@@ -1,19 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/4
-Message-ID: <CAPZ8mV5azdsSFw0_O3gKae86irswX7j-OgVggG0DFtump45tkA@mail.gmail.com>
-Date: Mon, 22 Aug 2011 00:05:18 -0700
-From: Mark Doliner <mark@...gant.net>
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Pidgin crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/2
+Message-ID: <4EC9BE2C.6060906@redhat.com>
+Date: Sun, 20 Nov 2011 19:57:48 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: websitebaker 2.8.1 and earlier: authentication error in backup module
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Aug 21, 2011 at 11:55 PM, Huzaifa Sidhpurwala
-<huzaifas@...hat.com> wrote:
-> Also looking at http://pidgin.im/news/security it seems two other security issues were also
-> fixed in 2.10.0, do you want CVEs to be assigned for them as well?
+On 11/20/2011 04:07 AM, Hanno Böck wrote:
+> http://www.websitebaker2.org/posts/security-vulnerability-backup-module-in-wb-core-13.php
+>
+> Extended information: Everybody can use the backup module from anywhere
+> and download the backup directly on every PC the "exploiter" likes
+> without any noticing by you.
+>
+>
 
-I'd say no.  The other two issues are both pretty minor.  I think it's
-very unlikely either of them would result in users being harmed.
+Please use CVE-2011-4322 for this issue.
 
---Mark
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
