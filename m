@@ -1,79 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/3
-Message-ID: <AANLkTintscsOj1Z0RTrCVUhL+bb3HCQxR5Cmkf0oRj-w@mail.gmail.com>
-Date: Mon, 14 Mar 2011 03:56:06 -0400
-From: Andrew Clausen <clausen@...n.upenn.edu>
-To: Pierre Joye <pierre.php@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: announcing libwipe
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/26
+Message-ID: <20111121213919.GD23629@foo.fgeek.fi>
+Date: Mon, 21 Nov 2011 23:39:19 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: advisories@...itunasecurity.com
+Subject: Re: Fwd: XSS vulnerability in Joomla 1.6.3
 Content-Type: text/plain; charset=utf-8
 
-Hi Pierre,
+On Mon, Nov 21, 2011 at 02:20:00PM -0700, Kurt Seifried wrote:
+> On 11/21/2011 11:01 AM, Henri Salo wrote:
+> > Can we get CVE-identifier assigned for this issue, thank you?
+> >
+> > Best regards,
+> > Henri Salo
+> >
+> > ----- Forwarded message from Netsparker Advisories <advisories@...itunasecurity.com> -----
+> >
+> > Date: Thu, 10 Nov 2011 16:32:12 +0200
+> > From: Netsparker Advisories <advisories@...itunasecurity.com>
+> > To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk
+> > Subject: [Full-disclosure] XSS vulnerability in Joomla 1.6.3
+> >
+> > Information
+> > --------------------
+> > Name :  XSS vulnerability in Joomla 1.6.3.
+> > Software :  All 1.6.x installs prior to and including 1.6.3 are affected.
+> > Vendor Hompeage :  http://www.joomla.org
+> > Vulnerability Type :  Cross-Site Scripting
+> > Severity :  High
+> > Researcher :  Mesut Timur <mesut [at] mavitunasecurity [dot] com>
+> > Advisory Reference :  NS-11-009
+> >
+> > Description
+> > ------------------
+> > Joomla is an award-winning content management system (CMS), which
+> > enables you to build Web sites and powerful online applications. Many
+> > aspects, including its ease-of-use and extensibility, have made Joomla
+> > the most popular Web site software available. Best of all, Joomla is
+> > an open source solution that is freely available to everyone.
+> >
+> > Details
+> > -------------------
+> > Joomla is affected by a XSS vulnerability in various administrator
+> > screens. All 1.6.x installs prior to and including 1.6.3 are affected.
+> > You can read the full article about Cross-Site Scripting
+> > vulnerabilities from here :
+> > http://www.mavitunasecurity.com/crosssite-scripting-xss/
+> >
+> > Solution
+> > -------------------
+> > Upgrade to the latest Joomla! version (1.6.4 or later).
+> >
+> > Credits
+> > -------------------
+> > It has been discovered on testing of Netsparker, Web Application
+> > Security Scanner - http://www.mavitunasecurity.com/netsparker/
+> >
+> > References
+> > -------------------
+> > 1. Vendor URL: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
+> > 2. MSL Advisory Link :
+> > http://www.mavitunasecurity.com/xss-vulnerability-in-joomla-163/
+> > 3. Netsparker Advisories :
+> > http://www.mavitunasecurity.com/netsparker-advisories/
+> >
+> > About Netsparker
+> > -------------------
+> > Netsparker® can find and report security issues such as SQL Injection
+> > and Cross-site Scripting (XSS) in all web applications regardless of
+> > the platform and the technology they are built on. Netsparker's unique
+> > detection and exploitation techniques allows it to be dead accurate in
+> > reporting hence it's the first and the only False Positive Free web
+> > application security scanner.
+> >
+> Can you confirm that this is a different issue from CVE-2011-2708 and
+> CVE-2011-3595?
+> 
+> -- 
+> 
+> -Kurt Seifried / Red Hat Security Response Team
 
-Thanks for your kind email.
+CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS vulnerability: http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html and I have already contacted MITRE twice to get another one marked as obsolete.
 
-My (limited) understanding of GPL3 is that something like LD_PRELOAD
-usage would be more or less unrestricted.
+This new is about: 20110601 XSS Vulnerabilities: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
 
-On the other hand, I guess this is an unclear legal issue, and
-releasing under the LGPL would be adequate for my goal of requiring
-improvements to the library to be free.  How does this sound?
+Sorry, but I don't know where to find SVN/GIT/CVS logs.
 
-Cheers,
-Andrew
-
-On 13 March 2011 19:13, Pierre Joye <pierre.php@...il.com> wrote:
-> hi,
->
-> I like this idea, and could be very useful especially in massive
-> shared environment (as in lot of users sharing a server, like web
-> servers for example).
->
-> My only concern right now is the choice of the gplv3, which is a no go
-> for many projects, especially for a library. Any chance to release it
-> under a more permissive or non viral license like bsd or MIT?
->
-> ps: that's not a license FUD, only a question (before I got shot :).
->
-> Cheers,
->
-> On Sat, Mar 12, 2011 at 7:29 AM, Andrew Clausen <clausen@...n.upenn.edu> wrote:
->> Hi all,
->>
->> I have written a program called "libwipe" for GNU/Linux to wipe memory
->> as soon as it is not being used.  I am releasing it under the GPL3
->> licence, and you can download it here:
->>
->> http://www.econ.upenn.edu/~clausen/computing/libwipe.tar.gz
->>
->> Any suggestions are appreciated.  In particular, I would like feedback on
->> * which memory mappings should be erased on exit
->> * which project this could be included in (secure-delete?)
->>
->> OVERVIEW
->>
->> This library is designed to make programs respect users' privacy by wiping
->> information when it is no longer needed.  It does not require any modifications
->> to the original programs.  To use it for all programs in a single shell
->> session, set the LD_PRELOAD environment variable with the shell command
->>
->>        export LD_PRELOAD=/usr/local/lib/libwipe.so
->>
->> To use it system-wide, add /usr/local/lib/libwipe.so to the /etc/ld.so.preload
->> configure file.
->>
->> The program uses two mechanisms:
->> (1) when memory is deallocated with free(3), it is zeroed out.
->> (2) when the process terminates, the entire memory is zeroed out.
->>
->> Cheers,
->> Andrew
->>
->
->
->
-> --
-> Pierre
->
-> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
->
+Best regards,
+Henri Salo
