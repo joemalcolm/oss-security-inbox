@@ -1,33 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/4
-Message-ID: <CAOSRhROHk-cYEuNJ--UCN7vC3M9nCu1+egiQ4xETApW_XBkf5w@mail.gmail.com>
-Date: Tue, 8 Nov 2011 08:08:35 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/14
+Message-ID: <CABqVa3-YDpT4-BWCrt5Zo3qu4_o=XBhQn=5eWBM=zomUoFW-rg@mail.gmail.com>
+Date: Mon, 21 Nov 2011 09:15:42 -0700
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Android: vold stack buffer overflow
+Subject: Re: kernel: hfs: add sanity check for file name length
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 8, 2011 at 8:03 AM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
-> A local user with group "log" on Android may send a malformed message
-> to vold ("volume daemon"), causing a stack buffer overflow.  This has
-> been demonstrated to be exploitable to escalate privileges to root on
-> all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
-> arbitrary heap object and triggering a use-after-free condition [1].
-> It appears the bug was silently patched in Honeycomb (3.x), but note
-> that since Honeycomb is not open source, it does not fall within the
-> scope of this list.  Bug discovered and exploited by the Revolutionary
-> team [2].
+On Sun, Nov 20, 2011 at 11:04 PM, Eugene Teo <eugene@...hat.com> wrote:
+> https://lkml.org/lkml/2011/11/9/303
+> https://bugzilla.redhat.com/show_bug.cgi?id=755431
+> http://git.kernel.org/linus/bc5b8a9003132ae44559edd63a1623
+>
+> On a corrupted file system the ->len field could be wrong leading to a
+> buffer overflow.
+>
+> Thanks, Eugene
 >
 
-Oops, a few minor corrections.
+Please use CVE-2011-4330 for this issue.
 
-Typo: Gingerbread is 2.3.x.  Also, the vulnerability actually lives in
-the libsysutils library, and was demonstrated to be exploitable via
-vold, which makes use of the affected library function.  Sorry for the
-noise.
-
-> -Dan
->
-> [1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
-> [2] http://revolutionary.io/
->
+-- 
+Kurt Seifried
+kurt@...fried.org
