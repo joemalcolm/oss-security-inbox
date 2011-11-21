@@ -1,40 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/2
-Message-ID: <BANLkTi=KT4waCOJEWHa25qLVVZYO1SG5Ag@mail.gmail.com>
-Date: Tue, 28 Jun 2011 17:49:24 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: Andrew Morton <akpm@...ux-foundation.org>
-Cc: Vasiliy Kulikov <segoon@...nwall.com>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/16
+Message-ID: <20111121175306.GA21065@foo.fgeek.fi>
+Date: Mon, 21 Nov 2011 19:53:06 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: LabWiki <= 1.1 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 28, 2011 at 5:12 PM, Linus Torvalds
-<torvalds@...ux-foundation.org> wrote:
->
->> If rounding the counts to a 1k granularity will indeed defeat the
->> attack (I'm unsure) then I'd suggest that a fix would be to perform
->> that fuzzification if the receiving process doesn't have suitable
->> permissions.  So if the user is reading his own stats or is root, he
->> still gets byte-resolution results.  This keeps the stats as useful as
->> we can make them and reduces the back-compatibility damage.
->
-> Sure.
+Can I get CVE-identifier for this issue:
 
-Actually, due to the whole netlink thing, it's not obvious who the
-data goes to, so I think the taskstats interface simply needs to round
-unconditionally.
+http://archives.neohapsis.com/archives/fulldisclosure/current/0112.html
 
-If you want the exact thing, you can use /proc/<pid>/io, which now
-does the security checking as per Vasiliy.
+Other references:
 
-So some patch like the appended? Vasiliy, this is different from your
-2/2, but it's simpler and I think sufficient. And shouldn't break
-iotop. What do you think? I agree that it's not perfect, but it seems
-to be sufficient at least for the particular passwd attack, no? Or is
-there some way you can fool sshd to read some other user-supplied data
-so that you can trick it into giving multiple values that you control,
-and thus see exactly when the IO counts overflow..
+http://osvdb.org/show/osvdb/76933
+http://osvdb.org/show/osvdb/76934
+http://osvdb.org/show/osvdb/76932
+http://secunia.com/advisories/46762/
 
-                   Linus
-
-View attachment "patch.diff" of type "text/x-patch" (1633 bytes)
+Best regards,
+Henri Salo
