@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/10
-Message-ID: <20110712183427.GO7511@ngolde.de>
-Date: Tue, 12 Jul 2011 20:34:27 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/14
+Message-ID: <CABqVa3-YDpT4-BWCrt5Zo3qu4_o=XBhQn=5eWBM=zomUoFW-rg@mail.gmail.com>
+Date: Mon, 21 Nov 2011 09:15:42 -0700
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: apache mod-auth-external
+Subject: Re: kernel: hfs: add sanity check for file name length
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-there has been an SQL injection reported in mod-auth-external.
-http://code.google.com/p/mod-auth-external/issues/detail?id=5
-http://bugs.debian.org/633637
+On Sun, Nov 20, 2011 at 11:04 PM, Eugene Teo <eugene@...hat.com> wrote:
+> https://lkml.org/lkml/2011/11/9/303
+> https://bugzilla.redhat.com/show_bug.cgi?id=755431
+> http://git.kernel.org/linus/bc5b8a9003132ae44559edd63a1623
+>
+> On a corrupted file system the ->len field could be wrong leading to a
+> buffer overflow.
+>
+> Thanks, Eugene
+>
 
-Can someone assign a CVE id to this?
-Cheers
-Nico
+Please use CVE-2011-4330 for this issue.
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Kurt Seifried
+kurt@...fried.org
