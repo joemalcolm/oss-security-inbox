@@ -1,54 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/7
-Message-Id: <201102221731.05213.thomas@suse.de>
-Date: Tue, 22 Feb 2011 17:31:05 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/29
+Message-ID: <4ECAC75A.9090402@redhat.com>
+Date: Mon, 21 Nov 2011 14:49:14 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: gdm PostLogin script executes scripts as user gdm
+CC: Henri Salo <henri@...v.fi>, advisories@...itunasecurity.com
+Subject: Re: Fwd: XSS vulnerability in Joomla 1.6.3
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+On 11/21/2011 02:39 PM, Henri Salo wrote:
+> On Mon, Nov 21, 2011 at 02:20:00PM -0700, Kurt Seifried wrote:
+>> On 11/21/2011 11:01 AM, Henri Salo wrote:
+>>> Can we get CVE-identifier assigned for this issue, thank you?
+>>>
+>>> Best regards,
+>>> Henri Salo
+>>>
+>>> ----- Forwarded message from Netsparker Advisories <advisories@...itunasecurity.com> -----
+>>>
+>>> Date: Thu, 10 Nov 2011 16:32:12 +0200
+>>> From: Netsparker Advisories <advisories@...itunasecurity.com>
+>>> To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk
+>>> Subject: [Full-disclosure] XSS vulnerability in Joomla 1.6.3
+>>>
+>>> Information
+>>> --------------------
+>>> Name :  XSS vulnerability in Joomla 1.6.3.
+>>> Software :  All 1.6.x installs prior to and including 1.6.3 are affected.
+>>> Vendor Hompeage :  http://www.joomla.org
+>>> Vulnerability Type :  Cross-Site Scripting
+>>> Severity :  High
+>>> Researcher :  Mesut Timur <mesut [at] mavitunasecurity [dot] com>
+>>> Advisory Reference :  NS-11-009
+>>>
+>>> Description
+>>> ------------------
+>>> Joomla is an award-winning content management system (CMS), which
+>>> enables you to build Web sites and powerful online applications. Many
+>>> aspects, including its ease-of-use and extensibility, have made Joomla
+>>> the most popular Web site software available. Best of all, Joomla is
+>>> an open source solution that is freely available to everyone.
+>>>
+>>> Details
+>>> -------------------
+>>> Joomla is affected by a XSS vulnerability in various administrator
+>>> screens. All 1.6.x installs prior to and including 1.6.3 are affected.
+>>> You can read the full article about Cross-Site Scripting
+>>> vulnerabilities from here :
+>>> http://www.mavitunasecurity.com/crosssite-scripting-xss/
+>>>
+>>> Solution
+>>> -------------------
+>>> Upgrade to the latest Joomla! version (1.6.4 or later).
+>>>
+>>> Credits
+>>> -------------------
+>>> It has been discovered on testing of Netsparker, Web Application
+>>> Security Scanner - http://www.mavitunasecurity.com/netsparker/
+>>>
+>>> References
+>>> -------------------
+>>> 1. Vendor URL: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
+>>> 2. MSL Advisory Link :
+>>> http://www.mavitunasecurity.com/xss-vulnerability-in-joomla-163/
+>>> 3. Netsparker Advisories :
+>>> http://www.mavitunasecurity.com/netsparker-advisories/
+>>>
+>>> About Netsparker
+>>> -------------------
+>>> Netsparker® can find and report security issues such as SQL Injection
+>>> and Cross-site Scripting (XSS) in all web applications regardless of
+>>> the platform and the technology they are built on. Netsparker's unique
+>>> detection and exploitation techniques allows it to be dead accurate in
+>>> reporting hence it's the first and the only False Positive Free web
+>>> application security scanner.
+>>>
+>> Can you confirm that this is a different issue from CVE-2011-2708 and
+>> CVE-2011-3595?
+>>
+>> -- 
+>>
+>> -Kurt Seifried / Red Hat Security Response Team
+> CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS vulnerability: http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html and I have already contacted MITRE twice to get another one marked as obsolete.
+>
+> This new is about: 20110601 XSS Vulnerabilities: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
+>
+> Sorry, but I don't know where to find SVN/GIT/CVS logs.
+>
+> Best regards,
+> Henri Salo
 
-should we consider this as a vulnerability?
-https://bugzilla.gnome.org/show_bug.cgi?id=602403
-
-cite:
-------------------------------------------------------------------------------
-ericlesoll [reporter] 2009-11-19 13:00:11 UTC
-
-on Ubuntu Karmic Koala and Fedora 12
-After a fresh install on some machines and update from Jaunty on another one,
-we can't catch $USER $USERNAME $LOGNAME
-from /etc/gdm/PostLogin/Default, we get "gdm" for all variables instead of real
-login name. It was working since 7.04 version.
-If in a terminal we run : echo $USER, we get the real login name.
-
-example below :
-
-If I put those 3 lines in /etc/gdm/PostLogin/Default:
-
-echo $USER > /tmp/aaa.txt
-echo $USERNAME >> /tmp/aaa.txt
-echo $LOGNAME >> /tmp/aaa.txt
-
-after every login I get this result:
-
-$ cat /tmp/aaa.txt
-gdm
-gdm
-gdm
-
-I would expect to get my real login name in those 3 variables instead of "gdm",
-which is of no use to take specific action based on which user is logging in.
-This was working as expected with at least the 3 previous versions of Ubuntu.
-------------------------------------------------------------------------------
-
-Cheers,
-Thomas
+Please use CVE-2011-4332 for this issue.
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+
+-Kurt Seifried / Red Hat Security Response Team
+
