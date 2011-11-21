@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/4
-Message-ID: <20111111164824.GA28950@dhcp-25-225.brq.redhat.com>
-Date: Fri, 11 Nov 2011 17:48:24 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: nfs4_getfacl decoding kernel oops
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/7
+Message-ID: <4ECA37FF.8080100@redhat.com>
+Date: Mon, 21 Nov 2011 12:37:35 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request (minor) -- gnash -- Unsafe management of HTTP cookies
 Content-Type: text/plain; charset=utf-8
 
-"nfs4_getfacl decoding causes a kernel Oops when a server returns more
-than 2 GETATTR bitmap words in response to the FATTR4_ACL attribute
-request.
+Hello Kurt, Steve, vendors,
 
-While the NFS client only asks for one attribute (FATTR4_ACL) in the
-first bitmap word, the NFSv4 protocol allows for the server to return
-unbounded bitmaps (more than two)."
+   a security flaw was found in the way Shockwave Flash plug-in of the
+gnash, a GNU flash movie player, performed management of HTTP cookies
+(they were stored under /tmp directory with predictable name and world-
+readable permissions). A local attacker could use this flaw to obtain
+sensitive information.
 
-Upstream commit:
-e5012d1f3861d18c7f3814e757c1c3ab3741dbcd - incomplete, handles only the
-case when 2 words are expected and 3 are returned
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=649384
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=755518
 
-Proposed complete upstream patch:
-http://www.spinics.net/lists/linux-nfs/msg25288.html
+Could you allocate a CVE id for this?
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=747106
-
-Credit: Andy Adamson
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
