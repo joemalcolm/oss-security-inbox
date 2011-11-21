@@ -1,51 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/9
-Message-ID: <20110402211008.GA27473@eltex.net>
-Date: Sun, 3 Apr 2011 01:10:08 +0400
-From: ArkanoiD <ark@...ex.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/20
+Message-ID: <4ECABEC4.9040808@redhat.com>
+Date: Mon, 21 Nov 2011 14:12:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Moritz Muehlenhoff <jmm@...ian.org>
+CC: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>, cve@...re.org
+Subject: Re: CVE request: drupal before 7.5 access bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+On 11/21/2011 10:55 AM, Moritz Muehlenhoff wrote:
+> On Sun, Nov 20, 2011 at 07:58:47PM -0700, Kurt Seifried wrote:
+>> On 11/20/2011 04:14 AM, Hanno Böck wrote:
+>>> http://drupal.org/node/1231510
+>>>
+>>> If a Drupal site is using these features on comments, and the parent
+>>> node is denied access (either by a node access module or by being
+>>> unpublished), the file attached to the comment can still be downloaded
+>>> by non-privileged users if they know or guess its direct URL.
+>>>
+>>>
+>>>
+>> Please use CVE-2011-4323 for this issue.
+> This has already been assigned CVE-2011-2726, see 
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2726 for details ;-)
+>
+> Cheers,
+>         Moritz
+Correct. CVE-2011-4323 is a duplicate of CVE-2011-2726. My bad.
 
-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
-RnxrHTR+eNlrOzMw
-=8AFV
------END PGP PUBLIC KEY BLOCK-----
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
 
