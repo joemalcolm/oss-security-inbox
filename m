@@ -1,45 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/3
-Message-ID: <4DA3C023.3030900@redhat.com>
-Date: Tue, 12 Apr 2011 10:59:47 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/4
+Message-ID: <4EC9C65D.3040803@redhat.com>
+Date: Mon, 21 Nov 2011 11:32:45 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE requests: Three Linux kernel issues
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-4112 kernel: null ptr deref at dev_queue_xmit+0x35/0x4d0
 Content-Type: text/plain; charset=utf-8
 
-> [1] http://permalink.gmane.org/gmane.linux.kernel/1124411 :
->
-> | PATCH] char: briq_panel: fix TOCTOU bug
-> |
-> | There is a TOCTOU bug in briq_panel_write() code:
-> |
-> |     if (vfd_cursor>  39)<<<
-> |             scroll_vfd();
-> |     vfd[vfd_cursor++] = c;<<<
-> |
-> | It's possible to write to arbitrary memory location in case of more than
-> | one process tries to call write() simultaneously.
+This can be triggered by setting up a bridge over vlan, and running pktgen.
 
-This shouldn't happen as this is protected using tty_lock to only allow 
-single access to it at any one time. So having more than one processes 
-writing to it is unlikely. No CVE for this one.
+Reference:
+https://bugzilla.redhat.com/CVE-2011-4112
 
-> [2] http://permalink.gmane.org/gmane.linux.kernel/1124410 :
->
-> | [PATCH] char: genrtc: fix infoleak to userspace
-> |
-> | struct pll is copied to userspace.  It is filled in "multiplexing" function
-> | get_rtc_pll().  At least one implementator, q40_get_rtc_pll(), doesn't
-> | fill .pll_ctrl field.  It's hard to understand whether either the caller
-> | or the callee must zero the unused struct fields, however, on another
-> | ioctl commands the caller already zeroes the structure.  So, let's the
-> | caller use memset().
+Upstream commits:
+After the last patch, We are left in a state in which only drivers
+calling ether_setup have IFF_TX_SKB_SHARING set (we assume that drivers
+touching real hardware call ether_setup for their net_devices and don't
+hold any state in their skbs.  There are a handful of drivers that
+violate this assumption of course, and need to be fixed up.  This patch
+identifies those drivers, and marks them as not being able to support
+the safe transmission of skbs by clearning the IFF_TX_SKB_SHARING flag
+in priv_flags
+http://git.kernel.org/linus/550fd08c2cebad61c548def135f67aba284c6162
 
-No CVE for this one too; /dev/rtc is root read/write only.
-
-Thanks.
-
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Pktgen attempts to transmit shared skbs to net devices, which can't be
+used by some drivers as they keep state information in skbs.  This patch
+adds a flag marking drivers as being able to handle shared skbs in their
+tx path.  Drivers are defaulted to being unable to do so, but calling
+ether_setup enables this flag, as 90% of the drivers calling ether_setup
+touch real hardware and can handle shared skbs.  A subsequent patch will
+audit drivers to ensure that the flag is set properly
+http://git.kernel.org/linus/d8873315065f1f527c7c380402cf59b1e1d0ae36
