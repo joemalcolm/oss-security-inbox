@@ -1,76 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/16
-Message-ID: <1232707585.1685834.1311969852095.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 29 Jul 2011 16:04:12 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/3
+Message-ID: <4ECAFAD5.1060107@redhat.com>
+Date: Mon, 21 Nov 2011 18:28:53 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>
-Subject: Re: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
+CC: Henri Salo <henri@...v.fi>, n0b0d13s@...il.com
+Subject: Re: Fwd: Support Incident Tracker <= 3.65 (translate.php) Remote Code Execution Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Steve,
-
-Can you weigh in on how to assign this one. I'm thinking we want two IDs,
-but I know in the past one ID has been used for catchall type IDs (I'm not
-sure if that's simply done due to lack of details).
-
-Thanks.
+On 11/21/2011 10:18 AM, Henri Salo wrote:
+> Can we get CVE assigned for this issue?
+>
+> Best regards,
+> Henri Salo
+>
+> ----- Forwarded message from n0b0d13s@...il.com -----
+>
+> Date: Sat, 19 Nov 2011 15:27:47 GMT
+> From: n0b0d13s@...il.com
+> To: bugtraq@...urityfocus.com
+> Subject: Support Incident Tracker <= 3.65 (translate.php) Remote Code
+> 	Execution Vulnerability
+> X-Mailer: MIME-tools 5.420 (Entity 5.420)
+>
+> Support Incident Tracker <= 3.65 (translate.php) Remote Code Execution Vulnerability
+>
+>
+> author...............: Egidio Romano aka EgiX
+> mail.................: n0b0d13s[at]gmail[dot]com
+> software link........: http://sitracker.org/
+> affected versions....: from 3.45 to 3.65
+>
+>
+> [-] vulnerable code in /translate.php
+>
+> 234.        foreach (array_keys($_POST) as $key)
+> 235.        {
+> 236.            if (!empty($_POST[$key]) AND substr($key, 0, 3) == "str")
+> 237.            {
+> 238.                if ($lastchar!='' AND substr($key, 3, 1) != $lastchar) $i18nfile .= "\n";
+> 239.                $i18nfile .= "\${$key} = '".addslashes($_POST[$key])."';\n";
+> 240.                $lastchar = substr($key, 3, 1);
+> 241.                $translatedcount++;
+> 242.            }
+> 243.        }
+>
+> Input passed via keys of $_POST array isn't properly sanitized before being stored into $i18nfile variable
+> at line 239, that variable will be the contents of a language file stored into 'i18n' directory with a php
+> extension. This could allow authenticated users to inject and execute arbitrary PHP code. Furthermore,
+> access directly to /translate.php?mode=save will reveal the full installation path of the application.
+>
+>
+> [-] Disclosure timeline:
+>
+> [13/11/2011] - Vulnerability discovered
+> [13/11/2011] - Issue reported to http://bugs.sitracker.org/view.php?id=1737
+> [13/11/2011] - Vendor replied that this issue is fixed in the current SVN trunk
+> [19/11/2011] - Public disclosure
+>
+>
+> [-] Proof of concept:
+>
+> http://www.exploit-db.com/exploits/18132
+>
+> ----- End forwarded message -----
+Yes we can! Please use CVE-2011-4337 for this issue.
 
 -- 
-    JB
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> by further investigation of hplip CVE-2011-2722 issue:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2722
-> 
-> Tim Waugh noticed the similar issue being present also in foomatic-rip
-> universal print filter, when debug mode is enabled. Further details:
-> 
-> It was found that foomatic-rip filter used insecurely created
-> temporary
-> file for storage of PostScript data by rendering the data, intended to
-> be sent to the PostScript filter, when the debug mode was enabled. A
-> local attacker could use this flaw to conduct symlink attacks
-> (overwrite
-> arbitrary file accessible with the privileges of the user running the
-> foomatic-rip universal print filter).
-> 
-> Relevant source code part (Perl script part / foomatic-rip.in):
-> ===============================================================
-> 100 my $logfile = "/tmp/foomatic-rip";
-> ..
-> 3454 # In debug mode save the data supposed to be fed
-> into the
-> 3455 # renderer also into a file
-> 3456 if ($debug) {
-> 3457 $commandline = "tee -a ${logfile}.ps | ( $commandline )";
-> 3458 }
-> 
-> Note: The $logfile variable declaration (line #100) is not an insecure
-> temporary file use issue itself, since this danger (and its proper
-> usage) is documented in /etc/foomatic/filters.conf file.
-> 
-> Relevant source code part (C script part / renderer.c):
-> ========================================================
-> 436 /* Save the data supposed to be fed into the renderer
-> also int o a file*/
-> 437 dstrprepend(commandline, "tee -a " LOG_FILE ".ps | ( ");
-> 438 dstrcat(commandline, ")");
-> 439 }
-> 
-> Note: The LOG_FILE variable declaration by itself is not an insecure
-> temporary file use, since this danger (and its proper usage)
-> is documented in /etc/foomatic/filters.conf file.
-> 
-> References:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=726426
-> 
-> Credit: Issue discovered by Tim Waugh
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+-Kurt Seifried / Red Hat Security Response Team
+
