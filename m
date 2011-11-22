@@ -1,21 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/02/2
-Message-ID: <1793976656.580420.1312277587730.JavaMail.root@zmail07.collab.prod.int.phx2.redhat.com>
-Date: Tue, 2 Aug 2011 05:33:07 -0400 (EDT)
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/9
+Message-ID: <4ECBFD76.5050908@redhat.com>
+Date: Tue, 22 Nov 2011 12:52:22 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: webkit ZDI-11-138 and ZDI-11-139
+CC: Henri Salo <henri@...v.fi>, advisories@...itunasecurity.com
+Subject: Re: CVE-request: Symphony CMS Multiple Cross-Site Scripting and SQL Injection Vulnerabilities (NS-11-008)
 Content-Type: text/plain; charset=utf-8
 
-On 08/02/2011 02:28 PM, Thomas Biege wrote:
->> http://www.zerodayinitiative.com/advisories/ZDI-11-139/
->> Webkit Anonymous Frame Remote Code Execution Vulnerability
->> ZDI-11-139: April 19th, 2011 
-> 
+On 11/22/2011 04:09 AM, Henri Salo wrote:
+> Can we assign CVE-identifiers for these three issues, thank you?
+>
+> Found from: 2.2.3
+> Fixed in: 2.2.4
+>
+> 1. http://osvdb.org/show/osvdb/76882 / SA46663
+> extensions/profiledevkit/content/content.profile.php profile-parameter XSS
+>
+> 2. http://osvdb.org/show/osvdb/76883 / SA46663
+> symphony/lib/core/class.symphony.php filter-parameter XSS
 
-This should really be CVE-2011-1442, but there is every possibility that there may be may be a duplicate CVE since, it was reported by two researchers independently.
+Ok merging these two issues (as per ADT4 specification)  please use
+CVE-2011-4340 for this issue.
 
+
+> 3. http://osvdb.org/show/osvdb/76884 / SA46663
+> symphony/content/content.publish.ph filter-parameter SQL injection
+> (Different than CVE-2010-3458)
+
+Please use CVE-2011-4341 for this issue.
+> References:
+> http://seclists.org/bugtraq/2011/Nov/8
+> http://www.mavitunasecurity.com/xss-and-sql-injection-vulnerabilities-in-symphony-cms/
+> http://secunia.com/advisories/46663/
+> Advisory Reference: NS-11-008
+>
+> - Henri Salo
 
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team 
+
+-Kurt Seifried / Red Hat Security Response Team
+
