@@ -1,28 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/03/4
-Message-ID: <983552901.282778.1296749832050.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Feb 2011 11:17:12 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/11
+Message-ID: <1321997943.13759.12.camel@scapa>
+Date: Tue, 22 Nov 2011 22:39:03 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: fuse
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
+On ven., 2011-11-11 at 13:27 -0500, Marc Deslauriers wrote:
+> On Fri, 2011-11-11 at 10:05 +0000, John Haxby wrote:
+> > On 11/11/11 08:06, Guido Berhoerster wrote:
+> > > Replacing the file between the lstat and the open would change
+> > > its inode and then be caught by the check before the fchown, no?
+> > 
+> > Nope.   There is no reason why the same inode should not be reused.
+> > 
+> > On ext4 (btrfs seems to be different):
+> > 
+> > $ touch test; ls -i test; rm test; touch test; ls -i test
+> > 656078 test
+> > 656078 test
+> > 
+> > jch
 > 
-> A few more fixes have made their way to FUSE to prevent TOCTTOU symlink
-> attacks. An unprivileged user was able to unmount arbitrary mounts:
+> How about the attached patch?
 > 
-> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=bf5ffb5fd8558bd799791834def431c0cee5a11f
-> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=1e7607ff89c65b005f69e27aeb1649d624099873
-> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=cbd3a2a84068aae6e3fe32939d88470d712dbf47
-> 
-> Could we please get one or more CVE numbers for them?
-> 
+> Marc.
 
-I don't understand what these flaws are just by reading the commit
-messages. Can you explain them?
+Note that O_NOFOLLOW seems to be Linux-only. Any idea how to handle it
+on other ports?
 
-Thanks.
-
+Regards,
 -- 
-    JB
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
