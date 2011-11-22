@@ -1,65 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/05/1
-Message-ID: <20110905012403.GC31987@openwall.com>
-Date: Mon, 5 Sep 2011 05:24:03 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/2
+Message-ID: <4ECAF783.2050107@redhat.com>
+Date: Mon, 21 Nov 2011 18:14:43 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: XSS in Tiki Wiki CMS Groupware (HTB23027)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 29, 2011 at 01:40:16PM +0200, Yves-Alexis Perez wrote:
-> By the way, would you know some kind of lib for ???safe privileges
-> dropping??? for that kind of usage. I quickly looked at glib and while
-> they do have some primitives for process spawning, there's nothing
-> related to dropping privs. It looks like something which might be
-> useful.
+On 11/21/2011 02:26 PM, Henri Salo wrote:
+> Can I get CVE-identifier for this issue:
+>
+> https://www.htbridge.ch/advisory/xss_in_tiki_wiki_cms_groupware.html
+> http://secunia.com/advisories/45283/
+>
+> Best regards,
+> Henri Salo
+Please use CVE-2011-4336 for this issue.
 
-No, I am not aware of a generic library with functionality like that.
+-- 
 
-Additionally, while effective credentials switching for accessing users'
-files feels like the obvious best thing to do in a program, things are
-less obvious when you need to do that from a library.  One issue is
-threads.  Switching only fsuid/fsgid/groups or switching
-euid/egid/groups with direct kernel syscalls (not thread-aware at least
-on Linux) rather than with library functions (thread-aware at least on
-glibc) helps with this (but is non-portable or makes assumptions).
-But then what about signals?  Signal handlers installed by the main
-program or by other libraries may not expect to be invoked with
-temporarily changed effective credentials.  Should our library block all
-signals before it switches credentials, then unblock after it has
-restored the old credentials?  Maybe.  But this does get complicated,
-dirty, risky.
+-Kurt Seifried / Red Hat Security Response Team
 
-To give credit where it's due, the above concern regarding signals
-originates (for me) from an off-list discussion I had with Rich Felker -
-the author of musl, a new lightweight libc for Linux:
-
-http://www.etalabs.net/musl/
-
-In Openwall's "tcb suite" (specifically, in libtcb, which is used by
-libnss_tcb), we switch fsuid/fsgid/groups before accessing
-/etc/tcb/*/shadow files, because the /etc/tcb/* directories have users
-as their owners:
-
-http://www.openwall.com/tcb/
-
-We don't block/unblock signals.
-
-musl supports our tcb password shadowing scheme too, but instead of
-credential switching, it takes precautions when accessing those files as
-root.  Either approach has its pros and cons.  I've already mentioned
-the signals issue with credential switching.  And an issue with trying
-to access files as root safely is that even when you do everything you
-can, a race condition remains: an attacker may replace the file to read
-with a hard link to a tape device, which would rewind the tape on
-open(2).  (There might be other devices with side-effects on open, too.)
-Arguably, this is purely theoretical and thus acceptable.  I'd say it's
-more acceptable when accessing /etc/tcb/*/shadow than when accessing
-dot-files in a user's home directory, because /etc/tcb (this directory
-itself) is normally root:shadow, mode 710, so it'd take a group shadow
-compromise before this DoS attack may be attempted.
-
-I hope these examples are helpful, and I hope you don't mind me plugging
-these two pieces of software. ;-)
-
-Alexander
