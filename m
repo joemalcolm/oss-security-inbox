@@ -1,33 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/5
-Message-ID: <4E7EF1CA.5030603@sugarcrm.com>
-Date: Sun, 25 Sep 2011 02:18:02 -0700
-From: Stas Malyshev <smalyshev@...arcrm.com>
-To: Pierre Joye <pierre.php@...il.com>
-CC: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/9
+Message-ID: <4ECBFD76.5050908@redhat.com>
+Date: Tue, 22 Nov 2011 12:52:22 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, advisories@...itunasecurity.com
+Subject: Re: CVE-request: Symphony CMS Multiple Cross-Site Scripting and SQL Injection Vulnerabilities (NS-11-008)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
-
-On 9/25/11 2:02 AM, Pierre Joye wrote:
-> I tend to disagree here. One of the CVE goal is not about declaring
-> one or the other guilty of bad practice(s) but about informing users
-> about security issues in the software they use and how to act
-> correctly to fix these issues.
+On 11/22/2011 04:09 AM, Henri Salo wrote:
+> Can we assign CVE-identifiers for these three issues, thank you?
 >
-> The is_a change is typically one of these security issues. While being
-> a minor one (recommended ini settings or good code practices would
-> avoid it easily), it is still one. That's why I'd to go with assigning
-> one and link it to the bug.
+> Found from: 2.2.3
+> Fixed in: 2.2.4
+>
+> 1. http://osvdb.org/show/osvdb/76882 / SA46663
+> extensions/profiledevkit/content/content.profile.php profile-parameter XSS
+>
+> 2. http://osvdb.org/show/osvdb/76883 / SA46663
+> symphony/lib/core/class.symphony.php filter-parameter XSS
 
-I'm concerned that if we do it this way people would take it as "PHP has 
-security bug in is_a and it was fixed in this version, so as long as we 
-run updated version we're OK", not "my code has gaping security hole 
-which by pure luck wasn't exploitable but minor change made it 
-exploitable". If we don't make it crystal clear the latter and not the 
-former is the case, we'd have same problem with 5.4.
+Ok merging these two issues (as per ADT4 specification)  please use
+CVE-2011-4340 for this issue.
+
+
+> 3. http://osvdb.org/show/osvdb/76884 / SA46663
+> symphony/content/content.publish.ph filter-parameter SQL injection
+> (Different than CVE-2010-3458)
+
+Please use CVE-2011-4341 for this issue.
+> References:
+> http://seclists.org/bugtraq/2011/Nov/8
+> http://www.mavitunasecurity.com/xss-and-sql-injection-vulnerabilities-in-symphony-cms/
+> http://secunia.com/advisories/46663/
+> Advisory Reference: NS-11-008
+>
+> - Henri Salo
+
+
 -- 
-Stanislav Malyshev, Software Architect
-SugarCRM: http://www.sugarcrm.com/
-(408)454-6900 ext. 227
+
+-Kurt Seifried / Red Hat Security Response Team
+
