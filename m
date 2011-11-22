@@ -1,42 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/11
-Message-ID: <876004730.18832.1300220902526.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 15 Mar 2011 16:28:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/12
+Message-ID: <1322000323.8503.59.camel@mdlinux>
+Date: Tue, 22 Nov 2011 17:18:43 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request for python-feedparser
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-
------ Original Message -----
-> python-feedparser 5.0.1 fixes three flaws:
+On Tue, 2011-11-22 at 22:39 +0100, Yves-Alexis Perez wrote:
+> On ven., 2011-11-11 at 13:27 -0500, Marc Deslauriers wrote:
+> > On Fri, 2011-11-11 at 10:05 +0000, John Haxby wrote:
+> > > On 11/11/11 08:06, Guido Berhoerster wrote:
+> > > > Replacing the file between the lstat and the open would change
+> > > > its inode and then be caught by the check before the fchown, no?
+> > > 
+> > > Nope.   There is no reason why the same inode should not be reused.
+> > > 
+> > > On ext4 (btrfs seems to be different):
+> > > 
+> > > $ touch test; ls -i test; rm test; touch test; ls -i test
+> > > 656078 test
+> > > 656078 test
+> > > 
+> > > jch
+> > 
+> > How about the attached patch?
+> > 
+> > Marc.
 > 
-> https://code.google.com/p/feedparser/
-> 
-> * Fix issue 91 (invalid text in XML declaration causes sanitizer to
-> crash)
+> Note that O_NOFOLLOW seems to be Linux-only. Any idea how to handle it
+> on other ports?
 
-https://code.google.com/p/feedparser/issues/detail?id=91
+It should be available on kFreeBSD also, isn't it?
 
-Use CVE-2011-1156
+Honestly, you can probably just remove that whole section of code. It's
+only there to handle a bug in old versions of lightdm that incorrectly
+created the ~/.Xauthority file as root.
 
-
-> * Fix issue 254 (sanitization can be bypassed by malformed XML
-> comments)
-
-https://code.google.com/p/feedparser/issues/detail?id=254
-
-Use CVE-2011-1157
+Marc.
 
 
-> * Fix issue 255 (sanitizer doesn't strip unsafe URI schemes)
-
-https://code.google.com/p/feedparser/issues/detail?id=255
-
-Use CVE-2011-1158
-
-Thanks.
-
--- 
-    JB
