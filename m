@@ -1,79 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/12
-Message-ID: <20110603215355.GA1306@openwall.com>
-Date: Sat, 4 Jun 2011 01:53:55 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/11
+Message-ID: <1321997943.13759.12.camel@scapa>
+Date: Tue, 22 Nov 2011 22:39:03 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel proactive security hardening
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
-
-We have started with the project described below under GSoC 2011, and
-I've just setup a new mailing list for it, as well as for Linux kernel
-hardening topics in general.  Here's my "welcome" message explaining
-this in more detail and referencing work that has already started:
-
-http://www.openwall.com/lists/kernel-hardening/2011/06/03/1
-
-Folks interested in getting involved (or just watching) are welcome to
-join the kernel-hardening list (some already did).  Subscribe here:
-
-http://www.openwall.com/lists/#subscribe
-
-(choose "kernel-hardening" from the drop-down at the bottom of this page).
-
-Now the context to this (which was too long to top-quote):
-
-On Wed, Mar 23, 2011 at 03:35:09AM +0300, Solar Designer wrote:
-> On Sun, Nov 07, 2010 at 02:16:32PM -0800, Kees Cook wrote:
-> > A push has started to try to get as much as possible upstream into the
-> > Linux kernel from the various hardening patches that exist in PaX,
-> > grsecurity, OpenWall, etc. I've got some details here:
+On ven., 2011-11-11 at 13:27 -0500, Marc Deslauriers wrote:
+> On Fri, 2011-11-11 at 10:05 +0000, John Haxby wrote:
+> > On 11/11/11 08:06, Guido Berhoerster wrote:
+> > > Replacing the file between the lstat and the open would change
+> > > its inode and then be caught by the check before the fchown, no?
 > > 
-> > http://www.outflux.net/blog/archives/2010/11/07/security-is-more-than-bug-fixing/
+> > Nope.   There is no reason why the same inode should not be reused.
 > > 
-> > And there's a sign-up list here, for people interested in helping out:
+> > On ext4 (btrfs seems to be different):
 > > 
-> > https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#Upstream%20Hardening
+> > $ touch test; ls -i test; rm test; touch test; ls -i test
+> > 656078 test
+> > 656078 test
 > > 
-> > We could use the help. :)
+> > jch
 > 
-> Here's another way to help out: Openwall is a mentoring organization for
-> Google Summer of Code 2011 (GSoC), and one of our "ideas" is this:
+> How about the attached patch?
 > 
-> http://openwall.info/wiki/ideas
-> 
-> "Linux kernel hardening - extract security hardening changes from various
-> patches (which the mentor will point out), forward-port them to the
-> latest mainstream kernels, make it easy to enable/disable the hardening
-> measures (both compile- and runtime), add documentation, properly submit
-> to and work with LKML (make proposals and own discussions to completion:
-> either rejection or acceptance).  This is a noble but thankless job to
-> do, so be prepared!  The authors of those changes did not submit them
-> "properly" and did not "own discussions to completion" precisely because
-> the job is so thankless. ;-)
-> 
-> This may optionally involve work with other kernel branches and other
-> upstreams as well (OpenVZ, Red Hat, Ubuntu)."
-> 
-> Under Owl tasks, we also have:
-> 
-> "The rhel6 branch OpenVZ kernel that we'd update to will need to be
-> security-hardened, in part by reviewing, extracting, cleaning up,
-> porting, and documenting/commenting individual changes from grsecurity
-> and PaX (some of which have originated from Openwall's patches for older
-> kernels), and in part by implementing new security-related
-> changes/features, some of those specific to container-based
-> virtualization (purpose-specific restrictions to be applied on
-> per-container basis).  We expect help/consulting/mentoring from the
-> author of PaX on portions that are PaX (some of these are difficult to
-> understand from the code alone, especially the rationale behind things
-> being done in a certain way), whereas the rest are not too complicated
-> for a capable person to fully figure out on their own.
-> 
-> We should work with upstreams - OpenVZ and Red Hat - to try and get some
-> of these enhancements accepted."
-...
+> Marc.
 
-Alexander
+Note that O_NOFOLLOW seems to be Linux-only. Any idea how to handle it
+on other ports?
+
+Regards,
+-- 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
