@@ -1,24 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/4
-Message-ID: <20110926165743.GB14748@inutil.org>
-Date: Mon, 26 Sep 2011 18:57:43 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/4
+Message-ID: <4ECAFBD3.8040104@redhat.com>
+Date: Mon, 21 Nov 2011 18:33:07 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: Typo3
+Subject: Re: Did this ArchLinux/shaman thing ever get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign CVE IDs for two new Typo3 issues:
+On 11/14/2011 09:15 AM, Kurt Seifried wrote:
+> Did this ever get a CVE #? I can't find one.
+>
+> https://bbs.archlinux.org/viewtopic.php?id=64066&p=1
+>
+> ====================
+> The point of this thread was that you don't need to enter the root
+> password at all. Not the first time, not ever.
+>
+> As far as I understand, it is supposed to work like this: When you
+> first use shaman too install anything, it asks for the root password
+> You can tick a "Do not ask me again"-box, so you don't have to enter
+> the password again. If you tick the box and enter the password, shaman
+> add the lines
+> [auth]
+> askforpwd=false
+> to the users shaman.conf-file (~./config/shaman/shaman.conf) The next
+> time shaman is run, it checks the config file, and if the askforpwd
+> value is set to false, it grants itself root privileges (with some
+> nifty setuuid root-thingy, I imagine) This is not the problem - this
+> is the feature.
+>
+> The bug is this:
+> the fact that any user can add the lines
+> [auth]
+> askforpwd=false
+> to his own shaman.conf file, without ever entering the root password
+> in shaman. The next time shaman is run, it checks the config file, and
+> if the askforpwd value is set to false, it grants itself root
+> privileges - even though the user has never entered the root password.
+> This works for any unprivileged user on the system.
+>
+> If that is indeed a feature intended by any sane person, then I'm
+> Mother Mary. And that can't be, seeing as I don't have breasts.
+> ====================
+>
+>
+> Appears to never have been fixed, the last release of shaman appears
+> to have been 1.0.9 in 2008-09-06, the bug report was filed 2009-01-28.
+>
+Please use CVE-2011-4338 for this issue.
 
-1. TYPO3-CORE-SA-2011-002: Potential SQL injection vulnerability in TYPO3
-Core
-http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-002/
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641682
+-- 
 
-2. TYPO3-CORE-SA-2011-003: Improper error handling could lead to cache
-   flooding in TYPO3 Core
-http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-003/
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641683
+-Kurt Seifried / Red Hat Security Response Team
 
-Cheers,
-        Moritz
