@@ -1,48 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/1
-Message-ID: <57e84e1f-2b6f-4de0-b6b4-6e76a76be525@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 25 Oct 2011 10:32:56 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/6
+Message-ID: <4ECB202E.60607@redhat.com>
+Date: Mon, 21 Nov 2011 21:08:14 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Elio Maldonado <emaldona@...hat.com>, Robert Relyea <rrelyea@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Reed Loden <reed@...dloden.com>
-Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
+Subject: Re: CVE-2011-4110 kernel: keys: NULL pointer deref in the user-defined key type
 Content-Type: text/plain; charset=utf-8
 
-Reed asked me to give this a CVE id.
-
-Please use CVE-2011-3640
-
-Thanks.
+On 11/21/2011 02:26 PM, Kurt Seifried wrote:
+> On 11/21/2011 10:51 AM, Petr Matousek wrote:
+>> There is a NULL pointer deref in the user-defined key type whereby
+>> updating a negative key into a fully instantiated key will cause
+>> an oops to occur when the code attempts to free the non-existent
+>> old payload.
+>>
+>> Upstream commit:
+>> 9f35a33b8d06263a165efe3541d9aa0cdbd70b3b
+>>
+>> References:
+>> https://lkml.org/lkml/2011/11/15/363
+>> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4110
+>>
+>> Thanks,
+> Please use CVE-2011-4331 for this issue.
+>
+I failed to read the subject line and need to go to remedial reading
+classes. Please reject CVE-2011-4331
 
 -- 
-    JB
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
->    a security flaw was found in the way nss, the Network Security
-> Services (NSS) set of libraries, performed their initialization (the
-> file path for "pkcs11.txt" configuration file was constructed
-> incorrectly). When that configuration file was loaded from remote
-> WebDAV
-> or Samba CIFS share, it could lead to arbitrary security module
-> load, potentially leading to execution of arbitrary code (execution
-> of
-> code from untrusted security module).
-> 
-> Upstream bug report:
-> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
-> 
-> Other references:
-> [2] https://secunia.com/advisories/46557/
-> [3] https://bugs.gentoo.org/show_bug.cgi?id=388045
-> [4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
-> [5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
-> 
-> Could you allocate a CVE id for this? (as it looks there isn't one
-> for this deficiency yet)
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
+-Kurt Seifried / Red Hat Security Response Team
+
