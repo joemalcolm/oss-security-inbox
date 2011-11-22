@@ -1,40 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/8
-Message-ID: <4EB803C5.3020707@redhat.com>
-Date: Mon, 07 Nov 2011 09:13:57 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/5
+Message-ID: <4ECB0DAC.7070207@redhat.com>
+Date: Tue, 22 Nov 2011 10:49:16 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Ruby (OpenSSL extension) -- Insecure way of creation exponent value by private RSA key generation
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE-2011-4110 kernel: keys: NULL pointer deref in the user-defined key type
 Content-Type: text/plain; charset=utf-8
 
-On 11/07/2011 08:55 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a security flaw was found in the way the OpenSSL extension of the
-> Ruby programming language (of version from the Git trunk repository
-> after 2011-09-01 up to 2011-11-03) generated exponent value to be used
-> for private RSA key generation (the bug caused the exponent for the
-> generated key to be always '1'). A remote attacker could use this flaw
-> to bypass / corrupt integrity of services, depending on strong private
-> RSA keys generation mechanism.
->
-> Relevant upstream patch:
-> [1]
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=33633
->
-> References:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=751800
->
-> Could you allocate a CVE id for this?
-Please use CVE-2011-4121 for this issue.
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+On 11/22/2011 05:26 AM, Kurt Seifried wrote:
+> On 11/21/2011 10:51 AM, Petr Matousek wrote:
+>> There is a NULL pointer deref in the user-defined key type whereby
+>> updating a negative key into a fully instantiated key will cause
+>> an oops to occur when the code attempts to free the non-existent
+>> old payload.
+>>
+>> Upstream commit:
+>> 9f35a33b8d06263a165efe3541d9aa0cdbd70b3b
+>>
+>> References:
+>> https://lkml.org/lkml/2011/11/15/363
+>> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4110
+>>
+>> Thanks,
+> Please use CVE-2011-4331 for this issue.
 
+Kurt, we have assigned this with CVE-2011-4110, please reject
+CVE-2011-4331. Thanks.
 
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Eugene
