@@ -1,133 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/5
-Message-ID: <4DA32F9C.2060607@mvista.com>
-Date: Mon, 11 Apr 2011 06:43:08 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/3
+Message-ID: <4ECAFAD5.1060107@redhat.com>
+Date: Mon, 21 Nov 2011 18:28:53 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+CC: Henri Salo <henri@...v.fi>, n0b0d13s@...il.com
+Subject: Re: Fwd: Support Incident Tracker <= 3.65 (translate.php) Remote Code Execution Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Alexander,
+On 11/21/2011 10:18 AM, Henri Salo wrote:
+> Can we get CVE assigned for this issue?
+>
+> Best regards,
+> Henri Salo
+>
+> ----- Forwarded message from n0b0d13s@...il.com -----
+>
+> Date: Sat, 19 Nov 2011 15:27:47 GMT
+> From: n0b0d13s@...il.com
+> To: bugtraq@...urityfocus.com
+> Subject: Support Incident Tracker <= 3.65 (translate.php) Remote Code
+> 	Execution Vulnerability
+> X-Mailer: MIME-tools 5.420 (Entity 5.420)
+>
+> Support Incident Tracker <= 3.65 (translate.php) Remote Code Execution Vulnerability
+>
+>
+> author...............: Egidio Romano aka EgiX
+> mail.................: n0b0d13s[at]gmail[dot]com
+> software link........: http://sitracker.org/
+> affected versions....: from 3.45 to 3.65
+>
+>
+> [-] vulnerable code in /translate.php
+>
+> 234.        foreach (array_keys($_POST) as $key)
+> 235.        {
+> 236.            if (!empty($_POST[$key]) AND substr($key, 0, 3) == "str")
+> 237.            {
+> 238.                if ($lastchar!='' AND substr($key, 3, 1) != $lastchar) $i18nfile .= "\n";
+> 239.                $i18nfile .= "\${$key} = '".addslashes($_POST[$key])."';\n";
+> 240.                $lastchar = substr($key, 3, 1);
+> 241.                $translatedcount++;
+> 242.            }
+> 243.        }
+>
+> Input passed via keys of $_POST array isn't properly sanitized before being stored into $i18nfile variable
+> at line 239, that variable will be the contents of a language file stored into 'i18n' directory with a php
+> extension. This could allow authenticated users to inject and execute arbitrary PHP code. Furthermore,
+> access directly to /translate.php?mode=save will reveal the full installation path of the application.
+>
+>
+> [-] Disclosure timeline:
+>
+> [13/11/2011] - Vulnerability discovered
+> [13/11/2011] - Issue reported to http://bugs.sitracker.org/view.php?id=1737
+> [13/11/2011] - Vendor replied that this issue is fixed in the current SVN trunk
+> [19/11/2011] - Public disclosure
+>
+>
+> [-] Proof of concept:
+>
+> http://www.exploit-db.com/exploits/18132
+>
+> ----- End forwarded message -----
+Yes we can! Please use CVE-2011-4337 for this issue.
 
-Thank you for taking the time to reply.
+-- 
 
-I can assure you that none of our customers ever got any advanced notice
-of Embargoed issues. It would have been easier for me to just publicly
-expose those issues internally than take the constant beating over not
-disclosing Embargo information.
+-Kurt Seifried / Red Hat Security Response Team
 
-I do hope I did not "tax" any of the vendors or participants on the old
-vendor sec list. My apologies if I did.
-
-Mahalo,
-
-Armin
-
-On 04/09/2011 10:39 AM, Solar Designer wrote:
-> On Fri, Apr 08, 2011 at 11:40:45AM -1000, akuster wrote:
->> Can I get a status on this? (+, -, Ack, Nack)
-> 
-> Postponed.  I'd like to see any support for you getting onto the Linux
-> distros security contacts list, with reasoning, or/and any other
-> suggestions on what to do in this case.  Josh - what do you think (as
-> someone who advocated the setup of a vendor-sec replacement)?
-> 
-> Formally, you sort of qualify (you were on vendor-sec and presumably you
-> have a Linux distro, although I failed to quickly find a way to see what
-> kind of software your distro contains).  However, from your own
-> statement (quoted below), it appears that we're not going to be able to
-> see whether and how you make intended use of the advance notifications:
-> 
->> Our advisories are via a paid subscription service so they are not public.
-> 
-> Obviously, this goes against the attempt at transparency, and also it
-> means that we won't be able to evaluate your need to be on the list in
-> the same way that we do/should/will for other vendors - e.g., we may
-> re-check Frugalware and rPath in a few months from now to see if their
-> security response has sufficiently improved to warrant the advance
-> notifications to them or not, but what do we do for MontaVista? grant
-> you an unconditional exception?
-> 
-> You also wrote:
-> 
->> Our customers require vulnerabilities to be addressed in a timely manner.
-> 
-> So you have contractual relationships with your customers and you're
-> going to use the advance notifications in your business.  Well, many of
-> the more open Linux distros also have paying customers, but in your case
-> this is all you have (if I understood you correctly).
-> 
-> For both kinds of distros, it is possible that the vendor will misuse
-> the advance notifications to notify their customers before the issue is
-> disclosed publicly (which normally happens on the CRD).  We ask and hope
-> that vendors won't do this, but the risk is there.  Arguably, for a
-> vendor that is not making their advisories and updates public, this
-> temptation and thus the risk are higher.
-> 
-> Then, a closed Linux vendor like MontaVista, working for their paying
-> customers only, is somewhat similar to an end-user of Linux who
-> maintains their own Linux distro in-house.  Where do we draw the line?
-> Many legal entities vs. one?  I doubt that this is going to work as
-> desired (and I imagine that different people in here would want it to
-> work differently anyway).  For example, a large enterprise is likely to
-> use multiple legal entities.  Substantially same ownership?  This gets
-> too tricky, non-technical, non-specific, and subject to change.
-> 
-> Clearly, we can't reasonably start to accept end-users of Linux merely
-> because they build their own distro... or just claim to.
-> 
-> I understand that generalization and reductio ad absurdum may lead to a
-> logical fallacy, however unfortunately we're setting a precedent here
-> (one way or the other), so we may need to generalize and consider likely
-> consequences of the precedent... unless we're happy to drop the list
-> when it grows too large and maybe start anew, with stricter rules.
-> 
-> Finally, here's an additional aspect/concern.  The list is being setup
-> as a hopefully better alternative to explicit CC lists.  "Members" of
-> those lists are picked by whoever reports the issue - this person
-> could be from one of the distros or it could be an external reporter.
-> Would many (or any) of those people want to report to MontaVista
-> specifically (along with other distros) or to closed Linux vendors in
-> general?  I think not.  I think that having such vendors on the list
-> would feel like a tax to many reporters, who would have to weigh the
-> pros and cons of using the exploder (ease of use, an up-to-date list of
-> contact persons, encryption, but extra vendors notified) vs. direct e-mail
-> (excluding those who they don't want to or don't care to notify).
-> I think that many would choose the latter (and end up excluding some of
-> the open distros as well, even though they would not mind notifying
-> them), thereby reducing the usefulness of the list.
-> 
-> And you also wrote:
-> 
->> will revisit the wiki issue soon.
-> 
-> Since you pinged me about the status on your subscription, let me ping
-> you about the status on the wiki updates as well. ;-)  Any progress?
-> The pages to update with your info are:
-> 
-> http://oss-security.openwall.org/wiki/vendors
-> http://oss-security.openwall.org/wiki/distro-patches
-> 
-> Please don't take any of the above personal.  I am just trying to
-> provide a useful service to the community.  This is a thankless job, and
-> I'd be happy if someone else does it - and does it better, or just
-> differently to provide an alternative.  I'd be happy if the alternative
-> wins, letting me happily shutdown the list.  (I've been privately asked
-> to provide a hopefully more secure alternative to vendor-sec long before
-> vendor-sec ceased to exist, but I really did not want to get Openwall
-> into the mess, nor did I have time for it.  I only felt like I had to do
-> it when it became clear that the lst.de folks would not host something
-> like this anymore.)
-> 
-> In fact, MontaVista may host such a list as well, which would include
-> MontaVista and more... but I would not expect many (maybe even most?)
-> other distros and reporters to want to write to that list, which would
-> kind of confirm the problem with having MontaVista on the list.
-> 
-> Please let me know if I misunderstood anything or if you have any
-> suggestions.
-> 
-> Thanks,
-> 
-> Alexander
