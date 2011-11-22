@@ -1,23 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/15
-Message-ID: <4D3F52CA.8070204@redhat.com>
-Date: Wed, 26 Jan 2011 06:46:34 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/12
+Message-ID: <1322000323.8503.59.camel@mdlinux>
+Date: Tue, 22 Nov 2011 17:18:43 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-4238 xen dom0 issue
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-A missing sanity check was found in vbd_create() in the Xen hypervisor
-implementation. As CD-ROM drives are not supported by the blkback 
-back-end driver, attempting to use a virtual CD-ROM drive with blkback 
-could trigger a denial of service (crash) on the host system running the 
-Xen hypervisor.
+On Tue, 2011-11-22 at 22:39 +0100, Yves-Alexis Perez wrote:
+> On ven., 2011-11-11 at 13:27 -0500, Marc Deslauriers wrote:
+> > On Fri, 2011-11-11 at 10:05 +0000, John Haxby wrote:
+> > > On 11/11/11 08:06, Guido Berhoerster wrote:
+> > > > Replacing the file between the lstat and the open would change
+> > > > its inode and then be caught by the check before the fchown, no?
+> > > 
+> > > Nope.   There is no reason why the same inode should not be reused.
+> > > 
+> > > On ext4 (btrfs seems to be different):
+> > > 
+> > > $ touch test; ls -i test; rm test; touch test; ls -i test
+> > > 656078 test
+> > > 656078 test
+> > > 
+> > > jch
+> > 
+> > How about the attached patch?
+> > 
+> > Marc.
+> 
+> Note that O_NOFOLLOW seems to be Linux-only. Any idea how to handle it
+> on other ports?
 
-https://bugzilla.redhat.com/CVE-2010-4238
+It should be available on kFreeBSD also, isn't it?
 
-This affects Red Hat Enterprise Linux 5 only. There's no upstream patch.
+Honestly, you can probably just remove that whole section of code. It's
+only there to handle a bug in old versions of lightdm that incorrectly
+created the ~/.Xauthority file as root.
 
-https://bugzilla.redhat.com/CVE-2010-4238
+Marc.
 
-Eugene
+
