@@ -1,29 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/6
-Message-ID: <302d8142-632d-48f8-930b-ba9090fd2e83@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 10 Oct 2011 14:34:23 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/1
+Message-ID: <4ECAF5B0.5070807@redhat.com>
+Date: Mon, 21 Nov 2011 18:06:56 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: simple machines forum before 2.0.1 and 1.1.15
+CC: Henri Salo <henri@...v.fi>, sschurtz@...nline.de
+Subject: Re: CVE-request: Contao 2.10.1 Cross-site scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> http://www.simplemachines.org/community/index.php?P=adfcf10856d3f74172b76dd384b6ade6&topic=452888.0
-> 
-> "Critical security issues have been identified and fixed with this patch,
-> therefore it is highly recommended to make sure you update your forums
-> immediately."
-> 
-> 
-> That probably qualifies as "unknown security issue in simple machines
-> forum" ;-)
-
-Indeed. If someone has more details, please speak up. We can assign more
-IDs in the future if needed.
-
-Use CVE-2011-3615
-
-Thanks.
+On 11/21/2011 03:41 PM, Henri Salo wrote:
+> ----- Forwarded message from sschurtz@...nline.de -----
+>
+> Date: Sat, 8 Oct 2011 07:59:27 GMT
+> From: sschurtz@...nline.de
+> To: bugtraq@...urityfocus.com
+> Subject: Contao 2.10.1 Cross-site scripting vulnerability
+> X-Mailer: MIME-tools 5.420 (Entity 5.420)
+>
+> Advisory:              	Contao 2.10.1 Cross-site scripting vulnerability
+> Advisory ID:           	SSCHADV2011-025
+> Author:                	Stefan Schurtz
+> Affected Software:  	Successfully tested on Contao 2.10.1
+> Vendor URL:          	http://www.contao.org/
+> Vendor Status:       	fixed
+> CVE-ID:                	-
+>
+> ==========================
+> Vulnerability Description:
+> ==========================
+>
+> Contao 2.10 is prone to multiple Cross-site scripting vulnerability
+>
+> ==================
+> Technical Details:
+> ==================
+>
+> http://<target>/contao-2.10.1/index.php/teachers.html?"/><script>alert('xss')</script>
+> http://<target>/contao-2.10.1/index.php/teachers/'"</style></script><script>alert(document.cookie)</script>
+>
+> =========
+> Solution:
+> =========
+>
+> - Vendor patch available - http://dev.contao.org/projects/typolight/repository/revisions/1041
+> - Release of a new version 2.10.2 next week
+>
+> ====================
+> Disclosure Timeline:
+> ====================
+>
+> 07-Oct-2011 - informed developers (contao@...trobots.com)
+> 07-Oct-2011 - vendor fix
+> 08-Oct-2011 - release date of this security advisory
+>
+> ========
+> Credits:
+> ========
+>
+> Vulnerability found and advisory written by Stefan Schurtz.
+>
+> ===========
+> U
+> References:
+> ===========
+>
+> http://www.contao.org/
+> http://dev.contao.org/projects/typolight/repository/revisions/1041
+> http://www.rul3z.de/advisories/SSCHADV2011-025.txt
+>
+> ----- End forwarded message -----
+>
+> Can you assign CVE-identifier for this vulnerability?
+>
+> http://dev.contao.org/projects/typolight/repository/revisions/8de5b536973a38ba75ebebfff16a5f0f29d99671 (reported 10/10/2011 03:09 pm)
+> http://dev.contao.org/projects/typolight/repository/revisions/b7b2c2281227ad9c1647bf1f03e6d663b8387959 (reported 10/07/2011 01:33 pm)
+>
+> Best regards,
+> Henri Salo
+Please use CVE-2011-4335 for this issue.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
