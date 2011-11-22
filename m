@@ -1,100 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/51
-Message-ID: <22823352.372690.1301945640254.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 4 Apr 2011 15:34:00 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/8
+Message-ID: <20111122110920.GB28968@foo.fgeek.fi>
+Date: Tue, 22 Nov 2011 13:09:20 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: kernel: multiple issues in ROSE
+Cc: advisories@...itunasecurity.com
+Subject: CVE-request: Symphony CMS Multiple Cross-Site Scripting and SQL Injection Vulnerabilities (NS-11-008)
 Content-Type: text/plain; charset=utf-8
 
-One it is then. Thanks.
+Can we assign CVE-identifiers for these three issues, thank you?
 
-Use CVE-2011-1493.
+Found from: 2.2.3
+Fixed in: 2.2.4
 
--- 
-    JB
+1. http://osvdb.org/show/osvdb/76882 / SA46663
+extensions/profiledevkit/content/content.profile.php profile-parameter XSS
 
------ Original Message -----
-> On Mon, Apr 4, 2011 at 2:41 PM, Josh Bressers <bressers@...hat.com>
-> wrote:
-> > How do we want this broken down? If nobody complains, I'll just give
-> > it one.
-> >
-> 
-> I think one makes sense, since all the problems were in a single
-> protocol and were addressed at the same time.
-> 
-> -Dan
-> 
-> > Thanks.
-> >
-> > --
-> >    JB
-> >
-> > ----- Original Message -----
-> >> Any update on this?
-> >>
-> >> Thanks,
-> >> Dan
-> >>
-> >> On Mon, Mar 21, 2011 at 12:47 AM, Eugene Teo <eugene@...hat.com>
-> >> wrote:
-> >> > On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
-> >> >>
-> >> >> I sent in a patch [1] resolving two issues in ROSE:
-> >> >>
-> >> >> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's
-> >> >> possible
-> >> >> for a remote host to provide more digipeaters than expected,
-> >> >> resulting
-> >> >> in heap corruption. Check against ROSE_MAX_DIGIS to prevent
-> >> >> overflows, and abort facilities parsing on failure.
-> >> >>
-> >> >> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
-> >> >> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide
-> >> >> a
-> >> >> length of less than 10, resulting in an underflow in a memcpy
-> >> >> size,
-> >> >> causing a kernel panic due to massive heap corruption. A length
-> >> >> of
-> >> >> greater than 20 results in a stack overflow of the callsign
-> >> >> array.
-> >> >> Abort facilities parsing on these invalid length values."
-> >> >>
-> >> >> These issues may both result in code execution. They may be
-> >> >> triggered
-> >> >> by a remote attacker if the victim has a listening ROSE socket,
-> >> >> or
-> >> >> by
-> >> >> a local attacker (for privilege escalation) if a ROSE device
-> >> >> exists
-> >> >> (e.g. rose0).
-> >> >>
-> >> >> Ben Hutchings followed up with a patch [2] that resolves a
-> >> >> number
-> >> >> of
-> >> >> other ROSE issues related to lack of size field validation, some
-> >> >> of
-> >> >> which may also result in heap corruption.
-> >> >>
-> >> >> Not sure about the proper CVE breakdown for all these issues,
-> >> >> since
-> >> >> the entire protocol was quite broken. Perhaps one is enough to
-> >> >> cover
-> >> >> everything.
-> >> >
-> >> > I am not sure. I would just assign one for the collection of
-> >> > issues
-> >> > here but
-> >> > I will let Steve decide instead.
-> >> >
-> >> >> [1] http://marc.info/?l=linux-netdev&m=130060344616926
-> >> >> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
-> >> >
-> >> > Thanks, Eugene
-> >> > --
-> >> > main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) &&
-> >> > main(++i); }
-> >> >
-> >
+2. http://osvdb.org/show/osvdb/76883 / SA46663
+symphony/lib/core/class.symphony.php filter-parameter XSS
+
+3. http://osvdb.org/show/osvdb/76884 / SA46663
+symphony/content/content.publish.ph filter-parameter SQL injection
+(Different than CVE-2010-3458)
+
+References:
+http://seclists.org/bugtraq/2011/Nov/8
+http://www.mavitunasecurity.com/xss-and-sql-injection-vulnerabilities-in-symphony-cms/
+http://secunia.com/advisories/46663/
+Advisory Reference: NS-11-008
+
+- Henri Salo
