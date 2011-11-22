@@ -1,93 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/1
-Message-ID: <20110323003509.GA4595@openwall.com>
-Date: Wed, 23 Mar 2011 03:35:09 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/4
+Message-ID: <4ECAFBD3.8040104@redhat.com>
+Date: Mon, 21 Nov 2011 18:33:07 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel proactive security hardening
+Subject: Re: Did this ArchLinux/shaman thing ever get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-Hi all -
+On 11/14/2011 09:15 AM, Kurt Seifried wrote:
+> Did this ever get a CVE #? I can't find one.
+>
+> https://bbs.archlinux.org/viewtopic.php?id=64066&p=1
+>
+> ====================
+> The point of this thread was that you don't need to enter the root
+> password at all. Not the first time, not ever.
+>
+> As far as I understand, it is supposed to work like this: When you
+> first use shaman too install anything, it asks for the root password
+> You can tick a "Do not ask me again"-box, so you don't have to enter
+> the password again. If you tick the box and enter the password, shaman
+> add the lines
+> [auth]
+> askforpwd=false
+> to the users shaman.conf-file (~./config/shaman/shaman.conf) The next
+> time shaman is run, it checks the config file, and if the askforpwd
+> value is set to false, it grants itself root privileges (with some
+> nifty setuuid root-thingy, I imagine) This is not the problem - this
+> is the feature.
+>
+> The bug is this:
+> the fact that any user can add the lines
+> [auth]
+> askforpwd=false
+> to his own shaman.conf file, without ever entering the root password
+> in shaman. The next time shaman is run, it checks the config file, and
+> if the askforpwd value is set to false, it grants itself root
+> privileges - even though the user has never entered the root password.
+> This works for any unprivileged user on the system.
+>
+> If that is indeed a feature intended by any sane person, then I'm
+> Mother Mary. And that can't be, seeing as I don't have breasts.
+> ====================
+>
+>
+> Appears to never have been fixed, the last release of shaman appears
+> to have been 1.0.9 in 2008-09-06, the bug report was filed 2009-01-28.
+>
+Please use CVE-2011-4338 for this issue.
 
-On Sun, Nov 07, 2010 at 02:16:32PM -0800, Kees Cook wrote:
-> A push has started to try to get as much as possible upstream into the
-> Linux kernel from the various hardening patches that exist in PaX,
-> grsecurity, OpenWall, etc. I've got some details here:
-> 
-> http://www.outflux.net/blog/archives/2010/11/07/security-is-more-than-bug-fixing/
-> 
-> And there's a sign-up list here, for people interested in helping out:
-> 
-> https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#Upstream%20Hardening
-> 
-> We could use the help. :)
+-- 
 
-Here's another way to help out: Openwall is a mentoring organization for
-Google Summer of Code 2011 (GSoC), and one of our "ideas" is this:
+-Kurt Seifried / Red Hat Security Response Team
 
-http://openwall.info/wiki/ideas
-
-"Linux kernel hardening - extract security hardening changes from various
-patches (which the mentor will point out), forward-port them to the
-latest mainstream kernels, make it easy to enable/disable the hardening
-measures (both compile- and runtime), add documentation, properly submit
-to and work with LKML (make proposals and own discussions to completion:
-either rejection or acceptance).  This is a noble but thankless job to
-do, so be prepared!  The authors of those changes did not submit them
-"properly" and did not "own discussions to completion" precisely because
-the job is so thankless. ;-)
-
-This may optionally involve work with other kernel branches and other
-upstreams as well (OpenVZ, Red Hat, Ubuntu)."
-
-Under Owl tasks, we also have:
-
-"The rhel6 branch OpenVZ kernel that we'd update to will need to be
-security-hardened, in part by reviewing, extracting, cleaning up,
-porting, and documenting/commenting individual changes from grsecurity
-and PaX (some of which have originated from Openwall's patches for older
-kernels), and in part by implementing new security-related
-changes/features, some of those specific to container-based
-virtualization (purpose-specific restrictions to be applied on
-per-container basis).  We expect help/consulting/mentoring from the
-author of PaX on portions that are PaX (some of these are difficult to
-understand from the code alone, especially the rationale behind things
-being done in a certain way), whereas the rest are not too complicated
-for a capable person to fully figure out on their own.
-
-We should work with upstreams - OpenVZ and Red Hat - to try and get some
-of these enhancements accepted."
-
-Students wishing to spend their summer like that, be paid by Google, and
-get more involved in the relevant communities - please apply.
-
-We'd like to hear from prospective (co-)mentors too since our mentoring
-capacity is limited (and may affect the number of slots we request).
-
-Here's our GSoC 2011 organization profile:
-
-http://www.google-melange.com/gsoc/org/show/google/gsoc2011/openwall
-
-For those not familiar with Google Summer of Code:
-
-http://en.wikipedia.org/wiki/Google_Summer_of_Code
-http://code.google.com/soc/
-http://socghop.appspot.com
-
-Nmap project (http://nmap.org/soc/) summarizes GSoC as follows:
-"This innovative and extraordinarily generous program provides $5,000
-stipends to 1,000+ college and graduate students to create and enhance
-open source software during their summer break.  Students gain valuable
-experience, get paid, strengthen their resume, and write code which will
-be distributed freely and used by millions of people!"
-
-http://www.google-melange.com/document/show/gsoc_program/google/gsoc2011/timeline
-
-March 18-27:
-Would-be student participants discuss application ideas with mentoring
-organizations.
-
-March 28:
-Student application period opens.
-
-Alexander
