@@ -1,78 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/8
-Message-Id: <201110192230.p9JMUVMC026416@linus.mitre.org>
-Date: Wed, 19 Oct 2011 18:30:31 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/5
+Message-ID: <4ECB0DAC.7070207@redhat.com>
+Date: Tue, 22 Nov 2011 10:49:16 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, security@...ngoproject.com
-Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE-2011-4110 kernel: keys: NULL pointer deref in the user-defined key type
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 11/22/2011 05:26 AM, Kurt Seifried wrote:
+> On 11/21/2011 10:51 AM, Petr Matousek wrote:
+>> There is a NULL pointer deref in the user-defined key type whereby
+>> updating a negative key into a fully instantiated key will cause
+>> an oops to occur when the code attempts to free the non-existent
+>> old payload.
+>>
+>> Upstream commit:
+>> 9f35a33b8d06263a165efe3541d9aa0cdbd70b3b
+>>
+>> References:
+>> https://lkml.org/lkml/2011/11/15/363
+>> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4110
+>>
+>> Thanks,
+> Please use CVE-2011-4331 for this issue.
 
->Date: Sun, 11 Sep 2011 16:09:44 +0200
+Kurt, we have assigned this with CVE-2011-4110, please reject
+CVE-2011-4331. Thanks.
 
->multiple security flaws have been recently addressed in the v1.3.1
->and v1.2.7 versions of the Django Python Web framework ...
-
-This maps to 6 CVE identifiers (5 new ones); they're now on the CVE
-web site.
-
-> 1, Session manipulation,
-
-CVE-2011-4136
-
-> 2, Denial of service attack via URLField,
-
-CVE-2011-4137
-
-> 3, URLField redirection,
-
-3a. "no validation of the resulting redirected URL is performed,
-    including basic checks for supported protocols (HTTP, HTTPS
-    and FTP) ... This issue is ultimately rooted in a bug in
-    Python itself"
-
-    CVE-2011-1521
-
-3b. "although the initial request issued by Django uses the HEAD
-    method for HTTP/HTTPS, the request to the target of the
-    redirect is issued using GET. This may create further issues
-    for systems which implicitly trust GET requests from the
-    local machine/network."
-
-    CVE-2011-4138
-
-> 4, Host header cache poisoning,
-
-CVE-2011-4139
-
-> 5, Host header and CSRF,
-
-CVE-2011-4140
-
-> 6, Cross-subdomain CSRF attacks,
-
-This one is not a vulnerability for CVE.
-
-> 7, DEBUG pages and sensitive POST data
-
-This one is also not a vulnerability for CVE.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S S145
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through keyserver.pgp.com or pgp.mit.edu ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJOn00KAAoJEGvefgSNfHMdulcH/2CnWceFdH+bWZ6gFeC/qjU4
-Q0G/tGXZC7/lUdsnABAdxzsiI91hrT17RY5s1wkSFORf+yXI0OceqxQrZdrIE15g
-2YqHvDP/oN74yulVfXjr8olgSsxYtSFXVIHq3HGsydQATTFtRpgnTXbfLPb++1Qx
-m25y/51U4BmdyE5GYJUjQgvuo70cYAJ7G68VHJFTWtGOPzEYtGFqHXPeXr8s4y/m
-w4Fl4zAyI0FpNqskHy9XMQFHd3aobGzWKRKbgqZVbibkD3EaDuIKx3zGJ7uNbR3Z
-P6rDvY++DX4SE0TVX+5IYrCbv5GsjTaq1Rf48lwGJEYHiT+F+UnulBLXw6l6N4Q=
-=zq5f
------END PGP SIGNATURE-----
+Eugene
