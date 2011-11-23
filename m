@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/18/2
-Message-ID: <20110218165125.GA4245@albatros>
-Date: Fri, 18 Feb 2011 19:51:25 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/7
+Message-ID: <4ECD5CF4.8070300@redhat.com>
+Date: Wed, 23 Nov 2011 13:52:04 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: patch directory traversal flaw
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
 Content-Type: text/plain; charset=utf-8
 
-The patch of Jim Meyering introduces interdiff regression:
-
-$ interdiff -z john-1.7.6-jumbo-9.diff.gz john-1.7.6-jumbo-10.diff.gz
-patch: **** rejecting absolute target file name: /tmp/.private/genie/interdiff-1.7yovIC
-interdiff: Error applying patch1 to reconstructed file
-
-interdiff creates a patch with absolute filenames, but doesn't pass the
-target filename as an argument to patch.
-
-It is fixed in the latest upstream version 0.3.2.  The fix itself is as
-follows:
-
---- patchutils-0.3.1.orig/src/interdiff.c	2011-02-18 17:57:05.000000000 +0300
-+++ patchutils-0.3.1/src/interdiff.c	2011-02-18 17:57:24.000000000 +0300
-@@ -808,7 +808,7 @@ apply_patch (FILE *patch, const char *fi
- 	FILE *w;
- 
- 	w = xpipe(PATCH, &child, "w", PATCH,
--		  reverted ? "-Rsp0" : "-sp0", NULL);
-+		  reverted ? "-Rsp0" : "-sp0", file, NULL);
- 
- 	fprintf (w, "--- %s\n+++ %s\n", file, file);
- 	line = NULL;
---
-
-
-Thanks,
+On 11/23/2011 05:23 AM, Hanno Böck wrote:
+> New ffmpeg releases contain a couple of security fixes:
+> http://secunia.com/advisories/46888/
+>
+> 1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
+> exploited to cause a buffer overflow.
+>
+> 2) An integer overflow error within the "vp3_dequant()" function
+> (libavcodec/vp3.c) can be exploited to cause a buffer overflow.
+>
+> 3) Errors within the "av_image_fill_pointers()", the
+> "vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
+> exploited to trigger out-of-bounds reads.
+>
+>
+> Please assign CVEs.
+>
+>
+> Maybe someone wants to have a look if other issues in those releases are
+> security relevant:
+> http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
+>
+This would be the original advisory http://ffmpeg.org/#pr7dot8and8dot7
+correct?
 
 -- 
-Vasiliy
+
+-Kurt Seifried / Red Hat Security Response Team
+
+
