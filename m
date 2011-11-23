@@ -1,35 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/4
-Message-ID: <20111005123710.3def94b0@redhat.com>
-Date: Wed, 5 Oct 2011 12:37:10 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/4
+Message-ID: <20111123132301.6db67d53@laverne>
+Date: Wed, 23 Nov 2011 13:23:01 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: lists@...g.net
-Subject: Re: CVE Request: vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
+Subject: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 5 Oct 2011 18:07:59 +0800 YGN Ethical Hacker Group wrote:
+New ffmpeg releases contain a couple of security fixes:
+http://secunia.com/advisories/46888/
 
-> vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
+1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
+exploited to cause a buffer overflow.
 
-...
+2) An integer overflow error within the "vp3_dequant()" function
+(libavcodec/vp3.c) can be exploited to cause a buffer overflow.
 
-> vTiger uses the vulnerable version of phpmailer class file located at
-> /cron/class.phpmailer.php .
+3) Errors within the "av_image_fill_pointers()", the
+"vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
+exploited to trigger out-of-bounds reads.
 
-...
 
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3215
+Please assign CVEs.
 
-As you point out, application embeds a vulnerable copy of some other
-application, and the issue already has CVE assigned.  In such cases,
-phpmailer CVE should be used in the vtiger updates (if any).
 
-> It was launched as a fork of version 1.0 of the SugarCRM project
-> launched on December 31st, 2004.
-
-Wonder if any of the other reported issues are really sugarcrm issue
-that did not get fix in vtiger.
+Maybe someone wants to have a look if other issues in those releases are
+security relevant:
+http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
