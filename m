@@ -1,40 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/07/3
-Message-ID: <20110107112033.GA19236@steve.org.uk>
-Date: Fri, 7 Jan 2011 11:20:33 +0000
-From: Steve Kemp <steve@...ve.org.uk>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request - pimd - Insecure file creation in /var/tmp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/3
+Message-ID: <4ECCDCC4.4090700@redhat.com>
+Date: Wed, 23 Nov 2011 12:45:08 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+CC: Kurt Seifried <kseifried@...hat.com>, Henri Salo <henri@...v.fi>, cve@...re.org
+Subject: Typo in description of CVE-2011-2708 and CVE-2011-4331? [was: Re: Fwd: XSS vulnerability in Joomla 1.6.3 - CVE-2011-2710 / CVE-2011-2708 issue]
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve,
 
-  We received this report recently:
+   thank you for the clarification due this.
 
--- 
+But according to latest CVE-2011-2708 and CVE-2011-4331 description 
+assignment, there seems to be a type (rounded / cycled definition of both):
 
-Hi!
+======================================================
+Name: CVE-2011-2708
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2708 [Open URL]
+Final-Decision:
+Interim-Decision:
+Modified:
+Proposed:
+Assigned: 20110711
+Category:
 
-There is a simple security hole in pimd allowing a user to destroy any
-file in the filesystem. On USR1, pimd will write to /var/tmp/pimd.dump
-a dump of the multicast route table. Since /var/tmp is writable by any
-user, a user can create a symlink to any file he wants to destroy with
-the content of the multicast routing table.
+** REJECT **
 
-Attached is a simple patch that will instruct pimd to write the dump
-to /var/lib/misc which is writable by root only and seems a valid
-target according to the FHS (state files that don't need a
-subdirectory).
+DO NOT USE THIS CANDIDATE NUMBER. ConsultIDs: CVE-2011-2708. Reason:
+This candidate is a duplicate of CVE-2011-2708. Notes: All CVE users
+should reference CVE-2011-2708 instead of this candidate. All
+references and descriptions in this candidate have been removed to
+prevent accidental usage.
 
-This patch may cause tools that were sending USR1 and waiting for a
-/var/tmp/pimd.dump file fail. I don't have a solution for this.
+This one should mention 'CVE-2011-2710' in the body (based on the
+reply below).
 
-The patch also applies to /var/tmp/pimd.cache which is not implemented
-yet but still creates the file when receiving USR2 signal. Despite its
-name, this is also a state file, not a cache. The patch also just
-drops the possibility to use /usr/tmp/pimd.dump based on some C
-preprocessor conditions since I don't know if the preconditions would
-work correctly on Debian/kFreeBSD.
+======================================================
+Name: CVE-2011-4331
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4331 [Open URL]
+Final-Decision:
+Interim-Decision:
+Modified:
+Proposed:
+Assigned: 20111104
+Category:
 
+** REJECT **
 
+DO NOT USE THIS CANDIDATE NUMBER. ConsultIDs: CVE-2011-4331. Reason:
+This candidate is a duplicate of CVE-2011-4331. Notes: All CVE users
+should reference CVE-2011-4331 instead of this candidate. All
+references and descriptions in this candidate have been removed to
+prevent accidental usage.
 
-View attachment "pimd-insecure-file-creation.patch" of type "text/x-diff" (1807 bytes)
+This one should use "CVE-2011-4110" in the body, based on:
+http://seclists.org/oss-sec/2011/q4/378
+
+Could you correct these two yet? (not a big deal, just wanted to
+point this out those two to be described correctly, even when being
+duplicates).
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+On 11/23/2011 04:30 AM, Steven M. Christey wrote:
+>
+> Let's keep CVE-2011-2710 and we will reject CVE-2011-2708. Henri, I'm
+> sorry about the lack of response :-(
+>
+> - Steve
+>
+>
+> On Mon, 21 Nov 2011, Kurt Seifried wrote:
+>
+>>
+>>> CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS
+>>> vulnerability:
+>>> http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html
+>>> and I have already contacted MITRE twice to get another one marked as
+>>> obsolete.
+>>>
+>>>
+>>> Best regards,
+>>> Henri Salo
+>>
+>> Ok CVE-2011-2710 is public in CVE and NVD:
+>> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2710, and
+>> CVE-2011-2708 is still marked as reserved so we should probably quietly
+>> take CVE-2011-2708 out back and shoot it.
+>>
+>> CC'ing mitre.
+>>
+>> --
+>>
+>> -Kurt Seifried / Red Hat Security Response Team
+>>
+>>
+
