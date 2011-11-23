@@ -1,74 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/5
-Message-ID: <20110721182518.GA3471@openwall.com>
-Date: Thu, 21 Jul 2011 22:25:18 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: *BSD security contacts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/1
+Message-ID: <Pine.GSO.4.64.1111222227240.17118@faron.mitre.org>
+Date: Tue, 22 Nov 2011 22:30:45 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Kurt Seifried <kseifried@...hat.com>
+cc: oss-security@...ts.openwall.com, Henri Salo <henri@...v.fi>, cve@...re.org
+Subject: Re: Fwd: XSS vulnerability in Joomla 1.6.3 - CVE-2011-2710 / CVE-2011-2708 issue
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 21, 2011 at 10:25:07AM -0500, Tim Zingelman wrote:
-> On Tue, Jul 19, 2011 at 9:55 AM, Solar Designer <solar@...nwall.com> wrote:
-> > On Tue, Jul 19, 2011 at 09:28:51AM -0500, Tim Zingelman wrote:
-> >> p.s. I at least would be very much in support of a bsd distro's
-> >> restricted security mailing list if you were to create one.
-> >
-> > Sounds good.  Is anyone else interested in that as well?  Also, not
-> > being involved with a *BSD, perhaps I should not be on that list, but
-> > this brings up the issue of resolving administrative issues (e.g., not
-> > being on the list I would not notice spam getting through to it).
-> 
-> I'm afraid I don't know about interest.  I had hoped others would have
-> jumped in earlier... but they have not...
 
-Somehow there are few *BSD security folks on oss-security.  In fact,
-this was one of the things I considered when I decided to start with a
-Linux-only closed list.
+Let's keep CVE-2011-2710 and we will reject CVE-2011-2708.  Henri, I'm 
+sorry about the lack of response :-(
 
-> In the end did the opensolaris based distributions get into the closed
-> linux list?
+- Steve
 
-No, and they didn't ask for it.  I don't think they're on oss-security
-either - I guess they're just not interested.
 
-However, as you have seen from discussions on oss-security, the Oracle
-person who formally joined for Oracle Linux is actually a Solaris person.
-I find this weird.
+On Mon, 21 Nov 2011, Kurt Seifried wrote:
 
-> If not, I wonder if a list for everyone who
-> repackages/distributes free/open source software (other than linux
-> distro's) would make more sense than a BSD specific one?
-
-Maybe, but I would like to see which projects/distros are actually
-interested in being on such a list _and_ are on oss-security.  The
-latter requirement is needed because it does not make much sense to
-receive notifications of embargoed issues, yet miss notifications of
-issues being made public without embargo.
-
-> As far as you being on the list... I at least have no problem with it.
->  In fact I would be surprised to find much if anything on such a list
-> that was not also on the linux list.
-> (My personal preference would be to have the BSD folks on the linux
-> list and trust us to just ignore the kernel issues that are not
-> relevant to us :)
-
-Thank you for mentioning your preference - this is important info for me.
-
-The effectively Linux-specific issues sometimes brought up on the list
-are not limited to the kernel, though.
-
-On the other hand, in those cases when someone brings up an issue that
-is not Linux-specific, the reporter is not always willing to spend time
-to notify the *BSD's even when asked to and pointed at the wiki page
-with contacts.  Having a bsd-distros list that we could simply CC would
-be helpful in such occasions.  But setting one up and subscribing *BSD
-security contacts who expressed no interest in this kind of setup
-(except for you) is weird.
-
-> Thanks for all your work to provide good communication options!
-
-You're welcome.
-
-Thanks,
-
-Alexander
+>
+>> CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS 
+>> vulnerability: 
+>> http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html 
+>> and I have already contacted MITRE twice to get another one marked as 
+>> obsolete.
+>>
+>>
+>> Best regards,
+>> Henri Salo
+>
+> Ok CVE-2011-2710 is public in CVE and NVD:
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2710, and
+> CVE-2011-2708 is still marked as reserved so we should probably quietly
+> take CVE-2011-2708 out back and shoot it.
+>
+> CC'ing mitre.
+>
+> -- 
+>
+> -Kurt Seifried / Red Hat Security Response Team
+>
+>
