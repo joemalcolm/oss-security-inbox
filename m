@@ -1,55 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/06/1
-Message-ID: <41870251.859383.1315341696513.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 6 Sep 2011 16:41:36 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/7
+Message-ID: <4ECD5CF4.8070300@redhat.com>
+Date: Wed, 23 Nov 2011 13:52:04 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jonathan Wiltshire <jmw@...ian.org>, coley <coley@...re.org>
-Subject: Re: CVE request for bcfg2 (remote root)
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3211
-
-Thanks.
+On 11/23/2011 05:23 AM, Hanno Böck wrote:
+> New ffmpeg releases contain a couple of security fixes:
+> http://secunia.com/advisories/46888/
+>
+> 1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
+> exploited to cause a buffer overflow.
+>
+> 2) An integer overflow error within the "vp3_dequant()" function
+> (libavcodec/vp3.c) can be exploited to cause a buffer overflow.
+>
+> 3) Errors within the "av_image_fill_pointers()", the
+> "vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
+> exploited to trigger out-of-bounds reads.
+>
+>
+> Please assign CVEs.
+>
+>
+> Maybe someone wants to have a look if other issues in those releases are
+> security relevant:
+> http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
+>
+This would be the original advisory http://ffmpeg.org/#pr7dot8and8dot7
+correct?
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
 
 
------ Original Message -----
-> Hi,
-> 
-> A bug report in Debian has come to light for which I can find no other
-> information, and therefore I do not believe it has a CVE - but
-> probably
-> should.
-> 
-> From http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=640028 :
-> 
-> "All released stable versions of the bcfg2-server contain several
-> cases
-> where data from the client is used in a shell command without properly
-> escaping it first. The 1.2 prerelease series has been fixed.
-> 
-> "At least the SSHbase plugin has been confirmed as being exploitable.
-> This is a remote root hole, which requires that the SSHbase plugin is
-> enabled and that the attacker has control of a bcfg2 client machine."
-> 
-> A patch for the problem has been commited [1] upstream and backported
-> [2] to
-> the 1.1 series.
-> 
-> 1:
-> https://github.com/solj/bcfg2/commit/f4a35efec1b6a1e54d61cf1b8bfc83dd1d89eef7
-> 2:
-> https://github.com/solj/bcfg2/commit/46795ae451ca6ede55a0edeb726978aef4684b53
-> 
-> Please CC me, I am not subscribed.
-> 
-> Thanks,
-> 
-> --
-> Jonathan Wiltshire jmw@...ian.org
-> Debian Developer http://people.debian.org/~jmw
-> 
-> 4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC 74C3 5394 479D D352 4C51
