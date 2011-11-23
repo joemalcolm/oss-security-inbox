@@ -1,31 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/5
-Message-ID: <876933418.119306.1304965531432.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 9 May 2011 14:25:31 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request -- virt-v2v: vnc password protection is missing after	vm conversion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/2
+Message-ID: <4ECCD621.6010309@redhat.com>
+Date: Wed, 23 Nov 2011 12:16:49 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request --  1) Namazu v2.0.21: XSS flaw by processing HTTP cookies 2) Namazu v2.0.20: Stack-based buffer overflow by replacing blank "uri" field value
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello Steve, vendors.
-> 
-> Description:
-> It was found that after virtual machine conversion using virt-v2v the
-> target VM does not have VNC password enabled even though the source VM
-> does.  An attacker able to connect to the target VM can possibly use this
-> flaw to operate the VM with privileges of the logged in user.
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=702754
-> 
-> Could you please allocate a CVE identifier for this issue?
-> 
+Hello Kurt, Steve, vendors,
 
-Please use CVE-2011-1773
+   based on:
+   [1] https://bugs.gentoo.org/show_bug.cgi?id=391259
+   [2] http://www.namazu.org/security.html.en
 
-Thanks.
+the following two issues (when compared against [3]) doesn't
+seem to have CVE ids yet:
+I) There is cross-site scripting vulnerability for IE 6,7 in version 
+2.0.20 or older.
 
--- 
-    JB
+    References:
+    http://www.namazu.org/#stable
+    http://www.namazu.org/security.html#cross-site-scripting
+
+    Further issue details are described in:
+    https://bugzilla.redhat.com/show_bug.cgi?id=756348
+
+    Note: A CVE-2011-* identifier should be assigned for this.
+    =====
+
+II) To 2.0.19 or a version that is older than 2.0.19, there is a 
+vulnerability of overrunning in the buffer. It recommends since Namazu 
+2.0.20 to be used.
+
+    References:
+    http://www.namazu.org/#stable
+    http://www.namazu.org/security.html.en
+
+    Further issue details are described in:
+    https://bugzilla.redhat.com/show_bug.cgi?id=756341
+
+    Note: A CVE-2009-* identifier should be assigned to this.
+    =====
+
+Could you allocate two CVE ids (one CVE-2011-*, the other CVE-2009-*)
+for these two flaws?
+
+According to:
+[3] http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=namazu
+
+the last CVE id, assigned for Namazu, was CVE-2008-1468 for the
+"XSS UTF-7" issue, which corresponds to:
+
+"To 2.0.17 or a version that is older than 2.0.17 There is a weakness of 
+retrieval type by the misidentification of the encode automatic 
+operation recognition of Web browser that is the UTF-7 encoding. It 
+recommends since 2.0.18 as much as possible to be used." record
+from [2].
+
+Should you need any further details due these two, let me know.
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
