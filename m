@@ -1,35 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/2
-Message-ID: <20110402104937.57fb5bf4@mail.a3li.li>
-Date: Sat, 2 Apr 2011 10:49:37 +0200
-From: Alex Legler <a3li@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/1
+Message-ID: <Pine.GSO.4.64.1111222227240.17118@faron.mitre.org>
+Date: Tue, 22 Nov 2011 22:30:45 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Kurt Seifried <kseifried@...hat.com>
+cc: oss-security@...ts.openwall.com, Henri Salo <henri@...v.fi>, cve@...re.org
+Subject: Re: Fwd: XSS vulnerability in Joomla 1.6.3 - CVE-2011-2710 / CVE-2011-2708 issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
-Josh Bressers <bressers@...hat.com> wrote:
+Let's keep CVE-2011-2710 and we will reject CVE-2011-2708.  Henri, I'm 
+sorry about the lack of response :-(
 
-> 
-> Initial members will have had to be a vendor-sec member (no exploders
-> this time around). You must reply to this thread, in public (on
-> oss-security). We want this to be very public, we have nothing to
-> hide. You must have a public gpg key ID included in your reply. The
-> new list will gpg encrypt all mail (it does accept plaintext messages
-> though).
+- Steve
 
-please add me as a representative for Gentoo. We were members of v-s.
 
-pub   1024D/F3C06469 2008-06-12
-Key fingerprint = F898 3D19 6A52 0EF1 7451  C534 93EA 2A85 F3C0 6469
+On Mon, 21 Nov 2011, Kurt Seifried wrote:
 
-Thanks for your efforts,
-Alex
-
--- 
-Alex Legler <a3li@...too.org>
-Gentoo Security/Ruby
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+>
+>> CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS 
+>> vulnerability: 
+>> http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html 
+>> and I have already contacted MITRE twice to get another one marked as 
+>> obsolete.
+>>
+>>
+>> Best regards,
+>> Henri Salo
+>
+> Ok CVE-2011-2710 is public in CVE and NVD:
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2710, and
+> CVE-2011-2708 is still marked as reserved so we should probably quietly
+> take CVE-2011-2708 out back and shoot it.
+>
+> CC'ing mitre.
+>
+> -- 
+>
+> -Kurt Seifried / Red Hat Security Response Team
+>
+>
