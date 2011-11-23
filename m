@@ -1,23 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/2
-Message-ID: <4EC9BE2C.6060906@redhat.com>
-Date: Sun, 20 Nov 2011 19:57:48 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/8
+Message-ID: <4ECD6048.4090802@redhat.com>
+Date: Wed, 23 Nov 2011 14:06:16 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: websitebaker 2.8.1 and earlier: authentication error in backup module
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request --  1) Namazu v2.0.21: XSS flaw by processing HTTP cookies 2) Namazu v2.0.20: Stack-based buffer overflow by replacing blank "uri" field value
 Content-Type: text/plain; charset=utf-8
 
-On 11/20/2011 04:07 AM, Hanno Böck wrote:
-> http://www.websitebaker2.org/posts/security-vulnerability-backup-module-in-wb-core-13.php
+On 11/23/2011 04:16 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 >
-> Extended information: Everybody can use the backup module from anywhere
-> and download the backup directly on every PC the "exploiter" likes
-> without any noticing by you.
+>   based on:
+>   [1] https://bugs.gentoo.org/show_bug.cgi?id=391259
+>   [2] http://www.namazu.org/security.html.en
 >
+> the following two issues (when compared against [3]) doesn't
+> seem to have CVE ids yet:
+> I) There is cross-site scripting vulnerability for IE 6,7 in version
+> 2.0.20 or older.
 >
+>    References:
+>    http://www.namazu.org/#stable
+>    http://www.namazu.org/security.html#cross-site-scripting
+>
+>    Further issue details are described in:
+>    https://bugzilla.redhat.com/show_bug.cgi?id=756348
+>
+>    Note: A CVE-2011-* identifier should be assigned for this.
+>    =====
+Please use CVE-2011-4345 for this issue.
 
-Please use CVE-2011-4322 for this issue.
+>
+> II) To 2.0.19 or a version that is older than 2.0.19, there is a
+> vulnerability of overrunning in the buffer. It recommends since Namazu
+> 2.0.20 to be used.
+>
+>    References:
+>    http://www.namazu.org/#stable
+>    http://www.namazu.org/security.html.en
+>
+>    Further issue details are described in:
+>    https://bugzilla.redhat.com/show_bug.cgi?id=756341
+>
+>    Note: A CVE-2009-* identifier should be assigned to this.
+>    =====
+
+Please use CVE-2009-5028 for this issue
+>
+> Could you allocate two CVE ids (one CVE-2011-*, the other CVE-2009-*)
+> for these two flaws?
+>
+> According to:
+> [3] http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=namazu
+>
+> the last CVE id, assigned for Namazu, was CVE-2008-1468 for the
+> "XSS UTF-7" issue, which corresponds to:
+>
+> "To 2.0.17 or a version that is older than 2.0.17 There is a weakness
+> of retrieval type by the misidentification of the encode automatic
+> operation recognition of Web browser that is the UTF-7 encoding. It
+> recommends since 2.0.18 as much as possible to be used." record
+> from [2].
+>
+> Should you need any further details due these two, let me know.
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+
 
 -- 
 
