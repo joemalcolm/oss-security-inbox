@@ -1,27 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/9
-Message-ID: <20110804145720.GF30625@redhat.com>
-Date: Thu, 4 Aug 2011 22:57:20 +0800
-From: Daniel Veillard <veillard@...hat.com>
-To: Billy Rios <billy.rios@...il.com>
-Cc: Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: libxml security fix from apple ... any information?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/1
+Message-ID: <4ECDA09A.1060200@redhat.com>
+Date: Thu, 24 Nov 2011 09:40:42 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-4324 kernel: nfsv4: mknod(2) DoS
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 28, 2011 at 09:59:22PM -0700, Billy Rios wrote:
-> The crash was indeed in libxml2, but I could not get the bug to repro in
-> Linux.  We took the crash file and fuzzed a bit more on Linux, but no
-> crashes were observed.
+This only affects the Linux kernel as shipped with Red Hat Enterprise
+Linux 5. It is possible to trigger the BUG() in fs/nfs/nfs4xdr.c on a
+NFSv4 mount. This patch fixed the problem, although we only backported
+the relevant parts of the patch,
+http://git.kernel.org/linus/dc0b027dfadfcb8a5504f7d8052754bf8d501ab9.
 
-  Just wondering, are you by chance changing the libxml2 buffer allocation
-strategy in the application code (function xmlSetBufferAllocationScheme())
-and associated global variable (I know I know ...) xmlBufferAllocScheme.
-That may explain if you switched to an exact allocation policy why
-you hit the buffer overrun while it usually doesn't show up,
+https://bugzilla.redhat.com/CVE-2011-4324
 
-Daniel
-
--- 
-Daniel Veillard      | libxml Gnome XML XSLT toolkit  http://xmlsoft.org/
-daniel@...llard.com  | Rpmfind RPM search engine http://rpmfind.net/
-http://veillard.com/ | virtualization library  http://libvirt.org/
+Thanks, Eugene
