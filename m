@@ -1,42 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/8
-Message-ID: <Pine.GSO.4.64.1104111431270.4424@faron.mitre.org>
-Date: Mon, 11 Apr 2011 14:36:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/6
+Message-ID: <20111124174935.GF1081@dhcp-25-225.brq.redhat.com>
+Date: Thu, 24 Nov 2011 18:49:36 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: pure-ftpd STARTTLS command injection / new CVE?
+Subject: CVE request -- kernel: kvm: device assignment DoS
 Content-Type: text/plain; charset=utf-8
 
+It was found that kvm_vm_ioctl_assign_device function did not check if
+the user requesting assignment was privileged or not. Together with
+/dev/kvm being 666, unprivileged user could assign unused pci devices,
+or even devices that were in use and whose resources were not properly
+claimed by the respective drivers.
 
-CVE's rationale here is that Wietse Venema discovered a class of 
-implementation bugs against the same prototol - it's not a vulnerability 
-in the protocol itself.  CVE-wise, this situation is not fundamentally 
-different from 20+ FTP server implementations that have had buffer 
-overflows in the username, or lots of web server directory traversals 
-through GET requests (not joking here).  The original publication and CVE 
-usage seemed to imply that the CVE would be the same for all 
-implementations, but we don't do that except in really really high-volume, 
-low-detail situations (e.g. PROTOS SNMP 2002).
+Please note that privileged access was still needed to re-program the
+device to for example issue DMA requests. This is typically achieved by
+touching files on sysfs filesystem. These files are usually not
+accessible to unprivileged users.
 
-- Steve
+As a result, local user could use this flaw to crash the system.
 
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=756084
+http://thread.gmane.org/gmane.comp.emulators.kvm.devel/82043
 
-On Mon, 11 Apr 2011, Mike O'Connor wrote:
-
-> :http://www.pureftpd.org/project/pure-ftpd/news
-> :
-> :states that pure-ftpd is affected by the same STARTTLS
-> :injection bug as postifx's CVE-2011-0411.
-> :
-> :Is this CVE postfix-specific or can it be used for
-> :pure-ftpd as well? If needed, can someone assign a new CVE?
->
-> It should get its own CVE assignment.  Other products with the
-> same STARTTLS issue have gotten unique CVE assignments for them
-> -- see CVE-2011-143[012].
->
-> -- 
-> Michael J. O'Connor                                          mjo@...o.mi.org
-> =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-> "You can't destroy everything.  Where would you sit?"               -The Tick
->
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
