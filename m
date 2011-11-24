@@ -1,29 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/3
-Message-ID: <1103160827070.15802@mjc.redhat.com>
-Date: Wed, 16 Mar 2011 08:36:17 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/3
+Message-ID: <20111124144023.GB1081@dhcp-25-225.brq.redhat.com>
+Date: Thu, 24 Nov 2011 15:40:24 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, eteo@...hat.com
+Subject: Please REJECT CVE-2011-4112
 Content-Type: text/plain; charset=utf-8
 
-> time.  The embargoes in vendor-sec were typically weeks, but I don't recall
-> the longest one.  I too favor opening the vendor-sec archives after a while,
-> maybe quarterly.
+Hi,
 
-There were some very long embargos when third parties reporting the issues 
-to vendor-sec requested delays (due to issues being actually in firmware 
-in one case, and due to closed-source vendor co-ordination in another). 
-And we did discuss things on the list that were never made public 
-(particular ways to test or exploit vulnerabilities).  Also there were 
-things reported to us by people that wished to get no credit and remain 
-anonymous when the issue was public.
+could you please reject CVE-2011-4112 as it is not a security bug.
 
-However all those things are exceptions and I'd support us opening the 
-archives after a while and making it clear to folks reporting to us to 
-expect that to happen.  We'd need to check with common reporters like 
-CERT/CC who may not expect their early drafts to become public.
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=751006#c5
 
-Thanks, Mark
---
-Mark J Cox / Red Hat Security Response
+Thank you,
+-- 
+Petr Matousek / Red Hat Security Response Team
