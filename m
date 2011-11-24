@@ -1,19 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/16/1
-Message-ID: <4651786d-e56e-4e05-a9f0-49642fe6f1d4@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Wed, 16 Nov 2011 04:43:28 -0500 (EST)
-From: David Jorm <djorm@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: openid4java not properly verifying the signature of Attribute Exchange (AX) information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/2
+Message-ID: <20111124042015.25688373@laverne>
+Date: Thu, 24 Nov 2011 04:20:15 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
 Content-Type: text/plain; charset=utf-8
 
-It was found that openid4java was not checking that all Attribute Exchange (AX) information passed to it was signed. This is a security concern if AX is being used to receive information that an application only trusts the identity provider to assert.
+Am Wed, 23 Nov 2011 13:52:04 -0700
+schrieb Kurt Seifried <kseifried@...hat.com>:
 
-Upstream advisory: http://openid.net/2011/05/05/attribute-exchange-security-alert/
-Patch commit: http://code.google.com/p/openid4java/source/detail?r=661
-Secunia advisory: http://secunia.com/advisories/44496/
+> On 11/23/2011 05:23 AM, Hanno Böck wrote:
+> > New ffmpeg releases contain a couple of security fixes:
+> > http://secunia.com/advisories/46888/
+> >
+> > 1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
+> > exploited to cause a buffer overflow.
+> >
+> > 2) An integer overflow error within the "vp3_dequant()" function
+> > (libavcodec/vp3.c) can be exploited to cause a buffer overflow.
+> >
+> > 3) Errors within the "av_image_fill_pointers()", the
+> > "vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
+> > exploited to trigger out-of-bounds reads.
+> >
+> >
+> > Please assign CVEs.
+> >
+> >
+> > Maybe someone wants to have a look if other issues in those
+> > releases are security relevant:
+> > http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
+> >
+> This would be the original advisory http://ffmpeg.org/#pr7dot8and8dot7
+> correct?
 
-Thanks
+It is the upstream confirmation - at least it's about the same bugs.
+
 -- 
-David Jorm / Red Hat Security Response Team
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
