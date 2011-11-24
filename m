@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/10/3
-Message-ID: <4EE38547.8000001@gmail.com>
-Date: Sat, 10 Dec 2011 17:13:59 +0100
-From: Paul <pawlkt@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/7
+Message-ID: <4ECE8598.3040206@redhat.com>
+Date: Thu, 24 Nov 2011 10:57:44 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: cve request: bat_socket_read memory corruption
+Subject: Re: CVE request -- kernel: kvm: device assignment DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi
-
-can I get a CVE for this:
-https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2011-December/005904.html
-?
-
-If root does read() on a specific socket, it's possible to corrupt
-(kernel) memory over network, with an ICMP packet, if B.A.T.M.A.N. mesh
-protocol is used.
+On 11/24/2011 10:49 AM, Petr Matousek wrote:
+> It was found that kvm_vm_ioctl_assign_device function did not check if
+> the user requesting assignment was privileged or not. Together with
+> /dev/kvm being 666, unprivileged user could assign unused pci devices,
+> or even devices that were in use and whose resources were not properly
+> claimed by the respective drivers.
+>
+> Please note that privileged access was still needed to re-program the
+> device to for example issue DMA requests. This is typically achieved by
+> touching files on sysfs filesystem. These files are usually not
+> accessible to unprivileged users.
+>
+> As a result, local user could use this flaw to crash the system.
+>
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=756084
+> http://thread.gmane.org/gmane.comp.emulators.kvm.devel/82043
+>
+> Thanks,
+Please use CVE-2011-4347 for this issue.
 
 -- 
-Regards,             twitter.com/pa_kt
-Paul
 
+-Kurt Seifried / Red Hat Security Response Team
 
