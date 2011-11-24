@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/9
-Message-ID: <4EC52A29.5040804@redhat.com>
-Date: Thu, 17 Nov 2011 08:37:13 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/4
+Message-ID: <mpro.lv6ar0065ew5s081n.taviso@cmpxchg8b.com>
+Date: Thu, 24 Nov 2011 17:21:01 +0100
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: nginx resolver heap overflow
+Subject: Re: Please REJECT CVE-2011-4112
 Content-Type: text/plain; charset=utf-8
 
-On 11/16/2011 10:50 PM, Ben Hawkes wrote:
+Petr Matousek <pmatouse@...hat.com> wrote:
+
 > Hi,
->
-> The nginx team have released stable version 1.0.10, which includes a fix 
-> for a heap overflow bug in the custom DNS resolver:
->
-> http://trac.nginx.org/nginx/changeset/4268/nginx
->
-> The resolver is most commonly used with the proxy and fastcgi modules,
-> which are not enabled by default.
->
-> In order to trigger this condition an attacker would need to be in
-> control of an upstream resolver host, or be in a position to brute-force
-> the weakly generated 16-bit transaction identifier.
->
-> Thanks,
-> Ben Hawkes
-Do you need a CVE # for this issue?
+> 
+> could you please reject CVE-2011-4112 as it is not a security bug.
+> 
+> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=751006#c5
+> 
+> Thank you,
+
+Unrelated, but if it did not require CAP_NET_ADMIN, would you have
+considered it a security bug?
+
+I was under the impression that there was general agreement that NULL derefs
+that are handled gracefully are not security bugs any more.
+
+Is this because you're setting panic_on_oops?
+
+I wonder if we should create a separate panic_on_null, as I agree
+panic_on_oops is probably the correct default so as to avoid transitioning
+into a potentially exploitable state. I think I'm reasonably confident in
+the handling of NULL derefs (or am I deluded? I havn't thought about it a
+great deal).
+
+Tavis.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
 
