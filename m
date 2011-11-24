@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/9
-Message-ID: <4EF776E5.1010600@redhat.com>
-Date: Sun, 25 Dec 2011 12:17:57 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/7
+Message-ID: <4ECE8598.3040206@redhat.com>
+Date: Thu, 24 Nov 2011 10:57:44 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Joomla com_mailto automated mail timeout bypass (2009)
+Subject: Re: CVE request -- kernel: kvm: device assignment DoS
 Content-Type: text/plain; charset=utf-8
 
-On 12/25/2011 07:41 AM, Henri Salo wrote:
-> Can I get CVE-identifier assigned for this issue:
+On 11/24/2011 10:49 AM, Petr Matousek wrote:
+> It was found that kvm_vm_ioctl_assign_device function did not check if
+> the user requesting assignment was privileged or not. Together with
+> /dev/kvm being 666, unprivileged user could assign unused pci devices,
+> or even devices that were in use and whose resources were not properly
+> claimed by the respective drivers.
 >
-> http://developer.joomla.org/security/news/303-20090723-core-com-mailto-timeout-issue.html
-> http://osvdb.org/show/osvdb/56714
-> http://secunia.com/advisories/36097/
+> Please note that privileged access was still needed to re-program the
+> device to for example issue DMA requests. This is typically achieved by
+> touching files on sysfs filesystem. These files are usually not
+> accessible to unprivileged users.
 >
-> - Henri Salo
-Please use CVE-2011-4912 for this issue.
+> As a result, local user could use this flaw to crash the system.
+>
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=756084
+> http://thread.gmane.org/gmane.comp.emulators.kvm.devel/82043
+>
+> Thanks,
+Please use CVE-2011-4347 for this issue.
 
 -- 
 
