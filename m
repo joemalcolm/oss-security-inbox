@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/20/2
-Message-ID: <4EF009F6.9050408@redhat.com>
-Date: Mon, 19 Dec 2011 21:07:18 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/6
+Message-ID: <20111124174935.GF1081@dhcp-25-225.brq.redhat.com>
+Date: Thu, 24 Nov 2011 18:49:36 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI, ioctl
+Subject: CVE request -- kernel: kvm: device assignment DoS
 Content-Type: text/plain; charset=utf-8
 
->Hello Josh, Steve, vendors,
->
->   based on Debian BTS report:
->   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
->       (first CVE-2011-XXYY required for Debian case)
->
->looked more into original report:
->[2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
->
->and the first paragraph of [2] suggests:
->"When starting a program via "su - user -c program" the user session
->can escape to the parent session by using the TIOCSTI ioctl to push
->characters into the input buffer.  This allows for example a non-root
->session to push "chmod 666 /etc/shadow" or similarly bad commands into
->the input buffer such  that after the end of the session they are
->executed."
->
->this should get a CVE-2005-YYZZ CVE id.
+It was found that kvm_vm_ioctl_assign_device function did not check if
+the user requesting assignment was privileged or not. Together with
+/dev/kvm being 666, unprivileged user could assign unused pci devices,
+or even devices that were in use and whose resources were not properly
+claimed by the respective drivers.
 
-Please use CVE-2005-4890 for this issue.
+Please note that privileged access was still needed to re-program the
+device to for example issue DMA requests. This is typically achieved by
+touching files on sysfs filesystem. These files are usually not
+accessible to unprivileged users.
 
->Could you allocate these?
->
->Thank you & Regards, Jan.
->--
->Jan iankko Lieskovsky / Red Hat Security Response Team
+As a result, local user could use this flaw to crash the system.
 
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=756084
+http://thread.gmane.org/gmane.comp.emulators.kvm.devel/82043
+
+Thanks,
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Petr Matousek / Red Hat Security Response Team
