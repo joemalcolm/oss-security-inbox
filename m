@@ -1,31 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/9
-Message-ID: <14921541.122208.1295973514769.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 25 Jan 2011 11:38:34 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: VLC Subtitle StripTags heap corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/2
+Message-ID: <20111124042015.25688373@laverne>
+Date: Thu, 24 Nov 2011 04:20:15 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0522.
+Am Wed, 23 Nov 2011 13:52:04 -0700
+schrieb Kurt Seifried <kseifried@...hat.com>:
 
-Thanks.
+> On 11/23/2011 05:23 AM, Hanno Böck wrote:
+> > New ffmpeg releases contain a couple of security fixes:
+> > http://secunia.com/advisories/46888/
+> >
+> > 1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
+> > exploited to cause a buffer overflow.
+> >
+> > 2) An integer overflow error within the "vp3_dequant()" function
+> > (libavcodec/vp3.c) can be exploited to cause a buffer overflow.
+> >
+> > 3) Errors within the "av_image_fill_pointers()", the
+> > "vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
+> > exploited to trigger out-of-bounds reads.
+> >
+> >
+> > Please assign CVEs.
+> >
+> >
+> > Maybe someone wants to have a look if other issues in those
+> > releases are security relevant:
+> > http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
+> >
+> This would be the original advisory http://ffmpeg.org/#pr7dot8and8dot7
+> correct?
+
+It is the upstream confirmation - at least it's about the same bugs.
 
 -- 
-    JB
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
------ Original Message -----
-> Hi,
-> 
-> I couldn't find a CVE for this one:
-> 
-> "Subtitle StripTags heap corruption, potentially exploitable."
-> 
-> http://mailman.videolan.org/pipermail/vlc-devel/2011-January/078607.html
-> 
-> http://git.videolan.org/gitweb.cgi?p=vlc/vlc-1.1.git;a=commit;h=dc14617f39c03bbe80c3cc4f92799dca840966eb
-> 
-> Thanks,
-> 
-> Marc.
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
