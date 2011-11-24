@@ -1,36 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/7
-Message-ID: <20110704230906.GA11990@openwall.com>
-Date: Tue, 5 Jul 2011 03:09:06 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com, cperciva@...ebsd.org
-Subject: FreeBSD 4.x OpenSSH/libopie remote root hole
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/3
+Message-ID: <20111124144023.GB1081@dhcp-25-225.brq.redhat.com>
+Date: Thu, 24 Nov 2011 15:40:24 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, eteo@...hat.com
+Subject: Please REJECT CVE-2011-4112
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-I'd be interested in more detail on this bug.  So far, the closest to a
-description of the bug that I saw is this:
+could you please reject CVE-2011-4112 as it is not a security bug.
 
-http://lists.openwall.net/full-disclosure/2011/07/01/4
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=751006#c5
 
-but it's not enough.
-
-I'd like to learn not only on my own, but also on others' mistakes. ;-)
-And for this purpose it does not matter how old the software is and
-whether it is still supported or not.
-
-Colin - any comments from you?  I realize the bug is not yours, but
-perhaps you're one of the few people who have figured it out now, for a
-reason similar to mine.
-
-Red Hat - a lesson for you might be to stop linking sshd against so
-many libraries (over 20 last time I checked).  Don't wait until your
-remote root, really. ;-)  Yes, this means dropping some functionality,
-or maybe moving it to extra builds of sshd that only a small subset of
-systems will choose to run (e.g., configurable via /etc/sysconfig/sshd).
-Just an idea.
-
-Thanks,
-
-Alexander
+Thank you,
+-- 
+Petr Matousek / Red Hat Security Response Team
