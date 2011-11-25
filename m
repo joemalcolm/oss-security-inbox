@@ -1,33 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/11
-Message-Id: <201102251020.02709.sgrubb@redhat.com>
-Date: Fri, 25 Feb 2011 10:20:02 -0500
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/4
+Message-ID: <4ECFC769.5000304@redhat.com>
+Date: Fri, 25 Nov 2011 09:50:49 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugene@...hat.com>, Nelson Elhage <nelhage@...lice.com>
-Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
+CC: Jan Lieskovsky <jlieskov@...hat.com>, Ludwig Nussel <ludwig.nussel@...e.de>
+Subject: Re: CVE Request: colord sql injections
 Content-Type: text/plain; charset=utf-8
 
-On Friday, February 25, 2011 12:58:13 am Eugene Teo wrote:
-> On 02/25/2011 12:32 PM, Nelson Elhage wrote:
-> > The cgrulesengd program from libcgroup failed to properly verify the
-> > sender of netlink messages, allowing arbitrary users to spoof events
-> > to the daemon, causing it to place processes into incorrect cgroups.
-> > 
-> > Note that the default configuration of cgrulesengd does not contain
-> > any any rules, so this is probably only usefully exploitable if an
-> > admin have specifically configured cgrulesengd to enforce some policy.
-> > 
-> > References:
-> > http://sourceforge.net/mailarchive/message.php?msg_id=27102603
-> 
-> Please use CVE-2011-1022.
+On 11/25/2011 08:13 AM, Jan Lieskovsky wrote:
+> Hi Ludwig,
+>
+>   thank you for the report.
+>
+> On 11/25/2011 11:55 AM, Ludwig Nussel wrote:
+>> Hi,
+>>
+>> colord did not quote user supplied strings which made it prone to
+>> SQL injections:
+>> https://bugs.freedesktop.org/show_bug.cgi?id=42904
+>> https://bugzilla.novell.com/show_bug.cgi?id=698250
+>
+> Just to have this one sorted out wrt to the patches, the relevant
+> upstream patches are these two:
+> [1]
+> http://gitorious.org/colord/master/commit/1fadd90afcb4bbc47513466ee9bb1e4a8632ac3b
+> [2]
+> http://gitorious.org/colord/master/commit/36549e0ed255e7dfa7852d08a75dd5f00cbd270e
+>
+> right?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+>>
+>> When colord runs as root and local active users are allowed to
+>> create new devices (both are the defaults AFAIK) this allows not
+>> only to corrupt colord's own database but also to leverage it to
+>> modify other databases in the system (PackageKit for example also
+>> uses sqlite).
+>>
+>> PoC available on request.
+>>
+>> cu
+>> Ludwig
+>>
+>
+Please use CVE-2011-4349 for these SQL injection issues.
 
-That's a shame. I reported this same problem in November last year:
+-- 
 
-http://sourceforge.net/mailarchive/message.php?msg_id=26598749
+-Kurt Seifried / Red Hat Security Response Team
 
-The current patch does not check  if (from_nla_len != sizeof(from_nla))  before making 
-decisions based on the header. I contacted upstream about this.
-
--Steve
