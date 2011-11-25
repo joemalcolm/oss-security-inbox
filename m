@@ -1,25 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/10
-Message-ID: <20110415185735.GA9002@albatros>
-Date: Fri, 15 Apr 2011 22:57:35 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/2
+Message-ID: <4ECFB086.6010200@redhat.com>
+Date: Fri, 25 Nov 2011 16:13:10 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: colord sql injections
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 20, 2011 at 16:43 +0300, Vasiliy Kulikov wrote:
-> Steven,
-> 
-> On Wed, Feb 23, 2011 at 16:23 -0500, Josh Bressers wrote:
-> > Thanks for the list. I don't have enough CVE ids for this, I've grouped
-> > them by type and version for MITRE to assign IDs.
-> 
-> Any update on this?
+Hi Ludwig,
 
-Ping.
+   thank you for the report.
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+On 11/25/2011 11:55 AM, Ludwig Nussel wrote:
+> Hi,
+>
+> colord did not quote user supplied strings which made it prone to
+> SQL injections:
+> https://bugs.freedesktop.org/show_bug.cgi?id=42904
+> https://bugzilla.novell.com/show_bug.cgi?id=698250
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Just to have this one sorted out wrt to the patches, the relevant
+upstream patches are these two:
+[1] 
+http://gitorious.org/colord/master/commit/1fadd90afcb4bbc47513466ee9bb1e4a8632ac3b
+[2] 
+http://gitorious.org/colord/master/commit/36549e0ed255e7dfa7852d08a75dd5f00cbd270e
+
+right?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>
+> When colord runs as root and local active users are allowed to
+> create new devices (both are the defaults AFAIK) this allows not
+> only to corrupt colord's own database but also to leverage it to
+> modify other databases in the system (PackageKit for example also
+> uses sqlite).
+>
+> PoC available on request.
+>
+> cu
+> Ludwig
+>
+
