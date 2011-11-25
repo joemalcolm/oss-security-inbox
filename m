@@ -1,38 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/6
-Message-ID: <899476003.61142.1304624656567.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 5 May 2011 15:44:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/8
+Message-ID: <4ECFFA5F.2010800@redhat.com>
+Date: Fri, 25 Nov 2011 13:28:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel network vulns
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On 02/18/2010 01:12 PM, Eugene Teo wrote:
-> > 1) gre: fix netns vs proto registration ordering
-> > http://patchwork.ozlabs.org/patch/45553/
-> >
-> > "GRE protocol receive hook can be called right after protocol addition
-> > is done. If netns stuff is not yet initialized, we're going to oops in
-> > net_generic().
-> >
-> > This is remotely oopsable if ip_gre is compiled as module and packet
-> > comes at unfortunate moment of module loading."
+On 11/23/2011 08:20 PM, Hanno Böck wrote:
+> Am Wed, 23 Nov 2011 13:52:04 -0700
+> schrieb Kurt Seifried <kseifried@...hat.com>:
+>
+>> On 11/23/2011 05:23 AM, Hanno Böck wrote:
+>>> New ffmpeg releases contain a couple of security fixes:
+>>> http://secunia.com/advisories/46888/
+>>>
+>>> 1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
+>>> exploited to cause a buffer overflow.
+>>>
 
-Use CVE-2011-1767
+Please use CVE-2011-4351 for this issue
+>>> 2) An integer overflow error within the "vp3_dequant()" function
+>>> (libavcodec/vp3.c) can be exploited to cause a buffer overflow.
+>>>
+Please use CVE-2011-4352 for this issue.
 
-> >
-> > 2) tunnels: fix netns vs proto registration ordering
-> > http://patchwork.ozlabs.org/patch/45554/
-> >
-> > "Same stuff as in ip_gre patch: receive hook can be called before netns
-> > setup is done, oopsing in net_generic()."
-> 
+>>> 3) Errors within the "av_image_fill_pointers()", the
+>>> "vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
+>>> exploited to trigger out-of-bounds reads.
+>>>
+>>>
+Please use CVE-2011-4353 for this issue.
 
-Use CVE-2011-1768
+>>> Please assign CVEs.
+>>>
+>>>
+>>> Maybe someone wants to have a look if other issues in those
+>>> releases are security relevant:
+>>> http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
+>>>
+>> This would be the original advisory http://ffmpeg.org/#pr7dot8and8dot7
+>> correct?
+> It is the upstream confirmation - at least it's about the same bugs.
+>
 
-Thanks.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
