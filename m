@@ -1,43 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/12
-Message-ID: <20110225154320.GG7585@ksplice.com>
-Date: Fri, 25 Feb 2011 10:43:20 -0500
-From: Nelson Elhage <nelhage@...lice.com>
-To: Steve Grubb <sgrubb@...hat.com>
-Cc: oss-security@...ts.openwall.com, Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/3
+Message-ID: <4ECFB130.3080501@suse.de>
+Date: Fri, 25 Nov 2011 16:16:00 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request: colord sql injections
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 25, 2011 at 10:20:02AM -0500, Steve Grubb wrote:
-> On Friday, February 25, 2011 12:58:13 am Eugene Teo wrote:
-> > On 02/25/2011 12:32 PM, Nelson Elhage wrote:
-> > > The cgrulesengd program from libcgroup failed to properly verify the
-> > > sender of netlink messages, allowing arbitrary users to spoof events
-> > > to the daemon, causing it to place processes into incorrect cgroups.
-> > > 
-> > > Note that the default configuration of cgrulesengd does not contain
-> > > any any rules, so this is probably only usefully exploitable if an
-> > > admin have specifically configured cgrulesengd to enforce some policy.
-> > > 
-> > > References:
-> > > http://sourceforge.net/mailarchive/message.php?msg_id=27102603
-> > 
-> > Please use CVE-2011-1022.
+Jan Lieskovsky wrote:
+> On 11/25/2011 11:55 AM, Ludwig Nussel wrote:
+>> colord did not quote user supplied strings which made it prone to
+>> SQL injections:
+>> https://bugs.freedesktop.org/show_bug.cgi?id=42904
+>> https://bugzilla.novell.com/show_bug.cgi?id=698250
 > 
-> That's a shame. I reported this same problem in November last year:
+> Just to have this one sorted out wrt to the patches, the relevant
+> upstream patches are these two:
+> [1] http://gitorious.org/colord/master/commit/1fadd90afcb4bbc47513466ee9bb1e4a8632ac3b
+> [2] http://gitorious.org/colord/master/commit/36549e0ed255e7dfa7852d08a75dd5f00cbd270e
 > 
-> http://sourceforge.net/mailarchive/message.php?msg_id=26598749
-> 
-> The current patch does not check if (from_nla_len != sizeof(from_nla)) before
-> making decisions based on the header. I contacted upstream about this.
+> right?
 
->From my reading of the netlink code, recvmsg() / recvfrom() on a netlink socket
-will never return a from_nla_len != sizeof(struct sockaddaddr_nl). Am I missing
-something, did this change at some point, or are you just suggesting general
-paranoid good practice? It's probably good advice in any case, I'm just curious
-whether you're aware of cases where this can actually be a problem.
+Yes.
 
-- Nelson
+cu
+Ludwig
 
-> 
-> -Steve
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
