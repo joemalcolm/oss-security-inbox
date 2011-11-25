@@ -1,20 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/26/1
-Message-ID: <20110126130115.GB7088@albatros>
-Date: Wed, 26 Jan 2011 16:01:15 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/4
+Message-ID: <4ECFC769.5000304@redhat.com>
+Date: Fri, 25 Nov 2011 09:50:49 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: patch directory traversal flaw
+CC: Jan Lieskovsky <jlieskov@...hat.com>, Ludwig Nussel <ludwig.nussel@...e.de>
+Subject: Re: CVE Request: colord sql injections
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 06, 2011 at 15:52 -0500, Josh Bressers wrote:
-> Please use CVE-2010-4651.
-
-Is there any public fix for the issue?
-
-
-Thanks,
+On 11/25/2011 08:13 AM, Jan Lieskovsky wrote:
+> Hi Ludwig,
+>
+>   thank you for the report.
+>
+> On 11/25/2011 11:55 AM, Ludwig Nussel wrote:
+>> Hi,
+>>
+>> colord did not quote user supplied strings which made it prone to
+>> SQL injections:
+>> https://bugs.freedesktop.org/show_bug.cgi?id=42904
+>> https://bugzilla.novell.com/show_bug.cgi?id=698250
+>
+> Just to have this one sorted out wrt to the patches, the relevant
+> upstream patches are these two:
+> [1]
+> http://gitorious.org/colord/master/commit/1fadd90afcb4bbc47513466ee9bb1e4a8632ac3b
+> [2]
+> http://gitorious.org/colord/master/commit/36549e0ed255e7dfa7852d08a75dd5f00cbd270e
+>
+> right?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+>>
+>> When colord runs as root and local active users are allowed to
+>> create new devices (both are the defaults AFAIK) this allows not
+>> only to corrupt colord's own database but also to leverage it to
+>> modify other databases in the system (PackageKit for example also
+>> uses sqlite).
+>>
+>> PoC available on request.
+>>
+>> cu
+>> Ludwig
+>>
+>
+Please use CVE-2011-4349 for these SQL injection issues.
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+
+-Kurt Seifried / Red Hat Security Response Team
+
