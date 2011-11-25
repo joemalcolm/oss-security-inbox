@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/6
-Message-ID: <4D875F90.7020905@redhat.com>
-Date: Mon, 21 Mar 2011 15:24:16 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, John Bailey <rekkanoryo@...kanoryo.org>
-Subject: CVE Request (minor) -- Pidgin / libpurple -- Cipher API information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/1
+Message-ID: <4ECF7439.5010105@suse.de>
+Date: Fri, 25 Nov 2011 11:55:53 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: colord sql injections
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-Hello Josh, Steve, vendors,
+colord did not quote user supplied strings which made it prone to
+SQL injections:
+https://bugs.freedesktop.org/show_bug.cgi?id=42904
+https://bugzilla.novell.com/show_bug.cgi?id=698250
 
-   the following:
-   [1] http://pidgin.im/news/security/?id=50
+When colord runs as root and local active users are allowed to
+create new devices (both are the defaults AFAIK) this allows not
+only to corrupt colord's own database but also to leverage it to
+modify other databases in the system (PackageKit for example also
+uses sqlite).
 
-   Upstream patch:
-   [2] http://developer.pidgin.im/viewmtn/revision/info/16f4c309528b82961b169edb8b74b9061db6c471
+PoC available on request.
 
-Doesn't seem to have a CVE identifier yet.
+cu
+Ludwig
 
-Could you allocate one?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
