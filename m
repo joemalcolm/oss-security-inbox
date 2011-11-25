@@ -1,23 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/6
-Message-ID: <609827013.370354.1297266931389.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 9 Feb 2011 10:55:31 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/8
+Message-ID: <4ECFFA5F.2010800@redhat.com>
+Date: Fri, 25 Nov 2011 13:28:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Django multiple flaws (CVEs inside)
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 11/23/2011 08:20 PM, Hanno Böck wrote:
+> Am Wed, 23 Nov 2011 13:52:04 -0700
+> schrieb Kurt Seifried <kseifried@...hat.com>:
+>
+>> On 11/23/2011 05:23 AM, Hanno Böck wrote:
+>>> New ffmpeg releases contain a couple of security fixes:
+>>> http://secunia.com/advisories/46888/
+>>>
+>>> 1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
+>>> exploited to cause a buffer overflow.
+>>>
 
-I received a request to assign Django some IDs for three new issues:
-http://www.djangoproject.com/weblog/2011/feb/08/security/
+Please use CVE-2011-4351 for this issue
+>>> 2) An integer overflow error within the "vp3_dequant()" function
+>>> (libavcodec/vp3.c) can be exploited to cause a buffer overflow.
+>>>
+Please use CVE-2011-4352 for this issue.
 
-CVE-2011-0696 django Flaw in CSRF handling
-CVE-2011-0697 django Potential XSS in file field rendering
-CVE-2011-0698 django Directory-traversal vulnerability on Windows
+>>> 3) Errors within the "av_image_fill_pointers()", the
+>>> "vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
+>>> exploited to trigger out-of-bounds reads.
+>>>
+>>>
+Please use CVE-2011-4353 for this issue.
 
-Thanks.
+>>> Please assign CVEs.
+>>>
+>>>
+>>> Maybe someone wants to have a look if other issues in those
+>>> releases are security relevant:
+>>> http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
+>>>
+>> This would be the original advisory http://ffmpeg.org/#pr7dot8and8dot7
+>> correct?
+> It is the upstream confirmation - at least it's about the same bugs.
+>
+
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
