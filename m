@@ -1,40 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/7
-Message-Id: <201103070905.39966.sgrubb@redhat.com>
-Date: Mon, 7 Mar 2011 09:05:39 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/5
+Message-ID: <4ECFD2C6.9030704@redhat.com>
+Date: Fri, 25 Nov 2011 18:39:18 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- yaws -- Directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-On Friday, March 04, 2011 12:52:14 pm Solar Designer wrote:
-> On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
-> > If there's a common usage scenario that doesn't stem from blatant
-> > administrator negligence, then a CVE is probably still appropriate.
-> > ("blatant admin negligence" might be, say, if an admin arbitrarily makes
-> > a script setuid, or modifies the perms for an executable or config file
-> > to be world-writable.)
-> 
-> I think that "chmod 777 /var/log" is "blatant admin negligence".  As to,
-> say, "chown nginx /var/log/nginx", it could be negligence or it could be
-> lack of familiarity with the risks involved.  So I am willing to admit
-> that it's not necessarily negligence that turns those issues into
-> vulnerabilities on specific systems.
-> 
-> > We will sometimes write the CVE description more as an "adminisrator
-> > practice" than as "fault of the software."
-> 
-> Oh, this is something I did not realize.  A lot of people assume that
-> CVEs "blame" the software and its authors for having made an error.
-> 
-> It felt wrong, say, to blame a text editor for being unsafe to use on
-> files in untrusted directories when such unsafety was the typical and
-> expected situation for text editors in general.
+Hello Kurt, Steve, vendors,
 
-So, where does that leave us for things like this? :
+   a directory traversal flaw was found in the way yaws, web server
+for dynamic content written in Erlang, processed certain URLs. A
+remote, authenticated yaws user could use this flaw to obtain content
+of arbitrary local file, available to the yaws server user via
+specially-crafted URL request.
 
-http://reverse.lostrealm.com/protect/ldd.html
-http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650009
+[2] https://github.com/klacke/yaws/issues/69
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=757181
 
--Steve
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: As of right now, according to [2], there doesn't seem
+       to be an upstream patch for this issue available yet.
