@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/8
-Message-ID: <20111122110920.GB28968@foo.fgeek.fi>
-Date: Tue, 22 Nov 2011 13:09:20 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: advisories@...itunasecurity.com
-Subject: CVE-request: Symphony CMS Multiple Cross-Site Scripting and SQL Injection Vulnerabilities (NS-11-008)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/5
+Message-ID: <4ECFD2C6.9030704@redhat.com>
+Date: Fri, 25 Nov 2011 18:39:18 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- yaws -- Directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-Can we assign CVE-identifiers for these three issues, thank you?
+Hello Kurt, Steve, vendors,
 
-Found from: 2.2.3
-Fixed in: 2.2.4
-
-1. http://osvdb.org/show/osvdb/76882 / SA46663
-extensions/profiledevkit/content/content.profile.php profile-parameter XSS
-
-2. http://osvdb.org/show/osvdb/76883 / SA46663
-symphony/lib/core/class.symphony.php filter-parameter XSS
-
-3. http://osvdb.org/show/osvdb/76884 / SA46663
-symphony/content/content.publish.ph filter-parameter SQL injection
-(Different than CVE-2010-3458)
+   a directory traversal flaw was found in the way yaws, web server
+for dynamic content written in Erlang, processed certain URLs. A
+remote, authenticated yaws user could use this flaw to obtain content
+of arbitrary local file, available to the yaws server user via
+specially-crafted URL request.
 
 References:
-http://seclists.org/bugtraq/2011/Nov/8
-http://www.mavitunasecurity.com/xss-and-sql-injection-vulnerabilities-in-symphony-cms/
-http://secunia.com/advisories/46663/
-Advisory Reference: NS-11-008
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650009
+[2] https://github.com/klacke/yaws/issues/69
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=757181
 
-- Henri Salo
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: As of right now, according to [2], there doesn't seem
+       to be an upstream patch for this issue available yet.
