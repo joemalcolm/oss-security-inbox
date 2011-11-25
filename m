@@ -1,44 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/17/1
-Message-ID: <20110917055353.GB19260@openwall.com>
-Date: Sat, 17 Sep 2011 09:53:53 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/7
+Message-ID: <4ECFF985.7030202@redhat.com>
+Date: Fri, 25 Nov 2011 13:24:37 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: closed-list membership transition
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- yaws -- Directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 16, 2011 at 10:53:40AM -0700, Kees Cook wrote:
-> My last day with Canonical is today. Starting on Sep 19th, I will be
-> working for Google on ChromeOS. I'd like to transition my closed-list
-> membership based on the fact that ChromeOS is also a distro, and I'll
-> still have security responsibilities with it. How should this be handled?
+On 11/25/2011 10:39 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a directory traversal flaw was found in the way yaws, web server
+> for dynamic content written in Erlang, processed certain URLs. A
+> remote, authenticated yaws user could use this flaw to obtain content
+> of arbitrary local file, available to the yaws server user via
+> specially-crafted URL request.
+>
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650009
+> [2] https://github.com/klacke/yaws/issues/69
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=757181
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> P.S.: As of right now, according to [2], there doesn't seem
+>       to be an upstream patch for this issue available yet.
 
-The initial seed membership for the closed list was limited to distros
-who were on the old vendor-sec (and additionally limited to Linux only).
+Please use CVE-2011-4350 for this issue
 
-I think it's in fact time for us to start accepting other qualifying
-Linux distros.
+>Hey,
+>This looks a lot like CVE-2010-4181, just a later version of yaws.
+Thoughts?
+> -Rob
 
-One of the criteria should be that the distro is generally available
-(not limited to just one organization).  Another is that it should be
-issuing timely security updates.  And, without the "was on vendor-sec"
-requirement, we'll need someone to vouch for each new distro member and
-first person to subscribe from that new distro.  (Then that person can
-nominate additional contact persons for the distro.)
+Yes, however this is a different version so new a CVE is warranted, had
+these been released at the same time then they would have been merged
+according to ADT4.
 
-I think that Chrome OS qualifies.  As far as I can see, it's generally
-available now: http://getchrome.eu/download.php
 
-Also, I am happy to vouch for Kees.  (I would vouch for other Chrome OS
-security people I know as well, but this specific request is from Kees.)
+-- 
 
-So I'd like Chrome OS and Kees in particular to be on the closed Linux
-distros list, to receive advance notification of up to 14 days on medium
-severity issues (this is what the list is for).
+-Kurt Seifried / Red Hat Security Response Team
 
-I'd appreciate any comments on any of the above (support, objections,
-anything else).
-
-Thanks,
-
-Alexander
