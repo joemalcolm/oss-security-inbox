@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/10/2
-Message-ID: <4EE30776.9040301@redhat.com>
-Date: Sat, 10 Dec 2011 00:17:10 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/26/2
+Message-ID: <CAPBnJLvzZGpJ1vBFgthHBZFjj_zKh4wP8nWM6kKzRLnvFp+JFw@mail.gmail.com>
+Date: Sat, 26 Nov 2011 12:53:17 +0100
+From: Joost Hoogendoorn <joost@...ced.nl>
 To: oss-security@...ts.openwall.com
-CC: Mark Doliner <mark@...gant.net>
-Subject: Re: CVE request: Pidgin crash
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
-On 12/09/2011 07:08 PM, Mark Doliner wrote:
-> Hi!  Would it be possible to issue a CVE for a newish crash in Pidgin?
->  This is a remotely-triggerable crash in the oscar protocol (used by
-> the AIM and ICQ plugins) when handling incoming buddy list-related
-> SNACs.  I do not believe remote-code execution is possible.  It was
-> discovered by Evgeny Boger and reported on our public issue tracker at
-> http://developer.pidgin.im/ticket/14682  I do not believe a CVE exists
-> for this yet.
+I'm also interested. Thanks.
+
+
+2011/11/26 Solar Designer <solar@...nwall.com>
+
+> Hi Tim,
 >
-> The Pidgin project will be releasing version 2.10.1 tomorrow and it
-> will include a fix for this issue.
+> On Fri, Nov 18, 2011 at 07:20:14AM -0600, Tim Zingelman wrote:
+> > On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com>
+> wrote:
+> >
+> > > I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
+> > > specific people that they're interested.  So please reply to this
+> > > message to indicate your interest and we'll proceed.
+> >
+> > I am interested.  Thanks for doing this.
 >
-> Thanks (and sorry for sending this at the beginning of your weekends!),
-> Mark
-What is "weekends"? =)
-
-Please use CVE-2011-4601 for this issue.
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
+> Please send me (off-list is OK) your PGP key and e-mail address to
+> subscribe to the new list.
+>
+> I thought there would be more interest in this, but I don't mind setting
+> this up as just pkgsrc + Linux distros initially.
+>
+> (And, like I said, the Linux distros list will also continue to exist on
+> its own, letting message senders decide on who to notify.)
+>
+> Thanks,
+>
+> Alexander
+>
 
