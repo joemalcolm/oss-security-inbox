@@ -1,42 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/10
-Message-Id: <201102091127.13556.stephane@archlinux.org>
-Date: Wed, 9 Feb 2011 11:27:13 -0500
-From: Stéphane Gaudreault <stephane@...hlinux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/26/1
+Message-ID: <20111126081651.GA14242@openwall.com>
+Date: Sat, 26 Nov 2011 12:16:51 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: btrfs heap overflow
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
-ArchLinux support 2.6.37, although it is not commercial.
+Hi Tim,
 
-Stéphane
+On Fri, Nov 18, 2011 at 07:20:14AM -0600, Tim Zingelman wrote:
+> On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com> wrote:
+> 
+> > I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
+> > specific people that they're interested.  So please reply to this
+> > message to indicate your interest and we'll proceed.
+> 
+> I am interested.  Thanks for doing this.
 
-Le 9 février 2011 10:49:35, Dan Rosenberg a écrit :
-> I'm not aware of any distributions that support 2.6.37 kernels, but as
-> far as I know this doesn't affect CVE eligibility (please correct me
-> if I'm wrong).
-> 
-> -Dan
-> 
-> On Wed, Feb 9, 2011 at 10:20 AM, Eugene Teo <eugene@...hat.com> wrote:
-> > On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
-> >> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
-> >> btrfs_ioctl_space_info() and introduced security issues.  Since they
-> >> were all introduced at once and fixed at the same time, one CVE should
-> >> suffice.
-> >> 
-> >> Due to integer truncation or a signedness error in a typecasted
-> >> comparison, an integer overflow in an allocation size calculation, and
-> >> a failure to properly check bounds when copying data, it was possible
-> >> for an unprivileged user to cause a denial-of-service due to writing
-> >> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
-> >> 
-> >> -Dan
-> >> 
-> >> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
-> > 
-> > Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last
-> > year. Do we have commercially supported kernels that are affected by
-> > this?
-> > 
-> > Thanks, Eugene
+Please send me (off-list is OK) your PGP key and e-mail address to
+subscribe to the new list.
+
+I thought there would be more interest in this, but I don't mind setting
+this up as just pkgsrc + Linux distros initially.
+
+(And, like I said, the Linux distros list will also continue to exist on
+its own, letting message senders decide on who to notify.)
+
+Thanks,
+
+Alexander
