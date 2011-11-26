@@ -1,52 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/16/2
-Message-ID: <2039889913.22716.1313526873673.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 16 Aug 2011 16:34:33 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/26/2
+Message-ID: <CAPBnJLvzZGpJ1vBFgthHBZFjj_zKh4wP8nWM6kKzRLnvFp+JFw@mail.gmail.com>
+Date: Sat, 26 Nov 2011 12:53:17 +0100
+From: Joost Hoogendoorn <joost@...ced.nl>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: two vulnerabilities in ktsuss 1.4 and earlier
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
+I'm also interested. Thanks.
 
 
------ Original Message -----
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> I reported these bugs privately to the Debian security team and the
-> upstream author some time ago, but it does not appear that any CVE was
-> created as a result.
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=626178
-> 
-> The 1.3 and 1.4 versions of ktsuss which include a setuid ktsuss binary
-> suffered from two separate security bugs which can be used for local root
-> exploits.
-> 
-> The "1.314" version which does not include a setuid ktsuss binary and
-> uses "su" for privilege escalation does not suffer from these problems.
-> 
-> 
-> 1) When the target UID is the same as the real UID ktsuss skips
-> authentication. Under these circumstances, ktsuss fails to change the
-> effective UID back to the real UID. (line 118 of src/ktsuss.c in version
-> 1.3.)
-> 
-> $ ktsuss -u `whoami` whoami
-> root
+2011/11/26 Solar Designer <solar@...nwall.com>
 
-Use CVE-2011-2921 for the above issue.
+> Hi Tim,
+>
+> On Fri, Nov 18, 2011 at 07:20:14AM -0600, Tim Zingelman wrote:
+> > On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com>
+> wrote:
+> >
+> > > I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
+> > > specific people that they're interested.  So please reply to this
+> > > message to indicate your interest and we'll proceed.
+> >
+> > I am interested.  Thanks for doing this.
+>
+> Please send me (off-list is OK) your PGP key and e-mail address to
+> subscribe to the new list.
+>
+> I thought there would be more interest in this, but I don't mind setting
+> this up as just pkgsrc + Linux distros initially.
+>
+> (And, like I said, the Linux distros list will also continue to exist on
+> its own, letting message senders decide on who to notify.)
+>
+> Thanks,
+>
+> Alexander
+>
 
-> 
-> 
-> 2) The setuid ktsuss binary executes a GTK interface subprocess to prompt
-> for username and password. This GTK interface runs as root and allows
-> arbitrary code execution via the GTK_MODULES environmental variable.
-
-Use CVE-2011-2922 for this issue.
-
-Thanks.
-
--- 
-    JB
