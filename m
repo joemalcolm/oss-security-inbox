@@ -1,20 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/29/1
-Message-Id: <201105291253.30091.steffen.joeris@skolelinux.de>
-Date: Sun, 29 May 2011 12:53:25 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/26/1
+Message-ID: <20111126081651.GA14242@openwall.com>
+Date: Sat, 26 Nov 2011 12:16:51 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: movabletype-opensource
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Tim,
 
-Could a please get a CVE id for this issue:
-http://www.movabletype.org/2011/05/movable_type_51_and_505_436_security_update.html
-and
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627936
+On Fri, Nov 18, 2011 at 07:20:14AM -0600, Tim Zingelman wrote:
+> On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com> wrote:
+> 
+> > I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
+> > specific people that they're interested.  So please reply to this
+> > message to indicate your interest and we'll proceed.
+> 
+> I am interested.  Thanks for doing this.
 
-Cheers,
-Steffen
+Please send me (off-list is OK) your PGP key and e-mail address to
+subscribe to the new list.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+I thought there would be more interest in this, but I don't mind setting
+this up as just pkgsrc + Linux distros initially.
+
+(And, like I said, the Linux distros list will also continue to exist on
+its own, letting message senders decide on who to notify.)
+
+Thanks,
+
+Alexander
