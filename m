@@ -1,23 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/10
-Message-ID: <20110712183427.GO7511@ngolde.de>
-Date: Tue, 12 Jul 2011 20:34:27 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/26/3
+Message-ID: <20111126121211.GA15385@openwall.com>
+Date: Sat, 26 Nov 2011 16:12:11 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: apache mod-auth-external
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-there has been an SQL injection reported in mod-auth-external.
-http://code.google.com/p/mod-auth-external/issues/detail?id=5
-http://bugs.debian.org/633637
+On Sat, Nov 26, 2011 at 12:53:17PM +0100, Joost Hoogendoorn wrote:
+> I'm also interested. Thanks.
 
-Can someone assign a CVE id to this?
-Cheers
-Nico
+What OS distribution are you a security contact for?  And how do we
+verify that?
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Alexander
