@@ -1,24 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/7
-Message-ID: <681126650.1798699.1312403968294.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 3 Aug 2011 16:39:28 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/27/5
+Message-ID: <20111127231350.GA21202@openwall.com>
+Date: Mon, 28 Nov 2011 03:13:50 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Linux kernel af_packet information leak
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
+All -
 
+On Mon, Nov 28, 2011 at 02:56:22AM +0400, Solar Designer wrote:
+> OK, now this is starting to look about as ridiculous as the old "closed
+> list" thread did. ;-)  I am approving these messages so far in part
+> because I think they serve as (valid) criticism of the idea of such
+> lists, even if the senders did not intend such meaning.  I have mixed
+> feelings about these advance notification lists myself.
 
------ Original Message -----
-> Hi,
-> please assign a CVE ID for
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=13fcb7bd322164c67926ffe272846d4860196dc6
-> 
+Oh, I think I need to clarify.  By "these messages" above, I mean closed
+list membership requests that lack justification.  I can see how my
+positive reply to Tim's message might have created the false impression
+that no justification was required.  In fact, NetBSD/pkgsrc had previously
+expressed interest in being on such a list (during the "closed list"
+thread from half a year ago), Tim posted from his @pkgsrc address, and I
+verified that he was credited for pkgsrc security work just recently:
 
-Please use CVE-2011-2898
+http://mail-index.netbsd.org/current-users/2011/10/03/msg017924.html
 
-Thanks.
+"pkgsrc security: OBATA Akio, Guillaume Lasmayous, Fredrik Pettai, Tim
+Zingelman"
 
--- 
-    JB
+None of these things were true for Joost's and Michael's requests - so I
+had no better choice than to ask them for justification.
+
+It'd help avoid any confusion like that if further requests include
+justification in a more explicit form, even when the sender can
+reasonably expect that I'd recognize their OS and themselves and their
+involvement in security work for their OS.  While I did recall past
+discussions and notice the @pkgsrc address, not everyone did, which
+clearly caused confusion.
+
+Thanks,
+
+Alexander
