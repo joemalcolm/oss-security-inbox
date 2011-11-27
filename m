@@ -1,72 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/06/3
-Message-ID: <20110906214043.GC1845@suse.de>
-Date: Tue, 6 Sep 2011 23:40:43 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: OFED 1.5.2 /proc/net/sdpstats reading local denial of service/crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/27/2
+Message-ID: <20111127185109.GC3418@riva.dynamic.greenend.org.uk>
+Date: Sun, 27 Nov 2011 18:51:10 +0000
+From: Colin Watson <cjwatson@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Leo Iannacone <l3on@...ntu.com>
+Subject: Re: CVE Request -- ClearSilver (neo_cgi) -- Format string flaw by processing CGI error messages in Python module
 Content-Type: text/plain; charset=utf-8
 
+On Sun, Nov 27, 2011 at 06:21:15PM +0100, Jan Lieskovsky wrote:
+>   a format string flaw was found in the Python CGI Kit (neo_cgi)
+> module of ClearSilver, a language-neutral HTML templating system,
+> processed certain input, leading to Common Gateway Interface (CGI)
+> script errors. A remote attacker could provide a specially-crafted
+> input, which once processed by an application, using the Python
+> language API of ClearSilver neo_cgi module, could lead to that
+> particular application crash, or, potentially arbitrary code
+> execution with the privileges of the user running the application.
 
-Hi,
+Thanks for responding to this.  FWIW, I've attached a copy of the
+original mail I sent to a couple of security@ addresses about this
+vulnerability.
 
-One of our customers reported an issue in the "ib_sdp" module in the
-ofa_kernel package of the Open Fabrics OFED Infiband driverstack, version
-1.5.2 (and potentially older, I did not check in detail, at least 1.4.2
-does not have it).
+-- 
+Colin Watson                                       [cjwatson@...ian.org]
 
-Module is drivers/infiniband/ulp/sdp/ib_sdp.ko
+Date: Thu, 17 Nov 2011 17:12:44 +0000
+From: Colin Watson <cjwatson@...ntu.com>
+To: security@...ian.org, security@...ntu.com
+Cc: clearsilver@...kages.debian.org
+Subject: clearsilver: possible format string vulnerability in Python extension
+Message-ID: <20111117171243.GB3159@...a.dynamic.greenend.org.uk>
+Mail-Followup-To: security@...ian.org, security@...ntu.com,
+	clearsilver@...kages.debian.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Transfer-Encoding: quoted-printable
 
-/proc/net/sdpstats is user readable (S_IRUGO | S_IWUGO), so it can be
-triggered by users on machines with infiniband stack.
+While doing the Perl 5.14 transition in Ubuntu, I noticed that
+clearsilver has a -Wformat-security warning (Ubuntu builds with
+-Werror=3Dformat-security by default to catch exactly this kind of
+problem):
 
-While there is report of stack corruption and overflow on process (cat
-/proc/net/sdpstats) exit ("Thread overran stack, or stack corrupted"),
-I can't see where it actually comes from but perhaps the per_cpu vs
-single variable printing does something to the stack and not just reads
-over arrays.
+  gcc -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototy=
+pes -g -O2 -fstack-protector --param=3Dssp-buffer-size=3D4 -Wformat -Wfor=
+mat-security -g -O2 -fstack-protector --param=3Dssp-buffer-size=3D4 -Wfor=
+mat -Wformat-security -Werror=3Dformat-security -Wall -fPIC -Wall -I.. -D=
+_FORTIFY_SOURCE=3D2 -fPIC -I/usr/include/python2.7 -I.. -D_FORTIFY_SOURCE=
+=3D2 -fPIC -I../ -I/usr/include/python2.7 -c neo_cgi.c -o build/temp.linu=
+x-i686-2.7/neo_cgi.o
+  neo_cgi.c: In function 'p_cgi_error':
+  neo_cgi.c:181:3: error: format not a string literal and no format argum=
+ents [-Werror=3Dformat-security]
 
-ofed 1.5.3.2 has a different stat printing algorith according to our developer,
-so it no longer is affected.
+The effects of this can be reproduced like this:
 
-Patch below. Please assign a CVE.
+  $ python
+  >>> import neo_cgi
+  >>> cgi =3D neo_cgi.CGI()
+  >>> cgi.error('%s')
+  Status: 500
+  Content-Type: text/html
+ =20
+  <html><body>
+  An error occured:<pre>|=E2=96=92U=E2=96=92LfU=E2=96=92LfU=E2=96=92@...=96=
+=92`   =E2=96=92`=E2=96=92y=E2=96=92, x=E2=96=92</pre></body></html>
 
-Ciao, Marcus
+In fact, the examples shipped with clearsilver include exception
+handlers that call cgi.error(s), so if you can manage to get a % into
+something that will end up in a Python traceback then you can read bits
+of process memory over the Internet and possibly do a limited amount of
+modification too (with %n).
 
-From: Goldwyn Rodrigues <rgoldwyn@...e.de>
-Subject: [PATCH] Correct /proc/net/sdpstats variables
+I have not reported this upstream.
+http://code.google.com/p/clearsilver/source/browse/trunk/python/neo_cgi.c
+shows that it has not yet been fixed.  Upstream appears to be
+http://www.clearsilver.net/ / blong@...tion.net; perhaps somebody could
+coordinate with him if you confirm this as a possible vulnerability?
 
-A couple of variables are treated as arrays while printing 
-/proc/net/sdpstats, while they are actually single variables.
-This leads to stack/memory corruption and a kernel crash.
-Correct dealing of these variables in sdpstats_seq_show()
+Thanks,
 
----
- drivers/infiniband/ulp/sdp/sdp_proc.c |    7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+--=20
+Colin Watson                                       [cjwatson@...ntu.com]
 
-Index: ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c
-===================================================================
---- ofa_kernel-1.5.2.orig/drivers/infiniband/ulp/sdp/sdp_proc.c	2010-09-21 17:51:32.000000000 +0200
-+++ ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c	2011-07-22 15:09:14.000000000 +0200
-@@ -341,6 +341,7 @@ static int sdpstats_seq_show(struct seq_
- 	seq_printf(seq, "- RX int queue  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_queue));
- 	seq_printf(seq, "- RX int no op  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_no_op));
- 	seq_printf(seq, "- RX cq modified\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_cq_modified));
-+	seq_printf(seq, "- RX wq\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_wq));
- 
- 	seq_printf(seq, "- TX irq armed\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_arm));
- 	seq_printf(seq, "- TX interrupts\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_count));
-@@ -352,12 +353,6 @@ static int sdpstats_seq_show(struct seq_
- 	seq_printf(seq, "- TX error\t\t: %d\n", SDPSTATS_COUNTER_GET(zcopy_tx_error));
- 	seq_printf(seq, "- FMR alloc error\t: %d\n", SDPSTATS_COUNTER_GET(fmr_alloc_error));
- 
--	__sdpstats_seq_hist_pcpu(seq, "CPU sendmsg", sendmsg);
--	__sdpstats_seq_hist_pcpu(seq, "CPU recvmsg", recvmsg);
--	__sdpstats_seq_hist_pcpu(seq, "CPU rx_irq", rx_int_count);
--	__sdpstats_seq_hist_pcpu(seq, "CPU rx_wq", rx_wq);
--	__sdpstats_seq_hist_pcpu(seq, "CPU tx_irq", tx_int_count);
--
- 	return 0;
- }
- 
