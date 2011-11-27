@@ -1,43 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/12
-Message-ID: <20110225154320.GG7585@ksplice.com>
-Date: Fri, 25 Feb 2011 10:43:20 -0500
-From: Nelson Elhage <nelhage@...lice.com>
-To: Steve Grubb <sgrubb@...hat.com>
-Cc: oss-security@...ts.openwall.com, Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/27/5
+Message-ID: <20111127231350.GA21202@openwall.com>
+Date: Mon, 28 Nov 2011 03:13:50 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 25, 2011 at 10:20:02AM -0500, Steve Grubb wrote:
-> On Friday, February 25, 2011 12:58:13 am Eugene Teo wrote:
-> > On 02/25/2011 12:32 PM, Nelson Elhage wrote:
-> > > The cgrulesengd program from libcgroup failed to properly verify the
-> > > sender of netlink messages, allowing arbitrary users to spoof events
-> > > to the daemon, causing it to place processes into incorrect cgroups.
-> > > 
-> > > Note that the default configuration of cgrulesengd does not contain
-> > > any any rules, so this is probably only usefully exploitable if an
-> > > admin have specifically configured cgrulesengd to enforce some policy.
-> > > 
-> > > References:
-> > > http://sourceforge.net/mailarchive/message.php?msg_id=27102603
-> > 
-> > Please use CVE-2011-1022.
-> 
-> That's a shame. I reported this same problem in November last year:
-> 
-> http://sourceforge.net/mailarchive/message.php?msg_id=26598749
-> 
-> The current patch does not check if (from_nla_len != sizeof(from_nla)) before
-> making decisions based on the header. I contacted upstream about this.
+All -
 
->From my reading of the netlink code, recvmsg() / recvfrom() on a netlink socket
-will never return a from_nla_len != sizeof(struct sockaddaddr_nl). Am I missing
-something, did this change at some point, or are you just suggesting general
-paranoid good practice? It's probably good advice in any case, I'm just curious
-whether you're aware of cases where this can actually be a problem.
+On Mon, Nov 28, 2011 at 02:56:22AM +0400, Solar Designer wrote:
+> OK, now this is starting to look about as ridiculous as the old "closed
+> list" thread did. ;-)  I am approving these messages so far in part
+> because I think they serve as (valid) criticism of the idea of such
+> lists, even if the senders did not intend such meaning.  I have mixed
+> feelings about these advance notification lists myself.
 
-- Nelson
+Oh, I think I need to clarify.  By "these messages" above, I mean closed
+list membership requests that lack justification.  I can see how my
+positive reply to Tim's message might have created the false impression
+that no justification was required.  In fact, NetBSD/pkgsrc had previously
+expressed interest in being on such a list (during the "closed list"
+thread from half a year ago), Tim posted from his @pkgsrc address, and I
+verified that he was credited for pkgsrc security work just recently:
 
-> 
-> -Steve
+http://mail-index.netbsd.org/current-users/2011/10/03/msg017924.html
+
+"pkgsrc security: OBATA Akio, Guillaume Lasmayous, Fredrik Pettai, Tim
+Zingelman"
+
+None of these things were true for Joost's and Michael's requests - so I
+had no better choice than to ask them for justification.
+
+It'd help avoid any confusion like that if further requests include
+justification in a more explicit form, even when the sender can
+reasonably expect that I'd recognize their OS and themselves and their
+involvement in security work for their OS.  While I did recall past
+discussions and notice the @pkgsrc address, not everyone did, which
+clearly caused confusion.
+
+Thanks,
+
+Alexander
