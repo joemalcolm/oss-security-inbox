@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/13
-Message-ID: <4DA71FC8.5060101@mvista.com>
-Date: Thu, 14 Apr 2011 06:24:40 -1000
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com
-CC: Mike O'Connor <mjo@...o.mi.org>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/27/1
+Message-ID: <4ED2718B.90909@redhat.com>
+Date: Sun, 27 Nov 2011 18:21:15 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Leo Iannacone <l3on@...ntu.com>, Colin Watson <cjwatson@...ian.org>
+Subject: CVE Request -- ClearSilver (neo_cgi) -- Format string flaw by processing CGI error messages in Python module
 Content-Type: text/plain; charset=utf-8
 
+Hello Kurt, Steve, vendors,
 
+   a format string flaw was found in the Python CGI Kit (neo_cgi)
+module of ClearSilver, a language-neutral HTML templating system,
+processed certain input, leading to Common Gateway Interface (CGI)
+script errors. A remote attacker could provide a specially-crafted
+input, which once processed by an application, using the Python
+language API of ClearSilver neo_cgi module, could lead to that
+particular application crash, or, potentially arbitrary code
+execution with the privileges of the user running the application.
 
-On 04/13/2011 01:02 PM, Mike O'Connor wrote:
-> :----- Original Message -----
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=649322
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=757542
 
-> For linux-distros, I think what you really want to go for here are
-> *timely* updates.  If a distro isn't generally capable of producing a
-> security update within, say, a month of when the issue was released,
-> then their getting the issue in advance through linux-distros isn't
-> going to do them or their distro community a lot of good because they
-> have other constraints in getting fixes out the door. 
-> Focusing on how
-> you think an update ought to *look* (e.g. should the advisories be
-> public?) isn't as important as the update getting *out*.  Especially
-> since you're dealing with GPL'ed code, I think that's something you
-> can measure.  Just ask the constituency a month or so after some major
-> kernel issue who has released updates/fixes and who hasn't, show the
-> relevant source, and take it from there.
+Patch, proposed by the issue reporter to the Debian Bug Tracking System:
+[3] 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=fix-cgi-error-format-security.patch;att=1;bug=649322
 
-Where would one draw the line? If one is truly worried about security
-the units running the software need to validated (no suggesting this at
-all, completely impractical).  Anyone up for going to Iraq to check our
-customer's units? How about Bob's house, Jill's car or outer-space?
+Could you allocate a CVE id for this issue?
 
-- Armin
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
