@@ -1,42 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/10
-Message-Id: <201102091127.13556.stephane@archlinux.org>
-Date: Wed, 9 Feb 2011 11:27:13 -0500
-From: Stéphane Gaudreault <stephane@...hlinux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/27/2
+Message-ID: <20111127185109.GC3418@riva.dynamic.greenend.org.uk>
+Date: Sun, 27 Nov 2011 18:51:10 +0000
+From: Colin Watson <cjwatson@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: btrfs heap overflow
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Leo Iannacone <l3on@...ntu.com>
+Subject: Re: CVE Request -- ClearSilver (neo_cgi) -- Format string flaw by processing CGI error messages in Python module
 Content-Type: text/plain; charset=utf-8
 
-ArchLinux support 2.6.37, although it is not commercial.
+On Sun, Nov 27, 2011 at 06:21:15PM +0100, Jan Lieskovsky wrote:
+>   a format string flaw was found in the Python CGI Kit (neo_cgi)
+> module of ClearSilver, a language-neutral HTML templating system,
+> processed certain input, leading to Common Gateway Interface (CGI)
+> script errors. A remote attacker could provide a specially-crafted
+> input, which once processed by an application, using the Python
+> language API of ClearSilver neo_cgi module, could lead to that
+> particular application crash, or, potentially arbitrary code
+> execution with the privileges of the user running the application.
 
-Stéphane
+Thanks for responding to this.  FWIW, I've attached a copy of the
+original mail I sent to a couple of security@ addresses about this
+vulnerability.
 
-Le 9 février 2011 10:49:35, Dan Rosenberg a écrit :
-> I'm not aware of any distributions that support 2.6.37 kernels, but as
-> far as I know this doesn't affect CVE eligibility (please correct me
-> if I'm wrong).
-> 
-> -Dan
-> 
-> On Wed, Feb 9, 2011 at 10:20 AM, Eugene Teo <eugene@...hat.com> wrote:
-> > On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
-> >> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
-> >> btrfs_ioctl_space_info() and introduced security issues.  Since they
-> >> were all introduced at once and fixed at the same time, one CVE should
-> >> suffice.
-> >> 
-> >> Due to integer truncation or a signedness error in a typecasted
-> >> comparison, an integer overflow in an allocation size calculation, and
-> >> a failure to properly check bounds when copying data, it was possible
-> >> for an unprivileged user to cause a denial-of-service due to writing
-> >> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
-> >> 
-> >> -Dan
-> >> 
-> >> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
-> > 
-> > Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last
-> > year. Do we have commercially supported kernels that are affected by
-> > this?
-> > 
-> > Thanks, Eugene
+-- 
+Colin Watson                                       [cjwatson@...ian.org]
+
+Date: Thu, 17 Nov 2011 17:12:44 +0000
+From: Colin Watson <cjwatson@...ntu.com>
+To: security@...ian.org, security@...ntu.com
+Cc: clearsilver@...kages.debian.org
+Subject: clearsilver: possible format string vulnerability in Python extension
+Message-ID: <20111117171243.GB3159@...a.dynamic.greenend.org.uk>
+Mail-Followup-To: security@...ian.org, security@...ntu.com,
+	clearsilver@...kages.debian.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Transfer-Encoding: quoted-printable
+
+While doing the Perl 5.14 transition in Ubuntu, I noticed that
+clearsilver has a -Wformat-security warning (Ubuntu builds with
+-Werror=3Dformat-security by default to catch exactly this kind of
+problem):
+
+  gcc -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototy=
+pes -g -O2 -fstack-protector --param=3Dssp-buffer-size=3D4 -Wformat -Wfor=
+mat-security -g -O2 -fstack-protector --param=3Dssp-buffer-size=3D4 -Wfor=
+mat -Wformat-security -Werror=3Dformat-security -Wall -fPIC -Wall -I.. -D=
+_FORTIFY_SOURCE=3D2 -fPIC -I/usr/include/python2.7 -I.. -D_FORTIFY_SOURCE=
+=3D2 -fPIC -I../ -I/usr/include/python2.7 -c neo_cgi.c -o build/temp.linu=
+x-i686-2.7/neo_cgi.o
+  neo_cgi.c: In function 'p_cgi_error':
+  neo_cgi.c:181:3: error: format not a string literal and no format argum=
+ents [-Werror=3Dformat-security]
+
+The effects of this can be reproduced like this:
+
+  $ python
+  >>> import neo_cgi
+  >>> cgi =3D neo_cgi.CGI()
+  >>> cgi.error('%s')
+  Status: 500
+  Content-Type: text/html
+ =20
+  <html><body>
+  An error occured:<pre>|=E2=96=92U=E2=96=92LfU=E2=96=92LfU=E2=96=92@...=96=
+=92`   =E2=96=92`=E2=96=92y=E2=96=92, x=E2=96=92</pre></body></html>
+
+In fact, the examples shipped with clearsilver include exception
+handlers that call cgi.error(s), so if you can manage to get a % into
+something that will end up in a Python traceback then you can read bits
+of process memory over the Internet and possibly do a limited amount of
+modification too (with %n).
+
+I have not reported this upstream.
+http://code.google.com/p/clearsilver/source/browse/trunk/python/neo_cgi.c
+shows that it has not yet been fixed.  Upstream appears to be
+http://www.clearsilver.net/ / blong@...tion.net; perhaps somebody could
+coordinate with him if you confirm this as a possible vulnerability?
+
+Thanks,
+
+--=20
+Colin Watson                                       [cjwatson@...ntu.com]
+
