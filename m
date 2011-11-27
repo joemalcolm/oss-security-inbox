@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/3
-Message-ID: <4E1574C8.7030802@redhat.com>
-Date: Thu, 07 Jul 2011 16:56:40 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1780, CVE-2011-1936, kernel/xen issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/27/1
+Message-ID: <4ED2718B.90909@redhat.com>
+Date: Sun, 27 Nov 2011 18:21:15 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Leo Iannacone <l3on@...ntu.com>, Colin Watson <cjwatson@...ian.org>
+Subject: CVE Request -- ClearSilver (neo_cgi) -- Format string flaw by processing CGI error messages in Python module
 Content-Type: text/plain; charset=utf-8
 
-1) CVE-2011-1780 kernel: xen: svm: insufficiencies in handling emulated
-instructions during vm exits
+Hello Kurt, Steve, vendors,
 
-A bug was found in the way Xen handles instruction emulation during VM
-exits. Malicious guest user space process running in SMP guest can trick
-the emulator into reading different instruction than the one that caused
-the VM exit. To do so it should run legitimate instruction that causes
-VM exit in one thread and replace this instruction to another one from
-second thread. An unprivileged guest user can potentially use this flaw
-to crash the host. Doesn't affect upstream.
+   a format string flaw was found in the Python CGI Kit (neo_cgi)
+module of ClearSilver, a language-neutral HTML templating system,
+processed certain input, leading to Common Gateway Interface (CGI)
+script errors. A remote attacker could provide a specially-crafted
+input, which once processed by an application, using the Python
+language API of ClearSilver neo_cgi module, could lead to that
+particular application crash, or, potentially arbitrary code
+execution with the privileges of the user running the application.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-1780
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=649322
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=757542
 
-2) CVE-2011-1936 kernel: xen: vmx: insecure cpuid vmexit
-A bug was found in the way Xen handles cpuid instruction emulation
-during VM exits. An unprivileged guest user can potentially use this
-flaw to crash the guest.
+Patch, proposed by the issue reporter to the Debian Bug Tracking System:
+[3] 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=fix-cgi-error-format-security.patch;att=1;bug=649322
 
-This issue only affects systems running on x86 architecture with Intel
-processor and VMX virtualization extension enabled. Doesn't affect upstream.
+Could you allocate a CVE id for this issue?
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-1936
-
-Thanks, Eugene
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
