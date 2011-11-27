@@ -1,53 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/02/3
-Message-Id: <201108021734.28433.thomas@suse.de>
-Date: Tue, 2 Aug 2011 17:34:28 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/27/4
+Message-ID: <20111127225622.GA21131@openwall.com>
+Date: Mon, 28 Nov 2011 02:56:22 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: GIF loader buffer overflow when initializing decompression tables
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
-this one might need a CVE-ID...
+All -
 
-https://bugzilla.redhat.com/show_bug.cgi?id=727081
+OK, now this is starting to look about as ridiculous as the old "closed
+list" thread did. ;-)  I am approving these messages so far in part
+because I think they serve as (valid) criticism of the idea of such
+lists, even if the senders did not intend such meaning.  I have mixed
+feelings about these advance notification lists myself.
 
-Tomas Hoger 2011-08-01 05:48:32 EDT
+Michael -
 
-GDK's GIF image reader is based on David Koblas' code that is also used in
-several other GIF image readers.  This code contained an input validation flaw.
- Input code size was read from input GIF file and used to initialize decoding
-tables without checking the value, leading to buffer overflow.  Relevant GDK
-code is:
+On Sun, Nov 27, 2011 at 09:39:29PM +0100, Michael Harrison wrote:
+> This is a formal request to be on the non-Linux advance notification
+> list. I have signed signed this message. Please let me know if you need
+> something more, and thanks again for sending this out.
 
-  941 static int
-  942 gif_prepare_lzw (GifContext *context)
-  943 {
-    ...
-  946   if (!gif_read (context, &(context->lzw_set_code_size), 1)) {
-  947       /*g_message (_("GIF: EOF / read error on image data\n"));*/
-  948       return -1;
-  949   }
-    ...
-  952   context->lzw_clear_code = 1 << context->lzw_set_code_size;
-    ...
-  962   for (i = 0; i < context->lzw_clear_code; ++i) {
-  963       context->lzw_table[0][i] = 0;
-  964       context->lzw_table[1][i] = i;
-  965   }
+As I wrote to someone else the other day:
 
-The same flaw was previously reported for several other components that include
-GIF reading code based on David Koblas' parser, such as: gd (CVE-2006-4484),
-SDL_image (CVE-2007-6697), tk (CVE-2008-0553), netbpm (CVE-2008-0554), cups
-(CVE-2008-1373).
+"What OS distribution are you a security contact for?  And how do we
+verify that?"
 
-This problem was corrected upstream long ago:
+http://www.openwall.com/lists/oss-security/2011/11/26/3
 
-http://git.gnome.org/browse/gdk-pixbuf/commit/gdk-pixbuf/io-gif.c?id=3bac204e0d0241a0d68586ece7099e6acf0e9bea
+Thanks,
 
-The fix can be found in all gdk-pixbuf versions embedded in gtk2 packages, but
-it seems it never got it to stand-alone gdk-pixbuf version for gtk+ 1.x.
-
-Gimp corrected this bug ~2 years after GDK:
-
-http://git.gnome.org/browse/gimp/commit/plug-ins/common/gifload.c?id=cac290d093d0c318bbe33a4ff290c2abbd9698d3
+Alexander
