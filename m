@@ -1,41 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/10/1
-Message-ID: <20110910062759.GG1350@mutt-is@awesome>
-Date: Sat, 10 Sep 2011 09:28:00 +0300
-From: Eren Türkay <eren@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/27/3
+Message-ID: <4ED2A001.8000201@gmail.com>
+Date: Sun, 27 Nov 2011 21:39:29 +0100
+From: Michael Harrison <n0idx80@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: D-Link DCS-2121 Semicolon Vulnerability
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Alexander,
+This is a formal request to be on the non-Linux advance notification
+list. I have signed signed this message. Please let me know if you need
+something more, and thanks again for sending this out.
 
-I've come up with this [0] blog post which, accordingly to author,
-describes a 0day vulnerability within D-Link DCS-2121 camera.
+Sincerely,
 
-In summary, the data posted from the web configuration interface to samba is
-directly used as a parameter without proper sanitization. This leads to
-an unwanted system call.
+Michael
 
-Although the author says that the vulnerability can only be used by
-authenticated users via web interface, it would be dangerous together
-with CSRF on authenticated user. I think that it's worth looking, or, at
-least let the vendor know.
-
-"""
-Disclaimer (for not-so-funny people): yes this is "0day", unreported to
-the vendor. I even suspect the whole D-Link product line is vulnerable
-to the same bug (if not the whole world of low-end embedded systems (and
-even business class products)). However, since Web access requires
-authentication, this bug might be exploitable by administrators only, so
-it is only useful for people who would like to gain a shell on their own
-systems. Do not panic :)
-"""
-
-[0] http://newsoft-tech.blogspot.com/2010/09/d-link-dcs-2121-and-state-of-embedded.html
-
-Regards,
+On 11/26/11 9:16 AM, Solar Designer wrote:
+> Hi Tim,
+>
+> On Fri, Nov 18, 2011 at 07:20:14AM -0600, Tim Zingelman wrote:
+>> On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com> wrote:
+>>
+>>> I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
+>>> specific people that they're interested.  So please reply to this
+>>> message to indicate your interest and we'll proceed.
+>> I am interested.  Thanks for doing this.
+> Please send me (off-list is OK) your PGP key and e-mail address to
+> subscribe to the new list.
+>
+> I thought there would be more interest in this, but I don't mind setting
+> this up as just pkgsrc + Linux distros initially.
+>
+> (And, like I said, the Linux distros list will also continue to exist on
+> its own, letting message senders decide on who to notify.)
+>
+> Thanks,
+>
+> Alexander
 
 -- 
-        . 73! DE TA1AET
 
-Content of type "application/pgp-signature" skipped
+It's not about what you know, but what is left to learn~
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v2.0.17 (GNU/Linux)
+
+mQENBE6MJ20BCACsvXUqJyxwgr61LOdRVMmczLC5VHDBEaaCfx4AwSihQm6od14h
+6IQJVyHSp5hQz73n9yOmLeAV51akUSNwUcV85Fjxa169MDut7mexir6YkTDrwSdW
+BRvopP6EuJaLAJwdK0/++YRD9eu6YDPlMp50ceCr47Yy8W0BGTb7Z2CvGnNntr7U
+ZkHR+ALdEQNyqSQ/NGxe7lfO+MVSi0W2eDaUtR6JmmZCWyDRWDsiOsl/q+QnIJ7r
+s3flrDe57zMXkw2rdI6lWm745i9kOyg0+Jw0gQwy8oHh/4ktdboU6WLkv2N9eeMR
+l1a0AZeTSuOfWrepTF1K22E++1NuN3Y5TGKvABEBAAG0MU1pY2hhZWwgUi4gSGFy
+cmlzb24gKEN1cnJlbnQpIDxuMGlkeDgwQGdtYWlsLmNvbT6JAT4EEwECACgFAk6M
+J20CGwMFCQHanAAGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEGcT+eUbMgJy
+T94H/2F98ZYomipk30ZcEZa+MsqLRcBdIvUgfS43cSih2KlhsjWavwYTYANJG4k0
+TImCpoJymmEK0aozlPqeP9eGTFrAM8HPnlBqMqTP5B0dPn2hGnxFwP1NLq4KiwgH
+YM/j2QqTZGvCaq82OtG8FwGNHRCJu+buN3zJ/VZNj5b05USEPnl8w92r5V4gbRyL
+HZsVyGnPDzTsBDqoKjpMcCVD4uXQWDM9jLk366zLM6ChzhEX02bmKrFqkNnb7rd0
+gFGR8svA4uWc2w58zrbZdMTsXDTimHdUm2KU4Cz49UxmyXW+T3SIEtsH8WYlaL+2
+SAk8zYMMb95WjwZwrFt2hhfMBoa5AQ0ETownbQEIALZJ5AbAwQd4qhkPRDmpvgW3
+AZgMj/s20sBo6XiS9PF4iUYwdKbEGUbKuahHH4dP4lrAKO0telzaLW+PY7NKaQ1k
+iLubuiqr7VD2j3bXXD1bvFdmG6w+R+S3jmgZs20Sj+z8472eXXHSokrO8/jolopb
+1xzZGUUVlVoJ7dSYaByqxQgcQCxrCiF1xj3CN32m51LAmaCFnJkVYwRTzZpCcOkf
+I4eF+d+0OYlCEH9VTwhYJKJMuRFJjPJqzCiJyYky7Y5GqaY2QNnSX2tzGpurR6IP
+HW/ZR4SFcnlL8HvHvT6+KVjfItS1M9ybTsXdf8Hl6BGkng+AO/bJKI2f3z2MXP0A
+EQEAAYkBJQQYAQIADwUCTownbQIbDAUJAdqcAAAKCRBnE/nlGzICclJlCAChlNrr
+CeZ3dzj/FrKQFozovCvgYV8GK83BHB3nBAsoOllvEzjmYbqIuCbbxWT5Dl5uatez
+jV7mrfobmnKTsSCGy9WbLc54djiRRcHXpHCeIOCEt8RL85VLim91842Zxw7wTnB0
+CfPM77scCvpekkzFaUj/yWxd6lzugKZ60AmuUxLWxzxPl+tcgRKCQT1XMe+EzyEd
+yAObBp+Pyk8WAWth+mecxJ131AruPzKwTrvzyyQVaa7qwJzgkwOVKpTwHzvLUQqX
+bPj3ZpIt4C0FLc5x91BYAXlt7rk5q3RZajBca+bODlAOJpU4fQs4ln+ZGt3sdTt4
+HvFqkFebN/ZH/wWf
+=Wk3z
+-----END PGP PUBLIC KEY BLOCK-----
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (536 bytes)
