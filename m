@@ -1,22 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/11
-Message-ID: <4D64BAC8.2000501@msgid.tls.msk.ru>
-Date: Wed, 23 Feb 2011 10:44:08 +0300
-From: Michael Tokarev <mjt@....msk.ru>
-To: oss-security@...ts.openwall.com
-CC: Nelson Elhage <nelhage@...lice.com>,  Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Physical access vulnerabilities and auto-mounting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/1
+Message-ID: <4ED34FAD.4040501@redhat.com>
+Date: Mon, 28 Nov 2011 10:09:01 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- python-celery / Celery v2.4 -- Privilege escalation due improper sanitization of --uid and --gid arguments in certain tools (CELERYSA-0001
 Content-Type: text/plain; charset=utf-8
 
-23.02.2011 08:46, Nelson Elhage wrote:
-> I don't have any definite opinions here about where to draw which
-> lines, but I want to point out that in addition to physical attack
-> vectors, virtualization tools are also potentially affected by these
-> kinds of bugs. If you try to mount an untrusted VM's virtual disk
-> image from somewhere, you're also vulnerable to that VM triggering
-> bugs in the filesystem or other layers.
+Hello Kurt, Steve, vendors,
 
-And that's why projects like http://www.libguestfs.org/ emerges.
-FWIW ;)
+   a privilege escalation flaw was found in the way 'celeryd-multi',
+'celeryd_detach', 'celerybeat' and 'celeryev' tools of the Celery,
+an asynchronous task queue based on distributed message passing,
+performed sanitization of --uid and --gid arguments, provided to
+the tools on the command line (only effective user id was changed,
+with the real one remaining unchanged). A local attacker could use
+this flaw to send messages via the message broker or use the Pickle
+serializer to load and execute arbitrary code with elevated privileges.
 
-/mjt
+References:
+[1] http://www.celeryproject.org/news/celery-24-released/
+[2] http://docs.celeryproject.org/en/latest/changelog.html#version-2-4-4
+[3] https://github.com/ask/celery/blob/master/docs/sec/CELERYSA-0001.txt
+[4] https://github.com/ask/celery/pull/544
+
+Relevant upstream patch:
+[5] 
+https://github.com/gadomski/celery/commit/2afc0ea2ea22bce25013c9867f89e41a48b9251b
+
+Could you allocate a CVE id for this issue?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
