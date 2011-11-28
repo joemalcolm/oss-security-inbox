@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/7
-Message-ID: <977272446.96885.1305574633976.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 16 May 2011 15:37:13 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/8
+Message-ID: <4ED3BC91.7000608@redhat.com>
+Date: Mon, 28 Nov 2011 09:53:37 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Martin Zobel-Helas <zobel@...ian.org>, 626281@...s.debian.org, coley <coley@...re.org>
-Subject: Re: CVE request: keepalived pid file permissions issue
+Subject: CVE assigned for gdb: arbitrary code execution via .debug_gdb_scripts
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1784 for this.
+This issue is now public.
 
-Thanks.
+gdb: arbitrary code execution via .debug_gdb_scripts
+
+https://bugzilla.redhat.com/show_bug.cgi?id=703238
+
+Vincent Danen 
+It was discovered [1],[2] the the GNU Debugger (gdb) would load
+untrusted files
+from the current working directory when .debug_gdb_scripts was defined. 
+While
+this was a design decision, it is an insecure one and users who do not
+pre-inspect untrusted files may execute arbitrary code with their
+privileges.
+
+[1] http://sourceware.org/ml/gdb-patches/2011-04/msg00559.html
+[2] http://sourceware.org/ml/gdb-patches/2011-05/msg00202.html
+
+This issue has been assigned CVE-2011-4355
 
 -- 
-    JB
 
------ Original Message -----
-> Hey,
-> 
-> it was reported that keepalived (and some other daemons) store their
-> pid
-> file with permission 666. A bug was opened for keepalived in Debian,
-> could a CVE be assigned to the issue?
-> 
-> Bug text was:
-> 
-> On mar., 2011-05-10 at 16:33 +0200, Martin Zobel-Helas wrote:
-> > Package: keepalived
-> > Version: 1.1.12-1
-> > Severity: grave
-> > Tags: security
-> >
-> > Hi,
-> >
-> > keepalive writes a public writeable pid file to /var/run
-> >
-> > -rw-rw-rw- 1 root root 5 2011-02-08 13:00 keepalived.pid
-> >
-> > Cheers,
-> > Martin
-> >
-> >
-> > reference:
-> > http://lists.debian.org/05578BFF-44FC-41B3-9E8E-C11B5B9A6C11@gmail.com
-> 
-> Thanks,
-> --
-> Yves-Alexis
+-Kurt Seifried / Red Hat Security Response Team
+
+
