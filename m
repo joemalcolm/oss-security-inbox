@@ -1,76 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/8
-Message-ID: <4ECD6048.4090802@redhat.com>
-Date: Wed, 23 Nov 2011 14:06:16 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request --  1) Namazu v2.0.21: XSS flaw by processing HTTP cookies 2) Namazu v2.0.20: Stack-based buffer overflow by replacing blank "uri" field value
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/1
+Message-ID: <4ED34FAD.4040501@redhat.com>
+Date: Mon, 28 Nov 2011 10:09:01 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- python-celery / Celery v2.4 -- Privilege escalation due improper sanitization of --uid and --gid arguments in certain tools (CELERYSA-0001
 Content-Type: text/plain; charset=utf-8
 
-On 11/23/2011 04:16 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   based on:
->   [1] https://bugs.gentoo.org/show_bug.cgi?id=391259
->   [2] http://www.namazu.org/security.html.en
->
-> the following two issues (when compared against [3]) doesn't
-> seem to have CVE ids yet:
-> I) There is cross-site scripting vulnerability for IE 6,7 in version
-> 2.0.20 or older.
->
->    References:
->    http://www.namazu.org/#stable
->    http://www.namazu.org/security.html#cross-site-scripting
->
->    Further issue details are described in:
->    https://bugzilla.redhat.com/show_bug.cgi?id=756348
->
->    Note: A CVE-2011-* identifier should be assigned for this.
->    =====
-Please use CVE-2011-4345 for this issue.
+Hello Kurt, Steve, vendors,
 
->
-> II) To 2.0.19 or a version that is older than 2.0.19, there is a
-> vulnerability of overrunning in the buffer. It recommends since Namazu
-> 2.0.20 to be used.
->
->    References:
->    http://www.namazu.org/#stable
->    http://www.namazu.org/security.html.en
->
->    Further issue details are described in:
->    https://bugzilla.redhat.com/show_bug.cgi?id=756341
->
->    Note: A CVE-2009-* identifier should be assigned to this.
->    =====
+   a privilege escalation flaw was found in the way 'celeryd-multi',
+'celeryd_detach', 'celerybeat' and 'celeryev' tools of the Celery,
+an asynchronous task queue based on distributed message passing,
+performed sanitization of --uid and --gid arguments, provided to
+the tools on the command line (only effective user id was changed,
+with the real one remaining unchanged). A local attacker could use
+this flaw to send messages via the message broker or use the Pickle
+serializer to load and execute arbitrary code with elevated privileges.
 
-Please use CVE-2009-5028 for this issue
->
-> Could you allocate two CVE ids (one CVE-2011-*, the other CVE-2009-*)
-> for these two flaws?
->
-> According to:
-> [3] http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=namazu
->
-> the last CVE id, assigned for Namazu, was CVE-2008-1468 for the
-> "XSS UTF-7" issue, which corresponds to:
->
-> "To 2.0.17 or a version that is older than 2.0.17 There is a weakness
-> of retrieval type by the misidentification of the encode automatic
-> operation recognition of Web browser that is the UTF-7 encoding. It
-> recommends since 2.0.18 as much as possible to be used." record
-> from [2].
->
-> Should you need any further details due these two, let me know.
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+References:
+[1] http://www.celeryproject.org/news/celery-24-released/
+[2] http://docs.celeryproject.org/en/latest/changelog.html#version-2-4-4
+[3] https://github.com/ask/celery/blob/master/docs/sec/CELERYSA-0001.txt
+[4] https://github.com/ask/celery/pull/544
 
+Relevant upstream patch:
+[5] 
+https://github.com/gadomski/celery/commit/2afc0ea2ea22bce25013c9867f89e41a48b9251b
 
--- 
+Could you allocate a CVE id for this issue?
 
--Kurt Seifried / Red Hat Security Response Team
-
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
