@@ -1,133 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/6
-Message-ID: <1631157357.286087.1301513822965.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 30 Mar 2011 15:37:02 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/5
+Message-ID: <4ED3A651.4010609@redhat.com>
+Date: Mon, 28 Nov 2011 08:18:41 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: PHP-Nuke 8.x <= "chng_uid" Blind SQL Injection Vulnerability
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- python-celery / Celery v2.4 -- Privilege escalation due improper sanitization of --uid and --gid arguments in certain tools (CELERYSA-0001
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1480.
-
-Thanks.
+On 11/28/2011 02:09 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a privilege escalation flaw was found in the way 'celeryd-multi',
+> 'celeryd_detach', 'celerybeat' and 'celeryev' tools of the Celery,
+> an asynchronous task queue based on distributed message passing,
+> performed sanitization of --uid and --gid arguments, provided to
+> the tools on the command line (only effective user id was changed,
+> with the real one remaining unchanged). A local attacker could use
+> this flaw to send messages via the message broker or use the Pickle
+> serializer to load and execute arbitrary code with elevated privileges.
+>
+> References:
+> [1] http://www.celeryproject.org/news/celery-24-released/
+> [2] http://docs.celeryproject.org/en/latest/changelog.html#version-2-4-4
+> [3] https://github.com/ask/celery/blob/master/docs/sec/CELERYSA-0001.txt
+> [4] https://github.com/ask/celery/pull/544
+>
+> Relevant upstream patch:
+> [5]
+> https://github.com/gadomski/celery/commit/2afc0ea2ea22bce25013c9867f89e41a48b9251b
+>
+> Could you allocate a CVE id for this issue?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+Please use CVE-2011-4356 for this issue.
 
 -- 
-    JB
 
+-Kurt Seifried / Red Hat Security Response Team
 
------ Original Message -----
-> PHP-Nuke 8.x <= Blind SQL Injection Vulnerability
-> 
-> 
-> 
-> 1. OVERVIEW
-> 
-> The administration backend of PHP-Nuke 8.x is vulnerable to Blind SQL
-> Injection.
-> 
-> 
-> 2. BACKGROUND
-> 
-> PHP-Nuke is a Web Portal System or content management system. The goal
-> of PHP-Nuke is to have an automated web site to distribute news and
-> articles with users system. Each user can submit comments to discuss
-> the articles. Main features include: web based admin, surveys, top
-> page, access stats page with counter, user customizable box, themes
-> manager for registered users, friendly administration GUI with graphic
-> topic manager, option to edit or delete stories, option to delete
-> comments, moderation system, Referrers page to know who link us,
-> sections manager, customizable HTML blocks, user and authors edit, an
-> integrated Banners Ads system, search engine, backend/headlines
-> generation (RSS/RDF format), and many, many more friendly functions.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The "chng_uid" parameter is not properly sanitized upon submission to
-> the /admin.php which leads to Blind SQL Injection vulnerability.
-> This allows an attacker to inject or manipulate SQL queries in the
-> back-end database, allowing for the manipulation or disclosure of
-> arbitrary data.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> 8.0 and lower
-> 
-> Tested version: 8.0
-> The paid versions, 8.1 and 9.0, of php-Nuke may be vulnerable as well.
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> => /admin.php
-> 
-> POST /admin.php HTTP/1.1
-> Referer: http://localhost/admin.php?op=mod_users
-> Content-Type: application/x-www-form-urlencoded
-> Host: localhost
-> 
-> chng_uid=[BLIND_SQL_INJECTION]+&op=modifyUser
-> 
-> 
-> Tested Payloads:
-> ' or 1=1-- [TRUE]
-> ' or 1=2-- [FALSE]
-> ' or substring(@@version,1,1)=5-- [TRUE if mySQL version is 5.x]
-> ' or substring(@@version,1,1)=4-- [FALSE if mySQL version is 5.x]
-> ' or SLEEP(15)=0-- [sleep for 15 seconds]
-> 
-> Successful response (True) returns the user update form page.
-> 
-> 
-> 6. SOLUTION
-> 
-> Lock down access to php-Nuke administration backend.
-> No patch is available yet.
-> Use of this product is NOT recommended because of long lack of update
-> and vendor negligence about security reports.
-> 
-> 
-> 7. VENDOR
-> 
-> php-Nuke Developers
-> http://phpnuke.org/
-> 
-> 
-> 8. CREDIT
-> 
-> Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-01-01: contacted author through emails
-> 2011-01-25: contacted author through web site contact form
-> 2010-03-23: no replies from author
-> 2010-03-23: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[phpnuke-8.x]_sql_injection
-> About PHP-Nuke: http://en.wikipedia.org/wiki/PHP-Nuke
-> PHP-Nuke 8.0:
-> http://phpnuke.org/modules.php?name=Downloads&d_op=getit&lid=658
-> CWE-89: http://cwe.mitre.org/data/definitions/89.html
-> 
-> 
-> 
-> #yehg [2010-03-23]
-> 
-> keywords: php nuke, php-nuke, phpnuke, 8.0, 8.1, blind, sqlin, sql
-> injection
-> 
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
