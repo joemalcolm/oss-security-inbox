@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/10
-Message-ID: <4EA826AC.8060808@redhat.com>
-Date: Wed, 26 Oct 2011 09:26:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/7
+Message-ID: <20111128164423.GB25644@openwall.com>
+Date: Mon, 28 Nov 2011 20:44:23 +0400
+From: Solar Designer <solar@...nwall.com>
+To: "Patrick J. Volkerding" <security@...ckware.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: linux-distros Slackware membership
 Content-Type: text/plain; charset=utf-8
 
-On 10/26/2011 09:16 AM, Petr Matousek wrote:
-> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
-> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
-> to reset dmesg_restrict to 0.
->
-> This is an issue when e.g.  LXC (Linux Containers) are used and complete
-> user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
-> root user can bypass the dmesg_restrict protection.
->
-> Introduced by:
-> eaf06b241b091357e72b76863ba16e89610d31bd
->
-> Fixed by:
-> bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
->
-> Thanks,
-Please use CVE-2011-4080 for this issue.
+Hi Patrick,
 
--- 
+On Mon, Nov 28, 2011 at 09:05:14AM -0600, Patrick J. Volkerding wrote:
+> I believe I was supposed to be subscribed with my security at slackware 
+> dt com address (only read by me), but have never received any messages 
+> from the list.  Unless there's some reason that Slackware was not 
+> included (and in that case I would be curious why, and how the situation 
+> could be rectified), could you subscribe me?  My GPG key is:
+> 
+> pub   1024D/40102233 2003-02-26 [expires: 2012-12-21]
+> uid                  Slackware Linux Project <security@...ckware.com>
 
--Kurt Seifried / Red Hat Security Response Team
+You were in fact subscribed at this address, and messages are being
+accepted by your mail server (most recent message was today).  Please
+let me know off-list whether this has enabled you to figure out what the
+problem is or if you need help debugging it.
 
+Alexander
