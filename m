@@ -1,100 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/14
-Message-ID: <168586529.142226.1313781430377.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 15:17:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/3
+Message-ID: <20111128134516.5cce493c@mail.a3li.li>
+Date: Mon, 28 Nov 2011 13:45:16 +0100
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Elgg 1.7.10 <= | Multiple Vulnerabilities
+Cc: n0idx80@...il.com
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2935 for the XSS issue.
+On Mon, 28 Nov 2011 11:46:30 +0100
+Michael Harrison <n0idx80@...il.com> wrote:
 
-CVE-2011-2936 for the SQL injection issue.
+> Sorry about the confusion. I work for the Gentoo security team, and I
+> am not sure whether it would be beneficial for me to be on the closed
+> list or not. It is my presumption that the release of non-Linux
+> vulnerabilities might better help us identify vulnerabilities across
+> the board.
 
-Thanks.
+We are already part of the actual Linux distributions list, and
+according to the first message of this thread we would be included in
+this new list as well. So I think we're good.
+
+Alexander, fyi, Michael is training to be part of our security
+team, but not yet a full member. Please disregard this request.
+
+Sorry for the additional OT,
+Alex
 
 -- 
-    JB
+Alex Legler <a3li@...too.org>
+Gentoo Security/Ruby/Infrastructure
 
-
------ Original Message -----
-> 1. OVERVIEW
-> 
-> The Elgg 1.7.10 and lower versions are vulnerable to Cross Site
-> Scripting and SQL Injection.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Elgg is an award-winning social networking engine, delivering the
-> building blocks that enable businesses, schools, universities and
-> associations to create their own fully-featured social networks and
-> applications. Well-known Organizations with networks powered by Elgg
-> include: Australian Government, British Government, Federal Canadian
-> Government, MITRE, The World Bank, UNESCO, NASA, Stanford University,
-> Johns Hopkins University and more (http://elgg.org/powering.php)
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The "internalname" parameter is not properly sanitized, which allows
-> attacker to conduct Cross Site Scripting attack. This may allow an
-> attacker to create a specially crafted URL that would execute
-> arbitrary script code in a victim's browser. The "tag_names" is not
-> properly sanitized, which allows attacker to conduct SQL Injection
-> attack.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> Elgg 1.7.10 <=
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> - Cross Site Scripting
-> 
-> http://localhost/pg/embed/media?internalname=%20%22onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22%20x=%22
-> 
-> - SQL Injection > Info Disclosure
-> 
-> http://localhost/pg/search/?q=SQLin&search_type=tags&tag_names=location%27
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to 1.7.11 or higher.
-> 
-> 
-> 7. VENDOR
-> 
-> Curverider Ltd
-> http://www.curverider.co.uk/
-> http://elgg.org/
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-08-01: vulnerability reported
-> 2011-08-15: vendor released fixed version
-> 2011-08-18: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[elgg_1710]_xss_sqlin
-> Project Home: http://elgg.org/
-> Vendor Release Note:
-> http://blog.elgg.org/pg/blog/brett/read/189/elgg-1711-released
-> 
-> 
-> 
-> #yehg [2011-08-18]
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
