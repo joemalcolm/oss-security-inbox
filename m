@@ -1,58 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/11
-Message-ID: <652254890.179837.1305833444194.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 19 May 2011 15:30:44 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/6
+Message-ID: <4ED3A746.6050407@redhat.com>
+Date: Mon, 28 Nov 2011 08:22:46 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: ffmpeg/widelands/jifty::db/lilo/libpcap
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Leo Iannacone <l3on@...ntu.com>, Colin Watson <cjwatson@...ian.org>
+Subject: Re: CVE Request -- ClearSilver (neo_cgi) -- Format string flaw by processing CGI error messages in Python module
 Content-Type: text/plain; charset=utf-8
 
-> 
-> 1. ffmpeg/libav out of array write in AMV parsing
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624339
-> http://seclists.org/bugtraq/2011/Apr/257
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=89f903b3d5ec38c9c5d90fba7e626fa0eda61a32
-
-Use CVE-2011-1931
-
-
-> 
-> 2. widelands directory traversal
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=617960
-> http://bazaar.launchpad.net/~widelands-dev/widelands/build-15/revision/5021
-
-Use CVE-2011-1932
-
-
-> 
-> 3. SQL injection in Jifty::DBI
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622919
-> http://lists.jifty.org/pipermail/jifty-devel/2011-April/002426.html
-
-Use CVE-2011-1933
-
-
-> 
-> 4. lilo: lilo-uuid-diskid makes lilo.conf world-readable
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=615103
-
-Use CVE-2011-1934
-
-
-> 
-> 5. libpcap packet truncation
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=623868
-> http://thread.gmane.org/gmane.network.tcpdump.devel/5018
-
-Use CVE-2011-1935
-
-Thanks.
+On 11/27/2011 10:21 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a format string flaw was found in the Python CGI Kit (neo_cgi)
+> module of ClearSilver, a language-neutral HTML templating system,
+> processed certain input, leading to Common Gateway Interface (CGI)
+> script errors. A remote attacker could provide a specially-crafted
+> input, which once processed by an application, using the Python
+> language API of ClearSilver neo_cgi module, could lead to that
+> particular application crash, or, potentially arbitrary code
+> execution with the privileges of the user running the application.
+>
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=649322
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=757542
+>
+> Patch, proposed by the issue reporter to the Debian Bug Tracking System:
+> [3]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=fix-cgi-error-format-security.patch;att=1;bug=649322
+>
+> Could you allocate a CVE id for this issue?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+Please use CVE-2011-4357 for this issue.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
