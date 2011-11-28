@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/10
-Message-Id: <C953571F-C402-4B61-94D8-A68E555A4D4D@oracle.com>
-Date: Tue, 30 Aug 2011 21:25:34 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/3
+Message-ID: <CAPQRN=WDpuBC82mODSbCPokYso04StaxUMrBQB_KTrYzC7Kq3Q@mail.gmail.com>
+Date: Mon, 28 Nov 2011 21:18:50 -0200
+From: Raphael Bastos <tecnologia@...tosservice.com.br>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed List
+Cc: security@...ckware.com
+Subject: Fwd: Bug script install slackware
 Content-Type: text/plain; charset=utf-8
 
-
-On 30 Aug 2011, at 20:51, Solar Designer wrote:
-
-> Hi John,
-> 
-> On Tue, Aug 30, 2011 at 05:06:37PM +0100, John Haxby wrote:
->> I'm John Haxby, a member of the Linux group at Oracle Corporation.  I'm
->> actually in the Linux sustaining team, the team actually responsible for
->> fixing most of the bugs.
->> 
->> Could you please add me to the closed list?   There is one other person
->> on the list for Oracle, but none, yet, from the Linux group.
-> 
-> I've just added you.
+---------- Forwarded message ----------
+From: Raphael Bastos <tecnologia@...tosservice.com.br>
+Date: 2011/10/28
+Subject: Bug script install slackware
+To: volkerdi@...ckware.com
 
 
-Many thanks.
+Take a look.... this is the correction sugest to script "SeTpartitions".
 
-jch
+EX: sed ,'/mnt','$T_PX',g --- on lines 374, 495, 496, 503.
+
+livecd setup # cat -n  SeTpartitions |grep T_PX
+  10  T_PX=/mnt
+ 374  mount $ROOT_DEVICE $T_PX -t $ROOT_SYS_TYPE 1> $REDIR 2> $REDIR
+ 495        if [ ! -d $T_PX/$MTPT ]; then
+ 496           mkdir -p $T_PX/$MTPT
+ 503        mount $NEXT_PARTITION $T_PX/$MTPT -t $NEXT_SYS_TYPE 1>
+$REDIR 2> $REDIR
+
+
+Att,
+Raphael Bastos aka chemonz
+
+===============================================
+Bastos Service Manutenção Industrial Ltda.
+www.bastosservice.com.br
+Linux Reg. User: 388431  //  LPI ID: LPI000214711
+email:~> $ echo "vgepqnqikcBdcuvquugtxkeg0eqo0dt" | perl -pe \
+'s/(.)/chr(ord($1)-2)/ge'
+===============================================
+
