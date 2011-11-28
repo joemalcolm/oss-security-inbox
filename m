@@ -1,20 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/4
-Message-ID: <20110311143651.GA13326@albatros>
-Date: Fri, 11 Mar 2011 17:36:51 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/8
+Message-ID: <4ED3BC91.7000608@redhat.com>
+Date: Mon, 28 Nov 2011 09:53:37 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: CAP_SYS_MODULE bypass via CAP_NET_ADMIN
+Subject: CVE assigned for gdb: arbitrary code execution via .debug_gdb_scripts
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 24, 2011 at 15:54 -0800, Kees Cook wrote:
-> "ifconfig $module" will load any module as long as the process
-> has CAP_NET_ADMIN (ignoring CAP_SYS_MODULE)."
+This issue is now public.
 
-This was fixed in 8909c9ad8ff:
+gdb: arbitrary code execution via .debug_gdb_scripts
 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=8909c9ad8ff03611c9c96c9a92656213e4bb495b
+https://bugzilla.redhat.com/show_bug.cgi?id=703238
+
+Vincent Danen 
+It was discovered [1],[2] the the GNU Debugger (gdb) would load
+untrusted files
+from the current working directory when .debug_gdb_scripts was defined. 
+While
+this was a design decision, it is an insecure one and users who do not
+pre-inspect untrusted files may execute arbitrary code with their
+privileges.
+
+[1] http://sourceware.org/ml/gdb-patches/2011-04/msg00559.html
+[2] http://sourceware.org/ml/gdb-patches/2011-05/msg00202.html
+
+This issue has been assigned CVE-2011-4355
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+
+-Kurt Seifried / Red Hat Security Response Team
+
+
