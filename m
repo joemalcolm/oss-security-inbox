@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/27/2
-Message-ID: <c95a1a9e-b5f9-46ff-b9eb-324858da6e74@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 27 Sep 2011 14:26:23 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/3
+Message-ID: <CAPQRN=WDpuBC82mODSbCPokYso04StaxUMrBQB_KTrYzC7Kq3Q@mail.gmail.com>
+Date: Mon, 28 Nov 2011 21:18:50 -0200
+From: Raphael Bastos <tecnologia@...tosservice.com.br>
 To: oss-security@...ts.openwall.com
-Cc: security@....net
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+Cc: security@...ckware.com
+Subject: Fwd: Bug script install slackware
 Content-Type: text/plain; charset=utf-8
 
-Let's use CVE-2011-3379 for this.
+---------- Forwarded message ----------
+From: Raphael Bastos <tecnologia@...tosservice.com.br>
+Date: 2011/10/28
+Subject: Bug script install slackware
+To: volkerdi@...ckware.com
 
-Thanks.
 
--- 
-    JB
+Take a look.... this is the correction sugest to script "SeTpartitions".
+
+EX: sed ,'/mnt','$T_PX',g --- on lines 374, 495, 496, 503.
+
+livecd setup # cat -n  SeTpartitions |grep T_PX
+  10  T_PX=/mnt
+ 374  mount $ROOT_DEVICE $T_PX -t $ROOT_SYS_TYPE 1> $REDIR 2> $REDIR
+ 495        if [ ! -d $T_PX/$MTPT ]; then
+ 496           mkdir -p $T_PX/$MTPT
+ 503        mount $NEXT_PARTITION $T_PX/$MTPT -t $NEXT_SYS_TYPE 1>
+$REDIR 2> $REDIR
 
 
------ Original Message -----
-> Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the
-> is_a()
-> function worked, and as a result it could allow for remote arbitrary
-> code execution if certain specific conditions are met (the blog post
-> referenced below has a good writeup of the flaw).
-> 
-> http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
-> https://bugs.php.net/bug.php?id=55475
-> https://bugzilla.redhat.com/show_bug.cgi?id=741020
-> 
-> It looks like this is the fix:
-> 
-> http://svn.php.net/viewvc/?view=revision&amp;revision=317183
-> 
-> Thanks.
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
-> 
+Att,
+Raphael Bastos aka chemonz
+
+===============================================
+Bastos Service Manutenção Industrial Ltda.
+www.bastosservice.com.br
+Linux Reg. User: 388431  //  LPI ID: LPI000214711
+email:~> $ echo "vgepqnqikcBdcuvquugtxkeg0eqo0dt" | perl -pe \
+'s/(.)/chr(ord($1)-2)/ge'
+===============================================
+
