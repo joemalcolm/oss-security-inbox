@@ -1,19 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/2
-Message-ID: <20110317030947.GA46207@dojo.mi.org>
-Date: Wed, 16 Mar 2011 23:09:47 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/3
+Message-ID: <20111128134516.5cce493c@mail.a3li.li>
+Date: Mon, 28 Nov 2011 13:45:16 +0100
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: n0idx80@...il.com
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
-:who got vendor sec for HP.  Likely, we would still want to be part of
-:vendor-sec.new.
+On Mon, 28 Nov 2011 11:46:30 +0100
+Michael Harrison <n0idx80@...il.com> wrote:
 
-I'd also be interested in participating in a new incarnation of
-vendor-sec on behalf of my employer.
+> Sorry about the confusion. I work for the Gentoo security team, and I
+> am not sure whether it would be beneficial for me to be on the closed
+> list or not. It is my presumption that the release of non-Linux
+> vulnerabilities might better help us identify vulnerabilities across
+> the board.
+
+We are already part of the actual Linux distributions list, and
+according to the first message of this thread we would be included in
+this new list as well. So I think we're good.
+
+Alexander, fyi, Michael is training to be part of our security
+team, but not yet a full member. Please disregard this request.
+
+Sorry for the additional OT,
+Alex
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Once again we find that slime does not pay!"                       -The Tick
+Alex Legler <a3li@...too.org>
+Gentoo Security/Ruby/Infrastructure
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
