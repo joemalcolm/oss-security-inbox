@@ -1,108 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/4
-Message-ID: <20110304004107.GA8997@kroah.com>
-Date: Thu, 3 Mar 2011 16:41:07 -0800
-From: Greg KH <greg@...ah.com>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Cc: oss-security@...ts.openwall.com, Kees Cook <kees@...ntu.com>
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/5
+Message-ID: <4ED3A651.4010609@redhat.com>
+Date: Mon, 28 Nov 2011 08:18:41 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- python-celery / Celery v2.4 -- Privilege escalation due improper sanitization of --uid and --gid arguments in certain tools (CELERYSA-0001
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 07:26:21PM -0500, Dan Rosenberg wrote:
-> >>
-> >> Rather than requiring individuals to perform substantial amounts of
-> >> digging through patches, which I agree is infeasible, perhaps it would
-> >> be more reasonable to establish a general policy that bug reporters
-> >> and maintainers can use to work with distro security teams and the
-> >> rest of the security community.
-> >>
-> >> For example, a public or private list could be established for all
-> >> *potential* kernel security issues, and just as is the case with
-> >> CC'ing stable, a policy could be developed where maintainers are
-> >> expected to CC this list for fixes that might possibly have security
-> >> relevance, with a tendency towards erring on the safe side if security
-> >> impact is unclear.
-> >
-> > This proposal just fell down right there, as it has been rightly pointed
-> > out that numerous bug fixes in the kernel in the past have later been
-> > deemed "security fixes".  So what you are asking for is for _all_
-> > bugfixes to be sent to such a list.
-> >
-> > Well, we have that already, we have mailing lists that get every single
-> > patch that is merged into the kernel, and there's the big lkml list as
-> > well with hundreds of fixes posted every week.
-> >
-> 
-> Of course failing to anticipate security impact is bound to happen in
-> the kernel; it frequently happens in userland too, and is unavoidable.
->  That doesn't mean we can't try, and it doesn't mean we should be
-> overly paranoid and have security folks manually audit every patch.
-> Currently, maintainers and bug reporters are expected to ask
-> themselves a simple question when deciding whether or not to CC
-> stable: "does this fix a bug or security issue, or is it a new
-> feature?".  Similarly, I don't think it's too much to ask for people
-> to consider the question of "does this bug it allow an unprivileged
-> user to crash the system, gain additional access, or otherwise cross
-> privilege boundaries?"  And if the answer is "I don't know, maybe?",
-> then they should CC this list to be safe.  I think this would result
-> in not nearly as much volume as you're anticipating.
+On 11/28/2011 02:09 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a privilege escalation flaw was found in the way 'celeryd-multi',
+> 'celeryd_detach', 'celerybeat' and 'celeryev' tools of the Celery,
+> an asynchronous task queue based on distributed message passing,
+> performed sanitization of --uid and --gid arguments, provided to
+> the tools on the command line (only effective user id was changed,
+> with the real one remaining unchanged). A local attacker could use
+> this flaw to send messages via the message broker or use the Pickle
+> serializer to load and execute arbitrary code with elevated privileges.
+>
+> References:
+> [1] http://www.celeryproject.org/news/celery-24-released/
+> [2] http://docs.celeryproject.org/en/latest/changelog.html#version-2-4-4
+> [3] https://github.com/ask/celery/blob/master/docs/sec/CELERYSA-0001.txt
+> [4] https://github.com/ask/celery/pull/544
+>
+> Relevant upstream patch:
+> [5]
+> https://github.com/gadomski/celery/commit/2afc0ea2ea22bce25013c9867f89e41a48b9251b
+>
+> Could you allocate a CVE id for this issue?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+Please use CVE-2011-4356 for this issue.
 
-They do this already today, that's what security@...nel.org is for, and
-it gets a bit of traffic like this every week.
+-- 
 
-I actually use that traffic to watch out for things that need to make
-sure they go into the stable releases.  Those patches are then posted to
-stable@...nel.org when they are public, so you can watch that list if
-you want.
+-Kurt Seifried / Red Hat Security Response Team
 
-> >> I think security communication needs to be
-> >> improved at the commit level (as opposed to the reporting), since
-> >> maintainers are often much more knowledgeable and better able to
-> >> understand security impact than the users who are often presenting
-> >> issues.
-> >
-> > I don't think you understand the rate of change in the kernel and how
-> > trying to do this for every commit is unfeasable and unworkable.  You do
-> > know how fast it goes, right?
-> >
-> 
-> Why is CC'ing a security list any more difficult than CC'ing stable?
-
-It's not, but if all you want to do is make sure the patch is applied to
-the stable trees as you think it's a potential problem, just copy stable
-instead.  That's what happens today.
-
-> >> Criteria could be set up for what kinds of issues would be
-> >> candidates for being sent to this list.  I don't think this would
-> >> require substantially more work on anyone's part, but by creating a
-> >> culture where potential security issues are treated seriously, it
-> >> would at least stop some of the silent patching that's been going on.
-> >>
-> >> Once potential security issues have been submitted to such a list, I'm
-> >> sure there would be no shortage of people willing and able to analyze
-> >> security impact for each issue, including assigning CVEs.  While
-> >> digging through every kernel patch might be too much work, with the
-> >> cooperation of maintainers this can be reduced to a much smaller
-> >> subset that would be easily dealt with.
-> >
-> > I would be happy if someone could just document the patches that _are_
-> > applied to stable kernel releases.  I bet you can't keep up with that,
-> > they are moving so fast.
-> >
-> > Sorry, I don't think this is workable as you are proposing, but feel
-> > free to prove me wrong :)
-> >
-> 
-> Perhaps you're right, but maybe we can generate some discussion to
-> come up with a solution that improves upstream security communication
-> and IS workable.
-
-Again, just try to start out by watching stable@...nel.org and writing
-up summaries for the patches it applies and releases.  I think you
-severly underestimate the work involved.  But hey, what do I know, I
-could be totally wrong, it wouldn't be the first time today that
-happened :)
-
-thanks,
-
-greg k-h
