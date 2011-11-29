@@ -1,42 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/6
-Message-ID: <CABeokRdp3LAkfrHhbDfQeGdLgiMEqu8DXrMn1o6b2nneyfqyZQ@mail.gmail.com>
-Date: Thu, 18 Aug 2011 10:15:08 -0400
-From: Sergey Chernyshev <sergey.chernyshev@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/8
+Message-ID: <4ED4DD48.3010403@lighttpd.net>
+Date: Tue, 29 Nov 2011 14:25:28 +0100
+From: Stefan Bühler <stbuehler@...httpd.net>
 To: oss-security@...ts.openwall.com
-Subject: Start(up) API project security
+CC: security@...httpd.net, Xi Wang <xi.wang@...il.com>
+Subject: CVE Request: lighttpd/mod_auth out-of-bounds read due to signedness error
 Content-Type: text/plain; charset=utf-8
 
-Hello from fellow Open Sourcerer.
+Hi,
 
-I'm working on a project to help people build web apps, called Startup API
-(thinking of renaming it to Start API to make it less cool, but more
-useful).
+Xi Wang discovered the following issue in lighttpd:
 
-Having seen too many startups keeping the passwords in clear
-and committing many similar security "crimes", I'm very much concerned about
-it and want to establish some security process around building the apps.
-I've started gathering information about security-related issues on the
-project's wiki (not only for Startup API software itself, but for best
-practice collection in general):
-http://startupapi.org/Security
+for http auth we need to base64-decode user input; the allowed character 
+range includes non ASCII characters above 0x7f.
 
-Right now, I'm trying to understand what are the most common and / or most
-dangerous security issues surrounding web apps.
-I feel that this group should have a pretty good experience tracking those
-down and I'd love any thoughts you might want to share.
+The function to decode this string takes a "const char *in"; and reads
+each character into an "int ch", which is used as offset in the table.
 
-If you have any links to good articles or videos about web app security, I'd
-really appreciate that too.
+So characters above 0x7f lead to negative indices (as char is signed on 
+most platforms).
 
-Thank you,
+Here the vulnerable code (src/http_auth.c:67)
 
-         Sergey
+---
+static const short base64_reverse_table[256] = ...;
+static unsigned char * base64_decode(buffer *out, const char *in) {
+	...
+	int ch, ...;
+	size_t i;
+	...
+	
+		ch = in[i];
+		...
+		ch = base64_reverse_table[ch];
+	...
+}
+---
 
+It doesn't matter if "broken" data is read - it just may allow more
+encodings of the correct login information.
 
---
-Sergey Chernyshev
-http://www.sergeychernyshev.com/
-http://www.meetup.com/Web-Performance-NY/
-http://www.showslow.com/
+The only possible impact is a segfault, leading to DoS.
 
+I had a look at some debian and openSUSE binaryies, and it looks like 
+there is always enough data (>= 256 bytes) in the .rodata section 
+before the base64_reverse_table table, so these binaries are not 
+vulnerable afaict.
+
+we plan to release 1.4.30 soon, including the fix for this issue.
+
+regards,
+stefan
+
+bug tracked as:
+   http://redmine.lighttpd.net/issues/2370
+announcement (not complete yet):
+   http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2011_01.txt
+
+proposed patch
+===
+diff --git a/src/http_auth.c b/src/http_auth.c
+index f2f86dd..33adf71 100644
+--- a/src/http_auth.c
++++ b/src/http_auth.c
+@@ -99,7 +99,7 @@ static unsigned char * base64_decode(buffer *out, 
+const char *in) {
+  	ch = in[0];
+  	/* run through the whole string, converting as we go */
+  	for (i = 0; i < in_len; i++) {
+-		ch = in[i];
++		ch = (unsigned char) in[i];
+
+  		if (ch == '\0') break;
+
+===
