@@ -1,54 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/6
-Message-ID: <4DBEE3FB.1000207@mvista.com>
-Date: Mon, 02 May 2011 07:03:55 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/8
+Message-ID: <4ED4DD48.3010403@lighttpd.net>
+Date: Tue, 29 Nov 2011 14:25:28 +0100
+From: Stefan Bühler <stbuehler@...httpd.net>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+CC: security@...httpd.net, Xi Wang <xi.wang@...il.com>
+Subject: CVE Request: lighttpd/mod_auth out-of-bounds read due to signedness error
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+Xi Wang discovered the following issue in lighttpd:
 
-On 05/02/2011 06:12 AM, Solar Designer wrote:
-> On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
->> On 04/30/2011 04:51 AM, Solar Designer wrote:
->> <snipped>
->>
->>> Hence, I've saved your subscription request to a separate folder, to
->>> revisit it if a decision is made to start adding "closed" vendors to the
->>> list, if Wind River starts to publish advisories and updates (in other
->>> words, if it becomes no more closed than Red Hat), or if a suitable
->>> separate list is setup.
->>
->> Can you clarify what is meant by updates?
-> 
-> RHEL-like .src.rpm's or equivalent will do.  Something else might do.
+for http auth we need to base64-decode user input; the allowed character 
+range includes non ASCII characters above 0x7f.
 
-Ok.. but do they need to be publicly available ( ie no service or
-maintenance contract to get)?
+The function to decode this string takes a "const char *in"; and reads
+each character into an "int ch", which is used as offset in the table.
 
-> 
-> While we're at it, just what software do MontaVista and Wind River ship?
+So characters above 0x7f lead to negative indices (as char is signed on 
+most platforms).
 
-MontaVista ships Linux, apps, toolchains and misc cross development
-tools. The number of applications vary depending on the product version.
+Here the vulnerable code (src/http_auth.c:67)
 
-MVL6 and CGE 6 both use bitbake (ie receipt sytle) and older products
-use RPM.
+---
+static const short base64_reverse_table[256] = ...;
+static unsigned char * base64_decode(buffer *out, const char *in) {
+	...
+	int ch, ...;
+	size_t i;
+	...
+	
+		ch = in[i];
+		...
+		ch = base64_reverse_table[ch];
+	...
+}
+---
 
+It doesn't matter if "broken" data is read - it just may allow more
+encodings of the correct login information.
 
-> My guess is that embedded Linux distro vendors would not care about
-> vulnerabilities in desktop-specific apps (e.g., the X server), but I
-> could be wrong.  
+The only possible impact is a segfault, leading to DoS.
 
-We do supply X server.
+I had a look at some debian and openSUSE binaryies, and it looks like 
+there is always enough data (>= 256 bytes) in the .rodata section 
+before the base64_reverse_table table, so these binaries are not 
+vulnerable afaict.
 
-And there are other software categories, which may or
-> may not be relevant.  It'd be nice for potential reporters of security
-> issues to know which vendors might be affected.
+we plan to release 1.4.30 soon, including the fix for this issue.
 
-yes it would be nice. I will add it to my list of things todo.
+regards,
+stefan
 
-- Armin
+bug tracked as:
+   http://redmine.lighttpd.net/issues/2370
+announcement (not complete yet):
+   http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2011_01.txt
 
+proposed patch
+===
+diff --git a/src/http_auth.c b/src/http_auth.c
+index f2f86dd..33adf71 100644
+--- a/src/http_auth.c
++++ b/src/http_auth.c
+@@ -99,7 +99,7 @@ static unsigned char * base64_decode(buffer *out, 
+const char *in) {
+  	ch = in[0];
+  	/* run through the whole string, converting as we go */
+  	for (i = 0; i < in_len; i++) {
+-		ch = in[i];
++		ch = (unsigned char) in[i];
+
+  		if (ch == '\0') break;
+
+===
