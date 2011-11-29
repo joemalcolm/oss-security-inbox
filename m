@@ -1,41 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/3
-Message-ID: <20110427201047.08f42008@orphan>
-Date: Wed, 27 Apr 2011 20:10:47 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: dan.j.rosenberg@...il.com, "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/12
+Message-ID: <4ED54D52.3030303@redhat.com>
+Date: Tue, 29 Nov 2011 14:23:30 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: mediawiki before 1.17.1
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 27 Apr 2011 11:00:16 -0400 Dan Rosenberg wrote:
+On 11/29/2011 03:12 AM, Hanno Böck wrote:
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-November/000104.html
+>
+> From announce mail:
+>
+> -------------
+> I would like to announce the release of MediaWiki 1.17.1. Two security
+> issues were discovered.
+>
+> Alexandre Emsenhuber discovered an issue where page titles on private
+> wikis could be exposed bypassing different page ids to index.php. In the
+> case of the user not having correct permissions, they will now be
+> redirected to Special:BadTitle.
+>
+> For more details, see
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=32276
+Please use CVE-2011-4360 for this issue.
 
-> >> util-linux mount
-> >> =============
-> >> * Edits /etc/mtab.tmp with custom my_addmntent(), behaves
-> >> identically to glibc addmntent() in terms of return code
-> >> * Succeeds on partial writes, does not remove temp file on failure
-> >> (could result in additional corruption of /etc/mtab through
-> >> multiple invocations), does not remove lock file /etc/mtab~ on
-> >> failure (also an issue)
-> >
-> > Dan, would you mind clarifying the way to achieve mtab corruption
-> > via truncated left-over mtab.tmp file and multiple invocations?
-> >  After some discussion with our util-linux maintainer, we fail to
-> > see an obvious way.  util-linux opens mtab.tmp using "w" fopen
-> > open, i.e. using O_TRUNC open flag.  So if there's any mtab.tmp
-> > file found, it's overwritten and its existence does not block
-> > further use of mount / umount as existence of mtab~ lock file does.
-> 
-> Ah, quite right.  I missed that since I was just doing a quick survey
-> of a bunch of helpers.  It seems the mtab.tmp file isn't an issue.
-> Thanks for looking into it.
+> The second issue was found by Tim Starling, who discovered that
+> action=ajax requests were dispatched to the relevant function without
+> any read permission checks being done. This could have led to data
+> leakage on private wikis.
+>
+> For more details, see
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=32616
+Please use CVE-2011-4361 for this issue.
 
-Ok, thank you!
+> ------------------------
+>
+> Please assign two CVEs.
+>
 
-Steve, it seems CVE-2011-1676 should get marked as rejected or disputed.
-
-Thanks!
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
