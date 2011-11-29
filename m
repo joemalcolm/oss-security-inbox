@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/1
-Message-ID: <20110302015646.GK5871@ksplice.com>
-Date: Tue, 1 Mar 2011 20:56:46 -0500
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/2
+Message-ID: <4ED46BDE.8010709@redhat.com>
+Date: Mon, 28 Nov 2011 22:21:34 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: Multiple DoS issues in epoll
+CC: David Jorm <djorm@...hat.com>
+Subject: Re: CVE request: includeViewParameters re-evaluates param/model values as EL expressions on Mojarra/MyFaces
 Content-Type: text/plain; charset=utf-8
 
-Two requests for bugs in epoll:
+On 11/28/2011 10:16 PM, David Jorm wrote:
+> It has been found that when includeViewParameters is set to true, JSF 2 as implemented by Mojarra and MyFaces will re-evaluate parameter/model values as EL expressions.
+>
+> Original bug:
+> http://java.net/jira/browse/JAVASERVERFACES-2247
+>
+> MyFaces bug:
+> https://issues.apache.org/jira/browse/MYFACES-3405
+>
+> Write-up/reproducer:
+> http://www.jakobk.com/2011/11/jsf-value-expression-injection-vulnerability/
+>
+> Thanks
+Please use CVE-2011-4358  for the Mojarra instance of this vulnerable.
 
-(1) The epoll subsystem in Linux did not prevent users from creating circular
-epoll file structures, potentially leading to a denial of service (kernel
-deadlock).
+Please use CVE-2011-4359  for the MyFaces instance of this vulnerable.
 
-Reference: https://lkml.org/lkml/2011/2/5/220
-Upstream commit: http://git.kernel.org/linus/22bacca48a1755f79b7e0f192ddb9fbb7fc6e64e
+-- 
 
-(2) The epoll subsystem allows users to create large nested epoll structures,
-which the kernel will then to walk with preemption disabled, causing a denial of
-service via excessive CPU consumption in the kernel.
+-Kurt Seifried / Red Hat Security Response Team
 
-References:
-http://thread.gmane.org/gmane.linux.kernel/1105744
-http://thread.gmane.org/gmane.linux.kernel/1105744/focus=1105888
-
-No upstream fix yet for this one.
-
-- Nelson
