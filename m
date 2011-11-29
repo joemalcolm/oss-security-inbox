@@ -1,34 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/6
-Message-ID: <1905456926.90311.1297974895777.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 17 Feb 2011 15:34:55 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: thp: prevent hugepages during args/env copying into the user stack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/9
+Message-ID: <CAPQRN=UZoJgd71qfzAEKdJC37mT4+2hPmzs6=zz9hCXArbZmoA@mail.gmail.com>
+Date: Tue, 29 Nov 2011 11:35:30 -0200
+From: Raphael Bastos <tecnologia@...tosservice.com.br>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, security@...ckware.com
+Subject: Re: Fwd: Bug script install slackware
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0999.
+2011/11/29 Solar Designer <solar@...nwall.com>
 
-Thanks.
+> Raphael -
+>
+> On Mon, Nov 28, 2011 at 09:18:50PM -0200, Raphael Bastos wrote:
+> > Take a look.... this is the correction sugest to script "SeTpartitions".
+>
+> As Kurt said, you definitely need to provide more information.  I found
+> your posting cryptic and I was unsure about approving it for
+> distribution to the list (yet I did), because it could at best result in
+> a request for more info.  Security relevance of your finding is unclear
+> from what you posted.
+>
+> Please clarify.
+>
+> Thanks,
+>
+> Alexander
+>
 
--- 
-    JB
 
------ Original Message -----
-> "Transparent hugepages can only be created if rmap is fully
-> functional.
-> A specially crafted binary could allow the user stack to grow huge and
-> backed by hugepages without this patch while is_vma_temporary_stack()
-> is
-> true.
-> 
-> This also optmizes away some harmless but unnecessary setting of
-> khugepaged_scan.address and it switches some BUG_ON to VM_BUG_ON."
-> 
-> mm/huge_memory.c - introduced in 71e3aac0 (v2.6.38-rc1)
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=678209
-> http://git.kernel.org/linus/a7d6e4ecdb7648478ddec76d30d87d03d6e22b31
-> 
-> Thanks, Eugene
+Sorry for my bad English, I am Brazilian. kkkkkkkkk
+I am quoting a bug in the script "SeTpartitions," the official Slackware
+installer. I suggested a correction in lines 374, 495, 496, 503, where
+instead of using / mnt, which is used for the variable mountpoint '$ T_PX'.
+
+I found this bug since 2002 used the installer for my Slackware Linux
+distribution based on Gentoo. After modifying the installer could normally
+use.
+PS: I use a different mount point / mnt as used by Pat use another LiveCD, also
+created by me.
+
+Thank you for listening. I tried to send this email to Patrick, but
+went 30 days
+without response, so headed here for the list.
+
+Any other questions just give me a report.
+
+Sds,
+Raphael Bastos aka chemonz
+
