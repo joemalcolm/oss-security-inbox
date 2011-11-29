@@ -1,70 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/6
-Message-ID: <4E098464.6080104@redhat.com>
-Date: Tue, 28 Jun 2011 09:36:04 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Mango <h@...r.se>, phpMyAdmin Security Team <security@...myadmin.net>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: phpMyAdmin 3.4 Multiple Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/11
+Message-ID: <20111129204124.GA29519@openwall.com>
+Date: Wed, 30 Nov 2011 00:41:24 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Raphael Bastos <tecnologia@...tosservice.com.br>
+Cc: "Patrick J. Volkerding" <security@...ckware.com>, oss-security@...ts.openwall.com
+Subject: Re: Fwd: Bug script install slackware
 Content-Type: text/plain; charset=utf-8
 
-Hello Mango,
+Raphael -
 
-   thank you for your report.
+On Tue, Nov 29, 2011 at 12:45:23PM -0200, Raphael Bastos wrote:
+> It would be a security flaw .... Patrick I only report here on the list
+> because I sent an email to 30 days and getting no return. It would be
+> a bug that affected the slackware developers.
+> 
+> But if you want to play a scenario, okay. Simply just change the variable mount
+> point to a directory other than / mnt and try to run the default
+> installation of Slackware, so you have a broken installation.
 
-Wondering if you have contacted phpMyAdmin Security Team first (Cc-ed
-too) for their review, opinion and actions planned regarding the issues
-below? ( http://www.phpmyadmin.net/home_page/security/ )
+According to what you wrote so far, the bug is not a security flaw.
+Please take further discussion of this (with Patrick) off-list.  Thanks!
 
-Also, are there relevant upstream bugzilla issue tracking system:
-[1] http://sourceforge.net/tracker/?atid=377408&group_id=23067&func=browse
-
-records (where further information about the issues could be found) yet?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-On 06/28/2011 04:32 AM, Mango wrote:
-> Hi.
-> I've found a bunch of vulnerabilities in the latest release of phpMyAdmin.
->
-> Vuln 1:
-> Any variable in the super global $_SESSION array can be overwritten or
-> created with an arbitrate value.
->
-> Vuln 2:
-> A (common) misconfiguration of phpMyAdmin allows content from the $_SESSION
-> array can be written to a .php-file.
-> Combined with Vuln 1 this becomes a conditional remote code execution.
->
-> Vuln 3:
-> Content from the $_SESSION array are (post authentication) used as input to
-> a function that can execute PHP code.
-> Under the current circumstances a previously unknown null byte string
-> truncation in this function is used.
-> I have only been able to reproduce this string truncation on PHP 5.2.13
-> running on Windows 7 and I've failed to reproduce it on PHP 5.2.13 running
-> on OpenBSD 4.7 and PHP 5.2.17 running on Linux 2.6.18. I do lack
-> the necessary C++ debugging skills to find out why this only works on my
-> windows box.
-> Combined with Vuln 1 this becomes an authenticated remote code execution.
->
-> Vuln 4:
-> Under a certain configuration an authenticated attacker can include a local
-> file and interpret it's content as PHP.
-> By modifying values in the $_SESSION array a cache holding the required
-> configuration option can be temporarily altered during run time.
-> If combined with Vuln 1 all configurations are vulnerable to this
-> authenticated local file inclusion.
->
->
-> Vuln 2&  3 does not rely on Vuln 1 since the $_SESSION array could also be
-> modified by a local attacker trying to elevate his/hers privileges in an
-> improperly configured shared environment.
-> Do I need 4 CVEs?
->
-> Regards
-> /Mango - ha.xxor.se
->
-
+Alexander
