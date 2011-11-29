@@ -1,39 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/03/2
-Message-ID: <822284632.282461.1296749025708.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Feb 2011 11:03:45 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: glibc CVE-2010-3847 fix regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/5
+Message-ID: <20111129061453.GA26872@openwall.com>
+Date: Tue, 29 Nov 2011 10:14:53 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Raphael Bastos <tecnologia@...tosservice.com.br>
+Cc: oss-security@...ts.openwall.com, security@...ckware.com
+Subject: Re: Fwd: Bug script install slackware
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0536.
+Raphael -
 
-Thanks.
+On Mon, Nov 28, 2011 at 09:18:50PM -0200, Raphael Bastos wrote:
+> Take a look.... this is the correction sugest to script "SeTpartitions".
 
--- 
-    JB
+As Kurt said, you definitely need to provide more information.  I found
+your posting cryptic and I was unsure about approving it for
+distribution to the list (yet I did), because it could at best result in
+a request for more info.  Security relevance of your finding is unclear
+from what you posted.
 
------ Original Message -----
-> Hi!
-> 
-> It seems this does not have any CVE assigned yet...
-> 
-> The original patch for CVE-2010-3847, as used by multiple vendors,
-> introduced a bug in the way $ORIGIN is (not-)expanded when used in ELF
-> R*PATH. This could allow a local user to escalate privileges via
-> privileged program using a library with $ORIGIN in R*PATH (such as
-> certain glibc iconv modules).
-> 
-> There are at least Debian and Ubuntu advisories addressing this issue:
-> http://lists.debian.org/debian-security-announce/2011/msg00005.html
-> https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-January/001226.html
-> 
-> Note that privileged programs that themselves have $ORIGIN in R*PATH
-> could have been abused before and are not addressed in the above
-> advisories. It's unclear if any distro provides any privileged program
-> with such R*PATH though.
-> 
-> --
-> Tomas Hoger / Red Hat Security Response Team
+Please clarify.
+
+Thanks,
+
+Alexander
