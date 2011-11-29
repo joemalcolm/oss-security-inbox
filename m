@@ -1,29 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/3
-Message-ID: <4D6CB75F.5090303@redhat.com>
-Date: Tue, 01 Mar 2011 17:07:43 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: xfs infoleak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/7
+Message-ID: <4ED4E78C.8070907@slackware.com>
+Date: Tue, 29 Nov 2011 08:09:16 -0600
+From: "Patrick J. Volkerding" <security@...ckware.com>
+To: Raphael Bastos <tecnologia@...tosservice.com.br>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Fwd: Bug script install slackware
 Content-Type: text/plain; charset=utf-8
 
-On 02/16/2011 04:41 PM, Eugene Teo wrote:
->  From Dan R0s3nbug5, "The FSGEOMETRY_V1 ioctl (and its compat
-> equivalent) calls out to xfs_fs_geometry() with a version number of 3.
-> This code path does not fill in the logsunit member of the passed
-> xfs_fsop_geom_t, leading to the leaking of four bytes of uninitialized
-> stack data to potentially unprivileged callers. Since all other members
-> are filled in all code paths and there are no padding bytes in this
-> structure, it's safe to avoid an expensive memset() in favor of just
-> clearing this one field."
+Hello,
+
+While I'm sure there are a number of bugs in the crufty old installer 
+scripts, I'll need to know how there's a security impact before 
+notifying everyone that the sky has fallen.  I'd also like to note that 
+if running the installer requires physical access to the machine I'm 
+liable to consider security to already be non-existent at that time.
+
+Please clarify what is wrong with examples of how to reproduce the 
+issue, and I'll look into it.
+
+Thanks.
+
+On 11/28/2011 05:18 PM, Raphael Bastos wrote:
+> ---------- Forwarded message ----------
+> From: Raphael Bastos<tecnologia@...tosservice.com.br>
+> Date: 2011/10/28
+> Subject: Bug script install slackware
+> To: volkerdi@...ckware.com
 >
-> https://patchwork.kernel.org/patch/555461/
-> https://bugzilla.redhat.com/show_bug.cgi?id=677260
+>
+> Take a look.... this is the correction sugest to script "SeTpartitions".
+>
+> EX: sed ,'/mnt','$T_PX',g --- on lines 374, 495, 496, 503.
+>
+> livecd setup # cat -n  SeTpartitions |grep T_PX
+>    10  T_PX=/mnt
+>   374  mount $ROOT_DEVICE $T_PX -t $ROOT_SYS_TYPE 1>  $REDIR 2>  $REDIR
+>   495        if [ ! -d $T_PX/$MTPT ]; then
+>   496           mkdir -p $T_PX/$MTPT
+>   503        mount $NEXT_PARTITION $T_PX/$MTPT -t $NEXT_SYS_TYPE 1>
+> $REDIR 2>  $REDIR
+>
+>
+> Att,
+> Raphael Bastos aka chemonz
+>
+> ===============================================
+> Bastos Service Manutenção Industrial Ltda.
+> www.bastosservice.com.br
+> Linux Reg. User: 388431  //  LPI ID: LPI000214711
+> email:~>  $ echo "vgepqnqikcBdcuvquugtxkeg0eqo0dt" | perl -pe \
+> 's/(.)/chr(ord($1)-2)/ge'
+> ===============================================
 
-There's an issue with the patch, here's the fix to the fix:
-http://www.spinics.net/lists/xfs/msg03801.html
-
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
