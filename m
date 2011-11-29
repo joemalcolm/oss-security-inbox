@@ -1,18 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/49
-Message-ID: <20110404190632.GF14209@openwall.com>
-Date: Mon, 4 Apr 2011 23:06:32 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/6
+Message-ID: <20111129111217.65560ec7@laverne>
+Date: Tue, 29 Nov 2011 11:12:17 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: mediawiki before 1.17.1
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 10:40:57AM +0800, Eugene Teo wrote:
-> pub   4096R/51BF6EF3 2011-04-04
->     Key fingerprint = 7664 496C 62A9 7BC2 7229  B654 FF73 C155 51BF 6EF3
-> uid                  Eugene Teo <eugene[0x40]redhat.com>
-> uid                  Eugene Teo <eteo[0x40]redhat.com>
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-November/000104.html
 
-Added.
+From announce mail:
 
-Alexander
+-------------
+I would like to announce the release of MediaWiki 1.17.1. Two security
+issues were discovered.
+
+Alexandre Emsenhuber discovered an issue where page titles on private
+wikis could be exposed bypassing different page ids to index.php. In the
+case of the user not having correct permissions, they will now be
+redirected to Special:BadTitle.
+
+For more details, see
+https://bugzilla.wikimedia.org/show_bug.cgi?id=32276
+
+The second issue was found by Tim Starling, who discovered that
+action=ajax requests were dispatched to the relevant function without
+any read permission checks being done. This could have led to data
+leakage on private wikis.
+
+For more details, see
+https://bugzilla.wikimedia.org/show_bug.cgi?id=32616
+
+------------------------
+
+Please assign two CVEs.
+
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
