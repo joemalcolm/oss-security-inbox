@@ -1,26 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/3
-Message-ID: <CAHmME9oGDZPfstr3g9fMnbugmcB0Qo_Exgf8iaN8CmoP2mUjew@mail.gmail.com>
-Date: Wed, 2 Nov 2011 02:03:29 -0400
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request for Calibre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/13
+Message-ID: <4ED54E45.8000601@redhat.com>
+Date: Tue, 29 Nov 2011 14:27:33 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Stefan Bühler <stbuehler@...httpd.net>, security@...httpd.net, Xi Wang <xi.wang@...il.com>
+Subject: Re: CVE Request: lighttpd/mod_auth out-of-bounds read due to signedness error
 Content-Type: text/plain; charset=utf-8
 
-Oh, and I suppose there's a very obvious but critical #6:
+On 11/29/2011 06:25 AM, Stefan Bühler wrote:
+> Hi,
+>
+> Xi Wang discovered the following issue in lighttpd:
+>
+> for http auth we need to base64-decode user input; the allowed
+> character range includes non ASCII characters above 0x7f.
+>
+> The function to decode this string takes a "const char *in"; and reads
+> each character into an "int ch", which is used as offset in the table.
+>
+> So characters above 0x7f lead to negative indices (as char is signed
+> on most platforms).
+>
+> Here the vulnerable code (src/http_auth.c:67)
+>
+> ---
+> static const short base64_reverse_table[256] = ...;
+> static unsigned char * base64_decode(buffer *out, const char *in) {
+>     ...
+>     int ch, ...;
+>     size_t i;
+>     ...
+>     
+>         ch = in[i];
+>         ...
+>         ch = base64_reverse_table[ch];
+>     ...
+> }
+> ---
+>
+> It doesn't matter if "broken" data is read - it just may allow more
+> encodings of the correct login information.
+>
+> The only possible impact is a segfault, leading to DoS.
+>
+> I had a look at some debian and openSUSE binaryies, and it looks like
+> there is always enough data (>= 256 bytes) in the .rodata section
+> before the base64_reverse_table table, so these binaries are not
+> vulnerable afaict.
+>
+> we plan to release 1.4.30 soon, including the fix for this issue.
+>
+> regards,
+> stefan
+>
+> bug tracked as:
+>   http://redmine.lighttpd.net/issues/2370
+> announcement (not complete yet):
+>   http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2011_01.txt
+>
+> proposed patch
+> ===
+> diff --git a/src/http_auth.c b/src/http_auth.c
+> index f2f86dd..33adf71 100644
+> --- a/src/http_auth.c
+> +++ b/src/http_auth.c
+> @@ -99,7 +99,7 @@ static unsigned char * base64_decode(buffer *out,
+> const char *in) {
+>      ch = in[0];
+>      /* run through the whole string, converting as we go */
+>      for (i = 0; i < in_len; i++) {
+> -        ch = in[i];
+> +        ch = (unsigned char) in[i];
+>
+>          if (ch == '\0') break;
+>
+> ===
+Please use CVE-2011-4362 for this issue.
 
-6. An unprivileged user an mount/unmount/eject whatever he wants, with
-root permissions. Danger.
+-- 
 
-This may help to "confirm":
-https://bugs.launchpad.net/calibre/+bug/885027/
+-Kurt Seifried / Red Hat Security Response Team
 
-
-As well, the maintainer has already issued a fix. From the bug report:
-"Fixed in branch lp:calibre. The fix will be in the next release.
-calibre is usually released every Friday.", which means the above
-source link, that went to the trunk, now shows the fixed result. The
-old broken code is still available here:
-http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
-
-Note that the maintainer has chosen only to address #5.
