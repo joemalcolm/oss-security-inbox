@@ -1,22 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/19
-Message-Id: <20110412194323.bb5defbe.michael.s.gilbert@gmail.com>
-Date: Tue, 12 Apr 2011 19:43:23 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/5
+Message-ID: <20111129061453.GA26872@openwall.com>
+Date: Tue, 29 Nov 2011 10:14:53 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Raphael Bastos <tecnologia@...tosservice.com.br>
+Cc: oss-security@...ts.openwall.com, security@...ckware.com
+Subject: Re: Fwd: Bug script install slackware
 Content-Type: text/plain; charset=utf-8
 
-akuster wrote:
-> So publicly available advisories are a requirement.  What about access
-> to the patches?
-> 
-> Is there somewhere I can point my management to that defines these new
-> requirements or is this too soon?
+Raphael -
 
-I think it may be more productive for you to propose your method of
-participation, and let the community decide.  You can use
-redhat/debian/ubuntu as (mostly ideal) models of participation.
+On Mon, Nov 28, 2011 at 09:18:50PM -0200, Raphael Bastos wrote:
+> Take a look.... this is the correction sugest to script "SeTpartitions".
 
-Best wishes,
-Mike
+As Kurt said, you definitely need to provide more information.  I found
+your posting cryptic and I was unsure about approving it for
+distribution to the list (yet I did), because it could at best result in
+a request for more info.  Security relevance of your finding is unclear
+from what you posted.
+
+Please clarify.
+
+Thanks,
+
+Alexander
