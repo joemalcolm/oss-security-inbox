@@ -1,26 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/1
-Message-ID: <20111026110536.GE28067@dhcp-25-225.brq.redhat.com>
-Date: Wed, 26 Oct 2011 13:05:37 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/12
+Message-ID: <4ED54D52.3030303@redhat.com>
+Date: Tue, 29 Nov 2011 14:23:30 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: xfs: potential buffer overflow in xfs_readlink()
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: mediawiki before 1.17.1
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way Linux kernel's XFS filesystem implementation
-handled links with pathname larger than MAXPATHLEN. When
-CONFIG_XFS_DEBUG configuration option was not enabled when compiling
-Linux kernel, an attacker able to mount malicious XFS image could use
-this flaw to crash the system, or potentially, elevate his privileges
-on that system.
+On 11/29/2011 03:12 AM, Hanno Böck wrote:
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-November/000104.html
+>
+> From announce mail:
+>
+> -------------
+> I would like to announce the release of MediaWiki 1.17.1. Two security
+> issues were discovered.
+>
+> Alexandre Emsenhuber discovered an issue where page titles on private
+> wikis could be exposed bypassing different page ids to index.php. In the
+> case of the user not having correct permissions, they will now be
+> redirected to Special:BadTitle.
+>
+> For more details, see
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=32276
+Please use CVE-2011-4360 for this issue.
 
-Proposed upstream patch:
-http://oss.sgi.com/archives/xfs/2011-10/msg00345.html
+> The second issue was found by Tim Starling, who discovered that
+> action=ajax requests were dispatched to the relevant function without
+> any read permission checks being done. This could have led to data
+> leakage on private wikis.
+>
+> For more details, see
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=32616
+Please use CVE-2011-4361 for this issue.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=749156
-http://oss.sgi.com/archives/xfs/2011-10/msg00345.html
+> ------------------------
+>
+> Please assign two CVEs.
+>
 
-Thanks,
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
