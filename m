@@ -1,31 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/4
-Message-ID: <20111204200746.2bc22fe0@laverne>
-Date: Sun, 4 Dec 2011 20:07:46 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/6
+Message-ID: <4ED6C0AC.8060601@lordepsylon.net>
+Date: Thu, 01 Dec 2011 00:47:56 +0100
+From: psy <root@...depsylon.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+Subject: XSSer v1.6 -beta- aka "Grey Swarm!" released.
 Content-Type: text/plain; charset=utf-8
 
-Am Thu, 01 Dec 2011 13:24:19 -0700
-schrieb Kurt Seifried <kseifried@...hat.com>:
+Hi list,
 
-> My mistake, this should have been merged into CVE-2011-4090, it's the
-> same vuln type (XSS) and the same version of Serendipity,
-> CVE-2011-4365 is a bad assignment and should be marked as a duplicate
-> of CVE-2011-4090.
+There is released a new version of *XSSer* (v1.6-beta-) - the cross site
+scripter framework.
 
-I'd disagree on that.
+Take a look to the XSSer website to see new features implemented,
+screenshots, documentation, etc...
 
-CVE-2011-4090 is in an (optional) plugin, while CVE-2011-4365 is an
-issue in the main s9y code.
+http://xsser.sf.net
 
-Although the plugin is shipped with the core s9y, the impact is quite
-different. For 4090, you only need to care if you do something with the
-karma-plugin.
+You can download original code directly from here:
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+http://sourceforge.net/projects/xsser/files/xsser_1.6-1.tar.gz/download
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Or update your copy from the XSSer svn repository:
+
+$ svn co https://xsser.svn.sourceforge.net/svnroot/xsser xsser
+
+Also, you have on the main website some pre-compiled packages
+(ArchLinux, Debian/Ubuntu, Gentoo, etc..)
+
+"Are you ready for the Grey Swarm!?"
+
+Happy cross hacking.
+
+psy.
+
+
