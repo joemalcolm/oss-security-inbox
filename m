@@ -1,44 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/11
-Message-ID: <loom.20110415T210947-398@post.gmane.org>
-Date: Fri, 15 Apr 2011 19:14:52 +0000 (UTC)
-From: JcDenis <jcdenis@...d.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/2
+Message-ID: <20111130174426.GA5061@pisco.westfalen.local>
+Date: Wed, 30 Nov 2011 18:44:27 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: dotclear before 2.2.3
+Subject: CVE request: Proc::ProcessTable perl module
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers <bressers@...> writes:
+Hi,
+please assign a CVE ID for this:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650500 
 
-> 
-> 
-> ----- Original Message -----
-> > My french isn't that good:
-> > http://fr.dotclear.org/blog/post/2011/04/01/Dotclear-2.2.3
-> > 
-> > But that sounds like a security issue:
-> > "Pour en revenir à cette version, signalons qu'elle contient la
-> > correction d'une faille de sécurité signalée il y a quelque temps par
-> > Raphaël — que nous remercions au passage —, ainsi qu'une correction
-> > attendue pour la génération manuelle des miniatures."
-> 
-> Please use CVE-2011-1584.
-> 
-> The google translate is pretty vague, if someone has more details please
-> speak up:
-> 
-> "To come back to this version, note that it contains the
-> correcting a security flaw reported some time ago by
-> Raphael - we appreciate the way - and a correction
-> expected to generate manual thumbnail. "
-> 
-> Thanks.
-> 
-
-
-Hello Josh,
-
-Yes it's a security issue. Little more detail here:
-http://www.arcabit.com/english/home/a-flaw-in-dotclear
-or here:
-http://dev.dotclear.org/2.0/changeset/3427
-
+Cheers,
+        Moritz
