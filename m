@@ -1,50 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/15
-Message-ID: <615919935.998757.1309292668366.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 28 Jun 2011 16:24:28 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/5
+Message-ID: <4ED69938.8070401@redhat.com>
+Date: Wed, 30 Nov 2011 13:59:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Mambo CMS 4.6.x | Multiple Cross Site Scripting Vulnerabilities
+Subject: Re: CVE id request: ffmpeg
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2499
-
-Thanks.
+Does anyone happen to know the email address for fx of recurity labs? If
+so please message me off list (got a host not found error).
 
 -- 
-    JB
 
+-Kurt Seifried / Red Hat Security Response Team
 
------ Original Message -----
-> 1. OVERVIEW
-> 
-> Mambo CMS 4.6.5 and lower versions are vulnerable to Cross Site
-> Scripting.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Mambo is a full-featured, award-winning content management system that
-> can be used for everything from simple websites to complex corporate
-> applications. It is used all over the world to power government
-> portals, corporate intranets and extranets, ecommerce sites, nonprofit
-> outreach, schools, church, and community sites. Mambo's "power in
-> simplicity" also makes it the CMS of choice for many small businesses
-> and personal sites.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> Multiple parameters are not properly sanitized, which allows attacker
-> to conduct Cross Site Scripting attack.
-> This may allow an attacker to create a specially crafted URL that
-> would execute arbitrary script code in a victim's browser.
-> If a user has already logged in to the application, an XSS attack will
-> execute promptly.
-> If not, it will execute after the user's successful logging in.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> Tested on Mambo CMS 4.6.5 (current as of 2011-06-27)
