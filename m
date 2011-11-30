@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/11/1
-Message-ID: <52A7E3FE.60302@redhat.com>
-Date: Wed, 11 Dec 2013 15:03:10 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/3
+Message-ID: <4ED695ED.80808@redhat.com>
+Date: Wed, 30 Nov 2011 13:45:33 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: devscripts (uscan) command execution flaw
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: Proc::ProcessTable perl module
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+On 11/30/2011 10:44 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> please assign a CVE ID for this:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650500 
+>
+> Cheers,
+>         Moritz
+Please use CVE-2011-4363 for this issue.
 
-A flaw was reported in the uscan script of devscripts:
+-- 
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=731849
+-Kurt Seifried / Red Hat Security Response Team
 
->From that bug report:
-
-""
-The newfangled debian/copyright-driven repacking can be exploited by
-malicious upstream to execute arbitrary code.
-""
-
-The fix:
-
-http://anonscm.debian.org/gitweb/?p=collab-maint/devscripts.git;a=commitdiff;h=91f05b5
-
-Can a CVE please be assigned? (I guess this is not Debian specific,
-devscripts looks like it is/will be in the next Fedora release.)
-
-Thanks!
-
---
-Murray McAllister / Red Hat Security Response Team
