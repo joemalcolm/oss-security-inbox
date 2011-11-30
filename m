@@ -1,26 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/5
-Message-ID: <BANLkTikiLGrEGf9b+4noCSV-vhqJxKQHDw@mail.gmail.com>
-Date: Mon, 20 Jun 2011 09:57:56 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/2
+Message-ID: <20111130174426.GA5061@pisco.westfalen.local>
+Date: Wed, 30 Nov 2011 18:44:27 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
+Subject: CVE request: Proc::ProcessTable perl module
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 15, 2011 at 8:19 PM, Dan Rosenberg
-<dan.j.rosenberg@...il.com> wrote:
-> NetBSD has committed a fix for an issue in the 802.11 stack [1].
-> FreeBSD is also affected and should release a fix shortly.  Due to a
-> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
-> unprivileged user could cause the kernel to copy large amounts of
-> kernel memory back to the user, disclosing potentially sensitive
-> information.  The issue only affects certain non-x86 architectures,
-> such as SPARC.
->
-> -Dan
->
-> [1] http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
->
+Hi,
+please assign a CVE ID for this:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650500 
 
-FreeBSD has commited a fix:
-http://svnweb.freebsd.org/base?view=revision&revision=223145
+Cheers,
+        Moritz
