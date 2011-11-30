@@ -1,30 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/26
-Message-Id: <201104041638.32909.ludwig.nussel@suse.de>
-Date: Mon, 4 Apr 2011 16:38:32 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/3
+Message-ID: <4ED695ED.80808@redhat.com>
+Date: Wed, 30 Nov 2011 13:45:33 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: Proc::ProcessTable perl module
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
-
-I've created a dedicated key for this purpose:
-
-pub   2048R/1F334FA6 2011-04-04 [expires: 2012-04-03]
-uid                  Ludwig Nussel (vendor-sec) <ludwig.nussel@...e.de>
-sub   2048R/4F5FEB97 2011-04-04 [expires: 2012-04-03]
-
-cu
-Ludwig
+On 11/30/2011 10:44 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> please assign a CVE ID for this:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650500 
+>
+> Cheers,
+>         Moritz
+Please use CVE-2011-4363 for this issue.
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
+-Kurt Seifried / Red Hat Security Response Team
+
