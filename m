@@ -1,35 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/4
-Message-ID: <20111005123710.3def94b0@redhat.com>
-Date: Wed, 5 Oct 2011 12:37:10 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: lists@...g.net
-Subject: Re: CVE Request: vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/4
+Message-ID: <4ED698F1.1050907@redhat.com>
+Date: Wed, 30 Nov 2011 13:58:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, fx@...urity-lab.com
+Subject: Re: CVE id request: ffmpeg
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 5 Oct 2011 18:07:59 +0800 YGN Ethical Hacker Group wrote:
+On 11/30/2011 05:38 AM, Nico Golde wrote:
+> Hello,
+> it seems the new ffmpeg issue described in 
+> http://www.usenix.org/events/woot11/tech/final_files/Yamaguchi.pdf has fallen 
+> through the cracks. Can someone assign a CVE id to the described issue in 
+> vmd_decode (see see page 6, Extrapolation. page 7 contains the vulnerable code)?
+>
+> Please note that this is not CVE-2010-3429. The paper is about finding bugs 
+> similar to a given one and CVE-2010-3429 is the original bug, while the one in 
+> vmd_decode is similar.
+>
+> Kind regards
+> Nico
+>
+Looks that way. CC;ing FX so he's aware of this (not seeing the other
+authors since I don't know their emails offhand =).
 
-> vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
+Quoting the paper (excuse the format mangling, but I want the text for
+reference):
 
-...
+===========================
+The original vulnerability. In September 2010, the
+open source CERT reported a security vulnerability
+(CVE-2010-3429) in FFmpeg attributed to Cesar Bernardini, which allows
+an attacker to write data to arbitrary
+locations in memory relative to a pointer on the heap
+via crafted FLIC media frames [1]. The vulnerability
+is contained in the function flic decode frame 8BPP
+displayed in Figure 4, which is called for each frame of
+an 8 bit-per-pixel video.
+The critical write operation is performed on line 29,
+where the least signiﬁcant byte of the user-supplied
+integer line packets is written to a location rela-
+tive to the heap-based buffer pixels. It has been
+overlooked that the offset is dependent on y ptr and
+s->frame.linesize[0], both of which can be controlled by an attacker. In
+fact, due to the loop starting at
+line 18, it is possible to assign an arbitrary value to y ptr
+independent of the last value stored in line packets
+and no check is performed to verify whether the offset
+remains within the conﬁned regions of the buffer. It is
+thus possible for an attacker to write arbitrary bytes to
+arbitrary locations in memory.
+Extrapolation. For discovery of similar vulnerabilities, we apply our
+method to the code base of FFmpeg consisting of 6,778 functions. For
+PCA, we choose
+d = 200 and thereby project the embedded functions
+to a subspace capturing up to 200 unique API usage
+patterns. Table 1 lists the 20 most similar functions to
+flic decode frame 8BPP in this subspace. Note that
+we have found 20 to be a reasonable number of functions to consider in
+one batch and, as we will see shortly,
+sufﬁciently large for identiﬁcation of vulnerabilities.
+Inspecting the functions listed in Table 1, we ﬁrst spot
+a similar ﬂaw in flic decode frame 15 16BPP, where
+our method reports a similarity of 96%. This vulnerability has been
+discovered previously and is patched in
+the current versions of FFmpeg.
 
-> vTiger uses the vulnerable version of phpmailer class file located at
-> /cron/class.phpmailer.php .
+************************************
+Surprisingly however,
+another similar bug in function vmd decode located in a
+different source ﬁle has not discovered by the developers.
+Our method reports a similarity of 72% for vmd decode
+leading us almost instantly to this unknown vulnerability.
+The vulnerability is shown in Figure 5 and 6.
+************************************
 
-...
+Just like the original function, vmd decode reads the
+frame dimensions and offsets speciﬁed by the individual
+frame on line 8 to 11 and then calculates an offset into the
+pixel buffer based on these values on line 34. The function fails to
+validate whether the given offset references
+a location within the buffer. Therefore, as user-supplied
+data is copied to the speciﬁed location on line 43, an attacker can
+corrupt memory by choosing an offset outside
+of the buffer
 
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3215
+===========================
 
-As you point out, application embeds a vulnerable copy of some other
-application, and the issue already has CVE assigned.  In such cases,
-phpmailer CVE should be used in the vtiger updates (if any).
 
-> It was launched as a fork of version 1.0 of the SugarCRM project
-> launched on December 31st, 2004.
-
-Wonder if any of the other reported issues are really sugarcrm issue
-that did not get fix in vtiger.
+Please use CVE-2011-4364 for this issue (the section enclosed in *'s).
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
