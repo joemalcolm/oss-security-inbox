@@ -1,110 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/1
-Message-ID: <CAKDYTU0BZhS3OwAJWxq50JZRXS+L-xy0fK1o6gu0FrdbBaAccQ@mail.gmail.com>
-Date: Tue, 26 Jul 2011 10:41:52 +0530
-From: "Papers, Call For" <cfpt@...uritybyte.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/4
+Message-ID: <20111201095900.GA25680@foo.fgeek.fi>
+Date: Thu, 1 Dec 2011 11:59:00 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CFP SecurityByte India
+Subject: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Original post: http://seclists.org/bugtraq/2011/Nov/15
+Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
+New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
 
-The first round of speakers have been selected for Securitybyte, please
-follow us on twitter @securitybyte to get the latest updates on speakers and
-event.
+I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
 
-Deral Heiland, From Printer to Owned: Leveraging Multifunction Printers
-During Penetration Testing
-Nithya Raman, Security threats on social networks
-Alexander Polyakov, A Crushing Blow At the Heart of SAP J2EE Engine
-Bishan Singh, Enabling Un-trusted Mashups
-Krzysztof Kotowicz, HTML5: Something Wicked This Way Comes
-John McColl, Hacking Corporate Telephony
-Aseem Jakhar, Runtime thread injection and execution in Linux processes
-George Nicolaou, Alternative Exploitation Vectors (A study of CVE-3333)
-Michele Orru, Securing the Browser
-Kanwal K. Mookhey, The Data Theft Epidemic in India
-Vivek Ramachandran, Enterprise Wi-Fi Worms, Backdoors and Botnets for Fun
-and Profit
+This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
 
-The 2nd round of CFP is out
+Please notify me if this is not enough information.
 
-CFP/CTP
-
-Securitybyte is proud to announce its Second Annual International
-Information Security Conference, "Securitybyte 2011" in Bangalore, India.
-This 4-day event features two days of conferences and two days of
-post-conference hands-on Trainings & Certifications covering every aspect of
-Information Security. The Securitybyte conference features some of the most
-respected names in the Security space and is focused around new research and
-innovation. The Securitybyte Conference 2011 is planned for Sept 6th through
-9th, 2011 at The Taj Hotel in Bangalore, India.
-
-The two-day conference (Sept 6th & 7th) will have the following three
-tracks:
-
-   Deep Technical
-   Government & Governance
-   Management
-
-Submission Deadline: The first round of submission of papers for conference
-talks and trainings should be done no later than August 5th, 2011. Please
-send all your submissions to cfp@...uritybyte.org, keeping subject line as
-"SB 2011 CFP Submission".
-
-TOPICS
-
-Got a new attack against any technology or device? We want to see it.
-
-Topics of interest include, but are not limited to, the following:
-
-Management Case studies around any of the topics above of how the
-implementation was done and what were some of the lessons learned.
-
-Technology-Focused
-
-               Cloud Security
-               Electronic Device Security (Cell Phones / PDA's)
-               Defeating Biometrics
-               WLAN, RFID and Bluetooth Security
-               Data Recovery and Incident Response
-               Virtualization Security
-               Database Security
-               Forensic & Cyber security Regulatory & Law
-               Copyright infringement and anti-copyright infringement
-               enforcement technologies
-               Critical infrastructure issues
-               Data security and privacy issues
-               Identity theft, identity creation & identity fraud
-               Corporate Espionage
-
-
-National Security
-
-              Cyber forensics
-              Cyber warfare
-              Cyber Espionage
-              Next hyphenGen Cyber threats
-              Critical Infrastructure protection
-              Surveillance & counter-surveillance
-
-Speaker Submission:
-
-Please use the following submission form template to respond:
-
-   Name, title, address, email, and phone/contact number
-   Short biography, qualifications, occupation, achievements, and
-   affiliations (limit 250 words.)
-   Summary or abstract of your presentation (limit 1250 words.)
-   Technical requirements (video, internet, wireless, audio, etc.)
-   References (Contact name, title, and email address of two
-   conferences you have spoken at or comparable references.)
-
-**Please note, product or vendor pitches are not accepted. If your talk
-involves an advertisement for a new product or service your company is
-offering, please do not submit a proposal.
-
-
-Regards
-SecurityByte
-
+- Henri Salo
