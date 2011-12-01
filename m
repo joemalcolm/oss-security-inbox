@@ -1,58 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/13
-Message-ID: <633189304.1604805.1311710600501.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 26 Jul 2011 16:03:20 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/6
+Message-ID: <alpine.DEB.2.00.1112011232370.2227@cipher.ics.hut.fi>
+Date: Thu, 1 Dec 2011 12:42:51 +0200 (EET)
+From: Billy Brumley <billy.brumley@...to.fi>
 To: oss-security@...ts.openwall.com
-Cc: aCaB <acab@...mav.net>, Török Edvin <edwin@...mav.net>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Clam AntiVirus -- v0.97.2 -- Off-by-one error by scanning message hashes
+Subject: CVE-2011-4354 OpenSSL 0.9.8g (32-bit builds) bug leaks ECC private keys
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2721.
+This issue is tracked by CVE-2011-4354. It is publicly disclosed.
 
-Thanks.
 
--- 
-    JB
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> based on:
-> [1]
-> http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
-> 
-> an off-by-one error was found in the way the hash manager of Clam
-> AntiVirus, a GPL anti-virus toolkit for UNIX, performed scan of
-> messages with certain hashes. A remote attacker could provide a
-> message
-> with specially-crafted hash signature in it, leading to denial of
-> service (clamscan executable crash).
-> 
-> Upstream bug report:
-> [2] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2818
-> 
-> Relevant patch:
-> [3]
-> http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=4842733eb3f09be61caeed83778bb6679141dbc5
-> 
-> Other references:
-> [4] https://bugzilla.novell.com/show_bug.cgi?id=708263
-> [5]
-> http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
-> [6] http://www.clamav.net/lang/en/
-> [7] https://bugzilla.redhat.com/show_bug.cgi?id=725694
-> 
-> Note: The rest of the issues fixed in [1] seem to be just bug fixes.
-> Cc-ed upstream Clam Antivirus maintainers to confirm this (that
-> there is only one issue with security implications) and correct
-> the description of the issue, if necessary (just guessing that
-> "cli_hm_scan()" stands for
-> command_line_interface_hash_manager_scan, since it doesn't seem
-> to be described in the code anywhere).
-> 
-> Josh, Steve, could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Contributors
+===========================
+Billy Brumley <billy.brumley [at] aalto [dot] fi>
+Manuel Barbosa <mbb [at] di.uminho [dot] pt>
+Dan Page <page [at] cs.bris.ac [dot] uk>
+Fre Vercauteren <fvercaut [at] esat.kuleuven.ac [dot] be>
+
+
+
+Vulnerability description
+===========================
+The openssl-dev mailing list thread
+
+http://marc.info/?t=119271238800004
+
+describes a bug affecting 32-bit builds of OpenSSL 0.9.8g. In extremely 
+rare instances, it causes incorrect computation of finite field operations 
+when using NIST elliptic curves P-256 or P-384.
+
+Exploiting said bug, we designed and implemented an attack that recovers a 
+TLS server's private key. As far as we are aware, this is the first public 
+exploitation of the bug.
+
+The bug is fixed in OpenSSL >= 0.9.8h and a series of patches is available 
+to resolve it for version 0.9.8g starting from check in version 1.15 at
+
+http://cvs.openssl.org/rlog?f=openssl%2Fcrypto%2Fbn%2Fbn_nist.c
+
+As a more generic countermeasure to these types of attacks, we implemented 
+coordinate blinding as a patch to the OpenSSL source, available on the 
+openssl-dev mailing list at
+
+http://marc.info/?l=openssl-dev&m=131194808413635
+
+You can find our manuscript describing the attack at
+
+http://eprint.iacr.org/2011/633
+
+and our proof-of-concept code to verify the attack at
+
+http://crypto.di.uminho.pt/CACE/
+
+
+
+Vulnerability prerequisites
+===========================
+REQUIRED:
+
+- OpenSSL 0.9.8g (32-bit build)
+
+One or more of:
+- Use of curve P-256
+- Use of curve P-384
+
+One or more of:
+- Use of ECDH family ciphers
+- Use of ECDHE family ciphers *and* lack of SSL_OP_SINGLE_ECDH_USE context 
+option
+
+Ubuntu 9.10 Karmic ships with OpenSSL 0.9.8g and we verified the attack 
+against it.
+Debian 5.0 Lenny ships with OpenSSL 0.9.8g and, although we did not verify 
+the attack, the code suggests it is vulnerable.
+We verified the attack against stunnel 4.43 (linked against OpenSSL 
+0.9.8g) configured to use an ECDH cipher and P-256.
+Our methods do not seem to be effective for attacking OpenSSH: their 
+implementation strictly uses ephemeral ECDH keys.
+
+
+
+Vulnerability impact
+===========================
+The attack allows recovery of a TLS server's private key.
+For ECDH family ciphers, this is the long term private key of the public 
+key in a certificate.
+For ECDHE family ciphers, this is the private key of the per application 
+instance's ECDH ephemeral-static public key.
+The attack is remote and in that sense only requires observing the result 
+(success or failure) of repeated attacker-initiated TLS handshakes.
+
+
+
+Disclosure timeline
+===========================
+16 Sep 2011 Notified CERT
+15 Oct 2011 Notified Secunia
+27 Oct 2011 Notified OpenSSL team
+26 Nov 2011 Manuscript posted at IACR eprint
+28 Nov 2011 Updated OpenSSL team
+28 Nov 2011 Notified linux-distros list
+01 Dec 2011 Notified oss-security list
