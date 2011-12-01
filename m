@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/5
-Message-ID: <4E1C7AFB.4090908@msgid.tls.msk.ru>
-Date: Tue, 12 Jul 2011 20:48:59 +0400
-From: Michael Tokarev <mjt@....msk.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/8
+Message-ID: <4ED7B586.40107@redhat.com>
+Date: Thu, 01 Dec 2011 10:12:38 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: qemu -runas does not clear supplementary groups
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-There's a missing initgroups() call in qemu in the -runas
-argument handling.  Details are available on
+On 12/01/2011 02:59 AM, Henri Salo wrote:
+> Original post: http://seclists.org/bugtraq/2011/Nov/15
+> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
+> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+>
+> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
+>
+> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
+>
+> Please notify me if this is not enough information.
+>
+> - Henri Salo
+Please use CVE-2011-4365 for this issue.
 
- https://bugs.launchpad.net/qemu/+bug/807893
+-- 
 
-in short, -runas is supposed to reduce privileges to a
-bare minimum (after all initialization is completed),
-but the process still has all the supplementary groups
-which should be dropped too.
+-Kurt Seifried / Red Hat Security Response Team
 
-Can a CVE id be assigned for this issue?
-
-Thanks,
-
-/mjt
