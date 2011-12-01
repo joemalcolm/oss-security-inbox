@@ -1,50 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/10
-Message-ID: <1178433251.426653.1299529537474.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 7 Mar 2011 15:25:37 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/9
+Message-ID: <4ED7B5E6.9030208@redhat.com>
+Date: Thu, 01 Dec 2011 10:14:14 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+CC: Henri Salo <henri@...v.fi>, sschurtz@...nline.de
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Friday, March 04, 2011 12:52:14 pm Solar Designer wrote:
-> > On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
-> > > If there's a common usage scenario that doesn't stem from blatant
-> > > administrator negligence, then a CVE is probably still appropriate.
-> > > ("blatant admin negligence" might be, say, if an admin arbitrarily
-> > > makes a script setuid, or modifies the perms for an executable or
-> > > config file to be world-writable.)
-> >
-> > I think that "chmod 777 /var/log" is "blatant admin negligence". As to,
-> > say, "chown nginx /var/log/nginx", it could be negligence or it could
-> > be lack of familiarity with the risks involved. So I am willing to
-> > admit that it's not necessarily negligence that turns those issues into
-> > vulnerabilities on specific systems.
-> >
-> > > We will sometimes write the CVE description more as an "adminisrator
-> > > practice" than as "fault of the software."
-> >
-> > Oh, this is something I did not realize. A lot of people assume that
-> > CVEs "blame" the software and its authors for having made an error.
-> >
-> > It felt wrong, say, to blame a text editor for being unsafe to use on
-> > files in untrusted directories when such unsafety was the typical and
-> > expected situation for text editors in general.
-> 
-> So, where does that leave us for things like this? :
-> 
-> http://reverse.lostrealm.com/protect/ldd.html
-> http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
-> 
+On 12/01/2011 03:16 AM, Henri Salo wrote:
+> On Thu, Dec 01, 2011 at 11:59:00AM +0200, Henri Salo wrote:
+>> Original post: http://seclists.org/bugtraq/2011/Nov/15
+>> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
+>> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+>>
+>> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
+>>
+>> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
+>>
+>> Please notify me if this is not enough information.
+> These vulnerabilities also doesn't have CVE-identifiers assigned nor requested if I have correct information:
+>
+> http://www.rul3z.de/advisories/SSCHADV2011-016.txt http://osvdb.org/show/osvdb/75777
+> http://www.rul3z.de/advisories/SSCHADV2011-017.txt http://osvdb.org/show/osvdb/76856
+>
+> If my opinion counts these XSS issues could be put to one CVE-identifier. These have been verified by the author of Serendipity.
+>
+> - Henri Salo
+Merging these two as the fix is to update serendipity for both, the
+plug-in appears to simply expose another avenue of attack, not create an
+actual XSS as such.
 
-Steve,
-
-Can you start a new thread for that issue. This one is already hard enough
-to follow, and I think it deserves attention on its own.
-
-Thanks.
+Please use CVE-2011-4366 for this issue.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
