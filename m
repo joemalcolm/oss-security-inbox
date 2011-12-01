@@ -1,27 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/4
-Message-ID: <AANLkTi=CYJEv4pdUghLN39h6bpYhknrWLaAq=VSizWXE@mail.gmail.com>
-Date: Thu, 6 Jan 2011 11:01:12 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/6
+Message-ID: <alpine.DEB.2.00.1112011232370.2227@cipher.ics.hut.fi>
+Date: Thu, 1 Dec 2011 12:42:51 +0200 (EET)
+From: Billy Brumley <billy.brumley@...to.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: possible flaw in widely used strtod.c implementation
+Subject: CVE-2011-4354 OpenSSL 0.9.8g (32-bit builds) bug leaks ECC private keys
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 5, 2011 at 8:23 PM, Pierre Joye <pierre.php@...il.com> wrote:
-> On Wed, Jan 5, 2011 at 5:52 PM, Michael Gilbert
-> <michael.s.gilbert@...il.com> wrote:
->
->> The fact that this bug can lead to a denial-of-service in PHP is
->> sufficient to warrant a CVE for PHP, but nothing else (I think).  If it
->> can lead to a dos in other apps, then each should get their own CVE
->> (again in my opinion).
->
-> I think so too but in any case it would rock if I could get a CVE #
-> asap, we are going to release 5.2.17/5.3.5 tomorrow (packaging now).
+This issue is tracked by CVE-2011-4354. It is publicly disclosed.
 
-Anyone?
 
--- 
-Pierre
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Contributors
+===========================
+Billy Brumley <billy.brumley [at] aalto [dot] fi>
+Manuel Barbosa <mbb [at] di.uminho [dot] pt>
+Dan Page <page [at] cs.bris.ac [dot] uk>
+Fre Vercauteren <fvercaut [at] esat.kuleuven.ac [dot] be>
+
+
+
+Vulnerability description
+===========================
+The openssl-dev mailing list thread
+
+http://marc.info/?t=119271238800004
+
+describes a bug affecting 32-bit builds of OpenSSL 0.9.8g. In extremely 
+rare instances, it causes incorrect computation of finite field operations 
+when using NIST elliptic curves P-256 or P-384.
+
+Exploiting said bug, we designed and implemented an attack that recovers a 
+TLS server's private key. As far as we are aware, this is the first public 
+exploitation of the bug.
+
+The bug is fixed in OpenSSL >= 0.9.8h and a series of patches is available 
+to resolve it for version 0.9.8g starting from check in version 1.15 at
+
+http://cvs.openssl.org/rlog?f=openssl%2Fcrypto%2Fbn%2Fbn_nist.c
+
+As a more generic countermeasure to these types of attacks, we implemented 
+coordinate blinding as a patch to the OpenSSL source, available on the 
+openssl-dev mailing list at
+
+http://marc.info/?l=openssl-dev&m=131194808413635
+
+You can find our manuscript describing the attack at
+
+http://eprint.iacr.org/2011/633
+
+and our proof-of-concept code to verify the attack at
+
+http://crypto.di.uminho.pt/CACE/
+
+
+
+Vulnerability prerequisites
+===========================
+REQUIRED:
+
+- OpenSSL 0.9.8g (32-bit build)
+
+One or more of:
+- Use of curve P-256
+- Use of curve P-384
+
+One or more of:
+- Use of ECDH family ciphers
+- Use of ECDHE family ciphers *and* lack of SSL_OP_SINGLE_ECDH_USE context 
+option
+
+Ubuntu 9.10 Karmic ships with OpenSSL 0.9.8g and we verified the attack 
+against it.
+Debian 5.0 Lenny ships with OpenSSL 0.9.8g and, although we did not verify 
+the attack, the code suggests it is vulnerable.
+We verified the attack against stunnel 4.43 (linked against OpenSSL 
+0.9.8g) configured to use an ECDH cipher and P-256.
+Our methods do not seem to be effective for attacking OpenSSH: their 
+implementation strictly uses ephemeral ECDH keys.
+
+
+
+Vulnerability impact
+===========================
+The attack allows recovery of a TLS server's private key.
+For ECDH family ciphers, this is the long term private key of the public 
+key in a certificate.
+For ECDHE family ciphers, this is the private key of the per application 
+instance's ECDH ephemeral-static public key.
+The attack is remote and in that sense only requires observing the result 
+(success or failure) of repeated attacker-initiated TLS handshakes.
+
+
+
+Disclosure timeline
+===========================
+16 Sep 2011 Notified CERT
+15 Oct 2011 Notified Secunia
+27 Oct 2011 Notified OpenSSL team
+26 Nov 2011 Manuscript posted at IACR eprint
+28 Nov 2011 Updated OpenSSL team
+28 Nov 2011 Notified linux-distros list
+01 Dec 2011 Notified oss-security list
