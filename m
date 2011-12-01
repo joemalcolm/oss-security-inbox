@@ -1,102 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/3
-Message-ID: <BANLkTi=8wyhiO6Lg8fu_n6DuJYvnAZ8tqQ@mail.gmail.com>
-Date: Mon, 20 Jun 2011 09:35:52 +0100
-From: Daniel Godás <dgodas@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/11
+Message-ID: <4ED7E282.8010801@redhat.com>
+Date: Thu, 01 Dec 2011 13:24:34 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-This is the most sensible email I've seen on this list in ages. Keep up the
-good work!
+On 12/01/2011 10:14 AM, Kurt Seifried wrote:
+> On 12/01/2011 03:16 AM, Henri Salo wrote:
+>> On Thu, Dec 01, 2011 at 11:59:00AM +0200, Henri Salo wrote:
+>>> Original post: http://seclists.org/bugtraq/2011/Nov/15
+>>> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
+>>> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+>>>
+>>> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
+>>>
+>>> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
+>>>
+>>> Please notify me if this is not enough information.
+>> These vulnerabilities also doesn't have CVE-identifiers assigned nor requested if I have correct information:
+>>
+>> http://www.rul3z.de/advisories/SSCHADV2011-016.txt http://osvdb.org/show/osvdb/75777
+>> http://www.rul3z.de/advisories/SSCHADV2011-017.txt http://osvdb.org/show/osvdb/76856
+>>
+>> If my opinion counts these XSS issues could be put to one CVE-identifier. These have been verified by the author of Serendipity.
+>>
+>> - Henri Salo
+> Merging these two as the fix is to update serendipity for both, the
+> plug-in appears to simply expose another avenue of attack, not create an
+> actual XSS as such.
+>
+> Please use CVE-2011-4366 for this issue.
+>
+My mistake, this should have been merged into CVE-2011-4090, it's the
+same vuln type (XSS) and the same version of Serendipity, CVE-2011-4366
+is a bad assignment and should be marked as a duplicate of CVE-2011-4090.
 
-2011/6/20 Solar Designer <solar@...nwall.com>
+-- 
 
-> Hi,
->
-> Earlier today, while working on a test suite for John the Ripper, magnum
-> discovered and reported what turned out to be a bug in John the Ripper
-> and crypt_blowfish:
->
-> http://www.openwall.com/lists/john-dev/2011/06/19/2
->
-> The bug is inadvertent sign extension, and the fix is trivial:
->
-> http://www.openwall.com/lists/john-dev/2011/06/19/3
->
-> This bug dates back to 1998 (or maybe even 1997).
->
-> Unfortunately, the bug is not only in JtR, but also in crypt_blowfish,
-> and thus in plenty of other systems and programs that have integrated
-> crypt_blowfish.  Obviously, I am quite embarrassed; I should have
-> included 8-bit test vectors or subjected crypt_blowfish to a fuzzer (vs.
-> OpenBSD's implementation), or/and used different coding conventions (use
-> "unsigned char" almost everywhere, although this has its problems too -
-> such as compiler warnings on library calls that expect simple "char *").
->
-> Since the code successfully worked in JtR, I thought that it was
-> essentially already fuzz-tested.  But apparently passwords with 8-bit
-> characters were uncommon enough that no one noticed the bug for years.
->
-> I am going to provide an official fix for crypt_blowfish (likely the
-> one-liner plus added tests).  I thought I'd bring the issue up on
-> oss-security sooner rather than later.
->
-> Here's my preliminary analysis of the impact:
->
-> http://www.openwall.com/lists/john-dev/2011/06/20/3
-> http://www.openwall.com/lists/john-dev/2011/06/20/5
->
-> To summarize:
->
-> The majority of hashes (but not all of them) for passwords containing
-> characters with the 8th bit set are incompatible with OpenBSD's (really
-> nasty, but no security impact here).
->
-> What's worse, approximately 3 in 16 passwords containing a single
-> character with the 8th bit set have 1 to 3 characters immediately
-> preceding the 8-bit character ignored.  With more than one character
-> with the 8th bit set, things may be even worse.
->
-> Thus, those passwords may be much easier to crack than expected.
->
-> As to what's affected besides crypt_blowfish itself, I expect it to be
-> PHP (the code in php-5.3.7RC1 looks affected), Linux distros that use
-> crypt_blowfish (Owl, ALT Linux, SUSE), and some others (I'll try to
-> identify them and notify the maintainers).
->
-> Sorry about that!
->
-> Since this is the second bug with char signedness in crypt_blowfish, it
-> looks like I have a lesson to learn here.  The last time, the bug was
-> with salt generation for hash types other than bcrypt (that code was
-> little used and little tested).  Besides fixing the bug, I responded by
-> running extensive tests and making sure the distribution of salts was
-> uniform.  Of course, it was better to run those tests before releasing
-> the code to the public.  Now we have an issue with the passwords
-> themselves.  Obviously, I will be adding more tests, even though it
-> would be better done before releasing the code.
->
-> No, I don't expect even more sign extension bugs in crypt_blowfish.
-> There's not that much code, and we've pretty much tested it by now.
->
-> However, I might reconsider my C programming conventions for new code as
-> it relates to use of integer types.  I think I'd rather workaround
-> meaningless compiler warnings on strlen() and the like (even though
-> those extra casts look dirty) than miss real bugs elsewhere.
->
-> Perl's Crypt::Eksblowfish turns out to have sufficiently reworked code
-> that it's unaffected:
->
-> http://www.openwall.com/lists/john-dev/2011/06/20/4
->
-> Oh, also some builds of crypt_blowfish (and of affected systems/apps)
-> for PowerPC are probably unaffected, because char is typically unsigned
-> there (unless overridden in compiler flags for compatibility with more
-> typical systems).
->
-> Once again, my apologies for the mess.
->
-> Alexander
->
+-Kurt Seifried / Red Hat Security Response Team
 
