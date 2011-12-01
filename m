@@ -1,49 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/2
-Message-ID: <20111115023502.GA8095@openwall.com>
-Date: Tue, 15 Nov 2011 06:35:02 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/1
+Message-ID: <20111201001151.GA4975@openwall.com>
+Date: Thu, 1 Dec 2011 04:11:51 +0400
 From: Solar Designer <solar@...nwall.com>
-To: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: weird crypt-sha* in DragonFly BSD
+To: oss-security@...ts.openwall.com
+Subject: Re: XSSer v1.6 -beta- aka "Grey Swarm!" released.
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+All -
 
-Matthew - when I read that DragonFly moved to using SHA-256 for
-passwords by default, I thought this was referring to the SHA-256 based
-flavor of Ulrich Drepper's SHA-crypt.  This would not be the best choice
-to make, in my opinion, but it would not be that bad.  However, I just
-found this:
+On Thu, Dec 01, 2011 at 12:47:56AM +0100, psy wrote:
+> There is released a new version of *XSSer* (v1.6-beta-) - the cross site
+> scripter framework.
 
-http://gitweb.dragonflybsd.org/dragonfly.git/tree/HEAD:/lib/libcrypt
+We do not have a strict policy on whether security tool announcements
+are appropriate in here or not.  My current stance on it is that
+one-time announcements of tools with specific relevance to Open Source
+are OK, whereas repeated new version announcements are not.  Thus, I
+approved the announcement of XSSer this one time, but I don't intend to
+approve an announcement of the next version of XSSer.  Please let me
+know if you'd like this approach changed in some way.
 
-Are these crypt-sha256.c and/or crypt-sha512.c files actually in use?
-I hope not...  They do not include any password stretching, resulting in
-password hashes that are much quicker to crack than MD5-crypt's.
-
-There's also minor weirdness in the code - such as two local pointer
-variables being declared static seemingly for no reason, and only
-"final" but not "ctx" being zeroized in the end.  But even this lack of
-proper cleanup is very minor compared to the lack of stretching.
-
-Oh, also the "$3$" prefix was apparently previously used for NTLM:
-
-http://en.wikipedia.org/wiki/Crypt_(Unix)#NT_Hash_Scheme
-
-"FreeBSD used the $3$ prefix for this."
-
-http://search.cpan.org/~zefram/Authen-Passphrase/lib/Authen/Passphrase/NTHash.pm
-
-"... crypt string must consist of "$3$$" (note the extra "$") followed
-by the hash in lowercase hexadecimal."
-
-BTW, I looked at DragonFly's code while analyzing a more subtle issue
-with Ulrich's SHA-crypt:
-
-http://www.openwall.com/lists/oss-security/2011/11/15/1
-
-I thought that maybe you reimplemented it in a better fashion avoiding
-that issue, but I found this... %-)
+Meanwhile, the various CFPs and e-magazine issue announcements that are
+arriving to oss-security are being rejected - as we decided previously.
 
 Alexander
