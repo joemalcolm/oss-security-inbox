@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/4
-Message-ID: <4EA53E3F.8020103@redhat.com>
-Date: Mon, 24 Oct 2011 12:30:23 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Elio Maldonado <emaldona@...hat.com>, Robert Relyea <rrelyea@...hat.com>
-Subject: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/9
+Message-ID: <4ED7B5E6.9030208@redhat.com>
+Date: Thu, 01 Dec 2011 10:14:14 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, sschurtz@...nline.de
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+On 12/01/2011 03:16 AM, Henri Salo wrote:
+> On Thu, Dec 01, 2011 at 11:59:00AM +0200, Henri Salo wrote:
+>> Original post: http://seclists.org/bugtraq/2011/Nov/15
+>> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
+>> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+>>
+>> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
+>>
+>> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
+>>
+>> Please notify me if this is not enough information.
+> These vulnerabilities also doesn't have CVE-identifiers assigned nor requested if I have correct information:
+>
+> http://www.rul3z.de/advisories/SSCHADV2011-016.txt http://osvdb.org/show/osvdb/75777
+> http://www.rul3z.de/advisories/SSCHADV2011-017.txt http://osvdb.org/show/osvdb/76856
+>
+> If my opinion counts these XSS issues could be put to one CVE-identifier. These have been verified by the author of Serendipity.
+>
+> - Henri Salo
+Merging these two as the fix is to update serendipity for both, the
+plug-in appears to simply expose another avenue of attack, not create an
+actual XSS as such.
 
-   a security flaw was found in the way nss, the Network Security
-Services (NSS) set of libraries, performed their initialization (the
-file path for "pkcs11.txt" configuration file was constructed 
-incorrectly). When that configuration file was loaded from remote WebDAV 
-or Samba CIFS share, it could lead to arbitrary security module
-load, potentially leading to execution of arbitrary code (execution of
-code from untrusted security module).
+Please use CVE-2011-4366 for this issue.
 
-Upstream bug report:
-[1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
+-- 
 
-Other references:
-[2] https://secunia.com/advisories/46557/
-[3] https://bugs.gentoo.org/show_bug.cgi?id=388045
-[4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
+-Kurt Seifried / Red Hat Security Response Team
 
-Could you allocate a CVE id for this? (as it looks there isn't one
-for this deficiency yet)
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
