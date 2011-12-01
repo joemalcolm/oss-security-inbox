@@ -1,25 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/8
-Message-ID: <20110714153118.GA30247@openwall.com>
-Date: Thu, 14 Jul 2011 19:31:18 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/3
+Message-ID: <20111201003946.GG21767@foo.fgeek.fi>
+Date: Thu, 1 Dec 2011 02:39:46 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: XSSer v1.6 -beta- aka "Grey Swarm!" released.
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 14, 2011 at 04:37:36PM +0200, Ludwig Nussel wrote:
-> Well, you need to modify that in %post to automatically get 2y for
-> new passwords then.
+On Wed, Nov 30, 2011 at 05:29:55PM -0700, Kurt Seifried wrote:
+> On 11/30/2011 05:11 PM, Solar Designer wrote:
+> 
+> > > All -
+> > >
+> > > On Thu, Dec 01, 2011 at 12:47:56AM +0100, psy wrote:
+> >> >> There is released a new version of *XSSer* (v1.6-beta-) - the cross site
+> >> >> scripter framework.
+> > > We do not have a strict policy on whether security tool announcements
+> > > are appropriate in here or not.  My current stance on it is that
+> > > one-time announcements of tools with specific relevance to Open Source
+> > > are OK, whereas repeated new version announcements are not.  Thus, I
+> > > approved the announcement of XSSer this one time, but I don't intend to
+> > > approve an announcement of the next version of XSSer.  Please let me
+> > > know if you'd like this approach changed in some way.
+> > >
+> Agreed. Random thought: or if a project makes a major
+> breakthrough/update/change/once a year type of announcement is probably
+> sane too? I like hearing about new tools and definitely don't have time
+> to go through Google/etc any more =).
+> 
+> 
+> > > Meanwhile, the various CFPs and e-magazine issue announcements that are
+> > > arriving to oss-security are being rejected - as we decided previously.
+> > >
+> +1
+> 
+> > > Alexander
+> -- -Kurt Seifried / Red Hat Security Response Team
 
-Not in %post - we'll just provide the new file, which is marked
-%config(noreplace).  Yes, it does mean that if there were any local
-changes, the admin will need to merge the changes and/or rename the file
-from *.rpmnew manually.
+Advisories of major improvements is good limit in my opinion and I really do mean major improvements. +1 for e-magazine case also. I don't see a point of spamming list yearly if nothing interesting has happened. Software vendors/developers should create their own mailing lists and/or RSS-feeds.
 
-> Which is kind of ugly as that's a file the admin may have modified.
-
-You're right.  In a sense, having the change in code only would have
-been better.
-
-Alexander
+- Henri Salo
