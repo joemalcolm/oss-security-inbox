@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/2
-Message-ID: <4ED46BDE.8010709@redhat.com>
-Date: Mon, 28 Nov 2011 22:21:34 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/1
+Message-ID: <20111201001151.GA4975@openwall.com>
+Date: Thu, 1 Dec 2011 04:11:51 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>
-Subject: Re: CVE request: includeViewParameters re-evaluates param/model values as EL expressions on Mojarra/MyFaces
+Subject: Re: XSSer v1.6 -beta- aka "Grey Swarm!" released.
 Content-Type: text/plain; charset=utf-8
 
-On 11/28/2011 10:16 PM, David Jorm wrote:
-> It has been found that when includeViewParameters is set to true, JSF 2 as implemented by Mojarra and MyFaces will re-evaluate parameter/model values as EL expressions.
->
-> Original bug:
-> http://java.net/jira/browse/JAVASERVERFACES-2247
->
-> MyFaces bug:
-> https://issues.apache.org/jira/browse/MYFACES-3405
->
-> Write-up/reproducer:
-> http://www.jakobk.com/2011/11/jsf-value-expression-injection-vulnerability/
->
-> Thanks
-Please use CVE-2011-4358  for the Mojarra instance of this vulnerable.
+All -
 
-Please use CVE-2011-4359  for the MyFaces instance of this vulnerable.
+On Thu, Dec 01, 2011 at 12:47:56AM +0100, psy wrote:
+> There is released a new version of *XSSer* (v1.6-beta-) - the cross site
+> scripter framework.
 
--- 
+We do not have a strict policy on whether security tool announcements
+are appropriate in here or not.  My current stance on it is that
+one-time announcements of tools with specific relevance to Open Source
+are OK, whereas repeated new version announcements are not.  Thus, I
+approved the announcement of XSSer this one time, but I don't intend to
+approve an announcement of the next version of XSSer.  Please let me
+know if you'd like this approach changed in some way.
 
--Kurt Seifried / Red Hat Security Response Team
+Meanwhile, the various CFPs and e-magazine issue announcements that are
+arriving to oss-security are being rejected - as we decided previously.
 
+Alexander
