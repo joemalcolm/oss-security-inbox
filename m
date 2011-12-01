@@ -1,152 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/3
-Message-ID: <AANLkTimj8_ZjWYDwkVepV95ucoonKsvhi0JCxB+izqNh@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:04:57 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>
-Subject: Re: CVE Request: Joomla! 1.6.0 | Cross Site Scripting (XSS) Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/02/1
+Message-ID: <000101ccb02a$fceae7f0$f6c0b7d0$@secunia.com>
+Date: Thu, 1 Dec 2011 14:13:16 +0100
+From: "Secunia Research" <vuln@...unia.com>
+To: <oss-security@...ts.openwall.com>
+Cc: <henri@...v.fi>, <vuln@...unia.com>
+Subject: RE: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-I didn't happen to ask CVE for Joomla 1.5.20.
-Please assign new one or tie this CVE also that 1.5.20.
+Henri,
 
-Thanks!
+The GIT commit referenced by the Secunia advisory [1] is the correct fix for
+this issue.
+
+The fix removed a line in the code that displayed an unsanitised variable in
+one of the template files. This variable was inside a JavaScript comment
+block, but this does not prevent exploitation when the payload is prefixed
+with a </script> tag.
+
+[1]
+https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518
+ad4711
+
+--
+
+Med venlig hilsen / Kind Regards,
+ 
+Jon Butler
+Junior Security Specialist
+  
+Secunia
+Mikado House
+Rued Langgaardsvej 8
+2300 Copenhagen S
+Denmark 
+
+Phone +45 3338 5726
+
+Please visit our corporate website:
+www.secunia.com
+   
+Follow us on Twitter:
+http://twitter.com/secunia
 
 
-On Tue, Mar 15, 2011 at 4:51 AM, Josh Bressers <bressers@...hat.com> wrote:
-> Please use CVE-2011-1152
->
-> Did the original report for 1.5.20 get a CVE id? (I couldn't find one)
->
-> Thanks.
->
-> --
->    JB
->
->
-> ----- Original Message -----
->> ==========================================
->> Joomla! 1.6.0 | Cross Site Scripting (XSS) Vulnerability
->> ==========================================
->>
->>
->> 1. OVERVIEW
->>
->> Joomla! 1.6.0 was vulnerable to Cross Site Scripting.
->>
->>
->> 2. PRODUCT DESCRIPTION
->>
->> Joomla is a free and open source content management system (CMS) for
->> publishing content on the World Wide Web and intranets. It comprises a
->> model–view–controller (MVC) Web application framework that can also be
->> used independently.
->> Joomla is written in PHP, uses object-oriented programming (OOP)
->> techniques and software design patterns, stores data in a MySQL
->> database, and includes features such as page caching, RSS feeds,
->> printable versions of pages, news flashes, blogs, polls, search, and
->> support for language internationalization.
->>
->>
->> 3. VULNERABILITY DESCRIPTION
->>
->> The Query String parameter was not properly sanitized upon submission
->> to the /index.php url, which allows attacker to conduct Cross Site
->> Scripting attack. This may allow an attacker to create a specially
->> crafted URL that would execute arbitrary script code in a victim's
->> browser.
->>
->>
->> 4. VERSION AFFECTED
->>
->> Joomla! 1.6.0
->>
->>
->> 5. PROOF-OF-CONCEPT/EXPLOIT
->>
->> >>> SEO-enabled Joomla 1.6.0
->>
->> http://attacker.in/joomla160/index.php/%2522%253E%253Cimg%2520src%253Da%2520onerror%253Dalert(String.fromCharCode(88,83,83))%253E09739572178%252F
->>
->> http://attacker.in/joomla160/index.php/using-joomla/extensions/components/search-component/search/'%2522%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E
->>
->> http://attacker.in/joomla160/index.php/contact-us/'%2522%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E
->>
->> http://attacker.in/joomla160/index.php/park-links?'%2522%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E=1
->>
->> http://attacker.in/joomla160/index.php/using-joomla/extensions/templates?'%2522%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E=1
->>
->>
->> >>> SEO-disabled Joomla 1.6.0
->>
->> http://attacker.in/joomla160x/index.php?option=com_weblinks&view=category&id=18&Itemid=227&a86a9%2522%253e%253cscript%253ealert%25281%2529%253c%252fscript%253e9666d64388c=1
->>
->> http://attacker.in/joomla160x/index.php?option=com_content&view=category&layout=blog&id=21&Itemid=268&%2522%253e%253cscript%253ealert%280%29%253c/script%253e=XSS
->>
->>
->> This is the exactly same variant as shown in our last year demo video
->> in 1.5.20:
->>
->> http://yehg.net/lab/pr0js/training/view/misc/joomla-1.5.20_encoded-xss/
->>
->> We thought Joomla! team would fix this issue in 1.6.0 stable release
->> whilst they fixed it in Joomla! 1.5.21!
->>
->>
->> 6. IMPACT
->>
->> Attackers can compromise currently logged-in user/administrator
->> session and impersonate arbitrary user actions available under
->> /administrator/ functions.
->>
->>
->> 7. SOLUTION
->>
->> Upgrade to Joomla! 1.6.1 or higher
->>
->>
->> 8. VENDOR
->>
->> Joomla! Developer Team
->> http://www.joomla.org
->>
->>
->> 9. CREDIT
->>
->> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
->> Ethical Hacker Group, Myanmar.
->>
->>
->> 10. DISCLOSURE TIME-LINE
->>
->> 2011-01-24: notified vendor
->> 2011-03-08: vendor released fix
->> 2011-03-14: vulnerability disclosed
->>
->>
->> 11. REFERENCES
->>
->> Original Advisory URL:
->> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.0]_cross_site_scripting(XSS)
->> Former Advisory URL:
->> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5.20]_cross_site_scripting(XSS)
->> XSS FAQ: http://www.cgisecurity.com/xss-faq.html
->> OWASP Top 10:
->> http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
->> CWE-79: http://cwe.mitre.org/data/definitions/79.html
->>
->>
->> #yehg [2011-03-14]
->>
->>
->>
->>
->> ---------------------------------
->> Best regards,
->> YGN Ethical Hacker Group
->> Yangon, Myanmar
->> http://yehg.net
->> Our Lab | http://yehg.net/lab
->> Our Directory | http://yehg.net/hwd
->
+-----Original Message-----
+From: Henri Salo [mailto:henri@...v.fi] 
+Sent: 1. december 2011 10:59
+To: oss-security@...ts.openwall.com
+Subject: [oss-security] CVE-request: Serendipity
+'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+
+Original post: http://seclists.org/bugtraq/2011/Nov/15
+Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
+New version announcement:
+http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+
+I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but
+they changed from SVN to Git so can't really refer to proper commit. Secunia
+is linking in http://secunia.com/advisories/46666/ to
+https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518
+ad4711, which has nothing to do with the actual issue. Shame on Secunia.
+
+This is one of logs, which can act like proof:
+https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec1
+22a4fd
+
+Please notify me if this is not enough information.
+
+- Henri Salo
+
