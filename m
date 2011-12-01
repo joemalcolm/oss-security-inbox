@@ -1,28 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/32
-Message-ID: <BANLkTin90UYuUuGFuB3eUNbeaZC740p72w@mail.gmail.com>
-Date: Tue, 5 Apr 2011 13:00:28 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: two issues in mpt2sas
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/7
+Message-ID: <20111201141428.GP21767@foo.fgeek.fi>
+Date: Thu, 1 Dec 2011 16:14:28 +0200
+From: Henri Salo <henri@...v.fi>
+To: Secunia Research <vuln@...unia.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-"At two points in handling device ioctls via /dev/mpt2ctl,
-user-supplied length values are used to copy data from userspace into
-heap buffers without bounds checking, allowing controllable heap
-corruption and subsequently privilege escalation.
+On Thu, Dec 01, 2011 at 02:13:16PM +0100, Secunia Research wrote:
+> Henri,
+> 
+> The GIT commit referenced by the Secunia advisory [1] is the correct fix for
+> this issue.
+> 
+> The fix removed a line in the code that displayed an unsanitised variable in
+> one of the template files. This variable was inside a JavaScript comment
+> block, but this does not prevent exploitation when the payload is prefixed
+> with a </script> tag.
+> 
+> [1]
+> https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518
+> ad4711
+> 
+> --
+> 
+> Med venlig hilsen / Kind Regards,
+>  
+> Jon Butler
+> Junior Security Specialist
+>   
+> Secunia
+> Mikado House
+> Rued Langgaardsvej 8
+> 2300 Copenhagen S
+> Denmark 
+> 
+> Phone +45 3338 5726
+> 
+> Please visit our corporate website:
+> www.secunia.com
+>    
+> Follow us on Twitter:
+> http://twitter.com/secunia
 
-Additionally, user-supplied values are used to determine the size of a
-copy_to_user() as well as the offset into the buffer to be read, with
-no bounds checking, allowing users to read arbitrary kernel memory."
-[1]
+Sorry I misunderstood. Thank you for clearing this out. Developer of this software did not comment anything when I asked if this is correct or not, but they indeed told me about a change to different version controlling software.
 
-These issues require access to the /dev/mpt2sas device (LSI MPT Fusion
-SAS 2.0).  While the kernel creates this device file root-root 660 by
-default, I've seen it with more open permissions on live systems, so
-perhaps there's some common use case that requires modifying these
-default permissions.
-
--Dan
-
-[1] http://marc.info/?l=linux-kernel&m=130202198105756&w=2
+- Henri Salo
