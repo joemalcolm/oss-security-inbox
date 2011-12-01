@@ -1,22 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/6
-Message-ID: <20111117024027.GJ723@yuggoth.org>
-Date: Thu, 17 Nov 2011 02:40:28 +0000
-From: The Fungi <fungi@...goth.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/7
+Message-ID: <20111201141428.GP21767@foo.fgeek.fi>
+Date: Thu, 1 Dec 2011 16:14:28 +0200
+From: Henri Salo <henri@...v.fi>
+To: Secunia Research <vuln@...unia.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 2011-11-16 23:43:25 +0400 (+0400), Solar Designer wrote:
-[...]
-> Does anyone readily know if BIND 9.3.x is affected as well?
-[...]
+On Thu, Dec 01, 2011 at 02:13:16PM +0100, Secunia Research wrote:
+> Henri,
+> 
+> The GIT commit referenced by the Secunia advisory [1] is the correct fix for
+> this issue.
+> 
+> The fix removed a line in the code that displayed an unsanitised variable in
+> one of the template files. This variable was inside a JavaScript comment
+> block, but this does not prevent exploitation when the payload is prefixed
+> with a </script> tag.
+> 
+> [1]
+> https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518
+> ad4711
+> 
+> --
+> 
+> Med venlig hilsen / Kind Regards,
+>  
+> Jon Butler
+> Junior Security Specialist
+>   
+> Secunia
+> Mikado House
+> Rued Langgaardsvej 8
+> 2300 Copenhagen S
+> Denmark 
+> 
+> Phone +45 3338 5726
+> 
+> Please visit our corporate website:
+> www.secunia.com
+>    
+> Follow us on Twitter:
+> http://twitter.com/secunia
 
-While obviously not conclusive, I can say that our 9.3.4-P1.2
-resolvers were not impacted and ran clean through while our 9.5.1-P3
-and 9.6-ESV-R4 resolvers crashed and had to be restarted several
-times overnight.
--- 
-{ IRL(Jeremy_Stanley); WWW(http://fungi.yuggoth.org/); PGP(43495829);
-WHOIS(STANL3-ARIN); SMTP(fungi@...goth.org); FINGER(fungi@...goth.org);
-MUD(kinrui@...arsis.mudpy.org:6669); IRC(fungi@....yuggoth.org#ccl); }
+Sorry I misunderstood. Thank you for clearing this out. Developer of this software did not comment anything when I asked if this is correct or not, but they indeed told me about a change to different version controlling software.
+
+- Henri Salo
