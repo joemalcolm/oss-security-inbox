@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/2
-Message-ID: <4DC75331.2080406@redhat.com>
-Date: Mon, 09 May 2011 10:36:33 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/8
+Message-ID: <4ED7B586.40107@redhat.com>
+Date: Thu, 01 Dec 2011 10:12:38 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1771 kernel: cifs oops when creating file with O_DIRECT set
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-CIFS does not do O_DIRECT, so when you open a file with it, you will 
-trigger a NULL pointer dereference. This is a regression introduced with 
-the patchset to clean up filehandle management in CIFS. The fix checks 
-for a NULL filp->private_data before trying to dereference it.
+On 12/01/2011 02:59 AM, Henri Salo wrote:
+> Original post: http://seclists.org/bugtraq/2011/Nov/15
+> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
+> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+>
+> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
+>
+> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
+>
+> Please notify me if this is not enough information.
+>
+> - Henri Salo
+Please use CVE-2011-4365 for this issue.
 
-http://marc.info/?l=linux-cifs&m=130204730006155&w=2
-https://bugzilla.redhat.com/CVE-2011-1771
+-- 
 
-Introduced by cdff08e7 (v2.6.37-rc1)
+-Kurt Seifried / Red Hat Security Response Team
 
-Upstream commit
-http://git.kernel.org/linus/77970693
-
-Thanks, Eugene
