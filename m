@@ -1,102 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/4
-Message-ID: <4D86FF2A.1090200@redhat.com>
-Date: Mon, 21 Mar 2011 15:32:58 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/10
+Message-ID: <4ED7E273.5090701@redhat.com>
+Date: Thu, 01 Dec 2011 13:24:19 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vasiliy Kulikov <segoon@...nwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: netfilter & econet infoleaks
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 03/21/2011 12:35 PM, Eugene Teo wrote:
->> "Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
->> copied from userspace. Fields of these structs that are
->> zero-terminated strings are not checked. When they are used as argument
->> to a format string containing "%s" in request_module(), some sensitive
->> information is leaked to userspace via argument of spawned modprobe
->> process.
+On 12/01/2011 10:12 AM, Kurt Seifried wrote:
+> On 12/01/2011 02:59 AM, Henri Salo wrote:
+>> Original post: http://seclists.org/bugtraq/2011/Nov/15
+>> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
+>> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
 >>
->> The first bug was introduced before the git epoch; the second is
->> introduced by 6b7d31fc (v2.6.15-rc1); the third is introduced by
->> 6b7d31fc (v2.6.15-rc1). To trigger the bug one should have
->> CAP_NET_ADMIN."
->> http://marc.info/?l=netfilter-devel&m=129978081009955&w=2
->
-> [PATCH] ipv4: netfilter: arp_tables: fix infoleak to userspace
-> CVE-2011-1170
-
-https://bugzilla.redhat.com/CVE-2011-1170
-http://git.kernel.org/?p=linux/kernel/git/kaber/nf-next-2.6.git;a=commitdiff;h=42eab94fff18cb1091d3501cd284d6bd6cc9c143
-
->> "Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
->> copied from userspace. Fields of these structs that are
->> zero-terminated strings are not checked. When they are used as argument
->> to a format string containing "%s" in request_module(), some sensitive
->> information is leaked to userspace via argument of spawned modprobe
->> process.
+>> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
 >>
->> The first and the third bugs were introduced before the git epoch; the
->> second was introduced in 2722971c (v2.6.17-rc1). To trigger the bug
->> one should have CAP_NET_ADMIN."
->> http://marc.info/?l=linux-kernel&m=129978077609894&w=2
->
-> [PATCH] ipv4: netfilter: ip_tables: fix infoleak to userspace
-> CVE-2011-1171
-
-https://bugzilla.redhat.com/CVE-2011-1171
-http://git.kernel.org/?p=linux/kernel/git/kaber/nf-next-2.6.git;a=commitdiff;h=78b79876761b86653df89c48a7010b5cbd41a84a
-
->> "'buffer' string is copied from userspace. It is not checked whether
->> it is
->> zero terminated. This may lead to overflow inside of simple_strtoul().
->> Changli Gao suggested to copy not more than user supplied 'size' bytes.
+>> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
 >>
->> It was introduced before the git epoch. Files "ipt_CLUSTERIP/*" are
->> root writable only by default, however, on some setups permissions
->> might be
->> relaxed to e.g. network admin user."
->> http://marc.info/?l=netfilter&m=129978077509888&w=2
->> http://marc.info/?l=netfilter-devel&m=130036157327564&w=2
->
-> I'm reluctant to assign a CVE name for this one. The default perms for
-> this is S_IWUSR|S_IRUSR. I will let Steve decide for this one.
-
-https://bugzilla.redhat.com/689337
-http://git.kernel.org/?p=linux/kernel/git/kaber/nf-2.6.git;a=commitdiff;h=961ed183a9fd080cf306c659b8736007e44065a5
-
->> "Structures ip6t_replace, compat_ip6t_replace, and xt_get_revision are
->> copied from userspace. Fields of these structs that are
->> zero-terminated strings are not checked. When they are used as argument
->> to a format string containing "%s" in request_module(), some sensitive
->> information is leaked to userspace via argument of spawned modprobe
->> process.
+>> Please notify me if this is not enough information.
 >>
->> The first bug was introduced before the git epoch; the second was
->> introduced in 3bc3fe5e (v2.6.25-rc1); the third is introduced by
->> 6b7d31fc (v2.6.15-rc1). To trigger the bug one should have
->> CAP_NET_ADMIN."
->> http://marc.info/?l=linux-kernel&m=129978086410061&w=2
+>> - Henri Salo
+> Please use CVE-2011-4365 for this issue.
 >
-> [PATCH] ipv6: netfilter: ip6_tables: fix infoleak to userspace
-> CVE-2011-1172
+My mistake, this should have been merged into CVE-2011-4090, it's the
+same vuln type (XSS) and the same version of Serendipity, CVE-2011-4365
+is a bad assignment and should be marked as a duplicate of CVE-2011-4090.
 
-https://bugzilla.redhat.com/CVE-2011-1172
-http://git.kernel.org/?p=linux/kernel/git/kaber/nf-next-2.6.git;a=commitdiff;h=6a8ab060779779de8aea92ce3337ca348f973f54
-
->> "struct aunhdr has 4 padding bytes between 'pad' and 'handle' fields on
->> x86_64. These bytes are not initialized in the variable 'ah' before
->> sending 'ah' to the network. This leads to 4 bytes kernel stack
->> infoleak.
->>
->> This bug was introduced before the git epoch."
->> http://marc.info/?l=linux-netdev&m=130036203528021&w=2
->
-> [PATCH] econet: 4 byte infoleak to the network
-> CVE-2011-1173
-
-https://bugzilla.redhat.com/show_bug.cgi?id=591815#c14
-http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commitdiff;h=67c5c6cb8129c595f21e88254a3fc6b3b841ae8e
-
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+
+-Kurt Seifried / Red Hat Security Response Team
+
