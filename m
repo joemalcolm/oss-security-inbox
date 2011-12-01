@@ -1,71 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/5
-Message-ID: <4EE11259.50501@redhat.com>
-Date: Thu, 08 Dec 2011 12:39:05 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/5
+Message-ID: <20111201101643.GO21767@foo.fgeek.fi>
+Date: Thu, 1 Dec 2011 12:16:43 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request WordPress pretty-link plugin 1.5.2 XSS
+Cc: sschurtz@...nline.de
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 12/08/2011 03:19 AM, Henri Salo wrote:
-> Can I get CVE-identifier for this issue? I have verified this and reported this to the developer in here: http://wordpress.org/support/topic/plugin-pretty-link-lite-152-xss-vulnerability
+On Thu, Dec 01, 2011 at 11:59:00AM +0200, Henri Salo wrote:
+> Original post: http://seclists.org/bugtraq/2011/Nov/15
+> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
+> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+> 
+> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
+> 
+> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
+> 
+> Please notify me if this is not enough information.
 
-Please use CVE-2011-4595 for this issue.
->
-> - Henri Salo
->
-> Original post below:
->
-> ----- Forwarded message from irist.ir@...il.com -----
->
-> Date: Sun, 4 Dec 2011 15:26:35 GMT
-> From: irist.ir@...il.com
-> To: bugtraq@...urityfocus.com
-> Subject: Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting
-> 	Vulnerabilities
-> X-Mailer: MIME-tools 5.420 (Entity 5.420)
->
-> a bug in Wordpress pretty-link plugin that allows to us to occur a Cross-Site Scripting on a Remote machin.
->
->
->
->
->
-> ############################################################################################################################################
-> #                                                                                                                                          #
-> #                           ISlamic Republic Of IRan Security Team                                                                         #
-> #                                                                                                                                          #
-> #                                http://irist.ir/forum/                                                                                    #
-> #                                                                                                                                          #
-> ############################################################################################################################################
-> #                                                                                                                                          #
-> # Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting Vulnerabilities                                                                  #
-> #                                                                                                                                          #
-> # Download......: http://wordpress.org/extend/plugins/pretty-link/                                                                         #
-> #                                                                                                                                          #
-> # Exploit.......: http://www.site.com/[path]/wp-content/plugins/pretty-link/pretty-bar.php?url=[xss]                                       #
-> #                                                                                                                                          #
-> # Google Search.: "Powered by Wordpress"                                                                                                   #
-> #                                                                                                                                          #
-> ############################################################################################################################################
-> #                                                                                                                                          #
-> # Bug Found.....: IrIsT.Ir                                                                                                                 #
-> #                                                                                                                                          #
-> # discovery.....: Am!r (IrIsT?)                                                                                                            #
-> #                                                                                                                                          #
-> # contact.......: Amir[at]IrIsT.ir                                                                                                         #
-> #                                                                                                                                          #
-> # SP TNX........: The-0utl4w & A.u.r.A & B3HZ4D & m3hdi & joker_s & all IrIsT And Aria-security members                                    #
-> #                                                                                                                                          #
-> #   & Mehdi.H4ckcity &  2MzRp & mikili & All H4ckcity Members                                                                              #
-> #                                                                                                                                          #
-> ############################################################################################################################################
->
-> ----- End forwarded message -----
+These vulnerabilities also doesn't have CVE-identifiers assigned nor requested if I have correct information:
 
+http://www.rul3z.de/advisories/SSCHADV2011-016.txt http://osvdb.org/show/osvdb/75777
+http://www.rul3z.de/advisories/SSCHADV2011-017.txt http://osvdb.org/show/osvdb/76856
 
--- 
+If my opinion counts these XSS issues could be put to one CVE-identifier. These have been verified by the author of Serendipity.
 
--Kurt Seifried / Red Hat Security Response Team
-
+- Henri Salo
