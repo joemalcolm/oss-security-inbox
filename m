@@ -1,32 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/4
-Message-ID: <AANLkTinUdSydhjxvGixDsb=TdNfKDygBpQg8zJ56K2FF@mail.gmail.com>
-Date: Tue, 1 Mar 2011 10:11:19 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/11
+Message-ID: <4ED7E282.8010801@redhat.com>
+Date: Thu, 01 Dec 2011 13:24:34 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>,  Helgi Þormar Þorbjörnsson <helgi@....net>
-Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-hi,
+On 12/01/2011 10:14 AM, Kurt Seifried wrote:
+> On 12/01/2011 03:16 AM, Henri Salo wrote:
+>> On Thu, Dec 01, 2011 at 11:59:00AM +0200, Henri Salo wrote:
+>>> Original post: http://seclists.org/bugtraq/2011/Nov/15
+>>> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
+>>> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+>>>
+>>> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
+>>>
+>>> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
+>>>
+>>> Please notify me if this is not enough information.
+>> These vulnerabilities also doesn't have CVE-identifiers assigned nor requested if I have correct information:
+>>
+>> http://www.rul3z.de/advisories/SSCHADV2011-016.txt http://osvdb.org/show/osvdb/75777
+>> http://www.rul3z.de/advisories/SSCHADV2011-017.txt http://osvdb.org/show/osvdb/76856
+>>
+>> If my opinion counts these XSS issues could be put to one CVE-identifier. These have been verified by the author of Serendipity.
+>>
+>> - Henri Salo
+> Merging these two as the fix is to update serendipity for both, the
+> plug-in appears to simply expose another avenue of attack, not create an
+> actual XSS as such.
+>
+> Please use CVE-2011-4366 for this issue.
+>
+My mistake, this should have been merged into CVE-2011-4090, it's the
+same vuln type (XSS) and the same version of Serendipity, CVE-2011-4366
+is a bad assignment and should be marked as a duplicate of CVE-2011-4090.
 
-2011/2/28 Dan Rosenberg <dan.j.rosenberg@...il.com>:
-> I'm not familiar with this code or any of the context surrounding this
-> fix, but it appears to be an incomplete fix.  Checking for existence
-> of a symlink and then opening the resource leaves open a window during
-> which a legitimate file can be replaced with a symlink.
-
-Not sure it is fixable, or maybe using a lock on the symbolic link
-while fetching its target (to be tested to be sure that such locks
-cannot be overridden from shell).
-
-> Also, I don't see a reason why a hard link couldn't be used for exploitation
-> instead.
-
-Hard link are not detectable (lstat), they are treated like normal files.
-
-Cheers,
 -- 
-Pierre
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+-Kurt Seifried / Red Hat Security Response Team
+
