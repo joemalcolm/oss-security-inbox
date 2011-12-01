@@ -1,89 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/15
-Message-ID: <1019797868.1472632.1311190821123.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Jul 2011 15:40:21 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/2
+Message-ID: <4ED6CA83.6050301@redhat.com>
+Date: Wed, 30 Nov 2011 17:29:55 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Pavel Lisý <pavel.lisy@...il.com>, Alan Boudreault <aboudreault@...gears.com>, Even Rouault <even.rouault@...es-paris.org>
-Subject: Re: CVE Request -- MapServer -- Stack based buffer overflow [was: Re: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.]
+Subject: Re: XSSer v1.6 -beta- aka "Grey Swarm!" released.
 Content-Type: text/plain; charset=utf-8
 
-I'm assigning IDs as such:
+On 11/30/2011 05:11 PM, Solar Designer wrote:
 
-CVE-2011-2703 mapserver SQL injection flaws
-CVE-2011-2704 mapserver stack based buffer overflows
-
-Thanks.
-
--- 
-    JB
-
------ Original Message -----
-> Alan, Even, thanks for your replies.
-> 
-> Just to clarify this one a bit yet. Two CVE identifiers (one for the
-> multiple SQL injection flaws, the other for the stack based buffer
-> overflow issue) seem to be necessary in this case (due different
-> versions affected):
-> 
-> [1]
-> http://lists.osgeo.org/pipermail/mapserver-users/2011-July/069430.html
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> On 07/19/2011 05:32 PM, Alan Boudreault wrote:
-> > I got new from the debian security guy yesterday. I should get the
-> > CVE id
-> > soon.
+> > All -
 > >
-> > Thanks,
-> > Alan
+> > On Thu, Dec 01, 2011 at 12:47:56AM +0100, psy wrote:
+>> >> There is released a new version of *XSSer* (v1.6-beta-) - the cross site
+>> >> scripter framework.
+> > We do not have a strict policy on whether security tool announcements
+> > are appropriate in here or not.  My current stance on it is that
+> > one-time announcements of tools with specific relevance to Open Source
+> > are OK, whereas repeated new version announcements are not.  Thus, I
+> > approved the announcement of XSSer this one time, but I don't intend to
+> > approve an announcement of the next version of XSSer.  Please let me
+> > know if you'd like this approach changed in some way.
 > >
-> > On July 19, 2011 11:28:29 am Even Rouault wrote:
-> >> Selon Jan Lieskovsky<jlieskov@...hat.com>:
-> >>
-> >> Jan,
-> >>
-> >> I believe Alan Boudreault (MapServer team member that I've added to
-> >> the CC
-> >> list) has already asked the Debian security team to request for a
-> >> CVE
-> >> number, but without any result for now. Maybe he can confirm.
-> >>
-> >> Best regards,
-> >>
-> >> Even
-> >>
-> >>> Hello Josh, Steve, vendors,
-> >>>
-> >>>     the following has been brought to our attention:
-> >>>     [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
-> >>>     [2] http://trac.osgeo.org/mapserver/ticket/3903
-> >>>
-> >>> More from [2]:
-> >>>
-> >>> This ticket is to track fixes to prevent SQL injections through
-> >>> OGC
-> >>> filter encoding (in WMS, WFS and SOS), as well as a potential SQL
-> >>> injection in WMS time support.
-> >>>
-> >>> Your system may be vulnerable if it has MapServer with OGC
-> >>> protocols
-> >>> enabled, with layers connecting to an SQL RDBMS backend, either
-> >>> natively
-> >>> or via OGR.
-> >>>
-> >>> All versions of MapServer 4.x, 5.x and 6.x are potentially
-> >>> vulnerable.
-> >>> All users are ** strongly encouraged ** to upgrade to one of the
-> >>> latest
-> >>> releases with the fixes.
-> >>>
-> >>> Could you allocate a CVE id for this?
-> >>>
-> >>> Thank you&& Regards, Jan.
-> >>> --
-> >>> Jan iankko Lieskovsky / Red Hat Security Response Team
+Agreed. Random thought: or if a project makes a major
+breakthrough/update/change/once a year type of announcement is probably
+sane too? I like hearing about new tools and definitely don't have time
+to go through Google/etc any more =).
+
+
+> > Meanwhile, the various CFPs and e-magazine issue announcements that are
+> > arriving to oss-security are being rejected - as we decided previously.
 > >
++1
+
+> > Alexander
+-- -Kurt Seifried / Red Hat Security Response Team
+
+
