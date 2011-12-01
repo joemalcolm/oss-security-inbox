@@ -1,13 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/8
-Message-ID: <Pine.GSO.4.64.1103221249480.7299@faron.mitre.org>
-Date: Tue, 22 Mar 2011 12:50:18 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/2
+Message-ID: <4ED6CA83.6050301@redhat.com>
+Date: Wed, 30 Nov 2011 17:29:55 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security advisory: local DOS attack affecting non updated PaX patched kernels.
+Subject: Re: XSSer v1.6 -beta- aka "Grey Swarm!" released.
 Content-Type: text/plain; charset=utf-8
 
+On 11/30/2011 05:11 PM, Solar Designer wrote:
 
-CVE-2011-1474 was assigned to this issue.
+> > All -
+> >
+> > On Thu, Dec 01, 2011 at 12:47:56AM +0100, psy wrote:
+>> >> There is released a new version of *XSSer* (v1.6-beta-) - the cross site
+>> >> scripter framework.
+> > We do not have a strict policy on whether security tool announcements
+> > are appropriate in here or not.  My current stance on it is that
+> > one-time announcements of tools with specific relevance to Open Source
+> > are OK, whereas repeated new version announcements are not.  Thus, I
+> > approved the announcement of XSSer this one time, but I don't intend to
+> > approve an announcement of the next version of XSSer.  Please let me
+> > know if you'd like this approach changed in some way.
+> >
+Agreed. Random thought: or if a project makes a major
+breakthrough/update/change/once a year type of announcement is probably
+sane too? I like hearing about new tools and definitely don't have time
+to go through Google/etc any more =).
 
-- Steve
+
+> > Meanwhile, the various CFPs and e-magazine issue announcements that are
+> > arriving to oss-security are being rejected - as we decided previously.
+> >
++1
+
+> > Alexander
+-- -Kurt Seifried / Red Hat Security Response Team
+
+
