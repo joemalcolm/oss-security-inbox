@@ -1,28 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/07/3
-Message-ID: <4DEE628F.1010806@redhat.com>
-Date: Tue, 07 Jun 2011 19:40:31 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, nospam@...il.it
-Subject: CVE Request -- WebSVN -- execCommand() remote commands injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/4
+Message-ID: <20111201095900.GA25680@foo.fgeek.fi>
+Date: Thu, 1 Dec 2011 11:59:00 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello, Josh, Steve, vendors,
+Original post: http://seclists.org/bugtraq/2011/Nov/15
+Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
+New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
 
-   it was found that WebSVN is prone to remote commands injection 
-vulnerability due improper escaping / quoting of strings, to be
-sent to the command line. Microsoft Windows specific issue and
-different vulnerability than CVE-2008-5918, CVE-2008-5919,
-CVE-2008-5920, and CVE-2009-0240.
+I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
 
-References:
-[1] http://seclists.org/bugtraq/2011/Jun/34
-[2] http://retrogod.altervista.org/rgod_websvn_adv.html
-[3] http://retrogod.altervista.org/rgod_websvn_poc.html
+This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
 
-Could you allocate a CVE id for this?
+Please notify me if this is not enough information.
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- Henri Salo
