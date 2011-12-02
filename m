@@ -1,37 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/6
-Message-ID: <4ED6C0AC.8060601@lordepsylon.net>
-Date: Thu, 01 Dec 2011 00:47:56 +0100
-From: psy <root@...depsylon.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/02/2
+Message-ID: <230448c4-11a5-4384-b901-ce3a84a03a5a@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Thu, 01 Dec 2011 22:54:23 -0500 (EST)
+From: David Jorm <djorm@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: XSSer v1.6 -beta- aka "Grey Swarm!" released.
+Subject: DOM based XSS in the JBoss AS 7 administration console - CVE-2011-3606
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
+CVE-2011-3606 has been assigned to a DOM based XSS in the JBoss AS 7 administration console. This issue was embargoed until today, with a fix now available in the latest release of AS 7. Details are in Red Hat Bugzilla:
 
-There is released a new version of *XSSer* (v1.6-beta-) - the cross site
-scripter framework.
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-3606
 
-Take a look to the XSSer website to see new features implemented,
-screenshots, documentation, etc...
+Thanks to David Black for reporting this flaw.
 
-http://xsser.sf.net
-
-You can download original code directly from here:
-
-http://sourceforge.net/projects/xsser/files/xsser_1.6-1.tar.gz/download
-
-Or update your copy from the XSSer svn repository:
-
-$ svn co https://xsser.svn.sourceforge.net/svnroot/xsser xsser
-
-Also, you have on the main website some pre-compiled packages
-(ArchLinux, Debian/Ubuntu, Gentoo, etc..)
-
-"Are you ready for the Grey Swarm!?"
-
-Happy cross hacking.
-
-psy.
-
+-- 
+David Jorm / Red Hat Security Response Team
 
