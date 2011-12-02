@@ -1,27 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/9
-Message-ID: <20110804145720.GF30625@redhat.com>
-Date: Thu, 4 Aug 2011 22:57:20 +0800
-From: Daniel Veillard <veillard@...hat.com>
-To: Billy Rios <billy.rios@...il.com>
-Cc: Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: libxml security fix from apple ... any information?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/02/3
+Message-ID: <7fc68295-e0c9-40e5-afee-8382797bb978@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Thu, 01 Dec 2011 23:17:05 -0500 (EST)
+From: David Jorm <djorm@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CSRF in the JBoss AS 7 administration console & HTTP management API - CVE-2011-3609
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 28, 2011 at 09:59:22PM -0700, Billy Rios wrote:
-> The crash was indeed in libxml2, but I could not get the bug to repro in
-> Linux.  We took the crash file and fuzzed a bit more on Linux, but no
-> crashes were observed.
+CVE-2011-3609 has been assigned to a CSRF flaw in the JBoss AS 7 administration console & HTTP management API. A fix for this issue is now available in the latest release of AS 7. Details are in Red Hat Bugzilla:
 
-  Just wondering, are you by chance changing the libxml2 buffer allocation
-strategy in the application code (function xmlSetBufferAllocationScheme())
-and associated global variable (I know I know ...) xmlBufferAllocScheme.
-That may explain if you switched to an exact allocation policy why
-you hit the buffer overrun while it usually doesn't show up,
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-3609
 
-Daniel
+Thanks to David Black for reporting this flaw.
 
 -- 
-Daniel Veillard      | libxml Gnome XML XSLT toolkit  http://xmlsoft.org/
-daniel@...llard.com  | Rpmfind RPM search engine http://rpmfind.net/
-http://veillard.com/ | virtualization library  http://libvirt.org/
+David Jorm / Red Hat Security Response Team
