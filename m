@@ -1,22 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/1
-Message-Id: <201101181222.16630.timb@nth-dimension.org.uk>
-Date: Tue, 18 Jan 2011 12:22:05 +0000
-From: Tim Brown <timb@...-dimension.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/02/2
+Message-ID: <230448c4-11a5-4384-b901-ce3a84a03a5a@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Thu, 01 Dec 2011 22:54:23 -0500 (EST)
+From: David Jorm <djorm@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request
+Subject: DOM based XSS in the JBoss AS 7 administration console - CVE-2011-3606
 Content-Type: text/plain; charset=utf-8
 
-Guys,
+CVE-2011-3606 has been assigned to a DOM based XSS in the JBoss AS 7 administration console. This issue was embargoed until today, with a fix now available in the latest release of AS 7. Details are in Red Hat Bugzilla:
 
-What's the best way for an open source project to request a CVE prior to 
-disclosure?  I'm more that happy to coordinate the disclosure with 
-distributions where appropriate if that makes a difference.
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-3606
 
-Tim
+Thanks to David Black for reporting this flaw.
+
 -- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
+David Jorm / Red Hat Security Response Team
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
