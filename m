@@ -1,22 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/12/3
-Message-Id: <201101122056.p0CKuOsj006751@core.courtesan.com>
-Date: Wed, 12 Jan 2011 15:56:23 -0500
-From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/02/3
+Message-ID: <7fc68295-e0c9-40e5-afee-8382797bb978@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Thu, 01 Dec 2011 23:17:05 -0500 (EST)
+From: David Jorm <djorm@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: sudo does not ask for password on GID changes
+Subject: CSRF in the JBoss AS 7 administration console & HTTP management API - CVE-2011-3609
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 11 Jan 2011 15:52:46 MST, Vincent Danen wrote:
+CVE-2011-3609 has been assigned to a CSRF flaw in the JBoss AS 7 administration console & HTTP management API. A fix for this issue is now available in the latest release of AS 7. Details are in Red Hat Bugzilla:
 
-> A Debian bug report noted that sudo does not access for a password on
-> GID changes, like it does for UID changes.  This could allow a user to
-> execute commands using '-g [group]' without being prompted for their
-> password.
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-3609
 
-This is fixed in sudo 1.7.4p5, available now.
+Thanks to David Black for reporting this flaw.
 
-I've written up details of the bug in:
-    http://www.sudo.ws/sudo/alerts/runas_group_pw.html
-
- - todd
+-- 
+David Jorm / Red Hat Security Response Team
