@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/9
-Message-ID: <889145794.11829.1302893554457.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 15 Apr 2011 14:52:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/03/1
+Message-ID: <4ED9E006.6020007@googlemail.com>
+Date: Sat, 03 Dec 2011 09:38:30 +0100
+From: dishix <dishix@...glemail.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: incomplete fix for CVE-2010-1000 in KDE network
+Subject: CVE request: CSRF in xt:commerce 3.04 SP2.1
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1586
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks.
+Hi,
 
--- 
-    JB
+Can I get CVE-identifier for this:
+
+xt:commerce 3.04 SP2.1 is prone to CSRF. An attacker can exploit this
+vulnerability to escalate his/her privileges to gain administrator access.
+
+> http://dishix.blogspot.com/2011/11/exploiting-xtcommerce-v304-sp21-cross.html
+> http://dishix.blogspot.com/p/xtcommerce-v304-sp21-cross-site-request_29.html
 
 
+Best regards,
+dishix
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
------ Original Message -----
-> A bug was filed in Ubuntu[1] for patches[2][3] that went into KDE
-> Network for an incomplete fix for CVE-2010-1000. The commit message
-> is:
-> 
-> "Further addresses CVE-2010-1000. The file name of Metalink File is
-> checked a better way, making it work under more conditions."
-> 
-> While the previous patch fixed things like '../../tmp/gotcha', it did
-> not fix a single leading '../'.
-> 
-> [1]https://bugs.launchpad.net/ubuntu/+source/kdenetwork/+bug/757526
-> [2]http://websvn.kde.org/?view=revision&revision=1227468 (4.4)
-> [3]http://websvn.kde.org/?view=revision&revision=1227469 (4.5)
-> 
-> --
-> Jamie Strandboge | http://www.canonical.com
+iQEcBAEBAgAGBQJO2d/7AAoJEKmqdCCWk7VQDpsIAJQNWNIaDXNTAuQrf8767R+n
+U1ZQxSxRCVDkX7DsOINQgHxBYnetaycfKmBfX8KlOZvZYtvtOM7YrDlx2q8Pbcf7
+nGF2IhZBIDOE9I67Gpwx1wAoHQogynXS7o/PGyZL9o7j4tzUmodbPG8nFMIK9c+8
+BwchXmaV95J99V6scaL/MVwMG7K235UVuRkd6sxKDOPT9rYU8Ex/7Mpru9LQqeYf
+zS4WlzTJ+zgJ/3YmzvJo59AfTmTFGNbahgkl1YsgmEkq79lQoVewf72Q5kY50zbX
+njegk+xl1OJpbyoqa99x0Vxy789mqo97bfWreGgr445VLgIWG4LtkwEPemBpg/s=
+=H1Cx
+-----END PGP SIGNATURE-----
