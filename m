@@ -1,53 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/6
-Message-ID: <4D96FDEF.5010909@gmail.com>
-Date: Sat, 02 Apr 2011 12:43:59 +0200
-From: Es gibt immer etwas zu tratschen <tratschen@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/2
+Message-ID: <4EDBBDAF.3040706@redhat.com>
+Date: Sun, 04 Dec 2011 11:36:31 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Marc Deslauriers <marc.deslauriers@...onical.com>
+Subject: Re: CVE Request: ffmpeg
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12/04/2011 04:06 AM, Marc Deslauriers wrote:
+> Hello,
+>
+> This doesn't seem to have a CVE:
+>
+> An error within the "svq1_decode_frame()" function
+> (libavcodec/svq1dec.c) can be exploited to corrupt memory.
+>
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=4931c8f0f10bf8dedcf626104a6b85bfefadc6f2
+>
+> http://secunia.com/advisories/46888/
+> http://archives.neohapsis.com/archives/bugtraq/2011-11/0148.html
+>
+>
+> Thanks,
+>
+> Marc.
+>
+>
+The secunia page lists 3 CVE's and 4 issues with no mappings to CVE's to
+issues that I can see. Can you reply with the mapping information that
+you used to determine that this issue was not assigned a CVE (as opposed
+to one of the other issues)?. Also can you confirm or proove that these
+4 issues are all separate and that two of them have not been merged
+(thus obviating any need for a third CVE)? Thanks in advance. If anyone
+from Secunia is on this list I'd love to hear from you/any comments on
+this issue are more then welcome.
 
-Am 01.04.2011 20:03, schrieb Josh Bressers:
-> Hello everyone,
-> 
-> This topic has lost focus lately. Rather than let it slip away, I think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
-> 
-> Openwall has graciously volunteered to run a new list, and they currently
-> have some infrastructure in place to do this. The new list can start up
-> right away. In this instance, I fear perfect is the enemy of the good. I'd
-> rather see something functional in place than nothing.
-> 
-> Here is the plan for initial membership (this is also approved by
-> Openwall).
-> 
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
-> 
-> Once we have an initial seed group, we can focus on future membership
-> ideas.
-> 
-> Thanks.
-> 
-I also want to stay with you!
+-- 
 
+-Kurt Seifried / Red Hat Security Response Team
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.17 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQEcBAEBAgAGBQJNlv3uAAoJEPdDX1Kv1dVM/SIIAJLANpa+u1STvVU7nKkZSR+P
-vQLCaSHfMilpgD7SUJ65PZ3iU+xOwPQGFeEMygE25gpm2YXnXKJbxSeY+3dx/5f6
-xLFzDSu6QWBzZOIzyvg1eUcOZzDxnv6ce+Xn86tQ9zsLgwxRXfCZeZvB3LSCmQhJ
-BIUTq8GZkB8p8U6x/tVDlzpEl5LqECP1Yrl9lLwY5Fe4O56ESq7AmtH+N1STPr9+
-NNvLccEb4IKWT3oA9Zr1nyMfAN0g7g0cskx8YyvMXccj1fOyB6wwKuxuEXefFWbE
-+KH9vv+iz9t+CDjI3QkLFLXQciA0r1rd0KmnJQNtDrrMoPZPceAaEsOQReL/amo=
-=xrlm
------END PGP SIGNATURE-----
