@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/7
-Message-ID: <20110804143326.GC6651@foo.fgeek.fi>
-Date: Thu, 4 Aug 2011 17:33:26 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/4
+Message-ID: <20111204200746.2bc22fe0@laverne>
+Date: Sun, 4 Dec 2011 20:07:46 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: security@...bb.co.uk, C.Trapt@...il.com
-Subject: CVE-request: KaiBB security vulnerabilities without CVE-IDs
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Please assign CVE-IDs for following KaiBB issues:
+Am Thu, 01 Dec 2011 13:24:19 -0700
+schrieb Kurt Seifried <kseifried@...hat.com>:
 
-2011:
-http://osvdb.org/show/osvdb/71068 - HTB22793
-2010:
-http://osvdb.org/show/osvdb/69346
-http://osvdb.org/show/osvdb/71885 - HTB22746
-http://osvdb.org/show/osvdb/70210 - HTB22747, HTB22748
-http://osvdb.org/show/osvdb/70211 - HTB22749
-http://osvdb.org/show/osvdb/69347
-http://osvdb.org/show/osvdb/69345
+> My mistake, this should have been merged into CVE-2011-4090, it's the
+> same vuln type (XSS) and the same version of Serendipity,
+> CVE-2011-4365 is a bad assignment and should be marked as a duplicate
+> of CVE-2011-4090.
 
-Haven't tested any of these in actual installation. I can do it if someone requests it.
+I'd disagree on that.
 
-Vendor/project www-pages:
-1) http://code.google.com/p/kaibb/
-2) http://www.kaibb.co.uk/
+CVE-2011-4090 is in an (optional) plugin, while CVE-2011-4365 is an
+issue in the main s9y code.
 
-Best regards,
-Henri Salo
+Although the plugin is shipped with the core s9y, the impact is quite
+different. For 4090, you only need to care if you do something with the
+karma-plugin.
+
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
