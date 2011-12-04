@@ -1,44 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/11
-Message-ID: <AANLkTikD+VGvyONLSt8+3RBNKM-GUUczGDfakYtRG-e0@mail.gmail.com>
-Date: Tue, 25 Jan 2011 17:45:48 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/4
+Message-ID: <20111204200746.2bc22fe0@laverne>
+Date: Sun, 4 Dec 2011 20:07:46 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: libxml2 heap contents leak
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-hi,
+Am Thu, 01 Dec 2011 13:24:19 -0700
+schrieb Kurt Seifried <kseifried@...hat.com>:
 
-Btw, I re opened the php one as Daniel seems to think that it is the
-application responsibility and not libxml. I'm not totally convinced
-and I asked Rob to check this problem again.
+> My mistake, this should have been merged into CVE-2011-4090, it's the
+> same vuln type (XSS) and the same version of Serendipity,
+> CVE-2011-4365 is a bad assignment and should be marked as a duplicate
+> of CVE-2011-4090.
 
-On Mon, Jan 24, 2011 at 10:41 PM, Kees Cook <kees@...ntu.com> wrote:
-> Hello,
->
-> I'd like to get a CVE assigned for a minor heap contents leak in
-> libxml2. I reported that it is possible to leak heap memory contents
-> from libxml2 (and things linked against it, for example PHP[1], or things
-> written in PHP[2]):
->
-> https://bugzilla.gnome.org/show_bug.cgi?id=631551
->
-> Thanks,
->
-> -Kees
->
-> [1] http://bugs.php.net/bug.php?id=52998
-> [2] http://status.net/open-source/issues/2798
->
-> --
-> Kees Cook
-> Ubuntu Security Team
->
+I'd disagree on that.
 
+CVE-2011-4090 is in an (optional) plugin, while CVE-2011-4365 is an
+issue in the main s9y code.
 
+Although the plugin is shipped with the core s9y, the impact is quite
+different. For 4090, you only need to care if you do something with the
+karma-plugin.
 
 -- 
-Pierre
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
