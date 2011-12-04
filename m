@@ -1,105 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/7
-Message-ID: <AANLkTikghCt3SurFRM8kWcPnKAAOXH+s5XAJ1ZoW31o5@mail.gmail.com>
-Date: Mon, 14 Mar 2011 01:46:18 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/3
+Message-ID: <4EDBBE38.5040204@redhat.com>
+Date: Sun, 04 Dec 2011 11:38:48 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Joomla! 1.6.0 | SQL Injection Vulnerability
+CC: dishix <dishix@...glemail.com>
+Subject: Re: CVE request: CSRF in xt:commerce 3.04 SP2.1
 Content-Type: text/plain; charset=utf-8
 
-=================================
- Joomla! 1.6.0 | SQL Injection Vulnerability
-=================================
+On 12/03/2011 01:38 AM, dishix wrote:
+> Hi,
+>
+> Can I get CVE-identifier for this:
+>
+> xt:commerce 3.04 SP2.1 is prone to CSRF. An attacker can exploit this
+> vulnerability to escalate his/her privileges to gain administrator access.
+>
+> >
+> http://dishix.blogspot.com/2011/11/exploiting-xtcommerce-v304-sp21-cross.html
+> >
+> http://dishix.blogspot.com/p/xtcommerce-v304-sp21-cross-site-request_29.html
+>
+The second link is 404. Also can you provide links to the project and
+the affected source code so I can verify this issue? Thanks.
+>
+> Best regards,
+> dishix
 
+-- 
 
-1. OVERVIEW
+-Kurt Seifried / Red Hat Security Response Team
 
-Joomla! 1.6.0 was vulnerable to SQL Injection.
-
-
-2. BACKGROUND
-
-Joomla is a free and open source content management system (CMS) for
-publishing content on the World Wide Web and intranets. It comprises a
-model–view–controller (MVC) Web application framework that can also be
-used independently.
-Joomla is written in PHP, uses object-oriented programming (OOP)
-techniques and software design patterns, stores data in a MySQL
-database, and includes features such as page caching, RSS feeds,
-printable versions of pages, news flashes, blogs, polls, search, and
-support for language internationalization.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Parameters (filter_order, filer_order_Dir) were not properly sanitized
-in Joomla! that lead to SQL Injection vulnerability.  This could an
-attacker to inject or manipulate SQL queries in the back-end database,
-allowing for the manipulation or disclosure of arbitrary data.
-
-
-4. VERSION AFFECTED
-
-Joomla! 1.6.0
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://attacker.in/joomla160/index.php/using-joomla/extensions/components/content-component/article-category-list/?filter_order=yehg.net.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAAAAA,&filter_order_Dir=2&limit=3&limitstart=4
-
-
-http://attacker.in/joomla160/index.php/using-joomla/extensions/components/content-component/article-category-list/?filter_order=1,&filter_order_Dir=yehg.net.BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB,&limit=3&limitstart=4
-
-
-This is the exact same variant as shown in Joomla! 1.5.21:
-http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5_21]_sql_injection
-
-We thought Joomla! team would fix this issue in 1.6.0 stable release
-whilst they fixed it in Joomla! 1.5.22!
-
-
-6. SOLUTION
-
-Upgrade to Joomla! 1.6.1 or higher
-
-
-7. VENDOR
-
-Joomla! Developer Team
-http://www.joomla.org
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2011-01-24: notified vendor
-2011-03-08: vendor released fix
-2011-03-14: vulnerability disclosed
-
-
-10. REFERENCES
-
-Vendor Advisory URL:
-http://developer.joomla.org/security/news/328-20110201-core-sql-injection-path-disclosure.html
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.0]_sql_injection
-OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-CWE-89: http://cwe.mitre.org/data/definitions/89.html
-
-
-#yehg [2011-03-14]
-
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
