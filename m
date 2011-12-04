@@ -1,35 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/7
-Message-ID: <1779019949.374858.1299183916473.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Mar 2011 15:25:16 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/1
+Message-ID: <1322996787.32667.112.camel@mdlinux>
+Date: Sun, 04 Dec 2011 06:06:27 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: cve request for smoothwall & openfiler
+Subject: CVE Request: ffmpeg
 Content-Type: text/plain; charset=utf-8
 
+Hello,
+
+This doesn't seem to have a CVE:
+
+An error within the "svq1_decode_frame()" function
+(libavcodec/svq1dec.c) can be exploited to corrupt memory.
+
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=4931c8f0f10bf8dedcf626104a6b85bfefadc6f2
+
+http://secunia.com/advisories/46888/
+http://archives.neohapsis.com/archives/bugtraq/2011-11/0148.html
 
 
------ Original Message -----
-> Hi can someone allocate a cve for smoothwall express 3 regarding the
-> csrf and xss issue raised in [1].
-> Also if someone could allocate a cve for an xss in Openfiler - see
-> [2].
-> 
-> 
-> [1] http://secunia.com/advisories/42897/
-> [2] http://secunia.com/advisories/42507/
+Thanks,
 
-Here goes:
+Marc.
 
-http://secunia.com/advisories/42897/
-CVE-2011-1084 smoothwall xss
-CVE-2011-1085 smoothwall csrf
 
-http://secunia.com/advisories/42507/
-CVE-2011-1086 openfilter xss
-
-Thanks.
-
--- 
-    JB
