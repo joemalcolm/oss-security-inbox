@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/1
-Message-ID: <20111225002724.GA31068@foo.fgeek.fi>
-Date: Sun, 25 Dec 2011 02:27:24 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/3
+Message-ID: <4EDBBE38.5040204@redhat.com>
+Date: Sun, 04 Dec 2011 11:38:48 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...mla.org
-Subject: CVE-request for three 2009 Joomla issues
+CC: dishix <dishix@...glemail.com>
+Subject: Re: CVE request: CSRF in xt:commerce 3.04 SP2.1
 Content-Type: text/plain; charset=utf-8
 
-I didn't find CVE-identifiers for these issues:
+On 12/03/2011 01:38 AM, dishix wrote:
+> Hi,
+>
+> Can I get CVE-identifier for this:
+>
+> xt:commerce 3.04 SP2.1 is prone to CSRF. An attacker can exploit this
+> vulnerability to escalate his/her privileges to gain administrator access.
+>
+> >
+> http://dishix.blogspot.com/2011/11/exploiting-xtcommerce-v304-sp21-cross.html
+> >
+> http://dishix.blogspot.com/p/xtcommerce-v304-sp21-cross-site-request_29.html
+>
+The second link is 404. Also can you provide links to the project and
+the affected source code so I can verify this issue? Thanks.
+>
+> Best regards,
+> dishix
 
-1) Joomla! TinyMCE Editor Tiny Browser Plugin File Upload Arbitrary PHP Code Execution
-http://osvdb.org/show/osvdb/56276
-http://developer.joomla.org/security/news/301-20090722-core-file-upload.html
+-- 
 
-2) Joomla! Missing JEXEC Check Weakness Path Disclosure
-http://osvdb.org/show/osvdb/56277
-http://developer.joomla.org/security/news/302-20090722-core-missing-jexec-check.html
+-Kurt Seifried / Red Hat Security Response Team
 
-3) TinyBrowser Plugin for Joomla! upload.php folder Parameter Arbitrary File Upload
-http://osvdb.org/show/osvdb/64578
-
-Secunia advisory for three issues: http://secunia.com/advisories/35899/
-
-- Henri Salo
