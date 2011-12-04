@@ -1,87 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/2
-Message-ID: <AANLkTin6sP-Jsszzsxr06H5rLSSCvfa9wWT8cb-rS_p7@mail.gmail.com>
-Date: Thu, 27 Jan 2011 18:00:20 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/5
+Message-ID: <4EDBDEAF.9020105@redhat.com>
+Date: Sun, 04 Dec 2011 13:57:19 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request:Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-===========================================
-Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
-===========================================
+On 12/04/2011 12:07 PM, Hanno Böck wrote:
+> Am Thu, 01 Dec 2011 13:24:19 -0700
+> schrieb Kurt Seifried <kseifried@...hat.com>:
+>
+>> My mistake, this should have been merged into CVE-2011-4090, it's the
+>> same vuln type (XSS) and the same version of Serendipity,
+>> CVE-2011-4365 is a bad assignment and should be marked as a duplicate
+>> of CVE-2011-4090.
+> I'd disagree on that.
+>
+> CVE-2011-4090 is in an (optional) plugin, while CVE-2011-4365 is an
+> issue in the main s9y code.
+>
+> Although the plugin is shipped with the core s9y, the impact is quite
+> different. For 4090, you only need to care if you do something with the
+> karma-plugin.
+>
+Correct me if I'm wrong though but in the plugin advisory it says the
+fix is to upgrade serendipity to 1.6? If so then it looks like the
+problem is more back end than plugin.
 
+-- 
 
-1. OVERVIEW
+-Kurt Seifried / Red Hat Security Response Team
 
-The Vanilla Forums 2.0.16 and lower versions were vulnerable to Cross
-Site Scripting.
-
-
-2. BACKGROUND
-
-Vanilla Forums are open-source, standards-compliant, customizable
-discussion forums.
-It is specially made to help small communities grow larger through SEO
-mojo, totally customizable social tools,
-and great user experience. Vanilla is also built with integration at
-the forefront, so it can
-seamlessly integrate with your existing website, blog, or custom-built
-application.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The 'Target' parameter was not properly sanitized after user logs in,
-which allows attacker to conduct Cross Site Scripting attack.
-An attacker could prepare a link in a forum post that includes a link
-to a file which seems to require authentication.
-Upon logging in, user will get XSSed.
-
-
-4. VERSIONS AFFECTED
-
-2.0.16 and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://vanilla/index.php?p=/entry/signin&Target=javascript:alert(document.cookie)//http://
-
-
-6. SOLUTION
-
-Upgrade to Vanilla Forums 2.0.17 or higher
-
-
-7. VENDOR
-
-Vanilla Forums Development Team
-http://vanillaforums.org/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-14: notified vendor
-2011-01-18: vendor released fix
-2011-01-27: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.16]_cross_site_scripting
-What XSS Can Do: http://yehg.net/lab/pr0js/view.php/What%20XSS%20Can%20Do.pdf
-XSS FAQs: http://www.cgisecurity.com/articles/xss-faq.shtml
-XSS (wiki): http://en.wikipedia.org/wiki/Cross-site_scripting
-XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-CWE-79: http://cwe.mitre.org/data/definitions/79.html
-
-
-#yehg [2011-01-27]
