@@ -1,30 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/10/1
-Message-ID: <Pine.GSO.4.64.1102101005280.6839@faron.mitre.org>
-Date: Thu, 10 Feb 2011 10:13:57 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/5
+Message-ID: <4EDBDEAF.9020105@redhat.com>
+Date: Sun, 04 Dec 2011 13:57:19 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: btrfs heap overflow
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
+On 12/04/2011 12:07 PM, Hanno Böck wrote:
+> Am Thu, 01 Dec 2011 13:24:19 -0700
+> schrieb Kurt Seifried <kseifried@...hat.com>:
+>
+>> My mistake, this should have been merged into CVE-2011-4090, it's the
+>> same vuln type (XSS) and the same version of Serendipity,
+>> CVE-2011-4365 is a bad assignment and should be marked as a duplicate
+>> of CVE-2011-4090.
+> I'd disagree on that.
+>
+> CVE-2011-4090 is in an (optional) plugin, while CVE-2011-4365 is an
+> issue in the main s9y code.
+>
+> Although the plugin is shipped with the core s9y, the impact is quite
+> different. For 4090, you only need to care if you do something with the
+> karma-plugin.
+>
+Correct me if I'm wrong though but in the plugin advisory it says the
+fix is to upgrade serendipity to 1.6? If so then it looks like the
+problem is more back end than plugin.
 
-The Linux kernel (and open source in general) can be unusual because, 
-ideally, you only want CVEs assigned for "published" code that has some 
-chance of being used in somebody's network.  The OSS model more-or-less 
-means that all code is public.  In the ancient days of early CVE, we 
-considered excluding code that was only in beta, but then you had software 
-with extremely large user bases (sometimes in the millions)  that were in 
-permanent "beta," and that still happens today.
+-- 
 
-Add on the rapidly-changing nature of the Linux kernel and the fact that 
-so many different versions are used in so many distros and other 
-environments, and the amount of research that the distros seem to have to 
-conduct to figure out if their local kernel version is affected or not, 
-and the impossibility of an outsider (CVE) having full knowledge of which 
-code is being used where, means that CVE assignment even for release 
-candidates is a reasonable thing to do (the analytical expense of studying 
-the kernel, affected versions, and related distributions is just too high 
-- creating a CVE for a reported issue is much less expensive).
+-Kurt Seifried / Red Hat Security Response Team
 
-- Steve
