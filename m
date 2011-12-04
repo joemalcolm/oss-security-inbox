@@ -1,34 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/7
-Message-ID: <1798935709.450084.1307045614547.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 2 Jun 2011 16:13:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/2
+Message-ID: <4EDBBDAF.3040706@redhat.com>
+Date: Sun, 04 Dec 2011 11:36:31 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Multiple security vulnerabilities in ARSC Really Simple Chat
+CC: Marc Deslauriers <marc.deslauriers@...onical.com>
+Subject: Re: CVE Request: ffmpeg
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Could you assign CVE-identifiers for following security
-> vulnerabilities?
-> 
-> https://sourceforge.net/tracker/?func=detail&aid=3310673&group_id=32699&atid=406296
-> http://www.htbridge.ch/advisory/xss_in_a_really_simple_chat_arsc.html
-> http://www.htbridge.ch/advisory/multiple_sql_injections_in_a_really_simple_chat_arsc.html
-> 
-> ARSC seems to be a bit of a sinking boat. I still wonder why htbridge
-> does not request CVE-identifiers at all.
-> 
-
-
-This needs two IDs:
-
-CVE-2011-2180 ARSC XSS
-CVE-2011-2181 ARSC SQL injection
-
-Thanks.
+On 12/04/2011 04:06 AM, Marc Deslauriers wrote:
+> Hello,
+>
+> This doesn't seem to have a CVE:
+>
+> An error within the "svq1_decode_frame()" function
+> (libavcodec/svq1dec.c) can be exploited to corrupt memory.
+>
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=4931c8f0f10bf8dedcf626104a6b85bfefadc6f2
+>
+> http://secunia.com/advisories/46888/
+> http://archives.neohapsis.com/archives/bugtraq/2011-11/0148.html
+>
+>
+> Thanks,
+>
+> Marc.
+>
+>
+The secunia page lists 3 CVE's and 4 issues with no mappings to CVE's to
+issues that I can see. Can you reply with the mapping information that
+you used to determine that this issue was not assigned a CVE (as opposed
+to one of the other issues)?. Also can you confirm or proove that these
+4 issues are all separate and that two of them have not been merged
+(thus obviating any need for a third CVE)? Thanks in advance. If anyone
+from Secunia is on this list I'd love to hear from you/any comments on
+this issue are more then welcome.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
