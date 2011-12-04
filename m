@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/4
-Message-ID: <4E268233.3050909@redhat.com>
-Date: Wed, 20 Jul 2011 15:22:27 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/1
+Message-ID: <1322996787.32667.112.camel@mdlinux>
+Date: Sun, 04 Dec 2011 06:06:27 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: si4713-i2c: avoid potential buffer overflow on si4713
+Subject: CVE Request: ffmpeg
 Content-Type: text/plain; charset=utf-8
 
-"While compiling it with Fedora 15, [Mauro Carvalho Chehab] noticed this
-issue:
+Hello,
 
-inlined from ‘si4713_write_econtrol_string’ at
-drivers/media/radio/si4713-i2c.c:1065:24:
-/home/v4l/work_trees/linus/arch/x86/include/asm/uaccess_32.h:211:26:
-error: call to ‘copy_from_user_overflow’ declared with attribute error:
-copy_from_user() buffer size is not provably correct"
+This doesn't seem to have a CVE:
 
-http://git.kernel.org/?p=linux/kernel/git/longterm/longterm-queue-2.6.33.git;a=blob;f=queue-2.6.33/si4713-i2c-avoid-potential-buffer-overflow-on-si4713.patch;h=d99c471980a074cf4ef55fb4428d5f2fec66bffb;hb=29be9ef5e43df840fb19af1d4b3dfa51b3a956c8
+An error within the "svq1_decode_frame()" function
+(libavcodec/svq1dec.c) can be exploited to corrupt memory.
 
-AFAIK, only N900 uses this.
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=4931c8f0f10bf8dedcf626104a6b85bfefadc6f2
 
-Thanks, Eugene
+http://secunia.com/advisories/46888/
+http://archives.neohapsis.com/archives/bugtraq/2011-11/0148.html
+
+
+Thanks,
+
+Marc.
+
+
