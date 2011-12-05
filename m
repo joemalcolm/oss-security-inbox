@@ -1,39 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/18
-Message-ID: <20110401215229.GA16196@suse.de>
-Date: Fri, 1 Apr 2011 23:52:29 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/05/1
+Message-Id: <201112051114.49796.mweckbecker@suse.de>
+Date: Mon, 5 Dec 2011 11:14:48 +0100
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: glibc: timezone integer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
-> Hello everyone,
-> 
-> This topic has lost focus lately. Rather than let it slip away, I think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
-> 
-> Openwall has graciously volunteered to run a new list, and they currently
-> have some infrastructure in place to do this. The new list can start up
-> right away. In this instance, I fear perfect is the enemy of the good. I'd
-> rather see something functional in place than nothing.
+Hi,
 
-Yes, I doubt perfection could be reached ;)
+looks like this has never got a CVE so far or at least I couldn't find one,
+
+http://dividead.wordpress.com/tag/heap-overflow/
+http://lists.grok.org.uk/pipermail/full-disclosure/2011-December/084452.html
  
-> Here is the plan for initial membership (this is also approved by
-> Openwall).
-> 
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+Could there possibly be a CVE assigned, please? Thanks in advance.
 
-pub   1024D/0175623E 2003-11-21
-      Key fingerprint = D33B C5C3 C0CC 59B6 3989  D77B EA7B F397 0175 623E
-uid                  Marcus Meissner <meissner@...e.de>
-uid                  Marcus Meissner <meissner@...ell.com>
-sub   1024g/EA43E05E 2003-11-21
+Matthias
 
-Ciao, Marcus
+-- 
+Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
