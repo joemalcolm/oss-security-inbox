@@ -1,34 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/12
-Message-ID: <20110401202235.GA9674@nxnw.org>
-Date: Fri, 1 Apr 2011 13:22:36 -0700
-From: Steve Beattie <sbeattie@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/06/2
+Message-ID: <20111206203949.GA10436@pisco.westfalen.local>
+Date: Tue, 6 Dec 2011 21:39:49 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: acpid
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh,
+Hi,
+Please assign a CVE ID for this issue fixed in acpid 2.0.11:
 
-On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+http://www.tedfelix.com/linux/acpid-netlink.html 
+(The ChangeLog can only be grabbed through the tarballs):
 
-I was a subscriber of vender-sec, please add me to the new list.
+------
+* Sat Jul 30 2011  Ted Felix <http://www.tedfelix.com>
+  - 2.0.11 release
+  - Set umask to 0077 for scripts run by acpid.  (event.c)  (Ted Felix)
+------
 
-gpg information:
+Discovered by Helmut Grohne and Michael Biebl.
 
-pub   4096R/005E81F4 2010-06-08 [expires: 2020-06-05]
-      Key fingerprint = A606 3BB5 6023 09A4 3C8E  BBD4 2F09 9E8D 005E 81F4
-uid                  Steve Beattie (Ubuntu) <sbeattie@...ntu.com>
-
-Thanks.
-
--- 
-Steve Beattie
-<sbeattie@...ntu.com>
-http://NxNW.org/~steve/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Cheers,
+        Moritz
