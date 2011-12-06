@@ -1,50 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/19
-Message-ID: <20110314190345.GA4114@netbookdave>
-Date: Mon, 14 Mar 2011 20:03:45 +0100
-From: David King <amigadave@...gadave.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/06/3
+Message-ID: <4EDEA159.5030005@redhat.com>
+Date: Tue, 06 Dec 2011 16:12:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: acpid
 Content-Type: text/plain; charset=utf-8
 
-On 2011-03-14 16:00, Jan Lieskovsky <jlieskov@...hat.com> wrote:
->Hello Josh, Steve, David, vendors,
+On 12/06/2011 01:39 PM, Moritz Muehlenhoff wrote:
+> Hi,
+> Please assign a CVE ID for this issue fixed in acpid 2.0.11:
 >
->   this is due the following vino deficiency:
->   [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
->   [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
+> http://www.tedfelix.com/linux/acpid-netlink.html 
+> (The ChangeLog can only be grabbed through the tarballs):
 >
->As noted in [1] Vino may incorrectly report, that relevant user desktop
->is reachable only over local network, when in fact it's reachable from everywhere.
-
-[snip]
-
->Upstream bug report:
->[3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
+> ------
+> * Sat Jul 30 2011  Ted Felix <http://www.tedfelix.com>
+>   - 2.0.11 release
+>   - Set umask to 0077 for scripts run by acpid.  (event.c)  (Ted Felix)
+> ------
 >
->Ubuntu bug report (IPv6 specific):
->[4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
+> Discovered by Helmut Grohne and Michael Biebl.
 >
->To David King -- David, what are the upstream plans for this issue? Is there by any
->chance upstream patch for the bug [3] yet?
-
-I only took over the Vino maintainership 10 days ago, so I am not 
-familiar with all parts of the code yet, including this one. Now that I 
-have been notified of the issue, I will work on fixing it, but for the 
-next stable release (GNOME 3.0), due in a few weeks, I think that it 
-will be safest to disable this functionality.
-
-As for the UPnP issue listed at [2], I was planning to fix this during 
-the GNOME 3.2 release cycle, as it will require changing translatable 
-strings, and the project is already in a string freeze. The upstream bug 
-has some more details:
-
-https://bugzilla.gnome.org/show_bug.cgi?id=594521
-
-I could also disable this functionality as a workaround.
-
->Thanks && Regards, Jan.
+> Cheers,
+>         Moritz
+Please use CVE-2011-4578 for this issue.
 
 -- 
-http://amigadave.com/
+
+-Kurt Seifried / Red Hat Security Response Team
+
