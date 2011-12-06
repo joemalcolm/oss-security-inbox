@@ -1,45 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/26
-Message-ID: <Pine.GSO.4.64.1103041208100.3265@faron.mitre.org>
-Date: Fri, 4 Mar 2011 12:22:34 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Solar Designer <solar@...nwall.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/06/4
+Message-ID: <4EDEA3C9.1000500@redhat.com>
+Date: Tue, 06 Dec 2011 16:22:49 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: acpid - possible issue in socket handling
 Content-Type: text/plain; charset=utf-8
 
+While reading the acpid ChangeLog I noticed:
 
-On Fri, 4 Mar 2011, Solar Designer wrote:
+* Tue Nov 15 2011  Ted Felix <http://www.tedfelix.com>
+  - 2.0.13 release
+  - Fix for socket name buffer overflow.  (ud_socket.c)  (Ted Felix)
 
-> Again, as I wrote to Florian, maybe the expectations here are changing 
-> over the years.
+This doesn't appear to cross a security boundary without an admin doing
+something intentionally strange. But just in case someone knows a clever
+way to exploit this I thought I'd post to the list and ask (and if so
+I'll assign a CVE).
 
-In general, that's what happens in CVE.  Part of this may be that as the 
-more obvious/severe issues get eliminated, less-severe issues are then 
-given more attention.  I try to watch out for edge cases that may 
-"snowball" into large numbers of CVEs of limited utility - and you brought 
-up one such example of a snowball issue with the recognition of 
-technically-unsafe-but-commonly-accepted file behaviors of various Unix 
-commands.  However, there is no clearly-defined line (software is too 
-complex and dynamic for that) and risk tolerance differs widely between 
-individuals.  The PHP interpreted gets hit with various issues related to 
-sandbox escaping (or an application attacking itself), but in a hosting 
-scenario (fairly common these days), it's a concern to some consumers.
+Code below:
 
-As remote code execution vectors dry up (for certain classes of software), 
-people look elsewhere.  As obvious remote vuln types get resolved, people 
-look for other issues of uncertain exploitability that cause a crash. 
-Alexander, you've had a bit of experience in suddenly turning "bugs" into 
-"vulnerabilities" ;-)  The target is shifting over time and, by its 
-nature, spreading a wider net.  As long as prioritization metrics like 
-CVSS follow suit (e.g. more severities of 4 and 5, less 10's), this is a 
-reasonable shift.
+--- acpid-2.0.12/ud_socket.c    2009-04-29 08:36:27.000000000 -0600
++++ acpid-2.0.13/ud_socket.c    2011-10-17 17:47:16.000000000 -0600
+@@ -15,6 +15,7 @@
+ #include <fcntl.h>
+ 
+ #include "acpid.h"
++#include "log.h"
+ #include "ud_socket.h"
+ 
+ int
+@@ -24,7 +25,16 @@
+        int r;
+        struct sockaddr_un uds_addr;
+ 
+-       /* JIC */
++    if (strnlen(name, sizeof(uds_addr.sun_path)) >
++        sizeof(uds_addr.sun_path) - 1) {
++        acpid_log(LOG_ERR, "ud_create_socket(): "
++            "socket filename longer than %u characters: %s",
++            sizeof(uds_addr.sun_path) - 1, name);
++        errno = EINVAL;
++        return -1;
++    }
++
++    /* JIC */
+        unlink(name);
+ 
+        fd = socket(AF_UNIX, SOCK_STREAM, 0);
+@@ -35,7 +45,7 @@
+        /* setup address struct */
+        memset(&uds_addr, 0, sizeof(uds_addr));
+        uds_addr.sun_family = AF_UNIX;
+-       strcpy(uds_addr.sun_path, name);
++    strncpy(uds_addr.sun_path, name, sizeof(uds_addr.sun_path) - 1);
+       
+        /* bind it to the socket */
+        r = bind(fd, (struct sockaddr *)&uds_addr, sizeof(uds_addr));
+@@ -85,6 +95,14 @@
+        int r;
+        struct sockaddr_un addr;
+ 
++    if (strnlen(name, sizeof(addr.sun_path)) > sizeof(addr.sun_path) - 1) {
++        acpid_log(LOG_ERR, "ud_connect(): "
++            "socket filename longer than %u characters: %s",
++            sizeof(addr.sun_path) - 1, name);
++        errno = EINVAL;
++        return -1;
++    }
++   
+        fd = socket(AF_UNIX, SOCK_STREAM, 0);
+        if (fd < 0) {
+                return fd;
+@@ -93,6 +111,8 @@
+        memset(&addr, 0, sizeof(addr));
+        addr.sun_family = AF_UNIX;
+        sprintf(addr.sun_path, "%s", name);
++    /* safer: */
++    /*strncpy(addr.sun_path, name, sizeof(addr.sun_path) - 1);*/
+ 
+        r = connect(fd, (struct sockaddr *)&addr, sizeof(addr));
+        if (r < 0) {
 
-For CVE, there is no implied requirement for vendors to post advisories 
-for evey issue that has a CVE assigned.  Vendors decide which issues are 
-severe enough to directly notify their consumers about.  Granted, as the 
-scope of CVE widens, this may increase the vendor workload.
 
-Interesting discussion...
 
-- Steve
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
