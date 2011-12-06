@@ -1,29 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/9
-Message-ID: <20110124214624.GE4979@outflux.net>
-Date: Mon, 24 Jan 2011 13:46:24 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/06/1
+Message-ID: <20111206095525.GG4940@foo.fgeek.fi>
+Date: Tue, 6 Dec 2011 11:55:25 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE request: linux kernel heap issues
+Subject: C|Net Download.Com is now bundling Nmap with malware!
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+http://seclists.org/nmap-hackers/2011/5
 
-I don't think these minor issues I reported to the Linux Kernel have
-had CVEs assigned to them:
-
-heap contents leak for CAP_NET_ADMIN via ethtool ioctl
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
-
-iowarrior usb device heap overflow
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
-
-
-Thanks,
-
--Kees
-
--- 
-Kees Cook
-Ubuntu Security Team
+- Henri Salo
