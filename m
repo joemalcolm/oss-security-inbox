@@ -1,51 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/2
-Message-ID: <20110621124211.GA5938@openwall.com>
-Date: Tue, 21 Jun 2011 16:42:11 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/06/4
+Message-ID: <4EDEA3C9.1000500@redhat.com>
+Date: Tue, 06 Dec 2011 16:22:49 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: acpid - possible issue in socket handling
 Content-Type: text/plain; charset=utf-8
 
-Steve -
+While reading the acpid ChangeLog I noticed:
 
-Can I have a CVE id, please?  ASAP, or I am releasing without referring
-to a CVE id.
+* Tue Nov 15 2011  Ted Felix <http://www.tedfelix.com>
+  - 2.0.13 release
+  - Fix for socket name buffer overflow.  (ud_socket.c)  (Ted Felix)
 
-On Mon, Jun 20, 2011 at 03:43:20PM +0000, The Fungi wrote:
-> No, I agree your proposed approach lends a more general solution
-> which could be applied to the use cases I was considering. I saw you
-> mention it over on the crypto list as well, but it sounded like you
-> were trying to find ways to avoid a new hash encoding identifier in
-> the wild which could conflict with something OpenBSD might consider
-> assigning for some other purpose at a later date (though assuming
-> this workaround makes it onto their radar, that seems an unlikely
-> situation anyway).
+This doesn't appear to cross a security boundary without an admin doing
+something intentionally strange. But just in case someone knows a clever
+way to exploit this I thought I'd post to the list and ask (and if so
+I'll assign a CVE).
 
-Of course, I need to inform them that we're taking "$2x$" for our
-backwards compatibility feature.
+Code below:
 
-Here's how I am dealing with the issue in code:
+--- acpid-2.0.12/ud_socket.c    2009-04-29 08:36:27.000000000 -0600
++++ acpid-2.0.13/ud_socket.c    2011-10-17 17:47:16.000000000 -0600
+@@ -15,6 +15,7 @@
+ #include <fcntl.h>
+ 
+ #include "acpid.h"
++#include "log.h"
+ #include "ud_socket.h"
+ 
+ int
+@@ -24,7 +25,16 @@
+        int r;
+        struct sockaddr_un uds_addr;
+ 
+-       /* JIC */
++    if (strnlen(name, sizeof(uds_addr.sun_path)) >
++        sizeof(uds_addr.sun_path) - 1) {
++        acpid_log(LOG_ERR, "ud_create_socket(): "
++            "socket filename longer than %u characters: %s",
++            sizeof(uds_addr.sun_path) - 1, name);
++        errno = EINVAL;
++        return -1;
++    }
++
++    /* JIC */
+        unlink(name);
+ 
+        fd = socket(AF_UNIX, SOCK_STREAM, 0);
+@@ -35,7 +45,7 @@
+        /* setup address struct */
+        memset(&uds_addr, 0, sizeof(uds_addr));
+        uds_addr.sun_family = AF_UNIX;
+-       strcpy(uds_addr.sun_path, name);
++    strncpy(uds_addr.sun_path, name, sizeof(uds_addr.sun_path) - 1);
+       
+        /* bind it to the socket */
+        r = bind(fd, (struct sockaddr *)&uds_addr, sizeof(uds_addr));
+@@ -85,6 +95,14 @@
+        int r;
+        struct sockaddr_un addr;
+ 
++    if (strnlen(name, sizeof(addr.sun_path)) > sizeof(addr.sun_path) - 1) {
++        acpid_log(LOG_ERR, "ud_connect(): "
++            "socket filename longer than %u characters: %s",
++            sizeof(addr.sun_path) - 1, name);
++        errno = EINVAL;
++        return -1;
++    }
++   
+        fd = socket(AF_UNIX, SOCK_STREAM, 0);
+        if (fd < 0) {
+                return fd;
+@@ -93,6 +111,8 @@
+        memset(&addr, 0, sizeof(addr));
+        addr.sun_family = AF_UNIX;
+        sprintf(addr.sun_path, "%s", name);
++    /* safer: */
++    /*strncpy(addr.sun_path, name, sizeof(addr.sun_path) - 1);*/
+ 
+        r = connect(fd, (struct sockaddr *)&addr, sizeof(addr));
+        if (r < 0) {
 
-Bug fix, plus a backwards compatibility feature:
 
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/crypt_blowfish.c.diff?r1=1.9;r2=1.10
 
-8-bit test vectors added, for both modes (correct and buggy):
+-- 
 
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/wrapper.c.diff?r1=1.9;r2=1.10
+-Kurt Seifried / Red Hat Security Response Team
 
-These are only used by "make check", which I felt was not enough - many
-people are taking just the main C file and use it in their programs.
-Obviously, my "make check" would not exist in their source code trees.
-So if those programs are ever miscompiled or otherwise broken, it might
-not be detected.  To deal with this, I added:
-
-Quick self-test on every use:
-
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/crypt_blowfish.c.diff?r1=1.10;r2=1.11
-
-I am likely to go ahead and release this.
-
-Alexander
