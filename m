@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/10/2
-Message-ID: <AANLkTi=VApwAGz+n7Y39r2B8fVdvkm3HcmNwe+xd4hD-@mail.gmail.com>
-Date: Mon, 10 Jan 2011 20:48:01 +0100
-From: Pierre Joye <pierre.php@...il.com>
-To: Eygene Ryabinkin <rea-sec@...elabs.ru>
-Cc: oss-security@...ts.openwall.com, kalle@....net, felipe@....net,  cellog@....net, pajoye@....net
-Subject: Re: Re: CVE-2010-2094: PECL's phar code is vulnerable too
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/06/3
+Message-ID: <4EDEA159.5030005@redhat.com>
+Date: Tue, 06 Dec 2011 16:12:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: acpid
 Content-Type: text/plain; charset=utf-8
 
-I have to do it. But I would suggest to use the released version in
-the mean time. Zero difference in the code base.
-
-On Mon, Jan 10, 2011 at 6:38 PM, Eygene Ryabinkin <rea-sec@...elabs.ru> wrote:
-> Felipe, good day.
+On 12/06/2011 01:39 PM, Moritz Muehlenhoff wrote:
+> Hi,
+> Please assign a CVE ID for this issue fixed in acpid 2.0.11:
 >
-> Sun, Dec 26, 2010 at 05:26:29PM -0200, Felipe Pena wrote:
->> Yes, I will contact anyone to do it... (I'm not the ext/phar maintainer)
+> http://www.tedfelix.com/linux/acpid-netlink.html 
+> (The ChangeLog can only be grabbed through the tarballs):
 >
-> Any news on this?  http://pecl.php.net/package/phar shows no
-> revisions :((
-> --
-> Eygene
+> ------
+> * Sat Jul 30 2011  Ted Felix <http://www.tedfelix.com>
+>   - 2.0.11 release
+>   - Set umask to 0077 for scripts run by acpid.  (event.c)  (Ted Felix)
+> ------
 >
-
-
+> Discovered by Helmut Grohne and Michael Biebl.
+>
+> Cheers,
+>         Moritz
+Please use CVE-2011-4578 for this issue.
 
 -- 
-Pierre
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+-Kurt Seifried / Red Hat Security Response Team
+
