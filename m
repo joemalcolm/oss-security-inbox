@@ -1,59 +1,141 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/11
-Message-ID: <1048604435.1604666.1311710254688.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 26 Jul 2011 15:57:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/7
+Message-ID: <4EDFEB23.8050505@redhat.com>
+Date: Wed, 07 Dec 2011 15:39:31 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- GLPI -- Properly blacklist some sensitive fields
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: Moodle 1.9.15/2.0.6/2.1.3 releases
 Content-Type: text/plain; charset=utf-8
 
-Plese use CVE-2011-2720.
+On 12/07/2011 03:11 PM, Vincent Danen wrote:
+> MSA-11-0042: Information leak in Wiki
+> Affects: 2.1.x, 2.0.x Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commit;h=140af2a0f0a4598bf568b9ae182cb81eb583edeb
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191747
+>
+Please use CVE-2011-4581 for this issue
 
-Thanks.
+
+> MSA-11-0043: Possible link redirect in Calendar
+> Affects: 2.1.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28720&sr=1
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191748
+>
+Please use CVE-2011-4582 for this issue
+
+
+> MSA-11-0044: Expired identification information shown in Web services
+> Affects: 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28670&sr=1
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191750
+>
+Please use CVE-2011-4583 for this issue
+
+
+> MSA-11-0045: Potential to masquerade through MNet Affects: 2.1.x,
+> 2.0.x, 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=10df8657c1c138c0d0ab1d4796c552fcec0c299b
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191751
+>
+Please use CVE-2011-4584 for this issue
+
+
+> MSA-11-0046: Insecure authentication transmission
+> Affects: 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=01dd64a8c8aa95f793accea371b2392e662663c5
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191752
+>
+Please use CVE-2011-4585 for this issue
+
+
+> MSA-11-0047: Possible injection attack in Calendar
+> Affects: 2.1.x, 2.0.x, 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=581e8dba387f090d89382115fd850d8b44351526
+>
+> Reference: moodle.org/mod/forum/discuss.php?d=191754
+>
+Please use CVE-2011-4586 for this issue
+
+
+> MSA-11-0048: Password loss issue
+> Affects: 2.1.x, 2.0.x, 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=e079e82c087becf06d902089d14f3f76686bde19
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191755
+>
+Please use CVE-2011-4587 for this issue
+
+
+> MSA-11-0049: Network restriction ineffective with MNet
+> Affects: 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=3ab2851d2a59721445945d0706c58092e07e861e
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191756
+>
+Please use CVE-2011-4588 for this issue
+
+
+> MSA-11-0050: Backup capability issue
+> Affects: 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-29591
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191758
+>
+Please use CVE-2011-4589 for this issue
+
+
+> MSA-11-0051: Authentication issue with Web services
+> Affects: 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28629
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191759
+>
+Please use CVE-2011-4590 for this issue
+
+
+> MSA-11-0052: Potential to exploit developer debugging scripts
+> Affects: 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commit;h=187672608ec96659e07f2461b3b83634debd16cb
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191760
+>
+Please use CVE-2011-4591 for this issue
+
+
+> MSA-11-0053: Security and system administration conflict
+> Affects: 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commit;h=ade30ad3c420ce035a3d68287db701b70e806b3f
+>
+> Refrence: http://moodle.org/mod/forum/discuss.php?d=191761
+>
+Please use CVE-2011-4592 for this issue
+
+
+> MSA-11-0054: Personal information leak
+> Affects: 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commit;h=e94113a859015a4a80b9397957b8fc4044e2951f
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191762
+Please use CVE-2011-4593 for this issue
 
 -- 
-    JB
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> it was found that GLPI, the Information Resource-Manager with an
-> additional Administration-Interface, did not properly blacklist
-> certain
-> sensitive variables (like GLPI username and password). A remote
-> attacker
-> could use this flaw to obtain access to plaintext form of these values
-> via specially-crafted HTTP POST request.
-> 
-> References:
-> [1]
-> http://www.glpi-project.org/spip.php?page=annonce&id_breve=237&lang=en
-> [2] https://forge.indepnet.net/projects/glpi/versions/605
-> [3] https://forge.indepnet.net/issues/3017
-> 
-> Relevant patches:
-> [4]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14951
-> [5]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14952
-> [6]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14954
-> [7]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14955
-> [8]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14956
-> [9]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14957
-> [10]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14958
-> [11]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14960
-> [12]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14966
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+-Kurt Seifried / Red Hat Security Response Team
+
