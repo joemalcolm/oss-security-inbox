@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/11
-Message-ID: <1512488830.650854.1307992464681.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Jun 2011 15:14:24 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/5
+Message-ID: <4EDFB572.2070100@redhat.com>
+Date: Wed, 07 Dec 2011 11:50:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: buffer overflow in tftp-hpa
+CC: Matthias Weckbecker <mweckbecker@...e.de>
+Subject: Re: CVE request: glibc: timezone integer overflow
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> The tftp-hpa daemon contained a buffer overflow vulnerability in the
-> function for setting the utimeout option. As the daemon accepts this
-> option from clients, the buffer overflow can be remotely exploited.
-> 
-> For a patch, see
-> 
-> > git clone http://www.kernel.org/pub/scm/network/tftp/tftp-hpa.git/
-> > git diff 2864 f303
-> 
-
-Here is the gitweb URL for that patch:
-http://git.kernel.org/?p=network/tftp/tftp-hpa.git;a=commitdiff;h=f3035c45bc50bb5cac87ca01e7ef6a12485184f8
-
-Please use CVE-2011-2199.
-
-Thanks.
+On 12/05/2011 03:14 AM, Matthias Weckbecker wrote:
+> Hi,
+>
+> looks like this has never got a CVE so far or at least I couldn't find one,
+>
+> http://dividead.wordpress.com/tag/heap-overflow/
+> http://lists.grok.org.uk/pipermail/full-disclosure/2011-December/084452.html
+>  
+> Could there possibly be a CVE assigned, please? Thanks in advance.
+>
+> Matthias
+>
+Ok it appears although this is difficult to exploit, it can be triggered
+potentially allowing a security boundary to be crossed in some
+situations. Please use CVE-2009-5029 for this glibc timezone integer
+overflow issue.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
