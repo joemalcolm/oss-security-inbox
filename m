@@ -1,19 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/1
-Message-ID: <4DD310E5.5000004@redhat.com>
-Date: Wed, 18 May 2011 08:20:53 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/3
+Message-ID: <4EDF77A4.50600@kde.org>
+Date: Wed, 07 Dec 2011 09:26:44 -0500
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: net: ip_expire() must revalidate route
+CC: cve@...re.org
+Subject: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
-aka Linux Kernel 2.6.38 Remote NULL Pointer Dereference
+Hello,
 
-http://seclists.org/bugtraq/2011/May/123
-http://packetstormsecurity.org/files/view/101475/linux2638-null.txt
-http://marc.info/?l=linux-netdev&m=130558001727019&w=2
+I've been asked by the kcheckpass maintainer to lodge a dispute of
+CVE-2011-4122.
 
-fix: http://git.kernel.org/linus/64f3b9e2
+As explained in the blog entry linked from the CVE[1], the problem is
+that neither kcheckpass nor OpenPAM validate the 'service_name' input
+argument of pam_start(). This hole can be used to make PAM load
+arbitrary shared libraries, which can be used to execute arbitrary code
+as root, as kcheckpass is setuid root.
 
-Thanks, Eugene
+One could assume that kcheckpass should do the validation. However, the
+PAM documentation makes no mention of what a service name is supposed to
+look like, and consequently it must be treated as opaque by the
+application code. Therefore all validation must be expected to be done
+by the library, and failure to do so must be seen as a bug in the
+library exclusively.
+
+As a result, it is correct to list kcheckpass as an affected
+application, but not as the origin of the vulnerability. The linked
+advisories from ISS and Secunia are clearer about that.
+
+Thanks,
+Jeff
+
+[1]: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4122
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (260 bytes)
