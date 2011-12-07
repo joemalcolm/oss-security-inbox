@@ -1,22 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/2
-Message-ID: <4DE7B9AA.40908@redhat.com>
-Date: Thu, 02 Jun 2011 18:26:18 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Cherokee -- server admin vulnerable to csrf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/2
+Message-ID: <4EDEEAA3.3070104@redhat.com>
+Date: Tue, 06 Dec 2011 21:25:07 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: cve@...re.org
+Subject: Re: CVE request: includeViewParameters re-evaluates param/model values as EL expressions on Mojarra/MyFaces
 Content-Type: text/plain; charset=utf-8
 
+On 11/28/2011 10:21 PM, Kurt Seifried wrote:
+> On 11/28/2011 10:16 PM, David Jorm wrote:
+>> It has been found that when includeViewParameters is set to true, JSF 2 as implemented by Mojarra and MyFaces will re-evaluate parameter/model values as EL expressions.
+>>
+>> Original bug:
+>> http://java.net/jira/browse/JAVASERVERFACES-2247
+>>
+>> MyFaces bug:
+>> https://issues.apache.org/jira/browse/MYFACES-3405
+>>
+>> Write-up/reproducer:
+>> http://www.jakobk.com/2011/11/jsf-value-expression-injection-vulnerability/
+>>
+>> Thanks
+> Please use CVE-2011-4358  for the Mojarra instance of this vulnerable.
+>
+> Please use CVE-2011-4359  for the MyFaces instance of this vulnerable.
+>
+And I have been informed that CVE-2011-4343 was previously assigned for
+the Apache MyFaces issue, so CVE-2011-4359 is a duplicate and should be
+rejected.
 
-Hello, Josh, Steve, vendors,
+-- 
 
-   this doesn't seem to have a CVE identifier yet:
-   [1] http://seclists.org/fulldisclosure/2011/Jun/0
+-Kurt Seifried / Red Hat Security Response Team
 
-Though not sure, how much probable it is, it would get fixed,
-since upstream looks to consider this not to be an issue.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
