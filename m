@@ -1,106 +1,141 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/3
-Message-ID: <4D647E5A.1090004@redhat.com>
-Date: Wed, 23 Feb 2011 11:26:18 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/7
+Message-ID: <4EDFEB23.8050505@redhat.com>
+Date: Wed, 07 Dec 2011 15:39:31 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: Moodle 1.9.15/2.0.6/2.1.3 releases
 Content-Type: text/plain; charset=utf-8
 
-On 02/22/2011 09:01 PM, Josh Bressers wrote:
-> Do we know the affected versions? This probably won't be 20 IDs,
-> but I suspect it won't be one either.
+On 12/07/2011 03:11 PM, Vincent Danen wrote:
+> MSA-11-0042: Information leak in Wiki
+> Affects: 2.1.x, 2.0.x Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commit;h=140af2a0f0a4598bf568b9ae182cb81eb583edeb
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191747
+>
+Please use CVE-2011-4581 for this issue
 
-Just some, not all, since not all the patches listed here affect Red Hat 
-and I do not think I want to go through them again. Other vendors 
-affected by these can provide their inputs.
 
-I read some interesting discussions on LKML. These require debugfs to be 
-mounted on a local system. It is usually not mounted by default, and you 
-would not want to mount it on a production system unless you really have 
-to use the kernel tracer, etc.
+> MSA-11-0043: Possible link redirect in Calendar
+> Affects: 2.1.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28720&sr=1
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191748
+>
+Please use CVE-2011-4582 for this issue
 
------ Original Message -----
- > > There are 20 patches here - some are accepted, some are probably
- > > pending. All from Vasiliy Kulikov.
- > >
- > > [PATCH 01/20] mach-omap2: mux: world-writable debugfs files
- > > https://lkml.org/lkml/2011/2/4/66 arm arch
- > >
- > > [PATCH 02/20] mach-omap2: pm: world-writable debugfs timer files
- > > https://lkml.org/lkml/2011/2/4/67 arm arch
- > >
- > > [PATCH 03/20] mach-omap2: smartreflex: world-writable debugfs voltage
- > > files
- > > https://lkml.org/lkml/2011/2/4/68 arm arch
- > >
- > > [PATCH 04/20] mach-ux500: mbox-db5500: world-writable sysfs fifo file
- > > https://lkml.org/lkml/2011/2/4/69 arm arch
- > >
- > > [PATCH 05/20] leds: lp5521: world-writable sysfs engine* files
- > > https://lkml.org/lkml/2011/2/4/70
- > >
- > > [PATCH 06/20] leds: lp5523: world-writable engine* sysfs files
- > > https://lkml.org/lkml/2011/2/4/81
- > >
- > > [PATCH 07/20] video: sn9c102: world-wirtable sysfs files
- > > https://lkml.org/lkml/2011/2/4/85
- > >
- > > [PATCH 08/20] mfd: ab3100: world-writable debugfs *_priv files
- > > https://lkml.org/lkml/2011/2/4/82
- > >
- > > [PATCH 09/20] mfd: ab3500: world-writable debugfs register-* files
- > > https://lkml.org/lkml/2011/2/4/84
 
-introduced in 09bcb3f3 v2.6.35-rc1
+> MSA-11-0044: Expired identification information shown in Web services
+> Affects: 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28670&sr=1
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191750
+>
+Please use CVE-2011-4583 for this issue
 
- > > [PATCH 10/20] mfd: ab8500: world-writable debugfs register-* files
- > > https://lkml.org/lkml/2011/2/4/71
 
-introduced in 5814fc35 v2.6.37-rc1
+> MSA-11-0045: Potential to masquerade through MNet Affects: 2.1.x,
+> 2.0.x, 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=10df8657c1c138c0d0ab1d4796c552fcec0c299b
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191751
+>
+Please use CVE-2011-4584 for this issue
 
- > > [PATCH 11/20] misc: ep93xx_pwm: world-writable sysfs files
- > > https://lkml.org/lkml/2011/2/4/83
- > >
- > > [PATCH 12/20] net: can: at91_can: world-writable sysfs files
- > > https://lkml.org/lkml/2011/2/4/80
- > > fef52b0171dfd7dd9b85c9cc201bd433b42a8ded
 
-introduced in 3a5655a5 v2.6.38-rc3
+> MSA-11-0046: Insecure authentication transmission
+> Affects: 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=01dd64a8c8aa95f793accea371b2392e662663c5
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191752
+>
+Please use CVE-2011-4585 for this issue
 
- > > [PATCH 13/20] net: can: janz-ican3: world-writable sysfs termination
- > > file
- > > https://lkml.org/lkml/2011/2/4/72
- > > 1e6d93e45b231b3ae87c01902ede2315aacfe976
- > >
- > > [PATCH 14/20] platform: x86: acer-wmi: world-writable sysfs threeg
- > > file
- > > https://lkml.org/lkml/2011/2/4/79
- > > b80b168f918bba4b847e884492415546b340e19d
- > >
- > > [PATCH 15/20] platform: x86: asus_acpi: world-writable procfs files
- > > https://lkml.org/lkml/2011/2/4/73
- > > 8040835760adf0ef66876c063d47f79f015fb55d
- > >
- > > [PATCH 16/20] platform: x86: tc1100-wmi: world-writable sysfs wireless
- > > and jogdial files
- > > https://lkml.org/lkml/2011/2/4/78
- > > 8a6a142c1286797978e4db266d22875a5f424897
- > >
- > > [PATCH 17/20] rtc: rtc-ds1511: world-writable sysfs nvram file
- > > https://lkml.org/lkml/2011/2/4/74
- > >
- > > [PATCH 18/20] scsi: aic94xx: world-writable sysfs update_bios file
- > > https://lkml.org/lkml/2011/2/4/75
- > >
- > > [PATCH 19/20] scsi: iscsi: world-writable sysfs priv_sess file
- > > https://lkml.org/lkml/2011/2/4/76
 
-introduced in fe4f0bde v2.6.36-rc1
+> MSA-11-0047: Possible injection attack in Calendar
+> Affects: 2.1.x, 2.0.x, 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=581e8dba387f090d89382115fd850d8b44351526
+>
+> Reference: moodle.org/mod/forum/discuss.php?d=191754
+>
+Please use CVE-2011-4586 for this issue
 
- > > [PATCH 20/20] fs: ubifs: world-writable debugfs dump_* files
- > > https://lkml.org/lkml/2011/2/4/77
+
+> MSA-11-0048: Password loss issue
+> Affects: 2.1.x, 2.0.x, 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=e079e82c087becf06d902089d14f3f76686bde19
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191755
+>
+Please use CVE-2011-4587 for this issue
+
+
+> MSA-11-0049: Network restriction ineffective with MNet
+> Affects: 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=3ab2851d2a59721445945d0706c58092e07e861e
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191756
+>
+Please use CVE-2011-4588 for this issue
+
+
+> MSA-11-0050: Backup capability issue
+> Affects: 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-29591
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191758
+>
+Please use CVE-2011-4589 for this issue
+
+
+> MSA-11-0051: Authentication issue with Web services
+> Affects: 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28629
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191759
+>
+Please use CVE-2011-4590 for this issue
+
+
+> MSA-11-0052: Potential to exploit developer debugging scripts
+> Affects: 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commit;h=187672608ec96659e07f2461b3b83634debd16cb
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191760
+>
+Please use CVE-2011-4591 for this issue
+
+
+> MSA-11-0053: Security and system administration conflict
+> Affects: 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commit;h=ade30ad3c420ce035a3d68287db701b70e806b3f
+>
+> Refrence: http://moodle.org/mod/forum/discuss.php?d=191761
+>
+Please use CVE-2011-4592 for this issue
+
+
+> MSA-11-0054: Personal information leak
+> Affects: 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commit;h=e94113a859015a4a80b9397957b8fc4044e2951f
+>
+> Reference: http://moodle.org/mod/forum/discuss.php?d=191762
+Please use CVE-2011-4593 for this issue
 
 -- 
-Eugene Teo / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
