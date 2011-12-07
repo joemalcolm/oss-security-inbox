@@ -1,36 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/7
-Message-ID: <20110722203544.GA30239@blizzard>
-Date: Fri, 22 Jul 2011 22:35:44 +0200
-From: Lukas Fleischer <cgit@...ptocrack.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/2
+Message-ID: <4EDEEAA3.3070104@redhat.com>
+Date: Tue, 06 Dec 2011 21:25:07 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- cGit -- XSS flaw in rename hint
+CC: cve@...re.org
+Subject: Re: CVE request: includeViewParameters re-evaluates param/model values as EL expressions on Mojarra/MyFaces
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 22, 2011 at 06:48:38PM +0200, Jan Lieskovsky wrote:
-> Hello Josh, Steve, vendors,
-> 
->   an cross-site scripting (XSS) flaw was found in the way cgit, a fast
-> web interface for Git, displayed the file name in the rename hint. A
-> remote attacker could provide a specially-crafted web page, which once
-> visited by an authenticated Cgit user, with push access to the
-> repository, would lead to arbitrary web script or HTML code execution.
+On 11/28/2011 10:21 PM, Kurt Seifried wrote:
+> On 11/28/2011 10:16 PM, David Jorm wrote:
+>> It has been found that when includeViewParameters is set to true, JSF 2 as implemented by Mojarra and MyFaces will re-evaluate parameter/model values as EL expressions.
+>>
+>> Original bug:
+>> http://java.net/jira/browse/JAVASERVERFACES-2247
+>>
+>> MyFaces bug:
+>> https://issues.apache.org/jira/browse/MYFACES-3405
+>>
+>> Write-up/reproducer:
+>> http://www.jakobk.com/2011/11/jsf-value-expression-injection-vulnerability/
+>>
+>> Thanks
+> Please use CVE-2011-4358  for the Mojarra instance of this vulnerable.
+>
+> Please use CVE-2011-4359  for the MyFaces instance of this vulnerable.
+>
+And I have been informed that CVE-2011-4343 was previously assigned for
+the Apache MyFaces issue, so CVE-2011-4359 is a duplicate and should be
+rejected.
 
-I think you are a tad off, here. The vulnerability I discovered actually
-is only exploitable *by* a user with push access as it requires to push
-a commit that renames any file to a file with a malicious file name.
+-- 
 
-The description (and the categorization of the vulnerability, which
-definitely is a low severity one if it counts as a vulnerability at all)
-should be corrected to reflect that.
+-Kurt Seifried / Red Hat Security Response Team
 
-> 
-> References:
-> [1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
