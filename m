@@ -1,48 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/1
-Message-ID: <57e84e1f-2b6f-4de0-b6b4-6e76a76be525@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 25 Oct 2011 10:32:56 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/4
+Message-ID: <4EDF93A8.2080105@redhat.com>
+Date: Wed, 07 Dec 2011 09:26:16 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Elio Maldonado <emaldona@...hat.com>, Robert Relyea <rrelyea@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Reed Loden <reed@...dloden.com>
-Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
-Reed asked me to give this a CVE id.
+On 12/07/2011 07:26 AM, Jeff Mitchell wrote:
+> Hello,
+>
+> I've been asked by the kcheckpass maintainer to lodge a dispute of
+> CVE-2011-4122.
+>
+> As explained in the blog entry linked from the CVE[1], the problem is
+> that neither kcheckpass nor OpenPAM validate the 'service_name' input
+> argument of pam_start(). This hole can be used to make PAM load
+> arbitrary shared libraries, which can be used to execute arbitrary code
+> as root, as kcheckpass is setuid root.
+>
+> One could assume that kcheckpass should do the validation. However, the
+> PAM documentation makes no mention of what a service name is supposed to
+> look like, and consequently it must be treated as opaque by the
+> application code. Therefore all validation must be expected to be done
+> by the library, and failure to do so must be seen as a bug in the
+> library exclusively.
 
-Please use CVE-2011-3640
-
-Thanks.
+Can you provide a link to the documentation?
+> As a result, it is correct to list kcheckpass as an affected
+> application, but not as the origin of the vulnerability. The linked
+> advisories from ISS and Secunia are clearer about that.
+>
+> Thanks,
+> Jeff
+>
+> [1]: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4122
+>
+This is a good point/question. Steve?
 
 -- 
-    JB
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
->    a security flaw was found in the way nss, the Network Security
-> Services (NSS) set of libraries, performed their initialization (the
-> file path for "pkcs11.txt" configuration file was constructed
-> incorrectly). When that configuration file was loaded from remote
-> WebDAV
-> or Samba CIFS share, it could lead to arbitrary security module
-> load, potentially leading to execution of arbitrary code (execution
-> of
-> code from untrusted security module).
-> 
-> Upstream bug report:
-> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
-> 
-> Other references:
-> [2] https://secunia.com/advisories/46557/
-> [3] https://bugs.gentoo.org/show_bug.cgi?id=388045
-> [4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
-> [5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
-> 
-> Could you allocate a CVE id for this? (as it looks there isn't one
-> for this deficiency yet)
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
+-Kurt Seifried / Red Hat Security Response Team
+
