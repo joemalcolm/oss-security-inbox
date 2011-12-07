@@ -1,41 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/16
-Message-ID: <4D65016D.6030802@pre-sense.de>
-Date: Wed, 23 Feb 2011 13:45:33 +0100
-From: Timo Warns <warns@...-sense.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/3
+Message-ID: <4EDF77A4.50600@kde.org>
+Date: Wed, 07 Dec 2011 09:26:44 -0500
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+CC: cve@...re.org
+Subject: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-The kernel automatically evaluates partition tables of storage devices.
-The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
-a bug that allows to overflow the kernel heap. It may be possible to
-escalate privileges by exploiting this bug.
+I've been asked by the kcheckpass maintainer to lodge a dispute of
+CVE-2011-4122.
 
-(This bug is distinct from the LDM bug reported by Eugene Teo on
-2011-02-23.)
+As explained in the blog entry linked from the CVE[1], the problem is
+that neither kcheckpass nor OpenPAM validate the 'service_name' input
+argument of pam_start(). This hole can be used to make PAM load
+arbitrary shared libraries, which can be used to execute arbitrary code
+as root, as kcheckpass is setuid root.
 
-This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
-CONFIG_LDM_PARTITION needs to be set.
+One could assume that kcheckpass should do the validation. However, the
+PAM documentation makes no mention of what a service name is supposed to
+look like, and consequently it must be treated as opaque by the
+application code. Therefore all validation must be expected to be done
+by the library, and failure to do so must be seen as a bug in the
+library exclusively.
 
-Thanks, Timo
+As a result, it is correct to list kcheckpass as an affected
+application, but not as the origin of the vulnerability. The linked
+advisories from ISS and Secunia are clearer about that.
 
-- -- 
-Dr. Timo Warns                               warns@...-sense.de
-                                  Tel. +49 - 40 - 244 2407 - 16
-                                  Fax  +49 - 40 - 244 2407 - 24
-PRESENSE Technologies GmbH            Sachsenstr. 5, D-20097 HH
-                                         USt-IdNr.: DE263765024
-Geschäftsführer/Managing Directors       AG Hamburg, HRB 107844
-Till Dörges           Jürgen Sander              Axel Theilmann
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.15 (GNU/Linux)
-Comment: Using GnuPG with SUSE - http://enigmail.mozdev.org/
+Thanks,
+Jeff
 
-iEYEARECAAYFAk1lAW0ACgkQneTPdraGveU9wwCePDVkbSTEk4Ltzc4mjs/3Ci83
-5JIAn26q86H3uucoklA5yps8WwJAmrN4
-=ssUq
------END PGP SIGNATURE-----
+[1]: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4122
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (260 bytes)
