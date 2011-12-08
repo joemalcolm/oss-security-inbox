@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/2
-Message-ID: <4E0403C7.2040608@redhat.com>
-Date: Fri, 24 Jun 2011 11:25:59 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/4
+Message-ID: <4EE10DC1.9010001@redhat.com>
+Date: Thu, 08 Dec 2011 12:19:29 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: bluetooth: l2cap and rfcomm: fix 1 byte infoleak to userspace
+Subject: Re: CVE Request -- kernel: send(m)msg: user pointer dereferences
 Content-Type: text/plain; charset=utf-8
 
->From Marek Kroemeke and Filip Palian, structures "l2cap_conninfo" and
-"rfcomm_conninfo" have one padding byte each. This byte in "cinfo" is
-copied to userspace uninitialized.
+On 12/08/2011 12:15 PM, Petr Matousek wrote:
+> Dereferencing a user pointer directly from kernel-space without going
+> through the copy_from_user family of functions is a bad idea. Two of
+> such usages can be found in the sendmsg code path called from
+> sendmmsg, added by upstream commit
+> c71d8ebe7a4496fb7231151cb70a6baa0cb56f9a. Usages are performed through
+> memcmp() and memcpy() directly. 
+>
+> Upstream commit:
+> bc909d9ddbf7778371e36a651d6e4194b1cc7d4c
+>
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=761646
+>
+> Thanks,
+Please use CVE-2011-4594 for this issue.
 
-l2cap: since 99f4808d (v2.6.39-rc1), also in l2cap.c prior to that
-history:e9df2323 (v2.5.14)
-rfcomm: since history:9363d05d (v2.6.11-rc2)
+-- 
 
-http://git.kernel.org/linus/8d03e971cf403305217b8e62db3a2e5ad2d6263f
-https://bugzilla.redhat.com/show_bug.cgi?id=703019
+-Kurt Seifried / Red Hat Security Response Team
 
-Thanks, Eugene
