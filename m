@@ -1,59 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/25
-Message-ID: <1053489281.88137.1300136379757.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Mar 2011 16:59:39 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/6
+Message-ID: <4EE1146C.2090808@redhat.com>
+Date: Thu, 08 Dec 2011 12:47:56 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+CC: Jeff Mitchell <mitchell@....org>
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello Josh, Steve, David, vendors,
-> 
-> this is due the following vino deficiency:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
-> 
-> As noted in [1] Vino may incorrectly report, that relevant user
-> desktop
-> is reachable only over local network, when in fact it's reachable from
-> everywhere.
-> 
-> As this is issue slightly on the border, not sure it should receive a
-> CVE identifier,
-> so Cc-ed David Woodhouse to elaborate more on issue impact if
-> necessary.
-> 
-> Under my opinion, the trust boundary is crossed (it is wrongly
-> reported to the the user, they
-> have a secure setup, when they do not have it and otherwise would
-> perform steps to correct the
-> settings). But left the final decision for further discussion.
-> 
-> What are the thoughts of the others? Should this one get a CVE
-> identifier or not?
-> 
-> Upstream bug report:
-> [3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
-> 
-> Ubuntu bug report (IPv6 specific):
-> [4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
-> 
-> To David King -- David, what are the upstream plans for this issue? Is
-> there by any
-> chance upstream patch for the bug [3] yet?
-> 
+On 12/08/2011 07:11 AM, Jeff Mitchell wrote:
+> On 12/07/2011 11:26 AM, Kurt Seifried wrote:
+>>> One could assume that kcheckpass should do the validation. However, the
+>>> PAM documentation makes no mention of what a service name is supposed to
+>>> look like, and consequently it must be treated as opaque by the
+>>> application code. Therefore all validation must be expected to be done
+>>> by the library, and failure to do so must be seen as a bug in the
+>>> library exclusively.
+>>
+>> Can you provide a link to the documentation?
+>
+> http://pubs.opengroup.org/onlinepubs/8329799/pam_start.htm
+>
+> Thanks,
+> Jeff
+>
+Looking around I did find:
 
-This strikes me as it should get two CVE ids (if someone more familiar
-could chime in, I would appreciate it).
+http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/3/html/Reference_Guide/s1-pam-config-files.html
 
-This looks like one id for vino improperly claiming that machine is only
-accessible via the local network.
+=====================
+15.2.1. PAM Service Files
 
-Another for it using uPnP to open up a router without proper warning.
+Each PAM-aware application or service has a file within the /etc/pam.d/
+directory. Each file within this directory bears the name of the service
+for which it controls access.
 
-Thanks.
+It is up to the PAM-aware program to define its service name and install
+its own PAM configuration file in the /etc/pam.d/ directory. For
+example, the login program defines its service name as login and
+installs the /etc/pam.d/login PAM configuration file.
+=====================
+
+so to some degree it is defined: the service name must fit legal file
+name constraints, but this means things like length, but on ext4 for
+example this means 256 chars max, and only NULL and "/" are disallowed,
+to say nothing of other file systems like xfs (any bytes except null)
+and Joliet (CDFS, max 64 characters, unicode supported[1])
+
+So perhaps going for a lowest common denominator of common filesystems
+you'd expect to find /etc/ on (so ext4, xfs, maybe Joliet for cd based
+systems?) as a filter would be appropriate? And poking the PAM people to
+refine the specification a little bit? Thoughts or comments anyone?
+
+[1] http://en.wikipedia.org/wiki/Comparison_of_file_systems
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
+
