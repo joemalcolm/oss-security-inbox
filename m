@@ -1,17 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/1
-Message-ID: <4DE87A38.3030604@redhat.com>
-Date: Fri, 03 Jun 2011 14:07:52 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/7
+Message-ID: <4EE11844.2070409@kde.org>
+Date: Thu, 08 Dec 2011 15:04:20 -0500
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: ksm: race between ksmd and exiting task
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
-A race condition issue was found in the KSM implementation.
+On 12/8/2011 2:47 PM, Kurt Seifried wrote:
+> On 12/08/2011 07:11 AM, Jeff Mitchell wrote:
+>> On 12/07/2011 11:26 AM, Kurt Seifried wrote:
+>>>> One could assume that kcheckpass should do the validation. However, the
+>>>> PAM documentation makes no mention of what a service name is supposed to
+>>>> look like, and consequently it must be treated as opaque by the
+>>>> application code. Therefore all validation must be expected to be done
+>>>> by the library, and failure to do so must be seen as a bug in the
+>>>> library exclusively.
+>>>
+>>> Can you provide a link to the documentation?
+>>
+>> http://pubs.opengroup.org/onlinepubs/8329799/pam_start.htm
+>>
+>> Thanks,
+>> Jeff
+>>
+> Looking around I did find:
+> 
+> http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/3/html/Reference_Guide/s1-pam-config-files.html
+> 
+> =====================
+> 15.2.1. PAM Service Files
+> 
+> Each PAM-aware application or service has a file within the /etc/pam.d/
+> directory. Each file within this directory bears the name of the service
+> for which it controls access.
+> 
+> It is up to the PAM-aware program to define its service name and install
+> its own PAM configuration file in the /etc/pam.d/ directory. For
+> example, the login program defines its service name as login and
+> installs the /etc/pam.d/login PAM configuration file.
+> =====================
+> 
+> so to some degree it is defined: the service name must fit legal file
+> name constraints, but this means things like length, but on ext4 for
+> example this means 256 chars max, and only NULL and "/" are disallowed,
+> to say nothing of other file systems like xfs (any bytes except null)
+> and Joliet (CDFS, max 64 characters, unicode supported[1])
+> 
+> So perhaps going for a lowest common denominator of common filesystems
+> you'd expect to find /etc/ on (so ext4, xfs, maybe Joliet for cd based
+> systems?) as a filter would be appropriate? And poking the PAM people to
+> refine the specification a little bit? Thoughts or comments anyone?
+> 
+> [1] http://en.wikipedia.org/wiki/Comparison_of_file_systems
 
-https://bugzilla.redhat.com/show_bug.cgi?id=710338
-Report: http://www.spinics.net/lists/linux-mm/msg20233.html
-Proposed patch: http://www.spinics.net/lists/linux-mm/msg20301.html
+The documentation you linked to above is for LinuxPAM, not OpenPAM.
+They're different systems and the bug only affects OpenPAM.
 
-Thanks, Eugene
+--Jeff
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
