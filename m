@@ -1,45 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/2
-Message-ID: <20111124042015.25688373@laverne>
-Date: Thu, 24 Nov 2011 04:20:15 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/1
+Message-ID: <20111208101926.GF7151@foo.fgeek.fi>
+Date: Thu, 8 Dec 2011 12:19:26 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request WordPress pretty-link plugin 1.5.2 XSS
 Content-Type: text/plain; charset=utf-8
 
-Am Wed, 23 Nov 2011 13:52:04 -0700
-schrieb Kurt Seifried <kseifried@...hat.com>:
+Can I get CVE-identifier for this issue? I have verified this and reported this to the developer in here: http://wordpress.org/support/topic/plugin-pretty-link-lite-152-xss-vulnerability
 
-> On 11/23/2011 05:23 AM, Hanno Böck wrote:
-> > New ffmpeg releases contain a couple of security fixes:
-> > http://secunia.com/advisories/46888/
-> >
-> > 1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
-> > exploited to cause a buffer overflow.
-> >
-> > 2) An integer overflow error within the "vp3_dequant()" function
-> > (libavcodec/vp3.c) can be exploited to cause a buffer overflow.
-> >
-> > 3) Errors within the "av_image_fill_pointers()", the
-> > "vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
-> > exploited to trigger out-of-bounds reads.
-> >
-> >
-> > Please assign CVEs.
-> >
-> >
-> > Maybe someone wants to have a look if other issues in those
-> > releases are security relevant:
-> > http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
-> >
-> This would be the original advisory http://ffmpeg.org/#pr7dot8and8dot7
-> correct?
+- Henri Salo
 
-It is the upstream confirmation - at least it's about the same bugs.
+Original post below:
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+----- Forwarded message from irist.ir@...il.com -----
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Date: Sun, 4 Dec 2011 15:26:35 GMT
+From: irist.ir@...il.com
+To: bugtraq@...urityfocus.com
+Subject: Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting
+	Vulnerabilities
+X-Mailer: MIME-tools 5.420 (Entity 5.420)
+
+a bug in Wordpress pretty-link plugin that allows to us to occur a Cross-Site Scripting on a Remote machin.
+
+
+
+
+
+############################################################################################################################################
+#                                                                                                                                          #
+#                           ISlamic Republic Of IRan Security Team                                                                         #
+#                                                                                                                                          #
+#                                http://irist.ir/forum/                                                                                    #
+#                                                                                                                                          #
+############################################################################################################################################
+#                                                                                                                                          #
+# Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting Vulnerabilities                                                                  #
+#                                                                                                                                          #
+# Download......: http://wordpress.org/extend/plugins/pretty-link/                                                                         #
+#                                                                                                                                          #
+# Exploit.......: http://www.site.com/[path]/wp-content/plugins/pretty-link/pretty-bar.php?url=[xss]                                       #
+#                                                                                                                                          #
+# Google Search.: "Powered by Wordpress"                                                                                                   #
+#                                                                                                                                          #
+############################################################################################################################################
+#                                                                                                                                          #
+# Bug Found.....: IrIsT.Ir                                                                                                                 #
+#                                                                                                                                          #
+# discovery.....: Am!r (IrIsT?)                                                                                                            #
+#                                                                                                                                          #
+# contact.......: Amir[at]IrIsT.ir                                                                                                         #
+#                                                                                                                                          #
+# SP TNX........: The-0utl4w & A.u.r.A & B3HZ4D & m3hdi & joker_s & all IrIsT And Aria-security members                                    #
+#                                                                                                                                          #
+#   & Mehdi.H4ckcity &  2MzRp & mikili & All H4ckcity Members                                                                              #
+#                                                                                                                                          #
+############################################################################################################################################
+
+----- End forwarded message -----
