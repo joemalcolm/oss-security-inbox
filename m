@@ -1,85 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/5
-Message-ID: <20110430152614.GB30033@openwall.com>
-Date: Sat, 30 Apr 2011 19:26:14 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com, secalert_us@...cle.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/9
+Message-ID: <4EE14163.80109@kde.org>
+Date: Thu, 08 Dec 2011 17:59:47 -0500
+From: Jeff Mitchell <mitchell@....org>
+To: oss-security@...ts.openwall.com
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
-Hello Chandan, all -
+On 12/8/2011 4:53 PM, Kurt Seifried wrote:
+>  
+>>
+>> The documentation you linked to above is for LinuxPAM, not OpenPAM.
+>> They're different systems and the bug only affects OpenPAM.
+>>
+>> --Jeff
+>>
+> Right, my thought/comment is more around the point that this isn't
+> defined in general very well anywhere (that I can find, and I assume
+> OpenPAM and Linux PAM are going to implement things in a roughly similar
+> manner) and that it probably should be defined better. In the meantime
+> though it is likely that restrictions/filtering can be implemented but
+> it needs to be done carefully since there is the potential for weirdness.
 
-On Tue, Apr 26, 2011 at 10:03:58AM -0700, Oracle Security Alerts wrote:
-> Please subscribe us to the new list.
-> I'll send specific emails and keys in a separate mail.
+Sorry, misunderstood what you were getting at  :-)
 
-I've received a message off-list with the address to subscribe and PGP
-key info.  I've just replied to that message.
+Yes, agreed. It should be defined better, and as you pointed out apps
+trying to filter or restrict things can be prone to mistakes. Which I
+think exactly points out why this CVE is invalid; the lack of real
+specification means that an application cannot successfully guess what
+is valid, nor is it specified that an application should even try to
+make such guesses. Given the current situation, OpenPAM is culpable
+here, both for not checking the data it's receiving, and for having a
+specification that makes it impossible for upstream apps to properly try
+to help out.
 
-I see several issues with adding Oracle to the new list, see below.
+--Jeff
 
-Does Oracle start to prepare security updates for Oracle Enterprise
-Linux before or after Red Hat releases theirs?  If it's after, then
-there's too little need for Oracle to have advance notification.  If
-it's before, then I think the folks in here would like more detail on
-your approach, and what components this applies to.  Is it maybe just
-the Linux kernel, with the rest being rebuilds of Red Hat's SRPMs?
 
-These are merely questions from someone who doesn't know (me).  I think
-some others in here would have similar questions, and I'm afraid it's my
-responsibility to ask them (since no one else has dared to, yet...)
-(Similar questions were raised for CentOS.)
 
-> We were members of vendor-sec as Sun Microsystems team, and now
-> represent all of Oracle software and hardware products including but
-> not limited to Oracle Enterprise Linux, Solaris, Java, MySQL and
-> Open Office.
-
-Of these, only Oracle Enterprise Linux may qualify you for the list that
-has been setup so far.  As you say, Oracle got onto vendor-sec through
-the acquisition of Sun.  Although formally this satisfies "must be a
-vendor-sec member" for the initial seed membership of the new list, it
-does feel like a bypass of the intent of this requirement.  Oracle was
-never actually accepted to vendor-sec for Oracle Enterprise Linux.
-
-Then, the only @oracle.com person currently on oss-security (judging by
-the e-mail addresses) appears not to be involved with Oracle Enterprise
-Linux specifically.
-
-The person I was asked to subscribe is not publicly known (according to
-a Google web search I did) for any Oracle Enterprise Linux work.
-
-I could be wrong, but based on these findings my feeling is that Oracle
-does not pay much attention to Linux issues being publicly disclosed in
-here.  Thus, I see little need for Oracle to have advance notification
-of other Linux issues.
-
-> We found vendor-sec very useful in early identification of
-> vulnerabilities not only in free and open source code used in our
-> products, but also in common protocols, file formats or kernel
-> modules/software with similar functionality or logic.
-
-These are some great reasons for you to be on public lists such as
-oss-security.  This is also a reason for us to avoid unnecessarily
-discussing general issues in private.  We'll try to do better with the
-new list(s) - that is, if I see an issue unnecessarily being discussed
-in private, I am going to insist on it being brought to a suitable
-public list instead.  I hope others on the list will also watch for such
-unnecessarily-private topics.
-
-Finally, it is a reason to publish the closed lists' archives with a
-delay, which is something I am going to revisit.
-
-> All our security advisories are freely available.
-
-Great.  Can you please add your info to the following wiki pages? -
-
-http://oss-security.openwall.org/wiki/vendors
-http://oss-security.openwall.org/wiki/distro-patches
-
-This will be useful regardless of whether you're subscribed or not, and
-to which lists.
-
-Thanks,
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
