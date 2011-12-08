@@ -1,18 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/13
-Message-ID: <4D5BE0BA.7010808@redhat.com>
-Date: Wed, 16 Feb 2011 20:05:38 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/1
+Message-ID: <20111208101926.GF7151@foo.fgeek.fi>
+Date: Thu, 8 Dec 2011 12:19:26 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: wireshark dct3trace buffer overflow
+Subject: CVE-request WordPress pretty-link plugin 1.5.2 XSS
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Can I get CVE-identifier for this issue? I have verified this and reported this to the developer in here: http://wordpress.org/support/topic/plugin-pretty-link-lite-152-xss-vulnerability
 
-The following buffer overflow vuln. is assigned CVE-2011-0713:
-http://anonsvn.wireshark.org/viewvc?view=rev&revision=35953
+- Henri Salo
+
+Original post below:
+
+----- Forwarded message from irist.ir@...il.com -----
+
+Date: Sun, 4 Dec 2011 15:26:35 GMT
+From: irist.ir@...il.com
+To: bugtraq@...urityfocus.com
+Subject: Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting
+	Vulnerabilities
+X-Mailer: MIME-tools 5.420 (Entity 5.420)
+
+a bug in Wordpress pretty-link plugin that allows to us to occur a Cross-Site Scripting on a Remote machin.
 
 
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+
+
+############################################################################################################################################
+#                                                                                                                                          #
+#                           ISlamic Republic Of IRan Security Team                                                                         #
+#                                                                                                                                          #
+#                                http://irist.ir/forum/                                                                                    #
+#                                                                                                                                          #
+############################################################################################################################################
+#                                                                                                                                          #
+# Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting Vulnerabilities                                                                  #
+#                                                                                                                                          #
+# Download......: http://wordpress.org/extend/plugins/pretty-link/                                                                         #
+#                                                                                                                                          #
+# Exploit.......: http://www.site.com/[path]/wp-content/plugins/pretty-link/pretty-bar.php?url=[xss]                                       #
+#                                                                                                                                          #
+# Google Search.: "Powered by Wordpress"                                                                                                   #
+#                                                                                                                                          #
+############################################################################################################################################
+#                                                                                                                                          #
+# Bug Found.....: IrIsT.Ir                                                                                                                 #
+#                                                                                                                                          #
+# discovery.....: Am!r (IrIsT?)                                                                                                            #
+#                                                                                                                                          #
+# contact.......: Amir[at]IrIsT.ir                                                                                                         #
+#                                                                                                                                          #
+# SP TNX........: The-0utl4w & A.u.r.A & B3HZ4D & m3hdi & joker_s & all IrIsT And Aria-security members                                    #
+#                                                                                                                                          #
+#   & Mehdi.H4ckcity &  2MzRp & mikili & All H4ckcity Members                                                                              #
+#                                                                                                                                          #
+############################################################################################################################################
+
+----- End forwarded message -----
