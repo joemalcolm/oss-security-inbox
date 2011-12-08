@@ -1,77 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/1
-Message-ID: <CAFJ0LnE0AMi4x8rSdNjp-Ja7YRap-7qUgSYUiJRFk-GKY=vL=g@mail.gmail.com>
-Date: Wed, 9 Nov 2011 15:03:38 -0800
-From: Nick Kralevich <nnk@...gle.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: dan.j.rosenberg@...il.com
-Subject: Re: Re: CVE request: Android: vold stack buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/5
+Message-ID: <4EE11259.50501@redhat.com>
+Date: Thu, 08 Dec 2011 12:39:05 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request WordPress pretty-link plugin 1.5.2 XSS
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt / Dan,
+On 12/08/2011 03:19 AM, Henri Salo wrote:
+> Can I get CVE-identifier for this issue? I have verified this and reported this to the developer in here: http://wordpress.org/support/topic/plugin-pretty-link-lite-152-xss-vulnerability
 
-Nick Kralevich here from the Android security team.
-
-Google is a CNA (CVE Numbering Authority), and we've already assigned
-this vulnerability CVE-2011-3874. To avoid confusion, I would
-appreciate it if CVE-2011-3874 would be considered the authoritative
-CVE for this vulnerability, and CVE-2011-4123 should be marked as a
-duplicate. More information on the vold vulnerability, including a
-patch, can be found at
-http://code.google.com/p/android/issues/detail?id=21681
-
-For the record, Google maintains several security contact mailing
-lists.  In general, you can reach Google security by e-mailing
-security@...gle.com or visiting
-http://www.google.com/about/corporate/company/security.html
-
-For Android specific security issues, the preferred e-mail address is
-security@...roid.com, or you can visit
-http://developer.android.com/resources/faq/security.html#issue
-
-For Chrome specific security issues, the preferred e-mail address is
-security@...omium.org, or you can visit
-http://dev.chromium.org/Home/chromium-security/reporting-security-bugs
-
-In general, e-mailing security@...gle.com will eventually get to
-Chrome or Android, although it's faster to contact the product
-specific security alias first.
-
-Because Google is a CNA, we maintain our own pool of CVEs from Mitre.
-Any of the addresses above can issue CVEs for Google related
-vulnerabilities.
-
-Thanks!
--- Nick Kralevich
-   Android Security Team
-
-> On 11/08/2011 06:08 AM, Dan Rosenberg wrote:
-> > On Tue, Nov 8, 2011 at 8:03 AM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
-> >> A local user with group "log" on Android may send a malformed message
-> >> to vold ("volume daemon"), causing a stack buffer overflow.  This has
-> >> been demonstrated to be exploitable to escalate privileges to root on
-> >> all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
-> >> arbitrary heap object and triggering a use-after-free condition [1].
-> >> It appears the bug was silently patched in Honeycomb (3.x), but note
-> >> that since Honeycomb is not open source, it does not fall within the
-> >> scope of this list.  Bug discovered and exploited by the Revolutionary
-> >> team [2].
-> >>
-> > Oops, a few minor corrections.
-> >
-> > Typo: Gingerbread is 2.3.x.  Also, the vulnerability actually lives in
-> > the libsysutils library, and was demonstrated to be exploitable via
-> > vold, which makes use of the affected library function.  Sorry for the
-> > noise.
-> >
-> >> -Dan
-> >>
-> >> [1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
-> >> [2] http://revolutionary.io/
-> >>
-> Please use CVE-2011-4123 for this issue.
+Please use CVE-2011-4595 for this issue.
 >
-> --
+> - Henri Salo
 >
-> -Kurt Seifried / Red Hat Security Response Team
+> Original post below:
 >
+> ----- Forwarded message from irist.ir@...il.com -----
+>
+> Date: Sun, 4 Dec 2011 15:26:35 GMT
+> From: irist.ir@...il.com
+> To: bugtraq@...urityfocus.com
+> Subject: Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting
+> 	Vulnerabilities
+> X-Mailer: MIME-tools 5.420 (Entity 5.420)
+>
+> a bug in Wordpress pretty-link plugin that allows to us to occur a Cross-Site Scripting on a Remote machin.
+>
+>
+>
+>
+>
+> ############################################################################################################################################
+> #                                                                                                                                          #
+> #                           ISlamic Republic Of IRan Security Team                                                                         #
+> #                                                                                                                                          #
+> #                                http://irist.ir/forum/                                                                                    #
+> #                                                                                                                                          #
+> ############################################################################################################################################
+> #                                                                                                                                          #
+> # Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting Vulnerabilities                                                                  #
+> #                                                                                                                                          #
+> # Download......: http://wordpress.org/extend/plugins/pretty-link/                                                                         #
+> #                                                                                                                                          #
+> # Exploit.......: http://www.site.com/[path]/wp-content/plugins/pretty-link/pretty-bar.php?url=[xss]                                       #
+> #                                                                                                                                          #
+> # Google Search.: "Powered by Wordpress"                                                                                                   #
+> #                                                                                                                                          #
+> ############################################################################################################################################
+> #                                                                                                                                          #
+> # Bug Found.....: IrIsT.Ir                                                                                                                 #
+> #                                                                                                                                          #
+> # discovery.....: Am!r (IrIsT?)                                                                                                            #
+> #                                                                                                                                          #
+> # contact.......: Amir[at]IrIsT.ir                                                                                                         #
+> #                                                                                                                                          #
+> # SP TNX........: The-0utl4w & A.u.r.A & B3HZ4D & m3hdi & joker_s & all IrIsT And Aria-security members                                    #
+> #                                                                                                                                          #
+> #   & Mehdi.H4ckcity &  2MzRp & mikili & All H4ckcity Members                                                                              #
+> #                                                                                                                                          #
+> ############################################################################################################################################
+>
+> ----- End forwarded message -----
+
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
