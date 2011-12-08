@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/25
-Message-ID: <Pine.GSO.4.64.1103041200201.3265@faron.mitre.org>
-Date: Fri, 4 Mar 2011 12:05:02 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Solar Designer <solar@...nwall.com>
-cc: Florian Zumbiehl <florz@...rz.de>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/8
+Message-ID: <4EE131EA.8060701@redhat.com>
+Date: Thu, 08 Dec 2011 14:53:46 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jeff Mitchell <mitchell@....org>
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
+ 
+>
+> The documentation you linked to above is for LinuxPAM, not OpenPAM.
+> They're different systems and the bug only affects OpenPAM.
+>
+> --Jeff
+>
+Right, my thought/comment is more around the point that this isn't
+defined in general very well anywhere (that I can find, and I assume
+OpenPAM and Linux PAM are going to implement things in a roughly similar
+manner) and that it probably should be defined better. In the meantime
+though it is likely that restrictions/filtering can be implemented but
+it needs to be done carefully since there is the potential for weirdness.
 
-If there's a common usage scenario that doesn't stem from blatant 
-administrator negligence, then a CVE is probably still appropriate. 
-("blatant admin negligence" might be, say, if an admin arbitrarily makes a 
-script setuid, or modifies the perms for an executable or config file to 
-be world-writable.)
+-- 
 
-We will sometimes write the CVE description more as an "adminisrator 
-practice" than as "fault of the software."
+-Kurt Seifried / Red Hat Security Response Team
 
-For example, default passwords are fair game; arguably, if the admin 
-didn't read page 24 of the documentation that said "change the default 
-password," this is more the admin's fault than the software's fault... BUT 
-the issue has to be dealt with, either way, so a CVE becomes a "signal" 
-for that action to take place, whether it came from the software or from 
-the user.
 
-Not everything is that clean and straightforward of course, but that's the 
-general thinking.
-
-- Steve
