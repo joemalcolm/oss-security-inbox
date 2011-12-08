@@ -1,29 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/11
-Message-ID: <1300279733.4549.8.camel@macbook.infradead.org>
-Date: Wed, 16 Mar 2011 12:48:53 +0000
-From: David Woodhouse <dwmw2@...radead.org>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, Mark McLoughlin <mark@...net.ie>,  "Steven M. Christey" <coley@...us.mitre.org>, David King <amigadave@...gadave.com>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/4
+Message-ID: <4EE10DC1.9010001@redhat.com>
+Date: Thu, 08 Dec 2011 12:19:29 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: send(m)msg: user pointer dereferences
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2011-03-16 at 07:58 -0400, Josh Bressers wrote:
-> I probably should have been more clear here. I was under the impression the
-> CVE id applied to instances where it would use UPnP and no auth, which is
-> dangerous and should probably include a big warning with a button that says
-> "I know what I'm doing (but probably not really)". 
-
-
-Right. So that CVE should apply to the case of it listening on a
-publicly available IP address with no auth, whether it uses uPnP or not.
-
-If it just listens on the socket and is usable from the outside world
-without a password, that's the *same* problem.
-
-The CVE really has nothing to do with uPnP; it's about the lack of
-authentication on a publicly-available service.
+On 12/08/2011 12:15 PM, Petr Matousek wrote:
+> Dereferencing a user pointer directly from kernel-space without going
+> through the copy_from_user family of functions is a bad idea. Two of
+> such usages can be found in the sendmsg code path called from
+> sendmmsg, added by upstream commit
+> c71d8ebe7a4496fb7231151cb70a6baa0cb56f9a. Usages are performed through
+> memcmp() and memcpy() directly. 
+>
+> Upstream commit:
+> bc909d9ddbf7778371e36a651d6e4194b1cc7d4c
+>
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=761646
+>
+> Thanks,
+Please use CVE-2011-4594 for this issue.
 
 -- 
-dwmw2
+
+-Kurt Seifried / Red Hat Security Response Team
 
