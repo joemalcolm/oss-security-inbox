@@ -1,37 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/5
-Message-ID: <4EAED91F.8000404@redhat.com>
-Date: Mon, 31 Oct 2011 18:21:35 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Henrik Nordstrom <henrik@...riknordstrom.net>, Jiri Skala <jskala@...hat.com>
-Subject: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/5
+Message-ID: <4EE11259.50501@redhat.com>
+Date: Thu, 08 Dec 2011 12:39:05 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request WordPress pretty-link plugin 1.5.2 XSS
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+On 12/08/2011 03:19 AM, Henri Salo wrote:
+> Can I get CVE-identifier for this issue? I have verified this and reported this to the developer in here: http://wordpress.org/support/topic/plugin-pretty-link-lite-152-xss-vulnerability
 
-   an invalid free flaw was found in the way Squid proxy caching server
-processed DNS requests, where one CNAME record pointed to another CNAME
-record pointing to an empty A-record. A remote attacker could issue a
-specially-crafted DNS request, leading to denial of service (squid 
-daemon abort).
+Please use CVE-2011-4595 for this issue.
+>
+> - Henri Salo
+>
+> Original post below:
+>
+> ----- Forwarded message from irist.ir@...il.com -----
+>
+> Date: Sun, 4 Dec 2011 15:26:35 GMT
+> From: irist.ir@...il.com
+> To: bugtraq@...urityfocus.com
+> Subject: Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting
+> 	Vulnerabilities
+> X-Mailer: MIME-tools 5.420 (Entity 5.420)
+>
+> a bug in Wordpress pretty-link plugin that allows to us to occur a Cross-Site Scripting on a Remote machin.
+>
+>
+>
+>
+>
+> ############################################################################################################################################
+> #                                                                                                                                          #
+> #                           ISlamic Republic Of IRan Security Team                                                                         #
+> #                                                                                                                                          #
+> #                                http://irist.ir/forum/                                                                                    #
+> #                                                                                                                                          #
+> ############################################################################################################################################
+> #                                                                                                                                          #
+> # Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting Vulnerabilities                                                                  #
+> #                                                                                                                                          #
+> # Download......: http://wordpress.org/extend/plugins/pretty-link/                                                                         #
+> #                                                                                                                                          #
+> # Exploit.......: http://www.site.com/[path]/wp-content/plugins/pretty-link/pretty-bar.php?url=[xss]                                       #
+> #                                                                                                                                          #
+> # Google Search.: "Powered by Wordpress"                                                                                                   #
+> #                                                                                                                                          #
+> ############################################################################################################################################
+> #                                                                                                                                          #
+> # Bug Found.....: IrIsT.Ir                                                                                                                 #
+> #                                                                                                                                          #
+> # discovery.....: Am!r (IrIsT?)                                                                                                            #
+> #                                                                                                                                          #
+> # contact.......: Amir[at]IrIsT.ir                                                                                                         #
+> #                                                                                                                                          #
+> # SP TNX........: The-0utl4w & A.u.r.A & B3HZ4D & m3hdi & joker_s & all IrIsT And Aria-security members                                    #
+> #                                                                                                                                          #
+> #   & Mehdi.H4ckcity &  2MzRp & mikili & All H4ckcity Members                                                                              #
+> #                                                                                                                                          #
+> ############################################################################################################################################
+>
+> ----- End forwarded message -----
 
-Upstream bug report:
-[1] http://bugs.squid-cache.org/show_bug.cgi?id=3237
 
-Relevant upstream patch:
-[2] http://bazaar.launchpad.net/~squid/squid/3.1/revision/10384
+-- 
 
-References:
-[3] http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID_3_1_16.html
-[4] http://bugs.squid-cache.org/show_bug.cgi?id=3237#c4
-[5] http://bugs.squid-cache.org/show_bug.cgi?id=3237#c5
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=750316
+-Kurt Seifried / Red Hat Security Response Team
 
-Could you allocate a CVE id for this? (cc-ed Henrik and Jiri
-for their opinion / comments too, if this should be considered
-a security issue or not)
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
