@@ -1,96 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/11
-Message-ID: <4EB975DC.6020201@redhat.com>
-Date: Tue, 08 Nov 2011 11:33:00 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/6
+Message-ID: <4EE1146C.2090808@redhat.com>
+Date: Thu, 08 Dec 2011 12:47:56 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>
-Subject: Re: Re: CVE request for Calibre
+CC: Jeff Mitchell <mitchell@....org>
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
-On 11/06/2011 08:11 PM, Kurt Seifried wrote:
-> On 11/04/2011 02:45 PM, Jason A. Donenfeld wrote:
->> Just do clarify: Issues 1 through 7.1 (8 issues) were released with the
->> current version that has been out for quite some time now. These
-require a
->> CVE. Issues 8 through 14 are ones introduced only during development and
-> So to confirm these issues will be assigned a CVE (double checking since
-> this has been quite the mess):
->> were not released, and do not need a CVE.
+On 12/08/2011 07:11 AM, Jeff Mitchell wrote:
+> On 12/07/2011 11:26 AM, Kurt Seifried wrote:
+>>> One could assume that kcheckpass should do the validation. However, the
+>>> PAM documentation makes no mention of what a service name is supposed to
+>>> look like, and consequently it must be treated as opaque by the
+>>> application code. Therefore all validation must be expected to be done
+>>> by the library, and failure to do so must be seen as a bug in the
+>>> library exclusively.
 >>
->> So where does that leave us with the CVEs? Well, there are the issues
-that
->> were "released" with a "version" of Calibre, and then the trove of
-bugs he
->> introduced in the middle. I'll try to recap and separate which is which:
+>> Can you provide a link to the documentation?
+>
+> http://pubs.opengroup.org/onlinepubs/8329799/pam_start.htm
+>
+> Thanks,
+> Jeff
+>
+Looking around I did find:
 
-Ok this is quite the mess but to summarize:
+http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/3/html/Reference_Guide/s1-pam-config-files.html
 
-http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
+=====================
+15.2.1. PAM Service Files
 
->> 1. Ability to create root owned directory anywhere. The mount helper
-calls
->> mkdir(argv[3], ...).
+Each PAM-aware application or service has a file within the /etc/pam.d/
+directory. Each file within this directory bears the name of the service
+for which it controls access.
 
-Input validation
+It is up to the PAM-aware program to define its service name and install
+its own PAM configuration file in the /etc/pam.d/ directory. For
+example, the login program defines its service name as login and
+installs the /etc/pam.d/login PAM configuration file.
+=====================
 
->> 2. Ability to remove any empty directory on the system.
+so to some degree it is defined: the service name must fit legal file
+name constraints, but this means things like length, but on ext4 for
+example this means 256 chars max, and only NULL and "/" are disallowed,
+to say nothing of other file systems like xfs (any bytes except null)
+and Joliet (CDFS, max 64 characters, unicode supported[1])
 
-Input validation
+So perhaps going for a lowest common denominator of common filesystems
+you'd expect to find /etc/ on (so ext4, xfs, maybe Joliet for cd based
+systems?) as a filter would be appropriate? And poking the PAM people to
+refine the specification a little bit? Thoughts or comments anyone?
 
->> 3. Ability to create user_controlled_dir/.created_by_calibre_mount_helper
->> anywhere on the filesystem.
-
-Input validation
-
->> 4. Ability to delete user_controlled_dir/.created_by_calibre_mount_helper
->> anywhere on the filesystem.
-
-Input validation
-
->> 5. Ability to inject arguments into 'mount' being exec'd. On lines
-78, 81,
->> and 83, the final two arguments to mount are user controlled. On lines
->> 1033, 106, 108, 139, and 141, the last argument to unmount/eject is user
->> controlled. The "exists()" check can be subverted via race condition
-or by
->> creating an existing file in the working directory with a filename
-equal to
->> the desired injected argument.
-
-Input validation
-
->> 6. Ability to execute any program as root. The mount helper makes use of
->> execlp on lines 78, 81, 83, 103, 106, 108, 139, and 141, and the first
->> argument does not start with a / character. Because of this, execlp will
->> search PATH for the executable to run. PATH is user controlled, and
-thus it
->> is trivial to write a program that spawns a shell and give it "mount"
-as a
->> filename, and direct PATH to its directory.
-
-Untrusted search path
-
->> 7. Ability to mount any device to anywhere. This leads to local root,
-since
->> you can mount over /etc/ or /etc/pam.d/ or choose-your-own-adventure.
-
-Race condition
-
->> 7.1. Ability to unmount any device.
-
-Input validation (assuming you mean all the unmount(mp)'s in the code.
-
-===========
-
-So for the input validation issues please use CVE-2011-4124
-
-For the untrusted search path please use CVE-2011-4125
-
-For the race condition please use CVE-2011-4126
-
+[1] http://en.wikipedia.org/wiki/Comparison_of_file_systems
 
 -- 
 
 -Kurt Seifried / Red Hat Security Response Team
+
 
