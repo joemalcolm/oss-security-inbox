@@ -1,27 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/1
-Message-ID: <1322996787.32667.112.camel@mdlinux>
-Date: Sun, 04 Dec 2011 06:06:27 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/9
+Message-ID: <4EE14163.80109@kde.org>
+Date: Thu, 08 Dec 2011 17:59:47 -0500
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: ffmpeg
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 12/8/2011 4:53 PM, Kurt Seifried wrote:
+>  
+>>
+>> The documentation you linked to above is for LinuxPAM, not OpenPAM.
+>> They're different systems and the bug only affects OpenPAM.
+>>
+>> --Jeff
+>>
+> Right, my thought/comment is more around the point that this isn't
+> defined in general very well anywhere (that I can find, and I assume
+> OpenPAM and Linux PAM are going to implement things in a roughly similar
+> manner) and that it probably should be defined better. In the meantime
+> though it is likely that restrictions/filtering can be implemented but
+> it needs to be done carefully since there is the potential for weirdness.
 
-This doesn't seem to have a CVE:
+Sorry, misunderstood what you were getting at  :-)
 
-An error within the "svq1_decode_frame()" function
-(libavcodec/svq1dec.c) can be exploited to corrupt memory.
+Yes, agreed. It should be defined better, and as you pointed out apps
+trying to filter or restrict things can be prone to mistakes. Which I
+think exactly points out why this CVE is invalid; the lack of real
+specification means that an application cannot successfully guess what
+is valid, nor is it specified that an application should even try to
+make such guesses. Given the current situation, OpenPAM is culpable
+here, both for not checking the data it's receiving, and for having a
+specification that makes it impossible for upstream apps to properly try
+to help out.
 
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=4931c8f0f10bf8dedcf626104a6b85bfefadc6f2
-
-http://secunia.com/advisories/46888/
-http://archives.neohapsis.com/archives/bugtraq/2011-11/0148.html
+--Jeff
 
 
-Thanks,
 
-Marc.
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
