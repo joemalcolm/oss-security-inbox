@@ -1,34 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/1
-Message-Id: <201101040209.20874.hanno@hboeck.de>
-Date: Tue, 4 Jan 2011 02:09:20 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/8
+Message-ID: <4EE131EA.8060701@redhat.com>
+Date: Thu, 08 Dec 2011 14:53:46 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: AusweisApp
+CC: Jeff Mitchell <mitchell@....org>
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
-The "AusweisApp" is an official government application for the electronic ID
-in germany.
-
-The original version contained a vulnerability in the update function. It
-didn't verify the host of the https connection and allowed to install
-malicious files through a directory traversal vuln in the used unzip
-routine.
-I'm not sure if this makes one or two CVEs, as there are two "vulns" that
-can only be used together to do malicious things.
-
-Original source:
-https://janschejbal.wordpress.com/2010/11/09/ausweisapp-gehackt-malware-uber-autoupdate/
-
-Also, the versioning is a bit broken, the article claims that the version
-was both 1.0.0 and 1.0.1 depending on the source, but the new "fixed" version
-is also called 1.0:
-https://www.ausweisapp.bund.de/
+ 
+>
+> The documentation you linked to above is for LinuxPAM, not OpenPAM.
+> They're different systems and the bug only affects OpenPAM.
+>
+> --Jeff
+>
+Right, my thought/comment is more around the point that this isn't
+defined in general very well anywhere (that I can find, and I assume
+OpenPAM and Linux PAM are going to implement things in a roughly similar
+manner) and that it probably should be defined better. In the meantime
+though it is likely that restrictions/filtering can be implemented but
+it needs to be done carefully since there is the potential for weirdness.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-http://schokokeks.org - professional webhosting
+-Kurt Seifried / Red Hat Security Response Team
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+
