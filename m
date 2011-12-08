@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/1
-Message-ID: <4E8BC22B.6030207@redhat.com>
-Date: Wed, 05 Oct 2011 08:04:19 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/2
+Message-ID: <4EE0C595.5020000@kde.org>
+Date: Thu, 08 Dec 2011 09:11:33 -0500
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-Subject: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+On 12/07/2011 11:26 AM, Kurt Seifried wrote:
+>> One could assume that kcheckpass should do the validation. However, the
+>> PAM documentation makes no mention of what a service name is supposed to
+>> look like, and consequently it must be treated as opaque by the
+>> application code. Therefore all validation must be expected to be done
+>> by the library, and failure to do so must be seen as a bug in the
+>> library exclusively.
+> 
+> Can you provide a link to the documentation?
 
-Kevan Carstensen reported multiple security flaws in kexec-tools, 
-details are as follows:
+http://pubs.opengroup.org/onlinepubs/8329799/pam_start.htm
 
-1. CVE-2011-3588:
-
-The default value of "StrictHostKeyChecking=no" has been used for kdump/ 
-mkdumprd openssh integration. A remote malicious kdump server could use 
-this flaw to impersonate the intended, correct kdump server to obtain 
-security sensitive information (kdump core files).
-
-2. CVE-2011-3589
-
-mkdumprd utility copied content of certain directories into newly 
-created initial ramdisk images, potentially leading to information leak.
-
-3. CVE-2011-2390
-
-mkdumprd utility created the final initial ramdisk image with 
-world-readable permissions, possibly leading to information leak.
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=716439
+Thanks,
+Jeff
 
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (260 bytes)
