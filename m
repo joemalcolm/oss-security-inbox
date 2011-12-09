@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/3
-Message-ID: <362325010.1020838.1315589241518.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Sep 2011 13:27:21 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/09/2
+Message-ID: <4EE1C74A.5060501@suse.de>
+Date: Fri, 09 Dec 2011 09:31:06 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: masqmail
+Subject: CVE Request: icu out of bounds access
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3350.
+Hi,
 
-Thanks.
+An of bounds access was reported in icu:
+http://bugs.icu-project.org/trac/ticket/8984
+
+Unfortunately the chrome bug is private but the commit says "buffer
+overflow":
+http://codereview.chromium.org/8822005/patch/6001/7002
+
+I suppose a negative len could end up in the strncpy at the end of the
+function causing a buffer overflow.
+
+cu
+Ludwig
 
 -- 
-    JB
-
-
------ Original Message -----
-> Hi,
-> a misuse of the seteuid function from glibc prevents masqmail from
-> properly
-> dropping root privileges.
-> References:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=638002
-> http://article.gmane.org/gmane.mail.masqmail/303
-> 
-> Can you assign a CVE id to this?
-> 
-> Kind regards
-> Nico
-> --
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
-> 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
