@@ -1,43 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/7
-Message-ID: <4D52BA63.6050209@redhat.com>
-Date: Thu, 10 Feb 2011 00:01:39 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/09/4
+Message-ID: <4EE2322B.4000800@redhat.com>
+Date: Fri, 09 Dec 2011 09:07:07 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: btrfs heap overflow
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Asterisk Development Team <asteriskteam@...ium.com>
+Subject: Re: CVE Request -- Asterisk -- AST-2011-013 and AST-2011-014
 Content-Type: text/plain; charset=utf-8
 
-On 02/09/2011 11:49 PM, Dan Rosenberg wrote:
-> I'm not aware of any distributions that support 2.6.37 kernels, but as
-> far as I know this doesn't affect CVE eligibility (please correct me
-> if I'm wrong).
 
-Ok, I'm just asking. Please use CVE-2011-0696.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Eugene
+On 12/09/2011 05:00 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+> the following two security flaws have been recently fixed:
+> http://www.asterisk.org/node/51693
+>
+> in Asterisk:
+>
+> 1) AST-2011-013 Possible to enumerate SIP usernames when general and
+user/peer NAT settings differed
+>
+> An information disclosure flaw was found in the way Asterisk handled UDP
+> requests in configurations using network address translation (NAT) for
+the SIP
+> protocol. When the general configuration file section and user / peer
+> configuration file section NAT settings differed, it was possible to
+enumerate
+> SIP usernames if the request was sent to different port as that,
+specified in
+> the Via header.
+>
+> References:
+> [1] http://www.asterisk.org/node/51693
+> [2] http://downloads.asterisk.org/pub/security/AST-2011-013.pdf
+> [3]
+http://lists.digium.com/pipermail/asterisk-dev/2011-November/thread.html#52191
+> [4] https://bugs.gentoo.org/show_bug.cgi?id=394095
+> [5] https://bugzilla.redhat.com/show_bug.cgi?id=765773
+>
+> Upstream bug report:
+> [6] https://issues.asterisk.org/jira/browse/ASTERISK-18862
+>
+> Upstream review board request:
+> [7] https://reviewboard.asterisk.org/r/1591/
+>
+> Upstream patch (for 1.8 branch):
+> [8]
+http://svnview.digium.com/svn/asterisk?view=revision&sortby=date&revision=345828
 
-> On Wed, Feb 9, 2011 at 10:20 AM, Eugene Teo<eugene@...hat.com>  wrote:
->> On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
->>>
->>> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
->>> btrfs_ioctl_space_info() and introduced security issues.  Since they
->>> were all introduced at once and fixed at the same time, one CVE should
->>> suffice.
->>>
->>> Due to integer truncation or a signedness error in a typecasted
->>> comparison, an integer overflow in an allocation size calculation, and
->>> a failure to properly check bounds when copying data, it was possible
->>> for an unprivileged user to cause a denial-of-service due to writing
->>> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
->>>
->>> -Dan
->>>
->>> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
->>
->> Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last year.
->> Do we have commercially supported kernels that are affected by this?
->>
->> Thanks, Eugene
->>
+Please use CVE-2011-4597 for this issue.
+
+>
+> 2) AST-2011-014 NULL pointer dereference (crash) when processing INFO
+automon message
+> with no channel
+>
+> A NULL pointer dereference flaw was found in the way Asterisk handled INFO
+> requests, when the 'automon' feature was enabled. If no channel had been
+> created yet, a remote attacker could use this flaw to cause a denial of
+service
+> (asterisk crash) by sending an INFO request.
+>
+> References:
+> [9] http://www.asterisk.org/node/51693
+> [10] http://downloads.asterisk.org/pub/security/AST-2011-014.pdf
+> [11] https://bugs.gentoo.org/show_bug.cgi?id=394095
+> [12] https://bugzilla.redhat.com/show_bug.cgi?id=765776
+>
+> Upstream patch (for 1.8 branch):
+> [13]
+http://svnview.digium.com/svn/asterisk?view=revision&sortby=date&revision=347533
+
+Please use CVE-2011-4598 for this issue.
+
+>
+> Could you allocate CVE ids for these?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+- -- 
+
+- -Kurt Seifried / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJO4jIrAAoJEBYNRVNeJnmTGScQAL/sfa8d1mz9DvVbUXiGzKc7
+yTfdocBw0e7P3WD/o561aH6tSWR+QBYrZEs3xAe8je3QOVZgQq4iCcvsb374Cw6O
+UkoO/NUvI0IAplGZCZlgpooJbUoNvNBxiOz6wvE6fMlr2+XA5DYufc6vtHVbskXX
+L2eqcdcKjWnV3B2MsW6iHMVbg2n1a5augLRuLpvBLMt3G8mEt2DkwtVHKif8ne5K
+mAFF7B3ugfuHC54VN/EsTF8xnYIyOVol0kJo8LSpyatOQ4aCWLU7FYFn2kCaLky4
+1SNtiewAWH38NXGJa6SsI6RILvZJv/IfnN4YFba5LhIhQ+EvvrWdt3d5QVdojPKp
+07JWEOcVg3OsuIxW7np0Ze6chBLYlKA69ta4W7wQXvO8brK4QSHW3VNICbshcNTn
+UaYkqNNxfVL4zxVu/EpTim5CpPJxOk9Eaiu/RnR3BuCto9YikzLE2A5pxobXvGU1
+6wZ68DxuJ8e+lOE6VHYZB7WbtshowJVw81pZkXMGiueDg1wCY/+TjRblZemV/yi8
++kIXM4dSeuRZfjIPx1k16JoJzlP4k/7JBePbT/As/aw9P9yF6TvSR7HRi+02b3EO
+kGjqjG6cqQm+23P+gS/Q1+ZhmLJ1F+OUmswD6RdZoG2Gt+t2xAjH2ghgrRr2nH47
+OaUspa1cxToCHKx4s9qP
+=A8Jr
+-----END PGP SIGNATURE-----
 
