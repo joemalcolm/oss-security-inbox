@@ -1,21 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/2
-Message-ID: <20111030104857.GA14677@foo.fgeek.fi>
-Date: Sun, 30 Oct 2011 12:48:57 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Jara 1.6 SQL injection and XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/09/3
+Message-ID: <4EE1F864.7040609@redhat.com>
+Date: Fri, 09 Dec 2011 13:00:36 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Asterisk Development Team <asteriskteam@...ium.com>
+Subject: CVE Request -- Asterisk -- AST-2011-013 and AST-2011-014
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifiers for these issues:
+Hello Kurt, Steve, vendors,
 
-SQL injection: http://seclists.org/fulldisclosure/2011/Oct/767 (http://seclists.org/bugtraq/2011/Oct/201)
-Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3428075&group_id=294500&atid=1243901
+   the following two security flaws have been recently fixed:
+   http://www.asterisk.org/node/51693
 
-XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
-Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
+in Asterisk:
 
-No vendor reply. No fix.
+1) AST-2011-013 Possible to enumerate SIP usernames when general and user/peer NAT settings differed
 
-Best regards,
-Henri Salo
+    An information disclosure flaw was found in the way Asterisk handled UDP
+    requests in configurations using network address translation (NAT) for the SIP
+    protocol. When the general configuration file section and user / peer
+    configuration file section NAT settings differed, it was possible to enumerate
+    SIP usernames if the request was sent to different port as that, specified in
+    the Via header.
+
+    References:
+    [1] http://www.asterisk.org/node/51693
+    [2] http://downloads.asterisk.org/pub/security/AST-2011-013.pdf
+    [3] http://lists.digium.com/pipermail/asterisk-dev/2011-November/thread.html#52191
+    [4] https://bugs.gentoo.org/show_bug.cgi?id=394095
+    [5] https://bugzilla.redhat.com/show_bug.cgi?id=765773
+
+    Upstream bug report:
+    [6] https://issues.asterisk.org/jira/browse/ASTERISK-18862
+
+    Upstream review board request:
+    [7] https://reviewboard.asterisk.org/r/1591/
+
+    Upstream patch (for 1.8 branch):
+    [8] http://svnview.digium.com/svn/asterisk?view=revision&sortby=date&revision=345828
+
+2) AST-2011-014 NULL pointer dereference (crash) when processing INFO automon message
+    with no channel
+
+    A NULL pointer dereference flaw was found in the way Asterisk handled INFO
+    requests, when the 'automon' feature was enabled. If no channel had been
+    created yet, a remote attacker could use this flaw to cause a denial of service
+    (asterisk crash) by sending an INFO request.
+
+    References:
+    [9]  http://www.asterisk.org/node/51693
+    [10] http://downloads.asterisk.org/pub/security/AST-2011-014.pdf
+    [11] https://bugs.gentoo.org/show_bug.cgi?id=394095
+    [12] https://bugzilla.redhat.com/show_bug.cgi?id=765776
+
+    Upstream patch (for 1.8 branch):
+    [13] http://svnview.digium.com/svn/asterisk?view=revision&sortby=date&revision=347533
+
+Could you allocate CVE ids for these?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
