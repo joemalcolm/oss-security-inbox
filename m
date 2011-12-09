@@ -1,41 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/2
-Message-ID: <4E3236AC.6000100@redhat.com>
-Date: Fri, 29 Jul 2011 09:57:24 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/09/1
+Message-ID: <20111209051125.GA6884@openwall.com>
+Date: Fri, 9 Dec 2011 09:11:25 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, veillard@...hat.com, billy.rios@...il.com
-Subject: Re: libxml security fix from apple ... any information?
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
-On 07/28/2011 06:52 PM, Marcus Meissner wrote:
-> Hi folks, Billy, Daniel,
-> 
-> On
-> http://support.apple.com/kb/HT4808
-> there is a libxml security issue listed:
-> 
-> -----------------------------------------
-> libxml
-> 
-> Available for: Windows 7, Vista, XP SP2 or later
-> 
-> Impact: Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution
-> 
-> Description: A one-byte heap buffer overflow existed in libxml's handling of XML data. Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution.
-> 
-> CVE-ID
-> 
-> CVE-2011-0216 : Billy Rios of the Google Security Team
-> -----------------------------------------
-> 
-> I suspect this is libxml2 and it likely also affects Linux?
-> 
-> If this is correct, could you identify the commit fixing this issue?
-> 
+Hi,
 
-As far as i know, this does not affect linux
+I've just set this mailing list up:
 
+http://oss-security.openwall.org/wiki/mailing-lists/distros
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Yes, it's called distros, and we also still have linux-distros.
+
+Currently on the distros list are:
+
+* All Linux distribution vendors who are also on linux-distros
+* FreeBSD
+* NetBSD/pkgsrc
+
+Yes, I received and processed some subscription requests off-list.
+I need to document these in here now:
+
+For FreeBSD, I subscribed Xin Li, who is on the security team:
+http://www.freebsd.org/administration.html#t-secteam
+
+For NetBSD/pkgsrc I subscribed Tim Zingelman and Thomas Klausner, whose
+recent activity is clear e.g. from:
+http://mail-index.netbsd.org/current-users/2011/10/03/msg017924.html
+
+Alexander
