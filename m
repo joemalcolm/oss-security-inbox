@@ -1,44 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/1
-Message-Id: <201102081154.16647.thomas@suse.de>
-Date: Tue, 8 Feb 2011 11:54:16 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/09/5
+Message-ID: <4EE2338C.5080505@redhat.com>
+Date: Fri, 09 Dec 2011 09:13:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xpdf
+CC: Ludwig Nussel <ludwig.nussel@...e.de>
+Subject: Re: CVE Request: icu out of bounds access
 Content-Type: text/plain; charset=utf-8
 
 
-Should CVE-IDs be assigned to this issues?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Am Freitag 21 Januar 2011 00:15:49 schrieb Dan Rosenberg:
-> I identified two issues in xpdf.  I don't think the first requires a
-> CVE, since it's incredibly unlikely to be exploitable, but I include
-> it here in case someone disagrees.
-> 
-> 1. Due to an integer overflow when parsing CharCodes for fonts and a
-> failure to check the return value of a memory allocation, it is
-> possible to trigger writes to a narrow range of offsets from a NULL
-> pointer.  The chance of being able to exploit this for anything other
-> than a crash is very remote: on x86 32-bit, there's no chance (since
-> the write occurs between 0xffffffc4 and 0xfffffffc).  At least the
-> write lands in valid userspace on x86-64, but in my testing this
-> memory is never mapped.  Fixed in poppler commit at [1], hopefully
-> fixed soon at xpdf upstream.
-> 
-> 2. Malformed commands may cause corruption of the internal stack used
-> to maintain graphics contexts, leading to potentially exploitable
-> memory corruption.  Fixed in poppler commit at [2], hopefully fixed
-> soon at xpdf upstream.
-> 
-> -Dan
-> 
-> [1] http://cgit.freedesktop.org/poppler/poppler/commit/?id=cad66a7d25abdb6aa15f3aa94a35737b119b2659
-> [2] http://cgit.freedesktop.org/poppler/poppler/commit/?id=8284008aa8230a92ba08d547864353d3290e9bf9
-> 
+On 12/09/2011 01:31 AM, Ludwig Nussel wrote:
+> Hi,
+>
+> An of bounds access was reported in icu:
+> http://bugs.icu-project.org/trac/ticket/8984
+>
+> Unfortunately the chrome bug is private but the commit says "buffer
+> overflow":
+> http://codereview.chromium.org/8822005/patch/6001/7002
+>
+> I suppose a negative len could end up in the strncpy at the end of the
+> function causing a buffer overflow.
+>
+> cu
+> Ludwig
+>
+Please use CVE-2011-4599 for this issue.
 
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+- -- 
+
+- -Kurt Seifried / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJO4jOMAAoJEBYNRVNeJnmTQSQP/1xlN0UhL6VLlXoA4crkUluR
+URvaK/ZD9GYB9T/cX7gGzemhKjTeEQquKR9lA9nn1CTKowrqtG1//l9TKHJ53vjw
+d4IQKrjf8pIv9IZeWMT1hIpT+8o63od1mMXtqAME05T5pCxALC8/YbMa5zTZNyYc
+mGrlhk1uUeldVnKEXslbjk03pbp1T4ybV7oq8k3G59kwz0xaAz1LGuKP05aTXf7a
+h4Qr0ct+Dsczw/544Gnjx91SsM7p7nEfRT5eKppqCVXMpDxpMbT6KXJh9Nj42Vkz
+GJRtVtvygeapAoES6d/OuCWYmTf7X/H85Gu1042DINRYaDdjfTucDD1GMN8W/ZZD
+ThryHpkcef32xc+ZGQF7MLF07CnSu+mcH/Ed8yBqPEfE1V0l6+p9crWAEJm+/Blz
+5Z7kUCH93mSjnV0tGNl7FJ8luSZEpDNrnrJ4rT0N0npv2s9JvUXP72odrzhOGg3i
+3E2yw2/DRNyItsPlS2PtlJHu53YZhz2rKbu9LBXepD7FsOOyDZJL+O7Uu9XT383P
+8ZBou0VCI6Lcw+zBMtAdpOCeWVRkgfjZ+n5LrhWFtJfH4bYwgUCkh8koSMdMTVsz
+bdbm+9XSj+m03X/otk3URNUa2tcCfGPZVbS/2yM3+EgDsB4xPXeXvXTEwZWQHKsS
+hNEOOLNnDRzndZWa1qV3
+=V1JK
+-----END PGP SIGNATURE-----
+
