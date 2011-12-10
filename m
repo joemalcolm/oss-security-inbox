@@ -1,97 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/2
-Message-ID: <CAPYM6VzMMxF_ku+EO=LEk+Bta=bxwKydrCYnhhvabBXj_fCAOg@mail.gmail.com>
-Date: Mon, 26 Sep 2011 12:13:34 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/10/1
+Message-ID: <CAPZ8mV533aw7Att9pOgH_WSQM=bSx2+2Pp4M7hEYBU4AB5rz2w@mail.gmail.com>
+Date: Fri, 9 Dec 2011 18:08:19 -0800
+From: Mark Doliner <mark@...gant.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Advanced Electron Forums (AEF) 1.0.9 <= Cross Site Request Forgery (CSRF) Vulnerability
+Subject: CVE request: Pidgin crash
 Content-Type: text/plain; charset=utf-8
 
-Advanced Electron Forums (AEF) 1.0.9 <= Cross Site Request Forgery
-(CSRF) Vulnerability
+Hi!  Would it be possible to issue a CVE for a newish crash in Pidgin?
+ This is a remotely-triggerable crash in the oscar protocol (used by
+the AIM and ICQ plugins) when handling incoming buddy list-related
+SNACs.  I do not believe remote-code execution is possible.  It was
+discovered by Evgeny Boger and reported on our public issue tracker at
+http://developer.pidgin.im/ticket/14682  I do not believe a CVE exists
+for this yet.
 
+The Pidgin project will be releasing version 2.10.1 tomorrow and it
+will include a fix for this issue.
 
-
-1. OVERVIEW
-
-The Advanced Electron Forums (AEF)  1.0.9 <= versions are vulnerable
-to Cross Site Request Forgery (CSRF).
-
-
-2. BACKGROUND
-
-AEF has a very simple and easy to use Administration Panel and
-installing this software is a piece of cake! You can install new
-themes, customize themes the way you want. The User Control Panel has
-a simple yet beautiful interface where users can set their preferences
-for the board.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Advanced Electron Forums (AEF) 1.0.9 <=  versions contain a flaw that
-allows a remote Cross-site Request Forgery (CSRF / XSRF) attack. The
-flaw exists because the application does not require multiple steps or
-explicit confirmation for sensitive transactions for majority of
-administrator functions such as adding new user, assigning user to
-administrative privilege. By using a crafted URL, an attacker may
-trick the victim into visiting to his web page to take advantage of
-the trust relationship between the authenticated victim and the
-application. Such an attack could trick the victim into executing
-arbitrary commands in the context of their session with the
-application, without further prompting or verification.
-
-
-4. VERSIONS AFFECTED
-
-1.0.9 <=
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-The following request ecalates a normal user to an administrator.
-
-[REQUEST]
-POST /aef/index.php?act=editprofile&uid=2 HTTP/1.1
-
-username=tester&email=tester%40yehg.net&u_member_group=1&realname=&title=&location=&gender=1&privatetext=&icq=&yim=&msn=&aim=&www=&sig=&editprofile=Edit+Profile
-[/REQUEST]
-
-
-6. SOLUTION
-
-Partial fix is available.
-The vendor released a single patch for the provided vulnerable
-EditProfile functionality.
-http://www.anelectron.com/downloads/index.php?act=downloadattach&atid=59
-
-
-7. VENDOR
-
-Electron Inc.
-http://www.anelectron.com/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-14: notified vendor through email, website contact form submission
-2011-05-17: vendor released aef 1.0.9 without the CSRF fix
-2011-09-06: vendor released separate patch about the CSRF fix
-2011-09-26: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[aef-1.x]_cross_site_request_forgery
-CSRF Wiki: https://secure.wikimedia.org/wikipedia/en/wiki/Cross-site_request_forgery
-
-
-
-#yehg [2011-09-26]
+Thanks (and sorry for sending this at the beginning of your weekends!),
+Mark
