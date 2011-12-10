@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/8
-Message-ID: <20111117055022.GB24831@sota.gen.nz>
-Date: Thu, 17 Nov 2011 05:50:22 +0000
-From: Ben Hawkes <hawkes@...a.gen.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/10/3
+Message-ID: <4EE38547.8000001@gmail.com>
+Date: Sat, 10 Dec 2011 17:13:59 +0100
+From: Paul <pawlkt@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: nginx resolver heap overflow
+Subject: cve request: bat_socket_read memory corruption
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-The nginx team have released stable version 1.0.10, which includes a fix 
-for a heap overflow bug in the custom DNS resolver:
+can I get a CVE for this:
+https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2011-December/005904.html
+?
 
-http://trac.nginx.org/nginx/changeset/4268/nginx
+If root does read() on a specific socket, it's possible to corrupt
+(kernel) memory over network, with an ICMP packet, if B.A.T.M.A.N. mesh
+protocol is used.
 
-The resolver is most commonly used with the proxy and fastcgi modules,
-which are not enabled by default.
+-- 
+Regards,             twitter.com/pa_kt
+Paul
 
-In order to trigger this condition an attacker would need to be in
-control of an upstream resolver host, or be in a position to brute-force
-the weakly generated 16-bit transaction identifier.
 
-Thanks,
-Ben Hawkes
