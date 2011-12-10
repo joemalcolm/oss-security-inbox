@@ -1,41 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/9
-Message-ID: <1212107829.27653.1302550973039.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Apr 2011 15:42:53 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/11/1
+Message-ID: <4EE3D70E.3070803@gmail.com>
+Date: Sat, 10 Dec 2011 23:02:54 +0100
+From: Paul <pawlkt@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests : Liferay 6.0.6
+Subject: Re: cve request: bat_socket_read memory corruption
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Sorry for the delay, this one was bigger than a breadbox so I needed
-> to
-> find a block of time to handle it.
-> 
-> ----- Original Message -----
-> > Hello,
-> >
-> > version 6.0.6 of Liferay correct 3 security vulnerabilities related
-> > to
-> > the processing of XSLT content and 2 XSS.
-> >
-> > The full 6.0.6 Changelog :
-> > http://issues.liferay.com/secure/ReleaseNote.jspa?version=10656&styleName=Html&projectId=10952
-> >
-> > Remote command execution :
-> > http://issues.liferay.com/browse/LPS-14726
-> 
-> Use CVE-2011-1501
+On 2011-12-10 20:30, Kurt Seifried wrote:
+
+> I'm going to need first hand source information, i.e. links to the
+> code/commits/project stating it's an issue or something similar.
 > 
 
+https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2011-December/005908.html
 
-Due to an error on my part, CVE-2011-1501 is a dupe. Please use
-CVE-2011-1571 for the above issue instead.
-
-Steve, can MITRE mark CVE-2011-1501 as not used.
-
-Thanks.
+Modified patch from Sven Eckelmann, one of project's managers, adressing
+this memory corruption problem.
 
 -- 
-    JB
+Regards,
+Paul
+
+
