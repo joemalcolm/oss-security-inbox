@@ -1,41 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/25/2
-Message-ID: <20110525173329.GA20752@openwall.com>
-Date: Wed, 25 May 2011 21:33:29 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/10/4
+Message-ID: <4EE3B365.50104@redhat.com>
+Date: Sat, 10 Dec 2011 12:30:45 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: list archive
+CC: Paul <pawlkt@...il.com>
+Subject: Re: cve request: bat_socket_read memory corruption
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 12/10/2011 09:13 AM, Paul wrote:
+> Hi
+>
+> can I get a CVE for this:
+> https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2011-December/005904.html
+> ?
+>
+> If root does read() on a specific socket, it's possible to corrupt
+> (kernel) memory over network, with an ICMP packet, if B.A.T.M.A.N. mesh
+> protocol is used.
+>
+I'm going to need first hand source information, i.e. links to the
+code/commits/project stating it's an issue or something similar.
 
-abc and I have enhanced the official/local archive of oss-security today
-(as well as of other Openwall-hosted mailing lists):
+-- 
 
-http://www.openwall.com/lists/oss-security/
+-Kurt Seifried / Red Hat Security Response Team
 
-Now these have month and day index pages with message Subjects and Froms
-on them (finally).  For example:
-
-http://www.openwall.com/lists/oss-security/2011/05/
-http://www.openwall.com/lists/oss-security/2011/05/24/
-
-Also, there are "prev month", "next month", "prev day", and "next day"
-links at top.
-
-If anyone is interested in the code:
-
-http://cvsweb.openwall.com/blists
-
-Suggestions/votes for further enhancements are welcome (we have a to-do
-list for blists internally, but we're unsure of what to work on next).
-This must not turn into a lengthy discussion thread of its own, which I
-think it won't.
-
-Alexander
-
-P.S. Five years of linux-kernel (almost 5 GB in mbox format) took two
-minutes to re-index, using 25 seconds of CPU time, on a fairly old
-machine and with the file being quite fragmented.  The index file size is
-approx. 3% of the mbox size (before the addition of Subjects and Froms,
-it was approx. 1%).  http://lists.openwall.net/linux-kernel/
