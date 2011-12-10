@@ -1,63 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/12
-Message-ID: <AANLkTi=8+gdQnHW+uP1qRWucveB4gjzXGx2+hvvnrn+f@mail.gmail.com>
-Date: Mon, 14 Mar 2011 00:13:27 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/10/2
+Message-ID: <4EE30776.9040301@redhat.com>
+Date: Sat, 10 Dec 2011 00:17:10 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Andrew Clausen <clausen@...n.upenn.edu>
-Subject: Re: announcing libwipe
+CC: Mark Doliner <mark@...gant.net>
+Subject: Re: CVE request: Pidgin crash
 Content-Type: text/plain; charset=utf-8
 
-hi,
+On 12/09/2011 07:08 PM, Mark Doliner wrote:
+> Hi!  Would it be possible to issue a CVE for a newish crash in Pidgin?
+>  This is a remotely-triggerable crash in the oscar protocol (used by
+> the AIM and ICQ plugins) when handling incoming buddy list-related
+> SNACs.  I do not believe remote-code execution is possible.  It was
+> discovered by Evgeny Boger and reported on our public issue tracker at
+> http://developer.pidgin.im/ticket/14682  I do not believe a CVE exists
+> for this yet.
+>
+> The Pidgin project will be releasing version 2.10.1 tomorrow and it
+> will include a fix for this issue.
+>
+> Thanks (and sorry for sending this at the beginning of your weekends!),
+> Mark
+What is "weekends"? =)
 
-I like this idea, and could be very useful especially in massive
-shared environment (as in lot of users sharing a server, like web
-servers for example).
-
-My only concern right now is the choice of the gplv3, which is a no go
-for many projects, especially for a library. Any chance to release it
-under a more permissive or non viral license like bsd or MIT?
-
-ps: that's not a license FUD, only a question (before I got shot :).
-
-Cheers,
-
-On Sat, Mar 12, 2011 at 7:29 AM, Andrew Clausen <clausen@...n.upenn.edu> wrote:
-> Hi all,
->
-> I have written a program called "libwipe" for GNU/Linux to wipe memory
-> as soon as it is not being used.  I am releasing it under the GPL3
-> licence, and you can download it here:
->
-> http://www.econ.upenn.edu/~clausen/computing/libwipe.tar.gz
->
-> Any suggestions are appreciated.  In particular, I would like feedback on
-> * which memory mappings should be erased on exit
-> * which project this could be included in (secure-delete?)
->
-> OVERVIEW
->
-> This library is designed to make programs respect users' privacy by wiping
-> information when it is no longer needed.  It does not require any modifications
-> to the original programs.  To use it for all programs in a single shell
-> session, set the LD_PRELOAD environment variable with the shell command
->
->        export LD_PRELOAD=/usr/local/lib/libwipe.so
->
-> To use it system-wide, add /usr/local/lib/libwipe.so to the /etc/ld.so.preload
-> configure file.
->
-> The program uses two mechanisms:
-> (1) when memory is deallocated with free(3), it is zeroed out.
-> (2) when the process terminates, the entire memory is zeroed out.
->
-> Cheers,
-> Andrew
->
-
-
+Please use CVE-2011-4601 for this issue.
 
 -- 
-Pierre
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+-Kurt Seifried / Red Hat Security Response Team
+
