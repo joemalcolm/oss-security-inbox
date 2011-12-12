@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/46
-Message-ID: <20110404190008.GC14209@openwall.com>
-Date: Mon, 4 Apr 2011 23:00:08 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/12/3
+Message-ID: <4EE63C66.5070003@redhat.com>
+Date: Mon, 12 Dec 2011 10:39:50 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: rocksndiamonds world-writable working/config directory
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 12:05:18AM -0500, Micah Gersten wrote:
-> Please add me to the new list, I was a member through the Ubuntu exploder:
-> pub   1024D/AA97FD59 2009-06-02 [expires: 2014-06-01]
->       Key fingerprint = FBB7 9514 0F36 1784 7CD8  734E 4E78 AFE1 AA97 FD59
-> uid                  Micah Gersten <micah@...ntu.com>
-> sub   4096g/FD0EAC79 2009-06-02 [expires: 2014-06-01]
+On 12/12/2011 09:24 AM, Vincent Danen wrote:
+> rocksndiamonds creates its ~/.rocksndiamonds/ directory as
+> world-writable.  This could allow a local attacker to replace a cache
+> file with a symbolic link to a file they would not otherwise have access
+> to, and the next time the victim loaded the game, it would be
+> overwritten.
+>
+> Could a CVE be assigned to this please?
+>
+> References:
+>
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651620
+> https://bugzilla.redhat.com/show_bug.cgi?id=766805
+>
+Please use CVE-2011-4606 for this issue.
 
-Added.
+-- 
 
-(We'll need to revisit the member list for Ubuntu later.)
+-Kurt Seifried / Red Hat Security Response Team
 
-Alexander
