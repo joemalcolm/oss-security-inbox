@@ -1,32 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/1
-Message-ID: <20110308000010.GD11663@altlinux.org>
-Date: Tue, 8 Mar 2011 03:00:11 +0300
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/12/2
+Message-ID: <20111212162444.GD1648@redhat.com>
+Date: Mon, 12 Dec 2011 09:24:56 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ldd can execute an app unexpectedly
+Subject: CVE request: rocksndiamonds world-writable working/config directory
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 07, 2011 at 06:27:05PM -0500, Steve Grubb wrote:
-[...]
->  http://reverse.lostrealm.com/protect/ldd.html
->  http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
-> 
-> Besides telling everyone don't do that. ldd could take the PoV that it should only 
-> call runtime linkers in trusted directories like /sbin or /usr/sbin. Or it could 
-> simply detect that another linker was requested and make you add a "--force" so that 
-> you are fully aware that you just let another linker run. (The suggested patch can 
-> certainly be improved. But its here just in case you want it.)
+rocksndiamonds creates its ~/.rocksndiamonds/ directory as
+world-writable.  This could allow a local attacker to replace a cache
+file with a symbolic link to a file they would not otherwise have access
+to, and the next time the victim loaded the game, it would be
+overwritten.
 
-In June of 2002, I suggested to change ldd to avoid invoking programs
-directly, even when it seems like that would work, and invoke the dynamic
-linker as a program instead.
-This change was implemented at least in Owl and ALT Linux:
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/~checkout~/Owl/packages/glibc/glibc-2.3.6-owl-alt-ldd.diff
-http://git.altlinux.org/gears/g/glibc.git?p=glibc.git;a=commitdiff;h=788577027d2950e9508a434475e04c3af864d169
+Could a CVE be assigned to this please?
 
+References:
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651620
+https://bugzilla.redhat.com/show_bug.cgi?id=766805
 
 -- 
-ldv
-
-Content of type "application/pgp-signature" skipped
+Vincent Danen / Red Hat Security Response Team 
