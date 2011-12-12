@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/27
-Message-ID: <4ECAC6CD.2090901@redhat.com>
-Date: Mon, 21 Nov 2011 14:46:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/12/4
+Message-ID: <20111212174705.GE1648@redhat.com>
+Date: Mon, 12 Dec 2011 10:47:06 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, cve@...re.org
-Subject: Re: Fwd: XSS vulnerability in Joomla 1.6.3 - CVE-2011-2710 / CVE-2011-2708 issue
+Subject: CVE request: putty does not wipe keyboard-interactive replies from memory after authentication
 Content-Type: text/plain; charset=utf-8
 
- 
-> CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS vulnerability: http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html and I have already contacted MITRE twice to get another one marked as obsolete.
->  
->
-> Best regards,
-> Henri Salo
+Putty 0.59-0.61 does not wipe keyboard-interactive replies from memory
+after authentication.  If malware is installed on the system and can
+access arbitrary memory locations, or if the memory is swapped to disk
+or written in a crash dump file, it can expose sensitive authentication
+information like passwords, public-key passphrases, etc.
 
-Ok CVE-2011-2710 is public in CVE and NVD:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2710, and
-CVE-2011-2708 is still marked as reserved so we should probably quietly
-take CVE-2011-2708 out back and shoot it.
+This is fixed upstream in 0.62.
 
-CC'ing mitre.
+Could a CVE be assigned to this?
+
+References:
+
+http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/password-not-wiped.html
+http://svn.tartarus.org/sgt?view=rev&revision=9357
+https://bugzilla.redhat.com/show_bug.cgi?id=766865
+http://bugs.gentoo.org/show_bug.cgi?id=394429
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
