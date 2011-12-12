@@ -1,27 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/16
-Message-ID: <748617436.652434.1307994238170.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Jun 2011 15:43:58 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/12/4
+Message-ID: <20111212174705.GE1648@redhat.com>
+Date: Mon, 12 Dec 2011 10:47:06 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: hfs_find_init() sb->ext_tree NULL pointer dereference
+Subject: CVE request: putty does not wipe keyboard-interactive replies from memory after authentication
 Content-Type: text/plain; charset=utf-8
 
+Putty 0.59-0.61 does not wipe keyboard-interactive replies from memory
+after authentication.  If malware is installed on the system and can
+access arbitrary memory locations, or if the memory is swapped to disk
+or written in a crash dump file, it can expose sensitive authentication
+information like passwords, public-key passphrases, etc.
 
+This is fixed upstream in 0.62.
 
------ Original Message -----
-> Reported by Clement LECIGNE. The issue is described here:
-> https://lkml.org/lkml/2011/6/8/154. No patch atm, but the impact is
-> low.
-> 
-> The relevant bug for this is:
-> https://bugzilla.redhat.com/show_bug.cgi?id=712774
-> 
+Could a CVE be assigned to this?
 
-Please use CVE-2011-2203.
+References:
+
+http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/password-not-wiped.html
+http://svn.tartarus.org/sgt?view=rev&revision=9357
+https://bugzilla.redhat.com/show_bug.cgi?id=766865
+http://bugs.gentoo.org/show_bug.cgi?id=394429
 
 Thanks.
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
