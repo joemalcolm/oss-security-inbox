@@ -1,44 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/5
-Message-ID: <4D22F2A6.2080604@redhat.com>
-Date: Tue, 04 Jan 2011 11:12:54 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Mark Stosberg <mark@...mersault.com>, Andy Armstrong <andy@...ten.net>
-CC: oss-security@...ts.openwall.com, Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>, "Chris 'BinGOs' Williams" <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>, Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>, Tom spot Callaway <tcallawa@...hat.com>
-Subject: Re: Re: CVE Request -- perl-CGI two ids, perl-CGI-Simple one id (CVE-2010-3172 already assigned for Bugzilla part)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/12/3
+Message-ID: <4EE63C66.5070003@redhat.com>
+Date: Mon, 12 Dec 2011 10:39:50 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: rocksndiamonds world-writable working/config directory
 Content-Type: text/plain; charset=utf-8
 
-Hi Mark, Andy,
+On 12/12/2011 09:24 AM, Vincent Danen wrote:
+> rocksndiamonds creates its ~/.rocksndiamonds/ directory as
+> world-writable.  This could allow a local attacker to replace a cache
+> file with a symbolic link to a file they would not otherwise have access
+> to, and the next time the victim loaded the game, it would be
+> overwritten.
+>
+> Could a CVE be assigned to this please?
+>
+> References:
+>
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651620
+> https://bugzilla.redhat.com/show_bug.cgi?id=766805
+>
+Please use CVE-2011-4606 for this issue.
 
-Ludwig Nussel wrote:
-> Mark Stosberg wrote:
->> Yes, it is. However, later testing found that the issue wasn't
->> completely fixed in 3.50. A new patch has been developed, and is
->> currently pending review and acceptance by the primary CGI.pm author,
->> Lincoln Stein. (Now CC'ed).
-> 
-> Any update on this? What are the remaining issues?
+-- 
 
-   Are there some patches to come yet wrt to Perl's CPAN CGI-Simple module
-and those two CVE ids yet?
-
-I can see latest CGi-Simple-v113 released on Monday, 27-th December 2010:
-[1] http://search.cpan.org/dist/CGI-Simple/
-
-Does it contain fixes for both CVE issues (so it is possible to rebase to new
-version) or anything else to be done in this part of the world yet?
-
-Is the fix, we were waiting for on the CGI-Simple side:
-[2] https://github.com/AndyA/CGI--Simple/commit/5a861280ef524661105e132536ff7d1a9084941f
-
-or yet another one?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> cu
-> Ludwig
-> 
+-Kurt Seifried / Red Hat Security Response Team
 
