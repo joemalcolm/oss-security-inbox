@@ -1,83 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/4
-Message-ID: <4D636DCF.4040605@redhat.com>
-Date: Tue, 22 Feb 2011 16:03:27 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/13/2
+Message-ID: <20111213131649.GA24611@openwall.com>
+Date: Tue, 13 Dec 2011 17:16:49 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: a collection of world-writable debugfs bugs
+Subject: Re: linux-distros list setup update
 Content-Type: text/plain; charset=utf-8
 
-There are 20 patches here - some are accepted, some are probably 
-pending. All from Vasiliy Kulikov.
+Hi,
 
-[PATCH 01/20] mach-omap2: mux: world-writable debugfs files
-https://lkml.org/lkml/2011/2/4/66 arm arch
+On Fri, Nov 18, 2011 at 06:36:57AM +0400, Solar Designer wrote:
+> Not surprisingly, we started receiving spam to the linux-distros list.
+> PGP-encrypted spam is fun, yet I decided to introduce an anti-spam
+> measure, now documented on this new wiki page:
+> 
+> http://oss-security.openwall.org/wiki/mailing-lists/linux-distros
 
-[PATCH 02/20] mach-omap2: pm: world-writable debugfs timer files
-https://lkml.org/lkml/2011/2/4/67 arm arch
+This is now moved to:
 
-[PATCH 03/20] mach-omap2: smartreflex: world-writable debugfs voltage files
-https://lkml.org/lkml/2011/2/4/68 arm arch
+http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-[PATCH 04/20] mach-ux500: mbox-db5500: world-writable sysfs fifo file
-https://lkml.org/lkml/2011/2/4/69 arm arch
+describing both "distros" and "linux-distros" lists at once.
 
-[PATCH 05/20] leds: lp5521: world-writable sysfs engine* files
-https://lkml.org/lkml/2011/2/4/70
+Also, I've just subscribed Nick Kralevich from Android Security Team to
+linux-distros (and thus to distros as well) based on Nick's off-list
+request.  We can see Nick doing relevant work e.g. here:
+http://www.openwall.com/lists/oss-security/2011/11/10/1
 
-[PATCH 06/20] leds: lp5523: world-writable engine* sysfs files
-https://lkml.org/lkml/2011/2/4/81
+> "Be sure to include [vs] (four characters) in the Subject line, or your
+> message will most likely be rejected by the mail server."
+> 
+> Some kinds of messages should pass despite of lacking [vs] in the
+> Subject - for example, this should be the case for most PGP-encrypted or
+> PGP-signed messages - but to be safe, please use the [vs] thing even if
+> you encrypt and/or sign.  The rejected messages are rejected at SMTP
+> level, so senders should receive bounces from their own mail relays.
 
-[PATCH 07/20] video: sn9c102: world-wirtable sysfs files
-https://lkml.org/lkml/2011/2/4/85
-
-[PATCH 08/20] mfd: ab3100: world-writable debugfs *_priv files
-https://lkml.org/lkml/2011/2/4/82
-
-[PATCH 09/20] mfd: ab3500: world-writable debugfs register-* files
-https://lkml.org/lkml/2011/2/4/84
-
-[PATCH 10/20] mfd: ab8500: world-writable debugfs register-* files
-https://lkml.org/lkml/2011/2/4/71
-
-[PATCH 11/20] misc: ep93xx_pwm: world-writable sysfs files
-https://lkml.org/lkml/2011/2/4/83
-
-[PATCH 12/20] net: can: at91_can: world-writable sysfs files
-https://lkml.org/lkml/2011/2/4/80
-fef52b0171dfd7dd9b85c9cc201bd433b42a8ded
-
-[PATCH 13/20] net: can: janz-ican3: world-writable sysfs termination file
-https://lkml.org/lkml/2011/2/4/72
-1e6d93e45b231b3ae87c01902ede2315aacfe976
-
-[PATCH 14/20] platform: x86: acer-wmi: world-writable sysfs threeg file
-https://lkml.org/lkml/2011/2/4/79
-b80b168f918bba4b847e884492415546b340e19d
-
-[PATCH 15/20] platform: x86: asus_acpi: world-writable procfs files
-https://lkml.org/lkml/2011/2/4/73
-8040835760adf0ef66876c063d47f79f015fb55d
-
-[PATCH 16/20] platform: x86: tc1100-wmi: world-writable sysfs wireless 
-and jogdial files
-https://lkml.org/lkml/2011/2/4/78
-8a6a142c1286797978e4db266d22875a5f424897
-
-[PATCH 17/20] rtc: rtc-ds1511: world-writable sysfs nvram file
-https://lkml.org/lkml/2011/2/4/74
-
-[PATCH 18/20] scsi: aic94xx: world-writable sysfs update_bios file
-https://lkml.org/lkml/2011/2/4/75
-
-[PATCH 19/20] scsi: iscsi: world-writable sysfs priv_sess file
-https://lkml.org/lkml/2011/2/4/76
-
-[PATCH 20/20] fs: ubifs: world-writable debugfs dump_* files
-https://lkml.org/lkml/2011/2/4/77
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=679303
--- 
-Eugene Teo / Red Hat Security Response Team
+Alexander
