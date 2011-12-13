@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/2
-Message-ID: <4ED46BDE.8010709@redhat.com>
-Date: Mon, 28 Nov 2011 22:21:34 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/13/1
+Message-ID: <4EE6CC84.9000309@redhat.com>
+Date: Tue, 13 Dec 2011 09:24:44 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>
-Subject: Re: CVE request: includeViewParameters re-evaluates param/model values as EL expressions on Mojarra/MyFaces
+Subject: OpenIPMI: IPMI event daemon creates PID file with world writeable permissions
 Content-Type: text/plain; charset=utf-8
 
-On 11/28/2011 10:16 PM, David Jorm wrote:
-> It has been found that when includeViewParameters is set to true, JSF 2 as implemented by Mojarra and MyFaces will re-evaluate parameter/model values as EL expressions.
->
-> Original bug:
-> http://java.net/jira/browse/JAVASERVERFACES-2247
->
-> MyFaces bug:
-> https://issues.apache.org/jira/browse/MYFACES-3405
->
-> Write-up/reproducer:
-> http://www.jakobk.com/2011/11/jsf-value-expression-injection-vulnerability/
->
-> Thanks
-Please use CVE-2011-4358  for the Mojarra instance of this vulnerable.
+Hi,
 
-Please use CVE-2011-4359  for the MyFaces instance of this vulnerable.
+A insecure file permissions flaw was found in the way IPMI event daemon 
+of the OpenIPMI (Intelligent Platform Management Interface) library and 
+tools created its PID file (it was created with 0666 permissions). A 
+local user could use this flaw to kill arbitrary running process during 
+ipmievd service shutdown.
+
+This has been assigned CVE-2011-4339
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=742837
+
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Huzaifa Sidhpurwala / Red Hat Security Response Team
