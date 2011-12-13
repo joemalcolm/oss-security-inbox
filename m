@@ -1,25 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/06/2
-Message-ID: <20111206203949.GA10436@pisco.westfalen.local>
-Date: Tue, 6 Dec 2011 21:39:49 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/13/1
+Message-ID: <4EE6CC84.9000309@redhat.com>
+Date: Tue, 13 Dec 2011 09:24:44 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: acpid
+Subject: OpenIPMI: IPMI event daemon creates PID file with world writeable permissions
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-Please assign a CVE ID for this issue fixed in acpid 2.0.11:
 
-http://www.tedfelix.com/linux/acpid-netlink.html 
-(The ChangeLog can only be grabbed through the tarballs):
+A insecure file permissions flaw was found in the way IPMI event daemon 
+of the OpenIPMI (Intelligent Platform Management Interface) library and 
+tools created its PID file (it was created with 0666 permissions). A 
+local user could use this flaw to kill arbitrary running process during 
+ipmievd service shutdown.
 
-------
-* Sat Jul 30 2011  Ted Felix <http://www.tedfelix.com>
-  - 2.0.11 release
-  - Set umask to 0077 for scripts run by acpid.  (event.c)  (Ted Felix)
-------
+This has been assigned CVE-2011-4339
 
-Discovered by Helmut Grohne and Michael Biebl.
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=742837
 
-Cheers,
-        Moritz
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
