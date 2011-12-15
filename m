@@ -1,85 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/5
-Message-Id: <20110105115255.a4a3f9e6.michael.s.gilbert@gmail.com>
-Date: Wed, 5 Jan 2011 11:52:55 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/8
+Message-ID: <4EEA691C.2000803@redhat.com>
+Date: Thu, 15 Dec 2011 14:39:40 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: possible flaw in widely used strtod.c implementation
+CC: vladz <vladz@...zero.fr>
+Subject: Re: CVE request: bypass default security level of the X wrapper (xserver-xorg <= 1:7.5+8)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 5 Jan 2011 09:14:27 +0100, Pierre Joye wrote:
-> hi,
-> 
-> Referring to: http://bugs.php.net/53632
-> 
-> This bug affects PHP and can be remotely triggered if someone actually
-> process an input as double (p.php?id=... and then $d
-> = $id +1 for example). However this issue could also affect any
-> software relying on the "strtod for IEEE-, VAX-, and IBM-arithmetic
-> machines." implementation (quite a lot actually do, according to
-> codesearch&co). See a non exhaustive list here:
-> 
-> http://www.google.com/codesearch?as_q=strtod+for+IEEE-,+VAX-,+and+IBM-arithmetic+machines.&btnG=Search+Code&hl=en&as_package=&as_lang=&as_filename=&as_class=&as_function=&as_license=&as_case=
-> 
-> Whether the bug exists in the respective builds of each of these
-> softwares may depend on how they are built (options, arch, etc.).
-> 
-> A fix is already in php's svn:
-> http://svn.php.net/viewvc?view=revision&revision=307095
-> 
-> A good explanation about this issue is in the gcc bug tracker (thanks
-> Rasmus for the pointer):
-> 
-> It is a design flaw in the x87 fpu registers, so keeping the float out
-> of those registers circumvents the problem.  It is
-> one of the suggested ways of fixing this that is mentioned in the famous
-> gcc bug 323 report:
-> 
-> http://gcc.gnu.org/bugzilla/show_bug.cgi?id=323
-> 
-> See Comment 87:
-> 
->  bruno 2006-12-21 15:08:57 UTC
->  The option -ffloat-store, recommended by Richard Henderson, has
->  the effect of decreasing the performance of floating-point
->  operations for the entire compilation unit. If you want a minimal
->  fix that does not affect other functions in the same compilation
->  unit, you can use 'volatile double' instead of 'double'. It's
->  like a one-shot -ffloat-store. Example:
-> 
->  #include <stdio.h>
-> 
->  void test(double x, double y) {
->    const volatile double y2 = x + 1.0;
->    if (y != y2) printf("error\n");
->  }
-> 
->  void main() {
->    const double x = .012;
->    const double y = x + 1.0;
-> 
->    test(x, y);
->  }
-> 
-> On windows it is slightly more complicated as it seems to do some more
-> under the wood work. I was able to reproduce the problem on certain
-> CPUs (i7) and not on other  (xeon) using the exact same binaries. I
-> still have to verify what is done exactly.
-> 
-> About getting a CVE #, I'm not sure it should be categorized only for
-> php or more generally about this strtod.c (newest version has the same
-> problem btw). Ideas? Comments?
 
-The x87 floating point extended precision issue itself is just a bug
-(well a hardware bug at that), and as of gcc >= 4.5 it can be avoided
-with the -fexcess-precision=standard option [0].
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The fact that this bug can lead to a denial-of-service in PHP is
-sufficient to warrant a CVE for PHP, but nothing else (I think).  If it
-can lead to a dos in other apps, then each should get their own CVE
-(again in my opinion).
+On 12/15/2011 11:09 AM, vladz wrote:
+> Hi,
+>
+> On Debian systems, the X wrapper (/usr/bin/X) is a setuid-root binary that
+> checks for some security requirements before launching Xorg with root
+> privileges.
+>
+> By default, the wrapper's configuration file only allows users whose
+> controlling TTY (console) to start the X server, but it is possible to
+> bypass this restriction by connecting another file (with similar tty
+> properties) to standard input before launching the X wrapper.
+>
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652249
+>
+> Could you allocate CVE id for this issue?
+>
+> Thank you,
+> vladz.
+Please use CVE-2011-4613 for this issue.
 
-Best wishes,
-Mike
+- -- 
 
-[0] http://gcc.gnu.org/bugzilla/show_bug.cgi?id=323#c127
+- -Kurt Seifried / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJO6mkcAAoJEBYNRVNeJnmTcMYP/0Q8NBMWVqvawJGaEpaYd0Jv
+OG8CwczJJsDoQVJ9UfQYEe96uIgcUUWAoCASc9W+l9hBm7YIo33XvaqlgllKtjXV
+PR683V+UvMqlFBFlm+O4+7HBdME2QFw+PHYkolbButZl/DBNTQzByafIcW9FDHJz
+8gbuOTn8C7wKm9FQv3iFbE3QwQOg94gHW69Sen7Xe47xuShIg9rVUFjo+5duMq5/
+qvAA6kSNwgjyrDCesWmdQjezDIibVei4SIDKrpKpwLUmCwScvBshkTOsy/bRPkZL
+MYkU2YB6HitYc21VW/ampeX/aa2HduYilOcWKx25LNcXAx6P0dCT12aluj+Ca4qm
+30YMe5Dd61CqgP+yaqQXXxlM0XTP8o1du9TKGct/0GizlUfYvJ9m+Pc6NSjFkdVL
+zxiktRXVFoyGNy0tkCYDF7eXtCrctpbk5aDdy4p+LlV281StML311WN0MEe37mPa
+70L3pAZTgvIUq08NscAQkFdzYYV5jEz3M3tqsg99KrbqrCNkUMuMuxqMz7Mu6KnA
+H8mu9iEI/lZQnLVti/65aoB6T7ewYzlPTA0E/nNo4BIshYuIxsrimrcvkDLAjwuc
+IiqogpTGCjTadZXkeSIk+j7CqyTOwmXFg0RLTx66kyTJJg6zdEMkWFBjF4O3OGfH
+6SCBBBD7bdllA+IByZ6j
+=hyxS
+-----END PGP SIGNATURE-----
+
