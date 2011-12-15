@@ -1,29 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/10
-Message-ID: <20110124215711.GF4979@outflux.net>
-Date: Mon, 24 Jan 2011 13:57:11 -0800
-From: Kees Cook <kees@...ntu.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE request: multiple gypsy vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/5
+Message-ID: <5E49EEF5B3B23549BAF01B43D0C2BB30176C4DDFB5@EXMB03.eu.tieto.com>
+Date: Thu, 15 Dec 2011 20:31:46 +0200
+From: <Thomas.Rucker@...to.com>
+To: <jamie@...onical.com>, <icecast-dev@...h.org>
+CC: <oss-security@...ts.openwall.com>, <security@...itz-naumann.com>, <security@...ntu.com>
+Subject: RE: [Icecast-dev] Security issue in icecast
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+*snip*
+Sending this to a public mailing list might not have been the smartest idea.
 
-I'd like to get CVEs assigned for two issues in Gypsy[1]:
+We're already aware of Moritz's finding and are working on a fix.
 
-reads arbitrary files as root user on behalf of regular user
-https://bugs.freedesktop.org/show_bug.cgi?id=33431
+Expect icecast release 2.3.3 soon.
 
-buffer overflow in nmea device input handling
-https://bugs.freedesktop.org/show_bug.cgi?id=33431
+Best regards
 
-Thanks,
-
--Kees
-
-[1] http://gypsy.freedesktop.org/wiki/
-
--- 
-Kees Cook
-Ubuntu Security Team
+Thomas Ruecker
