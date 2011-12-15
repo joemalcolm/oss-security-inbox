@@ -1,42 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/14
-Message-ID: <4EAAC8F9.30102@redhat.com>
-Date: Fri, 28 Oct 2011 09:23:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/1
+Message-ID: <4EE9B7E2.6050508@redhat.com>
+Date: Thu, 15 Dec 2011 17:03:30 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: Multiple remote denial of service in Linux bridge networking code 2.6.37-3.0
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: perf, powerpc: Handle events that raise an exception without overflowing
 Content-Type: text/plain; charset=utf-8
 
-On 10/28/2011 02:06 AM, Marcus Meissner wrote:
-> Hi,
->
-> Linux kernel 2.6.37 introduced with this commit
-> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=462fb2af9788a82a534f8184abfde31574e1cfa0
-> several regressions that be used to trigger remote denial of service attacks when
-> bridging is in use.
->
-> Reporter thread is on:
-> 	http://thread.gmane.org/gmane.linux.network/191713
->
-> Fixes are in git commits:
-> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=f8e9881c2aef1e982e5abc25c046820cd0b7cf64
-> 		In 2.6.39
-> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=66944e1c5797562cebe2d1857d46dff60bf9a69e
-> 		In 2.6.39
-> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=c65353daf137dd41f3ede3baf62d561fca076228
-> 		In 3.0
-> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=10949550bd1e50cc91c0f5085f7080a44b0871fe
-> 		In 3.0
-> So it can be considered fixed with Linux kernel 3.0.
-> Thanks to Eugene for looking up the commit ids.
->
-> I think it just needs one CVE, as it was one introducing patch.
->
-> Ciao, Marcus
-Please use CVE-2011-4087 for this issue.
+This does not affect the upstream kernel as it is already fixed. This is
+an issue that was introduced when fixing https://bugzilla.redhat.com/740465.
 
--- 
+A PMC is 32 bits (ie an int). When we pass it around as an unsigned
+long, we need to cast it before doing the comparison. Using perf on
+power machine with a local, unprivileged user account can cause a denial
+of service.
 
--Kurt Seifried / Red Hat Security Response Team
+Upstream commit:
+http://git.kernel.org/linus/0837e3242c73566fc1c0196b4ec61779c25ffc93
 
+Reference:
+https://bugzilla.redhat.com/767914
+
+Thanks, Eugene
