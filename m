@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/17
-Message-ID: <20110224235430.GT4212@outflux.net>
-Date: Thu, 24 Feb 2011 15:54:30 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/2
+Message-ID: <4EEA1D6A.3060905@redhat.com>
+Date: Thu, 15 Dec 2011 09:16:42 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: CAP_SYS_MODULE bypass via CAP_NET_ADMIN
+CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: perf, powerpc: Handle events that raise an exception without overflowing
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-While not as bad as CVE-2010-4661 (unprivileged module loading)
-I'd like to get a CVE assigned for this issue for tracking purposes:
-https://lkml.org/lkml/2011/2/24/203
-
-Basically "ifconfig $module" will load any module as long as the process
-has CAP_NET_ADMIN (ignoring CAP_SYS_MODULE).
-
--Kees
+On 12/15/2011 02:03 AM, Eugene Teo wrote:
+> This does not affect the upstream kernel as it is already fixed. This is
+> an issue that was introduced when fixing https://bugzilla.redhat.com/740465.
+>
+> A PMC is 32 bits (ie an int). When we pass it around as an unsigned
+> long, we need to cast it before doing the comparison. Using perf on
+> power machine with a local, unprivileged user account can cause a denial
+> of service.
+>
+> Upstream commit:
+> http://git.kernel.org/linus/0837e3242c73566fc1c0196b4ec61779c25ffc93
+>
+> Reference:
+> https://bugzilla.redhat.com/767914
+>
+> Thanks, Eugene
+Please use CVE-2011-4611 for this issue.
 
 -- 
-Kees Cook
-Ubuntu Security Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
