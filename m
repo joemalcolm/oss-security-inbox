@@ -1,45 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/4
-Message-Id: <201103161044.09804.ludwig.nussel@suse.de>
-Date: Wed, 16 Mar 2011 10:44:09 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/5
+Message-ID: <5E49EEF5B3B23549BAF01B43D0C2BB30176C4DDFB5@EXMB03.eu.tieto.com>
+Date: Thu, 15 Dec 2011 20:31:46 +0200
+From: <Thomas.Rucker@...to.com>
+To: <jamie@...onical.com>, <icecast-dev@...h.org>
+CC: <oss-security@...ts.openwall.com>, <security@...itz-naumann.com>, <security@...ntu.com>
+Subject: RE: [Icecast-dev] Security issue in icecast
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
-> Hello Josh, Steve, David, vendors,
-> 
->    this is due the following vino deficiency:
->    [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
->    [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
-> 
-> As noted in [1] Vino may incorrectly report, that relevant user desktop
-> is reachable only over local network, when in fact it's reachable from everywhere.
-> 
-> As this is issue slightly on the border, not sure it should receive a CVE identifier,
-> so Cc-ed David Woodhouse to elaborate more on issue impact if necessary.
-> 
-> Under my opinion, the trust boundary is crossed (it is wrongly reported to the the user, they
-> have a secure setup, when they do not have it and otherwise would perform steps to correct the
-> settings). But left the final decision for further discussion.
-> 
-> What are the thoughts of the others? Should this one get a CVE identifier or not?
+*snip*
+Sending this to a public mailing list might not have been the smartest idea.
 
-Claiming that the system is only reachable via local network while
-it's not doesn't sound correct to me either. However, how would a
-fix look like? A program basically can't know nor reliably determine
-whether it's reachable from outside. Private IP addresses are no
-indication either. So the only sane thing seems to be to not make
-any claims about local networks and just list the IP addresses/host
-names of the system.
+We're already aware of Moritz's finding and are working on a fix.
 
-cu
-Ludwig
+Expect icecast release 2.3.3 soon.
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Best regards
+
+Thomas Ruecker
