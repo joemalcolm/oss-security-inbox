@@ -1,50 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/4
-Message-ID: <CAOSRhRN1FRT5gbjPFtg+Vfm+bjOEhdOkxGwMJs7vU2xYJ7kZrQ@mail.gmail.com>
-Date: Thu, 14 Jul 2011 07:02:48 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/2
+Message-ID: <4EEA1D6A.3060905@redhat.com>
+Date: Thu, 15 Dec 2011 09:16:42 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Secunia Research <vuln@...unia.com>
-Subject: Re: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: perf, powerpc: Handle events that raise an exception without overflowing
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 14, 2011 at 2:49 AM, Erik de Castro Lopo
-<erikd@...a-nerd.com> wrote:
-> Jan Lieskovsky wrote:
+On 12/15/2011 02:03 AM, Eugene Teo wrote:
+> This does not affect the upstream kernel as it is already fixed. This is
+> an issue that was introduced when fixing https://bugzilla.redhat.com/740465.
 >
->>    an integer overflow, leading to heap-based buffer overflow flaw was
->> found in the way libsndfile, library for reading and writing of sound
->> files, processed certain PARIS Audio Format (PAF) audio files with
->> crafted count of channels in the PAF file header. A remote attacker
->> could provided a specially-crafted PAF audio file, which once opened by
->> a local, unsuspecting user in an application, linked against libsndfile,
->> could lead to that particular application crash (denial of service),
+> A PMC is 32 bits (ie an int). When we pass it around as an unsigned
+> long, we need to cast it before doing the comparison. Using perf on
+> power machine with a local, unprivileged user account can cause a denial
+> of service.
 >
-> I agree with everything up to here.
+> Upstream commit:
+> http://git.kernel.org/linus/0837e3242c73566fc1c0196b4ec61779c25ffc93
 >
->> or, potentially arbitrary code execution with the privileges of the
->> user running the application.
+> Reference:
+> https://bugzilla.redhat.com/767914
 >
-> but this is rubbish. The heap gets overwritten with zeros which would
-> certainly lead to the application segfaulting. However, there is
-> no way for arbitrary code to be executed on amy sane OS with proper
-> memory protection.
+> Thanks, Eugene
+Please use CVE-2011-4611 for this issue.
 
-This is not a sound assumption.  Any sort of partially controlled heap
-corruption, even if the data that's being written isn't controllable
-by an attacker, should be considered potentially exploitable.  Modern
-heap exploitation is alive and well - it's worth pointing out that a
-recent remote vulnerability in Microsoft IIS FTPD that allowed for a
-heap overflow of strictly 0xff bytes was shown to be exploitable,
-contradicting Microsoft's claims that it could only cause denial of
-service.  Think about partially overwriting certain elements of heap
-metadata, or even heap data, with zeroes.  Suppose an application with
-heavy function pointer usage was linked against libsndfile, and this
-overflow allowed overwriting the least significant bytes of a function
-pointer with zeroes and ultimately allowed for controlling execution
-flow.
+-- 
 
-It's better to be safe than sorry.
+-Kurt Seifried / Red Hat Security Response Team
 
-Regards,
-Dan
