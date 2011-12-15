@@ -1,20 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/1
-Message-ID: <20111113121234.0603015c@laverne>
-Date: Sun, 13 Nov 2011 12:12:34 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: cmsmadesimple before 1.9.4.3 - remote database corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/6
+Message-ID: <1323976628.3281.82.camel@localhost>
+Date: Thu, 15 Dec 2011 13:17:08 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: icecast-dev@...h.org
+Cc: security@...itz-naumann.com, security@...ntu.com, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: RE: [Icecast-dev] Security issue in icecast
 Content-Type: text/plain; charset=utf-8
 
-http://www.cmsmadesimple.org/2011/08/Announcing-CMSMS-1-9-4-3---Security-Release/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+cmsmadesimple%2Fblog+%28CMS+Made+Simple%29
+On Thu, 2011-12-15 at 20:31 +0200, Thomas.Rucker@...to.com wrote:
+> *snip*
+> Sending this to a public mailing list might not have been the smartest idea.
 
-"Today we have released CMSMS 1.9.4.3, a minor release that fixes a
-single security issue in the news module. Essentially, a malicious
-person could via accessing a sincle URL corrupt your news articles."
+I considered this a low impact vulnerability and therefore followed the
+procedures for reporting to oss-security. Additionally, I looked for a
+security contact at http://www.icecast.org/contact.php but could not
+find one, so I sent to the list since it said this was a valid way to
+submit bugs. If the issue were more severe, I would have followed a
+different procedure. I apologize for the inconvenience.
+
+> We're already aware of Moritz's finding and are working on a fix.
+> 
+> Expect icecast release 2.3.3 soon.
+
+Glad to hear. Thanks!
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Jamie Strandboge             | http://www.canonical.com
 
 Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
