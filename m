@@ -1,47 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/23/1
-Message-ID: <20110523063951.GA2611@suse.de>
-Date: Mon, 23 May 2011 08:39:51 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/3
+Message-ID: <20111215180947.GA32460@devzero.fr>
+Date: Thu, 15 Dec 2011 19:09:47 +0100
+From: vladz <vladz@...zero.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple libraries privilege checking
+Subject: CVE request: bypass default security level of the X wrapper (xserver-xorg <= 1:7.5+8)
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Thu, May 19, 2011 at 12:45:23AM +0400, Solar Designer wrote:
-> On Tue, May 17, 2011 at 01:18:33PM +0200, Sebastian Krahmer wrote:
-> > I uploaded a openssl-1.0.0d patch to
-> > 
-> > http://suse.de/~krahmer/libs-vs-fscaps
-> 
-> Thank you!
-> 
-> > The prefered way is to check the dumpable flag via prctl() which
-> > is detected by the config script.
-> 
-> This is fail-open (at build time).  If the -e "/usr/include/sys/prctl.h"
-> check somehow fails, we silently get an insecure build.  Of course,
+On Debian systems, the X wrapper (/usr/bin/X) is a setuid-root binary that
+checks for some security requirements before launching Xorg with root
+privileges.  
 
-Honestly, that was the easiest I could do in that time frame. The openssl
-config is a bit weird to me and the openssl project is not even providing
-distclean source tarballs for download (they contain symlinks etc.).
-It is also rather meant as a help for upstream which they could use as a base.
-I am sure they know better how to combine it with their config scripts
-and I am happy with changes as long as our resulting binary contains
-the hardening. I will try to ping the openssl developers about it.
+By default, the wrapper's configuration file only allows users whose
+controlling TTY (console) to start the X server, but it is possible to
+bypass this restriction by connecting another file (with similar tty
+properties) to standard input before launching the X wrapper.
 
-Sebastian
+  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652249
 
+Could you allocate CVE id for this issue?
 
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Thank you,
+vladz.
