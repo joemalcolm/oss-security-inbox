@@ -1,19 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/03/4
-Message-ID: <ace357d3-def6-4a4a-8e2f-69bef3a481d6@zmail02.collab.prod.int.phx2.redhat.com>
-Date: Mon, 03 Oct 2011 18:07:50 -0400 (EDT)
-From: Ramon de C Valle <rcvalle@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Request for CVE Identifier for perl code injection vulnerability in Digest->new()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/6
+Message-ID: <1323976628.3281.82.camel@localhost>
+Date: Thu, 15 Dec 2011 13:17:08 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: icecast-dev@...h.org
+Cc: security@...itz-naumann.com, security@...ntu.com, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: RE: [Icecast-dev] Security issue in icecast
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, 2011-12-15 at 20:31 +0200, Thomas.Rucker@...to.com wrote:
+> *snip*
+> Sending this to a public mailing list might not have been the smartest idea.
 
-I'd like to request a CVE Identifier for the following bug:
+I considered this a low impact vulnerability and therefore followed the
+procedures for reporting to oss-security. Additionally, I looked for a
+security contact at http://www.icecast.org/contact.php but could not
+find one, so I sent to the list since it said this was a valid way to
+submit bugs. If the issue were more severe, I would have followed a
+different procedure. I apologize for the inconvenience.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=743010
+> We're already aware of Moritz's finding and are working on a fix.
+> 
+> Expect icecast release 2.3.3 soon.
 
-Thanks,
---
-Ramon de C Valle / Red Hat Security Response Team
+Glad to hear. Thanks!
 
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
