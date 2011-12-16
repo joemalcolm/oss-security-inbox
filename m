@@ -1,26 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/11
-Message-ID: <20111115203129.GN2404@redhat.com>
-Date: Tue, 15 Nov 2011 13:31:31 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/16/3
+Message-ID: <4EEBC570.2060100@redhat.com>
+Date: Fri, 16 Dec 2011 15:25:52 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-3368 suggested patch incomplete for apache2 < 2.2.18
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: zabbix persistent XSS flaw
 Content-Type: text/plain; charset=utf-8
 
-* [2011-10-26 18:02:00 +0200] Marcus Meissner wrote:
 
->during our QA we noticed that the mod_proxy fix for CVE-2011-3368
->was incomplete for HTTP 0.9 style requests.
->
->https://bugzilla.novell.com/show_bug.cgi?id=722545
->
->to cross check, with the RewriteRules setup as in the exploit:
->
->$ telnet testhost 80
->GET @www.otherhost/foo.png
->... should give a 400 error, and not the 404 code from www.otherhost
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Did this ever get a CVE name (aka "incomplete fix of CVE-2011-3368")?
+On 12/16/2011 03:16 PM, Vincent Danen wrote:
+> Could a CVE be assigned to this flaw?
+>
+> Zabbix 1.8.10rc1 was released to correct persistant cross-site
+> scripting vulnerabilities due to improper sanitization of the gname
+> variable when creating user and host groups.
+>
+> References:
+>
+> http://www.zabbix.com/rn1.8.10rc1.php
+> https://support.zabbix.com/browse/ZBX-4015
+> https://bugzilla.redhat.com/show_bug.cgi?id=768525
+>
+Please use CVE-2011-4615 for this issue.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+- -- 
+
+- -Kurt Seifried / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJO68VwAAoJEBYNRVNeJnmT+4oP/jiCMcsybieFQ4Ds4IEsH52k
++8lGLSWER6vchRhjJZs7LNcHalsrGJTbnQtBPAAHF89m8kgYEE5jcaGuVzwaRmkP
+IygrCyIBLKNguKUniwD7eUbkYXIJK3zKLqiYGIRKSet3T539foGzCo+4nYueTQZr
+nI7dJeXdsyZe+2Z3AtYWfqtk7srNXAMf4KCRyITfcpDZt1iR4b2UQHuL/D/pcBJI
+l4+q+QL1wnfXXYGzIELDga4WnOCWHyMa5IU9PRv0DFKnXLk4qxzyDrgbLRdw0OvB
+m6mVj41eUe5zePUqEgWgeuLZ1aWzv2nGYsiNJOCSupD2loa1Lvh+7rrGbNJfS14W
+SEP8FjLvqX+nYexyclt3wPQleLAw3CobjpUOVmdysFXxh7oUlEiS0mROkDflzz0F
+Xqr6d8Jk9DysWhJ5E2Ciz466/0X53GXa7gD7Lk88ecZUTg+w0jCpci0z+Q887Mup
+tgl4fbD/Rk/DhkJz35QBbnLp8oeAQIwnwO0iWkZC8wkGjQxuaOPqM2xEjIxNfn9f
+bu8eqNJLoWrAy0lahnFhBrNm67YnJ3XAHK65/9IMhVnt+KufC9A44isknn/P7Iwl
+diAjaOWwn4aWKjmuiGKLaguIaGzUql1tJQlFwVHXr36WQePuaIX/a3xkvSWLGefb
+/zC7tkRNt2CnPAEnATur
+=4mxv
+-----END PGP SIGNATURE-----
+
