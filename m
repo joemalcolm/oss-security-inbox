@@ -1,41 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/13
-Message-ID: <20110621192214.GL1952@redhat.com>
-Date: Tue, 21 Jun 2011 13:22:15 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/16/3
+Message-ID: <4EEBC570.2060100@redhat.com>
+Date: Fri, 16 Dec 2011 15:25:52 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: zabbix persistent XSS flaw
 Content-Type: text/plain; charset=utf-8
 
-* [2011-06-21 22:15:25 +0400] Solar Designer wrote:
 
->On Tue, Jun 21, 2011 at 12:09:16PM -0600, Vincent Danen wrote:
->> Ok, so taking a quick look at php-suhosin, we have:
->>
->> ...
->>  61 typedef unsigned int BF_word;
->> ...
->> 558     BF_word tmp;
->> 559
->> 560     for (i = 0; i < BF_N + 2; i++) {
->> 561         tmp = 0;
->> 562         for (j = 0; j < 4; j++) {
->> 563             tmp <<= 8;
->> 564             tmp |= *ptr;
->>
->> I'm assuming the above means it is vulnerable (unsigned int vs unsigned
->> char).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 12/16/2011 03:16 PM, Vincent Danen wrote:
+> Could a CVE be assigned to this flaw?
 >
->No, we can't conclude anything from just the excerpt you quoted above.
->If *ptr is signed char, then we have the bug.  If it's unsigned char,
->then we don't.  If it's just char, which it was in my original code,
->then we have the bug on most platforms, but not on those few where char
->defaults to unsigned.  Or rather, the bug is mitigated on those.
+> Zabbix 1.8.10rc1 was released to correct persistant cross-site
+> scripting vulnerabilities due to improper sanitization of the gname
+> variable when creating user and host groups.
+>
+> References:
+>
+> http://www.zabbix.com/rn1.8.10rc1.php
+> https://support.zabbix.com/browse/ZBX-4015
+> https://bugzilla.redhat.com/show_bug.cgi?id=768525
+>
+Please use CVE-2011-4615 for this issue.
 
-So should have included this:
+- -- 
 
-556     __CONST char *ptr = key; 
+- -Kurt Seifried / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+iQIcBAEBAgAGBQJO68VwAAoJEBYNRVNeJnmT+4oP/jiCMcsybieFQ4Ds4IEsH52k
++8lGLSWER6vchRhjJZs7LNcHalsrGJTbnQtBPAAHF89m8kgYEE5jcaGuVzwaRmkP
+IygrCyIBLKNguKUniwD7eUbkYXIJK3zKLqiYGIRKSet3T539foGzCo+4nYueTQZr
+nI7dJeXdsyZe+2Z3AtYWfqtk7srNXAMf4KCRyITfcpDZt1iR4b2UQHuL/D/pcBJI
+l4+q+QL1wnfXXYGzIELDga4WnOCWHyMa5IU9PRv0DFKnXLk4qxzyDrgbLRdw0OvB
+m6mVj41eUe5zePUqEgWgeuLZ1aWzv2nGYsiNJOCSupD2loa1Lvh+7rrGbNJfS14W
+SEP8FjLvqX+nYexyclt3wPQleLAw3CobjpUOVmdysFXxh7oUlEiS0mROkDflzz0F
+Xqr6d8Jk9DysWhJ5E2Ciz466/0X53GXa7gD7Lk88ecZUTg+w0jCpci0z+Q887Mup
+tgl4fbD/Rk/DhkJz35QBbnLp8oeAQIwnwO0iWkZC8wkGjQxuaOPqM2xEjIxNfn9f
+bu8eqNJLoWrAy0lahnFhBrNm67YnJ3XAHK65/9IMhVnt+KufC9A44isknn/P7Iwl
+diAjaOWwn4aWKjmuiGKLaguIaGzUql1tJQlFwVHXr36WQePuaIX/a3xkvSWLGefb
+/zC7tkRNt2CnPAEnATur
+=4mxv
+-----END PGP SIGNATURE-----
+
