@@ -1,66 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/3
-Message-ID: <20110303181224.GB1433@suse.de>
-Date: Thu, 3 Mar 2011 19:12:24 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/18/1
+Message-ID: <20111218094528.GA22411@foo.fgeek.fi>
+Date: Sun, 18 Dec 2011 11:45:28 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: WordPress advanced-text-widget XSS advancedtext.php?page=
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+Can I get CVE-identifier for this issue?
 
-As moderator of vendor-sec and one of the sysadmins of lst.de I noticed
-a break-in into the lst.de machine last week, which was likely used to
-sniff email traffic of vendor-sec. This incident probably happened on Jan 20
-as confirmed by timestamp, but might have existed for longer.
+Original report: http://seclists.org/bugtraq/2011/Nov/133
+Vendor report: http://wordpress.org/support/topic/wordpress-advanced-text-widget-plugin-cross-site-scripting-vulnerabilities
+Fixed in 2.0.2
+Vulnerable versions: 2.0.1 and all below
+One example: advancedtext.php?page=
 
-As the system in use at lst.de is quite old and the admin team and myself
-does not really have the time anymore to keep it on a secure level, we
-would like to move the list to another hosting place.
+http://wordpress.org/extend/plugins/advanced-text-widget/changelog/
+------------------------------------------------------------------------
+r466102 | maxchirkov | 2011-11-22 19:32:02 +0200 (Tue, 22 Nov 2011) | 2 lines
 
-I have disabled the specific backdoor, but as I am not sure how the
-break-in happened it might reappear. So I recommend not mailing embargoed
-issues to vendor-sec@....de at this time.
+Committing version 2.0.2
+- Updated all instances of $_GET method with esc_attr() to improve security.
+------------------------------------------------------------------------
 
-
-I have asked Solar Designer if he could take over hosting, and he was agreeing,
-including a full GPG crypted setup.
-
-
-However we found during this brainstorming that changes in the setup
-of the vendor-sec list likely are good at this point in time.
-
-The number of subscribers is high, and probably 80-100 people get vendor-sec
-emails, making leaks by members always a possbility.
-
-Also the usefulness of v-s in general has a bit diminished, especially with
-oss-sec present and more active and more involved upstream projects doing
-their own management. Mark J Cox has some stats for Redhat updates showing this.
-
-(To use the threadmill metaphor, v-s does not help us vendors as much
-with the speed of the patch threadmill as it did 5 - 10 years ago.)
-
-
-
-So I would like to open up a discussion with _all_ OSS Security folks present.
-
-- Is a closed vendor coordination like vendor-sec still needed at this time?
-
-  Meaning: does the benefit of a closed group really outweigh the
-  "left out feeling" of non members and its annoyances?
-
-- If yes, would it be an idea to confine or split into lists of focus groups?
-  (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
-
-- Or of course the old option is open:
-  Should we proceed with the current state as-is, but throw a bit more
-  GPG encryption on top?
-
-- What other options do we have or should we pursue?
-
-At least SUSE, Redhat and Openwall are open for discussion.
-Please discuss :)
-
-Ciao, Marcus (vendor-sec moderator)
-
-Content of type "application/pgp-signature" skipped
+- Henri Salo
