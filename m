@@ -1,119 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/2
-Message-ID: <20111108123342.GA25039@netbsd.org>
-Date: Tue, 8 Nov 2011 12:33:42 +0000
-From: David Holland <dholland-oss-security@...bsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/3
+Message-ID: <4EEF6776.7010900@redhat.com>
+Date: Mon, 19 Dec 2011 09:33:58 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: sestoft@....dk
-Subject: Re: caml-light insecure temporary files
+Subject: Re: CVE id request: python-virtualenv
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 06, 2011 at 10:59:34PM +0100, Florian Weimer wrote:
- > > I don't know if anyone besides us still ships caml-light; it is long
- > > dead upstream and obsoleted by ocaml. AFAICT neither Debian nor Red
- > > Hat does. But just in case: it uses mktemp() insecurely, and also does
- > > unsafe things in /tmp during make install.
- > 
- > Moscow ML includes a copy of the affected code, and it's perhaps less
- > obsolete than caml-light.
 
-Blah, it does indeed... here's the corresponding patch for it. Note
-that mosml also requires a makefile patch similar to the one
-referenced in http://gnats.netbsd.org/45558 to avoid scribbling in
-/tmp when it installs.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Cc'd to the mosml maintainer.
+On 12/19/2011 09:21 AM, Nico Golde wrote:
+> An insecure /tmp file handling was found in python-virtualenv:
+> https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
+>
+> Can someone assign a CVE id for this?
+>
+> Kind regards
+> Nico
+Link is 404
 
---- mosmlyac/main.c.orig	2000-04-28 09:38:45.000000000 +0000
-+++ mosmlyac/main.c
-@@ -1,6 +1,9 @@
- #include <signal.h>
- #ifdef ANSI
- #include <string.h>
-+#include <stdlib.h>
-+#else
-+extern char *getenv();
- #endif
- #include "defs.h"
- 
-@@ -33,6 +36,11 @@ char *text_file_name;
- char *union_file_name;
- char *verbose_file_name;
- 
-+static int action_fd = -1;
-+static int entry_fd = -1;
-+static int text_fd = -1;
-+static int union_fd = -1;
-+
- FILE *action_file;	/*  a temp file, used to save actions associated    */
- 			/*  with rules until the parser is written	    */
- FILE *entry_file;
-@@ -71,9 +79,6 @@ char  *rassoc;
- short **derives;
- char *nullable;
- 
--extern char *mktemp();
--extern char *getenv();
--
- 
- void done(int k)
- {
-@@ -276,12 +281,21 @@ void create_file_names(void)
-     union_file_name[len + 5] = 'u';
- 
- #ifndef NO_UNIX
--    mktemp(action_file_name);
--    mktemp(entry_file_name);
--    mktemp(text_file_name);
--    mktemp(union_file_name);
-+    action_fd = mkstemp(action_file_name);
-+    entry_fd = mkstemp(entry_file_name);
-+    text_fd = mkstemp(text_file_name);
-+    union_fd = mkstemp(union_file_name);
- #endif
- 
-+    if (action_fd < 0)
-+	open_error(action_file_name);
-+    if (entry_fd < 0)
-+	open_error(entry_file_name);
-+    if (text_fd < 0)
-+	open_error(text_file_name);
-+    if (union_fd < 0)
-+	open_error(union_file_name);
-+
-     len = strlen(file_prefix);
- 
-     output_file_name = MALLOC(len + 7);
-@@ -321,15 +335,15 @@ void open_files(void)
- 	    open_error(input_file_name);
-     }
- 
--    action_file = fopen(action_file_name, "w");
-+    action_file = fdopen(action_fd, "w");
-     if (action_file == 0)
- 	open_error(action_file_name);
- 
--    entry_file = fopen(entry_file_name, "w");
-+    entry_file = fdopen(entry_fd, "w");
-     if (entry_file == 0)
- 	open_error(entry_file_name);
- 
--    text_file = fopen(text_file_name, "w");
-+    text_file = fdopen(text_fd, "w");
-     if (text_file == 0)
- 	open_error(text_file_name);
- 
-@@ -345,7 +359,7 @@ void open_files(void)
- 	defines_file = fopen(defines_file_name, "w");
- 	if (defines_file == 0)
- 	    open_error(defines_file_name);
--	union_file = fopen(union_file_name, "w");
-+	union_file = fdopen(union_fd, "w");
- 	if (union_file ==  0)
- 	    open_error(union_file_name);
-     }
+- -- 
 
+- -Kurt Seifried / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
 
--- 
-David A. Holland
-dholland@...bsd.org
+iQIcBAEBAgAGBQJO72d1AAoJEBYNRVNeJnmTpNAQAINiKQVnIoi+jHQ7Mlb+nCUz
+6dbHgJnM9aQ9hhq0YbSDb7g8uYJxcbtehXQ6MYyv6mSH+utq6ynQEdZi/RzizYIR
+NC4tD/+7jOiHubX/NKVDwVMkKEM/xObrUrkCtM5icnj9K5hkyxbji/TmmYc0mYBH
+7eeg3g6CsAkPHbfmhZz40LHh50yuWIn99LUOcgs7mGs9xsei/d1/PSNOONCMDpma
+LHLyjNQwekiEt3r3ERHwSiUJKYGn5i065W0UpDuL9NU2E/LsnESQtgniOCjNj524
+s7VYDgR9WVZKXX7BHkcDOWYTewI69Sz7gnNiJLhrFMYSCXLzK7CAoaqho6hEKnRV
+4GF+cfMtbTBn84c/Iiu8Oq4afPQo9Z7lAqK7vRvZrzib4lXrU4XUogWE57sHTmaD
+uSjHH0DYOH7ZDgWIRHUGFprxPb+vc8POWS2zkZ7M6F7Id+h/t/Omhom6qhs+LTOD
+LRmGwtP1put+NZB+Jxgm1NPJdwISxRWWw6VUWXDxPdw6zN8uteVOdZE5ZLtjEHNS
+hXQpgkAYCxtnU9sSAQ5ZseIVmv009T5+nuGj8nlhaKf7+snAyBmLB0EnO0Ly6RnS
+pZu17TnN7xo+RhN3ESL4Znu3lSPKEQtcy58fkP9tqBzptzT7W6khQ3hJ6Gu43X26
+2kfsHlqO6fTtfL8zvOn2
+=mNKu
+-----END PGP SIGNATURE-----
+
