@@ -1,42 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/3
-Message-Id: <20110714164922.ebbccde6.erikd@mega-nerd.com>
-Date: Thu, 14 Jul 2011 16:49:22 +1000
-From: Erik de Castro Lopo <erikd@...a-nerd.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/3
+Message-ID: <4EEF6776.7010900@redhat.com>
+Date: Mon, 19 Dec 2011 09:33:58 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Secunia Research <vuln@...unia.com>
-Subject: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+Subject: Re: CVE id request: python-virtualenv
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
 
->    an integer overflow, leading to heap-based buffer overflow flaw was
-> found in the way libsndfile, library for reading and writing of sound
-> files, processed certain PARIS Audio Format (PAF) audio files with
-> crafted count of channels in the PAF file header. A remote attacker
-> could provided a specially-crafted PAF audio file, which once opened by
-> a local, unsuspecting user in an application, linked against libsndfile,
-> could lead to that particular application crash (denial of service),
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I agree with everything up to here.
+On 12/19/2011 09:21 AM, Nico Golde wrote:
+> An insecure /tmp file handling was found in python-virtualenv:
+> https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
+>
+> Can someone assign a CVE id for this?
+>
+> Kind regards
+> Nico
+Link is 404
 
-> or, potentially arbitrary code execution with the privileges of the
-> user running the application.
+- -- 
 
-but this is rubbish. The heap gets overwritten with zeros which would
-certainly lead to the application segfaulting. However, there is
-no way for arbitrary code to be executed on amy sane OS with proper
-memory protection.
+- -Kurt Seifried / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
 
-Furthermore, Secunia when they contacted me about this said they would
-release information about this vulernability on the 18th and then ended
-up releasing it on the 12th instead which means I had to rush out the
-release I was working on (and would have easily had ready for the
-18th). That is not the way to win friends and influence people.
+iQIcBAEBAgAGBQJO72d1AAoJEBYNRVNeJnmTpNAQAINiKQVnIoi+jHQ7Mlb+nCUz
+6dbHgJnM9aQ9hhq0YbSDb7g8uYJxcbtehXQ6MYyv6mSH+utq6ynQEdZi/RzizYIR
+NC4tD/+7jOiHubX/NKVDwVMkKEM/xObrUrkCtM5icnj9K5hkyxbji/TmmYc0mYBH
+7eeg3g6CsAkPHbfmhZz40LHh50yuWIn99LUOcgs7mGs9xsei/d1/PSNOONCMDpma
+LHLyjNQwekiEt3r3ERHwSiUJKYGn5i065W0UpDuL9NU2E/LsnESQtgniOCjNj524
+s7VYDgR9WVZKXX7BHkcDOWYTewI69Sz7gnNiJLhrFMYSCXLzK7CAoaqho6hEKnRV
+4GF+cfMtbTBn84c/Iiu8Oq4afPQo9Z7lAqK7vRvZrzib4lXrU4XUogWE57sHTmaD
+uSjHH0DYOH7ZDgWIRHUGFprxPb+vc8POWS2zkZ7M6F7Id+h/t/Omhom6qhs+LTOD
+LRmGwtP1put+NZB+Jxgm1NPJdwISxRWWw6VUWXDxPdw6zN8uteVOdZE5ZLtjEHNS
+hXQpgkAYCxtnU9sSAQ5ZseIVmv009T5+nuGj8nlhaKf7+snAyBmLB0EnO0Ly6RnS
+pZu17TnN7xo+RhN3ESL4Znu3lSPKEQtcy58fkP9tqBzptzT7W6khQ3hJ6Gu43X26
+2kfsHlqO6fTtfL8zvOn2
+=mNKu
+-----END PGP SIGNATURE-----
 
-Regards,
-Erik
--- 
-----------------------------------------------------------------------
-Erik de Castro Lopo
-http://www.mega-nerd.com/
