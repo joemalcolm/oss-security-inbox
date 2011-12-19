@@ -1,108 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/18
-Message-ID: <Pine.GSO.4.64.1104051030060.20885@faron.mitre.org>
-Date: Tue, 5 Apr 2011 10:35:47 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/1
+Message-ID: <4EEEC615.3000700@redhat.com>
+Date: Sun, 18 Dec 2011 22:05:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...-smtp.mitre.org>, Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: kernel: multiple issues in ROSE
+Subject: CVE for HTML-Template-Pro 0.9506 XSS
 Content-Type: text/plain; charset=utf-8
 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652587
+http://search.cpan.org/~viy/HTML-Template-Pro-0.9507/lib/HTML/Template/Pro.pm
 
-On Mon, 4 Apr 2011, Dan Rosenberg wrote:
+diff -ru HTML-Template-Pro-0.9506/templates-Pro/test_var3.out
+HTML-Template-Pro-0.9507/templates-Pro/test_var3.out
+--- HTML-Template-Pro-0.9506/templates-Pro/test_var3.out    2007-05-07
+04:09:54.000000000 -0600
++++ HTML-Template-Pro-0.9507/templates-Pro/test_var3.out    2011-12-09
+00:41:53.000000000 -0700
+@@ -8,7 +8,7 @@
+  \&lt;&gt;&quot;; %FAhidden:
+ end
+ 
+- \\<>\"; %FAhidden:\r\nend
++ \\&lt;&gt;\"; %FAhidden:\r\nend
+ 
+ <H1> END test_var3 </H1>
+ </body></html>
 
-> I think one makes sense, since all the problems were in a single
-> protocol and were addressed at the same time.
+Please use CVE-2011-4616 for this issue.
 
-These days, some of the main criteria for splitting into separate CVEs 
-are:
+-- 
 
-(1) different bug types [where we can argue about whether 
-memory-corruption/overflow variants are all "one type"]
+-Kurt Seifried / Red Hat Security Response Team
 
-(2) different affected versions [using best-available knowledge of 
-affected versions at the time of assignment]
-
-(3) different researchers [this being a relatively recent development in 
-CVE-land, which ultimately creates more CVEs but is also much more useful 
-in many scenarios]
-
-When you get a large number of bugs/fixes at one time, these criteria are 
-sometimes relaxed for the sake of usability to CVE consumers (by keeping 
-the number of CVE's reasonably low), and keeping the amount of analysis 
-time relatively low.  In the case of the ROSE patches, there's a fairly 
-large number but it doesn't seem too bad.
-
-CVE consistency can't be guaranteed all the time, but where reasonable, it 
-makes sense to follow the guidelines.
-
-- Steve
-
-
-
->
-> -Dan
->
->> Thanks.
->>
->> --
->>    JB
->>
->> ----- Original Message -----
->>> Any update on this?
->>>
->>> Thanks,
->>> Dan
->>>
->>> On Mon, Mar 21, 2011 at 12:47 AM, Eugene Teo <eugene@...hat.com>
->>> wrote:
->>>> On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
->>>>>
->>>>> I sent in a patch [1] resolving two issues in ROSE:
->>>>>
->>>>> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's
->>>>> possible
->>>>> for a remote host to provide more digipeaters than expected,
->>>>> resulting
->>>>> in heap corruption. Check against ROSE_MAX_DIGIS to prevent
->>>>> overflows, and abort facilities parsing on failure.
->>>>>
->>>>> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
->>>>> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide a
->>>>> length of less than 10, resulting in an underflow in a memcpy size,
->>>>> causing a kernel panic due to massive heap corruption. A length of
->>>>> greater than 20 results in a stack overflow of the callsign array.
->>>>> Abort facilities parsing on these invalid length values."
->>>>>
->>>>> These issues may both result in code execution. They may be
->>>>> triggered
->>>>> by a remote attacker if the victim has a listening ROSE socket, or
->>>>> by
->>>>> a local attacker (for privilege escalation) if a ROSE device exists
->>>>> (e.g. rose0).
->>>>>
->>>>> Ben Hutchings followed up with a patch [2] that resolves a number
->>>>> of
->>>>> other ROSE issues related to lack of size field validation, some of
->>>>> which may also result in heap corruption.
->>>>>
->>>>> Not sure about the proper CVE breakdown for all these issues, since
->>>>> the entire protocol was quite broken. Perhaps one is enough to
->>>>> cover
->>>>> everything.
->>>>
->>>> I am not sure. I would just assign one for the collection of issues
->>>> here but
->>>> I will let Steve decide instead.
->>>>
->>>>> [1] http://marc.info/?l=linux-netdev&m=130060344616926
->>>>> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
->>>>
->>>> Thanks, Eugene
->>>> --
->>>> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) &&
->>>> main(++i); }
->>>>
->>
->
->
