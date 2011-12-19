@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/7
-Message-Id: <0A286AE1-C602-44A1-9DE0-1E01CD12F28D@gmail.com>
-Date: Wed, 19 Oct 2011 18:07:34 -0400
-From: Anthon Pang <anthon.pang@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: piwik before 1.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/2
+Message-ID: <20111219162106.GA13534@ngolde.de>
+Date: Mon, 19 Dec 2011 17:21:06 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: python-virtualenv
 Content-Type: text/plain; charset=utf-8
 
-AFAIK there's been no official change in disclosure policy by the Piwik project.  Advisories are separate from the release notes/changelog and are typically published within a week of release.
+An insecure /tmp file handling was found in python-virtualenv:
+https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
 
-That said, I expect this will take longer than usual given the number of vulnerabilities addressed in this release.
+Can someone assign a CVE id for this?
 
-Sent from my iPhone
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-On 2011-10-19, at 12:58 PM, "Steven M. Christey" <coley@...-smtp.mitre.org> wrote:
-
-> 
-> On Wed, 19 Oct 2011, Hanno B鐼k wrote:
-> 
->> Regarding CVEs, i suggest adding one for every name, e.g.
->> "Unknown security vulnerability in piwik before 1.6 discovered by
->> Alexandru Pitis" etc., until we know more about it.
-> 
-> This is consistent with current practice, where we assign separate CVEs for issues found by different researchers.  With the (limited) knowledge that's available right now, all the vulns are the same type, i.e., "unspecified."
-> 
-> - Steve
+Content of type "application/pgp-signature" skipped
