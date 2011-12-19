@@ -1,30 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/3
-Message-ID: <Pine.GSO.4.64.1103301314540.20552@faron.mitre.org>
-Date: Wed, 30 Mar 2011 13:19:58 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Rickard Green <rickard@...ang.org>, Bjorn-Egil Dahlberg <psyeugenic@...il.com>, Sverker Eriksson <sverker@...ang.org>, Patrik Nyblom <pan@...ang.org>, Raimo Niskanen <raimo@...ang.org>, Bjorn Gustavsson <bjorn@...ang.org>, Niclas Axelsson <burbas@...ang.org>, Hans Bolinder <hasse@...ang.org>
-Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/5
+Message-ID: <4EEF75F6.3090501@redhat.com>
+Date: Mon, 19 Dec 2011 10:35:50 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: python-virtualenv
 Content-Type: text/plain; charset=utf-8
 
 
-Some informal guidance on vulnerabilities in language 
-interpreters/compilers: if there's a reasonable chance that an API 
-function's correctness is affected, and that API function could be used by 
-an application to process untrusted data (and/or affect the application's 
-control flow), then it is generally treated as a security concern.  When 
-API correctness is *not* affected - but applications could just use it in 
-an insecure way - then the applications are "blamed" for the issue (the 
-classic example is C's strcpy() function, which has a significant design 
-limitation that many application programmers don't take into account, 
-leading to buffer overflows.)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-So for issues like "inexact comparisons" (whatever those are ;-) there is 
-the consideration of whether such functionality is likely to be used when 
-implementing security-related functionality.  For issues like incorrectly 
-reporting error status from an API function, that may be a candidate for a 
-CVE if the incorrect status report could have downstream effects on an 
-application's correctness.
+On 12/19/2011 09:39 AM, Nico Golde wrote:
+> Hi,
+> * Kurt Seifried <kseifried@...hat.com> [2011-12-19 17:38]:
+>>
+>> On 12/19/2011 09:21 AM, Nico Golde wrote:
+>>> An insecure /tmp file handling was found in python-virtualenv:
+>>> https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
+>>>
+>>> Can someone assign a CVE id for this?
+>> Link is 404
+>
+> Sorry, c&p mistake:
+> https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5
+>
+> Cheers
+> Nico
+Please use CVE-2011-4617 for this issue.
 
-- Steve
+- -- 
+
+- -Kurt Seifried / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJO73X2AAoJEBYNRVNeJnmTKzcP/1MwuORxy1F/L1JfuI+2P5Yc
+5ZZzKjyk65Vb0ycpbAypqNUyO3gDnqhSsMSYaftUoSKZ+QVqdO9zvSxPqbTomPWd
+oJ0H8zUWEOxrBg7kMnywBt//o6N7i0P+TYe7i1U2s+0z9iwABeZl6cTRG7DJtBO5
+lQgpgIxuWtJ3NJNobopVESbgMo6pYGxgMOQPFEwdexJRQQDMC63tPMi2iwKUECwy
+8Lv5AohE1TjfVnW20TvwPpXf4grwLcBTg2/goli8iiB9hpRs7ik895ZIpGdUASG1
+zdj7fNOE5YveMLPoWB8XUCX9PewSV0fKd26iug7S1qWPXl++mKgaI04XmU6EulFm
+dBGtrStq8kFxjMUwaF0A6HEQAvbnFRIPnmu5R2pb+kIFzzsPJ4eF/Hm9v+MiVEm3
+CarNBoKArhyTBjLnAZE1k4IPnHV8DwlFdTyEYPMOSLyzJEahogvenB2cnczdJ8ay
+b3DFhNq1XCCNp6OfR+md6pR5qBIQ5l5kmxb0zupQoddinCEfKDUsC5haAfu+bPqH
+TFx7jCvviq4+lLkdvmSJsaECqajN1ZPh8b9IwFnTP0GEzTMi0KPoNzSuAVuQTtMt
+B8vUuNnLLimDOSe8i5vEcViNbbU87T2/8hh0VuxGNA2zXWz0kmb3DpTkTdT/WAzy
+ml/3hyswpqqbyTRKbi7Q
+=fJiE
+-----END PGP SIGNATURE-----
+
