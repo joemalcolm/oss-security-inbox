@@ -1,41 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/3
-Message-ID: <BANLkTimEAmBgCqBygygJCO3RicO3_4Un-Q@mail.gmail.com>
-Date: Tue, 12 Apr 2011 23:51:14 -0600
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/2
+Message-ID: <20111219162106.GA13534@ngolde.de>
+Date: Mon, 19 Dec 2011 17:21:06 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mediawiki 1.16.3
+Subject: CVE id request: python-virtualenv
 Content-Type: text/plain; charset=utf-8
 
-BTW I submitted this as a bug for fedora:
+An insecure /tmp file handling was found in python-virtualenv:
+https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
 
-https://bugzilla.redhat.com/show_bug.cgi?id=695577
+Can someone assign a CVE id for this?
 
-My evil(ish) plan is to take over the mediawiki package for fedora and
-then EPEL and then all the plugins. muahahaha! =).
-
--Kurt
-
-
-On Tue, Apr 12, 2011 at 11:21 PM, Vincent Danen <vdanen@...hat.com> wrote:
-> Mediawiki 1.16.3 has been released with three noted flaws:
->
-> 1) XSS with IE <= 6 due to improper handling of uploaded file names
-> 2) CSS validation error in wikitext parser
-> 3) transwiki import neglects to perform access control checks
->
-> Can CVE names be assigned to these issues?
->
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000096.html
->
-> Thanks.
->
-> --
-> Vincent Danen / Red Hat Security Response Team
-
-
-
+Kind regards
+Nico
 -- 
-Kurt Seifried
-kurt@...fried.org
-skype: 1-703-879-3176
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
