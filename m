@@ -1,39 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/33
-Message-ID: <alpine.LRH.1.00.1104041311380.31509@bronson.owlriver.com>
-Date: Mon, 4 Apr 2011 13:26:50 -0400 (EDT)
-From: R P Herrold <herrold@...river.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/5
+Message-ID: <4EEF75F6.3090501@redhat.com>
+Date: Mon, 19 Dec 2011 10:35:50 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Closed list
+Subject: Re: CVE id request: python-virtualenv
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 4 Apr 2011, Tomas Hoger wrote:
 
-> Given the aim to keep the subscriber list very limited, this probably
-> falls into a tentatively subscribed category too.  AFAIK, CentOS has
-> rather few components that are not rebuilds of the RHEL SRPMs, the
-> question is how often a v-s info was useful in the past in providing
-> security updates for those extra packages.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks for the post furthering the marketing goals of your 
-corporate master; perhaps the security goal of making sure the 
-Linux server space is well-secured in a timely fashion was 
-overlooked by you as you framed your thought
+On 12/19/2011 09:39 AM, Nico Golde wrote:
+> Hi,
+> * Kurt Seifried <kseifried@...hat.com> [2011-12-19 17:38]:
+>>
+>> On 12/19/2011 09:21 AM, Nico Golde wrote:
+>>> An insecure /tmp file handling was found in python-virtualenv:
+>>> https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
+>>>
+>>> Can someone assign a CVE id for this?
+>> Link is 404
+>
+> Sorry, c&p mistake:
+> https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5
+>
+> Cheers
+> Nico
+Please use CVE-2011-4617 for this issue.
 
-Seemingly (you mention 'AFAIK'), you do not follow the 
-'extras' archive, nor the 'testing' where extensions are 
-found, past what Red Hat ships by default in its enterprise 
-product
+- -- 
 
-I have regularly flagged to our updates builder sub-group, for 
-slotting in updates to push out vulnerable content in those 
-side archives, based on vendor-sec notes; further, in ranking 
-the 'urgency' of a push, I posted a rather detailed package by 
-package analysis of un-pushed updates, in the last month or 
-so, as to matters pending during the intersticial 'solve the 
-rebuild' delay as to some updates issued upstream but not yet 
-pushed by the CentOS team, in part based upon tracking 
-vendor-sec
+- -Kurt Seifried / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
 
--- Russ herrold
- 	herrold@...tos.org
+iQIcBAEBAgAGBQJO73X2AAoJEBYNRVNeJnmTKzcP/1MwuORxy1F/L1JfuI+2P5Yc
+5ZZzKjyk65Vb0ycpbAypqNUyO3gDnqhSsMSYaftUoSKZ+QVqdO9zvSxPqbTomPWd
+oJ0H8zUWEOxrBg7kMnywBt//o6N7i0P+TYe7i1U2s+0z9iwABeZl6cTRG7DJtBO5
+lQgpgIxuWtJ3NJNobopVESbgMo6pYGxgMOQPFEwdexJRQQDMC63tPMi2iwKUECwy
+8Lv5AohE1TjfVnW20TvwPpXf4grwLcBTg2/goli8iiB9hpRs7ik895ZIpGdUASG1
+zdj7fNOE5YveMLPoWB8XUCX9PewSV0fKd26iug7S1qWPXl++mKgaI04XmU6EulFm
+dBGtrStq8kFxjMUwaF0A6HEQAvbnFRIPnmu5R2pb+kIFzzsPJ4eF/Hm9v+MiVEm3
+CarNBoKArhyTBjLnAZE1k4IPnHV8DwlFdTyEYPMOSLyzJEahogvenB2cnczdJ8ay
+b3DFhNq1XCCNp6OfR+md6pR5qBIQ5l5kmxb0zupQoddinCEfKDUsC5haAfu+bPqH
+TFx7jCvviq4+lLkdvmSJsaECqajN1ZPh8b9IwFnTP0GEzTMi0KPoNzSuAVuQTtMt
+B8vUuNnLLimDOSe8i5vEcViNbbU87T2/8hh0VuxGNA2zXWz0kmb3DpTkTdT/WAzy
+ml/3hyswpqqbyTRKbi7Q
+=fJiE
+-----END PGP SIGNATURE-----
+
