@@ -1,64 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/1
-Message-ID: <DDFFF4D8159CAA4881A60FDDAEA4E5482A70F4D84C@GVW0671EXC.americas.hpqcorp.net>
-Date: Wed, 16 Mar 2011 04:07:15 +0000
-From: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/1
+Message-ID: <4EEEC615.3000700@redhat.com>
+Date: Sun, 18 Dec 2011 22:05:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE for HTML-Template-Pro 0.9506 XSS
 Content-Type: text/plain; charset=utf-8
 
-Mike has an interesting idea, of opening the archives after a period of
-time.  The embargoes in vendor-sec were typically weeks, but I don't recall
-the longest one.  I too favor opening the vendor-sec archives after a while,
-maybe quarterly.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652587
+http://search.cpan.org/~viy/HTML-Template-Pro-0.9507/lib/HTML/Template/Pro.pm
 
-Not being the one fixing the code for our kernel left me with little to
-immediately contribute, but I requested and coordinated with several folks
-who got vendor sec for HP.  Likely, we would still want to be part of
-vendor-sec.new.
+diff -ru HTML-Template-Pro-0.9506/templates-Pro/test_var3.out
+HTML-Template-Pro-0.9507/templates-Pro/test_var3.out
+--- HTML-Template-Pro-0.9506/templates-Pro/test_var3.out    2007-05-07
+04:09:54.000000000 -0600
++++ HTML-Template-Pro-0.9507/templates-Pro/test_var3.out    2011-12-09
+00:41:53.000000000 -0700
+@@ -8,7 +8,7 @@
+  \&lt;&gt;&quot;; %FAhidden:
+ end
+ 
+- \\<>\"; %FAhidden:\r\nend
++ \\&lt;&gt;\"; %FAhidden:\r\nend
+ 
+ <H1> END test_var3 </H1>
+ </body></html>
 
-Most importantly, we would be glad to restate our need to continue to
-participate based on the new ground rules of whomever administers the new
-vendor-sec.  FWIW, I understand our largely silent participation in
-vendor-sec was annoying to folks looking at code, assessing risk, and
-suggesting fixes.  If there is something we could contribute, I'll encourage
-us not to be as shy.
+Please use CVE-2011-4616 for this issue.
 
--Mark Menkhus
-Hewlett Packard Software Security Response Team
+-- 
 
-> -----Original Message-----
-> From: Mike O'Connor [mailto:mjo@...o.mi.org]
-> Sent: Monday, March 14, 2011 9:01 PM
-> To: oss-security@...ts.openwall.com
-> Subject: Re: [oss-security] Vendor-sec hosting and future of closed
-> lists
-> 
-> [catching up on older emails]
-> 
-> :> > They do this already today, that's what security@...nel.org is
-> for, and
-> :> > it gets a bit of traffic like this every week.
-> :>
-> :> Is this list open to the public?  It doesn't seem to be available on
-> :> http://vger.kernel.org/vger-lists.html.
-> :
-> :No, it is closed, as it should be as potential security problems are
-> :mailed there.  You don't want that to be totally open, right?
-> 
-> One suggestion I've made in the past is to have the list _archives_ be
-> open.  So anything older than, say, a month is made public.  That way,
-> folks can see how issues were disclosed, how decisions were reached,
-> etc.  for old issues that are no longer under embargo.  The way I see
-> it, if we don't publish the list archive on our own terms, miscreants
-> will get around to publishing it for us.
-> 
-> --
->  Michael J. O'Connor
-> mjo@...o.mi.org
->  =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==-
-> -==--=
-> "Why make trillions when we could make... billions?"                -
-> Dr. Evil
+-Kurt Seifried / Red Hat Security Response Team
 
-Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4916 bytes)
