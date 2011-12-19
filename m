@@ -1,17 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/1
-Message-ID: <4E02BA3A.5080403@redhat.com>
-Date: Thu, 23 Jun 2011 09:29:54 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/4
+Message-ID: <20111219163945.GH3479@ngolde.de>
+Date: Mon, 19 Dec 2011 17:39:45 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: NetworkManager: did not honour PolicyKit auth_admin action element by creation of Ad-Hoc wireless networks
+Subject: Re: CVE id request: python-virtualenv
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Hi,
+* Kurt Seifried <kseifried@...hat.com> [2011-12-19 17:38]:
+> 
+> On 12/19/2011 09:21 AM, Nico Golde wrote:
+> > An insecure /tmp file handling was found in python-virtualenv:
+> > https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
+> >
+> > Can someone assign a CVE id for this?
+> Link is 404
 
-https://bugzilla.redhat.com/show_bug.cgi?id=709662
+Sorry, c&p mistake:
+https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5
 
-This has been assigned CVE-2011-2176.
-
+Cheers
+Nico
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
