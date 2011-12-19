@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/3
-Message-ID: <20110704165657.GA3084@inutil.org>
-Date: Mon, 4 Jul 2011 18:56:57 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/6
+Message-ID: <4EEF765B.8030700@redhat.com>
+Date: Mon, 19 Dec 2011 10:37:31 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: vsftpd download backdoored
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: WordPress advanced-text-widget XSS advancedtext.php?page=
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
+On 12/18/2011 02:45 AM, Henri Salo wrote:
+> Can I get CVE-identifier for this issue?
+>
+> Original report: http://seclists.org/bugtraq/2011/Nov/133
+> Vendor report: http://wordpress.org/support/topic/wordpress-advanced-text-widget-plugin-cross-site-scripting-vulnerabilities
+> Fixed in 2.0.2
+> Vulnerable versions: 2.0.1 and all below
+> One example: advancedtext.php?page=
+>
+> http://wordpress.org/extend/plugins/advanced-text-widget/changelog/
+> ------------------------------------------------------------------------
+> r466102 | maxchirkov | 2011-11-22 19:32:02 +0200 (Tue, 22 Nov 2011) | 2 lines
+>
+> Committing version 2.0.2
+> - Updated all instances of $_GET method with esc_attr() to improve security.
+> ------------------------------------------------------------------------
+>
+> - Henri Salo
+Please use CVE-2011-4618 for this issue.
 
-> Here's a great example of why maintainers should sign their release
-> tarballs, why distributions should insist on that, and why they should
-> actually check the signatures indeed.
-> 
-> I think we should be referring to this when convincing people to do that
-> (I had moderate success so far - some projects started signing their
-> tarballs after my suggestions/requests, some did not).
-> 
-> http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html
-> 
-> New vsftpd homepage:
-> 
-> https://security.appspot.com/vsftpd.html
+-- 
 
-IIRC for such backdoored downloads CVE IDs were assigned in the past
-to properly track the status of distributions providing the affected 
-piece of code. 
+-Kurt Seifried / Red Hat Security Response Team
 
-Can someone please assign an ID for this?
-
-Cheers,
-        Moritz
