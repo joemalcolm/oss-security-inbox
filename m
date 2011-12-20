@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/12
-Message-ID: <20110404085148.GC2053@suse.de>
-Date: Mon, 4 Apr 2011 10:51:48 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/20/2
+Message-ID: <4EF009F6.9050408@redhat.com>
+Date: Mon, 19 Dec 2011 21:07:18 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI, ioctl
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
-> >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
-> >and Josh).
-> 
-> Limiting a distro to two or three representatives is going to make things 
-> tricky for Red Hat; we have a rather large dedicated security response 
-> team (as we publish over 300 advisories a year across 70 product/versions 
-> and have a number of folks dealing with 'incoming' issues spread, and my 
-> team is dispersed across 9 different countries).  If these representatives 
-> have been very active on v-s and oss-security is there a reason to limit?
+>Hello Josh, Steve, vendors,
+>
+>   based on Debian BTS report:
+>   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+>       (first CVE-2011-XXYY required for Debian case)
+>
+>looked more into original report:
+>[2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+>
+>and the first paragraph of [2] suggests:
+>"When starting a program via "su - user -c program" the user session
+>can escape to the parent session by using the TIOCSTI ioctl to push
+>characters into the input buffer.  This allows for example a non-root
+>session to push "chmod 666 /etc/shadow" or similarly bad commands into
+>the input buffer such  that after the end of the session they are
+>executed."
+>
+>this should get a CVE-2005-YYZZ CVE id.
 
-Similar for SUSE. We currently have 3 engineers rotating through the incident
-manager role (and myself).
+Please use CVE-2005-4890 for this issue.
 
-Ciao, Marcus
+>Could you allocate these?
+>
+>Thank you & Regards, Jan.
+>--
+>Jan iankko Lieskovsky / Red Hat Security Response Team
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
