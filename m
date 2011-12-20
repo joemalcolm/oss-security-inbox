@@ -1,23 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/19
-Message-ID: <20110318190514.GN37813@dojo.mi.org>
-Date: Fri, 18 Mar 2011 15:05:14 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/20/3
+Message-ID: <4EF00C64.8010205@redhat.com>
+Date: Mon, 19 Dec 2011 21:17:40 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: HP System Management Homepage(SMH) | Open URL Redirection
+CC: Tim Sammut <underling@...too.org>
+Subject: Re: CVE assignment from previous years
 Content-Type: text/plain; charset=utf-8
 
-:Discovered by
-:Aung Khant (aungkhant<@>yehg.net)
-:YGN Ethical Hacker Group, Myanmar
-:http://yehg.net/
-:
-:Product:
-:HP System Management Homepage
 
-Is this open source software?  
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Nothing in fine print is ever good news.                        -Andy Rooney
+On 12/19/2011 07:52 PM, Tim Sammut wrote:
+> Hi,
+>
+> Is there a general guideline that is commonly used when deciding to
+> issue a CVE name from the pool of a previous year versus the current
+> year's pool?
+>
+> thanks and hope all is well
+> tim
+>
+Generally speaking the year the vuln was found or reported is the year
+that gets used for the CVE. Example: I just assigned a CVE-2005.
+
+- -- 
+
+- -Kurt Seifried / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+
+iQIcBAEBAgAGBQJO8AxkAAoJEBYNRVNeJnmTxqsP/R5Zo+nEt1ks1qlVe2zT1b/v
+3OBhXhwGlzFvEHjiWb3+4PPvTc3qQBrnt+CySl5ZsIePJ4XObtwSDY6QKoP41Uvx
+CvatEQsAtAX/RN04t3B8RlB3Q4SJviin9MdaaTs7pKimNrR9ZrwiBYW0Nf/7RFG0
+r0BYhHlEr7oxTSW7ni1O80s9UFqxJvJwe36NyJPIPXEYsgZYhsYdI+8zMnxNufGP
+NKg3ZGH7CJ7vcVNbqx+EjKn2Qoi/g3VE1zCPjFdL3kX/lAD5GuN/CRAn/TlLRchZ
+R3Y2YaserNMRku/GjvBi6Fj+t1neqOrXdmH6OoUKNimMdtt7oqGZe9pe9gcr4S/K
+NHqR18t5LDJfwUphGwa62+s78CH5x2UP78hrxOf2JtI2SJkXj3t9/mg5b1RGXmae
+zge9gnO9zBE1BonR0j+llIPtG7zd0GEASq97TnGalsipsQkuNx1Yf8pTZI46Jea9
+CQyP4X+aF1+ZNNzzEiRPyQyzXMh93xLHlNOrPX7Oj9pF6sI1qpoJYgGr5TZYy4FK
+0n7Z4WSuKwUlVNMd/koW6wGIoEvAi1F6hvjBpZTUIB+iUXTBQF526Y2ikIgJZw0L
+h7J9VI//0oLZ/76yEDk0zeV1IZyh08SwlttCQJtt/f4T7r5IzAFjH7eZ0J0zupsX
+syNxyLPeENLlA83aB+Pm
+=Srqi
+-----END PGP SIGNATURE-----
+
