@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/4
-Message-ID: <1304950272.17177.226.camel@new-desktop>
-Date: Mon, 09 May 2011 16:11:12 +0200
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/20/2
+Message-ID: <4EF009F6.9050408@redhat.com>
+Date: Mon, 19 Dec 2011 21:07:18 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request : client-side file creation via XSLT in Webkit
+Subject: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI, ioctl
 Content-Type: text/plain; charset=utf-8
 
+>Hello Josh, Steve, vendors,
+>
+>   based on Debian BTS report:
+>   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+>       (first CVE-2011-XXYY required for Debian case)
+>
+>looked more into original report:
+>[2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+>
+>and the first paragraph of [2] suggests:
+>"When starting a program via "su - user -c program" the user session
+>can escape to the parent session by using the TIOCSTI ioctl to push
+>characters into the input buffer.  This allows for example a non-root
+>session to push "chmod 666 /etc/shadow" or similarly bad commands into
+>the input buffer such  that after the end of the session they are
+>executed."
+>
+>this should get a CVE-2005-YYZZ CVE id.
 
-The bug was opened on January 18 :
-https://bugs.webkit.org/show_bug.cgi?id=52688 (restricted)
+Please use CVE-2005-4890 for this issue.
 
-A patch is available since February 20 :
-http://trac.webkit.org/changeset/79159 (public)
+>Could you allocate these?
+>
+>Thank you & Regards, Jan.
+>--
+>Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Given some recent mail exchanges with Apple, they still not have
-affected a CVE to this issue. Could you please allocate one, in order
-for me to have an easier job communicating with the numerous impacted
-vendors (many Linux distributions, RIM, Maxthon, ...) ?
+-- 
 
-Regards,
-Nicolas Grégoire
+-Kurt Seifried / Red Hat Security Response Team
 
