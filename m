@@ -1,43 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/11
-Message-ID: <4e129ec5.c5ead80a.2780.3376@mx.google.com>
-Date: Tue, 05 Jul 2011 05:22:45 +0000
-From: "pinto.elia@...il.com" <pinto.elia@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: R: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/20/1
+Message-ID: <4EEFF851.6030003@gentoo.org>
+Date: Mon, 19 Dec 2011 18:52:01 -0800
+From: Tim Sammut <underling@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE assignment from previous years
 Content-Type: text/plain; charset=utf-8
 
-Sorry for not quoting. Just for Info rpm5 have all the necessary for embedding all these check in a spec file from years. Regards. Elia
-----Messaggio originale----
-Da: Moritz Muehlenhoff
-Inviato:  04/07/2011, 18:56 
-A: oss-security@...ts.openwall.com
-Oggetto: Re: [oss-security] vsftpd download backdoored
+Hi,
+
+Is there a general guideline that is commonly used when deciding to
+issue a CVE name from the pool of a previous year versus the current
+year's pool?
+
+thanks and hope all is well
+tim
+
+-- 
+Tim Sammut ~ Gentoo Security Team
+underling@...too.org ~ C2375493
 
 
-
-Solar Designer wrote:
-
-> Here's a great example of why maintainers should sign their release
-> tarballs, why distributions should insist on that, and why they should
-> actually check the signatures indeed.
-> 
-> I think we should be referring to this when convincing people to do that
-> (I had moderate success so far - some projects started signing their
-> tarballs after my suggestions/requests, some did not).
-> 
-> http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html
-> 
-> New vsftpd homepage:
-> 
-> https://security.appspot.com/vsftpd.html
-
-IIRC for such backdoored downloads CVE IDs were assigned in the past
-to properly track the status of distributions providing the affected 
-piece of code. 
-
-Can someone please assign an ID for this?
-
-Cheers,
-        Moritz
-
+Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
