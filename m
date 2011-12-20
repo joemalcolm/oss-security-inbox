@@ -1,28 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/8
-Message-ID: <4ED7B586.40107@redhat.com>
-Date: Thu, 01 Dec 2011 10:12:38 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/20/4
+Message-ID: <Pine.GSO.4.64.1112201258220.24379@faron.mitre.org>
+Date: Tue, 20 Dec 2011 13:07:59 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+cc: Tim Sammut <underling@...too.org>
+Subject: Re: CVE assignment from previous years
 Content-Type: text/plain; charset=utf-8
 
-On 12/01/2011 02:59 AM, Henri Salo wrote:
-> Original post: http://seclists.org/bugtraq/2011/Nov/15
-> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
-> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
->
-> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
->
-> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
->
-> Please notify me if this is not enough information.
->
-> - Henri Salo
-Please use CVE-2011-4365 for this issue.
 
--- 
+Note that the year does NOT include when the vuln was found (and if it was 
+silently fixed, that's not a factor either).
 
--Kurt Seifried / Red Hat Security Response Team
+The year is almost always obtained from either:
 
+1) When the CVE was first privately reserved.  We already have more than
+    two hundred CVE-2012-XXXX numbers reserved for various CNAs who are
+    using them to coordinate disclosures that are scheduled to
+    happen in 2012.  This date often correlates with the year that the vuln
+    was found, but not always.
+
+2) When the issue was first made public.  There can be some disagreement
+    about when a vuln is first published (e.g. a bug report may lie
+    unresolved, technically viewable by anybody, for a few years before it
+    reaches general awareness, or something might be published on December
+    31 in one part of the world when it is January 1 in another part of the
+    world.)
+
+Some CNAs who have a pool of CVEs from one year, will continue to use that 
+pool in the next year if there are any CVEs left over, though I generally 
+discourage it.
+
+In January and February 2012, you will probably still see a fairly large 
+number of new CVE-2011-xxxx identifiers released, as MITRE/etc. assign 
+CVEs to issues that were first published in 2011.
+
+- Steve
+
+
+On Mon, 19 Dec 2011, Kurt Seifried wrote:
+
+>
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 12/19/2011 07:52 PM, Tim Sammut wrote:
+>> Hi,
+>>
+>> Is there a general guideline that is commonly used when deciding to
+>> issue a CVE name from the pool of a previous year versus the current
+>> year's pool?
+>>
+>> thanks and hope all is well
+>> tim
+>>
+> Generally speaking the year the vuln was found or reported is the year
+> that gets used for the CVE. Example: I just assigned a CVE-2005.
+>
+> - --
+>
+> - -Kurt Seifried / Red Hat Security Response Team
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v2.0.14 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJO8AxkAAoJEBYNRVNeJnmTxqsP/R5Zo+nEt1ks1qlVe2zT1b/v
+> 3OBhXhwGlzFvEHjiWb3+4PPvTc3qQBrnt+CySl5ZsIePJ4XObtwSDY6QKoP41Uvx
+> CvatEQsAtAX/RN04t3B8RlB3Q4SJviin9MdaaTs7pKimNrR9ZrwiBYW0Nf/7RFG0
+> r0BYhHlEr7oxTSW7ni1O80s9UFqxJvJwe36NyJPIPXEYsgZYhsYdI+8zMnxNufGP
+> NKg3ZGH7CJ7vcVNbqx+EjKn2Qoi/g3VE1zCPjFdL3kX/lAD5GuN/CRAn/TlLRchZ
+> R3Y2YaserNMRku/GjvBi6Fj+t1neqOrXdmH6OoUKNimMdtt7oqGZe9pe9gcr4S/K
+> NHqR18t5LDJfwUphGwa62+s78CH5x2UP78hrxOf2JtI2SJkXj3t9/mg5b1RGXmae
+> zge9gnO9zBE1BonR0j+llIPtG7zd0GEASq97TnGalsipsQkuNx1Yf8pTZI46Jea9
+> CQyP4X+aF1+ZNNzzEiRPyQyzXMh93xLHlNOrPX7Oj9pF6sI1qpoJYgGr5TZYy4FK
+> 0n7Z4WSuKwUlVNMd/koW6wGIoEvAi1F6hvjBpZTUIB+iUXTBQF526Y2ikIgJZw0L
+> h7J9VI//0oLZ/76yEDk0zeV1IZyh08SwlttCQJtt/f4T7r5IzAFjH7eZ0J0zupsX
+> syNxyLPeENLlA83aB+Pm
+> =Srqi
+> -----END PGP SIGNATURE-----
+>
+>
