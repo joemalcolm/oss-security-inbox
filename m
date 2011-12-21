@@ -1,38 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/5
-Message-ID: <4E098058.6090405@redhat.com>
-Date: Tue, 28 Jun 2011 09:18:48 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Luciano Bello <luciano@...ian.org>, 631818@...s.debian.org
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- DokuWiki -- XSS in DokuWiki's RSS embedding mechanism
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/4
+Message-ID: <20111221221210.GC7178@dhcp-25-225.brq.redhat.com>
+Date: Wed, 21 Dec 2011 23:12:10 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: kernel: kvm: pit timer with no irqchip crashes the system
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+User space may create the PIT and forget about setting up the irqchips.
+In that case, firing PIT IRQs will crash the host:
 
-   it was found that DokuWiki's RSS embedding mechanism did not properly
-escape user-provided links. An attacker could use this flaw to conduct
-cross-site scripting (XSS) attacks, potentially leading to arbitrary
-JavaScript code execution.
+BUG: unable to handle kernel NULL pointer dereference at
+0000000000000128
+IP: [<ffffffffa10f6280>] kvm_set_irq+0x30/0x170 [kvm]
+...
+Call Trace:
+ [<ffffffffa11228c1>] pit_do_work+0x51/0xd0 [kvm]
+ [<ffffffff81071431>] process_one_work+0x111/0x4d0
+ [<ffffffff81071bb2>] worker_thread+0x152/0x340
+ [<ffffffff81075c8e>] kthread+0x7e/0x90
+ [<ffffffff815a4474>] kernel_thread_helper+0x4/0x10
 
-References:
------------
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=631818
-[2] 
-http://www.certa.ssi.gouv.fr/site/CERTA-2011-AVI-366/CERTA-2011-AVI-366.html
-[3] 
-http://www.freelists.org/post/dokuwiki/Hotfix-Release-20110525a-Rincewind
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=717146
+Reference:
+http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/83564
+https://bugzilla.redhat.com/show_bug.cgi?id=769721
 
-Solution:
----------
-This issue has been addressed in upstream "2011-05-25 Rincewind"
-release:
-[5] http://www.dokuwiki.org/changes
-
-This issue doesn't seem to have a CVE identifier yet. Could you allocate
-one?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
