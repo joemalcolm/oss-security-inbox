@@ -1,16 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/13
-Message-ID: <20110403215128.GC9516@openwall.com>
-Date: Mon, 4 Apr 2011 01:51:28 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/6
+Message-ID: <4EF25B9C.3010002@redhat.com>
+Date: Wed, 21 Dec 2011 15:20:12 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE Request -- kernel: tight loop and no preemption can cause system stall
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 02, 2011 at 08:51:43PM +0200, Thijs Kinkhorst wrote:
-> I am on the Debian security team and was part of the vendor-sec list through 
-> our exploder. Please add me to the new list.
+On 12/21/2011 03:10 PM, Petr Matousek wrote:
+> A tight loop in user level process isn't preempted unless a realtime
+> process is woken up on the cpu.  Some important kernel threads such as
+> events/*, kblockd/* can be blocked by the process, and the machine
+> stalls.
+>
+> Unprivileged local user could use this flaw to DoS the system.
+>
+> Upstream commit:
+> f26f9aff6aaf67e9a430d16c266f91b13a5bff64
+>
+> Reference:
+> https://lkml.org/lkml/2010/11/20/212
+> https://bugzilla.redhat.com/show_bug.cgi?id=769711
+>
+> Thanks,
+Please use CVE-2011-4621 for this issue.
 
-Added.  You're one of two contacts for Debian currently on the new list.
+-- 
 
-Alexander
+-Kurt Seifried / Red Hat Security Response Team
+
