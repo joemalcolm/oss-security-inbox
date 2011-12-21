@@ -1,25 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/7
-Message-ID: <87fwjg7a8r.fsf@mid.deneb.enyo.de>
-Date: Wed, 28 Sep 2011 21:11:32 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/2
+Message-ID: <4EF2572B.4050506@redhat.com>
+Date: Wed, 21 Dec 2011 15:01:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: LZW decompression issues
+Subject: plib ulSetError() buffer overflow - CVE-2011-4620
 Content-Type: text/plain; charset=utf-8
 
-* Tomas Hoger:
+https://secunia.com/advisories/47297/
+http://plib.sourceforge.net/index.html
+http://www.exploit-db.com/exploits/18258/
 
-> Following bugzillas list various code bases that were checked for the
-> issue and if they are affected or not:
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2895
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2896
+ From Secunia:
 
-Not good. 8-(
+======================
+*Description*
+A vulnerability has been discovered in PLIB, which can be exploited by 
+malicious people to compromise an application using the library.
 
-Looking at <http://minnie.tuhs.org/cgi-bin/utree.pl?file=4.3BSD-Reno/src/usr.bin/compress/compress.c>,
-it seems that these constants
+The vulnerability is caused due to a boundary error within the 
+"ulSetError()" function (src/util/ulError.cxx) when creating the error 
+message, which can be exploited to overflow a static buffer.
 
-| char_type lmask[9] = {0xff, 0xfe, 0xfc, 0xf8, 0xf0, 0xe0, 0xc0, 0x80, 0x00};
-| char_type rmask[9] = {0x00, 0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff};
+Successful exploitation allows the execution of arbitrary code but 
+requires that the attacker can e.g. control the content of an overly 
+long error message passed to the "ulSetError()" function.
 
-can be used to build signatures to spot candidate binaries.
+The vulnerability is confirmed in version 1.8.5. Other versions may also 
+be affected.
+======================
+
+Please use CVE-2011-4620 for this issue.
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
+
