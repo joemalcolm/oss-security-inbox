@@ -1,30 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/7
-Message-ID: <20110413132625.GA3964@finlandia.home.infodrom.org>
-Date: Wed, 13 Apr 2011 15:26:25 +0200
-From: Joey Schulze <joey@...odrom.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/1
+Message-ID: <4EF12420.6070605@redhat.com>
+Date: Tue, 20 Dec 2011 17:11:12 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: mahara / HTML Purifier
+Subject: Re: CVE assignment from previous years
 Content-Type: text/plain; charset=utf-8
 
-Could we get CVE id(s) for these security problems discovered in
-HTML Purifier (emedded in older versions of mahara as well).
+On 12/20/2011 11:07 AM, Steven M. Christey wrote:
+>
+> Note that the year does NOT include when the vuln was found (and if it 
+> was silently fixed, that's not a factor either).
+>
+> The year is almost always obtained from either:
+>
+> 1) When the CVE was first privately reserved.  We already have more than
+>    two hundred CVE-2012-XXXX numbers reserved for various CNAs who are
+>    using them to coordinate disclosures that are scheduled to
+>    happen in 2012.  This date often correlates with the year that the 
+> vuln
+>    was found, but not always.
+>
+> 2) When the issue was first made public.  There can be some disagreement
+>    about when a vuln is first published (e.g. a bug report may lie
+>    unresolved, technically viewable by anybody, for a few years before it
+>    reaches general awareness, or something might be published on December
+>    31 in one part of the world when it is January 1 in another part of 
+> the
+>    world.)
+>
+> Some CNAs who have a pool of CVEs from one year, will continue to use 
+> that pool in the next year if there are any CVEs left over, though I 
+> generally discourage it.
+>
+> In January and February 2012, you will probably still see a fairly 
+> large number of new CVE-2011-xxxx identifiers released, as MITRE/etc. 
+> assign CVEs to issues that were first published in 2011.
+>
+> - Steve
+>
 
-Patches are attached.
-
-They originate from HTML Purifier
-
-http://htmlpurifier.org/news/2011/0327-4.3.0-released
-
-Regards,
-
-	Joey
+Steven is correct and I was wrong (as usual =)  Please ignore what I 
+said previously.
 
 -- 
-Experience is something you don't get until just after you need it.
 
-View attachment "css_url_escaping.dpatch" of type "text/plain" (1146 bytes)
+-Kurt Seifried / Red Hat Security Response Team
 
-View attachment "font_family_attacks.dpatch" of type "text/plain" (8737 bytes)
-
-View attachment "ie_innerhtml_backticks.dpatch" of type "text/plain" (2168 bytes)
