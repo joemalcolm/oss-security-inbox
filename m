@@ -1,19 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/11
-Message-ID: <4E93517D.3010801@gmail.com>
-Date: Mon, 10 Oct 2011 22:11:41 +0200
-From: Michael Harrison <n0idx80@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/4
+Message-ID: <20111221221210.GC7178@dhcp-25-225.brq.redhat.com>
+Date: Wed, 21 Dec 2011 23:12:10 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests:   <media-video/vlc-1.0.2: Multiple stack-based buffer overflows in ASF, AVI, MP4 demuxers and https://bugs.gentoo.org/show_bug.cgi?id=279340
+Subject: kernel: kvm: pit timer with no irqchip crashes the system
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+User space may create the PIT and forget about setting up the irqchips.
+In that case, firing PIT IRQs will crash the host:
 
-Could you please supply a CVE for the following issues:
+BUG: unable to handle kernel NULL pointer dereference at
+0000000000000128
+IP: [<ffffffffa10f6280>] kvm_set_irq+0x30/0x170 [kvm]
+...
+Call Trace:
+ [<ffffffffa11228c1>] pit_do_work+0x51/0xd0 [kvm]
+ [<ffffffff81071431>] process_one_work+0x111/0x4d0
+ [<ffffffff81071bb2>] worker_thread+0x152/0x340
+ [<ffffffff81075c8e>] kthread+0x7e/0x90
+ [<ffffffff815a4474>] kernel_thread_helper+0x4/0x10
 
-1. <media-video/vlc-1.0.2: Multiple stack-based buffer overflows in ASF, 
-AVI, MP4 demuxers
-https://bugs.gentoo.org/show_bug.cgi?id=285370
+Reference:
+http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/83564
+https://bugzilla.redhat.com/show_bug.cgi?id=769721
 
-2. <media-video/vlc-0.9.10 Real RDT Integer Underflow
-https://bugs.gentoo.org/show_bug.cgi?id=279340
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
