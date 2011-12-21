@@ -1,45 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/5
-Message-ID: <20110706065646.GC19469@openwall.com>
-Date: Wed, 6 Jul 2011 10:56:46 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/5
+Message-ID: <20111221221436.GD7178@dhcp-25-225.brq.redhat.com>
+Date: Wed, 21 Dec 2011 23:14:37 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+Subject: Re: kernel: kvm: pit timer with no irqchip crashes the system
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 04, 2011 at 09:24:23AM +0200, Tomas Hoger wrote:
-> On Mon, 4 Jul 2011 02:52:41 +0400 Solar Designer wrote:
+Sorry, I forgot to put "CVE Request" into the subject.
+
+Petr
+
+On Wed, Dec 21, 2011 at 11:12:10PM +0100, Petr Matousek wrote:
+> User space may create the PIT and forget about setting up the irqchips.
+> In that case, firing PIT IRQs will crash the host:
 > 
-> > Question to OpenSSL developers: is the patch given in Billy Bob
-> > Brumley and Nicola Tuveri's paper "Remote Timing Attacks Are Still
-> > Practical" OK to be used by distros?  Basically, I am interested in
-> > its "review status" by upstream - reviewed and approved, reviewed but
-> > not approved for specific reasons, not sufficiently reviewed.  (The
-> > patch is tiny, but even tiny changes might have non-obvious
-> > implications.)
+> BUG: unable to handle kernel NULL pointer dereference at
+> 0000000000000128
+> IP: [<ffffffffa10f6280>] kvm_set_irq+0x30/0x170 [kvm]
+> ...
+> Call Trace:
+>  [<ffffffffa11228c1>] pit_do_work+0x51/0xd0 [kvm]
+>  [<ffffffff81071431>] process_one_work+0x111/0x4d0
+>  [<ffffffff81071bb2>] worker_thread+0x152/0x340
+>  [<ffffffff81075c8e>] kthread+0x7e/0x90
+>  [<ffffffff815a4474>] kernel_thread_helper+0x4/0x10
 > 
-> I'm not part of the group you directed this question too, but as I've
-> not seen any upstream developer or list in CC...
-
-Yes, I did not CC.  Maybe I should have.  I thought that we had some
-OpenSSL folks in here.
-
-> The fix from the paper was committed in openssl CVS within about a week
-> from public disclosure:
+> Reference:
+> http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/83564
+> https://bugzilla.redhat.com/show_bug.cgi?id=769721
 > 
-> http://cvs.openssl.org/chngview?cn=20892
-> 
-> However, there were some concerns raised regarding the extra #ifdef
-> wrapping added as part of the commit, which disable the fix by default,
-> and the name suggests #ifndef was probably intended:
-> 
-> http://www.mail-archive.com/openssl-dev@openssl.org/msg29283.html
+> Thanks,
+> -- 
+> Petr Matousek / Red Hat Security Response Team
 
-This helps.
-
-Are you dealing with the issue for Red Hat products?  Perhaps you have a
-Bugzilla entry?
-
-Thank you!
-
-Alexander
+-- 
+Petr Matousek / Red Hat Security Response Team
