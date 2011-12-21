@@ -1,48 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/19/3
-Message-ID: <20110919103634.GA26967@openwall.com>
-Date: Mon, 19 Sep 2011 14:36:34 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/3
+Message-ID: <20111221221041.GB7178@dhcp-25-225.brq.redhat.com>
+Date: Wed, 21 Dec 2011 23:10:42 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: closed-list membership transition
+Subject: CVE Request -- kernel: tight loop and no preemption can cause system stall
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 19, 2011 at 10:03:05AM +0200, Ludwig Nussel wrote:
-> Solar Designer wrote:
-> > [...]
-> > I think that Chrome OS qualifies.  As far as I can see, it's generally
-> > available now: http://getchrome.eu/download.php
-> 
-> That's something different. Apparently just some guy who used SUSE
-> Studio to create a live CD based on openSUSE. Anyone could do that
-> with a few mouse clicks.
+A tight loop in user level process isn't preempted unless a realtime
+process is woken up on the cpu.  Some important kernel threads such as
+events/*, kblockd/* can be blocked by the process, and the machine
+stalls.
 
-Oops.  Thank you for this crucial correction.
+Unprivileged local user could use this flaw to DoS the system.
 
-That's weird naming, apparently based on inclusion of the Chrome web
-browser only.
+Upstream commit:
+f26f9aff6aaf67e9a430d16c266f91b13a5bff64
 
-OK, I read up some more on Chrome OS and Chromium OS.
+Reference:
+https://lkml.org/lkml/2010/11/20/212
+https://bugzilla.redhat.com/show_bug.cgi?id=769711
 
-Per the Chromium OS FAQ:
-
-http://www.chromium.org/chromium-os/chromium-os-faq
-
-it appears that Chrome OS is only available with a Chromebook purchase,
-but those may be purchased from multiple OEMs.  I think this latter fact
-qualifies Chrome OS for the closed list since it's similar to how
-multiple hardware product vendors redistribute the distros of MontaVista
-Software and Wind River, who we accepted (thereby setting a precedent).
-
-"Multiple" is the keyword here.  (We might have difficulty making a
-determination in case a distro is only used by a very low and fixed
-number of hardware vendors, though - like just two.)
-
-Also, Chromium OS is generally available, albeit not in a form suitable
-for end-users (there's a public git repository, but no images ready to
-boot/install).  Arguably, this makes Chromium OS eligible too, and I
-guess the security team behind Chrome OS and Chromium OS is the same.
-
-Any other comments?
-
-Alexander
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
