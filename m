@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/27/1
-Message-ID: <1317132688.2799.27.camel@mdlinux>
-Date: Tue, 27 Sep 2011 10:11:28 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: samba, cifs-utils
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/3
+Message-ID: <20111221221041.GB7178@dhcp-25-225.brq.redhat.com>
+Date: Wed, 21 Dec 2011 23:10:42 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- kernel: tight loop and no preemption can cause system stall
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+A tight loop in user level process isn't preempted unless a realtime
+process is woken up on the cpu.  Some important kernel threads such as
+events/*, kblockd/* can be blocked by the process, and the machine
+stalls.
 
-I don't think this ever got a CVE:
+Unprivileged local user could use this flaw to DoS the system.
 
-https://bugzilla.samba.org/show_bug.cgi?id=7179
+Upstream commit:
+f26f9aff6aaf67e9a430d16c266f91b13a5bff64
 
-http://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=810f7e4e0f2dbcbee0294d9b371071cb08268200
-
-
-When mount.cifs is setuid, unprivileged users can kill it, resulting in
-a denial of service from a stale lock file.
+Reference:
+https://lkml.org/lkml/2010/11/20/212
+https://bugzilla.redhat.com/show_bug.cgi?id=769711
 
 Thanks,
-
-Marc.
-
-
+-- 
+Petr Matousek / Red Hat Security Response Team
