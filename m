@@ -1,20 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/31
-Message-ID: <20110403230836.GH10158@openwall.com>
-Date: Mon, 4 Apr 2011 03:08:36 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/5
+Message-ID: <20111221221436.GD7178@dhcp-25-225.brq.redhat.com>
+Date: Wed, 21 Dec 2011 23:14:37 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: kernel: kvm: pit timer with no irqchip crashes the system
 Content-Type: text/plain; charset=utf-8
 
-Charles,
+Sorry, I forgot to put "CVE Request" into the subject.
 
-On Fri, Apr 01, 2011 at 12:30:17PM -0700, Charles Blas wrote:
-> Hello, please subscribe me also, was on vendor-sec.  Thanks!
-> Charles Blas, CISSP-ISSAP <cblas@....org>
+Petr
 
-Are you a security contact for a Linux distro, and for which one?
+On Wed, Dec 21, 2011 at 11:12:10PM +0100, Petr Matousek wrote:
+> User space may create the PIT and forget about setting up the irqchips.
+> In that case, firing PIT IRQs will crash the host:
+> 
+> BUG: unable to handle kernel NULL pointer dereference at
+> 0000000000000128
+> IP: [<ffffffffa10f6280>] kvm_set_irq+0x30/0x170 [kvm]
+> ...
+> Call Trace:
+>  [<ffffffffa11228c1>] pit_do_work+0x51/0xd0 [kvm]
+>  [<ffffffff81071431>] process_one_work+0x111/0x4d0
+>  [<ffffffff81071bb2>] worker_thread+0x152/0x340
+>  [<ffffffff81075c8e>] kthread+0x7e/0x90
+>  [<ffffffff815a4474>] kernel_thread_helper+0x4/0x10
+> 
+> Reference:
+> http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/83564
+> https://bugzilla.redhat.com/show_bug.cgi?id=769721
+> 
+> Thanks,
+> -- 
+> Petr Matousek / Red Hat Security Response Team
 
-How did you receive vendor-sec mail?
-
-Alexander
+-- 
+Petr Matousek / Red Hat Security Response Team
