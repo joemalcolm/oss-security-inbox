@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/10
-Message-ID: <4EA826AC.8060808@redhat.com>
-Date: Wed, 26 Oct 2011 09:26:36 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/6
+Message-ID: <4EF25B9C.3010002@redhat.com>
+Date: Wed, 21 Dec 2011 15:20:12 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+Subject: Re: CVE Request -- kernel: tight loop and no preemption can cause system stall
 Content-Type: text/plain; charset=utf-8
 
-On 10/26/2011 09:16 AM, Petr Matousek wrote:
-> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
-> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
-> to reset dmesg_restrict to 0.
+On 12/21/2011 03:10 PM, Petr Matousek wrote:
+> A tight loop in user level process isn't preempted unless a realtime
+> process is woken up on the cpu.  Some important kernel threads such as
+> events/*, kblockd/* can be blocked by the process, and the machine
+> stalls.
 >
-> This is an issue when e.g.  LXC (Linux Containers) are used and complete
-> user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
-> root user can bypass the dmesg_restrict protection.
+> Unprivileged local user could use this flaw to DoS the system.
 >
-> Introduced by:
-> eaf06b241b091357e72b76863ba16e89610d31bd
+> Upstream commit:
+> f26f9aff6aaf67e9a430d16c266f91b13a5bff64
 >
-> Fixed by:
-> bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
+> Reference:
+> https://lkml.org/lkml/2010/11/20/212
+> https://bugzilla.redhat.com/show_bug.cgi?id=769711
 >
 > Thanks,
-Please use CVE-2011-4080 for this issue.
+Please use CVE-2011-4621 for this issue.
 
 -- 
 
