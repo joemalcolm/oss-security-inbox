@@ -1,23 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/2
-Message-ID: <20110413052128.GF3934@redhat.com>
-Date: Tue, 12 Apr 2011 23:21:28 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/1
+Message-ID: <4EF12420.6070605@redhat.com>
+Date: Tue, 20 Dec 2011 17:11:12 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mediawiki 1.16.3
+Subject: Re: CVE assignment from previous years
 Content-Type: text/plain; charset=utf-8
 
-Mediawiki 1.16.3 has been released with three noted flaws:
+On 12/20/2011 11:07 AM, Steven M. Christey wrote:
+>
+> Note that the year does NOT include when the vuln was found (and if it 
+> was silently fixed, that's not a factor either).
+>
+> The year is almost always obtained from either:
+>
+> 1) When the CVE was first privately reserved.  We already have more than
+>    two hundred CVE-2012-XXXX numbers reserved for various CNAs who are
+>    using them to coordinate disclosures that are scheduled to
+>    happen in 2012.  This date often correlates with the year that the 
+> vuln
+>    was found, but not always.
+>
+> 2) When the issue was first made public.  There can be some disagreement
+>    about when a vuln is first published (e.g. a bug report may lie
+>    unresolved, technically viewable by anybody, for a few years before it
+>    reaches general awareness, or something might be published on December
+>    31 in one part of the world when it is January 1 in another part of 
+> the
+>    world.)
+>
+> Some CNAs who have a pool of CVEs from one year, will continue to use 
+> that pool in the next year if there are any CVEs left over, though I 
+> generally discourage it.
+>
+> In January and February 2012, you will probably still see a fairly 
+> large number of new CVE-2011-xxxx identifiers released, as MITRE/etc. 
+> assign CVEs to issues that were first published in 2011.
+>
+> - Steve
+>
 
-1) XSS with IE <= 6 due to improper handling of uploaded file names
-2) CSS validation error in wikitext parser
-3) transwiki import neglects to perform access control checks
-
-Can CVE names be assigned to these issues?
-
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000096.html
-
-Thanks.
+Steven is correct and I was wrong (as usual =)  Please ignore what I 
+said previously.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+
+-Kurt Seifried / Red Hat Security Response Team
+
