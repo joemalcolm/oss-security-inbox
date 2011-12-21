@@ -1,37 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/08/6
-Message-ID: <1897040229.564616.1307564898406.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 8 Jun 2011 16:28:18 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/7
+Message-ID: <4EF25B9E.3060606@redhat.com>
+Date: Wed, 21 Dec 2011 15:20:14 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Coppermine Photo Gallery -- cpg1.4.27 / cpg1.5.12 -- XSS flaw
+Subject: Re: kernel: kvm: pit timer with no irqchip crashes the system
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> Coppermine Photo Gallery upstream in the past addressed one XSS flaw
-> in cpg1.4.27 / cpg1.5.12 versions. Further details:
-> [1] http://bugs.gentoo.org/show_bug.cgi?id=347287
-> [2]
-> http://forum.coppermine-gallery.net/index.php/topic,65023.msg322935.html#msg322935
-> [3] http://forum.coppermine-gallery.net/index.php/topic,69495.0.html
-> [4] http://sourceforge.net/news/?group_id=89658
-> 
-> There doesn't seem to be a CVE id for this issue yet (or at least I
-> couldn't find one).
-> 
-> Note: Should be CVE-2010-XXYY CVE id.
-> 
-> Could you allocate one?
-> 
-
-Please use CVE-2010-4667.
-
-Thanks.
+On 12/21/2011 03:14 PM, Petr Matousek wrote:
+> Sorry, I forgot to put "CVE Request" into the subject.
+>
+> Petr
+>
+> On Wed, Dec 21, 2011 at 11:12:10PM +0100, Petr Matousek wrote:
+>> User space may create the PIT and forget about setting up the irqchips.
+>> In that case, firing PIT IRQs will crash the host:
+>>
+>> BUG: unable to handle kernel NULL pointer dereference at
+>> 0000000000000128
+>> IP: [<ffffffffa10f6280>] kvm_set_irq+0x30/0x170 [kvm]
+>> ...
+>> Call Trace:
+>>   [<ffffffffa11228c1>] pit_do_work+0x51/0xd0 [kvm]
+>>   [<ffffffff81071431>] process_one_work+0x111/0x4d0
+>>   [<ffffffff81071bb2>] worker_thread+0x152/0x340
+>>   [<ffffffff81075c8e>] kthread+0x7e/0x90
+>>   [<ffffffff815a4474>] kernel_thread_helper+0x4/0x10
+>>
+>> Reference:
+>> http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/83564
+>> https://bugzilla.redhat.com/show_bug.cgi?id=769721
+>>
+>> Thanks,
+>> -- 
+>> Petr Matousek / Red Hat Security Response Team
+Please use CVE-2011-4622 for this issue.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
