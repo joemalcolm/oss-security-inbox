@@ -1,29 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/5
-Message-ID: <20111229202200.GA11807@openwall.com>
-Date: Fri, 30 Dec 2011 00:22:00 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/2
+Message-ID: <4EF2572B.4050506@redhat.com>
+Date: Wed, 21 Dec 2011 15:01:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: plib ulSetError() buffer overflow - CVE-2011-4620
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 11, 2011 at 07:56:06PM +0400, Solar Designer wrote:
-> I've just subscribed Zhenfeng(Jeffrey) Zhao and Hui Zhu, both of Wind River.
+https://secunia.com/advisories/47297/
+http://plib.sourceforge.net/index.html
+http://www.exploit-db.com/exploits/18258/
 
-I've just unsubscribed Hui Zhu, who apparently is no longer with Wind
-River - e-mail started bouncing, and the LinkedIn profile says "March
-2008 - December 2011" (not "- Present"):
+ From Secunia:
 
-http://cn.linkedin.com/in/teawater
+======================
+*Description*
+A vulnerability has been discovered in PLIB, which can be exploited by 
+malicious people to compromise an application using the library.
 
-Zhenfeng(Jeffrey) Zhao is still subscribed, so Wind River is still
-present on the linux-distros and distros lists.
+The vulnerability is caused due to a boundary error within the 
+"ulSetError()" function (src/util/ulError.cxx) when creating the error 
+message, which can be exploited to overflow a static buffer.
 
-BTW, this is a good example of how PGP with people's personal keys helps -
-even if the e-mail address would be e.g. forwarded to a non-security
-person at Wind River, that person would (hopefully) not have Hui's PGP key.
+Successful exploitation allows the execution of arbitrary code but 
+requires that the attacker can e.g. control the content of an overly 
+long error message passed to the "ulSetError()" function.
 
-Alexander
+The vulnerability is confirmed in version 1.8.5. Other versions may also 
+be affected.
+======================
 
-P.S. Indeed, I would have preferred to learn of this from a Wind River
-person rather than from their mail server and own "investigation". ;-)
+Please use CVE-2011-4620 for this issue.
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
+
