@@ -1,43 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/24
-Message-ID: <805041020.87965.1300136062211.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Mar 2011 16:54:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/7
+Message-ID: <4EF25B9E.3060606@redhat.com>
+Date: Wed, 21 Dec 2011 15:20:14 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: format-string vulnerability in PHP Phar extension
+Subject: Re: kernel: kvm: pit timer with no irqchip crashes the system
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1153 for this.
-
-Thanks.
+On 12/21/2011 03:14 PM, Petr Matousek wrote:
+> Sorry, I forgot to put "CVE Request" into the subject.
+>
+> Petr
+>
+> On Wed, Dec 21, 2011 at 11:12:10PM +0100, Petr Matousek wrote:
+>> User space may create the PIT and forget about setting up the irqchips.
+>> In that case, firing PIT IRQs will crash the host:
+>>
+>> BUG: unable to handle kernel NULL pointer dereference at
+>> 0000000000000128
+>> IP: [<ffffffffa10f6280>] kvm_set_irq+0x30/0x170 [kvm]
+>> ...
+>> Call Trace:
+>>   [<ffffffffa11228c1>] pit_do_work+0x51/0xd0 [kvm]
+>>   [<ffffffff81071431>] process_one_work+0x111/0x4d0
+>>   [<ffffffff81071bb2>] worker_thread+0x152/0x340
+>>   [<ffffffff81075c8e>] kthread+0x7e/0x90
+>>   [<ffffffff815a4474>] kernel_thread_helper+0x4/0x10
+>>
+>> Reference:
+>> http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/83564
+>> https://bugzilla.redhat.com/show_bug.cgi?id=769721
+>>
+>> Thanks,
+>> -- 
+>> Petr Matousek / Red Hat Security Response Team
+Please use CVE-2011-4622 for this issue.
 
 -- 
-    JB
 
+-Kurt Seifried / Red Hat Security Response Team
 
-
------ Original Message -----
-> Hi,
-> I just found several format-string vulnerability in PHP Phar
-> extension, a
-> bug has been filed in the PHP bugtracker (private):
-> http://bugs.php.net/bug.php?id=54247
-> On error several class methods passes the supplied argument to
-> zend_throw_exception_ex()
-> which prints a formatted error message using such value as the
-> formatter
-> string.
-> 
-> $ sapi/cli/php ../bug.php "%08x.%08x.%08x.%08x.%08x"
-> PHP Fatal error: Uncaught exception 'PharException' with message
-> 'unable to
-> open phar for reading "00000008.00000000.bf95c204.0963e050.00000014"'
-> in
-> /home/felipe/dev/bug.php:4
-> 
-> Thanks.
-> 
-> --
-> Regards,
-> Felipe Pena
