@@ -1,100 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/2
-Message-ID: <CAPYM6VyJba-ScKkmxGDD1K_n+gLfYkkrcv_gY2fUoYR6hP4SWw@mail.gmail.com>
-Date: Wed, 5 Oct 2011 18:07:12 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/5
+Message-ID: <20111222170646.GF7178@dhcp-25-225.brq.redhat.com>
+Date: Thu, 22 Dec 2011 18:06:47 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: vTiger CRM 5.2.x <= Blind SQL Injection Vulnerability
+Subject: CVE-2011-4127 kernel: possible privilege escalation via SG_IO ioctl
 Content-Type: text/plain; charset=utf-8
 
-vTiger CRM 5.2.x <= Blind SQL Injection Vulnerability
+Paolo Bonzini of Red Hat found out that the host Linux system allows
+executing the SG_IO ioctl on a partition or even on an LVM volume, and
+will pass the command to the underlying block device. This could be
+further exploited in the in the context of virtualization, because
+virtio disks support a limited form of SCSI passthrough via the SG_IO
+ioctl. If virtio disk is hosted on a partition or LVM volume with
+format=raw, tools such as sg_dd can be used to read and write other data
+on the same disk --- even data that belongs to the host or to other
+guests.
 
+References:
+https://lkml.org/lkml/2004/8/12/218
+https://lkml.org/lkml/2004/8/12/260
+https://bugzilla.redhat.com/show_bug.cgi?id=752375
 
-
-1. OVERVIEW
-
-The vTiger CRM 5.2.1 and lower versions are vulnerable to Blind SQL
-Injection. No fixed version has been released as of 2011-10-05.
-
-
-2. BACKGROUND
-
-vtiger CRM is a free, full-featured, 100% Open Source CRM software
-ideal for small and medium businesses, with low-cost product support
-available to production users that need reliable support. vtiger CRM
-is a widely used product with thousands of users in dozens of
-countries.  It has a vibrant community of users driving the product
-forward, and contributing to it's development.  Over 2 million copies
-of vtiger CRM have been downloaded so far. It was launched as a fork
-of version 1.0 of the SugarCRM project launched on December 31st,
-2004.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The "onlyforuser" parameter was not properly sanitized, which allows
-attacker to conduct Blind SQL Injection Attack. This could an attacker
-to inject or manipulate SQL queries in the back-end database, allowing
-for the manipulation or disclosure of arbitrary data.
-
-
-4. VERSIONS AFFECTED
-
-Tested on 5.2.1
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-A future calendar event must be created in advance to trigger this
-vulnerability.
-
-Verified with Simple 1=1 Boolean check
------------------------------------------------------
-
-/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+1%3d1--
-
-/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+1%3d2--
-
-
-Verified with MySQL @@version  check
------------------------------------------------------
-
-/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+@@version%3d5--
-
-/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+@@version%3d4--
-
-
-6. SOLUTION
-
-No patched version is available yet.
-The vendor hasn't attempted to fix the issues though they acknowledged
-the report.
-
-
-7. VENDOR
-
-vTiger Development Team
-http://www.vtiger.com/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-08: notified vendor
-2011-10-05: no fixed version released yet
-2011-10-05: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5BvTiger_5.2.1%5D_blind_sqlin
-Wiki VtigerCRM: https://secure.wikimedia.org/wikipedia/en/wiki/Vtiger_CRM
-
-
-#yehg [2011-10-05]
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
