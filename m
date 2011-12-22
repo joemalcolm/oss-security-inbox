@@ -1,32 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/8
-Message-ID: <20110403205955.GA8811@openwall.com>
-Date: Mon, 4 Apr 2011 00:59:55 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/7
+Message-ID: <20111222173107.GA25097@foo.fgeek.fi>
+Date: Thu, 22 Dec 2011 19:31:07 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE-request: WordPress flash-album-gallery plugin facebook.php XSS
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 02, 2011 at 05:25:11PM -0400, Elliot Peele wrote:
-> I was on vendor-sec via the security@...th.com exploder as a representative of rPath and rPath Linux.
-> 
-> pub   1024D/05C54D73 2002-07-02 Elliot Peele <elliot@...th.com>
->  Primary key fingerprint: 00F5 0BEE 168B C07E C49E  AEC8 992A A820 05C5 4D73
+Original report: http://seclists.org/bugtraq/2011/Nov/186
+Fix: http://plugins.trac.wordpress.org/changeset/469785
+Changelog: http://wordpress.org/extend/plugins/flash-album-gallery/changelog/
+Fixed in version: 1.57
 
-Tentatively subscribed (although Elliot reported an issue with list
-messages arriving to him, which we'll try to figure out off-list).
-
-Elliot - can you please post an URL with info on rPath Linux security
-response?  I went to http://www.rpath.com but could not easily find
-anything relevant.  There's an entry for rPath on the oss-security wiki:
-
-http://oss-security.openwall.org/wiki/vendors#rpath-inc
-
-It has a link to the security-announce mailing list.  The archive has a
-message in Feb 2011 ("kernel" update on 2011-02-07) and a message in Dec
-2010 ("gnupg" update on 2010-12-06).  Nothing in Nov (but a bunch of
-updates in Oct).  This gives us two security updates in 5 most recent
-months.  Naturally, I am not convinced that you should be on the list,
-but I'd be happy to be convinced once we start using the list.
-
-Alexander
+- Henri Salo
