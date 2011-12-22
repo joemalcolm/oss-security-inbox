@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/5
-Message-ID: <4E0D8CBA.8050309@redhat.com>
-Date: Fri, 01 Jul 2011 17:00:42 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: tomoyo: oops in tomoyo_mount_acl()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/4
+Message-ID: <20111222164447.GB5888@inutil.org>
+Date: Thu, 22 Dec 2011 17:44:47 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-On 06/30/2011 06:13 PM, Petr Matousek wrote:
-> Description of problem:
-> In tomoyo_mount_acl() since 2.6.36, kern_path() was called without
-> checking dev_name != NULL. As a result, an unprivileged user can
-> trigger oops by issuing mount(NULL, "/", "ext3", 0, NULL) request.
-> 
-> Upstream fix:
-> 4e78c724d47e2342aa8fde61f6b8536f662f795f
+Hi,
+there were a two Linux-related CVE requests/discussions, which 
+didn't end up in an assignment:
 
-Use CVE-2011-2518.
+1: rose: Add length checks to CALL_REQUEST parsing
+e0bccd315db0c2f919e7fcf9cb60db21d9986f52 in mainline
 
-Eugene
+It was decided that this should be split, but without a final
+resulting CVE assignment:
+http://www.openwall.com/lists/oss-security/2011/04/12/1
+
+2: /proc/$PID/{sched,schedstat} information leak
+Vasiliy Kulikov of OpenWall posted a demo exploit.
+http://openwall.com/lists/oss-security/2011/11/05/3
+
+AFAICS no CVE ID was assigned to this?
+
+Cheers,
+        Moritz
