@@ -1,43 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/23
-Message-Id: <F9ACDDDF-4F5E-4F23-AF74-FFD938396BFB@gmail.com>
-Date: Tue, 8 Mar 2011 23:20:28 +0000
-From: Helgi Þormar Þorbjörnsson <helgith@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/3
+Message-ID: <CA+TcGd-D7sqM9s17NXM1v+6e7RNT7gxHHJswaDn4cU339jF-Gg@mail.gmail.com>
+Date: Thu, 22 Dec 2011 11:00:07 -0500
+From: Kyle Creyts <kyle.creyts@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
+Subject: Re: CVE Request -- rsyslog -- DoS due integer signedness error while extending rsyslog counted string buffer
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+This only applies when imfile is enabled, however, correct?
+On Dec 22, 2011 7:20 AM, "Jan Lieskovsky" <jlieskov@...hat.com> wrote:
 
-On 1 Mar 2011, at 12:39, Helgi Þormar Þorbjörnsson wrote:
-
-> 
-> On 1 Mar 2011, at 12:19, Dan Rosenberg wrote:
-> 
->>> Not sure it is fixable, or maybe using a lock on the symbolic link
->>> while fetching its target (to be tested to be sure that such locks
->>> cannot be overridden from shell).
->>> 
->> 
->> The easiest way is to just open the target with the O_NOFOLLOW flag to
->> avoid following symlinks and abort on failure.  If you need to support
->> systems that don't have this flag, then perhaps you could consider
->> using an application-specific temporary directory instead of operating
->> in the world-writable /tmp.
-> 
-> The PEAR installer does use /tmp (and whatever the Windows equivalent is) by default unless the user opts into a local installation or does indeed change the configuration to use other temp/download/cache directories so users can guard themselves with a good setup.
-> 
-> A flag like that would be handy but doesn't exist (yet) in PHP. 
-> 
-> I moved over to using the O_CREAT|O_EXCL equivalent in PHP when creating new files and lstat + fopen + fstat and comparing mode/ino/dev before writing to an existing file for the cache. I could add an nlink check to that as well.
-> The current version I've been playing around with is located at https://gist.github.com/848371 - It is missing the nlink part but it should be able to deal with TOCTOU problems. That code snippet hasn't been committed as I consider it work-in-progress still.
-> 
-> Any comments / suggestions are welcome, I did write that one quite late last night :-)
-
-Here is the latest fix for the TOCTOU (e.g. time-of-check-time-of-use) problem: http://news.php.net/php.pear.core/9791 - A proper mix of lstat, fopen, fstat (to ensure no one has messed around with the file pointer between the check and getting the handler) as well as adding in a nlink check to make sure it is 1.
-
-Hopefully this is enough to fix the problem you had with my earlier fixes and get me the CVE number.
-
-- Helgi
+>
+> An integer signedness error, leading to heap based buffer overflow was
+> found in
+> the way the imfile module of rsyslog, an enhanced system logging and kernel
+> message trapping daemon, processed text files larger than 64 KB. When the
+> imfile rsyslog module was enabled, a local attacker could use this flaw to
+> cause denial of service (rsyslogd daemon hang) via specially-crafted
+> message,
+> to be logged.
+>
+> Upstream bug report:
+> [1] http://bugzilla.adiscon.com/**show_bug.cgi?id=221<http://bugzilla.adiscon.com/show_bug.cgi?id=221>
+>
+> Upstream patch:
+> [2] http://git.adiscon.com/?p=**rsyslog.git;a=commit;h=**
+> 6bad782f154b7f838c7371bf99c13f**6dc4ec4101<http://git.adiscon.com/?p=rsyslog.git;a=commit;h=6bad782f154b7f838c7371bf99c13f6dc4ec4101>
+>
+> References:
+> [3] https://bugzilla.redhat.com/**show_bug.cgi?id=769822<https://bugzilla.redhat.com/show_bug.cgi?id=769822>
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
 
