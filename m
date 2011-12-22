@@ -1,19 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/13
-Message-ID: <20110720170837.0033138e@redhat.com>
-Date: Wed, 20 Jul 2011 17:08:37 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: New IcedTea and IcedTea-Web releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/6
+Message-ID: <4EF3670A.5030007@redhat.com>
+Date: Thu, 22 Dec 2011 18:21:14 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Kyle Creyts <kyle.creyts@...il.com>
+Subject: Re: CVE Request -- rsyslog -- DoS due integer signedness error while extending rsyslog counted string buffer
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-New IcedTea6 and IcedTea-Web releases fix two issues affecting browser
-plugin and javaws:
+Hi Kyle,
 
-http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2011-July/015170.html
-http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2011-July/015171.html
+On 12/22/2011 05:00 PM, Kyle Creyts wrote:
+> This only applies when imfile is enabled, however, correct?
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Yes, this issue requires the imfile rsyslog module to be enabled.
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> On Dec 22, 2011 7:20 AM, "Jan Lieskovsky"<jlieskov@...hat.com>  wrote:
+>
+>>
+>> An integer signedness error, leading to heap based buffer overflow was
+>> found in
+>> the way the imfile module of rsyslog, an enhanced system logging and kernel
+>> message trapping daemon, processed text files larger than 64 KB. When the
+>> imfile rsyslog module was enabled, a local attacker could use this flaw to
+>> cause denial of service (rsyslogd daemon hang) via specially-crafted
+>> message,
+>> to be logged.
+>>
+>> Upstream bug report:
+>> [1] http://bugzilla.adiscon.com/**show_bug.cgi?id=221<http://bugzilla.adiscon.com/show_bug.cgi?id=221>
+>>
+>> Upstream patch:
+>> [2] http://git.adiscon.com/?p=**rsyslog.git;a=commit;h=**
+>> 6bad782f154b7f838c7371bf99c13f**6dc4ec4101<http://git.adiscon.com/?p=rsyslog.git;a=commit;h=6bad782f154b7f838c7371bf99c13f6dc4ec4101>
+>>
+>> References:
+>> [3] https://bugzilla.redhat.com/**show_bug.cgi?id=769822<https://bugzilla.redhat.com/show_bug.cgi?id=769822>
+>>
+>> Could you allocate a CVE id for this?
+>>
+>> Thank you&&  Regards, Jan.
+>> --
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>>
+>
+
