@@ -1,42 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/3
-Message-ID: <20110404002552.GA10924@openwall.com>
-Date: Mon, 4 Apr 2011 04:25:52 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/1
+Message-ID: <4EF32046.9030805@redhat.com>
+Date: Thu, 22 Dec 2011 13:19:18 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Rainer Gerhards <rgerhards@...scon.com>, Tomas Heinrich <theinric@...hat.com>
+Subject: CVE Request -- rsyslog -- DoS due integer signedness error while extending rsyslog counted string buffer
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
-> Benji's trolling does raise a couple real issues.  The private keys and
-> passphrases of those responding here have now become highly lucrative
-> targets for attackers.  Hence, everyone on this new list needs to use
-> good practices to keep their keys, hard drives, and computers safe.
-> There should probably be some common guidelines for key safety for all
-> participants.
 
-Right.  We're likely to specify some minimum requirements.  For example,
-Mike's 512-bit RSA key won't be allowed.  (It is OK for testing, but not
-when we use the list for real.  Yet this is an improvement over the
-plaintext vendor-sec and plaintext CC lists anyway.)  Maybe storage of
-private keys on a server won't be allowed (but we'd have to trust
-members on that).
+An integer signedness error, leading to heap based buffer overflow was found in
+the way the imfile module of rsyslog, an enhanced system logging and kernel
+message trapping daemon, processed text files larger than 64 KB. When the
+imfile rsyslog module was enabled, a local attacker could use this flaw to
+cause denial of service (rsyslogd daemon hang) via specially-crafted message,
+to be logged.
 
-> Perhaps all discussions should be published in the open
-> something like 2 months after the initial posting?  That would be a
-> kind of maximum private coordination period.
+Upstream bug report:
+[1] http://bugzilla.adiscon.com/show_bug.cgi?id=221
 
-Yes, we may do this.  Technically, an archive may be implemented as yet
-another subscriber with its public key, where the private key
-counterpart is not stored on any server and has a passphrase on it.
-Thus, a possible compromise of the list server won't reveal past
-messages (archived before the compromise, but not yet made public).
+Upstream patch:
+[2] http://git.adiscon.com/?p=rsyslog.git;a=commit;h=6bad782f154b7f838c7371bf99c13f6dc4ec4101
 
-Pushing the archive public will then be a manual process, but that's OK
-if it's only done once a month (omitting the last month's worth of
-messages).  In fact, a posting to oss-security will need to be made
-whenever the public archive is updated.
+References:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=769822
 
-Comments on this are welcome.
+Could you allocate a CVE id for this?
 
-Alexander
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
