@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/2
-Message-ID: <4EAF45C9.4020902@redhat.com>
-Date: Mon, 31 Oct 2011 19:05:13 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/5
+Message-ID: <20111222170646.GF7178@dhcp-25-225.brq.redhat.com>
+Date: Thu, 22 Dec 2011 18:06:47 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: oom: fix integer overflow of points in oom_badness
+Subject: CVE-2011-4127 kernel: possible privilege escalation via SG_IO ioctl
 Content-Type: text/plain; charset=utf-8
 
-On 10/31/2011 06:09 PM, Eugene Teo wrote:
-> An integer overflow will happen on 64bit archs if task's sum of rss,
-> swapents and nr_ptes exceeds (2^31)/1000 value. This was introduced by
-> commit f755a04 oom: use pte pages in OOM score. This can cause a denial
-> of service.
->
-> https://lkml.org/lkml/2011/10/31/138
->
-> Eugene
-Please use CVE-2011-4097 for this issue
+Paolo Bonzini of Red Hat found out that the host Linux system allows
+executing the SG_IO ioctl on a partition or even on an LVM volume, and
+will pass the command to the underlying block device. This could be
+further exploited in the in the context of virtualization, because
+virtio disks support a limited form of SCSI passthrough via the SG_IO
+ioctl. If virtio disk is hosted on a partition or LVM volume with
+format=raw, tools such as sg_dd can be used to read and write other data
+on the same disk --- even data that belongs to the host or to other
+guests.
 
+References:
+https://lkml.org/lkml/2004/8/12/218
+https://lkml.org/lkml/2004/8/12/260
+https://bugzilla.redhat.com/show_bug.cgi?id=752375
+
+Thanks,
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Petr Matousek / Red Hat Security Response Team
