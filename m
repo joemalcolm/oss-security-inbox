@@ -1,28 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/25/1
-Message-ID: <20110825081847.0bee10d8@redhat.com>
-Date: Thu, 25 Aug 2011 08:18:47 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/7
+Message-ID: <20111222173107.GA25097@foo.fgeek.fi>
+Date: Thu, 22 Dec 2011 19:31:07 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libqt4: two memory issues
+Subject: CVE-request: WordPress flash-album-gallery plugin facebook.php XSS
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 24 Aug 2011 15:49:17 -0400 (EDT) Josh Bressers wrote:
+Original report: http://seclists.org/bugtraq/2011/Nov/186
+Fix: http://plugins.trac.wordpress.org/changeset/469785
+Changelog: http://wordpress.org/extend/plugins/flash-album-gallery/changelog/
+Fixed in version: 1.57
 
-> > A) buffer overflow (looks only like an off-by-one from a very quick
-> > look)
-> > http://qt.gitorious.org/qt/qt/commit/9ae6f2f9a57f0c3096d5785913e437953fa6775c
-> 
-> Use CVE-2011-3193 for this.
-> 
-> I couldn't find this code in Harfbuzz-ng or pango. Has someone looked
-> into this further?
-
-In both harfbuzz and pango git, history of the file ends with "Remove
-old code!" removal:
-
-http://git.gnome.org/browse/pango/log/pango/opentype/harfbuzz-gpos.c
-http://cgit.freedesktop.org/harfbuzz/log/src/harfbuzz-gpos.c
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+- Henri Salo
