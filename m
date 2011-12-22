@@ -1,61 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/3
-Message-ID: <4E1C6102.9050706@suse.de>
-Date: Tue, 12 Jul 2011 16:58:10 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/2
+Message-ID: <4EF3506B.2090707@redhat.com>
+Date: Thu, 22 Dec 2011 08:44:43 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Rainer Gerhards <rgerhards@...scon.com>, Tomas Heinrich <theinric@...hat.com>
+Subject: Re: CVE Request -- rsyslog -- DoS due integer signedness error while extending rsyslog counted string buffer
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> On Mon, Jul 11, 2011 at 04:39:08PM +0200, Ludwig Nussel wrote:
->> Solar Designer wrote:
->>> [...]
->>> Also, it brings up the question: why merely use $2a$ running the new
->>> code rather than fully emulate the bug even for newly set passwords,
->>> which would make all passwords work, even on other networked machines?
->>> Sure, that would be even nastier for security, so maybe you managed to
->>> strike a balance well.  But nevertheless the question is there.  One of
->>> your options results in full backwards compatibility at a security cost
->>> (for the local system), but the other somehow chooses to strike a
->>> balance between compatibility and security without achieving either of
->>> these fully (for a network of systems).
->>>
->>> Maybe you can afford to drop BLOWFISH_2y to avoid those inconsistencies?
->>> I imagine that people won't know to enable this option unless/until they
->>> have already run into an issue anyway (that is, someone is already
->>> unable to log in).  At this point, they could likely upgrade the rest of
->>> their networked systems as well... or downgrade this one. ;-(
->>
->> I'm not sure I understand what you are suggesting.
+On 12/22/2011 05:19 AM, Jan Lieskovsky wrote:
 >
-> I am not exactly suggesting anything specific as I don't know your
-> priorities, but I point out the inconsistency.
+> An integer signedness error, leading to heap based buffer overflow was 
+> found in
+> the way the imfile module of rsyslog, an enhanced system logging and 
+> kernel
+> message trapping daemon, processed text files larger than 64 KB. When the
+> imfile rsyslog module was enabled, a local attacker could use this 
+> flaw to
+> cause denial of service (rsyslogd daemon hang) via specially-crafted 
+> message,
+> to be logged.
 >
-> My preference would be that you don't implement that BLOWFISH_2y option -
-> always have new hashes generated as 2y, even though this means that
-> networked systems need to be upgraded to new package versions in sync.
-
-The default would be to use 2y by default. The option would be there
-as last resort only.
-
->> Keep using the buggy
->> algorithm for new passwords and keep storing them as 2a
+> Upstream bug report:
+> [1] http://bugzilla.adiscon.com/show_bug.cgi?id=221
 >
-> I'd be unhappy about that, but it's a valid option to provide if you
-> want to minimize user annoyance, including for networked systems that
-> are not upgraded in sync (but are manually configured for this...)
-
-The fourth possibility would be to use the 2y algorithm and store as
-2a. That would be the better option if non-ASCII passwords are
-unlikely.
-
-cu
-Ludwig
+> Upstream patch:
+> [2] 
+> http://git.adiscon.com/?p=rsyslog.git;a=commit;h=6bad782f154b7f838c7371bf99c13f6dc4ec4101
+>
+> References:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=769822
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+Please use CVE-2011-4623 for this issue.
 
 -- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix 
-Imendörffer, HRB 16746 (AG Nürnberg)
+
+-Kurt Seifried / Red Hat Security Response Team
+
