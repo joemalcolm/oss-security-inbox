@@ -1,70 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/13/1
-Message-ID: <4E968F6A.4090203@redhat.com>
-Date: Thu, 13 Oct 2011 12:42:42 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/6
+Message-ID: <4EF3670A.5030007@redhat.com>
+Date: Thu, 22 Dec 2011 18:21:14 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: radvd 1.8.2 released with security fixes
+CC: Kyle Creyts <kyle.creyts@...il.com>
+Subject: Re: CVE Request -- rsyslog -- DoS due integer signedness error while extending rsyslog counted string buffer
 Content-Type: text/plain; charset=utf-8
 
-On 10/07/2011 04:22 AM, Solar Designer wrote:
 
-> 3) The radvd daemon would not fail on privsep_init() errors, which could
-> cause it to run with full root privileges when it should be running as
-> an unprivileged user. (CVE-2011-3603)
+Hi Kyle,
+
+On 12/22/2011 05:00 PM, Kyle Creyts wrote:
+> This only applies when imfile is enabled, however, correct?
+
+Yes, this issue requires the imfile rsyslog module to be enabled.
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> On Dec 22, 2011 7:20 AM, "Jan Lieskovsky"<jlieskov@...hat.com>  wrote:
+>
+>>
+>> An integer signedness error, leading to heap based buffer overflow was
+>> found in
+>> the way the imfile module of rsyslog, an enhanced system logging and kernel
+>> message trapping daemon, processed text files larger than 64 KB. When the
+>> imfile rsyslog module was enabled, a local attacker could use this flaw to
+>> cause denial of service (rsyslogd daemon hang) via specially-crafted
+>> message,
+>> to be logged.
+>>
+>> Upstream bug report:
+>> [1] http://bugzilla.adiscon.com/**show_bug.cgi?id=221<http://bugzilla.adiscon.com/show_bug.cgi?id=221>
+>>
+>> Upstream patch:
+>> [2] http://git.adiscon.com/?p=**rsyslog.git;a=commit;h=**
+>> 6bad782f154b7f838c7371bf99c13f**6dc4ec4101<http://git.adiscon.com/?p=rsyslog.git;a=commit;h=6bad782f154b7f838c7371bf99c13f6dc4ec4101>
+>>
+>> References:
+>> [3] https://bugzilla.redhat.com/**show_bug.cgi?id=769822<https://bugzilla.redhat.com/show_bug.cgi?id=769822>
+>>
+>> Could you allocate a CVE id for this?
+>>
+>> Thank you&&  Regards, Jan.
+>> --
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>>
 >
 
-I think this is not an issue at all:
-
-If you look at the unpatched code, in privsep-linux.c, privsep_init() 
-can return -1 at two places.
-
-A. if pipe(pipefds) fails
-B. If fork() fails
-
-If either of these functions fails, the end result is that there is no 
-fork() and radvd runs as a single process.
-
-Now looking at radvd.c
-
-
-         /* drop root privileges if requested. */
-         if (username) {
-                 if (!singleprocess) {
-                         dlog(LOG_DEBUG, 3, "Initializing privsep");
-                         if (privsep_init() < 0)
-                                 flog(LOG_WARNING, "Failed to initialize 
-privsep.");
-                 }
-
-                 if (drop_root_privileges(username) < 0) {
-                         perror("drop_root_privileges");
-                         exit(1);
-                 }
-         }
-
-
-After running privsep_init(), drop_root_privileges() is run, so :
-
-a. if privsep_init() failed and drop_root_privileges() did not fail, you 
-end up running a single radvd process running as radvd user, which is 
-similar to running "radvd --singleprocess"
-
-b. if privsep_init() failed and drop_root_privileges() failed, you bail 
-out of the program, similar to what would happen if privsep_init() did 
-not fail.
-
-c. if privsep_init() and drop_root_privileges() did not fail, we have 
-two radvd process, one running as radvd user and the other is root
-
-So from what i can see, the maximum harm which would occur if 
-privsep_init() fails, is that radvd would effectively run in 
---singleprocess mode
-
-
-
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
