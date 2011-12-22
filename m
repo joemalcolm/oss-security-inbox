@@ -1,43 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/05/2
-Message-ID: <20111105103508.GB11970@openwall.com>
-Date: Sat, 5 Nov 2011 14:35:08 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/1
+Message-ID: <4EF32046.9030805@redhat.com>
+Date: Thu, 22 Dec 2011 13:19:18 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Rainer Gerhards <rgerhards@...scon.com>, Tomas Heinrich <theinric@...hat.com>
+Subject: CVE Request -- rsyslog -- DoS due integer signedness error while extending rsyslog counted string buffer
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 04, 2011 at 01:14:46PM -0500, John Lightsey wrote:
-> On 11/04/2011 11:36 AM, Solar Designer wrote:
-> > On Fri, Nov 04, 2011 at 09:46:45AM -0500, John Lightsey wrote:
-> >> PAR::Packer - PAR packed files are extracted to unsafe and predictable
-> >> temporary directories
-> >>
-> >> https://rt.cpan.org/Public/Bug/Display.html?id=69560
-> > 
-> > I think that your description for this one happens to encourage a poor
-> > fix for it.  Specifically, starting the description by "par_mktmpdir()
-> > makes no effort to verify that the /tmp/par-<username> directory is safe
-> > to use" may result in this function being patched to do such checks,
-> > which I think would be a poor fix.  A better fix would be to properly
-> > create a temporary files directory, with a less predictable name and
-> > with due retries (with new names) if the directory already exists -
-> > preferably using File::Temp's tempdir().
-> 
-> The problem with using random directory names here is that the
-> /tmp/par-user directory is being used as a caching mechanism to avoid
-> extracting the PAR contents over and over.
 
-Oh, I did not realize that.
+An integer signedness error, leading to heap based buffer overflow was found in
+the way the imfile module of rsyslog, an enhanced system logging and kernel
+message trapping daemon, processed text files larger than 64 KB. When the
+imfile rsyslog module was enabled, a local attacker could use this flaw to
+cause denial of service (rsyslogd daemon hang) via specially-crafted message,
+to be logged.
 
-> A better alternative may be
-> to use $ENV{'HOME'}/.par or something along those lines.
+Upstream bug report:
+[1] http://bugzilla.adiscon.com/show_bug.cgi?id=221
 
-Makes sense to me.  Use of env vars is unsafe in a potentially SUID
-script, but I don't know what the current policy regarding this is in
-CPAN.  Are CPAN modules by default supposed to be safe for use in SUID
-Perl scripts or not - I guess not, or we'd have plenty of CVE ids for
-those issues by now?  An alternative would be to find the home
-directory path from the real UID.
+Upstream patch:
+[2] http://git.adiscon.com/?p=rsyslog.git;a=commit;h=6bad782f154b7f838c7371bf99c13f6dc4ec4101
 
-Alexander
+References:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=769822
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
