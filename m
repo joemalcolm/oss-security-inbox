@@ -1,65 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/8
-Message-ID: <4DE68A5E.9080106@mvista.com>
-Date: Wed, 01 Jun 2011 08:52:14 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/6
+Message-ID: <20111223211218.GA19763@openwall.com>
+Date: Sat, 24 Dec 2011 01:12:18 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-
-
-On 06/01/2011 06:34 AM, Solar Designer wrote:
-> Hi Armin,
+On Fri, Dec 23, 2011 at 01:52:24PM -0700, Kurt Seifried wrote:
+> On 12/22/2011 09:44 AM, Moritz Muehlenhoff wrote:
+> >2: /proc/$PID/{sched,schedstat} information leak
+> >Vasiliy Kulikov of OpenWall posted a demo exploit.
+> >http://openwall.com/lists/oss-security/2011/11/05/3
+> >
+> >AFAICS no CVE ID was assigned to this?
 > 
-> On Thu, May 26, 2011 at 05:42:00AM -1000, akuster wrote:
->> You can find our security Advisories at:
->> http://www.mvista.com/cve_vulnerabilities.php
->>
->> I have updated
->> http://oss-security.openwall.org/wiki/vendors
->> http://oss-security.openwall.org/wiki/distro-patches
+> I believe we are not assigning CVE's for these types of proc related 
+> issues, some discussion was had:
 > 
-> Thanks.  I've just reviewed the above and subscribed you to the list.
-> 
-> I have some "complaints", though:
+> https://lkml.org/lkml/2011/2/7/368
 
-No worries.
+For "these types" (what types?) of proc related issues, or for all
+infoleak issues related to procfs?  To me, a timing attack based on data
+in a world-readable proc file is totally different from a data leak via
+fd preserved across SUID exec.  Thus, a CVE (non-)assignment decision
+for one of these should have nothing to do with CVE (non-)assignment for
+the other.
 
-> 
-> http://www.mvista.com/cve_vulnerabilities.php gives a mapping of CVE IDs
-> to affected MontaVista products.  That's great.  However, fix
-> information is missing.  Does having a CVE ID listed there imply that
-> you have fixed the issue for those affected products or not (e.g.,
-> perhaps not for EOL'ed products, or are you not listing those as
-> affected at all)?  
-
-Yes, having the cve listed means it is fixed.
-
-Specifically relevant to this discussion would be the
-> dates on which you're getting issues fixed (such that those could be
-> compared to CRDs to see if you likely made use of the advance
-> notifications or not).  Right now, you have "Published" and "Modified"
-> dates, but no fix dates (which would be per product?)
-
-Good input. I will put that on my list for version 2 requirements.
-
-> 
-> Also, no info on 2011's CVEs yet.  Does this mean we'd have to wait
-> until 2012 to get an idea on how you're handling 2011's security issues?
-
-Correct. I have an internal business requirement to delay public
-notifications for 6 months in order to give our customers time to
-propagate our fixes to their customers. If our internal processes are
-working, then 2011 CVE's should start showing up sometime this month.
-
-> 
-> That said, you do look like a security-conscious Linux distro vendor
-> now (and you meet some other requirements), so you're on the list.
-> 
-Many thanks.
-
-Armin
-
-
+Alexander
