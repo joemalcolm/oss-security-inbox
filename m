@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/6
-Message-ID: <662783063.126228.1294081837675.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 3 Jan 2011 14:10:37 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/6
+Message-ID: <20111223211218.GA19763@openwall.com>
+Date: Sat, 24 Dec 2011 01:12:18 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley  <coley@...re.org>
-Subject: Re: CVE request: wordpress before 3.0.4 XSS
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Details here:
+On Fri, Dec 23, 2011 at 01:52:24PM -0700, Kurt Seifried wrote:
+> On 12/22/2011 09:44 AM, Moritz Muehlenhoff wrote:
+> >2: /proc/$PID/{sched,schedstat} information leak
+> >Vasiliy Kulikov of OpenWall posted a demo exploit.
+> >http://openwall.com/lists/oss-security/2011/11/05/3
+> >
+> >AFAICS no CVE ID was assigned to this?
 > 
-> http://wordpress.org/news/2010/12/3-0-4-update/
-> http://core.trac.wordpress.org/changeset/17172/branches/3.0
-> http://www.heise.de/newsticker/meldung/Security-Bugfix-fuer-Wordpress-1161909.html
+> I believe we are not assigning CVE's for these types of proc related 
+> issues, some discussion was had:
 > 
+> https://lkml.org/lkml/2011/2/7/368
 
-Use CVE-2010-4536 for these (from reading the text, it's multiple XSS flaws).
+For "these types" (what types?) of proc related issues, or for all
+infoleak issues related to procfs?  To me, a timing attack based on data
+in a world-readable proc file is totally different from a data leak via
+fd preserved across SUID exec.  Thus, a CVE (non-)assignment decision
+for one of these should have nothing to do with CVE (non-)assignment for
+the other.
 
-Thanks.
-
--- 
-    JB
+Alexander
