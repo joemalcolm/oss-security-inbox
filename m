@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/6
-Message-ID: <4E8F0F93.8060901@oracle.com>
-Date: Fri, 07 Oct 2011 15:41:23 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/1
+Message-ID: <20111223202002.GB14531@inutil.org>
+Date: Fri, 23 Dec 2011 21:20:02 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: radvd 1.8.2 released with security fixes
+Subject: CVE request: simplesamlphp / Typo3
 Content-Type: text/plain; charset=utf-8
 
-On 07/10/11 14:03, Robert Święcki wrote:
-> On Fri, Oct 7, 2011 at 12:35 PM, Huzaifa Sidhpurwala
-> <huzaifas@...hat.com> wrote:
->> Shouldnt this be:
->>
->>        /* No path traversal */
->>        if (strstr(iface, "..") || strchr(iface, '/'))
->>                return -1;
-> FWIW, this will reject too much;
->
-> /path/to/sth..jpg
->
+Hi,
 
-Indeed, since I don't believe that iface can reasonably include a "/"
-its sufficient to check for that.   If not then you need to check for
-"../" at the beginning of iface and "/.." anywhere else in it.   But
-simply forbidding "/" should be fine.
+1. Please assign a CVE ID for this issue in simplesamlphp we fixed in a DSA
+a while ago:
+http://lists.debian.org/debian-security-announce/2011/msg00206.html
 
-jch
+2. Please assign a CVE ID for these issues in Typo3 we fixed in a DSA
+a while ago:
+http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-001/
+http://lists.debian.org/debian-security-announce/2011/msg00163.html
+
+Cheers,
+        Moritz
