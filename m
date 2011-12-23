@@ -1,28 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/6
-Message-ID: <1316704429.3222.4.camel@localhost>
-Date: Thu, 22 Sep 2011 10:13:47 -0500
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/2
+Message-ID: <4EF4E60D.1030604@redhat.com>
+Date: Fri, 23 Dec 2011 13:35:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com
-Subject: Re: CVE Request -- apt
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: WordPress flash-album-gallery plugin facebook.php XSS
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2011-09-22 at 10:11 -0500, Jamie Strandboge wrote:
-> apt-key in Ubuntu is not verifying the key correctly when it is fetched
-> via 'apt-key net-update'. This was reported here:
-> 
-> http://seclists.org/fulldisclosure/2011/Sep/221
-> 
-> and tracked here:
-> https://launchpad.net/bugs/856489
-> 
-> Based on the man page, Debian should not be affected. Derivatives of
-> Ubuntu probably are.
-
-Forgot to CC security@...ntu.com
+On 12/22/2011 10:31 AM, Henri Salo wrote:
+> Original report: http://seclists.org/bugtraq/2011/Nov/186
+> Fix: http://plugins.trac.wordpress.org/changeset/469785
+> Changelog: http://wordpress.org/extend/plugins/flash-album-gallery/changelog/
+> Fixed in version: 1.57
+>
+> - Henri Salo
+Please use CVE-2011-4624  for this issue.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-Kurt Seifried / Red Hat Security Response Team
+
