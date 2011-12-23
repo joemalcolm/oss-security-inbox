@@ -1,22 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/6
-Message-ID: <20111111225001.GB28950@dhcp-25-225.brq.redhat.com>
-Date: Fri, 11 Nov 2011 23:50:02 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/8
+Message-ID: <20111223232211.GA20465@openwall.com>
+Date: Sat, 24 Dec 2011 03:22:11 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: jbd/jbd2: invalid value of first log block leads to oops
+Cc: Jeff Mitchell <mitchell@....org>, cve@...re.org
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way Linux kernel's Journaling Block Device (JBD)
-handled invalid log first block value. An attacker able to mount
-malicious ext3 or ext4 image could use this flaw to crash the system.
+On Wed, Dec 07, 2011 at 09:26:44AM -0500, Jeff Mitchell wrote:
+> I've been asked by the kcheckpass maintainer to lodge a dispute of
+> CVE-2011-4122.
+> 
+> As explained in the blog entry linked from the CVE[1], the problem is
+> that neither kcheckpass nor OpenPAM validate the 'service_name' input
+> argument of pam_start(). This hole can be used to make PAM load
+> arbitrary shared libraries, which can be used to execute arbitrary code
+> as root, as kcheckpass is setuid root.
 
-Upstream commit:
-8762202dd0d6e46854f786bdb6fb3780a1625efe
+Besides loading of arbitrary shared libraries due to the OpenPAM
+peculiarity, doesn't this kcheckpass feature allow a user to specify an
+arbitrary PAM service name that is actually valid on the system, not
+limited to PAM services intended for use by KDE?  Isn't that a
+vulnerability of itself?  While kcheckpass itself doesn't grant access
+to any resource, an alternate PAM stack (maybe only intended for use by
+a specific service) might have modules with side-effects.
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=753341
+To me, kcheckpass looks poorly designed in letting the invoking user
+specify an arbitrary PAM service name.  Instead, the service name should
+either be obtained from a trusted place or it should be checked against
+a trusted whitelist.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+For example, passwd(1) from SimplePAMApps does the latter: it has a
+command-line option to specify a PAM service name suffix (which it'd
+append to "passwd"), but the suffix must be whitelisted in
+/etc/security/passwd.conf.
+
+> One could assume that kcheckpass should do the validation. However, the
+> PAM documentation makes no mention of what a service name is supposed to
+> look like, and consequently it must be treated as opaque by the
+> application code. Therefore all validation must be expected to be done
+> by the library, and failure to do so must be seen as a bug in the
+> library exclusively.
+
+These are some valid points, but on the other hand giving an untrusted
+user full control over the PAM service name is so ridiculous that I
+can't blame a PAM library exclusively for not sanitizing this input.
+
+I think we'd set a bad precedent by saying that kcheckpass did
+everything right and only OpenPAM was at fault.  I think that both need
+to be corrected.  OpenPAM is already patched by now; is kcheckpass
+corrected in some way as well?
+
+http://security.freebsd.org/advisories/FreeBSD-SA-11:10.pam.asc
+
+> As a result, it is correct to list kcheckpass as an affected
+> application, but not as the origin of the vulnerability.
+
+My opinion is that the vulnerability originates in both places, or we
+can say that there's more than one vulnerability here.  If I had to
+choose just one, I'd say that kcheckpass is more at fault than OpenPAM,
+and that OpenPAM's fix is a hardening measure, whereas kcheckpass needs
+to have its vulnerability fixed.
+
+I am not affiliated with either project; in fact, I am not even using
+KDE and OpenPAM normally.
+
+I am of a similar opinion regarding other cases where poorly written or
+misconfigured applications expose library interfaces that were never
+meant to be used on untrusted input.  For example, the "glibc: timezone
+integer overflow" issue that was brought to this list earlier this month
+is in my opinion less of an issue than FTP server misconfiguration that
+makes the issue exploitable.  That is, I'd rather assign CVE ids to FTP
+servers supporting chroot'ing into users' home directories without
+warning the server admins of the added root compromise risk inherent to
+such chroot'ing.  Patching one attack vector in glibc does not eliminate
+that risk.
+
+http://www.openwall.com/lists/oss-security/2011/12/05/1
+
+Alexander
