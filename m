@@ -1,26 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/13
-Message-ID: <20110804191323.GB41331@dojo.mi.org>
-Date: Thu, 4 Aug 2011 15:13:24 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/5
+Message-ID: <CANTw=MMyTEr0D=2Yv11aTJWCqy9A2VpyYtd76avDj+bmvEy8fg@mail.gmail.com>
+Date: Fri, 23 Dec 2011 16:10:38 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: FreeBSD/NetBSD/OpenBSD(?) ftpd remote crash (2010)
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-:Can I get 2010 CVE-ID for this issue? I am not sure if other distributions/operating systems need their own IDs. If I am correct one ID should be enough.
-:
-:Original discussion: http://seclists.org/fulldisclosure/2010/Mar/117
-:Bug report to FreeBSD: http://www.freebsd.org/cgi/query-pr.cgi?pr=144761
-:NetBSD: http://www.netbsd.org/cgi-bin/query-pr-single.pl?number=43023
-:Reported to OpenBSD (and patched), but can't find references.
+On Fri, Dec 23, 2011 at 3:52 PM, Kurt Seifried wrote:
+> On 12/22/2011 09:44 AM, Moritz Muehlenhoff wrote:
+>>
+>> Hi,
+>> there were a two Linux-related CVE requests/discussions, which
+>> didn't end up in an assignment:
+>>
+>> 1: rose: Add length checks to CALL_REQUEST parsing
+>> e0bccd315db0c2f919e7fcf9cb60db21d9986f52 in mainline
+>>
+>> It was decided that this should be split, but without a final
+>> resulting CVE assignment:
+>> http://www.openwall.com/lists/oss-security/2011/04/12/1
+>
+>
+> Can anyone shed more light on this for me? (links to fixes/etc.?).
 
-FWIW, a reference for OpenBSD is:
+As stated in Moritz's original message, the linux kernel git commit id
+is e0bccd315.  Here is a link directly to a message with the patch:
+http://marc.info/?l=linux-netdev&m=130063972406389&w=2
 
-ftp://ftp.openbsd.org/pub/OpenBSD/patches/4.5/common/013_ftpd.patch
+>>
+>> 2: /proc/$PID/{sched,schedstat} information leak
+>> Vasiliy Kulikov of OpenWall posted a demo exploit.
+>> http://openwall.com/lists/oss-security/2011/11/05/3
+>>
+>> AFAICS no CVE ID was assigned to this?
+>
+>
+> I believe we are not assigning CVE's for these types of proc related issues,
+> some discussion was had:
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"All my autopsies have been performed on dead people."     -Anguished English
+Infoleaks certainly do get an id as they are considered an exposure
+(i.e. they make an exploiters job easier); as in Common
+Vulnerabilities and Exposures (CVE):
+http://cve.mitre.org
 
-Content of type "application/pgp-signature" skipped
+Best wishes,
+Mike
