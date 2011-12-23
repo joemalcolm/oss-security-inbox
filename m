@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/3
-Message-Id: <201105191306.08348.ludwig.nussel@suse.de>
-Date: Thu, 19 May 2011 13:06:08 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Dovecot releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/7
+Message-ID: <20111223215808.GA3924@pisco.westfalen.local>
+Date: Fri, 23 Dec 2011 22:58:08 +0100
+From: Moritz Mühlenhoff <jmm@...til.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: simplesamlphp / Typo3
 Content-Type: text/plain; charset=utf-8
 
-Henri Salo wrote:
-> Should these two get CVE-identifier(s)?
+On Fri, Dec 23, 2011 at 01:45:25PM -0700, Kurt Seifried wrote:
+> On 12/23/2011 01:20 PM, Moritz Muehlenhoff wrote:
+> >Hi,
+> >
+> >1. Please assign a CVE ID for this issue in simplesamlphp we fixed in a DSA
+> >a while ago:
+> >http://lists.debian.org/debian-security-announce/2011/msg00206.html
+> Please use CVE-2011-4625 for this issue
+
+Thanks.
+ 
+> >2. Please assign a CVE ID for these issues in Typo3 we fixed in a DSA
+> >a while ago:
+> >http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-001/
+> >http://lists.debian.org/debian-security-announce/2011/msg00163.html
 > 
-> http://dovecot.org/pipermail/dovecot/2011-May/059085.html
-> http://dovecot.org/pipermail/dovecot/2011-May/059086.html
+> Argh. This one will have to wait since 1) I need to assign CVE's for
+> ALL the typo3 issues for 2011 
 
-http://hg.dovecot.org/dovecot-1.1/rev/3698dfe0f21c
+AFAICS all the other Typo3 issues from 2011 have IDs assiged:
+TYPO3-CORE-SA-2011-004: CVE-2011-4614
+TYPO3-CORE-SA-2011-003: CVE-2011-3584
+TYPO3-CORE-SA-2011-002: CVE-2011-3583
 
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Cheers,
+       Moritz
