@@ -1,21 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/4
-Message-ID: <1312378156.3096.8.camel@localhost.localdomain>
-Date: Wed, 03 Aug 2011 14:29:13 +0100
-From: Tim Waugh <twaugh@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/1
+Message-ID: <20111223202002.GB14531@inutil.org>
+Date: Fri, 23 Dec 2011 21:20:02 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: foomatic-gui
+Subject: CVE request: simplesamlphp / Typo3
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2011-08-03 at 09:13 -0400, Marc Deslauriers wrote:
-> http://cvs.savannah.gnu.org/viewvc/foomatic-gui/foomatic/pysmb.py?root=foomatic-gui&r1=1.2&r2=1.3
+Hi,
 
-Actually foomatic-gui is not the origin of pysmb.py -- that came from
-system-config-printer prior to 1.1.0.
+1. Please assign a CVE ID for this issue in simplesamlphp we fixed in a DSA
+a while ago:
+http://lists.debian.org/debian-security-announce/2011/msg00206.html
 
-Tim.
-*/
+2. Please assign a CVE ID for these issues in Typo3 we fixed in a DSA
+a while ago:
+http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-001/
+http://lists.debian.org/debian-security-announce/2011/msg00163.html
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (483 bytes)
+Cheers,
+        Moritz
