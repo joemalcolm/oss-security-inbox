@@ -1,25 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/4
-Message-ID: <4EB2B99D.3000800@redhat.com>
-Date: Thu, 03 Nov 2011 09:56:13 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/4
+Message-ID: <4EF4EA08.3050606@redhat.com>
+Date: Fri, 23 Dec 2011 13:52:24 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: wordpress plugin timthumb before 2.0 remote code execution
+CC: Moritz Muehlenhoff <jmm@...ian.org>, Eugene Teo <eteo@...hat.com>
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-On 11/03/2011 05:23 AM, Hanno Böck wrote:
-> http://markmaunder.com/2011/08/01/zero-day-vulnerability-in-many-wordpress-themes/
+On 12/22/2011 09:44 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> there were a two Linux-related CVE requests/discussions, which
+> didn't end up in an assignment:
 >
-> Seems this never got a CVE. German newspage heise reports lots of
-> hacked wordpress blogs, most likely due to this issue:
-> http://www.heise.de/security/meldung/Tausende-WordPress-Blogs-zur-Verbreitung-von-Schadcode-genutzt-1370660.html
+> 1: rose: Add length checks to CALL_REQUEST parsing
+> e0bccd315db0c2f919e7fcf9cb60db21d9986f52 in mainline
 >
-Yes I remember this one (I actually had a friend's WordPress get nailed
-via this).
+> It was decided that this should be split, but without a final
+> resulting CVE assignment:
+> http://www.openwall.com/lists/oss-security/2011/04/12/1
 
-Fix: http://code.google.com/p/timthumb/
+Can anyone shed more light on this for me? (links to fixes/etc.?).
+>
+> 2: /proc/$PID/{sched,schedstat} information leak
+> Vasiliy Kulikov of OpenWall posted a demo exploit.
+> http://openwall.com/lists/oss-security/2011/11/05/3
+>
+> AFAICS no CVE ID was assigned to this?
 
-Please use CVE-2011-4106 for this issue.
+I believe we are not assigning CVE's for these types of proc related 
+issues, some discussion was had:
+
+https://lkml.org/lkml/2011/2/7/368
+
+http://www.google.com/custom?domains=lkml.org&q=%2Fproc%2F+leaks
+
+but I'm not sure what the outcome is. CC'ing Eugene Teo.
+
+>
+> Cheers,
+>          Moritz
 
 -- 
 
