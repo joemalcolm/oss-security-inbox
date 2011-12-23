@@ -1,80 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/4
-Message-ID: <4D99DD87.5010001@gmx.de>
-Date: Mon, 04 Apr 2011 17:02:31 +0200
-From: Matthias Andree <matthias.andree@....de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/7
+Message-ID: <20111223215808.GA3924@pisco.westfalen.local>
+Date: Fri, 23 Dec 2011 22:58:08 +0100
+From: Moritz Mühlenhoff <jmm@...til.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: simplesamlphp / Typo3
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Dec 23, 2011 at 01:45:25PM -0700, Kurt Seifried wrote:
+> On 12/23/2011 01:20 PM, Moritz Muehlenhoff wrote:
+> >Hi,
+> >
+> >1. Please assign a CVE ID for this issue in simplesamlphp we fixed in a DSA
+> >a while ago:
+> >http://lists.debian.org/debian-security-announce/2011/msg00206.html
+> Please use CVE-2011-4625 for this issue
 
-Am 02.04.2011 02:08, schrieb Dan Rosenberg:
-> Hi Josh,
+Thanks.
+ 
+> >2. Please assign a CVE ID for these issues in Typo3 we fixed in a DSA
+> >a while ago:
+> >http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-001/
+> >http://lists.debian.org/debian-security-announce/2011/msg00163.html
 > 
->>
->> Long term I'd like to see two lists, one for purpose #1, and another geared
->> toward #2. I think having a trusted venue for knowledge sharing would be
->> very useful, and we likely don't want the list clogged with coordination
->> details. This will of course rely heavily on what Openwall is willing to
->> take on. They're already taking on a lot of risk and responsibility, I
->> don't want to spoil the good will.
->>
-> 
-> I agree that having such a venue for discussion would be valuable, and
-> I'd personally like to contribute to such a list.
-> 
->>
->> Should we require members use a mail address from their vendor? Letting
->> people use personal addresses creates an opportunity for people to remain
->> on a list when they are no longer a part of a given vendor (it also makes
->> it quite easy to know who represents a vendor).
->>
-> 
-> Yes, I think this should be a requirement for a closed coordination
-> list (as opposed to the more relaxed option #2).  In fact, I think
-> membership to such a list should be restricted almost exclusively to
-> distributions and downstream providers of third-party software.  It
-> obviously makes sense to have distro security teams on a list, since a
-> vulnerability in project XYZ will need to be coordinated among all of
-> the distros.  However, most software projects only need access to
-> information concerning their own project.  There's no reason one
-> software project should gain access to vulnerability information about
-> a completely unrelated project, and restricting membership to achieve
-> that will at least help minimize the leakage that went on with the
-> previous list.
+> Argh. This one will have to wait since 1) I need to assign CVE's for
+> ALL the typo3 issues for 2011 
 
-This raises an interesting point, "downstream providers of third-party
-software".
+AFAICS all the other Typo3 issues from 2011 have IDs assiged:
+TYPO3-CORE-SA-2011-004: CVE-2011-4614
+TYPO3-CORE-SA-2011-003: CVE-2011-3584
+TYPO3-CORE-SA-2011-002: CVE-2011-3583
 
-In my case, I'd understand that I might want to offer vendors the
-possibility to co-ordinate upgrades for bogofilter, fetchmail, and
-leafnode, in lexicographical order, and possibly for a FreeBSD port --
-although I'm not a representative of FreeBSD's security officer team
-(nor would that team usually deal with third-party software
-vulnerabilities unless it's in the basde system).
-
-Questions:
-
-#1 would the new private list be allowed to Cc: outside members (for
-instance, FreeBSD's unencrypted internal developers@ list does not allow
-that)?  Who would make sure that no end user agent allows an unencrypted
-Cc: slip?  A major concern IMO.
-
-#2 will the subscriber list be public for subscribers that are later
-joining according to a policy that the new subscribers will have voted
-on in the secret list?
-
-#3 will the list rules themselves be open to non-members?
-
-Best regards
-Matthias Andree
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAk2Z3YAACgkQvmGDOQUufZVOxwCgjB/6LOWr20J8Y8EfzFft3t8p
-f+MAn2/WOCMH38v5Bp0F4ywC6kUnzAfV
-=JEA5
------END PGP SIGNATURE-----
+Cheers,
+       Moritz
