@@ -1,45 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/4
-Message-ID: <1308135047.3466.36.camel@dhcp-24-196.brq.redhat.com>
-Date: Wed, 15 Jun 2011 12:50:47 +0200
-From: Ondrej Vasik <ovasik@...hat.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, Nicolas François <nekral.lists@...il.com>, kzak@...hat.com
-Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/5
+Message-ID: <CANTw=MMyTEr0D=2Yv11aTJWCqy9A2VpyYtd76avDj+bmvEy8fg@mail.gmail.com>
+Date: Fri, 23 Dec 2011 16:10:38 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2011-06-15 at 09:49 +0200, Ludwig Nussel wrote:
-> Bernhard Rosenkraenzer wrote:
-> > On Friday, June 10, 2011 11:55 CEST, Ludwig Nussel <ludwig.nussel@...e.de> wrote: 
-> >  
-> > > The issue also reminds me that there are several su implemenations.
-> > > On Fedora and SUSE we have a patched coreutils version, Debian uses
-> > > the one from shadow-utils and then there's also a su from
-> > > SimplePAMApps, used by e.g. Owl. Of course each one has it's own
-> > > quirks and weird features. Does anyone still remember why a
-> > > particular implementation was chosen? :-)
-> > 
-> > 
-> > In Ark Linux, we switched from the coreutils one to the shadow-utils one
-> > about 2 years ago because the shadow-utils one does what we need (incl. PAM
-> > support) without having to port the PAM patch on every new coreutils release.
-> 
-> Upstream coreutils indicated that they consider su in coreutils kind
-> of deprecated, basically only kept for legacy reasons on non-Linux
-> OSes. They would accept the PAM patch though so distros don't need
-> to maintain it.
-> 
-> Is there actually any serious distro that doesn't use PAM though?
-> Those #ifdefs to keep old shadow compatibility makes the code rather
-> ugly and hard to read. Maybe it's time to just rip out the old code
-> and submit a clean, PAM only su to util-linux.
+On Fri, Dec 23, 2011 at 3:52 PM, Kurt Seifried wrote:
+> On 12/22/2011 09:44 AM, Moritz Muehlenhoff wrote:
+>>
+>> Hi,
+>> there were a two Linux-related CVE requests/discussions, which
+>> didn't end up in an assignment:
+>>
+>> 1: rose: Add length checks to CALL_REQUEST parsing
+>> e0bccd315db0c2f919e7fcf9cb60db21d9986f52 in mainline
+>>
+>> It was decided that this should be split, but without a final
+>> resulting CVE assignment:
+>> http://www.openwall.com/lists/oss-security/2011/04/12/1
+>
+>
+> Can anyone shed more light on this for me? (links to fixes/etc.?).
 
-For me, having it in coreutils, shadow-utils, SimplePAMApps and possibly
-- in util-linux - could only cause a lot of confusion. Some
-consolidation might be better.
+As stated in Moritz's original message, the linux kernel git commit id
+is e0bccd315.  Here is a link directly to a message with the patch:
+http://marc.info/?l=linux-netdev&m=130063972406389&w=2
 
-Adding util-linux upstream maintainer to CC.
+>>
+>> 2: /proc/$PID/{sched,schedstat} information leak
+>> Vasiliy Kulikov of OpenWall posted a demo exploit.
+>> http://openwall.com/lists/oss-security/2011/11/05/3
+>>
+>> AFAICS no CVE ID was assigned to this?
+>
+>
+> I believe we are not assigning CVE's for these types of proc related issues,
+> some discussion was had:
 
-Greetings,
-         Ondrej Vasik
+Infoleaks certainly do get an id as they are considered an exposure
+(i.e. they make an exploiters job easier); as in Common
+Vulnerabilities and Exposures (CVE):
+http://cve.mitre.org
 
+Best wishes,
+Mike
