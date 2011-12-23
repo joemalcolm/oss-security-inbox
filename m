@@ -1,18 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/6
-Message-ID: <4DB17AEF.6050206@redhat.com>
-Date: Fri, 22 Apr 2011 14:56:15 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/3
+Message-ID: <4EF4E865.3080907@redhat.com>
+Date: Fri, 23 Dec 2011 13:45:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request -- Asterisk Security Vulnerability
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: simplesamlphp / Typo3
 Content-Type: text/plain; charset=utf-8
 
-Matthew Nicholson wrote:
-> It is for AST-2011-006
+On 12/23/2011 01:20 PM, Moritz Muehlenhoff wrote:
+> Hi,
+>
+> 1. Please assign a CVE ID for this issue in simplesamlphp we fixed in a DSA
+> a while ago:
+> http://lists.debian.org/debian-security-announce/2011/msg00206.html
+Please use CVE-2011-4625 for this issue
 
-Please use CVE-2011-1599 for this issue then.
+> 2. Please assign a CVE ID for these issues in Typo3 we fixed in a DSA
+> a while ago:
+> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-001/
+> http://lists.debian.org/debian-security-announce/2011/msg00163.html
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Argh. This one will have to wait since 1) I need to assign CVE's for ALL 
+the typo3 issues for 2011 and 2) I don't have enough spare CVE' right 
+now (here's hoping someone at Mitre is still in the office this 
+afternoon =). Once I get the CVE #'s I'll do an email like I did for moodle.
+
+> Cheers,
+>          Moritz
+
+-- 
+-Kurt Seifried / Red Hat Security Response Team
