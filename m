@@ -1,42 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/7
-Message-ID: <CAEZPtU4v33T5fhqV=pUc6vVpj83ThJ2xdRqD4DnTqG4hbUO1UA@mail.gmail.com>
-Date: Sun, 25 Sep 2011 14:28:13 +0200
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/3
+Message-ID: <4EF4E865.3080907@redhat.com>
+Date: Fri, 23 Dec 2011 13:45:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@....net
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: simplesamlphp / Typo3
 Content-Type: text/plain; charset=utf-8
 
-hi,
-
-Btw, the correct fix (and less restrictive) is to disable
-allow_url_include, not  allow_url_fopen.
-
-Cheers,
-
-On Sat, Sep 24, 2011 at 3:56 PM, Vincent Danen <vdanen@...hat.com> wrote:
-> Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the is_a()
-> function worked, and as a result it could allow for remote arbitrary
-> code execution if certain specific conditions are met (the blog post
-> referenced below has a good writeup of the flaw).
+On 12/23/2011 01:20 PM, Moritz Muehlenhoff wrote:
+> Hi,
 >
-> http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
-> https://bugs.php.net/bug.php?id=55475
-> https://bugzilla.redhat.com/show_bug.cgi?id=741020
->
-> It looks like this is the fix:
->
-> http://svn.php.net/viewvc/?view=revision&amp;revision=317183
->
-> Thanks.
->
-> --
-> Vincent Danen / Red Hat Security Response Team
+> 1. Please assign a CVE ID for this issue in simplesamlphp we fixed in a DSA
+> a while ago:
+> http://lists.debian.org/debian-security-announce/2011/msg00206.html
+Please use CVE-2011-4625 for this issue
 
+> 2. Please assign a CVE ID for these issues in Typo3 we fixed in a DSA
+> a while ago:
+> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-001/
+> http://lists.debian.org/debian-security-announce/2011/msg00163.html
 
+Argh. This one will have to wait since 1) I need to assign CVE's for ALL 
+the typo3 issues for 2011 and 2) I don't have enough spare CVE' right 
+now (here's hoping someone at Mitre is still in the office this 
+afternoon =). Once I get the CVE #'s I'll do an email like I did for moodle.
+
+> Cheers,
+>          Moritz
 
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+-Kurt Seifried / Red Hat Security Response Team
