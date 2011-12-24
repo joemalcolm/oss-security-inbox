@@ -1,20 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/11
-Message-ID: <1319128663.31111.7.camel@scapa>
-Date: Thu, 20 Oct 2011 18:37:43 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: radvd 1.8.2 released with security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/5
+Message-ID: <4EF64D5D.90605@redhat.com>
+Date: Sun, 25 Dec 2011 06:08:29 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: kseifried@...hat.com
+CC: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-10-14 at 12:13 +0400, Vasiliy Kulikov wrote:
-> Thanks for spotting it, I think CVE-2011-3603 should be rejected.
+On 12/24/2011 04:52 AM, Kurt Seifried wrote:
+> On 12/22/2011 09:44 AM, Moritz Muehlenhoff wrote:
+>> Hi,
+>> there were a two Linux-related CVE requests/discussions, which
+>> didn't end up in an assignment:
+>>
+>> 1: rose: Add length checks to CALL_REQUEST parsing
+>> e0bccd315db0c2f919e7fcf9cb60db21d9986f52 in mainline
+>>
+>> It was decided that this should be split, but without a final
+>> resulting CVE assignment:
+>> http://www.openwall.com/lists/oss-security/2011/04/12/1
+> 
+> Can anyone shed more light on this for me? (links to fixes/etc.?).
 
-It seems it wasn't rejected yet (or maybe it's just that MITRE/NVD lag,
-since they aren't even showing it as ACCEPTED either).
+I have forwarded you the email thread. This patch refers to the changes
+made by Ben Hutchings.
 
-Regards,
--- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Eugene
