@@ -1,117 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/10
-Message-ID: <AANLkTi=KiLQp=BR1Y7Nm8XU7u73TuJsNonQJ5PJPLB-D@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:40:59 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/3
+Message-ID: <4EF5F237.2040403@redhat.com>
+Date: Sat, 24 Dec 2011 08:39:35 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: 2Wire Broadband Router Session Hijacking Vulnerability
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request 2006: Joomla Web Link Submission title Parameter SQL injection
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+On 12/24/2011 08:05 AM, Henri Salo wrote:
+> Is it possible to get CVE assigned for very old Joomla-issue?
+>
+> http://osvdb.org/show/osvdb/26626
+> http://secunia.com/advisories/20746/
+> http://www.exploit-db.com/exploits/1922/
+> http://www.securityfocus.com/archive/1/437496
+>
+> I can see from honeypot-logs that they are still using this vulnerability. I did not yet find Joomla-references for this. If this is too old vulnerability for CVE or wrong reason please notify me.
+>
+> - Henri Salo
+It's never to late for a CVE! This issue doesn't appear to be 
+CVE-2006-3481 so I guess it gets a new CVE. Please use CVE-2006-7247 for 
+this issue.
 
-The 2Wire Broadband Router is vulnerable to Session Hijacking flaw
-which attackers can compromise the router administrator session.
+-- 
 
+-Kurt Seifried / Red Hat Security Response Team
 
-2. PRODUCT DESCRIPTION
-
-2Wire routers, product of 2Wire, are widely-used Broadband routers in
-SOHO environment.
-They are distributed through most famous ISPs (see -
-http://2wire.com/?p=383) with ready-to-use pre-configured settings.
-Their Wireless SSIDs are well-known as "2WIRE" prefix.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The web-based management interface of 2Wire Broadband router does not
-generate truely unique random session IDs for a logged-in
-administrator user.
-This allows attackers to brute-force guess a valid session ID to
-compromise the administrator session.
-For more information about this kind of weekness,
-refer to CWE-330: Use of Insufficiently Random Values and CWE-331:
-Insufficient Entropy.
-
-
-4. VERSIONS AFFECTED
-
-Tested against:
-Model: 2700HGV-2 Gateway
-Hardware Version: 2700-100657-005
-Software Version: 5.29.117.3
-
-Other versions might be affected as well.
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_tokens_captured_webscarab
-http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_tokens_captured_burp
-http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_analysis_with_burp.jpg
-http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_analysis_with_burp-02.jpg
-http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_analysis_with_burp-03.jpg
-http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_analysis_with_burp-04.jpg
-
-
-6. IMPACT
-
-Attackers can compromise 2wire administrator session through automated
-tools and modify any settings they want.
-
-
-7. SOLUTION [from 2wire]
-
-2wire has already investigated and provided a fix for this issue.
-These fixes have been implemented in the 6.x series of software and
-are available to our partners.
-Since 2wire does not provide software releases to end-users, it is up
-to the partner ISP to
-adopt new versions and provide them to their customers.
-
-
-8. VENDOR
-
-2Wire Inc
-http://www.2wire.com
-About 2Wire - http://www.2wire.com/index.php?p=486
-
-
-9. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-10. DISCLOSURE TIME-LINE
-
-07-25-2010: vulnerability discovered
-07-29-2010: notified vendor
-08-02-2010: vendor responded/verified
-08-09-2010: vendor did not respond when fix/upgrade would be available
-08-09-2010: vulnerability disclosed
-08-21-2010: vendor released fix
-
-
-11. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/2wire/[2wire]_session_hijacking_vulnerability
-Other unfixed 2Wire Vulnerabilities: http://www.hakim.ws/
-2Wire Routers WorldWide: http://www.shodanhq.com/?q=2Wire
-Related WebGoat Lesson:
-http://yehg.net/lab/pr0js/training/view/owasp/webgoat/WebGoat_SessionMan_SessionHijackingWithJHijack/
-Related: http://jeremiahgrossman.blogspot.com/2008/04/intranet-hack-targeting-at-2wire-dsl.html
-Related: http://www.routerzone.eu/wiki/index.php/Hacking_the_2Wire_1800
-
-
-#yehg [08-09-2010]
-
-updated: 2010-10-24
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
