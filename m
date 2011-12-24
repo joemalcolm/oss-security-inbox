@@ -1,103 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/3
-Message-ID: <4ECCDCC4.4090700@redhat.com>
-Date: Wed, 23 Nov 2011 12:45:08 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-CC: Kurt Seifried <kseifried@...hat.com>, Henri Salo <henri@...v.fi>, cve@...re.org
-Subject: Typo in description of CVE-2011-2708 and CVE-2011-4331? [was: Re: Fwd: XSS vulnerability in Joomla 1.6.3 - CVE-2011-2710 / CVE-2011-2708 issue]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/3
+Message-ID: <4EF5F237.2040403@redhat.com>
+Date: Sat, 24 Dec 2011 08:39:35 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request 2006: Joomla Web Link Submission title Parameter SQL injection
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
-
-   thank you for the clarification due this.
-
-But according to latest CVE-2011-2708 and CVE-2011-4331 description 
-assignment, there seems to be a type (rounded / cycled definition of both):
-
-======================================================
-Name: CVE-2011-2708
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2708 [Open URL]
-Final-Decision:
-Interim-Decision:
-Modified:
-Proposed:
-Assigned: 20110711
-Category:
-
-** REJECT **
-
-DO NOT USE THIS CANDIDATE NUMBER. ConsultIDs: CVE-2011-2708. Reason:
-This candidate is a duplicate of CVE-2011-2708. Notes: All CVE users
-should reference CVE-2011-2708 instead of this candidate. All
-references and descriptions in this candidate have been removed to
-prevent accidental usage.
-
-This one should mention 'CVE-2011-2710' in the body (based on the
-reply below).
-
-======================================================
-Name: CVE-2011-4331
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4331 [Open URL]
-Final-Decision:
-Interim-Decision:
-Modified:
-Proposed:
-Assigned: 20111104
-Category:
-
-** REJECT **
-
-DO NOT USE THIS CANDIDATE NUMBER. ConsultIDs: CVE-2011-4331. Reason:
-This candidate is a duplicate of CVE-2011-4331. Notes: All CVE users
-should reference CVE-2011-4331 instead of this candidate. All
-references and descriptions in this candidate have been removed to
-prevent accidental usage.
-
-This one should use "CVE-2011-4110" in the body, based on:
-http://seclists.org/oss-sec/2011/q4/378
-
-Could you correct these two yet? (not a big deal, just wanted to
-point this out those two to be described correctly, even when being
-duplicates).
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-On 11/23/2011 04:30 AM, Steven M. Christey wrote:
+On 12/24/2011 08:05 AM, Henri Salo wrote:
+> Is it possible to get CVE assigned for very old Joomla-issue?
 >
-> Let's keep CVE-2011-2710 and we will reject CVE-2011-2708. Henri, I'm
-> sorry about the lack of response :-(
+> http://osvdb.org/show/osvdb/26626
+> http://secunia.com/advisories/20746/
+> http://www.exploit-db.com/exploits/1922/
+> http://www.securityfocus.com/archive/1/437496
 >
-> - Steve
+> I can see from honeypot-logs that they are still using this vulnerability. I did not yet find Joomla-references for this. If this is too old vulnerability for CVE or wrong reason please notify me.
 >
->
-> On Mon, 21 Nov 2011, Kurt Seifried wrote:
->
->>
->>> CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS
->>> vulnerability:
->>> http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html
->>> and I have already contacted MITRE twice to get another one marked as
->>> obsolete.
->>>
->>>
->>> Best regards,
->>> Henri Salo
->>
->> Ok CVE-2011-2710 is public in CVE and NVD:
->> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2710, and
->> CVE-2011-2708 is still marked as reserved so we should probably quietly
->> take CVE-2011-2708 out back and shoot it.
->>
->> CC'ing mitre.
->>
->> --
->>
->> -Kurt Seifried / Red Hat Security Response Team
->>
->>
+> - Henri Salo
+It's never to late for a CVE! This issue doesn't appear to be 
+CVE-2006-3481 so I guess it gets a new CVE. Please use CVE-2006-7247 for 
+this issue.
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
 
