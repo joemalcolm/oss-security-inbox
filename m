@@ -1,21 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/9
-Message-ID: <20110516215859.GD2430@redhat.com>
-Date: Mon, 16 May 2011 15:59:00 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: polarssl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/5
+Message-ID: <4EF64D5D.90605@redhat.com>
+Date: Sun, 25 Dec 2011 06:08:29 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: kseifried@...hat.com
+CC: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to this issue?
+On 12/24/2011 04:52 AM, Kurt Seifried wrote:
+> On 12/22/2011 09:44 AM, Moritz Muehlenhoff wrote:
+>> Hi,
+>> there were a two Linux-related CVE requests/discussions, which
+>> didn't end up in an assignment:
+>>
+>> 1: rose: Add length checks to CALL_REQUEST parsing
+>> e0bccd315db0c2f919e7fcf9cb60db21d9986f52 in mainline
+>>
+>> It was decided that this should be split, but without a final
+>> resulting CVE assignment:
+>> http://www.openwall.com/lists/oss-security/2011/04/12/1
+> 
+> Can anyone shed more light on this for me? (links to fixes/etc.?).
 
-http://polarssl.org/trac/wiki/SecurityAdvisory201101
-https://bugzilla.redhat.com/show_bug.cgi?id=705187
+I have forwarded you the email thread. This patch refers to the changes
+made by Ben Hutchings.
 
-Possible man-in-the-middle in Diffie Hellman key exchange, fixed in
-0.14.2.
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Eugene
