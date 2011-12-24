@@ -1,40 +1,227 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/30
-Message-ID: <20110403230631.GG10158@openwall.com>
-Date: Mon, 4 Apr 2011 03:06:31 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/1
+Message-ID: <4EF51A59.9080401@redhat.com>
+Date: Fri, 23 Dec 2011 17:18:33 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Moritz Mühlenhoff <jmm@...til.org>
+Subject: Re: CVE request: simplesamlphp / Typo3
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 04:17:32PM -0400, Dan Rosenberg wrote:
-> I'd prefer if any private replacement for vendor-sec were either:
-> 
-> 1. Strictly limited to vendor coordination of embargoed security
-> issues (with membership reflecting this purpose), or
+On 12/23/2011 02:58 PM, Moritz Mühlenhoff wrote:
+> AFAICS all the other Typo3 issues from 2011 have IDs assiged:
+> TYPO3-CORE-SA-2011-004: CVE-2011-4614
+> TYPO3-CORE-SA-2011-003: CVE-2011-3584
+> TYPO3-CORE-SA-2011-002: CVE-2011-3583
+>
+> Cheers,
+>         Moritz
+Good =) I assumed if no 001, then nothing later, plus they are all 
+reserved (where/how did they get assigned?). Odd. Anyways here at the CVE's:
 
-This is what we have with the list I've setup today.
+http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-001/
 
-> 2. Opened up to researchers who have contributed knowledge and
-> findings in this area, and are deemed trustworthy by other list
-> subscribers or some other community opinion.
+=================================================
+Vulnerable subcomponent #1: Frontend
+Vulnerability Type: Cross-Site Scripting
+Severity: High
+Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:N/I:P/A:N/E:U/RL:OF/RC:C (What's 
+that?)
+Problem Description: Failing to properly sanitize URL parameters the 
+"JSwindow" property of the typolink function is susceptible to 
+Cross-Site Scripting. The problem does not exist if the third party 
+extension "realurl" is used and it's configuration parameter 
+"doNotRawUrlEncodeParameterNames" is set to FALSE (default).
+Solution: Update to the TYPO3 versions 4.3.12, 4.4.9 or 4.5.4 that fix 
+the problem described.
+Credits: Credits go to Marco Bresch who discovered and reported the issue.
 
-We may setup a separate list for this later.
+CVE-2011-4626
 
-> In other words, it doesn't make sense to me to use "member of the old
-> vendor-sec" as the only requirement for subscription, as some of the
-> old members may not be eligible depending on the purpose of the new
-> list.
+=================================================
 
-Right.  There will be a lot fewer people on the new list now.  This
-requirement is mostly just to start with what's obviously a subset of
-the old vendor-sec's members.
+Vulnerable subcomponent #2: Backend
+Vulnerability Type: Information Disclosure
+Severity: Low
+Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:P/I:N/A:N/E:U/RL:OF/RC:C (What's 
+that?)
+Problem Description: For authentication attempts with wrong credentials, 
+TYPO3 sends different HTTP-Headers depending if provided username or 
+provided password is wrong.
+Solution: Update to the TYPO3 versions 4.3.12, 4.4.9 or 4.5.4 that fix 
+the problem described.
+Credits: Credits go to Sebastian Schinzel who discovered and reported 
+the issue.
 
-> I understand that this is just a preliminary solution, but I
-> think the question of membership should be sorted out sooner rather
-> than later.
+CVE-2011-4627
 
-Indeed.  I think my decision to limit this to Linux distro security
-contacts takes care of that for this one list.
+=================================================
+Vulnerability Type: Authentication Delay Bypass
+Severity: Low
+Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:P/I:N/A:N/E:U/RL:OF/RC:C (What's 
+that?)
+Problem Description: The TYPO3 Backend login has a delay for 
+authentication attempts with wrong credentials. By using a crafted 
+request, an attacker is able to bypass the madantory delay in such cases.
+Solution: Update to the TYPO3 versions 4.3.12, 4.4.9 or 4.5.4 that fix 
+the problem described.
+Credits: Credits go to Sebastian Schinzel who discovered and reported 
+the issue.
 
-Alexander
+CVE-2011-4628
+
+=================================================
+
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:N/I:P/A:N/E:U/RL:OF/RC:C (What's 
+that?)
+Problem Description: Failing to properly sanitize an username the admin 
+panel is susceptible to Cross-Site Scripting.
+Solution: Update to the TYPO3 versions 4.3.12, 4.4.9 or 4.5.4 that fix 
+the problem described.
+Credits: Credits go to TYPO3 Security Team member Georg Ringer who 
+discovered and reported the issue.
+
+CVE-2011-4629
+
+=================================================
+
+
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:H/Au:S/C:P/I:P/A:N/E:U/RL:OF/RC:C (What's 
+that?)
+Problem Description: Failing to properly sanitize a content element's 
+link attribute the browse_links wizard is susceptible to Cross-Site 
+Scripting. Exploiting requires an attacker to prepare a content element 
+and trick its victim to open the browse_links wizard for this record.
+Solution: Update to the TYPO3 versions 4.3.12, 4.4.9 or 4.5.4 that fix 
+the problem described.
+Credits: Credits go to TYPO3 Security Team member Georg Ringer who 
+discovered and reported the issue.
+
+CVE-2011-4630
+
+=================================================
+
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:H/Au:S/C:P/I:P/A:N/E:U/RL:OF/RC:C (What's 
+that?)
+Problem Description: Failing to properly sanitize a page title the 
+system extension recycler is susceptible to Cross-Site Scripting. 
+Exploiting requires an attacker to prepare a page and deleted page and 
+trick its victim to visit the recycler.
+Solution: Update to the TYPO3 versions 4.3.12, 4.4.9 or 4.5.4 that fix 
+the problem described.
+Credits: Credits go to TYPO3 Core Team member Steffen Gebert who 
+discovered and reported the issue.
+
+CVE-2011-4631
+
+=================================================
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:H/Au:S/C:P/I:P/A:N/E:U/RL:OF/RC:C (What's 
+that?)
+Problem Description: Failing to properly sanitize a page title the 
+tcemain flash message is susceptible to Cross-Site Scripting. Exploiting 
+requires an attacker to prepare a page and trick its victim to copy/move 
+the prepared page.
+Solution: Update to the TYPO3 versions 4.3.12, 4.4.9 or 4.5.4 that fix 
+the problem described.
+Credits: Credits go to TYPO3 Security Team member Georg Ringer who 
+discovered and reported the issue.
+
+CVE-2011-4632
+
+=================================================
+Vulnerability Type: Information Disclosure
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:P/I:N/A:N/E:U/RL:OF/RC:C (What's 
+that?)
+Problem Description: A TYPO3 Backend user (editor) is able to see 
+workspace changes of records in any languages - even for those he hasn't 
+got granted access to.
+Solution: Update to the TYPO3 versions 4.5.4 that fix the problem described.
+Credits: Credits go to TYPO3 Workspaces Team member Michael Klapperer 
+who discovered and reported the issue.
+
+CVE-2011-4900
+
+=================================================
+Vulnerability Type: Information Disclosure
+Severity: High
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:C/I:P/A:N/E:U/RL:OF/RC:C (What's 
+that?)
+Problem Description: Using "getText" feature on headlines of content 
+elements it is possible to retrieve arbitrary data from TYPO3 database. 
+The vulnerability results from an insecure configuration in 
+css_styled_content system extension.
+Solution: Update to the TYPO3 versions 4.3.12, 4.4.9 or 4.5.4 that fix 
+the problem described.
+Important Note: Having an adjusted fontTag property in the provided 
+TypoScript (e.g. lib.stdheader.10.1.fontTag) or depending on headlines 
+passed through fontTag might result in unexpected rendering results. 
+Headline rendering is now handled through dataWrap (e.g. 
+lib.stdheader.10.1.dataWrap). Make sure to check your TypoScript before 
+the update and check the wesite rendering after it!
+Credits: Credits go to Mads Chr. Olesen who discovered and reported the 
+issue.
+
+CVE-2011-4901
+
+=================================================
+Vulnerability Type: Unserialize() vulnerability
+Severity: High
+Suggested CVSS v2.0: AV:N/AC:M/Au:S/C:P/I:C/A:N/E:U/RL:OF/RC:C (What's 
+that?)
+Problem Description: Special user input of BE editors is treated as 
+serialized data and is deserialized by TYPO3. This allows BE editors to 
+delete any arbitrary file the webserver has access to.
+Solution: Update to the TYPO3 versions 4.3.12, 4.4.9 or 4.5.4 that fix 
+the problem described.
+Credits: Credits go to TYPO3 Security Team member Marcus Krause who 
+discovered and reported the issue.
+
+CVE-2011-4902
+
+=================================================
+Vulnerable subcomponent #3: Exposed API
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:P/I:P/A:N/E:U/RL:OF/RC:C (What's 
+that?)
+Problem Description: The RemoveXSS function fails to sanitize an attack 
+vector that works in Internet Explorer version 6.
+Solution: Update to the TYPO3 versions 4.3.12, 4.4.9 or 4.5.4 that fix 
+the problem described.
+Credits: Credits go to Vladimir Podkovanov who discovered and reported 
+the issue.
+
+CVE-2011-4903
+
+=================================================
+Vulnerability Type: Missing Access Control
+Severity: High
+Suggested CVSS v2.0: AV:N/AC:M/Au:S/C:P/I:P/A:N/E:U/RL:OF/RC:C (What's 
+that?)
+Problem Description: ExtDirect endpoints are not associated with TYPO3 
+backend modules and such TYPO3 access control is not applied on 
+ExtDirect calls. This allows arbitrary BE users to consume any available 
+ExtDirect endpoint service.
+Solution: Update to the TYPO3 versions 4.4.9 or 4.5.4 that fix the 
+problem described.
+Note: From now on ExtDirect components need to be registered through 
+t3lib_extMgm::registerExtDirectComponent() function call.
+Credits: Credits go to TYPO3 Security Team member Helmut Hummel who 
+discovered and reported the issue.
+
+CVE-2011-4904
+
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
