@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/8
-Message-ID: <972812882.1798855.1312404342488.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 3 Aug 2011 16:45:42 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, coley@...us.mitre.org
-Subject: Re: CVE Request: foomatic-gui
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/4
+Message-ID: <4EF649D6.9050404@redhat.com>
+Date: Sun, 25 Dec 2011 05:53:26 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: kseifried@...hat.com
+CC: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2899
+>> 2: /proc/$PID/{sched,schedstat} information leak
+>> Vasiliy Kulikov of OpenWall posted a demo exploit.
+>> http://openwall.com/lists/oss-security/2011/11/05/3
+>>
+>> AFAICS no CVE ID was assigned to this?
+> 
+> I believe we are not assigning CVE's for these types of proc related
+> issues, some discussion was had:
+> 
+> https://lkml.org/lkml/2011/2/7/368
+> 
+> http://www.google.com/custom?domains=lkml.org&q=%2Fproc%2F+leaks
+> 
+> but I'm not sure what the outcome is. CC'ing Eugene Teo.
 
-Thanks.
+IIRC, it's an issue but there's no resolution as existing code may break.
 
--- 
-    JB
+There are also,
+/proc/{interrupts, stat}
+https://lkml.org/lkml/2011/11/7/340
 
------ Original Message -----
-> Hello,
-> 
-> foomatic-gui improperly escapes certain hostnames, resulting in a
-> remote
-> arbitrary command execution vulnerability.
-> 
-> Ref.:
-> https://bugs.launchpad.net/ubuntu/+source/foomatic-gui/+bug/811119
-> http://cvs.savannah.gnu.org/viewvc/foomatic-gui/foomatic/pysmb.py?root=foomatic-gui&r1=1.2&r2=1.3
-> http://packages.debian.org/changelogs/pool/main/f/foomatic-gui/foomatic-gui_0.7.9.5/changelog
-> 
-> Could a CVE please be assigned to this issue?
-> 
-> Thanks,
-> 
-> Marc.
-> 
-> 
-> --
-> Marc Deslauriers
-> Ubuntu Security Engineer | http://www.ubuntu.com/
-> Canonical Ltd. | http://www.canonical.com/
+/dev/pts/, /dev/tty*
+https://lkml.org/lkml/2011/11/7/355
+
+I have not checked the status of these issues. Vasiliy, kindly shed some
+light.
+
+Happy holidays.
+
+Eugene
