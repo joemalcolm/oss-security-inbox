@@ -1,53 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/09/5
-Message-ID: <4EE2338C.5080505@redhat.com>
-Date: Fri, 09 Dec 2011 09:13:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Ludwig Nussel <ludwig.nussel@...e.de>
-Subject: Re: CVE Request: icu out of bounds access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/4
+Message-ID: <4EF649D6.9050404@redhat.com>
+Date: Sun, 25 Dec 2011 05:53:26 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: kseifried@...hat.com
+CC: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
+>> 2: /proc/$PID/{sched,schedstat} information leak
+>> Vasiliy Kulikov of OpenWall posted a demo exploit.
+>> http://openwall.com/lists/oss-security/2011/11/05/3
+>>
+>> AFAICS no CVE ID was assigned to this?
+> 
+> I believe we are not assigning CVE's for these types of proc related
+> issues, some discussion was had:
+> 
+> https://lkml.org/lkml/2011/2/7/368
+> 
+> http://www.google.com/custom?domains=lkml.org&q=%2Fproc%2F+leaks
+> 
+> but I'm not sure what the outcome is. CC'ing Eugene Teo.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+IIRC, it's an issue but there's no resolution as existing code may break.
 
-On 12/09/2011 01:31 AM, Ludwig Nussel wrote:
-> Hi,
->
-> An of bounds access was reported in icu:
-> http://bugs.icu-project.org/trac/ticket/8984
->
-> Unfortunately the chrome bug is private but the commit says "buffer
-> overflow":
-> http://codereview.chromium.org/8822005/patch/6001/7002
->
-> I suppose a negative len could end up in the strncpy at the end of the
-> function causing a buffer overflow.
->
-> cu
-> Ludwig
->
-Please use CVE-2011-4599 for this issue.
+There are also,
+/proc/{interrupts, stat}
+https://lkml.org/lkml/2011/11/7/340
 
-- -- 
+/dev/pts/, /dev/tty*
+https://lkml.org/lkml/2011/11/7/355
 
-- -Kurt Seifried / Red Hat Security Response Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
+I have not checked the status of these issues. Vasiliy, kindly shed some
+light.
 
-iQIcBAEBAgAGBQJO4jOMAAoJEBYNRVNeJnmTQSQP/1xlN0UhL6VLlXoA4crkUluR
-URvaK/ZD9GYB9T/cX7gGzemhKjTeEQquKR9lA9nn1CTKowrqtG1//l9TKHJ53vjw
-d4IQKrjf8pIv9IZeWMT1hIpT+8o63od1mMXtqAME05T5pCxALC8/YbMa5zTZNyYc
-mGrlhk1uUeldVnKEXslbjk03pbp1T4ybV7oq8k3G59kwz0xaAz1LGuKP05aTXf7a
-h4Qr0ct+Dsczw/544Gnjx91SsM7p7nEfRT5eKppqCVXMpDxpMbT6KXJh9Nj42Vkz
-GJRtVtvygeapAoES6d/OuCWYmTf7X/H85Gu1042DINRYaDdjfTucDD1GMN8W/ZZD
-ThryHpkcef32xc+ZGQF7MLF07CnSu+mcH/Ed8yBqPEfE1V0l6+p9crWAEJm+/Blz
-5Z7kUCH93mSjnV0tGNl7FJ8luSZEpDNrnrJ4rT0N0npv2s9JvUXP72odrzhOGg3i
-3E2yw2/DRNyItsPlS2PtlJHu53YZhz2rKbu9LBXepD7FsOOyDZJL+O7Uu9XT383P
-8ZBou0VCI6Lcw+zBMtAdpOCeWVRkgfjZ+n5LrhWFtJfH4bYwgUCkh8koSMdMTVsz
-bdbm+9XSj+m03X/otk3URNUa2tcCfGPZVbS/2yM3+EgDsB4xPXeXvXTEwZWQHKsS
-hNEOOLNnDRzndZWa1qV3
-=V1JK
------END PGP SIGNATURE-----
+Happy holidays.
 
+Eugene
