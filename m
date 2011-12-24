@@ -1,25 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/1
-Message-ID: <4D66F47D.2030604@redhat.com>
-Date: Fri, 25 Feb 2011 08:14:53 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/2
+Message-ID: <20111224150540.GA29606@foo.fgeek.fi>
+Date: Sat, 24 Dec 2011 17:05:40 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>
-Subject: Re: CVE request: kernel: CAP_SYS_MODULE bypass via CAP_NET_ADMIN
+Subject: CVE-request 2006: Joomla Web Link Submission title Parameter SQL injection
 Content-Type: text/plain; charset=utf-8
 
-On 02/25/2011 07:54 AM, Kees Cook wrote:
-> Hi,
->
-> While not as bad as CVE-2010-4661 (unprivileged module loading)
-> I'd like to get a CVE assigned for this issue for tracking purposes:
-> https://lkml.org/lkml/2011/2/24/203
->
-> Basically "ifconfig $module" will load any module as long as the process
-> has CAP_NET_ADMIN (ignoring CAP_SYS_MODULE).
+Is it possible to get CVE assigned for very old Joomla-issue?
 
-Please use CVE-2011-1019.
+http://osvdb.org/show/osvdb/26626
+http://secunia.com/advisories/20746/
+http://www.exploit-db.com/exploits/1922/
+http://www.securityfocus.com/archive/1/437496
 
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+I can see from honeypot-logs that they are still using this vulnerability. I did not yet find Joomla-references for this. If this is too old vulnerability for CVE or wrong reason please notify me.
+
+- Henri Salo
