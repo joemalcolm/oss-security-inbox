@@ -1,65 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/16
-Message-ID: <20110629215334.GA15871@openwall.com>
-Date: Thu, 30 Jun 2011 01:53:34 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/7
+Message-ID: <4EF7763D.8040402@redhat.com>
+Date: Sun, 25 Dec 2011 12:15:09 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Michael Matz <matz@...e.de>, Ludwig Nussel <ludwig.nussel@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+CC: Henri Salo <henri@...v.fi>, security@...mla.org
+Subject: Re: CVE-request for three 2009 Joomla issues
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 28, 2011 at 02:05:35PM +0200, Michael Matz wrote:
-> Thanks, so, let me see if I got this: the original password contained some 
-> 8bit chars (0xff or not doesn't matter), the buggy hashes lead to easily 
-> finding passwords with the same hash, some of those conflicting passwords 
-> might have 0xff chars in them, and _those_ then will sometimes still 
-> produce a hash conflict even with the fixed blowfish code.
+On 12/24/2011 05:27 PM, Henri Salo wrote:
+> I didn't find CVE-identifiers for these issues:
+>
+> 1) Joomla! TinyMCE Editor Tiny Browser Plugin File Upload Arbitrary PHP Code Execution
+> http://osvdb.org/show/osvdb/56276
+> http://developer.joomla.org/security/news/301-20090722-core-file-upload.html
 
-The above is almost right, but not exactly.  Not all buggy hashes for
-passwords with 8-bit chars lead to easily finding other passwords with
-the same hash, but many do.
+Please use CVE-2011-4906 for this issue.
+>
+> 2) Joomla! Missing JEXEC Check Weakness Path Disclosure
+> http://osvdb.org/show/osvdb/56277
+> http://developer.joomla.org/security/news/302-20090722-core-missing-jexec-check.html
+Please use CVE-2011-4907 for this issue.
+>
+> 3) TinyBrowser Plugin for Joomla! upload.php folder Parameter Arbitrary File Upload
+> http://osvdb.org/show/osvdb/64578
+Please ue CVE-2011-4908 for this issue.
 
-Simple example:
+> Secunia advisory for three issues: http://secunia.com/advisories/35899/
+>
+> - Henri Salo
 
-With the buggy code, all of: "\xa3", "ab\xa3", and "\xff\xff\xa3"
-produce the same hash.
 
-With the fixed code, "\xff\xff\xa3" is the only easily found password
-that produces that same hash.
+-- 
 
-(This matches your understanding.)
+-Kurt Seifried / Red Hat Security Response Team
 
-No extra unauthorized access risk, OpenBSD compatible hash:
-
-With the buggy code, "\xa3" "ab" (3 chars total) produces a certain
-hash.  No other password may be easily found that produces the same hash.
-
-With the fixed code, the same password produces the same hash.  (So the
-user can log in.)
-
-No extra unauthorized access risk, OpenBSD incompatible hash:
-
-With the buggy code, "a\xa3" (2 chars total) produces a certain hash.
-No other password may be easily found that produces the same hash.
-
-With the fixed code, no password may be easily found that produces the
-same hash.  (So the user cannot log in.)
-
-Complicated example:
-
-With the buggy code, "1\xa3" "345" (5 chars total) produces a certain
-hash.  "\xff\xa3" "345" and some other strings produce the same hash.
-Among those other strings is "\xff\xa3" "34" "\xff\xff\xff\xa3" "345"
-(11 chars total).
-
-With the fixed code, "\xff\xa3" "345" no longer produces the same hash,
-but "\xff\xa3" "34" "\xff\xff\xff\xa3" "345" still does.
-
-> If so, treating passwords containing 0xff special seems sensible.
-
-Yes.  In "Simple" and "Complicated" examples above, an attacker wouldn't
-need to know/guess some of the original password's characters to log in,
-even after the code is fixed, unless we introduce special treatment of
-0xff chars.
-
-Alexander
