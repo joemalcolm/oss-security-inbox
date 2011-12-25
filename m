@@ -1,42 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/2
-Message-ID: <4EDBBDAF.3040706@redhat.com>
-Date: Sun, 04 Dec 2011 11:36:31 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/2
+Message-ID: <493030fa-0b5b-4665-8c10-e8da4813f9f9@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Sat, 24 Dec 2011 19:37:35 -0500 (EST)
+From: David Jorm <djorm@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>
-Subject: Re: CVE Request: ffmpeg
+Subject: CVE Request for Apache ActiveMQ DoS
 Content-Type: text/plain; charset=utf-8
 
-On 12/04/2011 04:06 AM, Marc Deslauriers wrote:
-> Hello,
->
-> This doesn't seem to have a CVE:
->
-> An error within the "svq1_decode_frame()" function
-> (libavcodec/svq1dec.c) can be exploited to corrupt memory.
->
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=4931c8f0f10bf8dedcf626104a6b85bfefadc6f2
->
-> http://secunia.com/advisories/46888/
-> http://archives.neohapsis.com/archives/bugtraq/2011-11/0148.html
->
->
-> Thanks,
->
-> Marc.
->
->
-The secunia page lists 3 CVE's and 4 issues with no mappings to CVE's to
-issues that I can see. Can you reply with the mapping information that
-you used to determine that this issue was not assigned a CVE (as opposed
-to one of the other issues)?. Also can you confirm or proove that these
-4 issues are all separate and that two of them have not been merged
-(thus obviating any need for a third CVE)? Thanks in advance. If anyone
-from Secunia is on this list I'd love to hear from you/any comments on
-this issue are more then welcome.
+A flaw in Apache ActiveMQ before 5.6.0 could allow a remote unauthenticated
+attacker to abuse the 'failover' feature, allowing them to trigger a denial of
+service against the broker service.  An attacker can issue multiple ActiveMQ
+openwire connection requests using the string 'failover:tcp://[IP]:61616', and
+due to the 'failure' mechanism, all TCP connections remain active even if a
+valid session is not created.  After a few thousand requests, a
+'java.net.SocketException: Too many open files' exception is triggered, leading
+to a freeze or crash of the broker (and possibly connected systems as well).
+
+Upstream bug:
+https://issues.apache.org/jira/browse/AMQ-3294
+
+Secunia advisory:
+http://secunia.com/advisories/47112
+
+Patch commits:
+http://svn.apache.org/viewvc?view=revision&revision=1209700
+http://svn.apache.org/viewvc?view=revision&revision=1211844
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
+David Jorm / Red Hat Security Response Team
 
