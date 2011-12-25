@@ -1,62 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/4
-Message-ID: <20110424113029.GB32248@openwall.com>
-Date: Sun, 24 Apr 2011 15:30:29 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/10
+Message-ID: <4EF78A61.3000604@redhat.com>
+Date: Sun, 25 Dec 2011 13:41:05 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: CVE-2011-4862 is not BSD-specific
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 20, 2011 at 10:19:01PM -0700, Drew Yao wrote:
-> It seems that you're not opposed to Apple's inclusion on the list. Would you reconsider and allow us on the list?
+On 12/25/2011 10:14 AM, Florian Weimer wrote:
+> This is just a heads-up: CVE-2011-4862, a pre-authentication buffer
+> overflow in telnetd recently fixed by FreeBSD is not BSD-specific.  It
+> seems to have been added at MIT when the BSD telnetd was Kerberized,
+> and it ended up in the Heimdal recryptofication of Kerberos (from
+> where FreeBSD got it) and later in GNU inetutils.  I have reproduced a
+> pre-authentication segfault with both versions (as shipped by Debian).
+>
+> The telnetd from netkit does not appear to be affected.
+Good write up at:
 
-Personally, I'd be happy to invite Apple, *BSD's, and Google security
-folks to have a sit at the table.  Since Google doesn't release a Linux
-distro for others to use, this precedent probably means subscribing
-MontaVista and Wind River without any requirements on them making
-advisories, updates, or whatever public.
+http://thexploit.com/secdev/a-textbook-buffer-overflow-a-look-at-the-freebsd-telnetd-code/
 
-However:
+-- 
 
-- It'd be difficult to draw the line.  What about Solaris distros, etc?
+-Kurt Seifried / Red Hat Security Response Team
 
-- Only two issues were brought up on the new list so far, and as far as
-I can tell both are Linux specific.
-
-- We've already seen some opposition to MontaVista with its current
-non-public advisories being on the list.  And I assume the same would
-apply to Wind River.
-
-- Sorry, I am not speaking of just Apple here.  I am still trying to
-avoid/postpone the "elite club" thing, where current members would
-vouch for or veto new members.  Maybe we'll be forced to arrive at that
-eventually, but I think this would be a drawback.
-
-Thus, I am leaning towards setting up a second list, not limited to
-Linux.  And maybe a third list, for "closed" Linux vendors.  Then
-message senders will be able to decide who they want to inform.  (If
-there's any demand, we may also setup a list excluding Linux, but so far
-I haven't seen any interest in that.)
-
-> In an earlier mail, you mentioned 
-> "For just one vendor, we can be CC'ing you whenever appropriate, with no list needed." We ship a lot of open source software, and outside of Apple, very few people would be qualified to know whether or not we ship any given piece of OSS, especially since we sometimes add new projects to the next, unreleased version of Mac OS X.
-
-Fair enough.  I'll e-mail you with names of the two components mentioned
-on the new list so far such that you can confirm they're indeed of no
-relevance to you.
-
-> Regarding the question of where to draw the line for allowing non-Linux distros to the table, I'd say we've earned our place by sending numerous internally discovered bugs to vendor-sec, as well as coordinating disclosure of open source projects like CUPS that we maintain.
-
-Yes, you did.  However, as soon as we lift the "was a vendor-sec member"
-requirement for membership of the new list, which we'll need to, we'll
-have subscription requests from vendors who couldn't have possibly
-earned their place in this specific way.  So we won't be able to use
-this as a requirement, or doing so would be unreasonable.
-
-> We'd want both me and <Jeffrey Czerniak <jeffcz@...le.com> on the list, both using the PGP key found at https://www.apple.com/support/security/pgp/ 
-
-Thanks for the info.  I'll save your message to a separate folder, to
-return to it when setting up a suitable list or/and when we have some
-other solution or policy.
-
-Alexander
