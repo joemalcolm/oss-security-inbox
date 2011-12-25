@@ -1,19 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/11
-Message-ID: <20110729153634.GA11615@openwall.com>
-Date: Fri, 29 Jul 2011 19:36:34 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/5
+Message-ID: <87mxag7ew7.fsf@mid.deneb.enyo.de>
+Date: Sun, 25 Dec 2011 18:14:00 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE-2011-4862 is not BSD-specific
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 29, 2011 at 05:28:44PM +0200, Tomas Hoger wrote:
-> Can you add me to the list?  I've been on the vendor-sec@ via Red Hat
-> expander.
-> 
-> key id: 7BF4A180
-> fingerprint: E0B1 2194 B60C 4DD5 77DA  59A8 C0A3 D1DC 7BF4 A180
+This is just a heads-up: CVE-2011-4862, a pre-authentication buffer
+overflow in telnetd recently fixed by FreeBSD is not BSD-specific.  It
+seems to have been added at MIT when the BSD telnetd was Kerberized,
+and it ended up in the Heimdal recryptofication of Kerberos (from
+where FreeBSD got it) and later in GNU inetutils.  I have reproduced a
+pre-authentication segfault with both versions (as shipped by Debian).
 
-Added.
-
-Alexander
+The telnetd from netkit does not appear to be affected.
