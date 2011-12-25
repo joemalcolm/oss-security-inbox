@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/5
-Message-ID: <20110317172812.GZ5174@redhat.com>
-Date: Thu, 17 Mar 2011 11:28:13 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/7
+Message-ID: <4EF7763D.8040402@redhat.com>
+Date: Sun, 25 Dec 2011 12:15:09 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for Asterisk flaws
+CC: Henri Salo <henri@...v.fi>, security@...mla.org
+Subject: Re: CVE-request for three 2009 Joomla issues
 Content-Type: text/plain; charset=utf-8
 
-Two flaws were fixed in Asterisk:
+On 12/24/2011 05:27 PM, Henri Salo wrote:
+> I didn't find CVE-identifiers for these issues:
+>
+> 1) Joomla! TinyMCE Editor Tiny Browser Plugin File Upload Arbitrary PHP Code Execution
+> http://osvdb.org/show/osvdb/56276
+> http://developer.joomla.org/security/news/301-20090722-core-file-upload.html
 
-AST-2011-003: http://downloads.asterisk.org/pub/security/AST-2011-003.pdf
-- resource exhaustion DoS in Asterisk Manager Interface
+Please use CVE-2011-4906 for this issue.
+>
+> 2) Joomla! Missing JEXEC Check Weakness Path Disclosure
+> http://osvdb.org/show/osvdb/56277
+> http://developer.joomla.org/security/news/302-20090722-core-missing-jexec-check.html
+Please use CVE-2011-4907 for this issue.
+>
+> 3) TinyBrowser Plugin for Joomla! upload.php folder Parameter Arbitrary File Upload
+> http://osvdb.org/show/osvdb/64578
+Please ue CVE-2011-4908 for this issue.
 
-AST-2011-004: http://downloads.asterisk.org/pub/security/AST-2011-003.pdf
-- DoS in TCP/TLS server due to NULL ptr deref
+> Secunia advisory for three issues: http://secunia.com/advisories/35899/
+>
+> - Henri Salo
 
-Could CVE names be assigned to these issues?
-
-Thanks!
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+
+-Kurt Seifried / Red Hat Security Response Team
+
