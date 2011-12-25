@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/1
-Message-ID: <4DFEA775.2070909@redhat.com>
-Date: Mon, 20 Jun 2011 09:50:45 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/8
+Message-ID: <4EF7769B.5010906@redhat.com>
+Date: Sun, 25 Dec 2011 12:16:43 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: inet_diag: fix inet_diag_bc_audit()
+CC: Henri Salo <henri@...v.fi>, security@...mla.org
+Subject: Re: CVE-request for three 2009 Joomla issues (second part)
 Content-Type: text/plain; charset=utf-8
 
-[PATCH] inet_diag: fix inet_diag_bc_audit()
+On 12/25/2011 07:37 AM, Henri Salo wrote:
+> Can I get three CVEs assigned for these issues:
+>
+> 1) "Input passed via the "HTTP_REFERER" is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
+> http://developer.joomla.org/security/news/298-20090604-core-frontend-xss-httpreferer-not-properly-filtered.html
+> http://osvdb.org/show/osvdb/55589
+Please use CVE-2011-4909 for this issue.
+>
+> 2) "Input passed via the URL is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
+> http://developer.joomla.org/security/news/299-20090605-core-frontend-xss-phpself-not-properly-filtered.html
+> http://osvdb.org/show/osvdb/55590
+Please use CVE-2011-4910 for this issue.
+>
+> 3) "A security issue exists due to certain files missing the check for JEXEC, which can lead to the disclosure of path information."
+> http://developer.joomla.org/security/news/300-20090606-core-missing-jexec-check.html (different than 302-20090722-core-missing-jexec-check.html)
+> http://osvdb.org/show/osvdb/55591
+Please use CVE-2011-4911 for this issue.
 
-A malicious user or buggy application can inject code and trigger an
-infinite loop in inet_diag_bc_audit()
+> Secunia advisory: http://secunia.com/advisories/35668/
+>
+> - Henri Salo
 
-Also make sure each instruction is aligned on 4 bytes boundary, to avoid
-unaligned accesses.
 
-Reported-by: Dan Rosenberg <drosenberg@...curity.com>
+-- 
 
-http://thread.gmane.org/gmane.linux.network/197206/focus=197386
-http://patchwork.ozlabs.org/patch/100857/
-https://bugzilla.redhat.com/show_bug.cgi?id=714536
+-Kurt Seifried / Red Hat Security Response Team
 
-Thanks, Eugene
