@@ -1,44 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/11
-Message-ID: <Pine.GSO.4.64.1105091522240.1528@faron.mitre.org>
-Date: Mon, 9 May 2011 15:26:01 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/6
+Message-ID: <4EF775BC.2010201@redhat.com>
+Date: Sun, 25 Dec 2011 12:13:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request : client-side file creation via XSLT in Webkit
+CC: David Jorm <djorm@...hat.com>
+Subject: Re: CVE Request for Apache ActiveMQ DoS
 Content-Type: text/plain; charset=utf-8
 
-
-Nicolas,
-
-After deeper investigation, this appears to be CVE-2011-1425, which was 
-requested by you and assigned on March 14 (hopefully with email 
-notification to you), and published through CVE on April 2 or 3 after an 
-xmlsec announcement 
-http://www.aleksey.com/pipermail/xmlsec/2011/009120.html
-
-CVE-2011-1425 points to both changeset 79159 and Webkit bug 52688.
-
-Are you talking about a different XSLT file-overwrite issue than 
-CVE-2011-1425?
-
-- Steve
-
-
-On Mon, 9 May 2011, Nicolas Gr�goire wrote:
-
+On 12/24/2011 05:37 PM, David Jorm wrote:
+> A flaw in Apache ActiveMQ before 5.6.0 could allow a remote unauthenticated
+> attacker to abuse the 'failover' feature, allowing them to trigger a denial of
+> service against the broker service.  An attacker can issue multiple ActiveMQ
+> openwire connection requests using the string 'failover:tcp://[IP]:61616', and
+> due to the 'failure' mechanism, all TCP connections remain active even if a
+> valid session is not created.  After a few thousand requests, a
+> 'java.net.SocketException: Too many open files' exception is triggered, leading
+> to a freeze or crash of the broker (and possibly connected systems as well).
 >
-> The bug was opened on January 18 :
-> https://bugs.webkit.org/show_bug.cgi?id=52688 (restricted)
+> Upstream bug:
+> https://issues.apache.org/jira/browse/AMQ-3294
 >
-> A patch is available since February 20 :
-> http://trac.webkit.org/changeset/79159 (public)
+> Secunia advisory:
+> http://secunia.com/advisories/47112
 >
-> Given some recent mail exchanges with Apple, they still not have
-> affected a CVE to this issue. Could you please allocate one, in order
-> for me to have an easier job communicating with the numerous impacted
-> vendors (many Linux distributions, RIM, Maxthon, ...) ?
+> Patch commits:
+> http://svn.apache.org/viewvc?view=revision&revision=1209700
+> http://svn.apache.org/viewvc?view=revision&revision=1211844
 >
-> Regards,
-> Nicolas Grégoire
->
->
+Please use CVE-2011-4905 for this issue.
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
