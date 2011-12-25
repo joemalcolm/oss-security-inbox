@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/28/1
-Message-ID: <20110528001152.GT12539@genesis.frugalware.org>
-Date: Sat, 28 May 2011 02:11:52 +0200
-From: Miklos Vajna <vmiklos@...galware.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/8
+Message-ID: <4EF7769B.5010906@redhat.com>
+Date: Sun, 25 Dec 2011 12:16:43 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Henri Salo <henri@...v.fi>, security@...mla.org
+Subject: Re: CVE-request for three 2009 Joomla issues (second part)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 06, 2011 at 09:12:02PM +0400, Solar Designer <solar@...nwall.com> wrote:
-> While we're at it, can you please create entries for Frugalware at:
-> 
-> http://oss-security.openwall.org/wiki/vendors
-> http://oss-security.openwall.org/wiki/distro-patches
-> 
-> and then maintain them (update the links, etc)?  This would be an
-> uncontroversially positive outcome of this discussion thread. ;-)
+On 12/25/2011 07:37 AM, Henri Salo wrote:
+> Can I get three CVEs assigned for these issues:
+>
+> 1) "Input passed via the "HTTP_REFERER" is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
+> http://developer.joomla.org/security/news/298-20090604-core-frontend-xss-httpreferer-not-properly-filtered.html
+> http://osvdb.org/show/osvdb/55589
+Please use CVE-2011-4909 for this issue.
+>
+> 2) "Input passed via the URL is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
+> http://developer.joomla.org/security/news/299-20090605-core-frontend-xss-phpself-not-properly-filtered.html
+> http://osvdb.org/show/osvdb/55590
+Please use CVE-2011-4910 for this issue.
+>
+> 3) "A security issue exists due to certain files missing the check for JEXEC, which can lead to the disclosure of path information."
+> http://developer.joomla.org/security/news/300-20090606-core-missing-jexec-check.html (different than 302-20090722-core-missing-jexec-check.html)
+> http://osvdb.org/show/osvdb/55591
+Please use CVE-2011-4911 for this issue.
 
-Sure, done. (Sorry, looks like I totally missed this mail, just found it
-when I searched back an older one. :) )
+> Secunia advisory: http://secunia.com/advisories/35668/
+>
+> - Henri Salo
 
-Thanks.
 
-Content of type "application/pgp-signature" skipped
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
