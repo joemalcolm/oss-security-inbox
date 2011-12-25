@@ -1,44 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/2
-Message-ID: <4EF3506B.2090707@redhat.com>
-Date: Thu, 22 Dec 2011 08:44:43 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/5
+Message-ID: <87mxag7ew7.fsf@mid.deneb.enyo.de>
+Date: Sun, 25 Dec 2011 18:14:00 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Rainer Gerhards <rgerhards@...scon.com>, Tomas Heinrich <theinric@...hat.com>
-Subject: Re: CVE Request -- rsyslog -- DoS due integer signedness error while extending rsyslog counted string buffer
+Subject: CVE-2011-4862 is not BSD-specific
 Content-Type: text/plain; charset=utf-8
 
-On 12/22/2011 05:19 AM, Jan Lieskovsky wrote:
->
-> An integer signedness error, leading to heap based buffer overflow was 
-> found in
-> the way the imfile module of rsyslog, an enhanced system logging and 
-> kernel
-> message trapping daemon, processed text files larger than 64 KB. When the
-> imfile rsyslog module was enabled, a local attacker could use this 
-> flaw to
-> cause denial of service (rsyslogd daemon hang) via specially-crafted 
-> message,
-> to be logged.
->
-> Upstream bug report:
-> [1] http://bugzilla.adiscon.com/show_bug.cgi?id=221
->
-> Upstream patch:
-> [2] 
-> http://git.adiscon.com/?p=rsyslog.git;a=commit;h=6bad782f154b7f838c7371bf99c13f6dc4ec4101
->
-> References:
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=769822
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-Please use CVE-2011-4623 for this issue.
+This is just a heads-up: CVE-2011-4862, a pre-authentication buffer
+overflow in telnetd recently fixed by FreeBSD is not BSD-specific.  It
+seems to have been added at MIT when the BSD telnetd was Kerberized,
+and it ended up in the Heimdal recryptofication of Kerberos (from
+where FreeBSD got it) and later in GNU inetutils.  I have reproduced a
+pre-authentication segfault with both versions (as shipped by Debian).
 
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+The telnetd from netkit does not appear to be affected.
