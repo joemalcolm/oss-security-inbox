@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/3
-Message-ID: <b603fa5f-571c-451f-ae31-ea1391b83ef2@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 22 Sep 2011 08:44:13 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/1
+Message-ID: <20111225002724.GA31068@foo.fgeek.fi>
+Date: Sun, 25 Dec 2011 02:27:24 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: PunBB multiple XSS issues
+Cc: security@...mla.org
+Subject: CVE-request for three 2009 Joomla issues
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3371.
+I didn't find CVE-identifiers for these issues:
 
-Thanks.
+1) Joomla! TinyMCE Editor Tiny Browser Plugin File Upload Arbitrary PHP Code Execution
+http://osvdb.org/show/osvdb/56276
+http://developer.joomla.org/security/news/301-20090722-core-file-upload.html
 
--- 
-    JB
+2) Joomla! Missing JEXEC Check Weakness Path Disclosure
+http://osvdb.org/show/osvdb/56277
+http://developer.joomla.org/security/news/302-20090722-core-missing-jexec-check.html
 
+3) TinyBrowser Plugin for Joomla! upload.php folder Parameter Arbitrary File Upload
+http://osvdb.org/show/osvdb/64578
 
------ Original Message -----
-> Can I get CVE-identifier for this issue.
-> 
-> Original post: http://seclists.org/fulldisclosure/2011/Sep/158
-> Bug-report to developers:
-> http://punbb.informer.com/forums/topic/24427/multiple-xss-vulnerabilities/
-> Fixed on:
-> https://github.com/punbb/punbb/commit/dd50a50a2760f10bd2d09814e30af4b36052ca6d
-> PunBB 1.3.6 released:
-> https://github.com/downloads/punbb/punbb/punbb-1.3.6.zip
-> 
-> Best regards,
-> Henri Salo
-> 
+Secunia advisory for three issues: http://secunia.com/advisories/35899/
+
+- Henri Salo
