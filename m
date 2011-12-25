@@ -1,57 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/7
-Message-ID: <1260331906.531698.1314732529761.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 30 Aug 2011 15:28:49 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/1
+Message-ID: <20111225002724.GA31068@foo.fgeek.fi>
+Date: Sun, 25 Dec 2011 02:27:24 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, geoff@...ttered.org, dwyer@...lab.ee.mu.oz.au, jgifford@...ksmart.net, coley <coley@...re.org>
-Subject: Re: Security issue in hammerhead
+Cc: security@...mla.org
+Subject: CVE-request for three 2009 Joomla issues
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3204 for this.
+I didn't find CVE-identifiers for these issues:
 
-Thanks.
+1) Joomla! TinyMCE Editor Tiny Browser Plugin File Upload Arbitrary PHP Code Execution
+http://osvdb.org/show/osvdb/56276
+http://developer.joomla.org/security/news/301-20090722-core-file-upload.html
 
--- 
-    JB
+2) Joomla! Missing JEXEC Check Weakness Path Disclosure
+http://osvdb.org/show/osvdb/56277
+http://developer.joomla.org/security/news/302-20090722-core-missing-jexec-check.html
 
------ Original Message -----
-> A security bug was reported against hammerhead in Ubuntu. You are
-> being
-> emailed as the upstream contact. Please keep
-> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
-> 
-> This issue should be considered public and has not yet been assigned a
-> CVE.
-> 
-> Details from the public bug follow:
-> https://launchpad.net/bugs/826679
-> 
-> ----
-> From the reporter:
-> 
-> "hammerhead blindly writes to to /tmp/hammer.log without prior checks.
-> It is possible to put a symbolic link at /tmp/hammer.log pointing at
-> another file - that hammerhead will then end up appending data into.
-> (it appears that hammerhead uses the file location as specified
-> in /etc/hammerhead/hh.conf - which in debian/ubuntu
-> is /tmp/hammer.log)."
-> ----
-> 
-> A quick check shows that HH_LOG and REPORT_LOG are indeed being
-> unconditionally opened with 'fopen(..., "a+")' in src/hammerhead.cc.
-> 
-> Thanks in advance for your cooperation in coordinating a fix for this
-> issue,
-> 
-> Jamie Strandboge
-> 
-> [1] oss-security@...ts.openwall.com is a public mailing list for
-> people to collaborate on security vulnerabilities and coordinate
-> security updates.
-> 
-> PS - I couldn't find a security contact for hammerhead, so emailed to
-> those I could find in AUTHORS.
-> 
-> --
-> Jamie Strandboge | http://www.canonical.com
+3) TinyBrowser Plugin for Joomla! upload.php folder Parameter Arbitrary File Upload
+http://osvdb.org/show/osvdb/64578
+
+Secunia advisory for three issues: http://secunia.com/advisories/35899/
+
+- Henri Salo
