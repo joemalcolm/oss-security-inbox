@@ -1,61 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/6
-Message-ID: <4EE1146C.2090808@redhat.com>
-Date: Thu, 08 Dec 2011 12:47:56 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/2
+Message-ID: <493030fa-0b5b-4665-8c10-e8da4813f9f9@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Sat, 24 Dec 2011 19:37:35 -0500 (EST)
+From: David Jorm <djorm@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jeff Mitchell <mitchell@....org>
-Subject: Re: Disputing CVE-2011-4122
+Subject: CVE Request for Apache ActiveMQ DoS
 Content-Type: text/plain; charset=utf-8
 
-On 12/08/2011 07:11 AM, Jeff Mitchell wrote:
-> On 12/07/2011 11:26 AM, Kurt Seifried wrote:
->>> One could assume that kcheckpass should do the validation. However, the
->>> PAM documentation makes no mention of what a service name is supposed to
->>> look like, and consequently it must be treated as opaque by the
->>> application code. Therefore all validation must be expected to be done
->>> by the library, and failure to do so must be seen as a bug in the
->>> library exclusively.
->>
->> Can you provide a link to the documentation?
->
-> http://pubs.opengroup.org/onlinepubs/8329799/pam_start.htm
->
-> Thanks,
-> Jeff
->
-Looking around I did find:
+A flaw in Apache ActiveMQ before 5.6.0 could allow a remote unauthenticated
+attacker to abuse the 'failover' feature, allowing them to trigger a denial of
+service against the broker service.  An attacker can issue multiple ActiveMQ
+openwire connection requests using the string 'failover:tcp://[IP]:61616', and
+due to the 'failure' mechanism, all TCP connections remain active even if a
+valid session is not created.  After a few thousand requests, a
+'java.net.SocketException: Too many open files' exception is triggered, leading
+to a freeze or crash of the broker (and possibly connected systems as well).
 
-http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/3/html/Reference_Guide/s1-pam-config-files.html
+Upstream bug:
+https://issues.apache.org/jira/browse/AMQ-3294
 
-=====================
-15.2.1. PAM Service Files
+Secunia advisory:
+http://secunia.com/advisories/47112
 
-Each PAM-aware application or service has a file within the /etc/pam.d/
-directory. Each file within this directory bears the name of the service
-for which it controls access.
-
-It is up to the PAM-aware program to define its service name and install
-its own PAM configuration file in the /etc/pam.d/ directory. For
-example, the login program defines its service name as login and
-installs the /etc/pam.d/login PAM configuration file.
-=====================
-
-so to some degree it is defined: the service name must fit legal file
-name constraints, but this means things like length, but on ext4 for
-example this means 256 chars max, and only NULL and "/" are disallowed,
-to say nothing of other file systems like xfs (any bytes except null)
-and Joliet (CDFS, max 64 characters, unicode supported[1])
-
-So perhaps going for a lowest common denominator of common filesystems
-you'd expect to find /etc/ on (so ext4, xfs, maybe Joliet for cd based
-systems?) as a filter would be appropriate? And poking the PAM people to
-refine the specification a little bit? Thoughts or comments anyone?
-
-[1] http://en.wikipedia.org/wiki/Comparison_of_file_systems
+Patch commits:
+http://svn.apache.org/viewvc?view=revision&revision=1209700
+http://svn.apache.org/viewvc?view=revision&revision=1211844
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+David Jorm / Red Hat Security Response Team
 
