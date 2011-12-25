@@ -1,26 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/6
-Message-ID: <662783063.126228.1294081837675.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 3 Jan 2011 14:10:37 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/9
+Message-ID: <4EF776E5.1010600@redhat.com>
+Date: Sun, 25 Dec 2011 12:17:57 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley  <coley@...re.org>
-Subject: Re: CVE request: wordpress before 3.0.4 XSS
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Joomla com_mailto automated mail timeout bypass (2009)
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Details here:
-> 
-> http://wordpress.org/news/2010/12/3-0-4-update/
-> http://core.trac.wordpress.org/changeset/17172/branches/3.0
-> http://www.heise.de/newsticker/meldung/Security-Bugfix-fuer-Wordpress-1161909.html
-> 
-
-Use CVE-2010-4536 for these (from reading the text, it's multiple XSS flaws).
-
-Thanks.
+On 12/25/2011 07:41 AM, Henri Salo wrote:
+> Can I get CVE-identifier assigned for this issue:
+>
+> http://developer.joomla.org/security/news/303-20090723-core-com-mailto-timeout-issue.html
+> http://osvdb.org/show/osvdb/56714
+> http://secunia.com/advisories/36097/
+>
+> - Henri Salo
+Please use CVE-2011-4912 for this issue.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
