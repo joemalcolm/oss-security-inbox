@@ -1,34 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/8
-Message-ID: <20110519185232.GM32435@foo.fgeek.fi>
-Date: Thu, 19 May 2011 21:52:32 +0300
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/4
+Message-ID: <20111225144135.GB571@foo.fgeek.fi>
+Date: Sun, 25 Dec 2011 16:41:35 +0200
 From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Dovecot releases
+Subject: CVE-request: Joomla com_mailto automated mail timeout bypass (2009)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 19, 2011 at 02:43:51PM -0400, Josh Bressers wrote:
-> 
-> 
-> ----- Original Message -----
-> > Henri Salo wrote:
-> > > Should these two get CVE-identifier(s)?
-> > >
-> > > http://dovecot.org/pipermail/dovecot/2011-May/059085.html
-> > > http://dovecot.org/pipermail/dovecot/2011-May/059086.html
-> > 
-> > http://hg.dovecot.org/dovecot-1.1/rev/3698dfe0f21c
-> > 
-> 
-> As best as I can tell, just the header NULL issue deserves a CVE id.
-> CVE-2011-1929
-> 
-> Thanks.
-> 
-> -- 
->     JB
+Can I get CVE-identifier assigned for this issue:
 
-Thank you for your response. I wonder why Dovecot-project does not request these by themselves. I notified the mailing-list about new CVE-identifier.
+http://developer.joomla.org/security/news/303-20090723-core-com-mailto-timeout-issue.html
+http://osvdb.org/show/osvdb/56714
+http://secunia.com/advisories/36097/
 
-Best regards,
-Henri Salo
+- Henri Salo
