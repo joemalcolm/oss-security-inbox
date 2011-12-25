@@ -1,16 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/16/3
-Message-ID: <20111016134811.GA19558@foo.fgeek.fi>
-Date: Sun, 16 Oct 2011 16:48:11 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/9
+Message-ID: <4EF776E5.1010600@redhat.com>
+Date: Sun, 25 Dec 2011 12:17:57 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Wrong MLIST link in CVE-2011-3783
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Joomla com_mailto automated mail timeout bypass (2009)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 16, 2011 at 04:40:58PM +0300, Henri Salo wrote:
-> In http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-3783 there is MLIST-link: http://www.openwall.com/lists/oss-security/2011/06/27/6 which I think is wrong.
+On 12/25/2011 07:41 AM, Henri Salo wrote:
+> Can I get CVE-identifier assigned for this issue:
+>
+> http://developer.joomla.org/security/news/303-20090723-core-com-mailto-timeout-issue.html
+> http://osvdb.org/show/osvdb/56714
+> http://secunia.com/advisories/36097/
+>
+> - Henri Salo
+Please use CVE-2011-4912 for this issue.
 
-Or did someone start assigning CVE-identifiers for everything what has been found in http://code.google.com/p/inspathx/ and this MLIST-link is referer in all of those issues? :)
+-- 
 
-Best regards,
-Henri Salo
+-Kurt Seifried / Red Hat Security Response Team
+
