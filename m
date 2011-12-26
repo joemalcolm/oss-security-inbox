@@ -1,35 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/2
-Message-ID: <4DBE7DA6.20807@redhat.com>
-Date: Mon, 02 May 2011 15:17:18 +0530
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/26/1
+Message-ID: <4EF8206F.5080804@redhat.com>
+Date: Mon, 26 Dec 2011 12:51:19 +0530
 From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, Richard Hughes <rhughes@...hat.com>, Ray Strode <rstrode@...hat.com>, lsof@...ata.co.uk, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- gnome-desktop3: Switching users dialog does not lock the screen for the original user account
+Subject: Re: CVE-2011-4862 is not BSD-specific
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve, Josh,
+On 12/25/2011 10:44 PM, Florian Weimer wrote:
+> This is just a heads-up: CVE-2011-4862, a pre-authentication buffer
+> overflow in telnetd recently fixed by FreeBSD is not BSD-specific.  It
+> seems to have been added at MIT when the BSD telnetd was Kerberized,
+> and it ended up in the Heimdal recryptofication of Kerberos (from
+> where FreeBSD got it) and later in GNU inetutils.  I have reproduced a
+> pre-authentication segfault with both versions (as shipped by Debian).
+>
+> The telnetd from netkit does not appear to be affected.
 
-It turned out that this issue is with gnome-screensaver-dialog, and this
-does not kill the screensaver at all.
-Hence is not a security issue.
+The patch seems to be applicable though, probably you need to do 
+something else to make it segfault?
 
-Can we please have this CVE rejected? Thanks.
-
-References:
-Original report:
-https://bugzilla.redhat.com/show_bug.cgi?id=697199
-
-Upstream bug report:
-https://bugzilla.gnome.org/show_bug.cgi?id=648234
-
-
-
-On 04/21/2011 02:15 AM, Josh Bressers wrote:
-> Please use CVE-2011-1596
-> 
-> Thanks.
-> 
 
 
 -- 
