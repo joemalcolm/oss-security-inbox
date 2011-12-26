@@ -1,24 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/6
-Message-ID: <20110718173638.GC18284@redhat.com>
-Date: Mon, 18 Jul 2011 11:36:39 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/26/2
+Message-ID: <87d3bb4qxj.fsf@mid.deneb.enyo.de>
+Date: Mon, 26 Dec 2011 10:34:32 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2011-2520: flaw in system-config-firewall's usage of pickle allows privilege escalation
+Subject: Re: CVE-2011-4862 is not BSD-specific
 Content-Type: text/plain; charset=utf-8
 
-Hi folks.  I'm not sure if anyone else uses system-config-firewall and
-system-config-printer, but we had a report of a privilege escalation
-flaw that could allow a user with access to run these commands to
-elevate their privileges due to insecure use of the python pickle
-module.
+* Huzaifa Sidhpurwala:
 
-The solution is to use JSON rather than pickle.  The details and a patch
-for CVE-2011-2520 are available in our bugzilla:
+>> The telnetd from netkit does not appear to be affected.
+>
+> The patch seems to be applicable though, probably you need to do
+> something else to make it segfault?
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2520
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Our version of netkit (which we once got from
+<ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/>) lacks Kerberos
+support entirely.
