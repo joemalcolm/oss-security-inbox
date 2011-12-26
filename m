@@ -1,16 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/4
-Message-ID: <20111225144135.GB571@foo.fgeek.fi>
-Date: Sun, 25 Dec 2011 16:41:35 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/26/1
+Message-ID: <4EF8206F.5080804@redhat.com>
+Date: Mon, 26 Dec 2011 12:51:19 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: Joomla com_mailto automated mail timeout bypass (2009)
+Subject: Re: CVE-2011-4862 is not BSD-specific
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier assigned for this issue:
+On 12/25/2011 10:44 PM, Florian Weimer wrote:
+> This is just a heads-up: CVE-2011-4862, a pre-authentication buffer
+> overflow in telnetd recently fixed by FreeBSD is not BSD-specific.  It
+> seems to have been added at MIT when the BSD telnetd was Kerberized,
+> and it ended up in the Heimdal recryptofication of Kerberos (from
+> where FreeBSD got it) and later in GNU inetutils.  I have reproduced a
+> pre-authentication segfault with both versions (as shipped by Debian).
+>
+> The telnetd from netkit does not appear to be affected.
 
-http://developer.joomla.org/security/news/303-20090723-core-com-mailto-timeout-issue.html
-http://osvdb.org/show/osvdb/56714
-http://secunia.com/advisories/36097/
+The patch seems to be applicable though, probably you need to do 
+something else to make it segfault?
 
-- Henri Salo
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
