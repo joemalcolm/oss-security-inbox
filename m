@@ -1,18 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/11
-Message-ID: <20110414144051.GM18543@redhat.com>
-Date: Thu, 14 Apr 2011 08:40:52 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/26/3
+Message-ID: <4EF84066.3060805@redhat.com>
+Date: Mon, 26 Dec 2011 15:07:42 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mediawiki 1.16.4, incomplete fix of CVE-2011-1578
+Subject: Re: CVE-2011-4862 is not BSD-specific
 Content-Type: text/plain; charset=utf-8
 
-Looks as though Mediawiki 1.16.3 did not fully fix the CVE-2011-1578
-issue (XSS), so 1.16.4 has been released:
+On 12/26/2011 03:04 PM, Florian Weimer wrote:
+> * Huzaifa Sidhpurwala:
+>
+>>> The telnetd from netkit does not appear to be affected.
+>>
+>> The patch seems to be applicable though, probably you need to do
+>> something else to make it segfault?
+>
+> Our version of netkit (which we once got from
+> <ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/>) lacks Kerberos
+> support entirely.
 
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000097.html
+ From what i see, if your telnetd can do encrypted connections, then it 
+is affected.
 
-Could a CVE name get assigned to this?
+However netkit telnet clients dont have support for encryption, so using 
+the telnet client out of box is not going to work.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
