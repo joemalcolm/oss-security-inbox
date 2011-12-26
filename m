@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/4
-Message-ID: <250031570.149827.1303760258713.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 25 Apr 2011 15:37:38 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: Eugene Teo <eugene@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: missing socket check in can/bcm release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/26/2
+Message-ID: <87d3bb4qxj.fsf@mid.deneb.enyo.de>
+Date: Mon, 26 Dec 2011 10:34:32 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2011-4862 is not BSD-specific
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On 04/21/2011 09:55 AM, Eugene Teo wrote:
-> > On 04/21/2011 07:45 AM, Eugene Teo wrote:
-> >> On 04/21/2011 04:52 AM, Josh Bressers wrote:
-> >>> Please use CVE-2011-1598
-> >>
-> >> Updated patch:
-> >> http://permalink.gmane.org/gmane.linux.network/192974
-> >
-> > Correction: s/Updated patch//. This patch is for a similar issue but
-> > for can/raw release. I rather group these two patches with
-> > CVE-2011-1598 than to have another name assigned for it. But I'm fine
-> > either way.
-> 
-> On second thoughts, let's have another CVE assigned.
-> 
-> can/bcm release: credit Dave Jones
-        This one is already CVE-2011-1598
+* Huzaifa Sidhpurwala:
 
-> can/raw release: credit Oliver Hartkopp
-        This one is now CVE-2011-1748
+>> The telnetd from netkit does not appear to be affected.
+>
+> The patch seems to be applicable though, probably you need to do
+> something else to make it segfault?
 
-Thanks.
-
--- 
-    JB
+Our version of netkit (which we once got from
+<ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/>) lacks Kerberos
+support entirely.
