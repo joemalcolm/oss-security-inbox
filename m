@@ -1,35 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/8
-Message-ID: <4E41B997.5080506@redhat.com>
-Date: Wed, 10 Aug 2011 06:49:59 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: Two kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/27/2
+Message-ID: <20111227172604.GA11555@albatros>
+Date: Tue, 27 Dec 2011 21:26:04 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Eugene Teo <eteo@...hat.com>
+Cc: kseifried@...hat.com, oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:
-> Hi,
-> the following two issues also seem to warrant a CVE assignment:
+Hi,
+
+On Sun, Dec 25, 2011 at 05:53 +0800, Eugene Teo wrote:
+> >> 2: /proc/$PID/{sched,schedstat} information leak
+> >> Vasiliy Kulikov of OpenWall posted a demo exploit.
+> >> http://openwall.com/lists/oss-security/2011/11/05/3
+> >>
+> >> AFAICS no CVE ID was assigned to this?
+...
+> IIRC, it's an issue but there's no resolution as existing code may break.
 > 
-> 1. staging: comedi: fix infoleak to userspace
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=819cbb120eaec7e014e5abd029260db1ca8c5735
+> There are also,
+> /proc/{interrupts, stat}
+> https://lkml.org/lkml/2011/11/7/340
 > 
-> (It's a staging driver and I'm unsure whether we have assigned
->  CVE IDs for staging drivers in the past. OTOH, this driver
->  is enabled in the Debian 6.0 kernel)
+> /dev/pts/, /dev/tty*
+> https://lkml.org/lkml/2011/11/7/355
 
-We don't as code from the staging drivers are usually are substandard
-and usually not supported.
+Correct, neither of these are fixed yet :-(
 
-Btw, can you please mail me a copy of the /boot/config of the most
-recent Debian kernel for my reference?
 
-> 2. [SCSI] pmcraid: reject negative request size
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
+/proc/$pid/* vuln will be fixed in the following patch series by introducing
+a restricted procfs permission mode:
 
-I don't have a PMC Sierra MaxRAID controller, so I am not sure what's
-the permissions give to /dev/pmcsas%u. I'm checking. Meanwhile, use
-CVE-2011-2906 for this issue.
+https://lkml.org/lkml/2011/11/19/41
+https://lkml.org/lkml/2011/12/11/62
 
-Thanks, Eugene
+Currently these series are in the -mm tree.
+
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
