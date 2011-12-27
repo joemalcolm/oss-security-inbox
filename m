@@ -1,26 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/6
-Message-ID: <loom.20110824T050953-567@post.gmane.org>
-Date: Wed, 24 Aug 2011 03:12:36 +0000 (UTC)
-From: David Jorm <djorm@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: cifs: singedness issue in CIFSFindNext()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/27/2
+Message-ID: <20111227172604.GA11555@albatros>
+Date: Tue, 27 Dec 2011 21:26:04 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Eugene Teo <eteo@...hat.com>
+Cc: kseifried@...hat.com, oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo <eugene@...> writes:
+Hi,
 
-> Fix this by making the name_len an unsigned value in CIFSFindNext.
+On Sun, Dec 25, 2011 at 05:53 +0800, Eugene Teo wrote:
+> >> 2: /proc/$PID/{sched,schedstat} information leak
+> >> Vasiliy Kulikov of OpenWall posted a demo exploit.
+> >> http://openwall.com/lists/oss-security/2011/11/05/3
+> >>
+> >> AFAICS no CVE ID was assigned to this?
+...
+> IIRC, it's an issue but there's no resolution as existing code may break.
 > 
-> http://www.spinics.net/lists/linux-cifs/msg03950.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=732869
+> There are also,
+> /proc/{interrupts, stat}
+> https://lkml.org/lkml/2011/11/7/340
 > 
-> Thanks, Eugene
-> 
-> 
+> /dev/pts/, /dev/tty*
+> https://lkml.org/lkml/2011/11/7/355
 
-Please use CVE-2011-3191.
+Correct, neither of these are fixed yet :-(
 
-Thanks
---
-David Jorm / Red Hat Security Response Team
 
+/proc/$pid/* vuln will be fixed in the following patch series by introducing
+a restricted procfs permission mode:
+
+https://lkml.org/lkml/2011/11/19/41
+https://lkml.org/lkml/2011/12/11/62
+
+Currently these series are in the -mm tree.
+
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
