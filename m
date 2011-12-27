@@ -1,59 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/4
-Message-ID: <1298515589.25507.9.camel@apollo>
-Date: Wed, 23 Feb 2011 21:46:29 -0500
-From: Jon Oberheide <jon@...rheide.org>
-To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, Timo Warns <warns@...-sense.de>
-Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/27/3
+Message-ID: <20111227232509.GA832@openwall.com>
+Date: Wed, 28 Dec 2011 03:25:09 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Jeff Mitchell <mitchell@....org>
+Cc: oss-security@...ts.openwall.com, cve@...re.org, ossi@....org
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
-> On 02/24/2011 03:59 AM, Josh Bressers wrote:
-> > ----- Original Message -----
-> >>
-> >> The kernel automatically evaluates partition tables of storage devices.
-> >> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
-> >> a bug that allows to overflow the kernel heap. It may be possible to
-> >> escalate privileges by exploiting this bug.
-> >>
-> >> (This bug is distinct from the LDM bug reported by Eugene Teo on
-> >> 2011-02-23.)
-> >>
-> >> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
-> >> CONFIG_LDM_PARTITION needs to be set.
-> >>
-> >
-> > Can you point to a commit message or something else that is public? It's
-> > not clear how this differs from Eugene's request.
-> 
-> As far as I can tell, it's not public yet. Timo will follow-up once his 
-> patch is accepted.
+On Mon, Dec 26, 2011 at 11:39:55PM -0500, Jeff Mitchell wrote:
+> So kcheckpass, at least for the moment, punts all of this down to
+> OpenPAM. Is it *nice*? No. Is it *valid*? Yes, unless OpenPAM changes
+> its programming guide to require sanity checking of inputs at a higher
+> level (and then it should still do its own checking anyways).
 
-The advisory Timo posted mentioned ldm_frag_add() so it's public for all
-practical purposes at this point:
+Sure, but is it valid and not a vulnerability when installing a package
+(containing kcheckpass) unexpectedly (for a sysadmin) lets any user on
+the system invoke any of the configured PAM stacks, some of which may
+have side-effects?
 
-static bool ldm_frag_add (const u8 *data, int size, struct list_head
-*frags)
-{
-...
-        f = kmalloc (sizeof (*f) + size*num, GFP_KERNEL);
-        if (!f) {
-                ldm_crit ("Out of memory.");
-                return false;
-        }
-...
-        memcpy (f->data+rec*(size-VBLK_SIZE_HEAD)+VBLK_SIZE_HEAD, data,
-size);
-        return true;
-}
+I think it is not valid, and I think it is a vulnerability on its own,
+albeit a relatively minor one, regardless of PAM's pam_start() service
+name directory traversal possibility or lack thereof.
 
-Regards,
-Jon Oberheide
+In other words, I say that kcheckpass is vulnerable (in this different
+way) even on systems that don't use OpenPAM (or that use fixed OpenPAM).
 
--- 
-Jon Oberheide <jon@...rheide.org>
-GnuPG Key: 1024D/F47C17FE
-Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+> That's the basis for the maintainer wanting to challenge this CVE. Even
+> if everyone agrees that kcheckpass should do some kind of filtering of
+> service names, the fact remains that OpenPAM should have been doing its
+> own sanity checking anyways (since it should never simply trust user
+> input), and OpenPAM wasn't. If it wasn't kcheckpass that exposed this
+> problem, it would eventually have been something else.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Like I said before, this definitely makes some sense to me.  The service
+name was not supposed to be user input, though.  Normally, the same
+application provides the service name and cares about the authentication
+result, so it would not reasonably let the user choose the service name
+arbitrarily (as that would also let the user affect the authentication
+result in possibly unintended ways).  We have a rare exception here,
+where the authentication result actually does not matter to kcheckpass
+itself, but matters to another application - one in control of the
+supplied service name.  OK, that's a peculiar exception and a somewhat
+valid use case, and I fully support the OpenPAM hardening change that
+this prompted.
+
+> I'll happily pass your comments along to the kcheckpass maintainer, and
+> he indicated to me during our discussions that some level of filtering
+> would probably be appropriate, but this CVE is due to OpenPAM's lack of
+> sanity checking and blaming the program that exposes it via valid (if
+> ugly) usage scenarios is misguided.
+
+We need two CVE ids then - one for OpenPAM, the other for the kcheckpass
+issue (namely, letting a user run arbitrary PAM stacks, including those
+that a sysadmin may never have intended for the user to be able to run).
+
+Makes sense?
+
+Alexander
