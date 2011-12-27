@@ -1,29 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/4
-Message-Id: <20110118122109.722d85ba.michael.s.gilbert@gmail.com>
-Date: Tue, 18 Jan 2011 12:21:09 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/27/3
+Message-ID: <20111227232509.GA832@openwall.com>
+Date: Wed, 28 Dec 2011 03:25:09 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Jeff Mitchell <mitchell@....org>
+Cc: oss-security@...ts.openwall.com, cve@...re.org, ossi@....org
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 18 Jan 2011 16:53:51 +0000, Tim Brown wrote:
-> On Tuesday 18 January 2011 16:40:42 Michael Gilbert wrote:
-> > On Tue, 18 Jan 2011 12:22:05 +0000, Tim Brown wrote:
-> > > Guys,
-> > > 
-> > > What's the best way for an open source project to request a CVE prior to
-> > > disclosure?  I'm more that happy to coordinate the disclosure with
-> > > distributions where appropriate if that makes a difference.
-> > 
-> > You're looking for vendor-sec:
-> > http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
-> 
-> That's a closed list though isn't it?  If anyone wants to sponsor me on to it, 
-> I'm willing to put my OpenVAS hat on and jump through the necessary hoops :)
+On Mon, Dec 26, 2011 at 11:39:55PM -0500, Jeff Mitchell wrote:
+> So kcheckpass, at least for the moment, punts all of this down to
+> OpenPAM. Is it *nice*? No. Is it *valid*? Yes, unless OpenPAM changes
+> its programming guide to require sanity checking of inputs at a higher
+> level (and then it should still do its own checking anyways).
 
-There are some notes at the bottom of the above page that describe what
-to do if you are not a vendor-sec member.
+Sure, but is it valid and not a vulnerability when installing a package
+(containing kcheckpass) unexpectedly (for a sysadmin) lets any user on
+the system invoke any of the configured PAM stacks, some of which may
+have side-effects?
 
-Best wishes,
-Mike
+I think it is not valid, and I think it is a vulnerability on its own,
+albeit a relatively minor one, regardless of PAM's pam_start() service
+name directory traversal possibility or lack thereof.
+
+In other words, I say that kcheckpass is vulnerable (in this different
+way) even on systems that don't use OpenPAM (or that use fixed OpenPAM).
+
+> That's the basis for the maintainer wanting to challenge this CVE. Even
+> if everyone agrees that kcheckpass should do some kind of filtering of
+> service names, the fact remains that OpenPAM should have been doing its
+> own sanity checking anyways (since it should never simply trust user
+> input), and OpenPAM wasn't. If it wasn't kcheckpass that exposed this
+> problem, it would eventually have been something else.
+
+Like I said before, this definitely makes some sense to me.  The service
+name was not supposed to be user input, though.  Normally, the same
+application provides the service name and cares about the authentication
+result, so it would not reasonably let the user choose the service name
+arbitrarily (as that would also let the user affect the authentication
+result in possibly unintended ways).  We have a rare exception here,
+where the authentication result actually does not matter to kcheckpass
+itself, but matters to another application - one in control of the
+supplied service name.  OK, that's a peculiar exception and a somewhat
+valid use case, and I fully support the OpenPAM hardening change that
+this prompted.
+
+> I'll happily pass your comments along to the kcheckpass maintainer, and
+> he indicated to me during our discussions that some level of filtering
+> would probably be appropriate, but this CVE is due to OpenPAM's lack of
+> sanity checking and blaming the program that exposes it via valid (if
+> ugly) usage scenarios is misguided.
+
+We need two CVE ids then - one for OpenPAM, the other for the kcheckpass
+issue (namely, letting a user run arbitrary PAM stacks, including those
+that a sysadmin may never have intended for the user to be able to run).
+
+Makes sense?
+
+Alexander
