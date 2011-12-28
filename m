@@ -1,82 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/1
-Message-Id: <20110715104744.9f8428bf.erikd@mega-nerd.com>
-Date: Fri, 15 Jul 2011 10:47:44 +1000
-From: Erik de Castro Lopo <erikd@...a-nerd.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Secunia Research <vuln@...unia.com>
-Subject: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/2
+Message-ID: <4EFAA673.9040404@redhat.com>
+Date: Tue, 27 Dec 2011 22:17:39 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
 
-Please CC me on all mails regarding this bug. I am not on the list
-where Dan Rosenberg wrote:
+Ok finally got this ironed out:
 
-> On Thu, Jul 14, 2011 at 2:49 AM, Erik de Castro Lopo
-> <erikd (AT) mega-nerd (DOT) com> wrote:
-> > Jan Lieskovsky wrote:
-> >
-> >> * *an integer overflow, leading to heap-based buffer overflow flaw was
-> >> found in the way libsndfile, library for reading and writing of sound
-> >> files, processed certain PARIS Audio Format (PAF) audio files with
-> >> crafted count of channels in the PAF file header. A remote attacker
-> >> could provided a specially-crafted PAF audio file, which once opened by
-> >> a local, unsuspecting user in an application, linked against libsndfile,
-> >> could lead to that particular application crash (denial of service),
-> >
-> > I agree with everything up to here.
-> >
-> >> or, potentially arbitrary code execution with the privileges of the
-> >> user running the application.
-> >
-> > but this is rubbish. The heap gets overwritten with zeros which would
-> > certainly lead to the application segfaulting. However, there is
-> > no way for arbitrary code to be executed on amy sane OS with proper
-> > memory protection.
 >
-> This is not a sound assumption. Any sort of partially controlled heap
-> corruption, even if the data that's being written isn't controllable
-> by an attacker, should be considered potentially exploitable. Modern
-> heap exploitation is alive and well - it's worth pointing out that a
-> recent remote vulnerability in Microsoft IIS FTPD that allowed for a
-> heap overflow of strictly 0xff bytes was shown to be exploitable,
-> contradicting Microsoft's claims that it could only cause denial of
-> service.
+> -------- Original Message --------
+> Subject: Re: [oss-security] CVE request: kernel: multiple issues in ROSE
+> Date: Tue, 5 Apr 2011 11:37:37 -0400
+> From: Dan Rosenberg<dan.j.rosenberg@...il.com>
+> Reply-To: oss-security@...ts.openwall.com
+> To: oss-security@...ts.openwall.com
+> CC: Steven M. Christey<coley@...us.mitre.org>,        Josh Bressers
+> <bressers@...hat.com>, Eugene Teo<eugene@...hat.com>
+>
+> Hi,
+>
+> This breakdown seems to make sense.  I'll do my best to break up the
+> issues below.
+>
+>> Dan, could you confirm that this breakdown makes sense?
+>>
+>> 1) buffer overflows (not validating length is<= the maximum)
+>>
+> 1) When parsing the FAC_NATIONAL_DIGIS facilities field, it's possible
+> for a remote host to provide more digipeaters than expected, resulting
+> in heap corruption.  Check against ROSE_MAX_DIGIS to prevent
+> overflows, and abort facilities parsing on failure.  It looks like
+> this will be CVE-2011-1493.
+This was assigned CVE-2011-1493, please continue to use.
 
-The code which caused the heap overflow was this:
+============================
+>
+> 2) When parsing the FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP
+> facilities fields, a remote host can provide a length of greater than
+> 20, resulting in a stack overflow of the callsign array.
+>> 2) use of negative signed integers in memcpy() and other operations 
+>> where
+>>    conversion creates a large unsigned integer, referred to as
+>>    "underflow"
+>>
+> 3) When parsing the FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP
+> facilities fields, a remote host can provide a length
+> of less than 10, resulting in an underflow in a memcpy size, causing a
+> kernel panic due to massive heap corruption.
+>
+> Note that 2) and 3) are solved by validating a single length field, so
+> maybe they should be grouped together?  The above three issues were
+> all found by me.
 
-    memset (ppaf24->samples, 0, ppaf24->samplesperblock * ppaf24->channels) ;
+For the issues 2) and 3) in FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP 
+please use CVE-2011-4913
 
-where it was the ppaf24->channels value that was not validated (and
-ppaf24->samplesperblock is always 10). In future versions of libsndfile
-ppaf24->samplesperblock will be replaced by a compile time constant
-value.
+============================
+>
+>> 3) any other types of problems that aren't covered by those two?  (The
+>>    length validation checks don't always have enough context in the 
+>> source
+>>    code).
+>>
+> 4) Ben Hutchings' fixes addressed multiple cases where the ROSE
+> protocol did not ensure that socket data being parsed wasn't being
+> read in from beyond the boundaries of the incoming socket buffer.  For
+> example, a received packet might provide a length field longer than
+> the amount of remaining data in the socket buffer.
+>
+> Looking at the patch, it doesn't appear that any memory corruption
+> would be caused by this, since the out-of-bounds data is still
+> validated by the parsing code.  I'd say the impact is likely limited
+> to possible information disclosure, if the contents of the
+> out-of-bounds memory could be inferred by the behavior of the protocol
+> during parsing.  It's theoretically possible (but very unlikely) that
+> this could cause read accesses to unmapped memory, which would cause a
+> DOS.
+>
+> -Dan
 
-That means that the heap is overwritten in blocks that are a multiple
-of 10 bytes which makes it significatly more difficult to exploit.
+For this please use CVE-2011-4914
 
-> Think about partially overwriting certain elements of heap
-> metadata, or even heap data, with zeroes. Suppose an application with
-> heavy function pointer usage was linked against libsndfile, and this
-> overflow allowed overwriting the least significant bytes of a function
-> pointer with zeroes and ultimately allowed for controlling execution
-> flow.
+============================
 
-For this instance of heap overflow (overwritten in multiples of 10 bytes
-with the base being 4 byte aligned), its only possible to zero the lowest
-2 bytes of a function pointer (assuming a little endian machine) if it
-happens to lie in exactly the right place.
+>
+>> We would need separate CVE's for the issues found by Dan versus the 
+>> issues
+>> found by Ben Hutchings.
+>>
+>> Arguably, #2 could probably be broken down further, but without enough
+>> source code context in the patches, it's not immediately clear.
+>>
+>> - Steve
+>>
 
-In terms of ease of exploitation, this one has to be in the very difficult
-basket.
 
-> It's better to be safe than sorry.
-
-That's why I rushed out a new release. I do take this seriously, but
-I do not like to see the threat exaggerated beyond reason.
-
-Erik
 -- 
-----------------------------------------------------------------------
-Erik de Castro Lopo
-http://www.mega-nerd.com/
+
+-Kurt Seifried / Red Hat Security Response Team
+
+
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
+
