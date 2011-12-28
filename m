@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/5
-Message-ID: <20110406133016.GX1293@yuggoth.org>
-Date: Wed, 6 Apr 2011 13:30:24 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/4
+Message-ID: <4EFAAD13.8010800@redhat.com>
+Date: Tue, 27 Dec 2011 22:45:55 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Eugene Teo <eteo@...hat.com>, Moritz Muehlenhoff <jmm@...ian.org>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 05, 2011 at 10:53:58AM -0600, Vincent Danen wrote:
-> * [2011-04-05 20:18:38 +0400] Solar Designer wrote:
-[...]
-> >I am comfortable about "Apple/FreeBSD/OpenBSD", but not about "etc." -
-> >so we'd be forced to introduce a vouching system (well, maybe we'd be
-> >forced to do that for Linux distros as well...)
-> 
-> "etc" more or less meant the other *BSDs, but I was being lazy.  =)
-> Maybe just NetBSD there.
-[...]
+My mistake, the /proc/interupts and /proc/stat should be two separate 
+CVE's, I misunderstood the issue.
 
-Probably worth pointing out, since I didn't see it mentioned
-elsewhere, that these distinctions are not so cut-and-dried as that.
-Debian, for example, is not only a GNU/Linux distribution but also a
-GNU/BSD distribution:
+===========
+>> IIRC, it's an issue but there's no resolution as existing code may 
+>> break.
+>>
+>> There are also,
+>> /proc/{interrupts, stat}
+>> https://lkml.org/lkml/2011/11/7/340 
 
-http://www.debian.org/ports/kfreebsd-gnu/
+Please use CVE-2011-4915 for the /proc/interupts issue
 
-(...and a GNU/Hurd distribution, though perpetually short of release
-status, and it's not like there are likely enough of those to
-warrant a separate ML of this nature anyway.)
+Please use CVE-2011-4917 for the /proc/stat issue
+
+
+
+>>
+>> /dev/pts/, /dev/tty*
+>> https://lkml.org/lkml/2011/11/7/355
+> Please use CVE-2011-4916 for this issue.
+>
+
+
 -- 
-{ IRL(Jeremy_Stanley); WWW(http://fungi.yuggoth.org/); PGP(43495829);
-WHOIS(STANL3-ARIN); SMTP(fungi@...goth.org); FINGER(fungi@...goth.org);
-MUD(kinrui@...arsis.mudpy.org:6669); IRC(fungi@....yuggoth.org#ccl);
-ICQ(114362511); YAHOO(crawlingchaoslabs); AIM(dreadazathoth); }
+
+-Kurt Seifried / Red Hat Security Response Team
+
