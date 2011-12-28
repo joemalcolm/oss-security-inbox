@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/36
-Message-ID: <20110404175333.GA13733@openwall.com>
-Date: Mon, 4 Apr 2011 21:53:33 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/1
+Message-ID: <4EFA8DB0.2060107@redhat.com>
+Date: Tue, 27 Dec 2011 20:32:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: closed-list
 Content-Type: text/plain; charset=utf-8
 
-Russ, Tomas -
+Can you add me to the linux and non-linux list[*]? I'm on Eugene Teo's team (within Red Hat SRT)
 
-On Mon, Apr 04, 2011 at 01:26:50PM -0400, R P Herrold wrote:
-> On Mon, 4 Apr 2011, Tomas Hoger wrote:
-> 
-> >Given the aim to keep the subscriber list very limited, this probably
-> >falls into a tentatively subscribed category too.  AFAIK, CentOS has
-> >rather few components that are not rebuilds of the RHEL SRPMs, the
-> >question is how often a v-s info was useful in the past in providing
-> >security updates for those extra packages.
-> 
-> Thanks for the post furthering the marketing goals of your 
-> corporate master; ...
+key id: 5E267993
+fingerprint: A90B F995 7350 148F 66BF  7554 160D 4553 5E26 7993
 
-FWIW, I found Tomas' posting appropriate and his question desirable,
-which is confirmed by your helpful response (starting with the second
-paragraph).  If not Tomas, others would (hopefully) have the same
-question, which was reasonable and it needed to be addressed in here.
+Thank you!
 
-So I'd like to thank both of you.  I only wish this did not result in
-that tone of Russ' response, but we can live with that.
+[*] also this way I can expedite CVE assignments
 
-Alexander
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
+
+View attachment "kseifried-redhat-com.pubkey.asc" of type "text/plain" (3126 bytes)
