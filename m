@@ -1,39 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/7
-Message-ID: <4E2D671A.9030603@redhat.com>
-Date: Mon, 25 Jul 2011 14:52:42 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- GLPI -- Properly blacklist some sensitive fields
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/4
+Message-ID: <4EFAAD13.8010800@redhat.com>
+Date: Tue, 27 Dec 2011 22:45:55 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Eugene Teo <eteo@...hat.com>, Moritz Muehlenhoff <jmm@...ian.org>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+My mistake, the /proc/interupts and /proc/stat should be two separate 
+CVE's, I misunderstood the issue.
 
-   it was found that GLPI, the Information Resource-Manager with an 
-additional Administration-Interface, did not properly blacklist certain 
-sensitive variables (like GLPI username and password). A remote attacker 
-could use this flaw to obtain access to plaintext form of these values 
-via specially-crafted HTTP POST request.
+===========
+>> IIRC, it's an issue but there's no resolution as existing code may 
+>> break.
+>>
+>> There are also,
+>> /proc/{interrupts, stat}
+>> https://lkml.org/lkml/2011/11/7/340 
 
-References:
-[1] http://www.glpi-project.org/spip.php?page=annonce&id_breve=237&lang=en
-[2] https://forge.indepnet.net/projects/glpi/versions/605
-[3] https://forge.indepnet.net/issues/3017
+Please use CVE-2011-4915 for the /proc/interupts issue
 
-Relevant patches:
-[4]  https://forge.indepnet.net/projects/glpi/repository/revisions/14951
-[5]  https://forge.indepnet.net/projects/glpi/repository/revisions/14952
-[6]  https://forge.indepnet.net/projects/glpi/repository/revisions/14954
-[7]  https://forge.indepnet.net/projects/glpi/repository/revisions/14955
-[8]  https://forge.indepnet.net/projects/glpi/repository/revisions/14956
-[9]  https://forge.indepnet.net/projects/glpi/repository/revisions/14957
-[10] https://forge.indepnet.net/projects/glpi/repository/revisions/14958
-[11] https://forge.indepnet.net/projects/glpi/repository/revisions/14960
-[12] https://forge.indepnet.net/projects/glpi/repository/revisions/14966
+Please use CVE-2011-4917 for the /proc/stat issue
 
-Could you allocate a CVE id for this?
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>>
+>> /dev/pts/, /dev/tty*
+>> https://lkml.org/lkml/2011/11/7/355
+> Please use CVE-2011-4916 for this issue.
+>
+
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
