@@ -1,23 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/6
-Message-ID: <20110819170835.GH1360@redhat.com>
-Date: Fri, 19 Aug 2011 11:08:35 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/3
+Message-ID: <4EFAAAE9.3030907@redhat.com>
+Date: Tue, 27 Dec 2011 22:36:41 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: stunnel 4.4x heap overflow flaw
+CC: Eugene Teo <eteo@...hat.com>, Moritz Muehlenhoff <jmm@...ian.org>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-As noted in the stunnel changelog, 4.42 corrects a heap overflow flaw
-that could lead to a DoS or remote execution of arbitrary code.
+On 12/24/2011 02:53 PM, Eugene Teo wrote:
+>>> 2: /proc/$PID/{sched,schedstat} information leak
+>>> Vasiliy Kulikov of OpenWall posted a demo exploit.
+>>> http://openwall.com/lists/oss-security/2011/11/05/3
+>>>
+>>> AFAICS no CVE ID was assigned to this?
+>> I believe we are not assigning CVE's for these types of proc related
+>> issues, some discussion was had:
+>>
+>> https://lkml.org/lkml/2011/2/7/368
+>>
+>> http://www.google.com/custom?domains=lkml.org&q=%2Fproc%2F+leaks
+>>
+>> but I'm not sure what the outcome is. CC'ing Eugene Teo.
+===========
+> IIRC, it's an issue but there's no resolution as existing code may break.
+>
+> There are also,
+> /proc/{interrupts, stat}
+> https://lkml.org/lkml/2011/11/7/340
+Please use CVE-2011-4915 for this issue.
+>
+> /dev/pts/, /dev/tty*
+> https://lkml.org/lkml/2011/11/7/355
+Please use CVE-2011-4916 for this issue.
 
-References:
 
-http://stunnel.org/?page=sdf_ChangeLog
-https://bugzilla.redhat.com/show_bug.cgi?id=732068
+>
+> I have not checked the status of these issues. Vasiliy, kindly shed some
+> light.
+>
+> Happy holidays.
+>
+> Eugene
 
-Could a CVE be assigned for this?
-
-Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+
+-Kurt Seifried / Red Hat Security Response Team
+
