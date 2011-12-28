@@ -1,34 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/11
-Message-ID: <20110621181525.GA7762@openwall.com>
-Date: Tue, 21 Jun 2011 22:15:25 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/3
+Message-ID: <4EFAAAE9.3030907@redhat.com>
+Date: Tue, 27 Dec 2011 22:36:41 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+CC: Eugene Teo <eteo@...hat.com>, Moritz Muehlenhoff <jmm@...ian.org>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Status of two Linux kernel issues w/o CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 21, 2011 at 12:09:16PM -0600, Vincent Danen wrote:
-> Ok, so taking a quick look at php-suhosin, we have:
-> 
-> ...
->  61 typedef unsigned int BF_word;
-> ...
-> 558     BF_word tmp;
-> 559 
-> 560     for (i = 0; i < BF_N + 2; i++) {
-> 561         tmp = 0;
-> 562         for (j = 0; j < 4; j++) {
-> 563             tmp <<= 8;
-> 564             tmp |= *ptr;
-> 
-> I'm assuming the above means it is vulnerable (unsigned int vs unsigned
-> char).
+On 12/24/2011 02:53 PM, Eugene Teo wrote:
+>>> 2: /proc/$PID/{sched,schedstat} information leak
+>>> Vasiliy Kulikov of OpenWall posted a demo exploit.
+>>> http://openwall.com/lists/oss-security/2011/11/05/3
+>>>
+>>> AFAICS no CVE ID was assigned to this?
+>> I believe we are not assigning CVE's for these types of proc related
+>> issues, some discussion was had:
+>>
+>> https://lkml.org/lkml/2011/2/7/368
+>>
+>> http://www.google.com/custom?domains=lkml.org&q=%2Fproc%2F+leaks
+>>
+>> but I'm not sure what the outcome is. CC'ing Eugene Teo.
+===========
+> IIRC, it's an issue but there's no resolution as existing code may break.
+>
+> There are also,
+> /proc/{interrupts, stat}
+> https://lkml.org/lkml/2011/11/7/340
+Please use CVE-2011-4915 for this issue.
+>
+> /dev/pts/, /dev/tty*
+> https://lkml.org/lkml/2011/11/7/355
+Please use CVE-2011-4916 for this issue.
 
-No, we can't conclude anything from just the excerpt you quoted above.
-If *ptr is signed char, then we have the bug.  If it's unsigned char,
-then we don't.  If it's just char, which it was in my original code,
-then we have the bug on most platforms, but not on those few where char
-defaults to unsigned.  Or rather, the bug is mitigated on those.
 
-Alexander
+>
+> I have not checked the status of these issues. Vasiliy, kindly shed some
+> light.
+>
+> Happy holidays.
+>
+> Eugene
+
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
