@@ -1,33 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/24
-Message-ID: <988082d0-add1-46bf-92ef-bf7d0cdff9a0@email.android.com>
-Date: Mon, 06 Jun 2011 16:38:49 -0400
-From: "daniel@...so.com" <daniel@...so.com>
-To: Josh Bressers <bressers@...hat.com>,oss-security@...ts.openwall.com
-CC: Russell Coker <rcoker@...hat.com>,"Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/6
+Message-ID: <20111228180730.GA27039@core.inversepath.com>
+Date: Wed, 28 Dec 2011 19:07:30 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision
 Content-Type: text/plain; charset=utf-8
 
 
+#2011-003 multiple implementations denial-of-service via hash algorithm
+collision
 
-Josh Bressers <bressers@...hat.com> wrote:
->This really shouldn't get a CVE id. It's well known, and sadly, not easy
->to
->fix. There are more details in this bug:
->https://bugzilla.redhat.com/show_bug.cgi?id=479145
+Description:
 
-I failed to see why setsid() doesn't prevent the priviledges escalation. AFAIU the exploit is only possible if the process has a controlling tty, which is prevented by setsid()
+A variety of programming languages suffer from a denial-of-service (DoS)
+condition against storage functions of key/value pairs in hash data
+structures, the condition can be leveraged by exploiting predictable
+collisions in the underlying hashing algorithms.
 
->I would classify this as an administration issue, not a flaw in su or
->sudo.
->If you're running arbitrary things, you're in far more trouble than
->this.
+The issue finds particular exposure in web server applications and/or
+frameworks. In particular, the lack of sufficient limits for the number of
+parameters in POST requests in conjunction with the predictable collision
+properties in the hashing functions of the underlying languages can render web
+applications vulnerable to the DoS condition. The attacker, using specially
+crafted HTTP requests, can lead to a 100% of CPU usage which can last up to
+several hours depending on the targeted application and server performance,
+the amplification effect is considerable and requires little bandwidth and
+time on the attacker side.
 
-Well, you're not running arbitrary things, you're running commands as a less priviledged user under the assumption that it will be restricted to that user.
+The condition for predictable collisions in the hashing functions has been
+reported for the following language implementations: Java, JRuby, PHP, Python,
+Rubinius, Ruby. In the case of the Ruby language, the 1.9.x branch is not
+affected by the predictable collision condition since this version includes a
+randomization of the hashing function.
 
-The scenario of having this less priviledged user compromised without admin knowledge is not far from real.
+The vulnerability outlined in this advisory is practically identical to the
+one reported in 2003 and described in the paper Denial of Service via
+Algorithmic Complexity Attacks which affected the Perl language.
 
-I, for instance, use su -u to run commands as the www user, what are the odds of that user being compromised without my knowledge? The last thing I want is having a way for that compromised user to run arbitrary commands as any other user.
+The reporters own advisory can be found at
+http://www.nruns.com/_downloads/advisory28122011.pdf
 
-Daniel
+Affected version:
+Java, all versions
+JRuby <= 1.6.5
+PHP <= 5.3.8, <= 5.4.0RC3
+Python, all versions
+Rubinius, all versions
+Ruby <= 1.8.7-p356
 
+Apache Geronimo, all versions
+Apache Tomcat <= 5.5.34, <= 6.0.34, <= 7.0.22
+Oracle Glassfish <= 3.1.1
+Jetty, all versions
+Plone, all versions
+Rack, all versions
+V8 JavaScript Engine, all versions
+
+Fixed version:
+Java, N/A
+JRuby >= 1.6.5.1
+PHP >= 5.3.9, >= 5.4.0RC4
+Python, N/A
+Rubinius, N/A
+Ruby >= 1.8.7-p357, 1.9.x
+
+Apache Geronimo, N/A
+Apache Tomcat >= 5.5.35, >= 6.0.35, >= 7.0.23
+Oracle Glassfish, N/A (Oracle reports that the issue is fixed in the main codeline and scheduled for a future CPU)
+Jetty, N/A
+Plone, N/A
+Rack, N/A
+V8 JavaScript Engine, N/A
+
+Credit: vulnerability report and PoC code received from Alexander Klink
+<alexander.klink AT nruns.com> and Julian Waelde <jwaelde AT
+cdc.informatik.tu-darmstadt.de>.
+
+CVE: CVE-2011-4461 (Jetty), CVE-2011-4838 (JRuby), CVE-2011-4885 (PHP),
+     CVE-2011-4462 (Plone), CVE-2011-4815 (Ruby)
+
+Timeline:
+
+2011-09-25: vulnerability report received, reporters set embargo date to December 27th
+2011-10-18: contacted maintainers of Apache Tomcat, Apache Geronimo, Jetty, Java, Plone, Zope, V8
+2011-11-01: contacted maintainers of Ruby on Rails, Ruby, Python, PHP
+2011-11-01: contacted affected distributions
+2011-11-02: contacted JRuby maintainer
+2011-12-13: contacted Ruby Installer maintainer
+2011-12-14: assigned CVE for Ruby
+2011-12-15: assigned CVE for JRuby
+2011-12-13: contacted Rack maintainer
+2011-12-16: assigned CVE for Apache Tomcat
+2011-12-21: assigned CVE for PHP
+2011-12-28: advisory release
+
+References:
+http://www.nruns.com/_downloads/advisory28122011.pdf
+http://www.cs.rice.edu/~scrosby/hash/CrosbyWallach_UsenixSec2003.pdf
+http://svn.php.net/viewvc?view=revision&revision=321003 (unstable, not final)
+http://svn.php.net/viewvc?view=revision&revision=321040 (unstable, not final)
+https://gist.github.com/52bbc6b9cc19ce330829
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2011-003.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
