@@ -1,50 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/11
-Message-ID: <20110517193255.GK2430@redhat.com>
-Date: Tue, 17 May 2011 13:32:56 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: Wouter Verhelst <w@...r.be>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: nbd-server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/5
+Message-ID: <20111228084433.GA16259@suse.de>
+Date: Wed, 28 Dec 2011 09:44:33 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Jeff Mitchell <mitchell@....org>, ossi@....org
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
-* [2011-05-17 20:40:01 +0200] Wouter Verhelst wrote:
 
->On Tue, May 17, 2011 at 11:07:46AM -0600, Vincent Danen wrote:
->> * [2011-05-17 10:38:20 +0200] Thijs Kinkhorst wrote:
->>
->> >Hi,
->> >
->> >In Debian the following was reported:
->> >nbd-server 2.9.21 has a NULL-pointer dereference in its negotiation
->> >phase, which allows unauthenticated users to DoS the server by causing
->> >the negotiation to fail (e.g., by specifying a non-existing name for an
->> >export).
->> >
->> >Filed as http://bugs.debian.org/627042. This affects only 2.9.21 so for us
->> >goes that only our unstable distribution is affected.
->> >
->> >We'd like to have a CVE name for this.
->>
->> The Debian bug is really light on details, so here is the git commit
->> that fixes this:
->>
->> http://nbd.git.sourceforge.net/git/gitweb.cgi?p=nbd/nbd;a=commitdiff;h=ebbbe0b3ce5393fa42a259f5e03d549508586aaa
->>
->> But I don't see any evidence that this _only_ affects 2.9.21.  Are we
->> sure that it doesn't affect earlier versions?  The reporter doesn't
->> indicate one way or the other.
->
->Yes, absolutely; 2.9.21 and 2.9.21a (diff between .21 and .21a is a
->documentation-related file that wasn't added to Makefile.am). The bug
->was introduced with this commit:
->
->http://nbd.git.sourceforge.net/git/gitweb.cgi?p=nbd/nbd;a=commit;h=9ea4e742ce6f1b7793d1edfca70427a8660aeffa
->
->To be 100% sure, I just checked out the tree at the 2.9.20 tag and
->recompiled; I couldn't reproduce it.
+FWIW, one could have also used the pam helper from squid or squid3
+which calls pam_start() in the same way.
+It is wrong from OpenPAM to blindly trust the service parameter
+and append it to /etc/pam.d. In particular since PAM's primary reason
+is to bring security, so it should be security-aware.
+But its also wrong from applications to pass everything they get
+from *users* to pam_start() w/o filtering. That likely hurts the system
+policy _at least_. Defensive programming, anyone? :)
 
-Fantastic.  Thank you for the check and the additional commit link.
+regards,
+Sebastian
+
+
+On Wed, Dec 28, 2011 at 03:25:09AM +0400, Solar Designer wrote:
+> On Mon, Dec 26, 2011 at 11:39:55PM -0500, Jeff Mitchell wrote:
+> > So kcheckpass, at least for the moment, punts all of this down to
+> > OpenPAM. Is it *nice*? No. Is it *valid*? Yes, unless OpenPAM changes
+> > its programming guide to require sanity checking of inputs at a higher
+> > level (and then it should still do its own checking anyways).
+> 
+> Sure, but is it valid and not a vulnerability when installing a package
+> (containing kcheckpass) unexpectedly (for a sysadmin) lets any user on
+> the system invoke any of the configured PAM stacks, some of which may
+> have side-effects?
+> 
+> I think it is not valid, and I think it is a vulnerability on its own,
+> albeit a relatively minor one, regardless of PAM's pam_start() service
+> name directory traversal possibility or lack thereof.
+> 
+> In other words, I say that kcheckpass is vulnerable (in this different
+> way) even on systems that don't use OpenPAM (or that use fixed OpenPAM).
+> 
+> > That's the basis for the maintainer wanting to challenge this CVE. Even
+> > if everyone agrees that kcheckpass should do some kind of filtering of
+> > service names, the fact remains that OpenPAM should have been doing its
+> > own sanity checking anyways (since it should never simply trust user
+> > input), and OpenPAM wasn't. If it wasn't kcheckpass that exposed this
+> > problem, it would eventually have been something else.
+> 
+> Like I said before, this definitely makes some sense to me.  The service
+> name was not supposed to be user input, though.  Normally, the same
+> application provides the service name and cares about the authentication
+> result, so it would not reasonably let the user choose the service name
+> arbitrarily (as that would also let the user affect the authentication
+> result in possibly unintended ways).  We have a rare exception here,
+> where the authentication result actually does not matter to kcheckpass
+> itself, but matters to another application - one in control of the
+> supplied service name.  OK, that's a peculiar exception and a somewhat
+> valid use case, and I fully support the OpenPAM hardening change that
+> this prompted.
+> 
+> > I'll happily pass your comments along to the kcheckpass maintainer, and
+> > he indicated to me during our discussions that some level of filtering
+> > would probably be appropriate, but this CVE is due to OpenPAM's lack of
+> > sanity checking and blaming the program that exposes it via valid (if
+> > ugly) usage scenarios is misguided.
+> 
+> We need two CVE ids then - one for OpenPAM, the other for the kcheckpass
+> issue (namely, letting a user run arbitrary PAM stacks, including those
+> that a sysadmin may never have intended for the user to be able to run).
+> 
+> Makes sense?
+> 
+> Alexander
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
