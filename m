@@ -1,41 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/7
-Message-ID: <20110310213243.GA3051@florz.florz.dyndns.org>
-Date: Thu, 10 Mar 2011 22:32:43 +0100
-From: Florian Zumbiehl <florz@...rz.de>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kalu??a <jkaluza@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/8
+Message-ID: <20111229230026.GT27039@core.inversepath.com>
+Date: Fri, 30 Dec 2011 00:00:26 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com
+Cc: kseifried@...hat.com
+Subject: Re: More CVEs? (was Re:  [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Dec 29, 2011 at 05:55:43PM -0500, David Jorm wrote:
+> 
+> > Kurt or other CVE assigners, can you please assign a bunch for
+> > python,
+> > java, tomcat etc. pp.
+> 
+> Tomcat has been assigned CVE-2011-4084.
+>
 
-> On Thu, Mar 10, 2011 at 07:08:38PM +0100, Florian Zumbiehl wrote:
-> > What about these?:
-> > 
-> > | However, I think that still #6 (shell injection) and #7 (logrotate
-> > | DoS with strange characters in file names) should be considered
-> > | vulnerabilities in logrotate: It would be reasonable to assume that you
-> > | can use user input that's a valid (slash-less) filename as a (part of a)
-> > | log file name (assuming that the program is running as the same user that
-> > | inspects and rotates the logs, so the log directory being writable by
-> > | the program would not be insecure per-se) without that file name being
-> > | interpreted by a shell or causing logrotate to stop functioning,
-> > | respectively.
-[...]
-> To summarize, it feels like in theory a privilege boundary could exist
-> here and be crossed on certain systems with extra software, but in
-> practice this is unlikely and it would indicate poor design of another
-> piece of software or/and false sense of security put into that privilege
-> boundary.  I don't know what this means for CVE id assignment per the
-> current "rules".
+Indeed, this was referenced in our advisory Timeline but missing in the CVE
+list. I just fixed that, sorry for that.
 
-I was thinking more in the direction of an existing config that includes
-a wildcard and software that uses user input to construct file names
-that would be matched by that wildcard. An example of such software
-would be samba, which tends to create per-client-host log files named
-after those hosts. I don't have a clue whether samba could be made to
-include any shell meta characters (does it even do reverse lookups for
-that?), but I guess you get the idea.
+Cheers
 
-Florian
+> Thanks
+> --
+> David Jorm / Red Hat Security Response Team
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
