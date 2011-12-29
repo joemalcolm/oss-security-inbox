@@ -1,26 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/18
-Message-ID: <20110314171620.GI31820@redhat.com>
-Date: Mon, 14 Mar 2011 11:16:21 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/6
+Message-ID: <210a6f1d-f909-403d-9753-7f37e9ec305e@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Thu, 29 Dec 2011 17:55:43 -0500 (EST)
+From: David Jorm <djorm@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for python-feedparser
+Cc: kseifried@...hat.com
+Subject: Re: More CVEs? (was Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
 Content-Type: text/plain; charset=utf-8
 
-python-feedparser 5.0.1 fixes three flaws:
 
-https://code.google.com/p/feedparser/
+> Kurt or other CVE assigners, can you please assign a bunch for
+> python,
+> java, tomcat etc. pp.
 
-* Fix  issue 91  (invalid text in XML declaration causes sanitizer to crash)
-* Fix  issue 254  (sanitization can be bypassed by malformed XML comments)
-* Fix  issue 255  (sanitizer doesn't strip unsafe URI schemes) 
+Tomcat has been assigned CVE-2011-4084.
 
-Could CVE names be assigned to these issues?
-
-It looks like the last two issues were introduced in 5.0, the first
-issue was reported against 4.1.
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Thanks
+--
+David Jorm / Red Hat Security Response Team
