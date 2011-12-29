@@ -1,35 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/2
-Message-id: <5E1237E8-121D-46DD-B38D-33A741841801@apple.com>
-Date: Mon, 04 Apr 2011 19:54:30 -0700
-From: Jeffrey Czerniak <jeffcz@...le.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/4
+Message-ID: <20111229191240.GA11413@openwall.com>
+Date: Thu, 29 Dec 2011 23:12:40 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision
 Content-Type: text/plain; charset=utf-8
 
-On Apr 4, 2011, at 4:27 PM, Solar Designer wrote:
-> 
-> Yet I recognize that Apple has been contributing to vendor-sec, so I'd
-> be happy to add you to a suitable list if one is setup.  Perhaps a BSD
-> distros list, which would generally be CC'ed on issues that are expected
-> to be shared between Linux and *BSD userlands and thus likely also with
-> Mac OS X?  Do you and other vendors feel that such a list is needed?
-> 
-> So far, yours is the only non-Linux vendor request.  For just one
-> vendor, we can be CC'ing you whenever appropriate, with no list needed.
+On Wed, Dec 28, 2011 at 07:07:30PM +0100, Andrea Barisani wrote:
+> 2011-11-01: contacted affected distributions
+...
+> 2011-12-28: advisory release
 
-Hello Solar Designer,
+The linux-distros list was made use of.  (I assume oCERT also contacted
+non-Linux distributions separately.)
 
-We found the vendor-sec email list useful not just for reporting issues in open-source projects, but also for receiving advance notification about issues that affect the various open-source libraries and applications that Apple ships.  (More details can be found at http://www.opensource.apple.com/)
+This was the first major exception to linux-distros' list policy to
+limit embargoes to 14 days at most (after initial posting to the list).
 
-If you are not willing to grant us full membership to the new list, we at least hope we can be cc-ed on all userland issues reported to the list.
+I did not object this time because the underlying issue was publicly
+known and the impact was limited to DoS.  Well, and I was not given an
+opportunity to object other than by asking for the CRD to be moved to an
+earlier date, which would likely not work for others.  (I am not
+complaining.)
 
-Best regards,
+Yet I feel that I need to post in here and state that this does not set
+a precedent, that the "14 days" policy is in effect, and that occasional
+exceptions, if any, need to be agreed upon in advance (unlike it
+happened this time).  That is, if someone wants to report an issue via
+the linux-distros or distros lists and propose a longer embargo period,
+they need to state so first, without disclosing much detail about the
+issue to the list.  I think it may be OK (although this might vary on a
+case by case basis) to disclose the minimum required for list members to
+agree to a longer embargo period as a rare exception (like it would
+probably happen for these hash collision issues), object to it (have the
+list notified with detailed info closer to the proposed CRD), or/and opt
+to request the detail individually (not via the list).
 
-----------------
-Jeffrey Czerniak
-Apple Product Security Response
-jeffcz@...le.com
-----------------
+I think this is a rare exception to oCERT's policy, too.  It says:
 
+"- under extremely exceptional circumstances, if the oCERT Team and all
+the parties involved feel the need for longer time, a 2 months embargo
+can be applied, in this case we would clearly document the decision for
+public review"
 
+Andrea - you could want to "clearly document the decision for public
+review" now, although I guess your rationale was similar to mine (when I
+decided not to object to the unusually long embargo period this time).
+
+Thank you for your work on this issue!  I imagine it was pretty
+time-consuming with so many affected projects.
+
+Alexander
