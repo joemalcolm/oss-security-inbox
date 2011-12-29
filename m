@@ -1,22 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/1
-Message-Id: <201101181222.16630.timb@nth-dimension.org.uk>
-Date: Tue, 18 Jan 2011 12:22:05 +0000
-From: Tim Brown <timb@...-dimension.org.uk>
-To: oss-security@...ts.openwall.com
-Subject: CVE request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/3
+Message-ID: <20111229184849.GA11332@openwall.com>
+Date: Thu, 29 Dec 2011 22:48:49 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: closed-list
 Content-Type: text/plain; charset=utf-8
 
-Guys,
+On Tue, Dec 27, 2011 at 08:32:00PM -0700, Kurt Seifried wrote:
+> Can you add me to the linux and non-linux list[*]? I'm on Eugene Teo's team 
+> (within Red Hat SRT)
 
-What's the best way for an open source project to request a CVE prior to 
-disclosure?  I'm more that happy to coordinate the disclosure with 
-distributions where appropriate if that makes a difference.
+Added.
 
-Tim
--- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Alexander
