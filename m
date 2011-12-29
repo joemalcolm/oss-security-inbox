@@ -1,60 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/2
-Message-ID: <20111117010045.GA18158@openwall.com>
-Date: Thu, 17 Nov 2011 05:00:45 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/2
+Message-ID: <eec049a5-91a3-4c6a-9b77-803873bcc030@zmail14.collab.prod.int.phx2.redhat.com>
+Date: Thu, 29 Dec 2011 12:31:48 -0500 (EST)
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
+Cc: kseifried@...hat.com
+Subject: Re: More CVEs? (was Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 16, 2011 at 11:43:25PM +0400, Solar Designer wrote:
-> http://www.isc.org/software/bind/advisories/cve-2011-4313
-> 
-> "Versions affected:
-> All currently supported versions of BIND, 9.4-ESV, 9.6-ESV, 9.7.x, 9.8.x"
-> 
-> Does anyone readily know if BIND 9.3.x is affected as well?
+>> Credit: vulnerability report and PoC code received from Alexander
+>> Klink <alexander.klink AT nruns.com> and Julian Waelde <jwaelde AT
+>> cdc.informatik.tu-darmstadt.de>.
+>> 
+>> CVE: CVE-2011-4461 (Jetty), CVE-2011-4838 (JRuby), CVE-2011-4885
+>> (PHP), CVE-2011-4462 (Plone), CVE-2011-4815 (Ruby)
+>
+>Kurt or other CVE assigners, can you please assign a bunch for python,
+>java, tomcat etc. pp.
+>
+>-- 
+>Hanno Böck		mail/jabber: hanno@...eck.de
+>GPG: BBB51E42		http://www.hboeck.de/
 
-So I downloaded bind-9.4-ESV-R5-P1.tar.gz and bind-9.4-ESV-R5.tar.gz,
-verified signatures, diff'ed these two trees, and then tried to apply
-the resulting patch to 9.3.5 (just whatever version we happen to need a
-patch for - obviously, only in case it is actually affected).  The
-result of this is inconclusive.  On one hand, the code being patched is
-mostly present in 9.3.5 as well, but on the other the checks that the
-patch adds to lib/dns/rbtdb.c use the NEGATIVE() macro, which is not
-present in 9.3.5.  While back-porting this macro definition is trivial,
-and I've done just that, this source file in 9.3.5 lacks other likely
-relevant pieces of code, including this one present in 9.4-ESV-R5's
-lib/dns/rbtdb.c: addrdataset():
+I am going to defer this to Steve/etc, as I had nothing to do with the original CVE assignments so I have no idea (maybe they got assigned but not published? Not assigned yet due to split/merge issues? not assigned due to other reasons?). 
 
-			newheader->attributes |= RDATASET_ATTR_NEGATIVE;
-
-If 9.3.5 can't set this flag, then perhaps not checking for it was not a
-problem.  Then the question becomes whether the fixes to
-bin/named/query.c are required even when lib/dns/rbtdb.c did not have
-the problem.  In other words, are these a security fix for a separate
-attack vector (even if a similar one) or merely a hardening measure?
-Or are the changes to lib/dns/rbtdb.c merely a hardening measure?  I am
-not familiar with this code and with the specific attack(s), so I don't
-know the answers.
-
-I've attached the 9.4-ESV-R5 to 9.4-ESV-R5-P1 diffs, and a "patch"
-against 9.3.5 - even though in the latter the changes to lib/dns/rbtdb.c
-are almost certainly not needed, as I explained above.
-
-Also, is BIND built without DNSSEC support affected?  The ISC advisory
-does not mention DNSSEC and RRSIG, but bind-9.4-ESV-R5-P1/CHANGES
-mentions RRSIG, which is a DNSSEC thing.  (Yes, we build BIND without
-DNSSEC on Owl currently since DNSSEC proved to be more of a risk than a
-solution so far - and it looks like we have yet another example here.
-This is going to change, though, as DNSSEC gets deployed in more places.
-So we might have to revert that temporary decision and re-include DNSSEC
-support already in our next release.)
-
-I am still looking for more conclusive info and more detail on this.
-
-Alexander
-
-View attachment "bind-9.4-ESV-R5-P1.diff" of type "text/plain" (3831 bytes)
-
-View attachment "bind-9.3.5-up-CVE-2011-4313.diff" of type "text/plain" (2513 bytes)
+-- Kurt Seifried / Red Hat Security Repsonse Team
