@@ -1,23 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/3
-Message-ID: <4E095F26.30008@redhat.com>
-Date: Tue, 28 Jun 2011 10:27:10 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: oom: use pte pages in OOM score
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/1
+Message-ID: <20111229131342.080f44d6@05h7cjceim>
+Date: Thu, 29 Dec 2011 13:13:42 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: More CVEs? (was Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
 Content-Type: text/plain; charset=utf-8
 
-On 06/28/2011 09:32 AM, Eugene Teo wrote:
-> PTE pages are invisible memory user. A local, unprivileged user could
-> leverage this flaw to trigger a denial of service. AFAIK, this was
-> introduced in a63d83f427f (v2.6.36-rc1), fixed in f755a042d (v2.6.39-rc6).
-> 
-> http://git.kernel.org/linus/a63d83f427f
-> http://git.kernel.org/linus/f755a042d
-> 
+Am Wed, 28 Dec 2011 19:07:30 +0100
+schrieb Andrea Barisani <lcars@...rt.org>:
 
-Assigned CVE-2011-2498
+> Affected version:
+> Java, all versions
+> JRuby <= 1.6.5
+> PHP <= 5.3.8, <= 5.4.0RC3
+> Python, all versions
+> Rubinius, all versions
+> Ruby <= 1.8.7-p356
+> 
+> Apache Geronimo, all versions
+> Apache Tomcat <= 5.5.34, <= 6.0.34, <= 7.0.22
+> Oracle Glassfish <= 3.1.1
+> Jetty, all versions
+> Plone, all versions
+> Rack, all versions
+> V8 JavaScript Engine, all versions
+> 
+> Fixed version:
+> Java, N/A
+> JRuby >= 1.6.5.1
+> PHP >= 5.3.9, >= 5.4.0RC4
+> Python, N/A
+> Rubinius, N/A
+> Ruby >= 1.8.7-p357, 1.9.x
+> 
+> Apache Geronimo, N/A
+> Apache Tomcat >= 5.5.35, >= 6.0.35, >= 7.0.23
+> Oracle Glassfish, N/A (Oracle reports that the issue is fixed in the
+> main codeline and scheduled for a future CPU) Jetty, N/A
+> Plone, N/A
+> Rack, N/A
+> V8 JavaScript Engine, N/A
+> 
+> Credit: vulnerability report and PoC code received from Alexander
+> Klink <alexander.klink AT nruns.com> and Julian Waelde <jwaelde AT
+> cdc.informatik.tu-darmstadt.de>.
+> 
+> CVE: CVE-2011-4461 (Jetty), CVE-2011-4838 (JRuby), CVE-2011-4885
+> (PHP), CVE-2011-4462 (Plone), CVE-2011-4815 (Ruby)
 
+Kurt or other CVE assigners, can you please assign a bunch for python,
+java, tomcat etc. pp.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
