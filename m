@@ -1,48 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/16
-Message-ID: <e6gh3axpoalp7kw7j3v47f6jk7wnz5kcyitltpfijvgs2g6djv@ed3e7aarvaak>
-Date: Wed, 19 Apr 2023 02:37:35 +0800
-From: Ruihan Li <lrh2000@....edu.cn>
-To: 0xef967c36@...il.com
-Cc: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>,  Ruihan Li <lrh2000@....edu.cn>
-Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/1
+Message-ID: <20111229131342.080f44d6@05h7cjceim>
+Date: Thu, 29 Dec 2011 13:13:42 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: More CVEs? (was Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Am Wed, 28 Dec 2011 19:07:30 +0100
+schrieb Andrea Barisani <lcars@...rt.org>:
 
-On Tue, Apr 18, 2023 at 08:13:24PM +0300, 0xef967c36@...il.com wrote:
-> No, there's no clash. That was a bug in strace (fortunately fixed in
-> newer versions).
+> Affected version:
+> Java, all versions
+> JRuby <= 1.6.5
+> PHP <= 5.3.8, <= 5.4.0RC3
+> Python, all versions
+> Rubinius, all versions
+> Ruby <= 1.8.7-p356
 > 
-> Those values macros are different; and they were ALWAYS different.
+> Apache Geronimo, all versions
+> Apache Tomcat <= 5.5.34, <= 6.0.34, <= 7.0.22
+> Oracle Glassfish <= 3.1.1
+> Jetty, all versions
+> Plone, all versions
+> Rack, all versions
+> V8 JavaScript Engine, all versions
+> 
+> Fixed version:
+> Java, N/A
+> JRuby >= 1.6.5.1
+> PHP >= 5.3.9, >= 5.4.0RC4
+> Python, N/A
+> Rubinius, N/A
+> Ruby >= 1.8.7-p357, 1.9.x
+> 
+> Apache Geronimo, N/A
+> Apache Tomcat >= 5.5.35, >= 6.0.35, >= 7.0.23
+> Oracle Glassfish, N/A (Oracle reports that the issue is fixed in the
+> main codeline and scheduled for a future CPU) Jetty, N/A
+> Plone, N/A
+> Rack, N/A
+> V8 JavaScript Engine, N/A
+> 
+> Credit: vulnerability report and PoC code received from Alexander
+> Klink <alexander.klink AT nruns.com> and Julian Waelde <jwaelde AT
+> cdc.informatik.tu-darmstadt.de>.
+> 
+> CVE: CVE-2011-4461 (Jetty), CVE-2011-4838 (JRuby), CVE-2011-4885
+> (PHP), CVE-2011-4462 (Plone), CVE-2011-4815 (Ruby)
 
-A quick search shows that it is fixed in df7aa2 ("ioctl: take all 32 bits of
-ioctl commands into account") [1]. The commit message says
-> Historically, only 16 bits (8-bit number and 8-bit type) of 32-bit ioctl
-> commands were used for decoding, which was the source for numerous
-> annoying collisions like this:
->
->	ioctl(0, SNDCTL_TMR_TIMEBASE or SNDRV_TIMER_IOCTL_NEXT_DEVICE or TCGETS, {B38400 opost isig icanon echo ...}) = 0
->	ioctl(0, MGSL_IOCGPARAMS or MMTIMER_GETRES or MTIOCTOP or SNDCTL_MIDI_MPUMODE, 0x7fffd47f7338) = -1 ENOTTY (Inappropriate ioctl for device)
-Here the first example is exactly the case we are discussing.
+Kurt or other CVE assigners, can you please assign a bunch for python,
+java, tomcat etc. pp.
 
-[1]: https://github.com/strace/strace/commit/df7aa2b19e6f69c19fbe09180bf1ec4fb52e2615
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-It appears that SNDCTL_TMR_TIMEBASE and TCGETS do have the same command code,
-which sits in the lower 16 bits. But SNDCTL_TMR_TIMEBASE uses a newer command
-encoding scheme [2] that includes the direction and argument size in the
-higher 16 bits. TCGETS, on the other hand, contains only the command code, so
-its higher bits are set to zero (TCGETS should have a really long history,
-just longer than that of the new ioctl command encoding scheme).
-
-[2]: https://elixir.bootlin.com/linux/v6.3-rc7/source/include/uapi/asm-generic/ioctl.h#L5 
-
-This means we haven't had any collisions yet. Also, since new ioctl commands
-will certainly be encoded using the new encoding scheme, which TCGETS does not
-use, it is very unlikely that new collisions will occur in the future, unless
-the command code is exactly the same and the higher bits under the new
-encoding scheme are also occasionally zeros.
-
-Thanks,
-Ruihan Li
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
