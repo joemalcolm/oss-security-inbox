@@ -1,54 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/17
-Message-ID: <1579872259.144003.1313783381867.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 15:49:41 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/5
+Message-ID: <20111229202200.GA11807@openwall.com>
+Date: Fri, 30 Dec 2011 00:22:00 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: heap overflow in perl while decoding Unicode string
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-I'm going to assign this CVE-2011-2939. It looks like a single byte
-overflow. It's probably not exploitable (even as a DoS), but to play it
-safe, I'm assigning this ID.
+On Wed, May 11, 2011 at 07:56:06PM +0400, Solar Designer wrote:
+> I've just subscribed Zhenfeng(Jeffrey) Zhao and Hui Zhu, both of Wind River.
 
-Thanks.
+I've just unsubscribed Hui Zhu, who apparently is no longer with Wind
+River - e-mail started bouncing, and the LinkedIn profile says "March
+2008 - December 2011" (not "- Present"):
 
--- 
-    JB
+http://cn.linkedin.com/in/teawater
 
------ Original Message -----
-> Does anyone know more about this flaw? It's in perl and the Encode
-> module:
-> 
-> http://cpansearch.perl.org/src/DANKOGAI/Encode-2.44/Changes
-> 
-> ! Unicode/Unicode.xs
-> Addressed the following:
-> Date: Fri, 22 Jul 2011 13:58:43 +0200
-> From: Robert Zacek <zacek@...st.com>
-> To: perl5-security-report@...l.org
-> Subject: Unicode.xs!decode_xs n-byte heap-overflow
-> 
-> It's been fixed in perl:
-> 
-> http://perl5.git.perl.org/perl.git/commitdiff/e46d973584785af1f445c4dedbee4243419cb860#patch5
-> 
-> Seems to be in all versions of perl since 5.10.0.
-> 
-> There isn't really information on the impact of this though. I don't
-> know enough to determine whether this is something that can cause
-> arbitrary code execution, whether some gcc/glibc hardening prevents or
-> minimizes the impact, whether it's a crash-only, etc. It has been
-> asked
-> on the perl5-porters list, but no response was given:
-> 
-> http://permalink.gmane.org/gmane.comp.lang.perl.perl5.porters/98004
-> 
-> Does anyone know anything more about this flaw? Could a CVE be
-> assigned
-> to it as well?
-> 
-> Thanks.
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
+Zhenfeng(Jeffrey) Zhao is still subscribed, so Wind River is still
+present on the linux-distros and distros lists.
+
+BTW, this is a good example of how PGP with people's personal keys helps -
+even if the e-mail address would be e.g. forwarded to a non-security
+person at Wind River, that person would (hopefully) not have Hui's PGP key.
+
+Alexander
+
+P.S. Indeed, I would have preferred to learn of this from a Wind River
+person rather than from their mail server and own "investigation". ;-)
