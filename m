@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/3
-Message-ID: <4ECFB130.3080501@suse.de>
-Date: Fri, 25 Nov 2011 16:16:00 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/8
+Message-ID: <20111229230026.GT27039@core.inversepath.com>
+Date: Fri, 30 Dec 2011 00:00:26 +0100
+From: Andrea Barisani <lcars@...rt.org>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request: colord sql injections
+Cc: kseifried@...hat.com
+Subject: Re: More CVEs? (was Re:  [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
-> On 11/25/2011 11:55 AM, Ludwig Nussel wrote:
->> colord did not quote user supplied strings which made it prone to
->> SQL injections:
->> https://bugs.freedesktop.org/show_bug.cgi?id=42904
->> https://bugzilla.novell.com/show_bug.cgi?id=698250
+On Thu, Dec 29, 2011 at 05:55:43PM -0500, David Jorm wrote:
 > 
-> Just to have this one sorted out wrt to the patches, the relevant
-> upstream patches are these two:
-> [1] http://gitorious.org/colord/master/commit/1fadd90afcb4bbc47513466ee9bb1e4a8632ac3b
-> [2] http://gitorious.org/colord/master/commit/36549e0ed255e7dfa7852d08a75dd5f00cbd270e
+> > Kurt or other CVE assigners, can you please assign a bunch for
+> > python,
+> > java, tomcat etc. pp.
 > 
-> right?
+> Tomcat has been assigned CVE-2011-4084.
+>
 
-Yes.
+Indeed, this was referenced in our advisory Timeline but missing in the CVE
+list. I just fixed that, sorry for that.
 
-cu
-Ludwig
+Cheers
+
+> Thanks
+> --
+> David Jorm / Red Hat Security Response Team
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
