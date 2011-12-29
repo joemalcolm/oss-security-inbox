@@ -1,112 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/5
-Message-ID: <20111104163648.GA10002@openwall.com>
-Date: Fri, 4 Nov 2011 20:36:48 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/4
+Message-ID: <20111229191240.GA11413@openwall.com>
+Date: Thu, 29 Dec 2011 23:12:40 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
+Subject: Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision
 Content-Type: text/plain; charset=utf-8
 
-John,
+On Wed, Dec 28, 2011 at 07:07:30PM +0100, Andrea Barisani wrote:
+> 2011-11-01: contacted affected distributions
+...
+> 2011-12-28: advisory release
 
-Thank you for reporting these!
+The linux-distros list was made use of.  (I assume oCERT also contacted
+non-Linux distributions separately.)
 
-On Fri, Nov 04, 2011 at 09:46:45AM -0500, John Lightsey wrote:
-> PAR::Packer - PAR packed files are extracted to unsafe and predictable
-> temporary directories
-> 
-> https://rt.cpan.org/Public/Bug/Display.html?id=69560
+This was the first major exception to linux-distros' list policy to
+limit embargoes to 14 days at most (after initial posting to the list).
 
-I think that your description for this one happens to encourage a poor
-fix for it.  Specifically, starting the description by "par_mktmpdir()
-makes no effort to verify that the /tmp/par-<username> directory is safe
-to use" may result in this function being patched to do such checks,
-which I think would be a poor fix.  A better fix would be to properly
-create a temporary files directory, with a less predictable name and
-with due retries (with new names) if the directory already exists -
-preferably using File::Temp's tempdir().
+I did not object this time because the underlying issue was publicly
+known and the impact was limited to DoS.  Well, and I was not given an
+opportunity to object other than by asking for the CRD to be moved to an
+earlier date, which would likely not work for others.  (I am not
+complaining.)
 
-> Parallel::ForkManager - Insecure /tmp file handling
-> 
-> https://rt.cpan.org/Public/Bug/Display.html?id=68298
+Yet I feel that I need to post in here and state that this does not set
+a precedent, that the "14 days" policy is in effect, and that occasional
+exceptions, if any, need to be agreed upon in advance (unlike it
+happened this time).  That is, if someone wants to report an issue via
+the linux-distros or distros lists and propose a longer embargo period,
+they need to state so first, without disclosing much detail about the
+issue to the list.  I think it may be OK (although this might vary on a
+case by case basis) to disclose the minimum required for list members to
+agree to a longer embargo period as a rare exception (like it would
+probably happen for these hash collision issues), object to it (have the
+list notified with detailed info closer to the proposed CRD), or/and opt
+to request the detail individually (not via the list).
 
-Sounds like the classic issue there.
+I think this is a rare exception to oCERT's policy, too.  It says:
 
-> File::Temp - _is_safe() allows unsafe traversal of symlinks
-> 
-> https://rt.cpan.org/Public/Bug/Display.html?id=69106
+"- under extremely exceptional circumstances, if the oCERT Team and all
+the parties involved feel the need for longer time, a 2 months embargo
+can be applied, in this case we would clearly document the decision for
+public review"
 
-This one is tricky.  I am not convinced that it is CVE-worthy and that
-your proposed fix is the right thing to do.  To me, File::Temp's MEDIUM
-and HIGH safety levels are questionable; if I were the maintainer, I
-would probably not introduce these, or I'd explicitly document them as
-safety and not security features.  Here's what I mean by this subtle
-distinction:
+Andrea - you could want to "clearly document the decision for public
+review" now, although I guess your rationale was similar to mine (when I
+decided not to object to the unusually long embargo period this time).
 
-Basically, with these safety levels, File::Temp provides certain safety
-checks against a Perl script author or user shooting themselves in the
-foot.  Then the question is whether those safety checks are supposed to
-be exhaustive or not.  In other words, whether this is merely safety
-against inadvertent misuses or also security against malicious uses of
-properly written scripts that actually deliberately rely on these safety
-levels.  Re-wording this even further, is a script that deliberately
-relies on these safety levels for security properly written?  I think
-not.  Maybe it'd make more sense to assign CVEs to such scripts.
-
-Currently, the three safety levels (STANDARD, MEDIUM, and HIGH) are
-documented to do certain specific checks, but the intended use and
-whether those checks are supposed to be exhaustive (sufficient for
-security) or not is unclear from the documentation.  It can be said that
-the behavior is consistent with documentation (it says what checks are
-performed at what level, and as far as I'm aware this matches the code),
-and thus there's no security vulnerability.
-
-Specifically, HIGH only cares about parent directories if chown giveaway
-is potentially allowed by the OS.  To me, this is flawed logic (but it
-is documented).  Maybe this stuff was introduced when the initial
-motivation behind the safety checks was forgotten (the safety vs.
-security distinction), although that's just a guess.  I am also guessing
-that the logic when implementing HIGH was that without chown giveaway,
-safe ownership and permissions on the target directory itself would seem
-to imply that the directory was deliberately created by a trusted user,
-and thus its parent directories were presumably trusted by that user
-(and don't need to be checked by the script).  This assumption works
-fine for safety, but not for security.  The question here is where the
-pathname being checked comes from.  Is it trusted input (and only needs
-safety checks) or is it untrusted and potentially deliberately malicious
-input (and thus needs exhaustive security checks)?  No answer to this is
-given in the documentation, that I can see.  If the pathname is
-potentially malicious, then on one hand parent directories need to be
-checked regardless of chown giveaway availability, but on the other hand
-even a safely-looking directory and full path leading to it do not imply
-that it is safe to create arbitrary files in this directory (e.g., think
-/etc/cron.d).
-
-Thus, File::Temp's HIGH safety level makes no sense to me, and I see no
-way to fix it.  For safety, it is no better than MEDIUM (chown giveaway
-is irrelevant in the safety context).  For security, it is insufficient
-and it can't be made sufficient.
-
-As to the proposed fix (symlink-safety.patch), it partially helps in
-certain special misuse cases.  Namely, when the pathname is not
-untrusted/malicious, but is poorly chosen, yet it contains just one
-unsafe component.  However, even in that case this fix doesn't protect
-from hard-linking of an existing suitable symlink (of a trusted user)
-into /tmp (possibly under a different name, although the symlink target
-name remains that of the original symlink).  And the limitation of
-working for just one unsafe path component is no good; perhaps HIGH's
-checks of parent directories would be better enabled unconditionally,
-and even then this stuff is highly questionable.
-
-Whatever we do or don't do to the code, I think the most important fix
-would be to the documentation.  We need to document that these are not
-security features and that they must not be relied upon.  Maybe we
-should even deprecate HIGH because it doesn't make sense for any use.
-
-> Batch::BatchRun - Unsafe /tmp file usage
-> 
-> https://rt.cpan.org/Public/Bug/Display.html?id=69594
-
-Another classic here.
+Thank you for your work on this issue!  I imagine it was pretty
+time-consuming with so many affected projects.
 
 Alexander
