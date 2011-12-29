@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/16
-Message-ID: <20110318181115.GS5174@redhat.com>
-Date: Fri, 18 Mar 2011 12:11:15 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/2
+Message-ID: <eec049a5-91a3-4c6a-9b77-803873bcc030@zmail14.collab.prod.int.phx2.redhat.com>
+Date: Thu, 29 Dec 2011 12:31:48 -0500 (EST)
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: list@...adns.org, 610834@...s.debian.org, geissert@...ian.org, atomo64@...il.com, bressers@...hat.com, coley@...re.org
-Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
+Cc: kseifried@...hat.com
+Subject: Re: More CVEs? (was Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
 Content-Type: text/plain; charset=utf-8
 
-* [2011-01-29 22:21:08 -0700] Sam Trenholme wrote:
-
->In 2002, when I rewrote the compression code for MaraDNS for the first
->time, I made a mistake in allocating an array of integers, allocating
->it in bytes instead of sizeof(int) units.  The resulted in a buffer
->being too small, allowing it to be overwritten.
+>> Credit: vulnerability report and PoC code received from Alexander
+>> Klink <alexander.klink AT nruns.com> and Julian Waelde <jwaelde AT
+>> cdc.informatik.tu-darmstadt.de>.
+>> 
+>> CVE: CVE-2011-4461 (Jetty), CVE-2011-4838 (JRuby), CVE-2011-4885
+>> (PHP), CVE-2011-4462 (Plone), CVE-2011-4815 (Ruby)
 >
->The impact of this programming error is that MaraDNS can be crashed by
->sending MaraDNS a single "packet of death".  Since the data placed in
->the overwritten array can not be remotely controlled (it is a list of
->increasing integers), there is no way to increase privileges
->exploiting this bug.
+>Kurt or other CVE assigners, can you please assign a bunch for python,
+>java, tomcat etc. pp.
 >
->The attached patch resolves this issue by allocating in sizeof(int)
->units instead of byte-sized units for an integer array.  In addition,
->it uses a smaller array because a DNS name can only have, at most, 128
->labels.
+>-- 
+>Hanno Böck		mail/jabber: hanno@...eck.de
+>GPG: BBB51E42		http://www.hboeck.de/
 
-Was a CVE name ever assigned to this issue?
+I am going to defer this to Steve/etc, as I had nothing to do with the original CVE assignments so I have no idea (maybe they got assigned but not published? Not assigned yet due to split/merge issues? not assigned due to other reasons?). 
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+-- Kurt Seifried / Red Hat Security Repsonse Team
