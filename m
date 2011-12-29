@@ -1,18 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/18/1
-Message-ID: <20110918163648.GA13173@foo.fgeek.fi>
-Date: Sun, 18 Sep 2011 19:36:48 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: PunBB multiple XSS issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/7
+Message-ID: <20111229225821.GS27039@core.inversepath.com>
+Date: Thu, 29 Dec 2011 23:58:21 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue.
 
-Original post: http://seclists.org/fulldisclosure/2011/Sep/158
-Bug-report to developers: http://punbb.informer.com/forums/topic/24427/multiple-xss-vulnerabilities/
-Fixed on: https://github.com/punbb/punbb/commit/dd50a50a2760f10bd2d09814e30af4b36052ca6d
-PunBB 1.3.6 released: https://github.com/downloads/punbb/punbb/punbb-1.3.6.zip
+Hi Solar,
 
-Best regards,
-Henri Salo
+> I think this is a rare exception to oCERT's policy, too.  It says:
+>
+> "- under extremely exceptional circumstances, if the oCERT Team and all
+> the parties involved feel the need for longer time, a 2 months embargo
+> can be applied, in this case we would clearly document the decision for
+> public review"
+
+> Andrea - you could want to "clearly document the decision for public
+> review" now, although I guess your rationale was similar to mine (when I
+> decided not to object to the unusually long embargo period this time).
+
+As stated in our timeline the embargo date was requested by reporters:
+"2011-09-25: vulnerability report received, reporters set embargo date to December 27th"
+
+Our disclosure policy also says:
+"- in any circumstance reporter preference will always be honoured in case a
+joint agreement is not reached, as oCERT would be anyway unable to force its
+embargo"
+
+We tried to negotiate an earlier embargo time as, obviously, many complained
+about the unfortunate timing considering xmas holidays but the reporters really
+wanted to release this after the CCC talk.
+
+It is oCERT policy to not leak reports before the desired date set by the
+reporters if a more favourable one is not agreed upon.
+
+Hope this clarifies the exception.
+
+Cheers
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
