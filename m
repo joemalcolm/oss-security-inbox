@@ -1,41 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/16
-Message-ID: <4D65016D.6030802@pre-sense.de>
-Date: Wed, 23 Feb 2011 13:45:33 +0100
-From: Timo Warns <warns@...-sense.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/30/4
+Message-Id: <201112300306.pBU36JnQ005083@linus.mitre.org>
+Date: Thu, 29 Dec 2011 22:06:19 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+Cc: cve-assign@...re.org
+Subject: Re: More CVEs? (was Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-The kernel automatically evaluates partition tables of storage devices.
-The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
-a bug that allows to overflow the kernel heap. It may be possible to
-escalate privileges by exploiting this bug.
+Here's the initial CVE assignment status for the 13 products listed
+in oCERT #2011-003, plus ASP.NET. The CVE descriptions are available
+at http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-#### URLs,
+and will be on the MITRE CVE web site soon.
 
-(This bug is distinct from the LDM bug reported by Eugene Teo on
-2011-02-23.)
+>Java
 
-This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
-CONFIG_LDM_PARTITION needs to be set.
+There's intentionally no CVE assigned by the MITRE CNA. The MITRE CNA
+hasn't been proactively assigning CVEs to hash-table robustness issues
+in implementations of general-purpose programming languages. As usual,
+a CVE can be assigned for a software mistake that has a security
+impact. Here, each maintainer of a language implementation can decide
+whether there was a software mistake. The decision depends on what
+robustness properties were intended. This happens to be a case in
+which it's difficult for outside parties to discern what was intended.
 
-Thanks, Timo
+>JRuby
+
+CVE-2011-4838
+
+>PHP
+
+CVE-2011-4885
+
+>Python
+
+Again, there's intentionally no CVE assigned by the MITRE CNA because
+this is an implementation of a general-purpose programming language,
+and no implementation maintainer has requested a CVE.
+
+>Rubinius
+
+Again, there's intentionally no CVE assigned by the MITRE CNA because
+this is an implementation of a general-purpose programming language,
+and no implementation maintainer has requested a CVE.
+
+>Ruby (only the Ruby MRI implementation)
+
+CVE-2011-4815
+
+>Apache Geronimo
+
+CVE-2011-5034
+
+>Apache Tomcat
+
+CVE-2011-4084
+
+At least at the moment, this CVE is intentionally not mapping to the
+oCERT #2011-003 and n.runs-SA-2011.004 references. We might have a
+pending REJECT on a closely related CVE that still has a reserved
+status. This related CVE is the CVE referenced as "2011-12-16:
+assigned CVE for Apache Tomcat" in the oCERT #2011-003 Timeline.
+
+>Oracle Glassfish
+
+CVE-2011-5035
+
+>Jetty
+
+CVE-2011-4461
+
+>Plone
+
+CVE-2011-4462
+
+>Rack
+
+CVE-2011-5036
+
+>V8 JavaScript Engine
+
+CVE-2011-5037
+
+>ASP.NET
+
+CVE-2011-3414
 
 - -- 
-Dr. Timo Warns                               warns@...-sense.de
-                                  Tel. +49 - 40 - 244 2407 - 16
-                                  Fax  +49 - 40 - 244 2407 - 24
-PRESENSE Technologies GmbH            Sachsenstr. 5, D-20097 HH
-                                         USt-IdNr.: DE263765024
-Geschäftsführer/Managing Directors       AG Hamburg, HRB 107844
-Till Dörges           Jürgen Sander              Axel Theilmann
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.15 (GNU/Linux)
-Comment: Using GnuPG with SUSE - http://enigmail.mozdev.org/
+Version: GnuPG v1.4.11 (SunOS)
 
-iEYEARECAAYFAk1lAW0ACgkQneTPdraGveU9wwCePDVkbSTEk4Ltzc4mjs/3Ci83
-5JIAn26q86H3uucoklA5yps8WwJAmrN4
-=ssUq
+iQEcBAEBAgAGBQJO/SlMAAoJEGvefgSNfHMdhn4H/2+MS345nwm/kHGPJDLZA5LP
+WtmD56n2+na4SUZFh2kOT7vu/9MR6U6IXgp8gsMPPpFLfkDR4pp2s07NvtBzUKBy
+C7DL4BN/GSEd70Gx1sku1oiFqREcNUt4eOmKZqRcURnz4M1yj25auKPWcoUecWPP
+YJarbr1Ud795rJYFYBBxbt1sGqs+qKt54IriyQ1TDspZCcBPV4Jy0XrMAuRxme7y
+AbHeVFM1aU+V4fZMOZz6B+2rQfhX3nWChuRj4F6ioABXkgjBRefL1vLAEbsb9IUS
+PBi4VCOr7Exy0qkhEfACVqEtEKBJIAihzgG0CNa6mA9+CUq89vfppeH5/LJu8Uo=
+=K98h
 -----END PGP SIGNATURE-----
