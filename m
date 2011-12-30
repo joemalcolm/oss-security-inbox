@@ -1,49 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/3
-Message-ID: <20110719101957.GA3463@flens.dfn-cert.de>
-Date: Tue, 19 Jul 2011 12:19:57 +0200
-From: dfncert@...-cert.de
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, dfncert@...-cert.de
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/30/1
+Message-ID: <20111230112656.5c9df449@redhat.com>
+Date: Fri, 30 Dec 2011 11:26:56 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, hanno@...eck.de
+Cc: Andrea Barisani <lcars@...rt.org>
+Subject: Re: More CVEs? (was Re:  [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 19, 2011 at 02:37:46AM +0400, Solar Designer wrote:
+On Thu, 29 Dec 2011 13:13:42 +0100 Hanno Böck wrote:
 
-> On Tue, Jul 19, 2011 at 12:06:15AM +0200, Stefan Behte wrote:
-> > Then posting it to the new vendor-sec (linux-distros@...openwall.org)
-> > sounds like the right thing to do.
+> Am Wed, 28 Dec 2011 19:07:30 +0100
+> schrieb Andrea Barisani <lcars@...rt.org>:
+
+> > CVE: CVE-2011-4461 (Jetty), CVE-2011-4838 (JRuby), CVE-2011-4885
+> > (PHP), CVE-2011-4462 (Plone), CVE-2011-4815 (Ruby)
 > 
-> This is not exactly the new vendor-sec.  As the name suggests, it is a
-> Linux distros only list.  Also, please note that the maximum acceptable
+> Kurt or other CVE assigners, can you please assign a bunch for python,
+> java, tomcat etc. pp.
 
-We meant to say that we are willing to provide it to all distributions
-which provide packages for FreeRadius, not only Linux vendors. Sorry.
+Few already assigned:
 
+ASP.NET
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-3414
 
-> distros list without prior discussion on oss-security, I would bring
-> this up and suggest that we contact *BSD's at least.  Since this is
-> already on oss-security, I assume that interested *BSD's and others may
+Apache Geronimo
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5034
 
-We will contact the NetBSD/FreeBSD/OpenBSD security teams about the issue.
+Oracle Glassfish
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5035
 
+Rack
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5036
 
-> -----BEGIN PGP PUBLIC KEY BLOCK-----
-[snip]
-> -----END PGP PUBLIC KEY BLOCK-----
-
-Thanks for the information.
-
-
-Are the published information sufficient to get a CVE number for the issue?
-
-
-p.s.
-Please include us in CC since we are not subscribed on the list.
+Google V8
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5037
 
 -- 
-DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40 808077-555
-Sitz/Register: Hamburg,  AG Hamburg,  HRB 88805,  Ust-IdNr.: DE 232129737
-Sachsenstraße 5, 20097 Hamburg/Germany,  CEO: Dr. Klaus-Peter Kossakowski
-
-Content of type "application/pgp-signature" skipped
+Tomas Hoger / Red Hat Security Response Team
