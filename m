@@ -1,39 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/2
-Message-ID: <4EF2572B.4050506@redhat.com>
-Date: Wed, 21 Dec 2011 15:01:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: plib ulSetError() buffer overflow - CVE-2011-4620
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/30/1
+Message-ID: <20111230112656.5c9df449@redhat.com>
+Date: Fri, 30 Dec 2011 11:26:56 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, hanno@...eck.de
+Cc: Andrea Barisani <lcars@...rt.org>
+Subject: Re: More CVEs? (was Re:  [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
 Content-Type: text/plain; charset=utf-8
 
-https://secunia.com/advisories/47297/
-http://plib.sourceforge.net/index.html
-http://www.exploit-db.com/exploits/18258/
+On Thu, 29 Dec 2011 13:13:42 +0100 Hanno Böck wrote:
 
- From Secunia:
+> Am Wed, 28 Dec 2011 19:07:30 +0100
+> schrieb Andrea Barisani <lcars@...rt.org>:
 
-======================
-*Description*
-A vulnerability has been discovered in PLIB, which can be exploited by 
-malicious people to compromise an application using the library.
+> > CVE: CVE-2011-4461 (Jetty), CVE-2011-4838 (JRuby), CVE-2011-4885
+> > (PHP), CVE-2011-4462 (Plone), CVE-2011-4815 (Ruby)
+> 
+> Kurt or other CVE assigners, can you please assign a bunch for python,
+> java, tomcat etc. pp.
 
-The vulnerability is caused due to a boundary error within the 
-"ulSetError()" function (src/util/ulError.cxx) when creating the error 
-message, which can be exploited to overflow a static buffer.
+Few already assigned:
 
-Successful exploitation allows the execution of arbitrary code but 
-requires that the attacker can e.g. control the content of an overly 
-long error message passed to the "ulSetError()" function.
+ASP.NET
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-3414
 
-The vulnerability is confirmed in version 1.8.5. Other versions may also 
-be affected.
-======================
+Apache Geronimo
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5034
 
-Please use CVE-2011-4620 for this issue.
+Oracle Glassfish
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5035
+
+Rack
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5036
+
+Google V8
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5037
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
-
+Tomas Hoger / Red Hat Security Response Team
