@@ -1,31 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/25
-Message-ID: <Pine.GSO.4.64.1103041200201.3265@faron.mitre.org>
-Date: Fri, 4 Mar 2011 12:05:02 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Solar Designer <solar@...nwall.com>
-cc: Florian Zumbiehl <florz@...rz.de>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/30/2
+Message-ID: <20111230114950.GC20236@foo.fgeek.fi>
+Date: Fri, 30 Dec 2011 13:49:50 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: Elxis CMS two XSS-vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+1) Input passed to the "task" parameter in index.php (when "option" is set to "com_content") is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
+http://osvdb.org/show/osvdb/77563
 
-If there's a common usage scenario that doesn't stem from blatant 
-administrator negligence, then a CVE is probably still appropriate. 
-("blatant admin negligence" might be, say, if an admin arbitrarily makes a 
-script setuid, or modifies the perms for an executable or config file to 
-be world-writable.)
+2) Input passed via the URL to administrator/index.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
+http://osvdb.org/show/osvdb/77564
 
-We will sometimes write the CVE description more as an "adminisrator 
-practice" than as "fault of the software."
+http://secunia.com/advisories/47073/
 
-For example, default passwords are fair game; arguably, if the admin 
-didn't read page 24 of the documentation that said "change the default 
-password," this is more the admin's fault than the software's fault... BUT 
-the issue has to be dealt with, either way, so a CVE becomes a "signal" 
-for that action to take place, whether it came from the software or from 
-the user.
+Fixed in same version "2009.3 Aphrodite rev2684" so one CVE-identifier might be enough.
 
-Not everything is that clean and straightforward of course, but that's the 
-general thinking.
-
-- Steve
+- Henri Salo
