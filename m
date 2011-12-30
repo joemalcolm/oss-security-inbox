@@ -1,28 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/1
-Message-ID: <20110405002712.GB16256@openwall.com>
-Date: Tue, 5 Apr 2011 04:27:12 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/30/4
+Message-Id: <201112300306.pBU36JnQ005083@linus.mitre.org>
+Date: Thu, 29 Dec 2011 22:06:19 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: Web of trust
+Cc: cve-assign@...re.org
+Subject: Re: More CVEs? (was Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 11:00:42PM +0200, Yves-Alexis Perez wrote:
-> ... considering the use of GPG, would it make sense to have at
-> least some kind of ???web of trust??? thing on the involved keys?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yes.  I've been checking signatures on keys, although I did "have to"
-accept a few keys that were not verifiable in this way.  I relied on
-other means of verification in those cases.
+Here's the initial CVE assignment status for the 13 products listed
+in oCERT #2011-003, plus ASP.NET. The CVE descriptions are available
+at http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-#### URLs,
+and will be on the MITRE CVE web site soon.
 
-> That plus
-> subscribing the project address when possible could help maintaining
-> some confidence about where the mail really ends (though that doesn't
-> mean it can't be leaked later).
+>Java
 
-Yes.  With personal addresses, I have to verify that they're
-acknowledged as addresses of the person involved with the project.
+There's intentionally no CVE assigned by the MITRE CNA. The MITRE CNA
+hasn't been proactively assigning CVEs to hash-table robustness issues
+in implementations of general-purpose programming languages. As usual,
+a CVE can be assigned for a software mistake that has a security
+impact. Here, each maintainer of a language implementation can decide
+whether there was a software mistake. The decision depends on what
+robustness properties were intended. This happens to be a case in
+which it's difficult for outside parties to discern what was intended.
 
-There's definitely room for improvement here.
+>JRuby
 
-Alexander
+CVE-2011-4838
+
+>PHP
+
+CVE-2011-4885
+
+>Python
+
+Again, there's intentionally no CVE assigned by the MITRE CNA because
+this is an implementation of a general-purpose programming language,
+and no implementation maintainer has requested a CVE.
+
+>Rubinius
+
+Again, there's intentionally no CVE assigned by the MITRE CNA because
+this is an implementation of a general-purpose programming language,
+and no implementation maintainer has requested a CVE.
+
+>Ruby (only the Ruby MRI implementation)
+
+CVE-2011-4815
+
+>Apache Geronimo
+
+CVE-2011-5034
+
+>Apache Tomcat
+
+CVE-2011-4084
+
+At least at the moment, this CVE is intentionally not mapping to the
+oCERT #2011-003 and n.runs-SA-2011.004 references. We might have a
+pending REJECT on a closely related CVE that still has a reserved
+status. This related CVE is the CVE referenced as "2011-12-16:
+assigned CVE for Apache Tomcat" in the oCERT #2011-003 Timeline.
+
+>Oracle Glassfish
+
+CVE-2011-5035
+
+>Jetty
+
+CVE-2011-4461
+
+>Plone
+
+CVE-2011-4462
+
+>Rack
+
+CVE-2011-5036
+
+>V8 JavaScript Engine
+
+CVE-2011-5037
+
+>ASP.NET
+
+CVE-2011-3414
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJO/SlMAAoJEGvefgSNfHMdhn4H/2+MS345nwm/kHGPJDLZA5LP
+WtmD56n2+na4SUZFh2kOT7vu/9MR6U6IXgp8gsMPPpFLfkDR4pp2s07NvtBzUKBy
+C7DL4BN/GSEd70Gx1sku1oiFqREcNUt4eOmKZqRcURnz4M1yj25auKPWcoUecWPP
+YJarbr1Ud795rJYFYBBxbt1sGqs+qKt54IriyQ1TDspZCcBPV4Jy0XrMAuRxme7y
+AbHeVFM1aU+V4fZMOZz6B+2rQfhX3nWChuRj4F6ioABXkgjBRefL1vLAEbsb9IUS
+PBi4VCOr7Exy0qkhEfACVqEtEKBJIAihzgG0CNa6mA9+CUq89vfppeH5/LJu8Uo=
+=K98h
+-----END PGP SIGNATURE-----
