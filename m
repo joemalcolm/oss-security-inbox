@@ -1,30 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/3
-Message-ID: <20110225003225.GX4212@outflux.net>
-Date: Thu, 24 Feb 2011 16:32:25 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/30/2
+Message-ID: <20111230114950.GC20236@foo.fgeek.fi>
+Date: Fri, 30 Dec 2011 13:49:50 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: /sys/kernel/debug/acpi/custom_method can bypass module restrictions
+Subject: CVE-request: Elxis CMS two XSS-vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+1) Input passed to the "task" parameter in index.php (when "option" is set to "com_content") is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
+http://osvdb.org/show/osvdb/77563
 
-While CVE-2010-4347 covers the unprivileged to fully privileged escalation
-issue, this interface still allows an unprivileged root user to gain
-back all their capabilities.
+2) Input passed via the URL to administrator/index.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
+http://osvdb.org/show/osvdb/77564
 
-Having a system with acpi and debugfs built into the kernel allows
-a uid=0 user (without capabilities, e.g. in containers) to write to
-arbitrary kernel memory, likely resulting in escalated capability
-privileges[1], or unlocking an otherwise modules-disabled kernel by
-changing /proc/sys/kernel/modules_disabled back to 0.
+http://secunia.com/advisories/47073/
 
-Thanks,
+Fixed in same version "2009.3 Aphrodite rev2684" so one CVE-identifier might be enough.
 
--Kees
-
-[1] http://jon.oberheide.org/files/american-sign-language.c
-
--- 
-Kees Cook
-Ubuntu Security Team
+- Henri Salo
