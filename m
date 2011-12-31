@@ -1,56 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/11
-Message-ID: <1093098424.141863.1313780632015.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 15:03:52 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/31/2
+Message-ID: <4EFF7C81.3050308@redhat.com>
+Date: Sat, 31 Dec 2011 14:20:01 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Michael Koziarski <michael@...iarski.com>, aaron@...derlovemaking.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: ruby on rails flaws (4)
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Elxis CMS two XSS-vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+On 12/30/2011 04:49 AM, Henri Salo wrote:
+> 1) Input passed to the "task" parameter in index.php (when "option" is set to "com_content") is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
+> http://osvdb.org/show/osvdb/77563
+>
+> 2) Input passed via the URL to administrator/index.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
+> http://osvdb.org/show/osvdb/77564
+Merging these two issues as per ADT4:
 
+At this stage, X and Y are the same bug type, affect the same versions,
+and affect the same products.
 
------ Original Message -----
-> Could we get CVEs assigned to these flaws? Upstream had requested CVEs
-> prior to disclosure, but didn't receive any.
-> 
-> http://weblog.rubyonrails.org/2011/8/16/ann-rails-3-1-0-rc6
-> 
-> 1) Filter Skipping bugs
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/3420ac71aed312d6
-> https://github.com/rails/rails/commit/5f94b93279f6d0682fafb237c301302c107a9552
-> https://bugzilla.redhat.com/show_bug.cgi?id=731432
+Do X and Y have any of the following characteristics?
 
-Use CVE-2011-2929
+  * X appears in a different DLL, library, or program than Y (e.g. X
+    affects LIB1.DLL and Y affects LIB2.DLL)
+  * X has more serious impact than Y (e.g. code execution as root versus
+    leak of system pathname)
+  * X takes a different input parameter/argument than Y (e.g. SQL
+    injection in both the "user" and "password" parameters)
+  * X is exploitable locally, but Y is not.
+  * X requires stronger authentication than Y.
+  * X can be exploited by a certain user that Y can not (e.g. a guest
+    user vs. an admin)
 
+*Yes:* *MERGE
 
-> 
-> 2) SQL Injection issues
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6a1e473744bc389b
-> https://github.com/rails/rails/commit/8a39f411dc3c806422785b1f4d5c7c9d58e4bf85
-> https://bugzilla.redhat.com/show_bug.cgi?id=731438
-
-Use CVE-2011-2930
-
-
-> 
-> 3) Parse error in strip_tags
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b9130749b74ea12
-> https://github.com/rails/rails/commit/586a944ddd4d03e66dea1093306147594748037a
-> https://bugzilla.redhat.com/show_bug.cgi?id=731436
-
-Use CVE-2011-2931
-
-
-> 
-> 4) UTF-8 escaping vulnerability
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/56bffb5923ab1195
-> https://github.com/rails/rails/commit/bfc432574d0b141fd7fe759edfe9b6771dd306bd
-> https://bugzilla.redhat.com/show_bug.cgi?id=731435
-
-Use CVE-2011-2932
-
-Thanks.
+*Please use CVE-2011-4918 for these two issues
+*
+*
+>
+> http://secunia.com/advisories/47073/
+>
+> Fixed in same version "2009.3 Aphrodite rev2684" so one CVE-identifier might be enough.
+>
+> - Henri Salo
+Does anyone have a contact name for Secunia with respect to
+co-ordinating CVE assignments better?
 
 -- 
-    JB
+
+-- Kurt Seifried / Red Hat Security Response Team
+
+
