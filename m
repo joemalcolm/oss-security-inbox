@@ -1,35 +1,158 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/3
-Message-ID: <362325010.1020838.1315589241518.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Sep 2011 13:27:21 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/31/1
+Message-ID: <4EFF64E1.8020902@pipping.org>
+Date: Sat, 31 Dec 2011 20:39:13 +0100
+From: Sebastian Pipping <sebastian@...ping.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: masqmail
+Subject: mpack 1.6 allows eavesdropping on mails sent by other users
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3350.
-
-Thanks.
-
--- 
-    JB
+Hello oss-security,
 
 
------ Original Message -----
-> Hi,
-> a misuse of the seteuid function from glibc prevents masqmail from
-> properly
-> dropping root privileges.
-> References:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=638002
-> http://article.gmane.org/gmane.mail.masqmail/303
-> 
-> Can you assign a CVE id to this?
-> 
-> Kind regards
-> Nico
-> --
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
-> 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
+I think I have found something :-)
+
+
+Target software
+===============
+I recently stumbled upon a vulnerability in mpack 1.6 [1], a handy tool
+to (1) wrap/unwrap files into/from MIME containers and (2) send files
+via e-mail from the command line.
+
+
+Potential damage
+================
+The vulnerability allows to eavesdrop on mails (or parts of them on
+FreeBSD) sent by other any user on the system, including mails sent by
+root.  I guess "information disclosure" is the term.
+
+To reduce the probability of telling something here that turns out wrong
+later, I wrote a little tool called "mpacktrafficripper" [2] to
+demonstrate and verify the exploit.
+
+The FreeBSD version may allow additional damage, see details below.
+
+
+Affected distros
+================
+So far I have superficially tested the latest editions of three major
+distros.  The results:
+
+ - Debian (1.6-7):   vulnerable
+
+ - Gentoo (1.6-r1):  vulnerable
+
+ - FreeBSD (1.6):    vulnerable  (part 2 and after if split,
+                                  see details)
+
+Check [3] for my Git repo collecting the patches of all of these.
+
+
+Technical details
+=================
+The original code of mpack 1.6 operates this way:
+
+  1) make a tempfile name using mktemp
+
+  2) open that file using open(..., O_CREAT|O_EXCL, 0644)
+  3) write to the file                              ^^^^
+  4) close it
+
+  5) re-open the file using fopen(..., "r")
+  6) read from it
+  7) close it
+
+  8) delete the file
+
+So due to permissions 0644 everyone can read the file he opens the file
+for reading before it's deleted.  With an open file descriptor, there
+should not even be a reason to hurry.
+
+So a call like
+
+  # sudo mpack -s foo /etc/passwd fake@...l.com
+
+can be eavesdropped on in Debian and Gentoo.
+When instructing mpack to split the file into several mails as in
+
+  # sudo mpack -s foo -m 1700 /etc/passwd fake@...l.com
+                      ^^^^^^^
+the tempfile names follow a pattern:
+
+  foo
+  foo.01
+  foo.02
+
+Now on FreeBSD the original use of mktemp followed by open with
+O_CREAT|O_EXCL has been adjusted to this procedure, instead:
+
+  1) make a temp file using mkstemp and close returned file descriptor
+                              ^
+  2) open that file using open(..., O_CREAT|O_TRUNC, 0644)
+                                            ^^^^^^^
+  3) to 8) as above
+
+So mkstemp creates the first file (not open) which gets the permissions
+right but all following files are created using open _without_ O_EXCL
+and with 0644 permissions.  So the second part and after can be
+eavesdropped on FreeBSD, too.  Additionally, there could be room for
+symlink or hardlink attacks in that case, I have tested that.
+
+
+A patch
+=======
+A patch could be to change create files with 0600 permissions rather
+than 0644 as done by [4].  However, that approach affects creation of
+non-temporary files too.  In some cases, users may not want that
+behaviour -- you tell me.
+
+
+Upstream
+========
+My attempts of contacting upstream failed.  I wrote to
+
+  To: mpack-bugs@...rew.cmu.edu
+  CC: "John G. Myers" <jgm@....edu>,
+      "Christopher J. Newman" <chrisn@....edu>
+
+and got this back:
+
+  ----- The following addresses had permanent fatal errors -----
+  <jgm@....edu>
+    (reason: 553 5.3.0 <jgm+@...rew.cmu.edu>... Unknown address.
+      See   <http://www.cmu.edu/directory?to=jgm>)
+  niftytelnet@....com
+    (reason: 550 5.1.1 unknown or illegal alias: niftytelnet@....com)
+    (expanded from: <chrisn@....edu>)
+
+  ----- Transcript of session follows -----
+  ... while talking to mx1.andrew.cmu.edu.:
+  >>> DATA
+  <<< 553 5.3.0 <jgm+@...rew.cmu.edu>... Unknown address.
+    See  <http://www.cmu.edu/directory?to=jgm>
+  550 5.1.1 <jgm@....edu>... User unknown
+  <<< 503 5.0.0 Need RCPT (recipient)
+  ... while talking to mx.mac.com.akadns.net.:
+  >>> DATA
+  <<< 550 5.1.1 unknown or illegal alias: niftytelnet@....com
+  550 5.1.1 niftytelnet@....com... User unknown
+  <<< 554 5.5.0 No recipients have been specified.
+
+
+Next steps
+==========
+You tell me.  Does this need a CVE number?  With a dead upstream, how do
+we best get this fixed in all distros ?
+
+Best,
+
+
+
+Sebastian
+
+
+[1] ftp://ftp.andrew.cmu.edu/pub/mpack/
+[2] http://git.goodpoint.de/?p=mpacktrafficripper.git;a=summary
+[3] http://git.goodpoint.de/?p=mpack.git;a=summary
+[4]
+http://git.goodpoint.de/?p=mpack.git;a=commitdiff;h=0c87201f64491575350b18d04c62ec142e119d1f
