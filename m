@@ -1,27 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/2
-Message-ID: <Pine.GSO.4.64.1103281027270.7261@faron.mitre.org>
-Date: Mon, 28 Mar 2011 10:27:49 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, David Malcolm <dmalcolm@...hat.com>
-Subject: Re: CVE Request -- Python (urllib, urllib2): Improper management of ftp:// and file:// URL schemes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/31/2
+Message-ID: <4EFF7C81.3050308@redhat.com>
+Date: Sat, 31 Dec 2011 14:20:01 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Elxis CMS two XSS-vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-
-On Thu, 24 Mar 2011, Jan Lieskovsky wrote:
-
->  A security flaw was found in the way handlers for ftp:// and
-> file:// URL schemes in the Python urllib and urllib2 extensible
-> libraries processed the urllib open URL request.
+On 12/30/2011 04:49 AM, Henri Salo wrote:
+> 1) Input passed to the "task" parameter in index.php (when "option" is set to "com_content") is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
+> http://osvdb.org/show/osvdb/77563
 >
->...
+> 2) Input passed via the URL to administrator/index.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
+> http://osvdb.org/show/osvdb/77564
+Merging these two issues as per ADT4:
+
+At this stage, X and Y are the same bug type, affect the same versions,
+and affect the same products.
+
+Do X and Y have any of the following characteristics?
+
+  * X appears in a different DLL, library, or program than Y (e.g. X
+    affects LIB1.DLL and Y affects LIB2.DLL)
+  * X has more serious impact than Y (e.g. code execution as root versus
+    leak of system pathname)
+  * X takes a different input parameter/argument than Y (e.g. SQL
+    injection in both the "user" and "password" parameters)
+  * X is exploitable locally, but Y is not.
+  * X requires stronger authentication than Y.
+  * X can be exploited by a certain user that Y can not (e.g. a guest
+    user vs. an admin)
+
+*Yes:* *MERGE
+
+*Please use CVE-2011-4918 for these two issues
+*
+*
 >
-> References:
-> [1] http://bugs.python.org/issue11662
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=690560
+> http://secunia.com/advisories/47073/
+>
+> Fixed in same version "2009.3 Aphrodite rev2684" so one CVE-identifier might be enough.
+>
+> - Henri Salo
+Does anyone have a contact name for Secunia with respect to
+co-ordinating CVE assignments better?
+
+-- 
+
+-- Kurt Seifried / Red Hat Security Response Team
 
 
-Use CVE-2011-1521
-
-- Steve
