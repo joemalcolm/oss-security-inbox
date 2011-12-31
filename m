@@ -1,55 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/1
-Message-Id: <201102281416.06874.thomas@suse.de>
-Date: Mon, 28 Feb 2011 14:16:06 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/31/4
+Message-ID: <4EFF8DD5.6050500@pipping.org>
+Date: Sat, 31 Dec 2011 23:33:57 +0100
+From: Sebastian Pipping <sebastian@...ping.org>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- OpenLDAP -- two issues
+Subject: Re: mpack 1.6 allows eavesdropping on mails sent by other users
 Content-Type: text/plain; charset=utf-8
 
+On 12/31/2011 10:26 PM, Kurt Seifried wrote:
+> It's a vuln so yup. Please use CVE-2011-4919 for this issue. As for
+> getting it fixed FreeBSD/Debian/etc monitor this list, if anyone thinks
+> additional notification is needed please forward this email to the
+> appropriate parties I guess.
 
-The following might also need a CVE-ID.
-
-https://bugzilla.novell.com/show_bug.cgi?id=674985#c1
-------------------------------------------------------------------------------
-http://www.openldap.org/its/index.cgi/Software Bugs?id=6768
-
-That's a pretty bad DOS. Everybody (even unauthenticated users) can kill the
-server by submitting a MODRDN request with an empty "olddn" value and "remove
-old RDN" set (-r). Example:
-
-      ldapmodrdn -x -H ldap://ldapserver -r '' o=test 
-------------------------------------------------------------------------------
+Alright, thanks.
 
 
-Am Freitag 25 Februar 2011 17:18:08 schrieb Josh Bressers:
-> ----- Original Message -----
-> > Hello Josh, Steve, vendors,
-> > 
-> > looks like the following two issues did not get a CVE identifiers yet:
-> > [1] http://secunia.com/advisories/43331/
-> 
-> The above advisory covers both bugs below.
-> 
-> 
-> > [2] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6607
-> 
-> CVE-2011-1024 openldap forwarded bind failure messages cause success
-> 
-> 
-> > [3] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6661
-> 
-> CVE-2011-1025 openldap rootpw is not verified with slapd.conf
-> 
-> 
-> Thanks.
-> 
-> 
+> Happy new years!
 
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Same to you!
+
+Best,
+
+
+
+Sebastian
