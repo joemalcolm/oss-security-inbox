@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/3
-Message-ID: <20110914140926.GC25572@dhcp-25-225.brq.redhat.com>
-Date: Wed, 14 Sep 2011 16:09:27 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/31/4
+Message-ID: <4EFF8DD5.6050500@pipping.org>
+Date: Sat, 31 Dec 2011 23:33:57 +0100
+From: Sebastian Pipping <sebastian@...ping.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request -- kernel: cifs: always do is_path_accessible check in cifs_mount
+Subject: Re: mpack 1.6 allows eavesdropping on mails sent by other users
 Content-Type: text/plain; charset=utf-8
 
-"Currently, we skip doing the is_path_accessible check in cifs_mount if
-there is no prefixpath. There is a report of at least one server however
-that allows a TREE_CONNECT to a share that has a DFS referral at its
-root. UNC that had no prefixpath was used in that case, so the
-is_path_accessible check was not triggered and the box later hit
-a BUG() because we were chasing a DFS referral on the root dentry for
-the mount."
+On 12/31/2011 10:26 PM, Kurt Seifried wrote:
+> It's a vuln so yup. Please use CVE-2011-4919 for this issue. As for
+> getting it fixed FreeBSD/Debian/etc monitor this list, if anyone thinks
+> additional notification is needed please forward this email to the
+> appropriate parties I guess.
 
-Upstream fix:
-70945643722ffeac779d2529a348f99567fa5c33
+Alright, thanks.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=682829
-https://github.com/mirrors/linux/commit/70945643722ffeac779d2529a348f99567fa5c33
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+> Happy new years!
+
+Same to you!
+
+Best,
+
+
+
+Sebastian
