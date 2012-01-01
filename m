@@ -1,22 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/05/5
-Message-ID: <5097FD39.8050101@redhat.com>
-Date: Mon, 05 Nov 2012 18:54:01 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/01/3
+Message-ID: <20120101155309.GA28339@ngolde.de>
+Date: Sun, 1 Jan 2012 16:53:09 +0100
+From: Nico Golde <nion@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: operator new[] overflow checking in G++
+Subject: speaking of DoS, openssh and dropbear (CVE-2006-1206)
 Content-Type: text/plain; charset=utf-8
 
-On 08/31/2012 02:51 PM, Florian Weimer wrote:
+Hi,
+given the hash DoS I remembered a small program I wrote some time last year to 
+demonstrate why the default configuration of openssh sucks (MaxStartups and 
+LoginGraceTime). I attached the program.
+So now I'm wondering about two issues. I just tested this with dropbear 0.52 
+and I am still able to DoS it just fine even though at least 
+http://www.securityfocus.com/bid/17024 claims that this has been fixed in 
+Dropbear SSH Server 0.48. The other thing is that I'm wondering how to 
+properly handle this issue with openssh?  This certainly is no vulnerability 
+that is straight-forward to fix and it might even be that openssh would argue 
+that this is a problem.
 
-> There is another patch which touches code which is not actually used by
-> GCC, but could theoretically be called by code emitted by other compilers:
->
->    <http://gcc.gnu.org/ml/gcc-patches/2012-08/msg01416.html>
+This is certainly a very easy DoS and given that this definitely 
+affects Debian configurations and also the default configuration, I feel 
+uncomfortable to further ignore this problem.
 
-This has now been accepted into GCC:
+I think its time to discuss this and work on a fix. Solar Designer is 
+proposing something along the lines of per-source limits which seems like a 
+reasonable solution to me (I guess he will send more information on this).
+What do you (especially the people shipping openssh) think about this?
 
-<http://gcc.gnu.org/viewcvs?view=revision&revision=193174>
+Kind regards
+Nico
 
 -- 
-Florian Weimer / Red Hat Product Security Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+View attachment "sockext.c" of type "text/x-csrc" (3789 bytes)
+
+Content of type "application/pgp-signature" skipped
