@@ -1,30 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/15
-Message-ID: <Pine.GSO.4.64.1201171650350.16209@faron.mitre.org>
-Date: Tue, 17 Jan 2012 17:00:35 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/01/5
+Message-ID: <20120101205239.GA21048@openwall.com>
+Date: Mon, 2 Jan 2012 00:52:39 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-cc: Henri Salo <henri@...v.fi>
-Subject: Re: Re: pwgen: non-uniform distribution of passwords
+Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
 Content-Type: text/plain; charset=utf-8
 
+Hi Nico,
 
-On Tue, 17 Jan 2012, Kurt Seifried wrote:
+It was high time to bring this up on a public list.  Thank you!
 
-> In this case we have something that tells you not to use an unsafe 
-> option but isn't exceedingly noticeable or clear (if it came up every 
-> time you used that option there would be a stringer case for no CVE). 
-> I'm sitting on the fence for this one (I can see it going either way), 
-> wouldn't mind some more opinions from the smart people on this list.
+On Sun, Jan 01, 2012 at 04:53:09PM +0100, Nico Golde wrote:
+> given the hash DoS I remembered a small program I wrote some time last year to 
+> demonstrate why the default configuration of openssh sucks (MaxStartups and 
+> LoginGraceTime).
 
-For CVE, if there is an insecure feature that is documented, but there are 
-likely or proven scenarios in which an admin might be unaware of the 
-insecurity of the feature, then we will often consider it for inclusion. 
-In this case, we would write the CVE description in a way that emphasizes 
-the admin's role in creating/introducing the issue.
+I think not only the default configuration, but also the approach behind
+MaxStartups sucks (either a fixed limit or RED).  In fact, I told this
+to OpenSSH folks before, and I proposed an alternative, but clearly I
+should have done more (contributed code) in order for anything to change.
 
-A separate reason for inclusion would be if a product advertises a 
-security feature, but the implementation does not achieve the claimed 
-level of security.
+To be fair, there are also things that I do like about MaxStartups: the
+idea to limit only not-yet-authenticated sessions (or to limit them
+separately from authenticated sessions) and the close-a-pipe-fd trick.
 
-- Steve
+> ... how to properly handle this issue with openssh?
+
+In the same way that I did in popa3d, I think: per-source limits.  Maybe
+also per-source-netblock (e.g., separately for /8, /16, /24 - although
+this is IPv4-specific and these don't reflect actual netblock allocations).
+
+Another thing that popa3d's standalone mode takes care of is log flood.
+It makes sure that every single source IP address that is permitted to
+connect is logged at least once, but it avoids making mostly redundant
+records when a threshold is reached.
+
+For purpose of these limits, sessions are treated as active for at least
+a certain number of seconds after the connection is made.  So if an
+attacker opens and closes connections rapidly, the per-source limit is
+hit and further connections start to be rejected and not even logged
+until those "zombie sessions" expire.  (With per-netblock limits, this
+may become trickier as we'd want to log each individual IP address at
+least once.)
+
+In xinetd, we have per-source limits (my contribution from many years
+ago), but no log flood protection yet (something to fix).
+
+Speaking of log flood, this is not only about filling up a filesystem,
+but also about exhausting syslogd bandwidth (especially easy if fsync's
+are not disabled).  When the latter happens, the network service (sshd,
+etc.) and other services may be impacted.
+
+I've been toying with the idea of writing a libinetd that would have
+this functionality in it (and we'd have an inetd clone, sshd, and other
+services use it), but I never got around to doing it.
+
+> I feel uncomfortable to further ignore this problem.
+
+Same here.
+
+Alexander
