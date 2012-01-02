@@ -1,34 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/12
-Message-ID: <CANTw=MMB6jTrob0TutQFfAOmZ1zg3tsQ8tNoP1v7GZccHh_pFA@mail.gmail.com>
-Date: Fri, 21 Sep 2012 14:27:43 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/10
+Message-ID: <20120102121523.GA17440@ugly.local>
+Date: Mon, 2 Jan 2012 13:15:23 +0100
+From: Oswald Buddenhagen <ossi@....org>
+To: Solar Designer <solar@...nwall.com>
+Cc: Jeff Mitchell <mitchell@....org>, oss-security@...ts.openwall.com, cve@...re.org
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 21, 2012 at 2:18 PM, Kurt Seifried <kseifried@...hat.com> wrote:
->> Any security weakness can qualify for the E in CVE.  Really the
->> point
->
-> No, security vulnerabilities qualify, security hardening does not
-> necessarily qualify.
+On Wed, Dec 28, 2011 at 03:25:09AM +0400, Solar Designer wrote:
+> On Mon, Dec 26, 2011 at 11:39:55PM -0500, Jeff Mitchell wrote:
+> > So kcheckpass, at least for the moment, punts all of this down to
+> > OpenPAM. Is it *nice*? No. Is it *valid*? Yes, unless OpenPAM changes
+> > its programming guide to require sanity checking of inputs at a higher
+> > level (and then it should still do its own checking anyways).
+> 
+> Sure, but is it valid and not a vulnerability when installing a package
+> (containing kcheckpass) unexpectedly (for a sysadmin) lets any user on
+> the system
+> invoke any of the configured PAM stacks, some of which may have
+> side-effects?
+> 
+i pondered this possibility when i initially added the override
+parameter to kcheckpass, but i couldn't come up with anything usefully
+exploitable - it would have to be some right which is granted to the
+user *only* by this particular service - but not full logins. this seems
+a bit far-fetched. so while you have a valid point in principle, it
+doesn't seem particularly relevant for desktop systems.
 
-Again E is for exposure, not vulnerability.
-
-> In this case GnuPG respects umask. We can't assign a CVE for every
-> single program that has potentially sensitive output and fails to
-> ensure that the output is mode 0600 or whatever (what about extended
-> access controls?). Some programs choose to enforce permissions within
-> themselves (e.g. OpenSSH and key based authentication), but generally
-> speaking makeing sure a program with potentially sensitive output is
-> safe is the job of the system configuration, and you have several options:
-
-Think about it this way.  I open a file with mode 600 in vim, edit it,
-save it, and find it with mode 644?  That would be an exposure, would
-it not?
-
-Again, about as minor as you could get, but its still an E.
-
-Best wishes,
-Mike
+fwiw, linux-pam's pam_unix has an own setuid helper for shadow pw
+verification for some time now. most services don't actually need root
+for authentication at all. consequently, it is usually not useful to
+install kcheckpass setuid root at all, which makes this whole discussion
+somewhat irrelevant in the first place (except that the upstream
+makefiles will still try to install with setuid root).
