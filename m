@@ -1,48 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/04/3
-Message-Id: <201209041825.28438.geissert@debian.org>
-Date: Tue, 4 Sep 2012 18:25:27 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/2
+Message-ID: <20120102001323.GB22463@openwall.com>
+Date: Mon, 2 Jan 2012 04:13:23 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: php header() header injection detection bypass
+Cc: Christos Zoulas <christos@...las.com>
+Subject: Re: *BSD's DES-based crypt(3) treats all invalid salt chars as '.'
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 04 September 2012 14:02:25 cve-assign@...re.org wrote:
-> >This is perfect, thanks. Please use CVE-2012-4388 for the incomplete
-> >fix for CVE-2011-1398.
-[...]
-> In the current situation, CVE-2011-1398 will probably be modified soon
-> to have a "NOTE: this vulnerability exists because of an incomplete
-> fix for CVE-####-####." sentence.
+Christos Zoulas fixed the out of bounds read below in NetBSD (for NetBSD 6).
 
-As far as I'm aware, there was no CVE assigned when the original header 
-injection/response splitting protection was added. I presume there wasn't 
-one because it was a security feature to protect applications that didn't 
-validate what was being passed to header()[1], not a fix for a vulnerability.
-
-[1] such as phpMyID: http://seclists.org/bugtraq/2008/Oct/4
-(which now I notice never got a CVE id)
-
-> Although a vulnerability statement such as "First one still has the
-> possibility of injecting '\r' before the first '\n'" can be associated
-> with the concept of an incomplete fix, MITRE does not consider the fix
-> to be an "incomplete fix for" a different CVE (that references a
-> better patch). In our terminology, the "incomplete fix for" phrase is
-> only used for pointers in the opposite direction. And, of course, CVEs
-> are assigned to vulnerabilities, not to fixes.
-
-Perhaps I'm misunderstanding something, but the above is confusing me.
-
-To me, this is what each of the ids represent:
-CVE-2011-1398: describes the protection bypass
-CVE-2012-4388: describes the failure to fully fix the protection bypass 
-(hence the "incomplete fix for CVE-2011-1398")
-
-
-P.S. I don't even mention the NUL-byte issue as, to the best of my 
-knowledge, never made it into a release.
-
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+On Tue, Nov 15, 2011 at 08:16:14AM +0400, Solar Designer wrote:
+> Speaking of NetBSD, it also appears to have out of bounds array reads on
+> salt characters with the 8th bit set:
+> 
+> static unsigned char a64toi[128];	/* ascii-64 => 0..63 */
+> [...]
+> 		/* get iteration count */
+> 		num_iter = 0;
+> 		for (i = 4; --i >= 0; ) {
+> 			if ((t = (unsigned char)setting[i]) == '\0')
+> 				t = '.';
+> 			encp[i] = t;
+> 			num_iter = (num_iter<<6) | a64toi[t];
+> 		}
+> [...]
+> 	salt = 0;
+> 	for (i = salt_size; --i >= 0; ) {
+> 		if ((t = (unsigned char)setting[i]) == '\0')
+> 			t = '.';
+> 		encp[i] = t;
+> 		salt = (salt<<6) | a64toi[t];
+> 	}
+> 
+> This has no security impact that I can see, though.  Perhaps with PHP
+> safe_mode and the like it could be used to read data beyond array
+> bounds, but unless the order of variables in .bss is heavily changed by
+> the compiler or linker there's nothing interesting to read in the 128
+> bytes following a64toi[], and it would not result in a crash either.
+> 
+> Alexander
