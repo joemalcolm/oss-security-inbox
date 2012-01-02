@@ -1,81 +1,152 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/17/1
-Message-ID: <CAB9ZNAwKURikFpnx+yB7wirq_aEwxLFZgDGZOBnd=ND4TLDmrw@mail.gmail.com>
-Date: Thu, 17 May 2012 09:52:09 -0500
-From: Andres Gomez <agomez@...idsignal.com>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  vuln@...unia.com
-Subject: CVE Request: Planeshift buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/15
+Message-ID: <20120102233300.GB7531@ngolde.de>
+Date: Tue, 3 Jan 2012 00:33:01 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
 Content-Type: text/plain; charset=utf-8
 
-Name: Stack-based buffer overflow in Planeshift 0.5.9 and earlier
-Software: Planeshift 0.5.9
-Software link: http://www.planeshift.it/
-Vulnerability Type: Buffer overflow
+Hi,
+* Kurt Seifried <kseifrie@...hat.com> [2012-01-02 04:56]:
+[...] 
+> By establishing a large number of connections and holding them open (this 
+> typically requires only a few packets or less per second from the attackers 
+> system) an attacker can hold a connection open indefinitely or until a 
+> timeout condition is reached. 
+> 
+> We have seen this attack before: SYN flooding, Slowloris, airline seat 
+> reservations, email spam, password brute forcing attacks, etc.
 
-Vulnerability Details:
+I definitely agree, the root problem is pretty similar (I like airline seat 
+reservation :D).
 
-There is a buffer overflow in planeshift/src/client/chatbubbles.cpp line
-223:
+[...] 
+> 2) Random drops
+> 
+> Another strategy is to randomly drop connections when load gets high. The 
+> theory is that legitimate connections will continue to try and connect, by 
+> dropping connections and reducing load there is a better chance that 
+> legitimate clients will get through. Unfortunately with a typical DoS or 
+> DDoS style attack to attackers connections will vastly outnumber legitimate 
+> connection attempts.
 
-       .
-       .
-       .
+Or as in some of the slowloris "fixes" not dropping random connections, but 
+incrementally changing the connection timeout with the load/number of 
+connections. I think this is a fairly sane tradeoff.
 
-        // align
-        csString align = chatNode->GetAttributeValue("align");
-        align.Downcase();
-        if (align == "right")
-            chat.textSettings.align = ETA_RIGHT;
-        else if (align == "center")
-            chat.textSettings.align = ETA_CENTER;
-        else
-            chat.textSettings.align = ETA_LEFT;
+> 3) Progressive timeouts/lockouts
+> 
+> To prevent password guessing attacks at the console some Linux systems 
+> implement a progressive timeout, if you get the password wrong you have to 
+> wait a second, if you get it wrong again you have to wait 2 seconds, then 4 
+> seconds, etc. This reduces the number of attempts an attacker can make. In 
+> terms of OpenSSH we could for example implement a lockout, if you connect 
+> but fail to login you have to wait 10 seconds, the second time you need to 
+> wait 20 seconds, etc. There are a large number of downsides to this however: 
+> you need to store a database of IP's or networks to lockout and for how 
+> long, you may have multi user systems connecting to yours which means one 
+> user making a typo (or maliciously fail to login, thus locing everyone else 
+> out). 
 
-        // prefix
-223>  strcpy(chat.effectPrefix,
-chatNode->GetAttributeValue("effectPrefix"));
+If you combine this with a per-ip based connection count, you could achieve 
+that without needing to store connections in a database, but only apply this 
+to active connections. I haven't checked the source, but I would expect there 
+is already a datastructure to operate on lists of connections.
 
-        //enabled
-        .
-        .
-        .
+I think we agree that 4 and 5 would be really suboptimal solutions for the 
+case of openssh.
 
-this line reads a tag inside chatbubbles.xml called effectPrefix. If that
-string is very long, for example:
+> 6) hash cash and work functions
+> 
+> The idea here is simple, make the attack computationally expensive and the 
+> attacker will not be able to cause as much trouble. For large scale or 
+> sustained attacks simply increase the work function (like bcrypt, you can 
+> effectively select how much work it is to decrypt the password), this could 
+> also be done in the fly, as an increasingly number of connections occur 
+> increase the work function. 
 
-<chat type="say" enabled="yes" colourR="186" colourG="168" colourB="126"
-shadowR="108" shadowG="98" shadowB="73" align="left"
-effectPrefix="chatbubble_AAAAA....AAAAA" />
+Do you know of any existing service that implements such an approach? I would 
+love to check this out in detail on an example.
 
-It will overwrite effectPrefix[64] buffer, which can lead even to arbitrary
-code execution.
+> 7) Grey listing
+> 
+> This is more applicable to email but can work with other protocols 
+> potentially. Basically you tell clients that their connection cannot be 
+> serviced and that they should come back later and try again. Legitimate 
+> clients will come back and attempt to connect again, most illegitimate 
+> clients (at least in the spam world) will simply move on and try other 
+> hosts. This type of solution will probably not work well with interactive 
+> protocols such as SSH or for targeted attacks. 
 
+I guess this would be rather annoying for ssh as an attacker either can 
+directly reconnect, in which case the effect of this is practically non
+existent or it becomes very annoying from a user PoV.
 
-Could a CVE be assigned to this issue?
+[...] 
+> -------------
+> 
+> But what if the attacker has a 10,000 node bot net?
 
-Thanks,
+While this is an argument that is valid, I think this would be an argument 
+that doesn't matter for most users. A possible use of the script I sent would 
+be to e.g. prevent an admin to login via ssh while the server is exploited 
+through another service. In such a case I would find it fairly weird if a 
+botnet is used at the same to achieve this. Also since security is hardly a 
+state and I think in practice the difference really matters, I do believe
+it is useful to significantly raise the bar of the thread from a home-user to 
+a distributed attacker.
 
-Andres Gomez.
+[...] 
+> The first three solutions (early drops, random drops and progressive 
+> timeouts) can be implemented in OpenSSH server side without requiring any 
+> changes to the protocol or clients.
+> 
+> Reputation based systems can be implemented within OpenSSH (but I wouldn't, 
+> because it is a bad bad idea) or at the OS level in firewall code, 
+> reputation based systems would require no changes to OpenSSH clients or the 
+> protocol.
+> 
+> Port knocking can implemented at the OS or firewall level, but requires 
+> client software and user training/etc. Widespread deployment isn't going to 
+> happen anytime soon (although I'd be curious to see how adoption would be if 
+> we shipped something to support it by default). 
 
+I still think that for the average user the per-ip based connection count is a 
+fairly good solution. Of course not optimal in case of DDoS attacks, even 
+though as an openssh user, I feel like it's ok to neglect this problem in 
+practice.
+It would also be interesting to see some input from the openssh people, hence 
+I CCed the dev list (hopefully the right one).
+For reference: 
+http://www.openwall.com/lists/oss-security/2012/01/01/3
+
+> The rest of the solutions do not lend themselves to this problem or would 
+> require significant changes to the OpenSSH protocol/client/server which is a 
+> bad bad idea.
+> 
+> Anything we do to address this issue should be extremely simple and 
+> conservative, the OpenSSH server and client are very stable and robust 
+> pieces of code, any modifications to them make me nervous. 
+> 
+> I suspect the simplest and more effective solution might be some form of 
+> progressive timeout for IP's that fail to authenticate (drop the connection 
+> entry silently and ignore them in favor of real clients). 
+> 
+> Long term I'd like to see more work on hash cash type solutions, being able 
+> to arbitrarily set or have a reactive system that requires increased work on 
+> the client end to prove they are a legitimate client would help with this 
+> whole DoS/DDoS class of problem to some degree.
+
+See above, it would be really nice to see if there is a project which already 
+does that.
+
+Kind regards
+Nico
+P.S. if anyone has a clue on why that script still works with dropbear, even 
+though it already seems to implement per-ip based connection counting...
 -- 
---
-AVISO DE CONFIDENCIALIDAD:
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Esta transmisión se entiende para uso del destinatario o la entidad a la 
-que va dirigida y puede contener información confidencial o protegida por 
-la ley. Si el lector de este mensaje no fuera el destinatario, considérese 
-por este medio informado que la retención, difusión, o copia de este correo 
-electrónico está estrictamente prohibida. Si recibe este mensaje por error, 
-por favor notifique inmediatamente al emisor y destruya el original. Gracias
-
---
-CONFIDENTIALITY NOTICE:
-
-This transmission is intended for the use of the individual or entity to 
-which it is addressed, and it may contain information that is confidential 
-or privileged under law. If the reader of this message is not the intended 
-recipient, you are hereby notified that retention, dissemination, 
-distribution or copying of this e-mail is strictly prohibited. If you 
-received this e-mail in error, please notify the sender immediately and 
-destroy the original. Thank you.
-
+Content of type "application/pgp-signature" skipped
