@@ -1,41 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/2
-Message-ID: <20120127011801.GA5887@openwall.com>
-Date: Fri, 27 Jan 2012 05:18:01 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/14
+Message-ID: <4F022FBF.6010806@redhat.com>
+Date: Mon, 02 Jan 2012 15:29:19 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: testing pwqgen
+CC: Eitan Adler <lists@...anadler.com>, Solar Designer <solar@...nwall.com>
+Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 01/01/2012 09:41 PM, Eitan Adler wrote:
+> On Sun, Jan 1, 2012 at 10:54 PM, Kurt Seifried <kseifrie@...hat.com> wrote:
+>> Long term I'd like to see more work on hash cash type solutions, being able to
+>> arbitrarily set or have a reactive system that requires increased work on the client
+>> end to prove they are a legitimate client would help with this whole DoS/DDoS class > of problem to some degree.
+> But what if the attacker has a 10,000 node bot net? Wouldn't they just
+> abuse the victimized computers even further?
+>
+>
+>
+If you mean the compromised botnet machines by "victimized computers"
+they're already lost and gone forever in most cases.
 
-I think we can and should use this list not only for discussing actual
-vulnerabilities, but also for sharing information on what was audited,
-tested, etc. even if found not vulnerable.  Such information may be
-helpful too.
+One possible second order effect is that the botnet machines need enough
+CPU power to launch their attacks that they become so slow that users
+actually take action to fix their computers, which would be a good thing.
 
-In light of the pwgen vulnerability:
+-- 
 
-http://www.openwall.com/lists/oss-security/2012/01/17/5
-http://www.openwall.com/lists/oss-security/2012/01/19/24
-http://www.openwall.com/lists/oss-security/2012/01/22/6
+-- Kurt Seifried / Red Hat Security Response Team
 
-I also tested our pwqgen (part of passwdqc) for (lack of) a similar
-issue.  Testing was easy with low random=... settings (like for 1 or 2
-words), but I also wanted to test with our default settings (no options
-on pwqgen's command line at all, which means 47 bits of randomness).
-
-I happened to generate 466896327 such passwords (or phrases) until I
-interrupted the script.  Out of them, 779 appear twice and none more
-than two times.  Thus, 466895548 are unique.
-
-For uniform distribution, the expectation is that we'll have about
-466895552.5 unique passwords, or about 774.5 duplicates.  The test
-results match this pretty closely.
-
-Of course, this heavily depends on the quality of /dev/urandom.  I did
-my testing on the same system where I had tested pwgen.  This is an
-8-core machine running Linux 2.6.18-274.3.1.el5.028stab094.3.owl1 (an
-Owl revision/build of a RHEL5 branch OpenVZ kernel) for x86_64.
-
-Alexander
