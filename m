@@ -1,42 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/26/1
-Message-ID: <5039CCC7.8040004@redhat.com>
-Date: Sun, 26 Aug 2012 10:14:15 +0300
-From: Michael Pasternak <mpastern@...hat.com>
-To: vdanen@...hat.com, oss-security@...ts.openwall.com
-Subject: Re: oVirt 3.1 does not validate server certificates in python sdk and cli (CVE-2012-3533)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/13
+Message-ID: <2377875.j8BZY3dZpb@devil>
+Date: Mon, 02 Jan 2012 21:01:13 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: libfpx "Free_All_Memory()" Double-Free Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-Hi Vincent,
-
-Fix for the mentioned issue available in:
-
-sdk: 3.1.0.6
-cli: 3.1.0.8
-
-> 
-> Hi folks.  This is a heads-up for anyone who may be shipping oVirt.
-> oVirt 3.1 added a new python SDK and CLI which do various fancy things.
-> It supports connecting to servers over SSL, but did not have support for
-> validating certificates, which could lead to a mitm attack.
-> 
-> I've assigned CVE-2012-3533 to this issue.  It is corrected in git
-> already.
-> 
-> References:
-> 
-> http://wiki.ovirt.org/wiki/Release_Notes#Interfaces
-> http://gerrit.ovirt.org/#/c/7209/
-> http://gerrit.ovirt.org/#/c/7249/
-> https://bugzilla.redhat.com/show_bug.cgi?id=851672
-> 
-> -- 
-> 
-> Vincent Danen / Red Hat Security Response Team
-
+seems there is not a CVE assigned for libfpx "Free_All_Memory()" Double-Free 
+Vulnerability.
+Reference: https://secunia.com/advisories/47246/
 
 -- 
+Agostino Sarubbo		ago -at- gentoo.org
+Gentoo/AMD64 Arch Security Liaison
+GPG: 0x7CD2DC5D
 
-Michael Pasternak
-RedHat, ENG-Virtualization R&D
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
