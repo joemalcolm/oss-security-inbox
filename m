@@ -1,92 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/1
-Message-ID: <507F5028.50105@redhat.com>
-Date: Wed, 17 Oct 2012 18:41:12 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/4
+Message-ID: <20120102004928.GA22741@openwall.com>
+Date: Mon, 2 Jan 2012 04:49:28 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Michael Gilbert <mgilbert@...ian.org>
-Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
+Cc: deraadt@...nbsd.org, Todd Miller <Todd.Miller@...rtesan.com>, Colin Percival <cperciva@...ebsd.org>, dillon@...llo.backplane.com, Christos Zoulas <christos@...las.com>
+Subject: OpenBSD bcrypt 8-bit key_len wraparound
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 10/17/2012 01:46 PM, Michael Gilbert wrote:
-> On Wed, Oct 17, 2012 at 3:42 PM, Kurt Seifried wrote:
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->> 
->> On 10/15/2012 02:50 PM, Raphael Geissert wrote:
->>> Hi,
->>> 
->>> Michael Stapelberg, Tollef Fog Heen, and Michael Biebl
->>> discovered that dhclient was setting dhclient-script's PATH to
->>> one that included a subdirectory of the build directory[1].
->>> This issue is caused by the way isc-dhcp is packaged in
->>> Debian.
->>> 
->>> At least two versions of isc-dhcp for the amd64 (x86_64) 
->>> architecture in Debian were found two be setting PATH to a 
->>> subdirectory of /home/zero79/, which would allow a user with
->>> such HOME directory to be able to execute code as root.
->>> 
->>> To clarify the bug report: it is not specific to samba or hooks
->>> in general, PATH is injected in the environment passed to the
->>> execve() call that executes dhclient-script.
->>> 
->>> Since this issue doesn't affect the stable release, there won't
->>> be a DSA. This email is just a heads up.
->>> 
->>> [1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=690532
->>> 
->>> Cheers,
->>> 
->> 
->> Was this software released however?
-> 
-> It was uploaded to and affected Debian testing and unstable.
-> Testing has not yet been officially "released", but some people use
-> testing as if it were an official release.  Unstable never gets
-> released.
+Christos Zoulas of NetBSD discovered that the key_len variable was
+declared in bcrypt.c as u_int8_t and it would potentially wrap around here:
 
-When I say released I meant in the sense of made available for
-download, not in the sense of software engineering and doing a proper
-"release".
+key_len = strlen(key) + (minor >= 'a' ? 1 : 0);
 
-Release information here:
+While bcrypt truncates very long passwords at 72 characters (by design),
+which is sort of expected behavior, the wraparound is not expected.  It
+is substantially different behavior than truncation.  For example, the
+following three kinds of passwords all produce the same hash as tested
+by calling crypt() with the same $2a$ salt from a C program on OpenBSD 4.6:
 
-http://lists.alioth.debian.org/pipermail/pkg-dhcp-devel/2012-April/001275.html
+1. A string of 72 zeroes:
 
-Any ways as you can see it's had a CVE assigned:
+000000000000000000000000000000000000000000000000000000000000000000000000
 
-So for Debian Bug report logs - #690532
-CVE-2012-2248: build system paths used in -DCLIENT_PATH
+2. Any 255-character string starting with a "0", e.g.:
 
-So my work here is done =).
+012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234
 
-> Best wishes, Mike
+3. Any 256-character string starting with a "0", e.g.:
 
+0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
 
+while #2 and #3 would produce the same hash anyway (because of
+truncation at 72), it is not expected that they produce the same hash as
+the obviously very weak password #1.  (John the Ripper will test all
+such passwords quickly if invoked with "--external=Repeats".)
 
+#2 and #3 would produce this same hash even if they contained a lot of
+entropy in character positions 2 through 72, which get ignored.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Luckily, it is unrealistic that people will use passwords this long, yet
+there's a theoretical issue to fix here.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Simply changing the type of key_len to u_int32_t (assuming that longer
+strings are not supported at higher levels anyway, which may or may not
+be the case) wouldn't fully do the trick because the underlying
+functions use u_int16_t for some reason.  Thus, we opted to fix the
+issue by limiting key_len to 72 or 73 right in that place:
 
-iQIcBAEBAgAGBQJQf1AoAAoJEBYNRVNeJnmT3SoQAJqW5UirPGOUzSb5NStJD9Se
-GSImky2n+78NyPLwlzSLqB3QRjyEwjbJ01RNXzFU/Z4h4nlmfVVrBrszlWk0T6Fv
-cBXKB3cFGmCxDPYErm4Uh8WmSeD3aFUTe2iibXMUhOAlfoVwUadL5FMpBBjszFo+
-NBqddySqX1TpAm3CHZnHi29U7kj9/7p/JVkdsqHyF7rMW9lXEp2OG2mfLHTDJQ3W
-FcfsqneJQIuEZ3I59OTopKyXrPSaAyvGWCK3yDq6mRyiXDGtv9cb/jCUCUBE130z
-OOyQI6hQrOe1xw6y8Uw9s8WRIMF5khuQzk057ddzSxlWf8KZHOL5mUVMWsP57zsy
-9HSUxve0Cc+1J52ChjFnP/cTGylWht5vLe9ZnmWPq8Sz3HGpoLJaWChMJeU0ODSL
-6BOGi0dtcJFx47nHdzxpiG6hrWRF4qHc1VYUghv3Mli12NSXpMp/eCrepBy+R99I
-/W9ScwS51C7cpSju3Dz6iXOrROMu8USjP5a8FY0TpNKDh7P9qHbN9SIQizxnxqtT
-dbfCcnQ4lHL0W+AFNIXYfMnHt0LkSmTmfZcW8o0g5Ptw++KrtJNr/+SlRycYLSpM
-cn8uW0GyWAxJPdYftw3eZrgQdj0Q5dBj940CtsIguwf3PfboEBHes7MamHt7GMg/
-s3Wo3oTF3tYSCLjvxbe/
-=hjvB
------END PGP SIGNATURE-----
+http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libcrypt/bcrypt.c.diff?r1=1.13&r2=1.15
+
++	size_t len;
+
+-	key_len = strlen(key) + (minor >= 'a' ? 1 : 0);
++	len = strlen(key);
++	if (len > 72)
++		key_len = 72;
++	else
++		key_len = (uint8_t)len;
++	key_len += minor >= 'a' ? 1 : 0;
+
+Other *BSDs may want to do the same.
+
+...Oh, and someone may want to check Solaris for this and for the ":"
+return bcrypt issue.  (I did not.)
+
+Alexander
