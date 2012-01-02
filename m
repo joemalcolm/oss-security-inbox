@@ -1,19 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/08/2
-Message-ID: <20120308074145.GC22153@foo.fgeek.fi>
-Date: Thu, 8 Mar 2012 09:41:45 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/9
+Message-ID: <CAF6rxg=5PdGYmLFKrwHi9GTW6ZELgwfTYMrJerxD+iLPmihLTQ@mail.gmail.com>
+Date: Sun, 1 Jan 2012 23:41:09 -0500
+From: Eitan Adler <lists@...anadler.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: phpMyFAQ index.php URI XSS
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2010 CVE-identifier for security vulnerability in phpMyFAQ, thanks.
+On Sun, Jan 1, 2012 at 10:54 PM, Kurt Seifried <kseifrie@...hat.com> wrote:
+> Long term I'd like to see more work on hash cash type solutions, being able to
+> arbitrarily set or have a reactive system that requires increased work on the client
+> end to prove they are a legitimate client would help with this whole DoS/DDoS class > of problem to some degree.
 
-Original advisory: http://seclists.org/bugtraq/2010/Sep/207
-Vendor URL: http://www.phpmyfaq.de/advisory_2010-09-28.php
-OSVDB: http://osvdb.org/show/osvdb/68268
-Secunia: http://secunia.com/advisories/41625/
+But what if the attacker has a 10,000 node bot net? Wouldn't they just
+abuse the victimized computers even further?
 
-Fixed in version 2.6.9.
 
-- Henri Salo
+
+-- 
+Eitan Adler
