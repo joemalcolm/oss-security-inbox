@@ -1,41 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/18/4
-Message-ID: <50D08342.5060605@redhat.com>
-Date: Tue, 18 Dec 2012 15:52:50 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/6
+Message-ID: <20120102013445.GC944@dojo.mi.org>
+Date: Sun, 1 Jan 2012 20:34:45 -0500
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Plug-and-wipe and Secure Boot semantics
+Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
 Content-Type: text/plain; charset=utf-8
 
-On 12/18/2012 03:41 PM, Greg KH wrote:
-> On Tue, Dec 18, 2012 at 01:46:47PM +0100, Florian Weimer wrote:
->> Some UEFI machines seem to boot from USB by default, without any
->> prompting, probably assuming that a signed boot loader cannot cause
->> any damage.
->
-> Specific model name(s) please?
+:On Sun, Jan 01, 2012 at 04:53:09PM +0100, Nico Golde wrote:
+:> given the hash DoS I remembered a small program I wrote some time last year to 
+:> demonstrate why the default configuration of openssh sucks (MaxStartups and 
+:> LoginGraceTime).
 
-Lenovo M72e 0896A9G
+FWIW, we've had to adjust the default MaxStartups for our ssh-heavy
+cluster management software for many years now.  It doesn't even take
+a casual abuser to deny service to all.
 
-This is a business-class Windows 8 machine which comes with a Windows 8 
-logo sticker, so Secure Boot was enabled in the factory (and my testing 
-reflected that).  I'm not sure if the type number encodes that—Lenovo 
-surely offers essentially the same hardware with Secure Boot disabled by 
-default, so that customers can install Windows 7 more easily.
+:I think not only the default configuration, but also the approach behind
+:MaxStartups sucks (either a fixed limit or RED).  In fact, I told this
+:to OpenSSH folks before, and I proposed an alternative, but clearly I
+:should have done more (contributed code) in order for anything to change.
+:
+:To be fair, there are also things that I do like about MaxStartups: the
+:idea to limit only not-yet-authenticated sessions (or to limit them
+:separately from authenticated sessions) and the close-a-pipe-fd trick.
+:
+:> ... how to properly handle this issue with openssh?
+:
+:In the same way that I did in popa3d, I think: per-source limits.  Maybe
+:also per-source-netblock (e.g., separately for /8, /16, /24 - although
+:this is IPv4-specific and these don't reflect actual netblock allocations).
 
->> Most signed Linux boot loaders only verify the kernel (and,
->> indirectly, code that's loaded into the kernel), but not the
->> initrd contents.
->
-> Given that there is only one public signed Linux boot loader, saying
-> "most" is a bit odd here :)
-
-Uhm, aren't there a couple of them in circulation?
-
-The Fedora 18 TC3 installer boots on the machine mentioned above, in the 
-factory default configuration.  Previous installer versions showed a 
-Secure Boot error message.  I've run into an installer bug, though:
-<https://bugzilla.redhat.com/show_bug.cgi?id=888232>
+Any thoughts on what an appropriate default config for per-source
+limits should be?  How many connections from a given source would
+end up being too many for the default OpenSSH configuration?
 
 -- 
-Florian Weimer / Red Hat Product Security Team
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"I need a vacation."                                          -The Terminator
+
+Content of type "application/pgp-signature" skipped
