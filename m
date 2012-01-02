@@ -1,70 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/16
-Message-ID: <509965F8.60505@halfdog.net>
-Date: Tue, 06 Nov 2012 19:33:12 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-CC: vladz <vladz@...zero.fr>
-Subject: Re: TTY handling when executing code in different lower-privileged context (su, virt containers)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/11
+Message-ID: <20120102181157.GA24173@openwall.com>
+Date: Mon, 2 Jan 2012 22:11:57 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Oswald Buddenhagen <ossi@....org>
+Cc: Jeff Mitchell <mitchell@....org>, oss-security@...ts.openwall.com, cve@...re.org
+Subject: Re: Disputing CVE-2011-4122
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-vladz wrote:
+On Mon, Jan 02, 2012 at 01:15:23PM +0100, Oswald Buddenhagen wrote:
+> On Wed, Dec 28, 2011 at 03:25:09AM +0400, Solar Designer wrote:
+> > ... is it valid and not a vulnerability when installing a package
+> > (containing kcheckpass) unexpectedly (for a sysadmin) lets any user on
+> > the system invoke any of the configured PAM stacks, some of which may
+> > have side-effects?
 > 
-> On Mon, Nov 05, 2012 at 07:22:37PM +0000, halfdog wrote:
->> During programming experiments I found some class of
->> vulnerabilities [1], that seem to be rediscovered again from time
->> to time, but since attack value is questionable, it was not fixed
->> yet.
-> 
-> Nice.  I was just wondering why the SIGSTOP signal is used here? 
-> Sending a string starting with "exit;" to close the child process
-> also does the trick, no?  ...
+> i pondered this possibility when i initially added the override
+> parameter to kcheckpass, but i couldn't come up with anything usefully
+> exploitable - it would have to be some right which is granted to the
+> user *only* by this particular service - but not full logins.
 
-I'm not sure if there are cases where this is really required. I added
-it to support setups like [root-shell] -> su -> [bad-binary].
+The side-effects don't necessarily have to involve a right being granted
+to the user.  They may be, for example, connections made to external
+authentication servers (increasing load on those, etc.), log file
+records being made, notifications being sent to external servers or to
+sysadmins, a resource being consumed (e.g., successful authentication
+for a certain heavy service may count towards a configured maximum
+number of concurrent uses).  Then, a certain PAM module may trust, say,
+an environment variable assuming that the corresponding PAM stacks are
+never used from SUID/SGID programs - an assumption that you break.
 
-The shell with foreground process will no process the input. When
-suspending the parent, shell will process input, last line of input is
-"fg" to get normal su running again.
+> this seems
+> a bit far-fetched. so while you have a valid point in principle,
 
-I would think of using it that way: [bad-binary] is started by admin
-via su on error or other user process performs attach-exec-transform
-(like with vserver example). [bad-binary] then backdoors root account
-(modify sudoers, add ssh keys, make libc world writable), clears the
-screen, writes out some large banner or error message, so that admin
-does not see the injected commands and then launches the [good-binary].
+Yes, a bit far-fetched.  Yet for an upstream piece of software, you have
+to consider issues like that.
 
-Therefore it might be useful to temporarily suspend the process
-executed from shell.
+> it doesn't seem particularly relevant for desktop systems.
 
+Just because a piece of software is intended for desktop systems doesn't
+mean it will only be installed on such.  It is not too uncommon to have
+extra/unneeded packages installed on servers.  This indicates a sloppy
+sysadmin practice, yet as an upstream author you need to ensure that
+your own software doesn't make things worse if installed on a server.
+Also, some servers actually have GUI desktops as well on purpose (e.g.,
+to accommodate GUI installers and configuration tools of applications
+that are actually needed on the server).
 
->> I would like to propose following "fix" for this problem:
->> Modification of man-page of su making this a known problem or
->> feature, not a bug.
-> 
-> Changing the man page is a good idea.  Administrators (good ones)
-> should never have to open users's interactive shells.  I mean,
-> beside being a security problem, it's kind of invasion of privacy.
-> ;)
+> fwiw, linux-pam's pam_unix has an own setuid helper for shadow pw
+> verification for some time now. most services don't actually need root
+> for authentication at all. consequently, it is usually not useful to
+> install kcheckpass setuid root at all, which makes this whole discussion
+> somewhat irrelevant in the first place (except that the upstream
+> makefiles will still try to install with setuid root).
 
-Not to a standard user account. But some daemons come with own account
-and that might be hot candidates. For example the postgresql default
-configuration allows psql maintenance connections only from user
-"postgres" on localhost (via shared mem if I remember correctly).
-Therefore su to "postgres" for database in- or exports might be used
-quite frequently, perhaps someone could confirm that or bring even
-other examples.
+Yes, but this exception you mention (the upstream Makefiles installing
+the program SUID root) is a sufficient reason to have this discussion.
 
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Thanks,
 
-iEYEARECAAYFAlCZZecACgkQxFmThv7tq+79IACdHNfY7k1/c5+9UvwO7Pznmy2E
-WxQAnjZruvgAdAhoniCLGKLvGkwBq7bN
-=kaTH
------END PGP SIGNATURE-----
+Alexander
