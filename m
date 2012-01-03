@@ -1,48 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/13
-Message-ID: <4F174639.40502@redhat.com>
-Date: Wed, 18 Jan 2012 15:22:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/13
+Message-ID: <4F036D6A.2090202@redhat.com>
+Date: Tue, 03 Jan 2012 14:04:42 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: WordPress 3.1.1
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: maradns hash table collision cpu dos
 Content-Type: text/plain; charset=utf-8
 
-On 01/15/2012 07:39 AM, Henri Salo wrote:
-> On Sun, Jan 15, 2012 at 03:32:48PM +0100, Hanno Böck wrote:
->>> 1) Certain unspecified input is not properly sanitised before being
->>> returned to the user. This can be exploited to execute arbitrary HTML
->>> and script code in a user's browser session in context of an affected
->>> site. http://osvdb.org/show/osvdb/72141
->> I think this is CVE-2012-0287:
->> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-0287
-> I think you are correct. I do not know why I did not see this in allitems.txt.gz. Can't find other CVEs with that URL. There seems to be three issues. I am refering to http://wordpress.org/news/2011/04/wordpress-3-1-1/:
+On 01/03/2012 12:04 PM, Vincent Danen wrote:
+> * [2012-01-03 20:52:09 +0200] Henri Salo wrote:
 >
-> "Version 3.1.1 also addresses three security issues discovered by WordPress core developers Jon Cave and Peter Westwood, of our security team. The first hardens CSRF prevention in the media uploader. The second avoids a PHP crash in certain environments when handling devilishly devised links in comments, and the third addresses an XSS flaw."
+>> On Tue, Jan 03, 2012 at 11:42:44AM -0700, Vincent Danen wrote:
+>>> MaraDNS has released an updated version to fix this hash table
+>>> collision
+>>> DoS.  Could a CVE be assigned to it?
+>>>
+>>> References:
+>>>
+>>> http://samiam.org/blog/20111229.html
+>>> http://samiam.org/blog/20111230.html
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=771428
+>>>
+>>> Thanks.
+>>>
+>>> -- 
+>>> Vincent Danen / Red Hat Security Response Team
+>>
+>> Please note: http://www.openwall.com/lists/oss-security/2012/01/02/12
 >
-> ======================================================
-> Name: CVE-2012-0287
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-0287
-> Phase: Assigned (20120103)
-> Category: 
-> Reference: MISC:http://oldmanlab.blogspot.com/2012/01/wordpress-33-xss-vulnerability.html
-> Reference: CONFIRM:https://wordpress.org/news/2012/01/wordpress-3-3-1/
+> Ahh, I hadn't seen that one yet.  Thanks, Henri.  The title in that
+> email isn't overly descriptive which is why I didn't notice it (holiday
+> mail catchup swamping everything).
 >
-> Cross-site scripting (XSS) vulnerability in wp-comments-post.php in
-> WordPress 3.3.x before 3.3.1, when Internet Explorer is used, allows
-> remote attackers to inject arbitrary web script or HTML via the query
-> string in a POST operation that is not properly handled by the
-> "Duplicate comment detected" feature.
->
->
-> Current Votes:
-> None (candidate not yet proposed)
-> ======================================================
->
-> - Henri Salo
-I don't feel assigning a CVE for these issues would be prudent until
-some details are released, I think the 3.1.1 and 3.1.3 stuff is separate
-but I can't be sure. Can someone from WordPress comment?
+Place holder to complete this thread:
+
+This issue was previously assigned CVE-2012-0024
 
 -- 
 
