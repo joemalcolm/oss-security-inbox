@@ -1,50 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/31/8
-Message-Id: <201207311844.q6VIibEG011425@linus.mitre.org>
-Date: Tue, 31 Jul 2012 14:44:37 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: RSGallery2 before 2.3.0 (etc.) CVE-2012-3554 CVE-2012-4071
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/4
+Message-ID: <CAESCr8MLR=4UXXyh4UHfTXccvYKRAeBaTrU0xqnb4e9=k+3LQg@mail.gmail.com>
+Date: Tue, 3 Jan 2012 20:29:46 +0200
+From: Netsparker Advisories <advisories@...itunasecurity.com>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com, Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Symphony CMS Multiple Cross-Site Scripting and SQL Injection Vulnerabilities (NS-11-008)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-http://extensions.joomla.org/extensions/photos-a-images/photo-gallery/142
-http://joomlacode.org/gf/project/rsgallery2/news/
-http://www.rsgallery2.nl/announcements/rsgallery2_3.2.0_and_2.3.0_released_16845.0.html
+We are assigning these identifiers to the advisory.
 
-"The RSGallery2 team is pleased to announce the release of RSGallery2
-3.2.0 for Joomla 2.5.x and RSGallery2 2.3.0 for Joomla 1.5.x. These
-are security releases, users are advised to upgrade immediately. A
-special thank you goes to Stergios Kolios."
+Thanks,
 
-This announcement already has CVE assignments (at least CVE-2012-3554
-and CVE-2012-4071; possibly others) but we are still coordinating with
-the researcher to determine if any details will be released.
-Therefore, this message about the CVE assignments may be useful to
-only a limited audience.
+On 22 November 2011 21:52, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 11/22/2011 04:09 AM, Henri Salo wrote:
+>> Can we assign CVE-identifiers for these three issues, thank you?
+>>
+>> Found from: 2.2.3
+>> Fixed in: 2.2.4
+>>
+>> 1. http://osvdb.org/show/osvdb/76882 / SA46663
+>> extensions/profiledevkit/content/content.profile.php profile-parameter XSS
+>>
+>> 2. http://osvdb.org/show/osvdb/76883 / SA46663
+>> symphony/lib/core/class.symphony.php filter-parameter XSS
+>
+> Ok merging these two issues (as per ADT4 specification)  please use
+> CVE-2011-4340 for this issue.
+>
+>
+>> 3. http://osvdb.org/show/osvdb/76884 / SA46663
+>> symphony/content/content.publish.ph filter-parameter SQL injection
+>> (Different than CVE-2010-3458)
+>
+> Please use CVE-2011-4341 for this issue.
+>> References:
+>> http://seclists.org/bugtraq/2011/Nov/8
+>> http://www.mavitunasecurity.com/xss-and-sql-injection-vulnerabilities-in-symphony-cms/
+>> http://secunia.com/advisories/46663/
+>> Advisory Reference: NS-11-008
+>>
+>> - Henri Salo
+>
+>
+> --
+>
+> -Kurt Seifried / Red Hat Security Response Team
+>
 
-The changelog.php files in the RSGallery2 2.3.0 and 3.2.0 downloads
-currently do not label any specific changelog entries as security
-fixes with their "* -> Security Fix" notation. It might or might not
-turn out that one or more of the changelog entries actually is
-associated with either CVE-2012-3554 or CVE-2012-4071.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
 
-iQEcBAEBAgAGBQJQGCcGAAoJEGvefgSNfHMd6gMIALSNKsFP/VU+FlJ+/Zrtr1jC
-eNDbFycw54tuSXdgyCAqIoS4uxyYbi6UaS+QRJbUMyvaiDUZ6UywvaBEUFDcxxpY
-7nYFYOGeMBz+6qs1Q/mfXu4FAfqOYnDoFXTAosTyYdFFLPBMUdga5+awNHk9mYh9
-rUMnlHpGrszmoYhbtxs1xtvwTNGq13rpYmPB8yUTxUuAFnON9yT7umpVKHWJR0G/
-kT4c35Zt1KR7vydbHwgXePYWm1LdcvbWpfxARy46qSznbGubqOK5GwnDVP4ygvkw
-7egMxRe48ab3zrpXMhINnH9eNq/I8dBMwB6KPSNh3gI3OzSek5pAA3FrH8MnbWM=
-=rRcu
------END PGP SIGNATURE-----
+-- 
+Netsparker Advisories, <advisories@...itunasecurity.com>
+Homepage, http://www.mavitunasecurity.com/netsparker-advisories/
