@@ -1,54 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/7
-Message-ID: <CA+5g0S+0PHoU8Pdnewj5XS+WvvnUxgEkOd=dZjpuGB6soGB7GA@mail.gmail.com>
-Date: Wed, 30 May 2012 14:40:06 -0300
-From: Felipe Pena <felipensp@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Tomas Hoger <thoger@...hat.com>
-Subject: Re: CVE id request: Multiple buffer overflow in unixODBC
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/5
+Message-ID: <20120103183942.GG5573@foo.fgeek.fi>
+Date: Tue, 3 Jan 2012 20:39:42 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-request: PHP Booking Calendar 10e XSS
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Tue, Jan 03, 2012 at 01:30:14PM -0500, Steven M. Christey wrote:
+> Henri,
+> 
+> This was just assigned CVE-2011-5045 a couple days ago.
+> 
+> - Steve
 
-2012/5/30 Kurt Seifried <kseifried@...hat.com>:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 05/30/2012 02:07 AM, Tomas Hoger wrote:
->> On Tue, 29 May 2012 09:42:42 -0300 Felipe Pena wrote:
->>
->>> Multiple buffer overflow in unixODBC ===========================
->>>
->>> The library unixODBC doesn't check properly the input from
->>> FILEDSN=, DRIVER= options in the DSN, which causes buffer
->>> overflow when passed to the SQLDriverConnect() function.
->>
->> Reports like this - covering bugs in parsing of the configuration
->> parameters (i.e. generally trusted input) - should include some
->> reasoning why these should be considered security.  Nothing obvious
->> not intended to break PHP safe_mode comes to mind.
->>
->
-> Ahh my bad, I misunderstood this to be options that could be passed by
-> the program as a standard part of the query, and thus controlled by
-> the attacker. If this is indeed limited to configuration files and
-> there are not extenuating circumstances that allow exploitation I will
-> have to REJECT these CVEs.
->
+Sorry I didn't notice that.
 
-It isn't limited to the configuration files. Such input can be passed
-to the `isql' interactive tool that come together unixODBC. The same
-string can be used to connect through PHP PDO, for example.
-
-$ pwd
-.../unixodbc/src/unixODBC-2.3.1/exe
-$ ./isql "FILEDSN=$(python -c "print 'A'*10000");UID=user" -k
-Segmentation fault
-
-If it isn't characterized a security issue I'm sorry.
-
-Thanks.
-
--- 
-Regards,
-Felipe Pena
+- Henri Salo
