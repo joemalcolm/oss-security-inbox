@@ -1,23 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/9
-Message-Id: <1FB8487C-5EDA-4ED8-B2BE-8E34BF451EC4@securityview.nl>
-Date: Thu, 19 Jan 2012 08:40:47 +0100
-From: Ronald van den Blink <oss-security@...urityview.nl>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Batavi 1.2.1 Fixes Blind SQL Injection vulnerability in boxToReload parameter of ajax.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/3
+Message-ID: <Pine.GSO.4.64.1201031328570.27628@faron.mitre.org>
+Date: Tue, 3 Jan 2012 13:30:14 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-request: PHP Booking Calendar 10e XSS
 Content-Type: text/plain; charset=utf-8
 
 
-On Jan 18, 2012, at 10:55 PM, Kurt Seifried wrote:
+Henri,
 
-> Can you include a link to the code commit(s) that fiix this? Thanks.
-Hi Kurt,
+This was just assigned CVE-2011-5045 a couple days ago.
 
-This is still a bit of a problem, as our internal svn is still not correctly set up to sync to SF's SVN. What I can do however is ask our developers to create a diff of the files which were changed to fix this and post them online?
+- Steve
 
-B.t.w. if someone knows a way to sync two SVN repositories to with each other, please contact me off list.
 
-With kind regards,
+On Tue, 3 Jan 2012, Henri Salo wrote:
 
-Ronald
+> Should this vulnerability get CVE?
+>
+> Original report: http://seclists.org/bugtraq/2011/Dec/123
+> Report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3469106&group_id=132702&atid=724998
+>
+> - Henri Salo
+>
