@@ -1,58 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/19
-Message-ID: <20120419214820.GE18015@suse.de>
-Date: Thu, 19 Apr 2012 23:48:20 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: security@...nel.org
-Subject: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/9
+Message-ID: <20120103195519.GA5032@pisco.westfalen.local>
+Date: Tue, 3 Jan 2012 20:55:19 +0100
+From: Moritz Mühlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com
+Cc: Craig Barratt <cbarratt@...rs.sourceforge.net>, cve-assign@...re.org, security@...ntu.com
+Subject: Re: CVE Request: Security issue in backuppc
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Oct 27, 2011 at 04:00:48PM -0500, Jamie Strandboge wrote:
+> Hi Craig,
+> 
+> While preparing updates to fix CVE-2011-3361 in Ubuntu I discovered
+> another XSS vulnerability in View.pm when accessing the following URLs
+> in backuppc:
+> index.cgi?action=view&type=XferLOG&num=<XSS here>&host=<some host>
+> index.cgi?action=view&type=XferErr&num=<XSS here>&host=<some host>
+> 
+> You are being emailed as the upstream contact. Please keep
+> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
+> 
+> To oss-security, can I have a CVE for this? It is essentially the same
+> vulnerability and fix as for CVE-2011-3361, but in CGI/View.pm instead
+> of CGI/Browse.pm. Attached is a patch to fix this issue. Tested on
+> 3.0.0, 3.1.0, 3.2.0 and 3.2.1.
 
-we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
-namespace leak caused by vsftpd.
+*ping*
 
-https://bugzilla.novell.com/show_bug.cgi?id=757783
+This hasn't ended up in a CVE assignment.
 
-He provided a simple reproducer:
-
-#include <stdio.h>
-#include <errno.h>
-#include <signal.h>
-#include <sched.h>
-#include <linux/sched.h>
-#include <unistd.h>
-#include <sys/syscall.h>
-
-int main(int argc, char *argv[])
-{
-    int i, ret;
-
-    for (i = 0; i < 10000; i++) {
-
-        if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC |
-CLONE_NEWNET | SIGCHLD, NULL)))
-            return 0;
-
-        if (-1 == ret) {
-            perror("clone");
-            break;
-        }
-
-    }
-    return 0;
-}
-
-
-and checking "cat /proc/slabinfo|grep pid_namespace"
-gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
-
-
-Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
-fixed between 3.1 and 3.2 (but someone else cross check perhaps).
-
-Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
-but it seems not helping.
-
-Ciao, Marcus
+Cheers,
+        Moritz
