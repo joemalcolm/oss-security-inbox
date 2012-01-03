@@ -1,52 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/01/2
-Message-ID: <20121101204423.GF2676@redhat.com>
-Date: Thu, 1 Nov 2012 14:44:23 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/19
+Message-ID: <20120103223903.GA11131@ngolde.de>
+Date: Tue, 3 Jan 2012 23:39:03 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-4233: multiple null pointer dereference flaws in LibreOffice/OpenOffice.org
+Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
 Content-Type: text/plain; charset=utf-8
 
-This one took me a bit by surprise.  Debian released an advisory for OOo
-and I have no record of this CVE anywhere.  It looks as though it went
-public yesterday, and was fixed in upstream 3.5.7.2, but it's not noted
-on the LibreOffice web site at all.
+Hi,
+* Solar Designer <solar@...nwall.com> [2012-01-03 02:58]:
+> On Tue, Jan 03, 2012 at 12:33:01AM +0100, Nico Golde wrote:
+> > P.S. if anyone has a clue on why that script still works with dropbear, even 
+> > though it already seems to implement per-ip based connection counting...
+> 
+> Does it still work?  I was not able to reproduce that.  I built Dropbear
+> 2011.54, generated an RSA host key with "./dropbearkey -t rsa -f
+> dropbear_rsa_host_key" and started the service with "./dropbear -r
+> dropbear_rsa_host_key -p 2222". 
 
-Does anyone have any further details on these issues?  I just filed a
-bug in our bugzilla (https://bugzilla.redhat.com/show_bug.cgi?id=872350)
-with the following description/references which are all I've been able
-to find so far.
+Ignore my P.S., I tested this again and the patch works as expected.
+Sorry for the confusion...
 
-I'm not sure on the commit referenced as [4] below; that was the first
-one that caught my eye, but I think it might be a red herring as it
-doesn't seem to be relevant to any of the file types that are noted as
-affected.
-
-Any further information anyone has would be sincerely appreciated.
-
-
-
-
-It was reported [1] that LibreOffice suffered from multiple NULL pointer
-dereference flaws in at least version 3.5.5.3 and possibly earlier.
-These flaws are reported to be corrected in 3.5.7.2 [2], however I am
-unable to find a specific reference for this CVE on the LibreOffice
-site.  Debian has released an advisory for OpenOffice.org [3] so it
-presumably affected as well.
-
-These flaws affect ODT files, ODG files, PPT files (when handling the
-PolyPolygon record within an embedded .wmf file), and XLS files.
-
-Checking the LibreOffice git, I see two commits that may be relevant
-[4],[5].  However there are a lot of commits to go through between now
-and the time that High-Tech Bridge indicates they reported the flaws
-upstream (July 26th, 2012).
-
-[1] https://www.htbridge.com/advisory/HTB23106
-[2] http://www.libreoffice.org/download/release-notes/#LO355
-[3] http://www.debian.org/security/2012/dsa-2570
-[4] http://cgit.freedesktop.org/libreoffice/core/commit/?h=libreoffice-3-5-7&id=f95762beb3b5849bfaccd39523a11fe15b191d89
-[5] http://cgit.freedesktop.org/libreoffice/core/commit/?h=libreoffice-3-5-7&id=8ca9fb05c9967f11670d045886438ddfa3ac02a7
-
+Cheers
+Nico
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
