@@ -1,92 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/1
-Message-ID: <505BCE6C.1010805@redhat.com>
-Date: Thu, 20 Sep 2012 20:18:20 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, info@...udbees.com, security@...udbees.com
-Subject: CVE Request: Jenkins and plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/14
+Message-ID: <4F036EAB.40502@redhat.com>
+Date: Tue, 03 Jan 2012 14:10:03 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/02/2012 04:33 PM, Nico Golde wrote:
+> Hi,
+> * Kurt Seifried <kseifrie@...hat.com> [2012-01-02 04:56]:
+> [...] 
+>
+>> The rest of the solutions do not lend themselves to this problem or would 
+>> require significant changes to the OpenSSH protocol/client/server which is a 
+>> bad bad idea.
+>>
+>> Anything we do to address this issue should be extremely simple and 
+>> conservative, the OpenSSH server and client are very stable and robust 
+>> pieces of code, any modifications to them make me nervous. 
+>>
+>> I suspect the simplest and more effective solution might be some form of 
+>> progressive timeout for IP's that fail to authenticate (drop the connection 
+>> entry silently and ignore them in favor of real clients). 
+>>
+>> Long term I'd like to see more work on hash cash type solutions, being able 
+>> to arbitrarily set or have a reactive system that requires increased work on 
+>> the client end to prove they are a legitimate client would help with this 
+>> whole DoS/DDoS class of problem to some degree.
+> See above, it would be really nice to see if there is a project which already 
+> does that.
+hashcash.org has implementations in multiple languages (including a bash
+script), it uses partial SHA-1 collisions, so easy to do for server, not
+sure if you can increase/decrease workload on the fly incrementally
+(i.e. require 16, 17, 18 bit partial matches if the server starts
+getting loaded).
 
-http://www.cloudbees.com/jenkins-advisory/jenkins-security-advisory-2012-09-17.cb
-Jenkins Security Advisory 2012-09-17
+>
+> Kind regards
+> Nico
+>
+-- 
 
-This advisory announces security vulnerabilities that were found in
-Jenkins core and several plugins.
+-- Kurt Seifried / Red Hat Security Response Team
 
-The first vulnerability in Jenkins core allows unprivileged users to
-insert data into Jenkins master, which can lead to remote code
-execution. For this vulnerability to be exploited, the attacker must
-have an HTTP access to a Jenkins master, and he must have a read
-access to Jenkins.
-
-The second vulnerability in Jenkins core is a cross-site scripting
-vulnerability. This allows an attacker to craft a URL that points to
-Jenkins, and if a legitimate user clicks this link, the attacker will
-be able to hijack the user session.
-
-The third vulnerability is a cross-site scripting vulnerability in the
-Violations plugin.
-
-The fourth vulnerability is a cross-site scripting vulnerability in
-the CI game plugin.
-
-Several of these vulnerabilies were discovered by Avram Marius Gabriel.
-Severity:
-
-CloudBees rates the first vulnerability in the core as critical, as it
-allows malicious users to execute arbitrary code on the server. The
-othe three XSS vulnerabilities are rated as high, as they allow
-malicious users to escalate privileges.
-Fix:
-The following versions incorporate fixes to the vulnerabilities found
-in the Jenkins core.
-
-    Main line users should upgrade to Jenkins 1.482
-    LTS users should upgrade to 1.466.2
-    Users of Jenkins Enterprise by CloudBees 1.466.x should upgrade to
-1.466.2.1
-    Users of Jenkins Enterprise by CloudBees 1.447.x should upgrade to
-1.447.3.1
-    Users of Jenkins Enterprise by CloudBees 1.424.x and earlier
-should upgrade to 1.424.6.11
-    The fix has already been deployed to DEV@...ud
-
-Users of the CloudBees Custom Update Center plugin needs to update to
-3.4 or later in order to work with these newer versions of Jenkins.
-
-To patch vulnerabilities in the plugins, upgrade to the following
-versions. These plugins should be available in your Jenkins' plugin
-update center UI in up to a day.
-
-    Users of the Violations plugin should upgrade to 0.7.11 or later
-    Users of the CI game plugin should upgrade to 1.19 or later
-
-
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQW85sAAoJEBYNRVNeJnmTXvMP+gJwt6fdMYKE3PZ2w/Vx6GsV
-pAcQ9T+5uLUgt9ITcmcYJM+0N8AUq57RWgxtnyoElbI/ZbWQwqYIfkvhLqJA5tSl
-kaj7b8CjcH9bmH/ODCISF80Frmc+BUWfk8aS3gFhXkQUzat5zz1rue7ugl+Ef0Xk
-QOzND2vkfOzUrIIclY2l5nPqP0HoIdN19jI5uUV0ZKTK0kTgx55O0tOyOore/X8C
-g8H5jnDQjQOXCdRKc9mSwz8A8E2xjvvc2Hbdkys1E01x9GONRW373165Ukzc76Vd
-dapPMw0mEBpFEewYWS6yuNMttSOHaKXHtRe/tWFat/q61yeLyIxwDzUIJ3yHLq0n
-trRXjPpVAoV7OnlMIGLeZEUI3lIXN+JP7kj4iJFymmDDUQwpwUzTmPURmHIYIPYX
-ILnD1qTTbmscV0CZ0nBX0Tc8/tzp2/0An8DjRVt3ePJTjrY6rWUqYH46nm6DdZ00
-ZJiAhS0rDl+pZiZCseqT2hz7ZTVvAEwVe0rLeB7p8jypLRGRuUG08Dr090vkFpB/
-DQUMmWlXo/9cHJpTivtT3r5uQg5/Og5s3/z0ke01bM7fen08vFilmC70VJ3jLgdk
-5MulIFS1m69YvRxea9DcwN8PFAFj62wEA3r8fszA40k2P54OQhq7Xt1wIY8fxy9t
-YoNuQNh6zcm2ckIwWgYG
-=DlGG
------END PGP SIGNATURE-----
