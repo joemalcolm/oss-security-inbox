@@ -1,50 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/8
-Message-ID: <CAGVYHsWfzO=1Xs3bQ9iOum82-Dm1t-e7-Lc+5LKc6+hCQ8xMHQ@mail.gmail.com>
-Date: Mon, 29 Oct 2012 14:02:58 -0500
-From: Andrés Gómez Ramírez <andresgomezram7@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/1
+Message-ID: <20120103015657.GA819@openwall.com>
+Date: Tue, 3 Jan 2012 05:56:57 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
+Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
 Content-Type: text/plain; charset=utf-8
 
-Sorry for the previous message, it was not intentional :)
+On Tue, Jan 03, 2012 at 12:33:01AM +0100, Nico Golde wrote:
+> P.S. if anyone has a clue on why that script still works with dropbear, even 
+> though it already seems to implement per-ip based connection counting...
 
-Hi, Could a CVE be assigned to this issue?
+Does it still work?  I was not able to reproduce that.  I built Dropbear
+2011.54, generated an RSA host key with "./dropbearkey -t rsa -f
+dropbear_rsa_host_key" and started the service with "./dropbear -r
+dropbear_rsa_host_key -p 2222".  Then I ran your DoS program with
+"0:2222 10" on the command-line.  At first, it detected that Dropbear
+would only allow 5 connections from the source address (indeed,
+Dropbear's MAX_UNAUTH_PER_IP defaults to 5), and I was no longer able to
+get the SSH version banner with "nc -v 0 2222" (the connection would be
+closed immediately).  However, after a while I started being able to
+connect with "nc" again, and Dropbear's log records only showed the DoS
+program making 4 connections at a time, not 5 - I don't know why.  So I
+hacked the program to make 6 connections at a time instead (changed
+get_max_startups() to just "return 6;").  Then the DoS for connections
+from 127.0.0.1 became reliable, so I was able to reasonably test
+connections from other source IP addresses, which I did.  "nc -s
+127.0.0.2 -v 0 2222" worked flawlessly (multiple times with no issue),
+reporting "SSH-2.0-dropbear_2011.54".  Thus, the per-source limit
+appeared to work as it should have.  Where's the problem?
 
-Name: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
-Software: PLIB 1.8.5
-Software link: http://plib.sourceforge.net/
-Vulnerability Type: Stack Based Buffer overflow
-References: http://www.exploit-db.com/exploits/21831/
-                   http://www.securityfocus.com/bid/55839
+(Of course, with the defaults of MAX_UNAUTH_CLIENTS 30 and
+MAX_UNAUTH_PER_IP 5 it'd only take abusive connections from 6 IP
+addresses to DoS the service, but that's expected.)
 
-Vulnerability Details: Plib is prone to stack based Buffer overflow in the
-error function in ssg/ssgParser.cxx when it loads 3d model files as X
-(Direct x), ASC, ASE, ATG, and OFF, if a very long error message is passed
-to the function, in line 68:
-
-
-// Output an error
-void _ssgParser::error( const char *format, ... )
-{
-  char msgbuff[ 255 ];
-  va_list argp;
-
-  char* msgptr = msgbuff;
-  if (linenum)
-  {
-    msgptr += sprintf ( msgptr,"%s, line %d: ",
-      path, linenum );
-  }
-
-  va_start( argp, format );
-68        vsprintf( msgptr, format, argp );
-  va_end( argp );
-
-  ulSetError ( UL_WARNING, "%s", msgbuff ) ;
-}
-
-Thanks,
-
-Andres Gomez.
-
+Alexander
