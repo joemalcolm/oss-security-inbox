@@ -1,97 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/11
-Message-Id: <201205231601.46051.mweckbecker@suse.de>
-Date: Wed, 23 May 2012 16:01:45 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/10
+Message-ID: <20120103204943.GA4123@openwall.com>
+Date: Wed, 4 Jan 2012 00:49:43 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "John W. Linville" <linville@...hat.com>
-Subject: Re: CVE request(?): hostapd: improper file permissions of hostapd's config leaks credentials
+Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 23 May 2012 11:15:48 Jan Lieskovsky wrote:
-> Hi Matthias,
->
+Hi,
 
-Hi Jan,
+One of the ideas I have is to make the per-source limit(s) dynamic -
+based on the remaining number of free slots (for a given category, if
+applicable - e.g., with per-netblock limits).
 
->    thank you for your request.
->
-> On 05/23/2012 10:21 AM, Matthias Weckbecker wrote:
-> > Hi Kurt,
-> > Hi vendors,
-> >
-> > not too critical in my opinion, but I think still worth to be at least
-> > mentioned briefly as other distros such as Fedora 16 were affected too:
-> >
-> > https://bugzilla.novell.com/show_bug.cgi?id=740964
-> >
-> > I'm not sure whether this issue should get a CVE,
->
-> We have previously checked this with John W.Linville (Cc-ed on this post
-> too) with reply from him being as inlined below:
->
+The attached Perl script simulates a worst-case scenario for an
+algorithm implementing this.  Specifically, with 1000 slots and
+allocations starting at 10 slots per source (and reducing all the way to
+1 per source as we're about to run out of free slots), we're able to
+accept connections from at least 292 different source addresses.
+With 1000 slots, but starting at 50 slots per source, we're able to
+accept connections from at least 88 different source addresses.
 
-OK, thank you for your explanation. Although I don't agree with you (as it's 
-like shipping /etc/shadow world-readable and saying it has to be adjusted to 
-reflect the administrator's needs), I can live with no CVE being assigned for
-this. I wouldn't say that this is a critical issue anyway.
+$ ./persource.pl | wc -l
+292
+$ for n in {10..1}; do ./persource.pl | fgrep -cx $n; done
+10
+12
+12
+14
+17
+20
+24
+34
+49
+100
 
-Thanks,
-Matthias
+Alexander
 
-> ---<inline>---
-> Jan,
->
-> I think you understand it all correctly.
->
-> Thanks,
->
-> John
->
-> On Thu, 2012-05-17 at 12:44 +0200, Jan Lieskovsky wrote:
->  > Hello John,
->  >
->  >    this is due the following Novell bug:
->  >    [1] https://bugzilla.novell.com/show_bug.cgi?id=740964
->  >
->  > I have checked that Fedora hostapd versions, have permissions like
->  > (thus insecure too):
->  >
->  > # ls -l /etc/hostapd/hostapd.conf
->  > -rw-r--r--. 1 root root 722 Feb  9  2011 /etc/hostapd/hostapd.conf
->  >
->  > I am taking the default content of /etc/hostapd/hostapd.conf
->  > as an example configuration (thus something which should the
->  > administrator of the system to update to reflect their needs
->  > to get hostapd for their wireless network configuration to
->  > work properly.
->  >
->  > Thus as such I would say this is just issue of proper configuration
->  > (in the moment of editing the configuration file the administrator
->  > should update the permissions on the config file too to ensure WPA
->  > password wouldn't leak, right?), than a real security flaw.
->  >
->  > Do you agree with this view or should I request CVE identifier
->  > for this issue and we should get hostapd packages in Fedora updated
->  > to correct this?
->  >
->  > Thank you && Regards, Jan.
->  > --
->  > Jan iankko Lieskovsky / Red Hat Security Response Team
->  >
->  > P.S.:
->  >
->  > For the other part of Novell bug (permissions for hostapd.wpa_psk
->  > in Fedora versions there doesn't seem to be other hostapd.wpa_psk
->  > than just:
->  >
->  > /usr/share/doc/hostapd-0.7.3/hostapd.wpa_psk
->  >
->  > which I think is there for documentation / config sample purposes).
->  > Thus I would not consider this second part as a security issue.
-
--- 
-Matthias Weckbecker, Junior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+View attachment "persource.pl" of type "text/plain" (333 bytes)
