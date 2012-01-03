@@ -1,80 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/02/1
-Message-ID: <5042BE02.10404@redhat.com>
-Date: Sat, 01 Sep 2012 20:01:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/17
+Message-ID: <20120103214128.GA10452@foo.fgeek.fi>
+Date: Tue, 3 Jan 2012 23:41:28 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: php header() header injection detection bypass
+Subject: CVE-request: WordPress SQL injection and arbitrary code injection (2003)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+These two WordPress security vulnerabilities from 2003 are still without CVE-identifiers. I am requesting CVE-identifiers as these issues have highly critical impact.
 
-On 08/31/2012 04:42 PM, Raphael Geissert wrote:
-> Hi,
-> 
-> On Friday 31 August 2012 13:38:16 Kurt Seifried wrote:
->> Apologies in advance for my questions but I'm a bit confused
->> (also I don't have access to PHP security bugs so I'm a bit in
->> the dark here).
->> 
->> 1) I don't see #54182 and #54006 in the PHP ChangeLog, have these
->> been fixed?
-> [...]
->> 2) Are you saying that the "header injection detection bypass"
->> wasn't completely fixed by the patches for #54182 and #54006, and
->> then someone reported #60227, originally reported as #60028 which
->> has been fixed needs a second CVE (e.g. the "an incomplete fix
->> for original issue led to a second fix being pushed" thing)?
-> 
-> All the bug reports I mentioned are about exactly the same issue.
-> The non- public ones have been marked as duplicates of the public
-> one.
-> 
-> I'm aware of at least 5.4.0 RC5 containing the incomplete fix[1],
-> but I don't know in which exact RC version it made its way into.
-> 5.4.0 beta2 was still vulnerable to CVE-2011-1398.
-> 
-> PHP 5.4.1 RC1 already had the proper fix.
-> 
-> So, since at least PHP 5.4.0 had the incomplete fix, I guess a new
-> CVE for the incomplete fix is in order. Kurt, could you please
-> assign one?
-> 
-> Please let me know if it's not clear enough yet.
-> 
-> [1]http://svn.php.net/viewvc/?view=revision&revision=318820 
-> (referenced from #60227)
+1) SQL injection
+http://osvdb.org/show/osvdb/4610
 
-This is perfect, thanks. Please use CVE-2012-4388 for the incomplete
-fix for CVE-2011-1398. (this would be easier if the old bug entries
-were public =).
+2) Arbitrary code injection
+http://osvdb.org/show/osvdb/4611
 
+Secunia advisory: http://secunia.com/advisories/8954/
 
-> Cheers,
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQQr4CAAoJEBYNRVNeJnmT8fgP/j8WIOL6loD6wXovpCS1gwlj
-A/wkadlal5XgFQ01MJaJnjy9p+CkztoofUjMuwGIkJHhDsvvBVzE8w9pbSNhoZfn
-FMX9m2sP3VAuD5vyTizkmlC4hH3/OufAnglJaLxENa+MX0nUhtkzOnd8g9PA/aLG
-9pMjCZBcsL2GPN8C3XrokIao3LwyDTUT1aamOGJKcY3bw439NTZjSzk3cAP8nCPA
-FvwZsAuZ8Hout4V8szmTJr6yLx6OfA5Al44dhFqjUEuHKTZSpUDbR86UOByrO9fJ
-ALPxX7Z8JmHD3EiiSs4BgTfubd783ovONdSUJsiNFidQoYlna8mPpw9Qgt692sSR
-n2KXHk958mujRR6/Bc1lds6FdT7Qg+4usOs8cj3VVltDc+UpKm4oBTZ+jbnl+TQo
-iXfQGpWzwZ/caOAoozBpUikVZlZdT6xu2PfLrwSiqVZ+MRvD1p07IWWHMEeNma7c
-FZtE4OsmtmYaSX/xSkgPBLIzLjOlVJdkH4694ACuhiR62iwxy2vvLYqGx2+Spmzg
-WXJ5iLF/QHyJFJZYFostGtOaIGqW9b9GLHve8f0xyhneJRRi7Tw5h0A14GhHEbpY
-lH37OTKZ0oKVUErLpXlw8zblwsrgUWJPcJpIRkdvxz9li33FOY7jasSKsJGXhOYl
-L+x3hnfMOaRizpGA40nK
-=knYF
------END PGP SIGNATURE-----
+- Henri Salo
