@@ -1,74 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/13
-Message-ID: <505CC068.6050403@redhat.com>
-Date: Fri, 21 Sep 2012 13:30:48 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/11
+Message-ID: <d019c14b-1643-41fe-bd5a-bd056206d8ef@zmail13.collab.prod.int.phx2.redhat.com>
+Date: Tue, 03 Jan 2012 15:51:45 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Michael Gilbert <mgilbert@...ian.org>
-Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+Subject: Closed list unsubscribe
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello all,
 
-On 09/21/2012 12:27 PM, Michael Gilbert wrote:
-> On Fri, Sep 21, 2012 at 2:18 PM, Kurt Seifried
-> <kseifried@...hat.com> wrote:
->>> Any security weakness can qualify for the E in CVE.  Really
->>> the point
->> 
->> No, security vulnerabilities qualify, security hardening does
->> not necessarily qualify.
-> 
-> Again E is for exposure, not vulnerability.
-> 
->> In this case GnuPG respects umask. We can't assign a CVE for
->> every single program that has potentially sensitive output and
->> fails to ensure that the output is mode 0600 or whatever (what
->> about extended access controls?). Some programs choose to enforce
->> permissions within themselves (e.g. OpenSSH and key based
->> authentication), but generally speaking makeing sure a program
->> with potentially sensitive output is safe is the job of the
->> system configuration, and you have several options:
-> 
-> Think about it this way.  I open a file with mode 600 in vim, edit
-> it, save it, and find it with mode 644?  That would be an exposure,
-> would it not?
+I'm writing to note that I'm no longer a subscriber to the closed list. I
+asked Solar Designer to remove me as I no longer need this mail.
 
-Not if it respects your umask. If you want privacy set your umask
-correctly. Programs can't know what they're supposed to do unless you
-tell them. And we tell the system using umask.
+I'm working on a group inside Red Hat to begin addressing security in a
+more proactive manner. I have a short writeup of this here:
+http://www.bress.net/blog/archives/200-Expanding-Red-Hats-Product-Security-Efforts.html
 
-> Again, about as minor as you could get, but its still an E.
+I don't have much information just yet, but I'll be sure to let everyone
+know how things are progressing in the future.
 
-I'm confused. It's not exposed unless you configure umask wrong and
-run this in a public viewable directory. If you want a CVE for every
-single program that doesn't ensure it's (potentially sensitive) output
-is mode 0600 than that's basically, well, all the programs on a system.
+Thanks.
 
-> Best wishes, Mike
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQXMBoAAoJEBYNRVNeJnmT0JsQANftNC0hArRkLz/enBNQ9XLs
-0ZJQRLZM5mh2h82hr9rvhpOAmmAPBQ/+mVsmDVs9MicPk3Vu7xyPkxLuzbd4L7C4
-I99nOZ4PGuGccN9+r6JOLg2JqKRKJIBPfxsfEIPdsQM7It7bGFkAr1w/ylEefnSB
-OOZREhu3NY7xM0ydbReQT7CLS3xiKbiRCi6qOXCa4mG/wVff9ZbxeVgvf4ZBPXby
-QW54CevK7KScUuHZ1UFniJdd++ockxnCDAQ5y7d6yQufECmtvPc+xPdj5U044xYm
-h4oiWB5HVxJ0d9Ca1shOVcl5f5pEfxzzO2YiyyamwB4eEkMttg+pYVK0mw5BzFLC
-iOlZFTTAZyFSremCgCzfa/tvOcSNr7Irhj5IFCV/J3ZwbzbmPuXR+xCn4Zs1pIez
-xwXtqfXlML5Ptr4KgKc3hWjWyP1FGtzHcV3+d61ZPRzTJ0Y1G55zGch30m8B527A
-QNXZ0czh/31Aoz2H5FyfGJYHFTq9FVTds/FuCMdPDL43zUtEq/OXTtEAdzY3Ul8H
-p6ZYhQx9nsKwX9p76XFKrXPnBMY6bP8WRspIF5TAIIuGhTWn/afcMZBkxrpBQHaL
-7SST84BMCfxWwanBZnjD9n+r0eVIfOgSe5ywBte7O0ZADjFO44XAt4nFnUMzwMOQ
-n2f3p5kLwpbVhX7rjC5Y
-=K+6A
------END PGP SIGNATURE-----
+-- 
+    JB
