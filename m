@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/3
-Message-ID: <5004EF0E.50009@redhat.com>
-Date: Tue, 17 Jul 2012 10:20:22 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/12
+Message-ID: <4F036D3E.7020506@redhat.com>
+Date: Tue, 03 Jan 2012 14:03:58 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: libjpeg-turbo: Heap-based buffer overflow when decompressing corrupt JPEG images
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: Two CVE requests
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
-
-We were made aware of a flaw in libjpeg-turbo by Chris Evans of Google
-security team. Details as follows:
-
-A Heap-based buffer overflow was found in the way libjpeg-turbo
-decompressed certain corrupt JPEG images in which the component count
-was erroneously set to a large value. An attacker could create a
-specially-crafted JPEG image that, when opened, could cause an
-application using libpng to crash or, possibly, execute arbitrary code
-with the privileges of the user running the application.
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=826849
-http://libjpeg-turbo.svn.sourceforge.net/viewvc/libjpeg-turbo?view=revision&revision=830
-
-This issue has been assigned CVE-2012-2806.
-
-Upstream release of libjpeg-turbo-1.2.1 resolves this issue.
+On 01/02/2012 11:41 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> please assign two CVE IDs:
+>
+> 1. Buffer overflow in VLC TiVo demuxer
+> http://www.videolan.org/security/sa1108.html
+Please use CVE-2012-0023 for this issue.
+>
+> 2. maradns made modifications to address the recent hash collisions:
+> http://samiam.org/blog/20111229.html
+Please use CVE-2012-0024 for this issue.
+>
+> Cheers,
+>         Moritz
 
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+
+-- Kurt Seifried / Red Hat Security Response Team
 
