@@ -1,31 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/21/6
-Message-ID: <20121021153836.GA27958@openwall.com>
-Date: Sun, 21 Oct 2012 19:38:36 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/6
+Message-ID: <20120103184244.GB23586@redhat.com>
+Date: Tue, 3 Jan 2012 11:42:44 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: YGN Ethical Hacker Group <lists@...g.net>
-Subject: Re: F5 FirePass SSL VPN 4xxx Series | Arbitrary URL Redirection
+Subject: CVE request: maradns hash table collision cpu dos
 Content-Type: text/plain; charset=utf-8
 
-Tim,
+MaraDNS has released an updated version to fix this hash table collision
+DoS.  Could a CVE be assigned to it?
 
-On Sun, Oct 21, 2012 at 03:24:34PM +0100, Tim Brown wrote:
-> I'm sure I will be corrected if I'm wrong in stating this.  But oss-security 
-> is for the discussion of previously disclosed issues that affect F/OSS.  There 
-> are doubtless some edge cases but I don't believe that the discussion of an 
-> issue relating to BIG-IP F5s (a commerical, closed source product) has any 
-> relevance to the oss-security list.   Please try and ensure you only email 
-> this list when you require action from F/OSS developers and/or distributions.
+References:
 
-Thank you for pointing this out!  I was under impression that YGN
-Ethical Hacker Group knew what this list was for, after they had made
-multiple on topic postings in the past.  Some [smaller] router firmware
-is in fact Open Source.
+http://samiam.org/blog/20111229.html
+http://samiam.org/blog/20111230.html
+https://bugzilla.redhat.com/show_bug.cgi?id=771428
 
-I'm sorry that, as a list moderator, I let YEHG's original posting and a
-follow-up through.  We'll reject further postings to this thread, unless
-there are any on list policies and such rather than on the off-topic
-vulnerability.
+Thanks.
 
-Alexander
+-- 
+Vincent Danen / Red Hat Security Response Team 
