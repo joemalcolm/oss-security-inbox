@@ -1,23 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/24/4
-Message-ID: <20120724072652.GA21558@kludge.henri.nerv.fi>
-Date: Tue, 24 Jul 2012 10:26:52 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/20
+Message-ID: <20120104000438.4a775851@w0wkgxv41q>
+Date: Wed, 4 Jan 2012 00:04:38 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: sschurtz@...nline.de
-Subject: CVE-request: WordPress plugin Count Per Day XSS (SSCHADV2012-015)
+Subject: CVE request: XSS in wordpress 3.3
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+http://oldmanlab.blogspot.com/2012/01/wordpress-33-xss-vulnerability.html
 
-Can we assign 2012 CVE-identifier for XSS vulnerability in WordPress plugin Count Per Day, thanks.
+Fix in 3.3.1:
+https://wordpress.org/news/2012/01/wordpress-3-3-1/
 
-Original advisory: http://www.darksecurity.de/advisories/2012/SSCHADV2012-015.txt
-OSVDB: http://osvdb.org/show/osvdb/83491
-Secunia advisory: http://secunia.com/advisories/49692/
-Vendor page: http://www.tomsdimension.de/wp-plugins/count-per-day
-SCM: http://plugins.trac.wordpress.org/changeset/571926/count-per-day#file22
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-Fixed in version 3.2 of the plugin, which I manually verified.
-
-- Henri Salo
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
