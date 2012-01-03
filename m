@@ -1,39 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/4
-Message-ID: <20120115153248.1c62a48a@ok4imboeog>
-Date: Sun, 15 Jan 2012 15:32:48 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/15
+Message-ID: <4F037144.7030800@redhat.com>
+Date: Tue, 03 Jan 2012 14:21:08 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: WordPress 3.1.1
+CC: Moritz Mühlenhoff <jmm@...til.org>, Craig Barratt <cbarratt@...rs.sourceforge.net>, cve-assign@...re.org, security@...ntu.com
+Subject: Re: CVE Request: Security issue in backuppc
 Content-Type: text/plain; charset=utf-8
 
-Am Sun, 15 Jan 2012 16:09:14 +0200
-schrieb Henri Salo <henri@...v.fi>:
+On 01/03/2012 12:55 PM, Moritz Mühlenhoff wrote:
+> On Thu, Oct 27, 2011 at 04:00:48PM -0500, Jamie Strandboge wrote:
+>> Hi Craig,
+>>
+>> While preparing updates to fix CVE-2011-3361 in Ubuntu I discovered
+>> another XSS vulnerability in View.pm when accessing the following URLs
+>> in backuppc:
+>> index.cgi?action=view&type=XferLOG&num=<XSS here>&host=<some host>
+>> index.cgi?action=view&type=XferErr&num=<XSS here>&host=<some host>
+>>
+>> You are being emailed as the upstream contact. Please keep
+>> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
+>>
+>> To oss-security, can I have a CVE for this? It is essentially the same
+>> vulnerability and fix as for CVE-2011-3361, but in CGI/View.pm instead
+>> of CGI/Browse.pm. Attached is a patch to fix this issue. Tested on
+>> 3.0.0, 3.1.0, 3.2.0 and 3.2.1.
+> *ping*
+>
+> This hasn't ended up in a CVE assignment.
+>
+> Cheers,
+>         Moritz
+I believe as per ADT4 these issues should be merged into the existing
+CVE-2011-3361:
 
-> If I am correct these WordPress issues are missing CVEs. I checked
-> from MITREs CVE-list and tried Google. Needs two 2011 CVE.
-> 
-> 1) Certain unspecified input is not properly sanitised before being
-> returned to the user. This can be exploited to execute arbitrary HTML
-> and script code in a user's browser session in context of an affected
-> site. http://osvdb.org/show/osvdb/72141
+ADT4:
 
-I think this is CVE-2012-0287:
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-0287
+At this stage, X and Y are the same bug type, affect the same versions,
+and affect the same products.
 
-> 2) The "make_clickable()" function in wp-includes/formatting.php does
-> not properly check the URL length in comments before passing it to
-> the PCRE library, which can be exploited to cause a crash.
-> http://osvdb.org/show/osvdb/72142
-> 
-> http://wordpress.org/news/2011/04/wordpress-3-1-1/
-> http://secunia.com/advisories/44038/
-> http://seclists.org/cert/2011/63
+Do X and Y have any of the following characteristics?
 
-Don't know if this got one, too.
+    X appears in a different DLL, library, or program than Y (e.g. X
+affects LIB1.DLL and Y affects LIB2.DLL)
+    X has more serious impact than Y (e.g. code execution as root versus
+leak of system pathname)
+    X takes a different input parameter/argument than Y (e.g. SQL
+injection in both the "user" and "password" parameters)
+    X is exploitable locally, but Y is not.
+    X requires stronger authentication than Y.
+    X can be exploited by a certain user that Y can not (e.g. a guest
+user vs. an admin)
+
+   
+
+    Yes: MERGE them. These characteristics are irrelevant for CVE.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-- Kurt Seifried / Red Hat Security Response Team
+
