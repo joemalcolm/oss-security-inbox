@@ -1,32 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/18
-Message-ID: <4F04D04E.2080203@redhat.com>
-Date: Wed, 04 Jan 2012 15:18:54 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/5
+Message-ID: <4b867641-5dd5-47b5-a482-6968871fd2d6@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Wed, 04 Jan 2012 06:56:36 -0500 (EST)
+From: Ramon de C Valle <rcvalle@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
+Cc: Vincent Danen <vdanen@...hat.com>, Tomas Hoger <thoger@...hat.com>
+Subject: CVE request: ghostscript: system initialization file uncontrolled search path element
 Content-Type: text/plain; charset=utf-8
 
-On 01/04/2012 03:10 PM, Petr Matousek wrote:
-> Move "exit_robust_list" into mm_release() and clear them
->
-> We don't want to get rid of the futexes just at exit() time, we want to
-> drop them when doing an execve() too, since that gets rid of the
-> previous VM image too.
->
-> Doing it at mm_release() time means that we automatically always do it
-> when we disassociate a VM map from the task.
->
-> Upstream patches:
-> 8141c7f3e7aee618312fa1c15109e1219de784a7
-> fc6b177dee33365ccb29fe6d2092223cf8d679f9
->
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=771764
->
-Please use CVE-2012-0028 for this issue.
+Hi Kurt,
+
+We identified and are separating the bugs discussed in Bug 599564[1] in two
+different issues. Can you assign a CVE Identifier to the following issue:
+
+Ghostscript included the current working directory in its library search
+path by default. If a user ran Ghostscript without the "-P-" option in an
+attacker-controlled directory containing a specially-crafted PostScript
+library file, it could cause Ghostscript to execute arbitrary PostScript
+code. With this update, Ghostscript no longer searches the current working
+directory for library files by default.[1]
+
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=599564
+
+Thanks,
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Ramon de C Valle / Red Hat Security Response Team
