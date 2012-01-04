@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/7
-Message-ID: <420283662.1872329.1348674717592.JavaMail.root@redhat.com>
-Date: Wed, 26 Sep 2012 11:51:57 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- php-ZendFramework: XSS vectors in multiple Zend Framework components (ZF2012-03)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/6
+Message-Id: <201201041450.q04EomXc023907@linus.mitre.org>
+Date: Wed, 4 Jan 2012 09:50:48 -0500 (EST)
+From: cve-assign@...re.org
+To: krahmer@...e.de, oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE-2011-4858 confusion
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  upstream ZendFramework 2.0.1 version corrected one occurrence
-of cross-site scripting (XSS) flaw across multiple components
-(improper escaping of HTML, HTML attributes and / or URLs):
-[1] http://framework.zend.com/blog/zend-framework-2-0-1-released.html
-[2] http://framework.zend.com/security/advisory/ZF2012-03
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=860738
-[4] https://bugs.gentoo.org/show_bug.cgi?id=436210
+MITRE is still working on this. Our current perspective is that
+CVE-2011-4084 is one vulnerability that was confirmed by the upstream
+vendor, and CVE-2011-4858 is a different vulnerability that was not
+confirmed by the upstream vendor. There are apparently related test
+cases and test results that are not yet public.
 
-Relevant upstream patch:
-[5] https://github.com/zendframework/zf2/commit/27131ca9520bdf1d4c774c71459eba32f2b10733
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: While the aforementioned upstream [5] patch is against the 2.0.1
-      branch, after backport it would be applicable also against
-      ZendFramework 1 versions (relevant routines across the affected
-      components - at least those I checked have same definition).
+iQEcBAEBAgAGBQJPBGZMAAoJEGvefgSNfHMd3MsH+QE9+MihuCYpnTK0IUYFw4TO
+kCB4GR6xR6UptA0R5UMPrJzwpXgL2N6dL7Vb3frLP+1/8h+66mgnF+pqJ++u78tz
+lOOoBTWk+U3G7qvFSW1NKL7A+CdIPAVkFtgXM2NGlxB70YHbEHWzX3nrlnAIYNE2
+TpVRfienHWm9THE9Q8e4k+b58oOKtnC9IhFGSAeLoogPv1ZUaqEibbM+KhsApyt8
+1pHpm8OYqgwayjrUsI7wAQUrZ8zoyRKC4gvOam4d9APm0cSlvy38kHRh947e3C3p
+qmijezwUJkImuJeILkkuHEN1wRHaED2MTHKKed3ym3d2ZkokiMdsHMp4I7TDvwY=
+=bfZ9
+-----END PGP SIGNATURE-----
