@@ -1,58 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/1
-Message-ID: <4FAC78F1.5010903@redhat.com>
-Date: Thu, 10 May 2012 20:26:57 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Johan Cwiklinski <mailings@...nd.be>
-Subject: Re: CVE-request: galette sql injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/9
+Message-ID: <20120104173048.GD3691@pisco.westfalen.local>
+Date: Wed, 4 Jan 2012 18:30:49 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: Kurt Seifried <kseifrie@...hat.com>
+Cc: oss-security@...ts.openwall.com, Craig Barratt <cbarratt@...rs.sourceforge.net>, cve-assign@...re.org, security@...ntu.com
+Subject: Re: CVE Request: Security issue in backuppc
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 05/10/2012 01:06 PM, Johan Cwiklinski wrote:
-> Hello,
-> 
-> Versions 0.63x of galette (out-of-date but mostly used versions for
-> now) have an sql injection vulnerability.
-> 
-> Could a CVE be assigned for this vulnerability?
-> 
-> This issue has been reported on project's tracker: 
-> http://redmine.ulysses.fr/issues/250
-> 
-> The issue has been fixed 
-> (http://redmine.ulysses.fr/projects/galette/repository/revisions/8c13ec159ba),
+On Tue, Jan 03, 2012 at 02:21:08PM -0700, Kurt Seifried wrote:
+> On 01/03/2012 12:55 PM, Moritz Mühlenhoff wrote:
+> > On Thu, Oct 27, 2011 at 04:00:48PM -0500, Jamie Strandboge wrote:
+> >> Hi Craig,
+> >>
+> >> While preparing updates to fix CVE-2011-3361 in Ubuntu I discovered
+> >> another XSS vulnerability in View.pm when accessing the following URLs
+> >> in backuppc:
+> >> index.cgi?action=view&type=XferLOG&num=<XSS here>&host=<some host>
+> >> index.cgi?action=view&type=XferErr&num=<XSS here>&host=<some host>
+> >>
+> >> You are being emailed as the upstream contact. Please keep
+> >> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
+> >>
+> >> To oss-security, can I have a CVE for this? It is essentially the same
+> >> vulnerability and fix as for CVE-2011-3361, but in CGI/View.pm instead
+> >> of CGI/Browse.pm. Attached is a patch to fix this issue. Tested on
+> >> 3.0.0, 3.1.0, 3.2.0 and 3.2.1.
+> > *ping*
+> >
+> > This hasn't ended up in a CVE assignment.
+> >
+> > Cheers,
+> >         Moritz
+> I believe as per ADT4 these issues should be merged into the existing
+> CVE-2011-3361:
 >
+> ADT4:
 > 
-a new release and an official announcment from the project will come
-> very soon.
+> At this stage, X and Y are the same bug type, affect the same versions,
+> and affect the same products.
 > 
-> Thank you!
+> Do X and Y have any of the following characteristics?
+> 
+>     X appears in a different DLL, library, or program than Y (e.g. X
+> affects LIB1.DLL and Y affects LIB2.DLL)
+>     X has more serious impact than Y (e.g. code execution as root versus
+> leak of system pathname)
+>     X takes a different input parameter/argument than Y (e.g. SQL
+> injection in both the "user" and "password" parameters)
+>     X is exploitable locally, but Y is not.
+>     X requires stronger authentication than Y.
+>     X can be exploited by a certain user that Y can not (e.g. a guest
+> user vs. an admin)
+> 
+>     Yes: MERGE them. These characteristics are irrelevant for CVE.
 
-Please use CVE-2012-2338 for this issue.
+I don't have a strong opinion on this, but does this policy really make
+sense if only X was tracked by a CVE for over half a year?
+
+There might just as well be people, who addressed CVE-2011-3361 under
+the impression that only X needs to be fixed and which will miss Y
+if Y is folded into CVE-2011-3361.
+
+Cheers,
+        Moritz
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPrHjxAAoJEBYNRVNeJnmTH3QP/2ndZBsV5A9QDGw4CEnOQEt8
-Ms7rX5dMFw1BePrDAk5/AauHEyzS660XuXzfkppA7LYP84s2QZTAYYy4REUAxO47
-cDIuLlq2ECIE4EtBIzgvF6c1hNiXznlwgu2woXgxRxiCR/9rYK/v3xZCCDL21MOq
-jhMm8vLhPNcfa5c2R7ywvFPGq8J5vMnLzlLkKp+1sU61xketv/deH2+LwnBhZNhW
-h+PRLmfCLDS39IhZJmPvoRRIMe5Fuu9mV7Qu/1CKTze0WLclzBPlf6PXOO309op+
-htOrjOAmXxWLbw1PXEj9ih35YN8ByT+MMGdaQQ0nnD06Mp/o+7bdSq5Pl12oTVEo
-8f9xFHUN22XydT95y19XymTnZzOv4yAfs18WIPzZOkwH54N11WovXPUJCzWywHcl
-0/Bb/KXa8s0KCQT2iPzB8PS7K5+7dN1KMAB8IsIcYE7S7Mk/AuDQH1TNtDvwbw6K
-n9SC9IzLJardoavhSPWMJDYugCW993OiHiBI6V+CX1i+y+tyOMC3tgYl7RQ/Zilv
-hzjrHgP7H6B2/87qS82Vz0lLiy8nSsCeSdv336N85On6WWTnKJIwydaKhMe8cXsl
-6wmKRRH+nM2cCv9WEk4mW2YZ6AElJMX3CHpTvz8kkqYW7WE5cOGmXEQda/licsZj
-qUkzRgNIFPZdWnq2Uzl6
-=z3ba
------END PGP SIGNATURE-----
