@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/8
-Message-Id: <201208280107.20720.geissert@debian.org>
-Date: Tue, 28 Aug 2012 01:07:20 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/7
+Message-ID: <4F04840B.5010400@redhat.com>
+Date: Wed, 04 Jan 2012 09:53:31 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: letodms multiple issues
+CC: Ramon de C Valle <rcvalle@...hat.com>, Vincent Danen <vdanen@...hat.com>, Tomas Hoger <thoger@...hat.com>
+Subject: Re: CVE request: ghostscript: system initialization file uncontrolled search path element
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 28 August 2012 00:49:51 Kurt Seifried wrote:
-> Welp if someone summarizes it I'll assign CVE's happily =).
+On 01/04/2012 04:56 AM, Ramon de C Valle wrote:
+> Hi Kurt,
+>
+> We identified and are separating the bugs discussed in Bug 599564[1] in two
+> different issues. Can you assign a CVE Identifier to the following issue:
+>
+> Ghostscript included the current working directory in its library search
+> path by default. If a user ran Ghostscript without the "-P-" option in an
+> attacker-controlled directory containing a specially-crafted PostScript
+> library file, it could cause Ghostscript to execute arbitrary PostScript
+> code. With this update, Ghostscript no longer searches the current working
+> directory for library files by default.[1]
+>
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=599564
+>
+> Thanks,
+>
+Assigning a 2010 CVE since this was made public in 2010. Please use
+CVE-2010-4820 for this issue.
 
-As per EDB-ID: 20759, there are at least the following issues:
-
-> 1. Reflected XSS in Login Page.
-But in fact it's not just the login page. However, since it's the same kind 
-of vulnerability, I'd just assign one for all the out/ reflected XSS'.
-
-> 2. Stored XSS in Document Owner/User name (when viewing user document).
-> 3. Stored XS in Calendar.
-Perhaps those two could be covered by only one id.
-
-> 4. Change Password CSRF.
-
-And this one definitely needs its own id.
-
-
-If one is to review the code base, there are probably many more. The changes 
-made to the SQL queries are just a hint.
-
-Cheers,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+
+-- Kurt Seifried / Red Hat Security Response Team
+
