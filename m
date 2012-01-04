@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/30/7
-Message-ID: <1335828888.2997.17.camel@mdlinux>
-Date: Mon, 30 Apr 2012 19:34:48 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/1
+Message-ID: <4F03AC8C.20403@redhat.com>
+Date: Tue, 03 Jan 2012 18:34:04 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Vincent Untz <vuntz@...e.com>
-Subject: Re: CVE Request: libsoup 2.32.2 sets ssl trusted flag despite no verification
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: XSS in wordpress 3.3
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2012-04-24 at 12:04 +0200, Ludwig Nussel wrote:
-> Hi,
-> 
-> libsoup 2.32.2 does not verify certificates at all if an application does
-> not explicitly specify a file with trusted root CA's. Since that libsoup
-> version relies on the verification failure to clear the trust flag it
-> always considers ssl connections as trusted in that case.
-> 
-> Reference:
-> https://bugzilla.novell.com/show_bug.cgi?id=758431
-> 
+On 01/03/2012 04:04 PM, Hanno Böck wrote:
+> http://oldmanlab.blogspot.com/2012/01/wordpress-33-xss-vulnerability.html
+>
+> Fix in 3.3.1:
+> https://wordpress.org/news/2012/01/wordpress-3-3-1/
+>
+Please use CVE-2012-0026 for this issue.
 
-Here is an upstream bug about the issue.
+-- 
 
-https://bugzilla.gnome.org/show_bug.cgi?id=666280
-
-Marc.
-
+-- Kurt Seifried / Red Hat Security Response Team
 
