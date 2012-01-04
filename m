@@ -1,42 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/06/1
-Message-Id: <201210052311.38808.geissert@debian.org>
-Date: Fri, 5 Oct 2012 23:11:36 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: LetoDMS, more issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/10
+Message-ID: <Pine.GSO.4.64.1201041254070.14826@faron.mitre.org>
+Date: Wed, 4 Jan 2012 13:11:51 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Moritz Muehlenhoff <jmm@...ian.org>
+cc: Kurt Seifried <kseifrie@...hat.com>, oss-security@...ts.openwall.com, Craig Barratt <cbarratt@...rs.sourceforge.net>, cve-assign@...re.org, security@...ntu.com
+Subject: Re: CVE Request: Security issue in backuppc
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Some more issues were fixed in LetoDMS...
+All,
 
-* Fixed in 3.3.8
-Multiple XSS:
-http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/inc/inc.ClassUI.php?r1=930&r2=929&pathrev=930
-http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/out/out.DocumentNotify.php?r1=934&r2=933&pathrev=934
-(and a few others scattered in multiple other commits)
-Missing CSRF protection (all part of the same thing):
-http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=927
-http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=915
-http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=914
-http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=907
-(and possibly some others...)
+A new CVE is needed for this.  The new variant SHOULD receive a new CVE 
+because there's a different researcher (specifically, Jamie) and 
+effectively a different version (probably upstream; also, many distros may 
+have already fixed the original CVE-2011-3361).
 
-* Fixed in 3.3.9
-Multiple XSS in out/out.UsrMgr.php: 
-http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/out/out.UsrMgr.php?r1=979&r2=978&pathrev=979
-Regression in the above patch (fixed after the release of 3.3.9):
-http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/out/out.UsrMgr.php?r1=982&r2=981&pathrev=982
+Blame the CVE content-decision documentation (and me, its author).  The 
+current version can cause confusion, people can interpret it in different 
+ways, plus there are gaps.  It needs some serious restructuring.  (This is 
+why the document's not public.)
 
-LetoDMS Core:
-* Fixed in 3.3.8:
-SQL injection:
-http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/LetoDMS_Core/Core/inc.ClassDMS.php?r1=929&r2=928&pathrev=929
+Kurt (and other CNAs): the documentation problem is that ADT4 says 
+"MERGE", which seems to imply that you should stop, but really you should 
+continue to ADT5, which is about splitting based on different researchers. 
+ADT4 is there to explicitly cover places where somebody might reasonably 
+feel like splitting, but CVE does not.  There are also a couple other 
+decision points that aren't documented yet.  You should generally fall 
+through *all* the decision points, not just the first point that suggests 
+split/merge/consult.  That is, all of ADT1 through ADT5 should be examined 
+when deciding how to group issues.
 
-etc
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+- Steve
