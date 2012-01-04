@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/6
-Message-ID: <5048E3FD.9070603@redhat.com>
-Date: Thu, 06 Sep 2012 11:57:17 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/17
+Message-ID: <20120104221058.GE6914@dhcp-25-225.brq.redhat.com>
+Date: Wed, 4 Jan 2012 23:10:59 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 19 - guest administrator can access qemu monitor console
+Subject: CVE Request -- kernel: futex: clear robust_list on execve
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Move "exit_robust_list" into mm_release() and clear them
 
+We don't want to get rid of the futexes just at exit() time, we want to
+drop them when doing an execve() too, since that gets rid of the
+previous VM image too.
 
-> NOTE REGARDING CVE ==================
-> 
-> This issue was previously reported in a different context, not to
-> Xen upstream, and assigned CVE-2007-0998 and fixed in a different
-> way.  We have requested a new CVE for XSA-19 but it is not yet
-> available.
+Doing it at mm_release() time means that we automatically always do it
+when we disassociate a VM map from the task.
 
-Was this requested from me? I don't seem to have a copy of the request.
+Upstream patches:
+8141c7f3e7aee618312fa1c15109e1219de784a7
+fc6b177dee33365ccb29fe6d2092223cf8d679f9
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=771764
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQSOP9AAoJEBYNRVNeJnmT/oIP/1H00QFB5D4POxuKsIZIld5R
-gv0nymc36gqdGk2vMD2F2o6ikwG9yuotkYcHnAOgXFanH9AgN0mQ+X1mQRongibp
-5anVmGOeTySuvaOc8A2aPcd6QwhtITafqM4O6NZ3Qdv3W9jGUnkmfLIUV+BBSJ+V
-HZNcSn14ec2f2oGRRqztntiPKdEzYdlSRetQCbKAXoEUSTavhCRWrNUMXFfFhIMj
-cOP7C11ej+45+BRa2Jj+lG3zzw6Ut4+bagsG4M5AD8z3wjQ9FPRKwEdP1Zct2tPb
-tZvly0zUhWVj36+gXSo4M7+6zHpEVGXaPZWQo67MHsJMLClEtdiXJGyYzs8RrLAq
-IhFc7ehQt1JqDwR3KvXeg9qdPUgTwp3OfTvtD9MRjXIYICf19Mr1O3hswEux0DtZ
-9V40L63tsj74udHnipwSB4BM7elGmB90PIzPFC9BNmzCCANyjRG6uD87pb7Cb4Xa
-vfPEV3+7vB/WjqCpeXmnWTeaqD0GFxaH87Sb0t2CwVjCx071Nox084RSRS2oFZHP
-u/1QPxQf+u1NmyjrKwUCgPLvpD4rsw8fx9ZtaN31KcTbHCXPtXHw+Fi1d9Jsqbue
-QgmMjHovpaPRfFiNUVXuQ7NsWT2+JmktRIMifEbizW1dwQv9s+cAkzW6dCerO+BS
-lODUtQV1KfQpfbCYVpgw
-=LmYg
------END PGP SIGNATURE-----
+-- 
+Petr Matousek / Red Hat Security Response Team
