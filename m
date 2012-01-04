@@ -1,60 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/15
-Message-ID: <4F037144.7030800@redhat.com>
-Date: Tue, 03 Jan 2012 14:21:08 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/12
+Message-ID: <4F04BBA7.3060204@redhat.com>
+Date: Wed, 04 Jan 2012 13:50:47 -0700
 From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Mühlenhoff <jmm@...til.org>, Craig Barratt <cbarratt@...rs.sourceforge.net>, cve-assign@...re.org, security@...ntu.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Moritz Muehlenhoff <jmm@...ian.org>, Craig Barratt <cbarratt@...rs.sourceforge.net>, cve-assign@...re.org, security@...ntu.com
 Subject: Re: CVE Request: Security issue in backuppc
 Content-Type: text/plain; charset=utf-8
 
-On 01/03/2012 12:55 PM, Moritz Mühlenhoff wrote:
-> On Thu, Oct 27, 2011 at 04:00:48PM -0500, Jamie Strandboge wrote:
->> Hi Craig,
->>
->> While preparing updates to fix CVE-2011-3361 in Ubuntu I discovered
->> another XSS vulnerability in View.pm when accessing the following URLs
->> in backuppc:
->> index.cgi?action=view&type=XferLOG&num=<XSS here>&host=<some host>
->> index.cgi?action=view&type=XferErr&num=<XSS here>&host=<some host>
->>
->> You are being emailed as the upstream contact. Please keep
->> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
->>
->> To oss-security, can I have a CVE for this? It is essentially the same
->> vulnerability and fix as for CVE-2011-3361, but in CGI/View.pm instead
->> of CGI/Browse.pm. Attached is a patch to fix this issue. Tested on
->> 3.0.0, 3.1.0, 3.2.0 and 3.2.1.
-> *ping*
+On 01/04/2012 11:11 AM, Steven M. Christey wrote:
 >
-> This hasn't ended up in a CVE assignment.
+> All,
 >
-> Cheers,
->         Moritz
-I believe as per ADT4 these issues should be merged into the existing
-CVE-2011-3361:
-
-ADT4:
-
-At this stage, X and Y are the same bug type, affect the same versions,
-and affect the same products.
-
-Do X and Y have any of the following characteristics?
-
-    X appears in a different DLL, library, or program than Y (e.g. X
-affects LIB1.DLL and Y affects LIB2.DLL)
-    X has more serious impact than Y (e.g. code execution as root versus
-leak of system pathname)
-    X takes a different input parameter/argument than Y (e.g. SQL
-injection in both the "user" and "password" parameters)
-    X is exploitable locally, but Y is not.
-    X requires stronger authentication than Y.
-    X can be exploited by a certain user that Y can not (e.g. a guest
-user vs. an admin)
-
-   
-
-    Yes: MERGE them. These characteristics are irrelevant for CVE.
+> A new CVE is needed for this.  The new variant SHOULD receive a new
+> CVE because there's a different researcher (specifically, Jamie) and
+> effectively a different version (probably upstream; also, many distros
+> may have already fixed the original CVE-2011-3361).
+>
+> Blame the CVE content-decision documentation (and me, its author). 
+> The current version can cause confusion, people can interpret it in
+> different ways, plus there are gaps.  It needs some serious
+> restructuring.  (This is why the document's not public.)
+>
+> Kurt (and other CNAs): the documentation problem is that ADT4 says
+> "MERGE", which seems to imply that you should stop, but really you
+> should continue to ADT5, which is about splitting based on different
+> researchers. ADT4 is there to explicitly cover places where somebody
+> might reasonably feel like splitting, but CVE does not.  There are
+> also a couple other decision points that aren't documented yet.  You
+> should generally fall through *all* the decision points, not just the
+> first point that suggests split/merge/consult.  That is, all of ADT1
+> through ADT5 should be examined when deciding how to group issues.
+>
+> - Steve
+Ahhh.. I sort of wondered about that but never thought to ask. Derp! You
+should probably update that document and post it prominently somewhere,
+I know it has helped me a lot.
 
 -- 
 
