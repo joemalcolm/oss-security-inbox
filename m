@@ -1,66 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/18/5
-Message-ID: <50D0A231.4050802@redhat.com>
-Date: Tue, 18 Dec 2012 10:04:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/15
+Message-ID: <4F04BFE1.90604@redhat.com>
+Date: Wed, 04 Jan 2012 14:08:49 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Freeciv (X < 2.3.3): DoS (memory exhaustion or excessive CPU consumption) via malformed network packets
+CC: Moritz Mühlenhoff <jmm@...til.org>, Craig Barratt <cbarratt@...rs.sourceforge.net>, cve-assign@...re.org, security@...ntu.com
+Subject: Re: CVE Request: Security issue in backuppc
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/03/2012 02:21 PM, Kurt Seifried wrote:
+> On 01/03/2012 12:55 PM, Moritz Mühlenhoff wrote:
+>> On Thu, Oct 27, 2011 at 04:00:48PM -0500, Jamie Strandboge wrote:
+>>> Hi Craig,
+>>>
+>>> While preparing updates to fix CVE-2011-3361 in Ubuntu I discovered
+>>> another XSS vulnerability in View.pm when accessing the following URLs
+>>> in backuppc:
+>>> index.cgi?action=view&type=XferLOG&num=<XSS here>&host=<some host>
+>>> index.cgi?action=view&type=XferErr&num=<XSS here>&host=<some host>
+>>>
+>>> You are being emailed as the upstream contact. Please keep
+>>> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
+>>>
+>>> To oss-security, can I have a CVE for this? It is essentially the same
+>>> vulnerability and fix as for CVE-2011-3361, but in CGI/View.pm instead
+>>> of CGI/Browse.pm. Attached is a patch to fix this issue. Tested on
+>>> 3.0.0, 3.1.0, 3.2.0 and 3.2.1.
+>> *ping*
+>>
+>> This hasn't ended up in a CVE assignment.
+>>
+>> Cheers,
+>>         Moritz
+> I believe as per ADT4 these issues should be merged into the existing
+> CVE-2011-3361:
+>
+> ADT4:
+>
+>
 
-On 12/18/2012 07:13 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> Freeciv upstream has released 2.3.3 version correcting one security
-> issue:
-> 
-> A denial of service flaw was found in the way the server component 
-> of Freeciv, a turn-based, multi-player, X based strategy game, 
-> processed certain packets (invalid packets with whole packet
-> length lower than packet header size or syntactically valid
-> packets, but whose processing would lead to an infinite loop). A
-> remote attacker could send a specially-crafted packet that, when
-> processed would lead to freeciv server to terminate (due to memory
-> exhaustion) or become unresponsive (due to excessive CPU use).
-> 
-> References: [1] http://aluigi.altervista.org/adv/freecivet-adv.txt 
-> [2] https://bugs.gentoo.org/show_bug.cgi?id=447490 [3]
-> http://freeciv.wikia.com/wiki/NEWS-2.3.3 [4]
-> https://bugzilla.redhat.com/show_bug.cgi?id=888331
-> 
-> Upstream bug report: [5] http://gna.org/bugs/?20003
-> 
-> Relevant patch (against trunk): [6]
-> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21670
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+As Steve has pointed out, this was incorrect (different researcher found
+the second vuln). So the previous issue:
 
-Please use CVE-2012-5645 for this issue.
+CVE-2011-3361 is related to "Ensure $num is numeric in lib/BackupPC/CGI/Browse.pm to avoid XSS attack."
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+=====================
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+For this new issue please use CVE-2011-4923 which covers:
 
-iQIcBAEBAgAGBQJQ0KIxAAoJEBYNRVNeJnmTTigQAJ/zsEZ07mUjKA2zMh1EOH3v
-CD1UgfkRQ0/lym+Eg55JGzSRzXai7yfWhhp1T+jsLqED4+kKGryJFE1eprvyRMdL
-Je7PAZl67sfrdVW+nBOFUhlIIc7jiKp2vGqj826M4nzcRZbWdYL9hdFhqxlDEnyq
-8dx623jwPOiMFv5N3epX3aE7T5F92MAwGZrPu3tqI4E+B+ho4o12Z2OxZvoS6azG
-FZNWdl9QJ607+YI9Dd2JZ3kpa/T+k9IEImjvCP6QHnmc4UDQVmMPoyV4UXXyleDS
-8kEZLuKzJ2x5+pC/NcHjyt9chOovSuFkbCQut3WYBENz1qZBjyThjEbxfoFATAR+
-sAiRLoM6+rmNN5pBFFKiIypXCsaHz5PbWLXNWZkjGYsitHvNrY7vp700jweMXMFh
-hR9VlRw0zgBja5PYq5S8B/25YcmwzGtpl4zQBFBYJDv+v3WJE07yWeVCY50zEI3c
-jQ4yG7n8rJE0/tEHdNrIP4zBbYjmLoi3KtgEaSzDfMGIo4qHPbGbHg9fOZqBSv6S
-XSm/mVOsV4cwWrcUJFyQolEXCjUtuj/hqVY8tNUPCnUlUo3c3PAoQGGM+Cvx584Z
-0R6SPuni35ABgKJznjvectvaiTD9CMVX1DZHj0sJtoaSUkr9MB1UuDB1/ADpO+t5
-6pVDRu12YymToTPHKzHh
-=cXYM
------END PGP SIGNATURE-----
+View.pm XSS vulnerabilities exploited via urls such as:
+
+index.cgi?action=view&type=XferLOG&num=<XSS here>&host=<some host>
+index.cgi?action=view&type=XferErr&num=<XSS here>&host=<some host>
+
+Sorry for the mess.
+
+
+-- 
+
+-- Kurt Seifried / Red Hat Security Response Team
+
