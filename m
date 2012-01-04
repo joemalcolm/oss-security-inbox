@@ -1,22 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/1
-Message-ID: <4F6BE404.8090409@redhat.com>
-Date: Thu, 22 Mar 2012 20:46:28 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/8
+Message-ID: <20120104172609.GA3838@pisco.westfalen.local>
+Date: Wed, 4 Jan 2012 18:26:10 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: MediaWiki security and maintenance release 1.18.2
+Subject: CVE request: Pidgin
 Content-Type: text/plain; charset=utf-8
 
-On 03/22/2012 03:12 PM, Henri Salo wrote:
-> http://lists.wikimedia.org/pipermail/wikitech-l/2012-March/059230.html
-> 
-> I do not know if these do have CVE-identifiers already or not.
-> 
-> - Henri Salo
+Hi,
+It seems that this older Pidgin issue never received a CVE assignment:
+http://www.pidgin.im/news/security/?id=50
 
-Emailed mediawiki to see if they already requested CVE's, but I suspect
-they did not. Will assign next week if they don't reply.
-
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Cheers,
+        Moritz
