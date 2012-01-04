@@ -1,40 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/9
-Message-ID: <20120906204454.GL1356@redhat.com>
-Date: Thu, 6 Sep 2012 14:44:54 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/18
+Message-ID: <4F04D04E.2080203@redhat.com>
+Date: Wed, 04 Jan 2012 15:18:54 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - mcrypt buffer overflow flaw
+Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
 Content-Type: text/plain; charset=utf-8
 
-* [2012-09-06 15:11:27 -0500] Raphael Geissert wrote:
-
->On Thursday 06 September 2012 09:37:14 Vincent Danen wrote:
->> A buffer overflow was reported [1],[2] in mcrypt version 2.6.8 and
->> earlier due to a boundary error in the processing of an encrypted file
->> (via the check_file_head() function in src/extra.c).  If a user were
->> tricked into attempting to decrypt a specially-crafted .nc encrypted
->> flie, this flaw would cause a stack-based buffer overflow that could
->> potentially lead to arbitrary code execution.
+On 01/04/2012 03:10 PM, Petr Matousek wrote:
+> Move "exit_robust_list" into mm_release() and clear them
 >
->I'm attaching a patch that makes mcrypt abort when the salt is longer than
->the temp buffer it uses.
+> We don't want to get rid of the futexes just at exit() time, we want to
+> drop them when doing an execve() too, since that gets rid of the
+> previous VM image too.
 >
->While working on it, I noticed the err_ functions do not have a constant
->printf format, yet there are calls such as:
->      sprintf(tmperr, _("Input File: %s\n"), infile);
->      err_info(tmperr);
->[print_enc_info in src/extra.c]
+> Doing it at mm_release() time means that we automatically always do it
+> when we disassociate a VM map from the task.
 >
->And a few others in src/mcrypt.c; for instance:
->$ mcrypt --no-openpgp "%s.nc"
->mcrypt: h?????????Fn???`.nc is not a regular file. Skipping...
+> Upstream patches:
+> 8141c7f3e7aee618312fa1c15109e1219de784a7
+> fc6b177dee33365ccb29fe6d2092223cf8d679f9
 >
->I'm attaching another patch that prevents the format string attacks.
-
-Fantastic, thanks for this.  I suppose the format string issues may
-require another CVE name?  I'm not sure if they're exploitable or not
-(no chance right now to look at it further).
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=771764
+>
+Please use CVE-2012-0028 for this issue.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+
+-- Kurt Seifried / Red Hat Security Response Team
+
