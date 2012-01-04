@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/12/2
-Message-Id: <201211121737.qACHbedv023366@linus.mitre.org>
-Date: Mon, 12 Nov 2012 12:37:40 -0500 (EST)
-From: cve-assign@...re.org
-To: jlieskov@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- WeeChat (prior to 0.3.9.1): Heap-based buffer overflow when decoding IRC colors in strings
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/11
+Message-ID: <20120104200226.GK23586@redhat.com>
+Date: Wed, 4 Jan 2012 13:02:26 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: krahmer@...e.de, cve-assign@...re.org, Mark Thomas <markt@...che.org>
+Subject: Re: Re: CVE-2011-4858 confusion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2012-01-04 09:50:48 -0500] cve-assign@...re.org wrote:
 
->[3] https://savannah.nongnu.org/bugs/?37704
+>MITRE is still working on this. Our current perspective is that
+>CVE-2011-4084 is one vulnerability that was confirmed by the upstream
+>vendor, and CVE-2011-4858 is a different vulnerability that was not
+>confirmed by the upstream vendor. There are apparently related test
+>cases and test results that are not yet public.
 
-This issue had similar communication sent separately to MITRE, and
-was assigned CVE-2012-5854 today.
+We received an email from upstream Tomcat asking us to make that change.
+CVE-2011-4858 is the CVE for the hash collision issue.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+I'm cc'ing Mark who made the original request to us.  Mark, could you
+please clarify?
 
-iQEcBAEBAgAGBQJQoTKsAAoJEGvefgSNfHMdeWcIAK2eVnvJFf5G8EkOKmuxoGrB
-uVcXw6hzKfuuJDAFyA/WM9kyZDdZesg1L7QzP6FRBfp0o4T6Pkkne8A7SkPdAaW7
-ytLLGhkSJkBv3ozTTVueejsTtfBg59K2FWBhvxUoKrRWqSdNzmu0fCdTmsTfUgzk
-5qd/Zx1bteZAh17FeqzTjOh9aBzIRlBhxA3+bgshTY3N0DUDBHWk/NgllwSC2Izl
-ha4LIiYdoFJLMjHbr55o0cXBdyzcdbx+7/BL7nN4sD/DTojpcA6JoE+ZW2/zvJ2Z
-pVoVU3zKE44lEdhmxgeKDYlqHBXbPOgfsg6o9JhKBw+8oS0rqgvuwefyWz5koA8=
-=W8IZ
------END PGP SIGNATURE-----
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
