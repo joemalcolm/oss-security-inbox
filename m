@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/05/1
-Message-ID: <1328448865.3610.18.camel@cthulhu.hellion.org.uk>
-Date: Sun, 05 Feb 2012 14:34:25 +0100
-From: Ian Campbell <ijc@....org>
-To: Solar Designer <solar@...nwall.com>
-Cc: Ian Campbell <ijc@....org>, oss-security@...ts.openwall.com
-Subject: Re: Adding Xen.org contact to linux-distros security list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/14
+Message-ID: <Pine.GSO.4.64.1201041558560.14826@faron.mitre.org>
+Date: Wed, 4 Jan 2012 16:04:59 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: Pidgin
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 2012-02-04 at 03:07 +0400, Solar Designer wrote:
-> On Fri, Feb 03, 2012 at 09:33:05AM +0000, Ian Campbell wrote:
-> > Would it be possible for myself to be subscribed to the linux-distros
-> > security list as a representative of Xen.org?
-> 
-> I think not.  We had a few exceptions like this on vendor-sec, but when
-> setting up the linux-distros list I proposed not to be making such
-> exceptions anymore and everyone seemed to agree.  In fact, that's even
-> reflected in the list name - on purpose.
 
-Thanks, I can quite understand your position.
+On Wed, 4 Jan 2012, Kurt Seifried wrote:
 
-I'll get back in touch with the qemu folks and update the wiki as you
-suggest.
+> Minor issue, but stuff in memory does have a bad habit of ending up in
+> other places (swap/etc.). Please use CVE-2011-4922 for this issue.
 
-Cheers,
-Ian.
+CVE has some similar precedents for this kind of issue, such as 
+CVE-2009-0518, CVE-2008-6828, CVE-2007-2619, CVE-2005-0604, CVE-2003-0048, 
+CVE-2006-2662, and probably more recent issues too.  Granted it's minor.
 
-
+- Steve
