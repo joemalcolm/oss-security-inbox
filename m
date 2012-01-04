@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/19/1
-Message-ID: <979919144.1848807.1348076592319.JavaMail.root@redhat.com>
-Date: Wed, 19 Sep 2012 13:43:12 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request Smarty / php-Smarty: XSS in Smarty exception messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/19
+Message-ID: <20120104222303.GA23577@kroah.com>
+Date: Wed, 4 Jan 2012 14:23:03 -0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Wed, Jan 04, 2012 at 11:10:59PM +0100, Petr Matousek wrote:
+> Move "exit_robust_list" into mm_release() and clear them
+> 
+> We don't want to get rid of the futexes just at exit() time, we want to
+> drop them when doing an execve() too, since that gets rid of the
+> previous VM image too.
+> 
+> Doing it at mm_release() time means that we automatically always do it
+> when we disassociate a VM map from the task.
+> 
+> Upstream patches:
+> 8141c7f3e7aee618312fa1c15109e1219de784a7
+> fc6b177dee33365ccb29fe6d2092223cf8d679f9
 
-  a cross-site scripting (XSS) flaw was found in the way Smarty
-sanitized exception messages:
-[1] http://secunia.com/advisories/50589/
-[2] http://code.google.com/p/smarty-php/source/browse/trunk/distribution/change_log.txt
+In the future, could you reference which kernel contained these patches
+so I don't have to go look it up?  :)
 
-Upstream patch:
-[3] http://code.google.com/p/smarty-php/source/detail?r=4658
+For the record, the first one showed up in 2.6.28-rc5 and the second in
+2.6.32-rc4.
 
-Could you allocate a CVE id for this?
+thanks,
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: Going through the OSS archive from 2012-09 it doesn't seem
-      this has got a CVE identifier yet (but didn't look to posts
-      from previous months).
+greg k-h
