@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/2
-Message-ID: <20121017114435.0d58ce6b@fabiankeil.de>
-Date: Wed, 17 Oct 2012 11:44:35 +0200
-From: Fabian Keil <freebsd-listen@...iankeil.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/3
+Message-ID: <4F03F998.3040505@redhat.com>
+Date: Wed, 04 Jan 2012 00:02:48 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Multiple e107 vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
+On 01/03/2012 03:04 PM, Henri Salo wrote:
+> 1) Multiple Script URI XSS
+> http://osvdb.org/show/osvdb/78047
+>
+> 2) e107_admin/users.php resend_name Parameter XSS
+> http://osvdb.org/show/osvdb/78048
+>
+> 3) User Signatures link BBCode XSS
+> http://osvdb.org/show/osvdb/78049
+These 3 XSS vulns are being merged as per ADT4. Please use CVE-2011-4920
+for these issues.
+> 4) usersettings.php username Parameter SQL Injection
+> http://osvdb.org/show/osvdb/78050
 
-> On 10/16/2012 08:40 AM, Matthias Weckbecker wrote:
-> > Technically, this would also apply to Perl (at least with 5.12.3). 
-> 
-> It's also the case with perl 5.14.2 (just tested). :/
+Please use CVE-2011-4921 for this issue.
+>
+> Secunia advisory: http://secunia.com/advisories/46706/
+>
+> I do not know where to find SCM links. Secunia can probably help if needed.
+>
+> - Henri Salo
 
-At least for Perl I consider this a feature.
+http://e107.org/news.php?extend.885.2
+http://e107.svn.sourceforge.net/viewvc/e107/
 
-The NUL byte is a special character and allows trailing white
-space in the filename that is otherwise stripped. This is
-(more or less) documented in perlopentut(1).
+-- 
 
-It also seems unlikely that someone adds NUL bytes to the
-white list of acceptable characters by accident, and if there
-is no white list in the first place, the Perl script probably
-has bigger issues.
+-- Kurt Seifried / Red Hat Security Response Team
 
-Fabian
-
-Download attachment "signature.asc" of type "application/pgp-signature" (197 bytes)
