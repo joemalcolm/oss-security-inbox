@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/17
-Message-ID: <20120104221058.GE6914@dhcp-25-225.brq.redhat.com>
-Date: Wed, 4 Jan 2012 23:10:59 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/16
+Message-ID: <4F04C45E.5090505@redhat.com>
+Date: Wed, 04 Jan 2012 14:27:58 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: futex: clear robust_list on execve
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: WordPress SQL injection and arbitrary code injection (2003)
 Content-Type: text/plain; charset=utf-8
 
-Move "exit_robust_list" into mm_release() and clear them
+On 01/03/2012 02:41 PM, Henri Salo wrote:
+> These two WordPress security vulnerabilities from 2003 are still without CVE-identifiers. I am requesting CVE-identifiers as these issues have highly critical impact.
+>
+> 1) SQL injection
+> http://osvdb.org/show/osvdb/4610
+Please use CVE-2003-1598 for the WordPress    0.70
+./wp-links/links.all.php SQL Injection
 
-We don't want to get rid of the futexes just at exit() time, we want to
-drop them when doing an execve() too, since that gets rid of the
-previous VM image too.
 
-Doing it at mm_release() time means that we automatically always do it
-when we disassociate a VM map from the task.
-
-Upstream patches:
-8141c7f3e7aee618312fa1c15109e1219de784a7
-fc6b177dee33365ccb29fe6d2092223cf8d679f9
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=771764
+>
+> 2) Arbitrary code injection
+> http://osvdb.org/show/osvdb/4611
+Please use CVE-2003-1599 for the WordPress    0.70 ./blog.header.php
+code injection
+>
+> Secunia advisory: http://secunia.com/advisories/8954/
+>
+> - Henri Salo
+http://www.kernelpanik.org/docs/kernelpanik/wordpressadv.txt
 
 -- 
-Petr Matousek / Red Hat Security Response Team
+
+-- Kurt Seifried / Red Hat Security Response Team
+
