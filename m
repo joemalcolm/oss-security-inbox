@@ -1,31 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/3
-Message-ID: <CANTw=MM0DZ3+-peswQzkt1_nUeys_wR6uKe+4zewDafFCPJnvA@mail.gmail.com>
-Date: Mon, 24 Sep 2012 20:32:38 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/11
+Message-ID: <4F05D8AB.2020809@redhat.com>
+Date: Thu, 05 Jan 2012 10:06:51 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+CC: David Hicks <d@...id.au>
+Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 24, 2012 at 8:24 PM, Michael Gilbert
-<michael.s.gilbert@...il.com> wrote:
-> On Mon, Sep 24, 2012 at 5:46 PM, Tavis Ormandy wrote:
->>> > I think you've misunderstood the problem, and it's trivial to solve.
->>>
->>> No, I'm thinking about the broader implication.  If you're arguing that
->>> gpg should be modified to better handle permissions, then all applications
->>> potentially handling sensitive information should as well: file editors,
->>> and what not.  Otherwise, what makes gpg such a special case?
->>>
->>
->> I think you've confused my post with someone elses.
->
-> See Steve Christy's snowball post.  Again, I'm considering the
-> totality of the system.  Setting 644 as a default for gpg is I suppose
+On 01/05/2012 04:22 AM, David Hicks wrote:
+> The question these approaches raise is whether it is advisable to
+> reinvent rate limiting in each and every network daemon. Performing rate
+> limiting at the system/interface level prevents unwanted and expensive
+> context switches to each daemon. Configuration and maintenance is much
+> simpler because administrators don't need to learn 50 different ways to
+> configure rate limiting for each daemon. There is also less risk for
+> bugs to be written into the rate limiting implementation of each daemon.
 
-Correction, not 644, but using the input file's permissions as the
-basis for the output file's permissions (obviously before applying
-umask).
+To a large degree yes, because each daemon is different and the daemon
+also knows how bad things are getting, the firewall doesn't. Ideally the
+daemons should be auto-tuning and degrading politely to prevent
+dying/killing the system/etc. so the admin doesn't have to explicitly
+learn how to tune it. THiss problem occurs with firewall limiting
+anyways, how many connections per second per C class (or whatever) can I
+safely allow to daemon X? What happens if we upgrade/downgrade the
+server daemon X runs on? What happens if server X takes additional
+duties or is modified in another way that affects the load it can
+handle? I vote for daemons that auto-tune intelligently because I am
+lazy =).
 
-Best wishes,
-Mike
+> On a technical note, rate limiting requires a small amount of memory
+> (buckets) to store information about recent connections. For this
+> reason, allowing IPv6 rate limiting granularity at the /128 level would
+> be inadvisable as an attacker with /64 addresses could quickly exhaust
+> the table capacity/available memory. The design of the data structures
+> and algorithms for the table need to be very efficient. Taking it down
+> another level, a table that is larger than available L1-L3 cache could
+> further degrade performance ([4] and [5] discuss hash tables and CPU
+> cache).
+Again we could do something clever like auto-tune and start
+consolidating buckets if the tables start getting too large.
+
+
+
+-- 
+
+-- Kurt Seifried / Red Hat Security Response Team
+
