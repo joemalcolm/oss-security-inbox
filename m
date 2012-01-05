@@ -1,92 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/13
-Message-ID: <50BD2F80.7030507@gmx.de>
-Date: Tue, 04 Dec 2012 00:02:24 +0100
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/10
+Message-ID: <4F05D7AA.7040204@redhat.com>
+Date: Thu, 05 Jan 2012 10:02:34 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-5468: bogofilter-SA-2012-01
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: WordPress plugin Adminimize XSS
 Content-Type: text/plain; charset=utf-8
 
-bogofilter-SA-2012-01
+On 01/05/2012 04:06 AM, Henri Salo wrote:
+> Original advisory: http://www.securityfocus.com/archive/1/520591
+> OSVDB: http://osvdb.org/show/osvdb/77472
+> Fixed in: 1.7.22
+> Vulnerable: All before 1.7.22
+> SCM: http://plugins.svn.wordpress.org/adminimize/
+> Changelog: http://wordpress.org/extend/plugins/adminimize/changelog/
+>
+> Should be 2011 CVE.
+>
+> fgeek@...mple:~/adminimize/tags$ diff 1.7.21/adminimize_page.php 1.7.22/adminimize_page.php 
+> 121c121
+> <       <form name="backend_option" method="post" id="_mw_adminimize_options" action="?page=<?php echo $_GET['page'];?>" >
+> ---
+>>       <form name="backend_option" method="post" id="_mw_adminimize_options" action="?page=<?php echo esc_attr( $_GET['page'] );?>" >
+> - Henri Salo
+This is an example of a *GREAT* CVE request, he even tells me what year
+it should be. Very handy for the next month or so.
 
-Topic:		heap corruption overrun in bogofilter/bogolexer
+Please use CVE-2011-4926 for this issue.
 
-Announcement:	bogofilter-SA-2012-01
-Writer:		Matthias Andree
-Version:	1.0
-CVE ID:		CVE-2012-5468
-Announced:	2012-12-03
-Category:	vulnerability
-Type:		out of bounds write through invalid input
-Impact:		heap corruption, application crash
-Credits:	Julius Plenz (FU Berlin, Germany)
-Danger:		medium
-URL:		http://bogofilter.sourceforge.net/security/bogofilter-SA-2012-01
+-- 
 
-Affected:	bogofilter <= 1.2.2
-		SVN checkouts before 2012-10-19 UTC (-r6972)
+-- Kurt Seifried / Red Hat Security Response Team
 
-Not affected:	bogofilter 1.2.3 (r6973) and newer
-
-1. Background
-=============
-
-Bogofilter is a software package for classifying a message as spam or
-non-spam.  It uses a data base to store words and must be trained
-which messages are spam and non-spam. It uses the probabilities of
-individual words for classifying the message.
-
-Note that the bogofilter project is issuing security announcements only
-for current "stable" releases, and not necessarily for past "stable"
-releases.
-
-2. Problem description
-======================
-
-Julius Plenz figured out that bogofilter's/bogolexer's base64 could
-overwrite heap memory in the character set conversion in certain
-pathological cases of invalid base64 code that decodes to incomplete
-multibyte characters.
-
-3. Impact
-=========
-
-Vulnerable bogofilter/bogolexer applications can corrupt their heap and
-crash.
-
-4. Solution
-===========
-
-Upgrade your bogofilter to version 1.2.3 (or a newer release).
-
-bogofilter is available from SourceForge:
-<https://sourceforge.net/project/showfiles.php?group_id=62265>
-
-
-A. Copyright, License and Warranty
-==================================
-
-(C) Copyright 2012 by Matthias Andree, <matthias.andree@....de>.
-Some rights reserved.
-
-This work is licensed under the
-Creative Commons Attribution-NoDerivs 3.0 Germany License (CC BY-ND 3.0).
-
-To view a copy of this license, visit
-http://creativecommons.org/licenses/by-nd/3.0/de/deed.en
-or send a letter to:
-
-Creative Commons
-444 Castro Street
-Suite 900
-MOUNTAIN VIEW, CALIFORNIA 94041
-USA
-
-
-THIS WORK IS PROVIDED FREE OF CHARGE AND WITHOUT ANY WARRANTIES.
-Use the information herein at your own risk.
-
-END of bogofilter-SA-2012-01
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
