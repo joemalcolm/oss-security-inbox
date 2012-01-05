@@ -1,23 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/5
-Message-ID: <4F90EB75.2060502@redhat.com>
-Date: Fri, 20 Apr 2012 12:52:05 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: fcaps: clear the same personality flags as suid when fcaps are used
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/8
+Message-ID: <20120105155335.GD16919@dhcp-25-225.brq.redhat.com>
+Date: Thu, 5 Jan 2012 16:53:36 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: Greg KH <greg@...ah.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
 Content-Type: text/plain; charset=utf-8
 
-Reported by Steve Grubb, if a process increases permissions using fcaps
-all of the dangerous personality flags which are cleared for suid apps
-should also be cleared. Thus programs given priviledge with fcaps will
-continue to have address space randomization enabled even if the parent
-tried to disable it to make it easier to attack.
+On Wed, Jan 04, 2012 at 02:23:03PM -0800, Greg KH wrote:
+> On Wed, Jan 04, 2012 at 11:10:59PM +0100, Petr Matousek wrote:
+> > Move "exit_robust_list" into mm_release() and clear them
+> > 
+> > We don't want to get rid of the futexes just at exit() time, we want to
+> > drop them when doing an execve() too, since that gets rid of the
+> > previous VM image too.
+> > 
+> > Doing it at mm_release() time means that we automatically always do it
+> > when we disassociate a VM map from the task.
+> > 
+> > Upstream patches:
+> > 8141c7f3e7aee618312fa1c15109e1219de784a7
+> > fc6b177dee33365ccb29fe6d2092223cf8d679f9
+> 
+> In the future, could you reference which kernel contained these patches
+> so I don't have to go look it up?  :)
 
-Upstream commit:
-http://git.kernel.org/linus/d52fc5dde171f030170a6cb78034d166b13c9445
+I will try to include the kernel version next time.
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=806722
+Petr
 
-Thanks, Eugene
+> 
+> For the record, the first one showed up in 2.6.28-rc5 and the second in
+> 2.6.32-rc4.
+> 
+> thanks,
+> 
+> greg k-h
+
+-- 
+Petr Matousek / Red Hat Security Response Team
