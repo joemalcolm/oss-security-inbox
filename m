@@ -1,61 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/12/1
-Message-ID: <20120712011604.GF16475@boyd>
-Date: Wed, 11 Jul 2012 18:16:05 -0700
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/4
+Message-ID: <1325762541.14636.80@d.hx.id.au>
+Date: Thu, 05 Jan 2012 22:22:21 +1100
+From: David Hicks <d@...id.au>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, Dustin Kirkland <dustin.kirkland@...zang.com>, Marcus Meissner <meissner@...e.de>, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Re: ecryptfs headsup
+Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
 Content-Type: text/plain; charset=utf-8
 
-On 2012-07-11 17:27:41, Kurt Seifried wrote:
-> On 07/11/2012 10:48 AM, Kurt Seifried wrote:
-> >> Hi Tyler, et al.-
-> > 
-> >> I don't have any objections at all with adding nosuid and nodev
-> >> to the hardcoded mount.ecryptfs_private options.
-> > 
-> >> Actually, I seem to recall this coming up recently before.  I 
-> >> can't find the bug or email thread (must have been IRC), but I 
-> >> recall offering to commit, test, and release that change 
-> >> immediately.  I believe I was asked to wait to do that until a
-> >> CVE had been published...  I can't find any record of that
-> >> conversation though, so that's just from memory.
-> > 
-> >> Shall I go ahead and commit/test/release that now, Tyler?
-> > 
-> > So it sounds like a non privileged user on an Ubuntu machine can 
-> > insert a USB stick/etc with a file system that gets automatically 
-> > mounted, said file system can contain setuid root binaries for
-> > example which the user can then execute, elevating privileges?
-> 
-> Please use CVE-2012-3409 for the ecryptfs mount.ecryptfs_private which
-> allows setuid and dev enabled filesystems, this affects multiple Linux
-> vendors.
->
-> Just to confirm: this only affects systems with a setuid
-> mount.ecryptfs_private?
+iptables (/ip6tables) already allows for rate limiting via the hashlimit
+match extension. The inbuilt support for source masks makes it easy to
+progressively block larger subnets if an attacker has control over large
+subnets with many available IP addresses.
 
-There are two separate issues here. The first is with the attack vector
-described above.
+Assume that 10.10.0.1 or fd01:2345:6789::1 starts flooding your server
+with 50 connection requests to SSH per second. iptables/ip6tables (via
+the hashlimit extension) is configured to prevent more than 3 SSH
+connection attempts per 15 minutes per IPv4 address (/32) or /64 IPv6
+allocation. After the first 3 SYN packets from the attacker, all further
+SYN packets will be dropped/recorded/whatever until >=15 minutes pass
+without another SYN packet arriving. It may also be possible to reset
+any existing connections the attacker has to the server and add the
+attacker to a temporary blacklist that drops all their traffic.
 
-An attacker could trivially craft a lower encrypted filesystem on a USB
-drive. It would be automatically mounted in most distros these
-days and the mount flags would most likely contain MS_NOSUID. However,
-setuid and setgid bits in the USB drive's filesystem would still be
-honored if a setuid-root mount.ecryptfs_private was available on the
-system because it was not forcing the MS_NOSUID mount flag on the mounts
-that it set up.
+You may also have another rule configured such that no more than 30 SSH
+connection attempts are allowed per 15 minutes per /24 IPv4 allocation
+or /48 IPv6 allocation. An attacker that controls 10.10.0.0/24 or
+fd01:2345:6789::0/48 (not the best example) would no longer be able to
+utilise a compromised subnet to bypass the more stringent 3
+connections/15 minutes rule.
 
-If we distill that down a little more, it means that it is possible to
-mount eCryptfs, *without* MS_NOSUID, on top of a filesystem that is
-mounted with MS_NOSUID and eCryptfs will happily honor the setuid and
-setgid bits at its layer. I tend to lean towards that being a
-non-security, but serious, filesystem stacking bug but I could be
-convinced otherwise. It would definitely be an administrator error, but
-I don't know what behavior an admin should expect in this situation. Any
-thoughts?
+It is worth noting that the man page for ip6tables appears to contain an
+error[1] for the --hashlimit-srcmask argument. The manual indicates
+values for the mask must range from 0 to 32 bits (correct for IPv4).
+However values from 0 to 128 seem to be supported[2] if ip6tables is
+being used.
 
-Tyler
+
+OpenBSD's pf also allows for connection rate limiting with the
+"max-src-conn-rate" restriction. I haven't investigated how this works
+in comparison to iptables/hashlimit or whether it can support grouping
+of addresses sharing a common mask.
+
+
+The question these approaches raise is whether it is advisable to
+reinvent rate limiting in each and every network daemon. Performing rate
+limiting at the system/interface level prevents unwanted and expensive
+context switches to each daemon. Configuration and maintenance is much
+simpler because administrators don't need to learn 50 different ways to
+configure rate limiting for each daemon. There is also less risk for
+bugs to be written into the rate limiting implementation of each daemon.
+
+On a technical note, rate limiting requires a small amount of memory
+(buckets) to store information about recent connections. For this
+reason, allowing IPv6 rate limiting granularity at the /128 level would
+be inadvisable as an attacker with /64 addresses could quickly exhaust
+the table capacity/available memory. The design of the data structures
+and algorithms for the table need to be very efficient. Taking it down
+another level, a table that is larger than available L1-L3 cache could
+further degrade performance ([4] and [5] discuss hash tables and CPU
+cache).
+
+
+[1]
+https://git.netfilter.org/cgi-bin/gitweb.cgi?p=iptables.git;a=blob;f=extensions/libxt_hashlimit.man;h=f90577e77796502fac2ccc368a0863483aad4045;hb=HEAD#l30
+[2]
+https://git.netfilter.org/cgi-bin/gitweb.cgi?p=iptables.git;a=blob;f=extensions/libxt_hashlimit.c;h=da34cb2218a6bd053c856b288b881f6b97affd87;hb=HEAD#l210
+[3] http://www.openbsd.org/faq/pf/filter.html#stateopts
+[4]
+http://people.csail.mit.edu/nickolai/papers/metreveli-cphash-ppopp.pdf
+[5] http://people.csail.mit.edu/nickolai/papers/cphash-tr.pdf
 
 Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
