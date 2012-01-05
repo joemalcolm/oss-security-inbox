@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/11
-Message-Id: <20120607155336.856E214DBE6@smtp.hushmail.com>
-Date: Thu, 07 Jun 2012 16:53:36 +0100
-From: "Dex" <0x41@...h.ai>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/3
+Message-ID: <20120105110617.GF26352@foo.fgeek.fi>
+Date: Thu, 5 Jan 2012 13:06:17 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: WHMCS 5.0.2> SQLi CVE Request
+Subject: CVE-request: WordPress plugin Adminimize XSS
 Content-Type: text/plain; charset=utf-8
 
-Because securityfocus seem incapable of reading code, which I guess
-should be expected from an operation like that, they link to the vuln
-check code.
-The exploit code is available at PacketStorm:
-http://packetstormsecurity.org/files/113106/WHMCS-Blind-SQL-Injection.html
+Original advisory: http://www.securityfocus.com/archive/1/520591
+OSVDB: http://osvdb.org/show/osvdb/77472
+Fixed in: 1.7.22
+Vulnerable: All before 1.7.22
+SCM: http://plugins.svn.wordpress.org/adminimize/
+Changelog: http://wordpress.org/extend/plugins/adminimize/changelog/
 
-On Thursday, June 07, 2012 at 4:48 PM, Dex  wrote:Hello all
-I'd like to  request a CVE for this bug please so that I can be
-cool/save the planet.http://www.securityfocus.com/bid/53711
-It is what was patched with this patch from WHMCS
-http://www.securityfocus.com/bid/53770http://blog.whmcs.com/?t=47828
-Thanks in advance,dx7r
-I hate myself for this.
+Should be 2011 CVE.
+
+fgeek@...mple:~/adminimize/tags$ diff 1.7.21/adminimize_page.php 1.7.22/adminimize_page.php 
+121c121
+<       <form name="backend_option" method="post" id="_mw_adminimize_options" action="?page=<?php echo $_GET['page'];?>" >
+---
+>       <form name="backend_option" method="post" id="_mw_adminimize_options" action="?page=<?php echo esc_attr( $_GET['page'] );?>" >
+
+- Henri Salo
