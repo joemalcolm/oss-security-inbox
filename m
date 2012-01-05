@@ -1,55 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/7
-Message-ID: <1348223820.22489.36.camel@vespa.frost.loc>
-Date: Fri, 21 Sep 2012 12:37:00 +0200
-From: Tomas Mraz <tmraz@...hat.com>
-To: Matthias Weckbecker <mweckbecker@...e.de>
-Cc: oss-security@...ts.openwall.com, vcizek@...e.de
-Subject: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/6
+Message-ID: <4F05C2DB.9050404@mvista.com>
+Date: Thu, 05 Jan 2012 05:33:47 -1000
+From: akuster <akuster@...sta.com>
+To: Petr Matousek <pmatouse@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2012-09-21 at 12:20 +0200, Matthias Weckbecker wrote: 
-> Hello Steve, Kurt, Vitezslav, Tomas, vendors,
-> 
-> we have recently been notified about a potential issue with gpg: When files
-> are en/de-crypted the result is written world-readable by default.
-> Short example (quote from [1]):
-> 
->  # de-crypting
->  % gpg sikrit.gpg
->  % ll sikrit*
->    -rw-r--r-- 1 gp users  12 Sep 17 09:41 sikrit
->    -rw------- 1 gp users 480 Sep 17 09:40 sikrit.gpg
->  # en-crypting
->  % echo "my password" > sikrit
->  % chmod go= sikrit
->  % ll sikrit
->    -rw------- 1 gp users 12 Sep 17 09:38 sikrit
->  % gpg -e -r pfeifer sikrit
->  % wipe sikrit
->  % ll sikrit.gpg 
->    -rw-r--r-- 1 gp users 480 Sep 17 09:40 sikrit.gpg
-> 
-> [1] https://bugzilla.novell.com/show_bug.cgi?id=780943
-> 
-> Wouldn't one usually expect files that were previously encrypted to contain
-> sensitive content (that's probably why content is encrypted at all)? And if
-> so, shouldn't such files be only readable by certain users / group of users
-> by default? Otherwise, a file that is e.g. decrypted in /tmp might leak due
-> to the file permissions being too loose.
-> 
-> I'm not quite sure whether to assign a CVE for this, so I thought I'd just
-> add a question mark behind the subject and let the list (and Kurt) decide.
+Could it be said that this issue was introduced by these two commits in
+2.6.16 ?
 
-I suppose the permissions respect the user's umask so I do not think
-this is a real security issue in the gpg itself. Although using the
-permissions of the original file when creating the decrypted/encrypted
-one (still modified with the user's umask) would be more appropriate. So
-in my opinion this does not warrant a CVE but improvement in the
-upstream gnupg code would be appreciated I think.
+0771dfefc9e538f077d0b43b6dec19a5a67d0e70
+34f192c6527f20c47ccec239e7d51a27691b93fc
 
--- 
-Tomas Mraz
-No matter how far down the wrong road you've gone, turn back.
-                                              Turkish proverb
+- Armin
 
+On 01/04/2012 12:10 PM, Petr Matousek wrote:
+> Move "exit_robust_list" into mm_release() and clear them
+> 
+> We don't want to get rid of the futexes just at exit() time, we want to
+> drop them when doing an execve() too, since that gets rid of the
+> previous VM image too.
+> 
+> Doing it at mm_release() time means that we automatically always do it
+> when we disassociate a VM map from the task.
+> 
+> Upstream patches:
+> 8141c7f3e7aee618312fa1c15109e1219de784a7
+> fc6b177dee33365ccb29fe6d2092223cf8d679f9
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=771764
+> 
