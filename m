@@ -1,59 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/7
-Message-ID: <503C5BFF.9090509@redhat.com>
-Date: Mon, 27 Aug 2012 23:49:51 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/14
+Message-ID: <Pine.GSO.4.64.1201051220140.2231@faron.mitre.org>
+Date: Thu, 5 Jan 2012 12:37:44 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE request: letodms multiple issues
+Subject: Re: CVE Requests for FFmpeg 0.9.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 08/27/2012 11:12 PM, Raphael Geissert wrote:
-> On Monday 27 August 2012 20:32:16 Kurt Seifried wrote:
->> On 08/27/2012 02:43 PM, Raphael Geissert wrote:
->>> Multiple vulnerabilities have been found in LetoDMS[1]. Could
->>> CVE ids be assigned, please? Thanks in advance.
-> [...]
->>>> major security update which fixeѕ lots of possible XSS and
->>>> CSRF
->>>> 
->>>> attacts
->> 
->> That's two sets of vulns, can you send me the links to the code 
->> updates? I'm assuming they are in 
->> http://mydms.svn.sourceforge.net/viewvc/mydms/ somewhere?
->> Thanks.
-> 
-> Not helpful, it's all in: 
-> http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=853
->
->  Cheers,
-
-Welp if someone summarizes it I'll assign CVE's happily =).
+Michael, this is a well-organized request, thank you!
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>I tried to sort the issues a little according to type to make this huge
+>list a bit less ugly. Also feel free to skip things considered too minor, 
+>iam not sure where the threshold of "too minor" is.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+A couple thoughts on this one, I hope this makes sense.
 
-iQIcBAEBAgAGBQJQPFv/AAoJEBYNRVNeJnmTKNYQAIB32eJHAlSy2QpKKHwMmhzd
-MKJQGtjhylmMainr5c3TapFibCYypov7/cmNHQcpH8taC7iwOvg0lPqEp815gK7p
-MCtvT+hS8DhnxGaUZkrQYoryJorKtk8rHdhIy3GJHoFRcdRPwR2VK2ZPUygeh4+c
-izrwt6oLo1GCABM3+sCOl4zhJJSAfYqflHg6co190HlQLQjs2xlQbA4NkZPbQeP/
-SD8VQxWhvFnFgLy5wXn58NyONOYNegkzJ1/islPMac5+cwDhu0Kay4cIn3KW5V0/
-pRe1ePz6KFe/8/GbiUCbGKvuD65AzK9LHis2JjqAqtz69DoJ6EsY1v6Tb047XCwZ
-A5guJbs/i9nLH4vw7gIfGczaGW3mNdkQl8U0NlNjfEg59hyPRJcMVZhoiRI98JFX
-7XtVveK5cmpkC+eyx4frRlgeT7T2rE7khUdEdH8n1m71O7z/gaFWojXTHWNLOJ2h
-Hu0UkDQ84eMoDMS/GRoO0vaOcSJBwlvsk1NwcI8Dvg2jS3pCMy7SuN6K1aFRTn6f
-9P6hF++0uQKobgMXWRTDBDskU/C2s0j+IomjcCQtlRHHiZBsgIlaH+ofYTeV1p9Z
-7rYcRK3N+xwmU3zoEI4acpR40xD3dnUfIZ1tHeuXgG7A6oGSP3tQKLrHXAnT4GqU
-jjIqR4fuJDmD1T6RYrtW
-=jVGZ
------END PGP SIGNATURE-----
+My VERY limited understanding of ffmpeg is that it is single-user, and it 
+can only process a single file from a single source, without multiple 
+"sessions" or "actions" using data from different sources.  If that is the 
+case, then crashers like NULL dereferences and divide-by-zero might not 
+qualify for inclusion in CVE.  With products like web browsers and 
+document editors, a crash from one single window or tab could cause a 
+denial of service by closing *other* independent windows or tabs that the 
+user may care about; with things like kernels or servers, a crash affects 
+many sessions and users.  So if ffmpeg only processes one file at a time, 
+a basic crasher probably doesn't get a CVE.
+
+If the crash is strongly associated with data integrity, e.g. memory 
+corruption or invalid free's, then it would get a CVE - since we make a 
+conservative assumption that a code-execution exploit *might* be found by 
+someone, and the consequence might be more than DoS.  I've been somewhat 
+agnostic about out-of-range reads.
+
+However, such crashes that appear in the *libraries* provided by ffmpeg 
+would qualify, since those libraries might be used in an independent 
+product for which a crash is a security issue (for example, a product 
+might use a library function to convert the audio for a large number of 
+files that have been uploaded from many users, and a single crash prevents 
+other users' files from being converted.  In this way, shared libraries 
+are treated more conservatively.)
+
+- Steve
