@@ -1,69 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/8
-Message-ID: <4F42BF89.5090509@redhat.com>
-Date: Mon, 20 Feb 2012 14:47:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, muuratsalo experimental hack lab <muuratsalo@...il.com>, Ulli Horlacher <framstag@....uni-stuttgart.de>
-Subject: Re: Vulnerabilitites in Debian F*EX <= 20100208 and F*EX 20111129-2.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/7
+Message-ID: <20120105155010.GC16919@dhcp-25-225.brq.redhat.com>
+Date: Thu, 5 Jan 2012 16:50:11 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: akuster <akuster@...sta.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 02/20/2012 07:54 AM, Nico Golde wrote:
-> Hi, * Henri Salo <henri@...v.fi> [2012-02-20 14:16]:
->> On Mon, Feb 20, 2012 at 01:15:10PM +0100, Nico Golde wrote:
->>> * muuratsalo experimental hack lab <muuratsalo@...il.com>
->>> [2012-02-20 12:51]:
->>>> I am Nicola Fioravanti aka muuratsalo | muuratsalo
->>>> experimental hack lab. I am writing you because I have
->>>> discovered some vulnerabilities in Debian F*EX <= 20100208
->>>> (stable) and F*EX 20111129-2. (testing and unstable) I have
->>>> already contacted the Author who confirmed the
->>>> vulnerabilities and applied the suggested fixes. A major
->>>> update of F*EX  has been released on the 15th of February 
->>>> 2012. The Debian Mantainer of the package is working on it. 
->>>> Together with the Author we decided not to release any public
->>>> advisory before the release of the new Debian package.
->>>> 
->>>> I would be grateful if you could assign CVE ids to the
->>>> discovered issues.
->>> 
->>> I asked Nicola to send this to oss-security as the impact of
->>> this bug is fairly low in my opinion and the issue is public
->>> via the upstream changelog.
->>> 
->>> Can someone please assign a CVE id to this? Given that all of
->>> the vulnerable input parameters are in the fup component, I
->>> guess one id should be sufficient.
->> 
->> Is there a Debian bug-report about this issue?
+On Thu, Jan 05, 2012 at 05:33:47AM -1000, akuster wrote:
+> Could it be said that this issue was introduced by these two commits in
+> 2.6.16 ?
 > 
-> Yes, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=660621
+> 0771dfefc9e538f077d0b43b6dec19a5a67d0e70
+> 34f192c6527f20c47ccec239e7d51a27691b93fc
+
+Looks correct.
+
+Petr
+
 > 
-> Cheers Nico P.S. the bug report does not mention the other
-> vulnerable parameters as I forgot those
+> - Armin
+> 
+> On 01/04/2012 12:10 PM, Petr Matousek wrote:
+> > Move "exit_robust_list" into mm_release() and clear them
+> > 
+> > We don't want to get rid of the futexes just at exit() time, we want to
+> > drop them when doing an execve() too, since that gets rid of the
+> > previous VM image too.
+> > 
+> > Doing it at mm_release() time means that we automatically always do it
+> > when we disassociate a VM map from the task.
+> > 
+> > Upstream patches:
+> > 8141c7f3e7aee618312fa1c15109e1219de784a7
+> > fc6b177dee33365ccb29fe6d2092223cf8d679f9
+> > 
+> > Reference:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=771764
+> > 
 
-Please use CVE-2012-0869 for this issue.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPQr+JAAoJEBYNRVNeJnmTaCYP/0b0UCGGXin+UOg9DJRAwp+k
-yhFzpTDSF5MAR2cxpTNO5mwWKJTr5Z1BYJpPehsLjW4CEd48toY40PAimR6kKuT7
-sSgOKHKGrxiuZmKYWNI6PYs5oXEkdH/4KPofECeKDki9bKnvMWp1n0t34j3QSnew
-WhmRpmEsFgCwpBOTCX6RXQu+nTiolrf+xdUSTS6LN6BL29m3Q7rF5VhLcurrLZD6
-FkoZjOCK6WEoUQ7G1IiiXGaT7WU2Pm723TW+BoetsvWD9fd7GdXBjur2lie+n4cp
-4X2joF5iXA7fTiHyfE073ytNIuW8ffRaydOZtXieyMQL0hCwhKNjtrehkz9DmlBC
-1g7gMxx/2V7P5pRXYkBoIs0WY3yP/Q9CHNvr7CsMxgfeJqVsKIW+wQqzx8KZHdbn
-YXyAJLdrW9+TSpV4y19mWb6kzm0jlaADBv1id7lFDXO1ToKjFMEREBP7SQudYNYV
-EJ4PzSxgXmP0yBJ4c66/jR5mZcD9MWtfYv1rKkfcJNSqNse+F+Hx/JW3WvXkQGTV
-vIPyHimgdQtKGvkBvcwd7Fr2gItk8bdqPsOARpBFVWppA6gsQ++ZkKKJPyyqEwul
-fpgUJcrKcJUrtq0/+HKUwf+l0RfUzCRKJd2Mjeuo8vNgWDzS5vpiHXICAdWl7CSk
-4UDyYOkljl/rOKJYV8/t
-=MISI
------END PGP SIGNATURE-----
+-- 
+Petr Matousek / Red Hat Security Response Team
