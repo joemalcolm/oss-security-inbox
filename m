@@ -1,35 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/24/4
-Message-ID: <CAN00zFCCVEDG9dUK893by9GfAduRoEDSEmD+UMjLitF+gaxNNw@mail.gmail.com>
-Date: Fri, 24 Aug 2012 12:04:06 +0200
-From: Thomas Pollet <thomas.pollet@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/1
+Message-ID: <3898089.TjErJE34Ag@devil>
+Date: Thu, 05 Jan 2012 10:20:04 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: zenoss issues
+Subject: CVE request: TORQUE Munge Authentication Security Bypass
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please assign a CVE for this issue.
+reference: https://secunia.com/advisories/47381/
 
-I have found that zenoss displays snmp output like syslocation unfiltered
-in the web interface.
-http://jira.zenoss.com/jira/browse/ZEN-3192
-I suspect there are many more bugs in this package.
+Thanks
+-- 
+Agostino Sarubbo		ago -at- gentoo.org
+Gentoo/AMD64 Arch Security Liaison
+GPG: 0x7CD2DC5D
 
-Regards,
-Thomas
-
-On 24 August 2012 09:33, Thomas Pollet <thomas.pollet@...il.com> wrote:
-
-> Hello,
->
-> I have found xss and command execution problems with zenoss. I created a
-> bugreport which can be found at
-> http://jira.zenoss.com/jira/browse/ZEN-3183 . However the zenoss
-> developers don't seem to be able to reproduce the issues.
->
-> Another issue, reported by Emanuel Bronshtein can be found at
-> http://jira.zenoss.com/jira/browse/ZEN-3153
->
-> Regards,
-> Thomas Pollet
->
-
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
