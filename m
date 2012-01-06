@@ -1,32 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/1
-Message-ID: <20120822072025.GR5405@dhcp-25-225.brq.redhat.com>
-Date: Wed, 22 Aug 2012 09:20:26 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/6
+Message-ID: <20120106180903.3a112f28@z6v6uh99fl>
+Date: Fri, 6 Jan 2012 18:09:03 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-3520 kernel: af_netlink: invalid handling of SCM_CREDENTIALS passing
+Subject: Re: CVE request: wordpress plugin timthumb before 2.0 remote code execution
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way Netlink messages without explicitly set
-SCM_CREDENTIALS were delivered. The kernel passes all-zero
-SCM_CREDENTIALS ancillary data to the receiver if the sender did not
-provide such data, instead of including the correct data from the peer
-(as it is the case with AF_UNIX). Programs that set SO_PASSCRED option
-on the Netlink socket and rely on SCM_CREDENTIALS for authentication
-might accept spoofed messages and perform privileged actions on behalf
-of the unprivileged attacker.
+Am Thu, 03 Nov 2011 09:56:13 -0600
+schrieb Kurt Seifried <kseifried@...hat.com>:
 
-Introduced in:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=16e572626961
+> On 11/03/2011 05:23 AM, Hanno Böck wrote:
+> > http://markmaunder.com/2011/08/01/zero-day-vulnerability-in-many-wordpress-themes/
+> >
+> > Seems this never got a CVE. German newspage heise reports lots of
+> > hacked wordpress blogs, most likely due to this issue:
+> > http://www.heise.de/security/meldung/Tausende-WordPress-Blogs-zur-Verbreitung-von-Schadcode-genutzt-1370660.html
+> >
+> Yes I remember this one (I actually had a friend's WordPress get
+> nailed via this).
+> 
+> Fix: http://code.google.com/p/timthumb/
+> 
+> Please use CVE-2011-4106 for this issue.
 
-Upstream fix:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=e0e3cea46d31
+Mitre site on this is empty till today:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4106
 
-Acknowledgements:
+At least a short explanation and the three links would be nice.
 
-Red Hat would like to thank Pablo Neira Ayuso for for reporting this
-issue.
-
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
