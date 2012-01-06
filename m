@@ -1,146 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/18/4
-Message-ID: <20120918082128.GA25362@hal.local.invalid>
-Date: Tue, 18 Sep 2012 10:21:29 +0200
-From: Guido Berhoerster <guido+openwall.com@...hoerster.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/7
+Message-ID: <4F073324.8030309@redhat.com>
+Date: Fri, 06 Jan 2012 10:45:08 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Vulnerabilities in Oki CUPS printer drivers
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: redmine issues
 Content-Type: text/plain; charset=utf-8
 
+On 01/06/2012 10:02 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> please assign three CVE IDs for the following issues in Redmine:
+>
+> These need to be CVE-2011-* IDs:
+>
+> The announcement can be found here: http://www.redmine.org/news/49
+>
+> --------
+> This release also fixes 3 security issues reported by joernchen of
+> Phenoelit:
+>
+> * logged in users may be able to access private data (affected
+> versions: 1.0.x)
+Please use CVE-2011-4927 for this issue.
+>
+> * persistent XSS vulnerability in textile formatter (affected
+> versions: all previous releases)
+Please use CVE-2011-4928 for this issue.
+>
+> * remote command execution in bazaar repository adapter (affected
+> versions: 0.9.x, 1.0.x)
+Please use CVE-2011-4929 for this issue.
+> --------
+>
+> This was already fixed in a Debian security update some time ago,
+> but never received a CVE ID:
+> http://lists.debian.org/debian-security-announce/2011/msg00131.html
+>
+> Patches can be found in the Debian patch tracker:
+> http://patch-tracker.debian.org/package/redmine/1.0.1-2
+>
+> Cheers,
+>         Moritz
 
-Vulnerabilities in Oki CUPS printer drivers
-
-The following describes a security vulnerability in several Oki
-CUPS drivers. While I'm not aware that these drivers are packaged
-in any ditribution, they are free software (licensed under the GPL
-v2 or later) and made available via the Oki website and their FTP
-server so I hope this is on topic here.
-
-
-Vulnerabilities in Oki CUPS printer drivers
--------------------------------------------
-
-The CUPS filters distributed with several Oki CUPS printer drivers
-for Unix/Linux create temporary files with predictable names and
-uses them in an insecure way allowing arbitrary users to overwrite
-or create files via symlink attack for which the unprivileged CUPS
-user (usually lp) has the corresponding permissions. Furthermore,
-this allows arbitrary users to send data to a printer.
-
-"rastertookimonochrome" is a shell script that creates a temporary
-file as follows:
-
-    tmp_name="rastertookimonochrome"
-    inFile="/tmp/${tmp_name}.$$"
-
-    [...]
-
-    ${CAT} - > ${inFile}
-
-using only the current PID to make a unique filename which is
-easily predictable and then truncates and overwrites the file
-without any further safety checks. This may be exploited by a
-malicious user by creating a symlink to a file in order to
-overwrite or create a file as the unprivileged CUPS user.
-
-Since the script also neither verifies the ownership of the
-temporary file nor checks whether it successfully wrote to it, a
-malicious user may also create correspondingly named file with
-arbitrary data which then will be sent to the printer.
-
-Similar vulnerabilities can be found in the "okijobaccounting"
-script that is part of a number of other drivers.
-
-At least the following drivers are affected:
-
-ftp://ftp2.okidata.com/pub/drivers/linux/SFP/monochrome/desktop/B6300.tar
-Timestamp: Jan 16  2011
-Script: B6300/okijobaccounting
-
-ftp://ftp2.okidata.com/pub/drivers/linux/SFP/monochrome/desktop/B6500.tar
-Timestamp: Jan 16  2011)
-Script: B6500/okijobaccounting
-
-ftp://ftp2.okidata.com/pub/drivers/linux/SFP/monochrome/desktop/B700.tar
-Timestamp: Jan 16  2011
-Script: B700/okijobaccounting
-
-ftp://ftp2.okidata.com/pub/drivers/linux/SFP/monochrome/desktop/B930.tar
-Timestamp: Jan 16  2011
-Script: B930/okijobaccounting
-
-ftp://ftp2.okidata.com/pub/drivers/linux/SFP/monochrome/desktop/OK2200PCLv2.tar.gz
-Timestamp: Mar  2  2011
-Script: B2200/rastertookimonochrome
-
-ftp://ftp2.okidata.com/pub/drivers/linux/SFP/monochrome/desktop/OK400PCLv3.tar.gz
-Timestamp: Mar  2  2011
-Script: B400/rastertookimonochrome
-
-This issue was initially reported to the vendor on August 21st,
-2012.
-
-
-Possible Fixes
---------------
-
-In the scripts I have examined it was not necessary at all to even
-create a temporary file. The code in "rastertookimonochrome" e.g.
-looks as follows:
-
-----8<----
-
-tmp_name="rastertookimonochrome"
-inFile="/tmp/${tmp_name}.$$"
-
-${CAT} - > ${inFile}
-
-# ...
-
-${ECHO} ${UEL}
-${ECHO} ${OKIJOB_ACCT}
-${ECHO} ${manual_feed}
-${ECHO} ${PAPER}
-${ECHO} ${RDYMSG}
-
-# ...
-
-${CAT} ${inFile} | ${RASTERTOHP} "${1}" "${2}" "${3}" "${4}" "${5}" 2>/dev/null
-
----->8----
-
-The script can be restructured as follows:
-
-----8<----
-
-
-{
-    ${ECHO} ${UEL}
-    ${ECHO} ${OKIJOB_ACCT}
-    ${ECHO} ${manual_feed}
-    ${ECHO} ${PAPER}
-    ${ECHO} ${RDYMSG}
-
-    # ...
-
-    ${CAT} -
-} | ${RASTERTOHP} "${1}" "${2}" "${3}" "${4}" "${5}" 2>/dev/null
-
-This obviates the need to create a temporary file altogether and
-thus also bypasses the security problems associated with it.
-
-Moreover, in case a temporary file is necessary, CUPS exports the
-environment variable TMPDIR before executing the filter which
-points to a directory for temporary files which has stricter
-permissions than /tmp, e.g. on my openSUSE system it is set to
-
-drwxrwx--T 2 root lp 4096 25. Apr 10:52 /var/spool/cups/tmp
-
-Since this is only writable by the CUPS users' group (and root)
-symlink attacks and the injection of data become impossible as
-long as the temporary file is created with sufficiently strict
-permissions. This is documented at
-http://www.cups.org/documentation.php/api-filter.html#TEMPFILES
 
 -- 
-Guido Berhoerster
+
+-- Kurt Seifried / Red Hat Security Response Team
+
