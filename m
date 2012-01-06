@@ -1,53 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/13
-Message-ID: <50A3D7DD.9010202@redhat.com>
-Date: Wed, 14 Nov 2012 10:41:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/8
+Message-ID: <4F078458.1050201@gmail.com>
+Date: Sat, 07 Jan 2012 00:31:36 +0100
+From: Michael Harrison <n0idx80@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vulnerabilities in Oki CUPS printer drivers
+Subject: CVE Request for spamdyke "STARTTLS" Plaintext Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi guys,
 
-On 09/18/2012 02:21 AM, Guido Berhoerster wrote:
-> 
-> Vulnerabilities in Oki CUPS printer drivers
-> 
-> The following describes a security vulnerability in several Oki 
-> CUPS drivers. While I'm not aware that these drivers are packaged 
-> in any ditribution, they are free software (licensed under the GPL 
-> v2 or later) and made available via the Oki website and their FTP 
-> server so I hope this is on topic here.
+Could you provide a CVE for the spamdyke "STARTTLS" Plaintext Injection
+Vulnerability
 
-Apologies for the delay on this, the files are no longer available on
-the Oki ftpsite, so I assume the vendor "fixed" this by removing them?
-I managed to dig up some copies of the file through google but they
-don't contain the okijobaccounting script or the
-rastertookimonochrome. So I can't confirm this (can anyone other than
-the original reporter? (e.g. iSIGHT or iDefense? I'm pretty sure you
-guys cover Oki as a vendor =).
+http://secunia.com/advisories/47435/#comments
+
+Thanks,
+
+Michael
+
+-- 
+
+It's not about what you know, but what is left to learn~
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v2.0.17 (GNU/Linux)
+
+mQENBE6MJ20BCACsvXUqJyxwgr61LOdRVMmczLC5VHDBEaaCfx4AwSihQm6od14h
+6IQJVyHSp5hQz73n9yOmLeAV51akUSNwUcV85Fjxa169MDut7mexir6YkTDrwSdW
+BRvopP6EuJaLAJwdK0/++YRD9eu6YDPlMp50ceCr47Yy8W0BGTb7Z2CvGnNntr7U
+ZkHR+ALdEQNyqSQ/NGxe7lfO+MVSi0W2eDaUtR6JmmZCWyDRWDsiOsl/q+QnIJ7r
+s3flrDe57zMXkw2rdI6lWm745i9kOyg0+Jw0gQwy8oHh/4ktdboU6WLkv2N9eeMR
+l1a0AZeTSuOfWrepTF1K22E++1NuN3Y5TGKvABEBAAG0MU1pY2hhZWwgUi4gSGFy
+cmlzb24gKEN1cnJlbnQpIDxuMGlkeDgwQGdtYWlsLmNvbT6JAT4EEwECACgFAk6M
+J20CGwMFCQHanAAGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEGcT+eUbMgJy
+T94H/2F98ZYomipk30ZcEZa+MsqLRcBdIvUgfS43cSih2KlhsjWavwYTYANJG4k0
+TImCpoJymmEK0aozlPqeP9eGTFrAM8HPnlBqMqTP5B0dPn2hGnxFwP1NLq4KiwgH
+YM/j2QqTZGvCaq82OtG8FwGNHRCJu+buN3zJ/VZNj5b05USEPnl8w92r5V4gbRyL
+HZsVyGnPDzTsBDqoKjpMcCVD4uXQWDM9jLk366zLM6ChzhEX02bmKrFqkNnb7rd0
+gFGR8svA4uWc2w58zrbZdMTsXDTimHdUm2KU4Cz49UxmyXW+T3SIEtsH8WYlaL+2
+SAk8zYMMb95WjwZwrFt2hhfMBoa5AQ0ETownbQEIALZJ5AbAwQd4qhkPRDmpvgW3
+AZgMj/s20sBo6XiS9PF4iUYwdKbEGUbKuahHH4dP4lrAKO0telzaLW+PY7NKaQ1k
+iLubuiqr7VD2j3bXXD1bvFdmG6w+R+S3jmgZs20Sj+z8472eXXHSokrO8/jolopb
+1xzZGUUVlVoJ7dSYaByqxQgcQCxrCiF1xj3CN32m51LAmaCFnJkVYwRTzZpCcOkf
+I4eF+d+0OYlCEH9VTwhYJKJMuRFJjPJqzCiJyYky7Y5GqaY2QNnSX2tzGpurR6IP
+HW/ZR4SFcnlL8HvHvT6+KVjfItS1M9ybTsXdf8Hl6BGkng+AO/bJKI2f3z2MXP0A
+EQEAAYkBJQQYAQIADwUCTownbQIbDAUJAdqcAAAKCRBnE/nlGzICclJlCAChlNrr
+CeZ3dzj/FrKQFozovCvgYV8GK83BHB3nBAsoOllvEzjmYbqIuCbbxWT5Dl5uatez
+jV7mrfobmnKTsSCGy9WbLc54djiRRcHXpHCeIOCEt8RL85VLim91842Zxw7wTnB0
+CfPM77scCvpekkzFaUj/yWxd6lzugKZ60AmuUxLWxzxPl+tcgRKCQT1XMe+EzyEd
+yAObBp+Pyk8WAWth+mecxJ131AruPzKwTrvzyyQVaa7qwJzgkwOVKpTwHzvLUQqX
+bPj3ZpIt4C0FLc5x91BYAXlt7rk5q3RZajBca+bODlAOJpU4fQs4ln+ZGt3sdTt4
+HvFqkFebN/ZH/wWf
+=Wk3z
+-----END PGP PUBLIC KEY BLOCK-----
 
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQo9fdAAoJEBYNRVNeJnmT4DsP/2FUFLQB9a6qjDBGWsc9NueP
-UEeQTDsIUrMHfh6dE3Q8WD0CynG1yGRt6SB8NilOm93SnyXN8/oaXyK9wYiFKaBb
-uVmKdKTaIk/6o4tWOr6fcgFfa77do+y1OlqN6Sw7Ra6EI/9qCO65u1u0fskVy/HY
-OtcWO8Yx8fNTIKXXekoZwjY6nWV2RJi6/XHzfY9qAvhd2Qv+KyTickIOrOJRIKaW
-GejpWRMZaPUn1HV1IjGfTiLJYKI4IubvItSIaOO+ctMPPPJl/xtWjQpU3S1FEBJf
-3lTqsQpcMc0eMhvj9arJ+BVgUZ/ejkbid/f9DZUuZ+qaJ2TCZEsBl0IYCzSQq2nD
-PzKCugRK1hJTyaDh4C/pgyNRfp8JshepgKR8jkGG3O/if8z812vmjou6mphI/cSf
-c0tLI+fp0of3ig9nhrvI8rftl7ZQUqN7Z+kjOWjBGv0PCRPXajBcTkFXlwU/n79L
-DA4pmqwPln3PnuPem1ZjvT1LnTMOeMstSEZEptuMcIPzPgUsOyQA7ZB6To2hj5l3
-/ZLYgQj2vyHssYcXD2p8MqHtXm1+4W8MQsULP07SbOXDUzDA8c7Dm1/ALvu//Z41
-PjVPBf3G0CWDGYrjEyybxL5KNBUU6vXO+WlUErecW3dZ4ZYnpEQEXbTtYwoehcST
-VbGJBYDDRufUHfODc7d/
-=lvzJ
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (536 bytes)
