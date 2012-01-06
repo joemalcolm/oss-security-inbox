@@ -1,64 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/1
-Message-ID: <4F29D7FC.4040209@redhat.com>
-Date: Wed, 01 Feb 2012 17:25:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: distros & linux-distros embargo period and message format
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/2
+Message-ID: <20120106103832.GC23157@foo.fgeek.fi>
+Date: Fri, 6 Jan 2012 12:38:32 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, kseifrie@...hat.com
+Cc: moderators@...db.org
+Subject: Re: CVE-request: WordPress SQL injection and arbitrary code injection (2003)
 Content-Type: text/plain; charset=utf-8
 
-On 02/01/2012 04:54 PM, Solar Designer wrote:
-> Why shorter embargo periods are preferable: vendors who are ready to
-> push out their updates first don't have to sit on those updates waiting
-> for others, users get their fixes sooner, the potential for leaks (or
-> rediscovery) and exploit development in the wild before a fix is out is
-> reduced, the potential for a vendor inadvertently releasing before the
-> CRD is reduced (and in case this happens anyway, other vendors are
-> likely "more ready" by that time since they knew the CRD was sooner),
-> fewer embargoed issues are being tracked at the same time (less work,
-> lower risk of errors).
->
-> Of course, this is a tradeoff - just like the very existence of such
-> closed lists is.
-
-Against the certainty that the end of the embargo brings, so we're
-putting a potential risk (rediscovery/etc.) against a guarented risk
-(details will become available when the embargo ends. I'm not claiming
-to know which is better but I think two weeks is already pretty short,
-reducing that to say a week only saves 7 days but potentially increases
-workload 100% or more (we have half as much time to deal with it).
-
-> Why me: I feel that it's my duty as list admin to propose the smallest
-> maximum embargo period that list members might be willing and able to use.
-
-I think the shortened embargo time is rapidly approaching the limit of
-maximum benefit (that is balancing time to fix against the chance of it
-becoming public and putting systems/people at risk). Personally I think
-hard rules are not a good idea here, I would support guidelines that
-have some flexibility, not all cases are the same.
-
-> I already provided some answers to "why" above, and here's one more: the
-> change may also result in vendors' processes being adjusted to meet the
-> faster pace.  I am unsure to which extent this is positive overall,
-> though (considering that those changes may have side-effects).
-
-I don't have the data handy but I know most Linux vendors are now
-responding to 500-1000 security issues per year and getting the majority
-of them fixed by the time the issue goes public or very shortly
-thereafter, I'm not sure we can speed this up much (this works tends to
-be highly serialized, find the bug, assess the bug, fix the bug, QA the
-software, etc.).
-
-Also I haven't really seen any cases in the open source world of a leak
-of information leading to widespread exploitation/problems (and if there
-have been I'd love to know).
-
-
-> Thanks again,
+On Wed, Jan 04, 2012 at 02:27:58PM -0700, Kurt Seifried wrote:
+> On 01/03/2012 02:41 PM, Henri Salo wrote:
+> > These two WordPress security vulnerabilities from 2003 are still without CVE-identifiers. I am requesting CVE-identifiers as these issues have highly critical impact.
+> >
+> > 1) SQL injection
+> > http://osvdb.org/show/osvdb/4610
+> Please use CVE-2003-1598 for the WordPress    0.70
+> ./wp-links/links.all.php SQL Injection
 > 
-> Alexander
+> 
+> >
+> > 2) Arbitrary code injection
+> > http://osvdb.org/show/osvdb/4611
+> Please use CVE-2003-1599 for the WordPress    0.70 ./blog.header.php
+> code injection
+> >
+> > Secunia advisory: http://secunia.com/advisories/8954/
+> >
+> > - Henri Salo
+> http://www.kernelpanik.org/docs/kernelpanik/wordpressadv.txt
+> 
+> -- 
+> 
+> -- Kurt Seifried / Red Hat Security Response Team
 
+Thank you for the identifiers. Descriptions are switched.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+4610 CVE-2003-1598 is about blog.header.php posts variable SQL injection
+4611 CVE-2003-1599 is about links.all.php abspath variable RFI
+
+OSVDB already added these to the advisories, but that can be easily fixed. In future I can add files affected and correct parameters to these requests for clarity. Sorry for the confusion, but could you tell me which CVE should be used for which vulnerability?
+
+- Henri Salo
