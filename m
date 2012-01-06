@@ -1,17 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/2
-Message-ID: <87vckpfnu9.fsf@mid.deneb.enyo.de>
-Date: Tue, 24 Apr 2012 12:03:58 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/5
+Message-ID: <20120106170220.GA4241@pisco.westfalen.local>
+Date: Fri, 6 Jan 2012 18:02:20 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
+Subject: CVE request: redmine issues
 Content-Type: text/plain; charset=utf-8
 
-* Marcus Meissner:
+Hi,
+please assign three CVE IDs for the following issues in Redmine:
 
->> Would you mind sharing the patch you used in SLE packages?  It does not
->> seem to have been fixed in OpenSUSE yet.  Thanks!
->
-> I just did a basic uid check.
+These need to be CVE-2011-* IDs:
 
-Shouldn't you check GID against EGID, too, for completeness?
+The announcement can be found here: http://www.redmine.org/news/49
+
+--------
+This release also fixes 3 security issues reported by joernchen of
+Phenoelit:
+
+* logged in users may be able to access private data (affected
+versions: 1.0.x)
+
+* persistent XSS vulnerability in textile formatter (affected
+versions: all previous releases)
+
+* remote command execution in bazaar repository adapter (affected
+versions: 0.9.x, 1.0.x)
+--------
+
+This was already fixed in a Debian security update some time ago,
+but never received a CVE ID:
+http://lists.debian.org/debian-security-announce/2011/msg00131.html
+
+Patches can be found in the Debian patch tracker:
+http://patch-tracker.debian.org/package/redmine/1.0.1-2
+
+Cheers,
+        Moritz
