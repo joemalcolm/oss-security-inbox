@@ -1,30 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/1
-Message-ID: <20120410023134.GA17717@ngolde.de>
-Date: Tue, 10 Apr 2012 04:31:34 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/3
+Message-ID: <4F071E8E.7020004@redhat.com>
+Date: Fri, 06 Jan 2012 09:17:18 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request for imagemagick, libpng and tiff
+CC: Henri Salo <henri@...v.fi>, moderators@...db.org
+Subject: Re: CVE-request: WordPress SQL injection and arbitrary code injection (2003)
 Content-Type: text/plain; charset=utf-8
 
-We received 3 bug reports targeting imagemagick, libpng and tiff crashing on 
-input when used with electric fence indicating memory errors on handling 
-crafted input. From what I see no CVE ids have been assigned to these bugs 
-yet.
+On 01/06/2012 03:38 AM, Henri Salo wrote:
+> On Wed, Jan 04, 2012 at 02:27:58PM -0700, Kurt Seifried wrote:
+>> On 01/03/2012 02:41 PM, Henri Salo wrote:
+>>> These two WordPress security vulnerabilities from 2003 are still without CVE-identifiers. I am requesting CVE-identifiers as these issues have highly critical impact.
+>>>
+>>> 1) SQL injection
+>>> http://osvdb.org/show/osvdb/4610
+>> Please use CVE-2003-1598 for the WordPress    0.70
+>> ./wp-links/links.all.php SQL Injection
+>>
+>>
+>>> 2) Arbitrary code injection
+>>> http://osvdb.org/show/osvdb/4611
+>> Please use CVE-2003-1599 for the WordPress    0.70 ./blog.header.php
+>> code injection
+>>> Secunia advisory: http://secunia.com/advisories/8954/
+>>>
+>>> - Henri Salo
+>> http://www.kernelpanik.org/docs/kernelpanik/wordpressadv.txt
+>>
+>> -- 
+>>
+>> -- Kurt Seifried / Red Hat Security Response Team
+> Thank you for the identifiers. Descriptions are switched.
+>
+> 4610 CVE-2003-1598 is about blog.header.php posts variable SQL injection
+> 4611 CVE-2003-1599 is about links.all.php abspath variable RFI
+>
+> OSVDB already added these to the advisories, but that can be easily fixed. In future I can add files affected and correct parameters to these requests for clarity. Sorry for the confusion, but could you tell me which CVE should be used for which vulnerability?
+>
+> - Henri Salo
 
-Can someone assign ids?
-libpng: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668082
-(apparently fixed in 1.2.48 with a removal of the buggy function)
 
-tiff: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668087
+Yeah I got them switched around. The correct assignment is:
 
-imagemagick: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668075
+2. Descripcion.
 
-Kind regards
-Nico
+==========
 
+WordPress 0.7 permite la ejecucion remota de comandos en ./wp-links/links.all.php. Un atacante puede
+inyectar una url en $abspath y obtener ejecucion remota de comandos con los privilegios del servidor
+web (habitualmente nobody).
+
+WordPress 0.7 allows remote execution of commands. / Wp-links / links.all.php. An attacker can
+ inject a url in $ abspath and get remote execution of commands with the privileges of the server
+ web (usually nobody).
+
+CVE-2003-1599 is about links.all.php abspath variable RFI
+==========
+
+
+WordPress 0.7 (codigo de b2 cafelog) permite inyeccion sql en ./blog.header.php. $posts no se
+convierte a entero, por lo que podemos inyectar sql en esta variable. En MySQL 4.x podemos utilizar
+UNION y subselects para obtener privilegios.
+
+
+
+ WordPress 0.7 (b2 cafelog code) allows SQL injection. / Blog.header.php. $ posts not
+ converted to an integer, so we can inject sql in this variable. In MySQL 4.x can use
+ UNION and subselects to obtain privileges.
+CVE-2003-1598 is about blog.header.php posts variable SQL injection
+
+
+==========
+
+Since these are very old I think we can get away with switching them and not re-assigning.
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
 
-Content of type "application/pgp-signature" skipped
+-- Kurt Seifried / Red Hat Security Response Team
+
