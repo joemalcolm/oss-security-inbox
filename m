@@ -1,62 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/3
-Message-ID: <507F7AF6.6020202@redhat.com>
-Date: Wed, 17 Oct 2012 21:43:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/4
+Message-Id: <201201061623.q06GNfCc002056@linus.mitre.org>
+Date: Fri, 6 Jan 2012 11:23:41 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
+Cc: cve-assign@...re.org
+Subject: Re: CVE-2011-4858 confusion
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/17/2012 07:54 PM, Michael Gilbert wrote:
-> On Wed, Oct 17, 2012 at 8:41 PM, Kurt Seifried
-> <kseifried@...hat.com> wrote:
->> When I say released I meant in the sense of made available for 
->> download, not in the sense of software engineering and doing a
->> proper "release".
->> 
->> Release information here:
->> 
->> http://lists.alioth.debian.org/pipermail/pkg-dhcp-devel/2012-April/001275.html
->>
->>
->> 
-Any ways as you can see it's had a CVE assigned:
->> 
->> So for Debian Bug report logs - #690532 CVE-2012-2248: build
->> system paths used in -DCLIENT_PATH
->> 
->> So my work here is done =).
-> 
-> Wasn't the assigned CVE number already apparent as part of the
-> subject of this thread?
-> 
-> Best wishes, Mike
+The new CVE mapping for this Apache Tomcat issue is:
 
-I have my mail software setup to squish the headers really small. I
-should probably rethink this space saving strategy.
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4858
+
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4084 (rejected)
+
+(MITRE had previously been sent information about test cases and test
+results that suggested a different mapping. However, yesterday we
+received updated information about test cases and test results.)
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJQf3r2AAoJEBYNRVNeJnmTZzgP/RB1YtyapGHNLtBLGTMfuK6h
-neg4z5Z+rdv3P4ehHZEcF4hofrkGHhiH/IxACIjaNaeTNpXT80RfWNUI/QGcQYuU
-P1bIg5mHFNMTNSCW7YrwCwpQSOsOolv33FRm7e5CULWXUfOFAij8vENcTvgcfXb0
-WSauqAr2dYAQoaKeVJcrePcS3NbjJD1igqxzfrEY2uHBmNV29PhacgmFus9NrZMS
-AfFgt55L1/+wzjkcPejRL+1dEPm+K9Wdv2e78TW6z1hZNL3zuVeh+lp8r86HGjHr
-MhsBRkRKPPoidPmr9X7gPNYWGDm1FdmRDnXQEaWH7jhwpPiXll+x8WOr85KJgxOQ
-yVlADuXr0vCidMsipIvoyNLtCSaSE8I0FoIWYMl7HSydJ196jFFzhyS4zBHdXQls
-NwciXtR6MQxV2qyIRtZ8a5rRK/EKQppjdxjrM4XmQWHXW7RkRsqQFckhvl2wo8Ud
-bPXYdnuesLqFQLg4m1qS2oLj56JSQxNXrUNmSaJo0iyC3zxCrWmy/NlsujZw/+aJ
-fIaVqTdMEmfRvRFFtERiCuejwK/rIgFQql/JpmT8VJ5ECqucTmcFOcTPcxtk4G2/
-+uuqOIZD3cI+uqlv5LvEyQ6Qx8maC+okGHRDqx6SQP9k/wbjK05x9xEtXEv6hnjX
-bRuiCJdMpbVvH8UYgwkh
-=xkGO
+iQEcBAEBAgAGBQJPBx8PAAoJEGvefgSNfHMdwCwH/RMtGSZ/DFJ91M5+o7XyW6CO
+jUpzceBMXk7UHbt89VZC974yQJ+kAQf9AjyWCfsknkalfZAWAiAgAJiqMq5+HoG4
+epMQ5zGG3KjqQrXqa+lo4+OyL0yuNyLp2MHBmaOoXFbSSSJCncJVhuhPYwFQZ+jI
+0QRKCck7ml3brEMQGfHAm7K2ImO4A/hbarUi1mNU5JUhfFoCGBt9ObNDVKsD1oLN
+X/wYMyoVz6PuiUWSb7r1HFFXFy7mqGaNc5GU6Fw8YveEC6B/EOZD/t4HkjyqYgJ/
+QI7yZ0QtCU0PG3fyPUdzMSsSiEI+MhWgGv93xEss4WsLodgQirvK2Pl5RGoY8/o=
+=ho10
 -----END PGP SIGNATURE-----
