@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/3
-Message-ID: <20120309052023.GA26158@foo.fgeek.fi>
-Date: Fri, 9 Mar 2012 07:20:23 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/07/3
+Message-Id: <B638E316-E025-4C87-BD75-6548ECF9FA42@gmail.com>
+Date: Sat, 7 Jan 2012 18:01:46 -0500
+From: Xi Wang <xi.wang@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Parallels Plesk Panel admin/plib/api-rpc/Agent.php Unspecified SQL Injection
+Subject: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 08, 2012 at 03:32:38PM -0700, Kurt Seifried wrote:
-> On 03/08/2012 12:46 AM, Henri Salo wrote:
-> > Can I get 2012 CVE-identifier for this security vulnerability, thanks.
-> > 
-> > OSVDB: http://osvdb.org/show/osvdb/79769
-> > Secunia: http://secunia.com/advisories/48262/
-> > SecurityFocus: http://www.securityfocus.com/bid/52267
-> > Vendor: http://kb.parallels.com/en/113321
-> > 
-> > - Henri Salo
-> 
-> This isn't open source is it?
-> 
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+Hi,
 
-Ouh sorry you are correct. Could MITRE handle this one? This software is widely used.
+In general driver code trusts hardware devices and often doesn't
+validate the data they respond with.  But how about USB devices
+that an attacker could plug into a victim's computer?  For example,
+an attacker may craft a USB device with a long product name to cause
+a buffer overflow (CVE-2011-0712).
 
-- Henri Salo
+http://www.openwall.com/lists/oss-security/2011/02/16/5
+http://twitter.com/#!/mwrlabs/status/44814759396249600
+
+Here is another possible bug in the USB audio format parser I tried
+to report upstream.
+
+https://lkml.org/lkml/2012/1/4/215
+
+I am wondering where to draw the line.  Should such device drivers
+be considered vulnerable or not?  Thanks.
+
+- xi
