@@ -1,75 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/08/1
-Message-ID: <4FF90AFD.7040702@redhat.com>
-Date: Sat, 07 Jul 2012 22:22:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/07/2
+Message-ID: <4F08612E.6040906@openttd.org>
+Date: Sat, 07 Jan 2012 16:13:50 +0100
+From: Rubidium <rubidium@...nttd.org>
 To: oss-security@...ts.openwall.com
-CC: security@...dpress.org, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE #'s for WordPress 3.4.1 release
+Subject: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi folks,
 
-Seeing as how I have heard back from security@...dpress.org on another
-matter, but not this one (nor has Steve said "don't do it" =), I can
-only assume CVE #'s have not been assigned. If CVE's were issued for
-these issues they have not been published anywhere I can find them.
-Google:
+we, the OpenTTD developers, have identified a security vulnerability in
+OpenTTD (an open source game with multiplayer). Would you be so kind as 
+to allocate a CVE id for this issue?
 
-site:wordpress.org CVE-2012
+The issue concerns a denial of service vulnerability in the form of a 
+slow read attack preventing anyone to join the server, and preventing 
+the continuation of a game when 'pause on join' is enabled. This attack 
+requires the attacker to be authorized, but most servers do not 
+implement authorization. The first vulnerable version is 0.3.5, the 
+upcoming 1.1.5 release will have the issue fixed.
 
-returns 12 results, most of which are CVE-2012-1835.
+Once a CVE id is allocated, the issue and fix will be documented at
+http://security.openttd.org/CVE-2012-xxxx
 
-On 07/02/2012 03:24 PM, Kurt Seifried wrote:
-> http://codex.wordpress.org/Version_3.4.1
-> 
-> Lists several security issues as corrected:
-> 
-> -Privilege Escalation/XSS. Critical. Administrators and editors in 
-> multisite were accidentally allowed to use unfiltered_html for
-> 3.4.0.
+Thanks in advance,
+Remko 'Rubidium' Bijker
 
-Please use CVE-2012-3383 for this issue.
-
-> -CSRF. Additional CSRF protection in the customizer.
-
-Please use CVE-2012-3384 for this issue.
-
-> -Information Disclosure: Disclosure of post contents to authors
-> and contributors (such as private or draft posts).
-
-Please use CVE-2012-3385 for this issue.
-
-> -Hardening: Deprecate wp_explain_nonce(), which could reveal 
-> unnecessary information. -Hardening: Require a child theme to be
-> activated with its intended parent only.
-
-Hopefully these are in fact only hardening issues and not security
-issues, so no CVE. More details (like links to the code commits) would
-be appreciated though.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP+Qr9AAoJEBYNRVNeJnmTEnIP/1eUWbW3uCJB9NM5/5cTinGt
-jU3cNGBKLIjJfo16nYBcbFeihUdp6RxFy5Mz63104W9UOvyS3qLW6avU8wQ34u+7
-QfDCmFKM/7rRfJk2T6e5eJY6PANqmUpkOob2xqtXd44yCbT2feKr6E1EzkqkmXdl
-mqt6RtsiBqxNKRR9BWC5ZSFDmcHjcBX1SWFn8xWBanC2hZk2c2g5zA18ZEatKhsY
-gfVsSznm5VxTutvQtUhhKh8D7pVtVpydm5tb8vXiEjYTrhnOrlyhMvdgSO0PuQTf
-OvD3BNnGSG0JKLnwl8R7uUlhOAuHMweI0DdQGNR+vOTmMvc1FLtT5RTKb2a4ojhq
-nQ3V0RxLJn2ZMEkbV+E7HBwEILBKPDzIuCBm1LmPyD7kaEWkwJrmPzhn0MRS/67H
-nBT89hikxTmiGH8kUSjaSVPHRz2RrCPEHjp9mfjhe4huDit9eB5Fe3QKE52VVhUJ
-oqenf0g9f51sG4s4ail7ubmb/908TlhSDX56UK21Irb3OTjOgi5lnzVbcOq2OX3n
-YmWeXzO6QyIq0OK+GIGpp3WlDd00AKgg1Ip/wxa2aNDIAM3WTy9QGkk35F3SIg0p
-MA4tFgbZkbFIPVo4QJVdat0oGP0Q/AdC7Ts7DsASJnT3Qq/p/EaFa6D9MOEngX9N
-Xx2JZ3K6FExbFo6c1+L0
-=mpKg
------END PGP SIGNATURE-----
+(Please CC me, I'm not subscribed)
