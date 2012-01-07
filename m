@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/15
-Message-ID: <CANTw=MN_zwQjcrXqpV6K-HuHWQmZ97J80_eSwBnoptFZoDoO6w@mail.gmail.com>
-Date: Fri, 18 May 2012 17:48:22 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/07/1
+Message-ID: <4F079833.6060609@redhat.com>
+Date: Fri, 06 Jan 2012 17:56:19 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: devotee (debian vote engine) cryptographically weak random numbers permit discovery of secret ballot submissions
+Subject: Re: CVE Request for spamdyke "STARTTLS" Plaintext Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 01/06/2012 04:31 PM, Michael Harrison wrote:
+> Hi guys,
+>
+> Could you provide a CVE for the spamdyke "STARTTLS" Plaintext Injection
+> Vulnerability
+>
+> http://secunia.com/advisories/47435/#comments
+>
+> Thanks,
+>
+> Michael
+>
+I need more info, original advisory and code commit ideally.
 
-It has been disclosed [0] that the debian vote engine (devotee) [1]
-uses cryptographically weak pseudo-random numbers (intended to be
-48-bit, but really only 32-bit due to the use of a 32-bit seed feeding
-the 48-bit number generator) to generate ballot secret monikers.  This
-allows unprivileged persons to brute force the contents of presumably
-secret election ballots, and makes it possible to calculate the
-contents of secret voter ballots in all past debian elections.
+-- 
 
-Ideally, devotee should use a random secret moniker with fully 64 (or
-preferably 128) bits that would require years rather than minutes or
-days to brute force [2].
+-- Kurt Seifried / Red Hat Security Response Team
 
-The source also uses /dev/urandom, which has less entropy than /dev/random.
-
-Please assign an id for this issue.
-
-Thanks,
-Mike
-
-[0] https://lists.debian.org/debian-devel/2012/04/msg00528.html
-[1] http://anonscm.debian.org/gitweb/?p=users/srivasta/debian/devotee.git
-[2] http://www.codinghorror.com/blog/2006/07/brute-force-key-attacks-are-for-dummies.html
