@@ -1,81 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/8
-Message-ID: <4680B31DCCC3B6428FB4E85ED9D540D0032B43@SRVEXCH.oppida.fr>
-Date: Wed, 28 Mar 2012 12:11:52 +0000
-From: Luc ABRIC <luc.abric@...ida.fr>
-To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
-CC: Karim SLAMANI <karim.slamani@...ida.fr>, Valérian PERRET <valerian.perret@...ida.fr>, Yann MICHARD <yann.michard@...ida.fr>, "'Jostein Knudsen'" <jkn@...no>
-Subject: CVE request: eZ Publish XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/12
+Message-ID: <20120108211806.GF8030@nef.pbox.org>
+Date: Sun, 8 Jan 2012 22:18:07 +0100
+From: Alistair Crooks <agc@...bsd.org>
+To: oss-security@...ts.openwall.com
+Cc: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Jan 09, 2012 at 03:48:20AM +0800, Eugene Teo wrote:
+> On 01/08/2012 07:19 PM, Florian Weimer wrote:
+> > * Xi Wang:
+> > 
+> >> I am wondering where to draw the line.  Should such device drivers
+> >> be considered vulnerable or not?  Thanks.
+> > 
+> > I think they should be considered vulnerable.  Some applications need
+> > some robustness to attacks even from the local console (e.g., student
+> > computer rooms).
+> > 
+> > USB is also a popular transport in many air-gapped environments.
+> 
+> I would consider them vulnerable with low security impacts. If you are
+> fixing such issues, do post them to the list.
 
-We identified a XSS vulnerability in the eZ Publish application. Here comes some details.
+One very interesting datapoint here is Antti Kantee's rump subsystem
+in NetBSD
 
-1) Email address of requester 
-yann.michard@...ida.fr, luc.abric@...ida.fr & jkn@...no.
-Yann MICHARD discovered the vulnerability, so all the credits goes to him.
+	http://www.netbsd.org/docs/rump/
+	http://blog.netbsd.org/tnf/entry/runnable_userspace_meta_programs_in
 
-2) Software name and optionally vendor name
-Vendor: eZ
-Product name: Ez Publish
-Editions: both Enterprise & Community
+which allows for userspace-mounting of devices and filesystems
+thereon.  Unknown provenance USB sticks are one of the use cases
+mentioned.
 
-3) At least one of (to determine is this a security issue):
-   1. Type of vulnerability
- OWASP A2: Cross Site Scripting
- 
-   2. Exploitation vectors
- Access to the vulnerable website (no need for any credentials)
- 
-   3. Attack outcome
- A browser is enough to execute the attack.
- 
-4) For Open Source at least one of:
-  1. Link to vulnerable source code or fix
- Not available yet.
+	+ rump_msdos:  USB sticks with FAT file systems are a common
+	sight.  Mounting an untrusted image from removable media with
+	the file system driver running in the kernel is risky in many
+	ways:  inopportune unplugging of the media or a corrupted file
+	system may have adverse effects such as system crashes or
+	worse.  By using the rump_msdos command instead of
+	mount_msdos, the file system service runs in userspace and is
+	accessed via puffs.  This isolates the main kernel from any
+	resulting problems such as buffer overflows.
 
-  2. Link to source code change log
- Not available yet.
+	The usage of mount_msdos and rump_msdos are equivalent...
 
-  3. Link to security advisory
- Not available yet.
-
-  4. Link to bug entry
-http://issues.ez.no/19283
-
-  5. Request comes from project member (a.k.a. "trust me, it's a problem")
-Knudsen <jkn@...no> from Ez can confirm the vulnerability.
-
-5) Affected version(s) (3.2.4, 3.x, current version, all current releases, something)
-The whole 4.x serie it seems (4.1 to 4.6 from the bug entry).
-
-6) Whether or not this has been previously requested (i.e. on OSS-Sec or to cve-assign)
-No, this is our first request relative to this vulnerability.
-
-7) Is this an Open Source or commercial software request
-Both, the affected software has 2 editions, one open-source, one commercial.
-
-8) Is this an embargoed issue (if yes and commercial: send to cve-assign, if yes and open source: send to vs-sec?)
-Nope.
-
-9) IF multiple issues are listed please list affected versions for each issue and/or who reported them (so we can determine CVE split/merge).
-The editor did now publish a Security Advisory yet, but he confirmed the vulnerability.
-The first issue we reported on this application was affected the CVE 2012-1565, but we don't think it should be used for a merge as the 2 issues are distincts.
+If USB is a transport in air-gapped environments, I personally have a
+concern with that. A good thing airgaps aren't used for anything in RL,
+right? ;-)
 
 Regards,
-Luc ABRIC
-IT Security Expert
+Alistair
 
-6 avenue du Vieil Etang - Bâtiment B
-78180 Montigny-le-Bretonneux
-Phone: +33 (0)1 30 14 19 00
-Fax:       +33 (0)1 30 14 19 09
-Mobile: +33 (0)6 26 87 62 14
-luc.abric@...ida.fr
-
-www.oppida.fr
-
-
-
-
+PS. Obvious disclaimer - I am biased.
+PPS. Just reading REAMDE right now
+--
+Alistair Crooks
+{agc,security-officer}@...BSD.org
