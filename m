@@ -1,125 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/2
-Message-ID: <505A7F9E.4000203@redhat.com>
-Date: Wed, 19 Sep 2012 20:29:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/10
+Message-ID: <20120108220818.353d2a1f@fb6vu8j9i2>
+Date: Sun, 8 Jan 2012 22:08:18 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Damien Stuart <dstuart@...uart.org>, Michael Rash <mbr@...herdyne.org>
-Subject: Re: CVE Request -- fwknop 2.0.3: Multiple security issues
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Am Sun, 8 Jan 2012 09:07:25 -0800
+schrieb Greg KH <greg@...ah.com>:
 
-On 09/19/2012 12:10 PM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+> They should be considered buggy, yes, and as such, the kernel
+> developers will fix any reported problems (or we should, if not,
+> please let me know.)
 > 
-> multiple securit issues have been corrected in 2.0.3 upstream
-> version of fwknop
-> (http://www.cipherdyne.org/blog/categories/software-releases.html):
->
-> 
--
----------------------------------------------------------------------------
-> 1) multiple DoS / code execution flaws: Upstream patch: [1]
-> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=d46ba1c027a11e45821ba897a4928819bccc8f22
+> But note, as these almost always fall under the "you have physical
+> access" category, their security impact is generally considered low.
 
-Ok
-> 
-yeah this seems to be mostly changes related to char buf[32] to
-char buf[ACCESS_BUF_LEN], plus some logic cleanups (like making sure
-the port specified is larger than 0 and less than MAX_PORT). So I'll
-lump them all together rather than separate them.
+As far as publicly known, it's likely that Stuxnet was originally
+spread via a security problem with USB.
 
-Please use CVE-2012-4434 for this issue.
+Also, I'd doubt the "physical access" category. It may just require a
+bit of social engineering ("I have the file you requested on this usb
+stick").
 
-> 2) server did not properly validate allow IP addresses from
-> malicious authenticated clients Upstream patch: [2]
-> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=f4c16bc47fc24a96b63105556b62d61c1ba7d799
+Considering that I'd strongly disagree classifying such issues "low
+impact".
 
-Stupid
-> 
-question possibly (didn't look at the code apart from the fix).
-I see:
-
-if(char_ctr >= MAX_IPV4_STR_LEN)
-
-but nothing for IPv6 (does fwknopd even support ipv6?)... someone may
-want to check that.
-
-Please use CVE-2012-4435for this issue.
-
-> 3) strict filesystem permissions for various fwknop files are not
-> verified
-
-This seems more like security hardening. Generally speaking network
-daemons are not responsible for ensuring the safety of their own files
-(the system should have a sane configuration). Also if I assign a CVE
-for this then every single daemon that creates a config file and fails
-to check the permissions qualifies for a CVE that's a few hundred
-thousand CVEs =). For example: OpenSSH, it has a number of checks on
-file permissions, no CVE's for that.
-
-> 4) local buffer overflow in --last processing with a maliciously
-> constructed ~/.fwknop.run file Upstream patch: [3]
-> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=a60f05ad44e824f6230b22f8976399340cb535dc
-
-This
-> 
-is the MAX_CMDLINE_ARGS stuff specifically I assume?
-
-Please use CVE-2012-4436 for this issue.
-
-> For the remaining ones: ======================= 5) several
-> conditions in which the server did not properly throw out
-> maliciously constructed variables in the access.conf file Upstream
-> patch: [4]
-> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=e2c0ac4821773eb335e36ad6cd35830b8d97c75a
->
->  Note: This doesn't look like a security flaw (previously possible
-> to provide malicious values to access.conf file, but I assume it
-> would required administrator privileges).
-> 
-> 6) [test suite] Added a new fuzzing capability to ensure proper
-> server-side input validation. Note: Test-suite add-on, no CVE
-> needed.
-> 
-> 7) Fixed RPM builds by including the $(DESTDIR) prefix for
-> uninstall-local and install-exec-hook stages in Makefile.am. 
-> Upstream patch: [5]
-> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=c5b229c5c87657197b0c814ff22127d870b55753
->
->  Note: Also doesn't look like a fix for a security flaw.
-> 
-> Could you allocate CVE ids for issues 1), 2), 3), and 4) ?
-> 
-> [Cc-ed Damien and Michael from fwknop upstream to confirm they {the
-> first four} should receive a CVE identifier].
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+At least for pluggable devices, I'd consider such issues rather
+serious. It's another thing with PCI or other devices that require
+significant work to attach to a piece of hardware.
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-iQIcBAEBAgAGBQJQWn+eAAoJEBYNRVNeJnmTJTwQALuiFHMtB+AOYoP3PQoPlW07
-ktfHS3t64Lv9to160PDabHMoGJg/MJyz+liA/mHRESXe6PhnPMdZKYquPtBsA7O9
-97NVUQolV5BpfUJTIZtLnIcIH5Sul+mmMj4QbglK5ZV50DGpN8gH9WX6irOn+gFI
-RNj5W6BnLnCPRJX4CXF+kjKB5BpZGv4TmdRzW9CvR7/j2S+QqbiYS6HCAaQXuqLS
-OF7W3l9JKY7I9yZP8LuaZ8duRImizhaueSBV9EqDLva8gtl+snI43ho+/eX64+vp
-HmlnkoChNwUpnAjHFsWqYwjQ2ztCMONlZh7jrptKltdWhVha5zlqv50NlEK2NscC
-IENCTcb/yWn/GYNYUs5sMn3LJZsuEgzaaTru3/CvSyFs6SbyYhOB3MAaU4AtBWR2
-T3Y8WNuUz6bf1ZkltIpJb9Nn9Qy57ZMH4BuDJCSDsrIhowwSiKKFAW9RWClLDzOz
-24reeMbm/aGXmCNwpzinEoexsWAv5GmvqtaOtyKNgCY2Yjl5Dot+0l6vkcb221hM
-9NELus8L20+NhMmAty+XYTnRs4YaezuwOyNroDce7DA2whml9hLEGcb5fv5dY4IE
-7Dcx+QttaOQn8Ixdoc3Wqx/dGrto67sajF3OWXz58YqLCj6XAP7kZZ6JxsIxi6Ki
-NChFqIKY+pLaEXTi0ewn
-=o1N7
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
