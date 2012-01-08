@@ -1,56 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/2
-Message-ID: <4FB5B6A9.2080505@redhat.com>
-Date: Fri, 18 May 2012 10:40:41 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/5
+Message-ID: <CAF6rxg=OfOPAmYTM4WxY04r9KtPk5=suSxJuhcVOG1aJPw_m4Q@mail.gmail.com>
+Date: Sun, 8 Jan 2012 12:37:56 -0500
+From: Eitan Adler <lists@...anadler.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: 100 bugs in Open Source C/C++ projects
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
-Here's a long list of bugs found in numerous open source projects. I
-found it at
-http://www.gamedev.net/page/resources/_/technical/general-programming/100-bugs-in-open-source-cc-projects-r2886.
+On Sat, Jan 7, 2012 at 6:01 PM, Xi Wang <xi.wang@...il.com> wrote:
+> I am wondering where to draw the line.  Should such device drivers
+> be considered vulnerable or not?  Thanks.
 
-I suspect some of them are security bugs. I am not sure if the author
-has filed any bugs, or contact any of the upstream projects. If you are
-in this list, please start looking at them.
+Yes, they should be considered insecure given they these types of bugs
+can have unwanted impact in some contexts.
+Even though they require physical access to the machine does not mean
+that they shouldn't be fixed.
 
-    Apache HTTP Server - http://httpd.apache.org/
-    Audacity - http://audacity.sourceforge.net/
-    Chromium - http://www.chromium.org/
-    Clang - http://clang-analyzer.llvm.org/
-    CMake - http://www.cmake.org/
-    Crystal Space 3D SDK - http://www.crystalsp.../main/Main_Page
-    Emule - http://www.emule.com/
-    FAR Manager - http://www.farmanager.com/
-    FCE Ultra - http://fceux.com/web/home.html
-    Fennec Media Project - http://fennec.sourceforge.net/
-    G3D Content Pak - http://sourceforge.n...ojects/g3d-cpp/
-    IPP Samples - http://www.viva64.com/go.php?url=449
-    Lugaru - http://www.wolfire.com/lugaru
-    Miranda IM - http://www.miranda-im.org/
-    MySQL - http://www.mysql.com/
-    Newton Game Dynamics - http://newtondynamic...orum/newton.php
-    Notepad++ - http://notepad-plus-plus.org/
-    Pixie - http://www.renderpixie.com/
-    PNG library - http://libpng.org/pub/png/
-    QT - http://qt.nokia.com/products/
-    ReactOS - http://www.reactos.org/en/
-    Shareaza - http://www.shareaza.com/
-    SMTP Client with SSL/TLS - http://www.codeproje...P/smtp_ssl.aspx
-    StrongDC++ - http://strongdc.sour...ex.php?lang=eng
-    Swiss-Army Knife of Trace - http://www.codeproje.../tracetool.aspx
-    TortoiseSVN - http://tortoisesvn.net/
-    Ultimate TCP/IP - http://www.codeproje...imateTCPIP.aspx
-    VirtualDub - http://www.virtualdub.org/
-    WinDjView - http://windjview.sourceforge.net/
-    WinMerge - http://winmerge.org/
-    Wolfenstein 3D - http://en.wikipedia..../Wolfenstein_3D
-    Crypto++ - http://www.cryptopp.com/
-    Quake-III-Arena - https://github.com/i...Quake-III-Arena
-    And some others.
 
-Eugene
---
-Eugene Teo / Red Hat Security Response Team
+
+-- 
+Eitan Adler
