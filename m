@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/7
-Message-ID: <4F677745.8030904@redhat.com>
-Date: Mon, 19 Mar 2012 12:13:25 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/6
+Message-ID: <4F09F304.6080001@redhat.com>
+Date: Mon, 09 Jan 2012 03:48:20 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Black <disclosure@....org>
-Subject: Re: CVE request for bitlebee
+CC: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
-On 03/19/2012 04:34 AM, David Black wrote:
-> A few months ago it was reported that Bitlbee did not drop extra
-> groups(in unix.c) that the process launching it had.
-> There hasn't been a CVE assigned to this issue, so I thought I would
-> follow up and request one.
-> The original report can be found at
-> http://bugs.bitlbee.org/bitlbee/ticket/852 and it was fixed in
-> http://bugs.bitlbee.org/bitlbee/changeset/devel%2C856.
+On 01/08/2012 07:19 PM, Florian Weimer wrote:
+> * Xi Wang:
 > 
-> --
-> Thank you.
+>> I am wondering where to draw the line.  Should such device drivers
+>> be considered vulnerable or not?  Thanks.
+> 
+> I think they should be considered vulnerable.  Some applications need
+> some robustness to attacks even from the local console (e.g., student
+> computer rooms).
+> 
+> USB is also a popular transport in many air-gapped environments.
 
-Please use CVE-2012-1187 for this issue.
+I would consider them vulnerable with low security impacts. If you are
+fixing such issues, do post them to the list.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Thanks, Eugene
