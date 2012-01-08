@@ -1,21 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/4
-Message-ID: <4F29E29A.8050408@redhat.com>
-Date: Wed, 01 Feb 2012 18:10:50 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/4
+Message-ID: <20120108170725.GA25464@kroah.com>
+Date: Sun, 8 Jan 2012 09:07:25 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: distros & linux-distros embargo period and message format
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
-Also I think it's important to keep in mind a LOT of the Open Source
-vendors are staffed by volunteers or people who do this as part of their
-day job but not exclusively so. Increasing the burden for security
-response on companies with employees is one thing, but on volunteers is
-probably going to lead to a serious set of problems and some long term
-consequences that are probably MUCH worse for users than a few
-potentially security issues that potentially leak early.
+On Sat, Jan 07, 2012 at 06:01:46PM -0500, Xi Wang wrote:
+> Hi,
+> 
+> In general driver code trusts hardware devices and often doesn't
+> validate the data they respond with.  But how about USB devices
+> that an attacker could plug into a victim's computer?  For example,
+> an attacker may craft a USB device with a long product name to cause
+> a buffer overflow (CVE-2011-0712).
+> 
+> http://www.openwall.com/lists/oss-security/2011/02/16/5
+> http://twitter.com/#!/mwrlabs/status/44814759396249600
+> 
+> Here is another possible bug in the USB audio format parser I tried
+> to report upstream.
+> 
+> https://lkml.org/lkml/2012/1/4/215
+> 
+> I am wondering where to draw the line.  Should such device drivers
+> be considered vulnerable or not?  Thanks.
 
+They should be considered buggy, yes, and as such, the kernel developers
+will fix any reported problems (or we should, if not, please let me
+know.)
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+But note, as these almost always fall under the "you have physical
+access" category, their security impact is generally considered low.
+
+thanks,
+
+greg k-h
