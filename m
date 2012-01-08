@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/1
-Message-ID: <20120706145509.GA3525@inutil.org>
-Date: Fri, 6 Jul 2012 16:55:09 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/9
+Message-Id: <9625A18F-DF8A-4E9A-90C1-AEE43366676C@gmail.com>
+Date: Sun, 8 Jan 2012 15:21:57 -0500
+From: Xi Wang <xi.wang@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: VLC / Asterisk
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Jan 8, 2012, at 12:07 PM, Greg KH wrote:
+> They should be considered buggy, yes, and as such, the kernel developers
+> will fix any reported problems (or we should, if not, please let me
+> know.)
 
-Please assign CVE IDs:
+Thanks for the clarification.  CVE-2011-0712 (long product name)
+was fixed like a year ago.
 
-1. heap-based buffer overflow in VLC's Ogg demuxer
-Fixed in the VLC 2.0.2 release
+http://git.kernel.org/linus/eaae55da
 
-Commit:
-http://git.videolan.org/?p=vlc/vlc-2.0.git;a=commitdiff;h=16e9e126333fb7acb47d363366fee3deadc8331e
+The usb audio format parser was just fixed upstream.
 
-2. asterisk: Possible resource leak on uncompleted re-invite transactions
-http://downloads.asterisk.org/pub/security/AST-2012-010.html
+http://git.kernel.org/?p=linux/kernel/git/tiwai/sound.git;a=commit;h=4fa0e81b
 
-Cheers,
-        Moritz
+- xi
