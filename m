@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/5
-Message-ID: <20120328065157.GA22447@kludge.henri.nerv.fi>
-Date: Wed, 28 Mar 2012 09:51:57 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/3
+Message-ID: <CAO2oKfMAny7v-JBEnubOT1Sf=7wSULZfKL7Svw2xaDd=wPmHJA@mail.gmail.com>
+Date: Sun, 8 Jan 2012 09:56:45 -0400
+From: Hadi Shiravi <hadishiravi@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: clamav floating point exception in OLE2 scanner DoS (2007)
+Subject: New Intrusion Detection Evaluation Dataset
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2007 CVE-identifier for "fix floating point exception when using ScanOLE2" vulnerability:
+Hello,
 
-clamav (0.91.2-1) unstable; urgency=low
+The Information Security Centre of Excellence (ISCX) 2012 intrusion
+detection evaluation dataset consists of labeled network traces, including full
+packet payloads, which along with the relevant profiles are publicly
+available to researchers by applying at http://iscx.ca/dataset-request-form.
+A full description of the evaluation dataset can also be found at
+http://www.iscx.ca/datasets. A brief abstract of the fundamental ideas
+behind the dataset is also attached below. A complete blog post is
+also accessible at http://ali.shiravi.com/84.
 
-  * New upstream version
-    - fix call to tolower() which led to a crash in libclamav
-    - fix possible NULL dereference, e.g. when parsing email with RFC2397
-      URI
-    - fix floating point exception when using ScanOLE2
-    - fix possible NULL dereference in rtf.c
+Thank you,
 
- -- Stephen Gran <sgran@...ian.org>  Tue, 21 Aug 2007 11:17:01 +0100
+Hadi Shiravi
 
-Different issue than CVE-2007-2650, which was fixed in 0.90.3
+Network Security Researcher
+University of New Brunswick
 
-http://security-tracker.debian.org/tracker/TEMP-0000000-6B8835
-
-Other issues have CVEs: CVE-2007-4510, CVE-2007-4560. I requested this CVE-identifier before, but it did not get assigned.
-
-- Henri Salo
