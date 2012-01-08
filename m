@@ -1,42 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/3
-Message-ID: <4F163A64.6090005@redhat.com>
-Date: Tue, 17 Jan 2012 20:20:04 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/7
+Message-Id: <B0EFF348-4C27-448B-A13E-096FED0615DD@gmail.com>
+Date: Sun, 8 Jan 2012 15:13:37 -0500
+From: Xi Wang <xi.wang@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>, security@....net
-Subject: Re: CVE affected for PHP 5.3.9 ?
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
-On 01/15/2012 10:08 AM, Nicolas Grégoire wrote:
->> Can you provide a reproducer (vuln script and a malicious input) that
->> shows this in action (e.g. creates a local php file).
-> Please find attached the "php539-xslt.php" script.
->
-> This script displays by default a pre-filled HTML form including some
-> XML data and XSLT code. When the form is submitted, the user-controlled
-> XML data is transformed using the user-controlled XSLT code. Then, the
-> output of this transformation is displayed in the browser.
->
-> When executed, the pre-filled XSLT code will write
-> to /var/www/xxx/backdoor.php this content :
->
-> <html><body>
-> <h1><font color="red">I'm a (very) malicious PHP file !!!</font></h1>
-> <?php phpinfo()?>
-> </body></html>
->
-> Note : the payload is encrypted with RC4. A static key ("simple_demo")
-> embedded in the XSLT code is used to decrypt it.
->
-> Regards,
-> Nicolas
->
->
-Apologies for the delay, this is definitely an issue. Please use
-CVE-2012-0057 for this issue.
+On Jan 8, 2012, at 6:19 AM, Florian Weimer wrote:
+> I think they should be considered vulnerable.  Some applications need
+> some robustness to attacks even from the local console (e.g., student
+> computer rooms).
 
--- 
+Thanks for bringing that up.  Student computer rooms are a
+nice example, and a good old memory. ;-)
 
--- Kurt Seifried / Red Hat Security Response Team
+> USB is also a popular transport in many air-gapped environments.
 
+What else might be on this "untrusted" device list?  Firewire?
+I guess those in the PC box don't count.
+
+- xi
