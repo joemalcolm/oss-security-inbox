@@ -1,29 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/4
-Message-ID: <20120627134705.4688e5a0@redhat.com>
-Date: Wed, 27 Jun 2012 13:47:05 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: secalert_us@...cle.com
-Cc: oss-security@...ts.openwall.com, serg@...typrogram.com
-Subject: Re: MySQL CVEs (was: Security vulnerability in MySQL/MariaDB sql/password.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/1
+Message-ID: <871uracugf.fsf@mid.deneb.enyo.de>
+Date: Sun, 08 Jan 2012 12:19:44 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 18 Jun 2012 18:50:01 +0200 Tomas Hoger wrote:
+* Xi Wang:
 
-> Additionally, following bugs try to collect info on MySQL security
-> fixes in the last released and an upcoming Oracle CPU:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=832477
-> https://bugzilla.redhat.com/show_bug.cgi?id=832540
-> 
-> It would be nice if Oracle could confirm the mapping between CVEs and
-> particular issues to avoid any incorrect guesses.
+> I am wondering where to draw the line.  Should such device drivers
+> be considered vulnerable or not?  Thanks.
 
-I was really hoping to see some comments form Oracle security team and
-an explicit confirmation of the correct CVE guesses.  Is there a good
-reason why CVE mapping for public issues can not be provided?
+I think they should be considered vulnerable.  Some applications need
+some robustness to attacks even from the local console (e.g., student
+computer rooms).
 
-Thank you!
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+USB is also a popular transport in many air-gapped environments.
