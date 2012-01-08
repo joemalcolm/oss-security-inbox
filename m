@@ -1,55 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/8
-Message-ID: <4F75A6D2.4040801@redhat.com>
-Date: Fri, 30 Mar 2012 14:28:02 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Tom Lane <tgl@...hat.com>, pgsql-jdbc@...tgresql.org, Steffen Dettmer <steffen@...t.de>
-Subject: CVE DISPUTE notification: postgresql-jdbc: SQL injection due improper escaping of JDBC statement parameters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/2
+Message-ID: <20120108153947.GA11789@pisco.westfalen.local>
+Date: Sun, 8 Jan 2012 16:39:48 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: znc
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi,
+please assign a CVE ID to a DoS issue in the ZNC IRC bouncer.
 
-   originally, the following deficiency has been reported by Steffen Dettmer:
-   [1] http://seclists.org/bugtraq/2012/Mar/125
+I don't have a upstream reference, but the upstream patch applied 
+by the Debian maintainer can be found here:
 
-A SQL injection flaw was found in the way postgresql-jdbc, a JDBC driver for
-PostgreSQL database, performed escaping of certain JDBC statement parameters. A
-remote attacker could provide a JDBC statement with specially-crafted
-parameters, which once processed by the postgresql-jdbc driver would lead to
-SQL injection.
+http://patch-tracker.debian.org/patch/series/view/znc/0.202-2/01-fix-bouncedcc-dos.diff 
+http://packages.qa.debian.org/z/znc/news/20120107T145601Z.html
 
-References:
-[2] http://lists.opensuse.org/opensuse-security/2012-03/msg00024.html
-[3] https://bugzilla.novell.com/show_bug.cgi?id=754273
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=807394
-
-Upon further issue investigation and discussion with Tom Lane of PostgreSQL
-upstream and JDBC driver upstream the following conclusion has been provided:
-
-The upstream development team of the JDBC driver for the PostgreSQL database
-does not consider improper escaping of certain JDBC statement / query
-parameters, when the JDBC driver of version older than the version of
-underlying PostgresSQL server is being used, to be a security defect. In
-general, the JDBC driver for the PostgreSQL database does not promise to work
-with server releases newer than the driver release.
-
-This is NOT an official JDBC driver for PostgreSQL database development team
-statement yet (in the sense it would reference some upstream document / web page).
-Anyway, we have got preliminary notification there is a upstream intention to
-provide such page (document which postgresql-jdbc versions are expected to work
-correctly with which versions of PostgreSQL database server).
-
-Till this is done, please take this post as a clarification of postgresql-jdbc's
-upstream intentions to dispute the possibly later allocated CVE identifier to this
-issue (posting this sooner yet one can be allocated to this though some vendors
-might still be interested in allocation).
-
-For now Red Hat Security Response Team decided to agree with the above upstream
-assessment / pursue the way to upstream conclusion. Though in the future if some
-further details would appear, forcing us to change this conclusion, we might
-revisit our decision.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Cheers,
+        Moritz
