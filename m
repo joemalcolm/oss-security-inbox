@@ -1,55 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/14
-Message-ID: <4FFDC042.8000707@redhat.com>
-Date: Wed, 11 Jul 2012 12:04:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Moses Mendoza <moses@...petlabs.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Fwd: New Security Vulnerabilities in Puppet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/4
+Message-ID: <20120109115947.GA16323@foo.fgeek.fi>
+Date: Mon, 9 Jan 2012 13:59:47 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: znc
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Jan 09, 2012 at 01:17:33PM +0200, Henri Salo wrote:
+> On Sun, Jan 08, 2012 at 04:39:48PM +0100, Moritz Muehlenhoff wrote:
+> > Hi,
+> > please assign a CVE ID to a DoS issue in the ZNC IRC bouncer.
+> > 
+> > I don't have a upstream reference, but the upstream patch applied 
+> > by the Debian maintainer can be found here:
+> > 
+> > http://patch-tracker.debian.org/patch/series/view/znc/0.202-2/01-fix-bouncedcc-dos.diff 
+> > http://packages.qa.debian.org/z/znc/news/20120107T145601Z.html
+> > 
+> > Cheers,
+> >         Moritz
+> 
+> Here is the changelog: http://wiki.znc.in/ChangeLog/0.202
+> This looks a bit like Debian-patch: https://github.com/znc/znc/commit/6ae491ca66e8f7d8c4fe3caca3adbe147c7e552c#modules/bouncedcc.cpp
 
-On 07/11/2012 10:37 AM, Moses Mendoza wrote:
->>> 
->>> Vulnerability 5 Agents with certnames of IP addresses can be 
->>> impersonated (low) *Affected Versions: 2.7.x, 2.6.x If an 
->>> authenticated host with a certname of an IP address changes IP 
->>> addresses, and a second host assumes the first host's former
->>> IP address, the second host will be treated by the puppet
->>> master as the first one, giving the second host access to the
->>> first host's catalog. Note: This will not be fixed in Puppet
->>> versions prior to the forthcoming 3.x. Instead, with this
->>> announcement IP-based authentication in Puppet < 3.x is
->>> deprecated.
+Correcting myself as Patrick Matthäi (Debian package maintainer) answered. Correct upstream patch is: https://github.com/znc/znc/commit/11508aa72efab4fad0dbd8292b9614d9371b20a9
 
-After some further communications with them it has been decided to
-assign this issue a CVE. Please use CVE-2012-3408 for this issue.
-
-Moses: can you confirm that a CVE page with links to the code
-commits/etc will be created? Thanks.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP/cBCAAoJEBYNRVNeJnmTy20P/RSOFcMm17lRy6ZYGZNBeXxp
-AD/yyljK4eAIGOG7Nvbx9AIce1BRbb+MdxJbRqFtVhO26bRgiCGViM6I0o6lyEKH
-Wh0HeLls5YtgxcNquhyJsvQQOaZ8uWRa7j09Pzm6YL0076rTxS0o7jPIt0dudRSe
-u3IfbsxRWPaiurDw9XhkhxuZYGpdRf6c0XR0aHtbFwnt5Huwjf8p8GnyP16rwQcR
-csr+IcWixMNZULIqh1+NoUG1uJiWYfK7LZ54q3Bm3yVWRBLzqOzao1pa9jWJwAxy
-9saqOwP3TKbpDh43QcLaiT88taK71vcyezhvIlZH2LwPKk0eQSYfXAw65/bTaKIv
-iCBcYgeasV5/xPYXBVglAuwqYbd1CEJTKZGenYGAPdxxrm63HIlzFeWJnL02sQZe
-+6g0AVGJ6J6bHPI7TgEZsMXrEo8rfrKtAOYlDp5YsMC0YQQX4wovFbhJi0EcTeu0
-uOS80adyvVDgHxdE6A3SOq3+458aCuiQ4rkp1Tf0Au/20u0zFGaytMITnJGmmFfB
-NPrSNQvknuK8C/t4C7MS4lTAJu1CvTjWzeeAxgLRPb9zyEgdkEiu0yTdUH8twG5O
-xfG3c0sp0jOmaKGDblTNKvMxicKppbBp2ZBmT0NbBLTG02NDCucTtOQfWizYWmDB
-It5g13Hj2PmBbNOuWifm
-=CbYi
------END PGP SIGNATURE-----
+- Henri Salo
