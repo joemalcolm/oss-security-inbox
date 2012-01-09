@@ -1,56 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/1
-Message-ID: <4F8F5C20.7030109@redhat.com>
-Date: Wed, 18 Apr 2012 18:28:16 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/8
+Message-ID: <87fwfozn1i.fsf@mid.deneb.enyo.de>
+Date: Mon, 09 Jan 2012 20:35:53 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: Greg Knaddison <greg.knaddison@...uia.com>
-Subject: Re: CVE Request for Drupal Contributed Advisories on 2012-04-18
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* Kurt Seifried:
 
-On 04/18/2012 04:50 PM, Greg Knaddison wrote:
-> Hello,
-> 
-> Two releases today need CVEs:
-> 
-> https://drupal.org/node/1538436 SA-CONTRIB-2012-060 - Commerce
-> Reorder - Cross Site Request Forgery
+> Firewire has DMA. 
+>
+> http://cansecwest.com/core05/2005-firewire-cansecwest.swf
+>
+> eSATA - also does DMA.
+>
+> Thunderbolt also does DMA. 
+>
+> In other words a lot of the newer/higher end interfaces all do DMA
+> which is ... a problem.
 
-Please use CVE-2012-2116 for this issue
-
-> https://drupal.org/node/1538704 SA-CONTRIB-2012-061 - Gigya -
-> Social optimization - Cross Site Scripting (XSS)
-
-Please use CVE-2012-2117 for this issue
-
-> Thanks, Greg
-> 
-> -- Director Security Services | +1-720-310-5623 Skype:
-> greg.knaddison | http://twitter.com/greggles | http://acquia.com
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPj1wgAAoJEBYNRVNeJnmTghYP/iksiaHJvjzVANIxIgz8xcFp
-FA7baM4eWd/ca3DlfkFbtAGYb+5Uya7a3RfgiLda2NHllmZwBWYIdC4PguzpMA+b
-/Ezw2DhPzxsfWAGwVhI9VogSRZRVsCMA/eiofX+DbyWt7UKRmrwWG08IcWbeb9KA
-ekRYDU64OGkKSGfitcw+BF4xNlFRlLMAlrvgvKHCYxR7qT9f0SNdfpG1hp2IYQpP
-XUPl2vC817G6G8YEnxA/2TJM+p9TKJ3TDAG37FzE5IXd5OHVTsh5dG69ofsy2aIM
-EZ5aI+YmkaRDrISwULZauNrJstGG+hhp/hrn8PbNuwNjxAuYZep+aqT1WCByqWB8
-THcYbQHj4EA3UOpBszoLMD4QMfgZULMfqWhYjcQzXET6ssEkDUgSFz937U99TJk9
-kvBg8SWSYegbzRnYQG0pSzy13IkZf1PdziS8A3w16RxbUHCpnjJwncuhw1fBasNc
-013HB5Ym18mGOciLhceGPnQeGCd+OlbrIJQCGla7VusncPO08OnfX+UgfOP1aGV2
-RHqldklOJPg/81z/2IVuqnw2wiWzsxgKY62UZqKW50Ok+uX3euyQvsnEXA0MOlwo
-0N8Uoc+9wHhTDJNnTfCxEncoc52isn8+QpGnc++gKSoC+E+tD8v0bBD+AqayAW7F
-7eUVQGFUL3S9eBdrzWfX
-=05wj
------END PGP SIGNATURE-----
+Gigabit Ethernet adapters also do DMA.  Is it really the case that the
+(e)SATA implementation is as problematic as IEEE 1394?  I don't think
+SATA exposes the DMA functionality over the wire.
