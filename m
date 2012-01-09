@@ -1,61 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/28/2
-Message-ID: <501389E3.3000407@redhat.com>
-Date: Sat, 28 Jul 2012 00:42:43 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/3
+Message-ID: <20120109111733.GD8630@foo.fgeek.fi>
+Date: Mon, 9 Jan 2012 13:17:33 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: frosch <frosch@...nttd.org>
-Subject: Re: CVE request for OpenTTD
+Cc: inbox@...efuller.co.uk
+Subject: Re: CVE request: znc
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 07/27/2012 03:42 PM, frosch wrote:
-> Hello,
+On Sun, Jan 08, 2012 at 04:39:48PM +0100, Moritz Muehlenhoff wrote:
+> Hi,
+> please assign a CVE ID to a DoS issue in the ZNC IRC bouncer.
 > 
-> we, the OpenTTD developers, have identified a security
-> vulnerability in OpenTTD (an open source game with multiplayer).
-> Would you be so kind as to allocate a CVE id for this issue?
+> I don't have a upstream reference, but the upstream patch applied 
+> by the Debian maintainer can be found here:
 > 
-> The issue concerns a denial of service vulnerabilty which enables 
-> an attacker to force the server into an invalid game state. The 
-> server will abort upon detecting this state. This attack can be
-> performed using an unmodified client via normal game interaction.
-> The attack requires authorization, but most servers do not
-> implement authorization. The first vulnerable version is 0.6.0, the
-> upcoming 1.2.2 release will have the issue fixed.
+> http://patch-tracker.debian.org/patch/series/view/znc/0.202-2/01-fix-bouncedcc-dos.diff 
+> http://packages.qa.debian.org/z/znc/news/20120107T145601Z.html
 > 
-> Once a CVE id is allocated, the issue and fix will be documented
-> at http://security.openttd.org/CVE-2012-xxxx
-> 
-> Thanks in advance, Christoph 'frosch' Elsenhans
-> 
-> (Please CC me, I'm not subscribed)
+> Cheers,
+>         Moritz
 
-Sorry can you please provide links to an advisory, code commit, or
-something so we have a reference?
+Here is the changelog: http://wiki.znc.in/ChangeLog/0.202
+This looks a bit like Debian-patch: https://github.com/znc/znc/commit/6ae491ca66e8f7d8c4fe3caca3adbe147c7e552c#modules/bouncedcc.cpp
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQE4njAAoJEBYNRVNeJnmTyXUQANRMA6VLhvNn1Odvqu3sJNv9
-C0IOzkxLmudQtrYw4SzRUVf8Epqb4I2gN3DJHVZFXM+IZBJk7lNNoIFn0ffest68
-BVQUB78hfl+t0awGNJShsUNZh3uPgl2Bb495BmlxEW27L79GEb6U6x/aHvgYWsfL
-gHmWQE/xWDM1sohJSiANc0CNFsS7XU4hhBz0ghE7dXHscJtDiN7aCFPl6Yd6VWAo
-92b2/8PSIht5+XYZf22JxvxhMyRgMlBqQNesNdBXaYbFBRYx3tSBlRez1y6Chbe4
-pWmdfYeXw3m4t2FOsKqkEFhYUZW6z8CVcBGML+ZFJI9gRsY/tN48fvhL8Xdc8rng
-aUeK4UhJzpZj2mXg2gdnpt8BEa9Vu/KDf22EHWdbIddBhj1bekcEyNtu1EfJtRp4
-6xbEwdcOSk09ICBte+0BmVsRBc7HQLNFf4QG+0TTzP6G/1bMrj5yvWczEciWn2DR
-Zmm/imPcy2HNtsp0Ot2pafVJsuNHiWL5KZcPgt2PbN/DH8NDmMfV4ufIfcTrC0f4
-Tby8pUBaXkcgTTff1F/qZhqNUvoFHlcVb1cfKKhh6p8yhQ2BcZGIpw1VLTgVaEcP
-iZpAN0KJkvHu72YeYeP+op7ll0uziZw0s9wNp/754uJbskbAKmDXNAIKBbk1KoUI
-CwSv4XyuCGwpPtWtfqc1
-=bnbQ
------END PGP SIGNATURE-----
+- Henri Salo
