@@ -1,25 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/06/3
-Message-ID: <20120206092201.GA27627@openwall.com>
-Date: Mon, 6 Feb 2012 13:22:01 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/6
+Message-ID: <4F0AF251.20705@suse.de>
+Date: Mon, 09 Jan 2012 14:57:37 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4324 kernel: nfsv4: mknod(2) DoS
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 24, 2011 at 09:40:42AM +0800, Eugene Teo wrote:
-> This only affects the Linux kernel as shipped with Red Hat Enterprise
-> Linux 5. It is possible to trigger the BUG() in fs/nfs/nfs4xdr.c on a
-> NFSv4 mount. This patch fixed the problem, although we only backported
-> the relevant parts of the patch,
-> http://git.kernel.org/linus/dc0b027dfadfcb8a5504f7d8052754bf8d501ab9.
+Alistair Crooks wrote:
+> On Mon, Jan 09, 2012 at 03:48:20AM +0800, Eugene Teo wrote:
+>> On 01/08/2012 07:19 PM, Florian Weimer wrote:
+>>>> I am wondering where to draw the line.  Should such device drivers
+>>>> be considered vulnerable or not?  Thanks.
+>>>
+>>> I think they should be considered vulnerable.  Some applications need
+>>> some robustness to attacks even from the local console (e.g., student
+>>> computer rooms).
+>>>
+>>> USB is also a popular transport in many air-gapped environments.
+>>
+>> I would consider them vulnerable with low security impacts. If you are
+>> fixing such issues, do post them to the list.
 > 
-> https://bugzilla.redhat.com/CVE-2011-4324
+> One very interesting datapoint here is Antti Kantee's rump subsystem
+> in NetBSD
+> 
+> 	http://www.netbsd.org/docs/rump/
+> 	http://blog.netbsd.org/tnf/entry/runnable_userspace_meta_programs_in
+> 
+> which allows for userspace-mounting of devices and filesystems
+> thereon.  Unknown provenance USB sticks are one of the use cases
+> mentioned.
 
-Assuming that the fix for this one is correct and sufficient (and it
-appears to be), this is definitely no worse than a DoS. :-)
+Nice. Using fuse for mounting hot plugged devices where performance
+isn't a priority anyways is what I dream about sometimes too :-)
+I wonder how hard it would be to create some glue code and re-use the
+existing kernel fs drivers 1:1.
 
--			BUG();
-+			WRITE32(0);
+cu
+Ludwig
 
-Alexander
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
