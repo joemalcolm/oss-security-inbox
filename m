@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/14
-Message-ID: <20120504173528.GA731@openwall.com>
-Date: Fri, 4 May 2012 21:35:28 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Debian/Ubuntu php_crypt_revamped.patch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/5
+Message-ID: <20120109124804.GA7421@albatros>
+Date: Mon, 9 Jan 2012 16:48:04 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 04, 2012 at 10:08:53AM -0600, Kurt Seifried wrote:
-> So I'm guessing this needs a CVE #?
+Hi,
 
-The purpose of my posting wasn't to request a CVE id (although you may
-provide one), but rather to notify Ubuntu and others of the Debian bug
-that they may need to fix in Debian-derived distros, and to suggest that
-the patch be dropped from future versions.
+On Sun, Jan 08, 2012 at 16:32 -0500, Xi Wang wrote:
+> On Jan 8, 2012, at 3:19 PM, Eitan Adler wrote:
+> > Computer monitors? Keyboards. Anything you could plug into the
+> > computer without opening up the case.
+> 
+> That makes sense, though it's a little bit strange to say "hey man
+> plug in this fancy monitor" for an attack, compared to lending a
+> usb stick. ;-)
 
-Speaking of CVE, though, I think that yes - this deserves one.  This is
-a security issue in two ways:
-
-1. User authentication in some PHP apps may turn from fail-close to
-fail-open.
-
-2. If a PHP app actually makes use of PHP crypt()'s ability to generate
-random salts (when no salt is provided), then empty strings may be
-generated in place of hashed passwords for newly set/changed passwords.
-Combined with #1 above, this may mean that authentication with any
-password will then succeed against such accounts.
-
-Since I expect that Ubuntu will fix this in a PHP update for 11.04, I
-guess they'll want to refer to a CVE id in the advisory.
+As USB device could pretend being almost any external device and fake
+its own device ID, sizes and popularity of the device shouldn't limit
+the set of untrusted drivers.
 
 Thanks,
 
-Alexander
+--
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
