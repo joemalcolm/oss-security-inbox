@@ -1,47 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/4
-Message-ID: <20121011135844.GB869@kludge.henri.nerv.fi>
-Date: Thu, 11 Oct 2012 16:58:44 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/10
+Message-ID: <20120109224014.GK8030@nef.pbox.org>
+Date: Mon, 9 Jan 2012 23:40:14 +0100
+From: Alistair Crooks <agc@...src.org>
 To: oss-security@...ts.openwall.com
-Cc: Scott Herbert <scott.a.herbert@...glemail.com>, Malte Müller <info@...tem.de>
-Subject: CVE request: Zenphoto admin-news-articles.php date parameter XSS 
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Mon, Jan 09, 2012 at 02:57:37PM +0100, Ludwig Nussel wrote:
+> Nice. Using fuse for mounting hot plugged devices where performance
+> isn't a priority anyways is what I dream about sometimes too :-)
+> I wonder how hard it would be to create some glue code and re-use the
+> existing kernel fs drivers 1:1.
 
-Can we assign 2012 CVE-identifier for issue in Zenphoto zp-core/zp-extensions/zenpage/admin-news-articles.php date parameter XSS, thanks.
+I should have quoted further - this is from rump(3) on NetBSD:
 
-http://osvdb.org/85899
-http://seclists.org/fulldisclosure/2012/Oct/17
-http://secunia.com/advisories/50799/
-http://scott-herbert.com/blog/2012/10/02/cookie-stealing-and-xss-vulnerable-in-zenphotoversion-1-4-3-2-1130
+     rump is part of the realization of a flexible anykernel architecture for
+     NetBSD.  An anykernel architecture enables using kernel code in a number
+     of different kernel models.  These models include, but are not limited
+     to, the original monolithic kernel, a microkernel server, or an exokernel
+     style application library.  rump itself makes it possible to run unmodi-
+     fied kernel components in a regular userspace process.  Most of the time
+     "unmodified" means unmodified source code, but some architectures can
+     also execute unmodified kernel module binaries in userspace.  Examples of
+     different use models are running file system drivers as userspace servers
+     (see p2k(3)) and being able to write standalone applications which under-
+     stand file system images.
 
-Not fixed in 1.4.3.3. Will be fixed in next bugfix release beginning of November.
+     Regardless of the kernel model used, a rump kernel is a fullfledged ker-
+     nel with its own virtual namespaces, including a file system hierarchy,
+     CPUs, TCP/UDP ports, device driver attachments and file descriptors.
+     This means that any modification to the system state on the host running
+     the rump kernel will not show up in the rump kernel and vice versa.  A
+     rump kernel may also be significantly more lightweight than the host, and
+     might not include for example file system support at all.
 
-Fix in http://www.zenphoto.org/svn/trunk/:
-foo@bar:~/zenphoto/trunk$ svn diff -r10048:10942 zp-core/zp-extensions/zenpage/admin-news-articles.php
-Index: zp-core/zp-extensions/zenpage/admin-news-articles.php
-===================================================================
---- zp-core/zp-extensions/zenpage/admin-news-articles.php   (revision 10048)
-+++ zp-core/zp-extensions/zenpage/admin-news-articles.php   (revision 10942)
-@@ -109,13 +109,13 @@
-            <h1><?php echo gettext('Articles'); ?>
-            <?php
-            if (isset($_GET['category'])) {
--               echo "<em>".sanitize($_GET['category']).'</em>';
-+               echo "<em>".html_encode(sanitize($_GET['category'])).'</em>';
-            }
-            if (isset($_GET['date'])) {
--               echo '<em><small> ('.$_GET['date'].')</small></em>';
-+               $_zp_post_date = sanitize($_GET['date']);
-+               echo '<em><small> ('.html_encode($_zp_post_date).')</small></em>';
-                // require so the date dropdown is working
-                set_context(ZP_ZENPAGE_NEWS_DATE);
--               $_zp_post_date = sanitize($_GET['date']);
-            }
-            if(isset($_GET['published'])) {
-                switch ($_GET['published']) {
+FUSE has some limitations when it comes to devices - the NetBSD
+version of FUSE is layered on top of the rump puffs, for example, and
+there is a separate pud(4) "pass to userspace device" subsystem which
+deals specifically with devices.
 
+There's an interesting article on using multiple IP stacks with rump:
 
-- Henri Salo
+	http://mail-index.netbsd.org/current-users/2011/01/18/msg015464.html
+
+	I've been working on a system call "hijacking" library on and
+	off for the past 1.5 weeks.  Support is at a stage where
+	TCP/IP works and I do my normal web surfing through a rump
+	tcp/ip server (plus I run a third tcp/ip stack for testing).
+
+	In contrast to heavyweight virtualization (usermode OS etc.),
+	the only setup required is configuring the TCP/IP stack, no
+	rootfs & full installation & long waits are necessary.  Server
+	"reboot" takes about 0.01s, so there's hardly a loss of
+	service for some applications with good restart capability
+	such as web browsing (especially since the browser itself does
+	not die).
+
+Oh, and this is completely separate from Xen and usermode virtualisation,
+but we're getting off topic here...
+
+Regards,
+Alistair
