@@ -1,53 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/9
-Message-ID: <50DFBAC6.3090506@redhat.com>
-Date: Sat, 29 Dec 2012 20:53:42 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/7
+Message-ID: <4F0B366F.5090607@redhat.com>
+Date: Mon, 09 Jan 2012 11:48:15 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Holland <dholland-oss-security@...bsd.org>, Steven Christey <coley@...re.org>
-Subject: Re: Isearch insecure temporary files
+Subject: Re: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/07/2012 08:13 AM, Rubidium wrote:
+> Hi folks,
+>
+> we, the OpenTTD developers, have identified a security vulnerability in
+> OpenTTD (an open source game with multiplayer). Would you be so kind
+> as to allocate a CVE id for this issue?
+>
+> The issue concerns a denial of service vulnerability in the form of a
+> slow read attack preventing anyone to join the server, and preventing
+> the continuation of a game when 'pause on join' is enabled. This
+> attack requires the attacker to be authorized, but most servers do not
+> implement authorization. The first vulnerable version is 0.3.5, the
+> upcoming 1.1.5 release will have the issue fixed.
+>
+> Once a CVE id is allocated, the issue and fix will be documented at
+> http://security.openttd.org/CVE-2012-xxxx
+>
+> Thanks in advance,
+> Remko 'Rubidium' Bijker
+>
+> (Please CC me, I'm not subscribed)
+Need more information like a code commit to link to.
 
-On 12/21/2012 12:50 PM, David Holland wrote:
-> Looking at that thread (which I didn't see at the time because I
-> no longer have time to follow this list much) I think I'd agree
-> that the CVE system itself is the wrong scheme, not only for its
-> own reasons but also because it doesn't reach the right targets.
-
-> All of these problems also apply to any new scheme someone sets
-> up; what I'm suggesting is that the existing CVE infrastructure is
-> not necessarily that much of an advantage.
-
-One random thought, might it be worth adding structured data to CVE
-that basically says when the issue was made public/reported to the
-upstream and when upstream 1) acknowledged it (if ever) and then they
-patched it (if ever) and when they shipped a fixed version (if ever).
-Obviously then you could simply parse for the time between date
-reported and date acknowledged/patched/fixed and see how
-healthy/responsive the upstream is.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ37rFAAoJEBYNRVNeJnmTCSgQAIB9gSFe08KOfIVY+oUzRuQw
-ol9jgO8wfB3zKPca1EqSabi7pXVdebTZ+MhjIwC5I7kUxNS+ME1xLU2wcnwx2nMS
-SILB5ZltCv+JfXdf0VuAns047P/iaK4JAMuqFrXu3Bymjui4cSr+ypN5Ao7hXygu
-09nFJ9hnZIoNIMqe8xy3xCFGXFEI9EN2zOE6bJf5uxIBAA2WSmMut9trZLYHo2wZ
-/NAuXWZOATe/tbt24YsJSZrL9HQZTmZL756UTK5/LEn4hQtpzPVv5NpHx2KWsMGf
-I2GZI1QYXnVaArH+HL4ZY9antd3KEahZLsKONq7ZGefpBZBqwyVVLwe/2fD5AVXV
-kLkb6svEeonwQevIYdj59pmIUuvKF0ooWdWasNnIqKWFh7en3yyuiy1ewKayGyTn
-5AMdxKsx4byYGQDQsBgJERZCTRol17XiUwetuNPRWOW3gDCPMmdLeokgWp2esxaf
-INZXlKkcfgJvU69ke1fdaPfUo5abw52+3iYABzbTMzDXdNl1MezT6Pz78GNRyPPh
-xbpxEg5oqMttw+19AoC8yO7JIPdggGsMqhPDLD345moihXXh8FIidB5NFziSBT0z
-/sG4GjTPxOwzCs9hHnlxjtcw2SBYnil8SqGyA4LsesbL2+FGp4y3+iaM0p3ydVjU
-bjhIXvSv8FOZnDgoXp61
-=DTEx
------END PGP SIGNATURE-----
+-- Kurt Seifried / Red Hat Security Response Team
