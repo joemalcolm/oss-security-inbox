@@ -1,74 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/29/4
-Message-ID: <581103266.40035311.1354212434922.JavaMail.root@redhat.com>
-Date: Thu, 29 Nov 2012 13:07:14 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/2
+Message-ID: <b91d07ac-d53d-4ac6-bab5-818b80ffa3f6@zmail14.collab.prod.int.phx2.redhat.com>
+Date: Mon, 09 Jan 2012 00:11:24 -0500 (EST)
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Gerald Combs <gerald@...eshark.org>, Peter Hatina <phatina@...hat.com>
-Subject: CVE Request -- wireshark: Wireshark 1.6.12 and Wireshark 1.8.4 fixes
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Firewire has DMA. 
 
-  Wireshark upstream has recently released v1.6.12 and v1.8.4 versions,
-correcting the following security issues:
+http://cansecwest.com/core05/2005-firewire-cansecwest.swf
 
-* #1 pcap-ng hostname disclosure (wnpa-sec-2012-30)
-http://www.wireshark.org/security/wnpa-sec-2012-30.html
-https://bugzilla.redhat.com/show_bug.cgi?id=881855
+eSATA - also does DMA.
 
-* #2 DoS (infinite loop) in the USB dissector (wnpa-sec-2012-31)
-http://www.wireshark.org/security/wnpa-sec-2012-31.html
-https://bugzilla.redhat.com/show_bug.cgi?id=881822
+Thunderbolt also does DMA. 
 
-* #3 DoS (infinite loop) in the sFlow dissector (wnpa-sec-2012-32)
-http://www.wireshark.org/security/wnpa-sec-2012-32.html
-https://bugzilla.redhat.com/show_bug.cgi?id=881816
+In other words a lot of the newer/higher end interfaces all do DMA which is ... a problem.
 
-* #4 DoS (infinite loop) in the SCTP dissector (wnpa-sec-2012-33)
-http://www.wireshark.org/security/wnpa-sec-2012-33.html
-https://bugzilla.redhat.com/show_bug.cgi?id=881809
+-Kurt
 
-* #5 DoS (infinite loop) in the EIGRP dissector (wnpa-sec-2012-34)
-http://www.wireshark.org/security/wnpa-sec-2012-34.html
-https://bugzilla.redhat.com/show_bug.cgi?id=881805
+----- Original Message -----
+From: "Xi Wang" <xi.wang@...il.com>
+To: oss-security@...ts.openwall.com
+Sent: Sunday, January 8, 2012 1:13:37 PM
+Subject: Re: [oss-security] Malicious devices & vulnerabilties
 
-* #6 DoS (crash) in the ISAKMP dissector (wnpa-sec-2012-35)
-http://www.wireshark.org/security/wnpa-sec-2012-35.html
-https://bugzilla.redhat.com/show_bug.cgi?id=881790
+On Jan 8, 2012, at 6:19 AM, Florian Weimer wrote:
+> I think they should be considered vulnerable.  Some applications need
+> some robustness to attacks even from the local console (e.g., student
+> computer rooms).
 
-* #7 DoS (infinite loop) in the iSCSI dissector (wnpa-sec-2012-36)
-http://www.wireshark.org/security/wnpa-sec-2012-36.html
-https://bugzilla.redhat.com/show_bug.cgi?id=881771
+Thanks for bringing that up.  Student computer rooms are a
+nice example, and a good old memory. ;-)
 
-* #8 DoS (infinite loop) in the WTP dissector (wnpa-sec-2012-37)
-http://www.wireshark.org/security/wnpa-sec-2012-37.html
-https://bugzilla.redhat.com/show_bug.cgi?id=881748
+> USB is also a popular transport in many air-gapped environments.
 
-* #9 DoS (infinite loop) in the RTCP dissector (wnpa-sec-2012-38)
-http://www.wireshark.org/security/wnpa-sec-2012-38.html
-https://bugzilla.redhat.com/show_bug.cgi?id=881742
+What else might be on this "untrusted" device list?  Firewire?
+I guess those in the PC box don't count.
 
-* #10 DoS (infinite loop) in the 3GPP2 A11 dissector (wnpa-sec-2012-39)
-http://www.wireshark.org/security/wnpa-sec-2012-39.html
-https://bugzilla.redhat.com/show_bug.cgi?id=881706
-
-* #11 DoS (infinite loop) in the ICMPv6 dissector (wnpa-sec-2012-40)
-http://www.wireshark.org/security/wnpa-sec-2012-40.html
-https://bugzilla.redhat.com/show_bug.cgi?id=881701
-
-Other references:
-http://www.wireshark.org/docs/relnotes/wireshark-1.6.12.html
-http://www.wireshark.org/docs/relnotes/wireshark-1.8.4.html
-http://www.wireshark.org/security/
-https://bugs.gentoo.org/show_bug.cgi?id=445138
-https://bugs.mageia.org/show_bug.cgi?id=8239
-
-Could you allocate CVE ids for these?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: Particular Red Hat bugzilla entries contain further information
-      (upstream bug, reproducer && patches where available).
+- xi
