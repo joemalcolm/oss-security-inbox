@@ -1,32 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/6
-Message-Id: <201210301610.24847.timb@nth-dimension.org.uk>
-Date: Tue, 30 Oct 2012 16:10:23 +0000
-From: Tim Brown <timb@...-dimension.org.uk>
-To: full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
-Subject: Medium risk security flaws in Konqueror
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/9
+Message-ID: <4F0B627F.7010902@redhat.com>
+Date: Mon, 09 Jan 2012 14:56:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: Malicious devices & vulnerabilties
 Content-Type: text/plain; charset=utf-8
 
-I recnetly discovered a number of memory corruption flaws in the Konqueror web 
-browser as used by KDE.
+On 01/09/2012 12:35 PM, Florian Weimer wrote:
+> * Kurt Seifried:
+>
+>> Firewire has DMA. 
+>>
+>> http://cansecwest.com/core05/2005-firewire-cansecwest.swf
+>>
+>> eSATA - also does DMA.
+>>
+>> Thunderbolt also does DMA. 
+>>
+>> In other words a lot of the newer/higher end interfaces all do DMA
+>> which is ... a problem.
+> Gigabit Ethernet adapters also do DMA.  Is it really the case that the
+> (e)SATA implementation is as problematic as IEEE 1394?  I don't think
+> SATA exposes the DMA functionality over the wire.
+Hmmm yeah reading some Intel docs it would appear they did DMA and SATA
+sanely
 
-After discussions with the vendor, the following CVEs were assigned to these
-vulnerabilities:
+http://www.intel.com/assets/pdf/whitepaper/252664.pdf
 
-1) CVE-2012-4512
-2) CVE-2012-4513
-3) CVE-2012-4514
-4) CVE-2012-4515
+However it would appear Thunderbolt didn't do such a good job:
 
-The attached advisory gives further details.
+http://www.theregister.co.uk/2011/02/24/thunderbolt_mac_threat/
 
-Cheers,
-Tim
 -- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
 
-Download attachment "NDSA20121010.txt.asc" of type "application/pgp-signature" (7271 bytes)
+-- Kurt Seifried / Red Hat Security Response Team
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
