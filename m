@@ -1,44 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/08/1
-Message-ID: <20120608061734.GA32386@kludge.henri.nerv.fi>
-Date: Fri, 8 Jun 2012 09:17:34 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/10
+Message-ID: <4F0CAB52.4020601@redhat.com>
+Date: Tue, 10 Jan 2012 14:19:14 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Piwik before 1.7
+CC: Xi Wang <xi.wang@...il.com>
+Subject: Re: CVE request: kernel: xfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 08, 2012 at 10:44:46PM -0600, Kurt Seifried wrote:
-> On 05/08/2012 03:03 AM, Hanno Böck wrote:
-> > Hi,
-> > 
-> > http://piwik.org/blog/2012/02/7775/
-> > 
-> > Information is very rare: "We would like to thank the following
-> > security researchers for their responsible disclosure of XSS &
-> > click-jacking issues: Piotr Duszynski, Sergey Markov, Mauro
-> > Gentile."
-> > 
-> > I'd suggest assigning 3 CVEs with subjects like
-> > 
-> > "Unknown XSS or clickjacking issue identified by Piotr Duszynski" 
-> > "Unknown XSS or clickjacking issue identified by Sergey Markov" 
-> > "Unknown XSS or clickjacking issue identified by Mauro Gentile"
-> 
-> 
-> We would like to thank the following security researchers for their
-> responsible disclosure of XSS & click-jacking issues: Piotr Duszynski,
-> Sergey Markov, Mauro Gentile.
-> Thank you for disclosing security issues to the Piwik team, ensuring a
-> healthy and safe experience for the whole community!
-> 
-> I can't find anything else. Can you send the code commits that address
-> this?
-> 
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+On 01/10/2012 11:57 AM, Xi Wang wrote:
+> Commit ef14f0c1578dce4b688726eb2603e50b62d6665a introduced an integer
+> overflow in the ACL handling code, which could further lead to
+> heap-based buffer overflow via a crafted filesystem.
+>
+> Upstream commits:
+> http://git.kernel.org/linus/fa8b18edd752a8b4e9d1ee2cd615b82c93cf8bba
+> http://git.kernel.org/linus/093019cf1b18dd31b2c3b77acce4e000e2cbc9ce
+>
+> Both commits are needed to fix the vulnerability.
+>
+> The vulnerability seems to first appear in 2.6.32-rc1.  3.2 contains
+> only the first commit.
+>
+> - xi
+Do you need a CVE for this?
 
-After long email conversation with the vendor we are not getting any details from them. This http://dev.piwik.org/trac/changeset/5804 might be related as Nicob pointed out. Could we still assign CVE-identifiers for these three issues?
+-- 
 
-- Henri Salo
+-- Kurt Seifried / Red Hat Security Response Team
+
