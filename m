@@ -1,23 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/23/2
-Message-ID: <4F1CB53A.7070509@redhat.com>
-Date: Mon, 23 Jan 2012 09:17:46 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/12
+Message-ID: <4F0CB957.5040205@redhat.com>
+Date: Tue, 10 Jan 2012 15:19:03 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
+Subject: glib2 hash dos oCert-2011-003
 Content-Type: text/plain; charset=utf-8
 
-On 01/23/2012 01:52 AM, Solar Designer wrote:
-> On Wed, Jan 18, 2012 at 10:25:55AM +0800, Eugene Teo wrote:
->> "Jüri Aedla reported that the /proc/<pid>/mem handling really isn't very
->> robust, and it also doesn't match the permission checking of any of the
->> other related files.
-> 
-> Anyone got a pointer to Jüri's report?  I suppose it was somewhere on
-> LKML, but I haven't found it yet.
+glib2 hash dos oCert-2011-003
 
-It was reported privately. I will forward a copy to our private list
-once I have his permission.
+https://bugzilla.redhat.com/show_bug.cgi?id=772720
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655044
+http://mail.gnome.org/archives/gtk-devel-list/2003-May/msg00111.html
 
-Eugene
+Assigning a 2012 CVE because that is when the problem in glib was widely
+acknowledged.
+
+Please use CVE-2012-0039 for this issue.
+
+-- 
+
+-- Kurt Seifried / Red Hat Security Response Team
+
