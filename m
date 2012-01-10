@@ -1,51 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/1
-Message-ID: <50BD57D3.4020309@redhat.com>
-Date: Mon, 03 Dec 2012 18:54:27 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/9
+Message-Id: <C4D11068-83A3-40C8-A826-EE6E294987E3@gmail.com>
+Date: Tue, 10 Jan 2012 13:57:01 -0500
+From: Xi Wang <xi.wang@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Robbie Mackay <robbie@...ahidi.com>, Heather Leson <HLeson@...ahidi.com>
-Subject: Re: CVE request for Ushahidi security vulnerability 2012-008
+Subject: CVE request: kernel: xfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Commit ef14f0c1578dce4b688726eb2603e50b62d6665a introduced an integer
+overflow in the ACL handling code, which could further lead to
+heap-based buffer overflow via a crafted filesystem.
 
-On 11/29/2012 05:09 PM, Robbie Mackay wrote:
-> The following vulnerability was found in Ushahidi and fixed in the 
-> Ushahidi 2.6.1 release. Could you please assign a CVE?
-> 
-> Forgotten password challenges were guessable based on users last
-> login and email address. The issue was discovered by Timothy D.
-> Morgan
-> 
-> Security advisory: 
-> http://ushahidi.com/index.php/security/alert/sa-web-2012-008 Issue:
-> https://github.com/ushahidi/Ushahidi_Web/issues/646 Commit: 
-> https://github.com/ushahidi/Ushahidi_Web/commit/e8c7ecd42818c331db8945d20f8b1865bc6d157e
+Upstream commits:
+http://git.kernel.org/linus/fa8b18edd752a8b4e9d1ee2cd615b82c93cf8bba
+http://git.kernel.org/linus/093019cf1b18dd31b2c3b77acce4e000e2cbc9ce
 
-Please
-> 
-use CVE-2012-5618 for this issue.
+Both commits are needed to fix the vulnerability.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+The vulnerability seems to first appear in 2.6.32-rc1.  3.2 contains
+only the first commit.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQvVfTAAoJEBYNRVNeJnmTEgwQAMLxqwtmfaDpA0MoKwyshVzq
-sKxABl1CT/OzCB1vaksMT4Y7UhwH09I140QwxpBBIzvaLskagbucFLT1fwO4nInk
-Wu2DMslTOpm0QdklyGykiKy2WgsZgNn3Qkj6lR8nsJEaAtlIPeEv3mT4hLxJx1MU
-If39EqS3EFcuqkj0duRtwgUiN9a54j7cMvcuy3RcKSpZZXcZdMLJS73n6DcHk0vh
-tzmkkRpd8s6AgWreQG43piDFPM7aaQwCfd0v0jMFrCq+BOsnlZ7Pbf0zkpXwH4s1
-sixz+8UtjIkzjp+dOd5jOAjmGirbYq4V96sp1hEu258Cm+LRpfdxOqUcVrxUXQEp
-WbrMNpyK0f2rC9f64wKgHAeaEAoKslvF1QY6c9QXbzqW1EUFAwpxDAO3c4CZ4W3P
-vRZDPOsD2CVRkSFKWuHKv/pMa1h0ltuyxDNf0QNiScb5o9sGGYntCTcbVs/DNjmq
-8qWoRvxCkxt3gSqJI+/GIJbHDtwoVDrkMKWJsqhpF7Q5iSIrONM3HdllAJCbqV90
-F/FdOvwZMe39T9I4XRLzwWhybPsTnq2Gq5GcQexdcUN3iXBvAA3fylOs93ifLhkY
-+A9o3D8gklAAeIHPjYzahtqhu/UjnN7qPJVO9VjL9I5A78UwYcsR4FEMEt6uLNTu
-ronBQc3q3iSnDO21mxLj
-=8LN/
------END PGP SIGNATURE-----
+- xi
