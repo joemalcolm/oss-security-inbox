@@ -1,18 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/1
-Message-ID: <CAPZ8mV5bBPnBPgD4yPdvpc=sMt3=icVF_zNLzrPPY+uN9q_9TQ@mail.gmail.com>
-Date: Sun, 6 May 2012 22:40:12 -0700
-From: Mark Doliner <mark@...gant.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/4
+Message-ID: <4F0BCEB1.7050507@redhat.com>
+Date: Mon, 09 Jan 2012 22:37:53 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: A Pidgin remote crash
+CC: Chong Yidong <cyd@....org>, deng@...domsample.de, ulm@...too.org, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE Request: CEDET/Emacs global-ede-mode file loading vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Could I request that a CVE be issued for a possible
-remotely-triggerable crash in Pidgin?  To my knowledge no CVE exists
-for this issue.  The issue is described at
-http://pidgin.im/news/security/?id=63
+On 01/09/2012 08:54 PM, Chong Yidong wrote:
+> Kurt Seifried <kseifried@...hat.com> writes:
+>
+>> I'll assign this a CVE once I have determined the code base status (are
+>> these considered the same codebase, or have they forked enough to be
+>> considered separate code bases? Also I need to ensure this hasn't
+>> already been assigned a CVE. CC'ing relevant developers as well.
+> No, this hasn't already been assigned a CVE.  The upstream CEDET 1.0 is
+> largely the same codebase as the CEDET distributed in Emacs.  The
+> version in Emacs omits some CEDET components, and added some plumbing to
+> integrate CEDET into the Emacs build system.  But the main part of the
+> Emacs Lisp code, including the part affected by this flaw, is the same.
+>
+> David, could you write up a version of the fix that applies to the CEDET
+> 1.0 tarball?  I think distributors who package CEDET will want it.
+Please use CVE-2012-0035 for this issue (for both Emacs and CEDET).
 
-The Pidgin project has just released version 2.10.4 which fixes the issue.
+-- 
 
-Thanks,
-Mark
+-- Kurt Seifried / Red Hat Security Response Team
+
