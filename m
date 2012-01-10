@@ -1,42 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/15/3
-Message-ID: <20121115103636.GA11652@runtux.com>
-Date: Thu, 15 Nov 2012 11:36:37 +0100
-From: Ralf Schlatterbeck <rsc@...tux.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michel Alexandre Salim <michel+fdr@...vestre.me>, Richard Jones <richard@...hanicalcat.net>
-Subject: Re: Re: CVE Request -- roundup: Multiple XSS flaws plus other security related fixes corrected in upstream 1.4.20 version
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/6
+Message-ID: <4F0C600F.60808@redhat.com>
+Date: Tue, 10 Jan 2012 08:58:07 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2012-0207 kernel: igmp: Avoid zero delay when receiving odd mixture of IGMP queries
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 14, 2012 at 10:26:16AM -0700, Kurt Seifried wrote:
-> > [A] Doesn't have security implications if roundup is correnctly 
-> > configured. The bug would create a python backtrace. Unless the
-> > "debug" option in section [web] is set (which is explicitly
-> > discouraged) this will only display "an error has occurred" in the
-> > web-interface. Even if someone sets the debug option in a
-> > production release only the hashed password could be disclosed.
-> > Note that this bug only affects the anydbm backend which should not
-> > be used for a production version either.
-> 
-> How is the password hashed?
+On 01/10/2012 12:34 AM, Eugene Teo wrote:
+> Commit 5b7c84066733c5dfb0e4016d939757b38de189e4 ('ipv4: correct IGMP
+> behavior on v3 query during v2-compatibility mode') added yet another
+> case for query parsing, which can result in max_delay = 0.  Substitute
+> a value of 1, as in the usual v3 case.
+>
+> Reported-by: Simon McVittie <smcv <at> debian.org>
+> References: http://bugs.debian.org/654876
+> Signed-off-by: Ben Hutchings <ben <at> decadent.org.uk>
+>
+> http://article.gmane.org/gmane.linux.network/217256
+>
+> Introduced in 5b7c8406 2.6.36-rc8
+>
+> Thanks, Eugene
+Debian appears to have assigned CVE-2012-0207 to this issue, is that
+correct?
 
-We're using PBKDF2 now for some time. The number of rounds can be
-configured and currently defaults to 10000. Note that we encode the used
-hashing function in the password field in the database. This allows us
-to upgrade existing passwords on user login to the new scheme. This also
-means existing installations can have a mixture of password hashing
-schemes in the DB.
-
-The old default scheme was SHA-1 with no salt, see
-http://issues.roundup-tracker.org/issue2550688
-
-This was changed to PBKDF2 in Release 1.4.17 and there was still the bug
-[A] remaining in the anydbm backend which was fixed in 1.4.20. This also
-shows how many people are using that backend (it's mainly used for demo)
-
-Ralf
 -- 
-Dr. Ralf Schlatterbeck                  Tel:   +43/2243/26465-16
-Open Source Consulting                  www:   http://www.runtux.com
-Reichergasse 131, A-3411 Weidling       email: office@...tux.com
-osAlliance member                       email: rsc@...lliance.com
+
+-- Kurt Seifried / Red Hat Security Response Team
+
