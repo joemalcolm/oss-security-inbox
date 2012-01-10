@@ -1,50 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/11/6
-Message-ID: <CAAPiX_LwM6C81G05Ht1yoTP_n8Cj49TnmgvCph+iuOLz=t26ug@mail.gmail.com>
-Date: Wed, 11 Apr 2012 15:30:50 -0600
-From: Greg Knaddison <greg.knaddison@...uia.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/3
+Message-ID: <871ur8p5yo.fsf@gnu.org>
+Date: Tue, 10 Jan 2012 11:54:55 +0800
+From: Chong Yidong <cyd@....org>
 To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE's for Drupal Contrib 2012 001 through 057 (67 new CVE assignments)
+Cc: oss-security@...ts.openwall.com,  deng@...domsample.de,  ulm@...too.org,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: CEDET/Emacs global-ede-mode file loading vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 10, 2012 at 1:08 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 04/10/2012 10:30 AM, Greg Knaddison wrote:
->> "NO CVE","SA-CONTRIB-2012-050","CDN2 Video -
->>> Unsupported","https://drupal.org/node/1506542"
->>>
->>
->> While the backend service and module are no longer active, there
->> are 70 sites using this module who are vulnerable to CSRF/XSS. What
->> is the reason not to give it a CVE?
->
-> I was under the impression that if the backend was off the plugin
-> wouldn't work/expose the vuln, I could of course be wrong, if so I'll
-> assign a CVE.
+Kurt Seifried <kseifried@...hat.com> writes:
 
-I believe the XSS exists even without the backend. On review I'm less
-confident the CSRF is in the module or the service.
+> I'll assign this a CVE once I have determined the code base status (are
+> these considered the same codebase, or have they forked enough to be
+> considered separate code bases? Also I need to ensure this hasn't
+> already been assigned a CVE. CC'ing relevant developers as well.
 
->> If you have any further suggestions on how we can improve the
->> content or formatting of the SAs please let me know.
->
-> Direct links to the code commits fixing them would be nice =)
+No, this hasn't already been assigned a CVE.  The upstream CEDET 1.0 is
+largely the same codebase as the CEDET distributed in Emacs.  The
+version in Emacs omits some CEDET components, and added some plumbing to
+integrate CEDET into the Emacs build system.  But the main part of the
+Emacs Lisp code, including the part affected by this flaw, is the same.
 
-We probably can't do this, though it is a fairly common request. Our
-current policy is not to discuss the specific details for at least 2
-weeks and closer to 6 months if possible. Project usage shows that
-most site builders don't upgrade very quickly.
-
-I didn't see an answer to my question about asking for CVE-identifier
-on Wednesdays after the SAs are released. I assumed that would be
-helpful so I just started doing that.
-
-Thanks!
-Greg
-
--- 
-Director Security Services | +1-720-310-5623
-Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
+David, could you write up a version of the fix that applies to the CEDET
+1.0 tarball?  I think distributors who package CEDET will want it.
