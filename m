@@ -1,85 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/19/4
-Message-ID: <50AA6532.6080504@redhat.com>
-Date: Mon, 19 Nov 2012 09:58:26 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/1
+Message-ID: <4F0B80DD.7050806@redhat.com>
+Date: Mon, 09 Jan 2012 17:05:49 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: [[Weechat-security] Security vulnerability in WeeChat 0.3.0 -> 0.3.9.1]
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE request: znc
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 11/19/2012 02:57 AM, Guido Berhoerster wrote:
-> Hi,
-> 
-> the weechat issue below should get a CVE, it describes a shell 
-> injection vulnerability that affects weechat plugins using the 
-> hook_process function. In addtion, upstream has a bug report at 
-> https://savannah.nongnu.org/bugs/?37764 and the actual fix which is
-> included in 0.3.9.2 is at 
-> http://git.savannah.gnu.org/gitweb/?p=weechat.git;a=commitdiff_plain;h=efb795c74fe954b9544074aafcebb1be4452b03a
+On 01/09/2012 04:59 AM, Henri Salo wrote:
+> On Mon, Jan 09, 2012 at 01:17:33PM +0200, Henri Salo wrote:
+>> On Sun, Jan 08, 2012 at 04:39:48PM +0100, Moritz Muehlenhoff wrote:
+>>> Hi,
+>>> please assign a CVE ID to a DoS issue in the ZNC IRC bouncer.
+>>>
+>>> I don't have a upstream reference, but the upstream patch applied 
+>>> by the Debian maintainer can be found here:
+>>>
+>>> http://patch-tracker.debian.org/patch/series/view/znc/0.202-2/01-fix-bouncedcc-dos.diff 
+>>> http://packages.qa.debian.org/z/znc/news/20120107T145601Z.html
+>>>
+>>> Cheers,
+>>>         Moritz
+>> Here is the changelog: http://wiki.znc.in/ChangeLog/0.202
+>> This looks a bit like Debian-patch: https://github.com/znc/znc/commit/6ae491ca66e8f7d8c4fe3caca3adbe147c7e552c#modules/bouncedcc.cpp
+> Correcting myself as Patrick Matthäi (Debian package maintainer) answered. Correct upstream patch is: https://github.com/znc/znc/commit/11508aa72efab4fad0dbd8292b9614d9371b20a9
 >
->  ----- Forwarded message from FlashCode <flashcode@...shtux.org>
-> -----
-> 
-> Date: Sun, 18 Nov 2012 14:18:12 +0100 From: FlashCode
-> <flashcode@...shtux.org> To: weechat-security@...gnu.org 
-> Message-ID: <20121118131811.GH29073@...shtux.org> Subject:
-> [Weechat-security] Security vulnerability in WeeChat 0.3.0 -> 
-> 0.3.9.1
-> 
-> Hi all,
-> 
-> A security vulnerability has been fixed in WeeChat 0.3.9.2. This
-> problem affects all versions from 0.3.0 to 0.3.9.1.
-> 
-> Untrusted command for function hook_process could lead to execution
-> of commands, because of shell expansions.
-> 
-> This problem is only caused by some scripts calling function 
-> hook_process (giving untrusted command), but the problem has been 
-> fixed in WeeChat, for maximum safety: WeeChat will not use the
-> shell any more to execute command.
-> 
-> If you are not using any script calling function hook_process, you
-> are not concerned by this problem.
-> 
-> For more info, visit the WeeChat security page: 
-> http://weechat.org/security/
+> - Henri Salo
+Please use CVE-2012-0033 for this issue.
 
-Please use CVE-2012-5534 for this issue.
+-- 
 
+-- Kurt Seifried / Red Hat Security Response Team
 
-> -- Cordialement / Best regards Sébastien.
-> 
-> web: flashtux.org / weechat.org      mail: flashcode@...shtux.org 
-> irc: FlashCode @ irc.freenode.net    xmpp: flashcode@...ber.fr
-> 
-> 
-> 
-> ----- End forwarded message -----
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQqmUyAAoJEBYNRVNeJnmT5vkP/0n0l7PEqOerIjZqWb9UQeA0
-GBtgn2bhvaRXipOaxp7t1t/PhGdl8q+s0YM9Iw5FDQfNvhFPXcq8IVA3z32VQUsB
-ZvZc7pgi1/+EBiz0BpCvSokCO8ptdY171Ujoxbe1hRyoHoS2PAL7/y5CQTRYa/51
-U2XDd5aQomOwMY9keY131VNHyCWtDvtEVpN4NwMR6IV2RKPFAwsz7I5aQCdJU2Lk
-PTSeZWjhchyn7HCKmYzuuYYF683/Buc1kxkFTAyIb6+TLV3wiiHbayJKpVUmjQrM
-wof6yIjjuOi/E++a8ds2XRsUcaDI/Os3wLW3YE1kxlqYiEn9ec1CVRLDRgdBAfsV
-/niVwy6A8EgCnmnEXlNt8fDs7zsbOUVLxHGBaaeO8lua/PPCJRldoJX0D1aD62AK
-YcAQCz6pIWNXWETR9UC0wbH1nLfp7UCEalWspzm+2IrYyQh8rm+R84zNMcnp/ya6
-053VynxFSD9pwDUAKZbSg5Wtw9oya1U6d+Ggvse7rL3HZPmD8unsRzjsVFMoerKr
-nNfqavfXCaolnhRhy4f1dFNbJQMAkgjFm9kL1i2pMYNEua0vDjRPqVaqIA4Rcj1Q
-gyzqb6KQaMnje2b+bh5RM6DgRWEt8pWBiPhhuapofZuRSm4n/OiA56uXMtbgXS5B
-9h5JSRib4sGnQAK3l06I
-=UuE2
------END PGP SIGNATURE-----
