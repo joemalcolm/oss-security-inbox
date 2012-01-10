@@ -1,37 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/1
-Message-ID: <1326586554.7887.512.camel@new-desktop>
-Date: Sun, 15 Jan 2012 01:15:54 +0100
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/8
+Message-ID: <4F0C7427.1010407@redhat.com>
+Date: Tue, 10 Jan 2012 10:23:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE affected for PHP 5.3.9 ?
+Subject: Re: CVE-2012-0207 kernel: igmp: Avoid zero delay when receiving odd mixture of IGMP queries
 Content-Type: text/plain; charset=utf-8
 
+On 01/10/2012 10:23 AM, Moritz Muehlenhoff wrote:
+> On Tue, Jan 10, 2012 at 08:58:07AM -0700, Kurt Seifried wrote:
+>> On 01/10/2012 12:34 AM, Eugene Teo wrote:
+>>> Commit 5b7c84066733c5dfb0e4016d939757b38de189e4 ('ipv4: correct IGMP
+>>> behavior on v3 query during v2-compatibility mode') added yet another
+>>> case for query parsing, which can result in max_delay = 0.  Substitute
+>>> a value of 1, as in the usual v3 case.
+>>>
+>>> Reported-by: Simon McVittie <smcv <at> debian.org>
+>>> References: http://bugs.debian.org/654876
+>>> Signed-off-by: Ben Hutchings <ben <at> decadent.org.uk>
+>>>
+>>> http://article.gmane.org/gmane.linux.network/217256
+>>>
+>>> Introduced in 5b7c8406 2.6.36-rc8
+>>>
+>>> Thanks, Eugene
+>> Debian appears to have assigned CVE-2012-0207 to this issue, is that
+>> correct?
+> Yes, it's also in the Subject of Eugene's mail :-)
+>
+> Cheers,
+>         Moritz
+I really need to stop doing oss-sec before breakfast.
 
-> Right but the script has to have the line
-> <sax:output href="0wn3d.php" method="text">
+-- 
 
-Wrong.
-
-The PHP code only has to call transformToXML() after having loaded the
-malicious XSLT code via importStylesheet(). The XML data itself is
-irrelevant for this bug and the "sax:output" tag isn't in the PHP script
-but in the XSLT stylesheet provided by the attacker.
-
-# LOAD XML FILE 
-$XML = new DOMDocument(); 
-$XML->loadXML( $sXml ); 
-
-# LOAD XSLT FILE 
-$XSL = new DOMDocument(); 
-$XSL->loadXML( $sXsl ); // Content of $xXsl may be untrusted !
-
-# START XSLT 
-$xslt = new XSLTProcessor(); 
-$xslt->importStylesheet( $XSL );
-
-# TRASNFORM & PRINT 
-print $xslt->transformToXML( $XML ); // File creation !
-
-Nicolas
+-- Kurt Seifried / Red Hat Security Response Team
 
