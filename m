@@ -1,38 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/05/6
-Message-ID: <506F4165.1080408@canonical.com>
-Date: Fri, 05 Oct 2012 16:21:57 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request: Python keyring
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/2
+Message-ID: <4F0B8CE5.3050502@redhat.com>
+Date: Mon, 09 Jan 2012 17:57:09 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, cyd@....org, deng@...domsample.de, ulm@...too.org, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request: CEDET/Emacs global-ede-mode file loading vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+I'll assign this a CVE once I have determined the code base status (are
+these considered the same codebase, or have they forked enough to be
+considered separate code bases? Also I need to ensure this hasn't
+already been assigned a CVE. CC'ing relevant developers as well.
 
-Python keyring before 0.9.1 was using the user-supplied password insecurely.
 
->From the 0.9.1 changelog:
+EMACS
 
-CryptedFileKeyring now uses PBKDF2 to derive the key from the user's
-password and a random hash. The IV is chosen randomly as well. All the
-stored passwords are encrypted at once. Any keyrings using the old
-format will be automatically converted to the new format (but will no
-longer be compatible with 0.9 and earlier). The user's password is no
-longer limited to 32 characters. PyCrypto 2.5 or greater is now required
-for this keyring.
+Hiroshi Oota has found a security flaw in EDE (part of CEDET), a
+development tool included in Emacs.  EDE can store various information
+about a project, such as how to build the project, in a file named
+Project.ede in the project directory tree.  When the minor mode
+`global-ede-mode' is enabled, visiting a file causes Emacs to look for
+Project.ede in the file's directory or one of its parent directories.
+If Project.ede is present, Emacs automatically reads and evaluates the
+first Lisp expression in it.
 
-See:
+This design exposes EDE users to the danger of loading malicious code
+from one file (Project.ede), simply by visiting another file in the same
+directory tree.
 
-http://pypi.python.org/pypi/keyring#id2
-https://bugs.launchpad.net/ubuntu/+source/python-keyring/+bug/1004845
+REF
+http://lists.gnu.org/archive/html/emacs-devel/2012-01/msg00387.html
+https://bugs.gentoo.org/show_bug.cgi?id=398241
+https://bugs.gentoo.org/show_bug.cgi?id=398239
+https://bugs.gentoo.org/show_bug.cgi?id=398227
 
-Thanks,
 
-Marc.
+CEDET
+>>> Does this also affect the standalone version of CEDET, i.e. cedet-1.0
+>>> from <http://cedet.sourceforge.net/>?
+>
+>> Yes.
+>
+> The patch for Emacs 23 fails for it, unfortunately. In case anyone is
+> interested, a (almost trivially) backported version of the patch can
+> be found here:
+>
+<http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/app-emacs/cedet/files/cedet-1.0-ede_security_fix.patch>
+
+A new CEDET 1.0.1 (or similar) will be released soon. The bzr repos
+trunk and newtrunk were updated.
+
+REF
+http://lists.gnu.org/archive/html/emacs-devel/2012-01/msg00401.html
+http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/app-emacs/cedet/files/cedet-1.0-ede_security_fix.patch
 
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+
+-- Kurt Seifried / Red Hat Security Response Team
+
