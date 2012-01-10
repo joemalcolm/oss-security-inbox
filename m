@@ -1,59 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/18/2
-Message-ID: <CAB9ZNAzBgtqWdjDmsTmzHi+uVCUCqtfO6Goo4fneacfJ5cSBtw@mail.gmail.com>
-Date: Sat, 18 Feb 2012 13:35:31 -0500
-From: Andres Gomez <agomez@...idsignal.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/11
+Message-ID: <4F0CB174.1000002@redhat.com>
+Date: Tue, 10 Jan 2012 14:45:24 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: TORCS 1.3.2 xml buffer overflow - CVE-2012-1189
+CC: Xi Wang <xi.wang@...il.com>
+Subject: Re: CVE request: kernel: xfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-http://www.exploit-db.com/exploits/18471/
-http://www.torcs.org
+On 01/10/2012 02:19 PM, Kurt Seifried wrote:
+> On 01/10/2012 11:57 AM, Xi Wang wrote:
+>> Commit ef14f0c1578dce4b688726eb2603e50b62d6665a introduced an integer
+>> overflow in the ACL handling code, which could further lead to
+>> heap-based buffer overflow via a crafted filesystem.
+>>
+>> Upstream commits:
+>> http://git.kernel.org/linus/fa8b18edd752a8b4e9d1ee2cd615b82c93cf8bba
+>> http://git.kernel.org/linus/093019cf1b18dd31b2c3b77acce4e000e2cbc9ce
+>>
+>> Both commits are needed to fix the vulnerability.
+>>
+>> The vulnerability seems to first appear in 2.6.32-rc1.  3.2 contains
+>> only the first commit.
+>>
+>> - xi
+> Do you need a CVE for this?
+>
+I apologize, I'm still getting used to Thunderbird (Vince says I should
+use mutt, I suspect he may be correct) which places the subject line
+well above the message body so when I scan it I'm usually looking at the
+To: and CC: line and not seeing the subject (as evidenced by me asking
+stupid questions like this about once a day =).
 
-Hi,
+Please use CVE-2012-0038 for this kernel issue.
 
-I have found another exploitable buffer overflow in torcs, this time it
-does'nt have relation with plib.
-The problem is in:
+-- 
 
-torcs/src/modules/graphic/ssgraph/grsound.cpp, line 103:
-
-96     char filename[512];
-        FILE *file = NULL;
-
-        // ENGINE PARAMS
-        tdble rpm_scale;
-        param = GfParmGetStr(handle, "Sound", "engine sample",
-"engine-1.wav");
-        rpm_scale = GfParmGetNum(handle, "Sound", "rpm scale", NULL, 1.0);
-103   sprintf (filename, "cars/%s/%s", car->_carName, param);
-        file = fopen(filename, "r");
-        if (!file)
-        {
-107             sprintf (filename, "data/sound/%s", param);
-        }
-        else
-        {
-            fclose(file);
-        }
-
-This section reads a configuration sound option from [any-car].xml, for
-example:
-
-<section name="Sound">
-        <attstr name="engine sample" val="renault-v10.wav"/>
-        <attnum name="rpm scale" val="0.35"/>
-</section>
-
-if audio file name in "engine sample" is enough long it could overwrite
-"filename" buffer (line 96),
-because there is not size validation in line 103 (also in line 107).
-
-I have already notified vendor.
-
-Please use CVE-2012-1189 for this issue.
-
-Regards.
-
-Andrés Gómez
+-- Kurt Seifried / Red Hat Security Response Team
 
