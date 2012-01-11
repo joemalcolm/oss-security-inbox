@@ -1,51 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/5
-Message-ID: <20120418063258.GA32320@oevtugenva.nrevsny.pk>
-Date: Wed, 18 Apr 2012 02:32:58 -0400
-From: Rich Felker <dalias@...ifal.cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/11/7
+Message-ID: <4F0E1E5F.4020902@redhat.com>
+Date: Wed, 11 Jan 2012 16:42:23 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: musl@...ts.openwall.com
-Subject: Stack-based buffer overflow in musl libc 0.8.7 and earlier
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: Wireshark multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Name: Stack-based buffer overflow in musl libc 0.8.7 and earlier
-Software: musl 0.8.7 and earlier
-Software link:  http://www.etalabs.net/musl
-Vulnerability Type: Buffer overflow
-Severity: Critical
+On 01/11/2012 09:19 AM, Agostino Sarubbo wrote:
+> According to secunia advisory: https://secunia.com/advisories/47494/ :
+>
+> Multiple vulnerabilities have been reported in Wireshark, which can be 
+> exploited by malicious people to cause a DoS (Denial of Service) and 
+> compromise a user's system.
+>
+> 1) NULL pointer dereference errors when reading certain packet information can 
+> be exploited to cause a crash.
+>
+> 2) An error within the RLC dissector can be exploited to cause a buffer 
+> overflow via a specially crafted RLC packet capture file.
+>
+> and according with upstream advisory:
+>
+> 1)http://www.wireshark.org/security/wnpa-sec-2012-01.html
+> Name: Multiple Wireshark file parser vulnerabilities
+> Description:
+> Laurent Butti discovered that Wireshark failed to properly check record sizes 
+> for many packet capture file formats.
+> Impact:
+> It may be possible to make Wireshark crash by convincing someone to read a 
+> malformed packet trace file.
+Please use CVE-2012-0041 for this issue
+>
+> 2)http://www.wireshark.org/security/wnpa-sec-2012-02.html
+> Name: Wireshark NULL pointer vulnerabilities
+> Description:
+> Wireshark was improperly handling NULL pointers when displaying packet 
+> information which could lead to a crash.
+> Impact:
+> It may be possible to make Wireshark crash by injecting a malformed packet 
+> onto the wire or by convincing someone to read a malformed packet trace file.
+Please use CVE-2012-0042 for this issue
+>
+> 3)http://www.wireshark.org/security/wnpa-sec-2012-03.html
+> Name: Wireshark RLC dissector buffer overflow
+> Description:
+> The RLC dissector could overflow a buffer.
+> Impact:
+> It may be possible to make Wireshark crash by injecting a malformed packet 
+> onto the wire or by convincing someone to read a malformed packet trace file.
+Please use CVE-2012-0043 for this issue
 
-Software Description:
+-- 
 
-musl is an implementation of the C/POSIX standard library for
-Linux-based systems. musl aims to be lightweight, fast, simple, free,
-and correct in the sense of standards-conformance and safety, and to
-meet requirements ranging from embedded systems and initrd images to
-desktop workstations, mobile devices, and high-load servers. Several
-build-from-source mini-distributions use musl as their C library.
+-- Kurt Seifried / Red Hat Security Response Team
 
-Vulnerability Details:
-
-musl's implementation of [v]fprintf swaps in a temporary FILE buffer
-on the stack when writing to unbuffered streams such as stderr. Under
-certain conditions where the buffer end pointer has already been set
-to the address of the internal degenerate buffer prior to the call to
-[v]fprintf, stdio internals can fail to bound access to the temporary
-buffer. Large writes will then overflow the temporary buffer and
-clobber stack contents, including potentially the return address. Any
-program linked to musl which includes potentially-large data from
-untrusted sources in its output to stderr or other unbuffered streams
-is affected.
-
-Solution:
-
-The vulnerability has been fixed in git, and the fix is to be included
-in the upcoming 0.8.8 release. A patch which applies cleanly to all
-recent releases is available on the musl mailing list:
-
-http://www.openwall.com/lists/musl/2012/04/17/1
-
-Credits:
-
-This vulnerability was discovered and fixed by the author (myself,
-Rich Felker) while debugging a crash occurring in test code written
-for musl by Luka Marčetić as part of GSoC 2011.
