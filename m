@@ -1,24 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/12/2
-Message-ID: <20120212081746.GA25149@foo.fgeek.fi>
-Date: Sun, 12 Feb 2012 10:17:46 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/11/4
+Message-ID: <20120111201942.GP31851@dhcp-25-225.brq.redhat.com>
+Date: Wed, 11 Jan 2012 21:19:43 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Webcalendar 1.2.4 location XSS
+Subject: CVE request -- kernel: kvm: syscall instruction induced guest panic
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Feb 11, 2012 at 11:04:19PM -0500, Eitan Adler wrote:
-> On Sat, Feb 11, 2012 at 11:41 AM, Henri Salo <henri@...v.fi> wrote:
-> > This seems to be missing 2012 CVE.
-> >
-> > Original report: http://seclists.org/bugtraq/2012/Jan/128
-> > Project page: https://sourceforge.net/projects/webcalendar/
-> > Version affected: 1.2.4 (the newest)
-> 
-> So far as I could see the newest version is 1.2.3
-> (http://sourceforge.net/projects/webcalendar/?source=directory and
-> http://www.k5n.us/webcalendar.php?topic=News don't list 1.2.4)
+"32bit guests will crash (and 64bit guests may behave in a
+wrong way) for example by simply executing following
+nasm-demo-application:
 
-Page http://sourceforge.net/projects/webcalendar/files/webcalendar%201.2/ lists 1.2.4 version. I have no idea why the other page doesn't list it at all. No reply to bug-report: http://sourceforge.net/tracker/?func=detail&aid=3472745&group_id=3870&atid=103870 and only thing I found strange in the report is "Version: 1.2.5" as there isn't such available. I can verify this advisory if you want.
+    [bits 32]
+    global _start
+    SECTION .text
+    _start: syscall
 
-- Henri Salo
+The reason seems a missing "invalid opcode"-trap (int6) for the
+syscall opcode "0f05", which is not available on Intel CPUs
+within non-longmodes, as also on some AMD CPUs within legacy-mode.
+(depending on CPU vendor, MSR_EFER and cpuid)
+
+Because previous mentioned OSs may not engage corresponding
+syscall target-registers (STAR, LSTAR, CSTAR), they remain
+NULL and (non trapping) syscalls are leading to multiple
+faults and finally crashs."
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=773370
+https://lkml.org/lkml/2011/12/28/170
+http://www.spinics.net/lists/kvm/msg66633.html
+
+Proposed patch:
+http://www.spinics.net/lists/kvm/msg66633.html
+
+Credits:
+Stephan Bärwolf
+
+Introduced by:
+e66bb2ccdcf76d032bbb464b35c292bb3ee58f9b in linux-2.6.32
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
