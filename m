@@ -1,41 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/3
-Message-ID: <20120220131318.GA15511@foo.fgeek.fi>
-Date: Mon, 20 Feb 2012 15:13:18 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/11/2
+Message-ID: <4F0D6964.6000206@redhat.com>
+Date: Wed, 11 Jan 2012 18:50:12 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vulnerabilitites in Debian F*EX <= 20100208 and F*EX 20111129-2.
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: drm: integer overflow in drm_mode_dirtyfb_ioctl()
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 20, 2012 at 01:15:10PM +0100, Nico Golde wrote:
-> Hi,
-> * muuratsalo experimental hack lab <muuratsalo@...il.com> [2012-02-20 12:51]:
-> > I am Nicola Fioravanti aka muuratsalo | muuratsalo experimental hack lab.
-> > I am writing you because I have discovered some vulnerabilities in
-> > Debian F*EX <= 20100208 (stable) and F*EX 20111129-2. (testing and
-> > unstable)
-> > I have already contacted the Author who confirmed the vulnerabilities
-> > and applied the suggested fixes.
-> > A major update of F*EX  has been released on the 15th of February
-> > 2012. The Debian Mantainer of the package is working on it.
-> > Together with the Author we decided not to release any public advisory
-> > before the release of the new Debian package.
-> > 
-> > I would be grateful if you could assign CVE ids to the discovered issues.
-> 
-> I asked Nicola to send this to oss-security as the impact of this bug is 
-> fairly low in my opinion and the issue is public via the upstream changelog.
-> 
-> Can someone please assign a CVE id to this? Given that all of the vulnerable 
-> input parameters are in the fup component, I guess one id should be 
-> sufficient.
-> 
-> Kind regards
-> Nico
-> -- 
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
+There is a potential integer overflow in drm_mode_dirtyfb_ioctl() if
+userspace passes in a large num_clips.  The call to kmalloc would
+allocate a small buffer, and the call to fb->funcs->dirty may result in
+a memory corruption.
 
-Is there a Debian bug-report about this issue?
+Reported-by: Haogang Chen <haogangchen@...il.com>
+Signed-off-by: Xi Wang <xi.wang@...il.com>
 
-- Henri Salo
+Upstream commit:
+http://git.kernel.org/linus/a5cd335165e31db9dbab636fd29895d41da55dd2
