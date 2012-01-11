@@ -1,26 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/07/2
-Message-ID: <4F3079F7.4040606@redhat.com>
-Date: Mon, 06 Feb 2012 18:10:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, team@...rt.org, caml-list@...ia.fr, gerd@...d-stolpmann.de
-Subject: Re: CVE request: Hash DoS vulnerability (ocert-2011-003)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/11/1
+Message-Id: <201201111134.49453.thijs@debian.org>
+Date: Wed, 11 Jan 2012 11:34:44 +0100
+From: Thijs Kinkhorst <thijs@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: simpleSAMLphp 1.8.2 cross site scripting
 Content-Type: text/plain; charset=utf-8
 
-On 02/06/2012 06:05 PM, Kurt Seifried wrote:
-> So going through various things looks like Ocaml is vulnerable and has
-> not had a CVE # assigned for this issue yet.
-> 
-> Discussion of the issue takes place on the mailing list, here is a link
-> for the originating thread:
-> 
->cc
-> 
-> There doesn't appear to be a fix yet.
-> 
-> 
+Hi,
 
-Please use CVE-2012-0839 for this issue.
+Can I get a CVE for this?
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+http://code.google.com/p/simplesamlphp/issues/detail?id=468
+http://groups.google.com/group/simplesamlphp-
+announce/browse_thread/thread/cb96723ee3c6751e
+
+
+thanks,
+Thijs
+
+Download attachment "signature.asc " of type "application/pgp-signature" (491 bytes)
