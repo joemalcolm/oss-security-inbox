@@ -1,60 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/12
-Message-ID: <20120108211806.GF8030@nef.pbox.org>
-Date: Sun, 8 Jan 2012 22:18:07 +0100
-From: Alistair Crooks <agc@...bsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/11/3
+Message-ID: <2273600.2E0aOJkKJz@devil>
+Date: Wed, 11 Jan 2012 17:19:57 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: Malicious devices & vulnerabilties
+Subject: CVE request: Wireshark multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 09, 2012 at 03:48:20AM +0800, Eugene Teo wrote:
-> On 01/08/2012 07:19 PM, Florian Weimer wrote:
-> > * Xi Wang:
-> > 
-> >> I am wondering where to draw the line.  Should such device drivers
-> >> be considered vulnerable or not?  Thanks.
-> > 
-> > I think they should be considered vulnerable.  Some applications need
-> > some robustness to attacks even from the local console (e.g., student
-> > computer rooms).
-> > 
-> > USB is also a popular transport in many air-gapped environments.
-> 
-> I would consider them vulnerable with low security impacts. If you are
-> fixing such issues, do post them to the list.
+According to secunia advisory: https://secunia.com/advisories/47494/ :
 
-One very interesting datapoint here is Antti Kantee's rump subsystem
-in NetBSD
+Multiple vulnerabilities have been reported in Wireshark, which can be 
+exploited by malicious people to cause a DoS (Denial of Service) and 
+compromise a user's system.
 
-	http://www.netbsd.org/docs/rump/
-	http://blog.netbsd.org/tnf/entry/runnable_userspace_meta_programs_in
+1) NULL pointer dereference errors when reading certain packet information can 
+be exploited to cause a crash.
 
-which allows for userspace-mounting of devices and filesystems
-thereon.  Unknown provenance USB sticks are one of the use cases
-mentioned.
+2) An error within the RLC dissector can be exploited to cause a buffer 
+overflow via a specially crafted RLC packet capture file.
 
-	+ rump_msdos:  USB sticks with FAT file systems are a common
-	sight.  Mounting an untrusted image from removable media with
-	the file system driver running in the kernel is risky in many
-	ways:  inopportune unplugging of the media or a corrupted file
-	system may have adverse effects such as system crashes or
-	worse.  By using the rump_msdos command instead of
-	mount_msdos, the file system service runs in userspace and is
-	accessed via puffs.  This isolates the main kernel from any
-	resulting problems such as buffer overflows.
+and according with upstream advisory:
 
-	The usage of mount_msdos and rump_msdos are equivalent...
+1)http://www.wireshark.org/security/wnpa-sec-2012-01.html
+Name: Multiple Wireshark file parser vulnerabilities
+Description:
+Laurent Butti discovered that Wireshark failed to properly check record sizes 
+for many packet capture file formats.
+Impact:
+It may be possible to make Wireshark crash by convincing someone to read a 
+malformed packet trace file.
 
-If USB is a transport in air-gapped environments, I personally have a
-concern with that. A good thing airgaps aren't used for anything in RL,
-right? ;-)
+2)http://www.wireshark.org/security/wnpa-sec-2012-02.html
+Name: Wireshark NULL pointer vulnerabilities
+Description:
+Wireshark was improperly handling NULL pointers when displaying packet 
+information which could lead to a crash.
+Impact:
+It may be possible to make Wireshark crash by injecting a malformed packet 
+onto the wire or by convincing someone to read a malformed packet trace file.
 
-Regards,
-Alistair
+3)http://www.wireshark.org/security/wnpa-sec-2012-03.html
+Name: Wireshark RLC dissector buffer overflow
+Description:
+The RLC dissector could overflow a buffer.
+Impact:
+It may be possible to make Wireshark crash by injecting a malformed packet 
+onto the wire or by convincing someone to read a malformed packet trace file.
 
-PS. Obvious disclaimer - I am biased.
-PPS. Just reading REAMDE right now
---
-Alistair Crooks
-{agc,security-officer}@...BSD.org
+-- 
+Agostino Sarubbo		ago -at- gentoo.org
+Gentoo/AMD64 Arch Security Liaison
+GPG: 0x7CD2DC5D
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
