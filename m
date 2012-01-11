@@ -1,108 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/2
-Message-ID: <505BCFC1.4020008@redhat.com>
-Date: Thu, 20 Sep 2012 20:24:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: info@...udbees.com, security@...udbees.com
-Subject: Re: CVE Request: Jenkins and plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/11/5
+Message-ID: <87lipeqh5l.fsf@engster.org>
+Date: Wed, 11 Jan 2012 18:32:22 +0100
+From: David Engster <deng@...domsample.de>
+To: Chong Yidong <cyd@....org>
+Cc: Kurt Seifried <kseifried@...hat.com>,  oss-security@...ts.openwall.com,  ulm@...too.org,  "Steven M. Christey" <coley@...us.mitre.org>, "Eric M. Ludlam" <eric@...ge-engine.com>
+Subject: Re: CVE Request: CEDET/Emacs global-ede-mode file loading vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 09/20/2012 08:18 PM, Kurt Seifried wrote:
-> http://www.cloudbees.com/jenkins-advisory/jenkins-security-advisory-2012-09-17.cb
+Chong Yidong writes:
+> Kurt Seifried <kseifried@...hat.com> writes:
 >
-> 
-Jenkins Security Advisory 2012-09-17
-> 
-> This advisory announces security vulnerabilities that were found
-> in Jenkins core and several plugins.
-> 
-> The first vulnerability in Jenkins core allows unprivileged users
-> to insert data into Jenkins master, which can lead to remote code 
-> execution. For this vulnerability to be exploited, the attacker
-> must have an HTTP access to a Jenkins master, and he must have a
-> read access to Jenkins.
+>> I'll assign this a CVE once I have determined the code base status (are
+>> these considered the same codebase, or have they forked enough to be
+>> considered separate code bases? Also I need to ensure this hasn't
+>> already been assigned a CVE. CC'ing relevant developers as well.
+>
+> No, this hasn't already been assigned a CVE.  The upstream CEDET 1.0 is
+> largely the same codebase as the CEDET distributed in Emacs.  The
+> version in Emacs omits some CEDET components, and added some plumbing to
+> integrate CEDET into the Emacs build system.  But the main part of the
+> Emacs Lisp code, including the part affected by this flaw, is the same.
+>
+> David, could you write up a version of the fix that applies to the CEDET
+> 1.0 tarball?  I think distributors who package CEDET will want it.
 
-Please use CVE-2012-4438 for this issue.
+A patch for cedet-1.0 was posted here:
 
-> The second vulnerability in Jenkins core is a cross-site scripting 
-> vulnerability. This allows an attacker to craft a URL that points
-> to Jenkins, and if a legitimate user clicks this link, the attacker
-> will be able to hijack the user session.
+http://sourceforge.net/mailarchive/forum.php?thread_name=87lipg3dw5.fsf%40engster.org&forum_name=cedet-devel
 
-Please use CVE-2012-4439 for this issue.
+In the meantime, Eric published a bugfix-release cedet-1.0.1, so
+distributors should upgrade to that.
 
-> The third vulnerability is a cross-site scripting vulnerability in
-> the Violations plugin.
-
-Please use CVE-2012-4440 for this issue.
-
-> The fourth vulnerability is a cross-site scripting vulnerability
-> in the CI game plugin.
-
-Please use CVE-2012-4441 for this issue.
-
-> Several of these vulnerabilies were discovered by Avram Marius
-> Gabriel.
-
-Also can cloudbees please comment on which specific issues Avram
-Marius Gabriel found so attribution can be sorted out? Thanks.
-
-> Severity:
-> 
-> CloudBees rates the first vulnerability in the core as critical, as
-> it allows malicious users to execute arbitrary code on the server.
-> The othe three XSS vulnerabilities are rated as high, as they
-> allow malicious users to escalate privileges. Fix: The following
-> versions incorporate fixes to the vulnerabilities found in the
-> Jenkins core.
-> 
-> Main line users should upgrade to Jenkins 1.482 LTS users should
-> upgrade to 1.466.2 Users of Jenkins Enterprise by CloudBees 1.466.x
-> should upgrade to 1.466.2.1 Users of Jenkins Enterprise by
-> CloudBees 1.447.x should upgrade to 1.447.3.1 Users of Jenkins
-> Enterprise by CloudBees 1.424.x and earlier should upgrade to
-> 1.424.6.11 The fix has already been deployed to DEV@...ud
-> 
-> Users of the CloudBees Custom Update Center plugin needs to update
-> to 3.4 or later in order to work with these newer versions of
-> Jenkins.
-> 
-> To patch vulnerabilities in the plugins, upgrade to the following 
-> versions. These plugins should be available in your Jenkins'
-> plugin update center UI in up to a day.
-> 
-> Users of the Violations plugin should upgrade to 0.7.11 or later 
-> Users of the CI game plugin should upgrade to 1.19 or later
-> 
-> 
-> 
-> 
-> 
-> 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQW8/BAAoJEBYNRVNeJnmTvW0P/iSwkKpf3BtNoOdqy5NG4nll
-m8bI2BBostdT+Ie5jWv5aRZAdqbAh4IfFHnl3DKcRs3jTB4EXKTanoYvLDG2i/EJ
-NWm+fYG0rEkY3RF94fxNqy9GwTWkdDRdm0Pas+dXy0fJPi8z1QcHj8cKweGNQdL2
-foxq1F7wflAgms0G3rXWNG1itdnHkGJVeCfj3xNcXkeg2orCwjRqlLe2+YrXt1S1
-tvrOb7dMyDRFsDics5/zad3ZUt4tKCxXColCaDFesUXetWIkWP5oqLdXoXUDfhiU
-e/c1v0Zh3DsFDP09rsEMVrzly/UyYOJjPbVnXbicK3a1qT3rLbPzfle0Irztno95
-1pUwnKeILwGZNgHSjRD/TUtOyseizQsuzSKQvsqbp0sWwNzQG/KMlglxBhht3btw
-30AcP55c/fEi5u5skdH0y/xpecuYqURR5R46LfPXdPmBmznN2ZxWm0q41UN+2rdP
-xJhzNCW+Io7zs77AKmXjsbKFTgRRUY4FmHs162iTAPgWiB/1whI+WJG451yD7wj9
-UDhPu3Ad0E5U3vl2sOoUMepZ8wgoxlDhpU4Kw90hWqDPq5Gx28yX0XvcwvcLmQvr
-PZSMNOmeiaOauC0T9AGvVxm5j6P3MQIV9BKCCJfaHq+UhEGKZpaC0XJW9RgeQuh0
-+Pees4tf9Hfw/Hkdo3WZ
-=OSbN
------END PGP SIGNATURE-----
+-David
