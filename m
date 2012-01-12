@@ -1,50 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/5
-Message-ID: <20120518093721.GL26453@dhcp-25-225.brq.redhat.com>
-Date: Fri, 18 May 2012 11:37:22 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/5
+Message-ID: <4F0E7986.20503@redhat.com>
+Date: Wed, 11 Jan 2012 23:11:18 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: mm: read_pmd_atomic: 32bit PAE pmd walk vs pmd_populate SMP race condition
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: Wireshark multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-When holding the mmap_sem for reading, pmd_offset_map_lock should only
-run on a pmd_t that has been read atomically from the pmdp
-pointer, otherwise we may read only half of it leading to this crash.
+On 01/11/2012 07:20 PM, Steven M. Christey wrote:
+>
+> On Wed, 11 Jan 2012, Kurt Seifried wrote:
+>
+>> On 01/11/2012 09:19 AM, Agostino Sarubbo wrote:
+>>> According to secunia advisory: https://secunia.com/advisories/47494/ :
+>>>
+>>> Multiple vulnerabilities have been reported in Wireshark, which can be
+>>> exploited by malicious people to cause a DoS (Denial of Service) and
+>>> compromise a user's system.
+>>>
+>>> 1) NULL pointer dereference errors when reading certain packet
+>>> information can
+>>> be exploited to cause a crash.
+>
+> In this case, if a network monitor can be crashed, an attacker might
+> be able to launch an attack undetected.  As such, NULL pointer
+> dereferences and other crashers in security-relevant products often
+> count for CVEs, so Kurt, please assign one for this.
+>
+> See http://www.openwall.com/lists/oss-security/2011/09/14/9 for
+> further explanation from me.
+>
+> - Steve
+>From what I read the first #1 and #2 (secunia) map to wireshark
+wnpa-sec-2012-02.html and wnpa-sec-2012-03.html respectively, so they
+should be all good? Or did I misread it (this is entirely possible =).
 
-PID: 11679  TASK: f06e8000  CPU: 3   COMMAND: "do_race_2_panic"
- #0 [f06a9dd8] crash_kexec at c049b5ec
- #1 [f06a9e2c] oops_end at c083d1c2
- #2 [f06a9e40] no_context at c0433ded
- #3 [f06a9e64] bad_area_nosemaphore at c043401a
- #4 [f06a9e6c] __do_page_fault at c0434493
- #5 [f06a9eec] do_page_fault at c083eb45
- #6 [f06a9f04] error_code (via page_fault) at c083c5d5
-    EAX: 01fb470c EBX: fff35000 ECX: 00000003 EDX: 00000100 EBP:
-    00000000
-    DS:  007b     ESI: 9e201000 ES:  007b     EDI: 01fb4700 GS:  00e0
-    CS:  0060     EIP: c083bc14 ERR: ffffffff EFLAGS: 00010246
- #7 [f06a9f38] _spin_lock at c083bc14
- #8 [f06a9f44] sys_mincore at c0507b7d
- #9 [f06a9fb0] system_call at c083becd
-                         start           len
-    EAX: ffffffda  EBX: 9e200000  ECX: 00001000  EDX: 6228537f
-    DS:  007b      ESI: 00000000  ES:  007b      EDI: 003d0f00
-    SS:  007b      ESP: 62285354  EBP: 62285388  GS:  0033
-    CS:  0073      EIP: 00291416  ERR: 000000da  EFLAGS: 00000286
-
-This should be a longstanding bug affecting x86 32bit PAE without
-THP. Only archs with 64bit large pmd_t and 32bit unsigned long should
-be affected.
-
-An unprivileged local user could use this flaw to crash the system.
-
-Proposed fix:
-http://permalink.gmane.org/gmane.linux.kernel.mm/78590
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=822821
-http://permalink.gmane.org/gmane.linux.kernel.mm/78590
-
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
+
+-- Kurt Seifried / Red Hat Security Response Team
+
