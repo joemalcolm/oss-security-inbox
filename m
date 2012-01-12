@@ -1,41 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/8
-Message-ID: <4FB242F6.2090506@gentoo.org>
-Date: Tue, 15 May 2012 07:50:14 -0400
-From: Sean Amoss <ackle@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/1
+Message-ID: <4F0E249E.6070700@redhat.com>
+Date: Wed, 11 Jan 2012 17:09:02 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: gdk-pixbuf Integer overflow in XBM file loader
+CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: drm: integer overflow in drm_mode_dirtyfb_ioctl()
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-
-I have not seen a CVE assigned for this issue yet:
-
-"It's possible to crash any application with memory allocation error, or
-potentially corrupt heap because width/height parameters isn't properly
-verified."
-
-
-References:
-https://bugs.gentoo.org/show_bug.cgi?id=412033
-https://bugs.launchpad.net/ubuntu/+source/gdk-pixbuf/+bug/681150
-
-Upstream bug:
-https://bugzilla.gnome.org/show_bug.cgi?id=672811
-
-Upstream commit:
-http://git.gnome.org/browse/gdk-pixbuf/commit/?id=4f0f465f991cd454d03189497f923eb40c170c22
-
-
-Thanks,
-Sean
+On 01/11/2012 03:50 AM, Eugene Teo wrote:
+> There is a potential integer overflow in drm_mode_dirtyfb_ioctl() if
+> userspace passes in a large num_clips.  The call to kmalloc would
+> allocate a small buffer, and the call to fb->funcs->dirty may result in
+> a memory corruption.
+>
+> Reported-by: Haogang Chen <haogangchen@...il.com>
+> Signed-off-by: Xi Wang <xi.wang@...il.com>
+>
+> Upstream commit:
+> http://git.kernel.org/linus/a5cd335165e31db9dbab636fd29895d41da55dd2
+Please use CVE-2012-0044 for this issue.
 
 -- 
-Sean Amoss
-Gentoo Security | GLSA Coordinator
-E-Mail	  : ackle@...too.org
-GnuPG ID  : E928357A
-GnuPG FP  : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
 
+-- Kurt Seifried / Red Hat Security Response Team
 
-Download attachment "signature.asc" of type "application/pgp-signature" (295 bytes)
