@@ -1,35 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/10
-Message-ID: <CAH5b-BXJwgK-3snZyGc=cUrTxstwsBsLTstZzeDQ5DesKPh-DA@mail.gmail.com>
-Date: Wed, 11 Jul 2012 16:12:09 +0200
-From: yersinia <yersinia.spiros@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/3
+Message-ID: <20120112004407.GA13150@openwall.com>
+Date: Thu, 12 Jan 2012 04:44:07 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
 Content-Type: text/plain; charset=utf-8
 
-Dunno if OT.
+Hi,
 
-But exists in other linux libc implementation similar more secure
-alternatives to getenv ?
+FWIW, the approach with per source IP address limits is also used in
+ModSecurity's SecReadStateLimit and SecWriteStateLimit directives:
 
-Thanks
+http://sourceforge.net/apps/mediawiki/mod-security/index.php?title=Reference_Manual#SecReadStateLimit
 
-2012/7/11, Solar Designer <solar@...nwall.com>:
-> On Wed, Jul 11, 2012 at 11:05:03AM +0200, Sebastian Krahmer wrote:
->> Ok. We are not in a hurry. I added the new patch to
->>
->> https://bugzilla.novell.com/show_bug.cgi?id=697105
->>
->> using __secure_getenv().
->
-> You could want to add a #warning after the #else (when __secure_getenv
-> is not detected by the configure script), although I'd prefer these
-> things to be fail-close (build failing if __secure_getenv is expected to
-> be present, but is not detected).  This is an issue with
-> security-related autoconf checks in general.
->
-> Alexander
->
+SecWriteStateLimit is now being talked about in context of slow read
+attacks:
 
--- 
-Inviato dal mio dispositivo mobile
+http://blog.spiderlabs.com/2012/01/modsecurity-advanced-topic-of-the-week-mitigation-of-slow-read-denial-of-service-attack.html
+
+Alexander
