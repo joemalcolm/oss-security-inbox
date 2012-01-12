@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/3
-Message-ID: <50939F0B.5020709@redhat.com>
-Date: Fri, 02 Nov 2012 15:53:07 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/8
+Message-ID: <4F0F5155.2060908@redhat.com>
+Date: Thu, 12 Jan 2012 14:32:05 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: libtiff: Missing return value check in ppm2tiff leading to heap-buffer overflow when reading a tiff file
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: Mediawiki
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+On 01/12/2012 01:31 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> please assign a CVE ID for a new security issue fixed in Mediawiki
+> 1.17.2:
+>
+> === Security changes ===
+> * (bug 33117) prop=revisions allows deleted text to be exposed through
+> cache pollution.
+>
+> http://svn.wikimedia.org/svnroot/mediawiki/tags/REL1_17_2/phase3/RELEASE-NOTES
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=33117
+> https://www.mediawiki.org/wiki/Special:Code/MediaWiki/108686
+> https://www.mediawiki.org/wiki/Special:Code/MediaWiki/108687
+>
+> Cheers,
+>         Moritz
 
-A flaw was found in the way ppm2tiff, a tool to create a TIFF file from
-PPM, PGM and PBM image files, did not check the return value of
-TIFFScanlineSize() function. When TIFFScanlineSize encountered an
-integer-overflow and returned zero, this value was not checked. A
-remote attacker could provide a specially-crafted PPM image format
-file, that when processed by ppm2tiff would lead to ppm2tiff executable
-crash or, potentially, arbitrary code execution with the privileges of
-the user running the ppm2tiff binary.
+=== Security changes ===
+* (bug 33117) prop=revisions allows deleted text to be exposed through cache pollution.
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=871700
 
+Please use CVE-2012-0046 for this issue.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+
+-- Kurt Seifried / Red Hat Security Response Team
+
