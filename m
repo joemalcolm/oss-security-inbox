@@ -1,18 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/14
-Message-ID: <m1ipguakg2.fsf@fess.ebiederm.org>
-Date: Fri, 20 Apr 2012 01:14:53 -0700
-From: ebiederm@...ssion.com (Eric W. Biederman)
-To: Pavel Emelyanov <xemul@...allels.com>
-Cc: Eugene Teo <eugeneteo@...nel.sg>,  Marcus Meissner <meissner@...e.de>,  OSS Security List <oss-security@...ts.openwall.com>,  "security\@kernel.org" <security@...nel.org>,  Sukadev Bhattiprolu <sukadev@...ibm.com>,  Serge Hallyn <serge.hallyn@...onical.com>
-Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/6
+Message-ID: <20120112083138.GA16901@inutil.org>
+Date: Thu, 12 Jan 2012 09:31:38 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Mediawiki
 Content-Type: text/plain; charset=utf-8
 
-Pavel Emelyanov <xemul@...allels.com> writes:
+Hi,
+please assign a CVE ID for a new security issue fixed in Mediawiki
+1.17.2:
 
-> I'm talking about the call to pid_ns_prepare_proc which does kern_mount
-> thus bringing the proc sb in memory and pinning the init's pid on it.
+=== Security changes ===
+* (bug 33117) prop=revisions allows deleted text to be exposed through
+cache pollution.
 
-My apologies I hadn't realized what you were thinking about.
+http://svn.wikimedia.org/svnroot/mediawiki/tags/REL1_17_2/phase3/RELEASE-NOTES
+https://bugzilla.wikimedia.org/show_bug.cgi?id=33117
+https://www.mediawiki.org/wiki/Special:Code/MediaWiki/108686
+https://www.mediawiki.org/wiki/Special:Code/MediaWiki/108687
 
-Eric
+Cheers,
+        Moritz
