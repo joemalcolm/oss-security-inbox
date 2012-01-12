@@ -1,51 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/19/2
-Message-ID: <DD8B8FEBBFAF9E488F63FF0F1A69EDD108DA3A10@ftrdmel1>
-Date: Sat, 19 May 2012 21:20:36 +0200
-From: <fabrice.fontaine@...nge.com>
-To: <henri@...v.fi>, <touko.korpela@....fi>
-Cc: <oss-security@...ts.openwall.com>
-Subject: RE: libupnp buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/1
+Message-ID: <CANdZDc4-E-ACYR=TbtCBmCDw=K1Ht2Q9emsBju6+a6mWOP0Wqw@mail.gmail.com>
+Date: Thu, 12 Jan 2012 16:56:14 -0700
+From: "Zooko Wilcox-O'Hearn" <zooko@...ko.com>
+To: oss-security@...ts.openwall.com
+Subject: details about Tahoe-LAFS security problem #1654
 Content-Type: text/plain; charset=utf-8
 
-You can find the list of source code commits for the 1.6.16 here: http://pupnp.git.sourceforge.net/git/gitweb.cgi?p=pupnp/pupnp;a=log;h=01d7c05fb882bb1904f5022a33eef8a68d8b8bdc.
+---------- Forwarded message ----------
+From: Brian Warner <warner@...har.com>
+Date: Thu, Jan 12, 2012 at 4:35 PM
+Subject: [tahoe-dev] details about #1654 security problem
+To: Tahoe-LAFS development <tahoe-dev@...oe-lafs.org>
 
-Moreover, the most important bug fixes have been added in the tracker: http://sourceforge.net/tracker/?atid=841026&group_id=166957&func=browse.
 
-To sum up, most of the issues were about memory leaks (http://sourceforge.net/tracker/?func=detail&aid=3497009&group_id=166957&atid=841026), a few of them were about security like an out of bound access (http://sourceforge.net/tracker/?func=detail&aid=3496933&group_id=166957&atid=841026, classified as CWE-119 by Coverity). However, most of the other "security" changes have been made to:
-	- replace strcpy or sprint by strncpy or snprintf as using sprintf is seen as a defect by coverity (CWE-676)
- 	- remove implicit integer conversion between unsigned and signed (seen as CWE-681 by Coverity)
+Dear Tahoe-LAFS Users:
 
-Best Regards,
+On 08-Jan-2012, Tahoe-LAFS core member Kevan Carstensen (author of the
+MDMF code) discovered a serious bug in v1.9.0 (the current stable
+release) that allows attackers to corrupt downloads of mutable files in
+certain cases. We've released Tahoe-LAFS v1.9.1 which removes this
+vulnerability. All users are encouraged to upgrade immediately to
+v1.9.1, or to downgrade to v1.8.3.
 
-Fabrice
+v1.9.0 was released about two months ago. As far as we know, ArchLinux
+is the only distribution to have packaged v1.9.0 (the others are still
+on v1.8.3, which is safe). So if you get your Tahoe-LAFS through a
+non-ArchLinux package, you're probably fine. If you build it yourself,
+you should upgrade.
 
------Message d'origine-----
-De : Henri Salo [mailto:henri@...v.fi] 
-Envoyé : samedi 19 mai 2012 20:47
-À : Touko Korpela
-Cc : FONTAINE Fabrice RD-MAPS-REN; oss-security@...ts.openwall.com
-Objet : Re: libupnp buffer overflows
+In Tahoe, files are encrypted, and then encoded into multiple redundant
+shares. Integrity-checking information (Merkle hash trees) are included
+in the shares to detect corruption. When downloading, these hashes are
+checked before combining the shares in the decoder, which generates
+ciphertext that can be decrypted into the original file. Mutable files
+have two sets of hash trees, the "share hash tree" (which covers all
+shares), and the "block hash trees" (which sit under the share-hash-tree
+and cover the individual blocks that make up each share, one block per
+128KiB segment of the original file).
 
-On Fri, May 18, 2012 at 10:22:52PM +0300, Touko Korpela wrote:
-> On Fri, May 18, 2012 at 08:43:52PM +0200, Florian Weimer wrote:
-> > * Touko Korpela:
-> > 
-> > > Upstream changelog for libupnp (/usr/share/doc/libupnp6/changelog.gz) lists
-> > > many fixes for buffer overflows in version 1.6.16. Should this be added to
-> > > tracker and check if CVE number is allocated?
-> > 
-> > It seems that the list of issues is fairly long.  Have you got a list
-> > of source code commits?
-> 
-> Unfortunately, no. I only noticed this from the changelog.
-> Maybe maintainer and/or upstream can tell if this can be exploited.
+The new mutable downloader released in v1.9.0, which supports both the
+old-style SDMF format and the new MDMF format, has a bug in which the
+share-hash-tree check is accidentaly bypassed when the Merkle hash tree
+is already fully populated. This doesn't normally occur, but shares can
+contain additional hash-tree nodes beyond the ones they strictly need.
+An attacker could modify one share to include the entire tree, then
+change the block data in the remaining shares. They would need to update
+the block-hash-trees in those doctored shares, but because of the bug,
+these tree roots will not be compared against the share hash tree.
 
-Fabrice replied: 
-"""
-Those issues were found by Coverity (http://www.coverity.com). Coverity affects CWE identifiers like CWE-170 but I haven't kept the CWE identifiers of all the fixed bugs.
-"""
+The attacker is thus able to control the input to the ZFEC decoder for
+all but the first share received (which must have valid block data).
+This gives them the ability to flip bits of the plaintext without
+triggering the CorruptShareError exceptions that share corruption would
+normally produce, causing corrupted plaintext to be delivered to an
+unwitting client.
 
-Did you Fabrice verify if these had security impact? I can try to help if needed.
+To exploit this bug, the attacker must be able to deliver multiple
+modified shares to your client, in a particular order: this means they
+must control one or more of your storage servers.
 
-- Henri Salo
+Note that this does not directly reveal the plaintext to the attacker
+(this is an integrity failure, not a confidentiality failure). However,
+"encryption without authentication" is never a safe state of affairs,
+and can frequently be exploited to reveal information about the
+plaintext (perhaps by inducing observable failures by flipping bits in
+messages of a known format). In addition, clients which read corrupted
+data as part of a read-modify-write operation (such as directory
+modifications) may then write the corrupted data back out to the file,
+making the corruption persist even after the client has been fixed.
+
+v1.9.1 fixes this by removing the accidental "if" clause, making the
+share-hash-tree check unconditional.
+
+The specific bug is in src/allmydata/mutable/retrieve.py,
+Retrieve._validate_block, around the call to
+share_hash_tree.set_hashes(), and was introduced in git revisionid
+ac3b2647dd2c45cd1ddbf5b130ee5a780c66c73b with the MDMF-capable
+downloader rewrite around 01-Aug-2011. The bug was first present in
+shipping code in Tahoe-LAFS-1.9.0, on 30-Oct-2011. It was fixed in
+commit 9b4b03a474a2c9050c8347459ab6698839be7288, shipped in
+Tahoe-LAFS-1.9.1 on 12-Jan-2012. We are continuing to audit the 1.9.x
+mutable downloader code to search for other potential bugs.
+
+Bug #1654 (https://tahoe-lafs.org/trac/tahoe-lafs/ticket/1654) was
+created to track this problem, and is now closed. The same fix was
+applied to trunk a few minutes ago, so trunk is now safe too.
+
+sorry!
+ -Brian
+_______________________________________________
+tahoe-dev mailing list
+tahoe-dev@...oe-lafs.org
+http://tahoe-lafs.org/cgi-bin/mailman/listinfo/tahoe-dev
