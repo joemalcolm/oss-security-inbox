@@ -1,19 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/03/1
-Message-ID: <20120903053546.GA25405@kludge.henri.nerv.fi>
-Date: Mon, 3 Sep 2012 08:35:46 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/2
+Message-ID: <4F0E24B5.7060503@redhat.com>
+Date: Wed, 11 Jan 2012 17:09:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: pawel.wylecial@...il.com
-Subject: CVE-request: CakePHP XXE injection
+Subject: Re: CVE request -- kernel: kvm: syscall instruction induced guest panic
 Content-Type: text/plain; charset=utf-8
 
-Could you assign 2012 CVE-identifier for this issue?
+On 01/11/2012 01:19 PM, Petr Matousek wrote:
+> "32bit guests will crash (and 64bit guests may behave in a
+> wrong way) for example by simply executing following
+> nasm-demo-application:
+>
+>     [bits 32]
+>     global _start
+>     SECTION .text
+>     _start: syscall
+>
+> The reason seems a missing "invalid opcode"-trap (int6) for the
+> syscall opcode "0f05", which is not available on Intel CPUs
+> within non-longmodes, as also on some AMD CPUs within legacy-mode.
+> (depending on CPU vendor, MSR_EFER and cpuid)
+>
+> Because previous mentioned OSs may not engage corresponding
+> syscall target-registers (STAR, LSTAR, CSTAR), they remain
+> NULL and (non trapping) syscalls are leading to multiple
+> faults and finally crashs."
+>
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=773370
+> https://lkml.org/lkml/2011/12/28/170
+> http://www.spinics.net/lists/kvm/msg66633.html
+>
+> Proposed patch:
+> http://www.spinics.net/lists/kvm/msg66633.html
+>
+> Credits:
+> Stephan Bärwolf
+>
+> Introduced by:
+> e66bb2ccdcf76d032bbb464b35c292bb3ee58f9b in linux-2.6.32
+>
+> Thanks,
+Please use CVE-2012-0045 for this issue.
 
-Original advisory: http://seclists.org/bugtraq/2012/Jul/101
-Vendor security advisory: http://bakery.cakephp.org/articles/markstory/2012/07/14/security_release_-_cakephp_2_1_5_2_2_1
-OSVDB: http://osvdb.org/show/osvdb/84042
+-- 
 
-"CakePHP 2.1.5 and 2.2.1 have just been released. If you are using CakePHP's `Xml` class, you should upgrade as soon as possible."
+-- Kurt Seifried / Red Hat Security Response Team
 
-- Henri Salo
