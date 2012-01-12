@@ -1,73 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/4
-Message-ID: <1325762541.14636.80@d.hx.id.au>
-Date: Thu, 05 Jan 2012 22:22:21 +1100
-From: David Hicks <d@...id.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/7
+Message-ID: <Pine.GSO.4.64.1201121219340.28039@faron.mitre.org>
+Date: Thu, 12 Jan 2012 12:31:08 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: Wireshark multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-iptables (/ip6tables) already allows for rate limiting via the hashlimit
-match extension. The inbuilt support for source masks makes it easy to
-progressively block larger subnets if an attacker has control over large
-subnets with many available IP addresses.
 
-Assume that 10.10.0.1 or fd01:2345:6789::1 starts flooding your server
-with 50 connection requests to SSH per second. iptables/ip6tables (via
-the hashlimit extension) is configured to prevent more than 3 SSH
-connection attempts per 15 minutes per IPv4 address (/32) or /64 IPv6
-allocation. After the first 3 SYN packets from the attacker, all further
-SYN packets will be dropped/recorded/whatever until >=15 minutes pass
-without another SYN packet arriving. It may also be possible to reset
-any existing connections the attacker has to the server and add the
-attacker to a temporary blacklist that drops all their traffic.
+On Wed, 11 Jan 2012, Kurt Seifried wrote:
 
-You may also have another rule configured such that no more than 30 SSH
-connection attempts are allowed per 15 minutes per /24 IPv4 allocation
-or /48 IPv6 allocation. An attacker that controls 10.10.0.0/24 or
-fd01:2345:6789::0/48 (not the best example) would no longer be able to
-utilise a compromised subnet to bypass the more stringent 3
-connections/15 minutes rule.
+> On 01/11/2012 07:20 PM, Steven M. Christey wrote:
+>>
+>> In this case, if a network monitor can be crashed, an attacker might
+>> be able to launch an attack undetected.  As such, NULL pointer
+>> dereferences and other crashers in security-relevant products often
+>> count for CVEs, so Kurt, please assign one for this.
+>>
+> From what I read the first #1 and #2 (secunia) map to wireshark
+> wnpa-sec-2012-02.html and wnpa-sec-2012-03.html respectively, so they
+> should be all good? Or did I misread it (this is entirely possible =).
 
-It is worth noting that the man page for ip6tables appears to contain an
-error[1] for the --hashlimit-srcmask argument. The manual indicates
-values for the mask must range from 0 to 32 bits (correct for IPv4).
-However values from 0 to 128 seem to be supported[2] if ip6tables is
-being used.
+No, my fault, sorry about that - I misread it.  No new CVE needed.  Using 
+Agostino's original request, Item 1 from SECUNIA:47494 is the same as 
+Wireshark item 2 (wnpa-sec-2012-02.html) as listed later in Agostino's 
+request, to which you had already assigned CVE-2012-0042.  I originally 
+read this like there were separate requests, and I missed that there were 
+overlapping references that talked about the same issue.
 
-
-OpenBSD's pf also allows for connection rate limiting with the
-"max-src-conn-rate" restriction. I haven't investigated how this works
-in comparison to iptables/hashlimit or whether it can support grouping
-of addresses sharing a common mask.
-
-
-The question these approaches raise is whether it is advisable to
-reinvent rate limiting in each and every network daemon. Performing rate
-limiting at the system/interface level prevents unwanted and expensive
-context switches to each daemon. Configuration and maintenance is much
-simpler because administrators don't need to learn 50 different ways to
-configure rate limiting for each daemon. There is also less risk for
-bugs to be written into the rate limiting implementation of each daemon.
-
-On a technical note, rate limiting requires a small amount of memory
-(buckets) to store information about recent connections. For this
-reason, allowing IPv6 rate limiting granularity at the /128 level would
-be inadvisable as an attacker with /64 addresses could quickly exhaust
-the table capacity/available memory. The design of the data structures
-and algorithms for the table need to be very efficient. Taking it down
-another level, a table that is larger than available L1-L3 cache could
-further degrade performance ([4] and [5] discuss hash tables and CPU
-cache).
-
-
-[1]
-https://git.netfilter.org/cgi-bin/gitweb.cgi?p=iptables.git;a=blob;f=extensions/libxt_hashlimit.man;h=f90577e77796502fac2ccc368a0863483aad4045;hb=HEAD#l30
-[2]
-https://git.netfilter.org/cgi-bin/gitweb.cgi?p=iptables.git;a=blob;f=extensions/libxt_hashlimit.c;h=da34cb2218a6bd053c856b288b881f6b97affd87;hb=HEAD#l210
-[3] http://www.openbsd.org/faq/pf/filter.html#stateopts
-[4]
-http://people.csail.mit.edu/nickolai/papers/metreveli-cphash-ppopp.pdf
-[5] http://people.csail.mit.edu/nickolai/papers/cphash-tr.pdf
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+- Steve
