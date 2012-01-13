@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/8
-Message-ID: <20120831161152.GE19175@dhcp-25-225.brq.redhat.com>
-Date: Fri, 31 Aug 2012 18:11:53 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/10
+Message-ID: <1326493857.7887.287.camel@new-desktop>
+Date: Fri, 13 Jan 2012 23:30:57 +0100
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: net: slab corruption due to improper synchronization around inet->opt
+Subject: Re: CVE affected for PHP 5.3.9 ?
 Content-Type: text/plain; charset=utf-8
 
-Description of the problem:
-Lack proper synchronization to manipulate inet->opt ip_options can lead
-to system crash.
+Le vendredi 13 janvier 2012 à 13:50 -0700, Kurt Seifried a écrit :
+> Again I'm still not clear on what/how a security boundary is being
+> crossed. How does this elevate privileges or give you remote access
+> that you wouldn't already if you can upload arbitrary PHP scripts?
 
-Problem is that ip_make_skb() calls ip_setup_cork() and ip_setup_cork()
-possibly makes a copy of ipc->opt (struct ip_options), without any
-protection against another thread manipulating inet->opt. Another thread
-can change inet->opt pointer and free old one under us.
+XSLT 1.0, as defined by the W3C, doesn't allow to save the result of a
+XSL transformation to the file system. This feature is an extension
+provided by libxslt itself. As PHP 5 uses libxslt as its XSLT engine,
+PHP applications parsing external/untrusted XSLT expose this feature.
 
-Given right server application (setting socket options and processing
-traffic over the same socket at the same time), remote attacker could
-use this flaw to crash the system. More likely though, local
-unprivileged user could use this flaw to crash the system.
+An attacker can provide specially crafted XSLT code which will create an
+arbitrary file with chosen content ("0wn3d.php" in my example). Then,
+this PHP file is requested by the attacker and executed.
 
-Upstream fix:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f6d8bd051c391c1c0458a30b2a7abcd939329259
+Somewhat similar to an undocumented file upload feature ...
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Regards,
+Nicolas
+
+
