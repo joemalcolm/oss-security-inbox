@@ -1,75 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/6
-Message-ID: <20120912140433.GA4786@suse.de>
-Date: Wed, 12 Sep 2012 16:04:33 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/7
+Message-ID: <4F109933.30407@redhat.com>
+Date: Fri, 13 Jan 2012 13:50:59 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: libdbus CVE-2012-3524 fix
+CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+Subject: Re: CVE affected for PHP 5.3.9 ?
 Content-Type: text/plain; charset=utf-8
 
-
-Hi,
-
-As the CRD is today, and list policy requires "opening" the
-distros-list posting, here is the forward.
-
-As a quick fix, the exploit can also be mitigated by properly
-placing the dbus-launch binary into the expected path, usually
-"/bin/dbus-launch", e.g.
-
-# ln -s /usr/bin/dbus-launch /bin/dbus-launch
-
-since for some reason, on most dists the binary is mis-placed
-into /usr/bin. This makes an execv() fail in libdbus itself,
-triggering an execvp().
-
-Sebastian
-
------ Forwarded message from Sebastian Krahmer <krahmer@...e.de> -----
-
-
-Hi,
-
-The recently discussed libdbus getenv() issue [1] turned out
-to be easily exploitable on various UNIX systems, including
-some Linux distributions. Common attack vectors are Xorg and
-spice-gtk via auto-launching [2].
-Properly patching requires fixes for libdbus and libgio,
-depending on which you link your suid binaries.
-Would be nice if someone from RH could forward their patch,
-as they have some developers upstream and possibly access to
-the private git commit (they also already assigned this CVE).
-My CRD proposal is Sept. 12th. As can be seen in [1], this issue
-is indeed public since 1+ year.
-
-Sebastian
-
-[1] https://bugzilla.novell.com/show_bug.cgi?id=697105
-[2] http://stealth.openwall.net/null/dzug.c
-
-PS: This is a re-send, the first mail to distros list was probably
-catched by spam filter.
+On 01/13/2012 11:08 AM, Nicolas Grégoire wrote:
+> Le vendredi 13 janvier 2012 à 09:54 -0700, Kurt Seifried a écrit :
+>> I'm not clear on how this crosses a security boundary
+> Some applications *will* process untrusted XSLT stylesheets.
+>
+> The most basic example is online XSLT gateways :
+> http://www.shell-tools.net/index.php?op=xslt
+> http://online-toolz.com/tools/xslt-transformation.php
+>
+> You may find more with Google and a dork like [inurl:php
+> inurl:"xsl=http"]. This is often used to adapt the layout of a page to
+> the browser (desktop vs. mobile).
+>
+> There's too some more complex cases where untrusted XSLT may be used,
+> like parsing SVG images, XML-DSig signatures or SAML tokens, ...
+>
+> Regards,
+> Nicolas
+>
+>
+Ok I'm still not clear on what the security claim is. Are you saying you
+can cause arbitrary text output via XSL/XML mangling tricks? And
+combined with having a script that uses something like "<sax:output
+href="0wn3d.php" method="text">" you can put arbitrary text content into
+this file which could then result in the file being parsed? The problem
+is you'd have to write a script that does this, writes to a local file
+with a file ending in .php or .shtml or whatever, in which case it's
+pretty clear the script writer MEANT to do that. Again I'm still not
+clear on what/how a security boundary is being crossed. How does this
+elevate privileges or give you remote access that you wouldn't already
+if you can upload arbitrary PHP scripts?
 
 -- 
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imend?rffer, HRB 16746 (AG N?rnberg)
-Maxfeldstra?e 5
-90409 N?rnberg
-Germany
-
-
-
------ End forwarded message -----
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+-- Kurt Seifried / Red Hat Security Response Team
 
