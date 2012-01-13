@@ -1,36 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/23
-Message-ID: <87hazr33hu.fsf@mid.deneb.enyo.de>
-Date: Thu, 19 Jan 2012 20:18:37 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/8
+Message-ID: <4F109A93.7040705@redhat.com>
+Date: Fri, 13 Jan 2012 13:56:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Screen locking programs on Xorg 1.11
+Subject: Re: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
-> I recently found out that it is possible to kill a screensaver/screen
-> locker program on the latest version of Xorg (1.11 shipped with
-> archlinux, debian wheezy..) using the Ctrl+Alt+Multiply key binding.
+On 01/09/2012 11:48 AM, Kurt Seifried wrote:
+> On 01/07/2012 08:13 AM, Rubidium wrote:
+>> Hi folks,
+>>
+>> we, the OpenTTD developers, have identified a security vulnerability in
+>> OpenTTD (an open source game with multiplayer). Would you be so kind
+>> as to allocate a CVE id for this issue?
+>>
+>> The issue concerns a denial of service vulnerability in the form of a
+>> slow read attack preventing anyone to join the server, and preventing
+>> the continuation of a game when 'pause on join' is enabled. This
+>> attack requires the attacker to be authorized, but most servers do not
+>> implement authorization. The first vulnerable version is 0.3.5, the
+>> upcoming 1.1.5 release will have the issue fixed.
+>>
+>> Once a CVE id is allocated, the issue and fix will be documented at
+>> http://security.openttd.org/CVE-2012-xxxx
+>>
+>> Thanks in advance,
+>> Remko 'Rubidium' Bijker
+>>
+>> (Please CC me, I'm not subscribed)
+> Need more information like a code commit to link to.
+>
+> -- Kurt Seifried / Red Hat Security Response Team
+Rubidium replied to me offlist:
 
-This used to be, uhm, common knowledge:
+http://vcs.openttd.org/svn/changeset/23764
 
-| Option "AllowDeactivateGrabs" "boolean"
-|     This option enables the use of the Ctrl+Alt+Keypad-Divide key
-|     sequence to deactivate any active keyboard and mouse
-|     grabs. Default: off.
-| 
-| Option "AllowClosedownGrabs" "boolean"
-|     This option enables the use of the Ctrl+Alt+Keypad-Multiply key
-|     sequence to kill clients with an active keyboard or mouse grab as
-|     well as killing any application that may have locked the server,
-|     normally using the XGrabServer(3x) Xlib function. Default: off.
-| 
-|     Note that the options AllowDeactivateGrabs and AllowClosedownGrabs
-|     will allow users to remove the grab used by screen saver/locker
-|     programs. An API was written to such cases. If you enable this
-|     option, make sure your screen saver/locker is updated.
+Please use CVE-2012-0048 for this issue.
 
-<http://www.x.org/archive/X11R6.8.1/doc/Xorg.1.html>
 
-The API in question appears to be XF86MiscSetGrabKeysState:
 
-<http://cvsweb.xfree86.org/cvsweb/xc/programs/Xserver/hw/xfree86/XF86Config.man?hideattic=0#rev1.6>
+-- 
+
+-- Kurt Seifried / Red Hat Security Response Team
+
