@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/08/7
-Message-ID: <4F59345B.3050903@redhat.com>
-Date: Thu, 08 Mar 2012 15:36:11 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/6
+Message-ID: <1326478099.7887.260.camel@new-desktop>
+Date: Fri, 13 Jan 2012 19:08:19 +0100
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: phpMyFAQ index.php URI XSS
+Subject: Re: CVE affected for PHP 5.3.9 ?
 Content-Type: text/plain; charset=utf-8
 
-On 03/08/2012 12:41 AM, Henri Salo wrote:
-> Can I get 2010 CVE-identifier for security vulnerability in phpMyFAQ, thanks.
-> 
-> Original advisory: http://seclists.org/bugtraq/2010/Sep/207
-> Vendor URL: http://www.phpmyfaq.de/advisory_2010-09-28.php
-> OSVDB: http://osvdb.org/show/osvdb/68268
-> Secunia: http://secunia.com/advisories/41625/
-> 
-> Fixed in version 2.6.9.
-> 
-> - Henri Salo
+Le vendredi 13 janvier 2012 à 09:54 -0700, Kurt Seifried a écrit :
+> I'm not clear on how this crosses a security boundary
 
-Please use CVE-2010-4821 for this issue.
+Some applications *will* process untrusted XSLT stylesheets.
+
+The most basic example is online XSLT gateways :
+http://www.shell-tools.net/index.php?op=xslt
+http://online-toolz.com/tools/xslt-transformation.php
+
+You may find more with Google and a dork like [inurl:php
+inurl:"xsl=http"]. This is often used to adapt the layout of a page to
+the browser (desktop vs. mobile).
+
+There's too some more complex cases where untrusted XSLT may be used,
+like parsing SVG images, XML-DSig signatures or SAML tokens, ...
+
+Regards,
+Nicolas
 
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
