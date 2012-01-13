@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/1
-Message-ID: <1961204867.37145591.1353671088048.JavaMail.root@redhat.com>
-Date: Fri, 23 Nov 2012 06:44:48 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/5
+Message-ID: <4F1061DE.9020501@redhat.com>
+Date: Fri, 13 Jan 2012 09:54:54 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Christoph Biedl <debian.axhn@...chmal.in-ulm.de>
-Subject: CVE Request -- android-tools (server): Insecure temporary file used for logging
+CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+Subject: Re: CVE affected for PHP 5.3.9 ?
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On 01/13/2012 08:19 AM, Nicolas Grégoire wrote:
+> Hello,
+>
+> PHP released v5.3.9 earlier this month :
+> http://php.net/ChangeLog-5.php#5.3.9
+>
+> I wonder if CVE identifiers were already affected to these security
+> vulnerabilities. I'm looking specifically for bug 54446 that I
+> reported : https://bugs.php.net/bug.php?id=54446
+>
+> Regards,
+> Nicolas
+>
+>
+I'm not clear on how this crosses a security boundary. The attacker
+would need to write a custom script that uses the "<sax:output
+href="0wn3d.php" method="text">" and the user the script runs as (apache
+usually or whatever local account is in use) would also need write
+permissions to the directory in question. How is this different than say
+using fopen/fwrite to create the file?
 
-  Christoph Biedl in Debian bug report [1] noticed the
-following deficiency:
+-- 
 
-An insecure temporary file use flaw was found in the way
-server component of android tools, a suite of Android Debug
-Bridge (ADB) platform tools, performed logging of server
-events upon server startup. A local attacker could use this
-flaw to conduct symbolic links attacks, possibly leading to
-their ability to append unauthorized content to system files
-accessible with the privileges of the user running the adb
-executable.
+-- Kurt Seifried / Red Hat Security Response Team
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=688280
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=879582
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
