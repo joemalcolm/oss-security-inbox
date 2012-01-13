@@ -1,30 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/6
-Message-ID: <CAF6rxgk20-9R7LczRPC87JhTeGbFx-jr_J1u2sqZ+73zL+TUYQ@mail.gmail.com>
-Date: Wed, 17 Oct 2012 13:39:18 -0400
-From: Eitan Adler <lists@...anadler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/9
+Message-ID: <4F109ADD.80906@redhat.com>
+Date: Fri, 13 Jan 2012 13:58:05 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
+Subject: Re: CVE request for OpenTTD - use CVE-2012-0049!
 Content-Type: text/plain; charset=utf-8
 
-On 17 October 2012 13:31, Simon McVittie <smcv@...ian.org> wrote:
-> As you imply, that pseudocode is a bad idea anyway: the webapp should
-> be ensuring that the filenames match a pattern more like
-> /^[A-Za-z0-9_]\.jpg$/ (or not allowing user-controlled filenames at
-> all), and/or the web server should be configured so it never trusts
-> files in the uploads directory (either as executable code or something
-> like .htaccess).
-
-> Anything vulnerable to this sort of trickery is probably vulnerable to
-> file-overwriting attacks via "../" path segments, too.
-
-What if they ensure this sort of safety via some other mechanism?
-(chroot for example)
-What if they take the file name to be "anything after the final /" ?
-
-I could see some instances, albeit contrived, where an application
-might be vulnerable to this sort of attack, but not vulnerable to
-generic path traversal.
+On 01/13/2012 01:56 PM, Kurt Seifried wrote:
+> On 01/09/2012 11:48 AM, Kurt Seifried wrote:
+>> On 01/07/2012 08:13 AM, Rubidium wrote:
+>>> Hi folks,
+>>>
+>>> we, the OpenTTD developers, have identified a security vulnerability in
+>>> OpenTTD (an open source game with multiplayer). Would you be so kind
+>>> as to allocate a CVE id for this issue?
+>>>
+>>> The issue concerns a denial of service vulnerability in the form of a
+>>> slow read attack preventing anyone to join the server, and preventing
+>>> the continuation of a game when 'pause on join' is enabled. This
+>>> attack requires the attacker to be authorized, but most servers do not
+>>> implement authorization. The first vulnerable version is 0.3.5, the
+>>> upcoming 1.1.5 release will have the issue fixed.
+>>>
+>>> Once a CVE id is allocated, the issue and fix will be documented at
+>>> http://security.openttd.org/CVE-2012-xxxx
+>>>
+>>> Thanks in advance,
+>>> Remko 'Rubidium' Bijker
+>>>
+>>> (Please CC me, I'm not subscribed)
+>> Need more information like a code commit to link to.
+>>
+>> -- Kurt Seifried / Red Hat Security Response Team
+> Rubidium replied to me offlist:
+>
+> http://vcs.openttd.org/svn/changeset/23764
+>
+> Please use CVE-2012-0048 for this issue.
+>
+>
+>
+Augh typo, that should have been CVE-2012-0049!
 
 -- 
-Eitan Adler
+
+-- Kurt Seifried / Red Hat Security Response Team
+
