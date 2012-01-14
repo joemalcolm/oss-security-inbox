@@ -1,20 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/07/5
-Message-ID: <20121107194627.6533e173@redhat.com>
-Date: Wed, 7 Nov 2012 19:46:27 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/14/3
+Message-ID: <4F11D800.7090504@redhat.com>
+Date: Sat, 14 Jan 2012 12:31:12 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: IcedTea-Web CVE-2012-4540
+CC: Ignacio Espinosa <osu@...dvis.net>, Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+Subject: Re: CVE affected for PHP 5.3.9 ?
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On 01/14/2012 12:03 PM, Ignacio Espinosa wrote:
+> On Fri, 13 Jan 2012 13:50:59 -0700
+> Kurt Seifried <kseifried@...hat.com> wrote:
+>> [...]
+>> Ok I'm still not clear on what the security claim is. Are you saying you
+>> can cause arbitrary text output via XSL/XML mangling tricks? And
+>> combined with having a script that uses something like "<sax:output
+>> href="0wn3d.php" method="text">" you can put arbitrary text content into
+>> this file which could then result in the file being parsed? The problem
+>> is you'd have to write a script that does this, writes to a local file
+>> with a file ending in .php or .shtml or whatever, in which case it's
+>> pretty clear the script writer MEANT to do that. Again I'm still not
+>> clear on what/how a security boundary is being crossed. How does this
+>> elevate privileges or give you remote access that you wouldn't already
+>> if you can upload arbitrary PHP scripts?
+>>
+>>
+> You don't need to upload arbitrary php scripts to make this works. Just uploading a crafted xslt file will create (before patch)  a file with arbitrary content, php code for example, as write-access is set for default.
+>
+> -- snip --
+>         <sax:output href="0wn3d.php" method="text">
+>         <xsl:value-of select="'&lt;?php system(\$_GET[&quot;cmd&quot;]);?&gt;'"/>
+> -- snip --
+>
+>
 
-IcedTea-Web versions 1.1.7, 1.2.2 and 1.3.1 that were just released fix
-a buffer overflow IcedTeaScriptableJavaObject::invoke.  The issue got
-CVE-2012-4540 assigned.
+Right but the script has to have the line
 
-http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2012-November/020775.html
-http://icedtea.classpath.org/hg/release/icedtea-web-1.3/rev/e7970f3da5fe
+<sax:output href="0wn3d.php" method="text">
+
+which means the author really meant to do this (output a php or shtml or whatever file), or can the attacker somehow control the output href commonly? It appears that this is not the case. This does not appear to be a security vulnerability. 
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+
+-- Kurt Seifried / Red Hat Security Response Team
+
