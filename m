@@ -1,10 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/7
-Message-ID: <87zk9e7lvw.fsf@algae.riseup.net>
-Date: Fri, 11 May 2012 11:55:31 -0400
-From: micah anderson <micah@...eup.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/14/1
+Message-ID: <4F110786.50108@redhat.com>
+Date: Fri, 13 Jan 2012 21:41:42 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: sympa
+CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+Subject: Re: CVE affected for PHP 5.3.9 ?
 Content-Type: text/plain; charset=utf-8
 
-Content of type "application/pgp-signature" skipped
+On 01/13/2012 03:30 PM, Nicolas Grégoire wrote:
+> Le vendredi 13 janvier 2012 à 13:50 -0700, Kurt Seifried a écrit :
+>> Again I'm still not clear on what/how a security boundary is being
+>> crossed. How does this elevate privileges or give you remote access
+>> that you wouldn't already if you can upload arbitrary PHP scripts?
+> XSLT 1.0, as defined by the W3C, doesn't allow to save the result of a
+> XSL transformation to the file system. This feature is an extension
+> provided by libxslt itself. As PHP 5 uses libxslt as its XSLT engine,
+> PHP applications parsing external/untrusted XSLT expose this feature.
+>
+> An attacker can provide specially crafted XSLT code which will create an
+> arbitrary file with chosen content ("0wn3d.php" in my example). Then,
+> this PHP file is requested by the attacker and executed.
+>
+> Somewhat similar to an undocumented file upload feature ...
+Right, but in this case to upload the file you need to put a custom php
+script on the server, so no additional privilege or access is gained. Is
+it common for these scripts to allow a remote user to specify the output
+location (this seems unlikely to me)?
+> Regards,
+> Nicolas
+>
+>
+
+
+-- 
+
+-- Kurt Seifried / Red Hat Security Response Team
+
