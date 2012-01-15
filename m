@@ -1,20 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/6
-Message-ID: <CAJzxamK7STS-ydt5PWvLW1bYj5gwwGNgMopkoTY3DP0knzE3ug@mail.gmail.com>
-Date: Wed, 7 Nov 2012 00:37:25 +1100
-From: David Black <disclosure@....org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: TTY handling when executing code in different lower-privileged context (su, virt containers)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/7
+Message-ID: <1611310.NLWvOFezWo@devil>
+Date: Sun, 15 Jan 2012 15:48:17 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request for spamdyke "STARTTLS" Plaintext
 Content-Type: text/plain; charset=utf-8
 
->In both cases, paranoid administrators might decide to use /dev/null
->as stdin/stdout/stderr when just starting non-interactive programs in
->different context, while they could replace the privileged shell with
->exec when interactive context switch is needed (no shell, no escalation).
->
->Any opinions on that?
->
+In reference of: http://www.openwall.com/lists/oss-security/2012/01/07/1 :
+
+According to secunia security advisory ( https://secunia.com/advisories/47435
+ ) :
+
+Description:
+A vulnerability has been reported in spamdyke, which can be exploited by 
+malicious people to manipulate certain data.
+
+The vulnerability is caused due to the TLS implementation not properly 
+clearing transport layer buffers when upgrading from plaintext to ciphertext 
+after receiving the "STARTTLS" command. This can be exploited to insert 
+arbitrary plaintext data (e.g. SMTP commands) during the plaintext phase, 
+which will then be executed after upgrading to the TLS ciphertext phase.
+
+The vulnerability is reported in versions prior to 4.2.1.
 
 
-Perhaps if sudo/su determine if a user is running 'interactively' they
-could use a pseudo-pty ?
+Solution:
+Update to version 4.2.1.
+
+
+And from upstream changelog ( 
+http://www.spamdyke.org/documentation/Changelog.txt ):
+
+ Changed smtp_filter() and middleman() to discard any buffered input after TLS
+    is started.  This prevents the injection of commands into a secure session
+    by sending extra input in the same packet as the "STARTTLS" command.  Not
+    really a security problem but good practice anyway.  Thanks to Eric 
+Shubert for reporting this one.
+
+
+Sorry Kurt, but atm, I have not found the commit code.
+
+
+-- 
+Agostino Sarubbo		ago -at- gentoo.org
+Gentoo/AMD64 Arch Security Liaison
+GPG: 0x7CD2DC5D
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
