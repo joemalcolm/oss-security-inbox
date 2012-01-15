@@ -1,21 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/2
-Message-ID: <20120320102000.GI3053@dhcp-25-225.brq.redhat.com>
-Date: Tue, 20 Mar 2012 11:20:01 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/6
+Message-ID: <20120115143917.GJ13740@foo.fgeek.fi>
+Date: Sun, 15 Jan 2012 16:39:17 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- kernel: execshield: predictable ascii armour base address
+Subject: Re: CVE-request: WordPress 3.1.1
 Content-Type: text/plain; charset=utf-8
 
-When running a binary with a lot of shared libraries, predictable base
-address is used for one of the loaded libraries.
+On Sun, Jan 15, 2012 at 03:32:48PM +0100, Hanno Böck wrote:
+> > 1) Certain unspecified input is not properly sanitised before being
+> > returned to the user. This can be exploited to execute arbitrary HTML
+> > and script code in a user's browser session in context of an affected
+> > site. http://osvdb.org/show/osvdb/72141
+> 
+> I think this is CVE-2012-0287:
+> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-0287
 
-This flaw could be used to bypass ASLR.
+I think you are correct. I do not know why I did not see this in allitems.txt.gz. Can't find other CVEs with that URL. There seems to be three issues. I am refering to http://wordpress.org/news/2011/04/wordpress-3-1-1/:
 
-References:
-http://scarybeastsecurity.blogspot.com/2012/03/some-random-observations-on-linux-aslr.html
-https://bugzilla.redhat.com/show_bug.cgi?id=804947
+"Version 3.1.1 also addresses three security issues discovered by WordPress core developers Jon Cave and Peter Westwood, of our security team. The first hardens CSRF prevention in the media uploader. The second avoids a PHP crash in certain environments when handling devilishly devised links in comments, and the third addresses an XSS flaw."
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+======================================================
+Name: CVE-2012-0287
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-0287
+Phase: Assigned (20120103)
+Category: 
+Reference: MISC:http://oldmanlab.blogspot.com/2012/01/wordpress-33-xss-vulnerability.html
+Reference: CONFIRM:https://wordpress.org/news/2012/01/wordpress-3-3-1/
+
+Cross-site scripting (XSS) vulnerability in wp-comments-post.php in
+WordPress 3.3.x before 3.3.1, when Internet Explorer is used, allows
+remote attackers to inject arbitrary web script or HTML via the query
+string in a POST operation that is not properly handled by the
+"Duplicate comment detected" feature.
+
+
+Current Votes:
+None (candidate not yet proposed)
+======================================================
+
+- Henri Salo
