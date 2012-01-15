@@ -1,64 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/9
-Message-ID: <4F2C4F7B.40901@redhat.com>
-Date: Fri, 03 Feb 2012 14:19:55 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/12
+Message-ID: <4F132DE5.3030202@redhat.com>
+Date: Sun, 15 Jan 2012 12:49:57 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Joomla! Security News 2012-02-03
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>, Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: Wireshark multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 02/03/2012 06:25 AM, Henri Salo wrote:
-> And again few Joomla security issues without CVE.
-> 
-> - Henri Salo
-> 
-> ----- Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
-> 
-> Date: Fri, 03 Feb 2012 13:11:55 +0000
-> From: Joomla! Developer Network - Security News <no_reply@...mla.org>
-> To: henri@...v.fi
-> Subject: Joomla! Security News
-> 
-> Joomla! Developer Network - Security News
-> 
-> ///////////////////////////////////////////
-> [20120201] - Core - Information Disclosure
-> 
-> Posted: 01 Feb 2012 09:25 PM PST
-> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/PkBR45UJQxo/387-20120201-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
+On 01/12/2012 10:55 PM, Huzaifa Sidhpurwala wrote:
+>
+> There are 6 file format crashes here. In the interest of vendors,
+> which dont always rebase to the newer version, would it be convenient
+> to split these into 6 CVEs?
+>
+> I doubt some older versions are affected by only some crashers.
+>
+>
 
-http://developer.joomla.org/security/news/387-20120201-core-information-disclosure.html
-
-Please use CVE-2012-0835 for this issue
-
-
-> ///////////////////////////////////////////
-> [20120202] - Core - Information Disclosure
-> 
-> Posted: 01 Feb 2012 09:25 PM PST
-> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/MFhhodAeXho/388-20120202-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
-
-http://developer.joomla.org/security/news/388-20120202-core-information-disclosure.html
-
-Please use CVE-2012-0836 for this issue
-
-> ///////////////////////////////////////////
-> [20120203] - Core - Information Disclosure
-> 
-> Posted: 01 Feb 2012 09:25 PM PST
-> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/LY07jV4Rnvs/389-20120203-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
-
-http://developer.joomla.org/security/news/389-20120203-core-information-disclosure.html
-
-Please use CVE CVE-2012-0837 for this issue
-
-
-Also I not from last time we ended at 385, I can't find the news item
-for 386 easily, any idea if that is a security issue or something else?
-
-http://developer.joomla.org/security/news/
-
+I agree in principle, however in practice this is a lot of work (as you
+well know =). I guess my question/concern would be is who does the
+research to verify all this, and what if it varies by version (i.e. it
+is 6 separate issues in an older version but the newer version combined
+some code into a common library for example so it's only a single issue,
+but with multiple avenues of attack/etc.). In other words a lot of
+potential work.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+
+-- Kurt Seifried / Red Hat Security Response Team
+
