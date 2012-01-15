@@ -1,61 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/7
-Message-ID: <20120502221425.GY13910@redhat.com>
-Date: Wed, 2 May 2012 16:14:25 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/10
+Message-ID: <1326647295.7887.574.camel@new-desktop>
+Date: Sun, 15 Jan 2012 18:08:15 +0100
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: weak use of crypto in python-elixir can lead to information disclosure (CVE and peer review request)
+Subject: Re: CVE affected for PHP 5.3.9 ?
 Content-Type: text/plain; charset=utf-8
 
-* [2012-05-01 13:03:56 +0200] Florian Weimer wrote:
 
->* Florian Weimer:
->
->> * Vincent Danen:
->>
->>>>And you can group by encrypted column values in the database.  That's
->>>>why I'm not sure if it's actually possible to address this issue in a
->>>>satisfying manner.
->>>
->>> So the encryption can be more fine-grained than just per-table?  You can
->>> also do it per-column?  If that's the case, this does sound a lot uglier
->>> to deal with.
->>
->> This test case suggests to me that you have to specify the list of
->> encrypted columns explicitly:
->>
->> <http://elixir.ematia.de/trac/browser/elixir/trunk/tests/test_encryption.py>
->>
->> Based on this example, it's not clear to me if the current
->> implementation supports get_by with an encrypted column.  If this is a
->> feature which needs preserving, there is no apparent way around
->> convergent encryption.
->
->So it turns out that this passes the assert:
->
->        p = Person.get_by(password='r\\x9d\\xa8\\xb4\\x8d|\\xffp\\xf5\\x0e')
->        assert p.name == 'Jonathan LaCour'
->
->But this fails because p is None:
->
->        p = Person.get_by(ssn='123-45-6789')
->        assert p.name == 'Jonathan LaCour'
->
->This suggests to me that get_by on an encrypted column is not actually
->supported.
->
->The documentation doesn't describe which queries are supported:
-><http://elixir.ematia.de/apidocs/elixir.ext.encrypted.html>
+> Can you provide a reproducer (vuln script and a malicious input) that
+> shows this in action (e.g. creates a local php file).
 
-Thanks, Florian.  Seems like this thing is a bit messy.  I did post your
-questions to the Red Hat bug, and there were some developer responses
-there.
+Please find attached the "php539-xslt.php" script.
 
-The long and short of it is that, despite what you've brought up, they
-feel the fix is still appropriate.
+This script displays by default a pre-filled HTML form including some
+XML data and XSLT code. When the form is submitted, the user-controlled
+XML data is transformed using the user-controlled XSLT code. Then, the
+output of this transformation is displayed in the browser.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=810013#c33 (for this
-interested in the details).
+When executed, the pre-filled XSLT code will write
+to /var/www/xxx/backdoor.php this content :
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+<html><body>
+<h1><font color="red">I'm a (very) malicious PHP file !!!</font></h1>
+<?php phpinfo()?>
+</body></html>
+
+Note : the payload is encrypted with RC4. A static key ("simple_demo")
+embedded in the XSLT code is used to decrypt it.
+
+Regards,
+Nicolas
+
+
+
+Download attachment "php539-xslt.php" of type "application/x-php" (2038 bytes)
