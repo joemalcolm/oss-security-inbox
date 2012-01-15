@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/23/5
-Message-ID: <4F46B439.6030605@redhat.com>
-Date: Thu, 23 Feb 2012 14:48:41 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/1
+Message-ID: <1326586554.7887.512.camel@new-desktop>
+Date: Sun, 15 Jan 2012 01:15:54 +0100
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- kernel: block: CLONE_IO io_context refcounting issues
+Subject: Re: CVE affected for PHP 5.3.9 ?
 Content-Type: text/plain; charset=utf-8
 
-On 02/23/2012 11:11 AM, Petr Matousek wrote:
-> With CLONE_IO, copy_io() increments both ioc->refcount and
-> ioc->nr_tasks. However exit_io_context() only decrements
-> ioc->refcount if ioc->nr_tasks reaches 0.
-> 
-> With CLONE_IO, parent's io_context->nr_tasks is incremented, but never
-> decremented whenever copy_process() fails afterwards, which prevents
-> exit_io_context() from calling IO schedulers exit functions.
-> 
-> An unprivileged local user could use these flaws cause denial of
-> service.
-> 
-> Upstream fixes:
-> 61cc74fbb87af6aa551a06a370590c9bc07e29d9
-> b69f2292063d2caf37ca9aec7d63ded203701bf3
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=796829
-> http://comments.gmane.org/gmane.linux.kernel/922519
-> 
-> Looks like it got fixed in Linux kernel 2.6.33(-rc1).
-> 
-> Thanks,
 
-Please use CVE-2012-0879 for this issue.
+> Right but the script has to have the line
+> <sax:output href="0wn3d.php" method="text">
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Wrong.
+
+The PHP code only has to call transformToXML() after having loaded the
+malicious XSLT code via importStylesheet(). The XML data itself is
+irrelevant for this bug and the "sax:output" tag isn't in the PHP script
+but in the XSLT stylesheet provided by the attacker.
+
+# LOAD XML FILE 
+$XML = new DOMDocument(); 
+$XML->loadXML( $sXml ); 
+
+# LOAD XSLT FILE 
+$XSL = new DOMDocument(); 
+$XSL->loadXML( $sXsl ); // Content of $xXsl may be untrusted !
+
+# START XSLT 
+$xslt = new XSLTProcessor(); 
+$xslt->importStylesheet( $XSL );
+
+# TRASNFORM & PRINT 
+print $xslt->transformToXML( $XML ); // File creation !
+
+Nicolas
+
