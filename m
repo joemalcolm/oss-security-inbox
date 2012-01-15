@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/17
-Message-ID: <4F54F31E.1050300@redhat.com>
-Date: Mon, 05 Mar 2012 18:08:46 +0100
-From: Stefan Cornelius <scorneli@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/4
+Message-ID: <20120115153248.1c62a48a@ok4imboeog>
+Date: Sun, 15 Jan 2012 15:32:48 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-1106 assignment notification -- abrt: Setuid process core dump archived with unsafe GID permissions
+Subject: Re: CVE-request: WordPress 3.1.1
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Am Sun, 15 Jan 2012 16:09:14 +0200
+schrieb Henri Salo <henri@...v.fi>:
 
-A sensitive information disclosure flaw was found in the way abrt, the
-automatic bug detection and reporting tool, performed archiving of certain core
-dump files. When the abrt C handler plug-in and core dumps for setuid and
-setgid processes were enabled (via fs.suid_dumpable=2), an unprivileged local
-user could use this flaw to obtain access to core dump files of setuid
-processes, which terminated with crash and were run by the same unprivileged
-user, leading to disclosure of sensitive information due to weak GID
-permissions, those core dump files were created with.
+> If I am correct these WordPress issues are missing CVEs. I checked
+> from MITREs CVE-list and tried Google. Needs two 2011 CVE.
+> 
+> 1) Certain unspecified input is not properly sanitised before being
+> returned to the user. This can be exploited to execute arbitrary HTML
+> and script code in a user's browser session in context of an affected
+> site. http://osvdb.org/show/osvdb/72141
 
-We have assigned CVE-2012-1106 to this issue.
+I think this is CVE-2012-0287:
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-0287
 
-Upstream patch:
-https://fedorahosted.org/abrt/changeset/23d6997d7886abe118c28254f7f73f0b19b2d4e0
+> 2) The "make_clickable()" function in wp-includes/formatting.php does
+> not properly check the URL length in comments before passing it to
+> the PCRE library, which can be exploited to cause a crash.
+> http://osvdb.org/show/osvdb/72142
+> 
+> http://wordpress.org/news/2011/04/wordpress-3-1-1/
+> http://secunia.com/advisories/44038/
+> http://seclists.org/cert/2011/63
 
-Red Hat bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=785163
-
-Thanks and kind regards,
+Don't know if this got one, too.
 
 -- 
-Stefan Cornelius / Red Hat Security Response Team
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
