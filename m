@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/6
-Message-ID: <20120210185157.GE1797@redhat.com>
-Date: Fri, 10 Feb 2012 11:51:57 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/5
+Message-ID: <1326638125.4782.35.camel@scapa>
+Date: Sun, 15 Jan 2012 15:35:25 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: imagemagick invalid validation DoS CVE-2012-0247 and CVE-2012-02478
+Subject: Re: CVE-request: WordPress 3.1.1
 Content-Type: text/plain; charset=utf-8
 
-* [2012-02-10 13:36:24 +0200] Henri Salo wrote:
+On dim., 2012-01-15 at 16:09 +0200, Henri Salo wrote:
+> I even contacted WordPress administrators and asked if this does have
+> CVE, but they haven't replied for some reason.
 
->Concerning ImageMagick 6.7.5-0 and earlier:
->
->CVE-2012-0247: When parsing a maliciously crafted image with incorrect offset and count in the ResolutionUnit tag in EXIF IFD0, ImageMagick copies two bytes into an invalid address.
->CVE-2012-0248: When parsing a maliciously crafted image with an IFD whose all IOP tags' value offsets point to the beginning of the IFD itself. As a result, ImageMagick parses the IFD structure indefinitely, causing a denial of service.
->
->For more details please read: http://www.imagemagick.org/discourse-server/viewtopic.php?f=4&t=20286
->CERT-FI: http://www.cert.fi/haavoittuvuudet/2012/haavoittuvuus-2012-021.html (finnish)
->Reported to Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659339
+Note that I tried to contact Ryan Boren and wp-hackers to get
+information about CVE-2011-3122, 3125, 3128 and 3129 but didn't get any
+answer either (for the later the mail doesn't even appear on the
+archives so I guess it was not moderated, but afaict I didn't receive a
+bounce either). It seems that the security contact point is security
+[at] automattic.com so maybe try that?
 
-Do we know when this was introduced?  At a quick glance here, I don't
-see magick/property.c in 6.2.8, but I do see it in 6.6.5, so somewhere
-between those two versions that file and functionality was added.
-
+Regards,
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
