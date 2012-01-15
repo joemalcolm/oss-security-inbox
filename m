@@ -1,49 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/11
-Message-ID: <50C9F77B.80504@redhat.com>
-Date: Thu, 13 Dec 2012 08:42:51 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/2
+Message-ID: <4F123D77.5020700@redhat.com>
+Date: Sat, 14 Jan 2012 19:44:07 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Simon McVittie <smcv@...ian.org>
-Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
+CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+Subject: Re: CVE affected for PHP 5.3.9 ?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/14/2012 05:15 PM, Nicolas Grégoire wrote:
+>> Right but the script has to have the line
+>> <sax:output href="0wn3d.php" method="text">
+> Wrong.
+>
+> The PHP code only has to call transformToXML() after having loaded the
+> malicious XSLT code via importStylesheet(). The XML data itself is
+> irrelevant for this bug and the "sax:output" tag isn't in the PHP script
+> but in the XSLT stylesheet provided by the attacker.
+>
+> # LOAD XML FILE 
+> $XML = new DOMDocument(); 
+> $XML->loadXML( $sXml ); 
+>
+> # LOAD XSLT FILE 
+> $XSL = new DOMDocument(); 
+> $XSL->loadXML( $sXsl ); // Content of $xXsl may be untrusted !
+>
+> # START XSLT 
+> $xslt = new XSLTProcessor(); 
+> $xslt->importStylesheet( $XSL );
+>
+> # TRASNFORM & PRINT 
+> print $xslt->transformToXML( $XML ); // File creation !
+>
+> Nicolas
+>
+So the attacker can control the output file name/location via a
+malformed input from the attacker only? This would have been good to
+have in your original info (we could have avoided this back and forth).
+Can you provide a reproducer (vuln script and a malicious input) that
+shows this in action (e.g. creates a local php file).
 
-On 12/13/2012 04:12 AM, Simon McVittie wrote:
-> (Incidentally, Geany is written using Gtk and GLib, and GLib
-> already has a function g_shell_quote() which escapes arbitrary
-> filenames for /bin/sh.)
-> 
-> If shell syntax is not specifically needed, it would be even better
-> to use a mechanism not involving parsing shell syntax, like
-> posix_spawn(), GLib's g_spawn_async() or Python's os.spawn* family,
-> to launch the compiler (analogous to using prepared statements to
-> avoid ever having to think about SQL escaping or SQL injection).
+-- 
 
-If anyone knows similar functions/etc for other programming languages
-please let me know off list so I can compile a list of these and then
-post them for future reference. Thanks!
+-- Kurt Seifried / Red Hat Security Response Team
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQyfd6AAoJEBYNRVNeJnmT3qgP/A8dd7gwBa324eR46Yms84/z
-fdl6Wa2aWRPaVLgFgEvqtnspIiokAhQvVqxt0o0F2+rEqAzFa6YBHAlL2WXwyZZZ
-vf/EfLT0X0B4vYRJthzQ7oWwAKrPYewuRycTFXl3qRxWVfOi9NC+rxoCXbjCoHrD
-ry4HSw4LHsdEdeoZY2Q+ntw1uBgP784osqcU2oQ/Nu1ilYc5KjZxVP0aJqRIHcqc
-T9fpxWh6tCgsiOivYr5s4DXUltjkqHJLlX7Db3/faFvhY4q6ZGVp2K36EXk/A+RT
-6qkWxsnzc6Q0loDqgx7Vi20cyggx7zpFL5ocsatu87gYITNZn1yZM6lEpPtghQXN
-yNeDookupmqOd+N4vK3GIx9oCsfZZ7QkJ0BAUAb8LS/lkF9gktJ9SgzIipu4+MBf
-wG7ETxrRNfgWxAFPpvvYajcD6l5EwoYSj2b0xChlZjp97gfBAuLs4DN5kODVbvLS
-eFz+arInikSkcAs+G7hLOfTajM97aSM1Ln7bdhH3b7FHdaiFJW0YkIAhvFuAgwzO
-Q09yTBSzbOhndu183JpY9JtUMhZhC/n0vvY2I1aMnrTrgTsnkte7oqzt5WmZ0b3A
-7RnT2rpjHFMT18pQFoZkP79YxbeKdfjVcv2YDZ02mSw6dEtH/QD2xGoaOuEdwm2a
-1dTPDQSWbMhSlrXEZ/CX
-=ExlJ
------END PGP SIGNATURE-----
