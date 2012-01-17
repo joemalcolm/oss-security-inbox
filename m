@@ -1,52 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/12
-Message-ID: <4FA7F15D.3060101@redhat.com>
-Date: Mon, 07 May 2012 09:59:25 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request: Pidgin XMPP remote crash (#62)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/9
+Message-ID: <20120117195825.GA3256@foo.fgeek.fi>
+Date: Tue, 17 Jan 2012 21:58:25 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: pwgen: non-uniform distribution of passwords
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 05/07/2012 09:54 AM, Kurt Seifried wrote:
-> On 05/07/2012 09:53 AM, Kurt Seifried wrote:
->> Could I request that a CVE be issued for a possible 
->> remotely-triggerable crash in Pidgin?  To my knowledge no CVE 
->> exists for this issue.  The issue is described at 
->> http://pidgin.im/news/security/?id=62
+On Tue, Jan 17, 2012 at 11:51:31PM +0400, Solar Designer wrote:
+> It was just pointed out to me off-list that the man page for pwgen
+> specifically mentions that this kind of passwords "should not be used in
+> places where the password could be attacked via an off-line brute-force
+> attack."  I had missed that detail or at least I did not recall it.
 > 
->> The Pidgin project has just released version 2.10.4 which fixes
->> the issue.
-> 
-> 
-> Please use CVE-2012-2323 for this issue.
-> 
+> This kind of documentation certainly mitigates the problem to some extent.
 
-Argh I can't read this early in the morning. I failed to notice it
-already had a CVE #. Reject CVE-2012-2323 (CVE-2012-2214 was already
-assigned).
+I'll bet most of the end-users will also miss this if you did.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPp/FdAAoJEBYNRVNeJnmTIC4QAIxTcMgFNRTSbO2bKOleYLa7
-JSaC80i+uC4FcqE2vXlequabscxdxE8ksYn6HnVLY2qGcm0C68N26aYNkmfp+2zV
-DeFAxKtfwUZQcAyoQbk3ltUkHjh6rxVmooVrx9LKFcblzVtn4pVcIaGYM7kk55c+
-8dC5wwzhzoneuaZaRIBs32pXSTxUVwqqiIoPWCvHtzC6W0FI+c8IWqtIdg3aV7ec
-wMRZmE6JMPYUi8fm0+VcldTklFvneCbL3MRh7O7P/llBenJREAu0Ti5lG64u5mvD
-krZjUB/LopiwOviX+AuhRuPYHwiJgSSUF0uGSyOqlX64KuNcoX1PnupAM7YTrNQv
-sbGP521UaAQ7XOfqRMmtdFUqm8DsWQWbT2Jod0QVyLhYYX7g7ez24Zv7pze5AGO6
-Icri09XowIlUauCDVLPv2LCvhZizxsH97OWPCyy22pe/r1qqB3fgH6NDGDk0isty
-6eX1+zNiYw8R8LBnHwOE75jp377GSRne6HQhnIe08pDXsu7VrVt8ZaJ7SaSb53Dl
-6DF7XDAJ58SseM9npDWvyCTU0cWEuZAfK7yrOTDVpP6864JX/azb7q6PxEqQ+MmQ
-0BAR2LiFYS8xswXqTSKRRdp/hbxlRNx8L/nso4kFVLT5zQZg9m7jiX9OOY++NNV1
-6Ueijoa4e7TVJ/0QpaRH
-=oPQK
------END PGP SIGNATURE-----
+- Henri Salo
