@@ -1,61 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/05/5
-Message-ID: <506F2A6B.2080803@redhat.com>
-Date: Fri, 05 Oct 2012 12:43:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/3
+Message-ID: <20120117091745.GA31441@foo.fgeek.fi>
+Date: Tue, 17 Jan 2012 11:17:45 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org
-Subject: Re: CVE Request: html2ps
+Subject: Re: gpw password generator giving short password at low rate
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 10/05/2012 04:49 AM, Marc Deslauriers wrote:
-> Hello,
+On Tue, Jan 17, 2012 at 09:51:05AM +0100, Yves-Alexis Perez wrote:
+> we were pointed at a bug in gpw (a password generator), which makes it
+> generate shorter password than required at a rate of ~20 over 1 million.
+> The bug is at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651510
+> (so already public) and I'm wondering if that deserves a CVE:
 > 
-> I don't believe a CVE was ever assigned to this html2ps flaw in
-> 2009:
+> * gpw seems unmaintained (upstream and in Debian since around 2006)
+> * I'm not sure people even use it
+> * people using it interactively will notice the password has the wrong
+> size
 > 
-> Directory traversal vulnerability in html2ps before 1.0b7 allows
-> remote attackers to read arbitrary files via directory traversal
-> sequences in SSI directives
+> But as it may be used in a script, then it might still be a real issue.
 > 
-> See:
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=548633 
-> https://bugzilla.redhat.com/show_bug.cgi?id=526513 
-> http://packetstormsecurity.org/files/81614/html2ps-1.0-beta5-File-Disclosure.html
->
->  Thanks,
-> 
-> Marc.
+> What do people think?
 
-Please use CVE-2009-5067 for this issue.
+I think this is security issue and should receive CVE. Is this program used in other distributions we could notify? Has this been fixed in other versions?
 
-BTW if anyone wants to go through the Red Hat Bugzilla and make sure
-all the security have CVE's assigned feel free to contact me and I can
-let you know the easiest way to get the data/check it =).
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQbyprAAoJEBYNRVNeJnmTPfkQAKeL2IIYwfjjFD6f+373PVrz
-nwiuWxFcZmm46b9OJtMR5lG5DHY7NJ6V2Tz20/pcVoY6qTQvTVhR/MWuUXsUhdW8
-/uSI5BrrqUizQfxZ1tNg0jrONHsTGOdt/jZpJk6WS6/61IXE382XeMwOyzupk3g7
-so8M2PVjGqVrHdAXhMfI/FgpPDVydh5P4J3580sK+y7eqljIyi9a4LzAxkfvDpwN
-aQqytHSirT/5WAfOwjU/gJgG+jrxvO7C/creEbOGTuWsC/+0HGO4FZygXUBQmLyx
-P3T6x/+EIJ/kJvYlv1Y6QT7jzIHeNuFGT5bZvQCOEUWwM/5+Ztw4t5tWj6DQhcY4
-14VaVlSkQE4LgIBajtwLU2K0BDSOY1s72cvO6QQ86yYFVSP4V75ev6HMsqKWSUg1
-6SeRjtheVhKmX0Gh2Fru0GzpapX/CgRSiRoX85A5UcLK0yl/YrG0lX7O3eMUxZCZ
-xJ4sUQyxMJi1Sac0IC7hDG3w8Hkw1Zab+XpuYNlr8QCm4rjpJwmbRbNzzBZznzCH
-U4MhsG3SAOm0jmnnfCz65GdSqNbndWrL3LZre6+ehG+6lYXLvefczBveOAaXkP/a
-bxBqt7scQXcgasajaBA3k3KUSjZz4frPTmDGFNt20y366E637kSsnKSyWXWABPwR
-1GE3UwZeKlwdHKx9+DT0
-=3Vq9
------END PGP SIGNATURE-----
+- Henri Salo
