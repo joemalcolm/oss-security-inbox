@@ -1,63 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/6
-Message-ID: <4FDAE67A.1040801@redhat.com>
-Date: Fri, 15 Jun 2012 01:38:34 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/13
+Message-ID: <4F15E6BD.1030605@redhat.com>
+Date: Tue, 17 Jan 2012 14:23:09 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Henri Salo <henri@...v.fi>
-CC: oss-security@...ts.openwall.com, Greg Knaddison <greg.knaddison@...uia.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request for Drupal contributed modules
+To: oss-security@...ts.openwall.com
+CC: Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: gpw password generator giving short password at low rate
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/17/2012 02:24 AM, Yves-Alexis Perez wrote:
+> On mar., 2012-01-17 at 11:17 +0200, Henri Salo wrote:
+>> On Tue, Jan 17, 2012 at 09:51:05AM +0100, Yves-Alexis Perez wrote:
+>>> we were pointed at a bug in gpw (a password generator), which makes it
+>>> generate shorter password than required at a rate of ~20 over 1 million.
+>>> The bug is at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651510
+>>> (so already public) and I'm wondering if that deserves a CVE:
+>>>
+>>> * gpw seems unmaintained (upstream and in Debian since around 2006)
+>>> * I'm not sure people even use it
+>>> * people using it interactively will notice the password has the wrong
+>>> size
+>>>
+>>> But as it may be used in a script, then it might still be a real issue.
+>>>
+>>> What do people think?
+>> I think this is security issue and should receive CVE. Is this program
+>> used in other distributions we could notify? Has this been fixed in
+>> other versions?
+>>
+> Not that I know of (but I didn't know anything about gpw before reading
+> that bug report). It should be present in Debian derivatives, at least.
+>
+> Regards,
+Please use CVE-2011-4931 for this issue.
 
-On 06/15/2012 12:19 AM, Henri Salo wrote:
-> On Wed, Jun 13, 2012 at 08:32:11PM -0600, Kurt Seifried wrote:
->> CVE-2012-2699 SA-CONTRIB-2012-073 - Glossary - Cross-Site Scripting (XSS)
->> CVE-2012-2700 SA-CONTRIB-2012-074 - Contact Forms - Access Bypass
->> CVE-2012-2701 SA-CONTRIB-2012-075 - Take Control - Cross Site Request
->> Forgery (CSRF)
-> 
-> These were already assigned.
-> 
-> Request: http://www.openwall.com/lists/oss-security/2012/05/10/6
-> Response: http://www.openwall.com/lists/oss-security/2012/05/11/2
-> 
-> Reject new identifiers or can we use this in future Drupal contrib issues?
-> 
-> - Henri Salo
+-- 
 
-Thanks, I didn't check my previous email (like I'm supposed to, to make
-sure exact scenario doesn't happen).
+-- Kurt Seifried / Red Hat Security Response Team
 
-Please reject the following 3 CVE's, they were previously assigned:
-
-CVE-2012-2699 SA-CONTRIB-2012-073 - Glossary - Cross-Site Scripting (XSS)
-CVE-2012-2700 SA-CONTRIB-2012-074 - Contact Forms - Access Bypass
-CVE-2012-2701 SA-CONTRIB-2012-075 - Take Control - Cross Site Request
-Forgery (CSRF)
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP2uZ6AAoJEBYNRVNeJnmT4/AP/1BxvFh3bWBsVKvnqrLDChiH
-UPlvTF8RMBjrS99dpf+K/23jj4oTacOklt8e0VUfLXEf6yZ5/hvlduFc6QrE0LGU
-O4XsYxo8kMEv5P4XQcTVVBuB5RZEqQ5njoaCfdWTPBRB06333aE07b+hZLc25loZ
-037acu6EkLyrk0XG99J3vOabUP+UKGkhkSz5L/t5czvqsSztoelm2z6LCjeUI9Zb
-UhmldabB4sPoYyFTHHmk01gKgibpR3Ck9MTW0bpFtAkTGN9xiPecysBrruvpvvRz
-UBmz+hQ0/7c0ebNH8dB/axJqUx/70cxirYNj/FlF+YCW4ZH4ceLpefzndE3Vp2Pb
-UAznBwikXDMRSpa+DsB+NL/inP52PTbsrUGwRZUdyzn4PNcdag6OA1eXluTglxTS
-Va7es8Q5Th10lXYHTRV558zR80jHkvHDlGu8/vPYne87d9yzYSiyRYvkQonZ1y2M
-9bQSLq63OqBabnM+NTSVODGJ8R6OlISyO5m7dbw7bv39OPY7W/sl8cVvCof+7YdM
-vuYYSQMQXLZIMu9V8lpi+zWj5F+Ym/c2dQCCQbhd2uN8n682o2nNPDqgJyKgCW7o
-kC7E48xyI9HNPfg5jWZ58jrVLC1NJR+oCqc8OHLik9n/MLSKqKoJnUgpDc/tirvx
-gBj4hwWsuO+JQEQs+KcG
-=Xe5H
------END PGP SIGNATURE-----
