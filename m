@@ -1,61 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/13
-Message-ID: <4F21DC5F.70007@redhat.com>
-Date: Thu, 26 Jan 2012 16:06:07 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/1
+Message-ID: <4F15275E.8030700@redhat.com>
+Date: Tue, 17 Jan 2012 13:16:38 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: wicd writes sensitive information in log files (password, passphrase...)
+CC: Kurt Seifried <kseifried@...hat.com>, Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: Wireshark multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-wicd writes sensitive information in log files (password, passphrase...)
+On 01/16/2012 01:19 AM, Kurt Seifried wrote:
+>
+> I agree in principle, however in practice this is a lot of work (as you
+> well know =). I guess my question/concern would be is who does the
+> research to verify all this, and what if it varies by version (i.e. it
+> is 6 separate issues in an older version but the newer version combined
+> some code into a common library for example so it's only a single issue,
+> but with multiple avenues of attack/etc.). In other words a lot of
+> potential work.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652417
 
-From: Vincent Lefevre <vincent@...c17.net>
-To: Debian Bug Tracking System <submit@...s.debian.org>
-Subject: wicd writes sensitive information in log files (password,
- passphrase...)
-Date: Sat, 17 Dec 2011 03:27:32 +0100
+I did some research, with details available at:
+https://bugzilla.redhat.com/show_bug.cgi?id=773726#c2 and
+https://bugzilla.redhat.com/show_bug.cgi?id=773726#c3
 
-Package: wicd
-Version: 1.7.1~b3-3
-Severity: grave
-Tags: security
-Justification: user security hole
+In my opinion only 1 and 2 (ie ws bug 6663 and ws bug
+6670) should be allocated a CVE.
 
-wicd writes sensitive information in log files (under /var/log/wicd),
-such as passwords and passphrases. Users in the adm group can have
-access to them, but also log files are meant to be sent in bug
-reports, and if the bug reporter doesn't pay attention, there is
-a huge risk to transmit such information.
+Others are application crashes.
 
-http://bazaar.launchpad.net/~wicd-devel/wicd/experimental/revision/682
 
-=== modified file 'wicd/configmanager.py'
---- wicd/configmanager.py	2011-12-15 18:21:53 +0000
-+++ wicd/configmanager.py	2011-12-17 06:55:18 +0000
-@@ -120,8 +120,13 @@
-             ret = to_unicode(ret)
-             if default:
-                 if self.debug:
--                    print ''.join(['found ', option, ' in configuration ',
--                                   str(ret)])
-+                    # mask out sensitive information
-+                    if option in ['apsk', 'password', 'identity',
-'private_key', \
-+                                  'private_key_passwd', 'key',
-'passphrase']:
-+                        print ''.join(['found ', option, ' in
-configuration *****'])
-+                    else:
-+                        print ''.join(['found ', option, ' in
-configuration ',
-+                                       str(ret)])
-         else:
-             if default != "__None__":
-                 print 'did not find %s in configuration, setting
-default %s' % (option, str(default))
 
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
