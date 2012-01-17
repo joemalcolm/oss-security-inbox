@@ -1,53 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/8
-Message-ID: <20120117195131.GA25350@openwall.com>
-Date: Tue, 17 Jan 2012 23:51:31 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/16
+Message-ID: <Pine.GSO.4.64.1201171700520.16209@faron.mitre.org>
+Date: Tue, 17 Jan 2012 17:08:51 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: bugtraq@...urityfocus.com, Theodore Ts'o <tytso@....edu>
-Subject: Re: pwgen: non-uniform distribution of passwords
+Subject: Re: gpw password generator giving short password at low rate
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 17, 2012 at 02:01:38PM +0400, Solar Designer wrote:
-> Time running (D:HH:MM) - Keyspace searched - Passwords cracked
-> 0:00:02 - 0.0008% - 6.0%
-> 0:01:00 - 0.025% - 19.5%
-> 0:20:28 - 0.5% - 39.1%
-> 1:16:24 - 1.0% - 47.1%
-> 3:00:48 - 1.8% - 55.2%
-> 3:21:44 - 2.3% - 59.4%
-> 5:05:17 - 3.1% - 64.2%
-...
-> I did some testing of pwgen-2.06's "pronounceable" passwords, and I
-> think they might be weaker than you had expected (depends on what you
-> had expected, which I obviously don't know).
 
-It was just pointed out to me off-list that the man page for pwgen
-specifically mentions that this kind of passwords "should not be used in
-places where the password could be attacked via an off-line brute-force
-attack."  I had missed that detail or at least I did not recall it.
+The rarity of an issue does not affect CVE inclusion.
 
-This kind of documentation certainly mitigates the problem to some extent.
+In this case, the product's security feature is not living up to its 
+advertised capability (by generating shorter passwords than expected) so, 
+even if it's not that severe an issue, it's probably still of some 
+importance to some people.
 
-Yet I think this gives users the perception that only the keyspace is
-smaller, not that the generated passwords are distributed non-uniformly.
-In fact, most users would not even think of the latter risk.
+The availability of the software does not directly affect CVE inclusion; 
+if it could be available for people to install on their own systems, then 
+it can be covered by CVE.  Obviously this applies to any software that is 
+available for download from the web, whether open or closed source.  (I 
+say "does not directly affect CVE inclusion" because CVE cannot keep up 
+with every single product and every single vulnerability due to various 
+limitations - primarily the raw number of vulns that are released every 
+year - so, some products with limited "market share" might not make it 
+into CVE even though they would technically qualify.)
 
-The passwords look much stronger than they actually are, and I think
-this is a problem.  They look like almost random sequences of 8
-characters, whereas the level of security for 6% to 20% of them is
-similar to that of dictionary words with minor mangling.
+- Steve
 
-Sure, there's a trade-off, but non-uniform distribution didn't have to
-be part of it.  That's an implementation shortcoming.
 
-> Specifically, not only the keyspace is significantly smaller than that
-> for "secure" passwords (which I'm sure you were aware of), but also the
-> distribution is highly non-uniform.  My guess is that this results from
-> different phonemes containing the same characters.  So certain
-> substrings can be produced in more than one way, and then some
-> characters turn out to be more probable than some others (especially as
-> it relates to their conditional probabilities given certain preceding
-> characters).
+On Tue, 17 Jan 2012, Yves-Alexis Perez wrote:
 
-Alexander
+> Hi list,
+>
+> we were pointed at a bug in gpw (a password generator), which makes it
+> generate shorter password than required at a rate of ~20 over 1 million.
+> The bug is at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651510
+> (so already public) and I'm wondering if that deserves a CVE:
+>
+> * gpw seems unmaintained (upstream and in Debian since around 2006)
+> * I'm not sure people even use it
+> * people using it interactively will notice the password has the wrong
+> size
+>
+> But as it may be used in a script, then it might still be a real issue.
+>
+> What do people think?
+>
+> Regards,
+> -- 
+> Yves-Alexis
+>
