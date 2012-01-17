@@ -1,101 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/26/3
-Message-ID: <87r4wfz5fl.fsf@mid.deneb.enyo.de>
-Date: Mon, 26 Mar 2012 18:35:10 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/12
+Message-ID: <4F15E4A9.6090100@redhat.com>
+Date: Tue, 17 Jan 2012 14:14:17 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: quake3 reflective DoS
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: Re: pwgen: non-uniform distribution of passwords
 Content-Type: text/plain; charset=utf-8
 
-Message-ID: <4F70438B.9000806@...ian.org>
-Date: Mon, 26 Mar 2012 11:23:07 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: Florian Weimer <fw@...eb.enyo.de>, 665656@...s.debian.org
-CC: Markus Koschany <apo@...baru.de>, security@...ian.org
-Subject: Re: Bug#665656: openarena-server: is vulnerable for getstatus DRDoS
- attack
-MIME-Version: 1.0
+On 01/17/2012 12:58 PM, Henri Salo wrote:
+> On Tue, Jan 17, 2012 at 11:51:31PM +0400, Solar Designer wrote:
+>> It was just pointed out to me off-list that the man page for pwgen
+>> specifically mentions that this kind of passwords "should not be used in
+>> places where the password could be attacked via an off-line brute-force
+>> attack."  I had missed that detail or at least I did not recall it.
+>>
+>> This kind of documentation certainly mitigates the problem to some extent.
+> I'll bet most of the end-users will also miss this if you did.
+>
+> - Henri Salo
+I'm of the mind that documenting issues is good but documenting issues
+doesn't always make them go away.
 
-On 26/03/12 06:35, Florian Weimer wrote:
-> Please set the distribution to squeeze-security, adjust the version
-> number, build with -sa, and upload to security-master.
+E.g. documenting a default usrname/password where it can be easily
+changed is reasonable. Documenting a default username/password that
+cannot be changed doesn't really help to the same degree.
 
-Uploaded, thanks. If you obtain a CVE number for this, please make sure
-any advisory prominently mentions ioquake3 r1762 and/or this bug number.
+In this case we have something that tells you not to use an unsafe
+option but isn't exceedingly noticeable or clear (if it came up every
+time you used that option there would be a stringer case for no CVE).
+I'm sitting on the fence for this one (I can see it going either way),
+wouldn't mind some more opinions from the smart people on this list.
 
-Tremulous (contrib) seems to be vulnerable to the same thing... I'll
-open a bug.
+-- 
 
-Here's some text for a general advisory, and some shorter text suitable
-for a DSA:
-
---------------
-
-It has been discovered that spoofed "getstatus" UDP requests are being
-used by attackers[0][1][2][3] to direct status responses from multiple
-Quake 3-based servers to a victim, as a traffic amplification mechanism
-for a denial of service attack on that victim.
-
-Open-source games derived from the Quake 3 engine are typically based on
-ioquake3 [4], a popular fork of that engine. This vulnerability was
-fixed in ioquake3 svn revision 1762 (January 2010) [5] by applying a
-rate-limit to the getstatus request. Like several other known and fixed
-vulnerabilities, it is not fixed in the latest official ioquake3 release
-(1.36, April 2009).
-
-If a CVE ID is allocated for this vulnerability, please reference
-ioquake3 r1762 prominently in any advisory.
-
-Fixed versions of various open-source games based on Quake III Arena,
-mostly based on visual inspection of their source code:
-
-* ioquake3 svn >= r1762
-* OpenArena >= 0.8.8
-* OpenArena engine snapshot >= 0.8.x-20
-* World of Padman >= 1.5.4
-* Tremulous svn trunk >= r1953
-* Tremulous svn, gpp branch >= r1955
-* Smokin' Guns >= 1.1b4
-* Smokin' Guns svn 1.1 branch >= r472
-
-Vulnerable older versions include:
-
-* ioquake3 engine 1.36
-* OpenArena 0.8.5
-* World of Padman 1.5
-* Tremulous 1.1.0
-* Tremulous Gameplay Preview 1 (GPP1)
-* Smokin' Guns svn trunk at the time of writing (r181)
-
-Proprietary games based on the Quake III Arena engine (Quake III Arena
-when played using its official engine, Star Wars: Jedi Outcast and Jedi
-Academy, Star Trek: Elite Force 1 & 2, etc.) are also likely to be
-vulnerable.
-
-Proprietary games being run under the ioquake3 engine (Quake III Arena
-when using ioquake3, Urban Terror when using ioUrbanTerror, etc.) may be
-vulnerable or not vulnerable, depending on the version of ioquake3 used.
-
-[0]
-http://lists.ioquake.org/pipermail/ioquake3-ioquake.org/2012-January/004778.html
-[1] http://openarena.ws/board/index.php?topic=4391.0
-[2] http://www.urbanterror.info/forums/topic/27825-drdos/
-[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=665656
-[4] http://ioquake3.org/
-[5] http://icculus.org/pipermail/quake3-commits/2010-January/001679.html
-
------------
-
-It has been discovered that spoofed "getstatus" UDP requests are used by
-attackers to direct status responses from multiple Quake 3-based servers
-(such as OpenArena) to a victim, as a traffic amplification mechanism
-for a denial of service attack on that victim.
-
-For the stable distribution (squeeze), this problem has been fixed in
-version 0.8.5-5+squeeze2.
-
-For the testing and unstable distributions (wheezy/sid), this problem is
-fixed in all released versions of the ioquake3 package, which are used
-by version 0.8.5-6 or later of the openarena package.
-
+-- Kurt Seifried / Red Hat Security Response Team
 
