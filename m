@@ -1,38 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/4
-Message-ID: <20120504080311.GF16166@suse.de>
-Date: Fri, 4 May 2012 10:03:11 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: evolution-data-server lacks SSL checking in its libsoup users
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/15
+Message-ID: <Pine.GSO.4.64.1201171650350.16209@faron.mitre.org>
+Date: Tue, 17 Jan 2012 17:00:35 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: Henri Salo <henri@...v.fi>
+Subject: Re: Re: pwgen: non-uniform distribution of passwords
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 03, 2012 at 05:27:02PM +0200, Marcus Meissner wrote:
-> Hi,
-> 
-> The libsoup SSL certificate checking problem Ludwig exposed is drawing some
-> circles.
-> 
-> I started looking at the libsoup users, first one is evolution-data-server,
-> 
-> None of the libsoup users there seem to handle SSL certificate trust correctly (or at all) in my eyes.
-> 
-> In version 2.28 these are.
-> 	Groupwise protocol handling (server/groupwise/e-gw-connection.c)
-> 	Exchange protocol handling (server/exchange/lib/e2k-context.c)
-> 	Google (servers/google/libgdata-google/gdata-google-service.c)
-> 	calendar/backends/http/e-cal-backend-http.c
-> 	calendar/backends/caldav/e-cal-backend-caldav.c
-> 
-> I do not fully understand the correct solution to this yet though, whether we need
-> to pass in additional flags, or evaluate the "trusted" flag after the connect.
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=760517
 
-This was already reported:
-	https://bugzilla.gnome.org/show_bug.cgi?id=671537
-	https://launchpad.net/bugs/933659   (private still)
+On Tue, 17 Jan 2012, Kurt Seifried wrote:
 
-so it might have a CVE already.
+> In this case we have something that tells you not to use an unsafe 
+> option but isn't exceedingly noticeable or clear (if it came up every 
+> time you used that option there would be a stringer case for no CVE). 
+> I'm sitting on the fence for this one (I can see it going either way), 
+> wouldn't mind some more opinions from the smart people on this list.
 
-Ciao, Marcus
+For CVE, if there is an insecure feature that is documented, but there are 
+likely or proven scenarios in which an admin might be unaware of the 
+insecurity of the feature, then we will often consider it for inclusion. 
+In this case, we would write the CVE description in a way that emphasizes 
+the admin's role in creating/introducing the issue.
+
+A separate reason for inclusion would be if a product advertises a 
+security feature, but the implementation does not achieve the claimed 
+level of security.
+
+- Steve
