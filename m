@@ -1,49 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/3
-Message-ID: <mpro.m82vby3w5e1110nsi.taviso@cmpxchg8b.com>
-Date: Wed, 1 Aug 2012 15:12:00 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/2
+Message-ID: <1326790265.4782.70.camel@scapa>
+Date: Tue, 17 Jan 2012 09:51:05 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: NVidia Linux driver
+Subject: gpw password generator giving short password at low rate
 Content-Type: text/plain; charset=utf-8
 
-Marc Deslauriers <marc.deslauriers@...onical.com>
-wrote:
+Hi list,
 
-> Hello,
-> 
-> Could a CVE please be assigned to the following issue:
-> 
-> The binary NVidia Linux driver allows local users to access arbitrary
-> memory locations by leveraging GPU device-node read/write privileges, and
-> escalate privileges to root. Possibly an incomplete fix for CVE-2012-0946.
-> 
-> See:
-> 
-> http://seclists.org/fulldisclosure/2012/Aug/4
-> 
-> Thanks,
-> 
-> Marc.
+we were pointed at a bug in gpw (a password generator), which makes it
+generate shorter password than required at a rate of ~20 over 1 million.
+The bug is at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651510
+(so already public) and I'm wondering if that deserves a CVE:
 
-I know that at least Gentoo does this since ~2006:
+* gpw seems unmaintained (upstream and in Debian since around 2006)
+* I'm not sure people even use it
+* people using it interactively will notice the password has the wrong
+size
 
-35 # !!! SECURITY WARNING !!!
-36 # DO NOT MODIFY OR REMOVE THE DEVICE FILE RELATED OPTIONS UNLESS YOU KNOW
-37 # WHAT YOU ARE DOING.
-38 # ONLY ADD TRUSTED USERS TO THE VIDEO GROUP, THESE USERS MAY BE ABLE TO
-CRASH,
-39 # COMPROMISE, OR IRREPARABLY DAMAGE THE MACHINE.
-40 options nvidia NVreg_DeviceFileMode=432 NVreg_DeviceFileUID=0
-NVreg_DeviceFileGID=VIDEOGID NVreg_ModifyDeviceFiles=1
+But as it may be used in a script, then it might still be a real issue.
 
+What do people think?
 
-http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/x11-drivers/nvidia-drivers/files/nvidia?revision=1.3&view=markup
-
-Tavis.
-
+Regards,
 -- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
+Yves-Alexis
 
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
