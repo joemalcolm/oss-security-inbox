@@ -1,42 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/6
-Message-ID: <20120809180145.GS1458@redhat.com>
-Date: Thu, 9 Aug 2012 12:01:45 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2012-3467: Unauthorized access (authentication bypass) from client to broker due to use of NullAuthenticator in shadow connections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/6
+Message-ID: <1326822907.3234.25.camel@mdlinux>
+Date: Tue, 17 Jan 2012 12:55:07 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: overlayfs
 Content-Type: text/plain; charset=utf-8
 
-Just a heads up to advise those shipping qpid-cpp of the following flaw:
+Could we please get a CVE assigned to the following issue:
 
-In the AMQP messaging scheme implementation each broker can have both, direct
-connections and shadow connections. A shadow connection represents a connection
-to another broker in the cluster. Members use shadow connections to simulate
-the actions of other brokers, so that all members arrive at the same time.
-Output for shadow connections is just discarded, brokers only send data to
-their directly-connected clients.
+overlayfs, as used in the Ubuntu kernel, doesn't perform required inode
+security checks, bypassing intended security restrictions.
 
-A security flaw was found in the way the Qpid C++ libraries implementation,
-used by AMQP client applications to exchange messages with an AMQP message
-broker using the AMQP protocol, performed authentication for certain shadow
-connections. An AMQP client application could issue a phoney shadow connection
-to the AMQP broker, leading into situation that AMQP broker to consider the
-connection it to be a legitimate connection from another AMQP broker,
-subsequently using NullAuthenticator mechanism for authentication, allowing the
-AMQP client application to bypass the authentication.
+Bug:
+https://bugs.launchpad.net/ubuntu/+source/linux/+bug/915941
 
+Upstream source:
+git://git.kernel.org/pub/scm/linux/kernel/git/mszeredi/vfs.git
 
-This has been assigned the name CVE-2012-3467.
+Thanks,
 
-References:
+Marc.
 
-https://issues.apache.org/jira/browse/QPID-3849
-http://svn.apache.org/viewvc?view=revision&revision=1352992
-https://bugzilla.redhat.com/show_bug.cgi?id=836276
-
-Also, as a aide note, this affects (possibly Red Hat-specific naming
-convention) the qpid-cpp-server-cluster package, other qpid packages  are not
-affected.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
