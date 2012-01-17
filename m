@@ -1,35 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/16/6
-Message-ID: <20120716190725.GA2180@ngolde.de>
-Date: Mon, 16 Jul 2012 21:07:26 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/10
+Message-ID: <4F15E1A6.6000204@redhat.com>
+Date: Tue, 17 Jan 2012 14:01:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: libjs-swfupload
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: golismero symlink vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Kurt Seifried <kseifried@...hat.com> [2012-07-16 20:32]:
-> On 07/16/2012 12:17 PM, Nico Golde wrote:
-> > Hi, there is an XSS issue in libjs-swfupload. Can we get a CVE id
-> > for this?
-> > 
-> > Details: 
-> > https://nealpoole.com/blog/2012/05/xss-and-csrf-via-swf-applets-swfupload-plupload/
-> >
-> > 
-> http://code.google.com/p/swfupload/issues/detail?id=376
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681323
-> > 
-> 
-> There also appears to be a CSRF vulnerability. Is there a reason for
-> only mentioning the XSS?
+On 01/17/2012 11:28 AM, Henri Salo wrote:
+> User-triggered update-mechanism is vulnerable to symlink-attack in all GoLismero-versions before revision 2b3bb43d6867. Vulnerable code was in ./libs/updater.py, which I rewrote.
+>
+> Vulnerable versions:
+> - GoLISMERO_last.zip (Nov 14, 2011)
+> - GoLISMERO_v0.6.3.zip (Nov 9, 2011)
+> - All Git-revisions before 2b3bb43d6867
+>
+> Reported to author: 2011-11-17
+> Fixed by me: 2012-01-17
+> Link to the commit: http://code.google.com/p/golismero/source/detail?r=2b3bb43d68676efd687361f7de29380189031ab8
+>
+> I fixed this, because developer had lack of time. I am asking for CVE, because this software is used in backtrack where golismero is executed as root-user.
+>
+> Should get 2012 ID as this was publicly announced 2012-01-17. I haven't read all the code yet so there might be other issues too. I am not the original developer, but helped a bit after I found this vulnerability.
+>
+> - Henri Salo
+Good request! Please use CVE-2012-0054 for this issue.
 
-The CSRF is for pupload which we don't ship and I haven't looked at.
-
-Cheers
-Nico
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
 
-Content of type "application/pgp-signature" skipped
+-- Kurt Seifried / Red Hat Security Response Team
+
