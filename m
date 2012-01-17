@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/28/4
-Message-ID: <20120128143936.6593bad1@nasir8h3tg>
-Date: Sat, 28 Jan 2012 14:39:36 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/7
+Message-ID: <20120117182821.GF942@foo.fgeek.fi>
+Date: Tue, 17 Jan 2012 20:28:21 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: (maybe) CVE request: libvpx before 1.0 crasher
+Subject: CVE-request: golismero symlink vulnerability
 Content-Type: text/plain; charset=utf-8
 
-libvpx (webm library) has released a new version that fixes a crasher
-bug:
-http://blog.webmproject.org/2012/01/vp8-codec-sdk-duclair-released.html
+User-triggered update-mechanism is vulnerable to symlink-attack in all GoLismero-versions before revision 2b3bb43d6867. Vulnerable code was in ./libs/updater.py, which I rewrote.
 
-I'm not 100% sure if and in what situation crash bugs qualify as
-security issues.
+Vulnerable versions:
+- GoLISMERO_last.zip (Nov 14, 2011)
+- GoLISMERO_v0.6.3.zip (Nov 9, 2011)
+- All Git-revisions before 2b3bb43d6867
 
-However, I tend to think that this one does. libvpx is used in browsers
-and crashing browsers seems an issue to me.
-Also, it could be used to crash automatic media re-encoding-services
-(e.g. backends of video websites like youtube).
+Reported to author: 2011-11-17
+Fixed by me: 2012-01-17
+Link to the commit: http://code.google.com/p/golismero/source/detail?r=2b3bb43d68676efd687361f7de29380189031ab8
 
-So I'd request a CVE.
+I fixed this, because developer had lack of time. I am asking for CVE, because this software is used in backtrack where golismero is executed as root-user.
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Should get 2012 ID as this was publicly announced 2012-01-17. I haven't read all the code yet so there might be other issues too. I am not the original developer, but helped a bit after I found this vulnerability.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+- Henri Salo
