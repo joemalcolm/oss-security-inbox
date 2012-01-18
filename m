@@ -1,47 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/9
-Message-ID: <4F623778.1070006@redhat.com>
-Date: Thu, 15 Mar 2012 12:39:52 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/3
+Message-ID: <4F163A64.6090005@redhat.com>
+Date: Tue, 17 Jan 2012 20:20:04 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Andrew Alexeev <andrew@...nx.com>
-Subject: Re: CVE Request: nginx fix for malformed HTTP responses from upstream servers
+CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>, security@....net
+Subject: Re: CVE affected for PHP 5.3.9 ?
 Content-Type: text/plain; charset=utf-8
 
-On 03/15/2012 07:37 AM, Andrew Alexeev wrote:
-> Hello,
-> 
-> The nginx team has released stable version 1.0.14, and development
-> version 1.1.17 of nginx web server, which include a fix for malformed
-> HTTP responses from upstream servers:
-> 
-> http://trac.nginx.org/nginx/changeset/4535/nginx
-> http://trac.nginx.org/nginx/changeset/4531/nginx
-> http://trac.nginx.org/nginx/changeset/4530/nginx
-> 
-> http://nginx.org/en/security_advisories.html
-
-Memory disclosure with specially crafted backend responses
-Severity: major
-Not vulnerable: 1.1.17+, 1.0.14+
-Vulnerable: 0.1.0-1.1.16
-The patch  pgp
-
-> Without this fix contents of previously freed memory might be sent to
-> a client if an upstream server returned specially crafted response,
-> potentially resulting in sensitive information leak.
-> 
-> Patch which can be applied to the earlier versions of nginx is here:
-> http://nginx.org/download/patch.2012.memory.txt
-> 
-> Thanks to Matthew Daley for spotting this one.
-
-This is a nicely formatted CVE request. In future if you want a CVE in
-advance you can request one via the VS list and I'll be happy to assign
-it privately there.
-
-Please use CVE-2012-1180 for this issue.
-
+On 01/15/2012 10:08 AM, Nicolas Grégoire wrote:
+>> Can you provide a reproducer (vuln script and a malicious input) that
+>> shows this in action (e.g. creates a local php file).
+> Please find attached the "php539-xslt.php" script.
+>
+> This script displays by default a pre-filled HTML form including some
+> XML data and XSLT code. When the form is submitted, the user-controlled
+> XML data is transformed using the user-controlled XSLT code. Then, the
+> output of this transformation is displayed in the browser.
+>
+> When executed, the pre-filled XSLT code will write
+> to /var/www/xxx/backdoor.php this content :
+>
+> <html><body>
+> <h1><font color="red">I'm a (very) malicious PHP file !!!</font></h1>
+> <?php phpinfo()?>
+> </body></html>
+>
+> Note : the payload is encrypted with RC4. A static key ("simple_demo")
+> embedded in the XSLT code is used to decrypt it.
+>
+> Regards,
+> Nicolas
+>
+>
+Apologies for the delay, this is definitely an issue. Please use
+CVE-2012-0057 for this issue.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+
+-- Kurt Seifried / Red Hat Security Response Team
+
