@@ -1,73 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/02/2
-Message-ID: <506B3E74.80704@redhat.com>
-Date: Tue, 02 Oct 2012 13:20:20 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/7
+Message-ID: <4F1659FC.9040608@redhat.com>
+Date: Tue, 17 Jan 2012 22:34:52 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Raphael Geissert <geissert@...ian.org>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request - mcrypt buffer overflow flaw
+To: oss-security@...ts.openwall.com
+CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: Unused iocbs in a batch should not be accounted as active
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/17/2012 10:30 PM, Eugene Teo wrote:
+> commit 69e4747ee9727d660b88d7e1efe0f4afcb35db1b
+> Author: Gleb Natapov <gleb@...hat.com>
+> Date:   Sun Jan 8 17:07:28 2012 +0200
+>
+>     Unused iocbs in a batch should not be accounted as active.
+>
+>     Since commit 080d676de095 ("aio: allocate kiocbs in batches") iocbs
+> are allocated in a batch during processing of first iocbs.  All iocbs in
+> a batch are automatically added to ctx->active_reqs list and accounted
+> in ctx->reqs_active.
+>
+>     If one (not the last one) of iocbs submitted by an user fails,
+> further iocbs are not processed, but they are still present in
+> ctx->active_reqs and accounted in ctx->reqs_active.  This causes process
+> to stuck in a D state in wait_for_all_aios() on exit since
+> ctx->reqs_active will never go down to zero.  Furthermore since
+> kiocb_batch_free() frees iocb without removing it from active_reqs list
+> the list become corrupted which may cause oops.
+>
+>     Fix this by removing iocb from ctx->active_reqs and updating
+> ctx->reqs_active in kiocb_batch_free().
+>
+>     Signed-off-by: Gleb Natapov <gleb@...hat.com>
+>     Reviewed-by: Jeff Moyer <jmoyer@...hat.com>
+>     Cc: stable@...nel.org   # 3.2
+>     Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
+>
+> Issue introduced in v3.2-rc1 via commit 080d676d.
+>
+> Thanks, Eugene
+Please use CVE-2012-0058 for this issue
 
-On 10/02/2012 12:42 PM, Raphael Geissert wrote:
-> Kurt,
-> 
-> I think at least one more CVE id needs to be assigned:
-> 
-> On Saturday 15 September 2012 19:22:06 Raphael Geissert wrote:
->> On Tuesday 11 September 2012 10:19:38 Eygene Ryabinkin wrote:
+-- 
 
->> Another week, another couple of patches. One makes it use strncpy
->> and forces a NUL on the last byte of local_algorithm, local_mode,
->> and local_keymode. Their values are checked later on, so it seems
->> safe to pass unvalidated data. The size of the buffers is
->> hard-coded to avoid making many changes to the code.
-> 
-> I think this needs a separate id, since fixes were released by
-> Fedora and Debian referencing CVE-2012-4409 but only for the
-> original report.
-> 
-> Eygene's followup issues have been fixed in Debian without
-> referencing a CVE id.
+-- Kurt Seifried / Red Hat Security Response Team
 
-Can you post a link to source fixes/commits? Thanks.
-
->> Once those issues were fixed I noticed that salt_size is not
->> initialized if the salt flag is not set. The result is an
->> inconditional call to malloc, with an uninitialized int as
->> argument. This can lead to a non-attacker-controlled memory
->> consumption DoS in most cases. It makes me think nobody actually
->> ever used it without a salt.
-> 
-> I've no strong opinion on whether this deserves an id.
-> 
-> Cheers,
-
-Hrmm there's a thought, has this DoS been confirmed? As we've probably
-seen over the last year more than a few sites fail to salt their
-stored passwords =(.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQaz50AAoJEBYNRVNeJnmTSK4P/26UQ0ORk9a3iUwsegwosivb
-S/hvJQ+nH8oXHrT4TX6sjwg0QacNHGVDcgMRf2iQVTSrDseJsFVz1EC+hQHR0A53
-o3svXEb/11l+tpOxvXRaV2Tr5eU0BSwB+nDLiZgWry+IYLp17pyqdicNsLfwST6n
-RZhWdI/cMFk7Oxm6FyM0fSoXWS95ixSCJrnRh60+PrZeKKe6K+Hw78+nMO9dUcjI
-GQHrMMiNGY0CDwDrokQeYT6Asf96nXBurNjt/gd18u9QXp6NZ7hWLsfF/f8ISFC9
-0firEfZYbBcuV7KSacPyk+kqgT+VsSXZPbCqeC78o8avHBN/pa7zjXmnJjBOH5ps
-FD88YNv5hdk6NjCrK5PbfRqi79ltM1JzI6mDxXb7jmJ6OFbvdCcMqKoSMNQkkYRA
-FaR0f3BOU2I/1JsYKcCUITLRjUAcvw1LQX6v9MWtEb3iN/jfGRYdXEa0hV75tgpq
-qljttSu3i5F/x80/TrOfvtQ+unuESUulkeXExdMfOULnf9SBgxY7aZpbT9TCfBlI
-qBY4xBZTtxh2lYwLTiCof0lCtu779uqKeszVi6LiF9SXv/4cm8srvU4K74CDIcjv
-KLCP4ba+a/VihVBf2EUP2myRN7ayPXYwII6CtqYu4smhJc00UQFMtbFNghXx+3Sg
-vU//7x41AXD3ET5hrRfL
-=fa7h
------END PGP SIGNATURE-----
