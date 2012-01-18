@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/6
-Message-ID: <20121126150635.GA23095@inutil.org>
-Date: Mon, 26 Nov 2012 16:06:35 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/2
+Message-ID: <4F162EC9.4030404@redhat.com>
+Date: Tue, 17 Jan 2012 19:30:33 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Curl insecure usage
+CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-during the triage of the SSL client bugs spotted by the
-http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf paper
-Debian developer Alessandro Ghedini discovered two more
-applications using Curl in an insecure manner:
+On 01/17/2012 07:25 PM, Eugene Teo wrote:
+> "Jüri Aedla reported that the /proc/<pid>/mem handling really isn't very
+> robust, and it also doesn't match the permission checking of any of the
+> other related files.
+>
+> This changes it to do the permission checks at open time, and instead of
+> tracking the process, it tracks the VM at the time of the open.  That
+> simplifies the code a lot, but does mean that if you hold the file
+> descriptor open over an execve(), you'll continue to read from the _old_ VM.
+>
+> That is different from our previous behavior, but much simpler.  If
+> somebody actually finds a load where this matters, we'll need to revert
+> this commit.
+>
+> I suspect that nobody will ever notice - because the process mapping
+> addresses will also have changed as part of the execve.  So you cannot
+> actually usefully access the fd across a VM change simply because all
+> the offsets for IO would have changed too."
+>
+> http://git.kernel.org/linus/e268337dfe26dfc7efd422a804dbb27977a3cccc
+>
+> Thanks, Eugene
+Please use CVE-2012-0056 for this issue.
 
-1. opendnssec (in the eppclient tool)
-http://lists.opendnssec.org/pipermail/opendnssec-user/2012-November/002296.html
+-- 
 
-2. PHPcas (used by Moodle e.g.):
-https://github.com/Jasig/phpCAS/pull/58
+-- Kurt Seifried / Red Hat Security Response Team
 
-Please assign CVE IDs for these.
-
-Cheers,
-        Moritz
