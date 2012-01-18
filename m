@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/3
-Message-ID: <Pine.GSO.4.64.1201031328570.27628@faron.mitre.org>
-Date: Tue, 3 Jan 2012 13:30:14 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/4
+Message-ID: <4F164CDB.20701@redhat.com>
+Date: Wed, 18 Jan 2012 12:38:51 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: PHP Booking Calendar 10e XSS
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE-2012-0207 kernel: igmp: Avoid zero delay when receiving odd mixture of IGMP queries
 Content-Type: text/plain; charset=utf-8
 
+On 01/10/2012 03:34 PM, Eugene Teo wrote:
+> Commit 5b7c84066733c5dfb0e4016d939757b38de189e4 ('ipv4: correct IGMP
+> behavior on v3 query during v2-compatibility mode') added yet another
+> case for query parsing, which can result in max_delay = 0.  Substitute
+> a value of 1, as in the usual v3 case.
+> 
+> Reported-by: Simon McVittie <smcv <at> debian.org>
+> References: http://bugs.debian.org/654876
+> Signed-off-by: Ben Hutchings <ben <at> decadent.org.uk>
+> 
+> http://article.gmane.org/gmane.linux.network/217256
+> 
+> Introduced in 5b7c8406 2.6.36-rc8
+> 
+> Thanks, Eugene
 
-Henri,
+Upstream commit:
+http://git.kernel.org/linus/a8c1f65c79cbbb2f7da782d4c9d15639a9b94b27
 
-This was just assigned CVE-2011-5045 a couple days ago.
+Reference:
+https://bugzilla.redhat.com/CVE-2012-0207
 
-- Steve
-
-
-On Tue, 3 Jan 2012, Henri Salo wrote:
-
-> Should this vulnerability get CVE?
->
-> Original report: http://seclists.org/bugtraq/2011/Dec/123
-> Report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3469106&group_id=132702&atid=724998
->
-> - Henri Salo
->
+Eugene
