@@ -1,69 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/2
-Message-ID: <4FE7F47D.6000702@redhat.com>
-Date: Sun, 24 Jun 2012 23:17:49 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/6
+Message-ID: <4F165904.7080908@redhat.com>
+Date: Wed, 18 Jan 2012 13:30:44 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Felipe Pena <felipensp@...il.com>
-Subject: Re: CVE request: Full path disclosure in DokuWiki
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: Unused iocbs in a batch should not be accounted as active
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+commit 69e4747ee9727d660b88d7e1efe0f4afcb35db1b
+Author: Gleb Natapov <gleb@...hat.com>
+Date:   Sun Jan 8 17:07:28 2012 +0200
 
-On 06/24/2012 06:40 AM, Felipe Pena wrote:
-> Full path disclosure in DokuWiki 
-> ======================================== DokuWiki is a simple to
-> use Wiki aimed at the documentation needs of a small company. It
-> works on plain text files and thus needs no database. It has a 
-> simple but powerful syntax which makes sure the datafiles remain
-> readable outside the Wiki.
-> 
-> The POST input 'prefix' is not checked/casted for proper data type
-> before passing to PHP's substr() function, which lead to displays
-> an warning with sensitive information on server with PHP error
-> level enabled:
-> 
-> $PRE   = cleanText(substr($_POST['prefix'], 0, -1));
-> 
-> $ curl -dprefix[]=1 http://localhost/dokuwiki/doku.php 2> /dev/null
-> | grep Warning <b>Warning</b>:  substr() expects parameter 1 to be
-> string, array given in <b>/var/www/dokuwiki/doku.php</b> on line
-> <b>47</b><br /> <b>Warning</b>:  Cannot modify header information -
-> headers already sent by (output started at
-> /var/www/dokuwiki/doku.php:47) in 
-> <b>/var/www/dokuwiki/inc/actions.php</b> on line <b>180</b><br />
-> 
-> Affected versions: ======================================== - Angua
-> (RC1) - Rincewind - Anteater
-> 
-> References: ======================================== 
-> http://www.freelists.org/post/dokuwiki/Fwd-DokuWiki-Full-path-disclosure
->
->  Credits: ======================================== This
-> vulnerability was discovered by Felipe Pena. Twitter: @felipensp
+    Unused iocbs in a batch should not be accounted as active.
 
-Please use CVE-2012-3354 for this issue.
+    Since commit 080d676de095 ("aio: allocate kiocbs in batches") iocbs
+are allocated in a batch during processing of first iocbs.  All iocbs in
+a batch are automatically added to ctx->active_reqs list and accounted
+in ctx->reqs_active.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+    If one (not the last one) of iocbs submitted by an user fails,
+further iocbs are not processed, but they are still present in
+ctx->active_reqs and accounted in ctx->reqs_active.  This causes process
+to stuck in a D state in wait_for_all_aios() on exit since
+ctx->reqs_active will never go down to zero.  Furthermore since
+kiocb_batch_free() frees iocb without removing it from active_reqs list
+the list become corrupted which may cause oops.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+    Fix this by removing iocb from ctx->active_reqs and updating
+ctx->reqs_active in kiocb_batch_free().
 
-iQIcBAEBAgAGBQJP5/R9AAoJEBYNRVNeJnmTuy4QAMQ1Lde156PpN81VAVaE9XUk
-vcZ6arWAvYIJzMMYlwVZlWdfhQbds4v0IbuefugnsS7XMD5/+Gn0Y07ulqTWiDMY
-dQ6ESNkVvTW959S977aSullrYlF3LDgYxb48dvclza8fxQxQZRKGZ/ppHJ2+CGqn
-sGwiJjF/zAQDYRiNl9+FE2aLrWjUTU1IEIwAHzPMa/jMO/XPhMVjU48JntMd1f/n
-rcpUbTVByY2dFaPGpH8APFCjPlCk3fkWZCzGmGRNkZQBvGrGBFOHdbeP+zSITwd5
-ksQqhzOG4X43VGMpkMREgMc9+korDplKGAjBGGHZKOGQA6ad3rjspHpnmfkyn7wY
-Ug3aolQtwsOyzYBA/LRpYNZcRTYGRRSnoutjNkGaAZHjiLKixrlmv99CxubCefLf
-d0q7qF1gMaZX3bY1X9cYcatKDI/26Xlr1zsDYXyQsmqNbqqsvaZ98lq3dR3r1BbD
-kEIkEF2kCvB8XEtgpPni7MwyLI5vf7iFOMyVzVmgT8jvTME1dpph0aL7L0nm65Ko
-YkgGk8ppC3wN2v9AC6N/fAAFUzPuCUGmIDDMqXL6/T/4Kxem0a2NzlTdxpUgQqgW
-m7xs0HgdBjRpeTD8Oz0yWpirQDjplLpbNRC08ZekRn8Tuz4pjtveHuSJMNLeNPOs
-vO1optUzhVkE9I0lJAuE
-=gzwk
------END PGP SIGNATURE-----
+    Signed-off-by: Gleb Natapov <gleb@...hat.com>
+    Reviewed-by: Jeff Moyer <jmoyer@...hat.com>
+    Cc: stable@...nel.org   # 3.2
+    Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
+
+Issue introduced in v3.2-rc1 via commit 080d676d.
+
+Thanks, Eugene
