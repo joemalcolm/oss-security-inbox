@@ -1,37 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/20/2
-Message-ID: <alpine.LFD.2.02.1210210127420.6640@javelin.pnq.redhat.com>
-Date: Sun, 21 Oct 2012 01:28:30 +0530 (IST)
-From: P J P <ppandit@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/9
+Message-Id: <682F4F17-7EF6-4820-BC0F-F4EB77EEE7DB@securityview.nl>
+Date: Wed, 18 Jan 2012 14:31:19 +0100
+From: Ronald van den Blink <oss-security@...urityview.nl>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel stack disclosure in binfmt_script load_script()
+Subject: CVE request - Batavi 1.2.1 Fixes Blind SQL Injection vulnerability in boxToReload parameter of ajax.php
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-+-- On Fri, 19 Oct 2012, Kurt Seifried wrote --+
-| Please use CVE-2012-4530 for this issue.
+Can we please have a CVE assigned for the following fix in Batavi 1.2.1 (http://sourceforge.net/projects/batavi/files/).
 
-Thank you Kurt! :)
-- --
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+As pointed out by Canberk BOLAT of Mavituna Security, version before 1.2.1 have a Blind SQL Injection Vulnerability in the boxToReload parameter of ajax.php. This has been fixed in Batavi 1.2.1.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Relevant part of the changelog:
 
-iQIcBAEBAgAGBQJQgwJmAAoJENBIeGA2VWAr974P/2hipbdLNfyymB1rQpY4IjGE
-QwlK0xS3H16Dc1MiUd49aELNHCrW7IUL1JhhZrBtoFsgQ46zDfbYvy9BOvqkRrSY
-lcT2IQDEJdR5Bx+5lUscr3NkG4cS6OzA4Mcli1JOrNT9OnMMRMxNG6GCZhknElKl
-42qRawvkW6eE2Y4UFaIPZX3H3dh8fnEABRX7wegkKmgJmXWy88PljiH5HBBfQIqe
-8QcKcY5M0A4FZ5p8WxXSuVj5q3zqsTf+U6vakIjldbVkJbyQEcsdXNvjzIneZHsr
-jBluBeKdKC+MWF9AGwJb1fHJA0vj7A876eA4MAuQwrJC/D0B+mD097ypi4jZ+ytz
-1TERWi/yolkJ1xZ4SmuCJth/tLuQ26DwmSPihIJj1Y3v9KbWcZH13lcXv1XGxLd6
-2wob0ogxGVq21R0Dn3ZE3wdj7HhUs5OCRUflDw7VG6xSPA/2oQ7sBQTu5CFMiYlp
-/+NjQLigiKInRDIi6uDRReIUdO3wYNN/qg5QxZgsfyd+8iGV0gHLXpPVOuX9oOU7
-A3fT6/6NYDc7F/6Ut+oFarp5VsAxTiIvnWDwwVoTBz4Pu3TGCdVLTfEsxW5SkKow
-cgDMvZQSEu5DGQTSL66W3MnIMJHEo1JtWtml5YqY7JzkPfRPmyVH9Qx9IgmM6B3z
-MCJuSA+s4wJy5N04my8A
-=zeoa
------END PGP SIGNATURE-----
+For details about the changes of the downloaded version you'll find a changes.txt in the root folder of the package.
+
+Version 1.2.1
+
+[..]
+
+Security:
+
+- Fixed SQL injection in modules;
+- Improvements methods of Database to handle it;
+- All data which come from user going via special check to strip all dangerous values.
+
+[..]
+
+With kind regards,
+
+Ronald van den Blink
+Project Manager 
+Iceshop BV
+
+Iceshop BV is the main contributor to the next generation open source e-commerce software Batavi. Batavi is the first open source e-commerce software that can easy handle more than 100.000 products and has native Icecat (www.icecat.biz) integration. 
