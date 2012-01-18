@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/4
-Message-ID: <1327660847.20016.9.camel@oban>
-Date: Fri, 27 Jan 2012 11:40:47 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/12
+Message-ID: <4F1740BE.1030609@redhat.com>
+Date: Wed, 18 Jan 2012 14:59:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Debian (others?) openssh-server: Forced Command handling leaks private information to ssh clients
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: NGS00109 remote code execution in ImpressPages CMS
 Content-Type: text/plain; charset=utf-8
 
-On jeu., 2012-01-26 at 19:49 -0500, Marc Deslauriers wrote:
-> > Please use CVE-2012-0814 for this issue. Also please let me know if
-> > other Linux distributions are affected!
-> > 
-> > 
-> 
-> Looks like this (I haven't tried...):
-> 
-> http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/auth-options.c.diff?r1=1.53;r2=1.54 
+On 01/15/2012 08:58 AM, Henri Salo wrote:
+> This issue does not have CVE assigned. If I am correct this needs CVE from 2011 pool as original advisory was done in http://seclists.org/bugtraq/2011/Sep/156 but details came in http://seclists.org/bugtraq/2012/Jan/28
+>
+> Vendor url: http://www.impresspages.org/news/impresspages-1-0-13-security-release/
+> Secunia: http://secunia.com/advisories/46193/
+> OSVDB: http://osvdb.org/show/osvdb/75783
+>
+> eval() is evil()
+>
+> - Henri Salo
+It was known as a security vuln in 2011, to 2011 CVE. Had it been
+silently slipped out as an update but no info that it was security
+related then it might warrant a 2012 CVE. Please use CVE-2011-4932 for
+this issue.
 
-By the way, is the ForceCommand (and other directives) really supposed
-to be private for different keys (or, more widely, for different matches
-for the same user).
-
-Regards,
 -- 
-Yves-Alexis
+
+-- Kurt Seifried / Red Hat Security Response Team
 
