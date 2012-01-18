@@ -1,82 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/8
-Message-ID: <5076FD82.3060000@redhat.com>
-Date: Thu, 11 Oct 2012 11:10:26 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/1
+Message-ID: <4F162DB3.1080201@redhat.com>
+Date: Wed, 18 Jan 2012 10:25:55 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Tim Brown <timb@...-dimension.org.uk>, security@....org
-Subject: Re: Pre-advisory for Konqueror 4.7.3 (other versions may be affected)
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+"Jüri Aedla reported that the /proc/<pid>/mem handling really isn't very
+robust, and it also doesn't match the permission checking of any of the
+other related files.
 
-On 10/10/2012 07:52 PM, Kurt Seifried wrote:
-> On 10/10/2012 04:12 PM, Tim Brown wrote:
->> Taken from NDSA20121010: --8<-------- This advisory comes in 4
->> related parts:
-> 
->> 1) The Konqueror web browser is vulnerable to type confusion 
->> leading to memory disclosure.  The root cause of this is the
->> same as CVE-2010-0046 reported by Chris Rohlf which affected
->> WebKit.
+This changes it to do the permission checks at open time, and instead of
+tracking the process, it tracks the VM at the time of the open.  That
+simplifies the code a lot, but does mean that if you hold the file
+descriptor open over an execve(), you'll continue to read from the _old_ VM.
 
-Please use CVE-2012-4512 for this issue.
+That is different from our previous behavior, but much simpler.  If
+somebody actually finds a load where this matters, we'll need to revert
+this commit.
 
->> 2) The Konqueror web browser is vulnerable to an out of bounds 
->> memory access when accessing the canvas.  In this case the 
->> vulnerability was identified whilst playing with bug #43813 from
->>  Google's Chrome repository.
+I suspect that nobody will ever notice - because the process mapping
+addresses will also have changed as part of the execve.  So you cannot
+actually usefully access the fd across a VM change simply because all
+the offsets for IO would have changed too."
 
-Please use CVE-2012-4513 for this issue.
+http://git.kernel.org/linus/e268337dfe26dfc7efd422a804dbb27977a3cccc
 
->> 3) The Konqueror web browser is vulnerable to a NULL pointer 
->> dereference leading to a crash.
-> 
->> 4) The Konqueror web browser is vulnerable to a "use-after-free"
->>  class flaw when the context menu is used whilst the document
->> DOM that is being changed from within Javascript.
-
-Please use CVE-2012-4514 for this issue.
-
->> These flaws were identified during an analysis of previously 
->> reported vulnerabilities that affected Google's Chrome web
->> browser. It is believed that only vulnerability 1 is/was common
->> to the two code bases.
-
-Please use CVE-2012-4515 for this issue.
-
->> --8<--------
-> 
->> I'm pre-advising on these flaws since I've not heard anything
->> from the KDE project in about 8 months regarding 3 and 4 and we
->> are aware that 1 and 2 have been fixed.  I'll give it 7 days and
->> then drop technical details.  Vendors with an interest can
->> contact me off list.
-> 
->> Tim
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQdv2CAAoJEBYNRVNeJnmTZY4P/i8FhSTjseaK+VYdt4Z3Uow+
-fp6N58S5P16shvY0VOJ9NSYRjAhy212lG6iSzyXHPs+ya+88SwRif6bomjdX63Xy
-IUauSghyhfFh6+Y5tx9mdgSZO5znBIAK93UVEmYam591QFa5FK/8PpWKZ38A4baX
-HCnA6/XOr+ilyUbaj0E3d70HiNbSdARBNsvYrWLJ93/d2+uCCW15PIbuyG1b1nHD
-beMdrse++dfUw/sQiVGgUK7aUeH006YnIObd7j7bkkdU5muLLk8ixvnlI73mDVU2
-+18giz58AkUq22wXpP8pwa+KVEpZAbNugFNR/p0xZT1Jk4N3lizBU6e0+K4CkuXV
-1memByFQH2cLzyNRcdJOcI8QcZXvoXJG4Yy8rJMxq0M64/PnZf3eyTPycT/nvfa9
-jQsUILti6wxh/d0SWFo5O/gDrrrHTeRLGPv0/VVCwtASN8e6y6h453P1UNf2WEbl
-WMhOFGoFmKXzeo1a6D2k1rzLzY4PijHf5EStqozb+szrkBk/J0USujSFME9xbjrU
-goEvD128HmeCZ/RaNB5NW4ebJ7aHcg9NALm+8IKdO5BF/Y7kOVXnp7bLBypDpQH7
-WgGwVBM4wdrDl9OYKJ+WiEpF+xtcczO7JTNWaj/JcI6oOkLI+p0x3eZ/q3UtylAf
-MrqDQcd7+y2gnmXmMzn8
-=uAqx
------END PGP SIGNATURE-----
+Thanks, Eugene
