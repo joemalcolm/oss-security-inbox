@@ -1,55 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/11/3
-Message-ID: <2273600.2E0aOJkKJz@devil>
-Date: Wed, 11 Jan 2012 17:19:57 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/13
+Message-ID: <4F174639.40502@redhat.com>
+Date: Wed, 18 Jan 2012 15:22:49 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Wireshark multiple vulnerabilities
+Subject: Re: CVE-request: WordPress 3.1.1
 Content-Type: text/plain; charset=utf-8
 
-According to secunia advisory: https://secunia.com/advisories/47494/ :
-
-Multiple vulnerabilities have been reported in Wireshark, which can be 
-exploited by malicious people to cause a DoS (Denial of Service) and 
-compromise a user's system.
-
-1) NULL pointer dereference errors when reading certain packet information can 
-be exploited to cause a crash.
-
-2) An error within the RLC dissector can be exploited to cause a buffer 
-overflow via a specially crafted RLC packet capture file.
-
-and according with upstream advisory:
-
-1)http://www.wireshark.org/security/wnpa-sec-2012-01.html
-Name: Multiple Wireshark file parser vulnerabilities
-Description:
-Laurent Butti discovered that Wireshark failed to properly check record sizes 
-for many packet capture file formats.
-Impact:
-It may be possible to make Wireshark crash by convincing someone to read a 
-malformed packet trace file.
-
-2)http://www.wireshark.org/security/wnpa-sec-2012-02.html
-Name: Wireshark NULL pointer vulnerabilities
-Description:
-Wireshark was improperly handling NULL pointers when displaying packet 
-information which could lead to a crash.
-Impact:
-It may be possible to make Wireshark crash by injecting a malformed packet 
-onto the wire or by convincing someone to read a malformed packet trace file.
-
-3)http://www.wireshark.org/security/wnpa-sec-2012-03.html
-Name: Wireshark RLC dissector buffer overflow
-Description:
-The RLC dissector could overflow a buffer.
-Impact:
-It may be possible to make Wireshark crash by injecting a malformed packet 
-onto the wire or by convincing someone to read a malformed packet trace file.
+On 01/15/2012 07:39 AM, Henri Salo wrote:
+> On Sun, Jan 15, 2012 at 03:32:48PM +0100, Hanno Böck wrote:
+>>> 1) Certain unspecified input is not properly sanitised before being
+>>> returned to the user. This can be exploited to execute arbitrary HTML
+>>> and script code in a user's browser session in context of an affected
+>>> site. http://osvdb.org/show/osvdb/72141
+>> I think this is CVE-2012-0287:
+>> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-0287
+> I think you are correct. I do not know why I did not see this in allitems.txt.gz. Can't find other CVEs with that URL. There seems to be three issues. I am refering to http://wordpress.org/news/2011/04/wordpress-3-1-1/:
+>
+> "Version 3.1.1 also addresses three security issues discovered by WordPress core developers Jon Cave and Peter Westwood, of our security team. The first hardens CSRF prevention in the media uploader. The second avoids a PHP crash in certain environments when handling devilishly devised links in comments, and the third addresses an XSS flaw."
+>
+> ======================================================
+> Name: CVE-2012-0287
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-0287
+> Phase: Assigned (20120103)
+> Category: 
+> Reference: MISC:http://oldmanlab.blogspot.com/2012/01/wordpress-33-xss-vulnerability.html
+> Reference: CONFIRM:https://wordpress.org/news/2012/01/wordpress-3-3-1/
+>
+> Cross-site scripting (XSS) vulnerability in wp-comments-post.php in
+> WordPress 3.3.x before 3.3.1, when Internet Explorer is used, allows
+> remote attackers to inject arbitrary web script or HTML via the query
+> string in a POST operation that is not properly handled by the
+> "Duplicate comment detected" feature.
+>
+>
+> Current Votes:
+> None (candidate not yet proposed)
+> ======================================================
+>
+> - Henri Salo
+I don't feel assigning a CVE for these issues would be prudent until
+some details are released, I think the 3.1.1 and 3.1.3 stuff is separate
+but I can't be sure. Can someone from WordPress comment?
 
 -- 
-Agostino Sarubbo		ago -at- gentoo.org
-Gentoo/AMD64 Arch Security Liaison
-GPG: 0x7CD2DC5D
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+-- Kurt Seifried / Red Hat Security Response Team
+
