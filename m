@@ -1,65 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/4
-Message-ID: <4F69BC6B.5080200@redhat.com>
-Date: Wed, 21 Mar 2012 12:32:59 +0100
-From: Stefan Cornelius <scorneli@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/10
+Message-ID: <20120118204328.GU2618@outflux.net>
+Date: Wed, 18 Jan 2012 12:43:28 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: GnuTLS TLS record handling issue / MU-201202-01
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+What's the problem with the old logic in the mem handling? (Why does this
+need a CVE?)
 
-Correcting myself as more details about the GnuTLS case were revealed:
-GnuTLS needs a CVE after all, for another issue different from
-CVE-2012-1569.
+On Wed, Jan 18, 2012 at 10:25:55AM +0800, Eugene Teo wrote:
+> "Jüri Aedla reported that the /proc/<pid>/mem handling really isn't very
+> robust, and it also doesn't match the permission checking of any of the
+> other related files.
+> 
+> This changes it to do the permission checks at open time, and instead of
+> tracking the process, it tracks the VM at the time of the open.  That
+> simplifies the code a lot, but does mean that if you hold the file
+> descriptor open over an execve(), you'll continue to read from the _old_ VM.
+> 
+> That is different from our previous behavior, but much simpler.  If
+> somebody actually finds a load where this matters, we'll need to revert
+> this commit.
+> 
+> I suspect that nobody will ever notice - because the process mapping
+> addresses will also have changed as part of the execve.  So you cannot
+> actually usefully access the fd across a VM change simply because all
+> the offsets for IO would have changed too."
+> 
+> http://git.kernel.org/linus/e268337dfe26dfc7efd422a804dbb27977a3cccc
+> 
+> Thanks, Eugene
 
-Quoting the Mu Dynamics advisory [1]:
-
-The block cipher decryption logic in GnuTLS assumed that a record
-containing any data which was a multiple of the block size was valid for
-further decryption processing, leading to a heap corruption vulnerability.
-
-The bug can be reproduced in GnuTLS 3.0.14 by creating a corrupt
-GenericBlockCipher struct with a valid IV, while everything else is
-stripped off the end, while the handshake message length retains its
-original value: [...]
-
-This will cause a segmentation fault, when the ciphertext_to_compressed
-function tries to give decrypted data to _gnutls_auth_cipher_add_auth
-for HMAC verification, even though the data length is invalid, and it
-should have returned GNUTLS_E_DECRYPTION_FAILED or
-GNUTLS_E_UNEXPECTED_PACKET_LENGTH instead, before
-_gnutls_auth_cipher_add_auth was called.
-
-NOTE: This CVE request is only for the GnuTLS TLS record handling issue
-/ MU-201202-01. When looking at the release notes [2] and [3], there are
-other issues that may be worthy of a CVE, but are currently still under
-investigation:
-
-** libgnutls: Eliminate double free during SRP
-authentication. Reported by Peter Penzov.
-
-** libgnutls: PKCS #11 objects that do not have ID
-no longer crash listing. Reported by Sven Geggus.
-
-
--- References --
-
-[1] Mu Dynamics:
-http://blog.mudynamics.com/2012/03/20/gnutls-and-libtasn1-vulns/
-
-[2] GnuTLS 3.0.15 release announcement:
-http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5912
-
-[3] GnuTLS 2.12.17 release announcement:
-http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5910
-
-[4] GNUTLS-SA-2012-2:
-http://www.gnu.org/software/gnutls/security.html
-
-[5] Red Hat bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=805432
-
-Thanks and kind regards,
 -- 
-Stefan Cornelius / Red Hat Security Response Team
+Kees Cook
