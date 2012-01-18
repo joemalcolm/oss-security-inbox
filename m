@@ -1,44 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/8
-Message-ID: <20120209082436.GA14572@dztty>
-Date: Thu, 9 Feb 2012 09:24:36 +0100
-From: Djalal Harouni <tixxdz@...ndz.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/11
+Message-ID: <4F173FB8.3090804@redhat.com>
+Date: Wed, 18 Jan 2012 14:55:04 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux procfs infoleaks via self-read by a SUID/SGID program (was: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access)
+CC: Ronald van den Blink <oss-security@...urityview.nl>
+Subject: Re: CVE request - Batavi 1.2.1 Fixes Blind SQL Injection vulnerability in boxToReload parameter of ajax.php
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 09, 2012 at 10:55:23AM +0400, Solar Designer wrote:
-> On Thu, Feb 09, 2012 at 03:31:34AM +0100, Jason A. Donenfeld wrote:
-> > On Wed, Feb 8, 2012 at 11:12, Solar Designer <solar@...nwall.com> wrote:
-> > > BTW, what version of chsh did you test this with and what behavior do
-> > > you observe?  I was not able to get anything useful in this way out of
-> > > Owl's chsh (once enabled for non-root) - it just asks for the password,
-> > > but somehow fails to read it if one is entered on the tty (perhaps
-> > > there's some inconsistency in use of the tty vs. fd 0).  I suppose I'd
-> > > need to get past successful authentication for chsh's input to be
-> > > treated as the new shell name, in which case it'd get printed out (such
-> > > as in an error message) or/and put in /etc/passwd.
-> > 
-> > zx2c4@...C4-Laptop ~/Projects/Ploits/Local/CVE-2012-0056 $ gcc maps.c
-> > zx2c4@...C4-Laptop ~/Projects/Ploits/Local/CVE-2012-0056 $ ./a.out
-> > Changing the login shell for zx2c4
-> > Enter the new value, or press ENTER for the default
-> >         Login Shell [/bin/bash]: chsh: Invalid entry:
-> > 00400000-00408000 r-xp 00000000 fd:00 1444794
-> >   /usr/bin/chsh
-> 
-> Hmm.  It does not even ask you for the password.  Perhaps you have
-> CHFN_AUTH in /etc/login.defs set to "no" or not set at all?  (On Owl,
-> it's "yes".)
-Yes it seems that it does not require a password, and this is an
-arbitrary /proc/<pid>/ info leak (at least for some of the files), I've
-also experienced this.
-
-In this case the config of /usr/bin/chsh will help, since we avoid the
-lseek() which will fail on arbitrary files.
-
-> Alexander
+On 01/18/2012 06:31 AM, Ronald van den Blink wrote:
+> Hi,
+>
+> Can we please have a CVE assigned for the following fix in Batavi 1.2.1 (http://sourceforge.net/projects/batavi/files/).
+>
+> As pointed out by Canberk BOLAT of Mavituna Security, version before 1.2.1 have a Blind SQL Injection Vulnerability in the boxToReload parameter of ajax.php. This has been fixed in Batavi 1.2.1.
+>
+> Relevant part of the changelog:
+>
+> For details about the changes of the downloaded version you'll find a changes.txt in the root folder of the package.
+>
+> Version 1.2.1
+>
+> [..]
+>
+> Security:
+>
+> - Fixed SQL injection in modules;
+> - Improvements methods of Database to handle it;
+> - All data which come from user going via special check to strip all dangerous values.
+>
+> [..]
+>
+> With kind regards,
+>
+> Ronald van den Blink
+> Project Manager 
+> Iceshop BV
+>
+> Iceshop BV is the main contributor to the next generation open source e-commerce software Batavi. Batavi is the first open source e-commerce software that can easy handle more than 100.000 products and has native Icecat (www.icecat.biz) integration. 
+Can you include a link to the code commit(s) that fiix this? Thanks.
 
 -- 
-tixxdz
-http://opendz.org
+
+-- Kurt Seifried / Red Hat Security Response Team
+
