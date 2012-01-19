@@ -1,77 +1,140 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/16
-Message-ID: <5052160B.2090002@redhat.com>
-Date: Thu, 13 Sep 2012 11:21:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Jeff Law <law@...hat.com>, Jakub Jelinek <jakub@...hat.com>
-Subject: Re: CVE Request -- glibc: strcoll() integer overflow leading to buffer overflow + another alloca() stack overflow issue (upstream #14547 && #14552)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/14
+Message-ID: <20120119100625.GA31571@openwall.com>
+Date: Thu, 19 Jan 2012 14:06:25 +0400
+From: Solar Designer <solar@...nwall.com>
+To: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>, security@...gonflybsd.org
+Cc: oss-security@...ts.openwall.com, magnum <john.magnum@...hmail.com>
+Subject: Re: weird crypt-sha* in DragonFly BSD
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+DragonFly BSD committers -
 
-On 09/10/2012 11:51 AM, Jan Lieskovsky wrote:
-> Hi Florian,
+magnum has prepared a patch to address this issue in DragonFly BSD:
+
+http://www.openwall.com/lists/john-dev/2012/01/19/1
+
+This reverts the default to FreeBSD's MD5-crypt _and_ it takes care of
+the magic strings in your crypt-sha* stuff to make those strings
+constant (whatever they happened to be in your release in practice -
+including the extra 4 bytes).
+
+Please review and commit.
+
+Alexander
+
+On Mon, Jan 16, 2012 at 09:12:04PM +0400, Solar Designer wrote:
+> Matt -
 > 
-> thank you for the clarification.
+> magnum proceeded to implement support for DragonFly's SHA-2 based hashes
+> in John the Ripper - to hopefully make you reconsider sooner rather than
+> later.  While doing so, he ended up finding a nasty bug that I
+> previously did not notice: the code uses sizeof(magic) instead of
+> strlen(magic), where "magic" is a pointer.  Thus, the resulting hashes
+> are non-portable between 32-bit and 64-bit systems, and additionally
+> they may be non-portable between different 64-bit versions/builds of
+> DragonFly (let alone to/from other systems).  While this lack of
+> portability might make some attacks on stolen/leaked hashes more
+> difficult (it certainly is an issue that we have to consider when adding
+> support for these hashes to JtR), I doubt that this is what you want.
 > 
->> On 09/07/2012 07:21 PM, Kurt Seifried wrote:
->> 
->>> 2) Issue #2 (mentioned here only for completeness, but I am not
->>> of the opinion this should receive a CVE identifier. See
->>> argumentation below [but open to glibc upstream / others to
->>> disprove it]).
->> 
->> I will hold off on issuing a CVE for this then. Anyone want to
->> weigh in?
->> 
->> It looks as if the alloca issue was introduced at the same time
->> as the malloc-related overflow:
->> 
->> http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=5358d026c74
->>
->>
->> 
-So perhaps one CVE is enough for glibc bugs 14552 and 14547 because the
->> problems are similar and affect the same versions.
+> I strongly recommend that you revert to FreeBSD's MD5-crypt ASAP.
 > 
-> Should the alloca() issue get CVE identifier, then I would rather
-> use two CVE identifiers. Though those issues might affect same
-> glibc versions, one is integer overflow, leading to heap-based
-> buffer overflow, while the alloca() one would be stack-based buffer
-> overflow.
+> More detail here:
 > 
-> So to clearly identify, it would be better if the second one would
-> be allocated too (if Steve won't mind).
+> http://www.openwall.com/lists/john-dev/2012/01/16/1
+> http://www.openwall.com/lists/john-dev/2012/01/16/4
 > 
-> Kurt, could you allocate yet one then?
-
-Please use CVE-2012-4424 for this issue.
-
-Also the original report:
-http://sourceware.org/bugzilla/show_bug.cgi?id=14552#c0
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQUhYLAAoJEBYNRVNeJnmTEQ4QANxQwR1plKLDC2HkgSi4dmMc
-JvQ6upCz9q2erXoWM/Y9AXqJnwmlNyMe5aZjV4FCwV6ezaubXAxwbtbGYUMrmWe1
-T0Ee6QrLZeXHRn998jb6iBoKP/F5/x9wDHaxy0XciOjacIE8Zq1+V+pcHkBK6YsG
-hEu+r2hLALV0HUNXofHTiNu2W36aSH2elhiS2c8SFzqdBxustlMvwqnWeXhi/W+S
-0ozaI7sxkIulTlBdOdTKo9+5OB+gcUCrYhMdBTnjgHc2ixpFBo3nykIvuawJKFIj
-4fZuIsFm7FsQRC+cPwjES6EuoSJyvNREqO3M90Iwj1nxFAFkKCnQ1p4w4295y7rG
-UKx7J4M0S8F5SICJ5YOmq59Ze7V0UeeDAzUejR2Tfhqbo2uBb2c1tZ2MbhnvVw2A
-itXh7LpAL5Y3LfxdCwnSFiy/DoGwJx7LnS7SiDHb+4fNjrJAUL3nl3IAm85myM0/
-XqGrVJtL5dun26UYX4Yv0ketXQ9Ahccs/bPCfD+2z/LXtz19vjfB5wl2oPb8f4uf
-6TlZ4xQOB61MsXIrbSBqPEjcch5IX6ejWcoXetO65P1q4UCktbrPMwuBXot7HLhN
-pgK8IHhkxLb/3tMvGen09soL7qERdt1IZK953DiMCLxYrnF6P0QMEq5LmZjCAMcm
-yTkAY7yb+CxnYl5/eDmd
-=ed8K
------END PGP SIGNATURE-----
+> For now, we'll support only the 32-bit flavor of these hashes in JtR.
+> If you keep them in DragonFly for much longer, we'll likely do something
+> about supporting the 64-bit flavors as well.
+> 
+> The speeds on one CPU core (in a E5420):
+> 
+> Reference (heavily optimized and parallelized FreeBSD MD5-crypt, 12
+> hashes computed in parallel):
+> 
+> Benchmarking: FreeBSD MD5 [SSE2i 12x]... DONE
+> Raw:    25320 c/s real, 25320 c/s virtual
+> 
+> DragonFly's alternatives:
+> 
+> Benchmarking: DragonFly BSD SHA-256 w/ bug (32-bit) [OpenSSL 32/64]...  DONE
+> Many salts:     1663K c/s real, 1646K c/s virtual
+> Only one salt:  1479K c/s real, 1494K c/s virtual
+> 
+> Benchmarking: DragonFly BSD SHA-512 w/ bugs (32-bit) [OpenSSL 64/64]...  DONE
+> Many salts:     1377K c/s real, 1377K c/s virtual
+> Only one salt:  1257K c/s real, 1257K c/s virtual
+> 
+> That's 65 times faster cracking - before we even started optimizing.
+> 
+> 8-way OpenMP on 2xE5420 (8 cores), reference:
+> 
+> Benchmarking: FreeBSD MD5 [SSE2i 12x]... (8xOMP) DONE
+> Raw:    202368 c/s real, 25264 c/s virtual
+> 
+> (215k c/s is possible with Intel's compiler, but I did not bother here.)
+> 
+> DragonFly's alternatives:
+> 
+> Benchmarking: DragonFly BSD SHA-256 w/ bug (32-bit) [OpenSSL 32/64]... (8xOMP) DONE
+> Many salts:     10870K c/s real, 1370K c/s virtual
+> Only one salt:  6119K c/s real, 763973 c/s virtual
+> 
+> Benchmarking: DragonFly BSD SHA-512 w/ bugs (32-bit) [OpenSSL 64/64]... (8xOMP) DONE
+> Many salts:     8509K c/s real, 1065K c/s virtual
+> Only one salt:  5207K c/s real, 656587 c/s virtual
+> 
+> That's roughly a 50x speedup - again, for unoptimized DragonFly hashing
+> vs. optimized FreeBSD hashing.
+> 
+> With full optimizations, the difference will be more like 500x for the
+> SHA-256 flavor.
+> 
+> Please let us know if you're going to do anything about these issues.
+> 
+> Thanks,
+> 
+> Alexander
+> 
+> On Tue, Nov 15, 2011 at 06:35:02AM +0400, Solar Designer wrote:
+> > Hi,
+> > 
+> > Matthew - when I read that DragonFly moved to using SHA-256 for
+> > passwords by default, I thought this was referring to the SHA-256 based
+> > flavor of Ulrich Drepper's SHA-crypt.  This would not be the best choice
+> > to make, in my opinion, but it would not be that bad.  However, I just
+> > found this:
+> > 
+> > http://gitweb.dragonflybsd.org/dragonfly.git/tree/HEAD:/lib/libcrypt
+> > 
+> > Are these crypt-sha256.c and/or crypt-sha512.c files actually in use?
+> > I hope not...  They do not include any password stretching, resulting in
+> > password hashes that are much quicker to crack than MD5-crypt's.
+> > 
+> > There's also minor weirdness in the code - such as two local pointer
+> > variables being declared static seemingly for no reason, and only
+> > "final" but not "ctx" being zeroized in the end.  But even this lack of
+> > proper cleanup is very minor compared to the lack of stretching.
+> > 
+> > Oh, also the "$3$" prefix was apparently previously used for NTLM:
+> > 
+> > http://en.wikipedia.org/wiki/Crypt_(Unix)#NT_Hash_Scheme
+> > 
+> > "FreeBSD used the $3$ prefix for this."
+> > 
+> > http://search.cpan.org/~zefram/Authen-Passphrase/lib/Authen/Passphrase/NTHash.pm
+> > 
+> > "... crypt string must consist of "$3$$" (note the extra "$") followed
+> > by the hash in lowercase hexadecimal."
+> > 
+> > BTW, I looked at DragonFly's code while analyzing a more subtle issue
+> > with Ulrich's SHA-crypt:
+> > 
+> > http://www.openwall.com/lists/oss-security/2011/11/15/1
+> > 
+> > I thought that maybe you reimplemented it in a better fashion avoiding
+> > that issue, but I found this... %-)
+> > 
+> > Alexander
