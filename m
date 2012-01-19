@@ -1,70 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/9
-Message-ID: <20121031183129.GC2676@redhat.com>
-Date: Wed, 31 Oct 2012 12:31:29 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/1
+Message-ID: <1326931432.32025.3.camel@localhost.localdomain>
+Date: Thu, 19 Jan 2012 01:03:52 +0100
+From: Gu1 <gu1@...sortium-of-pwners.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
+Subject: Screen locking programs on Xorg 1.11
 Content-Type: text/plain; charset=utf-8
 
-* [2012-10-29 18:22:29 -0500] Andr?s G?mez Ram?rez wrote:
+Hi,
+I recently found out that it is possible to kill a screensaver/screen
+locker program on the latest version of Xorg (1.11 shipped with
+archlinux, debian wheezy..) using the Ctrl+Alt+Multiply key binding.
 
->PLIB is no longer being maintained:
->
->http://sourceforge.net/mailarchive/message.php?msg_id=28580157
->
->I sent a couple of bugs several months ago, but there wasn't any response
->from plib developers, so I decided to make them public.
+This behavior seems to have been introduced in a recent commit[1] and i
+couldn't find a way to disable it.
 
-Fair enough.  Thank you so much for this explanation.  I didn't realize
-it was unmaintained software.
+All screen locking programs i tested (gnome-screensaver, kscreenlocker,
+slock, slimlock...), are basically rendered useless.
 
->On Mon, Oct 29, 2012 at 3:58 PM, Vincent Danen <vdanen@...hat.com> wrote:
->
->> * [2012-10-29 14:02:58 -0500] Andr?s G?mez Ram?rez wrote:
->>
->>  Sorry for the previous message, it was not intentional :)
->>>
->>> Hi, Could a CVE be assigned to this issue?
->>>
->>> Name: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
->>> Software: PLIB 1.8.5
->>> Software link: http://plib.sourceforge.net/
->>> Vulnerability Type: Stack Based Buffer overflow
->>> References: http://www.exploit-db.com/**exploits/21831/<http://www.exploit-db.com/exploits/21831/>
->>>                   http://www.securityfocus.com/**bid/55839<http://www.securityfocus.com/bid/55839>
->>>
->>> Vulnerability Details: Plib is prone to stack based Buffer overflow in the
->>> error function in ssg/ssgParser.cxx when it loads 3d model files as X
->>> (Direct x), ASC, ASE, ATG, and OFF, if a very long error message is passed
->>> to the function, in line 68:
->>>
->>>
->>> // Output an error
->>> void _ssgParser::error( const char *format, ... )
->>> {
->>>  char msgbuff[ 255 ];
->>>  va_list argp;
->>>
->>>  char* msgptr = msgbuff;
->>>  if (linenum)
->>>  {
->>>    msgptr += sprintf ( msgptr,"%s, line %d: ",
->>>      path, linenum );
->>>  }
->>>
->>>  va_start( argp, format );
->>> 68        vsprintf( msgptr, format, argp );
->>>  va_end( argp );
->>>
->>>  ulSetError ( UL_WARNING, "%s", msgbuff ) ;
->>> }
->>>
->>> Thanks,
->>>
->>
->> Andreas, was this reported to upstream?  I can't see a patch or anything
->> in their bug tracker regarding this.
+Not sure if this is a bug or a feature... :)
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+
+[1]:
+http://cgit.freedesktop.org/xorg/xserver/commit/?id=7d2543a3cb3089241982ce4f8984fd723d5312a1
+
