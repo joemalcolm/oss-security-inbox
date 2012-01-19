@@ -1,26 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/1
-Message-ID: <4F604EB3.1060707@suse.de>
-Date: Wed, 14 Mar 2012 08:54:27 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/18
+Message-ID: <4F1811B6.2060403@redhat.com>
+Date: Thu, 19 Jan 2012 13:51:02 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: libgdata did not verify SSL certificates
+CC: Yves-Alexis Perez <corsac@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>, Jan-Wijbrand Kolman <janwijbrand@...il.com>, Tres Seaver <tseaver@...ladion.com>, Zope Security Team <security-response@...e.org>, Radek Steiger <rsteiger@...hat.com>, Jan Pokorny <jpokorny@...hat.com>
+Subject: Re: CVE-2011-4924 assignment notification -- Zope2, Zope3: Incomplete upstream fix for CVE-2010-1104 issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 01/19/2012 01:42 PM, Yves-Alexis Perez wrote:
+> On jeu., 2012-01-19 at 13:12 +0100, Jan Lieskovsky wrote:
+>> A cross site scripting (XSS) flaw was found in the way Zope2 and Zope3
+>> performed error messages sanitization. If a remote attacker could trick a user,
+>> who was logged into Zope2, into visiting a specially-crafted URL, it would lead
+>> to arbitrary web script execution in the context of user's Zope2 session. If a
+>> remote attacker could trick a user, who was logged into Zope3, into examining
+>> error entries for particular Zope3 instance, it would lead to arbitrary web
+>> script execution in the context of user's Zope3 session.
+>
+> Does this mean CVE-2010-1104 applies to Zope3 too, or the fix for this
+> CVE created CVE-2011-4924?
 
-libgdata did not verify SSL certificates:
+The former. The CVE-2010-1104 issue was applicable to Zope3 too (just wasn't
+described in the description). The reason probably being the CVE-2010-1104
+to had been reported against Zope2 version only (according to particular
+LaunchPad bug).
 
-http://git.gnome.org/browse/libgdata/commit/?id=6799f2c525a584dc998821a6ce897e463dad7840
-http://git.gnome.org/browse/libgdata/commit/?h=libgdata-0-10&id=8eff8fa9138859e03e58c2aa76600ab63eb5c29c
-https://bugzilla.gnome.org/show_bug.cgi?id=671535
-https://bugzilla.novell.com/show_bug.cgi?id=752088
+Zope2 patch for CVE-2010-1104 was incomplete (still allowing XSS). Not sure,
+if there was some Zope3 patch for CVE-2010-1104 applied.
 
-cu
-Ludwig
+Jan-Wijbrand Kolman could you clarify and help us to understand original
+CVE-2010-1104 situation in Zope3?
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>
+> Regards,
+
