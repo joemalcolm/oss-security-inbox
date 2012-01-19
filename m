@@ -1,36 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/11/7
-Message-ID: <1352662181.17241.52.camel@scapa>
-Date: Sun, 11 Nov 2012 20:29:41 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/23
+Message-ID: <87hazr33hu.fsf@mid.deneb.enyo.de>
+Date: Thu, 19 Jan 2012 20:18:37 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Privilege escalation (lpadmin -> root) in cups
+Subject: Re: Screen locking programs on Xorg 1.11
 Content-Type: text/plain; charset=utf-8
 
-On sam., 2012-11-10 at 14:01 +0100, Yves-Alexis Perez wrote:
-> On sam., 2012-11-10 at 13:49 +0100, Yves-Alexis Perez wrote:
-> > Hi,
-> > 
-> > a Debian user reported a bug in our BTS concerning cupsd. The bug is
-> > available at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692791 and
-> > upstream bug at http://www.cups.org/str.php?L4223 (restricted because
-> > it's tagged security).
-> > 
-> By the way, it seems that the CUPS security contact at
-> http://oss-security.openwall.org/wiki/software#cups doesn't work, I just
-> received a bounce. Does someone know a mail address to reach them?
-> 
-Followup on that:
+> I recently found out that it is possible to kill a screensaver/screen
+> locker program on the latest version of Xorg (1.11 shipped with
+> archlinux, debian wheezy..) using the Ctrl+Alt+Multiply key binding.
 
-I had the information by the person reporting the bug #4223. He had an
-answer there that the security contact for Apple was security@...le.com
-and the one for CUPS was security@...s.org (which was notified because
-the bug was tagged security).
+This used to be, uhm, common knowledge:
 
-I've edited the wiki to correct the information there.
+| Option "AllowDeactivateGrabs" "boolean"
+|     This option enables the use of the Ctrl+Alt+Keypad-Divide key
+|     sequence to deactivate any active keyboard and mouse
+|     grabs. Default: off.
+| 
+| Option "AllowClosedownGrabs" "boolean"
+|     This option enables the use of the Ctrl+Alt+Keypad-Multiply key
+|     sequence to kill clients with an active keyboard or mouse grab as
+|     well as killing any application that may have locked the server,
+|     normally using the XGrabServer(3x) Xlib function. Default: off.
+| 
+|     Note that the options AllowDeactivateGrabs and AllowClosedownGrabs
+|     will allow users to remove the grab used by screen saver/locker
+|     programs. An API was written to such cases. If you enable this
+|     option, make sure your screen saver/locker is updated.
 
-Regards,
--- 
-Yves-Alexis
+<http://www.x.org/archive/X11R6.8.1/doc/Xorg.1.html>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+The API in question appears to be XF86MiscSetGrabKeysState:
+
+<http://cvsweb.xfree86.org/cvsweb/xc/programs/Xserver/hw/xfree86/XF86Config.man?hideattic=0#rev1.6>
