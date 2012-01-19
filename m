@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/15
-Message-ID: <20120306204048.GG1220@redhat.com>
-Date: Tue, 6 Mar 2012 13:40:48 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/3
+Message-ID: <20120119021234.GP1624@redhat.com>
+Date: Wed, 18 Jan 2012 19:12:34 -0700
 From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: smokeping XSS
+Cc: crak.otaku@...il.com
+Subject: CVE request: tucan insecure plugin update mechanism
 Content-Type: text/plain; charset=utf-8
 
-* [2012-02-27 20:26:05 +0100] Florian Weimer wrote:
+Saw a Debian bug report about tucan and how it insecurely handles
+"plugin" updates (which are basically python scripts).  These "plugins"
+are executed with the privileges of the user running tucan, and because
+there is no authenticity checking (plugins are not signed, doesn't look
+like there are any certificate checks when connecting to the update
+server, etc.), it's prone to MITM attacks where an attacker could
+basically run arbitrary code as the user running tucan.
 
->* Vincent Danen:
->
->> https://bugzilla.redhat.com/show_bug.cgi?id=783584
->
->Is the patch
->
->https://bugzilla.redhat.com/attachment.cgi?id=556619
->
->really correct?  It does not strip the two magic characters "=
->(" should be enough, = is just defensive), so it's probably still
->possible to inject an onmouseover handler and CSS which enlarges the
->affected HTML element so that the handler is practically guaranteed to
->fire.
->
->I've just looked at the patch, I haven't got a (patched or unpatched)
->smokeping instance to test this.
+I'm not sure how popular this program is or how widely used, but this is
+definitely not good design.
 
-Sorry, slowly catching up on mails here.
+References:
 
-Whether that is right or wrong, I'm not 100% sure; you'd have to ask
-upstream.  I just did the diff since I couldn't find a svn/git repo web
-interface to generate a patch, so if it's wrong, then upstream has got
-it wrong as well.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=656388
+https://bugzilla.redhat.com/show_bug.cgi?id=782999
+http://code.google.com/p/tucan/
 
-I see that Fedora has used a patch (not sure if it's the same or not),
-so if I get a chance in the next few days I'll try the new version to
-try to validate the fix.
+(I'm cc'ing who I hope is one of the lead developers, although it
+doesn't look like much development has been done in the last year)
 
 -- 
 Vincent Danen / Red Hat Security Response Team 
