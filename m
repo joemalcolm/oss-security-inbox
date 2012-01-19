@@ -1,61 +1,164 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/17/2
-Message-ID: <20120417053439.GA24627@alf.mars>
-Date: Tue, 17 Apr 2012 07:34:40 +0200
-From: Helmut Grohne <helmut@...divi.de>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, 668667@...s.debian.org
-Subject: Re: CVE Request (minor) -- Two Munin graphing framework flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/24
+Message-ID: <20120119193412.GB3255@openwall.com>
+Date: Thu, 19 Jan 2012 23:34:12 +0400
+From: Solar Designer <solar@...nwall.com>
+To: valentino.angeletti@...l.com
+Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, tytso@....edu
+Subject: Re: pwgen: non-uniform distribution of passwords
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+On Thu, Jan 19, 2012 at 09:21:17AM +0100, valentino.angeletti@...l.com wrote:
+> may ask you what software (and how it works brute force ecc) you used?
 
-Please always CC the bug report when adding detail to it. Doing it now
-for you.
+John the Ripper, indeed - generating a custom .chr file (which is based
+on trigraph frequencies) from a sample of 1 million of pwgen'ed
+passwords and then using this file to crack another (non-overlapping)
+sample of pwgen'ed passwords.  My initial notification to oss-security
+and Bugtraq included these links, which describe this in more detail:
 
-On Mon, Apr 16, 2012 at 01:19:32PM -0600, Kurt Seifried wrote:
-> > [3] Remote users can fill /tmp filesystem: Red Hat would not
-> > consider this to be a security flaw => no RH BTS entry.
-> > 
-> > Original report: 
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668667
-> 
-> I reread this one a few times, I'm not clear on what:
-> 
-> ==========
-> printf 'GET
-> /cgi-bin/munin-cgi-graph/localdomain/localhost.localdomain/vmstat-day.png?foo
-> HTTP/1.0\r\nHost: localhost\r\nConnection: close\r\n\r\n' | nc
-> localhost 80
-> 
-> Provided that the filename actually exists, munin will render the image
-> ==========
-> 
-> means exactly, does the file vmstat-day.png need to exist where? It
-> seems like if the image is of any size (say 20k or more) the
-> amplification (each get request = 20k of tmp space usage) and the
-> files have to be deleted manually it might qualify as a DoS.
-> 
-> helmut@...divi.de can you shed more light on this?
+http://www.openwall.com/lists/john-users/2010/11/17/7
+http://www.openwall.com/lists/john-users/2010/11/22/5
+http://www.openwall.com/lists/john-users/2010/11/28/1
+http://www.openwall.com/lists/john-users/2010/12/06/1
 
-The basic requirement is that a plugin called vmstat is configured for
-the node localhost.localdomain. I just picked it as an example, cause it
-is present on my system. In practise any plugin for any host will do.
+However, as I wrote in a followup posting to oss-security 2 days ago:
 
-The filling of the disk works by choosing a unique query string for each
-request, because munin "caches" all theses images without ever deleting
-them and includes the query string in the filename. So you are right,
-that we get a base amplification of 20k/request.
+"I might update/revise my analysis on this issue in a few days.
 
-In addition munin parses parts of the query string. You are allowed to
-modify the size of the image. By choosing a path
-"....png?size_x=20000&size_y=20000&uniquestuff" you can do the same
-attack while simultaneously using a large image size. The raw image
-would be 381M (assuming 8bits/pixel) in this case. A png version will
-likely be smaller, say 4M? So now you have an amplification of
-4M/request. Note that this query can get a node into swapping, because
-rrdtool needs to create the whole image in main memory.
+Specifically, I now suspect that a (large) part of the apparent
+non-uniformity of the distribution was in fact an artifact of my
+analysis approach.  I only analyzed sets of 1 million of pwgen'ed
+passwords, so I could not directly check the distribution of full
+passwords (1 million is too little, even compared to the small keyspace
+of these passwords), whereas JtR only uses trigraph frequencies.
 
-Hope this helps
+I am now generating 1 billion of pwgen'ed passwords, which should take a
+couple of days to complete. [...]"
 
-Helmut
+http://www.openwall.com/lists/oss-security/2012/01/17/14
+
+This has in fact completed by now:
+
+$ ./pwgen -1cn 8 1000000000 | dd obs=10M > 1g
+17578125+0 records in
+858+1 records out
+9000000000 bytes (9.0 GB) copied, 147496 seconds, 61.0 kB/s
+
+And I analyzed this larger sample briefly:
+
+$ time ~/john/john-1.7.9-jumbo-5/run/unique -v -mem=25 1gu < 1g
+Total lines read 1000000000 Unique lines written 697066573
+
+real    144m40.619s
+user    142m8.727s
+sys     0m39.645s
+
+So that's 697 million unique passwords in 1 billion, which for a uniform
+distribution would correspond to a total keyspace size of 1.3 billion:
+
+$ ./solve 697066573 1000000000
+1296935185
+
+I've attached the solve.c program to this message.  [ BTW, I verified
+that there's no fatal precision loss in its expected_different()
+function (despite of the risky expression) for the value ranges on which
+it is called here.  I did so by also computing the expected different
+value with a different (much slower) algorithm - just not as part of
+equation solving (which would be slower yet). ]
+
+However, let's see what numbers we get for smaller samples (actually,
+subsets of the 1 billion sample above, but that's OK in this case):
+
+Total lines read 100000000 Unique lines written 89163247
+Total lines read 10000000 Unique lines written 9811335
+Total lines read 1000000 Unique lines written 997978
+
+$ ./solve 89163247 100000000
+427419891
+$ ./solve 9811335 10000000
+261676022
+$ ./solve 997978 1000000
+246946702
+
+As we can see, the guess for the total keyspace size keeps increasing as
+we increase the sample size.  That's under assumption that we have a
+uniform distribution.  Hence, our distribution is non-uniform.
+
+That said, the keyspace may in fact be smaller than I had expected,
+although I haven't hit it with my 1 billion sample yet.  So we have a
+mix of two problems here: likely small keyspace and non-uniform
+distribution.
+
+My John the Ripper pwgen.chr attack was probably testing a lot of
+passwords that are actually impossible, so a much faster attack (even
+more specifically focused on pwgen'ed passwords) should be possible.
+
+I think I underestimated just how much smaller pwgen's pronounceable
+passwords keyspace is compared to the full {62 different, length 8}
+keyspace, although we still do not have the exact number.
+
+I continue to think that the primary problem in terms of pwgen use is
+that these passwords look much stronger than they actually are.  For
+example:
+
+$ pwgen
+athu9Bee Vae0jexa rae2Oa1c Aim8Ku3c No5aep0F OhY5quee ieVae2ti wah1aiM2
+oaNg1oth baePule5 sod8oH6i ohfoh5Du Pai9Uch7 AeG3bies Maev6tae iKievae9
+zo9eiSai Xito9aid iGh3ay8s owib0Ub8 Yahm0oaC Wu3VaiK7 IeK3sah2 xai7Eico
+...
+
+Looking at these, how many people would realize that the keyspace for
+them may be thousands of times smaller than the full {62 different,
+length 8} keyspace and that the distribution may be non-uniform?
+
+Based on the 1 billion sample, the keyspace is 168,350 times smaller,
+although this estimate has the non-uniformity "factored in" (a larger
+sample would show a somewhat larger keyspace estimate).
+
+A partial fix may be for pwgen to print a warning each time it is used
+in this mode and with output to a tty (it already behaves differently
+based on whether its output is a tty or not, so that won't be a new
+drawback).  Also, the default mode may be changed to the "secure" one,
+with the weak alternative available via a non-default option.
+
+<plug>
+Or indeed people can just use pwqgen instead:
+
+http://www.openwall.com/passwdqc/
+
+$ for n in {1..10}; do pwqgen; done
+Warm5Claw4Blame
+hungry5tomato3Yeah
+Midst_Vowel9Spate
+Ohio7steak$Mild
+Taxi&desert+gorge
+fond-Pint=easy
+mode6oldest5chief
+Defeat7Oval-Anew
+vomit+ate2Slid
+tehran8hang3ritual
+
+These are 47-bit (similar to the full {62 different, length 8} keyspace,
+but at a longer length and easier to memorize).  This can easily be
+adjusted from the command-line:
+
+$ for n in {1..3}; do pwqgen random=30; done
+spend!deep
+Alkali-self
+decay9your
+$ for n in {1..3}; do pwqgen random=64; done
+meet-draft9Gun*wire
+inner+Rusty4dogma3tape
+Switch8Sword9even=Viral
+
+The 30-bit ones above are comparable to pwgen's in security (about as
+weak).  In fact, they may be slightly better due to uniform distribution
+(as long as /dev/urandom works well).  The 64-bit ones are unreasonable
+for most users/uses.  The default of 47 bits is reasonable, although as
+always this depends on threat model.
+</plug>
+
+Alexander
+
+View attachment "solve.c" of type "text/plain" (589 bytes)
