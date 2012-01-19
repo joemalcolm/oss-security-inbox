@@ -1,29 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/4
-Message-ID: <20120109115947.GA16323@foo.fgeek.fi>
-Date: Mon, 9 Jan 2012 13:59:47 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/7
+Message-ID: <CANTw=MNVfX66J+wFSvgiYX1SsFywFwtXcDRg-LUWDjTpJ=GxJQ@mail.gmail.com>
+Date: Thu, 19 Jan 2012 00:49:25 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: znc
+Subject: Re: Screen locking programs on Xorg 1.11
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 09, 2012 at 01:17:33PM +0200, Henri Salo wrote:
-> On Sun, Jan 08, 2012 at 04:39:48PM +0100, Moritz Muehlenhoff wrote:
-> > Hi,
-> > please assign a CVE ID to a DoS issue in the ZNC IRC bouncer.
-> > 
-> > I don't have a upstream reference, but the upstream patch applied 
-> > by the Debian maintainer can be found here:
-> > 
-> > http://patch-tracker.debian.org/patch/series/view/znc/0.202-2/01-fix-bouncedcc-dos.diff 
-> > http://packages.qa.debian.org/z/znc/news/20120107T145601Z.html
-> > 
-> > Cheers,
-> >         Moritz
-> 
-> Here is the changelog: http://wiki.znc.in/ChangeLog/0.202
-> This looks a bit like Debian-patch: https://github.com/znc/znc/commit/6ae491ca66e8f7d8c4fe3caca3adbe147c7e552c#modules/bouncedcc.cpp
+On Wed, Jan 18, 2012 at 8:53 PM, Michael Gilbert wrote:
+> On Wed, Jan 18, 2012 at 7:03 PM, Gu1 wrote:
+>> Hi,
+>> I recently found out that it is possible to kill a screensaver/screen
+>> locker program on the latest version of Xorg (1.11 shipped with
+>> archlinux, debian wheezy..) using the Ctrl+Alt+Multiply key binding.
+>>
+>> This behavior seems to have been introduced in a recent commit[1] and i
+>> couldn't find a way to disable it.
+>>
+>> All screen locking programs i tested (gnome-screensaver, kscreenlocker,
+>> slock, slimlock...), are basically rendered useless.
+>>
+>> Not sure if this is a bug or a feature... :)
+>
+> All I can say is wow.  A key combo/code that reproducibly kills all
+> screen lockers is definitely *not* a feature.  This demonstrates the
+> importance of code review in critical code.  Nice find.
 
-Correcting myself as Patrick Matthäi (Debian package maintainer) answered. Correct upstream patch is: https://github.com/znc/znc/commit/11508aa72efab4fad0dbd8292b9614d9371b20a9
+As a temporary solution, I've found that commenting lines 44-49 in
+/usr/share/X11/xkb/compat/xfree86 (actual location may vary for your
+distro; mine is a debian system), which are
 
-- Henri Salo
+    interpret XF86_Ungrab {
+        action = Private(type=0x86, data="Ungrab");
+    };
+    interpret XF86_ClearGrab {
+        action = Private(type=0x86, data="ClsGrb");
+    };
+
+and running "setxkbmap $(setxkbmap -query | grep layout | awk '{print
+$2}')" solves the problem.
+
+Best wishes,
+Mike
