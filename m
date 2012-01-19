@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/1
-Message-ID: <4F0E249E.6070700@redhat.com>
-Date: Wed, 11 Jan 2012 17:09:02 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/5
+Message-ID: <4F17A6C3.3050106@redhat.com>
+Date: Wed, 18 Jan 2012 22:14:43 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: drm: integer overflow in drm_mode_dirtyfb_ioctl()
+CC: Vincent Danen <vdanen@...hat.com>, crak.otaku@...il.com
+Subject: Re: CVE request: tucan insecure plugin update mechanism
 Content-Type: text/plain; charset=utf-8
 
-On 01/11/2012 03:50 AM, Eugene Teo wrote:
-> There is a potential integer overflow in drm_mode_dirtyfb_ioctl() if
-> userspace passes in a large num_clips.  The call to kmalloc would
-> allocate a small buffer, and the call to fb->funcs->dirty may result in
-> a memory corruption.
+On 01/18/2012 07:12 PM, Vincent Danen wrote:
+> Saw a Debian bug report about tucan and how it insecurely handles
+> "plugin" updates (which are basically python scripts).  These "plugins"
+> are executed with the privileges of the user running tucan, and because
+> there is no authenticity checking (plugins are not signed, doesn't look
+> like there are any certificate checks when connecting to the update
+> server, etc.), it's prone to MITM attacks where an attacker could
+> basically run arbitrary code as the user running tucan.
 >
-> Reported-by: Haogang Chen <haogangchen@...il.com>
-> Signed-off-by: Xi Wang <xi.wang@...il.com>
+> I'm not sure how popular this program is or how widely used, but this is
+> definitely not good design.
 >
-> Upstream commit:
-> http://git.kernel.org/linus/a5cd335165e31db9dbab636fd29895d41da55dd2
-Please use CVE-2012-0044 for this issue.
+> References:
+>
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=656388
+> https://bugzilla.redhat.com/show_bug.cgi?id=782999
+> http://code.google.com/p/tucan/
+>
+> (I'm cc'ing who I hope is one of the lead developers, although it
+> doesn't look like much development has been done in the last year)
+>
+Please use CVE-2012-0063 for this issue.
 
 -- 
 
