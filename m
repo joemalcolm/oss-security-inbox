@@ -1,18 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/27/2
-Message-ID: <20121227203151.GA8741@pisco.westfalen.local>
-Date: Thu, 27 Dec 2012 21:31:51 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/11
+Message-Id: <67BA4235-FD21-4767-B988-B3298CA205A5@securityview.nl>
+Date: Thu, 19 Jan 2012 09:29:15 +0100
+From: Ronald van den Blink <oss-security@...urityview.nl>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Jenkins
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE request - Batavi 1.2.1 Fixes Blind SQL Injection vulnerability in boxToReload parameter of ajax.php
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-these Jenkins security issues don't seem to have CVEs assigned so far:
-https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2012-11-20 
 
-I can't provide links to upstream fixes, but three CVE IDs seem 
-needed (HTTP response splitting, open redirect and XSS)
+On Jan 19, 2012, at 8:40 AM, Ronald van den Blink wrote:
 
-Cheers,
-        Moritz
+> 
+> On Jan 18, 2012, at 10:55 PM, Kurt Seifried wrote:
+> 
+>> Can you include a link to the code commit(s) that fiix this? Thanks.
+> Hi Kurt,
+> 
+> This is still a bit of a problem, as our internal svn is still not correctly set up to sync to SF's SVN. What I can do however is ask our developers to create a diff of the files which were changed to fix this and post them online?
+> 
+> B.t.w. if someone knows a way to sync two SVN repositories to with each other, please contact me off list.
+> 
+> With kind regards,
+> 
+> Ronald
+
+Well, that went easier than I thought. In https://sourceforge.net/projects/batavi/files/upgrade/ you can find two files (database.1.2-1.2.1.sql and core.1.2-1.2.1.patch) which both contains fixes for the Blind SQL injection. You can find them on lines 12833 till 12860. Also a new DB method was introduced on lines 13289 till 13300. Both are in core.1.2-1.2.1.patch. I hope that this clarifies it enough?
+
+--
+Ronald
