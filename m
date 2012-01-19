@@ -1,90 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/8
-Message-ID: <CANTw=MMjSrAyot_HoetKcqp+wHCW3kzfYwG30n1OGXz0TbeUXA@mail.gmail.com>
-Date: Mon, 24 Sep 2012 15:56:32 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/25
+Message-ID: <4F18A73D.7020807@redhat.com>
+Date: Thu, 19 Jan 2012 16:29:01 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+Subject: CVE request: usbmuxd 1.0.7 "receive_packet()" Buffer Overflow Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 24, 2012 at 3:06 PM, Tavis Ormandy wrote:
-> Michael Gilbert <mgilbert@...ian.org> wrote:
->
->> On Mon, Sep 24, 2012 at 4:42 AM, Tavis Ormandy wrote:
->> > I agree. Users do know how to use umask properly, but this isn't what
->> > umask is for. The umask for the low order bits are only applied if the
->> > program requested 0666, it's still the responsibility of the program to
->> > choose the appropriate permissions.
->> >
->> > Creating sensitive files with 0666 and then saying "set your umask" is
->> > just wrong.
->>
->> Think about the complexity potentially involved to solve these issues the
->> right way.
->
-> What complexity?
+rigan has reported a vulnerability in usbmuxd, which potentially can be
+exploited by malicious people with physical access to compromise a
+vulnerable system.
 
-The complexity of fixing permission handling in just about every
-single unix application.
+The vulnerability is caused due to a boundary error within the
+"receive_packet()" function (libusbmuxd/libusbmuxd.c) when processing a
+property list containing an overly long "SerialNumber" field, which can
+be exploited to cause a heap-based buffer overflow.
 
->> First of all, gpg is not the only application that would need to be
->> "privacy-aware". Every single application that produces new files from
->> existing ones to propagate permissions from those original files to the
->> new ones, which would be pretty much everything.
->
-> I'm not sure what you're talking about, when you invoke open() with O_CREAT,
-> you need to put the correct value in the third parameter. I don't know what
-> that has to do with propogation.
+Successful exploitation may allow the execution of arbitrary code, but
+requires that the attacker is able to connect a malicious USB device.
 
-If gpg is supposed to propagate permissions based on its input file
-permissions to output files, then the broad implications are that
-whole class of applications that derive new files need to do that as
-well.
+https://secunia.com/advisories/47545/
+https://bugs.gentoo.org/show_bug.cgi?id=399409
 
->>  In addition, piping
->> would need to be permissions-aware to achieve the following:
->>
->> $ umask 077 $ touch sensitive-file $ umask 022 $ cat sensitive-file >
->> sensitive-file2 $ ls -l sensitive-file* -rw------- 1 a a 0 Sep 24 13:09
->> sensitive-file -rw------- 1 a a 0 Sep 24 13:09 sensitive-file2
->
-> I cannot parse this argument, but "piping" is a very high level concept, and
-> of little relevance. We're talking about the third parameter to open when
-> O_CREAT is specified.
+source code commit:
+http://git.marcansoft.com/?p=usbmuxd.git;a=commitdiff;h=f794991993af56a74795891b4ff9da506bc893e6
 
-The point is retaining appropriate permissions across a chain of
-commands, rather than resorting to the umask, which you are arguing is
-the wrong thing to do for sensitive data.
+-- 
 
-So starting with sensitive-file a set of permissions, performing any
-kind of operations on it you need, then writing a sensitive-file-new
-at the end, that file has the same permissions as the original (rather
-than resorting to the umask to choose a default).
+-- Kurt Seifried / Red Hat Security Response Team
 
->> Also, in the gpg case, what should be done when starting with a 644,
->> should the decrypted contents be 600 (acting more as a protective parent),
->> or should it respect the original permissions (irrespective of the umask),
->> or chose the more restrictive of both?
->
-> I think you mean 0666, which is what gpg is requesting. I'm pretty sure they
-> did not really intend for that, and so it should be updated to request what
-> they actually want.
-
-The original example was 600 input permissions producing 644 output.
-My question is what should be done with the reverse case: 644 input,
-should the output be 644 (i.e. input permissions = output
-permissions), 600 (protective parenting), or something else?
-
->> I'm not saying that these problems couldn't (or shouldn't) be solved, but
->> it seems like a daunting task.
->
-> I think you've misunderstood the problem, and it's trivial to solve.
-
-No, I'm thinking about the broader implication.  If you're arguing
-that gpg should be modified to better handle permissions, then all
-applications potentially handling sensitive information should as
-well: file editors, and what not.  Otherwise, what makes gpg such a
-special case?
-
-Best wishes,
-Mike
