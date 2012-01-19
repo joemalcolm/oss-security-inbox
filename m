@@ -1,62 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/6
-Message-Id: <201209141222.33220.frank.mehnert@oracle.com>
-Date: Fri, 14 Sep 2012 12:22:33 +0200
-From: Frank Mehnert <frank.mehnert@...cle.com>
-To: halfdog <me@...fdog.net>
-Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>, Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE for Virtualbox 0x8 DoS?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/20
+Message-ID: <4F182005.2010200@canonical.com>
+Date: Thu, 19 Jan 2012 05:52:05 -0800
+From: John Johansen <john.johansen@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-On Friday 14 September 2012 12:12:44 halfdog wrote:
-> Hi,
-> 
-> Kurt Seifried wrote:
-> > On 09/13/2012 10:59 AM, Raphael Geissert wrote:
-> >> Hi,
-> >> 
-> >> Has a CVE id been finally assigned for the following issue?
-> >> http://www.halfdog.net/Security/2012/VirtualBoxSoftwareInterrupt0x8Guest
-> >> Crash/
-> >> 
-> >>  Regards,
-> > 
-> > - From that page:
-> > 
-> > 20120910: Oracle security decides, that CVE should be assigned
-> > 
-> > Can Oracle/halfdog.net communicate the CVE to the community
-> > please?
-> 
-> I do not have that information yet. The information about intended CVE
-> assignment till October update was exchanged off list, contact on
-> Oracle side was Mr. Mehnert.
-> 
-> Early disclosure of this issue was due to misconception, that Oracle
-> would have assessed severity, need for CVE and communication of
-> disclosure timeline before releasing patch as maintenance release. The
-> early disclosure mixed up the whole
-> reporting/analyze/classify/CVE-assign/disclosure process somehow.
+I recently joined the Ubuntu Security team and request membership to the
+linux-distros@...openwall.org list so that I may participate fully in reporting
+and fixing vulnerabilities in Ubuntu and FOSS. Here is my GPG fingerprint:
 
-The security folks told me that there will be a CVE which will be
-visible with the next scheduled Oracle CPU date (in October 2012).
+pub   4096R/18D5C3D8 2011-09-06
+      Key fingerprint = EDC4 830F BD39 AB6A C510  47FB 052F 3670 18D5 C3D8
+uid                  John Johansen <john@...x.net>
+uid                  John Johansen <john.johansen@...onical.com>
+sub   4096R/3CF6A249 2011-09-06
 
-Thanks,
 
-Frank
--- 
-Dr.-Ing. Frank Mehnert
-Senior Manager Software Development Desktop Virtualization, VirtualBox
-ORACLE Deutschland B.V. & Co. KG | Werkstr. 24 | 71384 Weinstadt, Germany
+Thank you for your consideration
 
-Hauptverwaltung: Riesstr. 25, D-80992 München
-Registergericht: Amtsgericht München, HRA 95603
 
-Komplementärin: ORACLE Deutschland Verwaltung B.V.
-Hertogswetering 163/167, 3543 AS Utrecht, Niederlande
-Handelsregister der Handelskammer Midden-Niederlande, Nr. 30143697
-Geschäftsführer: Jürgen Kunz, Marcel van de Molen, Alexander van der Ven
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
