@@ -1,18 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/11
-Message-ID: <20120127223058.GA9800@openwall.com>
-Date: Sat, 28 Jan 2012 02:30:58 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/27
+Message-ID: <CAAsmaPbCabXDvE=54eqbqAZtp+q9UJH_bgLF6WGERo80aeRnHA@mail.gmail.com>
+Date: Thu, 19 Jan 2012 17:35:23 -0600
+From: Tim Zingelman <tez@...bsd.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+Subject: Re: Screen locking programs on Xorg 1.11
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 09, 2011 at 09:11:25AM +0400, Solar Designer wrote:
-> http://oss-security.openwall.org/wiki/mailing-lists/distros
-...
-> For FreeBSD, I subscribed Xin Li, who is on the security team:
-> http://www.freebsd.org/administration.html#t-secteam
+On Thu, Jan 19, 2012 at 1:18 PM, Florian Weimer <fw@...eb.enyo.de> wrote:
+>> I recently found out that it is possible to kill a screensaver/screen
+>> locker program on the latest version of Xorg (1.11 shipped with
+>> archlinux, debian wheezy..) using the Ctrl+Alt+Multiply key binding.
+>
+> This used to be, uhm, common knowledge:
+>
+> | Option "AllowDeactivateGrabs" "boolean"
+> |     This option enables the use of the Ctrl+Alt+Keypad-Divide key
+> |     sequence to deactivate any active keyboard and mouse
+> |     grabs. Default: off.
+> |
+> | Option "AllowClosedownGrabs" "boolean"
+> |     This option enables the use of the Ctrl+Alt+Keypad-Multiply key
+> |     sequence to kill clients with an active keyboard or mouse grab as
+> |     well as killing any application that may have locked the server,
+> |     normally using the XGrabServer(3x) Xlib function. Default: off.
+> |
+> |     Note that the options AllowDeactivateGrabs and AllowClosedownGrabs
+> |     will allow users to remove the grab used by screen saver/locker
+> |     programs. An API was written to such cases. If you enable this
+> |     option, make sure your screen saver/locker is updated.
+>
+> <http://www.x.org/archive/X11R6.8.1/doc/Xorg.1.html>
+>
+> The API in question appears to be XF86MiscSetGrabKeysState:
+>
+> <http://cvsweb.xfree86.org/cvsweb/xc/programs/Xserver/hw/xfree86/XF86Config.man?hideattic=0#rev1.6>
 
-I've just subscribed Colin Percival, the FreeBSD Security Officer.
+Given this additional information isn't this a vulnerability issue in
+the various screen lock applications rather than an issue with the
+Xorg server?
 
-Alexander
+ - Tim
