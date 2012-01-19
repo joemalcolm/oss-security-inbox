@@ -1,42 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/15
-Message-ID: <1354058463.7676.13.camel@scapa>
-Date: Wed, 28 Nov 2012 00:21:03 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/4
+Message-ID: <4F179696.8080406@redhat.com>
+Date: Thu, 19 Jan 2012 12:05:42 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: secure-testing-team@...ts.alioth.debian.org, Russ Allbery <rra@...ian.org>,  code@...zashack.org, temp66@...il.com
-Subject: rssh: incorrect filtering of command line options
+CC: Kees Cook <kees@...ntu.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
 Content-Type: text/plain; charset=utf-8
 
-Hi people,
+On 01/19/2012 04:43 AM, Kees Cook wrote:
+> What's the problem with the old logic in the mem handling? (Why does this
+> need a CVE?)
 
-I've just released DSA 2578-1 which affects rssh after coordination on
-the distro list and I'm now posting to oss-sec per policy.
+This is a possible local privilege escalation issue on a system with
+ASLR disabled, combined with other exploitation techniques.
 
-Package        : rssh
-Vulnerability  : incorrect filtering of command line options
-Problem type   : remote
-CVE ID         : CVE-2012-2251 CVE-2012-2252 
-
-James Clawson discovered that rssh, a restricted shell for OpenSSH to be used
-with scp/sftp, rdist and cvs, was not correctly filtering command line options.
-This could be used to force the execution of a remote script and thus allow
-arbitrary command execution. Two CVE were assigned:
-
-CVE-2012-2251
-	Incorrect filtering of command line when using rsync protocol. It was
-	for example possible to pass dangerous options after a "--" switch. The rsync
-	protocol support has been added in a Debian (and Fedora/Red Hat) specific
-	patch, so this vulnerability doesn't affect upstream.
-
-CVE-2012-2251
-	Incorrect filtering of the "--rsh" option: the filter preventing usage of the
-	"--rsh=" option would not prevent passing "--rsh". This vulnerability affects
-	upstream code.
-
-Regards,
--- 
-Yves-Alexis Perez
- Debian Security
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Eugene
