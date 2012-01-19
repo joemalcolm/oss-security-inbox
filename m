@@ -1,78 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/6
-Message-ID: <4F50B060.1090209@redhat.com>
-Date: Fri, 02 Mar 2012 12:34:56 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Mo Morsi <mmorsi@...hat.com>, Vít Ondruch <vondruch@...hat.com>
-Subject: CVE Request -- Ruby on Rails (v3.0.12) / rubygem-actionpack: Two XSS flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/8
+Message-ID: <4F17B8FA.9010708@pipping.org>
+Date: Thu, 19 Jan 2012 07:32:26 +0100
+From: Sebastian Pipping <sebastian@...ping.org>
+To: oss-security@...ts.openwall.com
+CC: Dirk Meyer <dirk.meyer@...oex.sub.org>
+Subject: Re: mpack 1.6 allows eavesdropping on mails sent by other users
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On 12/31/2011 08:39 PM, Sebastian Pipping wrote:
+> A patch
+> =======
+> A patch could be to change create files with 0600 permissions rather
+> than 0644 as done by [4].  However, that approach affects creation of
+> non-temporary files too.  In some cases, users may not want that
+> behaviour -- you tell me.
 
-   as noted in:
-   [1] http://weblog.rubyonrails.org/2012/3/1/ann-rails-3-0-12-has-been-released
+There now is a patch in addition to [4] that people seeking to fix the
+described issue may be interested in.
 
-Issue #A:
-----------
-A cross-site scripting (XSS) flaw was found in the way the String class, used
-in Ruby on Rails, performed HTML escaping of SafeBuffer objects, when such
-objects were manipulated directly via '[]' method or other methods, also
-returning new instances of SafeBuffer object. By using these methods, such
-newly returned SafeBuffer instances would be inadvertently marked as HTML safe.
-If a Ruby on Rails application used SafeBuffer objects this way, a remote
-attacker could provide a specially-crafted input, which once processed by such
-SafeBuffer instance would pass the HTML escaping test without further
-filtering, possibly leading to arbitrary HTML or webscript execution.
+Dirk Meyer of FreeBSD brought my attention to a broken case with munpack
+that was shipped broken with the original 1.6 upstream tarball but may
+have been fixed by the removal of O_EXCL applied by earlier attempts to
+fix the insecure tempfile handling (as with FreeBSD).
 
-References:
-[2A] http://groups.google.com/group/rubyonrails-security/browse_thread/thread/edd28f1e3d04e913
-[3A] https://bugs.gentoo.org/show_bug.cgi?id=406547
-[4A] https://bugzilla.redhat.com/show_bug.cgi?id=799275
+So with O_EXCL back in (or still in place), patch [5] can be used to
+repair munpack.
 
-Proposed upstream patches:
-[5A] 
-http://groups.google.com/group/rubyonrails-security/attach/1c2e01a5e42722c9/3-0-safe-buffer-slice.patch?part=3
-     (against v3.0 branch)
+Best,
 
-[6A] 
-http://groups.google.com/group/rubyonrails-security/attach/1c2e01a5e42722c9/3-1-safe-buffer-slice.patch?part=4
-     (against v3.1 branch)
 
-[7A] 
-http://groups.google.com/group/rubyonrails-security/attach/1c2e01a5e42722c9/3-2-safe-buffer-slice.patch?part=5
 
-     (against v3.2 branch)
+Sebastian
 
-Issue #B:
-----------
-A cross-site scripting (XSS) flaw was found in the way 'select' helper method
-of the Ruby on Rails performed HTML escaping of 'select' HTML tag options, when
-the tags were created manually. In this case, the select tag values might end
-up unescaped. A remote-attacker could provide a specially-crafted input to Ruby
-on Rails application, using select tags this way, which potentially resulted
-into arbitrary HTML or webscript execution.
 
-References:
-[2B] http://groups.google.com/group/rubyonrails-security/browse_thread/thread/9da0c515a6c4664
-[3B] https://bugs.gentoo.org/show_bug.cgi?id=406547
-[4B] https://bugzilla.redhat.com/show_bug.cgi?id=799276
+> [4]
+> http://git.goodpoint.de/?p=mpack.git;a=commitdiff;h=0c87201f64491575350b18d04c62ec142e119d1f
 
-Proposed upstream patches:
-[5B] 
-http://groups.google.com/group/rubyonrails-security/attach/6fca4f5c47705488/3-0-select_options.patch?part=3
-     (against v3.0 branch)
-
-[6B] 
-http://groups.google.com/group/rubyonrails-security/attach/6fca4f5c47705488/3-1-select_options.patch?part=4
-     (against v3.1 branch)
-
-[7B] 
-http://groups.google.com/group/rubyonrails-security/attach/6fca4f5c47705488/3-2-select_options.patch?part=5
-     (against v3.2 branch)
-
-Could you allocate CVE ids for these?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+[5]
+http://git.goodpoint.de/?p=mpack.git;a=commitdiff;h=a4ececa89969adfa53c30878b21178e1427cb6c5
