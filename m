@@ -1,23 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/8
-Message-ID: <20120607091343.GB8042@suse.de>
-Date: Thu, 7 Jun 2012 11:13:43 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/6
+Message-ID: <4F17A7C3.4010301@redhat.com>
+Date: Wed, 18 Jan 2012 22:18:59 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: hyper-v daemon
+CC: Gu1 <gu1@...sortium-of-pwners.net>
+Subject: Re: Screen locking programs on Xorg 1.11
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 07, 2012 at 10:35:24AM +0900, Greg KH wrote:
-> On Wed, Jun 06, 2012 at 04:59:59PM +0200, Sebastian Krahmer wrote:
-> > Hi,
-> > 
-> > The hyper-v daemon fails to check origin of netlink messages.
-> > Please see
-> > 
-> > https://bugzilla.novell.com/show_bug.cgi?id=761200
-> 
-> Is there a fix for this anywhere yet?
+On 01/18/2012 05:03 PM, Gu1 wrote:
+> Hi,
+> I recently found out that it is possible to kill a screensaver/screen
+> locker program on the latest version of Xorg (1.11 shipped with
+> archlinux, debian wheezy..) using the Ctrl+Alt+Multiply key binding.
+>
+> This behavior seems to have been introduced in a recent commit[1] and i
+> couldn't find a way to disable it.
+>
+> All screen locking programs i tested (gnome-screensaver, kscreenlocker,
+> slock, slimlock...), are basically rendered useless.
+>
+> Not sure if this is a bug or a feature... :)
+>
+>
+> [1]:
+> http://cgit.freedesktop.org/xorg/xserver/commit/?id=7d2543a3cb3089241982ce4f8984fd723d5312a1
+>
+Confirmed. Please use CVE-2012-0064 for this issue.
 
-Wasn't aware that it lived in kernel git, sorry. Just sent a patch.
+-- 
 
-Ciao, Marcus
+-- Kurt Seifried / Red Hat Security Response Team
+
