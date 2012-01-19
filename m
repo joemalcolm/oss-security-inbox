@@ -1,72 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/19/3
-Message-ID: <20120919212659.GA20600@cipherdyne.org>
-Date: Wed, 19 Sep 2012 17:26:59 -0400
-From: Michael Rash <mbr@...herdyne.org>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, Damien Stuart <dstuart@...uart.org>
-Subject: Re: CVE Request -- fwknop 2.0.3: Multiple security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/17
+Message-ID: <1326976959.2250.2.camel@scapa>
+Date: Thu, 19 Jan 2012 13:42:39 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Jan-Wijbrand Kolman <janwijbrand@...il.com>, Tres Seaver <tseaver@...ladion.com>, Zope Security Team <security-response@...e.org>, Radek Steiger <rsteiger@...hat.com>, Jan Pokorny <jpokorny@...hat.com>
+Subject: Re: CVE-2011-4924 assignment notification -- Zope2, Zope3: Incomplete upstream fix for CVE-2010-1104 issue
 Content-Type: text/plain; charset=utf-8
 
-On Sep 19, 2012, Jan Lieskovsky wrote:
+On jeu., 2012-01-19 at 13:12 +0100, Jan Lieskovsky wrote:
+> A cross site scripting (XSS) flaw was found in the way Zope2 and Zope3
+> performed error messages sanitization. If a remote attacker could trick a user,
+> who was logged into Zope2, into visiting a specially-crafted URL, it would lead
+> to arbitrary web script execution in the context of user's Zope2 session. If a
+> remote attacker could trick a user, who was logged into Zope3, into examining
+> error entries for particular Zope3 instance, it would lead to arbitrary web
+> script execution in the context of user's Zope3 session. 
 
-> Hello Kurt, Steve, vendors,
-> 
->   multiple securit issues have been corrected in 2.0.3 upstream version of
-> fwknop (http://www.cipherdyne.org/blog/categories/software-releases.html):
-> ---------------------------------------------------------------------------
-> 1) multiple DoS / code execution flaws:
->    Upstream patch:
->    [1] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=d46ba1c027a11e45821ba897a4928819bccc8f22
-> 
-> 2) server did not properly validate allow IP addresses from malicious
->    authenticated clients
->    Upstream patch:
->    [2] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=f4c16bc47fc24a96b63105556b62d61c1ba7d799
-> 
-> 3) strict filesystem permissions for various fwknop files are not verified
-> 4) local buffer overflow in --last processing with a maliciously constructed ~/.fwknop.run file
->    Upstream patch:
->    [3] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=a60f05ad44e824f6230b22f8976399340cb535dc
-> 
-> For the remaining ones:
-> =======================
-> 5) several conditions in which the server did not properly throw out maliciously constructed variables in the access.conf file
->    Upstream patch:
->    [4] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=e2c0ac4821773eb335e36ad6cd35830b8d97c75a
-> 
->    Note: This doesn't look like a security flaw (previously possible to provide malicious values
->    to access.conf file, but I assume it would required administrator privileges).
-> 
-> 6) [test suite] Added a new fuzzing capability to ensure proper server-side input validation.
->    Note: Test-suite add-on, no CVE needed.
-> 
-> 7) Fixed RPM builds by including the $(DESTDIR) prefix for uninstall-local and
->    install-exec-hook stages in Makefile.am.
->    Upstream patch:
->    [5] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=c5b229c5c87657197b0c814ff22127d870b55753
->    
->    Note: Also doesn't look like a fix for a security flaw.
-> 
-> Could you allocate CVE ids for issues 1), 2), 3), and 4) ?
-> 
-> [Cc-ed Damien and Michael from fwknop upstream to confirm
-> they {the first four} should receive a CVE identifier].
+Does this mean CVE-2010-1104 applies to Zope3 too, or the fix for this
+CVE created CVE-2011-4924?
 
-I would say that the first four should receive CVE identifiers, yes.
-For 5), it could be a security issue in older versions of fwknop if the
-umask at install time was permissive enough to allow non-admin users to
-modify the access.conf file, but this is unlikely I think so probably
-doesn't deserve a CVE identifier.
-
-Thanks,
-
+Regards,
 -- 
-Michael Rash
-http://www.cipherdyne.org/
-Key fingerprint: E2EF 0C8A 5AA9 654C 4763  B50F 37AC E946 7F51 8271
+Yves-Alexis
 
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
