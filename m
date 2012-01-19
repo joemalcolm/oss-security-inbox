@@ -1,117 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/15/3
-Message-ID: <CAPYM6VxfmoDZoyxGjp1gj=3sN6w1-z8DsCcqMcac7=hjBJ5x_g@mail.gmail.com>
-Date: Mon, 16 Apr 2012 00:34:10 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
-Subject: FastPath Webchat | Multiple Cross Site Scripting Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/13
+Message-ID: <1326962081.4782.100.camel@scapa>
+Date: Thu, 19 Jan 2012 09:34:41 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: security@...dpress.org
+Subject: Re: CVE-request: WordPress 3.1.1
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+On mer., 2012-01-18 at 15:22 -0700, Kurt Seifried wrote:
+> On 01/15/2012 07:39 AM, Henri Salo wrote:
+> > On Sun, Jan 15, 2012 at 03:32:48PM +0100, Hanno Böck wrote:
+> >>> 1) Certain unspecified input is not properly sanitised before being
+> >>> returned to the user. This can be exploited to execute arbitrary HTML
+> >>> and script code in a user's browser session in context of an affected
+> >>> site. http://osvdb.org/show/osvdb/72141
+> >> I think this is CVE-2012-0287:
+> >> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-0287
+> > I think you are correct. I do not know why I did not see this in allitems.txt.gz. Can't find other CVEs with that URL. There seems to be three issues. I am refering to http://wordpress.org/news/2011/04/wordpress-3-1-1/:
+> >
+> > "Version 3.1.1 also addresses three security issues discovered by WordPress core developers Jon Cave and Peter Westwood, of our security team. The first hardens CSRF prevention in the media uploader. The second avoids a PHP crash in certain environments when handling devilishly devised links in comments, and the third addresses an XSS flaw."
+> >
+> > ======================================================
+> > Name: CVE-2012-0287
+> > Status: Candidate
+> > URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-0287
+> > Phase: Assigned (20120103)
+> > Category: 
+> > Reference: MISC:http://oldmanlab.blogspot.com/2012/01/wordpress-33-xss-vulnerability.html
+> > Reference: CONFIRM:https://wordpress.org/news/2012/01/wordpress-3-3-1/
+> >
+> > Cross-site scripting (XSS) vulnerability in wp-comments-post.php in
+> > WordPress 3.3.x before 3.3.1, when Internet Explorer is used, allows
+> > remote attackers to inject arbitrary web script or HTML via the query
+> > string in a POST operation that is not properly handled by the
+> > "Duplicate comment detected" feature.
+> >
+> >
+> > Current Votes:
+> > None (candidate not yet proposed)
+> > ======================================================
+> >
+> > - Henri Salo
+> I don't feel assigning a CVE for these issues would be prudent until
+> some details are released, I think the 3.1.1 and 3.1.3 stuff is separate
+> but I can't be sure. Can someone from WordPress comment?
+> 
 
-Fastpath WebChat is vulnerable to Cross Site Scripting.
+I was asked to try security@...dpress.org so I'm adding them to CC: just
+in case. (to security@...dpress.org, the thread beginning is at
+http://openwall.com/lists/oss-security/2012/01/15/3)
 
+Regards,
+-- 
+Yves-Alexis
 
-2. BACKGROUND
-
-Fastpath WebChat is part of the Fastpath product. It provides a way
-for users to begin chatting with support agents using Fastpath.
-Fastpath is a plugin of OpenFire, a real time collaboration (RTC)
-server for instant messaging.  Fastpath provides queuing and routing
-for instant messaging to intelligently link people together.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Multiple parameters were not properly sanitized, which allows attacker
-to conduct Cross Site Scripting attack. This may allow an attacker to
-create a specially crafted URL that would execute arbitrary script
-code in a victim's browser.
-
-
-4. VERSIONS AFFECTED
-
-4.0.0 (released date: Aug 5, 2008)
-
-
-5. VULNERABLE PARAMETERS
-
-File: webapp/agentinfo.jsp	
-Parameters: agentName, emailValue, jid, nameValue, title
-
-File: webapp/chat-ended.jsp	 	
-Parameter: workgroup
-
-File: webapp/chatmain.jsp	
-Parameters: chatID, workgroup
-
-File: webapp/chatroom.jsp	
-Parameters: email, jid, userNickname, question
-
-File: webapp/contact-agent.jsp	
-Parameter: email
-
-File: webapp/email/leave-a-message.jsp	
-Parameter: workgroup	
-
-File: webapp/email/offline-mail.jsp	 	
-Parameter: workgroup
-
-File: webapp/queue_updater.jsp	 	
-Parameters: chatID, workgroup	
-
-File: webapp/style.jsp
-Parameter: 	 workgroup	
-
-File: webapp/transcriptmain.jsp	
-Parameters: 	chatID, workgroup
-
-File: webapp/transcriptsrc.jsp
-Parameters:  from, text
-
-
-6. SOLUTION
-
-Fastpath WebChat is no longer in active development.
-Ref: http://www.igniterealtime.org/projects/openfire/plugins.jsp
-Ref: http://fisheye.igniterealtime.org/browse/svn-org/openfire/trunk/src/plugins/fastpath/src/web
-
-
-7. VENDOR
-
-Jive Software
-http://www.jivesoftware.com/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2012-04-15: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5Bfastpath-webchat%5D_multiple_cross_site_scripting
-What XSS Can Do: http://yehg.net/lab/pr0js/view.php/What%20XSS%20Can%20Do.pdf
-XSS FAQs: http://www.cgisecurity.com/articles/xss-faq.shtml
-XSS (wiki): http://en.wikipedia.org/wiki/Cross-site_scripting
-XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-CWE-79: http://cwe.mitre.org/data/definitions/79.html
-
-
-#yehg [2012-04-15]
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
