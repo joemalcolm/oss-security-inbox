@@ -1,20 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/30/4
-Message-ID: <20120430225609.3f550281@hsalkjdhsa.lan>
-Date: Mon, 30 Apr 2012 22:56:09 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/21
+Message-ID: <1326983132.3307.4.camel@localhost>
+Date: Thu, 19 Jan 2012 08:25:32 -0600
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: spip before 1.9.2.o, 2.0.18 and 2.1.13 multiple XSS
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-http://www.securityfocus.com/bid/53216/info
-http://archives.rezo.net/archives/spip-en.mbox/U5QUZ6WJRAJC7H5BR7W5SQG6WCD3PXL7/
+On Thu, 2012-01-19 at 05:52 -0800, John Johansen wrote:
+> Hi,
+> 
+> I recently joined the Ubuntu Security team and request membership to the
+> linux-distros@...openwall.org list so that I may participate fully in reporting
+> and fixing vulnerabilities in Ubuntu and FOSS. Here is my GPG fingerprint:
+> 
+> pub   4096R/18D5C3D8 2011-09-06
+>       Key fingerprint = EDC4 830F BD39 AB6A C510  47FB 052F 3670 18D5 C3D8
+> uid                  John Johansen <john@...x.net>
+> uid                  John Johansen <john.johansen@...onical.com>
+> sub   4096R/3CF6A249 2011-09-06
+> 
+> 
+> Thank you for your consideration
+> 
 
-Info is very limited, though I'd suggest just having one CVE referring
-to "multiple XSS".
+ACK. John was added to the Ubuntu Security back in September.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Jamie Strandboge             | http://www.canonical.com
 
 Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
