@@ -1,69 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/07/1
-Message-ID: <50217C02.2000906@openstack.org>
-Date: Tue, 07 Aug 2012 22:35:14 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2012-011] Compute node filesystem injection/corruption (CVE-2012-3447)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/10
+Message-ID: <4F17CA2F.7070402@pipping.org>
+Date: Thu, 19 Jan 2012 08:45:51 +0100
+From: Sebastian Pipping <sebastian@...ping.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Screen locking programs on Xorg 1.11
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 01/19/2012 01:03 AM, Gu1 wrote:
+> Hi,
+> I recently found out that it is possible to kill a screensaver/screen
+> locker program on the latest version of Xorg (1.11 shipped with
+> archlinux, debian wheezy..) using the Ctrl+Alt+Multiply key binding.
 
-OpenStack Security Advisory: 2012-011
-CVE: CVE-2012-3447
-Date: August 7, 2012
-Title: Compute node filesystem injection/corruption
-Impact: Critical
-Reporter: Pádraig Brady (Red Hat)
-Products: Nova
-Affects: All versions
+I was able to reproduce it with Xorg 1.11.3 on Gentoo.
+It didn't work for multiply from shift+plus (German keyboard layout) but
+the keypad's plus (involving Num lock) did bypass the password dialog.
+Scary!
 
-Description:
-Pádraig Brady from Red Hat discovered that the fix implemented for
-CVE-2012-3361 (OSSA-2012-008) was not covering all attack scenarios. By
-crafting a malicious image with root-readable-only symlinks and
-requesting a server based on it, an authenticated user could still
-corrupt arbitrary files (all setups affected) or inject arbitrary files
-(Essex and later setups with OpenStack API enabled and a libvirt-based
-hypervisor) on the host filesystem, potentially resulting in full
-compromise of that compute node.
 
-Folsom fix:
-https://github.com/openstack/nova/commit/ce4b2e27be45a85b310237615c47eb53f37bb5f3
+> This behavior seems to have been introduced in a recent commit[1] and i
+> couldn't find a way to disable it.
+> 
+> All screen locking programs i tested (gnome-screensaver, kscreenlocker,
+> slock, slimlock...), are basically rendered useless.
 
-Essex fix:
-https://github.com/openstack/nova/commit/d9577ce9f266166a297488445b5b0c93c1ddb368
+Thanks for not keeping this to yourself.  I'm really glad to know.
 
-Diablo fix:
-https://review.openstack.org/#/c/10953/
 
-References:
-https://bugs.launchpad.net/nova/+bug/1031311
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3447
+> [1]:
+> http://cgit.freedesktop.org/xorg/xserver/commit/?id=7d2543a3cb3089241982ce4f8984fd723d5312a1
 
-Notes:
-This fix will be included in the upcoming Nova 2012.1.2 stable update
-(due Thursday) and the Folsom-3 development milestone (due next week).
+I found the commit on branch master, see here:
 
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+  http://cgit.freedesktop.org/xorg/xserver/log/?ofs=650
 
-iQIcBAEBCAAGBQJQIXv+AAoJEFB6+JAlsQQjnJUQAI+Vp+GCMXAei/ktStVFrkXC
-ilgIjBB5mcbrj/TGlnqhkS0MB0+kmo8Ucy4tI0O+gAqYaPNcEp6bbGr5pOby8Gdk
-DehvQuTi4Rvvypnb7ORM+DjqPBtNGGMWKJzO84ls98Ev0z+6Soi4vmQal78wvwpX
-3UbyqZG9P85QlDyyK+x/Af2D0YVCQffQ93/7UJi2OwB0hwHy+RS4WN7rYJGD2vh0
-50jQYSgw/rrBSUPNupjEH+mXT/DM93z93qWmxHD6TYYUK9MmrfkfUPx8Ki8Fn5oQ
-9znwXsIK5h3uexe2dHbABKaIm3AnMP3wCrKynEEjFV/no00r/Evm2zsdam31O3Bv
-DV8ng6sdSnvltQK2s8F3blp3tNpsAp12QkC0BDI9FlYAACdaTBnDcVhKh4HoO84T
-cRakJhfj23472GgmwwkIcPNEcfY1fWngUqN4rF2XUggtXzeEHyyqoiZIm4s4ns5+
-DkSCmo5qBNbcos1C0BNeyPQ+wdF5U7wzQfggC6SRoKcPj/Mp8P5LCvgjPKwNtBuq
-gzAVPSlx0Zehlqqey8zkUUGQ4btxiKP5+iwrKajY6QfqgtkqEsG46GR+tm+ygDNR
-T8ltuixqMWpLPVUFZClaxV0MytSMdjhIgywkzyqHg9bzP4N3MztsGnIBPdQ0HC3a
-P85xQ28EFbBC5tIZ4WRe
-=C2MN
------END PGP SIGNATURE-----
+The first tag coming later in time seems to be xorg-server-1.10.99.902
+on page before:
+
+  http://cgit.freedesktop.org/xorg/xserver/log/?ofs=600
+
+I looked for function PrintDeviceGrabInfo introduced by the commit you
+pointed to:
+
+  # grep -Rl '^PrintDeviceGrabInfo' \
+        xorg-server-1.10.3.901 \
+        xorg-server-1.10.99.902 \
+        xorg-server-1.11.3
+  xorg-server-1.10.99.902/dix/grabs.c
+  xorg-server-1.11.3/dix/grabs.c
+
+So from a superficial analysis anything since 1.10.99.902 could be
+vulnerable.
+
+Best,
+
+
+
+Sebastian
