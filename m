@@ -1,76 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/14/1
-Message-ID: <50CA71C1.6010905@redhat.com>
-Date: Thu, 13 Dec 2012 17:24:33 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/26
+Message-ID: <4F18A7DD.7000706@redhat.com>
+Date: Thu, 19 Jan 2012 16:31:41 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-CC: oss-security@...ts.openwall.com, Timo Warns <Warns@...-Sense.DE>
-Subject: Re: Remote file inclusion by office applications
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: usbmuxd 1.0.7 "receive_packet()" Buffer Overflow Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/19/2012 04:29 PM, Kurt Seifried wrote:
+> rigan has reported a vulnerability in usbmuxd, which potentially can be
+> exploited by malicious people with physical access to compromise a
+> vulnerable system.
+>
+> The vulnerability is caused due to a boundary error within the
+> "receive_packet()" function (libusbmuxd/libusbmuxd.c) when processing a
+> property list containing an overly long "SerialNumber" field, which can
+> be exploited to cause a heap-based buffer overflow.
+>
+> Successful exploitation may allow the execution of arbitrary code, but
+> requires that the attacker is able to connect a malicious USB device.
+>
+> https://secunia.com/advisories/47545/
+> https://bugs.gentoo.org/show_bug.cgi?id=399409
+>
+> source code commit:
+> http://git.marcansoft.com/?p=usbmuxd.git;a=commitdiff;h=f794991993af56a74795891b4ff9da506bc893e6
+>
+What a well formed CVE request ;)
 
-On 12/13/2012 11:53 AM, Daniel Kahn Gillmor wrote:
-> On 12/13/2012 11:44 AM, Kurt Seifried wrote:
->> I'm kind of leaning towards classifying this as a security issue
->> since I expected there is some way to disable it or at least tell
->> it to prompt me when a document tries to go get an external data
->> source (e.g. "this document contains external data, the URLs/file
->> paths it is trying to  reference are: [list of locations]") but
->> apparently there is no way to disable/have this prompt (at least
->> that I can find in LibreOffice)?
-> 
-> I think your assessment is correct.  I've just now made an ODT file
-> that libreoffice uses to not only hit the network for a PNG (denial
-> of service attacks, remote exploitation of other flaws in libpng or
-> in LO itself, virus scanner bypass, etc), but one that will include
-> and render ~/.ssh/id_rsa as a text/plain document.  This seems like
-> it could be done against any local privileged file.
-> 
-> For local file inclusion, libreoffice at leasts prompts me with:
-> 
-> ----------- This document contains one or more links to external
-> data.
-> 
-> Would you like to change the document, and update all links to get
-> the most recent data?
-> 
-> [Yes] [No] -----------
-> 
-> but it doesn't tell me what those documents are. And given the UI 
-> history of people clicking through popups they don't understand,
-> i'm not convinced that this popup is going to do anything to
-> prevent remote disclosure (it even defaults to "Yes").  When i say
-> "no" on the prompt, it goes out and fetches networked URLs anyway,
-> so i assume this prompt is supposed to just refer to local
-> "external data".
-> 
-> --dkg
-> 
+Please use CVE-2012-0065 for this issue.
 
-Ok so for LibreOffice and OpenOffice please use CVE-2012-5639 for this
-issue (automatic opening of remote content/poor UI so you have no idea
-what it is your opening).
+-- 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-- Kurt Seifried / Red Hat Security Response Team
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQynHBAAoJEBYNRVNeJnmTpvUQAI9Cb4N2LJei/Fi17QeL0PZy
-nw7OZOtlUsPqNCzFts/7X1u3377UBVv3+kFrheFlC9i24aQQ16sFg6M3QmKGIAO7
-lPn0ri+0HvTgOjzjGkmJXvYpMbmFm04qPNWPxRIKW7GvXHnxVI/M2F8hwOIqINca
-sQkFW4cci6GbLhtx1levExadjUzbMTZ1Fm2LG86yE1Q3uBWiTRXqg4DBMwGA99p0
-P0gAg8dL3CjamdCQC5P2DwK5ol3+uVDbyAI7M2vlYixc+LATL1QmLKGNbQfsjcU2
-AWCb35MtnSX/Mm/GnTXtgf1ScbWM+bod9l0p/pCKIBH+W/A0jyRDitJxMz0B+rze
-d2qR/OCtEtEpnHVSSt8rJvGVTCL3VSvD3ODxsmTfrhheYNeDnVwc8I4I4MR2zeQr
-rXYhWqStmNX58cF7NClYm+PNLEdvnt8yd1w6zb9iwVcWAbLhTxS/GX9hM0yS6b4M
-l/2yMve9dEc4TT4ajTi8BwS0f7c9nvNH0RRxe3SJm249ZyuXpF07+P1ZJOJ4owwB
-Ir6Q2NK98aDpLh2Ztmho7Wk64lF9YSoA3CSx2JbKjuVkabeuE3avfd1+PFfx0HWK
-soDm9ohafoGvE0r2O15ENKlzt5QnHay3AGSlMDnuOV/DiHFHTjXh4vCxWe/Qx3zG
-ud/Yy5lXXA4vaX+7dbDk
-=mYif
------END PGP SIGNATURE-----
