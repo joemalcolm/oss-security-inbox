@@ -1,82 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/29/2
-Message-ID: <506692AA.5040206@redhat.com>
-Date: Sat, 29 Sep 2012 00:18:18 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: andi abes <andi.abes@...il.com>, Russell Bryant <rbryant@...hat.com>
-Subject: Re: Re: [Openstack] [OSSA 2012-016] Token authorization for a user in a disabled tenant is allowed (CVE-2012-4457)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/22
+Message-ID: <239DE025ED8C904A95453F44188176B70101B263@E3088LM3DR.risorse.enel>
+Date: Thu, 19 Jan 2012 09:21:17 +0100
+From: <valentino.angeletti@...l.com>
+To: <solar@...nwall.com>, <oss-security@...ts.openwall.com>
+Cc: <bugtraq@...urityfocus.com>, <tytso@....edu>
+Subject: R: pwgen: non-uniform distribution of passwords
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Ok thank you,
+may ask you what software (and how it works brute force ecc) you used?
 
-On 09/28/2012 05:56 PM, andi abes wrote:
-> is the plan going forward to announce these on friday afternoons?
+Thank you
+Vale-
 
-I can't speak for OpenStack but the history of these vulns is that
-they have been public since May 2012 and April 2012, but were not
-labelled as security, they were noticed, CVE's were assigned and I
-think the idea was to notify people quickly since they're have a
-significant impact and have been around for a while.
+-----Messaggio originale-----
+Da: Solar Designer [mailto:solar@...nwall.com] 
+Inviato: martedì 17 gennaio 2012 20:52
+A: oss-security@...ts.openwall.com
+Cc: bugtraq@...urityfocus.com; Theodore Ts'o
+Oggetto: Re: pwgen: non-uniform distribution of passwords
 
-> On Fri, Sep 28, 2012 at 4:50 PM, Russell Bryant
-> <rbryant@...hat.com> wrote:
->> OpenStack Security Advisory: 2012-016 CVE: CVE-2012-4457 Date:
->> September 28, 2012 Title: Token authorization for a user in a
->> disabled tenant is allowed Impact: High Reporter: Rohit Karajgi
->> (NTT Data) Affects: Essex (prior to 2012.1.2), Folsom (prior to
->> folsom-3 development milestone)
->> 
->> Description: Rohit Karajgi reported a vulnerability in Keystone.
->> It was possible to get a token that is authorized for a disabled
->> tenant. Once the token is established with authorization on the
->> tenant, keystone would respond 200 OK to token validation
->> requests from other OpenStack services, allowing the user to work
->> with the tenant's resources.
->> 
->> Folsom fix: (Included in 2012.2) 
->> http://github.com/openstack/keystone/commit/4ebfdfaf23c6da8e3c182bf3ec2cb2b7132ef685
->>
->>
->> 
-Essex fix: (Included in 2012.1.2)
->> http://github.com/openstack/keystone/commit/5373601bbdda10f879c08af1698852142b75f8d5
->>
->>
->> 
-References:
->> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4457 
->> https://bugs.launchpad.net/keystone/+bug/988920
->> 
->> -- Russell Bryant OpenStack Vulnerability Management Team
->> 
->> _______________________________________________ Mailing list:
->> https://launchpad.net/~openstack Post to     :
->> openstack@...ts.launchpad.net Unsubscribe :
->> https://launchpad.net/~openstack More help   :
->> https://help.launchpad.net/ListHelp
+On Tue, Jan 17, 2012 at 02:01:38PM +0400, Solar Designer wrote:
+> Time running (D:HH:MM) - Keyspace searched - Passwords cracked
+> 0:00:02 - 0.0008% - 6.0%
+> 0:01:00 - 0.025% - 19.5%
+> 0:20:28 - 0.5% - 39.1%
+> 1:16:24 - 1.0% - 47.1%
+> 3:00:48 - 1.8% - 55.2%
+> 3:21:44 - 2.3% - 59.4%
+> 5:05:17 - 3.1% - 64.2%
+...
+> I did some testing of pwgen-2.06's "pronounceable" passwords, and I
+> think they might be weaker than you had expected (depends on what you
+> had expected, which I obviously don't know).
 
+It was just pointed out to me off-list that the man page for pwgen
+specifically mentions that this kind of passwords "should not be used in
+places where the password could be attacked via an off-line brute-force
+attack."  I had missed that detail or at least I did not recall it.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+This kind of documentation certainly mitigates the problem to some extent.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Yet I think this gives users the perception that only the keyspace is
+smaller, not that the generated passwords are distributed non-uniformly.
+In fact, most users would not even think of the latter risk.
 
-iQIcBAEBAgAGBQJQZpKqAAoJEBYNRVNeJnmTUqMP/02lnwb+9O/efN51/Y2qkNzz
-nNSXKWl1ht1beuQaRiLqkRm3au81gtKewO/TmbJHN++6EI54vT1EUj0IXZlXm+aV
-fsdp9rQrJGILMUVPydOccHOe54nhLKUZ/F9os5PmAHhuZJHqSo5oDU2TbiYQeeX+
-vLVJrBG1GXIOxsXWXTV4Bp11+D6mwYIgVQUVN3pk/ZzKeEk9S6T71NHXj1RDZMpZ
-i6Cs35r6nRDcxOsj65jJysiWrHEahjau8bmdZ3KW/2FdjHuzvdqRz3/doFrmAiCG
-bQ4I7laagNC8XkOIZ7UV1S5pTYB64iSvGv+haW7Lq9mjWjrZ6wX06R7J/NX5wDPC
-A3RAIKxYLzkJdn0ifx922lfJkK7SH01dSDWpSib0KQzkkvQBw/6QcSah3TwBpDka
-kFA9ifMYWhiBhn9OFTcIpAT8mpdhmLBiALZsvxM0lRLxCqslcoExK1gWLhyL1tSf
-b2ENNYYZuNNSZMFCp/zm2giZZV2XpUxvPIcyuEGd8RLKANhVI2o+TOKoCmbpBZsE
-9RA5W8zkYxmheVxGLLcPMs02uqK1ZCFh4dKYRDWEXMFTZinyHQahjPY9tUBEPk+b
-am5I5FB4NelhVoLmiTwI9+nIV0VINJj7/UiCD7bGqU8UENcAGzjl3az9fJp6iM6I
-FFxytD+xS5uN7uwomVyD
-=3hBF
------END PGP SIGNATURE-----
+The passwords look much stronger than they actually are, and I think
+this is a problem.  They look like almost random sequences of 8
+characters, whereas the level of security for 6% to 20% of them is
+similar to that of dictionary words with minor mangling.
+
+Sure, there's a trade-off, but non-uniform distribution didn't have to
+be part of it.  That's an implementation shortcoming.
+
+> Specifically, not only the keyspace is significantly smaller than that
+> for "secure" passwords (which I'm sure you were aware of), but also the
+> distribution is highly non-uniform.  My guess is that this results from
+> different phonemes containing the same characters.  So certain
+> substrings can be produced in more than one way, and then some
+> characters turn out to be more probable than some others (especially as
+> it relates to their conditional probabilities given certain preceding
+> characters).
+
+Alexander
