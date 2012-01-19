@@ -1,54 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/20/4
-Message-ID: <50D2A657.3010109@redhat.com>
-Date: Wed, 19 Dec 2012 22:47:03 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/12
+Message-ID: <1326961877.4782.98.camel@scapa>
+Date: Thu, 19 Jan 2012 09:31:17 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: information disclosure flaw in php-ZendFramework (ZF2012-05)
+Subject: Re: Screen locking programs on Xorg 1.11
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On jeu., 2012-01-19 at 08:45 +0100, Sebastian Pipping wrote:
+> So from a superficial analysis anything since 1.10.99.902 could be
+> vulnerable. 
 
-On 12/19/2012 09:46 PM, Vincent Danen wrote:
-> There doesn't seem to be a CVE for this issue.  Could one be
-> assigned? Thanks.
-> 
-> 
-> A vulnerability was reported in Zend Framework versions prior to
-> 1.11.15 and 1.12.1, which can be exploited to disclose certain
-> sensitive information.  This flaw is caused due to an error in the
-> "Zend_Feed_Rss" and "Zend_Feed_Atom" classes of the "Zend_Feed"
-> component, when processing XML data.  It can be used to disclose
-> the contents of certain local files by sending specially crafted
-> XML data including external entity references.
-> 
-> 
-> References: http://framework.zend.com/security/advisory/ZF2012-05 
-> https://bugzilla.redhat.com/show_bug.cgi?id=889037 
-> http://secunia.com/advisories/51583
+git seems to agree:
 
-Please use CVE-2012-5657 for this issue.
+corsac@...pa: git tag --contains 7d2543a3cb3089241982ce4f8984fd723d5312a1
+xorg-server-1.10.99.902
+xorg-server-1.11.0
+xorg-server-1.11.1
+xorg-server-1.11.1.901
+xorg-server-1.11.1.902
+xorg-server-1.11.2
+xorg-server-1.11.2.901
+xorg-server-1.11.2.902
+xorg-server-1.11.3
+xorg-server-1.11.3.901
+xorg-server-1.11.99.1
+xorg-server-1.11.99.2
+xorg-server-1.11.99.901
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Regards,
+-- 
+Yves-Alexis
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ0qZXAAoJEBYNRVNeJnmTXk8P/i/sKjbl2p3nuN3WCHzOEWDR
-SZqCD9CNdlXnX1UHv2aox9itN+ClnDzDLMmp6pR7R/IWoJqJEb4exS/34WJT7yz5
-T8uLV7HfHhT/787ZVj0eKfQ4bidYgwEbXKdTjKKIJMj+w7gHGyXzdg1pXTLFdFz5
-pZQ3/Rjbkkvnz4FXpt/Sa/xgiq8HlfEeBxhxX5pcDkRq2JB3sOy7zLE9Gvi+81h+
-/K2SncIO90m3EmKr7EOhRDwLSwoCUIonQ4qM6INSYqvzOpoX+o6S8nxymE9xHViI
-96oppBkBv9RlqQOOCIBnbM72KnYx1ok2k0VqRX42XMQrXfVIrmNeWb9b0KfkKYFS
-z77mnVgprE0+4Zud/JKFA/BKs3kHXlc6GSe0vFZDJMZ8kiArH+Fjb/KYCuzytYXX
-Pw4k3A9nxbyRfA8h7QDjxdLPlbWMVbJ26DwjWxJRs2EV2SK+UvCz7iaI/1GJGQDU
-ZsrNV9OvhBWLb/JJTSWm47fTahlCrbubVq8KYAhVgWAjqnl/EsL7b6NQud6ScJwV
-SknaDRy/jWEpXl2nvn2aQnRHyPntLPbi7CIExSmd13EgppSKUkxL/lktW3IPoFz/
-r37RBhbsjgGFDZXSrhS41dBqiaGpwUCpwSEJPt3kOPzRSU3E7c93c8fsVA+7+xFv
-2WZGV1gt4tJiyvKyYljK
-=yxVf
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
