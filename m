@@ -1,68 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/1
-Message-ID: <50B4551A.7030608@redhat.com>
-Date: Mon, 26 Nov 2012 22:52:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/15
+Message-ID: <20120119105929.GJ9575@foo.fgeek.fi>
+Date: Thu, 19 Jan 2012 12:59:29 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Andrés Gómez Ramírez <andresgomezram7@...il.com>
-Subject: Re: CVE Request: Gimp memory corruption vulnerability
+Subject: Re: CVE request - Batavi 1.2.1 Fixes Blind SQL Injection vulnerability in boxToReload parameter of ajax.php
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 11/21/2012 10:19 AM, Andrés Gómez Ramírez wrote:
-> Hello, could a CVE be assigned to this issue?
+On Thu, Jan 19, 2012 at 08:40:47AM +0100, Ronald van den Blink wrote:
+> On Jan 18, 2012, at 10:55 PM, Kurt Seifried wrote:
 > 
-> Name: Gimp memory corruption vulnerability Software: GIMP 2.8.2 
-> Software link: http://www.gimp.org/ <http://plib.sourceforge.net/> 
-> Vulnerability Type: Memory Corruption
+> > Can you include a link to the code commit(s) that fiix this? Thanks.
+> Hi Kurt,
 > 
-> Description:
+> This is still a bit of a problem, as our internal svn is still not correctly set up to sync to SF's SVN. What I can do however is ask our developers to create a diff of the files which were changed to fix this and post them online?
 > 
-> GIMP 2.8.2 is vulnerable to memory corruption when reading XWD
-> files, which could lead even to arbitrary code execution.
+> B.t.w. if someone knows a way to sync two SVN repositories to with each other, please contact me off list.
 > 
-> Upstream fix: 
-> http://git.gnome.org/browse/gimp/commit/?id=2873262fccba12af144ed96ed91be144d92ff2e1
->
+> With kind regards,
 > 
-(fixed in master and gimp-2-8)
-> 
-> References: https://bugzilla.gnome.org/show_bug.cgi?id=687392
-> 
-> Thanks,
-> 
-> Andres Gomez.
+> Ronald
 
-Apology for the delay, I had some mail filter issues that I have now
-fixed so I won't miss these in future.
+I am contacting you in the list, because someone might end up here using keywords: http://stackoverflow.com/questions/143130/how-to-synchronize-two-subversion-repositories
 
-Also if there were any other CVE requests that were also CC'ed to
-full-disclosure or Bugtraq that I haven't dealt with please ping me
-and I'll get to them asap.
-
-Please use CVE-2012-5576for this issue.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQtFUaAAoJEBYNRVNeJnmTnsoP+weCng3Etwm0gQZE/XsfCkee
-5bv8tZx2IoAqmXcwwjFtJBUUEyW4FOvvWqemDOTu2CbxJHH8BDcG7B/IeiBZuOBs
-rKuqqHx4rwEMyl/pFAmL7TtxVSEm4RjKe6RS/52IZOpFVK53XZfO7o/BtRnAsitV
-sVknVeq+WH+xxFFU6jrpvXqju0aWEo1Q4I4S/uGh9F1WtEhGMUvbBXgBKFQL23X5
-abKPpAhF807E9mhLTFOoJ/sts6L1waw5+hXAvp8LCY9pVtM6pf+VD0Gj8xIW7wP4
-wgGC2i8N4xgEohsmCzvznWDqfD5BNrFFIUguceTl/uF+PL0wKo0Nxyf+0RQOx8e1
-EQ5+3j3Q0BHXwIEA2CArIV0g4LPBJ0sJNH+bSTR6Iiz0j2Gm1VbB9GJ7hSNF5cJ/
-sXVtM9dUMdpBxKfjQeyvb4lXFLKZg8875NooGHFFinMSMjV97p6/rt6atEj76HVD
-tfLK9IBh/lm8V31L56YeegzKq0OkkdIC9pZGw+ATj66WyfTAQZxsdlGl58S9umVS
-PcFjON3sAn0O5RGAEDpyxbMMUHRbW3d/UkilA5lcqJ2XPDeILcvr5HYz5Pikkltg
-JDAbZuQV46ohmXZERjNF4hUY8VWeU4a6rk1wU11wJB4UD+sSpXjvBZoSj9EIdSjO
-MWz9hgNy/as5Qi6aOBEE
-=kBhU
------END PGP SIGNATURE-----
+- Henri Salo
