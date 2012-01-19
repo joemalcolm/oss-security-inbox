@@ -1,55 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/25/1
-Message-ID: <4F979B38.4000307@redhat.com>
-Date: Wed, 25 Apr 2012 00:35:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss >> \"oss-security@...ts.openwall.com\"" <oss-security@...ts.openwall.com>
-Subject: CVE Request: Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler aligned_end is not updated
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/9
+Message-Id: <1FB8487C-5EDA-4ED8-B2BE-8E34BF451EC4@securityview.nl>
+Date: Thu, 19 Jan 2012 08:40:47 +0100
+From: Ronald van den Blink <oss-security@...urityview.nl>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Batavi 1.2.1 Fixes Blind SQL Injection vulnerability in boxToReload parameter of ajax.php
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler
-aligned_end is not updated
+On Jan 18, 2012, at 10:55 PM, Kurt Seifried wrote:
 
-does not appear to affect Python 2.x
+> Can you include a link to the code commit(s) that fiix this? Thanks.
+Hi Kurt,
 
-memory leak/crashes/etc.
+This is still a bit of a problem, as our internal svn is still not correctly set up to sync to SF's SVN. What I can do however is ask our developers to create a diff of the files which were changed to fix this and post them online?
 
-http://bugs.python.org/issue14579
+B.t.w. if someone knows a way to sync two SVN repositories to with each other, please contact me off list.
 
-Author: Serhiy Storchaka (storchaka) 	Date: 2012-04-14 18:46
+With kind regards,
 
-In the utf-16 decoder after calling unicode_decode_call_errorhandler
-aligned_end is not updated. This may potentially cause data leaks,
-memory damage, and crash. The bug introduced by implementation of the
-issue #4868. In a similar situation in the utf-8 decoder aligned_end
-is updated.
-
-========
-
-More discussion and links to the patches/etc. in the bug.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPl5s3AAoJEBYNRVNeJnmTSxEP/0BAZDzBuJC6jNAUBxp8BL0j
-a1NXA3N8JFNkHh4u0/G4VHlYBndMIDimfXf6jwd2mj37o9NpBG2prOUpioXXMZ/K
-LHhlOZHGs9jZLBzdoXtEZi1CAQptKbfOPQHbZvi8HkVu7XVXMEckZ5RJaNJ0urjT
-7RH3bVD8rV5D+/cqD3Rr67ld6XrM+n2aCsq32vWxUsZUlmjckCPann2Y9kpLEWDQ
-sG42nf994WSV/h8D6A3U7Rnpw+jQUlmjALmw6AcBAQJtOrBt9OL5BMIEowAIBviY
-rvFL7GOQGYS1Wn53MVbQTuLjmJX2OEzgfvEdeUbzGNB60/0C13PvSPRqMfG2aLu8
-npemlZRv3Lqkufih/pUsRkWUkZJZR7c+VSmFuGlJ+XD2q5LRUVxdOOV5ntdMoQw7
-kNfCyPdeMwHoMIFr1xI+z4aZO8nVlyr92SmR1N4nvGSQ/tZjYaa9IoNYCc/13Jm9
-aOl6zz8dqmREsImofb4BL4S77/bCaOKmQDuLaghgoOROKDZeeTQ3u1bxGhc9OFXT
-M3sSMdva9A8ehF2XRqfyw8s1+kx0v/TvOWoWLWwGl8fhJGETMJ/Y4+myxqvUAsf+
-RxWhXI0wKaGNzFbtCZ2xrnUxpBJeiE1Agr8rd/+yVbkQBPajAEnisGqzMKPhRqPi
-E9fe8lgLB0xib5welCIV
-=S2+D
------END PGP SIGNATURE-----
+Ronald
