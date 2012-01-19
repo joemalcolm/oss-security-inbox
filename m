@@ -1,61 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/06/4
-Message-ID: <20120206094248.GA27887@openwall.com>
-Date: Mon, 6 Feb 2012 13:42:48 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2011-4325 Linux kernel: nfs: diotest4 from LTP crash client
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/19
+Message-ID: <CACcZV=GscjqAez8czzjsa_YEoMPK85HrcfdOLvE5c0Nm=qRsvA@mail.gmail.com>
+Date: Thu, 19 Jan 2012 14:02:10 +0100
+From: Jan-Wijbrand Kolman <janwijbrand@...il.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security@...ts.openwall.com, Yves-Alexis Perez <corsac@...ian.org>,  "Steven M. Christey" <coley@...us.mitre.org>, Tres Seaver <tseaver@...ladion.com>,  Zope Security Team <security-response@...e.org>, Radek Steiger <rsteiger@...hat.com>,  Jan Pokorny <jpokorny@...hat.com>
+Subject: Re: CVE-2011-4924 assignment notification -- Zope2, Zope3: Incomplete upstream fix for CVE-2010-1104 issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-I could not find this one on oss-security.
+On Thu, Jan 19, 2012 at 1:51 PM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+> On 01/19/2012 01:42 PM, Yves-Alexis Perez wrote:
+>> Does this mean CVE-2010-1104 applies to Zope3 too, or the fix for this
+>> CVE created CVE-2011-4924?
+>
+> The former. The CVE-2010-1104 issue was applicable to Zope3 too (just wasn't
+> described in the description). The reason probably being the CVE-2010-1104
+> to had been reported against Zope2 version only (according to particular
+> LaunchPad bug).
+>
+> Zope2 patch for CVE-2010-1104 was incomplete (still allowing XSS). Not sure,
+> if there was some Zope3 patch for CVE-2010-1104 applied.
+>
+> Jan-Wijbrand Kolman could you clarify and help us to understand original
+> CVE-2010-1104 situation in Zope3?
 
-http://rhn.redhat.com/errata/RHSA-2012-0007.html says "A flaw was found
-in the Linux kernel's NFS implementation. A local, unprivileged user
-could use this flaw to cause a denial of service.  (CVE-2011-4325,
-Moderate)"
+To my knowledge there was no patch applied to Zope 3 for
+CVE-2010-1104. Mind you though: I only think so because I could not
+find evidence of changes in zope.error related to this issue from
+before the zope.error 3.7.3 release.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=755455 mentions "null
-pointer deref" in its title and says "diotest4 from LTP will crash
-client on NFS mount. Not a regression, 5.7 GA kernel has the same
-issue."  It refers to:
-
-Upstream commit:
-http://git.kernel.org/linus/1ae88b2e4 (v2.6.31-rc6)
-
-The commit message:
-
-"We can't call nfs_readdata_release()/nfs_writedata_release() without
-first initialising and referencing args.context. Doing so inside
-nfs_direct_read_schedule_segment()/nfs_direct_write_schedule_segment()
-causes an Oops.
-
-We should rather be calling nfs_readdata_free()/nfs_writedata_free() in
-those cases.
-
-Looking at the O_DIRECT code, the "struct nfs_direct_req" is already
-referencing the nfs_open_context for us. Since the readdata and writedata
-structures carry a reference to that, we can simplify things by getting rid
-of the extra nfs_open_context references, so that we can replace all
-instances of nfs_readdata_release()/nfs_writedata_release()."
-
-I was able to find this on LKML, but with no more detail:
-
-http://lists.openwall.net/linux-kernel/2009/08/12/215
-
-Apparently, an uninitialized pointer was being accessed, and apparently
-it happened to be NULL (or nearby) on some occasion - but I see no proof
-that it would always be NULL, although there may well be something that
-makes it so.
-
-Overall, after a quick glance at the fix, I am not convinced that this
-was just a DoS.  Someone familiar with the code might have a better idea.
-
-Also, does Red Hat treat NULL pointer derefs in the kernel as DoS only
-now, relying primarily on mmap_min_addr to work?  (We do.  And we'll
-treat a mmap_min_addr bypass if another one of these is found, as the
-real privilege escalation issue, assuming that plenty of NULL derefs
-exist in the kernel.)
-
-Alexander
+regards, jw
+-- 
+Jan-Wijbrand Kolman
+janwijbrand@...il.com
