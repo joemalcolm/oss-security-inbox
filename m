@@ -1,39 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/08/4
-Message-Id: <201210082352.q98Npq8N018527@linus.mitre.org>
-Date: Mon, 8 Oct 2012 19:51:52 -0400 (EDT)
-From: cve-assign@...re.org
-To: seth.arnold@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: QT CRIME vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/10
+Message-ID: <4725110.8qjRCcY8di@devil>
+Date: Fri, 20 Jan 2012 09:42:20 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: spamdyke buffer overflow vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+According to secunia advisory:
+https://secunia.com/advisories/47548/ :
+Description:
 
->http://permalink.gmane.org/gmane.comp.lib.qt.devel/6729 :
+Some vulnerabilities have been reported in spamdyke, which potentially can be 
+exploited by malicious people to compromise a vulnerable system.
 
->A security vulnerability has been discovered in the SSL/TLS protocol,
->which affects connections using compression. All versions of TLS are
->believed to be affected. To address this, Qt will disable TLS
->compression by default.
+The vulnerabilities are caused due to boundary errors related to the incorrect 
+use of the "snprintf()" and "vsnprintf()" functions, which can be exploited to 
+cause buffer overflows.
 
-This disclosure should be mapped only to CVE-2012-4929. There should
-not be product-specific CVE names for this issue in the TLS protocol.
+The vulnerabilities are reported in versions prior to 4.3.0.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
 
-iQEcBAEBAgAGBQJQc2VGAAoJEGvefgSNfHMd4ToH/i5Z594Ozgi3oeEO6cUB3sKv
-38vnY2QvqMyRo0+/11sXFnemi2mGu+ih+ChcB2zH1a3TSNvqTP7KySnH2BmbvdSF
-JpQX/frtsoMUMuOheaxMtIVZ+6tKhuJcSE+7/DBCajvMbM2pb7NkJ4Agd00hriO9
-LRliPVcYNdPo6XOgHNpkIDPHcZldKp5HdN72k5nzPsVFnhSs66OPxXiDW9xA6HwX
-2KAOV/bBigzo6t809Y4rob1rmG11PMv3fWzXpScgPKBIfyPjf/7pfISr9JxmNpow
-DSjBPkNMZ0C19RlTmkp9cpcTasijuKDC1oMtelcvkIGPq0yJubLqSwdS3SJStqw=
-=5YC8
------END PGP SIGNATURE-----
+Solution
+Update to version 4.3.0.
+
+
+and from upstream changelog:
+http://www.spamdyke.org/documentation/Changelog.txt :
+
+Fixed a number of very serious errors in the usage of snprintf()/vsnprintf().
+    The return value was being used as the length of the string printed into
+    the buffer, but the return value really indicates the length of the string
+    that *could* be printed if the buffer were of infinite size. Because the
+    returned value could be larger than the buffer's size, this meant remotely
+    exploitable buffer overflows were possible, depending on spamdyke's
+    configuration.
+
+and from upstream mailing list:
+http://www.mail-archive.com/spamdyke-release@spamdyke.org/msg00014.html
+
+it also fixes a series of major bugs 
+that could lead to buffer overflows.  Depending on spamdyke's configuration, 
+these could cause remotely exploitable security holes.  Please upgrade 
+immediately!
+
+Please assign a CVE
+
+-- 
+Agostino Sarubbo		ago -at- gentoo.org
+Gentoo/AMD64 Arch Security Liaison
+GPG: 0x7CD2DC5D
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
