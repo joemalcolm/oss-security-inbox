@@ -1,33 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/27/5
-Message-ID: <1343425359.4658.13.camel@lagune.teich>
-Date: Fri, 27 Jul 2012 23:42:39 +0200
-From: frosch <frosch@...nttd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/9
+Message-ID: <20120120053504.GK7143@alex.ibm>
+Date: Fri, 20 Jan 2012 09:35:04 +0400
+From: Alexander Pletnev <pletnev.rusalex@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for OpenTTD
+Subject: pdf attacks vectors
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi guys, im working with an web app, and going to create PDFs on-the-fly with user related data. 
+Therefore im writinig to oss-security. What are a pdf attacks vector need's to be avoided by my app ?
 
-we, the OpenTTD developers, have identified a security vulnerability in
-OpenTTD (an open source game with multiplayer). Would you be so kind as 
-to allocate a CVE id for this issue?
-
-The issue concerns a denial of service vulnerabilty which enables
-an attacker to force the server into an invalid game state. The
-server will abort upon detecting this state.
-This attack can be performed using an unmodified client via normal
-game interaction. The attack requires authorization, but most servers
-do not implement authorization. The first vulnerable version is 0.6.0,
-the upcoming 1.2.2 release will have the issue fixed.
-
-Once a CVE id is allocated, the issue and fix will be documented at
-http://security.openttd.org/CVE-2012-xxxx
-
-Thanks in advance,
-Christoph 'frosch' Elsenhans
-
-(Please CC me, I'm not subscribed)
-
-
+In other words, what is the most dangerous pdf attack vectors ?
 
