@@ -1,31 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/6
-Message-ID: <1340879657.2516.16.camel@guybrush>
-Date: Thu, 28 Jun 2012 12:34:17 +0200
-From: Johannes Schlüter <johannes@....net>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  security@....net
-Subject: Re: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/15
+Message-ID: <4F197F9B.4020005@redhat.com>
+Date: Fri, 20 Jan 2012 22:52:11 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On Wed, 2012-06-27 at 23:12 -0600, Kurt Seifried wrote:
-> http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+On 01/19/2012 12:05 PM, Eugene Teo wrote:
+> On 01/19/2012 04:43 AM, Kees Cook wrote:
+>> What's the problem with the old logic in the mem handling? (Why does this
+>> need a CVE?)
 > 
-> shows authors, SAPI modules (and their authors) and normal modules
-> (and their authors), resulting in a significant information disclosure
-> (version #'s can be narrowed down from the authors list).
+> This is a possible local privilege escalation issue on a system with
+> ASLR disabled, combined with other exploitation techniques.
 
-I have barely seen attackers actually trying to figure out the version
-number. 99% are directly trying to exploit known vectors using some
-scripts. And to get the version number there's a way simpler way, also
-controlled using the same php.ini setting:
+Detailed information can be found here,
+https://access.redhat.com/kb/docs/DOC-69129
 
-    $ echo "HEAD / HTTP/1.0\n" | nc www.php.net 80 | grep PHP
-    Server: Apache/1.3.41 (Unix) PHP/5.2.17
-    X-Powered-By: PHP/5.2.17
-
-johannes
-
-
+Thanks, Eugene
