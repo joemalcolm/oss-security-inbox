@@ -1,38 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/04/6
-Message-ID: <CAAPiX_+E5U4QdLBCxjX5R64TXFE9dPdCOsPRxxh7=WQQBvpr4A@mail.gmail.com>
-Date: Mon, 4 Jun 2012 14:53:47 -0600
-From: Greg Knaddison <greg.knaddison@...uia.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/4
+Message-ID: <4F18F95B.3080008@redhat.com>
+Date: Thu, 19 Jan 2012 22:19:23 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for Drupal contributed modules
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>, Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: Wireshark multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 4, 2012 at 11:09 AM, Solar Designer <solar@...nwall.com> wrote:
-> On Mon, Jun 04, 2012 at 11:02:57AM -0600, Greg Knaddison wrote:
->> I didn't see a response nor this message in the archives at
->> http://www.openwall.com/lists/oss-security/2012/05/
+On 01/19/2012 09:27 PM, Huzaifa Sidhpurwala wrote:
+> On 01/18/2012 11:17 AM, Kurt Seifried wrote:
+> On 01/18/2012 11:17 AM, Kurt Seifried wrote:
+>> On 01/17/2012 12:46 AM, Huzaifa Sidhpurwala wrote:
+>>> On 01/16/2012 01:19 AM, Kurt Seifried wrote:
+>>>>
+>>>> I agree in principle, however in practice this is a lot of work (as
+>>>> you
+>>>> well know =). I guess my question/concern would be is who does the
+>>>> research to verify all this, and what if it varies by version (i.e. it
+>>>> is 6 separate issues in an older version but the newer version
+>>>> combined
+>>>> some code into a common library for example so it's only a single
+>>>> issue,
+>>>> but with multiple avenues of attack/etc.). In other words a lot of
+>>>> potential work.
+>>>
+>>>
+>>> I did some research, with details available at:
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=773726#c2 and
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=773726#c3
+>>>
+>>> In my opinion only 1 and 2 (ie ws bug 6663 and ws bug
+>>> 6670) should be allocated a CVE.
+>>>
+>>> Others are application crashes.
+>>
+>> Ok doke, so we already got CVE-2012-0041 Assigned for all of these. I
+>> slightly re-ordered them from the info at
+>> https://bugzilla.redhat.com/show_bug.cgi?id=773726 and an irc chat to
+>> confirm:
+>>
+>> ======
+>> Type-cast error: Caused because of casting unsigned to signed int (ws
+>> bug
+>> 6663). This leaves the app in an unstable state.
+>> -
+>> 1. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6663
+>> This is a type cast issue, caused because of casting an unsigned int to
+>> signed
+>> int.
+>> In the unfixed version this would throw an exception which the
+>> application
+>> would catch, but leave it in an unstable state. The patch makes sure
+>> that the
+>> value passed was less than G_MAXINT
+>> Patch:
+>> http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40164
+>>
+>> =======
+>> Application crash/Dos because of trying to allocate too large a
+>> buffer size
+>> (ws bug 6666, 6667, 6669).
+>> -
+>> 2. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6666
+>> 5Views file format DoS due to request to allocate too large a buffer
+>> size.
+>> Normally glib should terminate the application with something like
+>> "GLib-ERROR **: gmem.c:239: failed to allocate 3221228094 bytes"
+>> Resolved by clamping the value of packet_size
+>> Patch:
+>> http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40165
+>>
+>> 3. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6667
+>> Same problem and solution but with i4b capture format now
+>> Patch:
+>> http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40166
+>>
+>> 5. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6669
+>> Similar issue with netmon file format.
+>> Patch:
+>> http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40168
+>>
+>> =======
+>> Integer underflow causing too large buffer to be allocated and a crash
+>> (ws bug 6668).
+>> -
+>> 4. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6668
+>> Same problem and solution but with iptrace capture format. Also some
+>> checks for
+>> bad file format.
+>> Patch:
+>> http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40167
+>>
+>> =======
+>> Memory corruption (buffer-overflow) when reading novell capture file
+>> format. glibc however detects this and terminates the application (ws
+>> bug 6670)
+>> -
+>> 6. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6670
+>> Similar issue with netmon file format.
+>> Patch:
+>> http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40169
+>>
+>> =======
+>>
+>> So we already have one CVE assigned for all these, my thought would be
+>> to use CVE-2012-0041 for the first one (6663) and assign new CVE's for
+>> the rest. Comments/questions?
+>>
 >
-> The message is seen here:
 >
-> http://www.openwall.com/lists/oss-security/2012/05/30/15
+> You are correct, we may need to split this into 4 parts:
 >
-> The "month view" currently shows Subjects of only up to 10 messages per
-> day, with a "more messages" link in place of the 10th message in case
-> there are more than 10.  The "day view" shows all messages for that day:
 >
-> http://www.openwall.com/lists/oss-security/2012/05/30/
->
-> Maybe we should adjust this setting - say, to 30 or even 100 (messages
-> per day shown in month view)?
->
+> 6663 - typecast flaw
+Please continue to use CVE-2012-0041 for this issue (6663)
 
-Makes sense. And yes, I'd suggest expanding that. I've never seen an
-archive page that is limited in that way.
+> 6666, 6667, 6669 - Dos due to too large buffer alloc requst
+Please use CVE-2012-0066 for these issues (6666, 6667, 6669)
 
-Thanks,
-Greg
+> 6668 - Dos due to integer underflow and too large buffer alloc. request
+Please use CVE-2012-0067 for this issue (6668)
 
+> 6670 - memory corruption due to buffer underflow
+Please use CVE-2012-0068 for this issue (6670)
 
 -- 
-Director Security Services | +1-720-310-5623
-Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
+
+-- Kurt Seifried / Red Hat Security Response Team
+
