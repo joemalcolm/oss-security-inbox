@@ -1,103 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/9
-Message-ID: <506CA2ED.1000100@redhat.com>
-Date: Wed, 03 Oct 2012 14:41:17 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Tyler Hicks <tyhicks@...onical.com>
-CC: oss-security@...ts.openwall.com, coley@...us.mitre.org, security@...ntu.com, security@...y-lang.org
-Subject: Re: CVE Request: Ruby safe level bypasses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/23
+Message-ID: <CANY-Wm_G0Vi8hG=vCgCNT=7L=CCKYPvgHZRtOGr1FSrLFbO8oA@mail.gmail.com>
+Date: Fri, 20 Jan 2012 12:22:51 -0700
+From: "Samuel J. Greear" <sjg@...sjg.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>,  security@...gonflybsd.org, oss-security@...ts.openwall.com,  magnum <john.magnum@...hmail.com>
+Subject: Re: weird crypt-sha* in DragonFly BSD
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>
+> 1. You will want to be aware of this issue:
+>
+> glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
+> http://www.openwall.com/lists/oss-security/2011/11/15/1
+>
+> There's no agreed upon fix yet (use "thread-next" to see some ideas),
+> but I think all distros/projects using Ulrich's SHA-crypt will need to
+> deal with this issue eventually.  I'll try to remember to inform you
+> once we choose to do anything specific.
+>
 
-On 10/03/2012 02:30 PM, Tyler Hicks wrote:
-> On 2012-10-03 13:48:14, Kurt Seifried wrote:
->> On 10/02/2012 04:32 PM, Tyler Hicks wrote:
->>> Hello - Upstream Ruby has fixed[1] exception methods that 
->>> incorrectly allowed safe level bypasses. These bypasses
->>> allowed untainted strings to be modified by untrusted code in
->>> safe level 4.
->>> 
->>> Note that the changes to exc_to_s() and name_err_to_s(), in 
->>> error.c, are similar to the fix for CVE-2011-1005, but the
->>> Ruby advisory[2] made it clear that Ruby 1.9.x was not affected
->>> by CVE-2011-1005. It turns out that the vulnerability was
->>> later reintroduced to Ruby's trunk in revision 29456. Ruby
->>> 1.9.3-p0 and later is affected.
->>> 
->>> While Shugo Maeda was fixing the issue above, he noticed that 
->>> name_err_mesg_to_str() had a similar flaw. Ruby 1.8.x, along
->>> with 1.9.3-p0 and later is affected.
->>> 
->>> I believe that these issues need two separate CVEs. Both
->>> issues are fixed in the same upstream patch[1]. Could you
->>> please allocate ids?
->>> 
->>> Thanks, Tyler
->>> 
->>> [1] 
->>> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37068
->>>
->>>
->>
->>> 
-[2]
->> http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/
->>>
->>
->>
->> 
-Please use CVE-2012-4464 for this issue.
-> 
-> Hi Kurt - I think that two CVE ids are needed here.
-> 
-> All issues are fixed in the same upstream patch but some issues in
-> that patch affect different versions. I'll use the notation from
-> "CVE Abstraction Content Decisions: Rationale and Application" to
-> describe how I see it:
-> 
-> S1: The vulnerability found in exc_to_s() S2: The vulnerability
-> found in name_err_to_s() S3: The vulnerability found in
-> name_err_mesg_to_str()
-> 
-> S1, S2 and S3 are the same type of bug. S1 and S2 appear in the
-> same versions (1.9.3-p0 and newer), so MERGE them. S3 appears in
-> 1.8.x, as well as 1.9.3-p0 and newer, so SPLIT it from S1 and S2.
-
-And this is why I should probably be more aggressive about asking for
-commits to be broken out by software version if multiple versions are
-affected =).
-
-Ok let's continue to use CVE-2012-4464 for the exc_to_s() and
-name_err_to_s() issues which affect 1.9.3-p0 and newer.
-
-For name_err_mesg_to_str() which affects both 1.9.3-p0 and newer and
-1.8.x please use CVE-2012-4466.
-
-> Tyler
-> 
+I saw this, my preference would be to get rid of all uses of alloca() and
+use malloc(), optionally with a fixed-size array on the stack for short
+passwords. If specific alignment is needed it can be forced by
+over-allocating and indexing into the heap allocation to the correct
+alignment. (I have a personally vendetta against alloca(), importing new
+uses of it made me cry a little) -- So I may do this, but it doesn't make
+my short list, if someone beats me to it I would be interested in hearing
+about it so we can keep in sync.
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+> 2. Instead of:
+>
+> + * The deprecated sha256/512 functions are somehow sensitive to the
+> + * order of this crypt_types array as well as their respective "name"
+> members.
+> + *
+> + * In order to ensure that both existing passwords will continue to work
+> and
+> + * that new passwords will be more secure by using the new algorithms even
+> + * without updating the existing login.conf, this array is now scanned
+> + * backwards. This could be reverted in the future when the deprecated SHA
+> + * functionality is removed.
+>
+> how about using the more reliable approach proposed by magnum here? -
+>
+> http://www.openwall.com/lists/john-dev/2012/01/19/1
+>
+> As you can see, he has even spent time to identify the specific 64-bit
+> magic values.  Of course, you'll need to double-check them (such as by
+> applying the patch and testing logins to existing accounts with both
+> sha256 and sha512 on a 64-bit DragonFly system.)
+>
+>
+There isn't a collision issue with $3$ and $4$ on DragonFly, so I don't see
+any obvious need. I intend to rip the old code out after a few releases, so
+the issue (if there is one) will be (relatively) short lived.
 
-iQIcBAEBAgAGBQJQbKLtAAoJEBYNRVNeJnmT8GUQAMN+H6tTL92vO1zW9uxzz9Sr
-laPfWzSVtoeiqmHCWoUO096Nt8UpRaXcO7bMTfI3hQkJyrpcx3U1NhCcDnHiiGCZ
-eB3QWtzEcF1BeRmX9AsvzXbI+OGonCD8l7N0MfB1CXu1Wnb+oXUNbq7yeqMImCRU
-EXXCa4KjIxUor7IUKoK5ye/V1E1LgYsc/mJgEHH3egX2J4eUAg+wa3yF/lQr+EQo
-vxYAFSAKKHjIfP5lVYWSltcsQrcO4eHyXhJ7oV4S4CKfTF7R1O3l6Og5hLSei8tU
-hZTtfErlQaTnVv9NH91IvcKd3oQh4JMR7MoqhOIbYSpyqVUHyqzYSjzg3J/AWpnG
-s8RxRTt2wS5dyk/am90zPxjt0uHV2/l91d0moz88Z+FWI7wXy9aS0V7UG7J3mqIT
-Umv2WJ97NNBLpQSM8BJBZSz7DPPjePOZQBsLY0dMvxSZdNAsmie/sK1YjL0NTw9w
-rShUx2ZoGj6bpkfugpVLsyw8wfD6B+PJBN/4DRh3PlT20kJgF5xMPVnUPCDEZikU
-HtbuM53r/LFNZT4xkCkZ3/KzQTj/LhSrtVmu1SqJWZAAOgANhezxxiAE/mrCHfmQ
-3cX989BpeJixoWomEK1BsvPPeXmQWHssjHgUMJTke7bpecMRVBhGRMUIO/GAjih1
-C19y0fl7OVTHH4G0RbrW
-=jfkc
------END PGP SIGNATURE-----
+
+> 3. It would be nice for upgraded systems to automatically switch from
+> sha256 to sha512 in login.conf - perhaps there's some on-upgrade hook
+> that you can use for this?  sha256 no longer means the same thing
+> anyway; there's no good reason for a percentage of DragonFly systems to
+> temporarily switch from one SHA-256 based algorithm to another just for
+> them to hopefully switch to sha512 a little bit later (when the admin
+> does that).  And, what's worse, many systems will end up stuck in this
+> intermediary state.
+>
+>
+We do not have specific infrastructure for this and it needed to work for
+any systems stuck in such an intermediary state anyway, but I will be
+looking into what we can do to a) automatically change the setting in
+login.conf and b) warn users/administrators of their existing potentially
+insecure passwords.
+
+An aside on B above, if we do put in place a mechanism to warn users/admins
+about passwords with $3$ and $4$ magic, is the MD5 implementation
+sufficiently weak at this point to warrant warning about it as well?
+
+Thanks,
+Sam
+
