@@ -1,48 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/5
-Message-ID: <20120202020145.GC10267@openwall.com>
-Date: Thu, 2 Feb 2012 06:01:45 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/8
+Message-ID: <4F18FBFC.9000107@redhat.com>
+Date: Thu, 19 Jan 2012 22:30:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: Jenkins
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 01, 2012 at 07:29:05PM -0500, Marc Deslauriers wrote:
-> This means vendors will be keeping information about the vulnerability
-> private until they are confident they are able to release within a week,
-> at which point they will then share the information with other vendors
-> who will scramble to get their updates ready.
+On 01/16/2012 10:08 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> Please assign a CVE ID for the hash collision attack and Jenkins:
+> http://www.cloudbees.com/jenkins-advisory/jenkins-security-advisory-2012-01-10.cb
+>
+> Cheers,
+>         Moritz
+Ok it appears no-one has assigned a CVE for this yet. Please use
+CVE-2012-0785 for this issue.
 
-Yes, this is one of the things I expect to be happening, too.
+-- 
 
-You asked me "why", but not "why not" - and this matches our roles for
-this discussion well. ;-)
+-- Kurt Seifried / Red Hat Security Response Team
 
-> As a distro, I now have two choices: I sit on vulnerabilities until our
-> own QA and testing is done, at which point I send them to the list and
-
-Why can't you send to the list when you are half-way done, if 2 weeks
-would have been enough for you normally?
-
-> hope that 7 days is enough for everyone else, or I simply stop using the
-> list for anything that's more than trivial and contact other vendors
-> directly.
-
-Another option: contact large vendors who need more time for QA first
-(2 weeks before CRD), post to the list later (1 week before CRD).  There
-are possibly just a few large vendors/distros who need this (I am
-thinking Ubuntu, Red Hat, SUSE - and that might be all).
-
-Also, when you post to the list, you're able to share more info with
-other vendors (those on the list): not only info on the bug, but also
-your patches (perhaps already partially tested), advisory draft, etc.
-That way, it is easier for other vendors to be done in 1 more week.
-
-Drawbacks:
-- Large vendors gain an advantage.
-- Fixes may be worse since no input is provided by other/smaller vendors
-early on (e.g., I would not have a chance to identify a shortcoming in a
-patch being tested by Ubuntu until the patch is already sent to QA, so
-is too late to revise unless it fails QA).
-
-Alexander
