@@ -1,52 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/6
-Message-ID: <4F90EC8F.9030401@redhat.com>
-Date: Thu, 19 Apr 2012 22:56:47 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/5
+Message-ID: <20120120052017.GA13558@kiste2>
+Date: Fri, 20 Jan 2012 06:20:17 +0100
+From: Michael Niedermayer <michaelni@....at>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: fcaps: clear the same personality flags as suid when fcaps are used
+Cc: valentino.angeletti@...l.com, bugtraq@...urityfocus.com, tytso@....edu
+Subject: Re: Re: pwgen: non-uniform distribution of passwords
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 04/19/2012 10:52 PM, Eugene Teo wrote:
-> Reported by Steve Grubb, if a process increases permissions using
-> fcaps all of the dangerous personality flags which are cleared for
-> suid apps should also be cleared. Thus programs given priviledge
-> with fcaps will continue to have address space randomization
-> enabled even if the parent tried to disable it to make it easier to
-> attack.
+On Thu, Jan 19, 2012 at 11:34:12PM +0400, Solar Designer wrote:
+> On Thu, Jan 19, 2012 at 09:21:17AM +0100, valentino.angeletti@...l.com wrote:
+> > may ask you what software (and how it works brute force ecc) you used?
 > 
-> Upstream commit: 
-> http://git.kernel.org/linus/d52fc5dde171f030170a6cb78034d166b13c9445
->
->  Reference: https://bugzilla.redhat.com/show_bug.cgi?id=806722
+> John the Ripper, indeed - generating a custom .chr file (which is based
+> on trigraph frequencies) from a sample of 1 million of pwgen'ed
+> passwords and then using this file to crack another (non-overlapping)
+> sample of pwgen'ed passwords.  My initial notification to oss-security
+> and Bugtraq included these links, which describe this in more detail:
 > 
-> Thanks, Eugene
+> http://www.openwall.com/lists/john-users/2010/11/17/7
+> http://www.openwall.com/lists/john-users/2010/11/22/5
+> http://www.openwall.com/lists/john-users/2010/11/28/1
+> http://www.openwall.com/lists/john-users/2010/12/06/1
+> 
+> However, as I wrote in a followup posting to oss-security 2 days ago:
+> 
+> "I might update/revise my analysis on this issue in a few days.
+> 
+> Specifically, I now suspect that a (large) part of the apparent
+> non-uniformity of the distribution was in fact an artifact of my
+> analysis approach.  I only analyzed sets of 1 million of pwgen'ed
+> passwords, so I could not directly check the distribution of full
+> passwords (1 million is too little, even compared to the small keyspace
+> of these passwords), whereas JtR only uses trigraph frequencies.
+> 
+> I am now generating 1 billion of pwgen'ed passwords, which should take a
+> couple of days to complete. [...]"
+> 
+> http://www.openwall.com/lists/oss-security/2012/01/17/14
+> 
+> This has in fact completed by now:
+> 
+> $ ./pwgen -1cn 8 1000000000 | dd obs=10M > 1g
+> 17578125+0 records in
+> 858+1 records out
+> 9000000000 bytes (9.0 GB) copied, 147496 seconds, 61.0 kB/s
+> 
+> And I analyzed this larger sample briefly:
+> 
+> $ time ~/john/john-1.7.9-jumbo-5/run/unique -v -mem=25 1gu < 1g
+> Total lines read 1000000000 Unique lines written 697066573
+> 
+> real    144m40.619s
+> user    142m8.727s
+> sys     0m39.645s
+> 
+> So that's 697 million unique passwords in 1 billion, which for a uniform
+> distribution would correspond to a total keyspace size of 1.3 billion:
+> 
+> $ ./solve 697066573 1000000000
+> 1296935185
+> 
+> I've attached the solve.c program to this message.  [ BTW, I verified
+> that there's no fatal precision loss in its expected_different()
+> function (despite of the risky expression) for the value ranges on which
+> it is called here.  I did so by also computing the expected different
+> value with a different (much slower) algorithm - just not as part of
+> equation solving (which would be slower yet). ]
+> 
+> However, let's see what numbers we get for smaller samples (actually,
+> subsets of the 1 billion sample above, but that's OK in this case):
+> 
+> Total lines read 100000000 Unique lines written 89163247
+> Total lines read 10000000 Unique lines written 9811335
+> Total lines read 1000000 Unique lines written 997978
+> 
+> $ ./solve 89163247 100000000
+> 427419891
+> $ ./solve 9811335 10000000
+> 261676022
+> $ ./solve 997978 1000000
+> 246946702
 
-Please use CVE-2012-2123 for this issue.
+Its also interresting to note that some password lengths are a lot
+worse than others and that longer does not equal better in some cases
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+$ pwgen -1cn 4 100000 | sort | uniq -u |wc -l
+98385
+$ pwgen -1cn 5 100000 | sort | uniq -u |wc -l
+82589
+$ pwgen -1cn 6 100000 | sort | uniq -u |wc -l
+96693
+$ pwgen -1cn 7 100000 | sort | uniq -u |wc -l
+99524
+$ pwgen -1cn 8 100000 | sort | uniq -u |wc -l
+99954
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+lucky the default is not 5
 
-iQIcBAEBAgAGBQJPkOyPAAoJEBYNRVNeJnmTdeYP/j3mkBDfKmNR6WfS9tIqQN2S
-8O60vrzYfOsZ/+qwHlP4JSmy1pyGoE/rj/ADz/ctLmaGKSoE41Oz30mEE3LksKke
-uNhIaMCbAGxo+gNT7CADI32vl+Ab2P/NVgVj5GSuJ9ZCHi34qTUSHkATJWM5iNJs
-HtsF46VSzVKKsGRWF6AhszGA4v54v76vOesncMG5U6SQ9+aPDnx/t9SvSHb29yvg
-WSU2Q3EvVa3YWkR+7FaGs7UYj63PcPWYP0VAjacA/RafY3CMEijwKKB6qvHYEOpM
-mCkaTxCEHYwhtf6QBMqmC5EWiaMB4uhxjzUO3/HUPz2YA+dw2d1sMcct49jWzF2B
-vGSiFT3LQ1AZQK7Yp517ASYbCEPVNIDqwnpXuDVuJJ/AcHbuyEOEsEbMy3TVo7Xl
-sj4XD/yE+iGNwBoTIQyx0/fMMh1K25j/8KEZabzO6w5RciPHULIMawzVaTkciMxg
-HtNG67Kt3UHcpKwDQLeGH75vQqQDPfu6o5e5Ix9wnSrbZuMZn8Ub1lmVoP+d5PfK
-YdW6flfTo+Z/f57VMgmzzJCfFp/SR+B5j4lskcaeMtysTMp5L0r1/s/0NXpOKz+G
-IL7EsqbJvUDGZ6PXmmD/KXEOMaCyUEmzmh92w6H5sTfsOwzl2YjddMM4KMdSGaQC
-VdbREbLZLmSW90WOh/JK
-=Thfp
------END PGP SIGNATURE-----
+[...]
+
+-- 
+Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
+
+The real ebay dictionary, page 2
+"100% positive feedback" - "All either got their money back or didnt complain"
+"Best seller ever, very honest" - "Seller refunded buyer after failed scam"
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
