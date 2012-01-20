@@ -1,66 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/22
-Message-ID: <239DE025ED8C904A95453F44188176B70101B263@E3088LM3DR.risorse.enel>
-Date: Thu, 19 Jan 2012 09:21:17 +0100
-From: <valentino.angeletti@...l.com>
-To: <solar@...nwall.com>, <oss-security@...ts.openwall.com>
-Cc: <bugtraq@...urityfocus.com>, <tytso@....edu>
-Subject: R: pwgen: non-uniform distribution of passwords
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/12
+Message-ID: <20120120094445.GA4594@openwall.com>
+Date: Fri, 20 Jan 2012 13:44:45 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-Ok thank you,
-may ask you what software (and how it works brute force ecc) you used?
+Hi,
 
-Thank you
-Vale-
+I've just updated the wiki page at:
 
------Messaggio originale-----
-Da: Solar Designer [mailto:solar@...nwall.com] 
-Inviato: martedì 17 gennaio 2012 20:52
-A: oss-security@...ts.openwall.com
-Cc: bugtraq@...urityfocus.com; Theodore Ts'o
-Oggetto: Re: pwgen: non-uniform distribution of passwords
+http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-On Tue, Jan 17, 2012 at 02:01:38PM +0400, Solar Designer wrote:
-> Time running (D:HH:MM) - Keyspace searched - Passwords cracked
-> 0:00:02 - 0.0008% - 6.0%
-> 0:01:00 - 0.025% - 19.5%
-> 0:20:28 - 0.5% - 39.1%
-> 1:16:24 - 1.0% - 47.1%
-> 3:00:48 - 1.8% - 55.2%
-> 3:21:44 - 2.3% - 59.4%
-> 5:05:17 - 3.1% - 64.2%
-...
-> I did some testing of pwgen-2.06's "pronounceable" passwords, and I
-> think they might be weaker than you had expected (depends on what you
-> had expected, which I obviously don't know).
+to state the following:
 
-It was just pointed out to me off-list that the man page for pwgen
-specifically mentions that this kind of passwords "should not be used in
-places where the password could be attacked via an off-line brute-force
-attack."  I had missed that detail or at least I did not recall it.
+"Please note that the maximum acceptable embargo period for issues
+disclosed to these lists is 14 to 19 days, with embargoes longer than 14
+days (up to 19) allowed in case the issue is reported on a Thursday or a
+Friday and the proposed coordinated disclosure date is thus adjusted to
+fall on a Monday or (preferably) a Tuesday.  Please do not ask for a
+longer embargo.  In fact, embargoes shorter than 14 days are preferable."
 
-This kind of documentation certainly mitigates the problem to some extent.
+Previously, the maximum was specified as 14 days unconditionally, but
+frankly this started to fail in practice for the day-of-week reason -
+so I've adjusted the policy as above (based on proposals from list
+members).
 
-Yet I think this gives users the perception that only the keyspace is
-smaller, not that the generated passwords are distributed non-uniformly.
-In fact, most users would not even think of the latter risk.
+While at it, I've also added this clarification on the format of messages:
 
-The passwords look much stronger than they actually are, and I think
-this is a problem.  They look like almost random sequences of 8
-characters, whereas the level of security for 6% to 20% of them is
-similar to that of dictionary words with minor mangling.
-
-Sure, there's a trade-off, but non-uniform distribution didn't have to
-be part of it.  That's an implementation shortcoming.
-
-> Specifically, not only the keyspace is significantly smaller than that
-> for "secure" passwords (which I'm sure you were aware of), but also the
-> distribution is highly non-uniform.  My guess is that this results from
-> different phonemes containing the same characters.  So certain
-> substrings can be produced in more than one way, and then some
-> characters turn out to be more probable than some others (especially as
-> it relates to their conditional probabilities given certain preceding
-> characters).
+"Speaking of encryption, the supported message formats are: plain
+unencrypted messages, PGP/MIME (including with attachments), or inline
+PGP.  (In all of these cases, messages are distributed to list members
+(re-)encrypted to their own keys.)  However, manual PGP-encrypted
+attachments are not supported (so if you want to attach file(s) to your
+encrypted message, use PGP/MIME)."
 
 Alexander
