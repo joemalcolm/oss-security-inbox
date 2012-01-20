@@ -1,45 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/14
-Message-ID: <Pine.GSO.4.64.1201051220140.2231@faron.mitre.org>
-Date: Thu, 5 Jan 2012 12:37:44 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/11
+Message-ID: <20120120090756.GA4392@openwall.com>
+Date: Fri, 20 Jan 2012 13:07:56 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Requests for FFmpeg 0.9.1
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Jan 19, 2012 at 05:52:05AM -0800, John Johansen wrote:
+> I recently joined the Ubuntu Security team and request membership to the
+> linux-distros@...openwall.org list so that I may participate fully in reporting
+> and fixing vulnerabilities in Ubuntu and FOSS. Here is my GPG fingerprint:
+> 
+> pub   4096R/18D5C3D8 2011-09-06
+>       Key fingerprint = EDC4 830F BD39 AB6A C510  47FB 052F 3670 18D5 C3D8
+> uid                  John Johansen <john@...x.net>
+> uid                  John Johansen <john.johansen@...onical.com>
+> sub   4096R/3CF6A249 2011-09-06
 
-Michael, this is a well-organized request, thank you!
+Subscribed.
 
-
->I tried to sort the issues a little according to type to make this huge
->list a bit less ugly. Also feel free to skip things considered too minor, 
->iam not sure where the threshold of "too minor" is.
-
-A couple thoughts on this one, I hope this makes sense.
-
-My VERY limited understanding of ffmpeg is that it is single-user, and it 
-can only process a single file from a single source, without multiple 
-"sessions" or "actions" using data from different sources.  If that is the 
-case, then crashers like NULL dereferences and divide-by-zero might not 
-qualify for inclusion in CVE.  With products like web browsers and 
-document editors, a crash from one single window or tab could cause a 
-denial of service by closing *other* independent windows or tabs that the 
-user may care about; with things like kernels or servers, a crash affects 
-many sessions and users.  So if ffmpeg only processes one file at a time, 
-a basic crasher probably doesn't get a CVE.
-
-If the crash is strongly associated with data integrity, e.g. memory 
-corruption or invalid free's, then it would get a CVE - since we make a 
-conservative assumption that a code-execution exploit *might* be found by 
-someone, and the consequence might be more than DoS.  I've been somewhat 
-agnostic about out-of-range reads.
-
-However, such crashes that appear in the *libraries* provided by ffmpeg 
-would qualify, since those libraries might be used in an independent 
-product for which a crash is a security issue (for example, a product 
-might use a library function to convert the audio for a large number of 
-files that have been uploaded from many users, and a single crash prevents 
-other users' files from being converted.  In this way, shared libraries 
-are treated more conservatively.)
-
-- Steve
+Alexander
