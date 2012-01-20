@@ -1,47 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/19/2
-Message-ID: <alpine.LFD.2.02.1210191749330.11210@javelin.pnq.redhat.com>
-Date: Fri, 19 Oct 2012 17:58:12 +0530 (IST)
-From: P J P <ppandit@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/19
+Message-ID: <4F199011.1050106@redhat.com>
+Date: Fri, 20 Jan 2012 17:02:25 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: me@...fdog.net
-Subject: CVE Request -- kernel stack disclosure in binfmt_script load_script()
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Joshua Colp <jcolp@...ium.com>
+Subject: Re: CVE Request -- Asterisk AST-2012-001 / Remote DoS while processing crypto line for media stream with non-existing RTP
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/20/2012 04:55 PM, Steven M. Christey wrote:
+>
+> CVE-2012-0885 was already assigned to AST-2012-001 based on a request from the upstream vendor. They
+> probably updated their advisory since your initial request:
+>
+> http://downloads.asterisk.org/pub/security/AST-2012-001.html
 
+Thanks for your prompt reply, Steve. It has been truly updated
+already (checked by forcing Firefox to renew it's cached).
 
-A memory disclosure flaw has been found in the way binfmt_script load_script() 
-function handled excessive recursions. An unprivileged local user could use 
-this flaw to leak kernel memory.
+Thank you, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Proposed upstream fix:
-  - https://lkml.org/lkml/2012/9/23/29
+>
+> - Steve
+>
+>
+> On Fri, 20 Jan 2012, Jan Lieskovsky wrote:
+>
+>> Hello Kurt, Steve, vendors,
+>>
+>> a denial of service flaw was found in the way asterisk processed certain
+>> requests to negotiate secure video stream, when the res_srtp Asterisk module
+>> has been loaded and video support has not been enabled. A remote attacker could
+>> provide a specially-crafted media stream negotiation request, which once
+>> processed by Asterisk would lead to asterisk daemon crash by processing crypto
+>> line for such media stream.
+>>
+>> References:
+>> [1] http://downloads.asterisk.org/pub/security/AST-2012-001.html
+>> [2] https://issues.asterisk.org/jira/browse/ASTERISK-19202
+>> [3] https://bugzilla.redhat.com/show_bug.cgi?id=783487
+>>
+>> Upstream patch against the v1.8.x branch:
+>> [4] http://downloads.asterisk.org/pub/security/AST-2012-001-1.8.diff
+>>
+>> Upstream patch against the v1.10.x branch:
+>> [5] http://downloads.asterisk.org/pub/security/AST-2012-001-10.diff
+>>
+>> Could you allocate a CVE identifier for this?
+>>
+>> Thank you && Regards, Jan.
+>> --
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>>
 
-References:
-  - https://lkml.org/lkml/2012/8/18/75
-  - http://www.halfdog.net/Security/2012/LinuxKernelBinfmtScriptStackDataDisclosure/
-
-Thank you.
-- --
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQgUdcAAoJENBIeGA2VWArvqwP/iGzUS3S8CeCS2a12rqS+rth
-0V5aGT2oSC7g8R6d9DzbfS/u3U9+QUQDImkPv7KvREWUBYIrFy8v+qSy3DgdUq9e
-H700gLvgIj50IrEo807optzM7MtHuQY8RUMZL/IMPeLr55gvH9P3f9abDbTVjHTI
-fnihwpCpzSHmuUALWGKDRH1PG2ZvW8KrxL8Iw7HoQLIK+RPvtWMtGoqdI1fRslW1
-1em+3oM9vexYT1vWvPDTWDAvrbzG/l5x4FCOAwl6dS9GrhDtaFDUaX87jgZE+P+Z
-uk0u9rD4Q1wg6iQSHHTHWFGosTJs4UQLDPvAd6Y1U+I+H4AIg6+SeYqTIEzm+C9l
-hgM3086Ur5bRlyhryMzbozGBRnoo+Az5SscZLIdP9Xir8P7KcUdsH6LZprwe2GGs
-zrFlSwiGVjf7Br/B9HKAeimzc3VS5hVuA78AAUDTAFin2Y8QLl51+srduIhmQ9Fx
-TTFRal1nWZMsx9KWbzAFr2FCicWYvhfrCx55HPX4NHwNI/8tMCG/YWglEq1y3pbf
-Cl8dNCdYPBN0VLvAOEb/uOwLkww9zJyQKhI7ezVGRuBVVpCnW6I7wmAQiNWE/L/W
-WDkE7nUR96OHRmcY18Tlt/SaGkRHXeG1epaTvEhE1+/Ca6tN0dZZznG0XpScUAId
-w215frss3fNKnN8vkvlB
-=gVkm
------END PGP SIGNATURE-----
