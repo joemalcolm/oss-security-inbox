@@ -1,74 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/16
-Message-ID: <4FB6CFAE.5020303@redhat.com>
-Date: Fri, 18 May 2012 16:39:42 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Michael Gilbert <mgilbert@...ian.org>
-Subject: Re: CVE id request: devotee (debian vote engine) cryptographically weak random numbers permit discovery of secret ballot submissions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/16
+Message-ID: <4F198C62.5090706@redhat.com>
+Date: Fri, 20 Jan 2012 16:46:42 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Joshua Colp <jcolp@...ium.com>
+Subject: CVE Request -- Asterisk AST-2012-001 / Remote DoS while processing crypto line for media stream with non-existing RTP
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-On 05/18/2012 03:48 PM, Michael Gilbert wrote:
-> Hi,
-> 
-> It has been disclosed [0] that the debian vote engine (devotee)
-> [1] uses cryptographically weak pseudo-random numbers (intended to
-> be 48-bit, but really only 32-bit due to the use of a 32-bit seed
-> feeding the 48-bit number generator) to generate ballot secret
-> monikers.  This allows unprivileged persons to brute force the
-> contents of presumably secret election ballots, and makes it
-> possible to calculate the contents of secret voter ballots in all
-> past debian elections.
-> 
-> Ideally, devotee should use a random secret moniker with fully 64
-> (or preferably 128) bits that would require years rather than
-> minutes or days to brute force [2].
-> 
-> The source also uses /dev/urandom, which has less entropy than
-> /dev/random.
-> 
-> Please assign an id for this issue.
-> 
-> Thanks, Mike
-> 
-> [0] https://lists.debian.org/debian-devel/2012/04/msg00528.html [1]
-> http://anonscm.debian.org/gitweb/?p=users/srivasta/debian/devotee.git
->
-> 
-[2]
-http://www.codinghorror.com/blog/2006/07/brute-force-key-attacks-are-for-dummies.html
+   a denial of service flaw was found in the way asterisk processed certain
+requests to negotiate secure video stream, when the res_srtp Asterisk module
+has been loaded and video support has not been enabled. A remote attacker could
+provide a specially-crafted media stream negotiation request, which once
+processed by Asterisk would lead to asterisk daemon crash by processing crypto
+line for such media stream.
 
-This appears to be a service more than software, and although the
-source is available (see git link) it appears to be out of date?
+References:
+[1] http://downloads.asterisk.org/pub/security/AST-2012-001.html
+[2] https://issues.asterisk.org/jira/browse/ASTERISK-19202
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=783487
 
-http://lists.debian.org/debian-www/2012/04/msg00200.html
+Upstream patch against the v1.8.x branch:
+[4] http://downloads.asterisk.org/pub/security/AST-2012-001-1.8.diff
 
-Can you confirm the vulnerability is in the software you linked to,
-and that this has actually been downloaded/used outside of Debian?
+Upstream patch against the v1.10.x branch:
+[5] http://downloads.asterisk.org/pub/security/AST-2012-001-10.diff
 
+Could you allocate a CVE identifier for this?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPts+tAAoJEBYNRVNeJnmTVx8P/RNy2jG+q0d45MN4rOQAnpdw
-JURbgmjCvAXXJrAyAmt4pybI9LdKKUax18AnWpk8juo0uTr8B1MmG0CliRUDqS9d
-3XobCqSNcxbTi0UIITZCSsxqEv3wR/BqjsC1t9NVIS4vo6q7CzbaBCl2PBZo3iXJ
-szJ9yXQPp9xxxAnduAk78oFm1PJ5DBj1hQuEUezb5u3wIalUcXtljlN/Cqwu3nCA
-QiFbNRvXe9IQ+tof10dH9xKw1TBZyRoGBl6lJCUxeTFRjzFd8LyiYphlpuEa/iAt
-hE9XtB1sZBa+JkZm0Rudjw6jKsLqClYybz/fyQTfBiNmqkpI9FYM04wYOGc+kp07
-nj/zgsSFxpQG2LXzSaBXlVrJZ36fQ/ZDtURNdjHuBfjzp/6bbCPZnIir7uZSp0Ns
-vnI9Fvj0GDWx4snlqZygAfZnBBIx6zvrC7yyQQFp0zveq1F/50EMB9zioahlS3JJ
-V3c3IN3+QQ5JfZs9GhQaE48/BBGoudhshVkL6Sl4L7cEZXiYr0FbhewWUUDLesTY
-8C/4EzYeYbDuetZjjxEuXPjxwGPaVVuLNFSRnA2R4JkrexhWPoXYwJE8HYDwB094
-PyNRIdw3zOHpfDcrCl6kyaXZbJZXGXl6i+qDthhmFVcOD3EX/98GMJ2DthcykFOL
-94+3BVbbKXX4ak0cICRS
-=6aCp
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
