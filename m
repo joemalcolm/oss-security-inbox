@@ -1,39 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/5
-Message-ID: <Pine.GSO.4.64.1201240900140.23800@faron.mitre.org>
-Date: Tue, 24 Jan 2012 09:10:55 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/18
+Message-ID: <Pine.GSO.4.64.1201201053330.12004@faron.mitre.org>
+Date: Fri, 20 Jan 2012 10:55:20 -0500 (EST)
 From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id assignment dates
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Joshua Colp <jcolp@...ium.com>
+Subject: Re: CVE Request -- Asterisk AST-2012-001 / Remote DoS while processing crypto line for media stream with non-existing RTP
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 23 Jan 2012, Michael Gilbert wrote:
+CVE-2012-0885 was already assigned to AST-2012-001 based on a request from 
+the upstream vendor.  They probably updated their advisory since your 
+initial request:
 
-> On Mon, Jan 23, 2012 at 3:04 PM, Steven M. Christey wrote:
->> We do not publish any dates related to disclosure, patch, or vendor
->> notification; interested parties can consult other databases that explicitly
->> track this information, such as OSVDB.
->
-> Just curious, why not?  It seems like this kind of information would
-> be invaluable for researchers interested anthropological/statistical
-> studies of security vulnerabilities.
-
-Despite public perception, CVE is *not* a vulnerability database (although 
-the National Vulnerability Database [NVD], which extends CVE, *is*).  For 
-CVE, our primary role has always been to provide standard vulnerability 
-identifiers that everybody can use, so our analysis is focused on that 
-particular task, which keeps us busy enough :-)  Tracking 
-disclosure-related information is outside the scope of our project (and 
-finding this information can take more time than you'd expect).  We use an 
-imprecise notion of disclosure date so we can determine which year to 
-place in the CVE-YYYY-nnnn identifier, but that's it.
-
-I completely agree that tracking this kind of information is important, 
-and I've personally wanted to see disclosure-related stats for years.  I 
-specifically mentioned OSVDB because they are trying to track this 
-information at a greater level of detail than any other effort I know of. 
-And, by virtue of being an *open source* vulnerability database, others 
-can contribute to it.
+   http://downloads.asterisk.org/pub/security/AST-2012-001.html
 
 - Steve
+
+
+On Fri, 20 Jan 2012, Jan Lieskovsky wrote:
+
+> Hello Kurt, Steve, vendors,
+>
+>  a denial of service flaw was found in the way asterisk processed certain
+> requests to negotiate secure video stream, when the res_srtp Asterisk module
+> has been loaded and video support has not been enabled. A remote attacker 
+> could
+> provide a specially-crafted media stream negotiation request, which once
+> processed by Asterisk would lead to asterisk daemon crash by processing 
+> crypto
+> line for such media stream.
+>
+> References:
+> [1] http://downloads.asterisk.org/pub/security/AST-2012-001.html
+> [2] https://issues.asterisk.org/jira/browse/ASTERISK-19202
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=783487
+>
+> Upstream patch against the v1.8.x branch:
+> [4] http://downloads.asterisk.org/pub/security/AST-2012-001-1.8.diff
+>
+> Upstream patch against the v1.10.x branch:
+> [5] http://downloads.asterisk.org/pub/security/AST-2012-001-10.diff
+>
+> Could you allocate a CVE identifier for this?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
