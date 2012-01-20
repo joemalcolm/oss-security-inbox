@@ -1,23 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/19/4
-Message-ID: <Pine.GSO.4.64.1206191503350.25927@faron.mitre.org>
-Date: Tue, 19 Jun 2012 15:05:04 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...-smtp.mitre.org>, Josh Bressers <josh@...ss.net>
-Subject: Re: CVE Request -- Revelation: 1) Limits effective password length to 32 characters 2) Doesn't iterate the passphrase through SHA algorithm to derive the encryption key
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/26
+Message-ID: <20120120203552.GA8337@openwall.com>
+Date: Sat, 21 Jan 2012 00:35:52 +0400
+From: Solar Designer <solar@...nwall.com>
+To: "Samuel J. Greear" <sjg@...sjg.com>
+Cc: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>, security@...gonflybsd.org, oss-security@...ts.openwall.com, magnum <john.magnum@...hmail.com>
+Subject: Re: weird crypt-sha* in DragonFly BSD
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Jan 20, 2012 at 12:22:51PM -0700, Samuel J. Greear wrote:
+> I saw this, my preference would be to get rid of all uses of alloca() and
+> use malloc(), optionally with a fixed-size array on the stack for short
+> passwords. If specific alignment is needed it can be forced by
+> over-allocating and indexing into the heap allocation to the correct
+> alignment. (I have a personally vendetta against alloca(), importing new
+> uses of it made me cry a little) -- So I may do this, but it doesn't make
+> my short list, if someone beats me to it I would be interested in hearing
+> about it so we can keep in sync.
 
-On Mon, 18 Jun 2012, Kurt Seifried wrote:
+Thank you for stating your preference.
 
-> Assigned 2012 CVE's as the first clear mention of the issues is in the
-> codepoet.no ticket. The Blog entry for 2010 mentions the issue
-> indirectly so I'm going with the more concrete mention.
+No manual alignment like you describe should be needed with malloc() -
+it is supposed to return a pointer that is already suitably aligned.
 
-This is a reasonable approach to take.  The year portion of a CVE 
-identifier can't always be associated with the actual year of disclosure, 
-and in this case, it's arguable what counts as "sufficient disclosure" 
-anyway.  A couple minutes of investigation is sufficient.
+> > 3. It would be nice for upgraded systems to automatically switch from
+> > sha256 to sha512 in login.conf - perhaps there's some on-upgrade hook
+...
 
-- Steve
+> We do not have specific infrastructure for this and it needed to work for
+> any systems stuck in such an intermediary state anyway, but I will be
+> looking into what we can do to a) automatically change the setting in
+> login.conf and b) warn users/administrators of their existing potentially
+> insecure passwords.
+> 
+> An aside on B above, if we do put in place a mechanism to warn users/admins
+> about passwords with $3$ and $4$ magic, is the MD5 implementation
+> sufficiently weak at this point to warrant warning about it as well?
+
+For "md5", I think it'd be more appropriate to inform (rather than warn)
+the administrators (only) of availability of a more modern and more
+secure option.  You may reuse the same code that you'd introduce for
+dealing with $3$ and $4$, but use slightly different wording of the
+warning message and not display it to non-root users (only display it to
+root if the default for new passwords is weaker than the new sha512).
+
+The known cryptographic weaknesses of MD5 are irrelevant to its use for
+password hashing.  Thus, the only relevant weakness is in the lower
+computational complexity: 1000 iterations of MD5 vs. approx. 17,000
+iterations of SHA-512 for typical password lengths (with the default
+setting of rounds=5000).  This may be a 50x difference in cracking speed.
+
+I think that moving to bcrypt would be better.  Both MD5-crypt and
+SHA-crypt are GPU-friendly, whereas bcrypt is not.
+
+SHA-crypt's advantage over bcrypt is political: it can be said that it
+builds upon a NIST-approved algorithm.  I don't know whether you find
+this important for your project (so important that you'd sacrifice some
+actual security to gain this) or not.
+
+(Indeed, it is possible to do better than bcrypt with knowledge of
+present threats, but we're talking password hash types that are already
+in use.)
+
+Alexander
