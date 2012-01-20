@@ -1,66 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/14
-Message-ID: <CAAPiX_LE8A3sSQ7HHKFKv7DzygQpoFf=G3g=to-Z8Waj5wAotA@mail.gmail.com>
-Date: Tue, 20 Mar 2012 17:28:16 -0600
-From: Greg Knaddison <greg.knaddison@...uia.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, security@...pal.org
-Subject: Re: Re: [security] Drupal CORE and Drupal Contrib
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/29
+Message-ID: <20120120223343.GC1624@redhat.com>
+Date: Fri, 20 Jan 2012 15:33:43 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: smokeping XSS
 Content-Type: text/plain; charset=utf-8
 
-Thanks, Kurt. These are all updated now.
+Haven't seen this one come across yet.  An XSS flaw was found in
+smokeping that version 2.6.7 corrects.  At a quick glance, it looks like
+it goes back quite a ways (at least to 2.4.2 which is what we have in
+Fedora).
 
-We have a new Drupal 7 core release planned for March 28th that will
-likely include some issues. I will mail you March 26th with
-descriptions of any issues that we plan to release on the 28th. This
-fact is public in our community but I don't expect you to have seen
-the news.
+Could a CVE be assigned to this please?
 
-Regards,
-Greg
-
-On Mon, Mar 19, 2012 at 12:33 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 03/16/2012 04:40 PM, Greg Knaddison wrote:
->> Hi Kurt,
->>
->> We started considering associating CVEs with our Security Advisories
->> (SAs) in September of 2011. At the time we discussed it with Josh
->> Bressers, Jan Lieskovsky, Steven M. Christey and decided that it would
->> only be practical to do it for Drupal core for now and we could
->> considering doing it for contrib in the future. Since that discussion
->> there has only been one SA for Drupal core which I think has the CVEs
->> on it: SA-CORE-2012-001 - Drupal core multiple vulnerabilities -
->> http://drupal.org/node/1425084
->>
->> Is there another SA for core that I'm not considering? Is there a
->> better way to list the CVE numbers?
->>
->> There have been several SAs for contributed modules and we would
->> gladly update them with CVEs. If you can send an email with a link to
->> the SA and the CVE-id to use that would be great.
->
-> Ok starting with core:
->
-> http://drupal.org/node/1231510
-> SA-CORE-2011-003 - Drupal core - Access bypass
-> This was already assigned CVE-2011-2726
->
-> http://drupal.org/node/1204582
-> SA-CORE-2011-002 - Drupal core - Access bypass
-> This was already assigned CVE-2011-2687
->
-> http://drupal.org/node/1168756
-> SA-CORE-2011-001 - Drupal core - Multiple vulnerabilities
-> Can't find any CVE's, do they need to be assigned?
->
->
->
->
-> --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-
-
+References:
+http://holisticinfosec.org/content/view/188/45/
+https://bugs.gentoo.org/show_bug.cgi?id=399553
+http://oss.oetiker.ch/smokeping/pub/CHANGES
+https://bugzilla.redhat.com/show_bug.cgi?id=783584
 
 -- 
-Director Security Services | +1-720-310-5623
-Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
+Vincent Danen / Red Hat Security Response Team 
