@@ -1,34 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/7
-Message-ID: <1105004407.31047537.1352818139754.JavaMail.root@redhat.com>
-Date: Tue, 13 Nov 2012 09:48:59 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/22
+Message-ID: <20120120183331.GY1624@redhat.com>
+Date: Fri, 20 Jan 2012 11:33:31 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Denis Ovsienko <infrastation@...dex.ru>, Christian Hammers <ch@...ian.org>, "Dmitry V. Levin" <ldv@...linux.org>, Paul Jakma <paul@...ma.org>, Florian Weimer <fweimer@...hat.com>, "Marco d'Itri" <md@...ux.it>
-Subject: CVE Request -- quagga (ospf6d): Assertion failure when removing routes (retrieving information which route to remove)
+Subject: CVE request: moodle 2.2.1, 2.1.4, 2.0.7, 1.9.16 vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+New moodle releases were made to fix a number of flaws (summarized
+below).  Could CVEs be assigned to these?
 
-  Marco d'Itri in Debian bug [1] has reported the following deficiency,
-being present in 0.99.21 and possibly earlier versions of the Quagga 
-routing suite:
+[1] http://docs.moodle.org/dev/Moodle_2.2.1_release_notes
+[2] http://docs.moodle.org/dev/Moodle_2.1.4_release_notes
+[3] http://docs.moodle.org/dev/Moodle_2.0.7_release_notes
+[4] http://docs.moodle.org/dev/Moodle_1.9.16_release_notes
 
-A denial of service flaw was found in the way Quagga's ospf6d daemon
-performed routes removal. In certain circumstances when removing the
-route the ospf6d daemon terminated with assertion failure when trying
-to determine / find, which route to remove. An OSPF6 router could use
-this flaw to cause ospf6d on an adjacent router to abort.
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=693102
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=876197
+MSA-12-0001: Recaptcha transmission consistency issue
+Affects: 2.2, 2.1.x, 2.0.x, 1.9.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=b608b227bac4efba76da43dabe9bc2e32fb8fa32
+Reference: http://moodle.org/mod/forum/discuss.php?d=194008
 
-Upstream bug report:
-[3] https://bugzilla.quagga.net/show_bug.cgi?id=747
 
-Could you allocate a CVE id for this?
+MSA-12-0002: Personal information leak
+Affects: 1.9.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=36b0ddeed45d0751508dcd9fa50f17fda43bae54
+Reference: http://moodle.org/mod/forum/discuss.php?d=194009
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+
+MSA-12-0003: Added password protection
+Affects: 2.2, 2.1.x, 2.0.x, 1.9.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=aa30d3e8ce0dd41d3d0f7dae856beb180fed1f83
+Reference: http://moodle.org/mod/forum/discuss.php?d=194011
+
+
+MSA-12-0004: Added profile image security
+Affects: 2.2, 2.1.x, 2.0.x, 1.9.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=90911c4ff98dc2078a3acef5ddf5a1a8f7e20ba5
+Reference: http://moodle.org/mod/forum/discuss.php?d=194012
+
+
+MSA-12-0005: Encryption enhancement
+Affects: 2.2, 2.1.x, 2.0.x, 1.9.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=98456628a24bba25d336860d38a45b5a4e3895da
+Reference:  http://moodle.org/mod/forum/discuss.php?d=194013
+
+
+MSA-12-0006: Additional email address validation
+Affects: 2.2, 2.1.x, 2.0.x, 1.9.x
+Fix: http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-13572
+Reference: http://moodle.org/mod/forum/discuss.php?d=194014
+
+
+MSA-12-0007: Email injection prevention
+Affects: 2.2, 2.1.x, 2.0.x, 1.9.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=62988bf0bbc73df655f51884aaf1f523928abff9
+Reference: http://moodle.org/mod/forum/discuss.php?d=194015
+
+
+MSA-12-0008: Unsynchronised access via tokens
+Affects: 2.2, 2.1.x, 2.0.x
+Fix: http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28126
+Reference: http://moodle.org/mod/forum/discuss.php?d=194016
+
+
+MSA-12-0009: Role access issue
+Affects: 2.2, 2.1.x
+Fix: http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-29469
+Reference: http://moodle.org/mod/forum/discuss.php?d=194017
+
+
+MSA-12-0010: Unauthorised access to session key
+Affects: 2.1.x, 2.0.x
+Fix: http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-27334
+Reference: http://moodle.org/mod/forum/discuss.php?d=194018
+
+
+MSA-12-0011: Browser autofill password issue
+Affects: 2.2, 2.1.x, 2.0.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=6e9989dbd3f261b2e1586ff77b0bf22fc7091485
+Reference: http://moodle.org/mod/forum/discuss.php?d=194019
+
+
+MSA-12-0012: Form validation issue
+Affects: 2.2, 2.1.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=51070abc78b9e1db1db9a44855e8623b22bebd48
+Reference: http://moodle.org/mod/forum/discuss.php?d=194020
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
