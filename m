@@ -1,68 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/10
-Message-ID: <4F5451AA.3070308@redhat.com>
-Date: Sun, 04 Mar 2012 22:39:54 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/3
+Message-ID: <4F18F4F3.9010302@redhat.com>
+Date: Thu, 19 Jan 2012 22:00:35 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Ruby on Rails github compromise
+To: security@....net, oss-security@...ts.openwall.com
+Subject: Potential security issues fixed in PHP 5.3.9
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/blog/1068-public-key-security-vulnerability-and-mitigation
+Hi, in addition to the xslt arbitrary file creation) there are some more potential security vulnerabilities that appear to have been fixed in 5.3.9. Can you confirm if these are not security issues? Also will you need CVE assignments for the ones that are (I can help with that).
 
-    Public Key Security Vulnerability and Mitigation
-    mojombo March 4, 2012
+Sending to security@....net again and cc'ing oss-sec in case anyone on the list has ideas/comments.
 
-    At 8:49am Pacific Time this morning a GitHub user exploited a
-security vulnerability in the public key update form in order to add his
-public key to the rails organization. He was then able to push a new
-file to the project as a demonstration of this vulnerability.
+>From the ChangeLog:
 
-    As soon as we detected the attack we expunged the unauthorized key
-and suspended the user.
+===========================================================
+Fixed bug #60150 (Integer overflow during the parsing of invalid exif
+header). (Stas, flolechaud at gmail dot com) - security bug
+There is an integer overflow in ext/exif/exif.c that can be used in order to
+cause a denial of service or read arbitrary memory.
 
-    At 9:53am Pacific Time this morning we rolled out a fix to the
-vulnerability and started an investigation into the impact of the
-attack. Database and log analysis have shown that the user compromised
-three accounts (rails and two others that appear to have been proofs of
-concept). All affected parties have been or will be contacted once we
-are certain of the findings.
+==========
+Fixed bug #55776 (PDORow to session bug). (Johannes)
+Is a Apache crash. It gives a CGI/FastCGI Send/Don't Send window.
+http://img171.imageshack.us/img171/3953/57126366.jpg [Open URL]
+After few minutes is crashing apache server:
+http://img840.imageshack.us/img840/2981/21231006.jpg [Open URL] 
 
-    The root cause of the vulnerability was a failure to properly check
-incoming form parameters, a problem known as the mass-assignment
-vulnerability. In parallel to the attack investigation we initiated a
-full audit of the GitHub codebase to ensure that no other instances of
-this vulnerability were present. This audit is still ongoing, and I am
-going to personally ensure that we have a strategy going forward to
-prevent this type of vulnerability from happening again.
+==========
+Fixed bug #60279 (Fixed NULL pointer dereference in
+stream_socket_enable_crypto, case when ssl_handle of session_stream is
+not initia\
+lized.) (shm) - (needs bad code)
 
-    I sincerely apologize for allowing this to happen. Security is our
-priority and I will be arranging additional external security audits
-above and beyond our normal schedule to further test our security
-measures and give you peace of mind.
+==========
+Fixed bug #55622 (memory corruption in parse_ini_string). (Pierre) -
+need access to ini style config, but can cause memory corruption\
+ (code exec?)
 
-====
+==========
+Fixed bug #53502 (strtotime with timezone memory leak). (Derick) - minor
+dos?
 
-Mass assignment in Rails applications:
-http://blog.mhartl.com/2008/09/21/mass-assignment-in-rails-applications/
-
-Homakov (exploited this issue on Github:
-"wow how come I commit in master? O_o "
-https://github.com/rails/rails/commit/b83965785db1eec019edf1fc272b1aa393e6dc57
-
-Proposal for Improving Mass Assignment:
-https://gist.github.com/1974187
-
-Responsible Disclosure Policy:
-https://github.com/blog/1069-responsible-disclosure-policy
-
-Whitelist all attribute assignment by default.:
-https://github.com/rails/rails/commit/641a4f62405cc2765424320932902ed8076b5d38
-
-What's New in Edge: Scoped Mass Assignment in Rails 3.1:
-http://enlightsolutions.com/articles/whats-new-in-edge-scoped-mass-assignment-in-rails-3-1
-
-I think this potentially warrants a CVE, thoughts/comments?
+-- -- Kurt Seifried / Red Hat Security Response Team
 
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
