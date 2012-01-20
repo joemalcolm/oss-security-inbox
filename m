@@ -1,25 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/17
-Message-ID: <20120710143458.GA9661@openwall.com>
-Date: Tue, 10 Jul 2012 18:34:58 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/7
+Message-ID: <4F18FB57.2080906@redhat.com>
+Date: Thu, 19 Jan 2012 22:27:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE Request for spamdyke "STARTTLS" Plaintext
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 10, 2012 at 04:30:44PM +0200, Sebastian Krahmer wrote:
-> On Tue, Jul 10, 2012 at 06:22:28PM +0400, Solar Designer wrote:
-> > If this is not for upstream and you only need it working on a particular
-> > distro with glibc, then why not use __secure_getenv()?
-> 
-> Indeed, if it is a exported symbol on the glibc versions we ship,
-> we should consider this. I remember a discussion that it was somehow
-> not available in the past.
+On 01/15/2012 07:48 AM, Agostino Sarubbo wrote:
+> In reference of: http://www.openwall.com/lists/oss-security/2012/01/07/1 :
+>
+> According to secunia security advisory ( https://secunia.com/advisories/47435
+>  ) :
+>
+> Description:
+> A vulnerability has been reported in spamdyke, which can be exploited by 
+> malicious people to manipulate certain data.
+>
+> The vulnerability is caused due to the TLS implementation not properly 
+> clearing transport layer buffers when upgrading from plaintext to ciphertext 
+> after receiving the "STARTTLS" command. This can be exploited to insert 
+> arbitrary plaintext data (e.g. SMTP commands) during the plaintext phase, 
+> which will then be executed after upgrading to the TLS ciphertext phase.
+>
+> The vulnerability is reported in versions prior to 4.2.1.
+>
+>
+> Solution:
+> Update to version 4.2.1.
+>
+>
+> And from upstream changelog ( 
+> http://www.spamdyke.org/documentation/Changelog.txt ):
+>
+>  Changed smtp_filter() and middleman() to discard any buffered input after TLS
+>     is started.  This prevents the injection of commands into a secure session
+>     by sending extra input in the same packet as the "STARTTLS" command.  Not
+>     really a security problem but good practice anyway.  Thanks to Eric 
+> Shubert for reporting this one.
+>
+>
+> Sorry Kurt, but atm, I have not found the commit code.
+>
+>
+Thanks, this helped clarify it a lot. Please use CVE-2012-0070 for this
+issue.
 
-That was about __libc_enable_secure.  I'm not sure if the same applies
-to __secure_getenv() or not.  In Owl and ALT Linux, both are available
-for apps.  You could/should make your glibc export these, too.
+-- 
 
-http://www.openwall.com/lists/oss-security/2011/05/16/11
+-- Kurt Seifried / Red Hat Security Response Team
 
-Alexander
