@@ -1,37 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/4
-Message-ID: <20120229102951.GA18647@suse.de>
-Date: Wed, 29 Feb 2012 11:29:51 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/30
+Message-ID: <4F19FD92.4090803@redhat.com>
+Date: Fri, 20 Jan 2012 16:49:38 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, mateusz.goik@...antsoft.pl
-Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+CC: Pierre Joye <pierre.php@...il.com>, security@....net
+Subject: Re: Potential security issues fixed in PHP 5.3.9
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 28, 2012 at 10:23:07AM -0700, Kurt Seifried wrote:
-> On 02/28/2012 09:32 AM, cve-assign@...re.org wrote:
-> >> Any javascript code could be executed from Kadu History Window
-> >> in following conditions:
-> > 
-> > CVE-2012-1410 is assigned to this Kadu issue.
-> > 
-> > We are confused about
-> > 
-> > https://bugzilla.novell.com/show_bug.cgi?id=749036
-> > 
-> > This is a bug report about this Kadu vulnerability, but it has a
-> > CVE assignment of CVE-2006-7248 for a vulnerability in the 
-> > SMIME_read_PKCS7 function in OpenSSL 0.9.7i. Our perspective is
-> > that this means CVE-2006-7248 has been assigned to multiple issues
-> > (the Kadu issue and the OpenSSL issue), so we'll now proceed to
-> > REJECT CVE-2006-7248 sometime later today unless there's a
-> > substantial objection.
-> 
-> Argh sorry cut and paste the wrong CVE # into novell's bugzilla. Can
-> we just remove it from there please?
+On 01/20/2012 05:22 AM, Pierre Joye wrote:
+> hi!
+>
+> On Fri, Jan 20, 2012 at 6:00 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+>> Hi, in addition to the xslt arbitrary file creation) there are some more potential security vulnerabilities that appear to have been fixed in 5.3.9. Can you confirm if these are not security issues? Also will you need CVE assignments for the ones that are (I can help with that).
+>>
+>> Sending to security@....net again and cc'ing oss-sec in case anyone on the list has ideas/comments.
+>>
+>> From the ChangeLog:
+>>
+>> ===========================================================
+>> Fixed bug #60150 (Integer overflow during the parsing of invalid exif
+>> header). (Stas, flolechaud at gmail dot com) - security bug
+>> There is an integer overflow in ext/exif/exif.c that can be used in order to
+>> cause a denial of service or read arbitrary memory.
+> Which one?
+My bad, I read the NEWS and then the ChangeLog and promptly forgot that
+CVE-2011-4566 had been assigned. I emailed with Pierre Joye, here is a
+summary:
 
-I made the specific comment private.
+>> ==========
+>> Fixed bug #55776 (PDORow to session bug). (Johannes)
+>> Is a Apache crash. It gives a CGI/FastCGI Send/Don't Send window.
+>> http://img171.imageshack.us/img171/3953/57126366.jpg [Open URL]
+>> After few minutes is crashing apache server:
+>> http://img840.imageshack.us/img840/2981/21231006.jpg [Open URL]
+Please use CVE-2012-0788 for this issue.
 
-So is this kadu issue now CVE-2012-1410 or CVE-2012-1092?
+>> ==========
+>> Fixed bug #60279 (Fixed NULL pointer dereference in
+>> stream_socket_enable_crypto, case when ssl_handle of session_stream is
+>> not initia\
+>> lized.) (shm) - (needs bad code)
+>>
+>> ==========
+>> Fixed bug #55622 (memory corruption in parse_ini_string). (Pierre) -
+>> need access to ini style config, but can cause memory corruption\
+>>  (code exec?)
+These need to be researched a bit more (do they have a security impact?).
+>> ==========
+>> Fixed bug #53502 (strtotime with timezone memory leak). (Derick) - minor
+>> dos?
+> I don't think we can or should consider memory leaks as DoS :)
+>
+Unfortunately memory leaks (where memory is used, then released but not
+released properly) can result in denial of service attacks.
 
-Ciao, Marcus
+Please use CVE-2012-0789 for this issue.
+
+-- 
+
+-- Kurt Seifried / Red Hat Security Response Team
+
