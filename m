@@ -1,60 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/6
-Message-ID: <503520A5.5070906@redhat.com>
-Date: Wed, 22 Aug 2012 12:10:45 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/28
+Message-ID: <20120120211903.GA8826@openwall.com>
+Date: Sat, 21 Jan 2012 01:19:03 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- jabberd2: Prone to unsolicited XMPP Dialback attacks
+Subject: Re: pdf attacks vectors
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sat, Jan 21, 2012 at 12:56:30AM +0400, Alexander Pletnev wrote:
+> I have no time to write a big explanation to you. But i will do it later. 
 
-On 08/22/2012 09:28 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> a security flaw was found in the XMPP Dialback protocol
-> implementation of jabberd2, OpenSource server implementation of the
-> Jabber protocols (Verify Response and Authorization Response were
-> not checked within XMPP protocol server to server session). A rogue
-> XMPP server could use this flaw to spoof one or more domains, when
-> communicating with vulnerable server implementation, possibly
-> leading into XMPP's Server Dialback protections bypass.
-> 
-> References: [1]
-> http://xmpp.org/resources/security-notices/server-dialback/ [2]
-> https://bugzilla.redhat.com/show_bug.cgi?id=850872
-> 
-> Upstream patch: [3]
-> https://github.com/Jabberd2/jabberd2/commit/aabcffae560d5fd00cd1d2ffce5d760353cf0a4d
->
->  Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+You don't need to write it "to me".  If you have further questions you'd
+like to ask or things to clarify on this mailing list, then you will in
+fact need to explain what you're doing in more detail.  Otherwise, you
+probably don't need to.  But like I said you may want to specify your
+threat model in your web app's documentation either way.
 
-Please use CVE-2012-3525 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQNSClAAoJEBYNRVNeJnmTI9sP/j4Z9gG+wMEVBO4NaTT9o6Ta
-bSnPYbHHWt8lQ4/9/XKYwIp0ErA7aRrqwlyDHL9meqK1RTex54fzPpcX25qkMIk/
-GkhFkHRWdMLj6WP0pe4l46GpqntlBLC6/kiMbZTr92/6hGINkNMU+2V3/ZeCk2w4
-vS+RrwhTPcKhKMDZN9Xw05KB/+XxoGk6NQ3vgL+DVbmjobpiSHz1hhHr2ACQ50dR
-PKZ472f12hBJueWYKmUx/PLZ23ElpfJDYVONplE0rc+jemGmobNdGfS+1NxU4qhI
-KolXjoieXYg2ePOfLBkuwpd0ua94L2LuMdRmk2KTQ8wLrDInNr2tXQ+xISPsTRtF
-inLiBppohkanRYCkqJezLTNFyl4+i4SrbALA9MrfBqWjwiSe3IK+OSHEZE5/M7nW
-vPE0j0O/b1xZ2+0HAJ4KGwURwlHw7bszjPVKtozRKto4Prsn6pdxJTWrqp0h/NmQ
-srMCppzXLepcYfPkCnDTJYlho2wxrktXDa2cTgNNhQT2qnMdiTHsgzPZBlxEPhge
-I2GUD9wBPVh3FPEQKyxC/nrU47LZfht8n04xeVZDyJ/9h27gL6PcvY7AxhQ7tdQq
-dwEFaV1OTbTtfMmDz/iTgrhy35eajcP03k9R1KM/gwDmc/rSlMntK531SHsRJ22M
-7tW+3Bt3YgJJMH/pRb7A
-=WeUA
------END PGP SIGNATURE-----
+Alexander
