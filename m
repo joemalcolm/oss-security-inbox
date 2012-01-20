@@ -1,72 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/16
-Message-ID: <4F18089A.3040000@redhat.com>
-Date: Thu, 19 Jan 2012 13:12:10 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Jan-Wijbrand Kolman <janwijbrand@...il.com>
-CC: oss-security@...ts.openwall.com, Tres Seaver <tseaver@...ladion.com>, Zope Security Team <security-response@...e.org>, Radek Steiger <rsteiger@...hat.com>, Jan Pokorny <jpokorny@...hat.com>
-Subject: CVE-2011-4924 assignment notification -- Zope2, Zope3: Incomplete upstream fix for CVE-2010-1104 issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/27
+Message-ID: <20120120205630.GE32366@alex.ibm>
+Date: Sat, 21 Jan 2012 00:56:30 +0400
+From: Alexander Pletnev <pletnev.rusalex@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: pdf attacks vectors
 Content-Type: text/plain; charset=utf-8
 
-Hello vendors,
+Yes thanks, your answer was very helpfull for me. 
 
-   originally, Common Vulnerabilities and Exposures assigned an identifier
-CVE-2010-1104 to the following vulnerability:
+I have no time to write a big explanation to you. But i will do it later. 
 
-Cross-site scripting (XSS) vulnerability in Zope 2.8.x before 2.8.12, 2.9.x
-before 2.9.12, 2.10.x before 2.10.11, 2.11.x before 2.11.6, and 2.12.x before
-2.12.3 allows remote attackers to inject arbitrary web script or HTML via
-vectors related to error messages.
 
-Later the applied upstream patch was found to be incomplete. The CVE identifier
-of CVE-2011-4924 has been assigned to this incomplete fix with the issue
-description as follows:
 
-A cross site scripting (XSS) flaw was found in the way Zope2 and Zope3
-performed error messages sanitization. If a remote attacker could trick a user,
-who was logged into Zope2, into visiting a specially-crafted URL, it would lead
-to arbitrary web script execution in the context of user's Zope2 session. If a
-remote attacker could trick a user, who was logged into Zope3, into examining
-error entries for particular Zope3 instance, it would lead to arbitrary web
-script execution in the context of user's Zope3 session.
 
-Credit: Issue has been discovered by Radek Steiger of Red Hat.
-
-References:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4924
-
-Zope2 fixes relevant information:
-=================================
-Zope2 v2.12.22 and Zope2 v2.13.12 hotfix announcement:
-[2] https://mail.zope.org/pipermail/zope-dev/2012-January/043987.html
-
-PyPi Zope_Hotfix_CVE_2010_1104 1.0 reference:
-[3] http://pypi.python.org/pypi/Products.Zope_Hotfix_CVE_2010_1104
-
-Zope2 Hotfix_CVE_2010_1104 SVN entries:
-[4]
-http://svn.zope.org/Products.Zope_Hotfix_CVE_2010_1104/?rev=124087&sortby=log#dirlist
-
-Zope2 v2.12.22 Changelog:
-[5] http://pypi.python.org/pypi/Zope2/2.12.22#id1
-
-Zope2 v2.13.12 Changelog:
-[6] http://pypi.python.org/pypi/Zope2/2.13.12#id1
-
-Zope3 fixes relevant information:
-=================================
-New Zope3 zope.error v3.7.3 version has been released to correct this issue:
-[7] http://pypi.python.org/pypi/zope.error/3.7.3
-
-Relevant Zope 3 upstream patch:
-[8] http://svn.zope.org/zope.error/trunk/?rev=124062&view=rev
-
-Jan-Wijbrand Kolman will issue Zope3 zope.error package updates against
-ZTK v1.0 and v1.1 branches yet.
-
-Jan, once this is done, could you list the relevant links here too?
-(in the reply to this post)
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+On Fri, Jan 20, 2012 at 11:46:10PM +0400, Solar Designer wrote:
+> On Fri, Jan 20, 2012 at 09:35:04AM +0400, Alexander Pletnev wrote:
