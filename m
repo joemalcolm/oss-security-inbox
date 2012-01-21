@@ -1,39 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/5
-Message-ID: <20120106170220.GA4241@pisco.westfalen.local>
-Date: Fri, 6 Jan 2012 18:02:20 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/21/6
+Message-ID: <4F1B4FD8.8020207@redhat.com>
+Date: Sat, 21 Jan 2012 16:52:56 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: redmine issues
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Horde IMP -- Multiple XSS flaws fixed in v5.0.18
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign three CVE IDs for the following issues in Redmine:
+On 01/21/2012 03:44 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   Multiple XSS flaws were adressed in the v5.0.18 version of Horde IMP
+> (from [1]):
+>
+> "[mms] SECURITY: Fix XSS vulnerabilities on the compose page (traditional
+> view), the contacts popup window, and with certain IMAP mailbox names."
+>
+> References:
+> [1] http://www.horde.org/apps/imp/docs/CHANGES
+> [2] http://www.horde.org/apps/imp/docs/RELEASE_NOTES
+> [3] http://secunia.com/advisories/47580
+> [4] https://bugs.gentoo.org/show_bug.cgi?id=399563
+>
+> Upstream patches:
+> [5]
+> https://github.com/horde/horde/commit/41136ea893b3d5a84c6228a552f8e211c90f58de
+>     (multiple XSS flaws)
+>
+> [6]
+> https://github.com/horde/horde/commit/208eae43c95136a67104f760027a8892a22b6e25
+>     (XSS in email validation)
+>
+> Could you allocate CVE ids for these? (two should be enough, one for
+> the multiple
+> XSS flaws patch and one for XSS in email validation patch)
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+Please use CVE-2012-0791 for this issue.
 
-These need to be CVE-2011-* IDs:
+-- 
 
-The announcement can be found here: http://www.redmine.org/news/49
+--
 
---------
-This release also fixes 3 security issues reported by joernchen of
-Phenoelit:
+-- Kurt Seifried / Red Hat Security Response Team
 
-* logged in users may be able to access private data (affected
-versions: 1.0.x)
-
-* persistent XSS vulnerability in textile formatter (affected
-versions: all previous releases)
-
-* remote command execution in bazaar repository adapter (affected
-versions: 0.9.x, 1.0.x)
---------
-
-This was already fixed in a Debian security update some time ago,
-but never received a CVE ID:
-http://lists.debian.org/debian-security-announce/2011/msg00131.html
-
-Patches can be found in the Debian patch tracker:
-http://patch-tracker.debian.org/package/redmine/1.0.1-2
-
-Cheers,
-        Moritz
