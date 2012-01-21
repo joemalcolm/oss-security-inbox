@@ -1,40 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/5
-Message-ID: <1352551783.17241.24.camel@scapa>
-Date: Sat, 10 Nov 2012 13:49:43 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: 692791@...s.debian.org, team@...urity.debian.org, cups-security@...le.com
-Subject: Privilege escalation (lpadmin -> root) in cups
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/21/3
+Message-ID: <4F1A96F8.8020301@redhat.com>
+Date: Sat, 21 Jan 2012 11:44:08 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Horde IMP -- Multiple XSS flaws fixed in v5.0.18
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Kurt, Steve, vendors,
 
-a Debian user reported a bug in our BTS concerning cupsd. The bug is
-available at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692791 and
-upstream bug at http://www.cups.org/str.php?L4223 (restricted because
-it's tagged security).
+   Multiple XSS flaws were adressed in the v5.0.18 version of Horde IMP (from [1]):
 
-I'm unsure right now if it's an upstream issue or specific to Debian.
+"[mms] SECURITY: Fix XSS vulnerabilities on the compose page (traditional
+view), the contacts popup window, and with certain IMAP mailbox names."
 
-Basically, members of the lpadmin group (which is the group having admin
-rights to cups, meaning they're supposed to be able to add/remove
-printeers etc.) have admin access to the web interface, where they can
-edit the config file and set some “dangerous” directives (like the log
-filenames), which enable them to read or write files as the user running
-the cupsd webserver.
+References:
+[1] http://www.horde.org/apps/imp/docs/CHANGES
+[2] http://www.horde.org/apps/imp/docs/RELEASE_NOTES
+[3] http://secunia.com/advisories/47580
+[4] https://bugs.gentoo.org/show_bug.cgi?id=399563
 
-In Debian case at least, it's run as root, meaning we have a privilege
-escalation issue from lpadmin group to root.
+Upstream patches:
+[5] https://github.com/horde/horde/commit/41136ea893b3d5a84c6228a552f8e211c90f58de
+     (multiple XSS flaws)
 
-A fix would be to not run cupsd web server as root, and maybe to
-restrict it to some kind of chroot so it doesn't have access to
-sensitive files
+[6] https://github.com/horde/horde/commit/208eae43c95136a67104f760027a8892a22b6e25
+     (XSS in email validation)
 
-Can a CVE be allocated for this?
+Could you allocate CVE ids for these? (two should be enough, one for the multiple
+XSS flaws patch and one for XSS in email validation patch)
 
-Regards,
--- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
