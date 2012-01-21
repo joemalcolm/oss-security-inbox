@@ -1,72 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/1
-Message-ID: <4FC48846.3030906@redhat.com>
-Date: Tue, 29 May 2012 10:26:46 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Apache OpenOffice.Org Security Team" <ooo-security@...ubator.apache.org>, LibreOffice Security Team <officesecurity@...ts.freedesktop.org>
-CC: oss-security@...ts.openwall.com, Florian Weimer <fweimer@...hat.com>, Caolán McNamara <caolanm@...hat.com>, David Tardon <dtardon@...hat.com>
-Subject: Re: Kind request to update upstream CVE-2012-2334 advisories they to reflect arbitrary code execution possibility too and OSS list notification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/21/5
+Message-ID: <20120121120814.GB10593@openwall.com>
+Date: Sat, 21 Jan 2012 16:08:14 +0400
+From: Solar Designer <solar@...nwall.com>
+To: "Samuel J. Greear" <sjg@...sjg.com>
+Cc: security@...gonflybsd.org, oss-security@...ts.openwall.com
+Subject: Re: weird crypt-sha* in DragonFly BSD
 Content-Type: text/plain; charset=utf-8
 
-On 05/28/2012 05:09 PM, Jan Lieskovsky wrote:
-> Hello Apache OpenOffice.org, LibreOffice Security Teams, vendors,
->
-> originally the CVE-2012-2334 security flaw has been described as follows:
-> [1] http://www.openoffice.org/security/cves/CVE-2012-2334.html
-> [2] http://www.libreoffice.org/advisories/cve-2012-2334/
->
-> during internal audit of relevant upstream patches:
-> [3] http://cgit.freedesktop.org/libreoffice/core/commit/?id=28a6558f9d3ca2dda3191f8b5b3f2378ee2533da
-> [4] http://cgit.freedesktop.org/libreoffice/core/commit/?id=512401decb286ba0fc3031939b8f7de8649c502e
->
-> it has been observed by Florian Weimer that the [4] patch also corrected
-> and integer overflow, being present in the SvxMSDffManager::GetFidclData()
-> routine, which might lead under certain circumstances to possibility
-> of arbitrary code execution too.
->
-> Update CVE-2012-2334 flaw description is at:
-> [5] https://bugzilla.redhat.com/show_bug.cgi?id=821803#c0
->
-> This post is intended to serve as kind request to OpenOffice.org and
-> LibreOffice upstream, they to update their corresponding advisories
-> ([1], [2]) to reflect this fact.
->
-> For what is related against upstream patches -- upon testing we can confirm,
-> the original ones were complete and this is in no way a new security flaw.
->
-> But something, which got corrected upstream in previous release(s), and
-> should mention possibility of arbitrary code execution too in order to properly
-> describe this deficiency.
->
-> OpenOffice.org / LibreOffice upstreams - please update your advisories to
-> reflect this if possible yet.
->
-> OSS vendors, please note this notification (for case you previously categorized
-> fix for the CVE-2012-2334 flaw as something to be postponed due to lower
-> impact).
+On Fri, Jan 20, 2012 at 12:22:51PM -0700, Samuel J. Greear wrote:
+> I saw this, my preference would be to get rid of all uses of alloca() and
+> use malloc(), ...
 
-Hello Apache OpenOffice.org, LibreOffice Security Teams, vendors,
+I thought of this some more and I'm afraid that this change would not
+bring us much closer to fully solving the problem.  malloc() may fail,
+which we will need to handle somehow.  If we agree upon the desired
+behavior of crypt() on transient errors, then we can just as well
+continue using alloca() and simply treat allocation attempts larger than
+a certain size as errors.
 
-   updating the credit information yet it to sound more correctly / appropriately:
+Well, with malloc() we can have this size limit larger than with
+alloca(), especially if we try to make sure that we don't cross a guard
+page (so with alloca() we'd have to use a limit of like 2 KB then).
 
->
-> Credit for the discovery should go to: Florian Weimer of Red Hat
+On the other hand, if we permit very long passwords to be passed to the
+SHA-crypt algorithm (and the specific service does not introduce its own
+limit), we also permit attackers to consume excessive amounts of CPU
+time per crypt() call - orders of magnitude more than what the sysadmin
+had intended (for typical password lengths).  So maybe 2 KB is a
+reasonable limit to impose at this level anyway (whereas services should
+use lower limits).
 
-The above should have read as:
-"Florian Weimer, Red Hat Product Security Team"
-
-Please use this new / latter form in your advisories.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: Would you need further background details due this, contact me or
-> Florian off list.
->
-
+Alexander
