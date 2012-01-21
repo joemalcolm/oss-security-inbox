@@ -1,107 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/11
-Message-ID: <4F8728DB.3060905@redhat.com>
-Date: Thu, 12 Apr 2012 13:11:23 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/21/4
+Message-ID: <20120121110701.GA29498@foo.fgeek.fi>
+Date: Sat, 21 Jan 2012 13:07:01 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: fix to CVE-2009-4307
+Subject: Re: pdf attacks vectors
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Jan 20, 2012 at 09:35:04AM +0400, Alexander Pletnev wrote:
+> Hi guys, im working with an web app, and going to create PDFs on-the-fly with user related data. 
+> Therefore im writinig to oss-security. What are a pdf attacks vector need's to be avoided by my app ?
+> 
+> In other words, what is the most dangerous pdf attack vectors ?
 
-On 04/03/2012 08:55 PM, Kurt Seifried wrote:
-> On 04/03/2012 04:32 PM, akuster wrote:
->> Hello,
->>
->> Was there a CVE assigned to commit d50f2ab6f050311dbf7b8f5501b25f0bf64a439b?
->>
->> Commit 503358ae01b70ce6909d19dd01287093f6b6271c ("ext4: avoid divide by
->> zero when trying to mount a corrupted file system") fixes CVE-2009-4307
->> by performing a sanity check on s_log_groups_per_flex, since it can be
->> set to a bogus value by an attacker.
->>
->> - Armin
-> 
-> I assume you are talking about this:
-> 
-> http://git.kernel.org/?p=virt/kvm/kvm.git;a=commitdiff;h=d50f2ab6f050311dbf7b8f5501b25f0bf64a439b
-> 
-> ================================================
-> Commit 503358ae01b70ce6909d19dd01287093f6b6271c ("ext4: avoid divide by
-> zero when trying to mount a corrupted file system") fixes CVE-2009-4307
-> by performing a sanity check on s_log_groups_per_flex, since it can be
-> set to a bogus value by an attacker.
-> 
-> sbi->s_log_groups_per_flex = sbi->s_es->s_log_groups_per_flex;
-> groups_per_flex = 1 << sbi->s_log_groups_per_flex;
-> 
-> if (groups_per_flex < 2) { ... }
-> 
-> This patch fixes two potential issues in the previous commit.
-> 
-> 1) The sanity check might only work on architectures like PowerPC. 
-> On x86, 5 bits are used for the shifting amount.  That means, given
-> a large s_log_groups_per_flex value like 36, groups_per_flex = 1 <<
-> 36 is essentially 1 << 4 = 16, rather than 0.  This will bypass the
-> check, leaving s_log_groups_per_flex and groups_per_flex
-> inconsistent.
+Related great tools: http://blog.didierstevens.com/programs/pdf-tools/
 
-Please use CVE-2012-2100 for this issue (An incomplete fix for
-CVE-2009-4307 allows this issue to be exploited on PPC).
-
-> 2) The sanity check relies on undefined behavior, i.e., oversized shift.
-> A standard-confirming C compiler could rewrite the check in unexpected
-> ways.  Consider the following equivalent form, assuming groups_per_flex
-> is unsigned for simplicity.
-
-It doesn't appear that this issue is security per se, so not assigning a
-CVE (unless someone shows otherwise).
-
-> groups_per_flex = 1 << sbi->s_log_groups_per_flex;
-> if (groups_per_flex == 0 || groups_per_flex == 1) {
-> 
-> We compile the code snippet using Clang 3.0 and GCC 4.6.  Clang will
-> completely optimize away the check groups_per_flex == 0, leaving the
-> patched code as vulnerable as the original.  GCC keeps the check, but
-> there is no guarantee that future versions will do the same.
-> 
-> Signed-off-by: Xi Wang <xi.wang@...il.com>
-> Signed-off-by: "Theodore Ts'o" <tytso@....edu>
-> Cc: stable@...r.kernel.org
-> ================================================
-> 
-> What specific do you want a CVE assigned for?
-> 
-> For #1 I can see a CVE of the "a previous patch didn't completely fix
-> the issue, yada yada" type.
-> 
-> For #2 I'm not sure how we handle something like a compiler possibly
-> mangling code so that an issue is introduced (is that a compiler
-> problem? a code problem? the intersection of both? Steve: can I get a
-> comment/referees decision here =)
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPhyjbAAoJEBYNRVNeJnmTmPkP/A9/qAbsgANDXtVmeMpfl4f8
-iWVjqHP9jzSSO+hSGH58HQize5CwxI2OWlVTaeybcpNa7joHFwQI0rsUSemMGF1I
-l+jz1X6ABDGXuuh+l+7Mdy7Z6jRD4B59xcDLGt8ire4Q3g6+thaEVR7TTgLE1iiN
-SvWxUmmYxdxGRtNigz4jUhcnuSyar1Rdnl3qETxLZJp3eRkMpZ8OtzW2bG7FcgsP
-iAR6psKdfJ5twYI/YLVKow6Yy0xd+pOYXbxi5PgY3ZZmxKVi0VXUEldap/MvpjcX
-oDQMnF+NxIzmt7jvBZ1/eDfCeusbIh/uZBY/cuLZqmH4SD6fY0PdUa81Ha/RENg+
-qosFGOIKOqDfnNcC0rNrBOoUqmbhOfV9JqwHwGiekhUHv8xmrG2OFVR/NiKuyJC2
-ZbafJii7HWGTGmuUoj2wrYXxR5imAblXpXI1qIEHrX1EE/YLfXAwST2Elog0jbvp
-QfWBNFzDoSa86w35p7IF1JVrQr2fKz63QIOPbd6N8meHKyhyus99ksH/wWHE/Xbu
-1I5NBu17PEmOt8lr+rzp27G1+tbKs7g/SdKbMIhF7m/oHkLbakRGOUm4KXj9qrDV
-BraFPGtI7iSs1wUhHpyrWSroVWJiiAH9EyL3UbltOrf4p9XyX15qQKv5wP4lknu0
-uTzxa6hAobArJYndJxRW
-=z2tU
------END PGP SIGNATURE-----
+- Henri Salo
