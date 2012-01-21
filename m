@@ -1,48 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/3
-Message-ID: <50C9B815.606@debian.org>
-Date: Thu, 13 Dec 2012 11:12:21 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/21/2
+Message-ID: <4F1A1647.4050606@redhat.com>
+Date: Fri, 20 Jan 2012 18:35:03 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: spamdyke buffer overflow vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 12/12/12 16:51, Jan Lieskovsky wrote:
-> 1) should Geany escape the filenames?,
-> 2) is this a security issue or not?
+On 01/20/2012 01:42 AM, Agostino Sarubbo wrote:
+> According to secunia advisory:
+> https://secunia.com/advisories/47548/ :
+> Description:
+>
+> Some vulnerabilities have been reported in spamdyke, which potentially can be 
+> exploited by malicious people to compromise a vulnerable system.
+>
+> The vulnerabilities are caused due to boundary errors related to the incorrect 
+> use of the "snprintf()" and "vsnprintf()" functions, which can be exploited to 
+> cause buffer overflows.
+>
+> The vulnerabilities are reported in versions prior to 4.3.0.
+>
+>
+> Solution
+> Update to version 4.3.0.
+>
+>
+> and from upstream changelog:
+> http://www.spamdyke.org/documentation/Changelog.txt :
+>
+> Fixed a number of very serious errors in the usage of snprintf()/vsnprintf().
+>     The return value was being used as the length of the string printed into
+>     the buffer, but the return value really indicates the length of the string
+>     that *could* be printed if the buffer were of infinite size. Because the
+>     returned value could be larger than the buffer's size, this meant remotely
+>     exploitable buffer overflows were possible, depending on spamdyke's
+>     configuration.
+>
+> and from upstream mailing list:
+> http://www.mail-archive.com/spamdyke-release@spamdyke.org/msg00014.html
+>
+> it also fixes a series of major bugs 
+> that could lead to buffer overflows.  Depending on spamdyke's configuration, 
+> these could cause remotely exploitable security holes.  Please upgrade 
+> immediately!
+>
+> Please assign a CVE
+>
+Can you include some links to actual code commits? I want to prevent
+duplicates and more information would aid in that.
 
-My opinion is that it should escape the filenames as a matter of
-correctness - otherwise, there are certain filenames which it could in
-principle compile successfully, but which will not actually work - but
-that it isn't a security issue.
+-- 
 
-As a general principle, if you're interpolating an arbitrary substring
-(in this case a filename) into a string with a defined syntax (in this
-case Bourne shell), and you don't specifically intend the substring to
-be "code" in that syntax, then you should escape it appropriately for
-that syntax. Failure to do so is certainly a correctness bug, and
-sometimes a security flaw (depending on context).
+--
 
-(Incidentally, Geany is written using Gtk and GLib, and GLib already has
-a function g_shell_quote() which escapes arbitrary filenames for /bin/sh.)
+-- Kurt Seifried / Red Hat Security Response Team
 
-If shell syntax is not specifically needed, it would be even better to
-use a mechanism not involving parsing shell syntax, like posix_spawn(),
-GLib's g_spawn_async() or Python's os.spawn* family, to launch the
-compiler (analogous to using prepared statements to avoid ever having to
-think about SQL escaping or SQL injection).
-
-> Obviously, even for gcc you can pass specially-crafted filename,
-> when attempt to build it would lead to "ls -la" command (for example)
-> to be executed.
-
-What filenames would those be?
-
-If Geany puts filenames in a shell command the way I suspect it does
-from the "exploit" given, then a filename with a command in backticks,
-e.g. foo`xmessage hello`.c, would be another "exploit" - but that's
-entirely between Geany and the shell, and gcc would see only "foo.c".
-(... and then fail because that file probably doesn't exist - another
-reason to treat this as a correctness bug.)
-
-    S
