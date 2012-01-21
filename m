@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/4
-Message-ID: <20120418051620.GA21131@alf.mars>
-Date: Wed, 18 Apr 2012 07:16:21 +0200
-From: Helmut Grohne <helmut@...divi.de>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, 668667@...s.debian.org
-Subject: Re: CVE Request (minor) -- Two Munin graphing framework flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/21/1
+Message-ID: <4F1A15AF.4060307@redhat.com>
+Date: Fri, 20 Jan 2012 18:32:31 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: smokeping XSS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 17, 2012 at 11:04:56PM -0600, Kurt Seifried wrote:
-> On 04/16/2012 11:34 PM, Helmut Grohne wrote:
-> > The basic requirement is that a plugin called vmstat is configured
-> > for the node localhost.localdomain. I just picked it as an example,
-> > cause it is present on my system. In practise any plugin for any
-> > host will do.
-> 
-> Is this the default configuration?
+On 01/20/2012 03:33 PM, Vincent Danen wrote:
+> Haven't seen this one come across yet.  An XSS flaw was found in
+> smokeping that version 2.6.7 corrects.  At a quick glance, it looks like
+> it goes back quite a ways (at least to 2.4.2 which is what we have in
+> Fedora).
+>
+> Could a CVE be assigned to this please?
+>
+> References:
+> http://holisticinfosec.org/content/view/188/45/
+> https://bugs.gentoo.org/show_bug.cgi?id=399553
+> http://oss.oetiker.ch/smokeping/pub/CHANGES
+> https://bugzilla.redhat.com/show_bug.cgi?id=783584
+>
+Please use CVE-2012-0790 for this issue.
 
-I am not that sure about the defaults, because I changed them. However
-running a Munin without any plugins is pointless. It is like running a
-mail server that does not transport any mail. You don't even have to
-guess the name of a configured plugin, because those images are linked
-from the html. Finding a configured plugin is really no issue on any
-sane munin installation. Sane administrators may have to restricted
-access to munin to themselves as to not expose the monitoring results to
-the public though.
+--
 
-Helmut
+-- Kurt Seifried / Red Hat Security Response Team
