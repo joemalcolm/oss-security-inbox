@@ -1,18 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/3
-Message-ID: <4F5422BF.7030708@redhat.com>
-Date: Mon, 05 Mar 2012 10:19:43 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-3593 kernel: vlan: fix panic when handling priority tagged frames
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/22/4
+Message-ID: <CAHmME9qSs1S=QOtBXoydzq204hFFkpHcLqvE5vjKgAid0_htyA@mail.gmail.com>
+Date: Sun, 22 Jan 2012 20:47:02 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
 Content-Type: text/plain; charset=utf-8
 
-A partner reported that frames with priority tags only (VID=0 in the
-frame), could cause a panic on some drivers. It affects the Linux kernel
-as shipped with Red Hat Enterprise Linux 6 due to incorrect backporting
-of upstream patches. It does not affect the upstream kernel.
+On Sun, Jan 22, 2012 at 20:43, Solar Designer <solar@...nwall.com> wrote:
+> On Sun, Jan 22, 2012 at 07:30:53PM +0100, Jason A. Donenfeld wrote:
+>> The issue is described in detail here: http://blog.zx2c4.com/749
+>
+> Thanks!  This explains the self_exec_id issue and one attack on it.
+>
+> Why are you not posting this to oss-security yet?  Do you feel that your
+> blog receives less exposure and you don't want to expose this additional
+> detail on the attack to a wider audience until there are distro vendor
+> updates?
 
-https://bugzilla.redhat.com/CVE-2011-3593
+No, I just didn't want to blog-spam a rather well focused mailing list
+:-). I'll cc oss-security on this email though.
 
-Thanks, Eugene
+
+>
+> BTW, self_exec_id was originally introduced into the kernel 10+ years
+> ago with some involvement from me, and for a significantly different
+> purpose (protecting changed parent against malicious child death signals).
+> I think its use for /proc/pid/mem was introduced last year (2011).
+>
+> Any comments on the fix?
+>
+>> >> http://git.kernel.org/linus/e268337dfe26dfc7efd422a804dbb27977a3cccc
+>
+> My primary concern was that the first might be broken.  I have some
+> further thoughts on this since I posted, though.  I'll post an update.
+
+I'm not sure yet; I haven't looked at it carefully. First instinct is
+that there's
+[ old process { old & new ] new process}
+overlapping as a possibility, but I really have no idea. I'll take a
+closer look soon.
+
+>
+> Alexander
