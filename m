@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/27/4
-Message-ID: <50648B04.5060705@fifthhorseman.net>
-Date: Thu, 27 Sep 2012 13:21:08 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/22/3
+Message-ID: <20120122175227.GA15826@openwall.com>
+Date: Sun, 22 Jan 2012 21:52:27 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: dracut creates non-world readable initramfs images
+Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
 Content-Type: text/plain; charset=utf-8
 
-On 09/27/2012 05:07 AM, Huzaifa Sidhpurwala wrote:
-> Hi All,
-> 
-> An information disclosure flaw was found in the way dracut, an
-> initramfs root filesystem images generator, created initramfs images.
-> 
-> When the root filesystem contained sensitive information (password
-> based authentication for iSCSI systems or encrypted root filesystem
-> crypttab password information), an attacker could use this flaw to
-> obtain this information.
-> 
-> This issue has been assigned CVE-2012-4453
+On Wed, Jan 18, 2012 at 10:25:55AM +0800, Eugene Teo wrote:
+> "Jüri Aedla reported that the /proc/<pid>/mem handling really isn't very
+> robust, and it also doesn't match the permission checking of any of the
+> other related files.
 
-the subject line says "creates non-world readable initramfs images".
-should that be "creates world-readable initramfs images" instead?
+Anyone got a pointer to Jüri's report?  I suppose it was somewhere on
+LKML, but I haven't found it yet.
 
-	--dkg
+I see how the checks against current->self_exec_id were insufficient for
+security, yet maybe the report contained something else as well?
+
+> This changes it to do the permission checks at open time, and instead of
+> tracking the process, it tracks the VM at the time of the open.  That
+> simplifies the code a lot, but does mean that if you hold the file
+> descriptor open over an execve(), you'll continue to read from the _old_ VM.
+
+I see it in the revised code, but I don't get it.  What does "the old
+VM" mean after an execve()?  The code stores the mm pointer in
+file->private_data, but is this stored pointer even valid after an
+execve()?  (The code blindly assumes so, only checking for non-NULL.)
+
+Was this discussed (on LKML or elsewhere)?
+
+> http://git.kernel.org/linus/e268337dfe26dfc7efd422a804dbb27977a3cccc
+
+Alexander
