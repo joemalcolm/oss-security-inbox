@@ -1,22 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/3
-Message-ID: <20120321084324.GK3053@dhcp-25-225.brq.redhat.com>
-Date: Wed, 21 Mar 2012 09:43:25 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/22/2
+Message-ID: <Pine.GSO.4.64.1201211954330.148@faron.mitre.org>
+Date: Sat, 21 Jan 2012 20:02:38 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE request -- kernel: execshield: predictable ascii armour base address
+cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...-smtp.mitre.org>
+Subject: Re: CVE Request -- Horde IMP -- Multiple XSS flaws fixed in v5.0.18
 Content-Type: text/plain; charset=utf-8
 
-Hi, 
 
-On Tue, Mar 20, 2012 at 05:22:32PM +0100, Marcus Meissner wrote:
-> There are also 4 seperate issues in Chris blogpost.
+On Sat, 21 Jan 2012, Kurt Seifried wrote:
 
-The first issue is Red Hat only, not upstream. The other three issues
-would be great to fix, but IMO are enhancements only hence I did not
-request CVE IDs.
+> On 01/21/2012 03:44 AM, Jan Lieskovsky wrote:
+>> Hello Kurt, Steve, vendors,
+>>
+>>   Multiple XSS flaws were adressed in the v5.0.18 version of Horde IMP
+>> (from [1]):
+>>
+>> "[mms] SECURITY: Fix XSS vulnerabilities on the compose page (traditional
+>> view), the contacts popup window, and with certain IMAP mailbox names."
+>>
+>> References:
+>> [1] http://www.horde.org/apps/imp/docs/CHANGES
+>> [2] http://www.horde.org/apps/imp/docs/RELEASE_NOTES
+>> [3] http://secunia.com/advisories/47580
+>> [4] https://bugs.gentoo.org/show_bug.cgi?id=399563
+>>
+>> Upstream patches:
+>> [5]
+>> https://github.com/horde/horde/commit/41136ea893b3d5a84c6228a552f8e211c90f58de
+>>     (multiple XSS flaws)
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Keep this one for CVE-2012-0791 as Kurt assigned.
+
+>> [6]
+>> https://github.com/horde/horde/commit/208eae43c95136a67104f760027a8892a22b6e25
+>>     (XSS in email validation)
+
+While normally one might MERGE this XSS with the others, in this case we 
+(the CVE team) happened to notice that this XSS is actually associated 
+with a different version / product, fixed in Webmail 4.0.6:
+
+   http://secunia.com/advisories/47592
+   http://www.horde.org/apps/webmail/docs/CHANGES
+
+Since this specific XSS is not listed in the IMP changelog, we should 
+treat it as a different product/version, and SPLIT.
+
+So, use CVE-2012-0909 for this new one.
+
+
+Summary:
+
+
+   CVE-2012-0791 - XSS in compose page, (traditional view), the contacts
+   popup window, and with certain IMAP mailbox names.  Fixed in
+   Horde IMP v5.0.18, and apparently Webmail 4.0.6.
+
+   CVE-2012-0909 (new) - XSS in email validation, related to the Form
+   library, only affecting Webmail 4.0.6.
+
+- Steve
