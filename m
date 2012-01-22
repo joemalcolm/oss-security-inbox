@@ -1,33 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/04/1
-Message-ID: <4FCC7131.5000709@redhat.com>
-Date: Mon, 04 Jun 2012 10:26:25 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Symfony / php-symfony-symfony: Session fixation flaw corrected in upstream 1.4.18 version
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/22/6
+Message-ID: <20120122224855.GA16947@openwall.com>
+Date: Mon, 23 Jan 2012 02:48:55 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Cc: tytso@....edu
+Subject: Re: pwgen: non-uniform distribution of passwords
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Thu, Jan 19, 2012 at 11:34:12PM +0400, Solar Designer wrote:
+> $ ./pwgen -1cn 8 1000000000 | dd obs=10M > 1g
+...
+> $ time ~/john/john-1.7.9-jumbo-5/run/unique -v -mem=25 1gu < 1g
+> Total lines read 1000000000 Unique lines written 697066573
 
-   a session fixation flaw was found in the way Symfony, an open-source PHP web applications 
-development framework, performed removal of user credential, adding several user credentials at once 
-and 'user authenticated' settings change by regenerating session ID. A remote attacker could provide 
-a specially-crafted URL, that when visited by a valid Symfony application user (victim) could lead 
-to unauthorized access to the victim's user account.
+Here's some further analysis of the 1 billion sample used as a training
+set along with a separate 1 million sample used as a test set:
 
-References:
-[1] https://bugs.gentoo.org/show_bug.cgi?id=418427
-[2] http://symfony.com/blog/security-release-symfony-1-4-18-released
-[3] http://trac.symfony-project.org/browser/tags/RELEASE_1_4_18/CHANGELOG
+Applying the 697 million unique passwords (from the 1 billion sample
+above) as a wordlist (6 GB file size) to crack another 1 million of
+pwgen'ed passwords cracks 418168 of them (41.8%).  For a uniform
+distribution (which is not the case), this would correspond to total
+keyspace size of about 1.67 billion passwords (between 30 and 31 bits).
 
-Upstream patch:
-[4] http://trac.symfony-project.org/changeset/33466?format=diff&new=33466
+Focusing on more frequent pwgen'ed passwords only:
 
-Could you allocate a CVE id for this? (afaics there hasn't been
-requested one for this issue yet during last month / from the start
-of June 2012)
+The most common passwords in my 1 billion sample happen to be, prefixed
+by number of occurrences:
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+    127 Ooquoo0e
+    125 ooghai0E
+    123 eiThie7e
+    123 aiShie8o
+    122 eiQuei9u
+    122 Aighah4u
+    121 eichae1I
+    121 Oophai4o
+    121 Oochoh5u
+    121 Iephee6e
+
+the next one is seen 120 times.  Overall, there are 3452 unique
+passwords with 100 occurrences or more (in 1 billion generated).
+
+Taking these 3452 as a wordlist cracks 284 passwords in the separate
+1 million sample.  This is 0.0284%.  However, 3452 is only %0.0002 of
+the 1.67 billion estimate for the keyspace size that we arrived at
+above.  Hence, the distribution is non-uniform, and our speedup from
+exploiting this property is at least 137x on this test.  (284 / 2 is
+obviously 142, but I used more precise numbers here.)
+
+Checking this another way, the keyspace size estimate assuming uniform
+distribution would be only 12 million based on the test above - a lot
+lower than the previous estimate.  This similarly confirms that the
+distribution is non-uniform.
+
+Top 1 million unique passwords from my 1 billion training set cracks
+37149 in the test set (3.7%).  The corresponding uniform keyspace size
+estimate is 27 million.
+
+Top 10 million unique passwords cracks 145179 (14.5%).  The keyspace
+size estimate is 69 million.
+
+Top 100 million unique passwords cracks 262693 (26.3%).  The keyspace
+size estimate is 381 million.
+
+Finally, only 115339574 unique passwords are seen in the 1 billion
+sample more than once.  (This is less than 1000-697 = 303 million
+because many passwords are seen more than 2 times each.)  Using them as
+a wordlist cracks 276382 (27.6%).  The keyspace size estimate is 417
+million.
+
+Chances are that I won't spend further time on this, although a possible
+project would be to create a program that would output all or top N of
+pwgen'ed passwords using exact probabilities (based on analysis of
+pwgen's source code or/and behavior of pwgen with non-random inputs
+rather than based on normal pwgen invocations like I did so far, which
+only provides estimates).  This would result in more efficient attacks
+(more passwords in the test set cracked per candidate passwords tested).
+
+Alexander
