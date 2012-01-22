@@ -1,71 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/03/4
-Message-ID: <1344010022.4642.170.camel@deadeye.wl.decadent.org.uk>
-Date: Fri, 3 Aug 2012 17:07:02 +0100
-From: Ben Hutchings <bhutchings@...arflare.com>
-To: <oss-security@...ts.openwall.com>
-CC: linux-net-drivers <linux-net-drivers@...arflare.com>
-Subject: Remote DoS in Linux sfc driver through TCP MSS option (CVE-2012-3412)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/22/5
+Message-ID: <20120122202159.GA16281@openwall.com>
+Date: Mon, 23 Jan 2012 00:21:59 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
 Content-Type: text/plain; charset=utf-8
 
-Issue
------
+On Sun, Jan 22, 2012 at 09:52:27PM +0400, Solar Designer wrote:
+> On Wed, Jan 18, 2012 at 10:25:55AM +0800, Eugene Teo wrote:
+> > This changes it to do the permission checks at open time, and instead of
+> > tracking the process, it tracks the VM at the time of the open.  That
+> > simplifies the code a lot, but does mean that if you hold the file
+> > descriptor open over an execve(), you'll continue to read from the _old_ VM.
+> 
+> I see it in the revised code, but I don't get it.  What does "the old
+> VM" mean after an execve()?  The code stores the mm pointer in
+> file->private_data, but is this stored pointer even valid after an
+> execve()?  (The code blindly assumes so, only checking for non-NULL.)
 
-On Linux, a peer (or local user) may cause TCP to use a nominal MSS of
-as little as 88 (actual MSS of 76 with timestamps).  Given that we have
-a sufficiently prodigious local sender and the peer ACKs quickly enough,
-it is nevertheless possible to grow the window for such a connection
-to the point that we will try to send just under 64K at once.  This
-results in a single skb that expands to 861 segments.
+OK, here's my current understanding: the old VM is preserved
+(refcounted) precisely because someone holds /proc/<pid>/mem open.
+The new mem_open() calls mm_access(), which calls get_task_mm().
+So at the time of mem_read() / mem_write() the pointer is valid even if
+the process passed an execve().
 
-In the sfc driver, such an skb will require hundreds of DMA descriptors;
-a substantial fraction of a TX ring or even more than a full ring.  The
-TX queue selected for the skb may stall and trigger the TX watchdog
-repeatedly (since the problem skb will be retried after the TX reset).
+However, I think this opens up a new security problem (albeit a
+relatively minor one): RLIMIT_NPROC * RLIMIT_AS bypass.  Previously, a
+user with RLIMIT_NPROC set was sort of limited to consuming this much
+memory (plus shm and plus various in-kernel data structures related to
+the user's processes).  Now the user's memory consumption via processes'
+address space is not limited by RLIMIT_NPROC anymore.
 
-Fix
----
+Am I missing something?  If not, I think we need to patch that.  Maybe
+have RLIMIT_NPROC apply even to such "zombie VMs" (confusing and
+tricky).  Maybe re-consider the entire approach to fixing the original
+issue addressed with commit e268337dfe26dfc7efd422a804dbb27977a3cccc.
+That is, revert this commit and fix the issue differently (likely by
+adding full privilege checks at time of read and write - in addition to
+re-introducing the self_exec_id checks, which are also needed even along
+with full checks of the caller's privileges).
 
-This issue is fixed in David Miller's net.git repository by the
-following commits:
-
-30b678d net: Allow driver to limit number of GSO segments per skb
-7e6d06f sfc: Fix maximum number of TSO segments and minimum TX queue size
-1485348 tcp: Apply device TSO segment limit earlier
-
-The out-of-tree sfc driver, available from
-<https://support.solarflare.com>, was fixed in a different way (not
-dependent on kernel changes) in version 3.2.1.6099.
-
-The OpenOnload package, available from
-<http://www.openonload.org/download.html>, was updated to include the
-fixed sfc driver in version 201205-u1.
-
-The fixed sfc driver will be included in a new EnterpriseOnload release
-shortly.
-
-Mitigation
-----------
-
-If all processes that may send on the sfc interface use Onload, or do
-not use TCP, the vulnerability does not exist.
-
-The vulnerability can otherwise be avoided by making a temporary
-configuration change.  For an sfc interface named eth0, either:
-
-a. Increase the TX queue size:
-       ethtool -G eth0 tx 4096
-   This can increase TX latency and memory usage.
-
-or:
-
-b. Disable TSO:
-       ethtool -K eth0 tso off
-   This can reduce TX throughput and/or increase CPU usage.
-
--- 
-Ben Hutchings, Staff Engineer, Solarflare
-Not speaking for my employer; that's the marketing department's job.
-They asked us to note that Solarflare product names are trademarked.
-
-
+Alexander
