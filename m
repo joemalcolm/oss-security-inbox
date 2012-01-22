@@ -1,46 +1,145 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/14
-Message-ID: <4F036EAB.40502@redhat.com>
-Date: Tue, 03 Jan 2012 14:10:03 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/22/1
+Message-ID: <4F1B5521.90007@redhat.com>
+Date: Sat, 21 Jan 2012 17:15:29 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: moodle 2.2.1, 2.1.4, 2.0.7, 1.9.16 vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 01/02/2012 04:33 PM, Nico Golde wrote:
-> Hi,
-> * Kurt Seifried <kseifrie@...hat.com> [2012-01-02 04:56]:
-> [...] 
+On 01/20/2012 11:33 AM, Vincent Danen wrote:
+> New moodle releases were made to fix a number of flaws (summarized
+> below).  Could CVEs be assigned to these?
 >
->> The rest of the solutions do not lend themselves to this problem or would 
->> require significant changes to the OpenSSH protocol/client/server which is a 
->> bad bad idea.
->>
->> Anything we do to address this issue should be extremely simple and 
->> conservative, the OpenSSH server and client are very stable and robust 
->> pieces of code, any modifications to them make me nervous. 
->>
->> I suspect the simplest and more effective solution might be some form of 
->> progressive timeout for IP's that fail to authenticate (drop the connection 
->> entry silently and ignore them in favor of real clients). 
->>
->> Long term I'd like to see more work on hash cash type solutions, being able 
->> to arbitrarily set or have a reactive system that requires increased work on 
->> the client end to prove they are a legitimate client would help with this 
->> whole DoS/DDoS class of problem to some degree.
-> See above, it would be really nice to see if there is a project which already 
-> does that.
-hashcash.org has implementations in multiple languages (including a bash
-script), it uses partial SHA-1 collisions, so easy to do for server, not
-sure if you can increase/decrease workload on the fly incrementally
-(i.e. require 16, 17, 18 bit partial matches if the server starts
-getting loaded).
+> [1] http://docs.moodle.org/dev/Moodle_2.2.1_release_notes
+> [2] http://docs.moodle.org/dev/Moodle_2.1.4_release_notes
+> [3] http://docs.moodle.org/dev/Moodle_2.0.7_release_notes
+> [4] http://docs.moodle.org/dev/Moodle_1.9.16_release_notes
+>
+Summary:
+
+CVE-2012-0792 Moodle MSA-12-0002: Personal information leak
+CVE-2012-0793 Moodle MSA-12-0004: Added profile image security
+CVE-2012-0794 Moodle MSA-12-0005: Encryption enhancement
+CVE-2012-0795 Moodle MSA-12-0006: Additional email address validation
+CVE-2012-0796 Moodle MSA-12-0007: Email injection prevention
+CVE-2012-0797 Moodle MSA-12-0008: Unsynchronised access via tokens
+CVE-2012-0798 Moodle MSA-12-0009: Role access issue
+CVE-2012-0799 Moodle MSA-12-0010: Unauthorised access to session key
+CVE-2012-0800 Moodle MSA-12-0011: Browser autofill password issue
+CVE-2012-0801 Moodle MSA-12-0012: Form validation issue
+
 
 >
-> Kind regards
-> Nico
+> MSA-12-0001: Recaptcha transmission consistency issue
+> Affects: 2.2, 2.1.x, 2.0.x, 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=b608b227bac4efba76da43dabe9bc2e32fb8fa32
+> Reference: http://moodle.org/mod/forum/discuss.php?d=194008
 >
+This is an enhancement and appears to have no security impact.
+>
+> MSA-12-0002: Personal information leak
+> Affects: 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=36b0ddeed45d0751508dcd9fa50f17fda43bae54
+> Reference: http://moodle.org/mod/forum/discuss.php?d=194009
+>
+>
+Please use CVE-2012-0792 for this issue.
+
+> MSA-12-0003: Added password protection
+> Affects: 2.2, 2.1.x, 2.0.x, 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=aa30d3e8ce0dd41d3d0f7dae856beb180fed1f83
+> Reference: http://moodle.org/mod/forum/discuss.php?d=194011
+>
+Security enhancement to help prevent browsers from remembering a users
+password.
+>
+> MSA-12-0004: Added profile image security
+> Affects: 2.2, 2.1.x, 2.0.x, 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commit;h=90911c4ff98dc2078a3acef5ddf5a1a8f7e20ba5
+> Reference: http://moodle.org/mod/forum/discuss.php?d=194012
+>
+Please use CVE-2012-0793 for this issue.
+
+>
+> MSA-12-0005: Encryption enhancement
+> Affects: 2.2, 2.1.x, 2.0.x, 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=98456628a24bba25d336860d38a45b5a4e3895da
+> Reference:  http://moodle.org/mod/forum/discuss.php?d=194013
+>
+Please use CVE-2012-0794 for this issue.
+
+> MSA-12-0006: Additional email address validation
+> Affects: 2.2, 2.1.x, 2.0.x, 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-13572
+> Reference: http://moodle.org/mod/forum/discuss.php?d=194014
+>
+Please use CVE-2012-0795 for this issue.
+
+>
+> MSA-12-0007: Email injection prevention
+> Affects: 2.2, 2.1.x, 2.0.x, 1.9.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commit;h=62988bf0bbc73df655f51884aaf1f523928abff9
+> Reference: http://moodle.org/mod/forum/discuss.php?d=194015
+>
+Please use CVE-2012-0796 for this issue.
+
+>
+> MSA-12-0008: Unsynchronised access via tokens
+> Affects: 2.2, 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28126
+> Reference: http://moodle.org/mod/forum/discuss.php?d=194016
+>
+Please use CVE-2012-0797 for this issue.
+
+>
+> MSA-12-0009: Role access issue
+> Affects: 2.2, 2.1.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-29469
+> Reference: http://moodle.org/mod/forum/discuss.php?d=194017
+>
+Please use CVE-2012-0798 for this issue.
+
+>
+> MSA-12-0010: Unauthorised access to session key
+> Affects: 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-27334
+> Reference: http://moodle.org/mod/forum/discuss.php?d=194018
+>
+Please use CVE-2012-0799 for this issue.
+
+>
+> MSA-12-0011: Browser autofill password issue
+> Affects: 2.2, 2.1.x, 2.0.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=6e9989dbd3f261b2e1586ff77b0bf22fc7091485
+> Reference: http://moodle.org/mod/forum/discuss.php?d=194019
+>
+Please use CVE-2012-0800 for this issue.
+
+>
+> MSA-12-0012: Form validation issue
+> Affects: 2.2, 2.1.x
+> Fix:
+> http://git.moodle.org/gw?p=moodle.git;a=commit;h=51070abc78b9e1db1db9a44855e8623b22bebd48
+> Reference: http://moodle.org/mod/forum/discuss.php?d=194020
+>
+Please use CVE-2012-0801 for this issue.
+
 -- 
+
+--
 
 -- Kurt Seifried / Red Hat Security Response Team
 
