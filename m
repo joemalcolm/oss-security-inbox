@@ -1,32 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/5
-Message-ID: <160917472.5434172.1351857344147.JavaMail.root@redhat.com>
-Date: Fri, 2 Nov 2012 07:55:44 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/23/5
+Message-ID: <4F1DD6C0.5040706@redhat.com>
+Date: Mon, 23 Jan 2012 14:53:04 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: Strange CVE situation (at least one ID should come of this)
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: spamdyke buffer overflow vulnerability
 Content-Type: text/plain; charset=utf-8
 
+On 01/20/2012 06:35 PM, Kurt Seifried wrote:
+> On 01/20/2012 01:42 AM, Agostino Sarubbo wrote:
+>> According to secunia advisory:
+>> https://secunia.com/advisories/47548/ :
+>> Description:
+>>
+>> Some vulnerabilities have been reported in spamdyke, which potentially can be 
+>> exploited by malicious people to compromise a vulnerable system.
+>>
+>> The vulnerabilities are caused due to boundary errors related to the incorrect 
+>> use of the "snprintf()" and "vsnprintf()" functions, which can be exploited to 
+>> cause buffer overflows.
+>>
+>> The vulnerabilities are reported in versions prior to 4.3.0.
+>>
+>>
+>> Solution
+>> Update to version 4.3.0.
+>>
+>>
+>> and from upstream changelog:
+>> http://www.spamdyke.org/documentation/Changelog.txt :
+>>
+>> Fixed a number of very serious errors in the usage ofc.
+>>     The return value was being used as the length of the string printed into
+>>     the buffer, but the return value really indicates the length of the string
+>>     that *could* be printed if the buffer were of infinite size. Because the
+>>     returned value could be larger than the buffer's size, this meant remotely
+>>     exploitable buffer overflows were possible, depending on spamdyke's
+>>     configuration.
+>>
+>> and from upstream mailing list:
+>> http://www.mail-archive.com/spamdyke-release@spamdyke.org/msg00014.html
+>>
+>> it also fixes a series of major bugs 
+>> that could lead to buffer overflows.  Depending on spamdyke's configuration, 
+>> these could cause remotely exploitable security holes.  Please upgrade 
+>> immediately!
+>>
+>> Please assign a CVE
+>>
+> Can you include some links to actual code commits? I want to prevent
+> duplicates and more information would aid in that.
 > 
-> That's not the same as a generic "don't use this."  For this
-> CVE-2012-2400, there is a specific advisory from a specific vendor
-> telling customers to patch a vulnerability.  It's "unspecified" all over
-> the place due to lack of details, so risk analysis is problematic, but
-> it's a statement of some kind of vulnerability in a specific version by an
-> authoritative source.
-> 
-> Oracle and HP publish advisories like this on a regular basis.
-> 
 
-This isn't meant to be a troll, it's a legitimate question.
+Ugh so I downloaded (www.spamdyke.org/download.html) and diff'ed
+spamdyke 4.2.1 and 4.3.0 and checked for snprint/vsnprintf occurances
+being replaced, there's about 80 (all virtually identical fixes). I also
+checked 4.3.0 to 4.3.1, no more of those fixes, so it's safe to say this
+fix at least is largely confined to the 4.3.0 update.
 
-So if someone publishes an advisory stating "I have found a number of
-security flaws in product X." Would that get the same sort of CVE ID?
+Please use CVE-2012-0802 for this issue.
 
-I of course don't approve of such advisories, my curiosity is academic.
 
-Thanks.
 
 -- 
-    JB
+
+--
+
+-- Kurt Seifried / Red Hat Security Response Team
