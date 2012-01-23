@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/3
-Message-ID: <20120312183926.7fb54961@redhat.com>
-Date: Mon, 12 Mar 2012 18:39:26 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/23/3
+Message-ID: <20120123192640.GA21381@openwall.com>
+Date: Mon, 23 Jan 2012 23:26:40 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl: null pointer dereference issue
+Cc: coley@...re.org
+Subject: CVE id assignment dates
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 27 Feb 2012 15:42:44 +0100 Matthias Weckbecker wrote:
+Hi,
 
-> bad S/MIME messages with crafted MIME headers can result in a NULL
-> pointer dereference in openssl's ans1 parser,
-> 
->  https://bugzilla.novell.com/show_bug.cgi?id=748738
->  http://www.mail-archive.com/openssl-dev@openssl.org/msg30305.html
->  http://cvs.openssl.org/chngview?cn=22144
+It appears that many people are confused by and concerned about the
+"Assigned" dates on CVE ids, not being aware that these dates often (or
+even all the time?) merely reflect the assignment of a CVE id pool to a
+CNA, normally before the actual vulnerabilities are discovered.
 
-Note that additional similar issue in mime_param_cmp was fixed in
-0.9.8u and 1.0.0h as:
-  http://cvs.openssl.org/chngview?cn=22252
+For example, CVE-2012-0056 shows "Assigned (20111207)" - so someone
+wrongly thought that this meant that kernel developers or whoever sat on
+this bug for 1.5 months.
 
-This can also be triggered by malformed S/MIME message.
+I think cve.mitre.org web pages need to provide an explanation right
+next to these dates or not show the dates.
 
-The above commit also corrects an issue with the previous mime_hdr_cmp
-fix that could cause the function to return either "less than" or
-"greater than" when comparing NULL to non-NULL.  There's no known
-security impact of this change, it seems it could cause verification /
-decryption to fail when it can succeed. Reported by "bla".
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Alexander
