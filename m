@@ -1,55 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/30/6
-Message-ID: <503F8991.9040505@redhat.com>
-Date: Thu, 30 Aug 2012 11:41:05 -0400
-From: Russell Bryant <rbryant@...hat.com>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2012-013] Keystone, Lack of authorization for adding users to tenants (CVE-2012-3542)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/23/1
+Message-ID: <CANTw=MP7bz=NVvfJM3n9BLE4RMg7yjz=eM1eGX30nwwZmk8Vxw@mail.gmail.com>
+Date: Sun, 22 Jan 2012 19:52:47 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Jan 20, 2012 at 11:30 AM, Solar Designer wrote:
+> That's tricky.  For example, in Russia the New Year holidays may last
+> for 11 or 12 days (such as Dec 30 to Jan 10).  If we attempt to account
+> for that along with the Christmas break, then 10 business days may turn
+> into a month.
 
-OpenStack Security Advisory: 2012-013
-CVE: CVE-2012-3542
-Date: August 30, 2012
-Title: Lack of authorization for adding users to tenants
-Impact: Critical
-Reporter: Dolph Mathews (Rackspace)
-Products: Keystone
-Affects: Essex, Folsom
+To make any sensible decision on this, I think you have to assume
+every week of the year as having at least 4 business days (even
+xmas/new years).  Any regions or religious organizations that have
+multi-day holidays will either be out of luck or should have at least
+one person reading their mail 4 days out of the holiday week.
 
-Description:
-Dolph Mathews reported a vulnerability in Keystone. When attempting to
-update a user's default tenant, Keystone will only partially deny the
-request when a user is not authorized to complete this action. The API
-responds with 401 Not Authorized and the user's default tenant is not
-changed. However, the user is still granted membership to this new
-tenant.The result is that any client that can reach the administrative
-API (deployed on port 35357, by default) can add any user to any tenant.
-
-Fixes:
-Folsom:
-https://github.com/openstack/keystone/commit/c13d0ba606f7b2bdc609a7f388334e5efec3f3aa
-2012.1:
-https://github.com/openstack/keystone/commit/5438d3b5a219d7c8fa67e66e538d325a61617155
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3542
-https://bugs.launchpad.net/keystone/+bug/1040626
-
-Notes:
-This fix will be included in the folsom-rc1 development milestone and in
-a future Essex (2012.1) release.
-
-- -- 
-Russell Bryant
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iEYEARECAAYFAlA/iZEACgkQFg9ft4s9SAZ0zQCeKEqxWbDFum/f6l00H0x6FL2L
-QEEAn3eer5owk4/lEktxTMrdIhtnyaaL
-=vdh7
------END PGP SIGNATURE-----
+Best wishes,
+Mike
