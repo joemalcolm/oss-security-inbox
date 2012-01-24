@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/10
-Message-ID: <1122029455.1048762.1348577191990.JavaMail.root@redhat.com>
-Date: Tue, 25 Sep 2012 08:46:31 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, WordPress Security Team <security@...dpress.org>, Matej Cepl <mcepl@...hat.com>
-Subject: CVE Request -- WordPress (3,4.2): CSRF in the incoming links section of the dashboard
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/6
+Message-ID: <20120124143007.GG9326@foo.fgeek.fi>
+Date: Tue, 24 Jan 2012 16:30:07 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id assignment dates
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, WordPress Security Team, vendors,
+On Tue, Jan 24, 2012 at 09:10:55AM -0500, Steven M. Christey wrote:
+> I completely agree that tracking this kind of information is
+> important, and I've personally wanted to see disclosure-related
+> stats for years.  I specifically mentioned OSVDB because they are
+> trying to track this information at a greater level of detail than
+> any other effort I know of. And, by virtue of being an *open source*
+> vulnerability database, others can contribute to it.
+> 
+> - Steve
 
-  an anonymous researcher called 'Akastep' has reported
-and CSRF flaw being present in the way WordPress of version
-v3.4.2 and earlier used to process incoming links section /
-widget of the dashboard.
+First of all I am heavy user of OSVDB (http://osvdb.org/user/fgeek/profile). One should note that even OSVDB has a license, which will limit the usage of the data: http://osvdb.org/license and from my own experience I can say that this is definitely not always a good thing and might create new aspects for words open and free. For NDA reasons I can't say the case where this was a problem, but you can use your imagination.
 
-References:
-
-[1] http://packetstormsecurity.org/files/116785/WordPress-3.4.2-Cross-Site-Request-Forgery.html
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=860261
-[3] https://bugs.gentoo.org/show_bug.cgi?id=436198
-[4] https://secunia.com/advisories/50715/
-
-AFAIK there is not an upstream ticket and patch for this issue
-yet (but might have overlooked something pretty obvious - WordPress
-upstream please clarify).
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- Henri Salo
