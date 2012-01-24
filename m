@@ -1,47 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/21
-Message-ID: <20120120163020.GA6909@openwall.com>
-Date: Fri, 20 Jan 2012 20:30:20 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/3
+Message-ID: <4F1E4237.6020608@redhat.com>
+Date: Mon, 23 Jan 2012 22:31:35 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+CC: Michael Gilbert <michael.s.gilbert@...il.com>
+Subject: Re: CVE id assignment dates
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 20, 2012 at 08:50:40AM -0700, Kurt Seifried wrote:
-> On 01/20/2012 02:44 AM, Solar Designer wrote:
-> > "Please note that the maximum acceptable embargo period for issues
-> > disclosed to these lists is 14 to 19 days, with embargoes longer than 14
-> > days (up to 19) allowed in case the issue is reported on a Thursday or a
-> > Friday and the proposed coordinated disclosure date is thus adjusted to
-> > fall on a Monday or (preferably) a Tuesday.  Please do not ask for a
-> > longer embargo.  In fact, embargoes shorter than 14 days are preferable."
+On 01/23/2012 06:05 PM, Michael Gilbert wrote:
+> On Mon, Jan 23, 2012 at 3:04 PM, Steven M. Christey wrote:
+>> We do not publish any dates related to disclosure, patch, or vendor
+>> notification; interested parties can consult other databases that explicitly
+>> track this information, such as OSVDB.
+> 
+> Just curious, why not?  It seems like this kind of information would
+> be invaluable for researchers interested anthropological/statistical
+> studies of security vulnerabilities.
+> 
+> Best wishes,
+> Mike
 
-> Why not just make it 10 business days
+If you'd like to do the work/research needed to nail these down I'm sure
+someone (I can't speak on behalf of Mitre) would accept the data, but
+speaking from experience (at iSIGHT/iDefense) it is a LOT of work in
+some cases (you start going down rabbit holes pretty quickly, things
+that appear simple often are not), so to do it consistently for all
+issues (even within a "small" group of packages or vendors) is a full
+time job for more than one person.
 
-It wouldn't do the trick.  10 business days from a Wednesday gives us
-another Wednesday, which is good, but 10 business days from a Friday
-gives us another Friday (unless there are holidays).
+--
 
-> with a note to be kind with
-> respect to holidays (i.e. over the Xmas break for us North/South
-> Americans and Europeans).
-
-That's tricky.  For example, in Russia the New Year holidays may last
-for 11 or 12 days (such as Dec 30 to Jan 10).  If we attempt to account
-for that along with the Christmas break, then 10 business days may turn
-into a month.
-
-So I don't mind adding an informal note "to be kind with respect to
-holidays", but its exact meaning will vary and it should not affect the
-maximum embargo period of 14 to 19 days.
-
-> Agreed for the message format. Might want to
-> add a list of tools/etc. that do pgp/mime so there is less of an excuse
-> to do it improperly.
-
-Feel free to add and maintain such a tools list on the wiki page.
-I only know that Mutt works fine.
-
-Thanks for your comments!
-
-Alexander
+-- Kurt Seifried / Red Hat Security Response Team
