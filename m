@@ -1,53 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/13
-Message-ID: <504A2DF1.6090305@redhat.com>
-Date: Fri, 07 Sep 2012 11:25:05 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/2
+Message-ID: <4F1E13B9.2070402@redhat.com>
+Date: Tue, 24 Jan 2012 10:13:13 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Eitan Adler <lists@...anadler.com>, Jan Lieskovsky <jlieskov@...hat.com>, Paul Wise <pabs@...ian.org>, Cyril Brulebois <kibi@...ian.org>
-Subject: Re: CVE-2010 Request -- blender: Insecure temporary file use by creating file string in undo save quit Blender kernel routine (re-occurrence of CVE-2008-1103)
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 09/06/2012 04:46 PM, Eitan Adler wrote:
-> On 6 September 2012 13:56, Kurt Seifried <kseifried@...hat.com>
-> wrote:
->>> Upstream ticket: [1] 
->>> https://projects.blender.org/tracker/index.php?func=detail&aid=22509&group_id=9&atid=498
->
->>>  Could you allocate a CVE-2010- identifier for this?
->> 
->> Please use CVE-2012-4410 for this issue.
+On 01/20/2012 10:52 PM, Eugene Teo wrote:
+> On 01/19/2012 12:05 PM, Eugene Teo wrote:
+>> On 01/19/2012 04:43 AM, Kees Cook wrote:
+>>> What's the problem with the old logic in the mem handling? (Why does this
+>>> need a CVE?)
+>>
+>> This is a possible local privilege escalation issue on a system with
+>> ASLR disabled, combined with other exploitation techniques.
 > 
-> Why the 2012 CVE when the issue was reported in 2010?
+> Detailed information can be found here,
+> https://access.redhat.com/kb/docs/DOC-69129
 
-*REJECT* CVE-2012-4410 - this has the wrong year. The issue was
-reported in 2010.
+We have released an update for Red Hat Enterprise Linux 6,
+https://rhn.redhat.com/errata/RHSA-2012-0052.html.
 
-Please use CVE-2010-5105 for this issue, it has the correct year.
+Please update the kernel as soon as possible.
 
+PS: On Red Hat Enterprise Linux 6, /bin/su (coreutils) and
+/usr/bin/gpasswd (shadow-utils) are protected at compile time by PIE.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQSi3wAAoJEBYNRVNeJnmTDwkP/2M8nAer4GmImn+I2YNpKux4
-embiraOjmGZBj3mZZkUPP0YJNfMye4wQyVdqGWNiqFMerl6jmOP3tXlCR2eCqsdl
-R8KMPUR0leqbMD+pWIuh1fQO087+/gQi54ZhrY12Hb5lCbquiVBzrhWnglNT3zAB
-VqtaFI3oXboT8jx5S2lzByR8q7Fc3HruynnPo/1hjbooM2nyMTYm0gZDDMWblUoD
-8VYGFfVx0DvjaBSDMjBZ/KdKLrVhwdykh68suv15WU4BrgXktuqB2/ZzXojvJ5uu
-RSjzb1Venix0Q0zpk2rmlsiWjRidpVDfXJ8TQLkJAAjwWcxGsKrI2iUZdEunOiig
-/s6ENU5ZOJfXVfVb2jp1gUIxGt6dkpVFfQxPhNVBCNr0bpo9dlgSRlpMQoonaYM+
-1KjCjseHk5G7XAwhiwLkORviV4nE9NtUdcZsrCnnM/niywqt6yh2xajKqI9bmcrD
-vKBPMWCSoTFAi7h7P0eAMlM/gAbwnX43z7CHJRN41pIduvopQu5vERFlIKz0UXZ7
-ZuzMHR79K9j1CvbG0JlPrzk5YxIJekCEqUy62Wb6HByNX2DEbVY6cRbq0t74YqWb
-cQTkFquo/GqijzIFlQiqZ4CIhyPO3j6hZkO9WDXM99+Grg8DdAd5o6aMc72ovgo4
-uHVk891HVsCd7gCNEcLG
-=Y0oG
------END PGP SIGNATURE-----
+Thanks, Eugene
