@@ -1,61 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/2
-Message-ID: <CAHmME9rRzP_HJMa7Tqt4ir=Qjho3CqBrNbYQK6fwaTo2xN8zdg@mail.gmail.com>
-Date: Sat, 29 Dec 2012 12:45:05 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Frederick Townes <ftownes@...edge.com>
-Subject: Re: CVE Request: W3 Total Cache - public cache exposure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/10
+Message-ID: <4F1F178F.8010002@redhat.com>
+Date: Tue, 24 Jan 2012 13:41:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Luciano Bello <luciano@...ian.org>
+Subject: Re: CVE request: bip buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Dec 29, 2012 at 6:35 AM, Kurt Seifried <kseifried@...hat.com> wrote:
->
->
-> As I understand it this is more of an .htaccess type issue than an
-> actual issue with W3 total cache? Is this documented anywhere in the
-> W3 total cache documents?
->
+On 01/24/2012 02:41 AM, Luciano Bello wrote:
+> Hi there,
+>         Please, assign a CVE ID for the following vulnerability in bip 
+> (http://bip.t1r.net): https://projects.duckcorp.org/issues/269
+> 
+> The patch can be found here: 
+> https://projects.duckcorp.org/projects/bip/repository/revisions/222a33cb84a2e52ad55a88900b7895bf9dd0262c
+> 
+> This bug is present in 0.8.8 and previous versions and, according to reporter, 
+> remote execution of code should be possible.
+> 
+> Thanks,
+> 
+> /luciano
 
-W3 generates .htaccess files and sets up the directory structure and
-accesses. Nowhere is it documented that sysadmins should additionally
-modify the .htaccess files to protect the cache, and W3's own htaccess
-generation fails to protect it.
+Excellent CVE request. Please use CVE-2012-0806 for this issue.
 
+-- 
 
->
-> > 2. Hash keys are easily predictable, in the case of (1) not
-> > existing.
->
-> explanation/algorithm/?
->
+--
 
-Sure:
-
-        query_md5=md5("SELECT * FROM ${db_prefix}users WHERE ID =
-'${user_id}'")
-        key=md5("w3tc_${host}_${site_id}_sql_${query_md5}")
-        url="
-http://siteblabla/wp-content/w3tc/${key:0:1}/${key:1:1}/${key:2:1}/${key}"
-
-"db_prefix" is by default "wp_", per wordpress config, and few people go in
-and change that. "user_id" is an integer. IDs start at 1 and increase for
-each added user. "site_id" is an integer that also starts at 1 and
-increases for each site used in multi-site wordpress. "host" is the
-hostname of the site. All of these values are known or guessable.
-
-
-
->
-> > 3. Cached database values are downloadable by their hash keys on
-> > the public internet, exposing sensitive information like password
-> > hashes.
->
-> Do they need to be downloadable? That is to say can these hash values
-> be protected, or must they be exposed?
->
-
-They _must_ be protected. They _must not_ be exposed or downloadable. The
-hash values are raw SQL query responses, so they contain things like
-password hashes. The cache is used only internally by the web application,
-and client browsers should never have any direct contact with this cache.
-
+-- Kurt Seifried / Red Hat Security Response Team
