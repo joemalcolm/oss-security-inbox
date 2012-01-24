@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/7
-Message-ID: <20121029185458.GL2676@redhat.com>
-Date: Mon, 29 Oct 2012 12:54:58 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/11
+Message-ID: <4F1F17DD.3000308@redhat.com>
+Date: Tue, 24 Jan 2012 13:43:09 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Hanno B?ck <hanno@...eck.de>
-Subject: Re: CVE request: awstats before 7.1 awredir.pl vulnerability
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE requests: Suhosin extension / as31
 Content-Type: text/plain; charset=utf-8
 
-* [2012-10-25 23:45:13 -0600] Kurt Seifried wrote:
+On 01/24/2012 10:28 AM, Moritz Muehlenhoff wrote:
+> Please please assign two CVE IDs:
+> 
+> 1. Suhosin extension "transparent cookie encryption 
+>    buffer overflow"
+>    
+>    http://seclists.org/fulldisclosure/2012/Jan/295
 
->On 10/25/2012 03:07 AM, Hanno Böck wrote:
->> http://awstats.sourceforge.net/docs/awstats_changelog.txt -
->> Security fix into awredir.pl
->>
->> I didn't find any more info, but please assign a CVE. (and i found
->> there were awredir issues before that got CVE-2009-5020, but I
->> think this is a different issue, at least if their changelogs are
->> correct)
->
->Please use CVE-2012-4547 for this issue.
+Please use CVE-2012-0807 for this issue.
 
-I suspect it is this:
 
-http://awstats.cvs.sourceforge.net/viewvc/awstats/awstats/wwwroot/cgi-bin/awredir.pl?r1=1.13&r2=1.14
+> 2. Insecure temporary file in as31 assembler
+> 
+>    http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655496
+> 
+> Cheers,
+>         Moritz
 
-But it's been over a year since this commit (but the last one is 8mos
-old and seems to have no security relevance).
-
-So looks to be XSS sanitization.
+Please use CVE-2012-0808 for this issue.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+
+-- Kurt Seifried / Red Hat Security Response Team
+kseifried@...hat.com
