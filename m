@@ -1,66 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/7
-Message-ID: <20120321165148.GG32100@redhat.com>
-Date: Wed, 21 Mar 2012 10:51:48 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/9
+Message-ID: <4F1F1706.9080903@redhat.com>
+Date: Tue, 24 Jan 2012 13:39:34 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...mav.net
-Subject: Vulnerabilities reported in ClamAV 0.96.4
+CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+Subject: Re: XSLT issue in MoinMoin
 Content-Type: text/plain; charset=utf-8
 
-Hopefully security@ for ClamAV goes somewhere useful (I don't feel like
-opening a bugzilla account there just to ask this).
+On 01/24/2012 01:07 PM, Nicolas Grégoire wrote:
+> Hello,
+> 
+> some vulnerabilities have been published with version 1.9.3 of
+> MoinMoin : http://moinmo.in/SecurityFixes
+> 
+> The XSS already has a CVE but not the XSLT issue. This issue is very
+> similar to CVE-2012-0057 patched in PHP 5.3.9 (except the XSLT engine
+> which is here '4Suite').
+> 
+> The patch is simply a documentation update, given that 4Suite (afaik)
+> doesn't allow to desactivate its extensions :
+> http://hg.moinmo.in/moin/1.9/rev/99e2309a7ec0
+> 
+> Regards,
+> Nicolas Grégoire
 
-Saw a bunch of CVEs come through for various anti-virus products, five
-of which are reportedly applicable for ClamAV 0.96.4.  I'm wondering a)
-if the upstream folks know about these and b) whether or not the report
-has a typo in the version, since 0.97.4 is the latest upstream version?
+How exactly does the attacker get access to the filesystem using XSLT?
+Does everything using 4Suite have this issue?
 
-http://www.securityfocus.com/archive/1/522005
 
-Indicates that CVE-2012-1419, CVE-2012-1443, CVE-2012-1457,
-CVE-2012-1458, and CVE-2012-1459 affect ClamAV 0.96.4.  There isn't much
-more information though.  Cutting-n-pasting from the report:
 
-1. Specially crafted infected POSIX TAR files with "[aliases]" as first
-9 bytes evades detection. (CVE-2012-1419)
+--
 
-[...]
-
-25. Infected RAR files with initial two bytes set to 'MZ' can be fixed
-by the user and correctly extracted. Such a file evades detection.
-(CVE-2012-1443)
-
-[...]
-
-39. If the length field in the header of a file with test EICAR virus
-included into a TAR archive is set to be greater than the archive's
-total length (1,000,000+original length in our experiments), the
-antivirus declares the file to be clean but virus gets extracted
-correctly by the GNU tar program. (CVE-2012-1457)
-
-40. A Windows Compiled HTML Help (CHM) file is a set of HTML files,
-scripts, and images compressed using the LZX algorithm.  For faster
-random accesses, the algorithm is reset at intervals instead of
-compressing the entire file as a single stream. The length of each
-interval is specified in the LZXC header.
-
-If an infected CHM file's header modified so that the reset interval is
-lower than in the original file, the antivirus declares the file to be
-clean. But the Windows CHM viewer hh.exe correctly decompresses the
-infected content located before the tampered header. (CVE-2012-1458)
-
-41. In a POSIX TAR archive, each member file has a 512-byte header
-protected by a simple checksum. Every header also contains a file length
-field, which is used by the extractor to locate the next header in the
-archive.
-
-If a TAR archive contains two files: the first one is clean, while the
-second is infected with test EICAR virus - and it is modified such that
-the length field in the header of the first, clean file to point into
-the middle of the header of the second, infected file. The antivirus
-declares the file to be clean but virus gets extracted correctly by the
-GNU tar program. (CVE-2012-1459)
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+-- Kurt Seifried / Red Hat Security Response Team
