@@ -1,49 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/06/1
-Message-ID: <4F7E7A62.3050704@redhat.com>
-Date: Thu, 05 Apr 2012 23:08:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: slock-0.9 displays modal box after locking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/1
+Message-ID: <CANTw=MPBVKdkfr1t7v1k73FBk0MpQNMoaeaHdU1G6AGQ_oMMEg@mail.gmail.com>
+Date: Mon, 23 Jan 2012 20:05:09 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id assignment dates
 Content-Type: text/plain; charset=utf-8
 
-From: https://bugs.gentoo.org/show_bug.cgi?id=401645
+On Mon, Jan 23, 2012 at 3:04 PM, Steven M. Christey wrote:
+> We do not publish any dates related to disclosure, patch, or vendor
+> notification; interested parties can consult other databases that explicitly
+> track this information, such as OSVDB.
 
-Longpoke 2012-01-31 15:21:57 UTC
+Just curious, why not?  It seems like this kind of information would
+be invaluable for researchers interested anthropological/statistical
+studies of security vulnerabilities.
 
-If any program makes a modal dialog box while the screen is
-black/controls locked with slock, and then some buttons are pressed on
-the keyboard, the screen is unblackened, and everything is visible on
-the desktop you locked on.
-
-Steps to reproduce:
-1. sleep 3; pcmanfm
-2. slock
-3. press some buttons
-4. now black screen will go away and you can see the current active desktop
-
-This is a critical vulnerability. I recommend blocking this package.
-
-I'm running xmonad on amd64.
-
-Longpoke 2012-02-01 03:41:11 UTC
-
-You need to run the other program *concurrently*. I'll try and make the
-reproduction steps clearer:
-
-1. run sleep <n>; <X-program>
-2. lock the screen as fast as you can
-3. make sure <n> seconds has passed, so that you know <X-program> has
-started
-4. press some keys (any keys (doesn't have to be your actual password),
-don't hit enter)
-
-Now the black screen will go away and you can see the current active
-desktop along with <X-program>.
-
-Where <X-program> is the name of some X program that will create a
-window and leave it open when executed, i.e: pcmanfm.
-
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Best wishes,
+Mike
