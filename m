@@ -1,16 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/24/1
-Message-Id: <201206240203.00827.luciano@debian.org>
-Date: Sun, 24 Jun 2012 02:03:00 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/4
+Message-Id: <201201241041.30510.luciano@debian.org>
+Date: Tue, 24 Jan 2012 10:41:30 +0100
 From: Luciano Bello <luciano@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: CSRF in eXtplorer
+Subject: CVE request: bip buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-John Leitch has discovered a CSRF vulnerability in eXtplorer:
-http://www.autosectools.com/Advisories/eXtplorer.2.1.RC3_Cross-
-site.Request.Forgery_174.html
+Hi there,
+        Please, assign a CVE ID for the following vulnerability in bip 
+(http://bip.t1r.net): https://projects.duckcorp.org/issues/269
 
-Can you please assign a CVE id to it?
+The patch can be found here: 
+https://projects.duckcorp.org/projects/bip/repository/revisions/222a33cb84a2e52ad55a88900b7895bf9dd0262c
 
-Cheers, luciano
+This bug is present in 0.8.8 and previous versions and, according to reporter, 
+remote execution of code should be possible.
+
+Thanks,
+
+/luciano
