@@ -1,67 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/12
-Message-ID: <20120314205412.GB5203@openwall.com>
-Date: Thu, 15 Mar 2012 00:54:12 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/5
+Message-ID: <Pine.GSO.4.64.1201240900140.23800@faron.mitre.org>
+Date: Tue, 24 Jan 2012 09:10:55 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: running the distros lists
+Subject: Re: CVE id assignment dates
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 14, 2012 at 01:42:23PM -0600, Kurt Seifried wrote:
-> Can we also maintain a public database of upstream contacts? I seem to
-> remember a few different efforts to do this but can't find anything
-> current.
 
-We have this wiki page:
+On Mon, 23 Jan 2012, Michael Gilbert wrote:
 
-http://oss-security.openwall.org/wiki/software
+> On Mon, Jan 23, 2012 at 3:04 PM, Steven M. Christey wrote:
+>> We do not publish any dates related to disclosure, patch, or vendor
+>> notification; interested parties can consult other databases that explicitly
+>> track this information, such as OSVDB.
+>
+> Just curious, why not?  It seems like this kind of information would
+> be invaluable for researchers interested anthropological/statistical
+> studies of security vulnerabilities.
 
-It currently lists Apache, Asterisk, ..., Xine, X.Org - just to give an
-idea of what projects chose to add themselves or were added.  By all
-means, please help keep this wiki page current and use it.
+Despite public perception, CVE is *not* a vulnerability database (although 
+the National Vulnerability Database [NVD], which extends CVE, *is*).  For 
+CVE, our primary role has always been to provide standard vulnerability 
+identifiers that everybody can use, so our analysis is focused on that 
+particular task, which keeps us busy enough :-)  Tracking 
+disclosure-related information is outside the scope of our project (and 
+finding this information can take more time than you'd expect).  We use an 
+imprecise notion of disclosure date so we can determine which year to 
+place in the CVE-YYYY-nnnn identifier, but that's it.
 
-We also have:
+I completely agree that tracking this kind of information is important, 
+and I've personally wanted to see disclosure-related stats for years.  I 
+specifically mentioned OSVDB because they are trying to track this 
+information at a greater level of detail than any other effort I know of. 
+And, by virtue of being an *open source* vulnerability database, others 
+can contribute to it.
 
-http://oss-security.openwall.org/wiki/vendors
-http://oss-security.openwall.org/wiki/infrastructure
-
-> This would save a ton of time. It would of course have to be
-> maintained (maybe a scheme like emailing the people listed every few
-> months and offering a "click here to confirm you're still the security
-> contact" and a "click here to be removed as the contact" to help keep it
-> up to date).
-
-Well, we don't have that currently, and I'm not sure if it'd work well
-in practice or not.  I imagine that some upstreams would be offended by
-the automated messages, yet they could also be offended by not being
-notified of an issue affecting their software (and more importantly
-their users would be affected).
-
-> Also things like PGP keys/etc would be nice to have in this.
-
-Right.  Please feel free to add PGP key info to the wiki pages above.
-
-> It strikes me that this would actually be a valuable project for
-> Mitre, similar to CPE, maybe the "SCE" ("Security Contact Enumeration")?
-
-Maybe.
-
-> As anyone trying to notify multiple upstreams knows, it can be a
-> horribly painful process.
-
-Yes, but my gut feeling is that identifying the right set of projects to
-notify is at least as difficult and time-consuming as finding their
-current contact info is.  Of course, anything we can do to make any of
-the steps easier may be of help.
-
-Kurt - how about my original request for help running the list, though?
-Even if you somehow don't volunteer to notify upstreams (and others),
-making sure that every issue gets a CRD proposed for it ASAP will be of
-help.  Can I at least count on you doing that? ;-)  And maybe someone
-else will volunteer for other sub-tasks (although a per-vulnerability
-rather than per-sub-task split between the several responsible list
-members could work better, I think).
-
-Thanks,
-
-Alexander
+- Steve
