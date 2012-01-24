@@ -1,37 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/5
-Message-ID: <20120912123453.GA17642@ngolde.de>
-Date: Wed, 12 Sep 2012 14:34:53 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/12
+Message-ID: <1327441032.27688.66.camel@new-desktop>
+Date: Tue, 24 Jan 2012 22:37:12 +0100
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: tor
+Subject: Re: XSLT issue in MoinMoin
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-from the tor release notes[0]:
-Changes in version 0.2.2.39 - 2012-09-11
-  Tor 0.2.2.39 fixes two more opportunities for remotely triggerable 
-  assertions.
 
-  o Security fixes:
-    - Fix an assertion failure in tor_timegm() that could be triggered
-      by a badly formatted directory object. Bug found by fuzzing with
-      Radamsa. Fixes bug 6811; bugfix on 0.2.0.20-rc.
-    - Do not crash when comparing an address with port value 0 to an
-      address policy. This bug could have been used to cause a remote
-      assertion failure by or against directory authorities, or to
-      allow some applications to crash clients. Fixes bug 6690; bugfix
-      on 0.2.1.10-alpha.
+> How exactly does the attacker get access to the filesystem using XSLT?
 
-I have not seen CVE ids for these issues.
-Can you assign ids for them?
+An attacker can read files using either the doc-as-string() extension
+function or a XML External Entity attack. Write access is done via the
+<exsl:document> extension element.
 
-[0] https://gitweb.torproject.org/tor.git/blob/release-0.2.2:/ReleaseNotes
+Depending of your policy, you may want to affect one, two or three CVE
+(one by vector ? by impact ? by type of bug ?).
 
-Kind regards
-Nico
+> Does everything using 4Suite have this issue?
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+Yes. Unless an obscure and undocumented option allows to deactivate this
+behavior :-(
 
-Content of type "application/pgp-signature" skipped
+My XSLT Wiki has some additional details, including PoC code :
+- http://goo.gl/3A7h2 (4Suite)
+- http://goo.gl/GI5NK (MoinMoin)
+
+Regards,
+Nicolas
+
