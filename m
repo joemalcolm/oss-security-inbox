@@ -1,51 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/05/2
-Message-ID: <501ED51C.808@redhat.com>
-Date: Sun, 05 Aug 2012 14:18:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/25/2
+Message-ID: <20120125150114.GB4413@foo.fgeek.fi>
+Date: Wed, 25 Jan 2012 17:01:14 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request for Calligra
+Subject: Re: Fwd Joomla! Security News 2012-01
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Jan 25, 2012 at 04:17:47PM +0200, Henri Salo wrote:
+> Does someone know if these already have CVE-identifiers? Joomla just released this advisory.
 
-On 08/04/2012 08:58 AM, Agostino Sarubbo wrote:
-> On Saturday 04 August 2012 09:15:22 Jeff Mitchell wrote:
->> Hi,
->> 
->> A buffer overflow attack can lead to arbitrary code execution.
->> Can we get a CVE for this issue, please?
->> 
->> Thanks, Jeff
-> Please post commit code and please provide more information (as
-> Kurt want)
-> 
+This is why I don't like Joomla. They jumped from 1.7 to 2.5.0 and support for 1.7.x is following:
 
-Yes Kurt does want. Also please note it's a 3day weekend in most of
-Canada, hence me actually not being here constantly and enjoying some
-time off =)
+"Please note that version 1.7 will reach end of life on 24 February 2012."
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+EOL for 1.7.x means also 1.6.x, which both are still heavily uesd.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+http://www.joomla.org/download.html
+http://www.joomla.org/announcements/release-news/5403-joomla-250-released.html
 
-iQIcBAEBAgAGBQJQHtUcAAoJEBYNRVNeJnmT7r0QAKz0u7MWN3N1YFLrVnLxbaso
-9KSTGZTHH7mvlGR1JUVjl89XrpBU/8SYM9+JazcTH1Et8xuGIdVM/26EeUiX/A38
-+1s3xm2GYsuf6o9hPZthrO3oQACZrRgTus4QMf9Csxu37If6cokMzdzrcvPPL71S
-i/VXaMPKvEBP0mT7vDQsjRQqYe1erWJtOOQ6Ez1qUw1Ddta5ETdzj7yHPQRbA10f
-NwvhkqJXzfN9rQISYzDaemRKJePtskrzzkddpNWXF5M+uwKpOvu5QAS3X6Pbo8H8
-I+QbWree3HPtLpvfRt6Na/4SpIeylx8Sp04KUCWvmt3Di77/Hagru3dEHIJGJVL7
-3rg/P+qdwHT15n/HpxjVckAQ4r0CyIgy86jOcoZ/BQCEk7N42P3GenpvdoX/lBgk
-KtH7s8fDXS63QmqVP3vah34tmIg731gSbIUnNgX+blB5r7z7+hZmEWLfVFJkH9xR
-NhnSj4dTxwgQ7LXtreiVyRtshlI9KJ92m7mFP47a5HxuuVv6JeniqyCtkRNty+w2
-AnRSB3N86NPqHD6v2AcVdqfCyw5PAm9fPYzfvV54/JfmYGqL5YxlbSUpTrFfZz1J
-JddidGtQvdSUhk2MxJYMFxSoBnirWb6s2CaCOHQLLDD088Zoq4h7dXgUY1HA1ooI
-kOTERHkNGBOvKe8I8ydu
-=enb2
------END PGP SIGNATURE-----
+Joomla is part of oCERT "The oCERT team is a volunteer-based force of well-known security professionals from major Open Source projects, vendors and the security community."
+
+Basicly the end of support for 1.7.x and 1.6.x means that if you go to support-forum and ask something you will be asked for your software version number and if it isn't 2.5.0 they will tell you to upgrade, before you will get more help.
+
+- Henri Salo
