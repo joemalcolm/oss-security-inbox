@@ -1,55 +1,136 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/27/2
-Message-ID: <50124D84.8080005@redhat.com>
-Date: Fri, 27 Jul 2012 02:12:52 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/25/1
+Message-ID: <20120125141747.GA4413@foo.fgeek.fi>
+Date: Wed, 25 Jan 2012 16:17:47 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, sschurtz@...nline.de
-Subject: Re: CVE-request: WordPress plugin Count Per Day XSS (SSCHADV2012-015)
+Subject: Fwd Joomla! Security News 2012-01
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Does someone know if these already have CVE-identifiers? Joomla just released this advisory.
 
-On 07/24/2012 01:26 AM, Henri Salo wrote:
-> Hello,
-> 
-> Can we assign 2012 CVE-identifier for XSS vulnerability in
-> WordPress plugin Count Per Day, thanks.
-> 
-> Original advisory:
-> http://www.darksecurity.de/advisories/2012/SSCHADV2012-015.txt 
-> OSVDB: http://osvdb.org/show/osvdb/83491 Secunia advisory:
-> http://secunia.com/advisories/49692/ Vendor page:
-> http://www.tomsdimension.de/wp-plugins/count-per-day SCM:
-> http://plugins.trac.wordpress.org/changeset/571926/count-per-day#file22
->
->  Fixed in version 3.2 of the plugin, which I manually verified.
-> 
-> - Henri Salo
-> 
+- Henri Salo
 
-Sorry forgot to about this one. Please use CVE-2012-3434 for this issue.
+----- Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Date: Wed, 25 Jan 2012 13:21:21 +0000
+From: Joomla! Developer Network - Security News <no_reply@...mla.org>
+To: henri@...v.fi
+Subject: Joomla! Security News
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Joomla! Developer Network - Security News
 
-iQIcBAEBAgAGBQJQEk2EAAoJEBYNRVNeJnmTlyUP/ivkklXhU+nObX/T80m9ujIF
-JJcoejmbkl8kVsBhezT0wm8vKKKJpgHAvI/7M/IrEBw2OAXjQETWCkxWqOAGvgyG
-zFXsFSFPpVYyOtrfTdF4PIE+6rw54rT/n0FOSwZa3MyrDEFRydzreUzpovDm32b3
-xeAuXu0wixgxCr4p6RmuKbeFIoInIJhwBKf2NgcUP1DumjIGru0yryLwg7kI+FaK
-wTlgHNEuCiWN5tPvHd5EmVMi9KPTDiRFpaylSUvu28O6aaV4FPtlSd7TVseuyEz2
-Fkv0R/kUgimmoBtfN0K79nTgkLTZ79ETGQWC7uwH6lQLCd3wYRbUdn6XvLiE3+r0
-euEoeWVitEec0RnZns/xpULuXZvL0tbwBdCyQ1ipbmeY3fVyYrSE84hgb3SOddbi
-MEBZODZgsiK5UUL6d3mxRPHYwTHxs6ZJyd1AHbXAZjX0smJ7+t0e/Lfd1JiDZaqP
-IzDeRZDSXwjzhBfIEMfzK+fjbCSa5lZA0Ufc7dRzvjzz0uAWobOLWEOexvYpMjZZ
-vetfsKz0PDbg/9gajz2SsTMQk47MS3w882igYzkIq/pDgHiJQkKh/Rl/8bglfNpn
-HwNnlcl3XYzuGMrHAb2zSKhe11TPprMe+OK0+dNwprZx6lEqnDbLgM+8tHYevThp
-Oe9yvBL8mx/xKX3PhTj8
-=cUhC
------END PGP SIGNATURE-----
+///////////////////////////////////////////
+[20120101] - Core - Information Disclosure
+
+Posted: 23 Jan 2012 01:45 AM PST
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/MYKnZ2QJKYE/382-20120101-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
+
+Project: Joomla!
+SubProject: All
+Severity: Low
+Versions: 1.7.3 and all earlier 1.7 and 1.6 versions
+Exploit type: Information Disclosure
+Reported Date: 2012-January-07
+Fixed Date: 2012-January-24
+
+Description
+Inadequate filtering leads to information disclosure.
+Affected Installs
+Joomla! version 1.7.3 and all earlier versions
+Solution
+Upgrade to version 1.7.4 or 2.5.0 or higher
+Reported by Cyrille Barthelemy
+Contact
+The JSST at the Joomla! Security Center.
+
+
+
+///////////////////////////////////////////
+[20120102] - Core - XSS Vulnerability
+
+Posted: 23 Jan 2012 01:45 AM PST
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/XAEsWEG3dgU/383-20120102-core-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
+
+Project: Joomla!
+SubProject: All
+Severity: Moderate
+Versions: 1.7.3 and all earlier 1.7 and 1.6 versions
+Exploit type: XSS Vulnerability
+Reported Date: 2011-November-16
+Fixed Date: 2012-January-24
+
+Description
+Inadequate filtering leads to XSS vulnerability.
+Affected Installs
+Joomla! version 1.7.3 and all earlier versions
+Solution
+Upgrade to version 1.7.4 or 2.5.0 or higher
+Reported by Ankita Kapadia
+Contact
+The JSST at the Joomla! Security Center.
+
+
+
+///////////////////////////////////////////
+[20120103] - Core - Information Disclosure
+
+Posted: 23 Jan 2012 01:45 AM PST
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/Ed0TMAvyQ4g/384-20120103-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
+
+Project: Joomla!
+SubProject: All
+Severity: Low
+Versions: 1.7.3 and all earlier 1.7 and 1.6 versions
+Exploit type: Information Disclosure
+Reported Date: 2011-December-19
+Fixed Date: 2012-January-24
+
+Description
+Inadequate filtering leads to information disclosure.
+Affected Installs
+Joomla! version 1.7.3 and all earlier versions
+Solution
+Upgrade to version 1.7.4 or 2.5.0 or higher
+Reported by Jean-Marie Simonet
+Contact
+The JSST at the Joomla! Security Center.
+
+
+
+///////////////////////////////////////////
+[20120104] - Core - XSS Vulnerability
+
+Posted: 23 Jan 2012 01:45 AM PST
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/K4UuOr8BroM/385-20120104-core-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
+
+Project: Joomla!
+SubProject: All
+Severity: Moderate
+Versions: 1.7.3 and all earlier versions
+Exploit type: XSS Vulnerability
+Reported Date: 2012-January-22
+Fixed Date: 2012-January-24
+
+Description
+Inadequate filtering leads to XSS vulnerability.
+Affected Installs
+Joomla! version 1.7.3 and all earlier 1.7 and 1.6 versions
+Solution
+Upgrade to version 1.7.4 or 2.5.0 or higher
+Reported by David Jardin
+Contact
+The JSST at the Joomla! Security Center.
+
+
+
+--
+You are subscribed to email updates from "Joomla! Developer Network -
+Security News."
+To stop receiving these emails, you may unsubscribe now: http://feedburner.google.com/fb/a/mailunsubscribe?k=JWlBXz9w0F12fWtPu46jwc9_Jcc
+
+Email delivery powered by Google.
+Google Inc., 20 West Kinzie, Chicago IL USA 60610
+
+
+----- End forwarded message -----
