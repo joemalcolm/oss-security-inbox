@@ -1,18 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/3
-Message-ID: <20120327143937.GA8265@jwilk.net>
-Date: Tue, 27 Mar 2012 16:39:37 +0200
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/25/3
+Message-ID: <20120125153128.GA6077@foo.fgeek.fi>
+Date: Wed, 25 Jan 2012 17:31:28 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: distutils creates ~/.pypirc insecurely
+Subject: TWSL2012-002: Multiple Vulnerabilities in WordPress
 Content-Type: text/plain; charset=utf-8
 
-* Vincent Danen <vdanen@...hat.com>, 2012-03-27, 08:15:
->Standard flaw where a file that contains a username and password is 
->written with insecure permissions.  This only affects python 2.6 and 
->higher.
+FYI: http://seclists.org/fulldisclosure/2012/Jan/416
 
-I see the vulnerable code in Python 2.3.7, 2.4.6 and 2.5.6, too.
-
--- 
-Jakub Wilk
+- Henri
