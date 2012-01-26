@@ -1,79 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/13
-Message-ID: <Pine.GSO.4.64.1202011702220.16245@faron.mitre.org>
-Date: Wed, 1 Feb 2012 17:23:34 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/12
+Message-ID: <4F21BD74.7090103@redhat.com>
+Date: Thu, 26 Jan 2012 13:54:12 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: Henri Salo <henri@...v.fi>, filippo.cavallarin@...seq.it
-Subject: XSS hiding CSRF (was: Re: Mibew messenger multiple XSS)
+CC: Christian Boltz <oss-securrity@...ltz.de>
+Subject: Re: CVE request: PostfixAdmin SQL injections and XSS
 Content-Type: text/plain; charset=utf-8
 
 
-Funny, the CVE team was discussing this curiosity just today.
+>>> Please assign a CVE number to those issues.
+>>>
+>>> The issues are fixed in PostfixAdmin 2.3.5, which I'll release
+>>> today or tomorrow.
+>>>
+>>> For reference, here's the changelog with all details:
+>>>   - fix SQL injection in pacrypt() (if $CONF[encrypt] ==
+>>>   'mysql_encrypt') 
+>>>   - fix SQL injection in backup.php - the dump
+>>>   was not mysql_escape()d,>   
+>>>     therefore users could inject SQL (for example in the
+>>>     vacation message) which will be executed when restoring
+>>>     the database dump. WARNING: database dumps created with
+>>>     backup.php from 2.3.4 or older might>     
+>>>              contain malicious SQL. Double-check
+>>>              before using them!
 
-In the Mibew case, the PoC code has POST forms that invoke scripts like 
-"/operator/ban.php"  and "/operator/settings.php".  These are almost 
-certainly administrative functions that probably shouldn't be reachable at 
-all.  Thus, these might be better identified as CSRF issues at their core, 
-instead of XSS.
+Please use CVE-2012-0811 for PostfixAdmin 2.3.4 multiple SQL vulnerabilities
 
-It seems that some researchers report XSS in administrator modules, but 
-they omit when you need to use CSRF in order to get the administrator to 
-perform the XSS.  So, the primary issue is often CSRF, and XSS is only 
-resultant (since, in many cases, the admin already has privileges to edit 
-HTML).  The vuln DBs are starting to catch up with this "trend" in vuln 
-reporting, so there is a very slow shift towards identifying CSRF as the 
-core problem.  However, CSRF is in the eye of the beholder, in that you 
-often need to know the INTENDED functionality of the application before 
-you can interpret whether things are CSRF versus regular functionality, 
-versus good old XSS.
+>>>   - fix XSS with $_GET[domain] in templates/menu.php and
+>>>   edit-vacation - fix XSS in some create-domain input fields
+>>>   - fix XSS in create-alias and edit-alias error message
+>>>   - fix XSS (by values stored in the database) in fetchmail list
 
-Note that this kind of XSS-hiding-CSRF issue is not necessarily tied to 
-admin functionality, but that's where it's a strong indicator that a 
-researcher might be ignoring CSRF.
+Please use CVE-2012-0812 for PostfixAdmin 2.3.4 multiple XSS
+vulnerabilities
 
-Sometimes, though, it can be difficult to determine whether XSS or CSRF is 
-at the root, even if you're dealing with admin functionality.  For 
-example, maybe an admin program will check for CSRF and fail, but include 
-the original form in its error response, possibly enabling XSS.  Or, maybe 
-there are TWO issues at play - maybe a victim can be CSRF'ed to make posts 
-on their behalf, and also a secondary issue where the victim can become an 
-attacker and XSS other people (with or without CSRF).
+>> So basically we have two sets of vulnerabilities: multiple SQL
+>> injections and multiple XSS vulnerabilities, correct?
+> 
+> Yes, correct.
+> (For completeness: the last 3 items ($LANG, the "forward only" marker 
+> and the hex2bin change) are non-security fixes.)
+> 
+> 
+> Gruß
+> 
+> Christian Boltz
 
-Unfortunately, I strongly suspect that the number of XSS-hiding-CSRF 
-reports will grow :-(
-
-For people who investigate vuln reports closely, please keep this trend in 
-mind.  If you are a researcher, consider whether XSS or other issues are 
-really legitimate functionality that is only reachable by targeting the 
-victim with CSRF; if that's the case, then the CSRF is "primary" and the 
-XSS is "resultant" and not a separate vulnerability - and if your targeted 
-application has CSRF, then maybe there's a more powerful impact than just 
-XSS.  (For example, depending on how settings / configuration is 
-implemented, you might be able to get code execution out of it.)
-
-- Steve
+Thanks.
 
 
-On Wed, 1 Feb 2012, Kurt Seifried wrote:
-
-> On 01/31/2012 08:22 AM, Henri Salo wrote:
->> This seems to need 2012 CVE-identifier.
->>
->> Advisory: http://seclists.org/bugtraq/2012/Jan/177
->> Codseq own advisory: http://www.codseq.it/advisories/mibew_messenger_multiple_xss
->> OSVDB: http://osvdb.org/show/osvdb/78663
->> Secunia: http://secunia.com/advisories/47787/
->>
->> At the moment http://mibew.org/ does not work for me.
->>
->> - Henri Salo
->
-> Please use CVE-2012-0829 for this issue.
->
-> P.S. for some reason OSVDB lists this as a CSRF issue (?) which is
-> mentioned in the advisory but not really shown.
->
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
->
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
