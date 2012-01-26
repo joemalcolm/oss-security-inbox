@@ -1,71 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/27/4
-Message-ID: <5012B31D.1060805@openstack.org>
-Date: Fri, 27 Jul 2012 17:26:21 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2012-010] Various Keystone token expiration issues (CVE-2012-3426)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/16
+Message-ID: <4F21E032.1040608@redhat.com>
+Date: Thu, 26 Jan 2012 16:22:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Debian (others?) openssh-server: Forced Command handling leaks private information to ssh clients
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 01/26/2012 04:19 PM, Kurt Seifried wrote:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=657445
+> 
+> ======================================================================
+> 
+> From: Bjoern Buerger <bbu@...gutronix.de>
+> To: Debian Bug Tracking System <submit@...s.debian.org>
+> Subject: openssh-server: Forced Command handling leaks private
+> information to ssh
+>  clients
+> Date: Thu, 26 Jan 2012 11:46:18 +0100
+> 
+> Package: openssh-server
+> Version: 1:5.5p1-6+squeeze1
+> Severity: normal
+> 
+> 
+> The handling of multiple forced commands in ~/.ssh/authorized key leaks
+> information about other configured forced commands to the user. This
+> affects tools lile gitolite, which makes heavy use of forced commands
+> (For gitolite, this bug means: A user can obtain some or all usernames
+>  with access to the same gitolite setup by just using the verbose
+>  switch of his ssh client, which is a really nasty thing).
+> 
+> Example:
+> 
+>  User "bbu" on machine "ptx" has three configured forced commands for
+>  keys test{1,2,3}_rsa.pub:
+> 
+>  command="/usr/bin/first_command" ssh-rsa [...third_key...]
+>  command="/usr/bin/second_command" ssh-rsa [...second_key...]
+>  command="/usr/bin/third_command" ssh-rsa [...third_key...]
+> 
+>  Now, if the user of test1_rsa.pub uses the "-v" switch of
+>  his ssh client, he gets just his command:
+> 
+>  foo@bar:~/ssh_debug$ ssh -i test1_rsa -v bbu@ptx 2>&1 | grep Forced\
+> command
+>  debug1: Remote: Forced command: /usr/bin/first_command
+>  debug1: Remote: Forced command: /usr/bin/first_command
+> 
+>  but the user of test2_rsa.pub sees two commands:
+> 
+>  foo@bar:~/ssh_debug$ ssh -i test2_rsa -v bbu@ptx 2>&1 | grep Forced\
+> command
+>  debug1: Remote: Forced command: /usr/bin/first_command
+>  debug1: Remote: Forced command: /usr/bin/second_command
+>  debug1: Remote: Forced command: /usr/bin/first_command
+>  debug1: Remote: Forced command: /usr/bin/second_command
+> 
+>  and for user of test3_rsa.pub:
+> 
+>  bbu@...ra:~/ssh_debug$ ssh -i test3_rsa -v bbu@ptx 2>&1 | grep Forced\
+> command
+>  debug1: Remote: Forced command: /usr/bin/first_command
+>  debug1: Remote: Forced command: /usr/bin/second_command
+>  debug1: Remote: Forced command: /usr/bin/third_command
+>  debug1: Remote: Forced command: /usr/bin/first_command
+>  debug1: Remote: Forced command: /usr/bin/second_command
+>  debug1: Remote: Forced command: /usr/bin/third_command
+> ======================================================================
+> 
+> I have confirmed that this works exactly as advertised on Debian 6. I
+> have confirmed that RHEL/Fedora are not affected (you only get shown the
+> command for your specific SSH key).
+> 
+> So Debian is definitely affected, but I am concerned others may be as
+> well (is this Debian specific or does it affect all users of that
+> version of OpenSSH?). I suggest you test this on your own distributions
+> as well.
 
-OpenStack Security Advisory: 2012-010
-CVE: CVE-2012-3426
-Date: July 27, 2012
-Title: Various Keystone token expiration issues
-Impact: Medium
-Reporter: Derek Higgins
-Products: Keystone
-Affects: Essex, Folsom
+Please use CVE-2012-0814 for this issue. Also please let me know if
+other Linux distributions are affected!
 
-Description:
-Derek Higgins reported various issues affecting Keystone token
-expiration. A token expiration date can be circumvented by
-continuously creating new tokens before the old one has expired.
-Existing tokens also remain valid after a user account is disabled or
-after an account password changed. An authenticated and authorized
-user could potentially leverage those vulnerabilities to extend his
-access beyond the account owner expectations.
 
-Folsom fixes:
-http://github.com/openstack/keystone/commit/375838cfceb88cacc312ff6564e64eb18ee6a355
-http://github.com/openstack/keystone/commit/628149b3dc6b58b91fd08e6ca8d91c728ccb8626
-http://github.com/openstack/keystone/commit/a67b24878a6156eab17b9098fa649f0279256f5d
-
-Essex fixes:
-http://github.com/openstack/keystone/commit/29e74e73a6e51cffc0371b32354558391826a4aa
-http://github.com/openstack/keystone/commit/d9600434da14976463a0bd03abd8e0309f0db454
-http://github.com/openstack/keystone/commit/ea03d05ed5de0c015042876100d37a6a14bf56de
-
-References:
-https://bugs.launchpad.net/keystone/+bug/998185
-https://bugs.launchpad.net/keystone/+bug/997194
-https://bugs.launchpad.net/keystone/+bug/996595
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3426
-
-Notes:
-Those fixes were already included in Keystone 2012.1.1 stable update
-and the Folsom-1 development milestone.
-
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBCAAGBQJQErMZAAoJEFB6+JAlsQQjMrkP/juA+StMaNQNNqfPyV4gFJHG
-mI/ZTFq7lf9HBqqxrKbWKdDdAW+AbGM+EXL6Vhu0xBCIk0Q9+dyj1t6BQd/Y/CMv
-Je5XWZ3YrufHtNI37I9We8hrNBz4WoVhAyLZNHPHmngRu/Dxz8BNtKC4mSrG5bLL
-ammjtdnecRLPa3GkqYi6tFQgKSzAiU/edXx0+h9veMaxvxKmDzwIKJ625p6CmouR
-esCnoMkC23e2IoDnq85WaoqK9V8PyMJJ8auU1P+olA/VdvTIXOPAiMOrclEOuFCw
-EVENPwXmzh/hM2LZKZSSmRgWxSvADfCWnTWc8VT0CvVbJXkOegwMgsFvzd/oy89Q
-huEu0HiBdOw7yDet5n1f63Es0NO108jEvlN4LNEF0emEv6fNo6rbKHpIqw5R+Dxp
-Yiu0j3XOiBhE6eIUvVdXv+mAvaRJsk9KzWQaAyrp2UKO52MU6G11+zwJpJCVCRod
-yjO2kSm1ksZzSF2ZmoteOeFdqJp11qI1LbfT6vswuacW1zrCPHbAM8RP1DS/5X4d
-PdgzJBZhE20G1YcY+kMMqIlmIs9hgP6IcaeHKxXcrW3Oq/flI00Rade/HmAamQ51
-PsT9cVeE3uZt8plARG1SXyzQp8WF+U//H2af2BGiClX3TdrZU3EIOsKby77Xgwxl
-Z7A0lu7IqS1+4Fm/6738
-=fX6q
------END PGP SIGNATURE-----
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
