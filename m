@@ -1,27 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/10
-Message-ID: <20121110203019.GR13903@dhcp-25-225.brq.redhat.com>
-Date: Sat, 10 Nov 2012 21:30:20 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/17
+Message-ID: <4F21E21C.9050906@redhat.com>
+Date: Thu, 26 Jan 2012 16:30:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- vdsm: certificate generation upon node creation
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: Fwd Joomla! Security News 2012-01
 Content-Type: text/plain; charset=utf-8
 
-When new node image is being created, vdsm.rpm is added to the node
-image and self-signed key (and certificate) is created. This key/cert
-allows vdsm to start and serve requests from anyone who has a matching
-key/cert which could be anybody holding the node image.
+Well no-one spoke up so I'm assuming no CVE's have been issued for these
+issues yet.
 
-Upstream fix:
-http://gerrit.ovirt.org/#/c/8368/
+>> ///////////////////////////////////////////
+>> [20120101] - Core - Information Disclosure
+>>
+>> Posted: 23 Jan 2012 01:45 AM PST
+>> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/MYKnZ2QJKYE/382-20120101-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
+> 
+> 
+> http://developer.joomla.org/security/news/382-20120101-core-information-disclosure.html
+> 
+> Project: Joomla! SubProject: All Severity: Low Versions: 1.7.3 and all
+> earlier 1.7 and 1.6 versions Exploit type: Information Disclosure
+> Reported Date: 2012-January-07 Fixed Date: 2012-January-24 Description
+> Inadequate filtering leads to information disclosure. Affected Installs
+> Joomla! version 1.7.3 and all earlier versions Solution Upgrade to
+> version 1.7.4 or 2.5.0 or higher Reported by Cyrille Barthelemy Contact
+> The JSST at the Joomla! Security Center.
 
-Acknowledgements:
+Please use CVE-2011-4933 for this issue
+(382-20120101-core-information-disclosure.html)
 
-This issue was discovered by Dan Kenigsberg of Red Hat.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=875367
+>> ///////////////////////////////////////////
+>> [20120102] - Core - XSS Vulnerability
+>>
+>> Posted: 23 Jan 2012 01:45 AM PST
+>> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/XAEsWEG3dgU/383-20120102-core-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
+> 
+> 
+> developer.joomla.org/security/news/383-20120102-core-xss-vulnerability.html
+> 
+> Project: Joomla! SubProject: All Severity: Moderate Versions: 1.7.3 and
+> all earlier 1.7 and 1.6 versions Exploit type: XSS Vulnerability
+> Reported Date: 2011-November-16 Fixed Date: 2012-January-24 Description
+> Inadequate filtering leads to XSS vulnerability. Affected Installs
+> Joomla! version 1.7.3 and all earlier versions Solution Upgrade to
+> version 1.7.4 or 2.5.0 or higher Reported by Ankita Kapadia Contact The
+> JSST at the Joomla! Security Center.
 
-Thanks,
+Please use CVE-2011-4934 for this issue
+(383-20120102-core-xss-vulnerability.html)
+
+>> ///////////////////////////////////////////
+>> [20120103] - Core - Information Disclosure
+>>
+>> Posted: 23 Jan 2012 01:45 AM PST
+>> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/Ed0TMAvyQ4g/384-20120103-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
+> 
+> http://developer.joomla.org/security/news/384-20120103-core-information-disclosure.html
+> 
+> Project: Joomla! SubProject: All Severity: Low Versions: 1.7.3 and all
+> earlier 1.7 and 1.6 versions Exploit type: Information Disclosure
+> Reported Date: 2011-December-19 Fixed Date: 2012-January-24 Description
+> Inadequate filtering leads to information disclosure. Affected Installs
+> Joomla! version 1.7.3 and all earlier versions Solution Upgrade to
+> version 1.7.4 or 2.5.0 or higher Reported by Jean-Marie Simonet Contact
+> The JSST at the Joomla! Security Center.
+
+Please use CVE-2011-4935 for this issue
+(384-20120103-core-information-disclosure.html)
+
+>> ///////////////////////////////////////////
+>> [20120104] - Core - XSS Vulnerability
+>>
+>> Posted: 23 Jan 2012 01:45 AM PST
+>> c
+> 
+> 
+> 
+> http://developer.joomla.org/security/news/385-20120104-core-xss-vulnerability.html
+> 
+> Project: Joomla! SubProject: All Severity: Moderate Versions: 1.7.3 and
+> all earlier versions Exploit type: XSS Vulnerability Reported Date:
+> 2012-January-22 Fixed Date: 2012-January-24 Description Inadequate
+> filtering leads to XSS vulnerability. Affected Installs Joomla! version
+> 1.7.3 and all earlier 1.7 and 1.6 versions Solution Upgrade to version
+> 1.7.4 or 2.5.0 or higher Reported by David Jardin Contact The JSST at
+> the Joomla! Security Center.
+
+Please use CVE-2011-4936 for this issue
+(385-20120104-core-xss-vulnerability.html)
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Kurt Seifried Red Hat Security Response Team (SRT)
