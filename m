@@ -1,36 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/25/1
-Message-ID: <1330195034.8332.125.camel@tiger.regit.org>
-Date: Sat, 25 Feb 2012 19:37:14 +0100
-From: Eric Leblond <eric@...it.org>
-To: oss-security@...ts.openwall.com
-Subject: Attack on badly configured Netfilter-based firewalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/8
+Message-ID: <20120126151241.GA30438@statler.antagonism.home>
+Date: Thu, 26 Jan 2012 10:12:41 -0500
+From: Patrick R McDonald <marlowe@...agonism.org>
+To: Christian Hoffmann <christian@...fie.info>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Request for CVE for Vulnerability in Tahoe-LAFS 1.9.0
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Thu, Jan 26, 2012 at 03:57:14PM +0100, Christian Hoffmann wrote:
+> Hallo Patrick,
+>
+> On 26.01.2012 15:15, Patrick R McDonald wrote:
+> > I would like to request a CVE for a vulnerability in Tahoe-LAFS,
+> >
+> > https://tahoe-lafs.org/pipermail/tahoe-announce/2012-January/000032.html
+> I think CVE-2012-0051 has already been assigned to this vulnerability.
+>
+> It is referenced in the Trac ticket (see below) which is mentioned in
+> the above mail archive post, unless I'm confusing things.
+>
+>
+> References:
+> https://tahoe-lafs.org/trac/tahoe-lafs/ticket/1654
+> http://seclists.org/oss-sec/2012/q1/135 (initial request)
+> http://seclists.org/oss-sec/2012/q1/158 (CVE assignment)
+>
+>
+> Best regards,
+>
+> Christian Hoffmann
+>
 
-I've discovered a generic attack on firewall using Application Level
-Gateway (like Netfilter or Checkpoint).
+My apologies.  Thanks for the info and the quick turnaround.
 
-Impact:
-An attacker on a local network can open some pinholes in a firewall
-which is not correctly protected.
-Fix:
-None, the issue has to be fixed in the firewall configuration.
-Workaround:
-Apply a strict anti-spoofing policy for IPv4 and IPv6 as described in
-the document "Secure use of iptables and connection tracking helpers" 
-This document was written after private disclosure of the attack to the
-Netfilter's team.
+--
+----------------------------------------------------------------
+| Patrick R. McDonald                       GPG Key: A2D1E972  |
+| https://www.antagonism.org/         <marlowe@...agonism.org> |
+|                               <mcdonald.patrick.r@...il.com> |
+|                         <patrick@...nsecurityfoundation.org> |
+----------------------------------------------------------------
+| Malo periculosam libertatem quam quietum servitium           |
+----------------------------------------------------------------
 
-This attack will be presented at Cansecwest, March 9th 2012.
-
-Secure use of iptables and connection tracking helpers:
-http://home.regit.org/netfilter-en/secure-use-of-helpers/
-
-Best regards,
--- 
-Eric Leblond 
-Blog: http://home.regit.org/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Content of type "application/pgp-signature" skipped
