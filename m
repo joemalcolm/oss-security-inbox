@@ -1,35 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/14
-Message-Id: <201205182028.q4IKSafO029791@linus.mitre.org>
-Date: Fri, 18 May 2012 16:28:36 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/15
+Message-ID: <4F21DF82.9090902@redhat.com>
+Date: Thu, 26 Jan 2012 16:19:30 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2012-2762 Serendipity include/functions_trackbacks.inc.php SQL injection
+Subject: CVE Request: Debian (others?) openssh-server: Forced Command handling leaks private information to ssh clients
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=657445
 
-https://github.com/s9y/Serendipity/commit/87153991d06bc18fe4af05f97810487c4a340a92
-http://blog.s9y.org/archives/241-Serendipity-1.6.2-released.html
-CVE-2012-2762
+======================================================================
 
-(different affected versions than CVE-2012-2332)
+From: Bjoern Buerger <bbu@...gutronix.de>
+To: Debian Bug Tracking System <submit@...s.debian.org>
+Subject: openssh-server: Forced Command handling leaks private
+information to ssh
+ clients
+Date: Thu, 26 Jan 2012 11:46:18 +0100
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S S145
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Package: openssh-server
+Version: 1:5.5p1-6+squeeze1
+Severity: normal
 
-iQEcBAEBAgAGBQJPtrB3AAoJEGvefgSNfHMd840H/i+ReLRXmlQRN4sqkhzEqkj5
-bgJfdSd2l9eU50wCdZtqOeV2Os8mLpDeO1KR4IFIQNcXGVJsh4z3wbTHF4WkNHaF
-8CqrzReerujVmhSABl2U4mz7m1/KoQCBdzKcF1dGbFMlUSGuUZpYi8+mFvHFieig
-54zhO5kiQJyAJJMb8xjcxkmvhxC2OD2rTULmw+zqswRGVVKpOPIxiB6m8d9zYLnD
-JFT31MtfNLmT9YwvTYctaU/Q9y2kP6yRdmYyPB0tojhXfURNCd5O5XRpf3L2Fqx3
-p01iJBap3unzTEcN9MnkK03vm0cvzpNRycbqfaPcoyf0e7TP6Vv44qFJ83NX1HE=
-=6lp5
------END PGP SIGNATURE-----
+
+The handling of multiple forced commands in ~/.ssh/authorized key leaks
+information about other configured forced commands to the user. This
+affects tools lile gitolite, which makes heavy use of forced commands
+(For gitolite, this bug means: A user can obtain some or all usernames
+ with access to the same gitolite setup by just using the verbose
+ switch of his ssh client, which is a really nasty thing).
+
+Example:
+
+ User "bbu" on machine "ptx" has three configured forced commands for
+ keys test{1,2,3}_rsa.pub:
+
+ command="/usr/bin/first_command" ssh-rsa [...third_key...]
+ command="/usr/bin/second_command" ssh-rsa [...second_key...]
+ command="/usr/bin/third_command" ssh-rsa [...third_key...]
+
+ Now, if the user of test1_rsa.pub uses the "-v" switch of
+ his ssh client, he gets just his command:
+
+ foo@bar:~/ssh_debug$ ssh -i test1_rsa -v bbu@ptx 2>&1 | grep Forced\
+command
+ debug1: Remote: Forced command: /usr/bin/first_command
+ debug1: Remote: Forced command: /usr/bin/first_command
+
+ but the user of test2_rsa.pub sees two commands:
+
+ foo@bar:~/ssh_debug$ ssh -i test2_rsa -v bbu@ptx 2>&1 | grep Forced\
+command
+ debug1: Remote: Forced command: /usr/bin/first_command
+ debug1: Remote: Forced command: /usr/bin/second_command
+ debug1: Remote: Forced command: /usr/bin/first_command
+ debug1: Remote: Forced command: /usr/bin/second_command
+
+ and for user of test3_rsa.pub:
+
+ bbu@...ra:~/ssh_debug$ ssh -i test3_rsa -v bbu@ptx 2>&1 | grep Forced\
+command
+ debug1: Remote: Forced command: /usr/bin/first_command
+ debug1: Remote: Forced command: /usr/bin/second_command
+ debug1: Remote: Forced command: /usr/bin/third_command
+ debug1: Remote: Forced command: /usr/bin/first_command
+ debug1: Remote: Forced command: /usr/bin/second_command
+ debug1: Remote: Forced command: /usr/bin/third_command
+======================================================================
+
+I have confirmed that this works exactly as advertised on Debian 6. I
+have confirmed that RHEL/Fedora are not affected (you only get shown the
+command for your specific SSH key).
+
+So Debian is definitely affected, but I am concerned others may be as
+well (is this Debian specific or does it affect all users of that
+version of OpenSSH?). I suggest you test this on your own distributions
+as well.
+
+
+
+
+
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
