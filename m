@@ -1,34 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/04/2
-Message-ID: <20120204014539.GA19577@openwall.com>
-Date: Sat, 4 Feb 2012 05:45:39 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/10
+Message-ID: <4F218A2F.4000203@redhat.com>
+Date: Thu, 26 Jan 2012 10:15:27 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+CC: Christian Boltz <oss-securrity@...ltz.de>
+Subject: Re: CVE request: PostfixAdmin SQL injections and XSS
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 03, 2012 at 08:26:26PM -0500, Michael Gilbert wrote:
-> I think the important aspect here is the transparency of the private
-> discussion (after an appropriate delay), rather than the length of the
-> delay itself.
-
-Thank you for sharing your opinion.
-
-Yet the delay itself matters too.  There are different opinions as to
-whether it is "the important aspect" or not.
-
-> That can be set by the researcher (with some reasonable
-> maximum, like a month).
+On 01/26/2012 04:07 AM, Christian Boltz wrote:
+> Hello,
 > 
-> We all should be able to see what is going on over in the closed list.
->  Although it is unlikely being used for nefarious purposes (hiding
-> issues permanently, etc.), transparency (after a delay) is the only
-> way to show that it is not.  Anyway, 30 days seems appropriate.
+> we (the upstream PostfixAdmin developers) received a report about SQL
+> injections and XSS in PostfixAdmin. 
+> 
+> Please assign a CVE number to those issues.
+> 
+> The issues are fixed in PostfixAdmin 2.3.5, which I'll release today or 
+> tomorrow.
+> 
+> 
+> For reference, here's the changelog with all details:
+> 
+>   - fix SQL injection in pacrypt() (if $CONF[encrypt] == 'mysql_encrypt')
+>   - fix SQL injection in backup.php - the dump was not mysql_escape()d, 
+>     therefore users could inject SQL (for example in the vacation message)
+>     which will be executed when restoring the database dump.
+>     WARNING: database dumps created with backup.php from 2.3.4 or older might
+>              contain malicious SQL. Double-check before using them!
+>   - fix XSS with $_GET[domain] in templates/menu.php and edit-vacation
+>   - fix XSS in some create-domain input fields
+>   - fix XSS in create-alias and edit-alias error message
+>   - fix XSS (by values stored in the database) in fetchmail list view,
+>     list-domain and list-virtual
+>   - create-domain: fix SQL injection (only exploitable by superadmins)
+>   - add missing $LANG['pAdminDelete_admin_error']
+>   - don't mark mailbox targets with recipient delimiter as "forward only"
+>   - wrap hex2bin with function_exists() - PHP 5.3.8 has it as native function
 
-I don't mind.  Like I said, I need a tool - a program to mass-decrypt a
-PGP/MIME mbox, producing another mbox.  I think such a program might be
-generally useful.  Well, or alternatively I need to introduce a
-different mechanism for the archive - not treat it as a regular
-subscriber like I intended to.
 
-Alexander
+So basically we have two sets of vulnerabilities: multiple SQL
+injections and multiple XSS vulnerabilities, correct?
+
+
+> Gruß
+> 
+> Christian Boltz
+
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
