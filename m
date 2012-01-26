@@ -1,45 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/11/4
-Message-ID: <20120111201942.GP31851@dhcp-25-225.brq.redhat.com>
-Date: Wed, 11 Jan 2012 21:19:43 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/18
+Message-ID: <4F21E662.8060308@redhat.com>
+Date: Thu, 26 Jan 2012 16:48:50 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- kernel: kvm: syscall instruction induced guest panic
+CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: XSLT issue in MoinMoin
 Content-Type: text/plain; charset=utf-8
 
-"32bit guests will crash (and 64bit guests may behave in a
-wrong way) for example by simply executing following
-nasm-demo-application:
+On 01/24/2012 02:37 PM, Nicolas Grégoire wrote:
+> 
+>> How exactly does the attacker get access to the filesystem using XSLT?
+> 
+> An attacker can read files using either the doc-as-string() extension
+> function or a XML External Entity attack. Write access is done via the
+> <exsl:document> extension element.
+> 
+> Depending of your policy, you may want to affect one, two or three CVE
+> (one by vector ? by impact ? by type of bug ?).
+> 
+>> Does everything using 4Suite have this issue?
+> 
+> Yes. Unless an obscure and undocumented option allows to deactivate this
+> behavior :-(
+> 
+> My XSLT Wiki has some additional details, including PoC code :
+> - http://goo.gl/3A7h2 (4Suite)
+> - http://goo.gl/GI5NK (MoinMoin)
+> 
+> Regards,
+> Nicolas
+> 
 
-    [bits 32]
-    global _start
-    SECTION .text
-    _start: syscall
+I think this issue warrants some more discussion, is the vuln in
+moinmoin (and by extension anyone using 4Suite in a similar manner), or
+is it a 4Suite issue (and in this case it's intended behaviour and not a
+security issue?). Steve: care to weigh in?
 
-The reason seems a missing "invalid opcode"-trap (int6) for the
-syscall opcode "0f05", which is not available on Intel CPUs
-within non-longmodes, as also on some AMD CPUs within legacy-mode.
-(depending on CPU vendor, MSR_EFER and cpuid)
-
-Because previous mentioned OSs may not engage corresponding
-syscall target-registers (STAR, LSTAR, CSTAR), they remain
-NULL and (non trapping) syscalls are leading to multiple
-faults and finally crashs."
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=773370
-https://lkml.org/lkml/2011/12/28/170
-http://www.spinics.net/lists/kvm/msg66633.html
-
-Proposed patch:
-http://www.spinics.net/lists/kvm/msg66633.html
-
-Credits:
-Stephan Bärwolf
-
-Introduced by:
-e66bb2ccdcf76d032bbb464b35c292bb3ee58f9b in linux-2.6.32
-
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Kurt Seifried Red Hat Security Response Team (SRT)
