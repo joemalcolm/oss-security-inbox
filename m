@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/12
-Message-Id: <201204191520.40640.mweckbecker@suse.de>
-Date: Thu, 19 Apr 2012 15:20:40 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/9
+Message-ID: <4F21893B.2020306@redhat.com>
+Date: Thu, 26 Jan 2012 10:11:23 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: latex2man / texlive
+Subject: Re: Request for CVE for Vulnerability in Tahoe-LAFS 1.9.0
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt, Steve, vendors,
+And that's why I'm wanting people to include source code commit
+information in their requests (the system works!!! =).
 
-recently there has been an issue reported by Helmut Grohne in latex2man. It 
-seems to be different from what we had the other day (CVE-2012-2093 [1]).
-Bug report of the new issue is available at:
+On 01/26/2012 08:12 AM, Patrick R McDonald wrote:
+> On Thu, Jan 26, 2012 at 03:57:14PM +0100, Christian Hoffmann
+> wrote:
+>> Hallo Patrick,
+>> 
+>> On 26.01.2012 15:15, Patrick R McDonald wrote:
+>>> I would like to request a CVE for a vulnerability in
+>>> Tahoe-LAFS,
+>>> 
+>>> https://tahoe-lafs.org/pipermail/tahoe-announce/2012-January/000032.html
+>>
+>>> 
+I think CVE-2012-0051 has already been assigned to this vulnerability.
+>> 
+>> It is referenced in the Trac ticket (see below) which is
+>> mentioned in the above mail archive post, unless I'm confusing
+>> things.
+>> 
+>> 
+>> References: https://tahoe-lafs.org/trac/tahoe-lafs/ticket/1654 
+>> http://seclists.org/oss-sec/2012/q1/135 (initial request) 
+>> http://seclists.org/oss-sec/2012/q1/158 (CVE assignment)
+>> 
+>> 
+>> Best regards,
+>> 
+>> Christian Hoffmann
+>> 
+> 
+> My apologies.  Thanks for the info and the quick turnaround.
 
-  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668779
 
-Does this qualify for a CVE? 
 
-Thanks,
-Matthias
-
-[1] http://seclists.org/oss-sec/2012/q2/56
 
 -- 
-Matthias Weckbecker, Junior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Kurt Seifried Red Hat Security Response Team (SRT)
