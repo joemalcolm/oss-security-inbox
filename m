@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/4
-Message-Id: <201201241041.30510.luciano@debian.org>
-Date: Tue, 24 Jan 2012 10:41:30 +0100
-From: Luciano Bello <luciano@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: bip buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/4
+Message-ID: <20120126015014.GA22914@foo.fgeek.fi>
+Date: Thu, 26 Jan 2012 03:50:14 +0200
+From: Henri Salo <henri@...v.fi>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Fwd Joomla! Security News 2012-01
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
-        Please, assign a CVE ID for the following vulnerability in bip 
-(http://bip.t1r.net): https://projects.duckcorp.org/issues/269
+On Wed, Jan 25, 2012 at 05:07:27PM -0700, Kurt Seifried wrote:
+> On 01/25/2012 07:17 AM, Henri Salo wrote:
+> > Does someone know if these already have CVE-identifiers? Joomla just released this advisory.
+> > 
+> > - Henri Salo
+> > 
+> > ----- Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
+> > 
+> > Date: Wed, 25 Jan 2012 13:21:21 +0000
+> > From: Joomla! Developer Network - Security News <no_reply@...mla.org>
+> > To: henri@...v.fi
+> > Subject: Joomla! Security News
+> > 
+> > Joomla! Developer Network - Security News
+> 
+> Are these the correct URL's/descriptions (see below)?
+<snip>
 
-The patch can be found here: 
-https://projects.duckcorp.org/projects/bip/repository/revisions/222a33cb84a2e52ad55a88900b7895bf9dd0262c
+To me that looks OK, but I just asked IF there is already CVEs assigned to these security vulnerabilities or not. I don't know if Joomla has requested identifiers from MITRE or done it via oCERT for example. Advisories, which are at the moment just oneliners in their webpage do not at least list any CVE-identifiers.
 
-This bug is present in 0.8.8 and previous versions and, according to reporter, 
-remote execution of code should be possible.
-
-Thanks,
-
-/luciano
+- Henri Salo
