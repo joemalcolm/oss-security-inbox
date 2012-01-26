@@ -1,55 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/14
-Message-ID: <50903858.3060709@redhat.com>
-Date: Tue, 30 Oct 2012 14:28:08 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/13
+Message-ID: <4F21DC5F.70007@redhat.com>
+Date: Thu, 26 Jan 2012 16:06:07 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, security@...pal.org
-Subject: Re: Strange CVE situation (at least one ID should come of this)
+Subject: CVE request: wicd writes sensitive information in log files (password, passphrase...)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+wicd writes sensitive information in log files (password, passphrase...)
 
-On 10/30/2012 11:39 AM, Henri Salo wrote:
-> On Tue, Oct 30, 2012 at 01:34:07PM -0400, Steven M. Christey
-> wrote:
->> Perhaps the OSS community could borrow an idea from one of the 
->> framework vendors with lots of third-party modules - I forget if
->> it was Joomla or Drupal - who actively maintained a list of
->> poorly maintained or obsolete software.
-> 
-> There is at least http://docs.joomla.org/Vulnerable_Extensions_List
-> and Drupal is coordinating contrib modules too (code reviews,
-> advisories, etc). I don't know if Joomla security guys handle
-> vulnerable extensions in some level or not.
-> 
-> - Henri Salo
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652417
 
-Does Drupal throw up a warning if you try to use one of these extensions?
+From: Vincent Lefevre <vincent@...c17.net>
+To: Debian Bug Tracking System <submit@...s.debian.org>
+Subject: wicd writes sensitive information in log files (password,
+ passphrase...)
+Date: Sat, 17 Dec 2011 03:27:32 +0100
 
-It occurs to me we need a mechanism similar to CRL/OCSP for software,
-especially things with plugins like Drupal/WordPress/Firefox/Chrome so
-that we can at least warn users of bad software.
+Package: wicd
+Version: 1.7.1~b3-3
+Severity: grave
+Tags: security
+Justification: user security hole
 
-- -- 
+wicd writes sensitive information in log files (under /var/log/wicd),
+such as passwords and passphrases. Users in the adm group can have
+access to them, but also log files are meant to be sent in bug
+reports, and if the bug reporter doesn't pay attention, there is
+a huge risk to transmit such information.
+
+http://bazaar.launchpad.net/~wicd-devel/wicd/experimental/revision/682
+
+=== modified file 'wicd/configmanager.py'
+--- wicd/configmanager.py	2011-12-15 18:21:53 +0000
++++ wicd/configmanager.py	2011-12-17 06:55:18 +0000
+@@ -120,8 +120,13 @@
+             ret = to_unicode(ret)
+             if default:
+                 if self.debug:
+-                    print ''.join(['found ', option, ' in configuration ',
+-                                   str(ret)])
++                    # mask out sensitive information
++                    if option in ['apsk', 'password', 'identity',
+'private_key', \
++                                  'private_key_passwd', 'key',
+'passphrase']:
++                        print ''.join(['found ', option, ' in
+configuration *****'])
++                    else:
++                        print ''.join(['found ', option, ' in
+configuration ',
++                                       str(ret)])
+         else:
+             if default != "__None__":
+                 print 'did not find %s in configuration, setting
+default %s' % (option, str(default))
+
+
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQkDhYAAoJEBYNRVNeJnmTPpYP/jL2WyeKwCZLEbWR0jb84cd6
-Z+qJ/g9XvMicZr7n8n4huNqBF1K4eZ8/GN+JSj53XA8WA/CWFfpZ6POMxbxzQnq4
-nVGl6iB4/mnnRFHMcCejAwV/bNi5W2yOlAkVBwbzPc2UM2X2iG3vEWOs+m8AfT0E
-Psde9Mj2X7hoVNy/nH0uIgPomQIT0ErIPYv/4fJgROKoIQGCWF7JG9WiWGboHNfd
-lnxYDrC0JLB2EG1P3aFarL6LRCIXyC7C344TbRd4l3Ye6H99Auw8ZheSbiYlITUH
-HDlUj/PemXruY04p4CLymXklGKIqi9ZTpfPnpHJyyMn4U3kdgM/ZE7hFlT1xl7mu
-8/qvGj772E942LUrnpGmW3iATVOkBzmEg7IjOOiAzW9XsujV4Nmpsm1B1+GFOded
-u9FnUDoJa4oqpY0zkr2YI43UzfIV+vb0lBdrAQsxk3xame/8lgJSh7nw90PjKV8p
-oulkVDcqpnZoleflztgloGP0CqxBF91AoDOyPLX2UygopYCt8FvvcMCUhIupS1HO
-0HBsHP+karYpnh3R0MO67UVcaN+h93Pd98Zzyr23mnnLMdvxXC4e2pUPDBFObqkH
-UaB2eTqZVPaa1swOT5Z5lRJLU6BDwW/ITD6odg7tuxi64go18PPK1O3EBdz8bs9V
-2ntc+2tdD5xT95aAAiS7
-=qntM
------END PGP SIGNATURE-----
