@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/10
-Message-ID: <4FA3FE7C.2010101@redhat.com>
-Date: Fri, 04 May 2012 18:06:20 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Peter Jones <pjones@...hat.com>
-Subject: CVE Request -- anaconda: Weak permissions by writing password configuration file in bootloader configuration module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/6
+Message-ID: <20120126141518.GC29661@statler.antagonism.home>
+Date: Thu, 26 Jan 2012 09:15:18 -0500
+From: Patrick R McDonald <marlowe@...agonism.org>
+To: oss-security@...ts.openwall.com
+Subject: Request for CVE for Vulnerability in Tahoe-LAFS 1.9.0
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+I would like to request a CVE for a vulnerability in Tahoe-LAFS,
 
-   a security flaw was found in the way bootloader configuration module of
-Anaconda, a graphical system installer, stored password hashes when performing
-write of password configuration file (0755 permissions were used instead of
-0700 ones). A local users could use this flaw to obtain password hashes and
-conduct brute force password guessing attacks (possibly leading to password
-circumvention, machine reboot or use of custom kernel or initrd command line
-parameters).
+https://tahoe-lafs.org/pipermail/tahoe-announce/2012-January/000032.html
 
-Upstream patch:
-[1] http://git.fedorahosted.org/git/?p=anaconda.git;a=commit;h=03ef13b625cc06873a924e0610340f8489fd92df
+The resolution to the vulnerability is
 
-References:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=819031
+https://tahoe-lafs.org/pipermail/tahoe-announce/2012-January/000033.html
 
-Could you allocate a CVE identifier for this?
+If you have any questions, please feel free to contact me directly.
 
-Thank you && Regards, Jan.
 --
-Jan iankko Lieskovsky / Red Hat Security Response Team
+----------------------------------------------------------------
+| Patrick R. McDonald                       GPG Key: A2D1E972  |
+| https://www.antagonism.org/         <marlowe@...agonism.org> |
+|                               <mcdonald.patrick.r@...il.com> |
+|                         <patrick@...nsecurityfoundation.org> |
+----------------------------------------------------------------
+| Malo periculosam libertatem quam quietum servitium           |
+----------------------------------------------------------------
+
+Content of type "application/pgp-signature" skipped
