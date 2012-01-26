@@ -1,117 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/5
-Message-ID: <4FBCAAC4.9020206@redhat.com>
-Date: Wed, 23 May 2012 11:15:48 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Matthias Weckbecker <mweckbecker@...e.de>
-CC: oss-security@...ts.openwall.com, "John W. Linville" <linville@...hat.com>
-Subject: Re: CVE request(?): hostapd: improper file permissions of hostapd's config leaks credentials
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/3
+Message-ID: <20120126012445.GA21847@foo.fgeek.fi>
+Date: Thu, 26 Jan 2012 03:24:45 +0200
+From: Henri Salo <henri@...v.fi>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: TWSL2012-002: Multiple Vulnerabilities in WordPress
 Content-Type: text/plain; charset=utf-8
 
-Hi Matthias,
+On Wed, Jan 25, 2012 at 05:02:58PM -0700, Kurt Seifried wrote:
+> On 01/25/2012 08:31 AM, Henri Salo wrote:
+> > FYI: http://seclists.org/fulldisclosure/2012/Jan/416
+> > 
+> > - Henri
+> 
+> Uh correct me if I am wrong but these already have CVE's? From the link:
+> 
+> Finding 1: PHP Code Execution and Persistent Cross Site Scripting
+> Vulnerabilities via 'setup-config.php' page.
+> CVE: CVE-2011-4899
+> 
+> Finding 2: Multiple Cross Site Scripting Vulnerabilities in
+> 'setup-config.php' page
+> CVE: CVE-2012-0782
+> 
+> Finding 3: MySQL Server Username/Password Disclosure Vulnerability via
+> 'setup-config.php' page
+> CVE: CVE-2011-4898
 
-   thank you for your request.
+Yes you are correct. My point was to share this information with oss-security and the information being that WordPress is not going to fix these issues. Not everyone from oss-security is reading full-disclosure and still want to kno security-related topics of open-source software and looking at the lasts posts of full-disclosure I don't wonder why :)
 
-On 05/23/2012 10:21 AM, Matthias Weckbecker wrote:
-> Hi Kurt,
-> Hi vendors,
->
-> not too critical in my opinion, but I think still worth to be at least
-> mentioned briefly as other distros such as Fedora 16 were affected too:
->
-> https://bugzilla.novell.com/show_bug.cgi?id=740964
->
-> I'm not sure whether this issue should get a CVE,
-
-We have previously checked this with John W.Linville (Cc-ed on this post too)
-with reply from him being as inlined below:
-
----<inline>---
-Jan,
-
-I think you understand it all correctly.
-
-Thanks,
-
-John
-
-On Thu, 2012-05-17 at 12:44 +0200, Jan Lieskovsky wrote:
- > Hello John,
- >
- >    this is due the following Novell bug:
- >    [1] https://bugzilla.novell.com/show_bug.cgi?id=740964
- >
- > I have checked that Fedora hostapd versions, have permissions like
- > (thus insecure too):
- >
- > # ls -l /etc/hostapd/hostapd.conf
- > -rw-r--r--. 1 root root 722 Feb  9  2011 /etc/hostapd/hostapd.conf
- >
- > I am taking the default content of /etc/hostapd/hostapd.conf
- > as an example configuration (thus something which should the
- > administrator of the system to update to reflect their needs
- > to get hostapd for their wireless network configuration to
- > work properly.
- >
- > Thus as such I would say this is just issue of proper configuration
- > (in the moment of editing the configuration file the administrator
- > should update the permissions on the config file too to ensure WPA
- > password wouldn't leak, right?), than a real security flaw.
- >
- > Do you agree with this view or should I request CVE identifier
- > for this issue and we should get hostapd packages in Fedora updated
- > to correct this?
- >
- > Thank you && Regards, Jan.
- > --
- > Jan iankko Lieskovsky / Red Hat Security Response Team
- >
- > P.S.:
- >
- > For the other part of Novell bug (permissions for hostapd.wpa_psk
- > in Fedora versions there doesn't seem to be other hostapd.wpa_psk
- > than just:
- >
- > /usr/share/doc/hostapd-0.7.3/hostapd.wpa_psk
- >
- > which I think is there for documentation / config sample purposes).
- > Thus I would not consider this second part as a security issue.
--- 
-John W. Linville            The water won't run clean until you get
-linville@...hat.com                       the pigs out of the creek.
-
----</inline>---
-
-Thus basically from the above, we wouldn't look at this one as a
-security flaw, because this is more question of proper configuration,
-rather than a real security flaw (the administrator needs in any
-case edit /etc/hostapd/hostapd.conf it to suite their needs / their
-local wireless configuration before being able to use the hostapd
-service. And in that moment [when entering sensitive WPA information
-there], they should also change the permissions of the hostapd
-configuration it to be more secure / not readable by all local users).
-
-Thus maybe something to be explicitly mentioned in the documentation
-(change permissions of the config file post update), but not a security
-flaw.
-
-> but in the past similar
-> vulnerabilities got a CVE (e.g. CVE-2012-0863).
-
- From http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-0863 and
-mainly from:
-https://bugs.launchpad.net/ubuntu/+source/mumble/+bug/783405/comments/0
-
-the passwords in this case were stored in plaintext in the database,
-which is something slightly different.
-
-Hope this helps.
-
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->
-> Thanks,
-> Matthias
->
+- Henri Salo
