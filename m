@@ -1,110 +1,180 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/17/3
-Message-ID: <CAB9ZNAz3Hkbajo6JeOQZd7YHAbvYnJG24NUCu0Ku7t+7QJ63Uw@mail.gmail.com>
-Date: Thu, 17 May 2012 16:29:11 -0500
-From: Andres Gomez <agomez@...idsignal.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  vuln@...unia.com
-Subject: Re: CVE Request: Planeshift buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/2
+Message-ID: <4F20993F.9050006@redhat.com>
+Date: Wed, 25 Jan 2012 17:07:27 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: Fwd Joomla! Security News 2012-01
 Content-Type: text/plain; charset=utf-8
 
-Planeshift is an online multiplayer role playing game which is open source (
-http://en.wikipedia.org/wiki/PlaneShift_(video_game)) and "chatbubbles.xml"
-is a sort of configuration file for chat windows inside the game, so I
-can't be changed directly by remote users.
+On 01/25/2012 07:17 AM, Henri Salo wrote:
+> Does someone know if these already have CVE-identifiers? Joomla just released this advisory.
+> 
+> - Henri Salo
+> 
+> ----- Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
+> 
+> Date: Wed, 25 Jan 2012 13:21:21 +0000
+> From: Joomla! Developer Network - Security News <no_reply@...mla.org>
+> To: henri@...v.fi
+> Subject: Joomla! Security News
+> 
+> Joomla! Developer Network - Security News
 
-2012/5/17 Kurt Seifried <kseifried@...hat.com>
->
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 05/17/2012 08:52 AM, Andres Gomez wrote:
-> > Name: Stack-based buffer overflow in Planeshift 0.5.9 and earlier
-> > Software: Planeshift 0.5.9 Software link:
-> > http://www.planeshift.it/ Vulnerability Type: Buffer overflow
-> >
-> > Vulnerability Details:
-> >
-> > There is a buffer overflow in planeshift/src/client/chatbubbles.cpp
-> > line 223:
-> >
-> > . . .
-> >
-> > // align csString align = chatNode->GetAttributeValue("align");
-> > align.Downcase(); if (align == "right") chat.textSettings.align =
-> > ETA_RIGHT; else if (align == "center") chat.textSettings.align =
-> > ETA_CENTER; else chat.textSettings.align = ETA_LEFT;
-> >
-> > // prefix 223>  strcpy(chat.effectPrefix,
-> > chatNode->GetAttributeValue("effectPrefix"));
-> >
-> > //enabled . . .
-> >
-> > this line reads a tag inside chatbubbles.xml called effectPrefix.
-> > If that string is very long, for example:
-> >
-> > <chat type="say" enabled="yes" colourR="186" colourG="168"
-> > colourB="126" shadowR="108" shadowG="98" shadowB="73" align="left"
-> > effectPrefix="chatbubble_AAAAA....AAAAA" />
-> >
-> > It will overwrite effectPrefix[64] buffer, which can lead even to
-> > arbitrary code execution.
-> >
-> >
-> > Could a CVE be assigned to this issue?
->
-> I'm not familiar with this software (it's a game?) the chat bubbles,
-> can they come from remote users (like some sort of internal game chat)?
->
->
-> > Thanks,
-> >
-> > Andres Gomez.
-> >
->
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
->
-> iQIcBAEBAgAGBQJPtV+JAAoJEBYNRVNeJnmTRtcP/R+w6vfmWPlfF2DDjxmOS25f
-> qpAnIWXWQWAQ0xv1AJbbeuCd/ChnYG6BHiRpe3RQFHm2LeFJugfWIMrwJyWyVkuD
-> cf4/5+hxhc7tY8vze51C9budUQZoeo+jalGt5eoOk0mCUqDR2RoLn8Pg2UEzsloO
-> HNNWlWJ2xP3Qt2cuHbBMQIa3RUA0vFh+cUSP2mvLe//pS/FljLt5k78kV1wzAUEw
-> DsuxNYoNJ5DoMWSCltsXSsN0tbIGr5vlHkHkWfXzs7POB2dRtJakJj30AkPdpt7r
-> FZuwoEuvPRsLgrNa6LFpnsbFI9Bw0St3K+XKm+upa0S0o8plI/iUYFhuZOdTkpyf
-> GaHtSpRoeVZgW8M/yvM3k3Lh/nPywI/ORBrdLcELrgrjMTh/rMyAgh4IBYTYNpaX
-> Lyca8ZigbmyHzgWF8v/oujdu+9Pu9sdxlPxLMBv9omYa9Sqr8M6U0+OPbXDYzJD1
-> NQ1ReT2YYQml/KcX3H9/IQ9TL+/1/lpWnY5pEbx6ya/X7jVNKkkDOBAkwkSzgEgD
-> x5xYC8hxhXSDov3iIpzeZBlN3shRP+BKXCbhbb9ZxPN0fOI8IuJNVUaSzAxTQb5f
-> +jJuoWVkdr2Rp5cmOonX1wFo1LRvNH8ZD6FXOb+ano+Hwktm+aJCjyxpSSmqXOHb
-> mYPLwJ9J3ZupuIgFY/lx
-> =EgCI
-> -----END PGP SIGNATURE-----
+Are these the correct URL's/descriptions (see below)?
+
+> ///////////////////////////////////////////
+> [20120101] - Core - Information Disclosure
+> 
+> Posted: 23 Jan 2012 01:45 AM PST
+> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/MYKnZ2QJKYE/382-20120101-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
+
+
+http://developer.joomla.org/security/news/382-20120101-core-information-disclosure.html
+
+Project: Joomla! SubProject: All Severity: Low Versions: 1.7.3 and all
+earlier 1.7 and 1.6 versions Exploit type: Information Disclosure
+Reported Date: 2012-January-07 Fixed Date: 2012-January-24 Description
+Inadequate filtering leads to information disclosure. Affected Installs
+Joomla! version 1.7.3 and all earlier versions Solution Upgrade to
+version 1.7.4 or 2.5.0 or higher Reported by Cyrille Barthelemy Contact
+The JSST at the Joomla! Security Center.
+
+> Project: Joomla!
+> SubProject: All
+> Severity: Low
+> Versions: 1.7.3 and all earlier 1.7 and 1.6 versions
+> Exploit type: Information Disclosure
+> Reported Date: 2012-January-07
+> Fixed Date: 2012-January-24
+> 
+> Description
+> Inadequate filtering leads to information disclosure.
+> Affected Installs
+> Joomla! version 1.7.3 and all earlier versions
+> Solution
+> Upgrade to version 1.7.4 or 2.5.0 or higher
+> Reported by Cyrille Barthelemy
+> Contact
+> The JSST at the Joomla! Security Center.
+> 
+> 
+> 
+> ///////////////////////////////////////////
+> [20120102] - Core - XSS Vulnerability
+> 
+> Posted: 23 Jan 2012 01:45 AM PST
+> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/XAEsWEG3dgU/383-20120102-core-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
+
+
+developer.joomla.org/security/news/383-20120102-core-xss-vulnerability.html
+
+Project: Joomla! SubProject: All Severity: Moderate Versions: 1.7.3 and
+all earlier 1.7 and 1.6 versions Exploit type: XSS Vulnerability
+Reported Date: 2011-November-16 Fixed Date: 2012-January-24 Description
+Inadequate filtering leads to XSS vulnerability. Affected Installs
+Joomla! version 1.7.3 and all earlier versions Solution Upgrade to
+version 1.7.4 or 2.5.0 or higher Reported by Ankita Kapadia Contact The
+JSST at the Joomla! Security Center.
+
+> Project: Joomla!
+> SubProject: All
+> Severity: Moderate
+> Versions: 1.7.3 and all earlier 1.7 and 1.6 versions
+> Exploit type: XSS Vulnerability
+> Reported Date: 2011-November-16
+> Fixed Date: 2012-January-24
+> 
+> Description
+> Inadequate filtering leads to XSS vulnerability.
+> Affected Installs
+> Joomla! version 1.7.3 and all earlier versions
+> Solution
+> Upgrade to version 1.7.4 or 2.5.0 or higher
+> Reported by Ankita Kapadia
+> Contact
+> The JSST at the Joomla! Security Center.
+> 
+> 
+> 
+> ///////////////////////////////////////////
+> [20120103] - Core - Information Disclosure
+> 
+> Posted: 23 Jan 2012 01:45 AM PST
+> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/Ed0TMAvyQ4g/384-20120103-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
+
+http://developer.joomla.org/security/news/384-20120103-core-information-disclosure.html
+
+Project: Joomla! SubProject: All Severity: Low Versions: 1.7.3 and all
+earlier 1.7 and 1.6 versions Exploit type: Information Disclosure
+Reported Date: 2011-December-19 Fixed Date: 2012-January-24 Description
+Inadequate filtering leads to information disclosure. Affected Installs
+Joomla! version 1.7.3 and all earlier versions Solution Upgrade to
+version 1.7.4 or 2.5.0 or higher Reported by Jean-Marie Simonet Contact
+The JSST at the Joomla! Security Center.
+
+> Project: Joomla!
+> SubProject: All
+> Severity: Low
+> Versions: 1.7.3 and all earlier 1.7 and 1.6 versions
+> Exploit type: Information Disclosure
+> Reported Date: 2011-December-19
+> Fixed Date: 2012-January-24
+> 
+> Description
+> Inadequate filtering leads to information disclosure.
+> Affected Installs
+> Joomla! version 1.7.3 and all earlier versions
+> Solution
+> Upgrade to version 1.7.4 or 2.5.0 or higher
+> Reported by Jean-Marie Simonet
+> Contact
+> The JSST at the Joomla! Security Center.
+> 
+> 
+> 
+> ///////////////////////////////////////////
+> [20120104] - Core - XSS Vulnerability
+> 
+> Posted: 23 Jan 2012 01:45 AM PST
+> c
+
+
+
+http://developer.joomla.org/security/news/385-20120104-core-xss-vulnerability.html
+
+Project: Joomla! SubProject: All Severity: Moderate Versions: 1.7.3 and
+all earlier versions Exploit type: XSS Vulnerability Reported Date:
+2012-January-22 Fixed Date: 2012-January-24 Description Inadequate
+filtering leads to XSS vulnerability. Affected Installs Joomla! version
+1.7.3 and all earlier 1.7 and 1.6 versions Solution Upgrade to version
+1.7.4 or 2.5.0 or higher Reported by David Jardin Contact The JSST at
+the Joomla! Security Center.
+
+
+> 
+> Project: Joomla!
+> SubProject: All
+> Severity: Moderate
+> Versions: 1.7.3 and all earlier versions
+> Exploit type: XSS Vulnerability
+> Reported Date: 2012-January-22
+> Fixed Date: 2012-January-24
+> 
+> Description
+> Inadequate filtering leads to XSS vulnerability.
+> Affected Installs
+> Joomla! version 1.7.3 and all earlier 1.7 and 1.6 versions
+> Solution
+> Upgrade to version 1.7.4 or 2.5.0 or higher
+> Reported by David Jardin
+> Contact
+> The JSST at the Joomla! Security Center.
+> 
+>  
 
 -- 
---
-AVISO DE CONFIDENCIALIDAD:
 
-Esta transmisión se entiende para uso del destinatario o la entidad a la 
-que va dirigida y puede contener información confidencial o protegida por 
-la ley. Si el lector de este mensaje no fuera el destinatario, considérese 
-por este medio informado que la retención, difusión, o copia de este correo 
-electrónico está estrictamente prohibida. Si recibe este mensaje por error, 
-por favor notifique inmediatamente al emisor y destruya el original. Gracias
-
---
-CONFIDENTIALITY NOTICE:
-
-This transmission is intended for the use of the individual or entity to 
-which it is addressed, and it may contain information that is confidential 
-or privileged under law. If the reader of this message is not the intended 
-recipient, you are hereby notified that retention, dissemination, 
-distribution or copying of this e-mail is strictly prohibited. If you 
-received this e-mail in error, please notify the sender immediately and 
-destroy the original. Thank you.
-
+-- Kurt Seifried / Red Hat Security Response Team
+kseifried@...hat.com
