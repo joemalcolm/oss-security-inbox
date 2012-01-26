@@ -1,55 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/6
-Message-ID: <20120328074906.GA27988@kludge.henri.nerv.fi>
-Date: Wed, 28 Mar 2012 10:49:06 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/5
+Message-ID: <6011606.WFIUfj6TO8@tux.boltz.de.vu>
+Date: Thu, 26 Jan 2012 12:07:12 +0100
+From: Christian Boltz <oss-securrity@...ltz.de>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, security@...mla.org
-Subject: CVE-request: Joomla core information disclosure 372-20111003
+Subject: CVE request: PostfixAdmin SQL injections and XSS
 Content-Type: text/plain; charset=utf-8
 
-After discussion with Kurt we decided these three issues need own CVE-identifiers:
+Hello,
 
-http://developer.joomla.org/security/news/370-20111001-core-information-disclosure (CVE-2011-3629)
-http://developer.joomla.org/security/news/371-20111002-core-information-disclosure (CVE-2011-4937)
-http://developer.joomla.org/security/news/372-20111003-core-information-disclosure
+we (the upstream PostfixAdmin developers) received a report about SQL
+injections and XSS in PostfixAdmin. 
 
-These all were previously refered as CVE-2011-3629. Now I need CVE-identifier for 372-20111003, which should be 2011. I can email about these to MITRE after assignment to get these updates in CVE-list:
+Please assign a CVE number to those issues.
 
-======================================================
-Name: CVE-2011-3629
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3629
-Phase: Assigned (20110921)
-Category:
-
-** RESERVED **
-This candidate has been reserved by an organization or individual that
-will use it when announcing a new security problem.  When the
-candidate has been publicized, the details for this candidate will be
-provided.
+The issues are fixed in PostfixAdmin 2.3.5, which I'll release today or 
+tomorrow.
 
 
-Current Votes:
-None (candidate not yet proposed)
-======================================================
+For reference, here's the changelog with all details:
 
-======================================================
-Name: CVE-2011-4937
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4937
-Phase: Assigned (20111223)
-Category:
+  - fix SQL injection in pacrypt() (if $CONF[encrypt] == 'mysql_encrypt')
+  - fix SQL injection in backup.php - the dump was not mysql_escape()d, 
+    therefore users could inject SQL (for example in the vacation message)
+    which will be executed when restoring the database dump.
+    WARNING: database dumps created with backup.php from 2.3.4 or older might
+             contain malicious SQL. Double-check before using them!
+  - fix XSS with $_GET[domain] in templates/menu.php and edit-vacation
+  - fix XSS in some create-domain input fields
+  - fix XSS in create-alias and edit-alias error message
+  - fix XSS (by values stored in the database) in fetchmail list view,
+    list-domain and list-virtual
+  - create-domain: fix SQL injection (only exploitable by superadmins)
+  - add missing $LANG['pAdminDelete_admin_error']
+  - don't mark mailbox targets with recipient delimiter as "forward only"
+  - wrap hex2bin with function_exists() - PHP 5.3.8 has it as native function
 
-** RESERVED **
-This candidate has been reserved by an organization or individual that
-will use it when announcing a new security problem.  When the
-candidate has been publicized, the details for this candidate will be
-provided.
+If you are interested in the exact code changes, run
+    svn diff -r 1180:1335 https://postfixadmin.svn.sourceforge.net/svnroot/postfixadmin/branches/postfixadmin-2.3
 
 
-Current Votes:
-None (candidate not yet proposed)
-======================================================
+Severity: that's a good question, please judge yourself ;-)
 
-- Henri Salo
+The most critical part is probably the SQL injection in pacrypt() because it is
+used in the login form, which means it's available to non-authentificated
+users. On the positive side, I'd guess the mysql_encrypt encryption method is
+used rarely.
+
+The affected code in pacrypt() is ($pw was not escaped, $salt comes from the
+database (the first 2 characters of the current hashed password)):
+            $res=db_query("SELECT ENCRYPT('".$pw."','".$salt."');");
+or when hashing a new password
+            $res=db_query("SELECT ENCRYPT('".$pw."');");
+
+db_query() is a wrapper that uses (depending on the configured database)
+mysql_query, mysqli_query or pg_query.
+
+The other issues are limited to authentificated users.
+
+
+Gruß
+
+Christian Boltz
+-- 
+>So, Helm aufsetz und auf Steine wart ...
+*werf*
+*Steine! Flache Steine! Runde Steine! Grosse Steine! Kleine Steine!*
+*Wer will noch mal, wer hat noch nicht?*
+[> Manfred Tremmel und David Haller in suse-linux]
+
