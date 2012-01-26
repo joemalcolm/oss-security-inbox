@@ -1,33 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/7
-Message-ID: <4F0B366F.5090607@redhat.com>
-Date: Mon, 09 Jan 2012 11:48:15 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/14
+Message-ID: <4F21DE6A.7090101@redhat.com>
+Date: Thu, 26 Jan 2012 16:14:50 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for OpenTTD
+Subject: Re: CVE request: wicd writes sensitive information in log files (password, passphrase...)
 Content-Type: text/plain; charset=utf-8
 
-On 01/07/2012 08:13 AM, Rubidium wrote:
-> Hi folks,
->
-> we, the OpenTTD developers, have identified a security vulnerability in
-> OpenTTD (an open source game with multiplayer). Would you be so kind
-> as to allocate a CVE id for this issue?
->
-> The issue concerns a denial of service vulnerability in the form of a
-> slow read attack preventing anyone to join the server, and preventing
-> the continuation of a game when 'pause on join' is enabled. This
-> attack requires the attacker to be authorized, but most servers do not
-> implement authorization. The first vulnerable version is 0.3.5, the
-> upcoming 1.1.5 release will have the issue fixed.
->
-> Once a CVE id is allocated, the issue and fix will be documented at
-> http://security.openttd.org/CVE-2012-xxxx
->
-> Thanks in advance,
-> Remko 'Rubidium' Bijker
->
-> (Please CC me, I'm not subscribed)
-Need more information like a code commit to link to.
+On 01/26/2012 04:06 PM, Kurt Seifried wrote:
+> wicd writes sensitive information in log files (password, passphrase...)
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652417
+> 
+> From: Vincent Lefevre <vincent@...c17.net>
+> To: Debian Bug Tracking System <submit@...s.debian.org>
+> Subject: wicd writes sensitive information in log files (password,
+>  passphrase...)
+> Date: Sat, 17 Dec 2011 03:27:32 +0100
+> 
+> Package: wicd
+> Version: 1.7.1~b3-3
+> Severity: grave
+> Tags: security
+> Justification: user security hole
+> 
+> wicd writes sensitive information in log files (under /var/log/wicd),
+> such as passwords and passphrases. Users in the adm group can have
+> access to them, but also log files are meant to be sent in bug
+> reports, and if the bug reporter doesn't pay attention, there is
+> a huge risk to transmit such information.
+> 
+> http://bazaar.launchpad.net/~wicd-devel/wicd/experimental/revision/682
+> 
+> === modified file 'wicd/configmanager.py'
+> --- wicd/configmanager.py	2011-12-15 18:21:53 +0000
+> +++ wicd/configmanager.py	2011-12-17 06:55:18 +0000
+> @@ -120,8 +120,13 @@
+>              ret = to_unicode(ret)
+>              if default:
+>                  if self.debug:
+> -                    print ''.join(['found ', option, ' in configuration ',
+> -                                   str(ret)])
+> +                    # mask out sensitive information
+> +                    if option in ['apsk', 'password', 'identity',
+> 'private_key', \
+> +                                  'private_key_passwd', 'key',
+> 'passphrase']:
+> +                        print ''.join(['found ', option, ' in
+> configuration *****'])
+> +                    else:
+> +                        print ''.join(['found ', option, ' in
+> configuration ',
+> +                                       str(ret)])
+>          else:
+>              if default != "__None__":
+>                  print 'did not find %s in configuration, setting
+> default %s' % (option, str(default))
+> 
+> 
 
--- Kurt Seifried / Red Hat Security Response Team
+Please use CVE-2012-0813 for this issue. One thing I forgot to include:
+affected version 9derp). wicd 1.6.2.2 and 1.7.0 are affected, a new
+tarball doesn't appear to be out yet.
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
