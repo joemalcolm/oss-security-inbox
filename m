@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/2
-Message-ID: <CANTw=MNT-ROMct6io-Wa-j3ewH2=kJiMcn63ep+Dp1i-+4Jt6w@mail.gmail.com>
-Date: Wed, 18 Jan 2012 20:53:40 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Screen locking programs on Xorg 1.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/7
+Message-ID: <4F2169CA.2050509@hoffie.info>
+Date: Thu, 26 Jan 2012 15:57:14 +0100
+From: Christian Hoffmann <christian@...fie.info>
+To: marlowe@...agonism.org, oss-security@...ts.openwall.com
+Subject: Re: Request for CVE for Vulnerability in Tahoe-LAFS 1.9.0
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 18, 2012 at 7:03 PM, Gu1 wrote:
-> Hi,
-> I recently found out that it is possible to kill a screensaver/screen
-> locker program on the latest version of Xorg (1.11 shipped with
-> archlinux, debian wheezy..) using the Ctrl+Alt+Multiply key binding.
->
-> This behavior seems to have been introduced in a recent commit[1] and i
-> couldn't find a way to disable it.
->
-> All screen locking programs i tested (gnome-screensaver, kscreenlocker,
-> slock, slimlock...), are basically rendered useless.
->
-> Not sure if this is a bug or a feature... :)
+Hallo Patrick,
 
-All I can say is wow.  A key combo/code that reproducibly kills all
-screen lockers is definitely *not* a feature.  This demonstrates the
-importance of code review in critical code.  Nice find.
+On 26.01.2012 15:15, Patrick R McDonald wrote:
+> I would like to request a CVE for a vulnerability in Tahoe-LAFS,
+> 
+> https://tahoe-lafs.org/pipermail/tahoe-announce/2012-January/000032.html
+I think CVE-2012-0051 has already been assigned to this vulnerability.
 
-Best wishes,
-Mike
+It is referenced in the Trac ticket (see below) which is mentioned in
+the above mail archive post, unless I'm confusing things.
+
+
+References:
+https://tahoe-lafs.org/trac/tahoe-lafs/ticket/1654
+http://seclists.org/oss-sec/2012/q1/135 (initial request)
+http://seclists.org/oss-sec/2012/q1/158 (CVE assignment)
+
+
+Best regards,
+
+Christian Hoffmann
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
