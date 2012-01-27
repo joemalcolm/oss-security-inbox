@@ -1,31 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/24/2
-Message-ID: <CAN10O-Y9ux_hRg7QbwPP9SFhg0kR4G7NtAnVYxtSLq11u0rRwQ@mail.gmail.com>
-Date: Fri, 24 Aug 2012 08:29:10 +0200
-From: Filip Palian <s3810@...stk.edu.pl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/9
+Message-ID: <20120127183048.GA7675@openwall.com>
+Date: Fri, 27 Jan 2012 22:30:48 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Stripe Capture the Flag
+Subject: Re: Subscribe to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-2012/8/22 Solar Designer <solar@...nwall.com>:
-> (...)
-> I guess most CTFs are Open Source relevant, but they may
-> lack sufficient Open Source focus for this list.
+On Fri, Jan 27, 2012 at 04:33:26AM -0500, Ramon de C Valle wrote:
+> I'm a new member of Red Hat Security Response Team. Could you please
+> subscribe me to the linux-distros mailing list?
+> 
+> pub   2048R/E9A5A2DD 2011-09-14
+>       Key fingerprint = 37C9 75D7 0092 D074 DA95  F229 191A 8A07 E9A5 A2DD
+> uid                  Ramon de C Valle <ramon@...hat.com>
+> uid                  Ramon de C Valle <rcvalle@...hat.com>
+> uid                  Ramon de C Valle <rdecarva@...hat.com>
+> sub   2048R/8E1B3C19 2011-09-14
 
-As you have pointed out, most CTFs are Open Source related and
-definietly focus on security. This is exacly what the name of the list
-is. As many may think, it's not cve-designation list only (obviously I
-may be wrong about that).
+Subscribed.
 
-In the other hand, it would be sad to see oss-security list turning
-into the place, where people are writing walktroughs, spoilers and
-asks for help (which IMHO would be unavoidable).
-Filtering all the garbage could be overhelming for moderators.
-
-> Please help us decide.
-
-Maybe you will consider launching a dedicated list for CTFs only?
-
-
-Best regards,
-Filip Palian
+Alexander
