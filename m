@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/15
-Message-ID: <CANTw=MO2FgZLMdm80zxQyhgK=eZa8EC7u08xA-hf5PvZJu5Hvg@mail.gmail.com>
-Date: Thu, 18 Oct 2012 15:35:25 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/3
+Message-ID: <845c2322-8661-473b-ad5c-f345742446cd@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Fri, 27 Jan 2012 04:33:26 -0500 (EST)
+From: Ramon de C Valle <rcvalle@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
+Subject: Subscribe to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 17, 2012 at 8:41 PM, Kurt Seifried wrote:
->> It was uploaded to and affected Debian testing and unstable.
->> Testing has not yet been officially "released", but some people use
->> testing as if it were an official release.  Unstable never gets
->> released.
->
-> When I say released I meant in the sense of made available for
-> download, not in the sense of software engineering and doing a proper
-> "release".
+Hi Solar,
 
-So, at the risk of sounding nitpicky, the Debian testing + unstable
-archives are pretty much equivalent to Fedora rawhide.  Even though
-Redhat's position is that issues affecting only rawhide should not get
-CVE identifiers, in Debian I think we should try to be more honest, so
-we'll assign identifiers to all "uploaded" versions (in Debian, we use
-the term upload to mean that a package is available in an archive vice
-the term release).
+I'm a new member of Red Hat Security Response Team. Could you please
+subscribe me to the linux-distros mailing list?
 
-Best wishes,
-Mike
+pub   2048R/E9A5A2DD 2011-09-14
+      Key fingerprint = 37C9 75D7 0092 D074 DA95  F229 191A 8A07 E9A5 A2DD
+uid                  Ramon de C Valle <ramon@...hat.com>
+uid                  Ramon de C Valle <rcvalle@...hat.com>
+uid                  Ramon de C Valle <rdecarva@...hat.com>
+sub   2048R/8E1B3C19 2011-09-14
+
+Thanks,
+
+
+-- 
+Ramon de C Valle / Red Hat Security Response Team
