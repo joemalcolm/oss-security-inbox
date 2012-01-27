@@ -1,47 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/10/4
-Message-ID: <1075899722.32546706.1347299502780.JavaMail.root@redhat.com>
-Date: Mon, 10 Sep 2012 13:51:42 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jeff Law <law@...hat.com>, Jakub Jelinek <jakub@...hat.com>
-Subject: Re: CVE Request -- glibc: strcoll() integer overflow leading to buffer overflow + another alloca() stack overflow issue (upstream #14547 && #14552)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/5
+Message-ID: <2035741.oIHJTl3Sd1@tux.boltz.de.vu>
+Date: Fri, 27 Jan 2012 11:56:33 +0100
+From: Christian Boltz <oss-securrity@...ltz.de>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: PostfixAdmin SQL injections and XSS
 Content-Type: text/plain; charset=utf-8
 
-Hi Florian,
+Hello,
 
-  thank you for the clarification.
+Am Donnerstag, 26. Januar 2012 schrieb Kurt Seifried:
+> Please use CVE-2012-0811 for PostfixAdmin 2.3.4 multiple SQL
+> vulnerabilities
 
-> On 09/07/2012 07:21 PM, Kurt Seifried wrote:
-> 
->> 2) Issue #2 (mentioned here only for completeness, but I am not of
->> the opinion this should receive a CVE identifier. See argumentation
->> below [but open to glibc upstream / others to disprove it]).
->
-> I will hold off on issuing a CVE for this then. Anyone want to weigh in?
-> 
-> It looks as if the alloca issue was introduced at the same time as the 
-> malloc-related overflow:
-> 
-> http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=5358d026c74
-> 
-> So perhaps one CVE is enough for glibc bugs 14552 and 14547 because the 
-> problems are similar and affect the same versions.
+> Please use CVE-2012-0812 for PostfixAdmin 2.3.4 multiple XSS
+> vulnerabilities
 
-Should the alloca() issue get CVE identifier, then I would rather use two
-CVE identifiers. Though those issues might affect same glibc versions,
-one is integer overflow, leading to heap-based buffer overflow, while
-the alloca() one would be stack-based buffer overflow.
+Thanks.
 
-So to clearly identify, it would be better if the second one would be allocated
-too (if Steve won't mind).
+I forgot to mention a small, but important detail: The credits ;-)
 
-Kurt, could you allocate yet one then?
+Credits go to 
+    Filippo Cavallarin <filippo.cavallarin [at] codseq [dot] it> 
+for finding most of the vulnerabilities and notifying us.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+The only exception is 
+    - create-domain: fix SQL injection (only exploitable by superadmins) 
+which was found by Matthias Bethke <msbethke [at] sourceforge [dot] net>
 
-> 
-> -- 
-> Florian Weimer / Red Hat Product Security Team
+Please add the credits to the CVEs.
+
+
+Gruß
+
+Christian Boltz
+-- 
+Und jetzt sei ein lieber Hase und hoppel irgendwohin, wo man knuddelige,
+fluffige kleine Dinger wie Dich in den Arm nimmt und lieb hat.
+[Robin S. Socha - d.c.o.u.l.m.]
+
