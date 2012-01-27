@@ -1,20 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/11
-Message-ID: <20120328162607.49ab69c5@hsalkjdhsa>
-Date: Wed, 28 Mar 2012 16:26:07 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/10
+Message-ID: <bb05dac7-0824-460e-82b0-cdec6db57b07@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Fri, 27 Jan 2012 14:04:36 -0500 (EST)
+From: Ramon de C Valle <rcvalle@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: phppgadmin before 5.0.4 XSS
+Subject: Re: Subscribe to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-phppgadmin 5.0.4 fixes an xss, please assign CVE.
 
-https://github.com/phppgadmin/phppgadmin/commit/e92a003624609a445c4cf57c9c3d1fcef0eae47c#diff-0
 
-"Fix XSS in function.php, reported by Mateusz Goik"
+> Subscribed.
+
+Thanks.
+
+> 
+> Alexander
+> 
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Ramon de C Valle / Red Hat Security Response Team
