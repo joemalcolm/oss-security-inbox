@@ -1,55 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/19/5
-Message-ID: <50083A2E.4080708@redhat.com>
-Date: Thu, 19 Jul 2012 10:47:42 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/11
+Message-ID: <20120127223058.GA9800@openwall.com>
+Date: Sat, 28 Jan 2012 02:30:58 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: CVE Request: quota: incorrect use of tcp_wrappers
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Dec 09, 2011 at 09:11:25AM +0400, Solar Designer wrote:
+> http://oss-security.openwall.org/wiki/mailing-lists/distros
+...
+> For FreeBSD, I subscribed Xin Li, who is on the security team:
+> http://www.freebsd.org/administration.html#t-secteam
 
-On 07/19/2012 02:36 AM, Huzaifa Sidhpurwala wrote:
-> Hi All,
-> 
-> rquotad seems to re-use good_client implementation from portmap. 
-> The way good_client called tcp_wrappers via hosts_ctl was not
-> correct, possibly causing hosts access rules defined in
-> hosts.{allow,deny} not to be honored.
-> 
-> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=566717
-> 
-> Can a CVE id be please allocated to this issue? (Possibly 2010 i
-> think)
-> 
-> Thanks!.
+I've just subscribed Colin Percival, the FreeBSD Security Officer.
 
-
-Please use CVE-2012-3417 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQCDouAAoJEBYNRVNeJnmTouIP/2PjTaMq3KNCTFBjcn3A4XFa
-ifF7uXRNP2n9HWhUYC2RVK/fXU20yFNwLIZ589ZhLiEvjO2TTFXw6JX/r5rjBCmx
-UxTqJNEuBYcWyThEeWCZXCgPvUGhR0l00UW79lbNOvDs6jAikr/IRBSwiu8YwCK8
-PFYLgolRUngmumnSBxDUCYhD3PyAk/lKKAQdmbe7NDWwOtuCBqnA7s3QfTqUDRRS
-mbss+NWNJ33ObQ2JWnt8EdXTFsAF7j1i9FFNwgRXP9iL9Iw4BtXFImvkJZebTe1O
-TOWUoTJ2IBq0+9IJpcXH3CfbpXIh7cMLabdSMjdJFjPfe0l0jSz7DPw4jIbVCU7+
-+Kf7VZwKDam4kXNzUqQw7J9NRbIYUtVKnlUaCG942EZzsG0g5tF0/ylQGmhuQzxj
-rjggsf6jJ6umwQNRMnZ0BJVTwx38vq6yseTTYgkMY1ihMdQySuksTLLix4JCjRY7
-2HmmlBJTLKWzgtJXiHmQIc0sG4CULqiBLKHSnYG0OIRuAWPUdZTAvysyfF0pK8Ww
-xGmspmzPNgIKNtKuz66WMVd6tFQHdFlXtbtTMawsSQG0lymclYBrCPf0jbQoeySc
-kc/Gys/PiJFlAywNkByl9jOz44jZ56zkzmVx2P8ef1h9rQ4GnItMI5vlFqfEPEqR
-SXr4PzU6J2zbuUJlBA08
-=Z/mG
------END PGP SIGNATURE-----
+Alexander
