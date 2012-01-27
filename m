@@ -1,62 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/13/4
-Message-ID: <4F884F63.20102@redhat.com>
-Date: Fri, 13 Apr 2012 10:08:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/4
+Message-ID: <1327660847.20016.9.camel@oban>
+Date: Fri, 27 Jan 2012 11:40:47 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Wikidforum 2.10 multiple XSS and SQL-injection vulnerabilities SSCHADV2012-005
+Subject: Re: CVE Request: Debian (others?) openssh-server: Forced Command handling leaks private information to ssh clients
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 04/13/2012 04:46 AM, Henri Salo wrote:
-> On Thu, Apr 12, 2012 at 12:55:01PM -0600, Kurt Seifried wrote:
->>> http://osvdb.org/show/osvdb/80840 Wikidforum Advanced Search 
->>> Multiple Field SQL Injection
->> Also I couldn't really confirm the SQL injections so not
->> assigning a CVE, if you can find confirmation I'll assign a CVE.
+On jeu., 2012-01-26 at 19:49 -0500, Marc Deslauriers wrote:
+> > Please use CVE-2012-0814 for this issue. Also please let me know if
+> > other Linux distributions are affected!
+> > 
+> > 
 > 
-> With "'" as input to select_sort:
+> Looks like this (I haven't tried...):
 > 
-> You have an error in your SQL syntax; check the manual that
-> corresponds to your MySQL server version for the right syntax to
-> use near '\\\' asc' at line 1select * from posts where
-> parent_post_id IS NULL AND status=1 AND user_id=0 AND (post LIKE
-> '%foo%' OR title LIKE '%foo%') and status IN (1) order by \\\' asc
-> 
-> My friend told me that this can escalate in case of bad permissions
-> or bad MySQL setup, but I do not have better PoC for this list. At
-> least one can't chain for example SELECT foo FROM bar;DROP TABLE
-> users;--
-> 
-> http://dev.mysql.com/doc/refman/5.5/en/select.html
-> 
-> - Henri Salo
+> http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/auth-options.c.diff?r1=1.53;r2=1.54 
 
-Have you actually verified this first hand (e.g. done a successful SQL
-injection attack) against an installation of Wikidforum?
+By the way, is the ForceCommand (and other directives) really supposed
+to be private for different keys (or, more widely, for different matches
+for the same user).
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Regards,
+-- 
+Yves-Alexis
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPiE9fAAoJEBYNRVNeJnmTTBUP/RAFfubG9vd+NjbTPbiXv39H
-6yZC19+k77jk7CTUklfOlud6UNcnLdtoOyBgKD6bLud81dJGUJ66b5lNM21yVSbU
-ToIIuXNhXGdQ07LtkCbq4AS3jkHDBl9SH6jUnS0GSS4nr/J8KxzBCUrh+fAi1HWK
-dGfj3TkBkUf2gWIb9dj62tzx21MAKfcA7SuNmc3tLoBKPIV6ZmsoKM5hEetP2snM
-XWx25D1QjyPHjNfDaqFqz/3GWnMUs5FRgD+N1WvTU6UJi/EONmhu074lWFaFKIJU
-tTEuTcuSKal9zQBC9//JRLfkHv+kI3DHezAsoFfsk1MUFD8A9dzGVbSp4CQmuVQs
-5ZuXRI1PxeMh8ZVHM1Deo7Bfn+jJZAqtlPwOPHzeXpxF+A+JAZA5mnYY0PVbRUTm
-FU5hj6MhVmfGVus6kKaKw3nuOdNAPmNfYRP+DOLKG7tTBcnQwMLAtr0TTfK1HJFG
-j1BQGZ3raJhcvT7Q9/IOw/2xZOWEfl1RKUv+WrheqM4taxs4GCb7G38xENrhWmN/
-MInu9n10oGcDqeSx7oYeRkrSt9vX0U6wSsXPpYPQT2eK+B7DmLQeNyu4uzpqQHvU
-Iljr7PkpQARbdeqbACrrraVEcvSZheNbmlF2iymDgh93O27wxHbJe7gTPowAfHWe
-Y5Ar7EwOUTJLkddvTY7G
-=G5vD
------END PGP SIGNATURE-----
