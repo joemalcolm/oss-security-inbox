@@ -1,63 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/10
-Message-Id: <20120419150457.849d020d.akpm@linux-foundation.org>
-Date: Thu, 19 Apr 2012 15:04:57 -0700
-From: Andrew Morton <akpm@...ux-foundation.org>
-To: Marcus Meissner <meissner@...e.de>
-Cc: OSS Security List <oss-security@...ts.openwall.com>, security@...nel.org, Sukadev Bhattiprolu <sukadev@...ibm.com>, Serge Hallyn <serge.hallyn@...onical.com>, "Eric W. Biederman" <ebiederm@...ssion.com>, Pavel Emelyanov <xemul@...nvz.org>
-Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/13
+Message-ID: <4F233165.9060907@redhat.com>
+Date: Fri, 27 Jan 2012 16:21:09 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Yves-Alexis Perez <corsac@...ian.org>, djm@...nbsd.org, dtucker@...nbsd.org
+Subject: Re: CVE Request: Debian (others?) openssh-server: Forced Command handling leaks private information to ssh clients
 Content-Type: text/plain; charset=utf-8
 
-(cc's added)
+Ok so we (myself and vdanen@...hat.com) have done some more research and
+here are the results (good news and bad news):
 
-On Thu, 19 Apr 2012 23:48:20 +0200
-Marcus Meissner <meissner@...e.de> wrote:
+OpenSSH portable compiled from source with no changes:
 
-> Hi,
-> 
-> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
-> namespace leak caused by vsftpd.
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=757783
-> 
-> He provided a simple reproducer:
-> 
-> #include <stdio.h>
-> #include <errno.h>
-> #include <signal.h>
-> #include <sched.h>
-> #include <linux/sched.h>
-> #include <unistd.h>
-> #include <sys/syscall.h>
-> 
-> int main(int argc, char *argv[])
-> {
->     int i, ret;
-> 
->     for (i = 0; i < 10000; i++) {
-> 
->         if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC |
-> CLONE_NEWNET | SIGCHLD, NULL)))
->             return 0;
-> 
->         if (-1 == ret) {
->             perror("clone");
->             break;
->         }
-> 
->     }
->     return 0;
-> }
-> 
-> 
-> and checking "cat /proc/slabinfo|grep pid_namespace"
-> gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
-> 
-> 
-> Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
-> fixed between 3.1 and 3.2 (but someone else cross check perhaps).
-> 
-> Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
-> but it seems not helping.
-> 
-> Ciao, Marcus
+5.3p1 is NOT vulnerable
+5.4p1 is vulnerable
+5.5p1 is vulnerable
+5.6p1 is NOT vulnerable
+
+Upon further examination of the errors we have the following for OpenSSH 5.3p1:
+=========
+debug1: Offering RSA public key: /home/test-ssh2/.ssh/id_rsa
+debug1: Remote: Forced command: echo 3
+debug1: Server accepts key: pkalg ssh-rsa blen 279
+debug1: read PEM private key done: type RSA
+debug1: Remote: Forced command: echo 3
+debug1: Authentication succeeded (publickey).
+Authenticated to localhost ([::1]:22).
+debug1: channel 0: new [client-session]
+debug1: Requesting no-more-sessions@...nssh.com
+debug1: Entering interactive session.
+debug1: Sending environment.
+debug1: Sending env LANG = en_US.UTF-8
+Environment:
+[snip]
+=========
+
+As we can see we get the debug information BEFORE authentication is finished.
+
+So this issue was then addressed in 5.4:
+
+ - (dtucker) OpenBSD CVS Sync
+   - dtucker@....openbsd.org 2010/03/07 11:57:13
+     [auth-rhosts.c monitor.c monitor_wrap.c session.c auth-options.c sshd.c]
+     Hold authentication debug messages until after successful authentication.
+     Fixes an info leak of environment variables specified in authorized_keys,
+     reported by Jacob Appelbaum.  ok djm@
+
+http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/auth-options.c.diff?r1=1.47;r2=1.48
+
+which contains the following line:
+
+-	auth_debug_reset();
+
+So now more information is sent in the debug message (post-authentication) which created this problem:
+
+=========
+debug1: Offering RSA public key: /home/test-ssh2/.ssh/id_rsa
+debug1: Server accepts key: pkalg ssh-rsa blen 279
+debug1: read PEM private key done: type RSA
+debug1: Authentication succeeded (publickey).
+Authenticated to localhost ([::1]:22).
+debug1: channel 0: new [client-session]
+debug1: Requesting no-more-sessions@...nssh.com
+debug1: Entering interactive session.
+debug1: Remote: Forced command: echo 1
+debug1: Remote: Forced command: echo 2
+debug1: Remote: Forced command: echo 3
+debug1: Remote: Forced command: echo 1
+debug1: Remote: Forced command: echo 2
+debug1: Remote: Forced command: echo 3
+debug1: Sending environment.
+debug1: Sending env LANG = en_US.UTF-8
+Environment:
+  LANG=en_US.UTF-8
+[stuff]
+=========
+
+Then in version 5.6p1 the certificate handling code was reworked and 
+something fixed this problem, we haven't tracked it down exactly (it 
+may be related to cert_forced_command, auth_cert_options and 
+parse_option_list).
+
+TL;DR anyone shipping OpenSSH portable 5.4 and 5.5 is vulnerable and needs to fix this.
+
+This may also affect OpenSSH 5.4/5.5 (non portable) which I'll test when I get home.
+
+-- 
+
+-- Kurt Seifried / Red Hat Security Response Team
+
