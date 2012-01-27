@@ -1,19 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/01/4
-Message-ID: <20120301210955.GA1297@foo.fgeek.fi>
-Date: Thu, 1 Mar 2012 23:09:55 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/7
+Message-ID: <4F22D805.4090401@redhat.com>
+Date: Fri, 27 Jan 2012 09:59:49 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Joomla core information disclosure 1.7.1
+CC: Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: CVE Request: Debian (others?) openssh-server: Forced Command handling leaks private information to ssh clients
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 01, 2012 at 11:07:39PM +0200, Henri Salo wrote:
-> http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
+On 01/27/2012 03:40 AM, Yves-Alexis Perez wrote:
+> On jeu., 2012-01-26 at 19:49 -0500, Marc Deslauriers wrote:
+>>> Please use CVE-2012-0814 for this issue. Also please let me know if
+>>> other Linux distributions are affected!
+>>>
+>>>
+>>
+>> Looks like this (I haven't tried...):
+>>
+>> http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/auth-options.c.diff?r1=1.53;r2=1.54 
 > 
-> I can't never be sure with Joomla so maybe someone wants to verify this before assigment.
+> By the way, is the ForceCommand (and other directives) really supposed
+> to be private for different keys (or, more widely, for different matches
+> for the same user).
+> 
+> Regards,
 
-Sorry about this. I do not know why Google nor CVE list didn't show this to me, but I found this:
+I created three separate keys, so three separate accounts. I can't see
+any valid reason that account #3 (that is the third key listed) should
+be able to see the first and second force commands. These commands could
+contain sensitive commands/passwords (e.g. log in with a key to trigger
+some automated job by the backup user) for example.
 
-http://secunia.com/advisories/46421/
-
-- Henri Salo
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
