@@ -1,83 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/19/2
-Message-ID: <CAPYM6Vwmnx1MzAO20crxJN_jmX8azGHnL3sAaorT50_4wv1xVA@mail.gmail.com>
-Date: Sun, 19 Aug 2012 19:18:31 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
-Subject: ocPoral CMS 8.x | Session Hijacking Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/8
+Message-ID: <1327684446.17581.4.camel@scapa>
+Date: Fri, 27 Jan 2012 18:14:06 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE Request: Debian (others?) openssh-server: Forced Command handling leaks private information to ssh clients
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+On ven., 2012-01-27 at 09:59 -0700, Kurt Seifried wrote:
+> I created three separate keys, so three separate accounts. 
 
-ocPoral CMS 8.x and lower versions are vulnerable to Session Hijacking
-flaw which could allow attackers to compromise administrator session.
+That was my question, in fact. Are separate keys (to the same user
+account on the box) really supposed to be considered separate accounts
+(on the box).
 
+My first guess is “yes”, but I'm not sure if it was created like that,
+and thus think it was a valid question. For the sshd, you don't (may
+not) have three separate accounts, but one.
 
-2. PRODUCT DESCRIPTION
+Regards,
+-- 
+Yves-Alexis
 
-ocPortal is the website Content Management System (a CMS) for building
-and maintaining a dynamic website. ocPortal's powerful feature-set
-means there's always a way to accomplish your vision. Not only does
-ocPortal's CMS have all the features you'd expect: for instance photo
-galleries, news, file downloads and community forums/chats, but it
-does so whilst meeting the highest accessibility and professional
-standards. It is also smart enough to go beyond page management, to
-automatically handle search engine optimisation, and provide
-aggressive hack attack prevention.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The ocPoral CMS generates 7-digit session IDs for logged-in users;
-thus it is possible to work out a valid session ID through brute
-forcing. Successful hijacking requires the "Enforce IP addresses for
-sessions" option be disabled. However, when a user's IP is highly
-dynamic, this option will likely to be disabled as it would invalidate
-logged-in sessions. In other way, if a user and an attacker happened
-to be within the same subnet, the attack would succeed regardless of
-the "Enforce IP" setting turning on.
-
-
-4. VERSIONS AFFECTED
-
-Tested on version 8.1.2
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-sample session cookie: ocp_session=8711789
-
-
-6. SOLUTION
-
-No fix is available as of 2012-08-19.
-Workaround is to set enabled for the option, "Enforce IP addresses for
-sessions".
-
-
-7. VENDOR
-
-ocPortal Development Team
-http://www.ocportal.com/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2012-07-29: notified vendor, vendor did not plan to release fix
-because of default deployed workaround
-2012-08-19: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/2wire/%5Bocportal_8x%5D_session_hijacking_vulnerability
-
-
-#yehg [2012-08-19]
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
