@@ -1,57 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/09/2
-Message-ID: <4F8271C7.9080608@redhat.com>
-Date: Sun, 08 Apr 2012 23:21:11 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/6
+Message-ID: <4F22D5B7.1070508@redhat.com>
+Date: Fri, 27 Jan 2012 09:49:59 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: gajim - code execution and sql injection
+CC: Ramon de C Valle <rcvalle@...hat.com>
+Subject: Re: Subscribe to linux-distros
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/08/2012 07:33 PM, Carlos Alberto Lopez Perez wrote:
-> On 08/04/12 17:59, Kurt Seifried wrote:
->> On a side note: if you want a free SSL certificate please use 
->> something like http://cert.startcom.org/ which is included within
->> most browsers. cacert.org is not included in any (that I know of)
->> browsers, I have no idea what the cacert practices are (and I
->> can't find any documentation on their site) so there's no way
->> that root key will be loaded by myself (and most people I know).
+On 01/27/2012 02:33 AM, Ramon de C Valle wrote:
+> Hi Solar,
+> 
+> I'm a new member of Red Hat Security Response Team. Could you
+> please subscribe me to the linux-distros mailing list?
+> 
+> pub   2048R/E9A5A2DD 2011-09-14 Key fingerprint = 37C9 75D7 0092
+> D074 DA95  F229 191A 8A07 E9A5 A2DD uid                  Ramon de C
+> Valle <ramon@...hat.com> uid                  Ramon de C Valle
+> <rcvalle@...hat.com> uid                  Ramon de C Valle
+> <rdecarva@...hat.com> sub   2048R/8E1B3C19 2011-09-14
+> 
+> Thanks,
 > 
 > 
-> Cacert.org CA is trusted by the majority of Linux/BSD distributions
-> and therefore for any browser running on it. 
-> http://wiki.cacert.org/InclusionStatus
 
-According to the page you quote it's not in any Mozilla browsers by
-default (or any major web browser that I can see), it's not in Fedora
-or Red Hat Enterprise Linux or any derivatives of Red Hat Enterprise
-Linux, or Ubuntu or SuSE Linux to name a few (not to mention Mac OS X
-or Windows).
-
-I don't understand why people choose a widely unsupported CA when
-there are widely supported CAs like StartCom that offer free
-certificates. Please, use supported CAs.
+I can confirm he is.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPgnHHAAoJEBYNRVNeJnmTvDIQAJ19AwyVYj/gXlrcXW7pw+W2
-xLi1NOx7F9x+wTCW9scPr5JqzofJLkWEf7XUwGPIIm6Nv18XfZERit7pOQhzyIVy
-vUid2H7E+7vSx/7eGRcNXI7B8R0vBGNGcs4Pup0+RSVI5kW4UAjngRAEVXSablRQ
-E8ZrB/mAEsvogGpvg5+cIVPqP07XZWou8QAc2ovxveeXS5AA1xh4ePPPI9L+iXyz
-ktkwUqF+oS/l4Im0o1ldLcUCBlcSmdFP592XZId9jT20yb9BUC36lZn1ZLhh+zQc
-yiTADc+Xeo5e7ricov3ilUZo4bQy+4JcNLCY8EG/VF2F2U1l0lpebNbL8ZtcgluM
-gb1gzAZUizVfvutI2xvVmneNeRpZ5fzbCGcVIKYexxNHuCxl7XRnmBYeqgKT2Tia
-Sn6eKs/bh+J3w0Tw0wZFA7bOOhOCQR8/MKWHGU0VTgco/8YPTvAp/aVuMr/CeJzR
-K8KtvIu/oYazGVsG/7ZxNDobH9kn4jTsoORnFatrjQLda6fLo6vJjN1BIlbKDvkc
-xg1IecOzNpbf9Wnen8RaD93rQCIc5bl7ouq5migfkE0wGHDdfGVicnxBbQm8VvyV
-uUTG2Gcq6fLV3m1I6/Xx9dZ3/Wij5bsl71cIxhHSGyJtoLkCuBeh8ZfxU78WMuqR
-Ib7Q80Uio8yb/B0+Bt1r
-=q3NF
+iQIcBAEBAgAGBQJPItW0AAoJEBYNRVNeJnmTr8AP/RxVb2WzhhQjpnkFPkdru4xM
+6qfn/w6ghiUybBFircf1v2ryFgP0ceN01u+K4TCkTY6AiokteXdws8qdoVHkdJty
+T2/tPQUmGV2IrPMG6k/UztBI88nVb7TRjKwJbzCEUU9jPrXuU6GErAuWNmNKhpqT
+PowhK7UuTo18KzOhw2jGTTwJACzQrL69bk12aUhfAMHLDxmV28YPEeYXs4GfnqDc
+JtuaheLMJGhWW/pGu9ChQtuJVvgY7GwEy4P+Of7DkKJR5pQya2aM6T/VHeX90ZLO
+7h7asrbqMmoes2A03SiHkVPAkkGl0zBH59yEEaJKzF8HBP0Dl4yNL8WGbThfWtNu
+Oj82hyIKU/W8q8kjpbvXSL7TniBYrSH1GsXc0U9eNk8M06mrdIE+6OlX+HbzVijM
+gswQt+JG3Gz+HACAwWRC4XpVyDvovJ2jQdjODSHzsWy4DHoOybDfNJijy2fy581s
+hhQqHpkDOctdeNf1nwRP8znz+hfZ19FmGuUJaiH0eTV+OMsfRLRjtESvOpb2hLBy
+G1C6+/4TYnp+yQiWuQytX89crC5j3mtVmkZYAlx06JVbpTQ9VuxHY0IjC3ijCSR4
+z2DDj6POnsRx9+facdgC9myOjpkMqmrRpuODgaMP/wlxgQFb+nqrEpiXJq/jLvio
+GaAs4JG0VWX5Xt+dONRd
+=LjO8
 -----END PGP SIGNATURE-----
