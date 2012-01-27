@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/10
-Message-ID: <4F8454EA.4090409@ispconfig.org>
-Date: Tue, 10 Apr 2012 17:42:34 +0200
-From: "ISPConfig.org - Till Brehm" <t.brehm@...config.org>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  lathama@...il.com
-Subject: Re: Re: CVE for ISPConfig 3.0.4.3 "Add new Webdav user" can chmod and chown entire server from client interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/2
+Message-ID: <20120127011801.GA5887@openwall.com>
+Date: Fri, 27 Jan 2012 05:18:01 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: testing pwqgen
 Content-Type: text/plain; charset=utf-8
 
- > On 04/09/2012 04:42 AM, ISPConfig.org - Till Brehm wrote:
- > > The contact info of the ispconfig project can be found here:
- > >
- > > http://www.ispconfig.org/imprint/
- >
- > Is there a security contact and PGP key for reporting serious issues?
- > I was unable to find any security contact information on the website
- > as previously stated.
+Hi,
 
-Please use the email address on the page http://www.ispconfig.org/imprint/
-for all kind of contact requests incl. security reports.
+I think we can and should use this list not only for discussing actual
+vulnerabilities, but also for sharing information on what was audited,
+tested, etc. even if found not vulnerable.  Such information may be
+helpful too.
 
-Regarding the issue that you reported to the oss-security list, the 
-bugfix release
-has been published today.
+In light of the pwgen vulnerability:
 
-With kind regards,
+http://www.openwall.com/lists/oss-security/2012/01/17/5
+http://www.openwall.com/lists/oss-security/2012/01/19/24
+http://www.openwall.com/lists/oss-security/2012/01/22/6
 
-Till Brehm
-ISPConfig.org
+I also tested our pwqgen (part of passwdqc) for (lack of) a similar
+issue.  Testing was easy with low random=... settings (like for 1 or 2
+words), but I also wanted to test with our default settings (no options
+on pwqgen's command line at all, which means 47 bits of randomness).
 
--- 
-ISPConfig UG (haftungsbeschränkt)
-Ritterstrasse 21
-21335 Lüneburg
-Tel +49-4131-707771
-Fax +49-4131-407175
-Email info@...config.org
---
+I happened to generate 466896327 such passwords (or phrases) until I
+interrupted the script.  Out of them, 779 appear twice and none more
+than two times.  Thus, 466895548 are unique.
 
+For uniform distribution, the expectation is that we'll have about
+466895552.5 unique passwords, or about 774.5 duplicates.  The test
+results match this pretty closely.
+
+Of course, this heavily depends on the quality of /dev/urandom.  I did
+my testing on the same system where I had tested pwgen.  This is an
+8-core machine running Linux 2.6.18-274.3.1.el5.028stab094.3.owl1 (an
+Owl revision/build of a RHEL5 branch OpenVZ kernel) for x86_64.
+
+Alexander
