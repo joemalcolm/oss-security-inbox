@@ -1,35 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/5
-Message-ID: <271664441.37279311.1353692769563.JavaMail.root@redhat.com>
-Date: Fri, 23 Nov 2012 12:46:09 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/28/4
+Message-ID: <20120128143936.6593bad1@nasir8h3tg>
+Date: Sat, 28 Jan 2012 14:39:36 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, security@...de.org
-Subject: CVE Request -- (Horde) IMP (prior v5.0.24-git): Obscure XSS issue when uploading attachments.
+Subject: (maybe) CVE request: libvpx before 1.0 crasher
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+libvpx (webm library) has released a new version that fixes a crasher
+bug:
+http://blog.webmproject.org/2012/01/vp8-codec-sdk-duclair-released.html
 
-  Horde upstream within Horde Groupware Webmail Edition version 4.0.9
-release corrected also one XSS issue in IMP:
-[1] http://lists.horde.org/archives/announce/2012/000840.html
-* Mail changes:
-     * Fixed obscure XSS issue when uploading attachments.
+I'm not 100% sure if and in what situation crash bugs qualify as
+security issues.
 
-  Upstream patch: https://github.com/horde/horde/commit/1550c6ecd7204f9579fcbb09ec7089e01b0771e2
-  References: https://github.com/horde/horde/blob/1550c6ecd7204f9579fcbb09ec7089e01b0771e2/imp/docs/CHANGES
+However, I tend to think that this one does. libvpx is used in browsers
+and crashing browsers seems an issue to me.
+Also, it could be used to crash automatic media re-encoding-services
+(e.g. backends of video websites like youtube).
 
-Could you allocate a CVE id for this?
+So I'd request a CVE.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-P.S.: No Red Hat bugzilla entry available, since this issue did not
-      affect versions of IMP, as shipped with Fedora / Fedora EPEL.
-
-P.S.#2: The other XSS from [1]:
-      Calendar changes:
-      * Fixed XSS issue in portal blocks.
-
-      is already covered within my previous (Kronolith related) request.
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
