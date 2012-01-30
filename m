@@ -1,30 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/05/5
-Message-ID: <20121205124346.GA6921@meddwl.vdavda.com>
-Date: Wed, 5 Dec 2012 13:43:46 +0100
-From: Sergei Golubchik <serg@...monty.org>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: CVE request: Mysql/Mariadb insecure salt-usage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/30/7
+Message-Id: <51BAF590-58CD-4945-9735-619BCF3C7EDE@wired-net.gr>
+Date: Mon, 30 Jan 2012 23:32:12 +0200
+From: Nanakos Chrysostomos <nanakos@...ed-net.gr>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Jonathan Wiltshire <jmw@...ian.org>, Gian Piero Carrubba <gpiero@...rf.it>, "team@...urity.debian.org" <team@...urity.debian.org>
+Subject: Re: Re: Yubiserver package ships with pre-filled identities
 Content-Type: text/plain; charset=utf-8
 
-Hi, Huzaifa!
 
-On Dec 05, Huzaifa Sidhpurwala wrote:
-> Noticed another post by kingcope on full-disclosure, which basically
-> boils down to re-use of a salt-value when transmitting passwords
-> over a network.
-> 
-> If you could MITM/capture network packets, you could use this
-> weakness to determine the passwords.
-> 
-> References:
-> http://seclists.org/fulldisclosure/2012/Dec/58
-> https://bugzilla.redhat.com/show_bug.cgi?id=883719
-> 
-> Should this a CVE be assigned to this issue?
+On 30 Ιαν 2012, at 19:08, Kurt Seifried <kseifried@...hat.com> wrote:
 
-https://mariadb.atlassian.net/browse/MDEV-3915
+> On 01/30/2012 04:56 AM, Jonathan Wiltshire wrote:
+>> On 2012-01-30 06:43, Nanakos Chrysostomos wrote:
+>>> Hi again,
+>>> I found another reason for not shipping the package with an example
+>>> account. I think you are certainly right. If you haven't filled a  
+>>> bug
+>>> please do so, in the meanwhile I will upload to mentors a new  
+>>> version
+>>> with an empty database that resolves the problem. Thanks.
+>>
+>> This populated database is also shipped in the upstream tarball,
+>> oss-security should be consulted to see whether a CVE identifier  
+>> should
+>> be issued.
+>>
+>> Adding to CC; oss-sec please see below:
+>>
+>>
+>>> On 30 Ιαν 2012, at 1:25, Gian Piero Carrubba <gpiero@...rf.it> w 
+>>> rote:
+>>>
+>>>> Hi Nanakos,
+>>>>
+>>>> thanks for your prompt response.
+>>>>
+>>>> * [Sun, Jan 29, 2012 at 11:19:37PM +0200] Nanakos Chrysostomos:
+>>>>> those keys are invalid and are not my real keys. It's just a  
+>>>>> sample
+>>>>> for the potential users of the package to see.
+>
+> Ok I'm not clear on what is going on here, is there a link to the bug
+> entry regarding this issue, or can someone clarify it?
+>
 
-Regards,
-Sergei
+Hi,
+there is no bug entry yet.
+
+
+> 1) are there default accounts shipped with the product that get
+> activated automatically during install? (it sounds like yes?)
+>
+
+Yes. The database is populated with an example/test account which is  
+activated during install.
+
+
+> 2) can someone remotely/locally access these accounts? what are the
+> credentials for these accounts ("invalid keys"?), can an attacker  
+> access
+> them?
+>
+
+If someone programs or uses a software emulation for the yubikey can  
+have access to whatever the user of the application uses it for ( the  
+yubiserver). For example if someone uses Pam yubico module with the su  
+or sshd server to provide a two factor authentication scheme he should  
+suffer from this security issue if he hasn't deleted or deactivated  
+the test account. If someone by mistake installs yubiserver and  
+doesn't use him to validate his otp or hmac otp, he won't suffer from  
+this security issue. Someone can only suffer if he uses the server and  
+hasn't deleted or deactivated the test account which is shipped with  
+the server.
+
+> 3) what is the privilege level of the accounts?
+
+That depends on how someone wants to use the server and the privilege  
+level that he wants to give to it's users through the validation of  
+the otp or hmac otp.
+
+Chris.
+
+
+>
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
