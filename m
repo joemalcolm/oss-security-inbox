@@ -1,54 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/30/7
-Message-ID: <5016BF21.2080901@redhat.com>
-Date: Mon, 30 Jul 2012 11:06:41 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/30/4
+Message-ID: <4F26CE80.4010407@redhat.com>
+Date: Mon, 30 Jan 2012 10:08:16 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: icinga sample db creation scripts
+CC: Jonathan Wiltshire <jmw@...ian.org>, Nanakos Chrysostomos <nanakos@...ed-net.gr>, Gian Piero Carrubba <gpiero@...rf.it>, team@...urity.debian.org
+Subject: Re: Re: Yubiserver package ships with pre-filled identities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/30/2012 04:56 AM, Jonathan Wiltshire wrote:
+> On 2012-01-30 06:43, Nanakos Chrysostomos wrote:
+>> Hi again,
+>> I found another reason for not shipping the package with an example
+>> account. I think you are certainly right. If you haven't filled a bug
+>> please do so, in the meanwhile I will upload to mentors a new version
+>> with an empty database that resolves the problem. Thanks.
+> 
+> This populated database is also shipped in the upstream tarball,
+> oss-security should be consulted to see whether a CVE identifier should
+> be issued.
+> 
+> Adding to CC; oss-sec please see below:
+> 
+> 
+>> On 30 Ιαν 2012, at 1:25, Gian Piero Carrubba <gpiero@...rf.it> wrote:
+>>
+>>> Hi Nanakos,
+>>>
+>>> thanks for your prompt response.
+>>>
+>>> * [Sun, Jan 29, 2012 at 11:19:37PM +0200] Nanakos Chrysostomos:
+>>>> those keys are invalid and are not my real keys. It's just a sample
+>>>> for the potential users of the package to see.
 
-On 07/30/2012 07:01 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> Icinga ships some sample DB creationscripts which give out too
-> much privileges.
-> 
-> References: https://bugzilla.novell.com/show_bug.cgi?id=767319 
-> https://git.icinga.org/?p=icinga-doc.git;a=commitdiff;h=619a08ca1178144b8a3a5caafff32a2d3918edab
->
-> 
-https://git.icinga.org/?p=icinga-core.git;a=commitdiff;h=712813d3118a5b9e5a496179cab81dbe91f69d63
-> 
-> Reported by Lars Vogdt of SUSE via Tim Hardeck to Incinga.
-> 
-> Ciao, Marcus
+Ok I'm not clear on what is going on here, is there a link to the bug
+entry regarding this issue, or can someone clarify it?
 
-Please use CVE-2012-3441 for this issue.
+1) are there default accounts shipped with the product that get
+activated automatically during install? (it sounds like yes?)
+
+2) can someone remotely/locally access these accounts? what are the
+credentials for these accounts ("invalid keys"?), can an attacker access
+them?
+
+3) what is the privilege level of the accounts?
 
 
-- -- 
+
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQFr8hAAoJEBYNRVNeJnmThm8QALEGeIMoU3GUHILe/0qxd5Cb
-U9VTa5e2it5t34ccrXNpO8qocpWbMm38/wMlL+3ogE1aPrer8KwmRkTBIc0CpoVl
-WqLE0cgwf3YlzaWhogs5kMRDDW8MknWi6WCrnXdEwSqGmIWw34xC0dvZVouo02TM
-HHJlSB/VDFWlx5YpvuqNPb17K6rg+mQ1rbHV6kHDFH0O4PY8DAC1xbIS9nJN7Q6v
-moqlJwAC9KuYBN6y3dcZtn/dJr3SF8VhP01HrJDhszPx3AwMklvw97hBF3CGeepJ
-g2ZC+MhQh/EDpkdNN3hoBYnPnE3Id6XoB7Onv/7RnG9S0Mi6MK27SfvJpwscye8m
-bCLv2NiHcijjZtGnWWQX/PRf98nIFGuTEIRpjL/z9skVkUKgDtIyco5xnUUCcYCv
-0JJVzbWreCJ2KY7FFCn9RQFX21t17//zTVhC6e8ad4t1MWZRpuFdMcP+XIdlaf5Z
-X32FienXrk8lzdB1c6nLdqnKE4CPZHUNfwL/AkhztLc1BhNrxcdMju4f/4j75jm5
-fsW8V4O9wWypDjhXXTuHuj/JhBdkvp/BNP2NhyOV15ZOVDpI3xHTwW1e3T1OeYWd
-UEdMP4sEDtXou4OS7P/WRaJ/5QTKzY2cZ4N6QWiF8DNH/dM59o+hI7r2oXB5CQti
-r7Comaq2vJ67FkmTispH
-=M/mm
------END PGP SIGNATURE-----
