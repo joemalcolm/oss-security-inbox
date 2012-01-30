@@ -1,86 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/8
-Message-ID: <50B6459D.2000402@redhat.com>
-Date: Wed, 28 Nov 2012 10:10:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>, Ricardo Mones <ricardo@...es.org>
-Subject: Re: CVE request -- vCalendar plugin for Claws Mail: credentials exposed on interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/30/9
+Message-Id: <27EBCD9A-8F46-4861-B209-DE0B0F1D472E@wired-net.gr>
+Date: Tue, 31 Jan 2012 00:14:10 +0200
+From: Nanakos Chrysostomos <nanakos@...ed-net.gr>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Jonathan Wiltshire <jmw@...ian.org>, Gian Piero Carrubba <gpiero@...rf.it>, "team@...urity.debian.org" <team@...urity.debian.org>
+Subject: Re: Re: Yubiserver package ships with pre-filled identities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Ah I didn't reply to oss-sec somehow the first time around.
+On 31 Ιαν 2012, at 0:06, Kurt Seifried <kseifried@...hat.com> wrote:
 
-On 11/15/2012 05:36 AM, Ricardo Mones wrote:
-> Hi,
-> 
-> This has been reported on our bugzilla: 
-> http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2782
+> On 01/30/2012 02:32 PM, Nanakos Chrysostomos wrote:
+>>
+>
+>>> Ok I'm not clear on what is going on here, is there a link to the  
+>>> bug
+>>> entry regarding this issue, or can someone clarify it?
+>>>
+>>
+>> Hi,
+>> there is no bug entry yet.
+>>
+>>
+>>> 1) are there default accounts shipped with the product that get
+>>> activated automatically during install? (it sounds like yes?)
+>>>
+>>
+>> Yes. The database is populated with an example/test account which is
+>> activated during install.
+>
+> Is this account documented/the impact documented?
+>
+
+What do you mean?
+
+
+
+>>> 2) can someone remotely/locally access these accounts? what are the
+>>> credentials for these accounts ("invalid keys"?), can an attacker  
+>>> access
+>>> them?
+>>>
+>>
+>> If someone programs or uses a software emulation for the yubikey can
+>> have access to whatever the user of the application uses it for ( the
+>> yubiserver). For example if someone uses Pam yubico module with the  
+>> su
+>> or sshd server to provide a two factor authentication scheme he  
+>> should
+>> suffer from this security issue if he hasn't deleted or deactivated  
+>> the
+>> test account. If someone by mistake installs yubiserver and doesn't  
+>> use
+>> him to validate his otp or hmac otp, he won't suffer from this  
+>> security
+>> issue. Someone can only suffer if he uses the server and hasn't  
+>> deleted
+>> or deactivated the test account which is shipped with the server.
+>>
+>>> 3) what is the privilege level of the accounts?
+>>
+>> That depends on how someone wants to use the server and the privilege
+>> level that he wants to give to it's users through the validation of  
+>> the
+>> otp or hmac otp.
+>
+> So it would basically be the same as any other standard account  
+> created
+> on the server?
+>
+
+Yes. It's just a simple account you could add anytime by yourself.
+
+
+
+>> Chris.
 >
 >
-> 
-There's still not fix available. Could a CVE id be allocated for
-> this if appropriate?
-> 
-> thanks in advance,
-> 
-> P.S.: I'm not subscribed to the list.
-> 
-
-Ok so based on the bug entry:
-
-=============
-In some instances, it might be the case that the only possible way to
-access a calendaring service is through https, and in such cases, the
-only way to authenticate (at least within the confines of vCalendar)
-is by embedding the username:password into the ics URL and/or have a
-'private' url that shouldn't be shared.
-
-In either case, after configuring a calendar and trying to access it,
-the full url is displayed in the status tray when trying to poll the
-calendar, something like:
-
-Fetching
-'https://user:password@...ver.example.com/location/of/my/Calendar'...
-
-Thus, use of the vCalendar plugin really isn't suitable or secure for
-such configurations!  In the scenarios above, the former is more of a
-concern but neither is one you'd necessarily want to expose to prying
-eyes.  Even a google calendar "private url", for example, is visible
-it its entirety within the status tray.
-=============
-
-
-Basically for all password entry fields we usually **** them out by
-default. As well AFAIK pretty much all applications that store
-passwords in plain text don't display them by default when you open up
-the password management screen (e.g. web browsers like Firefox). So in
-general we have a well established trend of hiding plain text
-passwords and not displaying them unless the users takes a specific
-action to display them (e.g. "show hidden password").
-
-Please use CVE-2012-5527 for this issue.
-
-
-- -- Kurt Seifried Red Hat Security Response Team (SRT) PGP: 0x5E267993
-A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQtkWdAAoJEBYNRVNeJnmTXckP/0rzlvJj7Jyd8N1WMfoP9nPB
-7r73cc96AT7uysVVbpcLItIr7q/IPlsK91JuQvv8Q33CIMaNRHdMCQB7kp0SDh4k
-QFyZlOlnljq9vo/7dAe3fDtjdEee9wkYMk+HxzHWqRGc0g+7ORHmENeqGmDQSQWn
-g2POj4I6xWZavbFV8G5SM6OowGycahcWdEIDySLPHfKbgW0sHQ3UBpMfFGpBGSxQ
-Ps5YrGGHpeNDFBmq7IvP52Lm0RF632WcjyEqhgqaomKpUqpm1y+fIuExDa9Rhy7C
-rl9dspslinPni1jaiNC7sSwuxdXlYQnI6pLts4wNWeuw45CSzaBd+vW4VyvppXwa
-/QYnv59DAoewOgvkwYLtWjMiiqMQ5BtW/sqDtHuqXobAQO98guiIwtepBZs+lt55
-KMlYm5/BomDXGt3qwuMbOVWrageGMGFT/1Ba+LSYRwJQRvyE3v3xatUZA+vcEodU
-nryol0UIvu7heeKDtjWxy7+xt8Z7F9DWynrYMHrDsFryiBAta+SCLwh6U94jDbaT
-sShbIckbxWFNtfGe1WbpabjljTfPrkzUTahL3a1PaVAO2vUZqM44w5dURg1SOs2b
-2jggIxQDXeMwynmLz3DztCkfKtoSMxK1rJzHLdkLIh3HFLSBWHPmJspVcjsiT2pV
-4pTE+MCIWI73MevucYkg
-=hXNa
------END PGP SIGNATURE-----
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
