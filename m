@@ -1,52 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/08/3
-Message-ID: <20120508083722.GC5761@kludge.henri.nerv.fi>
-Date: Tue, 8 May 2012 11:37:22 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/30/2
+Message-ID: <4F262B5F.4070100@redhat.com>
+Date: Sun, 29 Jan 2012 22:32:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: MyBB before 1.6.1
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: (maybe) CVE request: libvpx before 1.0 crasher
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2010 CVE-identifiers for these two vulnerabilities, thanks.
+On 01/28/2012 06:39 AM, Hanno Böck wrote:
+> libvpx (webm library) has released a new version that fixes a
+> crasher bug: 
+> http://blog.webmproject.org/2012/01/vp8-codec-sdk-duclair-released.html
+>
+>  I'm not 100% sure if and in what situation crash bugs qualify as 
+> security issues.
+> 
+> However, I tend to think that this one does. libvpx is used in
+> browsers and crashing browsers seems an issue to me. Also, it could
+> be used to crash automatic media re-encoding-services (e.g.
+> backends of video websites like youtube).
+> 
+> So I'd request a CVE.
+> 
 
-1. MyBB search.php keywords Parameter SQL Injection
+Yeah generally speaking crashes in file parsers used by other
+applications (especially web browsers =) are generally a problem (I'd
+be pretty annoyed to lose 40 tabs all at once).
 
-MyBB contains a flaw that may allow an attacker to carry out an SQL injection attack. The issue is due to the search.php script not properly sanitizing user-supplied input to the keywords parameter. This may allow an attacker to inject or manipulate SQL queries in the back-end database, allowing for the manipulation or disclosure of arbitrary data."""
+Please use CVE-2012-0823 for this issue.
 
-Reference: http://osvdb.org/show/osvdb/70013
-Advisory: http://yehg.net/lab/pr0js/advisories/%5Bmybb1.6%5D_sql_injection
-
-2. MyBB private.php keywords Parameter SQL Injection
-
-MyBB contains a flaw that may allow an attacker to carry out an SQL injection attack. The issue is due to the private.php script not properly sanitizing user-supplied input to the keywords parameter. This may allow an attacker to inject or manipulate SQL queries in the back-end database, allowing for the manipulation or disclosure of arbitrary data.
-
-Reference: http://osvdb.org/show/osvdb/70014
-Advisory: http://yehg.net/lab/pr0js/advisories/%5Bmybb1.6%5D_sql_injection
-
-Both fixed in 1.6.1, same reporter but different php-file so do we want to merge these or should there be two CVEs? Please note that there is issue:
-
-======================================================
-Name: CVE-2010-4522
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4522
-Phase: Assigned (20101209)
-Category:
-Reference: MLIST:[oss-security] 20101220 CVE Request: MyBB XSS bugs
-Reference: URL:http://openwall.com/lists/oss-security/2010/12/20/1
-Reference: MLIST:[oss-security] 20101221 Re: CVE Request: MyBB XSS bugs
-Reference: URL:http://openwall.com/lists/oss-security/2010/12/22/2
-Reference: CONFIRM:http://blog.mybb.com/2010/12/15/mybb-1-6-1-release-1-4-14-update/
-
-Multiple cross-site scripting (XSS) vulnerabilities in MyBB (aka
-MyBulletinBoard) 1.4.14, and 1.6.x before 1.6.1, allow remote
-attackers to inject arbitrary web script or HTML via vectors related
-to (1) editpost.php, (2) member.php, and (3) newreply.php.
-
-
-Current Votes:
-None (candidate not yet proposed)
-======================================================
-
-I do not understand why 1.6.1 release did not say anything about fixes to SQL-injection vulnerabilities.
-
-- Henri Salo
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
