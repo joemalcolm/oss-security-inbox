@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/8
-Message-ID: <1327435624.27688.12.camel@new-desktop>
-Date: Tue, 24 Jan 2012 21:07:03 +0100
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-To: oss-security@...ts.openwall.com
-Subject: XSLT issue in MoinMoin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/31/4
+Message-Id: <0A8384E9-C571-4968-A362-03BE466D1241@wired-net.gr>
+Date: Tue, 31 Jan 2012 08:32:42 +0200
+From: Nanakos Chrysostomos <nanakos@...ed-net.gr>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Jonathan Wiltshire <jmw@...ian.org>, Gian Piero Carrubba <gpiero@...rf.it>, "team@...urity.debian.org" <team@...urity.debian.org>
+Subject: Re: Re: Yubiserver package ships with pre-filled identities
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-some vulnerabilities have been published with version 1.9.3 of
-MoinMoin : http://moinmo.in/SecurityFixes
+On 31 Ιαν 2012, at 4:22, Kurt Seifried <kseifried@...hat.com> wrote:
 
-The XSS already has a CVE but not the XSLT issue. This issue is very
-similar to CVE-2012-0057 patched in PHP 5.3.9 (except the XSLT engine
-which is here '4Suite').
+> On 01/30/2012 03:14 PM, Nanakos Chrysostomos wrote:
+>
+>>> Is this account documented/the impact documented?
+>>>
+>>
+>> What do you mean?
+>
+> Is this issue clearly documented, e.g. do the docs say "WARNING: A
+> DEFAULT ACCOUNT IS ENABLED. THIS IS NOT SAFE. IT MUST BE REMOVED PRIOR
+> TO PRODUCTION USE" and so on.
+>
 
-The patch is simply a documentation update, given that 4Suite (afaik)
-doesn't allow to desactivate its extensions :
-http://hg.moinmo.in/moin/1.9/rev/99e2309a7ec0
+No it's not. In the meantime I have fixed both upstream versions  
+provided through my site and a new package version has been sponsored  
+in Debian that eliminates the problem. Is anything else that has to be  
+done?
 
-Regards,
-Nicolas Grégoire
+Thanks?
+Chris.
 
 
+> Steve: thoughts/comments?
+>
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
