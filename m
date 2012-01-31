@@ -1,21 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/6
-Message-ID: <20120710134336.GA8972@openwall.com>
-Date: Tue, 10 Jul 2012 17:43:36 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/31/2
+Message-ID: <4F27515A.3040403@redhat.com>
+Date: Mon, 30 Jan 2012 19:26:34 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+Subject: gnusound 0.7.5 file name handling format string issue
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 10, 2012 at 03:13:55PM +0200, Florian Weimer wrote:
-> Perhaps we can put a getenv_secure() into libc, which will perform all 
-> the appropriate checks (including future checks we do not know about 
-> yet)?  Duplicating the code in many libraries does not seem prudent.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=654270#24
 
-We already have __secure_getenv() in glibc, which I think is what
-libraries like this should be using on systems with glibc.
+Package: gnusound
+Version: 0.7.5-3
+Severity: serious
 
-Apparently, it was even in LSB until 1.3 inclusive, but was since
-dropped from there?
+which was the last release in 2008.
 
-Alexander
+diff --git a/src/gtk2/gui_dialogs.c b/src/gtk2/gui_dialogs.c
+index e85cf88..540e67a 100644
+--- a/src/gtk2/gui_dialogs.c
++++ b/src/gtk2/gui_dialogs.c
+@@ -56,6 +56,7 @@ gui_yes_no(const char *title,
+                                     GTK_DIALOG_MODAL,
+                                     GTK_MESSAGE_QUESTION,
+                                     GTK_BUTTONS_YES_NO,
++                                    "%s",
+                                     message);
+     button = gtk_dialog_run(GTK_DIALOG(dialog));
+     switch(button) {
+@@ -95,6 +96,7 @@ gui_alert(const char *format,
+                                     GTK_DIALOG_MODAL,
+                                     GTK_MESSAGE_INFO,
+                                     GTK_BUTTONS_CLOSE,
++                                    "%s",
+                                     wordwrap(message, 60));
+     gtk_dialog_run(GTK_DIALOG(dialog));
+     gtk_widget_destroy(dialog);
+
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
