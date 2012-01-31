@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/12/3
-Message-ID: <843562544.46686746.1355329142617.JavaMail.root@redhat.com>
-Date: Wed, 12 Dec 2012 11:19:02 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/31/6
+Message-ID: <20120131152229.GC24473@foo.fgeek.fi>
+Date: Tue, 31 Jan 2012 17:22:29 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Due to Nagios (core) 3.4.3 history.cgi crash (fulldisclosure/2012/Dec/107 post)
+Subject: Mibew messenger multiple XSS
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+This seems to need 2012 CVE-identifier.
 
-  based on:
-  [1] http://seclists.org/fulldisclosure/2012/Dec/107
+Advisory: http://seclists.org/bugtraq/2012/Jan/177
+Codseq own advisory: http://www.codseq.it/advisories/mibew_messenger_multiple_xss
+OSVDB: http://osvdb.org/show/osvdb/78663
+Secunia: http://secunia.com/advisories/47787/
 
-we have investigated the situation for potential security
-implications and it looks on distributions, with FORTIFY_SOURCE
-protection enabled, this problem would not be a security flaw
-(the history.cgi plug-in truly crashes, but main Nagios daemon
-stays alive and the overflow is detected / in httpd error log:
+At the moment http://mibew.org/ does not work for me.
 
-*** buffer overflow detected ***: /usr/lib64/nagios/cgi-bin/history.cgi terminated
-)
-
-So on distributions with F_S enabled the only impact would be
-'nagios' executable crash, but since it's just 'history.cgi' plug-in
-which crashes, DoS can't be reached here either.
-
-Based on the above, we would not consider this to be a security flaw,
-but mentioning here for case nagios is shipped without F_S protection
-somewhere (in that case it might be more interesting from security point
-of view and might qualify for a CVE id).
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- Henri Salo
