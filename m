@@ -1,19 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/04/6
-Message-ID: <20120304185449.GA7298@pisco.westfalen.local>
-Date: Sun, 4 Mar 2012 19:54:50 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: XML::Atom Perl module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/31/7
+Message-ID: <Pine.GSO.4.64.1201311018490.24478@faron.mitre.org>
+Date: Tue, 31 Jan 2012 10:23:10 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+cc: Nanakos Chrysostomos <nanakos@...ed-net.gr>, Kurt Seifried <kseifried@...hat.com>, Jonathan Wiltshire <jmw@...ian.org>, "team@...urity.debian.org" <team@...urity.debian.org>
+Subject: Re: Re: Yubiserver package ships with pre-filled identities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE ID for this issue fixed in DSA 2424:
-http://lists.debian.org/debian-security-announce/2012/msg00052.html
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661949 
 
-Fixed in 0.39:
-http://cpansearch.perl.org/src/MIYAGAWA/XML-Atom-0.41/Changes 
+On Tue, 31 Jan 2012, Gian Piero Carrubba wrote:
 
-Cheers,
-        Moritz
+> More generally, in a 2FA environment, a default account in yubiserver 
+> could lessen the security level but should not expose a straight attack 
+> vector.
+
+If a security feature is less strong than advertised (or less strong than 
+its user may reasonably assume), then this is enough to qualify for CVE.
+
+> Problem arises when a user doesn't check the account db [0] and blindly 
+> trust the results of key validation, possibly automatically mapping 
+> successfully validated keys to default users. I doubt this can happen 
+> for system logins, unless something is seriously wrong, but there are 
+> other resources for whose I think this scenario is plausible (i.e. 
+> authentication to a proxy server or granting access to a network 
+> segment).
+
+Since there are plausible scenarios in which the feature could be misused, 
+this also seems to qualify for a CVE.
+
+> To be honest, issuing a CVE seems a bit overkilling to me.
+
+CVE doesn't cover just the most serious vulnerabilities out there. While 
+the circumstances might be rare, and it's not as serious as other 
+problems, it's still "bad enough" that some consumers would care about it.
+
+- Steve
