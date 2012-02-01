@@ -1,62 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/4
-Message-ID: <20120524180804.GM20735@dhcp-25-225.brq.redhat.com>
-Date: Thu, 24 May 2012 20:08:05 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/17
+Message-ID: <20120201231757.GB9659@openwall.com>
+Date: Thu, 2 Feb 2012 03:17:57 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: mm: read_pmd_atomic: 32bit PAE pmd walk vs pmd_populate SMP race condition
+Subject: Re: Subscribe to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 24, 2012 at 11:03:00AM -0700, akuster wrote:
-> is 1a5a9906d4e8d1976b701f889d8f35d54b928f25 the upstream fix?
+Alex,
 
-no, that is CVE-2012-1179.
-
-petr
-
+On Wed, Feb 01, 2012 at 11:42:56PM +0100, Alex Legler wrote:
+> Sorry for yet another unjustified subscription request, I'll be
+> sure to train our new staff and contributors better so that they know
+> we are already present on the list and that such requests should be
+> discussed internally first.
 > 
-> -armin
-> 
-> On 05/18/2012 02:37 AM, Petr Matousek wrote:
-> > When holding the mmap_sem for reading, pmd_offset_map_lock should only
-> > run on a pmd_t that has been read atomically from the pmdp
-> > pointer, otherwise we may read only half of it leading to this crash.
-> > 
-> > PID: 11679  TASK: f06e8000  CPU: 3   COMMAND: "do_race_2_panic"
-> >  #0 [f06a9dd8] crash_kexec at c049b5ec
-> >  #1 [f06a9e2c] oops_end at c083d1c2
-> >  #2 [f06a9e40] no_context at c0433ded
-> >  #3 [f06a9e64] bad_area_nosemaphore at c043401a
-> >  #4 [f06a9e6c] __do_page_fault at c0434493
-> >  #5 [f06a9eec] do_page_fault at c083eb45
-> >  #6 [f06a9f04] error_code (via page_fault) at c083c5d5
-> >     EAX: 01fb470c EBX: fff35000 ECX: 00000003 EDX: 00000100 EBP:
-> >     00000000
-> >     DS:  007b     ESI: 9e201000 ES:  007b     EDI: 01fb4700 GS:  00e0
-> >     CS:  0060     EIP: c083bc14 ERR: ffffffff EFLAGS: 00010246
-> >  #7 [f06a9f38] _spin_lock at c083bc14
-> >  #8 [f06a9f44] sys_mincore at c0507b7d
-> >  #9 [f06a9fb0] system_call at c083becd
-> >                          start           len
-> >     EAX: ffffffda  EBX: 9e200000  ECX: 00001000  EDX: 6228537f
-> >     DS:  007b      ESI: 00000000  ES:  007b      EDI: 003d0f00
-> >     SS:  007b      ESP: 62285354  EBP: 62285388  GS:  0033
-> >     CS:  0073      EIP: 00291416  ERR: 000000da  EFLAGS: 00000286
-> > 
-> > This should be a longstanding bug affecting x86 32bit PAE without
-> > THP. Only archs with 64bit large pmd_t and 32bit unsigned long should
-> > be affected.
-> > 
-> > An unprivileged local user could use this flaw to crash the system.
-> > 
-> > Proposed fix:
-> > http://permalink.gmane.org/gmane.linux.kernel.mm/78590
-> > 
-> > References:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=822821
-> > http://permalink.gmane.org/gmane.linux.kernel.mm/78590
-> > 
-> > Thanks,
+> Please disregard the request.
 
--- 
-Petr Matousek / Red Hat Security Response Team
+Thanks for commenting on the request so promptly.
+
+On a related note, last week I had to suspend Stefan Behte's
+subscription because his PGP key expired and he has not (yet) replied to
+my private e-mail on that.  So right now you are the only Gentoo person
+on linux-distros.
+
+Alexander
