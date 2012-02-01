@@ -1,67 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/14
-Message-ID: <CA+5g0SLAHYOi+dd5Wv8a=BOhTK5Fanwb4pZ+Ct9SSKVsHmLAvQ@mail.gmail.com>
-Date: Wed, 30 May 2012 17:42:59 -0300
-From: Felipe Pena <felipensp@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Tomas Hoger <thoger@...hat.com>
-Subject: Re: CVE id request: Multiple buffer overflow in unixODBC
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/1
+Message-ID: <20120201004205.GA5261@openwall.com>
+Date: Wed, 1 Feb 2012 04:42:05 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: Apache HTTP Server 2.2.22 Released
 Content-Type: text/plain; charset=utf-8
 
-2012/5/30 Kurt Seifried <kseifried@...hat.com>:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 05/30/2012 11:40 AM, Felipe Pena wrote:
->> Hi all,
->>
->> 2012/5/30 Kurt Seifried <kseifried@...hat.com>:
->>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->>>
->>> On 05/30/2012 02:07 AM, Tomas Hoger wrote:
->>>> On Tue, 29 May 2012 09:42:42 -0300 Felipe Pena wrote:
->>>>
->>>>> Multiple buffer overflow in unixODBC
->>>>> ===========================
->>>>>
->>>>> The library unixODBC doesn't check properly the input from
->>>>> FILEDSN=, DRIVER= options in the DSN, which causes buffer
->>>>> overflow when passed to the SQLDriverConnect() function.
->>>>
->>>> Reports like this - covering bugs in parsing of the
->>>> configuration parameters (i.e. generally trusted input) -
->>>> should include some reasoning why these should be considered
->>>> security.  Nothing obvious not intended to break PHP safe_mode
->>>> comes to mind.
->>>>
->>>
->>> Ahh my bad, I misunderstood this to be options that could be
->>> passed by the program as a standard part of the query, and thus
->>> controlled by the attacker. If this is indeed limited to
->>> configuration files and there are not extenuating circumstances
->>> that allow exploitation I will have to REJECT these CVEs.
->>>
->>
->> It isn't limited to the configuration files. Such input can be
->> passed to the `isql' interactive tool that come together unixODBC.
->> The same string can be used to connect through PHP PDO, for
->> example.
->>
->> $ pwd .../unixodbc/src/unixODBC-2.3.1/exe $ ./isql
->> "FILEDSN=$(python -c "print 'A'*10000");UID=user" -k Segmentation
->> fault
->>
->> If it isn't characterized a security issue I'm sorry.
->>
->> Thanks.
->>
->
-> Is this something that an attacker can typically control, or does the
-> PHP author need to write code that does this?
->
+I think that only posting to oss-security when there's not yet a CVE ID
+assigned (to request one) is weird.  I think it may be more beneficial
+to post in here about all security issues in Open Source software -
+well, or at least in widely used pieces of software.  As a special case,
+when an issue that was first discussed on the private linux-distros or
+distros lists is made public, I think this should include a posting to
+oss-security (and not only vendor advisories sent via their usual
+channels, which vary by vendor).  (No, the Apache issues below were not
+on the distros lists.)
 
-Nop. Beyond the isql one, I can't find a way to control externally the DSN.
+----- Forwarded message from "William A. Rowe Jr." <wrowe@...che.org> -----
 
--- 
-Regards,
-Felipe Pena
+Date: Tue, 31 Jan 2012 16:34:24 -0600
+From: "William A. Rowe Jr." <wrowe@...che.org>
+To: announce@...pd.apache.org
+Subject: Apache HTTP Server 2.2.22 Released
+
+                       Apache HTTP Server 2.2.22 Released
+
+   The Apache Software Foundation and the Apache HTTP Server Project are
+   pleased to announce the release of version 2.2.22 of the Apache HTTP
+   Server ("Apache").  This version of Apache is principally a security
+   and bug fix release, including the following significant security fixes:
+
+   * SECURITY: CVE-2011-3368 (cve.mitre.org)
+     Reject requests where the request-URI does not match the HTTP
+     specification, preventing unexpected expansion of target URLs in
+     some reverse proxy configurations.
+
+   * SECURITY: CVE-2011-3607 (cve.mitre.org)
+     Fix integer overflow in ap_pregsub() which, when the mod_setenvif module
+     is enabled, could allow local users to gain privileges via a .htaccess
+     file.
+
+   * SECURITY: CVE-2011-4317 (cve.mitre.org)
+     Resolve additional cases of URL rewriting with ProxyPassMatch or
+     RewriteRule, where particular request-URIs could result in undesired
+     backend network exposure in some configurations.
+
+   * SECURITY: CVE-2012-0021 (cve.mitre.org)
+     mod_log_config: Fix segfault (crash) when the '%{cookiename}C' log format
+     string is in use and a client sends a nameless, valueless cookie, causing
+     a denial of service. The issue existed since version 2.2.17.
+
+   * SECURITY: CVE-2012-0031 (cve.mitre.org)
+     Fix scoreboard issue which could allow an unprivileged child process
+     could cause the parent to crash at shutdown rather than terminate
+     cleanly.
+
+   * SECURITY: CVE-2012-0053 (cve.mitre.org)
+     Fixed an issue in error responses that could expose "httpOnly" cookies
+     when no custom ErrorDocument is specified for status code 400.
+
+   The Apache HTTP Project thanks halfdog, Context Information Security Ltd,
+   Prutha Parikh of Qualys, and Norman Hippert for bringing these issues to
+   the attention of the security team.
+
+   We consider this release to be the best version of Apache available, and
+   encourage users of all prior versions to upgrade.
+
+   Apache HTTP Server 2.2.22 is available for download from:
+
+     http://httpd.apache.org/download.cgi
+
+   Please see the CHANGES_2.2 file, linked from the download page, for a
+   full list of changes.  A condensed list, CHANGES_2.2.22 includes only
+   those changes introduced since the prior 2.2 release.  A summary of all
+   of the security vulnerabilities addressed in this and earlier releases
+   is available:
+
+     http://httpd.apache.org/security/vulnerabilities_22.html
+
+   This release includes the Apache Portable Runtime (APR) version 1.4.5
+   and APR Utility Library (APR-util) version 1.4.2, bundled with the tar
+   and zip distributions.  The APR libraries libapr and libaprutil (and
+   on Win32, libapriconv version 1.2.1) must all be updated to ensure
+   binary compatibility and address many known security and platform bugs.
+   APR-util version 1.4 represents a minor version upgrade from earlier
+   httpd source distributions, which previously included version 1.3.
+
+   Apache 2.2 offers numerous enhancements, improvements, and performance
+   boosts over the 2.0 codebase.  For an overview of new features
+   introduced since 2.0 please see:
+
+     http://httpd.apache.org/docs/2.2/new_features_2_2.html
+
+   This release builds on and extends the Apache 2.0 API.  Modules written
+   for Apache 2.0 will need to be recompiled in order to run with Apache
+   2.2, and require minimal or no source code changes.
+
+     http://svn.apache.org/repos/asf/httpd/httpd/branches/2.2.x/VERSIONING
+
+   When upgrading or installing this version of Apache, please bear in mind
+   that if you intend to use Apache with one of the threaded MPMs (other
+   than the Prefork MPM), you must ensure that any modules you will be
+   using (and the libraries they depend on) are thread-safe.
+
+
+----- End forwarded message -----
