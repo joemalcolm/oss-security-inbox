@@ -1,29 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/08/1
-Message-ID: <1255718567.7311121.1349698552444.JavaMail.root@redhat.com>
-Date: Mon, 8 Oct 2012 08:15:52 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: password hashing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/4
+Message-ID: <4F291A3A.8040000@redhat.com>
+Date: Wed, 01 Feb 2012 11:55:54 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, berkeviktor@....com, Debian Security Team <security@...ian.org>, Paul Wise <pabs@...ian.org>, Joerg Reisenweber <joerg@...nmoko.org>, Christopher Aillon <caillon@...hat.com>, Remi Collet <Fedora@...illeCollet.com>, Jonathan Blandford <jrb@...hat.com>
+Subject: CVE Request (two ids) -- Xchat-WDK (prior 1499-4 [2012-01-18]) and Xchat-v2.8.6 on Maemo architecture -- Heap-based buffer overflow by processing UTF-8 line from server containing characters outside BMP
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi,
-> 
-> I was too shy to spam oss-security with this, but a list member (who is
-> also on Openwall's announce list) asked me to.  Armed with this excuse,
-> let me tell you that I made two presentations on password hashing this
-> year.  It's everything you wanted to know about password hashing since
-> 1960s to present day and the near future, and more. ;-)
-> 
+Hello Kurt, Steve, Viktor, vendors,
 
-This is fantastic, thanks! I've not gone through them all yet, but they
-look good and are most interesting.
+   a heap-based buffer overflow flaw was found in the way xchat, graphical IRC
+chat client, processed one line of text received from the server, when the text
+contained Unicode characters and some of the characters were outside of the
+Basic Multilingual Plane (BMP). A remote attacker could provide a
+specially-crafted Unicode string as a xchat channel or private message, which
+once processed would lead to denial of service (xchat client crash), or,
+potentially arbitrary code execution with the privileges of the user running
+xchat client.
 
-Can I ask how these are licensed? I can see a use to borrow some of these
-slides for presentations.
+This issue has been successfully reproduced on Xchat-WDK versions prior to:
+* 1499-4 (2012-01-18)
 
-Thanks.
+     add Non-BMP plugin to avoid client crashes
 
--- 
-    JB
+version. Also Joerg Reisenweber reports, this deficiency to have been exploited
+in the past on Xchat-v2.8.6 versions, as being used on Maemo architecture.
+
+The following Linux based xchat versions have been investigated against presence
+of this issue:
+* xchat-v2.6.6,
+* xchat-v2.8.6,
+* xchat-v2.8.8
+
+on various architectures (i386, x86_64, ppc64) with various versions of gtk2 library:
+* gtk-v2.10.4,
+* gtk-v2.18.9,
+* gtk-v2.24.7,
+* gtk-v2.14.7
+
+and presence of this flaw has not been observed on those Linux versions, which makes
+us think it is some Microsoft Windows 7 / Maemo architecture specific feature, which
+makes this issue to be visible on those Xchat derivatives.
+
+References:
+[1] http://code.google.com/p/xchat-wdk/issues/detail?id=132
+[2] http://code.google.com/p/xchat-wdk/issues/detail?id=134
+[3] http://code.google.com/p/xchat-wdk/issues/detail?id=135
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=786391
+
+Xchat-WDK upstream changelog:
+[5] http://www.xchat-wdk.org/home/changelog
+     part:
+     * 1499-4 (2012-01-18)
+
+     add Non-BMP plugin to avoid client crashes
+
+Particular Xchat-WDK upstream patch:
+[6] http://lwsitu.com/xchat/replace_non-bmp.diff
+
+Could you allocate two CVE ids for these flaws? (assuming two ids are
+necessary, because Xchat-WDK for MS Windows 7 case and Xchat-v2.8.6 for
+Maemo case can / should be considered as different source code bases).
+
+Steve, please advise if one id is sufficient or two should be used?
+
+Also, for the Xchat-WDK case it looks that v1499-6 corrected the issue
+for channel messages, but the issue is still present for 'private messages'
+case:
+[7] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c33
+[8] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c34
+[9] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c36
+
+Though this assumption needs to be verified / confirmed yet.
+Viktor, could you please confirm or disprove it?
+
+If that assumption would have shown as valid, a third CVE identifier
+would need to be assigned yet for the incomplete Xchat-WDK v1499-6
+fix yet (addressing the issue for 'channel messages' case, but not
+for 'private messages' case).
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
