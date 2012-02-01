@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/3
-Message-ID: <CAO2oKfMAny7v-JBEnubOT1Sf=7wSULZfKL7Svw2xaDd=wPmHJA@mail.gmail.com>
-Date: Sun, 8 Jan 2012 09:56:45 -0400
-From: Hadi Shiravi <hadishiravi@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/10
+Message-ID: <4F29B266.1030206@redhat.com>
+Date: Wed, 01 Feb 2012 14:45:10 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: New Intrusion Detection Evaluation Dataset
+CC: Henri Salo <henri@...v.fi>, filippo.cavallarin@...seq.it
+Subject: Re: Mibew messenger multiple XSS
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 01/31/2012 08:22 AM, Henri Salo wrote:
+> This seems to need 2012 CVE-identifier.
+> 
+> Advisory: http://seclists.org/bugtraq/2012/Jan/177
+> Codseq own advisory: http://www.codseq.it/advisories/mibew_messenger_multiple_xss
+> OSVDB: http://osvdb.org/show/osvdb/78663
+> Secunia: http://secunia.com/advisories/47787/
+> 
+> At the moment http://mibew.org/ does not work for me.
+> 
+> - Henri Salo
 
-The Information Security Centre of Excellence (ISCX) 2012 intrusion
-detection evaluation dataset consists of labeled network traces, including full
-packet payloads, which along with the relevant profiles are publicly
-available to researchers by applying at http://iscx.ca/dataset-request-form.
-A full description of the evaluation dataset can also be found at
-http://www.iscx.ca/datasets. A brief abstract of the fundamental ideas
-behind the dataset is also attached below. A complete blog post is
-also accessible at http://ali.shiravi.com/84.
+Please use CVE-2012-0829 for this issue.
 
-Thank you,
+P.S. for some reason OSVDB lists this as a CSRF issue (?) which is
+mentioned in the advisory but not really shown.
 
-Hadi Shiravi
-
-Network Security Researcher
-University of New Brunswick
-
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
