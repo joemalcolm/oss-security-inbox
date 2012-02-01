@@ -1,41 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/18
-Message-ID: <4F21E662.8060308@redhat.com>
-Date: Thu, 26 Jan 2012 16:48:50 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/13
+Message-ID: <Pine.GSO.4.64.1202011702220.16245@faron.mitre.org>
+Date: Wed, 1 Feb 2012 17:23:34 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: XSLT issue in MoinMoin
+cc: Henri Salo <henri@...v.fi>, filippo.cavallarin@...seq.it
+Subject: XSS hiding CSRF (was: Re: Mibew messenger multiple XSS)
 Content-Type: text/plain; charset=utf-8
 
-On 01/24/2012 02:37 PM, Nicolas Grégoire wrote:
-> 
->> How exactly does the attacker get access to the filesystem using XSLT?
-> 
-> An attacker can read files using either the doc-as-string() extension
-> function or a XML External Entity attack. Write access is done via the
-> <exsl:document> extension element.
-> 
-> Depending of your policy, you may want to affect one, two or three CVE
-> (one by vector ? by impact ? by type of bug ?).
-> 
->> Does everything using 4Suite have this issue?
-> 
-> Yes. Unless an obscure and undocumented option allows to deactivate this
-> behavior :-(
-> 
-> My XSLT Wiki has some additional details, including PoC code :
-> - http://goo.gl/3A7h2 (4Suite)
-> - http://goo.gl/GI5NK (MoinMoin)
-> 
-> Regards,
-> Nicolas
-> 
 
-I think this issue warrants some more discussion, is the vuln in
-moinmoin (and by extension anyone using 4Suite in a similar manner), or
-is it a 4Suite issue (and in this case it's intended behaviour and not a
-security issue?). Steve: care to weigh in?
+Funny, the CVE team was discussing this curiosity just today.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+In the Mibew case, the PoC code has POST forms that invoke scripts like 
+"/operator/ban.php"  and "/operator/settings.php".  These are almost 
+certainly administrative functions that probably shouldn't be reachable at 
+all.  Thus, these might be better identified as CSRF issues at their core, 
+instead of XSS.
+
+It seems that some researchers report XSS in administrator modules, but 
+they omit when you need to use CSRF in order to get the administrator to 
+perform the XSS.  So, the primary issue is often CSRF, and XSS is only 
+resultant (since, in many cases, the admin already has privileges to edit 
+HTML).  The vuln DBs are starting to catch up with this "trend" in vuln 
+reporting, so there is a very slow shift towards identifying CSRF as the 
+core problem.  However, CSRF is in the eye of the beholder, in that you 
+often need to know the INTENDED functionality of the application before 
+you can interpret whether things are CSRF versus regular functionality, 
+versus good old XSS.
+
+Note that this kind of XSS-hiding-CSRF issue is not necessarily tied to 
+admin functionality, but that's where it's a strong indicator that a 
+researcher might be ignoring CSRF.
+
+Sometimes, though, it can be difficult to determine whether XSS or CSRF is 
+at the root, even if you're dealing with admin functionality.  For 
+example, maybe an admin program will check for CSRF and fail, but include 
+the original form in its error response, possibly enabling XSS.  Or, maybe 
+there are TWO issues at play - maybe a victim can be CSRF'ed to make posts 
+on their behalf, and also a secondary issue where the victim can become an 
+attacker and XSS other people (with or without CSRF).
+
+Unfortunately, I strongly suspect that the number of XSS-hiding-CSRF 
+reports will grow :-(
+
+For people who investigate vuln reports closely, please keep this trend in 
+mind.  If you are a researcher, consider whether XSS or other issues are 
+really legitimate functionality that is only reachable by targeting the 
+victim with CSRF; if that's the case, then the CSRF is "primary" and the 
+XSS is "resultant" and not a separate vulnerability - and if your targeted 
+application has CSRF, then maybe there's a more powerful impact than just 
+XSS.  (For example, depending on how settings / configuration is 
+implemented, you might be able to get code execution out of it.)
+
+- Steve
+
+
+On Wed, 1 Feb 2012, Kurt Seifried wrote:
+
+> On 01/31/2012 08:22 AM, Henri Salo wrote:
+>> This seems to need 2012 CVE-identifier.
+>>
+>> Advisory: http://seclists.org/bugtraq/2012/Jan/177
+>> Codseq own advisory: http://www.codseq.it/advisories/mibew_messenger_multiple_xss
+>> OSVDB: http://osvdb.org/show/osvdb/78663
+>> Secunia: http://secunia.com/advisories/47787/
+>>
+>> At the moment http://mibew.org/ does not work for me.
+>>
+>> - Henri Salo
+>
+> Please use CVE-2012-0829 for this issue.
+>
+> P.S. for some reason OSVDB lists this as a CSRF issue (?) which is
+> mentioned in the advisory but not really shown.
+>
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+>
