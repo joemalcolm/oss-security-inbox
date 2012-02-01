@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/2
-Message-ID: <20120831122105.361c10f7@hsalkjdhsa>
-Date: Fri, 31 Aug 2012 12:21:05 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/14
+Message-ID: <20120201234256.733f1497@mail.a3li.li>
+Date: Wed, 1 Feb 2012 23:42:56 +0100
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: contao before 2.11.4 sql injection
+Subject: Re: Subscribe to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-bug tracker info:
-https://github.com/contao/core/issues/4427
+On Wed, 01 Feb 2012 23:02:41 +0100
+Agostino Sarubbo <ago@...too.org> wrote:
 
-Upstream changelog:
-http://contao.org/en/changelog/versions/2.11.html
-"Fixed a critical privilege escalation vulnerability which allowed
-regular users to make themselves administrators (thanks to Fabian
-Mihailowitsch) (see #4427)."
+> @Alexander:
+> 
+> I'm contributor in gentoo security project as 'security bug
+> coordinator', can you subscribe me?
+> http://www.gentoo.org/proj/en/security/
 
-I think this has no CVE yet, please assign CVE.
+Sorry for yet another unjustified subscription request, I'll be
+sure to train our new staff and contributors better so that they know
+we are already present on the list and that such requests should be
+discussed internally first.
+
+Please disregard the request.
+
+Thanks,
+Alex
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Alex Legler <a3li@...too.org>
+Gentoo Security/Ruby/Infrastructure
 
 Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
