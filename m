@@ -1,29 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/23/5
-Message-ID: <1707742.pqzVoIFduu@devil>
-Date: Tue, 23 Oct 2012 23:18:15 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/8
+Message-ID: <1328130174.31285.162.camel@mdlinux>
+Date: Wed, 01 Feb 2012 16:02:54 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: cve@...re.org
-Subject: Wrong affected version in the CVE-2012-4511
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-The description says:
+On Thu, 2012-02-02 at 00:54 +0400, Solar Designer wrote:
+> On Fri, Jan 20, 2012 at 01:44:45PM +0400, Solar Designer wrote:
+> > http://oss-security.openwall.org/wiki/mailing-lists/distros
+> > 
+> > to state the following:
+> > 
+> > "Please note that the maximum acceptable embargo period for issues
+> > disclosed to these lists is 14 to 19 days, with embargoes longer than 14
+> > days (up to 19) allowed in case the issue is reported on a Thursday or a
+> > Friday and the proposed coordinated disclosure date is thus adjusted to
+> > fall on a Monday or (preferably) a Tuesday.  Please do not ask for a
+> > longer embargo.  In fact, embargoes shorter than 14 days are preferable."
+> 
+> I've just revised the last sentence above to say "In fact, embargo
+> periods shorter than 7 days are preferable."
+> 
+> Can we possibly afford to change the maximum to 7 to 11 days (depending
+> on day of week)?  That is, 7 days is the standard maximum, up to 11 days
+> is possible if the issue is reported on a Thursday or a Friday (only in
+> these two cases).  I am for this change (in both my list member for
+> Openwall and my list admin capacity).  What about others?
 
-services/flickr/flickr.c in libsocialweb before 0.25.22 automatically connects 
-to Flickr when no Flickr account is set, which might allow remote attackers to 
-obtain sensitive information via a man-in-the-middle (MITM) attack.
+A week is a pretty short delay to prepare updates and perform the
+necessary QA to get an issue out on time. Why are you pushing to get the
+maximum reduced?
 
-but Rob Bradford in the Red Hat bugzilla said:
-That's odd - when I did "yum remove libsocialweb" it didn't threaten to remove 
-anything else (well, except libsocialweb-keys...:-)
-Anyway there is a 0.25.21 on the servers for you.
+> (In fact, I'd prefer an even shorter maximum, but I am proposing what I
+> think has a chance to be approved by others without making the list a
+> lot less useful to them.)
 
-and, for the record the version 0.25.22 does not exist.
+Reducing the maximum will just result in having everyone miss the
+embargo date and putting users at risk.
 
-So I think we need "s/22/21"
-Can someone take care of this issue?
--- 
-Agostino Sarubbo / ago -at- gentoo.org
-Gentoo/AMD64 Arch Security Liaison
-GPG: 0x7CD2DC5D
+Marc.
+
+
