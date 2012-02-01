@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/1
-Message-ID: <20120424094724.0bd373c9@redhat.com>
-Date: Tue, 24 Apr 2012 09:47:24 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/16
+Message-ID: <20120201231302.GA9659@openwall.com>
+Date: Thu, 2 Feb 2012 03:13:02 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Tavis Ormandy <taviso@...xchg8b.com>
-Subject: Re: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 22 Apr 2012 19:44:56 +0400 Solar Designer wrote:
+On Wed, Feb 01, 2012 at 11:59:34PM +0100, Thomas Klausner wrote:
+> While you're editing the wiki... it's probably obvious to everyone,
+> but perhaps not, so a short sentence about the Subject header not
+> being encrypted and thus visible to e.g. mail server admins might be a
+> good idea.
 
-> Turns out that file was mangled in transit.  Tavis has posted the
-> correct one on this URL:
-> 
-> http://lock.cmpxchg8b.com/openssl-1.0.1-testcase-32bit.crt.gz
-> 
-> SHA-256:
-> ac7acb168a6bfd65375eeec072acbf904f0f10e3bc5588c020aed4df4712d066
+Added:
 
-If you test your 0.9.x updates with this reproducer from Tavis, you
-should still expect to see crashes, which are now corrected upstream in
-0.9.8w:
+"except that headers, including From and Subject, are not encrypted, so
+you may want to avoid including security sensitive information in the
+Subject."
 
-http://marc.info/?l=openssl-dev&m=133525318514423&w=2
-
-This incomplete fix got CVE-2012-2131.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Alexander
