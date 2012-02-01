@@ -1,60 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/19/1
-Message-Id: <201210182014.26885.geissert@debian.org>
-Date: Thu, 18 Oct 2012 20:14:25 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, Attila Bogar <attila.bogar@...guamatics.com>
-Subject: Re: CVE Request -- mcrypt: stack-based buffer overflow by encryption / decryption of overly long file names
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/18
+Message-ID: <20120201235403.GC9659@openwall.com>
+Date: Thu, 2 Feb 2012 03:54:03 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-Hi Jan, everyone,
+Marc,
 
-[BCC'ing Malcolm Parsons, who sent me an email about the tmperr buffer 
-overflow this morning. Not sure if he discovered it independently.]
+Thank you for your feedback.
 
-On Thursday 18 October 2012 08:50:37 Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
->   Attila Bogar reported a stack-based buffer overflow
-> in the way MCrypt, a crypt() package and crypt(1) command
-> replacement, used to encrypt / decrypt files with overly
-> long names (longer than 128 bytes). A remote attacker
-> could provide a specially-crafted file that, when processed
-> by the mcrypt too, would lead to mcrypt executable crash [*].
-> 
-> A different vulnerability than CVE-2012-4409:
-[...]
-> References:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=867790
-> 
-> Patch proposed by Attila:
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=867790#c0
+On Wed, Feb 01, 2012 at 04:02:54PM -0500, Marc Deslauriers wrote:
+> A week is a pretty short delay to prepare updates and perform the
+> necessary QA to get an issue out on time. Why are you pushing to get the
+> maximum reduced?
 
-Why 132? tmperr is declared as:
-char tmperr[128];
+Why shorter embargo periods are preferable: vendors who are ready to
+push out their updates first don't have to sit on those updates waiting
+for others, users get their fixes sooner, the potential for leaks (or
+rediscovery) and exploit development in the wild before a fix is out is
+reduced, the potential for a vendor inadvertently releasing before the
+CRD is reduced (and in case this happens anyway, other vendors are
+likely "more ready" by that time since they knew the CRD was sooner),
+fewer embargoed issues are being tracked at the same time (less work,
+lower risk of errors).
 
-That would still allow some bytes to be overwritten.
+Of course, this is a tradeoff - just like the very existence of such
+closed lists is.
 
-[...]
-> P.S.: I am not sure about relation of this issue to the issue
->       Raphael Geissert reported previously:
->       [4] http://www.openwall.com/lists/oss-security/2012/10/02/1
-> 
->       so CC-in him too, he to clarify if [2] == [4], or if
->       they are yet different issues. Raphael, please clarify.
+Why 7-11 days: a few issues were recently handled within 7 days fine -
+such as the sudo issue (easy fix provided by upstream and not needing
+much QA) and the Linux kernel /proc/<pid>/mem issue (vendors had to
+hurry up because the issue was mostly public).  So this may be realistic
+at least as a target (hence my wiki page edit) or maybe also as the
+maximum (hence my proposal).  Additionally, the original maximum of 14
+days may be seen as potentially including the extra days needed based
+on day-of-week: it is one week normal + some days from the other week
+when needed by day-of-week.  So maybe me trying to meet the reality
+(seen on a few occasions) by extending this to 14-19 days was wrong, and
+I instead should have proposed 7-11 days.  Hence the belated proposal.
 
-They are different issues. The closest is CVE-2012-4426[5].
+Why me: I feel that it's my duty as list admin to propose the smallest
+maximum embargo period that list members might be willing and able to use.
 
-I didn't look much into those other buffers as they would require an attacker 
-to control the arguments passed to mcrypt(1) to exploit them.
+Why I am making this proposal now: this is triggered by a certain
+off-list discussion I just had; unfortunately, the other party does not
+permit me to post more about it.  However, as I wrote above, I feel that
+I have good reasons to give this proposal a try (see if it's acceptable
+or not) regardless of what triggered these thoughts now.
 
-Kurt, regarding the issues in [4], I don't know what other reference you 
-want me to add. There's nothing more than what's on the thread.
+> Reducing the maximum will just result in having everyone miss the
+> embargo date and putting users at risk.
 
-[5]http://www.openwall.com/lists/oss-security/2012/09/13/22
+It's not that simple.
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Not "everyone" will miss the CRD.  Clearly, if some vendors on the list
+are comfortable with a shorter embargo they either expect to meet the
+CRD or find the issues for which they miss the CRD not important enough
+to fix before CRD anyway.
+
+I already provided some answers to "why" above, and here's one more: the
+change may also result in vendors' processes being adjusted to meet the
+faster pace.  I am unsure to which extent this is positive overall,
+though (considering that those changes may have side-effects).
+
+Thanks again,
+
+Alexander
