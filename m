@@ -1,65 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/27/8
-Message-ID: <503BAFD3.5030709@redhat.com>
-Date: Mon, 27 Aug 2012 11:35:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/5
+Message-ID: <4F2935D4.2010107@aol.com>
+Date: Wed, 01 Feb 2012 13:53:40 +0100
+From: Berke Viktor <berkeviktor@....com>
 To: oss-security@...ts.openwall.com
-CC: Thomas Pollet <thomas.pollet@...il.com>
-Subject: Re: Re: zenoss issues
+Subject: Re: CVE Request (two ids) -- Xchat-WDK (prior 1499-4 [2012-01-18]) and Xchat-v2.8.6 on Maemo architecture -- Heap-based buffer overflow by processing UTF-8 line from server containing characters outside BMP
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 08/24/2012 04:04 AM, Thomas Pollet wrote:
-> Hi,
-> 
-> I have found that zenoss displays snmp output like syslocation
-> unfiltered in the web interface. 
-> http://jira.zenoss.com/jira/browse/ZEN-3192 I suspect there are
-> many more bugs in this package.
-> 
-> Regards, Thomas
-> 
-> On 24 August 2012 09:33, Thomas Pollet <thomas.pollet@...il.com>
-> wrote:
-> 
->> Hello,
->> 
->> I have found xss and command execution problems with zenoss. I
->> created a bugreport which can be found at 
->> http://jira.zenoss.com/jira/browse/ZEN-3183 . However the zenoss 
->> developers don't seem to be able to reproduce the issues.
->> 
->> Another issue, reported by Emanuel Bronshtein can be found at 
->> http://jira.zenoss.com/jira/browse/ZEN-3153
->> 
->> Regards, Thomas Pollet
+Here are my notes:
 
-Just a reminder that no public links have been posted, if you could
-please do so I will assign a CVE #.
+- Apparently only Windows versions are affected, no Linux ones. I 
+haven't tested Maemo but I'd be suprised if it would crash.
+- Not all non-BMP characters crash, only a specific range. See the patch 
+you linked for details.
 
+if ((suspect >= 0x1D173 && suspect <= 0x1D17A)
+			|| (suspect >= 0xE0001 && suspect <= 0xE007F))
 
+- As for your assumption that private messages would still crash, I 
+already made a correction in the bug tracker, but for your reference:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+"ANY received text will be filtered correctly, be it private or public 
+message or anything else. XChat-WDK will ONLY crash if you paste the 
+malicious characters into your own client's input box, for which the 
+only reason could be to intentionally crash yourself. This obviously 
+can't be prevented in XChat-WDK, only if GTK+ fixes it."
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+That is, current versions of XChat-WDK are immune to these kinds of attacks.
 
-iQIcBAEBAgAGBQJQO6/SAAoJEBYNRVNeJnmTKIQQALkZNy/lAiXL6Pit0kTJkdwq
-0emVwdBJ37QhxFTZc61yt6dSxgQRIjhbn9SLiGMkVR58UqVU/e5FbXxZZgGUYT/5
-JQEvzZ8UuS0GiPD5zqtmT2rXbA9BEDnmxPaIeHY9gisMAaRvR8cMNc9htS6X+Hqu
-BN9rFgHcNN8VwZ1yuB6VHxZLLncTUgmYW69tbKu7OU/1WSmyE6MmW/OVKiopv373
-/w61EAL2NYhw0IFa8eLUnoJEQPNg75VkJ5SKsb9SEaZPCDdSQ8SUEGMDVQX1Pqu3
-ieYJZ6uNrveZk2hkAb8oXt+/V4rokjUpfuP+xWxm1GYuSE0jBwzv0VmK2URuj2GI
-TWUq4+ROLEA+u+Sp7LaD64VPG+LLZuJ2sPSGx5/Ug23I1qYYkYSJ0IjAsQf9rISz
-FCilwag7yFz+FUcSmZsj4j8cZtN7yB0cASgC8o/SuYbHnM0+D0zXxsB8r1f70XeM
-ZBK6OJpsxxjAiutpSeneVbcIv4zZwcb+O89zvl/KltLwYsYi+fa/dxHzO3o3y+od
-ZQTz69mCzDPucqjA5jaLhYtnbOHb/RnF2RpeOULyIVgKBPVVhEZz6ocbq6PHyjis
-Rb9paATIJxDm0dHsAee0xnpYtpzn46/p6iWa35obUe6wdWfhdayCgqooVvW6iFax
-G6yB9TZnlivN0wW4B46n
-=k4hV
------END PGP SIGNATURE-----
+Regards,
+
+Viktor
+
+On 2012.02.01. 11:55, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, Viktor, vendors,
+>
+> a heap-based buffer overflow flaw was found in the way xchat, graphical IRC
+> chat client, processed one line of text received from the server, when
+> the text
+> contained Unicode characters and some of the characters were outside of the
+> Basic Multilingual Plane (BMP). A remote attacker could provide a
+> specially-crafted Unicode string as a xchat channel or private message,
+> which
+> once processed would lead to denial of service (xchat client crash), or,
+> potentially arbitrary code execution with the privileges of the user
+> running
+> xchat client.
+>
+> This issue has been successfully reproduced on Xchat-WDK versions prior to:
+> * 1499-4 (2012-01-18)
+>
+> add Non-BMP plugin to avoid client crashes
+>
+> version. Also Joerg Reisenweber reports, this deficiency to have been
+> exploited
+> in the past on Xchat-v2.8.6 versions, as being used on Maemo architecture.
+>
+> The following Linux based xchat versions have been investigated against
+> presence
+> of this issue:
+> * xchat-v2.6.6,
+> * xchat-v2.8.6,
+> * xchat-v2.8.8
+>
+> on various architectures (i386, x86_64, ppc64) with various versions of
+> gtk2 library:
+> * gtk-v2.10.4,
+> * gtk-v2.18.9,
+> * gtk-v2.24.7,
+> * gtk-v2.14.7
+>
+> and presence of this flaw has not been observed on those Linux versions,
+> which makes
+> us think it is some Microsoft Windows 7 / Maemo architecture specific
+> feature, which
+> makes this issue to be visible on those Xchat derivatives.
+>
+> References:
+> [1] http://code.google.com/p/xchat-wdk/issues/detail?id=132
+> [2] http://code.google.com/p/xchat-wdk/issues/detail?id=134
+> [3] http://code.google.com/p/xchat-wdk/issues/detail?id=135
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=786391
+>
+> Xchat-WDK upstream changelog:
+> [5] http://www.xchat-wdk.org/home/changelog
+> part:
+> * 1499-4 (2012-01-18)
+>
+> add Non-BMP plugin to avoid client crashes
+>
+> Particular Xchat-WDK upstream patch:
+> [6] http://lwsitu.com/xchat/replace_non-bmp.diff
+>
+> Could you allocate two CVE ids for these flaws? (assuming two ids are
+> necessary, because Xchat-WDK for MS Windows 7 case and Xchat-v2.8.6 for
+> Maemo case can / should be considered as different source code bases).
+>
+> Steve, please advise if one id is sufficient or two should be used?
+>
+> Also, for the Xchat-WDK case it looks that v1499-6 corrected the issue
+> for channel messages, but the issue is still present for 'private messages'
+> case:
+> [7] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c33
+> [8] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c34
+> [9] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c36
+>
+> Though this assumption needs to be verified / confirmed yet.
+> Viktor, could you please confirm or disprove it?
+>
+> If that assumption would have shown as valid, a third CVE identifier
+> would need to be assigned yet for the incomplete Xchat-WDK v1499-6
+> fix yet (addressing the issue for 'channel messages' case, but not
+> for 'private messages' case).
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
