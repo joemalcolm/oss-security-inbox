@@ -1,35 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/1
-Message-ID: <CAGyNYUMEA8W8PaP=h6Rj+f_puz7OqVzFYtqru1UaR1e7qp2x5Q@mail.gmail.com>
-Date: Fri, 20 Apr 2012 08:59:03 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: Marcus Meissner <meissner@...e.de>
-Cc: OSS Security List <oss-security@...ts.openwall.com>, security@...nel.org,  Sukadev Bhattiprolu <sukadev@...ibm.com>, Serge Hallyn <serge.hallyn@...onical.com>,  "Eric W. Biederman" <ebiederm@...ssion.com>, Pavel Emelyanov <xemul@...nvz.org>
-Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/15
+Message-ID: <20120201225934.GB21615@danbala.tuwien.ac.at>
+Date: Wed, 1 Feb 2012 23:59:34 +0100
+From: Thomas Klausner <wiz@...BSD.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 20, 2012 at 5:48 AM, Marcus Meissner <meissner@...e.de> wrote:
-> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
-> namespace leak caused by vsftpd.
->
-> https://bugzilla.novell.com/show_bug.cgi?id=757783
->
-> He provided a simple reproducer:
-[...]
->
-> and checking "cat /proc/slabinfo|grep pid_namespace"
-> gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
->
-> Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
-> fixed between 3.1 and 3.2 (but someone else cross check perhaps).
->
-> Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
-> but it seems not helping.
+On Thu, Feb 02, 2012 at 12:54:59AM +0400, Solar Designer wrote:
+> Also, I added the following to the wiki page:
 
-I tested this with 3.0.25-rt44.57.el6rt.x86_64 yesterday, and I was
-able to trigger the issue. The process needs to be privileged with
-CAP_SYS_ADMIN.
-
-Eric, besides struct pid_namespace, there is a corresponding struct pid_2 leak.
-
-Thanks, Eugene
+While you're editing the wiki... it's probably obvious to everyone,
+but perhaps not, so a short sentence about the Subject header not
+being encrypted and thus visible to e.g. mail server admins might be a
+good idea.
+ Thomas
