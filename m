@@ -1,33 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/9
-Message-ID: <4F4EA267.3080204@redhat.com>
-Date: Wed, 29 Feb 2012 15:10:47 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/6
+Message-ID: <1328117400.27034.2.camel@scapa>
+Date: Wed, 01 Feb 2012 18:30:00 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: Bugs in "file" program VU#621745
+Subject: Re: Re: CVE Request (two ids) -- Xchat-WDK (prior 1499-4 [2012-01-18]) and Xchat-v2.8.6 on Maemo architecture -- Heap-based buffer overflow by processing UTF-8 line from server containing characters outside BMP
 Content-Type: text/plain; charset=utf-8
 
-On 02/29/2012 10:52 AM, Florian Weimer wrote:
-> * Kurt Seifried:
+On mer., 2012-02-01 at 13:53 +0100, Berke Viktor wrote:
+> Hello,
 > 
->>> We recently pointed the CERT BFF at the ubiquitous "file" command
->>> and found a few bugs.  While we've not proven the bugs to be
->>> exploitable, we've also not ruled out the possibility that they
->>> could be.
->>>
->>> Fixes were committed on Feb 16, 2012: 
->>> https://github.com/glensc/file/commits/master
+> Here are my notes:
 > 
->> If any of these are security issues please let me know and I will
->> assign CVE #'s.
-> 
-> file also provides a library, libmagic.  This could lead to crashes of
-> server processes which use libmagic.  Debian will likely release a fix
-> as a security update.
+> - Apparently only Windows versions are affected, no Linux ones. I 
+> haven't tested Maemo but I'd be suprised if it would crash.
+> - Not all non-BMP characters crash, only a specific range. See the
+> patch 
+> you linked for details. 
 
-Fair enough but I'd like some details before issuing CVE's, like what
-are the actual security issues that have been fixed?
-
+It did crash Maemo clients, that's where the report came from.
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
