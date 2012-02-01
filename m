@@ -1,67 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/22/2
-Message-ID: <20120422122311.GA2812@openwall.com>
-Date: Sun, 22 Apr 2012 16:23:11 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/7
+Message-ID: <20120201205459.GA8715@openwall.com>
+Date: Thu, 2 Feb 2012 00:54:59 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On Fri, Apr 20, 2012 at 01:11:19PM +0400, Solar Designer wrote:
-> Tavis Ormandy of Google Security Team found a vulnerability in OpenSSL:
+On Fri, Jan 20, 2012 at 01:44:45PM +0400, Solar Designer wrote:
+> http://oss-security.openwall.org/wiki/mailing-lists/distros
 > 
-> incorrect integer conversions in OpenSSL can result in memory corruption.
-> http://lists.openwall.net/full-disclosure/2012/04/19/4
+> to state the following:
 > 
-> Advisory from OpenSSL:
-> http://openssl.org/news/secadv_20120419.txt
+> "Please note that the maximum acceptable embargo period for issues
+> disclosed to these lists is 14 to 19 days, with embargoes longer than 14
+> days (up to 19) allowed in case the issue is reported on a Thursday or a
+> Friday and the proposed coordinated disclosure date is thus adjusted to
+> fall on a Monday or (preferably) a Tuesday.  Please do not ask for a
+> longer embargo.  In fact, embargoes shorter than 14 days are preferable."
 
-Tavis posted a followup to my message, where he attached a testcase that
-was unfortunately above oss-security's message size limit - so the
-message did not make it to the list.  I've gzip-compressed the file and
-have re-attached it to this message now (it's only 3 KB when compressed).
+I've just revised the last sentence above to say "In fact, embargo
+periods shorter than 7 days are preferable."
 
-Tavis' message was:
+Can we possibly afford to change the maximum to 7 to 11 days (depending
+on day of week)?  That is, 7 days is the standard maximum, up to 11 days
+is possible if the issue is reported on a Thursday or a Friday (only in
+these two cases).  I am for this change (in both my list member for
+Openwall and my list admin capacity).  What about others?
 
-On Fri, Apr 20, 2012 at 09:20:39PM +0200, Tavis Ormandy wrote:
-> FWIW, here is the testcase I sent to openssl-team.
->
-> A smaller one that's easier to test is this:
->
-> $ printf "\xe3\x80\x81\x84\xe3\x80\x00\x00\x00\x00" | openssl x509 -inform DER
->
-> Tavis.
+(In fact, I'd prefer an even shorter maximum, but I am proposing what I
+think has a chance to be approved by others without making the list a
+lot less useful to them.)
 
-FWIW, trying these two on OpenSSL 1.0.0d (the Owl package, which
-includes some unrelated patches), I get:
+Also, I added the following to the wiki page:
 
-x86_64 build:
-$ printf "\xe3\x80\x81\x84\xe3\x80\x00\x00\x00\x00" | openssl x509 -inform DER
-Segmentation fault
-$ openssl x509 -inform DER < openssl-1.0.1-testcase-32bit.crt
-unable to load certificate
-47191757631152:error:0D0680A8:asn1 encoding routines:ASN1_CHECK_TLEN:wrong tag:tasn_dec.c:1319:
-47191757631152:error:0D07803A:asn1 encoding routines:ASN1_ITEM_EX_D2I:nested asn1 error:tasn_dec.c:381:Type=X509
+"Please note that any/all list postings may be made public once the
+corresponding security issue is publicly disclosed, so please do not
+post information that you want to stay private forever."
 
-i686 build:
-$ printf "\xe3\x80\x81\x84\xe3\x80\x00\x00\x00\x00" | openssl x509 -inform DER
-unable to load certificate
-3082893472:error:0D07207B:asn1 encoding routines:ASN1_get_object:header too long:asn1_lib.c:150:
-$ openssl x509 -inform DER < openssl-1.0.1-testcase-32bit.crt
-unable to load certificate
-3083593888:error:0D0680A8:asn1 encoding routines:ASN1_CHECK_TLEN:wrong tag:tasn_dec.c:1319:
-3083593888:error:0D07803A:asn1 encoding routines:ASN1_ITEM_EX_D2I:nested asn1 error:tasn_dec.c:381:Type=X509
+with a footnote that says:
 
-So no luck triggering a crash on 32-bit, although we must patch the
-issue on 32-bit as well.  I'm not sure if I am using the larger testcase
-correctly, though.  I am not familiar with this.
+"There was/is intent to be making all list postings public with a delay,
+which is currently not yet implemented for technical reasons, but it may
+be implemented and applied retroactively - that is, including to past
+postings."
 
-The smaller testcase also triggers a segfault on OpenSSL 0.9.7m (with
-unrelated patches) on x86_64.  So not surprisingly some versions older
-than 0.9.8 are vulnerable as well.
+Those "technical reasons" are me not being aware of a program to
+mass-decrypt an mbox with PGP/MIME messages (producing an mbox with
+decrypted messages).  I'd appreciate it if someone finds or writes
+this program.
 
 Alexander
-
-Download attachment "openssl-1.0.1-testcase-32bit.crt.gz" of type "application/octet-stream" (2870 bytes)
