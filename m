@@ -1,43 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/23/3
-Message-Id: <201204231324.q3NDOLqo018724@linus.mitre.org>
-Date: Mon, 23 Apr 2012 09:24:21 -0400 (EDT)
-From: cve-assign@...re.org
-To: henri@...v.fi, oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Security vulnerabilities fixed in WordPress 3.3.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/12
+Message-ID: <1926255.IY1SnQp175@devil>
+Date: Wed, 01 Feb 2012 23:02:41 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Subscribe to linux-distros
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+@Alexander:
 
->Page http://codex.wordpress.org/Version_3.3.2 says:
+I'm contributor in gentoo security project as 'security bug coordinator', can 
+you subscribe me?
+http://www.gentoo.org/proj/en/security/
+-- 
+Agostino Sarubbo		ago -at- gentoo.org
+Gentoo/AMD64 Arch Security Liaison
+GPG: 0x7CD2DC5D
 
->I asked from WordPress if these vulnerabilities already have CVE-identifiers
-
-Note that http://nvd.nist.gov/download/nvd-rss.xml is also among
-the sources to check for recent CVE assignments:
-
-CVE-2012-2399
-CVE-2012-2400
-CVE-2012-2401
-CVE-2012-2402
-CVE-2012-2403
-CVE-2012-2404
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S S145
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJPlVfBAAoJEGvefgSNfHMdwy0H/2817pGAY9/u31GMvJRNfzLU
-LhQvbBg15wXXvQ9T7iyWPaY0h6FXHOxZI2SLlLszlcr47b8hDdz+SJbUvzF0Lji+
-HsgQI/Wz6ptpIsh6Z4wg7lus4IasvxFMT0M/+T2q/SHn5b9CrmHmmhlv2ceC0bZT
-h0XZ4uwqW+i08KquLZz3EtHzSmLdNPj5FIwMc0jlrViHsnIFnrsSslHGqqeljaM6
-/0bE3SdoDafLBTRAgmTfsOpynVE8uJFL5xGIqvpb6sKWen9vTg9hTlyU3X5Va4VJ
-HJ35UblozCZKN+WU9Ko7wfKfRD0RbG/PgS0EHBzRL6YhzIfnwU/f8Rmh3nud+AY=
-=2UOc
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
