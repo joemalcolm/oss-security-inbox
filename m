@@ -1,52 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/19/3
-Message-ID: <5081840B.3040904@redhat.com>
-Date: Fri, 19 Oct 2012 10:47:07 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/9
+Message-ID: <4F29AFFE.9090107@redhat.com>
+Date: Wed, 01 Feb 2012 14:34:54 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: P J P <ppandit@...hat.com>, me@...fdog.net
-Subject: Re: CVE Request -- kernel stack disclosure in binfmt_script load_script()
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, berkeviktor@....com, Debian Security Team <security@...ian.org>, Paul Wise <pabs@...ian.org>, Joerg Reisenweber <joerg@...nmoko.org>, Christopher Aillon <caillon@...hat.com>, Remi Collet <Fedora@...illeCollet.com>, Jonathan Blandford <jrb@...hat.com>
+Subject: Re: CVE Request (two ids) -- Xchat-WDK (prior 1499-4 [2012-01-18]) and Xchat-v2.8.6 on Maemo architecture -- Heap-based buffer overflow by processing UTF-8 line from server containing characters outside BMP
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 10/19/2012 06:28 AM, P J P wrote:
+On 02/01/2012 03:55 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, Viktor, vendors,
 > 
-> A memory disclosure flaw has been found in the way binfmt_script 
-> load_script() function handled excessive recursions. An
-> unprivileged local user could use this flaw to leak kernel memory.
+>   a heap-based buffer overflow flaw was found in the way xchat,
+> graphical IRC
+> chat client, processed one line of text received from the server, when
+> the text
+> contained Unicode characters and some of the characters were outside of the
+> Basic Multilingual Plane (BMP). A remote attacker could provide a
+> specially-crafted Unicode string as a xchat channel or private message,
+> which
+> once processed would lead to denial of service (xchat client crash), or,
+> potentially arbitrary code execution with the privileges of the user
+> running
+> xchat client.
 > 
-> Proposed upstream fix: - https://lkml.org/lkml/2012/9/23/29
+> This issue has been successfully reproduced on Xchat-WDK versions prior to:
+> * 1499-4 (2012-01-18)
 > 
-> References: - https://lkml.org/lkml/2012/8/18/75 - 
-> http://www.halfdog.net/Security/2012/LinuxKernelBinfmtScriptStackDataDisclosure/
+>     add Non-BMP plugin to avoid client crashes
+> 
+> version. Also Joerg Reisenweber reports, this deficiency to have been
+> exploited
+> in the past on Xchat-v2.8.6 versions, as being used on Maemo architecture.
+> 
+> The following Linux based xchat versions have been investigated against
+> presence
+> of this issue:
+> * xchat-v2.6.6,
+> * xchat-v2.8.6,
+> * xchat-v2.8.8
+> 
+> on various architectures (i386, x86_64, ppc64) with various versions of
+> gtk2 library:
+> * gtk-v2.10.4,
+> * gtk-v2.18.9,
+> * gtk-v2.24.7,
+> * gtk-v2.14.7
+> 
+> and presence of this flaw has not been observed on those Linux versions,
+> which makes
+> us think it is some Microsoft Windows 7 / Maemo architecture specific
+> feature, which
+> makes this issue to be visible on those Xchat derivatives.
+> 
+> References:
+> [1] http://code.google.com/p/xchat-wdk/issues/detail?id=132
+> [2] http://code.google.com/p/xchat-wdk/issues/detail?id=134
+> [3] http://code.google.com/p/xchat-wdk/issues/detail?id=135
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=786391
+> 
+> Xchat-WDK upstream changelog:
+> [5] http://www.xchat-wdk.org/home/changelog
+>     part:
+>     * 1499-4 (2012-01-18)
+> 
+>     add Non-BMP plugin to avoid client crashes
+> 
+> Particular Xchat-WDK upstream patch:
+> [6] http://lwsitu.com/xchat/replace_non-bmp.diff
+> 
+> Could you allocate two CVE ids for these flaws? (assuming two ids are
+> necessary, because Xchat-WDK for MS Windows 7 case and Xchat-v2.8.6 for
+> Maemo case can / should be considered as different source code bases).
 >
-> 
-> 
-> Thank you.
+> Steve, please advise if one id is sufficient or two should be used?
 
-Please use CVE-2012-4530 for this issue.
+Yeah, took a quick look, to quote the XChat-WDK site:
 
-- -- 
+-----------------
+XChat is an IRC chat program. It allows you to join multiple IRC
+channels (chat rooms) at the same time, talk publicly, private
+one-on-one conversations etc.
+
+XChat-WDK is a patchset for XChat SVN which allows for building on
+Windows using the Windows Driver Kit. This results in binaries usable
+across all versions of Windows starting from XP (read why).
+-----------------
+
+So that sounds like a limited fork, so basically the same code base,
+Additionally the same fix applies to both xchat and xchat-WDK,
+indicating the code is basically the same so I'll assign a single CVE
+for it.
+
+Please use CVE-2012-0828 for this issue.
+
+
+> Also, for the Xchat-WDK case it looks that v1499-6 corrected the issue
+> for channel messages, but the issue is still present for 'private messages'
+> case:
+> [7] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c33
+> [8] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c34
+> [9] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c36
+> 
+> Though this assumption needs to be verified / confirmed yet.
+> Viktor, could you please confirm or disprove it?
+> 
+> If that assumption would have shown as valid, a third CVE identifier
+> would need to be assigned yet for the incomplete Xchat-WDK v1499-6
+> fix yet (addressing the issue for 'channel messages' case, but not
+> for 'private messages' case).
+> 
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQgYQLAAoJEBYNRVNeJnmTDCIQAK0U1X+YxwlEvqxgDxsKD+D2
-b32vstxqY7GT1LYWjCyKykbeSv7soYqQZODSOfU/xNKl/BlIuRcqaJB3cy97uuw5
-BdZFbBOV56jd4b0YmK7pKM5Gx84fRO9rmVm178mcx69wqxM7FxPHr+Oo/JTy/lwQ
-6FTiQbMm7E6mz8/ArBl3ogLGOKjCHjusT0nb+Gzw8B2Ga88oGfxKsFs3D2GD57Jb
-NiSKiuMNavl3Lm+P2SLX4lQkugjfwXQHwJKQ6h6vpXbvAIDUDCmSwzkFOLsAuGYt
-Ra6+QSabbyl0dT0SLcnBdFzhkrxptsA0TDBjhk29qYC6Cx/Ji66wm3FdOBDBbmvM
-piDJjerg/UmAtFo4rg2fT+HBj6pt+xV8WKyKu/IkWt8bZhGTykaFQiUSbocsc00V
-s+WXJQZJz+YBhvHZm80AgBIMvEKfQ04dI1o4G9XiglcelsmYhhbp4ylZd14Hb4Ih
-6s/wyJl0M0F8Fg86MIRyhCETNhdZURPXR+rOLQrksl1fhc71GAV5G8cUUMjEPlYl
-ve+W14VUobTGMGIqIf4lPzWH8jv/fa/Ao/8we/GGEJq6RQIxAXdiRQ8NIQ6GGZiB
-R43A1chQM4YBK3HNDLfFRat67Dc2EqLuiGW25YSF4hWRiFL5uqA/IPF+oC/X7h6Z
-fYhY9eeRZgKbQ7AhjnPv
-=Opno
------END PGP SIGNATURE-----
