@@ -1,73 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/4
-Message-ID: <503C2479.7020701@redhat.com>
-Date: Mon, 27 Aug 2012 19:52:57 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/2
+Message-ID: <4F28A821.7010507@redhat.com>
+Date: Tue, 31 Jan 2012 19:49:05 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, hdm@...asploit.com, jdrake@...p.org
-Subject: Re: CVE Request: Java 7 code execution 0day
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Fwd: Apache HTTP Server 2.2.22 Released
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/31/2012 05:42 PM, Solar Designer wrote:
+> I think that only posting to oss-security when there's not yet a CVE ID
+> assigned (to request one) is weird.  I think it may be more beneficial
+> to post in here about all security issues in Open Source software -
+> well, or at least in widely used pieces of software.  As a special case,
+> when an issue that was first discussed on the private linux-distros or
+> distros lists is made public, I think this should include a posting to
+> oss-security (and not only vendor advisories sent via their usual
+> channels, which vary by vendor).  (No, the Apache issues below were not
+> on the distros lists.)
 
-Argh I didn't check my CVE email so I failed to see Mitre assigned a
-CVE for this a few hours ago.
+Agreed, one thing that would be helpful is to start all CVE requests
+with "CVE Request" in the subject line which will make it easy for me to
+spot them. Anything informational can be whatever title (like what Solar
+Designer sent).
 
-======================================================
-Name: CVE-2012-4681
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-4681 [Open
-URL]
-Final-Decision:
-Interim-Decision:
-Modified:
-Proposed:
-Assigned: 20120827
-Category:
-Reference:
-MISC:http://blog.fireeye.com/research/2012/08/zero-day-season-is-not-over-yet.html
-[Open URL]
-Reference:
-MISC:http://labs.alienvault.com/labs/index.php/2012/new-java-0day-exploited-in-the-wild/
-[Open URL]
-Reference:
-MISC:https://community.rapid7.com/community/metasploit/blog/2012/08/27/lets-start-the-week-with-a-new-java-0day
-[Open URL]
+On the other hand how much overlap do we want with full-disclosure/bugzilla?
 
-Oracle Java 7 Update 6, and possibly other versions, allows remote
-attackers to execute arbitrary code via a crafted applet, as exploited
-in the wild in August 2012 using Gondzz.class and Gondvv.class.
-
-
-> Please use CVE-2012-3539 for this issue in Java from Oracle.
-> Please note that additional CVE's may be issued if it is discovered
-> that this issue affects over versions of Java/etc.
-
-Please REJECT CVE-2012-3539.
-
-The correct CVE for this Java issue is CVE-2012-4681 as assigned by Mitre.
-
-
-- -- 
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQPCR4AAoJEBYNRVNeJnmT4mQQAIY3wypf8b0LrEjjhA1WOOt6
-le7O12mFuH5hS3C1EWgpRQQ5XsrbwGRiTqTE2wlvvetFhku65wRJiOnS5rpcVhdM
-7nkCAEVrQhvJeHZnDtwaAEJdLKA8ASDUrSqGrHu54JiEYYr9g3qHul4Xl7UOXGkX
-Nh1AB61vs/jd4xZiJTjF2KeOAfadqq5+dRZwZz09T5DsDFfmH6b8xtWCRCQaa8gm
-E1PRdj1qyswkgfbAJcde+73UxTPE9ICOL+h8GQoAc4/tfMwqnjrh/M9y2gx1WHMU
-+nNM1Y3x9gtqxtfp75Cm7y3W9Jx8VTzKt6Q/XGZedP4iG5RWQ0i2Zq16Z2FLwLxD
-vI5U7zorjscVQW+UntRKbajsso5LE/b7jFSZjPa//ww/chpvHQ/MG19WxwwePj6R
-JQHnlPNXWpjESrmzWYHbKnTDCH8oWZ1OyF68yXDYzlg9L+75Jaqw+rUAPR+S87kp
-g+U/YzBKAbSJf7xLr28iBs0Lyt6RH1JShtTLNWe9BjW07jHdwUdnJqDdftSWkGOW
-sxnlBHeCPIxoTThpbH4ie8sb9lH251vF4F++xKbhnjRr2fpjCHL2HcaZDUPH7Md5
-g7uejMnlKALsh7TVjwl6LE9+qhiE1KBEq9hrf66Y5d0OV3n8GmEXlkMoL5V2ZYbL
-1RVL4me4Un/bvRH8biRM
-=6idH
------END PGP SIGNATURE-----
