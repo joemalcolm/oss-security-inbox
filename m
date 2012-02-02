@@ -1,59 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/1
-Message-ID: <4FFBA4DC.6020404@redhat.com>
-Date: Mon, 09 Jul 2012 21:43:24 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, moderators@...db.org, m.razavi777@...il.com, larry0@...com
-Subject: Re: CVE-request: Basilic 1.5.14 diff.php remote code execution vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/8
+Message-ID: <F4A3A6029AA9A54E8FA9BF5FB9834C797580C3@exch-hq-1.secunia.local>
+Date: Thu, 2 Feb 2012 07:25:37 +0000
+From: Carsten Eiram <che@...unia.com>
+To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
+CC: 'Henri Salo' <henri@...v.fi>, "'filippo.cavallarin@...seq.it'" <filippo.cavallarin@...seq.it>
+Subject: RE: XSS hiding CSRF (was: Re: Mibew messenger multiple XSS)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The points made by Steve are why we're spending so much time testing everything we can get our hands on. It's standard operating procedure - and has been for many years - to particularly pay attention to these "XSS hiding CSRF" cases. For that reason you'll often see discrepancies in the original report and the released Secunia advisories.
 
-On 07/09/2012 04:47 PM, Henri Salo wrote:
-> Hello,
+In the case of Mibew, the functionality is restricted to admins and from an administrator's perspective there is no gain. Therefore, we do not consider it a vulnerability in itself. However, via the CSRF vector it can be exploited by non-admins. This is why the Secunia advisory is rated as CSRF (like the OSVDB advisory) and just mentions XSS as a follow-up impact (along with alternatively just changing the administrator's password and gain full access that way).
+
+I would definitely join Steve in encouraging researchers to keep this trend in mind by considering a) if a discovered issue actually provides a gain compared to legitimately accessible functionality and b) relies on another vulnerability in order to be an issue. We encounter these "XSS hiding CSRF" cases on a weekly basis.
+
+
+-- 
+
+Med venlig hilsen / Kind regards
+
+
+Carsten H. Eiram
+Chief Security Specialist
+
+Follow us on twitter
+http://twitter.com/secunia
+http://twitter.com/carsteneiram
+
+Secunia
+Mikado House
+Rued Langgaards Vej 8
+2300 Copenhagen S
+Denmark
+
+Phone   +45 7020 5144
+Fax       +45 7020 5145
+
+
+> -----Original Message-----
+> From: Steven M. Christey [mailto:coley@...-smtp.mitre.org]
+> Sent: 1. februar 2012 23:24
+> To: oss-security@...ts.openwall.com
+> Cc: Henri Salo; filippo.cavallarin@...seq.it
+> Subject: [oss-security] XSS hiding CSRF (was: Re: [oss-security] Mibew
+> messenger multiple XSS)
 > 
-> Can you assign 2012 CVE-identifier for Basilic 1.5.14 diff.php
-> remote code execution vulnerability, thanks.
 > 
-> Bugtraq ID: 54234 Announcement:
-> http://seclists.org/bugtraq/2012/Jul/1 Verification:
-> http://seclists.org/bugtraq/2012/Jul/42 Example URL:
-> http://www.example.com/basilic/Config/diff.php?file=%26cat%20/etc/passwd&amp;new=1&amp;old=2
->
+> Funny, the CVE team was discussing this curiosity just today.
 > 
-Metasploit PoC:
-http://downloads.securityfocus.com/vulnerabilities/exploits/54234.rb
+> In the Mibew case, the PoC code has POST forms that invoke scripts like
+> "/operator/ban.php"  and "/operator/settings.php".  These are almost
+> certainly administrative functions that probably shouldn't be reachable at all.
+> Thus, these might be better identified as CSRF issues at their core, instead of
+> XSS.
 > 
-> OSVDB guys could you create item for this issue. Thank you :)
+> It seems that some researchers report XSS in administrator modules, but
+> they omit when you need to use CSRF in order to get the administrator to
+> perform the XSS.  So, the primary issue is often CSRF, and XSS is only
+> resultant (since, in many cases, the admin already has privileges to edit
+> HTML).  The vuln DBs are starting to catch up with this "trend" in vuln
+> reporting, so there is a very slow shift towards identifying CSRF as the core
+> problem.  However, CSRF is in the eye of the beholder, in that you often
+> need to know the INTENDED functionality of the application before you can
+> interpret whether things are CSRF versus regular functionality, versus good
+> old XSS.
 > 
-> - Henri Salo
-
-Please use CVE-2012-3399 for this issue.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP+6TcAAoJEBYNRVNeJnmT9/MP/0K1Y+MhOtdBVRFTaxayUrGa
-LJ0DrnhY81fdEUPy9r5mwFe+aqKDZJ8JrT+nyI1n4Mn6uknTdAPetl97V4kM8iir
-XSAlanRETxWzX9fVLmHo/CZBrpoKU6kpXanZZLPi3iVuZF++zXugV+knmZDz+MVg
-QYLK/sHu2iQMlx8EG5IHFNC8YLLSv++ept/6bbHnMN24b8lnhe64ePdkRFLXBe/N
-+r4b7z1V6jZTwH4RLGMJruPsoXA2EroiJCwOLjyo/rv+Hp6XfQoKp2it+T4wu/kK
-gAxb/6bmvw6dlBk/ccvCIIDUReD52tfdyZ39kTstZqc7KQwYKrDgj8t07VXbbxDx
-8qz5goHZJwbLM4GyKeUpj0kGa0geAZzJlvxZKvT7v14WYf4suFcUaoT8+IZt8Pmq
-WjmISuGQOBgPYcMLjYE1sE8WTlJhe///8LABT4gROsBYyljb4N29DiydMimF0x/f
-BOrkzlYuFaSfs6Pco8E7tkBNpzp5rFctef4QIQdO6K1nAZJ7Ovigq+gh9QVeIh1M
-e9575CNotVUO1bYY+x48y370zbe8J+HKxhx3yM3i7jFPVwRKE0Pn+vkAxxoyb6GY
-PTHxIWAFvr82qXWdqnLvR4MQ4Evm0HeF+TdjKQidXWQMQFYvVyp1yxt76EZUMGwc
-Fk9yOwA7LAw7U/A15/rI
-=UFYv
------END PGP SIGNATURE-----
+> Note that this kind of XSS-hiding-CSRF issue is not necessarily tied to admin
+> functionality, but that's where it's a strong indicator that a researcher might
+> be ignoring CSRF.
+> 
+> Sometimes, though, it can be difficult to determine whether XSS or CSRF is at
+> the root, even if you're dealing with admin functionality.  For example,
+> maybe an admin program will check for CSRF and fail, but include the original
+> form in its error response, possibly enabling XSS.  Or, maybe there are TWO
+> issues at play - maybe a victim can be CSRF'ed to make posts on their behalf,
+> and also a secondary issue where the victim can become an attacker and XSS
+> other people (with or without CSRF).
+> 
+> Unfortunately, I strongly suspect that the number of XSS-hiding-CSRF reports
+> will grow :-(
+> 
+> For people who investigate vuln reports closely, please keep this trend in
+> mind.  If you are a researcher, consider whether XSS or other issues are really
+> legitimate functionality that is only reachable by targeting the victim with
+> CSRF; if that's the case, then the CSRF is "primary" and the XSS is "resultant"
+> and not a separate vulnerability - and if your targeted application has CSRF,
+> then maybe there's a more powerful impact than just XSS.  (For example,
+> depending on how settings / configuration is implemented, you might be
+> able to get code execution out of it.)
+> 
+> - Steve
+> 
+> 
+> On Wed, 1 Feb 2012, Kurt Seifried wrote:
+> 
+> > On 01/31/2012 08:22 AM, Henri Salo wrote:
+> >> This seems to need 2012 CVE-identifier.
+> >>
+> >> Advisory: http://seclists.org/bugtraq/2012/Jan/177
+> >> Codseq own advisory:
+> >> http://www.codseq.it/advisories/mibew_messenger_multiple_xss
+> >> OSVDB: http://osvdb.org/show/osvdb/78663
+> >> Secunia: http://secunia.com/advisories/47787/
+> >>
+> >> At the moment http://mibew.org/ does not work for me.
+> >>
+> >> - Henri Salo
+> >
+> > Please use CVE-2012-0829 for this issue.
+> >
+> > P.S. for some reason OSVDB lists this as a CSRF issue (?) which is
+> > mentioned in the advisory but not really shown.
+> >
+> > --
+> > Kurt Seifried Red Hat Security Response Team (SRT)
+> >
