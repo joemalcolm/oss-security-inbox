@@ -1,29 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/7
-Message-ID: <20120523103511.GX20735@dhcp-25-225.brq.redhat.com>
-Date: Wed, 23 May 2012 12:35:12 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/6
+Message-ID: <4F2A0E63.8010000@redhat.com>
+Date: Wed, 01 Feb 2012 21:17:39 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: huge pages: memory leak on mmap failure
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-Description of problem:
-When called for anonymous (non-shared) mappings, hugetlb_reserve_pages()
-does a resv_map_alloc(). It depends on code in hugetlbfs's
-vm_ops->close() to release that allocation.
+On 02/01/2012 07:01 PM, Solar Designer wrote:
+> On Wed, Feb 01, 2012 at 07:29:05PM -0500, Marc Deslauriers wrote:
+>> This means vendors will be keeping information about the vulnerability
+>> private until they are confident they are able to release within a week,
+>> at which point they will then share the information with other vendors
+>> who will scramble to get their updates ready.
+> 
+> Yes, this is one of the things I expect to be happening, too.
+> 
+> You asked me "why", but not "why not" - and this matches our roles for
+> this discussion well. ;-)
+> 
+>> As a distro, I now have two choices: I sit on vulnerabilities until our
+>> own QA and testing is done, at which point I send them to the list and
+> 
+> Why can't you send to the list when you are half-way done, if 2 weeks
+> would have been enough for you normally?
+> 
+>> hope that 7 days is enough for everyone else, or I simply stop using the
+>> list for anything that's more than trivial and contact other vendors
+>> directly.
+> 
+> Another option: contact large vendors who need more time for QA first
+> (2 weeks before CRD), post to the list later (1 week before CRD).  There
+> are possibly just a few large vendors/distros who need this (I am
+> thinking Ubuntu, Red Hat, SUSE - and that might be all).
+> 
+> Also, when you post to the list, you're able to share more info with
+> other vendors (those on the list): not only info on the bug, but also
+> your patches (perhaps already partially tested), advisory draft, etc.
+> That way, it is easier for other vendors to be done in 1 more week.
+> 
+> Drawbacks:
+> - Large vendors gain an advantage.
+> - Fixes may be worse since no input is provided by other/smaller vendors
+> early on (e.g., I would not have a chance to identify a shortcoming in a
+> patch being tested by Ubuntu until the patch is already sent to QA, so
+> is too late to revise unless it fails QA).
+> 
+> Alexander
 
-However, in the mmap() failure path, we do a plain unmap_region()
-without the remove_vma() which actually calls vm_ops->close(). 
+I'm seeing a LOT of guaranteed downsides to this shorter embargo period
+(vendor-sec-1-week-embargo@, vendor-sec-2-week-embargo@, increased
+workloads, decreased testing/QA time, decreased trust in the community,
+decreased discussion of patches/fixes/workarounds/root causes, etc.)
+against the _potential_ risk of an issue being revealed prior to the
+embargo date, which has the _potential_ to have an impact (so a
+potential risk for an outcome that may potentially be bad, in other
+words pretty low). And even if we make this change (shorter embargo
+periods) that risk of early disclosure is still present! I'm just not
+sure we're gaining anything worthwhile.
 
-An unprivileged local user could use this flaw to crash the system.
+This doesn't appear to have been a significant problem in the past or
+present. Is something changing to significantly increase this risk that
+we (the community) are unaware of? You allude to:
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=824345
-http://www.spinics.net/lists/linux-mm/msg34763.html
+"Why I am making this proposal now: this is triggered by a certain
+off-list discussion I just had; unfortunately, the other party does not
+permit me to post more about it."
 
-Proposed upstream fix:
-https://lkml.org/lkml/2012/5/21/385
+Which is awfully vague. I think it's important for there to be openness,
+transparency and honesty in this process or else it won't work. Like you
+pointed out earlier vendors may choose to stop playing together, which
+would REALLY not be good for the vendors or the Open Source community
+long term.
 
-Thanks,
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Kurt Seifried Red Hat Security Response Team (SRT)
