@@ -1,47 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/06/2
-Message-ID: <33901844.19080402.1354758657191.JavaMail.root@redhat.com>
-Date: Wed, 5 Dec 2012 20:50:57 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: Vincent Danen <vdanen@...hat.com>
-Cc: coley <coley@...re.org>, security-2012@...irrelmail.org, oss-security@...ts.openwall.com
-Subject: Re: Strange CVE situation (at least one ID should come of this)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/11
+Message-ID: <20266.42082.681461.226312@mariner.uk.xensource.com>
+Date: Thu, 2 Feb 2012 14:57:38 +0000
+From: Ian Jackson <Ian.Jackson@...citrix.com>
+To: xen-announce@...ts.xensource.com, xen-devel@...ts.xensource.com, oss-security@...ts.openwall.com
+Subject: Xen Security Advisory 6 (CVE-2012-0029) - HVM e1000, buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> * [2012-12-03 22:26:29 -0700] Kurt Seifried wrote:
-> 
-> >-----BEGIN PGP SIGNED MESSAGE-----
-> >Hash: SHA1
-> >
-> >On 10/26/2012 01:54 PM, Josh Bressers wrote:
-> >> Hello,
-> >>
-> >> This Squirrelmail plugin came to my attention a few weeks back:
-> >> http://squirrelmail.org/plugin_view.php?id=117
-> >>
-> >> It's from 2004, which is suspect in itself, but I took a look
-> >> after
-> >> someone asked. It's pretty scary in there.
-> >>
-> >> If I was to list the security problems I found after a few minutes
-> >> of looking, they are:
-> >>
-> >> * It uses MD5 passwords
-> >
-> >Going with this one since there's a good number of MD5 related CVE's
-> >already.
-> >
-> >Please use CVE-2012-5623 for this issue.
-> 
-> Shouldn't this be a 2004 CVE, since it was fixed in 2004?
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-No, it's not fixed at all. The module would need a rather invasive rewrite
-to "fix" this. I really just wanted a CVE ID as a warning of "don't use
-this". 2004 is the last time it was updated :)
+              Xen Security Advisory CVE-2012-0029 / XSA-6
 
-Thanks.
+            qemu-dm Local Privilege Escalation Vulnerability
 
--- 
-    JB
+ISSUE DESCRIPTION
+=================
+
+Heap-based buffer overflow in the process_tx_desc function in the
+e1000 emulation allows the guest to cause a denial of service (QEMU
+crash) and possibly execute arbitrary code via crafted legacy mode
+packets.
+
+Upstream qemu has already released an advisory hence there is no
+embargo.
+
+VULNERABLE SYSTEMS
+==================
+
+The vulnerability impacts any host running HVM (Fully-Emulated) guests
+which are configured with an e1000 NIC (using "model=e1000") in their
+VIF configuration. Note that the default emulated NIC is "rtl8139"
+which is not vulnerable.
+
+Hosts which run only PV guests or which use the default rtl813939 NIC
+are not effected.
+
+MITIGATION
+==========
+
+Switching all HVM guests to a different emulated NIC (e.g. rtl8139,
+which is the default) or PV network drivers will remove this
+vulnerability.
+
+Enabling device model stub domains for such guests will also mitigate
+any arbitrary code execution exploit by restricting it to the stub
+domain only.
+
+RESOLUTION
+==========
+
+This issue is resolved in the following changesets:
+  qemu-xen-unstable.git      ebe37b2a3f844bad02dcc30d081f39eda06118f8
+  qemu-xen-4.1-testing.git   3cf61880403b4e484539596a95937cc066243388
+  qemu-xen-4.0-testing.git   36984c285a765541b04f378bfa84d2c850c167d3
+
+In each case the QEMU_TAG in the corresponding xen.hg repository has
+been updated so that a completely fresh build will pick up the fix:
+  xen-unstable.hg      24673:fcc071c31e3a3ccc5dfaefd091eedbb608604928
+  xen-4.1-testing.hg   23224:cccd6c68e1b9527f556deef760713380801db9b5
+  xen-4.0-testing.hg   21563:3feb83eed6bdd515b90aca528c1ebd83dfb7a378
+(Currently in http://xenbits.xen.org/staging/xen-*.hg; will be
+ in http://xenbits.xen.org/staging/xen*.hg after automated tests.)
+
+
+PATCH INFORMATION
+=================
+
+The patch is 65f82df0d7a71ce1b10cd4c5ab08888d176ac840 in the upstream
+qemu.git tree.  A backported version, as has been applied to
+qemu-xen-*.git, is attached as cve-2012-0029-qemu-xen-unstable.patch.
+
+$ sha256sum cve-2012-0029-qemu-xen-unstable.patch 
+dae528d93e44494ad0d682dc40b19ff8232cff5807ff331bef3d91ca169de9af  cve-2012-0029-qemu-xen-unstable.patch
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJPKqLEAAoJEIP+FMlX6CvZoNIIAJIFsDhYfTBS9+06lMm6hX9u
+lPJG/Or2d5KhfaQZlBfLG0SRG8wtALsmXY5z6anxFG+NG7uBDb3oOj+gd+7d/gIk
+8NXQPgs4/MpoaeSjdxm/+XkBfNSladUy8S47BLvpExtW68WLQ5EEw12jU0hGgZEJ
+/pI7in1Ypw3PBAFQM7hHraqV4u0akOes+do/TXHA98P/xE4UG3dsEz+YSWjnxw3C
+wd7xibqYNU7/OQmWbnc6CSGo6pEgrg7UsYe+KIs7H83oHrZgQpnDpqzGyAldBFqW
+hheFNzCKe7armeMDqxhm3D3ksMjck2yhENb7D9ebJNl/SXle/dLoyOfAOCWEZ1A=
+=sC0B
+-----END PGP SIGNATURE-----
+
+
+View attachment "cve-2012-0029-qemu-xen-unstable.patch" of type "text/plain" (955 bytes)
