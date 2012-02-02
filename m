@@ -1,35 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/9
-Message-Id: <1D32004A-3106-4E79-8803-A5FFD01D6084@oracle.com>
-Date: Wed, 30 May 2012 19:48:24 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/3
+Message-ID: <20120202005431.GA10019@openwall.com>
+Date: Thu, 2 Feb 2012 04:54:31 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-
-On 30 May 2012, at 19:25, Florian Weimer wrote:
-
-> * John Haxby:
+On Wed, Feb 01, 2012 at 05:25:32PM -0700, Kurt Seifried wrote:
+> On 02/01/2012 04:54 PM, Solar Designer wrote:
+...
+> > Of course, this is a tradeoff - just like the very existence of such
+> > closed lists is.
 > 
->> Recently we have a couple of queries relating to a Nessus "TCP/IP
->> SYN+FIN Packet Filtering Weakness".   This has not been helped by the
->> fact that [1] actually points (indrectly) to CVE-2002-2438 which is
->> actually a SYN+RST problem.
-> 
-> Reading the discussion here,
-> 
->  <http://comments.gmane.org/gmane.linux.network/213981>
-> 
-> it seems to me that this is just a performance optimization which
-> could be bypassed by using different flags, so I don't think there's a
-> vulnerability or fix here, except the general lack of source IP
-> address validation in IP networks.
+> Against the certainty that the end of the embargo brings, so we're
+> putting a potential risk (rediscovery/etc.) against a guarented risk
+> (details will become available when the embargo ends. I'm not claiming
+> to know which is better
 
-That's the same thread that I referred to but I didn't reach the same conclusion that you did.   It is possible to block SYN+FIN in iptables, but the distros I'm aware of don't have that kind of check in place so people will be vulnerable to this kind of DoS.
+We don't really have a choice as to the details becoming public - we
+only have (limited) choice as to when.
 
-The conclusion from the thread was that SYN+FIN is not a legitimate packet so the kernel should drop it.   The nessus people seem to think the same thing: they have a test for this (although they refer to the SYN+RST fix from a decade ago).    If there's a consensus that we don't need a CVE then we can go to nessus and have them fix, remove or update their test.
+> but I think two weeks is already pretty short,
 
-One could argue that if SYN+FIN doesn't need a CVE then SYN+RST didn't either since it can be blocked by the same, or very similar, iptables rule.
+OK, thanks for sharing your opinion.
 
-jch
+> reducing that to say a week only saves 7 days but potentially increases
+> workload 100% or more (we have half as much time to deal with it).
+
+Below in this same message you wrote that "most Linux vendors are now
+responding to 500-1000 security issues per year", which means that you
+almost always have multiple issues being worked on in parallel.  Thus,
+there should be _no_ increase in workload because if you have to work
+on each issue twice faster, you have twice fewer issues to work on at
+the same time.  So the workload should stay roughly the same.
+
+On the other hand, the "500-1000 security issues per year" figure might
+not be relevant - I'll comment on that below.
+
+> I think the shortened embargo time is rapidly approaching the limit of
+> maximum benefit (that is balancing time to fix against the chance of it
+> becoming public and putting systems/people at risk). Personally I think
+> hard rules are not a good idea here, I would support guidelines that
+> have some flexibility, not all cases are the same.
+
+Some people would prefer no rules/guidelines at all - but in that case
+use of a public list right away is likely better. ;-)
+
+More to the point, I am not proposing completely removing the
+flexibility.  With a maximum of 7-11 days, the preference may be even
+lower than that - like 4 days.  Not surprisingly, you don't seem to like
+this - but I think I should have asked anyway.
+
+> I don't have the data handy but I know most Linux vendors are now
+> responding to 500-1000 security issues per year and getting the majority
+> of them fixed by the time the issue goes public or very shortly
+> thereafter,
+
+How many of these are embargoed?  I think maybe 50 or so?  This still
+leaves one embargoed issue handled every week, on average, which may be
+enough not to significantly increase the workload with a shorter embargo
+(one issue handled per week or two issues handled per two weeks -
+almost the same thing).
+
+> I'm not sure we can speed this up much (this works tends to
+> be highly serialized, find the bug, assess the bug, fix the bug, QA the
+> software, etc.).
+
+In general, yes.  However, the "find" step is usually mostly done by the
+time the issue gets to the list, and the QA team might work more closely
+with the security team (maybe, or maybe not).  I can see that
+speculatively testing non-final fixes from the security team may
+increase the total workload, though (in case the security team chooses
+to revise the fix for its own reasons).  This might add cost to the
+vendor, but there's also a benefit: quicker fixes to the users, other
+vendors not having to wait.  There might even be a business/commercial
+justification to this change.
+
+> Also I haven't really seen any cases in the open source world of a leak
+> of information leading to widespread exploitation/problems (and if there
+> have been I'd love to know).
+
+This argument, assuming that it's true, also means that there's little
+to lose by posting to a public list right away or by not having fixes
+ready by a CRD in some case.
+
+...or do you feel that a leak to certain unintended parties who may
+exploit the issue to a limited scale (and choose not to make the issue
+public) is less of a problem than publication of the issue (which may
+result in widespread exploitation)?  This is non-obvious.  While in the
+former case fewer systems may be compromised, in the latter case
+experienced people and companies with experienced IT security staff
+(capable of more than just installing vendors' patches) are given a
+better chance to defend their systems.
+
+Alexander
