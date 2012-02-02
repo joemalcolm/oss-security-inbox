@@ -1,21 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/5
-Message-ID: <20120321131145.09de69a9@redhat.com>
-Date: Wed, 21 Mar 2012 13:11:45 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/7
+Message-ID: <20120202045450.GA11288@openwall.com>
+Date: Thu, 2 Feb 2012 08:54:50 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: GnuTLS TLS record handling issue / MU-201202-01
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 21 Mar 2012 12:32:59 +0100 Stefan Cornelius wrote:
+On Wed, Feb 01, 2012 at 09:17:39PM -0700, Kurt Seifried wrote:
+> Is something changing to significantly increase this risk that
+> we (the community) are unaware of?
 
-> Correcting myself as more details about the GnuTLS case were revealed:
-> GnuTLS needs a CVE after all, for another issue different from
-> CVE-2012-1569.
+As far as I'm aware, no - it's all the same concerns and reasoning that
+we had e.g. 10 years ago.
 
-CVE-2012-1569 is for libtasn1 MU-201202-02.
+> You allude to:
+> 
+> "Why I am making this proposal now: this is triggered by a certain
+> off-list discussion I just had; unfortunately, the other party does not
+> permit me to post more about it."
+> 
+> Which is awfully vague.
 
-Use CVE-2012-1573 for gnutls MU-201202-01.
+Unfortunately, yes.  Well, I can add that it's just a person's negative
+opinion on what we're doing with these closed lists, with reasoning -
+and nothing more.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+> I think it's important for there to be openness,
+> transparency and honesty in this process or else it won't work.
+
+I fully agree.  However, when someone e-mails potentially helpful
+comments to me yet does not permit me to post them to the list, what
+options do I have?  Stop the discussion right there - either we discuss
+this in public or not at all?  I guess for some topics I would do just
+that, but I felt that this one did not cross that line.
+
+> Like you
+> pointed out earlier vendors may choose to stop playing together, which
+> would REALLY not be good for the vendors or the Open Source community
+> long term.
+
+That's my opinion too.
+
+Yet I needed to bring the topic up.  I was not 100% sure that some
+vendors currently on the list would find 7-11 days unacceptable.  Being
+90% sure was not enough.
+
+I've noticed a decrease in embargo periods over time - I think for
+vendor-sec the average might have been 14 days if not more, whereas now
+it might be down to 10-12 days or so (excluding the hash DoS thing).
+So we turned the old average into the new maximum.  I thought that maybe
+we were ready for the "next level" - but it seems not.  Maybe later?
+
+Alexander
