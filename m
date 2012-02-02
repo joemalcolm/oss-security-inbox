@@ -1,19 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/3
-Message-ID: <20120822100935.GB14303@inutil.org>
-Date: Wed, 22 Aug 2012 12:09:35 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/2
+Message-ID: <1328142545.4754.24.camel@mdlinux>
+Date: Wed, 01 Feb 2012 19:29:05 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Any information on mesa/CVE-2012-2864?
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-I noticed the following on
-http://googlechromereleases.blogspot.de/2012/08/stable-channel-update-for-chrome-os.html :
+On Thu, 2012-02-02 at 03:54 +0400, Solar Designer wrote:
+> Marc,
+> 
+> Thank you for your feedback.
+> 
+> On Wed, Feb 01, 2012 at 04:02:54PM -0500, Marc Deslauriers wrote:
+> > A week is a pretty short delay to prepare updates and perform the
+> > necessary QA to get an issue out on time. Why are you pushing to get the
+> > maximum reduced?
+> 
+> Why shorter embargo periods are preferable: vendors who are ready to
+> push out their updates first don't have to sit on those updates waiting
+> for others, users get their fixes sooner, the potential for leaks (or
+> rediscovery) and exploit development in the wild before a fix is out is
+> reduced, the potential for a vendor inadvertently releasing before the
+> CRD is reduced (and in case this happens anyway, other vendors are
+> likely "more ready" by that time since they knew the CRD was sooner),
+> fewer embargoed issues are being tracked at the same time (less work,
+> lower risk of errors).
 
-    [$3133.7] [141901] Critical CVE-2012-2864: Mesa array overflow. Credit to miaubiz.
+This means vendors will be keeping information about the vulnerability
+private until they are confident they are able to release within a week,
+at which point they will then share the information with other vendors
+who will scramble to get their updates ready.
 
-The Google bug tracker entry is closed, does anyone have additional information?
+As a distro, I now have two choices: I sit on vulnerabilities until our
+own QA and testing is done, at which point I send them to the list and
+hope that 7 days is enough for everyone else, or I simply stop using the
+list for anything that's more than trivial and contact other vendors
+directly.
 
-Cheers,
-        Moritz
+> Why 7-11 days: a few issues were recently handled within 7 days fine -
+> such as the sudo issue (easy fix provided by upstream and not needing
+> much QA) and the Linux kernel /proc/<pid>/mem issue (vendors had to
+> hurry up because the issue was mostly public).
+
+Yes, those are two excellent examples of basically one line fixes where
+a week was sufficient to publish updates. I don't think they should be
+used as a reference to determine what an acceptable delay is.
+
+>   So this may be realistic
+> at least as a target (hence my wiki page edit) or maybe also as the
+> maximum (hence my proposal).  Additionally, the original maximum of 14
+> days may be seen as potentially including the extra days needed based
+> on day-of-week: it is one week normal + some days from the other week
+> when needed by day-of-week.  So maybe me trying to meet the reality
+> (seen on a few occasions) by extending this to 14-19 days was wrong, and
+> I instead should have proposed 7-11 days.  Hence the belated proposal.
+
+For us, 7-11 is too short for certain complexe issues. 14-19 is a
+reasonable delay to backport patches, perform adequate QA and publish.
+
+> 
+> Why me: I feel that it's my duty as list admin to propose the smallest
+> maximum embargo period that list members might be willing and able to use.
+> 
+> Why I am making this proposal now: this is triggered by a certain
+> off-list discussion I just had; unfortunately, the other party does not
+> permit me to post more about it.  However, as I wrote above, I feel that
+> I have good reasons to give this proposal a try (see if it's acceptable
+> or not) regardless of what triggered these thoughts now.
+> 
+> > Reducing the maximum will just result in having everyone miss the
+> > embargo date and putting users at risk.
+> 
+> It's not that simple.
+> 
+> Not "everyone" will miss the CRD.  Clearly, if some vendors on the list
+> are comfortable with a shorter embargo they either expect to meet the
+> CRD or find the issues for which they miss the CRD not important enough
+> to fix before CRD anyway.
+
+Or, they have waited until they were ready before telling everyone else
+about it simply to adhere to the new list rules.
+
+> I already provided some answers to "why" above, and here's one more: the
+> change may also result in vendors' processes being adjusted to meet the
+> faster pace.  I am unsure to which extent this is positive overall,
+> though (considering that those changes may have side-effects).
+
+This will result in issues becoming public before everyone's updates are
+ready to be published, nothing more.
+
+Marc.
+
+
+
+
