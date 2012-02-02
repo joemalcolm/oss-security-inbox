@@ -1,30 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/13/3
-Message-ID: <1342182313.3057.78.camel@mdlinux>
-Date: Fri, 13 Jul 2012 08:25:13 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: KDE Pim
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/4
+Message-ID: <4F29E29A.8050408@redhat.com>
+Date: Wed, 01 Feb 2012 18:10:50 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-
-Could a CVE please be assigned to the following issue:
-
-Javascript and external images were being loaded while rendering HTML
-email in kmail. The downloaded Javascript was then being interpreted.
-
-See:
-
-https://projects.kde.org/projects/kde/kdepim/repository/revisions/dbb2f72f4745e00f53031965a9c10b2d6862bd54
-
-https://bugs.launchpad.net/ubuntu/+source/kdepim/+bug/1022690
-
-Thanks,
-
-Marc.
+Also I think it's important to keep in mind a LOT of the Open Source
+vendors are staffed by volunteers or people who do this as part of their
+day job but not exclusively so. Increasing the burden for security
+response on companies with employees is one thing, but on volunteers is
+probably going to lead to a serious set of problems and some long term
+consequences that are probably MUCH worse for users than a few
+potentially security issues that potentially leak early.
 
 
-
-
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
