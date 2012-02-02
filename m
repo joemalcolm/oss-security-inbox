@@ -1,34 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/02/4
-Message-ID: <20121002223214.GA13083@boyd>
-Date: Tue, 2 Oct 2012 15:32:15 -0700
-From: Tyler Hicks <tyhicks@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com, security@...y-lang.org
-Subject: CVE Request: Ruby safe level bypasses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/9
+Message-ID: <1517197.DWiP3HNVTb@devil>
+Date: Thu, 02 Feb 2012 12:15:26 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: phpldapadmin "base" Cross-Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello - Upstream Ruby has fixed[1] exception methods that incorrectly
-allowed safe level bypasses. These bypasses allowed untainted strings to
-be modified by untrusted code in safe level 4.
+According to secunia advisory:
+https://secunia.com/advisories/47852/
 
-Note that the changes to exc_to_s() and name_err_to_s(), in error.c, are
-similar to the fix for CVE-2011-1005, but the Ruby advisory[2] made it
-clear that Ruby 1.9.x was not affected by CVE-2011-1005. It turns out
-that the vulnerability was later reintroduced to Ruby's trunk in
-revision 29456. Ruby 1.9.3-p0 and later is affected.
+Input passed via the "base" parameter to cmd.php (when "cmd" is set to 
+"query_engine") is not properly sanitised in lib/QueryRender.php before being 
+returned to the user. This can be exploited to execute arbitrary HTML and 
+script code in a user's browser session in context of an affected site.
 
-While Shugo Maeda was fixing the issue above, he noticed that
-name_err_mesg_to_str() had a similar flaw. Ruby 1.8.x, along with
-1.9.3-p0 and later is affected.
+The vulnerability is confirmed in version 1.2.2. Other versions may also be 
+affected.
 
-I believe that these issues need two separate CVEs. Both issues are
-fixed in the same upstream patch[1]. Could you please allocate ids?
+Original Advisory:
+https://sourceforge.net/tracker/index.php?func=detail&aid=3477910&group_id=61828&atid=498546
 
-Thanks,
-Tyler
+Commit code:
+http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=commit;h=7dc8d57d6952fe681cb9e8818df7f103220457bd
 
-[1] http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37068
-[2] http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/
+-- 
+Agostino Sarubbo		ago -at- gentoo.org
+Gentoo/AMD64 Arch Security Liaison
+GPG: 0x7CD2DC5D
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
