@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/12
-Message-ID: <1326961877.4782.98.camel@scapa>
-Date: Thu, 19 Jan 2012 09:31:17 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/13
+Message-ID: <20120202194619.GA13034@openwall.com>
+Date: Thu, 2 Feb 2012 23:46:19 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Screen locking programs on Xorg 1.11
+Subject: Re: PHP remote code execution introduced via HashDoS fix
 Content-Type: text/plain; charset=utf-8
 
-On jeu., 2012-01-19 at 08:45 +0100, Sebastian Pipping wrote:
-> So from a superficial analysis anything since 1.10.99.902 could be
-> vulnerable. 
+Tomas,
 
-git seems to agree:
+Thank you for posting this.
 
-corsac@...pa: git tag --contains 7d2543a3cb3089241982ce4f8984fd723d5312a1
-xorg-server-1.10.99.902
-xorg-server-1.11.0
-xorg-server-1.11.1
-xorg-server-1.11.1.901
-xorg-server-1.11.1.902
-xorg-server-1.11.2
-xorg-server-1.11.2.901
-xorg-server-1.11.2.902
-xorg-server-1.11.3
-xorg-server-1.11.3.901
-xorg-server-1.11.99.1
-xorg-server-1.11.99.2
-xorg-server-1.11.99.901
+On Thu, Feb 02, 2012 at 08:12:22PM +0100, Tomas Hoger wrote:
+> This got CVE-2012-0830 assigned earlier today.  This is sent to make
+> the assignment public and avoid possible duplicate assignment.
 
-Regards,
--- 
-Yves-Alexis
+I suggest that we post this sort of things to oss-security not only
+because of CVE issues, but also to make this list a central place to
+keep people informed of security issues in at least popular Open Source
+software.  That is, I think this posting would be desirable even if the
+CVE number had already been communicated to those who might request one.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Not everyone who wants this sort of info also happens to read IT news
+sites, Twitter feeds, etc daily (which also include lots of other info
+that would be off-topic here).
+
+Maybe your comment above was addressed to security@php and Stefan rather
+than to oss-security, though.  Then it sounds just right to me.
+
+Alexander
