@@ -1,94 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/12/2
-Message-ID: <4FADFC09.3010205@redhat.com>
-Date: Fri, 11 May 2012 23:58:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/5
+Message-ID: <20120202020145.GC10267@openwall.com>
+Date: Thu, 2 Feb 2012 06:01:45 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: micah <micah@...eup.net>
-Subject: Re: CVE request: sympa (try again)
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Feb 01, 2012 at 07:29:05PM -0500, Marc Deslauriers wrote:
+> This means vendors will be keeping information about the vulnerability
+> private until they are confident they are able to release within a week,
+> at which point they will then share the information with other vendors
+> who will scramble to get their updates ready.
 
-On 05/11/2012 12:03 PM, micah wrote:
-> 
-> Hi,
-> 
-> Please assign a CVE for Sympa, any version prior to 6.1.11. It is 
-> possible to open the archive management ("arc_manage") page for
-> any list, even those set to only be available to members, giving
-> anyone the option to download the archive, or delete the archive.
-> 
-> http://www.sympa.org/distribution/latest-stable/NEWS 
-> https://sourcesup.renater.fr/scm/viewvc.php/branches/sympa-6.0-branch/wwsympa/wwsympa.fcgi.in?root=sympa&r1=6706&r2=7358&pathrev=7358
->
->  thank you, micah
-> 
-> ps - for some reason the previous message is formatted strange, so
-> I'm sending this one without the signature
-> 
+Yes, this is one of the things I expect to be happening, too.
 
-Ok I see this one and several more:
+You asked me "why", but not "why not" - and this matches our roles for
+this discussion well. ;-)
 
-================================
+> As a distro, I now have two choices: I sit on vulnerabilities until our
+> own QA and testing is done, at which point I send them to the list and
 
-6.1.11		May 11, 2012
-Bug fixes:
-[7358] wwsympa/wwsympa.fcgi.in:  Fixing a potential security issue
-related to archives
+Why can't you send to the list when you are half-way done, if 2 weeks
+would have been enough for you normally?
 
-================================
+> hope that 7 days is enough for everyone else, or I simply stop using the
+> list for anything that's more than trivial and contact other vendors
+> directly.
 
-6.1.1           October 22, 2010
-This version includes a lots news such as DKIM support, autosignoff
-footer link included in lists messages, ...
-Various vulnerability have been solved in 6.1.1 : cross side scripting,
-cross-Site request forgeries, brute force attack, DOS. These
-vulnerabilities were identified with the help of P. Gardenat (Rectorat
- de Rennes) during a security audit on Sympa.
-- ---------------------
-web_tt2/error.tt2, wwsympa/wwsympa.fcgi.in:  Now shared document
-can't	be read or edited unless list is open. This is a security fix
+Another option: contact large vendors who need more time for QA first
+(2 weeks before CRD), post to the list later (1 week before CRD).  There
+are possibly just a few large vendors/distros who need this (I am
+thinking Ubuntu, Red Hat, SUSE - and that might be all).
 
-================================
+Also, when you post to the list, you're able to share more info with
+other vendors (those on the list): not only info on the bug, but also
+your patches (perhaps already partially tested), advisory draft, etc.
+That way, it is easier for other vendors to be done in 1 more week.
 
-6.0		1st October 2009
-Security:
-- - [reported by T. Retout] SQL injection threat removed by using place
-holders instead of direct sprint in a query.
-- - [Submitted by N. Bertrand, univ.  Minnesota] Basic logs in debug
-don't issue the password  unencrypted in the logs for function
-Auth::ldap_authentication. This way, this password won't be sent
-unencrypted to a possible syslog server.
-- - [#4439] [#4440] [reported by O.Berger] security vulnerability which
-use a file in /tmp.
-- - [#4430] store temporary files in Sympa's own tmp directory instead
-of /tmp to prevent symlink attacks
+Drawbacks:
+- Large vendors gain an advantage.
+- Fixes may be worse since no input is provided by other/smaller vendors
+early on (e.g., I would not have a chance to identify a shortcoming in a
+patch being tested by Ubuntu until the patch is already sent to QA, so
+is too late to revise unless it fails QA).
 
-================================
-
-Can you confirm these and I will assign CVE's for the outstanding issues.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPrfwJAAoJEBYNRVNeJnmTjwYP/RYT1um9+14sKMs2iTsribGZ
-i2X3m7LtkNUT29614x+Pw87fVFTeIGxvJ8vM0uyUvvZn2QsflmASHGhzAlLu60u4
-2Nm+FrXCoqmF7YRwFlxO1blMgSAYt8aDunot4dkTl8x6MWfM265y/Ft2r3dssiun
-LT52nal/4RZSFbx0YYfzxQPkwZLtsEo9XFMF9lttH3j7NuyMlG/trPFMWrpWJ23w
-RkPMkO4VrPp9oZkFO+2MJij9v4H9IwiVbptINk1cEkCEYWpdZrgLX1TrtfCGgYeP
-M0qawndp/J3Js6ZniVbOaMKyodyTcZnc4ajW7a0T4xY01h947J9JgqmCMUqKZ8GX
-zyR7R4TJMarNjkfg7jj2iBg6QdqM1owJ2fELnrZN6n0MER2TZ0BI/+A5Og9OBk+j
-1dXEuiO/sYkaLNJiMwlsHIZEnGdGVCmZgp0p8XhJfsRi23mWfnyI+qGVMBx5vGDW
-TCJ2aELsr1cWL4CPM3hxrzXu4WYh6DGYisGxhYNq2jEkfd0ctLomQCn4FgAHV+M6
-EEBODxFyVqYBwjnl3FS+EMtzFGU/4UHYxo8tXquwt2T9BjaTSz7b1FYD4ViQ658e
-WVkf63xNP8IorjpJjMiwhItS+ImbK2YIvyy7vHe6/pN0OdVNm7O94mcDXTlgowRa
-Zan9zvykYeNxXFA+5ugX
-=IC7h
------END PGP SIGNATURE-----
+Alexander
