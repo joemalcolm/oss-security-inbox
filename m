@@ -1,30 +1,128 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/7
-Message-ID: <20120210185828.GF1797@redhat.com>
-Date: Fri, 10 Feb 2012 11:58:28 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/6
+Message-ID: <20120203132502.GE25053@foo.fgeek.fi>
+Date: Fri, 3 Feb 2012 15:25:02 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: imagemagick invalid validation DoS CVE-2012-0247 and CVE-2012-02478
+Subject: CVE-request: Joomla! Security News 2012-02-03
 Content-Type: text/plain; charset=utf-8
 
-* [2012-02-10 11:51:57 -0700] Vincent Danen wrote:
+And again few Joomla security issues without CVE.
 
->* [2012-02-10 13:36:24 +0200] Henri Salo wrote:
->
->>Concerning ImageMagick 6.7.5-0 and earlier:
->>
->>CVE-2012-0247: When parsing a maliciously crafted image with incorrect offset and count in the ResolutionUnit tag in EXIF IFD0, ImageMagick copies two bytes into an invalid address.
->>CVE-2012-0248: When parsing a maliciously crafted image with an IFD whose all IOP tags' value offsets point to the beginning of the IFD itself. As a result, ImageMagick parses the IFD structure indefinitely, causing a denial of service.
->>
->>For more details please read: http://www.imagemagick.org/discourse-server/viewtopic.php?f=4&t=20286
->>CERT-FI: http://www.cert.fi/haavoittuvuudet/2012/haavoittuvuus-2012-021.html (finnish)
->>Reported to Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659339
->
->Do we know when this was introduced?  At a quick glance here, I don't
->see magick/property.c in 6.2.8, but I do see it in 6.6.5, so somewhere
->between those two versions that file and functionality was added.
+- Henri Salo
 
-Sorry, I do see it in 6.5.4 as well, so between 6.2.8 and 6.5.4.
+----- Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Date: Fri, 03 Feb 2012 13:11:55 +0000
+From: Joomla! Developer Network - Security News <no_reply@...mla.org>
+To: henri@...v.fi
+Subject: Joomla! Security News
+
+Joomla! Developer Network - Security News
+
+///////////////////////////////////////////
+[20120201] - Core - Information Disclosure
+
+Posted: 01 Feb 2012 09:25 PM PST
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/PkBR45UJQxo/387-20120201-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
+
+
+Project: Joomla!
+SubProject: All
+ Severity: Low
+Versions: 2.5.0 and 1.7.0 - 1.7.4
+Exploit type: Information Disclosure
+Reported Date: 2012-January-29
+Fixed Date: 2012-February-02
+
+Description
+
+Inadequate validation leads to information disclosure in administrator.
+Affected Installs
+
+Joomla! version 2.5.0, 1.7.4, and all earlier 1.7.x versions
+Solution
+
+Upgrade to version 1.7.5 or 2.5.1 or higher
+
+Reported by Jakub Galczyk
+Contact
+
+The JSST at the Joomla! Security Center.
+
+
+
+///////////////////////////////////////////
+[20120202] - Core - Information Disclosure
+
+Posted: 01 Feb 2012 09:25 PM PST
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/MFhhodAeXho/388-20120202-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
+
+
+Project: Joomla!
+SubProject: All
+ Severity: Moderate
+Versions: 1.7.4 and all earlier 1.7.x versions
+Exploit type: Information Disclosure
+Reported Date: 2012-January-06
+Fixed Date: 2012-February-02
+
+Description
+
+On some servers the error log could be read by unauthorised users.
+Affected Installs
+
+Joomla! version 1.7.4 and all earlier 1.7.x versions
+Solution
+
+Upgrade to version 2.5.1 or 1.7.5 or higher
+
+Reported by Alain Rivest
+Contact
+
+The JSST at the Joomla! Security Center.
+
+
+
+///////////////////////////////////////////
+[20120203] - Core - Information Disclosure
+
+Posted: 01 Feb 2012 09:25 PM PST
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/LY07jV4Rnvs/389-20120203-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
+
+
+Project: Joomla!
+SubProject: All
+ Severity: Low
+Versions: 2.5.0 and 1.7.0 - 1.7.4
+Exploit type: Information Disclosure
+Reported Date: 2012-January-29
+Fixed Date: 2012-February-02
+
+Description
+
+Inadequate validation leads to path disclosure in administrator.
+Affected Installs
+
+Joomla! version 2.5.0, 1.7.4, and all earlier 1.7.x versions
+Solution
+
+Upgrade to version 2.5.1 or 1.7.5 or higher
+
+Reported by Jakub Galczyk
+Contact
+
+The JSST at the Joomla! Security Center.
+
+
+
+--
+You are subscribed to email updates from "Joomla! Developer Network -
+Security News."
+To stop receiving these emails, you may unsubscribe now: http://feedburner.google.com/fb/a/mailunsubscribe?k=JWlBXz9w0F12fWtPu46jwc9_Jcc
+
+Email delivery powered by Google.
+Google Inc., 20 West Kinzie, Chicago IL USA 60610
+
+
+----- End forwarded message -----
