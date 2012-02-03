@@ -1,75 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/6
-Message-ID: <20120507135922.GC31485@suse.de>
-Date: Mon, 7 May 2012 15:59:22 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: connman heads up / CVE requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/5
+Message-ID: <20120203103706.GC3437@suse.de>
+Date: Fri, 3 Feb 2012 11:37:06 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request (2002): Linux TCP stack could accept invalid TCP flag combinations
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Thanks for disassembling my mail :)
+After a customer query likely coming from erroneous Security Scanner output,
+
+this issue from 2002 has no CVE id yet as far as I see:
+
+http://www.kb.cert.org/vuls/id/464113
+
+It describes a problem where firewalls might let some TCP flags combinations
+pass (e.g. all with RST flag set) and the OS (e.g. Linux) stack would in turn
+accept a TCP session it might not have accepted otherwise.
+
+The protection added in Linux 2.4.20 is checking for the RST (reset) flag
+when a SYN packet is received, which was I think the main attack scenario.
+
+The relevant part of the 2.4.20 patch is:
+
+@@ -3667,6 +3693,9 @@
+                if(th->ack)
+                        return 1;
+
++               if(th->rst)
++                       goto discard;
++
+                if(th->syn) {
+                        if(tp->af_specific->conn_request(sk, skb) < 0)
+                                return 1;
 
 
-> 1) Conman doesn't check for the origin of netlink messages
->    (from https://bugzilla.novell.com/show_bug.cgi?id=715172#c4)
-> 
->    with patches:
->    [1a] 
-> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=c1b968984212b46bea1330f5ae029507b9bfded9
->    [1b] 
-> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=b0ec6eb4466acc57a9ea8be52c17b674b6ea0618
+The check still exists in current mainline git, so the issue is still fixed.
 
-Yes.
-
-> 
-> 2) Check hostname validity prior setting the hostname in loopback
->    plug-in:
->    (from https://bugzilla.novell.com/show_bug.cgi?id=715172#c4)
-> 
->    with patches:
->    [2a] 
-> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=26ace5c59f790bce0f1988b88874c6f2c480fd5a
->    [2b] 
-> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=a5f540db7354b76bcabd0a05d8eb8ba2bff4e911
-
-Yes. The severity of this is quite high, its a default remote root exploit, as
-connman is requesting hostname per dhcp by default and not checking for
-shell escapes.
-(I did not check whether they clean any other strings that could appear
-and could contain newlines etc. when its written to a config file)
-
-> 
-> 3) DHCPv6 option parsing vulnerable to DoS (endless loop):
->    (from https://bugzilla.novell.com/show_bug.cgi?id=715172#c9)
-> 
->    with patches:
->    There doesn't seem to be upstream patches for this yet.
-
-I think its this:
-http://lists.connman.net/pipermail/connman/2012-May/009473.html
-
-
-> 
-> 4) Check vpnc options for validity prior saving them:
->    (from https://bugzilla.novell.com/show_bug.cgi?id=715172#c10):
-
-AFAIK there is no patch for it yet. Upstream needs to verify/confirm these,
-but I think its a real bug that lets you overwrite files.
-
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Ciao, Marcus
