@@ -1,55 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/6
-Message-ID: <50C9C15D.8090008@op5.se>
-Date: Thu, 13 Dec 2012 12:51:57 +0100
-From: Andreas Ericsson <ae@....se>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: Eitan Adler <lists@...anadler.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Nick Treleaven <nick.treleaven@...nternet.com>,  Colomban Wendling <lists.ban@...besfolles.org>, Enrico Troeger <enrico.troeger@...na.de>,  Matthew Brush <mbrush@...ebrainz.ca>, Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com,  jonathan underwood <jonathan.underwood@...il.com>, oss-security@...ts.openwall.com
-Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/2
+Message-ID: <20120203022747.GA14725@openwall.com>
+Date: Fri, 3 Feb 2012 06:27:47 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Subscribe to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-On 12/13/2012 12:21 PM, Jan Lieskovsky wrote:
-> Hi Andreas,
-> 
->    I think it's unlikely to happen for one file.
-> But what for project with (hundred, thousand of) small files?
-> 
-> Is the user prior building expected to investigate file name of
-> each of them for sanity? This is where trust boundary is crossed -
-> someone could send you a tarball: "Here is the source you were
-> searching for." You would go to build it in Geany..
-> 
+On Thu, Feb 02, 2012 at 03:17:57AM +0400, Solar Designer wrote:
+> On a related note, last week I had to suspend Stefan Behte's
+> subscription because his PGP key expired and he has not (yet) replied to
+> my private e-mail on that.  So right now you are the only Gentoo person
+> on linux-distros.
 
-Hold on here. The report is for geany, so for geany's filename
-escaping to actually be at fault, you would still have to load the
-offending file into the editor. Otherwise, just running 'make' from
-the command line would trigger the exact same effect, except that
-make is (as has been pointed out) designed to run arbitrary shell
-commands already and therefore won't be doing anything wrong.
+Stefan has renewed the key and I've just reactivated his subscription.
 
-> The difference when running it directly from the command line is
-> that Bash would escape those files for you, so even with crafted names
-> nothing bad / suspicious would happen (and project would build
-> if syntactically correct).
-> 
-
-Except that people wouldn't manually compile thousands of files
-one by one. That's where build systems come in.
-
-> To the difference, in the Geany scenario, the file name(s) would
-> be passed to command line directly as they are (and if the project
-> would build or not at the end isn't what matters here).
-> 
-
-For the original report to be valid, the file would still have to
-be loaded into geany, or the report should have been about some
-other program. This is not a security issue that concerns geany.
-
--- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Alexander
