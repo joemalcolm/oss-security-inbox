@@ -1,25 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/18
-Message-ID: <20120504202219.GA1111@openwall.com>
-Date: Sat, 5 May 2012 00:22:19 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/9
+Message-ID: <4F2C4F7B.40901@redhat.com>
+Date: Fri, 03 Feb 2012 14:19:55 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: PHP-CGI query string parameter vulnerability (CVE-2012-1823 / CVE-2012-2311, CERT VU#520827)
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Joomla! Security News 2012-02-03
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 02/03/2012 06:25 AM, Henri Salo wrote:
+> And again few Joomla security issues without CVE.
+> 
+> - Henri Salo
+> 
+> ----- Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
+> 
+> Date: Fri, 03 Feb 2012 13:11:55 +0000
+> From: Joomla! Developer Network - Security News <no_reply@...mla.org>
+> To: henri@...v.fi
+> Subject: Joomla! Security News
+> 
+> Joomla! Developer Network - Security News
+> 
+> ///////////////////////////////////////////
+> [20120201] - Core - Information Disclosure
+> 
+> Posted: 01 Feb 2012 09:25 PM PST
+> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/PkBR45UJQxo/387-20120201-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
 
-I guess most of you have heard of this one already, yet it should be in
-here as well.  The original issue was tracked as CERT VU#520827,
-CVE-2012-1823.  PHP 5.4.2 and 5.3.12 were released with an incomplete
-fix, and apparently CVE-2012-2311 refers to that incomplete fix issue.
+http://developer.joomla.org/security/news/387-20120201-core-information-disclosure.html
 
-http://eindbazen.net/2012/05/php-cgi-advisory-cve-2012-1823/
-http://www.php-security.net/archives/11-Mitigation-for-CVE-2012-1823-CVE-2012-2311.html
-http://www.kb.cert.org/vuls/id/520827
-http://www.reddit.com/r/PHP/comments/t3pr8/how_serious_is_this/
-http://www.reddit.com/r/netsec/comments/t4lxw/phpcgi_query_string_parameter_vulnerability_leads/
-http://www.metasploitminute.com/2012/05/cve-2012-1823-php-cgi-bug.html
-http://www.opennet.ru/opennews/art.shtml?num=33765 (in Russian)
+Please use CVE-2012-0835 for this issue
 
-Alexander
+
+> ///////////////////////////////////////////
+> [20120202] - Core - Information Disclosure
+> 
+> Posted: 01 Feb 2012 09:25 PM PST
+> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/MFhhodAeXho/388-20120202-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
+
+http://developer.joomla.org/security/news/388-20120202-core-information-disclosure.html
+
+Please use CVE-2012-0836 for this issue
+
+> ///////////////////////////////////////////
+> [20120203] - Core - Information Disclosure
+> 
+> Posted: 01 Feb 2012 09:25 PM PST
+> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/LY07jV4Rnvs/389-20120203-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
+
+http://developer.joomla.org/security/news/389-20120203-core-information-disclosure.html
+
+Please use CVE CVE-2012-0837 for this issue
+
+
+Also I not from last time we ended at 385, I can't find the news item
+for 386 easily, any idea if that is a security issue or something else?
+
+http://developer.joomla.org/security/news/
+
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
