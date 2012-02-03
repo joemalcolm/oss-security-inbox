@@ -1,60 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/1
-Message-ID: <4FEBA510.3090809@redhat.com>
-Date: Wed, 27 Jun 2012 18:28:00 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/8
+Message-ID: <4F2C1318.4010708@redhat.com>
+Date: Fri, 03 Feb 2012 10:02:16 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: arbitrary code exec in bcfg2
+CC: Ian Campbell <ijc@....org>
+Subject: Re: Adding Xen.org contact to linux-distros security list
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/03/2012 02:33 AM, Ian Campbell wrote:
+> Hello,
+> 
+> Would it be possible for myself to be subscribed to the linux-distros
+> security list as a representative of Xen.org?
+> 
+> Although Xen.org is not a distro we do incorporate upstream software and
+> one of our upstreams (qemu) uses this list as their embargoed security
+> announcement channel. We would like to be able to co-ordinate the
+> release of fixes into our own qemu trees.
+> 
+> Many thanks,
+> 
+> Ian.
 
-On 06/27/2012 12:32 PM, Vincent Danen wrote:
-> bcfg2 suffers from an arbitrary code execution flaw due to the
-> Trigger plugin.  Upstream has corrected the issue in git, but no
-> released packages are available and it looks like this has been
-> around for a while (indicated that 1.x is affected as well, up to
-> and including the current 1.2.2 release).
-> 
-> Looks like an authenticated remote root compromise (need to be able
-> to log into bcfg2 to exploit it, and bcfg2 typically runs as
-> root).
-> 
-> Could a CVE be assigned to this please?
-> 
-> References:
-> 
-> http://permalink.gmane.org/gmane.comp.sysutils.bcfg2.devel/4539 
-> http://trac.mcs.anl.gov/projects/bcfg2/changeset/a524967e8d5c4c22e49cd619aed20c87a316c0be
->
->  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=679272 
-> https://bugzilla.redhat.com/show_bug.cgi?id=835985
-> 
-> Thanks.
+I think this is something that should be discussed (I'm not specifically
+against Xen joining, but I'm worried about the precedent it might set).
+Many projects incorporate upstream software, if we lower the bar of
+entry in this respect we may get a lot more people on the list. This
+might not be a good idea (more chances of leaks/etc.).
 
-Please use CVE-2012-3366 for this issue.
+My understanding of the way the vs security list is used is that
+upstream is typically notified (after all, they usually are the ones
+fixing the issue), and that people not on the list can post to the list
+to notify it of upcoming stuff (this happens all the time), we then CC
+them on communications about the issue they reported to keep them in the
+loop. For something this specific might it not be a better idea for Xen
+just go straight to the qemu project so they can be notified of the
+embargoed issues?
 
-- -- 
+
+
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP66UPAAoJEBYNRVNeJnmTMiEQAK8J+IZ7SNzjwnwFzqpMQxbV
-UM6iv7vs9Y9a2MyIN1msCLEzQIKN/b+p/56vSBA1K1djD2mRslC5bABpxS1V2nVA
-/E1sG5AF/jx4aNCH2dxcPUoWV+msPSgwpujHqVG2QHDfMZsTP/+ieY9e1aCdBumC
-OdRiQkkFZG3f+yzGeSjdjOJse5APZorPrYPvR1jIxQIbn7BtgbRtW80y1Q4LWA4F
-DUuevtfY43HPdCdauvUksobnjN7jMItDm/QJAnhuXtgRjb7RRCT9a6t+p44x+CDi
-XqmHzfvTfi5xjw/2oncJf5lxtKVJhljn9R+5CeJlHn+/foVtb945EAMk+mSzqpVp
-Ucpg8GXW5V0/W3hA7Ss/xBoN9BcSaI1daRC5+nmOAuBHIb+4yCqr2MYIl4rWlTz8
-7BMMZsCBSmPtwKa1bCu3vr6+90GLZPh6hp5cIyc4Ls4zbIo7Rlqe8wS24CWGrS32
-YyGQAfHE1dgq8TnGOZWpTYwBtT8BsU7vHiblMoq6EhjdaedLvXKqz2By2pm5/J19
-us6IcIzlxVOjGlRONDDFRVpC6rgu73T7gde200TnGruHFB3TZT6ZuHbdRzzGl0Nj
-bZvqxc5xnS7g3fva1ftN8dx+NcdW4VnFSH2x6QVuZwEPyyIHLOL5kBR0hznhmEBy
-a5Q/V9QEy08qCiU5Gzj8
-=KkK/
------END PGP SIGNATURE-----
