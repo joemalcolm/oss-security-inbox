@@ -1,43 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/23/3
-Message-Id: <5085f7882c78a_6877c3904437e4@uservoice.com>
-Date: Tue, 23 Oct 2012 01:48:55 +0000
-From: Kurt Seifried <services@...ik.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/1
+Message-ID: <CAEZPtU5CmLEj1_DLJ-tt1SM19UT4uv3NfRcVFCz=-s2pd+HPwg@mail.gmail.com>
+Date: Fri, 3 Feb 2012 01:04:18 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: XSS in piwik before 1.9
+Subject: Re: PHP remote code execution introduced via HashDoS fix
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE----- 
- SHA1 
+hi!
 
-I hate to break it to you but I did a quick file diff and the XSS 
-stuff is pretty easy to spot. Any attacker who wants to find the 
-vulnerability will, quickly. Not giving out information really only 
-harms the people that actually benefit from knowing (e.g. your users 
-and vendors, it's just one more thing to figure out). 
+5.3.10 has been released as well to fix this issue (and another one
+related to magic quotes).
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT) 
- 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993 
+Cheers,
 
------BEGIN PGP SIGNATURE----- 
- GnuPG v1.4.12 (GNU/Linux) 
+On Thu, Feb 2, 2012 at 8:46 PM, Solar Designer <solar@...nwall.com> wrote:
+> Tomas,
+>
+> Thank you for posting this.
+>
+> On Thu, Feb 02, 2012 at 08:12:22PM +0100, Tomas Hoger wrote:
+>> This got CVE-2012-0830 assigned earlier today.  This is sent to make
+>> the assignment public and avoid possible duplicate assignment.
+>
+> I suggest that we post this sort of things to oss-security not only
+> because of CVE issues, but also to make this list a central place to
+> keep people informed of security issues in at least popular Open Source
+> software.  That is, I think this posting would be desirable even if the
+> CVE number had already been communicated to those who might request one.
+>
+> Not everyone who wants this sort of info also happens to read IT news
+> sites, Twitter feeds, etc daily (which also include lots of other info
+> that would be off-topic here).
+>
+> Maybe your comment above was addressed to security@php and Stefan rather
+> than to oss-security, though.  Then it sounds just right to me.
+>
+> Alexander
 
-iQIcBAEBAgAGBQJQhfdrAAoJEBYNRVNeJnmTI9EP+wTUWIoCVFQc5JMcYZbDs65B 
-U78c7+jb91VwslWonwnLJyX4zx/0Uc27kOc7y9NNSaskgf75VlORwdVJZGoi19x6 
-cT8javpFeSFvy9L/dTUea175W9yd1VVpjzdZnO+LCVUvQ/0CNX89hOlQhCmyabAt 
-uSKeYUd3icAizZJ9a8qb5Zg6qYvj9iAP2W3wYE0081LDsqgz+tIyAEx1WUj+TBss 
-2sZE6MLqsKcB+lGjGYyVRtDdZTwyXiwS7rvmg8V2ODycLdeWw9znelZvp6+Ai4E+ 
-B+XFU5Mt6yFXf3Gv9O0k8I2jxSFe/zsEJXmKHxhJjW3+jb9tCkQMzwrpc35NqJ40 
-1qdGA/CinAOzad5Cd4Z3bjufwl23KIH+VhrprGlye2GxVZPtcnKxWqhXVNqzIstI 
-zutadEuxhMyWPDXgUkEwG9z8wN96fdQcx0MZDEQqQCRt0yjYm18EiyRLdqLFtGfp 
-h5dsP0ZIuuOZ+yIHFo7Rei/iXwgTLS3YOtkwCLYg7K1W24x3YBYZegZoa9IRWOnl 
-jAgSLCNwKVcc6OHsPgCDgnYp0z/b27a+qEglYRJCalHHyLk2R37CGwD6qX5K9qSD 
-F9o/LX5DCg1omojAHPG/NVpyolw5oYGmztxCD8ijFK/DoMUFeEZFWznvtgnzNz3/ 
-UUpW1A4c9r544NmuQLa+ 
-=OfJF 
------END PGP SIGNATURE----- 
 
-Powered by UserVoice.
-[http://www.uservoice.com/fullservice]
 
+-- 
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
