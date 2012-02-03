@@ -1,35 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/14
-Message-ID: <4F6CC70E.2050201@redhat.com>
-Date: Fri, 23 Mar 2012 12:55:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Todd C. Miller" <Todd.Miller@...rtesan.com>
-Subject: Re: CVE for OpenBSD random() bug?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/10
+Message-ID: <20120203230721.GA18730@openwall.com>
+Date: Sat, 4 Feb 2012 03:07:21 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Ian Campbell <ijc@....org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Adding Xen.org contact to linux-distros security list
 Content-Type: text/plain; charset=utf-8
 
-On 03/22/2012 07:24 AM, Todd C. Miller wrote:
->> It would seem this fits into the "weaker then advertised" class of
->> security problem. Thoughts/comments (anyone strongly against this)?
-> 
-> Since random(3) is not a cryptographically secure random function
-> I'm not sure that is makes sense to assign a CVE.
-> 
-> I suppose it really depends on the likelihood of someone calling
-> srandom(0); I don't know why anyone would do that on purpose.  If
-> you must use random(3) instead of something stronger like arc4random(3),
-> it is possible to seed the PRNG via /dev/arandom using srandomdev(3)
-> or set the seed state manually via initstate(3), both of which
-> provide more than just 32 bits of seed data.
-> 
->  - todd
+On Fri, Feb 03, 2012 at 09:33:05AM +0000, Ian Campbell wrote:
+> Would it be possible for myself to be subscribed to the linux-distros
+> security list as a representative of Xen.org?
 
-I guess if no-one thought it would be used insecurely it wouldn't need
-to be fixed ;). Also not all security uses of randomness are strictly
-crypto related (e.g. array seeds to defeat HashDoS, etc.).
+I think not.  We had a few exceptions like this on vendor-sec, but when
+setting up the linux-distros list I proposed not to be making such
+exceptions anymore and everyone seemed to agree.  In fact, that's even
+reflected in the list name - on purpose.
 
-Please use CVE-2012-1577 for this issue.
+Thanks for bringing the topic up anyway.  It helps to know what's in
+demand and see what solutions we have (or don't have).
 
+> Although Xen.org is not a distro we do incorporate upstream software and
+> one of our upstreams (qemu) uses this list as their embargoed security
+> announcement channel. We would like to be able to co-ordinate the
+> release of fixes into our own qemu trees.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+I think you should contact the QEMU folks and ask them to CC you on
+relevant notifications.  I think they will start doing it if they don't
+mind.  And if they do mind, then it'd be inappropriate to bypass that.
+
+Meanwhile, I've edited this wiki page:
+
+http://oss-security.openwall.org/wiki/mailing-lists/distros
+
+to ask reporters to consider notifying not only distro vendors, but also
+affected Open Source projects (if applicable).  Specifically:
+
+"If the security issue you're reporting affects other systems as well
+(from vendors not represented on these lists), please consider notifying
+other affected distro vendors and/or Open Source projects as well and
+mention what you're doing on this or what you'd like done on it in your
+notification to the list."
+
+where "distro vendors" and "Open Source projects" are links to:
+
+http://oss-security.openwall.org/wiki/vendors
+http://oss-security.openwall.org/wiki/software
+
+You could want to add Xen.org contact information to the latter page.
+
+Alexander
