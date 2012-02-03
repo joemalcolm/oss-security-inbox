@@ -1,19 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/28
-Message-ID: <20120120211903.GA8826@openwall.com>
-Date: Sat, 21 Jan 2012 01:19:03 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/7
+Message-ID: <4F2C1141.7020006@redhat.com>
+Date: Fri, 03 Feb 2012 09:54:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: pdf attacks vectors
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request (2002): Linux TCP stack could accept invalid TCP flag combinations
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jan 21, 2012 at 12:56:30AM +0400, Alexander Pletnev wrote:
-> I have no time to write a big explanation to you. But i will do it later. 
+On 02/03/2012 03:37 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> After a customer query likely coming from erroneous Security Scanner output,
+> 
+> this issue from 2002 has no CVE id yet as far as I see:
+> 
+> http://www.kb.cert.org/vuls/id/464113
+> 
+> It describes a problem where firewalls might let some TCP flags combinations
+> pass (e.g. all with RST flag set) and the OS (e.g. Linux) stack would in turn
+> accept a TCP session it might not have accepted otherwise.
+> 
+> The protection added in Linux 2.4.20 is checking for the RST (reset) flag
+> when a SYN packet is received, which was I think the main attack scenario.
+> 
+> The relevant part of the 2.4.20 patch is:
+> 
+> @@ -3667,6 +3693,9 @@
+>                 if(th->ack)
+>                         return 1;
+> 
+> +               if(th->rst)
+> +                       goto discard;
+> +
+>                 if(th->syn) {
+>                         if(tp->af_specific->conn_request(sk, skb) < 0)
+>                                 return 1;
+> 
+> 
+> The check still exists in current mainline git, so the issue is still fixed.
+> 
+> Ciao, Marcus
 
-You don't need to write it "to me".  If you have further questions you'd
-like to ask or things to clarify on this mailing list, then you will in
-fact need to explain what you're doing in more detail.  Otherwise, you
-probably don't need to.  But like I said you may want to specify your
-threat model in your web app's documentation either way.
+Nice, a cert KB with a picture, never seen that before.
 
-Alexander
+Please use CVE-2002-2438 for this issue.
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
