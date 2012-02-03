@@ -1,62 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/04/2
-Message-ID: <506CF011.8090508@redhat.com>
-Date: Wed, 03 Oct 2012 20:10:25 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/3
+Message-ID: <4F2B9F74.406@redhat.com>
+Date: Fri, 03 Feb 2012 01:48:52 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: compat: SIOCGSTAMP/SIOCGSTAMPNS incorrect order of arguments to compat_put_time[val|spec]
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: phpldapadmin "base" Cross-Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 10/03/2012 04:08 PM, Petr Matousek wrote:
-> Description of the problem:
+On 02/02/2012 04:15 AM, Agostino Sarubbo wrote:
+> According to secunia advisory: 
+> https://secunia.com/advisories/47852/
 > 
-> Commit 644595f89620 ("compat: Handle COMPAT_USE_64BIT_TIME in 
-> net/socket.c") introduced a bug where the helper functions to take 
-> either a 64-bit or compat time[spec|val] got the arguments in the
-> wrong order, passing the kernel stack pointer off as a user pointer
-> (and vice versa).
+> Input passed via the "base" parameter to cmd.php (when "cmd" is set
+> to "query_engine") is not properly sanitised in lib/QueryRender.php
+> before being returned to the user. This can be exploited to execute
+> arbitrary HTML and script code in a user's browser session in
+> context of an affected site.
 > 
-> On architectures that use separate address spaces for userspace
-> and kernel (for example PA-RISC), an unprivileged local user can
-> crash the system or read kernel memory.
+> The vulnerability is confirmed in version 1.2.2. Other versions may
+> also be affected.
 > 
-> Introduced in: 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=644595f89620
+> Original Advisory: 
+> https://sourceforge.net/tracker/index.php?func=detail&aid=3477910&group_id=61828&atid=498546
 >
->  Upstream fix: 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=ed6fe9d614f
+>  Commit code: 
+> http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=commit;h=7dc8d57d6952fe681cb9e8818df7f103220457bd
 >
->  Acknowledgements:
 > 
-> This issue was discovered by Mikulas Patocka of Red Hat.
-> 
-> Thanks,
-> 
+Ah our missing friend htmlspecialchars. Please use CVE-2012-0834 for
+this issue.
 
-Please use CVE-2012-4467 for this issue.
-
-- -- 
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQbPAQAAoJEBYNRVNeJnmTqL4P/1xsHVcZbTRtS91SIgM4+cuo
-8D//8L/C8BKsqfQ4D8rBv+BEKOwGZz9KMmb5F2b67flKuszcrsYrmisn6b0Unybm
-Wa7xW/MqwoOk6rO/79T9y33vBDtt6fCPbSviGEQDSL63z1WnhKykKHOQNCFsNroa
-wd8XOm9twVlxZoCPAeseY2Q3AwLOVrqYkpn9rsP3tpg4CwgOE9c243WcvtBeRHwT
-2QOag3FPKt6HRkiH70aa5apx28uIi7fpSJfri/gWYYO0tu8MoPFDgQL3pRjXOV3N
-nWZmZCiaTt/mv1afS7mf51URB/B3TtLbpWM2bRHSiG1YbioUJI26pDqwWOm8tvre
-yyNng+BOadIOXTSRwJeTgt8Twsz+qsL+9nNdxYaJsTlxhqlycKkzji4ESdIPgkvY
-HHPa+HKEd65ISAPBUckcNPBHr01ieRVRHhUuhUausCRXHDueDSGA4fXTpzXy2EXX
-oDzceWuPYA6ZdOwctpvtzd+TgaltCGia3hBZV1odd0CfXSPM9Dg+751fyJRFm/YD
-6iSi84kft0D4mtOrx380BCVu8cdI8DvFndQR9nQhBoqKY8i3FXJ5I5gGF9xXb34E
-qmkuEbkwSpGzJWwcrGietDZsccLan+HTSYObvs+DPvTGPmOecdiIPskzJoKzIAP8
-45rjyg4VRXPGTfM/oz3w
-=uzYd
------END PGP SIGNATURE-----
