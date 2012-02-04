@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/19/2
-Message-ID: <1695043470.1858431.1348078239757.JavaMail.root@redhat.com>
-Date: Wed, 19 Sep 2012 14:10:39 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, Damien Stuart <dstuart@...uart.org>, Michael Rash <mbr@...herdyne.org>
-Subject: CVE Request -- fwknop 2.0.3: Multiple security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/04/2
+Message-ID: <20120204014539.GA19577@openwall.com>
+Date: Sat, 4 Feb 2012 05:45:39 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Fri, Feb 03, 2012 at 08:26:26PM -0500, Michael Gilbert wrote:
+> I think the important aspect here is the transparency of the private
+> discussion (after an appropriate delay), rather than the length of the
+> delay itself.
 
-  multiple securit issues have been corrected in 2.0.3 upstream version of
-fwknop (http://www.cipherdyne.org/blog/categories/software-releases.html):
----------------------------------------------------------------------------
-1) multiple DoS / code execution flaws:
-   Upstream patch:
-   [1] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=d46ba1c027a11e45821ba897a4928819bccc8f22
+Thank you for sharing your opinion.
 
-2) server did not properly validate allow IP addresses from malicious
-   authenticated clients
-   Upstream patch:
-   [2] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=f4c16bc47fc24a96b63105556b62d61c1ba7d799
+Yet the delay itself matters too.  There are different opinions as to
+whether it is "the important aspect" or not.
 
-3) strict filesystem permissions for various fwknop files are not verified
-4) local buffer overflow in --last processing with a maliciously constructed ~/.fwknop.run file
-   Upstream patch:
-   [3] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=a60f05ad44e824f6230b22f8976399340cb535dc
+> That can be set by the researcher (with some reasonable
+> maximum, like a month).
+> 
+> We all should be able to see what is going on over in the closed list.
+>  Although it is unlikely being used for nefarious purposes (hiding
+> issues permanently, etc.), transparency (after a delay) is the only
+> way to show that it is not.  Anyway, 30 days seems appropriate.
 
-For the remaining ones:
-=======================
-5) several conditions in which the server did not properly throw out maliciously constructed variables in the access.conf file
-   Upstream patch:
-   [4] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=e2c0ac4821773eb335e36ad6cd35830b8d97c75a
+I don't mind.  Like I said, I need a tool - a program to mass-decrypt a
+PGP/MIME mbox, producing another mbox.  I think such a program might be
+generally useful.  Well, or alternatively I need to introduce a
+different mechanism for the archive - not treat it as a regular
+subscriber like I intended to.
 
-   Note: This doesn't look like a security flaw (previously possible to provide malicious values
-   to access.conf file, but I assume it would required administrator privileges).
-
-6) [test suite] Added a new fuzzing capability to ensure proper server-side input validation.
-   Note: Test-suite add-on, no CVE needed.
-
-7) Fixed RPM builds by including the $(DESTDIR) prefix for uninstall-local and
-   install-exec-hook stages in Makefile.am.
-   Upstream patch:
-   [5] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=c5b229c5c87657197b0c814ff22127d870b55753
-   
-   Note: Also doesn't look like a fix for a security flaw.
-
-Could you allocate CVE ids for issues 1), 2), 3), and 4) ?
-
-[Cc-ed Damien and Michael from fwknop upstream to confirm
-they {the first four} should receive a CVE identifier].
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Alexander
