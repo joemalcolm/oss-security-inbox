@@ -1,38 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/3
-Message-ID: <20120210095417.GA27095@foo.fgeek.fi>
-Date: Fri, 10 Feb 2012 11:54:17 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/04/4
+Message-ID: <20120204034839.GA19843@openwall.com>
+Date: Sat, 4 Feb 2012 07:48:39 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: MySQL 0-day - does it need a CVE?
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 10, 2012 at 12:36:46AM +0400, Solar Designer wrote:
-> On Thu, Feb 09, 2012 at 10:09:44PM +0200, Henri Salo wrote:
-> > Oracle MySQL Server CVE-2012-0492 Remote MySQL Server Vulnerability ??? http://www.securityfocus.com/bid/51516
+On Fri, Feb 03, 2012 at 10:00:24PM -0500, Michael Gilbert wrote:
+> On Fri, Feb 3, 2012 at 8:45 PM, Solar Designer wrote:
+> > Yet the delay itself matters too.  There are different opinions as to
+> > whether it is "the important aspect" or not.
 > 
-> Why this one?
-> 
-> The table at the bottom of:
-> 
-> http://www.oracle.com/technetwork/topics/security/cpujan2012-366304.html
-> 
-> lists 27 MySQL vulnerabilities, all with CVE IDs and CVSS scoring - but
-> little other info.  CVE-2012-0492 is one of them, but it does not stand
-> out.  (And I have no idea what it actually is, just like I have no idea
-> about the remaining 26.)
-> 
-> "This Critical Patch Update contains 27 new security fixes for Oracle
-> MySQL.  1 of these vulnerabilities may be remotely exploitable without
-> authentication, i.e., may be exploited over a network without the need
-> for a username and password."
-> 
-> That one is CVE-2011-2262, but per CVSS scoring it's just a DoS.
-> 
-> I wish we had more info.
-> 
-> Alexander
+> That's why I think its more appropriate to defer such decisions to the
+> researcher who understands the complexity of the problem at hand (of
+> course hopefully allowing negotiation with those affected to choose a
+> disclosure date that can be met).
 
-Sory for not being clear. I am not sure what the CVE-identifier is as I told in my last email to this thread. New cases I have seen: http://security-tracker.debian.org/tracker/CVE-2011-2262 http://security-tracker.debian.org/tracker/CVE-2012-0492 latter link with a list of "a different vulnerability than". I do NOT have any facts about these vulnerabilities. I hope Oracle coordinates issues like these with MITRE/US-CERT and adds more information to advisory and CVE after these are 100% public and distros are ready.
+That's what we have now, right?
 
-- Henri Salo
+> > [...] I need a tool - a program to mass-decrypt a
+> > PGP/MIME mbox, producing another mbox.  I think such a program might be
+> > generally useful.  Well, or alternatively I need to introduce a
+> > different mechanism for the archive - not treat it as a regular
+> > subscriber like I intended to.
+> 
+> Completely unfleshed out, but a pseudo-bash script along the lines of
+> the following should do it:
+> 
+>   echo "" > newmbox
+>   gpg-agent --allow-preset-passphrase
+>   /usr/lib/gnupg2/gpg-preset-passphrase --preset <cache id>
+>   cat mbox | while read line; do
+>       test <header> && echo $line >> /tmp/header
+>       test <body> && echo $line >> /tmp/body
+>       if [ <end off body> ]; then
+>           cat /tmp/header >> newmbox
+>           cat /tmp/body | gpg --decrypt >> newmbox
+>       fi
+>   done
+>   /usr/lib/gnupg2/gpg-preset-passphrase --forget
+> 
+> Obviously a bit more work there to figure out appropriate conditionals
+> to put in the angle brackets.
+
+Unless I am missing something, this doesn't handle MIME at all - so it
+won't do the trick.
+
+I was thinking of building something upon Mutt in its entirety (e.g.,
+talk to it with expect) or upon pieces of code from Mutt (since it
+handles such mbox'es just fine) or maybe upon my own mbox and MIME
+parsing code from blists (but add the gpg invocations to it myself).
+
+Alternatively, I could in fact make the list archive recipient special
+such that there would be no MIME at that level - re-encrypt entire
+already-decrypted messages to the archive key such that the resulting
+messages are no longer valid for viewing with a MUA, but such that we
+can decrypt them again easier (without parsing MIME).  This might be
+less code to write.
+
+Alexander
