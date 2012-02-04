@@ -1,75 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/7
-Message-ID: <506C97AD.50707@redhat.com>
-Date: Wed, 03 Oct 2012 13:53:17 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/04/6
+Message-ID: <20120204044724.GA20171@openwall.com>
+Date: Sat, 4 Feb 2012 08:47:24 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>, cgit@...mli.net, meyering@...hat.com
-Subject: Re: cgit: heap buffer overflow
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Feb 03, 2012 at 11:20:35PM -0500, Michael Gilbert wrote:
+> I was trying to keep it simple.  I got the impression that your
+> concern was potentially needing to enter a passphrase to individually
+> decrypt each message.  Anyway, just throw in the appropriate munpack
+> calls above to handle the mime parts.
 
-On 09/30/2012 01:21 PM, Jason A. Donenfeld wrote:
-> Hey oss-sec,
-> 
-> The original author and maintainer of cgit, Lars Hjemli, has been
-> MIA for the last several months, and nobody I've talked to seems to
-> know what's happened. Because I've previously been involved with
-> some cgit things, I'm maintaining a tree of my own to which folks
-> on the cgit mailing list are now sending patches. It'd be a bit
-> presumptuous to call myself the new maintainer, but I am trying to
-> keep the project alive and healthy until Lars returns from wherever
-> he is.
-> 
-> Jim Meyering from Redhat has written to the cgit mailing list with
-> a detailed analysis and a two line commit fixing a heap buffer
-> overflow. At the minimum, it's a denial of service, and in the
-> worst case, it might lead to to a remote shell. If anyone has any
-> tricks on how to exploit it successfully, I'd be interested to hear
-> them.
-> 
-> You can read his analysis and look at the commit here [1] and a
-> Redhat bug report here [2].
-> 
-> If this oss-sec finds it concerning enough, I can tag a 
-> non-Lars-approved release and post links to new tarballs for
-> folks. But there's a chance that exploitation isn't feasible, as
-> Jim has written in his report, in which case I'd like to hold off
-> on making any non-Lars-approved releases for a bit.
-> 
-> Thanks, Jason
-> 
-> [1]
-> http://git.zx2c4.com/cgit/commit/?id=7757d1b046ecb67b830151d20715c658867df1ec
->
-> 
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=820733
-> 
+There was not exactly a "concern" - I just said that I was not aware of
+a tool to do the job, and I still am not.  What you're proposing is to
+write an own tool (script).
 
-Please use CVE-2012-4465 for this issue. At a minimum it can lead to a
-DoS.
+Thank you for the suggestion to use munpack, this is something I had not
+considered.  I was thinking of options that would produce (almost) the
+exact same mbox that we'd get if mail to subscribers were not encrypted.
+With the munpack approach, I think it might be trickier to arrive "back"
+at that (same original MIME types for each section, etc.)  I understand
+that initially this kind of correctness might not matter - you just want
+to see that the list is not being misused and that's all.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+This can definitely be done.  I just have other tasks to work on...
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQbJetAAoJEBYNRVNeJnmTWr4QANV6yzu71fCtmPOzZVNDaO+I
-S8vN1e94W2I24nKsECghzNIrY0wOI9PDkGsjoDf2FBNwAejLs1LdUp76nuGOEEzd
-JfDSqTzXkaAIM+Vv/aFXNyyVWXiVW+PrQM4tH2Jis75Mu6b/BB/BqVBwjneyJKlJ
-7P9+3Ffmot5ObSHgHJuJm9Q5aKtv20QihrQ1pXYW7PTcCbU688LNVaaRnwudZakv
-B/PMaLAer4skwiSdkOV+pWKIHkhn9oer1l9eY8r9a/woBOTNg81HYgvdVkaqSNyo
-KnJDR9xvs4Aao2294rzsrjpbQiWztpdUtSJuxRrJ0yP4YfcxYRiktIAboJ2c1JL1
-4mE0Iw4kbnQQpEoWOU4Ay6Qlm0a3nl1ecoTkhwKFLP0iZy20EjMyG+CiD+oQaJjp
-7HzSDkNxpYR4uJQ7xP73RERvTP9K1E9UBkWCaDCYxzmt3YLFcMSbZN2SRLAqSCDd
-X52Tq8iivTjO38FMSM0ag/2TRrAf1zmE/aOEe6i4OgvvFxnjr2RsNJHLu/OMBuq3
-B+ZY1LqiVuTXTsoSU+4UKHzy7fxYO83rYs+OT/5MCZPJayqSbf51913r9M/SnrHi
-usaE2s4alytXHAZ9sTp8pI/I2ODP9zk2MphRFPZ57ByfByeAJEkaALs9SRg0ly7L
-EZgH4fTDZAZRHyUFgXMR
-=D+f7
------END PGP SIGNATURE-----
+Alexander
