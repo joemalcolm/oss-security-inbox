@@ -1,54 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/12/4
-Message-ID: <4FADFDF2.5050703@redhat.com>
-Date: Sat, 12 May 2012 00:06:42 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/04/1
+Message-ID: <CANTw=MP2R6Qac+xW1GGME8AHx6Qhaw35mwXcTyBjbSKMBtNLSg@mail.gmail.com>
+Date: Fri, 3 Feb 2012 20:26:26 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: mahara
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 05/11/2012 02:06 PM, Moritz Muehlenhoff wrote:
-> Hi, please assign a CVE ID for this issue in Mahara, which was
-> released as http://www.debian.org/security/2012/dsa-2467:
-> 
-> | It was discovered that Mahara, the portfolio, weblog, and resume
-> builder, | had an insecure default with regards to SAML-based
-> authentication used | with more than one SAML identity provider.
-> Someone with control over one | IdP could impersonate users from
-> other IdP's.
-> 
-> Upstream bug is: https://bugs.launchpad.net/mahara/+bug/932909
-> 
-> Upstream commit: 
-> http://gitorious.org/mahara/mahara/commit/f07be6020e70fa8f53cd77fdcd63e7fd7ff8aaea
+On Wed, Feb 1, 2012 at 11:54 PM, Solar Designer wrote:
+> Yet I needed to bring the topic up.  I was not 100% sure that some
+> vendors currently on the list would find 7-11 days unacceptable.  Being
+> 90% sure was not enough.
 >
->  Cheers, Moritz
+> I've noticed a decrease in embargo periods over time - I think for
+> vendor-sec the average might have been 14 days if not more, whereas now
+> it might be down to 10-12 days or so (excluding the hash DoS thing).
+> So we turned the old average into the new maximum.  I thought that maybe
+> we were ready for the "next level" - but it seems not.  Maybe later?
 
-Please use CVE-2012-2351 for this issue.
+I think the important aspect here is the transparency of the private
+discussion (after an appropriate delay), rather than the length of the
+delay itself.  That can be set by the researcher (with some reasonable
+maximum, like a month).
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+We all should be able to see what is going on over in the closed list.
+ Although it is unlikely being used for nefarious purposes (hiding
+issues permanently, etc.), transparency (after a delay) is the only
+way to show that it is not.  Anyway, 30 days seems appropriate.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPrf3yAAoJEBYNRVNeJnmThg8QALAc3Alla1RpVwUjfnfEX3JK
-6iaq+JtTmzTP0vQOiKXoh3B2uZEIg5B6nYPTTUhscsl3d2UA6kPa1SeU5Hr6Drm2
-Hdow3YKssIn77L7TI5+uufJYDOq4/9Adzx/U6kytdMB983BjFWlCYknsmopCicx9
-oXRBdOlmgfVwwKLaW9qwBbbHpUAyHreOhTmTS6gm00gBA6WaERwl6gt3QQSLzRxH
-iX7Oe12fj1joOmgjVddE9H+LwUweO7A0F+VpIx3247TOYTxyZvvU3pXfofW4T7OG
-u5HNGfgmHwC+262WC6ibVeQ1vQCwcDcORt4rbhtFctRXh/88xTD2SDK00Wqr9HQG
-Z17uiciD/Wk8MHk90j24nQupe77kcBMf0u95MhZrAuPWS5t8A6TYt3MB9d7DnaG1
-0xJbBxf7qiXnFtipVwA/4JUQO2ez1GzUWub70p/RYyaTMhP6q6/3MYBixvcD00LB
-WMIj8ZVDsYqjcYUe+iThO3f+aSBQmI+wJfPZRrG1BZMzda93UpN73TD95Tv7vZ7n
-YXwld+w0JX/8T+rjL1IgTquWWMew8/VT/UBAsdVapNXmjOuFaVgjzCeFUTef7dH6
-hxORHwuqYy/OrPI26twGui026j8KqjZQ9JQjAS/PaE/Agt3BWCl5Sfn1o2CBthww
-gavIXP9InWUF3jtfEcIv
-=sY4S
------END PGP SIGNATURE-----
+Best wishes,
+Mike
