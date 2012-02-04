@@ -1,34 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/10
-Message-ID: <20121003220855.GG22926@dhcp-25-225.brq.redhat.com>
-Date: Thu, 4 Oct 2012 00:08:56 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/04/5
+Message-ID: <CANTw=MMqLkMsjTitwA5aWi6N5fJdTmP8FfqV8LtgMQGrSd9XUQ@mail.gmail.com>
+Date: Fri, 3 Feb 2012 23:20:35 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: compat: SIOCGSTAMP/SIOCGSTAMPNS incorrect order of arguments to compat_put_time[val|spec]
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-Description of the problem:
+2012/2/3 Solar Designer:
+> On Fri, Feb 03, 2012 at 10:00:24PM -0500, Michael Gilbert wrote:
+>> On Fri, Feb 3, 2012 at 8:45 PM, Solar Designer wrote:
+>> > Yet the delay itself matters too.  There are different opinions as to
+>> > whether it is "the important aspect" or not.
+>>
+>> That's why I think its more appropriate to defer such decisions to the
+>> researcher who understands the complexity of the problem at hand (of
+>> course hopefully allowing negotiation with those affected to choose a
+>> disclosure date that can be met).
+>
+> That's what we have now, right?
+>
+>> > [...] I need a tool - a program to mass-decrypt a
+>> > PGP/MIME mbox, producing another mbox.  I think such a program might be
+>> > generally useful.  Well, or alternatively I need to introduce a
+>> > different mechanism for the archive - not treat it as a regular
+>> > subscriber like I intended to.
+>>
+>> Completely unfleshed out, but a pseudo-bash script along the lines of
+>> the following should do it:
+>>
+>>   echo "" > newmbox
+>>   gpg-agent --allow-preset-passphrase
+>>   /usr/lib/gnupg2/gpg-preset-passphrase --preset <cache id>
+>>   cat mbox | while read line; do
+>>       test <header> && echo $line >> /tmp/header
+>>       test <body> && echo $line >> /tmp/body
+>>       if [ <end off body> ]; then
+>>           cat /tmp/header >> newmbox
+>>           cat /tmp/body | gpg --decrypt >> newmbox
+>>       fi
+>>   done
+>>   /usr/lib/gnupg2/gpg-preset-passphrase --forget
+>>
+>> Obviously a bit more work there to figure out appropriate conditionals
+>> to put in the angle brackets.
+>
+> Unless I am missing something, this doesn't handle MIME at all - so it
+> won't do the trick.
 
-Commit 644595f89620 ("compat: Handle COMPAT_USE_64BIT_TIME in
-net/socket.c") introduced a bug where the helper functions to take
-either a 64-bit or compat time[spec|val] got the arguments in the wrong
-order, passing the kernel stack pointer off as a user pointer (and vice
-versa).
+I was trying to keep it simple.  I got the impression that your
+concern was potentially needing to enter a passphrase to individually
+decrypt each message.  Anyway, just throw in the appropriate munpack
+calls above to handle the mime parts.
 
-On architectures that use separate address spaces for userspace and
-kernel (for example PA-RISC), an unprivileged local user can crash the
-system or read kernel memory.
-
-Introduced in:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=644595f89620
-
-Upstream fix:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=ed6fe9d614f
-
-Acknowledgements:
-
-This issue was discovered by Mikulas Patocka of Red Hat.
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Best wishes,
+Mike
