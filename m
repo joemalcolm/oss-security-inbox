@@ -1,18 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/21/4
-Message-ID: <20120121110701.GA29498@foo.fgeek.fi>
-Date: Sat, 21 Jan 2012 13:07:01 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/04/3
+Message-ID: <CANTw=MNk8mvdueF4YaM-Z4VpQM7A+mMX7UPvRV6Va8j0O+zhjA@mail.gmail.com>
+Date: Fri, 3 Feb 2012 22:00:24 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: pdf attacks vectors
+Subject: Re: distros & linux-distros embargo period and message format
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 20, 2012 at 09:35:04AM +0400, Alexander Pletnev wrote:
-> Hi guys, im working with an web app, and going to create PDFs on-the-fly with user related data. 
-> Therefore im writinig to oss-security. What are a pdf attacks vector need's to be avoided by my app ?
-> 
-> In other words, what is the most dangerous pdf attack vectors ?
+On Fri, Feb 3, 2012 at 8:45 PM, Solar Designer wrote:
+> On Fri, Feb 03, 2012 at 08:26:26PM -0500, Michael Gilbert wrote:
+>> I think the important aspect here is the transparency of the private
+>> discussion (after an appropriate delay), rather than the length of the
+>> delay itself.
+>
+> Thank you for sharing your opinion.
+>
+> Yet the delay itself matters too.  There are different opinions as to
+> whether it is "the important aspect" or not.
 
-Related great tools: http://blog.didierstevens.com/programs/pdf-tools/
+That's why I think its more appropriate to defer such decisions to the
+researcher who understands the complexity of the problem at hand (of
+course hopefully allowing negotiation with those affected to choose a
+disclosure date that can be met).
 
-- Henri Salo
+>> That can be set by the researcher (with some reasonable
+>> maximum, like a month).
+>>
+>> We all should be able to see what is going on over in the closed list.
+>>  Although it is unlikely being used for nefarious purposes (hiding
+>> issues permanently, etc.), transparency (after a delay) is the only
+>> way to show that it is not.  Anyway, 30 days seems appropriate.
+>
+> I don't mind.  Like I said, I need a tool - a program to mass-decrypt a
+> PGP/MIME mbox, producing another mbox.  I think such a program might be
+> generally useful.  Well, or alternatively I need to introduce a
+> different mechanism for the archive - not treat it as a regular
+> subscriber like I intended to.
+
+Completely unfleshed out, but a pseudo-bash script along the lines of
+the following should do it:
+
+  echo "" > newmbox
+  gpg-agent --allow-preset-passphrase
+  /usr/lib/gnupg2/gpg-preset-passphrase --preset <cache id>
+  cat mbox | while read line; do
+      test <header> && echo $line >> /tmp/header
+      test <body> && echo $line >> /tmp/body
+      if [ <end off body> ]; then
+          cat /tmp/header >> newmbox
+          cat /tmp/body | gpg --decrypt >> newmbox
+      fi
+  done
+  /usr/lib/gnupg2/gpg-preset-passphrase --forget
+
+Obviously a bit more work there to figure out appropriate conditionals
+to put in the angle brackets.
+
+Best wishes,
+Mike
