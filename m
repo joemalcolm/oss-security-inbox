@@ -1,66 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/15
-Message-ID: <4FFDB7F2.8060703@redhat.com>
-Date: Wed, 11 Jul 2012 11:29:22 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: Overflow fix in bash 4.2 patch 33
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/05/1
+Message-ID: <1328448865.3610.18.camel@cthulhu.hellion.org.uk>
+Date: Sun, 05 Feb 2012 14:34:25 +0100
+From: Ian Campbell <ijc@....org>
+To: Solar Designer <solar@...nwall.com>
+Cc: Ian Campbell <ijc@....org>, oss-security@...ts.openwall.com
+Subject: Re: Adding Xen.org contact to linux-distros security list
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sat, 2012-02-04 at 03:07 +0400, Solar Designer wrote:
+> On Fri, Feb 03, 2012 at 09:33:05AM +0000, Ian Campbell wrote:
+> > Would it be possible for myself to be subscribed to the linux-distros
+> > security list as a representative of Xen.org?
+> 
+> I think not.  We had a few exceptions like this on vendor-sec, but when
+> setting up the linux-distros list I proposed not to be making such
+> exceptions anymore and everyone seemed to agree.  In fact, that's even
+> reflected in the list name - on purpose.
 
-On 07/11/2012 10:15 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> the bash maintainer kindly mailed us and other vendors a
-> notification of a overflow in the bash "test" builtin when
-> "/dev/fd/..." filenames are used.
-> 
-> ftp://ftp.gnu.org/pub/gnu/bash/bash-4.2-patches/bash42-033
-> 
-> Reproducer: test -e /dev/fd/111111111111111111111111111111111
-> 
-> Problem is caught by -D_FORTIFY_SOURCE=2 if enabled, and likely
-> also by -fstack-protector (not tested)
-> 
-> Goes all the way back to old bashes.
-> 
-> The likeliness of people able to inject those filenames into shell
-> scripts and not being able to execute shellcode themselves is
-> however slim. (setuid root shell scripts are not possible.)
-> 
-> Security (CVE) relevant scenario we thought of is breaking out of
-> a restricted shell mode.
-> 
-> Ciao, Marcus
+Thanks, I can quite understand your position.
 
-Can you give a more concrete example, e.g. you're talking about
-http://www.gnu.org/software/bash/manual/html_node/The-Restricted-Shell.html
-I assume? Are we simply talking about violating those restrictions?
+I'll get back in touch with the qemu folks and update the wiki as you
+suggest.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Cheers,
+Ian.
 
 
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP/bfyAAoJEBYNRVNeJnmTdSAQAKEQWS2YeX/NME/jHFxW4GbA
-38G/FZKpkG8XajwBv+NxbMAamj8nJBJfpuT7vLo4Yd6WY/SKQ2pG5dTZJqKQSsUe
-tLDXl2tW6gRKzhhlXZ/4ZzH7KvH+zjfwTDy4pcNKrj8cp1vZ+idv61JMwSLEmi/G
-cPRrMRgxAl+zR6xfM02sySXxNL7wczG2x7td8s7eLhi9AsEDG3PEACFLLeaYUuaQ
-x0OK4eJPDqOSHAx6Q7FzupMYuu3A55x7Y2KFcXMpD8rkOYTwTFSZuE47Q3TggUza
-JidAHWNhrJ6NaxZW8sjnnSSCdAyBzAy3kEgPYr/7Rb0J4DvyI+b+wmx4Jl2Cv2tl
-6KcTqglRrZPITl52aQrtYH9f9EtsgbOlhRgYydqyDaRRvBiOqIZCTgqOQmzIf3mf
-3Wy6Gvy8dUcMEAioyePTXC3u4MguOrNV86OoGUZ41rif3F3szLc5YEbQgTBUQbTo
-H/Rzj+1wL1z+buY2FceC4Se+CAj3fFgHgj/LO8o3Nnb0tBibkp3ABYuEVgwpKtkB
-fDWgTDKW54lY3IwM2v8dCrVzL5jwFQGoJA+8K1jQEUL1JDHAvx4bvlfT3N6hXMEF
-WQTn/cNWUVZVRsfoOMAljXxyKxkD8SJLma4uhO8gmZq2JCUPig9iOEdkkqwFdCYo
-IZok0OzBba1dgGsmpoJg
-=5JOy
------END PGP SIGNATURE-----
