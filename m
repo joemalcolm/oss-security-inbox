@@ -1,53 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/9
-Message-ID: <20121204181229.218523tdfdnfphbx@imap.suse.de>
-Date: Tue, 04 Dec 2012 18:12:29 +0100
-From: Matthias Weckbecker <mweckbecker@...e.de>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
-Cc: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: Dovecot DoS in 2.x (fixed in 2.1.11)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/06/1
+Message-ID: <20120206042738.GA26810@openwall.com>
+Date: Mon, 6 Feb 2012 08:27:38 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt, Vincent, vendors, ...
+Hi,
 
-Quoting Kurt Seifried <kseifried@...hat.com>:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 12/03/2012 10:33 AM, Vincent Danen wrote:
->> Could a CVE be assigned for the following please?
->>
->> Dovecot 2.1.11 was released and includes a fix for a crash
->> condition when the IMAP server was issued a SEARCH command with
->> multiple KEYWORD parameters.  An authenticated remote user could
->> use this flaw to crash Dovecot.
->>
-[...]
->>
->>
->> Thanks.
->
-> Please use CVE-2012-5620 for this issue.
->
+I just analyzed this issue a little bit and thought I'd post a followup
+to the thread on oss-security, but to my surprise I could not find the
+issue mentioned in here, even though "nearby" ones (e.g. fixed in RHEL
+at about the same time) were brought to this list.  I guess this has to
+do with differences in CVE assignment - when an issue already has a CVE
+ID, it is less likely to be brought up in here - which I find wrong.
+This shouldn't be just a CVE ID assignment list, but a general Open
+Source security list.  Anyway, to the specific issue:
 
-We were discussing this issue too at [1] and think that it does only
-affect the current connection, no subsequent (i.e. new) connections
-are affected.
+http://rhn.redhat.com/errata/RHSA-2012-0007.html says "A missing
+validation flaw was found in the Linux kernel's m_stop() implementation.
+A local, unprivileged user could use this flaw to trigger a denial of
+service. (CVE-2011-3637, Moderate)"  So I wanted to verify whether the
+impact is in fact limited to a DoS.  More links:
 
-What's your opinion wrt this?
+https://bugzilla.redhat.com/show_bug.cgi?id=747848
 
-[1] https://bugzilla.novell.com/show_bug.cgi?id=792642
+The fix, which I confirmed that it's included in at least OpenVZ's
+linux-2.6.18-274.17.1.el5.028stab097.1, which is what I happen to care
+about at this time:
 
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-[...]
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=76597cd31470fa130784c78fadb4dab2e624a723
 
-Thanks,
-Matthias
+-	vma_stop(priv, vma);
++	if (!IS_ERR(vma))
++		vma_stop(priv, vma);
 
--- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://opensuse.org/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg)
+Linus' commit message:
+
+"When m_start returns an error, the seq_file logic will still call m_stop
+with that error entry, so we'd better make sure that we check it before
+using it as a vma.
+
+Introduced by commit ec6fd8a4355c ("report errors in /proc/*/*map*
+sanely"), which replaced NULL with various ERR_PTR() cases.
+
+(On ia64, you happen to get a unaligned fault instead of a page fault,
+since the address used is generally some random error code like -EPERM)"
+
+The commit referenced above as one that introduced the bug:
+
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=ec6fd8a4355c
+
+Thus, _assuming_ that the bug was in fact introduced by that commit
+alone, it does appear to me that we have a mere DoS here - the pointer
+being referenced has to be some -Exxx access code and nothing more
+arbitrary.  Good.  (Additionally, the current fix only catches 4095
+possible values, so if the problem were worse, it would be insufficient.)
+
+Alexander
