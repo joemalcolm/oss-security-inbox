@@ -1,62 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/13
-Message-ID: <507F0A2A.2020200@redhat.com>
-Date: Wed, 17 Oct 2012 13:42:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/06/4
+Message-ID: <20120206094248.GA27887@openwall.com>
+Date: Mon, 6 Feb 2012 13:42:48 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
+Subject: CVE-2011-4325 Linux kernel: nfs: diotest4 from LTP crash client
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 10/15/2012 02:50 PM, Raphael Geissert wrote:
-> Hi,
-> 
-> Michael Stapelberg, Tollef Fog Heen, and Michael Biebl discovered
-> that dhclient was setting dhclient-script's PATH to one that
-> included a subdirectory of the build directory[1]. This issue is
-> caused by the way isc-dhcp is packaged in Debian.
-> 
-> At least two versions of isc-dhcp for the amd64 (x86_64)
-> architecture in Debian were found two be setting PATH to a
-> subdirectory of /home/zero79/, which would allow a user with such
-> HOME directory to be able to execute code as root.
-> 
-> To clarify the bug report: it is not specific to samba or hooks in
-> general, PATH is injected in the environment passed to the execve()
-> call that executes dhclient-script.
-> 
-> Since this issue doesn't affect the stable release, there won't be
-> a DSA. This email is just a heads up.
-> 
-> [1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=690532
-> 
-> Cheers,
-> 
+I could not find this one on oss-security.
 
-Was this software released however?
+http://rhn.redhat.com/errata/RHSA-2012-0007.html says "A flaw was found
+in the Linux kernel's NFS implementation. A local, unprivileged user
+could use this flaw to cause a denial of service.  (CVE-2011-4325,
+Moderate)"
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+https://bugzilla.redhat.com/show_bug.cgi?id=755455 mentions "null
+pointer deref" in its title and says "diotest4 from LTP will crash
+client on NFS mount. Not a regression, 5.7 GA kernel has the same
+issue."  It refers to:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Upstream commit:
+http://git.kernel.org/linus/1ae88b2e4 (v2.6.31-rc6)
 
-iQIcBAEBAgAGBQJQfwoqAAoJEBYNRVNeJnmTFa4P/iUGrMc3zt23oqMySqzacrkN
-hzj/zw3xJEFOFZMeTXg2ZUlS3KrUaqolZh6Btlku9EUWVUp+6GudqSE4p/Cr4cL5
-fHj2UoTf7X3RjDv8lyqRNbvtJc6eqRBc5iL2UPwXkTFOBA4dHhIV3/PcxoLNLol/
-uLYnH7Q6oAa8bJdJYWPo6rh2aMGxR6b2ewXqnVWckOCdrcQD6tfNDHgYji1NC/oh
-wcdD3AxvYhxlKiI6+mWy548LG8fJ0bYpx020rkYYldJUre0Frn8TjogoxmEDyyWF
-2Ohhnl3EmjlxM2l0FyKSmUZxsb4aRLkLHqNAmk6b33U5czoti1zsHqmzvMjAAb+d
-g9IjNkZu/SSTt1ma8MZHd1LDRcM+6gqydTXcdXeuehTcELE5zKUPo4nUQXVKXnxg
-CrQDLxRqX0/a6fyc1pLpdWrO0XAHJbCoGdL4nAkI/LlQzQM9K8j9gxkZ4hrWfUwZ
-6tbUBqAnglKLVwUhmRmEeKuFSkuoGq2TZeJEbivbqytxyvcmYUzbb+pDdKydnA4o
-bIFxQ+lMmouQAIGZB+MwrKQ2PGcAPi5DqHaW/ko0o42xlkyhzVy22fFVNh0AgD7y
-NlUZp181WwBrwg4tRKlFHSG0CYq9aKMXIDZL4EAq9cEV8B0WOf/EsVUT3lrXh0dZ
-1JSFcLEl9rje9PawjOfD
-=xqMN
------END PGP SIGNATURE-----
+The commit message:
+
+"We can't call nfs_readdata_release()/nfs_writedata_release() without
+first initialising and referencing args.context. Doing so inside
+nfs_direct_read_schedule_segment()/nfs_direct_write_schedule_segment()
+causes an Oops.
+
+We should rather be calling nfs_readdata_free()/nfs_writedata_free() in
+those cases.
+
+Looking at the O_DIRECT code, the "struct nfs_direct_req" is already
+referencing the nfs_open_context for us. Since the readdata and writedata
+structures carry a reference to that, we can simplify things by getting rid
+of the extra nfs_open_context references, so that we can replace all
+instances of nfs_readdata_release()/nfs_writedata_release()."
+
+I was able to find this on LKML, but with no more detail:
+
+http://lists.openwall.net/linux-kernel/2009/08/12/215
+
+Apparently, an uninitialized pointer was being accessed, and apparently
+it happened to be NULL (or nearby) on some occasion - but I see no proof
+that it would always be NULL, although there may well be something that
+makes it so.
+
+Overall, after a quick glance at the fix, I am not convinced that this
+was just a DoS.  Someone familiar with the code might have a better idea.
+
+Also, does Red Hat treat NULL pointer derefs in the kernel as DoS only
+now, relying primarily on mmap_min_addr to work?  (We do.  And we'll
+treat a mmap_min_addr bypass if another one of these is found, as the
+real privilege escalation issue, assuming that plenty of NULL derefs
+exist in the kernel.)
+
+Alexander
