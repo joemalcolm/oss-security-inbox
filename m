@@ -1,43 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/7
-Message-ID: <4FDB4567.1040502@coochey.net>
-Date: Fri, 15 Jun 2012 15:23:35 +0100
-From: Giles Coochey <giles@...chey.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/07/1
+Message-ID: <4F3078F1.8070105@redhat.com>
+Date: Mon, 06 Feb 2012 18:05:53 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 9 (CVE-2012-2934) - PV guest host DoS (AMD erratum #121)
+Subject: CVE request: Hash DoS vulnerability (ocert-2011-003)
 Content-Type: text/plain; charset=utf-8
 
-On 14/06/2012 19:20, Florian Weimer wrote:
-> * Xen org security team:
->
->> There is no software fix for this issue. The workaround suggested by
->> AMD in erratum #121 cannot be applied to Xen since the relevant address
->> is under guest control.
->>
->> Applying the patch will cause Xen to detect vulnerable systems and
->> refuse to boot.
-> This response puzzles me.  Isn't this changing a potential denial of
-> service (a para-virtualized guest could attempt an exploit) to a
-> definite one (the system won't boot)?  Why is this a good idea?
-It ensures that the user of the system is aware of the risks.
+So going through various things looks like Ocaml is vulnerable and has
+not had a CVE # assigned for this issue yet.
 
-This position will only occur when the patch to the vulnerability is 
-applied (i.e. during an out of service upgrade). The admins of the 
-system should always read the release notes to patches and upgrades - 
-otherwise they wouldn't know what else might be broken, deprecated.
+Discussion of the issue takes place on the mailing list, here is a link
+for the originating thread:
 
-I think it's the right approach.
+http://www.mail-archive.com/caml-list@inria.fr/msg01477.html
+
+There doesn't appear to be a fix yet.
+
 
 -- 
-Regards,
-
-Giles Coochey, CCNA, CCNAS
-NetSecSpec Ltd
-+44 (0) 7983 877438
-http://www.coochey.net
-http://www.netsecspec.co.uk
-giles@...chey.net
-
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4928 bytes)
+Kurt Seifried Red Hat Security Response Team (SRT)
