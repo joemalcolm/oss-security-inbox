@@ -1,54 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/31/7
-Message-ID: <50181E3A.2050400@redhat.com>
-Date: Tue, 31 Jul 2012 12:04:42 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/07/2
+Message-ID: <4F3079F7.4040606@redhat.com>
+Date: Mon, 06 Feb 2012 18:10:15 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- libvirt: crash in virTypedParameterArrayClear
+To: oss-security@...ts.openwall.com, team@...rt.org, caml-list@...ia.fr, gerd@...d-stolpmann.de
+Subject: Re: CVE request: Hash DoS vulnerability (ocert-2011-003)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 07/31/2012 08:59 AM, Petr Matousek wrote:
-> It has been found that sending crafted RPC command with nparams set
-> to 0 can lead to libvirtd accessing random memory, possibly leading
-> to crash. A remote attacker could use this flaw to crash libvirtd
-> (DoS).
+On 02/06/2012 06:05 PM, Kurt Seifried wrote:
+> So going through various things looks like Ocaml is vulnerable and has
+> not had a CVE # assigned for this issue yet.
 > 
-> Upstream proposed fix: 
-> https://www.redhat.com/archives/libvir-list/2012-July/msg01650.html
->
->  References: 
-> https://www.redhat.com/archives/libvir-list/2012-July/msg01650.html
->
+> Discussion of the issue takes place on the mailing list, here is a link
+> for the originating thread:
 > 
-https://bugzilla.redhat.com/show_bug.cgi?id=844734
+>cc
 > 
-> Thanks,
+> There doesn't appear to be a fix yet.
+> 
+> 
 
-Please use CVE-2012-3445 for this issue.
+Please use CVE-2012-0839 for this issue.
 
-
-- -- 
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQGB46AAoJEBYNRVNeJnmTdMIQAN5YS7Szy4JMB7uzxAjky6dv
-yOHNu7VWuRr1G4rvKuJ9U06ipurJLI2M2+TMvgQQiDoWVEVdAn6pLRtEHwYuipG7
-tqtwHEcLQt9Z7MQrQfzJlEMDw2v1Q43qIlKyi+BkHExEczxj+RsROYLFl0jMHAOW
-DPzDFUiCtjnK5WscAhOHTd7eZ/AiwRsotso4CXswosDV3Er69p1xGOc0AawbJF2J
-lT5CEEEd3KgEeKavWArEec2bi/nLH1hbQcNEaIhMXotsgLzUvc69X2+8Z1ZO9D50
-k1bTjgxtXNEAw4Cc/Klj9rDzmtJ5irk3L/WFZKN43G2q2+aye/5xsqz7uYs+Rngg
-0AA+Sz/w3kyX9COf9QJ8gJN0KsLWmBdYyje43to+owZlFVAR46Ws+QvFWSfJPOHD
-02CrcD9WCCphNeJ12BFG+ffNAJGO7GqGRcW0RdmRCtBeR08TIUPskwBPL3eqb+Bt
-PIgcIyOFapbzzA/M+Ncj3x6G2Cusi/rbbv+hb1Nnpkbt9dJ445C4pZrr6DBbzngU
-OUb6Ip+6HfGf9xFfFEwlJQs0+oE591LTUlr5TDsyIqcZ4DWylIN8+R82MNRK1bqN
-AJtpk5f/MgwrETxbt7JNe7p/Wew+A1mr6Vq2u8b7AKz8smrxTW0kH4w3yA73huIG
-vPq7Rz6bJPZmuwNxdnH5
-=cFpj
------END PGP SIGNATURE-----
