@@ -1,58 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/10/4
-Message-ID: <4FABF4F7.3080501@redhat.com>
-Date: Thu, 10 May 2012 11:03:51 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: phpMyFAQ default password 1.3.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/07/3
+Message-ID: <20120207192309.GG28231@dhcp-25-225.brq.redhat.com>
+Date: Tue, 7 Feb 2012 20:23:09 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2011-4325 Linux kernel: nfs: diotest4 from LTP crash client
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 05/10/2012 01:39 AM, Henri Salo wrote:
-> This is very old issue from 2003 without CVE-identifier.
+On Mon, Feb 06, 2012 at 01:42:48PM +0400, Solar Designer wrote:
+<snip>
+> Apparently, an uninitialized pointer was being accessed, and apparently
+> it happened to be NULL (or nearby) on some occasion - but I see no proof
+> that it would always be NULL, although there may well be something that
+> makes it so.
 > 
-> Description:
-> 
-> By default, phpMyFAQ installs with a default password. An
-> unspecified account has an unspecified password which is publicly
-> known and documented. This allows attackers to trivially access the
-> program or system and gain privileged access.
-> 
-> http://osvdb.org/show/osvdb/81714 
-> http://www.phpmyfaq.de/changelog.php
-> 
-> Is there a general CVE-identifier for issues like default password,
-> which I think would be OK in case like this? If user upgraded
-> installation from old version to new this was not fixed in the
-> process.
-> 
-> - Henri Salo
+> Overall, after a quick glance at the fix, I am not convinced that this
+> was just a DoS.  Someone familiar with the code might have a better idea.
 
-I'll need at least the account name so I can confirm this. Or if you
-diff the code I'm guessing it will stand out easily.
+Code: 48 8b 47 38 48 89 fb 48 8b 68 10 48 8d b5 b4 00 00 00 e8 c9
+RIP  [<ffffffff887aed65>] :nfs:__put_nfs_open_context+0x7/0x93
+ RSP <ffff810153cc1d28>
+CR2: 0000000000000038
+ <0>Kernel panic - not syncing: Fatal exception
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+addr2line -ife nfs.ko.debug <<< 6D65
+__put_nfs_open_context
+/usr/src/debug/kernel-2.6.18/linux-2.6.18-296.el5.x86_64/fs/nfs/inode.c:624
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+0000000000006d5e <__put_nfs_open_context>:
+    6d5e:       41 54                   push   %r12
+    6d60:       41 89 f4                mov    %esi,%r12d
+    6d63:       55                      push   %rbp
+    6d64:       53                      push   %rbx
+    6d65:       48 8b 47 38             mov    0x38(%rdi),%rax
 
-iQIcBAEBAgAGBQJPq/T3AAoJEBYNRVNeJnmTme0P/1q/22FTmG05Zd5XLE2Bbjcs
-93uATy91vsqfRuv0kP9zOnZaMhn4gus5xo+42jAq/cvH+ewrLxYJjxVlIoimC4Pi
-QSsTP/FeNCgNP5zsvKMy/03ffBIQw2cuQwNQKbu7L9Vxuv2g8MJJBPLjkuylBO4P
-yg0j2/RtEMXzOEa+b4pPe0CBAEwOD6KNAvoEtK3018YYGG8csN/HqgVFkpFhJq+y
-wjF1ei2R+QzA5Ig0YduAbEn/zynuvNhLgj5RVWq58wHo0fi003tsWKRQvEaEXwr0
-mz+Yg9fDp1tOb3UcvbMqc3w8LK4UyeXJjy5TEvS3kKwdRKTKTX9y6oqkJqEjebxA
-Nz/JciajoKp+xa0dXs/0TYvDvxYivuOAJR65OUPrPsNgsOOW4bUU5dMnnlFJ5t4T
-38W8Co2B7ishu4BeG2AHcyS2xrS7o7GtOJbUSsaMn7L1HLwOS0L/YNQG92IaxJVf
-iRWAa4TonGQjdrl8tPtiT4hEZHkaGTZrC9Ym1VUWyZhu/j2N3Gy1CY5RoVi7jN1J
-KtTo3+BeQQyCLIVARnNXLdxLTHb6JHBO/ULZ9YwhbKJtUgjvdJqaSfau0Xcbj6or
-XTbaQ9kxohewDwjohKZSxdXjc8Nteoja1F6AnAsGA5kFuJqljF6UCfqwsT/d0gZc
-3a4KLwqt+d+yfYd8ljWs
-=h+nZ
------END PGP SIGNATURE-----
+static void __put_nfs_open_context(struct nfs_open_context *ctx, int is_sync)
+{
+        struct inode *inode = ctx->path.dentry->d_inode;   // line 624 / 6d65
+        ...
+}
+
+[pmatouse@...p-25-225 linux-2.6.18-296.el5.x86_64]$ pahole -r -C nfs_open_context nfs.ko.debug
+struct nfs_open_context {
+        struct nfs_lock_context    lock_context;         /*     0    48 */
+        struct path                path;                 /*    48    16 */
+        ...
+}
+
+[pmatouse@...p-25-225 linux-2.6.18-296.el5.x86_64]$ pahole -r -C path nfs.ko.debug
+struct path {
+        struct vfsmount *          mnt;                  /*     0     8 */
+        struct dentry *            dentry;               /*     8     8 */
+        ...
+}
+
+48 + 8 == 56 (0x38) (mov    0x38(%rdi),%rax)
+ctx is null
+
+--
+
+nfs_direct_read_schedule()
+ -> data = nfs_readdata_alloc();			// allocates and nulls readdata
+ -> nfs_readdata_release(data);				// on error
+ -> data->args.context = get_nfs_open_context(ctx);	// initializes args.context
+
+it can happen that nfs_readdata_release() is called with data->args.context
+being NULL.
+
+void nfs_readdata_release(void *data)
+{
+        struct nfs_read_data *rdata = data;
+
+        put_nfs_open_context(rdata->args.context);
+        nfs_readdata_free(rdata);
+}
+
+void put_nfs_open_context(struct nfs_open_context *ctx)
+{
+        __put_nfs_open_context(ctx, 0);
+}
+
+static void __put_nfs_open_context(struct nfs_open_context *ctx, int is_sync)
+{
+        struct inode *inode = ctx->path.dentry->d_inode;               // line 624
+        ...
+}
+
+ 
+> Also, does Red Hat treat NULL pointer derefs in the kernel as DoS only
+> now, relying primarily on mmap_min_addr to work?  (We do.  And we'll
+> treat a mmap_min_addr bypass if another one of these is found, as the
+> real privilege escalation issue, assuming that plenty of NULL derefs
+> exist in the kernel.)
+
+Yes.
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
