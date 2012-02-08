@@ -1,89 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/7
-Message-ID: <50AFC2AD.7060006@redhat.com>
-Date: Fri, 23 Nov 2012 11:38:37 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/08/2
+Message-ID: <20120208101258.GA2149@openwall.com>
+Date: Wed, 8 Feb 2012 14:12:58 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, security@...de.org
-Subject: Re: CVE Request -- kronolith: Two sets (3.0.17 && 3.0.18) of XSS flaws
+Subject: Linux procfs infoleaks via self-read by a SUID/SGID program (was: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Feb 08, 2012 at 06:59:48AM +0100, Jason A. Donenfeld wrote:
+> Might be slightly offtopic,
 
-On 11/23/2012 10:25 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> Horde upstream has recently released 3.0.18 version of Kronolith,
-> the Horde calendar application, correcting one set of XSS flaws: 
-> [1]
-> https://github.com/horde/horde/blob/d3dda2d47fad7eb128a0091e732cded0c2601009/kronolith/docs/CHANGES
->
-> 
-[2] http://lists.horde.org/archives/announce/2012/000836.html
-> 
-> more exactly: * Set #1: [mms] SECURITY: Fix XSS vulnerabilities in
-> the portal blocks. Upstream patch:
-> http://git.horde.org/horde-git/-/commit/d865c564beb6e98532880aa51a04a79f3311cd1e
->
-> 
-References: [1], [2] plus [3]
-https://bugzilla.redhat.com/show_bug.cgi?id=879684
+On topic for this list (thank you for posting!), but not for the
+original thread (I've changed the Subject, but kept the thread since
+this is already in the thread).
 
-Please use CVE-2012-5567 for kronolith: 3.0.18 of XSS flaw
-
-> Also previously (in version 3.0.17 yet another set of XSS flaws got
-> corrected): * Set #2: [jan] SECURITY: Fix XSS vulnerabilities in
-> tasks view and search view (Bug #11189). Upstream ticket: [4]
-> http://bugs.horde.org/ticket/11189 Upstream patch:  [5]
-> http://git.horde.org/horde-git/-/commit/1228a6825a8dab3333d0a8c8986fc10d1f3d11b2
->
+> but this is a possible info leak of maps for a suid program:
 > 
-References: [1], [2], [4], [5]
-> Note: There isn't a Red Hat Bugzilla entry, since the kronolith
-> 2.x version based versions shipped, within Fedora / Fedora EPEL
-> weren't vulnerable to this problem yet.
-
-Please use CVE-2012-5566 for kronolith: 3.0.17 of XSS flaw
-
-> Look at MITRE CVE database for kronolith: [6]
-> http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=kronolith
+> $ cat maps.c
+> #include <unistd.h>
+> #include <fcntl.h>
 > 
-> suggests the last security flaws, a CVE ids has been assigned to,
-> were the following two: * v2.2-RC2 --------
+> int main(int argc, char **argv)
+> {
 > 
-> [jan] SECURITY: Fix privilege escalation in Horde API. =>
-> CVE-2008-7218 [cjh] SECURITY: Fix missing ownership validation on
-> share changes => CVE-2008-7219
-> 
-> so both of sets of the XSS issues (Set #1, Set #2) should still be
-> lacking (two) CVE identifiers.
-> 
-> Could you allocate them?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+>         int fd = open("/proc/self/maps", O_RDONLY);
+>         dup2(fd, 0);
+>         execl("/usr/bin/chsh", "chsh", NULL);
+>         return 0;
+> }
 
+Nice.  I guess the same works for /proc/self/mem as well, including with
+lseek().  Using this for more than just an ASLR bypass may be tricky -
+need to find a suitable program to abuse.  In fact, even the usefulness
+of such an ASLR bypass is very limited since the invocation mode above
+might not be the same as needed for another attack, and the address
+space layout will change between the two execs.  (Not to mention that
+ASLR is generally practical to bypass for local attacks anyway by simply
+trying enough times, unless there's lockout.)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+I guess it might be possible to get some implementation of chsh to print
+an excerpt from /etc/shadow.  Luckily, on Owl we don't have chsh enabled
+for non-root by default and we don't have a global /etc/shadow. ;-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+BTW, what version of chsh did you test this with and what behavior do
+you observe?  I was not able to get anything useful in this way out of
+Owl's chsh (once enabled for non-root) - it just asks for the password,
+but somehow fails to read it if one is entered on the tty (perhaps
+there's some inconsistency in use of the tty vs. fd 0).  I suppose I'd
+need to get past successful authentication for chsh's input to be
+treated as the new shell name, in which case it'd get printed out (such
+as in an error message) or/and put in /etc/passwd.
 
-iQIcBAEBAgAGBQJQr8KtAAoJEBYNRVNeJnmTvOMQANJwGQMMe+EmCuwFBjty8oCz
-w/9F+OAC9I4/tViLPfbbyzKkXk0cprC9FdaPb/8eBVW1L/ELCZGbbdQPlAiag2im
-FmxyHou2lJ/dxePvdDZE7ZI0xp4gHnoRynXJ4g7szFisr4UWqZzqUsfpk7O2JOnT
-FfZljNJdMJXok++p2q1CCckwltMpLaYr4AvUPEZMUIMTbgrj+GXuhjriuztVa9ii
-4foH5KSzpPA1CfooDTqnmosJW+sZADr+GM2/RsLQZ0FHosbNtqkn8MGyr6ApLaGr
-1gNYQbduYaCoSVndxoJt+CTkgbuJ1O3Hru8ib46CJ3tZrKS2lmR0CzrAG4GaJEhV
-Eh9L/YRYDt3RA/h2u0TNg5w4gQl4vhwZG6y4ZljPUT2zFq9KuWNxMByMdWeKwM6N
-0D2KT8RqffyVA+UXSQbWg8SGz1nKr4v70FatjDSByrZqyXIBl6w3yGrFeVsgcErJ
-zpo7yu5A2bNUP4qBLS4hisZxvHU3aLCStWlD3BX1ghaFlZXkAXEh0AdIbj0zw31F
-pYkxbPXATiMtXUy0jp8xWY8/cCXy2oROVtmiI9dlZDkPWBJYXpysBprsEZttiANl
-hk53ql7glJMEB83UBOI1kOjVN+wDX7veeNEv3Ntou5nm9mpmHeAUq3T/7O08l+l0
-aAf/nis5wNitl8Mvj6Zf
-=yKB3
------END PGP SIGNATURE-----
+Alexander
