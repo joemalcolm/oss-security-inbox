@@ -1,33 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/5
-Message-ID: <20120530165602.GD1295@kludge.henri.nerv.fi>
-Date: Wed, 30 May 2012 19:56:02 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/08/3
+Message-ID: <20120208172657.GA3879@pisco.westfalen.local>
+Date: Wed, 8 Feb 2012 18:26:57 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Steve Langasek <vorlon@...ian.org>
-Subject: Re: CVE id request: Multiple buffer overflow in unixODBC
+Subject: CVE request: apr - Hash DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 30, 2012 at 10:07:02AM +0200, Tomas Hoger wrote:
-> On Tue, 29 May 2012 09:42:42 -0300 Felipe Pena wrote:
-> 
-> > Multiple buffer overflow in unixODBC
-> > ===========================
-> > 
-> > The library unixODBC doesn't check properly the input from FILEDSN=,
-> > DRIVER= options in the DSN, which causes buffer overflow when passed
-> > to the SQLDriverConnect() function.
-> 
-> Reports like this - covering bugs in parsing of the configuration
-> parameters (i.e. generally trusted input) - should include some
-> reasoning why these should be considered security.  Nothing obvious not
-> intended to break PHP safe_mode comes to mind.
-> 
-> -- 
-> Tomas Hoger / Red Hat Security Response Team
+Hi,
+APR (Apache Portable Runtime) is affected by the hash collision DoS 
+class, please assign a CVE ID:
 
-Debian-report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=675058
+The upstream discussion can be found here:
+http://www.mail-archive.com/dev%40apr.apache.org/msg24439.html
 
-Maintainer is also asking why this is security related issue. Can I get short description thanks.
-
-- Henri Salo
+Cheers,
+        Moritz
