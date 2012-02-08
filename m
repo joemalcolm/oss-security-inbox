@@ -1,210 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/14/4
-Message-ID: <4F3AC9FA.6030003@redhat.com>
-Date: Tue, 14 Feb 2012 13:54:18 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/08/1
+Message-ID: <CAHmME9rbJyXESUGXU5-7K3cJMFMtjif2WUicL6a1d_iMfLi0Fw@mail.gmail.com>
+Date: Wed, 8 Feb 2012 06:59:48 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
 To: oss-security@...ts.openwall.com
-CC: Michael Niedermayer <michaelni@....at>, Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: CVE Requests for FFmpeg 0.9.1
+Subject: Re: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Might be slightly offtopic, but this is a possible info leak of maps for a
+suid program:
 
-Sorry for the delay in getting these done.
+$ cat maps.c
+#include <unistd.h>
+#include <fcntl.h>
 
+int main(int argc, char **argv)
+{
 
-==============================================
-> HEAP buffer overflows: (write) 
-> ae21776207e8a2bbe268e7c9e203f7599dd87ddb lavfi: add missing check 
-> in
-avfilter_filter_samples()
-> Simple case of missing check, there wasnt much using the audio
-filters so
-> this probably is not practically exploitable
-
-Please use CVE-2012-0847 for this issue.
-
-- ----------------------------------------------
-> 5257743aee0c3982f0079e6553aabc6aa39401d2 ws_snd1: Fix wrong 
-> samples
-count and crash.
-> Simple case of amount written and check mismatching
-
-Please use CVE-2012-0848 for this issue.
-
-- ----------------------------------------------
-> 1f99939a6361e2e6d6788494dd7c682b051c6c34 j2kdec: Fix integer
-overflow leading to a segfault
-> 
-http://ffmpeg.org/trac/ffmpeg/ticket/776
-> The check missed negative values, j2k is marked as experimental
-though so
-> depending on the user app this may require the user to enable it.
-
-Please use CVE-2012-0849 for this issue.
-
-- ----------------------------------------------
-> 944f5b2779e4aa63f7624df6cd4de832a53db81b aacsbr: Fix memory 
-> corruption.
-> 
-http://ffmpeg.org/trac/ffmpeg/ticket/760
-> v_off becoming negative and writes based on this overwriting
-various fields
-> of the struct which valgrind didnt detect.
-
-Please use CVE-2012-0850 for this issue.
-
-- ----------------------------------------------
-> 7fff64e00d886fde11d61958888c82b461cf99b9 h264: check
-chroma_format_idc range.
-> 
-
-http://ffmpeg.org/trac/ffmpeg/ticket/758
-Please use CVE-2012-0851 for this issue.
-
-- ----------------------------------------------
-> 608708009f69ba4cecebf05120c696167494c897 adpcm: Fix crash
-> 
-http://ffmpeg.org/trac/ffmpeg/ticket/794
-> Allocation for X channels, write for 2, this adds a X!=2 check
-
-Please use CVE-2012-0852 for this issue.
-
-- ----------------------------------------------
-> 9af6abdc17deb95c9b1f1d9242ba49b8b5e0b016 atrac3: Fix crash in 
-> tonal
-component decoding.
-> 
-http://ffmpeg.org/trac/ffmpeg/ticket/780
-> Simple case of index becoming bigger than array without checks
-
-Please use CVE-2012-0853 for this issue.
-
-- ----------------------------------------------
-> 6d8e6fe9dbc365f50521cf0c4a5ffee97c970cb5 CODEC_ID_SOL_DPCM: Fix 
-> used
-write buffer.
-> Wrong pointer being used to write after recent audio API change.
-
-Please use CVE-2012-0854 for this issue.
-
-- ----------------------------------------------
-> 3eedf9f716733b3b4c5205726d2c1ca52b3d3d78 j2kdec: Check curtileno 
-> for
-validity
-> Simple missing check for index and array size. j2k is marked as
-experimental though so
-> depending on the user app this may require the user to enable it.
-
-Please use CVE-2012-0855 for this issue.
-
-- ----------------------------------------------
-> 21270cffaeab2f67a613907516b2b0cd6c9eacf4 h263dec: Fix regression /
-crash with lowres.
-> 
-http://ffmpeg.org/trac/ffmpeg/ticket/757
-> memset of the full size in a reduced size buffer, this requires
-the user
-> to enable lowres
-
-Please use CVE-2012-0856 for this issue.
-
-==============================================
-> HEAP+possible STACK buffer overflow: (write) 
-> 282bb02839b1ce73963c8e3ee46804f1ade8b12a j2kdec: Fix crash in 
-> get_qcx Simple missing check for index and array size. j2k is 
-> marked as
-experimental though so
-> depending on the user app this may require the user to enable it.
-
-Please use CVE-2012-0857 for this issue.
+        int fd = open("/proc/self/maps", O_RDONLY);
+        dup2(fd, 0);
+        execl("/usr/bin/chsh", "chsh", NULL);
+        return 0;
+}
 
 
-==============================================
-> Things that didnt fit in above: 
-> 18bcfc912e48bf77a5202a0e24a3b884b9b2ff2c shorten: Fix invalid 
-> free() Adding a offset after realloc() but not undoing that before 
-> a
-possible
-> 2nd realloc()
+On Mon, Feb 6, 2012 at 05:27, Solar Designer <solar@...nwall.com> wrote:
 
-Please use CVE-2012-0858 for this issue.
+> Hi,
+>
+> I just analyzed this issue a little bit and thought I'd post a followup
+> to the thread on oss-security, but to my surprise I could not find the
+> issue mentioned in here, even though "nearby" ones (e.g. fixed in RHEL
+> at about the same time) were brought to this list.  I guess this has to
+> do with differences in CVE assignment - when an issue already has a CVE
+> ID, it is less likely to be brought up in here - which I find wrong.
+> This shouldn't be just a CVE ID assignment list, but a general Open
+> Source security list.  Anyway, to the specific issue:
+>
+> http://rhn.redhat.com/errata/RHSA-2012-0007.html says "A missing
+> validation flaw was found in the Linux kernel's m_stop() implementation.
+> A local, unprivileged user could use this flaw to trigger a denial of
+> service. (CVE-2011-3637, Moderate)"  So I wanted to verify whether the
+> impact is in fact limited to a DoS.  More links:
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=747848
+>
+> The fix, which I confirmed that it's included in at least OpenVZ's
+> linux-2.6.18-274.17.1.el5.028stab097.1, which is what I happen to care
+> about at this time:
+>
+>
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=76597cd31470fa130784c78fadb4dab2e624a723
+>
+> -       vma_stop(priv, vma);
+> +       if (!IS_ERR(vma))
+> +               vma_stop(priv, vma);
+>
+> Linus' commit message:
+>
+> "When m_start returns an error, the seq_file logic will still call m_stop
+> with that error entry, so we'd better make sure that we check it before
+> using it as a vma.
+>
+> Introduced by commit ec6fd8a4355c ("report errors in /proc/*/*map*
+> sanely"), which replaced NULL with various ERR_PTR() cases.
+>
+> (On ia64, you happen to get a unaligned fault instead of a page fault,
+> since the address used is generally some random error code like -EPERM)"
+>
+> The commit referenced above as one that introduced the bug:
+>
+>
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=ec6fd8a4355c
+>
+> Thus, _assuming_ that the bug was in fact introduced by that commit
+> alone, it does appear to me that we have a mere DoS here - the pointer
+> being referenced has to be some -Exxx access code and nothing more
+> arbitrary.  Good.  (Additionally, the current fix only catches 4095
+> possible values, so if the problem were worse, it would be insufficient.)
+>
+> Alexander
+>
 
-- ----------------------------------------------
-> 6fcf2bb8af0e7d6bb179e71e67e5fab8ef0d2ec2 vorbis: Fix last quarter 
-> of
-CVE-2011-3893
-> This fixes a apparently forgoten case in the original patchset
-from google
-> Ive reproduced this by setting multiplier to the maximal value
-that it could
-> reach
-
-Please use CVE-2012-0859 for this issue.
-
-
-Summary:
-
-CVE-2012-0847 FFmpeg ae21776207e8a2bbe268e7c9e203f7599dd87ddb lavfi:
-add missing check in avfilter_filter_samples()
-
-CVE-2012-0848 FFmpeg 5257743aee0c3982f0079e6553aabc6aa39401d2 ws_snd1:
-Fix wrong samples count and crash.
-
-CVE-2012-0849 FFmpeg 1f99939a6361e2e6d6788494dd7c682b051c6c34 j2kdec:
-Fix integer overflow leading to a segfault
-
-CVE-2012-0850 FFmpeg 944f5b2779e4aa63f7624df6cd4de832a53db81b aacsbr:
-Fix memory corruption.
-
-CVE-2012-0851 FFmpeg 7fff64e00d886fde11d61958888c82b461cf99b9 h264:
-check chroma_format_idc range.
-
-CVE-2012-0852 FFmpeg 608708009f69ba4cecebf05120c696167494c897 adpcm:
-Fix crash
-
-CVE-2012-0853 FFmpeg 9af6abdc17deb95c9b1f1d9242ba49b8b5e0b016 atrac3:
-Fix crash in tonal component decoding.
-
-CVE-2012-0854 FFmpeg 6d8e6fe9dbc365f50521cf0c4a5ffee97c970cb5
-CODEC_ID_SOL_DPCM: Fix used write buffer.
-
-CVE-2012-0855 FFmpeg 3eedf9f716733b3b4c5205726d2c1ca52b3d3d78 j2kdec:
-Check curtileno for validity
-
-CVE-2012-0856 FFmpeg 21270cffaeab2f67a613907516b2b0cd6c9eacf4 h263dec:
-Fix regression / crash with lowres.
-
-CVE-2012-0857 FFmpeg 282bb02839b1ce73963c8e3ee46804f1ade8b12a j2kdec:
-Fix crash in get_qcx
-
-CVE-2012-0858 FFmpeg 18bcfc912e48bf77a5202a0e24a3b884b9b2ff2c shorten:
-Fix invalid free()
-
-CVE-2012-0859 FFmpeg 6fcf2bb8af0e7d6bb179e71e67e5fab8ef0d2ec2 vorbis:
-Fix last quarter of CVE-2011-3893
-
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPOsn3AAoJEBYNRVNeJnmT6YAP/iDb5h+Y2iElAWr60VeBW6SF
-72VToE6XRg0lc9cS/3p7CnGLZ4ZljFtBG1DRZezL9iJCk7PMNlS+Ho/Z2mPMT2+I
-qGaGWIxgK6/yUbTfmb91VGc99HGUhu/67As17c1S0CMnK2NTFP5frVSAQi+NPczI
-XLuCzOURh76yjk7dSthlAaxZWTCxr0cM9jY6Ep6UeMXJEM9DW/QQ/pfqkm68tsvO
-3QKFUfUNEQ5qJeO1Vhv/oViAaDD074fh4gnGuu3k3aZn3s2JKgfpHH+2n3kpILlH
-N24ltckK0x8jv8BK+Pf6VaN7vXONdQO1yC6iKdCrub7z+WZlOgsCqNZ2+MyKcUqN
-s5QnZ6EOAEna5apT1PTXqogEbg1WL0DEcZTvpk6Pc2A9jL/AP2sq3I6TFxW+6YQH
-LTDoR2oll6Xuq+maCgGKINsd0OYx4b+uGyn2sZCG0n2vyo24XzGWUWu+YLFS8VG6
-oBGAdlgn0li8fxF8/WAPQv7L9FVIBj7hOLn5wooK8Cl7FLOUdEM352NtXdMY2ob0
-7+o/rwtlGVSGdNAIyLzlpLdToripnSjGd1d3HjpY3f/6jxDKmb7lx74LNFERUYv4
-bfE8GuMW0CesoupYKpx8n4Sa4PHS7vUswgY1/XdwFX8W824bme8oL+fghhfbYR8Z
-rEEjxZqDo+kqShDxsJ0d
-=1476
------END PGP SIGNATURE-----
