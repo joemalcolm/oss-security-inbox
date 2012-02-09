@@ -1,112 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/10
-Message-Id: <E1T9DXL-0005Qu-97@xenbits.xen.org>
-Date: Wed, 05 Sep 2012 11:12:47 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 17 (CVE-2012-3515) - Qemu VT100 emulation vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/1
+Message-ID: <4F330E66.4030507@redhat.com>
+Date: Wed, 08 Feb 2012 17:08:06 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: apr - Hash DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/08/2012 10:26 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> APR (Apache Portable Runtime) is affected by the hash collision DoS 
+> class, please assign a CVE ID:
+> 
+> The upstream discussion can be found here:
+> http://www.mail-archive.com/dev%40apr.apache.org/msg24439.html
+> 
+> Cheers,
+>         Moritz
 
-            Xen Security Advisory CVE-2012-3515 / XSA-17
-                           version 2
+Please use CVE-2012-0840 for this issue.
 
-               Qemu VT100 emulation vulnerability
+They posted a first attempt at a fix:
+http://www.mail-archive.com/dev%40apr.apache.org/msg24473.html
 
-UPDATES IN VERSION 2
-====================
+Actual commit:
+http://mail-archives.apache.org/mod_mbox/apr-commits/201201.mbox/%3C20120115003715.071D423888FD@eris.apache.org%3E
 
-Public release.
+Reply about this commit:
+r1231605 and r1231858 cause massive regressions and test case failures
+in httpd.
 
-ISSUE DESCRIPTION
-=================
+so probably not the final fix.
 
-The device model used by fully virtualised (HVM) domains, qemu, does
-not properly handle escape VT100 sequences when emulating certain
-devices with a virtual console backend.
+If someone could reply to this with the final fix that'd be helpful.
 
-IMPACT
-======
-
-An attacker who has sufficient privilege to access a vulnerable device
-within a guest can overwrite portions of the device model's address
-space. This can allow them to escalate their privileges to that of the
-device model process.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen systems running HVM guests are potentially vulnerable to this
-depending on the specific guest configuration. The default
-configuration is vulnerable.
-
-Guests using either the traditional "qemu-xen" or upstream qemu device
-models are vulnerable.
-
-MITIGATION
-==========
-
-This issue can be avoided by only running PV guests or by configuring
-HVM guests to not use the virtual console('vc') backend for any device.
-
-For serial devices specify in your guest configuration:
-     serial = 'none'
-in your guest configuration.
-
-For parallel port devices the syntax is toolstack specific.
-For xend specify in your guest configuration:
-     parallel = 'none'
-For xl specify in your guest configuration:
-     xl: device_model_args = ['-parallel', 'none']
-
-In both cases the default is to use the vulnerable 'vc' mode.
-
-You can confirm whether or not you are vulnerable by pressing
-Ctrl-Alt-<N> (for digit N) while connected to either the VNC or SDL
-console. If you are able to switch to a window displaying "serial" or
-"parallel" then you are vulnerable.
-
-The issue can also be mitigated by enabling the stub domain device
-model. In this case the attacked can only potentially gain control of
-the stub domain and not of the entire system.
-
-To enable stub domains specify in your guest configuration:
-    device_model = "stubdom-dm"
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch(es) will resolve the issue.
-
-PATCH INFORMATION
-=================
-
-The attached patches resolve this issue
-
-Traditional qemu tree
-   Xen 4.0, 4.1 and unstable         xsa17-qemu-xen-traditional-all.patch
-
-Upstream qemu tree (present in unstable only)
-   Xen unstable                      xsa17-qemu-xen-unstable.patch
-
-$ sha256sum xsa17-*.patch
-60215322d3fbbc2054dfc160a20d9e0811af88487c4edc2f6ea81dcd5cedf039  xsa17-qemu-xen-traditional-all.patch
-7b4bb59e7757080e7806a8b8eeb6b78fa0ffdfbfb28a7a379f7edff285bffd88  xsa17-qemu-xen-unstable.patch
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQRx1PAAoJEIP+FMlX6CvZUqUH/jeAAvQnoBp6YKzm78XSnnmk
-GI2C/LhH0xqR3wFoEmWeMsiO4lrGrASX6T31NTvHa8sOtFqlNpTfRhwQybwYR3aa
-cz9/4y2a54hD95P1nVmPF0PddmSP47QSpRdCj0projq1UGxIdwEhkNeSoM8h7dXO
-MegqZClsvJMKd8XEcjBF5Qg7u9vLrXilCx5+It7XNE31Jxpkr/fozBb7FnNtDGJj
-s4RN/UDU4Pu68XyZ7Dc5xEFdJW48tz4BIlxxXavILBRFSE1VEf7Gc8H9CsUtBPWB
-C/LCUjpHkAOmqdgFhiLnZ2u+2s79U0dtPDJMNmqaGgWH+AqGkU9Nq8XXODTyY9k=
-=gnuE
------END PGP SIGNATURE-----
-
-Download attachment "xsa17-qemu-xen-traditional-all.patch" of type "application/octet-stream" (3537 bytes)
-
-Download attachment "xsa17-qemu-xen-unstable.patch" of type "application/octet-stream" (3537 bytes)
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
