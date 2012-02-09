@@ -1,31 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/11
-Message-ID: <20120627183222.GW1302@redhat.com>
-Date: Wed, 27 Jun 2012 12:32:22 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/2
+Message-ID: <CAHmME9pdxOeQ4WnT_WPTbt5MKCJ158DJHGH8M8=-J3HyL_Y86Q@mail.gmail.com>
+Date: Thu, 9 Feb 2012 03:15:56 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: arbitrary code exec in bcfg2
+Subject: Re: Linux procfs infoleaks via self-read by a SUID/SGID program (was: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access)
 Content-Type: text/plain; charset=utf-8
 
-bcfg2 suffers from an arbitrary code execution flaw due to the Trigger
-plugin.  Upstream has corrected the issue in git, but no released
-packages are available and it looks like this has been around for a
-while (indicated that 1.x is affected as well, up to and including the
-current 1.2.2 release).
+On Thu, Feb 9, 2012 at 00:03, Djalal Harouni <tixxdz@...ndz.org> wrote:
 
-Looks like an authenticated remote root compromise (need to be able to
-log into bcfg2 to exploit it, and bcfg2 typically runs as root).
+> Hi Solar, Jason,
+>
+> Nice one Jason, and I've also found this according to this tweet:
+> http://twitter.com/#!/tixxdz/status/165818331092365312
 
-Could a CVE be assigned to this please?
 
-References:
+http://git.zx2c4.com/CVE-2012-0056/commit/?id=105eded1abc03c5610cf912d4939809b2f06627e
 
-http://permalink.gmane.org/gmane.comp.sysutils.bcfg2.devel/4539
-http://trac.mcs.anl.gov/projects/bcfg2/changeset/a524967e8d5c4c22e49cd619aed20c87a316c0be
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=679272
-https://bugzilla.redhat.com/show_bug.cgi?id=835985
+2012-01-25 (for the record)
 
-Thanks.
+probably this has been known by a lot of folks for a while though
 
--- 
-Vincent Danen / Red Hat Security Response Team 
