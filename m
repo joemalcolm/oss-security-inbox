@@ -1,21 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/10
-Message-ID: <bb05dac7-0824-460e-82b0-cdec6db57b07@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Fri, 27 Jan 2012 14:04:36 -0500 (EST)
-From: Ramon de C Valle <rcvalle@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/7
+Message-ID: <20120209072739.GA5840@openwall.com>
+Date: Thu, 9 Feb 2012 11:27:39 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Subscribe to linux-distros
+Subject: Re: CVE-2011-4325 Linux kernel: nfs: diotest4 from LTP crash client
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Feb 07, 2012 at 08:23:09PM +0100, Petr Matousek wrote:
+> nfs_direct_read_schedule()
+>  -> data = nfs_readdata_alloc();			// allocates and nulls readdata
 
+Thank you!
 
-> Subscribed.
+Yes, I see that nfs_readdata_alloc() does:
 
-Thanks.
+	struct nfs_read_data *p = mempool_alloc(nfs_rdata_mempool, SLAB_NOFS);
 
-> 
-> Alexander
-> 
+	if (p) {
+		memset(p, 0, sizeof(*p));
 
--- 
-Ramon de C Valle / Red Hat Security Response Team
+Alexander
