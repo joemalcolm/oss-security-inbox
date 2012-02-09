@@ -1,19 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/4
-Message-ID: <20120210113624.GA27319@foo.fgeek.fi>
-Date: Fri, 10 Feb 2012 13:36:24 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/10
+Message-ID: <20120209190131.GA25225@foo.fgeek.fi>
+Date: Thu, 9 Feb 2012 21:01:31 +0200
 From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: imagemagick invalid validation DoS CVE-2012-0247 and CVE-2012-02478
+Subject: Re: MySQL 0-day - does it need a CVE?
 Content-Type: text/plain; charset=utf-8
 
-Concerning ImageMagick 6.7.5-0 and earlier:
+On Thu, Feb 09, 2012 at 10:20:14AM -0700, Kurt Seifried wrote:
+> https://lists.immunityinc.com/pipermail/canvas/2012-February/000011.html
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Hi,
+> 
+> We are releasing a working MySQL 5.5.20 remote 0day exploit with this
+> update.The exploit has been tested with mysql-5.5.20-debian6.0-i686.deb
+> on Debian 6.0.
+> 
+> Best,
+> Intevydis Ltd.
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.10 (Darwin)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+> 
+> iEYEARECAAYFAk8xdTEACgkQY8Flb3OI+Q2zXwCfQL5y+R8n+ipdMYIRdoVPkEdF
+> yeoAn26p3KmY0+WYFqKrb9/A3frNo2Xm
+> =m+1k
+> -----END PGP SIGNATURE-----
+> 
+> Does this need a CVE # or have you already gotten one from Mitre?
+> 
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
 
-CVE-2012-0247: When parsing a maliciously crafted image with incorrect offset and count in the ResolutionUnit tag in EXIF IFD0, ImageMagick copies two bytes into an invalid address.
-CVE-2012-0248: When parsing a maliciously crafted image with an IFD whose all IOP tags' value offsets point to the beginning of the IFD itself. As a result, ImageMagick parses the IFD structure indefinitely, causing a denial of service.
-
-For more details please read: http://www.imagemagick.org/discourse-server/viewtopic.php?f=4&t=20286
-CERT-FI: http://www.cert.fi/haavoittuvuudet/2012/haavoittuvuus-2012-021.html (finnish)
-Reported to Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659339
+No idea. I don't see this in MITRE's CVE-list yet and it seems that some information is going around Internet, but nobody is telling exact facts.
 
 - Henri Salo
