@@ -1,44 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/2
-Message-ID: <1351849138.25049.15.camel@Brinn>
-Date: Fri, 02 Nov 2012 09:38:58 +0000
-From: Caolán McNamara <caolanm@...hat.com>
-To: Marcus Meissner <meissner@...e.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2012-4233: multiple null pointer dereference flaws in LibreOffice/OpenOffice.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/11
+Message-ID: <20120209200944.GA25530@foo.fgeek.fi>
+Date: Thu, 9 Feb 2012 22:09:44 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: MySQL 0-day - does it need a CVE?
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2012-11-02 at 09:07 +0100, Marcus Meissner wrote:
-> On Thu, Nov 01, 2012 at 02:44:23PM -0600, Vincent Danen wrote:
-> > This one took me a bit by surprise.  Debian released an advisory for OOo
-> > and I have no record of this CVE anywhere.  It looks as though it went
-> > public yesterday, and was fixed in upstream 3.5.7.2, but it's not noted
-> > on the LibreOffice web site at all.
+On Thu, Feb 09, 2012 at 10:20:14AM -0700, Kurt Seifried wrote:
+> https://lists.immunityinc.com/pipermail/canvas/2012-February/000011.html
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Hi,
+> 
+> We are releasing a working MySQL 5.5.20 remote 0day exploit with this
+> update.The exploit has been tested with mysql-5.5.20-debian6.0-i686.deb
+> on Debian 6.0.
+> 
+> Best,
+> Intevydis Ltd.
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.10 (Darwin)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+> 
+> iEYEARECAAYFAk8xdTEACgkQY8Flb3OI+Q2zXwCfQL5y+R8n+ipdMYIRdoVPkEdF
+> yeoAn26p3KmY0+WYFqKrb9/A3frNo2Xm
+> =m+1k
+> -----END PGP SIGNATURE-----
+> 
+> Does this need a CVE # or have you already gotten one from Mitre?
+> 
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
 
-Because I update the web site and I didn't get around to it until this
-morning. http://www.libreoffice.org/advisories/cve-2012-4233/
-https://www.htbridge.com/advisory/HTB23106 is the source of the CVE and
-their advisory contains the reproducer documents.
+Oracle MySQL Server CVE-2012-0492 Remote MySQL Server Vulnerability – http://www.securityfocus.com/bid/51516
 
-> >> Does anyone have any further details on these issues?  I just filed a
-> > bug in our bugzilla (https://bugzilla.redhat.com/show_bug.cgi?id=872350)
-> > with the following description/references which are all I've been able
-> > to find so far.
-
-These are the commits for the high-tech advisories
-http://cgit.freedesktop.org/libreoffice/core/commit/?h=libreoffice-3-5-7&id=44bc6b5cac723b52df40fbef026e99b7119d8a69
-http://cgit.freedesktop.org/libreoffice/core/commit/?h=libreoffice-3-5-7&id=8ca9fb05c9967f11670d045886438ddfa3ac02a7
-http://cgit.freedesktop.org/libreoffice/core/commit/?h=libreoffice-3-5-7&id=6789ec4c1a9c6af84bd62e650a03226a46365d97
-http://cgit.freedesktop.org/libreoffice/binfilter/commit/?h=libreoffice-3-5-7&id=7e22ee55ffc9743692f3ddb93e59dd4427029c5b
-
-> (The whole OpenOffice/LibreOffice security issue handling is not really
-> good ... long embargoes that get extended wildly even though fixes are in
-> public GIT already, etc )
-
-Well, I'd be more than happy to have more distro folk subscribed to
-officesecurity@...ts.freedesktop.org Fixing the bugs is easy, syncing
-embargo dates between LibreOffice and Apache OOo is a bit more
-challenging.
-
-C.
-
+- Henri Salo
