@@ -1,27 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/18
-Message-ID: <20120419164122.GB23313@inutil.org>
-Date: Thu, 19 Apr 2012 18:41:22 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/14
+Message-ID: <4F343954.2010109@redhat.com>
+Date: Thu, 09 Feb 2012 14:23:32 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, officesecurity@...ts.freedesktop.org, David Tardon <dtardon@...hat.com>, Miklos Vajna <vmiklos@...e.cz>, Carlo Di Dato <shinnai@...istici.org>
-Subject: Re: Re: [Officesecurity] CVE Request (minor) -- LibreOffice (X >= v3.5.0): DoS (excessive CPU use) in the RTF tokenizer
+CC: "Steven M. Christey" <coley@...us.mitre.org>, admin@...ndisco.net
+Subject: Re: MySQL 0-day - does it need a CVE?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 19, 2012 at 01:33:07PM +0100, Caolán McNamara wrote:
-> > [8] https://bugs.freedesktop.org/show_bug.cgi?id=48640#c1 ('DoS PoC')
-> > 
-> > This one (on LibreOffice >= v.3.5.0 using the new RTF tokenizer implementation)
-> > truly leads to denial of service (excessive CPU consumption and hang) while
-> > trying to process that RTF file. So this case might be applicable
-> > for CVE-2012-* identifier assignment.
+On 02/09/2012 01:46 PM, Yves-Alexis Perez wrote:
+> On ven., 2012-02-10 at 00:36 +0400, Solar Designer wrote:
+>> That one is CVE-2011-2262, but per CVSS scoring it's just a DoS.
+>> 
 > 
-> Dunno about this, I mean if we're going to go around assigning CVEs to
-> every busy-hang we'd be knee deep in CVEs by the end of a week.
+> Note that the initial immunity mail doesn't say anything about the 
+> vulnerability itself, so it might just be a DoS.
+> 
+>> I wish we had more info.
+> 
+> Yeah, me too…
 
-I agree. For an application profile such as an office suite handing out CVE
-IDs to crash/CPU overload bug w/o potential of code injection is a waste
-of time and impractical.
+There's nowhere near enough information available to validate that the
+new(?) issue reported by ImmunitySec matches up to CVE-2012-0492.
+Hopefully ImmunitySec/Oracle can comment on this and clear it up for
+users/vendors.
 
-Cheers,
-        Moritz
+Unfortunately CVE only works as well as the vendors using it decide it
+will. A biased example: Red Hat provides links to security reports with
+details, bugzilla entries, code commit information, and so on. Vendors
+that fail or refuse to provide details/code commits for their Open
+Source projects and so on make things extremely difficult for users and
+other vendors. =( An example of this is the following blog entry:
+
+http://blog.montyprogram.com/oracles-27-mysql-security-fixes-and-mariadb/
+
+I'm not trying to pick on Oracle but this is topical and a perfect
+example of the problem(s) CVE was meant to address but can't if vendors
+don't participate in the process appropriately.
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
