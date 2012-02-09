@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/4
-Message-ID: <1339738999.10233.23.camel@scapa>
-Date: Fri, 15 Jun 2012 07:43:19 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/12
+Message-ID: <20120209203646.GA12774@openwall.com>
+Date: Fri, 10 Feb 2012 00:36:46 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: CVE Request: NetworkManager creates an open network when asked to create an adhoc-WPA network
+Subject: Re: MySQL 0-day - does it need a CVE?
 Content-Type: text/plain; charset=utf-8
 
-On jeu., 2012-06-14 at 22:52 -0600, Kurt Seifried wrote:
-> On 06/14/2012 10:28 PM, Huzaifa Sidhpurwala wrote:
-> > Hi All,
-> > 
-> > In NetworkManager, when a new wireless network was created with 
-> > WPA/WPA2 security, it created an open/insecure network. From the
-> > commit, it seems the bug exists in the kernel.
-> > 
-> > Reference: https://bugzilla.redhat.com/show_bug.cgi?id=782627 
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655972 
-> > http://cgit.freedesktop.org/NetworkManager/NetworkManager/commi/?id=69247a00eacd00617acbf1dfcee8497437b8ad39
-> >
-> >  The patch disables WPA adhoc networks completely untill a better 
-> > solution is found.
-> > 
-> > Can a CVE id be please assigned to this issue?
-> 
-> Please use CVE-2012-2736 for this issue.
-> 
-> 
+On Thu, Feb 09, 2012 at 10:09:44PM +0200, Henri Salo wrote:
+> Oracle MySQL Server CVE-2012-0492 Remote MySQL Server Vulnerability ??? http://www.securityfocus.com/bid/51516
 
-And shouldn't something been done on the kernel part? I'm not sure how
-it behaves but if it silently create an open ad-hoc connection while it
-was requested a wpa one by the application, that looks like something
-warranting a CVE too.
+Why this one?
 
-Regards,
--- 
-Yves-Alexis
+The table at the bottom of:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+http://www.oracle.com/technetwork/topics/security/cpujan2012-366304.html
+
+lists 27 MySQL vulnerabilities, all with CVE IDs and CVSS scoring - but
+little other info.  CVE-2012-0492 is one of them, but it does not stand
+out.  (And I have no idea what it actually is, just like I have no idea
+about the remaining 26.)
+
+"This Critical Patch Update contains 27 new security fixes for Oracle
+MySQL.  1 of these vulnerabilities may be remotely exploitable without
+authentication, i.e., may be exploited over a network without the need
+for a username and password."
+
+That one is CVE-2011-2262, but per CVSS scoring it's just a DoS.
+
+I wish we had more info.
+
+Alexander
