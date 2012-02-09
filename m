@@ -1,83 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/7
-Message-ID: <20120504153151.GA32354@openwall.com>
-Date: Fri, 4 May 2012 19:31:51 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/13
+Message-ID: <1328820378.2336.27.camel@scapa>
+Date: Thu, 09 Feb 2012 21:46:18 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Debian/Ubuntu php_crypt_revamped.patch
+Subject: Re: MySQL 0-day - does it need a CVE?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On ven., 2012-02-10 at 00:36 +0400, Solar Designer wrote:
+> That one is CVE-2011-2262, but per CVSS scoring it's just a DoS.
+> 
 
-Boaz Rymland reported to me what he thought was a phpass bug, where any
-password would be valid when authenticated against a NULL or empty
-password hash.  (Indeed, the password hash shouldn't normally be NULL or
-empty, but it is better for authentication code to be fail-close rather
-than fail-open.)  At first, I was not able to reproduce the problem, but
-after exchanging a few e-mails we were able to narrow it down to PHP
-crypt() call returning an empty string when called with NULL or an empty
-string for the salt argument on Boaz' Ubuntu 11.04 system with php5
-5.3.5-1ubuntu7.7.  I was still not able to reproduce that on other
-systems (with other versions of PHP).
+Note that the initial immunity mail doesn't say anything about the
+vulnerability itself, so it might just be a DoS.
 
-Today, I downloaded and built clean PHP 5.3.5 on an Owl system.
-I still could not trigger the problem.  Then I applied
-debian/patches/php_crypt_revamped.patch from Debian's
-php5_5.3.5-1.diff.gz - and the problem finally appeared.
+> I wish we had more info. 
 
-Original:
+Yeah, me too…
+-- 
+Yves-Alexis
 
-php@owl:~ $ ~/php-5.3.5/bin/php -r 'echo crypt("pass", null), "\n";'
-$1$l5Nwx5hu$NhostJ7i8jP1B.4C4zaiM78.
-
-With Debian patch:
-
-php@owl:~ $ ~/php-5.3.5-debian/bin/php -r 'echo crypt("pass", null), "\n";'
-
-php@owl:~ $ 
-
-(empty string was printed).
-
-It turns out that the patch first appeared in Debian's 5.3.2-1 in
-response to almost a non-issue (different behavior across PHP versions
-for an invalid salt string) and general feeling that PHP should be using
-system-provided crypto instead of its bundled code when possible
-(questionable to me: each approach has its pros and cons):
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=572601
-
-The handling of NULL/empty salt strings was corrected in 5.3.6-1, as
-well as in 5.3.3-7+squeeze4 (stable-security):
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=581170
-
-Apparently, that fix never made it into Ubuntu 11.04 updates - so I
-guess this should happen now.
-
-Overall, the patch looks problematic to me.  Here's another problem with
-it, still reproducible on 5.3.10-1ubuntu3 (Ubuntu 12.04):
-
-user@...ntu:~$ php -r 'echo crypt("pass", "_J9..Salt"), "\n";'
-_J9..Saltr2Hq6I3ZH0s
-user@...ntu:~$ php -r 'echo crypt("pass", "_J9..Saltr2Hq6I3ZH0s"), "\n";'
-_J0LlWX63dRZg
-
-That non-security bug is with the "salt_len == 9" check added with the
-patch.  So phpass' authentication against CRYPT_EXT_DES hashes, which it
-tries to support, would be failing on Debian/Ubuntu systems.  I guess I
-need to introduce a workaround for it now, complicating the code. :-(
-
-I think it may be best to drop this patch from further versions of
-Debian/Ubuntu - and not reintroduce it even in response to the likely
-"bug" reports from Debian users complaining about the behavior change
-from previous versions of Debian.
-
-I agree that the code in upstream PHP may need improvement, but that
-patch does not improve it, and the deviation from upstream is bad.
-Altering the behavior of PHP on specific distros beyond what may
-normally happen due to PHP's ./configure is undesirable and should only
-be done for very good reasons.
-
-Sorry for the rant.
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
