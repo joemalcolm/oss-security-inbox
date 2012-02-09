@@ -1,36 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/8
-Message-ID: <20120419105204.GE29881@dhcp-25-225.brq.redhat.com>
-Date: Thu, 19 Apr 2012 12:52:05 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/15
+Message-ID: <1328823392.2336.28.camel@scapa>
+Date: Thu, 09 Feb 2012 22:36:32 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- kernel: kvm: device assignment page leak
+Cc: Kurt Seifried <kseifried@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: MySQL 0-day - does it need a CVE?
 Content-Type: text/plain; charset=utf-8
 
-KVM uses memory slots to track and map guest regions of memory.  When
-device assignment is used, the pages backing these slots are pinned in
-memory using get_user_pages and mapped into the iommu.  The problem is
-that when a memory slot is destroyed the pages for the associated memory
-slot are neither unpinned nor unmapped from the iommu.
+On jeu., 2012-02-09 at 14:23 -0700, Kurt Seifried wrote:
+> I'm not trying to pick on Oracle but this is topical and a perfect
+> example of the problem(s) CVE was meant to address but can't if vendors
+> don't participate in the process appropriately.
+> 
+Can't MITRE request a little more information from vendors?
 
-The problem is that those pages are now never unpinned and continue to
-have an increased reference count.  This is therefore a potential page
-leak from the kvm kernel module.
-
-On Red Hat Enterprise Linux, local user with ability to assign devices
-could use this flaw to DoS the system.
-
-With upstream qemu-kvm/kvm privileged guest user that could hotunplug
-and then hotplug back certain devices could potentially use this flaw to
-DoS the host.
-
-Upstream fix:
-http://git.kernel.org/?p=virt/kvm/kvm.git;a=commit;h=32f6daad4651a748a58a3ab6da0611862175722f
-
-References:
-https://lkml.org/lkml/2012/4/11/248
-https://bugzilla.redhat.com/show_bug.cgi?id=814149
-
-Thanks,
+Regards,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
