@@ -1,155 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/18/3
-Message-ID: <20120918064329.GA28374@suse.de>
-Date: Tue, 18 Sep 2012 08:43:29 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/5
+Message-ID: <20120209064726.GB5144@openwall.com>
+Date: Thu, 9 Feb 2012 10:47:26 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: note on gnome shell extensions
+Subject: Re: Linux procfs infoleaks via self-read by a SUID/SGID program (was: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access)
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Feb 09, 2012 at 12:03:20AM +0100, Djalal Harouni wrote:
+> I've some kernel patches which are not ready yet, I was planning to send
+> them to lkml and to the kernel-hardening lists to get feedback from the
+> kernel developers.
 
-Yes, Vincent Untz did:
+I suggest that you bring this to kernel-hardening first to see how it
+fits in with what others have been working on and to consider their
+feedback - I think Kees and Vasiliy are also doing something in this
+area.  When you have patches ready for LKML, post them to LKML and CC
+the thread to kernel-hardening.
 
-https://bugzilla.gnome.org/show_bug.cgi?id=684215
+> On Wed, Feb 08, 2012 at 02:12:58PM +0400, Solar Designer wrote:
+> > Nice.  I guess the same works for /proc/self/mem as well, including with
+> > lseek().  Using this for more than just an ASLR bypass may be tricky -
 
-Sebastian
+> I thing that same thing will not work for /proc/self/mem since it was
+> patched, after the execl() the fd will still referece the old
+> /proc/self/maps of the maps.c program, not the 'chsh' one.
 
-On Mon, Sep 17, 2012 at 02:28:23PM -0600, Vincent Danen wrote:
-> * [2012-09-13 17:43:16 -0600] Kurt Seifried wrote:
->
-> Has anyone reported this to upstream yet?
->
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA1
->>
->> On 09/13/2012 11:59 AM, Tavis Ormandy wrote:
->>> Vincent Danen <vdanen@...hat.com> wrote:
->>>
->>>> * [2012-09-13 18:03:33 +0200] Marcus Meissner wrote:
->>>>
->>>>> On Thu, Sep 13, 2012 at 05:39:57PM +0200, Tavis Ormandy wrote:
->>>>>> On Mon, Sep 10, 2012 at 02:48:38PM -0600, Vincent Danen
->>>>>> wrote:
->>>>>>> * [2012-09-08 18:14:10 -0600] Kurt Seifried wrote: SUSE has
->>>>>>> some interesting info in their bug:
->>>>>>>
->>>>>>> https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
->>>>>>>
->>>>>>> By the sounds of it, this should be harmless.  Vincent Untz
->>>>>>> says that the browser plugin doesn't actually install the
->>>>>>> extensions, it's passed to another process via a dbus call
->>>>>>> to gnome-shell, which sends the uuid of the extension to
->>>>>>> the extensions.gnome.org web site in order to download the
->>>>>>> extension.
->>>>>>>
->>>>>>> See:
->>>>>>>
->>>>>>> http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
->>>>>>>
->>>
->>>>>>>
->> http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
->>>>>>>
->>>>>>> which is:
->>>>>>>
->>>>>>> let message = Soup.form_request_new_from_hash('GET',
->>>>>>> REPOSITORY_URL_INFO, params);
->>>>>>>
->>>>>>> And REPOSITORY_URL_INFO is hardcoded earlier:
->>>>>>>
->>>>>>> const REPOSITORY_URL_BASE = 'https://extensions.gnome.org';
->>>>>>> const REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE +
->>>>>>> '/download-extension/%s.shell-extension.zip'; const
->>>>>>> REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE +
->>>>>>> '/extension-info/'; const REPOSITORY_URL_UPDATE   =
->>>>>>> REPOSITORY_URL_BASE + '/update-info/';
->>>>>>>
->>>>>>> I don't think this is something that can be exploited,
->>>>>>> based on the above.
->>>>>>
->>>>>> Not sure I follow the logic, can't I just upload something
->>>>>> malicious to extensions.gnome.org and then force you to
->>>>>> download it? I mean, I can try it if you're not convinced
->>>>>> it's possible.
->>>>>
->>>>> There are supposed to be reviewers before it gets activated,
->>>>> but exactly this concern Sebastian also voiced.
->>>>>
->>>>>> They surely do not have a magical technique for determining
->>>>>> if my code is or can become malicious.
->>>>>
->>>>> Exactly.
->>>>
->>>> Yeah, this is definitely a possibility, but could happen
->>>> regardless of this with some social engineering (hey, download my
->>>> cool foo extension!) and have something malicious up there.  This
->>>> is pretty much the same thing, just making it easier.
->>>
->>> Well, no. This is like saying it's pointless to patch
->>> vulnerabilities, because I can just make you download malware. You
->>> can't just make me download malware, because I know how to make
->>> trust decisions.
->>>
->>> You could make me download a malicious gnome extension, because you
->>> can do so without interaction or my consent.
->>>
->>>> It's not much different than having a malicious app in the
->>>> iTunes/Android/Whatever app store.  The flaw there isn't so much
->>>> in the app store, but the app.  Wouldn't the same thought apply
->>>> here?
->>>>
->>>
->>> I've uploaded my malicious android app, how do I make you install
->>> it?
->>>
->>> I can create http://foo.com/malware.rpm, that's clearly not a
->>> vulnerability and working as designed. But if I can force you to
->>> download and install it without you having the opportunity to make
->>> a trust decision, that clearly is a vulnerability.
->>>
->>> Do you agree that I can upload something malicious to
->>> extensions.gnome.org?
->>>
->>> Do you agree that I can make you install it without consent,
->>> interaction, or the opportunity to make a trust decision?
->>>
->>> If so, then I don't understand the objection :-)
->>>
->>> Tavis.
->>
->> Please use CVE-2012-4427 for this issue.
->>
->>
->>
->> - --
->> Kurt Seifried Red Hat Security Response Team (SRT)
->> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->>
->> -----BEGIN PGP SIGNATURE-----
->> Version: GnuPG v1.4.12 (GNU/Linux)
->> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
->>
->> iQIcBAEBAgAGBQJQUm+UAAoJEBYNRVNeJnmTK/AP/3y+9lFhNKhkJ8tAbPoW4BY5
->> l9SRL8b0ikcTH8YgyvUKGj/QErVru1s9V3yLmgXJB3KSPFexGscHQFMGs1zwA1ap
->> LetcxqmOQjCYW+lffqDqBqP8CsL/6acTSUjbEIlhYn9qBPH+rLYlb9i1Hv3zw2Fj
->> h8sD7kTnLJQurcEUB36IuMWncG+ffYlulPam/Jvhr7UpEsBDHzPm1zSJMTaKFxKk
->> eQzGBEuEEZKwcvLXk/6ZR2hqq4B5DBatft39UXGFJlcqUG+EpRcI20Ra4Np1DlKi
->> cQ3hJYAU9je2nmCV48ihNIFY2t8DNCthfqld6xDOaZxRd+GWhOPDR4PifDtO07mF
->> vBpBqXCrOPNybIX3Kt+Lpbt+NqQCRfI0zgG0ipIoNPVGhSeq37flOOeLTC29rYRb
->> Dk0ZARTq00TAJ8mq7FctU31S8qnLjgcjiKoFI9UUU+zk3WL3i6OjfNdkkTWV7T9i
->> hYLkAkPg8OcDm/bOfWnxzLNZRo24bwWi/1ftj0sIs8xOO4QbE94y2/c5Byb0I/2k
->> TIqQdRVruqLLSQ0md7kgxLvkVybzy2A4FYToKMiwmeMByR54C/H/e5TGOxmVLPeD
->> ceqfTyZi2Zp7zWSEgFIwaG6jXD/HV9cpDyQnYeKVaVITCDSPGJgXYN6RZkkpKSEk
->> 3dm76Lc9jTSfg2PeY1Pb
->> =rsga
->> -----END PGP SIGNATURE-----
->
-> -- 
-> Vincent Danen / Red Hat Security Response Team 
+(You mean /proc/self/mem.)  Sure.  I was thinking of older kernels (e.g.
+RHEL5) that did not yet have write support for "mem".  I currently care
+about these more than I do about current mainline kernels in part
+because I dislike the "keep old mm" fix anyway (I think we'll need to
+deal with this differently) and in part because these still do allow
+read access to "mem" (nothing was patched in RHEL5 as it relates to this
+issue yet).
 
--- 
+> Just set your user password to (without quotes):
+> "Locked:                0 kB"
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+I like this.
 
+Alexander
