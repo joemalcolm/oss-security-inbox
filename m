@@ -1,20 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/13
-Message-ID: <CABbbngCdzMe8x7idqurAZ=R+TgNEbHFrVtVuhyFMp8ER6qbH4A@mail.gmail.com>
-Date: Mon, 26 Nov 2012 11:58:56 -0800
-From: Forest Monsen <forest.monsen@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, daniel@...nsecurityfoundation.org
-Subject: Re: CVE Request for Drupal Contributed Modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/4
+Message-ID: <CAHmME9rc0Wv6rdCRDtV7pWGBi6p3+wQ=d6utQWFw5-f3tcJu-g@mail.gmail.com>
+Date: Thu, 9 Feb 2012 03:31:34 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux procfs infoleaks via self-read by a SUID/SGID program (was: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 25, 2012 at 5:13 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+On Wed, Feb 8, 2012 at 11:12, Solar Designer <solar@...nwall.com> wrote:
+> BTW, what version of chsh did you test this with and what behavior do
+> you observe?  I was not able to get anything useful in this way out of
+> Owl's chsh (once enabled for non-root) - it just asks for the password,
+> but somehow fails to read it if one is entered on the tty (perhaps
+> there's some inconsistency in use of the tty vs. fd 0).  I suppose I'd
+> need to get past successful authentication for chsh's input to be
+> treated as the new shell name, in which case it'd get printed out (such
+> as in an error message) or/and put in /etc/passwd.
 
-> Ahh I made an error, simplest way to clean this up seems to be reject
-> the one and properly assign for 154 which I forgot to do.
->
+zx2c4@...C4-Laptop ~/Projects/Ploits/Local/CVE-2012-0056 $ gcc maps.c
+zx2c4@...C4-Laptop ~/Projects/Ploits/Local/CVE-2012-0056 $ ./a.out
+Changing the login shell for zx2c4
+Enter the new value, or press ENTER for the default
+        Login Shell [/bin/bash]: chsh: Invalid entry:
+00400000-00408000 r-xp 00000000 fd:00 1444794
+  /usr/bin/chsh
 
-Will do, thank you.
-
-Forest
-
+It's possible to use lseek to read the entire file in 1 go though.
