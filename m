@@ -1,38 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/8
-Message-ID: <8762fenxu3.fsf@mid.deneb.enyo.de>
-Date: Fri, 10 Feb 2012 23:11:00 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/8
+Message-ID: <20120209082436.GA14572@dztty>
+Date: Thu, 9 Feb 2012 09:24:36 +0100
+From: Djalal Harouni <tixxdz@...ndz.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: surf
+Subject: Re: Linux procfs infoleaks via self-read by a SUID/SGID program (was: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access)
 Content-Type: text/plain; charset=utf-8
 
-* Kurt Seifried:
+On Thu, Feb 09, 2012 at 10:55:23AM +0400, Solar Designer wrote:
+> On Thu, Feb 09, 2012 at 03:31:34AM +0100, Jason A. Donenfeld wrote:
+> > On Wed, Feb 8, 2012 at 11:12, Solar Designer <solar@...nwall.com> wrote:
+> > > BTW, what version of chsh did you test this with and what behavior do
+> > > you observe?  I was not able to get anything useful in this way out of
+> > > Owl's chsh (once enabled for non-root) - it just asks for the password,
+> > > but somehow fails to read it if one is entered on the tty (perhaps
+> > > there's some inconsistency in use of the tty vs. fd 0).  I suppose I'd
+> > > need to get past successful authentication for chsh's input to be
+> > > treated as the new shell name, in which case it'd get printed out (such
+> > > as in an error message) or/and put in /etc/passwd.
+> > 
+> > zx2c4@...C4-Laptop ~/Projects/Ploits/Local/CVE-2012-0056 $ gcc maps.c
+> > zx2c4@...C4-Laptop ~/Projects/Ploits/Local/CVE-2012-0056 $ ./a.out
+> > Changing the login shell for zx2c4
+> > Enter the new value, or press ENTER for the default
+> >         Login Shell [/bin/bash]: chsh: Invalid entry:
+> > 00400000-00408000 r-xp 00000000 fd:00 1444794
+> >   /usr/bin/chsh
+> 
+> Hmm.  It does not even ask you for the password.  Perhaps you have
+> CHFN_AUTH in /etc/login.defs set to "no" or not set at all?  (On Owl,
+> it's "yes".)
+Yes it seems that it does not require a password, and this is an
+arbitrary /proc/<pid>/ info leak (at least for some of the files), I've
+also experienced this.
 
-> On 02/09/2012 05:24 PM, Florian Weimer wrote:
->> surf does not protect its cookie jar against access read access from
->> other local users, as reported by Jakub Wilk in this Debian bug:
->> 
->> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659296>
->> 
->> Could someone please assign a CVE for this?
->
-> So for surf suckless (http://surf.suckless.org/) please use CVE-2012-0842
+In this case the config of /usr/bin/chsh will help, since we avoid the
+lseek() which will fail on arbitrary files.
 
-Oops.  I mistook this for the HTTP client library.  Your reference is
-correct, and it appears I consistently wrote "surf" (the correct
-spelling).
+> Alexander
 
->> uzbl <http://uzbl.org/> (in the uzbl-browser wrapper script) and
->> netsurf <http://www.netsurf-browser.org/> (the nsgtk_check_homedir
->> function creates the dot directory with world-readable settings) have
->> a similar issue, but are from different code bases.  I think those
->> should get distinct CVEs, too.
->
-> I'll need advisories or code commits, or links to the vuln code to
-> assign CVE's (I need more information). Thanks!
-
-Jakub has filed bugs:
-
-uzbl: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659379
-netsurf: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659376
+-- 
+tixxdz
+http://opendz.org
