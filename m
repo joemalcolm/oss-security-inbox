@@ -1,55 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/8
-Message-ID: <20120913160333.GG4928@suse.de>
-Date: Thu, 13 Sep 2012 18:03:33 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Vincent Danen <vdanen@...hat.com>
-Subject: Re: note on gnome shell extensions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/9
+Message-ID: <FF62C4D2C136E3458F2AA480ACC9791515DCA2EC@WIN-MMO0MBKKLR0.sefisasecure.com>
+Date: Fri, 10 Feb 2012 22:21:53 +0000
+From: Daniel Suarez <daniel@...isasecure.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: CVE request: surf
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 13, 2012 at 05:39:57PM +0200, Tavis Ormandy wrote:
-> On Mon, Sep 10, 2012 at 02:48:38PM -0600, Vincent Danen wrote:
-> > * [2012-09-08 18:14:10 -0600] Kurt Seifried wrote:
-> > SUSE has some interesting info in their bug:
-> > 
-> > https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
-> > 
-> > By the sounds of it, this should be harmless.  Vincent Untz says that
-> > the browser plugin doesn't actually install the extensions, it's passed
-> > to another process via a dbus call to gnome-shell, which sends the uuid
-> > of the extension to the extensions.gnome.org web site in order to
-> > download the extension.
-> > 
-> > See:
-> > 
-> > http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
-> > http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
-> > 
-> > which is:
-> > 
-> > let message = Soup.form_request_new_from_hash('GET', REPOSITORY_URL_INFO, params);
-> > 
-> > And REPOSITORY_URL_INFO is hardcoded earlier:
-> > 
-> > const REPOSITORY_URL_BASE = 'https://extensions.gnome.org';
-> > const REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE + '/download-extension/%s.shell-extension.zip';
-> > const REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE + '/extension-info/';
-> > const REPOSITORY_URL_UPDATE   = REPOSITORY_URL_BASE + '/update-info/';
-> > 
-> > I don't think this is something that can be exploited, based on the
-> > above.
-> 
-> Not sure I follow the logic, can't I just upload something malicious to
-> extensions.gnome.org and then force you to download it? I mean, I can
-> try it if you're not convinced it's possible.
 
-There are supposed to be reviewers before it gets activated, but exactly
-this concern Sebastian also voiced.
- 
-> They surely do not have a magical technique for determining if my code
-> is or can become malicious.
 
-Exactly.
+-----Mensaje original-----
+De: Florian Weimer [mailto:fw@...eb.enyo.de] 
+Enviado el: viernes, 10 de febrero de 2012 16:11
+Para: oss-security@...ts.openwall.com
+Asunto: Re: [oss-security] CVE request: surf
 
-Ciao, Marcus
+* Kurt Seifried:
+
+> On 02/09/2012 05:24 PM, Florian Weimer wrote:
+>> surf does not protect its cookie jar against access read access from
+>> other local users, as reported by Jakub Wilk in this Debian bug:
+>> 
+>> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659296>
+>> 
+>> Could someone please assign a CVE for this?
+>
+> So for surf suckless (http://surf.suckless.org/) please use CVE-2012-0842
+
+Oops.  I mistook this for the HTTP client library.  Your reference is
+correct, and it appears I consistently wrote "surf" (the correct
+spelling).
+
+>> uzbl <http://uzbl.org/> (in the uzbl-browser wrapper script) and
+>> netsurf <http://www.netsurf-browser.org/> (the nsgtk_check_homedir
+>> function creates the dot directory with world-readable settings) have
+>> a similar issue, but are from different code bases.  I think those
+>> should get distinct CVEs, too.
+>
+> I'll need advisories or code commits, or links to the vuln code to
+> assign CVE's (I need more information). Thanks!
+
+Jakub has filed bugs:
+
+uzbl: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659379
+netsurf: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659376
+
+
+This message has been scanned for malware by Websense. www.websense.com
