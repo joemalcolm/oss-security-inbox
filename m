@@ -1,30 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/23/2
-Message-ID: <20120423080521.GB4319@kludge.henri.nerv.fi>
-Date: Mon, 23 Apr 2012 11:05:21 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/1
+Message-ID: <87r4y3a63j.fsf@mid.deneb.enyo.de>
+Date: Fri, 10 Feb 2012 01:24:00 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Security vulnerabilities fixed in WordPress 3.3.2
+Subject: CVE request: surf
 Content-Type: text/plain; charset=utf-8
 
-Page http://codex.wordpress.org/Version_3.3.2 says:
+surf does not protect its cookie jar against access read access from
+other local users, as reported by Jakub Wilk in this Debian bug:
 
-"""
-Three external libraries included in WordPress received security updates:
+<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659296>
 
-- Plupload (version 1.5.4), which WordPress uses for uploading media.
-- SWFUpload, which WordPress previously used for uploading media, and may still be in use by plugins.
-- SWFObject, which WordPress previously used to embed Flash content, and may still be in use by plugins and themes.
+Could someone please assign a CVE for this?
 
-WordPress 3.3.2 also addresses:
-
-- Limited privilege escalation where a site administrator could deactivate network-wide plugins when running a WordPress network under particular circumstances.
-- Cross-site scripting vulnerability when making URLs clickable.
-- Cross-site scripting vulnerabilities in redirects after posting comments in older browsers, and when filtering URLs.
-
-A full log of the changes made for 3.3.2 can be found at http://core.trac.wordpress.org/changeset?new=20554%40branches%2F3.3&old=20087%40branches%2F3.3
-"""
-
-I asked from WordPress if these vulnerabilities already have CVE-identifiers and reported these to OSVDB, Secunia and Debian http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=670124
-
-- Henri Salo
+uzbl <http://uzbl.org/> (in the uzbl-browser wrapper script) and
+netsurf <http://www.netsurf-browser.org/> (the nsgtk_check_homedir
+function creates the dot directory with world-readable settings) have
+a similar issue, but are from different code bases.  I think those
+should get distinct CVEs, too.
