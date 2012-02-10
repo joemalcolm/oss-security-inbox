@@ -1,122 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/27/9
-Message-ID: <503BB367.7020500@redhat.com>
-Date: Mon, 27 Aug 2012 11:50:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/3
+Message-ID: <20120210095417.GA27095@foo.fgeek.fi>
+Date: Fri, 10 Feb 2012 11:54:17 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Bruno Kleinert <fuddl@...ian.org>, mtgap@...cloud.com, security@...cloud.com
-Subject: Re: ownCloud - matching CVEs to fix information and vice versa
+Subject: Re: MySQL 0-day - does it need a CVE?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Feb 10, 2012 at 12:36:46AM +0400, Solar Designer wrote:
+> On Thu, Feb 09, 2012 at 10:09:44PM +0200, Henri Salo wrote:
+> > Oracle MySQL Server CVE-2012-0492 Remote MySQL Server Vulnerability ??? http://www.securityfocus.com/bid/51516
+> 
+> Why this one?
+> 
+> The table at the bottom of:
+> 
+> http://www.oracle.com/technetwork/topics/security/cpujan2012-366304.html
+> 
+> lists 27 MySQL vulnerabilities, all with CVE IDs and CVSS scoring - but
+> little other info.  CVE-2012-0492 is one of them, but it does not stand
+> out.  (And I have no idea what it actually is, just like I have no idea
+> about the remaining 26.)
+> 
+> "This Critical Patch Update contains 27 new security fixes for Oracle
+> MySQL.  1 of these vulnerabilities may be remotely exploitable without
+> authentication, i.e., may be exploited over a network without the need
+> for a username and password."
+> 
+> That one is CVE-2011-2262, but per CVSS scoring it's just a DoS.
+> 
+> I wish we had more info.
+> 
+> Alexander
 
-Just a reminder, if someone from owncloud could sort this tangle out I
-can assign CVE's for the various issues.
+Sory for not being clear. I am not sure what the CVE-identifier is as I told in my last email to this thread. New cases I have seen: http://security-tracker.debian.org/tracker/CVE-2011-2262 http://security-tracker.debian.org/tracker/CVE-2012-0492 latter link with a list of "a different vulnerability than". I do NOT have any facts about these vulnerabilities. I hope Oracle coordinates issues like these with MITRE/US-CERT and adds more information to advisory and CVE after these are 100% public and distros are ready.
 
-On 08/10/2012 10:57 PM, Kurt Seifried wrote:
-> Ok so I started looking at ownCloud to make sure I didn't issue a 
-> duplicate.
-> 
-> We have the following 4 CVE entries for ownCloud and no way to
-> match them to a fixed version.
-> 
-> CVE-2012-2398	Cross-site scripting (XSS) vulnerability in 
-> files/ajax/download.php in ownCloud 3.0.2 allows remote attackers
-> to inject arbitrary web script or HTML via the files parameter, a 
-> different vulnerability than CVE-2012-2269.4. NOTE: the provenance
-> of this information is unknown; the details are obtained solely
-> from third party information.
-> 
-> Is CVE-2012-2398 fixed in 3.0.3?
-> 
-> CVE-2012-2397	Cross-site request forgery (CSRF) vulnerability in 
-> ownCloud 3.0.2 allows remote attackers to hijack the authentication
-> of arbitrary users for requests that insert cross-site scripting
-> (XSS) sequences via vectors involving contacts. NOTE: the
-> provenance of this information is unknown; the details are obtained
-> solely from third party information.
-> 
-> Is CVE-2012-2397 fixed in 3.0.3?
-> 
-> CVE-2012-2270	Open redirect vulnerability in index.php (aka the
-> Login Page) in ownCloud 3.0.0 allows remote attackers to redirect
-> users to arbitrary web sites and conduct phishing attacks via a URL
-> in the redirect_url parameter.
-> 
-> Is CVE-2012-2270 fixed in 3.0.1?
-> 
-> CVE-2012-2269	Multiple cross-site scripting (XSS) vulnerabilities
-> in ownCloud 3.0.0 allow remote attackers to inject arbitrary web
-> script or HTML via (1) an arbitrary field to
-> apps/contacts/ajax/addcard.php, (2) the parameter parameter to
-> apps/contacts/ajax/addproperty.php, (3) the name parameter to
-> apps/contacts/ajax/createaddressbook, (4) the file parameter to
-> files/download.php, or the (5) name, (6) user, or (7) redirect_url
-> parameter to files/index.php.
-> 
-> Is CVE-2012-2269 fixed in 3.0.1
-> 
-> Can you please confirm that these issues have been fixed, and in
-> what version of ownCloud? It would be very helpful if you could put
-> the CVE #'s into the ChangeLog at http://owncloud.org/changelog/
-> 
-> Once these 4 have been confirmed I can assign a CVE for the new
-> issue and the outstanding ones:
-> 
-> Version 4.0.6 Aug 1th 2012 •	Security: Check for Admin user in
-> appconfig.php •	Security: Several CSRF security fixes
-> 
-> Version 4.0.5 July 20th 2012 •	Several CSRF security fixes
-> 
-> Version 4.0.4 June 28th 2012 •	Nothing security listed
-> 
-> Version 4.0.3 June 23rd 2012 •	Fix several XSS bugs •	Implement
-> several CSRF security checks
-> 
-> Version 4.0.2 June 11th 2012 •	Several XSS fixes in calendar •
-> Several XSS fixes in contacts
-> 
-> Version 4.0.1 June 4th 2012 •	security: fix a XSS problem in
-> calendar •	security: fix a XSS problem in contacts
-> 
-> Version 4.0.0 May 22nd 2012 •	Nothing security listed
-> 
-> Version 3.0.3 April 27th 2012 •	Security: Several CSRF fixes •
-> Security: .htaccess uploading blacklist
-> 
-> Version 3.0.2 April 11th 2012 •	Security: Make password hashes more
-> random •	Security: Fix a XXS problem
-> 
-> Version 3.0.1 April 3rd 2012 •	Nothing security listed
-> 
-> Version 3.0 January 31st 2012, Release Announcement •	Nothing
-> security listed
-> 
-> 
-> 
-> 
-> 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQO7NmAAoJEBYNRVNeJnmT8sIP/iR/cM8IyG8klE0+aYgAeceq
-L0jI5DStl1MV39HpOnhuF78PyX9A2uYWcNa8pvhkHoxa8iaEBPIkIAEOHt3nom5T
-tQ8BFc+mNS973CRcGSEerMW2ScbACxGoZnbeUpmE+PPkKnzqOfB+LwqSQTDUEknR
-d628o8sGc8Y3hSZynMqRFblc9sK39lWSAjavV3f/Wl/t12GXwOXlooPGgqhy33TV
-/iQ8qBb7sVxgxGAD/lt9QRbab8SIquqPlb1VQx2LlQ1JDMelfUeeLWR9JB9Rljxv
-1ll/Fa10LgoEDw/Aa69UgShlClBTc3NAy6b1sEvO1OySe31WQmsCqLw20a9GbLen
-4EEWGi1H9IX4t1kf7cKhVZMglNnFNR73tZbGaWw4I9fwGFG+GqRxRF+ElVuG3DaN
-DZh7RJ5pqE7w0hXRpj9WY18dXuDrIdRjhoJYrbf42R3xKN7m9chEiApw94B71p6/
-NPGTJKuQ7eUwW87SGD7O+lBNjrXE43sg4CafYmlAVA9/d5W6lSen4ZOC1Ayzklfo
-SjBGENOAJ8Mye6JKyWyr2w8ZZP0olyayybG60RGsPkf05ktFv1aY4oYHO/fDMWgj
-I8+AqZ43TLpiz1/3DdX6XHfgxhRUPFtBcsK3ESkxIMvNNDto63HUWTx4z4/QnBPE
-gqrTSnTVUbHeCJNj2bNI
-=2iE9
------END PGP SIGNATURE-----
+- Henri Salo
