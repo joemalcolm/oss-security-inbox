@@ -1,87 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/6
-Message-Id: <E1TYG2H-0000zc-Mt@xenbits.xen.org>
-Date: Tue, 13 Nov 2012 12:56:13 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 22 (CVE-2012-4537) - Memory mapping failure DoS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/8
+Message-ID: <8762fenxu3.fsf@mid.deneb.enyo.de>
+Date: Fri, 10 Feb 2012 23:11:00 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: surf
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* Kurt Seifried:
 
-                 Xen Security Advisory CVE-2012-4537 / XSA-22
-			      version 4
+> On 02/09/2012 05:24 PM, Florian Weimer wrote:
+>> surf does not protect its cookie jar against access read access from
+>> other local users, as reported by Jakub Wilk in this Debian bug:
+>> 
+>> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659296>
+>> 
+>> Could someone please assign a CVE for this?
+>
+> So for surf suckless (http://surf.suckless.org/) please use CVE-2012-0842
 
-                  Memory mapping failure DoS vulnerability
+Oops.  I mistook this for the HTTP client library.  Your reference is
+correct, and it appears I consistently wrote "surf" (the correct
+spelling).
 
-UPDATES IN VERSION 4
-====================
+>> uzbl <http://uzbl.org/> (in the uzbl-browser wrapper script) and
+>> netsurf <http://www.netsurf-browser.org/> (the nsgtk_check_homedir
+>> function creates the dot directory with world-readable settings) have
+>> a similar issue, but are from different code bases.  I think those
+>> should get distinct CVEs, too.
+>
+> I'll need advisories or code commits, or links to the vuln code to
+> assign CVE's (I need more information). Thanks!
 
-Public release.
+Jakub has filed bugs:
 
-ISSUE DESCRIPTION
-=================
-
-When set_p2m_entry fails, Xen's internal data structures (the p2m and
-m2p tables) can get out of sync.  This failure can be triggered by
-unusual guest behaviour exhausting the memory reserved for the p2m
-table.  If it happens, subsequent guest-invoked memory operations can
-cause Xen to fail an assertion and crash.
-
-IMPACT
-======
-
-A malicious guest administrator might be able to cause Xen to crash.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen since at least 3.4 are vulnerable.
-
-The vulnerability is only exposed to HVM guests.
-
-MITIGATION
-==========
-
-There is no mitigation available other than to use a trusted guest
-kernel.
-
-RESOLUTION
-==========
-
-The attached patch resolves this issue.
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa22-4.2-unstable.patch    Xen 4.2.x, xen-unstable
-xsa22-4.1.patch             Xen 4.1.x
-xsa22-4.0.patch             Xen 4.0.x
-xsa22-3.4.patch             Xen 3.4.x
-
-$ sha256sum xsa22*.patch
-fe21558f098340451a275c468a7b2209915676f4f41ec394970c6aa0df3d93d3  xsa22-3.4.patch
-b7e635ae07f31ac8ecb8732152ba66897ea6d0f5e30468e35d7c37379c7369bb  xsa22-4.0.patch
-e699e7af6b90e60531d98f04197141c4caf5eb4cdb312a43e736830eb17d32e1  xsa22-4.1.patch
-8dbf850b903179807257febe12a15cb131968e65d2e90dbd3a5f72b83d2f931a  xsa22-4.2-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQokGpAAoJEIP+FMlX6CvZUsEIAIL7FtUpAgYTG73BXIpIoJ1h
-L85yaAhizzuwWAHMwLBD/oMs+OPzIXsCp4rBHI8XPQ0rf3YeHSj8uI+ta17Th1Gb
-KuFFlDPujh5EiE0yel8u21hgsJ7rUpA04jPeYDbVbHPVC6bywf7pkChCEPos/Ze9
-gAlRVptdBXH2nGmSyMFDfoby60lDXa7ZP0KoJUyuUG69zDMzlANLiEvk/+mN4YKB
-W4uiaYlCeDfrCn4T8Pk9rTMdDWmCsbQpZQRqwwNXdUa/EX0Ccv/QdcppPHoylYeK
-DQ9GPZOtDsm4s1M/J1oPVXZI7X/vLuBwje4/hhisFFiO4kLffcKCSopSizgLlO0=
-=82B5
------END PGP SIGNATURE-----
-
-Download attachment "xsa22-3.4.patch" of type "application/octet-stream" (2044 bytes)
-
-Download attachment "xsa22-4.0.patch" of type "application/octet-stream" (1288 bytes)
-
-Download attachment "xsa22-4.1.patch" of type "application/octet-stream" (1308 bytes)
-
-Download attachment "xsa22-4.2-unstable.patch" of type "application/octet-stream" (1296 bytes)
+uzbl: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659379
+netsurf: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659376
