@@ -1,75 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/12
-Message-Id: <201205241815.53463.sgrubb@redhat.com>
-Date: Thu, 24 May 2012 18:15:53 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/2
+Message-ID: <4F34AE98.8040701@redhat.com>
+Date: Thu, 09 Feb 2012 22:43:52 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: CVE Request: powerdns does not clear supplementary groups
+CC: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: CVE request: surf
 Content-Type: text/plain; charset=utf-8
 
-On Thursday, May 24, 2012 04:57:30 PM Solar Designer wrote:
-> Kurt -
+On 02/09/2012 05:24 PM, Florian Weimer wrote:
+> surf does not protect its cookie jar against access read access from
+> other local users, as reported by Jakub Wilk in this Debian bug:
 > 
-> On Thu, May 24, 2012 at 02:33:06PM -0600, Kurt Seifried wrote:
-> > [...] when a program
-> > with much more limited operations doesn't drop privileges, unless it
-> > directly leads to some sort of exploit/elevated access/etc. than I'm
-> > inclined to say while it's not good, it's not a vulnerability per se.
+> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659296>
 > 
-> It's a case of a security feature not working as intended. 
+> Could someone please assign a CVE for this?
 
-I have to agree. Changing UID/GID from root to something else is a security 
-feature by reducing privileges and write access to system files. Not doing it 
-correctly is CWE-271. Looking it up, you can easily find 2 CVE's that are about 
-not dropping supplemental groups.
+So for surf suckless (http://surf.suckless.org/) please use CVE-2012-0842
 
-If it were intended that you change uid/gid but retain a supplemental group, 
-then you don't understand how /etc/group was supposed to be setup and used. 
-Additionally you would have called initgroups() to pickup the new group 
-memberships associated with that acct. So, its always wrong to call setgid()||
-setuid() without taking care of supplemental groups.
+> uzbl <http://uzbl.org/> (in the uzbl-browser wrapper script) and
+> netsurf <http://www.netsurf-browser.org/> (the nsgtk_check_homedir
+> function creates the dot directory with world-readable settings) have
+> a similar issue, but are from different code bases.  I think those
+> should get distinct CVEs, too.
 
-Failing to drop supplemental groups, though, is not a vulnerability. Its an 
-exposure to risk because you can bet someone will find another hole and exploit 
-it and these extra privs allow them to escalate further.
+I'll need advisories or code commits, or links to the vuln code to
+assign CVE's (I need more information). Thanks!
 
 
-> Previously,
-> CVEs were sometimes assigned and sometimes not in such cases, and I
-> failed to see a pattern in that. ;-)  Consider e.g. CVE-2006-5794 ("it
-> is believed that this issue is only exploitable by leveraging
-> vulnerabilities in the unprivileged process, which are not known to
-> exist").  Are you maybe trying to draw the line between "security
-> feature" and "security hardening"?  Even if so, I fail to see how
-> OpenSSH's privsep is more of a "security feature", whereas another
-> daemon's dropping of root privs is "security hardening".  These look
-> very similar to me in terms of what they're intended and expected to
-> achieve, so I think it's the same category, whatever we call it.
-> 
-> Now, I imagine there could be a subtle case if e.g. a downstream distro
-> or a fork of a project introduces privilege dropping, which is not in
-> the main code base, and there turns out to be a flaw in that, which
-> weakens the added security (but not to the point of being worse than the
-> original).  It would feel a bit weird to say that the hardened revision
-> is vulnerable whereas the original is not, even though the original is
-> not any safer.  In such cases, I guess whether this is CVE-worthy or not
-> will depend on whether the added hardening was advertised to and
-> expected by users/admins of the hardened revision or not.  If it was an
-> undocumented extra, then it failing to improve things is probably not
-> what people would expect to be tracked as a security vulnerability.
-> However, if it was documented and expected to function, then it becomes
-> a vulnerability to track just like any other one of similar severity.
-
-
-Here is a real life case:
-
-+ if ( initgroups(pw->pw_name, NULL) != 0 || setgid(pw->pw_gid) != 0 ||
-+                                setuid(pw->pw_uid) != 0 ) 
-
-This is not upstream. This is a patch to drop capabilities by changing uid/gid. 
-The person writing the patch intended to do the right thing - but failed. See 
-the bug? This is in a network facing daemon that parses untrusted network 
-packets.
-
--Steve
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
