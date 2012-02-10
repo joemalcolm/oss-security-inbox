@@ -1,40 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/15
-Message-Id: <201211142206.qAEM6bT9018731@linus.mitre.org>
-Date: Wed, 14 Nov 2012 17:06:37 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/5
+Message-ID: <4F353AD1.1050904@esec.fr.sogeti.com>
+Date: Fri, 10 Feb 2012 16:42:09 +0100
+From: Emilien Girault <egirault@...c.fr.sogeti.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: HT Editor 2.0.20 buffer overflows CVE-2012-5867
+Subject: [vs] CVE-2012-1037 GLPI <= 0.80.61 LFI/RFI
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-We have assigned CVE-2012-5867 for the stack-based buffer overflows in
-the sys_common_canonicalize function in vfs.cc in HT Editor (aka hte):
+I found a File Inclusion vulnerability in GLPI <= 0.80.61. I contacted the project team; 
+the bug is now patched and a new version is available (0.80.7).
 
-  http://www.exploit-db.com/exploits/22683/
+I've published the advisory on fulldisclosure:
 
-The disclosure says "To be honnest, it may be the only interest, as
-the binary is not SUID." We have not determined what realistic use
-cases lead to sys_common_canonicalize function calls, other than cases
-in which the user interactively enters a filename, or interactively
-selects a directory.
+http://seclists.org/fulldisclosure/2012/Feb/157 <http://seclists.org/fulldisclosure/2012/Feb/157>
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+CVE-2012-1037: GLPI <= 0.80.61 LFI/RFI
 
-iQEcBAEBAgAGBQJQpBBMAAoJEGvefgSNfHMdg9wIAL2KgWGj5Vh4x59Ge9X7bT1d
-aPwDY8BK4cWMzbFuL1Mx8dtSFPgcaQ9Wsk7rp5GPSB/DWhNQq84ikhHWd/Lgmc3h
-/sD9jl3kB2isaynQreJ0a9oRT0AwTBtUAgyDYLywa7tv66z89UZ0ST4qT9lIkElB
-Z1aABhq+5FPa2JTbxgpPy+JQnxyIwpovpJkGRYp3lSt8WJNk0bNUNPbhz/BSOtjK
-EIAw2kypSWltFyM5B4WFkF3he0Manjk+A2DAfPJpWWgWeDBuixkqcBxewSQjGnZ+
-EznmrUz/UprrurqZ8ERRyIeruP79GcFJWqLQWcomcbMuqctS9iiNayZ8Fbl4vu0=
-=SxaN
------END PGP SIGNATURE-----
+Severity: Important
+
+Vendor: GLPI - http://www.glpi-project.org
+
+Versions Affected
+=================
+
+All versions between 0.78 and 0.80.61
+
+Description
+===========
+
+GLPI fails to properly sanitize the GET 'sub_type' parameter in the front/popup.php file:
+
+  [...]
+  checkLoginUser();
+
+  if (isset($_GET["popup"])) {
+     $_SESSION["glpipopup"]["name"] = $_GET["popup"];
+  }
+ 
+  if (isset($_SESSION["glpipopup"]["name"])) {
+    switch ($_SESSION["glpipopup"]["name"]) {
+  [...]
+    case "add_ruleparameter" :
+           popHeader($LANG['ldap'][35], $_SERVER['PHP_SELF']);
+           include strtolower($_GET['sub_type']."Parameter.php");   // <======= 
+           break;
+  [...]
+  
+To be triggered, the attacker needs to be authenticated. However, GLPI provides default accounts that often aren't 
+changed or disabled:
+
+    glpi/glpi
+    tech/tech
+    normal/normal
+    post-only/postonly
+
+Impact
+======
+
+Since there is a suffix, the vulnerability can be used as a RFI (requires allow_url_include = On).
+
+For LFI, the target file has to end up with "parameter.php". GLPI automatically escapes all GET and POST parameters 
+with addslashes(), so the null byte technique is not usable. I have not tested exploitation using the path truncation 
+technique but it might be possible.
+
+
+Mitigation
+==========
+
+Upgrade to GLPI 0.80.7.
+
+
+Exploit
+=======
+
+http://<server>/front/popup.php?popup=add_ruleparameter&sub_type=<file>
+
+
+Timeline
+========
+
+08 feb 2012 - Found the bug.
+09 feb 2012 - Contacted the GLPI Team.
+09 feb 2012 - Bug fixed & new version available.
+
+Thanks to the GLPI team for being responsive!
+
+References
+==========
+
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-1037
+https://forge.indepnet.net/projects/glpi/versions/685
+https://forge.indepnet.net/projects/glpi/repository/revisions/17457/diff/branches/0.80-bugfixes/front/popup.php
+
+I think you can package the new version into security updates.
+Please let me know if you need any more details.
+
+Best regards,
+
+-- 
+Emilien Girault
+
+
