@@ -1,96 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/7
-Message-ID: <1070541563.38394354.1354028455304.JavaMail.root@redhat.com>
-Date: Tue, 27 Nov 2012 10:00:55 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Andrea Barisani <lcars@...rt.org>
-Cc: ocert-announce@...ts.ocert.org, oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2012-001] multiple implementations denial-of-service via MurmurHash algorithm collision
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/6
+Message-ID: <20120210185157.GE1797@redhat.com>
+Date: Fri, 10 Feb 2012 11:51:57 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: imagemagick invalid validation DoS CVE-2012-0247 and CVE-2012-02478
 Content-Type: text/plain; charset=utf-8
 
-Hello Andrea,
+* [2012-02-10 13:36:24 +0200] Henri Salo wrote:
 
-  thank you for the notification. Just quick check -
-could you confirm the correct CVE id for JRuby Murmur flaw
-should be CVE-2012-5370, and not CVE-2011-5370?
+>Concerning ImageMagick 6.7.5-0 and earlier:
+>
+>CVE-2012-0247: When parsing a maliciously crafted image with incorrect offset and count in the ResolutionUnit tag in EXIF IFD0, ImageMagick copies two bytes into an invalid address.
+>CVE-2012-0248: When parsing a maliciously crafted image with an IFD whose all IOP tags' value offsets point to the beginning of the IFD itself. As a result, ImageMagick parses the IFD structure indefinitely, causing a denial of service.
+>
+>For more details please read: http://www.imagemagick.org/discourse-server/viewtopic.php?f=4&t=20286
+>CERT-FI: http://www.cert.fi/haavoittuvuudet/2012/haavoittuvuus-2012-021.html (finnish)
+>Reported to Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659339
 
-Asking, because while oCERT-2012-001 page mentions CVE-2012-5370,
-it actually links against:
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-5370
-
-(so some of them is typo), and CVE-2011-5370 would also make
-sense in the order for other Murmur hash algorithm implementations
-for other languages.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
------ Original Message -----
-#2012-001 multiple implementations denial-of-service via MurmurHash algorithm
-collision
-
-Description:
-
-A variety of programming languages suffer from a denial-of-service (DoS)
-condition against storage functions of key/value pairs in hash data
-structures, the condition can be leveraged by exploiting predictable
-collisions in the underlying hashing algorithms.
-
-The issue is similar to the one reported in oCERT-2011-003 and concerns the
-MurmurHash algorithm family. The condition for predictable collisions in the
-hashing functions has been reported for the following language
-implementations: JRuby (MurmurHash2), Ruby (MurmurHash2), Rubinius
-(MurmurHash3), Oracle JDK (MurmurHash), OpenJDK (MurmurHash). In the case of
-Java OpenJDK the hash function affected by the reported issue is not enabled
-by default, the default function is however reported vulnerable to
-oCERT-2011-003.
-
-Affected version:
-Ruby < 1.9.3-p327
-JRuby all versions
-Rubinius, all versions
-Oracle JDK <= 7
-OpenJDK <= 7
-
-Fixed version:
-Ruby >= 1.9.3-p327
-JRuby, N/A
-Rubinius, N/A
-Oracle JDK, N/A
-OpenJDK, N/A
-
-Credit: vulnerability report received from Jean-Philippe Aumasson
-        <jeanphilippe.aumasson AT gmail.com>, PoC code and SipHash
-	implementation used to patch the issue developed by Martin Bosslet
-	<martin.bosslet AT gmail.com>.
-
-CVE: CVE-2012-5370 (JRuby), CVE-2011-5371 (Ruby), CVE-2011-5372 (Rubinius),
-     CVE-2011-5373 (Oracle JDK, OpenJDK)
-
-Timeline:
-2012-08-30: vulnerability report sent to Ruby, JRuby and Rubinius security contacts
-2012-09-03: vulnerability report forwarded to oCERT by Hiroshi Nakamura (Ruby security contact)
-2012-09-06: oCERT contacted reporters to investigate additional affected projects
-2012-09-06: reporters indicate OpenJDK as vulnerable and that Java security team has been contacted on 2012-07-31
-2012-09-10: oCERT requested CVE assignment for Ruby, JRuby and Rubinius
-2012-09-12: Oracle JDK and OpenJDK confirmed vulnerable by reporters
-2012-09-12: oCERT requested CVE assignment for Oracle JDK and OpenJDK
-2012-10-10: reporters indicate public PoC release on 2012-11-07 at ASFWS
-2012-11-08: assigned CVEs
-2012-11-09: Ruby 1.9.3-p327 released
-2012-11-23: advisory release
-
-References:
-https://www.131002.net/siphash
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2012-001.html
+Do we know when this was introduced?  At a quick glance here, I don't
+see magick/property.c in 6.2.8, but I do see it in 6.6.5, so somewhere
+between those two versions that file and functionality was added.
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Vincent Danen / Red Hat Security Response Team 
