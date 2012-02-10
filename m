@@ -1,50 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/7
-Message-ID: <4F073324.8030309@redhat.com>
-Date: Fri, 06 Jan 2012 10:45:08 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/7
+Message-ID: <20120210185828.GF1797@redhat.com>
+Date: Fri, 10 Feb 2012 11:58:28 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: redmine issues
+Subject: Re: imagemagick invalid validation DoS CVE-2012-0247 and CVE-2012-02478
 Content-Type: text/plain; charset=utf-8
 
-On 01/06/2012 10:02 AM, Moritz Muehlenhoff wrote:
-> Hi,
-> please assign three CVE IDs for the following issues in Redmine:
->
-> These need to be CVE-2011-* IDs:
->
-> The announcement can be found here: http://www.redmine.org/news/49
->
-> --------
-> This release also fixes 3 security issues reported by joernchen of
-> Phenoelit:
->
-> * logged in users may be able to access private data (affected
-> versions: 1.0.x)
-Please use CVE-2011-4927 for this issue.
->
-> * persistent XSS vulnerability in textile formatter (affected
-> versions: all previous releases)
-Please use CVE-2011-4928 for this issue.
->
-> * remote command execution in bazaar repository adapter (affected
-> versions: 0.9.x, 1.0.x)
-Please use CVE-2011-4929 for this issue.
-> --------
->
-> This was already fixed in a Debian security update some time ago,
-> but never received a CVE ID:
-> http://lists.debian.org/debian-security-announce/2011/msg00131.html
->
-> Patches can be found in the Debian patch tracker:
-> http://patch-tracker.debian.org/package/redmine/1.0.1-2
->
-> Cheers,
->         Moritz
+* [2012-02-10 11:51:57 -0700] Vincent Danen wrote:
 
+>* [2012-02-10 13:36:24 +0200] Henri Salo wrote:
+>
+>>Concerning ImageMagick 6.7.5-0 and earlier:
+>>
+>>CVE-2012-0247: When parsing a maliciously crafted image with incorrect offset and count in the ResolutionUnit tag in EXIF IFD0, ImageMagick copies two bytes into an invalid address.
+>>CVE-2012-0248: When parsing a maliciously crafted image with an IFD whose all IOP tags' value offsets point to the beginning of the IFD itself. As a result, ImageMagick parses the IFD structure indefinitely, causing a denial of service.
+>>
+>>For more details please read: http://www.imagemagick.org/discourse-server/viewtopic.php?f=4&t=20286
+>>CERT-FI: http://www.cert.fi/haavoittuvuudet/2012/haavoittuvuus-2012-021.html (finnish)
+>>Reported to Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659339
+>
+>Do we know when this was introduced?  At a quick glance here, I don't
+>see magick/property.c in 6.2.8, but I do see it in 6.6.5, so somewhere
+>between those two versions that file and functionality was added.
+
+Sorry, I do see it in 6.5.4 as well, so between 6.2.8 and 6.5.4.
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
