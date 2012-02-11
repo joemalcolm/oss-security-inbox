@@ -1,59 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/23/4
-Message-ID: <Pine.GSO.4.64.1201231455240.12465@faron.mitre.org>
-Date: Mon, 23 Jan 2012 15:04:25 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/11/3
+Message-ID: <4F36F53E.6090206@redhat.com>
+Date: Sat, 11 Feb 2012 16:09:50 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id assignment dates
+CC: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: CVE request: surf
 Content-Type: text/plain; charset=utf-8
 
+On 02/10/2012 03:11 PM, Florian Weimer wrote:
+> * Kurt Seifried:
+> 
+>> On 02/09/2012 05:24 PM, Florian Weimer wrote:
+>>> surf does not protect its cookie jar against access read access from
+>>> other local users, as reported by Jakub Wilk in this Debian bug:
+>>>
+>>> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659296>
+>>>
+>>> Could someone please assign a CVE for this?
+>>
+>> So for surf suckless (http://surf.suckless.org/) please use CVE-2012-0842
+> 
+> Oops.  I mistook this for the HTTP client library.  Your reference is
+> correct, and it appears I consistently wrote "surf" (the correct
+> spelling).
+> 
+>>> uzbl <http://uzbl.org/> (in the uzbl-browser wrapper script) and
+>>> netsurf <http://www.netsurf-browser.org/> (the nsgtk_check_homedir
+>>> function creates the dot directory with world-readable settings) have
+>>> a similar issue, but are from different code bases.  I think those
+>>> should get distinct CVEs, too.
+>>
+>> I'll need advisories or code commits, or links to the vuln code to
+>> assign CVE's (I need more information). Thanks!
+> 
+> Jakub has filed bugs:
 
-Alexander,
+Not ideal (I'd prefer upstream stuff) but it'll do.
 
-This misconception is, unfortunately, all too common.  I will look into 
-ways of changing it on the CVE web site.
+> uzbl: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659379
 
-The Assigned date, strictly defined, is the date on which the specific CVE 
-*number* was first created and "committed" to the CVE database.  There is 
-no guaranteed relationship between the public disclosure date and the 
-Assigned date.
+Please use CVE-2012-0843 for this issue.
 
-When a CNA receives a pool of numbers, the Assigned date is when that pool 
-was created by MITRE.  A CNA pool is just a list of CVE numbers that 
-aren't even associated with a specific vulnerability.
+> netsurf: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659376
 
-When MITRE reserves a CVE candidate for an independent, non-CNA party, the 
-"Assigned" date reflects the day that we reserved the candidate - which is 
-sometimes before the issue is published, and sometimes even before the 
-vendor is notified.
-
-In other cases, MITRE independently assigns new CVEs for already-disclosed 
-vulnerabilities, and the Assigned date reflects when we created those 
-CVEs.  In this case, the Assigned date can be AFTER the original 
-disclosure date.
-
-We do not publish any dates related to disclosure, patch, or vendor 
-notification; interested parties can consult other databases that 
-explicitly track this information, such as OSVDB.
-
-- Steve
+Please use CVE-2012-0844 for this issue.
 
 
-On Mon, 23 Jan 2012, Solar Designer wrote:
-
-> Hi,
->
-> It appears that many people are confused by and concerned about the
-> "Assigned" dates on CVE ids, not being aware that these dates often (or
-> even all the time?) merely reflect the assignment of a CVE id pool to a
-> CNA, normally before the actual vulnerabilities are discovered.
->
-> For example, CVE-2012-0056 shows "Assigned (20111207)" - so someone
-> wrongly thought that this meant that kernel developers or whoever sat on
-> this bug for 1.5 months.
->
-> I think cve.mitre.org web pages need to provide an explanation right
-> next to these dates or not show the dates.
->
-> Alexander
->
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
