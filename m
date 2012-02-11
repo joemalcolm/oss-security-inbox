@@ -1,74 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/24
-Message-ID: <4F918108.8060309@redhat.com>
-Date: Fri, 20 Apr 2012 09:30:16 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/11/1
+Message-ID: <20120211085047.GA18474@openwall.com>
+Date: Sat, 11 Feb 2012 12:50:47 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Eric Hodel <drbrain@...ment7.net>, Evan Phoenix <evan@....io>, Vít Ondruch <vondruch@...hat.com>
-Subject: Re: CVE Request -- rubygems: Two security fixes in upstream v1.8.23 version
+Subject: Re: MySQL 0-day - does it need a CVE?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 04/20/2012 09:01 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, Eric, Evan, vendors,
+On Fri, Feb 10, 2012 at 12:36:46AM +0400, Solar Designer wrote:
+> The table at the bottom of:
 > 
-> two security fixes has been recently corrected in upstream 
-> rubygems-v1.8.23 version: #1 RubyGems now disallows redirection
-> from HTTPS to HTTP.
-
-Please use CVE-2012-2125 for this issue.
-
-> #2 RubyGems now verifies SSL connections.
-
-Please use CVE-2012-2126 for this issue.
-
-> References: [1]
-> https://github.com/rubygems/rubygems/blob/1.8/History.txt
-> (rubygems History.txt) [2] 
-> https://github.com/rubygems/rubygems/commit/d4c7eafb8efe1e13a7abf5be5a5b4548870b15b7
->
->  (relevant rubygems git commit) [3] 
-> http://www.ruby-lang.org/en/news/2012/04/20/ruby-1-9-3-p194-is-released/
->
+> http://www.oracle.com/technetwork/topics/security/cpujan2012-366304.html
 > 
-(Ruby v1.9.3-p194 version announcement)
-> [4] 
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&sortby=date&revision=35404
->
->  (Ruby language SVN repository commit) [5]
-> https://bugzilla.redhat.com/show_bug.cgi?id=814718 (Red Hat
-> bugzilla entry)
-> 
-> Both of [2] and [4] patches include fixes for both issues. For the
-> case #2 the security implications are clear.
-> 
-> Kurt, could you allocate two CVE ids for these issues?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+> lists 27 MySQL vulnerabilities, all with CVE IDs and CVSS scoring - but
+> little other info.
 
+Here's a more direct link:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+http://www.oracle.com/technetwork/topics/security/cpujan2012-366304.html#AppendixMSQL
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+(e.g. for referring to in distro advisories).
 
-iQIcBAEBAgAGBQJPkYEHAAoJEBYNRVNeJnmTMbYP/03p4p3JbDOIOC9D/P30uJO0
-uFUHkZRkC8/UfHgjNSzGaplIFZ38pey8/xmmkI+GeOuGRr+hPpHDfwdTGH89iiie
-txIdndsi/PWzZ1nLuZD1dJCSd4912q5VvA1fIAG8Bpl+f26wvoiZAuj3BYfUzosG
-GMuhrL98CoJqqSYaDrPnRA1w7pJgyz6xbTdwCvvqzjTp0g0SrmoSKqk5U1J7sU5x
-RJrqD4bIHZTM9EkqS+/wL+yZ9SW3ou/SjWfp6zjFz3JRwMIWKvM702EJHxPuErXx
-aiAXKRfi9T9F2YRrUILw3aHHCbnPU2+h2Wzl82+vNMZR8qB0p9zSdExY/n/FQ9PQ
-LDsyfvjBvVXxfUT8tnIF6my0k8OoZpZejzMVeywtd5zfVzSxiAGqn+f8TuquWYbf
-+ByboQIgog9bh7lgQhjBkNt98PwYDdwihtK7vAQMV6XZsfJ1BA37EZ7scL5sndka
-q0p9zlNwsHMA4FfBXvaDFeJlY/VjBcQP9b9cCmXUoiMqqromUoqzEfzFng40gMFO
-cBvwW2dMGPmhrA0RN+12zFknh/dBACdstb5mNHcWlASHLpuaOIhV7joE5Bz8F5TE
-ks1YYiTB+dcGb7Zdae1XXaYd1ViVzptgyCO97PkK3TqfRLuEsVdEibLzPOK1PwoZ
-U0WNtNRpbpd7FFNXUxH9
-=jcFs
------END PGP SIGNATURE-----
+News story summarizing the problem (in Russian, sorry):
+
+http://www.opennet.ru/opennews/art.shtml?num=33051
+
+It also mentions that Oracle Linux merely reuses RHEL's updates to
+MySQL without any reference to Oracle's own MySQL vulnerability/fix
+info.  So it is not even clear whether Oracle Linux has these 27 bugs in
+MySQL fixed or not, despite of MySQL being an Oracle product.
+
+Alexander
