@@ -1,21 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/27
-Message-ID: <20120227213915.GA3117@foo.fgeek.fi>
-Date: Mon, 27 Feb 2012 23:39:15 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/12/4
+Message-ID: <CAPYM6VwnG8g63VvBM+kLngcskJyY2EvLJmYW_Y95ou-vuw+5TQ@mail.gmail.com>
+Date: Sun, 12 Feb 2012 23:08:26 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com, corryl80@...il.com, bugtraq@...urityfocus.com
-Subject: Re: Case YVS Image Gallery
+Subject: CubeCart 3.0.20 (3.0.x) and lower | Open URL Redirection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 27, 2012 at 09:31:52AM -0700, Kurt Seifried wrote:
-> If you make a list of issues (e.g. XSS, CSRF, etc) with the code
-> examples I can assign the various blocks of issues CVEs.
+1. OVERVIEW
 
-1. ./administration/install.php opens ../functions/db_connect.php and writes to file without input validation leading to PHP code injection with all variables if any contains for example: ";} ?> <?php print("Hello World"); exit("") ?>
+The CubeCart 3.0.20 and lower versions are vulnerable to Open URL Redirection.
 
-Note that install guide in web says: "after instalation is complete, delete the "install.php" file" and install.php does not need permissions.
 
-2. ./administration/create_album.php does not have proper input validation leading to stored XSS, which can only be added by administrators, but I don't think this as a limit after other vulnerabilities. XSS will also be shown to normal users (mainpage).
+2. BACKGROUND
 
-- Henri Salo
+CubeCart is an "out of the box" ecommerce shopping cart software
+solution which has been written to run on servers that have PHP &
+MySQL support. With CubeCart you can quickly setup a powerful online
+store which can be used to sell digital or tangible products to new
+and existing customers all over the world.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The CubeCart 3.0.20 and lower versions contain a flaw that allows a
+remote cross site redirection attack. This flaw exists because the
+application does not properly sanitise the parameters,"goto" and "r".
+This allows an attacker to create a specially crafted URL, that if
+clicked, would redirect a victim from the intended legitimate web site
+(domain.com) to an arbitrary web site (localhost) of the attacker's
+choice.
+
+
+4. VERSIONS AFFECTED
+
+3.0.20 and lower (aka 3.0.x family)
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://localhost/cube3.0.20/switch.php?r=//yehg.net/&lang=es
+http://localhost/cube3.0.20/admin/login.php?goto=//yehg.net
+
+
+6. SOLUTION
+
+The CubeCart 3.0.x version family is no longer maintained by the vendor.
+Upgrade to CubeCart 4x/5.x.
+
+
+7. VENDOR
+
+CubeCart Development Team
+http://cubecart.com/
+
+
+8. CREDIT
+
+Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2012-02-10: CubeCart 3.0.x in End-of-Support/Maintenance circle
+2012-02-10: Vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[cubecart_3.0.20_3.0.x]_open_url_redirection
+CubeCart Home Page: http://cubecart.com/
+OWASP Top 10 2010 - A 10:
+http://www.owasp.org/index.php/Top_10_2010-A10-Unvalidated_Redirects_and_Forwards
+SANS Top 25: http://cwe.mitre.org/top25/#CWE-601
+CWE-601: http://cwe.mitre.org/data/definitions/601.html
+
+#yehg [2012-02-10]
