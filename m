@@ -1,21 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/14
-Message-ID: <Pine.GSO.4.64.1201041558560.14826@faron.mitre.org>
-Date: Wed, 4 Jan 2012 16:04:59 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/12/2
+Message-ID: <20120212081746.GA25149@foo.fgeek.fi>
+Date: Sun, 12 Feb 2012 10:17:46 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-cc: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: Pidgin
+Subject: Re: CVE-request: Webcalendar 1.2.4 location XSS
 Content-Type: text/plain; charset=utf-8
 
+On Sat, Feb 11, 2012 at 11:04:19PM -0500, Eitan Adler wrote:
+> On Sat, Feb 11, 2012 at 11:41 AM, Henri Salo <henri@...v.fi> wrote:
+> > This seems to be missing 2012 CVE.
+> >
+> > Original report: http://seclists.org/bugtraq/2012/Jan/128
+> > Project page: https://sourceforge.net/projects/webcalendar/
+> > Version affected: 1.2.4 (the newest)
+> 
+> So far as I could see the newest version is 1.2.3
+> (http://sourceforge.net/projects/webcalendar/?source=directory and
+> http://www.k5n.us/webcalendar.php?topic=News don't list 1.2.4)
 
-On Wed, 4 Jan 2012, Kurt Seifried wrote:
+Page http://sourceforge.net/projects/webcalendar/files/webcalendar%201.2/ lists 1.2.4 version. I have no idea why the other page doesn't list it at all. No reply to bug-report: http://sourceforge.net/tracker/?func=detail&aid=3472745&group_id=3870&atid=103870 and only thing I found strange in the report is "Version: 1.2.5" as there isn't such available. I can verify this advisory if you want.
 
-> Minor issue, but stuff in memory does have a bad habit of ending up in
-> other places (swap/etc.). Please use CVE-2011-4922 for this issue.
-
-CVE has some similar precedents for this kind of issue, such as 
-CVE-2009-0518, CVE-2008-6828, CVE-2007-2619, CVE-2005-0604, CVE-2003-0048, 
-CVE-2006-2662, and probably more recent issues too.  Granted it's minor.
-
-- Steve
+- Henri Salo
