@@ -1,92 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/24
-Message-ID: <20120120194610.GA7882@openwall.com>
-Date: Fri, 20 Jan 2012 23:46:10 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/12/3
+Message-ID: <20120212095225.GA25344@foo.fgeek.fi>
+Date: Sun, 12 Feb 2012 11:52:25 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: pdf attacks vectors
+Subject: Re: CVE-request: Webcalendar 1.2.4 location XSS
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 20, 2012 at 09:35:04AM +0400, Alexander Pletnev wrote:
-> Hi guys, im working with an web app, and going to create PDFs on-the-fly with user related data. 
-> Therefore im writinig to oss-security. What are a pdf attacks vector need's to be avoided by my app ?
+On Sun, Feb 12, 2012 at 10:17:46AM +0200, Henri Salo wrote:
+> On Sat, Feb 11, 2012 at 11:04:19PM -0500, Eitan Adler wrote:
+> > On Sat, Feb 11, 2012 at 11:41 AM, Henri Salo <henri@...v.fi> wrote:
+> > > This seems to be missing 2012 CVE.
+> > >
+> > > Original report: http://seclists.org/bugtraq/2012/Jan/128
+> > > Project page: https://sourceforge.net/projects/webcalendar/
+> > > Version affected: 1.2.4 (the newest)
+> > 
+> > So far as I could see the newest version is 1.2.3
+> > (http://sourceforge.net/projects/webcalendar/?source=directory and
+> > http://www.k5n.us/webcalendar.php?topic=News don't list 1.2.4)
 > 
-> In other words, what is the most dangerous pdf attack vectors ?
+> Page http://sourceforge.net/projects/webcalendar/files/webcalendar%201.2/ lists 1.2.4 version. I have no idea why the other page doesn't list it at all. No reply to bug-report: http://sourceforge.net/tracker/?func=detail&aid=3472745&group_id=3870&atid=103870 and only thing I found strange in the report is "Version: 1.2.5" as there isn't such available. I can verify this advisory if you want.
+> 
+> - Henri Salo
 
-You need to start by understanding and specifying your threat model.
-This may be part of the documentation for your web app such that all
-contributors to the project, anyone doing a security audit on it, your
-users (web app install admins and maybe even end-users) will know the
-threat model that the web app is supposed to work under.
+So if you have javascript enabled in *.sourceforge.net this PoC works in demo-page: http://webcalendar.sourceforge.net/demo/view_entry.php?id=2142&date=20120212 and I also tested this in version 1.2.4 (modified 2011-08-09) and it works as stored XSS. Changelog for 1.2.4 says:
 
-Given your description of what you're doing, it sounds like your
-untrusted input is not PDFs, and thus you're asking a wrong question,
-or maybe you merely use words ("PDF attack vectors") that I'd associate
-with something else (attacks via malicious PDF files).  So I won't
-comment on "PDF attack vectors" specifically (these sound irrelevant to
-your actual needs, and I am not familiar with them anyway).
+Version 1.2.4 (08 Aug 2011)
+ - Fixed XSS vulnerability: malicious javascript in event descriptions submitted
+   by public can do bad things (create admin account, delete events, etc.)
+   when the pending event is viewed by the admin.
+ - Fixed bug: PHP warnings on search
+ - Removed PHP warnings
+ - Bug fix: undefined function date_default_timezone_set in older versions
+   of PHP.
 
-[ Update: ...or maybe you literally do mean attacks via malicious PDF
-files, considering that they may be untrusted input to users of your web
-app (even if not to the web app itself).  I touch on this topic closer
-to the end of this reply. ]
+I can't find release 1.2.5 from SF project-page nor in http://www.k5n.us/downloads.php or in news. If the code indeed has stored XSS in versions 1.2.3 and 1.2.4 there probably is more of them. SHA256 for WebCalendar-1.2.4.tar.gz is: 09dea6511bf692f08e08a1a6088e547517a11ba746dde6b5e2cd57bb0081cfee
 
-What you need to do is sanitize user input before passing it to whatever
-PDF creating library you're using.  If you know that a certain input
-field can only contain values of a certain format and in a certain range
-(e.g., numeric values range or string lengths range), you need to
-enforce those limits before passing that input field's value to the
-library.  Perhaps you will want to have invalid inputs rejected in some
-user-friendly manner (e.g., don't silently truncate overly long strings,
-but instead re-display the input form with the problematic field
-highlighted and the problem explained).
+At the moment download counts:
+1.2.4 zip 8644
+1.2.4 tar.gz 1838
 
-Please note that input sanitization must be done server-side.  While you
-may also (partially) duplicate it in JavaScript for better user
-experience (such that they get initial input validation without having
-to submit the form), the final and complete sanitization must be done on
-the server after the form is submitted.
+Definitely needs a 2012 CVE-identifier.
 
-There may also exist attack vectors via perfectly valid input values
-(e.g., if a special character is valid input for one of your fields
-given the field's purpose, but is in fact special to the library).
-There's little you can do about this.  You'd have to research and
-consider the library's limitations, but that's tricky and this
-information may become outdated for another version of the library
-(although that would probably be considered a vulnerability of the
-library then).
-
-You may implement some sort of privilege separation within your web app
-(e.g., somehow run parts of it under another operating system account on
-the web server), but that's tricky - especially if your web app is to be
-installed on other servers and by others - and it does not prevent
-attacks on the library (it only mitigates their impact), nor does it
-prevent attacks via generated PDFs on users' PDF viewers.
-
-Yes, attacks on PDF viewers may also be a concern.  It is possible that
-perfectly valid input (as defined above) will make it through the PDF
-generating library correctly, yet will trigger a security issue in a PDF
-viewer on a user's system.  If the user filling out the initial form on
-the web (inputs to the PDF) is the same user who will view the PDF file,
-then there may be no privilege boundary crossed here (so no security
-issue even if the PDF viewer may be "attacked" in this way).  However,
-if a different user will then view the PDF, or if the user filling the
-web form uses some form of privilege separation (e.g. different
-computers for different kinds of work), then that privilege separation
-might be bypassed (a minor security problem).
-
-When you wrote that the web app will "create PDFs on-the-fly with user
-related data", did you possibly mean with data coming from a database
-rather than being entered by the user at this time?  If so, I recommend
-that you re-sanitize the data as you read it from the database and
-before you pass it to the PDF library.  That way, the impact of a
-possible compromise of the database will be slightly reduced.  You may
-have an abstraction layer for accessing the database along with data
-format and value range sanitization.  You'd use this abstraction layer
-everywhere in your web app, not just for PDFs.
-
-Again, what is your threat model?
-
-I hope this helps.
-
-Alexander
+- Henri Salo
