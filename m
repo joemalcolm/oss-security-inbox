@@ -1,78 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/13
-Message-ID: <4F7328AE.2000005@redhat.com>
-Date: Wed, 28 Mar 2012 09:05:18 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/12/1
+Message-ID: <CAF6rxgkYV1F_5CrFU6P7JVzA4CGTL1S_zLWfdPVihNs03Ums-A@mail.gmail.com>
+Date: Sat, 11 Feb 2012 23:04:19 -0500
+From: Eitan Adler <lists@...anadler.com>
 To: oss-security@...ts.openwall.com
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>, Gerald Combs <gerald@...eshark.org>
-Subject: Re: CVE Request: Multiple wireshark security flaws resolved in 1.4.12 and 1.6.6
+Subject: Re: CVE-request: Webcalendar 1.2.4 location XSS
 Content-Type: text/plain; charset=utf-8
 
-On 03/28/2012 02:56 AM, Huzaifa Sidhpurwala wrote:
-> Hi Folks,
-> 
-> Multiple security flaws were resolved in the recent release
-> of version 1.4.12 and 1.6.6. Details as follows, can CVE ids
-> be please assigned to them?
-> 
-> 1. Null pointer dereference in ANSI A dissector:
-> The ANSI A dissector could dereference a NULL pointer and crash.
-> It may be possible to make Wireshark crash by injecting a malformed
-> packet onto the wire or by convincing someone to read a malformed
-> packet trace file.
-> 
-> Reference:
-> http://www.wireshark.org/security/wnpa-sec-2012-04.html
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6823
-> Patch: http://anonsvn.wireshark.org/viewvc?view=revision&revision=40962
+On Sat, Feb 11, 2012 at 11:41 AM, Henri Salo <henri@...v.fi> wrote:
+> This seems to be missing 2012 CVE.
+>
+> Original report: http://seclists.org/bugtraq/2012/Jan/128
+> Project page: https://sourceforge.net/projects/webcalendar/
+> Version affected: 1.2.4 (the newest)
 
-Please use CVE-2012-1593 for this issue.
-
-> 2. Dos/Infinite loop when in IEEE 802.11 dissector:
-> The IEEE 802.11 dissector could go into an infinite loop.
-> It may be possible to make Wireshark crash by injecting a malformed
-> packet onto the wire or by convincing someone to read a malformed
-> packet trace file.
-> 
-> Reference:
-> http://www.wireshark.org/security/wnpa-sec-2012-05.html
-> http://www.wireshark.org/security/wnpa-sec-2012-05.html
-> Patch: http://anonsvn.wireshark.org/viewvc?view=revision&revision=40967
-
-Please use CVE-2012-1594 for this issue.
-
-> 3. Memory corruption when processing pcap/pcap-ng file formats:
-> The pcap and pcap-ng file parsers could crash trying to read ERF data.
-> It may be possible to make Wireshark crash convincing someone to read a
-> malformed packet trace file.
-> 
-> Reference:
-> http://www.wireshark.org/security/wnpa-sec-2012-06.html
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6804
-> Patch: http://anonsvn.wireshark.org/viewvc?view=revision&revision=41056
-
-Please use CVE-2012-1595 for this issue.
-
-> 4. Wireshark MP2T memory allocation flaw
-> The MP2T dissector could try to allocate too much memory and crash.
-> It may be possible to make Wireshark crash by injecting a malformed
-> packet onto the wire or by convincing someone to read a malformed
-> packet trace file.
-> 
-> Reference:
-> http://www.wireshark.org/security/wnpa-sec-2012-07.html
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6833
-> Possible Patch:
-> http://anonsvn.wireshark.org/viewvc?view=revision&revision=40978 (not sure)
-
-Please use CVE-2012-1596 for this issue.
-
-> @Gerald,
-> All your new advisory links on the wireshark security page are pointing
-> to the same page, so you may want to correct that :)
-> 
-> 
-
+So far as I could see the newest version is 1.2.3
+(http://sourceforge.net/projects/webcalendar/?source=directory and
+http://www.k5n.us/webcalendar.php?topic=News don't list 1.2.4)
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Eitan Adler
