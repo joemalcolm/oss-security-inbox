@@ -1,54 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/07/3
-Message-ID: <1516926920.28600951.1352288638704.JavaMail.root@redhat.com>
-Date: Wed, 7 Nov 2012 06:43:58 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/13/1
+Message-Id: <201202130957.37772.mweckbecker@suse.de>
+Date: Mon, 13 Feb 2012 09:57:37 +0100
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Jan Pokorny <jpokorny@...hat.com>, Matthew Wilkes <matthew.wilkes@...ne.org>, Plone Security Team <security@...ne.org>, Mitre CVE assign department <cve-assign@...re.org>
-Subject: CVE Request - Zope / Plone: Multiple vectors corrected within 20121106 fix
+Cc: Marcus Meissner <meissner@...e.de>, Thomas Biege <thomas@...e.de>
+Subject: Subscribe to linux-distros?
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi Alexander,
 
-  Plone upstream has issued 20121106 HotFix correcting
-multiple security issues:
-1) http://plone.org/products/plone/security/advisories/20121106/
-2) http://plone.org/products/plone/security/advisories/20121106-announcement
+I'm a member of the SUSE Security Team. I joined the team in August 2011. 
 
-Issues recapitulation (from 1) ):
-a) Restricted Python injection
-b) Reflexive HTTP header injection
-c) Restricted Python sandbox escape
-d) Restricted Python injection
-e) Partial restricted Python sandbox escape
-f) Reflexive XSS
-g) Partial permissions bypass
-h) Restricted Python sandbox escape
-i) Reflexive XSS
-j) Restricted Python injection
-k) DoS through unsanitised inputs into Kupu
-l) Anonymous users can list user account names
-m) Partial denial of service through Collections functionality
-n) Partial denial of service through internal function
-o) Anonymous users can batch change titles of content items
-p) Crafted URL allows downloading of BLOBs that are not visible to the user
-q) Persistent XSS via filtering bypass
-r) Users connected through FTP can list hidden folder contents
-s) Persistent XSS
-t) Attempting to access a view with no name returns an internal data structure
-u) DoS through RSS on private folder
-v) Timing attack in password validation
-w) PRNG isn't reseeded
-x) Form detail exposure
+Could you possibly subscribe me to the linux-distros list too, please? I'm 
+CC'ing Marcus Meissner (manager of the SUSE Security Team) and Thomas Biege
+(project manager security).
 
-=> preliminary 24 CVE ids needed.
+ pub   4096R/EA16D1D2 2011-07-27
+       Key fingerprint = D3B4 1D62 7C6A 2FFF B764  2BFA E4A4 9B9D EA16 D1D2
+ uid                  Matthias Weckbecker <mweckbecker@...e.de>
+ sub   4096R/1FBE90CA 2011-07-27
 
-Could you allocate a CVE ids for these? Please take this post
-as initial heads up for vendors regarding them. In subsequent
-posts I will try to provide as much details about these as
-possible (we to be able to determine how many of them in fact
-needed).
+Let me know if you need anything else,
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thank you,
+
+Matthias
+
+-- 
+Matthias Weckbecker, Junior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+
+Download attachment "0xD3B41D627C6A2FFFB7642BFAE4A49B9DEA16D1D2.asc" of type "application/pgp-keys" (3118 bytes)
