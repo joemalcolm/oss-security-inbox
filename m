@@ -1,51 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/11
-Message-ID: <4FCF8C3A.6070500@redhat.com>
-Date: Wed, 06 Jun 2012 10:58:34 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/13/5
+Message-ID: <4F393341.9040903@redhat.com>
+Date: Mon, 13 Feb 2012 08:58:57 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: CVE-Request: hyper-v daemon
+CC: YGN Ethical Hacker Group <lists@...g.net>
+Subject: Re: CubeCart 3.0.20 (3.0.x) and lower | Open URL Redirection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/12/2012 08:08 AM, YGN Ethical Hacker Group wrote:
+> 1. OVERVIEW
+> 
+> The CubeCart 3.0.20 and lower versions are vulnerable to Open URL Redirection.
+> 
+> 
+> 2. BACKGROUND
+> 
+> CubeCart is an "out of the box" ecommerce shopping cart software
+> solution which has been written to run on servers that have PHP &
+> MySQL support. With CubeCart you can quickly setup a powerful online
+> store which can be used to sell digital or tangible products to new
+> and existing customers all over the world.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> The CubeCart 3.0.20 and lower versions contain a flaw that allows a
+> remote cross site redirection attack. This flaw exists because the
+> application does not properly sanitise the parameters,"goto" and "r".
+> This allows an attacker to create a specially crafted URL, that if
+> clicked, would redirect a victim from the intended legitimate web site
+> (domain.com) to an arbitrary web site (localhost) of the attacker's
+> choice.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> 3.0.20 and lower (aka 3.0.x family)
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://localhost/cube3.0.20/switch.php?r=//yehg.net/&lang=es
+> http://localhost/cube3.0.20/admin/login.php?goto=//yehg.net
+> 
+> 
+> 6. SOLUTION
+> 
+> The CubeCart 3.0.x version family is no longer maintained by the vendor.
+> Upgrade to CubeCart 4x/5.x.
 
-On 06/06/2012 08:59 AM, Sebastian Krahmer wrote:
-> Hi,
->
-> The hyper-v daemon fails to check origin of netlink messages.
-> Please see
->
-> https://bugzilla.novell.com/show_bug.cgi?id=761200
->
-> Can someone from the usual suspects assign a CVE?
->
-> thanks, Sebastian
+Can you confirm that this issue is corrected/not present in version 4.x
+and 5.x?
 
-Please use CVE-2012-2669 for this issue.
-
-Apologies if this shows up twice, the first one appears to have gotten
-eaten somewhere.
-
-- -- Kurt Seifried Red Hat Security Response Team (SRT) PGP: 0x5E267993
-A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPz4w6AAoJEBYNRVNeJnmTiQ4QANC/Iop9IQvjKv4WYSKepXHD
-oNNl8TIQWWQTwAz2RaVagEAGYIo0tu0SYsc2eU4GjK0O2ns0TEmVBkgso7v3nhJx
-TgcVWjdIE/0oJFUXB+DUxTk2l60+BrmzJ/iSM9465CHbztSVcsy1jW7KNhouJX9Y
-a53AxoM7Yu8QDrInvPfQWVLt0g4rr7gn/Z35cit75/Kwvb5mec3JFgmOaCaDfnZb
-9KSULMrdCednoqjf3dCmVD+wfrgNRnta+z/HXouF+kWbHEvKoQYuI7cli4EHCqvq
-3ym3MXbhCm40A5imyjlYdB9bmpRbMvSLxCiAedc8mpnCl7CL+3rscg6N4U1kSIRD
-JQ19ygJ/lFJ8i29nYJvK8jIh4ch9syoqvnFhH6yvhgzt7qdps2NDqjEaRvr03PlS
-MhM2tBqNvP3nQbWeOPIgxDNWCQfP0pbh0TrmH/AesbqXHk+PC35O0BoARP6IWK2M
-AkIuDGye0IP/tbR9WQmZOOSGSoZrZktgL/96QaAb+cz1aIUQ0hWHs4QgcmEiF4Qs
-EwmIa9fvM69S6CuZ0N/u5P60eavKcBTNcCU166v2lXfeUPJPXXNCdxkMie+lOkg9
-epL3yBLl3dvK5JHDguAaPYTVgpruH+oBrFJF9im4f8r9pZRMAnw/K8XTjGFgYbBp
-tPGEUaQWFJeAa8LnWLoN
-=ZrOv
------END PGP SIGNATURE-----
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
