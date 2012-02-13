@@ -1,66 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/9
-Message-ID: <CAA5xPpneaHPNVa-EXN17Bdb3CtGzFCz_prYmXj3dD=qH663RCA@mail.gmail.com>
-Date: Mon, 5 Mar 2012 09:27:43 +0530
-From: Zubin Mithra <zubin.mithra@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Dhanesh k <dhanesh1428@...il.com>
-Subject: Re: CVE-Request taglib vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/13/6
+Message-ID: <4F3935C2.1050603@redhat.com>
+Date: Mon, 13 Feb 2012 09:09:38 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Webcalendar 1.2.4 location XSS
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 02/12/2012 02:52 AM, Henri Salo wrote:
+> On Sun, Feb 12, 2012 at 10:17:46AM +0200, Henri Salo wrote:
+>> On Sat, Feb 11, 2012 at 11:04:19PM -0500, Eitan Adler wrote:
+>>> On Sat, Feb 11, 2012 at 11:41 AM, Henri Salo <henri@...v.fi> wrote:
+>>>> This seems to be missing 2012 CVE.
+>>>>
+>>>> Original report: http://seclists.org/bugtraq/2012/Jan/128
+>>>> Project page: https://sourceforge.net/projects/webcalendar/
+>>>> Version affected: 1.2.4 (the newest)
+>>>
+>>> So far as I could see the newest version is 1.2.3
+>>> (http://sourceforge.net/projects/webcalendar/?source=directory and
+>>> http://www.k5n.us/webcalendar.php?topic=News don't list 1.2.4)
+>>
+>> Page http://sourceforge.net/projects/webcalendar/files/webcalendar%201.2/ lists 1.2.4 version. I have no idea why the other page doesn't list it at all. No reply to bug-report: http://sourceforge.net/tracker/?func=detail&aid=3472745&group_id=3870&atid=103870 and only thing I found strange in the report is "Version: 1.2.5" as there isn't such available. I can verify this advisory if you want.
+>>
+>> - Henri Salo
+> 
+> So if you have javascript enabled in *.sourceforge.net this PoC works in demo-page: http://webcalendar.sourceforge.net/demo/view_entry.php?id=2142&date=20120212 and I also tested this in version 1.2.4 (modified 2011-08-09) and it works as stored XSS. Changelog for 1.2.4 says:
+> 
+> Version 1.2.4 (08 Aug 2011)
+>  - Fixed XSS vulnerability: malicious javascript in event descriptions submitted
+>    by public can do bad things (create admin account, delete events, etc.)
+>    when the pending event is viewed by the admin.
+>  - Fixed bug: PHP warnings on search
+>  - Removed PHP warnings
+>  - Bug fix: undefined function date_default_timezone_set in older versions
+>    of PHP.
+> 
+> I can't find release 1.2.5 from SF project-page nor in http://www.k5n.us/downloads.php or in news. If the code indeed has stored XSS in versions 1.2.3 and 1.2.4 there probably is more of them. SHA256 for WebCalendar-1.2.4.tar.gz is: 09dea6511bf692f08e08a1a6088e547517a11ba746dde6b5e2cd57bb0081cfee
+> 
+> At the moment download counts:
+> 1.2.4 zip 8644
+> 1.2.4 tar.gz 1838
+> 
+> Definitely needs a 2012 CVE-identifier.
+> 
+> - Henri Salo
 
+Please use CVE-2012-0846 for this Webcalendar location variable XSS issue.
 
-> On 03/04/2012 05:53 AM, Zubin Mithra wrote:
-> > Hello,
-> >
-> > Multiple bugs were found and reported in taglib, and have been patched.
-> Out
-> > of the 4 reported, 2 were patched recently while 2 only affected taglib
-> > versions upto 1.7 and not the current development head at github.The
-> > discussion at the taglib mailing list can be viewed here at [1].
-> >
-> > Kindly assign CVE's for the same.
-> >
-> > Thanks,
-> > Zubin Mithra
-> >
-> > [1] http://mail.kde.org/pipermail/taglib-devel/2012-March/002186.html
-> >
->
-> Can you post a summary of the issues needing CVE #'s? Thanks.
->
->
-The issues which were present in the development head were :-
-
-[1] A crafted ogg file with sampleRate as "0" leads to crash in the
-application using taglib.
-         fixed in the commit -
-https://github.com/taglib/taglib/commit/77d61c6eca4d08b9b025738acf6b926cc750db23
-[2] "vendorLength" field modification in ogg tag parsing causes crash in
-the application using taglib.
-         fixed in the commit -
-https://github.com/taglib/taglib/commit/ab8a0ee8937256311e649a88e8ddd7c7f870ad59
-
-
-The issues which are present in the latest "release" but not in the current
-development head were :-
-
-[3] Lack of sanity checks of fields which were read, and were used for
-allocating memory; crafted files would lead of application crash.
-[4] A one bit change in a working ogg file would cause a thread to loop
-infinitely.
-
-*Please note* :-
-
-[1] and [2] were fixed after the report, and could be assigned CVE's.
-
-I am unsure about the other two, as they were fixed in the development
-branch, prior to our report. However, a release has not been made with the
-patches for [3] and [4] yet. Kindly assign CVE's for [3] and [4] if you see
-it fit to do so.
-
-
-Regards,
-Zubin Mithra
-
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
