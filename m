@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/4
-Message-ID: <366075028.29966683.1352550547046.JavaMail.root@redhat.com>
-Date: Sat, 10 Nov 2012 07:29:07 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/13/4
+Message-ID: <4F3932FD.7050606@redhat.com>
+Date: Mon, 13 Feb 2012 08:57:49 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Sebastien Helleu <flashcode@...shtux.org>
-Subject: CVE Request -- WeeChat (prior to 0.3.9.1): Heap-based buffer overflow when decoding IRC colors in strings
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Daniel Callaghan <dcallagh@...hat.com>, David Malcolm <dmalcolm@...hat.com>
+Subject: Re: CVE Request -- python (SimpleXMLRPCServer): DoS (excessive CPU usage) via malformed XML-RPC / HTTP POST request
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On 02/13/2012 07:03 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+>   we have been notified by Daniel Callaghan via:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=789790
+> 
+> about a denial of service flaw present in the way
+> Simple XML-RPC Server module of Python processed
+> client connections, that were closed prior the
+> complete request body has been received. A remote
+> attacker could use this flaw to cause Python Simple
+> XML-RPC based server process to consume excessive
+> amount of CPU.
+> 
+> Issue has been reported upstream at:
+> [2] http://bugs.python.org/issue14001
+> 
+> Could you allocate a CVE identifier for this?
+> 
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-  WeeChat upstream has released 0.3.9.1 version, correcting
-one (heap-based) buffer overflow flaw.
+Please use CVE-2012-0845 for this issue.
 
-References:
-[1] http://weechat.org/
-[2] http://weechat.org/security/
-[3] https://savannah.nongnu.org/bugs/?37704
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=875181
-
-Relevant upstream patch:
-[5] http://git.savannah.gnu.org/gitweb/?p=weechat.git;a=commitdiff;h=9453e81baa7935db82a0b765a47cba772aba730d
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
