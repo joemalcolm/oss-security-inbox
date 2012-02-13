@@ -1,21 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/17/3
-Message-ID: <1345237045.31660.58.camel@localhost>
-Date: Fri, 17 Aug 2012 15:57:25 -0500
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/13/2
+Message-ID: <20120213091746.GA2994@suse.de>
+Date: Mon, 13 Feb 2012 10:17:46 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: tinyproxy
+Cc: Thomas Biege <thomas@...e.de>
+Subject: Re: Subscribe to linux-distros?
 Content-Type: text/plain; charset=utf-8
+
+On Mon, Feb 13, 2012 at 09:57:37AM +0100, Matthias Weckbecker wrote:
+> Hi Alexander,
+> 
+> I'm a member of the SUSE Security Team. I joined the team in August 2011. 
+> 
+> Could you possibly subscribe me to the linux-distros list too, please? I'm 
+> CC'ing Marcus Meissner (manager of the SUSE Security Team) and Thomas Biege
+> (project manager security).
+> 
+>  pub   4096R/EA16D1D2 2011-07-27
+>        Key fingerprint = D3B4 1D62 7C6A 2FFF B764  2BFA E4A4 9B9D EA16 D1D2
+>  uid                  Matthias Weckbecker <mweckbecker@...e.de>
+>  sub   4096R/1FBE90CA 2011-07-27
+> 
+> Let me know if you need anything else,
 
 Hi,
 
-A DoS was reported against tinyproxy:
-https://banu.com/bugzilla/show_bug.cgi?id=110#c2
+I confirm that Matthias is member of my team.
 
-This was reported in:
-https://bugs.launchpad.net/ubuntu/+source/tinyproxy/+bug/1036985
+Ciao, Marcus
 
--- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Content of type "application/pgp-signature" skipped
