@@ -1,81 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/7
-Message-ID: <505367B9.8010402@redhat.com>
-Date: Fri, 14 Sep 2012 11:22:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Frank Mehnert <frank.mehnert@...cle.com>, halfdog <me@...fdog.net>, Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE for Virtualbox 0x8 DoS?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/14/1
+Message-ID: <4F3A41BD.90103@redhat.com>
+Date: Tue, 14 Feb 2012 12:13:01 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+CC: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Daniel Callaghan <dcallagh@...hat.com>, David Malcolm <dmalcolm@...hat.com>
+Subject: Re: CVE Request -- python (SimpleXMLRPCServer): DoS (excessive CPU usage) via malformed XML-RPC / HTTP POST request
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 09/14/2012 04:22 AM, Frank Mehnert wrote:
-> Hi,
-> 
-> On Friday 14 September 2012 12:12:44 halfdog wrote:
->> Hi,
->> 
->> Kurt Seifried wrote:
->>> On 09/13/2012 10:59 AM, Raphael Geissert wrote:
->>>> Hi,
->>>> 
->>>> Has a CVE id been finally assigned for the following issue? 
->>>> http://www.halfdog.net/Security/2012/VirtualBoxSoftwareInterrupt0x8Guest
->>>>
->>>> 
-Crash/
->>>> 
->>>> Regards,
->>> 
->>> - From that page:
->>> 
->>> 20120910: Oracle security decides, that CVE should be assigned
->>> 
->>> Can Oracle/halfdog.net communicate the CVE to the community 
->>> please?
->> 
->> I do not have that information yet. The information about
->> intended CVE assignment till October update was exchanged off
->> list, contact on Oracle side was Mr. Mehnert.
->> 
->> Early disclosure of this issue was due to misconception, that
->> Oracle would have assessed severity, need for CVE and
->> communication of disclosure timeline before releasing patch as
->> maintenance release. The early disclosure mixed up the whole 
->> reporting/analyze/classify/CVE-assign/disclosure process
->> somehow.
-> 
-> The security folks told me that there will be a CVE which will be 
-> visible with the next scheduled Oracle CPU date (in October 2012).
-> 
-> Thanks,
-> 
-> Frank
+Hello vendors,
 
-Thanks, can you post it here so people have something to reference and
-we can close this thread? Thanks.
+   just FYI, this issue affected also upstream
+PyPy v1.6 and v1.8 versions. Relevant upstream bug
+being here:
+https://bugs.pypy.org/issue1047
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Thanks to David Malcolm for pointing this out!
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+On 02/13/2012 04:57 PM, Kurt Seifried wrote:
+> On 02/13/2012 07:03 AM, Jan Lieskovsky wrote:
+>> Hello Kurt, Steve, vendors,
+>>
+>>    we have been notified by Daniel Callaghan via:
+>> [1] https://bugzilla.redhat.com/show_bug.cgi?id=789790
+>>
+>> about a denial of service flaw present in the way
+>> Simple XML-RPC Server module of Python processed
+>> client connections, that were closed prior the
+>> complete request body has been received. A remote
+>> attacker could use this flaw to cause Python Simple
+>> XML-RPC based server process to consume excessive
+>> amount of CPU.
+>>
+>> Issue has been reported upstream at:
+>> [2] http://bugs.python.org/issue14001
+>>
+>> Could you allocate a CVE identifier for this?
+>>
+>> Thank you&&  Regards, Jan.
+>> --
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> Please use CVE-2012-0845 for this issue.
 
-iQIcBAEBAgAGBQJQU2e5AAoJEBYNRVNeJnmTD7wQAMFy2eqSVy/XBWQzwl6i4wap
-+0Kz9AHVvz0AQJK982Tgle1BThA+fWI+6k6lyg6YqUaCHJbPQqMk3UqwashZXVzA
-xueoAZ+vn9vF6MONad8kHjyxS/lX5uSKULH2D5syr0GUe3pp5Mvji33vJ9odEQ7f
-M6n3DcLaY9vkfmWiwL43eHD4fz4ZDyxJR69JowMkAHgpcH8wjq4y4cGo3AbgI0Bv
-CjUT1pQbUtYiibK9oL398z6AACkFtEkP23kMyKNOdvj9Di3plSuRoTrvFNlAsFdH
-tJo/gk7tbaiRCsss7nBYYUVWfi3l4VbsWv+0hXmFeCPyrYkJDYUKGP5QhxkCnW4H
-DFHXBhLRHrQxNMT8Krp1iEXrh4UoHMgRA5nknPakt4RCl/H0blQXWAZuFWgqObw0
-WcvVSFGehfdmmWI1qoZpKzEocszvkGkacRjcasGzAde1CeN1NW9w7XsHn0iHozOd
-iPBp/Ri2Nb+DHHQsmcIkRyag7SKnjcGFUIaIkz5l/PUUN/q2qcqri3r9j/J+8LM9
-UmIrIOYz5SnNamdyysnCt03ctX9jSkhN9eI97FXrjkvITHTMDp0D3koK+8nCj675
-8ZRkwLEXo9H9Z6TMsb/Iqu0KDu+461RjkT7R374oGEfflw0SG5pgeevR31ztxP+q
-+o70FT8CvgZAM2tVW/3F
-=jsAK
------END PGP SIGNATURE-----
+Thanks, Kurt.
+
+Since the issue in PyPy is also coming from upstream Python
+SimpleXMLRPCServer.py module implementation:
+
+../pypy-1.6/lib-python/2.7/SimpleXMLRPCServer.py
+
+assuming one CVE identifier is enough for both issues.
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
