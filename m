@@ -1,70 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/16/3
-Message-ID: <20120416075803.GA3793@kludge.henri.nerv.fi>
-Date: Mon, 16 Apr 2012 10:58:03 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/14/2
+Message-ID: <20120214145100.GA29632@openwall.com>
+Date: Tue, 14 Feb 2012 18:51:00 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: WordPress-plugin bSuite <=4.0.7 permanent XSS
+Subject: Re: Subscribe to linux-distros?
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Mon, Feb 13, 2012 at 10:17:46AM +0100, Marcus Meissner wrote:
+> On Mon, Feb 13, 2012 at 09:57:37AM +0100, Matthias Weckbecker wrote:
+> > I'm a member of the SUSE Security Team. I joined the team in August 2011. 
+> > 
+> > Could you possibly subscribe me to the linux-distros list too, please? I'm 
+> > CC'ing Marcus Meissner (manager of the SUSE Security Team) and Thomas Biege
+> > (project manager security).
+> > 
+> >  pub   4096R/EA16D1D2 2011-07-27
+> >        Key fingerprint = D3B4 1D62 7C6A 2FFF B764  2BFA E4A4 9B9D EA16 D1D2
+> >  uid                  Matthias Weckbecker <mweckbecker@...e.de>
+> >  sub   4096R/1FBE90CA 2011-07-27
+...
+> I confirm that Matthias is member of my team.
 
-This issue is without 2011 CVE. Could we assign one, thanks?
+Marcus, I assume that you also meant to confirm that Matthias should be
+subscribed.  So I've just subscribed Matthias.
 
-Original advisory: http://www.ihteam.net/advisory/bsuite-wordpress-permanent-xss/
-OSVDB: http://osvdb.org/74046
-Secunia: SA45234
-Discussion: http://wordpress.org/support/topic/plugin-bsuite-xss-security-vulnerability-in-407
+(As we've seen from Gentoo's example, which I appreciated, a distro may
+reasonably delegate just a few representatives from their security team
+to also be on the distros list.  So these are distinct things.)
 
-Fixed in SVN revision 520611.
-
-- Henri Salo
-
-svn diff -r520603:520611
-Index: ui_stats.php
-===================================================================
---- ui_stats.php        (revision 520603)
-+++ ui_stats.php        (revision 520611)
-@@ -243,7 +243,7 @@
-
- if( count( $results ) )
-        foreach( $results as $res )
--               echo '<li><a href="'. $res->name .'">'. wordwrap( urldecode( str_replace( get_settings( 'siteurl' ), '', $res->name )), 25, "\n", TRUE ) .'</a><br><small>Avg: '. number_format( $res->hit_avg ) .' Total: '. number_format( $res->hit_count ) ."</small></li>\n";
-+               echo '<li><a href="'. sanitize_url( $res->name ).'">'. wordwrap( htmlspecialchars( urldecode( str_replace( get_settings( 'siteurl' ), '', $res->name ))), 25, "\n", TRUE ) .'</a><br><small>Avg: '. number_format( $res->hit_avg ) .' Total: '. number_format( $res->hit_count ) ."</small></li>\n";
- else
-        echo '<li>No Data Yet.</li>';
-
-@@ -276,7 +276,7 @@
- if( count( $results ) )
-        foreach( $results as $res ){
-                if( 1 == $res->object_type )
--                       echo '<li><a href="'. $res->name .'">'. wordwrap( urldecode( str_replace( get_settings( 'siteurl' ), '', $res->name )), 25, "\n", TRUE ) .'</a><br><small>'. number_format( $res->hit_count ) .' hits since '. $res->date_min .'</small></li>';
-+                       echo '<li><a href="'. sanitize_url( $res->name ) .'">'. wordwrap( htmlspecialchars( urldecode( str_replace( get_settings( 'siteurl' ), '', $res->name ))), 25, "\n", TRUE ) .'</a><br><small>'. number_format( $res->hit_count ) .' hits since '. $res->date_min .'</small></li>';
-                else
-                        echo '<li><a href="'. get_permalink( $res->object_id ) .'">'. wordwrap( get_the_title( $res->object_id ), 25, "\n", TRUE ) .'</a><br><small>'. number_format( $res->hit_count ) .' hits since '. $res->date_min .'</small></li>';
- }else{
-Index: bsuite.php
-===================================================================
---- bsuite.php  (revision 520603)
-+++ bsuite.php  (revision 520611)
-@@ -3,7 +3,7 @@
- Plugin Name: bSuite
- Plugin URI: http://maisonbisson.com/bsuite/
- Description: Stats tracking, improved sharing, related posts, CMS features, and a kitchen sink. <a href="http://maisonbisson.com/bsuite/">Documentation here</a>.
--Version: 5 alpha 2
-+Version: 5 alpha 3
- Author: Casey Bisson
- Author URI: http://maisonbisson.com/blog/
- */
-Index: readme.txt
-===================================================================
---- readme.txt  (revision 520603)
-+++ readme.txt  (revision 520611)
-@@ -4,7 +4,7 @@
- Tags: cms, content management, tags, stats, statistics, formatting, pages, widgets, related posts, keyword searching, post, posts, page, pages, admin, related content
- Requires at least: 3.2
- Tested up to: 3.3.1
--Stable tag: 5a2
-+Stable tag: trunk
-
- A suite of tools used to help surface interesting and popular stories as well as improve WordPress' CMS capabilities as an application platform.
+Alexander
