@@ -1,99 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/5
-Message-ID: <20120306133042.GA13665@foo.fgeek.fi>
-Date: Tue, 6 Mar 2012 15:30:42 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/14/3
+Message-ID: <1329233831.27728.3.camel@surprise>
+Date: Tue, 14 Feb 2012 10:37:09 -0500
+From: David Malcolm <dmalcolm@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: Joomla! Security News 2012-03
+Cc: Kurt Seifried <kseifried@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Daniel Callaghan <dcallagh@...hat.com>
+Subject: Re: CVE Request -- python (SimpleXMLRPCServer): DoS (excessive CPU usage) via malformed XML-RPC / HTTP POST request
 Content-Type: text/plain; charset=utf-8
 
-Can I get two CVE-identifiers for these security vulnerabilities listed below.
+On Tue, 2012-02-14 at 12:13 +0100, Jan Lieskovsky wrote:
+> Hello vendors,
+> 
+>    just FYI, this issue affected also upstream
+> PyPy v1.6 and v1.8 versions. Relevant upstream bug
+> being here:
+> https://bugs.pypy.org/issue1047
+...and almost certainly 1.7 also, probably earlier versions also: 1.6
+and 1.8 were the only versions I had to hand and checked.
 
-http://developer.joomla.org/security/news/392-20120302-core-xss-vulnerability.html
-http://developer.joomla.org/security/news/391-20120301-core-sql-injection.html
-
-- Henri Salo
-
------ Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
-
-Date: Tue, 06 Mar 2012 13:18:34 +0000
-From: Joomla! Developer Network - Security News <no_reply@...mla.org>
-To: henri@...v.fi
-Subject: Joomla! Security News
-
-Joomla! Developer Network - Security News
-
-///////////////////////////////////////////
-[20120302] - Core - XSS Vulnerability
-
-Posted: 05 Mar 2012 06:00 AM PST
-http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/hpSgU9ABRDc/392-20120302-core-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
+[PyPy embeds a copy of CPython's standard library, which it mostly uses
+as is, overriding a few things here and there]
 
 
-Project: Joomla!
-SubProject: All
- Severity: Moderate
-Versions: 2.5.1 and 2.5.0
-Exploit type: XSS Vulnerability
-Reported Date: 2012-February-29
-Fixed Date: 2012-March-05
-
-Description
-
-Inadequate filtering leads to XSS vulnerability.
-Affected Installs
-
-Joomla! version 2.5.1 and 2.5.0.
-Solution
-
-Upgrade to version 2.5.2
-
-Reported by Phil Purviance
-Contact
-
-The JSST at the Joomla! Security Center.
-
-
-
-///////////////////////////////////////////
-[20120301] - Core - SQL Injection
-
-Posted: 05 Mar 2012 06:00 AM PST
-http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/L_dDHx34L4A/391-20120301-core-sql-injection.html?utm_source=feedburner&utm_medium=email
-
-
-Project: Joomla!
-SubProject: All
- Severity: High
-Versions: 2.5.1, 2.5.0 and 1.7.0 - 1.7.4
-Exploit type: SQL Injection
-Reported Date: 2012-February-29
-Fixed Date: 2012-March-05
-
-Description
-
-Inadequate escaping leads to SQL injection vulnerability.
-Affected Installs
-
-Joomla! version 2.5.1, 2.5.0, 1.7.4, and all earlier 1.7.x versions
-Solution
-
-Upgrade to version 2.5.2
-
-Reported by Colin Wong
-Contact
-
-The JSST at the Joomla! Security Center.
-
-
-
---
-You are subscribed to email updates from "Joomla! Developer Network -
-Security News."
-To stop receiving these emails, you may unsubscribe now: http://feedburner.google.com/fb/a/mailunsubscribe?k=JWlBXz9w0F12fWtPu46jwc9_Jcc
-
-Email delivery powered by Google.
-Google Inc., 20 West Kinzie, Chicago IL USA 60610
-
-
------ End forwarded message -----
