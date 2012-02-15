@@ -1,39 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/14
-Message-ID: <4F4D56EC.5020407@redhat.com>
-Date: Tue, 28 Feb 2012 15:36:28 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/15/2
+Message-ID: <4F3C39AB.5040900@redhat.com>
+Date: Wed, 15 Feb 2012 16:03:07 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: CVE request: openssl: null pointer dereference issue
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: mumble local information disclosure
 Content-Type: text/plain; charset=utf-8
 
-On 02/27/2012 10:17 AM, Kurt Seifried wrote:
-> On 02/27/2012 07:42 AM, Matthias Weckbecker wrote:
->> Hi Kurt, Steve, vendors,
->>
->> bad S/MIME messages with crafted MIME headers can result in a NULL pointer 
->> dereference in openssl's ans1 parser,
->>
->>  https://bugzilla.novell.com/show_bug.cgi?id=748738
->>  http://www.mail-archive.com/openssl-dev@openssl.org/msg30305.html
->>  http://cvs.openssl.org/chngview?cn=22144
->>
->> Does it qualify for a CVE?
->>
->> Thanks, Matthias
+On 02/15/2012 03:09 PM, Vincent Danen wrote:
+> It was discovered that mumble created its database file
+> (~/.local/share/data/Mumble/.mumble.sqlite) with insecure world-readable
+> permissions.  If the user had (non-default) permissions on their home
+> directory, another local user could obtain password and configuration
+> settings from the database file.
 > 
-> Ok did some more research and here's what we got:
+> This has been corrected in upstream git and is reported as affecting
+> 1.2.3 and earlier.
 > 
-> First mention of this bug is in 2006:
+> Could a CVE be assigned to this flaw?
 > 
-> http://marc.info/?l=openssl-dev&m=115685408414194&w=2
+> References:
 > 
-> So please use CVE-2006-7248 for this issue.
+> https://bugs.launchpad.net/ubuntu/+source/mumble/+bug/783405
+> https://github.com/mumble-voip/mumble/commit/5632c35d6759f5e13a7dfe78e4ee6403ff6a8e3e
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=791000
+> http://bugs.gentoo.org/show_bug.cgi?id=403939
+> 
 
-Due to the Novell/kadu miss-paste this CVE needs to be re-issued. Please
-use CVE-2006-7250 for this OpenSSL issue.
-
+Please use CVE-2012-0863 for this issue.
 
 -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
