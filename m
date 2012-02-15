@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/13
-Message-ID: <4F036D6A.2090202@redhat.com>
-Date: Tue, 03 Jan 2012 14:04:42 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/15/1
+Message-ID: <20120215220912.GR15310@redhat.com>
+Date: Wed, 15 Feb 2012 15:09:12 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: maradns hash table collision cpu dos
+Subject: CVE request: mumble local information disclosure
 Content-Type: text/plain; charset=utf-8
 
-On 01/03/2012 12:04 PM, Vincent Danen wrote:
-> * [2012-01-03 20:52:09 +0200] Henri Salo wrote:
->
->> On Tue, Jan 03, 2012 at 11:42:44AM -0700, Vincent Danen wrote:
->>> MaraDNS has released an updated version to fix this hash table
->>> collision
->>> DoS.  Could a CVE be assigned to it?
->>>
->>> References:
->>>
->>> http://samiam.org/blog/20111229.html
->>> http://samiam.org/blog/20111230.html
->>> https://bugzilla.redhat.com/show_bug.cgi?id=771428
->>>
->>> Thanks.
->>>
->>> -- 
->>> Vincent Danen / Red Hat Security Response Team
->>
->> Please note: http://www.openwall.com/lists/oss-security/2012/01/02/12
->
-> Ahh, I hadn't seen that one yet.  Thanks, Henri.  The title in that
-> email isn't overly descriptive which is why I didn't notice it (holiday
-> mail catchup swamping everything).
->
-Place holder to complete this thread:
+It was discovered that mumble created its database file
+(~/.local/share/data/Mumble/.mumble.sqlite) with insecure world-readable
+permissions.  If the user had (non-default) permissions on their home
+directory, another local user could obtain password and configuration
+settings from the database file.
 
-This issue was previously assigned CVE-2012-0024
+This has been corrected in upstream git and is reported as affecting
+1.2.3 and earlier.
+
+Could a CVE be assigned to this flaw?
+
+References:
+
+https://bugs.launchpad.net/ubuntu/+source/mumble/+bug/783405
+https://github.com/mumble-voip/mumble/commit/5632c35d6759f5e13a7dfe78e4ee6403ff6a8e3e
+https://bugzilla.redhat.com/show_bug.cgi?id=791000
+http://bugs.gentoo.org/show_bug.cgi?id=403939
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
