@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/29/3
-Message-ID: <87zk5dy3dl.fsf@mid.deneb.enyo.de>
-Date: Wed, 29 Aug 2012 20:11:50 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2012-3509: objalloc_alloc integer overflows in libiberty
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/16/1
+Message-ID: <4F3D144B.9000709@suse.de>
+Date: Thu, 16 Feb 2012 15:35:55 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com, Vincent Untz <vuntz@...nsuse.org>
+Subject: Re: CVE request: mumble local information disclosure
 Content-Type: text/plain; charset=utf-8
 
-Sang Kil Cha discovered that _objalloc_alloc does not guard the
-addition of CHUNK_HEADER_SIZE to the length against overflow.  This
-can cause _objalloc_alloc to return a pointer to a memory region which
-is smaller than expected.
+Vincent Danen wrote:
+> It was discovered that mumble created its database file
+> (~/.local/share/data/Mumble/.mumble.sqlite) with insecure world-readable
+> permissions.  If the user had (non-default) permissions on their home
+> directory, another local user could obtain password and configuration
+> settings from the database file.
 
-The pointer alignment arithmetic in the objalloc_alloc macro misses an
-overflow check as well, with similar consequences.
+It certainly makes sense for cautios applications to make sure sensitive
+settings have restricted access permissions. Question is whether it is
+actually a vulnerability if they don't. Quoting the XDG spec¹
 
-GCC bug:
+| If, when attempting to write a file, the destination directory is
+| non-existant an attempt should be made to create it with permission
+| 0700. If the destination directory exists already the permissions should
+| not be changed.
 
-http://gcc.gnu.org/bugzilla/show_activity.cgi?id=54411
+So it could be argued that mumble just relied on the specification that
+already mandates restrictive permissions on ~/.config.
 
-Patch under review:
+The program that is supposed to create ~/.config on login had a bug that
+made the dir 755 in violation of the spec². Fixing the permissions is
+not allowed according to the spec though ...
 
-http://gcc.gnu.org/ml/gcc-patches/2012-08/msg01986.html
+cu
+Ludwig
 
-(I believe GCC has the master copy of this file, but does not use it
-itself.  libiberty is part of binutils and GDB, too.)
+[1] http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+[2] https://bugs.freedesktop.org/show_bug.cgi?id=36773
+
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
