@@ -1,80 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/18/1
-Message-ID: <4F3F311A.2060902@redhat.com>
-Date: Fri, 17 Feb 2012 22:03:22 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: YGN Ethical Hacker Group <lists@...g.net>
-Subject: Re: CubeCart 3.0.20 (3.0.x) and lower | Open URL Redirection Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/17/2
+Message-ID: <4F3E7EAC.208@redhat.com>
+Date: Fri, 17 Feb 2012 17:22:04 +0100
+From: Stefan Cornelius <scorneli@...hat.com>
+To: "" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE-2012-0864 assignment notification -- glibc F_S format string protection bypass via "nargs" integer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 02/16/2012 04:27 PM, YGN Ethical Hacker Group wrote:
-> Not Affective.
->
-> The version 4 and 5 have their own issues which we'll publish after
-> vendor has fixed.
->
->
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
->
->
->
-> On Mon, Feb 13, 2012 at 11:58 PM, Kurt Seifried <kseifried@...hat.com> wrote:
->> On 02/12/2012 08:08 AM, YGN Ethical Hacker Group wrote:
->>> 1. OVERVIEW
->>>
->>> The CubeCart 3.0.20 and lower versions are vulnerable to Open URL Redirection.
->>>
->>>
->>> 2. BACKGROUND
->>>
->>> CubeCart is an "out of the box" ecommerce shopping cart software
->>> solution which has been written to run on servers that have PHP &
->>> MySQL support. With CubeCart you can quickly setup a powerful online
->>> store which can be used to sell digital or tangible products to new
->>> and existing customers all over the world.
->>>
->>>
->>> 3. VULNERABILITY DESCRIPTION
->>>
->>> The CubeCart 3.0.20 and lower versions contain a flaw that allows a
->>> remote cross site redirection attack. This flaw exists because the
->>> application does not properly sanitise the parameters,"goto" and "r".
->>> This allows an attacker to create a specially crafted URL, that if
->>> clicked, would redirect a victim from the intended legitimate web site
->>> (domain.com) to an arbitrary web site (localhost) of the attacker's
->>> choice.
->>>
->>>
->>> 4. VERSIONS AFFECTED
->>>
->>> 3.0.20 and lower (aka 3.0.x family)
->>>
->>>
->>> 5. PROOF-OF-CONCEPT/EXPLOIT
->>>
->>> http://localhost/cube3.0.20/switch.php?r=//yehg.net/&lang=es
->>> http://localhost/cube3.0.20/admin/login.php?goto=//yehg.net
->>>
->>>
->>> 6. SOLUTION
->>>
->>> The CubeCart 3.0.x version family is no longer maintained by the vendor.
->>> Upgrade to CubeCart 4x/5.x.
->> Can you confirm that this issue is corrected/not present in version 4.x
->> and 5.x?
->>
->> --
->> Kurt Seifried Red Hat Security Response Team (SRT)
-Please use CVE-2012-0865 for this issue.
+Hi,
 
--- 
+In the Phrack article "A Eulogy for Format Strings", a researcher using
+nickname "Captain Planet" reported an integer overflow flaw in the
+format string protection mechanism offered by FORTIFY_SOURCE. A remote
+attacker could provide a specially crafted executable, leading to
+FORTIFY_SOURCE format string protection mechanism bypass, when executed.
 
--- Kurt Seifried / Red Hat Security Response Team
+References:
+http://www.phrack.org/issues.html?issue=67&id=9#article
 
+Red Hat bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=794766
+
+We have assigned CVE-2012-0864 to this issue.
+
+Upstream bug and Kees Cook's proposed patches:
+  http://sourceware.org/bugzilla/show_bug.cgi?id=13656
+  http://sourceware.org/ml/libc-alpha/2012-02/msg00023.html
+  http://sourceware.org/ml/libc-alpha/2012-02/msg00012.html
+  http://sourceware.org/ml/libc-alpha/2012-02/msg00073.html
+
+Thanks and kind regards,
+
+--
+Stefan Cornelius / Red Hat Security Response Team
