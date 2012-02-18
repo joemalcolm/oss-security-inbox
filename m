@@ -1,120 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/5
-Message-ID: <4F62A9D4.8090006@redhat.com>
-Date: Thu, 15 Mar 2012 20:47:48 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/18/1
+Message-ID: <4F3F311A.2060902@redhat.com>
+Date: Fri, 17 Feb 2012 22:03:22 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Mark Stanislav <mark.stanislav@...il.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Requests
+To: oss-security@...ts.openwall.com
+CC: YGN Ethical Hacker Group <lists@...g.net>
+Subject: Re: CubeCart 3.0.20 (3.0.x) and lower | Open URL Redirection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 03/15/2012 07:30 PM, Mark Stanislav wrote:
-> #1,2,3 are all included
-
-? Sorry but I have literally no idea what that means.
-
-> #4, each project is linked to where the code (both vulnerable and/or
-> fixed) lives
-> 
-> #5...
-> phpMoneyBooks, 1.0.2 and potentially prior versions
-> phpGradeBook, 1.9.4 and potentially prior versions
-> phpPaleo, 4.8b155 and potentially prior versions
-> hbportal, 0.1 and potentially prior versions
-> eticketing, no version numbering used *shrug*
-> 
-> #6 An e-mail was sent to cve@...re.org <mailto:cve@...re.org> 7 days ago
-> without response
-> #7 All open source
-> #8 Not embargoed
-
-I need the actual information for each one. Check out the nginx CVE
-request today for a good example.
-
-
-> I think that should do it.
-> 
-> -Mark
-> 
-> On Thu, Mar 15, 2012 at 8:22 PM, Kurt Seifried <kseifried@...hat.com
-> <mailto:kseifried@...hat.com>> wrote:
-> 
->     On 03/15/2012 01:18 PM, Mark Stanislav wrote:
->     > Howdy,
->     >
->     > I was looking to receive CVEs for the following...
->     >
->     > 1) phpMoneyBooks (http://phpmoneybooks.com/) has an
->     unauthenticated local
->     > file inclusion (LFI) vulnerability
->     > * Notified, Response Received, and Patch Released
->     >
->     > 2) phpGradeBook (http://phpgradebook.com/) has unauthenticated SQL
->     Database
->     > Exportation
->     > * Notified, Response Received, and Patch Released
->     >
->     > 3) phpPaleo (http://sourceforge.net/projects/phppaleo/) has an
->     > unauthenticated local file inclusion (LFI) vulnerability
->     > * Notified, Response Received, and Patch Released
->     >
->     > 4) hbportal (http://sourceforge.net/projects/hbportal/) has a
->     POST-based
->     > SQL injection vulnerability
->     > * Notified
->     >
->     > 5) e-ticketing (http://sourceforge.net/projects/e-ticketing/) has a
->     > POST-based SQL injection vulnerability
->     > * Notified & Response Received
->     >
->     > Thanks!
->     >
->     > -Mark
->     >
->     Removed the "no" this time to avoid ambiguity=)
-> 
->     More info would be helpful. Some draft guidelines:
-> 
->     Information for CVE request, REQUIRED:
-> 
->     1) Email address of requester (so we can contact them)
->     2) Software name and optionally vendor name
->     3) At least one of (to determine is this a security issue):
->      1. Type of vulnerability
->      2. Exploitation vectors
->      3. Attack outcome
->     4) For Open Source at least one of:
->      1. Link to vulnerable source code or fix
->      2. Link to source code change log
->      3. Link to security advisory
->      4. Link to bug entry
->      5. Request comes from project member (a.k.a. "trust me, it's a
->     problem")
->     5) Affected version(s) (3.2.4, 3.x, current version, all current
->     releases, something)
->     6) Whether or not this has been previously requested (i.e. on OSS-Sec or
->     to cve-assign)
->     7) Is this an Open Source or commercial software request
->     8) Is this an embargoed issue (if yes and commercial: send to
->     cve-assign, if yes and open source: send to vs-sec?)
->     9) IF multiple issues are listed please list affected versions for each
->     issue and/or who reported them (so we can determine CVE split/merge).
-> 
->     Information for CVE request, REQUESTED:
-> 
->     1) More of the above information of course
->     2) Software version(s) fixed (if available)
->     3) For closed source any of the information from "For Open Source at
->     least one of:"
->     4) Any additional information
-> 
-> 
->     --
-> 
->     -- Kurt Seifried / Red Hat Security Response Team
-> 
-> 
-
+On 02/16/2012 04:27 PM, YGN Ethical Hacker Group wrote:
+> Not Affective.
+>
+> The version 4 and 5 have their own issues which we'll publish after
+> vendor has fixed.
+>
+>
+> ---------------------------------
+> Best regards,
+> YGN Ethical Hacker Group
+> Yangon, Myanmar
+> http://yehg.net
+> Our Lab | http://yehg.net/lab
+> Our Directory | http://yehg.net/hwd
+>
+>
+>
+> On Mon, Feb 13, 2012 at 11:58 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+>> On 02/12/2012 08:08 AM, YGN Ethical Hacker Group wrote:
+>>> 1. OVERVIEW
+>>>
+>>> The CubeCart 3.0.20 and lower versions are vulnerable to Open URL Redirection.
+>>>
+>>>
+>>> 2. BACKGROUND
+>>>
+>>> CubeCart is an "out of the box" ecommerce shopping cart software
+>>> solution which has been written to run on servers that have PHP &
+>>> MySQL support. With CubeCart you can quickly setup a powerful online
+>>> store which can be used to sell digital or tangible products to new
+>>> and existing customers all over the world.
+>>>
+>>>
+>>> 3. VULNERABILITY DESCRIPTION
+>>>
+>>> The CubeCart 3.0.20 and lower versions contain a flaw that allows a
+>>> remote cross site redirection attack. This flaw exists because the
+>>> application does not properly sanitise the parameters,"goto" and "r".
+>>> This allows an attacker to create a specially crafted URL, that if
+>>> clicked, would redirect a victim from the intended legitimate web site
+>>> (domain.com) to an arbitrary web site (localhost) of the attacker's
+>>> choice.
+>>>
+>>>
+>>> 4. VERSIONS AFFECTED
+>>>
+>>> 3.0.20 and lower (aka 3.0.x family)
+>>>
+>>>
+>>> 5. PROOF-OF-CONCEPT/EXPLOIT
+>>>
+>>> http://localhost/cube3.0.20/switch.php?r=//yehg.net/&lang=es
+>>> http://localhost/cube3.0.20/admin/login.php?goto=//yehg.net
+>>>
+>>>
+>>> 6. SOLUTION
+>>>
+>>> The CubeCart 3.0.x version family is no longer maintained by the vendor.
+>>> Upgrade to CubeCart 4x/5.x.
+>> Can you confirm that this issue is corrected/not present in version 4.x
+>> and 5.x?
+>>
+>> --
+>> Kurt Seifried Red Hat Security Response Team (SRT)
+Please use CVE-2012-0865 for this issue.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+
+-- Kurt Seifried / Red Hat Security Response Team
+
