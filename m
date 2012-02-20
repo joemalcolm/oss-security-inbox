@@ -1,90 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/12/8
-Message-ID: <4FAEA098.1030801@redhat.com>
-Date: Sat, 12 May 2012 11:40:40 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/8
+Message-ID: <4F42BF89.5090509@redhat.com>
+Date: Mon, 20 Feb 2012 14:47:53 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: micah anderson <micah@...eup.net>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: sympa (try again)
+To: oss-security@...ts.openwall.com, muuratsalo experimental hack lab <muuratsalo@...il.com>, Ulli Horlacher <framstag@....uni-stuttgart.de>
+Subject: Re: Vulnerabilitites in Debian F*EX <= 20100208 and F*EX 20111129-2.
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/12/2012 09:27 AM, micah anderson wrote:
-> On Fri, 11 May 2012 23:58:33 -0600, Kurt Seifried
-> <kseifried@...hat.com> wrote:
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+On 02/20/2012 07:54 AM, Nico Golde wrote:
+> Hi, * Henri Salo <henri@...v.fi> [2012-02-20 14:16]:
+>> On Mon, Feb 20, 2012 at 01:15:10PM +0100, Nico Golde wrote:
+>>> * muuratsalo experimental hack lab <muuratsalo@...il.com>
+>>> [2012-02-20 12:51]:
+>>>> I am Nicola Fioravanti aka muuratsalo | muuratsalo
+>>>> experimental hack lab. I am writing you because I have
+>>>> discovered some vulnerabilities in Debian F*EX <= 20100208
+>>>> (stable) and F*EX 20111129-2. (testing and unstable) I have
+>>>> already contacted the Author who confirmed the
+>>>> vulnerabilities and applied the suggested fixes. A major
+>>>> update of F*EX  has been released on the 15th of February 
+>>>> 2012. The Debian Mantainer of the package is working on it. 
+>>>> Together with the Author we decided not to release any public
+>>>> advisory before the release of the new Debian package.
+>>>> 
+>>>> I would be grateful if you could assign CVE ids to the
+>>>> discovered issues.
+>>> 
+>>> I asked Nicola to send this to oss-security as the impact of
+>>> this bug is fairly low in my opinion and the issue is public
+>>> via the upstream changelog.
+>>> 
+>>> Can someone please assign a CVE id to this? Given that all of
+>>> the vulnerable input parameters are in the fup component, I
+>>> guess one id should be sufficient.
 >> 
->> On 05/11/2012 12:03 PM, micah wrote:
->>> 
->>> Hi,
->>> 
->>> Please assign a CVE for Sympa, any version prior to 6.1.11. It
->>> is possible to open the archive management ("arc_manage") page
->>> for any list, even those set to only be available to members,
->>> giving anyone the option to download the archive, or delete the
->>> archive.
->>> 
->>> http://www.sympa.org/distribution/latest-stable/NEWS 
->>> https://sourcesup.renater.fr/scm/viewvc.php/branches/sympa-6.0-branch/wwsympa/wwsympa.fcgi.in?root=sympa&r1=6706&r2=7358&pathrev=7358
-
-Please
->>> 
-use CVE-2012-2352 for this issue.
-
-
->>> thank you, micah
->>> 
->>> ps - for some reason the previous message is formatted strange,
->>> so I'm sending this one without the signature
->>> 
->> 
->> Ok I see this one and several more:
->> 
->> ================================
->> 
->> 6.1.11		May 11, 2012 Bug fixes: [7358] wwsympa/wwsympa.fcgi.in:
->> Fixing a potential security issue related to archives
->> 
->> Can you confirm these and I will assign CVE's for the outstanding
->> issues.
+>> Is there a Debian bug-report about this issue?
 > 
-> I am only able to confirm the above issue, I am not a sympa
-> developer I just was involved in the above issue.
-
-Ok I will assign one for the above.
-
-> What sort of 'confirmation' are you looking for? It seems like the 
-> changelog entries are pretty good confirmation. Perhaps you are
-> looking for more details of the issues, those you could obtain from
-> the sympa list.
-
-Ideally links to code commits like you included in your request =).
-
+> Yes, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=660621
 > 
-> micah
+> Cheers Nico P.S. the bug report does not mention the other
+> vulnerable parameters as I forgot those
+
+Please use CVE-2012-0869 for this issue.
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPrqCUAAoJEBYNRVNeJnmTPwsQALprGRr5jh+S8wpr07iyE5Cl
-HUJ9nwiG4odTZQfelpbEsicnozB3r5DiI1tWIa9gXJHMEiczYA8SfqDYcGD4AnBu
-YhW3u7UyRrXlkEM8Yr5lQKynoTERkuninY7jsAwp9M1mzzjzv2uy9PEjQflnxkNG
-/N7ZBKykn/oNV3CGMT5+rtzCYwVUpygvr8cBQwK+WXKEJ+RQk+RS8h0cDb94krCi
-he4bNZVE/Y10p18L9n+SbhfdNrO4Sbk8GiPurTurs7SrZWh0JD8Lm+UITkx2vKg1
-42NtRap3o63Zm0Zv1E+lWeM0htO2Cy27A5vWDUprSB7U3yCtaUMIuPijfzmcwjDv
-ekoky5OYS/KRs+VFti+VtAM1pQllJcHu9MvzSBKmq39cC0+/nmygqjxTTVDcaMRB
-cneg4A9RL2UxehnastMRqtkOwk7W08AqallDHOTH6tQrDRT0rE1x85sHjdtY7P/0
-jwRA9wRnik+Qov4p6W6l20a0KktW/vhI9Z8GjxOJVG5qxHW39Cgyj79P4hLi5g+G
-tKnVkacl74ZZ/WtzgpY4Q1pHDA3mvYLPlCrumh44wt+LCm1i1ckm+jmJzpxhTlm9
-R4/yvtbEJkETSEm8VmpHPapqmA+DDwvICHBMERbeMEYzN5WFKRY8754kVBQSs2L4
-LXwLGYWEaBVjm493VZCL
-=w6V5
+iQIcBAEBAgAGBQJPQr+JAAoJEBYNRVNeJnmTaCYP/0b0UCGGXin+UOg9DJRAwp+k
+yhFzpTDSF5MAR2cxpTNO5mwWKJTr5Z1BYJpPehsLjW4CEd48toY40PAimR6kKuT7
+sSgOKHKGrxiuZmKYWNI6PYs5oXEkdH/4KPofECeKDki9bKnvMWp1n0t34j3QSnew
+WhmRpmEsFgCwpBOTCX6RXQu+nTiolrf+xdUSTS6LN6BL29m3Q7rF5VhLcurrLZD6
+FkoZjOCK6WEoUQ7G1IiiXGaT7WU2Pm723TW+BoetsvWD9fd7GdXBjur2lie+n4cp
+4X2joF5iXA7fTiHyfE073ytNIuW8ffRaydOZtXieyMQL0hCwhKNjtrehkz9DmlBC
+1g7gMxx/2V7P5pRXYkBoIs0WY3yP/Q9CHNvr7CsMxgfeJqVsKIW+wQqzx8KZHdbn
+YXyAJLdrW9+TSpV4y19mWb6kzm0jlaADBv1id7lFDXO1ToKjFMEREBP7SQudYNYV
+EJ4PzSxgXmP0yBJ4c66/jR5mZcD9MWtfYv1rKkfcJNSqNse+F+Hx/JW3WvXkQGTV
+vIPyHimgdQtKGvkBvcwd7Fr2gItk8bdqPsOARpBFVWppA6gsQ++ZkKKJPyyqEwul
+fpgUJcrKcJUrtq0/+HKUwf+l0RfUzCRKJd2Mjeuo8vNgWDzS5vpiHXICAdWl7CSk
+4UDyYOkljl/rOKJYV8/t
+=MISI
 -----END PGP SIGNATURE-----
