@@ -1,41 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/2
-Message-ID: <4F4DF463.1050303@suse.de>
-Date: Wed, 29 Feb 2012 10:48:19 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/11
+Message-ID: <4F42D1D9.1060102@redhat.com>
+Date: Mon, 20 Feb 2012 16:06:01 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Dan Williams <dcbw@...hat.com>
-Subject: CVE Request: NetworkManager arbitrary file access
+CC: YGN Ethical Hacker Group <lists@...g.net>, full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>, secalert@...urityreason.com, bugs@...uritytracker.com, vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com, moderators@...db.org, submissions@...ketstormsecurity.org, submit@...ecurity.com
+Subject: Re: Dolphin 7.0.7 <= Multiple Cross Site Scripting Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 02/20/2012 10:05 AM, YGN Ethical Hacker Group wrote:
+> 1. OVERVIEW
+> 
+> Dolphin 7.0.7 and lower versions are vulnerable to Cross Site Scripting.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Dolphin is the only "all-in-one" free community software platform for
+> creating your own social networking, community or online dating site
+> without any limits and under your full control. Dolphin comes with
+> hundreds of features, module plugins and tools. Everything is included
+> and extension posibilities are literally endless. You can use it for
+> free with a BoonEx link in the footer or buy a $99 permanent license
+> to remove that requirement.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> Multiple parameters (explain,photos_only,online_only,mode) were not
+> properly sanitized, which allows attacker to conduct Cross Site
+> Scripting attack. This may allow an attacker to create a specially
+> crafted URL that would execute arbitrary script code in a victim's
+> browser.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> 7.0.7 and lower
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> Vulnerable Parameter: explain
+> 
+> http://localhost/dolph/explanation.php?explain=%27%22%3E%3Cscript%3Ealert%28/xss/%29%3C/script%3E
+> 
+> 
+> Vulnerable Parameters: photos_only,online_only,mode
+> 
+> http://localhost/dolph/viewFriends.php?iUser=1&page=1&per_page=32&sort=activity&photos_only='"><script>alert(/xss/)</script>
+> 
+> http://localhost/dolph/viewFriends.php?iUser=1&page=1&per_page=32&sort=activity&online_only='"><script>alert(/xss/)</script>
+> 
+> http://localhost/dolph/viewFriends.php?iUser=1&page=1&sort=activity&mode='"><script>alert(/xss/)</script>
+> 
+> 
+> 6. SOLUTION
+> 
+> Upgade to the latest version of Dolphine.
+> 
+> 
+> 7. VENDOR
+> 
+> BoonEx Pty Ltd
+> http://www.boonex.com/
+> 
+> 
+> 8. CREDIT
+> 
+> Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2011-06-09: notified vendor
+> 2011-10-24: fixed version, 7.0.8, released
+> 2012-02-20: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/%5BDolphin_7.0.7%5D_xss
+> BoonEx Home Page: http://www.boonex.com/
+> 
+> 
+> #yehg [2012-02-20]
 
-Connections in NetworkManager 0.9 store path names to certificates and
-key files. That means NM (or rather wpa_supplicant which gets
-configured by NM) accesses the user's files as root. A user who is
-allowed to add connections (default for locally logged in users) may
-specify arbitrary file names. NM happily accepts files of any other
-user, including root and even device files. Fortunately it's read
-access only.
-
-The safe approach would be to stream the actual content of the
-certificate and key files to NM and have NM store that directly.
-In fact NM 0.7 does just that for system connections (but forgets to
-store the key so those connections won't actually work).
-
-NM 0.6 is also affected.
-
-Reproducer for NM 0.9 attached, you need to edit the file names and
-then run e.g.
-$ nmw.py new wlan0 yourssid
-
-cu
-Ludwig
+Please use CVE-2012-0873 for these XSS issues.
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
-
-View attachment "nmw.py" of type "text/x-python" (10004 bytes)
+Kurt Seifried Red Hat Security Response Team (SRT)
