@@ -1,57 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/29/4
-Message-ID: <CA+KYVfi9VmoT4QzAPsFNv1=nYe1yu8gWzWTYHHBzSUQXdKcEcA@mail.gmail.com>
-Date: Sat, 29 Sep 2012 18:18:21 -0400
-From: andi abes <andi.abes@...il.com>
-To: Russell Bryant <rbryant@...hat.com>
-Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: Re: [Openstack] [OSSA 2012-016] Token authorization for a user in a disabled tenant is allowed (CVE-2012-4457)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/4
+Message-ID: <20120220145449.GC15321@ngolde.de>
+Date: Mon, 20 Feb 2012 15:54:49 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Vulnerabilitites in Debian F*EX <= 20100208 and F*EX 20111129-2.
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Sep 29, 2012 at 1:28 PM, Russell Bryant <rbryant@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 09/29/2012 02:18 AM, Kurt Seifried wrote:
->> On 09/28/2012 05:56 PM, andi abes wrote:
->>> is the plan going forward to announce these on friday
->>> afternoons?
->>
->> I can't speak for OpenStack but the history of these vulns is that
->> they have been public since May 2012 and April 2012, but were not
->> labelled as security, they were noticed, CVE's were assigned and I
->> think the idea was to notify people quickly since they're have a
->> significant impact and have been around for a while.
->
-> Correct.  Normally, we only announce on Tuesday through Thursday.  In
-> the case of the two announced yesterday (Friday), these were issues
-> fixed a good while ago in the open so we were just now catching up and
-> labeling them properly.
->
+Hi,
+* Henri Salo <henri@...v.fi> [2012-02-20 14:16]:
+> On Mon, Feb 20, 2012 at 01:15:10PM +0100, Nico Golde wrote:
+> > * muuratsalo experimental hack lab <muuratsalo@...il.com> [2012-02-20 12:51]:
+> > > I am Nicola Fioravanti aka muuratsalo | muuratsalo experimental hack lab.
+> > > I am writing you because I have discovered some vulnerabilities in
+> > > Debian F*EX <= 20100208 (stable) and F*EX 20111129-2. (testing and
+> > > unstable)
+> > > I have already contacted the Author who confirmed the vulnerabilities
+> > > and applied the suggested fixes.
+> > > A major update of F*EX  has been released on the 15th of February
+> > > 2012. The Debian Mantainer of the package is working on it.
+> > > Together with the Author we decided not to release any public advisory
+> > > before the release of the new Debian package.
+> > > 
+> > > I would be grateful if you could assign CVE ids to the discovered issues.
+> > 
+> > I asked Nicola to send this to oss-security as the impact of this bug is 
+> > fairly low in my opinion and the issue is public via the upstream changelog.
+> > 
+> > Can someone please assign a CVE id to this? Given that all of the vulnerable 
+> > input parameters are in the fup component, I guess one id should be 
+> > sufficient.
+> 
+> Is there a Debian bug-report about this issue?
 
-indeed, they were fixed a while ago. It just required a mini
-fire-drill to verify that, and ensure the packages we are using in our
-deployments indeed had the fixes in. As you point out, the original
-problem report didn't have a CVE designation assigned, so the relevant
-commit messages and standard security tracking mechanisms didn't
-indicate the fixes are included.
-A fun way to spend a friday afternoon.
+Yes, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=660621
 
-IIRC,  per security process packages/distributors are notified before
-the CVE's are made public.  It would be a great fire-drill
-extinguisher if the CVE announcement provided a link to a centralized
-location (for the CVE) where packages maintainers could update the
-distribution information.
+Cheers
+Nico
+P.S. the bug report does not mention the other vulnerable parameters as I 
+forgot those
 
-> Thanks,
->
-> - --
-> Russell Bryant
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
->
-> iEYEARECAAYFAlBnL8MACgkQFg9ft4s9SAYz3wCfYo+RnuaEtkEtUGmczPwvQiSh
-> yc8An30yhBv+SA1HZxlF2D+gEEUeOM6R
-> =RMEV
-> -----END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
