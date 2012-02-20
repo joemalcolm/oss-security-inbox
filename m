@@ -1,25 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/12/1
-Message-ID: <20121012104306.3b3078e7@redhat.com>
-Date: Fri, 12 Oct 2012 10:43:06 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/3
+Message-ID: <20120220131318.GA15511@foo.fgeek.fi>
+Date: Mon, 20 Feb 2012 15:13:18 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: libproxy PAC downloading buffer overflows
+Subject: Re: Vulnerabilitites in Debian F*EX <= 20100208 and F*EX 20111129-2.
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Mon, Feb 20, 2012 at 01:15:10PM +0100, Nico Golde wrote:
+> Hi,
+> * muuratsalo experimental hack lab <muuratsalo@...il.com> [2012-02-20 12:51]:
+> > I am Nicola Fioravanti aka muuratsalo | muuratsalo experimental hack lab.
+> > I am writing you because I have discovered some vulnerabilities in
+> > Debian F*EX <= 20100208 (stable) and F*EX 20111129-2. (testing and
+> > unstable)
+> > I have already contacted the Author who confirmed the vulnerabilities
+> > and applied the suggested fixes.
+> > A major update of F*EX  has been released on the 15th of February
+> > 2012. The Debian Mantainer of the package is working on it.
+> > Together with the Author we decided not to release any public advisory
+> > before the release of the new Debian package.
+> > 
+> > I would be grateful if you could assign CVE ids to the discovered issues.
+> 
+> I asked Nicola to send this to oss-security as the impact of this bug is 
+> fairly low in my opinion and the issue is public via the upstream changelog.
+> 
+> Can someone please assign a CVE id to this? Given that all of the vulnerable 
+> input parameters are in the fup component, I guess one id should be 
+> sufficient.
+> 
+> Kind regards
+> Nico
+> -- 
+> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+> For security reasons, all text in this mail is double-rot13 encrypted.
 
-libproxy 0.4.9 fixes a buffer overflow reported by Tomas Mraz:
+Is there a Debian bug-report about this issue?
 
-http://code.google.com/p/libproxy/source/detail?r=853
-https://groups.google.com/forum/?fromgroups=#!topic/libproxy/VxZ8No7mT0E
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4504
-
-Upstream announcement also mentions another issue - CVE-2012-4505.  It
-is related, but different problem that was found in pre-0.4 versions
-while investigating if they were affected by CVE-2012-4504.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4505
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+- Henri Salo
