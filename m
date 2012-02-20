@@ -1,38 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/06/1
-Message-ID: <20121206005859.GM2689@redhat.com>
-Date: Wed, 5 Dec 2012 17:58:59 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/2
+Message-ID: <20120220121509.GK19343@ngolde.de>
+Date: Mon, 20 Feb 2012 13:15:10 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>, security-2012@...irrelmail.org
-Subject: Re: Strange CVE situation (at least one ID should come of this)
+Cc: Ulli Horlacher <framstag@....uni-stuttgart.de>
+Subject: Re: Vulnerabilitites in Debian F*EX <= 20100208 and F*EX 20111129-2.
 Content-Type: text/plain; charset=utf-8
 
-* [2012-12-03 22:26:29 -0700] Kurt Seifried wrote:
+Hi,
+* muuratsalo experimental hack lab <muuratsalo@...il.com> [2012-02-20 12:51]:
+> I am Nicola Fioravanti aka muuratsalo | muuratsalo experimental hack lab.
+> I am writing you because I have discovered some vulnerabilities in
+> Debian F*EX <= 20100208 (stable) and F*EX 20111129-2. (testing and
+> unstable)
+> I have already contacted the Author who confirmed the vulnerabilities
+> and applied the suggested fixes.
+> A major update of F*EX  has been released on the 15th of February
+> 2012. The Debian Mantainer of the package is working on it.
+> Together with the Author we decided not to release any public advisory
+> before the release of the new Debian package.
+> 
+> I would be grateful if you could assign CVE ids to the discovered issues.
 
->-----BEGIN PGP SIGNED MESSAGE-----
->Hash: SHA1
->
->On 10/26/2012 01:54 PM, Josh Bressers wrote:
->> Hello,
->>
->> This Squirrelmail plugin came to my attention a few weeks back:
->> http://squirrelmail.org/plugin_view.php?id=117
->>
->> It's from 2004, which is suspect in itself, but I took a look after
->> someone asked. It's pretty scary in there.
->>
->> If I was to list the security problems I found after a few minutes
->> of looking, they are:
->>
->> * It uses MD5 passwords
->
->Going with this one since there's a good number of MD5 related CVE's
->already.
->
->Please use CVE-2012-5623 for this issue.
+I asked Nicola to send this to oss-security as the impact of this bug is 
+fairly low in my opinion and the issue is public via the upstream changelog.
 
-Shouldn't this be a 2004 CVE, since it was fixed in 2004?
+Can someone please assign a CVE id to this? Given that all of the vulnerable 
+input parameters are in the fup component, I guess one id should be 
+sufficient.
 
+Kind regards
+Nico
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
