@@ -1,22 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/12
-Message-ID: <7287429.viJElHTH7h@devil>
-Date: Fri, 14 Sep 2012 20:49:34 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/7
+Message-Id: <201202201757.q1KHvmVY007264@eton.blue.cert.org>
+Date: Mon, 20 Feb 2012 12:53:15 -0500
+From: "CERT(R) Coordination Center" <cert@...t.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: bacula: Console ACL Bypass
+CC: "CERT(R) Coordination Center" <cert@...t.org>
+Subject: Bugs in "file" program VU#621745
 Content-Type: text/plain; charset=utf-8
 
-On Friday 14 September 2012 20:21:27 you wrote:
-> Patch: http://sourceforge.net/projects/bacula/files/bacula/5.2.11/0001-Fix-
-> bug-1932-director-crash.patch
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Wrong link.
-This is the right commit code:
-http://www.bacula.org/git/cgit.cgi/bacula/commit/?id=67debcecd3d530c429e817e1d778e79dcd1db905
+Hi folks,
 
--- 
-Agostino Sarubbo / ago -at- gentoo.org
-Gentoo/AMD64 Arch Security Liaison
-GPG: 0x7CD2DC5D
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+We recently pointed the CERT BFF at the ubiquitous "file" command and
+found a few bugs.  While we've not proven the bugs to be exploitable,
+we've also not ruled out the possibility that they could be.
+
+Fixes were committed on Feb 16, 2012:
+https://github.com/glensc/file/commits/master
+
+
+Thank you,
+   Will Dormann
+
+=============================
+Vulnerability Analyst
+CERT Coordination Center
+4500 Fifth Ave.
+Pittsburgh, PA 15213
+1-412-268-7090
+=============================
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iQEVAwUBT0KJh02poTkZov2QAQLBngf/ajLYJAfCtpF/KQy5/wqRghOVtTwB1O/i
+toZU5zE15t5MbY8Kmy85GUQsUUTH7tYlvJF83H7htD3eWCKveNM38rxB6ho6ZyPD
+b+m55l4VyTgGN9EJefzuqNk9spcUnsIfHSRMqT7VNdcr9+R18GQjE750FwW/nl7R
+KPJeoc96cA8Fvx+0kLSiYfJMmJL/SakC+4DjT9gEU774HlyMU14piny1i1a+nGAz
+I/KXcCHfM6xU/5po6MOH8RRgChZDzwz5Yw8m23oHc5YsxRyS1igrbEtwVFLYNbz9
+izWwIqde2wNxg3HsC0CYuhd49gxBf/gsG43OGMsfhV0tqtcjUnfgEw==
+=zqku
+-----END PGP SIGNATURE-----
