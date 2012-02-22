@@ -1,25 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/6
-Message-ID: <1328117400.27034.2.camel@scapa>
-Date: Wed, 01 Feb 2012 18:30:00 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/22/2
+Message-ID: <20120222170437.GR1289@redhat.com>
+Date: Wed, 22 Feb 2012 10:04:37 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request (two ids) -- Xchat-WDK (prior 1499-4 [2012-01-18]) and Xchat-v2.8.6 on Maemo architecture -- Heap-based buffer overflow by processing UTF-8 line from server containing characters outside BMP
+Cc: systemtap@...rceware.org
+Subject: CVE-2012-0875: systemtap memory disclosure/kernel panic when processing malformed DWARF unwind data
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2012-02-01 at 13:53 +0100, Berke Viktor wrote:
-> Hello,
-> 
-> Here are my notes:
-> 
-> - Apparently only Windows versions are affected, no Linux ones. I 
-> haven't tested Maemo but I'd be suprised if it would crash.
-> - Not all non-BMP characters crash, only a specific range. See the
-> patch 
-> you linked for details. 
+A flaw was discovered [1] in how systemtap handled DWARF expressions
+when unwinding the stack.  This could result in an invalid pointer read,
+leading to reading kernel memory, or a kernel panic (and if the kernel
+reboot on panic flag was set (panic_on_oops), it would cause the system
+to reboot).
 
-It did crash Maemo clients, that's where the report came from.
+In order to trigger this flaw, an admin would have to enable
+unprivileged mode (giving users membership in the 'stapusr' group and
+configuring the local machine with 'signer,all-users' stap-server
+trust). If an admin has enabled unprivileged mode, a user with such
+access could use this to crash the local machine.
+
+A workaround is to disable unprivileged mode.
+
+This will be corrected in a forthcoming upstream release of systemtap,
+and is currently fixed in git [2].  It is believed that this flaw was
+introduced via git commit 16d59279f [3], so would affect systemtap >=
+1.4.
+
+[1] http://sourceware.org/bugzilla/show_bug.cgi?id=13714
+[2] http://sourceware.org/git/?p=systemtap.git;a=commit;h=64b0cff3b
+[3] http://sourceware.org/git/?p=systemtap.git;a=commit;h=16d59279f
+
+This is tracked in the Red Hat bugzilla via:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-0875
+
+and is assigned the name CVE-2012-0875.
+
 -- 
-Yves-Alexis
+Vincent Danen / Red Hat Security Response Team 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Content of type "application/pgp-signature" skipped
