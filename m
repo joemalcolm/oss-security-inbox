@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/1
-Message-ID: <4F15275E.8030700@redhat.com>
-Date: Tue, 17 Jan 2012 13:16:38 +0530
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/22/1
+Message-ID: <4F4480C4.90606@redhat.com>
+Date: Wed, 22 Feb 2012 11:14:36 +0530
 From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: Wireshark multiple vulnerabilities
+Subject: libxml2: hash table collisions CPU usage DoS
 Content-Type: text/plain; charset=utf-8
 
-On 01/16/2012 01:19 AM, Kurt Seifried wrote:
->
-> I agree in principle, however in practice this is a lot of work (as you
-> well know =). I guess my question/concern would be is who does the
-> research to verify all this, and what if it varies by version (i.e. it
-> is 6 separate issues in an older version but the newer version combined
-> some code into a common library for example so it's only a single issue,
-> but with multiple avenues of attack/etc.). In other words a lot of
-> potential work.
+Juraj Somorovsky reported that certain XML parsers/servers are affected 
+by the same, or similar, flaw as the hash table collisions CPU usage 
+denial of service.  Sending a specially crafted message to an XML 
+service can result in longer processing time, which could lead to a 
+denial of service.  It is reported that this attack on XML can be 
+applied on different XML nodes (such as entities, element attributes, 
+namespaces, various elements in the XML security, etc.).
 
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=787067
+https://rhn.redhat.com/errata/RHSA-2012-0324.html
 
-I did some research, with details available at:
-https://bugzilla.redhat.com/show_bug.cgi?id=773726#c2 and
-https://bugzilla.redhat.com/show_bug.cgi?id=773726#c3
+Patch:
+http://git.gnome.org/browse/libxml2/commit/?id=8973d58b7498fa5100a876815476b81fd1a2412a
 
-In my opinion only 1 and 2 (ie ws bug 6663 and ws bug
-6670) should be allocated a CVE.
-
-Others are application crashes.
-
-
+This has been assigned CVE-2012-0841
 
 
 -- 
