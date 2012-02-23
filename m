@@ -1,32 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/5
-Message-ID: <20121229103143.GA3201@elende>
-Date: Sat, 29 Dec 2012 11:31:43 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/23/4
+Message-ID: <4F46B3D5.6090809@redhat.com>
+Date: Thu, 23 Feb 2012 14:47:01 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: team@...urity.debian.org
-Subject: Inkscape reads .eps files from /tmp instead of the current directory
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Clay Gerrard <clay.gerrard@...il.com>, Ian Bicking <ianbicking@...il.com>, Jan Pokorny <jpokorny@...hat.com>, David Malcolm <dmalcolm@...hat.com>, Luke Macken <lmacken@...hat.com>
+Subject: Re: CVE Request -- python-paste-script: Supplementary groups not dropped when started an application with "paster serve" as root
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 02/23/2012 10:05 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+>   a security flaw was found in the way Paster, a pluggable command-line
+> frontend,
+> when started as root (for example to have access to privileged port) to
+> serve a
+> web based application, performed privileges dropping upon startup
+> (supplementary groups were not dropped properly regardless of the UID, GID
+> specified in the .ini configuration file or in the --user and --group CL
+> arguments). A remote attacker could use this flaw for example to read /
+> write
+> root GID accessible files, if the particular web application provided
+> remote
+> means for local file manipulation.
+> 
+> Credit / Issue Reported by: Clay Gerrard
+> 
+> References:
+> [1]
+> http://groups.google.com/group/paste-users/browse_thread/thread/2aa651ba331c2471
+> 
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=796790
+> 
+> Patch proposed by the issue reporter:
+> [3]
+> https://bitbucket.org/ianb/pastescript/pull-request/3/fix-group-permissions-for-pastescriptserve
+> 
+> 
+> Upstream patch:
+> [4] https://bitbucket.org/ianb/pastescript/changeset/a19e462769b4
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Going trough some bugreports in Debian I noticed [1], [2] I haven't
-found a CVE for "Inkscape reads .eps files from /tmp instead of the
-current directory".
+Please use CVE-2012-0878 for this issue.
 
-If one has file foo.eps in current directory, and /tmp/foo.eps is
-present
-
- $ inkscape foo.eps
-
-opens the copy in /tmp/foo.eps
-
-Does this warrants a CVE? If so could you assign one?
-
- [1]: http://bugs.debian.org/654341
- [2]: https://bugs.launchpad.net/inkscape/+bug/911146
-
-Regards,
-Salvatore
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
