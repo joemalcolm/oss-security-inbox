@@ -1,38 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/31/7
-Message-ID: <Pine.GSO.4.64.1201311018490.24478@faron.mitre.org>
-Date: Tue, 31 Jan 2012 10:23:10 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-cc: Nanakos Chrysostomos <nanakos@...ed-net.gr>, Kurt Seifried <kseifried@...hat.com>, Jonathan Wiltshire <jmw@...ian.org>, "team@...urity.debian.org" <team@...urity.debian.org>
-Subject: Re: Re: Yubiserver package ships with pre-filled identities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/23/1
+Message-ID: <4F4671C2.8090407@redhat.com>
+Date: Thu, 23 Feb 2012 18:05:06 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Clay Gerrard <clay.gerrard@...il.com>, Ian Bicking <ianbicking@...il.com>, Jan Pokorny <jpokorny@...hat.com>, David Malcolm <dmalcolm@...hat.com>, Luke Macken <lmacken@...hat.com>
+Subject: CVE Request -- python-paste-script: Supplementary groups not dropped when started an application with "paster serve" as root
 Content-Type: text/plain; charset=utf-8
 
+Hello Kurt, Steve, vendors,
 
-On Tue, 31 Jan 2012, Gian Piero Carrubba wrote:
+   a security flaw was found in the way Paster, a pluggable command-line frontend,
+when started as root (for example to have access to privileged port) to serve a
+web based application, performed privileges dropping upon startup
+(supplementary groups were not dropped properly regardless of the UID, GID
+specified in the .ini configuration file or in the --user and --group CL
+arguments). A remote attacker could use this flaw for example to read / write
+root GID accessible files, if the particular web application provided remote
+means for local file manipulation.
 
-> More generally, in a 2FA environment, a default account in yubiserver 
-> could lessen the security level but should not expose a straight attack 
-> vector.
+Credit / Issue Reported by: Clay Gerrard
 
-If a security feature is less strong than advertised (or less strong than 
-its user may reasonably assume), then this is enough to qualify for CVE.
+References:
+[1] http://groups.google.com/group/paste-users/browse_thread/thread/2aa651ba331c2471
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=796790
 
-> Problem arises when a user doesn't check the account db [0] and blindly 
-> trust the results of key validation, possibly automatically mapping 
-> successfully validated keys to default users. I doubt this can happen 
-> for system logins, unless something is seriously wrong, but there are 
-> other resources for whose I think this scenario is plausible (i.e. 
-> authentication to a proxy server or granting access to a network 
-> segment).
+Patch proposed by the issue reporter:
+[3] https://bitbucket.org/ianb/pastescript/pull-request/3/fix-group-permissions-for-pastescriptserve
 
-Since there are plausible scenarios in which the feature could be misused, 
-this also seems to qualify for a CVE.
+Upstream patch:
+[4] https://bitbucket.org/ianb/pastescript/changeset/a19e462769b4
 
-> To be honest, issuing a CVE seems a bit overkilling to me.
+Could you allocate a CVE id for this?
 
-CVE doesn't cover just the most serious vulnerabilities out there. While 
-the circumstances might be rare, and it's not as serious as other 
-problems, it's still "bad enough" that some consumers would care about it.
-
-- Steve
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
