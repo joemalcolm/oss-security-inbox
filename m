@@ -1,133 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/12
-Message-ID: <CAAPiX_KnEMU9QTHCJV73rFUgqSyOAEVqOJtq8OwU_XwPXJjSFA@mail.gmail.com>
-Date: Wed, 11 Jul 2012 12:42:25 -0400
-From: Greg Knaddison <greg.knaddison@...uia.com>
-To: "Steven M. Christey" <coley@...-smtp.mitre.org>
-Cc: Kurt Seifried <kseifried@...hat.com>, Henri Salo <henri@...v.fi>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/23/5
+Message-ID: <4F46B439.6030605@redhat.com>
+Date: Thu, 23 Feb 2012 14:48:41 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- kernel: block: CLONE_IO io_context refcounting issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 27, 2012 at 1:36 PM, Steven M. Christey
-<coley@...-smtp.mitre.org> wrote:
-> (Greg and Kurt, the number of duplicates and unassigned CVEs in this batch
-> is understandable due to various factors such as amount and assignments from
-> mutiple sources, but it's disconcerting.  Maybe we should talk off-list and
-> figure out how to minimize these problems in the future.)
+On 02/23/2012 11:11 AM, Petr Matousek wrote:
+> With CLONE_IO, copy_io() increments both ioc->refcount and
+> ioc->nr_tasks. However exit_io_context() only decrements
+> ioc->refcount if ioc->nr_tasks reaches 0.
+> 
+> With CLONE_IO, parent's io_context->nr_tasks is incremented, but never
+> decremented whenever copy_process() fails afterwards, which prevents
+> exit_io_context() from calling IO schedulers exit functions.
+> 
+> An unprivileged local user could use these flaws cause denial of
+> service.
+> 
+> Upstream fixes:
+> 61cc74fbb87af6aa551a06a370590c9bc07e29d9
+> b69f2292063d2caf37ca9aec7d63ded203701bf3
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=796829
+> http://comments.gmane.org/gmane.linux.kernel/922519
+> 
+> Looks like it got fixed in Linux kernel 2.6.33(-rc1).
+> 
+> Thanks,
 
-Responded off-list.
-
->> CVE-2012-2709 SA-CONTRIB-2012-081 - Aberdeen - Cross Site Scripting
->
-> This is a duplicate that might look like a typo at first.
->
-> Around May 21, MITRE originally published CVE-2012-2907 (NOTE THE DIFFERENT
-> NUMBER STARTING WITH "29" INSTEAD OF "27").
->
-> CVE-2012-2907 is in more active use, so keep CVE-2012-2907.
->
-> We will REJECT CVE-2012-2709.
->
-> (Kurt, CVE-2012-2709 belongs to you.  If you actually intended to list the
-> already-published CVE-2012-2907 and made a typo to CVE-2012-2709, please
-> make sure you've removed CVE-2012-2709 from your pool.)
-
-Advisory updated to reference CVE-2012-2907.
-
->> CVE-2012-2713 SA-CONTRIB-2012-085 - BrowserID - Multiple
->>     Vulnerabilities - CSRF
->> CVE-2012-2714 SA-CONTRIB-2012-085 - BrowserID - Multiple
->>     Vulnerabilities - BrowserID login theft
->
->
-> The description in SA-CONTRIB-2012-085 is not clear, but it seems that
-> CVE-2012-2714 might be the natural consequence of exploiting the CSRF.
-> The title "multiple vulnerabilities" does not help.  Any thoughts on
-> this one?
-
-We use "multiple vulnerabilities" in the title when the listing all
-fixed vulnerabilities becomes cumbersome. I agree it's not ideal. I
-believe that the lack of validation in the login theft is separate
-from the CSRF. Ben Adida is familiar with it and could potentially
-give advice.
-
->
->> CVE-2012-2727 SA-CONTRIB-2012-098 - Janrain Capture - Open Redirect
->
->
-> SA-CONTRIB-2012-098 mentioned a second separate issue for "An
-> additional security weakness occurs when the module creates a new
-> local user account."
->
-> CVE-2012-2727 - open redirect
->
-> (new) CVE-2012-3798 - disclosure of portions of passwords
-
-True disclosure in CVE-2012-3798 only happens if an attacker gains
-access to the user's session object (e.g. due to loss of a database
-backup or an insecure memcache configuration). We mention that as a
-poor security practice that was improved, but aren't sure what class
-of vulnerability that should be and whether it really deserves to be
-called out separately. There have been several other instances where
-credentials or credential-like information is stored unencrypted in a
-location that seems like a bad idea because it's more likely to be
-leaked (e.g. the sessions database table) but where it's not a direct
-immediate threat. Any advice on whether you feel those truly deserve a
-CVE assignment?
-
-I have not updated the advisory to include CVE-2012-3798.
-
->> CVE-2012-2723 SA-CONTRIB-2012-094
->
->
-> A close reading of SA-CONTRIB-2012-094 suggests that there should be
-> two CVEs.  Part of the advisory does seem to imply that the XSS is
-> resultant from the CSRF; but it also says "This vulnerability is
-> mitigated by the fact that an attacker must have a role with the
-> maestro admin permissions," which implies that users with maestro
-> admin permissions should not be allowed to conduct XSS attacks
-> themselves.  This could probably be argued either way.
->
->
-> CVE-2012-2723 - XSS
->
-> (new) CVE-2012-3799 - CSRF
-
-Indeed there is a CSRF issue separate from the XSS. Advisory updated with both.
-
->> CVE-2012-2721 SA-CONTRIB-2012-092 - Organic Groups - Cross Site
->> Scripting (XSS) and Access Bypass
->
->
-> This is 2 types of issues, thus needs 2 CVEs.
->
-> CVE-2012-2721 - Access Bypass
->
-> (new) CVE-2012-3800 - XSS
->
-Updated.
-
->
->> CVE-2012-2706 SA-CONTRIB-2012-079 - Post Affiliate Pro - Cross Site
->> Scripting (XSS) and Access Bypass - Unsupported
->
->
-> Two vuln types, two CVEs needed.
->
-> CVE-2012-2706 - XSS
-> (new) CVE-2012-3802 - unspecified read of commisions
->
-
-Advisory updated with both CVEs.
-
-Thanks for the review and additional CVEs, Steve.
-
-Regards,
-Greg
-
-
-
+Please use CVE-2012-0879 for this issue.
 
 -- 
-Director Security Services | +1-720-310-5623
-Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
+Kurt Seifried Red Hat Security Response Team (SRT)
