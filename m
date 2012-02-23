@@ -1,50 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/12/8
-Message-ID: <20121212204846.GN5030@redhat.com>
-Date: Wed, 12 Dec 2012 13:48:46 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/23/3
+Message-ID: <20120223181100.GO2608@dhcp-25-225.brq.redhat.com>
+Date: Thu, 23 Feb 2012 19:11:01 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-5617: gksu-polkit privileged code execution with unprivileged credentials
+Subject: CVE request -- kernel: block: CLONE_IO io_context refcounting issues
 Content-Type: text/plain; charset=utf-8
 
-This is a heads-up on a flaw reported to us regarding gksu-polkit.  This
-was sent to the linux-distros@ mailing list last week.
+With CLONE_IO, copy_io() increments both ioc->refcount and
+ioc->nr_tasks. However exit_io_context() only decrements
+ioc->refcount if ioc->nr_tasks reaches 0.
 
-Miroslav Trmac of Red Hat reported that gksu-polkit ships with an extremely
-permissive PolicyKit policy configuration file.  Because gksu-polkit
-allows a user to execute a program with administrative privileges, and
-because the default allow_active setting is "auth_self" rather than
-"auth_admin", any local user can use gksu-polkit to execute arbitrary
-programs (like a bash shell) with root privileges.
+With CLONE_IO, parent's io_context->nr_tasks is incremented, but never
+decremented whenever copy_process() fails afterwards, which prevents
+exit_io_context() from calling IO schedulers exit functions.
 
-For example:
+An unprivileged local user could use these flaws cause denial of
+service.
 
-$ cat foo.sh
-#! /bin/bash
-id -a
-# not just gksu-polkit id -a because gksu-polkit tries to interpret the
-# -a
-# this prompts for user's password only
-$ gksu-polkit /home/user/foo.sh
-uid=0(root) gid=0(root) groups=0(root)
-context=system_u:system_r:initrc_t:s0
-
-
-(As an aside, I did some peeking because there was some discussion as to
-whether or not this was intended behaviour.  It does not seem as though
-gksu-polkit is _intended_ to grant root access to every local user, even
-though they need to actually be at the computer (I've not tested whether
-or not this can be exploited via a remote X session, but it's possible).
-Even if this is not remotely exploitable, we do tend to require
-administrator authentication by local users (via su) or an administrator
-to grant such privileges (via sudo), so to me this is definitely a
-flaw).
-
+Upstream fixes:
+61cc74fbb87af6aa551a06a370590c9bc07e29d9
+b69f2292063d2caf37ca9aec7d63ded203701bf3
 
 References:
+https://bugzilla.redhat.com/show_bug.cgi?id=796829
+http://comments.gmane.org/gmane.linux.kernel/922519
 
-http://anonscm.debian.org/gitweb/?p=users/kov/gksu-polkit.git;a=blob;f=data/org.gnome.gksu.policy;h=ff0e4187941147d4f6c7ca53ebd1757521337288;hb=HEAD
-https://bugzilla.redhat.com/show_bug.cgi?id=883162
+Looks like it got fixed in Linux kernel 2.6.33(-rc1).
 
+Thanks,
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Petr Matousek / Red Hat Security Response Team
