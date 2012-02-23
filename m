@@ -1,45 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/9
-Message-Id: <201211021850.qA2InswU029406@linus.mitre.org>
-Date: Fri, 2 Nov 2012 14:49:54 -0400 (EDT)
-From: cve-assign@...re.org
-To: bressers@...hat.com
-Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Strange CVE situation (at least one ID should come of this)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/23/2
+Message-ID: <Pine.GSO.4.64.1202231254510.17983@faron.mitre.org>
+Date: Thu, 23 Feb 2012 13:10:40 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: muuratsalo experimental hack lab <muuratsalo@...il.com>, Ulli Horlacher <framstag@....uni-stuttgart.de>
+Subject: Re: Vulnerabilitites in Debian F*EX <= 20100208 and F*EX 20111129-2.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
->So if someone publishes an advisory stating "I have found a number of
->security flaws in product X." Would that get the same sort of CVE ID?
+Nico Golde said:
 
-CVE assignment at MITRE attempts to distinguish between "disclosures"
-and "rumors" although admittedly this is not 100% successful. In the
-specific case you mentioned, if there's no maintainer relationship
-between "I" and "product X" and no other available context, then no
-CVE is assigned.
+>>>> Can someone please assign a CVE id to this? Given that all of
+>>>> the vulnerable input parameters are in the fup component, I
+>>>> guess one id should be sufficient.
 
-More generally, there are various cases in which exactly the same
-statement would have a different CVE assignment decision depending on
-whether the statement came from a vendor or other software maintainer.
-This has been mentioned here before; for example, see
+We actually need two CVEs here.
 
-  http://openwall.com/lists/oss-security/2011/12/30/4
+Which components the vulnerabilities are in, is rarely relevant for 
+deciding how many CVEs to assign.  Much more critical is which versions 
+are affected.  The original researcher provided two advisories for 2 
+different versions.  So even though "fup" is affected, we mould need to 
+SPLIT if there are some items/vectors/issues that affect different 
+versions than others (hint: we will SPLIT.)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Kurt said:
 
-iQEcBAEBAgAGBQJQlBRTAAoJEGvefgSNfHMdKAwH/icGoCMaheqgi4cQG4XsChlb
-EaRDQLeN9XhaBp1pk7G+rnKaBNUBf25cVKKkTl8eJ/Y7zkP7eCU8G4aW5tjSBapw
-wNRErtss6mGQjOUt0QtWw9RmbMPR/u9r3ulQvsi1Py2Zp9XSjloiAUrXcgumjdmQ
-C/1SLGLRLNXPWOzhQvl8uPWCZLgoqhFX46/Knf61UX+Z62hwD7USDfE47MHdSj4b
-C4SecVWSAUwWnlfSr94cV9bRWUdZ0JvR2+KtjytKA4wTXjeZXsi7FPvnY0TBCmU8
-lE2gGZEzgzLbDcQqZU2Pk+WiH0jDSp8DmtxhCN/zV9ZvZAyaoBwE9BePBIofo0Q=
-=3WP8
------END PGP SIGNATURE-----
+> Please use CVE-2012-0869 for this issue.
+
+Here are the breakdowns for the two advisories/versions:
+
+F*EX <= 20100208
+   fup / from parameter
+   fup / to parameter
+   fup / id parameter
+
+F*EX 20111129-2
+   fup / id parameter
+
+
+So, based on the original report, we have:
+
+   20100208 only:
+     fup / from
+     fup / to
+
+   20100208 *and* 20111129-2
+     fup / id
+
+So, we MERGE the "fup" and "from" vectors since they affect the same 
+version, and we SPLIT these from the "id" vector. (For the incredibly 
+detail-oriented: whether the parameters come via GET or POST methods is 
+irrelevant for CVE.)
+
+Now, the question is which issue we link with CVE-2012-0869.  Since Debian 
+bug 660621 focuses on the id parameter, and that paremeter affects both 
+listed versions, I guess it makes sense to focus CVE-2012-0869 on the id 
+parameter.
+
+I've assigned CVE-2012-1293 for the "from" and "to" parameters that are 
+only listed for 20100208.
+
+- Steve
