@@ -1,74 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/2
-Message-ID: <50A3460B.7020306@redhat.com>
-Date: Wed, 14 Nov 2012 00:19:39 -0700
-From: Kurt Seiifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Gajim fails to handle invalid certificates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/24/3
+Message-Id: <FF4D7923-ADBD-4843-84E3-53D3EDEC9DD3@yassl.com>
+Date: Fri, 24 Feb 2012 15:04:53 -0800
+From: Larry Stefonic <larry@...sl.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Tomas Hoger <thoger@...hat.com>, support@...sl.com
+Subject: Re: MySQL 0-day - does it need a CVE?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Kurt,
 
-On 11/10/2012 09:02 PM, y33t wrote:
-> Gajim does not seem to properly handle invalid/broken/expired 
-> certificates. The _ssl_verify_callback function in tls_nb.py is
-> called by OpenSSL for every certificate in the certificate chain
-> (CA first, server certificate last) but always return True whether
-> an error was encountered or not.
-> 
-> This forces OpenSSL to verify each certificate until none is left,
-> at which points it will call _ssl_verify_callback one last time
-> with an error number of 0.
-> 
-> (This behavior is documented here:  man 3 SSL_CTX_set_verify "If
-> verify_callback returns 1, the verification process is continued.
-> If verify_callback always returns 1, the TLS/SSL handshake will not
-> be terminated with respect to verification failures and the
-> connection will be established." And can be observed in function
-> crypto/x509/x509_vfy.c:internal_verify() in OpenSSL source code.)
-> 
-> _ssh_verify_callback only stores the last error code, which always
-> is 0 unless an error was encountered in the deepest level of the
-> chain (the CA), so gajim will not warn as long as the CA is
-> recognized.
-> 
-> 
-> (...)
-> 
-> This problem goes beyond expired certificates. It is also possible
-> to edit any existing and valid server certificate by changing the
-> CN manually. The certificate's signature will be become invalid and
-> OpenSSL will detect it and return errnum 7 ("Certificate signature
-> failure") but gajim will not warn and will proceed with the
-> connection anyway...
-> 
-> 
-> References: https://trac.gajim.org/ticket/7252
+Thanks for the cc.  We're looking into the issue.
 
-So do we consider this to be an OpenSSL issue of gajim? I'm sure gajim
-is not the only program that does something like this.
+LS
+
+Larry Stefonic
+www.yassl.com
+Skype:  Stefonic
+http://twitter.com/CyaSSL
++1 206 369 4800
+
+On Feb 24, 2012, at 12:28 PM, Kurt Seifried wrote:
+
+> On 02/24/2012 03:11 AM, Tomas Hoger wrote:
+>> On Thu, 09 Feb 2012 10:20:14 -0700 Kurt Seifried wrote:
+>> 
+>>> https://lists.immunityinc.com/pipermail/canvas/2012-February/000011.html
+>> 
+>> ...
+>> 
+>>> We are releasing a working MySQL 5.5.20 remote 0day exploit with this
+>>> update.The exploit has been tested with
+>>> mysql-5.5.20-debian6.0-i686.deb on Debian 6.0.
+>> 
+>> Note also:
+>> 
+>> https://lists.immunityinc.com/pipermail/canvas/2012-February/000014.html
+>> http://partners.immunityinc.com/movies/VD-MySQL-5_5_20.mov
+>> 
+>> According to the video, it should be "yassl buffer overflow".
+>> 
+> 
+> Ok according to the video:
+> 
+> This vulnerability affects the yaSSL authentication portion (so SSL
+> certificate based authentication of clients).
+> 
+> This attack is "reliable", usually works on the first try, but if it
+> fails it will DoS MySQL and MySQL will require a restart.
+> 
+> So it sounds like this might actually be a yaSSL vulnerability and not
+> specific to MySQL. CC'ing support@...sl.com so they are aware of this
+> potential issue.
+> 
+> Please use CVE-2012-0882 for this issue.
+> 
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> 
 
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQo0YLAAoJEBYNRVNeJnmTu3MQAI3+hlMRTPjdJzUnm/ymKK6N
-pqlerX9VVxyHWuW8pPqTZqAUpENLMErHTaNEPp2bLYv63zYvmibKcGMqwH4s/rrM
-SvaxFrlZxJvaw8vCx5c046lDiH5DhjhUkQW/kriR7zdXzvxDwt/ZyfLu92LSQ7VR
-ahoEYcyTZEEBZpi11ZyPt6N2iqeHRpngMXFtCztiBcyMTzKiscQ9gwgGSVOe8Owg
-WopP35XgaxwohzIgzV4yF7ydff+/fZ/TFY2Y5Wl2iXs9LzgwHxVftfjVuoAI9A0q
-amYG15i2BfrHzkqqToenAJv/mrraGUg7972rgDGNayU+DQr3IllaY4kSa711rB+J
-vK6TWbQT5nIEnOCxsCHJRlrIAZfI727dvBPr7gapIafYw2EYInRHkfRJIwRVggAt
-zwYDEW8cEkGnkUxg85OGJhPUU8uVVa9oKOjdDCeaGLhdYYC4j49kRJefRHX4sUHa
-OPhJF61aeZOTR7q39gbdmjYerkrbW2XDwo/18aM8Brf6Q0hSPyq380D2/1Fh4cRb
-HHsmWqPTP7S/16jUN9oePNR1/lj2u/kz+GlQlyfoNoXT2gknLOeRnVGnvofUDT4U
-81qjpbdecoLCKJyHWMjQ1WCLnm21mu8FQTTxBfjOoj0lAbFcZH4Eps/VZBLWFj0N
-EZZnSNg788Lgek8lxl09
-=2ckv
------END PGP SIGNATURE-----
