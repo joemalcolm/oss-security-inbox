@@ -1,23 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/10/1
-Message-ID: <20120510002739.GA23554@openwall.com>
-Date: Thu, 10 May 2012 04:27:39 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/24/1
+Message-ID: <20120224111107.2f55ea54@redhat.com>
+Date: Fri, 24 Feb 2012 11:11:07 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
+Subject: Re: MySQL 0-day - does it need a CVE?
 Content-Type: text/plain; charset=utf-8
 
-Petr -
+On Thu, 09 Feb 2012 10:20:14 -0700 Kurt Seifried wrote:
 
-On Wed, May 09, 2012 at 09:30:55PM +0200, Petr Matousek wrote:
-> In this case single-threaded (privileged) Xorg was run with a stale
-> robust list pointer that accidentally fell into MMIO area
+> https://lists.immunityinc.com/pipermail/canvas/2012-February/000011.html
 
-Wow.  Thank you for your helpful answers, and for including that info on
-the RH Bugzilla entry.
+...
 
-So this gives us another attack scenario: not only on multi-threaded
-programs, but also on programs that have MMIO or e.g. disk files mmap'ed
-and writable.
+> We are releasing a working MySQL 5.5.20 remote 0day exploit with this
+> update.The exploit has been tested with
+> mysql-5.5.20-debian6.0-i686.deb on Debian 6.0.
 
-Alexander
+Note also:
+
+https://lists.immunityinc.com/pipermail/canvas/2012-February/000014.html
+http://partners.immunityinc.com/movies/VD-MySQL-5_5_20.mov
+
+According to the video, it should be "yassl buffer overflow".
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
