@@ -1,46 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/22/4
-Message-ID: <CAHmME9qSs1S=QOtBXoydzq204hFFkpHcLqvE5vjKgAid0_htyA@mail.gmail.com>
-Date: Sun, 22 Jan 2012 20:47:02 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/25/1
+Message-ID: <1330195034.8332.125.camel@tiger.regit.org>
+Date: Sat, 25 Feb 2012 19:37:14 +0100
+From: Eric Leblond <eric@...it.org>
+To: oss-security@...ts.openwall.com
+Subject: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jan 22, 2012 at 20:43, Solar Designer <solar@...nwall.com> wrote:
-> On Sun, Jan 22, 2012 at 07:30:53PM +0100, Jason A. Donenfeld wrote:
->> The issue is described in detail here: http://blog.zx2c4.com/749
->
-> Thanks!  This explains the self_exec_id issue and one attack on it.
->
-> Why are you not posting this to oss-security yet?  Do you feel that your
-> blog receives less exposure and you don't want to expose this additional
-> detail on the attack to a wider audience until there are distro vendor
-> updates?
+Hello,
 
-No, I just didn't want to blog-spam a rather well focused mailing list
-:-). I'll cc oss-security on this email though.
+I've discovered a generic attack on firewall using Application Level
+Gateway (like Netfilter or Checkpoint).
 
+Impact:
+An attacker on a local network can open some pinholes in a firewall
+which is not correctly protected.
+Fix:
+None, the issue has to be fixed in the firewall configuration.
+Workaround:
+Apply a strict anti-spoofing policy for IPv4 and IPv6 as described in
+the document "Secure use of iptables and connection tracking helpers" 
+This document was written after private disclosure of the attack to the
+Netfilter's team.
 
->
-> BTW, self_exec_id was originally introduced into the kernel 10+ years
-> ago with some involvement from me, and for a significantly different
-> purpose (protecting changed parent against malicious child death signals).
-> I think its use for /proc/pid/mem was introduced last year (2011).
->
-> Any comments on the fix?
->
->> >> http://git.kernel.org/linus/e268337dfe26dfc7efd422a804dbb27977a3cccc
->
-> My primary concern was that the first might be broken.  I have some
-> further thoughts on this since I posted, though.  I'll post an update.
+This attack will be presented at Cansecwest, March 9th 2012.
 
-I'm not sure yet; I haven't looked at it carefully. First instinct is
-that there's
-[ old process { old & new ] new process}
-overlapping as a possibility, but I really have no idea. I'll take a
-closer look soon.
+Secure use of iptables and connection tracking helpers:
+http://home.regit.org/netfilter-en/secure-use-of-helpers/
 
->
-> Alexander
+Best regards,
+-- 
+Eric Leblond 
+Blog: http://home.regit.org/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
