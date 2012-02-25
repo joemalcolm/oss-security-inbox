@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/04/4
-Message-ID: <87boocny01.fsf@mid.deneb.enyo.de>
-Date: Sun, 04 Mar 2012 17:15:26 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/25/2
+Message-ID: <1330200636.2515.28.camel@scapa>
+Date: Sat, 25 Feb 2012 21:10:36 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: XML entity expansion in the XML::Atom Perl module
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer:
+On sam., 2012-02-25 at 19:37 +0100, Eric Leblond wrote:
+> Impact:
+> An attacker on a local network can open some pinholes in a firewall
+> which is not correctly protected.
+> Fix:
+> None, the issue has to be fixed in the firewall configuration.
+> Workaround:
+> Apply a strict anti-spoofing policy for IPv4 and IPv6 as described in
+> the document "Secure use of iptables and connection tracking helpers" 
+> This document was written after private disclosure of the attack to the
+> Netfilter's team.
+> 
 
-> I would like to request a CVE name for this security fix:
->
-> | 0.39  2011.06.20
-> |     * Disabled external entities and network to avoid possible security flaw (yannk)
->
-> <http://cpansearch.perl.org/src/MIYAGAWA/XML-Atom-0.39/Changes>
->
-> Thanks.
+Did you check how the various frontends to iptables (ferm, ufw,
+shorewall and the gazillon others)? They might generate an “insecure”
+ruleset and might be candidate to a fix.
 
-Oh, to clarify, this is about external entities, not the billion
-laughs attack.
+Regards,
+-- 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
