@@ -1,30 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/4
-Message-ID: <20120820114536.436fa637@hsalkjdhsa>
-Date: Mon, 20 Aug 2012 11:45:36 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/26/2
+Message-ID: <4F4A8557.7000703@redhat.com>
+Date: Sun, 26 Feb 2012 12:17:43 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Roundcube XSS issues
+CC: Eric Leblond <eric@...it.org>
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 20 Aug 2012 12:30:46 +0300
-Henri Salo <henri@...v.fi> wrote:
-
-> On Mon, Aug 20, 2012 at 12:25:08PM +0300, Henri Salo wrote:
-> > Can I get CVE-identifiers (2012) to issues listed below, thanks.
-> > Fixed in version: 0.8.1
+On 02/25/2012 11:37 AM, Eric Leblond wrote:
+> Hello,
 > 
-> Sorry fixed in 0.8.0.
+> I've discovered a generic attack on firewall using Application
+> Level Gateway (like Netfilter or Checkpoint).
+> 
+> Impact: An attacker on a local network can open some pinholes in a
+> firewall which is not correctly protected.
 
-Sure?
-Release notes for 0.8.1 list XSS issues:
-http://sourceforge.net/news/?group_id=139281&id=309011
+Are there any helpers that can be abused to open holes in the firewall
+externally, or is it only internal clients that can cause problems and
+trigger the firewall to improperly allow network traffic in/out.
 
-Release notes for 0.8.0 don't:
-http://sourceforge.net/news/?group_id=139281&id=308917
+> Fix: None, the issue has to be fixed in the firewall
+> configuration. Workaround: Apply a strict anti-spoofing policy for
+> IPv4 and IPv6 as described in the document "Secure use of iptables
+> and connection tracking helpers" This document was written after
+> private disclosure of the attack to the Netfilter's team.
+
+Just to confirm: setting net.ipv4.conf.[IFNAME].rp_filter to 1 is
+sufficient, it doesn't need to be set globally as well?
+
+> This attack will be presented at Cansecwest, March 9th 2012.
+
+I assume you won't be providing any specifics until this date? I can't
+assign CVE's without more information so I guess we both just have to
+wait.
+
+> Secure use of iptables and connection tracking helpers: 
+> http://home.regit.org/netfilter-en/secure-use-of-helpers/
+> 
+> Best regards,
+
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Kurt Seifried Red Hat Security Response Team (SRT)
