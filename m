@@ -1,44 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/3
-Message-Id: <201210171225.28965.mweckbecker@suse.de>
-Date: Wed, 17 Oct 2012 12:25:28 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/26/5
+Message-ID: <1330295871.1973.11.camel@tiger.regit.org>
+Date: Sun, 26 Feb 2012 23:37:51 +0100
+From: Eric Leblond <eric@...it.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 17 October 2012 11:44:35 Fabian Keil wrote:
-> Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
-> > On 10/16/2012 08:40 AM, Matthias Weckbecker wrote:
-> > > Technically, this would also apply to Perl (at least with 5.12.3).
-> >
-> > It's also the case with perl 5.14.2 (just tested). :/
->
-> At least for Perl I consider this a feature.
->
+Hello,
 
-I agree. I also think that an application which lets such things happen (ie
-allow arbitrary content to be passed to open()) is rather to blame than the
-language (/interpreter) itself. But the same applies to Ruby, IMO.
+On Mon, 2012-02-27 at 01:53 +0400, Solar Designer wrote:
+> On Sun, Feb 26, 2012 at 10:05:55PM +0100, Eric Leblond wrote:
+> > On Sun, 2012-02-26 at 12:17 -0700, Kurt Seifried wrote:
+> > > Are there any helpers that can be abused to open holes in the firewall
+> > > externally, or is it only internal clients that can cause problems and
+> > > trigger the firewall to improperly allow network traffic in/out.
+> > 
+> > No, attacker has to be on a network directly connected to the firewall.
+> 
+> I guess by "internal clients" Kurt was referring to machines behind the
+> firewall (e.g., someone clicking an URL that has a string looking like
+> an FTP command embedded in it, thereby triggering the FTP helper to open
+> a hole - stuff that was discussed in late 1990s and partially mitigated
+> by hardening the helpers at the time), whereas by "attacker on a network
+> directly connected to the firewall" Eric means that the attacker may be
+> _outside_ the firewall (behind its WAN interface), but on the same
+> network segment (e.g., the attacker might have compromised a nearby
+> server, such as of another customer at a colocation facility).
 
-> The NUL byte is a special character and allows trailing white
-> space in the filename that is otherwise stripped. This is
-> (more or less) documented in perlopentut(1).
->
-> It also seems unlikely that someone adds NUL bytes to the
-> white list of acceptable characters by accident, and if there
-> is no white list in the first place, the Perl script probably
-> has bigger issues.
->
+This is a correct definition of the condition on the network required
+for the attack.
 
-Ack.
+> It is known that a machine will generally receive and process a packet
+> routed to one of its NICs by MAC address even if the destination IP
+> address is that of another NIC or even loopback (e.g., it is possible to
+> access services bound to 127.0.0.1 in this way - but only from directly
+> connected machines).  Without rp_filter or equivalent, it is possible to
+> have these packets' source addresses match the other NIC's network
+> segment.  My _guess_ (based solely on the info posted in here so far) is
+> that the gist of Eric et al.'s new attack is to apply this approach
+> against a protocol helper.  The novelty is thus in combining these known
+> things together to arrive at something that to the best of my knowledge
+> has not yet been discussed.
+> 
+> I suppose Eric will tell us if this is the correct guess or not. ;-)
 
-> Fabian
+Correct guess :)
 
-Matthias
-
+BR,
 -- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Eric Leblond 
+Blog: http://home.regit.org/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
