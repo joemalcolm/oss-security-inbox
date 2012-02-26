@@ -1,92 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/12
-Message-ID: <5099285C.9040704@mvista.com>
-Date: Tue, 06 Nov 2012 07:10:20 -0800
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: Request for linux-distros@...openwall.org membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/26/3
+Message-ID: <1330290355.1973.4.camel@tiger.regit.org>
+Date: Sun, 26 Feb 2012 22:05:55 +0100
+From: Eric Leblond <eric@...it.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-Kurt,
-
-On 11/05/2012 10:09 AM, Kurt Seifried wrote:
-> On 11/05/2012 10:53 AM, Henri Salo wrote:
->> On Mon, Nov 05, 2012 at 05:02:52PM +0530, Premchand Koneru
->> wrote:
->>> I recently joined the Montavista Security team and request 
->>> membership to thelinux-distros@...openwall.org  list, so that
->>> I may participate fully in reporting and fixing vulnerabilities
->>> in Montavista. Here is my GPG fingerprint:
->>> 
->>> pub   2048R/5DA060C7 2012-11-05 Key fingerprint = 7DF9 45B4
->>> 3116 8D5C D3C0  2A15 EADE D5B2 5DA0 60C7 uid Premchand
->>> Koneru<pkoneru@...sta.com <mailto:pkoneru@...sta.com>> sub
->>> 2048R/BE364B01 2012-11-05
->>> 
->>> Thank you for consideration.
+On Sun, 2012-02-26 at 12:17 -0700, Kurt Seifried wrote:
+> On 02/25/2012 11:37 AM, Eric Leblond wrote:
+> > Hello,
+> > 
+> > I've discovered a generic attack on firewall using Application
+> > Level Gateway (like Netfilter or Checkpoint).
+> > 
+> > Impact: An attacker on a local network can open some pinholes in a
+> > firewall which is not correctly protected.
 > 
->> This is first time I heard about Montavista. Where is your
->> package- and bug-tracker? Does Montavista use CVE?
+> Are there any helpers that can be abused to open holes in the firewall
+> externally, or is it only internal clients that can cause problems and
+> trigger the firewall to improperly allow network traffic in/out.
+
+No, attacker has to be on a network directly connected to the firewall.
+
+> > Fix: None, the issue has to be fixed in the firewall
+> > configuration. Workaround: Apply a strict anti-spoofing policy for
+> > IPv4 and IPv6 as described in the document "Secure use of iptables
+> > and connection tracking helpers" This document was written after
+> > private disclosure of the attack to the Netfilter's team.
 > 
->> - Henri Salo
+> Just to confirm: setting net.ipv4.conf.[IFNAME].rp_filter to 1 is
+> sufficient, it doesn't need to be set globally as well?
+
+It is sufficient for IPv4 but the feature is lacking on IPv6.
+
+> > This attack will be presented at Cansecwest, March 9th 2012.
 > 
-> 
-> Also how do we confirm you are on the security team there? I can't 
-> even find proof you work for Montavista (other than the email
-> address) and I can't find any mention of a person called "Premchand
-> Koneru" doing security work in the past.
-> 
-> I did manage to find a CVE page of sorts:
-> 
-> http://www.mvista.com/cve_vulnerabilities.php
-> 
-> For 2012 you appear to have fixed one Linux security flaw out of
-> the 7 listed (the rest are OpenSSL/OpenSSH), so I'm not really sure
-> why you would need access to distros@ if you aren't fixing Linux
-> related security issues any ways?
+> I assume you won't be providing any specifics until this date?I can't
+> assign CVE's without more information so I guess we both just have to
+> wait.
 
-I am not surprised that our list is behind. I did mention there would
-be a 3 month delay in new postings back when I was trying to get
-MontaVista back on the closed list which seemed acceptable at the
-time. This delay seems excessive. I will ping my management again.
+This is a generic attack not related to any version of Netfilter. It
+even works with badly configured Checkpoint firewall.
 
-If you feel that MV should be dropped from the list-distros list, then
-so be it.
+BR,
+-- 
+Eric Leblond 
+Blog: http://home.regit.org/
 
-I do realize this list is maintained by volunteers and today's rules
-are based on previous emails (kinda hard me to follow).
-
-I do hope the requirements listed at
-
-http://oss-security.openwall.org/wiki/mailing-lists/distros
-
-will be update with "How to maintain membership" and "How to ack/nack
-additional team members memberships".
-
-Kind regards,
-Armin
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.18 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQmShbAAoJEH91cpWuue2Nvl0P/2PfDeNSrUV8CE7oZ0GNgUGs
-wXEmJGEBtplvACUOiQ8P2tOoLHrke790hkF0LaLK7bHryKzTFtNHftVxc87Qu2cR
-V8ej/y7jO8/IGOYdAMS6W1dPPCZtmuVEEE2v6FGNtOGavy9LDYZRYOVBUUNB8yxr
-BtY40cTyAWHHaF/IZCoFw5tbaHLhl2bM9VrU0ws98t1mbG5kRV+HGJqnTvDJbTz9
-wcLIIBltehQn0u5WduDdWIZBo3hYT9mvg3hidDZ+Azag921/Caa6cuC+m5es/W2v
-wuU6GFt6KEPLs1LM+r/Uw0Ip/ilZnDWJIe8KPX/aTQDMQ5SzNkj+GkG/cEW7sMZe
-W8tEesag+nBuMEshtYXjILLCtOnE0NbwgaY2eHLRjZBU66WWObbeQ/upNgnKvq/X
-NVrv5MKyt66NpehjGBt13Ty4k/HEOkswUQl8gmCm+x9F+Rhqdky2Ore1HyjIb/cR
-5zstHdR2ZKodS5YAoiV2HfIFdfd6brymqZcNHEYfhYPnFxvaq/XNL2CRfLpvhmHT
-syKQhach2t5B2EFcED734ytGnnAMExF6S+6ItQ6zChEKnb/jFXQX6m1HEYpWmzn3
-thDO7RD6TEzL1EVJ5U2eEF8IXMe1QKIZdB1X/mJ99OPe0N9FYj8fJhEAz2430ej1
-XjebBQngww0tU0Cod8Aq
-=9Lc5
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
