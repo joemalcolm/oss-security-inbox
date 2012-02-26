@@ -1,43 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/26
-Message-Id: <201203161957.26397.tmb@65535.com>
-Date: Fri, 16 Mar 2012 19:57:20 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/26/4
+Message-ID: <20120226215329.GA17311@openwall.com>
+Date: Mon, 27 Feb 2012 01:53:29 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Requests
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-On Friday 16 Mar 2012 19:45:58 Kurt Seifried wrote:
-
-> You may have uh noticed me assigning 200+ cve's in the last few
-> months. I took over for Josh. I am unwilling to public assign CVE's
-> that are likely to end up with duplicates (e.g. no information CVE's
-> already sent in as a request to Mitre).
+On Sun, Feb 26, 2012 at 10:05:55PM +0100, Eric Leblond wrote:
+> On Sun, 2012-02-26 at 12:17 -0700, Kurt Seifried wrote:
+> > Are there any helpers that can be abused to open holes in the firewall
+> > externally, or is it only internal clients that can cause problems and
+> > trigger the firewall to improperly allow network traffic in/out.
 > 
-> I am quite happy to assign "secret" or whatever you want to call them
-> CVE's (I do it all the time on linux-distros list for embargoed
-> issues) but I'm also trying to avoid duplicates and other messes. If
-> the issue is so secret you can't even give me a version #, brief
-> description, etc. than chances are Mitre needs to handle it.
-> 
-> I'm asking for pretty basic info like version #'s affected and ideally
-> fixed if you got it. This doesn't need to be complicated.
+> No, attacker has to be on a network directly connected to the firewall.
 
-Thanks for the clarification.  Josh has in the past been very useful with 
-OpenVAS and KDE bugs in particular where there is a security team who can take 
-up most of the slack and handle the co-ordination process.  Hopefully we won't 
-notice any changeover when we deal with you.
+I guess by "internal clients" Kurt was referring to machines behind the
+firewall (e.g., someone clicking an URL that has a string looking like
+an FTP command embedded in it, thereby triggering the FTP helper to open
+a hole - stuff that was discussed in late 1990s and partially mitigated
+by hardening the helpers at the time), whereas by "attacker on a network
+directly connected to the firewall" Eric means that the attacker may be
+_outside_ the firewall (behind its WAN interface), but on the same
+network segment (e.g., the attacker might have compromised a nearby
+server, such as of another customer at a colocation facility).
 
-Totally agree about the information aspect FWIW, never had a problem sharing 
-in the past - it's just a matter of minimising the friction when disclosing.
+It is known that a machine will generally receive and process a packet
+routed to one of its NICs by MAC address even if the destination IP
+address is that of another NIC or even loopback (e.g., it is possible to
+access services bound to 127.0.0.1 in this way - but only from directly
+connected machines).  Without rp_filter or equivalent, it is possible to
+have these packets' source addresses match the other NIC's network
+segment.  My _guess_ (based solely on the info posted in here so far) is
+that the gist of Eric et al.'s new attack is to apply this approach
+against a protocol helper.  The novelty is thus in combining these known
+things together to arrive at something that to the best of my knowledge
+has not yet been discussed.
 
-Cheers,
-Tim
+I suppose Eric will tell us if this is the correct guess or not. ;-)
 
-PS I suspect I'll be in touch sooner rather than later about CVEs, got a 
-handful that are almost ready for disclosure.
--- 
-Tim Brown
-<mailto:tmb@...35.com>
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Alexander
