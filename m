@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/4
-Message-ID: <20121203173341.GS2689@redhat.com>
-Date: Mon, 3 Dec 2012 10:33:41 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Dovecot DoS in 2.x (fixed in 2.1.11)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/23
+Message-ID: <4F4BABAC.1060206@aliantsoft.pl>
+Date: Mon, 27 Feb 2012 17:13:32 +0100
+From: Mateusz Goik <mateusz.goik@...antsoft.pl>
+To: Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>
+CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>,  Radoslaw Lisowski <radoslaw.lisowski@...il.com>, kontakt@...antsoft.pl
+Subject: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned for the following please?
+Sorry. Tested on kadu 0.11.0..
 
-Dovecot 2.1.11 was released and includes a fix for a crash condition
-when the IMAP server was issued a SEARCH command with multiple KEYWORD
-parameters.  An authenticated remote user could use this flaw to crash
-Dovecot.
+Mateusz Goik.
 
-The upstream fix was to remove the keyword merging code.  This code
-does not exist in Dovecot 1.x, but it does affect 2.x versions, at least
-as far back as 2.0.9 (earliest version I checked).
-
-References:
-
-http://www.dovecot.org/list/dovecot-news/2012-November/000235.html
-http://secunia.com/advisories/51455
-http://hg.dovecot.org/dovecot-2.1/rev/0306792cc843
-https://bugzilla.redhat.com/show_bug.cgi?id=883060
-
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+On 02/27/2012 05:11 PM, Mateusz Goik wrote:
+> Hi,
+>
+> I would add it is possible - read / create files on users hdd. (using
+> the method - GET / PUT)
+> Tested on Backtrack 5 r1 (kadu 0.10.0 - compiled from source).
+>
+> Mateusz Goik
