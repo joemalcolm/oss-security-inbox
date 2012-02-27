@@ -1,27 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/7
-Message-ID: <209066437.8660003.1349870088343.JavaMail.root@redhat.com>
-Date: Wed, 10 Oct 2012 07:54:48 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/11
+Message-ID: <4F4BAFF8.3070401@redhat.com>
+Date: Mon, 27 Feb 2012 09:31:52 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: password hashing
+CC: Henri Salo <henri@...v.fi>, corryl80@...il.com, bugtraq@...urityfocus.com
+Subject: Re: Case YVS Image Gallery
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Mon, Oct 08, 2012 at 08:15:52AM -0400, Josh Bressers wrote:
-> > Can I ask how these are licensed? I can see a use to borrow some of
-> > these slides for presentations.
+On 02/27/2012 04:32 AM, Henri Salo wrote:
+> http://osvdb.org/show/osvdb/79477
 > 
-> I hadn't thought of putting my slides under a specific license before,
-> but I'm happy to permit reuse given proper attribution.  Perhaps one of
-> the Creative Commons licenses would be it, please feel free to suggest
-> one if you like.
+> The software "YVS Image Gallery" seems to be full of security issues. For example one can have lots of fun with this. Copy from installation.php:
 > 
+> """
+>     case(isset($_POST['db_name'])):
+> 
+>         $host = $_POST['host'];
+>         $db_name = $_POST['db_name'];
+>         $db_user_name = $_POST['db_user_name'];
+>         $db_password = $_POST['db_password'];
+> 
+>         $admin_name = $_POST['admin_name'];
+>         $admin_password = $_POST['admin_password'];
+> 
+>         $o_host = $_POST['o_host'];
+>         $o_db_name = $_POST['o_db_name'];
+>         $o_db_user_name = $_POST['o_db_user_name'];
+>         $o_db_password = $_POST['o_db_password'];
+> 
+>         //read in the file
+>         $file = "../functions/db_connect.php";
+>         $fh = fopen($file, 'r+');
+>         $contents = fread($fh, filesize($file));
+> 
+>         //set up the text to change
+>         $text_to_change = array();
+>         $new_text = array();
+> 
+>         $text_to_change[] = '$dbhost="'.$o_host.'"';
+>         $text_to_change[] = '$dbuser="'.$o_db_user_name.'"';
+>         $text_to_change[] = '$dbpass="'.$o_db_password.'"';
+>         $text_to_change[] = '$dbname="'.$o_db_name.'"';
+> 
+>         $new_text[] = '$dbhost="'.$host.'"';
+>         $new_text[] = '$dbuser="'.$db_user_name.'"';
+>         $new_text[] = '$dbpass="'.$db_password.'"';
+>         $new_text[] = '$dbname="'.$db_name.'"';
+> 
+>         $new_contents = str_replace($text_to_change, $new_text, $contents);
+>         fclose($fh);
+> 
+>         // Open file to write
+>         $fh = fopen($file, 'r+');
+>         fwrite($fh, $new_contents);
+>         fclose($fh);
+> 
+>         //set up new admin user
+> 
+>         include '../functions/db_connect.php';
+> 
+>         db_connect();
+> """
+> 
+> I'll bet this software is not used much, but I can list all problems I can find if we want to assign CVE-identifiers to cases like these. No contact information of developer found. Any ideas how to get these fixed or get the code out of internet. The package is also hosted in here: http://www.hotscripts.com/listing/yvs-image-gallery/ (and probably others).
+> 
+> - Henri Salo
 
-I'm a fan of the CC BY-SA license (Attribution, ShareAlike). That generally
-keeps the riffraff away ;)
-
-Thanks.
+If you make a list of issues (e.g. XSS, CSRF, etc) with the code
+examples I can assign the various blocks of issues CVEs.
 
 -- 
-    JB
+Kurt Seifried Red Hat Security Response Team (SRT)
