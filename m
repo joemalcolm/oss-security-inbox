@@ -1,43 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/6
-Message-ID: <20121110122841.GA14104@runtux.com>
-Date: Sat, 10 Nov 2012 13:28:41 +0100
-From: Ralf Schlatterbeck <rsc@...tux.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Michel Alexandre Salim <michel+fdr@...vestre.me>, Richard Jones <richard@...hanicalcat.net>
-Subject: Re: CVE Request -- roundup: Multiple XSS flaws plus other security related fixes corrected in upstream 1.4.20 version
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/26
+Message-ID: <CAOtvbJzvSFkNWMru6k=ik-Et1Lyj9tnhaW6AkPQu=EoRkWkOSQ@mail.gmail.com>
+Date: Mon, 27 Feb 2012 22:09:38 +0100
+From: Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Mateusz Goik <mateusz.goik@...antsoft.pl>,  "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>,  Radoslaw Lisowski <radoslaw.lisowski@...il.com>, kontakt@...antsoft.pl
+Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Nov 10, 2012 at 06:54:46AM -0500, Jan Lieskovsky wrote:
-> [A] * issue2550729: Fix password history display for anydbm backend,
-> thanks to Ralf Hemmecke for reporting. (Ralf)
-> [3] http://issues.roundup-tracker.org/issue2550729
-> 
-> [D] * Fix wrong execute permissions on some files,
-> thanks to Cheer Xiao for the patch. (Ralf)
-> 
-> Cc-ed Ralf Schlatterbeck on this post too to clarify, if issues [A]
-> and [D] would also have security implications / IOW if those would be
-> security flaws too.  Ralf please clarify. Thank you, Jan.
+Affected versions: 0.9.0 - 0.11.0 (0.11.1 is not vulnerable)
 
-[A] Doesn't have security implications if roundup is correnctly
-configured. The bug would create a python backtrace. Unless the "debug"
-option in section [web] is set (which is explicitly discouraged) this
-will only display "an error has occurred" in the web-interface. Even if
-someone sets the debug option in a production release only the hashed
-password could be disclosed. Note that this bug only affects the anydbm
-backend which should not be used for a production version either.
+Vulnerability:
 
-[D] No security implications: Fixed some permissions on files in
-roundup/cgi and locale directories. These are not accessible via the
-web-server. So this doesn't constitute a remote vulnerability. Local
-users don't gain anything executing these files as no privilege
-escalation is involved (they could copy the file which is readable
-anyway and make their local copy executable).
+Any javascript code could be executed from Kadu History Window in
+following conditions:
+* application owner send a prepared SMS and content of this SMS was
+stored in history file
+* owner of application has an attacker on his buddy list, attacker
+sets a prepared presence message/status description and this presence
+message/status description is stored in history file
 
-Ralf
--- 
-Dr. Ralf Schlatterbeck                  Tel:   +43/2243/26465-16
-Open Source Consulting                  www:   http://www.runtux.com
-Reichergasse 131, A-3411 Weidling       email: office@...tux.com
-osAlliance member                       email: rsc@...lliance.com
+and then:
+
+* owner of application views given SMS or presence message/status
+description in history window
+
+
+Javascript code was allowed to:
+* load any file from WEB, by <img> or <script> tags, even <object>
+with flash files were possible
+* read files from local file system
+* (not confirmed by myself) write files to local file system
+* show javascript windows (like alert)
