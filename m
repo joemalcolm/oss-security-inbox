@@ -1,55 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/12
-Message-ID: <4F75EF17.1080508@redhat.com>
-Date: Fri, 30 Mar 2012 11:36:23 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/7
+Message-ID: <20120227113252.GA31990@foo.fgeek.fi>
+Date: Mon, 27 Feb 2012 13:32:52 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Coppermine 1.5.18 waraxe-2012-SA#081
+Cc: corryl80@...il.com, bugtraq@...urityfocus.com
+Subject: Case YVS Image Gallery
 Content-Type: text/plain; charset=utf-8
 
-On 03/30/2012 01:58 AM, Henri Salo wrote:
-> Can I get 2012 CVE-identifier for stored XSS in Coppermine 1.5.18 edit_ont_pic.php keywords.
-> 
-> ID: waraxe-2012-SA#081
-> Original advisory: http://www.waraxe.us/advisory-81.html
-> Mailing list post: http://seclists.org/bugtraq/2012/Mar/166
-> 
-> """
-> Reason: failure to sufficiently sanitize user-supplied input data
-> Preconditions: privileges needed for picture keywords editing
-> 
-> Coppermine user with appropriate privileges is able to modify picture information:
-> 
-> http://localhost/cpg1518/edit_one_pic.php?id=1&what=picture
-> 
-> There is a field in form named as "Keywords (separate with semicolon)".
-> After insertion to database those keywords are later used in html meta section.
-> It appears, that specific user supplied data is not properly validated before
-> outputting as html to the end user, resulting in Stored XSS vulnerability.
-> 
-> Testing:
-> 
-> 1. Open picture information editing page:
-> 
-> http://localhost/cpg1518/edit_one_pic.php?id=1&what=picture
-> 
-> 2. Insert XSS payload below as keywords and click "Apply changes":
-> 
-> "><body onload=javascript:alert(String.fromCharCode(88,83,83))>
-> 
-> After that issue request to view this image:
-> 
-> http://localhost/cpg1518/displayimage.php?pid=1
-> 
-> As result we can observe XSS payload execution.
-> """
-> 
-> There is also four different path disclosure vulnerabilities (includes plugins), but I think one CVE-identifier for this advisory is enough as these are all in the same version and path disclosure is very low severity.
-> 
-> - Henri Salo
+http://osvdb.org/show/osvdb/79477
 
-What about the path disclosures?
+The software "YVS Image Gallery" seems to be full of security issues. For example one can have lots of fun with this. Copy from installation.php:
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+"""
+    case(isset($_POST['db_name'])):
+
+        $host = $_POST['host'];
+        $db_name = $_POST['db_name'];
+        $db_user_name = $_POST['db_user_name'];
+        $db_password = $_POST['db_password'];
+
+        $admin_name = $_POST['admin_name'];
+        $admin_password = $_POST['admin_password'];
+
+        $o_host = $_POST['o_host'];
+        $o_db_name = $_POST['o_db_name'];
+        $o_db_user_name = $_POST['o_db_user_name'];
+        $o_db_password = $_POST['o_db_password'];
+
+        //read in the file
+        $file = "../functions/db_connect.php";
+        $fh = fopen($file, 'r+');
+        $contents = fread($fh, filesize($file));
+
+        //set up the text to change
+        $text_to_change = array();
+        $new_text = array();
+
+        $text_to_change[] = '$dbhost="'.$o_host.'"';
+        $text_to_change[] = '$dbuser="'.$o_db_user_name.'"';
+        $text_to_change[] = '$dbpass="'.$o_db_password.'"';
+        $text_to_change[] = '$dbname="'.$o_db_name.'"';
+
+        $new_text[] = '$dbhost="'.$host.'"';
+        $new_text[] = '$dbuser="'.$db_user_name.'"';
+        $new_text[] = '$dbpass="'.$db_password.'"';
+        $new_text[] = '$dbname="'.$db_name.'"';
+
+        $new_contents = str_replace($text_to_change, $new_text, $contents);
+        fclose($fh);
+
+        // Open file to write
+        $fh = fopen($file, 'r+');
+        fwrite($fh, $new_contents);
+        fclose($fh);
+
+        //set up new admin user
+
+        include '../functions/db_connect.php';
+
+        db_connect();
+"""
+
+I'll bet this software is not used much, but I can list all problems I can find if we want to assign CVE-identifiers to cases like these. No contact information of developer found. Any ideas how to get these fixed or get the code out of internet. The package is also hosted in here: http://www.hotscripts.com/listing/yvs-image-gallery/ (and probably others).
+
+- Henri Salo
