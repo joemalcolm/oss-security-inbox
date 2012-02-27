@@ -1,45 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/8
-Message-ID: <1328130174.31285.162.camel@mdlinux>
-Date: Wed, 01 Feb 2012 16:02:54 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/17
+Message-ID: <87pqd0f582.fsf@mid.deneb.enyo.de>
+Date: Mon, 27 Feb 2012 20:26:05 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+Subject: Re: CVE request: smokeping XSS
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2012-02-02 at 00:54 +0400, Solar Designer wrote:
-> On Fri, Jan 20, 2012 at 01:44:45PM +0400, Solar Designer wrote:
-> > http://oss-security.openwall.org/wiki/mailing-lists/distros
-> > 
-> > to state the following:
-> > 
-> > "Please note that the maximum acceptable embargo period for issues
-> > disclosed to these lists is 14 to 19 days, with embargoes longer than 14
-> > days (up to 19) allowed in case the issue is reported on a Thursday or a
-> > Friday and the proposed coordinated disclosure date is thus adjusted to
-> > fall on a Monday or (preferably) a Tuesday.  Please do not ask for a
-> > longer embargo.  In fact, embargoes shorter than 14 days are preferable."
-> 
-> I've just revised the last sentence above to say "In fact, embargo
-> periods shorter than 7 days are preferable."
-> 
-> Can we possibly afford to change the maximum to 7 to 11 days (depending
-> on day of week)?  That is, 7 days is the standard maximum, up to 11 days
-> is possible if the issue is reported on a Thursday or a Friday (only in
-> these two cases).  I am for this change (in both my list member for
-> Openwall and my list admin capacity).  What about others?
+* Vincent Danen:
 
-A week is a pretty short delay to prepare updates and perform the
-necessary QA to get an issue out on time. Why are you pushing to get the
-maximum reduced?
+> https://bugzilla.redhat.com/show_bug.cgi?id=783584
 
-> (In fact, I'd prefer an even shorter maximum, but I am proposing what I
-> think has a chance to be approved by others without making the list a
-> lot less useful to them.)
+Is the patch
 
-Reducing the maximum will just result in having everyone miss the
-embargo date and putting users at risk.
+https://bugzilla.redhat.com/attachment.cgi?id=556619
 
-Marc.
+really correct?  It does not strip the two magic characters "=
+(" should be enough, = is just defensive), so it's probably still
+possible to inject an onmouseover handler and CSS which enlarges the
+affected HTML element so that the handler is practically guaranteed to
+fire.
 
-
+I've just looked at the patch, I haven't got a (patched or unpatched)
+smokeping instance to test this.
