@@ -1,50 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/7
-Message-ID: <4F2C1141.7020006@redhat.com>
-Date: Fri, 03 Feb 2012 09:54:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request (2002): Linux TCP stack could accept invalid TCP flag combinations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/3
+Message-ID: <4F4B5585.5060105@redhat.com>
+Date: Mon, 27 Feb 2012 11:05:57 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>, Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>
+CC: oss-security@...ts.openwall.com, Radoslaw Lisowski <radoslaw.lisowski@...il.com>
+Subject: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
-On 02/03/2012 03:37 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> After a customer query likely coming from erroneous Security Scanner output,
-> 
-> this issue from 2002 has no CVE id yet as far as I see:
-> 
-> http://www.kb.cert.org/vuls/id/464113
-> 
-> It describes a problem where firewalls might let some TCP flags combinations
-> pass (e.g. all with RST flag set) and the OS (e.g. Linux) stack would in turn
-> accept a TCP session it might not have accepted otherwise.
-> 
-> The protection added in Linux 2.4.20 is checking for the RST (reset) flag
-> when a SYN packet is received, which was I think the main attack scenario.
-> 
-> The relevant part of the 2.4.20 patch is:
-> 
-> @@ -3667,6 +3693,9 @@
->                 if(th->ack)
->                         return 1;
-> 
-> +               if(th->rst)
-> +                       goto discard;
-> +
->                 if(th->syn) {
->                         if(tp->af_specific->conn_request(sk, skb) < 0)
->                                 return 1;
-> 
-> 
-> The check still exists in current mainline git, so the issue is still fixed.
-> 
-> Ciao, Marcus
+Hello Mariusz, Kurt, Steve, vendors,
 
-Nice, a cert KB with a picture, never seen that before.
+   [1] though https://bugzilla.novell.com/show_bug.cgi?id=749036#c0
+   mentions CVE identifier has been already requested for this:
 
-Please use CVE-2002-2438 for this issue.
+   "The bug still doesn't have CVE number but will have in near future."
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+   it doesn't look like CVE id has been requested for this via OSS
+   security list, so moving this discussion / CVE request there.
+
+   Mariusz, could you clarify, if this issue has got a CVE identifier
+   already or if we still need one? If aren't able to do so, whom
+   should we contact to be clear about "CVE request status" for this?
+
+   Or at least clarify which list that "Here is a part of massage sent
+   by developers to package maintainers:" has been sent to? (so
+   we could ask there)
+
+   And in the end either use that one, already allocated or allocate
+   a new one here via OSS.
+
+   Below being issue description as I got it based on / from [2]:
+
+   A stored cross-site scripting (XSS) flaw was found in the way Kadu, the instant
+messenger compatible with the Gadu-Gadu protocol, performed sanitization of
+status and sms messages for particular contact in user's history. A remote
+attacker could provide a specially-crafted status or sms message, which would
+be stored in victim's Kadu history file, if the attacker was present on the
+contact list of the victim and the victim has had storage of statuses enabled
+for their history file. When the victim later examined the content of the
+status history, this flaw could lead to arbitrary HTML or webscript execution.
+
+References:
+[2] https://bugzilla.novell.com/show_bug.cgi?id=749036
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=797777
+
+Upstream patches:
+[4] https://gitorious.org/kadu/kadu/commit/ebe3674cf0f3aa9b36308c06e19cb293cc790b52
+     (patch for the XSS issue)
+
+[5] https://gitorious.org/kadu/kadu/commit/e9506be6d3dcdd408fdf83d8eb82416c9b798c84
+     (additional hardening)
+
+[6] https://gitorious.org/kadu/kadu/commit/91772e46541e22cbc2c7bf41a1a9798c2a58f6d6
+     (disable xhtmlrequests)
+
+[7] https://gitorious.org/kadu/kadu/commit/94e7479617d78a1649a0763960edade7ad09a0d0
+    (allow only GET and HEADER requests, additional hardening)
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
