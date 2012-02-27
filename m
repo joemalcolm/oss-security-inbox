@@ -1,123 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/30/1
-Message-ID: <4F2629F7.9080501@redhat.com>
-Date: Sun, 29 Jan 2012 22:26:15 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/14
+Message-ID: <4F4BBAA0.3000001@redhat.com>
+Date: Mon, 27 Feb 2012 10:17:20 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: Fwd Joomla! Security News 2012-01
+CC: Matthias Weckbecker <mweckbecker@...e.de>
+Subject: Re: CVE request: openssl: null pointer dereference issue
 Content-Type: text/plain; charset=utf-8
 
-Oh dang, assigned the wrong year. Please use these instead:
-
-CVE-2012-0819 Joomla! 382-20120101-core-information-disclosure.html
-CVE-2012-0820 Joomla! 383-20120102-core-xss-vulnerability.html
-CVE-2012-0821 Joomla! 384-20120103-core-information-disclosure.html
-CVE-2012-0822 Joomla! 385-20120104-core-xss-vulnerability.html
-
-On 01/26/2012 04:30 PM, Kurt Seifried wrote:
-> Well no-one spoke up so I'm assuming no CVE's have been issued for these
-> issues yet.
+On 02/27/2012 07:42 AM, Matthias Weckbecker wrote:
+> Hi Kurt, Steve, vendors,
 > 
->>> ///////////////////////////////////////////
->>> [20120101] - Core - Information Disclosure
->>>
->>> Posted: 23 Jan 2012 01:45 AM PST
->>> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/MYKnZ2QJKYE/382-20120101-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
->>
->>
->> http://developer.joomla.org/security/news/382-20120101-core-information-disclosure.html
->>
->> Project: Joomla! SubProject: All Severity: Low Versions: 1.7.3 and all
->> earlier 1.7 and 1.6 versions Exploit type: Information Disclosure
->> Reported Date: 2012-January-07 Fixed Date: 2012-January-24 Description
->> Inadequate filtering leads to information disclosure. Affected Installs
->> Joomla! version 1.7.3 and all earlier versions Solution Upgrade to
->> version 1.7.4 or 2.5.0 or higher Reported by Cyrille Barthelemy Contact
->> The JSST at the Joomla! Security Center.
+> bad S/MIME messages with crafted MIME headers can result in a NULL pointer 
+> dereference in openssl's ans1 parser,
 > 
-> Please use CVE-2011-4933 for this issue
-> (382-20120101-core-information-disclosure.html)
-
-REJECT CVE-2011-4933
-
-Please use CVE-2012-0819 for this issue
-(382-20120101-core-information-disclosure.html)
-
+>  https://bugzilla.novell.com/show_bug.cgi?id=748738
+>  http://www.mail-archive.com/openssl-dev@openssl.org/msg30305.html
+>  http://cvs.openssl.org/chngview?cn=22144
 > 
->>> ///////////////////////////////////////////
->>> [20120102] - Core - XSS Vulnerability
->>>
->>> Posted: 23 Jan 2012 01:45 AM PST
->>> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/XAEsWEG3dgU/383-20120102-core-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
->>
->>
->> developer.joomla.org/security/news/383-20120102-core-xss-vulnerability.html
->>
->> Project: Joomla! SubProject: All Severity: Moderate Versions: 1.7.3 and
->> all earlier 1.7 and 1.6 versions Exploit type: XSS Vulnerability
->> Reported Date: 2011-November-16 Fixed Date: 2012-January-24 Description
->> Inadequate filtering leads to XSS vulnerability. Affected Installs
->> Joomla! version 1.7.3 and all earlier versions Solution Upgrade to
->> version 1.7.4 or 2.5.0 or higher Reported by Ankita Kapadia Contact The
->> JSST at the Joomla! Security Center.
+> Does it qualify for a CVE?
 > 
-> Please use CVE-2011-4934 for this issue
-> (383-20120102-core-xss-vulnerability.html)
+> Thanks, Matthias
 
-REJECT CVE-2011-4934
+Ok did some more research and here's what we got:
 
-Please use CVE-2012-0820 for this issue
-(383-20120102-core-xss-vulnerability.html)
+First mention of this bug is in 2006:
 
->>> ///////////////////////////////////////////
->>> [20120103] - Core - Information Disclosure
->>>
->>> Posted: 23 Jan 2012 01:45 AM PST
->>> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/Ed0TMAvyQ4g/384-20120103-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
->>
->> http://developer.joomla.org/security/news/384-20120103-core-information-disclosure.html
->>
->> Project: Joomla! SubProject: All Severity: Low Versions: 1.7.3 and all
->> earlier 1.7 and 1.6 versions Exploit type: Information Disclosure
->> Reported Date: 2011-December-19 Fixed Date: 2012-January-24 Description
->> Inadequate filtering leads to information disclosure. Affected Installs
->> Joomla! version 1.7.3 and all earlier versions Solution Upgrade to
->> version 1.7.4 or 2.5.0 or higher Reported by Jean-Marie Simonet Contact
->> The JSST at the Joomla! Security Center.
-> 
-> Please use CVE-2011-4935 for this issue
-> (384-20120103-core-information-disclosure.html)
+http://marc.info/?l=openssl-dev&m=115685408414194&w=2
 
-REJECT CVE-2011-4935
-
-Please use CVE-2012-0821 for this issue
-(384-20120103-core-information-disclosure.html)
-
-
->>> ///////////////////////////////////////////
->>> [20120104] - Core - XSS Vulnerability
->>>
->>> Posted: 23 Jan 2012 01:45 AM PST
->>
->> http://developer.joomla.org/security/news/385-20120104-core-xss-vulnerability.html
->>
->> Project: Joomla! SubProject: All Severity: Moderate Versions: 1.7.3 and
->> all earlier versions Exploit type: XSS Vulnerability Reported Date:
->> 2012-January-22 Fixed Date: 2012-January-24 Description Inadequate
->> filtering leads to XSS vulnerability. Affected Installs Joomla! version
->> 1.7.3 and all earlier 1.7 and 1.6 versions Solution Upgrade to version
->> 1.7.4 or 2.5.0 or higher Reported by David Jardin Contact The JSST at
->> the Joomla! Security Center.
-> 
-> Please use CVE-2011-4936 for this issue
-> (385-20120104-core-xss-vulnerability.html)
-
-REJECT CVE-2011-4936
-
-Please use CVE-2012-0822 for this issue
-(385-20120104-core-xss-vulnerability.html)
-
+So please use CVE-2006-7248 for this issue.
 
 -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
