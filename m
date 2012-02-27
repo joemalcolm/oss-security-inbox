@@ -1,53 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/27/3
-Message-ID: <503B1449.2060808@redhat.com>
-Date: Mon, 27 Aug 2012 00:31:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/21
+Message-ID: <CA+s+YO+iJ0X_8o8HOrSEu-H=n1JGgGhVJKpGy9tQFvGqTd_9WQ@mail.gmail.com>
+Date: Mon, 27 Feb 2012 14:10:59 +0000
+From: Whitney Houston <i4m4l1v3b17ch3z@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: CVE Request: Heap-based buffer overflow in openjpeg
+Subject: Re: DesktopOnNet 3 Beta LFI
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I forget to say, I want CVE number. give it to me.
 
-On 08/27/2012 12:19 AM, Huzaifa Sidhpurwala wrote:
-> Hi Folks,
-> 
-> I discovered a heap-based buffer-overflow in openjpeg, when
-> decoding JPEG200 images. More details at:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=842918 
-> http://code.google.com/p/openjpeg/issues/detail?id=170
-> 
-> This seems to affect versions 1.3 , upto the latest release 
-> version.
-> 
-> Upstream is currently working on the fix.
-> 
-> Can a CVE id be please assigned to this flaw?
+On Mon, Feb 27, 2012 at 2:10 PM, Whitney Houston
+<i4m4l1v3b17ch3z@...il.com>wrote:
 
-Please use CVE-2012-3535 for this issue.
+> Hello list
+>
+> I want to report serious scary issue, I find this vulnerability that make
+> me fall off chair and giggle like silly slut.
+>
+> Project: http://sourceforge.net/projects/don3/
+>
+> <?php
+> require('system/switches.php');
+>
+> if
+> (file_exists('applications/'.$_GET["app"].'.don3app/'.$_GET["app"].'.php')){
+>         $appfile = $_GET["app"];
+>         $app_path = "applications/".$appfile.".don3app/";
+> } else {
+>         $appfile = "frontpage";
+>         $app_path = "applications/frontpage.don3app/";
+> }
+>
+> if (file_exists("library/$appfile.don3lib")){
+>         $topper_array = don3_read_don3lib($appfile.".don3lib");
+>         $title = $topper_array[0];
+> } else {
+>         $title = "ERROR T1";
+> }
+>
+>
+> $topper_includer = 'applications/'.$appfile.'.don3app/'.$appfile.'.php';
+>
+> ....
+>
+> include ($topper_includer);
+>
+>
+> Obviously I keep this bug super secret for many month but now i release
+> for all, after my recent death.
+>
+> xx
+>
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQOxRJAAoJEBYNRVNeJnmTfdsP/i8ksY0ZJjMbGf+deF6vJ+3d
-NLzLLhZZVJZrqeuVJN6IL+94x24OTOMbnZHVkC3aQzl7K0ucM5pblTA7hOcOI1cw
-T2Yy9+Yr7K8zZ8c3GJIZ5TH3PsYHMdtm5FGAUPIg2h+dOWIVvm9xD8ldus0qXt5C
-paPWCmq9ZrQPnrOPqDB7KyklRPnS16mYK8hzL3tpkSD2FwjBDxqXDLvC8cHHIu/5
-znZUl4tVt8tHGwAHxBjeNRZ7h8no+Sq2mcfVRGCCCQhO/YRRnCGllbHIAfMb+LeT
-M+Ylw8MewFGcA+MBV4ju0KtDbT3W7626+H349xJoyJnPpjF6atfZsnBNzWVYa+t0
-S2Okgnun6TBzhmbDGr9HyTTF1G59pIC3/OpTU8XAHLsZctBwTonD1Zv9+Lo0ZV12
-6P5rrPXAI5GvdeV9okhTF6LAY5JyrUCuLNo4eWsJ/gWo24kYvvXBDsT0ZIPCW9Y2
-fg6ZMBpQo1q3b9c5pr4QvRhRXgqvWfbiL36Vj+zMk2oP0bgA/NuOrGeAuXmpqUQ9
-KCxU2rkBGGr4bJEGQxe7e3uyelgiU9rxyH3ygDrJhm/+E/wGraPmOPNxs0jTwF9n
-DREFBeZ4ZbL+UQYsTzQou9RRjmkt4Ptw1I7nc6u05lK6nDEJv8Ev3fjPubRk75HQ
-Cfv+kRwwgfFR4x9bbymu
-=4189
------END PGP SIGNATURE-----
