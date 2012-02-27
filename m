@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/4
-Message-ID: <2054968671.25871448.1351853586672.JavaMail.root@redhat.com>
-Date: Fri, 2 Nov 2012 06:53:06 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/19
+Message-ID: <CAH5b-BXazLei2bQxaZRsF7fnQC0nM_KPXMf5ienPi8UFjZQW8Q@mail.gmail.com>
+Date: Mon, 27 Feb 2012 12:42:35 +0100
+From: yersinia <yersinia.spiros@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request -- pgbouncer: DoS (pooler server shutdown) by adding database with large name
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Sun, Feb 26, 2012 at 11:37 PM, Eric Leblond <eric@...it.org> wrote:
 
-  a denial of service flaw was found in the way pgbouncer,
-a lightweight connection pooler for PostgreSQL, performed
-processing of client requests attempting to add new database(s)
-with large name(s). A remote attacker could use this flaw
-to cause pooler server shutdown.
+> Hello,
+>
+>
+> This is a correct definition of the condition on the network required
+> for the attack.
+>
+> Hi. If i have undestood correcly,  setting arp_announce and arp_ignore as
+below should be fix the problem you have  described, isn't it ?
 
-Relevant upstream patch:
-[1] http://git.postgresql.org/gitweb/?p=pgbouncer.git;a=commitdiff;h=4b92112b820830b30cd7bc91bef3dd8f35305525
+net.ipv4.conf.all.arp_announce=1
+net.ipv4.conf.all.arp_ignore=2
 
-References:
-[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692103
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=872527
 
-Could you allocate a CVE id for this?
+We set so by default in our env by policy.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks and Regards
+
+Elia
+
