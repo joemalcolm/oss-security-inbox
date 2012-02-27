@@ -1,29 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/04/1
-Message-ID: <20121104123459.12a71c34.reed@reedloden.com>
-Date: Sun, 4 Nov 2012 12:34:59 -0800
-From: Reed Loden <reed@...dloden.com>
-To: <oss-security@...ts.openwall.com>
-Subject: YUI 2.x security issue regarding embedded SWF files -- or, How Not To Handle A Security Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/18
+Message-ID: <CAOtvbJwqQVJQb2jZvw-gZvSzxbdbsTtStu5Cr3K7SicmUV-yTg@mail.gmail.com>
+Date: Mon, 27 Feb 2012 11:28:35 +0100
+From: Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>,  Radoslaw Lisowski <radoslaw.lisowski@...il.com>, kontakt@...antsoft.pl
+Subject: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
-I haven't seen this posted at all, but it seems there's some (major?)
-security issue regarding the SWF files embedded in YUI 2. The YUI team
-has published a blog post regarding this problem asking users to e-mail
-them for details.
+Hi.
 
-http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
+I'm forwarding this mail to bug reported, Mateusz Goik
+(aliantsoft.pl). He said that he will take care of CVE identifier
+after Kadu 0.11.1 is released (it is available since late Saturday).
 
-The comments are a great read. Ryan Grove (former Yahoo! and YUI core
-team guy) hits the point on the head regarding disclosure handling of
-the issue. Apparently, some people/companies have already been notified
-directly weeks ago, and this is how the YUI team is continuing the
-disclosure process by just asking projects to e-mail them instead of
-just releasing the fix to the public at this stage. :/
+Regards
 
-Might want to go ahead and get a CVE assigned to whatever this issue
-is, and hope more details come out of this soon so YUI 2 users can
-actually get patched instead of having to request access to the fix...
 
-~reed
-(speaking only for himself)
+W dniu 27 lutego 2012 11:05 użytkownik Jan Lieskovsky
+<jlieskov@...hat.com> napisał:
+> Hello Mariusz, Kurt, Steve, vendors,
+>
+>  [1] though https://bugzilla.novell.com/show_bug.cgi?id=749036#c0
+>  mentions CVE identifier has been already requested for this:
+>
+>  "The bug still doesn't have CVE number but will have in near future."
+>
+>  it doesn't look like CVE id has been requested for this via OSS
+>  security list, so moving this discussion / CVE request there.
+>
+>  Mariusz, could you clarify, if this issue has got a CVE identifier
+>  already or if we still need one? If aren't able to do so, whom
+>  should we contact to be clear about "CVE request status" for this?
+>
+>  Or at least clarify which list that "Here is a part of massage sent
+>  by developers to package maintainers:" has been sent to? (so
+>  we could ask there)
+>
+>  And in the end either use that one, already allocated or allocate
+>  a new one here via OSS.
+>
+>  Below being issue description as I got it based on / from [2]:
+>
+>  A stored cross-site scripting (XSS) flaw was found in the way Kadu, the
+> instant
+> messenger compatible with the Gadu-Gadu protocol, performed sanitization of
+> status and sms messages for particular contact in user's history. A remote
+> attacker could provide a specially-crafted status or sms message, which
+> would
+> be stored in victim's Kadu history file, if the attacker was present on the
+> contact list of the victim and the victim has had storage of statuses
+> enabled
+> for their history file. When the victim later examined the content of the
+> status history, this flaw could lead to arbitrary HTML or webscript
+> execution.
+>
+> References:
+> [2] https://bugzilla.novell.com/show_bug.cgi?id=749036
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=797777
+>
+> Upstream patches:
+> [4]
+> https://gitorious.org/kadu/kadu/commit/ebe3674cf0f3aa9b36308c06e19cb293cc790b52
+>    (patch for the XSS issue)
+>
+> [5]
+> https://gitorious.org/kadu/kadu/commit/e9506be6d3dcdd408fdf83d8eb82416c9b798c84
+>    (additional hardening)
+>
+> [6]
+> https://gitorious.org/kadu/kadu/commit/91772e46541e22cbc2c7bf41a1a9798c2a58f6d6
+>    (disable xhtmlrequests)
+>
+> [7]
+> https://gitorious.org/kadu/kadu/commit/94e7479617d78a1649a0763960edade7ad09a0d0
+>   (allow only GET and HEADER requests, additional hardening)
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
