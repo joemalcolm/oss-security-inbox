@@ -1,103 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/17
-Message-ID: <4FFDB563.5070401@redhat.com>
-Date: Wed, 11 Jul 2012 11:18:27 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/24
+Message-ID: <4F4BEBC3.8030307@redhat.com>
+Date: Mon, 27 Feb 2012 13:46:59 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Stefan Cornelius <scorneli@...hat.com>
-Subject: Re: CVE request: glibc formatted printing vulnerabilities
+Subject: Re: Re: DesktopOnNet 3 Beta LFI
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 07/11/2012 04:32 AM, Stefan Cornelius wrote:
-> Hi,
+On 02/27/2012 07:10 AM, Whitney Houston wrote:
+> I forget to say, I want CVE number. give it to me.
 > 
-> there are further vulnerabilities in glibc's formatted printing 
-> functionality.
+> On Mon, Feb 27, 2012 at 2:10 PM, Whitney Houston
+> <i4m4l1v3b17ch3z@...il.com>wrote:
 > 
-> 1) It was discovered that the formatted printing functionality in
-> glibc did not properly honor the size of a structure when
-> calculating the amount of memory to allocate. A remote attacker
-> could provide a specially crafted sequence of format specifiers,
-> leading to an undersized buffer allocation and subsequent stack
-> corruption, resulting in a crash or, potentially, FORTIFY_SOURCE
-> format string protection mechanism bypass, when processed.
-> 
-> References: http://sourceware.org/bugzilla/show_bug.cgi?id=12445 
-> http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=84a4211850e3d23a9d3a4f3b294752a3b30bc0ff
->
-> 
-https://bugzilla.redhat.com/show_bug.cgi?id=833703
-
-Please use CVE-2012-3404 for this issue.
-
-> 2) It was discovered that the formatted printing functionality in
-> glibc used extend_alloca() incorrectly. "nspecs_max" is incorrectly
-> passed to extend_alloca, which modifies the value in "nspecs_max"
-> when allocating the memory. A remote attacker could provide a
-> specially crafted sequence of format specifiers, leading to a
-> desynchronization within the buffer size handling, resulting in the
-> use of uninitialized memory or, potentially, FORTIFY_SOURCE format
-> string protection mechanism bypass, when processed.
-> 
-> References: http://sourceware.org/bugzilla/show_bug.cgi?id=13446 
-> http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=a4647e727a2a52e1259474c13f4b13288938bed4
->
-> 
-https://bugzilla.redhat.com/show_bug.cgi?id=833704
-> 
-> It seems like 1) and 2) were introduced by the following commit: 
-> http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=1d498daa95384e5c9ad5bcb35e7a996e5869ac39
-
-Please
-> 
-use CVE-2012-3405 for this issue.
-
-> 3) It was discovered that the formatted printing functionality in
-> glibc did not properly restrict the use of alloca(). A remote
-> attacker could provide a specially crafted sequence of format
-> specifiers, leading to a crash or, potentially, FORTIFY_SOURCE
-> format string protection mechanism bypass, when processed.
-> 
-> References: https://bugzilla.redhat.com/show_bug.cgi?id=826943
-> 
-> Red Hat patch backports/testcases for RHEL6 that include a patch
-> for this: 
-> https://bugzilla.redhat.com/attachment.cgi?id=594722&action=diff
-> 
-> Red Hat patch backport/testcase for RHEL5 (older glibc versions) 
-> https://bugzilla.redhat.com/attachment.cgi?id=594727&action=diff
-
-Please use CVE-2012-3406 for this issue.
-
-> 
-> Thanks in advance and kind regards
-> 
+>> Hello list
+>>
+>> I want to report serious scary issue, I find this vulnerability that make
+>> me fall off chair and giggle like silly slut.
+>>
+>> Project: http://sourceforge.net/projects/don3/
+>>
+>> <?php
+>> require('system/switches.php');
+>>
+>> if
+>> (file_exists('applications/'.$_GET["app"].'.don3app/'.$_GET["app"].'.php')){
+>>         $appfile = $_GET["app"];
+>>         $app_path = "applications/".$appfile.".don3app/";
+>> } else {
+>>         $appfile = "frontpage";
+>>         $app_path = "applications/frontpage.don3app/";
+>> }
+>>
+>> if (file_exists("library/$appfile.don3lib")){
+>>         $topper_array = don3_read_don3lib($appfile.".don3lib");
+>>         $title = $topper_array[0];
+>> } else {
+>>         $title = "ERROR T1";
+>> }
+>>
+>>
+>> $topper_includer = 'applications/'.$appfile.'.don3app/'.$appfile.'.php';
+>>
+>> ....
+>>
+>> include ($topper_includer);
+>>
+>>
+>> Obviously I keep this bug super secret for many month but now i release
+>> for all, after my recent death.
+>>
+>> xx
+>>
 
 
-- -- 
+Can you please state which version(s) are vulnerable and which specific
+files are vulnerable? Thanks.
+
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP/bVjAAoJEBYNRVNeJnmTb24P/2w+i5usP05XnvmYY0QDeOE6
-jzO98b9G4Dq94eKmjLpkDprb5BTtPFjw028rIn/GEqvKMKll2z0+VBUc9mFMvSxC
-cdHeHlvxK7mdGFgFA+QfvEZ847/0Od7av6o2CQIy8p4SoNwM7gWT4FPHSNoVc73D
-/zGM8qUm/HeStzmNZaFlF+7NFopBNegmRWA8sgXIjcmTVlFJr78qHA5uvSj0T6NG
-Ve5ECwMxNMF0IkGyjFx2j49Ex+w+pQRXYwBZNeRQzRJ0SfuvEyeeWANnAy4zf7Aw
-al6Ia2rWKHQm2a9LC0QoZdwRJ7y7nzvaKByiwX/LJ3Mukz4Rg56asfv9zdOIqTKk
-XMydwTAW/PtwtGhgg8otSsJ8ysIm1D+lou8hLgaFzLMpVyuJsahqmM5gnOaDKnEa
-06D6XwLOJyjTKstiWUGEpgDX8hwoD0qp/3YkxFGZ1Omi/Q5oZs7fUQFv1cXAYmdA
-uJV7i/YJUXhKY2THM1tdCPg8zVZ3xLdWbQXhauRw3AwRjZrhTnkdLOQtI2NdzD/N
-ZQ9pcM3xmJ5LUVrS/SeCLF11SQekh9nXPekwb+cXF0Nn5UzGnnwYnvGJf2dYHb7a
-UslV9KlQnOGBwHFIopjBHNVNkOZAsWcFyGz8TiibxN3M7kdLlZqrdk1021gVVJC7
-Z5GjSNFJWa4A6kOGcfuF
-=g2X7
------END PGP SIGNATURE-----
