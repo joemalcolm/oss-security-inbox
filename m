@@ -1,48 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/5
-Message-ID: <20120330075804.GA11582@kludge.henri.nerv.fi>
-Date: Fri, 30 Mar 2012 10:58:04 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/1
+Message-ID: <4F4ADA3F.4060403@redhat.com>
+Date: Mon, 27 Feb 2012 09:19:59 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: Coppermine 1.5.18 waraxe-2012-SA#081
+CC: Eric Leblond <eric@...it.org>
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2012 CVE-identifier for stored XSS in Coppermine 1.5.18 edit_ont_pic.php keywords.
+> this some months ago. I've also tried to contact the various CERT
+> but they refused to handle the case or did not reply to my
+> requests.
 
-ID: waraxe-2012-SA#081
-Original advisory: http://www.waraxe.us/advisory-81.html
-Mailing list post: http://seclists.org/bugtraq/2012/Mar/166
+In future, if you tried to get help but you couldn't, feel free to
+send us an email at linux-distros vs.openwall.org.
 
-"""
-Reason: failure to sufficiently sanitize user-supplied input data
-Preconditions: privileges needed for picture keywords editing
-
-Coppermine user with appropriate privileges is able to modify picture information:
-
-http://localhost/cpg1518/edit_one_pic.php?id=1&what=picture
-
-There is a field in form named as "Keywords (separate with semicolon)".
-After insertion to database those keywords are later used in html meta section.
-It appears, that specific user supplied data is not properly validated before
-outputting as html to the end user, resulting in Stored XSS vulnerability.
-
-Testing:
-
-1. Open picture information editing page:
-
-http://localhost/cpg1518/edit_one_pic.php?id=1&what=picture
-
-2. Insert XSS payload below as keywords and click "Apply changes":
-
-"><body onload=javascript:alert(String.fromCharCode(88,83,83))>
-
-After that issue request to view this image:
-
-http://localhost/cpg1518/displayimage.php?pid=1
-
-As result we can observe XSS payload execution.
-"""
-
-There is also four different path disclosure vulnerabilities (includes plugins), but I think one CVE-identifier for this advisory is enough as these are all in the same version and path disclosure is very low severity.
-
-- Henri Salo
+Eugene
