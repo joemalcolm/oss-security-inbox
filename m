@@ -1,25 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/1
-Message-ID: <4F069736.5020306@redhat.com>
-Date: Thu, 05 Jan 2012 23:39:50 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/25
+Message-ID: <4F4BEC19.5040708@redhat.com>
+Date: Mon, 27 Feb 2012 13:48:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Requests for FFmpeg 0.9.1
+CC: Mateusz Goik <mateusz.goik@...antsoft.pl>, Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>, Radoslaw Lisowski <radoslaw.lisowski@...il.com>, kontakt@...antsoft.pl
+Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
- 
-> I dont know what seperates 2011 and 2012 CVEs ?
-> The list includes all things found after FFmpeg 0.9 (december 2011)
->
->
-> [...]
-The day they become public which I'm counting as today for simplicity
-(Steve, you ok with that?). I'm going to go through the list this
-weekend and sort out the security ones, reply here so you / other people
-can double check and then I'll assign the CVE's (this is definitely a
-weekend project =).
+On 02/27/2012 09:13 AM, Mateusz Goik wrote:
+> Sorry. Tested on kadu 0.11.0..
+> 
+> Mateusz Goik.
+> 
+> On 02/27/2012 05:11 PM, Mateusz Goik wrote:
+>> Hi,
+>>
+>> I would add it is possible - read / create files on users hdd. (using
+>> the method - GET / PUT)
+>> Tested on Backtrack 5 r1 (kadu 0.10.0 - compiled from source).
+>>
+>> Mateusz Goik
+
+Can you post a summary of the vulnerabilities and the affected
+version(s)? I'm sort of confused on this.
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Kurt Seifried Red Hat Security Response Team (SRT)
