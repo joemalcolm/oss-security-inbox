@@ -1,136 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/29/3
-Message-ID: <025b01cd55e5$c81a7020$584f5060$@reactionis.com>
-Date: Fri, 29 Jun 2012 11:56:04 +0100
-From: "Joseph Sheridan" <joe@...ctionis.com>
-To: "'full-disclosure'" <full-disclosure@...ts.grok.org.uk>, "'bugtraq'" <bugtraq@...urityfocus.com>, <secalert@...urityreason.com>, <bugs@...uritytracker.com>, "'vuln'" <vuln@...unia.com>, <vuln@...urity.nnov.ru>, <news@...uriteam.com>, <moderators@...db.org>, <submissions@...ketstormsecurity.org>, <submit@...ecurity.com>, <oss-security@...ts.openwall.com>, <bugs@...uritytracker.com>
-Subject: GIMP FIT File Format DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/13
+Message-ID: <4F4BB11B.8050003@redhat.com>
+Date: Mon, 27 Feb 2012 09:36:43 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Vasiliy Kulikov <segoon@...nwall.com>, Petr Sabata <psabata@...hat.com>
+Subject: Re: CVE Request -- Multiple instances of insecure temporary file use
 Content-Type: text/plain; charset=utf-8
 
-Summary
-=======
+On 02/27/2012 05:07 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+>   multiple instances (by checking for ATM technology support, checking
+> for Xtables
+> extension support, checking for setns() system call support, and in
+> dhcp-client-script example script) of insecure temporary file use were
+> found
+> in iproute. A local attacker could use this flaw to conduct symbolic link
+> attacks (modify or remove files via specially-crafted link names).
+> 
+> References:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=797878
+> 
+> Upstream patches:
+> [2]
+> http://git.kernel.org/?p=linux/kernel/git/shemminger/iproute2.git;a=commitdiff;h=e557d1ac3a156ba7521ba44b0b412af4542f83f8
+> 
+> 
+> [3]
+> http://git.kernel.org/?p=linux/kernel/git/shemminger/iproute2.git;a=commitdiff;h=20ed7b24df05eadf83168d1d0ce0052a31380928
+> 
+> 
+> Could you allocate a CVE identifier for this?
+> 
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-There is a file handling DoS in GIMP (the GNU Image Manipulation Program) for
-the 'fit' file format affecting all versions (Windows and Linux) up to and 
-including 2.8.0. A file in the fit format with a malformed 'XTENSION' header 
-will cause a crash in the GIMP program.
+Please use CVE-2012-1088 for these issues (same codebase/same
+discoverer/same issue type/same version so merging).
 
-CVE number: CVE-2012-3236
-Vendor Homepage: http://www.gimp.org/
-Date reported to vendor: 25/05/2012
-Found by Joseph Sheridan:
-href="http://www.reactionpenetrationtesting.co.uk/joseph-sheridan.html
-
-This advisory is posted at:
-http://www.reactionpenetrationtesting.co.uk/FIT-file-handling-DoS.html
-
-PoC file is available here:
-http://www.reactionpenetrationtesting.co.uk/vuln.fit
-
-Affected Products
-=================
-
-Vulnerable Products
-+------------------
-
-The following products are known to be affected by this vulnerability:
-
-  * GIMP <= 2.8.0 (Windows or Linux builds)
-
-Products Not Vulnerable
-+--------------------------------
-  * GIMP 2.8.1 
-
-Details
-=======
-
-There is a file handling DoS in GIMP (the GNU Image Manipulation Program) for
-the 'fit' file format affecting all versions (Windows and Linux) up to 2.8.0. 
-A file in the fit format with a malformed 'XTENSION' header will cause a crash 
-in the GIMP program. The flaw is triggered by opening a crafted 'fit' file or 
-allowing the file explorer dialog to preview the file.
-
-A file in the fit format starting as follows will trigger the crash:
-XTENSIONaaaaaaaaaaaaaaaaaaaaaa...aaaaaaaaaaaaaaaaaaaaaaaaHEADER2...
-
-The vulnerable code is in the fits-io.c lines where the program attempts to 
-copy from a null pointer:
-
- {
-   fdat = fits_decode_card (fits_search_card (hdr, "XTENSION"), typ_fstring);
-   strcpy (hdulist->xtension, fdat->fstring);
- }
- 
- This code can be patched by changing it to the following (as GIMP 2.8.1):
- 
-    fdat = fits_decode_card (fits_search_card (hdr, "XTENSION"), typ_fstring);
-   if(fdat != NULL) {
-    strcpy (hdulist->xtension, fdat->fstring);
-   } else {
-     strcpy (errmsg, "No valid XTENSION header found.");
-     goto err_return;
-   }
- 
-Impact
-======
-
-Successful exploitation of the vulnerability may result in an application 
-crash and denial of service.
-
-Solution
-===========
-The GIMP team have provided an update for this issue (release 2.8.1).
-
-Workarounds
-===========
-
-The fits-io.c file can be patched as above.
-
-Distribution
-============
-
-In addition to posting on the website, a text version of this notice
-is posted to the following e-mail and Usenet news recipients.
-
-  * bugtraq () securityfocus com
-  * full-disclosure () lists grok org uk
-  * oss [dash] security [dash] subscribe [at] lists [dot] openwall [dot] com 
-
-Future updates of this advisory, if any, will be placed on the ReactionIS
-corporate website, but may or may not be actively announced on
-mailing lists or newsgroups. Users concerned about this problem are
-encouraged to check the URL below for any updates:
-
-http://www.reactionpenetrationtesting.co.uk/FIT-file-handling-DoS.html
-
-============================================================================
-
-Reaction Information Security 
-Lombard House Business Centre,
-Suite 117,
-12-17 Upper Bridge Street,
-Canterbury, Kent, CT1 2NF
-
-Phone: +44 (0)1227 785050
-Email: research () reactionis {dot} co {dot} uk
-Web: http://www.reactionpenetrationtesting.co.uk
-
-
-Joseph Sheridan
-Technical Director
-Principal Consultant
-CHECK Team Leader, CREST Infrastructure, CREST Application, CISSP
-Tel: 07812052515
-Web: www.reactionis.com
-Email: joe@...ctionis.co.uk
-
-Reaction Information Security Limited.
-Registered in England No: 6929383
-Registered Office: 1, The Mews, 69 New Dover Road, Canterbury, CT1 3DZ
- 
-This email and any files transmitted with it are confidential and are intended solely for the use of the individual to whom they are addressed. If you are not the intended recipient please notify the sender. Any unauthorised dissemination or copying of this email or its attachments and any use or disclosure of any information contained in them, is strictly prohibited.
-
- Please consider the environment before printing this email
-
-
-
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
