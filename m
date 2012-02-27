@@ -1,106 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/05/1
-Message-Id: <36617FD3-6265-4329-9138-6203268449D1@gmail.com>
-Date: Tue, 5 Jun 2012 01:54:17 -0400
-From: Xi Wang <xi.wang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/4
+Message-ID: <20120227105530.GA12285@suse.de>
+Date: Mon, 27 Feb 2012 11:55:30 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: memory allocator upstream patches
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-I would like to share some upstream patches of two specific types
-of memory allocator vulnerabilities.
+I know that the 127.0.0.1 trick worked in past, but for loopback
+addresses this isnt working anymore since quite a while.
+You will get a 'martian destination', regardless of routing
+or rp_filter's set. If we talk about a Linux kernel:
 
-* malloc(n) size overflow.
+ip_route_input_slow()
+{
+[...]
+        if (ipv4_is_lbcast(daddr) || ipv4_is_zeronet(daddr) ||
+            ipv4_is_loopback(daddr))
+                goto martian_destination;
+[...]
+}
 
-Consider the following code pattern.
+Or I am doing something seriously wrong. No idea what Solaris
+or BSD's are doing.
+For 'real' NIC's this trick is however still working, even if
+the machine is a host (not a router). This leaves some room for
+accessing internal admin interfaces from outside. :)
+However, playing with source addresses to defeat firewalls should be
+difficult, since most dists enable rp_filter.
 
-	n = read_from_input();
-	p = malloc(n);
-	if (p)
-		memcpy(p, input_buffer, n);
+my 2ct's
+Sebastian
 
-Some malloc() implementations internally perform alignment/padding
-for a large n, and the allocation size wraps around to a small
-integer.  That means they would allocate a smaller buffer than
-expected, leading to buffer overflow.
+On Mon, Feb 27, 2012 at 01:53:29AM +0400, Solar Designer wrote:
+> On Sun, Feb 26, 2012 at 10:05:55PM +0100, Eric Leblond wrote:
+> > On Sun, 2012-02-26 at 12:17 -0700, Kurt Seifried wrote:
+> > > Are there any helpers that can be abused to open holes in the firewall
+> > > externally, or is it only internal clients that can cause problems and
+> > > trigger the firewall to improperly allow network traffic in/out.
+> > 
+> > No, attacker has to be on a network directly connected to the firewall.
+> 
+> I guess by "internal clients" Kurt was referring to machines behind the
+> firewall (e.g., someone clicking an URL that has a string looking like
+> an FTP command embedded in it, thereby triggering the FTP helper to open
+> a hole - stuff that was discussed in late 1990s and partially mitigated
+> by hardening the helpers at the time), whereas by "attacker on a network
+> directly connected to the firewall" Eric means that the attacker may be
+> _outside_ the firewall (behind its WAN interface), but on the same
+> network segment (e.g., the attacker might have compromised a nearby
+> server, such as of another customer at a colocation facility).
+> 
+> It is known that a machine will generally receive and process a packet
+> routed to one of its NICs by MAC address even if the destination IP
+> address is that of another NIC or even loopback (e.g., it is possible to
+> access services bound to 127.0.0.1 in this way - but only from directly
+> connected machines).  Without rp_filter or equivalent, it is possible to
+> have these packets' source addresses match the other NIC's network
+> segment.  My _guess_ (based solely on the info posted in here so far) is
+> that the gist of Eric et al.'s new attack is to apply this approach
+> against a protocol helper.  The novelty is thus in combining these known
+> things together to arrive at something that to the best of my knowledge
+> has not yet been discussed.
+> 
+> I suppose Eric will tell us if this is the correct guess or not. ;-)
+> 
+> Alexander
 
-* calloc(n, size) size overflow.
+-- 
 
-Some calloc() implementations don't check for n * size multiplication
-overflow, and would allocate a smaller buffer than expected,
-leading to buffer overflow.
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-The two types of vulnerabilities can be easily reproduced using
-malloc(-1) and calloc(BIG-VALUE, BIG-VALUE).  If the return values
-are non-null, the implementations are likely to be problematic.
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
-See a more complete list at:
-
-http://kqueue.org/blog/2012/03/05/memory-allocator-security-revisited/
-
-Below are some recent upstream fixes.
-
-
-Boehm-Demers-Weiser GC (libgc)
-==============================
-
-malloc() size overflow, upstream patch (revised by the developers):
-
-https://github.com/ivmai/bdwgc/commit/be9df82919960214ee4b9d3313523bff44fd99e1
-
-The bug in mallocx.c was found by Ivan Maidanski.
-
-calloc() size overflow, upstream patch (revised by the developers):
-
-https://github.com/ivmai/bdwgc/commit/e10c1eb9908c2774c16b3148b30d2f3823d66a9a
-https://github.com/ivmai/bdwgc/commit/6a93f8e5bcad22137f41b6c60a1c7384baaec2b3
-https://github.com/ivmai/bdwgc/commit/83231d0ab5ed60015797c3d1ad9056295ac3b2bb
-
-
-bionic (Android libc)
-=====================
-
-malloc() size overflow, upstream patch (revised by the developers):
-
-https://github.com/android/platform_bionic/commit/7f5aa4f35e23fd37425b3a5041737cdf58f87385
-
-NB: this vulnerability could only be triggered in debug mode, the
-same as CVE-2009-0607, calloc() size overflow.
-
-
-nedmalloc
-=========
-
-malloc() size overflow, upstream patch:
-
-https://github.com/ned14/nedmalloc/commit/1a759756639ab7543b650a10c2d77a0ffc7a2000
-
-calloc() size overflow, upstream patch:
-
-https://github.com/ned14/nedmalloc/commit/2965eca30c408c13473c4146a9d47d547d288db1
-
-
-Hoard
-=====
-
-http://www.hoard.org/
-
-malloc() size overflow, confirmed by the developers via email in
-this March, no upstream patch available (since 3.8).
-
-calloc() size overflow, which should only happen on non-glibc
-platforms (e.g., Mac OS X).  It has not been confirmed by the
-developers, but one can easily reproduce it.
-
-
-boost::pool
-===========
-
-ordered_malloc() (similar to calloc()) size overflow, upstream patch:
-
-https://svn.boost.org/trac/boost/changeset/78326
-
-
-- xi
