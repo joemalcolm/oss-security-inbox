@@ -1,45 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/4
-Message-ID: <20120410033103.GK16793@ngolde.de>
-Date: Tue, 10 Apr 2012 05:31:03 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/6
+Message-ID: <20120227110710.GB12285@suse.de>
+Date: Mon, 27 Feb 2012 12:07:10 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request for imagemagick, libpng and tiff
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Kurt Seifried <kseifried@...hat.com> [2012-04-10 04:54]:
-> On 04/09/2012 08:31 PM, Nico Golde wrote:
-> > We received 3 bug reports targeting imagemagick, libpng and tiff
-> > crashing on input when used with electric fence indicating memory
-> > errors on handling crafted input. From what I see no CVE ids have
-> > been assigned to these bugs yet.
-> > 
-> > Can someone assign ids? libpng:
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668082 (apparently
-> > fixed in 1.2.48 with a removal of the buggy function)
-> > 
-> > tiff: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668087
-> > 
-> > imagemagick:
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668075
-> 
-> Do any of these crashes occur without electric fence? Also I think
-> Vincent Fourmond <fourmond@...ian.org> stated it succinctly:
-> 
-> "On what do you base your claim that it is a user security hole ?
-> While I agree that it is a bug, I fail to see how a crash at the end
-> of a program's execution (cleanup time) necessarily is a user security
-> hole, hence downgrading the severity. Feel free to raise it up again
-> if you have arguments to back your claim."
 
-Ack. The imagemagick bug at least seems to be a false positive create by an 
-efence bug.
+Sure, but for 127.0.0.1 it seems the "problem" was big enough
+to hardcode such a rule in the route input path.
 
-Cheers
-Nico
+For ip6, almost all problems are already re-introduced,
+and more.
+
+cya,
+Sebastian
+
+On Mon, Feb 27, 2012 at 02:01:25PM +0300, ArkanoiD wrote:
+> It is known "problem" for a long time (note the quotes -- as it is known, it
+> is not a problem anymore and is fixed in all default rulesets).
+> 
+> ipv6 may reintorduce it, though.
+> 
+> On Mon, Feb 27, 2012 at 11:55:30AM +0100, Sebastian Krahmer wrote:
+> > Hi,
+> > 
+> > I know that the 127.0.0.1 trick worked in past, but for loopback
+> > addresses this isnt working anymore since quite a while.
+> > You will get a 'martian destination', regardless of routing
+> > or rp_filter's set. If we talk about a Linux kernel:
+> > 
+> > ip_route_input_slow()
+> > {
+> > [...]
+> >         if (ipv4_is_lbcast(daddr) || ipv4_is_zeronet(daddr) ||
+> >             ipv4_is_loopback(daddr))
+> >                 goto martian_destination;
+> > [...]
+> > }
+> > 
+> > Or I am doing something seriously wrong. No idea what Solaris
+> > or BSD's are doing.
+> > For 'real' NIC's this trick is however still working, even if
+> > the machine is a host (not a router). This leaves some room for
+> > accessing internal admin interfaces from outside. :)
+> > However, playing with source addresses to defeat firewalls should be
+> > difficult, since most dists enable rp_filter.
+> > 
+> > my 2ct's
+> > Sebastian
+> > 
+> > On Mon, Feb 27, 2012 at 01:53:29AM +0400, Solar Designer wrote:
+> > > On Sun, Feb 26, 2012 at 10:05:55PM +0100, Eric Leblond wrote:
+> > > > On Sun, 2012-02-26 at 12:17 -0700, Kurt Seifried wrote:
+> > > > > Are there any helpers that can be abused to open holes in the firewall
+> > > > > externally, or is it only internal clients that can cause problems and
+> > > > > trigger the firewall to improperly allow network traffic in/out.
+> > > > 
+> > > > No, attacker has to be on a network directly connected to the firewall.
+> > > 
+> > > I guess by "internal clients" Kurt was referring to machines behind the
+> > > firewall (e.g., someone clicking an URL that has a string looking like
+> > > an FTP command embedded in it, thereby triggering the FTP helper to open
+> > > a hole - stuff that was discussed in late 1990s and partially mitigated
+> > > by hardening the helpers at the time), whereas by "attacker on a network
+> > > directly connected to the firewall" Eric means that the attacker may be
+> > > _outside_ the firewall (behind its WAN interface), but on the same
+> > > network segment (e.g., the attacker might have compromised a nearby
+> > > server, such as of another customer at a colocation facility).
+> > > 
+> > > It is known that a machine will generally receive and process a packet
+> > > routed to one of its NICs by MAC address even if the destination IP
+> > > address is that of another NIC or even loopback (e.g., it is possible to
+> > > access services bound to 127.0.0.1 in this way - but only from directly
+> > > connected machines).  Without rp_filter or equivalent, it is possible to
+> > > have these packets' source addresses match the other NIC's network
+> > > segment.  My _guess_ (based solely on the info posted in here so far) is
+> > > that the gist of Eric et al.'s new attack is to apply this approach
+> > > against a protocol helper.  The novelty is thus in combining these known
+> > > things together to arrive at something that to the best of my knowledge
+> > > has not yet been discussed.
+> > > 
+> > > I suppose Eric will tell us if this is the correct guess or not. ;-)
+> > > 
+> > > Alexander
+> > 
+> > -- 
+> > 
+> > ~ perl self.pl
+> > ~ $_='print"\$_=\47$_\47;eval"';eval
+> > ~ krahmer@...e.de - SuSE Security Team
+> > 
+> > ---
+> > SUSE LINUX Products GmbH,
+> > GF: Jeff Hawn, Jennifer Guild, Felix Imend?rffer, HRB 16746 (AG N?rnberg)
+> > Maxfeldstra?e 5
+> > 90409 N?rnberg
+> > Germany
+> > 
+> > 
+> > email protected and scanned by AdvascanTM - keeping email useful - www.advascan.com 
+> > 
+> > 
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
 
-Content of type "application/pgp-signature" skipped
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
