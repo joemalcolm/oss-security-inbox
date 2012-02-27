@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/17
-Message-ID: <4F75FFDA.3010002@redhat.com>
-Date: Fri, 30 Mar 2012 12:47:54 -0600
-From: Jeff Law <law@...hat.com>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/10
+Message-Id: <201202271542.45184.mweckbecker@suse.de>
+Date: Mon, 27 Feb 2012 15:42:44 +0100
+From: Matthias Weckbecker <mweckbecker@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: openssl: null pointer dereference issue
 Content-Type: text/plain; charset=utf-8
 
-On 03/30/2012 12:43 PM, Solar Designer wrote:
-> On Fri, Mar 30, 2012 at 12:27:31PM -0600, Jeff Law wrote:
->> I think the right way to handle the return value is to return NULL for
->> these cases.  It's posix complaint and the glibc crypt routines already
->> return NULL for exceptional conditions.
->
-> Do you realize that plenty of services that use crypt() - likely the
-> majority of them, even - don't handle NULL returns, so they will
-> segfault when these conditions are triggered?
-Then, IMHO,  the app is clearly broken.  Crypt has been defined as 
-potentially returning NULL and at least for glibc has done so since the 
-introduction of sha256/sha512, if the app fails to check for that, then 
-the app needs to be fixed.
+Hi Kurt, Steve, vendors,
 
-I don't speak for glibc on this issue, so if you want to raise it on 
-libc-alpha, go for it.
+bad S/MIME messages with crafted MIME headers can result in a NULL pointer 
+dereference in openssl's ans1 parser,
 
-Jeff
+ https://bugzilla.novell.com/show_bug.cgi?id=748738
+ http://www.mail-archive.com/openssl-dev@openssl.org/msg30305.html
+ http://cvs.openssl.org/chngview?cn=22144
+
+Does it qualify for a CVE?
+
+Thanks, Matthias
+
+-- 
+Matthias Weckbecker, Junior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
