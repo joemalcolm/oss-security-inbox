@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/30/2
-Message-ID: <50164B49.30205@suse.de>
-Date: Mon, 30 Jul 2012 10:52:25 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/15
+Message-ID: <871upgi1pl.fsf@mid.deneb.enyo.de>
+Date: Mon, 27 Feb 2012 19:13:42 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-Simon McVittie wrote:
-> On 10/07/12 14:09, Sebastian Krahmer wrote:
->> We are going to add a libdbus hardening patch:
->>
->> https://bugzilla.novell.com/show_bug.cgi?id=697105
->>
->> This is because some suid binaries (Xorg and others) are linked against libdbus
-> 
-> The tl;dr: version if (e.g.) your Xorg binary still uses HAL and is also
-> setuid, ensure that it cleans its environment using a whitelist before
-> its first use of libdbus, libhal, any other non-trivial library, or exec().
-> 
-> In off-list discussion with the other D-Bus upstream maintainers,
-> consensus was that binaries with greater privileges than their parent
-> process (setuid or VFS capabilities) must not use non-trivial libraries
-> [...]
-> In particular, we do not support use of libdbus in setuid binaries that
-> do not sanitize their environment before their first call into libdbus.
+* Eric Leblond:
 
-PAM modules of systemd and consolekit use libdbus though. PAM can't
-scrub the environment before calling modules as those modules may want
-to do something with the information gained from the original
-environment (like e.g. pam_xauth).
+> I've discovered a generic attack on firewall using Application Level
+> Gateway (like Netfilter or Checkpoint).
 
-cu
-Ludwig
+This is rediscovered every two to five years.  Here's mine
+(from 2005, but it's been proposed before):
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+<http://www.enyo.de/fw/security/java-firewall/>
+
+> Secure use of iptables and connection tracking helpers:
+> http://home.regit.org/netfilter-en/secure-use-of-helpers/
+
+I think your filters aren't effective against sandboxed Java code on
+the client.
+
+I think there are other client-side sandboxes which allow de-facto
+unrestricted access (with server cooperation).  Doesn't Flash require
+just a policy file on the server to open up arbitrary ports?
+
+You could exclude the magic Silverlight port range:
+
+| One additional restriction on using the sockets classes is that the
+| destination port range that a network application is allowed to
+| connect to must be within the range of 4502-4534.
+
+<http://msdn.microsoft.com/en-us/library/cc645032%28v=vs.95%29.aspx>
