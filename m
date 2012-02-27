@@ -1,22 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/5
-Message-ID: <20120529104620.GA24474@openwall.com>
-Date: Tue, 29 May 2012 14:46:20 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Mark J Cox <mjc@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: linux-distros unsubscriptions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/9
+Message-ID: <1330350364.21477.6.camel@tiger.regit.org>
+Date: Mon, 27 Feb 2012 14:46:04 +0100
+From: Eric Leblond <eric@...it.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-Mark -
+Hello,
 
-On Tue, May 29, 2012 at 10:00:10AM +0100, Mark J Cox wrote:
-> Please unsubscribe eteo@...hat.com and rdecarva@...hat.com from linux-distros.  Eugene
-> has left Red Hat, and Ramon has moved to our Product Security Team and no longer
-> responds to upcoming vulnerabilities.
+On Mon, 2012-02-27 at 05:25 +0400, Solar Designer wrote:
+> Eugene, all -
+> 
+> On Mon, Feb 27, 2012 at 09:19:59AM +0800, Eugene Teo wrote:
+> > > this some months ago. I've also tried to contact the various CERT
+> > > but they refused to handle the case or did not reply to my
+> > > requests.
+> > 
+> > In future, if you tried to get help but you couldn't, feel free to
+> > send us an email at linux-distros vs.openwall.org.
+> 
+> When referring people to the distros and linux-distros list, please
+> always refer them to the wiki page:
+> 
+> http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-I've just unsubscribed them.
+Thanks, I will do that for sure.
 
-Thanks,
+I'm usually on the developer side and handling this case has been really
+difficult for me. And I didn't do it well. Sorry for that.
 
-Alexander
+BR,
+
+> 
+> Specifically, we need to ensure that people read this first:
+> 
+> "Please note that the maximum acceptable embargo period for issues
+> disclosed to these lists is 14 to 19 days, with embargoes longer than 14
+> days (up to 19) allowed in case the issue is reported on a Thursday or a
+> Friday and the proposed coordinated disclosure date is thus adjusted to
+> fall on a Monday or a Tuesday.  Please do not ask for a longer embargo.
+> In fact, embargo periods shorter than 7 days are preferable."
+> 
+> It appears that in this case this would actually be a problem - that is,
+> based on your suggestion (if you somehow made it to Eric much earlier),
+> Eric would post to the list e.g. in January and ask for the issue to be
+> kept private until March - thereby violating the list's maximum embargo
+> period.
+> 
+> Thanks,
+> 
+> Alexander
+
+-- 
+Eric Leblond 
+Blog: http://home.regit.org/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
