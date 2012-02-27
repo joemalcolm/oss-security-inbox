@@ -1,53 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/12
-Message-ID: <4FECD37C.900@lerdorf.com>
-Date: Thu, 28 Jun 2012 14:58:20 -0700
-From: Rasmus Lerdorf <rasmus@...dorf.com>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com,  Stuart Henderson <stu@...cehopper.org>, "security@....net" <security@....net>
-Subject: Re: Re: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/16
+Message-ID: <1330370331.21477.14.camel@tiger.regit.org>
+Date: Mon, 27 Feb 2012 20:18:51 +0100
+From: Eric Leblond <eric@...it.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 06/28/2012 11:29 AM, Kurt Seifried wrote:
-> Yeah my bad, I just skimmed the list (it was late). Just for
-> future reference as well the other magic values are:
+On Mon, 2012-02-27 at 19:13 +0100, Florian Weimer wrote:
+> * Eric Leblond:
 > 
-> ext/standard/info.h:#define PHP_LOGO_GUID 
-> "PHPE9568F34-D428-11d2-A769-00AA001ACF42"
+> > I've discovered a generic attack on firewall using Application Level
+> > Gateway (like Netfilter or Checkpoint).
 > 
-> ext/standard/info.h:#define PHP_EGG_LOGO_GUID 
-> "PHPE9568F36-D428-11d2-A769-00AA001ACF42"
+> This is rediscovered every two to five years.  Here's mine
+> (from 2005, but it's been proposed before):
 > 
-> ext/standard/info.h:#define ZEND_LOGO_GUID 
-> "PHPE9568F35-D428-11d2-A769-00AA001ACF42"
-> 
-> ext/standard/info.h:#define PHP_CREDITS_GUID 
-> "PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000"
-> 
-> I guess I'm just not a huge fan of surprises in my software =).
-> The expose_php variable appears to control them all no problem.
+> <http://www.enyo.de/fw/security/java-firewall/>
 
-Just for some history on this somewhat odd feature. It was added in
-order to be able to put the PHP logo on the phpinfo() page. We had
-originally just used an img link to php.net, but got a lot of
-phone-home privacy complaints about that. So we needed a way to
-display an image locally and didn't want to have to try to figure out
-where to copy that image during installation, plus it would be hard to
-manage access to it and the overall idea of copying anything to
-someone's docroot just sucks. So, we could either have given up on it,
-or, bake it into PHP this way along with an ini switch to disable it.
-The motivation wasn't to add an easter egg. The April 1
-PHP_EGG_LOGO_GUID came later.
+This is not at all the same attack.
 
-- -Rasmus
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+BR,
+-- 
+Eric Leblond 
+Blog: http://home.regit.org/
 
-iEYEARECAAYFAk/s03cACgkQlxayKTuqOuAVIACfRZUNmyZ0j60jvbMTw5iFy0cD
-mU0An0GLB/uKkLQ2Dhf7QffM+EiEkcmJ
-=mdWv
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
