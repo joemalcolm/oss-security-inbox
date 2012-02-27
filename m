@@ -1,33 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/16/2
-Message-ID: <5003CB29.2090001@internetionals.nl>
-Date: Mon, 16 Jul 2012 10:04:57 +0200
-From: Justin Ossevoort <justin@...ernetionals.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/12
+Message-ID: <4F4BB028.9010200@redhat.com>
+Date: Mon, 27 Feb 2012 09:32:40 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: ecryptfs headsup
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>, Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>, Radoslaw Lisowski <radoslaw.lisowski@...il.com>
+Subject: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
-On 13/07/12 22:13, Dustin Kirkland wrote:
-> Yeah, the other thing I'd add is that in order to perform this attack
-> (create a filesystem on a USB drive, have physical access to the
-> system, plug in the USB drive), the attacking user could just as
-> easily drop their favorite LiveISO on that same USB drive, reboot the
-> system, and mount the hard drive with root access.  I do see the
-> difference, in that the current issue allows for a live attack against
-> a running system, as opposed to an offline attack against a system at
-> rest.
+On 02/27/2012 03:05 AM, Jan Lieskovsky wrote:
+> Hello Mariusz, Kurt, Steve, vendors,
+> 
+>   [1] though https://bugzilla.novell.com/show_bug.cgi?id=749036#c0
+>   mentions CVE identifier has been already requested for this:
+> 
+>   "The bug still doesn't have CVE number but will have in near future."
 
-"Local access" doesn't imply the ability to reboot or interrupt the boot
-loader of a machine.
-There are some remote desktop/vm like uses (where people can sometimes
-plug their own drives) or partially shielded kiosk like machines (where
-you can unplug a usb keyboard/mouse).
-Also hardened systems with full disk encryption or with a locked bios
-which prohibits other boot orders are real targets in this cases.
+I can only assume they requested one directly from Mitre. Steve, is this
+the case? If not I'll assign one.
 
-An online attack is definitely more serious than the known offline
-attacks for which most relevant machines are more or less shielded.
 
-Regards,
 
-	justin....
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
