@@ -1,44 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/22/5
-Message-ID: <20120122202159.GA16281@openwall.com>
-Date: Mon, 23 Jan 2012 00:21:59 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/22
+Message-ID: <4F4BAB34.5060603@aliantsoft.pl>
+Date: Mon, 27 Feb 2012 17:11:32 +0100
+From: Mateusz Goik <mateusz.goik@...antsoft.pl>
+To: Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>
+CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>,  Radoslaw Lisowski <radoslaw.lisowski@...il.com>, kontakt@...antsoft.pl
+Subject: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jan 22, 2012 at 09:52:27PM +0400, Solar Designer wrote:
-> On Wed, Jan 18, 2012 at 10:25:55AM +0800, Eugene Teo wrote:
-> > This changes it to do the permission checks at open time, and instead of
-> > tracking the process, it tracks the VM at the time of the open.  That
-> > simplifies the code a lot, but does mean that if you hold the file
-> > descriptor open over an execve(), you'll continue to read from the _old_ VM.
-> 
-> I see it in the revised code, but I don't get it.  What does "the old
-> VM" mean after an execve()?  The code stores the mm pointer in
-> file->private_data, but is this stored pointer even valid after an
-> execve()?  (The code blindly assumes so, only checking for non-NULL.)
+Hi,
 
-OK, here's my current understanding: the old VM is preserved
-(refcounted) precisely because someone holds /proc/<pid>/mem open.
-The new mem_open() calls mm_access(), which calls get_task_mm().
-So at the time of mem_read() / mem_write() the pointer is valid even if
-the process passed an execve().
+I would add it is possible - read / create files on users hdd. (using
+the method - GET / PUT)
+Tested on Backtrack 5 r1 (kadu 0.10.0 - compiled from source).
 
-However, I think this opens up a new security problem (albeit a
-relatively minor one): RLIMIT_NPROC * RLIMIT_AS bypass.  Previously, a
-user with RLIMIT_NPROC set was sort of limited to consuming this much
-memory (plus shm and plus various in-kernel data structures related to
-the user's processes).  Now the user's memory consumption via processes'
-address space is not limited by RLIMIT_NPROC anymore.
-
-Am I missing something?  If not, I think we need to patch that.  Maybe
-have RLIMIT_NPROC apply even to such "zombie VMs" (confusing and
-tricky).  Maybe re-consider the entire approach to fixing the original
-issue addressed with commit e268337dfe26dfc7efd422a804dbb27977a3cccc.
-That is, revert this commit and fix the issue differently (likely by
-adding full privilege checks at time of read and write - in addition to
-re-introducing the self_exec_id checks, which are also needed even along
-with full checks of the caller's privileges).
-
-Alexander
+Mateusz Goik
