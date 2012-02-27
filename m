@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/27/5
-Message-ID: <1346081473.27216.9.camel@spiral.ashpool.org>
-Date: Mon, 27 Aug 2012 17:31:13 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/20
+Message-ID: <CA+s+YOLcT+mJ9VHCsd3ns8bE1ra0=ot=mHAUUtiGXsUXjUbu2Q@mail.gmail.com>
+Date: Mon, 27 Feb 2012 14:10:25 +0000
+From: Whitney Houston <i4m4l1v3b17ch3z@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: crowbar ohai plugin: local privilege (root) escalation due to insecure tmp file handling
+Subject: DesktopOnNet 3 Beta LFI
 Content-Type: text/plain; charset=utf-8
 
+Hello list
 
-Hi,
-insecure handling of tmp files can lead to executing arbitrary shell
-commands as root:
+I want to report serious scary issue, I find this vulnerability that make
+me fall off chair and giggle like silly slut.
 
-https://github.com/SUSE-Cloud/barclamp-deployer/commit/b6454268a067fc77ff5de82057b5b53b3cc38b87
+Project: http://sourceforge.net/projects/don3/
+
+<?php
+require('system/switches.php');
+
+if
+(file_exists('applications/'.$_GET["app"].'.don3app/'.$_GET["app"].'.php')){
+        $appfile = $_GET["app"];
+        $app_path = "applications/".$appfile.".don3app/";
+} else {
+        $appfile = "frontpage";
+        $app_path = "applications/frontpage.don3app/";
+}
+
+if (file_exists("library/$appfile.don3lib")){
+        $topper_array = don3_read_don3lib($appfile.".don3lib");
+        $title = $topper_array[0];
+} else {
+        $title = "ERROR T1";
+}
 
 
-Thanks,
-Thomas
+$topper_includer = 'applications/'.$appfile.'.don3app/'.$appfile.'.php';
 
--- 
-Thomas Biege, Project Manager Security, CSSLP
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
-21284 (AG Nürnberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+....
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+include ($topper_includer);
+
+
+Obviously I keep this bug super secret for many month but now i release for
+all, after my recent death.
+
+xx
+
