@@ -1,64 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/14
-Message-ID: <50A2910F.2040106@redhat.com>
-Date: Tue, 13 Nov 2012 11:27:27 -0700
-From: Kurt Seiifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Denis Ovsienko <infrastation@...dex.ru>, Christian Hammers <ch@...ian.org>, "Dmitry V. Levin" <ldv@...linux.org>, Paul Jakma <paul@...ma.org>, Florian Weimer <fweimer@...hat.com>, "Marco d'Itri" <md@...ux.it>
-Subject: Re: CVE Request -- quagga (ospf6d): Assertion failure when removing routes (retrieving information which route to remove)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/8
+Message-ID: <4F4B721F.1020802@redhat.com>
+Date: Mon, 27 Feb 2012 13:07:59 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Vasiliy Kulikov <segoon@...nwall.com>, Petr Sabata <psabata@...hat.com>
+Subject: CVE Request -- Multiple instances of insecure temporary file use
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-On 11/13/2012 07:48 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> Marco d'Itri in Debian bug [1] has reported the following
-> deficiency, being present in 0.99.21 and possibly earlier versions
-> of the Quagga routing suite:
-> 
-> A denial of service flaw was found in the way Quagga's ospf6d
-> daemon performed routes removal. In certain circumstances when
-> removing the route the ospf6d daemon terminated with assertion
-> failure when trying to determine / find, which route to remove. An
-> OSPF6 router could use this flaw to cause ospf6d on an adjacent
-> router to abort.
-> 
-> References: [1]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=693102 [2]
-> https://bugzilla.redhat.com/show_bug.cgi?id=876197
-> 
-> Upstream bug report: [3]
-> https://bugzilla.quagga.net/show_bug.cgi?id=747
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+   multiple instances (by checking for ATM technology support, checking for Xtables
+extension support, checking for setns() system call support, and in
+dhcp-client-script example script) of insecure temporary file use were found
+in iproute. A local attacker could use this flaw to conduct symbolic link
+attacks (modify or remove files via specially-crafted link names).
 
-Please use CVE-2012-5521 for this issue.
+References:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=797878
 
+Upstream patches:
+[2] 
+http://git.kernel.org/?p=linux/kernel/git/shemminger/iproute2.git;a=commitdiff;h=e557d1ac3a156ba7521ba44b0b412af4542f83f8
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+[3] 
+http://git.kernel.org/?p=linux/kernel/git/shemminger/iproute2.git;a=commitdiff;h=20ed7b24df05eadf83168d1d0ce0052a31380928
 
-iQIcBAEBAgAGBQJQopEPAAoJEBYNRVNeJnmT5fQP/0T4SrIhya2QCMKB6xwXh2A3
-g15i+A2X0ToXLDgUpnMlJPUbQMSRKvncm+prkHUJNsDxP6KW/hzMj/lsFGfdxsda
-drGePasJJNJUT0f1Z2g8IXNfy1iUq3ZnjAFpwbd93iR/iRclDvNPhC5813XOr37G
-ozpR4E4K+7Uf2GUvPAHwbTsgYeCQwnOzWZ3wIet9+Ej1vaEqRuXra3XmSnLAPiRp
-RTZb6A4TROnc/+KLRI8JHH5AZUSNODJClG00sewI8CVSEp+EtbRRljntzzRVlqOJ
-OXqITx5F5a+Su1S93dlRCoj4GJlPOJ9ALZ74+9RxmBFmR/ApE+uVUqZmIlJbvK73
-sAUBEvvV8yymP6WoaamA/UP8HcICATvjjdQe+I5fgCiFLxOU2z2vVkNuOdNZNwom
-iDGnnckWVEfjy9uRPAf7ubybCAMyY54pMZP2YHOwEzCaH7p74G3Pgv52DtGnQqU6
-ADSJPp0Sc6R0/QyqCbnSyksdPw/gAUWEbAZvlct63o2k+tENii3DjN8oz7bd4dsB
-afIuUqXbV+/1ta/6fkduY6Hir5gOyBXkh9KNg84FM6aa1sYgLGuxzVb1OOxXzXd8
-dsc6nahjFM98n80yx5InFKgyEcGr9BEzEWjn3dqKtagEyr5X3RjeFEabTlojYZIS
-sMvb3K2PDbLv/+TJ2NIG
-=S1si
------END PGP SIGNATURE-----
+Could you allocate a CVE identifier for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
