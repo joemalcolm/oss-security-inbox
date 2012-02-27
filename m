@@ -1,134 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/26
-Message-ID: <50526F94.9050204@redhat.com>
-Date: Thu, 13 Sep 2012 17:43:16 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/27
+Message-ID: <20120227213915.GA3117@foo.fgeek.fi>
+Date: Mon, 27 Feb 2012 23:39:15 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Tavis Ormandy <taviso@...xchg8b.com>
-Subject: Re: Re: note on gnome shell extensions
+Cc: kseifried@...hat.com, corryl80@...il.com, bugtraq@...urityfocus.com
+Subject: Re: Case YVS Image Gallery
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Feb 27, 2012 at 09:31:52AM -0700, Kurt Seifried wrote:
+> If you make a list of issues (e.g. XSS, CSRF, etc) with the code
+> examples I can assign the various blocks of issues CVEs.
 
-On 09/13/2012 11:59 AM, Tavis Ormandy wrote:
-> Vincent Danen <vdanen@...hat.com> wrote:
-> 
->> * [2012-09-13 18:03:33 +0200] Marcus Meissner wrote:
->> 
->>> On Thu, Sep 13, 2012 at 05:39:57PM +0200, Tavis Ormandy wrote:
->>>> On Mon, Sep 10, 2012 at 02:48:38PM -0600, Vincent Danen
->>>> wrote:
->>>>> * [2012-09-08 18:14:10 -0600] Kurt Seifried wrote: SUSE has
->>>>> some interesting info in their bug:
->>>>> 
->>>>> https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
->>>>> 
->>>>> By the sounds of it, this should be harmless.  Vincent Untz
->>>>> says that the browser plugin doesn't actually install the
->>>>> extensions, it's passed to another process via a dbus call
->>>>> to gnome-shell, which sends the uuid of the extension to
->>>>> the extensions.gnome.org web site in order to download the
->>>>> extension.
->>>>> 
->>>>> See:
->>>>> 
->>>>> http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
->>>>>
->
->>>>> 
-http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
->>>>> 
->>>>> which is:
->>>>> 
->>>>> let message = Soup.form_request_new_from_hash('GET', 
->>>>> REPOSITORY_URL_INFO, params);
->>>>> 
->>>>> And REPOSITORY_URL_INFO is hardcoded earlier:
->>>>> 
->>>>> const REPOSITORY_URL_BASE = 'https://extensions.gnome.org';
->>>>> const REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE + 
->>>>> '/download-extension/%s.shell-extension.zip'; const 
->>>>> REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE +
->>>>> '/extension-info/'; const REPOSITORY_URL_UPDATE   =
->>>>> REPOSITORY_URL_BASE + '/update-info/';
->>>>> 
->>>>> I don't think this is something that can be exploited,
->>>>> based on the above.
->>>> 
->>>> Not sure I follow the logic, can't I just upload something
->>>> malicious to extensions.gnome.org and then force you to
->>>> download it? I mean, I can try it if you're not convinced
->>>> it's possible.
->>> 
->>> There are supposed to be reviewers before it gets activated,
->>> but exactly this concern Sebastian also voiced.
->>> 
->>>> They surely do not have a magical technique for determining
->>>> if my code is or can become malicious.
->>> 
->>> Exactly.
->> 
->> Yeah, this is definitely a possibility, but could happen
->> regardless of this with some social engineering (hey, download my
->> cool foo extension!) and have something malicious up there.  This
->> is pretty much the same thing, just making it easier.
-> 
-> Well, no. This is like saying it's pointless to patch
-> vulnerabilities, because I can just make you download malware. You
-> can't just make me download malware, because I know how to make
-> trust decisions.
-> 
-> You could make me download a malicious gnome extension, because you
-> can do so without interaction or my consent.
-> 
->> It's not much different than having a malicious app in the 
->> iTunes/Android/Whatever app store.  The flaw there isn't so much
->> in the app store, but the app.  Wouldn't the same thought apply
->> here?
->> 
-> 
-> I've uploaded my malicious android app, how do I make you install
-> it?
-> 
-> I can create http://foo.com/malware.rpm, that's clearly not a
-> vulnerability and working as designed. But if I can force you to
-> download and install it without you having the opportunity to make
-> a trust decision, that clearly is a vulnerability.
-> 
-> Do you agree that I can upload something malicious to
-> extensions.gnome.org?
-> 
-> Do you agree that I can make you install it without consent,
-> interaction, or the opportunity to make a trust decision?
-> 
-> If so, then I don't understand the objection :-)
-> 
-> Tavis.
+1. ./administration/install.php opens ../functions/db_connect.php and writes to file without input validation leading to PHP code injection with all variables if any contains for example: ";} ?> <?php print("Hello World"); exit("") ?>
 
-Please use CVE-2012-4427 for this issue.
+Note that install guide in web says: "after instalation is complete, delete the "install.php" file" and install.php does not need permissions.
 
+2. ./administration/create_album.php does not have proper input validation leading to stored XSS, which can only be added by administrators, but I don't think this as a limit after other vulnerabilities. XSS will also be shown to normal users (mainpage).
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQUm+UAAoJEBYNRVNeJnmTK/AP/3y+9lFhNKhkJ8tAbPoW4BY5
-l9SRL8b0ikcTH8YgyvUKGj/QErVru1s9V3yLmgXJB3KSPFexGscHQFMGs1zwA1ap
-LetcxqmOQjCYW+lffqDqBqP8CsL/6acTSUjbEIlhYn9qBPH+rLYlb9i1Hv3zw2Fj
-h8sD7kTnLJQurcEUB36IuMWncG+ffYlulPam/Jvhr7UpEsBDHzPm1zSJMTaKFxKk
-eQzGBEuEEZKwcvLXk/6ZR2hqq4B5DBatft39UXGFJlcqUG+EpRcI20Ra4Np1DlKi
-cQ3hJYAU9je2nmCV48ihNIFY2t8DNCthfqld6xDOaZxRd+GWhOPDR4PifDtO07mF
-vBpBqXCrOPNybIX3Kt+Lpbt+NqQCRfI0zgG0ipIoNPVGhSeq37flOOeLTC29rYRb
-Dk0ZARTq00TAJ8mq7FctU31S8qnLjgcjiKoFI9UUU+zk3WL3i6OjfNdkkTWV7T9i
-hYLkAkPg8OcDm/bOfWnxzLNZRo24bwWi/1ftj0sIs8xOO4QbE94y2/c5Byb0I/2k
-TIqQdRVruqLLSQ0md7kgxLvkVybzy2A4FYToKMiwmeMByR54C/H/e5TGOxmVLPeD
-ceqfTyZi2Zp7zWSEgFIwaG6jXD/HV9cpDyQnYeKVaVITCDSPGJgXYN6RZkkpKSEk
-3dm76Lc9jTSfg2PeY1Pb
-=rsga
------END PGP SIGNATURE-----
+- Henri Salo
