@@ -1,29 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/21/1
-Message-Id: <201210210110.56641.tmb@65535.com>
-Date: Sun, 21 Oct 2012 01:10:55 +0100
-From: Tim Brown <tmb@...35.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/2
+Message-ID: <CAOtvbJxHNtmbxdLxAaeq7BEvVbqqKyAi-mB7x2QZOJ5x8dM5_A@mail.gmail.com>
+Date: Tue, 28 Feb 2012 10:57:35 +0100
+From: Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>,  Radoslaw Lisowski <radoslaw.lisowski@...il.com>
+Subject: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 17 Oct 2012 20:46:55 Michael Gilbert wrote:
+2012/2/27 Kurt Seifried <kseifried@...hat.com>:
+> On 02/27/2012 03:05 AM, Jan Lieskovsky wrote:
+>> Hello Mariusz, Kurt, Steve, vendors,
+>>
+>>   [1] though https://bugzilla.novell.com/show_bug.cgi?id=749036#c0
+>>   mentions CVE identifier has been already requested for this:
+>>
+>>   "The bug still doesn't have CVE number but will have in near future."
+>
+> I can only assume they requested one directly from Mitre. Steve, is this
+> the case? If not I'll assign one.
 
-> It was uploaded to and affected Debian testing and unstable.  Testing
-> has not yet been officially "released", but some people use testing as
-> if it were an official release.  Unstable never gets released.
-
-FWIW, I have added a check to unix-privesc-check for privileged binaries that 
-have "PATH=" embedded in them and run it over a couple of fairly vanilla 
-Debian systems with KDE on it and seen a few other cases of embedded PATHs.  
-This yielded a few cases where "privileged" binaries trust 
-/usr/local/{bin/sbin} but nothing else untoward. trunk is currently in flux, 
-but vendors may wish to incorporate it into their release testing in due 
-course.
-
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+We haven't requested CVE number yet. Could you do that for this issue?
