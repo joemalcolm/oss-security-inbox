@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/6
-Message-Id: <201201041450.q04EomXc023907@linus.mitre.org>
-Date: Wed, 4 Jan 2012 09:50:48 -0500 (EST)
-From: cve-assign@...re.org
-To: krahmer@...e.de, oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE-2011-4858 confusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/13
+Message-ID: <4F4D5693.7040307@redhat.com>
+Date: Tue, 28 Feb 2012 15:34:59 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org, mateusz.goik@...antsoft.pl
+Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/28/2012 03:33 PM, Kurt Seifried wrote:
+> On 02/28/2012 09:32 AM, cve-assign@...re.org wrote:
+>>> Any javascript code could be executed from Kadu History Window
+>>> in following conditions:
+>>
+>> CVE-2012-1410 is assigned to this Kadu issue.
+>>
+>> We are confused about
+>>
+>> https://bugzilla.novell.com/show_bug.cgi?id=749036
+>>
+>> This is a bug report about this Kadu vulnerability, but it has a
+>> CVE assignment of CVE-2006-7248 for a vulnerability in the 
+>> SMIME_read_PKCS7 function in OpenSSL 0.9.7i. Our perspective is
+>> that this means CVE-2006-7248 has been assigned to multiple issues
+>> (the Kadu issue and the OpenSSL issue), so we'll now proceed to
+>> REJECT CVE-2006-7248 sometime later today unless there's a
+>> substantial objection.
+> 
+> Please use CVE-2006-7249 for the kadu XSS vulnerability. Sorry about
+> the mess.
+> 
 
-MITRE is still working on this. Our current perspective is that
-CVE-2011-4084 is one vulnerability that was confirmed by the upstream
-vendor, and CVE-2011-4858 is a different vulnerability that was not
-confirmed by the upstream vendor. There are apparently related test
-cases and test results that are not yet public.
+Oh fer petes sake, I apologize, read 2006 repeatedly and of course cut
+and paste the wrong one AGAIN. Ok for real this time: please use
+CVE-2012-1092 for the kadu XSS issue.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S S145
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJPBGZMAAoJEGvefgSNfHMd3MsH+QE9+MihuCYpnTK0IUYFw4TO
-kCB4GR6xR6UptA0R5UMPrJzwpXgL2N6dL7Vb3frLP+1/8h+66mgnF+pqJ++u78tz
-lOOoBTWk+U3G7qvFSW1NKL7A+CdIPAVkFtgXM2NGlxB70YHbEHWzX3nrlnAIYNE2
-TpVRfienHWm9THE9Q8e4k+b58oOKtnC9IhFGSAeLoogPv1ZUaqEibbM+KhsApyt8
-1pHpm8OYqgwayjrUsI7wAQUrZ8zoyRKC4gvOam4d9APm0cSlvy38kHRh947e3C3p
-qmijezwUJkImuJeILkkuHEN1wRHaED2MTHKKed3ym3d2ZkokiMdsHMp4I7TDvwY=
-=bfZ9
------END PGP SIGNATURE-----
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
