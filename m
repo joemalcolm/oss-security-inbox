@@ -1,62 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/9
-Message-ID: <1071141285.31186123.1347031530084.JavaMail.root@redhat.com>
-Date: Fri, 7 Sep 2012 11:25:30 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, Florian Weimer <fweimer@...hat.com>, Jeff Law <law@...hat.com>, Jakub Jelinek <jakub@...hat.com>
-Subject: CVE Request -- glibc: strcoll() integer overflow leading to buffer overflow + another alloca() stack overflow issue (upstream #14547 && #14552)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/12
+Message-ID: <4F4D561C.5080301@redhat.com>
+Date: Tue, 28 Feb 2012 15:33:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org, mateusz.goik@...antsoft.pl
+Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, Florian, Jeff, Jakub, vendors,
+On 02/28/2012 09:32 AM, cve-assign@...re.org wrote:
+>> Any javascript code could be executed from Kadu History Window
+>> in following conditions:
+> 
+> CVE-2012-1410 is assigned to this Kadu issue.
+> 
+> We are confused about
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=749036
+> 
+> This is a bug report about this Kadu vulnerability, but it has a
+> CVE assignment of CVE-2006-7248 for a vulnerability in the 
+> SMIME_read_PKCS7 function in OpenSSL 0.9.7i. Our perspective is
+> that this means CVE-2006-7248 has been assigned to multiple issues
+> (the Kadu issue and the OpenSSL issue), so we'll now proceed to
+> REJECT CVE-2006-7248 sometime later today unless there's a
+> substantial objection.
 
-1) Issue #1: 
-------------
-  An integer overflow, leading to buffer overflow
-flaw was found in the way the implementation of
-strcoll() routine, used to compare two strings
-based on the current locale, of glibc, the GNU
-libc libraries, performed calculation of memory
-requirements / allocation, needed for storage
-of the strings. If an application linked against
-glibc was missing an application-level sanity
-checks for validity of strcoll() arguments and
-accepted untrusted input, an attacker could use
-this flaw to cause the particular application
-to crash or, potentially, execute arbitrary code
-with the privileges of the user running the
-application.
+Please use CVE-2006-7249 for the kadu XSS vulnerability. Sorry about
+the mess.
 
-Upstream bug report (including reproducer):
-[1] http://sourceware.org/bugzilla/show_bug.cgi?id=14547
-
-References:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=855385
-
-Could you allocate a CVE identifier for this?
-
-2) Issue #2 (mentioned here only for completeness,
-but I am not of the opinion this should receive a CVE
-identifier. See argumentation below [but open to
-glibc upstream / others to disprove it]).
-
-alloca() stack overflow (first issue from the report below)
-Upstream bug report:
-[3] http://sourceware.org/bugzilla/show_bug.cgi?id=14552
-
-If I have looked correctly this is expected / known
-behaviour of alloca() - from the manual page:
-[4] http://linux.die.net/man/3/alloca
-
-"Return Value
-The alloca() function returns a pointer to the
-beginning of the allocated space. If the allocation
-causes stack overflow, program behavior is undefined."
-
-Under my opinion the above description covers also the
-case of 'alloca() stack overflow' as reported in bug [3].
-Further opinions / upstream comments appreciated though.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
