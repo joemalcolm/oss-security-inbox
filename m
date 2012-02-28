@@ -1,69 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/2
-Message-ID: <50D13A53.7040402@redhat.com>
-Date: Tue, 18 Dec 2012 20:53:55 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-Subject: Re: CVE request: Inkscape fixes a XXE vulnerability during rasterization of SVG images
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/6
+Message-Id: <201202281632.q1SGWfM1002068@linus.mitre.org>
+Date: Tue, 28 Feb 2012 11:32:41 -0500 (EST)
+From: cve-assign@...re.org
+To: mateusz.goik@...antsoft.pl
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/18/2012 08:44 PM, Kurt Seifried wrote:
-> On 12/17/2012 01:27 PM, Nicolas Grégoire wrote:
-> 
->> Inkscape is vulnerable to XXE attacks during
->> rasterization/export of SVG images:
->> https://bugs.launchpad.net/inkscape/+bug/1025185
-> 
->> Impact: The impact of this vulnerability range form denial of 
->> service to file disclosure. Under Windows, it can also be used
->> to steal LM/NTLM hashes.
-> 
->> PoC: During rasterization, entities declared in the DTD are 
->> dereferenced and the content of the target file is included in
->> the output. Command-line used: "inkscape -e xxe-inkscape.png
->> xxe.svg" (PoC files are attached to the ticket)
-> 
->> References: CWE-827: Improper Control of Document Type Definition
->>  http://cwe.mitre.org/data/definitions/827.html
-> 
->> Regards, Nicolas Grégoire
-> 
-> This already has a CVE reference in the page:
-> 
-> CVE References
-> 
-> 2012-1102
+>Any javascript code could be executed from Kadu History Window in
+>following conditions:
 
-To clarify that CVE was assigned to
-http://seclists.org/oss-sec/2012/q1/549
+CVE-2012-1410 is assigned to this Kadu issue.
 
-http://seclists.org/oss-sec/2012/q1/549
+We are confused about
 
-so this is probably an error, someone needs to tidy that bug up and
-post links to the source/etc so I can see whats going on.
+  https://bugzilla.novell.com/show_bug.cgi?id=749036
+
+This is a bug report about this Kadu vulnerability, but it has a CVE
+assignment of CVE-2006-7248 for a vulnerability in the
+SMIME_read_PKCS7 function in OpenSSL 0.9.7i. Our perspective is that
+this means CVE-2006-7248 has been assigned to multiple issues (the
+Kadu issue and the OpenSSL issue), so we'll now proceed to REJECT
+CVE-2006-7248 sometime later today unless there's a substantial
+objection.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJQ0TpTAAoJEBYNRVNeJnmToVkQAL15KAplZyCcwZFZR2PqVr0V
-ZbTvQXo93A3FuAlVDZ6FQQJSMU1E5EMpuD80816JLuUgFe1he/VwUoCtUknPdz5n
-cgXNCAHAtbEt54bCcRKoVCeFHTnYP0MzA2PDOoRFuRgkUoUwFv6ilL5dcZD8pehq
-ZwEWGVE/IDPJ+yFUma+FwtSP0olxoH6ZOP79RPgGoaPrCDfsLRjloKRKX4IUXSHy
-aN5wGNVd9RfCCdtjwb8Qd0DakXwqJ0B0spFDK6ZhbtJl7IxdQqEiIndJ6+EhJRQh
-A9njFDUjtIUM5jqUe7/Lb2Hzi5cno120dBKxvU/PLk0D7ZSErfI2ZneoxIIIdk42
-+kNQ1qT8/08QsnicVlqP9RpUiW9fqx4ndzazNUjCcTyegnjyYNm2VQlOC0quEDyo
-DzY2l2PED+A4HZ+gQW0uUcMWuDAaH7o2ti6CGUPgd5IPBYbBJpXBRZmw26QSD71M
-xs50rPHiJhuJiw8s6q7M/sq/rf7ixe/AtJ5bfYntzD9pCaxkG7Q/FZytEXjIwiGb
-+mqN6q52Gnc6R+neY22la/xwwRnRjYCDIUz/2r4Xt9EV1I5XbS9Zn24DDLE7YFJw
-KT1hWAa8GqvmUgv5FjB20M9AANyi7wxUlzdnKsiL3WOJdVpApE2cDpBC41PH9WDZ
-EN02SxWlecA1X7CgMGpc
-=Bzwi
+iQEcBAEBAgAGBQJPTQBKAAoJEGvefgSNfHMdhXYH/0B7xfkZkD7025beh/Digvpd
+48hm8IRtRSbv8UVqsfq+jVjMUlD0blXjhKbli9OBl0xFcMGjZjxnC/3Rt4RZDib4
+AAUs9nEp1zB7dvjmsItkOCJk7Cn9CFVk4qCjSSEaz0tjrUXasf6nNsePwDht9zw6
+DM8ECv95CHiZ6V7+ZKAfwMRrMpYNxl3WtPGTVxUr9jfhiVvM8qgUvBlhJci4RJs3
+XgXxOTynLlMGYZTzY6zX5TJzOxnuojnmsAedwtYJpRMSBmX9TY/Dx356xjoehQUk
+Swg1IMVM+OcogYRBF5tS6QxrfefM1RDd4YgM0j+dcFA/5xjFLCs1yRY+6Ne0uo8=
+=lXSm
 -----END PGP SIGNATURE-----
