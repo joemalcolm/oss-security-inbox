@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/10
-Message-ID: <20121127182103.GM2689@redhat.com>
-Date: Tue, 27 Nov 2012 11:21:03 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/3
+Message-ID: <20120228151501.GH4015@dhcp-25-225.brq.redhat.com>
+Date: Tue, 28 Feb 2012 16:15:02 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-5532 hypervkvpd DoS
+Subject: CVE request -- kernel: cifs: dentry refcount leak when opening a FIFO on lookup leads to panic on unmount
 Content-Type: text/plain; charset=utf-8
 
-Just a heads-up on a flaw that was found:
+The cifs code will attempt to open files on lookup under certain
+circumstances. What happens though if we find that the file we opened
+was actually a FIFO or other special file? Currently, the open
+filehandle just ends up being leaked leading to a dentry refcount
+mismatch and oops on umount.
 
-Florian Weimer of the Red Hat Product Security Team discovered that hypervkvpd
-would exit when it processed a spoofed Netlink packet that had been sent from
-an untrusted local user, in the following code:
+An unprivileged local user could use this flaw to crash the system.
 
-         len = recvfrom(fd, kvp_recv_buffer, sizeof(kvp_recv_buffer), 0,
-                 addr_p, &addr_l);
+Introduced by:
+a6ce4932fbdbcd8f8e8c6df76812014351c32892 (Linux kernel 2.6.31)
 
-         if (len < 0 || addr.nl_pid) {
-             syslog(LOG_ERR, "recvfrom failed; pid:%u error:%d %s",
-                     addr.nl_pid, errno, strerror(errno));
-             close(fd);
-             return -1;
-         }
-
-This has been corrected upstream already.
+Proposed upstream patch:
+http://thread.gmane.org/gmane.linux.kernel.cifs/5526
 
 References:
+https://bugzilla.redhat.com/show_bug.cgi?id=798293
+http://thread.gmane.org/gmane.linux.kernel.cifs/5526
 
-https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=commit;h=95a69adab9acfc3981c504737a2b6578e4d846ef
-https://bugzilla.redhat.com/show_bug.cgi?id=877572
-
+Thanks,
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Petr Matousek / Red Hat Security Response Team
