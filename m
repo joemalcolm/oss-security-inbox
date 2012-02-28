@@ -1,66 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/5
-Message-ID: <4F542EB8.7000000@redhat.com>
-Date: Sun, 04 Mar 2012 20:10:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: CVE Request: XML entity expansion in the XML::Atom Perl module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/10
+Message-Id: <201202281918.q1SJIEH0004968@linus.mitre.org>
+Date: Tue, 28 Feb 2012 14:18:14 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
-On 03/04/2012 09:07 AM, Florian Weimer wrote:
-> I would like to request a CVE name for this security fix:
-> 
-> | 0.39  2011.06.20
-> |     * Disabled external entities and network to avoid possible security flaw (yannk)
-> 
-> <http://cpansearch.perl.org/src/MIYAGAWA/XML-Atom-0.39/Changes>
-> 
-> Thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2012-1102 for this issue. PS in future if you could
-include information like the following that would be helpful to all:
+>Argh sorry cut and paste the wrong CVE # into novell's bugzilla. Can
+>we just remove it from there please?
 
---- XML-Atom-0.38/lib/XML/Atom.pm	2011-05-22 23:35:44.000000000 -0600
-+++ XML-Atom-0.39/lib/XML/Atom.pm	2011-06-20 23:35:51.000000000 -0600
-@@ -4,7 +4,7 @@
- use strict;
+Removing Comment 4 from
+https://bugzilla.novell.com/show_bug.cgi?id=749036 is definitely a
+good idea, but MITRE will also do a REJECT of the CVE-2006-7248
+identifier to address the issue more completely.
 
- use 5.008_001;
--our $VERSION = '0.38';
-+our $VERSION = '0.39';
+We often see vendors of CVE compatible products and services picking
+up new CVE mappings from oss-security postings, and from references
+cited in oss-security postings, and this often happens on the day of
+the posting. Some vendors primarily just want the mapping, and aren't
+really investigating the issues or possible discrepancies. So, here,
+it's plausible that:
 
- BEGIN {
-     @XML::Atom::EXPORT = qw( LIBXML DATETIME);
-@@ -35,6 +35,26 @@
-     $XML::Atom::DefaultVersion = 0.3;
- }
+  1. Vendor already discovered the web page for "Bug 749036 - VUL-0:
+     kadu: allows to inject js code."
 
-+sub libxml_parser {
-+    ## uses old XML::LibXML < 1.70 interface for compat reasons
-+    return XML::LibXML->new(
-+        #no_network      => 1, # v1.63+
-+        expand_xinclude => 0,
-+        expand_entities => 1,
-+        load_ext_dtd    => 0,
-+        ext_ent_handler => sub { warn "External entities disabled."; '' },
-+    );
-+}
-+
-+sub expat_parser {
-+    return XML::Parser->new(
-+        Handlers => {
-+            ExternEnt => sub { warn "External Entities disabled."; '' },
-+            ExternEntFin => sub {},
-+        },
-+    );
-+}
-+
- use base qw( XML::Atom::ErrorHandler Exporter );
+  2. Vendor quickly skimmed the text of 749036 and saw "use
+     CVE-2006-7248 for this issue." Vendor did not bother to go to the
+     openssl-dev link, or even consider that openssl-dev is not a
+     common forum for discussing Kadu.
 
- package XML::Atom::Namespace;
+  3. Vendor immediately jumped to the conclusion that CVE-2006-7248 is
+     assigned to the Kadu issue, and updated a data set that
+     ultimately gets pushed out to their customers.
 
+  4. Sometime in the future, their customer decides to look up
+     CVE-2006-7248 on the MITRE CVE web site.
 
+  4a. If CVE-2006-7248 is a regular CVE entry about an OpenSSL
+      vulnerability, the customer might reach any of a variety of
+      incorrect conclusions, especially because Kadu apparently uses
+      OpenSSL through the QCA OSSL plugin for libqca2. The customer
+      might, for example, infer that CVE-2006-7248 is an unpatched
+      vulnerability affecting the Kadu EncryptionNgPlugin component.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+  4b. If CVE-2006-7248 is a rejected CVE entry that points to the
+      correct CVE identifiers for the Kadu issue and the OpenSSL
+      issue, then there's probably more hope that the customer will
+      find the correct information.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJPTSZKAAoJEGvefgSNfHMdpkkH/3PWGuCMgWU4ct823t69sPp6
+cIg9uryKHy/gWkJ6o66BLhSBrQxELjmY6zih/kA/OZP8zvrwaE1Y0bNFtoDS34cl
+aacPKfjpreHM6swa53BAhEiRIiKJB+IpD7X68LRkjGEeTAG3aZ1yoW41G0Ega9Ia
+uIyCKF0Z1cLyXcHvMMH3pau74MYIlzJtzdkOkVu24/2iifWlf91xMpH7xA6nmXlx
+uUNGSm2BgiKBp0KsYBi8CxweuohqbRcuD5/TC7F/pqZpMhkRL9mmdNhApgGCP+y5
+ydKgxbqvWfPxu83ru/PHttQs0F9ugYAB8fBoM6sWy6/Ki/I1i+sduJqcGIVRHis=
+=Ule+
+-----END PGP SIGNATURE-----
