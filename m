@@ -1,42 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/5
-Message-Id: <201207062001.q66K1HRx022870@linus.mitre.org>
-Date: Fri, 6 Jul 2012 16:01:17 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/14
+Message-ID: <4F4D56EC.5020407@redhat.com>
+Date: Tue, 28 Feb 2012 15:36:28 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request:  Asterisk
+CC: Matthias Weckbecker <mweckbecker@...e.de>
+Subject: Re: CVE request: openssl: null pointer dereference issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/27/2012 10:17 AM, Kurt Seifried wrote:
+> On 02/27/2012 07:42 AM, Matthias Weckbecker wrote:
+>> Hi Kurt, Steve, vendors,
+>>
+>> bad S/MIME messages with crafted MIME headers can result in a NULL pointer 
+>> dereference in openssl's ans1 parser,
+>>
+>>  https://bugzilla.novell.com/show_bug.cgi?id=748738
+>>  http://www.mail-archive.com/openssl-dev@openssl.org/msg30305.html
+>>  http://cvs.openssl.org/chngview?cn=22144
+>>
+>> Does it qualify for a CVE?
+>>
+>> Thanks, Matthias
+> 
+> Ok did some more research and here's what we got:
+> 
+> First mention of this bug is in 2006:
+> 
+> http://marc.info/?l=openssl-dev&m=115685408414194&w=2
+> 
+> So please use CVE-2006-7248 for this issue.
 
->> 2. asterisk: Possible resource leak on uncompleted re-invite
->> transactions
->> http://downloads.asterisk.org/pub/security/AST-2012-010.html
+Due to the Novell/kadu miss-paste this CVE needs to be re-issued. Please
+use CVE-2006-7250 for this OpenSSL issue.
 
->This issue does not appear to have a CVE yet ("TBD").
 
-MITRE sent them a CVE name in response to their request this week.
-Their request did not happen to include the specific mapping to the
-AST-2012-010 identifier, so for now we will not mention the specific
-CVE name here, because there's a small chance that the request was
-actually not about AST-2012-010. There's a larger chance that this CVE
-name will be added to the AST-2012-010 document soon.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJP90KqAAoJEGvefgSNfHMdmcYH/RFzmRv/40WZk7DlCxEvw8rP
-ss+Zj1b57BIEV3gRaJYo33xI39F+eXPtvedzQV+nkgFigd5OMP5Po0/reHYDrOc/
-vgV6s/v698dmMuBE+WGYBTvZDaUSDmRE6Bp3DQdnRVqfM7G6CRUBVkLMUNbX3qeI
-s7liWytRPJGY8GwqgLfXnU69lN+ieDQcVsr0UR3P67d2CjuWiAwiCs3cTMh/EkLU
-mQvMZcIgkiE2L80Cjl6eWf8oCkMTKQWvviMZTlgQp+BhdWvEuLaYtzr2FIDgX26c
-98NERM3xQNGJB3pKLbF00a6/dwprCAeJ1OL7yawReyGWXi6O+A4FJ3clup1i6lk=
-=gnRo
------END PGP SIGNATURE-----
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
