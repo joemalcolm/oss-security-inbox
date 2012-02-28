@@ -1,75 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/9
-Message-ID: <20120920215103.GA31724@redhat.com>
-Date: Thu, 20 Sep 2012 15:51:03 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/5
+Message-ID: <4F4CFFBD.5000906@redhat.com>
+Date: Tue, 28 Feb 2012 09:24:29 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Notification of upstream Condor security fixes
+CC: Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>, Mateusz Goik <mateusz.goik@...antsoft.pl>, "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>, Radoslaw Lisowski <radoslaw.lisowski@...il.com>, kontakt@...antsoft.pl
+Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
-Just an FYI about an upstream Condor release yesterday that fixed a few
-security issues:
+On 02/27/2012 02:09 PM, Rafał Malinowski wrote:
+> Affected versions: 0.9.0 - 0.11.0 (0.11.1 is not vulnerable)
+> 
+> Vulnerability:
+> 
+> Any javascript code could be executed from Kadu History Window in
+> following conditions:
+> * application owner send a prepared SMS and content of this SMS was
+> stored in history file
+> * owner of application has an attacker on his buddy list, attacker
+> sets a prepared presence message/status description and this presence
+> message/status description is stored in history file
+> 
+> and then:
+> 
+> * owner of application views given SMS or presence message/status
+> description in history window
+> 
+> 
+> Javascript code was allowed to:
+> * load any file from WEB, by <img> or <script> tags, even <object>
+> with flash files were possible
+> * read files from local file system
+> * (not confirmed by myself) write files to local file system
+> * show javascript windows (like alert)
 
-
-CVE-2012-3490
-
-Florian Weimer of the Red Hat Product Security Team reported that certain
-functions in Condor (my_popenv_impl and my_spawnv in
-src/condor_utils/my_popen.cpp) did not check the return value of setuid and
-similar function calls. As a result, the subprocess could possibly be created
-with root privileges instead of those of the intended user.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3491
-http://condor-git.cs.wisc.edu/?p=condor.git;a=commitdiff;h=94e84ce4
-
-NOTE: this flaw is only exploitable if the VMware support is compiled in; see
-the Red Hat bug for further details.
-
-
-CVE-2012-3491
-
-Florian Weimer of the Red Hat Product Security Team discovered that the ability
-to abort a job in Condor only required WRITE authorization, instead of a
-combination of WRITE authorization and job ownership. This could allow an
-authenticated attacker to bypass intended restrictions and abort any idle job
-on the system.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3491
-http://condor-git.cs.wisc.edu/?p=condor.git;a=commitdiff;h=1fff5d40
-
-
-CVE-2012-3492
-
-Florian Weimer of the Red Hat Product Security Team discovered that Condor's
-file system authentication challenge accepted directories with weak permissions
-(for example, world readable, writable and executable permissions). If a user
-created a directory with such permissions, a local attacker could rename it,
-allowing them to execute jobs with the privileges of the victim user.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3492
-http://condor-git.cs.wisc.edu/?p=condor.git;a=commitdiff;h=1db67805
-
-
-CVE-2012-3493
-
-Florian Weimer of the Red Hat Product Security Team found that an
-unauthenticated user able to connect to the Condor startd TCP port could
-request ads, provided they could guess or brute force the PID of the process,
-due to how the GIVE_REQUEST_AD handler is registered.  The ads contains a lot
-of already-public information for users with READ privileges, however it also
-provides the ClaimId (as opposed to the PublicClaimId which truncates the full
-value of the ClaimID).  If an attacker could obtain the private ClaimId, they
-could use it to control the running job, and also start new jobs on the system.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3493
-http://condor-git.cs.wisc.edu/?p=condor.git;a=commitdiff;h=d2f33972
-
-Other upstream references:
-
-http://research.cs.wisc.edu/condor/manual/v7.8/9_3Stable_Release.html
-http://research.cs.wisc.edu/condor/manual/v7.6/8_3Stable_Release.html
-
-These were fixed in upstream 7.8.4 and 7.6.10.
+Please use CVE-2012-1091 for this issue.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Kurt Seifried Red Hat Security Response Team (SRT)
