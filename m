@@ -1,46 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/2
-Message-ID: <mpro.mauiu905c9q3k02iz.taviso@cmpxchg8b.com>
-Date: Mon, 24 Sep 2012 10:42:09 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/4
+Message-ID: <4F4CFC36.7050101@redhat.com>
+Date: Tue, 28 Feb 2012 09:09:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+Subject: Re: CVE request -- kernel: cifs: dentry refcount leak when opening a FIFO on lookup leads to panic on unmount
 Content-Type: text/plain; charset=utf-8
 
-Matthias Weckbecker <mweckbecker@...e.de> wrote:
-
-> On Friday 21 September 2012 23:47:48 Michael Gilbert wrote: [...]
-> >
-> > So anyway, I suppose this creates more questions than answers, but I
-> > guess its worth thinking about.  After all, what did the user really
-> > expect?  If they had intended that original file to be private, and now
-> > its not, is that appropriate?  Is it more appropriate to assume all
-> > users know how to use umask appropriately?
-> >
+On 02/28/2012 08:15 AM, Petr Matousek wrote:
+> The cifs code will attempt to open files on lookup under certain
+> circumstances. What happens though if we find that the file we opened
+> was actually a FIFO or other special file? Currently, the open
+> filehandle just ends up being leaked leading to a dentry refcount
+> mismatch and oops on umount.
 > 
-> IMO if one bothers to encrypt a file at all it was certainly intended to
-> be private and only supposed to be readable by a certain user / user group
-> and not by just everyone. Otherwise encryption would be pointless, or are
-> there any other reasons for encrypting a file?
+> An unprivileged local user could use this flaw to crash the system.
 > 
-> > Best wishes, Mike
+> Introduced by:
+> a6ce4932fbdbcd8f8e8c6df76812014351c32892 (Linux kernel 2.6.31)
 > 
-> Thanks, Matthias
+> Proposed upstream patch:
+> http://thread.gmane.org/gmane.linux.kernel.cifs/5526
 > 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=798293
+> http://thread.gmane.org/gmane.linux.kernel.cifs/5526
+> 
+> Thanks,
 
-I agree. Users do know how to use umask properly, but this isn't what umask
-is for. The umask for the low order bits are only applied if the program
-requested 0666, it's still the responsibility of the program to choose the
-appropriate permissions.
-
-Creating sensitive files with 0666 and then saying "set your umask" is just
-wrong.
-
-Tavis.
-
+Please use CVE-2012-1090 for this issue.
 
 -- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
-
+Kurt Seifried Red Hat Security Response Team (SRT)
