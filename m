@@ -1,36 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/3
-Message-ID: <20120710113315.GA3946@suse.de>
-Date: Tue, 10 Jul 2012 13:33:15 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/16
+Message-ID: <4F4D6170.5050700@redhat.com>
+Date: Tue, 28 Feb 2012 16:21:20 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: ecryptfs headsup
+CC: Marcus Meissner <meissner@...e.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE Request (minor) -- osc: Improper sanitization of terminal emulator escape sequences when displaying build log and build status
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 02/28/2012 03:44 PM, Marcus Meissner wrote:
+> On Tue, Feb 28, 2012 at 06:56:52PM +0100, Jan Lieskovsky wrote:
+> I am not fully convinced it needs a CVE.
+> 
+> It basically boils down to the old "logfile with content that might be controlled
+> by an attacker pasted raw to a terminal" issue.
 
-We made a hardening patch for ecryptfs utils. It is finally ready,
-using sysconf(_SC_NGROUPS_MAX) :)
+Aren't these generally covered?
 
-I dont know whether a CVE is needed, maybe if you already
-ship it suid root (we do not).
+CVE-2010-3928
+CVE-2010-2713
+CVE-2009-4487
 
-It can be found here:
+"without sanitizing non-printable characters" and so on.
 
-https://bugzilla.novell.com/show_bug.cgi?id=740110
+> There is some more control on the person who builds a specific package what is output
+> thant there usually is in logfiles though.
+> 
+> A rogue server is unlikely, however a malicious packager could echo "bad escape code"
+> in his build and then ask for help on our IRC channels or mailinglists with package Y on project X.
+> (anyone can create an account and build packages ... and asking for help is not uncommon)
+> e.g. with "look at logfile with: 'osc buildlog home:user foopackage standard i586'.)
+> 
+> Ciao, Marcus
 
-Sebastian
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Kurt Seifried Red Hat Security Response Team (SRT)
