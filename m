@@ -1,74 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/18
-Message-ID: <CAKCW=4bj1PRoYXW56Fvygjvap_rzp=obbZ-ikR-dGp+nc=2YHg@mail.gmail.com>
-Date: Fri, 16 Mar 2012 14:30:35 -0400
-From: Mark Stanislav <mark.stanislav@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: CVE Requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/15
+Message-ID: <20120228224407.GA26604@suse.de>
+Date: Tue, 28 Feb 2012 23:44:07 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request (minor) -- osc: Improper sanitization of terminal emulator escape sequences when displaying build log and build status
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 16, 2012 at 1:46 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+On Tue, Feb 28, 2012 at 06:56:52PM +0100, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, Marcus, vendors,
+> 
+>   a security flaw was found in the way osc, the Python language based 
+>   command
+> line client for the openSUSE build service, displayed build logs and build
+> status for particular build. A rogue repository server could use this flaw 
+> to
+> modify window's title, or possibly execute arbitrary commands or overwrite
+> files via a specially-crafted build log or build status output containing an
+> escape sequence for a terminal emulator.
+> 
+> References:
+> [1] https://bugzilla.novell.com/show_bug.cgi?id=749335
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=798353
+> 
+> I need to conclude, I don't know how OBS repositories work (if there is a 
+> chance
+> of a rogue server being present). In any case, this issue is on the border
+> (pretty unlikely someone could alter content of OBS package during build --
+> in that case there would be more urgent issues than just particular terminal
+> window title change).
+> 
+> But strictly taken, the trust boundary is crossed in the moment, someone
+> would schedule OBS build and wouldn't expect the build log / status can
+> perform terminal "side" effect yet.
+> 
+> Marcus, please correct me if you don't agree this should get a CVE 
+> identifier.
+> 
+> If no one having objections and request appropriate, could you allocate one?
 
-> On 03/16/2012 09:53 AM, Solar Designer wrote:
-> > On Fri, Mar 16, 2012 at 12:20:37AM -0400, Mark Stanislav wrote:
-> >> None of the details of these issues have been publicly discussed or
-> released as I am trying (without much success) to allocate a CVE prior to
-> sending out a coordinated advisory including that identifier as I always
-> have done and as the mitre site indicates to do.
-> >>
-> >> There are no reference links to provide and I am not publicizing
-> details on this list before the developer can be informed of the CVE.
-> >>
-> >> I'm happy to take this off list as I am sure no one cares about any of
-> this discussion
->
-> In which case you can ask for them on VS@ list where the issue will
-> remain embargoed. If the issue is so sensitive you cannot leak
-> details/etc then you need to contact Mitre directly (this will also
-> ensure no duplicates/etc.).
->
+I am not fully convinced it needs a CVE.
 
-Is "VS@" supposed to be vendor-sec; the defunct list? Or is there another
-list I am not aware of? If so, can you please give me the *full* address?
-Thanks.
+It basically boils down to the old "logfile with content that might be controlled
+by an attacker pasted raw to a terminal" issue.
 
+There is some more control on the person who builds a specific package what is output
+thant there usually is in logfiles though.
 
->
-> > No, please keep this on the list.  Discussions on how to handle
-> > vulnerability disclosure (including the CVE ID assignment step) are
-> > definitely on topic for oss-security.
->
-> Yes and I need to finish documenting this stuff (it's become obvious we
-> need to educate people on how the system works and why it works that
-> way, we're not insane, we have good reasons for doing it the way we do,
-> honest =).
+A rogue server is unlikely, however a malicious packager could echo "bad escape code"
+in his build and then ask for help on our IRC channels or mailinglists with package Y on project X.
+(anyone can create an account and build packages ... and asking for help is not uncommon)
+e.g. with "look at logfile with: 'osc buildlog home:user foopackage standard i586'.)
 
-
-I'd say you may want to coordinate that documentation with Steve Christy as
-the nine times he allocated CVEs for me directly, this sort of conversation
-never came up. I can understand frustration on your part that people may
-not be educated, but realize that if CNAs handle this process differently,
-it may not be a matter of education on how 'the system works' but rather
-consistency within the entire process, agnostic of whom is allocating a CVE.
-
-I again, do appreciate your time but I suppose I'll just wait for Steve or
-whomever is manning cve@...re to contact me back.
-
-Best,
-
--Mark
-
-
-
- >
-> > Thanks,
-> >
-> > Alexander
-> > (a moderator for oss-security)
->
->
-> --
-> Kurt Seifried Red Hat Security Response Team (SRT)
->
-
+Ciao, Marcus
