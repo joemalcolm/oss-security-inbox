@@ -1,53 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/05/2
-Message-ID: <4F7D6D84.2060305@op5.se>
-Date: Thu, 05 Apr 2012 12:01:40 +0200
-From: Andreas Ericsson <ae@....se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/1
+Message-ID: <1330422418.14828.11.camel@tiger.regit.org>
+Date: Tue, 28 Feb 2012 10:46:58 +0100
+From: Eric Leblond <eric@...it.org>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: expat hash collision fix too predictable?
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-On 04/05/2012 11:30 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> while reviewing a expat regression (likely caused by the hash collision denial of service fix, but unclear)
-> i stumbled about the randomness it uses.
-> 
-> 	static unsigned long
-> 	generate_hash_secret_salt(void)
-> 	{
-> 	  unsigned int seed = time(NULL) % UINT_MAX;
-> 	  srand(seed);
-> 	  return rand();
-> 	}
-> 
-> and it is seeded once at parser object creation.
-> 
-> This is better than not seeding, but I am not sure if it is sufficient.
-> 
+Hello,
 
-A pretty simple fix that makes it far better is to do
+On Mon, 2012-02-27 at 19:13 +0100, Florian Weimer wrote:
+> * Eric Leblond:
+> 
+> > I've discovered a generic attack on firewall using Application Level
+> > Gateway (like Netfilter or Checkpoint).
+> 
+> This is rediscovered every two to five years.  Here's mine
+> (from 2005, but it's been proposed before):
+> 
+> <http://www.enyo.de/fw/security/java-firewall/>
+> 
+> > Secure use of iptables and connection tracking helpers:
+> > http://home.regit.org/netfilter-en/secure-use-of-helpers/
+> 
+> I think your filters aren't effective against sandboxed Java code on
+> the client.
 
-	struct timeval tv;
-	unsigned int seed;
+Interesting point. On this abnormal usage of helper, I fear more
+"malicious" software. I'm even surprised that a wonderful network
+evasion software like Shype is not using this technique.
 
-	gettimeofday(&tv, NULL);
-	seed = (tv.tv_usec * 65531) % UINT_MAX;
-	srand(seed);
-	return rand();
+> 
+> I think there are other client-side sandboxes which allow de-facto
+> unrestricted access (with server cooperation).  Doesn't Flash require
+> just a policy file on the server to open up arbitrary ports?
+> 
+> You could exclude the magic Silverlight port range:
+> 
+> | One additional restriction on using the sockets classes is that the
+> | destination port range that a network application is allowed to
+> | connect to must be within the range of 4502-4534.
+> 
+> <http://msdn.microsoft.com/en-us/library/cc645032%28v=vs.95%29.aspx>
 
-The other option is ofcourse to not involve timestamps at all and
-instead rely on a source with higher entropy, but this is usually
-sufficient to make attacking it very unappealing. Especially when
-considering that many xml docs contain a timestamp of when they were
-generated, making the issue that much worse.
+Regarding Netfilter, the FTP helper will only do the analysis if you
+connect to port 21 (or to match params specified by CT target). There is
+no need to limit traffic on other ports.
+Thus, it seems the approach explained in Netfilter document is correct:
+only activate the helpers to trusted server (if you can) or accept the
+fact that abnormal usage can be done. Regarding this last point, I will
+update the document to be more precise about the potential attack and
+evasion.
 
+Best regards,
 -- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Eric Leblond 
+Blog: http://home.regit.org/
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
