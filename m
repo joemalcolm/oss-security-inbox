@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/23/5
-Message-Id: <201204231850.q3NIoMGW027844@linus.mitre.org>
-Date: Mon, 23 Apr 2012 14:50:22 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/7
+Message-ID: <4F4D0D7B.9020004@redhat.com>
+Date: Tue, 28 Feb 2012 10:23:07 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Asterisk AST-2012-004 AST-2012-005 AST-2012-006
+CC: cve-assign@...re.org, mateusz.goik@...antsoft.pl
+Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/28/2012 09:32 AM, cve-assign@...re.org wrote:
+>> Any javascript code could be executed from Kadu History Window
+>> in following conditions:
+> 
+> CVE-2012-1410 is assigned to this Kadu issue.
+> 
+> We are confused about
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=749036
+> 
+> This is a bug report about this Kadu vulnerability, but it has a
+> CVE assignment of CVE-2006-7248 for a vulnerability in the 
+> SMIME_read_PKCS7 function in OpenSSL 0.9.7i. Our perspective is
+> that this means CVE-2006-7248 has been assigned to multiple issues
+> (the Kadu issue and the OpenSSL issue), so we'll now proceed to
+> REJECT CVE-2006-7248 sometime later today unless there's a
+> substantial objection.
 
-CVE-2012-2414 http://downloads.asterisk.org/pub/security/AST-2012-004.html
+Argh sorry cut and paste the wrong CVE # into novell's bugzilla. Can
+we just remove it from there please?
 
-CVE-2012-2415 http://downloads.asterisk.org/pub/security/AST-2012-005.html
 
-CVE-2012-2416 http://downloads.asterisk.org/pub/security/AST-2012-006.html
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S S145
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJPlaQOAAoJEGvefgSNfHMdIaYH/3ZrvYkjSeJbbHGpAPF1MF26
-jC7ZWTcK/pIdOjLZY/WIjsCWRiMKBJA9iZQ507iJE4hC/73k/hmbHd8L+34LJF/m
-Fz23/U/BzujardahIth760peOFi4vxZqSnECY2A2yj/ulQ4CipA1wOJ1ImLkHpzo
-zxGZbAdztCc0yQrwxSoqd9SBRDsY6YsNkJxxC/hCvpyELvSAj/QJc053phVQdGvd
-WwbZaLuWWWPXr5xl/6f+wRB33xXroZoQDIN9CiHkY6Tln7nzOcWZ5QQ/qepTP3aV
-7/9zHuneAwoJ5Nu74V06UmYbkv9mLQYi0PYRV5Hg+4WoT5PXFUiOtNsHk8iLIvU=
-=sA67
------END PGP SIGNATURE-----
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
