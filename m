@@ -1,24 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/7
-Message-ID: <20120518113005.GM26453@dhcp-25-225.brq.redhat.com>
-Date: Fri, 18 May 2012 13:30:06 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/8
+Message-ID: <20120228175522.GA14359@devzero.fr>
+Date: Tue, 28 Feb 2012 18:55:23 +0100
+From: vladz <vladz@...zero.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: incomplete fix for CVE-2011-4131
+Subject: CVE request: init script x11-common creates directories in insecure manners
 Content-Type: text/plain; charset=utf-8
 
-The fix for CVE-2011-4131 was not complete. Malicious NFS server could
-still crash the clients when more than 2 GETATTR bitmap words are
-returned in response to the FATTR4_ACL attribute request.
+Hi,
 
-Upstream fixes:
-20e0fa98b751facf9a1101edaefbc19c82616a68
-5794d21ef4639f0e33440927bb903f9598c21e92
-5a00689930ab975fdd1b37b034475017e460cf2a
+I've reported a small vulnerability to Debian.  Due to an insecure file
+creation, a local user can gain root privileges right after the 
+"x11-common" service is started.
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=822869
+  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661627
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Could you allocate CVE id for this issue?
+
+Thank you,
+vladz.
+
