@@ -1,38 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/12
-Message-ID: <4F15E4A9.6090100@redhat.com>
-Date: Tue, 17 Jan 2012 14:14:17 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/5
+Message-ID: <20120229160133.GB24479@suse.de>
+Date: Wed, 29 Feb 2012 17:01:33 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: Re: pwgen: non-uniform distribution of passwords
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE Request (minor) -- osc: Improper sanitization of terminal emulator escape sequences when displaying build log and build status
 Content-Type: text/plain; charset=utf-8
 
-On 01/17/2012 12:58 PM, Henri Salo wrote:
-> On Tue, Jan 17, 2012 at 11:51:31PM +0400, Solar Designer wrote:
->> It was just pointed out to me off-list that the man page for pwgen
->> specifically mentions that this kind of passwords "should not be used in
->> places where the password could be attacked via an off-line brute-force
->> attack."  I had missed that detail or at least I did not recall it.
->>
->> This kind of documentation certainly mitigates the problem to some extent.
-> I'll bet most of the end-users will also miss this if you did.
->
-> - Henri Salo
-I'm of the mind that documenting issues is good but documenting issues
-doesn't always make them go away.
+On Tue, Feb 28, 2012 at 04:21:20PM -0700, Kurt Seifried wrote:
+> On 02/28/2012 03:44 PM, Marcus Meissner wrote:
+> > On Tue, Feb 28, 2012 at 06:56:52PM +0100, Jan Lieskovsky wrote:
+> > I am not fully convinced it needs a CVE.
+> > 
+> > It basically boils down to the old "logfile with content that might be controlled
+> > by an attacker pasted raw to a terminal" issue.
+> 
+> Aren't these generally covered?
+> 
+> CVE-2010-3928
+> CVE-2010-2713
+> CVE-2009-4487
+> 
+> "without sanitizing non-printable characters" and so on.
 
-E.g. documenting a default usrname/password where it can be easily
-changed is reasonable. Documenting a default username/password that
-cannot be changed doesn't really help to the same degree.
+Hmm yes.
 
-In this case we have something that tells you not to use an unsafe
-option but isn't exceedingly noticeable or clear (if it came up every
-time you used that option there would be a stringer case for no CVE).
-I'm sitting on the fence for this one (I can see it going either way),
-wouldn't mind some more opinions from the smart people on this list.
+So I would say yes to a CVE id. Please assign.
 
--- 
+> > There is some more control on the person who builds a specific package what is output
+> > thant there usually is in logfiles though.
+> > 
+> > A rogue server is unlikely, however a malicious packager could echo "bad escape code"
+> > in his build and then ask for help on our IRC channels or mailinglists with package Y on project X.
+> > (anyone can create an account and build packages ... and asking for help is not uncommon)
+> > e.g. with "look at logfile with: 'osc buildlog home:user foopackage standard i586'.)
 
--- Kurt Seifried / Red Hat Security Response Team
-
+Ciao, Marcus
