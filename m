@@ -1,57 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/3
-Message-Id: <B878C4E7-06FE-4032-8BA4-C195AB384738@gmail.com>
-Date: Wed, 4 Apr 2012 00:19:43 -0400
-From: Xi Wang <xi.wang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/2
+Message-ID: <4F4DF463.1050303@suse.de>
+Date: Wed, 29 Feb 2012 10:48:19 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: fix to CVE-2009-4307
+Cc: Dan Williams <dcbw@...hat.com>
+Subject: CVE Request: NetworkManager arbitrary file access
 Content-Type: text/plain; charset=utf-8
 
-On Apr 3, 2012, at 10:55 PM, Kurt Seifried wrote:
-> For #2 I'm not sure how we handle something like a compiler possibly
-> mangling code so that an issue is introduced (is that a compiler
-> problem? a code problem? the intersection of both? Steve: can I get a
-> comment/referees decision here =)
+Hi,
 
-Thanks for bringing this up.
+Connections in NetworkManager 0.9 store path names to certificates and
+key files. That means NM (or rather wpa_supplicant which gets
+configured by NM) accesses the user's files as root. A user who is
+allowed to add connections (default for locally logged in users) may
+specify arbitrary file names. NM happily accepts files of any other
+user, including root and even device files. Fortunately it's read
+access only.
 
-I think the compiler is all right in this case.  The code is not.
+The safe approach would be to stream the actual content of the
+certificate and key files to NM and have NM store that directly.
+In fact NM 0.7 does just that for system connections (but forgets to
+store the key so those connections won't actually work).
 
-CVE-2009-4307 says that an attacker could trigger a division by
-zero by crafting a large s_log_groups_per_flex.
+NM 0.6 is also affected.
 
-The first commit (503358ae) fixes the division by zero.  The fix
-is not perfect because:
+Reproducer for NM 0.9 attached, you need to edit the file names and
+then run e.g.
+$ nmw.py new wlan0 yourssid
 
-1) Theoretically, a standard-conforming C compiler could generate
-code that is still vulnerable to division by zero, but I was not
-aware of any compilers doing that.
+cu
+Ludwig
 
-2) Logically, we should have groups_per_flex = 2^s_log_groups_per_flex,
-and the fix doesn't really ensure that.  This is obviously not good,
-but not sure how bad the consequence would be.
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
 
-BTW, the second commit (d50f2ab6) might still allow a buffer overflow
-later.  See another patch https://lkml.org/lkml/2012/2/20/422 (though
-it was rejected).
-
-In ext4_resize_fs():
-
-   flexbg_size = 1 << es->s_log_groups_per_flex;
-   ...
-   flex_gd = alloc_flex_gd(flexbg_size);
-
-and in alloc_flex_gd():
-
-   flex_gd->count = flexbg_size;
-   flex_gd->groups = kmalloc(sizeof(...) * flexbg_size, ...);
-
-Note that the kmalloc size could be smaller than expected due to
-multiplication overflow (flexbg_size = 1 << s_log_groups_per_flex
-could be very large since s_log_groups_per_flex could be as large
-as 31).  Array access flex_gd groups[i] could be out of bounds in
-that case.
-
-- xi
-
+View attachment "nmw.py" of type "text/x-python" (10004 bytes)
