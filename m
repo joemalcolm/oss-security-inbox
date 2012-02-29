@@ -1,80 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/8
-Message-ID: <CAJzxamKPnd=dgpeGtE3fb+X28fdfbhk0E8KRDcT=d-Egfwcj1Q@mail.gmail.com>
-Date: Thu, 12 Apr 2012 21:49:22 +1000
-From: David Black <disclosure@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/4
+Message-ID: <20120229102951.GA18647@suse.de>
+Date: Wed, 29 Feb 2012 11:29:51 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: cobbler lack of csrf protection, code execution
+Cc: cve-assign@...re.org, mateusz.goik@...antsoft.pl
+Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 12, 2012 at 9:46 PM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
-> Thank you for this post, David.
->
-> Just administrative note -- all of these security issues should
-> get CVE-2011-* CVE identifiers, as all of the Ubuntu bugs have
-> been reported in 2011 yet (2011-09-28 exactly).
->
->
-> On 04/12/2012 11:39 AM, David Black wrote:
->>
->> Hi, I reported some bugs a while ago in cobbler which never received
->> CVE ID, could the follow bugs receive CVE ID ?
->> 1. lack of csrf protection in the cobbler web interface (vulnerable to
->> csrf attacks)
->> https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858878
->
->
-> Some further references / patches information I was able to found:
-> 1) Ubuntu patch by Robie Basak:
->
-> http://bazaar.launchpad.net/~racb/ubuntu/oneiric/cobbler/858878_858883/revision/53
->
-> 2) Red Hat bugzilla entry:
->   https://bugzilla.redhat.com/show_bug.cgi?id=811937
->
->
->> 2. code execution on the cobbler host through use of yaml.loads on
->> potentially untrusted user input
->> https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883
->
->
-> Though only yaml.load privilege escalation vector has been mentioned in this
-> post, from further look noticed two ways for privilege escalation:
-> 1) (possibly remote) privilege escalation via yaml.load / by
->   processing management parameters:
->
->   References:
->   https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883
-> (Ubuntu bug)
->
->   Ubuntu patch from Robie Basak:
->   * Backport safe YAML load from upstream. (LP: #858883):
->
-> http://bazaar.launchpad.net/~racb/ubuntu/oneiric/cobbler/858878_858883/revision/54
->
->   https://bugzilla.redhat.com/show_bug.cgi?id=811920 (Red Hat bug)
->
-> 2) local privilege escalation due to insecure use of PYTHON_EGG_CACHE
-> location:
->
->   References:
->   https://bugs.launchpad.net/ubuntu/+source/cobbler/+bug/858875 (Ubuntu bug)
->   https://fedorahosted.org/cobbler/ticket/688 (upstream ticket)
->
-> https://d-feet.fedorahosted.org/cobbler/attachment/ticket/688/58_fix_egg_cache.patch
->   (relevant upstream patch)
->   https://bugzilla.redhat.com/show_bug.cgi?id=811926 (Red Hat bug)
->
-> Kurt, could you allocate three 2011 CVE ids for these issues?
-> i)   the first for CSRF issue,
-> ii)  the second for the yaml.load priv esc issue,
-> iii) the third for the PYTHON_EGG_CACHE local priv esc issue
->
-> David, would be great if you could confirm the three ids are necessary.
+On Tue, Feb 28, 2012 at 10:23:07AM -0700, Kurt Seifried wrote:
+> On 02/28/2012 09:32 AM, cve-assign@...re.org wrote:
+> >> Any javascript code could be executed from Kadu History Window
+> >> in following conditions:
+> > 
+> > CVE-2012-1410 is assigned to this Kadu issue.
+> > 
+> > We are confused about
+> > 
+> > https://bugzilla.novell.com/show_bug.cgi?id=749036
+> > 
+> > This is a bug report about this Kadu vulnerability, but it has a
+> > CVE assignment of CVE-2006-7248 for a vulnerability in the 
+> > SMIME_read_PKCS7 function in OpenSSL 0.9.7i. Our perspective is
+> > that this means CVE-2006-7248 has been assigned to multiple issues
+> > (the Kadu issue and the OpenSSL issue), so we'll now proceed to
+> > REJECT CVE-2006-7248 sometime later today unless there's a
+> > substantial objection.
+> 
+> Argh sorry cut and paste the wrong CVE # into novell's bugzilla. Can
+> we just remove it from there please?
 
-I left the third one (the PYTHON_EGG_CACHE  issue out) but it should
-probably get a CVE ID as well.
-Well what do you mean by 'necessary'? if you ask me I will say, "probably".
+I made the specific comment private.
 
---
-David
+So is this kadu issue now CVE-2012-1410 or CVE-2012-1092?
+
+Ciao, Marcus
