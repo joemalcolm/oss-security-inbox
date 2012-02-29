@@ -1,120 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/5
-Message-ID: <4F2935D4.2010107@aol.com>
-Date: Wed, 01 Feb 2012 13:53:40 +0100
-From: Berke Viktor <berkeviktor@....com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (two ids) -- Xchat-WDK (prior 1499-4 [2012-01-18]) and Xchat-v2.8.6 on Maemo architecture -- Heap-based buffer overflow by processing UTF-8 line from server containing characters outside BMP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/7
+Message-Id: <201202291837.q1TIbhBv014245@linus.mitre.org>
+Date: Wed, 29 Feb 2012 13:37:43 -0500 (EST)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Here are my notes:
+>So is this kadu issue now CVE-2012-1410 or CVE-2012-1092?
 
-- Apparently only Windows versions are affected, no Linux ones. I 
-haven't tested Maemo but I'd be suprised if it would crash.
-- Not all non-BMP characters crash, only a specific range. See the patch 
-you linked for details.
+We've updated the CVE public web site with the information about the
+Kadu issue and the unrelated OpenSSL issue. It includes:
 
-if ((suspect >= 0x1D173 && suspect <= 0x1D17A)
-			|| (suspect >= 0xE0001 && suspect <= 0xE007F))
+CVEs to use:
+Kadu     http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-1410
+OpenSSL  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7250
 
-- As for your assumption that private messages would still crash, I 
-already made a correction in the bug tracker, but for your reference:
 
-"ANY received text will be filtered correctly, be it private or public 
-message or anything else. XChat-WDK will ONLY crash if you paste the 
-malicious characters into your own client's input box, for which the 
-only reason could be to intentionally crash yourself. This obviously 
-can't be prevented in XChat-WDK, only if GTK+ fixes it."
+Rejected CVEs:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-1091
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-1092
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7248
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7249
 
-That is, current versions of XChat-WDK are immune to these kinds of attacks.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-Regards,
-
-Viktor
-
-On 2012.02.01. 11:55, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, Viktor, vendors,
->
-> a heap-based buffer overflow flaw was found in the way xchat, graphical IRC
-> chat client, processed one line of text received from the server, when
-> the text
-> contained Unicode characters and some of the characters were outside of the
-> Basic Multilingual Plane (BMP). A remote attacker could provide a
-> specially-crafted Unicode string as a xchat channel or private message,
-> which
-> once processed would lead to denial of service (xchat client crash), or,
-> potentially arbitrary code execution with the privileges of the user
-> running
-> xchat client.
->
-> This issue has been successfully reproduced on Xchat-WDK versions prior to:
-> * 1499-4 (2012-01-18)
->
-> add Non-BMP plugin to avoid client crashes
->
-> version. Also Joerg Reisenweber reports, this deficiency to have been
-> exploited
-> in the past on Xchat-v2.8.6 versions, as being used on Maemo architecture.
->
-> The following Linux based xchat versions have been investigated against
-> presence
-> of this issue:
-> * xchat-v2.6.6,
-> * xchat-v2.8.6,
-> * xchat-v2.8.8
->
-> on various architectures (i386, x86_64, ppc64) with various versions of
-> gtk2 library:
-> * gtk-v2.10.4,
-> * gtk-v2.18.9,
-> * gtk-v2.24.7,
-> * gtk-v2.14.7
->
-> and presence of this flaw has not been observed on those Linux versions,
-> which makes
-> us think it is some Microsoft Windows 7 / Maemo architecture specific
-> feature, which
-> makes this issue to be visible on those Xchat derivatives.
->
-> References:
-> [1] http://code.google.com/p/xchat-wdk/issues/detail?id=132
-> [2] http://code.google.com/p/xchat-wdk/issues/detail?id=134
-> [3] http://code.google.com/p/xchat-wdk/issues/detail?id=135
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=786391
->
-> Xchat-WDK upstream changelog:
-> [5] http://www.xchat-wdk.org/home/changelog
-> part:
-> * 1499-4 (2012-01-18)
->
-> add Non-BMP plugin to avoid client crashes
->
-> Particular Xchat-WDK upstream patch:
-> [6] http://lwsitu.com/xchat/replace_non-bmp.diff
->
-> Could you allocate two CVE ids for these flaws? (assuming two ids are
-> necessary, because Xchat-WDK for MS Windows 7 case and Xchat-v2.8.6 for
-> Maemo case can / should be considered as different source code bases).
->
-> Steve, please advise if one id is sufficient or two should be used?
->
-> Also, for the Xchat-WDK case it looks that v1499-6 corrected the issue
-> for channel messages, but the issue is still present for 'private messages'
-> case:
-> [7] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c33
-> [8] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c34
-> [9] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c36
->
-> Though this assumption needs to be verified / confirmed yet.
-> Viktor, could you please confirm or disprove it?
->
-> If that assumption would have shown as valid, a third CVE identifier
-> would need to be assigned yet for the incomplete Xchat-WDK v1499-6
-> fix yet (addressing the issue for 'channel messages' case, but not
-> for 'private messages' case).
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+iQEcBAEBAgAGBQJPTm8GAAoJEGvefgSNfHMdjUUIAKc04oaHCbGwyXC3iUgMP4KV
+hG+c74gSOZeAHw50iFT5pz+q5o8gx2YYjt+epPITpQm8akrBLc6H46sRJ9HJ870j
+l572tyiTfJ/mQfrGeA/CRtcyBad4Dgux8h+Y4rzQW++eZgt2KpL3YGbd+IpeBkRa
+L7h/yT8uKZ1KX/BbIPP1WbedPloxzzTWafRfPNXnOjAmZmcV5u8/cFoSEjmWNZLJ
++p7gpsynZxF/9z3emFSMfxs6A6DZsZpqyXpf3sjScrJWgcHscKcWWamfOL4DOsen
+FYjG79w1qU93WPpjbbr8Bl2Ysy+dUwkMMM2qDBI6rX3HC9mCyH+qQe/DKb5CyaI=
+=ea9e
+-----END PGP SIGNATURE-----
