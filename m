@@ -1,37 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/10
-Message-ID: <20120822194552.GA13945@openwall.com>
-Date: Wed, 22 Aug 2012 23:45:52 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/6
+Message-ID: <87linlle75.fsf@mid.deneb.enyo.de>
+Date: Wed, 29 Feb 2012 18:52:30 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Stripe Capture the Flag
+Subject: Re: Bugs in "file" program VU#621745
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+* Kurt Seifried:
 
-On Wed, Aug 22, 2012 at 12:01:27PM -0700, John Collison wrote:
-> We built a wargame around web security vulnerabilities. The nine
-> levels are built atop fairly standard web software stacks, with
-> increasingly tricky exploits required, and a special-edition t-shirt
-> at the end. It's as much for fun and education as anything else. Would
-> love to have you play!
-> 
-> Link: https://stripe-ctf.com
-> Blogpost: https://stripe.com/blog/capture-the-flag-20
+>> We recently pointed the CERT BFF at the ubiquitous "file" command
+>> and found a few bugs.  While we've not proven the bugs to be
+>> exploitable, we've also not ruled out the possibility that they
+>> could be.
+>> 
+>> Fixes were committed on Feb 16, 2012: 
+>> https://github.com/glensc/file/commits/master
 
-As a moderator for oss-security, I hesitated about approving the posting
-above, but I decided to give it a try so that list members and not
-moderators can decide whether such postings are welcome or not (for
-future occasions).  As previously discussed, we're currently rejecting
-conference and e-magazine CFPs, as well as e-magazine issue
-announcements.  In a way, CTF announcements are similar, however they
-might be less frequent (although this might change if we become known
-for approving them for distribution).  Another aspect is Open Source
-relevance.  I guess most CTFs are Open Source relevant, but they may
-lack sufficient Open Source focus for this list.
+> If any of these are security issues please let me know and I will
+> assign CVE #'s.
 
-Please help us decide.
-
-Thanks,
-
-Alexander
+file also provides a library, libmagic.  This could lead to crashes of
+server processes which use libmagic.  Debian will likely release a fix
+as a security update.
