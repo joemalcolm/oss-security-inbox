@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/9
-Message-ID: <1517197.DWiP3HNVTb@devil>
-Date: Thu, 02 Feb 2012 12:15:26 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/9
+Message-ID: <4F4EA267.3080204@redhat.com>
+Date: Wed, 29 Feb 2012 15:10:47 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: phpldapadmin "base" Cross-Site Scripting Vulnerability
+CC: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: Bugs in "file" program VU#621745
 Content-Type: text/plain; charset=utf-8
 
-According to secunia advisory:
-https://secunia.com/advisories/47852/
+On 02/29/2012 10:52 AM, Florian Weimer wrote:
+> * Kurt Seifried:
+> 
+>>> We recently pointed the CERT BFF at the ubiquitous "file" command
+>>> and found a few bugs.  While we've not proven the bugs to be
+>>> exploitable, we've also not ruled out the possibility that they
+>>> could be.
+>>>
+>>> Fixes were committed on Feb 16, 2012: 
+>>> https://github.com/glensc/file/commits/master
+> 
+>> If any of these are security issues please let me know and I will
+>> assign CVE #'s.
+> 
+> file also provides a library, libmagic.  This could lead to crashes of
+> server processes which use libmagic.  Debian will likely release a fix
+> as a security update.
 
-Input passed via the "base" parameter to cmd.php (when "cmd" is set to 
-"query_engine") is not properly sanitised in lib/QueryRender.php before being 
-returned to the user. This can be exploited to execute arbitrary HTML and 
-script code in a user's browser session in context of an affected site.
-
-The vulnerability is confirmed in version 1.2.2. Other versions may also be 
-affected.
-
-Original Advisory:
-https://sourceforge.net/tracker/index.php?func=detail&aid=3477910&group_id=61828&atid=498546
-
-Commit code:
-http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=commit;h=7dc8d57d6952fe681cb9e8818df7f103220457bd
+Fair enough but I'd like some details before issuing CVE's, like what
+are the actual security issues that have been fixed?
 
 -- 
-Agostino Sarubbo		ago -at- gentoo.org
-Gentoo/AMD64 Arch Security Liaison
-GPG: 0x7CD2DC5D
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Kurt Seifried Red Hat Security Response Team (SRT)
