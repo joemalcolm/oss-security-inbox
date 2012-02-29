@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/15/1
-Message-ID: <20120215220912.GR15310@redhat.com>
-Date: Wed, 15 Feb 2012 15:09:12 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/1
+Message-ID: <4F4D6ACF.2010705@redhat.com>
+Date: Tue, 28 Feb 2012 17:01:19 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mumble local information disclosure
+CC: vladz <vladz@...zero.fr>
+Subject: Re: CVE request: init script x11-common creates directories in insecure manners
 Content-Type: text/plain; charset=utf-8
 
-It was discovered that mumble created its database file
-(~/.local/share/data/Mumble/.mumble.sqlite) with insecure world-readable
-permissions.  If the user had (non-default) permissions on their home
-directory, another local user could obtain password and configuration
-settings from the database file.
+On 02/28/2012 10:55 AM, vladz wrote:
+> Hi,
+> 
+> I've reported a small vulnerability to Debian.  Due to an insecure file
+> creation, a local user can gain root privileges right after the 
+> "x11-common" service is started.
+> 
+>   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661627
+> 
+> Could you allocate CVE id for this issue?
+> 
+> Thank you,
+> vladz.
+> 
 
-This has been corrected in upstream git and is reported as affecting
-1.2.3 and earlier.
+Please use CVE-2012-1093 for this issue.
 
-Could a CVE be assigned to this flaw?
-
-References:
-
-https://bugs.launchpad.net/ubuntu/+source/mumble/+bug/783405
-https://github.com/mumble-voip/mumble/commit/5632c35d6759f5e13a7dfe78e4ee6403ff6a8e3e
-https://bugzilla.redhat.com/show_bug.cgi?id=791000
-http://bugs.gentoo.org/show_bug.cgi?id=403939
+P.S. is this Debian specific?
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Kurt Seifried Red Hat Security Response Team (SRT)
