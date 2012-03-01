@@ -1,48 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/18
-Message-ID: <50997753.3090901@redhat.com>
-Date: Tue, 06 Nov 2012 13:47:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: akuster <akuster@...sta.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros@...openwall.org membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/01/3
+Message-ID: <20120301210739.GB22073@foo.fgeek.fi>
+Date: Thu, 1 Mar 2012 23:07:39 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: Joomla core information disclosure 1.7.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 11/06/2012 08:10 AM, akuster wrote:
-> I am not surprised that our list is behind. I did mention there
-> would be a 3 month delay in new postings back when I was trying to
-> get MontaVista back on the closed list which seemed acceptable at
-> the time. This delay seems excessive. I will ping my management
-> again.
-> 
-> If you feel that MV should be dropped from the list-distros list,
-> then so be it.
+It seems that this issue does not yet have CVE-identifier.
 
-Nope, I honestly forgot you guys were on the list (I don't think I've
-ever seen a posting from you guys), and the request sounded like a new
-one (he didn't mention that you would vouch for him/etc.).
+http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+I can't never be sure with Joomla so maybe someone wants to verify this before assigment.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQmXdTAAoJEBYNRVNeJnmTFf8QAL+AYIG7gC0o883yeXdh8SSg
-rTyg+XuFFZMPzYRijl5bTE0CKXMr7Nzwdojfc37FqFBZNwa1QFZqCyY3e4one90G
-D1Jfu5hDEqrQdsEeqnNurheIvkw+BTiLDR2poQujvy5S9Ekf6Do1BhprXrRMDyQV
-pqa6rJ93EioIVweSMA7H7COEQR9lyQ8O/n9F+DUm8gij+QBrMntaFmeF3ZBiHgF7
-prN4EJkkOldxPwklI9PPnULxx8jthQvQQ5vc87lse4Rbb2ly2y7gpJuCyBoaKA7Y
-GC4dBWckXxBriWCPlDDyQw0QRPaerYKhKDwRdQZA5oUxPFmTvscIqN9kmqXLjuai
-dfXY3fVsH9RptIfgIpnKUBiD8T2NMLqPYCl1HuIBs0kYHofCE5j6sB/1TIL6Mzl5
-qLjGBM+qWNV46XdrqTgZ6f6fndLLFbBCyEIWCw2nRJjkXS7ETVAVfSRn848c6lq9
-baTAas5RGIYQQrIrSVdaGIFlmfDBfQaHlTmd7ARabBM1jXWExsKivpx9k6Rqa7xs
-J8g1+NIoNluppRMt+6lZxhcZsKGPAqRVTkCvK5+MofC1Ky6hhC17iYhvl5pm4NaZ
-RYCHILTjha+t7HBOuY0lsNhfwwPFpl0aHRRmVkrTnZPrar5dFFh0KvA2Sr3VXKhd
-oLs/whtuw+QylK9WbX31
-=j3tE
------END PGP SIGNATURE-----
+- Henri Salo
