@@ -1,49 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/21/6
-Message-ID: <4F1B4FD8.8020207@redhat.com>
-Date: Sat, 21 Jan 2012 16:52:56 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/01/4
+Message-ID: <20120301210955.GA1297@foo.fgeek.fi>
+Date: Thu, 1 Mar 2012 23:09:55 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Horde IMP -- Multiple XSS flaws fixed in v5.0.18
+Subject: Re: CVE-request: Joomla core information disclosure 1.7.1
 Content-Type: text/plain; charset=utf-8
 
-On 01/21/2012 03:44 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   Multiple XSS flaws were adressed in the v5.0.18 version of Horde IMP
-> (from [1]):
->
-> "[mms] SECURITY: Fix XSS vulnerabilities on the compose page (traditional
-> view), the contacts popup window, and with certain IMAP mailbox names."
->
-> References:
-> [1] http://www.horde.org/apps/imp/docs/CHANGES
-> [2] http://www.horde.org/apps/imp/docs/RELEASE_NOTES
-> [3] http://secunia.com/advisories/47580
-> [4] https://bugs.gentoo.org/show_bug.cgi?id=399563
->
-> Upstream patches:
-> [5]
-> https://github.com/horde/horde/commit/41136ea893b3d5a84c6228a552f8e211c90f58de
->     (multiple XSS flaws)
->
-> [6]
-> https://github.com/horde/horde/commit/208eae43c95136a67104f760027a8892a22b6e25
->     (XSS in email validation)
->
-> Could you allocate CVE ids for these? (two should be enough, one for
-> the multiple
-> XSS flaws patch and one for XSS in email validation patch)
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-Please use CVE-2012-0791 for this issue.
+On Thu, Mar 01, 2012 at 11:07:39PM +0200, Henri Salo wrote:
+> http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
+> 
+> I can't never be sure with Joomla so maybe someone wants to verify this before assigment.
 
--- 
+Sorry about this. I do not know why Google nor CVE list didn't show this to me, but I found this:
 
---
+http://secunia.com/advisories/46421/
 
--- Kurt Seifried / Red Hat Security Response Team
-
+- Henri Salo
