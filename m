@@ -1,33 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/11
-Message-ID: <4F15E239.9010105@redhat.com>
-Date: Tue, 17 Jan 2012 14:03:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: overlayfs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/01/1
+Message-ID: <20120301121105.GA22437@devzero.fr>
+Date: Thu, 1 Mar 2012 13:11:06 +0100
+From: vladz <vladz@...zero.fr>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: init script x11-common creates directories in insecure manners
 Content-Type: text/plain; charset=utf-8
 
-On 01/17/2012 10:55 AM, Marc Deslauriers wrote:
-> Could we please get a CVE assigned to the following issue:
->
-> overlayfs, as used in the Ubuntu kernel, doesn't perform required inode
-> security checks, bypassing intended security restrictions.
->
-> Bug:
-> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/915941
->
-> Upstream source:
-> git://git.kernel.org/pub/scm/linux/kernel/git/mszeredi/vfs.git
->
-> Thanks,
->
-> Marc.
->
->
-Please use CVE-2012-0055 for this issue.
 
--- 
+On Tue, Feb 28, 2012 at 05:01:19PM -0700, Kurt Seifried wrote:
+> Please use CVE-2012-1093 for this issue.
+Thank you.
 
--- Kurt Seifried / Red Hat Security Response Team
-
+> P.S. is this Debian specific?
+Yes, this is a Debian / Ubuntu specific issue. 
