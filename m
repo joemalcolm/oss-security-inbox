@@ -1,34 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/8
-Message-ID: <1334068155.4721.464.camel@mdlinux>
-Date: Tue, 10 Apr 2012 10:29:15 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: cobbler (Ubuntu-specific)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/01/2
+Message-ID: <CAHmME9qPZH_hPGC0V2uv4Jg7rhBENT-dEa9P8aj6_a3_7VOQ3g@mail.gmail.com>
+Date: Thu, 1 Mar 2012 16:43:17 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security@...ts.openwall.com
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE request: init script x11-common creates directories in insecure manners
 Content-Type: text/plain; charset=utf-8
 
-Could we please get a CVE assigned to the following issue?:
-
-A Ubuntu-specific script called "cobbler-ubuntu-import" in the Ubuntu
-cobbler package downloads isos from a mirror, and checks them against
-MD5SUMS, but does not verify the validity of that MD5SUMS file itself
-against the MD5SUMS.gpg. This was fixed in version 2.2.2-0ubuntu32 of
-the package.
-
-Bug:
-https://bugs.launchpad.net/ubuntu/+source/cobbler/+bug/974460
-
-Commit:
-http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/precise/cobbler/precise/revision/98
-
-Thanks,
-
-Marc.
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
+On Thu, Mar 1, 2012 at 13:11, vladz <vladz@...zero.fr> wrote:
+>
+> Yes, this is a Debian / Ubuntu specific issue.
+>
+This issue might be mitigated by kernel.yama.protected_stick_symlinks,
+which is present at least on Ubuntu.
 
