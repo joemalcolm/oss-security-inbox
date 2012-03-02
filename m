@@ -1,92 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/10
-Message-Id: <201209071126.35198.geissert@debian.org>
-Date: Fri, 7 Sep 2012 11:26:34 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: opencryptoki insecure lock files handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/3
+Message-ID: <4F505ABB.5030902@redhat.com>
+Date: Thu, 01 Mar 2012 22:29:31 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Ludwig Nussel <ludwig.nussel@...e.de>, Dan Williams <dcbw@...hat.com>
+Subject: Re: CVE Request: NetworkManager arbitrary file access
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 02/29/2012 02:48 AM, Ludwig Nussel wrote:
+> Hi,
+> 
+> Connections in NetworkManager 0.9 store path names to certificates and
+> key files. That means NM (or rather wpa_supplicant which gets
+> configured by NM) accesses the user's files as root. A user who is
+> allowed to add connections (default for locally logged in users) may
+> specify arbitrary file names. NM happily accepts files of any other
+> user, including root and even device files. Fortunately it's read
+> access only.
+> 
+> The safe approach would be to stream the actual content of the
+> certificate and key files to NM and have NM store that directly.
+> In fact NM 0.7 does just that for system connections (but forgets to
+> store the key so those connections won't actually work).
+> 
+> NM 0.6 is also affected.
+> 
+> Reproducer for NM 0.9 attached, you need to edit the file names and
+> then run e.g.
+> $ nmw.py new wlan0 yourssid
+> 
+> cu
+> Ludwig
+> 
 
-On Friday 07 September 2012 06:32:39 Tomas Hoger wrote:
-> On Thu, 6 Sep 2012 20:03:20 -0500 Raphael Geissert wrote:
-> > It is possible for an attacker to replace the lock files with
-> > symlinks and have pkcsslotd (or others) fchmod the target of the
-> > symlink to make it world-writable, create arbitrary files, etc.
-> 
-> There were following problems that I'm aware of:
-> 
-> - /tmp/.pkapi_xpk - This was normally created by pcksslotd (running as
->   root).  Symlink attack on this did not allow corrupting / truncating
->   files, but allowed creating new empty files at arbitrary locations.
-> 
-> - /tmp/.pkcs11spinloc - I believe this is created by opencryptoki
->   clients.  In addition to the above, there's a chmod to make this file
->   world writable.  This may get created by non-root user, but chmod
->   may still run later with root privileges later.
-> 
-> Those files do not seem to get removed as part of the normal operation,
-> so replacing them with symlinks if they already exist is limited
-> by /tmp stickiness.  Attacker does not need to be pkcs11 group member.
+Please use CVE-2012-1096 for this issue.
 
-Correct, and to make it clear: /tmp/.pkcs11spinloc *is* chmod'ed by 
-pcksslotd to make it world-writable.
-
-> > In response, upstream released 2.4.1[1] which fixed the fchmod issue
-> > (commits [3] and [4]).
-> 
-> 2.4.1 moved those files that became /var/lock/LCK..opencryptoki
-> and /var/lock/LCK..opencryptoki_stdll respectively.
-> 
-> > Niels discovered that 2.4.1 still allowed arbitrary files creation by
-> > following symlinks.
-> 
-> Would you mind clarifying?  As files were moved to /var/lock, this
-> should require attacker to have permissions to write to that directory.
-
-At least in Debian (and its derivatives):
-$ stat -c %a /var/lock/
-1777
-
-> > Upstream then released 2.4.2[2], fixing this last issue (commits [5]
-> > and [6]).
-> 
-> What do 2.4.2 actually fix?  I think the move of /tmp/.pkcs11spinloc
-> to /var/lock/LCK..opencryptoki_stdll probably created a regression in
-> use cases where opencryptoki clients run without root privileges (or
-> better to say without privileges to create the file in /var/lock/).
-
-Given the above (/var/lock/ is world-writable), 2.4.1 doesn't cause a 
-regression for non-root users.
-
-The move to the subdirectory in /var/lock limits the attack surface to 
-members of the pkcs11 group, who are fully trusted, therefore becoming a 
-non-issue.
-
-> Another move to pkcs11 group writable /var/lock/opencryptoki seems to
-> resolve that, but it also negates benefits of the 2.4.1 security fix.
-> Based on the rather quick look at the patches you pointed out, 2.4.2
-> seems to have the same problems pre-2.4.1 had, with following changed
-> conditions:
-> - attacker now needs to be pkcs11 group member
-> - lack of directory stickiness should make it easier to execute the
->   attack
-> 
-> > Even with the fixes in 2.4.2, members of the pkcs11 group could still
-> > use symlink attacks. However, as per upstream's documentation,
-> > members of such group are expected to be trusted[7].
-> 
-> Correct, any pkcs11 group member can easily compromise any other user
-> using opencryptoki library see:
-> https://bugzilla.redhat.com/show_bug.cgi?id=730635
-> 
-> Upstream does not see that as an issue though...
-
-Yeah, I saw it...
-
-Cheers,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Kurt Seifried Red Hat Security Response Team (SRT)
