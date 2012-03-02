@@ -1,19 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/3
-Message-ID: <20120323060845.GC15506@kludge.henri.nerv.fi>
-Date: Fri, 23 Mar 2012 08:08:45 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/4
+Message-ID: <20120302065827.GA3858@foo.fgeek.fi>
+Date: Fri, 2 Mar 2012 08:58:27 +0200
 From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: ImpressPages CMS Unspecified Remote Code Execution
+Subject: Re: CVE-request: Joomla core information disclosure 1.7.1
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Thu, Mar 01, 2012 at 10:14:40PM -0700, Kurt Seifried wrote:
+> On 03/01/2012 02:07 PM, Henri Salo wrote:
+> > Hello,
+> > 
+> > It seems that this issue does not yet have CVE-identifier.
+> > 
+> > http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
+> > 
+> > I can't never be sure with Joomla so maybe someone wants to verify this before assigment.
+> > 
+> > - Henri Salo
+> 
+> Looks like you asked for one for 20111001
+> (http://seclists.org/oss-sec/2011/q4/89) but I can't find a request for
+> 20111002 anywhere.
+> 
+> For Joomla! core information disclosure 20111002 please use CVE-2011-4937.
+> 
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
 
-This does not seem to be have CVE-identifier yet, which should be 2011.
-
-http://seclists.org/bugtraq/2011/Sep/156
-http://www.impresspages.org/news/impresspages-1-0-13-security-release/
-http://osvdb.org/show/osvdb/75783
-http://secunia.com/advisories/46193/
+http://seclists.org/oss-sec/2012/q1/524 so the CVE seems to be CVE-2011-3629. Sorry again for the hassle. I think CVE-2011-4937 is now duplicate. How do we get Joomla's security personnel to request CVE-identifiers by themselves and add them to advisories? They do belong to oCERT.
 
 - Henri Salo
+ps. SORRY :)
