@@ -1,44 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/5
-Message-ID: <1334130169.31461174.1352887921077.JavaMail.root@redhat.com>
-Date: Wed, 14 Nov 2012 05:12:01 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Tim Brown <timb@...nvas.org>, Michael Wiegand <michael.wiegand@...enbone.net>
-Cc: full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, oss-security@...ts.openwall.com, Michal Ambroz <rebus@...nam.cz>
-Subject: Re: Re: [OVSA20121112] OpenVAS Manager Vulnerable To Command Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/9
+Message-ID: <4F50FE18.70407@redhat.com>
+Date: Fri, 02 Mar 2012 10:06:32 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jussi Eronen <juhani.eronen@...ora.fi>
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-Hello Tim,
+On 03/02/2012 01:32 AM, Jussi Eronen wrote:
+> On 02/27/2012 03:19 AM, Eugene Teo wrote:
+>>> this some months ago. I've also tried to contact the various CERT
+>>> but they refused to handle the case or did not reply to my
+>>> requests.
+>>
+>> In future, if you tried to get help but you couldn't, feel free to
+>> send us an email at linux-distros vs.openwall.org.
+> 
+> You could also consider contacting us at vulncoord@...ora.fi. Our main
+> focus is on multi-vendor cases, where we feel that coordination could
+> have its benefits.
+> 
+> -Jussi / CERT-FI
 
-  thank you for the heads up and notification.
+Just curious, why is that not something@...t.fi? Why does CERT-FI not
+run it's own email, instead using @ficora.fi?
 
-The versions of openvas-manager package, as shipped with Fedora release of 16
-and release of 17 is based on upstream 2.0.5 version yet. From what I have looked
-and can tell from upstream advisory and patch (for 3.0.X version):
-[1] http://www.openvas.org/OVSA20121112.html
-[2] http://wald.intevation.org/scm/viewvc.php?view=rev&root=openvas&revision=14437
-
-the CVE-2012-5520 does not seem to be applicable to OpenVAS-4 / openvas-manager 2.0.5
-version yet:
-[3] http://lists.wald.intevation.org/pipermail/openvas-announce/2012-August/000140.html
-
-But prior definitely classifying Fedora 16 and Fedora 17 openvas-manager package versions
-as not vulnerable to this issue, I would like to hear opinion / confirmation from someone
-more familiar with OpenVAS code.
-
-So could you confirm the CVE-2012-5520 wouldn't affect OpenVAS-4 2.0.X version (yet)?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
------ Original Message -----
-Doh, a document gets proof read by multiple people and yet it contains a 
-mistake.  In the Current Status section of the advisory, the date is 
-incorrect.  A corrected advisory is attached.
-
-Tim
 -- 
-Tim Brown
-<mailto:timb@...nvas,org>
-<http://www.openvas.org/>
+Kurt Seifried Red Hat Security Response Team (SRT)
