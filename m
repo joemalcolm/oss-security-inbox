@@ -1,70 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/5
-Message-ID: <4F83ABC6.3090407@redhat.com>
-Date: Mon, 09 Apr 2012 21:40:54 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/7
+Message-Id: <201203020356.58000.tmb@65535.com>
+Date: Fri, 2 Mar 2012 03:56:47 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request for imagemagick, libpng and tiff
+Subject: Partial ASLR bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I believe this was reported to Google but not to other GNU/Linux distros:
 
-On 04/09/2012 09:31 PM, Nico Golde wrote:
-> Hi, * Kurt Seifried <kseifried@...hat.com> [2012-04-10 04:54]:
->> On 04/09/2012 08:31 PM, Nico Golde wrote:
->>> We received 3 bug reports targeting imagemagick, libpng and
->>> tiff crashing on input when used with electric fence indicating
->>> memory errors on handling crafted input. From what I see no CVE
->>> ids have been assigned to these bugs yet.
->>> 
->>> Can someone assign ids? libpng: 
->>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668082
->>> (apparently fixed in 1.2.48 with a removal of the buggy
->>> function)
->>> 
->>> tiff: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668087
->>> 
->>> imagemagick: 
->>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668075
->> 
->> Do any of these crashes occur without electric fence? Also I
->> think Vincent Fourmond <fourmond@...ian.org> stated it
->> succinctly:
->> 
->> "On what do you base your claim that it is a user security hole
->> ? While I agree that it is a bug, I fail to see how a crash at
->> the end of a program's execution (cleanup time) necessarily is a
->> user security hole, hence downgrading the severity. Feel free to
->> raise it up again if you have arguments to back your claim."
-> 
-> Ack. The imagemagick bug at least seems to be a false positive
-> create by an efence bug.
-> 
-> Cheers Nico
+* http://recxltd.blogspot.com/2012/03/partial-technique-against-aslr-
+multiple.html
 
-Ok, I'm going to hold off then on CVE's, sounds like a few more days
-and we'll know if these are real or not. If i haven't heard by Friday
-remind me to poke at it.
+There are a good number of conditions that need to be fulfilled to use it but 
+nevertheless it might be interesting to someone.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
 
-iQIcBAEBAgAGBQJPg6vGAAoJEBYNRVNeJnmTFTsP/3pg4Cf32yxeIg1lZk7+ETum
-Y/lueMdCusjuLsGp+JRmARtMzWuf4Z4UrKnAQyOfAXzCCV6UyyWLH2uAB3xncrbx
-09EfGoHaMuR7T3+wSQ8OFY+Y8UEwF5Do53LmFtCImYlQrDcTW+Ct5DDuhQlfRTVT
-Op06AgbCOhx0N/s8RORGK6RZm0ogFwjRq6bkSMibuNCiLvWf4vmcUhyfUIuHLpQu
-WQXXwrCdSaNfX9OsWzfGER2lfHsvIa5sylcN54WxmjV6K0Bt99MnQVT3reVdzlZ6
-eW+oZHfNR29xn4h5qGrWLHCco175qVGTetC9Cg3yN8jivwfVeyVML3m3BUTCzYH0
-ZVsKnJtAamV59wOGL5RveENHx+P4og9WgWz3z3D9yLh1nxZmLYLVBTbVUTTSzbGz
-xqrwDKchVLoQ+uZc6QJRg8/5ZQ+qeabqOhuMSkN8O0eRb/d0S0t3GFMiROTUPMTo
-VaWj98ZL/zF7U+2uqCo/5E0+6SBSMjQUmEWwyjz/N+cPddi8udylQJzer+o0rEUN
-6JuZW/im6OQ+NIPs9J3a6JfaNSuUlZmV6Md0QyfNQEC+waz9B+sH+hRqGsM07ELn
-BG4b4du0UHicfr4p4WtmqrDKrUZh0szbnjWSpL7DWu7s8Zwr4dYarZU6DZEXV9OI
-a/iZSMqtzn4Q1DvCHt3q
-=BqX9
------END PGP SIGNATURE-----
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
