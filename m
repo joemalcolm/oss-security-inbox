@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/04/4
-Message-ID: <20120604170939.GA14910@openwall.com>
-Date: Mon, 4 Jun 2012 21:09:39 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/11
+Message-ID: <20120302181531.GC4795@foo.fgeek.fi>
+Date: Fri, 2 Mar 2012 20:15:31 +0200
+From: Henri Salo <henri@...v.fi>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-request: Joomla core information disclosure 1.7.1
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 04, 2012 at 11:02:57AM -0600, Greg Knaddison wrote:
-> I didn't see a response nor this message in the archives at
-> http://www.openwall.com/lists/oss-security/2012/05/
-
-The message is seen here:
-
-http://www.openwall.com/lists/oss-security/2012/05/30/15
-
-The "month view" currently shows Subjects of only up to 10 messages per
-day, with a "more messages" link in place of the 10th message in case
-there are more than 10.  The "day view" shows all messages for that day:
-
-http://www.openwall.com/lists/oss-security/2012/05/30/
-
-Maybe we should adjust this setting - say, to 30 or even 100 (messages
-per day shown in month view)?
-
-> But I do see it in twitter at
-> https://twitter.com/oss_security/status/207950141695606784
+On Fri, Mar 02, 2012 at 10:03:06AM -0700, Kurt Seifried wrote:
+> Huh?
 > 
-> Is that lack of acknowledgment a subtle way to say "Greg, you really
-> really need to sign your mails!" If so I will figure it out :)
+> http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
+> 
+> and
+> 
+> http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
+> 
+> are entirely different issues (one is "Weak encryption causes potential
+> information disclosure" the other is "Inadequate error checking causes
+> potential information disclosure."), so two issues, two CVE's. We split
+> based on (among other things) the underlying issues, not the outcome.
+> 
+> These two CVE's are fine.
 
-I don't know why no one has replied.  I guess this was not intentional
-and someone will reply now.  Kurt?
+Definitely not my day. Sorry about that! My link should have been: http://secunia.com/advisories/46421/
 
-Alexander
+- Henri Salo
