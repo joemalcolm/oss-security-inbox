@@ -1,37 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/25/1
-Message-ID: <20120524233054.GA6157@rivest.dlitz.net>
-Date: Thu, 24 May 2012 19:30:54 -0400
-From: "Dwayne C. Litzenberger" <dlitz@...tz.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/2
+Message-ID: <4F505818.4030202@redhat.com>
+Date: Thu, 01 Mar 2012 22:18:16 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-2417 - PyCrypto <= 2.5 insecure ElGamal key generation
+CC: Marcus Meissner <meissner@...e.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE Request (minor) -- osc: Improper sanitization of terminal emulator escape sequences when displaying build log and build status
 Content-Type: text/plain; charset=utf-8
 
-CVE-2012-2417 https://bugs.launchpad.net/pycrypto/+bug/985164
+On 02/28/2012 03:44 PM, Marcus Meissner wrote:
+> On Tue, Feb 28, 2012 at 06:56:52PM +0100, Jan Lieskovsky wrote:
+>> Hello Kurt, Steve, Marcus, vendors,
+>>
+>>   a security flaw was found in the way osc, the Python language based 
+>>   command
+>> line client for the openSUSE build service, displayed build logs and build
+>> status for particular build. A rogue repository server could use this flaw 
+>> to
+>> modify window's title, or possibly execute arbitrary commands or overwrite
+>> files via a specially-crafted build log or build status output containing an
+>> escape sequence for a terminal emulator.
+>>
+>> References:
+>> [1] https://bugzilla.novell.com/show_bug.cgi?id=749335
+>> [2] https://bugzilla.redhat.com/show_bug.cgi?id=798353
+>>
+>> I need to conclude, I don't know how OBS repositories work (if there is a 
+>> chance
+>> of a rogue server being present). In any case, this issue is on the border
+>> (pretty unlikely someone could alter content of OBS package during build --
+>> in that case there would be more urgent issues than just particular terminal
+>> window title change).
+>>
+>> But strictly taken, the trust boundary is crossed in the moment, someone
+>> would schedule OBS build and wouldn't expect the build log / status can
+>> perform terminal "side" effect yet.
+>>
+>> Marcus, please correct me if you don't agree this should get a CVE 
+>> identifier.
+>>
+>> If no one having objections and request appropriate, could you allocate one?
+> 
+> I am not fully convinced it needs a CVE.
+> 
+> It basically boils down to the old "logfile with content that might be controlled
+> by an attacker pasted raw to a terminal" issue.
+> 
+> There is some more control on the person who builds a specific package what is output
+> thant there usually is in logfiles though.
+> 
+> A rogue server is unlikely, however a malicious packager could echo "bad escape code"
+> in his build and then ask for help on our IRC channels or mailinglists with package Y on project X.
+> (anyone can create an account and build packages ... and asking for help is not uncommon)
+> e.g. with "look at logfile with: 'osc buildlog home:user foopackage standard i586'.)
+> 
+> Ciao, Marcus
 
-PyCrypto (also known as python-crypto) versions 2.5 and earlier implement 
-incorrect ElGamal key generation.  The bug has been fixed in PyCrypto 
-2.6, which was released this morning.  Details below:
-
-     In the ElGamal schemes (for both encryption and signatures), g is
-     supposed to be the generator of the entire Z^*_p group. However, in
-     PyCrypto 2.5 and earlier, g is more simply the generator of a random
-     sub-group of Z^*_p.
-
-     The result is that the signature space (when the key is used for
-     signing) or the public key space (when the key is used for encryption)
-     may be greatly reduced from its expected size of log(p) bits, possibly
-     down to 1 bit (the worst case if the order of g is 2).
-
-     While it has not been confirmed, it has also been suggested that an
-     attacker might be able to use this fact to determine the private key.
-
-Anyone using ElGamal keys should generate new keys as soon as practical.
-
-Any additional information about this bug will be tracked at the above URL.
+Please use CVE-2012-1095 for this issue.
 
 -- 
-Dwayne C. Litzenberger <dlitz@...tz.net>
-  OpenPGP: 19E1 1FE8 B3CF F273 ED17  4A24 928C EC13 39C2 5CF7
-
-Download attachment "signature.asc" of type "application/pgp-signature" (223 bytes)
+Kurt Seifried Red Hat Security Response Team (SRT)
