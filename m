@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/8
-Message-ID: <4F543217.6060808@redhat.com>
-Date: Sun, 04 Mar 2012 20:25:11 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/5
+Message-ID: <4F50858D.3000708@ficora.fi>
+Date: Fri, 02 Mar 2012 10:32:13 +0200
+From: Jussi Eronen <juhani.eronen@...ora.fi>
 To: oss-security@...ts.openwall.com
-CC: Zubin Mithra <zubin.mithra@...il.com>, Dhanesh k <dhanesh1428@...il.com>
-Subject: Re: CVE-Request taglib vulnerabilities
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-On 03/04/2012 05:53 AM, Zubin Mithra wrote:
-> Hello,
+On 02/27/2012 03:19 AM, Eugene Teo wrote:
+>> this some months ago. I've also tried to contact the various CERT
+>> but they refused to handle the case or did not reply to my
+>> requests.
 > 
-> Multiple bugs were found and reported in taglib, and have been patched. Out
-> of the 4 reported, 2 were patched recently while 2 only affected taglib
-> versions upto 1.7 and not the current development head at github.The
-> discussion at the taglib mailing list can be viewed here at [1].
-> 
-> Kindly assign CVE's for the same.
-> 
-> Thanks,
-> Zubin Mithra
-> 
-> [1] http://mail.kde.org/pipermail/taglib-devel/2012-March/002186.html
-> 
+> In future, if you tried to get help but you couldn't, feel free to
+> send us an email at linux-distros vs.openwall.org.
 
-Can you post a summary of the issues needing CVE #'s? Thanks.
+You could also consider contacting us at vulncoord@...ora.fi. Our main
+focus is on multi-vendor cases, where we feel that coordination could
+have its benefits.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+-Jussi / CERT-FI
