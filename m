@@ -1,20 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/7
-Message-ID: <20120925061314.GA6040@haig>
-Date: Mon, 24 Sep 2012 23:13:14 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/1
+Message-ID: <4F505740.7020702@redhat.com>
+Date: Thu, 01 Mar 2012 22:14:40 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: Request for linux-distros@...openwall.org membership
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Joomla core information disclosure 1.7.1
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Sep 22, 2012 at 08:23:14AM +0400, Solar Designer wrote:
-> I've just subscribed you.
+On 03/01/2012 02:07 PM, Henri Salo wrote:
+> Hello,
 > 
-> Are you joining us here on oss-security as well?
+> It seems that this issue does not yet have CVE-identifier.
+> 
+> http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
+> 
+> I can't never be sure with Joomla so maybe someone wants to verify this before assigment.
+> 
+> - Henri Salo
 
-Thanks Alexander; yes, I'll be participating on oss-security as well.
+Looks like you asked for one for 20111001
+(http://seclists.org/oss-sec/2011/q4/89) but I can't find a request for
+20111002 anywhere.
 
-Thanks
+For Joomla! core information disclosure 20111002 please use CVE-2011-4937.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
