@@ -1,79 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/12/4
-Message-ID: <CAPYM6VwnG8g63VvBM+kLngcskJyY2EvLJmYW_Y95ou-vuw+5TQ@mail.gmail.com>
-Date: Sun, 12 Feb 2012 23:08:26 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/03/1
+Message-ID: <4F5164E0.2020607@redhat.com>
+Date: Fri, 02 Mar 2012 17:25:04 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CubeCart 3.0.20 (3.0.x) and lower | Open URL Redirection Vulnerability
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Mo Morsi <mmorsi@...hat.com>, Vít Ondruch <vondruch@...hat.com>
+Subject: Re: CVE Request -- Ruby on Rails (v3.0.12) / rubygem-actionpack: Two XSS flaws
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+On 03/02/2012 04:34 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+>   as noted in:
+>   [1]
+> http://weblog.rubyonrails.org/2012/3/1/ann-rails-3-0-12-has-been-released
+> 
+> Issue #A:
+> ----------
+> A cross-site scripting (XSS) flaw was found in the way the String class,
+> used
+> in Ruby on Rails, performed HTML escaping of SafeBuffer objects, when such
+> objects were manipulated directly via '[]' method or other methods, also
+> returning new instances of SafeBuffer object. By using these methods, such
+> newly returned SafeBuffer instances would be inadvertently marked as
+> HTML safe.
+> If a Ruby on Rails application used SafeBuffer objects this way, a remote
+> attacker could provide a specially-crafted input, which once processed
+> by such
+> SafeBuffer instance would pass the HTML escaping test without further
+> filtering, possibly leading to arbitrary HTML or webscript execution.
+> 
+> References:
+> [2A]
+> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/edd28f1e3d04e913
+> 
+> [3A] https://bugs.gentoo.org/show_bug.cgi?id=406547
+> [4A] https://bugzilla.redhat.com/show_bug.cgi?id=799275
+> 
+> Proposed upstream patches:
+> [5A]
+> http://groups.google.com/group/rubyonrails-security/attach/1c2e01a5e42722c9/3-0-safe-buffer-slice.patch?part=3
+> 
+>     (against v3.0 branch)
+> 
+> [6A]
+> http://groups.google.com/group/rubyonrails-security/attach/1c2e01a5e42722c9/3-1-safe-buffer-slice.patch?part=4
+> 
+>     (against v3.1 branch)
+> 
+> [7A]
+> http://groups.google.com/group/rubyonrails-security/attach/1c2e01a5e42722c9/3-2-safe-buffer-slice.patch?part=5
+> 
+> 
+>     (against v3.2 branch)
 
-The CubeCart 3.0.20 and lower versions are vulnerable to Open URL Redirection.
-
-
-2. BACKGROUND
-
-CubeCart is an "out of the box" ecommerce shopping cart software
-solution which has been written to run on servers that have PHP &
-MySQL support. With CubeCart you can quickly setup a powerful online
-store which can be used to sell digital or tangible products to new
-and existing customers all over the world.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The CubeCart 3.0.20 and lower versions contain a flaw that allows a
-remote cross site redirection attack. This flaw exists because the
-application does not properly sanitise the parameters,"goto" and "r".
-This allows an attacker to create a specially crafted URL, that if
-clicked, would redirect a victim from the intended legitimate web site
-(domain.com) to an arbitrary web site (localhost) of the attacker's
-choice.
-
-
-4. VERSIONS AFFECTED
-
-3.0.20 and lower (aka 3.0.x family)
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://localhost/cube3.0.20/switch.php?r=//yehg.net/&lang=es
-http://localhost/cube3.0.20/admin/login.php?goto=//yehg.net
-
-
-6. SOLUTION
-
-The CubeCart 3.0.x version family is no longer maintained by the vendor.
-Upgrade to CubeCart 4x/5.x.
-
-
-7. VENDOR
-
-CubeCart Development Team
-http://cubecart.com/
-
-
-8. CREDIT
-
-Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+Please use CVE-2012-1098 for this issue.
 
 
-9. DISCLOSURE TIME-LINE
+> Issue #B:
+> ----------
+> A cross-site scripting (XSS) flaw was found in the way 'select' helper
+> method
+> of the Ruby on Rails performed HTML escaping of 'select' HTML tag
+> options, when
+> the tags were created manually. In this case, the select tag values
+> might end
+> up unescaped. A remote-attacker could provide a specially-crafted input
+> to Ruby
+> on Rails application, using select tags this way, which potentially
+> resulted
+> into arbitrary HTML or webscript execution.
+> 
+> References:
+> [2B]
+> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/9da0c515a6c4664
+> 
+> [3B] https://bugs.gentoo.org/show_bug.cgi?id=406547
+> [4B] https://bugzilla.redhat.com/show_bug.cgi?id=799276
+> 
+> Proposed upstream patches:
+> [5B]
+> http://groups.google.com/group/rubyonrails-security/attach/6fca4f5c47705488/3-0-select_options.patch?part=3
+> 
+>     (against v3.0 branch)
+> 
+> [6B]
+> http://groups.google.com/group/rubyonrails-security/attach/6fca4f5c47705488/3-1-select_options.patch?part=4
+> 
+>     (against v3.1 branch)
+> 
+> [7B]
+> http://groups.google.com/group/rubyonrails-security/attach/6fca4f5c47705488/3-2-select_options.patch?part=5
+> 
+>     (against v3.2 branch)
+> 
+> Could you allocate CVE ids for these?
+> 
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-2012-02-10: CubeCart 3.0.x in End-of-Support/Maintenance circle
-2012-02-10: Vulnerability disclosed
+Please use CVE-2012-1099 for this issue.
 
 
-10. REFERENCES
+Summary: different researchers so two CVE's.
 
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[cubecart_3.0.20_3.0.x]_open_url_redirection
-CubeCart Home Page: http://cubecart.com/
-OWASP Top 10 2010 - A 10:
-http://www.owasp.org/index.php/Top_10_2010-A10-Unvalidated_Redirects_and_Forwards
-SANS Top 25: http://cwe.mitre.org/top25/#CWE-601
-CWE-601: http://cwe.mitre.org/data/definitions/601.html
+CVE-2012-1098 Ruby on rails 3.0.11 string class XSS vulnerability
+CVE-2012-1099 Ruby on rails 3.0.11 'select' helper method XSS vulnerability
 
-#yehg [2012-02-10]
+
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
