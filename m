@@ -1,39 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/5
-Message-ID: <4F164CEF.10600@redhat.com>
-Date: Wed, 18 Jan 2012 12:39:11 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/04/1
+Message-ID: <20120304092329.GA14206@foo.fgeek.fi>
+Date: Sun, 4 Mar 2012 11:23:29 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: systemd local denial of login or local users can create arbitrary services
 Content-Type: text/plain; charset=utf-8
 
-On 01/18/2012 10:30 AM, Kurt Seifried wrote:
-> On 01/17/2012 07:25 PM, Eugene Teo wrote:
->> "Jüri Aedla reported that the /proc/<pid>/mem handling really isn't very
->> robust, and it also doesn't match the permission checking of any of the
->> other related files.
->>
->> This changes it to do the permission checks at open time, and instead of
->> tracking the process, it tracks the VM at the time of the open.  That
->> simplifies the code a lot, but does mean that if you hold the file
->> descriptor open over an execve(), you'll continue to read from the _old_ VM.
->>
->> That is different from our previous behavior, but much simpler.  If
->> somebody actually finds a load where this matters, we'll need to revert
->> this commit.
->>
->> I suspect that nobody will ever notice - because the process mapping
->> addresses will also have changed as part of the execve.  So you cannot
->> actually usefully access the fd across a VM change simply because all
->> the offsets for IO would have changed too."
->>
->> http://git.kernel.org/linus/e268337dfe26dfc7efd422a804dbb27977a3cccc
->>
->> Thanks, Eugene
-> Please use CVE-2012-0056 for this issue.
+Can I get CVE-identifier for this issue? http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=662029
 
-Reference:
-https://bugzilla.redhat.com/CVE-2012-0056
+Version: 37-1
+Forwarded: https://bugzilla.redhat.com/show_bug.cgi?id=680122
 
-Thanks, Eugene
+By invoking systemctl status somename.service any user can create an
+entry in systemd's service list. If this list gets too large the login
+procedure can fail. It is not tracked which user created the entries.
+
+Thanks to Michael Biebl for helping me understand the issue. Lennart
+Poettering later explained that the issue is already known and fixed in
+git commit 9a46fc3b9014de1bf0ed1f3004a536b08a19ebb3.
+
+- Henri Salo
