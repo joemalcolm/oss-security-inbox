@@ -1,37 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/5
-Message-ID: <4F17A6C3.3050106@redhat.com>
-Date: Wed, 18 Jan 2012 22:14:43 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/04/2
+Message-ID: <CAA5xPp=DP9Y1E0jYT3wQgFfSJnJwhyF-3UN_6gAYqy3tSxWPjA@mail.gmail.com>
+Date: Sun, 4 Mar 2012 18:23:11 +0530
+From: Zubin Mithra <zubin.mithra@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>, crak.otaku@...il.com
-Subject: Re: CVE request: tucan insecure plugin update mechanism
+Cc: Dhanesh k <dhanesh1428@...il.com>
+Subject: CVE-Request taglib vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 01/18/2012 07:12 PM, Vincent Danen wrote:
-> Saw a Debian bug report about tucan and how it insecurely handles
-> "plugin" updates (which are basically python scripts).  These "plugins"
-> are executed with the privileges of the user running tucan, and because
-> there is no authenticity checking (plugins are not signed, doesn't look
-> like there are any certificate checks when connecting to the update
-> server, etc.), it's prone to MITM attacks where an attacker could
-> basically run arbitrary code as the user running tucan.
->
-> I'm not sure how popular this program is or how widely used, but this is
-> definitely not good design.
->
-> References:
->
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=656388
-> https://bugzilla.redhat.com/show_bug.cgi?id=782999
-> http://code.google.com/p/tucan/
->
-> (I'm cc'ing who I hope is one of the lead developers, although it
-> doesn't look like much development has been done in the last year)
->
-Please use CVE-2012-0063 for this issue.
+Hello,
 
--- 
+Multiple bugs were found and reported in taglib, and have been patched. Out
+of the 4 reported, 2 were patched recently while 2 only affected taglib
+versions upto 1.7 and not the current development head at github.The
+discussion at the taglib mailing list can be viewed here at [1].
 
--- Kurt Seifried / Red Hat Security Response Team
+Kindly assign CVE's for the same.
+
+Thanks,
+Zubin Mithra
+
+[1] http://mail.kde.org/pipermail/taglib-devel/2012-March/002186.html
 
