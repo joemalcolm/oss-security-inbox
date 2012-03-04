@@ -1,32 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/6
-Message-Id: <201205021843.q42IhDBV017927@linus.mitre.org>
-Date: Wed, 2 May 2012 14:43:13 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/04/5
+Message-ID: <20120304185053.GA6969@pisco.westfalen.local>
+Date: Sun, 4 Mar 2012 19:50:55 +0100
+From: Moritz Mühlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: temporary file issue in Config::IniFiles Config-IniFiles perl-Config-IniFiles
+Subject: CVE request: notmuch
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+please assign a CVE for this issue in "notmuch" (fixed in DSA 2416):
+http://lists.debian.org/debian-security-announce/2012/msg00044.html
 
-https://bitbucket.org/shlomif/perl-config-inifiles/changeset/a08fa26f4f59
-CVE-2012-2451
+Fix:
+http://git.notmuchmail.org/git/notmuch/commit/ae438ccd8c77831158c7c30f19710d798ee4a6b4
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S S145
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJPoX9dAAoJEGvefgSNfHMdBfUH/28Ib9CFmBOm+5OaTXUP1bcO
-wr7/kkf3ZlNoD5wIAGLrukrxcvglPq++mMGZmohULasD12k3WGc6gZXK5S5nBXBd
-BJ0bG2tR7ttPo2FO4kGbCXdZ0pPWBrZ0bFtPHoJh4q6P+Pkm7LePk9+jm4IxNNon
-u4M73h6IHHvmL4eo6h8ecBiVDzGZZ4RETU7UK2siR9P2BNFn+aTN2cowjT5uOnHo
-jKZBJmoDWzWlmK0u2eW0frJk9jiUF8ecx6BXWLu7L1pGn3VQWPV5qcuuXNStlhhr
-OMm8njI6FiNxUKflpECXLCkX/7UrD1jX0G3N69XC2CZ5N4q4D3ZzUeuSdYI65W0=
-=+ZwT
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
