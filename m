@@ -1,28 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/22/5
-Message-ID: <4F6A9D11.2060507@redhat.com>
-Date: Wed, 21 Mar 2012 21:31:29 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/04/7
+Message-ID: <4F53968E.3040701@freenet.de>
+Date: Sun, 04 Mar 2012 17:21:34 +0100
+From: Joachim Fritschi <jfritschi@...enet.de>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>, Greg Knaddison <greg.knaddison@...uia.com>, security@...pal.org
-Subject: Re: Re: [security] Drupal CORE and Drupal Contrib
+Subject: CVE Requests for phpCAS
 Content-Type: text/plain; charset=utf-8
 
-On 03/21/2012 01:05 PM, Moritz Muehlenhoff wrote:
-> On Mon, Mar 19, 2012 at 12:33:37PM -0600, Kurt Seifried wrote:
->> http://drupal.org/node/1168756
->> SA-CORE-2011-001 - Drupal core - Multiple vulnerabilities
->> Can't find any CVE's, do they need to be assigned?
-> 
-> Yes, there's been no CVE assignment so far. Debian fixed
-> this in a point update:
-> http://packages.qa.debian.org/d/drupal6/news/20110627T195934Z.html
-> 
-> Cheers,
->         Moritz
+Hi,
 
-I'm planning to do a mass CVE assignment for all the oustanding Drupal
-CORE/Contrib stuff this weekend.
+2 security vulnerabilities were discovered in the phpCAS library from 
+the jasig project.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+In the default configuration a phpCAS protected application allowed any 
+other cas service with proxy authorization and valid user credentials to 
+proxy any other phpCAS applications in the same SSO realm.
+This is a security flaw since individual applications should check 
+whether another application is actually authorized to proxy for users in 
+this particular application.
+This issue can be found on the issue tracker and a fix has already been 
+committed:
+https://issues.jasig.org/browse/PHPCAS-69
+
+
+In the default debug configuration a debug log was stored without proper 
+protection in /tmp and in a proxy configuration session data was stored 
+without proper protection in /tmp. This both could leak private user 
+attributes and sensitive login tokens during the login procedure to 
+other user on the webserver.
+This issue can be found on the issue tracker and a fix has already been 
+committed:
+https://github.com/Jasig/phpCAS/issues/22
+
+Could you please allocate two CVE identifiers for these issues?
+
+Thanks,
+
+Joachim
