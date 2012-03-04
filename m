@@ -1,51 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/20/1
-Message-ID: <4FB871B2.8020908@redhat.com>
-Date: Sat, 19 May 2012 22:23:14 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, msantand@....sans.org
-Subject: CVE Request: PHP 5.4.3 on Windows com_print_typeinfo() Buffer Overflow (?)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/04/8
+Message-ID: <1e352e9372a194d1f15afa2dee600877@mail.adsl.funky-badger.org>
+Date: Sun, 04 Mar 2012 19:40:06 +0000
+From: "Adam D. Barratt" <adam@...m-barratt.org.uk>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: XML::Atom Perl module
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 04.03.2012 18:54, Moritz Muehlenhoff wrote:
+> Hi,
+> please assign a CVE ID for this issue fixed in DSA 2424:
+> http://lists.debian.org/debian-security-announce/2012/msg00052.html
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661949
+>
+> Fixed in 0.39:
+> http://cpansearch.perl.org/src/MIYAGAWA/XML-Atom-0.41/Changes
 
-Original sources:
-https://isc.sans.edu/diary/PHP+5+4+Remote+Exploit+PoC+in+the+wild/13255
-http://packetstormsecurity.org/files/112851/php54-exec.txt
-http://www.exploit-db.com/exploits/18861/
-http://www.reddit.com/r/netsec/comments/tuyp3/isc_diary_php_54_remote_exploit_poc_in_the_wild/
+fwiw, this was also requested a few hours beforehand, in 
+<87hay4nyck.fsf@....deneb.enyo.de>.
 
-- From the exploit:
+Regards,
 
-// Exploit Title: PHP 5.4 (5.4.3) Code Execution 0day (Win32)
-// Exploit author: 0in (Maksymilian Motyl)
-// Email: 0in(dot)email(at)gmail.com
-// * Bug with Variant type parsing originally discovered by Condis
-// Tested on Windows XP SP3 fully patched (Polish)
-
-There appears to be a buffer overflow in com_print_typeinfo(), it
-appears to only affect PHP on Windows (COM object related).
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPuHGyAAoJEBYNRVNeJnmTzdsP/3whmwu6ImrekHLWJQ/lsms7
-ZRyIlkawEmTD6VO1PqJ/IN+a4Gid168ARsQV0KOsKJ9dd9cdcGBIRQ3qT1ENfplG
-MnL9B89Z75l7Zk28exVXCJcKvCczN83g/tMVUBceGH2hk8bQYbcykYeUTBiXVCsa
-JA9E8wPMmNQjRHvkbKL1Ec3uMLJuZAAx8OIqSi87PXalVtOyfR+EXFJnGo8VemID
-tyhb7UOk7toUJFG77pIal0LkXbE6P9JTjibzLtmvMMrmwXzrRlxA4XBqCeHIpbk5
-Dc+ukBDYK/BqhXl3OoetbYXglrSV2HjRKAQSpiZe/3iTm41foiDRjc4YBZFgKXf8
-DY5P3/022VHVXKou88+QFZjr1yGRqlncheZL44cZzvoWCPAR6XjDAlzJP4Gh2FGn
-E6hHoa1Sy70k06nKxUPx7KEzZ+KoUAF1pqsw9mzE6Dv4k4BsREGaceDXpwu8loaY
-jzaI28SQtVMFsVB1Lgpd2jt4U2ZLbtbsmlyHNw2EYwJrWE+/Rq4zD0VLzq4OMArv
-brkQ/xQCZG+feNVnpXrqv4zKCgYBKZWgQqZxSpEJHmRzhSzXvIh/FOxkbp6Lf+Sh
-+1Z6puxEOHlEO20I5D4DD//r+8YqIb0zerKClsKAQj7Q54LYOAC62g6AbePW95S5
-3gBx2LxCAFlwMwrUB2zm
-=aBYa
------END PGP SIGNATURE-----
+Adam
