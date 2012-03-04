@@ -1,25 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/17
-Message-ID: <87pqd0f582.fsf@mid.deneb.enyo.de>
-Date: Mon, 27 Feb 2012 20:26:05 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/04/6
+Message-ID: <20120304185449.GA7298@pisco.westfalen.local>
+Date: Sun, 4 Mar 2012 19:54:50 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: smokeping XSS
+Subject: CVE request: XML::Atom Perl module
 Content-Type: text/plain; charset=utf-8
 
-* Vincent Danen:
+Hi,
+please assign a CVE ID for this issue fixed in DSA 2424:
+http://lists.debian.org/debian-security-announce/2012/msg00052.html
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661949 
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=783584
+Fixed in 0.39:
+http://cpansearch.perl.org/src/MIYAGAWA/XML-Atom-0.41/Changes 
 
-Is the patch
-
-https://bugzilla.redhat.com/attachment.cgi?id=556619
-
-really correct?  It does not strip the two magic characters "=
-(" should be enough, = is just defensive), so it's probably still
-possible to inject an onmouseover handler and CSS which enlarges the
-affected HTML element so that the handler is practically guaranteed to
-fire.
-
-I've just looked at the patch, I haven't got a (patched or unpatched)
-smokeping instance to test this.
+Cheers,
+        Moritz
