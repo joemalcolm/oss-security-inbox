@@ -1,33 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/16
-Message-ID: <50A2D8AE.3070708@gentoo.org>
-Date: Tue, 13 Nov 2012 18:33:02 -0500
-From: Sean Amoss <ackle@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/17
+Message-ID: <4F54F31E.1050300@redhat.com>
+Date: Mon, 05 Mar 2012 18:08:46 +0100
+From: Stefan Cornelius <scorneli@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Privilege escalation (lpadmin -> root) in cups
+Subject: CVE-2012-1106 assignment notification -- abrt: Setuid process core dump archived with unsafe GID permissions
 Content-Type: text/plain; charset=utf-8
 
-On 11/11/2012 02:18 AM, Kurt Seifried wrote:
+Hi,
 
-> 
-> Please use CVE-2012-5519 for this issue. Also if other vendors could
-> check the permissions/configs/etc. and reply if they are vulnerable
-> that would be good.
-> 
->> Regards,
-> 
+A sensitive information disclosure flaw was found in the way abrt, the
+automatic bug detection and reporting tool, performed archiving of certain core
+dump files. When the abrt C handler plug-in and core dumps for setuid and
+setgid processes were enabled (via fs.suid_dumpable=2), an unprivileged local
+user could use this flaw to obtain access to core dump files of setuid
+processes, which terminated with crash and were run by the same unprivileged
+user, leading to disclosure of sensitive information due to weak GID
+permissions, those core dump files were created with.
 
-Gentoo is also vulnerable to this issue. Our bug for CVE-2012-5519:
+We have assigned CVE-2012-1106 to this issue.
 
-https://bugs.gentoo.org/show_bug.cgi?id=442926
+Upstream patch:
+https://fedorahosted.org/abrt/changeset/23d6997d7886abe118c28254f7f73f0b19b2d4e0
 
-Thanks,
+Red Hat bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=785163
+
+Thanks and kind regards,
 
 -- 
-Sean Amoss
-Gentoo Security | GLSA Coordinator
-E-Mail	  : ackle@...too.org
-GnuPG FP  : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
+Stefan Cornelius / Red Hat Security Response Team
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (295 bytes)
