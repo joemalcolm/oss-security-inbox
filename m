@@ -1,86 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/3
-Message-Id: <E1TYG2K-0000zq-49@xenbits.xen.org>
-Date: Tue, 13 Nov 2012 12:56:16 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 23 (CVE-2012-4538) - Unhooking empty PAE entries DoS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/16
+Message-ID: <20120305170635.GD1220@redhat.com>
+Date: Mon, 5 Mar 2012 10:06:35 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: mwlib < 0.13.5 DoS flaw
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Could a CVE be assigned to the following please?
 
-                 Xen Security Advisory CVE-2012-4538 / XSA-23
-                                version 2
+It was reported that mwlib suffered from a flaw that could allow a
+remote attacker to perform a denial of service attack on a mwlib
+installation by forcing it to parse a specially-crafted #iferror magic
+function.  This has been corrected in upstream version 0.13.5.
 
-                Unhooking empty PAE entries DoS vulnerability
+References:
 
-UPDATES IN VERSION 2
-====================
+http://groups.google.com/group/mwlib/browse_thread/thread/c2bd1cee77a8a79?hl=en
+http://www.google.com/url?sa=D&q=https://github.com/pediapress/mwlib/pull/10&usg=AFQjCNHgoXQUYFtEj0L8VP5K8Xn_GoTOyw
+https://github.com/pediapress/mwlib/commit/aa987c281c10e29f26aa0faa21c04f3bb1167fde
+https://bugzilla.redhat.com/show_bug.cgi?id=800064
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The HVMOP_pagetable_dying hypercall does not correctly check the
-caller's pagetable state, leading to a hypervisor crash.
-
-IMPACT
-======
-
-An HVM guest running on shadow pagetables (that is, not HAP) can
-cause the hypervisor to crash.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from 4.0 onwards are vulnerable, except that:
- - systems that run only PV guests are not vulnerable
- - systems that run all HVM guests using HAP (which is the default on
-   hardware that supports it) are not vulnerable.
-
-MITIGATION
-==========
-
-This issue can be avoided by running only PV guests or by running
-all HVM guests using hardware-assisited paging (HAP, also called
-NPT, RVI and EPT).
-
-Xen will run guests using HAP by default on hardware that
-supports it, unless it is disbled by putting 'hap=0' either on
-the xen hypervisor command-line or in the VM's configuration.
-
-You can check whether a particular machine supports HAP by looking at
-xen's boot messages.  On Xen 4.1, 4.2 and unstable, Xen will print
-"HVM: Hardware Assisted Paging (HAP) detected" during boot; on xen 4.0
-the message is "HVM: Hardware Assisted Paging detected".
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa23-4.0-4.1.patch         Xen 4.0.x, 4.1.x
-xsa23-4.2-unstable.patch    Xen 4.2.x, xen-unstable
-
-$ sha256sum xsa23*.patch
-f696d597481595b14ac9577d1dad05fc97da68568f52db74d62f2e3dcb2c7a6e  xsa23-4.0-4.1.patch
-70ffea07e58e4a747bf3ec103f656ba2cd0d8986722e6a72023c57d802c65964  xsa23-4.2-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQokGsAAoJEIP+FMlX6CvZTagH/iyB7+Y5Ug2+3o0minW/xYe5
-sVoRIxYhOuKIoRZFVHn3WvXc2PkL/sVCg8PoQnxCs1v4etALl6TTwE9CuJYVgbR7
-9OiN6l/NAg2Qbcg3W1j5Har0syOFL5ZkrvIZ3xvER1lsSINKFJ/HBYf9Oe3KUAaD
-ffzgRupB/AcETIClv9qwhmSVgjDyNWEae4TS5MzvdUM5dDcCObg/OpyvCGx2MbA8
-SF/s9bSwmUcEboy1wOm4wkTWfEJUCsE/ftpQRsEZPESOOXG5u2QB+EI1pbZ1SObx
-yhbDGE1Ex3T9u88t+7bSiFn2CwNS7eWQwg7nKQ6P/8PlSwm8BFg7KBC+HUxHNW4=
-=stq6
------END PGP SIGNATURE-----
-
-Download attachment "xsa23-4.0-4.1.patch" of type "application/octet-stream" (1148 bytes)
-
-Download attachment "xsa23-4.2-unstable.patch" of type "application/octet-stream" (1160 bytes)
+-- 
+Vincent Danen / Red Hat Security Response Team 
