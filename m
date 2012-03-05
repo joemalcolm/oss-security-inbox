@@ -1,59 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/21/1
-Message-ID: <20120521063831.GA30799@suse.de>
-Date: Mon, 21 May 2012 08:38:31 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: some drm overflow checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/12
+Message-ID: <4F54973F.7080406@redhat.com>
+Date: Mon, 05 Mar 2012 11:36:47 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Roland Gruber <post@...andgruber.de>, Fabio Tranchitella <kobold@...ian.org>, Dmitry Butskoy <Dmitry@...skoy.name>
+Subject: CVE Request -- LDAP Account Manager Pro / PhpLDAPadmin -- Multiple XSS flaws
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Kurt, Steve, vendors,
 
-spotted in xorls blog, who spotted it in the kernel stable changelog:
-https://xorl.wordpress.com/2012/05/17/linux-kernel-drm-intel-i915-multiple-ioctl-integer-overflows/
+   originally (2012-03-01), the following cross-site (XSS) flaws were reported
+against LDAP Account Manager Pro (from Secunia advisory [1]):
 
-It has two issues:
+* 1) Input passed to e.g. the "filteruid" POST parameter when filtering result
+sets in lam/templates/lists/list.php (when "type" is set to a valid value) is
+not properly sanitised before being returned to the user. This can be exploited
+to execute arbitrary HTML and script code in a user's browser session in
+context of an affected site.
 
-1. overflow of cliprect kmalloc as args->num_cliprects is not bounded
-  and passed in via a user ioctl.
+* 2) Input passed to the "filter" POST parameter in
+lam/templates/3rdParty/pla/htdocs/cmd.php (when "cmd" is set to "export" and
+"exporter_id" is set to "LDIF") is not properly sanitised before being returned
+to the user. This can be exploited to execute arbitrary HTML and script code in
+a user's browser session in context of an affected site.
 
-  Fixed via ed8cd3b2cd61004cab85380c52b1817aca1ca49b in mainline:
-  commit ed8cd3b2cd61004cab85380c52b1817aca1ca49b
-  Author: Xi Wang <xi.wang@...il.com>
-  Date:   Mon Apr 23 04:06:41 2012 -0400
+* 3) Input passed to the "attr" parameter in
+lam/templates/3rdParty/pla/htdocs/cmd.php (when "cmd" is set to
+"add_value_form" and "dn" is set to a valid value) is not properly sanitised
+before being returned to the user. This can be exploited to execute arbitrary
+HTML and script code in a user's browser session in context of an affected
+site.
 
-    drm/i915: fix integer overflow in i915_gem_execbuffer2()
+References:
+[1] http://secunia.com/advisories/48221/
+[2] http://www.vulnerability-lab.com/get_content.php?id=458
 
-    On 32-bit systems, a large args->buffer_count from userspace via ioctl
-    may overflow the allocation size, leading to out-of-bounds access.
+Later (2012-03-03), it was reported:
+[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=662050#15
 
-    This vulnerability was introduced in commit 8408c282 ("drm/i915:
-    First try a normal large kmalloc for the temporary exec buffers").
+that subset (for 'export', 'add_value_form', and 'dn' variables) of these
+security flaws is applicable also against the code of PhpLDAPadmin, a web-based
+LDAP client.
 
+Patches from LDAP Account Manager, which are applicable to PphLDAPAdmin:
+[4] 
+http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/lib/export_functions.php?r1=1.4&r2=1.5
 
-  8408c282 was added Feb 21 2011, and seemingly added during 2.6.38 development.
+[5] http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/htdocs/export.php?r1=1.1&r2=1.2
 
+[6] 
+http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/htdocs/add_value_form.php?r1=1.6&r2=1.7
 
-2. same file, overflow in args->buffer_count.
+I would swear, I have seen LDAP Account Manager CVE request on OSS security mailing list
+recently, but can't find it now quickly right now. Kurt, please prior assigning CVE ids
+to "LDAP Account Manager Pro" please double check the main CVE mitre database, if these
+didn't get a CVE identifier yet.
 
-   Fix is in mainline 44afb3a04391a74309d16180d1e4f8386fdfa745
+Wrt to PhpLDAPAdmin side -- I am not sure, what's the relation of the code between LAM and
+PLA (if PLA is using / embedding some code of LAM directly or if there were also some
+customizations on the side of PLA upon LAM code embedding / inclusion). Hopefully Roland,
+Fabio, Dmitry can clarify here, how much the PhpLDAPAdmin code is different from LDAP
+Account Manager code (if it's just overtaken LAM code or PhpLDAPAdmin have also made
+their own customizations to the code)?
 
-   commit 44afb3a04391a74309d16180d1e4f8386fdfa745
-   Author: Xi Wang <xi.wang@...il.com>
-   Date:   Mon Apr 23 04:06:42 2012 -0400
+Roland, Fabio, Dmitry, basically what we are searching an answer for is, if the PhpLDAPAdmin
+code is different enough it safe to be considered as a different code base and separate
+CVE identifier to be allocated for it? (IOW one for LDAP Account Manager Pro issues,
+the other for PhpLDAPAdmin issues)
 
-    drm/i915: fix integer overflow in i915_gem_do_execbuffer()
+Kurt, once the above doubt solved and you checked and confirmed, that LDAP Account Manager
+issue did not get CVE identifier in the recent past yet, could you allocate those?
 
-    On 32-bit systems, a large args->num_cliprects from userspace via ioctl
-    may overflow the allocation size, leading to out-of-bounds access.
-
-    This vulnerability was introduced in commit 432e58ed ("drm/i915: Avoid
-    allocation for execbuffer object list").
-
-
-   432e58ed was added during 2.6.37 development.
-
-
-I think it needs 2 CVEs, due to the different kernel versions introducing it.
-
-Ciao, Marcus
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
