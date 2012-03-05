@@ -1,48 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/28/2
-Message-ID: <20120128011857.GA10720@openwall.com>
-Date: Sat, 28 Jan 2012 05:18:57 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/3
+Message-ID: <4F5422BF.7030708@redhat.com>
+Date: Mon, 05 Mar 2012 10:19:43 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-3593 kernel: vlan: fix panic when handling priority tagged frames
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+A partner reported that frames with priority tags only (VID=0 in the
+frame), could cause a panic on some drivers. It affects the Linux kernel
+as shipped with Red Hat Enterprise Linux 6 due to incorrect backporting
+of upstream patches. It does not affect the upstream kernel.
 
-I would definitely like OpenBSD to be represented on the distros list.
-Not only OpenBSD ports, but also OpenBSD base.
+https://bugzilla.redhat.com/CVE-2011-3593
 
-On Sat, Jan 28, 2012 at 12:39:19AM +0000, Stuart Henderson wrote:
-> Could you add myself for OpenBSD ports please? If acceptable I'll send a
-> public key out of band. Thanks.
-
-Probably yes, but I (and maybe others) would like some info first:
-
-Is there any web page (or something else) specifying the OpenBSD ports
-security team (not all committers, but just those the project vouches
-for as it relates to handling of non-public security vulnerabilities)?
-Or a port-security@ exploder that you're on.  Or explicit approval
-(vouching for you) by a key OpenBSD person for this specific occasion.
-
-(For NetBSD and FreeBSD, the folks subscribed were "visibly" on security
-teams.)
-
-Is there any place where we can see past security issues in OpenBSD
-ports handled (which issues, when fixed)?  Something like a changelog
-with security fixes marked specially, or advisories?
-
-Would advance notifications result in you actually preparing OpenBSD
-port updates in time for public disclosure?
-
-How would you handle notifications that happen to pertain to components
-that are in OpenBSD base tree rather than ports?
-
-BTW, note how my current approach differs from what was used on
-vendor-sec: I ask projects themselves (known and reputable) to vouch for
-folks to be added on their behalf, whereas on vendor-sec some existing
-list members would vouch for a new member.  I'd appreciate any comments
-anyone might have on this.
-
-Thanks,
-
-Alexander
+Thanks, Eugene
