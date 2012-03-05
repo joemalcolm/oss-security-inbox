@@ -1,35 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/5
-Message-ID: <4F1061DE.9020501@redhat.com>
-Date: Fri, 13 Jan 2012 09:54:54 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/19
+Message-ID: <4F552E42.7020200@redhat.com>
+Date: Mon, 05 Mar 2012 14:21:06 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-Subject: Re: CVE affected for PHP 5.3.9 ?
+CC: Zubin Mithra <zubin.mithra@...il.com>, Dhanesh k <dhanesh1428@...il.com>
+Subject: Re: CVE-Request taglib vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 01/13/2012 08:19 AM, Nicolas Grégoire wrote:
+On 03/04/2012 08:57 PM, Zubin Mithra wrote:
 > Hello,
->
-> PHP released v5.3.9 earlier this month :
-> http://php.net/ChangeLog-5.php#5.3.9
->
-> I wonder if CVE identifiers were already affected to these security
-> vulnerabilities. I'm looking specifically for bug 54446 that I
-> reported : https://bugs.php.net/bug.php?id=54446
->
+> 
+> 
+>> On 03/04/2012 05:53 AM, Zubin Mithra wrote:
+>>> Hello,
+>>>
+>>> Multiple bugs were found and reported in taglib, and have been patched.
+>> Out
+>>> of the 4 reported, 2 were patched recently while 2 only affected taglib
+>>> versions upto 1.7 and not the current development head at github.The
+>>> discussion at the taglib mailing list can be viewed here at [1].
+>>>
+>>> Kindly assign CVE's for the same.
+>>>
+>>> Thanks,
+>>> Zubin Mithra
+>>>
+>>> [1] http://mail.kde.org/pipermail/taglib-devel/2012-March/002186.html
+>>>
+>>
+>> Can you post a summary of the issues needing CVE #'s? Thanks.
+>>
+>>
+> The issues which were present in the development head were :-
+> 
+> [1] A crafted ogg file with sampleRate as "0" leads to crash in the
+> application using taglib.
+>          fixed in the commit -
+> https://github.com/taglib/taglib/commit/77d61c6eca4d08b9b025738acf6b926cc750db23
+
+Please use CVE-2012-1107 for this issue.
+
+> [2] "vendorLength" field modification in ogg tag parsing causes crash in
+> the application using taglib.
+>          fixed in the commit -
+> https://github.com/taglib/taglib/commit/ab8a0ee8937256311e649a88e8ddd7c7f870ad59
+
+Please use CVE-2012-1108 for this issue.
+
+> The issues which are present in the latest "release" but not in the current
+> development head were :-
+> 
+> [3] Lack of sanity checks of fields which were read, and were used for
+> allocating memory; crafted files would lead of application crash.
+> [4] A one bit change in a working ogg file would cause a thread to loop
+> infinitely.
+
+Note enough information to assign CVEs.
+
+> *Please note* :-
+> 
+> [1] and [2] were fixed after the report, and could be assigned CVE's.
+> 
+> I am unsure about the other two, as they were fixed in the development
+> branch, prior to our report. However, a release has not been made with the
+> patches for [3] and [4] yet. Kindly assign CVE's for [3] and [4] if you see
+> it fit to do so.
+> 
+> 
 > Regards,
-> Nicolas
->
->
-I'm not clear on how this crosses a security boundary. The attacker
-would need to write a custom script that uses the "<sax:output
-href="0wn3d.php" method="text">" and the user the script runs as (apache
-usually or whatever local account is in use) would also need write
-permissions to the directory in question. How is this different than say
-using fopen/fwrite to create the file?
+> Zubin Mithra
+> 
+
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Kurt Seifried Red Hat Security Response Team (SRT)
