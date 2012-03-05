@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/22/6
-Message-ID: <4F6AAFC1.1000709@redhat.com>
-Date: Wed, 21 Mar 2012 22:51:13 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/6
+Message-ID: <4F5430B2.5000207@redhat.com>
+Date: Sun, 04 Mar 2012 20:19:14 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE for OpenBSD random() bug?
+To: oss-security@...ts.openwall.com
+CC: Moritz Mühlenhoff <jmm@...til.org>, Debian Security Team <security@...ian.org>
+Subject: Re: CVE request: notmuch
 Content-Type: text/plain; charset=utf-8
 
-https://banu.com/blog/42/openbsd-bug-in-the-random-function/
+On 03/04/2012 11:50 AM, Moritz Mühlenhoff wrote:
+> Hi,
+> please assign a CVE for this issue in "notmuch" (fixed in DSA 2416):
+> http://lists.debian.org/debian-security-announce/2012/msg00044.html
+> 
+> Fix:
+> http://git.notmuchmail.org/git/notmuch/commit/ae438ccd8c77831158c7c30f19710d798ee4a6b4
+> 
+> Cheers,
+>         Moritz
 
-http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/stdlib/random.c#rev1.16
+Please use CVE-2012-1103 for this issue.
 
-Fix a bug where random() always returns 0 when srandom() is seeded
-with 0.  Use 1 and not 0 as the first element of the state array,
-similar to what glibc does.  OK nicm@
-
-It would seem this fits into the "weaker then advertised" class of
-security problem. Thoughts/comments (anyone strongly against this)?
+Potentially stupid Q, why no CVE request from Debian? I'm happy to
+assign them, especially for stuff that qualifies for a DSA, it will
+almost certainly qualify for a CVE. If you need one for an embargoed
+issue please email the OpenWall vs list
+(http://oss-security.openwall.org/wiki/mailing-lists/distros) and I can
+assign it there.
 
 -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
