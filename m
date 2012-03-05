@@ -1,26 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/20
-Message-ID: <4F182005.2010200@canonical.com>
-Date: Thu, 19 Jan 2012 05:52:05 -0800
-From: John Johansen <john.johansen@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/7
+Message-ID: <4F5431DB.10200@redhat.com>
+Date: Sun, 04 Mar 2012 20:24:11 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Request for linux-distros@...openwall.org membership
+CC: Joachim Fritschi <jfritschi@...enet.de>
+Subject: Re: CVE Requests for phpCAS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 03/04/2012 09:21 AM, Joachim Fritschi wrote:
+> Hi,
+> 
+> 2 security vulnerabilities were discovered in the phpCAS library from
+> the jasig project.
+> 
+> In the default configuration a phpCAS protected application allowed any
+> other cas service with proxy authorization and valid user credentials to
+> proxy any other phpCAS applications in the same SSO realm.
+> This is a security flaw since individual applications should check
+> whether another application is actually authorized to proxy for users in
+> this particular application.
+> This issue can be found on the issue tracker and a fix has already been
+> committed:
+> https://issues.jasig.org/browse/PHPCAS-69
 
-I recently joined the Ubuntu Security team and request membership to the
-linux-distros@...openwall.org list so that I may participate fully in reporting
-and fixing vulnerabilities in Ubuntu and FOSS. Here is my GPG fingerprint:
+Please use CVE-2012-1104 for this issue.
 
-pub   4096R/18D5C3D8 2011-09-06
-      Key fingerprint = EDC4 830F BD39 AB6A C510  47FB 052F 3670 18D5 C3D8
-uid                  John Johansen <john@...x.net>
-uid                  John Johansen <john.johansen@...onical.com>
-sub   4096R/3CF6A249 2011-09-06
+> In the default debug configuration a debug log was stored without proper
+> protection in /tmp and in a proxy configuration session data was stored
+> without proper protection in /tmp. This both could leak private user
+> attributes and sensitive login tokens during the login procedure to
+> other user on the webserver.
+> This issue can be found on the issue tracker and a fix has already been
+> committed:
+> https://github.com/Jasig/phpCAS/issues/22
+
+Please use CVE-2012-1105 for this issue.
 
 
-Thank you for your consideration
+> Could you please allocate two CVE identifiers for these issues?
+> 
+> Thanks,
+> 
+> Joachim
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
