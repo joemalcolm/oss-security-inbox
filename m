@@ -1,45 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/10
-Message-ID: <20120511200648.GC26142@inutil.org>
-Date: Fri, 11 May 2012 22:06:48 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/8
+Message-ID: <4F543217.6060808@redhat.com>
+Date: Sun, 04 Mar 2012 20:25:11 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: TYPO3 TYPO3-SA-2010-022 still without CVE
+CC: Zubin Mithra <zubin.mithra@...il.com>, Dhanesh k <dhanesh1428@...il.com>
+Subject: Re: CVE-Request taglib vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-
-Hi Kurt,
-
-> > Issues in TYPO3-SA-2010-022 are still without CVE-identifiers if I
-> > am correct.
-> > 
-> > http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-sa-2010-022/
-> >
-> > 
-> OSVDB: 70116,70117,70118,70119,70120,70121,70122,70123
-> > http://secunia.com/advisories/35770/ 
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607286
-> > 
-> > Originally requested in here
-> > http://seclists.org/oss-sec/2011/q1/76
-> > 
-> > - Henri Salo
+On 03/04/2012 05:53 AM, Zubin Mithra wrote:
+> Hello,
 > 
-> CVE-2012-2342 TYPO3-SA-2010-022 #1 frontend click enlarge XSS
-> CVE-2012-2343 TYPO3-SA-2010-022 #1 frontend form content object XSS
-> CVE-2012-2344 TYPO3-SA-2010-022 #2 PHP file inclusion protection API
-> CVE-2012-2345 TYPO3-SA-2010-022 #3 Install Tool XSS
-> CVE-2012-2346 TYPO3-SA-2010-022 #4 Backend Remote File Disclosure
-> CVE-2012-2347 TYPO3-SA-2010-022 #4 Backend Path Traversal
-> CVE-2012-2348 TYPO3-SA-2010-022 #4 Backend SQL Injection
-> CVE-2012-2349 TYPO3-SA-2010-022 #5 Database API info disclosure
+> Multiple bugs were found and reported in taglib, and have been patched. Out
+> of the 4 reported, 2 were patched recently while 2 only affected taglib
+> versions upto 1.7 and not the current development head at github.The
+> discussion at the taglib mailing list can be viewed here at [1].
 > 
+> Kindly assign CVE's for the same.
 > 
-> split #1 because it affects different versions, split #4 because it's
-> 3 separate issues, same as the vendor did.
+> Thanks,
+> Zubin Mithra
+> 
+> [1] http://mail.kde.org/pipermail/taglib-devel/2012-March/002186.html
+> 
 
-But these are from 2010, they should not have 2012-* IDs?
+Can you post a summary of the issues needing CVE #'s? Thanks.
 
-Cheers,
-        Moritz
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
