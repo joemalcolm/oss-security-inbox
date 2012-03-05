@@ -1,66 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/1
-Message-ID: <50A345BC.5070802@redhat.com>
-Date: Wed, 14 Nov 2012 00:18:20 -0700
-From: Kurt Seiifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/4
+Message-ID: <4F542D51.2030201@redhat.com>
+Date: Sun, 04 Mar 2012 20:04:49 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mantis before 1.2.12
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: systemd local denial of login or local users can create arbitrary services
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 11/13/2012 11:26 AM, Kurt Seiifried wrote:
-> On 11/13/2012 07:52 AM, Hanno Böck wrote:
->> http://www.mantisbt.org/bugs/changelog_page.php?version_id=150
+On 03/04/2012 02:23 AM, Henri Salo wrote:
+> Can I get CVE-identifier for this issue? http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=662029
 > 
->> New mantis bugtracker release. Two fixes are security relevant 
->> (althouhg both sound minor)
+> Version: 37-1
+> Forwarded: https://bugzilla.redhat.com/show_bug.cgi?id=680122
 > 
-> Just to confirm I understand these issues:
+> By invoking systemctl status somename.service any user can create an
+> entry in systemd's service list. If this list gets too large the login
+> procedure can fail. It is not tracked which user created the entries.
 > 
->> - 0014496: [security] Workflow Transitions: Minimal Access Level 
->> to Change to this status has no correct 'default' (dregad) - 
->> resolved. http://www.mantisbt.org/bugs/view.php?id=14496
+> Thanks to Michael Biebl for helping me understand the issue. Lennart
+> Poettering later explained that the issue is already known and fixed in
+> git commit 9a46fc3b9014de1bf0ed1f3004a536b08a19ebb3.
 > 
-> This is an information disclosure: "Consequently, saving the page 
-> without changes would cause the config to be saved with all access 
-> levels as 'viewer'."
+> - Henri Salo
 
-Please use CVE-2012-5522 for this issue.
+Please use CVE-2012-1101 for this issue.
 
->> - 0014704: [security] Clone and Move issue with Copy bug notes - 
->> user get email notice from project without access (dregad) - 
->> closed. http://www.mantisbt.org/bugs/view.php?id=14704
-> 
-> Also an information disclosure: Now any action on IssueB eg. add 
-> notes, change status causes send email notice to UserA from
-> IssueB. UserA don't have access to IssueB by can read whole history
-> and any notes from email body.
-
-Please use CVE-2012-5523 for this issue.
-
->> Please assign CVEs.
-
-
-- -- 
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQo0W8AAoJEBYNRVNeJnmTdo8P/1/xNKJVKTk4tQDOy0rkquxW
-oyxuCZT4jioFksYzX5buyqofInlBNNZIz95e8ksg2ppX/KflIv+pz+rkPZGrn99T
-miUGId9RKKIBwxI6IPqBLx0D1gC9iZDfEL1j47c/mCoJRgdIKCB+wd1ocG5dTcSD
-IuC5DmRF2lfdfKIaodGDOBZGNSKLev9HR8tzeSduAOZ1qzKFZYp9VuwDz0obtYvY
-MR5wHYn5cBcSJH7ZtJ7sY2C4Ks1jAqm8fEcY+5GV03OVAlTAN46k6YAX94aIFShX
-LQl15PI1xzrAKKs4QEWPmdIlv4aDzaKt3jr1bG5exIR7khnMSR0zxwvu1+AvrZml
-VgAUbYcExeHjtod3OzadKqKrHDvfOJJM74N5G3LD1zqA/epGF2O4Mz5SSs8buFkr
-K538HQ+gmPy4NfrJvKHE2zFrZIPF9CsNpPR/pj2WHyIWiej0b+R8p4TzaYv3Kqa3
-xvu9WI6heUK1RJ1ulSeSgE4HV7CEQEyzky8ztMthoAyYIuTzHkcAIcT5I4UsNXpE
-HpBTrMKzZUaBGVzor0pm8w/gwMmbwHtetR6IBpnPMnqxO/1frK0vyurh/E4kyXii
-dAdpNRWRJcxq3m846F1HjfMfEqmid0lAbMiA/MRK+hzEUIttekBPfpgR1UU3RoIy
-jllL9pXbpUujAWyFoLW+
-=kIyP
------END PGP SIGNATURE-----
