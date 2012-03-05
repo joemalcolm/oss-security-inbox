@@ -1,24 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/5
-Message-ID: <20120615061914.GD6989@kludge.henri.nerv.fi>
-Date: Fri, 15 Jun 2012 09:19:14 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/1
+Message-ID: <4F551A8B.8030409@rolandgruber.de>
+Date: Mon, 05 Mar 2012 20:56:59 +0100
+From: Roland Gruber <post@...andgruber.de>
 To: oss-security@...ts.openwall.com
-Cc: Greg Knaddison <greg.knaddison@...uia.com>, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE Request for Drupal contributed modules
+CC: Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Fabio Tranchitella <kobold@...ian.org>,  Dmitry Butskoy <Dmitry@...skoy.name>
+Subject: Re: CVE Request -- LDAP Account Manager Pro / PhpLDAPadmin -- Multiple XSS flaws
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 13, 2012 at 08:32:11PM -0600, Kurt Seifried wrote:
-> CVE-2012-2699 SA-CONTRIB-2012-073 - Glossary - Cross-Site Scripting (XSS)
-> CVE-2012-2700 SA-CONTRIB-2012-074 - Contact Forms - Access Bypass
-> CVE-2012-2701 SA-CONTRIB-2012-075 - Take Control - Cross Site Request
-> Forgery (CSRF)
+Hi all,
 
-These were already assigned.
+On 05.03.2012 11:36, Jan Lieskovsky wrote:
+> Wrt to PhpLDAPAdmin side -- I am not sure, what's the relation of the
+> code between LAM and
+> PLA (if PLA is using / embedding some code of LAM directly or if there
+> were also some
+> customizations on the side of PLA upon LAM code embedding / inclusion).
+> Hopefully Roland,
+> Fabio, Dmitry can clarify here, how much the PhpLDAPAdmin code is
+> different from LDAP
+> Account Manager code (if it's just overtaken LAM code or PhpLDAPAdmin
+> have also made
+> their own customizations to the code)?
 
-Request: http://www.openwall.com/lists/oss-security/2012/05/10/6
-Response: http://www.openwall.com/lists/oss-security/2012/05/11/2
+LDAP Account Manager includes a reduced copy of the phpLDAPadmin code. I already checked if phpLDAPadmin contains a fix and it seems to be vulnerable,
+too. Therefore, I cloned the Debian bug.
 
-Reject new identifiers or can we use this in future Drupal contrib issues?
+The Debian bug report contains a patch for Debian Stable. Debian packages for Unstable are here:
 
-- Henri Salo
+http://www.ldap-account-manager.org/static/debian-packages/
+
+
+-- 
+
+Best regards
+
+Roland
