@@ -1,37 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/3
-Message-ID: <4FC5EF5C.1090104@redhat.com>
-Date: Wed, 30 May 2012 11:58:52 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Richard Mudgett <rmudgett@...ium.com>
-CC: oss-security@...ts.openwall.com, Jeffrey Ollie <jeff@...tech.us>
-Subject: Update of upstream patch links for AST-2012-007 / CVE-2012-2947 advisory needed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/1
+Message-ID: <4F54208B.9030605@redhat.com>
+Date: Mon, 05 Mar 2012 10:10:19 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2012-1097 kernel: regset: Prevent null pointer reference on readonly regsets
 Content-Type: text/plain; charset=utf-8
 
-Hello Richard,
+Description: The regset common infrastructure assumed that regsets would
+always have .get and .set methods, but not necessarily .active methods.
+Unfortunately people have since written regsets without .set methods.
 
-   this is due the links to patches, as being listed in AST-2012-007 advisory:
-   [1] http://downloads.asterisk.org/pub/security/AST-2012-007.html
+Rather than putting in stub functions everywhere, handle regsets with
+null .get or .set methods explicitly.
 
-They are obviously result of copy-n-paste problem from previous upstream AST-2012-006
-advisory:
-1) Though link name being http://downloads.asterisk.org/pub/security/AST-2012-007-1.8.11-cert.diff
-    it points to:
-    http://downloads.asterisk.org/pub/security/AST-2012-006-1.8.diff
+Credit: H. Peter Anvin
 
-2) http://downloads.asterisk.org/pub/security/AST-2012-007-1.8.diff (link name) =>
-    http://downloads.asterisk.org/pub/security/AST-2012-006-1.8.diff (link target)
+Upstream commits:
+http://git.kernel.org/linus/c8e252586f8d5de906385d8cf6385fee289a825e
+http://git.kernel.org/linus/5189fa19a4b2b4c3bec37c3a019d446148827717
 
-3) http://downloads.asterisk.org/pub/security/AST-2012-007-10.diff (link name) =>
-    http://downloads.asterisk.org/pub/security/AST-2012-006-1.8.diff (link target)
-
- From what I can tell (from upstream ticket), the proper AST-2012-007 upstream patch
-for v1.8.x branch is this one:
-https://code.asterisk.org/code/rdiff/asterisk/branches/1.8/channels/chan_iax2.c?r1=366880&r2=367781&u&N
-
-Could you please update the links in AST-2012-007 for other branches too, so they
-would reflect relevant */chan_iax2.c change?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Reference:
+https://bugzilla.redhat.com/CVE-2012-1097
