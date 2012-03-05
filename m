@@ -1,30 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/08/6
-Message-ID: <20120508120359.63afe711@hsalkjdhsa.lan>
-Date: Tue, 8 May 2012 12:03:59 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/18
+Message-ID: <CAB9ZNAwV8N3vx=YGKxLTQmLXfRJKRuXgQG27MQ7YWc9OZ4j84g@mail.gmail.com>
+Date: Mon, 5 Mar 2012 14:05:14 -0500
+From: Andres Gomez <agomez@...idsignal.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS and SQL injection in serendipity before 1.7.1
+Subject: Re: TORCS 1.3.2 xml buffer overflow - CVE-2012-1189
 Content-Type: text/plain; charset=utf-8
 
-http://blog.s9y.org/archives/240-Serendipity-1.6.1-released.html
+Speed Dreams (http://www.speed-dreams.org/) is also vulnerable due It is a
+TORCS's fork, and they both share most of the code.
+Should I ask for a new CVE number? or can I use CVE-2012-1189 for this
+issue?
 
-"This release mainly addresses two security issues found by Stefan
-Schurtz (thanks a lot, again!). One is a XSS issue in the media
-database panel, the other an SQL injection in the media database
-section. Both issues can only be exploited if you are logged in to your
-blog and you click a specially crafted link. The SQL injection cannot
-be used to extract sensitive information from the database or delete
-data."
+By the way, how can I get disclosed  CVE-2012-1189 details in mitre web
+page, since TORCS and Speed Dreams people have already fixed the bugs?.
 
-The webpage of the vulnerability researcher is
-http://www.rul3z.de/
+Regards.
 
-However, there seems to be no information yet about those vulns,
-probably they'll appear there soon.
+2012/2/18 Andres Gomez <agomez@...idsignal.com>
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+> http://www.exploit-db.com/exploits/18471/
+> http://www.torcs.org
+>
+> Hi,
+>
+> I have found another exploitable buffer overflow in torcs, this time it
+> does'nt have relation with plib.
+> The problem is in:
+>
+> torcs/src/modules/graphic/ssgraph/grsound.cpp, line 103:
+>
+> 96     char filename[512];
+>         FILE *file = NULL;
+>
+>         // ENGINE PARAMS
+>         tdble rpm_scale;
+>         param = GfParmGetStr(handle, "Sound", "engine sample",
+> "engine-1.wav");
+>         rpm_scale = GfParmGetNum(handle, "Sound", "rpm scale", NULL, 1.0);
+> 103   sprintf (filename, "cars/%s/%s", car->_carName, param);
+>         file = fopen(filename, "r");
+>         if (!file)
+>         {
+> 107             sprintf (filename, "data/sound/%s", param);
+>         }
+>         else
+>         {
+>             fclose(file);
+>         }
+>
+> This section reads a configuration sound option from [any-car].xml, for
+> example:
+>
+> <section name="Sound">
+>         <attstr name="engine sample" val="renault-v10.wav"/>
+>         <attnum name="rpm scale" val="0.35"/>
+> </section>
+>
+> if audio file name in "engine sample" is enough long it could overwrite
+> "filename" buffer (line 96),
+> because there is not size validation in line 103 (also in line 107).
+>
+> I have already notified vendor.
+>
+> Please use CVE-2012-1189 for this issue.
+>
+> Regards.
+>
+> Andrés Gómez
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
