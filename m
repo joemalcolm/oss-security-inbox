@@ -1,77 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/02/3
-Message-ID: <504398FB.5040507@redhat.com>
-Date: Sun, 02 Sep 2012 11:35:55 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/10
+Message-ID: <4F5451AA.3070308@redhat.com>
+Date: Sun, 04 Mar 2012 22:39:54 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Petr Matousek <pmatouse@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request -- kernel: request_module() OOM local DoS
+To: oss-security@...ts.openwall.com
+Subject: Ruby on Rails github compromise
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+https://github.com/blog/1068-public-key-security-vulnerability-and-mitigation
 
-As Tetsuo Handa pointed out, request_module() can stress the system
-while the oom-killed caller sleeps in TASK_UNINTERRUPTIBLE.
+    Public Key Security Vulnerability and Mitigation
+    mojombo March 4, 2012
 
-The task T uses "almost all" memory, then it does something which
-triggers request_module().  Say, it can simply call sys_socket().  This
-in turn needs more memory and leads to OOM.  oom-killer correctly
-chooses T and kills it, but this can't help because it sleeps in
-TASK_UNINTERRUPTIBLE and after that oom-killer becomes "disabled" by the
-TIF_MEMDIE task T.
+    At 8:49am Pacific Time this morning a GitHub user exploited a
+security vulnerability in the public key update form in order to add his
+public key to the rails organization. He was then able to push a new
+file to the project as a demonstration of this vulnerability.
 
-A local unprivileged user can make the system unusable.
+    As soon as we detected the attack we expunged the unauthorized key
+and suspended the user.
 
-Upstream fixes:
-(1) 70834d30 "usermodehelper: use UMH_WAIT_PROC consistently"
-(2) b3449922 "usermodehelper: introduce umh_complete(sub_info)"
-(3) d0bd587a "usermodehelper: implement UMH_KILLABLE"
-(4) 9d944ef3 "usermodehelper: kill umh_wait, renumber UMH_* constants"
-(5) 5b9bd473 "usermodehelper: ____call_usermodehelper() doesn't need
-do_exit()"
-(6) 3e63a93b "kmod: introduce call_modprobe() helper"
-(7) 1cc684ab "kmod: make __request_module() killable"
+    At 9:53am Pacific Time this morning we rolled out a fix to the
+vulnerability and started an investigation into the impact of the
+attack. Database and log analysis have shown that the user compromised
+three accounts (rails and two others that appear to have been proofs of
+concept). All affected parties have been or will be contacted once we
+are certain of the findings.
 
-According to the reporter, (1) and (4) are optional and safer to
-exclude.
+    The root cause of the vulnerability was a failure to properly check
+incoming form parameters, a problem known as the mass-assignment
+vulnerability. In parallel to the attack investigation we initiated a
+full audit of the GitHub codebase to ensure that no other instances of
+this vulnerability were present. This audit is still ongoing, and I am
+going to personally ensure that we have a strategy going forward to
+prevent this type of vulnerability from happening again.
 
-Acknowledgements:
-
-Red Hat would like to thank Tetsuo Handa for reporting this issue.
-
-References:
-https://bugs.launchpad.net/ubuntu/+source/linux/+bug/963685
-https://bugzilla.redhat.com/show_bug.cgi?id=853474
-
-Thanks,
-- -- 
-Petr Matousek / Red Hat Security Response Team
+    I sincerely apologize for allowing this to happen. Security is our
+priority and I will be arranging additional external security audits
+above and beyond our normal schedule to further test our security
+measures and give you peace of mind.
 
 ====
-For some reason this wasn't in my email hence the new message and not
-a proper reply).
 
-Please use CVE-2012-4398 for this issue.
+Mass assignment in Rails applications:
+http://blog.mhartl.com/2008/09/21/mass-assignment-in-rails-applications/
 
-- -- 
+Homakov (exploited this issue on Github:
+"wow how come I commit in master? O_o "
+https://github.com/rails/rails/commit/b83965785db1eec019edf1fc272b1aa393e6dc57
+
+Proposal for Improving Mass Assignment:
+https://gist.github.com/1974187
+
+Responsible Disclosure Policy:
+https://github.com/blog/1069-responsible-disclosure-policy
+
+Whitelist all attribute assignment by default.:
+https://github.com/rails/rails/commit/641a4f62405cc2765424320932902ed8076b5d38
+
+What's New in Edge: Scoped Mass Assignment in Rails 3.1:
+http://enlightsolutions.com/articles/whats-new-in-edge-scoped-mass-assignment-in-rails-3-1
+
+I think this potentially warrants a CVE, thoughts/comments?
+
+
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQQ5j7AAoJEBYNRVNeJnmTxCAP/iAnk1EioSt9wkWZ48oF8xSJ
-/kYtqwkuCn4dAu27SN6W74WqdWImVZvkazsof4I4nYMmPzVxrR54Sq+wqy6hOCea
-v2hGTkjNdIG3aDZNHkpzzLpJUFCtLbHnH9f5Fdn/s/Xwhg1LFGsRWdA5vYlH0Kuy
-/xcV2+oysRahV5dv9M045IsQZjRQZBoMru532P5Lj8F7+O1WQ520fRLFn/VQ1fKV
-s1OFLU5Xjyhnt+irR/vFkpp2uAUmWOoo/voBoCK36bsHZdJEvOGhWNofeuUgNYmF
-5W4yia3/NXVBHEsb/5OCBIaxNvanFnji7SVisIpRe7i6xyC+rPiaFBDSoaQLXwRs
-tjy7ubYce95KCbALlZauIXc+V/uQrK5XazmGrUXcjPNymzE1SFCfKqgzdYGZ1X28
-XjizKvVCRSLsybo/RaYNd+b7wt04lXuY8XCPA1NlivMKRyvzEDpQdvCqjnV1FzfZ
-Id4WgbOUtf+Bagc6dqp/LD88T+V2AoUJ8GI1dY+7oIWX1F0n1yUQGZ62AzbZIxZG
-N/v7ro4AJEfTqSfyRzdjCiXzyC3WRDwjzmx2g9fARNvO3ydEGfB3XvKfNLZygVhS
-dwL+jAaUXvdLf7EXCFonE0mACwTrkJJdJN37ZJHz3Ub36c/+ued+vzT5+ugV5a++
-iTL0sYG0csCol8mXGF9Y
-=6mwA
------END PGP SIGNATURE-----
