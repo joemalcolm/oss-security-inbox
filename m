@@ -1,107 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/13
-Message-ID: <4680B31DCCC3B6428FB4E85ED9D540D0032417@SRVEXCH.oppida.fr>
-Date: Tue, 20 Mar 2012 08:53:18 +0000
-From: Luc ABRIC <luc.abric@...ida.fr>
-To: "'Kurt Seifried'" <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, Valérian PERRET <valerian.perret@...ida.fr>, "'jkn@...no'" <jkn@...no>
-Subject: RE: CVE request: eZ Publish: insecure direct object reference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/20
+Message-ID: <4F55362E.8010408@redhat.com>
+Date: Mon, 05 Mar 2012 14:54:54 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: mwlib < 0.13.5 DoS flaw
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-Now that a CVE ID has been attributed, what am I supposed to do with the details of the vulnerability?
-
-Should I post them to vendor-sec? We don't want the details to leak to the public before the fix is fully rolled out, but we'd like to start working on the content of the CVE (make sur you have all needed information, etc.).
-
-Also, should I continue posting to oss-sec, or mailing you (Kurt) is enough?
-
-Regards,
-Luc.
-
------Message d'origine-----
-De : Kurt Seifried [mailto:kseifried@...hat.com] 
-Envoyé : lundi 19 mars 2012 20:12
-À : oss-security@...ts.openwall.com
-Cc : Luc ABRIC; Yann MICHARD; Karim SLAMANI; Valérian PERRET; 'jkn@...no'
-Objet : Re: [oss-security] CVE request: eZ Publish: insecure direct object reference
-
-On 03/19/2012 03:06 AM, Luc ABRIC wrote:
-> Hi,
+On 03/05/2012 10:06 AM, Vincent Danen wrote:
+> Could a CVE be assigned to the following please?
 > 
-> My initial CVE ID request was dropped because it was missing some details. Here comes a re-submission.
+> It was reported that mwlib suffered from a flaw that could allow a
+> remote attacker to perform a denial of service attack on a mwlib
+> installation by forcing it to parse a specially-crafted #iferror magic
+> function.  This has been corrected in upstream version 0.13.5.
 > 
-> After posting to oss-security I was asked a few questions by Kurt Seifried from Redhat SRT while the vendor was contacted by Secunia asking for pretty much the same informations. Secunia then decided it wasn't their role to handle this vulnerability.
-> I don't know if that's part of the process but I feel like you should know to avoid any duplicated work.
+> References:
 > 
-> 1) Email address of requester
-> yann.michard@...ida.fr, luc.abric@...ida.fr & jkn@...no.
-> Yann MICHARD discovered the vulnerability, so all the credits goes to him.
+> http://groups.google.com/group/mwlib/browse_thread/thread/c2bd1cee77a8a79?hl=en
 > 
-> 2) Software name and optionally vendor name
-> Vendor: Ez
-> Product name: Ez Publish
-> Editions: both Enterprise & Community
+> http://www.google.com/url?sa=D&q=https://github.com/pediapress/mwlib/pull/10&usg=AFQjCNHgoXQUYFtEj0L8VP5K8Xn_GoTOyw
 > 
-> 3) At least one of (to determine is this a security issue):
->   1. Type of vulnerability
-> OWASP A4: Insecure direct object reference
+> https://github.com/pediapress/mwlib/commit/aa987c281c10e29f26aa0faa21c04f3bb1167fde
 > 
->   2. Exploitation vectors
-> Access to the vulnerable website (no need for any credentials)
-> 
->   3. Attack outcome
-> A browser is enough to execute the attack.
-> 
-> 4) For Open Source at least one of:
->   1. Link to vulnerable source code or fix Not available yet.
-> 
->   2. Link to source code change log
-> Not available yet.
-> 
->   3. Link to security advisory
-> Not available yet.
-> 
->   4. Link to bug entry
-> http://issues.ez.no/19238
-> The vendor does not want to release more details until a fix is pushed to the clients
-> 
->   5. Request comes from project member (a.k.a. "trust me, it's a problem") Jostein Knudsen <jkn@...no> from Ez can confirm the vulnerability.
-> 
-> 5) Affected version(s) (3.2.4, 3.x, current version, all current releases, something) The whole 4.x serie it seems (4.1 to 4.6 from the bug entry).
-> 
-> 6) Whether or not this has been previously requested (i.e. on OSS-Sec or to cve-assign) Well yeah but it seems that the request didn't have enough information.
-> 
-> 7) Is this an Open Source or commercial software request Both, the affected software has 2 editions, one open-source, one commercial.
-> 
-> 8) Is this an embargoed issue (if yes and commercial: send to cve-assign, if yes and open source: send to vs-sec?) Not really sure what you mean by embargoed.
-> The French government asked us not do disclose any details until a fix is available AND installed on their systems because it affects some high profile websites.
-> We didn't plan on releasing any details before the fix anyway.
-> 
-> 9) IF multiple issues are listed please list affected versions for each issue and/or who reported them (so we can determine CVE split/merge).
-> It's the first issue we're publishing regarding this application.
-
-Perfect, this way if it comes up again there is enough info that
-hopefully someone will match it up =).
-
-Please use CVE-2012-1565 for this issue
-
-> 
-> Regards,
-> Luc ABRIC
-> IT Security Expert
-> 
-> 6 avenue du Vieil Etang - Bâtiment B
-> 78180 Montigny-le-Bretonneux
-> Phone: +33 (0)1 30 14 19 00
-> Fax:       +33 (0)1 30 14 19 09
-> Mobile: +33 (0)6 26 87 62 14
-> luc.abric@...ida.fr
-> 
-> www.oppida.fr
-> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=800064
 > 
 
+Please use CVE-2012-1109 for this issue.
 
 -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
