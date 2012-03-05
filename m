@@ -1,42 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/3
-Message-ID: <1422053670.30227855.1346949801345.JavaMail.root@redhat.com>
-Date: Thu, 6 Sep 2012 12:43:21 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/5
+Message-ID: <4F542EB8.7000000@redhat.com>
+Date: Sun, 04 Mar 2012 20:10:48 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Paul Wise <pabs@...ian.org>, Cyril Brulebois <kibi@...ian.org>
-Subject: CVE-2010 Request -- blender: Insecure temporary file use by creating file string in undo save quit Blender kernel routine (re-occurrence of CVE-2008-1103)
+CC: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: CVE Request: XML entity expansion in the XML::Atom Perl module
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On 03/04/2012 09:07 AM, Florian Weimer wrote:
+> I would like to request a CVE name for this security fix:
+> 
+> | 0.39  2011.06.20
+> |     * Disabled external entities and network to avoid possible security flaw (yannk)
+> 
+> <http://cpansearch.perl.org/src/MIYAGAWA/XML-Atom-0.39/Changes>
+> 
+> Thanks.
 
-  an insecure temporary file use flaw was found in the way
-'undo save quit' routine of Blender kernel of Blender, a 3D
-modeling, animation, rendering and post-production software
-solution, performed management of 'quit.blend' temporary file,
-used for session recovery purposes. A local attacker could use
-this flaw to conduct symbolic link attacks, leading to ability
-to overwrite arbitrary system file, accessible with the privileges
-of the user running the blender executable.
+Please use CVE-2012-1102 for this issue. PS in future if you could
+include information like the following that would be helpful to all:
 
-Upstream ticket:
-[1] https://projects.blender.org/tracker/index.php?func=detail&aid=22509&group_id=9&atid=498
+--- XML-Atom-0.38/lib/XML/Atom.pm	2011-05-22 23:35:44.000000000 -0600
++++ XML-Atom-0.39/lib/XML/Atom.pm	2011-06-20 23:35:51.000000000 -0600
+@@ -4,7 +4,7 @@
+ use strict;
 
-References:
-[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=584621
+ use 5.008_001;
+-our $VERSION = '0.38';
++our $VERSION = '0.39';
 
-This seems to be / is a re-occurrence of the CVE-2008-1103 flaw:
-[3] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1103
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-1103
-[5] https://bugs.launchpad.net/ubuntu/+source/blender/+bug/6671
-[6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=298167
+ BEGIN {
+     @XML::Atom::EXPORT = qw( LIBXML DATETIME);
+@@ -35,6 +35,26 @@
+     $XML::Atom::DefaultVersion = 0.3;
+ }
 
-Could you allocate a CVE-2010- identifier for this?
++sub libxml_parser {
++    ## uses old XML::LibXML < 1.70 interface for compat reasons
++    return XML::LibXML->new(
++        #no_network      => 1, # v1.63+
++        expand_xinclude => 0,
++        expand_entities => 1,
++        load_ext_dtd    => 0,
++        ext_ent_handler => sub { warn "External entities disabled."; '' },
++    );
++}
++
++sub expat_parser {
++    return XML::Parser->new(
++        Handlers => {
++            ExternEnt => sub { warn "External Entities disabled."; '' },
++            ExternEntFin => sub {},
++        },
++    );
++}
++
+ use base qw( XML::Atom::ErrorHandler Exporter );
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+ package XML::Atom::Namespace;
 
-P.S.: Please note upstream seems to dispute the necessity
-      of the fix for this (Followup #1 after Paul's report).
-      
+
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
