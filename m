@@ -1,63 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/04/5
-Message-ID: <4FCD00FA.10809@redhat.com>
-Date: Mon, 04 Jun 2012 12:39:54 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/24
+Message-ID: <4F553E93.1010908@redhat.com>
+Date: Mon, 05 Mar 2012 15:30:43 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Symfony / php-symfony-symfony: Session fixation flaw corrected in upstream 1.4.18 version
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Roland Gruber <post@...andgruber.de>, Fabio Tranchitella <kobold@...ian.org>, Dmitry Butskoy <Dmitry@...skoy.name>
+Subject: Re: CVE Request -- LDAP Account Manager Pro / PhpLDAPadmin -- Multiple XSS flaws
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 06/04/2012 02:26 AM, Jan Lieskovsky wrote:
+On 03/05/2012 03:36 AM, Jan Lieskovsky wrote:
 > Hello Kurt, Steve, vendors,
 > 
-> a session fixation flaw was found in the way Symfony, an
-> open-source PHP web applications development framework, performed
-> removal of user credential, adding several user credentials at once
-> and 'user authenticated' settings change by regenerating session
-> ID. A remote attacker could provide a specially-crafted URL, that
-> when visited by a valid Symfony application user (victim) could
-> lead to unauthorized access to the victim's user account.
+>   originally (2012-03-01), the following cross-site (XSS) flaws were
+> reported
+> against LDAP Account Manager Pro (from Secunia advisory [1]):
 > 
-> References: [1] https://bugs.gentoo.org/show_bug.cgi?id=418427 [2]
-> http://symfony.com/blog/security-release-symfony-1-4-18-released 
-> [3]
-> http://trac.symfony-project.org/browser/tags/RELEASE_1_4_18/CHANGELOG
->
->  Upstream patch: [4]
-> http://trac.symfony-project.org/changeset/33466?format=diff&new=33466
->
->  Could you allocate a CVE id for this? (afaics there hasn't been 
-> requested one for this issue yet during last month / from the
-> start of June 2012)
+> * 1) Input passed to e.g. the "filteruid" POST parameter when filtering
+> result
+> sets in lam/templates/lists/list.php (when "type" is set to a valid
+> value) is
+> not properly sanitised before being returned to the user. This can be
+> exploited
+> to execute arbitrary HTML and script code in a user's browser session in
+> context of an affected site.
 > 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+> * 2) Input passed to the "filter" POST parameter in
+> lam/templates/3rdParty/pla/htdocs/cmd.php (when "cmd" is set to "export"
+> and
+> "exporter_id" is set to "LDIF") is not properly sanitised before being
+> returned
+> to the user. This can be exploited to execute arbitrary HTML and script
+> code in
+> a user's browser session in context of an affected site.
 
-Please use CVE-2011-4964 for this issue.
+Please use CVE-2012-1114 for these two issues (XSS, same reporter)
 
-- -- 
+> * 3) Input passed to the "attr" parameter in
+> lam/templates/3rdParty/pla/htdocs/cmd.php (when "cmd" is set to
+> "add_value_form" and "dn" is set to a valid value) is not properly
+> sanitised
+> before being returned to the user. This can be exploited to execute
+> arbitrary
+> HTML and script code in a user's browser session in context of an affected
+> site.
+
+Please use CVE-2012-1115 for this vu;n (XSS, but different reporter)
+
+> References:
+> [1] http://secunia.com/advisories/48221/
+> [2] http://www.vulnerability-lab.com/get_content.php?id=458
+> 
+> Later (2012-03-03), it was reported:
+> [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=662050#15
+> 
+> that subset (for 'export', 'add_value_form', and 'dn' variables) of these
+> security flaws is applicable also against the code of PhpLDAPadmin, a
+> web-based
+> LDAP client.
+> 
+> Patches from LDAP Account Manager, which are applicable to PphLDAPAdmin:
+> [4]
+> http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/lib/export_functions.php?r1=1.4&r2=1.5
+> 
+> 
+> [5]
+> http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/htdocs/export.php?r1=1.1&r2=1.2
+> 
+> 
+> [6]
+> http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/htdocs/add_value_form.php?r1=1.6&r2=1.7
+> 
+> 
+> I would swear, I have seen LDAP Account Manager CVE request on OSS
+> security mailing list
+> recently, but can't find it now quickly right now. Kurt, please prior
+> assigning CVE ids
+> to "LDAP Account Manager Pro" please double check the main CVE mitre
+> database, if these
+> didn't get a CVE identifier yet.
+> 
+> Wrt to PhpLDAPAdmin side -- I am not sure, what's the relation of the
+> code between LAM and
+> PLA (if PLA is using / embedding some code of LAM directly or if there
+> were also some
+> customizations on the side of PLA upon LAM code embedding / inclusion).
+> Hopefully Roland,
+> Fabio, Dmitry can clarify here, how much the PhpLDAPAdmin code is
+> different from LDAP
+> Account Manager code (if it's just overtaken LAM code or PhpLDAPAdmin
+> have also made
+> their own customizations to the code)?
+> 
+> Roland, Fabio, Dmitry, basically what we are searching an answer for is,
+> if the PhpLDAPAdmin
+> code is different enough it safe to be considered as a different code
+> base and separate
+> CVE identifier to be allocated for it? (IOW one for LDAP Account Manager
+> Pro issues,
+> the other for PhpLDAPAdmin issues)
+> 
+> Kurt, once the above doubt solved and you checked and confirmed, that
+> LDAP Account Manager
+> issue did not get CVE identifier in the recent past yet, could you
+> allocate those?
+> 
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPzQD5AAoJEBYNRVNeJnmTWZgQALS5dSSyarymYhvp3hjNzRDs
-MKHFTnn17Ae3R2nfBAkK19fQdY3ZxkfeHxeHr5a5bPSlL0u+4E4oBtjC2/11cVnz
-I+tdwI3HNJvwAMk54ip73GbLmDmJfil/EFD7hdomuqLMK46lOudekLf2B64BmMd2
-r+fVIRz/Xuwht2PNiEQnal9TndCrcvTAmXJVLQw0LIP6LuGrQ8HVEKE9ZyuHAFNC
-8kKOR+bUAPi1Ffnf+ltEW4UO6NgyE2UOnqkm4h8IzcjaYk9l2MO3G98KWfdg3KUa
-nJ3IpNiw7Rd54jXWYBy9MTavPEXt/la5sUnMQoN7sh4uJBxQ4eD5kO28p0cOjpIG
-HqF/Yk+6lMw46Ud+dEL3EO56cUyrm27A+bakcSZEVgTEGbRy1xpFFBig/W/jqNsp
-WFBWtFZZi6tFikMSy1SoTdWM+4zq9Oiaw51kDmi1Uu/NWDvi7Tz0iJot2g4UUK4H
-F0V/kSJDUcmKfAuX27jn1pPTLkqYK+Bc5YEja9mWW4AlR+fnHi69zW88wIkIpwRw
-4Wi6DdMcvnPvB+SqgW/WX2PKFRNp5T0M65V8W4IIuNP/M1bYE1CFjkeKqEXhxqBu
-UzpSc+/Ndm94TpAqjcQ28STN+M2GQn1ix6rWFYI3nO6rrkFaDaTYb+Q1WVB9BfeD
-/Bf/R3FxxrNeqgl10qMK
-=H1xk
------END PGP SIGNATURE-----
