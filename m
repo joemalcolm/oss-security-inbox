@@ -1,117 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/13
-Message-ID: <CAHQz1r+zRKAMKX96E9EyPvuLXhXD=PAinKSQe0PRB7Q_OBTYNg@mail.gmail.com>
-Date: Thu, 18 Oct 2012 07:41:05 -0500
-From: Breno Silva <breno.silva@...il.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: oss-security@...ts.openwall.com, Matthias Weckbecker <mweckbecker@...e.de>,  security@...security.org, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE request: Fwd: [Full-disclosure] SEC Consult SA-20121017-0 :: ModSecurity multipart/invalid part ruleset bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/9
+Message-ID: <CAA5xPpneaHPNVa-EXN17Bdb3CtGzFCz_prYmXj3dD=qH663RCA@mail.gmail.com>
+Date: Mon, 5 Mar 2012 09:27:43 +0530
+From: Zubin Mithra <zubin.mithra@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Dhanesh k <dhanesh1428@...il.com>
+Subject: Re: CVE-Request taglib vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello Jan,
+Hello,
 
-Yes i can confirm the issue and the patch.
 
-Thanks
+> On 03/04/2012 05:53 AM, Zubin Mithra wrote:
+> > Hello,
+> >
+> > Multiple bugs were found and reported in taglib, and have been patched.
+> Out
+> > of the 4 reported, 2 were patched recently while 2 only affected taglib
+> > versions upto 1.7 and not the current development head at github.The
+> > discussion at the taglib mailing list can be viewed here at [1].
+> >
+> > Kindly assign CVE's for the same.
+> >
+> > Thanks,
+> > Zubin Mithra
+> >
+> > [1] http://mail.kde.org/pipermail/taglib-devel/2012-March/002186.html
+> >
+>
+> Can you post a summary of the issues needing CVE #'s? Thanks.
+>
+>
+The issues which were present in the development head were :-
 
-Breno
+[1] A crafted ogg file with sampleRate as "0" leads to crash in the
+application using taglib.
+         fixed in the commit -
+https://github.com/taglib/taglib/commit/77d61c6eca4d08b9b025738acf6b926cc750db23
+[2] "vendorLength" field modification in ogg tag parsing causes crash in
+the application using taglib.
+         fixed in the commit -
+https://github.com/taglib/taglib/commit/ab8a0ee8937256311e649a88e8ddd7c7f870ad59
 
-On Thu, Oct 18, 2012 at 3:58 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
 
-> Hi Kurt, Breno,
->
-> ----- Original Message -----
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 10/17/2012 02:47 AM, Matthias Weckbecker wrote:
-> > Hi Steve, Kurt, vendors,
-> >
-> > this flaw looks slightly different from the last one and
-> > apparently has not got a CVE yet.
-> >
-> > ----------  Forwarded Message  ----------
-> >
-> > Subject: [Full-disclosure] SEC Consult SA-20121017-0 ::
-> > ModSecurity multipart/invalid part ruleset bypass Date: Wednesday
-> > 17 October 2012 From: SEC Consult Vulnerability Lab
-> > <research@...-consult.com> To: full-disclosure@...ts.grok.org.uk,
-> > bugtraq@...urityfocus.com
-> >
-> > SEC Consult Vulnerability Lab Security Advisory < 20121017-0 >
-> > =======================================================================
-> >
-> >
-> >
-> > title: ModSecurity multipart/invalid part ruleset bypass
-> > product: ModSecurity vulnerable version: <= 2.6.8 fixed version:
-> > 2.7.0 CVE number: - impact: Depends what you use it for homepage:
-> > http://www.modsecurity.org/ found: 2012-10-12 by: Bernhard Mueller
-> >  SEC Consult Vulnerability Lab https://www.sec-consult.com
-> > =======================================================================
-> >
-> > Looking
-> >
-> >
-> > through
-> >
-> >
-> https://www.modsecurity.org/tracker/secure/ReleaseNote.jspa?projectId=10000&version=10100
-> >
-> > Is this https://www.modsecurity.org/tracker/browse/MODSEC-155
->
-> I am not sure this is related since it is closed with resolution 'Cannot
-> Reproduce'.
->
-> Based on Changes:
->   [1]
-> http://mod-security.svn.sourceforge.net/viewvc/mod-security/m2/branches/2.7.x/CHANGES
->
-> I would say this is:
->   "* Added MULTIPART_INVALID_PART flag. Also used in rule id 200002 for
-> multipart strict"
->
-> with relevant upstream commit being:
->   [2]
-> http://mod-security.svn.sourceforge.net/viewvc/mod-security?view=revision&sortby=date&revision=2081
->
-> but Cc-in Breno Silva to definitely confirm this yet.
->
-> Breno, could you please confirm / disprove that the patch [2] is upstream
-> patch for issue:
->   [3] http://www.openwall.com/lists/oss-security/2012/10/17/1 ?
->
-> And if it's not the correct one, provide an explicit revision link to
-> the proper one?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> >
-> > I'd like to confirm this before assigning a CVE.
-> >
-> > - --
-> > Kurt Seifried Red Hat Security Response Team (SRT)
-> > PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> >
-> > -----BEGIN PGP SIGNATURE-----
-> > Version: GnuPG v1.4.12 (GNU/Linux)
-> > Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-> >
-> > iQIcBAEBAgAGBQJQf7OGAAoJEBYNRVNeJnmTFlgQAJxEfUA7oFo8bb0/iSrb7zy9
-> > k4IgupMfsxmOLy9uv07G5dy7dRNRkOqYtrQxszFfnnsFqTDtE9+BU7QpX3pmyBlp
-> > KYJMTen2A7ygbqr2GSNnh5faCeYty/9gvubTrJ0wmdE8wlwoOqOtZcjkjA0IzRy9
-> > T5WYmwxHkkytPsBVQjrirJc4Q2ehKLUNA6ipC6eyq5b+5qqtS+pHRcJbMbNeHj8P
-> > PSDeWGAgwSVY56o+vb0WjAjaU/o64kv6ZOn8MFb06cb+GCTUbtpJHwRWaBwmNBaf
-> > 9vHqUURjkAkB/np5v9PvKGuovBs8MiDjv43Z8Tl2oWLGJlkaWO0ltC0HBD9nkKBV
-> > H+5mSPub3MBrtxXyUXI0lb4Zh4vUtbzDt8O0SVV+6lqAFv18UBX0ksTjzkgK6sIl
-> > 987lJr+MiKsVsO7XBZk0OBMQShu9AiZq3ueBwcol99HeY/ICPPZxT+lP/v72rNsc
-> > rMaLOBtgdMj2n0yVvqk4Zg1mshZyWP8NAofFhu2sIbItd/x/csCrwFTjJnrar2pN
-> > 2wHJKFjq/ssMXBuFws1M/O4CjRDo2iImB4fIYqS5GxSXRQUephI6eIbgmX/PPQgG
-> > 5z550ct/fbSCcNm8uzCjN5YbAKcvHqfDqTqrq4v6bBMJ6ww2eOR8gF9/LYFm7OKb
-> > jTf1myRV1SAMt6UVd0dJ
-> > =XFfO
-> > -----END PGP SIGNATURE-----
->
+The issues which are present in the latest "release" but not in the current
+development head were :-
+
+[3] Lack of sanity checks of fields which were read, and were used for
+allocating memory; crafted files would lead of application crash.
+[4] A one bit change in a working ogg file would cause a thread to loop
+infinitely.
+
+*Please note* :-
+
+[1] and [2] were fixed after the report, and could be assigned CVE's.
+
+I am unsure about the other two, as they were fixed in the development
+branch, prior to our report. However, a release has not been made with the
+patches for [3] and [4] yet. Kindly assign CVE's for [3] and [4] if you see
+it fit to do so.
+
+
+Regards,
+Zubin Mithra
 
