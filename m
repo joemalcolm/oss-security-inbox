@@ -1,95 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/8
-Message-ID: <20120321180212.GJ32100@redhat.com>
-Date: Wed, 21 Mar 2012 12:02:12 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: Matt Watchinski <mwatchinski@...rcefire.com>
-Cc: oss-security@...ts.openwall.com, security@...mav.net
-Subject: Re: Vulnerabilities reported in ClamAV 0.96.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/14
+Message-ID: <CAPYM6Vy8gAHqvA5bNOtyKdM5Z_bTbsk2QwaS7GpAryf_g6WkLg@mail.gmail.com>
+Date: Tue, 6 Mar 2012 00:03:35 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, submit@...3ct0r.com, oss-security@...ts.openwall.com
+Subject: Open-Realty CMS 2.5.8 (2.x.x) <= "select_users_template" Local File Inclusion Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-* [2012-03-21 13:41:44 -0400] Matt Watchinski wrote:
+1. OVERVIEW
 
->Yup goes somewhere useful.
->
->We don't have anymore information than you, but they are loaded in our
->bugtracker for investigation.  From our understanding the researcher did test
->0.96.4, and not 0.97.4.
+Open-Realty 2.5.8 and lower versions are vulnerable to Local File Inclusion.
 
-Thanks Matt, and Edwin, for the prompt responses.  Hopefully the
-researcher will respond as promptly (it would definitely be good to know
-whether or not the current 0.97.4 is still vulnerable).
 
-Thanks again (especially for the bugzilla links in Edwin's message).
+2. BACKGROUND
 
->On Wed, Mar 21, 2012 at 12:51 PM, Vincent Danen <vdanen@...hat.com> wrote:
->
->    Hopefully security@ for ClamAV goes somewhere useful (I don't feel like
->    opening a bugzilla account there just to ask this).
->
->    Saw a bunch of CVEs come through for various anti-virus products, five
->    of which are reportedly applicable for ClamAV 0.96.4.  I'm wondering a)
->    if the upstream folks know about these and b) whether or not the report
->    has a typo in the version, since 0.97.4 is the latest upstream version?
->
->    http://www.securityfocus.com/archive/1/522005
->
->    Indicates that CVE-2012-1419, CVE-2012-1443, CVE-2012-1457,
->    CVE-2012-1458, and CVE-2012-1459 affect ClamAV 0.96.4.  There isn't much
->    more information though.  Cutting-n-pasting from the report:
->
->    1. Specially crafted infected POSIX TAR files with "[aliases]" as first
->    9 bytes evades detection. (CVE-2012-1419)
->
->    [...]
->
->    25. Infected RAR files with initial two bytes set to 'MZ' can be fixed
->    by the user and correctly extracted. Such a file evades detection.
->    (CVE-2012-1443)
->
->    [...]
->
->    39. If the length field in the header of a file with test EICAR virus
->    included into a TAR archive is set to be greater than the archive's
->    total length (1,000,000+original length in our experiments), the
->    antivirus declares the file to be clean but virus gets extracted
->    correctly by the GNU tar program. (CVE-2012-1457)
->
->    40. A Windows Compiled HTML Help (CHM) file is a set of HTML files,
->    scripts, and images compressed using the LZX algorithm.  For faster
->    random accesses, the algorithm is reset at intervals instead of
->    compressing the entire file as a single stream. The length of each
->    interval is specified in the LZXC header.
->
->    If an infected CHM file's header modified so that the reset interval is
->    lower than in the original file, the antivirus declares the file to be
->    clean. But the Windows CHM viewer hh.exe correctly decompresses the
->    infected content located before the tampered header. (CVE-2012-1458)
->
->    41. In a POSIX TAR archive, each member file has a 512-byte header
->    protected by a simple checksum. Every header also contains a file length
->    field, which is used by the extractor to locate the next header in the
->    archive.
->
->    If a TAR archive contains two files: the first one is clean, while the
->    second is infected with test EICAR virus - and it is modified such that
->    the length field in the header of the first, clean file to point into
->    the middle of the header of the second, infected file. The antivirus
->    declares the file to be clean but virus gets extracted correctly by the
->    GNU tar program. (CVE-2012-1459)
->
->    --
->    Vincent Danen / Red Hat Security Response Team
->
->
->
->
->--
->Matthew Watchinski
->V.P. Vulnerability Research (VRT)
->Sourcefire, Inc.
->Office: 410-423-1928
->http://vrt-blog.snort.org && http://www.snort.org/vrt/
+Open-Realty is the world's leading real estate listing marketing and
+management CMS application, and has enjoyed being the real estate web
+site software of choice for professional web site developers since
+2002.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+
+3. VULNERABILITY DESCRIPTION
+
+Open-Realty contains a flaw that may allow a remote attacker to
+execute arbitrary commands or code. The issue is due to the
+'index.php' script not properly sanitizing user input, specifically
+directory traversal style attacks (e.g., ../../) supplied to the
+'select_users_template' parameter. This may allow an attacker to
+include a file from the targeted host that contains arbitrary commands
+or code that will be executed by the vulnerable script. Such attacks
+are limited due to the script only calling files already on the target
+host. In addition, this flaw can potentially be used to disclose the
+contents of any file on the system accessible by the web server.
+
+
+4. VERSIONS AFFECTED
+
+2.5.8 (2.x.x) <=
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://localhost/open-realty2.5.8/?select_users_template=../../../../../../../../../../../../../../../etc/passwd%00
+
+
+6. SOLUTION
+
+The version 2.5.x version family is no longer maintained by the vendor.
+The version 3.x.x is not found to be vulnerable to this issue. Upgrade
+to the latest 3.x.x version.
+
+
+7. VENDOR
+
+Transparent Technologies Inc.
+http://www.transparent-support.com
+
+
+8. CREDIT
+
+Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2012-03-05: Open-Realty 2.5.8 in End-of-Support/Maintenance circle
+2012-03-05: Vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5Bopen-realty_2.5.8_2.x%5D_lfi
+Open-Realty Home Page: http://www.open-realty.org/
+CWE-98: Improper Control of Filename for Include/Require Statement in
+PHP Program ('PHP File Inclusion')
+CAPEC-252: PHP Local File Inclusion
+
+
+#yehg [2012-03-05]
