@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/3
-Message-ID: <4FA78B7E.6070806@pre-sense.de>
-Date: Mon, 07 May 2012 10:44:46 +0200
-From: Timo Warns <warns@...-sense.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/2
+Message-ID: <4F542215.7040103@redhat.com>
+Date: Mon, 05 Mar 2012 10:16:53 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Linux kernel: Buffer overflow in HFS plus filesystem
+CC: "stev >> \"Steven M. Christey\"" <coley@...us.mitre.org>
+Subject: CVE-2011-4348 kernel: incomplete fix for CVE-2011-2482
 Content-Type: text/plain; charset=utf-8
 
-The Linux kernel (at least 3.x <= 3.3.4 and 2.6.x <= 2.6.35.13) contains
-a vulnerability in the driver for HFS plus file systems that may be
-exploited for code execution or privilege escalation.
+When testing [CVE-2011-2482] with SELinux disabled (haven't triggered
+panic on patched kernel with selinux on), the reproducer run after
+regular user causes soft lookups and the machine becomes completely
+unresponsive on patched kernel. Target machine was unresponsive after
+remote part of reproducer (con) killed. Target with patched kernel
+needed to be rebooted to start working regularly.
 
-A specially-crafted HFS plus filesystem can cause a buffer overflow via
-the memcpy() call of hfs_bnode_read() (in fs/hfsplus/bnode.c). The functions
+Upstream commit:
+http://git.kernel.org/linus/ae53b5bd77719fed58086c5be60ce4f22bffe1c6
 
-	hfsplus_rename_cat() (in fs/hfsplus/catalog.c) and
-	hfsplus_readdir() (in fs/hfsplus/dir.c)
+Reference:
+https://bugzilla.redhat.com/CVE-2011-4348
 
-call hfs_bnode_read() with values that result in a memcpy() call with a
-fixed-length destination buffer and both, a source buffer and length,
-that are read from the filesystem without sufficient validation.
-
-The buffer overflows were previously fixed in the HFS filesystem driver
-and have been assigned CVE-2009-4020 (commit
-ec81aecb29668ad71f699f4e7b96ec46691895b6 [1]).
-Commit 6f24f892871acc47b40dd594c63606a17c714f77 ("hfsplus: fix a
-potential buffer overflow") [2] also fixes the issue in the HFS plus
-filesystem driver.
-
-[1] http://git.kernel.org/linus/ec81aecb29668ad71f699f4e7b96ec46691895b6
-[2] http://git.kernel.org/linus/6f24f892871acc47b40dd594c63606a17c714f77
-
+Thanks, Eugene
