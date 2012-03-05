@@ -1,49 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/9
-Message-ID: <50991A59.3000906@mvista.com>
-Date: Tue, 06 Nov 2012 06:10:33 -0800
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros@...openwall.org membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/11
+Message-ID: <87mx7v1t4l.fsf@mid.deneb.enyo.de>
+Date: Mon, 05 Mar 2012 07:03:54 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com,  Moritz Mühlenhoff <jmm@...til.org>,  Debian Security Team <security@...ian.org>
+Subject: Re: CVE request: notmuch
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* Kurt Seifried:
 
+> Potentially stupid Q, why no CVE request from Debian? I'm happy to
+> assign them, especially for stuff that qualifies for a DSA, it will
+> almost certainly qualify for a CVE.
 
-
-On 11/05/2012 03:32 AM, Premchand Koneru wrote:
-> I recently joined the Montavista Security team and request
-> membership to thelinux-distros@...openwall.org  list, so that I may
-> participate fully in reporting and fixing vulnerabilities in
-> Montavista. Here is my GPG fingerprint:
-> 
-> pub   2048R/5DA060C7 2012-11-05 Key fingerprint = 7DF9 45B4 3116
-> 8D5C D3C0  2A15 EADE D5B2 5DA0 60C7 uid                  Premchand
-> Koneru<pkoneru@...sta.com <mailto:pkoneru@...sta.com>> sub
-> 2048R/BE364B01 2012-11-05
-> 
-> Thank you for consideration.
-> 
-> 
-I can confirm Premchand is on the MontaVista security team
-
-Armin
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.18 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQmRpZAAoJEH91cpWuue2NUpYP/3c3GDpQIbcSv3k3DWfDkQTj
-Z6+EXwaR1I4eZ5a3uWDXw48Azl82T9+3evXi84IYPlJisq5PwNfS4VuzEthSZvRO
-cB0oY51f1ehuEEuQ8TCqIMlkrD8G2Y296wH8atnThP96XaOUsHHQRWLP/tdtGq6I
-ZHbmCpHF98KI9bWZ34h4Ex8llVADwPJrqgQDzelxn2c8o/gLE4NCKIzgw1KG8q5I
-gRXsdqu5FR8GXxddmQWLto6lJgJ6T7t6owptJ69mjO69WQr1+hgwoqYJ4FREosh1
-oDQxga13Yce7k7PnZqdvdmvShycDRTeUxBc2iBxQMyfK1CGtWro6rT/Gzj4BjYRk
-Wc+HQ7oTAlseJTcxfPTDBr0ysbQCV2T1HqCdc44pgOamRPLJ8voShjAacpgI5+a1
-PjVcbXhvfengD7sHd802yBHwO5L21khkz8+IWYyRqXllt8sBvpfzcFFewmBumbd6
-MwqPOhFwdBH/QvpUNK95dgW6N48T1E/f0pLxDwJhLyZNplw2n/xMtkBtJVHnXV1C
-l2M3AF7A4Brzj8hz06hIzJAWtlELtLXDCOPVMIc04OF7LTZ/OgaFPqbnDWdWgBhT
-REXcB03ljAjl5jivxEvl7jp2nMaQFDo2eE/AHIsRDnCvciJZytcBMSxYRdKn940X
-LNEkh2TO2uTr7uhm4WZE
-=9lqZ
------END PGP SIGNATURE-----
+Based on our current agreement with MITRE, we can only assign names to
+issues which are not yet public.  The fix for this notmuch issue was
+already released (and labeled as a potential security issue) when we
+were contacted.
