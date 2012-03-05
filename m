@@ -1,44 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/9
-Message-ID: <20120628145930.GD1302@redhat.com>
-Date: Thu, 28 Jun 2012 08:59:30 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/23
+Message-ID: <4F55397F.3070304@redhat.com>
+Date: Mon, 05 Mar 2012 15:09:03 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: accountsservice local file disclosure flaw (CVE-2012-2737)
+CC: YGN Ethical Hacker Group <lists@...g.net>
+Subject: Re: Open-Realty CMS 2.5.8 (2.x.x) <= "select_users_template" Local File Inclusion Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Good day, all.
+On 03/05/2012 09:03 AM, YGN Ethical Hacker Group wrote:
+> 1. OVERVIEW
+> 
+> Open-Realty 2.5.8 and lower versions are vulnerable to Local File Inclusion.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Open-Realty is the world's leading real estate listing marketing and
+> management CMS application, and has enjoyed being the real estate web
+> site software of choice for professional web site developers since
+> 2002.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> Open-Realty contains a flaw that may allow a remote attacker to
+> execute arbitrary commands or code. The issue is due to the
+> 'index.php' script not properly sanitizing user input, specifically
+> directory traversal style attacks (e.g., ../../) supplied to the
+> 'select_users_template' parameter. This may allow an attacker to
+> include a file from the targeted host that contains arbitrary commands
+> or code that will be executed by the vulnerable script. Such attacks
+> are limited due to the script only calling files already on the target
+> host. In addition, this flaw can potentially be used to disclose the
+> contents of any file on the system accessible by the web server.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> 2.5.8 (2.x.x) <=
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://localhost/open-realty2.5.8/?select_users_template=../../../../../../../../../../../../../../../etc/passwd%00
+> 
+> 
+> 6. SOLUTION
+> 
+> The version 2.5.x version family is no longer maintained by the vendor.
+> The version 3.x.x is not found to be vulnerable to this issue. Upgrade
+> to the latest 3.x.x version.
+> 
+> 
+> 7. VENDOR
+> 
+> Transparent Technologies Inc.
+> http://www.transparent-support.com
+> 
+> 
+> 8. CREDIT
+> 
+> Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2012-03-05: Open-Realty 2.5.8 in End-of-Support/Maintenance circle
+> 2012-03-05: Vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/%5Bopen-realty_2.5.8_2.x%5D_lfi
+> Open-Realty Home Page: http://www.open-realty.org/
+> CWE-98: Improper Control of Filename for Include/Require Statement in
+> PHP Program ('PHP File Inclusion')
+> CAPEC-252: PHP Local File Inclusion
+> 
+> 
+> #yehg [2012-03-05]
 
-A local file disclosure flaw was discovered by Florian Weimer of the Red
-Hat Product Security Team in accountsservice.  From what I understand,
-there are a few distros that use this due to newer GNOME.
-
-The offending code was added here:
-
-http://cgit.freedesktop.org/accountsservice/commit/?id=69b526a6cd4c078732068de2ba393cf9242a404b
-
-A patch to correct the flaw is attached to our bugzilla bug and will be
-committed upstream shortly.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=832532
-
-The issue is described as follows:
-
-Florian Weimer found a local file disclosure flaw in accountsservice, an
-account management system using D-Bus for querying and manipulating user
-accounts.  The implementation of the SetIconFile method of the
-org.freedesktop.Accounts.User D-Bus interface can disclose arbitrary
-files due to a race condition in user_change_icon_file_authorized_cb()
-in /usr/libexec/accounts-daemon.  When this function calls
-get_caller_uid(), it uses PolicyKit to obtain the UID of the requesting
-process from /proc.  At the time the UID is fetched, it may not match
-the original UID making the D-Bus request if the process has executed an
-SUID binary.
-
-It has been assigned the name CVE-2012-2737.
-
-The distros mailing list was notified of this flaw on Monday (20120625)
-and made public today (20120628).
+Please use CVE-2012-1112 for this issue.
 
 -- 
-Vincent Danen / Red Hat Security Response Team
+Kurt Seifried Red Hat Security Response Team (SRT)
