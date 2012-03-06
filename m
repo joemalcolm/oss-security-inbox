@@ -1,174 +1,474 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/8
-Message-ID: <CANdZDc64sm8JO1q2MLD52hCwa3ytwR2tSc6c=4p+VwC6beyR1A@mail.gmail.com>
-Date: Sun, 15 Jan 2012 07:40:36 -0700
-From: "Zooko Wilcox-O'Hearn" <zooko@...ko.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/16
+Message-ID: <4F567653.4080009@redhat.com>
+Date: Tue, 06 Mar 2012 13:40:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: ANNOUNCING Tahoe, the Least-Authority File System, v1.9.1
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Mateusz Jurczyk <mjurczyk@...gle.com>, Werner Lemberg <wl@....org>, Moritz Muehlenhoff <jmm@...ian.org>, Moritz Muehlenhoff <jmm@...til.org>
+Subject: Re: CVE Request -- FreeType: Multiple security flaws to be fixed in v2.4.9
 Content-Type: text/plain; charset=utf-8
 
----------- Forwarded message ----------
-From: Brian Warner <warner@...har.com>
-Date: Thu, Jan 12, 2012 at 4:33 PM
-Subject: [tahoe-announce] ANN: Tahoe-LAFS 1.9.1 Released!
-To: Tahoe-LAFS development <tahoe-dev@...oe-lafs.org>,
-tahoe-announce@...oe-lafs.org
+On 03/06/2012 12:57 PM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+
+A summary will also be posted at the end of this email. I gotta say this
+is the best mass CVE request I've ever seen!
+
+>   we have been notified by Mateusz Jurczyk of the Google Security Team,
+> about the following FreeType security flaws, which are going to be fixed
+> in v2.4.9 version.
+> 
+> Credit: Mateusz Jurczyk, Google Security Team
+> 
+> Note: Though some the issues below might look like related / the same, I
+> have
+>       checked that each of them exclude themselves (IOW each of them is
+> different
+>       issue like the another. But was lazy to cross-reference those,
+> which of them
+>       is different from which another.
+> 
+>       Reproducers are attached to relevant upstream bug reports.
+> 
+>       Have Cc-ed Werner Lemberg of FreeType upstream on this post too,
+> so he could
+>       collect CVE identifiers prior FreeType v2.4.9 release.
+> 
+>       Yet, requesting CVE identifier even for the NULL ptr dereference
+> and floating
+>       point exception / integer divide by zero issue below, even if Red
+> Hat would not
+>       consider these to be security flaws. But other distributions might
+> be doing so,
+>       thus will let Steve to decide, if these two desire CVE identifiers
+> or not.
+> 
+>       And finally, due the count of the issues, not including full
+> issues description
+>       under each entry (to shorten the request). Only particular Red Hat
+> Bugzilla entry
+>       summary is included with relevant links to upstream bugs and
+> commits. Further issue
+>       description can be found under particular Red Hat Bugzilla entry
+> for each of them
+>       in initial comment (#c0).
+> 
+> Kurt, Steve, could you allocate CVE identifiers for these?
+> 
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> 
+> 
+> 
+> Issue #1:
+> =========
+>   freetype: Out-of heap-based buffer read by parsing, adding properties
+> in BDF
+>   fonts, or validating if property being an atom (FU#35597, FU#35598)
+> 
+> Upstream bug reports:
+> [1] https://savannah.nongnu.org/bugs/?35597
+> [2] https://savannah.nongnu.org/bugs/?35598
+> 
+> Upstream patch:
+> [3]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=320d4976d1d010b5abe9d61a7423d8ca06bc34df
+> 
+> 
+> Red Hat Bugzilla entry:
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=800581
+
+Please use CVE-2012-1126 for this issue.
+
+> Issue #2:
+> =========
+>   freetype: Out-of heap-based buffer read by parsing glyph information and
+>   bitmaps for BDF fonts (FU#35599, FU#35600)
+> 
+> Upstream bug reports:
+> [1] https://savannah.nongnu.org/bugs/?35599
+> [2] https://savannah.nongnu.org/bugs/?35600
+> 
+> Upstream patch:
+> [3]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=0b1c0c6b20bf121096afff206d570f26183402b3
+> 
+> 
+> Red Hat Bugzilla entry:
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=800583
+
+Please use CVE-2012-1127 for this issue.
+
+> Issue #3:
+> =========
+>   freetype: NULL pointer dereference by moving zone2 pointer point for
+> certain
+>   TrueType font (FU#35601)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35601
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=96cddb8d1d32d6738b06552083db9d6cee5b5cb4
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800584
+
+Please use CVE-2012-1128 for this issue.
+
+> Issue #4:
+> =========
+>   freetype: Out-of heap-based buffer read when parsing certain SFNT strings
+>   by Type42 font parser (FU#35602)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35602
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=82365c0dead99dd119d9e7117cf4f36ce1d1cbe1
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800585
+
+Please use CVE-2012-1129 for this issue.
+
+> Issue #5:
+> =========
+>   freetype: Out-of heap-based buffer read by loading properties of PCF
+>   fonts (FU#35603)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35603
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=c776fc17bfeaa607405fc96620e9445e7a0965c3
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800587
+
+Please use CVE-2012-1130 for this issue.
+
+> Issue #6:
+> =========
+>   freetype (64-bit specific): Out-of heap-based buffer read by attempt to
+>   record current cell into the cell table (FU#35604)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35604
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=fcbc82e69e7b114b0db75e955896107d611898e6
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800589
+
+Please use CVE-2012-1131 for this issue.
+
+> Issue #7:
+> =========
+>   freetype: Out-of heap-based buffer read flaw in Type1 font loader by
+>   parsing font dictionary entries (FU#35606)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35606
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=58cbc465d2ccd904dee755cff791fbb3a866646d
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800590
+
+Please use CVE-2012-1132 for this issue.
+
+> Issue #8:
+> =========
+>   freetype: Out-of heap-based buffer write by parsing BDF glyph information
+>   and bitmaps (FU#35607)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35607
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=28dd2c45957278e962f95633157b6139de8170aa
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800591
+
+Please use CVE-2012-1133 for this issue.
+
+> Issue #9:
+> =========
+>   freetype: Out-of heap-based buffer write in Type1 font parser by
+> retrieving
+>   font's private dictionary (FU#35608)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35608
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=d9577add645c8c05460c7d60ad486c021394b82e
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800592
+
+Please use CVE-2012-1134 for this issue.
+
+> Issue #10:
+> ==========
+>   freetype: Out-of heap-based buffer read in TrueType bytecode interpreter
+>   by executing NPUSHB and NPUSHW instructions (FU#35640)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35640
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=5dddcc45a03b336860436a180aec5b358517336b
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800593
+
+Please use CVE-2012-1135 for this issue.
+
+> Issue #11:
+> ==========
+>   freetype: Out-of heap-based buffer write by parsing BDF glyph and bitmaps
+>   information with missing ENCODING field (FU#35641)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35641
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=4086fb7caf41e33137e548e43a49a97b127cd369
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800594
+
+Please use CVE-2012-1136 for this issue.
+
+> Issue #12:
+> ==========
+>   freetype: Out-of heap-based buffer read by parsing BDF font header
+> (FU#35643)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35643
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=cee5d593582801f65c5e127d9de9ca24ebcdc747
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800595
+
+Please use CVE-2012-1137 for this issue.
+
+> Issue #13:
+> ==========
+>   freetype: Out-of heap-based buffer read in the TrueType bytecode
+>   interpreter by executing the MIRP instruction (FU#35646)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35646
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=a33c013fe2dc6e65de2879682201d9c155292349
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800597
+
+Please use CVE-2012-1138 for this issue.
+
+> Issue #14:
+> ==========
+>   freetype: Array index error, leading to out-of stack based buffer
+>   read by parsing BDF font glyph information (FU#35656)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35656
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=6ac022dc750d95296a6f731b9594f2e751d997fa
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800598
+
+Please use CVE-2012-1139 for this issue.
+
+> Issue #15:
+> ==========
+>   freetype: Out-of heap-based buffer read by conversion of PostScript
+> font objects (FU#35657)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35657
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=292144b44a15c1a72f2ef76475d65b7a3a3fba67
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800600
+
+Please use CVE-2012-1140 for this issue.
+
+> Issue #16:
+> ==========
+>   freetype: Out-of heap-based buffer read flaw by conversion of an ASCII
+>   string into a signed short integer by processing BDF fonts (FU#35658)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35658
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=d9c1659610f9cd5e103790cb5963483d65cf0d2d
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800602
+
+Please use CVE-2012-1141 for this issue.
+
+> Issue #17:
+> ==========
+>   freetype: Out-of heap-based buffer write by retrieval of advance values
+>   for glyph outlines (FU#35659)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35659
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=7d35a7dc7cc621538a1f4a63c83ebf223aace0b0
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800604
+
+Please use CVE-2012-1142 for this issue.
+
+> Issue #18:
+> ==========
+>   freetype: Integer divide by zero by performing arithmetic
+>   computations for certain fonts (FU#35660)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35660
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=ba67957d5ead443f4b6b31805d6e780d54361ca4
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800606
+
+Please use CVE-2012-1143 for this issue.
+
+> Issue #19:
+> ==========
+>   freetype: Out-of heap-based buffer write in the TrueType bytecode
+>   interpreter by moving zone2 pointer point (FU#35689)
+> 
+> Upstream bug report:
+> [1] https://savannah.nongnu.org/bugs/?35689
+> 
+> Upstream patch:
+> [2]
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=0fc8debeb6c2f6a8a9a2b97332a7c8a0a1bd9e85
+> 
+> 
+> Red Hat Bugzilla entry:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=800607
+
+Please use CVE-2012-1144 for this issue.
+
+Summary:
+
+CVE-2012-1126 FreeType 2.4.8 Out-of heap-based buffer read by parsing,
+adding properties in BDF
+
+CVE-2012-1127 FreeType 2.4.8 Out-of heap-based buffer read by parsing
+glyph information and bitmaps for BDF fonts
+
+CVE-2012-1128 FreeType 2.4.8 NULL pointer dereference by moving zone2
+pointer point for certain TrueType font
+
+CVE-2012-1129 FreeType 2.4.8 Out-of heap-based buffer read when parsing
+certain SFNT strings by Type42 font parser
+
+CVE-2012-1130 FreeType 2.4.8 Out-of heap-based buffer read by loading
+properties of PCF fonts
+
+CVE-2012-1131 FreeType 2.4.8 freetype (64-bit specific): Out-of
+heap-based buffer read by attempt to record current cell into the cell table
+
+CVE-2012-1132 FreeType 2.4.8 Out-of heap-based buffer read flaw in Type1
+font loader by parsing font dictionary entries
+
+CVE-2012-1133 FreeType 2.4.8 Out-of heap-based buffer write by parsing
+BDF glyph information and bitmaps
+
+CVE-2012-1134 FreeType 2.4.8 Out-of heap-based buffer write in Type1
+font parser by retrieving font's private dictionary
+
+CVE-2012-1135 FreeType 2.4.8 Out-of heap-based buffer read in TrueType
+bytecode interpreter by executing NPUSHB and NPUSHW instructions
+
+CVE-2012-1136 FreeType 2.4.8 Out-of heap-based buffer write by parsing
+BDF glyph and bitmaps information with missing ENCODING field
+
+CVE-2012-1137 FreeType 2.4.8 Out-of heap-based buffer read by parsing
+BDF font header
+
+CVE-2012-1138 FreeType 2.4.8 Out-of heap-based buffer read in the
+TrueType bytecode interpreter by executing the MIRP instruction
+
+CVE-2012-1139 FreeType 2.4.8 Array index error, leading to out-of stack
+based buffer read by parsing BDF font glyph information
+
+CVE-2012-1140 FreeType 2.4.8 Out-of heap-based buffer read by conversion
+of PostScript font objects
+
+CVE-2012-1141 FreeType 2.4.8 Out-of heap-based buffer read flaw by
+conversion of an ASCII string into a signed short integer by processing
+BDF fonts
+
+CVE-2012-1142 FreeType 2.4.8 Out-of heap-based buffer write by retrieval
+of advance values for glyph outlines
+
+CVE-2012-1143 FreeType 2.4.8 Integer divide by zero by performing
+arithmetic computations for certain fonts
+
+CVE-2012-1144 FreeType 2.4.8 Out-of heap-based buffer write in the
+TrueType bytecode interpreter by moving zone2 pointer point
 
 
-ANNOUNCING Tahoe, the Least-Authority File System, v1.9.1
-
-The Tahoe-LAFS team has announced the immediate availability of
-version 1.9.1 of Tahoe-LAFS, an extremely reliable distributed
-storage system. Get it here:
-
-https://tahoe-lafs.org/source/tahoe-lafs/trunk/docs/quickstart.rst
-
-Tahoe-LAFS is the first distributed storage system to offer
-"provider-independent security" — meaning that not even the
-operators of your storage servers can read or alter your data
-without your consent. Here is the one-page explanation of its
-unique security and fault-tolerance properties:
-
-https://tahoe-lafs.org/source/tahoe-lafs/trunk/docs/about.rst
-
-The previous stable release of Tahoe-LAFS was v1.9.0, released
-on October 31, 2011.
-
-v1.9.1 is a critical bugfix release which fixes a significant
-security issue [#1654]. See the NEWS file [1] and known_issues.rst
-[2] file for details.
-
-
-WHAT IS IT GOOD FOR?
-
-With Tahoe-LAFS, you distribute your filesystem across
-multiple servers, and even if some of the servers fail or are
-taken over by an attacker, the entire filesystem continues to
-work correctly, and continues to preserve your privacy and
-security. You can easily share specific files and directories
-with other people.
-
-In addition to the core storage system itself, volunteers
-have built other projects on top of Tahoe-LAFS and have
-integrated Tahoe-LAFS with existing systems, including
-Windows, JavaScript, iPhone, Android, Hadoop, Flume, Django,
-Puppet, bzr, mercurial, perforce, duplicity, TiddlyWiki, and
-more. See the Related Projects page on the wiki [3].
-
-We believe that strong cryptography, Free and Open Source
-Software, erasure coding, and principled engineering practices
-make Tahoe-LAFS safer than RAID, removable drive, tape,
-on-line backup or cloud storage.
-
-This software is developed under test-driven development, and
-there are no known bugs or security flaws which would
-compromise confidentiality or data integrity under recommended
-use. (For all important issues that we are currently aware of
-please see the known_issues.rst file [2].)
-
-
-COMPATIBILITY
-
-This release is compatible with the version 1 series of
-Tahoe-LAFS. Clients from this release can write files and
-directories in the format used by clients of all versions back
-to v1.0 (which was released March 25, 2008). Clients from this
-release can read files and directories produced by clients of
-all versions since v1.0. Servers from this release can serve
-clients of all versions back to v1.0 and clients from this
-release can use servers of all versions back to v1.0.
-
-This is the sixteenth release in the version 1 series. This
-series of Tahoe-LAFS will be actively supported and maintained
-for the foreseeable future, and future versions of Tahoe-LAFS
-will retain the ability to read and write files compatible
-with this series.
-
-
-LICENCE
-
-You may use this package under the GNU General Public License,
-version 2 or, at your option, any later version. See the file
-"COPYING.GPL" [4] for the terms of the GNU General Public
-License, version 2.
-
-You may use this package under the Transitive Grace Period
-Public Licence, version 1 or, at your option, any later
-version. (The Transitive Grace Period Public Licence has
-requirements similar to the GPL except that it allows you to
-delay for up to twelve months after you redistribute a derived
-work before releasing the source code of your derived work.)
-See the file "COPYING.TGPPL.rst" [5] for the terms of the
-Transitive Grace Period Public Licence, version 1.
-
-(You may choose to use this package under the terms of either
-licence, at your option.)
-
-
-INSTALLATION
-
-Tahoe-LAFS works on Linux, Mac OS X, Windows, Solaris, *BSD,
-and probably most other systems. Start with
-"docs/quickstart.rst" [6].
-
-
-HACKING AND COMMUNITY
-
-Please join us on the mailing list [7]. Patches are gratefully
-accepted -- the RoadMap page [8] shows the next improvements
-that we plan to make and CREDITS [9] lists the names of people
-who've contributed to the project. The Dev page [10] contains
-resources for hackers.
-
-
-SPONSORSHIP
-
-Atlas Networks has contributed several hosted servers for
-performance testing. Thank you to Atlas Networks [11] for
-their generous and public-spirited support.
-
-And a special thanks to Least Authority Enterprises [12],
-which employs several Tahoe-LAFS developers, for their
-continued support.
-
-HACK TAHOE-LAFS!
-
-If you can find a security flaw in Tahoe-LAFS which is serious
-enough that we feel compelled to warn our users and issue a fix,
-then we will award you with a customized t-shirts with your
-exploit printed on it and add you to the "Hack Tahoe-LAFS Hall
-Of Fame" [13].
-
-
-ACKNOWLEDGEMENTS
-
-This is the tenth release of Tahoe-LAFS to be created solely
-as a labor of love by volunteers. Thank you very much to the
-team of "hackers in the public interest" who make Tahoe-LAFS
-possible.
-
-Brian Warner
-on behalf of the Tahoe-LAFS team
-
-January 12, 2011
-San Francisco, California, USA
-
-
-[#1654] https://tahoe-lafs.org/trac/tahoe-lafs/ticket/1654
-[1] https://tahoe-lafs.org/trac/tahoe-lafs/browser/NEWS.rst
-[2] https://tahoe-lafs.org/trac/tahoe-lafs/browser/docs/known_issues.rst
-[3] https://tahoe-lafs.org/trac/tahoe-lafs/wiki/RelatedProjects
-[4] https://tahoe-lafs.org/trac/tahoe-lafs/browser/COPYING.GPL
-[5] https://tahoe-lafs.org/trac/tahoe-lafs/browser/COPYING.TGPPL.rst
-[6] https://tahoe-lafs.org/trac/tahoe-lafs/browser/docs/quickstart.rst
-[7] https://tahoe-lafs.org/cgi-bin/mailman/listinfo/tahoe-dev
-[8] https://tahoe-lafs.org/trac/tahoe-lafs/roadmap
-[9] https://tahoe-lafs.org/trac/tahoe-lafs/browser/CREDITS
-[10] https://tahoe-lafs.org/trac/tahoe-lafs/wiki/Dev
-[11] http://atlasnetworks.us/
-[12] http://leastauthority.com/
-[13] https://tahoe-lafs.org/hacktahoelafs/
-_______________________________________________
-tahoe-announce mailing list
-tahoe-announce@...oe-lafs.org
-http://tahoe-lafs.org/cgi-bin/mailman/listinfo/tahoe-announce
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
