@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/6
-Message-ID: <20120424124510.GB5036@suse.de>
-Date: Tue, 24 Apr 2012 14:45:10 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/14
+Message-ID: <4F56618B.5050009@redhat.com>
+Date: Tue, 06 Mar 2012 12:12:11 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Joomla! Security News 2012-03
 Content-Type: text/plain; charset=utf-8
 
-nfs-client-1.2.5 rpm which is probably a result of the nfs-utils-1.2.5
-source package.
-
-Sebastian
-
-On Tue, Apr 24, 2012 at 02:34:23PM +0200, Florian Weimer wrote:
-> * Sebastian Krahmer:
+On 03/06/2012 06:30 AM, Henri Salo wrote:
+> Can I get two CVE-identifiers for these security vulnerabilities listed below.
 > 
-> > Indeed, the point was to also check against fscaps:
-> >
-> > https://bugzilla.novell.com/show_bug.cgi?id=694598
-> >
-> > At least it should be considered for future builds. The mount.nfs
-> > case was only interesting for the suid bit.
-> 
-> Okay.  Our mount.nfs doesn't seem to use libgssglue.  I wonder if you
-> use a different code base, or if this is something that's going to be
-> come relevant to use with a newer upstream version, too.
+> http://developer.joomla.org/security/news/392-20120302-core-xss-vulnerability.html
+
+Please use CVE-2012-1117 for this issue
+
+> http://developer.joomla.org/security/news/391-20120301-core-sql-injection.html
+
+Please use CVE-2012-1116 for this issue
+
+Please note, smaller Joomla! #, smaller CVE # (trying to keep things in
+sync as much as possible =).
+
+> - Henri Salo
+>  
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Kurt Seifried Red Hat Security Response Team (SRT)
