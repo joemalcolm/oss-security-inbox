@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/5
-Message-ID: <CAF6rxg=OfOPAmYTM4WxY04r9KtPk5=suSxJuhcVOG1aJPw_m4Q@mail.gmail.com>
-Date: Sun, 8 Jan 2012 12:37:56 -0500
-From: Eitan Adler <lists@...anadler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/12
+Message-ID: <4F56661F.5090909@redhat.com>
+Date: Tue, 06 Mar 2012 12:31:43 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Malicious devices & vulnerabilties
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Joomla! Security News 2012-03
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jan 7, 2012 at 6:01 PM, Xi Wang <xi.wang@...il.com> wrote:
-> I am wondering where to draw the line.  Should such device drivers
-> be considered vulnerable or not?  Thanks.
+On 03/06/2012 06:30 AM, Henri Salo wrote:
+> Can I get two CVE-identifiers for these security vulnerabilities
+listed below.
+>
+>
+http://developer.joomla.org/security/news/392-20120302-core-xss-vulnerability.html
 
-Yes, they should be considered insecure given they these types of bugs
-can have unwanted impact in some contexts.
-Even though they require physical access to the machine does not mean
-that they shouldn't be fixed.
+Please use CVE-2012-1117 for this issue
 
+>
+http://developer.joomla.org/security/news/391-20120301-core-sql-injection.html
 
+Please use CVE-2012-1116 for this issue
 
--- 
-Eitan Adler
+Please note, smaller Joomla! #, smaller CVE # (trying to keep things in
+sync as much as possible =).
+
+> - Henri Salo
+>
+-- Kurt Seifried Red Hat Security Response Team (SRT)
