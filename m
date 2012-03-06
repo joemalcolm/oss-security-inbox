@@ -1,22 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/16
-Message-ID: <20120201231302.GA9659@openwall.com>
-Date: Thu, 2 Feb 2012 03:13:02 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/5
+Message-ID: <20120306133042.GA13665@foo.fgeek.fi>
+Date: Tue, 6 Mar 2012 15:30:42 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+Subject: CVE-request: Joomla! Security News 2012-03
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 01, 2012 at 11:59:34PM +0100, Thomas Klausner wrote:
-> While you're editing the wiki... it's probably obvious to everyone,
-> but perhaps not, so a short sentence about the Subject header not
-> being encrypted and thus visible to e.g. mail server admins might be a
-> good idea.
+Can I get two CVE-identifiers for these security vulnerabilities listed below.
 
-Added:
+http://developer.joomla.org/security/news/392-20120302-core-xss-vulnerability.html
+http://developer.joomla.org/security/news/391-20120301-core-sql-injection.html
 
-"except that headers, including From and Subject, are not encrypted, so
-you may want to avoid including security sensitive information in the
-Subject."
+- Henri Salo
 
-Alexander
+----- Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
+
+Date: Tue, 06 Mar 2012 13:18:34 +0000
+From: Joomla! Developer Network - Security News <no_reply@...mla.org>
+To: henri@...v.fi
+Subject: Joomla! Security News
+
+Joomla! Developer Network - Security News
+
+///////////////////////////////////////////
+[20120302] - Core - XSS Vulnerability
+
+Posted: 05 Mar 2012 06:00 AM PST
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/hpSgU9ABRDc/392-20120302-core-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
+
+
+Project: Joomla!
+SubProject: All
+ Severity: Moderate
+Versions: 2.5.1 and 2.5.0
+Exploit type: XSS Vulnerability
+Reported Date: 2012-February-29
+Fixed Date: 2012-March-05
+
+Description
+
+Inadequate filtering leads to XSS vulnerability.
+Affected Installs
+
+Joomla! version 2.5.1 and 2.5.0.
+Solution
+
+Upgrade to version 2.5.2
+
+Reported by Phil Purviance
+Contact
+
+The JSST at the Joomla! Security Center.
+
+
+
+///////////////////////////////////////////
+[20120301] - Core - SQL Injection
+
+Posted: 05 Mar 2012 06:00 AM PST
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/L_dDHx34L4A/391-20120301-core-sql-injection.html?utm_source=feedburner&utm_medium=email
+
+
+Project: Joomla!
+SubProject: All
+ Severity: High
+Versions: 2.5.1, 2.5.0 and 1.7.0 - 1.7.4
+Exploit type: SQL Injection
+Reported Date: 2012-February-29
+Fixed Date: 2012-March-05
+
+Description
+
+Inadequate escaping leads to SQL injection vulnerability.
+Affected Installs
+
+Joomla! version 2.5.1, 2.5.0, 1.7.4, and all earlier 1.7.x versions
+Solution
+
+Upgrade to version 2.5.2
+
+Reported by Colin Wong
+Contact
+
+The JSST at the Joomla! Security Center.
+
+
+
+--
+You are subscribed to email updates from "Joomla! Developer Network -
+Security News."
+To stop receiving these emails, you may unsubscribe now: http://feedburner.google.com/fb/a/mailunsubscribe?k=JWlBXz9w0F12fWtPu46jwc9_Jcc
+
+Email delivery powered by Google.
+Google Inc., 20 West Kinzie, Chicago IL USA 60610
+
+
+----- End forwarded message -----
