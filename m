@@ -1,71 +1,171 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/8
-Message-ID: <4FCF8BA2.2030406@redhat.com>
-Date: Wed, 06 Jun 2012 10:56:02 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/9
+Message-ID: <4F5665A0.5020800@redhat.com>
+Date: Tue, 06 Mar 2012 12:29:36 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: oss-security@...ts.openwall.com, Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: CVE request: rack-cache caches sensitive headers (Set-Cookie)
+To: oss-security@...ts.openwall.com
+CC: David Hicks <d@...id.au>
+Subject: Re: CVE request: mantisbt before 1.2.9
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 06/06/2012 03:29 AM, Jan Lieskovsky wrote:
-> Thanks for your report, Matthias.
+On 03/06/2012 06:53 AM, David Hicks wrote:
+> Thanks Hanno and apologies on behalf of the MantisBT project for
+> the lack of official notice.
 > 
-> On 06/06/2012 11:09 AM, Matthias Weckbecker wrote:
->> Hi Kurt, Steve, vendors,
->>
->> rake-cache caches sensitive response headers such as Set-Cookie.
->> Attackers
->> with access to the cache could possibly obtain other user's cookies to
->> e.g.
->> bypass authentication.
->>
->> More information (including patch) available at our bugzilla:
->>    https://bugzilla.novell.com/show_bug.cgi?id=763650
->>
->> Kurt, could you possibly assign a CVE for this issue, please? Thank
->> you in
->> advance!
+> I'll attempt to provide as much detail on the security issue(s)
+> resolved in MantisBT 1.2.9 noting that I haven't had much
+> involvement with this release over the past few months. The
+> mantisbt-dev@...ts.sourceforge.net mailing list has been BCC'd to
+> this email.
 > 
-> Kurt, once assigned please note it in our bug:
-> https://bugzilla.redhat.com/show_bug.cgi?id=824520
+> I have made public the relevant security issues reported on 
+> http://www.mantisbt.org/bugs that have been fixed in MantisBT
+> 1.2.9. These previously hidden issues will now show up in the
+> change log for version 1.2.9. There are a number of CVE requests
+> that should have been made a while ago (#6 which is particularly
+> nasty).
+
+This makes my life sooo much easier, thank you!
+
+> CVE REQUEST #1: MantisBT < 1.2.9 array value for
+> $g_private_bug_threshold configuration option allows bypass of
+> access checks http://www.mantisbt.org/bugs/view.php?id=10124
 > 
-> too.
+> A rarely known feature of MantisBT is the ability to define access 
+> thresholds as an array of "allowed access groups" rather than just
+> an integer value (for a linear scale of increasing access levels).
+> If the $g_private_bug_threshold value was defined as an array, all
+> access checks within MantisBT would by bypassed/allowed. This is a
+> low risk issue because it would be very obvious to administrators
+> that permissions were broken (they'd notice that anonymous users
+> can access every feature).
 > 
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+> [NOTE: this feature is so rarely known that large chunks of the
+> MantisBT code base are written under the assumption that thresholds
+> are always integer values. In the great majority of cases a
+> threshold with an array value will fail safely because array() == x
+> where x is an integer will return false. This bug is particularly
+> nasty because it was within the main access check function MantisBT
+> uses throughout the code base. From a user perspective, defining
+> thresholds using an array is _NOT_ recommended until a full audit
+> of the code base is performed to ensure that it is safe to define
+> thresholds using array values.]
+
+Please use CVE-2012-1118 for this issue
+
+> CVE REQUEST #2: MantisBT < 1.2.9 copy/clone bug report action
+> failed to leave an audit trail 
+> http://www.mantisbt.org/bugs/view.php?id=13816
 > 
->>
->> Matthias
->>
+> The copy/clone bug feature could be misused by authorised users to
+> spam an issue tracker with multiple copies of bugs with no obvious
+> audit trail of who was responsible. This is an annoyance on par
+> with new users signing up to a bug tracker and generating bugnote
+> (or other) spam. There is only so much we can do to solve the
+> problem -- it is mostly up to the administrator of each MantisBT
+> installation to screen new users.
 
-Please use CVE-2012-2671 for this issue.
+Please use CVE-2012-1119 for this issue
+
+> CVE REQUEST #3: MantisBT < 1.2.9
+> delete_bug_threshold/bugnote_allow_user_edit_delete access check
+> bypass via SOAP API http://www.mantisbt.org/bugs/view.php?id=13656
+> 
+> Users with write access to the SOAP API (this is a separate access 
+> check) were able to delete issues and bugnotes regardless of the 
+> configured $g_delete_bug_threshold and
+> $g_bugnote_allow_user_edit_delete settings. As users need to be
+> authorised and have read/write access via SOAP, they're likely
+> already trusted. Additionally, SOAP is a feature that is rarely
+> used on Internet facing bug trackers. For these reasons the impact
+> of this bug is significantly reduced.
+
+Please use CVE-2012-1120 for this issue
+
+> CVE REQUEST #4: MantisBT < 1.2.9 managers of specific projects
+> could update global category settings 
+> http://www.mantisbt.org/bugs/view.php?id=13561
+> 
+> If a user was given 'manager' permissions over a single project,
+> they were also incorrectly allowed to modify and delete global bug 
+> categories. Consequences of this bug are limited because 'manager' 
+> permissions are usually reserved for trusted users and aren't
+> handed out lightly.
+
+Please use CVE-2012-1121 for this issue
+
+> CVE REQUEST #5: MantisBT < 1.2.9 incorrect access checks performed
+> when moving bugs between projects 
+> http://www.mantisbt.org/bugs/view.php?id=13748
+> 
+> When a user attempted to move a bug between projects, an invalid
+> access check was performed. The $g_report_bug_threshold access
+> level from the source project was used instead of the
+> $g_report_bug_threshold access level from the destination project.
+> The result of this bug is that users could move bugs into projects
+> that they did not have access to report bugs within.
+
+Please use CVE-2012-1122 for this issue
+
+> CVE REQUEST #6: MantisBT < 1.2.9 SOAP API null password
+> authentication bypass 
+> http://www.mantisbt.org/bugs/view.php?id=13901
+> 
+> This serious issue allowed an an attacker to bypass SOAP API 
+> authentication and login as any user without needing to provide a
+> valid password. A SOAP client sending a null password field could
+> assume the identity of a MantisBT administrator without needing a
+> password and gain full access to the SOAP API (and consequently the
+> entire MantisBT installation).
+> 
+> [NOTE: the above summary for request #4 is based on reports made to
+> the mantisbt-dev mailing list on the 16th of February 2012 - I have
+> not independently confirmed the validity of this report. It may be
+> worth waiting for independent confirmation of this report via
+> mantisbt-dev. If this issue is valid, it has already been fixed in
+> MantisBT 1.2.9 "just in case" by disallowing null and blank
+> password logins via SOAP API.]
+
+Please use CVE-2012-1123 for this issue
+
+In summary:
+
+CVE-2012-1118 MantisBT 1.2.8 10124 array value for
+$g_private_bug_threshold configuration option allows bypass of access
+checks
+
+CVE-2012-1119 MantisBT 1.2.8 13816 copy/clone bug report action failed
+to leave an audit trail
+
+CVE-2012-1120 MantisBT 1.2.8 13656
+elete_bug_threshold/bugnote_allow_user_edit_delete access check bypass
+via SOAP API
+
+CVE-2012-1121 MantisBT 1.2.8 13561 managers of specific projects could
+update global category settings
+
+CVE-2012-1122 MantisBT 1.2.8 13748 incorrect access checks performed
+when moving bugs between projects
+
+CVE-2012-1123 MantisBT 1.2.8 13901 SOAP API null password
+authentication bypass
 
 
+> As a quick note, the /soap/api/ directory should be deleted or
+> access denied on installations that don't need to use SOAP. The new
+> /admin/check/ feature in the 1.3.x (development) branch already 
+> warns users to remove this directory if not required. Distributions
+> are advised to consider disabling access to /soap/api by default
+> (depending on whether you believe users are more likely to use or
+> not use SOAP API).
+> 
+> 
+> 
+> Thanks,
+> 
+> David Hicks MantisBT Developer #mantisbt irc.freenode.net 
+> http://www.mantisbt.org/bugs/
 
-- -- 
+
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPz4uhAAoJEBYNRVNeJnmTKzcP+we7VUVdFw3LqAfqRFmGE1zY
-0gq+Sd/ReM0GITRiDbtMOXGqy7DT6ivvuvaQ5T7skIWbNkvanSiv+6F+YeTgIQsX
-U9rkk4FeEkrmP5f7vVxPuhNSRWec8gjPkuxCzlQaBLlXmW21xP0fdGJ6wwxwGJAr
-SBsL/5MbsvO+R4WjChTio8fZ5aky8o+DWK1ShSN61FVciX+nSvCdvsL40OOki0TF
-6Enw/Cod5uccYsQgLNSfC0opWuLlHW/wZn2IcpZdL+Mp5cE69qy9dHLs8RS0uu/O
-TuWbzzgZZdt/aZPj6DE7mqWoW0n82H8eSK8HQPeA0K2e4U1q7CKgdiW8U/LR76Yp
-5xaUKvhyDWoqsYiP6UXIGYE30nRtHOuFFXxBbmE4kM/wAJtywrLmeD8yZIrRd4Kd
-2oJ4NLvfZkRz4nbhhWN+JI9AmoMn0NgG4KfXcK788Ve99MpNGp4Ym3V3b7TR78R3
-1awyCtjbCiQbGdmFKUKTToBNQ3DYFh9LOFzmksoOwdCfVJ8JhLmaUNkKCohmzH+Z
-8QxklQy39u148ZDNLS1CvIPT+R6oQtotHltLot+nGbAXoL6L4+uzQe58/GYnVnpl
-aJeC+R8acTRyMfCv8713bSeqZzt2U3M0QGEEePPPLq2sluAWIMC/hD1W8aI2RfiN
-T1pdH/XovTCpR35FCGut
-=ijcr
------END PGP SIGNATURE-----
