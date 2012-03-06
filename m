@@ -1,33 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/6
-Message-ID: <20120419074323.GA4709@kludge.henri.nerv.fi>
-Date: Thu, 19 Apr 2012 10:43:23 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/15
+Message-ID: <20120306204048.GG1220@redhat.com>
+Date: Tue, 6 Mar 2012 13:40:48 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, Hanno Böck <hanno@...eck.de>, Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: CVE-request: WordPress 3.1.1
+Subject: Re: CVE request: smokeping XSS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 17, 2012 at 11:10:27PM -0600, Kurt Seifried wrote:
-> Can you make a clean list of security issues and the versions
-> affected? Thanks.
+* [2012-02-27 20:26:05 +0100] Florian Weimer wrote:
 
-Two issues in 3.1.1 are without 2011 CVE-identifiers, which are announced in here: http://wordpress.org/news/2011/04/wordpress-3-1-1/ (April 5, 2011).
+>* Vincent Danen:
+>
+>> https://bugzilla.redhat.com/show_bug.cgi?id=783584
+>
+>Is the patch
+>
+>https://bugzilla.redhat.com/attachment.cgi?id=556619
+>
+>really correct?  It does not strip the two magic characters "=
+>(" should be enough, = is just defensive), so it's probably still
+>possible to inject an onmouseover handler and CSS which enlarges the
+>affected HTML element so that the handler is practically guaranteed to
+>fire.
+>
+>I've just looked at the patch, I haven't got a (patched or unpatched)
+>smokeping instance to test this.
 
-Issue #1:
+Sorry, slowly catching up on mails here.
 
-http://osvdb.org/show/osvdb/72141
-http://secunia.com/advisories/44038/
+Whether that is right or wrong, I'm not 100% sure; you'd have to ask
+upstream.  I just did the diff since I couldn't find a svn/git repo web
+interface to generate a patch, so if it's wrong, then upstream has got
+it wrong as well.
 
-"Certain unspecified input is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
+I see that Fedora has used a patch (not sure if it's the same or not),
+so if I get a chance in the next few days I'll try the new version to
+try to validate the fix.
 
-Issue #2:
-
-http://osvdb.org/show/osvdb/72142
-http://secunia.com/advisories/44038/
-
-"The "make_clickable()" function in wp-includes/formatting.php does not properly check the URL length in comments before passing it to the PCRE library, which can be exploited to cause a crash."
-
-Both vulnerabilities are reported in versions prior to 3.1.1.
-
-- Henri Salo
+-- 
+Vincent Danen / Red Hat Security Response Team 
