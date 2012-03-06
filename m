@@ -1,55 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/6
-Message-ID: <Pine.GSO.4.64.1211021328260.556@faron.mitre.org>
-Date: Fri, 2 Nov 2012 13:31:27 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/17
+Message-ID: <20120306214239.79fba143@redhat.com>
+Date: Tue, 6 Mar 2012 21:42:39 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: cve@...re.org, Gentoo Linux Security Team <security@...too.org>
-Subject: Re: libfpx Duplicate CVEs (CVE-2011-5232 and CVE-2012-0025)
+Cc: agomez@...idsignal.com, Kurt Seifried <kseifried@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: TORCS 1.3.2 xml buffer overflow - CVE-2012-1189
 Content-Type: text/plain; charset=utf-8
 
+On Tue, 6 Mar 2012 09:31:10 -0500 Andres Gomez wrote:
 
-Sean,
+> 2012/3/5 Kurt Seifried <kseifried@...hat.com>
+> 
+> > Would you consider tham to be the same code base or a different code
+> > base? If the same code base, share the CVE, if different code
+> > bases, new CVE for it. Steve: do we have a policy for "Fresh" forks
+> > as it were?
+>
+> Well, Speed Dreams started with TORCS code base, but they have added
+> a lot new code, so I would say that right now they have different
+> code base, although they still share a big portion of the code (as
+> the vulnerable section).  Because of that I would consider It needs a
+> new CVE number, could you assign one to it?  :)
 
-Agree with this duplicate, too.
+Their code bases may differ significantly in other parts, but it seems
+the affected vulnerable code is still identical between the two.
+Following are versions shortly before fixes got committed:
 
-Keep CVE-2012-0025 and REJECT CVE-2011-5232.
+http://torcs.cvs.sourceforge.net/viewvc/torcs/torcs/torcs/src/modules/graphic/ssggraph/grsound.cpp?revision=1.31.2.2&view=markup
+http://speed-dreams.svn.sourceforge.net/viewvc/speed-dreams/trunk/src/modules/graphic/ssggraph/grsound.cpp?revision=4146&view=markup
 
-Thanks,
-Steve
+In cases like this, same CVE is used for all project that use / embed
+the same affected code.
 
-
-On Tue, 30 Oct 2012, Sean Amoss wrote:
-
-> Steve, MITRE, vendors:
->
-> Another possible duplicate CVE assignment below :D
->
-> CVE-2011-5232 - Double free vulnerability in the Free_All_Memory
-> function in jpeg/dectile.c in libfpx before 1.3.1-1, as used in the
-> FlashPix PlugIn 4.2.2.0 for IrfanView, allows remote attackers to cause
-> a denial of service (crash) via a crafted FPX image.
->
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-5232
->
-> References to http://secunia.com/advisories/47246
->
-> =======================================================================
->
-> CVE-2012-0025 - libfpx "Free_All_Memory()" Double-Free Vulnerability
->
-> CVE Assignment: http://www.openwall.com/lists/oss-security/2012/01/03/16
->
-> References https://secunia.com/advisories/47246 in assignment above
->
->
-> Thanks,
-> Sean
->
-> -- 
-> Sean Amoss
-> Gentoo Security | GLSA Coordinator
-> E-Mail	  : ackle@...too.org
-> GnuPG FP  : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
->
->
+-- 
+Tomas Hoger / Red Hat Security Response Team
