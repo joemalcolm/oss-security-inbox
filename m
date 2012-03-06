@@ -1,62 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/18/2
-Message-ID: <5057CDFD.3020400@redhat.com>
-Date: Mon, 17 Sep 2012 19:27:25 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/11
+Message-ID: <4F5667E3.3030303@redhat.com>
+Date: Tue, 06 Mar 2012 12:39:15 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: OptiPNG Palette Reduction Use-After-Free Vulnerability
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Kish Guest Posting Plugin for WordPress File Upload Remote PHP Code Execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 03/06/2012 12:31 AM, Henri Salo wrote:
+> Can we assign CVE-identifier for this security vulnerability, thanks.
+> 
+> http://osvdb.org/show/osvdb/78479
+> http://www.securityfocus.com/bid/51638
+> http://secunia.com/advisories/47688/
+> http://www.exploit-db.com/exploits/18412/
+> 
+> Plugin is disabled in WordPress (doesn't show up in http://wordpress.org/extend/plugins/), but SVN can be found from here: http://plugins.svn.wordpress.org/kish-guest-posting/trunk/
+> 
+> File http://plugins.svn.wordpress.org/kish-guest-posting/trunk/readme.txt says:
+> 
+> """
+> = 1.2 =
+> security update for Uploadify Script
+> """
+> 
+> But I haven't tested (yet) if that is valid fix for the vulnerability.
+> 
+> - Henri Salo
 
-On 09/17/2012 10:36 AM, Agostino Sarubbo wrote:
-> Quoting the secunia advisory:
-> 
-> Description A vulnerability has been reported in OptiPNG, which can
-> be exploited by malicious people to potentially compromise a user's
-> system.
-> 
-> The vulnerability is caused due to a use-after-free error related
-> to the palette reduction functionality. No further information is
-> currently available.
-> 
-> Success exploitation may allow execution of arbitrary code.
-> 
-> The vulnerability is reported in version 0.7, 0.7.1, and 0.7.2.
-> 
-> 
-> Solution Update to version 0.7.3.
-> 
-> 
-> Code commit: 
-> http://optipng.hg.sourceforge.net/hgweb/optipng/optipng/rev/f1d5d44670a2
->
->  Additional info: Version 0.6.5 and earlier are not affected.
-> 
+Please use CVE-2012-1125 for this issue.
 
-Please use CVE-2012-4432 for this issue.
-
-- -- 
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQV839AAoJEBYNRVNeJnmT664QAI85o2ckKjTZ1uSNU0H4YliD
-L4RnENEPjiLwxXAaP5iHGvstnPHqGCHPrdRgjlVKe4FokQ+FIN8JR5/+wNpVTTDp
-gNs3A/jeuIM3EvJHBeJt3nI+372GwqyBJkd1YiRA/4NRVj/9bByw1e/sK2He0LLn
-t8q0GybXhGZBXngYQqgXRrP9EQq96eWzRE7gAkoq4+kkL9SsozNGcJxJDytQCJJT
-IckohRLWjqLLcFuhY1QfZ4YsJrGequbtTkq91iNZwOf6WVPoK00b90CsqGhqDehF
-jLlcopouSlvEKHr1jGpd2YS/m7EEfiix5h4kMzy8mcC+1Amg1iL6eKUauRn6IqwZ
-H8XKX8Tb35eHhspX1nTPR4fV8EbBtsNuwPuu86YP3V5tJhphTwixWQvDU4zPCAEi
-+ecmEsib79BvJdp3v92i8yyytxUP0e6XltMBK488bkB2qmskkwYAByHD/tb/mbBf
-YcMJ3bE+57hpXH1j1acOKG/6Sa1pS5UJk92CI6AKzPMVwLX0Gon/OEKbNAy0OuI9
-UpEvkETnzw+hjed1EzV5J1bNFaQroUk587PkiN5Judm+uIj4lakduli3n8LdZn1H
-dAlHiDWkW6xv0jOl13J6vaAljDBMc4+sZnbUtWMzxlwYxc3KUl1sz3iVHXr7iKnO
-ZsN/rnFLGSTCZSSokbmP
-=Fnct
------END PGP SIGNATURE-----
