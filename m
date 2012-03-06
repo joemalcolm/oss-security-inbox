@@ -1,48 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/12/2
-Message-ID: <4FFE6B32.5080108@redhat.com>
-Date: Thu, 12 Jul 2012 08:14:10 +0200
-From: Stefan Cornelius <scorneli@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/3
+Message-ID: <20120306073122.GA12833@foo.fgeek.fi>
+Date: Tue, 6 Mar 2012 09:31:22 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>
-Subject: Re: CVE request: glibc formatted printing vulnerabilities
+Subject: CVE-request: Kish Guest Posting Plugin for WordPress File Upload Remote PHP Code Execution
 Content-Type: text/plain; charset=utf-8
 
-On 07/11/2012 11:37 PM, Kees Cook wrote:
-> Hi Stefan,
-> 
-> On Wed, Jul 11, 2012 at 12:32:35PM +0200, Stefan Cornelius wrote:
->> 3) It was discovered that the formatted printing functionality in glibc
->> did not properly restrict the use of alloca(). A remote attacker could
->> provide a specially crafted sequence of format specifiers, leading to a
->> crash or, potentially, FORTIFY_SOURCE format string protection mechanism
->> bypass, when processed.
->>
->> References:
->> https://bugzilla.redhat.com/show_bug.cgi?id=826943
->>
->> Red Hat patch backports/testcases for RHEL6 that include a patch for this:
->> https://bugzilla.redhat.com/attachment.cgi?id=594722&action=diff
->>
->> Red Hat patch backport/testcase for RHEL5 (older glibc versions)
->> https://bugzilla.redhat.com/attachment.cgi?id=594727&action=diff
-> 
-> Is there an upstream commit proposed for this one? I see it mixed into
-> the RH patch with fixes for 1) and 2).
-> 
-> Thanks,
-> 
-> -Kees
-> 
+Can we assign CVE-identifier for this security vulnerability, thanks.
 
-Hi Kees,
+http://osvdb.org/show/osvdb/78479
+http://www.securityfocus.com/bid/51638
+http://secunia.com/advisories/47688/
+http://www.exploit-db.com/exploits/18412/
 
-Unfortunately, I'm currently unaware of an upstream patch for this. I've
-asked our maintainers for the status of this and, hopefully, I can
-provide you with a better response soon.
+Plugin is disabled in WordPress (doesn't show up in http://wordpress.org/extend/plugins/), but SVN can be found from here: http://plugins.svn.wordpress.org/kish-guest-posting/trunk/
 
-Kind regards,
--- 
-Stefan Cornelius / Red Hat Security Response Team
+File http://plugins.svn.wordpress.org/kish-guest-posting/trunk/readme.txt says:
 
+"""
+= 1.2 =
+security update for Uploadify Script
+"""
 
+But I haven't tested (yet) if that is valid fix for the vulnerability.
+
+- Henri Salo
