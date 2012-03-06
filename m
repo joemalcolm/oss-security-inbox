@@ -1,39 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/16/2
-Message-ID: <502D11BD.6040009@gentoo.org>
-Date: Thu, 16 Aug 2012 11:29:01 -0400
-From: Sean Amoss <ackle@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/2
+Message-ID: <20120306070659.GA12689@foo.fgeek.fi>
+Date: Tue, 6 Mar 2012 09:06:59 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Gentoo Linux Security Team <security@...too.org>
-Subject: CVE Request: SquidClamav insufficient escaping flaws
+Subject: CVE-request: phxEventManager search.php search_terms Parameter SQL Injection
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+Can we assign 2012 CVE-identifier for this vulnerability?
 
-It appears that this has not yet received a CVE:
+http://www.osvdb.org/show/osvdb/79738
 
-The upstream notification [1] shows SquidClamav 5.8 and 6.7 fixes a URL
-escaping issue which could lead to a daemon crash [2]. SquidClamav 5.8
-also fixes escaping issues in CGI scripts [3].
+"phxEventManager contains a flaw that may allow an attacker to carry out an SQL injection attack. The issue is due to the search.php script not properly sanitizing user-supplied input to the 'search_terms' parameter. This may allow an attacker to inject or manipulate SQL queries in the back-end database, allowing for the manipulation or disclosure of arbitrary data."
 
+Original report: http://seclists.org/fulldisclosure/2012/Mar/4
+Vendor report: http://sourceforge.net/tracker/?func=detail&atid=697109&aid=3496086&group_id=123602
 
-References:
-[1] http://squidclamav.darold.net/news.html
-[2] https://github.com/darold/squidclamav/commit/80f74451f628264d1d9a1f1c0bbcebc932ba5e00
-[3] https://github.com/darold/squidclamav/commit/5806d10a31183a0b0d18eccc3a3e04e536e2315b
-[4] https://bugs.gentoo.org/show_bug.cgi?id=428778
-
-
-Thanks,
-Sean
-
--- 
-Sean Amoss
-Gentoo Security | GLSA Coordinator
-E-Mail	  : ackle@...too.org
-GnuPG ID  : E928357A
-GnuPG FP  : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (295 bytes)
+- Henri Salo
