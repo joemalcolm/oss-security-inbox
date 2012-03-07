@@ -1,99 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/19
-Message-ID: <mpro.maavbm0atu7hc02hi.taviso@cmpxchg8b.com>
-Date: Thu, 13 Sep 2012 19:59:46 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/07/3
+Message-ID: <4F578E2E.3000208@redhat.com>
+Date: Wed, 07 Mar 2012 09:34:54 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: note on gnome shell extensions
+Subject: Re: CVE request -- kernel: mm: memcg: unregistring of events attached to the same eventfd can lead to oops
 Content-Type: text/plain; charset=utf-8
 
-Vincent Danen <vdanen@...hat.com> wrote:
-
-> * [2012-09-13 18:03:33 +0200] Marcus Meissner wrote:
+On 03/07/2012 03:57 AM, Petr Matousek wrote:
+> There is an issue when memcg unregisters events that were attached to
+> the same eventfd:
 > 
-> > On Thu, Sep 13, 2012 at 05:39:57PM +0200, Tavis Ormandy wrote:
-> > > On Mon, Sep 10, 2012 at 02:48:38PM -0600, Vincent Danen wrote:
-> > > > * [2012-09-08 18:14:10 -0600] Kurt Seifried wrote: SUSE has some
-> > > > interesting info in their bug:
-> >> >
-> > > > https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
-> >> >
-> > > > By the sounds of it, this should be harmless.  Vincent Untz says
-> > > > that the browser plugin doesn't actually install the extensions,
-> > > > it's passed to another process via a dbus call to gnome-shell, which
-> > > > sends the uuid of the extension to the extensions.gnome.org web site
-> > > > in order to download the extension.
-> >> >
-> > > > See:
-> >> >
-> > > > http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
-> > > >
-http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
-> >> >
-> > > > which is:
-> >> >
-> > > > let message = Soup.form_request_new_from_hash('GET',
-> > > > REPOSITORY_URL_INFO, params);
-> >> >
-> > > > And REPOSITORY_URL_INFO is hardcoded earlier:
-> >> >
-> > > > const REPOSITORY_URL_BASE = 'https://extensions.gnome.org'; const
-> > > > REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE +
-> > > > '/download-extension/%s.shell-extension.zip'; const
-> > > > REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE + '/extension-info/';
-> > > > const REPOSITORY_URL_UPDATE   = REPOSITORY_URL_BASE +
-> > > > '/update-info/';
-> >> >
-> > > > I don't think this is something that can be exploited, based on the
-> > > > above.
-> >>
-> > > Not sure I follow the logic, can't I just upload something malicious
-> > > to extensions.gnome.org and then force you to download it? I mean, I
-> > > can try it if you're not convinced it's possible.
-> >
-> > There are supposed to be reviewers before it gets activated, but exactly
-> > this concern Sebastian also voiced.
-> >
-> > > They surely do not have a magical technique for determining if my code
-> > > is or can become malicious.
-> >
-> > Exactly.
+> - On the first call mem_cgroup_usage_unregister_event() removes all
+>   events attached to a given eventfd, and if there were no events left,
+>   thresholds->primary would become NULL;
 > 
-> Yeah, this is definitely a possibility, but could happen regardless of
-> this with some social engineering (hey, download my cool foo extension!)
-> and have something malicious up there.  This is pretty much the same
-> thing, just making it easier.
- 
-Well, no. This is like saying it's pointless to patch vulnerabilities,
-because I can just make you download malware. You can't just make me
-download malware, because I know how to make trust decisions.
-
-You could make me download a malicious gnome extension, because you can do
-so without interaction or my consent.
-
-> It's not much different than having a malicious app in the
-> iTunes/Android/Whatever app store.  The flaw there isn't so much in the
-> app store, but the app.  Wouldn't the same thought apply here?
+> - Since there were several events registered, cgroups core will call
+>   mem_cgroup_usage_unregister_event() again, but now kernel will oops,
+>   as the function doesn't expect that threshold->primary may be NULL.
 > 
+>  BUG: unable to handle kernel NULL pointer dereference at
+> 0000000000000004
+>  IP: [<ffffffff810be32c>] mem_cgroup_usage_unregister_event+0x9c/0x1f0
+>  Pid: 574, comm: kworker/0:2 Not tainted 3.3.0-rc4+ #9 Bochs Bochs
+>  RIP: 0010:[<ffffffff810be32c>]  [<ffffffff810be32c>]
+> mem_cgroup_usage_unregister_event+0x9c/0x1f0
+>  RSP: 0018:ffff88001d0b9d60  EFLAGS: 00010246
+>  Process kworker/0:2 (pid: 574, threadinfo ffff88001d0b8000, task
+> ffff88001de91cc0)
+>  Call Trace:
+>   [<ffffffff8107092b>] cgroup_event_remove+0x2b/0x60
+>   [<ffffffff8103db94>] process_one_work+0x174/0x450
+>   [<ffffffff8103e413>] worker_thread+0x123/0x2d0
+> 
+> A local attacker able to register threshold events could use this flaw
+> to crash the system.
+> 
+> The earliest commit that *might* introduce this issue is 2e72b634 in
+> 2.6.34-rc2. I haven't tested it though and the code isi slightly
+> different.
+> 
+> On the current kernels without the fix I'm able to reproduce the bug
+> easily.
+> 
+> Upstream commit:
+> 371528c (3.3-rc5)
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=800813
+> http://git.kernel.org/linus/371528c
+> 
+> Thanks,
 
-I've uploaded my malicious android app, how do I make you install it?
-
-I can create http://foo.com/malware.rpm, that's clearly not a vulnerability
-and working as designed. But if I can force you to download and install it
-without you having the opportunity to make a trust decision, that clearly is
-a vulnerability.
-
-Do you agree that I can upload something malicious to extensions.gnome.org?
-
-Do you agree that I can make you install it without consent, interaction, or
-the opportunity to make a trust decision?
-
-If so, then I don't understand the objection :-)
-
-Tavis.
+Please use CVE-2012-1146 for this issue.
 
 -- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
-
+Kurt Seifried Red Hat Security Response Team (SRT)
