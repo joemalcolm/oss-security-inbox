@@ -1,47 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/9
-Message-ID: <4F05D701.1030901@redhat.com>
-Date: Thu, 05 Jan 2012 09:59:45 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/07/1
+Message-ID: <20120307105740.GJ17312@dhcp-25-225.brq.redhat.com>
+Date: Wed, 7 Mar 2012 11:57:41 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: TORQUE Munge Authentication Security Bypass
+Subject: CVE request -- kernel: mm: memcg: unregistring of events attached to the same eventfd can lead to oops
 Content-Type: text/plain; charset=utf-8
 
-On 01/05/2012 02:20 AM, Agostino Sarubbo wrote:
-> Please assign a CVE for this issue.
-> reference: https://secunia.com/advisories/47381/
->
-> Thanks
-Correct form of CVE request:
+There is an issue when memcg unregisters events that were attached to
+the same eventfd:
 
--------------------
-According to Secunia https://secunia.com/advisories/47381/  "The
-vulnerability is caused due to an unspecified error when using munge
-authentication and can be exploited to impersonate other users."
+- On the first call mem_cgroup_usage_unregister_event() removes all
+  events attached to a given eventfd, and if there were no events left,
+  thresholds->primary would become NULL;
 
-http://www.adaptivecomputing.com/resources/docs/torque/3-0-3/changelog.php#259
+- Since there were several events registered, cgroups core will call
+  mem_cgroup_usage_unregister_event() again, but now kernel will oops,
+  as the function doesn't expect that threshold->primary may be NULL.
 
->From changelog: b - Change so user cannot impersonate a different user
-when using munge.
+ BUG: unable to handle kernel NULL pointer dereference at
+0000000000000004
+ IP: [<ffffffff810be32c>] mem_cgroup_usage_unregister_event+0x9c/0x1f0
+ Pid: 574, comm: kworker/0:2 Not tainted 3.3.0-rc4+ #9 Bochs Bochs
+ RIP: 0010:[<ffffffff810be32c>]  [<ffffffff810be32c>]
+mem_cgroup_usage_unregister_event+0x9c/0x1f0
+ RSP: 0018:ffff88001d0b9d60  EFLAGS: 00010246
+ Process kworker/0:2 (pid: 574, threadinfo ffff88001d0b8000, task
+ffff88001de91cc0)
+ Call Trace:
+  [<ffffffff8107092b>] cgroup_event_remove+0x2b/0x60
+  [<ffffffff8103db94>] process_one_work+0x174/0x450
+  [<ffffffff8103e413>] worker_thread+0x123/0x2d0
 
-This affects Torque 2.5.8 and is fixed n Torque 2.5.9. Torque 2.5.9 was
-released on Nov 5, 2011
-(http://www.adaptivecomputing.com/resources/downloads/torque/)
+A local attacker able to register threshold events could use this flaw
+to crash the system.
 
--------------------
+The earliest commit that *might* introduce this issue is 2e72b634 in
+2.6.34-rc2. I haven't tested it though and the code isi slightly
+different.
 
-Ideally then you'd also post a link to the source code change. Depending
-on the availability of an upstream advisory/etc. this isn't always
-necessary.
+On the current kernels without the fix I'm able to reproduce the bug
+easily.
 
-Important note: In future I will not be assigning CVE's for postings of
-just the Secunia URL, you need to include more information as mentioned
-above so that a) I can research and verify the issue and b) to reduce
-the chance of duplicates and c) assign the correct year.
+Upstream commit:
+371528c (3.3-rc5)
 
-Please use CVE-2011-4925 for this issue.
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=800813
+http://git.kernel.org/linus/371528c
 
+Thanks,
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Petr Matousek / Red Hat Security Response Team
