@@ -1,42 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/5
-Message-ID: <4F0E7986.20503@redhat.com>
-Date: Wed, 11 Jan 2012 23:11:18 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: Wireshark multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/07/2
+Message-Id: <20120307.115048.295739206.wl@gnu.org>
+Date: Wed, 07 Mar 2012 11:50:48 +0100 (CET)
+From: Werner LEMBERG <wl@....org>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com, jlieskov@...hat.com, coley@...us.mitre.org, mjurczyk@...gle.com, jmm@...ian.org, jmm@...til.org
+Subject: Re: CVE Request -- FreeType: Multiple security flaws to be fixed in v2.4.9
 Content-Type: text/plain; charset=utf-8
 
-On 01/11/2012 07:20 PM, Steven M. Christey wrote:
->
-> On Wed, 11 Jan 2012, Kurt Seifried wrote:
->
->> On 01/11/2012 09:19 AM, Agostino Sarubbo wrote:
->>> According to secunia advisory: https://secunia.com/advisories/47494/ :
->>>
->>> Multiple vulnerabilities have been reported in Wireshark, which can be
->>> exploited by malicious people to cause a DoS (Denial of Service) and
->>> compromise a user's system.
->>>
->>> 1) NULL pointer dereference errors when reading certain packet
->>> information can
->>> be exploited to cause a crash.
->
-> In this case, if a network monitor can be crashed, an attacker might
-> be able to launch an attack undetected.  As such, NULL pointer
-> dereferences and other crashers in security-relevant products often
-> count for CVEs, so Kurt, please assign one for this.
->
-> See http://www.openwall.com/lists/oss-security/2011/09/14/9 for
-> further explanation from me.
->
-> - Steve
->From what I read the first #1 and #2 (secunia) map to wireshark
-wnpa-sec-2012-02.html and wnpa-sec-2012-03.html respectively, so they
-should be all good? Or did I misread it (this is entirely possible =).
 
--- 
+> A summary will also be posted at the end of this email. I gotta say this
+> is the best mass CVE request I've ever seen!
 
--- Kurt Seifried / Red Hat Security Response Team
+:-)  Thanks for the CVE values; I'll do a new release of FreeType
+within the next few days.
 
+
+    Werner
+
+
+PS: Observing the ffmpeg git repository, I think that Mateusz will
+    present another CVE bomb soon (or he already has done so).
