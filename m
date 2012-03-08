@@ -1,18 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/10
-Message-ID: <20120328131143.GA26534@kludge.henri.nerv.fi>
-Date: Wed, 28 Mar 2012 16:11:43 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/08/4
+Message-ID: <4F591CFA.5000203@redhat.com>
+Date: Thu, 08 Mar 2012 13:56:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...mla.org
-Subject: CVE-request: Joomla 20120305 / 20120306
+Subject: CVE request for PHP 5.3.x Corrupted $_FILES indices lead to security concern
 Content-Type: text/plain; charset=utf-8
 
-Can I get two 2012 CVE-identifiers for these vulnerabilities:
+Just looking through http://www.php.net/ChangeLog-5.php#5.4.0
 
-http://developer.joomla.org/security/news/396-20120305-core-password-change.html
-http://developer.joomla.org/security/news/397-20120306-core-information-disclosure.html
+Fixed bug #55500 (Corrupted $_FILES indices lead to security concern).
 
-Advisories released today.
+https://bugs.php.net/bug.php?id=55500
+(still locked)
 
-- Henri Salo
+But the blog posting:
+
+https://nealpoole.com/blog/2011/10/directory-traversal-via-php-multi-file-uploads/
+
+has details and it appears to be a security issue. I have emailed
+security@....net twice, no response in a week so I'm sending the request
+to OSS-sec.
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
