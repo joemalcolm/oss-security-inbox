@@ -1,56 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/26/3
-Message-ID: <4F996C36.1010004@redhat.com>
-Date: Thu, 26 Apr 2012 09:39:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jan Safranek <jsafrane@...hat.com>, Sergio Freire <sergio-s-freire@...novacao.pt>
-Subject: Re: CVE Request -- net-snmp: Array index error, leading to out-of heap-based buffer read (snmpd crash)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/08/1
+Message-ID: <20120308073900.GB22153@foo.fgeek.fi>
+Date: Thu, 8 Mar 2012 09:39:00 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, plugins@...dpress.org
+Subject: Re: CVE-request: Kish Guest Posting Plugin for WordPress File Upload Remote PHP Code Execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 04/26/2012 05:23 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On Tue, Mar 06, 2012 at 12:39:15PM -0700, Kurt Seifried wrote:
+> On 03/06/2012 12:31 AM, Henri Salo wrote:
+> > Can we assign CVE-identifier for this security vulnerability, thanks.
+> > 
+> > http://osvdb.org/show/osvdb/78479
+> > http://www.securityfocus.com/bid/51638
+> > http://secunia.com/advisories/47688/
+> > http://www.exploit-db.com/exploits/18412/
+> > 
+> > Plugin is disabled in WordPress (doesn't show up in http://wordpress.org/extend/plugins/), but SVN can be found from here: http://plugins.svn.wordpress.org/kish-guest-posting/trunk/
+> > 
+> > File http://plugins.svn.wordpress.org/kish-guest-posting/trunk/readme.txt says:
+> > 
+> > """
+> > = 1.2 =
+> > security update for Uploadify Script
+> > """
+> > 
+> > But I haven't tested (yet) if that is valid fix for the vulnerability.
+> > 
+> > - Henri Salo
 > 
-> an array index error, leading to out-of heap-based buffer read
-> flaw was found in the way net-snmp agent performed entries lookup
-> in the extension table. When certain MIB subtree was handled by the
-> extend directive, a remote attacker having read privilege to the
-> subtree could use this flaw to cause a denial of service (snmpd
-> crash) via SNMP GET request involving a non-existent extension 
-> table entry.
+> Please use CVE-2012-1125 for this issue.
 > 
-> References: [1] https://bugzilla.redhat.com/show_bug.cgi?id=815813
-> 
-> Could you allocate a CVE id for this?
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
 
-Please use CVE-2012-2141 for this issue.
+For curious people this is from SVN trunk:
 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+------------------------------------------------------------------------
+r403694 | kiaso | 2011-07-02 13:40:59 +0300 (Sat, 02 Jul 2011) | 1 line
 
+Uploadify.php security issue fixed
+------------------------------------------------------------------------
+r403689 | kiaso | 2011-07-02 13:24:03 +0300 (Sat, 02 Jul 2011) | 1 line
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Uploadify.php security issue fixed
+------------------------------------------------------------------------
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Index: uploadify/scripts/uploadify.php
+===================================================================
+--- uploadify/scripts/uploadify.php     (revision 403689)
++++ uploadify/scripts/uploadify.php     (revision 403694)
+@@ -1,3 +1,4 @@
++<<<<<<< .mine
+ <?php
+ /*
+ Uploadify v2.1.4
+@@ -27,6 +28,7 @@
+        $tempFile = $_FILES['Filedata']['tmp_name'];
+        $targetPath = $_SERVER['DOCUMENT_ROOT'] . $_REQUEST['folder'] . '/';
+        $targetFile =  str_replace('//','/',$targetPath) . $_FILES['Filedata']['name'];
++
+        // $fileTypes  = str_replace('*.','',$_REQUEST['fileext']);
+        // $fileTypes  = str_replace(';','|',$fileTypes);
+        // $typesArray = split('\|',$fileTypes);
+@@ -35,11 +37,76 @@
+        // if (in_array($fileParts['extension'],$typesArray)) {
+                // Uncomment the following line if you want to make the directory if it doesn't exist
+                // mkdir(str_replace('//','/',$targetPath), 0755, true);
++       // Define allowed extensions
++       $allowable = array ( 'png', 'gif', 'jpg', 'jpeg' );
++       $fileext = strtolower(substr( $_FILES['Filedata']['name'], -3 ));
++
++       // Assume evil upload
++       $noMatch = 0;
++
++       // Give it a try with this tiny extensionckeck
++       foreach( $allowable as $ext ) {
++               if ( strcasecmp( $fileext, $ext ) == 0 ) {
++                       $noMatch = 1;
++               }
++       }
++       if(!$noMatch){ // People are bad. I told you...
++               echo "This file is not allowed...";
++               exit();
++       }
++       else {
++               move_uploaded_file($tempFile,$targetFile);
++               echo str_replace($_SERVER['DOCUMENT_ROOT'],'',$targetFile);
++       }
 
-iQIcBAEBAgAGBQJPmWw2AAoJEBYNRVNeJnmTZRkQALNCqp/jV5VOiC2+MGnXgvxp
-ZPFY7RZ1oCUvJ/A7XIfaJZ9ark8gQjqxwZP1MbG4rR3RzjfCzg1tL4OSyxvig2PK
-g/yprHw837sauFuill+A+2pPrTx8A9xqehGWgJzSJUHdjhgmhV+FN4CN13WGBpJo
-jk6yVmEJDsKSloHSeO78Z8yV4cGYO/XdUkWUpU9N+zaNBco5nGQCR+Hd/Ny59MNS
-1byWgoGczkmexZtoIMAJGxoW4baYhjemzNvv4x7hIb2ttL3IW2UTwq2BCee1Udx7
-wpovVy899PJ2qsFDVuiylGniHcK+QwOVMzdVRyWZlHNRv40KpINFFrjm9oGb2Ewt
-X0tKZfoZcbz9ad7PV/MQLYyu2R3mMXPFDx/a0wXMXyQs3LJ2B0dgHjqg6noepqJk
-MCftVMIUuzsU9PcTIL78w3g0JVFmk1KZOsPj1DY+zAP0qg7oDN/eOkIf8L2k28//
-ny+85VQBz1AXU37Hp9L0daGGOOuDg7lBinVA+aXNEPvFGr4SpD95lfmO1kkfFpeQ
-2dabg/GBVJQjppzLEC/3U7h9QQV25hE0eqJL4BWLveNZfCLZhW4zIcLJXsUECinY
-2QYyZcPC9zyBHRiiWaJAaD13yvMXA4ynQeKuiWUCXVdpEFmVXxCgNCiwJSNlwYdF
-F5sn+Mo8VNctTgSPundu
-=rlKK
------END PGP SIGNATURE-----
++
++       // } else {
++       //      echo 'Invalid file type.';
++       // }
++}
++?>=======
+
+In my opinion this is not a proper fix for this security vulnerability as this doesn't detect the filetype. This code only assumes file is valid if filename suffix matches item from allowable array. I do not know how to contact developer of this plugin. I could even provide a working patch for this vulnerability.
+
+- Henri Salo
