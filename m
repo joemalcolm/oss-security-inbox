@@ -1,57 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/4
-Message-ID: <4F5E5020.7010206@redhat.com>
-Date: Mon, 12 Mar 2012 13:36:00 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/08/5
+Message-ID: <4F591F35.9080404@redhat.com>
+Date: Thu, 08 Mar 2012 14:05:57 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- openldap (slapd): Assertion failure by processing search queries requesting only attributes for particular entry
+To: oss-security@...ts.openwall.com, security@....net
+Subject: Re: CVE request for PHP 5.3.x Corrupted $_FILES indices lead to security concern
 Content-Type: text/plain; charset=utf-8
 
-On 03/12/2012 11:36 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On 03/08/2012 01:56 PM, Kurt Seifried wrote:
+> Just looking through http://www.php.net/ChangeLog-5.php#5.4.0
 > 
->   a denial of service flaw was found in the way the slapd server of the
-> OpenLDAP,
-> the Lightweight Directory Access Protocol applications and development
-> suite,
-> processed certain search queries requesting only attributes (no values)
-> for a
-> particular entry. A remote attacker could issue a specially-crafted LDAP
-> search
-> query, which once processed by a vulnerable slapd server would lead to
-> assertion failure (slapd abort).
+> Fixed bug #55500 (Corrupted $_FILES indices lead to security concern).
 > 
-> Upstream bug report:
-> [1] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7143
+> https://bugs.php.net/bug.php?id=55500
+> (still locked)
 > 
-> Original upstream patch:
-> [2]
-> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=ef2f5263de8802794e528cc2648ecfca369302ae
+> But the blog posting:
 > 
+> https://nealpoole.com/blog/2011/10/directory-traversal-via-php-multi-file-uploads/
 > 
-> Further patches:
-> [3]
-> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=430256fafb85028443d7964a5ab1f4bbf8b2db38
-> 
-> 
-> [4]
-> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=463c1fa25d45e393dc1f1ea235286f79e872fad0
-> 
-> 
-> References:
-> [5] http://www.openldap.org/software/release/changes.html
-> [6] https://bugs.gentoo.org/show_bug.cgi?id=407941
-> [7] https://secunia.com/advisories/48372/
-> [8] https://bugzilla.redhat.com/show_bug.cgi?id=802514
-> 
-> Could you allocate a CVE identifier for this?
-> 
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+> has details and it appears to be a security issue. I have emailed
+> security@....net twice, no response in a week so I'm sending the request
+> to OSS-sec.
 
-Please use CVE-2012-1164 for this issue.
+On second look the code doesn't appear to be in PHP 5.3.10 so is it only
+in PHP 5.4 betas? Can anyone @php confirm this?
+
+
 
 -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
