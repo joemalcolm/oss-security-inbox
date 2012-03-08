@@ -1,55 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/3
-Message-ID: <4F687AC3.5090403@redhat.com>
-Date: Tue, 20 Mar 2012 13:40:35 +0100
-From: Stefan Cornelius <scorneli@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/08/6
+Message-ID: <4F593386.1040604@redhat.com>
+Date: Thu, 08 Mar 2012 15:32:38 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libtasn1 "asn1_get_length_der()" DER decoding issue
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Parallels Plesk Panel admin/plib/api-rpc/Agent.php Unspecified SQL Injection
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 03/08/2012 12:46 AM, Henri Salo wrote:
+> Can I get 2012 CVE-identifier for this security vulnerability, thanks.
+> 
+> OSVDB: http://osvdb.org/show/osvdb/79769
+> Secunia: http://secunia.com/advisories/48262/
+> SecurityFocus: http://www.securityfocus.com/bid/52267
+> Vendor: http://kb.parallels.com/en/113321
+> 
+> - Henri Salo
 
-libtasn1 version 2.12 was released fixing the following issue:
+This isn't open source is it?
 
-  - Corrected DER decoding issue (reported by Matthew Hall).
-    Added self check to detect the problem, see tests/Test_overflow.c.
-    This problem can lead to at least remotely triggered crashes, see
-    further analysis on the libtasn1 mailing list.
-
-Further issue details from Simon Josefsson [1]:
-
-I want to mention that there were no security problem in the
-asn1_get_length_der function.  It was working properly and as documented
-before.  The security problem was the callers not checking that the
-returned values were reasonable, i.e., that the output length was less
-than or equal to the total length of the buffer.  However, fixing all
-callers of this function would be a huge amount of work.  Instead, we
-made asn1_get_length_der return an error code when the situation
-occured, to protect callers.  This fix could be the wrong thing if some
-code out there calls the function with a der_len parameter that is
-smaller than the entire DER structure length.  However, we are hoping
-that is not in any significant use, and that overall security will be
-improved by having the function sanity check its output rather than
-letting the caller do that.  This was a judgement call.
-
-[1] http://thread.gmane.org/gmane.comp.gnu.libtasn1.general/54
-
-It appears like GnuTLS is affected as well (but probably does not need a
-separate CVE at this point):
-http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5952/
-http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5957/
-
--- References --
-
-Release announcement:
-http://article.gmane.org/gmane.comp.gnu.libtasn1.general/53
-
-Small analysis + patch:
-http://thread.gmane.org/gmane.comp.gnu.libtasn1.general/54
-
-Red Hat bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=804920
-
-Thanks and kind regards,
 -- 
-Stefan Cornelius / Red Hat Security Response Team
+Kurt Seifried Red Hat Security Response Team (SRT)
