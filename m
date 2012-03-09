@@ -1,24 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/13/2
-Message-ID: <20120413104635.GA7230@kludge.henri.nerv.fi>
-Date: Fri, 13 Apr 2012 13:46:35 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/9
+Message-ID: <20120309231606.GA12383@eltex.net>
+Date: Sat, 10 Mar 2012 02:16:06 +0300
+From: ArkanoiD <ark@...ex.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Wikidforum 2.10 multiple XSS and SQL-injection vulnerabilities SSCHADV2012-005
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 12, 2012 at 12:55:01PM -0600, Kurt Seifried wrote:
-> > http://osvdb.org/show/osvdb/80840 Wikidforum Advanced Search
-> > Multiple Field SQL Injection
-> Also I couldn't really confirm the SQL injections so not assigning a
-> CVE, if you can find confirmation I'll assign a CVE.
+Am I the only one here with strong deja vu feeling? :-)
 
-With "'" as input to select_sort:
+On Sat, Mar 10, 2012 at 12:01:21AM +0100, Eric Leblond wrote:
+> Hello,
+> 
+> On Mon, 2012-02-27 at 14:46 +0100, Eric Leblond wrote:
+> > Hello,
+> > 
+> > On Mon, 2012-02-27 at 05:25 +0400, Solar Designer wrote:
+> > > Eugene, all -
+> > > 
+> > > On Mon, Feb 27, 2012 at 09:19:59AM +0800, Eugene Teo wrote:
+> ...
+> 
+> > e it to Eric much earlier),
+> > > Eric would post to the list e.g. in January and ask for the issue to be
+> > > kept private until March - thereby violating the list's maximum embargo
+> > > period.
+> 
+> The slides and videos of my CansecWest talk are available:
+> http://home.regit.org/2012/03/playing-with-network-layers-to-bypass-firewalls-filtering-policy/
+> 
+> I've done a complete description of the attack and also demonstrate the
+> need to be careful with the use of helpers.
+> 
+> BR,
+> -- 
+> Eric Leblond 
+> Blog: http://home.regit.org/
+> 
+> email protected and scanned by AdvascanTM - keeping email useful - www.advascan.com 
+> 
+> 
 
-You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\\\' asc' at line 1select * from posts where parent_post_id IS NULL AND status=1 AND user_id=0 AND (post LIKE '%foo%' OR title LIKE '%foo%') and status IN (1) order by \\\' asc
 
-My friend told me that this can escalate in case of bad permissions or bad MySQL setup, but I do not have better PoC for this list. At least one can't chain for example SELECT foo FROM bar;DROP TABLE users;--
-
-http://dev.mysql.com/doc/refman/5.5/en/select.html
-
-- Henri Salo
