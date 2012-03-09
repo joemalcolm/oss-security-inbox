@@ -1,72 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/11
-Message-ID: <4FECA2A7.1020603@redhat.com>
-Date: Thu, 28 Jun 2012 12:29:59 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/10
+Message-ID: <1331337282.30207.16.camel@tiger.regit.org>
+Date: Sat, 10 Mar 2012 00:54:42 +0100
+From: Eric Leblond <eric@...it.org>
 To: oss-security@...ts.openwall.com
-CC: Zeev Suraski <zeev@...d.com>, Stuart Henderson <stu@...cehopper.org>, "security@....net" <security@....net>
-Subject: Re: Re: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 06/28/2012 07:24 AM, Zeev Suraski wrote:
->> Would you expect a variable described as "Decides whether PHP may
->> expose the fact that it is installed on the server" to control
->> whether an anonymous user can fetch a list of enabled modules?
+On Sat, 2012-03-10 at 02:16 +0300, ArkanoiD wrote:
+> Am I the only one here with strong deja vu feeling? :-)
+
+Cool ;)
+
+Do you have any pointer/url to share ?
+
+BR,
 > 
-> I wouldn't, and thankfully it does not.  The list you're seeing has
-> nothing to do with what's enabled or disabled on the server.  It's
-> a build-time list of all the modules that were available in the
-> source tree.  It's completely static for a given version of PHP.
-> As an example, in the abovementioned URL, you see NSAPI, ISAPI and
-> Apache 2.0 mentioned, although this is an Apache 1.3 server.  We
-> also surely don't have COM and .NET installed on that Linux server
-> either.
+> On Sat, Mar 10, 2012 at 12:01:21AM +0100, Eric Leblond wrote:
+> > Hello,
+> > 
+> > On Mon, 2012-02-27 at 14:46 +0100, Eric Leblond wrote:
+> > > Hello,
+> > > 
+> > > On Mon, 2012-02-27 at 05:25 +0400, Solar Designer wrote:
+> > > > Eugene, all -
+> > > > 
+> > > > On Mon, Feb 27, 2012 at 09:19:59AM +0800, Eugene Teo wrote:
+> > ...
+> > 
+> > > e it to Eric much earlier),
+> > > > Eric would post to the list e.g. in January and ask for the issue to be
+> > > > kept private until March - thereby violating the list's maximum embargo
+> > > > period.
+> > 
+> > The slides and videos of my CansecWest talk are available:
+> > http://home.regit.org/2012/03/playing-with-network-layers-to-bypass-firewalls-filtering-policy/
+> > 
+> > I've done a complete description of the attack and also demonstrate the
+> > need to be careful with the use of helpers.
+> > 
+> > BR,
+> > -- 
+> > Eric Leblond 
+> > Blog: http://home.regit.org/
+> > 
+> > email protected and scanned by AdvascanTM - keeping email useful - www.advascan.com 
+> > 
+> > 
 > 
-> This is definitely not a security issue of any kind.
-> 
-> Zeev
 > 
 
-Yeah my bad, I just skimmed the list (it was late). Just for future
-reference as well the other magic values are:
+-- 
+Eric Leblond 
+Blog: http://home.regit.org/
 
-ext/standard/info.h:#define PHP_LOGO_GUID
-"PHPE9568F34-D428-11d2-A769-00AA001ACF42"
-
-ext/standard/info.h:#define PHP_EGG_LOGO_GUID
-"PHPE9568F36-D428-11d2-A769-00AA001ACF42"
-
-ext/standard/info.h:#define ZEND_LOGO_GUID
-"PHPE9568F35-D428-11d2-A769-00AA001ACF42"
-
-ext/standard/info.h:#define PHP_CREDITS_GUID
-"PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000"
-
-I guess I'm just not a huge fan of surprises in my software =). The
-expose_php variable appears to control them all no problem.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP7KKnAAoJEBYNRVNeJnmTBQMQAMnFQm+p8WjcsYUz+mWPewrS
-4fV+c70bZU2kDOK8NOBwXWTluqxA43LQQBYP68HeDUmMAlwrZIgi20+myriXndD1
-TDgMLpIImywMJentPpcgMHKNPUTW3a8pv4cde4tPUJVWkAIRPwY+yR3bhmnwhuq+
-sPXo2bI5Ah+KNFQfn00hfi/s/NSOYBnCHD9CXezBYvZhNjXq+do8C3Zgv70DzOnh
-9JR+v6s2iZUj37966GO4nV9+hMb0UW2SvT3qL8cgb5euNP3zF8loumJw0DHUgcoW
-+qcsw6rPTJbs2QSimw05gxrJe42BXYu0V+C8WC9Ov8JR+3p+fs/FCdf30RTDwtey
-3jDFstGntBfGmak2XE8jk0i7m3Vp9WzmDKeoVM/uZZTJJ9hj0UazuDMJlklzz2UR
-aHCzBzxxWY8fmS38k9Po//o4wtb03Z1E2op/zoM10KvgKlmSCpawng22dLnWPtah
-XTchlIeUW+0/+XKBO6pKaXmdm+zxxUPNshouN2rQFEGtPK0fvgk1zZ1mj4CgHc8Z
-sJ222TdURBAzlHDg8l2bXoI3pkmxoH3yJ4bp8Caa5+Qf5tfnTu13bIi0MAQbJ6S8
-lO3fFgxJ+U4k85RklS91jBb9XNG1qb4K+s3x7RzTKx29VsidlSYVrlWMcwwOxGU2
-fHE5udqClQeTSJq6s8xg
-=Y6Z8
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
