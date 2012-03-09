@@ -1,65 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/9
-Message-ID: <4FA3FDC8.8020905@redhat.com>
-Date: Fri, 04 May 2012 10:03:20 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Steve Beattie <steve@...w.org>
-Subject: Re: CVE Request: evolution-data-server lacks SSL checking in its libsoup users
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/7
+Message-ID: <CAB9ZNAyjGOkUjT-ehDxiWVC1vvdqrGGbj86fvzHdThEg3v8NrQ@mail.gmail.com>
+Date: Fri, 9 Mar 2012 09:13:26 -0500
+From: Andres Gomez <agomez@...idsignal.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: TORCS 1.3.2 xml buffer overflow - CVE-2012-1189
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+2012/3/6 Tomas Hoger <thoger@...hat.com>
 
-On 05/04/2012 02:30 AM, Steve Beattie wrote:
-> On Fri, May 04, 2012 at 10:03:11AM +0200, Marcus Meissner wrote:
->> This was already reported: 
->> https://bugzilla.gnome.org/show_bug.cgi?id=671537 
->> https://launchpad.net/bugs/933659   (private still)
->> 
->> so it might have a CVE already.
-> 
-> I've made the launchpad bug public now. There was no CVE assigned 
-> in that report.
-> 
-> Thanks.
-> 
+>
+> Their code bases may differ significantly in other parts, but it seems
+> the affected vulnerable code is still identical between the two.
+> Following are versions shortly before fixes got committed:
+>
+>
+> http://torcs.cvs.sourceforge.net/viewvc/torcs/torcs/torcs/src/modules/graphic/ssggraph/grsound.cpp?revision=1.31.2.2&view=markup
+>
+> http://speed-dreams.svn.sourceforge.net/viewvc/speed-dreams/trunk/src/modules/graphic/ssggraph/grsound.cpp?revision=4146&view=markup
+>
+> In cases like this, same CVE is used for all project that use / embed
+> the same affected code.
+>
 
-Shouldn't these all be covered by the libsoup CVE:
-
-> libsoup 2.32.2 does not verify certificates at all if an 
-> application does not explicitly specify a file with trusted root 
-> CA's. Since that libsoup version relies on the verification
-> failure to clear the trust flag it always considers ssl connections
-> as trusted in that case.
-> 
-> Reference: https://bugzilla.novell.com/show_bug.cgi?id=758431
-> 
-> cu Ludwig
-> 
-Please use CVE-2012-2132 for this issue.
+ Ok, understood, thanks.
 
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Write up the description and send it to Mitre =).
+>
+>   I already did, I sent details but they have not disclosed them in web
+> page http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-1189, maybe i
+> used a wrong email address (cve-assign@...re.org).
+>
+>
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+ So, what Mitre's email could I send CVE-2012-1189 details?
 
-iQIcBAEBAgAGBQJPo/3IAAoJEBYNRVNeJnmTtPkQAKI4X13+7i3fStpzFpHamaUi
-5/xgP6q+2ln/XVk11v4M6hN0VTr2gITPFk51x+MVnm+i9uBd8s5EtovrueA+eE8t
-bISTs6WSDDFrpOlR3nW1DN65bW9WT75dp1c4ehWZJXDtlOIeYAjKh+Avc0lxLLVM
-KeIaTv5nFHGaTth6ajreuW3esDYXAZ/mTlEfdyiUq2+6JtqE8TVl4sXRN0GOl7Ra
-wlBE8M28C3p8aqyeY5Esxq3chLNFF7WFaMkOkgNv5okpFrJ+QQ/8lT1nOf4pPgm8
-ndDk69ICcNkfFerBxNY58Qb8BLD022qJOAaYsbAfty1//gLXtUjqf5Zq/c2o3DJ4
-EaClDiLPAjwbc6T5JlDyatTdwLNlFDdziJTk3f0TU9Qffx7adbeCyPIA42GCnQp5
-pS+xsAIayCW3S7cAT/quy4F7dOppSWJ9qT4wJjCvIvQejnOS4qmQNL7GLac4REgU
-wMYYW6DKGWb0zOW0WTP58IC+Ros3nK+YiHyyg8tpG9SvtGC7L8CE532Y1eXwZT9/
-WccuEL3gQ9zOl3Y9EmTkj/770+msIRyjRQmuKpGwk/oUuKANlIfy4LwdSgD/PiGG
-3jlIZjdNOic6OM0N3TKbvDuKp+tBy41lYig1e4AGSpPeX5oFF380MERWw+GZFx2+
-dyiNsiZOsrcJTOYCKAMd
-=WbnO
------END PGP SIGNATURE-----
+Regards
+
+Andres Gomez
+
