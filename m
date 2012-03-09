@@ -1,87 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/4
-Message-ID: <5298129.1aQAUmsEvM@kspread>
-Date: Tue, 17 Jul 2012 10:18:06 +0200
-From: laurent Montel <montel@....org>
-To: Vincent Danen <vdanen@...hat.com>
-Cc: oss-security@...ts.openwall.com, Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com, faure@....org
-Subject: Re: CVE Request: KDE Pim
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/4
+Message-ID: <20120309082145.GB26740@foo.fgeek.fi>
+Date: Fri, 9 Mar 2012 10:21:45 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: Ariadne 2.7.6 XSS
 Content-Type: text/plain; charset=utf-8
 
-Le lundi 16 juillet 2012 11:47:59 Vincent Danen a écrit :
-> * [2012-07-13 10:41:33 -0600] Kurt Seifried wrote:
-> >On 07/13/2012 06:25 AM, Marc Deslauriers wrote:
-> >> Hello,
-> >> 
-> >> Could a CVE please be assigned to the following issue:
-> >> 
-> >> Javascript and external images were being loaded while rendering
-> >> HTML email in kmail. The downloaded Javascript was then being
-> >> interpreted.
-> >> 
-> >> See:
-> >> 
-> >> https://projects.kde.org/projects/kde/kdepim/repository/revisions/dbb2f72
-> >> f4745e00f53031965a9c10b2d6862bd54>> 
-> >>  https://bugs.launchpad.net/ubuntu/+source/kdepim/+bug/1022690
-> >> 
-> >> Thanks,
-> >> 
-> >> Marc.
-> >
-> >This seems like a security hardening issue to me, but I'm not a KDE
-> >person so did kdepim advertise itself as not executing JavaScript/etc?
-> 
-> Doing some digging, it looks like this was introduced in kdepim 4.4, and
-> would not affect earlier versions.  Can anyone confirm this?
+Can I get a 2011 CVE-identifier for this security vulnerability, thanks. Original advisory: http://seclists.org/bugtraq/2011/Dec/7 named SSCHADV2011-038.
 
-No it was added in 4.6 or 4.7 when we ported to akonadi2
-In 4.4 it didn't use *WebKit*
+OSVDB: http://osvdb.org/show/osvdb/77460 http://osvdb.org/show/osvdb/77461
+Secunia: http://secunia.com/advisories/47057/
+Report to vendor: http://bugs.ariadne-cms.org/view.php?id=277 (status: fixed)
 
-and it didn't use same code :
-it used DOM::
-
-'  try {
-   // Create a DOM Document from the HTML source
-   DOM::HTMLDocument doc;
-   doc.open();
-   doc.write( htmlSource );
-   doc.close();
-
-   mIsQuotedLine = false;
-   mIsFirstTextNodeInLine = true;
-   processNode( doc.documentElement() );
-   return doc.toString().string();
- }
-'
-
-So for me it's just kmail > 4.6 (we released an old 4.6-akonadi)
-
-not necessary to try to fix in 4.4
-
-I CC David if he has more infos.
-
-I hope that it helps.
-
-Security problem is that we allows to use javascript.
-In 4.4 we don't have it.
-
-
-
-Regards.
-
-
-
-> I'm cc'ing Laurent Montel who made the commit, and who should be able to
-> shed some light as to when the vulnerability was introduced, and also
-> answer Kurt's question above.
-> 
-> Laurent, any information you can provide would be appreciated.
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
--- 
-Laurent Montel | laurent.montel@...b.com | KDE/Qt Senior Software Engineer
-KDAB (France) S.A.S., a KDAB Group company
-Tel. France +33 (0)4 90 84 08 53, Sweden (HQ) +46-563-540090
-KDAB - Qt Experts - Platform-independent software solutions
+- Henri Salo
