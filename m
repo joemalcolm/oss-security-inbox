@@ -1,63 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/4
-Message-ID: <50750063.1030306@redhat.com>
-Date: Tue, 09 Oct 2012 22:58:11 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/8
+Message-ID: <1331334081.30207.11.camel@tiger.regit.org>
+Date: Sat, 10 Mar 2012 00:01:21 +0100
+From: Eric Leblond <eric@...it.org>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, security@...mla.org
-Subject: Re: CVE request: Joomla two XSS vulnerabilities fixed in 2.5.7
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 10/07/2012 10:30 AM, Henri Salo wrote:
+On Mon, 2012-02-27 at 14:46 +0100, Eric Leblond wrote:
 > Hello,
 > 
-> I think these two Joomla security issues does not have
-> CVE-identifiers:
-> 
-> http://www.joomla.org/announcements/release-news/5463-joomla-2-5-7-released.html
->
-> 
-http://secunia.com/advisories/49678/
-> Versions: 2.5.6 and all earlier 2.5.x versions
-> 
-> 1)
-> http://developer.joomla.org/security/news/539-20120901-core-xss-vulnerability
->
->  2)
-> http://developer.joomla.org/security/news/540-20120902-core-xss-vulnerability
->
-> 
-http://osvdb.org/show/osvdb/83490
-> http://www.darksecurity.de/advisories/2012/SSCHADV2012-014.txt
-> 
-> - Henri Salo
-> 
+> On Mon, 2012-02-27 at 05:25 +0400, Solar Designer wrote:
+> > Eugene, all -
+> > 
+> > On Mon, Feb 27, 2012 at 09:19:59AM +0800, Eugene Teo wrote:
+...
 
-I'm wondering,there seems to be some gaps in Joomla CVE assignments,
-are there other Joomlas that need CVEs as well?
+> e it to Eric much earlier),
+> > Eric would post to the list e.g. in January and ask for the issue to be
+> > kept private until March - thereby violating the list's maximum embargo
+> > period.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+The slides and videos of my CansecWest talk are available:
+http://home.regit.org/2012/03/playing-with-network-layers-to-bypass-firewalls-filtering-policy/
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+I've done a complete description of the attack and also demonstrate the
+need to be careful with the use of helpers.
 
-iQIcBAEBAgAGBQJQdQBjAAoJEBYNRVNeJnmT/xQP/3+laDs5mVOxsoVLfeObEXlp
-NrI+iVYueOXI5zMQqT3TQ/ZMDiueCTZIitw0fINB1GS5wX0K8fftPQAyDWtRu7BC
-6kP9TnOI1TuT9mGuvFM6vslHmY5UMAYXNanievSdAHMzKcNh84+yb/N13un3tZkI
-fenU6mVnoSBgD3QgE1XBiaG2r7SO3dMdUnEbmlrVM2aO8S/r91GUHdyeMO0qSB39
-d/rlNKyu+1Hc2qzM0D6C9Q8d7mN9j09j8HIaggMvx4iugHtch3qWxKi9TbUwhzZB
-FUC4hzburJrMv8LVgQvsyZoQ371jeXJY+hJ6K0IH5I0OlMeqyXvCMvTs2HtfayuS
-4S6FNFiRUMSTL9vBbCvB16K6YloLkbxg+0hasW/kRv1+oVh++MHUzJb8v0VKNCkj
-Mxzz+rXsG3MGq6+jJd+nTcrYrmKfO8P/9jau8ii3Ar5B7z+MwmZiG8ykYaM9/WBd
-LgAETpOCVR2+axKDbxgU71krCeGII4GI/GVtnVBeWO6FR3ds8m51YfQORh9jAUYZ
-N8eksGY9NQUSXOhPXFK5JXKxohQZyQJRUlsoxsGuKOhTkNbQYvlDV8rSrPFO6wdh
-ngEKm2Q9cUdjtx2JMtM5CFIsYooABiHJJuwZD8t/Gg56gaz9AD7CisLANT3QgyzD
-HS4XDveRvYcVkxXm1lLZ
-=31Uj
------END PGP SIGNATURE-----
+BR,
+-- 
+Eric Leblond 
+Blog: http://home.regit.org/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
