@@ -1,62 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/12/5
-Message-ID: <4FADFEEF.1070506@redhat.com>
-Date: Sat, 12 May 2012 00:10:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/3
+Message-ID: <20120309052023.GA26158@foo.fgeek.fi>
+Date: Fri, 9 Mar 2012 07:20:23 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>, Henri Salo <henri@...v.fi>, cve-assign@...re.org
-Subject: Re: CVE-request: TYPO3 TYPO3-SA-2010-022 still without CVE
+Subject: Re: CVE-request: Parallels Plesk Panel admin/plib/api-rpc/Agent.php Unspecified SQL Injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> But these are from 2010, they should not have 2012-* IDs?
+On Thu, Mar 08, 2012 at 03:32:38PM -0700, Kurt Seifried wrote:
+> On 03/08/2012 12:46 AM, Henri Salo wrote:
+> > Can I get 2012 CVE-identifier for this security vulnerability, thanks.
+> > 
+> > OSVDB: http://osvdb.org/show/osvdb/79769
+> > Secunia: http://secunia.com/advisories/48262/
+> > SecurityFocus: http://www.securityfocus.com/bid/52267
+> > Vendor: http://kb.parallels.com/en/113321
+> > 
+> > - Henri Salo
 > 
-> Cheers, Moritz
+> This isn't open source is it?
+> 
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
 
-Correct.
+Ouh sorry you are correct. Could MITRE handle this one? This software is widely used.
 
-CVE-2012-2342 **REJECT** wrong year
-CVE-2012-2343 **REJECT** wrong year
-CVE-2012-2344 **REJECT** wrong year
-CVE-2012-2345 **REJECT** wrong year
-CVE-2012-2346 **REJECT** wrong year
-CVE-2012-2347 **REJECT** wrong year
-CVE-2012-2348 **REJECT** wrong year
-CVE-2012-2349 **REJECT** wrong year
-
-
-CVE-2010-5097 TYPO3-SA-2010-022 #1 frontend click enlarge XSS
-CVE-2010-5098 TYPO3-SA-2010-022 #1 frontend form content object XSS
-CVE-2010-5099 TYPO3-SA-2010-022 #2 PHP file inclusion protection API
-CVE-2010-5100 TYPO3-SA-2010-022 #3 Install Tool XSS
-CVE-2010-5101 TYPO3-SA-2010-022 #4 Backend Remote File Disclosure
-CVE-2010-5102 TYPO3-SA-2010-022 #4 Backend Path Traversal
-CVE-2010-5103 TYPO3-SA-2010-022 #4 Backend SQL Injection
-CVE-2010-5104 TYPO3-SA-2010-022 #5 Database API info disclosure
-
-My apologies.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPrf7vAAoJEBYNRVNeJnmTcu0QAIN2ZFU2LvAQAt6+fwS5WBVw
-ak2cuMPoTj9Wtq8QWXMxChm0CKZGCgKSw4REHhsiTfU6lwuKSzeLv+WkKt4rC7CL
-tVycQiQtOcKcs1N+IWzABP28hpZvI14+LTbnECRVviSa/0ncYN4hny75Inw0XMNd
-QWjI3VN6oMblmdPDpN748f0v+QB/z/sj/TfSXcs0ZvcjaNdrzMGNinXY5AhHJRAN
-NOuletborCBOOqmFnzK79WmGN1/cCRR4/mGol0kEddTFA6svoHP8ywp5sU3G48WD
-JaRLwJiqzSV96gQs+XTBYheLlRwAkZLp9KGkdQPL893yWgXCbhPQBs8fFHll9GF3
-HGwlkqtc0PEXso7ilKvvG3UN0OHoML6U2TCDrZzRzZIQa8pA85oW9Vib632hRHTz
-JpFEix/uGWYTmWud2qELTwS2w3QTxP1z4PMU8nf0wCvzcvOXUNhERMKnZzzHwQSA
-6K+lzhJKBQ9sXebHHJevrMo8U5cXHSg3AUP16nnbJmPh+8JYEpgGW8E1BlTLr+ny
-wuxgjhdFJN/kSGUw1glgZoJ09FMKVyPiyiNm9bnLwo1XHuh0AJS9HiwhJ9hc3m5B
-vFOvEQDgKTlRhUj78WuQVpNYm0ofqfLp7+EWxrB2SGidVpDDPDnC8X0lYXklPXDH
-TY86G7v8FcENxtg1kTmH
-=a0ip
------END PGP SIGNATURE-----
+- Henri Salo
