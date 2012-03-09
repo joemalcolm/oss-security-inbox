@@ -1,46 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/17
-Message-ID: <20120504194452.GC15689@suse.de>
-Date: Fri, 4 May 2012 21:44:52 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Steve Beattie <steve@...w.org>
-Subject: Re: CVE Request: evolution-data-server lacks SSL checking in its libsoup users
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/6
+Message-ID: <4F59E523.9040206@redhat.com>
+Date: Fri, 09 Mar 2012 12:10:27 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+CC: Niko Tyni <ntyni@...ian.org>, Dominic Hargreaves <dom@...th.li>
+Subject: CVE Request -- libdbd-pg-perl / perl-DBD-Pg && libyaml-libyaml-perl / perl-YAML-LibYAML: Multiple format string flaws
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 04, 2012 at 10:03:20AM -0600, Kurt Seifried wrote:
-> On 05/04/2012 02:30 AM, Steve Beattie wrote:
-> > On Fri, May 04, 2012 at 10:03:11AM +0200, Marcus Meissner wrote:
-> >> This was already reported: 
-> >> https://bugzilla.gnome.org/show_bug.cgi?id=671537 
-> >> https://launchpad.net/bugs/933659   (private still)
-> >> 
-> >> so it might have a CVE already.
-> > 
-> > I've made the launchpad bug public now. There was no CVE assigned 
-> > in that report.
-> > 
-> > Thanks.
-> > 
-> 
-> Shouldn't these all be covered by the libsoup CVE:
-> 
-> > libsoup 2.32.2 does not verify certificates at all if an 
-> > application does not explicitly specify a file with trusted root 
-> > CA's. Since that libsoup version relies on the verification
-> > failure to clear the trust flag it always considers ssl connections
-> > as trusted in that case.
-> > 
-> > Reference: https://bugzilla.novell.com/show_bug.cgi?id=758431
-> > 
-> > cu Ludwig
-> > 
-> Please use CVE-2012-2132 for this issue.
+Hello Kurt, Steve, vendors,
 
-That really depends if it is the task of libsoup or the task of the
-applications I think. So who is lacking the checks...
+Case #1:
+========
+Two format string flaws were found in the way perl-DBD-Pg, a Perl language
+PostgreSQL DBI implementation, performed:
+1) turning of database notices into appropriate Perl language warning messages,
+2) preparation of particular DBD statement.
 
-Our opinion is that the default should be "good" in libsoup, so a CVE
-is needed there in all cases.
+A rogue server could provide a specially-crafted database warning or
+specially-crafted DBD statement, which once processed by the perl-DBD-Pg
+interface would lead to perl-DBD-Pg based process crash.
 
-Ciao, Marcus
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661536
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=801733
+
+CPAN ticket:
+[3] https://rt.cpan.org/Public/Bug/Display.html?id=75642
+
+Patch proposed by Niko Tyni:
+[4] 
+https://rt.cpan.org/Ticket/Attachment/1047954/547725/0001-Explicitly-warn-and-croak-with-controlled-format-str.patch
+
+Case #2:
+========
+Multiple format string flaws were found in the way perl-YAML-LibYAML, Perl YAML
+serialization using XS and libyaml, performed:
+1) error reporting by loading of general YAML stream,
+2) error reporting by loading of YAML node,
+3) error reporting by loading of YAML mapping into a Perl hash, and
+4) error reporting by loading of YAML sequence into a Perl array.
+
+A remote attacker could provide a specially-crafted YAML document, which once
+processed by the perl-YAML-LibYAML interface would lead to perl-YAML-LibYAML
+based process crash.
+
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661548
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=801738
+
+CPAN tickets:
+[3] https://rt.cpan.org/Public/Bug/Display.html?id=75365
+[4] https://rt.cpan.org/Public/Bug/Display.html?id=46507
+
+Proposed patch:
+[5] https://rt.cpan.org/Ticket/Attachment/920541/477607/YAML-LibYAML-0.35-format-error.patch
+
+Could you allocate two CVE ids for these? (one for libdbd-pg-perl / perl-DBD-Pg
+and one for libyaml-libyaml-perl / perl-YAML-LibYAML)
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
