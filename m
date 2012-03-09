@@ -1,32 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/16
-Message-ID: <20121029231000.GA21676@hunt>
-Date: Tue, 30 Oct 2012 00:10:00 +0100
-From: Seth Arnold <seth.arnold@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: Django
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/1
+Message-ID: <4F598EB2.9040504@redhat.com>
+Date: Thu, 08 Mar 2012 22:01:38 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: expat 2.1.0beta fixes 5 Denial of Service attacks, CVE's/details inside
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, all,
+So expat is releasing an update (2.0.1 -> 2.1.0) which is the first one
+in a while (which is a testament to the stability and reliability of
+expat). If you want to help Karl Waclawek (karl@...lawek.net), the
+author of expat out (and by extension pretty much everyone using Open
+Source that parses xml using expat which is a lot of stuff), please test
+the 2.1.0beta and send him feedback (works, doesn't work, etc.). Two of
+the issues were already assigned CVE's back in 2009, the rest got 2012
+because that where we are now.
 
-Django recently released updates 1.3.4 and 1.4.2 to address a Host:
-header poisoning problem and incorrect HttpOnly cookie documentation
-(only wrong in 1.4.x).
+Changes in Expat 2.1.0beta:
 
-I believe only the header poisoning problem requires a CVE (the other
-problem is documentation; Django application authors may make a mistake
-in their code if they go by the faulty documentation), but I thought I
-should mention both in this CVE request email as the Django announcement
-mentioned both:
+#2895533: CVE-2012-1147 - Resource leak in readfilemap.c.
+http://mail.python.org/pipermail/expat-bugs/2009-November/002858.html
+http://sourceforge.net/tracker/?func=detail&aid=2895533&group_id=10127&atid=110127
+https://bugzilla.redhat.com/show_bug.cgi?id=801634
 
-https://www.djangoproject.com/weblog/2012/oct/17/security/
+#1990430: CVE-2009-3720 - Parser crash with specially formatted UTF-8
+sequences.
+http://mail.python.org/pipermail/expat-bugs/2009-January/002781.html
+http://sourceforge.net/tracker/?func=detail&atid=110127&aid=1990430&group_id=10127
+https://bugzilla.redhat.com/show_bug.cgi?id=531697
 
-Commits:
-master: https://github.com/django/django/commit/9305c0e12d43c4df999c3301a1f0c742264a657e
-1.4 branch: https://github.com/django/django/commit/92d3430f12171f16f566c9050c40feefb830a4a3
-1.3 branch: https://github.com/django/django/commit/b45c377f8f488955e0c7069cad3f3dd21910b071
+#2894085: CVE-2009-3560 - Buffer over-read and crash in big2_toUtf8().
+http://mail.python.org/pipermail/expat-bugs/2009-November/002846.html
+http://sourceforge.net/tracker/?func=detail&atid=110127&aid=2894085&group_id=10127
+https://bugzilla.redhat.com/show_bug.cgi?id=533174
 
-Thanks
+#2958794: CVE-2012-1148 - Memory leak in poolGrow.
+http://mail.python.org/pipermail/expat-bugs/2010-February/002870.html
+http://sourceforge.net/tracker/?func=detail&atid=110127&aid=2958794&group_id=10127
+https://bugzilla.redhat.com/show_bug.cgi?id=801648
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+#3496608: CVE-2012-0876 - Hash DOS attack.
+http://blog.gmane.org/gmane.text.xml.expat.bugs/month=20120301
+http://sourceforge.net/tracker/?func=detail&atid=110127&aid=3496608&group_id=10127
+https://bugzilla.redhat.com/show_bug.cgi?id=786617
+
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
