@@ -1,45 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/7
-Message-Id: <201202291837.q1TIbhBv014245@linus.mitre.org>
-Date: Wed, 29 Feb 2012 13:37:43 -0500 (EST)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/2
+Message-ID: <4F599098.5040602@redhat.com>
+Date: Thu, 08 Mar 2012 22:09:44 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: expat 2.1.0beta fixes 5 Denial of Service attacks, CVE's/details inside
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+A link would have been helpful. Derp.
 
->So is this kadu issue now CVE-2012-1410 or CVE-2012-1092?
+http://sourceforge.net/projects/expat/files/expat/2.1.0/
 
-We've updated the CVE public web site with the information about the
-Kadu issue and the unrelated OpenSSL issue. It includes:
+On 03/08/2012 10:01 PM, Kurt Seifried wrote:
+> So expat is releasing an update (2.0.1 -> 2.1.0) which is the first one
+> in a while (which is a testament to the stability and reliability of
+> expat). If you want to help Karl Waclawek (karl@...lawek.net), the
+> author of expat out (and by extension pretty much everyone using Open
+> Source that parses xml using expat which is a lot of stuff), please test
+> the 2.1.0beta and send him feedback (works, doesn't work, etc.). Two of
+> the issues were already assigned CVE's back in 2009, the rest got 2012
+> because that where we are now.
+> 
+> Changes in Expat 2.1.0beta:
+> 
+> #2895533: CVE-2012-1147 - Resource leak in readfilemap.c.
+> http://mail.python.org/pipermail/expat-bugs/2009-November/002858.html
+> http://sourceforge.net/tracker/?func=detail&aid=2895533&group_id=10127&atid=110127
+> https://bugzilla.redhat.com/show_bug.cgi?id=801634
+> 
+> #1990430: CVE-2009-3720 - Parser crash with specially formatted UTF-8
+> sequences.
+> http://mail.python.org/pipermail/expat-bugs/2009-January/002781.html
+> http://sourceforge.net/tracker/?func=detail&atid=110127&aid=1990430&group_id=10127
+> https://bugzilla.redhat.com/show_bug.cgi?id=531697
+> 
+> #2894085: CVE-2009-3560 - Buffer over-read and crash in big2_toUtf8().
+> http://mail.python.org/pipermail/expat-bugs/2009-November/002846.html
+> http://sourceforge.net/tracker/?func=detail&atid=110127&aid=2894085&group_id=10127
+> https://bugzilla.redhat.com/show_bug.cgi?id=533174
+> 
+> #2958794: CVE-2012-1148 - Memory leak in poolGrow.
+> http://mail.python.org/pipermail/expat-bugs/2010-February/002870.html
+> http://sourceforge.net/tracker/?func=detail&atid=110127&aid=2958794&group_id=10127
+> https://bugzilla.redhat.com/show_bug.cgi?id=801648
+> 
+> #3496608: CVE-2012-0876 - Hash DOS attack.
+> http://blog.gmane.org/gmane.text.xml.expat.bugs/month=20120301
+> http://sourceforge.net/tracker/?func=detail&atid=110127&aid=3496608&group_id=10127
+> https://bugzilla.redhat.com/show_bug.cgi?id=786617
+> 
+> 
 
-CVEs to use:
-Kadu     http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-1410
-OpenSSL  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7250
 
-
-Rejected CVEs:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-1091
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-1092
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7248
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7249
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S S145
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJPTm8GAAoJEGvefgSNfHMdjUUIAKc04oaHCbGwyXC3iUgMP4KV
-hG+c74gSOZeAHw50iFT5pz+q5o8gx2YYjt+epPITpQm8akrBLc6H46sRJ9HJ870j
-l572tyiTfJ/mQfrGeA/CRtcyBad4Dgux8h+Y4rzQW++eZgt2KpL3YGbd+IpeBkRa
-L7h/yT8uKZ1KX/BbIPP1WbedPloxzzTWafRfPNXnOjAmZmcV5u8/cFoSEjmWNZLJ
-+p7gpsynZxF/9z3emFSMfxs6A6DZsZpqyXpf3sjScrJWgcHscKcWWamfOL4DOsen
-FYjG79w1qU93WPpjbbr8Bl2Ysy+dUwkMMM2qDBI6rX3HC9mCyH+qQe/DKb5CyaI=
-=ea9e
------END PGP SIGNATURE-----
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
