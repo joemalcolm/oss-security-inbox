@@ -1,24 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/14/3
-Message-ID: <1329233831.27728.3.camel@surprise>
-Date: Tue, 14 Feb 2012 10:37:09 -0500
-From: David Malcolm <dmalcolm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/5
+Message-ID: <20120309084751.GB26809@foo.fgeek.fi>
+Date: Fri, 9 Mar 2012 10:47:51 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Daniel Callaghan <dcallagh@...hat.com>
-Subject: Re: CVE Request -- python (SimpleXMLRPCServer): DoS (excessive CPU usage) via malformed XML-RPC / HTTP POST request
+Subject: CVE-request: appRain CMF uploadify.php File Upload Remote PHP Code Execution
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2012-02-14 at 12:13 +0100, Jan Lieskovsky wrote:
-> Hello vendors,
-> 
->    just FYI, this issue affected also upstream
-> PyPy v1.6 and v1.8 versions. Relevant upstream bug
-> being here:
-> https://bugs.pypy.org/issue1047
-...and almost certainly 1.7 also, probably earlier versions also: 1.6
-and 1.8 were the only versions I had to hand and checked.
+Can I get CVE-identifier for this security vulnerability, thank you.
 
-[PyPy embeds a copy of CPython's standard library, which it mostly uses
-as is, overriding a few things here and there]
+Advisory: http://seclists.org/bugtraq/2012/Jan/127
+http://osvdb.org/show/osvdb/78473
+http://www.securityfocus.com/bid/51576
 
+Discovered and vendor informed: 2011-12-19
+Vendor ack: 2011-12-20
+Disclosure and exploit: 2012-01-19
 
+Does this get 2011 or 2012 ID?
+
+- Henri Salo
