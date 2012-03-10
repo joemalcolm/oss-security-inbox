@@ -1,24 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/8
-Message-ID: <4F18FBFC.9000107@redhat.com>
-Date: Thu, 19 Jan 2012 22:30:36 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/10/5
+Message-ID: <4F5AF227.5050900@redhat.com>
+Date: Fri, 09 Mar 2012 23:18:15 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: Jenkins
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: appRain CMF uploadify.php File Upload Remote PHP Code Execution
 Content-Type: text/plain; charset=utf-8
 
-On 01/16/2012 10:08 AM, Moritz Muehlenhoff wrote:
-> Hi,
-> Please assign a CVE ID for the hash collision attack and Jenkins:
-> http://www.cloudbees.com/jenkins-advisory/jenkins-security-advisory-2012-01-10.cb
->
-> Cheers,
->         Moritz
-Ok it appears no-one has assigned a CVE for this yet. Please use
-CVE-2012-0785 for this issue.
+On 03/09/2012 01:47 AM, Henri Salo wrote:
+> Can I get CVE-identifier for this security vulnerability, thank you.
+> 
+> Advisory: http://seclists.org/bugtraq/2012/Jan/127
+> http://osvdb.org/show/osvdb/78473
+> http://www.securityfocus.com/bid/51576
+> 
+> Discovered and vendor informed: 2011-12-19
+> Vendor ack: 2011-12-20
+> Disclosure and exploit: 2012-01-19
+> 
+> Does this get 2011 or 2012 ID?
+> 
+> - Henri Salo
+
+Generally public disclosure otherwise we get to play insane "when did
+this become a security issue philosophy games", plus pragmatically
+public issue = known = can assign a CVE =).
+
+Please use CVE-2012-1153 for this issue.
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Kurt Seifried Red Hat Security Response Team (SRT)
