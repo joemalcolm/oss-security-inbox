@@ -1,20 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/27/2
-Message-ID: <CAF6rxgnFMUGCFoeKs5p5Vjs2BYqkRJ8-6+8LG+tzQph5--7PwQ@mail.gmail.com>
-Date: Thu, 26 Apr 2012 20:09:08 -0400
-From: Eitan Adler <lists@...anadler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/10/4
+Message-ID: <4F5AF055.2070108@redhat.com>
+Date: Fri, 09 Mar 2012 23:10:29 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Xin Li <delphij@...phij.net>, d@...phij.net,  FreeBSD Security Team <secteam@...ebsd.org>
-Subject: Re: CVE Request: programming error in crypt(3)
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Niko Tyni <ntyni@...ian.org>, Dominic Hargreaves <dom@...th.li>
+Subject: Re: CVE Request -- libdbd-pg-perl / perl-DBD-Pg && libyaml-libyaml-perl / perl-YAML-LibYAML: Multiple format string flaws
 Content-Type: text/plain; charset=utf-8
 
-On 26 April 2012 20:01, Kurt Seifried <kseifried@...hat.com> wrote:
-Can you share the info with
-> security@...ebsd.org and then have them request it (at least then I
-> know it's legitimate) which might work.
+On 03/09/2012 04:10 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> Case #1:
+> ========
+> Two format string flaws were found in the way perl-DBD-Pg, a Perl language
+> PostgreSQL DBI implementation, performed:
+> 1) turning of database notices into appropriate Perl language warning
+> messages,
+> 2) preparation of particular DBD statement.
+> 
+> A rogue server could provide a specially-crafted database warning or
+> specially-crafted DBD statement, which once processed by the perl-DBD-Pg
+> interface would lead to perl-DBD-Pg based process crash.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661536
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=801733
+> 
+> CPAN ticket:
+> [3] https://rt.cpan.org/Public/Bug/Display.html?id=75642
+> 
+> Patch proposed by Niko Tyni:
+> [4]
+> https://rt.cpan.org/Ticket/Attachment/1047954/547725/0001-Explicitly-warn-and-croak-with-controlled-format-str.patch
 
-Xin Li is a member of the FreeBSD security team:
-http://www.freebsd.org/administration.html#t-secteam
+Please use CVE-2012-1151 for this issue.
+
+> Case #2:
+> ========
+> Multiple format string flaws were found in the way perl-YAML-LibYAML,
+> Perl YAML
+> serialization using XS and libyaml, performed:
+> 1) error reporting by loading of general YAML stream,
+> 2) error reporting by loading of YAML node,
+> 3) error reporting by loading of YAML mapping into a Perl hash, and
+> 4) error reporting by loading of YAML sequence into a Perl array.
+> 
+> A remote attacker could provide a specially-crafted YAML document, which
+> once
+> processed by the perl-YAML-LibYAML interface would lead to
+> perl-YAML-LibYAML
+> based process crash.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661548
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=801738
+> 
+> CPAN tickets:
+> [3] https://rt.cpan.org/Public/Bug/Display.html?id=75365
+> [4] https://rt.cpan.org/Public/Bug/Display.html?id=46507
+> 
+> Proposed patch:
+> [5]
+> https://rt.cpan.org/Ticket/Attachment/920541/477607/YAML-LibYAML-0.35-format-error.patch
+
+Please use CVE-2012-1152 for this issue.
+
+> Could you allocate two CVE ids for these? (one for libdbd-pg-perl /
+> perl-DBD-Pg
+> and one for libyaml-libyaml-perl / perl-YAML-LibYAML)
+> 
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
 -- 
-Eitan Adler
+Kurt Seifried Red Hat Security Response Team (SRT)
