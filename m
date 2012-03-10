@@ -1,42 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/9
-Message-ID: <4F68B752.5040706@redhat.com>
-Date: Tue, 20 Mar 2012 10:58:58 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/10/3
+Message-ID: <4F5AEBF0.8020907@redhat.com>
+Date: Fri, 09 Mar 2012 22:51:44 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Luc ABRIC <luc.abric@...ida.fr>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, Valérian PERRET <valerian.perret@...ida.fr>, "'jkn@...no'" <jkn@...no>
-Subject: Re: CVE request: eZ Publish: insecure direct object reference
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Python Hash DoS (Issue 13703)
 Content-Type: text/plain; charset=utf-8
 
-On 03/20/2012 02:53 AM, Luc ABRIC wrote:
-> Hi,
+On 03/09/2012 10:48 PM, Kurt Seifried wrote:
+> Can I please get a CVE for the Python Hash DoS:
 > 
-> Now that a CVE ID has been attributed, what am I supposed to do with the details of the vulnerability?
+> This is an offshoot of oCERT-2011-003
+> 
+> http://bugs.python.org/issue13703
+> https://bugzilla.redhat.com/show_bug.cgi?id=750555
 
-A normal workflow would be to work with the vendor(s) on fixing it and
-then when they release an update you release a security advisory
-publicly at the same time or later (e.g. to give people time to update).
-
-> Should I post them to vendor-sec? We don't want the details to leak to the public before the fix is fully rolled out, but we'd like to start working on the content of the CVE (make sur you have all needed information, etc.).
-
-Vendor-sec no longer exists, the linux-distros list has replaced it,
-http://oss-security.openwall.org/wiki/mailing-lists/linux-distros
-
-you can certainly post there but be aware that issues posted there
-typically fall under a 2 week max embargo, so if you need longer you
-should hold off. Also linux-distros really only applies for stuff that
-Linux/BSD distros ship, third party software that no-one ships isn't
-really all that relevant. I have no idea if anyone ships eZ publish.
-
-> Also, should I continue posting to oss-sec, or mailing you (Kurt) is enough?
-
-I don't need anything else, I just assign the CVE's. Mitre does the
-actual write up based on info, publishing, etc. Posting to oss-sec is
-ideal, they will see it for sure.
-
-> Regards,
-> Luc.
-
+Please use CVE-2012-1150 for this issue.
 
 
 -- 
