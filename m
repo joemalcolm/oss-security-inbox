@@ -1,34 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/5
-Message-Id: <BBB09EBE-5D3A-4502-9E6E-9BD5CF4B64B0@nginx.com>
-Date: Thu, 15 Mar 2012 17:37:29 +0400
-From: Andrew Alexeev <andrew@...nx.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: nginx fix for malformed HTTP responses from upstream servers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/2
+Message-ID: <4F5E3411.1050205@redhat.com>
+Date: Mon, 12 Mar 2012 18:36:17 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- openldap (slapd): Assertion failure by processing search queries requesting only attributes for particular entry
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello Kurt, Steve, vendors,
 
-The nginx team has released stable version 1.0.14, and development
-version 1.1.17 of nginx web server, which include a fix for malformed
-HTTP responses from upstream servers:
+   a denial of service flaw was found in the way the slapd server of the OpenLDAP,
+the Lightweight Directory Access Protocol applications and development suite,
+processed certain search queries requesting only attributes (no values) for a
+particular entry. A remote attacker could issue a specially-crafted LDAP search
+query, which once processed by a vulnerable slapd server would lead to
+assertion failure (slapd abort).
 
-http://trac.nginx.org/nginx/changeset/4535/nginx
-http://trac.nginx.org/nginx/changeset/4531/nginx
-http://trac.nginx.org/nginx/changeset/4530/nginx
+Upstream bug report:
+[1] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7143
 
-http://nginx.org/en/security_advisories.html
+Original upstream patch:
+[2] 
+http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=ef2f5263de8802794e528cc2648ecfca369302ae
 
-Without this fix contents of previously freed memory might be sent to
-a client if an upstream server returned specially crafted response,
-potentially resulting in sensitive information leak.
+Further patches:
+[3] 
+http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=430256fafb85028443d7964a5ab1f4bbf8b2db38
 
-Patch which can be applied to the earlier versions of nginx is here:
-http://nginx.org/download/patch.2012.memory.txt
+[4] 
+http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=463c1fa25d45e393dc1f1ea235286f79e872fad0
 
-Thanks to Matthew Daley for spotting this one.
+References:
+[5] http://www.openldap.org/software/release/changes.html
+[6] https://bugs.gentoo.org/show_bug.cgi?id=407941
+[7] https://secunia.com/advisories/48372/
+[8] https://bugzilla.redhat.com/show_bug.cgi?id=802514
 
--- 
-Andrew Alexeev
-@nginxorg
+Could you allocate a CVE identifier for this?
 
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
