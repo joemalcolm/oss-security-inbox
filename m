@@ -1,38 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/17/5
-Message-ID: <1375435.1OnNeEHNAf@devil>
-Date: Mon, 17 Sep 2012 18:36:25 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/4
+Message-ID: <4F5E5020.7010206@redhat.com>
+Date: Mon, 12 Mar 2012 13:36:00 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: OptiPNG Palette Reduction Use-After-Free Vulnerability
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- openldap (slapd): Assertion failure by processing search queries requesting only attributes for particular entry
 Content-Type: text/plain; charset=utf-8
 
-Quoting the secunia advisory:
+On 03/12/2012 11:36 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+>   a denial of service flaw was found in the way the slapd server of the
+> OpenLDAP,
+> the Lightweight Directory Access Protocol applications and development
+> suite,
+> processed certain search queries requesting only attributes (no values)
+> for a
+> particular entry. A remote attacker could issue a specially-crafted LDAP
+> search
+> query, which once processed by a vulnerable slapd server would lead to
+> assertion failure (slapd abort).
+> 
+> Upstream bug report:
+> [1] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7143
+> 
+> Original upstream patch:
+> [2]
+> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=ef2f5263de8802794e528cc2648ecfca369302ae
+> 
+> 
+> Further patches:
+> [3]
+> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=430256fafb85028443d7964a5ab1f4bbf8b2db38
+> 
+> 
+> [4]
+> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=463c1fa25d45e393dc1f1ea235286f79e872fad0
+> 
+> 
+> References:
+> [5] http://www.openldap.org/software/release/changes.html
+> [6] https://bugs.gentoo.org/show_bug.cgi?id=407941
+> [7] https://secunia.com/advisories/48372/
+> [8] https://bugzilla.redhat.com/show_bug.cgi?id=802514
+> 
+> Could you allocate a CVE identifier for this?
+> 
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Description
-A vulnerability has been reported in OptiPNG, which can be exploited by 
-malicious people to potentially compromise a user's system.
+Please use CVE-2012-1164 for this issue.
 
-The vulnerability is caused due to a use-after-free error related to the 
-palette reduction functionality. No further information is currently 
-available.
-
-Success exploitation may allow execution of arbitrary code.
-
-The vulnerability is reported in version 0.7, 0.7.1, and 0.7.2.
-
-
-Solution
-Update to version 0.7.3.
-
-
-Code commit:
-http://optipng.hg.sourceforge.net/hgweb/optipng/optipng/rev/f1d5d44670a2
-
-Additional info:
-Version 0.6.5 and earlier are not affected.
 -- 
-Agostino Sarubbo / ago -at- gentoo.org
-Gentoo/AMD64 Arch Security Liaison
-GPG: 0x7CD2DC5D
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Kurt Seifried Red Hat Security Response Team (SRT)
