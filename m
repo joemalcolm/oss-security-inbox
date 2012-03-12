@@ -1,136 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/7
-Message-ID: <035501cd7974$64babfa0$2e303ee0$@reactionis.co.uk>
-Date: Mon, 13 Aug 2012 17:55:06 +0100
-From: "research" <research@...ctionis.co.uk>
-To: "'full-disclosure'" <full-disclosure@...ts.grok.org.uk>, "'bugtraq'" <bugtraq@...urityfocus.com>, <secalert@...urityreason.com>, <bugs@...uritytracker.com>, "'vuln'" <vuln@...unia.com>, <vuln@...urity.nnov.ru>, <news@...uriteam.com>, <moderators@...db.org>, <submissions@...ketstormsecurity.org>, <submit@...ecurity.com>, <oss-security@...ts.openwall.com>
-Subject: Total Shop UK eCommerce Generic Cross-Site Scripting 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/8
+Message-ID: <4F5E58AC.7020906@redhat.com>
+Date: Mon, 12 Mar 2012 14:12:28 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com
+Subject: Re: CVE Request: ldm (LTSP display manager)
 Content-Type: text/plain; charset=utf-8
 
-/------------------------------------------------------\
-| Total Shop UK eCommerce Generic Cross-Site Scripting |
-\------------------------------------------------------/
+On 03/12/2012 02:03 PM, Marc Deslauriers wrote:
+> Could we please get a CVE assigned to the following issue?:
+> 
+> Starting with ldm 2.2.x, upstream switched to using wwm as a minimal window manager.
+> It was discovered that wwm ships with keybindings that allow spawning an xterm.
+> 
+> As the ldm greeter runs as root, this allows for a passwordless root shell.
+> 
+> Bug:
+> https://bugs.launchpad.net/ubuntu/+source/ldm/+bug/953340
+> 
+> Commit:
+> http://bazaar.launchpad.net/~ltsp-upstream/ltsp/ldm-trunk/revision/1419
+> 
+> Thanks,
+> 
+> Marc.
+
+Please use CVE-2012-1166 for this issue.
 
 
-Summary
-=======
-
-The open source version of Total Shop UK eCommerce based on CodeIgniter
-version 2.1.2 is subject to a cross-site scripting vulnerability. The value
-of a generic parameter was not sufficiently sanitised before being written
-to a block of Javascript code. An attacker could distribute a malicious URL
-that would trigger this vulnerability and potentially steal session cookies,
-redirect the user to a malicious URL or download malware onto their machine.
-
-CVE number: CVE-2012-4236
-Impact: Medium
-Vendor homepage: http://www.totalshopuk.com/
-Vendor notified: 06/08/2012
-Credit: Chris Cooper of Reaction Information Security
-(http://www.reactionis.co.uk/)
-
-This advisory is posted at:
-
-http://www.reactionpenetrationtesting.co.uk/totalshop-uk-generic-xss.html
-
-
-Affected Products
-======== ========
-
-Total Shop UK eCommerce based on CodeIgniter version 2.1.2 (open source
-version). Other versions may be affected.
-
-
-Details
-=======
-
-Generic parameters in the /application/modules/_main/views/_top.php file are
-written to a Javascript function in the page header without sanitisation.
-The entire URL, including the query string, is written (via a PHP echo
-construct) into a refresh_page() Javascript function. It was possible to
-escape the function and execute arbitrary Javascript code on the application
-pages. 
-
-There is some character filtering in place, although this can be evaded by
-inserting a null (%00) character (see proof of concept).
-
-
-Impact
-======
-
-An attacker might entice users to follow a malicious URL, causing Javascript
-code to execute in their browser, potentially stealing session cookies,
-redirecting the user to a malicious URL or downloading malware onto their
-machine.
-
-
-Proof of Concept
-===== == =======
-
-Injecting the following Javascript code into a generic parameter on any
-application page will trigger the vulnerability, causing the page to return
-a Javascript alert box.
-
-%00";};alert(String.fromCharCode(120,115,115,116,101,115,116));{//
-
----
-Example 1 Request:
-+-----------------
-
-GET /?%00";};alert(String.fromCharCode(120,115,115,116,101,115,116));{//=1
-HTTP/1.1
-Host: 192.168.0.6
-Referer: http://192.168.0.6/about
-
-
----
-Example 1 Response:
-+------------------
-
---- SNIP ---
-function refresh_page(){
- 
-parent.location="/?%00";};alert(String.fromCharCode(120,115,115,116,101,115,
-116));{//=1"; 
-}
---- SNIP ---
-
-
-Solution
-========
-
-Upgrade to Total Shop UK eCommerce 2.1.2_p1. Download link here:
-http://sourceforge.net/projects/totalshopuk/files/TSUK_eCommerce_v2.1.2_p1.z
-ip/download
-
-
-Distribution
-============
-
-In addition to posting on the website, a text version of this notice has
-been posted to the following e-mail and Usenet news recipients.
-
-* bugtraq () securityfocus com
-* full-disclosure () lists grok org uk
-
-Future updates of this advisory, if any, will be placed on the ReactionIS
-corporate website, but may or may not be actively announced on mailing lists
-or newsgroups. Users concerned about this problem are encouraged to check
-the URL below for any updates:
-
-
-http://www.reactionpenetrationtesting.co.uk/totalshop-uk-generic-xss.html
-
-============================================================================
-==
-
-Reaction Information Security 
-Lombard House Business Centre,
-Suite 117,
-12-17 Upper Bridge Street,
-Canterbury, Kent, CT1 2NF
-
-Phone: +44 (0)1227 785050
-Email: research () reactionis {dot} co {dot} uk
-Web: http://www.reactionpenetrationtesting.co.uk
-
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
