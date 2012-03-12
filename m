@@ -1,58 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/05/3
-Message-ID: <20120605070814.GA16474@openwall.com>
-Date: Tue, 5 Jun 2012 11:08:14 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/9
+Message-ID: <20120312213807.GA31947@openwall.com>
+Date: Tue, 13 Mar 2012 01:38:07 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: BIND: Handling of zero length rdata can cause named to terminate unexpectedly
+Subject: running the distros lists
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-I think we should have this in here.  This is CVE-2012-1667.
+I could use some help running the distros list and its linux-distros
+sub-list.  Specifically, when issues are being brought to these lists,
+the initial messages very often lack a proposed coordinated release date
+(CRD).  Currently there's no specific person (nor a group smaller than
+the entire membership of the list) who would be responsible for getting
+a CRD agreed upon ASAP, yet this is something that needs to happen for
+each and every issue.  When everyone is responsible for this, it also
+means that no one in particular is responsible.  This needs to change.
 
-http://www.isc.org/software/bind/advisories/cve-2012-1667
+Could one or several distros and/or linux-distros list members please
+accept this responsibility?  I can't seem to allocate enough of my own
+time to this job, sorry.  (I am already putting some of my time into
+other aspects of running these lists, as you're aware.)  Additionally, I
+think that some other list members are better qualified for it because
+more of the issues affect their products.
 
-"Handling of zero length rdata can cause named to terminate unexpectedly
+I think Kurt, Vincent, and/or Jan (the Red Hat folks) could do this job
+well, especially considering that they're currently the ones to assign
+CVE IDs anyway (so could as well assign IDs and propose CRDs in the same
+message), but anyone else is welcome to volunteer for this thankless job
+as well.
 
-Summary:
-Processing of DNS resource records where the rdata field is zero length
-may cause various issues for the servers handling them.
+Please let us all know.
 
-CVE: CVE-2012-1667
-Posting date: 04 Jun 2012
-Program Impacted: BIND
-Versions affected: 9.0.x -> 9.6.x, 9.4-ESV->9.4-ESV-R5-P1, 9.6-ESV->9.6-ESV-R7, 9.7.0->9.7.6, 9.8.0->9.8.3, 9.9.0->9.9.1
-Severity: Critical
-Exploitable: Remotely
-
-Description:
-This problem was uncovered while testing with experimental DNS record
-types. It is possible to add records to BIND with null (zero length)
-rdata fields.
-
-Processing of these records may lead to unexpected outcomes. Recursive
-servers may crash or disclose some portion of memory to the client.
-Secondary servers may crash on restart after transferring a zone
-containing these records. Master servers may corrupt zone data if the
-zone option "auto-dnssec" is set to "maintain". Other unexpected
-problems that are not listed here may also be encountered.
-
-Impact: This issue primarily affects recursive nameservers.
-Authoritative nameservers will only be impacted if an administrator
-configures experimental record types with no data. If the server is
-configured this way, then secondaries can crash on restart after
-transferring that zone. Zone data on the master can become corrupted if
-the zone with those records has named configured to manage the DNSSEC
-key rotation."
-
-"Solution:
-Upgrade to BIND version 9.6-ESV-R7-P1, 9.7.6-P1, 9.8.3-P1, or 9.9.1-P1
-
-Acknowledgment: Dan Luther, Level3 Communications, for finding the
-issue, Jeffrey A. Spain, Cincinnati Day School, for replication and
-testing."
-
-Sounds like backporting time...
+Thanks,
 
 Alexander
