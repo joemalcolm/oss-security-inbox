@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/31/1
-Message-ID: <4F275081.7010306@redhat.com>
-Date: Mon, 30 Jan 2012 19:22:57 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Nanakos Chrysostomos <nanakos@...ed-net.gr>, Jonathan Wiltshire <jmw@...ian.org>, Gian Piero Carrubba <gpiero@...rf.it>, "team@...urity.debian.org" <team@...urity.debian.org>
-Subject: Re: Re: Yubiserver package ships with pre-filled identities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/5
+Message-ID: <1331582630.3983.14.camel@mdlinux>
+Date: Mon, 12 Mar 2012 16:03:50 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: ldm (LTSP display manager)
 Content-Type: text/plain; charset=utf-8
 
-On 01/30/2012 03:14 PM, Nanakos Chrysostomos wrote:
+Could we please get a CVE assigned to the following issue?:
 
->> Is this account documented/the impact documented?
->>
-> 
-> What do you mean?
+Starting with ldm 2.2.x, upstream switched to using wwm as a minimal window manager.
+It was discovered that wwm ships with keybindings that allow spawning an xterm.
 
-Is this issue clearly documented, e.g. do the docs say "WARNING: A
-DEFAULT ACCOUNT IS ENABLED. THIS IS NOT SAFE. IT MUST BE REMOVED PRIOR
-TO PRODUCTION USE" and so on.
+As the ldm greeter runs as root, this allows for a passwordless root shell.
 
-Steve: thoughts/comments?
+Bug:
+https://bugs.launchpad.net/ubuntu/+source/ldm/+bug/953340
+
+Commit:
+http://bazaar.launchpad.net/~ltsp-upstream/ltsp/ldm-trunk/revision/1419
+
+Thanks,
+
+Marc.
+
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
+
+
