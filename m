@@ -1,36 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/26
-Message-ID: <4F18A7DD.7000706@redhat.com>
-Date: Thu, 19 Jan 2012 16:31:41 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/3
+Message-ID: <20120312183926.7fb54961@redhat.com>
+Date: Mon, 12 Mar 2012 18:39:26 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: usbmuxd 1.0.7 "receive_packet()" Buffer Overflow Vulnerability
+Subject: Re: CVE request: openssl: null pointer dereference issue
 Content-Type: text/plain; charset=utf-8
 
-On 01/19/2012 04:29 PM, Kurt Seifried wrote:
-> rigan has reported a vulnerability in usbmuxd, which potentially can be
-> exploited by malicious people with physical access to compromise a
-> vulnerable system.
->
-> The vulnerability is caused due to a boundary error within the
-> "receive_packet()" function (libusbmuxd/libusbmuxd.c) when processing a
-> property list containing an overly long "SerialNumber" field, which can
-> be exploited to cause a heap-based buffer overflow.
->
-> Successful exploitation may allow the execution of arbitrary code, but
-> requires that the attacker is able to connect a malicious USB device.
->
-> https://secunia.com/advisories/47545/
-> https://bugs.gentoo.org/show_bug.cgi?id=399409
->
-> source code commit:
-> http://git.marcansoft.com/?p=usbmuxd.git;a=commitdiff;h=f794991993af56a74795891b4ff9da506bc893e6
->
-What a well formed CVE request ;)
+On Mon, 27 Feb 2012 15:42:44 +0100 Matthias Weckbecker wrote:
 
-Please use CVE-2012-0065 for this issue.
+> bad S/MIME messages with crafted MIME headers can result in a NULL
+> pointer dereference in openssl's ans1 parser,
+> 
+>  https://bugzilla.novell.com/show_bug.cgi?id=748738
+>  http://www.mail-archive.com/openssl-dev@openssl.org/msg30305.html
+>  http://cvs.openssl.org/chngview?cn=22144
+
+Note that additional similar issue in mime_param_cmp was fixed in
+0.9.8u and 1.0.0h as:
+  http://cvs.openssl.org/chngview?cn=22252
+
+This can also be triggered by malformed S/MIME message.
+
+The above commit also corrects an issue with the previous mime_hdr_cmp
+fix that could cause the function to return either "less than" or
+"greater than" when comparing NULL to non-NULL.  There's no known
+security impact of this change, it seems it could cause verification /
+decryption to fail when it can succeed. Reported by "bla".
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Tomas Hoger / Red Hat Security Response Team
