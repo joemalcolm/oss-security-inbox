@@ -1,37 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/17
-Message-ID: <20120306214239.79fba143@redhat.com>
-Date: Tue, 6 Mar 2012 21:42:39 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: agomez@...idsignal.com, Kurt Seifried <kseifried@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: TORCS 1.3.2 xml buffer overflow - CVE-2012-1189
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/10
+Message-ID: <4F5E726C.1060408@rolandgruber.de>
+Date: Mon, 12 Mar 2012 23:02:20 +0100
+From: Roland Gruber <post@...andgruber.de>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>, Fabio Tranchitella <kobold@...ian.org>,  Dmitry Butskoy <Dmitry@...skoy.name>
+Subject: Re: CVE Request -- LDAP Account Manager Pro / PhpLDAPadmin -- Multiple XSS flaws
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 6 Mar 2012 09:31:10 -0500 Andres Gomez wrote:
+Hi all,
 
-> 2012/3/5 Kurt Seifried <kseifried@...hat.com>
-> 
-> > Would you consider tham to be the same code base or a different code
-> > base? If the same code base, share the CVE, if different code
-> > bases, new CVE for it. Steve: do we have a policy for "Fresh" forks
-> > as it were?
->
-> Well, Speed Dreams started with TORCS code base, but they have added
-> a lot new code, so I would say that right now they have different
-> code base, although they still share a big portion of the code (as
-> the vulnerable section).  Because of that I would consider It needs a
-> new CVE number, could you assign one to it?  :)
+On 12.03.2012 12:18, Jan Lieskovsky wrote:
+> Can we consider the CVE-2012-1114, CVE-2012-1115
+> identifiers below to be valid also for phpLDAPAdmin code?
 
-Their code bases may differ significantly in other parts, but it seems
-the affected vulnerable code is still identical between the two.
-Following are versions shortly before fixes got committed:
+yes.
 
-http://torcs.cvs.sourceforge.net/viewvc/torcs/torcs/torcs/src/modules/graphic/ssggraph/grsound.cpp?revision=1.31.2.2&view=markup
-http://speed-dreams.svn.sourceforge.net/viewvc/speed-dreams/trunk/src/modules/graphic/ssggraph/grsound.cpp?revision=4146&view=markup
+> Roland, could you clarify, if phpLDAPAdmin code would be vulnerable
+> to all issues listed for LDAP Account Manager too or if phpLDAPAdmin
+> would be vulnerable only for XSS issues when processing:
+> i)   'export', 
+> ii)  'add_value_form'
+> iii)  and 'dn' variables?
 
-In cases like this, same CVE is used for all project that use / embed
-the same affected code.
+phpLDAPadmin is vulnerable to i, ii and iii.
+
+> And LDAP Account Manager would be vulnerable yet to additional
+> XSS flaws, due improper sanitization of 'filteruid', 'type',
+> and 'cmd' variables? (and these would be LDAP Account Manager
+> specific)
+
+Regarding the filteruid problem I cannot reproduce this. The variable is properly sanitized.
+This is a LAM only thing.
+
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+
+Best regards
+
+Roland
