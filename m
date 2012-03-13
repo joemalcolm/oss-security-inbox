@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/1
-Message-ID: <4F0B80DD.7050806@redhat.com>
-Date: Mon, 09 Jan 2012 17:05:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/13/4
+Message-ID: <4F5F4E6E.9070908@redhat.com>
+Date: Tue, 13 Mar 2012 19:11:02 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE request: znc
+Subject: Re: CVE request for PHP 5.3.x Corrupted $_FILES indices lead to security concern
 Content-Type: text/plain; charset=utf-8
 
-On 01/09/2012 04:59 AM, Henri Salo wrote:
-> On Mon, Jan 09, 2012 at 01:17:33PM +0200, Henri Salo wrote:
->> On Sun, Jan 08, 2012 at 04:39:48PM +0100, Moritz Muehlenhoff wrote:
->>> Hi,
->>> please assign a CVE ID to a DoS issue in the ZNC IRC bouncer.
->>>
->>> I don't have a upstream reference, but the upstream patch applied 
->>> by the Debian maintainer can be found here:
->>>
->>> http://patch-tracker.debian.org/patch/series/view/znc/0.202-2/01-fix-bouncedcc-dos.diff 
->>> http://packages.qa.debian.org/z/znc/news/20120107T145601Z.html
->>>
->>> Cheers,
->>>         Moritz
->> Here is the changelog: http://wiki.znc.in/ChangeLog/0.202
->> This looks a bit like Debian-patch: https://github.com/znc/znc/commit/6ae491ca66e8f7d8c4fe3caca3adbe147c7e552c#modules/bouncedcc.cpp
-> Correcting myself as Patrick Matthäi (Debian package maintainer) answered. Correct upstream patch is: https://github.com/znc/znc/commit/11508aa72efab4fad0dbd8292b9614d9371b20a9
+On 03/09/2012 02:26 AM, Kurt Seifried wrote:
+> Just looking through http://www.php.net/ChangeLog-5.php#5.4.0
 >
-> - Henri Salo
-Please use CVE-2012-0033 for this issue.
+> Fixed bug #55500 (Corrupted $_FILES indices lead to security concern).
+>
+> https://bugs.php.net/bug.php?id=55500
+> (still locked)
+>
+> But the blog posting:
+>
+> https://nealpoole.com/blog/2011/10/directory-traversal-via-php-multi-file-uploads/
+>
+> has details and it appears to be a security issue. I have emailed
+> security@....net twice, no response in a week so I'm sending the request
+> to OSS-sec.
+>
+
+This has been assigned CVE-2012-1172.
+
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Huzaifa Sidhpurwala / Red Hat Security Response Team
