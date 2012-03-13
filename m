@@ -1,41 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/9
-Message-ID: <20120524201004.GA3940@openwall.com>
-Date: Fri, 25 May 2012 00:10:04 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/13/2
+Message-ID: <20120313100250.19f1bc12@redhat.com>
+Date: Tue, 13 Mar 2012 10:02:50 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: powerdns does not clear supplementary groups
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE request: openssl: null pointer dereference issue
 Content-Type: text/plain; charset=utf-8
 
-Kurt -
+On Mon, 12 Mar 2012 13:46:07 -0600 Kurt Seifried wrote:
 
-On Thu, May 24, 2012 at 12:40:10PM -0600, Kurt Seifried wrote:
-> Supplemental groups enabled a user to be a member of more than one
-> group at a time (us old timers remember the joys of "newgrp"). Why
-> would anyone want this? You could for example create a group that has
-> permissions to access logging, terminals (e.g. modems, remember those?
-> =) and then add users to it as appropriate (and centralize
-> account/permissions management somewhat and all that good stuff).
+> Please use CVE-2012-1165 for this issue.
 
-That's what initgroups(3) is for.  If a program that is supposed to drop
-privs calls neither setgroups() nor initgroups(), or if it fails to
-check the return value from these and refuse to proceed on failure, then
-it is vulnerable.
+To clarify, the reply should have looked as:
 
-> So what happens when a program starts running as say root, and root
-> has supplemental groups (like "bin" or "daemon" and the program drops
-> its primary user/group but fails to drop supplementary groups, is that
-> a security issue,
+ -- 8< --
 
-Definitely.
+> Note that additional similar issue in mime_param_cmp was fixed in
+> 0.9.8u and 1.0.0h as:
+>   http://cvs.openssl.org/chngview?cn=22252
+> 
+> This can also be triggered by malformed S/MIME message.
 
-> and is it worthy of a CVE identifier?
+Please use CVE-2012-1165 for this issue.
 
-It should be.
+> The above commit also corrects an issue with the previous mime_hdr_cmp
+> fix that could cause the function to return either "less than" or
+> "greater than" when comparing NULL to non-NULL.  There's no known
+> security impact of this change, it seems it could cause verification /
+> decryption to fail when it can succeed. Reported by "bla".
 
-> Having supplementary groups is intentional [...]
+ -- 8< --
 
-Having supplementary groups of the new (pseudo-)user, possibly yes.
-Having supplementary groups of the old switched-from user, no.
+to make ti clear that CVE-2012-1165 is for the mime_param_cmp issue
+rather than mime_hdr_cmp fix correction.
 
-Alexander
+-- 
+Tomas Hoger / Red Hat Security Response Team
