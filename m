@@ -1,47 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/26/1
-Message-ID: <1330208166.25432.16.camel@tiger.regit.org>
-Date: Sat, 25 Feb 2012 23:16:06 +0100
-From: Eric Leblond <eric@...it.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/13/3
+Message-ID: <20120313114403.GA1412@danbala.tuwien.ac.at>
+Date: Tue, 13 Mar 2012 12:44:03 +0100
+From: Thomas Klausner <wiz@...BSD.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+Subject: Re: running the distros lists
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Thanks for the clarifications, but this still leaves many questions open for me.
 
-On Sat, 2012-02-25 at 21:10 +0100, Yves-Alexis Perez wrote:
-> On sam., 2012-02-25 at 19:37 +0100, Eric Leblond wrote:
-> > Impact:
-> > An attacker on a local network can open some pinholes in a firewall
-> > which is not correctly protected.
-> > Fix:
-> > None, the issue has to be fixed in the firewall configuration.
-> > Workaround:
-> > Apply a strict anti-spoofing policy for IPv4 and IPv6 as described in
-> > the document "Secure use of iptables and connection tracking helpers" 
-> > This document was written after private disclosure of the attack to the
-> > Netfilter's team.
-> > 
-> 
-> Did you check how the various frontends to iptables (ferm, ufw,
-> shorewall and the gazillon others)? They might generate an “insecure”
-> ruleset and might be candidate to a fix.
+On Tue, Mar 13, 2012 at 06:53:04AM +0400, Solar Designer wrote:
+> What I'd like to be happening is for some list member(s) (not too many
+> of them) to be proposing a CRD for each reported issue on the day it is
+> reported.  Then those member(s) need to stay on top of all open issues
+> and ensure the CRDs are met (if necessary, adjusting the CRDs as long as
+> the list's limit permits).  Quite often, this will involve negotiations
+> with other list members, with the reporter, with upstream(s), and with
+> various other parties (such as related projects and distros who are not
+> on the list).  Yes, this does sound CERT'ish. ;-)
 
-I've done some research on various frontend to iptables. Most of them
-were secure for IPv4 but the IPv6 case was more complicated. But given
-the fact there is a gazillon of them this was difficult to check them
-all. On Netfilter side, we've decided  to publish the document
-explaining how to secure helpers to explain how to fix this. It was some
-months ago and I hope it has been read.
+Does this person contact upstream(s)?
+If not, who does?
+Does this person contact downstreams?
+Or are they assumed to read distros@?
+What if an up- or downstream claims to need longer (confer a recent issue)?
+When CRD happens, who publishes what where?
+Or is it just a free-for-all afterwards?
 
-I've contacted the frontend developers and Netfilter/Linux firewalls
-vendors I knew to have them test their software/equipment. I've started
-this some months ago. I've also tried to contact the various CERT but
-they refused to handle the case or did not reply to my requests. 
-
-BR,
--- 
-Eric Leblond 
-Blog: http://home.regit.org/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Just off the top of my head :)
+ Thomas
