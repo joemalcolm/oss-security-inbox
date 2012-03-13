@@ -1,95 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/10
-Message-ID: <Pine.GSO.4.64.1206271319290.4361@faron.mitre.org>
-Date: Wed, 27 Jun 2012 13:36:45 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Kurt Seifried <kseifried@...hat.com>
-cc: Henri Salo <henri@...v.fi>, oss-security@...ts.openwall.com, Greg Knaddison <greg.knaddison@...uia.com>, "Steven M. Christey" <coley@...-smtp.mitre.org>
-Subject: Re: CVE Request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/13/1
+Message-ID: <20120313025304.GA984@openwall.com>
+Date: Tue, 13 Mar 2012 06:53:04 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: running the distros lists
 Content-Type: text/plain; charset=utf-8
 
+I got a couple of off-list requests to clarify what kind of help is
+needed.  I'll do so below:
 
-All,
+On Tue, Mar 13, 2012 at 01:38:07AM +0400, Solar Designer wrote:
+> I could use some help running the distros list and its linux-distros
+> sub-list.  Specifically, when issues are being brought to these lists,
+> the initial messages very often lack a proposed coordinated release date
+> (CRD).  Currently there's no specific person (nor a group smaller than
+> the entire membership of the list) who would be responsible for getting
+> a CRD agreed upon ASAP, yet this is something that needs to happen for
+> each and every issue.  When everyone is responsible for this, it also
+> means that no one in particular is responsible.  This needs to change.
 
-I have several clarifications and corrections to this latest Drupal 
-request and CVE response, on top of the dupes already listed.  The most 
-important notes are listed first.
+What I'd like to be happening is for some list member(s) (not too many
+of them) to be proposing a CRD for each reported issue on the day it is
+reported.  Then those member(s) need to stay on top of all open issues
+and ensure the CRDs are met (if necessary, adjusting the CRDs as long as
+the list's limit permits).  Quite often, this will involve negotiations
+with other list members, with the reporter, with upstream(s), and with
+various other parties (such as related projects and distros who are not
+on the list).  Yes, this does sound CERT'ish. ;-)
 
-(Greg and Kurt, the number of duplicates and unassigned CVEs in this batch 
-is understandable due to various factors such as amount and assignments 
-from mutiple sources, but it's disconcerting.  Maybe we should talk 
-off-list and figure out how to minimize these problems in the future.)
+> Could one or several distros and/or linux-distros list members please
+> accept this responsibility?  I can't seem to allocate enough of my own
+> time to this job, sorry.  (I am already putting some of my time into
+> other aspects of running these lists, as you're aware.)  Additionally, I
+> think that some other list members are better qualified for it because
+> more of the issues affect their products.
+> 
+> I think Kurt, Vincent, and/or Jan (the Red Hat folks) could do this job
+> well, especially considering that they're currently the ones to assign
+> CVE IDs anyway (so could as well assign IDs and propose CRDs in the same
+> message), but anyone else is welcome to volunteer for this thankless job
+> as well.
 
->CVE-2012-2709 SA-CONTRIB-2012-081 - Aberdeen - Cross Site Scripting
+Not exactly anyone else, but anyone who is currently on the distros list.
 
-This is a duplicate that might look like a typo at first.
-
-Around May 21, MITRE originally published CVE-2012-2907 (NOTE THE 
-DIFFERENT NUMBER STARTING WITH "29" INSTEAD OF "27").
-
-CVE-2012-2907 is in more active use, so keep CVE-2012-2907.
-
-We will REJECT CVE-2012-2709.
-
-(Kurt, CVE-2012-2709 belongs to you.  If you actually intended to list the 
-already-published CVE-2012-2907 and made a typo to CVE-2012-2709, please 
-make sure you've removed CVE-2012-2709 from your pool.)
-
-
-> CVE-2012-2713 SA-CONTRIB-2012-085 - BrowserID - Multiple
->     Vulnerabilities - CSRF
-> CVE-2012-2714 SA-CONTRIB-2012-085 - BrowserID - Multiple
->     Vulnerabilities - BrowserID login theft
-
-The description in SA-CONTRIB-2012-085 is not clear, but it seems that
-CVE-2012-2714 might be the natural consequence of exploiting the CSRF.
-The title "multiple vulnerabilities" does not help.  Any thoughts on
-this one?
-
-
-
->CVE-2012-2727 SA-CONTRIB-2012-098 - Janrain Capture - Open Redirect
-
-SA-CONTRIB-2012-098 mentioned a second separate issue for "An
-additional security weakness occurs when the module creates a new
-local user account."
-
-CVE-2012-2727 - open redirect
-
-(new) CVE-2012-3798 - disclosure of portions of passwords
-
-
-> CVE-2012-2723 SA-CONTRIB-2012-094
-
-A close reading of SA-CONTRIB-2012-094 suggests that there should be
-two CVEs.  Part of the advisory does seem to imply that the XSS is
-resultant from the CSRF; but it also says "This vulnerability is
-mitigated by the fact that an attacker must have a role with the
-maestro admin permissions," which implies that users with maestro
-admin permissions should not be allowed to conduct XSS attacks
-themselves.  This could probably be argued either way.
-
-CVE-2012-2723 - XSS
-
-(new) CVE-2012-3799 - CSRF
-
-
-> CVE-2012-2721 SA-CONTRIB-2012-092 - Organic Groups - Cross Site
-> Scripting (XSS) and Access Bypass
-
-This is 2 types of issues, thus needs 2 CVEs.
-
-CVE-2012-2721 - Access Bypass
-
-(new) CVE-2012-3800 - XSS
-
-> CVE-2012-2706 SA-CONTRIB-2012-079 - Post Affiliate Pro - Cross Site
-> Scripting (XSS) and Access Bypass - Unsupported
-
-Two vuln types, two CVEs needed.
-
-CVE-2012-2706 - XSS
-(new) CVE-2012-3802 - unspecified read of commisions
-
-
-- Steve
+> Please let us all know.
+> 
+> Thanks,
+> 
+> Alexander
