@@ -1,47 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/9
-Message-ID: <50B4F720.4000608@redhat.com>
-Date: Tue, 27 Nov 2012 10:23:44 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/13/5
+Message-ID: <20120313160746.GA1873@openwall.com>
+Date: Tue, 13 Mar 2012 20:07:46 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Tomas Hoger <thoger@...hat.com>
-Subject: Re: CVE request: libproxy issue
+Subject: Re: running the distros lists
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 11/27/2012 03:41 AM, Tomas Hoger wrote:
-> On Tue, 27 Nov 2012 11:17:33 +0100 Matthias Weckbecker wrote:
+On Tue, Mar 13, 2012 at 12:44:03PM +0100, Thomas Klausner wrote:
+> On Tue, Mar 13, 2012 at 06:53:04AM +0400, Solar Designer wrote:
+> > What I'd like to be happening is for some list member(s) (not too many
+> > of them) to be proposing a CRD for each reported issue on the day it is
+> > reported.  Then those member(s) need to stay on top of all open issues
+> > and ensure the CRDs are met (if necessary, adjusting the CRDs as long as
+> > the list's limit permits).  Quite often, this will involve negotiations
+> > with other list members, with the reporter, with upstream(s), and with
+> > various other parties (such as related projects and distros who are not
+> > on the list).  Yes, this does sound CERT'ish. ;-)
 > 
->> there is a format string issue with libproxy:
->> 
->> https://bugzilla.novell.com/show_bug.cgi?id=791086
->> 
->> Version 0.4.10 isn't affected anymore according to Shawn Chang.
-> 
-> https://code.google.com/p/libproxy/source/detail?r=475 apparently.
+> Does this person contact upstream(s)?
+> If not, who does?
+> Does this person contact downstreams?
 
-Please use CVE-2012-5580 for this issue.
+I think that ideally the person would (try to) identify the upstreams,
+downstreams, and other affected projects to contact, ask the reporter
+for approval, upon the approval inform those other projects that there's
+a security issue and ask them if they'd like more info and if they're OK
+with the proposed maximum embargo period (CC'ing the list on those
+preliminary notifications), and if they accept then finally pass the
+actual info on to them (also CC'ing the list) and add them to the CC
+list on further correspondence.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Or are they assumed to read distros@?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+No.
 
-iQIcBAEBAgAGBQJQtPcgAAoJEBYNRVNeJnmTtmgP/3/YsQ9VwnDJ5XROWzjgAEbp
-C3eoMA/Nvvo+neOGjank57JHcCNnr0/5P10HHAXpkp6sFm8qJSjrp5WgYJSdCwZc
-mp4E9ch9DaXc0ozCiNC0dwbzY/p37xFpptYbtCO3EnyYJiQtxA+JrtBJGR8MObp9
-VwFKMRZkm7ddaOS7MIkkRrienV8s76sPJkLxQGOPJtSBI3XgVdVBvIJzpTxAGE4W
-OiXF2net5rRA+9VRfFjO4wctXE6jX1CWYNQRCDVKsC0dNkp5pJckhtzsEBY2FeoK
-4q4qIHJlVmkweg6yb7DszCXrM3eTN5YxDfV/Z02FvIxmrvxOqi7GuRTkklUASkf7
-X6x4TceKxXV5ybUunSu57c/KAZnY9laMu0CJkK/sVjY73P7SIRCcWf9DnFQyIqNQ
-5LwDgexWth9rRikaHBFb1qjtL6mONgynsusH/0alvVJTZQid11yHFiDW6unZUT7R
-WGkpzS+uRcOQZKDSiUp43/IClmtgnZR7Cl5X1G+upIRaq9q6j/EH/Hf7jS/ohOYt
-2BaPSq5h1CEzGYBkv9p72DEDKtPygdBC0hdyLOKht4lXuVDVZNl5SQNixvFEHe2V
-xA0SLbxEPdslRY+Tnc4oDU/ZE3sDWUqgCkDsqnn6zw+pUU4LpHo+lB9Ic8J+7BmH
-zafln24KGsebIrNGM2ns
-=fIQB
------END PGP SIGNATURE-----
+> What if an up- or downstream claims to need longer (confer a recent issue)?
+
+If they want more time than we can give them, then we can choose between
+leaving them out of the loop and giving them whatever time we can give
+them (less than they want) - or we can leave this choice up to them.
+They may be unhappy and say that we're being irresponsible, but I see no
+obviously better approach.  Keeping issues embargoed for weeks or months
+is not obviously any less irresponsible.
+
+With the example that I guess you're referring to (which we may discuss
+in public in more detail once the corresponding issue is finally
+public), the reporter notified related projects (not on the distros
+list) without informing them of the maximum embargo period at the time,
+so they assumed they had plenty of time.  In my proposal above, I am
+trying to address this by asking other projects to accept the terms
+first (before being exposed to the vulnerability details).
+Unfortunately, that won't always work - e.g., a reporter not aware of
+this procedure of the distros list may contact other projects on his/her
+own and thereby create certain implied expectations on their part...
+
+I guess there's no perfect solution to this.
+
+> When CRD happens, who publishes what where?
+
+Everyone is free to publish via their usual channels (e.g., distro
+updates and advisories), plus I think we must start publishing all
+issues on oss-security.  It would also be nice to include a timeline
+along with every issue that was initially discussed in private.  I'd be
+happy if those distros list member(s) volunteering to help run the list
+would also accept the responsibility to post about each and every issue
+being made public to oss-security.
+
+> Or is it just a free-for-all afterwards?
+
+Yes, but I think we should also have the mandatory publication on
+oss-security.
+
+> Just off the top of my head :)
+
+That was a very useful set of reminders, thank you!
+
+Alexander
