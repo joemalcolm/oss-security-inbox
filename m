@@ -1,18 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/05/3
-Message-Id: <201210051413.28856.timb@nth-dimension.org.uk>
-Date: Fri, 5 Oct 2012 14:13:21 +0100
-From: Tim Brown <timb@...-dimension.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/8
+Message-ID: <4F60DD76.3020909@redhat.com>
+Date: Wed, 14 Mar 2012 12:03:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Security contact for scan-view component of clang
+CC: Marc Deslauriers <marc.deslauriers@...onical.com>, "ludwig.nussel@...e.de >> Ludwig Nussel" <ludwig.nussel@...e.de>
+Subject: Re: CVE Request: libgdata did not verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
-Anyone know who the best person to talk to about scan-view is?
+On 03/14/2012 05:46 AM, Marc Deslauriers wrote:
+> On Wed, 2012-03-14 at 08:54 +0100, Ludwig Nussel wrote:
+>> Hi,
+>>
+>> libgdata did not verify SSL certificates:
+>>
+>> http://git.gnome.org/browse/libgdata/commit/?id=6799f2c525a584dc998821a6ce897e463dad7840
+>> http://git.gnome.org/browse/libgdata/commit/?h=libgdata-0-10&id=8eff8fa9138859e03e58c2aa76600ab63eb5c29c
+>> https://bugzilla.gnome.org/show_bug.cgi?id=671535
+>> https://bugzilla.novell.com/show_bug.cgi?id=752088
+> 
+> Please credit Vreixo Formoso for having discovered this.
+> 
+> https://bugs.launchpad.net/ubuntu/+source/libgdata/+bug/938812
+> 
+> Thanks,
+> 
+> Marc.
 
-Tim
+Please use CVE-2012-1177 for this issue.
+
+
 -- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Kurt Seifried Red Hat Security Response Team (SRT)
