@@ -1,67 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/14
-Message-ID: <4F21DE6A.7090101@redhat.com>
-Date: Thu, 26 Jan 2012 16:14:50 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/7
+Message-ID: <4F60DD6A.1030806@redhat.com>
+Date: Wed, 14 Mar 2012 12:03:22 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: wicd writes sensitive information in log files (password, passphrase...)
+CC: Mark Doliner <mark@...gant.net>
+Subject: Re: CVE request: Two Pidgin crashes
 Content-Type: text/plain; charset=utf-8
 
-On 01/26/2012 04:06 PM, Kurt Seifried wrote:
-> wicd writes sensitive information in log files (password, passphrase...)
+On 03/14/2012 01:59 AM, Mark Doliner wrote:
+> Hello hello.  Could I request that two CVEs be issued for two separate
+> crashes in Pidgin?  To my knowledge no CVE exists for either issue.
+> Both issues were reported in our public bug tracker, and are therefore
+> public.
 > 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652417
-> 
-> From: Vincent Lefevre <vincent@...c17.net>
-> To: Debian Bug Tracking System <submit@...s.debian.org>
-> Subject: wicd writes sensitive information in log files (password,
->  passphrase...)
-> Date: Sat, 17 Dec 2011 03:27:32 +0100
-> 
-> Package: wicd
-> Version: 1.7.1~b3-3
-> Severity: grave
-> Tags: security
-> Justification: user security hole
-> 
-> wicd writes sensitive information in log files (under /var/log/wicd),
-> such as passwords and passphrases. Users in the adm group can have
-> access to them, but also log files are meant to be sent in bug
-> reports, and if the bug reporter doesn't pay attention, there is
-> a huge risk to transmit such information.
-> 
-> http://bazaar.launchpad.net/~wicd-devel/wicd/experimental/revision/682
-> 
-> === modified file 'wicd/configmanager.py'
-> --- wicd/configmanager.py	2011-12-15 18:21:53 +0000
-> +++ wicd/configmanager.py	2011-12-17 06:55:18 +0000
-> @@ -120,8 +120,13 @@
->              ret = to_unicode(ret)
->              if default:
->                  if self.debug:
-> -                    print ''.join(['found ', option, ' in configuration ',
-> -                                   str(ret)])
-> +                    # mask out sensitive information
-> +                    if option in ['apsk', 'password', 'identity',
-> 'private_key', \
-> +                                  'private_key_passwd', 'key',
-> 'passphrase']:
-> +                        print ''.join(['found ', option, ' in
-> configuration *****'])
-> +                    else:
-> +                        print ''.join(['found ', option, ' in
-> configuration ',
-> +                                       str(ret)])
->          else:
->              if default != "__None__":
->                  print 'did not find %s in configuration, setting
-> default %s' % (option, str(default))
-> 
-> 
+> The issues are described at the following two URLs:
 
-Please use CVE-2012-0813 for this issue. One thing I forgot to include:
-affected version 9derp). wicd 1.6.2.2 and 1.7.0 are affected, a new
-tarball doesn't appear to be out yet.
+> http://pidgin.im/news/security/?id=60
+
+Please use CVE-2011-4939 for this issue.
+
+> http://pidgin.im/news/security/?id=61
+
+Please use CVE-2012-1178 for this issue.
+
+> The Pidgin project has just released version 2.10.2 which fixes both issues.
+> 
+> Thanks,
+> Mark
+
 
 -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
