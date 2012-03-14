@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/02/1
-Message-Id: <81168C79-4F81-48CC-B901-B57A45CD0766@codseq.it>
-Date: Mon, 2 Apr 2012 09:59:24 +0200
-From: Filippo Cavallarin <filippo.cavallarin@...seq.it>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/11
+Message-ID: <20120314204410.GS3308@redhat.com>
+Date: Wed, 14 Mar 2012 14:44:10 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: OSClass directory traversal vulnerability
+Subject: Was a CVE ever assigned for Python SimpleHTTPServer.py XSS?
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-Can i get a CVE identifier for this issue:
-
-http://www.codseq.it/advisories/osclass_directory_traversal_vulnerability
-
-Thanks
-
-Filippo Cavallarin
+I'm not sure if a CVE was ever assigned to this or not; it's an older
+issue that's fixed in 2.5.x and 2.6.x (I suspect 2.7.x is fixed too, but
+I cannot find a commit to be 100% sure).  It sounds awfully familiar
+though.
 
 
-C o d S e q
-Development with an eye on security
-------------------------------------------------------------------------
-Castello 2005, 30122 Venezia
-Tel: 041 88 761 58 - Fax: 041 81 064 714 - Cell: 346 66 93 254
-c.f. CVLFPP82B27L736J - p.iva 03737650279
-http://www.codseq.it - filippo.cavallarin@...seq.it
+A flaw was reported in Python's SimpleHTTPServer's list_directory()
+function.  Due to a missing charset parameter, if a user were to connect
+to SimpleHTTPServer using IE7, which engages in encoding-sniffing and
+can be tricked into interpretting the output as UTF7.  Because of this,
+an attacker could hide <script> tags in UTF7-encoded characters which do
+not get quoted by cgi.encode(), allowing XSS attacks.
 
+This has been corrected upstream in version 2.6.7rc2 and 2.5.6c1.  It
+may be fixed in 2.7 as well, but I was unable to find a commit to match
+it against.
+
+References:
+http://bugs.python.org/issue11442
+http://svn.python.org/view/python/branches/release26-maint/Lib/SimpleHTTPServer.py?r1=66717&r2=88831&view=patch
+http://svn.python.org/view/python/branches/release25-maint/Lib/SimpleHTTPServer.py?r1=53148&r2=88815&view=patch
+https://bugzilla.redhat.com/show_bug.cgi?id=803500
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
