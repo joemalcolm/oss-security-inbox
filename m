@@ -1,105 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/20/3
-Message-ID: <50D2A599.6040303@redhat.com>
-Date: Wed, 19 Dec 2012 22:43:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/3
+Message-ID: <1331725608.3983.178.camel@mdlinux>
+Date: Wed, 14 Mar 2012 07:46:48 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, Nicolas Grégoire <nicolas.gregoire@...rri.fr>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: Inkscape fixes a XXE vulnerability during rasterization of SVG images
+Subject: Re: CVE Request: libgdata did not verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 2012-03-14 at 08:54 +0100, Ludwig Nussel wrote:
+> Hi,
+> 
+> libgdata did not verify SSL certificates:
+> 
+> http://git.gnome.org/browse/libgdata/commit/?id=6799f2c525a584dc998821a6ce897e463dad7840
+> http://git.gnome.org/browse/libgdata/commit/?h=libgdata-0-10&id=8eff8fa9138859e03e58c2aa76600ab63eb5c29c
+> https://bugzilla.gnome.org/show_bug.cgi?id=671535
+> https://bugzilla.novell.com/show_bug.cgi?id=752088
 
-On 12/19/2012 03:37 AM, Jan Lieskovsky wrote:
-> Hi Kurt, Nicolas, vendors,
-> 
-> ----- Original Message ----- -----BEGIN PGP SIGNED MESSAGE----- 
-> Hash: SHA1
-> 
-> On 12/18/2012 08:44 PM, Kurt Seifried wrote:
->> On 12/17/2012 01:27 PM, Nicolas Grégoire wrote:
->> 
->>> Inkscape is vulnerable to XXE attacks during 
->>> rasterization/export of SVG images: 
->>> https://bugs.launchpad.net/inkscape/+bug/1025185
->> 
->>> Impact: The impact of this vulnerability range form denial of 
->>> service to file disclosure. Under Windows, it can also be used 
->>> to steal LM/NTLM hashes.
->> 
->>> PoC: During rasterization, entities declared in the DTD are 
->>> dereferenced and the content of the target file is included in 
->>> the output. Command-line used: "inkscape -e xxe-inkscape.png 
->>> xxe.svg" (PoC files are attached to the ticket)
->> 
->>> References: CWE-827: Improper Control of Document Type
->>> Definition http://cwe.mitre.org/data/definitions/827.html
->> 
->>> Regards, Nicolas Grégoire
->> 
->> This already has a CVE reference in the page:
->> 
->> CVE References
->> 
->> 2012-1102
->> 
->> To clarify that CVE was assigned to 
->> http://seclists.org/oss-sec/2012/q1/549
->> 
->> http://seclists.org/oss-sec/2012/q1/549
->> 
->> so this is probably an error, someone needs to tidy that bug up
->> and post links to the source/etc so I can see whats going on.
-> 
-> That's correct. CVE-2012-1102 has been assigned to the perl
-> XML-Atom issue.
-> 
-> Assuming the source of the slight confusion is this comment: 
-> https://bugs.launchpad.net/inkscape/+bug/1025185/comments/13
-> 
-> and the CVE id in the references.
-> 
-> But from the context of that bug, comment c#13 was used just to
-> reference patch for same issue in perl XML-Atom (CVE-2012-1102) 
-> issue, when searching a patch for inkscape.
-> 
-> Which later resulted into upstream inkscape commit: 
-> http://bazaar.launchpad.net/~inkscape.dev/inkscape/trunk/revision/11931
->
->  referenced in (subsequent) comment c#14: 
-> https://bugs.launchpad.net/inkscape/+bug/1025185/comments/14
-> 
-> So CVE-2012-1102 identifier is for perl XML-Atom problem. And this 
-> (same XXE problem) being present in inkscape should get a new CVE
-> id yet.
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+Please credit Vreixo Formoso for having discovered this.
 
-Please use CVE-2012-5656 for the Inkscape fixes a XXE vulnerability
-during rasterization of SVG images
+https://bugs.launchpad.net/ubuntu/+source/libgdata/+bug/938812
+
+Thanks,
+
+Marc.
 
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ0qWYAAoJEBYNRVNeJnmTbwEQAJo3Kj60JuDW+L/s4X6RHSIm
-U6qaRb6f44HNnv9ii32HAHvi6XoHkUmsAcvo1tBvCQ33AAx/9CjPMjT4/2WCq/bN
-faR3Ek+E7IFgIkzbOoQlIJ5DuSqICMJGw409NQRVqPFizXkYh9n0d1uL+OjfKRgo
-TB/LanpsGXWe9KvGozC8GQw0tbtgwl0G1tJMUtJOZlIK+Mh/Bw3xJJJWewgQpIHT
-fHNr4mRyHBICXulV0m1R35th2GfAsKKJHLjxyeVuWCV2Zzbos35v08hofamMxztY
-gANmHdZvEQJ6gQ5x/RMPWN0ZizOxTu7AedqYhQgo0Kb/xWYJOfoFht1kUCKsWikb
-49hMRd7Od7swQu1sneyQh+HeN/bVnMFDLivT+/pbIk0i5qUrCDWCH9uHBrH1HPi1
-gGNizk3WTtLYxDL39SUZyHGKhixQJzTcmUUEl3Ql3kFqMgmG3L2Hw68T0jX2Sml9
-RrTYTdqwT4OmAUBQs2RpNHiAJ7QNTZuJKEKNH+1Fj7Kf7TvQrZ058EjTUT3Nithv
-FIkmQibNJNL9AA5khqym/FcqxyDMTjzYDtYRp9GTVQJX5TAHOW9mXD+eRdSvgCJ6
-6B9BIlkKtc4e9sOwIQaxJUMa8/5QFP4kraYpiF/WW0jU2GLlT7a1RKzkCpLCv8NC
-e52Jm+jfQNagLx2lLpBF
-=0R76
------END PGP SIGNATURE-----
