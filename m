@@ -1,43 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/9
-Message-ID: <4F6A0DAA.7090908@redhat.com>
-Date: Wed, 21 Mar 2012 11:19:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-CC: oss-security@...ts.openwall.com, Zubin Mithra <zubin.mithra@...il.com>, Dhanesh k <dhanesh1428@...il.com>
-Subject: Re: CVE-Request taglib vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/1
+Message-ID: <4F604EB3.1060707@suse.de>
+Date: Wed, 14 Mar 2012 08:54:27 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: libgdata did not verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
-On 03/21/2012 09:42 AM, Ludwig Nussel wrote:
-> Zubin Mithra wrote:
->> [...]
->> The issues which are present in the latest "release" but not in the current
->> development head were :-
->>
->> [3] Lack of sanity checks of fields which were read, and were used for
->> allocating memory; crafted files would lead of application crash.
-> 
-> Not an issue according to upstream:
-> http://mail.kde.org/pipermail/taglib-devel/2012-March/002187.html
+Hi,
 
-Shouldn't it simply say "file to large" or "unable to allocate blah"
-something rather than crashing? I assume by "large" file the file
-doesn't actually need to be large, just the header information needs to
-claim it is large?
+libgdata did not verify SSL certificates:
 
->> [4] A one bit change in a working ogg file would cause a thread to loop
->> infinitely.
-> 
-> http://mail.kde.org/pipermail/taglib-devel/2012-March/002191.html
-> https://github.com/taglib/taglib/commit/b3646a07348ffa276ea41a9dae03ddc63ea6c532
+http://git.gnome.org/browse/libgdata/commit/?id=6799f2c525a584dc998821a6ce897e463dad7840
+http://git.gnome.org/browse/libgdata/commit/?h=libgdata-0-10&id=8eff8fa9138859e03e58c2aa76600ab63eb5c29c
+https://bugzilla.gnome.org/show_bug.cgi?id=671535
+https://bugzilla.novell.com/show_bug.cgi?id=752088
 
-Has this been confirmed? Does the looping thread actually cause a DoS,
-simply slow down the application a bit, or?
-
-> cu
-> Ludwig
-
-
+cu
+Ludwig
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
