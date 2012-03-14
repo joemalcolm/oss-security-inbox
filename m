@@ -1,18 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/02/5
-Message-ID: <20120802151903.6e9d9d34@redhat.com>
-Date: Thu, 2 Aug 2012 15:19:03 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: <oss-security@...ts.openwall.com>
-Subject: bind-dyndb-ldap DoS CVE-2012-3429
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/6
+Message-ID: <4F60DD4D.8000704@redhat.com>
+Date: Wed, 14 Mar 2012 12:02:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: gnash integer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On 03/14/2012 11:54 AM, Vincent Danen wrote:
+> An integer overflow leading to a heap-based buffer overflow was found
+> and fixed in Gnash.  Could a CVE be assigned to this flaw?
+> 
+> References:
+> 
+> http://git.savannah.gnu.org/cgit/gnash.git/commit/?id=bb4dc77eecb6ed1b967e3ecbce3dac6c5e6f1527
+> 
+> http://secunia.com/advisories/47183
+> https://bugzilla.redhat.com/show_bug.cgi?id=803443
+> 
 
-bind-dyndb-ldap bug can be used to remotely DoS named.  Additional
-details and patch link can be found in Red Hat bug:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3429
+Please use CVE-2012-1175 for this issue.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Kurt Seifried Red Hat Security Response Team (SRT)
