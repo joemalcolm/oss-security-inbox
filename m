@@ -1,16 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/01/2
-Message-ID: <20120101141428.GA27804@foo.fgeek.fi>
-Date: Sun, 1 Jan 2012 16:14:28 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, kseifrie@...hat.com
-Subject: Re: CVE-request: Elxis CMS two XSS-vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/2
+Message-ID: <CAPZ8mV7KRrANjuQjt9snV_xQPiX+PPErxsdY6613yZjqSqpy9g@mail.gmail.com>
+Date: Wed, 14 Mar 2012 00:59:08 -0700
+From: Mark Doliner <mark@...gant.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Two Pidgin crashes
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Dec 31, 2011 at 02:20:01PM -0700, Kurt Seifried wrote:
-> Does anyone have a contact name for Secunia with respect to
-> co-ordinating CVE assignments better?
+Hello hello.  Could I request that two CVEs be issued for two separate
+crashes in Pidgin?  To my knowledge no CVE exists for either issue.
+Both issues were reported in our public bug tracker, and are therefore
+public.
 
-I think correct address is vuln@...unia.com or at least they should be able to point you to right direction.
+The issues are described at the following two URLs:
+http://pidgin.im/news/security/?id=60
+http://pidgin.im/news/security/?id=61
 
-- Henri Salo
+The Pidgin project has just released version 2.10.2 which fixes both issues.
+
+Thanks,
+Mark
