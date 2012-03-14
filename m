@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/6
-Message-ID: <4680B31DCCC3B6428FB4E85ED9D540D02415BE38@SRVEXCH.oppida.fr>
-Date: Fri, 11 May 2012 09:31:04 +0000
-From: Luc ABRIC <luc.abric@...ida.fr>
-To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
-CC: Karim SLAMANI <karim.slamani@...ida.fr>, Valérian PERRET <valerian.perret@...ida.fr>, Yann MICHARD <yann.michard@...ida.fr>
-Subject: CVE-2012-1597: XSS in eZ Publish
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/13
+Message-Id: <201203142256.56757.tmb@65535.com>
+Date: Wed, 14 Mar 2012 22:56:49 +0000
+From: Tim Brown <tmb@...35.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: running the distros lists
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone,
+On Wednesday 14 Mar 2012 20:54:12 Solar Designer wrote:
+> On Wed, Mar 14, 2012 at 01:42:23PM -0600, Kurt Seifried wrote:
+> > Can we also maintain a public database of upstream contacts? I seem to
+> > remember a few different efforts to do this but can't find anything
+> > current.
+> 
+> We have this wiki page:
+> 
+> http://oss-security.openwall.org/wiki/software
+> 
+> It currently lists Apache, Asterisk, ..., Xine, X.Org - just to give an
+> idea of what projects chose to add themselves or were added.  By all
+> means, please help keep this wiki page current and use it.
 
-eZ Publish just released details and fix for this XSS vulnerability that Yann MICHARD discovered a few months ago:
-http://share.ez.no/community-project/security-advisories/ezsa-2012-006-xss-exploit-on-ezjscore-run-command-when-using-firefox
-The advisory provides details about the fix itself.
+I should probably add OpenVAS to that list, but my real reason for responding 
+was to mention the OSVDB vendor dictionary at:
 
-Please update the CVE-2012-1597 details with those informations.
+* http://www.osvdb.org/vendors
 
-Regards,
-Luc ABRIC
-IT Security Expert
+It's definately a good place to start if you're trying to track down vendors, 
+F/OSS or otherwise.  Perhaps this is something where oss-security could 
+colaborate with the existing effort?
 
-6 avenue du Vieil Etang - Bâtiment B
-78180 Montigny-le-Bretonneux
-Phone: +33 (0)1 30 14 19 00
-Fax:       +33 (0)1 30 14 19 09
-Mobile: +33 (0)6 26 87 62 14
-luc.abric@...ida.fr
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
 
-www.oppida.fr
-
-
-
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
