@@ -1,63 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/11
-Message-ID: <20120424151252.GA12060@openwall.com>
-Date: Tue, 24 Apr 2012 19:12:52 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/12
+Message-ID: <20120314205412.GB5203@openwall.com>
+Date: Thu, 15 Mar 2012 00:54:12 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Tavis Ormandy <taviso@...xchg8b.com>
-Subject: Re: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
+Subject: Re: running the distros lists
 Content-Type: text/plain; charset=utf-8
 
-All -
+On Wed, Mar 14, 2012 at 01:42:23PM -0600, Kurt Seifried wrote:
+> Can we also maintain a public database of upstream contacts? I seem to
+> remember a few different efforts to do this but can't find anything
+> current.
 
-On Tue, Apr 24, 2012 at 04:31:51PM +0200, Tavis Ormandy wrote:
-> Oops, indeed I didn't test with the 0.9.x build. I had tried (and
-> failed) to mail it to openssl-security, but their MTA rejected it,
-> so just skipped it as the 1.0.0 patch seemed correct.
-> 
-> At the risk of being flamed for my progressive views on email size,
-> please turn up the limits for security aliases! :-)
+We have this wiki page:
 
-This is getting a bit off-topic indeed, but here are a few points:
+http://oss-security.openwall.org/wiki/software
 
-1. Yes, I agree that private security contact addresses should be more
-liberal in what they accept (as compared to mailing lists with larger
-numbers of subscribers).  This is why, for example, Tavis' message with
-the attached 1.3 MB file was delivered to me just fine, but did not make
-it through to oss-security.
+It currently lists Apache, Asterisk, ..., Xine, X.Org - just to give an
+idea of what projects chose to add themselves or were added.  By all
+means, please help keep this wiki page current and use it.
 
-2. Besides message size, also important is how the message may be
-treated by anti-spam and anti-virus software (which may arguably be
-unreasonable to use, especially in such cases, but may happen to be in
-place on a mail gateway anyway).  openssl-1.0.1-testcase-32bit.crt.gz
-uncompresses to 1431655797 bytes (curiously, 1.33333336 GiB), which may
-well be above a reasonable anti-DoS limit of an anti-virus checking
-what's inside compressed files.  In fact, that file could reasonably be
-blocked for being such a size bomb for end-user systems as well
-(compression ratio of over 1000).
+We also have:
 
-3. URLs may be used for passing of somewhat large or problematic files
-like this.  For postings to oss-security, file uploads to wiki pages
-under http://oss-security.openwall.org/wiki/code-reviews may be used.
-In fact, just before Tavis placed the file on an URL of his own, I
-started to set up this wiki page, which I intended to upload the file to:
-http://oss-security.openwall.org/wiki/code-reviews/openssl
-(maybe we should even complete this one, link to it from code-reviews,
-and start to use it for OpenSSL issues in particular).
+http://oss-security.openwall.org/wiki/vendors
+http://oss-security.openwall.org/wiki/infrastructure
 
-4. FYI, the current message size limit for oss-security is 200 KB.  This
-means that files of up to about 140 KB may be posted.  If list members
-feel that this needs to be adjusted one way or the other, let me know.
-Please consider that we currently have about 1000 subscribers.
+> This would save a ton of time. It would of course have to be
+> maintained (maybe a scheme like emailing the people listed every few
+> months and offering a "click here to confirm you're still the security
+> contact" and a "click here to be removed as the contact" to help keep it
+> up to date).
 
-5. For the non-public distros and linux-distros lists, the limit is in
-fact much larger, so that these lists' PGP re-encryption feature may be
-used to distribute non-public testcases and the like to list members.
-However, I think it's preferable that multi-megabyte messages be
-announced to and actually requested by list members before being posted,
-unless the issue is very time-sensitive (every hour matters).  Sometimes
-it makes more sense to send testcases to individual distros (just those
-who request this info) rather than to all at once anyway.
+Well, we don't have that currently, and I'm not sure if it'd work well
+in practice or not.  I imagine that some upstreams would be offended by
+the automated messages, yet they could also be offended by not being
+notified of an issue affecting their software (and more importantly
+their users would be affected).
+
+> Also things like PGP keys/etc would be nice to have in this.
+
+Right.  Please feel free to add PGP key info to the wiki pages above.
+
+> It strikes me that this would actually be a valuable project for
+> Mitre, similar to CPE, maybe the "SCE" ("Security Contact Enumeration")?
+
+Maybe.
+
+> As anyone trying to notify multiple upstreams knows, it can be a
+> horribly painful process.
+
+Yes, but my gut feeling is that identifying the right set of projects to
+notify is at least as difficult and time-consuming as finding their
+current contact info is.  Of course, anything we can do to make any of
+the steps easier may be of help.
+
+Kurt - how about my original request for help running the list, though?
+Even if you somehow don't volunteer to notify upstreams (and others),
+making sure that every issue gets a CRD proposed for it ASAP will be of
+help.  Can I at least count on you doing that? ;-)  And maybe someone
+else will volunteer for other sub-tasks (although a per-vulnerability
+rather than per-sub-task split between the several responsible list
+members could work better, I think).
 
 Thanks,
 
