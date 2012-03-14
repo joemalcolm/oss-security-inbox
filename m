@@ -1,30 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/4
-Message-ID: <4F542D51.2030201@redhat.com>
-Date: Sun, 04 Mar 2012 20:04:49 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/10
+Message-ID: <4F60F49F.7040803@redhat.com>
+Date: Wed, 14 Mar 2012 13:42:23 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: systemd local denial of login or local users can create arbitrary services
+CC: Solar Designer <solar@...nwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: running the distros lists
 Content-Type: text/plain; charset=utf-8
 
-On 03/04/2012 02:23 AM, Henri Salo wrote:
-> Can I get CVE-identifier for this issue? http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=662029
-> 
-> Version: 37-1
-> Forwarded: https://bugzilla.redhat.com/show_bug.cgi?id=680122
-> 
-> By invoking systemctl status somename.service any user can create an
-> entry in systemd's service list. If this list gets too large the login
-> procedure can fail. It is not tracked which user created the entries.
-> 
-> Thanks to Michael Biebl for helping me understand the issue. Lennart
-> Poettering later explained that the issue is already known and fixed in
-> git commit 9a46fc3b9014de1bf0ed1f3004a536b08a19ebb3.
-> 
-> - Henri Salo
+> I think that ideally the person would (try to) identify the upstreams,
+> downstreams, and other affected projects to contact, ask the reporter
+> for approval, upon the approval inform those other projects that there's
+> a security issue and ask them if they'd like more info and if they're OK
+> with the proposed maximum embargo period (CC'ing the list on those
+> preliminary notifications), and if they accept then finally pass the
+> actual info on to them (also CC'ing the list) and add them to the CC
+> list on further correspondence.
 
-Please use CVE-2012-1101 for this issue.
+Can we also maintain a public database of upstream contacts? I seem to
+remember a few different efforts to do this but can't find anything
+current. This would save a ton of time. It would of course have to be
+maintained (maybe a scheme like emailing the people listed every few
+months and offering a "click here to confirm you're still the security
+contact" and a "click here to be removed as the contact" to help keep it
+up to date). Also things like PGP keys/etc would be nice to have in
+this. It strikes me that this would actually be a valuable project for
+Mitre, similar to CPE, maybe the "SCE" ("Security Contact Enumeration")?
+
+As anyone trying to notify multiple upstreams knows, it can be a
+horribly painful process.
+
+> Alexander
 
 -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
