@@ -1,25 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/08/1
-Message-ID: <20121108221550.GJ13903@dhcp-25-225.brq.redhat.com>
-Date: Thu, 8 Nov 2012 23:15:51 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/4
+Message-ID: <20120314152447.GP3308@redhat.com>
+Date: Wed, 14 Mar 2012 09:24:47 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request --- acceptation of overlapping ipv6 fragments
+Subject: CVE request: pyfribidi buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
-Accepting overlapping fragmented ipv6 packets can lead to Operating
-Systems (OS) fingerprinting, IDS/IPS insertion/evasion, firewall
-evasion.
+Could a CVE be assigned for this issue please?  I don't think it's come
+through here yet.
 
-Do not accept such packets.
-
-Linux kernel upstream fix:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=70789d7052239992824628db8133de08dc78e593
+A buffer overflow flaw was reported in pyfribidi's
+fribidi_utf8_to_unicode() function, due to it handling at most 3 bytes
+for a single unicode character.  If a 4-byte utf-8 sequence was
+supplied, it would generate 2 unicode characters which would overflow
+the logical buffer.  This has been fixed in pyfribidi 0.11.
 
 References:
-http://tools.ietf.org/rfc/rfc5722.txt
-https://media.blackhat.com/bh-eu-12/Atlasis/bh-eu-12-Atlasis-Attacking_IPv6-WP.pdf
 
-Thanks,
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=663189
+https://github.com/pediapress/pyfribidi/issues/2
+https://github.com/pediapress/pyfribidi/commit/d2860c655357975e7b32d84e6b45e98f0dcecd7a
+http://www.securityfocus.com/bid/52451/info
+https://bugzilla.redhat.com/show_bug.cgi?id=801896
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
