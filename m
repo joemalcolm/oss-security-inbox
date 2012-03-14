@@ -1,69 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/11
-Message-ID: <CAF6bG8ftmkO7WPx+8iTQmnw_4fZMaKUWFozYgExnXcxej50A3Q@mail.gmail.com>
-Date: Sun, 30 Dec 2012 13:05:42 +0200
-From: Marko Lindqvist <cazfi74@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: About CVE-2012-5645
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/5
+Message-ID: <20120314175421.GQ3308@redhat.com>
+Date: Wed, 14 Mar 2012 11:54:21 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: gnash integer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 30 December 2012 05:48, Kurt Seifried <kseifried@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 12/21/2012 05:26 PM, Marko Lindqvist wrote:
->> I saw message that Freeciv bug #20003 has been assigned
->> CVE-2012-5645 : http://seclists.org/oss-sec/2012/q4/484
->>
->> I'd like to clarify things a bit. It was not single issue, but
->> more like two separate issues. Most importantly this leads to patch
->> listed
->> (http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21670)
->> to fix only part of the problems described. Something like:
->>
->> A denial of service flaw was found in the way the server component
->> of Freeciv, a turn-based, multi-player, X based strategy game,
->> processed certain packets (invalid packets with whole packet length
->> lower than packet header size). A remote attacker could send a
->> specially-crafted packet that, when processed would lead to freeciv
->> server to terminate (due to memory exhaustion)
->>
->>
->> The other half: A denial of service flaw was found in the way the
->> server component of Freeciv, a turn-based, multi-player, X based
->> strategy game, processed certain packets (syntactically valid
->> packets, but whose processing would lead to an infinite loop). A
->> remote attacker could send a specially-crafted packet that, when
->> processed would lead to freeciv server to become unresponsive (due
->> to excessive CPU use).
->>
->> is fixed in
->> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21701
->>
->>
->>
->> Both are fixed in 2.3.3 (and patch versions applied to the stable
->> branch S2_3 release was made from:
->> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21672 ,
->> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21703 )
->>
->>
->> - ML
->>
->
-> Hmm I'm waffling here. The issues are the same version/reporter,
-> roughly the same, can you post the http://cwe.mitre.org/ identifiers
-> for these two issues? If they are different enough this might warrant
-> a CVE split but for now I'm leaving it merged.
+An integer overflow leading to a heap-based buffer overflow was found
+and fixed in Gnash.  Could a CVE be assigned to this flaw?
 
- Yes, had it fixes for both parts listed from the start, there would
-be no problem. The problem is the confusion over where CVE-2012-5645
-is really fixed. Based on the original description here some
-distributions claim CVE-2012-5645 fixed now that they have applied one
-patch only. If you just add second fix to CVE-2012-5645, there will be
-no way of telling if particular logmsg about "CVE-2012-5645 fixed"
-means it's fixed completely, or only half of it.
+References:
 
+http://git.savannah.gnu.org/cgit/gnash.git/commit/?id=bb4dc77eecb6ed1b967e3ecbce3dac6c5e6f1527
+http://secunia.com/advisories/47183
+https://bugzilla.redhat.com/show_bug.cgi?id=803443
 
- - ML
+-- 
+Vincent Danen / Red Hat Security Response Team 
