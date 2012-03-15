@@ -1,42 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/8
-Message-ID: <20120105155335.GD16919@dhcp-25-225.brq.redhat.com>
-Date: Thu, 5 Jan 2012 16:53:36 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: Greg KH <greg@...ah.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/3
+Message-ID: <88277d60-aa3b-4f06-ac50-54d76aae307f@zmail13.collab.prod.int.phx2.redhat.com>
+Date: Thu, 15 Mar 2012 08:33:41 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: running the distros lists
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 04, 2012 at 02:23:03PM -0800, Greg KH wrote:
-> On Wed, Jan 04, 2012 at 11:10:59PM +0100, Petr Matousek wrote:
-> > Move "exit_robust_list" into mm_release() and clear them
-> > 
-> > We don't want to get rid of the futexes just at exit() time, we want to
-> > drop them when doing an execve() too, since that gets rid of the
-> > previous VM image too.
-> > 
-> > Doing it at mm_release() time means that we automatically always do it
-> > when we disassociate a VM map from the task.
-> > 
-> > Upstream patches:
-> > 8141c7f3e7aee618312fa1c15109e1219de784a7
-> > fc6b177dee33365ccb29fe6d2092223cf8d679f9
 > 
-> In the future, could you reference which kernel contained these patches
-> so I don't have to go look it up?  :)
+> Kurt - how about my original request for help running the list, though?
+> Even if you somehow don't volunteer to notify upstreams (and others),
+> making sure that every issue gets a CRD proposed for it ASAP will be of
+> help.  Can I at least count on you doing that? ;-)  And maybe someone
+> else will volunteer for other sub-tasks (although a per-vulnerability
+> rather than per-sub-task split between the several responsible list
+> members could work better, I think).
+> 
 
-I will try to include the kernel version next time.
+This task strikes me as a timesink that results in minimal value. It's in
+the best interest of all list members to fix issues in a timely manner. The
+historic vendor-sec never had a serious problem with CRD. They were often
+outside of the current proposed 14 day span, but that's just a reality of
+how things go. We all have more work to do than time, so some things are
+bound to suffer.
 
-Petr
+Trying to get a couple people to do this is going to be a losing battle. We
+need to think about how to best let the list police itself. It certainly
+won't be 100% perfect, but I think even an 80% reasonable CRD agreement
+goal is acceptable (perfect is the enemy of the good comes to mind).
 
-> 
-> For the record, the first one showed up in 2.6.28-rc5 and the second in
-> 2.6.32-rc4.
-> 
-> thanks,
-> 
-> greg k-h
+I would suggest some reasonable guidelines (that are not enforced
+strictly), then see how things go for a while. If it's deemed unacceptable,
+a better solution can be worked on.
+
+Thanks.
 
 -- 
-Petr Matousek / Red Hat Security Response Team
+    JB
