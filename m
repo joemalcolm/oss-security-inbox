@@ -1,22 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/4
-Message-ID: <1326467949.7887.190.camel@new-desktop>
-Date: Fri, 13 Jan 2012 16:19:08 +0100
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-To: oss-security@...ts.openwall.com
-Subject: CVE affected for PHP 5.3.9 ?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/6
+Message-ID: <4F61F9E9.9040003@gmail.com>
+Date: Thu, 15 Mar 2012 10:17:13 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: security@...roid.com, cve@...re.org
+CC: "Steven M. Christey" <coley@...us.mitre.org>,  oss-security@...ts.openwall.com
+Subject: Android CVE identifiers
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi Android Security Team and CVE folks,
 
-PHP released v5.3.9 earlier this month :
-http://php.net/ChangeLog-5.php#5.3.9
+The assignment of CVE identifiers to Android security issues appears to
+be sporadic at best, because to my knowledge none of the major Android
+OEMs (HTC, Motorola, Samsung, LG) assign CVEs to Android security issues
+affecting their builds or publish any information about this.  Is there
+any official policy followed by the Android security team on assigning
+CVE identifiers to OEM-specific vulnerabilities?
 
-I wonder if CVE identifiers were already affected to these security
-vulnerabilities. I'm looking specifically for bug 54446 that I
-reported : https://bugs.php.net/bug.php?id=54446
+If it would be helpful to anyone, I have a detailed list of about 20
+local privilege escalation vulnerabilities that have been patched in the
+last year or two, most of which affect specific devices.  If there is
+interest in assigning CVEs to these issues, I can follow up with a
+formal CVE request.  Additionally, there are at least a few
+Google-authored vulnerabilities that are missing identifiers.
 
 Regards,
-Nicolas
-
-
+Dan
