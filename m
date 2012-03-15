@@ -1,38 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/1
-Message-ID: <4F727B35.7020404@gentoo.org>
-Date: Tue, 27 Mar 2012 19:45:09 -0700
-From: Tim Sammut <underling@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/10
+Message-ID: <4F62376C.70600@fifthhorseman.net>
+Date: Thu, 15 Mar 2012 14:39:40 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-CC: security <security@...too.org>
-Subject: CVE Request: PolicyKit change allows users in "wheel" group to become root without a password
+Subject: CVE-request: apache's mod-fcgid does not respect configured FcgidMaxProcessesPerClass in VirtualHost
 Content-Type: text/plain; charset=utf-8
 
-Hi.
+Version 2.3.6 of mod-fcgid (the current published version from ASF 
+according to [0]) has a known problem that FcgidMaxProcessesPerClass 
+directives are not honored when they appear inside a VirtualHost stanza.
 
-Please assign a CVE to this issue.
+This is presents a risk for a denial of service because it means that a 
+remote attacker can violate the intent of the admin and overwhelm the 
+server running fcgid.
 
-An intended change in PolicyKit [1] version 0.103 [2] allows users of
-the "wheel" group to become root without providing the root password.
-While this was intentional, we believe it presents a security concern
-for our users [3].
+Could a CVE be assigned for this vulnerability?
 
-[1]
-http://cgit.freedesktop.org/PolicyKit/commit/?id=763faf434b445c20ae9529100d3ef5290976d0c9
-[2]
-http://www.mail-archive.com/polkit-devel@lists.freedesktop.org/msg00327.html
-[3] https://bugs.gentoo.org/show_bug.cgi?id=401513
+If the admin declares that a given virtualhost should be limited to X 
+fastcgi processes (often in order to constrain RAM usage by the vhost), 
+any remote user can issue X+1 (or 10X, or whatever) concurrent GET 
+requests, which defeats the documented limit, and can result in heavy 
+swap or the oom-killer, which can cause a DoS on other services on the host.
 
-[4]
-http://patch-tracker.debian.org/patch/series/view/policykit-1/0.104-2/05_revert-admin-identities-unix-group-wheel.patch
-[5] https://launchpad.net/ubuntu/+source/policykit-1/0.103-1
+This bug has been fixed since the release of 2.3.6 in upstream's svn 
+(r1037727 of https://svn.apache.org/repos/asf/httpd/mod_fcgid/trunk) 
+with a narrowly-targeted one-line patch:
 
-thank you
-tim
+--- modules/fcgid/fcgid_spawn_ctl.c	(revision 1037726)
++++ modules/fcgid/fcgid_spawn_ctl.c	(revision 1037727)
+@@ -178,7 +178,7 @@
+          if (current_node->inode == command->inode
+              && current_node->deviceid == command->deviceid
+              && !strcmp(current_node->cmdline, command->cmdline)
+-            && current_node->vhost_id == sconf->vhost_id
++            && current_node->vhost_id == command->vhost_id
+              && current_node->uid == command->uid
+              && current_node->gid == command->gid)
+              break;
 
--- 
-Tim Sammut ~ Gentoo Security Team
-underling@...too.org ~ C2375493
+But this patch hasn't made it to any released version.
 
+Debian has plans to release a Debian Security Advisory for the issue and 
+will resolve it with the above patch.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
+This problem is also documented at:
+
+  https://issues.apache.org/bugzilla/show_bug.cgi?id=49902
+  http://bugs.debian.org/615814
+
+Regards,
+
+	--dkg
+
+[0] https://httpd.apache.org/mod_fcgid/
