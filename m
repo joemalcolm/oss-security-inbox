@@ -1,37 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/1
-Message-ID: <20120103015657.GA819@openwall.com>
-Date: Tue, 3 Jan 2012 05:56:57 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/8
+Message-ID: <4F6236C2.9010708@redhat.com>
+Date: Thu, 15 Mar 2012 12:36:50 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+CC: Luc ABRIC <luc.abric@...ida.fr>, Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, "'jkn@...no'" <jkn@...no>
+Subject: Re: CVE request: eZ Publish: unspecified vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 03, 2012 at 12:33:01AM +0100, Nico Golde wrote:
-> P.S. if anyone has a clue on why that script still works with dropbear, even 
-> though it already seems to implement per-ip based connection counting...
+On 03/15/2012 02:59 AM, Luc ABRIC wrote:
+> Hi,
+> 
+> We identified 2 critical vulnerabilities affecting the eZ Publish application in both commercial and community edition.
+> 
+> eZ Systems Enterprise just opened the following issue regarding the most critical vulnerability:
+> http://issues.ez.no/19238
+> The 2nd issue will lead to another item in the bugtracker as soon as its confirmed by eZ.
+> 
+> Is it enough to request a CVE ID, at least for the first issue?
+> 
+> We're waiting for the editor to roll out a fix before releasing more details (including our exploit).
+> 
+> Regards,
+> Luc ABRIC.
+> 
+> IT Security Expert at Oppida
+> 
+> 6 avenue du Vieil Etang - Bâtiment B
+> 78180 Montigny-le-Bretonneux
+> Phone: +33 (0)1 30 14 19 00
+> Fax: +33 (0)1 30 14 19 09
+> Mobile: +33 (0)6 26 87 62 14
+> Mail: luc.abric@...ida.fr
+> 
+> Website: www.oppida.fr
+> 
+> 
+> 
 
-Does it still work?  I was not able to reproduce that.  I built Dropbear
-2011.54, generated an RSA host key with "./dropbearkey -t rsa -f
-dropbear_rsa_host_key" and started the service with "./dropbear -r
-dropbear_rsa_host_key -p 2222".  Then I ran your DoS program with
-"0:2222 10" on the command-line.  At first, it detected that Dropbear
-would only allow 5 connections from the source address (indeed,
-Dropbear's MAX_UNAUTH_PER_IP defaults to 5), and I was no longer able to
-get the SSH version banner with "nc -v 0 2222" (the connection would be
-closed immediately).  However, after a while I started being able to
-connect with "nc" again, and Dropbear's log records only showed the DoS
-program making 4 connections at a time, not 5 - I don't know why.  So I
-hacked the program to make 6 connections at a time instead (changed
-get_max_startups() to just "return 6;").  Then the DoS for connections
-from 127.0.0.1 became reliable, so I was able to reasonably test
-connections from other source IP addresses, which I did.  "nc -s
-127.0.0.2 -v 0 2222" worked flawlessly (multiple times with no issue),
-reporting "SSH-2.0-dropbear_2011.54".  Thus, the per-source limit
-appeared to work as it should have.  Where's the problem?
+No more info would be helpful. Some draft guidelines:
 
-(Of course, with the defaults of MAX_UNAUTH_CLIENTS 30 and
-MAX_UNAUTH_PER_IP 5 it'd only take abusive connections from 6 IP
-addresses to DoS the service, but that's expected.)
+Information for CVE request, REQUIRED:
 
-Alexander
+1) Email address of requester (so we can contact them)
+2) Software name and optionally vendor name
+3) At least one of (to determine is this a security issue):
+  1. Type of vulnerability
+  2. Exploitation vectors
+  3. Attack outcome
+4) For Open Source at least one of:
+  1. Link to vulnerable source code or fix
+  2. Link to source code change log
+  3. Link to security advisory
+  4. Link to bug entry
+  5. Request comes from project member (a.k.a. "trust me, it's a problem")
+5) Affected version(s) (3.2.4, 3.x, current version, all current
+releases, something)
+6) Whether or not this has been previously requested (i.e. on OSS-Sec or
+to cve-assign)
+7) Is this an Open Source or commercial software request
+8) Is this an embargoed issue (if yes and commercial: send to
+cve-assign, if yes and open source: send to vs-sec?)
+9) IF multiple issues are listed please list affected versions for each
+issue and/or who reported them (so we can determine CVE split/merge).
+
+Information for CVE request, REQUESTED:
+
+1) More of the above information of course
+2) Software version(s) fixed (if available)
+3) For closed source any of the information from "For Open Source at
+least one of:"
+4) Any additional information
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
