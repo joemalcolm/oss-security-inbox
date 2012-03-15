@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/7
-Message-ID: <1344536350.13241.51.camel@scapa>
-Date: Thu, 09 Aug 2012 11:19:14 -0700
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/11
+Message-ID: <CAKCW=4Yq=wZnEA5CVzn8fyLT=BMVyjEWpzwMjM25qZ9TqdR4Uw@mail.gmail.com>
+Date: Thu, 15 Mar 2012 15:18:49 -0400
+From: Mark Stanislav <mark.stanislav@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: argyros.george@...il.com
-Subject: Randomness Attacks Against PHP Applications
+Subject: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
+Howdy,
 
-I'm currently at the Usenix Security 2012 conference, where there was a
-nice paper about randomness vulnerabilities in PHP applications. I
-invite you to read the paper[1] but in summary, a lot of PHP
-applications make false assumption about the true randomness of the core
-PHP random functions and it might lead to attacks, for example using the
-“password reset” features.
+I was looking to receive CVEs for the following...
 
-Paper authors tried to port this to PHP security team, but it seems the
-answer was that it was an application problem. Some examples are given
-in the paper, but I have no idea where exactly the vulnerabilities
-really lie. The various rand() functions used by application developers
-might just not hold up to the expectations, or the developers might just
-don't know that they should use a cryptographically secure random
-function.
+1) phpMoneyBooks (http://phpmoneybooks.com/) has an unauthenticated local
+file inclusion (LFI) vulnerability
+* Notified, Response Received, and Patch Released
 
-In any case, I guess some discussion might be needed on how to really
-fix those vulnerabilities, and here seems like a good place. I've just
-added the two papers authors to CC:, but it might be interesting to
-bring PHP security team and applications developers in the loop.
+2) phpGradeBook (http://phpgradebook.com/) has unauthenticated SQL Database
+Exportation
+* Notified, Response Received, and Patch Released
 
-Regards,
--- 
-Yves-Alexis
+3) phpPaleo (http://sourceforge.net/projects/phppaleo/) has an
+unauthenticated local file inclusion (LFI) vulnerability
+* Notified, Response Received, and Patch Released
 
-[1]:
-https://www.usenix.org/conference/usenixsecurity12/i-forgot-your-password-randomness-attacks-against-php-applications
+4) hbportal (http://sourceforge.net/projects/hbportal/) has a POST-based
+SQL injection vulnerability
+* Notified
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+5) e-ticketing (http://sourceforge.net/projects/e-ticketing/) has a
+POST-based SQL injection vulnerability
+* Notified & Response Received
+
+Thanks!
+
+-Mark
+
