@@ -1,51 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/25/4
-Message-ID: <20120825102959.54d7e9dc@janhh3.site>
-Date: Sat, 25 Aug 2012 10:29:59 +0200
-From: Jan Willamowius <jan@...lamowius.de>
-To: oss-security@...ts.openwall.com, jan@...lamowius.de
-Subject: Re: information request on security bug fix in GNU Gatekeeper 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/4
+Message-ID: <4680B31DCCC3B6428FB4E85ED9D540D00321AF@SRVEXCH.oppida.fr>
+Date: Thu, 15 Mar 2012 08:59:56 +0000
+From: Luc ABRIC <luc.abric@...ida.fr>
+To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
+CC: Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, "'jkn@...no'" <jkn@...no>
+Subject: CVE request: eZ Publish: unspecified vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi Raphael,
+Hi,
 
-I was planning to give people a few days to update before releasing
-detailed information.
+We identified 2 critical vulnerabilities affecting the eZ Publish application in both commercial and community edition.
 
-But you are right, the possibility to create an unlimited number of
-connections each with its own thread handling it is the issue that
-creates an easy possibility for a DOS attack.
+eZ Systems Enterprise just opened the following issue regarding the most critical vulnerability:
+http://issues.ez.no/19238
+The 2nd issue will lead to another item in the bugtracker as soon as its confirmed by eZ.
+
+Is it enough to request a CVE ID, at least for the first issue?
+
+We're waiting for the editor to roll out a fix before releasing more details (including our exploit).
 
 Regards,
-Jan
+Luc ABRIC.
 
--- 
-Jan Willamowius, Founder of the GNU Gatekeeper Project
-EMail  : jan@...lamowius.de
-Website: http://www.gnugk.org
-Support: http://www.willamowius.com/gnugk-support.html
+IT Security Expert at Oppida
+
+6 avenue du Vieil Etang - Bâtiment B
+78180 Montigny-le-Bretonneux
+Phone: +33 (0)1 30 14 19 00
+Fax: +33 (0)1 30 14 19 09
+Mobile: +33 (0)6 26 87 62 14
+Mail: luc.abric@...ida.fr
+
+Website: www.oppida.fr
 
 
-Raphael Geissert wrote:
-> Hi Jan,
-> 
-> On the announcement of release 3.1 of GNU Gatekeeper[1] there's a mention of 
-> a security bug fix.
-> Could you please shed some light on the security issue? is it related to the 
-> status port connection limit feature that was recently added in [2] and 
-> similar?
-> 
-> Thanks in advance.
-> 
-> Found via secunia SA50343 [3]
-> 
-> [1]http://www.gnugk.org/gnugk-3.1.html
-> [2]http://openh323gk.cvs.sourceforge.net/viewvc/openh323gk/openh323gk/GkStatus.cxx?r1=1.132&r2=1.133
-> [3]http://secunia.com/advisories/50343/
-> 
-> Kind regards,
-> -- 
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
-> 
 
