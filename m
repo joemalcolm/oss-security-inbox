@@ -1,128 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/2
-Message-ID: <508F3134.4020409@redhat.com>
-Date: Mon, 29 Oct 2012 19:45:24 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, seth.arnold@...onical.com
-Subject: Re: Strange CVE situation (at least one ID should come of this)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/12
+Message-ID: <20120315194818.GA9016@openwall.com>
+Date: Thu, 15 Mar 2012 23:48:18 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Luc ABRIC <luc.abric@...ida.fr>, Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, "'jkn@...no'" <jkn@...no>
+Subject: Re: CVE request: eZ Publish: unspecified vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Mar 15, 2012 at 12:36:50PM -0600, Kurt Seifried wrote:
+> No more info would be helpful.
 
-On 10/29/2012 04:01 PM, Seth Arnold wrote:
-> On Mon, Oct 29, 2012 at 02:01:24PM -0600, Kurt Seifried wrote:
->> So the first question I have is:
->> 
->> Q1) Do we need to audit software to prove that it is vulnerable?
->> Or is a statistical model enough? e.g. for PHP based web plugins,
->> not
+I guess you meant to place a comma after "No".
+
+> Some draft guidelines:
 > 
-> I can't argue against the statistical model though it does rather
-> reduce the value of CVE as naming a specific vulnerability if they
-> start getting assigned for "eww this smells". There may be one
-> easily exploitable remote root flaw, there may be thousands of
-> reliability and information disclosure flaws, but hiding them all
-> under one "old and stinky" CVE doesn't feel like a significant
-> improvement.
+> Information for CVE request, REQUIRED:
+...
 
-Right but the problem is people aren't going to audit these stinky old
-softwares to find CVE's, it's just not worth it mostly (what's the
-incentive?).
+I think we should place these on the wiki.  There's already a wiki page
+on CVE IDs, but it is very brief and it does not mention obtaining CVE
+IDs via oss-security or distros lists.  You could want to update it and
+add links to it from other relevant oss-security wiki pages.
 
->> We can assign a CVE with a description along the lines of
->> "Software X has not been actively maintained since release Y on
->> date Z. Software X is comprised of some stuff and built in
->> language Z which is known to commonly result in security flaws
->> (possibly list what kind, e.g. XSS/buffer overflow, etc.)." Maybe
->> start with a generic cut off date of say 5 years, and start
->> listing stuff as people find/notice them. If a program ever comes
->> back into maintenance and release a new version then the old CVE
->> would be there as a warning, and moving forwards people would be
->> able to make a much more informed choice.
-> 
-> To turn this on its head: qmail is an MTA (historically trouble)
-> written in C (historically trouble) and has not had a stable
-> release in 14 years (going strictly by Wikipedia).
-> 
-> But I do not think qmail deserves a CVE simply by this basis.
+http://oss-security.openwall.org/wiki/disclosure/cve
 
-Hence the model. You take things into account like what language was
-used, what the software does, it's track record, and the person/team
-writing it and so on. In this case DJB has a pretty good track record,
-so statistically speaking qmail is on the safer side and probably
-doesn't need a CVE anytime soon. This isn't simple "if release >=5
-years assign cve=true" =).
+Thanks,
 
->> In effect this would be a blacklist/greylist of software, and by
->> using CVE it would be able to piggy back on the existing CVE
->> ecosystem (no better word to use), e.g. scanners would pick up
->> the old versions and
-> 
-> I'll grant that the CVE ecosystem is large and potentially very
-> powerful Force For Good, if deployed this way.
-> 
-> But when a consumer asks, "Is CVE-2013-F00F fixed?" and the answer
-> is "one guy put together three releases the last two months, fixing
-> one bug each", what _is_ the answer? "Yes" because there is a
-> responsive maintainer? Or "No" because probability dictates there
-> is likely more cruft yet to be found? Or "No" because two months is
-> insufficient data to draw a conclusion?
-
-1) I suspect we'll be assigning this to very dead software so I think
-it's highly unlikely that any updates ever got shipped.
-2) if it happens it's basically "fixed" by the new release. but again
-I seriously doubt we'll run into this anytime soon.
-
->> I realize this looks a LOT like feature creep with respect to
->> CVE, but I think it falls into the definition of a vulnerability
->> closely enough that it makes sense/won't result in a huge mess. I
->> can of course see
-> 
-> I like the specificity of today's CVE.
-
-Me too. But this is already being heavily eroded by firms like Oracle:
-
-http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=unknown
-
-The reality is we already have hundreds of CVE entries with absolutely
-no significant details other than a product name and version and vague
-terms as whether or not Confidentiality/Accessibility/Integrity might
-be affected.
-
-> I also think your idea has merit -- there is too much never-loved 
-> software out there -- but I don't think CVE is the correct lever
-> to attack it.
-
-The problem is we have this ecosystem of CVE software from scanners
-like Nessus to firms like iDefense/iSIGHT. Using CVE would quickly
-give this old and problematic software problems high visibility, CVE is:
-
-"International in scope and free for public use, CVE is a dictionary
-of publicly known information security vulnerabilities and exposures."
-
-> Thanks
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQjzE0AAoJEBYNRVNeJnmTJgYQAKuzMgE0SzGasPfkkXl/hQ8o
-+GJnYkHo7Tpuc6Hd+HdUOju36sV3CvTUY+eq0iIGgfgPq3IZq7ahfvSbD5UnXpA8
-T8CggpKX3IJEA4KZkFyDnFgeReurVsCBUOu7Kj1/2ZDX5uigiBuqfr7LdcfxjXtI
-ZAw7NrlDdyyGJveP0ZIjFCRCOlbzMnfcjFWJwUnRNTy198iaAm1P/MtsHuB90ofz
-jPxBYe1Rk31o9MJ8BqaPzGoNVZER6wQQLVCvim/KRv5uwDQ7EMRaXnOFsND1RXzF
-AucHf0L7RAhj/GlUd03uZeXyE2s7UNrHRCOqgRk6x/KBcQ48mDYVVB1a7K8bjEmx
-f6ah/W4h67N5MIhZwqhKKe3tBw2zxoMNNosYPKGjs98UFW41nFPsrBdk1/19NNaT
-zed0ltqeaaqSYeECgLZsfwxXGjnLcgXVMnmnSMf3K5+QEbkp8y6EzpXiCa5HwULA
-UJIWEo3LdZemEtSwOpTBxoOw1IfPatrJ+nuAF9azKHVc8cuyFeht2t25BtJHJWx+
-n3vjlwZenQPESS5xWaJhMyLA10Xskka0Or8tcpYiDNNRgYabGAlpwmpBI+ODld59
-wQbZoGDHkKOHzUpIPa1tvbGsgsUjUZ9w17DlYPM9SxKEYCabK2jL7D+AIX2K7tRe
-6PAygxkj8mJQ+mEit295
-=s5+Q
------END PGP SIGNATURE-----
+Alexander
