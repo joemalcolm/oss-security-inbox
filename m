@@ -1,68 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/5
-Message-ID: <506C64F7.9070507@redhat.com>
-Date: Wed, 03 Oct 2012 10:16:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/7
+Message-ID: <20120315172246.GC27407@dhcp-25-225.brq.redhat.com>
+Date: Thu, 15 Mar 2012 18:22:46 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request (minor) -- mc: Improper sanitization of MC_EXT_SELECTED variable when viewing multiple files
+Subject: CVE-2012-1179 kernel: thp: __split_huge_page() mapcount != page_mapcount BUG_ON()
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+In some cases it may happen that pmd_none_or_clear_bad() is called
+with the mmap_sem hold in read mode. In those cases the huge page
+faults can allocate hugepmds under pmd_none_or_clear_bad() and that
+can trigger a false positive from pmd_bad() that will not like to see
+a pmd materializing as trans huge.
 
-On 10/03/2012 09:36 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> based on https://bugs.gentoo.org/show_bug.cgi?id=436518:
-> 
-> A security flaw was found in the way Midnight Commander, a
-> user-friendly text console file manager and visual shell, performed
-> sanitization of MC_EXT_SELECTED environment variable when multiple
-> files were selected (first selected file was used as actual content
-> of the MC_EXT_SELECTED variable, while the remaining files were 
-> provided as arguments to the temporary script, handling the F3 /
-> Enter key press event). A remote attacker could provide a
-> specially-crafted archive that, when expanded and previewed by the
-> victim could lead to arbitrary code execution with the privileges
-> of the user running mc executable.
-> 
-> References: [1] https://bugs.gentoo.org/show_bug.cgi?id=436518
-> 
-> Upstream ticket: [2]
-> https://www.midnight-commander.org/ticket/2913
-> 
-> I need to confess this one is a bit on the border (the attack to
-> succeed the victim would need to perform couple of steps), but
-> basically the scenario is possible.
-> 
-> Could you allocate a CVE id for this one?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+A privileged user in the KVM guest can use this flaw to crash the host.
+An unprivileged local user could use this flaw to crash the system.
 
-Please use CVE-2012-4463 for this issue.
+For detailed info please consult the upstream patch.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Proposed upstream patch:
+http://comments.gmane.org/gmane.linux.kernel.mm/75413
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+References:
+http://comments.gmane.org/gmane.linux.kernel.mm/75413
+https://bugzilla.redhat.com/show_bug.cgi?id=803793
 
-iQIcBAEBAgAGBQJQbGT3AAoJEBYNRVNeJnmTf8sP/RyUYgYHf3jmD2a2oc5uVAUs
-PPq6og4xh9aXAcwuArLx6xWai/hhI+/ASVFmuPp3pFUGfIheWpxEnf+aAeb9bN7/
-jtmW06jI0kTC2QijRcHvPicAMgriSiyNgPG/oDDWdOm+CHGGyciklmvXbpRlWXti
-HFClwLzgJ6SgmG4YsTRobGKZk5EMb1y+rsgQVCROkY65aRxSALEjL3R8fY6q9AmT
-bDJ4oG/Tq+lr/9u89MEvnP4qIuAYLNEPS43CLS3OkWQ8H3nzOir86xnmdMa9MywC
-cPYSbFPEqROI91qq5S0DmSbUrBOv06/p5hPXFGABvynHHn1hf5tHt+jRogEApBJk
-Ydt95W9585/gCFRijJao9/RaEqDSr1/E3LkzWZwzxGCo0UGqIt7G7kdB8GbkMm/b
-WkGZS5ExsT63L9y7e5b8+kK6M/GMtg6o7DIsz9l8JT71MQqN6Qcv1SXGu+J00/L3
-VZ9TGo+/YPW+h9pQ9g75+7cOlEYTFhRJ0gcm9wT71wlSAPKn8/RtKgH0YIJ7wW70
-ChXqcpnjeqbSO78UP9Rb8o7sota9CAKC7D9kAT+LnfLLIQeUM5ZG9jkDbv7AFXgp
-B9RmkeXTgAYa5B2P3jMfCKK9F2/IXIFwjgwqmYfYt5vhLMkPGAgPHJJ9Ru0+FyWy
-zNs7vP5Va1Br87BKmYKM
-=9gaA
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
