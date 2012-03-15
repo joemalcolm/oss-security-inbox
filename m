@@ -1,94 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/30/3
-Message-ID: <4F9EEE8B.1010404@redhat.com>
-Date: Mon, 30 Apr 2012 13:56:59 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/1
+Message-ID: <4F617133.7040207@redhat.com>
+Date: Wed, 14 Mar 2012 22:33:55 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE-request: SilverStripe before 2.4.4
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: Was a CVE ever assigned for Python SimpleHTTPServer.py XSS?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 03/14/2012 02:44 PM, Vincent Danen wrote:
+> I'm not sure if a CVE was ever assigned to this or not; it's an older
+> issue that's fixed in 2.5.x and 2.6.x (I suspect 2.7.x is fixed too, but
+> I cannot find a commit to be 100% sure).  It sounds awfully familiar
+> though.
 
-On 04/30/2012 12:47 AM, Henri Salo wrote:
-> Can I get 2011 CVE-identifiers for SilverStripe issues fixed in
-> 2.4.4:
+grep -i SimpleHTTPServer allitems.csv
+
+shows nothing, nothing in mail folders, etc. Checked Google, some CVE's
+for SimpleHTTPServer show up but nothing like below.
+
+> A flaw was reported in Python's SimpleHTTPServer's list_directory()
+> function.  Due to a missing charset parameter, if a user were to connect
+> to SimpleHTTPServer using IE7, which engages in encoding-sniffing and
+> can be tricked into interpretting the output as UTF7.  Because of this,
+> an attacker could hide <script> tags in UTF7-encoded characters which do
+> not get quoted by cgi.encode(), allowing XSS attacks.
 > 
-> http://www.silverstripe.org/security-releases/
+> This has been corrected upstream in version 2.6.7rc2 and 2.5.6c1.  It
+> may be fixed in 2.7 as well, but I was unable to find a commit to match
+> it against.
 > 
-> SQL information disclosure, SQL injection in Translatable
-> extension, Cross Site Request Forgery in various CMS interfaces,
-> XSS in controller action handling
+> References:
+> http://bugs.python.org/issue11442
+> http://svn.python.org/view/python/branches/release26-maint/Lib/SimpleHTTPServer.py?r1=66717&r2=88831&view=patch
 > 
-> Requested originally in http://seclists.org/oss-sec/2011/q1/12 but
-> never got assigned. I can collect information about other versions
-> too and request missing CVE-identifiers, but that will take some
-> time.
+> http://svn.python.org/view/python/branches/release25-maint/Lib/SimpleHTTPServer.py?r1=53148&r2=88815&view=patch
 > 
-> - Henri Salo
+> https://bugzilla.redhat.com/show_bug.cgi?id=803500
 
-Ok went through the list a bit, the latest one already exists,
-assigned the 2011's:
+Please use CVE-2011-4940 for this issue.
 
-========================================
 
-31 January 2012
-SilverStripe v2.4.7 - XSS in text transformations on templates and
-page title saving in CMS (details)
-SilverStripe v2.3.13 - See 2.4.7 (details)
-(already assigned) CVE-2012-0976 	Cross-site scripting (XSS)
-vulnerability in admin/EditForm in SilverStripe 2.4.6 allows remote
-authenticated users with Content Authors privileges to inject
-arbitrary web script or HTML via the Title parameter. NOTE: some of
-these details are obtained from third party information.
-
-========================================
-
-18 October 2011
-SilverStripe v2.4.6 - XSS in anchor links, possible SQL injection with
-far eastern encodings, possible remote code execution through page
-comments (details)
-SilverStripe v2.3.12 - See 2.4.6 (details)
-
-CVE-2011-4958 Security: Cross-site scripting on anchor links
-
-CVE-2011-4959 Security: Possible SQL injection for MySQL when using
-far east character encodings
-
-CVE-2011-4960 Security: SQL injection in Folder::findOrMake()
-parameter (used mostly in author-only CMS through Upload::load())
-
-CVE-2011-4961 Security: Privilege escalation from EDIT_PERMISSIONS to
-ADMIN for users access to the CMS (through Member->getCMSFields() and
-TreeMultiselectField)
-
-CVE-2011-4962 Security: Potential remote code execution through
-serialization of page comment user submissions
-
-========================================
-
-I'll assign the 2010's when I get some more 2010 CVE's.
-
-- -- 
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPnu6LAAoJEBYNRVNeJnmTKHQP/08l9r0+iXd4t3qXt1Nw3IRt
-Bwly+oIkAnHRDtklXujsnPuiCL2aYCTH5YpUxdXv+1GJm0sTdMnBFbeQwxZGJw4F
-v2GMewANR2j8+IIRY8UoLcVA+sMFMR+ELVnD2QFZZvxUwm7XX8f3T0Iy3WhM9xrP
-IQSTNFpptLscAI4vf2/53pUVDWgerYfc8MT1IW8IbOIn5xGEyXLOv1Fa/PFTzw1i
-Z0zS2sNe5LUDJzqFgMDcDu0ZufBrulPphYk0JqjD059jjCsEJo6faczc3z+1CJqu
-KxZNaJDh+bm5XoQE+Wed9oSjoX1JVRyShliyHwxGBV3o1A170y5Tx3gzVmRWA71n
-lZXDRSzI3qeyCytz5hywDLcXTuqukL/hsXBf49OpjahZTLAt7gIavXyD3HFhiuuD
-Ctjqm/yDsg1GY9jJiyemxBoowC3mA4FVoGo3Czx3tLFZLiJWVvxwg3UUDthFhcM0
-5f4mlo/N8LhQ2nCqNlLc7VMcakL97FgRlK1U9kSFU+Mqv3Rrne3xeqrB6I9Fc9Wl
-Jo6+hOu2vet2gDJ/1wEurXmemZN/2Qhpar7ckzhV+h9UxmURMtMXiAAYjUxFxRPl
-GJ4ujhI24FQAIkBmDmry5Od3Hpd9ZxmxVBp+GX5vNqGsT7UA7p/LGyKf+nWCNmLY
-Akvwi3mOmFNdTCLDajBA
-=as6p
------END PGP SIGNATURE-----
