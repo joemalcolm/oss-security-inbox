@@ -1,52 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/03/2
-Message-ID: <504468F6.10109@redhat.com>
-Date: Mon, 03 Sep 2012 02:23:18 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/17
+Message-ID: <4F637EFB.8080109@redhat.com>
+Date: Fri, 16 Mar 2012 11:57:15 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, pawel.wylecial@...il.com
-Subject: Re: CVE-request: CakePHP XXE injection
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Matt Jordan <mjordan@...ium.com>
+Subject: Re: CVE Request -- Asterisk: AST-2012-002 and AST-2012-003 flaws
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 03/16/2012 05:47 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> 1) AST-2012-002:
+> 
+> An out-of stack-based buffer write flaw was found in the way the Miliwatt
+> application of the Asterisk, open source telephony toolkit, performed
+> generation of constant audio tone at 1000Hz (the 'o' option) from certain,
+> provided audio packets, when the 'internal_timing' Asterisk
+> configuration file
+> option was disabled. In this configuration, a remote attacker could
+> provide a
+> specially-crafted audio packet file, which once processed by the Miliwatt
+> application would lead to that application crash, or, potentially arbitrary
+> code execution with the privileges of the user running the application.
+> 
+> Upstream security advisory:
+> [1] http://downloads.asterisk.org/pub/security/AST-2012-002.pdf
+> 
+> Asterisk v1.8.10.1 announcement:
+> [2] http://www.asterisk.org/node/51797
+> 
+> Upstream patch against the v1.8 branch:
+> [3] http://downloads.asterisk.org/pub/security/AST-2012-002-1.8.diff
+> 
+> References:
+> [4] https://bugs.gentoo.org/show_bug.cgi?id=408431
+> [5] https://bugzilla.redhat.com/show_bug.cgi?id=804038
 
-On 09/02/2012 11:35 PM, Henri Salo wrote:
-> Could you assign 2012 CVE-identifier for this issue?
-> 
-> Original advisory: http://seclists.org/bugtraq/2012/Jul/101 Vendor
-> security advisory:
-> http://bakery.cakephp.org/articles/markstory/2012/07/14/security_release_-_cakephp_2_1_5_2_2_1
->
-> 
-OSVDB: http://osvdb.org/show/osvdb/84042
-> 
-> "CakePHP 2.1.5 and 2.2.1 have just been released. If you are using
-> CakePHP's `Xml` class, you should upgrade as soon as possible."
-> 
-> - Henri Salo
+Please use CVE-2012-1183 for Asterisk AST-2012-002
 
-Please use CVE-2012-4399 for this issue.
 
-- -- 
+> 2) AST-2012-003:
+> 
+> A stack-based buffer overflow flaw was found in the way Asterisk Manager
+> Interface of Asterisk, open source telephony toolkit, performed
+> processing of
+> certain HTTP Digest Authentication headers. A remote attacker,
+> attempting to
+> connect to the HTTP session could send a HTTP Digest Authentication
+> header with
+> specially-crafted values for certain fields, which once processed by the
+> Asterisk parse digest authorization header functionality would lead to
+> asterisk
+> crash, or, potentially arbitrary code execution with the privileges of
+> the user
+> running the application.
+> 
+> Upstream security advisory:
+> [1] http://downloads.asterisk.org/pub/security/AST-2012-003.pdf
+> 
+> Asterisk v1.8.10.1 announcement:
+> [2] http://www.asterisk.org/node/51797
+> 
+> Upstream patch against the v1.8 branch:
+> [3] http://downloads.asterisk.org/pub/security/AST-2012-003-1.8.diff
+> 
+> References:
+> [4] https://bugs.gentoo.org/show_bug.cgi?id=408431
+> [5] https://bugzilla.redhat.com/show_bug.cgi?id=804042
+> 
+> Could you allocate two ids for these issues?
+
+
+Please use CVE-2012-1184 for Asterisk AST-2012-003
+
+
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> P.S.: Cc-ed Matt Jordan of the Asterisk team, so once the ids are
+> assigned, he
+>       can update the advisories.
+
+
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQRGj2AAoJEBYNRVNeJnmTZs8QANnwWgywgyQEVVTB/cZo/GWG
-sCtVM/1tvipO3hwb67Bde1zaILYf75XMFtrpTwmIUaK3AKdzwMxg0RJt4A0Xuu6L
-MlXbDuEsXXiFrkRg+sxmlIM1cOBcWkktOCnyvduff/RR9MElpETq8B9z8/8lONDt
-L8YfEHszpUeLPIDwg+6g/IdcdaLfk3ZK7lVGgEzls8+nJJh1oKWb4kKbM7sLOYrL
-W9Fo0SysfYQtJCeObcAdgtytMBZHjZWoxTGTYN/uOJkOg6/kgT7yx1UkZe0gFBjA
-xvbKec1jaIGXhrukZ59gcGJx//wQV9dOLKOnozwTXGlKWMcnWW15gvVHUadjWxOp
-EYvU5p5NbBZ3IAvI730M2+bAsjyJH8jJKzFc+vMlhgVHOo6asrtkz6bUxUO4Xysi
-bRW7DlO5TC9wyu4okmbqGZnuF81JAan/k88RGbmfLf2JlwmCXMayumsTXv/GTm7B
-fM9Q9zfOgOuk09aefkT/QjcrSstQs9qbsGx7crQd46OT36/kP6Pms7yalGtb0lZW
-eFqQwWRnThd6pfEXWuMkcSbseA0BIlGWaFvzgBwYGxvojhme7tLd3k3qaQ1vPAPi
-ffVtOgnadUifSqP7p3NNq6juDz+fySLtefIGAnaB4Mfr9VViczvD6pYe2sGKzP4X
-S9VsUFjhNa3Rqd9G8c51
-=TRQe
------END PGP SIGNATURE-----
