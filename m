@@ -1,32 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/6
-Message-ID: <4F0C600F.60808@redhat.com>
-Date: Tue, 10 Jan 2012 08:58:07 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2012-0207 kernel: igmp: Avoid zero delay when receiving odd mixture of IGMP queries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/28
+Message-ID: <CAAPiX_KfLD7F_okhJ=USQZSBhUEyD_gNRCR8fgpsNCUt95Sc-A@mail.gmail.com>
+Date: Fri, 16 Mar 2012 16:40:18 -0600
+From: Greg Knaddison <greg.knaddison@...uia.com>
+To: security@...pal.org, Kurt Seifried <kseifried@...hat.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: [security] Drupal CORE and Drupal Contrib
 Content-Type: text/plain; charset=utf-8
 
-On 01/10/2012 12:34 AM, Eugene Teo wrote:
-> Commit 5b7c84066733c5dfb0e4016d939757b38de189e4 ('ipv4: correct IGMP
-> behavior on v3 query during v2-compatibility mode') added yet another
-> case for query parsing, which can result in max_delay = 0.  Substitute
-> a value of 1, as in the usual v3 case.
+Hi Kurt,
+
+We started considering associating CVEs with our Security Advisories
+(SAs) in September of 2011. At the time we discussed it with Josh
+Bressers, Jan Lieskovsky, Steven M. Christey and decided that it would
+only be practical to do it for Drupal core for now and we could
+considering doing it for contrib in the future. Since that discussion
+there has only been one SA for Drupal core which I think has the CVEs
+on it: SA-CORE-2012-001 - Drupal core multiple vulnerabilities -
+http://drupal.org/node/1425084
+
+Is there another SA for core that I'm not considering? Is there a
+better way to list the CVE numbers?
+
+There have been several SAs for contributed modules and we would
+gladly update them with CVEs. If you can send an email with a link to
+the SA and the CVE-id to use that would be great.
+
+Our biggest problem with trying to integrate CVE values to the SAs for
+contributed modules is that the contributed projects are all run by
+individual volunteers and we don't reliably know the date we are going
+to release those. My understanding is that we can ask for a 2 week
+embargo on CVE requests and that would work most of the time but not
+all. We're working to improve the predictability of this process, but
+I think it's too early to consider getting CVE's in advance.
+
+Thanks,
+Greg
+
+On Fri, Mar 16, 2012 at 11:51 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+> I was going to ask this next week but now seems topical: looking at
+> http://drupal.org/security/contrib
 >
-> Reported-by: Simon McVittie <smcv <at> debian.org>
-> References: http://bugs.debian.org/654876
-> Signed-off-by: Ben Hutchings <ben <at> decadent.org.uk>
+> I see drupal core (at least one thing there needs a CVE), and no CVE's
+> listed on that page. Would it be possible to get Drupal to list CVE's
+> assigned for the issue on that page? It would make life easier for all
+> concerned.
 >
-> http://article.gmane.org/gmane.linux.network/217256
+> Ditto for the contrib page, 41 issues so far this year, I think a bunch
+> have CVE's assigned but am not sure. Would it be possible to get Drupal
+> to list CVE's assigned for the issue on that page? It would make life
+> easier for all concerned.
 >
-> Introduced in 5b7c8406 2.6.36-rc8
+> I was planning to do a missing CVE assignment for Drupal this weekend
+> (I'm guessing 40?).
 >
-> Thanks, Eugene
-Debian appears to have assigned CVE-2012-0207 to this issue, is that
-correct?
+>
+> --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> --
+> [ Security | http://lists.drupal.org/mailman/listinfo/security ]
+> [Security team mailing list management and scheduling is documented here | https://security.drupal.org/handling-list-emails]
+
+
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Director Security Services | +1-720-310-5623
+Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
