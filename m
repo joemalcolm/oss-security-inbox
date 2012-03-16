@@ -1,24 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/04/2
-Message-ID: <CAA5xPp=DP9Y1E0jYT3wQgFfSJnJwhyF-3UN_6gAYqy3tSxWPjA@mail.gmail.com>
-Date: Sun, 4 Mar 2012 18:23:11 +0530
-From: Zubin Mithra <zubin.mithra@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Dhanesh k <dhanesh1428@...il.com>
-Subject: CVE-Request taglib vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/23
+Message-ID: <4F637B87.6030609@redhat.com>
+Date: Fri, 16 Mar 2012 11:42:31 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Andreas Ericsson <ae@....se>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 03/16/2012 04:26 AM, Andreas Ericsson wrote:
+> On 03/16/2012 04:41 AM, Kurt Seifried wrote:
+>>
+>> I need the actual info, please refer to:
+>>
+>> http://www.openwall.com/lists/oss-security/2012/03/16/2
+>> http://www.openwall.com/lists/oss-security/2012/03/15/9
+>> http://www.openwall.com/lists/oss-security/2012/03/14/6
+>> http://www.openwall.com/lists/oss-security/2012/03/12/7
+>>
+> 
+> Those mails are all exemplary requests for CVE id's, ofcourse, but the
+> fact that they are all already fixed and released means that 100% of
+> the work is already done. At that point, assigning a CVE id is mostly
+> useless and is done as a "just for the record" thing.
 
-Multiple bugs were found and reported in taglib, and have been patched. Out
-of the 4 reported, 2 were patched recently while 2 only affected taglib
-versions upto 1.7 and not the current development head at github.The
-discussion at the taglib mailing list can be viewed here at [1].
+Uh no. Tracking these issues is critical and it happens across dozens,
+and in some cases hundreds of vendors (e.g. CVE-2009-3555).
 
-Kindly assign CVE's for the same.
+> The need for unified identifier for a particular issue is greatest
+> when discussing the problem and its potential solutions; Not how
+> someone actually solved it after it's already done. If CVE is to become
+> a thing for changelogs only, all those projects that don't use one
+> but rely on commit-messages instead won't use CVE id's at all, and the
+> usefulness of the CVE database dwindles.
 
-Thanks,
-Zubin Mithra
+If only it were that simple. Having worked for iSIGHT/iDefense prior to
+Red Hat, and now at Red Hat, let me say this simply:
 
-[1] http://mail.kde.org/pipermail/taglib-devel/2012-March/002186.html
+CVE Is 100% critical for security work at large scales.
 
+Automated products/etc need reliable names for security issues.
+Customers need reliable ways to ask questions (did you fix that OpenSSL
+thing mentioned over in this random blog post? Oh you mean this CVE,
+yes. etc.).
+
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
