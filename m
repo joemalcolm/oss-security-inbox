@@ -1,57 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/04/5
-Message-ID: <CANTw=MMqLkMsjTitwA5aWi6N5fJdTmP8FfqV8LtgMQGrSd9XUQ@mail.gmail.com>
-Date: Fri, 3 Feb 2012 23:20:35 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/9
+Message-ID: <20120316073830.GA18158@kludge.henri.nerv.fi>
+Date: Fri, 16 Mar 2012 09:38:30 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+Subject: CVE-request: Drupal Finder SA-CONTRIB-2012-017
 Content-Type: text/plain; charset=utf-8
 
-2012/2/3 Solar Designer:
-> On Fri, Feb 03, 2012 at 10:00:24PM -0500, Michael Gilbert wrote:
->> On Fri, Feb 3, 2012 at 8:45 PM, Solar Designer wrote:
->> > Yet the delay itself matters too.  There are different opinions as to
->> > whether it is "the important aspect" or not.
->>
->> That's why I think its more appropriate to defer such decisions to the
->> researcher who understands the complexity of the problem at hand (of
->> course hopefully allowing negotiation with those affected to choose a
->> disclosure date that can be met).
->
-> That's what we have now, right?
->
->> > [...] I need a tool - a program to mass-decrypt a
->> > PGP/MIME mbox, producing another mbox.  I think such a program might be
->> > generally useful.  Well, or alternatively I need to introduce a
->> > different mechanism for the archive - not treat it as a regular
->> > subscriber like I intended to.
->>
->> Completely unfleshed out, but a pseudo-bash script along the lines of
->> the following should do it:
->>
->>   echo "" > newmbox
->>   gpg-agent --allow-preset-passphrase
->>   /usr/lib/gnupg2/gpg-preset-passphrase --preset <cache id>
->>   cat mbox | while read line; do
->>       test <header> && echo $line >> /tmp/header
->>       test <body> && echo $line >> /tmp/body
->>       if [ <end off body> ]; then
->>           cat /tmp/header >> newmbox
->>           cat /tmp/body | gpg --decrypt >> newmbox
->>       fi
->>   done
->>   /usr/lib/gnupg2/gpg-preset-passphrase --forget
->>
->> Obviously a bit more work there to figure out appropriate conditionals
->> to put in the angle brackets.
->
-> Unless I am missing something, this doesn't handle MIME at all - so it
-> won't do the trick.
+Can we assign CVE-identifier for this vulnerability http://drupal.org/node/1432970 (SA-CONTRIB-2012-017)?
 
-I was trying to keep it simple.  I got the impression that your
-concern was potentially needing to enter a passphrase to individually
-decrypt each message.  Anyway, just throw in the appropriate munpack
-calls above to handle the mime parts.
+Description
+Finder is a Drupal module that allows users to create faceted search forms. The module's autocomplete, checkbox, and radio button functionalities previously did not sanitize the output of fields and raw database values.
 
-Best wishes,
-Mike
+In addition, users with the "administer finder" permission were able to execute arbitrary code through a PHP import interface; specific PHP execution permissions were not required.Updated: This issue affected only the 7.x branch of code. The 6.x branch used the permission "administer finder PHP settings" which is sufficiently clear that it allows execution of PHP code.
+
+Versions affected
+Finder 6.x-1.x prior to 6.x-1.26
+Finder 7.x-1.x versions (all)
+Finder 7.x-2.x versions prior to 7.x-2.0-alpha8
+Drupal core is not affected. If you do not use the contributed Finder module, there is nothing you need to do.
+
+Project: Finder (third-party module)
+Date: 2012-February-08
+Security risk: Moderately critical
+Exploitable from: Remote
+Vulnerability: Cross Site Scripting, Arbitrary PHP code execution, Multiple vulnerabilities
+
+http://osvdb.org/show/osvdb/79014
+http://osvdb.org/show/osvdb/79015
+http://secunia.com/advisories/47943/
+http://secunia.com/advisories/47915/
+http://secunia.com/advisories/47941/
+
+- Henri Salo
