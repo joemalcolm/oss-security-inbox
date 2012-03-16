@@ -1,31 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/12
-Message-ID: <1327441032.27688.66.camel@new-desktop>
-Date: Tue, 24 Jan 2012 22:37:12 +0100
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: XSLT issue in MoinMoin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/18
+Message-ID: <CAKCW=4bj1PRoYXW56Fvygjvap_rzp=obbZ-ikR-dGp+nc=2YHg@mail.gmail.com>
+Date: Fri, 16 Mar 2012 14:30:35 -0400
+From: Mark Stanislav <mark.stanislav@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Mar 16, 2012 at 1:46 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-> How exactly does the attacker get access to the filesystem using XSLT?
+> On 03/16/2012 09:53 AM, Solar Designer wrote:
+> > On Fri, Mar 16, 2012 at 12:20:37AM -0400, Mark Stanislav wrote:
+> >> None of the details of these issues have been publicly discussed or
+> released as I am trying (without much success) to allocate a CVE prior to
+> sending out a coordinated advisory including that identifier as I always
+> have done and as the mitre site indicates to do.
+> >>
+> >> There are no reference links to provide and I am not publicizing
+> details on this list before the developer can be informed of the CVE.
+> >>
+> >> I'm happy to take this off list as I am sure no one cares about any of
+> this discussion
+>
+> In which case you can ask for them on VS@ list where the issue will
+> remain embargoed. If the issue is so sensitive you cannot leak
+> details/etc then you need to contact Mitre directly (this will also
+> ensure no duplicates/etc.).
+>
 
-An attacker can read files using either the doc-as-string() extension
-function or a XML External Entity attack. Write access is done via the
-<exsl:document> extension element.
+Is "VS@" supposed to be vendor-sec; the defunct list? Or is there another
+list I am not aware of? If so, can you please give me the *full* address?
+Thanks.
 
-Depending of your policy, you may want to affect one, two or three CVE
-(one by vector ? by impact ? by type of bug ?).
 
-> Does everything using 4Suite have this issue?
+>
+> > No, please keep this on the list.  Discussions on how to handle
+> > vulnerability disclosure (including the CVE ID assignment step) are
+> > definitely on topic for oss-security.
+>
+> Yes and I need to finish documenting this stuff (it's become obvious we
+> need to educate people on how the system works and why it works that
+> way, we're not insane, we have good reasons for doing it the way we do,
+> honest =).
 
-Yes. Unless an obscure and undocumented option allows to deactivate this
-behavior :-(
 
-My XSLT Wiki has some additional details, including PoC code :
-- http://goo.gl/3A7h2 (4Suite)
-- http://goo.gl/GI5NK (MoinMoin)
+I'd say you may want to coordinate that documentation with Steve Christy as
+the nine times he allocated CVEs for me directly, this sort of conversation
+never came up. I can understand frustration on your part that people may
+not be educated, but realize that if CNAs handle this process differently,
+it may not be a matter of education on how 'the system works' but rather
+consistency within the entire process, agnostic of whom is allocating a CVE.
 
-Regards,
-Nicolas
+I again, do appreciate your time but I suppose I'll just wait for Steve or
+whomever is manning cve@...re to contact me back.
+
+Best,
+
+-Mark
+
+
+
+ >
+> > Thanks,
+> >
+> > Alexander
+> > (a moderator for oss-security)
+>
+>
+> --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+>
 
