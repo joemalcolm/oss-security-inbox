@@ -1,21 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/10/7
-Message-ID: <20120510214337.GG9421@kludge.henri.nerv.fi>
-Date: Fri, 11 May 2012 00:43:37 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request: TYPO3 TYPO3-SA-2010-022 still without CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/14
+Message-ID: <d5e1dd9b9a1e04e4853aacf0722dcb5c@mail.adsl.funky-badger.org>
+Date: Fri, 16 Mar 2012 15:54:22 +0000
+From: "Adam D. Barratt" <adam@...m-barratt.org.uk>
+To: <oss-security@...ts.openwall.com>
+Cc: Kurt Seifried <kseifried@...hat.com>, Mark Stanislav <mark.stanislav@...il.com>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 16.03.2012 10:26, Andreas Ericsson wrote:
+> Those mails are all exemplary requests for CVE id's, ofcourse, but 
+> the
+> fact that they are all already fixed and released means that 100% of
+> the work is already done. At that point, assigning a CVE id is mostly
+> useless and is done as a "just for the record" thing.
 
-Issues in TYPO3-SA-2010-022 are still without CVE-identifiers if I am correct.
+Whether you consider it useless or not, those are the CVE assignments 
+that will happen on the list, aiui.
 
-http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-sa-2010-022/
-OSVDB: 70116,70117,70118,70119,70120,70121,70122,70123
-http://secunia.com/advisories/35770/
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607286
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security 
+specifically says: "Public security issues only please. What you say 
+here is public for the world to see - keep that in mind. Embargoed 
+information is best disclosed to vendor-sec" (which should be updated to 
+point at somewhere that actually exists).
 
-Originally requested in here http://seclists.org/oss-sec/2011/q1/76
+Regards,
 
-- Henri Salo
+Adam
