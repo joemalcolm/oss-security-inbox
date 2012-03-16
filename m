@@ -1,34 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/7
-Message-ID: <20120110172336.GA3693@pisco.westfalen.local>
-Date: Tue, 10 Jan 2012 18:23:36 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2012-0207 kernel: igmp: Avoid zero delay when receiving odd mixture of IGMP queries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/10
+Message-ID: <4F632863.8090707@redhat.com>
+Date: Fri, 16 Mar 2012 12:47:47 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Matt Jordan <mjordan@...ium.com>
+Subject: CVE Request -- Asterisk: AST-2012-002 and AST-2012-003 flaws
 Content-Type: text/plain; charset=utf-8
 
+Hello Kurt, Steve, vendors,
 
-On Tue, Jan 10, 2012 at 08:58:07AM -0700, Kurt Seifried wrote:
-> On 01/10/2012 12:34 AM, Eugene Teo wrote:
-> > Commit 5b7c84066733c5dfb0e4016d939757b38de189e4 ('ipv4: correct IGMP
-> > behavior on v3 query during v2-compatibility mode') added yet another
-> > case for query parsing, which can result in max_delay = 0.  Substitute
-> > a value of 1, as in the usual v3 case.
-> >
-> > Reported-by: Simon McVittie <smcv <at> debian.org>
-> > References: http://bugs.debian.org/654876
-> > Signed-off-by: Ben Hutchings <ben <at> decadent.org.uk>
-> >
-> > http://article.gmane.org/gmane.linux.network/217256
-> >
-> > Introduced in 5b7c8406 2.6.36-rc8
-> >
-> > Thanks, Eugene
-> Debian appears to have assigned CVE-2012-0207 to this issue, is that
-> correct?
+1) AST-2012-002:
 
-Yes, it's also in the Subject of Eugene's mail :-)
+An out-of stack-based buffer write flaw was found in the way the Miliwatt
+application of the Asterisk, open source telephony toolkit, performed
+generation of constant audio tone at 1000Hz (the 'o' option) from certain,
+provided audio packets, when the 'internal_timing' Asterisk configuration file
+option was disabled. In this configuration, a remote attacker could provide a
+specially-crafted audio packet file, which once processed by the Miliwatt
+application would lead to that application crash, or, potentially arbitrary
+code execution with the privileges of the user running the application.
 
-Cheers,
-        Moritz
+Upstream security advisory:
+[1] http://downloads.asterisk.org/pub/security/AST-2012-002.pdf
+
+Asterisk v1.8.10.1 announcement:
+[2] http://www.asterisk.org/node/51797
+
+Upstream patch against the v1.8 branch:
+[3] http://downloads.asterisk.org/pub/security/AST-2012-002-1.8.diff
+
+References:
+[4] https://bugs.gentoo.org/show_bug.cgi?id=408431
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=804038
+
+2) AST-2012-003:
+
+A stack-based buffer overflow flaw was found in the way Asterisk Manager
+Interface of Asterisk, open source telephony toolkit, performed processing of
+certain HTTP Digest Authentication headers. A remote attacker, attempting to
+connect to the HTTP session could send a HTTP Digest Authentication header with
+specially-crafted values for certain fields, which once processed by the
+Asterisk parse digest authorization header functionality would lead to asterisk
+crash, or, potentially arbitrary code execution with the privileges of the user
+running the application.
+
+Upstream security advisory:
+[1] http://downloads.asterisk.org/pub/security/AST-2012-003.pdf
+
+Asterisk v1.8.10.1 announcement:
+[2] http://www.asterisk.org/node/51797
+
+Upstream patch against the v1.8 branch:
+[3] http://downloads.asterisk.org/pub/security/AST-2012-003-1.8.diff
+
+References:
+[4] https://bugs.gentoo.org/show_bug.cgi?id=408431
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=804042
+
+Could you allocate two ids for these issues?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: Cc-ed Matt Jordan of the Asterisk team, so once the ids are assigned, he
+       can update the advisories.
