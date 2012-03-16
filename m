@@ -1,51 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/7
-Message-ID: <1558113393.18184847.1345561502579.JavaMail.root@redhat.com>
-Date: Tue, 21 Aug 2012 11:05:02 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/16
+Message-ID: <4F637C8F.1030401@redhat.com>
+Date: Fri, 16 Mar 2012 11:46:55 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: oss-security@...ts.openwall.com, Benny Baumann <BenBE@...hi.org>, Benny Baumann <BenBE@...rphia.de>, Nigel McNie <nigel@...hi.org>
-Subject: CVE Request -- php-geshi / GeSHi (1.0.8.11): Remote directory traversal and information disclosure in the cssgen contrib module (plus possibly XSS, but it needs upstream to confirm)
+CC: Solar Designer <solar@...nwall.com>, Mark Stanislav <mark.stanislav@...il.com>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, Ben, Nigel, vendors,
+On 03/16/2012 09:53 AM, Solar Designer wrote:
+> On Fri, Mar 16, 2012 at 12:20:37AM -0400, Mark Stanislav wrote:
+>> None of the details of these issues have been publicly discussed or released as I am trying (without much success) to allocate a CVE prior to sending out a coordinated advisory including that identifier as I always have done and as the mitre site indicates to do.
+>>
+>> There are no reference links to provide and I am not publicizing details on this list before the developer can be informed of the CVE.
+>>
+>> I'm happy to take this off list as I am sure no one cares about any of this discussion
 
-  Issue #A:
-  ---------
-  A directory traversal and information disclosure
-  (local file inclusion) flaws were found in the cssgen
-  contrib module (application to generate custom CSS files)
-  of GeSHi, a generic syntax highlighter, performed sanitization
-  of 'geshi-path' and 'geshi-lang-path' HTTP GET / POST variables.
-  A remote attacker could provide a specially-crafted URL that,
-  when visited could lead to local file system traversal or,
-  potentially, ability to read content of any local file,
-  accessible with the privileges of the user running the webserver.
+In which case you can ask for them on VS@ list where the issue will
+remain embargoed. If the issue is so sensitive you cannot leak
+details/etc then you need to contact Mitre directly (this will also
+ensure no duplicates/etc.).
 
-  References:
-  [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=685324
-  [2] https://bugzilla.redhat.com/show_bug.cgi?id=850425
+> No, please keep this on the list.  Discussions on how to handle
+> vulnerability disclosure (including the CVE ID assignment step) are
+> definitely on topic for oss-security.
 
-  Upstream patch:
-  [3] http://geshi.svn.sourceforge.net/viewvc/geshi?view=revision&revision=2507
+Yes and I need to finish documenting this stuff (it's become obvious we
+need to educate people on how the system works and why it works that
+way, we're not insane, we have good reasons for doing it the way we do,
+honest =).
 
-  Issue #B:
-  ---------
-  Then there is a report about non-persistent XSS flaw, that have been
-  fixed in the contrib module of 1.0.8.11 version too:
-  [4] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=685323
+> 
+> Thanks,
+> 
+> Alexander
+> (a moderator for oss-security)
 
-  but I was unable to find the relevant upstream patch (and above Debian BTS
-  entry doesn't contain further information too, which could be acted upon).
 
-  Thus I am Cc-in GeSHi upstream to this post to shed the light on the XSS flaw [4].
-  
-  Ben, Nigel, could you please clarify what was the relevant upstream patch for the
-  Debian BTS#685323 / Non-persistent XSS vulnerability in contrib script [4] issue?
-  Thank you for that, Jan.
-
-Kurt, once the second issue clarified, could you allocate CVE ids for these?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
