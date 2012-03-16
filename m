@@ -1,105 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/26/3
-Message-Id: <E1TRhff-0004iR-Vi@xenbits.xen.org>
-Date: Fri, 26 Oct 2012 11:01:47 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 25 (CVE-2012-4544) - Xen domain builder Out-of-memory due to malicious kernel/ramdisk
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/20
+Message-ID: <CAKCW=4ZZ4iDLRhkLMUCxTpKWvfBFQ=h5a0fy9j1MHCvPgjVA7Q@mail.gmail.com>
+Date: Fri, 16 Mar 2012 14:41:38 -0400
+From: Mark Stanislav <mark.stanislav@...il.com>
+To: Tim Brown <tmb@...35.com>
+Cc: oss-security@...ts.openwall.com,  "Adam D. Barratt" <adam@...m-barratt.org.uk>, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Mar 16, 2012 at 2:37 PM, Tim Brown <tmb@...35.com> wrote:
 
-	     Xen Security Advisory CVE-2012-4544 / XSA-25
+> On Friday 16 Mar 2012 16:11:04 Mark Stanislav wrote:
+> > All points being made are very much valid and I certainly understand how
+> > contextually oss-sec may be used to allocation requests under different
+> > circumstances.
+> >
+> > So here's my situation, I'm up for suggestions (of which, "wait longer",
+> is
+> > perfectly viable!)...
+> >
+> > 1) March 1st, I sent 2 of these CVEs over to Steve Christy at MITRE who
+> had
+> > previously allocated 9 prior CVEs in a day or two generally
+> > 2) March 8th, after not hearing back from Steve, I contacted
+> > cve@...redirectly with all 5
+> > 3) March 15th, after not hearing back from MITRE, I contacted Kurt off
+> list
+> > as I've noted his helpfulness doing allocations
+> > 3a) Kurt pointed me to email the list, rather than him directly (which is
+> > perfectly fine, but perhaps not the context I was aiming for initially)
+>
+> Josh Bressers (Josh, correct me if I'm using your name in vain) used to be
+> quite happy to assign CVEs for undisclosed (embargoed) F/OSS issues
+> providing
+> details were forthcoming with the request.   If Josh is no longer able to
+> fulfil that role due to a change of circumstance at Redhat it would be
+> nice if
+> someone stepped into the breach -  be that Redhat, Debian or one of the
+> other
+> CNAs.  There is definately a place for "disclosed to project, being/been
+> fixed,
+> not public - can I have a CVE?" without deferring to the distros list or
+> MITRE
+> - most of the time projects can respond in a timely fashion, so a minimum
+> effort approach is ideal.
+>
+> As an aside, the public address for MITRE on the web site is wrong AFAIK.
+> Quoting Steve Christey:
+>
+> "Apologies for the delay.  In the future, please use cve-assign@...re.org
+> for requests related to CVE reservation."
+>
 
-   Xen domain builder Out-of-memory due to malicious kernel/ramdisk
+Thank you, Tim. I've forwarded them over to that address instead.
 
-ISSUE DESCRIPTION
-=================
+-Mark
 
-The Xen PV domain builder contained no validation of the size of the
-supplied kernel or ramdisk either before or after decompression. This
-could cause the toolstack to consume all available RAM in the domain
-running the domain builder.
 
-IMPACT
-======
+>
+> From last time I went to MITRE (for a closed source product).
+>
+> Tim
+> --
+> Tim Brown
+> <mailto:tmb@...35.com>
+>
 
-A malicious guest administrator who can supply a kernel or ramdisk can
-exhaust memory in domain 0 leading to a denial of service attack.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are vulnerable.
-
-MITIGATION
-==========
-
-Running only trusted kernels and ramdisks will avoid this
-vulnerability.
-
-Using pvgrub also avoids this vulnerability since the builder will run
-in guest context. (nb: use of pygrub *is* vulnerable).
-
-Running only HVM guests will avoid this vulnerability.
-
-RELATED ISSUE
-=============
-
-CVE-2012-2625 covers a bug in pygrub which caused that process to
-consume excessive amount of memory under similar circumstances to the
-above.
-
-This was fixed in xen-unstable (and the fix inherited by Xen 4.2.x) in
-revision 25589:60f09d1ab1fe but not called out as a security problem.
-This fix is also included, where relevant, in the patches below.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue, including
-the related pygrub fix where neccesary.
-
-xsa25-unstable.patch        Xen unstable
-xsa25-4.2.patch             Xen 4.2.x
-xsa25-4.1.patch             Xen 4.1.x
-
-$ sha256sum xsa25*.patch
-613e4b82cdc9cabf9cbd52076118887b298c47e680c2066a28a77f12e9f90606  xsa25-4.1.patch
-135bc089d003f9b97991764c37b1ab8d37e9cbcfa1b9bd7429b4503abe00c8f5  xsa25-4.2.patch
-534495b7eef6e599f5814f0a67fc84fbe2e8eee9d223a09ad178ff63bdcda3dd  xsa25-unstable.patch
-
-Note that these patches impose a new size limit of 1Gby on both the
-compressed and uncompressed sizes of ramdisks.  On some systems it may
-be desirable to relax these limits and risk virtual address or memory
-exhaustion in the toolstack.  This can be achieved by setting
-XC_DOM_DECOMPRESS_MAX to the desired limit (in bytes). This can be
-done by building with "APPEND_CFLAGS=-DXC_DOM_DECOMPRESS_MAX=<limit>"
-or by editing tools/libxc/xc_dom.h directly.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-These issues have already been discussed in public in various places,
-including https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-2625
-and http://bugs.debian.org/688125.  This advisory is therefore not
-subject to an embargo.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQim1nAAoJEIP+FMlX6CvZgw0IAKTyGbRlt5N2i8YbRdAj0+wF
-OA4X5G1GlAEf0iGVjYi92/HnVyjWxLSNCKJK4YSWAUrlnkAC2IEUU6vqQOkxN/ic
-88D1VS8tEtQwRGa9jNxf4RTCLvdGxrVK4lnSDu7OplgwMDT7O/X+Dq89xKN2VCYw
-/iqpzlAndmC0Lqz0U8VlV71JryS5uwg980GWimQaIEinyOWFS5cuImvBamptl+zU
-aoU3JxERd3YWASrspm8dBOtwc75DucWY1hOjz52uloodKcJha55Objcm8dn76xwN
-JV7sHGFRrQyxHnQJ9GeSuV0RHkxB6VhMXTGWKFaynOLjtUUoidkawgs1ld+Qsms=
-=Vj6Q
------END PGP SIGNATURE-----
-
-Download attachment "xsa25-4.1.patch" of type "application/octet-stream" (16353 bytes)
-
-Download attachment "xsa25-4.2.patch" of type "application/octet-stream" (12666 bytes)
-
-Download attachment "xsa25-unstable.patch" of type "application/octet-stream" (12510 bytes)
