@@ -1,62 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/08/8
-Message-ID: <4FA9852B.40904@redhat.com>
-Date: Tue, 08 May 2012 14:42:19 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/24
+Message-ID: <4F6396C6.8080505@redhat.com>
+Date: Fri, 16 Mar 2012 13:38:46 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Alex Legler <a3li@...too.org>
-Subject: Re: CVE request: node.js <0.6.17/0.7.8 HTTP server information disclosure
+To: Mark Stanislav <mark.stanislav@...il.com>
+CC: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 03/16/2012 12:30 PM, Mark Stanislav wrote:
+> 
+> Is "VS@" supposed to be vendor-sec; the defunct list? Or is there
+> another list I am not aware of? If so, can you please give me the *full*
+> address? Thanks.
 
-On 05/08/2012 02:43 AM, Alex Legler wrote:
-> Hi,
-> 
-> I didn't see a CVE/request for this one yet:
-> 
-> http://blog.nodejs.org/2012/05/07/http-server-security-vulnerability-please-
->
-> 
-upgrade-to-0-6-17/
-> 
-> "A carefully crafted attack request can cause the contents of the
-> HTTP parser?s buffer to be appended to the attacking request?s
-> header, making it appear to come from the attacker. Since it is
-> generally safe to echo back contents of a request, this can allow
-> an attacker to get an otherwise correctly designed server to
-> divulge information about other requests. It is theoretically
-> possible that it could enable header-spoofing attacks, though such
-> an attack has not been demonstrated."
-> 
-> Fix: https://github.com/joyent/node/commit/c9a231d
-> 
-> Thanks, Alex
+Sorry it is: http://oss-security.openwall.org/wiki/mailing-lists/distros
 
+> I'd say you may want to coordinate that documentation with Steve Christy
+> as the nine times he allocated CVEs for me directly, this sort of
+> conversation never came up. I can understand frustration on your part
+> that people may not be educated, but realize that if CNAs handle this
+> process differently, it may not be a matter of education on how 'the
+> system works' but rather consistency within the entire process, agnostic
+> of whom is allocating a CVE.
 
-Thanks, please use CVE-2012-2330 for this issue.
+We're working on it.
+
+> I again, do appreciate your time but I suppose I'll just wait for Steve
+> or whomever is manning cve@...re to contact me back.
+
+I'm simply loathe to assign CVE's for which I get no details from a
+third party especially when they have sent requests in to Mitre already.
+How do I know if Mitre has or has not assigned a CVE yet? We basically
+end up with a race condition (and duplicates).
 
 
-- -- 
+> Best,
+> 
+> -Mark
+
+
+
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPqYUrAAoJEBYNRVNeJnmTBoMP/R8zTDVDkXsWNkjGp0Vh4BVv
-eH006T6P+DQu5hiGHM4xquLzwHayOKRWT3xhD9FneLfT5+Fin/+OtqbS4G6OCZaD
-YIHINy3Zz0aHxoVrCYQ9MqUXh5R3BuxWHwLCumtQZZuWInh4NTFhFiny7vzUPI5x
-UtDWSkYlCycJZydjevnCJrZueyGoFakvdl5JDHStUXcTGhGZ31RM+nTSfu70O5eS
-JZkzi8wNNGM7ZAUCJ+9/9tkAJyuP3xilkDEv/tuv2O7UA9a0S1EY3CIjg+iRCYy2
-HS48rHr0B0DbGAzDyZeHh618b/stiITANbZrV/Gbc7whf4OfcLZU5o8+HF2pma60
-uhN1rQtrlw/wQaIjDxfwUzr7WTA/e0QAGqvVcXgsQ3FYWYtKPEnsb+OOFJswxCHb
-rKK/40pYJJilUJx2obsr8aQnxoFmox5hmHX4tW0wlKW5UiQMzmyMAQiJ9Yhfpk2n
-xy4GxO73pst2vcPzpPCd3TdP5XjhIg2OXvnDK/xtmTC6xZ+sRcqiguemxuy82chE
-0HLgL7Ept1XYNwttPJRW/LQVtWVbkmDV8cOgr+c9G1x6ZwIwloK62W+zBW/MfEnR
-ebtEfxe6Fk61+e+eFQuTse5zY3u1SsXXB6IUl9OSi9FIrkbSA8E0HzxS4kKXjsFw
-IOFUJK3kCRwWVwcU+2hN
-=f7GB
------END PGP SIGNATURE-----
