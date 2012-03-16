@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/1
-Message-ID: <20120906143714.GG1356@redhat.com>
-Date: Thu, 6 Sep 2012 08:37:14 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request - mcrypt buffer overflow flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/7
+Message-ID: <4F62B65F.4080107@redhat.com>
+Date: Thu, 15 Mar 2012 21:41:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Mark Stanislav <mark.stanislav@...il.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
-I don't believe a CVE has been assigned to this, could one be?
+On 03/15/2012 09:00 PM, Mark Stanislav wrote:
+> 
+> 
+> On Mar 15, 2012, at 10:47 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> 
+>> On 03/15/2012 07:30 PM, Mark Stanislav wrote:
+>>> #1,2,3 are all included
+>>
+>> ? Sorry but I have literally no idea what that means.
+> 
+> You gave be a numbered list of requirements, I was confirming the existence of those first three for each vulnerability were found with my original email to the list.
 
-A buffer overflow was reported [1],[2] in mcrypt version 2.6.8 and
-earlier due to a boundary error in the processing of an encrypted file
-(via the check_file_head() function in src/extra.c).  If a user were
-tricked into attempting to decrypt a specially-crafted .nc encrypted
-flie, this flaw would cause a stack-based buffer overflow that could
-potentially lead to arbitrary code execution.
+I need the actual info, please refer to:
 
-References:
+http://www.openwall.com/lists/oss-security/2012/03/16/2
+http://www.openwall.com/lists/oss-security/2012/03/15/9
+http://www.openwall.com/lists/oss-security/2012/03/14/6
+http://www.openwall.com/lists/oss-security/2012/03/12/7
 
-https://bugzilla.redhat.com/show_bug.cgi?id=855029
-https://secunia.com/advisories/50507/
-https://bugs.gentoo.org/show_bug.cgi?id=434112
-http://packetstormsecurity.org/files/116268/mcrypt-2.6.8-Buffer-Overflow-Proof-Of-Concept.html
+etc.
+
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Kurt Seifried Red Hat Security Response Team (SRT)
