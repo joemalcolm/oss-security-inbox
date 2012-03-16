@@ -1,20 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/2
-Message-ID: <20120108153947.GA11789@pisco.westfalen.local>
-Date: Sun, 8 Jan 2012 16:39:48 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: znc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/13
+Message-ID: <20120316155319.GA11923@openwall.com>
+Date: Fri, 16 Mar 2012 19:53:19 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Mark Stanislav <mark.stanislav@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE ID to a DoS issue in the ZNC IRC bouncer.
+On Fri, Mar 16, 2012 at 12:20:37AM -0400, Mark Stanislav wrote:
+> None of the details of these issues have been publicly discussed or released as I am trying (without much success) to allocate a CVE prior to sending out a coordinated advisory including that identifier as I always have done and as the mitre site indicates to do.
+> 
+> There are no reference links to provide and I am not publicizing details on this list before the developer can be informed of the CVE.
+> 
+> I'm happy to take this off list as I am sure no one cares about any of this discussion
 
-I don't have a upstream reference, but the upstream patch applied 
-by the Debian maintainer can be found here:
+No, please keep this on the list.  Discussions on how to handle
+vulnerability disclosure (including the CVE ID assignment step) are
+definitely on topic for oss-security.
 
-http://patch-tracker.debian.org/patch/series/view/znc/0.202-2/01-fix-bouncedcc-dos.diff 
-http://packages.qa.debian.org/z/znc/news/20120107T145601Z.html
+Thanks,
 
-Cheers,
-        Moritz
+Alexander
+(a moderator for oss-security)
