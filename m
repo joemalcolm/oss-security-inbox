@@ -1,57 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/11
-Message-ID: <20120710141112.GB5296@suse.de>
-Date: Tue, 10 Jul 2012 16:11:12 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/12
+Message-ID: <4F631572.1020408@op5.se>
+Date: Fri, 16 Mar 2012 11:26:58 +0100
+From: Andreas Ericsson <ae@....se>
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+CC: Kurt Seifried <kseifried@...hat.com>,  Mark Stanislav <mark.stanislav@...il.com>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
-
-I am fine with either solution and would prefer upstream patches
-anyway, but it turned out in past that nobody from upstream
-is willing to add such patches.
-I tried a year ago with openssl and AFAIK its still suffering
-(at least I never heared back).
-
-If you compile your openssh '--with-ssl-engine' you have
-an easy root exploit (given that ssh-keysign is mode 04755
-such as on Debian) via OPENSSL_config().
-
-If you ask me, thats quite poor for a framework that wants to
-add security to the system.
-So, I do not have any problems adding our own patch sets rather
-than waiting for another year.
-
-Another lib that should receive a patch is libudev.
-
-Sebastian
-
-
-On Tue, Jul 10, 2012 at 05:43:36PM +0400, Solar Designer wrote:
-> On Tue, Jul 10, 2012 at 03:13:55PM +0200, Florian Weimer wrote:
-> > Perhaps we can put a getenv_secure() into libc, which will perform all 
-> > the appropriate checks (including future checks we do not know about 
-> > yet)?  Duplicating the code in many libraries does not seem prudent.
+On 03/16/2012 04:41 AM, Kurt Seifried wrote:
 > 
-> We already have __secure_getenv() in glibc, which I think is what
-> libraries like this should be using on systems with glibc.
+> I need the actual info, please refer to:
 > 
-> Apparently, it was even in LSB until 1.3 inclusive, but was since
-> dropped from there?
+> http://www.openwall.com/lists/oss-security/2012/03/16/2
+> http://www.openwall.com/lists/oss-security/2012/03/15/9
+> http://www.openwall.com/lists/oss-security/2012/03/14/6
+> http://www.openwall.com/lists/oss-security/2012/03/12/7
 > 
-> Alexander
+
+Those mails are all exemplary requests for CVE id's, ofcourse, but the
+fact that they are all already fixed and released means that 100% of
+the work is already done. At that point, assigning a CVE id is mostly
+useless and is done as a "just for the record" thing.
+
+The need for unified identifier for a particular issue is greatest
+when discussing the problem and its potential solutions; Not how
+someone actually solved it after it's already done. If CVE is to become
+a thing for changelogs only, all those projects that don't use one
+but rely on commit-messages instead won't use CVE id's at all, and the
+usefulness of the CVE database dwindles.
 
 -- 
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
