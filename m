@@ -1,26 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/3
-Message-ID: <845c2322-8661-473b-ad5c-f345742446cd@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Fri, 27 Jan 2012 04:33:26 -0500 (EST)
-From: Ramon de C Valle <rcvalle@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Subscribe to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/27
+Message-ID: <5915e2b1-eb30-498d-94c7-05c6e9e7660b@zimbra>
+Date: Fri, 16 Mar 2012 15:24:14 -0500 (CDT)
+From: "Matthew  Jordan" <mjordan@...ium.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- Asterisk: AST-2012-002 and AST-2012-003 flaws
 Content-Type: text/plain; charset=utf-8
 
-Hi Solar,
-
-I'm a new member of Red Hat Security Response Team. Could you please
-subscribe me to the linux-distros mailing list?
-
-pub   2048R/E9A5A2DD 2011-09-14
-      Key fingerprint = 37C9 75D7 0092 D074 DA95  F229 191A 8A07 E9A5 A2DD
-uid                  Ramon de C Valle <ramon@...hat.com>
-uid                  Ramon de C Valle <rcvalle@...hat.com>
-uid                  Ramon de C Valle <rdecarva@...hat.com>
-sub   2048R/8E1B3C19 2011-09-14
-
-Thanks,
 
 
--- 
-Ramon de C Valle / Red Hat Security Response Team
+----- Original Message -----
+> From: "Kurt Seifried" <kseifried@...hat.com>
+> To: oss-security@...ts.openwall.com
+> Cc: "Jan Lieskovsky" <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, "Matt Jordan"
+> <mjordan@...ium.com>
+> Sent: Friday, March 16, 2012 12:57:15 PM
+> Subject: Re: [oss-security] CVE Request -- Asterisk: AST-2012-002 and AST-2012-003 flaws
+> 
+> On 03/16/2012 05:47 AM, Jan Lieskovsky wrote:
+> > Hello Kurt, Steve, vendors,
+> > 
+> > 1) AST-2012-002:
+> > 
+> > An out-of stack-based buffer write flaw was found in the way the
+> > Miliwatt
+> > application of the Asterisk, open source telephony toolkit,
+> > performed
+> > generation of constant audio tone at 1000Hz (the 'o' option) from
+> > certain,
+> > provided audio packets, when the 'internal_timing' Asterisk
+> > configuration file
+> > option was disabled. In this configuration, a remote attacker could
+> > provide a
+> > specially-crafted audio packet file, which once processed by the
+> > Miliwatt
+> > application would lead to that application crash, or, potentially
+> > arbitrary
+> > code execution with the privileges of the user running the
+> > application.
+> > 
+> > Upstream security advisory:
+> > [1] http://downloads.asterisk.org/pub/security/AST-2012-002.pdf
+> > 
+> > Asterisk v1.8.10.1 announcement:
+> > [2] http://www.asterisk.org/node/51797
+> > 
+> > Upstream patch against the v1.8 branch:
+> > [3]
+> > http://downloads.asterisk.org/pub/security/AST-2012-002-1.8.diff
+> > 
+> > References:
+> > [4] https://bugs.gentoo.org/show_bug.cgi?id=408431
+> > [5] https://bugzilla.redhat.com/show_bug.cgi?id=804038
+> 
+> Please use CVE-2012-1183 for Asterisk AST-2012-002
+> 
+> 
+> > 2) AST-2012-003:
+> > 
+> > A stack-based buffer overflow flaw was found in the way Asterisk
+> > Manager
+> > Interface of Asterisk, open source telephony toolkit, performed
+> > processing of
+> > certain HTTP Digest Authentication headers. A remote attacker,
+> > attempting to
+> > connect to the HTTP session could send a HTTP Digest Authentication
+> > header with
+> > specially-crafted values for certain fields, which once processed
+> > by the
+> > Asterisk parse digest authorization header functionality would lead
+> > to
+> > asterisk
+> > crash, or, potentially arbitrary code execution with the privileges
+> > of
+> > the user
+> > running the application.
+> > 
+> > Upstream security advisory:
+> > [1] http://downloads.asterisk.org/pub/security/AST-2012-003.pdf
+> > 
+> > Asterisk v1.8.10.1 announcement:
+> > [2] http://www.asterisk.org/node/51797
+> > 
+> > Upstream patch against the v1.8 branch:
+> > [3]
+> > http://downloads.asterisk.org/pub/security/AST-2012-003-1.8.diff
+> > 
+> > References:
+> > [4] https://bugs.gentoo.org/show_bug.cgi?id=408431
+> > [5] https://bugzilla.redhat.com/show_bug.cgi?id=804042
+> > 
+> > Could you allocate two ids for these issues?
+> 
+> 
+> Please use CVE-2012-1184 for Asterisk AST-2012-003
+> 
+> 
+> > Thank you && Regards, Jan.
+> > --
+> > Jan iankko Lieskovsky / Red Hat Security Response Team
+> > 
+> > P.S.: Cc-ed Matt Jordan of the Asterisk team, so once the ids are
+> > assigned, he
+> >       can update the advisories.
+> 
+> 
+> --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+
+Thanks Kurt.  We'll get those added to the advisories right away.
+
+Matthew Jordan
+Digium, Inc. | Software Developer
+445 Jan Davis Drive NW - Huntsville, AL 35806 - USA
+Check us out at: http://digium.com & http://asterisk.org
