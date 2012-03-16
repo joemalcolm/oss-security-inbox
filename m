@@ -1,103 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/02/5
-Message-ID: <CAFB=mGANmXHOnZSezyjyqiL2oP6aU7RX5-UTB0DEfErWjc7xmQ@mail.gmail.com>
-Date: Sun, 2 Dec 2012 21:17:14 +0100
-From: king cope <isowarez.isowarez.isowarez@...glemail.com>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>,  king cope <isowarez.isowarez.isowarez@...glemail.com>,  full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com,  todd@...ketstormsecurity.org, submit@...sec.com,  Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org,  security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
-Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/15
+Message-ID: <CAKCW=4YT4Atm=QHQdw_ZpDFMi7JCA=-Jqz6eLnWaxpoLb6XaSQ@mail.gmail.com>
+Date: Fri, 16 Mar 2012 12:11:04 -0400
+From: Mark Stanislav <mark.stanislav@...il.com>
+To: "Adam D. Barratt" <adam@...m-barratt.org.uk>
+Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-My opinion is that the FILE to admin privilege elevation should be patched.
-What is the reason to have FILE and ADMIN privileges seperated when
-with this exploit
-FILE privileges equate to ALL ADMIN privileges.
-I understand that it's insecure to have FILE privileges attached to a user.
-But if this a configuration issue and not a vulnerability then as
-stated above there must be something wrong with the privilege
-management in this SQL server.
+All points being made are very much valid and I certainly understand how
+contextually oss-sec may be used to allocation requests under different
+circumstances.
 
-With Kind Regards,
+So here's my situation, I'm up for suggestions (of which, "wait longer", is
+perfectly viable!)...
 
-Kingcope
+1) March 1st, I sent 2 of these CVEs over to Steve Christy at MITRE who had
+previously allocated 9 prior CVEs in a day or two generally
+2) March 8th, after not hearing back from Steve, I contacted
+cve@...redirectly with all 5
+3) March 15th, after not hearing back from MITRE, I contacted Kurt off list
+as I've noted his helpfulness doing allocations
+3a) Kurt pointed me to email the list, rather than him directly (which is
+perfectly fine, but perhaps not the context I was aiming for initially)
 
+So we're moving past two weeks, I have 5 CVEs I am trying to allocate and
+talk with all of these developers to get on the same page which. None of
+these vulnerabilities are exactly going to rock the security world (see:
+CVE-2012-0002) but I'd love to be able to handle the process as MITRE
+intends (Introduction to CVE Identifier Reservation -
+http://cve.mitre.org/cve/cna.html) as I have previously 9 times with a lot
+of success.
 
-2012/12/2 Sergei Golubchik <serg@...monty.org>:
-> Hi, Huzaifa!
+I apologize if these requests fell outside of the regular scope of the
+list, but at this point I am just trying to get this process done with :)
+
+-Mark
+
+On Fri, Mar 16, 2012 at 11:54 AM, Adam D. Barratt
+<adam@...m-barratt.org.uk>wrote:
+
+> On 16.03.2012 10:26, Andreas Ericsson wrote:
 >
-> Here's the vendor's reply:
->
-> On Dec 02, Huzaifa Sidhpurwala wrote:
+>> Those mails are all exemplary requests for CVE id's, ofcourse, but the
+>> fact that they are all already fixed and released means that 100% of
+>> the work is already done. At that point, assigning a CVE id is mostly
+>> useless and is done as a "just for the record" thing.
 >>
->> * CVE-2012-5611 MySQL (Linux) Stack based buffer overrun PoC Zeroday
->> http://seclists.org/fulldisclosure/2012/Dec/4
->> https://bugzilla.redhat.com/show_bug.cgi?id=882599
 >
-> A duplicate of CVE-2012-5579
-> Already fixed in all stable MariaDB version.
+> Whether you consider it useless or not, those are the CVE assignments that
+> will happen on the list, aiui.
 >
->> * CVE-2012-5612 MySQL (Linux) Heap Based Overrun PoC Zeroday
->> http://seclists.org/fulldisclosure/2012/Dec/5
->> https://bugzilla.redhat.com/show_bug.cgi?id=882600
->
-> Acknowledged.
-> https://mariadb.atlassian.net/browse/MDEV-3908
->
->> * CVE-2012-5613 MySQL (Linux) Database Privilege Elevation Zeroday
->> Exploit
->> http://seclists.org/fulldisclosure/2012/Dec/6
->> https://bugzilla.redhat.com/show_bug.cgi?id=882606
->
-> Not a bug. MySQL manual specifies many times very explicitly:
->
-> ===
->    * Do not grant the `FILE' privilege to nonadministrative users. Any
->      user that has this privilege can write a file anywhere in the file
->      system with the privileges of the *Note `mysqld': mysqld. daemon.
->      To make this a bit safer, files generated with *Note `SELECT ...
->      INTO OUTFILE': select. do not overwrite existing files and are
->      writable by everyone.
->
->      The `FILE' privilege may also be used to read any file that is
->      world-readable or accessible to the Unix user that the server runs
->      as. With this privilege, you can read any file into a database
->      table. This could be abused, for example, by using *Note `LOAD
->      DATA': load-data. to load `/etc/passwd' into a table, which then
->      can be displayed with *Note `SELECT': select.
-> ===
-> You should exercise particular caution in granting the `FILE'
-> and administrative privileges:
->
->    * The `FILE' privilege can be abused to read into a database table
->      any files that the MySQL server can read on the server host. This
->      includes all world-readable files and files in the server's data
->      directory.  The table can then be accessed using *Note `SELECT':
->      select. to transfer its contents to the client host.
-> ===
->
-> Additionally, MySQL (and MariaDB) provides a --secure-file-priv
-> option that allows to restrict all FILE operations to a specific
-> directory.
->
-> Thus, CVE-2012-5613 is not a bug, but a result of a misconfiguration,
-> much like an anonymous ftp upload access to the $HOME of the ftp user.
->
->> * CVE-2012-5614 MySQL Denial of Service Zeroday PoC
->> http://seclists.org/fulldisclosure/2012/Dec/7
->> https://bugzilla.redhat.com/show_bug.cgi?id=882607
->
-> Acknowledged.
-> https://mariadb.atlassian.net/browse/MDEV-3910
->
->> * CVE-2012-5615 MySQL Remote Preauth User Enumeration Zeroday
->> http://seclists.org/fulldisclosure/2012/Dec/9
->> https://bugzilla.redhat.com/show_bug.cgi?id=882608
->
-> This is hardly a "zeroday" issue, it was known for, like, ten years.
-> But I'll see what we can do here.
-> https://mariadb.atlassian.net/browse/MDEV-3909
+> http://oss-security.openwall.**org/wiki/mailing-lists/oss-**security<http://oss-security.openwall.org/wiki/mailing-lists/oss-security>specifically says: "Public security issues only please. What you say here
+> is public for the world to see - keep that in mind. Embargoed information
+> is best disclosed to vendor-sec" (which should be updated to point at
+> somewhere that actually exists).
 >
 > Regards,
-> Sergei
-> MariaDB Security Coordinator
 >
+> Adam
+>
+
