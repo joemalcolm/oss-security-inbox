@@ -1,139 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/8
-Message-ID: <CABY-coPLy7tOBNCrmRw9D7svNfTTQkQx7YOqnioHhk8VNTYWFg@mail.gmail.com>
-Date: Thu, 20 Sep 2012 14:31:19 -0400
-From: George Argyros <argyros.george@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/6
+Message-Id: <92D81327-7B27-46CC-A97F-01C612305152@gmail.com>
+Date: Thu, 15 Mar 2012 23:00:42 -0400
+From: Mark Stanislav <mark.stanislav@...il.com>
 To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Raphael Geissert <geissert@...ian.org>,  Aggelos Kiayias <aggelos@...yias.com>, Vladimir Vorontsov <vladimir.vorontsov@...ec.ru>,  gifts <gifts.antichat@...il.com>, solar@...nwall.com
-Subject: Re: Randomness Attacks Against PHP Applications
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
-FYI, we have also released some code to exploit such vulnerabilities
-about a month ago in github
-(https://github.com/GeorgeArgyros/Snowflake).  We hope that this
-framework will allow the easier development of exploits for such
-vulnerabilities.
-The main difference with the code mentioned in the previous posts, is
-that it may not always be possible to obtain the first output from
-mt_rand() after seeding. For example, many applications only leak
-truncated mt_rand() outputs in which case we should really compare
-bits of different mt_rand outputs to test whether we found the correct
-seed. For this reason, in our tool the user defines a "hash" function
-that expresses any mt_rand dependent output and then we search for a
-preimage for this hash function.
-We also include a python API for this functionalities as well as a
-sample exploit for mediawiki 1.18.1. Some POCs might indeed help...
-
-We will also release the gaussian solver based tool we developed in
-order to recover the internal state of mt_rand from its (truncated)
-outputs in the following days.
-
-Regarding the PHP security team my personal opinion is that they are
-mostly stubborn. The long standing debate between them and the
-security community probably does not help that (although personally I
-mostly agree with the security community in these debates).
-Nevertheless, when some new fundamental problem comes up with PHP they
-seem to try to find a way in which they can attribute that problem to
-someone else instead of searching for a way to fix it (the fact that
-they attribute this problem only to PHP application developers
-demonstrates that).
-
-I agree too that education is important. This is something that we
-came to an agreement with the PHP team (for example that additional
-information is needed on the mt_rand manual). However, as pointed out
-nothing has changed yet (the conversations between us and the PHP team
-took place in March/April).
-
-However I think that the specific issue goes beyond education. First
-of all, We believe that adding simple exploit mitigations such as
-secure seeding in these functions is something that should definitely
-happen. Secure seeding is easy to add using randomness from the
-operating system and furthermore it will incur a negligible
-performance overhead since it would happen only once in the process
-lifetime. This will make the exploitation of these vulnerabilities
-much more difficult (compare the simple attack of connecting to a
-fresh process and bruteforcing the seed with connecting repeatedly to
-the same process and using a complex algorithm to recover the internal
-state from the outputs).
-
-For a more concrete solution I think that the existence of secure
-PRNGs is not enough. Even if mt_rand() was producing secure random
-numbers we would still be having a lot of vulnerable applications just
-from the way this function is used. Just as PHP devs use
-session_start() to start a new PHP session there is a need for a
-generate_token() function that will return a random token and take
-care of providing the necessary level of security for this token.
 
 
+On Mar 15, 2012, at 10:47 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
+> On 03/15/2012 07:30 PM, Mark Stanislav wrote:
+>> #1,2,3 are all included
+> 
+> ? Sorry but I have literally no idea what that means.
 
-On Mon, Sep 17, 2012 at 9:22 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 09/17/2012 10:58 AM, Raphael Geissert wrote:
->> On Monday 17 September 2012 10:36:46 Josh Bressers wrote:
->>>> On Wed, Aug 22, 2012 at 02:31:07PM +0400, Solar Designer
->>>> wrote: Maybe these PoCs will help convince someone.
->>
->> Just a note regarding the sessionid case: IIRC since 5.4
->> session.entropy_length is set to, erm, 32 (bytes.) Basically it
->> appends N bytes from /dev/urandom to the other input for the digest
->> and then it is computed. (why 32 bytes, and why still use md5 by
->> default, well...)
->>
->>> I'm skeptical they will. I've been doing a lot of work for the
->>> past year on various proactive security efforts. I keep coming
->>> back to two basic things.
->> [...]
->>> Has anyone tried to talk to them about this further to see if the
->>> issue is they don't understand, or are they being stubborn?
->>
->> I think the main problem is education. For instance, there is no
->> word about mt_rand not being suitable for criptographic pourposes
->> (much less what that means.)
->
-> Agreed. One example of a similar problem with good images displaying
-> the issue clearly:
->
-> http://lcamtuf.coredump.cx/newtcp/
->
->> Sure, searching for "crypt" in the page shows a few comments saying
->> that it isn't suitable, but: a) there are far more "encryption
->> functions", "random password generators", and similar stuff in the
->> comments than those that do mention its weaknesses. b) the official
->> documentation itself doesn't say a word. It should say it loud and
->> clear.
->>
->> Comments should also be moderated. Many examples available as
->> comments in the documentation are incorrect.
->>
->> Now, pointing it out is easy, but somebody has to actually do the
->> work. *That* is another issue.
->>
->> Cheers,
->>
->
->
-> - --
+You gave be a numbered list of requirements, I was confirming the existence of those first three for each vulnerability were found with my original email to the list.
+
+> 
+>> #4, each project is linked to where the code (both vulnerable and/or
+>> fixed) lives
+>> 
+>> #5...
+>> phpMoneyBooks, 1.0.2 and potentially prior versions
+>> phpGradeBook, 1.9.4 and potentially prior versions
+>> phpPaleo, 4.8b155 and potentially prior versions
+>> hbportal, 0.1 and potentially prior versions
+>> eticketing, no version numbering used *shrug*
+>> 
+>> #6 An e-mail was sent to cve@...re.org <mailto:cve@...re.org> 7 days ago
+>> without response
+>> #7 All open source
+>> #8 Not embargoed
+> 
+> I need the actual information for each one. Check out the nginx CVE
+> request today for a good example.
+
+What "actual information"? Anything that was asked for was given between my initial and secondary email.
+
+I've been allocated 9 CVEs over the past two years and never done any of this extra detail prior to releasing an advisory. That's not a commentary on you as a CNA but this process is quite involved relative to my previous experiences. Not sure what the confusion stems from...
+
+-Mark
+
+> 
+>> I think that should do it.
+>> 
+>> -Mark
+>> 
+>> On Thu, Mar 15, 2012 at 8:22 PM, Kurt Seifried <kseifried@...hat.com
+>> <mailto:kseifried@...hat.com>> wrote:
+>> 
+>>    On 03/15/2012 01:18 PM, Mark Stanislav wrote:
+>>> Howdy,
+>>> 
+>>> I was looking to receive CVEs for the following...
+>>> 
+>>> 1) phpMoneyBooks (http://phpmoneybooks.com/) has an
+>>    unauthenticated local
+>>> file inclusion (LFI) vulnerability
+>>> * Notified, Response Received, and Patch Released
+>>> 
+>>> 2) phpGradeBook (http://phpgradebook.com/) has unauthenticated SQL
+>>    Database
+>>> Exportation
+>>> * Notified, Response Received, and Patch Released
+>>> 
+>>> 3) phpPaleo (http://sourceforge.net/projects/phppaleo/) has an
+>>> unauthenticated local file inclusion (LFI) vulnerability
+>>> * Notified, Response Received, and Patch Released
+>>> 
+>>> 4) hbportal (http://sourceforge.net/projects/hbportal/) has a
+>>    POST-based
+>>> SQL injection vulnerability
+>>> * Notified
+>>> 
+>>> 5) e-ticketing (http://sourceforge.net/projects/e-ticketing/) has a
+>>> POST-based SQL injection vulnerability
+>>> * Notified & Response Received
+>>> 
+>>> Thanks!
+>>> 
+>>> -Mark
+>>> 
+>>    Removed the "no" this time to avoid ambiguity=)
+>> 
+>>    More info would be helpful. Some draft guidelines:
+>> 
+>>    Information for CVE request, REQUIRED:
+>> 
+>>    1) Email address of requester (so we can contact them)
+>>    2) Software name and optionally vendor name
+>>    3) At least one of (to determine is this a security issue):
+>>     1. Type of vulnerability
+>>     2. Exploitation vectors
+>>     3. Attack outcome
+>>    4) For Open Source at least one of:
+>>     1. Link to vulnerable source code or fix
+>>     2. Link to source code change log
+>>     3. Link to security advisory
+>>     4. Link to bug entry
+>>     5. Request comes from project member (a.k.a. "trust me, it's a
+>>    problem")
+>>    5) Affected version(s) (3.2.4, 3.x, current version, all current
+>>    releases, something)
+>>    6) Whether or not this has been previously requested (i.e. on OSS-Sec or
+>>    to cve-assign)
+>>    7) Is this an Open Source or commercial software request
+>>    8) Is this an embargoed issue (if yes and commercial: send to
+>>    cve-assign, if yes and open source: send to vs-sec?)
+>>    9) IF multiple issues are listed please list affected versions for each
+>>    issue and/or who reported them (so we can determine CVE split/merge).
+>> 
+>>    Information for CVE request, REQUESTED:
+>> 
+>>    1) More of the above information of course
+>>    2) Software version(s) fixed (if available)
+>>    3) For closed source any of the information from "For Open Source at
+>>    least one of:"
+>>    4) Any additional information
+>> 
+>> 
+>>    --
+>> 
+>>    -- Kurt Seifried / Red Hat Security Response Team
+>> 
+>> 
+> 
+> 
+> -- 
 > Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
->
-> iQIcBAEBAgAGBQJQV8y7AAoJEBYNRVNeJnmTMsYP/jMjcOslDu6l8aoxpSqNcFmB
-> hdRaVRNxBh3A/IK0Vg0syR1vmP8ShFlJCEZ9XUc+8v0E/s75EO6fWNsntKTSZY5s
-> A646R13ENc46aPhBi2feO7PX/bVTsJVvwVMMrKLlwTWIGoyfbemAjkWRE5VBwr6x
-> U+R1tp97wpK65LGjwmImgzCJMUqBXGuemm+jpJTMBltcACKvGp7h28wfJL66UR76
-> mSV0F7YisjZ3gKHv5DmKxlzVRNx9KcKM3qaMjWVuAIicMz3CBsbJ68WXVRbraV0Q
-> dXtkh5Uo/dfnfjXC6rPAMwkqOb7tdIB076alxTq16C2hbXrUVgroysJ4C4v16XTk
-> qkZOH6jcZYWiQai/tDQA/DNAsKbBTNj8N6JRX7y1i0d8l1SGv+fbGtG2qTeZEs5R
-> XhoVxKpEQUWrEU5yi7ToVasjqXUrE4cvD3n6RUX0s6IODjbm6Zbow/+F4PWIFJWF
-> wr2GC9nGn3RKicLxi+/mUWgtukZljfneYJu0i+R9DPDjwd0IxgpaWre3c//JurK5
-> AVX9clRdEEUZD4chzqDRdzv2xmJLDcevOo29s2XC8DzePWGRO+D7t+RhQkQ4C7JB
-> AaZyGKCr9tosPKUVWm7UGIAWxvHaIBsvfcH6V+lGSMkeyCIeAYFV+cWjgP/aZnno
-> Xeicv9GFtZPRw5ThRyFi
-> =D8kI
-> -----END PGP SIGNATURE-----
