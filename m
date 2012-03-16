@@ -1,23 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/04/1
-Message-ID: <20120304092329.GA14206@foo.fgeek.fi>
-Date: Sun, 4 Mar 2012 11:23:29 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/19
+Message-Id: <201203161837.44351.tmb@65535.com>
+Date: Fri, 16 Mar 2012 18:37:43 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: systemd local denial of login or local users can create arbitrary services
+Cc: Mark Stanislav <mark.stanislav@...il.com>, "Adam D. Barratt" <adam@...m-barratt.org.uk>, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue? http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=662029
+On Friday 16 Mar 2012 16:11:04 Mark Stanislav wrote:
+> All points being made are very much valid and I certainly understand how
+> contextually oss-sec may be used to allocation requests under different
+> circumstances.
+> 
+> So here's my situation, I'm up for suggestions (of which, "wait longer", is
+> perfectly viable!)...
+> 
+> 1) March 1st, I sent 2 of these CVEs over to Steve Christy at MITRE who had
+> previously allocated 9 prior CVEs in a day or two generally
+> 2) March 8th, after not hearing back from Steve, I contacted
+> cve@...redirectly with all 5
+> 3) March 15th, after not hearing back from MITRE, I contacted Kurt off list
+> as I've noted his helpfulness doing allocations
+> 3a) Kurt pointed me to email the list, rather than him directly (which is
+> perfectly fine, but perhaps not the context I was aiming for initially)
 
-Version: 37-1
-Forwarded: https://bugzilla.redhat.com/show_bug.cgi?id=680122
+Josh Bressers (Josh, correct me if I'm using your name in vain) used to be 
+quite happy to assign CVEs for undisclosed (embargoed) F/OSS issues providing 
+details were forthcoming with the request.   If Josh is no longer able to 
+fulfil that role due to a change of circumstance at Redhat it would be nice if 
+someone stepped into the breach -  be that Redhat, Debian or one of the other 
+CNAs.  There is definately a place for "disclosed to project, being/been fixed, 
+not public - can I have a CVE?" without deferring to the distros list or MITRE 
+- most of the time projects can respond in a timely fashion, so a minimum 
+effort approach is ideal.
 
-By invoking systemctl status somename.service any user can create an
-entry in systemd's service list. If this list gets too large the login
-procedure can fail. It is not tracked which user created the entries.
+As an aside, the public address for MITRE on the web site is wrong AFAIK.  
+Quoting Steve Christey:
 
-Thanks to Michael Biebl for helping me understand the issue. Lennart
-Poettering later explained that the issue is already known and fixed in
-git commit 9a46fc3b9014de1bf0ed1f3004a536b08a19ebb3.
+"Apologies for the delay.  In the future, please use cve-assign@...re.org 
+for requests related to CVE reservation."
 
-- Henri Salo
+From last time I went to MITRE (for a closed source product).
+
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
