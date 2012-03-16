@@ -1,47 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/9
-Message-ID: <4F21893B.2020306@redhat.com>
-Date: Thu, 26 Jan 2012 10:11:23 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/22
+Message-ID: <4F637D8E.5090702@redhat.com>
+Date: Fri, 16 Mar 2012 11:51:10 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Request for CVE for Vulnerability in Tahoe-LAFS 1.9.0
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, security@...pal.org
+Subject: Drupal CORE and Drupal Contrib
 Content-Type: text/plain; charset=utf-8
 
-And that's why I'm wanting people to include source code commit
-information in their requests (the system works!!! =).
+I was going to ask this next week but now seems topical: looking at
+http://drupal.org/security/contrib
 
-On 01/26/2012 08:12 AM, Patrick R McDonald wrote:
-> On Thu, Jan 26, 2012 at 03:57:14PM +0100, Christian Hoffmann
-> wrote:
->> Hallo Patrick,
->> 
->> On 26.01.2012 15:15, Patrick R McDonald wrote:
->>> I would like to request a CVE for a vulnerability in
->>> Tahoe-LAFS,
->>> 
->>> https://tahoe-lafs.org/pipermail/tahoe-announce/2012-January/000032.html
->>
->>> 
-I think CVE-2012-0051 has already been assigned to this vulnerability.
->> 
->> It is referenced in the Trac ticket (see below) which is
->> mentioned in the above mail archive post, unless I'm confusing
->> things.
->> 
->> 
->> References: https://tahoe-lafs.org/trac/tahoe-lafs/ticket/1654 
->> http://seclists.org/oss-sec/2012/q1/135 (initial request) 
->> http://seclists.org/oss-sec/2012/q1/158 (CVE assignment)
->> 
->> 
->> Best regards,
->> 
->> Christian Hoffmann
->> 
-> 
-> My apologies.  Thanks for the info and the quick turnaround.
+I see drupal core (at least one thing there needs a CVE), and no CVE's
+listed on that page. Would it be possible to get Drupal to list CVE's
+assigned for the issue on that page? It would make life easier for all
+concerned.
 
+Ditto for the contrib page, 41 issues so far this year, I think a bunch
+have CVE's assigned but am not sure. Would it be possible to get Drupal
+to list CVE's assigned for the issue on that page? It would make life
+easier for all concerned.
 
+I was planning to do a missing CVE assignment for Drupal this weekend
+(I'm guessing 40?).
 
 
 -- 
