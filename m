@@ -1,33 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/13/2
-Message-ID: <20120213091746.GA2994@suse.de>
-Date: Mon, 13 Feb 2012 10:17:46 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/11
+Message-ID: <20120316121219.GA22101@kludge.henri.nerv.fi>
+Date: Fri, 16 Mar 2012 14:12:19 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Thomas Biege <thomas@...e.de>
-Subject: Re: Subscribe to linux-distros?
+Subject: Joomla! Security News 2012-03-16
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 13, 2012 at 09:57:37AM +0100, Matthias Weckbecker wrote:
-> Hi Alexander,
-> 
-> I'm a member of the SUSE Security Team. I joined the team in August 2011. 
-> 
-> Could you possibly subscribe me to the linux-distros list too, please? I'm 
-> CC'ing Marcus Meissner (manager of the SUSE Security Team) and Thomas Biege
-> (project manager security).
-> 
->  pub   4096R/EA16D1D2 2011-07-27
->        Key fingerprint = D3B4 1D62 7C6A 2FFF B764  2BFA E4A4 9B9D EA16 D1D2
->  uid                  Matthias Weckbecker <mweckbecker@...e.de>
->  sub   4096R/1FBE90CA 2011-07-27
-> 
-> Let me know if you need anything else,
+Can we assign CVE-identifiers for these two vulnerabilities?
 
-Hi,
+20120304 - Core - Password Change http://developer.joomla.org/security/news/394-20120304-core-password-change.html
+20120303 - Core - Privilege Escalation http://developer.joomla.org/security/news/395-20120303-core-privilege-escalation.html
 
-I confirm that Matthias is member of my team.
+With Joomla you are never safe!
 
-Ciao, Marcus
+- Henri Salo
 
-Content of type "application/pgp-signature" skipped
+----- Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
+
+Date: Fri, 16 Mar 2012 12:09:18 +0000
+From: Joomla! Developer Network - Security News <no_reply@...mla.org>
+To: henri@...v.fi
+Subject: Joomla! Security News
+
+Joomla! Developer Network - Security News
+
+///////////////////////////////////////////
+[20120304] - Core - Password Change
+
+Posted: 16 Mar 2012 12:21 AM PDT
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/JukET1dgfDM/394-20120304-core-password-change.html?utm_source=feedburner&utm_medium=email
+
+
+Project: Joomla!
+SubProject: All
+ Severity: High
+Versions: 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x releases
+Exploit type: Password Change
+Reported Date: 2012-March-8
+Fixed Date: 2012-March-15
+
+Description
+
+Insufficient randomness leads to password reset vulnerability.
+Affected Installs
+
+Joomla! versions 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x versions
+Solution
+
+Upgrade to version 2.5.3
+
+Reported by George Argyros and Aggelos Kiayias
+Contact
+
+The JSST at the Joomla! Security Center.
+
+
+
+///////////////////////////////////////////
+[20120303] - Core - Privilege Escalation
+
+Posted: 15 Mar 2012 05:00 AM PDT
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/n5w8L96w-LM/395-20120303-core-privilege-escalation.html?utm_source=feedburner&utm_medium=email
+
+
+Project: Joomla!
+SubProject: All
+ Severity: High
+Versions: 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x releases
+Exploit type: Privilege Escalation
+Reported Date: 2012-March-12
+Fixed Date: 2012-March-15
+
+Description
+
+Programming error allows privilege escalation in some cases.
+Affected Installs
+
+Joomla! versions 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x versions
+Solution
+
+Upgrade to version 2.5.3
+
+Reported by Jeff Channel
+Contact
+
+The JSST at the Joomla! Security Center.
+
+
+
+--
+You are subscribed to email updates from "Joomla! Developer Network -
+Security News."
+To stop receiving these emails, you may unsubscribe now: http://feedburner.google.com/fb/a/mailunsubscribe?k=JWlBXz9w0F12fWtPu46jwc9_Jcc
+
+Email delivery powered by Google.
+Google Inc., 20 West Kinzie, Chicago IL USA 60610
+
+
+----- End forwarded message -----
