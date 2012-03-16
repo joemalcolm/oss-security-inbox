@@ -1,26 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/1
-Message-ID: <20120530100702.2688dca6@redhat.com>
-Date: Wed, 30 May 2012 10:07:02 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: felipensp@...il.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: Multiple buffer overflow in unixODBC
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/26
+Message-Id: <201203161957.26397.tmb@65535.com>
+Date: Fri, 16 Mar 2012 19:57:20 +0000
+From: Tim Brown <tmb@...35.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 29 May 2012 09:42:42 -0300 Felipe Pena wrote:
+On Friday 16 Mar 2012 19:45:58 Kurt Seifried wrote:
 
-> Multiple buffer overflow in unixODBC
-> ===========================
+> You may have uh noticed me assigning 200+ cve's in the last few
+> months. I took over for Josh. I am unwilling to public assign CVE's
+> that are likely to end up with duplicates (e.g. no information CVE's
+> already sent in as a request to Mitre).
 > 
-> The library unixODBC doesn't check properly the input from FILEDSN=,
-> DRIVER= options in the DSN, which causes buffer overflow when passed
-> to the SQLDriverConnect() function.
+> I am quite happy to assign "secret" or whatever you want to call them
+> CVE's (I do it all the time on linux-distros list for embargoed
+> issues) but I'm also trying to avoid duplicates and other messes. If
+> the issue is so secret you can't even give me a version #, brief
+> description, etc. than chances are Mitre needs to handle it.
+> 
+> I'm asking for pretty basic info like version #'s affected and ideally
+> fixed if you got it. This doesn't need to be complicated.
 
-Reports like this - covering bugs in parsing of the configuration
-parameters (i.e. generally trusted input) - should include some
-reasoning why these should be considered security.  Nothing obvious not
-intended to break PHP safe_mode comes to mind.
+Thanks for the clarification.  Josh has in the past been very useful with 
+OpenVAS and KDE bugs in particular where there is a security team who can take 
+up most of the slack and handle the co-ordination process.  Hopefully we won't 
+notice any changeover when we deal with you.
 
+Totally agree about the information aspect FWIW, never had a problem sharing 
+in the past - it's just a matter of minimising the friction when disclosing.
+
+Cheers,
+Tim
+
+PS I suspect I'll be in touch sooner rather than later about CVEs, got a 
+handful that are almost ready for disclosure.
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Tim Brown
+<mailto:tmb@...35.com>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
