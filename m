@@ -1,54 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/26/1
-Message-ID: <508A2369.1020102@redhat.com>
-Date: Thu, 25 Oct 2012 23:45:13 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/2
+Message-ID: <4F628BFB.1060901@redhat.com>
+Date: Thu, 15 Mar 2012 18:40:27 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: awstats before 7.1 awredir.pl vulnerability
+CC: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+Subject: Re: CVE-request: apache's mod-fcgid does not respect configured FcgidMaxProcessesPerClass in VirtualHost
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 03/15/2012 12:39 PM, Daniel Kahn Gillmor wrote:
+> Version 2.3.6 of mod-fcgid (the current published version from ASF
+> according to [0]) has a known problem that FcgidMaxProcessesPerClass
+> directives are not honored when they appear inside a VirtualHost stanza.
+>
+> This is presents a risk for a denial of service because it means that
+> a remote attacker can violate the intent of the admin and overwhelm
+> the server running fcgid.
+>
+> Could a CVE be assigned for this vulnerability?
+>
+> If the admin declares that a given virtualhost should be limited to X
+> fastcgi processes (often in order to constrain RAM usage by the
+> vhost), any remote user can issue X+1 (or 10X, or whatever) concurrent
+> GET requests, which defeats the documented limit, and can result in
+> heavy swap or the oom-killer, which can cause a DoS on other services
+> on the host.
+>
+> This bug has been fixed since the release of 2.3.6 in upstream's svn
+> (r1037727 of https://svn.apache.org/repos/asf/httpd/mod_fcgid/trunk)
+> with a narrowly-targeted one-line patch:
+>
+> --- modules/fcgid/fcgid_spawn_ctl.c    (revision 1037726)
+> +++ modules/fcgid/fcgid_spawn_ctl.c    (revision 1037727)
+> @@ -178,7 +178,7 @@
+>          if (current_node->inode == command->inode
+>              && current_node->deviceid == command->deviceid
+>              && !strcmp(current_node->cmdline, command->cmdline)
+> -            && current_node->vhost_id == sconf->vhost_id
+> +            && current_node->vhost_id == command->vhost_id
+>              && current_node->uid == command->uid
+>              && current_node->gid == command->gid)
+>              break;
+>
+> But this patch hasn't made it to any released version.
+>
+> Debian has plans to release a Debian Security Advisory for the issue
+> and will resolve it with the above patch.
+>
+> This problem is also documented at:
+>
+>  https://issues.apache.org/bugzilla/show_bug.cgi?id=49902
+>  http://bugs.debian.org/615814
+>
+> Regards,
+>
+>     --dkg
+>
+> [0] https://httpd.apache.org/mod_fcgid/
+Please use CVE-2012-1181 for this issue.
 
-On 10/25/2012 03:07 AM, Hanno Böck wrote:
-> http://awstats.sourceforge.net/docs/awstats_changelog.txt -
-> Security fix into awredir.pl
-> 
-> I didn't find any more info, but please assign a CVE. (and i found
-> there were awredir issues before that got CVE-2009-5020, but I
-> think this is a different issue, at least if their changelogs are 
-> correct)
+-- 
 
-Please use CVE-2012-4547 for this issue.
+-- Kurt Seifried / Red Hat Security Response Team
 
-One question, in CVE-2009-5020 (the last Awstats open redirect): Steve:
-
-CONFIRM:http://awstats.sourceforge.net/docs/awstats_changelog.txt
-
-Is it possible to include more information in the references like a
-line of text or the data it was pulled or something? I'm noticing this
-more and more as I try to verify stuff, could we consider adding a
-notes field or something?
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQiiNoAAoJEBYNRVNeJnmTSbcQAJvzJKn/SF6GewIgStgOsRcM
-dsWhlG/3ELZ4kS6ikUrHEOd8LbjBCQ2dK3JK9kTNxp3cY2xuFtBbnTFy3of3YSjZ
-1rjsK9xvWbm5+2DHJDbtH2cFuh6jF/Bpx33agf1gYiF0hXcTRfc6zCPerI7Zjtbt
-NRcY3yN7yNyZd9C0mY2iT9RWZyqM5tIDRRCkQfVklbltEZOrvgBmXfYSXjTVpzUR
-5q4KGcHVYNvr4gVItyg7z3uaADqIhtCw0QZFgQ/YXSDigxWf8qFNvypHm790RY9Q
-ilQI6B0E9se+x7ypZda/T7eqxAyzaVUFahIOzg6fstrUCp2FrAbnB5m065JCYzuQ
-Q3/Sqy81y12r5p6bbppulzlBgI0zQxT0n+Ayvylea/rp6hcpe82OocnxDVqaw6/z
-ovAjZkgDjWogV8TrdgQbW25iKl1A4ib2IEOu5FQbVbM9cT33QhD4GNMx1jSEU/TM
-x0SN5j4L7PVP2V+zzACAn4qxK8LTUUFy8pRPYckU9DbGICWBHP2CCTsAUWWCTPc5
-2K6+RBPQW0LnSTC60Q//3vQDhpbb+myzwpO3GqHQNpIZzvwQWx94jfXNKN2pZusJ
-3bYaoDTtBr7GGUfkp/j/8D8ID3fOvKwZ7TN+aZaehbmFGzpumFidHtsu+cf/+umr
-TVsWRQOzhHntznXjVWEr
-=e9t/
------END PGP SIGNATURE-----
