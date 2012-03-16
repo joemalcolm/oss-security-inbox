@@ -1,75 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/2
-Message-Id: <E1TYG2E-0000zH-Ug@xenbits.xen.org>
-Date: Tue, 13 Nov 2012 12:56:10 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 21 (CVE-2012-4536) - pirq range check DoS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/8
+Message-Id: <FBBBDC24-23AF-4361-8EF4-83DCF41A1AD3@gmail.com>
+Date: Fri, 16 Mar 2012 00:20:37 -0400
+From: Mark Stanislav <mark.stanislav@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+None of the details of these issues have been publicly discussed or released as I am trying (without much success) to allocate a CVE prior to sending out a coordinated advisory including that identifier as I always have done and as the mitre site indicates to do.
 
-                 Xen Security Advisory CVE-2012-4536 / XSA-21
-                                version 2
+There are no reference links to provide and I am not publicizing details on this list before the developer can be informed of the CVE.
 
-                    pirq range check DoS vulnerability
+I'm happy to take this off list as I am sure no one cares about any of this discussion but as I tried to do this privately initially before being told to email the list instead, I'm hesitant to bother.
 
-UPDATES IN VERSION 2
-====================
+Follow-up off list if you like, else I'll just skip this process and release advisories without them.
 
-Public release.
+Thanks for your time,
 
-ISSUE DESCRIPTION
-=================
+-Mark
 
-domain_pirq_to_emuirq() uses the guest provided pirq value before
-range checking it, and physdev_unmap_pirq uses domain_pirq_to_emuirq
-without checking the pirq value either.  Invalid pirq values can cause
-Xen to read out of array bounds, usually resulting in a fatal page
-fault.
+On Mar 15, 2012, at 11:41 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-IMPACT
-======
-
-A malicious guest administrator can cause Xen to crash.  If the out of
-array bounds access does not crash, the arbitrary value read will be
-ignored due to later error checking, so there is no privilege
-escalation and no exploitable information leak.
-
-VULNERABLE SYSTEMS
-==================
-
-Only Xen version 4.1 is vulnerable.  Other released versions, and
-xen-unstable, are not vulnerable.
-
-The vulnerability is only exposed to HVM guests.
-
-MITIGATION
-==========
-
-Running only PV guests, or ensuring that HVM guests only use trusted
-kernels, will avoid this vulnerability.
-
-RESOLUTION
-==========
-
-The attached patch resolves this issue.
-
-$ sha256sum xsa21.patch
-34c4bef71d0ad08ee7c337c77af47aa77bb19081a13fc13beaff7d4b37b6b35a  xsa21.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQokGnAAoJEIP+FMlX6CvZ1lQH/jdovmPuphnocdrkWGR8FE3+
-OqM3JIpOZTDPFfLO7pen/P5e/0fCBs7cF7FGvM1Uua54/M0HrVS93E1m9baornkh
-vEIV5c9TRTfUR3IGmVFs1l+ddJcfULOuhfE2IOrbcYaWBL89D9sQYrL/A1j4LTEh
-umsz6fh4XgINkt/tpneEcE4ckYd0YkkOm3zUK3HaGshNXoOGVyGeaNqKr/YuhEfc
-XWOkCUoZTxKz50Tg12pdtjX8CX0njJaKeAs0MLkyTL1cj+Sf89YzNuXLwx5ffpMu
-//VEe2tbyRzPj2JYzUOrV8E5W1fPZmfCSgMvJEtwmMbMXMb7sIUPMBh3yBcXQQU=
-=yPnD
------END PGP SIGNATURE-----
-
-Download attachment "xsa21.patch" of type "application/octet-stream" (1069 bytes)
+> On 03/15/2012 09:00 PM, Mark Stanislav wrote:
+>> 
+>> 
+>> On Mar 15, 2012, at 10:47 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+>> 
+>>> On 03/15/2012 07:30 PM, Mark Stanislav wrote:
+>>>> #1,2,3 are all included
+>>> 
+>>> ? Sorry but I have literally no idea what that means.
+>> 
+>> You gave be a numbered list of requirements, I was confirming the existence of those first three for each vulnerability were found with my original email to the list.
+> 
+> I need the actual info, please refer to:
+> 
+> http://www.openwall.com/lists/oss-security/2012/03/16/2
+> http://www.openwall.com/lists/oss-security/2012/03/15/9
+> http://www.openwall.com/lists/oss-security/2012/03/14/6
+> http://www.openwall.com/lists/oss-security/2012/03/12/7
+> 
+> etc.
+> 
+> 
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
