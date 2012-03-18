@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/7
-Message-ID: <20120315172246.GC27407@dhcp-25-225.brq.redhat.com>
-Date: Thu, 15 Mar 2012 18:22:46 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/18/1
+Message-ID: <20120318072041.GA13061@kludge.henri.nerv.fi>
+Date: Sun, 18 Mar 2012 09:20:41 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-1179 kernel: thp: __split_huge_page() mapcount != page_mapcount BUG_ON()
+Subject: Re: CVE request: piwik before 1.6
 Content-Type: text/plain; charset=utf-8
 
-In some cases it may happen that pmd_none_or_clear_bad() is called
-with the mmap_sem hold in read mode. In those cases the huge page
-faults can allocate hugepmds under pmd_none_or_clear_bad() and that
-can trigger a false positive from pmd_bad() that will not like to see
-a pmd materializing as trans huge.
+This case is still not handled. Information from the URL:
 
-A privileged user in the KVM guest can use this flaw to crash the host.
-An unprivileged local user could use this flaw to crash the system.
+The Piwik 1.5 release addresses a critical security vulnerability, which affect all Piwik users that have let granted some access to the "anonymous" user. Users should upgrade immediately.
 
-For detailed info please consult the upstream patch.
+Piwik 1.5 contains a remotely exploitable vulnerabiliy that could allow a remote attacker to execute arbitrary code. Only Installations that have granted untrusted view access to their stats (ie. grant "view" access to a website to anonymous) are at risk.
 
-Proposed upstream patch:
-http://comments.gmane.org/gmane.linux.kernel.mm/75413
+CVE ID: not yet assigned
+Known Versions Affected: Piwik 1.2, 1.3, and 1.4
 
-References:
-http://comments.gmane.org/gmane.linux.kernel.mm/75413
-https://bugzilla.redhat.com/show_bug.cgi?id=803793
+This issue was disclosed to us privately and safely. Our thanks to Neal Poole for discovering and reporting the issue to the Piwik Security Team. Neal is the first bounty recipient of Piwik's Security Bug Bounty program.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+This release also includes Zend Framework 1.11.6 which addresses a potential SQL injection vector when using PDO_MySql. Piwik users should be unaffected as it has used UTF-8 since Piwik 0.5.
+
+- Henri Salo
+
+On Thu, Oct 20, 2011 at 12:28:02PM -0400, Josh Bressers wrote:
+> Steve,
+> 
+> Can MITRE take this thread. I'm a bit fearful as to what this one is going to become.
+> 
+> Thanks.
+> 
+> ----- Original Message -----
+> > p.s. I see a CVE ID hasn't been issued for:
+> > 
+> > http://piwik.org/blog/2011/06/piwik-1-5-security-advisory/
+> > 
+> 
+> -- 
+>     JB
