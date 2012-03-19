@@ -1,28 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/2
-Message-ID: <4F6171F3.5050508@redhat.com>
-Date: Wed, 14 Mar 2012 22:37:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: running the distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/3
+Message-ID: <4F67467E.9010404@op5.se>
+Date: Mon, 19 Mar 2012 15:45:18 +0100
+From: Andreas Ericsson <ae@....se>
+To: Kurt Seifried <kseifried@...hat.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
-On 03/14/2012 02:54 PM, Solar Designer wrote:
-> Kurt - how about my original request for help running the list, though?
-> Even if you somehow don't volunteer to notify upstreams (and others),
-> making sure that every issue gets a CRD proposed for it ASAP will be of
-> help.  Can I at least count on you doing that? ;-)  And maybe someone
-> else will volunteer for other sub-tasks (although a per-vulnerability
-> rather than per-sub-task split between the several responsible list
-> members could work better, I think).
+On 03/16/2012 06:42 PM, Kurt Seifried wrote:
+> On 03/16/2012 04:26 AM, Andreas Ericsson wrote:
+>> On 03/16/2012 04:41 AM, Kurt Seifried wrote:
+>>>
+>>> I need the actual info, please refer to:
+>>>
+>>> http://www.openwall.com/lists/oss-security/2012/03/16/2
+>>> http://www.openwall.com/lists/oss-security/2012/03/15/9
+>>> http://www.openwall.com/lists/oss-security/2012/03/14/6
+>>> http://www.openwall.com/lists/oss-security/2012/03/12/7
+>>>
+>>
+>> Those mails are all exemplary requests for CVE id's, ofcourse, but the
+>> fact that they are all already fixed and released means that 100% of
+>> the work is already done. At that point, assigning a CVE id is mostly
+>> useless and is done as a "just for the record" thing.
+>  
+> Uh no. Tracking these issues is critical and it happens across dozens,
+> and in some cases hundreds of vendors (e.g. CVE-2009-3555).
 > 
-> Thanks,
-> 
-> Alexander
 
-Unfortunately I don't have the time to take on these duties in addition
-to my existing work at Red Hat.
+Which is why it's handy to be able to use an ID when discussing the fix
+as well. Googling for the discussion becomes all but impossible otherwise,
+since you're reduced to, in your own words, "that openssl thing".
+
+
+>> The need for unified identifier for a particular issue is greatest
+>> when discussing the problem and its potential solutions; Not how
+>> someone actually solved it after it's already done. If CVE is to become
+>> a thing for changelogs only, all those projects that don't use one
+>> but rely on commit-messages instead won't use CVE id's at all, and the
+>> usefulness of the CVE database dwindles.
+> 
+> If only it were that simple. Having worked for iSIGHT/iDefense prior to
+> Red Hat, and now at Red Hat, let me say this simply:
+> 
+> CVE Is 100% critical for security work at large scales.
+> 
+> Automated products/etc need reliable names for security issues.
+> Customers need reliable ways to ask questions (did you fix that OpenSSL
+> thing mentioned over in this random blog post? Oh you mean this CVE,
+> yes. etc.).
+> 
+
+Yes, but that question becomes very hard to answer when it's not
+written down what CVE it was that was fixed, which is why I think it's
+crucial to be able to get one before the fix is available. Many small
+projects don't use changelogs or track issues all that carefully after
+they're fixed, but rely entirely on commit messages to keep (and give)
+such information to its users.
+
+Then again, I'm speaking from a developer standpoint and I generally
+need (well, want, but for the sake of issue history I should say
+"strongly prefer to have") the id long before most users even know
+there's a problem.
+
+By this thread I'm fairly assured that won't be a problem though, so
+I'll refrain from commenting further.
+
+Thanks to all who clarified.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
