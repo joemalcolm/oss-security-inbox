@@ -1,33 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/3
-Message-ID: <4FEAD940.8060609@redhat.com>
-Date: Wed, 27 Jun 2012 11:58:24 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Enrico Scholz <enrico.scholz@...ormatik.tu-chemnitz.de>, Tom Woodward <tomwoodward.mail@...il.com>
-Subject: CVE Request -- dtach: Memory portion (random stack data) disclosure to the client by unclean client disconnect
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/10
+Message-ID: <4F677C01.4060706@redhat.com>
+Date: Mon, 19 Mar 2012 12:33:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Greg Knaddison <greg.knaddison@...uia.com>, security@...pal.org
+Subject: Re: Re: [security] Drupal CORE and Drupal Contrib
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On 03/16/2012 04:40 PM, Greg Knaddison wrote:
+> Hi Kurt,
+> 
+> We started considering associating CVEs with our Security Advisories
+> (SAs) in September of 2011. At the time we discussed it with Josh
+> Bressers, Jan Lieskovsky, Steven M. Christey and decided that it would
+> only be practical to do it for Drupal core for now and we could
+> considering doing it for contrib in the future. Since that discussion
+> there has only been one SA for Drupal core which I think has the CVEs
+> on it: SA-CORE-2012-001 - Drupal core multiple vulnerabilities -
+> http://drupal.org/node/1425084
+> 
+> Is there another SA for core that I'm not considering? Is there a
+> better way to list the CVE numbers?
+> 
+> There have been several SAs for contributed modules and we would
+> gladly update them with CVEs. If you can send an email with a link to
+> the SA and the CVE-id to use that would be great.
 
-   a portion of memory (random stack data) disclosure flaw was found in the way dtach, a simple 
-program emulating the detach feature of screen, performed client connection termination under 
-certain circumstances. A remote attacker could use this flaw to potentially obtain sensitive 
-information by issuing a specially-crafted dtach client connection close request.
+Ok starting with core:
 
-Upstream ticket:
-[1] http://sourceforge.net/tracker/?func=detail&aid=3517812&group_id=36489&atid=417357
+http://drupal.org/node/1231510
+SA-CORE-2011-003 - Drupal core - Access bypass
+This was already assigned CVE-2011-2726
 
-Preliminary proposed patch:
-[2] http://sourceforge.net/tracker/download.php?group_id=36489&atid=417357&file_id=441195&aid=3517812
+http://drupal.org/node/1204582
+SA-CORE-2011-002 - Drupal core - Access bypass
+This was already assigned CVE-2011-2687
 
-References:
-[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625302
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=812551
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=835849
+http://drupal.org/node/1168756
+SA-CORE-2011-001 - Drupal core - Multiple vulnerabilities
+Can't find any CVE's, do they need to be assigned?
 
-Could you allocate a CVE id for this issue?
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
