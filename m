@@ -1,79 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/6
-Message-ID: <20120907133239.669c2bd3@redhat.com>
-Date: Fri, 7 Sep 2012 13:32:39 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/13
+Message-ID: <4F6784EF.8040804@redhat.com>
+Date: Mon, 19 Mar 2012 13:11:43 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: geissert@...ian.org
-Subject: Re: CVE request: opencryptoki insecure lock files handling
+CC: Luc ABRIC <luc.abric@...ida.fr>, Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, Valérian PERRET <valerian.perret@...ida.fr>, "'jkn@...no'" <jkn@...no>
+Subject: Re: CVE request: eZ Publish: insecure direct object reference
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 6 Sep 2012 20:03:20 -0500 Raphael Geissert wrote:
+On 03/19/2012 03:06 AM, Luc ABRIC wrote:
+> Hi,
+> 
+> My initial CVE ID request was dropped because it was missing some details. Here comes a re-submission.
+> 
+> After posting to oss-security I was asked a few questions by Kurt Seifried from Redhat SRT while the vendor was contacted by Secunia asking for pretty much the same informations. Secunia then decided it wasn't their role to handle this vulnerability.
+> I don't know if that's part of the process but I feel like you should know to avoid any duplicated work.
+> 
+> 1) Email address of requester
+> yann.michard@...ida.fr, luc.abric@...ida.fr & jkn@...no.
+> Yann MICHARD discovered the vulnerability, so all the credits goes to him.
+> 
+> 2) Software name and optionally vendor name
+> Vendor: Ez
+> Product name: Ez Publish
+> Editions: both Enterprise & Community
+> 
+> 3) At least one of (to determine is this a security issue):
+>   1. Type of vulnerability
+> OWASP A4: Insecure direct object reference
+> 
+>   2. Exploitation vectors
+> Access to the vulnerable website (no need for any credentials)
+> 
+>   3. Attack outcome
+> A browser is enough to execute the attack.
+> 
+> 4) For Open Source at least one of:
+>   1. Link to vulnerable source code or fix Not available yet.
+> 
+>   2. Link to source code change log
+> Not available yet.
+> 
+>   3. Link to security advisory
+> Not available yet.
+> 
+>   4. Link to bug entry
+> http://issues.ez.no/19238
+> The vendor does not want to release more details until a fix is pushed to the clients
+> 
+>   5. Request comes from project member (a.k.a. "trust me, it's a problem") Jostein Knudsen <jkn@...no> from Ez can confirm the vulnerability.
+> 
+> 5) Affected version(s) (3.2.4, 3.x, current version, all current releases, something) The whole 4.x serie it seems (4.1 to 4.6 from the bug entry).
+> 
+> 6) Whether or not this has been previously requested (i.e. on OSS-Sec or to cve-assign) Well yeah but it seems that the request didn't have enough information.
+> 
+> 7) Is this an Open Source or commercial software request Both, the affected software has 2 editions, one open-source, one commercial.
+> 
+> 8) Is this an embargoed issue (if yes and commercial: send to cve-assign, if yes and open source: send to vs-sec?) Not really sure what you mean by embargoed.
+> The French government asked us not do disclose any details until a fix is available AND installed on their systems because it affects some high profile websites.
+> We didn't plan on releasing any details before the fix anyway.
+> 
+> 9) IF multiple issues are listed please list affected versions for each issue and/or who reported them (so we can determine CVE split/merge).
+> It's the first issue we're publishing regarding this application.
 
-> Niels Heinen (Google) discovered that openCryptoki 2.4.0 and older,
-> when spinlocks are used, incorrectly handle lock files stored
-> in /tmp.
+Perfect, this way if it comes up again there is enough info that
+hopefully someone will match it up =).
 
-AFAIK, this was reported to upstream more than once before it got
-fixed.
+Please use CVE-2012-1565 for this issue
 
-> It is possible for an attacker to replace the lock files with
-> symlinks and have pkcsslotd (or others) fchmod the target of the
-> symlink to make it world-writable, create arbitrary files, etc.
+> 
+> Regards,
+> Luc ABRIC
+> IT Security Expert
+> 
+> 6 avenue du Vieil Etang - Bâtiment B
+> 78180 Montigny-le-Bretonneux
+> Phone: +33 (0)1 30 14 19 00
+> Fax:       +33 (0)1 30 14 19 09
+> Mobile: +33 (0)6 26 87 62 14
+> luc.abric@...ida.fr
+> 
+> www.oppida.fr
+> 
+> 
 
-There were following problems that I'm aware of:
-
-- /tmp/.pkapi_xpk - This was normally created by pcksslotd (running as
-  root).  Symlink attack on this did not allow corrupting / truncating
-  files, but allowed creating new empty files at arbitrary locations.
-
-- /tmp/.pkcs11spinloc - I believe this is created by opencryptoki
-  clients.  In addition to the above, there's a chmod to make this file
-  world writable.  This may get created by non-root user, but chmod
-  may still run later with root privileges later.
-
-Those files do not seem to get removed as part of the normal operation,
-so replacing them with symlinks if they already exist is limited
-by /tmp stickiness.  Attacker does not need to be pkcs11 group member.
-
-> In response, upstream released 2.4.1[1] which fixed the fchmod issue
-> (commits [3] and [4]).
-
-2.4.1 moved those files that became /var/lock/LCK..opencryptoki
-and /var/lock/LCK..opencryptoki_stdll respectively.
-
-> Niels discovered that 2.4.1 still allowed arbitrary files creation by
-> following symlinks.
-
-Would you mind clarifying?  As files were moved to /var/lock, this
-should require attacker to have permissions to write to that directory.
-
-> Upstream then released 2.4.2[2], fixing this last issue (commits [5]
-> and [6]).
-
-What do 2.4.2 actually fix?  I think the move of /tmp/.pkcs11spinloc
-to /var/lock/LCK..opencryptoki_stdll probably created a regression in
-use cases where opencryptoki clients run without root privileges (or
-better to say without privileges to create the file in /var/lock/).
-
-Another move to pkcs11 group writable /var/lock/opencryptoki seems to
-resolve that, but it also negates benefits of the 2.4.1 security fix.
-Based on the rather quick look at the patches you pointed out, 2.4.2
-seems to have the same problems pre-2.4.1 had, with following changed
-conditions:
-- attacker now needs to be pkcs11 group member
-- lack of directory stickiness should make it easier to execute the
-  attack
-
-> Even with the fixes in 2.4.2, members of the pkcs11 group could still
-> use symlink attacks. However, as per upstream's documentation,
-> members of such group are expected to be trusted[7].
-
-Correct, any pkcs11 group member can easily compromise any other user
-using opencryptoki library see:
-https://bugzilla.redhat.com/show_bug.cgi?id=730635
-
-Upstream does not see that as an issue though...
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Kurt Seifried Red Hat Security Response Team (SRT)
