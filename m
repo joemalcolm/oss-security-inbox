@@ -1,30 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/2
-Message-ID: <1326790265.4782.70.camel@scapa>
-Date: Tue, 17 Jan 2012 09:51:05 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/11
+Message-ID: <4F677CAE.3060506@redhat.com>
+Date: Mon, 19 Mar 2012 12:36:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: gpw password generator giving short password at low rate
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: Joomla! Security News 2012-03-16
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
+On 03/16/2012 06:12 AM, Henri Salo wrote:
+> Can we assign CVE-identifiers for these two vulnerabilities?
+> 
+> 20120304 - Core - Password Change http://developer.joomla.org/security/news/394-20120304-core-password-change.html
 
-we were pointed at a bug in gpw (a password generator), which makes it
-generate shorter password than required at a rate of ~20 over 1 million.
-The bug is at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651510
-(so already public) and I'm wondering if that deserves a CVE:
+Please use CVE-2012-1562 for this issue (20120304)
 
-* gpw seems unmaintained (upstream and in Debian since around 2006)
-* I'm not sure people even use it
-* people using it interactively will notice the password has the wrong
-size
+> 20120303 - Core - Privilege Escalation http://developer.joomla.org/security/news/395-20120303-core-privilege-escalation.html
 
-But as it may be used in a script, then it might still be a real issue.
+Please use CVE-2012-1563 for this issue (20120303)
 
-What do people think?
 
-Regards,
+> With Joomla you are never safe!
+> 
+> - Henri Salo
+> 
+> ----- Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
+> 
+> Date: Fri, 16 Mar 2012 12:09:18 +0000
+> From: Joomla! Developer Network - Security News <no_reply@...mla.org>
+> To: henri@...v.fi
+> Subject: Joomla! Security News
+> 
+> Joomla! Developer Network - Security News
+> 
+> ///////////////////////////////////////////
+> [20120304] - Core - Password Change
+> 
+> Posted: 16 Mar 2012 12:21 AM PDT
+> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/JukET1dgfDM/394-20120304-core-password-change.html?utm_source=feedburner&utm_medium=email
+> 
+> 
+> Project: Joomla!
+> SubProject: All
+>  Severity: High
+> Versions: 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x releases
+> Exploit type: Password Change
+> Reported Date: 2012-March-8
+> Fixed Date: 2012-March-15
+> 
+> Description
+> 
+> Insufficient randomness leads to password reset vulnerability.
+> Affected Installs
+> 
+> Joomla! versions 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x versions
+> Solution
+> 
+> Upgrade to version 2.5.3
+> 
+> Reported by George Argyros and Aggelos Kiayias
+> Contact
+> 
+> The JSST at the Joomla! Security Center.
+> 
+> 
+> 
+> ///////////////////////////////////////////
+> [20120303] - Core - Privilege Escalation
+> 
+> Posted: 15 Mar 2012 05:00 AM PDT
+> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/n5w8L96w-LM/395-20120303-core-privilege-escalation.html?utm_source=feedburner&utm_medium=email
+> 
+> 
+> Project: Joomla!
+> SubProject: All
+>  Severity: High
+> Versions: 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x releases
+> Exploit type: Privilege Escalation
+> Reported Date: 2012-March-12
+> Fixed Date: 2012-March-15
+> 
+> Description
+> 
+> Programming error allows privilege escalation in some cases.
+> Affected Installs
+> 
+> Joomla! versions 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x versions
+> Solution
+> 
+> Upgrade to version 2.5.3
+> 
+> Reported by Jeff Channel
+> Contact
+> 
+> The JSST at the Joomla! Security Center.
+> 
+
+
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Kurt Seifried Red Hat Security Response Team (SRT)
