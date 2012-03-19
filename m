@@ -1,58 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/13
-Message-ID: <1326962081.4782.100.camel@scapa>
-Date: Thu, 19 Jan 2012 09:34:41 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: security@...dpress.org
-Subject: Re: CVE-request: WordPress 3.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/6
+Message-ID: <4680B31DCCC3B6428FB4E85ED9D540D00323B3@SRVEXCH.oppida.fr>
+Date: Mon, 19 Mar 2012 09:06:21 +0000
+From: Luc ABRIC <luc.abric@...ida.fr>
+To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
+CC: Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, Valérian PERRET <valerian.perret@...ida.fr>, "'jkn@...no'" <jkn@...no>
+Subject: CVE request: eZ Publish: insecure direct object reference
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2012-01-18 at 15:22 -0700, Kurt Seifried wrote:
-> On 01/15/2012 07:39 AM, Henri Salo wrote:
-> > On Sun, Jan 15, 2012 at 03:32:48PM +0100, Hanno Böck wrote:
-> >>> 1) Certain unspecified input is not properly sanitised before being
-> >>> returned to the user. This can be exploited to execute arbitrary HTML
-> >>> and script code in a user's browser session in context of an affected
-> >>> site. http://osvdb.org/show/osvdb/72141
-> >> I think this is CVE-2012-0287:
-> >> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-0287
-> > I think you are correct. I do not know why I did not see this in allitems.txt.gz. Can't find other CVEs with that URL. There seems to be three issues. I am refering to http://wordpress.org/news/2011/04/wordpress-3-1-1/:
-> >
-> > "Version 3.1.1 also addresses three security issues discovered by WordPress core developers Jon Cave and Peter Westwood, of our security team. The first hardens CSRF prevention in the media uploader. The second avoids a PHP crash in certain environments when handling devilishly devised links in comments, and the third addresses an XSS flaw."
-> >
-> > ======================================================
-> > Name: CVE-2012-0287
-> > Status: Candidate
-> > URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-0287
-> > Phase: Assigned (20120103)
-> > Category: 
-> > Reference: MISC:http://oldmanlab.blogspot.com/2012/01/wordpress-33-xss-vulnerability.html
-> > Reference: CONFIRM:https://wordpress.org/news/2012/01/wordpress-3-3-1/
-> >
-> > Cross-site scripting (XSS) vulnerability in wp-comments-post.php in
-> > WordPress 3.3.x before 3.3.1, when Internet Explorer is used, allows
-> > remote attackers to inject arbitrary web script or HTML via the query
-> > string in a POST operation that is not properly handled by the
-> > "Duplicate comment detected" feature.
-> >
-> >
-> > Current Votes:
-> > None (candidate not yet proposed)
-> > ======================================================
-> >
-> > - Henri Salo
-> I don't feel assigning a CVE for these issues would be prudent until
-> some details are released, I think the 3.1.1 and 3.1.3 stuff is separate
-> but I can't be sure. Can someone from WordPress comment?
-> 
+Hi,
 
-I was asked to try security@...dpress.org so I'm adding them to CC: just
-in case. (to security@...dpress.org, the thread beginning is at
-http://openwall.com/lists/oss-security/2012/01/15/3)
+My initial CVE ID request was dropped because it was missing some details. Here comes a re-submission.
+
+After posting to oss-security I was asked a few questions by Kurt Seifried from Redhat SRT while the vendor was contacted by Secunia asking for pretty much the same informations. Secunia then decided it wasn't their role to handle this vulnerability.
+I don't know if that's part of the process but I feel like you should know to avoid any duplicated work.
+
+1) Email address of requester
+yann.michard@...ida.fr, luc.abric@...ida.fr & jkn@...no.
+Yann MICHARD discovered the vulnerability, so all the credits goes to him.
+
+2) Software name and optionally vendor name
+Vendor: Ez
+Product name: Ez Publish
+Editions: both Enterprise & Community
+
+3) At least one of (to determine is this a security issue):
+  1. Type of vulnerability
+OWASP A4: Insecure direct object reference
+
+  2. Exploitation vectors
+Access to the vulnerable website (no need for any credentials)
+
+  3. Attack outcome
+A browser is enough to execute the attack.
+
+4) For Open Source at least one of:
+  1. Link to vulnerable source code or fix Not available yet.
+
+  2. Link to source code change log
+Not available yet.
+
+  3. Link to security advisory
+Not available yet.
+
+  4. Link to bug entry
+http://issues.ez.no/19238
+The vendor does not want to release more details until a fix is pushed to the clients
+
+  5. Request comes from project member (a.k.a. "trust me, it's a problem") Jostein Knudsen <jkn@...no> from Ez can confirm the vulnerability.
+
+5) Affected version(s) (3.2.4, 3.x, current version, all current releases, something) The whole 4.x serie it seems (4.1 to 4.6 from the bug entry).
+
+6) Whether or not this has been previously requested (i.e. on OSS-Sec or to cve-assign) Well yeah but it seems that the request didn't have enough information.
+
+7) Is this an Open Source or commercial software request Both, the affected software has 2 editions, one open-source, one commercial.
+
+8) Is this an embargoed issue (if yes and commercial: send to cve-assign, if yes and open source: send to vs-sec?) Not really sure what you mean by embargoed.
+The French government asked us not do disclose any details until a fix is available AND installed on their systems because it affects some high profile websites.
+We didn't plan on releasing any details before the fix anyway.
+
+9) IF multiple issues are listed please list affected versions for each issue and/or who reported them (so we can determine CVE split/merge).
+It's the first issue we're publishing regarding this application.
+
 
 Regards,
--- 
-Yves-Alexis
+Luc ABRIC
+IT Security Expert
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+6 avenue du Vieil Etang - Bâtiment B
+78180 Montigny-le-Bretonneux
+Phone: +33 (0)1 30 14 19 00
+Fax:       +33 (0)1 30 14 19 09
+Mobile: +33 (0)6 26 87 62 14
+luc.abric@...ida.fr
+
+www.oppida.fr
+
+
