@@ -1,42 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/2
-Message-ID: <20120227012501.GA18672@openwall.com>
-Date: Mon, 27 Feb 2012 05:25:01 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/5
+Message-ID: <4F674D8A.80900@redhat.com>
+Date: Mon, 19 Mar 2012 16:15:22 +0100
+From: Stefan Cornelius <scorneli@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+Subject: CVE-2012-1185 / CVE-2012-1186 assignment notification - incomplete ImageMagick fixes for CVE-2012-0247 / CVE-2012-0248
 Content-Type: text/plain; charset=utf-8
 
-Eugene, all -
+Hi,
 
-On Mon, Feb 27, 2012 at 09:19:59AM +0800, Eugene Teo wrote:
-> > this some months ago. I've also tried to contact the various CERT
-> > but they refused to handle the case or did not reply to my
-> > requests.
-> 
-> In future, if you tried to get help but you couldn't, feel free to
-> send us an email at linux-distros vs.openwall.org.
+The original fixes for the ImageMagick issues CVE-2012-0247 and
+CVE-2012-0248 are incomplete.
 
-When referring people to the distros and linux-distros list, please
-always refer them to the wiki page:
+The original fix for CVE-2012-0247 failed to check for the possibility
+of an integer overflow when computing the sum of "number_bytes" and
+"offset". This resulted in a wrap around into a value smaller than
+"length", making original CVE-2012-0247 introduced "length" check still
+to be possible to bypass, leading to memory corruption.
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros
+We have assigned CVE-2012-1185 identifier for the incomplete fix of the
+CVE-2012-0247 issue.
 
-Specifically, we need to ensure that people read this first:
+Relevant upstream patches:
+[1]
+http://trac.imagemagick.org/changeset/6998/ImageMagick/branches/ImageMagick-6.7.5/magick/profile.c
+[2]
+http://trac.imagemagick.org/changeset/6998/ImageMagick/branches/ImageMagick-6.7.5/magick/property.c
 
-"Please note that the maximum acceptable embargo period for issues
-disclosed to these lists is 14 to 19 days, with embargoes longer than 14
-days (up to 19) allowed in case the issue is reported on a Thursday or a
-Friday and the proposed coordinated disclosure date is thus adjusted to
-fall on a Monday or a Tuesday.  Please do not ask for a longer embargo.
-In fact, embargo periods shorter than 7 days are preferable."
+Red Hat Bugzilla bug:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-1185
 
-It appears that in this case this would actually be a problem - that is,
-based on your suggestion (if you somehow made it to Eric much earlier),
-Eric would post to the list e.g. in January and ask for the issue to be
-kept private until March - thereby violating the list's maximum embargo
-period.
 
-Thanks,
+The original fix for CVE-2012-0248 failed to correct the denial of
+service condition in "profile.c" source code part, too. This still
+allowed the specially-crafted image file, when processed for example by
+the "convert" executable, to cause original CVE-2012-0248 problem
+(denial of service).
 
-Alexander
+We have assigned CVE-2012-1186 identifier for the incomplete fix of the
+CVE-2012-0248 issue.
+
+Relevant upstream patch (same as [1] above):
+[4]
+http://trac.imagemagick.org/changeset/6998/ImageMagick/branches/ImageMagick-6.7.5/magick/profile.c
+
+
+Red Hat Bugzilla entry:
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-1186
+
+Thanks and kind regards,
+-- 
+Stefan Cornelius / Red Hat Security Response Team
