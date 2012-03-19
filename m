@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/08/5
-Message-ID: <20120508110310.1862c8db@hsalkjdhsa.lan>
-Date: Tue, 8 May 2012 11:03:10 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/1
+Message-ID: <4F668F85.8080903@redhat.com>
+Date: Mon, 19 Mar 2012 09:44:37 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Piwik before 1.7
+CC: Mark Stanislav <mark.stanislav@...il.com>, "Adam D. Barratt" <adam@...m-barratt.org.uk>, Kurt Seifried <kseifried@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Requests
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 03/17/2012 12:11 AM, Mark Stanislav wrote:
+> All points being made are very much valid and I certainly understand how
+> contextually oss-sec may be used to allocation requests under different
+> circumstances.
+> 
+> So here's my situation, I'm up for suggestions (of which, "wait longer", is
+> perfectly viable!)...
+> 
+> 1) March 1st, I sent 2 of these CVEs over to Steve Christy at MITRE who had
+> previously allocated 9 prior CVEs in a day or two generally
+[...]
 
-http://piwik.org/blog/2012/02/7775/
+I think the problem is simple.
 
-Information is very rare:
-"We would like to thank the following security researchers for their
-responsible disclosure of XSS & click-jacking issues: Piotr Duszynski,
-Sergey Markov, Mauro Gentile."
+Mark, if the patch is released, that means it's public even if the
+details are not publicly discussed. Provide the patch information (hash,
+link to the patch, etc), and we will assign CVE names. No one will be
+confused if there are duplicate names assigned to them.
 
-I'd suggest assigning 3 CVEs with subjects like
+If you are not comfortable talking about these issues in public, sure,
+use http://oss-security.openwall.org/wiki/mailing-lists/distros. And we
+will follow-up from there.
 
-"Unknown XSS or clickjacking issue identified by Piotr Duszynski"
-"Unknown XSS or clickjacking issue identified by Sergey Markov"
-"Unknown XSS or clickjacking issue identified by Mauro Gentile"
+Keep Steve and/or MITRE cc'ed.
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+No one wants to make things difficult for you. If everyone does their
+part, names will be allocated very quickly.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Thanks, Eugene
+--
+Eugene Teo / Red Hat Security Response Team
