@@ -1,39 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/14/1
-Message-ID: <4F110786.50108@redhat.com>
-Date: Fri, 13 Jan 2012 21:41:42 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/9
+Message-ID: <4F67794E.20001@redhat.com>
+Date: Mon, 19 Mar 2012 12:22:06 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-Subject: Re: CVE affected for PHP 5.3.9 ?
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Drupal Finder SA-CONTRIB-2012-017
 Content-Type: text/plain; charset=utf-8
 
-On 01/13/2012 03:30 PM, Nicolas Grégoire wrote:
-> Le vendredi 13 janvier 2012 à 13:50 -0700, Kurt Seifried a écrit :
->> Again I'm still not clear on what/how a security boundary is being
->> crossed. How does this elevate privileges or give you remote access
->> that you wouldn't already if you can upload arbitrary PHP scripts?
-> XSLT 1.0, as defined by the W3C, doesn't allow to save the result of a
-> XSL transformation to the file system. This feature is an extension
-> provided by libxslt itself. As PHP 5 uses libxslt as its XSLT engine,
-> PHP applications parsing external/untrusted XSLT expose this feature.
->
-> An attacker can provide specially crafted XSLT code which will create an
-> arbitrary file with chosen content ("0wn3d.php" in my example). Then,
-> this PHP file is requested by the attacker and executed.
->
-> Somewhat similar to an undocumented file upload feature ...
-Right, but in this case to upload the file you need to put a custom php
-script on the server, so no additional privilege or access is gained. Is
-it common for these scripts to allow a remote user to specify the output
-location (this seems unlikely to me)?
-> Regards,
-> Nicolas
->
->
+On 03/16/2012 01:38 AM, Henri Salo wrote:
+> Can we assign CVE-identifier for this vulnerability http://drupal.org/node/1432970 (SA-CONTRIB-2012-017)?
+
+Please use CVE-2012-1561 for this issue.
+
+> Description
+> Finder is a Drupal module that allows users to create faceted search forms. The module's autocomplete, checkbox, and radio button functionalities previously did not sanitize the output of fields and raw database values.
+> 
+> In addition, users with the "administer finder" permission were able to execute arbitrary code through a PHP import interface; specific PHP execution permissions were not required.Updated: This issue affected only the 7.x branch of code. The 6.x branch used the permission "administer finder PHP settings" which is sufficiently clear that it allows execution of PHP code.
+> 
+> Versions affected
+> Finder 6.x-1.x prior to 6.x-1.26
+> Finder 7.x-1.x versions (all)
+> Finder 7.x-2.x versions prior to 7.x-2.0-alpha8
+> Drupal core is not affected. If you do not use the contributed Finder module, there is nothing you need to do.
+> 
+> Project: Finder (third-party module)
+> Date: 2012-February-08
+> Security risk: Moderately critical
+> Exploitable from: Remote
+> Vulnerability: Cross Site Scripting, Arbitrary PHP code execution, Multiple vulnerabilities
+> 
+> http://osvdb.org/show/osvdb/79014
+> http://osvdb.org/show/osvdb/79015
+> http://secunia.com/advisories/47943/
+> http://secunia.com/advisories/47915/
+> http://secunia.com/advisories/47941/
+> 
+> - Henri Salo
 
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Kurt Seifried Red Hat Security Response Team (SRT)
