@@ -1,49 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/1
-Message-ID: <4F598EB2.9040504@redhat.com>
-Date: Thu, 08 Mar 2012 22:01:38 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/14
+Message-ID: <4F678A44.5090808@redhat.com>
+Date: Mon, 19 Mar 2012 13:34:28 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: expat 2.1.0beta fixes 5 Denial of Service attacks, CVE's/details inside
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, root@...uxmint.com
+Subject: LinuxMint - temp file creation vulns in mintNanny and mintUpdate
 Content-Type: text/plain; charset=utf-8
 
-So expat is releasing an update (2.0.1 -> 2.1.0) which is the first one
-in a while (which is a testament to the stability and reliability of
-expat). If you want to help Karl Waclawek (karl@...lawek.net), the
-author of expat out (and by extension pretty much everyone using Open
-Source that parses xml using expat which is a lot of stuff), please test
-the 2.1.0beta and send him feedback (works, doesn't work, etc.). Two of
-the issues were already assigned CVE's back in 2009, the rest got 2012
-because that where we are now.
+>mscherer@...hat.com reported these to me:
+>
+>Two issues in LinuxMint:
+>
+>First a temporary file creation flaw in mintNanny:
+>
+>https://github.com/linuxmint/mintnanny/blob/master/usr/lib/linuxmint/mintNanny/mintNanny.py#L70
 
-Changes in Expat 2.1.0beta:
+Please use CVE-2012-1566 for this issue
 
-#2895533: CVE-2012-1147 - Resource leak in readfilemap.c.
-http://mail.python.org/pipermail/expat-bugs/2009-November/002858.html
-http://sourceforge.net/tracker/?func=detail&aid=2895533&group_id=10127&atid=110127
-https://bugzilla.redhat.com/show_bug.cgi?id=801634
+>Secondly a temporary file creation flaw in mintUpdate:
+>
+>https://github.com/linuxmint/mintupdate/blob/master/usr/lib/linuxmint/mintUpdate/mintUpdate.py#L1444
 
-#1990430: CVE-2009-3720 - Parser crash with specially formatted UTF-8
-sequences.
-http://mail.python.org/pipermail/expat-bugs/2009-January/002781.html
-http://sourceforge.net/tracker/?func=detail&atid=110127&aid=1990430&group_id=10127
-https://bugzilla.redhat.com/show_bug.cgi?id=531697
+Please use CVE-2012-1567 for this issue.
 
-#2894085: CVE-2009-3560 - Buffer over-read and crash in big2_toUtf8().
-http://mail.python.org/pipermail/expat-bugs/2009-November/002846.html
-http://sourceforge.net/tracker/?func=detail&atid=110127&aid=2894085&group_id=10127
-https://bugzilla.redhat.com/show_bug.cgi?id=533174
+Also a note on fixing these issues:
 
-#2958794: CVE-2012-1148 - Memory leak in poolGrow.
-http://mail.python.org/pipermail/expat-bugs/2010-February/002870.html
-http://sourceforge.net/tracker/?func=detail&atid=110127&aid=2958794&group_id=10127
-https://bugzilla.redhat.com/show_bug.cgi?id=801648
+Python
 
-#3496608: CVE-2012-0876 - Hash DOS attack.
-http://blog.gmane.org/gmane.text.xml.expat.bugs/month=20120301
-http://sourceforge.net/tracker/?func=detail&atid=110127&aid=3496608&group_id=10127
-https://bugzilla.redhat.com/show_bug.cgi?id=786617
+Simply use “mkstemp” from the “tempfile” module:
 
+http://docs.python.org/library/tempfile.html#tempfile.mkstemp
+
+I tried to find a LinuxMint security contact, nothing on the website
+(e.g. http://www.linuxmint.com/teams.php), someone suggested
+root@...uxmint.com, here's hoping they see it.
 
 -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
