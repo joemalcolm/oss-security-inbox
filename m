@@ -1,28 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/3
-Message-ID: <20120306073122.GA12833@foo.fgeek.fi>
-Date: Tue, 6 Mar 2012 09:31:22 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/12
+Message-ID: <4F68BC00.9010301@redhat.com>
+Date: Tue, 20 Mar 2012 11:18:56 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: Kish Guest Posting Plugin for WordPress File Upload Remote PHP Code Execution
+CC: Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: Re: Bugs in "file" program VU#621745
 Content-Type: text/plain; charset=utf-8
 
-Can we assign CVE-identifier for this security vulnerability, thanks.
+On 03/20/2012 11:11 AM, Jan Lieskovsky wrote:
+> 
+> Hi Kurt, vendors,
+> 
+>> Date: Wed, 29 Feb 2012 16:54:49 -0500 (EST)
+>> From: Kurt Seifried <kseifrie@...hat.com>
+>> To: oss-security@...ts.openwall.com
+>> Cc: Florian Weimer <fw@...eb.enyo.de>
+>> Subject: Re: Bugs in "file" program VU#621745
+>>
+>> On 02/29/2012 10:52 AM, Florian Weimer wrote:
+>>> * Kurt Seifried:
+>>>
+>>>>> We recently pointed the CERT BFF at the ubiquitous "file" command
+>>>>> and found a few bugs.  While we've not proven the bugs to be
+>>>>> exploitable, we've also not ruled out the possibility that they
+>>>>> could be.
+>>>>>
+>>>>> Fixes were committed on Feb 16, 2012:
+>>>>> https://github.com/glensc/file/commits/master
+>>>
+>>>> If any of these are security issues please let me know and I will
+>>>> assign CVE #'s.
+>>>
+>>> file also provides a library, libmagic.  This could lead to crashes of
+>>> server processes which use libmagic.  Debian will likely release a fix
+>>> as a security update.
+>>
+>> Fair enough but I'd like some details before issuing CVE's, like what
+>> are the actual security issues that have been fixed?
+> 
+> Based on further investigation, I am able to tell the issues here
+> are out-of heap-based buffer reads and / or invalid pointer dereferences
+> by processing various parts of CDF (Composite Document Files) header.
+> 
+> Out-of heap-based buffer reads:
+> i)   either by attempt to access field at invalid index,
+> ii)  or by attempt to access field out of allocated array bounds.
+> 
+> Invalid pointer dereferences:
+> iii) by attempt to access pointer value, being modified in
+>      a for loop cycle.
+> 
+> Anyway, the file executable is terminated in each case yet by attempt
+> to read the location, thus these seem to be able to cause just file
+> executable crashes.
+> 
+> Relevant Red Hat Bugzilla record is here:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=805197
+> 
+> Though issues having lower impact, would it be possible to allocate
+> one CVE identifier to these? (one should be enough, since the reason
+> is always the same and the underlying code is parsing CDF file header).
+> 
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-http://osvdb.org/show/osvdb/78479
-http://www.securityfocus.com/bid/51638
-http://secunia.com/advisories/47688/
-http://www.exploit-db.com/exploits/18412/
 
-Plugin is disabled in WordPress (doesn't show up in http://wordpress.org/extend/plugins/), but SVN can be found from here: http://plugins.svn.wordpress.org/kish-guest-posting/trunk/
+Please use CVE-2012-1571 for these issues.
 
-File http://plugins.svn.wordpress.org/kish-guest-posting/trunk/readme.txt says:
-
-"""
-= 1.2 =
-security update for Uploadify Script
-"""
-
-But I haven't tested (yet) if that is valid fix for the vulnerability.
-
-- Henri Salo
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
