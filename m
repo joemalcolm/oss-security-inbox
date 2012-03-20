@@ -1,35 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/7
-Message-ID: <20121106144820.1d6ed02c@redhat.com>
-Date: Tue, 6 Nov 2012 14:48:20 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/8
+Message-ID: <4F68B633.100@redhat.com>
+Date: Tue, 20 Mar 2012 10:54:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros@...openwall.org membership
+CC: Stefan Cornelius <scorneli@...hat.com>
+Subject: Re: CVE request: libtasn1 "asn1_get_length_der()" DER decoding issue
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 06 Nov 2012 05:10:33 -0800 akuster wrote:
-
-> > An explicit signed ack/nack from the existing Montavista subscriber
-> > sounds reasonable here, at least to confirm Premchand is really a
-> > member of their security team.
+On 03/20/2012 06:40 AM, Stefan Cornelius wrote:
+> Hi,
 > 
-> What do you mean as signed?
+> libtasn1 version 2.12 was released fixing the following issue:
+> 
+>   - Corrected DER decoding issue (reported by Matthew Hall).
+>     Added self check to detect the problem, see tests/Test_overflow.c.
+>     This problem can lead to at least remotely triggered crashes, see
+>     further analysis on the libtasn1 mailing list.
+> 
+> Further issue details from Simon Josefsson [1]:
+> 
+> I want to mention that there were no security problem in the
+> asn1_get_length_der function.  It was working properly and as documented
+> before.  The security problem was the callers not checking that the
+> returned values were reasonable, i.e., that the output length was less
+> than or equal to the total length of the buffer.  However, fixing all
+> callers of this function would be a huge amount of work.  Instead, we
+> made asn1_get_length_der return an error code when the situation
+> occured, to protect callers.  This fix could be the wrong thing if some
+> code out there calls the function with a der_len parameter that is
+> smaller than the entire DER structure length.  However, we are hoping
+> that is not in any significant use, and that overall security will be
+> improved by having the function sanity check its output rather than
+> letting the caller do that.  This was a judgement call.
+> 
+> [1] http://thread.gmane.org/gmane.comp.gnu.libtasn1.general/54
+> 
+> It appears like GnuTLS is affected as well (but probably does not need a
+> separate CVE at this point):
+> http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5952/
+> http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5957/
+> 
+> -- References --
+> 
+> Release announcement:
+> http://article.gmane.org/gmane.comp.gnu.libtasn1.general/53
+> 
+> Small analysis + patch:
+> http://thread.gmane.org/gmane.comp.gnu.libtasn1.general/54
+> 
+> Red Hat bug:
+> https://bugzilla.redhat.com/show_bug.cgi?id=804920
+> 
+> Thanks and kind regards,
 
-Signed as GPG/PGP signed.  When you were subscribed to the list, you
-had provided your GPG key (id).  If you sign your reply with that key,
-list administrator can verify that it is really form current list
-member, vouching for another person representing the same distro or
-organization.
-
-A good example of similar past communication is this thread:
-http://thread.gmane.org/gmane.comp.security.oss.general/6835
-
-As you can see there, a request may come from a person that is involved
-with a distribution, but is not expected to be a list member as a
-security representative of the distribution.
-
-It's really this kind of feedback that can help list administrator
-here, and signing makes it verifiable.
+Please use CVE-2012-1569 for this issue.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Kurt Seifried Red Hat Security Response Team (SRT)
