@@ -1,35 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/4
-Message-ID: <1343827511.32192.92.camel@mdlinux>
-Date: Wed, 01 Aug 2012 09:25:11 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: Petr Matousek <pmatouse@...hat.com>
-Cc: oss-security@...ts.openwall.com, coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: NVidia Linux driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/5
+Message-ID: <CAFJ0LnEDCqhSerYm416-Yf9uSOsGG67mXzf+W=no2oEiMbqmAA@mail.gmail.com>
+Date: Tue, 20 Mar 2012 09:01:39 -0700
+From: Nick Kralevich <nnk@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- kernel: execshield: predictable ascii armour base address
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2012-08-01 at 15:13 +0200, Petr Matousek wrote:
-> Hi Marc,
-> 
-> On Wed, Aug 01, 2012 at 08:58:16AM -0400, Marc Deslauriers wrote:
-> > Hello,
-> > 
-> > Could a CVE please be assigned to the following issue:
-> > 
-> > The binary NVidia Linux driver allows local users to access arbitrary
-> > memory locations by leveraging GPU device-node read/write privileges,
-> > and escalate privileges to root. Possibly an incomplete fix for
-> > CVE-2012-0946.
-> > 
-> > See:
-> > 
-> > http://seclists.org/fulldisclosure/2012/Aug/4
-> 
-> did you test that the exploit works on NVIDIA driver that should contain
-> the CVE-2012-0946 fix?
+Can someone explain to me why this is worthy of a CVE? I can see this as a
+bug of course.  But a "vulnerability"?
 
-Yes, I have successfully tested it on 295.40.
+This bug, by itself, does not cause a vulnerability. It just makes
+vulnerabilities easier to exploit. I'm not sure this is worthy of a CVE
+unless we're willing to assign CVEs to all fixed address allocations.
 
-Marc.
+-- Nick
 
+On Tue, Mar 20, 2012 at 6:10 AM, Eugene Teo <eugene@...hat.com> wrote:
+
+> On 03/20/2012 06:20 PM, Petr Matousek wrote:
+> > When running a binary with a lot of shared libraries, predictable base
+> > address is used for one of the loaded libraries.
+> >
+> > This flaw could be used to bypass ASLR.
+> >
+> > References:
+> >
+> http://scarybeastsecurity.blogspot.com/2012/03/some-random-observations-on-linux-aslr.html
+> > https://bugzilla.redhat.com/show_bug.cgi?id=804947
+>
+> Use CVE-2012-1568.
+>
+> Eugene
+>
+
+
+
+-- 
+Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
 
