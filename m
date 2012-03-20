@@ -1,46 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/24/2
-Message-ID: <20121024085501.GM13184@symphytum.spacehopper.org>
-Date: Wed, 24 Oct 2012 09:55:01 +0100
-From: Stuart Henderson <stu@...cehopper.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/6
+Message-ID: <20120320162232.GA2710@suse.de>
+Date: Tue, 20 Mar 2012 17:22:32 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: XSS in piwik before 1.9
+Subject: Re: CVE request -- kernel: execshield: predictable ascii armour base address
 Content-Type: text/plain; charset=utf-8
 
-On 2012/10/24 11:12, Matthieu Aubry wrote:
-> We disagree that giving out exploits and more info about the hacks, will
-> help security and our users : it will NOT.
+Hi,
 
-Exploits, I agree. But more information will let people make a decision
-as to whether they're vulnerable, and how much pain it's worth going
-through to either upgrade to a fixed version or backport the fix.
+There are also 4 seperate issues in Chris blogpost.
 
-> Supporting researchers to find security bugs in open source projects,
-> however has helped us a lot: http://piwik.org/security/
 
-So this page has a link, "You can see the previous Security issues in Piwik"
-pointing at http://piwik.org/blog/category/security/. The last entry on here
-referring to an issue with piwik itself is from June 2011, but 4 releases
-since then have included security fixes, several of them rated "critical"
-on the changelog page. I wonder if it might be better to just refer to
-the changelog if the separate page can't be kept updated?
+CVEs are sometimes assigned if security preconditions are not met,
+or are too weak. (like if you would have a password hashing algorithm
+without salt ... while it works per-se, it is too weak)
 
-Unfortunately many of the releases with security fixes coincide with
-warnings like "This new version contains database schema changes so
-please be careful when running the Update script", anything more than
-complicated than "update the installed files" is going to restrict
-the number of users who keep up-to-date with security fixes.
 
-In particular some OS distributions package piwik; if they would like
-to fix the problems in a stable release (where it's not possible to
-force schema changes etc), with the current process each different
-OS packaging piwik would need to isolate the diff themselves and
-hope they include all needed parts,
+Ciao, Marcus
 
-As a packager I don't necessarily think an upstream project needs to
-continually maintain security fixes for old releases, but at least
-posting information about the actual bugs fixed with a reference
-to the commit/s would make life a lot easier for the people who
-help many of your users stay on top of security fixes.
+On Tue, Mar 20, 2012 at 09:01:39AM -0700, Nick Kralevich wrote:
+> Can someone explain to me why this is worthy of a CVE? I can see this as a
+> bug of course.  But a "vulnerability"?
+> 
+> This bug, by itself, does not cause a vulnerability. It just makes
+> vulnerabilities easier to exploit. I'm not sure this is worthy of a CVE
+> unless we're willing to assign CVEs to all fixed address allocations.
+> 
+> -- Nick
+> 
+> On Tue, Mar 20, 2012 at 6:10 AM, Eugene Teo <eugene@...hat.com> wrote:
+> 
+> > On 03/20/2012 06:20 PM, Petr Matousek wrote:
+> > > When running a binary with a lot of shared libraries, predictable base
+> > > address is used for one of the loaded libraries.
+> > >
+> > > This flaw could be used to bypass ASLR.
+> > >
+> > > References:
+> > >
+> > http://scarybeastsecurity.blogspot.com/2012/03/some-random-observations-on-linux-aslr.html
+> > > https://bugzilla.redhat.com/show_bug.cgi?id=804947
+> >
+> > Use CVE-2012-1568.
+> >
+> > Eugene
+> >
+> 
+> 
+> 
+> -- 
+> Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
 
+-- 
+Working, but not speaking, for the following german company:
+SUSE LINUX Products GmbH, HRB 16746 (AG Nuernberg)
+Geschaeftsfuehrer: Jeff Hawn, Jennifer Guild, Felix Imendoerffer
