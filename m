@@ -1,36 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/13/1
-Message-Id: <201202130957.37772.mweckbecker@suse.de>
-Date: Mon, 13 Feb 2012 09:57:37 +0100
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/11
+Message-ID: <4F68BA2B.30906@redhat.com>
+Date: Tue, 20 Mar 2012 18:11:07 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Marcus Meissner <meissner@...e.de>, Thomas Biege <thomas@...e.de>
-Subject: Subscribe to linux-distros?
+Subject: Re: Bugs in "file" program VU#621745
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
 
-I'm a member of the SUSE Security Team. I joined the team in August 2011. 
+Hi Kurt, vendors,
 
-Could you possibly subscribe me to the linux-distros list too, please? I'm 
-CC'ing Marcus Meissner (manager of the SUSE Security Team) and Thomas Biege
-(project manager security).
+> Date: Wed, 29 Feb 2012 16:54:49 -0500 (EST)
+> From: Kurt Seifried <kseifrie@...hat.com>
+> To: oss-security@...ts.openwall.com
+> Cc: Florian Weimer <fw@...eb.enyo.de>
+> Subject: Re: Bugs in "file" program VU#621745
+>
+> On 02/29/2012 10:52 AM, Florian Weimer wrote:
+>> * Kurt Seifried:
+>>
+>>>> We recently pointed the CERT BFF at the ubiquitous "file" command
+>>>> and found a few bugs.  While we've not proven the bugs to be
+>>>> exploitable, we've also not ruled out the possibility that they
+>>>> could be.
+>>>>
+>>>> Fixes were committed on Feb 16, 2012:
+>>>> https://github.com/glensc/file/commits/master
+>>
+>>> If any of these are security issues please let me know and I will
+>>> assign CVE #'s.
+>>
+>> file also provides a library, libmagic.  This could lead to crashes of
+>> server processes which use libmagic.  Debian will likely release a fix
+>> as a security update.
+>
+> Fair enough but I'd like some details before issuing CVE's, like what
+> are the actual security issues that have been fixed?
 
- pub   4096R/EA16D1D2 2011-07-27
-       Key fingerprint = D3B4 1D62 7C6A 2FFF B764  2BFA E4A4 9B9D EA16 D1D2
- uid                  Matthias Weckbecker <mweckbecker@...e.de>
- sub   4096R/1FBE90CA 2011-07-27
+Based on further investigation, I am able to tell the issues here
+are out-of heap-based buffer reads and / or invalid pointer dereferences
+by processing various parts of CDF (Composite Document Files) header.
 
-Let me know if you need anything else,
+Out-of heap-based buffer reads:
+i)   either by attempt to access field at invalid index,
+ii)  or by attempt to access field out of allocated array bounds.
 
-Thank you,
+Invalid pointer dereferences:
+iii) by attempt to access pointer value, being modified in
+      a for loop cycle.
 
-Matthias
+Anyway, the file executable is terminated in each case yet by attempt
+to read the location, thus these seem to be able to cause just file
+executable crashes.
 
--- 
-Matthias Weckbecker, Junior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Relevant Red Hat Bugzilla record is here:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=805197
 
-Download attachment "0xD3B41D627C6A2FFFB7642BFAE4A49B9DEA16D1D2.asc" of type "application/pgp-keys" (3118 bytes)
+Though issues having lower impact, would it be possible to allocate
+one CVE identifier to these? (one should be enough, since the reason
+is always the same and the underlying code is parsing CDF file header).
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>
+> --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+
