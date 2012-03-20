@@ -1,84 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/3
-Message-ID: <4F8639AD.9080601@redhat.com>
-Date: Wed, 11 Apr 2012 20:10:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Greg Knaddison <greg.knaddison@...uia.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE's for Drupal Contrib 2012 001 through 057 (67 new CVE assignments)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/14
+Message-ID: <CAAPiX_LE8A3sSQ7HHKFKv7DzygQpoFf=G3g=to-Z8Waj5wAotA@mail.gmail.com>
+Date: Tue, 20 Mar 2012 17:28:16 -0600
+From: Greg Knaddison <greg.knaddison@...uia.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, security@...pal.org
+Subject: Re: Re: [security] Drupal CORE and Drupal Contrib
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Thanks, Kurt. These are all updated now.
 
-On 04/11/2012 03:30 PM, Greg Knaddison wrote:
-> On Tue, Apr 10, 2012 at 1:08 PM, Kurt Seifried
-> <kseifried@...hat.com> wrote:
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->> 
->> On 04/10/2012 10:30 AM, Greg Knaddison wrote:
->>> "NO CVE","SA-CONTRIB-2012-050","CDN2 Video -
->>>> Unsupported","https://drupal.org/node/1506542"
->>>> 
->>> 
->>> While the backend service and module are no longer active,
->>> there are 70 sites using this module who are vulnerable to
->>> CSRF/XSS. What is the reason not to give it a CVE?
->> 
->> I was under the impression that if the backend was off the
->> plugin wouldn't work/expose the vuln, I could of course be wrong,
->> if so I'll assign a CVE.
-> 
-> I believe the XSS exists even without the backend. On review I'm
-> less confident the CSRF is in the module or the service.
+We have a new Drupal 7 core release planned for March 28th that will
+likely include some issues. I will mail you March 26th with
+descriptions of any issues that we plan to release on the 28th. This
+fact is public in our community but I don't expect you to have seen
+the news.
 
-I'll hold off on it then.
+Regards,
+Greg
 
->>> If you have any further suggestions on how we can improve the 
->>> content or formatting of the SAs please let me know.
->> 
->> Direct links to the code commits fixing them would be nice =)
-> 
-> We probably can't do this, though it is a fairly common request.
-> Our current policy is not to discuss the specific details for at
-> least 2 weeks and closer to 6 months if possible. Project usage
-> shows that most site builders don't upgrade very quickly.
+On Mon, Mar 19, 2012 at 12:33 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 03/16/2012 04:40 PM, Greg Knaddison wrote:
+>> Hi Kurt,
+>>
+>> We started considering associating CVEs with our Security Advisories
+>> (SAs) in September of 2011. At the time we discussed it with Josh
+>> Bressers, Jan Lieskovsky, Steven M. Christey and decided that it would
+>> only be practical to do it for Drupal core for now and we could
+>> considering doing it for contrib in the future. Since that discussion
+>> there has only been one SA for Drupal core which I think has the CVEs
+>> on it: SA-CORE-2012-001 - Drupal core multiple vulnerabilities -
+>> http://drupal.org/node/1425084
+>>
+>> Is there another SA for core that I'm not considering? Is there a
+>> better way to list the CVE numbers?
+>>
+>> There have been several SAs for contributed modules and we would
+>> gladly update them with CVEs. If you can send an email with a link to
+>> the SA and the CVE-id to use that would be great.
+>
+> Ok starting with core:
+>
+> http://drupal.org/node/1231510
+> SA-CORE-2011-003 - Drupal core - Access bypass
+> This was already assigned CVE-2011-2726
+>
+> http://drupal.org/node/1204582
+> SA-CORE-2011-002 - Drupal core - Access bypass
+> This was already assigned CVE-2011-2687
+>
+> http://drupal.org/node/1168756
+> SA-CORE-2011-001 - Drupal core - Multiple vulnerabilities
+> Can't find any CVE's, do they need to be assigned?
+>
+>
+>
+>
+> --
+> Kurt Seifried Red Hat Security Response Team (SRT)
 
-Hrmm yeah that's a tough one. Do you do any regression testing to make
-sure the new modules don't break things (if people know stuff is
-unlikely to break they are more likely to upgrade quickly, usually any
-ways).
 
-> I didn't see an answer to my question about asking for
-> CVE-identifier on Wednesdays after the SAs are released. I assumed
-> that would be helpful so I just started doing that.
 
-Perfect! I was just thinking, as long as the main project
-contributors/etc. (e.g. you guys in the case of Drupal) do the CVE
-requests in a regular and public way (e.g. to OSS-sec) than there is
-minimal chance of duplicates and other problems (e.g. someone else
-sending a request to Mitre directly or whatever).
-
-> Thanks! Greg
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPhjmsAAoJEBYNRVNeJnmTpL0P/RGx/4tA5HBHxY0tm8PWpXLM
-mljSw1jg9mRCI8hy1t5blVNsr/h7ZQJx5f7PqckKN83C47MozbM5gyNDrmGhwLOj
-jfprf1ySi0Wn8J5G5kK5YuC7PJBAwVwgvcCyxa/j8e5bO64U1vtV0QXODa2WKx2N
-94BodLWBEo5gWCrV7dlHMbz1Kipc2m07AcGCxmzSe05n+NKweIqChrirpzfbVl7P
-N55r3pGQBbr1Q//tqaUrnlYuln9pbfAmb1Vj6ZIQTlc3iwbn+4bBXj147EQKODEB
-6SWCDh+jFCQu8QNum3g9VNaN9esqN90LcWnajyllYve13Th73otLAnvng3VKMo/Z
-+953yNFVY/eJxIBRHNmvb2Hr1anlOjSZ2e5JY0WHOmUMYftivk+KAtdiyI97ZXnq
-7LDndcXlZgt38qS+AxrjjtzmzgezOxevHi2w1qEf7+K2QQaJetlgVnv+X66k9dSI
-lVj6eZXBM0vBpxDeE+pYyUgjvPYQm1p9rJf/cst0orm4mTGIWQBQAdEzArvA1opZ
-OSjEjR9HHHsnDkx7K37BVzBD4ifL+56EfMPOTqWzb2hJKrqmbzDRoS1P3SeeoEWf
-lImT+Vd/LbHKr17uUGfOZZMkO4PK/xM1TCc26yqOZ8260qa4yFUsOfzkQnlLP0ZX
-yph28yX2NTuR36fkZjKa
-=1B1L
------END PGP SIGNATURE-----
+-- 
+Director Security Services | +1-720-310-5623
+Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
