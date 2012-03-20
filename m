@@ -1,70 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/6
-Message-ID: <eab0a880-d46c-4a94-bfd6-c0f119fff26d@zimbra>
-Date: Fri, 06 Jul 2012 16:26:16 -0500 (CDT)
-From: "Matthew  Jordan" <mjordan@...ium.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: Moritz Muehlenhoff <jmm@...ian.org>, Asterisk Security Team <security@...erisk.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request:  Asterisk
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/9
+Message-ID: <4F68B752.5040706@redhat.com>
+Date: Tue, 20 Mar 2012 10:58:58 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Luc ABRIC <luc.abric@...ida.fr>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, Valérian PERRET <valerian.perret@...ida.fr>, "'jkn@...no'" <jkn@...no>
+Subject: Re: CVE request: eZ Publish: insecure direct object reference
 Content-Type: text/plain; charset=utf-8
 
-AST-2012-010 uses CVE-2012-3863.  The appropriate documents have been
-updated to reflect the assigned CVE.
+On 03/20/2012 02:53 AM, Luc ABRIC wrote:
+> Hi,
+> 
+> Now that a CVE ID has been attributed, what am I supposed to do with the details of the vulnerability?
 
-Thanks
+A normal workflow would be to work with the vendor(s) on fixing it and
+then when they release an update you release a security advisory
+publicly at the same time or later (e.g. to give people time to update).
 
---
-Matthew Jordan
-Digium, Inc. | Software Developer
-445 Jan Davis Drive NW - Huntsville, AL 35806 - USA
-Check us out at: http://digium.com & http://asterisk.org
+> Should I post them to vendor-sec? We don't want the details to leak to the public before the fix is fully rolled out, but we'd like to start working on the content of the CVE (make sur you have all needed information, etc.).
 
------ Original Message -----
-> From: "Kurt Seifried" <kseifried@...hat.com>
-> To: oss-security@...ts.openwall.com
-> Cc: "Moritz Muehlenhoff" <jmm@...ian.org>, "Asterisk Security Team" <security@...erisk.org>
-> Sent: Friday, July 6, 2012 12:21:14 PM
-> Subject: Re: [oss-security] CVE request:  Asterisk
-> 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 07/06/2012 08:55 AM, Moritz Muehlenhoff wrote:
-> > Hi,
-> > 
-> > 2. asterisk: Possible resource leak on uncompleted re-invite
-> > transactions
-> > http://downloads.asterisk.org/pub/security/AST-2012-010.html
-> > 
-> > Cheers, Moritz
-> 
-> This issue does not appear to have a CVE yet ("TBD"). If you like I
-> can assign one for it. Otherwise if you have gotten a CVE for it
-> please reply (and include OSS-security so everyone knows =). Thanks.
-> 
-> 
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
-> 
-> 
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-> 
-> iQIcBAEBAgAGBQJP9x6KAAoJEBYNRVNeJnmTSaQQAJgQX10VvuD15Yqp5ud/huKp
-> riOx3tkR7Zg+8YHXjHyghqeB6pdW+j9bFdKs8M7xszJZIiTGMvBu51rHG2dDmssG
-> a2Yvmw+y4rQFKxuz3gET7mPPD3dZ7fj1c5tj9omG6S3groVHk0DJt+t+NhpYCnjf
-> OOpe6+h+cvszU9coYgVDnMkjzOK70aPonW/SUrYYgNQMVrUcG+w/8MMi+ViO8vTu
-> eZC4SruIEeUvumwiU/Mp+U95v6/wo2AQwkJVCqoI5sKO6eDzqw3W7quFrTvxdx8z
-> xSHNMPslvK02whJM88ciAvAnxVTZOo1SHZQLyGI6G+EVc6D9gfW+uDpSttfgejBg
-> J73dxSC3yFLD9kk+SgdlJSwxgGaeUwGqquYgcH6XUkvyLcOz3K3/Zitrf2Ki3V+3
-> fLdvqy54tNqWZgp66wToKu7qaGw3w7Gr18A3jlipNTjY6udmlIEb5pZZHlVN3Y9W
-> RxlcBMRymB6Z/Ya3rxS2HwjmIPAhdb0wCjLquo2hS3zKkuUgiMpFK9vVXIFN4reG
-> pTVCdgUifzGZGXtp3g4G/LXuytH8B625nNMUpZIJyWv3dRr8/JybOx17jyNyZYhJ
-> dLPDEGa5ay/qQE/3BZ0QIDq43BmaOmsNCXWpR7bFTOYxwJC7M7UyMzUUXR2PW6vx
-> PZe6x+BEW8HAiolJpuOm
-> =ln6p
-> -----END PGP SIGNATURE-----
-> 
+Vendor-sec no longer exists, the linux-distros list has replaced it,
+http://oss-security.openwall.org/wiki/mailing-lists/linux-distros
+
+you can certainly post there but be aware that issues posted there
+typically fall under a 2 week max embargo, so if you need longer you
+should hold off. Also linux-distros really only applies for stuff that
+Linux/BSD distros ship, third party software that no-one ships isn't
+really all that relevant. I have no idea if anyone ships eZ publish.
+
+> Also, should I continue posting to oss-sec, or mailing you (Kurt) is enough?
+
+I don't need anything else, I just assign the CVE's. Mitre does the
+actual write up based on info, publishing, etc. Posting to oss-sec is
+ideal, they will see it for sure.
+
+> Regards,
+> Luc.
+
+
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
