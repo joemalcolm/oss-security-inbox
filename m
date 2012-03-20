@@ -1,63 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/30
-Message-ID: <4F19FD92.4090803@redhat.com>
-Date: Fri, 20 Jan 2012 16:49:38 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/3
+Message-ID: <4F687AC3.5090403@redhat.com>
+Date: Tue, 20 Mar 2012 13:40:35 +0100
+From: Stefan Cornelius <scorneli@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Pierre Joye <pierre.php@...il.com>, security@....net
-Subject: Re: Potential security issues fixed in PHP 5.3.9
+Subject: CVE request: libtasn1 "asn1_get_length_der()" DER decoding issue
 Content-Type: text/plain; charset=utf-8
 
-On 01/20/2012 05:22 AM, Pierre Joye wrote:
-> hi!
->
-> On Fri, Jan 20, 2012 at 6:00 AM, Kurt Seifried <kseifried@...hat.com> wrote:
->> Hi, in addition to the xslt arbitrary file creation) there are some more potential security vulnerabilities that appear to have been fixed in 5.3.9. Can you confirm if these are not security issues? Also will you need CVE assignments for the ones that are (I can help with that).
->>
->> Sending to security@....net again and cc'ing oss-sec in case anyone on the list has ideas/comments.
->>
->> From the ChangeLog:
->>
->> ===========================================================
->> Fixed bug #60150 (Integer overflow during the parsing of invalid exif
->> header). (Stas, flolechaud at gmail dot com) - security bug
->> There is an integer overflow in ext/exif/exif.c that can be used in order to
->> cause a denial of service or read arbitrary memory.
-> Which one?
-My bad, I read the NEWS and then the ChangeLog and promptly forgot that
-CVE-2011-4566 had been assigned. I emailed with Pierre Joye, here is a
-summary:
+Hi,
 
->> ==========
->> Fixed bug #55776 (PDORow to session bug). (Johannes)
->> Is a Apache crash. It gives a CGI/FastCGI Send/Don't Send window.
->> http://img171.imageshack.us/img171/3953/57126366.jpg [Open URL]
->> After few minutes is crashing apache server:
->> http://img840.imageshack.us/img840/2981/21231006.jpg [Open URL]
-Please use CVE-2012-0788 for this issue.
+libtasn1 version 2.12 was released fixing the following issue:
 
->> ==========
->> Fixed bug #60279 (Fixed NULL pointer dereference in
->> stream_socket_enable_crypto, case when ssl_handle of session_stream is
->> not initia\
->> lized.) (shm) - (needs bad code)
->>
->> ==========
->> Fixed bug #55622 (memory corruption in parse_ini_string). (Pierre) -
->> need access to ini style config, but can cause memory corruption\
->>  (code exec?)
-These need to be researched a bit more (do they have a security impact?).
->> ==========
->> Fixed bug #53502 (strtotime with timezone memory leak). (Derick) - minor
->> dos?
-> I don't think we can or should consider memory leaks as DoS :)
->
-Unfortunately memory leaks (where memory is used, then released but not
-released properly) can result in denial of service attacks.
+  - Corrected DER decoding issue (reported by Matthew Hall).
+    Added self check to detect the problem, see tests/Test_overflow.c.
+    This problem can lead to at least remotely triggered crashes, see
+    further analysis on the libtasn1 mailing list.
 
-Please use CVE-2012-0789 for this issue.
+Further issue details from Simon Josefsson [1]:
 
+I want to mention that there were no security problem in the
+asn1_get_length_der function.  It was working properly and as documented
+before.  The security problem was the callers not checking that the
+returned values were reasonable, i.e., that the output length was less
+than or equal to the total length of the buffer.  However, fixing all
+callers of this function would be a huge amount of work.  Instead, we
+made asn1_get_length_der return an error code when the situation
+occured, to protect callers.  This fix could be the wrong thing if some
+code out there calls the function with a der_len parameter that is
+smaller than the entire DER structure length.  However, we are hoping
+that is not in any significant use, and that overall security will be
+improved by having the function sanity check its output rather than
+letting the caller do that.  This was a judgement call.
+
+[1] http://thread.gmane.org/gmane.comp.gnu.libtasn1.general/54
+
+It appears like GnuTLS is affected as well (but probably does not need a
+separate CVE at this point):
+http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5952/
+http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5957/
+
+-- References --
+
+Release announcement:
+http://article.gmane.org/gmane.comp.gnu.libtasn1.general/53
+
+Small analysis + patch:
+http://thread.gmane.org/gmane.comp.gnu.libtasn1.general/54
+
+Red Hat bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=804920
+
+Thanks and kind regards,
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Stefan Cornelius / Red Hat Security Response Team
