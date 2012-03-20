@@ -1,54 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/16/2
-Message-ID: <4F3D8BB6.2040409@redhat.com>
-Date: Thu, 16 Feb 2012 16:05:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Ludwig Nussel <ludwig.nussel@...e.de>, Vincent Untz <vuntz@...nsuse.org>
-Subject: Re: CVE request: mumble local information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/13
+Message-ID: <4680B31DCCC3B6428FB4E85ED9D540D0032417@SRVEXCH.oppida.fr>
+Date: Tue, 20 Mar 2012 08:53:18 +0000
+From: Luc ABRIC <luc.abric@...ida.fr>
+To: "'Kurt Seifried'" <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, Valérian PERRET <valerian.perret@...ida.fr>, "'jkn@...no'" <jkn@...no>
+Subject: RE: CVE request: eZ Publish: insecure direct object reference
 Content-Type: text/plain; charset=utf-8
 
-On 02/16/2012 07:35 AM, Ludwig Nussel wrote:
-> Vincent Danen wrote:
->> It was discovered that mumble created its database file
->> (~/.local/share/data/Mumble/.mumble.sqlite) with insecure world-readable
->> permissions.  If the user had (non-default) permissions on their home
->> directory, another local user could obtain password and configuration
->> settings from the database file.
+Hi,
+
+Now that a CVE ID has been attributed, what am I supposed to do with the details of the vulnerability?
+
+Should I post them to vendor-sec? We don't want the details to leak to the public before the fix is fully rolled out, but we'd like to start working on the content of the CVE (make sur you have all needed information, etc.).
+
+Also, should I continue posting to oss-sec, or mailing you (Kurt) is enough?
+
+Regards,
+Luc.
+
+-----Message d'origine-----
+De : Kurt Seifried [mailto:kseifried@...hat.com] 
+Envoyé : lundi 19 mars 2012 20:12
+À : oss-security@...ts.openwall.com
+Cc : Luc ABRIC; Yann MICHARD; Karim SLAMANI; Valérian PERRET; 'jkn@...no'
+Objet : Re: [oss-security] CVE request: eZ Publish: insecure direct object reference
+
+On 03/19/2012 03:06 AM, Luc ABRIC wrote:
+> Hi,
 > 
-> It certainly makes sense for cautios applications to make sure sensitive
-> settings have restricted access permissions. Question is whether it is
-> actually a vulnerability if they don't. Quoting the XDG spec¹
-
-We can't rely upon file permissions being done safely/properly, just
-like we can't rely upon proper firewalls/etc for network services that
-"should" be internal only but sometimes are not (e.g.
-SMB/CIFS/NFS/etc.), There are often very legitimate cases for not having
-a firewall, world readable home dir, etc. The whole onion (multi-layered
-security) approach and so forth means we classify a lot more things as
-security vulns than is perhaps strictly necessary, but in the long run
-leads to safer and more robust systems.
-
-> | If, when attempting to write a file, the destination directory is
-> | non-existant an attempt should be made to create it with permission
-> | 0700. If the destination directory exists already the permissions should
-> | not be changed.
+> My initial CVE ID request was dropped because it was missing some details. Here comes a re-submission.
 > 
-> So it could be argued that mumble just relied on the specification that
-> already mandates restrictive permissions on ~/.config.
-
-The specifications might be wrong, they might be incomplete, they might
-be interpreted incorrectly, they might be implemented incorrectly, etc.
-
-> The program that is supposed to create ~/.config on login had a bug that
-> made the dir 755 in violation of the spec². Fixing the permissions is
-> not allowed according to the spec though ...
->
-> cu
-> Ludwig
+> After posting to oss-security I was asked a few questions by Kurt Seifried from Redhat SRT while the vendor was contacted by Secunia asking for pretty much the same informations. Secunia then decided it wasn't their role to handle this vulnerability.
+> I don't know if that's part of the process but I feel like you should know to avoid any duplicated work.
 > 
-> [1] http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
-> [2] https://bugs.freedesktop.org/show_bug.cgi?id=36773
+> 1) Email address of requester
+> yann.michard@...ida.fr, luc.abric@...ida.fr & jkn@...no.
+> Yann MICHARD discovered the vulnerability, so all the credits goes to him.
+> 
+> 2) Software name and optionally vendor name
+> Vendor: Ez
+> Product name: Ez Publish
+> Editions: both Enterprise & Community
+> 
+> 3) At least one of (to determine is this a security issue):
+>   1. Type of vulnerability
+> OWASP A4: Insecure direct object reference
+> 
+>   2. Exploitation vectors
+> Access to the vulnerable website (no need for any credentials)
+> 
+>   3. Attack outcome
+> A browser is enough to execute the attack.
+> 
+> 4) For Open Source at least one of:
+>   1. Link to vulnerable source code or fix Not available yet.
+> 
+>   2. Link to source code change log
+> Not available yet.
+> 
+>   3. Link to security advisory
+> Not available yet.
+> 
+>   4. Link to bug entry
+> http://issues.ez.no/19238
+> The vendor does not want to release more details until a fix is pushed to the clients
+> 
+>   5. Request comes from project member (a.k.a. "trust me, it's a problem") Jostein Knudsen <jkn@...no> from Ez can confirm the vulnerability.
+> 
+> 5) Affected version(s) (3.2.4, 3.x, current version, all current releases, something) The whole 4.x serie it seems (4.1 to 4.6 from the bug entry).
+> 
+> 6) Whether or not this has been previously requested (i.e. on OSS-Sec or to cve-assign) Well yeah but it seems that the request didn't have enough information.
+> 
+> 7) Is this an Open Source or commercial software request Both, the affected software has 2 editions, one open-source, one commercial.
+> 
+> 8) Is this an embargoed issue (if yes and commercial: send to cve-assign, if yes and open source: send to vs-sec?) Not really sure what you mean by embargoed.
+> The French government asked us not do disclose any details until a fix is available AND installed on their systems because it affects some high profile websites.
+> We didn't plan on releasing any details before the fix anyway.
+> 
+> 9) IF multiple issues are listed please list affected versions for each issue and/or who reported them (so we can determine CVE split/merge).
+> It's the first issue we're publishing regarding this application.
+
+Perfect, this way if it comes up again there is enough info that
+hopefully someone will match it up =).
+
+Please use CVE-2012-1565 for this issue
+
+> 
+> Regards,
+> Luc ABRIC
+> IT Security Expert
+> 
+> 6 avenue du Vieil Etang - Bâtiment B
+> 78180 Montigny-le-Bretonneux
+> Phone: +33 (0)1 30 14 19 00
+> Fax:       +33 (0)1 30 14 19 09
+> Mobile: +33 (0)6 26 87 62 14
+> luc.abric@...ida.fr
+> 
+> www.oppida.fr
+> 
 > 
 
 
