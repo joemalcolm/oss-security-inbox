@@ -1,18 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/26/1
-Message-Id: <201206261155.29887.luciano@debian.org>
-Date: Tue, 26 Jun 2012 11:55:29 +0200
-From: Luciano Bello <luciano@...ian.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: CSRF in eXtplorer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/1
+Message-ID: <20120320041808.GA1288@redhat.com>
+Date: Mon, 19 Mar 2012 22:18:08 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: maradns deleted domain record cache persistance flaw
 Content-Type: text/plain; charset=utf-8
 
-On Monday 25 June 2012, Kurt Seifried wrote:
-> Does this affect any versions other than just 2.1 RC3?
+I haven't seen a request for this yet:
 
-The vulnerable code is also in 2.0.0 and 2.0.1 (i.e. all the stable versions).
+It was reported that MaraDNS suffers from a flaw where it is susceptible to
+spoofing attacks.  Due to an error in the cache update policy, which does not
+properly handle revoked domain names, a remote attacker could keep a domain
+name resolvable after it has been deleted from the registration.
 
-Cheers,
+This flaw is fixed in versions 1.3.0.7.15 and 1.4.12, and is reported to affect
+all prior versions.
 
--luciano
+References:
+
+http://www.maradns.org/changelog.html
+https://secunia.com/advisories/48492/
+https://bugzilla.redhat.com/show_bug.cgi?id=804770
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
