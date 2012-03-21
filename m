@@ -1,43 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/02/5
-Message-Id: <7F0801DD-5384-4F30-B827-D98087F8911C@codseq.it>
-Date: Mon, 2 Apr 2012 18:42:46 +0200
-From: Filippo Cavallarin <filippo.cavallarin@...seq.it>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: OSClass directory traversal vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/9
+Message-ID: <4F6A0DAA.7090908@redhat.com>
+Date: Wed, 21 Mar 2012 11:19:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+CC: oss-security@...ts.openwall.com, Zubin Mithra <zubin.mithra@...il.com>, Dhanesh k <dhanesh1428@...il.com>
+Subject: Re: CVE-Request taglib vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 2 Apr 2012, at 5:53 PM, Kurt Seifried wrote:
-
-> On 04/02/2012 01:59 AM, Filippo Cavallarin wrote:
->> Hello,
->> Can i get a CVE identifier for this issue:
->> 
->> http://www.codseq.it/advisories/osclass_directory_traversal_vulnerability
->> 
->> Thanks
->> 
->> Filippo Cavallarin
->> 
->> 
->> C o d S e q
->> Development with an eye on security
->> ------------------------------------------------------------------------
->> Castello 2005, 30122 Venezia
->> Tel: 041 88 761 58 - Fax: 041 81 064 714 - Cell: 346 66 93 254
->> c.f. CVLFPP82B27L736J - p.iva 03737650279
->> http://www.codseq.it - filippo.cavallarin@...seq.it
->> 
+On 03/21/2012 09:42 AM, Ludwig Nussel wrote:
+> Zubin Mithra wrote:
+>> [...]
+>> The issues which are present in the latest "release" but not in the current
+>> development head were :-
+>>
+>> [3] Lack of sanity checks of fields which were read, and were used for
+>> allocating memory; crafted files would lead of application crash.
 > 
-> Please provide links to the original vendor advisory/ChangeLog/commits/etc.
+> Not an issue according to upstream:
+> http://mail.kde.org/pipermail/taglib-devel/2012-March/002187.html
+
+Shouldn't it simply say "file to large" or "unable to allocate blah"
+something rather than crashing? I assume by "large" file the file
+doesn't actually need to be large, just the header information needs to
+claim it is large?
+
+>> [4] A one bit change in a working ogg file would cause a thread to loop
+>> infinitely.
 > 
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+> http://mail.kde.org/pipermail/taglib-devel/2012-March/002191.html
+> https://github.com/taglib/taglib/commit/b3646a07348ffa276ea41a9dae03ddc63ea6c532
+
+Has this been confirmed? Does the looping thread actually cause a DoS,
+simply slow down the application a bit, or?
+
+> cu
+> Ludwig
 
 
-The changelog can be found here 
 
-http://osclass.org/blog/
-
-Filippo Cavallarin
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
