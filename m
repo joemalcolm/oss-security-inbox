@@ -1,52 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/8
-Message-ID: <1209860876.31092338.1347028868404.JavaMail.root@redhat.com>
-Date: Fri, 7 Sep 2012 10:41:08 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: Andrey Petrov <andrey.petrov@...zow.net>, Jamie Strandboge <jamie@...ntu.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- urllib3: Does not check for SSL certificates by default
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/22/2
+Message-ID: <4F6A1449.5030703@clamav.net>
+Date: Wed, 21 Mar 2012 19:47:53 +0200
+From: Török Edwin <edwin@...mav.net>
+To: Vincent Danen <vdanen@...hat.com>
+CC: oss-security@...ts.openwall.com, security@...mav.net
+Subject: Re: Vulnerabilities reported in ClamAV 0.96.4
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+On 03/21/2012 06:51 PM, Vincent Danen wrote:
+> Hopefully security@ for ClamAV goes somewhere useful (I don't feel like
+> opening a bugzilla account there just to ask this).
 
-  in relation to this one the following question has been
-raised internally - it's OK to assign CVE identifier for
-end user applications, proclaiming to perform SSL certificates
-verification, but not doing that.
+It does :)
 
-  But what about the libraries? Obviously urllib3 when instructed
-to do so, performs the verification. The question is should it
-get a CVE identifier or not? Could you clarify Mitre's opinion /
-view on this?
+> 
+> Saw a bunch of CVEs come through for various anti-virus products, five
+> of which are reportedly applicable for ClamAV 0.96.4.  I'm wondering a)
+> if the upstream folks know about these 
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks, we've already opened bugs about these, you can watch these for updates:
+https://bugzilla.clamav.net/show_bug.cgi?id=4623
+https://bugzilla.clamav.net/show_bug.cgi?id=4624
+https://bugzilla.clamav.net/show_bug.cgi?id=4625
+https://bugzilla.clamav.net/show_bug.cgi?id=4626
+https://bugzilla.clamav.net/show_bug.cgi?id=4627
 
-> Hello Kurt, Steve, vendors,
-> 
->   it was reported that urllib3, a Python HTTP library
-> with thread-safe connection pooling and file post support,
-> did not perform SSL certificates verification by default.
-> A rogue HTTP server could use this flaw to conduct
-> man-in-the-middle (MITM) attacks.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686872
-> [2] https://bugs.launchpad.net/ubuntu/+source/python-urllib3/+bug/1047054
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=855320
->     (the bug actually has python-requests in the summary,
->      but only due the fact it contains embedded urllib3)
-> 
-> Patch applied by the Ubuntu Linux distribution:
-> [4] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=python-urllib3_1.3-2ubuntu1.debdiff;att=1;bug=686872
-> 
-> Reproducer:
-> [5] https://bugs.launchpad.net/ubuntu/+source/python-urllib3/+bug/1047054/comments/0
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Best regards,
+--Edwin
+
