@@ -1,63 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/7
-Message-ID: <20121114104322.43befb79@lola.kot>
-Date: Wed, 14 Nov 2012 10:43:22 +0200
-From: George Kargiotakis <kargig@...d.gr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/5
+Message-ID: <20120321131145.09de69a9@redhat.com>
+Date: Wed, 21 Mar 2012 13:11:45 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel handling of IPv6 temporary addresses
+Subject: Re: CVE request: GnuTLS TLS record handling issue / MU-201202-01
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+On Wed, 21 Mar 2012 12:32:59 +0100 Stefan Cornelius wrote:
 
-Due to the way the Linux kernel handles the creation of IPv6 temporary
-addresses a malicious LAN user can remotely disable them altogether
-which may lead to privacy violations and information disclosure.
+> Correcting myself as more details about the GnuTLS case were revealed:
+> GnuTLS needs a CVE after all, for another issue different from
+> CVE-2012-1569.
 
-By default the Linux kernel uses the 'ipv6.max_addresses' option to
-specify how many IPv6 addresses an interface may have. The
-'ipv6.regen_max_retry' option specifies how many times the kernel will
-try to create a new address.
+CVE-2012-1569 is for libtasn1 MU-201202-02.
 
-Currently, in net/ipv6/addrconf.c,lines 898-910, there is no
-distinction between the events of reaching max_addresses for an
-interface and failing to generate a new address. Upon
-reaching any of the above conditions the following error is emitted by
-the kernel times 'regen_max_retry' (default value 3): 
+Use CVE-2012-1573 for gnutls MU-201202-01.
 
-[183.793393] ipv6_create_tempaddr(): retry temporary address
-regeneration [183.793405] ipv6_create_tempaddr(): retry temporary
-address regeneration [183.793411] ipv6_create_tempaddr(): retry
-temporary address regeneration
-
-After 'regen_max_retry' is reached the kernel completely disables
-temporary address generation for that interface.
-
-[183.793413] ipv6_create_tempaddr(): regeneration time exceeded -
-disabled temporary address support
-
-RFC4941 3.3.7 specifies that disabling temp_addresses MUST happen upon
-failure to create non-unique addresses which is not the above case.
-Addresses would have been created if the kernel had a higher
-'ipv6.max_addresses' limit.
-
-A malicious LAN user can send a limited amount of RA prefixes and thus
-disable IPv6 temporary address creation for any Linux host. Recent
-distributions which enable the IPv6 Privacy extensions by default, like
-Ubuntu 12.04 and 12.10, are vulnerable to such attacks.
-
-Due to the kernel's default values for valid (604800) and preferred
-(86400) lifetimes, this scenario may even occur under normal usage when
-a Router sends both a public and a ULA prefix, which is not an uncommon
-scenario for IPv6. 16 addresses are not enough with the current default
-timers when more than 1 prefix is advertised.
-
-The kernel should at least differentiate between the two cases of
-reaching max_addresses and being unable to create new addresses, due to
-DAD conflicts for example.
-
-Best regards,
 -- 
-George Kargiotakis
-https://void.gr
-GPG KeyID: 0xE4F4FFE6
-GPG Fingerprint: 9EB8 31BE C618 07CE 1B51 818D 4A0A 1BC8 E4F4 FFE6
+Tomas Hoger / Red Hat Security Response Team
