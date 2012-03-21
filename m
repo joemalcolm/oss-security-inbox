@@ -1,66 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/12
-Message-ID: <50B677E6.1080308@redhat.com>
-Date: Wed, 28 Nov 2012 13:45:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: Curl insecure usage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/1
+Message-ID: <4F696A73.3030003@ficora.fi>
+Date: Wed, 21 Mar 2012 07:43:15 +0200
+From: Jussi Eronen <juhani.eronen@...ora.fi>
+To: Kurt Seifried <kseifried@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Attack on badly configured Netfilter-based firewalls
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/26/2012 11:42 AM, Kurt Seifried wrote:
-> On 11/26/2012 08:06 AM, Moritz Muehlenhoff wrote:
->> Hi, during the triage of the SSL client bugs spotted by the 
->> http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf paper Debian 
->> developer Alessandro Ghedini discovered two more applications
->> using Curl in an insecure manner:
+Hello,
+
+(Sorry for the late reply)
+
+On 03/02/2012 07:06 PM, Kurt Seifried wrote:
+> On 03/02/2012 01:32 AM, Jussi Eronen wrote:
+>> You could also consider contacting us at vulncoord@...ora.fi. Our main
+>> focus is on multi-vendor cases, where we feel that coordination could
+>> have its benefits.
 > 
->> 1. opendnssec (in the eppclient tool) 
->> http://lists.opendnssec.org/pipermail/opendnssec-user/2012-November/002296.html
+> Just curious, why is that not something@...t.fi? Why does CERT-FI not
+> run it's own email, instead using @ficora.fi?
 
-Please
->> 
-use CVE-2012-5582 for opendnssec: insecure usage of curl
+Long story short: historical reasons. Our host organisation (FICORA,
+Finnish Communications Regulatory Authority, something like the FCC in
+the US) provides some basic services for us. We may switch to using
+cert.fi also in email at some point.
 
->> 2. PHPcas (used by Moodle e.g.): 
->> https://github.com/Jasig/phpCAS/pull/58
-
-Please use CVE-2012-5583 for phpCAS: insecure usage of curl
-
->> Please assign CVE IDs for these.
-> 
->> Cheers, Moritz
-> 
-> 
-> Have these been receiving individual CVE's? I can't find any
-> offhand, can you provide examples of others?
-
-Also can someone collate and post a list of all the other apps using
-curl insecurely and need CVE's with appropriate links to the
-upstreams/etc? Thanks.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+- -Jussi
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQtnflAAoJEBYNRVNeJnmTZjEQALHwHy7eiJeTIs/CzryTWoYr
-7Qc5vqpNWq+e2uvngFkZ/TcYZk5q3YMuvCpcGz/UFNAouTnxYWEScsbJ+zMtceP4
-IuSAQepg4wogrAxXZdrhAUd7019yYP0u0tC6qR5wEJfFdIpJN3uhv4NGs30KT/dw
-fVdh4bckYiz1ql04p5V81nyGS0MUKv3ECYmxbK1gzW3OajyQjuLJpS2WgQJ7PRYm
-jgFR9BZjjQJ0GWA1jGJFCcCaYVrLZCtorktrGirO08FSvjYkhNIwglWicTv0bMpu
-RjH1SYD45CODB9UxkyNXLGdIow3OefWXONj5VRWRXdAvBXZVqn8r8mnAaftUndWw
-SY0n5479MuO4DuGv1uKplDhTU50AbYn5+HpmHXjgafocvQG+zCirLPV9uqaCt2ho
-irAIAcXZCOeVfkwI/UdwxTTWK0v5gHqNOognzOgOsdrksgN4TLHes5CWOJRxp4GB
-5R9bLwmqtb9Ond4M7K3tHdeBcSuhwn+d3p8dL44zQz5kbw30aJsxyHnFZINZuh3B
-yKGjvgubjLtnZg7C0E+/iV2kBiDayx1Cq4j6TzwsQsR9G/vR24ZuBPh5UU6i2WoO
-RP41W47pcwg+8+wmLVNu8Xibb5Hot2s5anXNZYZJLk9ZshjLYYWzcelgD/AQHY4z
-FiLo5VCm2DuvCmBU1WNl
-=CTJs
+iEYEARECAAYFAk9panIACgkQb5sSMzb1qN3RLgCeMrF20wA14AibGeH07kZLMSRW
+azMAn3XYXqfTCkOx2BThwbVG60PfNLrX
+=N6SG
 -----END PGP SIGNATURE-----
