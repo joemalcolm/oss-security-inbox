@@ -1,39 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/5
-Message-ID: <20120229160133.GB24479@suse.de>
-Date: Wed, 29 Feb 2012 17:01:33 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/7
+Message-ID: <20120321165148.GG32100@redhat.com>
+Date: Wed, 21 Mar 2012 10:51:48 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE Request (minor) -- osc: Improper sanitization of terminal emulator escape sequences when displaying build log and build status
+Cc: security@...mav.net
+Subject: Vulnerabilities reported in ClamAV 0.96.4
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 28, 2012 at 04:21:20PM -0700, Kurt Seifried wrote:
-> On 02/28/2012 03:44 PM, Marcus Meissner wrote:
-> > On Tue, Feb 28, 2012 at 06:56:52PM +0100, Jan Lieskovsky wrote:
-> > I am not fully convinced it needs a CVE.
-> > 
-> > It basically boils down to the old "logfile with content that might be controlled
-> > by an attacker pasted raw to a terminal" issue.
-> 
-> Aren't these generally covered?
-> 
-> CVE-2010-3928
-> CVE-2010-2713
-> CVE-2009-4487
-> 
-> "without sanitizing non-printable characters" and so on.
+Hopefully security@ for ClamAV goes somewhere useful (I don't feel like
+opening a bugzilla account there just to ask this).
 
-Hmm yes.
+Saw a bunch of CVEs come through for various anti-virus products, five
+of which are reportedly applicable for ClamAV 0.96.4.  I'm wondering a)
+if the upstream folks know about these and b) whether or not the report
+has a typo in the version, since 0.97.4 is the latest upstream version?
 
-So I would say yes to a CVE id. Please assign.
+http://www.securityfocus.com/archive/1/522005
 
-> > There is some more control on the person who builds a specific package what is output
-> > thant there usually is in logfiles though.
-> > 
-> > A rogue server is unlikely, however a malicious packager could echo "bad escape code"
-> > in his build and then ask for help on our IRC channels or mailinglists with package Y on project X.
-> > (anyone can create an account and build packages ... and asking for help is not uncommon)
-> > e.g. with "look at logfile with: 'osc buildlog home:user foopackage standard i586'.)
+Indicates that CVE-2012-1419, CVE-2012-1443, CVE-2012-1457,
+CVE-2012-1458, and CVE-2012-1459 affect ClamAV 0.96.4.  There isn't much
+more information though.  Cutting-n-pasting from the report:
 
-Ciao, Marcus
+1. Specially crafted infected POSIX TAR files with "[aliases]" as first
+9 bytes evades detection. (CVE-2012-1419)
+
+[...]
+
+25. Infected RAR files with initial two bytes set to 'MZ' can be fixed
+by the user and correctly extracted. Such a file evades detection.
+(CVE-2012-1443)
+
+[...]
+
+39. If the length field in the header of a file with test EICAR virus
+included into a TAR archive is set to be greater than the archive's
+total length (1,000,000+original length in our experiments), the
+antivirus declares the file to be clean but virus gets extracted
+correctly by the GNU tar program. (CVE-2012-1457)
+
+40. A Windows Compiled HTML Help (CHM) file is a set of HTML files,
+scripts, and images compressed using the LZX algorithm.  For faster
+random accesses, the algorithm is reset at intervals instead of
+compressing the entire file as a single stream. The length of each
+interval is specified in the LZXC header.
+
+If an infected CHM file's header modified so that the reset interval is
+lower than in the original file, the antivirus declares the file to be
+clean. But the Windows CHM viewer hh.exe correctly decompresses the
+infected content located before the tampered header. (CVE-2012-1458)
+
+41. In a POSIX TAR archive, each member file has a 512-byte header
+protected by a simple checksum. Every header also contains a file length
+field, which is used by the extractor to locate the next header in the
+archive.
+
+If a TAR archive contains two files: the first one is clean, while the
+second is infected with test EICAR virus - and it is modified such that
+the length field in the header of the first, clean file to point into
+the middle of the header of the second, infected file. The antivirus
+declares the file to be clean but virus gets extracted correctly by the
+GNU tar program. (CVE-2012-1459)
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
