@@ -1,57 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/09/1
-Message-ID: <1339229952.28538.22@d.hx.id.au>
-Date: Sat, 09 Jun 2012 18:19:12 +1000
-From: David Hicks <d@...id.au>
-To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
-Cc: MantisBT Developer Mailing List <mantisbt-dev@...ts.sourceforge.net>
-Subject: CVE requests (x2) for Mantis Bug Tracker (MantisBT) before 1.2.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/6
+Message-ID: <4F69F6EE.9080905@suse.de>
+Date: Wed, 21 Mar 2012 16:42:38 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Zubin Mithra <zubin.mithra@...il.com>, Kurt Seifried <kseifried@...hat.com>, Dhanesh k <dhanesh1428@...il.com>
+Subject: Re: CVE-Request taglib vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-CVE REQUEST #1
+Zubin Mithra wrote:
+> [...]
+> The issues which are present in the latest "release" but not in the current
+> development head were :-
+> 
+> [3] Lack of sanity checks of fields which were read, and were used for
+> allocating memory; crafted files would lead of application crash.
 
-Title: Reporters can edit arbitrary bugnotes via SOAP API
-Affected: MantisBT 1.2.10 and earlier versions
-Not affected: MantisBT 1.2.11
+Not an issue according to upstream:
+http://mail.kde.org/pipermail/taglib-devel/2012-March/002187.html
 
-Description:
-Roland Becker and Damien Regad (MantisBT developers) found that any user
-able to report issues via the SOAP interface could also modify any
-bugnotes (comments) created by other users. In a default/typical
-MantisBT installation, SOAP API is enabled and any user can sign up to
-report new issues. This vulnerability therefore impacts upon many public
-facing MantisBT installations.
+> [4] A one bit change in a working ogg file would cause a thread to loop
+> infinitely.
 
-References:
-[1] http://www.mantisbt.org/bugs/view.php?id=14340
+http://mail.kde.org/pipermail/taglib-devel/2012-March/002191.html
+https://github.com/taglib/taglib/commit/b3646a07348ffa276ea41a9dae03ddc63ea6c532
 
+cu
+Ludwig
 
-
-CVE REQUEST #2
-
-Title: delete_attachments_threshold not checked on attachment deletion
-Affected: MantisBT 1.2.10 and earlier versions
-Not affected: MantisBT 1.2.11
-
-Description:
-Roland Becker (MantisBT developer) found that the
-delete_attachments_threshold permission was not being checked when a
-user attempted to delete an attachment from an issue. The more generic
-update_bug_threshold permission was being checked instead. MantisBT
-administrators may have been under the false impression that their
-configuration of the delete_attachments_threshold was successfully
-preventing unwanted users from deleting attachments.
-
-References:
-[1] http://www.mantisbt.org/bugs/view.php?id=14016
-
-
-
-With thanks,
-David Hicks
-MantisBT Developer
-#mantisbt irc.freenode.net
-http://www.mantisbt.org/bugs/
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
