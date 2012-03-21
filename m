@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/1
-Message-ID: <4FDAB9F9.9000403@redhat.com>
-Date: Fri, 15 Jun 2012 09:58:41 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/3
+Message-ID: <20120321084324.GK3053@dhcp-25-225.brq.redhat.com>
+Date: Wed, 21 Mar 2012 09:43:25 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: NetworkManager creates an open network when asked to create an adhoc-WPA network
+Cc: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE request -- kernel: execshield: predictable ascii armour base address
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Hi, 
 
-In NetworkManager, when a new wireless network was created with
-WPA/WPA2 security, it created an open/insecure network.
->From the commit, it seems the bug exists in the kernel.
+On Tue, Mar 20, 2012 at 05:22:32PM +0100, Marcus Meissner wrote:
+> There are also 4 seperate issues in Chris blogpost.
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=782627
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655972
-http://cgit.freedesktop.org/NetworkManager/NetworkManager/commi/?id=69247a00eacd00617acbf1dfcee8497437b8ad39
+The first issue is Red Hat only, not upstream. The other three issues
+would be great to fix, but IMO are enhancements only hence I did not
+request CVE IDs.
 
-The patch disables WPA adhoc networks completely untill a better
-solution is found.
-
-Can a CVE id be please assigned to this issue?
-
-
+Thanks,
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
-
+Petr Matousek / Red Hat Security Response Team
