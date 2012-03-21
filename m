@@ -1,53 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/7
-Message-ID: <4F18FB57.2080906@redhat.com>
-Date: Thu, 19 Jan 2012 22:27:51 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/4
+Message-ID: <4F69BC6B.5080200@redhat.com>
+Date: Wed, 21 Mar 2012 12:32:59 +0100
+From: Stefan Cornelius <scorneli@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE Request for spamdyke "STARTTLS" Plaintext
+Subject: CVE request: GnuTLS TLS record handling issue / MU-201202-01
 Content-Type: text/plain; charset=utf-8
 
-On 01/15/2012 07:48 AM, Agostino Sarubbo wrote:
-> In reference of: http://www.openwall.com/lists/oss-security/2012/01/07/1 :
->
-> According to secunia security advisory ( https://secunia.com/advisories/47435
->  ) :
->
-> Description:
-> A vulnerability has been reported in spamdyke, which can be exploited by 
-> malicious people to manipulate certain data.
->
-> The vulnerability is caused due to the TLS implementation not properly 
-> clearing transport layer buffers when upgrading from plaintext to ciphertext 
-> after receiving the "STARTTLS" command. This can be exploited to insert 
-> arbitrary plaintext data (e.g. SMTP commands) during the plaintext phase, 
-> which will then be executed after upgrading to the TLS ciphertext phase.
->
-> The vulnerability is reported in versions prior to 4.2.1.
->
->
-> Solution:
-> Update to version 4.2.1.
->
->
-> And from upstream changelog ( 
-> http://www.spamdyke.org/documentation/Changelog.txt ):
->
->  Changed smtp_filter() and middleman() to discard any buffered input after TLS
->     is started.  This prevents the injection of commands into a secure session
->     by sending extra input in the same packet as the "STARTTLS" command.  Not
->     really a security problem but good practice anyway.  Thanks to Eric 
-> Shubert for reporting this one.
->
->
-> Sorry Kurt, but atm, I have not found the commit code.
->
->
-Thanks, this helped clarify it a lot. Please use CVE-2012-0070 for this
-issue.
+Hi,
 
+Correcting myself as more details about the GnuTLS case were revealed:
+GnuTLS needs a CVE after all, for another issue different from
+CVE-2012-1569.
+
+Quoting the Mu Dynamics advisory [1]:
+
+The block cipher decryption logic in GnuTLS assumed that a record
+containing any data which was a multiple of the block size was valid for
+further decryption processing, leading to a heap corruption vulnerability.
+
+The bug can be reproduced in GnuTLS 3.0.14 by creating a corrupt
+GenericBlockCipher struct with a valid IV, while everything else is
+stripped off the end, while the handshake message length retains its
+original value: [...]
+
+This will cause a segmentation fault, when the ciphertext_to_compressed
+function tries to give decrypted data to _gnutls_auth_cipher_add_auth
+for HMAC verification, even though the data length is invalid, and it
+should have returned GNUTLS_E_DECRYPTION_FAILED or
+GNUTLS_E_UNEXPECTED_PACKET_LENGTH instead, before
+_gnutls_auth_cipher_add_auth was called.
+
+NOTE: This CVE request is only for the GnuTLS TLS record handling issue
+/ MU-201202-01. When looking at the release notes [2] and [3], there are
+other issues that may be worthy of a CVE, but are currently still under
+investigation:
+
+** libgnutls: Eliminate double free during SRP
+authentication. Reported by Peter Penzov.
+
+** libgnutls: PKCS #11 objects that do not have ID
+no longer crash listing. Reported by Sven Geggus.
+
+
+-- References --
+
+[1] Mu Dynamics:
+http://blog.mudynamics.com/2012/03/20/gnutls-and-libtasn1-vulns/
+
+[2] GnuTLS 3.0.15 release announcement:
+http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5912
+
+[3] GnuTLS 2.12.17 release announcement:
+http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5910
+
+[4] GNUTLS-SA-2012-2:
+http://www.gnu.org/software/gnutls/security.html
+
+[5] Red Hat bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=805432
+
+Thanks and kind regards,
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Stefan Cornelius / Red Hat Security Response Team
