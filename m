@@ -1,105 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/30/6
-Message-ID: <47222.194.177.215.120.1327930698.squirrel@www.wired-net.gr>
-Date: Mon, 30 Jan 2012 15:38:18 +0200 (EET)
-From: "Nanakos V. Chrysostomos" <nanakos@...ed-net.gr>
-To: "Jonathan Wiltshire" <jmw@...ian.org>
-Cc: "Gian Piero Carrubba" <gpiero@...rf.it>, team@...urity.debian.org, oss-security@...ts.openwall.com
-Subject: Re: Yubiserver package ships with pre-filled identities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/11
+Message-ID: <CAA5xPpnD6EgQnXm7gBGvpQ55DycsRksAdHkgo3QWAn56D7V+Pw@mail.gmail.com>
+Date: Wed, 21 Mar 2012 23:49:32 +0530
+From: Zubin Mithra <zubin.mithra@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, oss-security@...ts.openwall.com,  Dhanesh k <dhanesh1428@...il.com>
+Subject: Re: CVE-Request taglib vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Upstream version is no more populated with a test account for both
-versions, that is 0.1-1 and 0.2-1.
+On Wed, Mar 21, 2012 at 10:49 PM, Kurt Seifried <kseifried@...hat.com>wrote:
 
-Thanks.
+> On 03/21/2012 09:42 AM, Ludwig Nussel wrote:
+> > Zubin Mithra wrote:
+> >> [...]
+> >> The issues which are present in the latest "release" but not in the
+> current
+> >> development head were :-
+> >>
+> >> [3] Lack of sanity checks of fields which were read, and were used for
+> >> allocating memory; crafted files would lead of application crash.
+> >
+> > Not an issue according to upstream:
+> > http://mail.kde.org/pipermail/taglib-devel/2012-March/002187.html
+>
+> Shouldn't it simply say "file to large" or "unable to allocate blah"
+> something rather than crashing? I assume by "large" file the file
+> doesn't actually need to be large, just the header information needs to
+> claim it is large?
+>
 
-> On 2012-01-30 06:43, Nanakos Chrysostomos wrote:
->> Hi again,
->> I found another reason for not shipping the package with an example
->> account. I think you are certainly right. If you haven't filled a bug
->> please do so, in the meanwhile I will upload to mentors a new version
->> with an empty database that resolves the problem. Thanks.
+Yes, the file does not need to be large, it just needs to have a crafted
+header.
+
+On investigating the issue further, discussing with a developer Lukas
+Laninsky and providing PoC's, we had confirmed that the root issue was an
+Integer overflow - which would cause a large allocation and crash the
+application.
+
+The changeset that corrects it can be found here =>
+https://github.com/taglib/taglib/commit/dcdf4fd954e3213c355746fa15b7480461972308
+
+
+
 >
-> This populated database is also shipped in the upstream tarball,
-> oss-security should be consulted to see whether a CVE identifier should
-> be issued.
+> >> [4] A one bit change in a working ogg file would cause a thread to loop
+> >> infinitely.
+> >
+> > http://mail.kde.org/pipermail/taglib-devel/2012-March/002191.html
+> >
+> https://github.com/taglib/taglib/commit/b3646a07348ffa276ea41a9dae03ddc63ea6c532
 >
-> Adding to CC; oss-sec please see below:
+> Has this been confirmed? Does the looping thread actually cause a DoS,
+> simply slow down the application a bit, or?
+>
+
+Yes, it just causes a thread to cause an infinite loop and does not cause
+an application crash.
+
+
+
+>
+> > cu
+> > Ludwig
 >
 >
->> On 30 ÎÎ±Î½ 2012, at 1:25, Gian Piero Carrubba <gpiero@...rf.it> wrote:
->>
->>> Hi Nanakos,
->>>
->>> thanks for your prompt response.
->>>
->>> * [Sun, Jan 29, 2012 at 11:19:37PM +0200] Nanakos Chrysostomos:
->>>> those keys are invalid and are not my real keys. It's just a sample
->>>> for the potential users of the package to see.
->>>
->>> Ok, good for you :) .
->>>
->>>> According to yubico one in a billion or trillion I think , two
->>>> users might have/use the same credentials aka public id, private id
->>>> and aes key. I think there is no need to worry, but I might also be
->>>> wrong.
->>>
->>> While I certainly can be wrong, and surely I'm not a security
->>> expert, I strongly disagree about it not being a problem.
->>>
->>> First of all consider that this is not the case of two users
->>> casually having the same credentials (anyway logging in two  different
->>> services, think as the public id should be unique for  every realm),
->>> but an authentication service that is preconfigured  with known
->>> credentials.
->>>
->>>
->>> Please refer to [0], Â§2.3.5:
->>>
->>>> Given the symmetric nature of the AES encryption algorithm, the
->>>> security of the Yubikey relies that the AES key is logically and
->>>> physically protected both in the key and in the server that  verifies
->>>> the OTP.
->>>
->>> And in Â§6.1:
->>>
->>>> The Yubikey OTP generation is made up of the following fields
->>>>
->>>> [..] Private (secret) id
->>>> [..] Usage counter
->>>> [..] Timestamp
->>>> [..] Session usage counter
->>>> [..] Random number
->>>> [..] CRC16 checksum
->>>
->>> Where it is clear that the only authentication related field (apart
->>> from the aes key encrypting the string) is the private id.
->>>
->>> This is also reflected in your validate_otp() implementation, where
->>> - given the decrypted otp - the only authentication check is against
->>> the
->>> private_id. The other checks that could lead to a BAD_OTP error
->>> (namely against crc and counter) are there only for invalidating  data
->>> corruption and replay attacks.
->>>
->>> Please at last note that the uid and the aes key cannot be retrieved
->>> from a yubikey. This is a security feature in order to protect the
->>> stored accounts, but as for the symmetric nature of the key it  should
->>> be applied on both sides (yubikey and validation server).
->>>
->>>
->>> Ciao,
->>> Gian Piero.
->>>
->>>
->>> [0]
->>> http://static.yubico.com/var/uploads/pdfs/YubiKey_Manual_2010-09-16.pdf
 >
 > --
-> Jonathan Wiltshire                                      jmw@...ian.org
-> Debian Developer                         http://people.debian.org/~jmw
->
-> 4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
+> Kurt Seifried Red Hat Security Response Team (SRT)
 >
 
+
+Regards,
+Zubin Mithra
 
