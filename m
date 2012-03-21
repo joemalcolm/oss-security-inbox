@@ -1,20 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/16/3
-Message-ID: <2054533609.15208987.1345137945327.JavaMail.root@redhat.com>
-Date: Thu, 16 Aug 2012 13:25:45 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/2
+Message-ID: <20120321073659.GA24538@vermeer.pre-sense.de>
+Date: Wed, 21 Mar 2012 08:37:00 +0100
+From: Timo Warns <Warns@...-Sense.DE>
 To: oss-security@...ts.openwall.com
-Cc: oss-security@...ts.openwall.com
-Subject: phpMyAdmin PMASA-2012-3 (CVE-2012-4219) and PMASA-2012-4 (CVE-2012-4345) issues
+Subject: CVE-2012-1162 / -1163: Incorrect loop construct and numeric overflow in libzip
 Content-Type: text/plain; charset=utf-8
 
-Hello vendors,
+The following two issues in libzip have been handled via
+distros@...openwall.org. Distros and the libzip developers were informed on
+2012-03-12. An update of libzip has become available on 2012-03-20, the
+appointed coordinated release date. The PHP and zipruby developers have been
+informed before 2012-03-16, but have not released updates yet.
 
-  explicitly mentioning these two here, just for case someone overlooked:
-  [1] http://www.phpmyadmin.net/home_page/security/PMASA-2012-3.php (CVE-2012-4219)
-  [2] http://www.phpmyadmin.net/home_page/security/PMASA-2012-4.php (CVE-2012-4345)
-  [3] http://www.phpmyadmin.net/documentation/changelog.php
+libzip (version <= 0.10) has two vulnerabilities that may lead to a heap
+overflow or an information leak via corrupted zip files. PHP (versions
+5.4.0 and <= 5.3.10) and the Ruby binding zipruby (version <= 0.3.6) are
+also affected as they include copies of affected libzip versions.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+* CVE-2012-1162
+
+    libzip (version <= 0.10) uses an incorrect loop construct, which can
+    result in a heap overflow on corrupted zip files.
+    
+    On opening a zip file with zip_open, libzip reads in the number of
+    directory entries in the function _zip_readcdir in zip_open.c:
+
+    (192)    /* number of cdir-entries */
+    (193)    nentry = _zip_read2(&cdp);
+
+    Subsequently, memory for directory entries is allocated via
+    _zip_cdir_new (in zip_dirent.c) based on the number of directory
+    entries:
+
+    (104)    if ((cd->entry=(struct zip_dirent *)malloc(sizeof(*(cd->entry))*nentry))
+
+    If the number of directories in the zip file is set to 0, 0 bytes of
+    memory are allocated.
+
+    _zip_readcdir finishes with reading in the directory entries in
+    a posttest do-while loop:
+
+    (260)    do {
+    (261)        if ((_zip_dirent_read(cd->entry+i, fp, bufp, &left, 0, error)) < 0) {
+             ...
+    (277)    } while (i<cd->nentry && left > 0);
+
+    If cd->entry points to 0 bytes of allocated memory, _zip_dirent
+    writes beyond the allocated memory.
+
+* CVE-2012-1163
+
+    libzip (version <= 0.10) has a numeric overflow condition, which,
+    for example, results in improper restrictions of operations within
+    the bounds of a memory buffer (e.g., allowing information leaks).
+
+    On opening a zip file with zip_open, libzip reads in the size and the
+    offset of the central directory structure in the function _zip_readcdir
+    in zip_open.c:
+
+    (198)    cd->size = _zip_read4(&cdp);
+    (199)    cd->offset = _zip_read4(&cdp);
+
+    libzip performs a consistency check on these values, but does not
+    anticipate an integer overflow:
+
+    (203)    if (cd->offset+cd->size > buf_offset + (eocd-buf)) {
+
+    On an integer overflow, libzip continues to handle the zip file, which,
+    for example, can result in improper restriction of operations within the
+    bounds of a memory buffer.
+
+Cheers, Timo
