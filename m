@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/12
-Message-ID: <20120905114850.GB4164@suse.de>
-Date: Wed, 5 Sep 2012 13:48:50 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: pidgin lack of SSL checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/22/6
+Message-ID: <4F6AAFC1.1000709@redhat.com>
+Date: Wed, 21 Mar 2012 22:51:13 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE for OpenBSD random() bug?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+https://banu.com/blog/42/openbsd-bug-in-the-random-function/
 
-Beautiful rant... needs CVE I guess.
-http://developer.pidgin.im/ticket/15308
+http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/stdlib/random.c#rev1.16
 
-Missing SSL checks in libpurples NSS SSL plugin allows MitM attacks.
+Fix a bug where random() always returns 0 when srandom() is seeded
+with 0.  Use 1 and not 0 as the first element of the state array,
+similar to what glibc does.  OK nicm@
 
-(funny side note here is that gnutls 3.x is GPLv3 and effectively
- could taint any library/binary linking with it to be GPLv3 or newer.)
+It would seem this fits into the "weaker then advertised" class of
+security problem. Thoughts/comments (anyone strongly against this)?
 
-Ciao, Marcus
 -- 
-Open Linux Security Engineer Position at SUSE: http://bit.ly/Li4RbS
+Kurt Seifried Red Hat Security Response Team (SRT)
