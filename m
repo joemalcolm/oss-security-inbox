@@ -1,95 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/5
-Message-ID: <20120227110125.GA22910@eltex.net>
-Date: Mon, 27 Feb 2012 14:01:25 +0300
-From: ArkanoiD <ark@...ex.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/22/4
+Message-ID: <4F6A9BE6.4000201@redhat.com>
+Date: Wed, 21 Mar 2012 21:26:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+CC: William Pitcock <nenolod@...eferenced.org>
+Subject: Re: atheme.org Security Advisory ASA-2012-03-01: Improper cleanup of CertFP entries may result in undefined behaviour
 Content-Type: text/plain; charset=utf-8
 
-It is known "problem" for a long time (note the quotes -- as it is known, it
-is not a problem anymore and is fixed in all default rulesets).
+On 03/21/2012 12:55 PM, William Pitcock wrote:
+> atheme.org Security Advisory
+> ASA-2012-03-01
+> 
+> Original release: March 20, 2012.
+> Last update: March 20, 2012.
+> 
+> Copyright (c) 2012 atheme.org and it's contributors.
+> All rights reserved.
+> 
+> Distribution of this document in full, or in part is allowed,
+> provided that it remains in unmodified form and the above
+> copyright notice and this permission notice remain unchanged.
 
-ipv6 may reintorduce it, though.
+That makes no sense "or in part is allowed, provided that it remains in
+unmodified form" and I just violated this replying to you I guess.
 
-On Mon, Feb 27, 2012 at 11:55:30AM +0100, Sebastian Krahmer wrote:
-> Hi,
-> 
-> I know that the 127.0.0.1 trick worked in past, but for loopback
-> addresses this isnt working anymore since quite a while.
-> You will get a 'martian destination', regardless of routing
-> or rp_filter's set. If we talk about a Linux kernel:
-> 
-> ip_route_input_slow()
-> {
-> [...]
->         if (ipv4_is_lbcast(daddr) || ipv4_is_zeronet(daddr) ||
->             ipv4_is_loopback(daddr))
->                 goto martian_destination;
-> [...]
-> }
-> 
-> Or I am doing something seriously wrong. No idea what Solaris
-> or BSD's are doing.
-> For 'real' NIC's this trick is however still working, even if
-> the machine is a host (not a router). This leaves some room for
-> accessing internal admin interfaces from outside. :)
-> However, playing with source addresses to defeat firewalls should be
-> difficult, since most dists enable rp_filter.
-> 
-> my 2ct's
-> Sebastian
-> 
-> On Mon, Feb 27, 2012 at 01:53:29AM +0400, Solar Designer wrote:
-> > On Sun, Feb 26, 2012 at 10:05:55PM +0100, Eric Leblond wrote:
-> > > On Sun, 2012-02-26 at 12:17 -0700, Kurt Seifried wrote:
-> > > > Are there any helpers that can be abused to open holes in the firewall
-> > > > externally, or is it only internal clients that can cause problems and
-> > > > trigger the firewall to improperly allow network traffic in/out.
-> > > 
-> > > No, attacker has to be on a network directly connected to the firewall.
-> > 
-> > I guess by "internal clients" Kurt was referring to machines behind the
-> > firewall (e.g., someone clicking an URL that has a string looking like
-> > an FTP command embedded in it, thereby triggering the FTP helper to open
-> > a hole - stuff that was discussed in late 1990s and partially mitigated
-> > by hardening the helpers at the time), whereas by "attacker on a network
-> > directly connected to the firewall" Eric means that the attacker may be
-> > _outside_ the firewall (behind its WAN interface), but on the same
-> > network segment (e.g., the attacker might have compromised a nearby
-> > server, such as of another customer at a colocation facility).
-> > 
-> > It is known that a machine will generally receive and process a packet
-> > routed to one of its NICs by MAC address even if the destination IP
-> > address is that of another NIC or even loopback (e.g., it is possible to
-> > access services bound to 127.0.0.1 in this way - but only from directly
-> > connected machines).  Without rp_filter or equivalent, it is possible to
-> > have these packets' source addresses match the other NIC's network
-> > segment.  My _guess_ (based solely on the info posted in here so far) is
-> > that the gist of Eric et al.'s new attack is to apply this approach
-> > against a protocol helper.  The novelty is thus in combining these known
-> > things together to arrive at something that to the best of my knowledge
-> > has not yet been discussed.
-> > 
-> > I suppose Eric will tell us if this is the correct guess or not. ;-)
-> > 
-> > Alexander
-> 
-> -- 
-> 
-> ~ perl self.pl
-> ~ $_='print"\$_=\47$_\47;eval"';eval
-> ~ krahmer@...e.de - SuSE Security Team
-> 
-> ---
-> SUSE LINUX Products GmbH,
-> GF: Jeff Hawn, Jennifer Guild, Felix Imend?rffer, HRB 16746 (AG N?rnberg)
-> Maxfeldstra?e 5
-> 90409 N?rnberg
-> Germany
-> 
-> 
-> email protected and scanned by AdvascanTM - keeping email useful - www.advascan.com 
-> 
-> 
+Also did you want a CVE # for this issue?
 
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
