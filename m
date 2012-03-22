@@ -1,81 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/13
-Message-ID: <20120710142113.GD5296@suse.de>
-Date: Tue, 10 Jul 2012 16:21:13 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: ecryptfs headsup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/22/5
+Message-ID: <4F6A9D11.2060507@redhat.com>
+Date: Wed, 21 Mar 2012 21:31:29 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Moritz Muehlenhoff <jmm@...ian.org>, Greg Knaddison <greg.knaddison@...uia.com>, security@...pal.org
+Subject: Re: Re: [security] Drupal CORE and Drupal Contrib
 Content-Type: text/plain; charset=utf-8
 
+On 03/21/2012 01:05 PM, Moritz Muehlenhoff wrote:
+> On Mon, Mar 19, 2012 at 12:33:37PM -0600, Kurt Seifried wrote:
+>> http://drupal.org/node/1168756
+>> SA-CORE-2011-001 - Drupal core - Multiple vulnerabilities
+>> Can't find any CVE's, do they need to be assigned?
+> 
+> Yes, there's been no CVE assignment so far. Debian fixed
+> this in a point update:
+> http://packages.qa.debian.org/d/drupal6/news/20110627T195934Z.html
+> 
+> Cheers,
+>         Moritz
 
-It is a potential privilege escalation since the pam module
-was not setting uid/gid(list) appropriately and the suid
-binary did not clear environment before exec'ing umount.
-I do not know whether MS_NOSUID was really needed (and maybe
-MS_NODEV is, but I was not able to create dev files).
-Unfortunally we found ecryptfs not really stable inside the kernel
-and Marcus is still rebooting :)
-
-Sebastian
-
-On Tue, Jul 10, 2012 at 08:07:28AM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 07/10/2012 05:33 AM, Sebastian Krahmer wrote:
-> > Hi,
-> > 
-> > We made a hardening patch for ecryptfs utils. It is finally ready, 
-> > using sysconf(_SC_NGROUPS_MAX) :)
-> > 
-> > I dont know whether a CVE is needed, maybe if you already ship it
-> > suid root (we do not).
-> > 
-> > It can be found here:
-> > 
-> > https://bugzilla.novell.com/show_bug.cgi?id=740110
-> > 
-> > Sebastian
-> 
-> Well what is the security vulnerability / trust boundary that can be
-> broken using this issue?
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
-> 
-> 
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-> 
-> iQIcBAEBAgAGBQJP/DcgAAoJEBYNRVNeJnmT3R8P/0cRjsBbmwVeMwKUbwzZPUrB
-> qIZcQEtx+VfQo/pWasY+DudbszVlg7ZKEkOkORMGPeiCYWofElWG3YFM0vzPQALA
-> gBLCXOUYzGqZ9ZF754hizqSYOhPa9aQHV0yB/NPlYGhl1MZSjQx6/brsYs1EDOZU
-> Kn3bslL3vgp3mzhoDjTKyiLjndaVlFagQVlmcgXlm6YtzkFFkqCTdOU1IU0vElAO
-> hgeWzqNXH1ykEDxY6cZCpog+t28VhpbPG87qA2C2ErgZdfTulCaip4LsfP5B5fGY
-> nW0Z1vfFRn+2b3iR7YZBmcVbzgO2FUEBhKTRgKWyhDZ4Lee298CKm47dxXDt/T0Q
-> PB5Q1a9oJKCcitApyYKqK5f3kZ82uPJJt2jorVRN41ppBIGLbKQurGlYZUXb62Xc
-> Lyv4rxL+4/ejJXi6XQCTrHzzJf35Y9JSFsvO0bqXR/xwHtumWs44p6SDW34xtp5y
-> Vif1wrYqUUAzKEZkN7w8kzQA3Sz6hXOBiadqcNf7qkaGQ/0HlIfGB3abo7/OlJVB
-> 2Jf+HH5bM+5oiXA5fKwqq07dNUj9sGptOmuZVhfFsOE1H46WCKqhBGBgsanU94x9
-> W/3IUyq4wEAH3lJQypXh65kZoJGc+5CDeypQ2eo9/RI1jmrjxIR5GeN/WVcPRJtY
-> MByzHCJ43wPYEVl25/eV
-> =7ydb
-> -----END PGP SIGNATURE-----
+I'm planning to do a mass CVE assignment for all the oustanding Drupal
+CORE/Contrib stuff this weekend.
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Kurt Seifried Red Hat Security Response Team (SRT)
