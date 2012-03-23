@@ -1,27 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/19/2
-Message-ID: <5007C6F4.4070602@redhat.com>
-Date: Thu, 19 Jul 2012 14:06:04 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/1
+Message-ID: <4F6BE404.8090409@redhat.com>
+Date: Thu, 22 Mar 2012 20:46:28 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE Request: quota: incorrect use of tcp_wrappers
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: MediaWiki security and maintenance release 1.18.2
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+On 03/22/2012 03:12 PM, Henri Salo wrote:
+> http://lists.wikimedia.org/pipermail/wikitech-l/2012-March/059230.html
+> 
+> I do not know if these do have CVE-identifiers already or not.
+> 
+> - Henri Salo
 
-rquotad seems to re-use good_client implementation from portmap.
-The way good_client called tcp_wrappers via hosts_ctl was not correct,
-possibly causing hosts access rules defined in hosts.{allow,deny} not to
-be honored.
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=566717
-
-Can a CVE id be please allocated to this issue? (Possibly 2010 i think)
-
-Thanks!.
+Emailed mediawiki to see if they already requested CVE's, but I suspect
+they did not. Will assign next week if they don't reply.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
-
+Kurt Seifried Red Hat Security Response Team (SRT)
