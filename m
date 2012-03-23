@@ -1,27 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/17
-Message-ID: <1326976959.2250.2.camel@scapa>
-Date: Thu, 19 Jan 2012 13:42:39 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/9
+Message-ID: <4F6C924F.9080501@redhat.com>
+Date: Fri, 23 Mar 2012 09:10:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Jan-Wijbrand Kolman <janwijbrand@...il.com>, Tres Seaver <tseaver@...ladion.com>, Zope Security Team <security-response@...e.org>, Radek Steiger <rsteiger@...hat.com>, Jan Pokorny <jpokorny@...hat.com>
-Subject: Re: CVE-2011-4924 assignment notification -- Zope2, Zope3: Incomplete upstream fix for CVE-2010-1104 issue
+Subject: Re: CVE-request: MyBB 1.6 <= SQL Injection
 Content-Type: text/plain; charset=utf-8
 
-On jeu., 2012-01-19 at 13:12 +0100, Jan Lieskovsky wrote:
-> A cross site scripting (XSS) flaw was found in the way Zope2 and Zope3
-> performed error messages sanitization. If a remote attacker could trick a user,
-> who was logged into Zope2, into visiting a specially-crafted URL, it would lead
-> to arbitrary web script execution in the context of user's Zope2 session. If a
-> remote attacker could trick a user, who was logged into Zope3, into examining
-> error entries for particular Zope3 instance, it would lead to arbitrary web
-> script execution in the context of user's Zope3 session. 
+On 03/23/2012 02:38 AM, Henri Salo wrote:
+> There was a request with same subject in here: http://seclists.org/oss-sec/2011/q1/545 (2011)
+> 
+> I don't think this one got assigned and I couldn't find the CVE-identifier so I am requsting it again.
+> 
+> - Henri Salo
 
-Does this mean CVE-2010-1104 applies to Zope3 too, or the fix for this
-CVE created CVE-2011-4924?
+Is there a link on the MyBB site describing this issue/update?
 
-Regards,
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Kurt Seifried Red Hat Security Response Team (SRT)
