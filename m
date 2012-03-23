@@ -1,62 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/11/3
-Message-ID: <4FD62999.5090209@redhat.com>
-Date: Mon, 11 Jun 2012 11:23:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/15
+Message-ID: <20120323190036.GE28663@suse.de>
+Date: Fri, 23 Mar 2012 20:00:36 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- libvirt: address bus= device= when identicle vendor ID/product IDs usb devices attached are ignored
+Subject: Re: Re: openssl security issue or not? (CVE Request?)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 06/11/2012 10:29 AM, Petr Matousek wrote:
-> Description of the problem: libvirt ignores address bus= device=
-> when identicle vendor ID/product IDs usb devices attached with
-> either virsh or virt-manager.
+On Fri, Mar 23, 2012 at 11:29:33AM -0500, Ivan Nestlerode wrote:
+> Marcus Meissner <meissner@...e.de> wrote on 03/23/2012 11:13:20 AM:
+> > From: Marcus Meissner <meissner@...e.de>
+> > To: OSS Security List <oss-security@...ts.openwall.com>
+> > Cc: Ivan Nestlerode/Cambridge/IBM@...US
+> > Date: 03/23/2012 11:13 AM
+> > Subject: openssl security issue or not? (CVE Request?)
+> > 
+> > Hi folks, Ivan,
+> > 
+> > This patch:
+> > http://cvs.openssl.org/chngview?cn=22161
+> > fixes a decrypt error return values and according to the changelog
+> > "detects symmetric crypto errors" 
+> > 
+> > I am not sure if this counts as security issue in the end, but "not
+> > detecting a failed decrypt" seems to me like it is a security issue.
+> > 
+> > Any comments?
+> > 
+> > Ciao, Marcus
+> > (also https://bugzilla.novell.com/show_bug.cgi?id=749210 ) 
 > 
-> As a consequence, wrong USB device can be assigned to the wrong
-> guest.
+> Marcus,
 > 
-> References and proposed upstream patch: 
-> https://www.redhat.com/archives/libvir-list/2012-April/msg01494.html
->
->  Thanks,
+> I don't think that this change needs separate tracking as a security issue 
+> since there is no guarantee that you can detect symmetric decryption 
+> errors anyway (it is not that hard for random gibberish to decrypt with 
+> correct PKCS#5 padding).  This change made its way into their CVS first, 
+> but it was actually meant to go in along with another change that is a 
+> security fix and already has a CVE entry associated with it 
+> (CVE-2012-0884):
+> http://cvs.openssl.org/chngview?cn=22238
+> 
+> If a Linux distribution picks up the fix for CVE-2012-0884 then they will 
+> want to pick up change 22161 at the same time since the fix for the 
+> security vulnerability will generally cause symmetric decryption errors 
+> when it kicks in and things get very confusing for the end user without 
+> change 22161 (they will frequently get junk results with a success return 
+> value instead of an error return value).  Both were reported to OpenSSL at 
+> the same time, but the CVE change was submitted later because it was more 
+> complicated and required more review and discussion.
+> 
+> Hope that helps,
 
-Although there is no direct and simple way to trigger this behavior
-(short of having physical access) a security boundary is crossed. An
-example scenario: a cloud provider offers to attach a USB drive to the
-VM so you can export the data to the HD which is then fedexed to the
-customer overnight, or stored separately as a backup, etc. (lets face
-it, 3tb delivered overnight is a lot faster than any internet link
-I'll ever have).
+Yes, thanks Ivan and Jan!
 
-The problem is that when USB devices are attached it's possible for
-the specification of which VM the device is supposed to be attached to
-to be ignored, resulting in it being attached to a different VM,
-giving it direct access to the hardware.
-
-Please use CVE-2012-2693 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP1imZAAoJEBYNRVNeJnmT2bEQAI8YlBBK0Rq98bHOxVFrUBdW
-FTC1QJjFjQBVN3tG3JasMP6L38mvqeyBPbz+TxfSK8WXzs2VO+hw5ZNoFodLZ1VQ
-r01xJmXelX1Cdxu+jFngJhzipGLH0TCjXQFbhTshdA7NxwFhFxdYLe8IJrR+QXWt
-coIhpJbHSOa3XblRKDwOT4qcgZCW3/hvSJm9GuMqDNGgkG5ieU9mCkoWFBOYIfuc
-iW+sESS+DTtL8utL1S8KulxXdsTVutpDJf9Iu3Tq1JeSv02t/l0hFASCymX0kRZS
-e1wrXw9sKhrS1HVRkAW7JJIx2g1nnnatWsdIk7Av9HU1ySDhhpSvJ9nz9btoX6ev
-9rhdpwO9RbMqkGiY6KBtIDSGQLwYmBYZcoCFwpKiaZ08pa16pBeoSh4K/9GpVYw+
-+Q1nr0yvFWCSzD2oLjZzvRzQnjhDfw9zXbmRhx5EqmOEy//VjPGLnNT9BybJ0Va7
-tVTaraRls1arA7hju6UPMd8vo9VqZq52h9fCr9+ja8MQOrkLoAG2LBdLgqMYwYv6
-bptMJBGhyJEithT/qZAZnIxk901L3xAVH2oY8PuEsi/L8jFHt92wEZ3scIbJESrG
-SVcHkt5HcRv9iuoUwCLBdlCAT9BzTRQGBG96a/s/hKkyVhj8kprYTwYPrfJbdjf+
-rcyx+D/2dfEbj5YcOj3q
-=UdD1
------END PGP SIGNATURE-----
+Ciao, Marcus
