@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/16
-Message-ID: <50CA243D.9040900@fifthhorseman.net>
-Date: Thu, 13 Dec 2012 13:53:49 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/16
+Message-ID: <4F6CC602.1060203@redhat.com>
+Date: Fri, 23 Mar 2012 12:50:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, Timo Warns <Warns@...-Sense.DE>
-Subject: Re: Remote file inclusion by office applications
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: ImpressPages CMS Unspecified Remote Code Execution
 Content-Type: text/plain; charset=utf-8
 
-On 12/13/2012 11:44 AM, Kurt Seifried wrote:
-> I'm kind of leaning towards classifying this as a security issue since
-> I expected there is some way to disable it or at least tell it to
-> prompt me when a document tries to go get an external data source
-> (e.g. "this document contains external data, the URLs/file paths it is
-> trying to  reference are: [list of locations]") but apparently there
-> is no way to disable/have this prompt (at least that I can find in
-> LibreOffice)?
+On 03/23/2012 12:08 AM, Henri Salo wrote:
+> Hello,
+> 
+> This does not seem to be have CVE-identifier yet, which should be 2011.
+> 
+> http://seclists.org/bugtraq/2011/Sep/156
+> http://www.impresspages.org/news/impresspages-1-0-13-security-release/
+> http://osvdb.org/show/osvdb/75783
+> http://secunia.com/advisories/46193/
+> 
+> - Henri Salo
 
-I think your assessment is correct.  I've just now made an ODT file that
-libreoffice uses to not only hit the network for a PNG (denial of
-service attacks, remote exploitation of other flaws in libpng or in LO
-itself, virus scanner bypass, etc), but one that will include and render
-~/.ssh/id_rsa as a text/plain document.  This seems like it could be
-done against any local privileged file.
+affects v1.0.12, fixed in v1.0.13
 
-For local file inclusion, libreoffice at leasts prompts me with:
+Please use CVE-2011-4943 for this issue.
 
------------
- This document contains one or more links to external data.
 
- Would you like to change the document, and update all links to get the
- most recent data?
-
- [Yes] [No]
------------
-
-but it doesn't tell me what those documents are. And given the UI
-history of people clicking through popups they don't understand, i'm not
-convinced that this popup is going to do anything to prevent remote
-disclosure (it even defaults to "Yes").  When i say "no" on the prompt,
-it goes out and fetches networked URLs anyway, so i assume this prompt
-is supposed to just refer to local "external data".
-
-	--dkg
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
