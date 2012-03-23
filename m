@@ -1,46 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/2
-Message-ID: <5062A892.6070105@redhat.com>
-Date: Wed, 26 Sep 2012 12:32:42 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: Sebastian Krahmer <krahmer@...e.de>
-CC: oss-security@...ts.openwall.com, Tom Lane <tgl@...hat.com>
-Subject: Re: CVE Request: libtiff: Heap-buffer overflow when processing a TIFF image with PixarLog Compression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/13
+Message-ID: <4F6CC567.1060302@redhat.com>
+Date: Fri, 23 Mar 2012 12:48:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE Request: Geeklog 1.7.1 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 09/26/2012 12:27 PM, Sebastian Krahmer wrote:
+On 03/23/2012 02:56 AM, Henri Salo wrote:
+> Original request here: http://seclists.org/oss-sec/2011/q1/547
 > 
-> This conclusion leaves me a bit puzzled. :) Even just "a few bytes" are
-> often enough to trigger code exec. In particular if you get a big bounty for it.
->
-Sure :)
+> http://www.geeklog.net/article.php/geeklog-1.7.1sr1
+> http://project.geeklog.net/cgi-bin/hgwebdir.cgi/geeklog/rev/20a98e6bab20
+> http://yehg.net/lab/pr0js/advisories/[geeklog1.7.1]_cross_site_scripting
+> http://osvdb.org/show/osvdb/70245
+> http://secunia.com/advisories/42775/
+> 
+> This might have been left unassigned because of 'admin/configuration.php', but at least Geeklog thinks this as important security vulnerability. Needs 2010 identifier, thanks.
+> 
+> - Henri Salo
 
-> As well as the patch:
-> 
-> 
-> -	sp->tbuf = (uint16 *) _TIFFmalloc(tbuf_size);
-> +	sp->tbuf = (uint16 *) _TIFFmalloc(tbuf_size+sizeof(uint16)*sp->stride);
-> 
-> If there were sizeof(uint16)*sp->stride bytes missing before, this is really
-> more than just a few bytes. I checked that the mult cannot overflow,
-> as sp->stride seems to be uint16. However, I think the add can actually wrap,
-> (at least on ILP32) as tbuf_size can be 0xffffffff or so.
-> I think the patch is broken and just shifts the hole.
-> 
-It seems that sp->stride is at most td_samplesperpixel.
-
-Re-thinking about the patch, it does seem a bit broken now.
-Tom,
-Any inputs on this?
-
-
-> Plus, there are more occurences of _TIFFmalloc(tbuf_size) inside this file,
-> one in PixarLogSetupEncode() and one in PixarLogSetupDecode() (but it might be
-> that the Encode can never be triggered like so by attackers).
-> 
-> Sebastian
-> 
-
+Please use CVE-2011-4942 for this issue.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Kurt Seifried Red Hat Security Response Team (SRT)
