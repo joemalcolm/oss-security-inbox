@@ -1,23 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/03/3
-Message-ID: <20120803131217.GA16635@suse.de>
-Date: Fri, 3 Aug 2012 15:12:17 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: gnome-screensaver 3.4.2 locked only active screen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/12
+Message-ID: <OF5EE2B5C5.F11C9695-ON862579CA.005960A4-862579CA.005A991A@us.ibm.com>
+Date: Fri, 23 Mar 2012 11:29:33 -0500
+From: Ivan Nestlerode <inestlerode@...ibm.com>
+To: Marcus Meissner <meissner@...e.de>
+Cc: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: openssl security issue or not? (CVE Request?)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Marcus Meissner <meissner@...e.de> wrote on 03/23/2012 11:13:20 AM:
+> From: Marcus Meissner <meissner@...e.de>
+> To: OSS Security List <oss-security@...ts.openwall.com>
+> Cc: Ivan Nestlerode/Cambridge/IBM@...US
+> Date: 03/23/2012 11:13 AM
+> Subject: openssl security issue or not? (CVE Request?)
+> 
+> Hi folks, Ivan,
+> 
+> This patch:
+> http://cvs.openssl.org/chngview?cn=22161
+> fixes a decrypt error return values and according to the changelog
+> "detects symmetric crypto errors" 
+> 
+> I am not sure if this counts as security issue in the end, but "not
+> detecting a failed decrypt" seems to me like it is a security issue.
+> 
+> Any comments?
+> 
+> Ciao, Marcus
+> (also https://bugzilla.novell.com/show_bug.cgi?id=749210 ) 
 
-(FYI ... if no one shipped g-s 3.4.2, it probably does not need a CVE.
- openSUSE 12.2 fixed it during development.)
+Marcus,
 
-gnome-screensaver 3.4.2 (the only version affected) had the screenlock
-on multi-display settings only locking the screen with active focus.
-The other displayscreens staid unlocked and usable.
+I don't think that this change needs separate tracking as a security issue 
+since there is no guarantee that you can detect symmetric decryption 
+errors anyway (it is not that hard for random gibberish to decrypt with 
+correct PKCS#5 padding).  This change made its way into their CVS first, 
+but it was actually meant to go in along with another change that is a 
+security fix and already has a CVE entry associated with it 
+(CVE-2012-0884):
+http://cvs.openssl.org/chngview?cn=22238
 
-https://bugzilla.gnome.org/679441
+If a Linux distribution picks up the fix for CVE-2012-0884 then they will 
+want to pick up change 22161 at the same time since the fix for the 
+security vulnerability will generally cause symmetric decryption errors 
+when it kicks in and things get very confusing for the end user without 
+change 22161 (they will frequently get junk results with a success return 
+value instead of an error return value).  Both were reported to OpenSSL at 
+the same time, but the CVE change was submitted later because it was more 
+complicated and required more review and discussion.
 
-Ciao, Marcus
--- 
-Open Linux Security Engineer Position at SUSE: http://bit.ly/Li4RbS
+Hope that helps,
+-Ivan
