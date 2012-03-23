@@ -1,48 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/8
-Message-Id: <FBBBDC24-23AF-4361-8EF4-83DCF41A1AD3@gmail.com>
-Date: Fri, 16 Mar 2012 00:20:37 -0400
-From: Mark Stanislav <mark.stanislav@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE Requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/8
+Message-ID: <4F6C922A.9000206@redhat.com>
+Date: Fri, 23 Mar 2012 09:09:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: OpenKM 5.1.7 Privilege Escalation / OS Command Execution (XSRF based)
 Content-Type: text/plain; charset=utf-8
 
-None of the details of these issues have been publicly discussed or released as I am trying (without much success) to allocate a CVE prior to sending out a coordinated advisory including that identifier as I always have done and as the mitre site indicates to do.
-
-There are no reference links to provide and I am not publicizing details on this list before the developer can be informed of the CVE.
-
-I'm happy to take this off list as I am sure no one cares about any of this discussion but as I tried to do this privately initially before being told to email the list instead, I'm hesitant to bother.
-
-Follow-up off list if you like, else I'll just skip this process and release advisories without them.
-
-Thanks for your time,
-
--Mark
-
-On Mar 15, 2012, at 11:41 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-
-> On 03/15/2012 09:00 PM, Mark Stanislav wrote:
->> 
->> 
->> On Mar 15, 2012, at 10:47 PM, Kurt Seifried <kseifried@...hat.com> wrote:
->> 
->>> On 03/15/2012 07:30 PM, Mark Stanislav wrote:
->>>> #1,2,3 are all included
->>> 
->>> ? Sorry but I have literally no idea what that means.
->> 
->> You gave be a numbered list of requirements, I was confirming the existence of those first three for each vulnerability were found with my original email to the list.
+On 03/23/2012 04:00 AM, Henri Salo wrote:
+> Can I get CVE-identifiers for these two security vulnerabilities?
 > 
-> I need the actual info, please refer to:
+> http://osvdb.org/show/osvdb/78105 COMPASS-2012-001
+> http://osvdb.org/show/osvdb/78106 COMPASS-2012-002
 > 
-> http://www.openwall.com/lists/oss-security/2012/03/16/2
-> http://www.openwall.com/lists/oss-security/2012/03/15/9
-> http://www.openwall.com/lists/oss-security/2012/03/14/6
-> http://www.openwall.com/lists/oss-security/2012/03/12/7
-> 
-> etc.
-> 
-> 
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+> - Henri Salo
+
+I'm going to need some original vendor information (name, site, etc.).
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
