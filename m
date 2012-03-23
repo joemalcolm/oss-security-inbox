@@ -1,40 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/5
-Message-ID: <4F4CFFBD.5000906@redhat.com>
-Date: Tue, 28 Feb 2012 09:24:29 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/5
+Message-ID: <20120323085658.GB24018@kludge.henri.nerv.fi>
+Date: Fri, 23 Mar 2012 10:56:58 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>, Mateusz Goik <mateusz.goik@...antsoft.pl>, "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>, Radoslaw Lisowski <radoslaw.lisowski@...il.com>, kontakt@...antsoft.pl
-Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+Subject: CVE Request: Geeklog 1.7.1 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 02/27/2012 02:09 PM, Rafał Malinowski wrote:
-> Affected versions: 0.9.0 - 0.11.0 (0.11.1 is not vulnerable)
-> 
-> Vulnerability:
-> 
-> Any javascript code could be executed from Kadu History Window in
-> following conditions:
-> * application owner send a prepared SMS and content of this SMS was
-> stored in history file
-> * owner of application has an attacker on his buddy list, attacker
-> sets a prepared presence message/status description and this presence
-> message/status description is stored in history file
-> 
-> and then:
-> 
-> * owner of application views given SMS or presence message/status
-> description in history window
-> 
-> 
-> Javascript code was allowed to:
-> * load any file from WEB, by <img> or <script> tags, even <object>
-> with flash files were possible
-> * read files from local file system
-> * (not confirmed by myself) write files to local file system
-> * show javascript windows (like alert)
+Original request here: http://seclists.org/oss-sec/2011/q1/547
 
-Please use CVE-2012-1091 for this issue.
+http://www.geeklog.net/article.php/geeklog-1.7.1sr1
+http://project.geeklog.net/cgi-bin/hgwebdir.cgi/geeklog/rev/20a98e6bab20
+http://yehg.net/lab/pr0js/advisories/[geeklog1.7.1]_cross_site_scripting
+http://osvdb.org/show/osvdb/70245
+http://secunia.com/advisories/42775/
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+This might have been left unassigned because of 'admin/configuration.php', but at least Geeklog thinks this as important security vulnerability. Needs 2010 identifier, thanks.
+
+- Henri Salo
