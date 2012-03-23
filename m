@@ -1,79 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/10/6
-Message-ID: <20120910204838.GD13402@redhat.com>
-Date: Mon, 10 Sep 2012 14:48:38 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Tavis Ormandy <taviso@...xchg8b.com>
-Subject: Re: note on gnome shell extensions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/11
+Message-ID: <4F6CA42F.5040306@redhat.com>
+Date: Fri, 23 Mar 2012 17:26:23 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Marcus Meissner <meissner@...e.de>
+CC: oss-security@...ts.openwall.com, inestlerode@...ibm.com, Tomas Mraz <tmraz@...hat.com>
+Subject: Re: openssl security issue or not? (CVE Request?)
 Content-Type: text/plain; charset=utf-8
 
-* [2012-09-08 18:14:10 -0600] Kurt Seifried wrote:
+Hi Marcus,
 
->-----BEGIN PGP SIGNED MESSAGE-----
->Hash: SHA1
+   below is the previous reply from Tomas Mraz, Red Hat openssl package
+maintainer due these:
+http://cvs.openssl.org/chngview?cn=22161
+https://bugzilla.novell.com/show_bug.cgi?id=749210
+
+>> I do not think this is really security sensitive bug - at worst the
+>> decryption output will be empty or some bogus gibberish. Decryption is
+>> not authentication on itself.
+
+Hope this helps.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+On 03/23/2012 05:13 PM, Marcus Meissner wrote:
+> Hi folks, Ivan,
 >
->On 09/08/2012 04:36 PM, Tavis Ormandy wrote:
->> List, I just installed Fedora 17 on a workstation. While
->> researching how to upgrade gnome 3 to version 2, I noticed it
->> installed a browser extension called "Gnome Shell Integration".
->>
->> $ rpm -qf
->> /usr/lib64/mozilla/plugins/libgnome-shell-browser-plugin.so
->> gnome-shell-3.4.1-5.fc17.x86_64
->>
->> The NPPVpluginDescriptionString states "It can be used only by
->> extensions.gnome.org", but I happen to know that is a tricky thing
->> to get right.
+> This patch:
+> http://cvs.openssl.org/chngview?cn=22161
+> fixes a decrypt error return values and according to the changelog
+> "detects symmetric crypto errors"
 >
->Erk yeah not good.
+> I am not sure if this counts as security issue in the end, but "not
+> detecting a failed decrypt" seems to me like it is a security issue.
 >
->> The plugin incorrectly trusted hostname, and initialized. As far as
->> I can tell, the plugin will let you install new shell extensions, I
->> don't know what the impact of that is, can they contain native
->> code?
->>
->> Tavis.
+> Any comments?
 >
->Good news: In theory at least Gnome shell extensions are only
->JavaScript and (optional) CSS using the Gjs bindings, the JavaScript
->itself is run using SpiderMonkey. So no native code execution as far
->as I know.
->
->Bad news: It looks like it has bindings to run command lines from
->within a Gnome Shell Extensions:
->
->http://developer.gnome.org/glibmm/unstable/group__Spawn.html
->http://stackoverflow.com/questions/9606404/gnome-shell-extensions-stdout-from-glib-iochannel
+> Ciao, Marcus
+> (also https://bugzilla.novell.com/show_bug.cgi?id=749210 )
 
-SUSE has some interesting info in their bug:
-
-https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
-
-By the sounds of it, this should be harmless.  Vincent Untz says that
-the browser plugin doesn't actually install the extensions, it's passed
-to another process via a dbus call to gnome-shell, which sends the uuid
-of the extension to the extensions.gnome.org web site in order to
-download the extension.
-
-See:
-
-http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
-http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
-
-which is:
-
-let message = Soup.form_request_new_from_hash('GET', REPOSITORY_URL_INFO, params);
-
-And REPOSITORY_URL_INFO is hardcoded earlier:
-
-const REPOSITORY_URL_BASE = 'https://extensions.gnome.org';
-const REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE + '/download-extension/%s.shell-extension.zip';
-const REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE + '/extension-info/';
-const REPOSITORY_URL_UPDATE   = REPOSITORY_URL_BASE + '/update-info/';
-
-I don't think this is something that can be exploited, based on the
-above.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
