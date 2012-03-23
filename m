@@ -1,35 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/9
-Message-ID: <4F1F1706.9080903@redhat.com>
-Date: Tue, 24 Jan 2012 13:39:34 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/2
+Message-ID: <4F6C07F5.7000606@redhat.com>
+Date: Thu, 22 Mar 2012 23:19:49 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-Subject: Re: XSLT issue in MoinMoin
+To: William Pitcock <nenolod@...eferenced.org>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: atheme.org Security Advisory ASA-2012-03-01: Improper cleanup of CertFP entries may result in undefined behaviour
 Content-Type: text/plain; charset=utf-8
 
-On 01/24/2012 01:07 PM, Nicolas Grégoire wrote:
-> Hello,
+On 03/22/2012 12:16 PM, William Pitcock wrote:
+> Hi,
 > 
-> some vulnerabilities have been published with version 1.9.3 of
-> MoinMoin : http://moinmo.in/SecurityFixes
+> On Wednesday, March 21, 2012, Kurt Seifried <kseifried@...hat.com
+> <mailto:kseifried@...hat.com>> wrote:
+>> On 03/21/2012 12:55 PM, William Pitcock wrote:
+>>> atheme.org <http://atheme.org> Security Advisory
+>>> ASA-2012-03-01
+>>>
+>>> Original release: March 20, 2012.
+>>> Last update: March 20, 2012.
+>>>
+>>> Copyright (c) 2012 atheme.org <http://atheme.org> and it's contributors.
+>>> All rights reserved.
+>>>
+>>> Distribution of this document in full, or in part is allowed,
+>>> provided that it remains in unmodified form and the above
+>>> copyright notice and this permission notice remain unchanged.
+>>
+>> That makes no sense "or in part is allowed, provided that it remains in
+>> unmodified form" and I just violated this replying to you I guess.
 > 
-> The XSS already has a CVE but not the XSLT issue. This issue is very
-> similar to CVE-2012-0057 patched in PHP 5.3.9 (except the XSLT engine
-> which is here '4Suite').
+> Yes we should probably change our language for future advisories.
 > 
-> The patch is simply a documentation update, given that 4Suite (afaik)
-> doesn't allow to desactivate its extensions :
-> http://hg.moinmo.in/moin/1.9/rev/99e2309a7ec0
+>>
+>> Also did you want a CVE # for this issue?
 > 
-> Regards,
-> Nicolas Grégoire
+> That would be useful -- I know that suse, debian and gentoo carry the
+> software as part of their IRC server packages.
+> 
+> William
 
-How exactly does the attacker get access to the filesystem using XSLT?
-Does everything using 4Suite have this issue?
+Please use CVE-2012-1576 for this issue.
 
-
-
---
-
--- Kurt Seifried / Red Hat Security Response Team
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
