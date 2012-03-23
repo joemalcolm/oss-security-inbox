@@ -1,133 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/6
-Message-Id: <92D81327-7B27-46CC-A97F-01C612305152@gmail.com>
-Date: Thu, 15 Mar 2012 23:00:42 -0400
-From: Mark Stanislav <mark.stanislav@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE Requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/14
+Message-ID: <4F6CC70E.2050201@redhat.com>
+Date: Fri, 23 Mar 2012 12:55:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Todd C. Miller" <Todd.Miller@...rtesan.com>
+Subject: Re: CVE for OpenBSD random() bug?
 Content-Type: text/plain; charset=utf-8
 
-
-
-On Mar 15, 2012, at 10:47 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-
-> On 03/15/2012 07:30 PM, Mark Stanislav wrote:
->> #1,2,3 are all included
+On 03/22/2012 07:24 AM, Todd C. Miller wrote:
+>> It would seem this fits into the "weaker then advertised" class of
+>> security problem. Thoughts/comments (anyone strongly against this)?
 > 
-> ? Sorry but I have literally no idea what that means.
-
-You gave be a numbered list of requirements, I was confirming the existence of those first three for each vulnerability were found with my original email to the list.
-
+> Since random(3) is not a cryptographically secure random function
+> I'm not sure that is makes sense to assign a CVE.
 > 
->> #4, each project is linked to where the code (both vulnerable and/or
->> fixed) lives
->> 
->> #5...
->> phpMoneyBooks, 1.0.2 and potentially prior versions
->> phpGradeBook, 1.9.4 and potentially prior versions
->> phpPaleo, 4.8b155 and potentially prior versions
->> hbportal, 0.1 and potentially prior versions
->> eticketing, no version numbering used *shrug*
->> 
->> #6 An e-mail was sent to cve@...re.org <mailto:cve@...re.org> 7 days ago
->> without response
->> #7 All open source
->> #8 Not embargoed
+> I suppose it really depends on the likelihood of someone calling
+> srandom(0); I don't know why anyone would do that on purpose.  If
+> you must use random(3) instead of something stronger like arc4random(3),
+> it is possible to seed the PRNG via /dev/arandom using srandomdev(3)
+> or set the seed state manually via initstate(3), both of which
+> provide more than just 32 bits of seed data.
 > 
-> I need the actual information for each one. Check out the nginx CVE
-> request today for a good example.
+>  - todd
 
-What "actual information"? Anything that was asked for was given between my initial and secondary email.
+I guess if no-one thought it would be used insecurely it wouldn't need
+to be fixed ;). Also not all security uses of randomness are strictly
+crypto related (e.g. array seeds to defeat HashDoS, etc.).
 
-I've been allocated 9 CVEs over the past two years and never done any of this extra detail prior to releasing an advisory. That's not a commentary on you as a CNA but this process is quite involved relative to my previous experiences. Not sure what the confusion stems from...
+Please use CVE-2012-1577 for this issue.
 
--Mark
 
-> 
->> I think that should do it.
->> 
->> -Mark
->> 
->> On Thu, Mar 15, 2012 at 8:22 PM, Kurt Seifried <kseifried@...hat.com
->> <mailto:kseifried@...hat.com>> wrote:
->> 
->>    On 03/15/2012 01:18 PM, Mark Stanislav wrote:
->>> Howdy,
->>> 
->>> I was looking to receive CVEs for the following...
->>> 
->>> 1) phpMoneyBooks (http://phpmoneybooks.com/) has an
->>    unauthenticated local
->>> file inclusion (LFI) vulnerability
->>> * Notified, Response Received, and Patch Released
->>> 
->>> 2) phpGradeBook (http://phpgradebook.com/) has unauthenticated SQL
->>    Database
->>> Exportation
->>> * Notified, Response Received, and Patch Released
->>> 
->>> 3) phpPaleo (http://sourceforge.net/projects/phppaleo/) has an
->>> unauthenticated local file inclusion (LFI) vulnerability
->>> * Notified, Response Received, and Patch Released
->>> 
->>> 4) hbportal (http://sourceforge.net/projects/hbportal/) has a
->>    POST-based
->>> SQL injection vulnerability
->>> * Notified
->>> 
->>> 5) e-ticketing (http://sourceforge.net/projects/e-ticketing/) has a
->>> POST-based SQL injection vulnerability
->>> * Notified & Response Received
->>> 
->>> Thanks!
->>> 
->>> -Mark
->>> 
->>    Removed the "no" this time to avoid ambiguity=)
->> 
->>    More info would be helpful. Some draft guidelines:
->> 
->>    Information for CVE request, REQUIRED:
->> 
->>    1) Email address of requester (so we can contact them)
->>    2) Software name and optionally vendor name
->>    3) At least one of (to determine is this a security issue):
->>     1. Type of vulnerability
->>     2. Exploitation vectors
->>     3. Attack outcome
->>    4) For Open Source at least one of:
->>     1. Link to vulnerable source code or fix
->>     2. Link to source code change log
->>     3. Link to security advisory
->>     4. Link to bug entry
->>     5. Request comes from project member (a.k.a. "trust me, it's a
->>    problem")
->>    5) Affected version(s) (3.2.4, 3.x, current version, all current
->>    releases, something)
->>    6) Whether or not this has been previously requested (i.e. on OSS-Sec or
->>    to cve-assign)
->>    7) Is this an Open Source or commercial software request
->>    8) Is this an embargoed issue (if yes and commercial: send to
->>    cve-assign, if yes and open source: send to vs-sec?)
->>    9) IF multiple issues are listed please list affected versions for each
->>    issue and/or who reported them (so we can determine CVE split/merge).
->> 
->>    Information for CVE request, REQUESTED:
->> 
->>    1) More of the above information of course
->>    2) Software version(s) fixed (if available)
->>    3) For closed source any of the information from "For Open Source at
->>    least one of:"
->>    4) Any additional information
->> 
->> 
->>    --
->> 
->>    -- Kurt Seifried / Red Hat Security Response Team
->> 
->> 
-> 
-> 
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
