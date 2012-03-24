@@ -1,90 +1,156 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/11/2
-Message-ID: <509F5135.6030203@redhat.com>
-Date: Sun, 11 Nov 2012 00:18:13 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/24/1
+Message-ID: <4F6D51AB.2070507@redhat.com>
+Date: Fri, 23 Mar 2012 22:46:35 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>, 692791@...s.debian.org, team@...urity.debian.org, cups-security@...le.com
-Subject: Re: Privilege escalation (lpadmin -> root) in cups
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, reedy@...imedia.org
+Subject: CVEs for MediaWiki security and maintenance release 1.18.2
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+These issues affect Mediawiki 1.18.1 (just stating the obvious =).
 
-On 11/10/2012 05:49 AM, Yves-Alexis Perez wrote:
-> Hi,
-> 
-> a Debian user reported a bug in our BTS concerning cupsd. The bug
-> is available at
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692791 and 
-> upstream bug at http://www.cups.org/str.php?L4223 (restricted
-> because it's tagged security).
-> 
-> I'm unsure right now if it's an upstream issue or specific to
-> Debian.
+> I would like to announce the release of MediaWiki 1.18.2. Five security
+> issues were discovered.
+>
+> It was discovered that the api had a cross-site request forgery (CSRF)
+> vulnerability in the block/unblock modules. It was possible for a user
+> account with the block privileges to block or unblock another user without
+> providing a token.
+>
+> For more details, see https://bugzilla.wikimedia.org/show_bug.cgi?id=34212
 
-On Red Hat Enterprise 6 and Fedora 16 the file is owned by root:sys,
-and the cupsd.conf defaults to:
-
-<Location /admin/conf>
-  AuthType Default
-  Require user @SYSTEM
-  Order allow,deny
-</Location>
-
-so that should be like "root", "bin" and "adm" so yeah it would appear
-to be vendor specific.
-
-> Basically, members of the lpadmin group (which is the group having
-> admin rights to cups, meaning they're supposed to be able to
-> add/remove printeers etc.) have admin access to the web interface,
-> where they can edit the config file and set some “dangerous”
-> directives (like the log filenames), which enable them to read or
-> write files as the user running the cupsd webserver.
-> 
-> In Debian case at least, it's run as root, meaning we have a
-> privilege escalation issue from lpadmin group to root.
-
-I think as a rule cupsd runs as root, to touch the various files/dirs/etc.
-
-> A fix would be to not run cupsd web server as root, and maybe to 
-> restrict it to some kind of chroot so it doesn't have access to 
-> sensitive files
-
-Tricky, /dev/*, log dirs, etc. Probably better to just use a print
-specific user/group and make all the standard locations owned by it,
-and require the admin to setup anything like say
-/non-standard/log/printers/ and so on.
-
-> Can a CVE be allocated for this?
-
-Please use CVE-2012-5519 for this issue. Also if other vendors could
-check the permissions/configs/etc. and reply if they are vulnerable
-that would be good.
-
-> Regards,
-> 
+Please use CVE-2012-1578 for this issue.
 
 
+> It was discovered that the resource loader can leak certain kinds of
+private
+> data across domain origin boundaries, by providing the data as an
+executable
+> JavaScript file. In MediaWiki 1.18 and later, this includes the
+leaking of CSRF
+> protection tokens. This allows compromise of the wiki's user accounts,
+say by
+> changing the user's email address and then requesting a password reset.
+>
+> For more details, see https://bugzilla.wikimedia.org/show_bug.cgi?id=34907
 
-- -- 
+Please use CVE-2012-1579 for this issue.
+
+
+> Jan Schejbal of Hatforce.com discovered a cross-site request forgery
+(CSRF)
+> vulnerability in Special:Upload. Modern browsers (since at least as
+early as
+> December 2010) are able to post file uploads without user interaction,
+> violating previous security assumptions within MediaWiki.
+>
+> Depending on the wiki's configuration, this vulnerability could lead
+to further
+> compromise, especially on private wikis where the set of allowed file
+types is
+> broader than on public wikis. Note that CSRF allows compromise of a
+wiki from
+> an external website even if the wiki is behind a firewall.
+>
+> For more details, see https://bugzilla.wikimedia.org/show_bug.cgi?id=35317
+
+Please use CVE-2012-1580 for this issue.
+
+
+> George Argyros and Aggelos Kiayias reported that the method used to
+generate
+> password reset tokens is not sufficiently secure. Instead we use
+various more
+> secure random number generators, depending on what is available on the
+> platform. Windows users are strongly advised to install either the openssl
+> extension or the mcrypt extension for PHP so that MediaWiki can take
+advantage
+> of the cryptographic random number facility provided by Windows.
+>
+> Any extension developers using mt_rand() to generate random numbers in
+contexts
+> where security is required are encouraged to instead make use of the
+> MWCryptRand class introduced with this release.
+>
+> For more details, see https://bugzilla.wikimedia.org/show_bug.cgi?id=35078
+
+Please use CVE-2012-1581 for this issue.
+
+
+> A long-standing bug in the wikitext parser (bug 22555) was discovered
+to have
+> security implications. In the presence of the popular CharInsert
+extension, it
+> leads to cross-site scripting (XSS). XSS may be possible with other
+extensions
+> or perhaps even the MediaWiki core alone, although this is not
+confirmed at
+> this time. A denial-of-service attack (infinite loop) is also possible
+> regardless of configuration.
+>
+> For more details, see https://bugzilla.wikimedia.org/show_bug.cgi?id=35315
+
+Please use CVE-2012-1582 for this issue.
+
+
+> Full release notes:
+>
+https://gerrit.wikimedia.org/r/gitweb?p=mediawiki/core.git;a=blob_plain;f=RE
+> LEASE-NOTES-1.18;hb=1.18.2
+> https://www.mediawiki.org/wiki/Release_notes/1.18
+>
+> Co-inciding with these security releases, the MediaWiki source code
+> repository has
+> moved from SVN (at
+https://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3)
+> to Git (https://gerrit.wikimedia.org/gitweb/mediawiki/core.git). So
+the relevant
+> commits for these releases will not be appearing in our SVN
+repository. If you use
+> SVN checkouts of MediaWiki for version control, you need to migrate
+these to Git.
+> If you up are using tarballs, there should be no change in the process
+for you.
+>
+> Please note that any WMF-deployed extensions have also been migrated
+to Git
+> also, along with some other non WMF-maintained ones.
+>
+> Please bear with us, some of the Git related links for this release
+may not
+> work instantly, but should later on.
+>
+> To do a simple Git clone, the command is:
+> git clone https://gerrit.wikimedia.org/r/p/mediawiki/core.git
+>
+> More information is available at https://www.mediawiki.org/wiki/Git
+>
+> For more help, please visit the #mediawiki IRC channel on freenode.net
+> irc://irc.freenode.net/mediawiki or email The MediaWiki-l mailing list
+> at mediawiki-l at lists.wikimedia.org.
+>
+>
+> **********************************************************************
+> Download:
+> http://download.wikimedia.org/mediawiki/1.18/mediawiki-1.18.2.tar.gz
+>
+> Patch to previous version (1.18.1), without interface text:
+> http://download.wikimedia.org/mediawiki/1.18/mediawiki-1.18.2.patch.gz
+> Interface text changes:
+>
+http://download.wikimedia.org/mediawiki/1.18/mediawiki-i18n-1.18.2.patch.gz
+>
+> GPG signatures:
+> http://download.wikimedia.org/mediawiki/1.18/mediawiki-1.18.2.tar.gz.sig
+> http://download.wikimedia.org/mediawiki/1.18/mediawiki-1.18.2.patch.gz.sig
+>
+http://download.wikimedia.org/mediawiki/1.18/mediawiki-i18n-1.18.2.patch.gz.
+> sig
+>
+> Public keys:
+> https://secure.wikimedia.org/keys.html
+>
+>
+>
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQn1E1AAoJEBYNRVNeJnmTAk0QAJzI9+STxsFAL7YJm4obCLAY
-PhVVZYau19qUxMlMEIahfvcV46/36zYZPKYtNJCNtH7G30lPqC2gfZ3upNbri8+u
-71tZw15UMU6qAt/WNpfe9URjSNHRcO8tJ6OqN6u6er13YhdVkls6/Yudty1hAZoU
-wqd1xcBDv2uhaOsI5SswfSHC61JkBLRD7f13T6eWfSz5VT1TBwzJyP5yLTygx4jt
-wRnF/dBUSToSSqlLyP1gdSJWs6ksTtaVc7vHkCD2NVCZMPOn9lm9RiVj52Q1e/eR
-osbqbCwx8P3FC4w+MvN29+GbfRxdFA6ik4IHrpzR3Q+j105aQwIm0pubsENA2Lr3
-YHnvoD4oysfr3zUGYs5dbH1qITTw2t5c2oAP1wfG7C52jjblg3AaDDSgACyJFciQ
-kqcmSnDdBdcpc9dpGFo02LSOkh1jyVmBUCjTfXiNkpTtMv++CtgGdQM6j/UgAh1Q
-28yf5WhxuhdGPo28XNWbYj9ELAe4aDAssggTL+ysM8Xjc23hfBXowCNbkO4LqrlQ
-S14M04wi4eHrd8sj+DpzODm9ttOrnCCmzuNc5UBlxH2Mxk6LUVczU5RwDJ/wFPKA
-DoHFiCldax69zjRsLv/wgu3oNfn8Hi3Piyn/TfGmFEnnnejCUe5lDUIRzZgj+LoB
-62nQOCDF/bsxQWwJdDPl
-=zMgY
------END PGP SIGNATURE-----
