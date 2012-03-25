@@ -1,20 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/08/1
-Message-ID: <5021C00D.2020902@kde.org>
-Date: Tue, 07 Aug 2012 21:25:33 -0400
-From: Jeff Mitchell <mitchell@....org>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>,  Charlie Miller <charlie.miller@...uvant.com>, "Jorge Manuel B. S. Vicetto" <jmbsvicetto@...il.com>
-Subject: Re: CVE request for Calligra
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/25/1
+Message-ID: <20120325133706.GC17257@kludge.henri.nerv.fi>
+Date: Sun, 25 Mar 2012 16:37:06 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, lists@...g.net
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE-request: MyBB 1.6 <= SQL Injection
 Content-Type: text/plain; charset=utf-8
 
-On 08/06/2012 03:07 PM, Kurt Seifried wrote:
-> For this DOC rendering issue please use CVE-2012-3455 for KOffice and
-> please use 2012-3456 for Calligra.
+On Fri, Mar 23, 2012 at 09:10:07AM -0600, Kurt Seifried wrote:
+> On 03/23/2012 02:38 AM, Henri Salo wrote:
+> > There was a request with same subject in here: http://seclists.org/oss-sec/2011/q1/545 (2011)
+> > 
+> > I don't think this one got assigned and I couldn't find the CVE-identifier so I am requsting it again.
+> > 
+> > - Henri Salo
+> 
+> Is there a link on the MyBB site describing this issue/update?
+> 
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
 
-Great -- thanks to everyone who helped.
+It seems that this advisory http://seclists.org/oss-sec/2011/q1/545 is false-positive. Please see: http://dev.mybb.com/issues/1330
 
---Jeff
+#mybb in Freenode were helpful :)
 
+Could YEHG verify this?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
+- Henri Salo
