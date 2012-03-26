@@ -1,60 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/3
-Message-ID: <50B46C2E.4050204@redhat.com>
-Date: Tue, 27 Nov 2012 00:30:54 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/26/5
+Message-ID: <4F70BA18.1010606@redhat.com>
+Date: Mon, 26 Mar 2012 12:48:56 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...re.org
-Subject: Re: CVE Request: Python keyring
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fw@...eb.enyo.de>, smcv@...ian.org
+Subject: Re: CVE-2010 Request: quake3 / openarena-server: DDoS by processing 'getstatus' and 'rcon' packets
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 03/26/2012 07:09 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+>   yet in 2010 the following problem has been corrected in Quake3 /
+> OpenArena:
+> 
+>   A distributed denial of service flaw was found in the way Quake3 Arena /
+> OpenArena servers used to handle 'getstatus' and 'rcon' (remote command)
+> connectionless requests. A remote attacker could use this flaw to perform
+> distributed denial of service attack against the target server IP
+> gameserver by
+> spoofing certain packets.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=665656
+> [2] http://openarena.ws/board/index.php?topic=4391.0
+> [3] http://www.ioquake.org/forums/viewtopic.php?f=12&t=1694
+> [4] http://www.urbanterror.info/forums/topic/27825-drdos/
+> [5]
+> http://lists.ioquake.org/pipermail/ioquake3-ioquake.org/2012-January/004778.html
+> 
+> [6] https://bugzilla.redhat.com/show_bug.cgi?id=806898
+> 
+> Relevant upstream patch:
+> [7] http://icculus.org/pipermail/quake3-commits/2010-January/001679.html
+> 
+> Could you allocate a CVE-2010-* CVE identifier for this issue?
+> 
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> P.S.: There doesn't seem to be a CVE identifier for this issue yet:
+>       http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=quake3
+> 
+>       mentions various Quake3 related security flaws, but doesn't
+>       this concrete issue yet.
 
-On 11/16/2012 09:14 AM, Marc Deslauriers wrote:
-> Hello,
-> 
-> Python keyring before 0.10 created keyring files world-readable by
-> default.
-> 
-> Fixed in the following commit: 
-> https://bitbucket.org/kang/python-keyring-lib/changeset/049cd181470f1ee6c540e1d64acf1def7b1de0c1
->
->  Bugs:
-> 
-> https://bugs.launchpad.net/ubuntu/+source/python-keyring/+bug/1031465
->
-> 
-https://bitbucket.org/kang/python-keyring-lib/issue/67/set-go-rwx-on-keyring_passcfg
-> 
-> Could a CVE please be assigned to this issue?
-> 
-> Thanks,
-> 
-> Marc.
+Please use CVE-2010-5077 for this issue.
 
-Please use CVE-2012-5577 for the Python keyring 0.9.2 keyring file
-permissions, partially fixed in version 0.10
-
-
-- -- 
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQtGwtAAoJEBYNRVNeJnmT5xAQAI/KnhhVrUn4qMjixux9SQmI
-fvLnOwXmGrsOpW/N+1lgDa/LlPhAjPYhB+lDO2jHgeKCffBkYXFC7IlGOdSVuVSF
-RAzXB50UqtP7eQcwwhYthtByfABYhXU7UrORsCfqZjSTuZ+gqccp3t3EjWODpJnw
-MjyuZD3qXlaGfjFaS8DwXdymo8l1fyPxDI03LfmZAiPTmsuyORUJMZ95ycoPnGOp
-nVM3tcAJEhB+U757U1AdGx0cKZqzgZlC2yVr+I/5ysjGjorTh4iXdjNEnXGTW0qw
-UmbOpKiAzXBVIqVu4fccWp8va5GbjAcYpQDIOgcctTi4090LVO5LTRAJBJETVMH6
-JN9Ntbp2SYoDHMswlzjcc/RMH/2HZfmykUJ9fXA4EqTfe5dfpRX8JJEBAy9sVlan
-neyagOicg8mZbhhFpEICgAtyo7Nz4GO0ssmEpunpKQg4pQn/TCvS0tnkCZFU65Fe
-oaNhX3bo7bX+ZNZCcW4Wvu+aT1twmWpU9E6Jm7NuaH5WTpPDVMJ36xsuHo7sr4jr
-aAwDtYnO13Ia5iHc0gNfKpc9e+0JSd4ZGvIHI9T2UtNrDvOg/Tg/TVwQYjdavCBL
-bZFEQ2iNbuTlpAUUtVAyWYF5C2yyn1DoGOECizsds/UceszUyg45zJKqyiENn5eg
-qQKkDZShqtDqeHjAL7Xr
-=URYX
------END PGP SIGNATURE-----
