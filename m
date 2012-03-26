@@ -1,71 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/9
-Message-ID: <CAKecwXBQttvv4sJsZTkBT9nS2bQrRff1sFxU68L8iXXdeEngBA@mail.gmail.com>
-Date: Thu, 9 Aug 2012 18:25:11 -0300
-From: Santiago Pastorino <santiago@...works.com>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
-Subject: XSS Vulnerability in strip_tags
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/26/3
+Message-ID: <87r4wfz5fl.fsf@mid.deneb.enyo.de>
+Date: Mon, 26 Mar 2012 18:35:10 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: quake3 reflective DoS
 Content-Type: text/plain; charset=utf-8
 
-XSS Vulnerability in strip_tags
+Message-ID: <4F70438B.9000806@...ian.org>
+Date: Mon, 26 Mar 2012 11:23:07 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: Florian Weimer <fw@...eb.enyo.de>, 665656@...s.debian.org
+CC: Markus Koschany <apo@...baru.de>, security@...ian.org
+Subject: Re: Bug#665656: openarena-server: is vulnerable for getstatus DRDoS
+ attack
+MIME-Version: 1.0
 
-There is a vulnerability in the strip_tags helper of Ruby on Rails
-which could allow an attacker to execute arbitrary javascript. This
-vulnerability has been assigned the CVE identifier CVE-2012-3465.
+On 26/03/12 06:35, Florian Weimer wrote:
+> Please set the distribution to squeeze-security, adjust the version
+> number, build with -sa, and upload to security-master.
 
-Versions Affected:  All.
-Not affected:       Applications not using strip_tags
-Fixed Versions:     3.2.8, 3.1.8, 3.0.17
+Uploaded, thanks. If you obtain a CVE number for this, please make sure
+any advisory prominently mentions ioquake3 r1762 and/or this bug number.
 
-Impact
-- ------
-There is an XSS vulnerability in the strip_tags helper in Ruby on
-Rails, the helper doesn't correctly handle malformed html.  As a
-result an attacker can execute arbitrary javascript through the use of
-specially crafted malformed html.  All users who rely on strip_tags
-for XSS protection should upgrade or use the work around immediately.
+Tremulous (contrib) seems to be vulnerable to the same thing... I'll
+open a bug.
 
-Releases
-- --------
-The 3.2.8 and 3.1.8 releases are available at the normal locations.
+Here's some text for a general advisory, and some shorter text suitable
+for a DSA:
 
-Workarounds
-- -----------
-For users running earlier releases we have provided a work around,
-place the attached file into the config/initializers directory of your
-application.
+--------------
 
-Patches
-- -------
-To aid users who aren't able to upgrade immediately we have provided
-patches for the two supported release series.  They are in git-am
-format and consist of a single changeset.
+It has been discovered that spoofed "getstatus" UDP requests are being
+used by attackers[0][1][2][3] to direct status responses from multiple
+Quake 3-based servers to a victim, as a traffic amplification mechanism
+for a denial of service attack on that victim.
 
-* 3-0-strip_tags.patch - Patch for 3.0 series
-* 3-1-strip_tags.patch - Patch for 3.1 series
-* 3-2-strip_tags.patch - Patch for 3.2 series
+Open-source games derived from the Quake 3 engine are typically based on
+ioquake3 [4], a popular fork of that engine. This vulnerability was
+fixed in ioquake3 svn revision 1762 (January 2010) [5] by applying a
+rate-limit to the getstatus request. Like several other known and fixed
+vulnerabilities, it is not fixed in the latest official ioquake3 release
+(1.36, April 2009).
 
-Please note that only the 3.1.x and 3.2.x series are supported at
-present.  Users of earlier unsupported releases are advised to upgrade
-as soon as possible as we cannot guarantee the continued availability
-of security fixes for unsupported releases.
+If a CVE ID is allocated for this vulnerability, please reference
+ioquake3 r1762 prominently in any advisory.
 
-Credits
-- -------
+Fixed versions of various open-source games based on Quake III Arena,
+mostly based on visual inspection of their source code:
 
-Thanks to Marek from Nethemba (www.nethemba.com) for reporting this issue!
+* ioquake3 svn >= r1762
+* OpenArena >= 0.8.8
+* OpenArena engine snapshot >= 0.8.x-20
+* World of Padman >= 1.5.4
+* Tremulous svn trunk >= r1953
+* Tremulous svn, gpp branch >= r1955
+* Smokin' Guns >= 1.1b4
+* Smokin' Guns svn 1.1 branch >= r472
 
----
+Vulnerable older versions include:
 
-Santiago Pastorino
-WyeWorks Co-founder
-http://www.wyeworks.com
+* ioquake3 engine 1.36
+* OpenArena 0.8.5
+* World of Padman 1.5
+* Tremulous 1.1.0
+* Tremulous Gameplay Preview 1 (GPP1)
+* Smokin' Guns svn trunk at the time of writing (r181)
 
-Twitter: http://twitter.com/spastorino
-Github: http://github.com/spastorino
+Proprietary games based on the Quake III Arena engine (Quake III Arena
+when played using its official engine, Star Wars: Jedi Outcast and Jedi
+Academy, Star Trek: Elite Force 1 & 2, etc.) are also likely to be
+vulnerable.
 
-Download attachment "3-2-strip_tags.patch" of type "application/octet-stream" (1850 bytes)
+Proprietary games being run under the ioquake3 engine (Quake III Arena
+when using ioquake3, Urban Terror when using ioUrbanTerror, etc.) may be
+vulnerable or not vulnerable, depending on the version of ioquake3 used.
 
-Download attachment "3-1-strip_tags.patch" of type "application/octet-stream" (1850 bytes)
+[0]
+http://lists.ioquake.org/pipermail/ioquake3-ioquake.org/2012-January/004778.html
+[1] http://openarena.ws/board/index.php?topic=4391.0
+[2] http://www.urbanterror.info/forums/topic/27825-drdos/
+[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=665656
+[4] http://ioquake3.org/
+[5] http://icculus.org/pipermail/quake3-commits/2010-January/001679.html
 
-Download attachment "3-0-strip_tags.patch" of type "application/octet-stream" (1850 bytes)
+-----------
+
+It has been discovered that spoofed "getstatus" UDP requests are used by
+attackers to direct status responses from multiple Quake 3-based servers
+(such as OpenArena) to a victim, as a traffic amplification mechanism
+for a denial of service attack on that victim.
+
+For the stable distribution (squeeze), this problem has been fixed in
+version 0.8.5-5+squeeze2.
+
+For the testing and unstable distributions (wheezy/sid), this problem is
+fixed in all released versions of the ioquake3 package, which are used
+by version 0.8.5-6 or later of the openarena package.
+
+
