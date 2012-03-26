@@ -1,21 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/11/6
-Message-ID: <20120811154640.GA1026@openwall.com>
-Date: Sat, 11 Aug 2012 19:46:40 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/26/1
+Message-ID: <4F702389.5090807@suse.de>
+Date: Mon, 26 Mar 2012 10:06:33 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Tunnel Blick: Multiple Vulnerabilities to Local Root and DoS (OS X)
+Subject: Re: CVE-Request taglib vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Aug 11, 2012 at 05:31:23PM +0200, Jason A. Donenfeld wrote:
-> Tunnel Blick, a popular OpenVPN manager for Macintosh, has several
-> vulnerabilities in an SUID helper. I'm not sure if this is the place
-> to report vulnerabilities in Macintosh software, but Tunnel Blick is
-> open source.
+Zubin Mithra wrote:
+> On Wed, Mar 21, 2012 at 10:49 PM, Kurt Seifried <kseifried@...hat.com>wrote:
+> 
+>> On 03/21/2012 09:42 AM, Ludwig Nussel wrote:
+>>> Zubin Mithra wrote:
+>>>> [...]
+>>>> The issues which are present in the latest "release" but not in the
+>> current
+>>>> development head were :-
+>>>>
+>>>> [3] Lack of sanity checks of fields which were read, and were used for
+>>>> allocating memory; crafted files would lead of application crash.
+>>>
+>>> Not an issue according to upstream:
+>>> http://mail.kde.org/pipermail/taglib-devel/2012-March/002187.html
+>>
+>> Shouldn't it simply say "file to large" or "unable to allocate blah"
+>> something rather than crashing? I assume by "large" file the file
+>> doesn't actually need to be large, just the header information needs to
+>> claim it is large?
+>>
+> 
+> Yes, the file does not need to be large, it just needs to have a crafted
+> header.
+> 
+> On investigating the issue further, discussing with a developer Lukas
+> Laninsky and providing PoC's, we had confirmed that the root issue was an
+> Integer overflow - which would cause a large allocation and crash the
+> application.
+> 
+> The changeset that corrects it can be found here =>
+> https://github.com/taglib/taglib/commit/dcdf4fd954e3213c355746fa15b7480461972308
+> 
+>>
+>>>> [4] A one bit change in a working ogg file would cause a thread to loop
+>>>> infinitely.
+>>>
+>>> http://mail.kde.org/pipermail/taglib-devel/2012-March/002191.html
+>>>
+>> https://github.com/taglib/taglib/commit/b3646a07348ffa276ea41a9dae03ddc63ea6c532
+>>
+>> Has this been confirmed? Does the looping thread actually cause a DoS,
+>> simply slow down the application a bit, or?
+>>
+> 
+> Yes, it just causes a thread to cause an infinite loop and does not cause
+> an application crash.
 
-I just want to confirm that this is on-topic (since Open Source) and
-desirable, as long as you also notify the maintainers (which you did).
+So both issues qualify as security issue and CVE assignment then, right?
 
-Thanks,
+cu
+Ludwig
 
-Alexander
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
