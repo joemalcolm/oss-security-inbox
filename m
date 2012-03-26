@@ -1,44 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/11/4
-Message-ID: <CAHmME9rSFPhj_GizgrpeS2mXX9bpyX0yE7vWWK+mgDrxk2UXrA@mail.gmail.com>
-Date: Sat, 11 Aug 2012 17:31:23 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Tunnel Blick: Multiple Vulnerabilities to Local Root and DoS (OS X)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/26/2
+Message-ID: <4F706A6D.5030207@redhat.com>
+Date: Mon, 26 Mar 2012 15:09:01 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE-2010 Request: quake3 / openarena-server: DDoS by processing 'getstatus' and 'rcon' packets
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Kurt, Steve, vendors,
 
-Tunnel Blick, a popular OpenVPN manager for Macintosh, has several
-vulnerabilities in an SUID helper. I'm not sure if this is the place
-to report vulnerabilities in Macintosh software, but Tunnel Blick is
-open source.
+   yet in 2010 the following problem has been corrected in Quake3 / OpenArena:
 
->From the bug report [1] on the vulnerable code [2]:
+   A distributed denial of service flaw was found in the way Quake3 Arena /
+OpenArena servers used to handle 'getstatus' and 'rcon' (remote command)
+connectionless requests. A remote attacker could use this flaw to perform
+distributed denial of service attack against the target server IP gameserver by
+spoofing certain packets.
 
-1. A race condition in file permissions checking can lead to local root.
-(PoC: [3])
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=665656
+[2] http://openarena.ws/board/index.php?topic=4391.0
+[3] http://www.ioquake.org/forums/viewtopic.php?f=12&t=1694
+[4] http://www.urbanterror.info/forums/topic/27825-drdos/
+[5] http://lists.ioquake.org/pipermail/ioquake3-ioquake.org/2012-January/004778.html
+[6] https://bugzilla.redhat.com/show_bug.cgi?id=806898
 
-2. Insufficient checking of merely 0:0 744 can lead to local root on
-systems with particular configurations.
+Relevant upstream patch:
+[7] http://icculus.org/pipermail/quake3-commits/2010-January/001679.html
 
-3. Insufficient validation of path names can allow for arbitrary
-kernel module loading, which can lead to local root.
+Could you allocate a CVE-2010-* CVE identifier for this issue?
 
-4. Insufficient validation of path names can allow execution of
-arbitrary scripts as root, leading to local root.
-(PoC: [4])
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-5. Insufficient path validation in errorExitIfAttackViaString can lead
-to deletion of files as root, leading to DoS.
+P.S.: There doesn't seem to be a CVE identifier for this issue yet:
+       http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=quake3
 
-6. Allowing OpenVPN to run with user given configurations can lead to
-local root.
-
-Thanks,
-Jason
-
-[1] http://code.google.com/p/tunnelblick/issues/detail?id=212
-[2] http://code.google.com/p/tunnelblick/source/browse/trunk/tunnelblick/openvpnstart.m?r=2095
-[3] http://git.zx2c4.com/Pwnnel-Blicker/tree/pwnnel-blicker.c
-[4] http://git.zx2c4.com/Pwnnel-Blicker/tree/pwnnel-blicker-for-kids.sh
+       mentions various Quake3 related security flaws, but doesn't
+       this concrete issue yet.
