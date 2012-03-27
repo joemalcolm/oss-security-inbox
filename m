@@ -1,43 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/2
-Message-ID: <20120106103832.GC23157@foo.fgeek.fi>
-Date: Fri, 6 Jan 2012 12:38:32 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, kseifrie@...hat.com
-Cc: moderators@...db.org
-Subject: Re: CVE-request: WordPress SQL injection and arbitrary code injection (2003)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/8
+Message-ID: <20120327171352.GA16419@openwall.com>
+Date: Tue, 27 Mar 2012 21:13:52 +0400
+From: Solar Designer <solar@...nwall.com>
+To: VSR Advisories <advisories@...curity.com>
+Cc: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk, oss-security@...ts.openwall.com
+Subject: Re: CVE-2012-0037: libraptor - XXE in RDF/XML File Interpretation  (Multiple office products affected)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 04, 2012 at 02:27:58PM -0700, Kurt Seifried wrote:
-> On 01/03/2012 02:41 PM, Henri Salo wrote:
-> > These two WordPress security vulnerabilities from 2003 are still without CVE-identifiers. I am requesting CVE-identifiers as these issues have highly critical impact.
-> >
-> > 1) SQL injection
-> > http://osvdb.org/show/osvdb/4610
-> Please use CVE-2003-1598 for the WordPress    0.70
-> ./wp-links/links.all.php SQL Injection
-> 
-> 
-> >
-> > 2) Arbitrary code injection
-> > http://osvdb.org/show/osvdb/4611
-> Please use CVE-2003-1599 for the WordPress    0.70 ./blog.header.php
-> code injection
-> >
-> > Secunia advisory: http://secunia.com/advisories/8954/
-> >
-> > - Henri Salo
-> http://www.kernelpanik.org/docs/kernelpanik/wordpressadv.txt
-> 
-> -- 
-> 
-> -- Kurt Seifried / Red Hat Security Response Team
+Hi,
 
-Thank you for the identifiers. Descriptions are switched.
+As stated in the timeline below (thanks!), this issue was handled in
+part using the Openwall-hosted distros list (which currently notifies
+many Linux distro vendors, FreeBSD, and NetBSD/pkgsrc with PGP
+re-encryption to individual recipients):
 
-4610 CVE-2003-1598 is about blog.header.php posts variable SQL injection
-4611 CVE-2003-1599 is about links.all.php abspath variable RFI
+http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-OSVDB already added these to the advisories, but that can be easily fixed. In future I can add files affected and correct parameters to these requests for clarity. Sorry for the confusion, but could you tell me which CVE should be used for which vulnerability?
+The primary reason why I feel I have to post this follow-up message is
+that the long embargo period here was a major violation of the list's
+policy.  It is the second major violation so far; the first one was for
+HashDoS, and it was similarly discussed on oss-security after the fact:
 
-- Henri Salo
+http://www.openwall.com/lists/oss-security/2011/12/29/4
+http://www.openwall.com/lists/oss-security/2011/12/29/7
+
+It's cases like this that may eventually make us reconsider and stop
+hosting the non-public lists.  (Some propose automatic publishing of
+messages after N days as an alternative.)  Luckily, so far violations
+like this have been relatively rare, and one of the reasons why I feel
+every one of them needs attention is to keep it so.
+
+I've included more detail below:
+
+On Sat, Mar 24, 2012 at 09:40:42AM -0700, VSR Advisories wrote:
+> 2012-01-09    OpenOffice, LibreOffice, AbiWord, KOffice, and libraptor
+>               maintainers were provided a draft advisory and test sample.
+>               The OpenWall "distros" mailing list was also notified.
+>               Apache OpenOffice Security team acknowledged notification.
+>               libraptor developer confirmed flaw.
+> 
+> 2012-01-10    CVE-2012-0037 assigned by Apache.
+> 
+> 2012-02-02    Notified OpenWall "distros" mailing list again, due to previous
+>               technical problems.
+
+IIRC, the "technical problems" being referred to here were an attachment
+not being re-encrypted to list members, so they only had partial info
+until this point - essentially just the fact that there's a
+vulnerability in those products, but with no detail; given the extra
+embargo time (not needed by distro vendors) this may actually be good.
+The list setup is a bit picky about what encrypted message formats it
+supports (besides plaintext, they may be PGP/MIME or PGP inline, but
+they can't have individual pre-encrypted attachments - this has since
+been clarified on the wiki).
+
+> 2012-02-04    libraptor developer provided patches to all notified parties.
+> 
+> 2012-02-22    Extensive arguing between vendors about embargo/release date.
+> 
+> 2012-03-06    More arguing about release date.
+> 
+> 2012-03-14    Agreed upon release date established.
+> 
+> 2012-03-22    Security updates and vendor advisories released.
+> 
+> 2012-03-24    VSR advisory released.
+
+At the time of the initial notification in January, the distros list
+policy was to allow a maximum embargo period of 14 days (and this was
+stated on the wiki page with the list posting address).  At the time of
+the second notification in February, the policy was stated as:
+
+"Please note that the maximum acceptable embargo period for issues
+disclosed to these lists is 14 to 19 days, with embargoes longer than 14
+days (up to 19) allowed in case the issue is reported on a Thursday or a
+Friday and the proposed coordinated disclosure date is thus adjusted to
+fall on a Monday or a Tuesday.  Please do not ask for a longer embargo.
+In fact, embargo periods shorter than 7 days are preferable."
+
+When it became apparent that this was to be violated since one or two of
+the affected upstreams wanted much more time, the reporter (Timothy D.
+Morgan of VSR Security) explained that at the time of his initial
+notification he had thought that 14 days would in fact be enough.  While
+this sounds like a rather fundamental problem with a maximum embargo
+time policy (it is always possible that something new is discovered
+during discussion, which may invalidate the initial time estimate of the
+reporter), I've just added the following verbiage to hopefully reduce
+the number of such occurrences going forward:
+
+"If you have not yet notified upstream projects/developers of the
+affected software, other affected distro vendors, and/or affected Open
+Source projects, you may want to do so before notifying one of these
+mailing lists in order to ensure that these other parties are OK with
+the maximum embargo period that would apply (and if not, then you may
+have to delay your notification to the mailing list), unless you're
+confident you'd choose to ignore their preference anyway and disclose
+the issue publicly soon as per the policy stated here."
+
+Of course, I fully expect this attempt to sometimes fail, but maybe -
+just maybe - it will help in some cases.  There's no perfect solution
+here (although some would reasonably argue that simply not doing any
+pre-disclosure coordination is perfect - in a way it is).
+
+The time required by the free office product vendors to issue a security
+fix here reminded me of web browsers in 1990s.  Several web browser
+vendors have since learned to issue security fixes much quicker, but
+apparently office vendors still lack processes to do so.  Besides, the
+timing of the move of OpenOffice to Apache Incubator introduced a delay
+here (I think it was the very first release of Apache OpenOffice).
+I hope further security issues won't be taking this long to fix in
+released versions (such as through quick new releases or a binary update
+capability for existing releases).
+
+Also, apparently it is still common practice to delay documenting
+security fixes in office products as such - that is, since releases take
+so long to prepare and test, they're first built with security fixes
+included but undocumented, they're even made publicly available for
+testing, and only then they're finalized and the security fixes become
+publicly known as such.  This too is or should hopefully be a practice
+of the past as it relates to some other software, and let's just pretend
+that I naively hope it will be gone for these products (which is closely
+related to being able to fix security issues and push such fixes to the
+users quicker).
+
+I'd appreciate any comments and suggestions - preferably on the public
+oss-security list.  (Suggestions sent to me in private are a lot less
+valuable since I can't fully refer to them.)
+
+Alexander
