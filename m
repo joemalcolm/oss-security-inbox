@@ -1,66 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/13
-Message-ID: <503D07F6.5070309@redhat.com>
-Date: Tue, 28 Aug 2012 12:03:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/11
+Message-ID: <20120327185228.GR1398@redhat.com>
+Date: Tue, 27 Mar 2012 12:52:28 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: CVE-Request: apache2-mod_php5 AddHandler content confusion
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: distutils creates ~/.pypirc insecurely
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2012-03-27 12:46:48 -0600] Kurt Seifried wrote:
 
-On 08/28/2012 08:08 AM, Sebastian Krahmer wrote:> Hi,
-> 
-> So far I have not seen any CVE for the recent "apache2-mod_php5
-> remote code execution due to multiple extension
-feature of 'AddHandler's"
-> where you can treat a blah.php.gif as a PHP script due to sloppy 
-> configs. [1]
-> 
-> Can someone assign a CVE? At the quick look, I cant see who
-> actually discovered this.
-> 
-> Sebastian
-> 
-> [1] https://bugzilla.novell.com/show_bug.cgi?id=775852
+>On 03/27/2012 10:19 AM, Vincent Danen wrote:
+>> * [2012-03-27 09:59:46 -0600] Kurt Seifried wrote:
+>>
+>>> On 03/27/2012 08:15 AM, Vincent Danen wrote:
+>>>> Standard flaw where a file that contains a username and password is
+>>>> written with insecure permissions.  This only affects python 2.6 and
+>>>> higher.
+>>>>
+>>>> Could a CVE name be assigned to this flaw?  I don't think one has been
+>>>> already.
+>>>>
+>>>> References:
+>>>>
+>>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650555
+>>>> https://bugzilla.redhat.com/show_bug.cgi?id=758905
+>>>> http://bugs.python.org/issue13512
+>>>> http://bugs.python.org/file23824/pypirc-secure.diff
+>>>>
+>>>> Thanks.
+>>>>
+>>>
+>>> Please use CVE-2012-1587 for this issue.
+>>
+>> Sorry, I probably should have been more explicit on when it was reported
+>> (this is an older flaw).  It was reported (and public) in 2011.
+>>
+>
+>My bad, please reject CVE-2012-1587.
+>
+>Please use CVE-2011-4944 for this issue, it has the correct year.
 
-This issue is not new[1], however the most recent reporter (this issue
-get "rediscovered" every once in a while) has been pushing it on Red
-Hat/etc, as previously discussed by RedHat/SuSE this is a documented
-issue and not really a security issue (in the sense that improper
-configuration plus poorly written PHP applications can cause security
-issues so "don't do that"), and it has been known for some time now
-(e.g. 2006 and earlier):
+Great, thanks, and sorry for not noting the year in the initial message.
 
-[1] http://www.mail-archive.com/dev@httpd.apache.org/msg32365.html
-
-Generally speaking the solution has been to fix the apps that do not
-properly handle this (e.g. http://www.securityfocus.com/bid/18854).
-
-So unless something significant changes or new information comes to
-light this specific issue will probably not receive a CVE.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQPQf2AAoJEBYNRVNeJnmTlyEQAKrYqteEdbUnxXOAr72RA9yU
-jQ7IcheehRiVHGJd0U4/ekmdfxKcOVLAl6Ry7HtM7A+xyFoBBSrnnuTXMp5aobio
-3w0aOhmqpjM0hmOOk3sdjZ/lhm367zbFF02l0TY4hoUbfHvG/pJxodgwgRrHAD+j
-kIVJlgsBI19YU/w4PxwTKM7Q6nwVpMivI3fo7FxL/5gLUne9ZcrYgv9HLsvn70vZ
-SYYkmVBv5Yjgl3lyi4BiAvkEDaa3ZmjyryPyOCM9RFgrIvqoiMdiwcDMMxNshKzl
-DSLoukb04gYzpl0TJuLV3Rxc6azy5JC8A6Z8tHO8c6Q5k9cbAhoOWtxiLw+bNa0c
-3NDQf3a/ObC53Yx5d4+54JkKYyC9HSqOHBJB7UI5YnbD1QHaNDi1x9AL7dwzurLR
-lae+xEc3u8L+uVvXY8HNXTsdhHygrBvuo6GOGqmwP9SJRFWjuxIriAjwDuCtki5h
-Bwt/3irDr9O8wy60Nis7TjTP4pfDoIPydMzkXm9QEF1jbeND+uZ48T3cTUYNnuoc
-rODUET8NXBtFTmL+Rd8jTTfs36fvjAihIJp5iwTUC4YZmIcuIPJbePQWD4y0yckv
-tdrVTIcf5T9OHOuytBsWm61Ni99G91YPtjE8ZljXDYFAEKA/5qSouKW6ZxOA9XgV
-C8xQtVLDVarVrxW78BzD
-=2V5w
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
