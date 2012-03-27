@@ -1,20 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/8
-Message-ID: <887FE7CFF6F8DE4BB3A9535F53AFD06AF4CF7241@il-ex2.zend.net>
-Date: Thu, 28 Jun 2012 13:24:32 +0000
-From: Zeev Suraski <zeev@...d.com>
-To: Stuart Henderson <stu@...cehopper.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Kurt Seifried <kseifried@...hat.com>, "security@....net" <security@....net>
-Subject: RE: Re: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/2
+Message-ID: <20120327141531.GH1398@redhat.com>
+Date: Tue, 27 Mar 2012 08:15:31 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: distutils creates ~/.pypirc insecurely
 Content-Type: text/plain; charset=utf-8
 
-> Would you expect a variable described as "Decides whether PHP may expose
-> the fact that it is installed on the server" to control whether an anonymous user
-> can fetch a list of enabled modules?
+Standard flaw where a file that contains a username and password is
+written with insecure permissions.  This only affects python 2.6 and
+higher.
 
-I wouldn't, and thankfully it does not.  The list you're seeing has nothing to do with what's enabled or disabled on the server.  It's a build-time list of all the modules that were available in the source tree.  It's completely static for a given version of PHP.  As an example, in the abovementioned URL, you see NSAPI, ISAPI and Apache 2.0 mentioned, although this is an Apache 1.3 server.  We also surely don't have COM and .NET installed on that Linux server either.
+Could a CVE name be assigned to this flaw?  I don't think one has been
+already.
 
-This is definitely not a security issue of any kind.
+References:
 
-Zeev
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650555
+https://bugzilla.redhat.com/show_bug.cgi?id=758905
+http://bugs.python.org/issue13512
+http://bugs.python.org/file23824/pypirc-secure.diff
 
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
