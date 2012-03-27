@@ -1,99 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/5
-Message-ID: <1572234335.49589705.1355913437350.JavaMail.root@redhat.com>
-Date: Wed, 19 Dec 2012 05:37:17 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Nicolas Grégoire <nicolas.gregoire@...rri.fr>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: Inkscape fixes a XXE vulnerability during rasterization of SVG images
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/12
+Message-ID: <4F721289.9090207@vsecurity.com>
+Date: Tue, 27 Mar 2012 12:18:33 -0700
+From: VSR Advisories <advisories@...curity.com>
+To: Solar Designer <solar@...nwall.com>
+CC: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk,  oss-security@...ts.openwall.com
+Subject: Re: CVE-2012-0037: libraptor - XXE in RDF/XML File Interpretation (Multiple office products affected)
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt, Nicolas, vendors,
+Hi Alexander,
 
------ Original Message -----
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+As a researcher, I find the distros list a useful resource to enable quick and
+simultaneous notification of many open source OS distributions.
 
-On 12/18/2012 08:44 PM, Kurt Seifried wrote:
-> On 12/17/2012 01:27 PM, Nicolas Grégoire wrote:
-> 
->> Inkscape is vulnerable to XXE attacks during
->> rasterization/export of SVG images:
->> https://bugs.launchpad.net/inkscape/+bug/1025185
-> 
->> Impact: The impact of this vulnerability range form denial of 
->> service to file disclosure. Under Windows, it can also be used
->> to steal LM/NTLM hashes.
-> 
->> PoC: During rasterization, entities declared in the DTD are 
->> dereferenced and the content of the target file is included in
->> the output. Command-line used: "inkscape -e xxe-inkscape.png
->> xxe.svg" (PoC files are attached to the ticket)
-> 
->> References: CWE-827: Improper Control of Document Type Definition
->>  http://cwe.mitre.org/data/definitions/827.html
-> 
->> Regards, Nicolas Grégoire
-> 
-> This already has a CVE reference in the page:
-> 
-> CVE References
-> 
-> 2012-1102
->
-> To clarify that CVE was assigned to
-> http://seclists.org/oss-sec/2012/q1/549
-> 
-> http://seclists.org/oss-sec/2012/q1/549
-> 
-> so this is probably an error, someone needs to tidy that bug up and
-> post links to the source/etc so I can see whats going on.
 
-That's correct. CVE-2012-1102 has been assigned to the
-perl XML-Atom issue.
-
-Assuming the source of the slight confusion is this comment:
-https://bugs.launchpad.net/inkscape/+bug/1025185/comments/13
-
-and the CVE id in the references.
-
-But from the context of that bug, comment c#13 was used just
-to reference patch for same issue in perl XML-Atom (CVE-2012-1102)
-issue, when searching a patch for inkscape.
-
-Which later resulted into upstream inkscape commit:
-http://bazaar.launchpad.net/~inkscape.dev/inkscape/trunk/revision/11931
-
-referenced in (subsequent) comment c#14:
-https://bugs.launchpad.net/inkscape/+bug/1025185/comments/14
-
-So CVE-2012-1102 identifier is for perl XML-Atom problem. And this
-(same XXE problem) being present in inkscape should get a new
-CVE id yet.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+> When it became apparent that this was to be violated since one or two of 
+> the affected upstreams wanted much more time, the reporter (Timothy D. 
+> Morgan of VSR Security) explained that at the time of his initial 
+> notification he had thought that 14 days would in fact be enough.  While 
+> this sounds like a rather fundamental problem with a maximum embargo time 
+> policy (it is always possible that something new is discovered during 
+> discussion, which may invalidate the initial time estimate of the 
+> reporter), I've just added the following verbiage to hopefully reduce the 
+> number of such occurrences going forward:
 > 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJQ0TpTAAoJEBYNRVNeJnmToVkQAL15KAplZyCcwZFZR2PqVr0V
-> ZbTvQXo93A3FuAlVDZ6FQQJSMU1E5EMpuD80816JLuUgFe1he/VwUoCtUknPdz5n
-> cgXNCAHAtbEt54bCcRKoVCeFHTnYP0MzA2PDOoRFuRgkUoUwFv6ilL5dcZD8pehq
-> ZwEWGVE/IDPJ+yFUma+FwtSP0olxoH6ZOP79RPgGoaPrCDfsLRjloKRKX4IUXSHy
-> aN5wGNVd9RfCCdtjwb8Qd0DakXwqJ0B0spFDK6ZhbtJl7IxdQqEiIndJ6+EhJRQh
-> A9njFDUjtIUM5jqUe7/Lb2Hzi5cno120dBKxvU/PLk0D7ZSErfI2ZneoxIIIdk42
-> +kNQ1qT8/08QsnicVlqP9RpUiW9fqx4ndzazNUjCcTyegnjyYNm2VQlOC0quEDyo
-> DzY2l2PED+A4HZ+gQW0uUcMWuDAaH7o2ti6CGUPgd5IPBYbBJpXBRZmw26QSD71M
-> xs50rPHiJhuJiw8s6q7M/sq/rf7ixe/AtJ5bfYntzD9pCaxkG7Q/FZytEXjIwiGb
-> +mqN6q52Gnc6R+neY22la/xwwRnRjYCDIUz/2r4Xt9EV1I5XbS9Zn24DDLE7YFJw
-> KT1hWAa8GqvmUgv5FjB20M9AANyi7wxUlzdnKsiL3WOJdVpApE2cDpBC41PH9WDZ
-> EN02SxWlecA1X7CgMGpc
-> =Bzwi
-> -----END PGP SIGNATURE-----
+> "If you have not yet notified upstream projects/developers of the affected 
+> software, other affected distro vendors, and/or affected Open Source 
+> projects, you may want to do so before notifying one of these mailing
+> lists in order to ensure that these other parties are OK with the maximum
+> embargo period that would apply (and if not, then you may have to delay
+> your notification to the mailing list), unless you're confident you'd
+> choose to ignore their preference anyway and disclose the issue publicly
+> soon as per the policy stated here."
+
+I think this is a good idea.  I likely misunderstood the process you want
+researchers to follow when it comes to using the distros list.  While I think
+the time to release for this issue was excessive, I should have nailed down a
+release date with the upstreams prior to notifying the distros list.
+
+
+I'll reserve some additional comments for the oss-security list exclusively.
+
+Thanks,
+tim
