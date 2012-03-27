@@ -1,48 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/31/2
-Message-ID: <20120531164424.3151f7d9@redhat.com>
-Date: Thu, 31 May 2012 16:44:24 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/5
+Message-ID: <4F71E3F2.5010201@redhat.com>
+Date: Tue, 27 Mar 2012 09:59:46 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, Felipe Pena <felipensp@...il.com>
-Subject: Re: CVE id request: Multiple buffer overflow in unixODBC
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: distutils creates ~/.pypirc insecurely
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 30 May 2012 13:02:53 -0600 Kurt Seifried wrote:
+On 03/27/2012 08:15 AM, Vincent Danen wrote:
+> Standard flaw where a file that contains a username and password is
+> written with insecure permissions.  This only affects python 2.6 and
+> higher.
+> 
+> Could a CVE name be assigned to this flaw?  I don't think one has been
+> already.
+> 
+> References:
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650555
+> https://bugzilla.redhat.com/show_bug.cgi?id=758905
+> http://bugs.python.org/issue13512
+> http://bugs.python.org/file23824/pypirc-secure.diff
+> 
+> Thanks.
+> 
 
-> On 05/30/2012 11:40 AM, Felipe Pena wrote:
->
-> > It isn't limited to the configuration files. Such input can be
-> > passed to the `isql' interactive tool that come together unixODBC.
-> > The same string can be used to connect through PHP PDO, for
-> > example.
-
-Agree, anything that parses such connect string can be crashed this
-way.  The question is if any trust boundary is crossed with that, which
-depends on whether there are any apps that allow untrusted connect
-strings.
-
-> > $ ./isql "FILEDSN=$(python -c "print 'A'*10000");UID=user" -k
-
-Anyone having shell access to run isql directly should be assumed to
-have ability to edit ~/.odbcinst.ini, which should be enough to crash
-isql or inject code to it without having to trigger one of the
-mentioned overflows.
-
-> Is this something that an attacker can typically control, or does the
-> PHP author need to write code that does this?
-
-For PHP applications, would you assume attacker can typically control
-settings as database name, host, port or username?  It's not really
-quite common.  Possible use cases that come to mind:
-
-- DB management application similar to phpMyAdmin, that may take some
-  DB connection info as input from user.  If something like that exists
-  for ODBC, another question would be if the info from user can
-  actually be used to sneak in values for FILEDSN or DRIVER.
-- Of course, this may allow safe_mode bypass, which may not be possible
-  via odbcinst.ini (e.g. PHP script may not be allowed to edit it and
-  safe_mode does not allow setting ODBCINSTINI environment variable).
+Please use CVE-2012-1587 for this issue.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Kurt Seifried Red Hat Security Response Team (SRT)
