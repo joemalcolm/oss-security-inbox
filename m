@@ -1,85 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/7
-Message-ID: <4F8EF639.7050006@redhat.com>
-Date: Wed, 18 Apr 2012 11:13:29 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, advisories@...itunasecurity.com
-Subject: Re: CVE-request: OpenEMR 4.1.0 SQL-injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/13
+Message-ID: <4F721754.2040208@vsecurity.com>
+Date: Tue, 27 Mar 2012 12:39:00 -0700
+From: "Timothy D. Morgan" <tmorgan@...curity.com>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE-2012-0037: libraptor - XXE in RDF/XML File Interpretation (Multiple office products affected)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi again,
 
-On 04/16/2012 11:31 PM, Henri Salo wrote:
-> Hello,
+>> 2012-02-02    Notified OpenWall "distros" mailing list again, due to previous
+>>               technical problems.
 > 
-> Can I get 2012 CVE-identifier for SQL-injection in OpenEMR 4.1.0,
-> thanks.
-> 
-> Original advisory: http://seclists.org/fulldisclosure/2012/Jan/27 
-> OSVDB: http://osvdb.org/78132
-> 
-> """ Information -------------------- Name :  SQL Injection
-> Vulnerability in OpenEMR Software :  OpenEMR 4.1.0 and possibly
-> below. Vendor Homepage :  http://www.open-emr.org Vulnerability
-> Type :  SQL Injection Severity :  Critical Researcher :  Canberk
-> Bolat Advisory Reference :  NS-12-001
-> 
-> Description -------------------- OpenEMR is a Free and Open Source
-> electronic health records and medical practice management
-> application. OpenEMR is ONC Complete Ambulatory EHR certified and
-> features fully integrated electronic health records, practice
-> management, scheduling, electronic billing and
-> internationalization.
-> 
-> Details -------------------- OpenEMR is affected by a SQL Injection
-> vulnerability in version 4.1.0. Example PoC url is as follows :
-> 
-> http://example.com/interface/login/validateUser.php?u='%2b(SELECT%201%20FROM%20(SELECT%20SLEEP(25))A)%2b'
->
->  You can read the full article about SQL Injection vulnerability
-> from here : http://www.mavitunasecurity.com/sql-injection/.
-> 
-> Solution -------------------- The vendor released a patch for this
-> vulnerability. Please see the references.
-> 
-> Credits -------------------- It has been discovered on testing of
-> Netsparker, Web Application Security Scanner -
-> http://www.mavitunasecurity.com/netsparker/.
-> 
-> References -------------------- Vendor Url / Patch :
-> http://www.open-emr.org/wiki/index.php/OpenEMR_Patches MSL Advisory
-> Link 
-> :http://www.mavitunasecurity.com/sql-injection-vulnerability-in-openemr/
->
-> 
-Netsparker Advisories :
-http://www.mavitunasecurity.com/netsparker-advisories/
+> IIRC, the "technical problems" being referred to here were an attachment
+> not being re-encrypted to list members, so they only had partial info
+> until this point - essentially just the fact that there's a
+> vulnerability in those products, but with no detail; given the extra
+> embargo time (not needed by distro vendors) this may actually be good.
+> The list setup is a bit picky about what encrypted message formats it
+> supports (besides plaintext, they may be PGP/MIME or PGP inline, but
+> they can't have individual pre-encrypted attachments - this has since
+> been clarified on the wiki).
 
-Please use CVE-2012-2115  for this issue.
+Actually, I didn't manually encrypt the attachment, but my mail client's PGP
+plugin likely did the equivalent.  PGP/MIME is definitely preferred, but since
+certain Windows-based mail clients utterly fail at interpreting it properly, I
+often fall back to old style PGP when sending messages to strangers.  I think
+your updated text helps.
 
 
+> "If you have not yet notified upstream projects/developers of the
+> affected software, other affected distro vendors, and/or affected Open
+> Source projects, you may want to do so before notifying one of these
+> mailing lists in order to ensure that these other parties are OK with
+> the maximum embargo period that would apply (and if not, then you may
+> have to delay your notification to the mailing list), unless you're
+> confident you'd choose to ignore their preference anyway and disclose
+> the issue publicly soon as per the policy stated here."
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+You may want to re-word this a little to make it utterly clear to those who
+don't take the time to think about it.  Perhaps something like "If expect
+upstream vendors to require more than 14-19 days to develop a fix, establish a
+release date with them prior to notifying this list".  You could also break it
+down in to step-by-step bullets.  That page has grown much larger now and it is
+tempting to skim...
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPjvY5AAoJEBYNRVNeJnmTCfIQAJISQeUIZa5XtUU2Y/kZDuEM
-NRGkMD4ls2cLdQG8hJE5yPWNH887RhcyoLWkPZKETOygt1QsOs2YzRmae/irPE1M
-SBzijpDhommPYPs/RYUb6oaPv5nHZTD5y6ssN2sGDXZkStQdzEfdHxEagNgbIBYj
-4hQEZDtEt5cKGUyuWvdrlj7pOpu57L5wieeTf+FdgyOTpEXo5eujsxa/IpaAh0Oi
-u4NnVG8I26zCtPhJEYridHH8UUwjgcyzkjJiZmLDOInwfNB5ApFqOUNLu/QGo0sU
-jLEsevlXzj5f08+sNNadVp6LTbK1ns5KH/obc6OxOAkF4qgg7ZSwNXem9P6vkhJH
-mO/KvVH6V3l9fd6d/NF2OOzMBv/5dmSgjkpd3zTjEi4AE6PDIDfSOH8C0jqY/Bqx
-7wmxn0Fia3UP7IIhzC6kTavIcWWOPrTFHdUs9iwOXOQK/+MgqwD0gik1Atoc6h8N
-NE9+m4lKcEkMUNDGmTptV0ieEaQRI0tFKR6It3Ty5lHji/KLE9V+2r04LmMRwsiC
-4aJNBWRt0+MtK8x59+RA1Q9knOcNNvzAxQS/NOv1EBtL56ncHaql5FRdsR6HjQGr
-3jBd0IhbZGfQIT0gStRClFohNpe6m/XB4Kr1dHx/TkDPNILTvf9gAtHoO11Nba6/
-4gI6bP6IH5DyFmXfHaCR
-=0RXe
------END PGP SIGNATURE-----
+> Also, apparently it is still common practice to delay documenting
+> security fixes in office products as such - that is, since releases take
+> so long to prepare and test, they're first built with security fixes
+> included but undocumented, they're even made publicly available for
+> testing, and only then they're finalized and the security fixes become
+> publicly known as such.  This too is or should hopefully be a practice
+> of the past as it relates to some other software, and let's just pretend
+> that I naively hope it will be gone for these products (which is closely
+> related to being able to fix security issues and push such fixes to the
+> users quicker).
+
+I agree with you that releasing undocumented fixes carries significant risks.
+It's become clear to me that the LO/OO projects have a ways to go when it comes
+to release engineering.
+
+tim
