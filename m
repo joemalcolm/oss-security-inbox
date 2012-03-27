@@ -1,38 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/8
-Message-ID: <20120424142638.GF18917@cmpxchg8b.com>
-Date: Tue, 24 Apr 2012 16:26:38 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/10
+Message-ID: <4F720B18.1090405@redhat.com>
+Date: Tue, 27 Mar 2012 12:46:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Vincent Danen <vdanen@...hat.com>
+CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: distutils creates ~/.pypirc insecurely
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 22, 2012 at 07:44:56PM +0400, Solar Designer wrote:
-> With this one, I am able to trigger a problem on 32-bit (OpenSSL 1.0.0d
-> with unrelated patches):
+On 03/27/2012 10:19 AM, Vincent Danen wrote:
+> * [2012-03-27 09:59:46 -0600] Kurt Seifried wrote:
 > 
-> $ zcat openssl-1.0.1-testcase-32bit.crt.gz | openssl x509 -inform DER
-> *** glibc detected *** free(): invalid pointer: 0x45ff0008 ***
-> Aborted
+>> On 03/27/2012 08:15 AM, Vincent Danen wrote:
+>>> Standard flaw where a file that contains a username and password is
+>>> written with insecure permissions.  This only affects python 2.6 and
+>>> higher.
+>>>
+>>> Could a CVE name be assigned to this flaw?  I don't think one has been
+>>> already.
+>>>
+>>> References:
+>>>
+>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650555
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=758905
+>>> http://bugs.python.org/issue13512
+>>> http://bugs.python.org/file23824/pypirc-secure.diff
+>>>
+>>> Thanks.
+>>>
+>>
+>> Please use CVE-2012-1587 for this issue.
 > 
-> That's in an OpenVZ container with privvmpages barrier at 3 GB.
-> With 2 GB, I was getting:
+> Sorry, I probably should have been more explicit on when it was reported
+> (this is an older flaw).  It was reported (and public) in 2011.
 > 
-> $ zcat openssl-1.0.1-testcase-32bit.crt.gz | openssl x509 -inform DER
-> unable to load certificate
-> 3083651232:error:07069041:memory buffer routines:BUF_MEM_grow_clean:malloc failure:buffer.c:152:
-> 3083651232:error:0D06B041:asn1 encoding routines:ASN1_D2I_READ_BIO:malloc failure:a_d2i_fp.c:229:
-> 
-> Alexander
 
-Interesting, I think it should be possible to construct a testcase that
-requires less memory, the total input must be quite large, but it can
-be split into smaller components that don't require large allocations.
+My bad, please reject CVE-2012-1587.
 
-Tavis.
+Please use CVE-2011-4944 for this issue, it has the correct year.
 
 -- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
+Kurt Seifried Red Hat Security Response Team (SRT)
