@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/7
-Message-ID: <4F5E527F.3080703@redhat.com>
-Date: Mon, 12 Mar 2012 13:46:07 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/6
+Message-ID: <4F71E44B.1010005@redhat.com>
+Date: Tue, 27 Mar 2012 10:01:15 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Tomas Hoger <thoger@...hat.com>
-Subject: Re: CVE request: openssl: null pointer dereference issue
+Subject: Re: CVE id request: cifs-utils
 Content-Type: text/plain; charset=utf-8
 
-On 03/12/2012 11:39 AM, Tomas Hoger wrote:
-
-> Note that additional similar issue in mime_param_cmp was fixed in
-> 0.9.8u and 1.0.0h as:
->   http://cvs.openssl.org/chngview?cn=22252
+On 03/26/2012 08:51 PM, Nico Golde wrote:
+> Hi, can someone please assign a CVE id to: 
+> https://bugzilla.samba.org/show_bug.cgi?id=8821
 > 
-> This can also be triggered by malformed S/MIME message.
+> Debian bug: http;//bugs.debian.org/665923
 > 
-> The above commit also corrects an issue with the previous mime_hdr_cmp
-> fix that could cause the function to return either "less than" or
-> "greater than" when comparing NULL to non-NULL.  There's no known
-> security impact of this change, it seems it could cause verification /
-> decryption to fail when it can succeed. Reported by "bla".
+> Cheers Nico
+> 
 
-Please use CVE-2012-1165 for this issue.
-
+Please use CVE-2012-1586 for this issue.
 
 -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
