@@ -1,18 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/1
-Message-ID: <1327023763.11316.8.camel@localhost.localdomain>
-Date: Fri, 20 Jan 2012 02:42:43 +0100
-From: Gu1 <gu1@...sortium-of-pwners.net>
-To: fw@...eb.enyo.de
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Screen locking programs on Xorg 1.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/9
+Message-ID: <4680B31DCCC3B6428FB4E85ED9D540D0032B29@SRVEXCH.oppida.fr>
+Date: Wed, 28 Mar 2012 11:58:51 +0000
+From: Luc ABRIC <luc.abric@...ida.fr>
+To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
+CC: "'kseifried@...hat.com'" <kseifried@...hat.com>, Karim SLAMANI <karim.slamani@...ida.fr>, Valérian PERRET <valerian.perret@...ida.fr>, Yann MICHARD <yann.michard@...ida.fr>
+Subject: CVE 2012-1565 Insecure object reference
 Content-Type: text/plain; charset=utf-8
 
-> The API in question appears to be XF86MiscSetGrabKeysState:
+Hi,
 
-If I am not mistaken, this API has been removed a few years ago.
-I talk about it in my blog post [1].
+eZ Publish published more informations about this specific issue:
+http://share.ez.no/blogs/ez/security-advisory-promptly-patch-your-ez-publish-instances2
 
-[1]
-<http://gu1.aeroxteam.fr/2012/01/19/bypass-screensaver-locker-program-xorg-111-and-up/>
+The vulnerability detailled in the CVE is the one described by EZSA-2012-001.
+
+We also posted more details on our blog:
+http://blog-oppida.blogspot.fr/2012/03/ezpublish-object-remote-full.html
+
+Can you update the CVE description with those informations?
+Do you need help with the translation effort?
+
+I'll send a few more CVE requests for the other vulnerabilities.
+
+Regards,
+Luc ABRIC
+IT Security Expert
+
+6 avenue du Vieil Etang - Bâtiment B
+78180 Montigny-le-Bretonneux
+Phone: +33 (0)1 30 14 19 00
+Fax:       +33 (0)1 30 14 19 09
+Mobile: +33 (0)6 26 87 62 14
+luc.abric@...ida.fr
+
+www.oppida.fr
+
+
 
