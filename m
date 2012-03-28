@@ -1,50 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/2
-Message-ID: <4F0E24B5.7060503@redhat.com>
-Date: Wed, 11 Jan 2012 17:09:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/6
+Message-ID: <20120328074906.GA27988@kludge.henri.nerv.fi>
+Date: Wed, 28 Mar 2012 10:49:06 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- kernel: kvm: syscall instruction induced guest panic
+Cc: Kurt Seifried <kseifried@...hat.com>, security@...mla.org
+Subject: CVE-request: Joomla core information disclosure 372-20111003
 Content-Type: text/plain; charset=utf-8
 
-On 01/11/2012 01:19 PM, Petr Matousek wrote:
-> "32bit guests will crash (and 64bit guests may behave in a
-> wrong way) for example by simply executing following
-> nasm-demo-application:
->
->     [bits 32]
->     global _start
->     SECTION .text
->     _start: syscall
->
-> The reason seems a missing "invalid opcode"-trap (int6) for the
-> syscall opcode "0f05", which is not available on Intel CPUs
-> within non-longmodes, as also on some AMD CPUs within legacy-mode.
-> (depending on CPU vendor, MSR_EFER and cpuid)
->
-> Because previous mentioned OSs may not engage corresponding
-> syscall target-registers (STAR, LSTAR, CSTAR), they remain
-> NULL and (non trapping) syscalls are leading to multiple
-> faults and finally crashs."
->
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=773370
-> https://lkml.org/lkml/2011/12/28/170
-> http://www.spinics.net/lists/kvm/msg66633.html
->
-> Proposed patch:
-> http://www.spinics.net/lists/kvm/msg66633.html
->
-> Credits:
-> Stephan Bärwolf
->
-> Introduced by:
-> e66bb2ccdcf76d032bbb464b35c292bb3ee58f9b in linux-2.6.32
->
-> Thanks,
-Please use CVE-2012-0045 for this issue.
+After discussion with Kurt we decided these three issues need own CVE-identifiers:
 
--- 
+http://developer.joomla.org/security/news/370-20111001-core-information-disclosure (CVE-2011-3629)
+http://developer.joomla.org/security/news/371-20111002-core-information-disclosure (CVE-2011-4937)
+http://developer.joomla.org/security/news/372-20111003-core-information-disclosure
 
--- Kurt Seifried / Red Hat Security Response Team
+These all were previously refered as CVE-2011-3629. Now I need CVE-identifier for 372-20111003, which should be 2011. I can email about these to MITRE after assignment to get these updates in CVE-list:
 
+======================================================
+Name: CVE-2011-3629
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3629
+Phase: Assigned (20110921)
+Category:
+
+** RESERVED **
+This candidate has been reserved by an organization or individual that
+will use it when announcing a new security problem.  When the
+candidate has been publicized, the details for this candidate will be
+provided.
+
+
+Current Votes:
+None (candidate not yet proposed)
+======================================================
+
+======================================================
+Name: CVE-2011-4937
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4937
+Phase: Assigned (20111223)
+Category:
+
+** RESERVED **
+This candidate has been reserved by an organization or individual that
+will use it when announcing a new security problem.  When the
+candidate has been publicized, the details for this candidate will be
+provided.
+
+
+Current Votes:
+None (candidate not yet proposed)
+======================================================
+
+- Henri Salo
