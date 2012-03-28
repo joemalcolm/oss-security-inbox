@@ -1,28 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/7
-Message-ID: <773202b2-4775-4437-9e5c-049b307456b7@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Thu, 24 May 2012 15:10:25 -0400 (EDT)
-From: Miloslav Trmac <mitr@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/2
+Message-ID: <4F728E63.9060208@redhat.com>
+Date: Tue, 27 Mar 2012 22:06:59 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: David Black <disclosure@....org>, Peter van Dijk <peter.van.dijk@...herlabs.nl>, Bert Hubert <bert.hubert@...herlabs.nl>
-Subject: Re: CVE Request: powerdns does not clear supplementary groups
+CC: Tim Sammut <underling@...too.org>, security <security@...too.org>
+Subject: Re: CVE Request: PolicyKit change allows users in "wheel" group to become root without a password
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> So what happens when a program starts running as say root, and root
-> has supplemental groups (like "bin" or "daemon" and the program drops
-> its primary user/group but fails to drop supplementary groups, is that
-> a security issue, and is it worthy of a CVE identifier?
+On 03/27/2012 08:45 PM, Tim Sammut wrote:
+> Hi.
 > 
-> For most cases I'm going to say probably not (aka no). Having
-> supplementary groups is intentional and allows permissions to be more
-> fine grained, you can for example make root a member of "logging" so
-> that even when the app drops root privileges would still have the
-> supplementary group of "logging" and can do its logging or whatever.
+> Please assign a CVE to this issue.
+> 
+> An intended change in PolicyKit [1] version 0.103 [2] allows users
+> of the "wheel" group to become root without providing the root
+> password. While this was intentional, we believe it presents a
+> security concern for our users [3].
+> 
+> [1] 
+> http://cgit.freedesktop.org/PolicyKit/commit/?id=763faf434b445c20ae9529100d3ef5290976d0c9
+>
+> 
+[2]
+> http://www.mail-archive.com/polkit-devel@lists.freedesktop.org/msg00327.html
+>
+> 
+[3] https://bugs.gentoo.org/show_bug.cgi?id=401513
+> 
+> [4] 
+> http://patch-tracker.debian.org/patch/series/view/policykit-1/0.104-2/05_revert-admin-identities-unix-group-wheel.patch
+>
+> 
+[5] https://launchpad.net/ubuntu/+source/policykit-1/0.103-1
+> 
+> thank you tim
 
-Yes, the existence of supplementary groups is intentional - but that doesn't mean that inheriting supplementary groups is intentional.
+Please use CVE-2011-4945 for this issue (link #4 is from 2011).
 
->From the administrator's point of view, the privileges are effectively assigned to "the user" as an "atomic" identity - they are configured in /etc/passwd and /etc/group _and associated with an UID_.  In "ordinary" case, programs running with a specific UID are expected to always use the same primary GID, and same primary groups.  Yes, the implementation does not match the administrator's point of view, the UID, GID and supplementary groups are sparete, and , e.g. setuid/setgid may cause a different configuration from the "primary" case, or switching privileges temporarily creates non-ordinary situations.  Still, I think that keeping the administrator's point of view in mind is important.
-
-In the above example, if there really is a "logging" group, and an application is configured to drop privileges and switch to uid $APP_UID, the administrator would expect that whether the app should or should not have the "logging" group membership is configured in /etc/groups for $APP_UID, not for root.  So, I can't see that as an argument for intentionally not dropping supplementary groups.
-   Mirek
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
