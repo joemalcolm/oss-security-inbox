@@ -1,47 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/8
-Message-ID: <20120126151241.GA30438@statler.antagonism.home>
-Date: Thu, 26 Jan 2012 10:12:41 -0500
-From: Patrick R McDonald <marlowe@...agonism.org>
-To: Christian Hoffmann <christian@...fie.info>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Request for CVE for Vulnerability in Tahoe-LAFS 1.9.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/5
+Message-ID: <20120328065157.GA22447@kludge.henri.nerv.fi>
+Date: Wed, 28 Mar 2012 09:51:57 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: clamav floating point exception in OLE2 scanner DoS (2007)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 26, 2012 at 03:57:14PM +0100, Christian Hoffmann wrote:
-> Hallo Patrick,
->
-> On 26.01.2012 15:15, Patrick R McDonald wrote:
-> > I would like to request a CVE for a vulnerability in Tahoe-LAFS,
-> >
-> > https://tahoe-lafs.org/pipermail/tahoe-announce/2012-January/000032.html
-> I think CVE-2012-0051 has already been assigned to this vulnerability.
->
-> It is referenced in the Trac ticket (see below) which is mentioned in
-> the above mail archive post, unless I'm confusing things.
->
->
-> References:
-> https://tahoe-lafs.org/trac/tahoe-lafs/ticket/1654
-> http://seclists.org/oss-sec/2012/q1/135 (initial request)
-> http://seclists.org/oss-sec/2012/q1/158 (CVE assignment)
->
->
-> Best regards,
->
-> Christian Hoffmann
->
+Can I get 2007 CVE-identifier for "fix floating point exception when using ScanOLE2" vulnerability:
 
-My apologies.  Thanks for the info and the quick turnaround.
+clamav (0.91.2-1) unstable; urgency=low
 
---
-----------------------------------------------------------------
-| Patrick R. McDonald                       GPG Key: A2D1E972  |
-| https://www.antagonism.org/         <marlowe@...agonism.org> |
-|                               <mcdonald.patrick.r@...il.com> |
-|                         <patrick@...nsecurityfoundation.org> |
-----------------------------------------------------------------
-| Malo periculosam libertatem quam quietum servitium           |
-----------------------------------------------------------------
+  * New upstream version
+    - fix call to tolower() which led to a crash in libclamav
+    - fix possible NULL dereference, e.g. when parsing email with RFC2397
+      URI
+    - fix floating point exception when using ScanOLE2
+    - fix possible NULL dereference in rtf.c
 
-Content of type "application/pgp-signature" skipped
+ -- Stephen Gran <sgran@...ian.org>  Tue, 21 Aug 2007 11:17:01 +0100
+
+Different issue than CVE-2007-2650, which was fixed in 0.90.3
+
+http://security-tracker.debian.org/tracker/TEMP-0000000-6B8835
+
+Other issues have CVEs: CVE-2007-4510, CVE-2007-4560. I requested this CVE-identifier before, but it did not get assigned.
+
+- Henri Salo
