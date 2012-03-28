@@ -1,29 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/07/3
-Message-Id: <B638E316-E025-4C87-BD75-6548ECF9FA42@gmail.com>
-Date: Sat, 7 Jan 2012 18:01:46 -0500
-From: Xi Wang <xi.wang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/13
+Message-ID: <4F7328AE.2000005@redhat.com>
+Date: Wed, 28 Mar 2012 09:05:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Malicious devices & vulnerabilties
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>, Gerald Combs <gerald@...eshark.org>
+Subject: Re: CVE Request: Multiple wireshark security flaws resolved in 1.4.12 and 1.6.6
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 03/28/2012 02:56 AM, Huzaifa Sidhpurwala wrote:
+> Hi Folks,
+> 
+> Multiple security flaws were resolved in the recent release
+> of version 1.4.12 and 1.6.6. Details as follows, can CVE ids
+> be please assigned to them?
+> 
+> 1. Null pointer dereference in ANSI A dissector:
+> The ANSI A dissector could dereference a NULL pointer and crash.
+> It may be possible to make Wireshark crash by injecting a malformed
+> packet onto the wire or by convincing someone to read a malformed
+> packet trace file.
+> 
+> Reference:
+> http://www.wireshark.org/security/wnpa-sec-2012-04.html
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6823
+> Patch: http://anonsvn.wireshark.org/viewvc?view=revision&revision=40962
 
-In general driver code trusts hardware devices and often doesn't
-validate the data they respond with.  But how about USB devices
-that an attacker could plug into a victim's computer?  For example,
-an attacker may craft a USB device with a long product name to cause
-a buffer overflow (CVE-2011-0712).
+Please use CVE-2012-1593 for this issue.
 
-http://www.openwall.com/lists/oss-security/2011/02/16/5
-http://twitter.com/#!/mwrlabs/status/44814759396249600
+> 2. Dos/Infinite loop when in IEEE 802.11 dissector:
+> The IEEE 802.11 dissector could go into an infinite loop.
+> It may be possible to make Wireshark crash by injecting a malformed
+> packet onto the wire or by convincing someone to read a malformed
+> packet trace file.
+> 
+> Reference:
+> http://www.wireshark.org/security/wnpa-sec-2012-05.html
+> http://www.wireshark.org/security/wnpa-sec-2012-05.html
+> Patch: http://anonsvn.wireshark.org/viewvc?view=revision&revision=40967
 
-Here is another possible bug in the USB audio format parser I tried
-to report upstream.
+Please use CVE-2012-1594 for this issue.
 
-https://lkml.org/lkml/2012/1/4/215
+> 3. Memory corruption when processing pcap/pcap-ng file formats:
+> The pcap and pcap-ng file parsers could crash trying to read ERF data.
+> It may be possible to make Wireshark crash convincing someone to read a
+> malformed packet trace file.
+> 
+> Reference:
+> http://www.wireshark.org/security/wnpa-sec-2012-06.html
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6804
+> Patch: http://anonsvn.wireshark.org/viewvc?view=revision&revision=41056
 
-I am wondering where to draw the line.  Should such device drivers
-be considered vulnerable or not?  Thanks.
+Please use CVE-2012-1595 for this issue.
 
-- xi
+> 4. Wireshark MP2T memory allocation flaw
+> The MP2T dissector could try to allocate too much memory and crash.
+> It may be possible to make Wireshark crash by injecting a malformed
+> packet onto the wire or by convincing someone to read a malformed
+> packet trace file.
+> 
+> Reference:
+> http://www.wireshark.org/security/wnpa-sec-2012-07.html
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6833
+> Possible Patch:
+> http://anonsvn.wireshark.org/viewvc?view=revision&revision=40978 (not sure)
+
+Please use CVE-2012-1596 for this issue.
+
+> @Gerald,
+> All your new advisory links on the wireshark security page are pointing
+> to the same page, so you may want to correct that :)
+> 
+> 
+
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
