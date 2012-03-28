@@ -1,68 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/20/3
-Message-ID: <CAPYM6Vx=8PUi9sBvS8Z5jQ=9wq2dzNSN3rxcn5fS1=e7UYexnw@mail.gmail.com>
-Date: Sun, 20 May 2012 17:47:35 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
-Subject: Acuity CMS 2.6.x <= Path Traversal Arbitrary File Access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/11
+Message-ID: <20120328162607.49ab69c5@hsalkjdhsa>
+Date: Wed, 28 Mar 2012 16:26:07 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: phppgadmin before 5.0.4 XSS
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+phppgadmin 5.0.4 fixes an xss, please assign CVE.
 
-Acuity CMS 2.6.x (ASP-based) versions are vulnerable to Path Traversal.
+https://github.com/phppgadmin/phppgadmin/commit/e92a003624609a445c4cf57c9c3d1fcef0eae47c#diff-0
 
+"Fix XSS in function.php, reported by Mateusz Goik"
 
-2. BACKGROUND
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-Acuity CMS is a powerful but simple, extremely easy to use, low
-priced, easy to deploy content management system. It is a leader in
-its price and feature class.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The issue is due to the script, /admin/file_manager/browse.asp, not
-properly sanitizing user input, specifically directory traversal style
-attacks (e.g., ../../) supplied via the 'path' parameter. It would
-allow the attacker to access arbitrary files outside of web root
-directory.
-
-
-4. VERSIONS AFFECTED
-
-Tested with version 2.6.2.
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://localhost/admin/file_manager/browse.asp?field=&form=&path=../../
-
-
-6. SOLUTION
-
-The Acunity CMS is no longer in active development.
-It is recommended to user another CMS in active development and support.
-
-
-7. VENDOR
-
-The Collective
-http://www.thecollective.com.au/
-
-
-8. CREDIT
-
-Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2012-05-20: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5Bacuity_cms2.6%20x_(asp)%5D_path_traversal
-
-#yehg [2012-05-20]
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
