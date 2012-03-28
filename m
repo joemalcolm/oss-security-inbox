@@ -1,22 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/18
-Message-ID: <20121018203414.GC4830@kludge.henri.nerv.fi>
-Date: Thu, 18 Oct 2012 23:34:14 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/1
+Message-ID: <4F727B35.7020404@gentoo.org>
+Date: Tue, 27 Mar 2012 19:45:09 -0700
+From: Tim Sammut <underling@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
+CC: security <security@...too.org>
+Subject: CVE Request: PolicyKit change allows users in "wheel" group to become root without a password
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 18, 2012 at 02:19:06PM -0600, Kurt Seifried wrote:
-> Part of it also depends on usage. Google labels everything as a Beta,
-> sometimes for years and with millions of users. My experience is a lot
-> of people use Debian unstable (when I used Debian I did, otherwise
-> everything was to boring =). What would be interesting is if you could
-> provide download statistics from the main site. I know for a fact
-> CVE's have been assigned for publicly released applications that are
-> probably in use by less than 100 or in extreme cases possibly less
-> than 10 people globally.
+Hi.
 
-I use stable. Usually one can't easily say how many users there is for package x. :)
+Please assign a CVE to this issue.
 
-- Henri Salo
+An intended change in PolicyKit [1] version 0.103 [2] allows users of
+the "wheel" group to become root without providing the root password.
+While this was intentional, we believe it presents a security concern
+for our users [3].
+
+[1]
+http://cgit.freedesktop.org/PolicyKit/commit/?id=763faf434b445c20ae9529100d3ef5290976d0c9
+[2]
+http://www.mail-archive.com/polkit-devel@lists.freedesktop.org/msg00327.html
+[3] https://bugs.gentoo.org/show_bug.cgi?id=401513
+
+[4]
+http://patch-tracker.debian.org/patch/series/view/policykit-1/0.104-2/05_revert-admin-identities-unix-group-wheel.patch
+[5] https://launchpad.net/ubuntu/+source/policykit-1/0.103-1
+
+thank you
+tim
+
+-- 
+Tim Sammut ~ Gentoo Security Team
+underling@...too.org ~ C2375493
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
