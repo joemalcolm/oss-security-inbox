@@ -1,46 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/1
-Message-ID: <CAEZPtU5CmLEj1_DLJ-tt1SM19UT4uv3NfRcVFCz=-s2pd+HPwg@mail.gmail.com>
-Date: Fri, 3 Feb 2012 01:04:18 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/4
+Message-ID: <20120328063858.GA22457@kludge.henri.nerv.fi>
+Date: Wed, 28 Mar 2012 09:38:58 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: PHP remote code execution introduced via HashDoS fix
+Subject: CVE-request: e107 HTB23004
 Content-Type: text/plain; charset=utf-8
 
-hi!
+I won't veriify these vulnerabilities manually. Please assign 2011 CVE-identifier.
 
-5.3.10 has been released as well to fix this issue (and another one
-related to magic quotes).
+Original advisory: https://www.htbridge.com/advisory/multiple_vulnerabilities_in_e107_1.html
+These vulnerabilities have been fixed in 12306 revision.
 
-Cheers,
+Please do not ask me why changelog entry does not say anything about security problems. HTBridge has tested that vulnerabilities do not exist after patches.
 
-On Thu, Feb 2, 2012 at 8:46 PM, Solar Designer <solar@...nwall.com> wrote:
-> Tomas,
->
-> Thank you for posting this.
->
-> On Thu, Feb 02, 2012 at 08:12:22PM +0100, Tomas Hoger wrote:
->> This got CVE-2012-0830 assigned earlier today.  This is sent to make
->> the assignment public and avoid possible duplicate assignment.
->
-> I suggest that we post this sort of things to oss-security not only
-> because of CVE issues, but also to make this list a central place to
-> keep people informed of security issues in at least popular Open Source
-> software.  That is, I think this posting would be desirable even if the
-> CVE number had already been communicated to those who might request one.
->
-> Not everyone who wants this sort of info also happens to read IT news
-> sites, Twitter feeds, etc daily (which also include lots of other info
-> that would be off-topic here).
->
-> Maybe your comment above was addressed to security@php and Stefan rather
-> than to oss-security, though.  Then it sounds just right to me.
->
-> Alexander
+>From HTBridge:
 
+On the 6 of July a correction was released:
+http://e107.svn.sourceforge.net/viewvc/e107/trunk/e107_0.7/e107_admin/users_extended.php?revision=12306&view=markup
 
+Details of this corrections are available here:
+http://e107.svn.sourceforge.net/viewvc/e107/trunk/e107_0.7/e107_admin/users_extended.php?r1=12225&r2=12306
 
--- 
-Pierre
+Corrections for our vulnerabilities are marked as "User extended fields administration improvements and cleanup".
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+The changelog: http://e107.org/svn_changelog.php?version=0.7.26 confirms that this correction was applied to e107 0.7.26 version.
+
+- Henri Salo
