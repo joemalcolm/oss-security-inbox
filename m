@@ -1,18 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/8
-Message-ID: <4F562605.4090000@odu.neva.ru>
-Date: Tue, 06 Mar 2012 18:58:13 +0400
-From: Dmitry Butskoy <buc@...sz.so-cdu.ru>
-To: Roland Gruber <post@...andgruber.de>
-CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Fabio Tranchitella <kobold@...ian.org>,  Dmitry Butskoy <Dmitry@...skoy.name>
-Subject: Re: CVE Request -- LDAP Account Manager Pro / PhpLDAPadmin -- Multiple XSS flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/7
+Message-ID: <4F73F0C3.9060002@redhat.com>
+Date: Wed, 28 Mar 2012 23:18:59 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Interesting blog entry - Finding v6 hosts by efficiently mapping ip6.arpa
 Content-Type: text/plain; charset=utf-8
 
-Reported upstream, SF bug #3497660
+http://7bits.nl/blog/2012/03/26/finding-v6-hosts-by-efficiently-mapping-ip6-arpa
 
-https://sourceforge.net/tracker/?func=detail&aid=3497660&group_id=61828&atid=498546
+If this works it would make network scanning a whole heck of a lot easier.
 
-
-Regards,
-Dmitry Butskoy
-
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
