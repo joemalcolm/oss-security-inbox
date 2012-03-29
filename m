@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/10
-Message-Id: <201211021958.qA2JwoEX000798@linus.mitre.org>
-Date: Fri, 2 Nov 2012 15:58:50 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/2
+Message-ID: <4F73ED7F.9090402@redhat.com>
+Date: Wed, 28 Mar 2012 23:05:03 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Dokeos 2.1.1 XSS CVE-2012-5776
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: clamav floating point exception in OLE2 scanner DoS (2007)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 03/28/2012 12:51 AM, Henri Salo wrote:
+> Can I get 2007 CVE-identifier for "fix floating point exception when using ScanOLE2" vulnerability:
+> 
+> clamav (0.91.2-1) unstable; urgency=low
+> 
+>   * New upstream version
+>     - fix call to tolower() which led to a crash in libclamav
+>     - fix possible NULL dereference, e.g. when parsing email with RFC2397
+>       URI
+>     - fix floating point exception when using ScanOLE2
+>     - fix possible NULL dereference in rtf.c
+> 
+>  -- Stephen Gran <sgran@...ian.org>  Tue, 21 Aug 2007 11:17:01 +0100
+> 
+> Different issue than CVE-2007-2650, which was fixed in 0.90.3
+> 
+> http://security-tracker.debian.org/tracker/TEMP-0000000-6B8835
+> 
+> Other issues have CVEs: CVE-2007-4510, CVE-2007-4560. I requested this CVE-identifier before, but it did not get assigned.
+> 
+> - Henri Salo
 
-We have assigned CVE-2012-5776 for all of the XSS issues involving
-"extra_" parameters in main/auth/profile.php in Dokeos 2.1.1; see
+Please use CVE-2007-6745 for this issue.
 
-  http://www.securityfocus.com/archive/1/524564
-
-Here is a possibly relevant code excerpt from the Dokeos
-main/admin/registration_step3.php file:
-
-// extra default values
-$defaults['extra_street']       = isset($_SESSION['user_info']['extra_street'])?$_SESSION['user_info']['extra_street']:'';
-$defaults['extra_addressline2'] = isset($_SESSION['user_info']['extra_addressline2'])?$_SESSION['user_info']['extra_addressline2']:'';
-$defaults['extra_zipcode']      = isset($_SESSION['user_info']['extra_zipcode'])?$_SESSION['user_info']['extra_zipcode']:'';
-$defaults['extra_city']         = isset($_SESSION['user_info']['extra_city'])?$_SESSION['user_info']['extra_city']:'';
-$defaults['extra_organization'] = isset($_SESSION['user_info']['extra_organization'])?$_SESSION['user_info']['extra_organization']:'';
-if ($iden == 0 && $wish == 0) {
-    $defaults['extra_phone'] = isset($_SESSION['user_info']['extra_phone'])?$_SESSION['user_info']['extra_phone']:'';
-}
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJQlCVhAAoJEGvefgSNfHMdVn4H/1ja+VHgAZV85AfOzieg3k0A
-PSKLu77HeSIEmPMoJNyQMWcEpPlu/T/Oj7E/ktXssU6PIoXsct+7HGKjN1aSDAlY
-REk+uxTOt1ByQMb9EmHt01/V7Jw/j/fD4itykmzerBKx3x7Xy69k5NRWiySbCsSs
-DYppdKN6vUTBQFpMPayTv56ii5QwQ7xAqg+yUeC0HJuJxh+hOE0mYHRteOQDxQcx
-sr70AACcax3/OOl900YO+X/NSAOw0tW4CEhMIyhrFCyHFcNSQRG/s2EameVzD6BO
-DdtANg3nvaypKR3a4EQ2cFSDvX2zXCYhd8iqbMm4M2n1aLseNeGfdd5zc4BRICM=
-=OeB+
------END PGP SIGNATURE-----
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
