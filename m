@@ -1,57 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/23/1
-Message-ID: <500CE2B2.3020907@redhat.com>
-Date: Mon, 23 Jul 2012 15:35:46 +1000
-From: David Jorm <djorm@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE for JBOSS EAP 5.0(twiddle and jmx invocations) ?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/9
+Message-ID: <20120329083828.46fc3776@hsalkjdhsa.lan>
+Date: Thu, 29 Mar 2012 08:38:28 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: egroupware before 1.8.002 various security issues
 Content-Type: text/plain; charset=utf-8
 
-On 07/21/2012 02:12 AM, yersinia wrote:
-> Following this apparently RFE on JBOSS
-> https://issues.jboss.org/browse/JBPAPP-3391?_sscc=t
-> i have found a nice description, and an  proposed patch, about it here
-> http://objectopia.com/2009/10/01/securing-jmx-invoker-layer-in-jboss/.
->
-> But the last link describe - apparently - a serious bug in the JBoss JMX
-> Invoker Layer, a missing authentication that can
-> produce a serious problem. Reading the other response i don't think there
-> is today the possibility to enforce a true mitigation
-> in JBOSS, apart putting in place some form a network control (aka a
-> firewall). This is for JBOSS 5.0, i know that twiddle is no longer
-> in JBoss EAP 6.0 which provides a totally new, much improved, secure and
-> scriptable management interface.
->
-> Do you think this can require a CVE for JBOSS EAP 5?
->
-> Thanks in advance
->
+Am Wed, 28 Mar 2012 23:04:07 -0600
+schrieb Kurt Seifried <kseifried@...hat.com>:
 
-Thanks for bringing this up. As I see it, there's two issues here:
+> On 03/28/2012 10:26 AM, Hanno Böck wrote:
+> > http://comments.gmane.org/gmane.comp.web.egroupware.german/33144
+> > 
+> > " 1. Fixes regarding security issues like 'local file inclusion', 
+> > 'sql injection', 'reflected xss' and 'open redirect'. "
+> > 
+> 
+> Make a list with specific requests and information please.
+> 
 
-1) twiddle.sh accepting credentials as command-line arguments, meaning 
-they could be exposed to another local user via a process listing 
-(JBPAPP-3391)
+Local file inclusion:
+http://packetstormsecurity.org/files/101676/eGroupware-1.8.001.20110421-Local-File-Inclusion.html
 
-This issue affects JBoss AS 5 and EAP 5, but as you noted not AS 7 or 
-EAP 6. It is my opinion that this is indeed a low impact security flaw, 
-and a candidate for a CVE ID. I would give it the following CVSSv2 
-score: 2.1/AV:L/AC:L/Au:N/C:P/I:N/A:N. Kurt, can you please assign a CVE 
-ID for this flaw?
+SQL injection in 1.8.001:
+http://packetstormsecurity.org/files/100179/eGroupware-1.8.001-SQL-Injection.html
 
-2) AuthenticationInterceptor in jmx-invoker-service.xml is commented out 
-by default, allowing unauthenticated access to the JMX Invoker
+reflected xss:
+http://packetstormsecurity.org/files/100180/eGroupware-1.8.001-Cross-Site-Scripting.html
 
-This issue only affects JBoss AS community releases, not EAP or other 
-supported JBoss products. The JBoss AS community releases prior to AS 7 
-opted for open by default configuration rather than secure by default 
-configuration. AS 7 and all supported JBoss products have secure 
-defaults applied. It is my opinion that this is a configuration and 
-documentation issue rather than a security issue. Documentation for 
-securing the invokers on JBoss AS community releases is available here:
+open redirect:
+http://packetstormsecurity.org/files/101675/eGroupware-1.8.001.20110421-Open-Redirect.html
 
-https://community.jboss.org/wiki/SecureTheInvokers
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-Thanks
---
-David Jorm / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
