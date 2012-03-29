@@ -1,54 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/23/1
-Message-ID: <5085F76B.9040205@redhat.com>
-Date: Mon, 22 Oct 2012 19:48:27 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Matthieu Aubry <matthieu.aubry@...il.com>
-CC: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>, services@...ik.org
-Subject: Re: CVE request: XSS in piwik before 1.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/14
+Message-ID: <87ty17jfwv.fsf@mid.deneb.enyo.de>
+Date: Thu, 29 Mar 2012 22:44:32 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: TYPO3-CORE-SA-2012-001
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I may have missed a previous request.  If I can count properly, there
+are four different issues:
 
-On 10/22/2012 05:58 PM, Matthieu Aubry wrote:
-> Hi there,
-> 
-> we are NEVER going to release more information, this is normal, we
-> do not want to make exploits any easier than it could be.
-> 
-> The builds can be found at: http://builds.piwik.org/
-> 
-> Security contact: http://piwik.org/security/
-> 
-> Good search engine: https://www.startpage.com/
-> 
-> Cheers
+| Vulnerable subcomponent: Extbase Framework
+| Affected Versions:
+|   Versions 4.4.x and 4.5.x are not affected by this vulnerabilty.
+| Vulnerability Type: Insecure Unserialize
+| 
+| Problem Description: Due to a missing signature (HMAC) for a request
+| argument, an attacker could unserialize arbitrary objects within
+| TYPO3.
+| 
+| To our knowledge it is neither possible to inject code through this
+| vulnerability, nor are there exploitable objects within the TYPO3
+| Core. However, there might be exploitable objects within third party
+| extensions.
 
-I hate to break it to you but I did a quick file diff and the XSS
-stuff is pretty easy to spot. Any attacker who wants to find the
-vulnerability will, quickly. Not giving out information really only
-harms the people that actually benefit from knowing (e.g. your users
-and vendors, it's just one more thing to figure out).
+| Vulnerable subcomponent: TYPO3 Backend
+| Vulnerability Type: Cross-Site Scripting
+| 
+| Problem Description: Failing to properly HTML-encode user input in
+| several places, the TYPO3 backend is susceptible to Cross-Site
+| Scripting. A valid backend user is required to exploit these
+| vulnerabilities.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+| Vulnerable subcomponent: TYPO3 Command Line Interface
+| Vulnerability Type: Information Disclosure
+|
+| Problem Description: Accessing a CLI Script directly with a browser
+| may disclose the database name used for the TYPO3 installation.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+| Vulnerable subcomponent: TYPO3 HTML Sanitizing API
+| Vulnerability Type: Cross-Site Scripting
+|
+| Problem Description: By not removing non printable characters, the API
+| method t3lib_div::RemoveXSS() fails to filter specially crafted HTML
+| injections, thus is susceptible to Cross-Site Scripting.
 
-iQIcBAEBAgAGBQJQhfdrAAoJEBYNRVNeJnmTI9EP+wTUWIoCVFQc5JMcYZbDs65B
-U78c7+jb91VwslWonwnLJyX4zx/0Uc27kOc7y9NNSaskgf75VlORwdVJZGoi19x6
-cT8javpFeSFvy9L/dTUea175W9yd1VVpjzdZnO+LCVUvQ/0CNX89hOlQhCmyabAt
-uSKeYUd3icAizZJ9a8qb5Zg6qYvj9iAP2W3wYE0081LDsqgz+tIyAEx1WUj+TBss
-2sZE6MLqsKcB+lGjGYyVRtDdZTwyXiwS7rvmg8V2ODycLdeWw9znelZvp6+Ai4E+
-B+XFU5Mt6yFXf3Gv9O0k8I2jxSFe/zsEJXmKHxhJjW3+jb9tCkQMzwrpc35NqJ40
-1qdGA/CinAOzad5Cd4Z3bjufwl23KIH+VhrprGlye2GxVZPtcnKxWqhXVNqzIstI
-zutadEuxhMyWPDXgUkEwG9z8wN96fdQcx0MZDEQqQCRt0yjYm18EiyRLdqLFtGfp
-h5dsP0ZIuuOZ+yIHFo7Rei/iXwgTLS3YOtkwCLYg7K1W24x3YBYZegZoa9IRWOnl
-jAgSLCNwKVcc6OHsPgCDgnYp0z/b27a+qEglYRJCalHHyLk2R37CGwD6qX5K9qSD
-F9o/LX5DCg1omojAHPG/NVpyolw5oYGmztxCD8ijFK/DoMUFeEZFWznvtgnzNz3/
-UUpW1A4c9r544NmuQLa+
-=OfJF
------END PGP SIGNATURE-----
+<http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-001/>
