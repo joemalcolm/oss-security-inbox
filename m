@@ -1,76 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/9
-Message-Id: <E1TfaBH-00068a-7n@xenbits.xen.org>
-Date: Mon, 03 Dec 2012 17:51:47 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 31 (CVE-2012-5515) - Several memory hypercall operations allow invalid extent order values
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/6
+Message-ID: <4F73EE7D.2090001@redhat.com>
+Date: Wed, 28 Mar 2012 23:09:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: phppgadmin before 5.0.4 XSS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 03/28/2012 08:26 AM, Hanno Böck wrote:
+> phppgadmin 5.0.4 fixes an xss, please assign CVE.
+> 
+> https://github.com/phppgadmin/phppgadmin/commit/e92a003624609a445c4cf57c9c3d1fcef0eae47c#diff-0
+>
+>  "Fix XSS in function.php, reported by Mateusz Goik"
+> 
 
-	     Xen Security Advisory CVE-2012-5515 / XSA-31
-                             version 3
+Please use CVE-2012-1600  for this issue. Is there a link for the code
+change?
 
-  Several memory hypercall operations allow invalid extent order values
-
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Allowing arbitrary extent_order input values for XENMEM_decrease_reservation,
-XENMEM_populate_physmap, and XENMEM_exchange can cause arbitrarily long time
-being spent in loops without allowing vital other code to get a chance to
-execute. This may also cause inconsistent state resulting at the completion
-of these hypercalls.
-
-IMPACT
-======
-
-A malicious guest administrator can cause Xen to hang.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are vulnerable.  However, older versions (not supporting
-Populate-on-Demand, i.e. before 3.4) may only be theoretically affected.
-
-MITIGATION
-==========
-
-Running only trusted guest kernels will avoid this vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa31-4.1.patch             Xen 4.1.x
-xsa31-4.2-unstable.patch    Xen 4.2.x, xen-unstable
-
-
-$ sha256sum xsa31*.patch
-8e4bb43999d1a72d7f1b6ad3e66d0c173ca711c8145c5804b025eaa63d2c1691  xsa31-4.1.patch
-090d0cca3eddaee798e5f06a8d5f469d47f874c657abcd6028248d949d36da81  xsa31-4.2-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQvOJ4AAoJEIP+FMlX6CvZhCgIAIAkB8EpoFU0vwCW26toELFh
-3odZ8kji4hBoIaR6vOj4BIrSuTxC+0TZl3JGSwxQ+zo2k15njNqPZM/8m5kztLzZ
-K79GXhSRb6zo96EmAhxX6wU4qpBdDH7htdAsO74ApHdfw3hw9yXY2h+OkwiYTO6J
-K0TegvNYoJ+9NJ4ePTgZpHp4B1H4ymtvw84uzNBJQ6ePR95lV4aOq7h1loIvMPzB
-Mcxy+3LTAZasK7yYZLClyHXR46pN41qbMawKYNMp70+fQvyP58P6cExwZ4ODrbHf
-dfgEg2yNeI4YXzOx2vbRSDRDAzf4lhGHq9fXhUpNF/denRJJCC9r/E0+nWTzWog=
-=CUvM
------END PGP SIGNATURE-----
-
-Download attachment "xsa31-4.1.patch" of type "application/octet-stream" (2121 bytes)
-
-Download attachment "xsa31-4.2-unstable.patch" of type "application/octet-stream" (2127 bytes)
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
