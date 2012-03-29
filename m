@@ -1,58 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/7
-Message-ID: <5019609F.7080407@redhat.com>
-Date: Wed, 01 Aug 2012 11:00:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/11
+Message-ID: <4F7463BD.1060509@pre-sense.de>
+Date: Thu, 29 Mar 2012 15:29:33 +0200
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: NVidia Linux driver
+Subject: Re:  CVE-2012-1162 / -1163: Incorrect loop construct and numeric overflow in libzip
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I just realized that only libzip 0.10 is affected by these
+vulnerabilities, but not older versions of libzip.
 
-On 08/01/2012 06:58 AM, Marc Deslauriers wrote:
-> Hello,
-> 
-> Could a CVE please be assigned to the following issue:
-> 
-> The binary NVidia Linux driver allows local users to access
-> arbitrary memory locations by leveraging GPU device-node read/write
-> privileges, and escalate privileges to root. Possibly an incomplete
-> fix for CVE-2012-0946.
-> 
-> See:
-> 
-> http://seclists.org/fulldisclosure/2012/Aug/4
-> 
-> Thanks,
-> 
-> Marc.
+Stefan Cornelius has identified the precise commits that introduced the
+vulnerabilities:
+https://bugzilla.redhat.com/show_bug.cgi?id=802564
+https://bugzilla.redhat.com/show_bug.cgi?id=803028
 
-I do Open Source CVE assignments only, the Nvidia driver is binary
-only and closed source. You'll need to go to Mitre to get a CVE for
-this: cve-assign@...re.org (they handle the closed source stuff).
+As PHP and zipruby include older versions of libzip, they are not
+affected by the issues.
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQGWCfAAoJEBYNRVNeJnmTmYYP/3Myqj2EocA4jxj9Plhv1xyE
-P/mTlxPkwvi6Rlra2Mszhm7mDga1UOiHD/lqZ/CnyCjnEe8pY2pv9/Xbo4lxfZcv
-VruzRlWOeUjltZJxsinTR0j3JGhBFe/SKRg1qV1bEs05y8NASITS7J0QiBxwMse6
-P3hTHQ/9Sgh0VBZjdF2RpeV9+AMCyl/hIyyahRLtobyLqXBDaaMJdRqTRCqv4sbY
-7Vo6ZOG8FanD6gqLuLKqXt6hPz8j1fcHWhS73ySIL7e6T9P0rle7VI9aeHBiTEz5
-lh2zDqPxepMvy9E9CMFBNxay0cPcsOSw24YhxzFx+bjy+LdSbF+Z/GvxqU/pnuLz
-yCOlxianMVcvn3/Zr2YvnfHMfq/uq0/ShzSsQAwwM6NljFSL4RieD/aB21Ah76ao
-eMWScJmgmUPKwEPQelb7iCj/7vaEnU/SN1iB5jIPlM4aHqN0nPi/jiJZjac+EgxB
-FnRUoWs9ad06uoziSrz6bJW4HJJQjAHl3isPTZbxmHI/rLEExUu+DdCQnaFEHT0b
-e3cxHV865KecWasez13PnBfhQhH50D5PQhJLkbcQtEv7Hqvhrx0WPH9RhFYjWQtD
-jMOTfEcMLtfeETjncArwwiZQLRxDjVr2cCamlmVj4pMAGOcJa4qSCRvRIz9Rq73p
-Xpi1H5D/2gluae+oisvp
-=Rpar
------END PGP SIGNATURE-----
+Cheers, Timo
