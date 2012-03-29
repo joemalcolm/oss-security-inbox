@@ -1,45 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/3
-Message-ID: <CANTw=MMvyiRCkUdUi2MZmzJMORJr13R4ZLWeMKYkZKzuW15fZQ@mail.gmail.com>
-Date: Mon, 24 Sep 2012 13:13:24 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/5
+Message-ID: <4F73EE5E.4060103@redhat.com>
+Date: Wed, 28 Mar 2012 23:08:46 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+CC: Henri Salo <henri@...v.fi>, security@...mla.org
+Subject: Re: CVE-request: Joomla 20120305 / 20120306
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 24, 2012 at 4:42 AM, Tavis Ormandy wrote:
-> I agree. Users do know how to use umask properly, but this isn't what umask
-> is for. The umask for the low order bits are only applied if the program
-> requested 0666, it's still the responsibility of the program to choose the
-> appropriate permissions.
->
-> Creating sensitive files with 0666 and then saying "set your umask" is just
-> wrong.
+On 03/28/2012 07:11 AM, Henri Salo wrote:
+> Can I get two 2012 CVE-identifiers for these vulnerabilities:
+> 
+> http://developer.joomla.org/security/news/396-20120305-core-password-change.html
 
-Think about the complexity potentially involved to solve these issues
-the right way.
+Please use CVE-2012-1598 for this issue.
 
-First of all, gpg is not the only application that would need to be
-"privacy-aware". Every single application that produces new files from
-existing ones to propagate permissions from those original files to
-the new ones, which would be pretty much everything.  In addition,
-piping would need to be permissions-aware to achieve the following:
+> http://developer.joomla.org/security/news/397-20120306-core-information-disclosure.html
 
-$ umask 077
-$ touch sensitive-file
-$ umask 022
-$ cat sensitive-file > sensitive-file2
-$ ls -l sensitive-file*
--rw------- 1 a a 0 Sep 24 13:09 sensitive-file
--rw------- 1 a a 0 Sep 24 13:09 sensitive-file2
+Please use CVE-2012-1599 for this issue.
 
-Also, in the gpg case, what should be done when starting with a 644,
-should the decrypted contents be 600 (acting more as a protective
-parent), or should it respect the original permissions (irrespective
-of the umask), or chose the more restrictive of both?
+> Advisories released today.
+> 
+> - Henri Salo
 
-I'm not saying that these problems couldn't (or shouldn't) be solved,
-but it seems like a daunting task.
 
-Best wishes,
-Mike
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
