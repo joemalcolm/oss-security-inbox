@@ -1,79 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/28/7
-Message-ID: <50145B05.9070805@redhat.com>
-Date: Sat, 28 Jul 2012 15:35:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/13
+Message-ID: <87y5qjjg5m.fsf@mid.deneb.enyo.de>
+Date: Thu, 29 Mar 2012 22:39:17 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: frosch <frosch@...nttd.org>
-Subject: Re: CVE request for OpenTTD
+Subject: Re: Interesting blog entry - Finding v6 hosts by efficiently mapping ip6.arpa
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* Kurt Seifried:
 
-On 07/28/2012 04:53 AM, frosch wrote:
-> 
->> On 07/27/2012 03:42 PM, frosch wrote:
->>> Hello,
->>> 
->>> we, the OpenTTD developers, have identified a security 
->>> vulnerability in OpenTTD (an open source game with
->>> multiplayer). Would you be so kind as to allocate a CVE id for
->>> this issue?
->>> 
->>> The issue concerns a denial of service vulnerabilty which
->>> enables an attacker to force the server into an invalid game
->>> state. The server will abort upon detecting this state. This
->>> attack can be performed using an unmodified client via normal
->>> game interaction. The attack requires authorization, but most
->>> servers do not implement authorization. The first vulnerable
->>> version is 0.6.0, the upcoming 1.2.2 release will have the
->>> issue fixed.
->>> 
->>> Once a CVE id is allocated, the issue and fix will be
->>> documented at http://security.openttd.org/CVE-2012-xxxx
->>> 
->>> Thanks in advance, Christoph 'frosch' Elsenhans
->>> 
->>> (Please CC me, I'm not subscribed)
->> 
->> Sorry can you please provide links to an advisory, code commit,
->> or something so we have a reference?
->> 
-> trunk commit: http://vcs.openttd.org/svn/changeset/24439/ Bug
-> report: http://bugs.openttd.org/task/5254
-> 
-> Later on http://security.openttd.org/CVE-2012-xxxx will supply
-> patches for all vulnerable versions, and also link to the bug
-> tracker and related commits.
-> 
-> Regards
+> http://7bits.nl/blog/2012/03/26/finding-v6-hosts-by-efficiently-mapping-ip6-arpa
 
-Perfect, thanks. Please use CVE-2012-3436 for this issue.
+It works.  I have used it for enumerating the e164.arpa tree, which
+has a similarly regular structure, too, and for finding TLDs which
+have redirected second level domains on ISC's Dnschanger replacement
+name servers.
 
-P.S. with respect to "In some cases ships could be covered with land."
-couldn't the ship sail into a cave or over hanging cliff? ;)
+> If this works it would make network scanning a whole heck of a lot
+> easier.
 
+Reverse delegation is still not fully solved with IPv6 (and will
+probably never be), so non-synthetic answers will be rare.
+Particularly for anything which doesn't speak SMTP.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQFFsFAAoJEBYNRVNeJnmTkYsP/3ASyyww0GSXBDa/5ySEL64A
-LoIsy9m+rxUU/5C1sRLLDTNehrJ2HE8/yaOeJU1TpBX9jY21jcBu9YLJgPK0i7tT
-ameFOO11bn7zuQ7nssyB6Wo5QALivdhCX21sgN240oVCqse+h/zZkYYob2Xmc/Z0
-QlgjUAxwtLB1t/z31WU4rRVu9Rp2ArHjCRpuHSuTco9e2SHUQ6UsZZnfK9DxhGx6
-ZdXtw5Ts6LAMYXcNackrhnifEcSURPZXGgWc09qABfUYAyyrsncXwiRMDxrRad1o
-zJR46C3xJW1T+3SV8tLbSEv8X2VlRifguVzF6JRUpDl0T6Xe0kjPkNa6lHJ9jmTn
-CLrVxpdSnzuyII1iuaeuPUjd5jm5hCnhTyHOH/mZyb4gxOQ/GXiXRdz3bhn2wcFc
-BT+23wMJxWXU50NnAsqUTahW9r/7V0y0xc5gzfg0YRvNb3MeSZiHTBKM+zzeDEHr
-cUGfhHjof5Ad9YSSiRzwfwVXiP1eGoabJcQQGIdRmf0KG7S1y8GGT1xpT2J3Clnq
-xygcbpUQQewaMenvyYm3OPtGz2i3yLITHZXMN7SBPL3P4RC1QFiLgSzqXfr0EGI+
-zqRdoi4FdSkN4rtIbF0iAJ8gF/LawrqWJ136q+vlGcZOl6AlPShCgEek5s1unQ8n
-CWWRtNMcc6cwJ4jES5Fm
-=6xJd
------END PGP SIGNATURE-----
+If you want to use DNS to facility IPv6 scanning, you probably should
+store every AAAA you see in a database.
