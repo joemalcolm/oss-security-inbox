@@ -1,16 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/10
-Message-Id: <20120607154849.83C1014DBD8@smtp.hushmail.com>
-Date: Thu, 07 Jun 2012 16:48:49 +0100
-From: "Dex" <0x41@...h.ai>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/12
+Message-ID: <20120329195836.GO780@dhcp-25-225.brq.redhat.com>
+Date: Thu, 29 Mar 2012 21:58:36 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: WHMCS 5.0.2> SQLi CVE Request
+Subject: CVE request -- kernel: kvm: irqchip_in_kernel() and vcpu->arch.apic inconsistency
 Content-Type: text/plain; charset=utf-8
 
-Hello all
-I'd like to  request a CVE for this bug please so that I can be
-cool/save the planet.http://www.securityfocus.com/bid/53711
-It is what was patched with this patch from WHMCS
-http://www.securityfocus.com/bid/53770http://blog.whmcs.com/?t=47828
-Thanks in advance,dx7r
-I hate myself for this.
+If some vcpus are created before KVM_CREATE_IRQCHIP, then
+irqchip_in_kernel() and vcpu->arch.apic will be inconsistent, leading to
+potential NULL pointer dereferences.
+
+A unprivileged local user could use this flaw to crash the system.
+
+Upstream fix:
+http://git.kernel.org/?p=virt/kvm/kvm.git;a=commit;h=5b40572ed5f0344b9dbee486a17c589ce1abe1a3
+
+References:
+http://comments.gmane.org/gmane.comp.emulators.kvm.devel/86217
+https://bugzilla.redhat.com/show_bug.cgi?id=808199
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
