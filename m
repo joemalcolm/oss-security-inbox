@@ -1,30 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/19
-Message-ID: <CAH5b-BXazLei2bQxaZRsF7fnQC0nM_KPXMf5ienPi8UFjZQW8Q@mail.gmail.com>
-Date: Mon, 27 Feb 2012 12:42:35 +0100
-From: yersinia <yersinia.spiros@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/10
+Message-ID: <20120329122947.GB26304@openwall.com>
+Date: Thu, 29 Mar 2012 16:29:47 +0400
+From: Solar Designer <solar@...nwall.com>
+To: "Timothy D. Morgan" <tmorgan@...curity.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2012-0037: libraptor - XXE in RDF/XML File Interpretation (Multiple office products affected)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 26, 2012 at 11:37 PM, Eric Leblond <eric@...it.org> wrote:
+On Tue, Mar 27, 2012 at 12:39:00PM -0700, Timothy D. Morgan wrote:
+> > "If you have not yet notified upstream projects/developers of the
+> > affected software, other affected distro vendors, and/or affected Open
+> > Source projects, you may want to do so before notifying one of these
+> > mailing lists in order to ensure that these other parties are OK with
+> > the maximum embargo period that would apply (and if not, then you may
+> > have to delay your notification to the mailing list), unless you're
+> > confident you'd choose to ignore their preference anyway and disclose
+> > the issue publicly soon as per the policy stated here."
+> 
+> You may want to re-word this a little to make it utterly clear to those who
+> don't take the time to think about it.  Perhaps something like "If expect
+> upstream vendors to require more than 14-19 days to develop a fix, establish a
+> release date with them prior to notifying this list".  You could also break it
+> down in to step-by-step bullets.  That page has grown much larger now and it is
+> tempting to skim...
 
-> Hello,
->
->
-> This is a correct definition of the condition on the network required
-> for the attack.
->
-> Hi. If i have undestood correcly,  setting arp_announce and arp_ignore as
-below should be fix the problem you have  described, isn't it ?
+Thank you for the suggestion.  Unfortunately, adding more clarity and
+specific examples would make the wiki page even longer and potentially
+more tempting to skim/skip.  For now, I opted to simplify the text
+quoted above to:
 
-net.ipv4.conf.all.arp_announce=1
-net.ipv4.conf.all.arp_ignore=2
+"Please notify upstream projects/developers of the affected software,
+other affected distro vendors, and/or affected Open Source projects
+before notifying one of these mailing lists in order to ensure that
+these other parties are OK with the maximum embargo period that would
+apply (and if not, then you may have to delay your notification to the
+mailing list), unless you're confident you'd choose to ignore their
+preference anyway and disclose the issue publicly soon as per the policy
+stated here."
 
+This is slightly shorter and it let me add emphasis (bold face) in some
+places.
 
-We set so by default in our env by policy.
-
-Thanks and Regards
-
-Elia
-
+Alexander
