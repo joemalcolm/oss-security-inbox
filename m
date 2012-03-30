@@ -1,47 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/07/2
-Message-ID: <20121007092948.GC5040@pisco.westfalen.local>
-Date: Sun, 7 Oct 2012 11:29:48 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/4
+Message-ID: <4F751321.1070903@redhat.com>
+Date: Thu, 29 Mar 2012 19:57:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org
-Subject: Re: CVE Request: html2ps
+CC: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: CVE request: TYPO3-CORE-SA-2012-001
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 05, 2012 at 12:43:55PM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 10/05/2012 04:49 AM, Marc Deslauriers wrote:
-> > Hello,
-> > 
-> > I don't believe a CVE was ever assigned to this html2ps flaw in
-> > 2009:
-> > 
-> > Directory traversal vulnerability in html2ps before 1.0b7 allows
-> > remote attackers to read arbitrary files via directory traversal
-> > sequences in SSI directives
-> > 
-> > See:
-> > 
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=548633 
-> > https://bugzilla.redhat.com/show_bug.cgi?id=526513 
-> > http://packetstormsecurity.org/files/81614/html2ps-1.0-beta5-File-Disclosure.html
-> >
-> >  Thanks,
-> > 
-> > Marc.
-> 
-> Please use CVE-2009-5067 for this issue.
-> 
-> BTW if anyone wants to go through the Red Hat Bugzilla and make sure
-> all the security have CVE's assigned feel free to contact me and I can
-> let you know the easiest way to get the data/check it =).
+On 03/29/2012 02:44 PM, Florian Weimer wrote:
+> I may have missed a previous request.  If I can count properly, there
+> are four different issues:
 
-Likewise for the Debian Security Tracker:
-http://security-tracker.debian.org/tracker/data/fake-names contains
-a list of all tracked issues without a CVE reference (most of this
-is historic, of course)
+You can count properly!
 
-Cheers,
-        Moritz
+> | Vulnerable subcomponent: Extbase Framework
+> | Affected Versions:
+> |   Versions 4.4.x and 4.5.x are not affected by this vulnerabilty.
+> | Vulnerability Type: Insecure Unserialize
+> | 
+> | Problem Description: Due to a missing signature (HMAC) for a request
+> | argument, an attacker could unserialize arbitrary objects within
+> | TYPO3.
+> | 
+> | To our knowledge it is neither possible to inject code through this
+> | vulnerability, nor are there exploitable objects within the TYPO3
+> | Core. However, there might be exploitable objects within third party
+> | extensions.
+
+Please use CVE-2012-1605 for this issue.
+
+> | Vulnerable subcomponent: TYPO3 Backend
+> | Vulnerability Type: Cross-Site Scripting
+> | 
+> | Problem Description: Failing to properly HTML-encode user input in
+> | several places, the TYPO3 backend is susceptible to Cross-Site
+> | Scripting. A valid backend user is required to exploit these
+> | vulnerabilities.
+
+Please use CVE-2012-1606 for this issue.
+
+> | Vulnerable subcomponent: TYPO3 Command Line Interface
+> | Vulnerability Type: Information Disclosure
+> |
+> | Problem Description: Accessing a CLI Script directly with a browser
+> | may disclose the database name used for the TYPO3 installation.
+
+Please use CVE-2012-1607 for this issue.
+
+> | Vulnerable subcomponent: TYPO3 HTML Sanitizing API
+> | Vulnerability Type: Cross-Site Scripting
+> |
+> | Problem Description: By not removing non printable characters, the API
+> | method t3lib_div::RemoveXSS() fails to filter specially crafted HTML
+> | injections, thus is susceptible to Cross-Site Scripting.
+
+Please use CVE-2012-1608 for this issue.
+
+> <http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-001/>
+
+
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
