@@ -1,50 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/03/1
-Message-ID: <CAAPiX_LHO07ittwKRe5iQGK9Ox2xK30_jSo=jOdxFMo8qcvcsA@mail.gmail.com>
-Date: Wed, 2 May 2012 18:53:05 -0600
-From: Greg Knaddison <greg.knaddison@...uia.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/16
+Message-ID: <20120330184333.GA31260@openwall.com>
+Date: Fri, 30 Mar 2012 22:43:33 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Jeff Law <law@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, Mar 30, 2012 at 12:27:31PM -0600, Jeff Law wrote:
+> I think the right way to handle the return value is to return NULL for 
+> these cases.  It's posix complaint and the glibc crypt routines already 
+> return NULL for exceptional conditions.
 
-First, thanks to Kurt for getting us CVEs in advance on Drupal core's
-latest release at http://drupal.org/node/1557938 with CVEs on each
-issue.
+Do you realize that plenty of services that use crypt() - likely the
+majority of them, even - don't handle NULL returns, so they will
+segfault when these conditions are triggered?  (That's assuming there
+is no way for an attacker to get something mmap()'ed at NULL in the
+service.)  I think the NULL returns got into POSIX starting with 2001;
+if so, anything written earlier than that legitimately does not handle
+NULL returns (and indeed a lot of newer code also does not).
 
-This is a CVE request for the following contributed module issues:
+I have to admit that DragonFly BSD also recently went with NULL returns,
+and I failed to convince them to do otherwise.
 
-http://drupal.org/node/1558248  SA-CONTRIB-2012-072 - cctags - Cross
-Site Scripting (XSS)
-http://drupal.org/node/1557874  SA-CONTRIB-2012-071 - Glossify - Cross
-Site Scripting (XSS) - Unsupported
-http://drupal.org/node/1557872  SA-CONTRIB-2012-070 - Taxonomy Grid :
-Catalog - Cross Site Scripting (XSS) - Unsupported
-http://drupal.org/node/1557868  SA-CONTRIB-2012-069 - Addressbook -
-Multiple vulnerabilities - Unsupported
-http://drupal.org/node/1557852  SA-CONTRIB-2012-068 - Node Gallery -
-Cross Site Request Forgery (CSRF) - Unsupported
-http://drupal.org/node/1547738  SA-CONTRIB-2012-067 - Linkit - Access bypass
-http://drupal.org/node/1547736  SA-CONTRIB-2012-066 - Spaces and
-Spaces OG - Access Bypass
-http://drupal.org/node/1547686  SA-CONTRIB-2012-065 - Sitedoc -
-Information disclosure
-http://drupal.org/node/1547674  SA-CONTRIB-2012-064 - Ubercart -
-Multiple vulnerabilities
-http://drupal.org/node/1547660  SA-CONTRIB-2012-063 - RealName - Cross
-Site Scripting (XSS)
-http://drupal.org/node/1547520  SA-CONTRIB-2012-062 - Creative Commons
-- Cross Site Scripting (XSS)
+NetBSD went with my suggestion of "*0" / "*1", though.
 
-Other issues from 2012 that don't have a CVE per your policies:
-http://drupal.org/node/1515282  SA-CONTRIB-2012-056 - Janrain Engage -
-Sensitive Data Protection Vulnerability
-http://drupal.org/node/1506542  SA-CONTRIB-2012-050 - CDN2 Video - Unsupported
-
-Thanks,
-Greg
-
--- 
-Director Security Services | +1-720-310-5623
-Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
+Alexander
