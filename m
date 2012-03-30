@@ -1,56 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/10
-Message-ID: <4F62376C.70600@fifthhorseman.net>
-Date: Thu, 15 Mar 2012 14:39:40 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request: apache's mod-fcgid does not respect configured FcgidMaxProcessesPerClass in VirtualHost
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/19
+Message-ID: <4F760899.2060308@redhat.com>
+Date: Fri, 30 Mar 2012 13:25:13 -0600
+From: Jeff Law <law@...hat.com>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-Version 2.3.6 of mod-fcgid (the current published version from ASF 
-according to [0]) has a known problem that FcgidMaxProcessesPerClass 
-directives are not honored when they appear inside a VirtualHost stanza.
+On 03/30/2012 01:05 PM, Solar Designer wrote:
+>
+>> I don't speak for glibc on this issue, so if you want to raise it on
+>> libc-alpha, go for it.
+>
+> I was hoping that you would take care of that. ;-)
+:-)  I can hazard a guess at their reply and NULL vs some other return 
+value isn't something that's important enough to me to champion.
 
-This is presents a risk for a denial of service because it means that a 
-remote attacker can violate the intent of the admin and overwhelm the 
-server running fcgid.
+jeff
 
-Could a CVE be assigned for this vulnerability?
-
-If the admin declares that a given virtualhost should be limited to X 
-fastcgi processes (often in order to constrain RAM usage by the vhost), 
-any remote user can issue X+1 (or 10X, or whatever) concurrent GET 
-requests, which defeats the documented limit, and can result in heavy 
-swap or the oom-killer, which can cause a DoS on other services on the host.
-
-This bug has been fixed since the release of 2.3.6 in upstream's svn 
-(r1037727 of https://svn.apache.org/repos/asf/httpd/mod_fcgid/trunk) 
-with a narrowly-targeted one-line patch:
-
---- modules/fcgid/fcgid_spawn_ctl.c	(revision 1037726)
-+++ modules/fcgid/fcgid_spawn_ctl.c	(revision 1037727)
-@@ -178,7 +178,7 @@
-          if (current_node->inode == command->inode
-              && current_node->deviceid == command->deviceid
-              && !strcmp(current_node->cmdline, command->cmdline)
--            && current_node->vhost_id == sconf->vhost_id
-+            && current_node->vhost_id == command->vhost_id
-              && current_node->uid == command->uid
-              && current_node->gid == command->gid)
-              break;
-
-But this patch hasn't made it to any released version.
-
-Debian has plans to release a Debian Security Advisory for the issue and 
-will resolve it with the above patch.
-
-This problem is also documented at:
-
-  https://issues.apache.org/bugzilla/show_bug.cgi?id=49902
-  http://bugs.debian.org/615814
-
-Regards,
-
-	--dkg
-
-[0] https://httpd.apache.org/mod_fcgid/
