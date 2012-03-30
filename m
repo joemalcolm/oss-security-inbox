@@ -1,44 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/9
-Message-ID: <20120309231606.GA12383@eltex.net>
-Date: Sat, 10 Mar 2012 02:16:06 +0300
-From: ArkanoiD <ark@...ex.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/8
+Message-ID: <4F75A6D2.4040801@redhat.com>
+Date: Fri, 30 Mar 2012 14:28:02 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Tom Lane <tgl@...hat.com>, pgsql-jdbc@...tgresql.org, Steffen Dettmer <steffen@...t.de>
+Subject: CVE DISPUTE notification: postgresql-jdbc: SQL injection due improper escaping of JDBC statement parameters
 Content-Type: text/plain; charset=utf-8
 
-Am I the only one here with strong deja vu feeling? :-)
+Hello Kurt, Steve, vendors,
 
-On Sat, Mar 10, 2012 at 12:01:21AM +0100, Eric Leblond wrote:
-> Hello,
-> 
-> On Mon, 2012-02-27 at 14:46 +0100, Eric Leblond wrote:
-> > Hello,
-> > 
-> > On Mon, 2012-02-27 at 05:25 +0400, Solar Designer wrote:
-> > > Eugene, all -
-> > > 
-> > > On Mon, Feb 27, 2012 at 09:19:59AM +0800, Eugene Teo wrote:
-> ...
-> 
-> > e it to Eric much earlier),
-> > > Eric would post to the list e.g. in January and ask for the issue to be
-> > > kept private until March - thereby violating the list's maximum embargo
-> > > period.
-> 
-> The slides and videos of my CansecWest talk are available:
-> http://home.regit.org/2012/03/playing-with-network-layers-to-bypass-firewalls-filtering-policy/
-> 
-> I've done a complete description of the attack and also demonstrate the
-> need to be careful with the use of helpers.
-> 
-> BR,
-> -- 
-> Eric Leblond 
-> Blog: http://home.regit.org/
-> 
-> email protected and scanned by AdvascanTM - keeping email useful - www.advascan.com 
-> 
-> 
+   originally, the following deficiency has been reported by Steffen Dettmer:
+   [1] http://seclists.org/bugtraq/2012/Mar/125
 
+A SQL injection flaw was found in the way postgresql-jdbc, a JDBC driver for
+PostgreSQL database, performed escaping of certain JDBC statement parameters. A
+remote attacker could provide a JDBC statement with specially-crafted
+parameters, which once processed by the postgresql-jdbc driver would lead to
+SQL injection.
 
+References:
+[2] http://lists.opensuse.org/opensuse-security/2012-03/msg00024.html
+[3] https://bugzilla.novell.com/show_bug.cgi?id=754273
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=807394
+
+Upon further issue investigation and discussion with Tom Lane of PostgreSQL
+upstream and JDBC driver upstream the following conclusion has been provided:
+
+The upstream development team of the JDBC driver for the PostgreSQL database
+does not consider improper escaping of certain JDBC statement / query
+parameters, when the JDBC driver of version older than the version of
+underlying PostgresSQL server is being used, to be a security defect. In
+general, the JDBC driver for the PostgreSQL database does not promise to work
+with server releases newer than the driver release.
+
+This is NOT an official JDBC driver for PostgreSQL database development team
+statement yet (in the sense it would reference some upstream document / web page).
+Anyway, we have got preliminary notification there is a upstream intention to
+provide such page (document which postgresql-jdbc versions are expected to work
+correctly with which versions of PostgreSQL database server).
+
+Till this is done, please take this post as a clarification of postgresql-jdbc's
+upstream intentions to dispute the possibly later allocated CVE identifier to this
+issue (posting this sooner yet one can be allocated to this though some vendors
+might still be interested in allocation).
+
+For now Red Hat Security Response Team decided to agree with the above upstream
+assessment / pursue the way to upstream conclusion. Though in the future if some
+further details would appear, forcing us to change this conclusion, we might
+revisit our decision.
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
