@@ -1,68 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/09/1
-Message-ID: <504BDF52.1010805@redhat.com>
-Date: Sat, 08 Sep 2012 18:14:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/20
+Message-ID: <87zkaxq2l0.fsf@mid.deneb.enyo.de>
+Date: Fri, 30 Mar 2012 22:02:51 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: Tavis Ormandy <taviso@...xchg8b.com>
-Subject: Re: note on gnome shell extensions
+Subject: Re: postgresql-jdbc 8.1 SQL injection with postgresql server 9.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* Ludwig Nussel:
 
-On 09/08/2012 04:36 PM, Tavis Ormandy wrote:
-> List, I just installed Fedora 17 on a workstation. While
-> researching how to upgrade gnome 3 to version 2, I noticed it
-> installed a browser extension called "Gnome Shell Integration".
-> 
-> $ rpm -qf
-> /usr/lib64/mozilla/plugins/libgnome-shell-browser-plugin.so 
-> gnome-shell-3.4.1-5.fc17.x86_64
-> 
-> The NPPVpluginDescriptionString states "It can be used only by 
-> extensions.gnome.org", but I happen to know that is a tricky thing
-> to get right.
+> Postgresql 9.1 turned "standard conforming strings" on by default[1][2].
+> postgresql-jdbc before version 8.2-504 however did not know about that
+> kind of string and escaped single quotes with a backslash always. When
+> such an old version of postgresql-jdbc is used with a newer postgresql
+> server it not only breaks when strings contain single quotes, it also
+> allows for SQL injections[3].
 
-Erk yeah not good.
-
-> The plugin incorrectly trusted hostname, and initialized. As far as
-> I can tell, the plugin will let you install new shell extensions, I
-> don't know what the impact of that is, can they contain native
-> code?
-> 
-> Tavis.
-
-Good news: In theory at least Gnome shell extensions are only
-JavaScript and (optional) CSS using the Gjs bindings, the JavaScript
-itself is run using SpiderMonkey. So no native code execution as far
-as I know.
-
-Bad news: It looks like it has bindings to run command lines from
-within a Gnome Shell Extensions:
-
-http://developer.gnome.org/glibmm/unstable/group__Spawn.html
-http://stackoverflow.com/questions/9606404/gnome-shell-extensions-stdout-from-glib-iochannel
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQS99SAAoJEBYNRVNeJnmTvRYP/1QQ/qjU6nxj+zMqQrYungID
-B0bhjhEz1HLWqgawKHEd2DlAMwBWXD0WmCiJEI6PONRQscp7N3+t5W9aoDwuKXwt
-fHu9MX74WdBnMMKYTb/irvzIgeTmmfIgcLTXqlruZU9UkpH2xUBAmFv0K/y1Dlvm
-sdVJAPWl/OtgPMh97mb/sRAm0ZBh/98MGGE5wjV/4Vy7/J8sxLKlwjEqYZZeDz9y
-af7idH8+fCSeN3s8o1AVsFn9TBMyXXKuMv0RNJnKp4B7oF3EGQt+clHQM95b567Y
-pF/vZSf+O0a23uqqXNllPlr5HQLqOfMFhNsiT70QjWDknfxAw6Z3DxtsTQ8I1Xb0
-v+z73jjGAaJTISSkn6f1BZ9SA0V5o92AqzvlXQy1CZfDjJPrCPIM29vOsnGJcVkx
-XJ6Cyl1HI0N+70qTRmBoSdYcamIz7oK+4x9mLA4ThDCyHCrhhr80iAab2MwHFkGi
-F3UXTOg+kn9nW1b2qBjd+TV5KVMy/Im+HqZBfhtg6uSRcO1mrvzk8fRQENdGqaN/
-4wc03phWzHJR15K2RSLVRAca442SZx7wbEDrb+9bAtHXzvbg/3VH+VhtWchKlcYj
-lF2PgaeR/pz7W59k2HpjXXqmRorXToMXPguDyyBzve7s2+mlsos8corD6vnBEwCX
-HHFgSi+B1flhyLj1ZRqq
-=YjRJ
------END PGP SIGNATURE-----
+By the way, if you want to fix this for some reason, you should
+probably include support for the modified BYTEA encoding introduced in
+the 9.0 server version, too.
