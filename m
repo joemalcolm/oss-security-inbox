@@ -1,20 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/12
-Message-ID: <1926255.IY1SnQp175@devil>
-Date: Wed, 01 Feb 2012 23:02:41 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Subscribe to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/3
+Message-ID: <4F7510E4.5090703@redhat.com>
+Date: Thu, 29 Mar 2012 19:48:20 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Hanno Böck <hanno@...eck.de>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request: egroupware before 1.8.002 various security issues
 Content-Type: text/plain; charset=utf-8
 
-@Alexander:
+On 03/29/2012 12:38 AM, Hanno Böck wrote:
+> Am Wed, 28 Mar 2012 23:04:07 -0600 schrieb Kurt Seifried
+> <kseifried@...hat.com>:
+> 
+>> On 03/28/2012 10:26 AM, Hanno Böck wrote:
+>>> http://comments.gmane.org/gmane.comp.web.egroupware.german/33144
+>>>
+>>>
+>>> 
+" 1. Fixes regarding security issues like 'local file inclusion',
+>>> 'sql injection', 'reflected xss' and 'open redirect'. "
+>>> 
+>> 
+>> Make a list with specific requests and information please.
+>> 
+> 
+> Local file inclusion: 
+> http://packetstormsecurity.org/files/101676/eGroupware-1.8.001.20110421-Local-File-Inclusion.html
 
-I'm contributor in gentoo security project as 'security bug coordinator', can 
-you subscribe me?
-http://www.gentoo.org/proj/en/security/
+Please
+> 
+use CVE-2011-4948 for this issue.
+
+> SQL injection in 1.8.001: 
+> http://packetstormsecurity.org/files/100179/eGroupware-1.8.001-SQL-Injection.html
+
+Please
+> 
+use CVE-2011-4949 for this issue.
+
+> reflected xss: 
+> http://packetstormsecurity.org/files/100180/eGroupware-1.8.001-Cross-Site-Scripting.html
+
+Please
+> 
+use CVE-2011-4950 for this issue.
+
+> open redirect: 
+> http://packetstormsecurity.org/files/101675/eGroupware-1.8.001.20110421-Open-Redirect.html
+
+Please
+> 
+use CVE-2011-4951 for this issue.
+
 -- 
-Agostino Sarubbo		ago -at- gentoo.org
-Gentoo/AMD64 Arch Security Liaison
-GPG: 0x7CD2DC5D
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Kurt Seifried Red Hat Security Response Team (SRT)
