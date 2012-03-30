@@ -1,142 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/1
-Message-ID: <50DFB3BA.7060403@redhat.com>
-Date: Sat, 29 Dec 2012 20:23:38 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Michael Tokarev <mjt@....msk.ru>, michael@...tric.com
-Subject: Re: CVE request: qemu e1000 emulated device gues-side buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/11
+Message-ID: <CA+TgmoZ9vOYkqkNjNE+679ND3mx2ynHtPzwuKBQeWn3U5TmTkQ@mail.gmail.com>
+Date: Fri, 30 Mar 2012 11:45:24 -0400
+From: Robert Haas <robertmhaas@...il.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, security@...tgresql.org
+Subject: Re: [pgsql-security] postgresql-jdbc 8.1 SQL injection with postgresql server 9.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 12/29/2012 05:52 AM, Michael Tokarev wrote:
-> I'm not sure what's going on, but no one replied to this email.
-
-I was waiting for someone to reply/post more info, didn't happen until
-now =).
-
-> Meanwhile, this very place received one more bugfix -- see
-> 
-> http://lists.nongnu.org/archive/html/qemu-devel/2012-12/msg00533.html
+On Fri, Mar 30, 2012 at 11:27 AM, Robert Haas <robertmhaas@...il.com> wrote:
+> On Fri, Mar 30, 2012 at 8:51 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
+>> Postgresql 9.1 turned "standard conforming strings" on by default[1][2].
+>> postgresql-jdbc before version 8.2-504 however did not know about that
+>> kind of string and escaped single quotes with a backslash always. When
+>> such an old version of postgresql-jdbc is used with a newer postgresql
+>> server it not only breaks when strings contain single quotes, it also
+>> allows for SQL injections[3].
+>> The bug is neither in postgresql-jdbc as it was working correctly at the
+>> time it was released, nor is it really postgresql 9.1's fault which I
+>> guess doesn't expect and can't detect such an old jdbc adapter. The
+>> security issue arises when mixing the old adapter and the new server.
 >
->  Is this an issue serious enough to get a CVE#?
+> Right.  This issue has been previously reported to pgsql-security.
+> The position of the pgsql-jdbc project is that a client version should
+> be used with a matching server version; therefore, the project views
+> the proposed combination as an unsupported configuration.  Moreover,
+> PostgreSQL 8.2.x and postgresql-jdbc-8.2-x were desupported in general
+> as of December 2011.  The end of life dates for each major release are
+> documented on our web site[1], and the pgsql-jdbc download site[2]
+> clearly identifies this version of the driver as an "archived version"
+> rather than a "supported version".  As a rule, bug fix and security
+> updates are not released for versions which are no longer supported;
+> users are advised to update to a supported version.  Users of
+> pgsql-jdbc are further advised to use a major version that matches the
+> PostgreSQL server to which they are connecting.
+>
+> [1] http://www.postgresql.org/support/versioning/
+> [2] http://jdbc.postgresql.org/download.html
 
-I am merging these issues into a single CVE, same researcher, same
-version of Linux kernel, basically same problem. If anyone objects
-strongly however I can split (assumption being the CVE assigned now
-would be for the Dec 3 2012 issue). So we have:
+Small correction: the complaint we received was actually about
+postgresql-jdbc-8.1-x, which is listed as not supported.
+postgresql-jdbc-8.2-x is still listed as a supported version, but I
+believe you said this bug could only be reproduced with pre-8.2
+versions of JDBC.
 
-==========================
-Dec 3 2012:
-http://git.qemu.org/?p=qemu.git;a=commitdiff;h=b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
-
-+/* this is the size past which hardware will drop packets when
-setting LPE=0 */
-+#define MAXIMUM_ETHERNET_VLAN_SIZE 1522
-+    /* Discard oversized packets if !LPE and !SBP. */
-
-==========================
-Dec 5 2012:
-https://lists.nongnu.org/archive/html/qemu-devel/2012-12/msg00533.html
-
-+/* this is the size past which hardware will drop packets when
-setting LPE=1 */
-+#define MAXIMUM_ETHERNET_LPE_SIZE 16384
-
-==========================
-
-Please use CVE-2012-6075 for these issues.
-
-
-> Thanks,
-> 
-> /mjt
-> 
-> 19.12.2012 23:52, Michael Tokarev wrote:
->> qemu-1.3 includes the following patch by Michael Contreras:
->> 
->> http://thread.gmane.org/gmane.comp.emulators.qemu/182666 (initial
->> submission)
->> 
->> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
->>
->>
->> 
-(the commit)
->> 
->> 
->> commit b0d9ffcd0251161c7c92f94804dcf599dfa3edeb Author: Michael
->> Contreras <michael@...tric.com> Date:   Sun Dec 2 20:11:22 2012
->> -0800 Subject: e1000: Discard packets that are too long if !SBP
->> and !LPE
->> 
->> The e1000_receive function for the e1000 needs to discard
->> packets longer than 1522 bytes if the SBP and LPE flags are
->> disabled. The linux driver assumes this behavior and allocates
->> memory based on this assumption.
->> 
->> Signed-off-by: Michael Contreras <michael <at> inetric.com> ---
->> 
->> Tested with linux guest. This error can potentially be exploited.
->> At the very least it can cause a DoS to a guest system, and in
->> the worse case it could allow remote code execution on the guest
->> system with kernel level privilege. Risk seems low, as the
->> network would need to be configured to allow large packets.
->> 
->> 
->> The last comment, which didn't went into the commit message,
->> indicates that it is possible to send larger packet to a guest
->> and cause a buffer overflow with usual outcome in such cases.
->> 
->> Yes indeed, the impact is rather low, because the network should
->> be configured to allow larger packets to reach the guest, which
->> is not usually the case -- either the host network is configure
->> for MTU=1500 and disallow large packets entirely, or BOTH host
->> and guest network is configured to allow large packets.  In other
->> words, either all devices on the network are configred to accept
->> jumbo frames, no no jumbo frames are enabled at all.
->> 
->> That's why I'm not sure whenever this can be considered a
->> vulnerability which deserves a CVE# or not, so I'm asking here.
->> 
->> There's another followup bugfix in the same area, now talking
->> about "extra-large" frames --
->> 
->> http://thread.gmane.org/gmane.comp.emulators.qemu/183137
->> 
->> If this issue deserves a CVE#, I guess both patches can be seen
->> as a single bugfix.
->> 
->> This impacts qemu and all products based on it and using e1000
->> emulated device, including qemu-kvm, xen and others.
->> 
->> Thanks,
->> 
->> /mjt
->> 
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ37O6AAoJEBYNRVNeJnmTobcP/2buj6B2/eZ2U6rliK69Bbrj
-sI9ubrmOBSn0FswbsfTBU94p21O9eEWwer6DjbHlE5N5rq3pClRZe8ClQVS5+vDM
-OCEfN5aeK/2PHv398q8yG3GLvxFFEWKdmjIRClVimwFXMVcH5ewmbpt5kVfmcNXp
-PWETebHp10E8Az0IKFfNexBoZVCwaxBJp2YIaeTKbf77KmZ7pbxdVXE4rxRGquoG
-TMmLrIIdG8GqbTp+CRipZUrFCxQs+TRcgY4ZcbAaJfnYlz6P5M6IG9jYF/LiIWCS
-3MCtHoC9XWZi4Vk0nctKe1XAvx7c/uOqiLOYiZsF8NsvYVgVVldptwcxPTMoXNHi
-B3o2Iq7dQLVmBz2nWxsTJ2Fth8joGJRCGqlmZoN6mGDhXhZRH4b7Y7l5N73N1pds
-ycwWYB6XUVeKgwI1G/7EFdNCPgK3GD+oOT9b4cQgUzJ2bqD61UUVzOZSOLhTtm6Q
-cqjOhs0dK0XgElrWtI2diP0StqqZbG3lCS09OHmlQiSJlyNEEm7WJkNFal+FotqV
-wsiGHtij2Kv2WzLsPqajpb/CVQVgJFQ7D/rWgZUPbKurSSE+SGcIuwn9LmZepl7G
-HmoJEh7i1gu90ThT9fRm4SnUViCEpkR++X4zM71PkXkPVOcaxvSOwfNSBUQvaOGv
-ATotoSZWHd8rrjjuak0N
-=OsM0
------END PGP SIGNATURE-----
+-- 
+Robert Haas
+EnterpriseDB: http://www.enterprisedb.com
+The Enterprise PostgreSQL Company
