@@ -1,23 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/06/3
-Message-ID: <20120806080740.GA24131@dhcp-25-225.brq.redhat.com>
-Date: Mon, 6 Aug 2012 10:07:41 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/5
+Message-ID: <20120330075804.GA11582@kludge.henri.nerv.fi>
+Date: Fri, 30 Mar 2012 10:58:04 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel net/rds max socket length checking
+Subject: CVE-request: Coppermine 1.5.18 waraxe-2012-SA#081
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 06, 2012 at 09:48:50AM +0200, Marcus Meissner wrote:
-> Hi,
-> 
-> Kernel memory information leak in the RDS protocol.
-> (commit also has a testcase)
-> 
-> https://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=06b6a1cf6e776426766298d055bb3991957d90a7
+Can I get 2012 CVE-identifier for stored XSS in Coppermine 1.5.18 edit_ont_pic.php keywords.
 
-CVE id has been already assigned (CVE-2012-3430).
+ID: waraxe-2012-SA#081
+Original advisory: http://www.waraxe.us/advisory-81.html
+Mailing list post: http://seclists.org/bugtraq/2012/Mar/166
 
-See post with Message-ID: <20120726152511.GN12159@...p-25-225.brq.redhat.com>@oss-security.
+"""
+Reason: failure to sufficiently sanitize user-supplied input data
+Preconditions: privileges needed for picture keywords editing
 
--- 
-Petr Matousek / Red Hat Security Response Team
+Coppermine user with appropriate privileges is able to modify picture information:
+
+http://localhost/cpg1518/edit_one_pic.php?id=1&what=picture
+
+There is a field in form named as "Keywords (separate with semicolon)".
+After insertion to database those keywords are later used in html meta section.
+It appears, that specific user supplied data is not properly validated before
+outputting as html to the end user, resulting in Stored XSS vulnerability.
+
+Testing:
+
+1. Open picture information editing page:
+
+http://localhost/cpg1518/edit_one_pic.php?id=1&what=picture
+
+2. Insert XSS payload below as keywords and click "Apply changes":
+
+"><body onload=javascript:alert(String.fromCharCode(88,83,83))>
+
+After that issue request to view this image:
+
+http://localhost/cpg1518/displayimage.php?pid=1
+
+As result we can observe XSS payload execution.
+"""
+
+There is also four different path disclosure vulnerabilities (includes plugins), but I think one CVE-identifier for this advisory is enough as these are all in the same version and path disclosure is very low severity.
+
+- Henri Salo
