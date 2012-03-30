@@ -1,77 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/17/2
-Message-ID: <20120917072337.GC24015@suse.de>
-Date: Mon, 17 Sep 2012 09:23:37 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/13
+Message-ID: <20120330195639.57a62a09@redhat.com>
+Date: Fri, 30 Mar 2012 19:56:39 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus CVE-2012-3524 fix
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, 15 Nov 2011 06:13:24 +0400 Solar Designer wrote:
 
-On Fri, Sep 14, 2012 at 10:15:42AM +0200, Tomas Hoger wrote:
-> On Wed, 12 Sep 2012 16:04:33 +0200 Sebastian Krahmer wrote:
+> Alternatively, crypt(3) and crypt_r(3) (and the reference code for
+> SHA-crypt?) could refuse to work on overly long key or/and salt
+> strings, but then the question is what they should do on error.
+> crypt(3) returning NULL and setting errno is SUSv2-compliant, but in
+> practice is unexpected by many programs.  Thus, I think the functions
+> would need to return a string that is guaranteed not to match the
+> salt string, e.g. with something like:
 > 
-> > The recently discussed libdbus getenv() issue [1] turned out
-> > to be easily exploitable on various UNIX systems, including
-> > some Linux distributions. Common attack vectors are Xorg and
-> > spice-gtk via auto-launching [2].
-> > Properly patching requires fixes for libdbus and libgio,
-> > depending on which you link your suid binaries.
+> 	buffer[0] = '*';
+> 	buffer[1] = '0';
+> 	buffer[2] = '\0';
+> 	if (salt[0] == '*' && salt[1] == '0')
+> 		buffer[1] = '1';
 > 
-> [ ... ]
+> (but also need to check buflen).
 > 
-> > [2] http://stealth.openwall.net/null/dzug.c
-> 
-> Sebastian, can you confirm that this summary completely covers all your
-> findings?
+> Finally, we could use malloc() instead of alloca(), but this doesn't
+> eliminate the need to potentially handle an error condition (what if
+> malloc() returns NULL?)
 
-Um, I focused on the suid/daemons that we have on our dist, so theres
-indeed no claim that the list of attack vectors is complete. I cannot
-check any library/pam combination of any UNIX that is outthere. :)
-Though, I tried to be as 'complete as possible'.
-For example, you can also use su as attack vector if you run systemd
-(via pam_systemd and su keeping a parent pam-session as root, triggering
-pam_systemd.so load with user given environment; loading libdbus).
-And finally pam_ck_connector, but AFAIS this cannot be triggered
-as it only runs via login or login managers which dosn't leave room
-for DBUS_SYSTEM_BUS_ADDRESS passing so easily.
-But you know, these guys are maybe more clever than us and they get more
-money for their results. Thats the A in APT. :)
+FYI, a fix just got committed upstream, which makes glibc use malloc
+instead of alloca for long inputs and hence possibly make crypt() return
+NULL on errors:
 
-> 
-> There are problems with handling of DBUS_SYSTEM_BUS_ADDRESS environment
-> variable in both libdbus and glib/libgio when used in a privileged
-> (setuid or setgid) application.
-> 
-> libdbus is currently tracked via CVE-2012-3524, with two known attack
-> variants:
-> - unixexec:, which is only supported in recent dbus versions (1.5+ from
->   what I can see)
-> - autolaunch: combined with malicious PATH setting, leading to
->   execution of the attacker's dbus-launch.  This affects pre-1.5 dbus
->   versions too.
+http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=b8dc394ddfd58bc5d0fe9ecfc970fc42b789a9df
 
-Ok, there is also 'nonce-tcp' which you could use to dump (parts of) secret files.
-There is also the option to use a UNIX socket that you dont have write permission
-to, writing semi-garbage to it (with root peer credentials), maybe triggering
-actions in daemons that are 'unexpected'.
+Upstream discussion:
 
-
-> 
-> libgio got CVE-2012-4425:
-> - autolaunch: or empty address, combined with PATH setting, similar to
->   the second libdbus variant
-
-Yes, but I didnt check libgio explicitely. There might be other issues lurking inside
-libgio.
-
-Sebastian
-
+http://sourceware.org/ml/libc-alpha/2012-03/msg01138.html
+http://sourceware.org/ml/libc-alpha/2012-03/msg01158.html
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+Tomas Hoger / Red Hat Security Response Team
