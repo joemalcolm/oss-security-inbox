@@ -1,75 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/05/8
-Message-ID: <509811FD.70303@halfdog.net>
-Date: Mon, 05 Nov 2012 19:22:37 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: TTY handling when executing code in different lower-privileged context (su, virt containers)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/9
+Message-ID: <4F75AC42.7070904@suse.de>
+Date: Fri, 30 Mar 2012 14:51:14 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com, security@...tgresql.org
+Subject: postgresql-jdbc 8.1 SQL injection with postgresql server 9.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-During programming experiments I found some class of vulnerabilities
-[1], that seem to be rediscovered again from time to time, but since
-attack value is questionable, it was not fixed yet.
+Postgresql 9.1 turned "standard conforming strings" on by default[1][2].
+postgresql-jdbc before version 8.2-504 however did not know about that
+kind of string and escaped single quotes with a backslash always. When
+such an old version of postgresql-jdbc is used with a newer postgresql
+server it not only breaks when strings contain single quotes, it also
+allows for SQL injections[3].
+The bug is neither in postgresql-jdbc as it was working correctly at the
+time it was released, nor is it really postgresql 9.1's fault which I
+guess doesn't expect and can't detect such an old jdbc adapter. The
+security issue arises when mixing the old adapter and the new server.
+One might be inclined to say this is not a security issue as it's likely
+to break during normal operation as soon as some string contains a
+single quote. But then isn't that the case for SQL injections in
+general?
 
-The basic idea is, that a program started from interactive shell can
-access the TTY and also inject input data using TIOCSTI ioctl. This is
-not an issue when the program is running in the same execution
-context, but may allow privilege escalation when the program switches
-to another user context without closing the TTY file descriptors. In
-that case a malicious program running in the lower privileged context
-can inject commands to be executed by the interactive shell running
-with higher privileges.
+[1] http://www.depesz.com/2010/07/21/waiting-for-9-1-standard_conforming_strings-on/
+[2] http://archives.postgresql.org/pgsql-committers/2010-07/msg00210.php
+[3] http://lists.opensuse.org/opensuse-security/2012-03/msg00024.html
 
-Test were made using 'su' from root to 'test' user, which is
-vulnerable to that kind of attack.
+cu
+Ludwig
 
-Also entering a virtualization container is a problematic context
-switch. 'vserver enter' [2] was found to be vulnerable for command
-execution outside container while 'lxc-console' was not.
-
-
-At least with 'su', this vulnerability is known for years and still
-not fixed. In my opinion this is because the fix is not quite trivial
-and the proposed attack method requires root running interactive shell
-switching to a problematic user account (user interaction). So the
-CVSS for this is quite low.
-
-
-I would like to propose following "fix" for this problem: Modification
-of man-page of su making this a known problem or feature, not a bug.
-
-"Using su to execute commands as an untrusted user from an interactive
-shell may allow the untrusted user to escalate privileges to the user
-running the shell."
-
-
-For linux-vserver enter I would be interested in opinions if
-application should be fixed or documentation update is sufficient.
-- From my point of view, fix would be more appropriate.
-
-
-In both cases, paranoid administrators might decide to use /dev/null
-as stdin/stdout/stderr when just starting non-interactive programs in
-different context, while they could replace the privileged shell with
-exec when interactive context switch is needed (no shell, no escalation).
-
-Any opinions on that?
-
-hd
-
-[1] http://www.halfdog.net/Security/2012/TtyPushbackPrivilegeEscalation/
-[2] http://linux-vserver.org/
-
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iEYEARECAAYFAlCYEdIACgkQxFmThv7tq+5NOwCfUfq0ad9K8xkUYO+Yu0aROzpl
-ZL0Anjso4tJUcdZcoqkbfeP5aZ7AunUY
-=7FEy
------END PGP SIGNATURE-----
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
