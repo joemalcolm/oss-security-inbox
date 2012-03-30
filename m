@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/3
-Message-ID: <4F2B9F74.406@redhat.com>
-Date: Fri, 03 Feb 2012 01:48:52 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/1
+Message-ID: <4F7506D2.5060107@redhat.com>
+Date: Thu, 29 Mar 2012 19:05:22 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: phpldapadmin "base" Cross-Site Scripting Vulnerability
+Subject: Re: CVE request -- kernel: kvm: irqchip_in_kernel() and vcpu->arch.apic inconsistency
 Content-Type: text/plain; charset=utf-8
 
-On 02/02/2012 04:15 AM, Agostino Sarubbo wrote:
-> According to secunia advisory: 
-> https://secunia.com/advisories/47852/
+On 03/29/2012 01:58 PM, Petr Matousek wrote:
+> If some vcpus are created before KVM_CREATE_IRQCHIP, then
+> irqchip_in_kernel() and vcpu->arch.apic will be inconsistent, leading to
+> potential NULL pointer dereferences.
 > 
-> Input passed via the "base" parameter to cmd.php (when "cmd" is set
-> to "query_engine") is not properly sanitised in lib/QueryRender.php
-> before being returned to the user. This can be exploited to execute
-> arbitrary HTML and script code in a user's browser session in
-> context of an affected site.
+> A unprivileged local user could use this flaw to crash the system.
 > 
-> The vulnerability is confirmed in version 1.2.2. Other versions may
-> also be affected.
+> Upstream fix:
+> http://git.kernel.org/?p=virt/kvm/kvm.git;a=commit;h=5b40572ed5f0344b9dbee486a17c589ce1abe1a3
 > 
-> Original Advisory: 
-> https://sourceforge.net/tracker/index.php?func=detail&aid=3477910&group_id=61828&atid=498546
->
->  Commit code: 
-> http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=commit;h=7dc8d57d6952fe681cb9e8818df7f103220457bd
->
+> References:
+> http://comments.gmane.org/gmane.comp.emulators.kvm.devel/86217
+> https://bugzilla.redhat.com/show_bug.cgi?id=808199
 > 
-Ah our missing friend htmlspecialchars. Please use CVE-2012-0834 for
-this issue.
+> Thanks,
+
+Please use CVE-2012-1601 for this issue.
 
 -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
