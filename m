@@ -1,21 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/7
-Message-ID: <20120920173506.GB32624@kludge.henri.nerv.fi>
-Date: Thu, 20 Sep 2012 20:35:06 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: security@...key-project.com
-Subject: CVE-request: monkey fails to drop supplemental groups when lowering privileges
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/18
+Message-ID: <20120330190532.GA31396@openwall.com>
+Date: Fri, 30 Mar 2012 23:05:32 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Jeff Law <law@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, Mar 30, 2012 at 12:47:54PM -0600, Jeff Law wrote:
+> On 03/30/2012 12:43 PM, Solar Designer wrote:
+> >On Fri, Mar 30, 2012 at 12:27:31PM -0600, Jeff Law wrote:
+> >>I think the right way to handle the return value is to return NULL for
+> >>these cases.  It's posix complaint and the glibc crypt routines already
+> >>return NULL for exceptional conditions.
+> >
+> >Do you realize that plenty of services that use crypt() - likely the
+> >majority of them, even - don't handle NULL returns, so they will
+> >segfault when these conditions are triggered?
+> Then, IMHO,  the app is clearly broken.  Crypt has been defined as 
+> potentially returning NULL and at least for glibc has done so since the 
+> introduction of sha256/sha512, if the app fails to check for that, then 
+> the app needs to be fixed.
 
-Please assign 2012 CVE-identifier for following monkey vulnerability:
+Sure.  I am not arguing against fixing the apps (in fact, I am planning
+to fix one of mine - code originally written in 1998 or so - regardless
+of what glibc does on this), but I am arguing for not having glibc
+expose the problem.
 
-Monkey webserver fails to drop supplemental groups when lowering privileges. This allows any local user on the system to read any fine that root's supplemental groups can access. Monkey does perform a filesystem access check to make sure that its EUID/EGID can access the target file, but this check is subject to TOCTOU flaws.
+Considering the age of Unix, SUSv2 and POSIX.1-2001 are fairly recent
+(I think this may be when the NULL returns were first standardized), and
+glibc's SHA-crypt is very young.  It still makes sense to support apps
+older than that, including without changes.
 
-Reported by John Lightsey in http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=688007
-Affected Debian-version is 0.9.3-1 (haven't tested upstream package)
-Project page: http://www.monkey-project.com/
+> I don't speak for glibc on this issue, so if you want to raise it on 
+> libc-alpha, go for it.
 
-- Henri Salo
+I was hoping that you would take care of that. ;-)
+
+Anyway, given DragonFly's decision, various other systems returning NULL
+on various occasions (inconsistently), and your comment about glibc
+doing that for a while, I no longer have a strong opinion on the matter.
+
+We will likely continue to do the "*0" / "*1" thing in Owl (our distro
+that uses glibc with patches), though.
+
+Alexander
