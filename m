@@ -1,44 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/2
-Message-ID: <CAJzxamKHwFAuxhJettT+89cicmhhyGAarThX77hjA3j5mU7TWw@mail.gmail.com>
-Date: Fri, 25 May 2012 02:20:59 +1000
-From: David Black <disclosure@....org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request: powerdns does not clear supplementary groups
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/17
+Message-ID: <4F75FFDA.3010002@redhat.com>
+Date: Fri, 30 Mar 2012 12:47:54 -0600
+From: Jeff Law <law@...hat.com>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-Powerdns does not drop/clear supplementary groups in its dropPrivs
-routine where the intent is to drop privileges.
+On 03/30/2012 12:43 PM, Solar Designer wrote:
+> On Fri, Mar 30, 2012 at 12:27:31PM -0600, Jeff Law wrote:
+>> I think the right way to handle the return value is to return NULL for
+>> these cases.  It's posix complaint and the glibc crypt routines already
+>> return NULL for exceptional conditions.
+>
+> Do you realize that plenty of services that use crypt() - likely the
+> majority of them, even - don't handle NULL returns, so they will
+> segfault when these conditions are triggered?
+Then, IMHO,  the app is clearly broken.  Crypt has been defined as 
+potentially returning NULL and at least for glibc has done so since the 
+introduction of sha256/sha512, if the app fails to check for that, then 
+the app needs to be fixed.
 
-The relevant code can be found in pdns/unix_utility.cc /
-pdns-recursor-3.3/unix_utility.cc [0].
+I don't speak for glibc on this issue, so if you want to raise it on 
+libc-alpha, go for it.
 
-Can a CVE id be assigned for this issue?
-
-
-[0]
-pdns/unix_utility.cc / pdns-recursor-3.3/unix_utility.cc
-// Drops the program's privileges.
-void Utility::dropPrivs( int uid, int gid )
-{
- if(gid) {
-   if(setgid(gid)<0) {
-     theL()<<Logger::Critical<<"Unable to set effective group id to
-"<<gid<<": "<<stringerror()<<endl;
-     exit(1);
-   }
-   else
-     theL()<<Logger::Info<<"Set effective group id to "<<gid<<endl;
-
- }
-
- if(uid) {
-   if(setuid(uid)<0) {
-     theL()<<Logger::Critical<<"Unable to set effective user id to
-"<<uid<<":  "<<stringerror()<<endl;
-     exit(1);
-   }
-   else
-     theL()<<Logger::Info<<"Set effective user id to "<<uid<<endl;
- }
-}
+Jeff
