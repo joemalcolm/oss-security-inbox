@@ -1,37 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/4
-Message-ID: <1326792256.4782.71.camel@scapa>
-Date: Tue, 17 Jan 2012 10:24:16 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: gpw password generator giving short password at low rate
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/02/4
+Message-Id: <4F798A9C0200002500046A8D@gw.wicourts.gov>
+Date: Mon, 02 Apr 2012 11:16:44 -0500
+From: "Kevin Grittner" <Kevin.Grittner@...ourts.gov>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: "Steffen Dettmer" <steffen@...t.de>, <oss-security@...ts.openwall.com>,<pgsql-jdbc@...tgresql.org>, "Tom Lane" <tgl@...hat.com>
+Subject: Re: [JDBC] CVE DISPUTE notification: postgresql-jdbc: SQL injection due improper escaping of JDBC statement parameters
 Content-Type: text/plain; charset=utf-8
 
-On mar., 2012-01-17 at 11:17 +0200, Henri Salo wrote:
-> On Tue, Jan 17, 2012 at 09:51:05AM +0100, Yves-Alexis Perez wrote:
-> > we were pointed at a bug in gpw (a password generator), which makes it
-> > generate shorter password than required at a rate of ~20 over 1 million.
-> > The bug is at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651510
-> > (so already public) and I'm wondering if that deserves a CVE:
-> > 
-> > * gpw seems unmaintained (upstream and in Debian since around 2006)
-> > * I'm not sure people even use it
-> > * people using it interactively will notice the password has the wrong
-> > size
-> > 
-> > But as it may be used in a script, then it might still be a real issue.
-> > 
-> > What do people think?
-> 
-> I think this is security issue and should receive CVE. Is this program
-> used in other distributions we could notify? Has this been fixed in
-> other versions?
-> 
-Not that I know of (but I didn't know anything about gpw before reading
-that bug report). It should be present in Debian derivatives, at least.
-
-Regards,
--- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+What follows is just one perspective from a DBA at a production
+shop.
+ 
+Jan Lieskovsky <jlieskov@...hat.com> wrote:
+ 
+> This is NOT an official JDBC driver for PostgreSQL database
+> development team statement yet (in the sense it would reference
+> some upstream document / web page).
+> Anyway, we have got preliminary notification there is a upstream
+> intention to provide such page (document which postgresql-jdbc
+> versions are expected to work correctly with which versions of
+> PostgreSQL database server).
+ 
+Presumably you are aware of this section on the download page:
+ 
+http://jdbc.postgresql.org/download.html#current
+ 
+Which says:
+ 
+| This is the current version of the driver. Unless you have unusual
+| requirements (running old applications or JVMs), this is the
+| driver you should be using. It supports Postgresql 7.2 or newer
+| and requires a 1.4 or newer JVM. It contains support for SSL and
+| the javax.sql package. It comes in two flavors, JDBC3 and JDBC4.
+| If you are using the 1.6 or 1.7 JVM, then you should use the JDBC4
+| version. 
+| 
+| JDBC3 Postgresql Driver, Version 9.1-901
+| 
+| JDBC4 Postgresql Driver, Version 9.1-901
+ 
+And the section on supported versions of PostgreSQL:
+ 
+http://www.postgresql.org/support/versioning/
+ 
+... which shows version 8.1 as having reached end-of-life and gone
+out of support five years after release, in November, 2010.  As far
+as I could tell from a quick skim of the referenced links, this
+problem only exists when using this out-of-support version of the
+JDBC driver.
+ 
+While I certainly can't speak for the PostgreSQL community, I can
+say that the shop at which I work (the Consolidated Courts
+Automation Program of the Wisconsin Supreme Court), we pay attention
+to these pages and never consider it safe to use an unsupported
+version.  We upgrade our JDBC drivers as soon as practicable
+whenever the recommended version on the JDBC download page changes. 
+Of course, this is assigned to be done with some application
+software release and the JDBC version rolls out through development,
+testing, and staging servers before it is deployed to production, as
+we do with the server product itself.
+ 
+It is frequently mentioned on the PostgreSQL support lists that it
+is not a good idea to use older drivers and client libraries with
+newer servers, although the opposite is supported.  We respect this
+advice, and it seems reasonable to us.  If that's not mentioned
+explicitly on an official web page, I agree that it should be.
+ 
+-Kevin
