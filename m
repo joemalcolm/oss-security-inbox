@@ -1,24 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/11/4
-Message-ID: <CAAPiX_LYBtP_duS6ecT3Pg9QWuaftn5Y7f4-qgBAePnOjeVtqA@mail.gmail.com>
-Date: Wed, 11 Apr 2012 14:47:11 -0600
-From: Greg Knaddison <greg.knaddison@...uia.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request for Drupal Contributed Advisories on 2012-04-11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/02/2
+Message-ID: <20120402152512.GA1205@kludge.henri.nerv.fi>
+Date: Mon, 2 Apr 2012 18:25:12 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, security@...abletype.org
+Cc: bressers@...hat.com, steffen.joeris@...lelinux.de
+Subject: CVEs assigned for Movable Type 4.36 and 5.05 security updates
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+http://www.movabletype.org/2011/05/movable_type_51_and_505_436_security_update.html
 
-Two releases today need CVEs:
+CVE-2011-5084: A remote attacker could execute arbitrary code in a logged-in users' web browser.
+CVE-2011-5085: A remote attacker could read or modify the contents in the system under certain circumstances.
 
-http://drupal.org/node/1528614 SA-CONTRIB-2012-058 - Fivestar - Input Validation
-
-http://drupal.org/node/1528864 SA-CONTRIB-2012-059 - Autosave - Cross
-Site Request Forgery
-
-Thanks,
-Greg
-
--- 
-Director Security Services | +1-720-310-5623
-Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
+- Henri Salo
