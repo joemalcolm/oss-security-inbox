@@ -1,66 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/3
-Message-ID: <503C1FA0.6080601@redhat.com>
-Date: Mon, 27 Aug 2012 19:32:16 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/02/1
+Message-Id: <81168C79-4F81-48CC-B901-B57A45CD0766@codseq.it>
+Date: Mon, 2 Apr 2012 09:59:24 +0200
+From: Filippo Cavallarin <filippo.cavallarin@...seq.it>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE request: letodms multiple issues
+Subject: CVE request: OSClass directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
+Can i get a CVE identifier for this issue:
 
-On 08/27/2012 02:43 PM, Raphael Geissert wrote:
-> Hi,
-> 
-> Multiple vulnerabilities have been found in LetoDMS[1]. Could CVE
-> ids be assigned, please? Thanks in advance.
-> 
-> They are said to be fixed in 3.3.7[2], quoting the changelog:
-> 
->> --------------------------------------------------------------------------
->>
->>
->> 
-Changes in version 3.3.7
->> --------------------------------------------------------------------------
->>  major security update which fixeѕ lots of possible XSS and CSRF
->> attacts
+http://www.codseq.it/advisories/osclass_directory_traversal_vulnerability
 
-That's two sets of vulns, can you send me the links to the code
-updates? I'm assuming they are in
-http://mydms.svn.sourceforge.net/viewvc/mydms/ somewhere? Thanks.
+Thanks
 
-> Without looking at anything else other than the diff, I'm not
-> personally convinced that the changes are enough/that there are no
-> other vulnerabilities. That said, I'm most likely not going to
-> spend time on it.
-> 
-> [1]http://www.exploit-db.com/exploits/20759/ 
-> [2]http://forums.letodms.com/showthread.php?tid=768
-> 
-> Regards,
+Filippo Cavallarin
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+C o d S e q
+Development with an eye on security
+------------------------------------------------------------------------
+Castello 2005, 30122 Venezia
+Tel: 041 88 761 58 - Fax: 041 81 064 714 - Cell: 346 66 93 254
+c.f. CVLFPP82B27L736J - p.iva 03737650279
+http://www.codseq.it - filippo.cavallarin@...seq.it
 
-iQIcBAEBAgAGBQJQPB+gAAoJEBYNRVNeJnmTLuYQAIF03PyBbeXAm90z0nxbMPhE
-IPad3zYpZbpIY7i7TNfYxYlP5TNuYNd/483L+7ROWZTjdwcue2Wp35rGh/2F1iwK
-ou/lsBrTJohRKPjmoD7TI1BUSRsQHd5Sb0BlaJnnMeQGA2Sugk7qbKt8k1DPr8fy
-BRFKK8b0PvPtZnk1S4hlyE2cDsgJmZ7MuTl1T3N6mQF6vyIK6te8AQmTUXaSzM2n
-gm5ne/vPV9451joBzrhjG/8QPCMMfOLM0mvNHu8che6hD81pmHawA9ZEC1ztMKED
-b/EALxd+CZOyjWiFghFBiIlOBJ/JQj3Mgn3/TXvZlSu37OOCrMvxfCCB7jI0H8A6
-DhLtpvS+kqlWtqOQVlS+QsTe6BQF9mSJ9i1Ki6QprQREUlLCXpyKd+SeJmVrURl/
-9WWNxV5zQYFguymbeg7qctrvqMrQ0oDjmPh4363J/EzuCbmlQQeU1VMLOlLgZ/sq
-nD05row8vJk2dHpqssc7BuEnTDqca2avega2Jn5gtxwp9wZCwoQvD+2umZNmaxDU
-/YlFeIDrLXN0EwTjQR7wnWcLH6qntUv4/sh1d6WHONtFuHXKZBW/ZP1C+Yd47BjY
-ADz/ZkxC/9A58HHbh4CdBIHevEZd6SP2dOX31iyh0t7wvEWNg9VxZl5KBllEbYd3
-glDDZNzjo98Jk3OI87qw
-=TwDz
------END PGP SIGNATURE-----
