@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/12/2
-Message-ID: <20121012130407.GA6122@vuntz.net>
-Date: Fri, 12 Oct 2012 15:04:07 +0200
-From: Vincent Untz <vuntz@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/02/3
+Message-ID: <4F79CB67.2060900@redhat.com>
+Date: Mon, 02 Apr 2012 09:53:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Security flaw in cups-pk-helper (CVE-2012-4510)
+CC: Filippo Cavallarin <filippo.cavallarin@...seq.it>
+Subject: Re: CVE request: OSClass directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 04/02/2012 01:59 AM, Filippo Cavallarin wrote:
+> Hello,
+> Can i get a CVE identifier for this issue:
+> 
+> http://www.codseq.it/advisories/osclass_directory_traversal_vulnerability
+> 
+> Thanks
+> 
+> Filippo Cavallarin
+> 
+> 
+> C o d S e q
+> Development with an eye on security
+> ------------------------------------------------------------------------
+> Castello 2005, 30122 Venezia
+> Tel: 041 88 761 58 - Fax: 041 81 064 714 - Cell: 346 66 93 254
+> c.f. CVLFPP82B27L736J - p.iva 03737650279
+> http://www.codseq.it - filippo.cavallarin@...seq.it
+> 
 
-cups-pk-helper (versions up to 0.2.2) wraps cupsGetFile/cupsPutFile in
-an insecure way. Since cups-pk-helper is running as root, this could
-lead to uploading sensitive data to a cups resource, or overwriting
-specific files with the content of a cups resource. The flaw is however
-mitigated by the fact that it cannot be exploited without the user
-explicitly approving the action (via polkit authentication with the
-admin password).
-
-This has been fixed in cups-pk-helper 0.2.3:
-  http://www.freedesktop.org/software/cups-pk-helper/releases/cups-pk-helper-0.2.3.tar.xz
-
-Thanks to Sebastian Krahmer and Alexander Peslyak for their help in
-reviewing the fix.
-
-Reference: CVE-2012-4510
-
-About cups-pk-helper:
-  cups-pk-helper is a PolicyKit helper to configure cups with
-  fine-grained privileges.
-
-  See http://www.freedesktop.org/wiki/Software/cups-pk-helper
-
-Vincent
+Please provide links to the original vendor advisory/ChangeLog/commits/etc.
 
 -- 
-Les gens heureux ne sont pas pressés.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Kurt Seifried Red Hat Security Response Team (SRT)
