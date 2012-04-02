@@ -1,62 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/08/2
-Message-ID: <4F81B5CD.9060201@redhat.com>
-Date: Sun, 08 Apr 2012 09:59:09 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/02/6
+Message-ID: <4F79E5A8.7090703@redhat.com>
+Date: Mon, 02 Apr 2012 11:45:12 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Black <disclosure@....org>
-Subject: Re: CVE request: gajim - code execution and sql injection
+CC: Filippo Cavallarin <filippo.cavallarin@...seq.it>
+Subject: Re: CVE request: OSClass directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 04/08/2012 04:49 AM, David Black wrote:
-> Hi. a few months ago the following bugs were reported in gajim and
-> do not yet have CVE-ID allocation: 1.
-> https://trac.gajim.org/ticket/7031, 'Assisted' code execution (if
-> the user clicks a link)
-
-Please use CVE-2012-2085 for this issue.
-
-> 2. https://trac.gajim.org/ticket/7034, SQL injection via jids
-
-Please use CVE-2012-2086 for this issue.
-
-> Note: these two issues are fixed in the latest gajim
-> release[0][1].
+On 04/02/2012 10:42 AM, Filippo Cavallarin wrote:
+> On 2 Apr 2012, at 5:53 PM, Kurt Seifried wrote:
 > 
-> [0] http://gajim.org/ - "Gajim 0.15 is here! (18 March 2012)" [1]
-> https://trac.gajim.org/query?status=closed&milestone=0.15
+>> On 04/02/2012 01:59 AM, Filippo Cavallarin wrote:
+>>> Hello,
+>>> Can i get a CVE identifier for this issue:
+>>>
+>>> http://www.codseq.it/advisories/osclass_directory_traversal_vulnerability
+>>>
+>>> Thanks
+>>>
+>>> Filippo Cavallarin
+>>>
+>>>
+>>> C o d S e q
+>>> Development with an eye on security
+>>> ------------------------------------------------------------------------
+>>> Castello 2005, 30122 Venezia
+>>> Tel: 041 88 761 58 - Fax: 041 81 064 714 - Cell: 346 66 93 254
+>>> c.f. CVLFPP82B27L736J - p.iva 03737650279
+>>> http://www.codseq.it - filippo.cavallarin@...seq.it
+>>>
+>>
+>> Please provide links to the original vendor advisory/ChangeLog/commits/etc.
+>>
+>> -- 
+>> Kurt Seifried Red Hat Security Response Team (SRT)
+> 
+> 
+> The changelog can be found here 
+> 
+> http://osclass.org/blog/
+> 
+> Filippo Cavallarin
 
+The actual blog entry: http://osclass.org/blog/2012/03/05/osclass-2-3-6/
 
+doesn't mention anything about directory traversal. Do you have a link
+on their site, or the commit showing the problem or the fix?
 
-On a side note: if you want a free SSL certificate please use
-something like http://cert.startcom.org/ which is included within most
-browsers. cacert.org is not included in any (that I know of) browsers,
-I have no idea what the cacert practices are (and I can't find any
-documentation on their site) so there's no way that root key will be
-loaded by myself (and most people I know).
-
-
-- -- 
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPgbXKAAoJEBYNRVNeJnmTMxYQAKWoeLUvwmPT4jMwmkGjDaRR
-KGR6q5ITFiX9An1sLBZcpK/RUcvM2kC5QVIPZNP82gQXfs3tXCDnem7xAGPU7KHL
-WBWHnq/Wc0Qf97g2jgmpnxplfd7+mNrKyd+g0qdCS13K1F49eYeuK3LH3XOYXxAs
-9aanpcmiGjywhhZ/OhfJPVU5Nz4WbUsfVDh88iCAQXPj4xvYXRjcy3je1n2fUlDy
-OsK66ih51hV5Dq3t3HbZSfMDnjtgklEZTDK4fQ+rM7Ojph9tTfSp95CaWKoounf5
-TjxzVAV8knzvzHWoaYmmJg3Kx+mF43kzlTT73ecUTtBYCerfr1ypD0XBfibLerPR
-v1wTvZcDpGTLETE+fE9q4rF9HGQX/PG3aOJlmYHULCKXcef77enPpEaZ0HmBHs8j
-+UuyaAB8+bo9EUnh5EMJtpkv2vMmxLFYchEmLeBEwrhYe1jQ2IRye/4u0nEfLV00
-6fcCr94uQP263PSitRMm+1G5Jh7TcMwyad04EdXSCCR+DNStZ9RN3eTFFHBux54t
-Q5dxvzBqSMj9L3XnKCz9q9ErAZoiGWNlhLTAMSF7qmq/mzfyo6DlwOHZ4dKFDK0m
-MdsBcbYLQ5gGnKbC2Xg895g6vGhlwriuotFt5kchO52hKpAIHuwixXFBOMEZ3WWp
-SP9vNx5a/TcMNaKZcdxB
-=wM0B
------END PGP SIGNATURE-----
