@@ -1,41 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/05/3
-Message-ID: <4F7DD719.3060007@redhat.com>
-Date: Thu, 05 Apr 2012 11:32:09 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/03/6
+Message-ID: <4F7B5ADA.5090309@redhat.com>
+Date: Tue, 03 Apr 2012 14:17:30 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: expat hash collision fix too predictable?
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Coppermine 1.5.18 waraxe-2012-SA#081
 Content-Type: text/plain; charset=utf-8
 
-On 04/05/2012 03:30 AM, Marcus Meissner wrote:
-> Hi,
+On 04/03/2012 04:56 AM, Henri Salo wrote:
+> On Fri, Mar 30, 2012 at 11:36:23AM -0600, Kurt Seifried wrote:
+>> What about the path disclosures?
 > 
-> while reviewing a expat regression (likely caused by the hash collision denial of service fix, but unclear)
-> i stumbled about the randomness it uses.
-> 
-> 	static unsigned long
-> 	generate_hash_secret_salt(void)
-> 	{
-> 	  unsigned int seed = time(NULL) % UINT_MAX;
-> 	  srand(seed);
-> 	  return rand();
-> 	}
-> 
-> and it is seeded once at parser object creation.
-> 
-> This is better than not seeding, but I am not sure if it is sufficient.
-> 
-> Ciao, Marcus
+> I was not sure if those are really worth of CVE-identifier(s), but please do assign if you think those are needed. I do not see path disclosure issues as important security vulnerabilities especially if there is path disclosure issues in same version that there is other security vulnerabilities.
 
-Something to remember, this doesn't have to be cryptographically strong,
-just good enough to make pre-compute attacks costly enough to prevent
-them. With this instead of pre-computing one file and sending it
-multiple times you'd have to pre-compute a file for each attack.
-Additionally with the time constraint you'd have to send the XML in and
-have it hit the array creation stage with the exact same time, which
-would be tricky for most cases.
+Everyone has different definitions and requirements so CVE basically
+goes with "is it a security vulnerability" (e.g. does it cross a trust
+boundary, etc.).
+
+> If you ask me two 2012 CVE-identifiers are needed. Please correct me in case I am wrong.
+> 
+> 1. Stored XSS edit_one_pic.php keywords
+
+Please use CVE-2012-1613 for this issue.
+
+> 2. Multiple path disclosures in 1.5.18
+> 2.1. visiblehookpoints plugin index.php
+> 2.2. thumbnails.php GET parameters "page" and "cat"
+> 2.3. usermgr.php GET parameter "page"
+> 2.4. search.inc.php GET parameters "newer_than" and "older_than"
+
+Please use CVE-2012-1614 for these issues.
+
+> These issues (according to the advisory page) are fixed in: 1.5.20 (I have not tested these). Here is the copypaste from original advisory:
+> 
+> """
+> ###############################################################################
+> 2. Path Disclosure in "visiblehookpoints" plugin
+> ###############################################################################
+> 
+> Test:
+> 
+> http://localhost/cpg1518/plugins/visiblehookpoints/index.php
+> 
+> Result:
+> 
+> Warning: require_once(include/init.inc.php) [function.require-once]:
+> failed to open stream: No such file or directory in
+> C:apache_wwwcpg1518pluginsvisiblehookpointsindex.php on line 22
+> 
+> Fatal error: require_once() [function.require]:
+> Failed opening required 'include/init.inc.php' (include_path='.;C:phppear') in
+> C:apache_wwwcpg1518pluginsvisiblehookpointsindex.php on line 22
+> 
+> 
+> ###############################################################################
+> 3. Path Disclosure in "thumbnails.php"
+> ###############################################################################
+> 
+> Attack vector: user submitted GET parameters "page" and "cat"
+> 
+> Tests:
+> 
+> http://localhost/cpg1518/thumbnails.php?page[]
+> http://localhost/cpg1518/thumbnails.php?cat[]
+> 
+> Results:
+> 
+> Fatal error: Unsupported operand types in
+> C:apache_wwwcpg1518includefunctions.inc.php on line 2980
+> 
+> Fatal error: Unsupported operand types in
+> C:apache_wwwcpg1518 humbnails.php on line 160
+> 
+> 
+> 
+> ###############################################################################
+> 4. Path Disclosure in "usermgr.php"
+> ###############################################################################
+> 
+> Attack vector: user submitted GET parameter "page"
+> Preconditions: admin privileges needed
+> 
+> Test:
+> 
+> http://localhost/cpg1518/usermgr.php?page[]
+> 
+> Result:
+> 
+> Fatal error: Unsupported operand types in
+> C:apache_wwwcpg1518usermgr.php on line 185
+> 
+> 
+> ###############################################################################
+> 5. Path Disclosure in "search.inc.php"
+> ###############################################################################
+> 
+> Attack vector: user submitted GET parameters "newer_than" and "older_than"
+> 
+> Tests:
+> 
+> http://localhost/cpg1518/thumbnails.php?search=1&album=search&newer_than[]
+> http://localhost/cpg1518/thumbnails.php?search=1&album=search&older_than[]
+> 
+> Results:
+> 
+> Fatal error: Unsupported operand types in
+> C:apache_wwwcpg1518includesearch.inc.php on line 106
+> 
+> Fatal error: Unsupported operand types in
+> C:apache_wwwcpg1518includesearch.inc.php on line 107
+> """
+
 
 -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
