@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/13
-Message-ID: <20120202194619.GA13034@openwall.com>
-Date: Thu, 2 Feb 2012 23:46:19 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/03/1
+Message-ID: <20120403084351.GA23487@kludge.henri.nerv.fi>
+Date: Tue, 3 Apr 2012 11:43:51 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: PHP remote code execution introduced via HashDoS fix
+Subject: Re: CVE request: OSClass directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Tomas,
+On Mon, Apr 02, 2012 at 11:45:12AM -0600, Kurt Seifried wrote:
+> The actual blog entry: http://osclass.org/blog/2012/03/05/osclass-2-3-6/
+> 
+> doesn't mention anything about directory traversal. Do you have a link
+> on their site, or the commit showing the problem or the fix?
+> 
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
 
-Thank you for posting this.
+http://osclass.org/blog/2012/03/05/osclass-2-3-6/ "Special thanks to Filippo Cavallarin again for reporting a security vulnerability in combine.php file. If you’re using that file in your theme, I strongly recommend to update it. Please, remember to visit the wiki if you don’t know how to update OSClass."
 
-On Thu, Feb 02, 2012 at 08:12:22PM +0100, Tomas Hoger wrote:
-> This got CVE-2012-0830 assigned earlier today.  This is sent to make
-> the assignment public and avoid possible duplicate assignment.
+Here is the diff: https://github.com/osclass/OSClass/commit/09aa689ae424dc2bec6f857e7179ae4afdbbd2a9#diff-4
+Full changelog: http://doc.osclass.org/Changelog
 
-I suggest that we post this sort of things to oss-security not only
-because of CVE issues, but also to make this list a central place to
-keep people informed of security issues in at least popular Open Source
-software.  That is, I think this posting would be desirable even if the
-CVE number had already been communicated to those who might request one.
+Fixed in 2.3.6.
 
-Not everyone who wants this sort of info also happens to read IT news
-sites, Twitter feeds, etc daily (which also include lots of other info
-that would be off-topic here).
-
-Maybe your comment above was addressed to security@php and Stefan rather
-than to oss-security, though.  Then it sounds just right to me.
-
-Alexander
+- Henri Salo
