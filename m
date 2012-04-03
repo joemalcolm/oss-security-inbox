@@ -1,31 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/2
-Message-ID: <CANTw=MMTpo4nmn06Hj+pXKkt9=TO5_idEi=XXGd-1xwYQHFrgw@mail.gmail.com>
-Date: Mon, 24 Sep 2012 20:24:00 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/03/3
+Message-ID: <20120403130148.GA13952@kludge.henri.nerv.fi>
+Date: Tue, 3 Apr 2012 16:01:48 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+Cc: security@...mla.org
+Subject: CVE-request: Joomla 2012-04 398-20120307 399-20120308
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 24, 2012 at 5:46 PM, Tavis Ormandy wrote:
->> > I think you've misunderstood the problem, and it's trivial to solve.
->>
->> No, I'm thinking about the broader implication.  If you're arguing that
->> gpg should be modified to better handle permissions, then all applications
->> potentially handling sensitive information should as well: file editors,
->> and what not.  Otherwise, what makes gpg such a special case?
->>
->
-> I think you've confused my post with someone elses.
+Can I get two CVE-identifiers for these issues in Joomla:
 
-See Steve Christy's snowball post.  Again, I'm considering the
-totality of the system.  Setting 644 as a default for gpg is I suppose
-a step, but gpg is not the only application handling sensitive data.
-If that is the case, then there are a whole lot of other applications
-also not doing the right thing with your sensitive data including
-those that pipe and redirect stdin/stdout.  Again, I don't know how to
-make it any clearer, but I'm considering the broader implications, not
-just gpg.  I still don't understand again why gpg is so special?
+http://developer.joomla.org/security/news/398-20120307-core-information-disclosure.html
+http://developer.joomla.org/security/news/399-20120308-core-xss-vulnerability.html
 
-Best wishes,
-Mike
+- Henri Salo
