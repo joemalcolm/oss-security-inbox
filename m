@@ -1,31 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/4
-Message-ID: <20120822103107.GA12007@openwall.com>
-Date: Wed, 22 Aug 2012 14:31:07 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/03/4
+Message-ID: <20120403154534.45da1a26@redhat.com>
+Date: Tue, 3 Apr 2012 15:45:34 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: argyros.george@...il.com, Aggelos Kiayias <aggelos@...yias.com>
-Subject: Re: Randomness Attacks Against PHP Applications
+Subject: Fw: [vs] RPM issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi!
 
-On Thu, Aug 09, 2012 at 11:19:14AM -0700, Yves-Alexis Perez wrote:
-> I'm currently at the Usenix Security 2012 conference, where there was a
-> nice paper about randomness vulnerabilities in PHP applications. I
-> invite you to read the paper[1] but in summary, a lot of PHP
-> applications make false assumption about the true randomness of the core
-> PHP random functions and it might lead to attacks, for example using the
-> ???password reset??? features.
-> 
-> Paper authors tried to port this to PHP security team, but it seems the
-> answer was that it was an application problem.
+The mail below was posted to linux-distros@ list a week ago.  These
+issues are now public, with all patches in upstream git:
 
-Here's a vulnerability in and attack on session IDs of PHP proper:
+CVE-2012-0815
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=6fc6b45bf9fef0f17a2900c6c5198bda5e50d09e
 
-http://blog.ptsecurity.com/2012/08/not-so-random-numbers-take-two.html
+CVE-2012-0060
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=e4eab2bc6d07cfd33f740071de7ddbb2fe2f4190
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=f23998251992b8ae25faf5113c42fee2c49c7f29
 
-This is not exactly the same topic (PHP apps vs. PHP itself), yet it's
-closely related and the timing of it was provoked by the same research.
+CVE-2012-0061
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=472e569562d4c90d7a298080e0052856aa7fa86b
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=858a328cd0f7d4bcd8500c78faaf00e4f8033df6
 
-Alexander
+
+
+Begin forwarded message:
+
+Date: Tue, 27 Mar 2012 13:44:21 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: linux-distros@...openwall.org
+Subject: [vs] RPM issues
+
+Hi!
+
+Recently, we have put some effort into fuzzing (Ramon de C Valle) and
+fixing (Panu Matilainen) RPM which resulted in fixes for couple of
+problems that exist on the code paths reachable before signature
+verification (when using rpm or package manager as yum).  Following
+CVEs were assigned, along with mapping to attached patches (for 4.8.x):
+
+CVE-2012-0815 incorrect handling of negated offsets in
+headerVerifyInfo()
+region-trailer.patch
+
+CVE-2012-0060 insufficient validation of region tags
+headerload-region.patch
+pkgread-region.patch
+
+CVE-2012-0061 improper validation of header contents total size in
+headerLoad()
+region-size.patch
+Note: this fix is already in upstream git:
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=472e569562d4c90d7a298080e0052856aa7fa86b
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=858a328cd0f7d4bcd8500c78faaf00e4f8033df6
+
+We plan to make these public next Tue, Apr3.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
