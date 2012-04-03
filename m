@@ -1,51 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/30/4
-Message-ID: <503F8258.10901@redhat.com>
-Date: Thu, 30 Aug 2012 11:10:16 -0400
-From: Russell Bryant <rbryant@...hat.com>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2012-012] Horizon, Open redirect through 'next' parameter (CVE-2012-3542)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/03/5
+Message-ID: <4F7B5A32.2000705@redhat.com>
+Date: Tue, 03 Apr 2012 14:14:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, security@...mla.org
+Subject: Re: CVE-request: Joomla 2012-04 398-20120307 399-20120308
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 04/03/2012 07:01 AM, Henri Salo wrote:
+> Can I get two CVE-identifiers for these issues in Joomla:
+> 
+> http://developer.joomla.org/security/news/398-20120307-core-information-disclosure.html
 
-OpenStack Security Advisory: 2012-012
-CVE: CVE-2012-3542
-Date: August 30, 2012
-Title: Open redirect through 'next' parameter
-Impact: Medium
-Reporter: Thomas Biege (SUSE)
-Products: Horizon
-Affects: Essex (2012.1)
+Please use CVE-2012-1611 for this issue.
 
-Description:
-Thomas Biege from SUSE reported a vulnerability in Horizon
-authentication mechanism. By adding a malicious 'next' parameter to a
-Horizon authentication URL and enticing an unsuspecting user to follow
-it, the victim might get redirected after authentication to a
-malicious site where useful information could be extracted. Only
-setups running Essex are affected.
+> http://developer.joomla.org/security/news/399-20120308-core-xss-vulnerability.html
 
-Fixes:
-2012.1:
-https://github.com/openstack/horizon/commit/35eada8a27323c0f83c400177797927aba6bc99b
+Please use CVE-2012-1612 for this issue.
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3542
-https://bugs.launchpad.net/horizon/+bug/1039077
+> - Henri Salo
 
-Notes:
-This fix will be included in a future Essex (2012.1) release.
 
-- -- 
-Russell Bryant
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iEYEARECAAYFAlA/glMACgkQFg9ft4s9SAYMLACfdRBaonUw/CendCSy2gZh5hxw
-O64Anjkx1c5i1pfpGEbwNkyRDiALgWhC
-=5cbg
------END PGP SIGNATURE-----
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
