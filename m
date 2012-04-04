@@ -1,34 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/22
-Message-ID: <4F917028.2050003@redhat.com>
-Date: Fri, 20 Apr 2012 16:18:16 +0200
-From: Stefan Cornelius <scorneli@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/1
+Message-ID: <4F7BB827.6020501@redhat.com>
+Date: Tue, 03 Apr 2012 20:55:35 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: security-2012@...irrelmail.org
-Subject: CVE-2012-2124 assignment notification: squirrelmail: CVE-2010-2813 not fixed in RHSA-2012:0103
+CC: akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: fix to CVE-2009-4307
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 04/03/2012 04:32 PM, akuster wrote:
+> Hello,
+> 
+> Was there a CVE assigned to commit d50f2ab6f050311dbf7b8f5501b25f0bf64a439b?
+> 
+> Commit 503358ae01b70ce6909d19dd01287093f6b6271c ("ext4: avoid divide by
+> zero when trying to mount a corrupted file system") fixes CVE-2009-4307
+> by performing a sanity check on s_log_groups_per_flex, since it can be
+> set to a bogus value by an attacker.
+> 
+> - Armin
 
-A Red Hat Security Advisory RHSA-2012:0103 for squirrelmail packages
-shipped in Red Hat Enterprise Linux 4 and 5 claim to have fixed
-CVE-2010-2813 issue. However, the patch for this issue was not applied
-correctly and hence the issue was not fixed as stated in the advisory.
+I assume you are talking about this:
 
-A situation like this requires the assignment of a new, vendor-specific
-CVE for the broken/incomplete fix. Thus, CVE-2012-2124 has been assigned
-to this issue.
+http://git.kernel.org/?p=virt/kvm/kvm.git;a=commitdiff;h=d50f2ab6f050311dbf7b8f5501b25f0bf64a439b
 
-We apologize to upstream / distros for the confusion this additional
-CVE assignment may cause and want to make it explicit this is assigned
-to an issue in RHEL packages unlikely to affect anyone else (except of
-RHEL downstream distros).
+================================================
+Commit 503358ae01b70ce6909d19dd01287093f6b6271c ("ext4: avoid divide by
+zero when trying to mount a corrupted file system") fixes CVE-2009-4307
+by performing a sanity check on s_log_groups_per_flex, since it can be
+set to a bogus value by an attacker.
 
-References:
+sbi->s_log_groups_per_flex = sbi->s_es->s_log_groups_per_flex;
+groups_per_flex = 1 << sbi->s_log_groups_per_flex;
 
-Red Hat bug 814671:
-https://bugzilla.redhat.com/show_bug.cgi?id=814671
+if (groups_per_flex < 2) { ... }
 
-Thanks and kind regards,
+This patch fixes two potential issues in the previous commit.
+
+1) The sanity check might only work on architectures like PowerPC.
+On x86, 5 bits are used for the shifting amount.  That means, given a
+large s_log_groups_per_flex value like 36, groups_per_flex = 1 << 36
+is essentially 1 << 4 = 16, rather than 0.  This will bypass the check,
+leaving s_log_groups_per_flex and groups_per_flex inconsistent.
+
+2) The sanity check relies on undefined behavior, i.e., oversized shift.
+A standard-confirming C compiler could rewrite the check in unexpected
+ways.  Consider the following equivalent form, assuming groups_per_flex
+is unsigned for simplicity.
+
+groups_per_flex = 1 << sbi->s_log_groups_per_flex;
+if (groups_per_flex == 0 || groups_per_flex == 1) {
+
+We compile the code snippet using Clang 3.0 and GCC 4.6.  Clang will
+completely optimize away the check groups_per_flex == 0, leaving the
+patched code as vulnerable as the original.  GCC keeps the check, but
+there is no guarantee that future versions will do the same.
+
+Signed-off-by: Xi Wang <xi.wang@...il.com>
+Signed-off-by: "Theodore Ts'o" <tytso@....edu>
+Cc: stable@...r.kernel.org
+================================================
+
+What specific do you want a CVE assigned for?
+
+For #1 I can see a CVE of the "a previous patch didn't completely fix
+the issue, yada yada" type.
+
+For #2 I'm not sure how we handle something like a compiler possibly
+mangling code so that an issue is introduced (is that a compiler
+problem? a code problem? the intersection of both? Steve: can I get a
+comment/referees decision here =)
+
 -- 
-Stefan Cornelius / Red Hat Security Response Team
+Kurt Seifried Red Hat Security Response Team (SRT)
