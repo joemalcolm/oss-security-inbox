@@ -1,38 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/9
-Message-ID: <4F75AC42.7070904@suse.de>
-Date: Fri, 30 Mar 2012 14:51:14 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com, security@...tgresql.org
-Subject: postgresql-jdbc 8.1 SQL injection with postgresql server 9.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/11
+Message-ID: <5620.1333568872@sss.pgh.pa.us>
+Date: Wed, 04 Apr 2012 15:47:52 -0400
+From: Tom Lane <tgl@...hat.com>
+To: Kurt Seifried <kseifried@...hat.com>
+cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, pgsql-jdbc@...tgresql.org, Steffen Dettmer <steffen@...t.de>
+Subject: Re: CVE DISPUTE notification: postgresql-jdbc: SQL injection due improper escaping of JDBC statement parameters 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Kurt Seifried <kseifried@...hat.com> writes:
+> So I think it's safe to say that we can (and should) assign CVE's
+> based on the unintended interactions of products (assigning a CVE
+> helps ensure that people are more likely to find out, security
+> scanners all love to pick up on CVE's, etc.). I'm going to assign a
+> CVE for this and suggest a description of (stolen directly from the
+> first bug report
+> (http://lists.opensuse.org/opensuse-security/2012-03/msg00024.html):
 
-Postgresql 9.1 turned "standard conforming strings" on by default[1][2].
-postgresql-jdbc before version 8.2-504 however did not know about that
-kind of string and escaped single quotes with a backslash always. When
-such an old version of postgresql-jdbc is used with a newer postgresql
-server it not only breaks when strings contain single quotes, it also
-allows for SQL injections[3].
-The bug is neither in postgresql-jdbc as it was working correctly at the
-time it was released, nor is it really postgresql 9.1's fault which I
-guess doesn't expect and can't detect such an old jdbc adapter. The
-security issue arises when mixing the old adapter and the new server.
-One might be inclined to say this is not a security issue as it's likely
-to break during normal operation as soon as some string contains a
-single quote. But then isn't that the case for SQL injections in
-general?
+> "When using PostgreSQL JDBC driver version 8.1 to connect to a
+> PostgreSQL version 9.1 database, escaping of JDBC statement parameters
+> does not work and SQL injection attacks are possible. It should be
+> noted that the PostgreSQL JDBC driver version 8.1 is officially
+> obsolete and should not be used."
 
-[1] http://www.depesz.com/2010/07/21/waiting-for-9-1-standard_conforming_strings-on/
-[2] http://archives.postgresql.org/pgsql-committers/2010-07/msg00210.php
-[3] http://lists.opensuse.org/opensuse-security/2012-03/msg00024.html
+> Please use CVE-2012-1618 for this issue.
 
-cu
-Ludwig
+Well, if you want to have a CVE for this, you should use a more
+complete description.  The actual scenario is that pre-8.2 versions
+of the JDBC driver do not know about the "standard_conforming_strings"
+option of more recent Postgres servers, and are insecure with *any*
+Postgres server in which that option is turned on, which has been
+possible since server version 8.2.  What changed in the 9.1 server
+is that that option is now on by default.  It's still possible
+(and will remain so for the foreseeable future) to turn the option off
+in the server configuration, making this and other ancient clients
+secure again.  But that isn't the default anymore.
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+			regards, tom lane
