@@ -1,82 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/12
-Message-ID: <CAPFUtkaDdxs0N0Z6QAnWeEC28R0hr3eHYM+bKqAR7yr6xQdGZw@mail.gmail.com>
-Date: Wed, 12 Sep 2012 19:32:51 +0200
-From: Soren Hansen <soren@...ux2go.dk>
-To: Thierry Carrez <thierry@...nstack.org>
-Cc: openstack@...ts.launchpad.net, openstack-announce@...ts.openstack.org,  oss-security@...ts.openwall.com
-Subject: Re: [Openstack] [OSSA 2012-014] Revoking a role does not affect existing tokens (CVE-2012-4413)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/2
+Message-ID: <4F7BBB0F.40906@redhat.com>
+Date: Tue, 03 Apr 2012 21:07:59 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: privilege escalation in sectool
 Content-Type: text/plain; charset=utf-8
 
-So if I can grant people access to a particular tenant, I can invalidate
-everyone's tokens at will now?
+On 04/03/2012 04:54 PM, Vincent Danen wrote:
+> Colin Guthrie reported that sectool would elevate user privileges when
+> it was installed on a system, due to an incorrect DBus file
+> (specifically org.fedoraproject.sectool.mechanism.conf).  This could
+> allow a user with no additional privileges to elevate theirs (for
+> instance to restart a service they would not normally have permission to
+> restart).
+> 
+> Further details are in the bug, and a patch is available:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=809437
+> http://pkgs.fedoraproject.org/gitweb/?p=sectool.git;a=blob;f=sectool-0.9.5-dbus.patch;h=aedb3ef7f7e5ab22d5438bfb7eee63489ccf3244;hb=4859832281f0e08c6fbe48fc252c4199a0e9e322
+> 
+> 
+> Since this was reported and committed publicly, I'm requesting a CVE in
+> case one has already been assigned.
+> 
+> Thanks.
+> 
 
-Best regards, Soren.
-Sent from my phone. Please pardon my brevity.
-On Sep 12, 2012 6:40 PM, "Thierry Carrez" <thierry@...nstack.org> wrote:
+Please use CVE-2012-1615 for this issue.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> OpenStack Security Advisory: 2012-014
-> CVE: CVE-2012-4413
-> Date: September 12, 2012
-> Title: Revoking a role does not affect existing tokens
-> Impact: High
-> Reporter: Dolph Mathews (Rackspace)
-> Products: Keystone
-> Affects: Essex, Folsom
->
-> Description:
-> Dolph Mathews reported a vulnerability in Keystone. Granting and
-> revoking roles from a user is not reflected upon token validation for
-> pre-existing tokens. Pre-existing tokens continue to be valid for the
-> original set of roles for the remainder of the token's lifespan, or
-> until explicitly invalidated. This fix invalidates all tokens held by
-> a user upon role grant/revoke to circumvent the issue.
->
-> Folsom fix:
->
-> http://github.com/openstack/keystone/commit/efb6b3fca0ba0ad768b3e803a324043095d326e2
->
-> Essex fix:
->
-> http://github.com/openstack/keystone/commit/58ac6691a21675be9e2ffb0f84a05fc3cd4d2e2e
->
-> References:
-> https://bugs.launchpad.net/keystone/+bug/1041396
-> http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4413
->
-> Notes:
-> This fix will be included in the future Keystone 2012.1.3 stable
-> update and the upcoming Folsom-RC1 development milestone.
->
-> - --
-> Thierry Carrez (ttx)
-> OpenStack Vulnerability Management Team
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.11 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
->
-> iQIcBAEBCAAGBQJQULoUAAoJEFB6+JAlsQQjGacQAJUvJb+oIjh73KAYYuDpl/YP
-> PqJa4nmjVin7CyQ8AbxHK63xrAQ7isPFpCCqtEmjZ5kvFCrJRHiQggHNqISRhnvo
-> +HyS6RSn4Vrp001PSZSmQI5MpgkeWhbOy+fk4/ZY7hFgUyS2YqC8YiK7DTMdKRBi
-> toWOHRVWrmA4fUEDDcDdm9XzRseTC0cZAbj9bYAF+vXPdpxeGpq5l9Kb6yDezXGD
-> 62dFvHghVTWdUIN+gK4V4d77PoyeO9NRd4Ud0GjDpV/asQL31dW6B4aRPYVDPhL3
-> 7xcnhRsnZ3Y5J31n+7E/gMF+J+6kOaY/DNFZQ8chNW18kplYnmJnm7s3BJNjD512
-> UF/S5A5sH1Rk/vwe2nAHSqvQ1Dq3K0sRvW3YCijG2Rdj3mhBOr6OlvT5uJmnkeJT
-> GQQ8SR3y+ZLS/2EEW+cVjDMxV4Gnf9Zzrw/tSjVp6QLmJAkG8qrFmgdisQ/Jao4M
-> ygE8ZVu8lJq7N8b+k8XkB+bhz9E9V6hYOUuGoifEHRIPki/Ed7++BcdVTQdQYpAL
-> kDTaoVZt1+plwAu4ZBLxUg1vhVz19qgDc7UeoY1sPc1JcRWp/ONnp6K4z+Y+7Rsx
-> 3E4FLH0/qgFxKDHdGX91Plehk9dIEjHcGtKaXI8vOvGT17srYQaF6Y7rc+9TwaqI
-> bggBCxcI2PLQgjuWyF4M
-> =+6UN
-> -----END PGP SIGNATURE-----
->
-> _______________________________________________
-> Mailing list: https://launchpad.net/~openstack
-> Post to     : openstack@...ts.launchpad.net
-> Unsubscribe : https://launchpad.net/~openstack
-> More help   : https://help.launchpad.net/ListHelp
->
-
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
