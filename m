@@ -1,31 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/22/2
-Message-ID: <4F6A1449.5030703@clamav.net>
-Date: Wed, 21 Mar 2012 19:47:53 +0200
-From: Török Edwin <edwin@...mav.net>
-To: Vincent Danen <vdanen@...hat.com>
-CC: oss-security@...ts.openwall.com, security@...mav.net
-Subject: Re: Vulnerabilities reported in ClamAV 0.96.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/10
+Message-ID: <4F7CA5C6.3010207@redhat.com>
+Date: Wed, 04 Apr 2012 13:49:26 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Tom Lane <tgl@...hat.com>
+CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, pgsql-jdbc@...tgresql.org, Steffen Dettmer <steffen@...t.de>
+Subject: Re: CVE DISPUTE notification: postgresql-jdbc: SQL injection due improper escaping of JDBC statement parameters
 Content-Type: text/plain; charset=utf-8
 
-On 03/21/2012 06:51 PM, Vincent Danen wrote:
-> Hopefully security@ for ClamAV goes somewhere useful (I don't feel like
-> opening a bugzilla account there just to ask this).
-
-It does :)
-
+On 04/04/2012 01:47 PM, Tom Lane wrote:
+> Kurt Seifried <kseifried@...hat.com> writes:
+>> So I think it's safe to say that we can (and should) assign CVE's
+>> based on the unintended interactions of products (assigning a CVE
+>> helps ensure that people are more likely to find out, security
+>> scanners all love to pick up on CVE's, etc.). I'm going to assign a
+>> CVE for this and suggest a description of (stolen directly from the
+>> first bug report
+>> (http://lists.opensuse.org/opensuse-security/2012-03/msg00024.html):
 > 
-> Saw a bunch of CVEs come through for various anti-virus products, five
-> of which are reportedly applicable for ClamAV 0.96.4.  I'm wondering a)
-> if the upstream folks know about these 
+>> "When using PostgreSQL JDBC driver version 8.1 to connect to a
+>> PostgreSQL version 9.1 database, escaping of JDBC statement parameters
+>> does not work and SQL injection attacks are possible. It should be
+>> noted that the PostgreSQL JDBC driver version 8.1 is officially
+>> obsolete and should not be used."
+> 
+>> Please use CVE-2012-1618 for this issue.
+> 
+> Well, if you want to have a CVE for this, you should use a more
+> complete description.  The actual scenario is that pre-8.2 versions
+> of the JDBC driver do not know about the "standard_conforming_strings"
+> option of more recent Postgres servers, and are insecure with *any*
+> Postgres server in which that option is turned on, which has been
+> possible since server version 8.2.  What changed in the 9.1 server
+> is that that option is now on by default.  It's still possible
+> (and will remain so for the foreseeable future) to turn the option off
+> in the server configuration, making this and other ancient clients
+> secure again.  But that isn't the default anymore.
+> 
+> 			regards, tom lane
 
-Thanks, we've already opened bugs about these, you can watch these for updates:
-https://bugzilla.clamav.net/show_bug.cgi?id=4623
-https://bugzilla.clamav.net/show_bug.cgi?id=4624
-https://bugzilla.clamav.net/show_bug.cgi?id=4625
-https://bugzilla.clamav.net/show_bug.cgi?id=4626
-https://bugzilla.clamav.net/show_bug.cgi?id=4627
+Ahh perfect, thanks for the extra details!
 
-Best regards,
---Edwin
-
+-- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
