@@ -1,49 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/11/3
-Message-ID: <50C77527.6050300@redhat.com>
-Date: Tue, 11 Dec 2012 11:02:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/5
+Message-ID: <CAOBoUnMMpTB8n4tGJXzooEbie56JbA=_NvQ=a8Z41oQfFX2-wA@mail.gmail.com>
+Date: Wed, 4 Apr 2012 11:07:05 +0200
+From: Steffen Dettmer <steffen.dettmer@...glemail.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: opus codec before 1.0.2
+Subject: Re: Re: [JDBC] CVE DISPUTE notification: postgresql-jdbc: SQL injection due improper escaping of JDBC statement parameters
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Apr 2, 2012 at 6:16 PM, Kevin Grittner
+<Kevin.Grittner@...ourts.gov> wrote:
+> ... which shows version 8.1 as having reached end-of-life and gone
+> out of support five years after release, in November, 2010.
 
-On 12/11/2012 05:32 AM, Hanno Böck wrote:
-> http://lists.xiph.org/pipermail/opus/2012-December/001846.html
-> 
-> sounds like a low-severity security issue:
-> 
-> "Opus 1.0.2 fixes an out-of-bounds read that could be triggered by
-> a malicious Opus packet by causing an integer wrap-around in the
-> padding code. Considering that the packet would have to be at least
-> 16 MB in size and that no out-of-bounds write is possible, the
-> severity is very low."
-> 
-> Fixed in opus 1.0.2.
+Thank you for sharing your view. Let's me take this opportunity
+to tell my arguments why I think an advisory with this
+information could be suited.
 
-What's the security impact? does the service crash?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Yes, all this is true. However, not everyone knows all that and
+can "apply usual expectations".
 
-iQIcBAEBAgAGBQJQx3UnAAoJEBYNRVNeJnmTlRsP/j8I3rs8LmQPq95JLGFPNHg1
-UF6EX3rCao8E6NzNTJLLXHQWyATqq0dqUyBS3DYsx/ow08+BBZe8ph3GgM1RHikw
-wrH6W0e6VQNhfNgmwBRy16dCg/OtoeMlbHN+/YR0kkkEaDFdbT5YzsIJ8xqcyDDi
-D9CXU59lcRF9HdydsCNmyHrQkDSUYkmZYvdpowPaTkHN5cGD9C8/5zWerZhX7j+m
-lW9PP9Xe1SYgdqVXcr7V79kKL736sqWMyJh9rZuaqAbj/4xtm0qDeXGDFxkk1VOR
-2y+8t3nhCy4KvxG4pNBNZtWrPwrQEWm9RhhPxzlCAG98HB/rlWkrb5YwUAeZqnxX
-lHSzimgsCsD81l/9YT5IGlp4g8z6qd1POqMYltY1BejuxDD1PZP7eIIDpRPgHGQv
-ciliuEHg9ACO6Fd9ATLxwDgSVyMc4QZbhy2+K3mJxldysK2lAnDH6Vku7rXpBJpq
-Fstf7Lcq94hJI28Ax/M0/jR+Z3zSbfaSUcu6NN01C34/m7r42VLf0w+UkME3vLbm
-7+W9M7+2zCJNaayFNeFbl1uxgtYX2+XqTkENxOYqWHoTjfo2y5gq7sFiKHA9C3ms
-fhe/ze5shMQ3JI+pmQ2ta+Fust5UGvFT+RKzwGiv1h/eSkL24ue/xX1/6nNmwNJb
-nhP57AYmyqnPnjHLR9Hl
-=Lm9n
------END PGP SIGNATURE-----
+So you don't have old clients running anywhere? Others may follow
+the idea not to change a running system (at least as supported by
+vendor) but for some reason upgraded one of their databases to a
+newer version.
+
+Is this such an unlikely situation that some few old applications
+connect to a database which later is updated because some newer
+applications benefit from newer database features? Or because the
+database server hard- and software is upgraded to keep increasing
+performance requirements?
+
+Of course for an expert focusing PostgreSQL / JDBC all this is
+known, clear and obvious, but for the less experienced people,
+for example application developers, it might not be the case.
+
+Java developers may follow "run everywhere" as long as the test
+suites pass (which might not include security penetration testing
+and even if so may fail to detect the problem).
+
+Who is in charge to know that such a combination is insecure? The
+application vendors might not know which JDBC / DBMS combination
+a customer might use. At the customer site IT professionals may
+choose supported distributions and may not know details of
+PostgreSQL version requirements, especially if not stated in the
+manuals.
+
+The last 8.1 version (build) is from 2010, so someone could
+assume it would still be supported. I think this shouldn't be
+mentioned only somewhere on a web page, but in the appropriate
+users manuals.
+
+Often so many things are used by projects that it could be very
+hard trying to read all related mailing lists.
+
+When using a linux distribution that is still supported by the
+vendor, I think it is reasonable to assume the included packages
+are still supported at least by the same vendor.
+
+I talked with a (very) few people, no one had assumed that; the
+assumption was "install all vendor patches and be safe for known
+issues" and that different versions either work securely or not
+at all.
+
+IMHO also misleading seems to be the term "protocol version 3". I
+think this really suggests that any protocol version 3 client
+could connect to any protocol version 3 server.
+But this is not true. There are many different protocol
+version 3 versions, but I don't think that this is commonly
+understood by end users. I know that it is nowhere told that it
+would be interoperable, but I think a common assumption would be
+that protocol v3 is interoperable with protocol v3.
+
+The current situation seems to be "you cannot use older versions
+of your enterprise long term support distribution to connect newer
+versions of your enterprise long term support one", which in my
+point of view had been worth an advisory, but maintainers seem to
+conclude that what is not supported from the project does not
+need to be supported by the distribution.
+
+Maybe maintainers could decide to provide an advisory anyway, be
+it only summarizing the issue. I understand that creating a patch
+would be much effort, is not supported and disliked, but
+spreading the information could be suited nevertheless.
+Distributors could decide to pack newer versions. Even if not,
+Distribution customers then at least could decide to upgrade
+their systems and/or manually install a suited driver version.
+
+Knowing the issue is needed in any case, I think.
+
+oki,
+
+Steffen
