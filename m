@@ -1,71 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/7
-Message-ID: <4F86C088.2010509@redhat.com>
-Date: Thu, 12 Apr 2012 13:46:16 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: David Black <disclosure@....org>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: cobbler lack of csrf protection, code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/7
+Message-ID: <4F7C799E.8050309@redhat.com>
+Date: Wed, 04 Apr 2012 10:41:02 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, Filippo Cavallarin <filippo.cavallarin@...seq.it>
+Subject: Re: CVE request: OSClass directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Thank you for this post, David.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Just administrative note -- all of these security issues should
-get CVE-2011-* CVE identifiers, as all of the Ubuntu bugs have
-been reported in 2011 yet (2011-09-28 exactly).
-
-On 04/12/2012 11:39 AM, David Black wrote:
-> Hi, I reported some bugs a while ago in cobbler which never received
-> CVE ID, could the follow bugs receive CVE ID ?
-> 1. lack of csrf protection in the cobbler web interface (vulnerable to
-> csrf attacks) https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858878
-
-Some further references / patches information I was able to found:
-1) Ubuntu patch by Robie Basak:
-    http://bazaar.launchpad.net/~racb/ubuntu/oneiric/cobbler/858878_858883/revision/53
-
-2) Red Hat bugzilla entry:
-    https://bugzilla.redhat.com/show_bug.cgi?id=811937
-
-> 2. code execution on the cobbler host through use of yaml.loads on
-> potentially untrusted user input
-> https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883
-
-Though only yaml.load privilege escalation vector has been mentioned in this
-post, from further look noticed two ways for privilege escalation:
-1) (possibly remote) privilege escalation via yaml.load / by
-    processing management parameters:
-
-    References:
-    https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883 (Ubuntu bug)
-
-    Ubuntu patch from Robie Basak:
-    * Backport safe YAML load from upstream. (LP: #858883):
-    http://bazaar.launchpad.net/~racb/ubuntu/oneiric/cobbler/858878_858883/revision/54
-
-    https://bugzilla.redhat.com/show_bug.cgi?id=811920 (Red Hat bug)
-
-2) local privilege escalation due to insecure use of PYTHON_EGG_CACHE location:
-
-    References:
-    https://bugs.launchpad.net/ubuntu/+source/cobbler/+bug/858875 (Ubuntu bug)
-    https://fedorahosted.org/cobbler/ticket/688 (upstream ticket)
-    https://d-feet.fedorahosted.org/cobbler/attachment/ticket/688/58_fix_egg_cache.patch
-    (relevant upstream patch)
-    https://bugzilla.redhat.com/show_bug.cgi?id=811926 (Red Hat bug)
-
-Kurt, could you allocate three 2011 CVE ids for these issues?
-i)   the first for CSRF issue,
-ii)  the second for the yaml.load priv esc issue,
-iii) the third for the PYTHON_EGG_CACHE local priv esc issue
-
-David, would be great if you could confirm the three ids are necessary.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+On 04/03/2012 02:43 AM, Henri Salo wrote:
+> On Mon, Apr 02, 2012 at 11:45:12AM -0600, Kurt Seifried wrote:
+>> The actual blog entry:
+>> http://osclass.org/blog/2012/03/05/osclass-2-3-6/
+>> 
+>> doesn't mention anything about directory traversal. Do you have a
+>> link on their site, or the commit showing the problem or the
+>> fix?
+>> 
+>> -- Kurt Seifried Red Hat Security Response Team (SRT)
+> 
+> http://osclass.org/blog/2012/03/05/osclass-2-3-6/ "Special thanks
+> to Filippo Cavallarin again for reporting a security vulnerability
+> in combine.php file. If you’re using that file in your theme, I
+> strongly recommend to update it. Please, remember to visit the wiki
+> if you don’t know how to update OSClass."
+> 
+> Here is the diff:
+> https://github.com/osclass/OSClass/commit/09aa689ae424dc2bec6f857e7179ae4afdbbd2a9#diff-4
 >
-> --
-> Thank you.
+> 
+Full changelog: http://doc.osclass.org/Changelog
+> 
+> Fixed in 2.3.6.
+> 
+> - Henri Salo
 
+Thanks Henri, that's exactly the kind of information CVE requests need =)
+
+Please use CVE-2012-1617 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPfHmdAAoJEBYNRVNeJnmTyYgP/iqYXXfZRp1hnDZZwJPThFqC
+CfV+eIaol1nzRZqYsyeeWFyXIM3IWOq8EKR15erAdQ4aQOt641SdE4QXysTc0FEd
+WU+PdS7qOPDj4ToJ9aHQk+hyXJ+Dv7iae7C2i4dqT49CLPT6vPQvR5WpGDz9iNLg
+OxB2lpPzXqPktiOLpqtSvQGsQfhs3cv3eWjU/XxpW9d/nTdnh2k968oVZAJ9NQo1
+c+LY7S102i3JamQWKK2oEPHyG1qksM1PzPOAQxgpumuNbdbxW2z+jPEHlOk7csdD
+7S757Pnw+zVJoMXmnLvLRjy5AhZ01OWMDXutAvfzuRLpTY+3hBO0M7eRA1HIOeWX
+bdwhhXcdX6IgQalwEBpbIAiycMdoNagRIQg9rIaNtZUPKOaYEVKrivXM/djSGH51
+FzoODhy8Q8wDFW16FSjy78CMtXu+t+jLON29QyZvRktf/XXatCf99iWHi3JNpKpj
+dD+imFbYYaGXMCPR3fESsIw6IBH5JEa4zkrUMkKGsbwo7JHHkS4RRSzvC7nhsSsF
+t4hawiAvgW/Ipe8gmkFSNZvhK+3AJqGall9xiIQuUkNBuEWgc/dazNuYQgMyC3ns
+PzViz72meMUE1eMBTqIck18O3kPJe+C3IbdIpGd/niEzuCepYNt86h60Jxaokm+V
+9iPDgi+3SkRsieKizSZ/
+=4bO1
+-----END PGP SIGNATURE-----
