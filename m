@@ -1,63 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/13/1
-Message-ID: <20120513081938.GB30921@kludge.henri.nerv.fi>
-Date: Sun, 13 May 2012 11:19:38 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/6
+Message-ID: <4F7C56A9.8080804@redhat.com>
+Date: Wed, 04 Apr 2012 16:11:53 +0200
+From: Stefan Cornelius <scorneli@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Matthieu Aubry <matthieu.aubry@...il.com>
-Subject: Re: CVE request: Piwik before 1.7
+Subject: CVE-2012-1610 assignment notification: ImageMagick insufficient patch for CVE-2012-0259
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 08, 2012 at 10:44:46PM -0600, Kurt Seifried wrote:
-> On 05/08/2012 03:03 AM, Hanno Böck wrote:
-> > Hi,
-> > 
-> > http://piwik.org/blog/2012/02/7775/
-> > 
-> > Information is very rare: "We would like to thank the following
-> > security researchers for their responsible disclosure of XSS &
-> > click-jacking issues: Piotr Duszynski, Sergey Markov, Mauro
-> > Gentile."
-> > 
-> > I'd suggest assigning 3 CVEs with subjects like
-> > 
-> > "Unknown XSS or clickjacking issue identified by Piotr Duszynski" 
-> > "Unknown XSS or clickjacking issue identified by Sergey Markov" 
-> > "Unknown XSS or clickjacking issue identified by Mauro Gentile"
-> 
-> 
-> We would like to thank the following security researchers for their
-> responsible disclosure of XSS & click-jacking issues: Piotr Duszynski,
-> Sergey Markov, Mauro Gentile.
-> Thank you for disclosing security issues to the Piwik team, ensuring a
-> healthy and safe experience for the whole community!
-> 
-> I can't find anything else. Can you send the code commits that address
-> this?
-> 
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+Hi,
 
-I requested more details from security@ and got following reply from Matthieu Aubry:
+the original patch for CVE-2012-0259 turned out to be insufficient.
 
-"""
-Hi Henri,
+The problem is an integer overflow error in the "GetEXIFProperty()"
+function (magick/property.c, around line 1288):
 
-I agree it sounds like a good idea to describe exactly what went
-wrong, in a spirit of openness and learning from mistakes.
+      number_bytes=(size_t) components*tag_bytes[format];
 
-however,  Piwik data is very sensitive. Many Piwik users don't upgrade
-and use  older vulnerable version, sometimes data leaking are
-possible. If we give the details, first of all it takes time and
-energy which is already 100% booked, and secondly it would help black
-hat write bots to scrape and do bad.
+When processing EXIF directory entries with tags of e.g. format 5
+(EXIF_FMT_URATIONAL) and a large components count, the calculation can
+overflow and e.g. lead to "number_bytes" being 0. If that's the case,
+subsequent checks can be bypassed, resulting in the loop in the
+"EXIFMultipleFractions" macro to iterate through a large number of
+"components". This leads to out-of-bound reads until eventually causing
+a segmentation fault when trying to read beyond the limits of heap memory.
 
-This is not a good investment of our time sorry...
-but I appreciate your work :)
-Matt
-"""
+An updated patch is available via the ImageMagick forum [1].
 
-I do not think this is good way to improve security. In my opinion these issues still need CVE-identifiers, but details will limit to "unknown XSS" etc. Does these get three or one CVE-identifier?
+CVE-2012-1610 has been assigned to this issue.
 
-- Henri Salo
+Note: The initial patch for this issue is still necessary to prevent
+access of uninitialized/incorrect memory when e.g. processing specially
+crafted EXIF tags with a component count of 0.
+
+[1]
+http://www.imagemagick.org/discourse-server/viewtopic.php?f=4&t=20629#p82865
+
+Kind regards,
+-- 
+Stefan Cornelius / Red Hat Security Response Team
