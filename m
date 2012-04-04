@@ -1,67 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/05/7
-Message-ID: <509800E8.5080604@redhat.com>
-Date: Mon, 05 Nov 2012 11:09:44 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros@...openwall.org membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/8
+Message-ID: <4F7C7B0C.70602@mvista.com>
+Date: Wed, 04 Apr 2012 06:47:08 -1000
+From: akuster <akuster@...sta.com>
+To: Kurt Seifried <kseifried@...hat.com>
+CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: fix to CVE-2009-4307
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 11/05/2012 10:53 AM, Henri Salo wrote:
-> On Mon, Nov 05, 2012 at 05:02:52PM +0530, Premchand Koneru wrote:
->> I recently joined the Montavista Security team and request
->> membership to thelinux-distros@...openwall.org  list, so that I
->> may participate fully in reporting and fixing vulnerabilities in
->> Montavista. Here is my GPG fingerprint:
->> 
->> pub   2048R/5DA060C7 2012-11-05 Key fingerprint = 7DF9 45B4 3116
->> 8D5C D3C0  2A15 EADE D5B2 5DA0 60C7 uid
->> Premchand Koneru<pkoneru@...sta.com
->> <mailto:pkoneru@...sta.com>> sub   2048R/BE364B01 2012-11-05
->> 
->> Thank you for consideration.
+
+On 4/3/12 4:55 PM, Kurt Seifried wrote:
+> On 04/03/2012 04:32 PM, akuster wrote:
+>> Hello,
+>>
+>> Was there a CVE assigned to commit d50f2ab6f050311dbf7b8f5501b25f0bf64a439b?
+>>
+>> Commit 503358ae01b70ce6909d19dd01287093f6b6271c ("ext4: avoid divide by
+>> zero when trying to mount a corrupted file system") fixes CVE-2009-4307
+>> by performing a sanity check on s_log_groups_per_flex, since it can be
+>> set to a bogus value by an attacker.
+>>
+>> - Armin
 > 
-> This is first time I heard about Montavista. Where is your package-
-> and bug-tracker? Does Montavista use CVE?
+> I assume you are talking about this:
 > 
-> - Henri Salo
+> http://git.kernel.org/?p=virt/kvm/kvm.git;a=commitdiff;h=d50f2ab6f050311dbf7b8f5501b25f0bf64a439b
+
+Yes.
+
+<snippet>
+
 > 
+> What specific do you want a CVE assigned for?
+> 
+> For #1 I can see a CVE of the "a previous patch didn't completely fix
+> the issue, yada yada" type.
 
-Also how do we confirm you are on the security team there? I can't
-even find proof you work for Montavista (other than the email address)
-and I can't find any mention of a person called "Premchand Koneru"
-doing security work in the past.
+Yeah, just wondering since I have seen this in the past.
 
-I did manage to find a CVE page of sorts:
+thanks,
 
-http://www.mvista.com/cve_vulnerabilities.php
-
-For 2012 you appear to have fixed one Linux security flaw out of the 7
-listed (the rest are OpenSSL/OpenSSH), so I'm not really sure why you
-would need access to distros@ if you aren't fixing Linux related
-security issues any ways?
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQmADoAAoJEBYNRVNeJnmTV/MP/RpOjpvT1HWlxY0x8NEFWOgG
-AKK4OhUyH+wi/ECyhzoo9TaUvClXILrBwIcWvq2rRkVOEddzDfvmQyACSxuqTOwh
-D4ectq352nfwccTmBTOPL1WdbknFrhPD6NrVoXF1hvef65CKV6A2HlX8j/shWCs2
-3YhjwzHZgBP/ueeuXwa+Ki9NmuQQvy4XsVMmr6zxCdaZA6GhmvJGP19tsmUcl9dZ
-Km9nrQ1D8ia0/gG07l740BEDX7Hw08AKshWt8+fvbeCXKvepLryIL8rpV4bqgqAq
-z2WuJ3GiQSSMbXII/xrtrqknzOQsB1eRW8hjsthG45UewJ2kZ4aF4vFrDzPMCvDX
-lk+YPcB98SZfWHkRmuH4tn0bMTFVGn3xFWZ4hwr3qy9L+v3oHpV/l38z3HgmN7v8
-NgfEn0X5Fj6GsYE429hGRXARs/CsNeMN5mYPO3sYbH7Sl6Y/iv9kAfpxcZhf5Xyw
-hZVwoditoy/nkisoShl9WniHLm4z21Zkl9k8nHwDQ8dZbjZvllNb0kR1a7cBKJWF
-hL2mEfwhbulJ+XOTr8hi9itgXOYTLddUtCL4fX/Yv7keTn7O1W63sejIf9uqnNjV
-y0My68LsnXzsn1+wpgefDXIyhfl/3pLtGVpyLWUJJkK4WK3OyIoQeSD3OyM1hWhv
-9fiD6tELhvhINEY2O2sy
-=iMG8
------END PGP SIGNATURE-----
+- Armin
