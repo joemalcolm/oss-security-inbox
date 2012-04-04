@@ -1,35 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/23/1
-Message-ID: <20120923015509.GA6395@openwall.com>
-Date: Sun, 23 Sep 2012 05:55:09 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: vcizek@...e.de
-Subject: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/4
+Message-ID: <4F7C05BA.6040905@suse.de>
+Date: Wed, 04 Apr 2012 10:26:34 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com, security@...tgresql.org
+Subject: Re: Re: [pgsql-security] postgresql-jdbc 8.1 SQL injection with postgresql server 9.1
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 21, 2012 at 12:37:00PM +0200, Tomas Mraz wrote:
-> On Fri, 2012-09-21 at 12:20 +0200, Matthias Weckbecker wrote:
-> >  # de-crypting
-> >  % gpg sikrit.gpg
-> >  % ll sikrit*
-> >    -rw-r--r-- 1 gp users  12 Sep 17 09:41 sikrit
-> >    -rw------- 1 gp users 480 Sep 17 09:40 sikrit.gpg
-[...]
-> I suppose the permissions respect the user's umask so I do not think
-> this is a real security issue in the gpg itself. Although using the
-> permissions of the original file when creating the decrypted/encrypted
-> one (still modified with the user's umask) would be more appropriate. So
-> in my opinion this does not warrant a CVE but improvement in the
-> upstream gnupg code would be appreciated I think.
+Robert Haas wrote:
+> On Fri, Mar 30, 2012 at 8:51 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
+>> Postgresql 9.1 turned "standard conforming strings" on by default[1][2].
+>> postgresql-jdbc before version 8.2-504 however did not know about that
+>> kind of string and escaped single quotes with a backslash always. When
+>> such an old version of postgresql-jdbc is used with a newer postgresql
+>> server it not only breaks when strings contain single quotes, it also
+>> allows for SQL injections[3].
+>> The bug is neither in postgresql-jdbc as it was working correctly at the
+>> time it was released, nor is it really postgresql 9.1's fault which I
+>> guess doesn't expect and can't detect such an old jdbc adapter. The
+>> security issue arises when mixing the old adapter and the new server.
+> 
+> Right.  This issue has been previously reported to pgsql-security.
+> The position of the pgsql-jdbc project is that a client version should
+> be used with a matching server version; therefore, the project views
+> the proposed combination as an unsupported configuration.
 
-Agreed, and the "still modified with the user's umask" portion is very
-important.  I assume you mean orig.st_mode & ~umask.  With open(...,
-O_CREAT | ..., orig.st_mode) this does not need to be explicit, but with
-fchmod() it does.
+Sure, no doubt about that. The postgresql-jdbc package should have been
+updated a long time ago but obviously was forgotten. If we had updated
+it a year ago we'd have created a normal version update due to EOL of
+the old package with no security context at all. Now that it's known
+that the unsupported combination of versions allows for SQL injection
+however the update suddenly becomes security relevant.
 
-(Sorry for stating the obvious, but I am concerned that someone might
-patch GnuPG to just chmod to the original file's perms ignoring umask,
-which would be a dangerous change of behavior.)
+cu
+Ludwig
 
-Alexander
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
