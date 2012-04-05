@@ -1,55 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/5
-Message-ID: <50914189.20407@redhat.com>
-Date: Wed, 31 Oct 2012 09:19:37 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/05/3
+Message-ID: <4F7DD719.3060007@redhat.com>
+Date: Thu, 05 Apr 2012 11:32:09 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: net: divide by zero in tcp algorithm illinois
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: expat hash collision fix too predictable?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 04/05/2012 03:30 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> while reviewing a expat regression (likely caused by the hash collision denial of service fix, but unclear)
+> i stumbled about the randomness it uses.
+> 
+> 	static unsigned long
+> 	generate_hash_secret_salt(void)
+> 	{
+> 	  unsigned int seed = time(NULL) % UINT_MAX;
+> 	  srand(seed);
+> 	  return rand();
+> 	}
+> 
+> and it is seeded once at parser object creation.
+> 
+> This is better than not seeding, but I am not sure if it is sufficient.
+> 
+> Ciao, Marcus
 
-On 10/31/2012 08:31 AM, Petr Matousek wrote:
-> Description of the problem: Reading TCP stats when using TCP
-> Illinois congestion control algorithm can cause a divide by zero
-> kernel oops.
-> 
-> An unprivileged local user could use this flaw to crash the
-> system.
-> 
-> Proposed upstream patch: 
-> http://thread.gmane.org/gmane.linux.network/247871
-> 
-> Acknowledgements:
-> 
-> This issue was discovered by Rodrigo Freire of Red Hat.
-> 
-> References: https://bugzilla.redhat.com/show_bug.cgi?id=871848 
-> http://thread.gmane.org/gmane.linux.network/247871
-> 
-> Thanks,
+Something to remember, this doesn't have to be cryptographically strong,
+just good enough to make pre-compute attacks costly enough to prevent
+them. With this instead of pre-computing one file and sending it
+multiple times you'd have to pre-compute a file for each attack.
+Additionally with the time constraint you'd have to send the XML in and
+have it hit the array creation stage with the exact same time, which
+would be tricky for most cases.
 
-Please use CVE-2012-4565 for this issue.
-
-- -- 
+-- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQkUGJAAoJEBYNRVNeJnmTaCEQAMpQYy2q4fkaUZfh8q031LDD
-9HLVhj19u+m6CRGJ5MvKhdGGl9g5zFkPcz5bO0JtH+q8KW7clggQpAzuskFE/GL7
-ANpU5Jhx5swa03tQmQjmz5381MvkOT3KOwLMm6zGTzIV2slBLMMgqnKiRNECczh2
-asVMQpfXPIuZ2zKgMRDyyb1PHWFE40AX+10+dnCOU9eFoB0W/OCkPg4NN91i/2ae
-OK+XYvMNeeGX/TAMbZbfQ3mAaqCZ7vHMWDDI21u5AS32KdmC/oUMiHb51qK6wMI2
-0gF869OTg/e3r5+nrWwSaALchwRuZrsDf+N7mX7kwmgwyT807uQB4eVULQ2z1hX9
-2RnYXbq+XWLonDzvazHNj5cHfBL9VNhBQKe/fYm+iUx/VTSR7Owcw0xwvCW61cIo
-6/2E8OkfF4WYGVN/HsnNZmBPqmmeinmB2bFuHHln0i2l7oLxQpgnHsvOYlQlITSB
-1TKvxDzbLQHs+JmQYO5CGdtbPyxz98AkZevHGQmjgIqvYt/cGAa4DSxb2l/IKf3t
-5ZG60XcAkws8ZycULSnn513q0u5tcqno6yKBb75jZ3tsJk+uY0lwVNCOH6sqhIq2
-C58H6Gos6iMOkwv/rzOg0Ydzym8zwE81DFMsL4dgMyGpp1ZD6jSuWSmxValbkiCI
-va4CJ34Fm427d1d760Y3
-=ptv8
------END PGP SIGNATURE-----
