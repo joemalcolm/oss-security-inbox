@@ -1,39 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/20
-Message-ID: <1347568144.3378.119.camel@scapa>
-Date: Thu, 13 Sep 2012 22:29:04 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/05/2
+Message-ID: <4F7D6D84.2060305@op5.se>
+Date: Thu, 05 Apr 2012 12:01:40 +0200
+From: Andreas Ericsson <ae@....se>
 To: oss-security@...ts.openwall.com
-Cc: security@...dpress.org
-Subject: Re: CVEs for wordpress 3.4.2 release
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: expat hash collision fix too predictable?
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2012-09-12 at 13:38 +0300, Hanno Boeck wrote:
-> I can't find CVEs assigend for the issues fixed in wordpress 3.4.2.
+On 04/05/2012 11:30 AM, Marcus Meissner wrote:
+> Hi,
 > 
-> http://wordpress.org/news/2012/09/wordpress-3-4-2/
+> while reviewing a expat regression (likely caused by the hash collision denial of service fix, but unclear)
+> i stumbled about the randomness it uses.
 > 
+> 	static unsigned long
+> 	generate_hash_secret_salt(void)
+> 	{
+> 	  unsigned int seed = time(NULL) % UINT_MAX;
+> 	  srand(seed);
+> 	  return rand();
+> 	}
 > 
-> Sadly, the information is quite limited:
-> "Version 3.4.2 also fixes a few security issues and contains some
-> security hardening. The vulnerabilities included potential privilege
-> escalation and a bug that affects multisite installs with untrusted
-> users. These issues were discovered and fixed by the WordPress security
-> team."
+> and it is seeded once at parser object creation.
 > 
-> I suggest assigning two:
-> 1. potential privilege escalation
-> 2. problem with untrusted users on multisite installations
-> unless someone has more information.
+> This is better than not seeding, but I am not sure if it is sufficient.
+> 
 
-It's alway pretty annoying to try to fix CVEs in wordpress releases,
-since they are usually allocated just on some release announcement, and
-thus identifying specific commits is pretty hard. It'd be nice if
-Wordpress security team could be in the loop since the beginning, it
-might help a bit later (so adding them to CC: now)
+A pretty simple fix that makes it far better is to do
 
-Regards,
+	struct timeval tv;
+	unsigned int seed;
+
+	gettimeofday(&tv, NULL);
+	seed = (tv.tv_usec * 65531) % UINT_MAX;
+	srand(seed);
+	return rand();
+
+The other option is ofcourse to not involve timestamps at all and
+instead rely on a source with higher entropy, but this is usually
+sufficient to make attacking it very unappealing. Especially when
+considering that many xml docs contain a timestamp of when they were
+generated, making the issue that much worse.
+
 -- 
-Yves-Alexis
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
