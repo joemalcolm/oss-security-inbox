@@ -1,47 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/4
-Message-ID: <20120907093655.GP19175@dhcp-25-225.brq.redhat.com>
-Date: Fri, 7 Sep 2012 11:36:56 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: akuster <akuster@...sta.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: net: slab corruption due to improper synchronization around inet->opt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/06/1
+Message-ID: <4F7E7A62.3050704@redhat.com>
+Date: Thu, 05 Apr 2012 23:08:50 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: slock-0.9 displays modal box after locking
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+From: https://bugs.gentoo.org/show_bug.cgi?id=401645
 
-On Fri, Aug 31, 2012 at 12:37:58PM -0700, akuster wrote:
-> Is there a range of affected kernel versions?
-> 
-> Was this issue introduced by 1c32c5ad6fac8cee1a77449f5abf211e911ff830?
+Longpoke 2012-01-31 15:21:57 UTC
 
-the race seems to be present even before this commit.
+If any program makes a modal dialog box while the screen is
+black/controls locked with slock, and then some buttons are pressed on
+the keyboard, the screen is unblackened, and everything is visible on
+the desktop you locked on.
 
-Petr
+Steps to reproduce:
+1. sleep 3; pcmanfm
+2. slock
+3. press some buttons
+4. now black screen will go away and you can see the current active desktop
 
-> 
-> - Armin
-> 
-> On 08/31/2012 09:11 AM, Petr Matousek wrote:
-> > Description of the problem:
-> > Lack proper synchronization to manipulate inet->opt ip_options can lead
-> > to system crash.
-> > 
-> > Problem is that ip_make_skb() calls ip_setup_cork() and ip_setup_cork()
-> > possibly makes a copy of ipc->opt (struct ip_options), without any
-> > protection against another thread manipulating inet->opt. Another thread
-> > can change inet->opt pointer and free old one under us.
-> > 
-> > Given right server application (setting socket options and processing
-> > traffic over the same socket at the same time), remote attacker could
-> > use this flaw to crash the system. More likely though, local
-> > unprivileged user could use this flaw to crash the system.
-> > 
-> > Upstream fix:
-> > http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f6d8bd051c391c1c0458a30b2a7abcd939329259
-> > 
-> > Thanks,
-> > 
+This is a critical vulnerability. I recommend blocking this package.
+
+I'm running xmonad on amd64.
+
+Longpoke 2012-02-01 03:41:11 UTC
+
+You need to run the other program *concurrently*. I'll try and make the
+reproduction steps clearer:
+
+1. run sleep <n>; <X-program>
+2. lock the screen as fast as you can
+3. make sure <n> seconds has passed, so that you know <X-program> has
+started
+4. press some keys (any keys (doesn't have to be your actual password),
+don't hit enter)
+
+Now the black screen will go away and you can see the current active
+desktop along with <X-program>.
+
+Where <X-program> is the name of some X program that will create a
+window and leave it open when executed, i.e: pcmanfm.
 
 -- 
-Petr Matousek / Red Hat Security Response Team
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
