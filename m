@@ -1,35 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/17/1
-Message-ID: <20121217154122.GA24980@redhat.com>
-Date: Mon, 17 Dec 2012 08:41:22 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/06/2
+Message-ID: <4F7E7A98.6070402@redhat.com>
+Date: Thu, 05 Apr 2012 23:09:44 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: fail2ban 0.8.8 fixes an input variable quoting flaw on <matches> content
+Subject: Re: CVE Request: slock-0.9 displays modal box after locking
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to this issue please?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The release notes for fail2ban 0.8.8 indicate:
+On 04/05/2012 11:08 PM, Kurt Seifried wrote:
+> From: https://bugs.gentoo.org/show_bug.cgi?id=401645
+> 
+> Longpoke 2012-01-31 15:21:57 UTC
+> 
+> If any program makes a modal dialog box while the screen is 
+> black/controls locked with slock, and then some buttons are pressed
+> on the keyboard, the screen is unblackened, and everything is
+> visible on the desktop you locked on.
+> 
+> Steps to reproduce: 1. sleep 3; pcmanfm 2. slock 3. press some
+> buttons 4. now black screen will go away and you can see the
+> current active desktop
+> 
+> This is a critical vulnerability. I recommend blocking this
+> package.
+> 
+> I'm running xmonad on amd64.
+> 
+> Longpoke 2012-02-01 03:41:11 UTC
+> 
+> You need to run the other program *concurrently*. I'll try and make
+> the reproduction steps clearer:
+> 
+> 1. run sleep <n>; <X-program> 2. lock the screen as fast as you
+> can 3. make sure <n> seconds has passed, so that you know
+> <X-program> has started 4. press some keys (any keys (doesn't have
+> to be your actual password), don't hit enter)
+> 
+> Now the black screen will go away and you can see the current
+> active desktop along with <X-program>.
+> 
+> Where <X-program> is the name of some X program that will create a 
+> window and leave it open when executed, i.e: pcmanfm.
+> 
 
-    * [83109bc] IMPORTANT: escape the content of <matches> (if used in
-      custom action files) since its value could contain arbitrary
-      symbols.  Thanks for discovery go to the NBS System security
-      team
+Please use CVE-2012-1620 for this issue.
 
-This could cause issues on the system running fail2ban as it scans log
-files, depending on what content is matched.  There isn't much more
-detail about this issue than what is described above, so I think it may
-largely depend on the type of regexp used (what it matches) and the
-contents of the log file being scanned (whether or not an attacher could
-insert something that could be used in a malicious way).
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-References:
-
-https://raw.github.com/fail2ban/fail2ban/master/ChangeLog
-http://sourceforge.net/mailarchive/message.php?msg_id=30193056
-https://github.com/fail2ban/fail2ban/commit/83109bc
-https://bugzilla.redhat.com/show_bug.cgi?id=887914
-https://bugs.gentoo.org/show_bug.cgi?id=447572
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+iQIcBAEBAgAGBQJPfnqUAAoJEBYNRVNeJnmTiEMQAJStn/Ktgye5PLtEjHY49hEA
+NPyb/WNT2g6525ftHPZiB9CsiEgBwA1CUDYDfNHeOgwAYdo3QPbrzern5gUr61UE
+a/KEEwrj7QSzdlHrkqThdKJ+wK20Y0n9HTvXysaywr392w0Xze1mxEKvkzFzwrMj
+XFMfJRB6eVkJcOvVFnwVmV3tjU+/lfAcObwKcgEVCxtkcb7r+ZWAtB/ud+lRx3es
+g+huYxo+l43pJNAtjlSe2scOKdcCsKcdEzqJgQI3+qItz2RBh+JNL7t/gCWKjFMC
+yf/RxKoih0SsQkBEY0aLW92j4NJmOefR4531hlvQYl6pVI3We054xIQL2clOXn1p
+ltOVUCs9MkcACN7my1ao/K7KwvFLrXCN9mPkpGG7CxtISGi6rAL6E/7ktMppAsOw
+wG+r9UqgdXLoLHqkcJswPlXVhvtxF8UVNvm5CcS045MV0uEaOb0CkNvRT1+VP/Ff
+1//QB50sy4BnEB0+CXCWn7TBFpwEjyfjhj2LO+M4pUjUbksQOVLSh7GTuBJNSqW6
+3qd4vB3eXNLiblKH+a9Dto4jG1ebYR/kjSmlu93QlNrxYy6WuM52vu4GBVpIN2fw
+3hTlnLmZAqplA4EkeO21lpcT9eg+NZD2wuNGKoF6vXorpfOOr8P03bo4q6ZEIg8P
+96RClX6ZEu59zvNd1gro
+=ek/y
+-----END PGP SIGNATURE-----
