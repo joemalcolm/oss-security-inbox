@@ -1,58 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/20/6
-Message-ID: <50D33ECA.3090006@lab.b-care.net>
-Date: Thu, 20 Dec 2012 17:37:30 +0100
-From: Frédéric Basse <frederic.basse@....b-care.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/07/2
+Message-ID: <20120407115845.GA32103@openwall.com>
+Date: Sat, 7 Apr 2012 15:58:45 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2012-6426] LemonLDAP-NG SAML XML Signature Wrapping
+Cc: Frank Warmerdam <warmerdam@...ox.com>, zdi@...pingpoint.com, M Hjkoko <m-hjkoko@...mail.com>
+Subject: libtiff tif_getimage.c integer overflow leading to heap overwrite when parsing certain TIFF files (ZDI-CAN-1221 / CVE-2012-1173)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-[CVE-2012-6426] LemonLDAP-NG SAML XML Signature Wrapping
-_______________________________________________________________________
-Summary:
-LemonLDAP-NG <=1.2.2 is prone to a security vulnerability involving
-XML signature wrapping in authentication process.
+I realize that it is not great to post this on a weekend.  The issue was
+technically made public on April 4 (Wednesday), however unfortunately
+the folks on distros list who were actually involved in its handling
+have failed to post about it to oss-security in time - so I feel I had
+to substitute for them.  Delaying this further till Monday felt even
+worse since the issue was already public.
 
-Successful exploits may allow unauthenticated attackers to construct
-specially crafted messages that can be successfully verified and
-contain arbitrary content.
+This issue was tracked as ZDI-CAN-1221 / CVE-2012-1173.
 
-This may lead to authentication bypass.
-_______________________________________________________________________
-Details:
-Due to a bad use of Lasso library, SAML signatures are never checked,
-even if SP forces signature check.
-____________________________________________________________________
-CVSS Version 2 Metrics:
-Access Vector: Network exploitable
-Access Complexity: Low
-Authentication: Not required to exploit
-Impact Type:Allows unauthorized disclosure of information; Allows
-unauthorized modification
-_______________________________________________________________________
-Disclosure Timeline:
-2012-11-08 Vendor contacted
-2012-12-18 Vendor: fixed issue in svn r2698
-2012-12-19 CVE-2012-6426 assigned
-2012-12-20 Public advisory
-2012-12-21 EoW
-_______________________________________________________________________
-References:
-http://jira.ow2.org/browse/LEMONLDAP-570
-_______________________________________________________________________
-Frédéric Basse - Thales Communications & Security
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Vincent Danen summarized the issue as follows (in a comment on Red Hat
+bug 803078):
 
-iQEcBAEBAgAGBQJQ0z7KAAoJEG39VVx5rCjDjjUIAJz8M4OifN9cHf3W1qBwxFex
-CU3jUIGXb1H2N2OVH4DnU1xdFfm8Hr4nEbvSl+3yKJbIWAAPXx3Y5Ok9+LypE+Rb
-OrPRD9OJTat4wUj1SVbIh1bh1XWytRTq4i9pBE/F/86vyIJuQL9Hyya8ETSQoC6P
-FUrKEesHvKJetICPCqsiMuJiCstedEvgdGhkMhrDqaEkZTDkvbaZysxuJ3JSQ6Pq
-CioSQS2qB5U+IKJX2OKix1rR4ruaCoQmOq0qmRSr+8+a0dgP0Zf/w02KaXimuYwI
-oKBmiOTavr8NhQl45QGjVMZi3jMKs8qmxWul5/GE6mH7GqI8SfdvQxZC+iHHxQo=
-=IgwQ
------END PGP SIGNATURE-----
+"A flaw was found in the way that LibTIFF attempted to allocate space for a tile
+within a TIFF image file.  When calculating the size for a buffer, LibTIFF
+performs a multiply that can cause an integer overflow.  After allocation,
+LibTIFF will initialize the buffer with the tile data, which can cause code
+execution under the context of the application using LibTIFF, and with the
+calling user's permissions."
+
+Upstream Bugzilla entry, which now has patches attached to it (thank
+you, Frank):
+
+http://bugzilla.maptools.org/show_bug.cgi?id=2369
+
+Looking at the patches, I actually see two instances of integer
+multiplication before heap buffer allocation patched to use
+TIFFSafeMultiply(): one of them is for tilesize, the other for
+stripsize.  I assume CVE-2012-1173 applies to both issues at once.
+
+So far, I am only aware of Mandrake having announced this via
+MDVSA-2012:054 published on April 5.  Some other distros appear to have
+patched the issue or/and have made changelog/bug entries relating to it
+public without issuing an advisory yet.
+
+On April 6, the Red Hat bug entry:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=803078
+
+got an extra comment posted to it by Karel Volny with what appears to be
+an extra bug to patch (non-security?)  It also references not-public-yet
+RH bug 810551 (I have no idea what that one is - I did say I was not the
+best person to post this).
+
+The timeline appears to be as follows:
+
+2011-05-12 or earlier: bug discovered and reported to ZDI by Alexander Gavrun
+
+2011-05-12: bug reported by ZDI to libtiff upstream (Frank Warmerdam)
+
+2012-03-09: M Hjkoko creates the bug entry
+http://bugzilla.maptools.org/show_bug.cgi?id=2369 and thereby reminds
+upstream of the issue
+
+2012-03-12: M Hjkoko alerts the distros list that there's an upcoming
+libtiff issue listed at
+http://www.zerodayinitiative.com/advisories/upcoming/
+No detail is included, and all info posted to the distros list by this
+point is publicly available, hence the distros list embargo timer is not
+ticking yet.  (Maybe we should have posted the same info to oss-security
+at that time, though.)
+
+2012-03-13: CVE-2012-1173 is assigned by Red Hat.
+
+2012-03-21: Red Hat folks post to distros list (in response to inquiry
+by a non-Red Hat list member) actual detail on the issue, which they had
+obtained from ZDI in the previous few days.  Since non-public info got
+to the distros list at this point, the embargo timer started ticking.
+Unfortunately, this aspect was not understood and thus was not
+coordinated with ZDI and upstream prior to the distros list posting.
+
+2012-03-xx: apparently, Tom Lane at Red Hat works on the fixes.
+(Current upstream patches credit Tom for the fixes.)
+
+2012-03-27 - 2012-03-30: Discussion regarding embargo time and how we
+must make the issue public no later than 2012-04-04 (14 days since
+2012-03-21).  Luckily, ZDI was OK with this, and Frank even proposed
+making the issue public on 2012-04-01 (thanks!), but then 2012-04-04 was
+quickly agreed upon as the coordinated release date.
+
+2012-04-04: The issue is supposed to be made public.
+
+2012-04-05: MDVSA-2012:054 is published.
+
+2012-04-06: Upstream patches are posted at
+http://bugzilla.maptools.org/show_bug.cgi?id=2369#c4
+
+2012-04-06: Karel Volny's comment is posted at
+https://bugzilla.redhat.com/show_bug.cgi?id=803078#c22
+(might require further work)
+
+Alexander
