@@ -1,35 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/10/5
-Message-Id: <201212101903.qBAJ2wXl006414@linus.mitre.org>
-Date: Mon, 10 Dec 2012 14:02:58 -0500 (EST)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2012-6309 Arctic Torrent crash with .torrent file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/08/3
+Message-ID: <4F8201AE.1050501@redhat.com>
+Date: Sun, 08 Apr 2012 15:22:54 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, ft@...kotimme.com, dev@...config.org, lathama@...il.com
+Subject: CVE for ISPConfig 3.0.4.3 "Add new Webdav user" can chmod and chown entire server from client interface
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-We have assigned CVE-2012-6309 to this issue in .torrent file handling
-by Arctic Torrent:
+Main website: http://www.ispconfig.org/
 
-Disclosure:     http://downloads.securityfocus.com/vulnerabilities/exploits/55833.pl.txt
-Product source: http://cvs.int64.org/viewvc/int64/arctic/arctic/
+CC'ing various addresses I found on their site/docs. They don't appear
+to have any real contact info.
+
+Originally seen on Reddit, link to bug report:
+
+http://bugtracker.ispconfig.org/index.php?do=details&task_id=2157
+
+Filed by "hakong"
+========================
+Details
+Through the client interface, I was able to chmod and chown the root
+directory (/) of my server to web3:client9 and 770 using the "Add new
+Webdav user" by using ../../../../../../../../../../../../ as a path.
+This can probably be exploited in some way too.
+Just tried this on a fresh install of ISPConfig version 3.0.4.3, and
+it worked, had to re-install the entire VM. This has to be fixed as
+soon as possible.
+========================
+
+Quick check of svn and generate log (to see revisions) and a diff (to
+look at the interesting revision, check date in bug report):
+
+svn co svn://svn.ispconfig.org/ispconfig3/trunk/
+cd trunk
+svn log -v --limit 10 | less
+svn diff -r 3018:3027 > ../3018-3027.diff
+
+and we then this:
+
+Index: interface/web/sites/webdav_user_edit.php
+===================================================================
+- --- interface/web/sites/webdav_user_edit.php	(revision 3018)
++++ interface/web/sites/webdav_user_edit.php	(revision 3027)
+@@ -114,7 +114,9 @@
+ 		 */
+ 		if(isset($this->dataRecord['username']) &&
+trim($this->dataRecord['username']) == '') $app->tform->errorMessage
+.= $app->tform->lng('username_error_empty').'<br />';
+ 		if(isset($this->dataRecord['username']) &&
+empty($this->dataRecord['parent_domain_id']))
+$app->tform->errorMessage .=
+$app->tform->lng('parent_domain_id_error_empty').'<br />';
+- -
++		if(isset($this->dataRecord['dir']) &&
+stristr($this->dataRecord['dir'],'..')) $app->tform->errorMessage .=
+$app->tform->lng('dir_dot_error').'<br />';
++		if(isset($this->dataRecord['dir']) &&
+stristr($this->dataRecord['dir'],'./')) $app->tform->errorMessage .=
+$app->tform->lng('dir_slashdot_error').'<br />';
++		
+ 		parent::onSubmit();
+ 	}
+
+Which confirms this flaw quite nicely.
+
+Please use CVE-2012-2087 for this issue.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQEcBAEBAgAGBQJQxi9pAAoJEGvefgSNfHMd5GIH/iYODYKAEfU0W8Y4weKIgarm
-ryqBj5Aly7Xp15KqQl5QxNYnSUn2Bz+GUbIMUCks6+af50un2d6wpZcUn/RfkdCR
-Z3/OEauSY4pMgj2QMVYVMP3HgHT6+942vyGYl6owlbJwsd51Ng+N3YErJIH8O47O
-fI4Ys+cjT4CBTcz2AEQemQFc8DEYiUeoyNmmf1YOZNHjhd91WsnqEx/a3PjZQXsy
-oa+/Zz1KM1cLmkGkEpN619GTU7HO2xdUXKqsTCl/5aWmGE8u40SSDoy2D4IqHzjp
-Ov/nkYmaBrZ4bXwvvEKmgBMuMlAYGDPN+0F+S+hXFoDzoZOZ+hwfZkDqNDpjj3c=
-=opWS
+iQIcBAEBAgAGBQJPggGuAAoJEBYNRVNeJnmTxbsP/2jDl88uR6oxoAEpBIkvrNzT
+xFD8mcMx3ak5lapXyLMFt1yjOXo4uF7DYlLi76i12fvJ3AO+4+/J+tH7A0Do8Vf3
+sH8IAcYZ6iq+NnNF8MhnpTia6dC38gCYb6fqGxL8OrR0jxRDv2XfmKjOHPKQ9x5S
+DL/wmDuj4wKfOjoJbmqEpk6ECry2zWBREQTASGjChkLGKt9LvLCtRrkfq2yAidMD
+zhYKGyn0YRcySKV2EURP0hHw2Z0N5aVx3PBgu6CfUM2/KrcXx/sC8e3twP43uoC0
+ySpFLgrDrLcjwY9/Yzvbiqor2iA2lse2rXjrVAbwjMJ8pwIEhOj6gGq26tQR/WYF
+RoJpY5ZDXYuN1qSO2bAkD1xP3p/6sGrvz9hejc6X1DJGYEEv5Aje3XvZA1PJ4hZf
+31ASe/MZMiHSN6YbyClz6JdUG9aQW4qPWI7Pl1DE5SqenwU8eQvhNm+S/yMebwyZ
+skcMFojcZvFhd/HqR8idgUvyQKJ3ZlWxOooX6AOiyB8kghTt5oKUOUhPzs36rh0h
+WdHEnh23OCjPcxbVZsxh4XkTkH9K6oc770TvVJ7TrieAXZmvbSexyK2FP7ShUhhx
+kojxB1nBeIcYIX//Dc/JZUZHyrTjNeAm3RobtY0srgYu8FTme6rk45CTw+dmHN2h
+onlMmeJvYm7vrSw18a0/
+=1Dxw
 -----END PGP SIGNATURE-----
