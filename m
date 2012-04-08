@@ -1,37 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/11
-Message-ID: <CAKCW=4Yq=wZnEA5CVzn8fyLT=BMVyjEWpzwMjM25qZ9TqdR4Uw@mail.gmail.com>
-Date: Thu, 15 Mar 2012 15:18:49 -0400
-From: Mark Stanislav <mark.stanislav@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/08/1
+Message-ID: <CAJzxamLNBtf3L7wE-qFzbR1jpaa=uXqdPqa2No9W0rkm8-H0jw@mail.gmail.com>
+Date: Sun, 8 Apr 2012 20:49:10 +1000
+From: David Black <disclosure@....org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: gajim - code execution and sql injection
 Content-Type: text/plain; charset=utf-8
 
-Howdy,
+Hi. a few months ago the following bugs were reported in gajim and do
+not yet have CVE-ID allocation:
+1. https://trac.gajim.org/ticket/7031, 'Assisted' code
+execution (if the user clicks a link)
+2. https://trac.gajim.org/ticket/7034, SQL injection via jids
 
-I was looking to receive CVEs for the following...
+Note: these two issues are fixed in the latest gajim release[0][1].
 
-1) phpMoneyBooks (http://phpmoneybooks.com/) has an unauthenticated local
-file inclusion (LFI) vulnerability
-* Notified, Response Received, and Patch Released
-
-2) phpGradeBook (http://phpgradebook.com/) has unauthenticated SQL Database
-Exportation
-* Notified, Response Received, and Patch Released
-
-3) phpPaleo (http://sourceforge.net/projects/phppaleo/) has an
-unauthenticated local file inclusion (LFI) vulnerability
-* Notified, Response Received, and Patch Released
-
-4) hbportal (http://sourceforge.net/projects/hbportal/) has a POST-based
-SQL injection vulnerability
-* Notified
-
-5) e-ticketing (http://sourceforge.net/projects/e-ticketing/) has a
-POST-based SQL injection vulnerability
-* Notified & Response Received
-
-Thanks!
-
--Mark
-
+[0] http://gajim.org/ - "Gajim 0.15 is here! (18 March 2012)"
+[1] https://trac.gajim.org/query?status=closed&milestone=0.15
