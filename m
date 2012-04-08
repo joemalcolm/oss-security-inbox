@@ -1,34 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/10
-Message-ID: <Pine.GSO.4.64.1201041254070.14826@faron.mitre.org>
-Date: Wed, 4 Jan 2012 13:11:51 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Moritz Muehlenhoff <jmm@...ian.org>
-cc: Kurt Seifried <kseifrie@...hat.com>, oss-security@...ts.openwall.com, Craig Barratt <cbarratt@...rs.sourceforge.net>, cve-assign@...re.org, security@...ntu.com
-Subject: Re: CVE Request: Security issue in backuppc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/08/2
+Message-ID: <4F81B5CD.9060201@redhat.com>
+Date: Sun, 08 Apr 2012 09:59:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: David Black <disclosure@....org>
+Subject: Re: CVE request: gajim - code execution and sql injection
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-All,
+On 04/08/2012 04:49 AM, David Black wrote:
+> Hi. a few months ago the following bugs were reported in gajim and
+> do not yet have CVE-ID allocation: 1.
+> https://trac.gajim.org/ticket/7031, 'Assisted' code execution (if
+> the user clicks a link)
 
-A new CVE is needed for this.  The new variant SHOULD receive a new CVE 
-because there's a different researcher (specifically, Jamie) and 
-effectively a different version (probably upstream; also, many distros may 
-have already fixed the original CVE-2011-3361).
+Please use CVE-2012-2085 for this issue.
 
-Blame the CVE content-decision documentation (and me, its author).  The 
-current version can cause confusion, people can interpret it in different 
-ways, plus there are gaps.  It needs some serious restructuring.  (This is 
-why the document's not public.)
+> 2. https://trac.gajim.org/ticket/7034, SQL injection via jids
 
-Kurt (and other CNAs): the documentation problem is that ADT4 says 
-"MERGE", which seems to imply that you should stop, but really you should 
-continue to ADT5, which is about splitting based on different researchers. 
-ADT4 is there to explicitly cover places where somebody might reasonably 
-feel like splitting, but CVE does not.  There are also a couple other 
-decision points that aren't documented yet.  You should generally fall 
-through *all* the decision points, not just the first point that suggests 
-split/merge/consult.  That is, all of ADT1 through ADT5 should be examined 
-when deciding how to group issues.
+Please use CVE-2012-2086 for this issue.
 
-- Steve
+> Note: these two issues are fixed in the latest gajim
+> release[0][1].
+> 
+> [0] http://gajim.org/ - "Gajim 0.15 is here! (18 March 2012)" [1]
+> https://trac.gajim.org/query?status=closed&milestone=0.15
+
+
+
+On a side note: if you want a free SSL certificate please use
+something like http://cert.startcom.org/ which is included within most
+browsers. cacert.org is not included in any (that I know of) browsers,
+I have no idea what the cacert practices are (and I can't find any
+documentation on their site) so there's no way that root key will be
+loaded by myself (and most people I know).
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPgbXKAAoJEBYNRVNeJnmTMxYQAKWoeLUvwmPT4jMwmkGjDaRR
+KGR6q5ITFiX9An1sLBZcpK/RUcvM2kC5QVIPZNP82gQXfs3tXCDnem7xAGPU7KHL
+WBWHnq/Wc0Qf97g2jgmpnxplfd7+mNrKyd+g0qdCS13K1F49eYeuK3LH3XOYXxAs
+9aanpcmiGjywhhZ/OhfJPVU5Nz4WbUsfVDh88iCAQXPj4xvYXRjcy3je1n2fUlDy
+OsK66ih51hV5Dq3t3HbZSfMDnjtgklEZTDK4fQ+rM7Ojph9tTfSp95CaWKoounf5
+TjxzVAV8knzvzHWoaYmmJg3Kx+mF43kzlTT73ecUTtBYCerfr1ypD0XBfibLerPR
+v1wTvZcDpGTLETE+fE9q4rF9HGQX/PG3aOJlmYHULCKXcef77enPpEaZ0HmBHs8j
++UuyaAB8+bo9EUnh5EMJtpkv2vMmxLFYchEmLeBEwrhYe1jQ2IRye/4u0nEfLV00
+6fcCr94uQP263PSitRMm+1G5Jh7TcMwyad04EdXSCCR+DNStZ9RN3eTFFHBux54t
+Q5dxvzBqSMj9L3XnKCz9q9ErAZoiGWNlhLTAMSF7qmq/mzfyo6DlwOHZ4dKFDK0m
+MdsBcbYLQ5gGnKbC2Xg895g6vGhlwriuotFt5kchO52hKpAIHuwixXFBOMEZ3WWp
+SP9vNx5a/TcMNaKZcdxB
+=wM0B
+-----END PGP SIGNATURE-----
