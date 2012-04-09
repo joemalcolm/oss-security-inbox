@@ -1,142 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/5
-Message-ID: <20120117100138.GA22561@openwall.com>
-Date: Tue, 17 Jan 2012 14:01:38 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/09/3
+Message-ID: <1333954209.22006.6.camel@scapa>
+Date: Mon, 09 Apr 2012 08:50:09 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: bugtraq@...urityfocus.com, Theodore Ts'o <tytso@....edu>, dillon@...llo.backplane.com
-Subject: pwgen: non-uniform distribution of passwords
+Subject: Re: CVE request: gajim - code execution and sql injection
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On dim., 2012-04-08 at 23:21 -0600, Kurt Seifried wrote:
+> On 04/08/2012 07:33 PM, Carlos Alberto Lopez Perez wrote:
+> > On 08/04/12 17:59, Kurt Seifried wrote:
+> >> On a side note: if you want a free SSL certificate please use 
+> >> something like http://cert.startcom.org/ which is included within
+> >> most browsers. cacert.org is not included in any (that I know of)
+> >> browsers, I have no idea what the cacert practices are (and I
+> >> can't find any documentation on their site) so there's no way
+> >> that root key will be loaded by myself (and most people I know).
+> > 
+> > 
+> > Cacert.org CA is trusted by the majority of Linux/BSD distributions
+> > and therefore for any browser running on it. 
+> > http://wiki.cacert.org/InclusionStatus
+> 
+> According to the page you quote it's not in any Mozilla browsers by
+> default (or any major web browser that I can see), it's not in Fedora
+> or Red Hat Enterprise Linux or any derivatives of Red Hat Enterprise
+> Linux, or Ubuntu or SuSE Linux to name a few (not to mention Mac OS X
+> or Windows).
 
-I never heard back from Ted on the below.  I am not complaining -
-I understand that Ted is super busy with great stuff like ext4 - yet I
-think it's time to bring this to oss-security (for distros) and to
-Bugtraq (for end-users).  (Not really "to make this public" since the
-issue was already discussed in public on john-users.)
+Cacert.org is included in Debian ca-certificates package, and thus in
+the Ubuntu one (just stating fact, not that I find that good or bad).
+> 
+> I don't understand why people choose a widely unsupported CA when
+> there are widely supported CAs like StartCom that offer free
+> certificates. Please, use supported CAs.
+> 
 
-Some highlights (excerpts from the longer message below):
+This is a bit off-topic (for the thread, maybe not for the list). It
+seems that people like Cacert.org because of the trust model it
+represents (afaict it tries to fit the GPG web of trust to x509).
 
-"Time running (D:HH:MM) - Keyspace searched - Passwords cracked
-0:00:02 - 0.0008% - 6.0%
-0:01:00 - 0.025% - 19.5%
-0:20:28 - 0.5% - 39.1%
-1:16:24 - 1.0% - 47.1%
-3:00:48 - 1.8% - 55.2%
-3:21:44 - 2.3% - 59.4%
-5:05:17 - 3.1% - 64.2%
+Regads,
+-- 
+Yves-Alexis
 
-6% of pwgen'ed passwords get cracked in 2 minutes.  This is with NTLM
-hashes, which are obviously very fast.  For the MD5-based crypt(3),
-NTLM's 2 minutes would translate to 2 days, and this would apply
-per-salt, yet having 6% of passwords crackable in 2 days on a single CPU
-core is probably unacceptable.
-
-What might be worse is that 0.5% of passwords get cracked in 1 second
-(NTLM).  This is approx. 20 minutes for MD5-based crypt(3) hashes, also
-on one CPU core.  0.5% is small, but not negligible."
-
-Additional notes for Bugtraq:
-
-Now is a good time because a related issue was just brought up:
-
-"gpw password generator giving short password at low rate"
-http://www.openwall.com/lists/oss-security/2012/01/17/2
-
-Oh, and while I am at it: beware of JavaScript password generators -
-these are almost universally broken by design.
-
-Not very closely related, but DragonFly BSD's password hashing is
-ridiculous (non-portable and weaker than FreeBSD's).  I am gradually
-bringing more attention to the problem in an attempt to get it
-corrected (this posting is one such step):
-
-http://www.openwall.com/lists/oss-security/2012/01/16/2
-
-Alexander
-
------ Forwarded message from Solar Designer <solar@...nwall.com> -----
-
-Date: Tue, 25 Jan 2011 17:51:43 +0300
-From: Solar Designer <solar@...nwall.com>
-To: Theodore Ts'o <tytso@....edu>
-Subject: pwgen: non-uniform distribution of passwords
-
-Hi Ted,
-
-I did some testing of pwgen-2.06's "pronounceable" passwords, and I
-think they might be weaker than you had expected (depends on what you
-had expected, which I obviously don't know).
-
-Specifically, not only the keyspace is significantly smaller than that
-for "secure" passwords (which I'm sure you were aware of), but also the
-distribution is highly non-uniform.  My guess is that this results from
-different phonemes containing the same characters.  So certain
-substrings can be produced in more than one way, and then some
-characters turn out to be more probable than some others (especially as
-it relates to their conditional probabilities given certain preceding
-characters).
-
-By generating a custom .chr file for John the Ripper based on a lot of
-pwgen'ed passwords, I am able to crack further pwgen'ed passwords a lot
-faster - possibly faster than you would have expected.  This is without
-any custom programming yet, which could provide a further speedup (by
-fully avoiding candidate passwords that couldn't possibly be generated).
-
-Time running (D:HH:MM) - Keyspace searched - Passwords cracked
-0:00:02 - 0.0008% - 6.0%
-0:01:00 - 0.025% - 19.5%
-0:20:28 - 0.5% - 39.1%
-1:16:24 - 1.0% - 47.1%
-3:00:48 - 1.8% - 55.2%
-3:21:44 - 2.3% - 59.4%
-5:05:17 - 3.1% - 64.2%
-
-That is, 6% of pwgen'ed passwords get cracked in 2 minutes.  This is
-with NTLM hashes, which are obviously very fast.  For the MD5-based
-crypt(3), NTLM's 2 minutes would translate to 2 days, and this would
-apply per-salt, yet having 6% of passwords crackable in 2 days on a
-single CPU core is probably unacceptable - or at least not what users of
-pwgen would reasonably expect (I think), unless they're explicitly told
-about this.  On a quad-core, this is 6% in half a day.
-
-What might be worse, but is not seen in the table above, is that 0.5%
-of passwords get cracked in 1 second (NTLM).  This is approx. 20 minutes
-for MD5-based crypt(3) hashes, also on one CPU core.  0.5% is small, but
-not negligible.
-
-The "keyspace searched" column above shows percentage of the full
-{62 different, length 8} keyspace.  I'd also include percentages of the
-smaller keyspace that corresponds to the pronounceable passwords only,
-but its size is non-trivial to calculate, so I did not bother...
-
-Additionally, there are over 2 thousand duplicates in just 1 million of
-generated passwords.  Sounds like too many dupes.  Not what a user would
-expect, I think.
-
-More info on the attack:
-
-http://www.openwall.com/lists/john-users/2010/11/17/7
-http://www.openwall.com/lists/john-users/2010/11/22/5
-http://www.openwall.com/lists/john-users/2010/11/28/1
-http://www.openwall.com/lists/john-users/2010/12/06/1
-
-The "secure" ("-s") passwords appear to be safe from this:
-
-http://www.openwall.com/lists/john-users/2010/12/07/3
-
-A reimplementation of pwgen in JavaScript shows even worse behavior:
-
-http://www.openwall.com/lists/john-users/2010/12/07/4
-http://www.openwall.com/lists/john-users/2010/12/21/5
-
-Please let me know if you're going to address this in any way (code,
-documentation, advisory - whatever) or not (that is, I'd appreciate a
-response either way).
-
-Thanks,
-
-Alexander
-
------ End forwarded message -----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
