@@ -1,33 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/20
-Message-ID: <4F55362E.8010408@redhat.com>
-Date: Mon, 05 Mar 2012 14:54:54 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/09/5
+Message-ID: <4F831A4A.2070605@redhat.com>
+Date: Mon, 09 Apr 2012 11:20:10 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: mwlib < 0.13.5 DoS flaw
+Subject: Re: Re: CVE for ISPConfig 3.0.4.3 "Add new Webdav user" can chmod and chown entire server from client interface
 Content-Type: text/plain; charset=utf-8
 
-On 03/05/2012 10:06 AM, Vincent Danen wrote:
-> Could a CVE be assigned to the following please?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/09/2012 04:42 AM, ISPConfig.org - Till Brehm wrote:
+> The contact info of the ispconfig project can be found here:
 > 
-> It was reported that mwlib suffered from a flaw that could allow a
-> remote attacker to perform a denial of service attack on a mwlib
-> installation by forcing it to parse a specially-crafted #iferror magic
-> function.  This has been corrected in upstream version 0.13.5.
-> 
-> References:
-> 
-> http://groups.google.com/group/mwlib/browse_thread/thread/c2bd1cee77a8a79?hl=en
-> 
-> http://www.google.com/url?sa=D&q=https://github.com/pediapress/mwlib/pull/10&usg=AFQjCNHgoXQUYFtEj0L8VP5K8Xn_GoTOyw
-> 
-> https://github.com/pediapress/mwlib/commit/aa987c281c10e29f26aa0faa21c04f3bb1167fde
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=800064
+> http://www.ispconfig.org/imprint/
+
+Is there a security contact and PGP key for reporting serious issues?
+I was unable to find any security contact information on the website
+as previously stated.
+
+> Till Brehm ISPConfig.org
 > 
 
-Please use CVE-2012-1109 for this issue.
 
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPgxpKAAoJEBYNRVNeJnmTSRkQAIVt1SobM5opIkCplNfQO339
+fKm/v3H6iBKBvrYxmEWRILOAjZzowcdTcwP+wk5/KfE4v0zYt+qtBewPYffK8mfx
+eG72HiNZBX4ymzSc2nER5yFafS4BBNo60NoaB5Vma7uGYubSl8HWWqvbHndq7+ZQ
+razzFpQ+267bzpPHYgAEEwLbQjDmqpcYoCddIkilCJCXDe8N2g9fJRyZKeWz4Q5q
+xtW+sLBVqHt1Lr9ENupcIOWZHk11zGF6igIChpf7ohNEhwxFWdMyKG0Wz7EoirsC
+lGYn96y8M5bsptvsTw2N+LzbsvKFYcPRbf9jyJX/wT18RJ47yS9QgZxwl3O2bVKi
+K3FNF1N3k6yszhCdH9YIaeaaqgxe+1nxVDxavUJfIISwnCVYNV0DgJ/LyEfoovxW
+wicZuRADTtOM704xhdm7pJ24xsB55asa7CtWBcPto3rVIPOvvYPrduVxawGkpr8s
+M0qsnrwsDvqpADFLUcIyeRTPMZU5PNLEccRvSVGuxhlFcSur8YGuyGjBBp7RoBww
+UAiChQSGhsKu3zgWQYTtqYYSuvO2Cz4hfpZgVBdvYFTqI3PmQRjh02Y2kINN2/ZV
+F4N2bymMaJNErsdM+9TjEkdpVR7L6ZMCkFkLwXqR+22ZFsNlW4huKR2jpJgx2+/u
+SGzdscWECzrDY3KqNCpL
+=fKsP
+-----END PGP SIGNATURE-----
