@@ -1,74 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/16/3
-Message-ID: <CAPYM6VytKHgt6f8KcSsH+d41A=sbhbhTa8twk9OkBP2XNuF13A@mail.gmail.com>
-Date: Fri, 17 Feb 2012 07:27:31 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CubeCart 3.0.20 (3.0.x) and lower | Open URL Redirection Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/09/6
+Message-ID: <20120409202941.GE18080@kludge.henri.nerv.fi>
+Date: Mon, 9 Apr 2012 23:29:41 +0300
+From: Henri Salo <henri@...v.fi>
+To: Amir@...st.ir
+Cc: oss-security@...ts.openwall.com, moderators@...db.org
+Subject: Dispute Taggator Plugin for WordPress taggator.php tagid Parameter SQL Injection
 Content-Type: text/plain; charset=utf-8
 
-Not Affective.
+Hello Amir,
 
-The version 4 and 5 have their own issues which we'll publish after
-vendor has fixed.
+You originally reported a SQL injection security vulnerability in taggator-plugin in bugtraq[1], which can also be found from [2] and [3]. Vendor URL is [4] (from SVN [5]). I found from vendor page a note about your advisory:
 
+"""
+(6-4-2012) Notice 
 
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+There has been some reports of an SQL injection vulnerability in TagGator, I would like to reassure all users that we have checked the published exploit and confirmed that it was not valid.
 
+The Exploit says that the get parameter tagid can be used to execute sql on a website. TagGator doesn’t have this GET parameter, in fact, it doesn’t have any GET parameters, and even if it did, trying to execute the plugin directly outside of wordpress will result in error at the first line of code as all wordpress functions are inaccessible.
 
+No code is completely immune to hacking, TagGator is not an exception, but at least not with this exploit. As any developer, I am doing my best to keep my work safe and useful to my users. If you would find any security risks in my work, please report to me through the contact us page.
+"""
 
-On Mon, Feb 13, 2012 at 11:58 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 02/12/2012 08:08 AM, YGN Ethical Hacker Group wrote:
->> 1. OVERVIEW
->>
->> The CubeCart 3.0.20 and lower versions are vulnerable to Open URL Redirection.
->>
->>
->> 2. BACKGROUND
->>
->> CubeCart is an "out of the box" ecommerce shopping cart software
->> solution which has been written to run on servers that have PHP &
->> MySQL support. With CubeCart you can quickly setup a powerful online
->> store which can be used to sell digital or tangible products to new
->> and existing customers all over the world.
->>
->>
->> 3. VULNERABILITY DESCRIPTION
->>
->> The CubeCart 3.0.20 and lower versions contain a flaw that allows a
->> remote cross site redirection attack. This flaw exists because the
->> application does not properly sanitise the parameters,"goto" and "r".
->> This allows an attacker to create a specially crafted URL, that if
->> clicked, would redirect a victim from the intended legitimate web site
->> (domain.com) to an arbitrary web site (localhost) of the attacker's
->> choice.
->>
->>
->> 4. VERSIONS AFFECTED
->>
->> 3.0.20 and lower (aka 3.0.x family)
->>
->>
->> 5. PROOF-OF-CONCEPT/EXPLOIT
->>
->> http://localhost/cube3.0.20/switch.php?r=//yehg.net/&lang=es
->> http://localhost/cube3.0.20/admin/login.php?goto=//yehg.net
->>
->>
->> 6. SOLUTION
->>
->> The CubeCart 3.0.x version family is no longer maintained by the vendor.
->> Upgrade to CubeCart 4x/5.x.
->
-> Can you confirm that this issue is corrected/not present in version 4.x
-> and 5.x?
->
-> --
-> Kurt Seifried Red Hat Security Response Team (SRT)
+There has been only one commit in trunk after your advisory, which is copypasted in pastebin [6]. Could you verify that the advisory is correct? Please tell me which versions are affected if any, thank you.
+
+1: http://seclists.org/bugtraq/2012/Apr/43
+2: http://osvdb.org/show/osvdb/80965
+3: http://packetstormsecurity.org/files/111621/WordPress-Taggator-SQL-Injection.html
+4: http://angrybyte.com/wordpress-plugins/taggator/
+5: http://plugins.svn.wordpress.org/taggator/trunk/
+6: http://paste.nerv.fi/94105745.txt
+
+- Henri Salo
