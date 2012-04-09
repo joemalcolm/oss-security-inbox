@@ -1,56 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/2
-Message-ID: <5023485A.2090800@redhat.com>
-Date: Wed, 08 Aug 2012 23:19:22 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: CVE Request: gnome-keyring: improper caching of gpg password/passphrase
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/09/4
+Message-ID: <4F82BD00.3000107@ispconfig.org>
+Date: Mon, 09 Apr 2012 12:42:08 +0200
+From: "ISPConfig.org - Till Brehm" <t.brehm@...config.org>
+To: Kurt Seifried <kseifried@...hat.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  lathama@...il.com
+Subject: Re: CVE for ISPConfig 3.0.4.3 "Add new Webdav user" can chmod and chown entire server from client interface
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The Bug has been filed by "hakong" on April 3 in the ISPConfig 
+bugtracker and
+has been fixed on April 4  in SVN stable branch, Revision 3020.
 
-On 08/08/2012 11:10 PM, Huzaifa Sidhpurwala wrote:
-> Hi All,
-> 
-> gnome-keyring does not obey the configuration asking it to stop
-> caching passphrases after a while.
-> 
-> More details and patches available at the following references:
-> 
-> https://bugzilla.gnome.org/show_bug.cgi?id=681081 
-> https://bugzilla.redhat.com/show_bug.cgi?id=845426
-> 
-> Upstream bug suggests that this is a regression from 3.3.x. But it
-> seems some older versions may also be affected.
-> 
-> Can a CVE id be please assigned to this issue?
-> 
-> Thanks!
+See bugrepport for fast workaround and patch update instructions:
 
-Please use CVE-2012-3466 for this issue.
+http://bugtracker.ispconfig.org/index.php?do=details&task_id=2157 
+<http://bugtracker.ispconfig.org/index.php?do=details&task_id=2157>
+
+or get revision 3020 from ISPConfig 3.0.4 SVN stable branch to get the 
+update:
+
+svn://svn.ispconfig.org/ispconfig3/branches/ispconfig-3.0.4
+
+The Bug is fixed in ISPConfig 3.0.4.4 which will get released on April 
+10, 2012.
+
+The contact info of the ispconfig project can be found here:
+
+http://www.ispconfig.org/imprint/
+
+Till Brehm
+ISPConfig.org
+
+-- 
+ISPConfig UG (haftungsbeschränkt)
+Ritterstrasse 21
+21335 Lüneburg
+Tel +49-4131-707771
+Fax +49-4131-407175
+Email info@...config.org
+--
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQI0haAAoJEBYNRVNeJnmT4SwQALVKkEje7tgKBOTNE8L0IDmW
-WN4LR4I25PGpd9qs8IirMtcXDre1daayQkJP1r3modVQ6jLq0UHcc+gV5Pv6/Wkh
-N3/DWT7L3gCXHjzkeDQJAsiV2UeJTGRz39wsWRyQGwMdZdNp/50B6FWo6YfP2C8Z
-+iWdRkgDvQxlUmSq1NqfQtuWU0X8aZxUZUxzEKfA6N5q7idQPkVocy6FeuxN2MGh
-IYJ426Ov7J42hvbBUONphFu4syq1to54uFyeVngcOy0pvKgV6h5BWsOPuXuu4b9T
-par36GNavCfCAIVBADSJwTWghHdauPKKnuNQFqwLmWU1cw19QATv1q6+sxLSLWT1
-7HT0rL/tUIsKgI70K1VC11yTXvcoKzNTe1lsaMoKw9Dyl/wEO8dKEKflGL+GpqOQ
-a17A1qz3K7VxCR0bM0ztT+ocsmvpJGw5pOnSP0thWxV/vnp5waZyW9Z6Ul49n+6P
-wzI68iHAHTN+d/P3TpzxOxS/YxRFagdrWNZcrWkCSOCraMf3fCY84A83lNKlRP6g
-CAaZ0yjSsn8MZXQPp8AwzMmA4hjOvAq3ZJZcjyGGvT2B2vgdTmEd9ODi1M834wLg
-4LDe5vZofnaU80l00eYN/miavShdyDAEdla60jcV+BGcgcNiw8ik+0WISSjHjLA8
-mG98psivTMRZe5Y7x6W/
-=c7Eq
------END PGP SIGNATURE-----
+Am 08.04.2012 23:22, schrieb Kurt Seifried:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> Main website: http://www.ispconfig.org/
+>
+> CC'ing various addresses I found on their site/docs. They don't appear
+> to have any real contact info.
+>
+> Originally seen on Reddit, link to bug report:
+>
+> http://bugtracker.ispconfig.org/index.php?do=details&task_id=2157
+>
+> Filed by "hakong"
+> ========================
+> Details
+> Through the client interface, I was able to chmod and chown the root
+> directory (/) of my server to web3:client9 and 770 using the "Add new
+> Webdav user" by using ../../../../../../../../../../../../ as a path.
+> This can probably be exploited in some way too.
+> Just tried this on a fresh install of ISPConfig version 3.0.4.3, and
+> it worked, had to re-install the entire VM. This has to be fixed as
+> soon as possible.
+> ========================
+>
+> Quick check of svn and generate log (to see revisions) and a diff (to
+> look at the interesting revision, check date in bug report):
+>
+> svn co svn://svn.ispconfig.org/ispconfig3/trunk/
+> cd trunk
+> svn log -v --limit 10 | less
+> svn diff -r 3018:3027>  ../3018-3027.diff
+>
+> and we then this:
+>
+> Index: interface/web/sites/webdav_user_edit.php
+> ===================================================================
+> - --- interface/web/sites/webdav_user_edit.php	(revision 3018)
+> +++ interface/web/sites/webdav_user_edit.php	(revision 3027)
+> @@ -114,7 +114,9 @@
+>   		 */
+>   		if(isset($this->dataRecord['username'])&&
+> trim($this->dataRecord['username']) == '') $app->tform->errorMessage
+> .= $app->tform->lng('username_error_empty').'<br />';
+>   		if(isset($this->dataRecord['username'])&&
+> empty($this->dataRecord['parent_domain_id']))
+> $app->tform->errorMessage .=
+> $app->tform->lng('parent_domain_id_error_empty').'<br />';
+> - -
+> +		if(isset($this->dataRecord['dir'])&&
+> stristr($this->dataRecord['dir'],'..')) $app->tform->errorMessage .=
+> $app->tform->lng('dir_dot_error').'<br />';
+> +		if(isset($this->dataRecord['dir'])&&
+> stristr($this->dataRecord['dir'],'./')) $app->tform->errorMessage .=
+> $app->tform->lng('dir_slashdot_error').'<br />';
+> +		
+>   		parent::onSubmit();
+>   	}
+>
+> Which confirms this flaw quite nicely.
+>
+> Please use CVE-2012-2087 for this issue.
+>
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+>
+> iQIcBAEBAgAGBQJPggGuAAoJEBYNRVNeJnmTxbsP/2jDl88uR6oxoAEpBIkvrNzT
+> xFD8mcMx3ak5lapXyLMFt1yjOXo4uF7DYlLi76i12fvJ3AO+4+/J+tH7A0Do8Vf3
+> sH8IAcYZ6iq+NnNF8MhnpTia6dC38gCYb6fqGxL8OrR0jxRDv2XfmKjOHPKQ9x5S
+> DL/wmDuj4wKfOjoJbmqEpk6ECry2zWBREQTASGjChkLGKt9LvLCtRrkfq2yAidMD
+> zhYKGyn0YRcySKV2EURP0hHw2Z0N5aVx3PBgu6CfUM2/KrcXx/sC8e3twP43uoC0
+> ySpFLgrDrLcjwY9/Yzvbiqor2iA2lse2rXjrVAbwjMJ8pwIEhOj6gGq26tQR/WYF
+> RoJpY5ZDXYuN1qSO2bAkD1xP3p/6sGrvz9hejc6X1DJGYEEv5Aje3XvZA1PJ4hZf
+> 31ASe/MZMiHSN6YbyClz6JdUG9aQW4qPWI7Pl1DE5SqenwU8eQvhNm+S/yMebwyZ
+> skcMFojcZvFhd/HqR8idgUvyQKJ3ZlWxOooX6AOiyB8kghTt5oKUOUhPzs36rh0h
+> WdHEnh23OCjPcxbVZsxh4XkTkH9K6oc770TvVJ7TrieAXZmvbSexyK2FP7ShUhhx
+> kojxB1nBeIcYIX//Dc/JZUZHyrTjNeAm3RobtY0srgYu8FTme6rk45CTw+dmHN2h
+> onlMmeJvYm7vrSw18a0/
+> =1Dxw
+> -----END PGP SIGNATURE-----
+>
+
