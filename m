@@ -1,75 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/6
-Message-ID: <5091427A.3010904@redhat.com>
-Date: Wed, 31 Oct 2012 09:23:38 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/09/2
+Message-ID: <4F8271C7.9080608@redhat.com>
+Date: Sun, 08 Apr 2012 23:21:11 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: Re: CVE request: radsecproxy incorrect x.509 certificate validation
+Subject: Re: CVE request: gajim - code execution and sql injection
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/30/2012 01:46 PM, Raphael Geissert wrote:
-> Hi again,
+On 04/08/2012 07:33 PM, Carlos Alberto Lopez Perez wrote:
+> On 08/04/12 17:59, Kurt Seifried wrote:
+>> On a side note: if you want a free SSL certificate please use 
+>> something like http://cert.startcom.org/ which is included within
+>> most browsers. cacert.org is not included in any (that I know of)
+>> browsers, I have no idea what the cacert practices are (and I
+>> can't find any documentation on their site) so there's no way
+>> that root key will be loaded by myself (and most people I know).
 > 
-> On Wednesday 17 October 2012 12:48:19 Raphael Geissert wrote:
->> Ralf Paffrath discovered that radsecproxy may incorrectly accept
->> a client certificate if the certificates chain was validated with
->> the CA settings of one configuration block but the other
->> certificate constraints failed, and the certificate constraints
->> of another configuration block passed (ignoring this other config
->> block's CA settings.)
->> 
->> This issue has been fixed in version 1.6.1. However, it
->> introduces a minor regression as it ignores some configuration
->> blocks (see the references for further details.)
 > 
-> While checking the issue I noticed that the same issue also affects
->  radsecproxy's DTLS support, which was not fixed. Upstream has now
-> released version 1.6.2 addressing the vulnerability in its DTLS
-> support code.
-> 
-> Now, the thing is that upstream re-used the previously assigned CVE
-> id CVE-2012-4523. According to the guidelines a new id should be
-> assigned since they affect different versions even if the issues
-> are related.
-> 
-> So, I guess a new id is in order?
-> 
-> References: 
-> http://git.nordu.net/?p=radsecproxy.git;a=commit;h=3682c935facf5ccd7fa600644bbb76957155c680
->
-> 
-https://postlister.uninett.no/sympa/arc/radsecproxy/2012-10/msg00001.html
-> https://project.nordu.net/browse/RADSECPROXY-43
-> 
-> Regards,
+> Cacert.org CA is trusted by the majority of Linux/BSD distributions
+> and therefore for any browser running on it. 
+> http://wiki.cacert.org/InclusionStatus
 
-Correct, different versions = different CVEs typically. Please use
-CVE-2012-4566  for this issue. For reference:
+According to the page you quote it's not in any Mozilla browsers by
+default (or any major web browser that I can see), it's not in Fedora
+or Red Hat Enterprise Linux or any derivatives of Red Hat Enterprise
+Linux, or Ubuntu or SuSE Linux to name a few (not to mention Mac OS X
+or Windows).
 
-http://cve.mitre.org/cve/editorial_policies/cd_abstraction.html
+I don't understand why people choose a widely unsupported CA when
+there are widely supported CAs like StartCom that offer free
+certificates. Please, use supported CAs.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQkUJ6AAoJEBYNRVNeJnmT7+wP/i5aKzdl1TldiCIRcdD4pet0
-q3R5jhH+69wCOOS+9gZu8K2J+MFNyGisBnU7zmvdBDw9tSlX6snws+AVxVcT/84P
-aprOOZ22LH5qfrnJfTcIVtrX6cxGsVTrpGEAM7XV2UnvDaQRWkfOdmo68BYnCNh5
-CJ3pHYnz+tR5O0wscQPp5SauoZhuKbig9mlN/fwjutPChntvARvKmi+BWn+qZKIb
-PVAbeCuew60lmJaDbi7tFYfqFFV+RR4MUaJTgv2WC3PZW9bjovHR23WplVyBL+G3
-HUtW3Is/F3/RSYy3OfAVtKNhUmmABlVnq38BMqrItf3m1xTDpGAE1qPW6AUHXdeP
-vnREGluSjMMvo4wLuE+OFFwCa1uwwRnTBedeLIgmZSN4m5w/WHCIX9W0qyiJCGOd
-VYUvWZvhF6J2/RkjdYcSPX8o8YVCu4nt8c49SvR5H3xHo0dHOQWXHGhIFs1Tzvbg
-CqnrlwJwKZfHHtuVfOkbQzJfC/L8w2aQMtm8jE/rm/J6rFml1jwdhhRLmn/Z2J+Z
-yulyDmhplmE28W0LiNWWh6M6uVYe0q1cR8py6Gcv8NqANBclYNWweTjqz+o69YPX
-uPxjz53RxFt3PPnKJMTMID/Qe7mSbiVAhZEhZD5QEQiYZakOOo3/uvTCc6kRN6pS
-eouPvTKzgvNcH4kQKDke
-=3Z27
+iQIcBAEBAgAGBQJPgnHHAAoJEBYNRVNeJnmTvDIQAJ19AwyVYj/gXlrcXW7pw+W2
+xLi1NOx7F9x+wTCW9scPr5JqzofJLkWEf7XUwGPIIm6Nv18XfZERit7pOQhzyIVy
+vUid2H7E+7vSx/7eGRcNXI7B8R0vBGNGcs4Pup0+RSVI5kW4UAjngRAEVXSablRQ
+E8ZrB/mAEsvogGpvg5+cIVPqP07XZWou8QAc2ovxveeXS5AA1xh4ePPPI9L+iXyz
+ktkwUqF+oS/l4Im0o1ldLcUCBlcSmdFP592XZId9jT20yb9BUC36lZn1ZLhh+zQc
+yiTADc+Xeo5e7ricov3ilUZo4bQy+4JcNLCY8EG/VF2F2U1l0lpebNbL8ZtcgluM
+gb1gzAZUizVfvutI2xvVmneNeRpZ5fzbCGcVIKYexxNHuCxl7XRnmBYeqgKT2Tia
+Sn6eKs/bh+J3w0Tw0wZFA7bOOhOCQR8/MKWHGU0VTgco/8YPTvAp/aVuMr/CeJzR
+K8KtvIu/oYazGVsG/7ZxNDobH9kn4jTsoORnFatrjQLda6fLo6vJjN1BIlbKDvkc
+xg1IecOzNpbf9Wnen8RaD93rQCIc5bl7ouq5migfkE0wGHDdfGVicnxBbQm8VvyV
+uUTG2Gcq6fLV3m1I6/Xx9dZ3/Wij5bsl71cIxhHSGyJtoLkCuBeh8ZfxU78WMuqR
+Ib7Q80Uio8yb/B0+Bt1r
+=q3NF
 -----END PGP SIGNATURE-----
