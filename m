@@ -1,41 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/5
-Message-ID: <20120203103706.GC3437@suse.de>
-Date: Fri, 3 Feb 2012 11:37:06 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request (2002): Linux TCP stack could accept invalid TCP flag combinations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/7
+Message-ID: <4F83C392.8050102@redhat.com>
+Date: Tue, 10 Apr 2012 10:52:26 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request for links2
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-After a customer query likely coming from erroneous Security Scanner output,
-
-this issue from 2002 has no CVE id yet as far as I see:
-
-http://www.kb.cert.org/vuls/id/464113
-
-It describes a problem where firewalls might let some TCP flags combinations
-pass (e.g. all with RST flag set) and the OS (e.g. Linux) stack would in turn
-accept a TCP session it might not have accepted otherwise.
-
-The protection added in Linux 2.4.20 is checking for the RST (reset) flag
-when a SYN packet is received, which was I think the main attack scenario.
-
-The relevant part of the 2.4.20 patch is:
-
-@@ -3667,6 +3693,9 @@
-                if(th->ack)
-                        return 1;
-
-+               if(th->rst)
-+                       goto discard;
-+
-                if(th->syn) {
-                        if(tp->af_specific->conn_request(sk, skb) < 0)
-                                return 1;
+On 04/10/2012 08:13 AM, Nico Golde wrote:
+> Buffer overflow when pasting too long text from clipboard to dialog
+> boxes (not remotely exploitable) A write out of allocated memory in
+> the graphics rendeder (potentionally exploitable) An infinite loop
+> when parsing invalid usemap specification in text and graphics mode
+> (can cause browser lockup, but not otherwise exploitable)
+Yeah, i dont think this issue should get a CVE, its Dos
+> Accesses out of memory in the xbm decoder (potentionally
+> exploitable)
 
 
-The check still exists in current mainline git, so the issue is still fixed.
-
-Ciao, Marcus
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
