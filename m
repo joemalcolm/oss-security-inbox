@@ -1,39 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/10
-Message-Id: <F640638B-5C30-484C-9D62-C0771569151F@groovie.org>
-Date: Mon, 13 Aug 2012 15:26:43 -0700
-From: Ben Bangert <ben@...ovie.org>
-To: pylons-discuss@...glegroups.com
-Cc: pylons-devel@...glegroups.com, oss-security@...ts.openwall.com
-Subject: ANN: Beaker 1.6.4 released with important security update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/15
+Message-ID: <4F848EB2.7050907@redhat.com>
+Date: Tue, 10 Apr 2012 13:49:06 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, asterix@...aule.org
+Subject: Re: gajim insecure file creation when using latex
 Content-Type: text/plain; charset=utf-8
 
-Beaker is a high-level Python library providing caching and sessions for use in web applications. The session implementation comes with crypto-based cookie encryption that support PyCrypto, pycryptopp, and now NSS crypto.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Prior to this release, an attacker could possibly determine some content of cookie-based sessions encrypted with PyCrypto due to how the data was encrypted. This flaw did not affect pycryptopp sessions, nor does it allow an attacker to change data as a separate HMAC is used to sign the encrypted payload. Red Hat found and supplied a patch to fix this flaw, thanks!
+On 04/09/2012 09:43 PM, Nico Golde wrote:
+> Hi, Gajim seems to support latex in instant messages. This is
+> implemented by dumping the content to a .tex template on disk and
+> converting the result to an image. To prevent security problems, it
+> is at least checking the input for dangerous latex commands such as
+> \input (as far as I can see nothing is missing from this list).
+> 
+> However, it fails to create this temporary file in a secure
+> manner: From src/common/latex.py: 60 def get_tmpfile_name(): 61
+> random.seed() 62         int_ = random.randint(0, 100) 63
+> return os.path.join(gettempdir(), 'gajimtex_' + int_.__str__())
 
-CVE-2012-3458
-Fix in beaker: https://github.com/bbangert/beaker/commit/91becae76101cf87ce8cbfabe3af2622fc328fe5
+Sigh. And this is why people should use mkstemp().
 
-Applying this update will change the hashing of sessions encrypted with PyCrypto, invalidating existing ones.
-
-Changelog for this release:
-
-* Fix bug with key_length not being coerced to a int for comparison. Patch by
-  Greg Lavallee.
-* Fix bug with cookie invalidation not clearing the cookie data. Patch by
-  Vasiliy Lozovoy.
-* Added ability to pass in cookie_path for the Session. Patch by Marcin
-  Kuzminski.
-* Add NSS crypto support to Beaker. Patch by Miloslav Trmac of Redhat.
-* Fix security bug with pycrypto not securing data such that an attacker could
-  possibly determine parts of the encrypted payload. Patch by Miloslav Trmac of
-  Redhat. See `CVE-2012-3458 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-3458>`_.
-* Add ability to specify schema for database-backed sessions. Patch by Vladimir
-  Tananko.
-* Fix issue with long key names in memcached backend. Patch by Guillaume
-  Taglang.
+Please use CVE-2012-2093 for this issue.
 
 
-Cheers,
-Ben
+
+> ... 113 def latex_to_image(str_): 114         result = None 115
+> exitcode = 0 116 117         try: 118                 bg_str,
+> fg_str = gajim.interface.get_bg_fg_colors() 119         except: 120
+> # interface may not be available when we test latext at startup 121
+> bg_str, fg_str = 'rgb 1.0 1.0 1.0', 'rgb 0.0 0.0 0.0' 122 123
+> # filter latex code with bad commands 124         if
+> check_blacklist(str_): 125                 # we triggered the
+> blacklist, immediately return None 126                 return None 
+> 127 128         tmpfile = get_tmpfile_name() 130         # build
+> latex string 131         write_latex(os.path.join(tmpfile +
+> '.tex'), str_) and finally: 65 def write_latex(filename, str_): 66
+> texstr =
+> '\\documentclass[12pt]{article}\\usepackage[dvips]{graphicx}' 67
+> texstr += '\\usepackage{amsmath}\\usepackage{amssymb}' 68
+> texstr += '\\pagestyle{empty}' 69         texstr +=
+> '\\begin{document}\\begin{large}\\begin{gather*}' 70         texstr
+> += str_ 71         texstr +=
+> '\\end{gather*}\\end{large}\\end{document}' 72 73         file_ =
+> open(filename, "w+") 74         file_.write(texstr) 75
+> file_.flush() 76         file_.close()
+> 
+> I think this is of pretty minor severity even though it still
+> allows a local attacker to overwrite files the victim has write
+> access to with latex content by using symlinks and latex IMs are
+> used.
+> 
+> Cheers Nico
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPhI6yAAoJEBYNRVNeJnmTcD0P/ie/UZf1YOcIesLhQgjsUQq1
+hCV3oQIJKVykwxObjbgpFtT9wgpcgk2zmSU2YL8hE4+uvroCTDVMT4Y9pbt1/7/8
+uREQydl1svEOkWMJU72ScN9Op+wAEkz0bFLtKh6AmVqGddlfVAo1vQm9+r3A693l
+xtqcVOIte5Fbi8LbpkU5KAo4J1jVoMRJyTYT1j4Qi31TcaZVXs+VvgNIWjnX3bV1
+RmrBd8mkttNiGPY2r3/g2UYQtQb4w/hjaYhu6mC+foKnuxN+wsqgTS6sXOadf+Wc
+bdLz2OENPkcicCHIa5yJpw5cGoc5IBgTl4IUyEKzJ8LVWQuDRb89yEmgG/wxcNnW
+lhjmw29bT17oUuyTgjO/nDXrCEq71g/LHYLcYXPOvGpLK1xjYDqsciSha0nSUlq6
+Qg7BoMlpj8WUWo5nml+eQ+2ErFoY7Fla9Ir61HgOG5KaJ/kq3N8PvBbeNWvX6E0v
+w8WnBEihLKc05E4WFbZqu84EMTNtnh/zwnkStY9ZeY49Rs30fAIM5YOJHwac9zKy
+ByB5y4ueEqPmQvp14axruIyae0Sv03HrtuJD7Nm4KsZj1wZRnmlCqTBvlOGEDgdW
+O/mvUM7mNiqhQ2vl4BkqcZac2vf3z3ndz2cjILvJPMY0eE7WfpdkOjKDS+hpsRAZ
+NqBB0+dfoRMLw8OLwY+n
+=Yfv4
+-----END PGP SIGNATURE-----
