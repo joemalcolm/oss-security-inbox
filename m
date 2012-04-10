@@ -1,40 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/30/1
-Message-ID: <CAHmME9pnjh+EfkhDZu8gYFsVGO8mC-wym2gWu0mOVjTCVmve4g@mail.gmail.com>
-Date: Sun, 30 Sep 2012 21:21:02 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: cgit@...mli.net, meyering@...hat.com
-Subject: cgit: heap buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/3
+Message-ID: <4F83A0AE.5040609@redhat.com>
+Date: Mon, 09 Apr 2012 20:53:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request for imagemagick, libpng and tiff
 Content-Type: text/plain; charset=utf-8
 
-Hey oss-sec,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The original author and maintainer of cgit, Lars Hjemli, has been MIA
-for the last several months, and nobody I've talked to seems to know
-what's happened. Because I've previously been involved with some cgit
-things, I'm maintaining a tree of my own to which folks on the cgit
-mailing list are now sending patches. It'd be a bit presumptuous to
-call myself the new maintainer, but I am trying to keep the project
-alive and healthy until Lars returns from wherever he is.
+On 04/09/2012 08:31 PM, Nico Golde wrote:
+> We received 3 bug reports targeting imagemagick, libpng and tiff
+> crashing on input when used with electric fence indicating memory
+> errors on handling crafted input. From what I see no CVE ids have
+> been assigned to these bugs yet.
+> 
+> Can someone assign ids? libpng:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668082 (apparently
+> fixed in 1.2.48 with a removal of the buggy function)
+> 
+> tiff: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668087
+> 
+> imagemagick:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668075
 
-Jim Meyering from Redhat has written to the cgit mailing list with a
-detailed analysis and a two line commit fixing a heap buffer overflow.
-At the minimum, it's a denial of service, and in the worst case, it
-might lead to to a remote shell. If anyone has any tricks on how to
-exploit it successfully, I'd be interested to hear them.
+Do any of these crashes occur without electric fence? Also I think
+Vincent Fourmond <fourmond@...ian.org> stated it succinctly:
 
-You can read his analysis and look at the commit here [1] and a Redhat
-bug report here [2].
+"On what do you base your claim that it is a user security hole ?
+While I agree that it is a bug, I fail to see how a crash at the end
+of a program's execution (cleanup time) necessarily is a user security
+hole, hence downgrading the severity. Feel free to raise it up again
+if you have arguments to back your claim."
 
-If this oss-sec finds it concerning enough, I can tag a
-non-Lars-approved release and post links to new tarballs for folks.
-But there's a chance that exploitation isn't feasible, as Jim has
-written in his report, in which case I'd like to hold off on making
-any non-Lars-approved releases for a bit.
+> Kind regards Nico
 
-Thanks,
-Jason
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-[1] http://git.zx2c4.com/cgit/commit/?id=7757d1b046ecb67b830151d20715c658867df1ec
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=820733
+iQIcBAEBAgAGBQJPg6CuAAoJEBYNRVNeJnmT+DcP/2Xv7xdJVclX3blnLc162FNC
+7E4tFVdtxaGJ+K8srcS+rinYCz/FrnSHyEDpXR8ShLvmYR1cZ4KP+qzDyi9IzG1d
+QG5pKCRVWQuj2/r94BU/CgBUzLIa7qJO8ztsNxLHqHt22LlpHT7AZH1dC41hnVrD
+PXb3O+c1Y0FgnszFTZ8F7PaKPNYGwfJYOeY/Z8irNdf3iCXgjlbPbng/UBY/j1C+
+znFfaNRy05RcF8DJVVscE2S9LUhZ14ufMIdn4ApV+R+v6BBMzjVBAAJSN+n6AhNY
+zOBV7HdDuzaYdNmlHEcAyBIeGu7aK54gMDIReD0o3M3IpDGYbbc7Lu1C2a67z+DD
+GOm0RoKAjmHVnPg1x81qJQcdTncvD5dVpax3EhBZkfONWX5P0iViIwI2Z+8sRKxh
+NC5dYPIJO0BE70PfQPc7mFpkMsxgJNdqEIxUus7w5rkkN3uHh+k9d6WphAc5G3J3
+u1bbLymV25M2GxemN2qLYqbER8UwQfQ8nLreOnVoHA751sXifeCSWVEoGI62aWCT
+CH8XVzM2X+CZLtUHpRKP+B1Qa84ym0nR3KJDQRzTtO4+RCvcujYaT0T96z07oreS
+w4MtgKR4hy5JvQ+ALI1hBbQ1gc+nRQHFXk/Gl8A71Otnf7AJSE5V4hfG7jYraDiS
+KK4rfLQzswkE1wCzPAEO
+=HTTE
+-----END PGP SIGNATURE-----
