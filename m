@@ -1,37 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/30/4
-Message-ID: <50164FD0.5080606@redhat.com>
-Date: Mon, 30 Jul 2012 11:11:44 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Ludwig Nussel <ludwig.nussel@...e.de>
-Subject: Re: libdbus hardening
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/8
+Message-ID: <1334068155.4721.464.camel@mdlinux>
+Date: Tue, 10 Apr 2012 10:29:15 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: cobbler (Ubuntu-specific)
 Content-Type: text/plain; charset=utf-8
 
-On 07/30/2012 10:59 AM, Ludwig Nussel wrote:
-> Florian Weimer wrote:
->> On 07/17/2012 12:08 PM, Florian Weimer wrote:
->>
->>> Note that GNU libc will likely change the name to secure_getenv.
->>> Upstream does not want to document __secure_getenv as-is.
->>
->> This will be part of glibc 2.17.  autoconf instructions are available here:
->>
->> <http://sourceware.org/glibc/wiki/Tips_and_Tricks/secure_getenv>
->
-> Now the next step would be to make glibc automatically use secure_getenv
-> when running setuid root and require programs to explicitly call
-> insecure_getenv() or something like that :-)
+Could we please get a CVE assigned to the following issue?:
 
-You're welcome to absorb the transition costs. 8-) I looked into this 
-briefly, and the potentially insecure getenv calls are not in the 
-majority, so we'd have to expect quite a bit of breakage, or at least 
-add a configurable whitelist of variable names in a file in /etc.
+A Ubuntu-specific script called "cobbler-ubuntu-import" in the Ubuntu
+cobbler package downloads isos from a mirror, and checks them against
+MD5SUMS, but does not verify the validity of that MD5SUMS file itself
+against the MD5SUMS.gpg. This was fixed in version 2.2.2-0ubuntu32 of
+the package.
 
-FWIW, I consider PAM and NSS (Name Service Switch) the major problem 
-areas, too.  Do you know if the APIs would allow confining plug-ins to 
-subprocesses?  Then we only have to solve the transparent child process 
-problem.
+Bug:
+https://bugs.launchpad.net/ubuntu/+source/cobbler/+bug/974460
+
+Commit:
+http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/precise/cobbler/precise/revision/98
+
+Thanks,
+
+Marc.
 
 -- 
-Florian Weimer / Red Hat Product Security Team
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
+
