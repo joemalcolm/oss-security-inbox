@@ -1,84 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/12
-Message-Id: <E1TfaBG-000688-Od@xenbits.xen.org>
-Date: Mon, 03 Dec 2012 17:51:46 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 30 (CVE-2012-5514) - Broken error handling in guest_physmap_mark_populate_on_demand()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/5
+Message-ID: <4F83ABC6.3090407@redhat.com>
+Date: Mon, 09 Apr 2012 21:40:54 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request for imagemagick, libpng and tiff
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-	     Xen Security Advisory CVE-2012-5514 / XSA-30
-                              version 4
+On 04/09/2012 09:31 PM, Nico Golde wrote:
+> Hi, * Kurt Seifried <kseifried@...hat.com> [2012-04-10 04:54]:
+>> On 04/09/2012 08:31 PM, Nico Golde wrote:
+>>> We received 3 bug reports targeting imagemagick, libpng and
+>>> tiff crashing on input when used with electric fence indicating
+>>> memory errors on handling crafted input. From what I see no CVE
+>>> ids have been assigned to these bugs yet.
+>>> 
+>>> Can someone assign ids? libpng: 
+>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668082
+>>> (apparently fixed in 1.2.48 with a removal of the buggy
+>>> function)
+>>> 
+>>> tiff: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668087
+>>> 
+>>> imagemagick: 
+>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668075
+>> 
+>> Do any of these crashes occur without electric fence? Also I
+>> think Vincent Fourmond <fourmond@...ian.org> stated it
+>> succinctly:
+>> 
+>> "On what do you base your claim that it is a user security hole
+>> ? While I agree that it is a bug, I fail to see how a crash at
+>> the end of a program's execution (cleanup time) necessarily is a
+>> user security hole, hence downgrading the severity. Feel free to
+>> raise it up again if you have arguments to back your claim."
+> 
+> Ack. The imagemagick bug at least seems to be a false positive
+> create by an efence bug.
+> 
+> Cheers Nico
 
-    Broken error handling in guest_physmap_mark_populate_on_demand()
+Ok, I'm going to hold off then on CVE's, sounds like a few more days
+and we'll know if these are real or not. If i haven't heard by Friday
+remind me to poke at it.
 
-UPDATES IN VERSION 4
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-guest_physmap_mark_populate_on_demand(), before carrying out its actual
-operation, checks that the subject GFNs are not in use. If that check fails,
-the code prints a message and bypasses the gfn_unlock() matching the
-gfn_lock() carried out before entering the loop.
-
-Further, the function is exposed to the use of guests on their own
-behalf.  While we believe that this does not cause any further issues,
-we have not conducted a thorough enough review to be sure.  Rather, it
-should be exposed only to privileged domains.
-
-IMPACT
-======
-
-A malicious guest administrator can cause Xen to hang.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen version from 3.4 on are vulnerable.
-
-The vulnerability is only exposed by HVM guests.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa30-4.1.patch             Xen 4.1.x
-xsa30-4.2.patch             Xen 4.2.x
-xsa30-4.unstable.patch      xen-unstable
-
-$ sha256sum xsa30*.patch
-586adda04271e91e42f42bb53636e2aa6fc7379e2c2c4b825e7ec6e34350669e  xsa30-4.1.patch
-c410bffb90a551be30fde5ec4593c361b69e9c261878255fdb4f8447e7177418  xsa30-4.2.patch
-2270eed8b89e4e28c4c79e5a284203632a7189474d6f0a6152d6cf56b287497b  xsa30-unstable.patch
-$
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQEcBAEBAgAGBQJQvOJ3AAoJEIP+FMlX6CvZjRgIAIF1cvAxVM3nE55HwvIlMWto
-ldpam6YtFKAIr5XXBD6IQ0NrghJNNXyeZT4bxSdQAqyqUg9tYgkIMgYJx3kxQuVZ
-uhUIyg+mL5bZ+kN1TkHTVPVF1X1D0WbRDD//3V3MV8q6Dy1OEfTaQVb7ZLaNmwv5
-tmZ0+D6nrMe24UEr5RjzupBgX5iMeGdKyh87Zg/OM0CG5y8EQOaxlb9i47K/DLDh
-l4lc6Jpxz1+tW9B9T/SUDiH37BABturvr1XvDsbencuNZeicLr8y1YKDgf2OyN5L
-RfCjSNadtJRBV4BcyGTqdboZfnmavGqmYoDdJg3eSRZ+ls9PZ9hyEMETaRsCeOc=
-=MBWJ
+iQIcBAEBAgAGBQJPg6vGAAoJEBYNRVNeJnmTFTsP/3pg4Cf32yxeIg1lZk7+ETum
+Y/lueMdCusjuLsGp+JRmARtMzWuf4Z4UrKnAQyOfAXzCCV6UyyWLH2uAB3xncrbx
+09EfGoHaMuR7T3+wSQ8OFY+Y8UEwF5Do53LmFtCImYlQrDcTW+Ct5DDuhQlfRTVT
+Op06AgbCOhx0N/s8RORGK6RZm0ogFwjRq6bkSMibuNCiLvWf4vmcUhyfUIuHLpQu
+WQXXwrCdSaNfX9OsWzfGER2lfHsvIa5sylcN54WxmjV6K0Bt99MnQVT3reVdzlZ6
+eW+oZHfNR29xn4h5qGrWLHCco175qVGTetC9Cg3yN8jivwfVeyVML3m3BUTCzYH0
+ZVsKnJtAamV59wOGL5RveENHx+P4og9WgWz3z3D9yLh1nxZmLYLVBTbVUTTSzbGz
+xqrwDKchVLoQ+uZc6QJRg8/5ZQ+qeabqOhuMSkN8O0eRb/d0S0t3GFMiROTUPMTo
+VaWj98ZL/zF7U+2uqCo/5E0+6SBSMjQUmEWwyjz/N+cPddi8udylQJzer+o0rEUN
+6JuZW/im6OQ+NIPs9J3a6JfaNSuUlZmV6Md0QyfNQEC+waz9B+sH+hRqGsM07ELn
+BG4b4du0UHicfr4p4WtmqrDKrUZh0szbnjWSpL7DWu7s8Zwr4dYarZU6DZEXV9OI
+a/iZSMqtzn4Q1DvCHt3q
+=BqX9
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa30-4.1.patch" of type "application/octet-stream" (1866 bytes)
-
-Download attachment "xsa30-4.2.patch" of type "application/octet-stream" (1858 bytes)
-
-Download attachment "xsa30-unstable.patch" of type "application/octet-stream" (1749 bytes)
