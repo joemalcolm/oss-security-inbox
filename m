@@ -1,34 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/7
-Message-ID: <4F04840B.5010400@redhat.com>
-Date: Wed, 04 Jan 2012 09:53:31 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/13
+Message-ID: <4F8488FB.8010705@redhat.com>
+Date: Tue, 10 Apr 2012 13:24:43 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Ramon de C Valle <rcvalle@...hat.com>, Vincent Danen <vdanen@...hat.com>, Tomas Hoger <thoger@...hat.com>
-Subject: Re: CVE request: ghostscript: system initialization file uncontrolled search path element
+CC: Andres Gomez <agomez@...idsignal.com>
+Subject: Re: CVE Request: FlightGear and Simgear Multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 01/04/2012 04:56 AM, Ramon de C Valle wrote:
-> Hi Kurt,
->
-> We identified and are separating the bugs discussed in Bug 599564[1] in two
-> different issues. Can you assign a CVE Identifier to the following issue:
->
-> Ghostscript included the current working directory in its library search
-> path by default. If a user ran Ghostscript without the "-P-" option in an
-> attacker-controlled directory containing a specially-crafted PostScript
-> library file, it could cause Ghostscript to execute arbitrary PostScript
-> code. With this update, Ghostscript no longer searches the current working
-> directory for library files by default.[1]
->
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=599564
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/10/2012 09:23 AM, Andres Gomez wrote:
+> Hi,
+> 
+> could I please get CVEs assigned to the following issues?:
+> 
+> Multiple format string vulnerabilities have been found in
+> flightgear and simgear (version <= 2.6) as described in the mail
+> thread:
+> 
+> http://sourceforge.net/mailarchive/message.php?msg_id=28957051
+
+Please use CVE-2012-2090 for these issues.
+
+> Also multiple buffer overflow vulnerabilities were found in the
+> same software as described in:
+> 
+> http://sourceforge.net/mailarchive/message.php?msg_id=29011989
+
+Please use CVE-2012-2091 for these issues.
+
+> They are still unpatched but developers have not demostrated any
+> interest on fixing these issues.
+> 
 > Thanks,
->
-Assigning a 2010 CVE since this was made public in 2010. Please use
-CVE-2010-4820 for this issue.
+> 
+> Andres Gomez
 
--- 
 
--- Kurt Seifried / Red Hat Security Response Team
 
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPhIj7AAoJEBYNRVNeJnmTtSkQAJ7CxrY7/5HRS4xN25lDNH4J
+V3UAmjIt8c29Ujg6REWiUCdk0qYm7TMgpnS9LpCEXXIX/yA4sBXRTI7yJpEZxdKN
+xwgxuXPIvmEZkLT+112rMWsCn/wmJ0uQH/lSU3rb/vi7YGr0Jx11QcoR4UmdWbNs
+W7OTwuTbUDTI6ZK8OozyjtZDmz9K8HjFKhFAcGteNFyXv0xdmb7Vq3108mcuk9SC
+V56Nz0Q07QzUlPxN4IgQ/V1bpP1fx13bKOzFQGFjCmlprffPzUzTgYJkwX1G75Bn
+W1UrjUyWa2T40LiTOyquFaHnzOXrz6oJ+i3ulL0WNEJ/TxMSdAWSXA9ZvMK6ddQd
+jAN487we1sAmbXX3ZJuWQ1X//2uKMnGoV4P971w6omShWR+AyjXpdpCvyiRmayL2
+T317mzqpXXfsHRasyFRu/E2vf5ulkCcR6lmeJxk33vJ1D3NqIAyk3SUgPxETE86T
+JmpxgmY5o0CsW7FXUUwraT4sL60AeBo4SqKZnfyTNtrrQce+KD8TEMy+Lq3n1IW8
+Mxe/EVoXwmx01aRyTo8dTPlK0CJoClVx28CzzisNPHCTPJTeRfylVDFxRWUyhbAJ
+8ES+pWasU4OKYVBZWvlM5IRNxpsCbTQ1XOM1ElQKeNoDlutFNHFbexVlB8ZHv+Ue
+niS4tZwHZ4Kv5zg+Mpgu
+=FZ9c
+-----END PGP SIGNATURE-----
