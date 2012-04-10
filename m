@@ -1,52 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/02/6
-Message-ID: <4F79E5A8.7090703@redhat.com>
-Date: Mon, 02 Apr 2012 11:45:12 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/16
+Message-ID: <4F848FF0.7040306@redhat.com>
+Date: Tue, 10 Apr 2012 13:54:24 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Filippo Cavallarin <filippo.cavallarin@...seq.it>
-Subject: Re: CVE request: OSClass directory traversal vulnerability
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE id request for links2
 Content-Type: text/plain; charset=utf-8
 
-On 04/02/2012 10:42 AM, Filippo Cavallarin wrote:
-> On 2 Apr 2012, at 5:53 PM, Kurt Seifried wrote:
-> 
->> On 04/02/2012 01:59 AM, Filippo Cavallarin wrote:
->>> Hello,
->>> Can i get a CVE identifier for this issue:
->>>
->>> http://www.codseq.it/advisories/osclass_directory_traversal_vulnerability
->>>
->>> Thanks
->>>
->>> Filippo Cavallarin
->>>
->>>
->>> C o d S e q
->>> Development with an eye on security
->>> ------------------------------------------------------------------------
->>> Castello 2005, 30122 Venezia
->>> Tel: 041 88 761 58 - Fax: 041 81 064 714 - Cell: 346 66 93 254
->>> c.f. CVLFPP82B27L736J - p.iva 03737650279
->>> http://www.codseq.it - filippo.cavallarin@...seq.it
->>>
->>
->> Please provide links to the original vendor advisory/ChangeLog/commits/etc.
->>
->> -- 
->> Kurt Seifried Red Hat Security Response Team (SRT)
-> 
-> 
-> The changelog can be found here 
-> 
-> http://osclass.org/blog/
-> 
-> Filippo Cavallarin
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The actual blog entry: http://osclass.org/blog/2012/03/05/osclass-2-3-6/
+On 04/09/2012 08:43 PM, Nico Golde wrote:
+> Hi, we received the below bug report about memory handling problems
+> in links2. Can someone assign CVE ids to this? Imho at list the
+> first issue is debatable to not get an id. The infinite loop is
+> also a non-issue from my point of view.
+> 
+> Cheers Nico
+> 
+> ----- Forwarded message from Mikulas Patocka
+> <mikulas@...ax.karlin.mff.cuni.cz> -----
+> 
+> Subject: Bug#668227: links2: security bugs in links Resent-To:
+> debian-bugs-dist@...ts.debian.org Resent-Date: Mon, 09 Apr 2012
+> 22:09:02 +0000 From: Mikulas Patocka
+> <mikulas@...ax.karlin.mff.cuni.cz> To: Debian Bug Tracking System
+> <submit@...s.debian.org> Message-ID:
+> <20120409220450.13982.86610.reportbug@...ra> X-Mailer: reportbug
+> 4.12.6 Date: Tue, 10 Apr 2012 00:04:50 +0200
+> 
+> Package: links2 Version: 2.3~pre1-1 Severity: grave Tags: security 
+> Justification: user security hole
+> 
+> I discovered some out of memory accesses in links2 graphics mode
+> that could be potentially used to run exploits. I fixed them in
+> links-2.6. For Debian Squeeze, I am sending this patch that
+> backports the fixes to links-2.3pre1. Apply the patch and
+> distribute patched packages links and links2 through 
+> security.debian.org.
+> 
+> 
+> [...] This patch fixes:
+> 
+> Buffer overflow when pasting too long text from clipboard to dialog
+> boxes (not remotely exploitable)
 
-doesn't mention anything about directory traversal. Do you have a link
-on their site, or the commit showing the problem or the fix?
+Can this result in code execution?
 
--- 
+> A write out of allocated memory in the graphics rendeder
+> (potentionally exploitable) An infinite loop when parsing invalid
+> usemap specification in text and graphics mode (can cause browser
+> lockup, but not otherwise exploitable) Accesses out of memory in
+> the xbm decoder (potentionally exploitable)
+
+Normally we count DoS's in web browsers due to the fact people tend to
+have a lot of tabs open, a DoS can be really annoying (e.g. you're in
+the middle of filling out some long email form) but links2 is of an
+earlier era, so a DoS in it is pretty non-impactful.
+
+
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPhI/vAAoJEBYNRVNeJnmTHVAP/jJk0YWBwlKIxWLpzmpI94Oe
+mIaR8oo26UOspPzIv3yezGDTWtbVRmL2KFNYUEVi/CJdXsHgoJoMCSspNnP4kmFh
+chA56MUN1wo7OpXxeAf4zNdv5FnQgogjbvZyX/VTSF8DKnZ9ryHE6LFV7xO94gsn
+Ukjp9U9gAeISENiriDbSLVuImMgFC2uvVDahI6L6OYma9QtFMOUE5lQxLJn1eK4K
+qG1OdjuVcqb4FMhAizS/W3YrD0OdcDeVjXTES2poJghUUsFAYEgu5rlbG4ZLvIUp
+rqvtcutShUMm1U4sODQceUoBYSAZH8WoRtkh4G/HZofCsOvADYnCbnZbmEORn4cR
+pEaoXEUjGPdWpwgnzn3wWHP4AtJGlJep4OvmxMJGlTDPIZ2+BePVgxBy9BZzopFg
+ZFTJ6uW53yeDWEb/Fuw8YVOTZUqLCSvHl1MT6dRhEZc4FuRSBJthDDgeQrmkPd/a
+zx0dgMyLjHfNeMVMvSHU3WRSTixp1ujiELsljhdFwPT3lTMdkVIR2z06DXKTWJq2
+bHF+dnoQtrqnv/X2mavQxjUh+du0tu0AtnyKuIa0wt05xDz+/rA7d8WEqR7R+FLF
+GBjVKzSXLeZegv/IFb/FCgXO2d/u13py+StPXcPMv8rOImM1rO4pkBn0RukHtmiX
+l0gaheOntYEvbJbW7XQV
+=3Lqr
+-----END PGP SIGNATURE-----
