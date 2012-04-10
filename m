@@ -1,131 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/4
-Message-ID: <4F18F95B.3080008@redhat.com>
-Date: Thu, 19 Jan 2012 22:19:23 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/12
+Message-ID: <4F848517.6050301@redhat.com>
+Date: Tue, 10 Apr 2012 13:08:07 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>, Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: Wireshark multiple vulnerabilities
+CC: Greg Knaddison <greg.knaddison@...uia.com>
+Subject: Re: CVE's for Drupal Contrib 2012 001 through 057 (67 new CVE assignments)
 Content-Type: text/plain; charset=utf-8
 
-On 01/19/2012 09:27 PM, Huzaifa Sidhpurwala wrote:
-> On 01/18/2012 11:17 AM, Kurt Seifried wrote:
-> On 01/18/2012 11:17 AM, Kurt Seifried wrote:
->> On 01/17/2012 12:46 AM, Huzaifa Sidhpurwala wrote:
->>> On 01/16/2012 01:19 AM, Kurt Seifried wrote:
->>>>
->>>> I agree in principle, however in practice this is a lot of work (as
->>>> you
->>>> well know =). I guess my question/concern would be is who does the
->>>> research to verify all this, and what if it varies by version (i.e. it
->>>> is 6 separate issues in an older version but the newer version
->>>> combined
->>>> some code into a common library for example so it's only a single
->>>> issue,
->>>> but with multiple avenues of attack/etc.). In other words a lot of
->>>> potential work.
->>>
->>>
->>> I did some research, with details available at:
->>> https://bugzilla.redhat.com/show_bug.cgi?id=773726#c2 and
->>> https://bugzilla.redhat.com/show_bug.cgi?id=773726#c3
->>>
->>> In my opinion only 1 and 2 (ie ws bug 6663 and ws bug
->>> 6670) should be allocated a CVE.
->>>
->>> Others are application crashes.
->>
->> Ok doke, so we already got CVE-2012-0041 Assigned for all of these. I
->> slightly re-ordered them from the info at
->> https://bugzilla.redhat.com/show_bug.cgi?id=773726 and an irc chat to
->> confirm:
->>
->> ======
->> Type-cast error: Caused because of casting unsigned to signed int (ws
->> bug
->> 6663). This leaves the app in an unstable state.
->> -
->> 1. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6663
->> This is a type cast issue, caused because of casting an unsigned int to
->> signed
->> int.
->> In the unfixed version this would throw an exception which the
->> application
->> would catch, but leave it in an unstable state. The patch makes sure
->> that the
->> value passed was less than G_MAXINT
->> Patch:
->> http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40164
->>
->> =======
->> Application crash/Dos because of trying to allocate too large a
->> buffer size
->> (ws bug 6666, 6667, 6669).
->> -
->> 2. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6666
->> 5Views file format DoS due to request to allocate too large a buffer
->> size.
->> Normally glib should terminate the application with something like
->> "GLib-ERROR **: gmem.c:239: failed to allocate 3221228094 bytes"
->> Resolved by clamping the value of packet_size
->> Patch:
->> http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40165
->>
->> 3. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6667
->> Same problem and solution but with i4b capture format now
->> Patch:
->> http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40166
->>
->> 5. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6669
->> Similar issue with netmon file format.
->> Patch:
->> http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40168
->>
->> =======
->> Integer underflow causing too large buffer to be allocated and a crash
->> (ws bug 6668).
->> -
->> 4. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6668
->> Same problem and solution but with iptrace capture format. Also some
->> checks for
->> bad file format.
->> Patch:
->> http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40167
->>
->> =======
->> Memory corruption (buffer-overflow) when reading novell capture file
->> format. glibc however detects this and terminates the application (ws
->> bug 6670)
->> -
->> 6. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6670
->> Similar issue with netmon file format.
->> Patch:
->> http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40169
->>
->> =======
->>
->> So we already have one CVE assigned for all these, my thought would be
->> to use CVE-2012-0041 for the first one (6663) and assign new CVE's for
->> the rest. Comments/questions?
->>
->
->
-> You are correct, we may need to split this into 4 parts:
->
->
-> 6663 - typecast flaw
-Please continue to use CVE-2012-0041 for this issue (6663)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> 6666, 6667, 6669 - Dos due to too large buffer alloc requst
-Please use CVE-2012-0066 for these issues (6666, 6667, 6669)
+On 04/10/2012 10:30 AM, Greg Knaddison wrote:
+> I had a few questions/comments as I updated these - inline below:
+> 
+> "NO CVE","SA-CONTRIB-2012-050","CDN2 Video -
+>> Unsupported","https://drupal.org/node/1506542"
+>> 
+> 
+> While the backend service and module are no longer active, there
+> are 70 sites using this module who are vulnerable to CSRF/XSS. What
+> is the reason not to give it a CVE?
 
-> 6668 - Dos due to integer underflow and too large buffer alloc. request
-Please use CVE-2012-0067 for this issue (6668)
+I was under the impression that if the backend was off the plugin
+wouldn't work/expose the vuln, I could of course be wrong, if so I'll
+assign a CVE.
 
-> 6670 - memory corruption due to buffer underflow
-Please use CVE-2012-0068 for this issue (6670)
+> 
+>> "NO CVE","SA-CONTRIB-2012-056","Janrain Engage - Sensitive Data 
+>> Protection Vulnerability","https://drupal.org/node/1515282"
+>> 
+> 
+> We debated a bit about this one and whether to make it an SA or
+> not. In the end we decided that if a module were persisting the
+> password in plain text that would deserve an SA so this one
+> (persisting a login token in plain text) should also get an SA. Do
+> you have any guidance on how you think we should have handled it?
 
--- 
+Well the CVE inclusion decisions:
 
--- Kurt Seifried / Red Hat Security Response Team
+Pro assignment:
+Does exploitation of the issue provide the attacker with extra
+privileges or information, or cause a denial of service, that the
+attacker would not already have before they attempt to exploit the issue?
 
+Anti-assignment:
+Is the issue site-specific? Is it only in an online service
+(software-as-a-service), on a specific web site, or only offered
+through hosting solutions that are under the full control of the vendor?
+Does the issue only affect a version that was never made generally
+available to the vendor's customers?
+
+> If you have any further suggestions on how we can improve the
+> content or formatting of the SAs please let me know.
+
+Direct links to the code commits fixing them would be nice =)
+
+> Thanks, Greg
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPhIUXAAoJEBYNRVNeJnmTfGkP/3huqD45i6hpUn5QtkhmRH3L
+p/RpE2/muJIhyBFCYpTDQN4fqlt5TjHFLMCjDrm/be9h51mq54n4KNXLXGMPeax/
+ZDqg0LzZiTW918R5+zfIOtsf/rvUziT3GpNyOTVjWdNDa5hCF+SOeBiylXBIGVwk
+z1rYhC5r37FO5dmfgjk1fVCnprbKDavJjLaDn3kiPpDyj+UFUgEyiif/iTn1zJGh
+UazjNE8gxWB8NaLodihFZHqSy9aEUmoRSy0EPqFlbKPWHZzNvs4ju2MWuBjn+S/t
+lebnnvXcknnTbpQM1fm5AkC6GiXxblxgcRsJPzz2moAqfHg1uRl7s5W3IoZnoPCY
+Vw86JUWlDvQG9JNR0i7fGFsfBCN9K0M+i1zIa8ZqKNDZr6fiFULFZP7270bsPoYd
+SIPQDBb25hbri8v6MpomHFUFQa55LI+/10kGPshTt1fyOJMLDHfbsrj2OtU5Iy/p
+ehTTQUyZpSMQr/NoBNFIpuxbtKoGjIb1+F+RjQXJsCoeqbX2WniUGXXcRhhjzDtd
+aJIwfv6Tg7j838IwZPiKQwjho8a0bew4TXjwEBIqKm4ljm/c8tL5j/8Dqs1EShqn
+VB+5iRZF9tIfShZJuASGZq9oapwxjQvgd+V8yzq68EiUfWqOHWF6r0Gyme1UVZUK
+sWGz+Vgf3GyJVKWx+s/5
+=jemE
+-----END PGP SIGNATURE-----
