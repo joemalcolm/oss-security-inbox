@@ -1,180 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/2
-Message-ID: <4F20993F.9050006@redhat.com>
-Date: Wed, 25 Jan 2012 17:07:27 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/14
+Message-ID: <4F84899C.6090003@redhat.com>
+Date: Tue, 10 Apr 2012 13:27:24 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: Fwd Joomla! Security News 2012-01
+CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com
+Subject: Re: CVE Request: cobbler (Ubuntu-specific)
 Content-Type: text/plain; charset=utf-8
 
-On 01/25/2012 07:17 AM, Henri Salo wrote:
-> Does someone know if these already have CVE-identifiers? Joomla just released this advisory.
-> 
-> - Henri Salo
-> 
-> ----- Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
-> 
-> Date: Wed, 25 Jan 2012 13:21:21 +0000
-> From: Joomla! Developer Network - Security News <no_reply@...mla.org>
-> To: henri@...v.fi
-> Subject: Joomla! Security News
-> 
-> Joomla! Developer Network - Security News
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Are these the correct URL's/descriptions (see below)?
+On 04/10/2012 08:29 AM, Marc Deslauriers wrote:
+> Could we please get a CVE assigned to the following issue?:
+> 
+> A Ubuntu-specific script called "cobbler-ubuntu-import" in the
+> Ubuntu cobbler package downloads isos from a mirror, and checks
+> them against MD5SUMS, but does not verify the validity of that
+> MD5SUMS file itself against the MD5SUMS.gpg. This was fixed in
+> version 2.2.2-0ubuntu32 of the package.
+> 
+> Bug: https://bugs.launchpad.net/ubuntu/+source/cobbler/+bug/974460
+> 
+> Commit: 
+> http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/precise/cobbler/precise/revision/98
+>
+>  Thanks,
+> 
+> Marc.
 
-> ///////////////////////////////////////////
-> [20120101] - Core - Information Disclosure
-> 
-> Posted: 23 Jan 2012 01:45 AM PST
-> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/MYKnZ2QJKYE/382-20120101-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
-
-
-http://developer.joomla.org/security/news/382-20120101-core-information-disclosure.html
-
-Project: Joomla! SubProject: All Severity: Low Versions: 1.7.3 and all
-earlier 1.7 and 1.6 versions Exploit type: Information Disclosure
-Reported Date: 2012-January-07 Fixed Date: 2012-January-24 Description
-Inadequate filtering leads to information disclosure. Affected Installs
-Joomla! version 1.7.3 and all earlier versions Solution Upgrade to
-version 1.7.4 or 2.5.0 or higher Reported by Cyrille Barthelemy Contact
-The JSST at the Joomla! Security Center.
-
-> Project: Joomla!
-> SubProject: All
-> Severity: Low
-> Versions: 1.7.3 and all earlier 1.7 and 1.6 versions
-> Exploit type: Information Disclosure
-> Reported Date: 2012-January-07
-> Fixed Date: 2012-January-24
-> 
-> Description
-> Inadequate filtering leads to information disclosure.
-> Affected Installs
-> Joomla! version 1.7.3 and all earlier versions
-> Solution
-> Upgrade to version 1.7.4 or 2.5.0 or higher
-> Reported by Cyrille Barthelemy
-> Contact
-> The JSST at the Joomla! Security Center.
-> 
-> 
-> 
-> ///////////////////////////////////////////
-> [20120102] - Core - XSS Vulnerability
-> 
-> Posted: 23 Jan 2012 01:45 AM PST
-> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/XAEsWEG3dgU/383-20120102-core-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
+Please use CVE-2012-2092 for this issue.
 
 
-developer.joomla.org/security/news/383-20120102-core-xss-vulnerability.html
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Project: Joomla! SubProject: All Severity: Moderate Versions: 1.7.3 and
-all earlier 1.7 and 1.6 versions Exploit type: XSS Vulnerability
-Reported Date: 2011-November-16 Fixed Date: 2012-January-24 Description
-Inadequate filtering leads to XSS vulnerability. Affected Installs
-Joomla! version 1.7.3 and all earlier versions Solution Upgrade to
-version 1.7.4 or 2.5.0 or higher Reported by Ankita Kapadia Contact The
-JSST at the Joomla! Security Center.
-
-> Project: Joomla!
-> SubProject: All
-> Severity: Moderate
-> Versions: 1.7.3 and all earlier 1.7 and 1.6 versions
-> Exploit type: XSS Vulnerability
-> Reported Date: 2011-November-16
-> Fixed Date: 2012-January-24
-> 
-> Description
-> Inadequate filtering leads to XSS vulnerability.
-> Affected Installs
-> Joomla! version 1.7.3 and all earlier versions
-> Solution
-> Upgrade to version 1.7.4 or 2.5.0 or higher
-> Reported by Ankita Kapadia
-> Contact
-> The JSST at the Joomla! Security Center.
-> 
-> 
-> 
-> ///////////////////////////////////////////
-> [20120103] - Core - Information Disclosure
-> 
-> Posted: 23 Jan 2012 01:45 AM PST
-> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/Ed0TMAvyQ4g/384-20120103-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
-
-http://developer.joomla.org/security/news/384-20120103-core-information-disclosure.html
-
-Project: Joomla! SubProject: All Severity: Low Versions: 1.7.3 and all
-earlier 1.7 and 1.6 versions Exploit type: Information Disclosure
-Reported Date: 2011-December-19 Fixed Date: 2012-January-24 Description
-Inadequate filtering leads to information disclosure. Affected Installs
-Joomla! version 1.7.3 and all earlier versions Solution Upgrade to
-version 1.7.4 or 2.5.0 or higher Reported by Jean-Marie Simonet Contact
-The JSST at the Joomla! Security Center.
-
-> Project: Joomla!
-> SubProject: All
-> Severity: Low
-> Versions: 1.7.3 and all earlier 1.7 and 1.6 versions
-> Exploit type: Information Disclosure
-> Reported Date: 2011-December-19
-> Fixed Date: 2012-January-24
-> 
-> Description
-> Inadequate filtering leads to information disclosure.
-> Affected Installs
-> Joomla! version 1.7.3 and all earlier versions
-> Solution
-> Upgrade to version 1.7.4 or 2.5.0 or higher
-> Reported by Jean-Marie Simonet
-> Contact
-> The JSST at the Joomla! Security Center.
-> 
-> 
-> 
-> ///////////////////////////////////////////
-> [20120104] - Core - XSS Vulnerability
-> 
-> Posted: 23 Jan 2012 01:45 AM PST
-> c
-
-
-
-http://developer.joomla.org/security/news/385-20120104-core-xss-vulnerability.html
-
-Project: Joomla! SubProject: All Severity: Moderate Versions: 1.7.3 and
-all earlier versions Exploit type: XSS Vulnerability Reported Date:
-2012-January-22 Fixed Date: 2012-January-24 Description Inadequate
-filtering leads to XSS vulnerability. Affected Installs Joomla! version
-1.7.3 and all earlier 1.7 and 1.6 versions Solution Upgrade to version
-1.7.4 or 2.5.0 or higher Reported by David Jardin Contact The JSST at
-the Joomla! Security Center.
-
-
-> 
-> Project: Joomla!
-> SubProject: All
-> Severity: Moderate
-> Versions: 1.7.3 and all earlier versions
-> Exploit type: XSS Vulnerability
-> Reported Date: 2012-January-22
-> Fixed Date: 2012-January-24
-> 
-> Description
-> Inadequate filtering leads to XSS vulnerability.
-> Affected Installs
-> Joomla! version 1.7.3 and all earlier 1.7 and 1.6 versions
-> Solution
-> Upgrade to version 1.7.4 or 2.5.0 or higher
-> Reported by David Jardin
-> Contact
-> The JSST at the Joomla! Security Center.
-> 
->  
-
--- 
-
--- Kurt Seifried / Red Hat Security Response Team
-kseifried@...hat.com
+iQIcBAEBAgAGBQJPhImcAAoJEBYNRVNeJnmT6igP/2c9cgMx9AqAig2Ls3eII/5K
+hF7xOh1XdEDMW3Hy2ZzH3EwkH4YSXZAdOLjckWUcf4J5eP2CjaUdHMOm1u46ejwC
+jmUj40W8VYubPZmJbrzE4uSy2hL7K67Vk8jF0BEVDWkzcPV6oeqzjE81Ab3mPklf
+U0nyFF8KAEzhIuLOrvh5fUM33Wd57CRlnSaNlD+MV+z8NB61EReSHesT6IsdKN9S
+WO7hferjRX+kdVlRuhkNY3Yua5jReEGkQt4iVoM07I9mGkTjcuU7/emV/RtSKsx5
+AewOxuZ2ez/MADJ3g7679/7hn/7oeG7GEd2Y7f7oAnQJ0/vG2k5T1OGcTpbiiQld
+XVKE+a1h7xYKHpUd5YyJivCJXO0UqU+ZD4Uqp0Mpvuapy6UHiPSKk4Uwxnu3DL5E
+XG5VPenv8sgKbRsS8b5eUz/mgoOvDKYCeGJ4mDYF7ZbPND2gBpz2gFF/s5/J+AJC
+qK1gAMsMu6TPwp4k7kVwVM7LkQ2B1YIMIeOrRvdvCNbg1u2+O9IYR12MGEfQbsSJ
+qdyTHagVY48ue5wEpOPXy1rDpd9JAtD0Rz+drfpkR0dP7SRwfLS9jxuoulqw+G57
+BT81Sy9pGOg7OUI3MIZDtK6vTgFb+bUn27MoS249NNJvylZgFXpCtwHDctQH0wvt
+sjgJhJObRbYRzjQ5wcIA
+=eKfp
+-----END PGP SIGNATURE-----
