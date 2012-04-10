@@ -1,31 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/9
-Message-ID: <20120913181817.371dda1b@redhat.com>
-Date: Thu, 13 Sep 2012 18:18:17 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/6
+Message-ID: <20120410034316.GL16793@ngolde.de>
+Date: Tue, 10 Apr 2012 05:43:16 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+Cc: asterix@...aule.org
+Subject: gajim insecure file creation when using latex
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 10 Jul 2012 16:11:12 +0200 Sebastian Krahmer wrote:
+Hi,
+Gajim seems to support latex in instant messages. This is implemented by
+dumping the content to a .tex template on disk and converting the result to an 
+image. To prevent security problems, it is at least checking the input for 
+dangerous latex commands such as \input (as far as I can see nothing is 
+missing from this list).
 
-> If you compile your openssh '--with-ssl-engine' you have
-> an easy root exploit (given that ssh-keysign is mode 04755
-> such as on Debian) via OPENSSL_config().
+However, it fails to create this temporary file in a secure manner:
+From src/common/latex.py:
+60 def get_tmpfile_name():
+61         random.seed()
+62         int_ = random.randint(0, 100)
+63         return os.path.join(gettempdir(), 'gajimtex_' + int_.__str__())
+...
+113 def latex_to_image(str_):
+114         result = None
+115         exitcode = 0
+116 
+117         try:
+118                 bg_str, fg_str = gajim.interface.get_bg_fg_colors()
+119         except:
+120                 # interface may not be available when we test latext at startup
+121                 bg_str, fg_str = 'rgb 1.0 1.0 1.0', 'rgb 0.0 0.0 0.0'
+122 
+123         # filter latex code with bad commands
+124         if check_blacklist(str_):
+125                 # we triggered the blacklist, immediately return None
+126                 return None
+127 
+128         tmpfile = get_tmpfile_name()
+130         # build latex string
+131         write_latex(os.path.join(tmpfile + '.tex'), str_)
+and finally:
+65 def write_latex(filename, str_):
+66         texstr = '\\documentclass[12pt]{article}\\usepackage[dvips]{graphicx}'
+67         texstr += '\\usepackage{amsmath}\\usepackage{amssymb}'
+68         texstr += '\\pagestyle{empty}'
+69         texstr += '\\begin{document}\\begin{large}\\begin{gather*}'
+70         texstr += str_
+71         texstr += '\\end{gather*}\\end{large}\\end{document}'
+72 
+73         file_ = open(filename, "w+")
+74         file_.write(texstr)
+75         file_.flush()
+76         file_.close()
 
-Even though the above is not correct to the best of my knowledge (no
-openssh version I checked would call OPENSSL_config(NULL) from
-ssh-keysign, even when it's complied with --with-ssl-engine and
-installed setuid root; even though other openssh command line tools do
-end up calling OPENSSL_config(NULL)), this shows OpenSSL is not
-unlikely to be used in a privileged application and hence may allow
-privilege escalation via special OPENSSL_CONF or OPENSSL_ENGINES
-environment variables.
+I think this is of pretty minor severity even though it still allows a local attacker
+to overwrite files the victim has write access to with latex content by using symlinks
+and latex IMs are used.
 
-OpenSSL also already protects access to certain environment variables
-(there are OPENSSL_issetugid() calls before getenv()), it does not do
-the same check for all variables it reads.  It seems that problem
-deserves a CVE.
-
+Cheers
+Nico
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
