@@ -1,54 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/14
-Message-ID: <4F902A9F.4060309@redhat.com>
-Date: Thu, 19 Apr 2012 09:09:19 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- kernel: macvtap: zerocopy: vector length is not validated before pinning user pages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/9
+Message-ID: <CAB9ZNAxSdLHfU=FzBbDOaHgX6n-qoHdcq5yheWFdTx9pJwuauA@mail.gmail.com>
+Date: Tue, 10 Apr 2012 10:23:26 -0500
+From: Andres Gomez <agomez@...idsignal.com>
+To: oss-security@...ts.openwall.com, vuln@...unia.com,  bugtraq@...urityfocus.com
+Subject: CVE Request: FlightGear and Simgear Multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 04/19/2012 08:28 AM, Petr Matousek wrote:
-> Currently we do not validate the vector length before calling 
-> get_user_pages_fast(), host stack could be easily overflowed by 
-> malicious guest driver who gives us a descriptors with length
-> greater than MAX_SKB_FRAGS.
-> 
-> A privileged guest user could use this flaw to induce stack
-> overflow on the host with attacker non-controlled data (some bits
-> can be guessed, as it will be pointers to kernel memory) but with
-> attacker controlled length.
-> 
-> Proposed fix thread: 
-> http://marc.info/?l=linux-netdev&m=133455718001608&w=2
-> 
-> References: https://bugzilla.redhat.com/show_bug.cgi?id=814278
-> 
-> Thanks,
+could I please get CVEs assigned to the following issues?:
 
-Please use CVE-2012-2119 for this issue.
+Multiple format string vulnerabilities have been found in flightgear and
+simgear (version <= 2.6) as described in the mail thread:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+http://sourceforge.net/mailarchive/message.php?msg_id=28957051
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Also multiple buffer overflow vulnerabilities were found in the same
+software as described in:
 
-iQIcBAEBAgAGBQJPkCqfAAoJEBYNRVNeJnmTeNkP/153dMhF0c6w3gixH+SioOx+
-yOfM0eJRm2lG7qwaAyZI5J280IfuaTDDTG86eTrlNi66W25FVBTmgnHayN1PvTHT
-t3/ZUmu0jCdzfwbzNfAIuhv0RHgMSiVGb+ixaCZNv9zA80l7ltIKbQnKxADQlgzK
-THNzS+HiPCAgdaSGi3TfkOkhSnXDXS3HTFgfsHF0NZVS7ES5sd7wIjYnHRl72Ybf
-1oFDhFNZMFOj7Vnm0+ESPMzAJW+MdQDpA5HmKAMuA3rSUhVhccMgXIg3JjMg3g2W
-mqjrYgXllL1QzFyJ/3BaApcZH8+j75g3onII6Bh5RQ7tiYnDtdrr/U7XiTWCE6/I
-dQS4VSQTMoVZj4gN5JxO65gQunhTvrx4k1LM1s14nk5C3TNQf+WREqWKBwPhU06x
-/HzfMboCpAfu7blycKdTj1Ol+be2GeIMdyJIrRWLMYDvrx7mSbxFTesUAdJTGcQg
-ck3uVxw3yY7XFWXd7F7SS2acTDZJVBE4kbm7F3xOHRjR1/deHjOVcaJ81fzSH34e
-xP6syJsmNjxBTTQzC2wmoTeR9EiwjP/LHpb65kwLRCbD8B0qlY7b1E1x4sNkjjCB
-DQLGGC0W2n+mWQvaMlD6E9R+rs/cHVCmjkvjz0eQvGZm2I3NlljuL1H5NGsDcMJC
-Ne2SCBJcF86Hl5o1lq8n
-=pZNZ
------END PGP SIGNATURE-----
+http://sourceforge.net/mailarchive/message.php?msg_id=29011989
+
+They are still unpatched but developers have not demostrated any interest
+on fixing these issues.
+
+Thanks,
+
+Andres Gomez
+
+-- 
+--
+AVISO DE CONFIDENCIALIDAD:
+
+Esta transmisión se entiende para uso del destinatario o la entidad a la 
+que va dirigida y puede contener información confidencial o protegida por 
+la ley. Si el lector de este mensaje no fuera el destinatario, considérese 
+por este medio informado que la retención, difusión, o copia de este correo 
+electrónico está estrictamente prohibida. Si recibe este mensaje por error, 
+por favor notifique inmediatamente al emisor y destruya el original. Gracias
+
+--
+CONFIDENTIALITY NOTICE:
+
+This transmission is intended for the use of the individual or entity to 
+which it is addressed, and it may contain information that is confidential 
+or privileged under law. If the reader of this message is not the intended 
+recipient, you are hereby notified that retention, dissemination, 
+distribution or copying of this e-mail is strictly prohibited. If you 
+received this e-mail in error, please notify the sender immediately and 
+destroy the original. Thank you.
+
