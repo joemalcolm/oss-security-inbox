@@ -1,24 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/30/6
-Message-ID: <20120730130113.GE19431@suse.de>
-Date: Mon, 30 Jul 2012 15:01:13 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: icinga sample db creation scripts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/11/3
+Message-ID: <4F85E08D.6010704@redhat.com>
+Date: Wed, 11 Apr 2012 13:50:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, dapal@...ian.org
+Subject: Re: CVE id request: wicd
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Icinga ships some sample DB creationscripts which give out too much
-privileges.
+On 04/11/2012 10:39 AM, Nico Golde wrote:
+> Hi, can someone please assign a CVE id to wicd for: 
+> http://www.infosecinstitute.com/courses/ethical_hacking_training.html
+>
+> 
+http://bugs.debian.org/668397
+> 
+> It seems possible to get wicd to execute scripts via dbus messages
+> due to broken filtering.
+> 
+> 
+> Cheers Nico
 
-References:
-https://bugzilla.novell.com/show_bug.cgi?id=767319
-https://git.icinga.org/?p=icinga-doc.git;a=commitdiff;h=619a08ca1178144b8a3a5caafff32a2d3918edab
-https://git.icinga.org/?p=icinga-core.git;a=commitdiff;h=712813d3118a5b9e5a496179cab81dbe91f69d63
+Please use CVE-2012-2095 for this issue.
 
-Reported by Lars Vogdt of SUSE via Tim Hardeck to Incinga.
 
-Ciao, Marcus
--- 
-Open Linux Security Engineer Position at SUSE: http://bit.ly/Li4RbS
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPheCNAAoJEBYNRVNeJnmTVjAP/jpOHueKpaiyhRRaZWyGAY4X
+LbLXzbAbE5ttaRjVUYQS54aQpWfLy8oojBLujlU6W7mkH3Nwy+Lpf257aeahF5BR
+KZPiWLMkSVh82a7YQrfjz3GBpn3/MJKjBQjswEEkPGFTDvp0zHkzihvnAr4vgNnt
+kBLm3vmMryhjnXrdxQbsz/89NzW3Y0FJYe4psBgfhMQFYsigwE+7XM2uwtV2slRo
+5teb4EgleDOyH0wFPRakGfwvSZuS+5JdXws7HTUJfQWyyJJ8NEptCa92zW9qNgoa
+RwHj69tkEf8AuXrl9v7TnKzvZ60LBqM69wwWR7JNz3yGnTo/a8StuplusORai3rp
+b3/VJhe+ukPoUs4tkTBk6O26djZdBgJmkXMjTfce8E0koUgKGZEeG6g0FH5Qednw
+cCDKpQDlIpBCfgiHIwv2QVfvF++kJhsbYwkibWTtVjtAyxI2l/0XnDP7vLea0xIO
+wWfoj4Z7dyGux2i3tqGPgYVEkw5ccAmSeYjTX6Y8pn7SSOSvIRb5p2IAXvxqKgmN
+VRTa+d9L0h9NJOKmiWGQfbW9WDe1txDO7Lnok5Oes7Kbt0R6Cz9yjieFBLWoA85F
+z6AMjNGhJCKidyQ5Hm5GHUNcFuclYLm7rGPy0QHDwjBwIbfW1Hxm/rMgshewlS5u
+gAicaLlQgONEYNmPPsce
+=mFVG
+-----END PGP SIGNATURE-----
