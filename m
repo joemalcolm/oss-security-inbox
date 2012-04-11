@@ -1,33 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/13/6
-Message-ID: <4F886941.6070905@redhat.com>
-Date: Fri, 13 Apr 2012 19:58:25 +0200
-From: Stefan Cornelius <scorneli@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/11/2
+Message-ID: <20120411163959.GW16793@ngolde.de>
+Date: Wed, 11 Apr 2012 18:39:59 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-CC: secalert_us@...cle.com
-Subject: CVE request: mysql: Server crash on HANDLER READ NEXT after DELETE
+Subject: CVE id request: wicd
 Content-Type: text/plain; charset=utf-8
 
 Hi,
+can someone please assign a CVE id to wicd for:
+http://www.infosecinstitute.com/courses/ethical_hacking_training.html
+http://bugs.debian.org/668397
 
-MySQL 5.5.22 fixed a denial of service flaw in the way MySQL processed
-HANDLER READ NEXT statements after deleting a record. A remote,
-authenticated MySQL user could use this flaw to cause mysqld
-daemon abort.
+It seems possible to get wicd to execute scripts via dbus messages due to 
+broken filtering.
 
-References:
-[1] http://dev.mysql.com/doc/refman/5.5/en/news-5-5-22.html
-[2] https://bugs.gentoo.org/show_bug.cgi?id=411503
-[3]
-http://eromang.zataz.com/2012/04/10/oracle-mysql-innodb-bugs-13510739-and-63775-dos-demo/
 
-Upstream commit:
-http://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/3097.15.15
-
-Red Hat bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=812431
-
-Thanks and kind regards,
-
+Cheers
+Nico
 -- 
-Stefan Cornelius / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
