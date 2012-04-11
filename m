@@ -1,48 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/02/2
-Message-ID: <20121202082021.GB26165@meddwl.fritz.box>
-Date: Sun, 2 Dec 2012 09:20:21 +0100
-From: Sergei Golubchik <serg@...monty.org>
-To: oss-security@...ts.openwall.com
-Cc: king cope <isowarez.isowarez.isowarez@...glemail.com>, full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org, security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
-Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/11/6
+Message-ID: <CAAPiX_LwM6C81G05Ht1yoTP_n8Cj49TnmgvCph+iuOLz=t26ug@mail.gmail.com>
+Date: Wed, 11 Apr 2012 15:30:50 -0600
+From: Greg Knaddison <greg.knaddison@...uia.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE's for Drupal Contrib 2012 001 through 057 (67 new CVE assignments)
 Content-Type: text/plain; charset=utf-8
 
-Hi, Kurt!
+On Tue, Apr 10, 2012 at 1:08 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 04/10/2012 10:30 AM, Greg Knaddison wrote:
+>> "NO CVE","SA-CONTRIB-2012-050","CDN2 Video -
+>>> Unsupported","https://drupal.org/node/1506542"
+>>>
+>>
+>> While the backend service and module are no longer active, there
+>> are 70 sites using this module who are vulnerable to CSRF/XSS. What
+>> is the reason not to give it a CVE?
+>
+> I was under the impression that if the backend was off the plugin
+> wouldn't work/expose the vuln, I could of course be wrong, if so I'll
+> assign a CVE.
 
-This is CVE-2012-5579 that we've been discussing recently.
-A test case it different, but it triggers exactly the same code.
+I believe the XSS exists even without the backend. On review I'm less
+confident the CSRF is in the module or the service.
 
-MariaDB is not vulnerable as of 5.1.66, 5.2.13, 5.3.11, 5.5.28a.
-Latest released MySQL versions are still affected, but Oracle knows
-about this issue, so next versions won't be.
+>> If you have any further suggestions on how we can improve the
+>> content or formatting of the SAs please let me know.
+>
+> Direct links to the code commits fixing them would be nice =)
 
-Regards,
-Sergei
-MariaDB Security Coordinator
+We probably can't do this, though it is a fairly common request. Our
+current policy is not to discuss the specific details for at least 2
+weeks and closer to 6 months if possible. Project usage shows that
+most site builders don't upgrade very quickly.
 
-On Dec 01, Kurt Seifried wrote:
-> On 12/01/2012 02:26 PM, king cope wrote:
-> > (see attachment)
-> > 
-> > Cheerio, Kingcope
-> 
-> So normally for MySQL issues Oracle would assign the CVE #. However in
-> this case we have a bit of a time constraint (it's a weekend and this
-> is blowing up quickly)  and the impacts are potentially quite severe.
-> So I've spoken with some other Red Hat SRT members and we feel it is
-> best to get CVE #'s assigned for these issues quickly so we can refer
-> to them properly.
-> 
-> If Oracle security has already assigned CVE's for these please let us
-> and the public know so we can use the correct numbers. Also if Oracle
-> can let the public know which versions of MySQL are affected (e.g.
-> 5.0.x, 5.1.x, 5.5.x, etc.) that would be very helpful to everyone I am
-> sure.
-> 
-> I am also adding MySQL, Oracle, MariaDB, OSS-SEC, Steven Christey,
-> cve-assign and OSVDB to the CC so that everyone is aware of what is
-> going on.
-> 
-> http://seclists.org/fulldisclosure/2012/Dec/4
-> 
+I didn't see an answer to my question about asking for CVE-identifier
+on Wednesdays after the SAs are released. I assumed that would be
+helpful so I just started doing that.
+
+Thanks!
+Greg
+
+-- 
+Director Security Services | +1-720-310-5623
+Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
