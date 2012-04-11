@@ -1,64 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/30/3
-Message-ID: <50B8F725.8030905@redhat.com>
-Date: Fri, 30 Nov 2012 11:12:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jamie Strandboge <jamie@...onical.com>, security@...cloud.org
-Subject: Re: CVE Request: owncloud
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/11/5
+Message-Id: <C4778AD0-1BE5-4AA9-A939-08123334574D@gmail.com>
+Date: Wed, 11 Apr 2012 17:15:09 -0400
+From: Xi Wang <xi.wang@...il.com>
+To: Petr Matousek <pmatouse@...hat.com>
+Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>, akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>, vuln@...unia.com
+Subject: Re: fix to CVE-2009-4307
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Apr 11, 2012, at 7:07 AM, Petr Matousek wrote:
+> Is there any compiler that is used to compile the kernel that turns the
+> CVE-2009-4307 fix not working (the groups_per_flex < 2 check)? I
+> see that in your commit description you mention equivalent form where
+> Clang optimizes away the "groups_per_flex == 0" check. Does Clang
+> optimize/change also the "groups_per_flex < 2" check in a similar way?
 
-On 11/30/2012 08:29 AM, Jamie Strandboge wrote:
-> Owncloud 4.5.2 and 4.0.9 has a few security fixes: 
-> http://owncloud.org/changelog/
-> 
-> Specifically: - Multiple XSS vulnerabilities (oC-SA-2012-001)
+For current version, no.
 
-http://owncloud.org/security/advisories/oc-sa-2012-001/
-Please use CVE-2012-5606 for this issue.
+> If not, I would not call it a incomplete fix as the issue with zero
+> division was fixed. But yes, we'd still want to include the Xi's commit.
 
-> - Timing attack in the “Lost Password” implementation
-> (oC-SA-2012-002)
+I agree.  Future compilers might break that, but it's ok for now.
 
-http://owncloud.org/security/advisories/oc-sa-2012-002/
-Please use CVE-2012-5607 for this issue.
+> This is not only compiler specific but also architecture specific if I'm
+> not mistaken - on x86 the 1 << x shift can never become zero, whereas on
+> for example powerpc it can (for example slw instruction will give a zero
+> result when the shift amounts from 32 to 63).
 
-> - XSS vulnerability in user_webdavauth (oC-SA-2012-003)
+You are right.  Actually the bug was found on s930/ppc with fsfuzzer.
 
-http://owncloud.org/security/advisories/oc-sa-2012-003/
-Please use CVE-2012-5608 for this issue.
+        https://bugzilla.kernel.org/show_bug.cgi?id=14287
 
-> - Code Execution in /lib/migrate.php (oC-SA-2012-004)
+If fsfuzzer were running on x86, it would not have tiggered this
+bug. ;-)
 
-http://owncloud.org/security/advisories/oc-sa-2012-004/
-Please use CVE-2012-5609 for this issue.
+You can also find the original patch there. 
 
-> - Code Execution in /lib/filesystem.php (oC-SA-2012-005)
+        groups_per_flex = 1 << sbi->s_log_groups_per_flex;
+ 
++        /* There are some situations, after shift the value of
++           'groups_per_flex' can become zero and division with 0
++           will result in fixpoint divide exception
++         */
++       if (groups_per_flex == 0)
++               return 1;+
 
-http://owncloud.org/security/advisories/oc-sa-2012-005/
-Please use CVE-2012-5610 for this issue.
+The check "groups_per_flex == 0" would be optimized away by Clang
+since it involves undefined behavior.  Fortunately, ext4 developers
+changed the original patch a little bit.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+        http://www.spinics.net/lists/linux-ext4/msg16218.html
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+The revised patch combines
 
-iQIcBAEBAgAGBQJQuPclAAoJEBYNRVNeJnmTlGoQAJiRk2ucXjqxrB1+lBVZq5wz
-CFQ0t9e+cJlGiBMwOPEgGKmsXr5Tj6wLQ4E+S0CSy8+MDpvpOIas/WJyIRPH94s2
-hTuYnCCoaoA0pe0WrF/8Fv/eEqN3xZzjbStm3Iv4iAIkSNA9iDQNqR9yJUu/fDHa
-NFpwwjT7DAuqIYT0/jASVvQy5rcm47bGVtdE438T9+OJoi2/8oZPRLXwgkpUYuMd
-PL+CrCxAmwAFjkhUFZ9IJ7wkFJwQv8CydEo/Kj1MPit8DqA5qX2q7QLKBFKPuTOy
-EqaBvCcXP4zchEfdODbjxCbxaGuUG1kkYP1JVkpJjC4kFPa7AS3sYECxGCpy8Gb7
-8Uj+JaRLHp/cIWJqHAVxYnvv9iUuc1T83L1NJv5hCWZD3i16qaix297foNSV9mrY
-lAqWxJgvSus5M4Ce4Gt0HARDwzonFB1Kkclpk8PTFxNRmdDDPZUcy7ZoOhvDPHrI
-qtcIqjVZR6/EpZkms77usa1+rza0NqcLCMqeSNCdqbrFMt9z13xnsuBADVgOJNLm
-ZtYDnxonyrdJTKNOofldGdMUowcpuXLZT6n1J7XdCfsfpnoPIuoUylFgFcSOsihs
-eYVIYgGlflnzPKvj7w+YWyRX+0Ed1mowO3eBt/DlAiSdIMna1V6YGZMa1GjhwXVB
-Bm+IOUPVzHTo+L8ATXkz
-=KXaN
------END PGP SIGNATURE-----
+- an existing check "s_log_groups_per_flex == 0" (that is,
+  "groups_per_flex == 1") and
+
+- the proposed check "groups_per_flex == 0"
+
+into "groups_per_flex < 2", which current compilers won't kill. ;-)
+
+- xi
+
