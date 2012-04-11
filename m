@@ -1,45 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/03/4
-Message-ID: <4FF35A19.5010804@pre-sense.de>
-Date: Tue, 03 Jul 2012 22:46:17 +0200
-From: Timo Warns <warns@...-sense.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/11/1
+Message-ID: <20120411110717.GD5984@dhcp-25-225.brq.redhat.com>
+Date: Wed, 11 Apr 2012 13:07:17 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Stability fixes in UDF Logical Volume Descriptor handling
+Cc: Kurt Seifried <kseifried@...hat.com>, akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>, Xi Wang <xi.wang@...il.com>, vuln@...unia.com
+Subject: Re: fix to CVE-2009-4307
 Content-Type: text/plain; charset=utf-8
 
-Am 03.07.2012 20:58, schrieb Kurt Seifried:
-> On 07/03/2012 07:22 AM, Marcus Meissner wrote:
-> 
->> People (do not know who) reported to the kernel security team and
->> Jan Kara some UDF filesystem crashes.
-> 
->> Jan Kara did some fixes in the UDF fs and they were committed to
->> mainline already, both actual bugfixes and some more sanity 
->> checking for hardening.
->> 
->> I think a single CVE is sufficient.
-> 
-> Were they discovered by the same person or different people?
+Hi Xi,
 
-I reported the following issue for sparing tables on 2012-06-17 to
-security@...nel.org. Eugene Teo informed Jan Kara, who is the maintainer
-for the UDF filesystem, on the same day. Jan had a closer look at the
-UDF code and identified all other issues addressed by the patches.
+On Wed, Apr 04, 2012 at 12:19:43AM -0400, Xi Wang wrote:
+> On Apr 3, 2012, at 10:55 PM, Kurt Seifried wrote:
+> > For #2 I'm not sure how we handle something like a compiler possibly
+> > mangling code so that an issue is introduced (is that a compiler
+> > problem? a code problem? the intersection of both? Steve: can I get a
+> > comment/referees decision here =)
+> 
+> Thanks for bringing this up.
+> 
+> I think the compiler is all right in this case.  The code is not.
+> 
+> CVE-2009-4307 says that an attacker could trigger a division by
+> zero by crafting a large s_log_groups_per_flex.
+> 
+> The first commit (503358ae) fixes the division by zero.  The fix
+> is not perfect because:
+> 
+> 1) Theoretically, a standard-conforming C compiler could generate
+> code that is still vulnerable to division by zero, but I was not
+> aware of any compilers doing that.
 
-| udf_load_logicalvol() in fs/udf/super.c parses the number of sparing
-| tables and stores the sparing tables on the heap:
-|
-| (1286)  for (j = 0; j < spm->numSparingTables; j++) {
-| [...]
-| (1293)    map->s_type_specific.s_sparing.
-| (1294)	    s_spar_map[j] = bh2;
-|
-| map is of type udf_part_map, whose
-| s_type_specific.s_sparing.s_spar_map
-| member can only hold 4 pointers to buffer_head structs.
-|
-| spm->numSparingTables is read from the file system and not further
-| validated. A corrupted file system with numSparingTables > 4 causes
-| a heap overflow.
+Is there any compiler that is used to compile the kernel that turns the
+CVE-2009-4307 fix not working (the groups_per_flex < 2 check)? I
+see that in your commit description you mention equivalent form where
+Clang optimizes away the "groups_per_flex == 0" check. Does Clang
+optimize/change also the "groups_per_flex < 2" check in a similar way?
 
-Regards, Timo
+If not, I would not call it a incomplete fix as the issue with zero
+division was fixed. But yes, we'd still want to include the Xi's commit.
+
+This is not only compiler specific but also architecture specific if I'm
+not mistaken - on x86 the 1 << x shift can never become zero, whereas on
+for example powerpc it can (for example slw instruction will give a zero
+result when the shift amounts from 32 to 63).
+
+> 2) Logically, we should have groups_per_flex = 2^s_log_groups_per_flex,
+> and the fix doesn't really ensure that.  This is obviously not good,
+> but not sure how bad the consequence would be.
+> 
+> BTW, the second commit (d50f2ab6) might still allow a buffer overflow
+> later.  See another patch https://lkml.org/lkml/2012/2/20/422 (though
+> it was rejected).
+> 
+> In ext4_resize_fs():
+> 
+>    flexbg_size = 1 << es->s_log_groups_per_flex;
+>    ...
+>    flex_gd = alloc_flex_gd(flexbg_size);
+> 
+> and in alloc_flex_gd():
+> 
+>    flex_gd->count = flexbg_size;
+>    flex_gd->groups = kmalloc(sizeof(...) * flexbg_size, ...);
+> 
+> Note that the kmalloc size could be smaller than expected due to
+> multiplication overflow (flexbg_size = 1 << s_log_groups_per_flex
+> could be very large since s_log_groups_per_flex could be as large
+> as 31).  Array access flex_gd groups[i] could be out of bounds in
+> that case.
+
+As Xi points out, there might be other problems in the code. Those
+should get a separate CVE without referencing CVE-2009-4307 IMHO.
+
+To Secunia:
+https://secunia.com/advisories/48645/ is not a KVM/qemu-kvm issue.
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
