@@ -1,27 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/17
-Message-ID: <20120201231757.GB9659@openwall.com>
-Date: Thu, 2 Feb 2012 03:17:57 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Subscribe to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/4
+Message-ID: <CAAPiX_+yx=SR33RqQu4-ZmoW65i-Ffb9J5Ez8DB7V3asqRqesg@mail.gmail.com>
+Date: Wed, 11 Apr 2012 21:07:17 -0600
+From: Greg Knaddison <greg.knaddison@...uia.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE's for Drupal Contrib 2012 001 through 057 (67 new CVE assignments)
 Content-Type: text/plain; charset=utf-8
 
-Alex,
+On Wed, Apr 11, 2012 at 8:10 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-On Wed, Feb 01, 2012 at 11:42:56PM +0100, Alex Legler wrote:
-> Sorry for yet another unjustified subscription request, I'll be
-> sure to train our new staff and contributors better so that they know
-> we are already present on the list and that such requests should be
-> discussed internally first.
-> 
-> Please disregard the request.
+> >>
+> >> Direct links to the code commits fixing them would be nice =)
+> >
+> > We probably can't do this, though it is a fairly common request.
+> > Our current policy is not to discuss the specific details for at
+> > least 2 weeks and closer to 6 months if possible. Project usage
+> > shows that most site builders don't upgrade very quickly.
+>
+> Hrmm yeah that's a tough one. Do you do any regression testing to make
+> sure the new modules don't break things (if people know stuff is
+> unlikely to break they are more likely to upgrade quickly, usually any
+> ways).
+>
 
-Thanks for commenting on the request so promptly.
+As a project there is an automated testing framework integrated into the
+code hosted on drupal.org and a network of servers to run tests pretty
+quickly, but very few of the contributed modules take advantage of it
+(there are 16,000 of them after all). I don't think we've gone beyond
+anecdotes for why people don't upgrade rapidly but it's definitely
+something we're constantly working to improve the speed of the upgrade
+cycle.
 
-On a related note, last week I had to suspend Stefan Behte's
-subscription because his PGP key expired and he has not (yet) replied to
-my private e-mail on that.  So right now you are the only Gentoo person
-on linux-distros.
 
-Alexander
+> Perfect! I was just thinking, as long as the main project
+> contributors/etc. (e.g. you guys in the case of Drupal) do the CVE
+> requests in a regular and public way (e.g. to OSS-sec) than there is
+> minimal chance of duplicates and other problems (e.g. someone else
+> sending a request to Mitre directly or whatever).
+>
+>
+Solid.
+
+-- 
+Director Security Services | +1-720-310-5623
+Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
+
