@@ -1,29 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/12
-Message-ID: <4F1740BE.1030609@redhat.com>
-Date: Wed, 18 Jan 2012 14:59:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/8
+Message-ID: <CAJzxamKPnd=dgpeGtE3fb+X28fdfbhk0E8KRDcT=d-Egfwcj1Q@mail.gmail.com>
+Date: Thu, 12 Apr 2012 21:49:22 +1000
+From: David Black <disclosure@....org>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: NGS00109 remote code execution in ImpressPages CMS
+Subject: Re: CVE request: cobbler lack of csrf protection, code execution
 Content-Type: text/plain; charset=utf-8
 
-On 01/15/2012 08:58 AM, Henri Salo wrote:
-> This issue does not have CVE assigned. If I am correct this needs CVE from 2011 pool as original advisory was done in http://seclists.org/bugtraq/2011/Sep/156 but details came in http://seclists.org/bugtraq/2012/Jan/28
+On Thu, Apr 12, 2012 at 9:46 PM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+> Thank you for this post, David.
 >
-> Vendor url: http://www.impresspages.org/news/impresspages-1-0-13-security-release/
-> Secunia: http://secunia.com/advisories/46193/
-> OSVDB: http://osvdb.org/show/osvdb/75783
+> Just administrative note -- all of these security issues should
+> get CVE-2011-* CVE identifiers, as all of the Ubuntu bugs have
+> been reported in 2011 yet (2011-09-28 exactly).
 >
-> eval() is evil()
 >
-> - Henri Salo
-It was known as a security vuln in 2011, to 2011 CVE. Had it been
-silently slipped out as an update but no info that it was security
-related then it might warrant a 2012 CVE. Please use CVE-2011-4932 for
-this issue.
+> On 04/12/2012 11:39 AM, David Black wrote:
+>>
+>> Hi, I reported some bugs a while ago in cobbler which never received
+>> CVE ID, could the follow bugs receive CVE ID ?
+>> 1. lack of csrf protection in the cobbler web interface (vulnerable to
+>> csrf attacks)
+>> https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858878
+>
+>
+> Some further references / patches information I was able to found:
+> 1) Ubuntu patch by Robie Basak:
+>
+> http://bazaar.launchpad.net/~racb/ubuntu/oneiric/cobbler/858878_858883/revision/53
+>
+> 2) Red Hat bugzilla entry:
+>   https://bugzilla.redhat.com/show_bug.cgi?id=811937
+>
+>
+>> 2. code execution on the cobbler host through use of yaml.loads on
+>> potentially untrusted user input
+>> https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883
+>
+>
+> Though only yaml.load privilege escalation vector has been mentioned in this
+> post, from further look noticed two ways for privilege escalation:
+> 1) (possibly remote) privilege escalation via yaml.load / by
+>   processing management parameters:
+>
+>   References:
+>   https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883
+> (Ubuntu bug)
+>
+>   Ubuntu patch from Robie Basak:
+>   * Backport safe YAML load from upstream. (LP: #858883):
+>
+> http://bazaar.launchpad.net/~racb/ubuntu/oneiric/cobbler/858878_858883/revision/54
+>
+>   https://bugzilla.redhat.com/show_bug.cgi?id=811920 (Red Hat bug)
+>
+> 2) local privilege escalation due to insecure use of PYTHON_EGG_CACHE
+> location:
+>
+>   References:
+>   https://bugs.launchpad.net/ubuntu/+source/cobbler/+bug/858875 (Ubuntu bug)
+>   https://fedorahosted.org/cobbler/ticket/688 (upstream ticket)
+>
+> https://d-feet.fedorahosted.org/cobbler/attachment/ticket/688/58_fix_egg_cache.patch
+>   (relevant upstream patch)
+>   https://bugzilla.redhat.com/show_bug.cgi?id=811926 (Red Hat bug)
+>
+> Kurt, could you allocate three 2011 CVE ids for these issues?
+> i)   the first for CSRF issue,
+> ii)  the second for the yaml.load priv esc issue,
+> iii) the third for the PYTHON_EGG_CACHE local priv esc issue
+>
+> David, would be great if you could confirm the three ids are necessary.
 
--- 
+I left the third one (the PYTHON_EGG_CACHE  issue out) but it should
+probably get a CVE ID as well.
+Well what do you mean by 'necessary'? if you ask me I will say, "probably".
 
--- Kurt Seifried / Red Hat Security Response Team
-
+--
+David
