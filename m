@@ -1,57 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/29/1
-Message-ID: <50B6A72A.80905@gmail.com>
-Date: Wed, 28 Nov 2012 16:07:06 -0800
-From: Forest Monsen <forest.monsen@...il.com>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/7
+Message-ID: <4F86C088.2010509@redhat.com>
+Date: Thu, 12 Apr 2012 13:46:16 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: David Black <disclosure@....org>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request: cobbler lack of csrf protection, code execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Thank you for this post, David.
 
-Here's a batch CVE request for several previously published and
-resolved issues (except for SA-CONTRIB-2012-171, which was never
-resolved) in contributed modules for the Drupal project:
+Just administrative note -- all of these security issues should
+get CVE-2011-* CVE identifiers, as all of the Ubuntu bugs have
+been reported in 2011 yet (2011-09-28 exactly).
 
-###
+On 04/12/2012 11:39 AM, David Black wrote:
+> Hi, I reported some bugs a while ago in cobbler which never received
+> CVE ID, could the follow bugs receive CVE ID ?
+> 1. lack of csrf protection in the cobbler web interface (vulnerable to
+> csrf attacks) https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858878
 
-SA-CONTRIB-2012-166 - Table of Contents - Access Bypass
-http://drupal.org/node/1841046
+Some further references / patches information I was able to found:
+1) Ubuntu patch by Robie Basak:
+    http://bazaar.launchpad.net/~racb/ubuntu/oneiric/cobbler/858878_858883/revision/53
 
-SA-CONTRIB-2012-167 - Mixpanel - Cross site scripting (XSS)
-http://drupal.org/node/1853198
+2) Red Hat bugzilla entry:
+    https://bugzilla.redhat.com/show_bug.cgi?id=811937
 
-SA-CONTRIB-2012-168 - Services - Information Disclosure
-http://drupal.org/node/1853200
+> 2. code execution on the cobbler host through use of yaml.loads on
+> potentially untrusted user input
+> https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883
 
-SA-CONTRIB-2012-169 - Email Field - Cross Site Scripting and Access bypass
-http://drupal.org/node/1853214
+Though only yaml.load privilege escalation vector has been mentioned in this
+post, from further look noticed two ways for privilege escalation:
+1) (possibly remote) privilege escalation via yaml.load / by
+    processing management parameters:
 
-SA-CONTRIB-2012-170 - MultiLink - Access Bypass
-http://drupal.org/node/1853244
+    References:
+    https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883 (Ubuntu bug)
 
-SA-CONTRIB-2012-171 - Webmail Plus - SQL injection - (unsupported)
-http://drupal.org/node/1853268
+    Ubuntu patch from Robie Basak:
+    * Backport safe YAML load from upstream. (LP: #858883):
+    http://bazaar.launchpad.net/~racb/ubuntu/oneiric/cobbler/858878_858883/revision/54
 
-SA-CONTRIB-2012-172 - Zero Point - Cross Site Scripting (XSS)
-http://drupal.org/node/1853376
+    https://bugzilla.redhat.com/show_bug.cgi?id=811920 (Red Hat bug)
 
-###
+2) local privilege escalation due to insecure use of PYTHON_EGG_CACHE location:
 
-Thanks!
+    References:
+    https://bugs.launchpad.net/ubuntu/+source/cobbler/+bug/858875 (Ubuntu bug)
+    https://fedorahosted.org/cobbler/ticket/688 (upstream ticket)
+    https://d-feet.fedorahosted.org/cobbler/attachment/ticket/688/58_fix_egg_cache.patch
+    (relevant upstream patch)
+    https://bugzilla.redhat.com/show_bug.cgi?id=811926 (Red Hat bug)
 
-Forest
+Kurt, could you allocate three 2011 CVE ids for these issues?
+i)   the first for CSRF issue,
+ii)  the second for the yaml.load priv esc issue,
+iii) the third for the PYTHON_EGG_CACHE local priv esc issue
 
+David, would be great if you could confirm the three ids are necessary.
 
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
+>
+> --
+> Thank you.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iEYEARECAAYFAlC2pyoACgkQ/ILCL9e1Br4+tQCcCxW3lAylwP1RSuOFnGRnff9b
-gm8AmgLuMDqIHzQVHoo7WtD+SVsH3d4j
-=ZVPx
------END PGP SIGNATURE-----
