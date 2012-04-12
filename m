@@ -1,81 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/14/1
-Message-ID: <CAHmME9ryCHeJZX3pJFTbaO-A=rhp_zx8wAo15ifMmvCLCMaynw@mail.gmail.com>
-Date: Sat, 14 Jul 2012 07:41:44 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security@...ts.openwall.com
-Cc: Tyler Hicks <tyhicks@...onical.com>, Kurt Seifried <kseifried@...hat.com>,  Marcus Meissner <meissner@...e.de>, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Re: ecryptfs headsup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/6
+Message-ID: <CAJzxamKO5NXLVmXe7HGHU8f4dXOg9ohKCJ2eKqDJyVO7TSbn+A@mail.gmail.com>
+Date: Thu, 12 Apr 2012 19:39:31 +1000
+From: David Black <disclosure@....org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: cobbler lack of csrf protection, code execution
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi, I reported some bugs a while ago in cobbler which never received
+CVE ID, could the follow bugs receive CVE ID ?
+1. lack of csrf protection in the cobbler web interface (vulnerable to
+csrf attacks) https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858878
+2. code execution on the cobbler host through use of yaml.loads on
+potentially untrusted user input
+https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883
 
-There's another almost-hole (almost, like the umount env clearing)
-that the patch in that bug report fixes:
-
-At line 538, this code is added:
-
-	if (strstr(alias, "..")) {
-		fputs("Invalid alias", stderr);
-		exit(1);
-	}
-
-Ostensibly this is to prevent the subsequent call to
-
-        lock_counter(pwd->pw_name, uid, alias);
-
-from crafting the path name like this:
-
-       asprintf(&f, "%s/%s-%s-%s", TMP, FSTYPE, u, alias)
-
-where alias might have ".." in it, and then making a file like this:
-
-      open(f, O_RDWR | O_CREAT | O_NOFOLLOW, 0600)
-
-which takes special care to specify O_NOFOLLOW too, and then
-afterwards, it checks to see if it's owned by the correct user and
-makes certain it's a regular file.
-
-Fortunately, the call at the beginning of the program to seteuid(uid)
-prevents this from being too traumatic. But, the strstr check was
-added apparently as a security consideration; correct me if I'm
-mistaken.
-
-
-
-
-There's actually one use of the alias variable before such sanitation
-that is almost a big hole, but isn't, due again to the seteuid(uid) at
-the beginning of the program. At line 525 we have:
-
-if (read_config(pwd->pw_dir, uid, alias, &src, &dest, &opts2) < 0) {
-
-read_config forms a file name like this:
-
-if (asprintf(&fnam, "%s/.ecryptfs/%s.conf", pw_dir, alias) < 0) {
-
-It then makes a smart security check to ensure that it's not a symlink
-and that it's owned by uid:
-
-if (stat(fnam, &mstat)!=0 || (!S_ISREG(mstat.st_mode) || mstat.st_uid!=uid)) {
-    fputs("Bad file\n", stderr);
-    free(fnam);
-    return -1;
-}
-
-After it does this, it opens the file for reading with a standard fopen:
-
-fin = fopen(fnam, "r");
-
-And then it reads the various settings out of fin.
-
-There's a race condition on fnam, since you could make fnam a valid
-file, but immediately after the stat(2) call, swap it for a symlink.
-I'm not sure this is really an issue, though, since geteuid(uid) has
-already been called, so it's not as if the subsequent fopen is allowed
-to read just any file. It does pose the question, though, of why that
-stat check is there in the first place, if it can be subverted like
-that. The solution is just to open the fd first, and then check the
-permissions and whatnot with fstat(2).
-
-Jason Donenfeld
+--
+Thank you.
