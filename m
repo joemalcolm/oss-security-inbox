@@ -1,80 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/10
-Message-ID: <4FBE9B02.3090903@redhat.com>
-Date: Thu, 24 May 2012 14:33:06 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/10
+Message-ID: <4F86FEEA.5090304@redhat.com>
+Date: Thu, 12 Apr 2012 10:12:26 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: CVE Request: powerdns does not clear supplementary groups
+CC: Jan Lieskovsky <jlieskov@...hat.com>, David Black <disclosure@....org>
+Subject: Re: CVE request: cobbler lack of csrf protection, code execution
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/24/2012 02:10 PM, Solar Designer wrote:
-> Kurt -
+On 04/12/2012 05:46 AM, Jan Lieskovsky wrote:
+> Thank you for this post, David.
 > 
-> On Thu, May 24, 2012 at 12:40:10PM -0600, Kurt Seifried wrote:
->> Supplemental groups enabled a user to be a member of more than
->> one group at a time (us old timers remember the joys of
->> "newgrp"). Why would anyone want this? You could for example
->> create a group that has permissions to access logging, terminals
->> (e.g. modems, remember those? =) and then add users to it as
->> appropriate (and centralize account/permissions management
->> somewhat and all that good stuff).
+> Just administrative note -- all of these security issues should get
+> CVE-2011-* CVE identifiers, as all of the Ubuntu bugs have been
+> reported in 2011 yet (2011-09-28 exactly).
 > 
-> That's what initgroups(3) is for.  If a program that is supposed to
-> drop privs calls neither setgroups() nor initgroups(), or if it
-> fails to check the return value from these and refuse to proceed on
-> failure, then it is vulnerable.
+> On 04/12/2012 11:39 AM, David Black wrote:
+>> Hi, I reported some bugs a while ago in cobbler which never
+>> received CVE ID, could the follow bugs receive CVE ID ? 1. lack
+>> of csrf protection in the cobbler web interface (vulnerable to 
+>> csrf attacks) 
+>> https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858878
+>
+>> 
+> Some further references / patches information I was able to found: 
+> 1) Ubuntu patch by Robie Basak:
 > 
->> So what happens when a program starts running as say root, and
->> root has supplemental groups (like "bin" or "daemon" and the
->> program drops its primary user/group but fails to drop
->> supplementary groups, is that a security issue,
+> http://bazaar.launchpad.net/~racb/ubuntu/oneiric/cobbler/858878_858883/revision/53
+>
 > 
-> Definitely.
 > 
->> and is it worthy of a CVE identifier?
-> 
-> It should be.
-> 
->> Having supplementary groups is intentional [...]
-> 
-> Having supplementary groups of the new (pseudo-)user, possibly
-> yes. Having supplementary groups of the old switched-from user,
-> no.
-> 
-> Alexander
+> 2) Red Hat bugzilla entry: 
+> https://bugzilla.redhat.com/show_bug.cgi?id=811937
 
-Ahh I realize something I forgot to cover in my email is the
-distinction between vulnerability and vector, e.g. if program "foo"
-(for the sake of argument let's say it is a text editor) doesn't drop
-supplementary groups correctly than exploitation of it would be easy,
-so in this case I'd agree it was a security vuln. But when a program
-with much more limited operations doesn't drop privileges, unless it
-directly leads to some sort of exploit/elevated access/etc. than I'm
-inclined to say while it's not good, it's not a vulnerability per se.
+Please use CVE-2011-4952 for this issue (CSRF).
+
+>> 2. code execution on the cobbler host through use of yaml.loads
+>> on potentially untrusted user input 
+>> https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883
+>
+>> 
+> Though only yaml.load privilege escalation vector has been
+> mentioned in this post, from further look noticed two ways for
+> privilege escalation: 1) (possibly remote) privilege escalation via
+> yaml.load / by processing management parameters:
+> 
+> References: 
+> https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883
+>
+> 
+(Ubuntu bug)
+> 
+> Ubuntu patch from Robie Basak: * Backport safe YAML load from
+> upstream. (LP: #858883):
+> 
+> http://bazaar.launchpad.net/~racb/ubuntu/oneiric/cobbler/858878_858883/revision/54
+>
+> 
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=811920 (Red Hat bug)
+
+Please use CVE-2011-4953 for this issue (yaml.load).
+
+
+> 2) local privilege escalation due to insecure use of
+> PYTHON_EGG_CACHE location:
+> 
+> References: 
+> https://bugs.launchpad.net/ubuntu/+source/cobbler/+bug/858875
+> (Ubuntu bug) https://fedorahosted.org/cobbler/ticket/688 (upstream
+> ticket)
+> 
+> https://d-feet.fedorahosted.org/cobbler/attachment/ticket/688/58_fix_egg_cache.patch
+>
+>  (relevant upstream patch) 
+> https://bugzilla.redhat.com/show_bug.cgi?id=811926 (Red Hat bug)
+
+Please use CVE-2011-4954 for this issue (PYTHON_EGG_CACHE).
+
+> Kurt, could you allocate three 2011 CVE ids for these issues? i)
+> the first for CSRF issue, ii)  the second for the yaml.load priv
+> esc issue, iii) the third for the PYTHON_EGG_CACHE local priv esc
+> issue
+> 
+> David, would be great if you could confirm the three ids are
+> necessary.
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+>> 
+>> -- Thank you.
+> 
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPvpsCAAoJEBYNRVNeJnmTHIIQAIA3A/fehKMDeXegQ8t7ObbK
-PT+eTwn5TbRwxkdmvloF3wVFUoAv6C58obq349AmOKc/BXaM4Nf3tgnxiUKLm570
-yPjDdBGECBtMrLftQ5LMSwZCkygZicD1JRbS9moJJOoR9xK005FAZM1P3LJOo7Bv
-S4gNTD2Vz3p0v09o7axTsNfAcA/May5hOJ5jmSq+Oj098ShPGVmtAmQkfADRa+mP
-xjtC7qFojDbwR3OANRUqU0FTHym4PmroVyWBAgrZNnaIywNz0JTyVXIII03Iv6H+
-fAHxXshQ9NSTlizoKmm2ylmAI7u4/s/EWBE9P89Qo/m5ei0CKpc5i1YfzK7bD0zL
-Q4Y4WEFSNxpath2nQ/SUJe3E9P/yI6SsL2jjxFvf+qnfNtVSMAXFOLS6rmoE4ioj
-wo4Hu7HBfkVnW9AJL/dAtSh6Xjv7AnxXHLb3yQ/9oOaaXRm0wNdJVTyw3BsvOHuf
-d7Q/4GQhCKVDnXgCUpBQHa9ccqqfnVT9aReWueSf1N1NMVxJJOIcst+KtaEhm6Wt
-i/tCMXc3alIeeMn8CzK66XaS/hToSwB73NTsaze4wSyJMUIqM1nlO64mOv5KNwZM
-DYvj35I2ICK31prIAFVlGxaNRNExW+ofv4l4RvyTXREpU4ew0sgRMjzoJWw0+0sk
-is3phnptl1+es4JrjRye
-=dDuN
+iQIcBAEBAgAGBQJPhv7qAAoJEBYNRVNeJnmT+gMP/31vupdJ6Xfi/ic4i3zfxtYj
++yUYtODnMV3oyJqWbpC6Di1vnImAPGKG76gGUaoXQk6/e9sbz2P5EipCJbwQ9KHk
++0tzVxdYUJYAdN2Wi91Md7dkdKnkfAd4nN7NhVO3PsLXOGV/Dq793KNfK7pkqEgV
+IJ/sXGcx947Onh5eZAjK3cHNczb0osRw7yIdlHG/0f0ylSGnXgyRKsFLTq/erV5F
+ef2jq6E/X1UnGBm1svuw2clhb7FRnihvtt+pnttaXN1flCoL6nUQ4wjndjZxEa7d
+IcnkIoz7oUQVLlCemnhDL+FbOWOhKFLqCPAC4awgx5OKa5aoxZNkC6HB/wd4VFvp
+49zCZooGCwGDpEXjHvWjuCIKohCzUKVLyqQOs2cMaLNzrdAovuyJibpvYrqBcMBY
+wQO0ACyz/if1UE4edZh3pOxcLPN5tSOgEZ5DLWGEENaHJVq3yJDuy/NtFvA5N7aN
+ODWKSzYS91zq5Rc16cNj9anFe7zkDOmy9khnKFf3CeEGODEh/G0jp0YZ06hmHLgP
+ybYcX//ao9UOYco7vlc00fPkfNJgH+3detaCIXYEobz6brgvK3QmXQvpi4FrRLAH
+ALO4YlQmNmmQdU6BmAtmQIG/0KSOkt8i8QYWnWMaJAET4/0VgFujl8mP0JUIQ2gM
+KgCGfp5YrEoVdVQRWZOC
+=Bzh3
 -----END PGP SIGNATURE-----
