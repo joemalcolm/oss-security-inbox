@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/10
-Message-Id: <201202271542.45184.mweckbecker@suse.de>
-Date: Mon, 27 Feb 2012 15:42:44 +0100
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/1
+Message-ID: <20120412001002.GG16793@ngolde.de>
+Date: Thu, 12 Apr 2012 02:10:03 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: openssl: null pointer dereference issue
+Subject: Re: CVE id request for links2
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt, Steve, vendors,
+Hi,
+* Kurt Seifried <kseifried@...hat.com> [2012-04-10 21:56]:
+> On 04/09/2012 08:43 PM, Nico Golde wrote:
+[...] 
+> > I discovered some out of memory accesses in links2 graphics mode
+> > that could be potentially used to run exploits. I fixed them in
+> > links-2.6. For Debian Squeeze, I am sending this patch that
+> > backports the fixes to links-2.3pre1. Apply the patch and
+> > distribute patched packages links and links2 through 
+> > security.debian.org.
+> > 
+> > 
+> > [...] This patch fixes:
+> > 
+> > Buffer overflow when pasting too long text from clipboard to dialog
+> > boxes (not remotely exploitable)
+> 
+> Can this result in code execution?
 
-bad S/MIME messages with crafted MIME headers can result in a NULL pointer 
-dereference in openssl's ans1 parser,
+I am not sure about this one.
+For out of memory write in dip.c, my guess is yes, it is basically possible to
+write past an allocated buffer. Even though I can't tell you what data would
+reside in that area.
+For the xbm decoder, the problem has basically been that xbm_decode() did not
+indicate an error when decoding xbm images and thus the callers would continue
+to operate on the parsed structures even though the image is faulty.
 
- https://bugzilla.novell.com/show_bug.cgi?id=748738
- http://www.mail-archive.com/openssl-dev@openssl.org/msg30305.html
- http://cvs.openssl.org/chngview?cn=22144
-
-Does it qualify for a CVE?
-
-Thanks, Matthias
-
+Cheers
+Nico
 -- 
-Matthias Weckbecker, Junior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
