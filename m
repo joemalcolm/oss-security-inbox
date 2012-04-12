@@ -1,27 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/20/1
-Message-ID: <CAH5b-BWT+=sWPPYT8gVA60Agw4EDU-b+tOJfprmxZgjUMSfbEw@mail.gmail.com>
-Date: Fri, 20 Jul 2012 18:12:53 +0200
-From: yersinia <yersinia.spiros@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/5
+Message-ID: <20120412074914.GB29831@kludge.henri.nerv.fi>
+Date: Thu, 12 Apr 2012 10:49:14 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE for JBOSS EAP 5.0(twiddle and jmx invocations) ?
+Cc: Stefan Schurtz <sschurtz@...nline.de>
+Subject: CVE-request: Wikidforum 2.10 multiple XSS and SQL-injection vulnerabilities SSCHADV2012-005
 Content-Type: text/plain; charset=utf-8
 
-Following this apparently RFE on JBOSS
-https://issues.jboss.org/browse/JBPAPP-3391?_sscc=t
-i have found a nice description, and an  proposed patch, about it here
-http://objectopia.com/2009/10/01/securing-jmx-invoker-layer-in-jboss/.
+Hello,
 
-But the last link describe - apparently - a serious bug in the JBoss JMX
-Invoker Layer, a missing authentication that can
-produce a serious problem. Reading the other response i don't think there
-is today the possibility to enforce a true mitigation
-in JBOSS, apart putting in place some form a network control (aka a
-firewall). This is for JBOSS 5.0, i know that twiddle is no longer
-in JBoss EAP 6.0 which provides a totally new, much improved, secure and
-scriptable management interface.
+These three 2012 issues are without CVE-identifiers. XSS vulnerabilities can be joined to one CVE if I am correct.
 
-Do you think this can require a CVE for JBOSS EAP 5?
+Affected version: 2.10
+Advisory ID: SSCHADV2012-005
+Bugtraq: http://seclists.org/bugtraq/2012/Mar/45
 
-Thanks in advance
+Vulnerabilities:
+http://osvdb.org/show/osvdb/80838 Wikidforum Search Field XSS
+http://osvdb.org/show/osvdb/80839 Wikidforum Advanced Search Multiple Field XSS
+http://osvdb.org/show/osvdb/80840 Wikidforum Advanced Search Multiple Field SQL Injection
 
+Advisory URLs:
+http://www.darksecurity.de/advisories/2012/SSCHADV2012-005.txt
+http://www.darksecurity.de/index.php?/202-SSCHADV2012-005-Wikidforum-2.10-Multiple-security-vulnerabilities.html
+
+I also contacted vendor just to be sure: http://www.wikidforum.com/forum/forum-software_29/wikidforum-support_31/sschadv2012-005-unfixed-xss-and-sql-injection-security-vulnerabilities_188.html
+
+- Henri Salo
