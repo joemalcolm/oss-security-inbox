@@ -1,42 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/8
-Message-Id: <201209061511.28627.geissert@debian.org>
-Date: Thu, 6 Sep 2012 15:11:27 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/9
+Message-Id: <6E6DFCC9-6BFC-4774-BCF7-903C61418524@nginx.com>
+Date: Thu, 12 Apr 2012 18:21:18 +0400
+From: Andrew Alexeev <andrew@...nx.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - mcrypt buffer overflow flaw
+Subject: nginx security advisory: mp4 module vulnerability, CVE-2012-2089
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-On Thursday 06 September 2012 09:37:14 Vincent Danen wrote:
-> A buffer overflow was reported [1],[2] in mcrypt version 2.6.8 and
-> earlier due to a boundary error in the processing of an encrypted file
-> (via the check_file_head() function in src/extra.c).  If a user were
-> tricked into attempting to decrypt a specially-crafted .nc encrypted
-> flie, this flaw would cause a stack-based buffer overflow that could
-> potentially lead to arbitrary code execution.
+The nginx team has released stable version 1.0.15, and development
+version 1.1.19 of its nginx web server, which include a fix for a
+vulnerability discovered by Matthew Daley in nginx's standard mp4
+pseudo-streaming module.
 
-I'm attaching a patch that makes mcrypt abort when the salt is longer than 
-the temp buffer it uses.
+The following CVE-ID has been used: CVE-2012-2089 (privately
+assigned earlier by Kurt Seifried):
 
-While working on it, I noticed the err_ functions do not have a constant 
-printf format, yet there are calls such as:
-      sprintf(tmperr, _("Input File: %s\n"), infile);
-      err_info(tmperr);
-[print_enc_info in src/extra.c]
+http://nginx.org/en/security_advisories.html
 
-And a few others in src/mcrypt.c; for instance:
-$ mcrypt --no-openpgp "%s.nc" 
-mcrypt: h���Fn�`.nc is not a regular file. Skipping...
+Description: a specially crafted mp4 file might allow to overwrite
+memory locations in a worker process, if ngx_http_mp4_module is 
+used, potentially resulting in arbitrary code execution.  The mp4
+module is not built in by default, and should be explicitly
+configured to be included in nginx.  By default nginx worker
+processes run under non-privileged user account.
 
-I'm attaching another patch that prevents the format string attacks.
+The problem affects nginx versions newer than 1.1.3, 1.0.7, built with
+the ngx_http_mp4_module, and "mp4" directive in the configuration.
+To check if mp4 module is included in nginx build, use "nginx -V".
 
-Cheers,
+Users of nginx and mp4 pseudo-streaming module are kindly advised
+to upgrade to the latest nginx versions, or apply the following patch:
+
+http://nginx.org/download/patch.2012.mp4.txt
+
+
+
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Andrew Alexeev
+@nginxorg
 
-View attachment "mcrypt-format-strings.patch" of type "text/x-patch" (711 bytes)
-
-View attachment "CVE-2012-4409.patch" of type "text/x-patch" (589 bytes)
