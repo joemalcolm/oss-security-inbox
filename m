@@ -1,79 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/8
-Message-ID: <4FBBCE84.7020202@redhat.com>
-Date: Tue, 22 May 2012 11:36:04 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/13/4
+Message-ID: <4F884F63.20102@redhat.com>
+Date: Fri, 13 Apr 2012 10:08:03 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: some drm overflow checks
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: Wikidforum 2.10 multiple XSS and SQL-injection vulnerabilities SSCHADV2012-005
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/21/2012 12:38 AM, Marcus Meissner wrote:
-> Hi,
+On 04/13/2012 04:46 AM, Henri Salo wrote:
+> On Thu, Apr 12, 2012 at 12:55:01PM -0600, Kurt Seifried wrote:
+>>> http://osvdb.org/show/osvdb/80840 Wikidforum Advanced Search 
+>>> Multiple Field SQL Injection
+>> Also I couldn't really confirm the SQL injections so not
+>> assigning a CVE, if you can find confirmation I'll assign a CVE.
 > 
-> spotted in xorls blog, who spotted it in the kernel stable
-> changelog: 
-> https://xorl.wordpress.com/2012/05/17/linux-kernel-drm-intel-i915-multiple-ioctl-integer-overflows/
->
->  It has two issues:
+> With "'" as input to select_sort:
 > 
-> 1. overflow of cliprect kmalloc as args->num_cliprects is not
-> bounded and passed in via a user ioctl.
+> You have an error in your SQL syntax; check the manual that
+> corresponds to your MySQL server version for the right syntax to
+> use near '\\\' asc' at line 1select * from posts where
+> parent_post_id IS NULL AND status=1 AND user_id=0 AND (post LIKE
+> '%foo%' OR title LIKE '%foo%') and status IN (1) order by \\\' asc
 > 
-> Fixed via ed8cd3b2cd61004cab85380c52b1817aca1ca49b in mainline: 
-> commit ed8cd3b2cd61004cab85380c52b1817aca1ca49b Author: Xi Wang
-> <xi.wang@...il.com> Date:   Mon Apr 23 04:06:41 2012 -0400
+> My friend told me that this can escalate in case of bad permissions
+> or bad MySQL setup, but I do not have better PoC for this list. At
+> least one can't chain for example SELECT foo FROM bar;DROP TABLE
+> users;--
 > 
-> drm/i915: fix integer overflow in i915_gem_execbuffer2()
+> http://dev.mysql.com/doc/refman/5.5/en/select.html
 > 
-> On 32-bit systems, a large args->buffer_count from userspace via
-> ioctl may overflow the allocation size, leading to out-of-bounds
-> access.
-> 
-> This vulnerability was introduced in commit 8408c282 ("drm/i915: 
-> First try a normal large kmalloc for the temporary exec buffers").
-> 
-> 
-> 8408c282 was added Feb 21 2011, and seemingly added during 2.6.38
-> development.
+> - Henri Salo
 
-drm/i915: fix integer overflow in i915_gem_execbuffer2()
-
-Please use CVE-2012-2383 for this issue.
-
-> 2. same file, overflow in args->buffer_count.
-> 
-> Fix is in mainline 44afb3a04391a74309d16180d1e4f8386fdfa745
-> 
-> commit 44afb3a04391a74309d16180d1e4f8386fdfa745 Author: Xi Wang
-> <xi.wang@...il.com> Date:   Mon Apr 23 04:06:42 2012 -0400
-> 
-> drm/i915: fix integer overflow in i915_gem_do_execbuffer()
-> 
-> On 32-bit systems, a large args->num_cliprects from userspace via
-> ioctl may overflow the allocation size, leading to out-of-bounds
-> access.
-> 
-> This vulnerability was introduced in commit 432e58ed ("drm/i915:
-> Avoid allocation for execbuffer object list").
-> 
-> 
-> 432e58ed was added during 2.6.37 development.
-
-drm/i915: fix integer overflow in i915_gem_do_execbuffer()
-
-Please use CVE-2012-2384 for this issue.
-
-> I think it needs 2 CVEs, due to the different kernel versions
-> introducing it.
-
-Agreed.
-
-> Ciao, Marcus
-
+Have you actually verified this first hand (e.g. done a successful SQL
+injection attack) against an installation of Wikidforum?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -83,17 +46,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPu86EAAoJEBYNRVNeJnmTrikP/i4H7U6RE9rL+a07wgBWZuIj
-Q1qGp68i5hGBKXWOEQkZTLBVlbfkZL5DscNqBEhG2PBcvgoApuSvSsJ1goH7oDo0
-DkTIp/C9zd889gRF8hyflvhTIsgNaPr05pVGCNNuLgoBmvYnp1+XGLi7DIjjLg/A
-7P6C+TqKoQraaXaeiwc0EcHWYLIXYgyrFpnqcIJ76NzbXPiVhINQbsqXujj1D3iz
-YqEGTRKNgXTos05MvsR8rxVG2wYHjG/eq2tD8ADb37xs9TRF8dDzv69FNWIf5dem
-pARCnSimWZtOApY9Mj+TRh/zeUJ03RfxlR8fPzpi4q8Wcf7CITkocol9G/0MN2HL
-XoYdttpEaie2PT4MVj4MnL5GjMJeAV3LCN3he56BqxgcqSJXFpbiOk69Ez854zOb
-RmG3go7wC4hrz5V5i5d2rpAp3fuCOWXXhNdP+59oma5MvfF3qPqhj/vhwM5rjs8i
-4COD7i3EgdgcazDLrYyavUnYSItw6H5gL5VdI6mMVmUkW9zjyrFwxTmmMi/IcuIa
-6GZL/J8RG3JbFsOISA/ROP4e65Kdn6ifYaagKc9WFiv72VA9+e5GdlX6mzS+9PDj
-O1v3syrSY7FUdRyntYpOFYUWXPU3ozMyeIXBvx2hLFwgB1zJd1HlpAYnB433kVUY
-JjTHecw7ObVI8FTW9Qhr
-=RD91
+iQIcBAEBAgAGBQJPiE9fAAoJEBYNRVNeJnmTTBUP/RAFfubG9vd+NjbTPbiXv39H
+6yZC19+k77jk7CTUklfOlud6UNcnLdtoOyBgKD6bLud81dJGUJ66b5lNM21yVSbU
+ToIIuXNhXGdQ07LtkCbq4AS3jkHDBl9SH6jUnS0GSS4nr/J8KxzBCUrh+fAi1HWK
+dGfj3TkBkUf2gWIb9dj62tzx21MAKfcA7SuNmc3tLoBKPIV6ZmsoKM5hEetP2snM
+XWx25D1QjyPHjNfDaqFqz/3GWnMUs5FRgD+N1WvTU6UJi/EONmhu074lWFaFKIJU
+tTEuTcuSKal9zQBC9//JRLfkHv+kI3DHezAsoFfsk1MUFD8A9dzGVbSp4CQmuVQs
+5ZuXRI1PxeMh8ZVHM1Deo7Bfn+jJZAqtlPwOPHzeXpxF+A+JAZA5mnYY0PVbRUTm
+FU5hj6MhVmfGVus6kKaKw3nuOdNAPmNfYRP+DOLKG7tTBcnQwMLAtr0TTfK1HJFG
+j1BQGZ3raJhcvT7Q9/IOw/2xZOWEfl1RKUv+WrheqM4taxs4GCb7G38xENrhWmN/
+MInu9n10oGcDqeSx7oYeRkrSt9vX0U6wSsXPpYPQT2eK+B7DmLQeNyu4uzpqQHvU
+Iljr7PkpQARbdeqbACrrraVEcvSZheNbmlF2iymDgh93O27wxHbJe7gTPowAfHWe
+Y5Ar7EwOUTJLkddvTY7G
+=G5vD
 -----END PGP SIGNATURE-----
