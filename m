@@ -1,51 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/10
-Message-Id: <C9FFCEF6-B777-49AB-BC76-8E35A2892CF8@acquia.com>
-Date: Mon, 29 Oct 2012 12:38:55 -0700
-From: Angie Byron <angela.byron@...uia.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>, Greg Knaddison <greg.knaddison@...uia.com>, David Rothstein <drothstein@...il.com>
-Subject: Re: CVE request: Drupal SA-CORE-2012-003
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/13/5
+Message-ID: <4F885861.5050803@redhat.com>
+Date: Fri, 13 Apr 2012 10:46:25 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: CVE Request: Heap corruption in openjpeg
 Content-Type: text/plain; charset=utf-8
 
-Looping in David Rothstein. I'm no longer the release manager for D7, so I'm not sure what the CVE process was.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Oct 29, 2012, at 11:52 AM, Kurt Seifried wrote:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+On 04/13/2012 05:56 AM, Jan Lieskovsky wrote:
+> Thank you for this post, Huzaifa.
 > 
-> On 10/29/2012 12:17 PM, Moritz Muehlenhoff wrote:
->> Hi, please assign a CVE ID for SA-CORE-2012-003: 
->> http://drupal.org/node/1815912
+> On 04/13/2012 09:29 AM, Huzaifa Sidhpurwala wrote:
+>> Hi All,
 >> 
->> Cheers, Moritz
+>> While looking at openjpeg, i found the following bug in their
+>> tracker, which still seems to be un-addressed. 
+>> http://code.google.com/p/openjpeg/issues/detail?id=5
 >> 
+>> I dont think a CVE id has been assigned to this issue yet.
 > 
-> The page says "CVE: Requested" but I haven't seen the request, so I
-> can only assume it went to Mitre directly? I don't want to create
-> duplicates. Angela/Greg can you confirm what's up with the CVE here?
-> Thanks.
+> Yes, doesn't look so one got assigned for this one yet, since: 
+> http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=openjpeg
 > 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> provides just recent CVE-2012-1499. To the:
 > 
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
+> http://code.google.com/p/openjpeg/issues/detail?id=5
 > 
-> iQIcBAEBAgAGBQJQjtBYAAoJEBYNRVNeJnmTmO4P/3BDsde7eNgjt/xkrcV5IwZz
-> dw/bn2jMjkcW2Ze/UIxCTK8GmYNCSqoQ+wYcdqVOkk2Q5rp5wmtRVppM4rPO8vho
-> Dy4p039WQ827Vaz1iBk8F2I136WPybTh2XPB9Yrc5XuMuTYdxJyKXkUQlgp+2sBl
-> G6reX0E2vb8Yu47591rxQyF4gY6nvnA7W2cpTVM1UzmlhAjmHOeR+yoCT8BGJ79F
-> wkbXT3ax/8gtzmhz39x1gqU6b5HHjUH2PdOMKxYP65NzVKyqQvPYAFMb5n5kYKFS
-> woLz6UCTVfOD+wLpOiUTEDYGhJhNn1e8/LJZTdt7LxEZ9HTI+NtQ2daBfFI176MI
-> 6jxqCtVimouwWqJw9zv7lXc08bHHNVUQiyebaxb/mthwZ9Gn1YBIp9+8r/1o48Y2
-> TV3QlPYDjtuvECyR45R6V33ts2xgR6v8UCrXg2KKovL1ArIGFiA0yHz0lTokJJX6
-> FIciLmGFGFeacN0K4RluFK3K+t8PLvJ1imNE9X8oWTV7OGNcABj4uGbdZAsIwoMf
-> D4eImxpnVFaMa6657PUANRUvaxm8bwhoT36ODC+zz10Hv8SA1Wu86X2I72ktwJrm
-> K5RAW5ujOS6qX0pSa7Pf1gLgC6YVX+RdIredeTd7ATdO26eAbLdYRwK81jYITD4i
-> OIwAc8R+GuBMi0ZmdFDc
-> =10SK
-> -----END PGP SIGNATURE-----
+> issue itself:
+> 
+> 1) It should get a CVE-2009-* identifier (upstream ticket is public
+> from 2009-Jul-31).
+> 
+> 2) From the issue reasons investigation, it seems to be combination
+> of heap-based buffer invalid reads and writes by processing certain
+> Gray16 TIFF images, leading to invalid free (when such corrupted
+> memory allocated for tile encoder / decoder handle (TCD) is
+> attempted to be freed).
+> 
+> More official description in Red Hat bug: 
+> https://bugzilla.redhat.com/show_bug.cgi?id=812317
+> 
+> Kurt, could you allocate a 2009 CVE id?
 
+Please use CVE-2009-5030 for this issue.
+
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+>> 
+>> 
+>> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPiFhhAAoJEBYNRVNeJnmTgaMQAK8EzTHu25/+LSXEda8fU4TQ
+2GyVi35bcJkBr14tCZoEZWHmDNtNYpE6Z733g31CTBMDFXfh6BuTvA7At/nRrexc
+tJFWVQjn2uYybfpU/YQJpUnpHetGl+G6zqNZCMGfcq1u2iYCtLTpMlmfgNRhRamS
+Ce2O6WPdROaJB7nJYGh8amEgCsm5pPh/vyObFVsfUnbT0lc5Y9amp82XNdEdfoZ7
+sh9rDDWNFuySuc8xv/tL8928riprK5YtGanlL/hQ+vjUzHZ7d5M5iHi1FkjgMDHn
+SKoJI7pONYnD/MLh9CyroZG2RLjnSuOWa7LJzPmpHVYY9CUNE8iVAhi4pfCTqPmo
+WtuyzVEYr/SQ4I9JOUnDk6/uuejmMShxrmlTLhzqq4OIZfw9O/mk2URqgC6l40s/
+eQpXcH0I1+6WJ7TuRejiJnOeNf4cMx05Azb0+j/beP7DSUnbryT5KVRQML6i+MSz
+eRXHgIwYnJO/WjJVB9lRNaJaZFcwmk956Zvwe9sFSIKWBV98BCr3z66+nYB/zQVM
+7/oIiRyQFkwWs624xOPFEiuMaZB+PdnQdQaNXTmeP4v+BFPQJczCIJnnqnZqMIIQ
+bj4xUm63cKPfRldHywuLlXkPxDGzwL6+nNOuRg7RgOdAsL4JBd3yEdR0y2xrd7Q5
+JGXzewwr3BTBFp+D+N2+
+=mHxC
+-----END PGP SIGNATURE-----
