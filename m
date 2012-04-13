@@ -1,36 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/25/6
-Message-Id: <201204251545.q3PFjGH4024103@eton.blue.cert.org>
-Date: Wed, 25 Apr 2012 11:41:37 -0400
-From: "CERT(R) Coordination Center" <cert@...t.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/13/7
+Message-ID: <4F886B75.70605@redhat.com>
+Date: Fri, 13 Apr 2012 12:07:49 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "CERT(R) Coordination Center" <cert@...t.org>, jmfoote@...t.org
-Subject: CERT Linux Triage Tools 1.0 Released INFO#208126
+CC: Stefan Cornelius <scorneli@...hat.com>, secalert_us@...cle.com
+Subject: Re: CVE request: mysql: Server crash on HANDLER READ NEXT after DELETE
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hello,
+On 04/13/2012 11:58 AM, Stefan Cornelius wrote:
+> Hi,
+> 
+> MySQL 5.5.22 fixed a denial of service flaw in the way MySQL
+> processed HANDLER READ NEXT statements after deleting a record. A
+> remote, authenticated MySQL user could use this flaw to cause
+> mysqld daemon abort.
+> 
+> References: [1]
+> http://dev.mysql.com/doc/refman/5.5/en/news-5-5-22.html [2]
+> https://bugs.gentoo.org/show_bug.cgi?id=411503 [3] 
+> http://eromang.zataz.com/2012/04/10/oracle-mysql-innodb-bugs-13510739-and-63775-dos-demo/
+>
+>  Upstream commit: 
+> http://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/3097.15.15
+>
+>  Red Hat bug: https://bugzilla.redhat.com/show_bug.cgi?id=812431
+> 
+> Thanks and kind regards,
 
-The CERT Linux Triage Tools 1.0 have been released as open-source software and are available for download here:
+Please use CVE-2012-2102 for this issue.
 
-http://www.cert.org/vuls/discovery/triage.html
-
-The tools include a Python-based GDB extension called "exploitable" that can be used to classify application errors in a manner similar to !exploitable on Microsoft Windows or CrashWrangler on Apple OS X. You can learn more about the tools and how to use them in my recent blog post:
-
-http://www.cert.org/blogs/certcc/2012/04/cert_triage_tools_10.html
-
-Jonathan Foote
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQEVAwUBT5gb8k2poTkZov2QAQL/wgf+IXRJ3OXDdJXC3zrCxluJ0K4hdXWseM22
-7rSG/+mDCK24V24CEvpXTxfSMIf0ioDNxBkCP4g8cczsuXS3fQbNqdkfBOmndxS8
-pCRyM2GYbPIkBuDQY0ZzzMD4zI0buUcQqgdbZbBGvGC/yI/8ymWQaTSjVUJwTdOT
-XlVp/c4vlJYQWweErTwHgtKHC1ZpU09qfnL/in2AZjD/xQ/4d+A7HjqVTLx6MdzL
-gdLoLT7+shzQrNZr5hVZRZFJIxlsGDOO2gLBUyUFvdoZVzuRKXzIoo2XjF2OYHkA
-gLbMMaXMCnEwu1LJV++hC8Sj6VXo5FHay4H3X2kVCrt7GodpZ6jaZQ==
-=JLEG
+iQIcBAEBAgAGBQJPiGt1AAoJEBYNRVNeJnmT0mQP/joHG5GXPsWofNR4niSr51wL
+FKdqpIapxlIA+fJI+UmHVaS2uu094QOsWpXjpzCP0Lo1MmRDxGIySgx+N+QhCMjY
+NIUlr24QX4iVUJ6KVsKRYK8bZeF9nkYyB8Mc67ON60mLLMLt/HSwtTy/LBOjI/DO
+GzdG0YfU+aoxRMiW/Zg4De0mVaVys0RBeyMAVwNW2GXB3qNlprLD7UpMLqM8iTio
+MvEofvU8ljsb4y56I1vBBAq5rMkNnqOJY3FvOV2yf52JQ1/G8njtX/1+to1l8UNU
+sbWz1JPWf9KQDA1TXK5hVEfnQjVVt6/UaDgZcwqUJXN5sZomCVPdEm8RLj/zOe1a
+LWoXgrmuZvaFmwJf97zx4vxQ9knNscjmNQKA7g/qNNqApP8wqsgj+VwnkcuJmG9c
+IHCzicwU1vIYjF2wuA0t9/a+uw22qzdm3PLVNNcqXN7yinNNfFKL/xUzqyMS+QHy
+3oj3adwvEY+WUlJZ0lI34md/mp9pzmFE/pcMtCYyZ81OlREYfTYae1zOWqpvK3WL
+upxluLOtRlhB+Dc4W1cUvLWtLqWqq7+S4xxlDIQGyAX8eJJXxDg6g+J3ucpVygAU
+TmDyBdA0cMpO5Fu03Pt24ibnorsKTOUxL2tN3SD//7igJZK4B1/xGMPfz6c9SsZy
+DEI9L0Z+yvqnjWnr/t+H
+=nwmt
 -----END PGP SIGNATURE-----
