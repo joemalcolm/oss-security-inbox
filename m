@@ -1,84 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/3
-Message-ID: <5028957A.5090409@redhat.com>
-Date: Sun, 12 Aug 2012 23:49:46 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/13/2
+Message-ID: <20120413104635.GA7230@kludge.henri.nerv.fi>
+Date: Fri, 13 Apr 2012 13:46:35 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>
-Subject: Re: Tunnel Blick: Multiple Vulnerabilities to Local Root and DoS (OS X)
+Subject: Re: CVE-request: Wikidforum 2.10 multiple XSS and SQL-injection vulnerabilities SSCHADV2012-005
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Apr 12, 2012 at 12:55:01PM -0600, Kurt Seifried wrote:
+> > http://osvdb.org/show/osvdb/80840 Wikidforum Advanced Search
+> > Multiple Field SQL Injection
+> Also I couldn't really confirm the SQL injections so not assigning a
+> CVE, if you can find confirmation I'll assign a CVE.
 
-On 08/11/2012 09:31 AM, Jason A. Donenfeld wrote:
-> Hi,
-> 
-> Tunnel Blick, a popular OpenVPN manager for Macintosh, has several 
-> vulnerabilities in an SUID helper. I'm not sure if this is the
-> place to report vulnerabilities in Macintosh software, but Tunnel
-> Blick is open source.
-> 
-> From the bug report [1] on the vulnerable code [2]:
-> 
-> 1. A race condition in file permissions checking can lead to local
-> root. (PoC: [3])
-> 
-> 2. Insufficient checking of merely 0:0 744 can lead to local root
-> on systems with particular configurations.
-> 
-> 3. Insufficient validation of path names can allow for arbitrary 
-> kernel module loading, which can lead to local root.
-> 
-> 4. Insufficient validation of path names can allow execution of 
-> arbitrary scripts as root, leading to local root. (PoC: [4])
-> 
-> 5. Insufficient path validation in errorExitIfAttackViaString can
-> lead to deletion of files as root, leading to DoS.
-> 
-> 6. Allowing OpenVPN to run with user given configurations can lead
-> to local root.
-> 
-> Left one out.
-> 
-> 7. Race condition in process killing.
+With "'" as input to select_sort:
 
-Sorry maybe it's just late but I'm not finding any links to the
-vulnerable code/fixed code which makes it difficult to verify these
-issues. If you could put links to the affected code/lines so I can
-quickly verify that would be helpful. E.g. I might need to merge some
-of these (#3 and #4 and #5 for example are all input validation?).
+You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\\\' asc' at line 1select * from posts where parent_post_id IS NULL AND status=1 AND user_id=0 AND (post LIKE '%foo%' OR title LIKE '%foo%') and status IN (1) order by \\\' asc
 
-> Thanks, Jason
-> 
-> [1] http://code.google.com/p/tunnelblick/issues/detail?id=212 [2]
-> http://code.google.com/p/tunnelblick/source/browse/trunk/tunnelblick/openvpnstart.m?r=2095
->
-> 
-[3] http://git.zx2c4.com/Pwnnel-Blicker/tree/pwnnel-blicker.c
-> [4]
-> http://git.zx2c4.com/Pwnnel-Blicker/tree/pwnnel-blicker-for-kids.sh
->
-> 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+My friend told me that this can escalate in case of bad permissions or bad MySQL setup, but I do not have better PoC for this list. At least one can't chain for example SELECT foo FROM bar;DROP TABLE users;--
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+http://dev.mysql.com/doc/refman/5.5/en/select.html
 
-iQIcBAEBAgAGBQJQKJV6AAoJEBYNRVNeJnmTUKoP/RFPVbuAKsrTOKea0fbSVXA5
-gVqmHHuK0vEmJfi4HaUhKUsV5Vx+fq08TR+16CCYhCJwfZhzPcUPSYyswaXuP0Wi
-ZR8d+/jRPxRssBNeHkOey6ec2SaVwCJtVjnpaJAz0URE9421DX8217J9daOxcpK9
-WVelp+jJuye9n5ykezGIg/dufZ3LMvZmdDHaD7Wce7Lx3dfvSSjSjwZZAPM36uzY
-WpTdil0pvv/wmmN4tECUOCC2oEaroJc8iKQa3/U3RHFUtIPRvNanS++uKmVgNSrk
-FP/xZie4TrduciHxTPUEfx3ubiLEqQO0Xm90EU6l6zesIqeNSxt7O42V9UX0ukk4
-6PqkC/u/NbGfxm+W+GGOuN0HHEhl0Xvpq/kUKSIqCVHchEeWP/S59VbM48/0MhEC
-kWpbaKrOEfA9RG9uChYRiM3B4AO71yCRCksy+8QcvlOldoVnbGA239+aQ82CbCr3
-JC+rDJyViyzj7p06cF03lZ6WZ5zgbRBtp6Ijn7MXRV55fpYuCIyC83js9Mp6DZaT
-+wnUM0iy5CzbKXUmcslw3//t6QO3+aVD0hiYK4HrjUYq4rwY+E8IYd5Hn5F7Tim5
-rgrghd56GMe4cBn03/GUs6xVourQdUjyObN3MuLl+I8B9st34+AM0eSLvEeF+shE
-yXjS0VBOlI2YOK46f/DK
-=D+SB
------END PGP SIGNATURE-----
+- Henri Salo
