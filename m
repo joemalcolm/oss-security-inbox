@@ -1,63 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/3
-Message-ID: <20121219053959.GC23062@kroah.com>
-Date: Tue, 18 Dec 2012 21:39:59 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/15/1
+Message-ID: <20120415080358.GB20272@kludge.henri.nerv.fi>
+Date: Sun, 15 Apr 2012 11:03:58 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Plug-and-wipe and Secure Boot semantics
+Subject: Re: CVE-request: Wikidforum 2.10 multiple XSS and SQL-injection vulnerabilities SSCHADV2012-005
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 18, 2012 at 03:52:50PM +0100, Florian Weimer wrote:
-> On 12/18/2012 03:41 PM, Greg KH wrote:
-> >On Tue, Dec 18, 2012 at 01:46:47PM +0100, Florian Weimer wrote:
-> >>Some UEFI machines seem to boot from USB by default, without any
-> >>prompting, probably assuming that a signed boot loader cannot cause
-> >>any damage.
-> >
-> >Specific model name(s) please?
-> 
-> Lenovo M72e 0896A9G
+On Fri, Apr 13, 2012 at 10:08:03AM -0600, Kurt Seifried wrote:
+> Have you actually verified this first hand (e.g. done a successful SQL
+> injection attack) against an installation of Wikidforum?
 
-Thanks for that, I'll try to track one down, that's a very odd behavior,
-but, in reading the spec, I can't see how it violates it at all.
+Nope. My SQL-injection guru-powers are not enough for this. I think something bad could be done via those unescaped inputs, but at the moment I can't make a proper PoC for the list so my vote goes for "no CVE" until someone gives working PoC for this.
 
-> This is a business-class Windows 8 machine which comes with a
-> Windows 8 logo sticker, so Secure Boot was enabled in the factory
-> (and my testing reflected that).  I'm not sure if the type number
-> encodes that—Lenovo surely offers essentially the same hardware with
-> Secure Boot disabled by default, so that customers can install
-> Windows 7 more easily.
-> 
-> >>Most signed Linux boot loaders only verify the kernel (and,
-> >>indirectly, code that's loaded into the kernel), but not the
-> >>initrd contents.
-> >
-> >Given that there is only one public signed Linux boot loader, saying
-> >"most" is a bit odd here :)
-> 
-> Uhm, aren't there a couple of them in circulation?
+I also created this item (no response yet) http://www.wikidforum.com/forum/forum-software_29/wikidforum-support_31/sschadv2012-005-unfixed-xss-and-sql-injection-security-vulnerabilities_188.html
 
-Not that I know of, all of the "public" ones are based on Matthew
-Gerritt's code, do you know of another one that has made it through the
-Microsoft signing process?
-
-> The Fedora 18 TC3 installer boots on the machine mentioned above, in
-> the factory default configuration.  Previous installer versions
-> showed a Secure Boot error message.  I've run into an installer bug,
-> though:
-> <https://bugzilla.redhat.com/show_bug.cgi?id=888232>
-
-Previous versions of Fedora 18 betas didn't have a valid signed
-bootloader to allow anything to be installed, are you sure it's all
-properly built now?
-
-Also, there is a bug in Matthew's signed shim code that fails on some
-machines (like the one I have), so you might want to work on getting the
-bugfix into your build/sign/distro creation process.
-
-But, more on-topic, how does UEFI secure boot have anything to do with
-this mailing list?
-
-thanks,
-
-greg k-h
+- Henri Salo
