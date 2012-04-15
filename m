@@ -1,24 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/3
-Message-ID: <20120201041229.GA6581@openwall.com>
-Date: Wed, 1 Feb 2012 08:12:29 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: Apache HTTP Server 2.2.22 Released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/15/3
+Message-ID: <CAPYM6VxfmoDZoyxGjp1gj=3sN6w1-z8DsCcqMcac7=hjBJ5x_g@mail.gmail.com>
+Date: Mon, 16 Apr 2012 00:34:10 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
+Subject: FastPath Webchat | Multiple Cross Site Scripting Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 31, 2012 at 07:49:05PM -0700, Kurt Seifried wrote:
-> On the other hand how much overlap do we want with full-disclosure/bugzilla?
+1. OVERVIEW
 
-You mean with full-disclosure/Bugtraq (not Bugzilla)?
+Fastpath WebChat is vulnerable to Cross Site Scripting.
 
-I think there will be quite little overlap.  Neither of these lists has
-anything resembling the full set of security issues even in popular Open
-Source projects posted to it - they receive small and arbitrary subsets
-instead (plus lots of other stuff that would be offtopic here).  With
-mostly CVE requests in here, we also have an arbitrary subset (albeit I
-think a larger one).  If we expand that to have good coverage of at
-least popular projects that many of us use, that would actually make
-this list more unique.
 
-Alexander
+2. BACKGROUND
+
+Fastpath WebChat is part of the Fastpath product. It provides a way
+for users to begin chatting with support agents using Fastpath.
+Fastpath is a plugin of OpenFire, a real time collaboration (RTC)
+server for instant messaging.  Fastpath provides queuing and routing
+for instant messaging to intelligently link people together.
+
+
+3. VULNERABILITY DESCRIPTION
+
+Multiple parameters were not properly sanitized, which allows attacker
+to conduct Cross Site Scripting attack. This may allow an attacker to
+create a specially crafted URL that would execute arbitrary script
+code in a victim's browser.
+
+
+4. VERSIONS AFFECTED
+
+4.0.0 (released date: Aug 5, 2008)
+
+
+5. VULNERABLE PARAMETERS
+
+File: webapp/agentinfo.jsp	
+Parameters: agentName, emailValue, jid, nameValue, title
+
+File: webapp/chat-ended.jsp	 	
+Parameter: workgroup
+
+File: webapp/chatmain.jsp	
+Parameters: chatID, workgroup
+
+File: webapp/chatroom.jsp	
+Parameters: email, jid, userNickname, question
+
+File: webapp/contact-agent.jsp	
+Parameter: email
+
+File: webapp/email/leave-a-message.jsp	
+Parameter: workgroup	
+
+File: webapp/email/offline-mail.jsp	 	
+Parameter: workgroup
+
+File: webapp/queue_updater.jsp	 	
+Parameters: chatID, workgroup	
+
+File: webapp/style.jsp
+Parameter: 	 workgroup	
+
+File: webapp/transcriptmain.jsp	
+Parameters: 	chatID, workgroup
+
+File: webapp/transcriptsrc.jsp
+Parameters:  from, text
+
+
+6. SOLUTION
+
+Fastpath WebChat is no longer in active development.
+Ref: http://www.igniterealtime.org/projects/openfire/plugins.jsp
+Ref: http://fisheye.igniterealtime.org/browse/svn-org/openfire/trunk/src/plugins/fastpath/src/web
+
+
+7. VENDOR
+
+Jive Software
+http://www.jivesoftware.com/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2012-04-15: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5Bfastpath-webchat%5D_multiple_cross_site_scripting
+What XSS Can Do: http://yehg.net/lab/pr0js/view.php/What%20XSS%20Can%20Do.pdf
+XSS FAQs: http://www.cgisecurity.com/articles/xss-faq.shtml
+XSS (wiki): http://en.wikipedia.org/wiki/Cross-site_scripting
+XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
+CWE-79: http://cwe.mitre.org/data/definitions/79.html
+
+
+#yehg [2012-04-15]
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
