@@ -1,30 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/03/2
-Message-ID: <alpine.LFD.2.03.1305031634410.15970@redhat.com>
-Date: Fri, 3 May 2013 16:52:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Linux kernel: chipidea: allow disabling streaming in host mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/16/2
+Message-ID: <20120416065255.GA22663@suse.de>
+Date: Mon, 16 Apr 2012 08:52:55 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: dapal@...ian.org
+Subject: Re: CVE id request: wicd
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
 
-Linux kernel built with the ChipIdia Highspeed Dual Role Controller 
-(CONFIG_USB_CHIPIDEA) along with the ChipIdea host controller 
-(CONFIG_USB_CHIPIDEA_HOST) modules, is vulnerable to a kernel crash. It occurs 
-while streaming content over network via USB/Ethernet adapter
+Training classes were teached to read our bugzilla:
 
-A user/program could use this flaw to crash the kernel resulting in DoS.
+https://bugzilla.novell.com/show_bug.cgi?id=681125
 
-Upstream fix:
--------------
-  -> https://git.kernel.org/linus/929473ea05db455ad88cdc081f2adc556b8dc48f
+:)
 
-Reference:
-----------
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=959210
+l8er,
+Sebastian
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+On Wed, Apr 11, 2012 at 01:50:37PM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 04/11/2012 10:39 AM, Nico Golde wrote:
+> > Hi, can someone please assign a CVE id to wicd for: 
+> > http://www.infosecinstitute.com/courses/ethical_hacking_training.html
+> >
+> > 
+> http://bugs.debian.org/668397
+> > 
+> > It seems possible to get wicd to execute scripts via dbus messages
+> > due to broken filtering.
+> > 
+> > 
+> > Cheers Nico
+> 
+> Please use CVE-2012-2095 for this issue.
+> 
+> 
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+> 
+> iQIcBAEBAgAGBQJPheCNAAoJEBYNRVNeJnmTVjAP/jpOHueKpaiyhRRaZWyGAY4X
+> LbLXzbAbE5ttaRjVUYQS54aQpWfLy8oojBLujlU6W7mkH3Nwy+Lpf257aeahF5BR
+> KZPiWLMkSVh82a7YQrfjz3GBpn3/MJKjBQjswEEkPGFTDvp0zHkzihvnAr4vgNnt
+> kBLm3vmMryhjnXrdxQbsz/89NzW3Y0FJYe4psBgfhMQFYsigwE+7XM2uwtV2slRo
+> 5teb4EgleDOyH0wFPRakGfwvSZuS+5JdXws7HTUJfQWyyJJ8NEptCa92zW9qNgoa
+> RwHj69tkEf8AuXrl9v7TnKzvZ60LBqM69wwWR7JNz3yGnTo/a8StuplusORai3rp
+> b3/VJhe+ukPoUs4tkTBk6O26djZdBgJmkXMjTfce8E0koUgKGZEeG6g0FH5Qednw
+> cCDKpQDlIpBCfgiHIwv2QVfvF++kJhsbYwkibWTtVjtAyxI2l/0XnDP7vLea0xIO
+> wWfoj4Z7dyGux2i3tqGPgYVEkw5ccAmSeYjTX6Y8pn7SSOSvIRb5p2IAXvxqKgmN
+> VRTa+d9L0h9NJOKmiWGQfbW9WDe1txDO7Lnok5Oes7Kbt0R6Cz9yjieFBLWoA85F
+> z6AMjNGhJCKidyQ5Hm5GHUNcFuclYLm7rGPy0QHDwjBwIbfW1Hxm/rMgshewlS5u
+> gAicaLlQgONEYNmPPsce
+> =mFVG
+> -----END PGP SIGNATURE-----
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
