@@ -1,73 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/12
-Message-ID: <4FBBD6C7.9040900@redhat.com>
-Date: Tue, 22 May 2012 12:11:19 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/16/9
+Message-ID: <4F8C73B4.8000807@redhat.com>
+Date: Mon, 16 Apr 2012 13:32:04 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: maximilian attems <max@...o.at>, Dan Rosenberg <dan.j.rosenberg@...il.com>, klibc@...or.com
-Subject: Re: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>, jpff@...bath.ac.uk
+Subject: Re: CVE Requests: Multiple security flaws in csound5
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/22/2012 11:30 AM, Kurt Seifried wrote:
-> On 05/22/2012 03:18 AM, maximilian attems wrote:
->> On Wed, 18 May 2011, Dan Rosenberg wrote:
+On 04/15/2012 11:28 PM, Huzaifa Sidhpurwala wrote:
+> Hi Folks,
 > 
->>> On Wed, May 18, 2011 at 4:29 PM, maximilian attems
->>> <max@...o.at> wrote:
->>>> On Wed, May 18, 2011 at 04:13:05PM -0400, Dan Rosenberg
->>>> wrote:
->>>>> Might it be worth fixing the insecure temporary file
->>>>> usage?
->>>>> 
->>>>> 122         snprintf(fn, sizeof(fn), "/tmp/net-%s.conf", 
->>>>> dev->name); 123         f = fopen(fn, "w");
->>>>> 
->>>>> What if someone else has already created that file, or put
->>>>> a symlink or hard link there?
->>>> 
->>>> for the initramfs case I don't see how. outside of initramfs 
->>>> usage I'd agree that this needs fixing.
->>>> 
->>> 
->>> Right, this only applies after boot is done.
+> Multiple security flaws were reported in csound5, details below. 
+> Can CVE ids be please assigned to these issues?
 > 
->> As klibc main target is initramfs usage this use case hasn't
->> come up much, so wasn't top priority. Just got reminded today by 
->> checking ipconfig backlog patches.
-> 
->>>>> What if someone overwrites your string with command
->>>>> injection characters despite your stripping?
->>>> 
->>>> please be more verbose, what example do you have in mind?
->>>> 
->>> 
->>> Sorry for not being clear.  If you're concerned about scripts 
->>> parsing this file while it has command injection strings in
->>> it, what's to stop someone from putting a malicious file there
->>> if one doesn't already exist?  It sounds like the scripts that
->>> depend on this file should probably be fixed here, or the file
->>> itself should be moved to a location where it's not writable
->>> by unprivileged users.
-> 
->> ipconfig in latest klibc git uses /run as you suggested. 
->> http://git.kernel.org/?p=libs/klibc/klibc.git;a=summary
-> 
->> thank you.
-> 
-> 
-> Please use CVE-2012-2382 for this issue.
+> 1. Integer overflow leading to buffer overflow in pv_import 
+> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=810802 
+> http://secunia.com/secunia_research/2012-7/ There seems to be two
+> patches for this issue. The earlier fix was incomplete and a second
+> patch had to be applied later.
 
-Please REJECT CVE-2012-2382, this is a duplicate of CVE-2011-1930, I
-didn't check far back enough (my bad).
+Please use CVE-2012-2106 for this issue.
 
-The original (correct assignment) is here:
-http://seclists.org/oss-sec/2011/q2/460
+> 2. Integer overflow leading to buffer overflow in lpc_import 
+> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=810807 
+> http://secunia.com/secunia_research/2012-6/ Though the commit date
+> does not match up with the date described in the secunia advisory,
+> this is the only commit which seems to match the flaw description.
 
-Thanks to the security vendor that pointed this out (they did not want
-public credit).
+Please use CVE-2012-2107 for this issue.
+
+> 3. Stack-based buffer overflow in lpc_import Reference: 
+> https://bugzilla.redhat.com/show_bug.cgi?id=810810 
+> http://secunia.com/secunia_research/2012-4/
+
+Please use CVE-2012-2108 for this issue.
+
+> 
+> John, Can you please review the patches and let us know if they
+> are correct?
+> 
+> Thanks!
+> 
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -77,17 +55,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPu9bHAAoJEBYNRVNeJnmTL8IQAIMEzlm10PF1VYv93J5QBeOI
-DiDrhGc91MucGviPU4SXJiha+YvV9zuEJfxiuaStR15XhkzHN9k4c89aQgmTHaVH
-lYbRMM8qCdhUyH9yz5br496riH8O7tVAdFE+cDoWo3JSmN+rRplN+Y4ibPduKY/B
-vfaw+GowQWT5Ff0cm75iWNuiW+agnktJIZODeOwoO2NJl6hXewAPdkE2CjMTNB21
-6WdLk47qXngVKum6KvhnBPG24IYJeNsi1P8rscATc01XqWgRXmeC94rLUWkXWbsX
-i8OgynKJtNQqP6luEa1mi5PauHviFsYHBYc4pRzvSIU4Gxl7N2cFO7Tf7mi45Qpm
-kY1bcAG7aVWCqLiqwI40JOZ9Z4FY3p/dboXaI8GmVbK06eMjjeBDlUx0C5xFZ9qJ
-Sn8tWbGkHaHfLMxInrc8yeYUVQ4u+NMs7NFyzCBDhNP7uN+8HhJqMTvCsEOlSIxP
-jIXbjI8NZ++eaLNGQyn0RtOa2+Z17XVKE+CoS+H4pfxGX66U/lHtRfxktkG5o9gH
-Cs5LIJMfbF3AOJ5uER9I5sqPw4qOCPQr5ip5jyamCTveYl4EcXAJsAdGOwIhuQB8
-4sfr49Bu2yItyj9+SBShk5JUVscYsZiPXPhP8WrtUnI9J72dvuwgFkZM8vyh1PPv
-bV1/9OFluB7Pkmz98j06
-=Yn84
+iQIcBAEBAgAGBQJPjHO0AAoJEBYNRVNeJnmTuuAQALefXrzioF+P9zVyGIEf7Mkf
+Ya63UHvrV4MBAvy8H0qokWCRldqWF/MdTUwkXEptx/wJKjtVolxZUmpvlHEPuliY
+uz9PK2y1JlGJ1/Gw5xIg1Wtd8fkESefTFEjJWGlUrmGhExnWujPtv2Ya9Ehw/Itx
+K9wzz6OInQiJNTM71WClMUaPImz9ba7x+8yuprpJMtgl0DxwVMRGjy5rdUTXRlO4
+TTyMbW78YizlrgmCvHyJJDq8EBEidxlR6uzPxVwA03TuRxdMFQ/xk7tF614wkwtM
+oXiohU2TTvpCYau7Kj0/eqdwpDppH0uFI++k6LWttBh1VvowYn8oKkzjD6ihuRNR
+9ne6KQalj1BzI7geXBRLar6DIlsPYJiRjdxGSmQ8K+MalaQ+b7En4tHIivLajiLj
+TqZlZ2zmGYUkFsCCJQqhxNOTzD80aRXJB/OsCt4C96dEYXzl3WW9/dtyZcAQMPJP
+tElfmgnR8ToUm3Dje29PO23/y2P++JLVYGKxo8dpBlX9238Mg7Rrpslk57w6MOxJ
+PNqPTDRetSxgfVD6Dw1y3x0to6Xblk/fMJYikMQeuT+I6k6MHACt2eKi5gBwu4lE
+hHJRJ9G3fmNyR/eshiJnjbW9W60nGC2hickYONAPyqu1oS8ls+soYx+TrU8CHuAM
+nzH15pbNUNC4hT6FdQMm
+=6g+2
 -----END PGP SIGNATURE-----
