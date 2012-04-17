@@ -1,23 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/9
-Message-Id: <201208280125.42079.geissert@debian.org>
-Date: Tue, 28 Aug 2012 01:25:41 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/17/5
+Message-ID: <20120417115417.GA26547@kludge.henri.nerv.fi>
+Date: Tue, 17 Apr 2012 14:54:17 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: secteam@...ebsd.org
-Subject: CVE for FreeBSD SCTP remote DoS?
+Cc: "security@...o3.org" <security@...o3.org>
+Subject: CVE-request: TYPO3-CORE-SA-2012-002 XSS in TYPO3 Core
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone,
+Hello,
 
-There appears to be a remote DoS (via a NULL pointer dereference in the 
-kernel) vulnerability in FreeBSD's SCTP implementation[1].
+Marcus KrauseMember from the TYPO3 Security Team said they did not yet request CVE-identifier for this vulnerability released today so here we go.
 
-Has a CVE id been assigned to it already?
+Announce of XSS: http://lists.typo3.org/pipermail/typo3-announce/2012/000241.html
+Announce of new versions: http://lists.typo3.org/pipermail/typo3-announce/2012/000242.html
+Advisory: http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-002/
 
-[1]http://www.exploit-db.com/exploits/20226/
+Component Type: TYPO3 Core
+Affected Versions: 4.4.0 up to 4.4.14, 4.5.0 up to 4.5.14, 4.6.0 up to 4.6.7 and development releases of the 4.7 branch.
 
-Kind regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Problem Description: Failing to properly encode the output, the default TYPO3 Exception Handler is susceptible to Cross-Site Scripting.
+We are not aware of a possibilty to exploit this vulnerability without third party extensions being installed that put user input in exception messages.
+However it has come to our attention that extensions using the extbase MVC framework can be used to exploit this vulnerability if these extensions accept objects in controller actions.
+In general and especially when in doubt if the above conditions are met, we highly recommend users of affected versions to update as soon as possible.
+Imortant Note: In case you have configured your own exception handler for TYPO3 you need to make sure that the exception messages are properly encoded within this exception handler before they are presented.
+
+Solution: Update to the TYPO3 versions 4.4.15, 4.5.15 or 4.6.8 that fix the problem described!
+Credits: Credits go to Security Team Member Helmut Hummel who discovered and reported the issue.
+
+- Henri Salo
