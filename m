@@ -1,73 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/21/3
-Message-ID: <508386BA.80901@redhat.com>
-Date: Sat, 20 Oct 2012 23:23:06 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/17/3
+Message-ID: <20120417093507.GA7896@kludge.henri.nerv.fi>
+Date: Tue, 17 Apr 2012 12:35:07 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: nicolas.alvarez@...il.com
-Subject: Re: CVE Request: viewvc 1.1.5 lib/viewvc.py XSS
+Cc: Hanno Böck <hanno@...eck.de>, Kurt Seifried <kseifried@...hat.com>, Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: CVE-request: WordPress 3.1.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I previously requested CVE-identifiers for two WordPress 3.1.1 issues (2011), which are still not assigned.
 
-On 10/20/2012 11:19 PM, Kurt Seifried wrote:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=691062
-> 
-> From: Nicolás Alvarez <nicolas.alvarez@...il.com> To: Debian Bug
-> Tracking System <submit@...s.debian.org> Subject: viewvc: XSS bug
-> in diff view Date: Sat, 20 Oct 2012 17:54:18 -0300 [Message part 1
-> (text/plain, inline)] Package: viewvc Version: 1.1.5-1.3 Severity:
-> important Tags: security
-> 
-> There is an XSS bug in the diff view, exploitable by people with
-> commit access to the repository. The "function name" lines returned
-> by diff (in the diff lines starting with @@) are not HTML-escaped.
-> 
-> Here's an example. Add this file to a SVN repository:
-> 
-> blah x <script>alert("XSS!");</script> one context two context 
-> three context trigger
-> 
-> Commit it. Next, change the line labeled 'trigger', and commit
-> again. The diff produced by the second commit is:
-> 
-> @@ -3,4 +3,4 @@ x <script>alert("XSS!");</script> one context two
-> context three context -trigger +trigger X
-> 
-> When telling ViewVC to show the diff of that file for the last
-> commit, it doesn't HTML-escape the <script>, so it gets executed.
-> 
-> I'm attaching a patch that should fix this bug.
-> 
-> I don't have a CVE number. I haven't reported this upstream. I
-> quickly glanced at the upstream bug list and dev list archives and
-> it didn't seem to be already reported, but I didn't search
-> carefully.
+> 1) Certain unspecified input is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
+> http://osvdb.org/show/osvdb/72141
 
-I checked CVE (nothing for this) and the ChangeLogs/etc. This is
-indeed a new issue. Please use CVE-2012-4533 for this issue.
+Hanno Böck said in http://seclists.org/oss-sec/2012/q1/151 that CVE-2012-0287 is for this issue.
+
+======================================================
+Name: CVE-2012-0287
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-0287
+Phase: Assigned (20120103)
+Category:
+Reference: MISC:http://oldmanlab.blogspot.com/2012/01/wordpress-33-xss-vulnerability.html
+Reference: CONFIRM:https://wordpress.org/news/2012/01/wordpress-3-3-1/
+Reference: SECTRACK:1026542
+Reference: URL:http://www.securitytracker.com/id?1026542
+
+Cross-site scripting (XSS) vulnerability in wp-comments-post.php in
+WordPress 3.3.x before 3.3.1, when Internet Explorer is used, allows
+remote attackers to inject arbitrary web script or HTML via the query
+string in a POST operation that is not properly handled by the
+"Duplicate comment detected" feature.
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Current Votes:
+None (candidate not yet proposed)
+======================================================
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+It seems to be assigned for 3.3.1 and not for 3.1.1. Sorry for my mistake also in last emails.
 
-iQIcBAEBAgAGBQJQg4a6AAoJEBYNRVNeJnmTOm0P/3ZtfO5AjJ2XTpOHK6lya/fn
-23n/TZsInUHFL9jyKgeXEnRMrYEda5BYwoA1Ypd/umfVjUgM9N+yRo1ye9DADGxw
-+6pSFKDLo9MDHpSx0TjRerdFnxbnnf64dX1sPktXZxkJBVKmV5wlQghjNq3G4DdS
-ebhRYeIvhwkzCe4sy7zaOJt2/+GIi+GMeVejSwyqdaiOmfMCeGcZDbAhSbSVl8/q
-niCWcClOMcQsxJdEJtQZJzUHZaDpbuM6ETJsvmnL76+c0lcrnJZerxIC/Udpp6Ha
-okNZRwRM5Cjhza5MI6rtaO9+gKi9/F3WiU0Cgg2vf3tq3pScnm+fyZvY4HaBFB2V
-gVvomJLi8IN6rwZjpgPPt4rJObV4xYScdL7KqHrU2iEWmHvEeToOOoRWUtvPspiG
-ZdBehTy1K/ZF1w9cusU9oC1FK9xtHBNY5eyvN5mwyxKeDAe2jcwEYZHUBtuev/Hw
-REFTKCBrHek1sDiNfD/NF4AEN2QYiJRC+MgwWI5k/O8SHNF4JH+gBw05b7LJjU0X
-prj/owExb431fd3dOlqSKnx1EtVTUnDA4Z/H6hnYMvDVviRSsodkOimg2w36OVLZ
-//ook5dNxCb7kKJp2+crWLS+I8exzBDwkNtSC1xCJ1XtJTtng+J4EGiO0SodSV18
-eDwMJt8qjchOJElv1y4j
-=AINE
------END PGP SIGNATURE-----
+> 2) The "make_clickable()" function in wp-includes/formatting.php does not properly check the URL length in comments before passing it to the PCRE library, which can be exploited to cause a crash.
+> http://osvdb.org/show/osvdb/72142
+> 
+> http://wordpress.org/news/2011/04/wordpress-3-1-1/
+> http://secunia.com/advisories/44038/
+> http://seclists.org/cert/2011/63
+
+Still no CVE.
+
+> I even contacted WordPress administrators and asked if this does have CVE, but they haven't replied for some reason.
+
+Still no answer.
+
+Can we now assign CVE-identifiers for 3.1.1 issues, thanks? List of issues in 3.1.1 can be found from here http://core.trac.wordpress.org/query?status=closed&resolution=fixed&milestone=3.1.1&group=resolution&order=priority and related news article in here http://wordpress.org/news/2011/04/wordpress-3-1-1/
+
+- Henri Salo
