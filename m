@@ -1,31 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/22
-Message-ID: <4F553917.2010106@redhat.com>
-Date: Mon, 05 Mar 2012 15:07:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/17/1
+Message-ID: <20120417053135.GA10040@kludge.henri.nerv.fi>
+Date: Tue, 17 Apr 2012 08:31:35 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: lightdm
+Cc: advisories@...itunasecurity.com
+Subject: CVE-request: OpenEMR 4.1.0 SQL-injection
 Content-Type: text/plain; charset=utf-8
 
-On 03/05/2012 05:54 AM, Marc Deslauriers wrote:
-> Could we please get a CVE assigned to the following issue:
-> 
-> lightdm leaks file descriptors to child processes. A local attacker can use this to bypass
-> intended permissions and write to the log file, cause a denial of service, or possibly
-> have another unknown impact.
-> 
-> Bug:
-> https://bugs.launchpad.net/ubuntu/+source/lightdm/+bug/927060
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=658678
-> 
-> Thanks,
-> 
-> Marc.
-> 
-> 
+Hello,
 
-Please use CVE-2012-1111 for this issue.
+Can I get 2012 CVE-identifier for SQL-injection in OpenEMR 4.1.0, thanks.
+
+Original advisory: http://seclists.org/fulldisclosure/2012/Jan/27
+OSVDB: http://osvdb.org/78132
+
+"""
+Information
+--------------------
+Name :  SQL Injection Vulnerability in OpenEMR
+Software :  OpenEMR 4.1.0 and possibly below.
+Vendor Homepage :  http://www.open-emr.org
+Vulnerability Type :  SQL Injection
+Severity :  Critical
+Researcher :  Canberk Bolat
+Advisory Reference :  NS-12-001
+
+Description
+--------------------
+OpenEMR is a Free and Open Source electronic health records and
+medical practice management application. OpenEMR is ONC Complete
+Ambulatory EHR certified and features fully integrated electronic
+health records, practice management, scheduling, electronic billing
+and internationalization.
+
+Details
+--------------------
+OpenEMR is affected by a SQL Injection vulnerability in version 4.1.0.
+Example PoC url is as follows :
+
+http://example.com/interface/login/validateUser.php?u='%2b(SELECT%201%20FROM%20(SELECT%20SLEEP(25))A)%2b'
+
+You can read the full article about SQL Injection vulnerability from
+here : http://www.mavitunasecurity.com/sql-injection/.
+
+Solution
+--------------------
+The vendor released a patch for this vulnerability. Please see the references.
+
+Credits
+--------------------
+It has been discovered on testing of Netsparker, Web Application
+Security Scanner - http://www.mavitunasecurity.com/netsparker/.
+
+References
+--------------------
+Vendor Url / Patch : http://www.open-emr.org/wiki/index.php/OpenEMR_Patches
+MSL Advisory Link
+:http://www.mavitunasecurity.com/sql-injection-vulnerability-in-openemr/
+Netsparker Advisories : http://www.mavitunasecurity.com/netsparker-advisories/
+
+About Netsparker
+--------------------
+Netsparker® can find and report security issues such as SQL Injection
+and Cross-site Scripting (XSS) in all web applications regardless of
+the platform and the technology they are built on. Netsparker's unique
+detection and exploitation techniques allows it to be dead accurate in
+reporting hence it's the first and the only False Positive Free web
+application security scanner.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Netsparker Advisories, <advisories () mavitunasecurity com>
+Homepage, http://www.mavitunasecurity.com/netsparker-advisories/
+"""
+
+- Henri Salo
