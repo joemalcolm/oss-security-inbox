@@ -1,41 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/1
-Message-ID: <4F668F85.8080903@redhat.com>
-Date: Mon, 19 Mar 2012 09:44:37 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Mark Stanislav <mark.stanislav@...il.com>, "Adam D. Barratt" <adam@...m-barratt.org.uk>, Kurt Seifried <kseifried@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/17/2
+Message-ID: <20120417053439.GA24627@alf.mars>
+Date: Tue, 17 Apr 2012 07:34:40 +0200
+From: Helmut Grohne <helmut@...divi.de>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, 668667@...s.debian.org
+Subject: Re: CVE Request (minor) -- Two Munin graphing framework flaws
 Content-Type: text/plain; charset=utf-8
 
-On 03/17/2012 12:11 AM, Mark Stanislav wrote:
-> All points being made are very much valid and I certainly understand how
-> contextually oss-sec may be used to allocation requests under different
-> circumstances.
+Hi Kurt,
+
+Please always CC the bug report when adding detail to it. Doing it now
+for you.
+
+On Mon, Apr 16, 2012 at 01:19:32PM -0600, Kurt Seifried wrote:
+> > [3] Remote users can fill /tmp filesystem: Red Hat would not
+> > consider this to be a security flaw => no RH BTS entry.
+> > 
+> > Original report: 
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668667
 > 
-> So here's my situation, I'm up for suggestions (of which, "wait longer", is
-> perfectly viable!)...
+> I reread this one a few times, I'm not clear on what:
 > 
-> 1) March 1st, I sent 2 of these CVEs over to Steve Christy at MITRE who had
-> previously allocated 9 prior CVEs in a day or two generally
-[...]
+> ==========
+> printf 'GET
+> /cgi-bin/munin-cgi-graph/localdomain/localhost.localdomain/vmstat-day.png?foo
+> HTTP/1.0\r\nHost: localhost\r\nConnection: close\r\n\r\n' | nc
+> localhost 80
+> 
+> Provided that the filename actually exists, munin will render the image
+> ==========
+> 
+> means exactly, does the file vmstat-day.png need to exist where? It
+> seems like if the image is of any size (say 20k or more) the
+> amplification (each get request = 20k of tmp space usage) and the
+> files have to be deleted manually it might qualify as a DoS.
+> 
+> helmut@...divi.de can you shed more light on this?
 
-I think the problem is simple.
+The basic requirement is that a plugin called vmstat is configured for
+the node localhost.localdomain. I just picked it as an example, cause it
+is present on my system. In practise any plugin for any host will do.
 
-Mark, if the patch is released, that means it's public even if the
-details are not publicly discussed. Provide the patch information (hash,
-link to the patch, etc), and we will assign CVE names. No one will be
-confused if there are duplicate names assigned to them.
+The filling of the disk works by choosing a unique query string for each
+request, because munin "caches" all theses images without ever deleting
+them and includes the query string in the filename. So you are right,
+that we get a base amplification of 20k/request.
 
-If you are not comfortable talking about these issues in public, sure,
-use http://oss-security.openwall.org/wiki/mailing-lists/distros. And we
-will follow-up from there.
+In addition munin parses parts of the query string. You are allowed to
+modify the size of the image. By choosing a path
+"....png?size_x=20000&size_y=20000&uniquestuff" you can do the same
+attack while simultaneously using a large image size. The raw image
+would be 381M (assuming 8bits/pixel) in this case. A png version will
+likely be smaller, say 4M? So now you have an amplification of
+4M/request. Note that this query can get a node into swapping, because
+rrdtool needs to create the whole image in main memory.
 
-Keep Steve and/or MITRE cc'ed.
+Hope this helps
 
-No one wants to make things difficult for you. If everyone does their
-part, names will be allocated very quickly.
-
-Thanks, Eugene
---
-Eugene Teo / Red Hat Security Response Team
+Helmut
