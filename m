@@ -1,39 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/4
-Message-Id: <201201061623.q06GNfCc002056@linus.mitre.org>
-Date: Fri, 6 Jan 2012 11:23:41 -0500 (EST)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE-2011-4858 confusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/17/6
+Message-ID: <CAPYM6VzizugSoudTJeuzmzqJ2e4jG9Fo3ivMNizCrR0AQpbZ4w@mail.gmail.com>
+Date: Wed, 18 Apr 2012 00:32:39 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
+Subject: Acuity CMS 2.6.x <= Cross Site Scripting
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+1. OVERVIEW
 
-The new CVE mapping for this Apache Tomcat issue is:
+Acuity CMS 2.6.x (ASP-based) versions are vulnerable to Cross Site Scripting.
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4858
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4084 (rejected)
+2. BACKGROUND
 
-(MITRE had previously been sent information about test cases and test
-results that suggested a different mapping. However, yesterday we
-received updated information about test cases and test results.)
+Acuity CMS is a powerful but simple, extremely easy to use, low
+priced, easy to deploy content management system. It is a leader in
+its price and feature class.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S S145
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
 
-iQEcBAEBAgAGBQJPBx8PAAoJEGvefgSNfHMdwCwH/RMtGSZ/DFJ91M5+o7XyW6CO
-jUpzceBMXk7UHbt89VZC974yQJ+kAQf9AjyWCfsknkalfZAWAiAgAJiqMq5+HoG4
-epMQ5zGG3KjqQrXqa+lo4+OyL0yuNyLp2MHBmaOoXFbSSSJCncJVhuhPYwFQZ+jI
-0QRKCck7ml3brEMQGfHAm7K2ImO4A/hbarUi1mNU5JUhfFoCGBt9ObNDVKsD1oLN
-X/wYMyoVz6PuiUWSb7r1HFFXFy7mqGaNc5GU6Fw8YveEC6B/EOZD/t4HkjyqYgJ/
-QI7yZ0QtCU0PG3fyPUdzMSsSiEI+MhWgGv93xEss4WsLodgQirvK2Pl5RGoY8/o=
-=ho10
------END PGP SIGNATURE-----
+3. VULNERABILITY DESCRIPTION
+
+"UserName" parameter is not properly sanitized upon submission to the
+URL, /admin/login.asp , which allows attacker to conduct Cross Site
+Scripting attack. This may allow an attacker to create a specially
+crafted URL that would execute arbitrary script code in a victim's
+browser.
+
+
+4. VERSIONS AFFECTED
+
+Tested in version 2.6.2.
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://localhost/admin/login.asp?UserName="><script>prompt(/xss/)</script>
+
+
+6. SOLUTION
+
+The Acunity CMS is no longer in active development.
+It is recommended to user another CMS in active development and support.
+
+
+7. VENDOR
+
+The Collective
+http://www.thecollective.com.au/
+
+
+8. CREDIT
+
+Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2012-04-17: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5Bacuity_cms2.6.x_(asp)%5D_xss
+
+
+#yehg [2012-04-17]
