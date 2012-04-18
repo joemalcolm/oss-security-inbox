@@ -1,43 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/16/1
-Message-ID: <4F8BAE07.9010803@redhat.com>
-Date: Mon, 16 Apr 2012 10:58:39 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: jpff@...bath.ac.uk
-Subject: CVE Requests: Multiple security flaws in csound5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/10
+Message-ID: <CAGXu5jLRSsY4__4uXssqZ7zzO7D8CNZJ7u-YBx-2_QhG1wOogQ@mail.gmail.com>
+Date: Wed, 18 Apr 2012 13:37:21 -0700
+From: Kees Cook <keescook@...omium.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Xorg input device format string flaw
 Content-Type: text/plain; charset=utf-8
 
-Hi Folks,
+On Wed, Apr 18, 2012 at 1:23 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 04/18/2012 01:28 PM, Kees Cook wrote:
+>> Hello,
+>>
+>> Adding an input device with a malicious name can trigger a format
+>> string flaw in Xorg's logging subsystem. For builds of Xorg
+>> lacking -D_FORTIFY_SOURCE=2 (or 32-bit systems lacking the fix to
+>> fortify[1]) this can lead to arbitrary code execution as the Xorg
+>> user, usually root. When built with fortify, this is a denial of
+>> service, since Xorg will abort.
+>>
+>> Proposed solution patch series can be found here: 1/4
+>> http://patchwork.freedesktop.org/patch/10000/ 2/4
+>> http://patchwork.freedesktop.org/patch/9998/ 3/4
+>> http://patchwork.freedesktop.org/patch/9999/ 4/4
+>> http://patchwork.freedesktop.org/patch/10001/
+>>
+>> -Kees
+>>
+>> [1]
+>> http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=7c1f4834d398163d1ac8101e35e9c36fc3176e6e
+>
+> So
+>>
+> are you asking for just the device name issue covered in
+>
+> http://patchwork.freedesktop.org/patch/10001/
 
-Multiple security flaws were reported in csound5, details below.
-Can CVE ids be please assigned to these issues?
+Yeah, but I wanted to point to the entire patch series, since that
+fix, I think, depends on pieces from the others.
 
-1. Integer overflow leading to buffer overflow in pv_import
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=810802
-http://secunia.com/secunia_research/2012-7/
-There seems to be two patches for this issue. The earlier fix was
-incomplete and a second patch had to be applied later.
-
-2. Integer overflow leading to buffer overflow in lpc_import
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=810807
-http://secunia.com/secunia_research/2012-6/
-Though the commit date does not match up with the date described in the
-secunia advisory, this is the only commit which seems to match the flaw
-description.
-
-3. Stack-based buffer overflow in lpc_import
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=810810
-http://secunia.com/secunia_research/2012-4/
-
-
-John, Can you please review the patches and let us know if they are
-correct?
-
-Thanks!
+-Kees
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Kees Cook
+Chrome OS Security
