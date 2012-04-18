@@ -1,25 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/4
-Message-ID: <CAFJuDmPK8PGZH2zo4fvMoT7xR09Nb_oWzMnX5zH-gA4ZzT1pAg@mail.gmail.com>
-Date: Fri, 10 Aug 2012 04:55:19 -0400
-From: Adam Caudill <adam@...mcaudill.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/9
+Message-ID: <4F8F22B3.4020100@redhat.com>
+Date: Wed, 18 Apr 2012 14:23:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: NeoInvoice Blind SQL Injection in signup_check.php
+CC: Kees Cook <keescook@...omium.org>
+Subject: Re: CVE request: Xorg input device format string flaw
 Content-Type: text/plain; charset=utf-8
 
-All,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There is a blind SQL injection issue with NeoInvoice
-(https://github.com/tlhunter/neoinvoice).
+On 04/18/2012 01:28 PM, Kees Cook wrote:
+> Hello,
+> 
+> Adding an input device with a malicious name can trigger a format 
+> string flaw in Xorg's logging subsystem. For builds of Xorg
+> lacking -D_FORTIFY_SOURCE=2 (or 32-bit systems lacking the fix to
+> fortify[1]) this can lead to arbitrary code execution as the Xorg
+> user, usually root. When built with fortify, this is a denial of
+> service, since Xorg will abort.
+> 
+> Proposed solution patch series can be found here: 1/4
+> http://patchwork.freedesktop.org/patch/10000/ 2/4
+> http://patchwork.freedesktop.org/patch/9998/ 3/4
+> http://patchwork.freedesktop.org/patch/9999/ 4/4
+> http://patchwork.freedesktop.org/patch/10001/
+> 
+> -Kees
+> 
+> [1]
+> http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=7c1f4834d398163d1ac8101e35e9c36fc3176e6e
 
-Requester: adam@...mcaudill.com
-Software: NeoInvoice
-Attack Type: Blind SQL Injection
-Vulnerable Code:
-https://github.com/tlhunter/neoinvoice/blob/5e7af94641cba17df9141e95108c369cfb6e6dd5/public/signup_check.php#L29
+So
+> 
+are you asking for just the device name issue covered in
 
-Affected Version: Current version; project doesn't seem to be using versions.
+http://patchwork.freedesktop.org/patch/10001/
 
-Status: Author has been notified; awaiting a response.
+or something additional? E.g. the logging shenanigans in
+http://patchwork.freedesktop.org/patch/9999/ ?
 
--- Adam Caudill
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPjyKzAAoJEBYNRVNeJnmTZIIQAIDlcZialKVe7hRljmOYQ/dw
+Gi+0mUR7vGe1hY4gFqoYjQfqsdOgQhHdfAU2j2l/BYJTwRpgAqs3ZcBLkCPsHWem
+1dR1ZCpCyOIMu5GJE+bxD9kb8GQIABIaQeOfRv6GYedCr0b3rvEbnAHYgRD2N92r
+tjmtYcyoEkF8OtdzhOGZGdtyvLqJ0as90B3gISZO0lqO9uniyDKQDfUHj7/RW0ad
+uX5F3cylWY6Moi5NO2I7BprqKa4ulOTABDpHVZ8JR4RVI1qeSsPwiAq6tqI+dRg0
+TCkYfQs+XHoKlAUx4azta0ts4WYQP67dx9wwR94vaHQtE0JdkYTYJEjBJTNlqODL
+jdvHJynanmHT+6OdOaQ+RGH2UTPo6ELl16eRW6PAd56HWuXq+wzJ7ZmiKI55EwU3
+NgHLSWTRpgrjPQu50ZMCZu2mIqzooab09w2FJdhElAkYUNOfxOhGVX7SMo1S5S98
+/1fRRu8qIanKz3TOIg1UvoYlsmhkPmzkODvQwYm8RVG9A/C7epud8Cesxe5+yzYQ
+0otI1yIUcZe7jZ/zCEzafVcQbKKsoSmp1cbGwZGQGD0toYe0smU3bEoISn7m3ZmF
+eXj7jNn9F2tEA/KpkzIjlC2kLXe3yB4EjLb9Vr6tGtaX1SkuEKg3ip2JL7DNRsrt
+kUOuXzYUeVpUpu8Pvax4
+=0t86
+-----END PGP SIGNATURE-----
