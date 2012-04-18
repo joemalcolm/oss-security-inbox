@@ -1,45 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/20
-Message-Id: <201208311742.15714.geissert@debian.org>
-Date: Fri, 31 Aug 2012 17:42:14 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/7
+Message-ID: <4F8EF639.7050006@redhat.com>
+Date: Wed, 18 Apr 2012 11:13:29 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: php header() header injection detection bypass
+CC: Henri Salo <henri@...v.fi>, advisories@...itunasecurity.com
+Subject: Re: CVE-request: OpenEMR 4.1.0 SQL-injection
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Friday 31 August 2012 13:38:16 Kurt Seifried wrote:
-> Apologies in advance for my questions but I'm a bit confused (also I
-> don't have access to PHP security bugs so I'm a bit in the dark here).
+On 04/16/2012 11:31 PM, Henri Salo wrote:
+> Hello,
+> 
+> Can I get 2012 CVE-identifier for SQL-injection in OpenEMR 4.1.0,
+> thanks.
+> 
+> Original advisory: http://seclists.org/fulldisclosure/2012/Jan/27 
+> OSVDB: http://osvdb.org/78132
+> 
+> """ Information -------------------- Name :  SQL Injection
+> Vulnerability in OpenEMR Software :  OpenEMR 4.1.0 and possibly
+> below. Vendor Homepage :  http://www.open-emr.org Vulnerability
+> Type :  SQL Injection Severity :  Critical Researcher :  Canberk
+> Bolat Advisory Reference :  NS-12-001
+> 
+> Description -------------------- OpenEMR is a Free and Open Source
+> electronic health records and medical practice management
+> application. OpenEMR is ONC Complete Ambulatory EHR certified and
+> features fully integrated electronic health records, practice
+> management, scheduling, electronic billing and
+> internationalization.
+> 
+> Details -------------------- OpenEMR is affected by a SQL Injection
+> vulnerability in version 4.1.0. Example PoC url is as follows :
+> 
+> http://example.com/interface/login/validateUser.php?u='%2b(SELECT%201%20FROM%20(SELECT%20SLEEP(25))A)%2b'
 >
-> 1) I don't see #54182 and #54006 in the PHP ChangeLog, have these been
-> fixed?
-[...]
-> 2) Are you saying that the "header injection detection bypass" wasn't
-> completely fixed by the patches for #54182 and #54006, and then
-> someone reported #60227, originally reported as #60028 which has been
-> fixed needs a second CVE (e.g. the "an incomplete fix for original
-> issue led to a second fix being pushed" thing)?
+>  You can read the full article about SQL Injection vulnerability
+> from here : http://www.mavitunasecurity.com/sql-injection/.
+> 
+> Solution -------------------- The vendor released a patch for this
+> vulnerability. Please see the references.
+> 
+> Credits -------------------- It has been discovered on testing of
+> Netsparker, Web Application Security Scanner -
+> http://www.mavitunasecurity.com/netsparker/.
+> 
+> References -------------------- Vendor Url / Patch :
+> http://www.open-emr.org/wiki/index.php/OpenEMR_Patches MSL Advisory
+> Link 
+> :http://www.mavitunasecurity.com/sql-injection-vulnerability-in-openemr/
+>
+> 
+Netsparker Advisories :
+http://www.mavitunasecurity.com/netsparker-advisories/
 
-All the bug reports I mentioned are about exactly the same issue. The non-
-public ones have been marked as duplicates of the public one.
+Please use CVE-2012-2115  for this issue.
 
-I'm aware of at least 5.4.0 RC5 containing the incomplete fix[1], but I don't 
-know in which exact RC version it made its way into. 5.4.0 beta2 was still 
-vulnerable to CVE-2011-1398.
 
-PHP 5.4.1 RC1 already had the proper fix.
 
-So, since at least PHP 5.4.0 had the incomplete fix, I guess a new CVE for 
-the incomplete fix is in order. Kurt, could you please assign one?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Please let me know if it's not clear enough yet.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-[1]http://svn.php.net/viewvc/?view=revision&revision=318820
-(referenced from #60227)
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+iQIcBAEBAgAGBQJPjvY5AAoJEBYNRVNeJnmTCfIQAJISQeUIZa5XtUU2Y/kZDuEM
+NRGkMD4ls2cLdQG8hJE5yPWNH887RhcyoLWkPZKETOygt1QsOs2YzRmae/irPE1M
+SBzijpDhommPYPs/RYUb6oaPv5nHZTD5y6ssN2sGDXZkStQdzEfdHxEagNgbIBYj
+4hQEZDtEt5cKGUyuWvdrlj7pOpu57L5wieeTf+FdgyOTpEXo5eujsxa/IpaAh0Oi
+u4NnVG8I26zCtPhJEYridHH8UUwjgcyzkjJiZmLDOInwfNB5ApFqOUNLu/QGo0sU
+jLEsevlXzj5f08+sNNadVp6LTbK1ns5KH/obc6OxOAkF4qgg7ZSwNXem9P6vkhJH
+mO/KvVH6V3l9fd6d/NF2OOzMBv/5dmSgjkpd3zTjEi4AE6PDIDfSOH8C0jqY/Bqx
+7wmxn0Fia3UP7IIhzC6kTavIcWWOPrTFHdUs9iwOXOQK/+MgqwD0gik1Atoc6h8N
+NE9+m4lKcEkMUNDGmTptV0ieEaQRI0tFKR6It3Ty5lHji/KLE9V+2r04LmMRwsiC
+4aJNBWRt0+MtK8x59+RA1Q9knOcNNvzAxQS/NOv1EBtL56ncHaql5FRdsR6HjQGr
+3jBd0IhbZGfQIT0gStRClFohNpe6m/XB4Kr1dHx/TkDPNILTvf9gAtHoO11Nba6/
+4gI6bP6IH5DyFmXfHaCR
+=0RXe
+-----END PGP SIGNATURE-----
