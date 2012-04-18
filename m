@@ -1,56 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/1
-Message-ID: <4FEAB168.3010305@redhat.com>
-Date: Wed, 27 Jun 2012 01:08:24 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/11
+Message-ID: <CAAPiX_LKARvNvPe-EFxOaU=Y=7juQaJOz50HKaf6PO56CvBu7g@mail.gmail.com>
+Date: Wed, 18 Apr 2012 16:50:54 -0600
+From: Greg Knaddison <greg.knaddison@...uia.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>, Luciano Bello <luciano@...ian.org>
-Subject: Re: CVE request: CSRF in eXtplorer
+Subject: CVE Request for Drupal Contributed Advisories on 2012-04-18
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 06/25/2012 04:34 PM, Moritz Muehlenhoff wrote:
-> Kurt Seifried wrote:
-> 
->>> John Leitch has discovered a CSRF vulnerability in eXtplorer: 
->>> http://www.autosectools.com/Advisories/eXtplorer.2.1.RC3_Cross-
->>>  site.Request.Forgery_174.html
->>> 
->>> Can you please assign a CVE id to it?
->>> 
->>> Cheers, luciano
->> 
->> Does this affect any versions other than just 2.1 RC3?
-> 
-> The upstream version, which is in Debian stable (2.1.0b6, I suppose
-> that refers to beta6) is affected and was released in 2010, so this
-> is not just a regression in a short-lived release candidate.
-> 
-> Cheers, Moritz
+Two releases today need CVEs:
 
-Please use CVE-2012-3362 for this issue.
+https://drupal.org/node/1538436 SA-CONTRIB-2012-060 - Commerce Reorder
+- Cross Site Request Forgery
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+https://drupal.org/node/1538704 SA-CONTRIB-2012-061 - Gigya - Social
+optimization - Cross Site Scripting (XSS)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Thanks,
+Greg
 
-iQIcBAEBAgAGBQJP6rFoAAoJEBYNRVNeJnmT67QQALffg4LsBWnWEKeeg7zzn52y
-Xt33VLQVGcuRPV89AF6csYA8DpukcGm7xdywp6mJugLnM+HwazpBBoO/eMGCUlYg
-aAord9gNLh6nmI76jXnDUq0djpSogpttw9zRuN9hI8w6OL/UqVTo4V8PfATPCasW
-OtA/q6SiYK6fED6TuZtsgln72C+llYVY6UZMee/DTgG5WtXRUwQ01o4Xn9ZXGR1Y
-GRZagMDDY2YJwcxrHxDt0b765gsQQDJq/jW7ECgybZL4OoRbp3DiHvXMzCSbs6fD
-Omon9c/rGVLdxwKbHymuvrbPnNVGNV1LOCTVVxN6ppeKL8TFoOaNB+/qmhZvg/fn
-cmNz0VpzZI/ZJ3u/8QFvhWwAnAytD8tNUPQ4NMcMcVt6ShhG/z43+x6Gel0KMRUA
-rpcT+4oL7dNUtL82CTZAph9UZ6/9OzsqDdp7MJSW0YfubKuIH1HuIKNStX3UvHwJ
-DkpTEkxkJIhgzXnwLabmVCHwmIRfwjBlPKdJ5BYjq+cQ61eiP8FRkQHbueFnEXv9
-DzKjnwwL211LcBUrXt5TivalM0BsLv4x1oDHKp3J1oHvhYxsH2AiLNnvCNbdtCfc
-rm0M0UXd0onFLDDZ9Nmit2b1aebj/ZayA0gFdiRCrtk7yfXXXRwgZxu/oOZzD5Nr
-HvtU+jE9UkhI3capbXK/
-=v3np
------END PGP SIGNATURE-----
+--
+Director Security Services | +1-720-310-5623
+Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
