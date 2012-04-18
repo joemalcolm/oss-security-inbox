@@ -1,45 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/16/3
-Message-ID: <20120716174759.GJ9791@redhat.com>
-Date: Mon, 16 Jul 2012 11:47:59 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/8
+Message-ID: <20120418192811.GO8020@outflux.net>
+Date: Wed, 18 Apr 2012 12:28:11 -0700
+From: Kees Cook <keescook@...omium.org>
 To: oss-security@...ts.openwall.com
-Cc: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com, montel@....org
-Subject: Re: CVE Request: KDE Pim
+Subject: CVE request: Xorg input device format string flaw
 Content-Type: text/plain; charset=utf-8
 
-* [2012-07-13 10:41:33 -0600] Kurt Seifried wrote:
+Hello,
 
->On 07/13/2012 06:25 AM, Marc Deslauriers wrote:
->> Hello,
->>
->> Could a CVE please be assigned to the following issue:
->>
->> Javascript and external images were being loaded while rendering
->> HTML email in kmail. The downloaded Javascript was then being
->> interpreted.
->>
->> See:
->>
->> https://projects.kde.org/projects/kde/kdepim/repository/revisions/dbb2f72f4745e00f53031965a9c10b2d6862bd54
->>
->>  https://bugs.launchpad.net/ubuntu/+source/kdepim/+bug/1022690
->>
->> Thanks,
->>
->> Marc.
->
->This seems like a security hardening issue to me, but I'm not a KDE
->person so did kdepim advertise itself as not executing JavaScript/etc?
+Adding an input device with a malicious name can trigger a format
+string flaw in Xorg's logging subsystem. For builds of Xorg lacking
+-D_FORTIFY_SOURCE=2 (or 32-bit systems lacking the fix to fortify[1])
+this can lead to arbitrary code execution as the Xorg user, usually
+root. When built with fortify, this is a denial of service, since Xorg
+will abort.
 
-Doing some digging, it looks like this was introduced in kdepim 4.4, and
-would not affect earlier versions.  Can anyone confirm this?
+Proposed solution patch series can be found here:
+    1/4 http://patchwork.freedesktop.org/patch/10000/
+    2/4 http://patchwork.freedesktop.org/patch/9998/
+    3/4 http://patchwork.freedesktop.org/patch/9999/
+    4/4 http://patchwork.freedesktop.org/patch/10001/
 
-I'm cc'ing Laurent Montel who made the commit, and who should be able to
-shed some light as to when the vulnerability was introduced, and also
-answer Kurt's question above.
+-Kees
 
-Laurent, any information you can provide would be appreciated.
+[1] http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=7c1f4834d398163d1ac8101e35e9c36fc3176e6e
 
 -- 
-Vincent Danen / Red Hat Security Response Team
+Kees Cook
+Chrome OS Security
