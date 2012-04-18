@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/23/6
-Message-ID: <CALYzWgyFwOpPAeSPUZieLw6OG02RUdkyePC=v3UY4SSs1LJ2aw@mail.gmail.com>
-Date: Wed, 24 Oct 2012 11:12:39 +1300
-From: Matthieu Aubry <matthieu.aubry@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/4
+Message-ID: <20120418051620.GA21131@alf.mars>
+Date: Wed, 18 Apr 2012 07:16:21 +0200
+From: Helmut Grohne <helmut@...divi.de>
 To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: XSS in piwik before 1.9
+Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, 668667@...s.debian.org
+Subject: Re: CVE Request (minor) -- Two Munin graphing framework flaws
 Content-Type: text/plain; charset=utf-8
 
-> I hate to break it to you but I did a quick file diff and the XSS
-> stuff is pretty easy to spot. Any attacker who wants to find the
-> vulnerability will, quickly. Not giving out information really only
-> harms the people that actually benefit from knowing (e.g. your users
-> and vendors, it's just one more thing to figure out).\
+On Tue, Apr 17, 2012 at 11:04:56PM -0600, Kurt Seifried wrote:
+> On 04/16/2012 11:34 PM, Helmut Grohne wrote:
+> > The basic requirement is that a plugin called vmstat is configured
+> > for the node localhost.localdomain. I just picked it as an example,
+> > cause it is present on my system. In practise any plugin for any
+> > host will do.
+> 
+> Is this the default configuration?
 
+I am not that sure about the defaults, because I changed them. However
+running a Munin without any plugins is pointless. It is like running a
+mail server that does not transport any mail. You don't even have to
+guess the name of a configured plugin, because those images are linked
+from the html. Finding a configured plugin is really no issue on any
+sane munin installation. Sane administrators may have to restricted
+access to munin to themselves as to not expose the monitoring results to
+the public though.
 
-We know and understand how diff work, remember that we are building a major
-open source software? So yes we are fully aware how easy it is to find XSS
-by doing a diff...
-
-We disagree that giving out exploits and more info about the hacks, will
-help security and our users : it will NOT.
-Supporting researchers to find security bugs in open source projects,
-however has helped us a lot: http://piwik.org/security/
-
+Helmut
