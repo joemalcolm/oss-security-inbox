@@ -1,56 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/3
-Message-ID: <4F7510E4.5090703@redhat.com>
-Date: Thu, 29 Mar 2012 19:48:20 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/6
+Message-ID: <4F8EF4A2.1030901@redhat.com>
+Date: Wed, 18 Apr 2012 11:06:42 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Hanno Böck <hanno@...eck.de>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: egroupware before 1.8.002 various security issues
+To: oss-security@...ts.openwall.com
+CC: Rich Felker <dalias@...ifal.cx>, musl@...ts.openwall.com
+Subject: Re: Stack-based buffer overflow in musl libc 0.8.7 and earlier
 Content-Type: text/plain; charset=utf-8
 
-On 03/29/2012 12:38 AM, Hanno Böck wrote:
-> Am Wed, 28 Mar 2012 23:04:07 -0600 schrieb Kurt Seifried
-> <kseifried@...hat.com>:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/18/2012 12:32 AM, Rich Felker wrote:
+> Name: Stack-based buffer overflow in musl libc 0.8.7 and earlier 
+> Software: musl 0.8.7 and earlier Software link:
+> http://www.etalabs.net/musl Vulnerability Type: Buffer overflow 
+> Severity: Critical
 > 
->> On 03/28/2012 10:26 AM, Hanno Böck wrote:
->>> http://comments.gmane.org/gmane.comp.web.egroupware.german/33144
->>>
->>>
->>> 
-" 1. Fixes regarding security issues like 'local file inclusion',
->>> 'sql injection', 'reflected xss' and 'open redirect'. "
->>> 
->> 
->> Make a list with specific requests and information please.
->> 
+> Software Description:
 > 
-> Local file inclusion: 
-> http://packetstormsecurity.org/files/101676/eGroupware-1.8.001.20110421-Local-File-Inclusion.html
-
-Please
+> musl is an implementation of the C/POSIX standard library for 
+> Linux-based systems. musl aims to be lightweight, fast, simple,
+> free, and correct in the sense of standards-conformance and safety,
+> and to meet requirements ranging from embedded systems and initrd
+> images to desktop workstations, mobile devices, and high-load
+> servers. Several build-from-source mini-distributions use musl as
+> their C library.
 > 
-use CVE-2011-4948 for this issue.
-
-> SQL injection in 1.8.001: 
-> http://packetstormsecurity.org/files/100179/eGroupware-1.8.001-SQL-Injection.html
-
-Please
+> Vulnerability Details:
 > 
-use CVE-2011-4949 for this issue.
-
-> reflected xss: 
-> http://packetstormsecurity.org/files/100180/eGroupware-1.8.001-Cross-Site-Scripting.html
-
-Please
+> musl's implementation of [v]fprintf swaps in a temporary FILE
+> buffer on the stack when writing to unbuffered streams such as
+> stderr. Under certain conditions where the buffer end pointer has
+> already been set to the address of the internal degenerate buffer
+> prior to the call to [v]fprintf, stdio internals can fail to bound
+> access to the temporary buffer. Large writes will then overflow the
+> temporary buffer and clobber stack contents, including potentially
+> the return address. Any program linked to musl which includes
+> potentially-large data from untrusted sources in its output to
+> stderr or other unbuffered streams is affected.
 > 
-use CVE-2011-4950 for this issue.
-
-> open redirect: 
-> http://packetstormsecurity.org/files/101675/eGroupware-1.8.001.20110421-Open-Redirect.html
-
-Please
+> Solution:
 > 
-use CVE-2011-4951 for this issue.
+> The vulnerability has been fixed in git, and the fix is to be
+> included in the upcoming 0.8.8 release. A patch which applies
+> cleanly to all recent releases is available on the musl mailing
+> list:
+> 
+> http://www.openwall.com/lists/musl/2012/04/17/1
+> 
+> Credits:
+> 
+> This vulnerability was discovered and fixed by the author (myself, 
+> Rich Felker) while debugging a crash occurring in test code
+> written for musl by Luka Marčetić as part of GSoC 2011.
 
--- 
+Please use CVE-2012-2114 for this issue.
+
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPjvSiAAoJEBYNRVNeJnmTzoEP/2S9w9zMzK7ILiSklpqgOqg3
+SRA3UfRYYeGrpRzCfVE/Sa/u4Jg/Cjh4a5qIFOu/wgcOrOWuAjiW4eybR9zlSlyt
+TBrLiKN+e197ADrRX8JWJjY3LrgASlmlYZWiUkqCrNcO9QeDg2fWvFFY7HOXnbD+
+tpdgTIMakAeON7HIQRvykUzxNYQhsiCZvosE4Bu6y1de7xavsqEW+FwV7OL/BjTN
+cSZKkp6A9M+hRRuaq07lSmOnYs5QTlb3PG8ObAo7dFWJzQLniAmKE4JIrtp7L93r
+eii0e6SB3uINb4RL3Q/aDEmjNzx1mRtNexUWqjPtftTZ/0mzOADMeOHcJvfio9B6
+fF3eKhBmPT0BhZUx/kI3Hc6hjo0MHZQw10p2iwpThkHzpFaMxVsts0CwnoI/r+Na
+jwnetYl04GvJnrwVzN+Ag4x+CeOhF/jw3zECHsJ4kJ1abacJFKXBJPgxFcAvqxiY
+U8oDX5hneNlM5hSXNEd0fVzINVgt1mamCwu/6nEsxBp6ydIua9PBZ+ZxdnRo2U/w
+ZdIQKMIc27dPjlCz0D8DgSsUx1dZvVRBTsLOGlSEFuATnvoUGK4vbzdlhtnoXEQ4
+QAKXQumNpj4J9wYlHirWArrs2g9sF5Aub7d2fGwMnG00b95Wpt+8/qmsrJxzti/5
+L8f0eePww7O8bW2Sz7Xx
+=Zkg2
+-----END PGP SIGNATURE-----
