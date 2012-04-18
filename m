@@ -1,29 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/26/3
-Message-ID: <20120726152511.GN12159@dhcp-25-225.brq.redhat.com>
-Date: Thu, 26 Jul 2012 17:25:12 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/5
+Message-ID: <20120418063258.GA32320@oevtugenva.nrevsny.pk>
+Date: Wed, 18 Apr 2012 02:32:58 -0400
+From: Rich Felker <dalias@...ifal.cx>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: recv{from,msg}() on an rds socket can leak kernel memory
+Cc: musl@...ts.openwall.com
+Subject: Stack-based buffer overflow in musl libc 0.8.7 and earlier
 Content-Type: text/plain; charset=utf-8
 
-Two similar issues:
+Name: Stack-based buffer overflow in musl libc 0.8.7 and earlier
+Software: musl 0.8.7 and earlier
+Software link:  http://www.etalabs.net/musl
+Vulnerability Type: Buffer overflow
+Severity: Critical
 
-1) Reported by Jay Fenlason and Doug Ledford:
-recvfrom() on an RDS socket can disclose sizeof(struct
-sockaddr_storage)-sizeof(struct sockaddr_in) bytes of kernel stack to
-userspace when receiving a datagram.
+Software Description:
 
-2) Reported by Jay Fenlason:
-recv{from,msg}() on an RDS socket can disclose sizeof(struct
-sockaddr_storage) bytes of kernel stack to userspace when other code
-paths are taken.
+musl is an implementation of the C/POSIX standard library for
+Linux-based systems. musl aims to be lightweight, fast, simple, free,
+and correct in the sense of standards-conformance and safety, and to
+meet requirements ranging from embedded systems and initrd images to
+desktop workstations, mobile devices, and high-load servers. Several
+build-from-source mini-distributions use musl as their C library.
 
-Both issues end in rds_recvmsg() so one CVE is sufficient.
+Vulnerability Details:
 
-Upstream commit:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=06b6a1cf6e776426766298d055bb3991957d90a7
+musl's implementation of [v]fprintf swaps in a temporary FILE buffer
+on the stack when writing to unbuffered streams such as stderr. Under
+certain conditions where the buffer end pointer has already been set
+to the address of the internal degenerate buffer prior to the call to
+[v]fprintf, stdio internals can fail to bound access to the temporary
+buffer. Large writes will then overflow the temporary buffer and
+clobber stack contents, including potentially the return address. Any
+program linked to musl which includes potentially-large data from
+untrusted sources in its output to stderr or other unbuffered streams
+is affected.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Solution:
+
+The vulnerability has been fixed in git, and the fix is to be included
+in the upcoming 0.8.8 release. A patch which applies cleanly to all
+recent releases is available on the musl mailing list:
+
+http://www.openwall.com/lists/musl/2012/04/17/1
+
+Credits:
+
+This vulnerability was discovered and fixed by the author (myself,
+Rich Felker) while debugging a crash occurring in test code written
+for musl by Luka Marčetić as part of GSoC 2011.
