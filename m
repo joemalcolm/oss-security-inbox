@@ -1,43 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/14/5
-Message-ID: <50CAEC23.20106@redhat.com>
-Date: Fri, 14 Dec 2012 10:06:43 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/14
+Message-ID: <4F902A9F.4060309@redhat.com>
+Date: Thu, 19 Apr 2012 09:09:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Robust XML validation
+Subject: Re: CVE request -- kernel: macvtap: zerocopy: vector length is not validated before pinning user pages
 Content-Type: text/plain; charset=utf-8
 
-On 12/13/2012 01:47 PM, Timo Warns wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->> I wonder if we should care about this in the sense that we should
->> prepare fixes, or if it is sufficient to recommend to validate against
->> trusted schemas/DTDs only.  (I've found an implementation which gets
->> right the things I tested so far, so efficient implementations aren't
->> impossible.)
->
-> Validating against trusted schemas/DTDs would not be sufficient in my
-> opinion. For example, such validations are not effective against the
-> billion laughs attack (http://en.wikipedia.org/wiki/Billion_laughs).
+On 04/19/2012 08:28 AM, Petr Matousek wrote:
+> Currently we do not validate the vector length before calling 
+> get_user_pages_fast(), host stack could be easily overflowed by 
+> malicious guest driver who gives us a descriptors with length
+> greater than MAX_SKB_FRAGS.
+> 
+> A privileged guest user could use this flaw to induce stack
+> overflow on the host with attacker non-controlled data (some bits
+> can be guessed, as it will be pointers to kernel memory) but with
+> attacker controlled length.
+> 
+> Proposed fix thread: 
+> http://marc.info/?l=linux-netdev&m=133455718001608&w=2
+> 
+> References: https://bugzilla.redhat.com/show_bug.cgi?id=814278
+> 
+> Thanks,
 
-True, entity expansion is required for XML parsing, strictly speaking, 
-not just for validation.  Some XML implementations use heuristics to 
-stop such attacks.  And of course, there's the big hammer of disallowing 
-all entity declarations.
+Please use CVE-2012-2119 for this issue.
 
-> Moreover, some projects deliberately decide against schema validation.
-> For example, when fixing CVE-2012-2665, LibreOffice developers have
-> decided against validating the manifest.xml against a schema or DTD.
-> If I understood correctly, the reason was that omitting validations
-> allows to open documents in a future format on a best-effort basis (as
-> an alternative to annoying the user with a "format not supported" message).
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-I'm not an expert on schema authoring.  (Actually, I once tried to 
-define an extensible XML schema and couldn't get it work.) Looking at 
-RELAX NG, there doesn't seem to be a way to say, "you can put any tag 
-here, but if its <myimportanttag>, it must have *this* structure, 
-either.  So it's probably feasible to validate during generation only, 
-to check that your hand-crafted code produces the expected document 
-structure.  Which is a bit odd.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
--- 
-Florian Weimer / Red Hat Product Security Team
+iQIcBAEBAgAGBQJPkCqfAAoJEBYNRVNeJnmTeNkP/153dMhF0c6w3gixH+SioOx+
+yOfM0eJRm2lG7qwaAyZI5J280IfuaTDDTG86eTrlNi66W25FVBTmgnHayN1PvTHT
+t3/ZUmu0jCdzfwbzNfAIuhv0RHgMSiVGb+ixaCZNv9zA80l7ltIKbQnKxADQlgzK
+THNzS+HiPCAgdaSGi3TfkOkhSnXDXS3HTFgfsHF0NZVS7ES5sd7wIjYnHRl72Ybf
+1oFDhFNZMFOj7Vnm0+ESPMzAJW+MdQDpA5HmKAMuA3rSUhVhccMgXIg3JjMg3g2W
+mqjrYgXllL1QzFyJ/3BaApcZH8+j75g3onII6Bh5RQ7tiYnDtdrr/U7XiTWCE6/I
+dQS4VSQTMoVZj4gN5JxO65gQunhTvrx4k1LM1s14nk5C3TNQf+WREqWKBwPhU06x
+/HzfMboCpAfu7blycKdTj1Ol+be2GeIMdyJIrRWLMYDvrx7mSbxFTesUAdJTGcQg
+ck3uVxw3yY7XFWXd7F7SS2acTDZJVBE4kbm7F3xOHRjR1/deHjOVcaJ81fzSH34e
+xP6syJsmNjxBTTQzC2wmoTeR9EiwjP/LHpb65kwLRCbD8B0qlY7b1E1x4sNkjjCB
+DQLGGC0W2n+mWQvaMlD6E9R+rs/cHVCmjkvjz0eQvGZm2I3NlljuL1H5NGsDcMJC
+Ne2SCBJcF86Hl5o1lq8n
+=pZNZ
+-----END PGP SIGNATURE-----
