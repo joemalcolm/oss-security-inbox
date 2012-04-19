@@ -1,30 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/9
-Message-ID: <20120717153527.47cde649@redhat.com>
-Date: Tue, 17 Jul 2012 15:35:27 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: faure@....org, laurent Montel <montel@....org>, Vincent Danen <vdanen@...hat.com>, Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: KDE Pim
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/4
+Message-ID: <20120419012346.GJ17759@kenyonralph.com>
+Date: Wed, 18 Apr 2012 18:23:46 -0700
+From: Kenyon Ralph <kenyon@...yonralph.com>
+To: Kurt Seifried <kseifried@...hat.com>, 668667@...s.debian.org
+Cc: oss-security@...ts.openwall.com, Helmut Grohne <helmut@...divi.de>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Bug#668667: CVE Request (minor) -- Two Munin graphing framework flaws
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 17 Jul 2012 14:06:40 +0200 David Faure wrote:
-
-> On Tuesday 17 July 2012 10:18:06 laurent Montel wrote:
-> > Security problem is that we allows to use javascript.
-> > In 4.4 we don't have it.
+On 2012-04-18T18:37:09-0600, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 04/17/2012 11:16 PM, Helmut Grohne wrote:
+> > On Tue, Apr 17, 2012 at 11:04:56PM -0600, Kurt Seifried wrote:
+> > > On 04/16/2012 11:34 PM, Helmut Grohne wrote:
+> > > > The basic requirement is that a plugin called vmstat is
+> > > > configured for the node localhost.localdomain. I just picked it
+> > > > as an example, cause it is present on my system. In practise
+> > > > any plugin for any host will do.
+> > > 
+> > > Is this the default configuration?
+> > 
+> > I am not that sure about the defaults, because I changed them.
+> > However running a Munin without any plugins is pointless. It is
+> > like running a mail server that does not transport any mail. You
+> > don't even have to guess the name of a configured plugin, because
+> > those images are linked from the html. Finding a configured plugin
+> > is really no issue on any sane munin installation. Sane
+> > administrators may have to restricted access to munin to themselves
+> > as to not expose the monitoring results to the public though.
+> > 
+> > Helmut
 > 
-> And here's a testcase for the actual bug.
-> In kmail, Ctrl+O, open this .mbox, click on the HTML version, enable
-> HTML rendering, a javascript messagebox pops up.
-> Not sure what can really be exploited here (xmlhttprequest?), but at
-> least this way one can prove that 4.4 isn't affected, and test the
-> 4.9 fix.
+> If anyone can comment on this (default/not), and if you install a
+> plugin does it expose it publicly or does the administrator have to
+> enable remote access?
 
-Impact may depend on what domain is used for those scripts.  E.g. if
-html attachments were treated as local files / having null domain, and
-the message view was using khtml, having JS enabled would be a real
-problem because of this https://bugs.kde.org/show_bug.cgi?id=235468
+The packaging of munin node determines whether it will install
+symlinks for enabling plugins. The packaging of munin master
+determines whether a configuration for your httpd is installed and
+activated.
+
+On Debian, symlinks to enable plugins are installed by default, and an
+apache2 configuration is automatically activated. So, on Debian, if
+your httpd is publicly-accessible, the munin pages and CGI will be
+publicly-accessible.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Kenyon Ralph
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
