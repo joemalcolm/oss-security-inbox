@@ -1,53 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/5
-Message-ID: <50DFB7CD.9080007@redhat.com>
-Date: Sat, 29 Dec 2012 20:41:01 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/10
+Message-ID: <1334838787.23713.29.camel@Brinn>
+Date: Thu, 19 Apr 2012 13:33:07 +0100
+From: Caolán McNamara <caolanm@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Tilmann Haak <tilmann.haak@....de>, tw-public@....de
-Subject: Re: CVE request: MoinMoin Wiki (XSS in rss link)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, officesecurity@...ts.freedesktop.org, David Tardon <dtardon@...hat.com>, Miklos Vajna <vmiklos@...e.cz>, Carlo Di Dato <shinnai@...istici.org>
+Subject: Re: [Officesecurity] CVE Request (minor) -- LibreOffice (X >= v3.5.0): DoS (excessive CPU use) in the RTF tokenizer
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, 2012-04-19 at 14:14 +0200, Jan Lieskovsky wrote:
+> Though Caolán , Miklos or LibreOffice upstream can clarify further if
+> this should be considered to be a security flaw (due to internal
+> implementation details I am not aware of and might lead to memory
+> corruption announced at [7]).
 
-On 12/29/2012 07:37 AM, Tilmann Haak wrote:
-> Hi all,
+nah, insta-crash with a -1 passed to new(...) so throws bad_alloc,
+"safe" crash.
+
+> But as noted earlier, I don't think this is a security flaw, which
+> should get a CVE identifier.
+
+indeed.
+
+> [8] https://bugs.freedesktop.org/show_bug.cgi?id=48640#c1 ('DoS PoC')
 > 
-> there is an XSS issue in MoinMoin wiki, version 1.9.5. Function 
-> rsslink() in "theme/__init__.py" does not properly escape the page
-> name parameter.
-> 
-> Details can be found at: http://moinmo.in/SecurityFixes
-> 
-> A fix is available at:
-> http://hg.moinmo.in/moin/1.9/rev/c98ec456e493
-> 
-> Could you please assign a CVE number?
-> 
-> kind regards, Tilmann
+> This one (on LibreOffice >= v.3.5.0 using the new RTF tokenizer implementation)
+> truly leads to denial of service (excessive CPU consumption and hang) while
+> trying to process that RTF file. So this case might be applicable
+> for CVE-2012-* identifier assignment.
 
+Dunno about this, I mean if we're going to go around assigning CVEs to
+every busy-hang we'd be knee deep in CVEs by the end of a week.
 
-Please use CVE-2012-6082 for this issue.
+C.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ37fNAAoJEBYNRVNeJnmTpYEP/A0cs4VB2U3aUQE03Toh7cHH
-j0hjXhMRImATSDwI61qay9CUOhm1Hr5G0bNXs7XWGy95wGaxOzX62i241dpWa7Bf
-qj1sWwDH960ZiVx9712B7Gxab6kVeQjpluBLqcpwazilh4mPjwES5a0AZuQbS0nw
-DrjbDvXs/bWFGLZf8PnQ/CWZWVOiO/4pXn8dcWaz2FA7ZwPK8FMn7gp5BvZAlzpI
-ruxOGpCJ5UiFgMFht/x8rk4HPf+vYnDbO5H9dvf68JyzTTG1klxqFSSYD5aEilLi
-P8WXL4Rfjmu/XPasW20tnPMmZq8720QU+jmuARNGAEpsKwE2aDdxk+qiJ12I4UYu
-HRHMsMEyvmPTrkGiwTx0ELoTwPTF8XASX6LhSir+tc/yO3Z5Rv+RzfIr1hUWj197
-NYk30W/m2XTJOWBc+hgLtmqMxJXwbcmRfdbribpok7O/pxVFToWufPui0uuQLuBg
-N90wgaFgGTVE1Zig6sWhzRSRtSgB6vngMDxNr4TTLXyij/jRZprN3Pj0miLCvyay
-lqP8+XNKC13yvSG+1rioHYVaoh7FlORHxTE2jLiQzaNWxoyNFlSTb0U4fGgDo8XC
-4YrAKZxQqGD1yK7pzeMUwhd159U6PGDH/cOr6gffmH2trp3oj2C9zml/BaZj5vJn
-teeSNebc390umJaM+HUm
-=kR7s
------END PGP SIGNATURE-----
