@@ -1,53 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/2
-Message-ID: <4F8638AC.4030407@redhat.com>
-Date: Wed, 11 Apr 2012 20:06:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/13
+Message-ID: <20120419142819.GH29881@dhcp-25-225.brq.redhat.com>
+Date: Thu, 19 Apr 2012 16:28:20 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Greg Knaddison <greg.knaddison@...uia.com>
-Subject: Re: CVE Request for Drupal Contributed Advisories on 2012-04-11
+Subject: CVE request -- kernel: macvtap: zerocopy: vector length is not validated before pinning user pages
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Currently we do not validate the vector length before calling
+get_user_pages_fast(), host stack could be easily overflowed by
+malicious guest driver who gives us a descriptors with length greater
+than MAX_SKB_FRAGS.
 
-On 04/11/2012 02:47 PM, Greg Knaddison wrote:
-> Hello,
-> 
-> Two releases today need CVEs:
-> 
-> http://drupal.org/node/1528614 SA-CONTRIB-2012-058 - Fivestar -
-> Input Validation
+A privileged guest user could use this flaw to induce stack overflow on
+the host with attacker non-controlled data (some bits can be guessed, as
+it will be pointers to kernel memory) but with attacker controlled
+length.
 
-Please use CVE-2012-2096 for this issue.
+Proposed fix thread:
+http://marc.info/?l=linux-netdev&m=133455718001608&w=2
 
-> http://drupal.org/node/1528864 SA-CONTRIB-2012-059 - Autosave -
-> Cross Site Request Forgery
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=814278
 
-Please use CVE-2012-2097 for this issue.
-
-> Thanks, Greg
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPhjisAAoJEBYNRVNeJnmTnfYQAM81Kv+wwD5giwUw6lScrbj+
-hUmUckKAHCEm/F+HyXHvTch9IeXGkyyMjpoze28rJlLc9FO8L4YEHxGyzjaR93DY
-r5jPApQpjDAzcWOfBqwij6J9zg9FooYg+T+hfgRqE9+HNUVM9C88jti04UgeV5ja
-SbR4vpJVs+iDFpoLQ6WZ7asHRJWossn9O2eS05Js+bi7UTysLy66DtocR4oxLHjC
-/piwKYP0oQGYw17SNZJJUeITwaYTjm0dmA9w60EZfrQByBtxNRo2A0elbm98+pnX
-5foUBnqh76iaqwPUUQZtfqiNa7x5DFfVoJPzL9Bv8D6VPQGiMgHfxGxIdlJAqXQG
-WYIqDvs5bi0Sz/e6Qm2rE69cZXvqP4enV2WOTehXceiHymc318xbSuRR+HwnMy4q
-rWYHjZI4a1V21vObzYvISVZ1kzQPAG/DMTxagfoGxNj7z2jVbrjNBv5KzxGKHgk+
-QecUN584NIvJmwy5kYf/9Sba4H/Ui2/wlpUTb1D4Zc4QixBVyVDXVk/vI4VCzhE2
-nqCLeqDonqE10Aw18+rGE3dNJhsJOxVTzUbL0tOFGAu5XLzjAJ7mtySUAnSAOHVN
-/2CeGLxI2OGZx+Tps1eq/pWUNC3zyzVUagorE/gyRbaL7GahYzWyy8qJqSw3Av4+
-Ft34INBVNXA8rCSXmDo5
-=O/Pw
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
