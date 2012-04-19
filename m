@@ -1,56 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/11
-Message-ID: <4FF7672B.7050001@redhat.com>
-Date: Fri, 06 Jul 2012 16:31:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: XSS in a Mono System.web error page
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/7
+Message-Id: <3261-Thu19Apr2012104028+0100-jpff@codemist.co.uk>
+Date: Thu, 19 Apr 2012 10:40:28 +0100
+From: john ffitch <jpff@...emist.co.uk>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE Requests: Multiple security flaws in csound5
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 07/06/2012 04:21 PM, Marcus Meissner wrote:
-> Hi,
-> 
-> A Nessus scan of a Novell product using Mono Web revealed a XSS
-> attack in the Mono System.Web library.
-> 
-> The Mono team commited a fix to their GIT.
-> 
-> References: https://bugzilla.novell.com/show_bug.cgi?id=769799 
-> https://github.com/mono/mono/commit/d16d4623edb210635bec3ca3786481b82cde25a2
->
->  The XSS is in the error popup of the "Forbidden extension" filter
-> method, which filters out e.g. ".dll" files.
-> 
-> Ciao, Marcus
-
-Please use CVE-2012-3382 for this issue.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP92crAAoJEBYNRVNeJnmT/NEP/RQhU2JTHMhkXz95QGgroEwv
-/VnhcCOLeJAI0e0pjCJdHmqgfx6wJ2+Munst4M53TNtzkzCwYm4IV4HSYpNn2YTg
-qAAAgGfB579WmrMuBs6FXkDCarmerq1XeGuPeHEte/Lt2ktbgtTMMWp2zAEEnoHj
-6Ab6xy/e1odohJieJxp8fg1ZsksB765AhU/pTQVSY0LEKYzOmX7mcLMxntOinGP+
-HqTuRa/ITr9B2YdgEJ5XbCjaUs4S9C1jsC4y/5teoI29XTBEHmw0+tMYouUJvRry
-Kc2SIGhgie8uOVas9m+5c58unRq35ya73zTNIYA0lBE4F6vt+NjkpPdFDAQHMKeT
-pQYyTtlT9o75gp/sQfTZWJPtYcwvxFCF928i+7lrd0gpFfa1v+38DLFgI7//oySZ
-PMg3AeDIgvtSMOBRal5/VQLG7WHW7ZLpugqbPmY+BRbSqY+plHSwoAFG3XKp7S2h
-OmLI6DBQMgfo/cOA2qU9DfmbJP6efWISZrjPsEOLamydV2QxqG9j28Hpu9WLFMin
-47f7aAQzAs290U8ZV2bRlMsS8yGZG6ZqNKH5imrwyZQVYiEX8UdOK2irHnAtaY/U
-4K8ymglnNYEO0UIF84dSL7o1kRyiMsKbMisSmCi1FhZAfDmVAh4s2HvIiObZpE/A
-b1w1Zo/3EKv6Av7E1SGw
-=gScU
------END PGP SIGNATURE-----
+As far as I am aware the code in sourceforge git repository fixes
+these potential errors.  The two-patch for 810802 related to
+misunderstanding of what the problem was as the notification I had
+was terse.
+==John ffitch
