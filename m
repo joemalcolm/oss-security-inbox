@@ -1,79 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/6
-Message-ID: <4FCF54CB.4030502@xync.org>
-Date: Wed, 06 Jun 2012 09:02:03 -0400
-From: Mark Hoopes <xync@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/1
+Message-ID: <4F8F5C20.7030109@redhat.com>
+Date: Wed, 18 Apr 2012 18:28:16 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Arbitrary File Upload/Execution in Collabtive
+CC: Greg Knaddison <greg.knaddison@...uia.com>
+Subject: Re: CVE Request for Drupal Contributed Advisories on 2012-04-18
 Content-Type: text/plain; charset=utf-8
 
-This disclosure was posted to Bugtraq yesterday 
-(http://www.securityfocus.com/archive/1/522973/30/0/threaded).  I am 
-submitting it to oss-security as a request to have a CVE ID assigned.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-TITLE: Arbitrary File Upload/Execution in Collabtive
-DATE: 06-04-2012
-PRODUCT: Collabtive Web-Based Project Management Software 
-(http://collabtive.o-dyn.de/)
-VERSIONS: 0.7.5, 0.6.1 confirmed.  All versions <= 0.7.5 probable
-RESEARCHER: Mark Hoopes (xync@...c.org/)
-ADDITIONAL INFORMATION: 
-http://xync.org/2012/06/04/Arbitrary-File-Upload-in-Collabtive.html
+On 04/18/2012 04:50 PM, Greg Knaddison wrote:
+> Hello,
+> 
+> Two releases today need CVEs:
+> 
+> https://drupal.org/node/1538436 SA-CONTRIB-2012-060 - Commerce
+> Reorder - Cross Site Request Forgery
 
-Vulnerability:
-During the upload of an avatar image for a Collabtive user, the 
-manageuser.php script checks the file type using the MIME type provided 
-in the POST request (via the $_FILES['userfile']['type'] variable) 
-rather than by extension.  This MIME type can be spoofed via an 
-intercepting proxy or custom POST script allowing a malicious user to 
-upload an arbitrary file.  This file will be placed in a predictable web 
-accessible path with an easily determined name.  In most installations, 
-execution from this directory is not restricted which allows a remote 
-attacker to execute a PHP script uploaded this way with the privileges 
-of the web user.
+Please use CVE-2012-2116 for this issue
 
-Access to the avatar upload function is restricted to logged in users, 
-but because of Collabtive's design decisions in implementing OpenID 
-support, this is easily accomplished.  If an unknown user supplies a 
-valid OpenID v1.0 URL as the username on the login page, Collabtive will 
-automatically create a new user based on the referenced credentials.  
-That new user is not authorized to access any projects, but is 
-authorized to upload an avatar image.  This allows an attacker with no 
-other knowledge of the host site or its users to exploit the vulnerability.
+> https://drupal.org/node/1538704 SA-CONTRIB-2012-061 - Gigya -
+> Social optimization - Cross Site Scripting (XSS)
 
-Fix:
-Upgrade to Collabtive v0.7.6 or greater
-Source: 
-http://sourceforge.net/projects/collabtive/files/collabtive/0.7.6/collabtive076.zip/download
-Release Notes: http://www.collabtive.o-dyn.de/blog/?p=426
+Please use CVE-2012-2117 for this issue
 
-Workaround:
-Disable script execution of the upload directory via .htaccess for 
-Apache or similar web servers.  This should apply at minimum to the 
-/files/[template]/avatar directory but can safely be applied to the 
-entire /files directory.
-
-Sample contents of the .htaccess file are:
-   Options -Indexes
-   Options -ExecCGI
-   AddHandler cgi-script .php .php3 .php4 .phtml .pl .py .jsp .asp .htm 
-.shtml .sh .cgi
-
-Note 'AllowOverride Options AddHandler' or 'AllowOverride All' must be 
-enabled in the main httpd.conf file for this directory or inherited from 
-a parent directory.
-See http://www.mysql-apache-php.com/fileupload-security.htm
-
-Additional References:
-http://xync.org/2012/06/04/Arbitrary-File-Upload-in-Collabtive.html
-
-http://www.php.net/manual/en/features.file-upload.post-method.php see 
-comments for $_FILES['userfile']['type']
+> Thanks, Greg
+> 
+> -- Director Security Services | +1-720-310-5623 Skype:
+> greg.knaddison | http://twitter.com/greggles | http://acquia.com
 
 
-TIMELINE:
-   April 18, 2012 - Issue reported to developers
-   April 19, 2012 - Fix committed to Collabtive github
-   May 30,  2012 - Collabtive version 0.7.6 released w/ fix
-   June 4, 2012 - Vulnerability published
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPj1wgAAoJEBYNRVNeJnmTghYP/iksiaHJvjzVANIxIgz8xcFp
+FA7baM4eWd/ca3DlfkFbtAGYb+5Uya7a3RfgiLda2NHllmZwBWYIdC4PguzpMA+b
+/Ezw2DhPzxsfWAGwVhI9VogSRZRVsCMA/eiofX+DbyWt7UKRmrwWG08IcWbeb9KA
+ekRYDU64OGkKSGfitcw+BF4xNlFRlLMAlrvgvKHCYxR7qT9f0SNdfpG1hp2IYQpP
+XUPl2vC817G6G8YEnxA/2TJM+p9TKJ3TDAG37FzE5IXd5OHVTsh5dG69ofsy2aIM
+EZ5aI+YmkaRDrISwULZauNrJstGG+hhp/hrn8PbNuwNjxAuYZep+aqT1WCByqWB8
+THcYbQHj4EA3UOpBszoLMD4QMfgZULMfqWhYjcQzXET6ssEkDUgSFz937U99TJk9
+kvBg8SWSYegbzRnYQG0pSzy13IkZf1PdziS8A3w16RxbUHCpnjJwncuhw1fBasNc
+013HB5Ym18mGOciLhceGPnQeGCd+OlbrIJQCGla7VusncPO08OnfX+UgfOP1aGV2
+RHqldklOJPg/81z/2IVuqnw2wiWzsxgKY62UZqKW50Ok+uX3euyQvsnEXA0MOlwo
+0N8Uoc+9wHhTDJNnTfCxEncoc52isn8+QpGnc++gKSoC+E+tD8v0bBD+AqayAW7F
+7eUVQGFUL3S9eBdrzWfX
+=05wj
+-----END PGP SIGNATURE-----
