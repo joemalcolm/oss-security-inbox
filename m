@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/3
-Message-ID: <20120109111733.GD8630@foo.fgeek.fi>
-Date: Mon, 9 Jan 2012 13:17:33 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/8
+Message-ID: <20120419105204.GE29881@dhcp-25-225.brq.redhat.com>
+Date: Thu, 19 Apr 2012 12:52:05 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: inbox@...efuller.co.uk
-Subject: Re: CVE request: znc
+Subject: CVE request -- kernel: kvm: device assignment page leak
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jan 08, 2012 at 04:39:48PM +0100, Moritz Muehlenhoff wrote:
-> Hi,
-> please assign a CVE ID to a DoS issue in the ZNC IRC bouncer.
-> 
-> I don't have a upstream reference, but the upstream patch applied 
-> by the Debian maintainer can be found here:
-> 
-> http://patch-tracker.debian.org/patch/series/view/znc/0.202-2/01-fix-bouncedcc-dos.diff 
-> http://packages.qa.debian.org/z/znc/news/20120107T145601Z.html
-> 
-> Cheers,
->         Moritz
+KVM uses memory slots to track and map guest regions of memory.  When
+device assignment is used, the pages backing these slots are pinned in
+memory using get_user_pages and mapped into the iommu.  The problem is
+that when a memory slot is destroyed the pages for the associated memory
+slot are neither unpinned nor unmapped from the iommu.
 
-Here is the changelog: http://wiki.znc.in/ChangeLog/0.202
-This looks a bit like Debian-patch: https://github.com/znc/znc/commit/6ae491ca66e8f7d8c4fe3caca3adbe147c7e552c#modules/bouncedcc.cpp
+The problem is that those pages are now never unpinned and continue to
+have an increased reference count.  This is therefore a potential page
+leak from the kvm kernel module.
 
-- Henri Salo
+On Red Hat Enterprise Linux, local user with ability to assign devices
+could use this flaw to DoS the system.
+
+With upstream qemu-kvm/kvm privileged guest user that could hotunplug
+and then hotplug back certain devices could potentially use this flaw to
+DoS the host.
+
+Upstream fix:
+http://git.kernel.org/?p=virt/kvm/kvm.git;a=commit;h=32f6daad4651a748a58a3ab6da0611862175722f
+
+References:
+https://lkml.org/lkml/2012/4/11/248
+https://bugzilla.redhat.com/show_bug.cgi?id=814149
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
