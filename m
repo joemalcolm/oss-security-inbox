@@ -1,53 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/29/2
-Message-ID: <4F9CE5F3.4090906@redhat.com>
-Date: Sun, 29 Apr 2012 00:55:47 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/17
+Message-ID: <4F9035C4.8030103@redhat.com>
+Date: Thu, 19 Apr 2012 09:56:52 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Steve Schnepp <steve.schnepp@...il.com>
-CC: 668667@...s.debian.org, oss-security@...ts.openwall.com, Helmut Grohne <helmut@...divi.de>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Bug#668667: CVE Request (minor) -- Two Munin graphing framework flaws
+To: Henri Salo <henri@...v.fi>
+CC: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>, Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: CVE-request: WordPress 3.1.1
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/27/2012 09:41 AM, Steve Schnepp wrote:
-> On Wed, Apr 18, 2012 at 07:04, Kurt Seifried <kseifried@...hat.com>
-> wrote:
->>> In addition munin parses parts of the query string. You are
->>> allowed to modify the size of the image. By choosing a path 
->>> "....png?size_x=20000&size_y=20000&uniquestuff" you can do the 
->>> same attack while simultaneously using a large image size. The
->>> raw image would be 381M (assuming 8bits/pixel) in this case. A
->>> png version will likely be smaller, say 4M? So now you have an 
->>> amplification of 4M/request. Note that this query can get a
->>> node into swapping, because rrdtool needs to create the whole
->>> image in main memory.
+On 04/19/2012 01:43 AM, Henri Salo wrote:
+> On Tue, Apr 17, 2012 at 11:10:27PM -0600, Kurt Seifried wrote:
+>> Can you make a clean list of security issues and the versions 
+>> affected? Thanks.
+> 
+> Two issues in 3.1.1 are without 2011 CVE-identifiers, which are
+> announced in here:
+> http://wordpress.org/news/2011/04/wordpress-3-1-1/ (April 5,
+> 2011).
+> 
+> Issue #1:
+> 
+> http://osvdb.org/show/osvdb/72141 
+> http://secunia.com/advisories/44038/
+> 
+> "Certain unspecified input is not properly sanitised before being
+> returned to the user. This can be exploited to execute arbitrary
+> HTML and script code in a user's browser session in context of an
+> affected site."
 
-Please use CVE-2012-2147 for this issue (specifying the size = lots of
-ram/storage space used up during image creation).
+Please use CVE-2011-4956 for this issue.
 
+> Issue #2:
 > 
->> Ouch.
+> http://osvdb.org/show/osvdb/72142 
+> http://secunia.com/advisories/44038/
 > 
-> I believe I fixed the bug in r4825, since : - url with query string
-> aren't stored permanently anymore. - /tmp isn't used anymore per
-> default (to fix #668536)
+> "The "make_clickable()" function in wp-includes/formatting.php does
+> not properly check the URL length in comments before passing it to
+> the PCRE library, which can be exploited to cause a crash."
+
+Please use CVE-2011-4957 for this issue.
+
+> Both vulnerabilities are reported in versions prior to 3.1.1.
 > 
-> Could you confirm that ?
-> 
-> OTOH, the issue about very big imgs that gets the cgi into
-> swapping isn't the same bug to be.
-> 
-> As Helmut noticed, there is already a size cap in rrd, so do I
-> still need implement one in munin ? If yes, would you mind to file
-> another bugreport (for RAM exhaustion) ?
-> 
-> Thx !
-> 
-> r4825: http://munin-monitoring.org/changeset/4825
-> 
-> -- Steve Schnepp http://blog.pwkf.org/
+> - Henri Salo
 
 
 - -- 
@@ -58,17 +57,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPnOXzAAoJEBYNRVNeJnmTLncP/RHZ+19XnFy/mLRv+CqqwOSB
-MEwn6nDbgN8+MP4uhq0542cOy0611VYpB8ftPJxWBPRWhLPuyYTtaxe87esYmLp6
-JTO/OPonytkmWrBtD7Ta7amxiJAJFERjoZVuByiY+aZAX9WsVYiCpzlAl7E8NL5u
-L11RuZU7vsnn7vSsRomlKcQ/eRMHouUKqwcVB8GAW0vh1V2l+bpAorBTZvI1/zPX
-QcDGYWX7w7GsmUXAe4P6TcpS9lXJDzHpYTf9YzSMLaPDDevhcoR+hwSdnia6Uz22
-mpH2mf/d2vCY0o1FKWwR7ZDB7I8zdUmRSx96Umo/UikJknbHEc4zwfSYW2TefZIv
-G8cGMSYo35i/chJpf23iIcvKIvkQSs+1FCHep7OLuF6R1P0XnxXx2q78v3GjZC6C
-u6gSia1jT672xo1qEMArEOzj3h9/tNLt0YdIR+vTENYo/qhZf5DidbYZvIjlA24b
-Krbz/Fbcf8ayzctwuWvju4Kep602eM002FnYowXbN9rziz636yIWqJiQMaPMHYYo
-A7Y9qJFCUcophkaY0WAc6E1doM/+yKYduIsDbenXFoSqS6NFyjmlTfNA7rbxeWC3
-HvDnM1tG5YLd2PpzfmvMZfyH95ora0ecAiqAbZyn/On4ddgh9jEdwn3E0wt6N3N3
-h9sOLiYT90i3gZibguID
-=E8X5
+iQIcBAEBAgAGBQJPkDXDAAoJEBYNRVNeJnmTEkUP/2JcZah+MvvsfkT04zWOGpwO
+72szSSSvrLzEyIyJatAVvEjIEI4/q1voaYxBJXWkDAqx2r3v3Ni3Ns2Rd8SLK5Uk
+QG7XfUs/aVrW9eQSJ/keD5XSTdmFbA0EwVuEA7/x/N9ODFG8YHW5O8k7sazDlRzp
+N7VipPKEa8OqYg/9t6EAFvfIZdkvZ7lS4Nrzgd7j3eT/VnmshU5JLMosdYxbbWol
+5VnkEQ8FvhqpCdlRDSGS2kJxrwbhos50ad9aFwQXfMcXNQlENUEogLF1uCVRt5UW
+wm7xNeboi+zbiCBfo7BkwiDmsuZhCTHwt5EV4jJ60GDIfY91ode1N3tXt785/li2
+EHtwbkO2C2k2vPqNh8pKKHOV9xqAwLhYIN6JqGN1Eywz4xQrVgqzPT6meai5Y8f3
+pEeX0hKPT0P/Zq6zK0vpVUN2bHYmSbIRJqOaAWEPFiQ/HnngDflQR8KcnQ7Edbk/
+9wWsjZ0raHMuYg3TgI/idLpimj6jNBUDUPzdrfufU4AuihQ79wIhwmpRcKh6sNHu
+bgGSxFl/TbSKFknECbgkNDmoxq+RrH7MW3eEsBTeQyRDBW62ZiJikfokYid/kMRn
+XxMhQBx7zYfOsOzvh9a+FC2+5scn6uZUDgNUx5Jy/8GeqCLuq2/PqHpSukpZcftF
+l1zzfWJ5VEmNwkAp2Hz/
+=hp+u
 -----END PGP SIGNATURE-----
