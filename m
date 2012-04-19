@@ -1,83 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/13/5
-Message-ID: <CANT6BaM5dqu2m3r4brd=U8WWY+T65GmqFDv31=9OZQTf+ZqHZQ@mail.gmail.com>
-Date: Fri, 13 Jul 2012 15:13:44 -0500
-From: Dustin Kirkland <dustin.kirkland@...zang.com>
-To: Tyler Hicks <tyhicks@...onical.com>
-Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>,  Marcus Meissner <meissner@...e.de>, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Re: ecryptfs headsup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/10
+Message-Id: <20120419150457.849d020d.akpm@linux-foundation.org>
+Date: Thu, 19 Apr 2012 15:04:57 -0700
+From: Andrew Morton <akpm@...ux-foundation.org>
+To: Marcus Meissner <meissner@...e.de>
+Cc: OSS Security List <oss-security@...ts.openwall.com>, security@...nel.org, Sukadev Bhattiprolu <sukadev@...ibm.com>, Serge Hallyn <serge.hallyn@...onical.com>, "Eric W. Biederman" <ebiederm@...ssion.com>, Pavel Emelyanov <xemul@...nvz.org>
+Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 11, 2012 at 8:16 PM, Tyler Hicks <tyhicks@...onical.com> wrote:
-> On 2012-07-11 17:27:41, Kurt Seifried wrote:
->> On 07/11/2012 10:48 AM, Kurt Seifried wrote:
->> >> Hi Tyler, et al.-
->> >
->> >> I don't have any objections at all with adding nosuid and nodev
->> >> to the hardcoded mount.ecryptfs_private options.
->> >
->> >> Actually, I seem to recall this coming up recently before.  I
->> >> can't find the bug or email thread (must have been IRC), but I
->> >> recall offering to commit, test, and release that change
->> >> immediately.  I believe I was asked to wait to do that until a
->> >> CVE had been published...  I can't find any record of that
->> >> conversation though, so that's just from memory.
->> >
->> >> Shall I go ahead and commit/test/release that now, Tyler?
->> >
->> > So it sounds like a non privileged user on an Ubuntu machine can
->> > insert a USB stick/etc with a file system that gets automatically
->> > mounted, said file system can contain setuid root binaries for
->> > example which the user can then execute, elevating privileges?
->>
->> Please use CVE-2012-3409 for the ecryptfs mount.ecryptfs_private which
->> allows setuid and dev enabled filesystems, this affects multiple Linux
->> vendors.
->>
->> Just to confirm: this only affects systems with a setuid
->> mount.ecryptfs_private?
->
-> There are two separate issues here. The first is with the attack vector
-> described above.
->
-> An attacker could trivially craft a lower encrypted filesystem on a USB
-> drive. It would be automatically mounted in most distros these
-> days and the mount flags would most likely contain MS_NOSUID. However,
-> setuid and setgid bits in the USB drive's filesystem would still be
-> honored if a setuid-root mount.ecryptfs_private was available on the
-> system because it was not forcing the MS_NOSUID mount flag on the mounts
-> that it set up.
->
-> If we distill that down a little more, it means that it is possible to
-> mount eCryptfs, *without* MS_NOSUID, on top of a filesystem that is
-> mounted with MS_NOSUID and eCryptfs will happily honor the setuid and
-> setgid bits at its layer. I tend to lean towards that being a
-> non-security, but serious, filesystem stacking bug but I could be
-> convinced otherwise. It would definitely be an administrator error, but
-> I don't know what behavior an admin should expect in this situation. Any
-> thoughts?
+(cc's added)
 
-Yeah, the other thing I'd add is that in order to perform this attack
-(create a filesystem on a USB drive, have physical access to the
-system, plug in the USB drive), the attacking user could just as
-easily drop their favorite LiveISO on that same USB drive, reboot the
-system, and mount the hard drive with root access.  I do see the
-difference, in that the current issue allows for a live attack against
-a running system, as opposed to an offline attack against a system at
-rest.
+On Thu, 19 Apr 2012 23:48:20 +0200
+Marcus Meissner <meissner@...e.de> wrote:
 
-In any case, I have tested the fixes and just released
-ecryptfs-utils-99 which contains the no-set-uid fixes from Sebastian
-Krahmer and Tyler Hicks (thanks!).  We'll be following that release
-with another one shortly, that fixes a regression (race condition in a
-bit of a corner-case, when using pam_ecryptfs and encrypted file names
-on a system where ecryptfs is built as a kernel module).
-
-Cheers,
--- 
-:-Dustin
-
-Dustin Kirkland
-Chief Architect
-Gazzang, Inc.
-www.gazzang.com
+> Hi,
+> 
+> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
+> namespace leak caused by vsftpd.
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=757783
+> 
+> He provided a simple reproducer:
+> 
+> #include <stdio.h>
+> #include <errno.h>
+> #include <signal.h>
+> #include <sched.h>
+> #include <linux/sched.h>
+> #include <unistd.h>
+> #include <sys/syscall.h>
+> 
+> int main(int argc, char *argv[])
+> {
+>     int i, ret;
+> 
+>     for (i = 0; i < 10000; i++) {
+> 
+>         if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC |
+> CLONE_NEWNET | SIGCHLD, NULL)))
+>             return 0;
+> 
+>         if (-1 == ret) {
+>             perror("clone");
+>             break;
+>         }
+> 
+>     }
+>     return 0;
+> }
+> 
+> 
+> and checking "cat /proc/slabinfo|grep pid_namespace"
+> gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
+> 
+> 
+> Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
+> fixed between 3.1 and 3.2 (but someone else cross check perhaps).
+> 
+> Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
+> but it seems not helping.
+> 
+> Ciao, Marcus
