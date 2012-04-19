@@ -1,122 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/10
-Message-ID: <20121017154411.GG14978@beverly.kleinbus.org>
-Date: Wed, 17 Oct 2012 17:44:11 +0200
-From: Ignatios Souvatzis <is@...bsd.org>
-To: oss-security@...ts.openwall.com
-Cc: is@...bsd.org
-Subject: CVE id request: xlockmore vulnerability: local access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/9
+Message-ID: <4F9001B7.2010309@redhat.com>
+Date: Thu, 19 Apr 2012 14:14:47 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, officesecurity@...ts.freedesktop.org, Caolán McNamara <caolanm@...hat.com>, Miklos Vajna <vmiklos@...e.cz>, David Tardon <dtardon@...hat.com>, Carlo Di Dato <shinnai@...istici.org>
+Subject: CVE Request (minor) -- LibreOffice (X >= v3.5.0): DoS (excessive CPU use) in the RTF tokenizer
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello Kurt, Steve, vendors,
 
-i'd like to request an CVE identifier for the following vulnerability
-of xlockmore:
+   a denial of service flaw was found in the way the LibreOffice RTF Tokenizer
+used to resolve certain keywords being present in the Rich Text Format (RTF)
+document. A remote attacker could provide a specially-crafted RTF file, which
+once opened by a local, unsuspecting LibreOffice tools suite user would lead to
+excessive CPU usage by the tool used for opening that file.
 
-software:	xlockmore 5.0 to 5.40
-access:		terminal-local access to user account
-OS/hardware:	all where sizeof(time_t) > sizeof(long int)
-		(e.g. NetBSD-6 on 32bit platforms)
+Upstream bug report:
+[1] https://bugs.freedesktop.org/show_bug.cgi?id=48640
 
-Details:
+Upstream patch (against 3.5 branch):
+[2] 
+http://cgit.freedesktop.org/libreoffice/core/commit/?id=51c8c95b2864b49e7bcbd824eacedb5778a758c0&g=libreoffice-3-5
 
-"xlockmore -mode dclock" grew additional code in version 5.0
-depending on timestamps in 'time_t' format, unfortunately partially
-expressed as 'long' variables. This works if function
-prototypes/definitions or type casts are used and the values are
-passed by value, but fails in a few cases in the code where the
-pointer is passed to localtime(3)).
+References:
+[3] 
+http://didasec.wordpress.com/2012/04/16/libreoffice-3-5-2-2-soffice-exesoffice-bin-memory-corruption/
+[4] http://shinnai.altervista.org/exploits/SH-016-20120416.html
+[5] http://seclists.org/fulldisclosure/2012/Apr/201
+[6] https://bugzilla.redhat.com/show_bug.cgi?id=814223
 
-localtime accesses a (in the discovered case) 64bit value, which
-is likely not to be valid, and returns a null pointer as an error
-indication. The code in dclock.c does not check for this but,
-depending on additional command-line options, either dereferences
-the pointer or passes it to strftime() unconditionally, which in
-turn triggers a segmentation fault, terminating the program and
-leaving the terminal unlocked.
+ From investigation of the reproducers provided at:
+[7] https://bugs.freedesktop.org/show_bug.cgi?id=48640#c0 ('Crash PoC')
 
-While this is unexpected, the dangerous case is where
-"xlockmore -mode random" calls the mode "dclock" after a while,
-when the user has left the terminal, not noticing that it will
-(eventually) be unlocked.
+the particular error message:
+terminate called after throwing an instance of 'std::bad_alloc'
+   what(): std::bad_alloc
 
-Accessing the terminal needs physical access to it; however, the 
-terminal can be on a different machine than the one running xlock.
+Program received signal SIGABRT, Aborted.
+0X00111416 in __kernel_vsyscall ()
 
-The maintainer of xlockmore has been notified and is working on a
-fixed version. In the meantime, the appended patch file will fix
-this problem. While it was developed for 5.38, it should apply to
-other 5.x versions, too.
+seems to be just standard C++ (STL) error message / exception, that
+the requested memory allocation failed. From my investigation
+the relevant process termination in this case is safe from security
+point of view (standard way how C++ handles memory allocation failures).
 
-The packages xlockmore and xlockmore-lite from pkgsrc.org are
-vulnerable for 32bit machines with 64bit time_t up to and including
-xlockmore-5.38nb5 and xlockmore-lite-5.38nb1, but updated packages
-are available from pkgsrc-current and will shortly be available
-from pkgsrc-2011Q3.
+Though Caolán , Miklos or LibreOffice upstream can clarify further if
+this should be considered to be a security flaw (due to internal
+implementation details I am not aware of and might lead to memory
+corruption announced at [7]).
 
-pkgsrc on NetBSD-6.0 or NetBSD-current on 64bit architectures, and
-pkgsrc on NetBSD-5.1.x and earlier, are not vulnerable. 
+But as noted earlier, I don't think this is a security flaw, which
+should get a CVE identifier.
 
-xlockmore is not shipped with the base system of NetBSD.
+[8] https://bugs.freedesktop.org/show_bug.cgi?id=48640#c1 ('DoS PoC')
 
-The patch is of course subject to the same licensing as the original
-file.
+This one (on LibreOffice >= v.3.5.0 using the new RTF tokenizer implementation)
+truly leads to denial of service (excessive CPU consumption and hang) while
+trying to process that RTF file. So this case might be applicable
+for CVE-2012-* identifier assignment.
 
-$NetBSD: patch-modes_dclock.c,v 1.2 2012/10/15 20:47:57 is Exp $
+Kurt, if LibreOffice upstream approves, could you allocate CVE id
+for the 'RTF Tokenizer resolve keyword DoS / CPU usage issue' [8] ?
 
---- modes/dclock.c.orig	2012-01-23 13:19:21.000000000 +0000
-+++ modes/dclock.c
-@@ -376,11 +376,11 @@ static dclockstruct *dclocks = (dclockst
- extern char *message;
- 
- static unsigned long
--timeAtLastNewYear(long timeNow)
-+timeAtLastNewYear(time_t timeNow)
- {
- 	struct tm *t;
- 
--	t = localtime((const time_t *) &timeNow);
-+	t = localtime(&timeNow);
- 	return (unsigned long)(t->tm_year);
- }
- 
-@@ -420,7 +420,7 @@ convert(double x, char *string)
- }
- 
- static void
--dayhrminsec(long timeCount, int tzoffset, char *string)
-+dayhrminsec(time_t timeCount, int tzoffset, char *string)
- {
- 	int days, hours, minutes, secs;
- 	int bufsize, i;
-@@ -675,7 +675,7 @@ drawDclock(ModeInfo * mi)
- 				"%a %b %d %Y", localtime(&(dp->timeold)));
- 		}
- 	  } else {
--		long timeNow, timeLocal;
-+		time_t timeNow, timeLocal;
- 		timeNow = seconds();
- 		timeLocal = timeNow + dp->tzoffset;
- 
-@@ -950,7 +950,7 @@ init_dclock(ModeInfo * mi)
- {
- 	Display *display = MI_DISPLAY(mi);
- 	dclockstruct *dp;
--	long timeNow, timeLocal;
-+	time_t timeNow, timeLocal;
- 	int i, j;
- 
- 	if (dclocks == NULL) {
-@@ -1252,7 +1252,7 @@ defined(MODE_dclock_mayan)
- 			dayhrminsec(MAYAN_TIME_START - timeLocal, dp->tzoffset, dp->strnew[1]);
- 			dp->strpta[1] = dp->strnew[1];
- 		} else {
--			struct tm *t = localtime((const time_t *) &timeLocal);
-+			struct tm *t = localtime(&timeLocal);
- 
- 			if (dp->time24)
- 			  (void) strftime(dp->strnew[0], STRSIZE, "%H:%M:%S", t);
-
-
-Regards,
-	Ignatios Souvatzis
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
