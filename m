@@ -1,25 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/8
-Message-ID: <20120921133830.GA26867@kludge.henri.nerv.fi>
-Date: Fri, 21 Sep 2012 16:38:30 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request: monkey CGI scripts executed without dropping RUID/RGID root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/19
+Message-ID: <20120419214820.GE18015@suse.de>
+Date: Thu, 19 Apr 2012 23:48:20 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: security@...nel.org
+Subject: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-Please assign 2012 CVE-identifier for following monkey vulnerability:
+we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
+namespace leak caused by vsftpd.
 
-The Monkey webserver retains RUID/RGID root so that it can regain root as
-needed to perform privileged operations. Unfortunately, monkey does not drop
-RUID/RGID root before executing CGI scripts. This allows any user with write
-access to a cgi-bin directory to gain local root. It would also allow a remote
-attacker to do the same in combination with a CGI/PHP script that has any
-remote code execution bug.
+https://bugzilla.novell.com/show_bug.cgi?id=757783
 
-Reported by John Lightsey in http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=688008
-Affected Debian-version is 0.9.3-1 (haven't tested upstream package)
-Project page: http://www.monkey-project.com/
+He provided a simple reproducer:
 
-- Henri Salo
+#include <stdio.h>
+#include <errno.h>
+#include <signal.h>
+#include <sched.h>
+#include <linux/sched.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+
+int main(int argc, char *argv[])
+{
+    int i, ret;
+
+    for (i = 0; i < 10000; i++) {
+
+        if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC |
+CLONE_NEWNET | SIGCHLD, NULL)))
+            return 0;
+
+        if (-1 == ret) {
+            perror("clone");
+            break;
+        }
+
+    }
+    return 0;
+}
+
+
+and checking "cat /proc/slabinfo|grep pid_namespace"
+gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
+
+
+Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
+fixed between 3.1 and 3.2 (but someone else cross check perhaps).
+
+Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
+but it seems not helping.
+
+Ciao, Marcus
