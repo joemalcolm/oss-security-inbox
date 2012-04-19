@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/23/4
-Message-ID: <20121023025033.GA31456@openwall.com>
-Date: Tue, 23 Oct 2012 06:50:33 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/6
+Message-ID: <20120419074323.GA4709@kludge.henri.nerv.fi>
+Date: Thu, 19 Apr 2012 10:43:23 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: XSS in piwik before 1.9
+Cc: Kurt Seifried <kseifried@...hat.com>, Hanno Böck <hanno@...eck.de>, Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: CVE-request: WordPress 3.1.1
 Content-Type: text/plain; charset=utf-8
 
-Kurt, all -
+On Tue, Apr 17, 2012 at 11:10:27PM -0600, Kurt Seifried wrote:
+> Can you make a clean list of security issues and the versions
+> affected? Thanks.
 
-On Tue, Oct 23, 2012 at 01:48:55AM +0000, Kurt Seifried wrote:
-[...]
-> Powered by UserVoice.
+Two issues in 3.1.1 are without 2011 CVE-identifiers, which are announced in here: http://wordpress.org/news/2011/04/wordpress-3-1-1/ (April 5, 2011).
 
-I am sorry for letting a spoofed bounce "from Kurt" through to the list.
-Apparently, some list member is using UserVoice, whatever that is, and
-it has produced this spoofed bounce (really weird).  We'll try to be
-more careful in rejecting such bounces going forward.
+Issue #1:
 
-I now see that Kurt's actual message, with proper quoting and From
-address, was already on the list (and this is what triggered the bounce,
-presumably).
+http://osvdb.org/show/osvdb/72141
+http://secunia.com/advisories/44038/
 
-Alexander
+"Certain unspecified input is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
+
+Issue #2:
+
+http://osvdb.org/show/osvdb/72142
+http://secunia.com/advisories/44038/
+
+"The "make_clickable()" function in wp-includes/formatting.php does not properly check the URL length in comments before passing it to the PCRE library, which can be exploited to cause a crash."
+
+Both vulnerabilities are reported in versions prior to 3.1.1.
+
+- Henri Salo
