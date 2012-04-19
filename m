@@ -1,50 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/10
-Message-ID: <20121128173740.GB2689@redhat.com>
-Date: Wed, 28 Nov 2012 10:37:40 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: Ricardo Mones <ricardo@...es.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- vCalendar plugin for Claws Mail: credentials exposed on interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/2
+Message-ID: <4F8F5DCD.600@redhat.com>
+Date: Wed, 18 Apr 2012 18:35:25 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Kees Cook <keescook@...omium.org>
+Subject: Re: CVE request: Xorg input device format string flaw
 Content-Type: text/plain; charset=utf-8
 
-* [2012-11-28 18:13:42 +0100] Ricardo Mones wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->  Hi Vincent,
->
->On Wed, Nov 28, 2012 at 09:44:53AM -0700, Vincent Danen wrote:
->> * [2012-11-15 13:36:13 +0100] Ricardo Mones wrote:
+On 04/18/2012 02:37 PM, Kees Cook wrote:
+> On Wed, Apr 18, 2012 at 1:23 PM, Kurt Seifried
+> <kseifried@...hat.com> wrote:
+>> On 04/18/2012 01:28 PM, Kees Cook wrote:
+>>> Hello,
+>>> 
+>>> Adding an input device with a malicious name can trigger a
+>>> format string flaw in Xorg's logging subsystem. For builds of
+>>> Xorg lacking -D_FORTIFY_SOURCE=2 (or 32-bit systems lacking the
+>>> fix to fortify[1]) this can lead to arbitrary code execution as
+>>> the Xorg user, usually root. When built with fortify, this is a
+>>> denial of service, since Xorg will abort.
+>>> 
+>>> Proposed solution patch series can be found here: 1/4 
+>>> http://patchwork.freedesktop.org/patch/10000/ 2/4 
+>>> http://patchwork.freedesktop.org/patch/9998/ 3/4 
+>>> http://patchwork.freedesktop.org/patch/9999/ 4/4 
+>>> http://patchwork.freedesktop.org/patch/10001/
+>>> 
+>>> -Kees
+>>> 
+>>> [1] 
+>>> http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=7c1f4834d398163d1ac8101e35e9c36fc3176e6e
 >>
->> > This has been reported on our bugzilla:
->> > http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2782
->> >
->> > There's still not fix available. Could a CVE id be allocated for this if
->> >appropriate?
->> >
->> > thanks in advance,
->> >
->> >P.S.: I'm not subscribed to the list.
 >>
->> I don't know if this ever got a CVE or not; if it did I don't see a
->> reference.
->>
->> Also, according to this bug report it's fixed, but I can't find the
->> patch in your CVS tracker.  Can you provide a link to it?
->
->  Unfortunately tracker only tracks changes to core, not to plugins, but
->the patch it's commited also into the Debian packaging, so this link may
->serve:
->
->http://anonscm.debian.org/gitweb/?p=users/mones/claws-mail-extra-plugins.git;a=commitdiff;h=a3f91d21b32dd0b63b28ccb0c6f7a73939b14c9a
->
->> And, if a CVE hasn't been assigned, perhaps Kurt or someone could assign
->> one?
->
->  It't got one, but seems the list was not included in recipients:
->
->> Please use CVE-2012-5527 for this issue.
+>>> 
+So
+>>> 
+>> are you asking for just the device name issue covered in
+>> 
+>> http://patchwork.freedesktop.org/patch/10001/
 
-Fantastic, thank you for both of these.
+Please use CVE-2012-2118 for this issue (Xorg device name logging
+format string).
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+> Yeah, but I wanted to point to the entire patch series, since that 
+> fix, I think, depends on pieces from the others.
+> 
+> -Kees
+
+Ok, it's just that some of them have other somewhat security sounding
+issues (I haven't looked in depth though, was hoping you had).
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPj13NAAoJEBYNRVNeJnmTcg8P/0nmtqjjZpKKWfHK4vdcPtut
+6Ue/W0/QqDJi2riiB+4pe4QEezK5X27QmsH4pfqEWuk/0ykF9Dj1MKae3/bhT2wg
+zem/cKRHnS3/iprqWZrHhfvPoIi1oSl8nvjJImjfCMUGi1gZhdZDTYqP4MLbtvG7
++4TbWzeSxxDlOhW6iM70qIbxjuB1guh3DE1pjICjKev9GvfzU6vTkoYYGvq3ZFUQ
+warDFqYo1PxOVcWj96JCIQMpywr5vBIypg3ZmTVVWZgfRiE0Ub/1fstaICK0E9IV
+n+C9PNxwUOPGLAo+X1Mpj5kC7QutPvJ4zyOSHZBBFmUlW2arcXhC08MJb+zO/aXd
++kqzPnVWEuemqtfAbpELDYoKils5V1PG2ZNgd6rbabg6LHW795Db1UtGjvrU9Wb9
+YZgcD+yA3VqCdwHHSPY/w8ek3BUSQmR7jveAI7ZLdnMPdgV070hMkA8PxRhI7So2
+h3Riv2ySBH22ejZwNAJ0A18T7wBEn0u+KEvt7v91NwG5tLDtSBn7Kk+kvo2BvBz5
+6o3rh7GOFTPOR49wyMaUNHTN5C+LmcSY9mGYxX+mpJLZU68fn43YFbdWu2kRagQ0
+7OQSCg2ycXaR8bhtsudMuUCbWMgKo+Snvd2KCNE6AbCEyMnMDjvztff9Vpe7pCaZ
+iWjfpsj6EXWwvgQzebg5
+=TT32
+-----END PGP SIGNATURE-----
