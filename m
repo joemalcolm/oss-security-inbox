@@ -1,92 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/19/3
-Message-ID: <4FE0BBCB.9090709@redhat.com>
-Date: Tue, 19 Jun 2012 11:50:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Tomas Hoger <thoger@...hat.com>, secalert_us@...cle.com, serg@...typrogram.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: MySQL CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/2
+Message-ID: <m1d373iail.fsf@fess.ebiederm.org>
+Date: Thu, 19 Apr 2012 16:09:54 -0700
+From: ebiederm@...ssion.com (Eric W. Biederman)
+To: Andrew Morton <akpm@...ux-foundation.org>
+Cc: Marcus Meissner <meissner@...e.de>,  OSS Security List <oss-security@...ts.openwall.com>,  security@...nel.org,  Sukadev Bhattiprolu <sukadev@...ibm.com>,  Serge Hallyn <serge.hallyn@...onical.com>,  Pavel Emelyanov <xemul@...nvz.org>
+Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Andrew Morton <akpm@...ux-foundation.org> writes:
 
-On 06/18/2012 10:50 AM, Tomas Hoger wrote:
-> Hijacking this thread a bit...
-> 
-> On Sat, 9 Jun 2012 17:30:38 +0200 Sergei Golubchik wrote:
-> 
->> MySQL bug report: http://bugs.mysql.com/bug.php?id=64884 MySQL
->> fix: 
->> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.17
->>
->> 
-MySQL changelog:
->> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-63.html 
->> http://dev.mysql.com/doc/refman/5.5/en/news-5-5-24.html
-> 
-> In addition to 64884 / CVE-2012-2122 reported by Sergei, 5.1.63
-> release notes also mention additional security fix:
-> 
-> * Security Fix: Bug #59387 was fixed.
-> 
-> which can be tracked to the following commit:
-> 
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.16
+> (cc's added)
 >
->  This allows non-admin mysql user to crash mysqld.  The fix is also
-> in 5.5.24, but it is not mentioned in 5.5.24 releases notes or
-> changelog file included in the sources.  5.0.x is affected too.
-> Can the CVE be assigned?  I'm CCing Oracle security team
-> explicitly, so they can reply with their existing assignment (if
-> any), and/or are aware of the new assignment.
+> On Thu, 19 Apr 2012 23:48:20 +0200
+> Marcus Meissner <meissner@...e.de> wrote:
+>
+>> Hi,
+>> 
+>> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
+>> namespace leak caused by vsftpd.
+>> 
+>> https://bugzilla.novell.com/show_bug.cgi?id=757783
+>> 
+>> He provided a simple reproducer:
+>> 
+>> #include <stdio.h>
+>> #include <errno.h>
+>> #include <signal.h>
+>> #include <sched.h>
+>> #include <linux/sched.h>
+>> #include <unistd.h>
+>> #include <sys/syscall.h>
+>> 
+>> int main(int argc, char *argv[])
+>> {
+>>     int i, ret;
+>> 
+>>     for (i = 0; i < 10000; i++) {
+>> 
+>>         if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC |
+>> CLONE_NEWNET | SIGCHLD, NULL)))
+>>             return 0;
+>> 
+>>         if (-1 == ret) {
+>>             perror("clone");
+>>             break;
+>>         }
+>> 
+>>     }
+>>     return 0;
+>> }
+>> 
+>> 
+>> and checking "cat /proc/slabinfo|grep pid_namespace"
+>> gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
+>> 
+>> 
+>> Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
+>> fixed between 3.1 and 3.2 (but someone else cross check perhaps).
+>> 
+>> Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
+>> but it seems not helping.
 
-Please use CVE-2012-2749 for this issue.
+Is there a corresponding struct pid leak as well?  Most references to
+the pid namespace are through struct pid so that is an easy one to look
+at.
 
-> Additionally, 5.5.23 changes include another security fix:
-> 
-> * Security Fix: Bug #59533 was fixed.
-> 
-> However, I've not had much luck trying to find a commit or any
-> further info for this issue.  Upstream bug is private.  Does anyone
-> have any further info?
+The previous issue vsftp ran into was network namespaces being slow to
+cleanup which is a very different issue, and I just double checked even
+if network namespaces were being slow to clean up it would not affect
+the pid namespace.
 
-Please use CVE-2012-2750 for this issue. I guess this will be one of
-those "Unspecified vulnerability in MySQL before 5.5.23 has unknown
-impact and attack vectors, related to a "Security Fix." "
+At the very least those pid namespaces are going to stay around until
+the parent process reaps the dead children, so in the trivial test
+case it may simply be that there is a difference how the slab cache is
+shrunk after 10,000 pid namespaces are freed.
 
-> Additionally, following bugs try to collect info on MySQL security 
-> fixes in the last released and an upcoming Oracle CPU:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=832477 
-> https://bugzilla.redhat.com/show_bug.cgi?id=832540
-> 
-> It would be nice if Oracle could confirm the mapping between CVEs
-> and particular issues to avoid any incorrect guesses.
-> 
-> If anyone else has been looking into trying to map Oracle assigned
-> CVEs to specific changes and has any info missing in the above
-> bugs, feel free to comment there.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP4LvLAAoJEBYNRVNeJnmTh7oQAJJ4iVkvl1P3kFP8cT9OTY1H
-pbsqj/Ehj8Y+T5C/y7ZriEUcrHr9xJiwRQAUTlvtydRmslIAp2ptSEGkuLOJMe/C
-hBqrIUtJKzJSJQC6Xa4pmcObZ11zzP39STttQr6OdC4VUsLvKKWzXc6TkXn8iQiQ
-FQ8INUXM1JBUJiVBEJnVOqG5svX6WT0o1iqPgaaIoU37LJmzP8pW0fgcpHBAdSPv
-hwe5ys5pcNNloJVm9yNFksJiyfJ4g0ES5PrEaFMStfUuZj+RlDFdEIvciNESwpxL
-SxUl9X2+aFlEo0h7Bn4FrwvhC9pZ7HS5m6n+n6QX7LMHmsF24l022RvegyIqaE38
-YBAKXVrRjw/8GiF77lyB3vOh7reC8eou7APo4tvdNmzmAC5wpAiz6+xspxAg0LNI
-0D72rhskm0GnnXQ61upw0CR5COPaN37hP4x6BhtUuJMOZ6DX1CmrN3S4RaVyza01
-3ohWYefrA0m1hgASHHJG9W+0OVR6b/cGzvOzsj/bVHdJXsCgTFpxB9ZwGxAF+0Qe
-47Pi0Z3cmxaqd2K81YGRjk2aJYnQ6LwlPFUUIQoX4Wbq3Egau/2lM48tk5t0bMTJ
-1utRHbCy+XFDCk0JFynUN3xCaQ0Im4aak7TdW8QuQhEJxJ6M7s5+xIKUFpqODgNW
-pD8eTWiy5vUP1pAIwmul
-=F/Oa
------END PGP SIGNATURE-----
+Eric
