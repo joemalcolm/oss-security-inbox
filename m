@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/4
-Message-ID: <20120424102428.GB8963@suse.de>
-Date: Tue, 24 Apr 2012 12:24:28 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/18
+Message-ID: <20120419164122.GB23313@inutil.org>
+Date: Thu, 19 Apr 2012 18:41:22 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, officesecurity@...ts.freedesktop.org, David Tardon <dtardon@...hat.com>, Miklos Vajna <vmiklos@...e.cz>, Carlo Di Dato <shinnai@...istici.org>
+Subject: Re: Re: [Officesecurity] CVE Request (minor) -- LibreOffice (X >= v3.5.0): DoS (excessive CPU use) in the RTF tokenizer
 Content-Type: text/plain; charset=utf-8
 
-
-Indeed, the point was to also check against fscaps:
-
-https://bugzilla.novell.com/show_bug.cgi?id=694598
-
-At least it should be considered for future builds. The mount.nfs
-case was only interesting for the suid bit.
-
-(also see http://turing.suse.de/~krahmer/libs-vs-fscaps/)
-
-Sebastian
-
-On Tue, Apr 24, 2012 at 12:03:58PM +0200, Florian Weimer wrote:
-> * Marcus Meissner:
+On Thu, Apr 19, 2012 at 01:33:07PM +0100, Caolán McNamara wrote:
+> > [8] https://bugs.freedesktop.org/show_bug.cgi?id=48640#c1 ('DoS PoC')
+> > 
+> > This one (on LibreOffice >= v.3.5.0 using the new RTF tokenizer implementation)
+> > truly leads to denial of service (excessive CPU consumption and hang) while
+> > trying to process that RTF file. So this case might be applicable
+> > for CVE-2012-* identifier assignment.
 > 
-> >> Would you mind sharing the patch you used in SLE packages?  It does not
-> >> seem to have been fixed in OpenSUSE yet.  Thanks!
-> >
-> > I just did a basic uid check.
-> 
-> Shouldn't you check GID against EGID, too, for completeness?
+> Dunno about this, I mean if we're going to go around assigning CVEs to
+> every busy-hang we'd be knee deep in CVEs by the end of a week.
 
--- 
+I agree. For an application profile such as an office suite handing out CVE
+IDs to crash/CPU overload bug w/o potential of code injection is a waste
+of time and impractical.
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Cheers,
+        Moritz
