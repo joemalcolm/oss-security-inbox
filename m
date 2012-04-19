@@ -1,44 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/8
-Message-ID: <4F7C7B0C.70602@mvista.com>
-Date: Wed, 04 Apr 2012 06:47:08 -1000
-From: akuster <akuster@...sta.com>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: fix to CVE-2009-4307
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/11
+Message-ID: <20120419123645.GI27768@suse.cz>
+Date: Thu, 19 Apr 2012 14:36:45 +0200
+From: Miklos Vajna <vmiklos@...e.cz>
+To: Caolán McNamara <caolanm@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, officesecurity@...ts.freedesktop.org, David Tardon <dtardon@...hat.com>, Carlo Di Dato <shinnai@...istici.org>
+Subject: Re: [Officesecurity] CVE Request (minor) -- LibreOffice (X >= v3.5.0): DoS (excessive CPU use) in the RTF tokenizer
 Content-Type: text/plain; charset=utf-8
 
-
-
-On 4/3/12 4:55 PM, Kurt Seifried wrote:
-> On 04/03/2012 04:32 PM, akuster wrote:
->> Hello,
->>
->> Was there a CVE assigned to commit d50f2ab6f050311dbf7b8f5501b25f0bf64a439b?
->>
->> Commit 503358ae01b70ce6909d19dd01287093f6b6271c ("ext4: avoid divide by
->> zero when trying to mount a corrupted file system") fixes CVE-2009-4307
->> by performing a sanity check on s_log_groups_per_flex, since it can be
->> set to a bogus value by an attacker.
->>
->> - Armin
+On Thu, Apr 19, 2012 at 01:33:07PM +0100, Caolán McNamara <caolanm@...hat.com> wrote:
+> On Thu, 2012-04-19 at 14:14 +0200, Jan Lieskovsky wrote:
+> > Though Caolán , Miklos or LibreOffice upstream can clarify further if
+> > this should be considered to be a security flaw (due to internal
+> > implementation details I am not aware of and might lead to memory
+> > corruption announced at [7]).
 > 
-> I assume you are talking about this:
-> 
-> http://git.kernel.org/?p=virt/kvm/kvm.git;a=commitdiff;h=d50f2ab6f050311dbf7b8f5501b25f0bf64a439b
+> nah, insta-crash with a -1 passed to new(...) so throws bad_alloc,
+> "safe" crash.
 
-Yes.
++1, as far as I see.
 
-<snippet>
-
-> 
-> What specific do you want a CVE assigned for?
-> 
-> For #1 I can see a CVE of the "a previous patch didn't completely fix
-> the issue, yada yada" type.
-
-Yeah, just wondering since I have seen this in the past.
-
-thanks,
-
-- Armin
+Miklos
