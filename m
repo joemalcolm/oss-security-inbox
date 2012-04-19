@@ -1,25 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/3
-Message-ID: <871ur8p5yo.fsf@gnu.org>
-Date: Tue, 10 Jan 2012 11:54:55 +0800
-From: Chong Yidong <cyd@....org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com,  deng@...domsample.de,  ulm@...too.org,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: CEDET/Emacs global-ede-mode file loading vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/5
+Message-Id: <201204190829.48828.holger@layer-acht.org>
+Date: Thu, 19 Apr 2012 08:29:46 +0200
+From: Holger Levsen <holger@...er-acht.org>
+To: 668667@...s.debian.org
+Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com, Helmut Grohne <helmut@...divi.de>, "Steven M. Christey" <coley@...us.mitre.org>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: [Packaging] Bug#668667: CVE Request (minor) -- Two Munin graphing framework flaws
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...hat.com> writes:
+On Donnerstag, 19. April 2012, Kenyon Ralph wrote:
+> On Debian, symlinks to enable plugins are installed by default, and an
+> apache2 configuration is automatically activated. So, on Debian, if
+> your httpd is publicly-accessible, the munin pages and CGI will be
+> publicly-accessible.
 
-> I'll assign this a CVE once I have determined the code base status (are
-> these considered the same codebase, or have they forked enough to be
-> considered separate code bases? Also I need to ensure this hasn't
-> already been assigned a CVE. CC'ing relevant developers as well.
-
-No, this hasn't already been assigned a CVE.  The upstream CEDET 1.0 is
-largely the same codebase as the CEDET distributed in Emacs.  The
-version in Emacs omits some CEDET components, and added some plumbing to
-integrate CEDET into the Emacs build system.  But the main part of the
-Emacs Lisp code, including the part affected by this flaw, is the same.
-
-David, could you write up a version of the fix that applies to the CEDET
-1.0 tarball?  I think distributors who package CEDET will want it.
+though on Debian, apache is only accessable on localhost per default.
