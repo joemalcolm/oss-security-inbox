@@ -1,47 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/11
-Message-ID: <20120327185228.GR1398@redhat.com>
-Date: Tue, 27 Mar 2012 12:52:28 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/15
+Message-ID: <4F902D88.90607@redhat.com>
+Date: Thu, 19 Apr 2012 09:21:44 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: distutils creates ~/.pypirc insecurely
+CC: Matthias Weckbecker <mweckbecker@...e.de>
+Subject: Re: CVE request: latex2man / texlive
 Content-Type: text/plain; charset=utf-8
 
-* [2012-03-27 12:46:48 -0600] Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->On 03/27/2012 10:19 AM, Vincent Danen wrote:
->> * [2012-03-27 09:59:46 -0600] Kurt Seifried wrote:
->>
->>> On 03/27/2012 08:15 AM, Vincent Danen wrote:
->>>> Standard flaw where a file that contains a username and password is
->>>> written with insecure permissions.  This only affects python 2.6 and
->>>> higher.
->>>>
->>>> Could a CVE name be assigned to this flaw?  I don't think one has been
->>>> already.
->>>>
->>>> References:
->>>>
->>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650555
->>>> https://bugzilla.redhat.com/show_bug.cgi?id=758905
->>>> http://bugs.python.org/issue13512
->>>> http://bugs.python.org/file23824/pypirc-secure.diff
->>>>
->>>> Thanks.
->>>>
->>>
->>> Please use CVE-2012-1587 for this issue.
->>
->> Sorry, I probably should have been more explicit on when it was reported
->> (this is an older flaw).  It was reported (and public) in 2011.
->>
->
->My bad, please reject CVE-2012-1587.
->
->Please use CVE-2011-4944 for this issue, it has the correct year.
+On 04/19/2012 07:20 AM, Matthias Weckbecker wrote:
+> Hi Kurt, Steve, vendors,
+> 
+> recently there has been an issue reported by Helmut Grohne in
+> latex2man. It seems to be different from what we had the other day
+> (CVE-2012-2093 [1]). Bug report of the new issue is available at:
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668779
+> 
+> Does this qualify for a CVE?
 
-Great, thanks, and sorry for not noting the year in the initial message.
+Sigh. And this is why people using bash should use mktemp(), all other
+languages you probably want to use mkstemp().
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Please use CVE-2012-2120 for this issue.
+
+> Thanks, Matthias
+> 
+> [1] http://seclists.org/oss-sec/2012/q2/56
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPkC2HAAoJEBYNRVNeJnmT+bsP/iEFU3TXvzZyyQaP5Jrck7Yi
+rCshcwpEnhoqCMvVvFpJdc5BfDVVcPGg92TG3V2TQdBqiB0l0CfndX+Q6IIAJLTo
+hsX0fgg5rd6m6ftzDKtkQ4lGlvP3Vu32CdtJET8PInmNQ/9pVvsPvit3zYRCaBen
+osffDlB9AbKYHbdGNeMBlYMOgjbtwNhzv+on48bjVW2VzXYFpX2yLkO8B964u022
+iunDz0zCaRcAnOV1MvU9+v2mEvdb8gsGkFGvBYxKuXmv7APYYeJNr0qQS4PgxJwI
+ePf0vxjfEbNIyHmMJ57zQrDZ2EqQKySqwvqJDgSKFn49NxYzP05/qiExujKSB86r
+wws4y/xyIkkIFhFmRGNRR3i7c2vW8Zg/hvqLjZygrhkl1QLR+ZhYDIlKDYAV25Bh
+RjShj9n5gCsd+kHdpqO7lq0u+4itZV8ff67NRk+VbulQ1OV5QShvMdh0MEGScbxm
+HmQXObfZsSvtPyiYq+F1fiTO5DgiW6bhHNF7x7OZKDAlZZTfcEL5lu9vo4ocnRxP
+Czm4qWxdn1PIXyN8x33vTsn0zt/CbxwvZ8KoO53hsq7N/iOz5RxFnwd1MafUDIze
+HFQlplE7GPJxX9kL7Ax9Qs8FnSzmWifZZvwwIqUsHm0GqZ77tk85yZQ66DxDR4QI
+l3lmFq7tUJUA+CzRAjip
+=UDOO
+-----END PGP SIGNATURE-----
