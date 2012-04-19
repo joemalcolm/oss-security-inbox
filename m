@@ -1,53 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/03/1
-Message-ID: <20120703132217.GG18781@suse.de>
-Date: Tue, 3 Jul 2012 15:22:17 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: jack@...e.cz
-Subject: CVE Request: Stability fixes in UDF Logical Volume Descriptor handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/3
+Message-ID: <4F8F5E35.3010800@redhat.com>
+Date: Wed, 18 Apr 2012 18:37:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Helmut Grohne <helmut@...divi.de>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, 668667@...s.debian.org
+Subject: Re: CVE Request (minor) -- Two Munin graphing framework flaws
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-People (do not know who) reported to the kernel security team
-and Jan Kara some UDF filesystem crashes.
+On 04/17/2012 11:16 PM, Helmut Grohne wrote:
+> On Tue, Apr 17, 2012 at 11:04:56PM -0600, Kurt Seifried wrote:
+>> On 04/16/2012 11:34 PM, Helmut Grohne wrote:
+>>> The basic requirement is that a plugin called vmstat is
+>>> configured for the node localhost.localdomain. I just picked it
+>>> as an example, cause it is present on my system. In practise
+>>> any plugin for any host will do.
+>> 
+>> Is this the default configuration?
+> 
+> I am not that sure about the defaults, because I changed them.
+> However running a Munin without any plugins is pointless. It is
+> like running a mail server that does not transport any mail. You
+> don't even have to guess the name of a configured plugin, because
+> those images are linked from the html. Finding a configured plugin
+> is really no issue on any sane munin installation. Sane
+> administrators may have to restricted access to munin to themselves
+> as to not expose the monitoring results to the public though.
+> 
+> Helmut
 
-Jan Kara did some fixes in the UDF fs and they were committed
-to mainline already, both actual bugfixes and some more sanity
-checking for hardening.
+If anyone can comment on this (default/not), and if you install a
+plugin does it expose it publicly or does the administrator have to
+enable remote access?
 
-Buffer overreads or overwrites would have been possible.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-I think a single CVE is sufficient.
-
-
-The two mainline commits:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=1df2ae31c724e57be9d7ac00d78db8a5dabdd050
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=adee11b2085bee90bd8f4f52123ffb07882d6256
-
-
-commit 1df2ae31c724e57be9d7ac00d78db8a5dabdd050
-Author: Jan Kara <jack@...e.cz>
-Date:   Wed Jun 27 21:23:07 2012 +0200
-
-    udf: Fortify loading of sparing table
-
-    Add sanity checks when loading sparing table from disk to avoid accessing
-    unallocated memory or writing to it.
-
-    Signed-off-by: Jan Kara <jack@...e.cz>
-
-commit adee11b2085bee90bd8f4f52123ffb07882d6256
-Author: Jan Kara <jack@...e.cz>
-Date:   Wed Jun 27 20:20:22 2012 +0200
-
-    udf: Avoid run away loop when partition table length is corrupted
-    
-    Check provided length of partition table so that (possibly maliciously)
-    corrupted partition table cannot cause accessing data beyond current buffer.
-    
-    Signed-off-by: Jan Kara <jack@...e.cz>
-
-Ciao, Marcus
+iQIcBAEBAgAGBQJPj141AAoJEBYNRVNeJnmT8d8P/A/A0j1ruHMoKQitgRHMoY/o
+c+BIoadQGo5vqoi+wwbLa7gt2ftUQt88ETYILQmL9VkPmgMr9UGnh86eDk66HRnv
+vda9+DmVIJ+DfuKsNFQp4uwCr+pwIW+wpCLoB0m2zAuUN0aNYm2wVmKHyRtg6hk6
+7dr9lG5464Z5F+qNQqN/x+S0muNklcOL4P0Eu/jxpR8GQSNglU5CVRWUJYJu8Vpv
+stIPEaQujiSuw0WVM/t42cYBY0zGmZvT4Ar7AREg/ORj+GPxJqgKR/gG8yvI/QTV
+ffk1xaI7ewvjTo2fmCvyLYzUNgGzR2Ih45GKOzbqY2vxhE2DxLxwRUKwd6ntZjpl
+qJjidYO4RlSnroQisCjBdscdGgDKdnsDBO3s0mnJ7DxtRUf1CpHX4Ou8v0SeoFxr
+slE8w1WMF4I7/G1U6ZlZiM62mnM/xYRzwuoCcMzy5S9MvZRiRlMO8UbJyCyBkoct
+QPFr1eHd6Q5UkGeeyGon9xmjPbEdi0abI0fghHvN8p72OKcKzMq3+HCmW1DhrHK/
+V+WbewsEiCemlEhYR5Bk3htDOtfytO71KDUTVKg1w56qLe/kBlUBjc7SgHFWxiYS
++f4F+RXaVRi1mAX/qst1Dq9vH78afraPiZvJEBSaon2vR+7uiyYZxf8K/prfz/yn
+OwKeVEJDB874Z2tBNQ6H
+=bwVP
+-----END PGP SIGNATURE-----
