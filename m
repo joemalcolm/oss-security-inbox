@@ -1,63 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/18/2
-Message-ID: <20120618185001.0a5ad2fd@redhat.com>
-Date: Mon, 18 Jun 2012 18:50:01 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, secalert_us@...cle.com
-Cc: serg@...typrogram.com
-Subject: Re: MySQL CVEs (was: Security vulnerability in MySQL/MariaDB sql/password.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/19
+Message-ID: <4f914ecb.6468b40a.5543.ffffeb90@mx.google.com>
+Date: Fri, 20 Apr 2012 11:55:48 +0000
+From: "pinto.elia@...il.com" <pinto.elia@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: R: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
-Hijacking this thread a bit...
 
-On Sat, 9 Jun 2012 17:30:38 +0200 Sergei Golubchik wrote:
-
-> MySQL bug report:
-> http://bugs.mysql.com/bug.php?id=64884
-> MySQL fix:
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.17
-> MySQL changelog:
-> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-63.html
-> http://dev.mysql.com/doc/refman/5.5/en/news-5-5-24.html
-
-In addition to 64884 / CVE-2012-2122 reported by Sergei, 5.1.63 release
-notes also mention additional security fix:
-
- * Security Fix: Bug #59387 was fixed.
-
-which can be tracked to the following commit:
-
-http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.16
-
-This allows non-admin mysql user to crash mysqld.  The fix is also in
-5.5.24, but it is not mentioned in 5.5.24 releases notes or changelog
-file included in the sources.  5.0.x is affected too.  Can the CVE be
-assigned?  I'm CCing Oracle security team explicitly, so they can reply
-with their existing assignment (if any), and/or are aware of the new
-assignment.
+----Messaggio originale----
+Da: Andrew Morton
+Inviato:  20/04/2012, 00:04 
+A: Marcus Meissner
+Cc: OSS Security List; security@...nel.org; Sukadev Bhattiprolu; Serge Hallyn; Eric W. Biederman; Pavel Emelyanov
+Oggetto: [oss-security] Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 
 
-Additionally, 5.5.23 changes include another security fix:
+(cc's added)
 
- * Security Fix: Bug #59533 was fixed.
+On Thu, 19 Apr 2012 23:48:20 +0200
+Marcus Meissner <meissner@...e.de> wrote:
 
-However, I've not had much luck trying to find a commit or any further
-info for this issue.  Upstream bug is private.  Does anyone have any
-further info?
+> Hi,
+> 
+> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
+> namespace leak caused by vsftpd.
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=757783
+> 
+> He provided a simple reproducer:
+> 
+> #include <stdio.h>
+> #include <errno.h>
+> #include <signal.h>
+> #include <sched.h>
+> #include <linux/sched.h>
+> #include <unistd.h>
+> #include <sys/syscall.h>
+> 
+> int main(int argc, char *argv[])
+> {
+>     int i, ret;
+> 
+>     for (i = 0; i < 10000; i++) {
+> 
+>         if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC |
+> CLONE_NEWNET | SIGCHLD, NULL)))
+>             return 0;
+> 
+>         if (-1 == ret) {
+>             perror("clone");
+>             break;
+>         }
+> 
+>     }
+>     return 0;
+> }
+> 
+> 
+> and checking "cat /proc/slabinfo|grep pid_namespace"
+> gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
+> 
+> 
+> Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
+> fixed between 3.1 and 3.2 (but someone else cross check perhaps).
+> 
+> Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
+> but it seems not helping.
+> 
+> Ciao, Marcus
 
-
-Additionally, following bugs try to collect info on MySQL security
-fixes in the last released and an upcoming Oracle CPU:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=832477
-https://bugzilla.redhat.com/show_bug.cgi?id=832540
-
-It would be nice if Oracle could confirm the mapping between CVEs and
-particular issues to avoid any incorrect guesses.
-
-If anyone else has been looking into trying to map Oracle assigned CVEs
-to specific changes and has any info missing in the above bugs, feel
-free to comment there.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
