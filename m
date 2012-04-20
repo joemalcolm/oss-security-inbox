@@ -1,59 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/11/5
-Message-ID: <50C780D5.6040902@openstack.org>
-Date: Tue, 11 Dec 2012 19:52:05 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA 2012-020] Information leak in libvirt LVM-backed instances (CVE-2012-5625)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/25
+Message-ID: <4F918183.4090102@redhat.com>
+Date: Fri, 20 Apr 2012 09:32:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Marcus Meissner <meissner@...e.de>
+CC: oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-OpenStack Security Advisory: 2012-020
-CVE: CVE-2012-5625
-Date: December 11, 2012
-Title: Information leak in libvirt LVM-backed instances
-Reporter: Eric Windisch (Cloudscaling)
-Products: Nova
-Affects: Folsom, Grizzly
+On 04/20/2012 01:05 AM, Marcus Meissner wrote:
+> On Thu, Apr 19, 2012 at 09:09:55PM -0600, Kurt Seifried wrote:
+>> On 04/19/2012 03:48 PM, Marcus Meissner wrote:
+>>> Hi,
+>>> 
+>>> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report
+>>> a pid namespace leak caused by vsftpd.
+>>> 
+>>> https://bugzilla.novell.com/show_bug.cgi?id=757783
+>>> 
+>>> He provided a simple reproducer:
+>>> 
+>>> #include <stdio.h> #include <errno.h> #include <signal.h>
+>>> #include <sched.h> #include <linux/sched.h> #include <unistd.h>
+>>> #include <sys/syscall.h>
+>>> 
+>>> int main(int argc, char *argv[]) { int i, ret;
+>>> 
+>>> for (i = 0; i < 10000; i++) {
+>>> 
+>>> if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC
+>>> | CLONE_NEWNET | SIGCHLD, NULL))) return 0;
+>>> 
+>>> if (-1 == ret) { perror("clone"); break; }
+>>> 
+>>> } return 0; }
+>>> 
+>>> 
+>>> and checking "cat /proc/slabinfo|grep pid_namespace" gives
+>>> 10000 more active slots after running it on 3.0.13 (+SUSE
+>>> patches) and 3.1.10 (+SUSE patches).
+>>> 
+>>> 
+>>> Running this on 3.2.0 (+SUSE Patches) did not result in more
+>>> slots, so it was probably fixed between 3.1 and 3.2 (but
+>>> someone else cross check perhaps).
+>>> 
+>>> Any idea welcome on which patch fixed this, I tried 
+>>> 1b26c9b334044cff6d1d2698f2be41bc7d9a0864 but it seems not
+>>> helping.
+>>> 
+>>> Ciao, Marcus
+>> 
+>> Can this be triggered by a non privileged user/process? Eugene 
+>> mentions that CAP_SYS_ADMIN seems to be required, if so it seems
+>> like there isn't much of a trust boundary violation going on
+>> (anyone/thing with CAP_SYS_ADMIN is already in pretty good).
+> 
+> The above code ... no.
+> 
+> However, vsftpd has this code pattern in its newer namespace
+> enabled versions.
+> 
+> So it can be triggered via a namespace enabled vsftpd remotely, by
+> just running wget on even anonymous areas in a loop.
 
-Description:
-Eric Windisch from Cloudscaling reported a vulnerability in libvirt
-LVM-backed instances. The physical volume content was not wiped out
-before being reallocated and passed to an instance, which may result in
-the disclosure of information from previously-allocated logical volumes.
-Only setups using libvirt and LVM-backed instances
-(libvirt_images_type=lvm) are affected.
+Ok that seems like a reasonably sane use case (e.g. as opposed to
+granting a local program CAP_SYS_ADMIN). Please use CVE-2012-2127 for
+this issue.
 
-Grizzly (development branch) fix:
-http://github.com/openstack/nova/commit/9d2ea970422591f8cdc394001be9a2deca499a5f
+> Ciao, Macus
 
-Folsom fix (included in upcoming Nova 2012.2.2 stable update):
-http://github.com/openstack/nova/commit/a99a802e008eed18e39fc1d98170edc495cbd354
-
-References:
-https://bugs.launchpad.net/nova/+bug/1070539
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2012-5625
 
 - -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQIcBAEBCAAGBQJQx4DRAAoJEFB6+JAlsQQj5sEP/2osrfWvooWEeQbhnHGIp7yg
-GRR1BdPqqnBqBT4lzXp1B6O23l4LqSjKVC1X3r3zs2VqUcsZwTiJJz3FmPFlr0xZ
-5BSSrg4GWo+If0atGqsWwOabTzuOZqCoFe16uXghtBwjmceZBjUOhra4mfnW+VtO
-xVc9eXiREEnxkHFHVPVuNnAxdxgoYin8Nw0NaOs+uZ9ehTjv2h0/81FNGNy3Rw5Y
-TPJOq3YFrneAK5GEL/srhV+3V6LnRKXqlPIhFbw5wqO+WlHZWOHnayL/hQZaivdF
-gYiuaTkwU2d6yKbasy+q9flreylZbtllcj1p3IGvoAFbTSA3u2l3AeElqnx6D+ak
-ULxIpLQGlBzabiUDLpSe+9t/gv7bY7qcf+Ec1u6DsgRpN/GhHHwBKykzoQwvTPS/
-Of+CfmJj39NJarepUHMO7GMVUu/BYkQm4EnfPAnP8X8Gz5/0xJjo2ue7vnx8yuxC
-M7CPxWx3pZanC98n1omF5GvRlcdWECmbcP7NYynXhrROOw8mgXAs+Eh77mD94flk
-iZULo5fOJDShCVY+LmekzHix9WNRQSWxceAMYHrlNLo/H4zN5DWo063xgxYlSuNI
-+jfJ6DtqePjjG+c9tDcpVG9/OMxpyN8CKoWDSVWwdkTega3a7e1AAf9xEj0jT1jd
-OC2iQxz1crzjL1CV9z3J
-=CE4b
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPkYGDAAoJEBYNRVNeJnmTCS4P/3e8Yb5/QonbKJ8aNOzl3/4L
+3mWUdlUDmUCB/GlGSgKgKi4fVU0Afd3x8ghHjmWfp9YOAnx7WnkZpx7joPCM+dlL
+aXam4E208X7L5WpIbmqIi28IVa9x63N4lxb5au3Zwp4xNVB7mLIxERyYz+adNPRm
+7Kpohf1M2FAL2x/yGFVoTHEGHG2yh29BJYB9+KmQmf4h7znaR1XjidGYtNQpEkq/
+tGGIxdU0cLWHNswzhiDElhte8lsMyaZ4aNYZZDu9lxpc6TUE+/BpiF2zx6oUytmR
++hKJ+Tv3XMIZcYoyeNm1/5YrXLnZCdQJqAULtD63Rx/XMd9z4+blVryqZAo1PWgi
+rvQcwcAYWdKuGTSk/FCHv3zj/xZ1sb/exWt4U3YfrMAroPNKzr4dlTBs4HJIcsCY
+DnrCjJg7gGwU/mE7M4H2FMaaX3yxV45VVu3Prd8vsnYl3PvIiUl/GNXV02pONRki
+cX+jSK2mM4oYVXtSl3O5fefjJ/AIXg8fd5jgjzxEWQ2SgbsNOdeaofuVLshOshJv
+pXL94yhXiSM0kqA2BSn/n3Da7KNFKfYSNuu9YcpuMOmO98gVTG6BxDREyPVaNNnD
+xM89+VPS81SwoTvXoXApXVmdgsxS77Zr7s1V7rNmIvmz4BwBd9H3zYDZ56noCu0Z
+pR49VyTREeYtfaJmXvic
+=GZlG
 -----END PGP SIGNATURE-----
