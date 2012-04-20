@@ -1,108 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/29/2
-Message-ID: <025901cd55e5$7eac8680$7c059380$@reactionis.com>
-Date: Fri, 29 Jun 2012 11:54:01 +0100
-From: "Joseph Sheridan" <joe@...ctionis.com>
-To: "'full-disclosure'" <full-disclosure@...ts.grok.org.uk>, "'bugtraq'" <bugtraq@...urityfocus.com>, <secalert@...urityreason.com>, <bugs@...uritytracker.com>, "'vuln'" <vuln@...unia.com>, <vuln@...urity.nnov.ru>, <news@...uriteam.com>, <moderators@...db.org>, <submissions@...ketstormsecurity.org>, <submit@...ecurity.com>, <oss-security@...ts.openwall.com>, <bugs@...uritytracker.com>
-Subject: Irfanview Plugins JLS Decompression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/6
+Message-ID: <4F90EC8F.9030401@redhat.com>
+Date: Thu, 19 Apr 2012 22:56:47 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: fcaps: clear the same personality flags as suid when fcaps are used
 Content-Type: text/plain; charset=utf-8
 
-Summary
-=======
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-IrfanView Formats PlugIn is prone to an overflow condition. The JLS Plugin 
-(jpeg_ls.dll) library fails to properly sanitize user-supplied input 
-resulting in a heap-based buffer overflow. With a specially crafted JLS 
-compressed image file, a context-dependent attacker could potentially 
-execute arbitrary code.
+On 04/19/2012 10:52 PM, Eugene Teo wrote:
+> Reported by Steve Grubb, if a process increases permissions using
+> fcaps all of the dangerous personality flags which are cleared for
+> suid apps should also be cleared. Thus programs given priviledge
+> with fcaps will continue to have address space randomization
+> enabled even if the parent tried to disable it to make it easier to
+> attack.
+> 
+> Upstream commit: 
+> http://git.kernel.org/linus/d52fc5dde171f030170a6cb78034d166b13c9445
+>
+>  Reference: https://bugzilla.redhat.com/show_bug.cgi?id=806722
+> 
+> Thanks, Eugene
 
-CVE number: CVE-2012-3585
-Impact: high
-Vendor Homepage: http://www.ifranview.com/
-Vendor Notified: 16/06/2012
-Found by: Joseph Sheridan of Reaction Information Security
-href="http://www.reactionpenetrationtesting.co.uk/joseph-sheridan.html
+Please use CVE-2012-2123 for this issue.
 
-This advisory is posted at:
-http://www.reactionpenetrationtesting.co.uk/Irfanview-JLS-Heap-Overflow.html
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-POC file posted at:
-http://www.reactionpenetrationtesting.co.uk/vuln.jls
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Affected Products
-=================
-
-Irfanview Plugins version 4.33
-
-
-Details
-=======
-
-IrfanView Formats PlugIn is prone to an overflow condition. The JLS Plugin 
-(jpeg_ls.dll) library fails to properly sanitize user-supplied input 
-resulting in a heap-based buffer overflow. With a specially crafted JLS 
-compressed image file, a context-dependent attacker could potentially 
-execute arbitrary code.
-
-Impact
-======
-
-If a user could be enticed to open a malicious JLS file, the attack could 
-result in remote code execution.
-
-Solution
-===========
-Upgrade to Irfanview Plugins version 4.34
-
-The following jls dll has been patched:
-http://www.irfanview.net/plugins/jpeg_ls.zip
-
-
-Distribution
-============
-
-In addition to posting on the website, a text version of this notice
-is posted to the following e-mail and Usenet news recipients.
-
-  * bugtraq () securityfocus com
-  * full-disclosure () lists grok org uk
-  * oss [dash] security [dash] subscribe [at] lists [dot] openwall [dot] com or 
-
-Future updates of this advisory, if any, will be placed on the ReactionIS
-corporate website, but may or may not be actively announced on
-mailing lists or newsgroups. Users concerned about this problem are
-encouraged to check the URL below for any updates:
-
-http://www.reactionpenetrationtesting.co.uk/Irfanview-JLS-Heap-Overflow.html
-
-==============================================================================
-
-Reaction Information Security 
-Lombard House Business Centre,
-Suite 117,
-12-17 Upper Bridge Street,
-Canterbury, Kent, CT1 2NF
-
-Phone: +44 (0)1227 785050
-Email: research () reactionis {dot} co {dot} uk
-Web: http://www.reactionpenetrationtesting.co.uk
-
-
-Joseph Sheridan
-Technical Director
-Principal Consultant
-CHECK Team Leader, CREST Infrastructure, CREST Application, CISSP
-Tel: 07812052515
-Web: www.reactionis.com
-Email: joe@...ctionis.co.uk
-
-Reaction Information Security Limited.
-Registered in England No: 6929383
-Registered Office: 1, The Mews, 69 New Dover Road, Canterbury, CT1 3DZ
- 
-This email and any files transmitted with it are confidential and are intended solely for the use of the individual to whom they are addressed. If you are not the intended recipient please notify the sender. Any unauthorised dissemination or copying of this email or its attachments and any use or disclosure of any information contained in them, is strictly prohibited.
-
- Please consider the environment before printing this email
-
-
-
+iQIcBAEBAgAGBQJPkOyPAAoJEBYNRVNeJnmTdeYP/j3mkBDfKmNR6WfS9tIqQN2S
+8O60vrzYfOsZ/+qwHlP4JSmy1pyGoE/rj/ADz/ctLmaGKSoE41Oz30mEE3LksKke
+uNhIaMCbAGxo+gNT7CADI32vl+Ab2P/NVgVj5GSuJ9ZCHi34qTUSHkATJWM5iNJs
+HtsF46VSzVKKsGRWF6AhszGA4v54v76vOesncMG5U6SQ9+aPDnx/t9SvSHb29yvg
+WSU2Q3EvVa3YWkR+7FaGs7UYj63PcPWYP0VAjacA/RafY3CMEijwKKB6qvHYEOpM
+mCkaTxCEHYwhtf6QBMqmC5EWiaMB4uhxjzUO3/HUPz2YA+dw2d1sMcct49jWzF2B
+vGSiFT3LQ1AZQK7Yp517ASYbCEPVNIDqwnpXuDVuJJ/AcHbuyEOEsEbMy3TVo7Xl
+sj4XD/yE+iGNwBoTIQyx0/fMMh1K25j/8KEZabzO6w5RciPHULIMawzVaTkciMxg
+HtNG67Kt3UHcpKwDQLeGH75vQqQDPfu6o5e5Ix9wnSrbZuMZn8Ub1lmVoP+d5PfK
+YdW6flfTo+Z/f57VMgmzzJCfFp/SR+B5j4lskcaeMtysTMp5L0r1/s/0NXpOKz+G
+IL7EsqbJvUDGZ6PXmmD/KXEOMaCyUEmzmh92w6H5sTfsOwzl2YjddMM4KMdSGaQC
+VdbREbLZLmSW90WOh/JK
+=Thfp
+-----END PGP SIGNATURE-----
