@@ -1,138 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/11
-Message-ID: <502993E0.80303@redhat.com>
-Date: Mon, 13 Aug 2012 17:55:12 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/13
+Message-ID: <20120420074122.GD15515@suse.de>
+Date: Fri, 20 Apr 2012 09:41:22 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Matthias Andree <matthias.andree@....de>
-Subject: Re: CVE ID request for fetchmail segfault in NTLM protocol exchange
+Cc: Eugene Teo <eugeneteo@...nel.sg>, "Eric W. Biederman" <ebiederm@...ssion.com>, "security@...nel.org" <security@...nel.org>, Sukadev Bhattiprolu <sukadev@...ibm.com>, Serge Hallyn <serge.hallyn@...onical.com>
+Subject: Re: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Apr 20, 2012 at 09:14:58AM +0400, Pavel Emelyanov wrote:
+> On 04/20/2012 07:10 AM, Eugene Teo wrote:
+> >> So we know what is holding the pid namespace reference.
+> >>
+> >> Additional thoughts.
+> >>
+> >> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
+> > 
+> > No.
+> > 
+> >> Is there a corresponding task_struct leak?
+> > 
+> > Yes.
+> > 
+> >> I don't have much of a clue or much concern as this seems fixed in later kernels but I am happy to suggest things to look for to help narrow this down.
+> > 
+> > I'm helping to provide more information.
+> 
+> Is there also a vfsmount struct leak as well? The pidns creating implies
+> kern-mount-ing of a proc and it should be released when child reaper of
+> the namespace dies.
 
-On 08/13/2012 01:27 PM, Matthias Andree wrote:
-> Please assign a CVE ID for the problem described below.  Note that
-> the text below is a *draft* security advisory that will change
-> before being officially released.
-> 
-> 
-> fetchmail-SA-2012-02: DoS possible with NTLM authentication in
-> debug mode
-> 
-> Topics:		fetchmail denial of service in NTLM protocol phase
-> 
-> Author:		Matthias Andree Version:	draft Announced:	2012-08-13 Type:
-> crash while reading from bad memory location Impact:		fetchmail
-> segfaults and aborts, stalling inbound mail Danger:		low 
-> Acknowledgment:	J. Porter Clark
-> 
-> CVE Name:	(TBD) URL:
-> http://www.fetchmail.info/fetchmail-SA-2012-02.txt Project URL:
-> http://www.fetchmail.info/
-> 
-> Affects:	- fetchmail releases 5.0.8 up to and including 6.3.21 when
-> compiled with NTLM support enabled
-> 
-> Not affected:	- fetchmail releases compiled with NTLM support
-> disabled - fetchmail releases 6.3.22 and newer
-> 
-> Corrected in:	2012-08-13 Git, among others, see commit 
-> 3fbc7cd331602c76f882d1b507cd05c1d824ba8b
-> 
-> 2012-08-xx fetchmail 6.3.22 release tarball
-> 
-> 
-> 0. Release history ==================
-> 
-> 2012-08-13 0.1	draft
-> 
-> 
-> 1. Background =============
-> 
-> fetchmail is a software package to retrieve mail from remote POP3,
-> IMAP, ETRN or ODMR servers and forward it to local SMTP, LMTP
-> servers or message delivery agents. fetchmail supports SSL and TLS
-> security layers through the OpenSSL library, if enabled at compile
-> time and if also enabled at run time, in both SSL/TLS-wrapped mode
-> on dedicated ports as well as in-band-negotiated "STARTTLS" and
-> "STLS" modes through the regular protocol ports.
-> 
-> 
-> 2. Problem description and Impact 
-> =================================
-> 
-> Fetchmail version 5.0.8 added NTLM support. This code sent the
-> NTLM authentication request, but never checked if the received
-> response was NTLM protocol exchange, or a server-side error
-> message.  Instead, fetchmail tried to decode the error message as
-> though it were base64-encoded protocol exchange, and could then
-> segfault depending of buffer contents, while reading data from bad
-> memory locations.
-> 
-> 
-> 3. Solution ===========
-> 
-> Install fetchmail 6.3.22 or newer.
-> 
-> The fetchmail source code is always available from 
-> <http://developer.berlios.de/project/showfiles.php?group_id=1824>.
-> 
-> Distributors are encouraged to review the NEWS file and move
-> forward to 6.3.22, rather than backport individual security fixes,
-> because doing so routinely misses other fixes crucial to
-> fetchmail's proper operation, for which no security announcements
-> are issued, or documentation.
-> 
-> Fetchmail 6.3.X releases have always been made with a focus on
-> unchanged user and program interfaces so as to avoid disruptions
-> when upgrading from 6.3.X to 6.3.Y with Y > X.  Care was taken to
-> not change the interface incompatibly.
-> 
-> 
-> A. Copyright, License and Non-Warranty 
-> ======================================
-> 
-> (C) Copyright 2012 by Matthias Andree, <matthias.andree@....de>. 
-> Some rights reserved.
-> 
-> This work is licensed under the Creative Commons
-> Attribution-NoDerivs 3.0 Germany License (CC BY-ND 3.0).
-> 
-> To view a copy of this license, visit 
-> http://creativecommons.org/licenses/by-nd/3.0/de/deed.en or send a
-> letter to:
-> 
-> Creative Commons 444 Castro Street Suite 900 MOUNTAIN VIEW,
-> CALIFORNIA 94041 USA
-> 
-> 
-> THIS WORK IS PROVIDED FREE OF CHARGE AND WITHOUT ANY WARRANTIES. 
-> Use the information herein at your own risk.
-> 
-> END of fetchmail-SA-2012-02
+Yes, apparently (mnt_cache jumps 2*tries).
 
-Please use CVE-2012-3482 for this issue.
+I diffed slabinfo before and after approx 7500 tries on a freshly rebooted machine (3.1.10), here
+are the suspicious large jumps:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-mqueue_inode_cache      1      4    896    4    1 : tunables   54   27    0 : slabdata      1      1      0
++mqueue_inode_cache   7516   7516    896    4    1 : tunables   54   27    0 : slabdata   1879   1879      0
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+-pid_namespace          0      0   2112    3    2 : tunables   24   12    0 : slabdata      0      0      0
++pid_namespace       7515   7515   2112    3    2 : tunables   24   12    0 : slabdata   2505   2505      0
 
-iQIcBAEBAgAGBQJQKZPfAAoJEBYNRVNeJnmT5gQP/0vOSkcZGjtayB8ubwNKgJpx
-5zBxNAVsk3WJvG9z+42PNOOxify+SEI6dXD87sxcpOsA6qExgmhjbgEUiiWpTI4X
-Jxe93z5nan2BbNbSMBycU1y5AO5w/XsRRpClU7Va1x2GcqPfpIekJz9h48EiPI2V
-BYap2pyXKBpY8/z1gIBAj7pFw24wLaTdUdssD0UFjKgOq2MwlPD4jj6gNtfkNcSd
-8M97WIU0s1rLfv6kdDP4khTYBRh3Bjq9GzjI1Qh1zAZLU0JV3vcSa1XZ2VWIM3na
-U0v08T2/EQee0KPBRGc79wSuW507mVMuQUD6ZMIaEj14eMOfo6QyEEMuyTGj2iPD
-fl5tAVU9cFYgh9xOZZ8JSwxJd4JL1vpbksH5KspTmqIs6YHXyQd3u0pfEP/c/1gJ
-UzqqSVTJBKKmp3PUZnwrIxnJI2PADfd30MJQ6pRK16X/6GCngWidreBNbusMM9Un
-1qGixzWnKmBgriUYF31CqONwCmBFO9QTcxDu/ovVQtnE3C+WHuQ7bV99PYjtw+Y0
-wcoNgnsX/qChDg4MAW4ffAFOCxkv76fy52CteHNTlOM2JD23kCAMZHejl3qz+GH7
-WFODY+3DxrvXODa1C6ZVMkqDXEDvVYJRbsPriIzXMt2/GABktqU8yNMpgVyYuXN5
-2CVVyoIbsKp1fNR6ebzk
-=wC4W
------END PGP SIGNATURE-----
+-proc_inode_cache     591    696    632    6    1 : tunables   54   27    0 : slabdata    116    116      0
++proc_inode_cache    8105   8124    632    6    1 : tunables   54   27    0 : slabdata   1352   1354      0
+
+-mnt_cache             45     45    256   15    1 : tunables  120   60    0 : slabdata      3      3      0
++mnt_cache          15077  15090    256   15    1 : tunables  120   60    0 : slabdata   1006   1006      0
+
+-dentry             10840  10840    192   20    1 : tunables  120   60    0 : slabdata    542    542      0
++dentry             26780  26880    192   20    1 : tunables  120   60    0 : slabdata   1343   1344      0
+
+-size-4096             59     59   4096    1    1 : tunables   24   12    0 : slabdata     59     59      0
++size-4096           7577   7577   4096    1    1 : tunables   24   12    0 : slabdata   7577   7577      0
+-size-1024            665    680   1024    4    1 : tunables   54   27    0 : slabdata    170    170      0
++size-1024          15700  15700   1024    4    1 : tunables   54   27    0 : slabdata   3925   3925      0
+-size-64             3360   3540     64   59    1 : tunables  120   60    0 : slabdata     60     60      0
++size-64            15097  22597     64   59    1 : tunables  120   60    0 : slabdata    383    383      0
+-size-32             7892   7952     32  112    1 : tunables  120   60    0 : slabdata     71     71      0
++size-32            23920  31472     32  112    1 : tunables  120   60    0 : slabdata    281    281      0
+
+Ciao, Marcus
