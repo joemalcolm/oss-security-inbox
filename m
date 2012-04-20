@@ -1,69 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/12
-Message-Id: <201210102234.q9AMYdOm022710@linus.mitre.org>
-Date: Wed, 10 Oct 2012 18:34:39 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/3
+Message-ID: <4F90D383.2070303@redhat.com>
+Date: Thu, 19 Apr 2012 21:09:55 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Fwd: IPv6 DOS vulnerabilities
+CC: Marcus Meissner <meissner@...e.de>, security@...nel.org
+Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Here are CVE assignments for these mixed open-source/closed-source
-issues:
+On 04/19/2012 03:48 PM, Marcus Meissner wrote:
+> Hi,
+> 
+> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a
+> pid namespace leak caused by vsftpd.
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=757783
+> 
+> He provided a simple reproducer:
+> 
+> #include <stdio.h> #include <errno.h> #include <signal.h> #include
+> <sched.h> #include <linux/sched.h> #include <unistd.h> #include
+> <sys/syscall.h>
+> 
+> int main(int argc, char *argv[]) { int i, ret;
+> 
+> for (i = 0; i < 10000; i++) {
+> 
+> if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC | 
+> CLONE_NEWNET | SIGCHLD, NULL))) return 0;
+> 
+> if (-1 == ret) { perror("clone"); break; }
+> 
+> } return 0; }
+> 
+> 
+> and checking "cat /proc/slabinfo|grep pid_namespace" gives 10000
+> more active slots after running it on 3.0.13 (+SUSE patches) and
+> 3.1.10 (+SUSE patches).
+> 
+> 
+> Running this on 3.2.0 (+SUSE Patches) did not result in more slots,
+> so it was probably fixed between 3.1 and 3.2 (but someone else
+> cross check perhaps).
+> 
+> Any idea welcome on which patch fixed this, I tried
+> 1b26c9b334044cff6d1d2698f2be41bc7d9a0864 but it seems not helping.
+> 
+> Ciao, Marcus
 
-Windows: flood of ICMPv6 Neighbor Solicitation
-         messages - CVE-2012-5362
-
-  (a different vulnerability than CVE-2010-4669)
-
-
-FreeBSD and NetBSD: flood of ICMPv6 Neighbor Solicitation
-                    messages - CVE-2012-5363
-
-  (a different vulnerability than CVE-2011-2393)
-
-  (We're aware that it's possible for the observed IPv6 behavior to
-   have different root causes on FreeBSD and NetBSD.)
-
-
-Mac OS X: flood of ICMPv6 Neighbor Solicitation messages - no CVE
-
-  (There's no CVE assignment from MITRE because the observed impact
-   is potentially reasonable for some design goals. It's possible
-   that there will be a future CVE assignment by Apple.)
-
-
-Windows:  flood of ICMPv6 Router Advertisement packets
-          containing multiple Routing entries - CVE-2012-5364
-
-
-FreeBSD and NetBSD: flood of ICMPv6 Router Advertisement packets
-          containing multiple Routing entries - CVE-2012-5365
-
-
-Mac OS X: flood of ICMPv6 Router Advertisement packets
-          containing multiple Routing entries - CVE-2012-5366
-
-  (We're aware that it's possible for the observed IPv6 behavior to
-   have the same root cause on Mac OS X as on both FreeBSD and
-   NetBSD.)
+Can this be triggered by a non privileged user/process? Eugene
+mentions that CAP_SYS_ADMIN seems to be required, if so it seems like
+there isn't much of a trust boundary violation going on (anyone/thing
+with CAP_SYS_ADMIN is already in pretty good).
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQEcBAEBAgAGBQJQdfcdAAoJEGvefgSNfHMdA6UH/0bybnW/n6njAsiscsMCmqFo
-9D8o4PrLrNquI2ybBtTtP0G0OJiGCsFKPDptWROf+T5cMt1BCrX1YC5Mh1wvwWSS
-fIg6gQSTS1D7NNf/gek6vu5geYpfAVMKuHGWl5+6+hHa1KwN1csQOcjGyoo6qGmd
-vb52lZ+Nnt7BqNwEKZjfNvfHIQ60NF0yM8DtDMMe0JTNPF414CO6gqUhdP5kiwtR
-jLOT92EJWoZ2Qi7I8arKvyCEagIl6PhZO84dycFaY1HcUjYpN0EoPTX4kJOdJ3BT
-f8SQilTvuNnYZWDm3kgXb/iSYeHkObfLgfwGDzVh/O2opFlBrU+3cct3oxFoEMw=
-=vWAY
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPkNODAAoJEBYNRVNeJnmTAAYP/0L2MDtbhXSFOj6LpjhQfoa3
+CmLYoY5E1rQHPJIFggc9FoMPeZKbEDyKGDwxV7LxdEz8g55nDu9tzZTbzFlbPo04
+IxnI5YThwxYcgYQm+kwUp+kVxT2/NVLdEynPTSInJyTXW2p/twjn7D+F88U5ZSOS
+golUVRfJyigVCuHVYyK2Rcw6HXIsgjV6FjLm4pmQVAcfwuL32owUmw0d/CSmGnqI
+yIgNJYUc6DIQA0kDxJVLOBx1WcMGoxzf0UBFV9u6Gj4ucOtm92moBDKgR5+fymrR
+yN1UygKaisU3s0FNtmcSdyOiiypGN052bRBxpXC2rndt59IO/jxoRIWJGYN5txve
+adfcbty/XOOXCP4PMO2C81bEcF9VgQqaTE5RmcapJYBIMyI9LhbKtGr9aIR58TVE
+vjtlENFrF11jEPFKzPfVnqH0/e4i+nFRpX9gb3zR7rPgA6KH8ijKQzCEQf2sS5R0
+X2EJHwj9BHNy+6P+xjXp1JpKXDVq0S9JtyyZVaGBzBOCBIW0QMtpSO84YaxmxbP9
+/Tbt2FgKBGVvY6NpDMK6CsJ7jqSB6IHjJQSIKWbZpFghZgT1NMd4L3rpbwUIXyjJ
+61utBIFfLAIDjqn2H0RQm1TRm+Ofzxc33qx7aNNRDIM4BGUqOcqB/dUlYDVoS/dL
+5Wp58czyQo2nlJ73MAER
+=YakC
 -----END PGP SIGNATURE-----
