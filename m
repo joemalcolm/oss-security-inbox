@@ -1,67 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/14
-Message-ID: <4FA81872.5010606@redhat.com>
-Date: Mon, 07 May 2012 12:46:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: mybb before 1.6.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/15
+Message-ID: <m1wr5a93h3.fsf@fess.ebiederm.org>
+Date: Fri, 20 Apr 2012 02:06:48 -0700
+From: ebiederm@...ssion.com (Eric W. Biederman)
+To: Marcus Meissner <meissner@...e.de>
+Cc: oss-security@...ts.openwall.com,  Eugene Teo <eugeneteo@...nel.sg>,  "security\@kernel.org" <security@...nel.org>,  Sukadev Bhattiprolu <sukadev@...ibm.com>,  Serge Hallyn <serge.hallyn@...onical.com>
+Subject: Re: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Marcus Meissner <meissner@...e.de> writes:
 
-On 05/07/2012 10:40 AM, Hanno Böck wrote:
-> According to release notes 
-> http://blog.mybb.com/2012/04/01/mybb-1-6-7-update-1-8-development/ 
-> five security issues have been fixed:
-> 
-> SQL injection vulnerability within the Admin Control Panel (ACP)
-> in user search (reported by Nathan Malcolm, MyBB SQA Team) SQL
-> injection vulnerability within the ACP in Mail Log (reported by 
-> Nathan Malcolm, MyBB SQA Team)
+> On Fri, Apr 20, 2012 at 09:14:58AM +0400, Pavel Emelyanov wrote:
+>> On 04/20/2012 07:10 AM, Eugene Teo wrote:
+>> >> So we know what is holding the pid namespace reference.
+>> >>
+>> >> Additional thoughts.
+>> >>
+>> >> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
+>> > 
+>> > No.
+>> > 
+>> >> Is there a corresponding task_struct leak?
+>> > 
+>> > Yes.
+>> > 
+>> >> I don't have much of a clue or much concern as this seems fixed in later kernels but I am happy to suggest things to look for to help narrow this down.
+>> > 
+>> > I'm helping to provide more information.
+>> 
+>> Is there also a vfsmount struct leak as well? The pidns creating implies
+>> kern-mount-ing of a proc and it should be released when child reaper of
+>> the namespace dies.
+>
+> Yes, apparently (mnt_cache jumps 2*tries).
 
-Merging, samne issue/version/reporter. Please use CVE-2012-2324 for
-this issue.
+The other mnt_cache entry looks like the internal mount for the ipc
+mqueue superblock/namespace.
 
-> SQL injection vulnerability within the ACP in User Inline
-> Moderation (reported by Jammerx2, MyBB Developer)
+> I diffed slabinfo before and after approx 7500 tries on a freshly rebooted machine (3.1.10), here
+> are the suspicious large jumps:
 
-Please use CVE-2012-2325 for this issue.
+Hmm.  This smells like unreaped zombies, we will drop the mounts from at
+least the pid namespace in release_task -> proc_flush_task which you
+can't avoid if you get as far as release_task(), and release_task
+is the guts of the zombie reaper.  If the mounts still exist the
+processes should still be visible in /proc.
 
-> XSS within the ACP where an orphaned attachment has a malformed 
-> filename (reported by Nathan Malcolm, MyBB SQA Team)
+Is this really steady state data?  Have the zombies really been reaped?
+Perhaps there is a signal deliver bug to init where it isn't noticing it
+has re parented children?
 
-Please use CVE-2012-2326 for this issue.
+Otherwise these numbers should change and go down as processes are
+reaped and we can get a clue about where the bug is by looking at what
+has leaked.
 
-> Full Path Disclosure if malformed forumread cookie is used
+> -mqueue_inode_cache      1      4    896    4    1 : tunables   54   27    0 : slabdata      1      1      0
+> +mqueue_inode_cache   7516   7516    896    4    1 : tunables   54   27    0 : slabdata   1879   1879      0
+>
+> -pid_namespace          0      0   2112    3    2 : tunables   24   12    0 : slabdata      0      0      0
+> +pid_namespace       7515   7515   2112    3    2 : tunables   24   12    0 : slabdata   2505   2505      0
+>
+> -proc_inode_cache     591    696    632    6    1 : tunables   54   27    0 : slabdata    116    116      0
+> +proc_inode_cache    8105   8124    632    6    1 : tunables   54   27    0 : slabdata   1352   1354      0
+>
+> -mnt_cache             45     45    256   15    1 : tunables  120   60    0 : slabdata      3      3      0
+> +mnt_cache          15077  15090    256   15    1 : tunables  120   60    0 : slabdata   1006   1006      0
+>
+> -dentry             10840  10840    192   20    1 : tunables  120   60    0 : slabdata    542    542      0
+> +dentry             26780  26880    192   20    1 : tunables  120   60    0 : slabdata   1343   1344      0
+>
+> -size-4096             59     59   4096    1    1 : tunables   24   12    0 : slabdata     59     59      0
+> +size-4096           7577   7577   4096    1    1 : tunables   24   12    0 : slabdata   7577   7577      0
+> -size-1024            665    680   1024    4    1 : tunables   54   27    0 : slabdata    170    170      0
+> +size-1024          15700  15700   1024    4    1 : tunables   54   27    0 : slabdata   3925   3925      0
+> -size-64             3360   3540     64   59    1 : tunables  120   60    0 : slabdata     60     60      0
+> +size-64            15097  22597     64   59    1 : tunables  120   60    0 : slabdata    383    383      0
+> -size-32             7892   7952     32  112    1 : tunables  120   60    0 : slabdata     71     71      0
+> +size-32            23920  31472     32  112    1 : tunables  120   60    0 : slabdata    281    281      0
 
-Please use CVE-2012-2327 for this issue.
+I hate to say it but it looks very much to me like I am looking at data
+for unreaped zombies.
 
-> 
-> Please assign CVEs
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPqBhyAAoJEBYNRVNeJnmTm2IP/0GsQSE7p4KfMwmojs7f2y0n
-bjyO5JrCiFjtgBPopwa5ELg1k0iyK0TmIIYzlTKJSwI8fQ+voCgaHnToBDXHd7+V
-CJ7Dajvs3M4VAjyRf8F2n9lwUCTTbNpUVBaiq4Q+OGxh19/zgW5oLs2Q4qZATiaR
-CzJber4u6wfQBrg9TACs4YGZlVjLt7m+gXv9id9FuYXwwSl73y48BNOjPHCnEdkJ
-NqldfCl5uI0W5+bwlAamUIZuATqbVyntfQP/5d9syc7IvQclZAlBGHtPB5vCXXb3
-p6VslVKp4c3LJ6vYgOAHLw2J4LNhAjAuve9E6lxQQAdg49rxDt5524zQGgJxdLcH
-zy6Mpwh9TBBgzAeSd1Zsh7XOHPO4PEv+kskbE0A7wyTye2MhJzbv5IMH9PXb1ofR
-U/MFP4FS3F1UlWj4HtppfSyg8fbHXb2D2Jr0n8MR5SA8Mi0m9SkE1a6Lht6zA4wY
-yE/AiiriJj8XahU/m+WJ33K/IsjWGTyem+UOVyxXtUOZzhj2Yw7OC6SDXwJVzQO5
-1dUofI3foUFEZZQ5Juf+StT3XrJnzJ+FF8MMRe69z4WULgF1Ed6xFNQhJJAKpIWl
-0evW7r8rNeb1fkrpWjWKonT/yl8f1srDtmJg82GZvwORp4DeQcsEOeOqKq+vsLy0
-v5iTJsm9cquirOETfQSv
-=yFtQ
------END PGP SIGNATURE-----
+Eric
