@@ -1,76 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/2
-Message-ID: <50762647.3020102@redhat.com>
-Date: Wed, 10 Oct 2012 19:52:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Tim Brown <timb@...-dimension.org.uk>, security@....org
-Subject: Re: Pre-advisory for Konqueror 4.7.3 (other versions may be affected)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/23
+Message-ID: <4F917A32.8050006@redhat.com>
+Date: Fri, 20 Apr 2012 17:01:06 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Eric Hodel <drbrain@...ment7.net>, Evan Phoenix <evan@....io>, Vít Ondruch <vondruch@...hat.com>
+Subject: CVE Request -- rubygems: Two security fixes in upstream v1.8.23 version
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, Eric, Evan, vendors,
 
-On 10/10/2012 04:12 PM, Tim Brown wrote:
-> Taken from NDSA20121010:
-> 
-> --8<-------- This advisory comes in 4 related parts:
-> 
-> 1) The Konqueror web browser is vulnerable to type confusion 
-> leading to memory disclosure.  The root cause of this is the same
-> as CVE-2010-0046 reported by Chris Rohlf which affected WebKit.
-> 
-> 2) The Konqueror web browser is vulnerable to an out of bounds 
-> memory access when accessing the canvas.  In this case the 
-> vulnerability was identified whilst playing with bug #43813 from 
-> Google's Chrome repository.
-> 
-> 3) The Konqueror web browser is vulnerable to a NULL pointer 
-> dereference leading to a crash.
-> 
-> 4) The Konqueror web browser is vulnerable to a "use-after-free" 
-> class flaw when the context menu is used whilst the document DOM
-> that is being changed from within Javascript.
-> 
-> These flaws were identified during an analysis of previously 
-> reported vulnerabilities that affected Google's Chrome web browser.
-> It is believed that only vulnerability 1 is/was common to the two
-> code bases.
-> 
-> --8<--------
-> 
-> I'm pre-advising on these flaws since I've not heard anything from
-> the KDE project in about 8 months regarding 3 and 4 and we are
-> aware that 1 and 2 have been fixed.  I'll give it 7 days and then
-> drop technical details.  Vendors with an interest can contact me
-> off list.
-> 
-> Tim
-> 
+   two security fixes has been recently corrected in upstream rubygems-v1.8.23 version:
+   #1 RubyGems now disallows redirection from HTTPS to HTTP.
+   #2 RubyGems now verifies SSL connections.
 
-Do these things need CVE #'s or did they already get them, or? I'll
-need more infor to assign CVE's to make sure we don't end up with
-duplicates (e.g. function names/code/etc. would be ideal).
+References:
+[1] https://github.com/rubygems/rubygems/blob/1.8/History.txt (rubygems History.txt)
+[2] https://github.com/rubygems/rubygems/commit/d4c7eafb8efe1e13a7abf5be5a5b4548870b15b7
+     (relevant rubygems git commit)
+[3] http://www.ruby-lang.org/en/news/2012/04/20/ruby-1-9-3-p194-is-released/
+     (Ruby v1.9.3-p194 version announcement)
+[4] http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&sortby=date&revision=35404
+     (Ruby language SVN repository commit)
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=814718
+     (Red Hat bugzilla entry)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Both of [2] and [4] patches include fixes for both issues. For the case #2
+the security implications are clear.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Kurt, could you allocate two CVE ids for these issues?
 
-iQIcBAEBAgAGBQJQdiZGAAoJEBYNRVNeJnmTT0UQAMRID+4rcXU6bumj286mr1bF
-V+FQP1B367pMUtaU9DfhpJbZoRPPQcpkGaxQ0+37K+HRsD+2mw/JMwbihcn5gtaV
-7MGJu9aKEJ0jQaZs69SQyxuICLH3UrcDKcgcxCzGXWiXmH6lR/EhYT1B912L73tk
-eweAuler+xp8oeASik2Lj6oxx7hfY7derq/nbcE+X0GlYowqsAKAnxsQvZUdppYl
-JFykGTuD/W3G6J+zPEy7u6fToh/7opbG6jzlEXfgIBbG7IO24XNw4GP+zQnLOHDq
-Vz/1pPlo2weEK4JQOhtoG/M7mNrvjoOcn3lhB3zN7DImJ2Nx73yZE+q7REdDBT7O
-YO/U9TWIK4Ad1SjnPpUmNBpQEXhCb7n79Y7CmZJLHny4GWkeldxRziQHGSe6XGHG
-a4/CvMiOF6CaW7Ki05zzS6PBwcXaW/mpfMkn4bNaWC+AWU53zfUQq9U3kMqBEu5Z
-6iXamYtqWjXYyZ5WQOwKztEYPCA6emJzTv+oNctard5vjx4atI7p+qEYkNgQ5LjX
-cHz0RQP0rLem+JjOSFDghKnusZQj4IA6dHtQX/OOf+n8qYfZq/aOCkyUfCVEMN7T
-x87pALBwN/E0vQq6FvUBGuhSAGGvk2RBBecwBLxb27SK25Q1p3WBORxkhHo4YnOO
-Ag3xB4nFUhlJh5Gq3c8q
-=Lvkj
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
