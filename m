@@ -1,16 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/03/3
-Message-ID: <20120403130148.GA13952@kludge.henri.nerv.fi>
-Date: Tue, 3 Apr 2012 16:01:48 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/22
+Message-ID: <4F917028.2050003@redhat.com>
+Date: Fri, 20 Apr 2012 16:18:16 +0200
+From: Stefan Cornelius <scorneli@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...mla.org
-Subject: CVE-request: Joomla 2012-04 398-20120307 399-20120308
+CC: security-2012@...irrelmail.org
+Subject: CVE-2012-2124 assignment notification: squirrelmail: CVE-2010-2813 not fixed in RHSA-2012:0103
 Content-Type: text/plain; charset=utf-8
 
-Can I get two CVE-identifiers for these issues in Joomla:
+Hi,
 
-http://developer.joomla.org/security/news/398-20120307-core-information-disclosure.html
-http://developer.joomla.org/security/news/399-20120308-core-xss-vulnerability.html
+A Red Hat Security Advisory RHSA-2012:0103 for squirrelmail packages
+shipped in Red Hat Enterprise Linux 4 and 5 claim to have fixed
+CVE-2010-2813 issue. However, the patch for this issue was not applied
+correctly and hence the issue was not fixed as stated in the advisory.
 
-- Henri Salo
+A situation like this requires the assignment of a new, vendor-specific
+CVE for the broken/incomplete fix. Thus, CVE-2012-2124 has been assigned
+to this issue.
+
+We apologize to upstream / distros for the confusion this additional
+CVE assignment may cause and want to make it explicit this is assigned
+to an issue in RHEL packages unlikely to affect anyone else (except of
+RHEL downstream distros).
+
+References:
+
+Red Hat bug 814671:
+https://bugzilla.redhat.com/show_bug.cgi?id=814671
+
+Thanks and kind regards,
+-- 
+Stefan Cornelius / Red Hat Security Response Team
