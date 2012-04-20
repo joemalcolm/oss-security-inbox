@@ -1,26 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/09/7
-Message-ID: <20120509192104.GC2769@dhcp-25-225.brq.redhat.com>
-Date: Wed, 9 May 2012 21:21:05 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/18
+Message-ID: <4f914eb3.84630e0a.6214.7708@mx.google.com>
+Date: Fri, 20 Apr 2012 11:55:28 +0000
+From: "pinto.elia@...il.com" <pinto.elia@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: R: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 08, 2012 at 04:08:17AM +0400, Solar Designer wrote:
-<snip>
-> Well, if that process itself is multi-threaded (and
-> other threads are not exiting yet), it possibly can be exploited
-> (through affecting those other threads).  Is this the only attack
-> scenario?
 
-This is the attack scenario that I considered when filing this bug, yes.
+----Messaggio originale----
+Da: Andrew Morton
+Inviato:  20/04/2012, 00:04 
+A: Marcus Meissner
+Cc: OSS Security List; security@...nel.org; Sukadev Bhattiprolu; Serge Hallyn; Eric W. Biederman; Pavel Emelyanov
+Oggetto: [oss-security] Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 
-> Do we know of any SUID/SGID/fscaps-privileged multi-threaded
-> programs?  OK, I suppose that some proprietary ones exist (likely with
-> plenty of vulnerabilities in them). ;-)
 
-I haven't looked extensively for those. I can imagine such programs, but
-I admit I come from Windows world, so I might be a little bit biased.
+(cc's added)
 
-Petr
+On Thu, 19 Apr 2012 23:48:20 +0200
+Marcus Meissner <meissner@...e.de> wrote:
+
+> Hi,
+> 
+> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
+> namespace leak caused by vsftpd.
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=757783
+> 
+> He provided a simple reproducer:
+> 
+> #include <stdio.h>
+> #include <errno.h>
+> #include <signal.h>
+> #include <sched.h>
+> #include <linux/sched.h>
+> #include <unistd.h>
+> #include <sys/syscall.h>
+> 
+> int main(int argc, char *argv[])
+> {
+>     int i, ret;
+> 
+>     for (i = 0; i < 10000; i++) {
+> 
+>         if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC |
+> CLONE_NEWNET | SIGCHLD, NULL)))
+>             return 0;
+> 
+>         if (-1 == ret) {
+>             perror("clone");
+>             break;
+>         }
+> 
+>     }
+>     return 0;
+> }
+> 
+> 
+> and checking "cat /proc/slabinfo|grep pid_namespace"
+> gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
+> 
+> 
+> Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
+> fixed between 3.1 and 3.2 (but someone else cross check perhaps).
+> 
+> Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
+> but it seems not helping.
+> 
+> Ciao, Marcus
+
