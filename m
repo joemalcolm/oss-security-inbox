@@ -1,106 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/16/1
-Message-ID: <20120716075551.GB31259@suse.de>
-Date: Mon, 16 Jul 2012 09:55:51 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/16
+Message-ID: <20120420091119.GA25342@openwall.com>
+Date: Fri, 20 Apr 2012 13:11:19 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Tyler Hicks <tyhicks@...onical.com>, Kurt Seifried <kseifried@...hat.com>, Marcus Meissner <meissner@...e.de>, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Re: ecryptfs headsup
+Cc: Tavis Ormandy <taviso@...xchg8b.com>
+Subject: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-Indeed, there are various issues in the ecryptfs tool that made me scratch
-my head but are not serious vulnerabilities and cannot be fixed so easily
-w/o rewriting the entire file handling. Yes, some of the checks could
-probably be removed.
-So the main focus was that its runs with euid of the user. :)
-The one real issue was the missing MS_NOSUID|MS_NODEV.
+This should have been posted in here yesterday (and by someone more
+familiar with the topic), but better a bit late than never.
 
-Sebastian
+Tavis Ormandy of Google Security Team found a vulnerability in OpenSSL:
 
-On Sat, Jul 14, 2012 at 07:41:44AM +0200, Jason A. Donenfeld wrote:
-> Hi,
-> 
-> There's another almost-hole (almost, like the umount env clearing)
-> that the patch in that bug report fixes:
-> 
-> At line 538, this code is added:
-> 
-> 	if (strstr(alias, "..")) {
-> 		fputs("Invalid alias", stderr);
-> 		exit(1);
-> 	}
-> 
-> Ostensibly this is to prevent the subsequent call to
-> 
->         lock_counter(pwd->pw_name, uid, alias);
-> 
-> from crafting the path name like this:
-> 
->        asprintf(&f, "%s/%s-%s-%s", TMP, FSTYPE, u, alias)
-> 
-> where alias might have ".." in it, and then making a file like this:
-> 
->       open(f, O_RDWR | O_CREAT | O_NOFOLLOW, 0600)
-> 
-> which takes special care to specify O_NOFOLLOW too, and then
-> afterwards, it checks to see if it's owned by the correct user and
-> makes certain it's a regular file.
-> 
-> Fortunately, the call at the beginning of the program to seteuid(uid)
-> prevents this from being too traumatic. But, the strstr check was
-> added apparently as a security consideration; correct me if I'm
-> mistaken.
-> 
-> 
-> 
-> 
-> There's actually one use of the alias variable before such sanitation
-> that is almost a big hole, but isn't, due again to the seteuid(uid) at
-> the beginning of the program. At line 525 we have:
-> 
-> if (read_config(pwd->pw_dir, uid, alias, &src, &dest, &opts2) < 0) {
-> 
-> read_config forms a file name like this:
-> 
-> if (asprintf(&fnam, "%s/.ecryptfs/%s.conf", pw_dir, alias) < 0) {
-> 
-> It then makes a smart security check to ensure that it's not a symlink
-> and that it's owned by uid:
-> 
-> if (stat(fnam, &mstat)!=0 || (!S_ISREG(mstat.st_mode) || mstat.st_uid!=uid)) {
->     fputs("Bad file\n", stderr);
->     free(fnam);
->     return -1;
-> }
-> 
-> After it does this, it opens the file for reading with a standard fopen:
-> 
-> fin = fopen(fnam, "r");
-> 
-> And then it reads the various settings out of fin.
-> 
-> There's a race condition on fnam, since you could make fnam a valid
-> file, but immediately after the stat(2) call, swap it for a symlink.
-> I'm not sure this is really an issue, though, since geteuid(uid) has
-> already been called, so it's not as if the subsequent fopen is allowed
-> to read just any file. It does pose the question, though, of why that
-> stat check is there in the first place, if it can be subverted like
-> that. The solution is just to open the fd first, and then check the
-> permissions and whatnot with fstat(2).
-> 
-> Jason Donenfeld
+incorrect integer conversions in OpenSSL can result in memory corruption.
+http://lists.openwall.net/full-disclosure/2012/04/19/4
 
--- 
+Advisory from OpenSSL:
+http://openssl.org/news/secadv_20120419.txt
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+Fortunately, the SSL/TLS code of OpenSSL is not affected - but some
+other uses of OpenSSL are.
 
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
+There are updates for 1.0.1, 1.0.0, and 0.9.8.
 
+Alexander
