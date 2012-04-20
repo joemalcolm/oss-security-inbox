@@ -1,85 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/3
-Message-ID: <505165A2.7030100@redhat.com>
-Date: Wed, 12 Sep 2012 22:48:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Oracle Security Team <secalert_us@...cle.com>, David Jorm <djorm@...hat.com>
-Subject: Re: CVE Request (minor) -- JVM: heap memory disclosure (possibly various JDKs)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/20
+Message-ID: <4f914eda.84630e0a.6214.7739@mx.google.com>
+Date: Fri, 20 Apr 2012 11:56:06 +0000
+From: "pinto.elia@...il.com" <pinto.elia@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: R: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 09/12/2012 04:55 AM, Jan Lieskovsky wrote:
-> Hello Steve,
-> 
-> thank you for the clarification.
-> 
->> Jan/Kurt,
->> 
->> The bug report appears to be describing a narrow class of
->> vulnerability that could affect multiple codebases that implement
->> Java Virtual Machines, not just Oracle's;
-> 
-> That's true, my yesterday's request was too wide, because in that
-> moment we were not sure yet, which concrete JVM implementations
-> would be affected by this deficiency (and which not).
-> 
->> if so, then a separate CVE would be needed for each REPORTED
->> codebase, and CVE-2012-4416 is ONLY for bug id 7196857 for the 
->> Oracle-supported JVM.
-> 
-> Anyway, upon David's review (Cc-ed too) we can announce that this
-> problem would affect / is specific only to Oracle Java SE 7
-> (java-1.7.0-oracle), and Java SE 7 as provided by OpenJDK 7
-> (java-1.7.0-openjdk).
-> 
-> So after above suggestion we will use CVE-2012-4416 for Oracle's
-> codebase / Oracle supported JVM and the OpenJDK one should obtain
-> another CVE identifier.
-> 
-> I will clarify this situation in our bugs too yet.
-> 
-> Kurt, could you allocate another CVE id then for the OpenJDK part
-> of the story?
-> 
->> 
->> I wonder about the severity of the issue, but given the
->> possibility that applications might access an array before a
->> fill, and applications may depend on there being "empty" elements
->> after initialization, this seems reasonable for a CVE.
-> 
-> Florian clarified on this already (why to assign CVE id for these
-> is appropriate approach).
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
->> 
->> - Steve
+----Messaggio originale----
+Da: Andrew Morton
+Inviato:  20/04/2012, 00:04 
+A: Marcus Meissner
+Cc: OSS Security List; security@...nel.org; Sukadev Bhattiprolu; Serge Hallyn; Eric W. Biederman; Pavel Emelyanov
+Oggetto: [oss-security] Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 
-Please use CVE-2012-4420 for this issue in OpenJDK
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+(cc's added)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+On Thu, 19 Apr 2012 23:48:20 +0200
+Marcus Meissner <meissner@...e.de> wrote:
 
-iQIcBAEBAgAGBQJQUWWiAAoJEBYNRVNeJnmTsA0P/1WpRpGkrl0DUEI5Lve08CjB
-9Vi1U1RLNZBiuoh6he8qeGLY7lgZzbXwZdCBfxUc0IbFH2Vxr4JcIYfprXtg8c5O
-H4lUqgdXR09kWof9bR+DWqWKGcPp3UGSp1GzljPh3OrfdOj1DE7vErphG6SQaa16
-mVGlrmhU8DnUNbMRbswwbzFj7BrG3i3uWyO3t6IpUQvvtUB+tao82U/tg3TVN5it
-gYT6f6CTUsNQMSlk2Fu8rPr8zqA8Ik9D4lnOksA1KGhzyHshogRqybq/buWo3lfq
-rgLnyrCMOE/KwoXd8FXKaV9WjItrpys/IEFNLIAT+DN6SyZbKZh602n6WaJY9g6g
-DtIhrpjjNX7OX9zXiYsVC6oWTWakJmvhtFZifnY/rxUncyFPRkhcBiQ9EcHOHAoB
-+m7CSXefjQlr9qeN44G1EBr8mWs+nm9ZteGpztlsfw15SWZLYWnTjTvf1qLt3ZQh
-uiPX1cs2ONgs0jfYyvK7l3IQcaLNTysh8qWgQsJnXTLmHMAKpiPkI9c+zF8T9HLP
-sXvGX7u5ArltSoig45ldhKUvHWBEfA+yKjh302my+bsnGi5jjTUp/Tlu62kOHUIY
-Xo0M1HetEKy9My4NoDAZpHSztTvCih8bNbeTCKTqOljJ94LarsMJ7Jswo2G00eBs
-O3ukJIMQ0S5+5GIS/eWN
-=9fyV
------END PGP SIGNATURE-----
+> Hi,
+> 
+> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
+> namespace leak caused by vsftpd.
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=757783
+> 
+> He provided a simple reproducer:
+> 
+> #include <stdio.h>
+> #include <errno.h>
+> #include <signal.h>
+> #include <sched.h>
+> #include <linux/sched.h>
+> #include <unistd.h>
+> #include <sys/syscall.h>
+> 
+> int main(int argc, char *argv[])
+> {
+>     int i, ret;
+> 
+>     for (i = 0; i < 10000; i++) {
+> 
+>         if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC |
+> CLONE_NEWNET | SIGCHLD, NULL)))
+>             return 0;
+> 
+>         if (-1 == ret) {
+>             perror("clone");
+>             break;
+>         }
+> 
+>     }
+>     return 0;
+> }
+> 
+> 
+> and checking "cat /proc/slabinfo|grep pid_namespace"
+> gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
+> 
+> 
+> Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
+> fixed between 3.1 and 3.2 (but someone else cross check perhaps).
+> 
+> Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
+> but it seems not helping.
+> 
+> Ciao, Marcus
+
