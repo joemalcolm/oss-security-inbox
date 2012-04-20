@@ -1,49 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/4
-Message-Id: <201209211220.20425.mweckbecker@suse.de>
-Date: Fri, 21 Sep 2012 12:20:20 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: vcizek@...e.de, tmraz@...hat.com
-Subject: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/9
+Message-ID: <20120420070537.GC15515@suse.de>
+Date: Fri, 20 Apr 2012 09:05:37 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, Kurt, Vitezslav, Tomas, vendors,
+On Thu, Apr 19, 2012 at 09:09:55PM -0600, Kurt Seifried wrote:
+> On 04/19/2012 03:48 PM, Marcus Meissner wrote:
+> > Hi,
+> > 
+> > we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a
+> > pid namespace leak caused by vsftpd.
+> > 
+> > https://bugzilla.novell.com/show_bug.cgi?id=757783
+> > 
+> > He provided a simple reproducer:
+> > 
+> > #include <stdio.h> #include <errno.h> #include <signal.h> #include
+> > <sched.h> #include <linux/sched.h> #include <unistd.h> #include
+> > <sys/syscall.h>
+> > 
+> > int main(int argc, char *argv[]) { int i, ret;
+> > 
+> > for (i = 0; i < 10000; i++) {
+> > 
+> > if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC | 
+> > CLONE_NEWNET | SIGCHLD, NULL))) return 0;
+> > 
+> > if (-1 == ret) { perror("clone"); break; }
+> > 
+> > } return 0; }
+> > 
+> > 
+> > and checking "cat /proc/slabinfo|grep pid_namespace" gives 10000
+> > more active slots after running it on 3.0.13 (+SUSE patches) and
+> > 3.1.10 (+SUSE patches).
+> > 
+> > 
+> > Running this on 3.2.0 (+SUSE Patches) did not result in more slots,
+> > so it was probably fixed between 3.1 and 3.2 (but someone else
+> > cross check perhaps).
+> > 
+> > Any idea welcome on which patch fixed this, I tried
+> > 1b26c9b334044cff6d1d2698f2be41bc7d9a0864 but it seems not helping.
+> > 
+> > Ciao, Marcus
+> 
+> Can this be triggered by a non privileged user/process? Eugene
+> mentions that CAP_SYS_ADMIN seems to be required, if so it seems like
+> there isn't much of a trust boundary violation going on (anyone/thing
+> with CAP_SYS_ADMIN is already in pretty good).
 
-we have recently been notified about a potential issue with gpg: When files
-are en/de-crypted the result is written world-readable by default.
-Short example (quote from [1]):
+The above code ... no.
 
- # de-crypting
- % gpg sikrit.gpg
- % ll sikrit*
-   -rw-r--r-- 1 gp users  12 Sep 17 09:41 sikrit
-   -rw------- 1 gp users 480 Sep 17 09:40 sikrit.gpg
- # en-crypting
- % echo "my password" > sikrit
- % chmod go= sikrit
- % ll sikrit
-   -rw------- 1 gp users 12 Sep 17 09:38 sikrit
- % gpg -e -r pfeifer sikrit
- % wipe sikrit
- % ll sikrit.gpg 
-   -rw-r--r-- 1 gp users 480 Sep 17 09:40 sikrit.gpg
+However, vsftpd has this code pattern in its newer namespace enabled
+versions.
 
-[1] https://bugzilla.novell.com/show_bug.cgi?id=780943
+So it can be triggered via a namespace enabled vsftpd remotely,
+by just running wget on even anonymous areas in a loop.
 
-Wouldn't one usually expect files that were previously encrypted to contain
-sensitive content (that's probably why content is encrypted at all)? And if
-so, shouldn't such files be only readable by certain users / group of users
-by default? Otherwise, a file that is e.g. decrypted in /tmp might leak due
-to the file permissions being too loose.
-
-I'm not quite sure whether to assign a CVE for this, so I thought I'd just
-add a question mark behind the subject and let the list (and Kurt) decide.
-
-Thanks, Matthias
-
--- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Ciao, Macus
