@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/4
-Message-ID: <4F164CDB.20701@redhat.com>
-Date: Wed, 18 Jan 2012 12:38:51 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2012-0207 kernel: igmp: Avoid zero delay when receiving odd mixture of IGMP queries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/7
+Message-ID: <4F90F0D2.3000300@parallels.com>
+Date: Fri, 20 Apr 2012 09:14:58 +0400
+From: Pavel Emelyanov <xemul@...allels.com>
+To: Eugene Teo <eugeneteo@...nel.sg>
+CC: "Eric W. Biederman" <ebiederm@...ssion.com>, Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>, "security@...nel.org" <security@...nel.org>, Sukadev Bhattiprolu <sukadev@...ibm.com>, Serge Hallyn <serge.hallyn@...onical.com>
+Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
-On 01/10/2012 03:34 PM, Eugene Teo wrote:
-> Commit 5b7c84066733c5dfb0e4016d939757b38de189e4 ('ipv4: correct IGMP
-> behavior on v3 query during v2-compatibility mode') added yet another
-> case for query parsing, which can result in max_delay = 0.  Substitute
-> a value of 1, as in the usual v3 case.
+On 04/20/2012 07:10 AM, Eugene Teo wrote:
+>> So we know what is holding the pid namespace reference.
+>>
+>> Additional thoughts.
+>>
+>> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
 > 
-> Reported-by: Simon McVittie <smcv <at> debian.org>
-> References: http://bugs.debian.org/654876
-> Signed-off-by: Ben Hutchings <ben <at> decadent.org.uk>
+> No.
 > 
-> http://article.gmane.org/gmane.linux.network/217256
+>> Is there a corresponding task_struct leak?
 > 
-> Introduced in 5b7c8406 2.6.36-rc8
+> Yes.
 > 
+>> I don't have much of a clue or much concern as this seems fixed in later kernels but I am happy to suggest things to look for to help narrow this down.
+> 
+> I'm helping to provide more information.
+
+Is there also a vfsmount struct leak as well? The pidns creating implies
+kern-mount-ing of a proc and it should be released when child reaper of
+the namespace dies.
+
 > Thanks, Eugene
+> .
+> 
 
-Upstream commit:
-http://git.kernel.org/linus/a8c1f65c79cbbb2f7da782d4c9d15639a9b94b27
-
-Reference:
-https://bugzilla.redhat.com/CVE-2012-0207
-
-Eugene
