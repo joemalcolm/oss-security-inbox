@@ -1,71 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/2
-Message-ID: <505135A4.8010406@redhat.com>
-Date: Wed, 12 Sep 2012 19:23:48 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: tor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/21
+Message-ID: <4f914ef0.c5b70e0a.01bd.71c6@mx.google.com>
+Date: Fri, 20 Apr 2012 11:56:28 +0000
+From: "pinto.elia@...il.com" <pinto.elia@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: R: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 09/12/2012 01:40 PM, Nico Golde wrote:
-> Hi, * Kurt Seifried <kseifried@...hat.com> [2012-09-12 19:01]:
->> On 09/12/2012 06:34 AM, Nico Golde wrote:
->>> Hi, from the tor release notes[0]: Changes in version 0.2.2.39
->>> - 2012-09-11 Tor 0.2.2.39 fixes two more opportunities for
->>> remotely triggerable assertions.
->>> 
->>> o Security fixes: - Fix an assertion failure in tor_timegm()
->>> that could be triggered by a badly formatted directory object.
->>> Bug found by fuzzing with Radamsa. Fixes bug 6811; bugfix on
->>> 0.2.0.20-rc. - Do not crash when comparing an address with port
->>> value 0 to an address policy. This bug could have been used to
->>> cause a remote assertion failure by or against directory
->>> authorities, or to allow some applications to crash clients.
->>> Fixes bug 6690; bugfix on 0.2.1.10-alpha.
->>> 
->>> I have not seen CVE ids for these issues. Can you assign ids
->>> for them?
->>> 
->>> [0] 
->>> https://gitweb.torproject.org/tor.git/blob/release-0.2.2:/ReleaseNotes
->>
->>
->>> 
-Can you attach links to the code commits? thanks
+----Messaggio originale----
+Da: Andrew Morton
+Inviato:  20/04/2012, 00:04 
+A: Marcus Meissner
+Cc: OSS Security List; security@...nel.org; Sukadev Bhattiprolu; Serge Hallyn; Eric W. Biederman; Pavel Emelyanov
+Oggetto: [oss-security] Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+
+
+(cc's added)
+
+On Thu, 19 Apr 2012 23:48:20 +0200
+Marcus Meissner <meissner@...e.de> wrote:
+
+> Hi,
 > 
-> I didn't have them when I sent this mail. Should be: 
-> https://gitweb.torproject.org/tor.git/commitdiff/973c18bf0e84d14d8006a9ae97fde7f7fb97e404
->
+> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
+> namespace leak caused by vsftpd.
 > 
-https://gitweb.torproject.org/tor.git/commitdiff/62d96284f7e0f81c40d5df7e53dd7b4dfe7e56a5
+> https://bugzilla.novell.com/show_bug.cgi?id=757783
 > 
-> Cheers Nico
+> He provided a simple reproducer:
+> 
+> #include <stdio.h>
+> #include <errno.h>
+> #include <signal.h>
+> #include <sched.h>
+> #include <linux/sched.h>
+> #include <unistd.h>
+> #include <sys/syscall.h>
+> 
+> int main(int argc, char *argv[])
+> {
+>     int i, ret;
+> 
+>     for (i = 0; i < 10000; i++) {
+> 
+>         if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC |
+> CLONE_NEWNET | SIGCHLD, NULL)))
+>             return 0;
+> 
+>         if (-1 == ret) {
+>             perror("clone");
+>             break;
+>         }
+> 
+>     }
+>     return 0;
+> }
+> 
+> 
+> and checking "cat /proc/slabinfo|grep pid_namespace"
+> gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
+> 
+> 
+> Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
+> fixed between 3.1 and 3.2 (but someone else cross check perhaps).
+> 
+> Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
+> but it seems not helping.
+> 
+> Ciao, Marcus
 
-Thanks for the links. Please use CVE-2012-4419 for this issue.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQUTWkAAoJEBYNRVNeJnmT+QUP/RHczOGvPLxgw8PvzX+vihwQ
-UbtlYK+STddooFRpJUTUDjawjaY/KBKzMt1tus6vQrREZb0g9HDDQVtzgEz2fzXy
-KTko9atXNGiJZCJ8Q3UrtElL23QhzZco1+76pZso4jSVIOWLR2UWxFUmf7b1obVV
-OC51cxm8fTkHXYrvACYbmQGcO9tKOkHimJle4O3Kr7togiRVdqSIDotVJy/7PZ8P
-+PeHRbA7E7Cu/atiDyfY25KvaLZtSL0H/9SwcYUxKQfI83eVqtyciU+7Yr5z8leT
-Lc7EmUmr7jCUEEhh/sP/8bX2iTEQiHyXDWFkFTddgyJpvTHcJOM2tYWTOrg3gR0K
-AD/R05vM2l9OLhFoGIbBPCk41ZtXa/zZTkAneFhhPQnmjjT/Qudw1h3YWO877O0C
-bNAq2r3b+/Hixs9DnK4CeMpuOWqQPkF7Bl6mODSlKz0MadR4rJsofawJ+nG8pnAP
-Wm9XautufJsDwjhKq9uOjM3E/r/KXLepm3Vr9ERhlU9unEDgrzTd0ycqU68jzFYV
-vtYB15eN7GOwfMh4YAFq8n+PZxk7fpeiKl3Hk+Q+IAYCYXEEkS+jDoUKyr2IV+J4
-JQeMEisOekJ/XT9gbkcewNN69oszO4WolQXXEX3S5wNMbFZ5Fbx4teuXRU1t7HSs
-L0f2zHBJpw1Zt86rpLj1
-=6GNC
------END PGP SIGNATURE-----
