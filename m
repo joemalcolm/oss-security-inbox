@@ -1,81 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/11/1
-Message-ID: <20120411110717.GD5984@dhcp-25-225.brq.redhat.com>
-Date: Wed, 11 Apr 2012 13:07:17 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>, Xi Wang <xi.wang@...il.com>, vuln@...unia.com
-Subject: Re: fix to CVE-2009-4307
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/21/1
+Message-ID: <4F910F0D.4060003@parallels.com>
+Date: Fri, 20 Apr 2012 11:23:57 +0400
+From: Pavel Emelyanov <xemul@...allels.com>
+To: "Eric W. Biederman" <ebiederm@...ssion.com>
+CC: Eugene Teo <eugeneteo@...nel.sg>, Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>, "security@...nel.org" <security@...nel.org>, Sukadev Bhattiprolu <sukadev@...ibm.com>, Serge Hallyn <serge.hallyn@...onical.com>
+Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
-Hi Xi,
+On 04/20/2012 11:20 AM, Eric W. Biederman wrote:
+> Pavel Emelyanov <xemul@...allels.com> writes:
+> 
+>> On 04/20/2012 07:10 AM, Eugene Teo wrote:
+>>>> So we know what is holding the pid namespace reference.
+>>>>
+>>>> Additional thoughts.
+>>>>
+>>>> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
+>>>
+>>> No.
+>>>
+>>>> Is there a corresponding task_struct leak?
+>>>
+>>> Yes.
+>>>
+>>>> I don't have much of a clue or much concern as this seems fixed in later kernels but I am happy to suggest things to look for to help narrow this down.
+>>>
+>>> I'm helping to provide more information.
+>>
+>> Is there also a vfsmount struct leak as well? The pidns creating implies
+>> kern-mount-ing of a proc and it should be released when child reaper of
+>> the namespace dies.
+> 
+> In this case the user is vsftp which is an entertaining user.
+> 
+> Roughly for every connection vsftp does:
+> - accepts the connection
+> - forks a server process
+> - unshares the network ipc and pid namespaces for additional isolation
+> - drops privilegs?
+> - serves up the file.
+> 
+> Since vsftp does not want any of the features of namespaces it does not
+> setup mounts or any of that.
 
-On Wed, Apr 04, 2012 at 12:19:43AM -0400, Xi Wang wrote:
-> On Apr 3, 2012, at 10:55 PM, Kurt Seifried wrote:
-> > For #2 I'm not sure how we handle something like a compiler possibly
-> > mangling code so that an issue is introduced (is that a compiler
-> > problem? a code problem? the intersection of both? Steve: can I get a
-> > comment/referees decision here =)
-> 
-> Thanks for bringing this up.
-> 
-> I think the compiler is all right in this case.  The code is not.
-> 
-> CVE-2009-4307 says that an attacker could trigger a division by
-> zero by crafting a large s_log_groups_per_flex.
-> 
-> The first commit (503358ae) fixes the division by zero.  The fix
-> is not perfect because:
-> 
-> 1) Theoretically, a standard-conforming C compiler could generate
-> code that is still vulnerable to division by zero, but I was not
-> aware of any compilers doing that.
+I'm talking about the call to pid_ns_prepare_proc which does kern_mount
+thus bringing the proc sb in memory and pinning the init's pid on it.
 
-Is there any compiler that is used to compile the kernel that turns the
-CVE-2009-4307 fix not working (the groups_per_flex < 2 check)? I
-see that in your commit description you mention equivalent form where
-Clang optimizes away the "groups_per_flex == 0" check. Does Clang
-optimize/change also the "groups_per_flex < 2" check in a similar way?
-
-If not, I would not call it a incomplete fix as the issue with zero
-division was fixed. But yes, we'd still want to include the Xi's commit.
-
-This is not only compiler specific but also architecture specific if I'm
-not mistaken - on x86 the 1 << x shift can never become zero, whereas on
-for example powerpc it can (for example slw instruction will give a zero
-result when the shift amounts from 32 to 63).
-
-> 2) Logically, we should have groups_per_flex = 2^s_log_groups_per_flex,
-> and the fix doesn't really ensure that.  This is obviously not good,
-> but not sure how bad the consequence would be.
+> vsftp simply wants a way to reduce the
+> the chance that a bug in the implemenation of vsftp will all the server
+> to be compromised.
 > 
-> BTW, the second commit (d50f2ab6) might still allow a buffer overflow
-> later.  See another patch https://lkml.org/lkml/2012/2/20/422 (though
-> it was rejected).
+> To that extent I believe the reproduce program was very representative
+> of what vsftp is doing.
 > 
-> In ext4_resize_fs():
+> Eric
+> .
 > 
->    flexbg_size = 1 << es->s_log_groups_per_flex;
->    ...
->    flex_gd = alloc_flex_gd(flexbg_size);
-> 
-> and in alloc_flex_gd():
-> 
->    flex_gd->count = flexbg_size;
->    flex_gd->groups = kmalloc(sizeof(...) * flexbg_size, ...);
-> 
-> Note that the kmalloc size could be smaller than expected due to
-> multiplication overflow (flexbg_size = 1 << s_log_groups_per_flex
-> could be very large since s_log_groups_per_flex could be as large
-> as 31).  Array access flex_gd groups[i] could be out of bounds in
-> that case.
 
-As Xi points out, there might be other problems in the code. Those
-should get a separate CVE without referencing CVE-2009-4307 IMHO.
-
-To Secunia:
-https://secunia.com/advisories/48645/ is not a KVM/qemu-kvm issue.
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
