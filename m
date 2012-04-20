@@ -1,57 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/06/4
-Message-ID: <50C05C2A.3090607@redhat.com>
-Date: Thu, 06 Dec 2012 01:49:46 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Sergei Golubchik <serg@...monty.org>, Jan Lieskovsky <jlieskov@...hat.com>, Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: CVE request: Mysql/Mariadb insecure salt-usage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/11
+Message-ID: <m1k41adge1.fsf@fess.ebiederm.org>
+Date: Fri, 20 Apr 2012 00:14:14 -0700
+From: ebiederm@...ssion.com (Eric W. Biederman)
+To: Eugene Teo <eugeneteo@...nel.sg>
+Cc: Marcus Meissner <meissner@...e.de>,  OSS Security List <oss-security@...ts.openwall.com>,  security@...nel.org,  Sukadev Bhattiprolu <sukadev@...ibm.com>,  Serge Hallyn <serge.hallyn@...onical.com>,  Pavel Emelyanov <xemul@...nvz.org>
+Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Eugene Teo <eugeneteo@...nel.sg> writes:
 
-On 12/05/2012 05:43 AM, Sergei Golubchik wrote:
-> Hi, Huzaifa!
-> 
-> On Dec 05, Huzaifa Sidhpurwala wrote:
->> Noticed another post by kingcope on full-disclosure, which
->> basically boils down to re-use of a salt-value when transmitting
->> passwords over a network.
->> 
->> If you could MITM/capture network packets, you could use this 
->> weakness to determine the passwords.
->> 
->> References: http://seclists.org/fulldisclosure/2012/Dec/58 
->> https://bugzilla.redhat.com/show_bug.cgi?id=883719
->> 
->> Should this a CVE be assigned to this issue?
-> 
-> https://mariadb.atlassian.net/browse/MDEV-3915
-> 
-> Regards, Sergei
+>> So we know what is holding the pid namespace reference.
+>>
+>> Additional thoughts.
+>>
+>> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
+>
+> No.
+>
+>> Is there a corresponding task_struct leak?
+>
+> Yes.
 
-Please use CVE-2012-5627 for this issue.
+Hmm.  The zombies are reaped? 
 
+I am scratching my head perhaps because I am looking at the current code
+but I don't seem to see how a task that pins a pid can get past
+release_task (the zombie reaper) and in particular past in release
+__exit_signal() which calls unhash_process().
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+The simple test to see if we have made it past unhash_process is to see
+if you can see the zombie processes.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+> I'm helping to provide more information.
 
-iQIcBAEBAgAGBQJQwFwqAAoJEBYNRVNeJnmTVl0QAJJZ5G5h2GxyLieUCGsa15HP
-KQ3uZU1KGZ2uGrueRRzZqbk+i5qP8P7eVwwZEq57lNJRZKYf++UXDRu0WGOn8A0A
-6qgUjDphoqJBmK1hYDjpyO+/YY79p5mGAye3bUKZGs5bOUrYTGTE9MZealwo0+Ur
-En5veDhj0fcOgZGiiRcyz4EE4Zf43Cnq5FKs8ZRNvMqJwqoDTlAUnPCZ7v5v+Sb0
-eNWNOpYC2BUld2Yorm/3wo46zt2nsVAL41r9IY7OmBWKS68yAeXCzXmNYYtiktoQ
-LQLIidqFWcPIOF90sD0IeSy01XRNUK+23Qed2JtV3YBbI8Wu0RS8IlsEJMV1j8Ik
-lzXQFleMIQ4JXdVeJXeTbTfnbc5ri8qZCkKduwzFq28jyXEPvXxnBMEmcQUUaMcL
-KimFSf6ur3eGK8WL3s1fXDh+asaHonsKLoYHEKmP0f+Td7/4fLjN+FjrjMhYxmec
-PDn+B1rMefsy3C/IWupy3HIINDXN23o/A0rsoQurycAsm1Z4FIrGP5VNZqmBhYO6
-SP60nAWUqVk9hh6Z9rtZKkVkwYsk76Ac8i18Qs9mdL5y0hYVhPqjHKIq6NL/dk9A
-lkXVGd28w43SLcNHI2eG/XjZn7tQliu3p2O7Koj4rEYObzVp0JcnhZg17NzNz4PN
-jGICtk8EGou6cwwtzlXw
-=O9Xz
------END PGP SIGNATURE-----
+You are.  Thank you for looking to see what the symptoms are.
+
+Eric
