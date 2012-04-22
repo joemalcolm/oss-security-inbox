@@ -1,77 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/12
-Message-ID: <4F54973F.7080406@redhat.com>
-Date: Mon, 05 Mar 2012 11:36:47 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Roland Gruber <post@...andgruber.de>, Fabio Tranchitella <kobold@...ian.org>, Dmitry Butskoy <Dmitry@...skoy.name>
-Subject: CVE Request -- LDAP Account Manager Pro / PhpLDAPadmin -- Multiple XSS flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/22/2
+Message-ID: <20120422122311.GA2812@openwall.com>
+Date: Sun, 22 Apr 2012 16:23:11 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi,
 
-   originally (2012-03-01), the following cross-site (XSS) flaws were reported
-against LDAP Account Manager Pro (from Secunia advisory [1]):
+On Fri, Apr 20, 2012 at 01:11:19PM +0400, Solar Designer wrote:
+> Tavis Ormandy of Google Security Team found a vulnerability in OpenSSL:
+> 
+> incorrect integer conversions in OpenSSL can result in memory corruption.
+> http://lists.openwall.net/full-disclosure/2012/04/19/4
+> 
+> Advisory from OpenSSL:
+> http://openssl.org/news/secadv_20120419.txt
 
-* 1) Input passed to e.g. the "filteruid" POST parameter when filtering result
-sets in lam/templates/lists/list.php (when "type" is set to a valid value) is
-not properly sanitised before being returned to the user. This can be exploited
-to execute arbitrary HTML and script code in a user's browser session in
-context of an affected site.
+Tavis posted a followup to my message, where he attached a testcase that
+was unfortunately above oss-security's message size limit - so the
+message did not make it to the list.  I've gzip-compressed the file and
+have re-attached it to this message now (it's only 3 KB when compressed).
 
-* 2) Input passed to the "filter" POST parameter in
-lam/templates/3rdParty/pla/htdocs/cmd.php (when "cmd" is set to "export" and
-"exporter_id" is set to "LDIF") is not properly sanitised before being returned
-to the user. This can be exploited to execute arbitrary HTML and script code in
-a user's browser session in context of an affected site.
+Tavis' message was:
 
-* 3) Input passed to the "attr" parameter in
-lam/templates/3rdParty/pla/htdocs/cmd.php (when "cmd" is set to
-"add_value_form" and "dn" is set to a valid value) is not properly sanitised
-before being returned to the user. This can be exploited to execute arbitrary
-HTML and script code in a user's browser session in context of an affected
-site.
+On Fri, Apr 20, 2012 at 09:20:39PM +0200, Tavis Ormandy wrote:
+> FWIW, here is the testcase I sent to openssl-team.
+>
+> A smaller one that's easier to test is this:
+>
+> $ printf "\xe3\x80\x81\x84\xe3\x80\x00\x00\x00\x00" | openssl x509 -inform DER
+>
+> Tavis.
 
-References:
-[1] http://secunia.com/advisories/48221/
-[2] http://www.vulnerability-lab.com/get_content.php?id=458
+FWIW, trying these two on OpenSSL 1.0.0d (the Owl package, which
+includes some unrelated patches), I get:
 
-Later (2012-03-03), it was reported:
-[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=662050#15
+x86_64 build:
+$ printf "\xe3\x80\x81\x84\xe3\x80\x00\x00\x00\x00" | openssl x509 -inform DER
+Segmentation fault
+$ openssl x509 -inform DER < openssl-1.0.1-testcase-32bit.crt
+unable to load certificate
+47191757631152:error:0D0680A8:asn1 encoding routines:ASN1_CHECK_TLEN:wrong tag:tasn_dec.c:1319:
+47191757631152:error:0D07803A:asn1 encoding routines:ASN1_ITEM_EX_D2I:nested asn1 error:tasn_dec.c:381:Type=X509
 
-that subset (for 'export', 'add_value_form', and 'dn' variables) of these
-security flaws is applicable also against the code of PhpLDAPadmin, a web-based
-LDAP client.
+i686 build:
+$ printf "\xe3\x80\x81\x84\xe3\x80\x00\x00\x00\x00" | openssl x509 -inform DER
+unable to load certificate
+3082893472:error:0D07207B:asn1 encoding routines:ASN1_get_object:header too long:asn1_lib.c:150:
+$ openssl x509 -inform DER < openssl-1.0.1-testcase-32bit.crt
+unable to load certificate
+3083593888:error:0D0680A8:asn1 encoding routines:ASN1_CHECK_TLEN:wrong tag:tasn_dec.c:1319:
+3083593888:error:0D07803A:asn1 encoding routines:ASN1_ITEM_EX_D2I:nested asn1 error:tasn_dec.c:381:Type=X509
 
-Patches from LDAP Account Manager, which are applicable to PphLDAPAdmin:
-[4] 
-http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/lib/export_functions.php?r1=1.4&r2=1.5
+So no luck triggering a crash on 32-bit, although we must patch the
+issue on 32-bit as well.  I'm not sure if I am using the larger testcase
+correctly, though.  I am not familiar with this.
 
-[5] http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/htdocs/export.php?r1=1.1&r2=1.2
+The smaller testcase also triggers a segfault on OpenSSL 0.9.7m (with
+unrelated patches) on x86_64.  So not surprisingly some versions older
+than 0.9.8 are vulnerable as well.
 
-[6] 
-http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/htdocs/add_value_form.php?r1=1.6&r2=1.7
+Alexander
 
-I would swear, I have seen LDAP Account Manager CVE request on OSS security mailing list
-recently, but can't find it now quickly right now. Kurt, please prior assigning CVE ids
-to "LDAP Account Manager Pro" please double check the main CVE mitre database, if these
-didn't get a CVE identifier yet.
-
-Wrt to PhpLDAPAdmin side -- I am not sure, what's the relation of the code between LAM and
-PLA (if PLA is using / embedding some code of LAM directly or if there were also some
-customizations on the side of PLA upon LAM code embedding / inclusion). Hopefully Roland,
-Fabio, Dmitry can clarify here, how much the PhpLDAPAdmin code is different from LDAP
-Account Manager code (if it's just overtaken LAM code or PhpLDAPAdmin have also made
-their own customizations to the code)?
-
-Roland, Fabio, Dmitry, basically what we are searching an answer for is, if the PhpLDAPAdmin
-code is different enough it safe to be considered as a different code base and separate
-CVE identifier to be allocated for it? (IOW one for LDAP Account Manager Pro issues,
-the other for PhpLDAPAdmin issues)
-
-Kurt, once the above doubt solved and you checked and confirmed, that LDAP Account Manager
-issue did not get CVE identifier in the recent past yet, could you allocate those?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "openssl-1.0.1-testcase-32bit.crt.gz" of type "application/octet-stream" (2870 bytes)
