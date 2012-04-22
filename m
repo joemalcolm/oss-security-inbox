@@ -1,67 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/26/1
-Message-ID: <4F702389.5090807@suse.de>
-Date: Mon, 26 Mar 2012 10:06:33 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/22/3
+Message-ID: <20120422154456.GA4014@openwall.com>
+Date: Sun, 22 Apr 2012 19:44:56 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request taglib vulnerabilities
+Cc: Tavis Ormandy <taviso@...xchg8b.com>
+Subject: Re: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
 Content-Type: text/plain; charset=utf-8
 
-Zubin Mithra wrote:
-> On Wed, Mar 21, 2012 at 10:49 PM, Kurt Seifried <kseifried@...hat.com>wrote:
-> 
->> On 03/21/2012 09:42 AM, Ludwig Nussel wrote:
->>> Zubin Mithra wrote:
->>>> [...]
->>>> The issues which are present in the latest "release" but not in the
->> current
->>>> development head were :-
->>>>
->>>> [3] Lack of sanity checks of fields which were read, and were used for
->>>> allocating memory; crafted files would lead of application crash.
->>>
->>> Not an issue according to upstream:
->>> http://mail.kde.org/pipermail/taglib-devel/2012-March/002187.html
->>
->> Shouldn't it simply say "file to large" or "unable to allocate blah"
->> something rather than crashing? I assume by "large" file the file
->> doesn't actually need to be large, just the header information needs to
->> claim it is large?
->>
-> 
-> Yes, the file does not need to be large, it just needs to have a crafted
-> header.
-> 
-> On investigating the issue further, discussing with a developer Lukas
-> Laninsky and providing PoC's, we had confirmed that the root issue was an
-> Integer overflow - which would cause a large allocation and crash the
-> application.
-> 
-> The changeset that corrects it can be found here =>
-> https://github.com/taglib/taglib/commit/dcdf4fd954e3213c355746fa15b7480461972308
-> 
->>
->>>> [4] A one bit change in a working ogg file would cause a thread to loop
->>>> infinitely.
->>>
->>> http://mail.kde.org/pipermail/taglib-devel/2012-March/002191.html
->>>
->> https://github.com/taglib/taglib/commit/b3646a07348ffa276ea41a9dae03ddc63ea6c532
->>
->> Has this been confirmed? Does the looping thread actually cause a DoS,
->> simply slow down the application a bit, or?
->>
-> 
-> Yes, it just causes a thread to cause an infinite loop and does not cause
-> an application crash.
+On Sun, Apr 22, 2012 at 04:23:11PM +0400, Solar Designer wrote:
+> Tavis posted a followup to my message, where he attached a testcase that
+> was unfortunately above oss-security's message size limit - so the
+> message did not make it to the list.  I've gzip-compressed the file and
+> have re-attached it to this message now (it's only 3 KB when compressed).
 
-So both issues qualify as security issue and CVE assignment then, right?
+Turns out that file was mangled in transit.  Tavis has posted the
+correct one on this URL:
 
-cu
-Ludwig
+http://lock.cmpxchg8b.com/openssl-1.0.1-testcase-32bit.crt.gz
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+SHA-256: ac7acb168a6bfd65375eeec072acbf904f0f10e3bc5588c020aed4df4712d066
+
+$ gzip -vl openssl-1.0.1-testcase-32bit.crt.gz
+method  crc     date  time           compressed        uncompressed  ratio uncompressed_name
+defla 879c374f Apr 22 18:57             1389433          1431655797  99.9% openssl-1.0.1-testcase-32bit.crt
+
+With this one, I am able to trigger a problem on 32-bit (OpenSSL 1.0.0d
+with unrelated patches):
+
+$ zcat openssl-1.0.1-testcase-32bit.crt.gz | openssl x509 -inform DER
+*** glibc detected *** free(): invalid pointer: 0x45ff0008 ***
+Aborted
+
+That's in an OpenVZ container with privvmpages barrier at 3 GB.
+With 2 GB, I was getting:
+
+$ zcat openssl-1.0.1-testcase-32bit.crt.gz | openssl x509 -inform DER
+unable to load certificate
+3083651232:error:07069041:memory buffer routines:BUF_MEM_grow_clean:malloc failure:buffer.c:152:
+3083651232:error:0D06B041:asn1 encoding routines:ASN1_D2I_READ_BIO:malloc failure:a_d2i_fp.c:229:
+
+Alexander
