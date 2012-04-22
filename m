@@ -1,50 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/11/3
-Message-ID: <4F85E08D.6010704@redhat.com>
-Date: Wed, 11 Apr 2012 13:50:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, dapal@...ian.org
-Subject: Re: CVE id request: wicd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/22/1
+Message-ID: <20120422093444.GA1484@suse.de>
+Date: Sun, 22 Apr 2012 11:34:44 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Eugene Teo <eugeneteo@...nel.sg>, security@...nel.org, jeffm@...e.com, Sukadev Bhattiprolu <sukadev@...ibm.com>, Serge Hallyn <serge.hallyn@...onical.com>, Pavel Emelyanov <xemul@...nvz.org>
+Subject: Re: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 04/11/2012 10:39 AM, Nico Golde wrote:
-> Hi, can someone please assign a CVE id to wicd for: 
-> http://www.infosecinstitute.com/courses/ethical_hacking_training.html
->
+On Fri, Apr 20, 2012 at 12:14:14AM -0700, Eric W. Biederman wrote:
+> Eugene Teo <eugeneteo@...nel.sg> writes:
 > 
-http://bugs.debian.org/668397
+> >> So we know what is holding the pid namespace reference.
+> >>
+> >> Additional thoughts.
+> >>
+> >> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
+> >
+> > No.
+> >
+> >> Is there a corresponding task_struct leak?
+> >
+> > Yes.
 > 
-> It seems possible to get wicd to execute scripts via dbus messages
-> due to broken filtering.
+> Hmm.  The zombies are reaped? 
 > 
+> I am scratching my head perhaps because I am looking at the current code
+> but I don't seem to see how a task that pins a pid can get past
+> release_task (the zombie reaper) and in particular past in release
+> __exit_signal() which calls unhash_process().
 > 
-> Cheers Nico
+> The simple test to see if we have made it past unhash_process is to see
+> if you can see the zombie processes.
+> 
+> > I'm helping to provide more information.
+> 
+> You are.  Thank you for looking to see what the symptoms are.
 
-Please use CVE-2012-2095 for this issue.
+Jeff Mahoney did locate the introducer and the fix yesterday night ...
 
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Introduced in 423e0ab086ad8b33626e45fa94ac7613146b7ffa (in Linux 3.1 timeframe)
 
-iQIcBAEBAgAGBQJPheCNAAoJEBYNRVNeJnmTVjAP/jpOHueKpaiyhRRaZWyGAY4X
-LbLXzbAbE5ttaRjVUYQS54aQpWfLy8oojBLujlU6W7mkH3Nwy+Lpf257aeahF5BR
-KZPiWLMkSVh82a7YQrfjz3GBpn3/MJKjBQjswEEkPGFTDvp0zHkzihvnAr4vgNnt
-kBLm3vmMryhjnXrdxQbsz/89NzW3Y0FJYe4psBgfhMQFYsigwE+7XM2uwtV2slRo
-5teb4EgleDOyH0wFPRakGfwvSZuS+5JdXws7HTUJfQWyyJJ8NEptCa92zW9qNgoa
-RwHj69tkEf8AuXrl9v7TnKzvZ60LBqM69wwWR7JNz3yGnTo/a8StuplusORai3rp
-b3/VJhe+ukPoUs4tkTBk6O26djZdBgJmkXMjTfce8E0koUgKGZEeG6g0FH5Qednw
-cCDKpQDlIpBCfgiHIwv2QVfvF++kJhsbYwkibWTtVjtAyxI2l/0XnDP7vLea0xIO
-wWfoj4Z7dyGux2i3tqGPgYVEkw5ccAmSeYjTX6Y8pn7SSOSvIRb5p2IAXvxqKgmN
-VRTa+d9L0h9NJOKmiWGQfbW9WDe1txDO7Lnok5Oes7Kbt0R6Cz9yjieFBLWoA85F
-z6AMjNGhJCKidyQ5Hm5GHUNcFuclYLm7rGPy0QHDwjBwIbfW1Hxm/rMgshewlS5u
-gAicaLlQgONEYNmPPsce
-=mFVG
------END PGP SIGNATURE-----
+Date:   Tue Jul 19 09:32:38 2011 -0700
+
+    VFS : mount lock scalability for internal mounts
+
+And the fixed in Linux 3.2:
+
+commit 905ad269c55fc62bee3da29f7b1d1efeba8aa1e1
+Author: Al Viro <viro@...iv.linux.org.uk>
+Date:   Thu Dec 8 23:20:45 2011 -0500
+
+    procfs: fix a vfsmount longterm reference leak
+
+    kern_mount() doesn't pair with plain mntput()...
+
+
+We (SUSE) did backport the buggy patch to our SLE11 SP2 Linux 3.0 kernel, which made
+it also show up there.
+
+So mainline kernels affected: "Linux Kernel 3.1"
+
+Ciao, Marcus
