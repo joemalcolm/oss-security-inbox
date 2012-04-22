@@ -1,50 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/7
-Message-ID: <1611310.NLWvOFezWo@devil>
-Date: Sun, 15 Jan 2012 15:48:17 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request for spamdyke "STARTTLS" Plaintext
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/22/4
+Message-ID: <4F943EB0.5000605@redhat.com>
+Date: Sun, 22 Apr 2012 19:24:00 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- DokuWiki: XSS and CSRF due improper escaping of 'target' parameter in preprocessing edit form data
 Content-Type: text/plain; charset=utf-8
 
-In reference of: http://www.openwall.com/lists/oss-security/2012/01/07/1 :
+Hello Kurt, Steve, vendors,
 
-According to secunia security advisory ( https://secunia.com/advisories/47435
- ) :
+   a cross-site scripting (XSS) and cross-site request forgery (CSRF) flaws were
+found in the way DokuWiki, a standards compliant, simple to use Wiki, performed
+sanitization of the 'target' parameter when preprocessing edit form data. A
+remote attacker could provide a specially-crafted URL, which once visited by a
+valid DokuWiki user would lead to arbitrary HTML or web script execution in the
+context of logged in DokuWiki user.
 
-Description:
-A vulnerability has been reported in spamdyke, which can be exploited by 
-malicious people to manipulate certain data.
+References:
+[1] https://secunia.com/advisories/48848/
+[2] http://ircrash.com/uploads/dokuwiki.txt
+[3] https://bugs.gentoo.org/show_bug.cgi?id=412891
+[4] http://bugs.dokuwiki.org/index.php?do=details&task_id=2487
+     (upstream bug report for the XSS issue)
+[5] http://bugs.dokuwiki.org/index.php?do=details&task_id=2488
+     (upstream bug report for the CSRF issue)
+[6] https://bugzilla.redhat.com/show_bug.cgi?id=815122
+     (Red Hat bugzilla entry)
 
-The vulnerability is caused due to the TLS implementation not properly 
-clearing transport layer buffers when upgrading from plaintext to ciphertext 
-after receiving the "STARTTLS" command. This can be exploited to insert 
-arbitrary plaintext data (e.g. SMTP commands) during the plaintext phase, 
-which will then be executed after upgrading to the TLS ciphertext phase.
+Discovered by : Khashayar Fereidani
 
-The vulnerability is reported in versions prior to 4.2.1.
+Proof of Concept URL:
+http://sitename/doku.php?do=edit&id=S9F8W2A&target=<script>alert(123)</script>
 
+Could you allocate a 2012 CVE id for this issue? (one is enough because
+only 'target' parameter isn't properly escaped, leading to XSS or CSRF
+{see [2] for further examples})
 
-Solution:
-Update to version 4.2.1.
-
-
-And from upstream changelog ( 
-http://www.spamdyke.org/documentation/Changelog.txt ):
-
- Changed smtp_filter() and middleman() to discard any buffered input after TLS
-    is started.  This prevents the injection of commands into a secure session
-    by sending extra input in the same packet as the "STARTTLS" command.  Not
-    really a security problem but good practice anyway.  Thanks to Eric 
-Shubert for reporting this one.
-
-
-Sorry Kurt, but atm, I have not found the commit code.
-
-
--- 
-Agostino Sarubbo		ago -at- gentoo.org
-Gentoo/AMD64 Arch Security Liaison
-GPG: 0x7CD2DC5D
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
