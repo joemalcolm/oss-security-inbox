@@ -1,27 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/7
-Message-ID: <4FFC3516.9070504@redhat.com>
-Date: Tue, 10 Jul 2012 15:58:46 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/23/2
+Message-ID: <20120423080521.GB4319@kludge.henri.nerv.fi>
+Date: Mon, 23 Apr 2012 11:05:21 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+Subject: Security vulnerabilities fixed in WordPress 3.3.2
 Content-Type: text/plain; charset=utf-8
 
-On 07/10/2012 03:43 PM, Solar Designer wrote:
-> On Tue, Jul 10, 2012 at 03:13:55PM +0200, Florian Weimer wrote:
->> Perhaps we can put a getenv_secure() into libc, which will perform all
->> the appropriate checks (including future checks we do not know about
->> yet)?  Duplicating the code in many libraries does not seem prudent.
->
-> We already have __secure_getenv() in glibc, which I think is what
-> libraries like this should be using on systems with glibc.
+Page http://codex.wordpress.org/Version_3.3.2 says:
 
-Sebastian's patches also include a check on prctl(PR_GET_DUMPABLE).  I'm 
-not sure if the libc approach (compare effective and real UIDs/GIDs on 
-process start and base process environment trust decisions on that) is 
-equivalent.
+"""
+Three external libraries included in WordPress received security updates:
 
--- 
-Florian Weimer / Red Hat Product Security Team
+- Plupload (version 1.5.4), which WordPress uses for uploading media.
+- SWFUpload, which WordPress previously used for uploading media, and may still be in use by plugins.
+- SWFObject, which WordPress previously used to embed Flash content, and may still be in use by plugins and themes.
 
+WordPress 3.3.2 also addresses:
 
+- Limited privilege escalation where a site administrator could deactivate network-wide plugins when running a WordPress network under particular circumstances.
+- Cross-site scripting vulnerability when making URLs clickable.
+- Cross-site scripting vulnerabilities in redirects after posting comments in older browsers, and when filtering URLs.
+
+A full log of the changes made for 3.3.2 can be found at http://core.trac.wordpress.org/changeset?new=20554%40branches%2F3.3&old=20087%40branches%2F3.3
+"""
+
+I asked from WordPress if these vulnerabilities already have CVE-identifiers and reported these to OSVDB, Secunia and Debian http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=670124
+
+- Henri Salo
