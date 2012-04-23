@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/9
-Message-Id: <682F4F17-7EF6-4820-BC0F-F4EB77EEE7DB@securityview.nl>
-Date: Wed, 18 Jan 2012 14:31:19 +0100
-From: Ronald van den Blink <oss-security@...urityview.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/23/5
+Message-Id: <201204231850.q3NIoMGW027844@linus.mitre.org>
+Date: Mon, 23 Apr 2012 14:50:22 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: CVE request - Batavi 1.2.1 Fixes Blind SQL Injection vulnerability in boxToReload parameter of ajax.php
+Cc: cve-assign@...re.org
+Subject: Asterisk AST-2012-004 AST-2012-005 AST-2012-006
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Can we please have a CVE assigned for the following fix in Batavi 1.2.1 (http://sourceforge.net/projects/batavi/files/).
+CVE-2012-2414 http://downloads.asterisk.org/pub/security/AST-2012-004.html
 
-As pointed out by Canberk BOLAT of Mavituna Security, version before 1.2.1 have a Blind SQL Injection Vulnerability in the boxToReload parameter of ajax.php. This has been fixed in Batavi 1.2.1.
+CVE-2012-2415 http://downloads.asterisk.org/pub/security/AST-2012-005.html
 
-Relevant part of the changelog:
+CVE-2012-2416 http://downloads.asterisk.org/pub/security/AST-2012-006.html
 
-For details about the changes of the downloaded version you'll find a changes.txt in the root folder of the package.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-Version 1.2.1
-
-[..]
-
-Security:
-
-- Fixed SQL injection in modules;
-- Improvements methods of Database to handle it;
-- All data which come from user going via special check to strip all dangerous values.
-
-[..]
-
-With kind regards,
-
-Ronald van den Blink
-Project Manager 
-Iceshop BV
-
-Iceshop BV is the main contributor to the next generation open source e-commerce software Batavi. Batavi is the first open source e-commerce software that can easy handle more than 100.000 products and has native Icecat (www.icecat.biz) integration. 
+iQEcBAEBAgAGBQJPlaQOAAoJEGvefgSNfHMdIaYH/3ZrvYkjSeJbbHGpAPF1MF26
+jC7ZWTcK/pIdOjLZY/WIjsCWRiMKBJA9iZQ507iJE4hC/73k/hmbHd8L+34LJF/m
+Fz23/U/BzujardahIth760peOFi4vxZqSnECY2A2yj/ulQ4CipA1wOJ1ImLkHpzo
+zxGZbAdztCc0yQrwxSoqd9SBRDsY6YsNkJxxC/hCvpyELvSAj/QJc053phVQdGvd
+WwbZaLuWWWPXr5xl/6f+wRB33xXroZoQDIN9CiHkY6Tln7nzOcWZ5QQ/qepTP3aV
+7/9zHuneAwoJ5Nu74V06UmYbkv9mLQYi0PYRV5Hg+4WoT5PXFUiOtNsHk8iLIvU=
+=sA67
+-----END PGP SIGNATURE-----
