@@ -1,25 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/11
-Message-ID: <d019c14b-1643-41fe-bd5a-bd056206d8ef@zmail13.collab.prod.int.phx2.redhat.com>
-Date: Tue, 03 Jan 2012 15:51:45 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Closed list unsubscribe
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/23/3
+Message-Id: <201204231324.q3NDOLqo018724@linus.mitre.org>
+Date: Mon, 23 Apr 2012 09:24:21 -0400 (EDT)
+From: cve-assign@...re.org
+To: henri@...v.fi, oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Security vulnerabilities fixed in WordPress 3.3.2
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm writing to note that I'm no longer a subscriber to the closed list. I
-asked Solar Designer to remove me as I no longer need this mail.
+>Page http://codex.wordpress.org/Version_3.3.2 says:
 
-I'm working on a group inside Red Hat to begin addressing security in a
-more proactive manner. I have a short writeup of this here:
-http://www.bress.net/blog/archives/200-Expanding-Red-Hats-Product-Security-Efforts.html
+>I asked from WordPress if these vulnerabilities already have CVE-identifiers
 
-I don't have much information just yet, but I'll be sure to let everyone
-know how things are progressing in the future.
+Note that http://nvd.nist.gov/download/nvd-rss.xml is also among
+the sources to check for recent CVE assignments:
 
-Thanks.
+CVE-2012-2399
+CVE-2012-2400
+CVE-2012-2401
+CVE-2012-2402
+CVE-2012-2403
+CVE-2012-2404
 
--- 
-    JB
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJPlVfBAAoJEGvefgSNfHMdwy0H/2817pGAY9/u31GMvJRNfzLU
+LhQvbBg15wXXvQ9T7iyWPaY0h6FXHOxZI2SLlLszlcr47b8hDdz+SJbUvzF0Lji+
+HsgQI/Wz6ptpIsh6Z4wg7lus4IasvxFMT0M/+T2q/SHn5b9CrmHmmhlv2ceC0bZT
+h0XZ4uwqW+i08KquLZz3EtHzSmLdNPj5FIwMc0jlrViHsnIFnrsSslHGqqeljaM6
+/0bE3SdoDafLBTRAgmTfsOpynVE8uJFL5xGIqvpb6sKWen9vTg9hTlyU3X5Va4VJ
+HJ35UblozCZKN+WU9Ko7wfKfRD0RbG/PgS0EHBzRL6YhzIfnwU/f8Rmh3nud+AY=
+=2UOc
+-----END PGP SIGNATURE-----
