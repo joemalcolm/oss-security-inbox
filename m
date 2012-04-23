@@ -1,26 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/18/1
-Message-ID: <50D065B7.2010408@redhat.com>
-Date: Tue, 18 Dec 2012 13:46:47 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Plug-and-wipe and Secure Boot semantics
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/23/4
+Message-ID: <4F957C88.2030705@redhat.com>
+Date: Mon, 23 Apr 2012 10:00:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org, henri@...v.fi, "st >> \"Steven M. Christey\"" <coley@...us.mitre.org>
+Subject: Re: Re: Security vulnerabilities fixed in WordPress 3.3.2
 Content-Type: text/plain; charset=utf-8
 
-Some UEFI machines seem to boot from USB by default, without any 
-prompting, probably assuming that a signed boot loader cannot cause any 
-damage.  Most signed Linux boot loaders only verify the kernel (and, 
-indirectly, code that's loaded into the kernel), but not the initrd 
-contents.  (This isn't possible because initrds are system-specific and 
-thus cannot be signed in general.  Recovery images signed by system 
-manufactures likely have similar issues.)  As a result, the signed 
-loader might start something that wipes the hard disk or uploads its 
-contents somewhere
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm wondering if this is a problem.  I haven't investigated boot order 
-defaults for legacy systems, so I don't know if this plug-and-wipe issue 
-is a regression.  In the end, this boils down to what Secure Boot means, 
-semantically.
+On 04/23/2012 07:24 AM, cve-assign@...re.org wrote:
+>> Page http://codex.wordpress.org/Version_3.3.2 says:
+> 
+>> I asked from WordPress if these vulnerabilities already have
+>> CVE-identifiers
+> 
+> Note that http://nvd.nist.gov/download/nvd-rss.xml is also among 
+> the sources to check for recent CVE assignments:
+> 
+> CVE-2012-2399 CVE-2012-2400 CVE-2012-2401 CVE-2012-2402 
+> CVE-2012-2403 CVE-2012-2404
+> 
 
--- 
-Florian Weimer / Red Hat Product Security Team
+Would it be possible to post just the Open Source subset of the CVENEW
+mailing list to OSS-SEC?
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPlXyIAAoJEBYNRVNeJnmTrzkQANh+eyz/fg05sSY4xushcWp+
+fwaaaH8ARnohd2x3eUCeBVSSCCvMdU4hHtBMgpLQPzRH/D7uoMRAAL8rGYTZDBpb
+7Pav1NApYuUOSJR8qL3UBCN74M3vFSiSHsY6whCPhERxO7BhG3TfCjH+h35uN2Yf
+eFn4BmGKzrM9p91tZzH8XG0eWFaB3JfBAbiALR7DpEvuKxAeD98kIy4IJy1xjH8x
+SDK3ETBBfGV+BI5B/d4ig5vDChyhUB6wN3m+FiKIdGtaBxVY24w3AZgSDVp9D+Fs
+QKSY1NzQb0A7fMW7s77Pg7bfMdUah2gPvpYgIVQz8ZKouDZbkbC7IxrML+KuHwVa
+tu+s14B85a0xTZ5lGEPQFI3IY373t29dvvEZ9HWNvq8QDatm9DBRIpLZYsRnxE7r
+QQMsFRdUclbSh4J1zOfGcJvmojSDb0Ca4yMBEO4yjDQClxRIiN5iQ3w7yHT7Yygv
+3IhA4zh31PsqzX6BbKr885A7YlN1fLArlGYZRZ1SmEVDmbBjLpRSPWHikow2p87J
+TIZIygOQDMyJdy4vV2zgCSS6OZ1YAa1F9IueiJe32FbiQlxayIQhsAVHLiU4t6+U
+tyjikbNtYMq75/ATXORWZ2S8TudJ53FBWpPgW3SmTEazSam9yDHRRHtigIcVN43p
+r7nJyzdSNhNsrOAgEhOg
+=ZifB
+-----END PGP SIGNATURE-----
