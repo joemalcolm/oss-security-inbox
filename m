@@ -1,66 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/22
-Message-ID: <50524680.7020805@redhat.com>
-Date: Thu, 13 Sep 2012 14:48:00 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE request - mcrypt buffer overflow flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/9
+Message-ID: <20120424143151.GG18917@cmpxchg8b.com>
+Date: Tue, 24 Apr 2012 16:31:51 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Apr 24, 2012 at 09:47:24AM +0200, Tomas Hoger wrote:
+> On Sun, 22 Apr 2012 19:44:56 +0400 Solar Designer wrote:
+> 
+> > Turns out that file was mangled in transit.  Tavis has posted the
+> > correct one on this URL:
+> > 
+> > http://lock.cmpxchg8b.com/openssl-1.0.1-testcase-32bit.crt.gz
+> > 
+> > SHA-256:
+> > ac7acb168a6bfd65375eeec072acbf904f0f10e3bc5588c020aed4df4712d066
+> 
+> If you test your 0.9.x updates with this reproducer from Tavis, you
+> should still expect to see crashes, which are now corrected upstream in
+> 0.9.8w:
+> 
+> http://marc.info/?l=openssl-dev&m=133525318514423&w=2
+> 
+> This incomplete fix got CVE-2012-2131.
+> 
 
-On 09/06/2012 02:11 PM, Raphael Geissert wrote:
-> Hi,
-> 
-> On Thursday 06 September 2012 09:37:14 Vincent Danen wrote:
->> A buffer overflow was reported [1],[2] in mcrypt version 2.6.8
->> and earlier due to a boundary error in the processing of an
->> encrypted file (via the check_file_head() function in
->> src/extra.c).  If a user were tricked into attempting to decrypt
->> a specially-crafted .nc encrypted flie, this flaw would cause a
->> stack-based buffer overflow that could potentially lead to
->> arbitrary code execution.
-> 
-> I'm attaching a patch that makes mcrypt abort when the salt is
-> longer than the temp buffer it uses.
-> 
-> While working on it, I noticed the err_ functions do not have a
-> constant printf format, yet there are calls such as: 
-> sprintf(tmperr, _("Input File: %s\n"), infile); err_info(tmperr); 
-> [print_enc_info in src/extra.c]
-> 
-> And a few others in src/mcrypt.c; for instance: $ mcrypt
-> --no-openpgp "%s.nc" mcrypt: h���Fn�`.nc is not a regular file.
-> Skipping...
-> 
-> I'm attaching another patch that prevents the format string
-> attacks.
-> 
-> Cheers,
+Oops, indeed I didn't test with the 0.9.x build. I had tried (and
+failed) to mail it to openssl-security, but their MTA rejected it,
+so just skipped it as the 1.0.0 patch seemed correct.
 
-Please use CVE-2012-4426 for these format string issues.
+At the risk of being flamed for my progressive views on email size,
+please turn up the limits for security aliases! :-)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Tavis.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQUkZ/AAoJEBYNRVNeJnmTP9YP/11qqwwMjEnej8e4hRYFcqtB
-8w/nqDoOGDwyxMLRYW7K3OjS5oBxNUOSsLcuNjpeNOJ+9EKNXpSfCR66Q8pJ0DHT
-mCbkPWQFaRMXkFLJCtXA1c5vEGdC2bG6EACflxmKmnwUlT/zJzXDa1q1DD3re4hI
-HYy+dkFwVOvpyNoQhRLAi6KpRDzkTK6ohf7dMQmZ+1v2DKEtVja+fycWqJm09zRm
-Zoen4lZTeiZZT1nV8CQJrHjIuEeVnULyYZpVDUvzrWA4yttFalz+hsGUPSxwvGFp
-5iwm42i+Q20bLmij44c5i09kRuo6Cx1BhlfTwRLk3dMN7cDZGUd7jHuzaL/VlndI
-/ybY+3pNQZlvATn0y/fI53yaJhYypgnM+CUF+l4LaLGgneGj/hYamBGfEvcG9rJw
-vyI9c2Wxr07byFQXV9Z3Y73u+q4gePfXsjw2cMt59xlkugEvQMcviEdQMPp/RUMt
-KGHrbV2p4okxP35qo7zF7ztXG5/vW8bvIemwiYfaBnXBFArPCYgtYzpc4tlb/0Nj
-4ZtCQ8n63k62+PJpdTvXbMMtMXBTK04lJd8o1U7wtZpphJQbKl4A0bPYc6vWVarj
-fr6A8mp1bDI+hT1LH/nUjFmpudHafy5g3/9tiE+BG8Ozs1RUz3B4b6GzbuVjuTQq
-c5iHRTdGSQL2i6EBVuPW
-=G+yt
------END PGP SIGNATURE-----
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
