@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/12/1
-Message-Id: <201212121157.16820.mweckbecker@suse.de>
-Date: Wed, 12 Dec 2012 11:57:16 +0100
-From: Matthias Weckbecker <mweckbecker@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: thttpd: Denial of Service (App. crash, local)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/8
+Message-ID: <20120424142638.GF18917@cmpxchg8b.com>
+Date: Tue, 24 Apr 2012 16:26:38 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt, Steve, vendors, ...,
+On Sun, Apr 22, 2012 at 07:44:56PM +0400, Solar Designer wrote:
+> With this one, I am able to trigger a problem on 32-bit (OpenSSL 1.0.0d
+> with unrelated patches):
+> 
+> $ zcat openssl-1.0.1-testcase-32bit.crt.gz | openssl x509 -inform DER
+> *** glibc detected *** free(): invalid pointer: 0x45ff0008 ***
+> Aborted
+> 
+> That's in an OpenVZ container with privvmpages barrier at 3 GB.
+> With 2 GB, I was getting:
+> 
+> $ zcat openssl-1.0.1-testcase-32bit.crt.gz | openssl x509 -inform DER
+> unable to load certificate
+> 3083651232:error:07069041:memory buffer routines:BUF_MEM_grow_clean:malloc failure:buffer.c:152:
+> 3083651232:error:0D06B041:asn1 encoding routines:ASN1_D2I_READ_BIO:malloc failure:a_d2i_fp.c:229:
+> 
+> Alexander
 
-I think I have never posted it to oss-sec. glibc's crypt() can return NULL
-under some circumstances which causes thttpd to crash while dereferencing:
+Interesting, I think it should be possible to construct a testcase that
+requires less memory, the total input must be quite large, but it can
+be split into smaller components that don't require large allocations.
 
-  https://bugzilla.novell.com/show_bug.cgi?id=783165
-
-Maybe you want to assign a CVE.
-
-Matthias
+Tavis.
 
 -- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
