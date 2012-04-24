@@ -1,68 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/20
-Message-ID: <CAKCW=4ZZ4iDLRhkLMUCxTpKWvfBFQ=h5a0fy9j1MHCvPgjVA7Q@mail.gmail.com>
-Date: Fri, 16 Mar 2012 14:41:38 -0400
-From: Mark Stanislav <mark.stanislav@...il.com>
-To: Tim Brown <tmb@...35.com>
-Cc: oss-security@...ts.openwall.com,  "Adam D. Barratt" <adam@...m-barratt.org.uk>, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE Requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/6
+Message-ID: <20120424124510.GB5036@suse.de>
+Date: Tue, 24 Apr 2012 14:45:10 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 16, 2012 at 2:37 PM, Tim Brown <tmb@...35.com> wrote:
+nfs-client-1.2.5 rpm which is probably a result of the nfs-utils-1.2.5
+source package.
 
-> On Friday 16 Mar 2012 16:11:04 Mark Stanislav wrote:
-> > All points being made are very much valid and I certainly understand how
-> > contextually oss-sec may be used to allocation requests under different
-> > circumstances.
+Sebastian
+
+On Tue, Apr 24, 2012 at 02:34:23PM +0200, Florian Weimer wrote:
+> * Sebastian Krahmer:
+> 
+> > Indeed, the point was to also check against fscaps:
 > >
-> > So here's my situation, I'm up for suggestions (of which, "wait longer",
-> is
-> > perfectly viable!)...
+> > https://bugzilla.novell.com/show_bug.cgi?id=694598
 > >
-> > 1) March 1st, I sent 2 of these CVEs over to Steve Christy at MITRE who
-> had
-> > previously allocated 9 prior CVEs in a day or two generally
-> > 2) March 8th, after not hearing back from Steve, I contacted
-> > cve@...redirectly with all 5
-> > 3) March 15th, after not hearing back from MITRE, I contacted Kurt off
-> list
-> > as I've noted his helpfulness doing allocations
-> > 3a) Kurt pointed me to email the list, rather than him directly (which is
-> > perfectly fine, but perhaps not the context I was aiming for initially)
->
-> Josh Bressers (Josh, correct me if I'm using your name in vain) used to be
-> quite happy to assign CVEs for undisclosed (embargoed) F/OSS issues
-> providing
-> details were forthcoming with the request.   If Josh is no longer able to
-> fulfil that role due to a change of circumstance at Redhat it would be
-> nice if
-> someone stepped into the breach -  be that Redhat, Debian or one of the
-> other
-> CNAs.  There is definately a place for "disclosed to project, being/been
-> fixed,
-> not public - can I have a CVE?" without deferring to the distros list or
-> MITRE
-> - most of the time projects can respond in a timely fashion, so a minimum
-> effort approach is ideal.
->
-> As an aside, the public address for MITRE on the web site is wrong AFAIK.
-> Quoting Steve Christey:
->
-> "Apologies for the delay.  In the future, please use cve-assign@...re.org
-> for requests related to CVE reservation."
->
+> > At least it should be considered for future builds. The mount.nfs
+> > case was only interesting for the suid bit.
+> 
+> Okay.  Our mount.nfs doesn't seem to use libgssglue.  I wonder if you
+> use a different code base, or if this is something that's going to be
+> come relevant to use with a newer upstream version, too.
 
-Thank you, Tim. I've forwarded them over to that address instead.
+-- 
 
--Mark
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-
->
-> From last time I went to MITRE (for a closed source product).
->
-> Tim
-> --
-> Tim Brown
-> <mailto:tmb@...35.com>
->
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
