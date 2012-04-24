@@ -1,22 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/4
-Message-ID: <20120914124032.GA4728@kludge.henri.nerv.fi>
-Date: Fri, 14 Sep 2012 15:40:32 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/4
+Message-ID: <20120424102428.GB8963@suse.de>
+Date: Tue, 24 Apr 2012 12:24:28 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: SMF index.php msg parameter SQL-injection (2005)
+Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
 
-Old SQL-injection security issue in SMF does not have CVE-identifier. Could you please assign one from year 2005, thanks.
+Indeed, the point was to also check against fscaps:
 
-Affected versions: <= 1.0.4
-Fixed in 1.0.5
+https://bugzilla.novell.com/show_bug.cgi?id=694598
 
-References:
-http://osvdb.org/17458
-http://secunia.com/advisories/15784/
+At least it should be considered for future builds. The mount.nfs
+case was only interesting for the suid bit.
 
-- Henri Salo
-ps. never too late
+(also see http://turing.suse.de/~krahmer/libs-vs-fscaps/)
+
+Sebastian
+
+On Tue, Apr 24, 2012 at 12:03:58PM +0200, Florian Weimer wrote:
+> * Marcus Meissner:
+> 
+> >> Would you mind sharing the patch you used in SLE packages?  It does not
+> >> seem to have been fixed in OpenSUSE yet.  Thanks!
+> >
+> > I just did a basic uid check.
+> 
+> Shouldn't you check GID against EGID, too, for completeness?
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
