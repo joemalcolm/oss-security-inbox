@@ -1,113 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/17/1
-Message-ID: <CAPMrQTR6RJ3ke7xQnGeWZp23CQH=pL_63UMYS4t0XjVxTNjNSg@mail.gmail.com>
-Date: Fri, 17 Aug 2012 13:26:13 +0300
-From: Julius Kivimäki <julius.kivimaki@...il.com>
-To: research <research@...ctionis.co.uk>
-Cc: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
-Subject: Re: [Full-disclosure] GIMP Scriptfu Python Remote Command Execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/1
+Message-ID: <20120424094724.0bd373c9@redhat.com>
+Date: Tue, 24 Apr 2012 09:47:24 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Tavis Ormandy <taviso@...xchg8b.com>
+Subject: Re: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
 Content-Type: text/plain; charset=utf-8
 
-Where exactly is the vulnerability here? I am unable to see it myself, it
-appears that you are using an eval function to evaluate code which isn't
-exactly a security issue.
+On Sun, 22 Apr 2012 19:44:56 +0400 Solar Designer wrote:
 
-2012/8/17 research <research@...ctionis.co.uk>
+> Turns out that file was mangled in transit.  Tavis has posted the
+> correct one on this URL:
+> 
+> http://lock.cmpxchg8b.com/openssl-1.0.1-testcase-32bit.crt.gz
+> 
+> SHA-256:
+> ac7acb168a6bfd65375eeec072acbf904f0f10e3bc5588c020aed4df4712d066
 
-> Summary
-> =======
->
-> There is an arbitrary command execution vulnerability in the scriptfu
-> network server
-> console in the GIMP 2.6 branch. It is possible to use a python scriptfu
-> command to run
-> arbitrary operating-system commands and potentially take full control of
-> the
-> host.
->
-> The advisory is posted here:
->
-> http://www.reactionpenetrationtesting.co.uk/GIMP-scriptfu-python-command-exe
-> cution.html
->
-> CVE number: CVE-2012-4245
-> Vendor homepage: http://www.gimp.org/
-> Vendor notified: 9/8/2012
->
->
-> Affected Products
-> =================
->
-> GIMP 2.6 branch (Windows or Linux builds)
->
-> Non-Affected Products
-> =====================
->
-> The Scriptfu network server component does not currently work in the GIMP
-> 2.8 branch
-> (Windows or Linux builds).
->
-> Details
-> =======
->
-> There is an arbitrary command execution vulnerability in the scriptfu
-> network server
-> console in the GIMP 2.6 branch. It is possible to use a python scriptfu
-> command to run
-> arbitrary operating-system commands and potentially take full control of
-> the
-> host.
-> The following command will write "foo" to "/tmp/owned":
->
-> (python-fu-eval 0 "file = open('/tmp/owned','w')\nfile.write('foo')")
->
->
-> Impact
-> ======
->
-> Successful exploitation of the vulnerability may result in remote command
-> execution.
->
-> Solution
-> ===========
-> No solution has been implemented at this stage apart from the workaround
-> below.
->
-> Workaround
-> ===========
->
-> Do not enable the scriptfu network server.
-> The GIMP development team have stated that this component was not designed
-> with security
->  in mind and therefore should not be used in production environments.
->
-> Distribution
-> ============
->
-> In addition to posting on the website, a text version of this notice
-> is posted to the following e-mail and Usenet news recipients.
->
->   * bugtraq () securityfocus com
->   * full-disclosure () lists grok org uk
->
-> Future updates of this advisory, if any, will be placed on the ReactionIS
-> corporate website, but may or may not be actively announced on
-> mailing lists or newsgroups. Users concerned about this problem are
-> encouraged to check the URL below for any updates:
->
->
-> http://www.reactionpenetrationtesting.co.uk/GIMP-scriptfu-python-command-exe
-> cution.html
->
->
-> ============================================================================
-> ====
->
->
->
-> _______________________________________________
-> Full-Disclosure - We believe in it.
-> Charter: http://lists.grok.org.uk/full-disclosure-charter.html
-> Hosted and sponsored by Secunia - http://secunia.com/
->
+If you test your 0.9.x updates with this reproducer from Tavis, you
+should still expect to see crashes, which are now corrected upstream in
+0.9.8w:
 
+http://marc.info/?l=openssl-dev&m=133525318514423&w=2
+
+This incomplete fix got CVE-2012-2131.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
