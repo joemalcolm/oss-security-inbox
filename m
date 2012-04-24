@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/1
-Message-ID: <20120504073143.GC16166@suse.de>
-Date: Fri, 4 May 2012 09:31:44 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/10
+Message-ID: <20120424143447.GC8574@suse.de>
+Date: Tue, 24 Apr 2012 16:34:47 +0200
 From: Marcus Meissner <meissner@...e.de>
 To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: more tight ioctl permissions in dl2k driver
+Subject: CVE Request: use after free bug in "quota" handling in hugetlb code
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Can you please assign a CVE for this issue:
+Reported by Schacher Raindel, quoting his report:
 
-Stephan Mueller reported lack of capable(CAP_NET_ADMIN) checks
-in private ioctls in the dl2k network card driver.
+There is a use after free bug in the kernel hugetlb code. The bug can allow an
+authenticated, unprivileged local attacker to crash the system (and possibly
+gain higher privileges) if huge pages are enabled in the system.
 
-The netdev team will probably remove the handling of the SIOCDEVPRIVATE*
-calls from this driver though and not use Jeffs patch directly.
+A fix has been committed to upstream, commit
+90481622d75715bfcb68501280a917dbfe516029 "hugepages: fix use after free bug in
+"quota" handling"
+
+Version-Release number of selected component (if applicable):
+The bug exists in kernel versions 2.6.24 and above.
 
 References:
-	http://www.spinics.net/lists/netdev/msg196365.html
-	http://www.spinics.net/lists/netdev/msg196381.html
-	http://www.spinics.net/lists/netdev/msg196382.html
-	https://bugzilla.novell.com/show_bug.cgi?id=758813
+	https://bugzilla.novell.com/show_bug.cgi?id=758532
+	https://bugzilla.redhat.com/show_bug.cgi?id=815065
+	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=90481622d75715bfcb68501280a917dbfe516029
 
 Ciao, Marcus
