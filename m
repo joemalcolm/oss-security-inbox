@@ -1,58 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/14
-Message-ID: <5041029B.60607@redhat.com>
-Date: Fri, 31 Aug 2012 12:29:47 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/11
+Message-ID: <20120424151252.GA12060@openwall.com>
+Date: Tue, 24 Apr 2012 19:12:52 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: contao before 2.11.4 sql injection
+Cc: Tavis Ormandy <taviso@...xchg8b.com>
+Subject: Re: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+All -
 
-On 08/31/2012 04:21 AM, Hanno Böck wrote:
-> bug tracker info: https://github.com/contao/core/issues/4427
+On Tue, Apr 24, 2012 at 04:31:51PM +0200, Tavis Ormandy wrote:
+> Oops, indeed I didn't test with the 0.9.x build. I had tried (and
+> failed) to mail it to openssl-security, but their MTA rejected it,
+> so just skipped it as the 1.0.0 patch seemed correct.
 > 
-> Upstream changelog: 
-> http://contao.org/en/changelog/versions/2.11.html "Fixed a critical
-> privilege escalation vulnerability which allowed regular users to
-> make themselves administrators (thanks to Fabian Mihailowitsch)
-> (see #4427)."
-> 
-> I think this has no CVE yet, please assign CVE.
+> At the risk of being flamed for my progressive views on email size,
+> please turn up the limits for security aliases! :-)
 
+This is getting a bit off-topic indeed, but here are a few points:
 
-Please use CVE-2012-4383 for this issue.
+1. Yes, I agree that private security contact addresses should be more
+liberal in what they accept (as compared to mailing lists with larger
+numbers of subscribers).  This is why, for example, Tavis' message with
+the attached 1.3 MB file was delivered to me just fine, but did not make
+it through to oss-security.
 
-One note/comment, in the github discussion I see:
+2. Besides message size, also important is how the message may be
+treated by anti-spam and anti-virus software (which may arguably be
+unreasonable to use, especially in such cases, but may happen to be in
+place on a mail gateway anyway).  openssl-1.0.1-testcase-32bit.crt.gz
+uncompresses to 1431655797 bytes (curiously, 1.33333336 GiB), which may
+well be above a reasonable anti-DoS limit of an anti-virus checking
+what's inside compressed files.  In fact, that file could reasonably be
+blocked for being such a size bomb for end-user systems as well
+(compression ratio of over 1000).
 
-"I think it is more urgent than the previous two security fixes, but
-as you say it only works for backend users (but even if they have no
-user module available). I would not thread it as immediate release,
-but also not wait a few weeks..."
+3. URLs may be used for passing of somewhat large or problematic files
+like this.  For postings to oss-security, file uploads to wiki pages
+under http://oss-security.openwall.org/wiki/code-reviews may be used.
+In fact, just before Tavis placed the file on an URL of his own, I
+started to set up this wiki page, which I intended to upload the file to:
+http://oss-security.openwall.org/wiki/code-reviews/openssl
+(maybe we should even complete this one, link to it from code-reviews,
+and start to use it for OpenSSL issues in particular).
 
-so it looks like they have other issues that may need CVE's as well?
+4. FYI, the current message size limit for oss-security is 200 KB.  This
+means that files of up to about 140 KB may be posted.  If list members
+feel that this needs to be adjusted one way or the other, let me know.
+Please consider that we currently have about 1000 subscribers.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+5. For the non-public distros and linux-distros lists, the limit is in
+fact much larger, so that these lists' PGP re-encryption feature may be
+used to distribute non-public testcases and the like to list members.
+However, I think it's preferable that multi-megabyte messages be
+announced to and actually requested by list members before being posted,
+unless the issue is very time-sensitive (every hour matters).  Sometimes
+it makes more sense to send testcases to individual distros (just those
+who request this info) rather than to all at once anyway.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Thanks,
 
-iQIcBAEBAgAGBQJQQQKbAAoJEBYNRVNeJnmTrcoP/1xMq/fkeYggmEj3jnDSORms
-u/GEr6oNVe8SYeDe89noVGJ3jxypuCvXG4alu8m+ICYluymi8v+znrjUdSeUX6zY
-7pIOd4jCI+lhzq0GFu7kDdkfyLze2LnA0gEK0iypcEjEVQWhyYavB/k2IkanXzhB
-zAAuwSrL7A05ZAWGhcfEq6N/LLHF07s4JZiGCl+p5b1FZkWqHd6CbWO57R+aymaS
-JA1g/QwqgZjhiJaeyLyczT2Bj6fAk2uPo7/2JJgfX+29S3UoiGKLFpfaI9y8EQ7r
-M5ruB7s2c2wfj1hjLw4qzV479H0x+f4+38avBuJe7tLHdOgZkB1CHLAPdZQ5j6zB
-s+vi+XPysKztG+/rXeaXW28PajIr2Qk842tPPxzhaz5HUhbO9Wcx38yisfZWGyoa
-+DDlMD8h97bJyB02SwsaFhwO64kgSGDil0CyGSm+GJ85Dn3s0NZVQqdZPpGCogoF
-XXj75D9AiSHOR51/+Z9HDpI0tO63NQgi5oS04++/Ke9YoKuGv8GHzXW2szLytKHQ
-tYb4qV0u6ZhiRmmomi7h1j9Jpf9s1XIhWESXuh6JbhbNqKkRYIcEvU3gXagzpVq/
-bcY0LRQJgI8eWXpqGQ4qg9ZQh6nfFydY1xC/hnP43GYOP1mI7YoGfi6LaL30pVmV
-HcUAXdR4VMgIdmRHnX7V
-=wvPn
------END PGP SIGNATURE-----
+Alexander
