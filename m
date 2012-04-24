@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/8
-Message-ID: <502590A9.1050107@debian.org>
-Date: Fri, 10 Aug 2012 23:52:25 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/3
+Message-ID: <4F967AA8.4040202@suse.de>
+Date: Tue, 24 Apr 2012 12:04:24 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Bruno Kleinert <fuddl@...ian.org>
-Subject: Re: Possible data loss or data modification in ownCloud
+Cc: Vincent Untz <vuntz@...e.com>
+Subject: CVE Request: libsoup 2.32.2 sets ssl trusted flag despite no verification
 Content-Type: text/plain; charset=utf-8
 
-On 10/08/12 10:25, Bruno Kleinert wrote:
-> if ($source) { +               switch ($mode) { +
-> case 'r+': +                       case 'rb+': ... +
-> case 'a': +                       case 'ab': +
-> if (!$this->is_writable($path)) { +
-> return false; +                               }
+Hi,
 
-I find this suspicious. Surely this should be enumerating the modes
-that are safe, rather than the modes that are not safe? With that
-patch, if a new value for $mode is added, it's assumed to be a read
-operation. It seems much safer to assume that unknown modes are writes:
+libsoup 2.32.2 does not verify certificates at all if an application does
+not explicitly specify a file with trusted root CA's. Since that libsoup
+version relies on the verification failure to clear the trust flag it
+always considers ssl connections as trusted in that case.
 
-    switch ($mode) {
-        case 'r':
-        case 'rb':
-            break;
-        default:
-            if (!$this->is_writable($path)) {
-                return false;
-            }
-    }
+Reference:
+https://bugzilla.novell.com/show_bug.cgi?id=758431
 
-Regards,
-    S
+cu
+Ludwig
+
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
