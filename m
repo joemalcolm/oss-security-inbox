@@ -1,46 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/6
-Message-ID: <1591326075.16670108.1345465587615.JavaMail.root@redhat.com>
-Date: Mon, 20 Aug 2012 08:26:27 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/13
+Message-ID: <4F96C4FE.8050404@redhat.com>
+Date: Tue, 24 Apr 2012 09:21:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: oss-security@...ts.openwall.com, Nils Philippsen <nils@...hat.com>, Florian Weimer <fweimer@...hat.com>
-Subject: The Gimp PSD plug-in CVE-2012-3402 issue
+CC: Ludwig Nussel <ludwig.nussel@...e.de>, Vincent Untz <vuntz@...e.com>
+Subject: Re: CVE Request: libsoup 2.32.2 sets ssl trusted flag despite no verification
 Content-Type: text/plain; charset=utf-8
 
-Hello vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  see below report about the GIMP's PSD plug-in CVE-2012-3402 issue:
---------------------------------------------------------------------
+On 04/24/2012 04:04 AM, Ludwig Nussel wrote:
+> Hi,
+> 
+> libsoup 2.32.2 does not verify certificates at all if an
+> application does not explicitly specify a file with trusted root
+> CA's. Since that libsoup version relies on the verification failure
+> to clear the trust flag it always considers ssl connections as
+> trusted in that case.
+> 
+> Reference: https://bugzilla.novell.com/show_bug.cgi?id=758431
+> 
+> cu Ludwig
+> 
 
-Summary: Gimp (PSD plug-in): Heap-buffer overflow by decoding certain PSD headers
+Please use CVE-2012-2132 for this issue.
 
-CVE: CVE-2012-3402
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Description:
-A heap-based buffer overflow flaw was found in the way Adobe Photoshop(tm) PSD plug-in
-of Gimp, the GNU Image Manipulation Program, performed decoding of headers, when loading
-certain Adobe Photoshop image files. A remote attacker could provide a specially-crafted
-PSD image file that, when opened in Gimp would lead to PSD plug-in crash or, potentially,
-arbitrary code execution with the privileges of the user running gimp executable.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Note: A different flaw than CVE-2009-3909.
-
-CVSSv2: 6.8/AV:N/AC:M/Au:N/C:P/I:P/A:P
-
-Affected versions: X <= 2.2.13
-                   Newer versions (gimp-v2.6.X, gimp-v2.8.X, master) are not affected
-                   by this issue.
-
-Credit (please credit both people or no one):
-1, Issue found by: Jan Lieskovsky,  Red Hat Security Response Team
-2, Reproducer by:  Florian Weimer,  Red Hat Product Security Team
-
-Further issue details and relevant patch in:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3402
-
---------------------------------------------------------------------
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJPlsT+AAoJEBYNRVNeJnmTNYQP+QE8Q0HawkuCX49P+65ye2x7
+O0/eRhG9GWs7s1D3i/QsOTMjdnF2Ng18RGrvXCsdFdXhSjgoLQiNFCds3LNPNNqm
+a0suMHDEnBrpdwcargVI28KEZ84Uj+7A7ztFW+olt3Sdi7JCjJz/3oY9Rass1wQf
+35EhtKg9N8I5jTBOGCWjanNis82J4aO+IrG510QyuwpKAw1QsP+tIqEUtta2IKDS
+f4rHGjiMtBU2cb+BELN02clKrgV/OPLTbOqRUsJZqvX7VIeJ070ZfpX1P+b3bA3E
+1v33/iIkxdxVDtOMT1jcF2xX+/koR4h42r7m4BXgZiyOXyJtQpKeSQyXZ8g1OBeL
+sv8Avo7f1t9bUy7ZzL2d97A4Gb6fTqmH9kWI9Ofrbo9+WVWGYFNb0nLuOfyONlR/
+OUt6S/mCJAmwsgprgcTCFTxqfpbRfxfJA1hItrcoX3qS1nwhao4/Er1ujHL20xGU
+RMvmQcyklBPzau87yx7LbaHAd4tOQY+PQgPp0TiKVoXRn9c8WqNIoYMk9rpH06Af
+GbRcWcuBAY4ZbgMSkGBn/xAfMsv5tn4dpPmqFXnO7fKKumQhB1Opx7iBjWtCGCr3
+uzX1tOi7fP3pQsla1Yxet+L1hXmarvEZB1ken2i67+vqJo/56UiBRCZkVxZutG6l
+2y3AoSDvU7i+tuwyigte
+=zTR+
+-----END PGP SIGNATURE-----
