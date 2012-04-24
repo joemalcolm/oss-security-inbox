@@ -1,23 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/23/1
-Message-ID: <CANTw=MP7bz=NVvfJM3n9BLE4RMg7yjz=eM1eGX30nwwZmk8Vxw@mail.gmail.com>
-Date: Sun, 22 Jan 2012 19:52:47 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/5
+Message-ID: <87zka1cnqo.fsf@mid.deneb.enyo.de>
+Date: Tue, 24 Apr 2012 14:34:23 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 20, 2012 at 11:30 AM, Solar Designer wrote:
-> That's tricky.  For example, in Russia the New Year holidays may last
-> for 11 or 12 days (such as Dec 30 to Jan 10).  If we attempt to account
-> for that along with the Christmas break, then 10 business days may turn
-> into a month.
+* Sebastian Krahmer:
 
-To make any sensible decision on this, I think you have to assume
-every week of the year as having at least 4 business days (even
-xmas/new years).  Any regions or religious organizations that have
-multi-day holidays will either be out of luck or should have at least
-one person reading their mail 4 days out of the holiday week.
+> Indeed, the point was to also check against fscaps:
+>
+> https://bugzilla.novell.com/show_bug.cgi?id=694598
+>
+> At least it should be considered for future builds. The mount.nfs
+> case was only interesting for the suid bit.
 
-Best wishes,
-Mike
+Okay.  Our mount.nfs doesn't seem to use libgssglue.  I wonder if you
+use a different code base, or if this is something that's going to be
+come relevant to use with a newer upstream version, too.
