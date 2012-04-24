@@ -1,95 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/1
-Message-ID: <CANdZDc4-E-ACYR=TbtCBmCDw=K1Ht2Q9emsBju6+a6mWOP0Wqw@mail.gmail.com>
-Date: Thu, 12 Jan 2012 16:56:14 -0700
-From: "Zooko Wilcox-O'Hearn" <zooko@...ko.com>
-To: oss-security@...ts.openwall.com
-Subject: details about Tahoe-LAFS security problem #1654
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/14
+Message-ID: <4F96D904.5030201@redhat.com>
+Date: Tue, 24 Apr 2012 18:47:00 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Adam Tkac <atkac@...hat.com>, Petr Spacek <pspacek@...hat.com>
+Subject: CVE Request -- bind-dyndb-ldap: Bind DoS (named hang) by processing DNS query for zone served by bind-dyndb-ldap
 Content-Type: text/plain; charset=utf-8
 
----------- Forwarded message ----------
-From: Brian Warner <warner@...har.com>
-Date: Thu, Jan 12, 2012 at 4:35 PM
-Subject: [tahoe-dev] details about #1654 security problem
-To: Tahoe-LAFS development <tahoe-dev@...oe-lafs.org>
+Note: First time mangled email address of Petr Spacek =>
+       apologize if you got this email two times. Anyway:
 
+Hello Kurt, Steve, vendors,
 
-Dear Tahoe-LAFS Users:
+   a denial of service flaw was found in the way the bind-dyndb-ldap, a dynamic
+LDAP back-end plug-in for BIND providing LDAP database back-end capabilities,
+performed LDAP connection errors handling / attempted to recover, when an error
+during a LDAP search happened for a particular DNS query. When the Berkeley
+Internet Name Domain (BIND) server was patched to support dynamic loading of
+database back-ends, and the LDAP database back-end was enabled, a remote
+attacker could use this flaw to cause denial of service (named process hang)
+via DNS query for zone served by bind-dyndb-ldap.
 
-On 08-Jan-2012, Tahoe-LAFS core member Kevan Carstensen (author of the
-MDMF code) discovered a serious bug in v1.9.0 (the current stable
-release) that allows attackers to corrupt downloads of mutable files in
-certain cases. We've released Tahoe-LAFS v1.9.1 which removes this
-vulnerability. All users are encouraged to upgrade immediately to
-v1.9.1, or to downgrade to v1.8.3.
+bind-dyndb-ldap backend upstream commit, which introduced the problem:
+[1] 
+http://git.fedorahosted.org/git/?p=bind-dyndb-ldap.git;a=commit;h=a7a47212beb01c5083768bdd4170250e7f7cf188
 
-v1.9.0 was released about two months ago. As far as we know, ArchLinux
-is the only distribution to have packaged v1.9.0 (the others are still
-on v1.8.3, which is safe). So if you get your Tahoe-LAFS through a
-non-ArchLinux package, you're probably fine. If you build it yourself,
-you should upgrade.
+Preliminary bind-dyndb-ldap back-end upstream patch from Adam Tkac:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=815846#c1
 
-In Tahoe, files are encrypted, and then encoded into multiple redundant
-shares. Integrity-checking information (Merkle hash trees) are included
-in the shares to detect corruption. When downloading, these hashes are
-checked before combining the shares in the decoder, which generates
-ciphertext that can be decrypted into the original file. Mutable files
-have two sets of hash trees, the "share hash tree" (which covers all
-shares), and the "block hash trees" (which sit under the share-hash-tree
-and cover the individual blocks that make up each share, one block per
-128KiB segment of the original file).
+References:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=815846
+[4] https://www.redhat.com/archives/freeipa-users/2012-April/msg00145.html
 
-The new mutable downloader released in v1.9.0, which supports both the
-old-style SDMF format and the new MDMF format, has a bug in which the
-share-hash-tree check is accidentaly bypassed when the Merkle hash tree
-is already fully populated. This doesn't normally occur, but shares can
-contain additional hash-tree nodes beyond the ones they strictly need.
-An attacker could modify one share to include the entire tree, then
-change the block data in the remaining shares. They would need to update
-the block-hash-trees in those doctored shares, but because of the bug,
-these tree roots will not be compared against the share hash tree.
+Note: Just to explicitly note this. This is NOT a bind DoS in the sense
+       upstream bind source package would be affected by it. Bind
+       needs to be first patched to support dynamic loading of database
+       backends and it's an error in the LDAP backend (bind-dyndb-ldap
+       source code) which makes this attack to succeed when a specially-crafted
+       DNS query is issued.
 
-The attacker is thus able to control the input to the ZFEC decoder for
-all but the first share received (which must have valid block data).
-This gives them the ability to flip bits of the plaintext without
-triggering the CorruptShareError exceptions that share corruption would
-normally produce, causing corrupted plaintext to be delivered to an
-unwitting client.
+Could you allocate a CVE id for this?
 
-To exploit this bug, the attacker must be able to deliver multiple
-modified shares to your client, in a particular order: this means they
-must control one or more of your storage servers.
-
-Note that this does not directly reveal the plaintext to the attacker
-(this is an integrity failure, not a confidentiality failure). However,
-"encryption without authentication" is never a safe state of affairs,
-and can frequently be exploited to reveal information about the
-plaintext (perhaps by inducing observable failures by flipping bits in
-messages of a known format). In addition, clients which read corrupted
-data as part of a read-modify-write operation (such as directory
-modifications) may then write the corrupted data back out to the file,
-making the corruption persist even after the client has been fixed.
-
-v1.9.1 fixes this by removing the accidental "if" clause, making the
-share-hash-tree check unconditional.
-
-The specific bug is in src/allmydata/mutable/retrieve.py,
-Retrieve._validate_block, around the call to
-share_hash_tree.set_hashes(), and was introduced in git revisionid
-ac3b2647dd2c45cd1ddbf5b130ee5a780c66c73b with the MDMF-capable
-downloader rewrite around 01-Aug-2011. The bug was first present in
-shipping code in Tahoe-LAFS-1.9.0, on 30-Oct-2011. It was fixed in
-commit 9b4b03a474a2c9050c8347459ab6698839be7288, shipped in
-Tahoe-LAFS-1.9.1 on 12-Jan-2012. We are continuing to audit the 1.9.x
-mutable downloader code to search for other potential bugs.
-
-Bug #1654 (https://tahoe-lafs.org/trac/tahoe-lafs/ticket/1654) was
-created to track this problem, and is now closed. The same fix was
-applied to trunk a few minutes ago, so trunk is now safe too.
-
-sorry!
- -Brian
-_______________________________________________
-tahoe-dev mailing list
-tahoe-dev@...oe-lafs.org
-http://tahoe-lafs.org/cgi-bin/mailman/listinfo/tahoe-dev
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
