@@ -1,38 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/13
-Message-Id: <201203142256.56757.tmb@65535.com>
-Date: Wed, 14 Mar 2012 22:56:49 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/25/6
+Message-Id: <201204251545.q3PFjGH4024103@eton.blue.cert.org>
+Date: Wed, 25 Apr 2012 11:41:37 -0400
+From: "CERT(R) Coordination Center" <cert@...t.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: running the distros lists
+CC: "CERT(R) Coordination Center" <cert@...t.org>, jmfoote@...t.org
+Subject: CERT Linux Triage Tools 1.0 Released INFO#208126
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 14 Mar 2012 20:54:12 Solar Designer wrote:
-> On Wed, Mar 14, 2012 at 01:42:23PM -0600, Kurt Seifried wrote:
-> > Can we also maintain a public database of upstream contacts? I seem to
-> > remember a few different efforts to do this but can't find anything
-> > current.
-> 
-> We have this wiki page:
-> 
-> http://oss-security.openwall.org/wiki/software
-> 
-> It currently lists Apache, Asterisk, ..., Xine, X.Org - just to give an
-> idea of what projects chose to add themselves or were added.  By all
-> means, please help keep this wiki page current and use it.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I should probably add OpenVAS to that list, but my real reason for responding 
-was to mention the OSVDB vendor dictionary at:
+Hello,
 
-* http://www.osvdb.org/vendors
+The CERT Linux Triage Tools 1.0 have been released as open-source software and are available for download here:
 
-It's definately a good place to start if you're trying to track down vendors, 
-F/OSS or otherwise.  Perhaps this is something where oss-security could 
-colaborate with the existing effort?
+http://www.cert.org/vuls/discovery/triage.html
 
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
+The tools include a Python-based GDB extension called "exploitable" that can be used to classify application errors in a manner similar to !exploitable on Microsoft Windows or CrashWrangler on Apple OS X. You can learn more about the tools and how to use them in my recent blog post:
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+http://www.cert.org/blogs/certcc/2012/04/cert_triage_tools_10.html
+
+Jonathan Foote
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iQEVAwUBT5gb8k2poTkZov2QAQL/wgf+IXRJ3OXDdJXC3zrCxluJ0K4hdXWseM22
+7rSG/+mDCK24V24CEvpXTxfSMIf0ioDNxBkCP4g8cczsuXS3fQbNqdkfBOmndxS8
+pCRyM2GYbPIkBuDQY0ZzzMD4zI0buUcQqgdbZbBGvGC/yI/8ymWQaTSjVUJwTdOT
+XlVp/c4vlJYQWweErTwHgtKHC1ZpU09qfnL/in2AZjD/xQ/4d+A7HjqVTLx6MdzL
+gdLoLT7+shzQrNZr5hVZRZFJIxlsGDOO2gLBUyUFvdoZVzuRKXzIoo2XjF2OYHkA
+gLbMMaXMCnEwu1LJV++hC8Sj6VXo5FHay4H3X2kVCrt7GodpZ6jaZQ==
+=JLEG
+-----END PGP SIGNATURE-----
