@@ -1,23 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/5
-Message-ID: <20120914125554.GB4728@kludge.henri.nerv.fi>
-Date: Fri, 14 Sep 2012 15:55:54 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request: WordPress insufficient permissions verification on XMLRPC interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/25/1
+Message-ID: <4F979B38.4000307@redhat.com>
+Date: Wed, 25 Apr 2012 00:35:36 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss >> \"oss-security@...ts.openwall.com\"" <oss-security@...ts.openwall.com>
+Subject: CVE Request: Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler aligned_end is not updated
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please assign 2010 CVE-identifier for XML-RPC interface access restriction bypass issue in WordPress.
+Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler
+aligned_end is not updated
 
-Description: WordPress contains a flaw related to the XML-RPC remote publishing interface. The interface fails to properly enforce access control restrictions, allowing a remote attacker to bypass restrictions and improperly edit, publish or delete posts.
+does not appear to affect Python 2.x
 
-References:
-1. http://osvdb.org/69761
-2. http://core.trac.wordpress.org/changeset/16803
-3. http://secunia.com/advisories/42553/
-4. http://wordpress.org/news/2010/12/wordpress-3-0-3/
-5. http://codex.wordpress.org/Version_3.0.3
+memory leak/crashes/etc.
 
-- Henri Salo
+http://bugs.python.org/issue14579
+
+Author: Serhiy Storchaka (storchaka) 	Date: 2012-04-14 18:46
+
+In the utf-16 decoder after calling unicode_decode_call_errorhandler
+aligned_end is not updated. This may potentially cause data leaks,
+memory damage, and crash. The bug introduced by implementation of the
+issue #4868. In a similar situation in the utf-8 decoder aligned_end
+is updated.
+
+========
+
+More discussion and links to the patches/etc. in the bug.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPl5s3AAoJEBYNRVNeJnmTSxEP/0BAZDzBuJC6jNAUBxp8BL0j
+a1NXA3N8JFNkHh4u0/G4VHlYBndMIDimfXf6jwd2mj37o9NpBG2prOUpioXXMZ/K
+LHhlOZHGs9jZLBzdoXtEZi1CAQptKbfOPQHbZvi8HkVu7XVXMEckZ5RJaNJ0urjT
+7RH3bVD8rV5D+/cqD3Rr67ld6XrM+n2aCsq32vWxUsZUlmjckCPann2Y9kpLEWDQ
+sG42nf994WSV/h8D6A3U7Rnpw+jQUlmjALmw6AcBAQJtOrBt9OL5BMIEowAIBviY
+rvFL7GOQGYS1Wn53MVbQTuLjmJX2OEzgfvEdeUbzGNB60/0C13PvSPRqMfG2aLu8
+npemlZRv3Lqkufih/pUsRkWUkZJZR7c+VSmFuGlJ+XD2q5LRUVxdOOV5ntdMoQw7
+kNfCyPdeMwHoMIFr1xI+z4aZO8nVlyr92SmR1N4nvGSQ/tZjYaa9IoNYCc/13Jm9
+aOl6zz8dqmREsImofb4BL4S77/bCaOKmQDuLaghgoOROKDZeeTQ3u1bxGhc9OFXT
+M3sSMdva9A8ehF2XRqfyw8s1+kx0v/TvOWoWLWwGl8fhJGETMJ/Y4+myxqvUAsf+
+RxWhXI0wKaGNzFbtCZ2xrnUxpBJeiE1Agr8rd/+yVbkQBPajAEnisGqzMKPhRqPi
+E9fe8lgLB0xib5welCIV
+=S2+D
+-----END PGP SIGNATURE-----
