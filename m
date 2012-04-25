@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/24/2
-Message-ID: <500E3D65.4090208@redhat.com>
-Date: Tue, 24 Jul 2012 11:45:01 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/25/4
+Message-ID: <20120425065606.GA5552@kludge.henri.nerv.fi>
+Date: Wed, 25 Apr 2012 09:56:06 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Wireshark before 1.8.1 (etc.) CVE-2012-4048 CVE-2012-4049
+Subject: Re: CVE Request: Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler aligned_end is not updated
 Content-Type: text/plain; charset=utf-8
 
-On 07/24/2012 10:14 AM, cve-assign@...re.org wrote:
-> CVE-2012-4048  http://www.wireshark.org/security/wnpa-sec-2012-11.html
-> CVE-2012-4049  http://www.wireshark.org/security/wnpa-sec-2012-12.html
+On Wed, Apr 25, 2012 at 12:37:53AM -0600, Kurt Seifried wrote:
+> On 04/25/2012 12:35 AM, Kurt Seifried wrote:
+> > Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler 
+> > aligned_end is not updated
+> > 
+> > does not appear to affect Python 2.x
+> > 
+> > memory leak/crashes/etc.
+> > 
+> > http://bugs.python.org/issue14579
+> > 
+> > Author: Serhiy Storchaka (storchaka) 	Date: 2012-04-14 18:46
+> > 
+> > In the utf-16 decoder after calling
+> > unicode_decode_call_errorhandler aligned_end is not updated. This
+> > may potentially cause data leaks, memory damage, and crash. The bug
+> > introduced by implementation of the issue #4868. In a similar
+> > situation in the utf-8 decoder aligned_end is updated.
+> > 
+> > ========
+> > 
+> > More discussion and links to the patches/etc. in the bug.
+> > 
 > 
-> (We've already asked the upstream vendor to remove the bug 7221
-> reference from wnpa-sec-2012-12, and insert the correct bug number.)
-> 
+> Please use CVE-2012-2135 for this issue.
 
-Combing through the wireshark commits, the following seems to be the
-correct bug. (But do wait for upstream)
+Reported to Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=670389
 
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7209
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
-
-
+- Henri Salo
