@@ -1,39 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/09/3
-Message-ID: <20120509063653.GA18609@suse.de>
-Date: Wed, 9 May 2012 08:36:53 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: connman heads up / CVE requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/25/8
+Message-ID: <20120425210610.GR3020@redhat.com>
+Date: Wed, 25 Apr 2012 15:06:10 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: mikel@...nteractive.net
+Subject: CVE request: two flaws fixed in rubygem-mail 2.4.4
 Content-Type: text/plain; charset=utf-8
 
 
+Two flaws were corrected in rubygem-mail version 2.4.4:
 
-> >> 4) Check vpnc options for validity prior saving them: (from
-> >> https://bugzilla.novell.com/show_bug.cgi?id=715172#c10):
-> > 
-> > AFAIK there is no patch for it yet. Upstream needs to
-> > verify/confirm these, but I think its a real bug that lets you
-> > overwrite files.
-> 
-> I will wait until this is confirmed, when it is please reply to the list.
+A file system traversal in file_delivery method [1].
 
-This one seems to be a non-issue, so thats all for now.
+Arbitrary command execution when using exim or sendmail from the commandline [2],[3].
 
-Sebastian
+[1] https://github.com/mikel/mail/commit/29aca25218e4c82991400eb9b0c933626aefc98f
+[2] https://github.com/mikel/mail/commit/36b7fa23d38cb59dd79b7efa258ef0e7ddab5a11
+[3] https://github.com/mikel/mail/commit/ac56f03bdfc30b379aeecd4ff317d08fdaa328c2
 
+Other references:
+
+https://bugzilla.novell.com/show_bug.cgi?id=759092
+https://bugzilla.redhat.com/show_bug.cgi?id=816352
+
+Could two CVEs be assigned for these flaws please?
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Vincent Danen / Red Hat Security Response Team 
