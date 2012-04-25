@@ -1,45 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/27/5
-Message-ID: <4F99E74D.2090209@delphij.net>
-Date: Thu, 26 Apr 2012 17:24:45 -0700
-From: Xin Li <delphij@...phij.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/25/5
+Message-ID: <87vckoultc.fsf@mid.deneb.enyo.de>
+Date: Wed, 25 Apr 2012 12:50:55 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: d@...phij.net
-Subject: Re: CVE Request: programming error in crypt(3)
+Subject: Re: CVE Request: Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler aligned_end is not updated
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+* Kurt Seifried:
 
-On 04/26/12 17:20, Kurt Seifried wrote:
-> CVE-2012-2143On 04/26/2012 03:36 PM, Xin Li wrote:
->> Hi,
-> 
->> I'd like to request a CVE number for a programming error in 
->> FreeBSD's crypt(3) implementation, which prevents it from 
->> generating a right hash from input in certain circumstances.
-> 
->> We will publish the details in an upcoming advisory.
-> 
->> Thanks in advance!
-> 
->> Cheers,
-> 
-> Please use CVE-2012-2143 for this issue.
+> Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler
+> aligned_end is not updated
+>
+> does not appear to affect Python 2.x
 
-Thanks!
-
-- -- 
-Xin LI <delphij@...phij.net>	https://www.delphij.net/
-FreeBSD - The Power to Serve!		Live free or die
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (FreeBSD)
-
-iQEcBAEBCAAGBQJPmedNAAoJEG80Jeu8UPuzJpYIAI9hcIFMuASc8St5gxGt2uge
-5cjxIjYWnqEX+F29AVhub7nLusiQbJP2kUNpt0bAj7zXG6PFSzl1x9qPhba4K9lz
-3NZ3Xn9q+qX4ALHjzpKaHZRE7dv1thXFgVQX/OhOVcMv8OZ0DMajfBS4+sjsZdJR
-TsspRfHV1qoq+8YoFYNGUxm77mwE5qs9KGFfSlNkKWwtLjdfn4tDA8nKyXjvhE1K
-O/iX4+yFBPAqPS2lHxwMeBRvUCRtteMnpbYf0Sfg16qhP7vPeJiXVtYy1yNoHPJd
-pRDOw3Q0RD7qGmBww4ZgmssO6/RGfxk0YeJY5xTUb0bdfvz8QJBrcwmRui9ef7E=
-=lw1m
------END PGP SIGNATURE-----
+3.1 seems to be affected as well (according to reproducer and commit
+log).
