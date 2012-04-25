@@ -1,27 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/1
-Message-ID: <CAF6rxgkveYO58=EpROgS5r8kZGjAozUwY9z_LPWTwtFJQ-1tfg@mail.gmail.com>
-Date: Thu, 13 Dec 2012 00:54:12 -0500
-From: Eitan Adler <lists@...anadler.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Nick Treleaven <nick.treleaven@...nternet.com>,  Colomban Wendling <lists.ban@...besfolles.org>, Enrico Troeger <enrico.troeger@...na.de>,  Matthew Brush <mbrush@...ebrainz.ca>, Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com,  jonathan.underwood@...il.com
-Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/25/2
+Message-ID: <4F979B37.6010305@redhat.com>
+Date: Wed, 25 Apr 2012 00:35:35 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss >> \"oss-security@...ts.openwall.com\"" <oss-security@...ts.openwall.com>
+Subject: CVE Request: Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler aligned_end is not updated
 Content-Type: text/plain; charset=utf-8
 
-On 12 December 2012 11:51, Jan Lieskovsky <jlieskov@...hat.com> wrote:
-> The questions:
-> 1) should Geany escape the filenames?,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Up to the maintainers.
+Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler
+aligned_end is not updated
 
-> 2) is this a security issue or not?
+does not appear to affect Python 2.x
 
-Unlikely.  Is there a way a malicious document could cause code
-execution without user action?
+memory leak/crashes/etc.
 
+http://bugs.python.org/issue14579
 
+Author: Serhiy Storchaka (storchaka) 	Date: 2012-04-14 18:46
 
+In the utf-16 decoder after calling unicode_decode_call_errorhandler
+aligned_end is not updated. This may potentially cause data leaks,
+memory damage, and crash. The bug introduced by implementation of the
+issue #4868. In a similar situation in the utf-8 decoder aligned_end
+is updated.
 
+========
 
--- 
-Eitan Adler
+More discussion and links to the patches/etc. in the bug.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPl5s3AAoJEBYNRVNeJnmTSxEP/0BAZDzBuJC6jNAUBxp8BL0j
+a1NXA3N8JFNkHh4u0/G4VHlYBndMIDimfXf6jwd2mj37o9NpBG2prOUpioXXMZ/K
+LHhlOZHGs9jZLBzdoXtEZi1CAQptKbfOPQHbZvi8HkVu7XVXMEckZ5RJaNJ0urjT
+7RH3bVD8rV5D+/cqD3Rr67ld6XrM+n2aCsq32vWxUsZUlmjckCPann2Y9kpLEWDQ
+sG42nf994WSV/h8D6A3U7Rnpw+jQUlmjALmw6AcBAQJtOrBt9OL5BMIEowAIBviY
+rvFL7GOQGYS1Wn53MVbQTuLjmJX2OEzgfvEdeUbzGNB60/0C13PvSPRqMfG2aLu8
+npemlZRv3Lqkufih/pUsRkWUkZJZR7c+VSmFuGlJ+XD2q5LRUVxdOOV5ntdMoQw7
+kNfCyPdeMwHoMIFr1xI+z4aZO8nVlyr92SmR1N4nvGSQ/tZjYaa9IoNYCc/13Jm9
+aOl6zz8dqmREsImofb4BL4S77/bCaOKmQDuLaghgoOROKDZeeTQ3u1bxGhc9OFXT
+M3sSMdva9A8ehF2XRqfyw8s1+kx0v/TvOWoWLWwGl8fhJGETMJ/Y4+myxqvUAsf+
+RxWhXI0wKaGNzFbtCZ2xrnUxpBJeiE1Agr8rd/+yVbkQBPajAEnisGqzMKPhRqPi
+E9fe8lgLB0xib5welCIV
+=S2+D
+-----END PGP SIGNATURE-----
