@@ -1,35 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/11/5
-Message-ID: <4FD61E4A.4050108@redhat.com>
-Date: Mon, 11 Jun 2012 10:35:22 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/26/1
+Message-ID: <4F98C5C9.3060200@redhat.com>
+Date: Wed, 25 Apr 2012 21:49:29 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- libguestfs: virt-edit doesn't preserve file permissions
+CC: Vincent Danen <vdanen@...hat.com>, mikel@...nteractive.net
+Subject: Re: CVE request: two flaws fixed in rubygem-mail 2.4.4
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/11/2012 10:21 AM, Petr Matousek wrote:
-> Description of the problem: virt-edit creates a new file when it is
-> used and thus does not preserve file permissions, file owner and
-> SELinux context on the files that it was editing.
+On 04/25/2012 03:06 PM, Vincent Danen wrote:
 > 
-> As a consequence, if certain security-sensitive files in the guest 
-> were edited using virt-edit, they would become world-readable.
+> Two flaws were corrected in rubygem-mail version 2.4.4:
 > 
-> Proposed upstream patch: 
-> https://www.redhat.com/archives/libguestfs/2012-February/msg00034.html
->
->  References: 
-> https://www.redhat.com/archives/libguestfs/2012-February/msg00033.html
->
-> 
-https://bugzilla.redhat.com/show_bug.cgi?id=788642
-> 
-> Thanks,
+> A file system traversal in file_delivery method [1]. [1] 
+> https://github.com/mikel/mail/commit/29aca25218e4c82991400eb9b0c933626aefc98f
 
-Please use CVE-2012-2690 for this issue.
+Please
+> 
+use CVE-2012-2139 for this issue.
+
+
+> Arbitrary command execution when using exim or sendmail from the 
+> commandline [2],[3]. [2] 
+> https://github.com/mikel/mail/commit/36b7fa23d38cb59dd79b7efa258ef0e7ddab5a11
+>
+>  [3] 
+> https://github.com/mikel/mail/commit/ac56f03bdfc30b379aeecd4ff317d08fdaa328c2
+
+Please
+> 
+use CVE-2012-2140 for this issue.
+
+> Other references:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=759092 
+> https://bugzilla.redhat.com/show_bug.cgi?id=816352
+> 
+> Could two CVEs be assigned for these flaws please?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -39,17 +49,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJP1h5KAAoJEBYNRVNeJnmTD04QAL0e/1ngZ6Jj7/LrTBn+2tE2
-PDO4Qo59ab/R1h0UL6+DS3lT1gMw+pVugP6RbGl2op2XnMEvGzUQ/AxbWSWgM8N3
-U8Jb2qNOP2p74J263v6D7/LrytKuphyWNkNZo39Is7fMZRDfxqcRQngUFo8OrUsR
-MTpk9jlHDAce8rU5DIEC4nogUpzK9GjV9/RAh7MozB0H696fLACWOcECzRRcIc0N
-gpCTg5Id84n0SjPEOcCdqkMXRyzMRGCCzTiagSCA5++0UChzfyQIIlRVHksCs5zX
-sMfYlI31tqYmokqOyxNGkK+k91fXxwDRnZlwHN6hnK6jj0WZ8R6rjG9TA+VHjzWZ
-YOIgd0QdEVtLMaRgYaOv1AFR6gtPbkm7zqUEqcF++UQub79z5mYshzFZYtW20ei2
-1lH4XQrhuJFWpLQJZxryLCeSUd3rQeBqsaAdhWaaffcarfdN4rN+ZbN3WXhMt8mC
-sjdVWAkmhB+vZfNiWv2Hd0Auxlww8w2jYwPBIrUAqr5ozxyF7KboM41fzrvroD/W
-+srUEXKmw3pWvz0K+apzxMtDO1FdCv3Lz0VlestqojsEsgMoQE6sTHKShU5UTors
-zL9b9W4pkmvamNtdSK40f0nGtTKJzPbqwzSpfwo7Cx+nmhEVkQjdF+KJNvpDLfO+
-+tpMtNrGMOl3MdX/p6qf
-=MbYs
+iQIcBAEBAgAGBQJPmMXJAAoJEBYNRVNeJnmTL5YQALbtZ9HL5chg/IUsD8S6q2ce
+6x6gCd3ArghuKBfOQd2X6nATcdJ6NFmoyt35ebSpbKILXg8XHlWopDqf8Y7nmrFV
+kD8E7FQ5w36aRdis8Enl/mYDPRsXg8NOTfUOQxjQq6IlS3zFWnClh6/eGV/UrKrZ
+LYXX2dGP698yAtyvITvBR1T2jaCUqlndQgU24mW+3PmhkhhZU8MxVskMwU90VqVp
+Vy80b8lXqnMj4eUHHqgISJQGPReb+7tNCo5yUeegg7Fv/Oe5XPIckOJB+68bVoeT
+0fHBLfDH3NDF1jQZJO2zshKD0obTrBko9SmNzz5jX6m8WsIpUKzuT65Y+P3l7c1O
+o60wfi7iCeC2hu870wJ13qUlwE+vUWuImTr16kOJu9fSODtg/1aPKnTham+0yqk9
+UFgkFrI/SkLcJY0I7JsuFaP73poPOI4j1cwiuhFzIF2phbdgZeuemfy8kF88WiaP
+qiFh4A7jtNf6wxxW7gEGyiafu2JRX8TjuhTGW7juZZP/1jwiFv8FkEAeRPpNo5jn
+lGkt5oWbMfdOh6RJMwvahkCskd2J1Recp1pDywVTGpgbkgjipUuZqD597iQjRBRU
+gEXrmzz9eqbtP/chDx+2ZY+5L6j4C24HIFeYyhUWiv4sSf5jGPDwfVlH/vsqnZD6
+IYqIpcNHML0er2MPWdNv
+=0z+y
 -----END PGP SIGNATURE-----
