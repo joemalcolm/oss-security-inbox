@@ -1,32 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/8
-Message-Id: <201208201452.43981.mweckbecker@suse.de>
-Date: Mon, 20 Aug 2012 14:52:43 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/26/3
+Message-ID: <4F996C36.1010004@redhat.com>
+Date: Thu, 26 Apr 2012 09:39:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: The Gimp GIF plug-in CVE-2012-3481 issue
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jan Safranek <jsafrane@...hat.com>, Sergio Freire <sergio-s-freire@...novacao.pt>
+Subject: Re: CVE Request -- net-snmp: Array index error, leading to out-of heap-based buffer read (snmpd crash)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-so here is the 3rd one:
+On 04/26/2012 05:23 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> an array index error, leading to out-of heap-based buffer read
+> flaw was found in the way net-snmp agent performed entries lookup
+> in the extension table. When certain MIB subtree was handled by the
+> extend directive, a remote attacker having read privilege to the
+> subtree could use this flaw to cause a denial of service (snmpd
+> crash) via SNMP GET request involving a non-existent extension 
+> table entry.
+> 
+> References: [1] https://bugzilla.redhat.com/show_bug.cgi?id=815813
+> 
+> Could you allocate a CVE id for this?
 
-specially crafted GIF image files could cause a heap-based buffer overflow via 
-an integer overflow of the 'height' / 'len' properties of the file.
-Attackers could exploit this to cause a Denial of Service (Application crash)
-or to (potentially) execute arbitrary code in the context of the user running 
-gimp.
+Please use CVE-2012-2141 for this issue.
 
-Reference(s):
-https://bugzilla.novell.com/show_bug.cgi?id=776572
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
-Thanks to Jan Lieskovsky and Florian Weimer for joining me in researching this
-flaw.
 
-Matthias
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPmWw2AAoJEBYNRVNeJnmTZRkQALNCqp/jV5VOiC2+MGnXgvxp
+ZPFY7RZ1oCUvJ/A7XIfaJZ9ark8gQjqxwZP1MbG4rR3RzjfCzg1tL4OSyxvig2PK
+g/yprHw837sauFuill+A+2pPrTx8A9xqehGWgJzSJUHdjhgmhV+FN4CN13WGBpJo
+jk6yVmEJDsKSloHSeO78Z8yV4cGYO/XdUkWUpU9N+zaNBco5nGQCR+Hd/Ny59MNS
+1byWgoGczkmexZtoIMAJGxoW4baYhjemzNvv4x7hIb2ttL3IW2UTwq2BCee1Udx7
+wpovVy899PJ2qsFDVuiylGniHcK+QwOVMzdVRyWZlHNRv40KpINFFrjm9oGb2Ewt
+X0tKZfoZcbz9ad7PV/MQLYyu2R3mMXPFDx/a0wXMXyQs3LJ2B0dgHjqg6noepqJk
+MCftVMIUuzsU9PcTIL78w3g0JVFmk1KZOsPj1DY+zAP0qg7oDN/eOkIf8L2k28//
+ny+85VQBz1AXU37Hp9L0daGGOOuDg7lBinVA+aXNEPvFGr4SpD95lfmO1kkfFpeQ
+2dabg/GBVJQjppzLEC/3U7h9QQV25hE0eqJL4BWLveNZfCLZhW4zIcLJXsUECinY
+2QYyZcPC9zyBHRiiWaJAaD13yvMXA4ynQeKuiWUCXVdpEFmVXxCgNCiwJSNlwYdF
+F5sn+Mo8VNctTgSPundu
+=rlKK
+-----END PGP SIGNATURE-----
