@@ -1,19 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/5
-Message-ID: <20120103183942.GG5573@foo.fgeek.fi>
-Date: Tue, 3 Jan 2012 20:39:42 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/26/4
+Message-ID: <4F99BFE3.2000603@delphij.net>
+Date: Thu, 26 Apr 2012 14:36:35 -0700
+From: Xin Li <delphij@...phij.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: PHP Booking Calendar 10e XSS
+CC: d@...phij.net, FreeBSD Security Team <secteam@...ebsd.org>
+Subject: CVE Request: programming error in crypt(3)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 03, 2012 at 01:30:14PM -0500, Steven M. Christey wrote:
-> Henri,
-> 
-> This was just assigned CVE-2011-5045 a couple days ago.
-> 
-> - Steve
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Sorry I didn't notice that.
+Hi,
 
-- Henri Salo
+I'd like to request a CVE number for a programming error in FreeBSD's
+crypt(3) implementation, which prevents it from generating a right
+hash from input in certain circumstances.
+
+We will publish the details in an upcoming advisory.
+
+Thanks in advance!
+
+Cheers,
+- -- 
+Xin LI <delphij@...phij.net>	https://www.delphij.net/
+FreeBSD - The Power to Serve!		Live free or die
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (FreeBSD)
+
+iQEcBAEBCAAGBQJPmb/jAAoJEG80Jeu8UPuzJqEH/1jVL0ji4MtIHfXqpX62V3ID
+nNDB3Hcul+MNexxNp6vKEGjjwNV/Pd867RsIwBBrkqTfY4oQIoBi7HEN5q/BMHiL
+4QwMfwDefq50MXt1sKU5J4hCpG8vtrtTy1/Be2IZIQ/b4ODNiQ3ie2neEn3101Sw
+g2IRjrkz7OP0Ju0SSXOIELfvK7K3Uhre/snkb8Pg/67xIt23bNLH9Iewl1v/EqGe
+JGxN5/nbWUFwPdPt0BSfQ4pIkNtUglvX79iNy/EEdNRoaCa/Jtotu1t8rqBmlPpr
+z9JiQma0q1WlXz+05Y+GkDL+X5swuy5BfPkIZIFuPA2mIOGMgprcYmCL1Qf2lJk=
+=Ydn3
+-----END PGP SIGNATURE-----
