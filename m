@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/27/3
-Message-ID: <50641750.4060902@redhat.com>
-Date: Thu, 27 Sep 2012 14:37:28 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: dracut creates non-world readable initramfs images
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/26/2
+Message-ID: <4F99301C.3000305@redhat.com>
+Date: Thu, 26 Apr 2012 13:23:08 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Jan Safranek <jsafrane@...hat.com>, Sergio Freire <sergio-s-freire@...novacao.pt>
+Subject: CVE Request -- net-snmp: Array index error, leading to out-of heap-based buffer read (snmpd crash)
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Hello Kurt, Steve, vendors,
 
-An information disclosure flaw was found in the way dracut, an
-initramfs root filesystem images generator, created initramfs images.
+   an array index error, leading to out-of heap-based buffer read flaw was found
+in the way net-snmp agent performed entries lookup in the extension table. When
+certain MIB subtree was handled by the extend directive, a remote attacker
+having read privilege to the subtree could use this flaw to cause a denial of
+service (snmpd crash) via SNMP GET request involving a non-existent extension
+table entry.
 
-When the root filesystem contained sensitive information (password
-based authentication for iSCSI systems or encrypted root filesystem
-crypttab password information), an attacker could use this flaw to
-obtain this information.
+References:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=815813
 
-This issue has been assigned CVE-2012-4453
+Could you allocate a CVE id for this?
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=859448
-Patch:
-http://git.kernel.org/?p=boot/dracut/dracut.git;a=commit;h=e1b48995c26c4f06d1a71
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
