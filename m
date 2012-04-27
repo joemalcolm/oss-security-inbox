@@ -1,47 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/6
-Message-ID: <4F0AF251.20705@suse.de>
-Date: Mon, 09 Jan 2012 14:57:37 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/27/6
+Message-ID: <20120427103316.GB18639@kludge.henri.nerv.fi>
+Date: Fri, 27 Apr 2012 13:33:16 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Malicious devices & vulnerabilties
+Subject: Re: CVE-request: OpenKM 5.1.7 Privilege Escalation / OS Command Execution (XSRF based)
 Content-Type: text/plain; charset=utf-8
 
-Alistair Crooks wrote:
-> On Mon, Jan 09, 2012 at 03:48:20AM +0800, Eugene Teo wrote:
->> On 01/08/2012 07:19 PM, Florian Weimer wrote:
->>>> I am wondering where to draw the line.  Should such device drivers
->>>> be considered vulnerable or not?  Thanks.
->>>
->>> I think they should be considered vulnerable.  Some applications need
->>> some robustness to attacks even from the local console (e.g., student
->>> computer rooms).
->>>
->>> USB is also a popular transport in many air-gapped environments.
->>
->> I would consider them vulnerable with low security impacts. If you are
->> fixing such issues, do post them to the list.
+On Fri, Mar 23, 2012 at 09:09:30AM -0600, Kurt Seifried wrote:
+> On 03/23/2012 04:00 AM, Henri Salo wrote:
+> > Can I get CVE-identifiers for these two security vulnerabilities?
+> > 
+> > http://osvdb.org/show/osvdb/78105 COMPASS-2012-001
+> > http://osvdb.org/show/osvdb/78106 COMPASS-2012-002
+> > 
+> > - Henri Salo
 > 
-> One very interesting datapoint here is Antti Kantee's rump subsystem
-> in NetBSD
+> I'm going to need some original vendor information (name, site, etc.).
 > 
-> 	http://www.netbsd.org/docs/rump/
-> 	http://blog.netbsd.org/tnf/entry/runnable_userspace_meta_programs_in
-> 
-> which allows for userspace-mounting of devices and filesystems
-> thereon.  Unknown provenance USB sticks are one of the use cases
-> mentioned.
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
 
-Nice. Using fuse for mounting hot plugged devices where performance
-isn't a priority anyways is what I dream about sometimes too :-)
-I wonder how hard it would be to create some glue code and re-use the
-existing kernel fs drivers 1:1.
+Finally I got response from the vendor. I tried via several different ways. Now Paco Avila kindly said he will collect the information, but it will take a while.
 
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+- Henri Salo
