@@ -1,69 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/19/6
-Message-Id: <201207192137.q6JLbDjW023526@linus.mitre.org>
-Date: Thu, 19 Jul 2012 17:37:13 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/27/8
+Message-ID: <20120427204048.GB3020@redhat.com>
+Date: Fri, 27 Apr 2012 14:40:48 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2012-4024 and CVE-2012-4025: Squashfs overflows
+Subject: weak use of crypto in python-elixir can lead to information disclosure (CVE and peer review request)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Could a CVE be assigned for the following issue?
 
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-4024
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-4025
+It was reported that python-elixir, a library for ORM mapping on top of
+SQLAlchemy with support for encrypting data stored in a database,
+suffers from weak use of cryptography.  It uses Blowfish in CFB mode,
+which has an additional parameter (IV), which is not specified and thus
+defaults to zero.  CFB mode is only secure if the the IV is
+unpredictable and different for every message.  Because of this, and
+because the encryption key is shared for each database table (fields and
+rows), the same plaintext prefix is always encrypted to an identical and
+corresponding ciphertext prefix.  As a result, an attacker with access
+to the database could figure out the plaintext values of encrypted text.
 
-We wanted to mention these two recent open-source CVEs here because
-the upstream vendor expressed a position that the issues don't qualify
-for CVE inclusion, and indicated that he often uses CVE in his work on
-code unrelated to Squashfs.
 
-This post isn't meant to suggest any level of urgency for Linux
-distributions to produce new Squashfs packages. It's conceivable that
-actual exploitation of these vulnerabilities will never occur
-anywhere.
+References:
 
-Although Squashfs is a Linux filesystem, these two CVEs are about a
-utility program that is, in some ways, similar to tar or other archive
-programs. In general, if an archive file might be obtained from an
-untrusted remote source, and crafted data within the archive file
-potentially leads to arbitrary code execution during extraction, the
-issue can be included in CVE. There are many CVEs in this category
-(e.g., see CVE-2011-1777 and CVE-2011-1778 in RHSA-2011:1507-1).
-CVE-2012-4025 also fits into this category.
+https://bugzilla.redhat.com/show_bug.cgi?id=810013
+http://groups.google.com/group/sqlelixir/browse_thread/thread/efc16227514cffa?pli=1
+http://elixir.ematia.de/trac/ticket/119
 
-CVE-2012-4024 is different because the crafted data isn't in the
-archive file. Specifically, the crafted data must be in a list file
-that's similar to the list file used with the "tar -T" option. One
-threat model is that an attacker announces 'We have created an example
-of our project as a squashfs filesystem. The downloadable files are
-myproject.sqsh and myproject.list. If you only want the source code,
-you can extract it by running the "unsquashfs myproject.sqsh -ef
-myproject.list" command.' If myproject.list is long enough (e.g.,
-thousands of lines with reasonable source-code filenames and one line
-with exploit code), probably most people wouldn't notice that the file
-isn't legitimate.
 
-Some similar issues involving archive programs don't qualify for CVE
-inclusion because there is no plausible threat model. Ones that are
-proposed occasionally include situations where a crafted filename must
-be entered on the command line, and situations where the victim must
-use a crafted configuration file.
+So far there has been no response from upstream, and we have what I
+think is a suitable proposal to fix the flaw and a possible migration
+script to ease migrating from an insecure encrypted db to a secure one
+(noted in the google groups message).
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Not sure if anyone else is shipping python-elixir at all, but if you
+are, input on the proposed fix and migration script (in the absence of
+an upstream response) would be fantastic.
 
-iQEcBAEBAgAGBQJQCHqAAAoJEGvefgSNfHMdSTMH/Rp4tQhLhY9SB1kE/DiAH7VF
-gDV+uIoAx9G4GQwmA9tYTErKzXjsnob9A5WRQhSrbFdpNEkwOWZkvXWrN/Q42gj3
-Ac9ga+JkHrd/IdOINhvV1w3dzX8w9MyjZlHBE1Zs6tcb9IExu667a1WiBqAFjpKO
-XnMHFOT5Qi5zFsA2N39hnpLiekQ5gtY+HZ0gCN0IIefEXIm4SHdbVYhBqY12b8Lq
-g4C2USDattV3SrFbVGOAlYUxBjX7ki7qrggnUGCNRefHKYHh0xKepS5KayRQQc4h
-tISphBcubCCdQVBlR7kgaJEugIWQc8p1iPebd473fo/cNFjDvM0QQ3SlqZN8xb8=
-=Ov+l
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
