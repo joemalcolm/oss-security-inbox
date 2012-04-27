@@ -1,35 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/7
-Message-ID: <4F90F0D2.3000300@parallels.com>
-Date: Fri, 20 Apr 2012 09:14:58 +0400
-From: Pavel Emelyanov <xemul@...allels.com>
-To: Eugene Teo <eugeneteo@...nel.sg>
-CC: "Eric W. Biederman" <ebiederm@...ssion.com>, Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>, "security@...nel.org" <security@...nel.org>, Sukadev Bhattiprolu <sukadev@...ibm.com>, Serge Hallyn <serge.hallyn@...onical.com>
-Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/27/5
+Message-ID: <4F99E74D.2090209@delphij.net>
+Date: Thu, 26 Apr 2012 17:24:45 -0700
+From: Xin Li <delphij@...phij.net>
+To: oss-security@...ts.openwall.com
+CC: d@...phij.net
+Subject: Re: CVE Request: programming error in crypt(3)
 Content-Type: text/plain; charset=utf-8
 
-On 04/20/2012 07:10 AM, Eugene Teo wrote:
->> So we know what is holding the pid namespace reference.
->>
->> Additional thoughts.
->>
->> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
-> 
-> No.
-> 
->> Is there a corresponding task_struct leak?
-> 
-> Yes.
-> 
->> I don't have much of a clue or much concern as this seems fixed in later kernels but I am happy to suggest things to look for to help narrow this down.
-> 
-> I'm helping to provide more information.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Is there also a vfsmount struct leak as well? The pidns creating implies
-kern-mount-ing of a proc and it should be released when child reaper of
-the namespace dies.
-
-> Thanks, Eugene
-> .
+On 04/26/12 17:20, Kurt Seifried wrote:
+> CVE-2012-2143On 04/26/2012 03:36 PM, Xin Li wrote:
+>> Hi,
 > 
+>> I'd like to request a CVE number for a programming error in 
+>> FreeBSD's crypt(3) implementation, which prevents it from 
+>> generating a right hash from input in certain circumstances.
+> 
+>> We will publish the details in an upcoming advisory.
+> 
+>> Thanks in advance!
+> 
+>> Cheers,
+> 
+> Please use CVE-2012-2143 for this issue.
 
+Thanks!
+
+- -- 
+Xin LI <delphij@...phij.net>	https://www.delphij.net/
+FreeBSD - The Power to Serve!		Live free or die
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (FreeBSD)
+
+iQEcBAEBCAAGBQJPmedNAAoJEG80Jeu8UPuzJpYIAI9hcIFMuASc8St5gxGt2uge
+5cjxIjYWnqEX+F29AVhub7nLusiQbJP2kUNpt0bAj7zXG6PFSzl1x9qPhba4K9lz
+3NZ3Xn9q+qX4ALHjzpKaHZRE7dv1thXFgVQX/OhOVcMv8OZ0DMajfBS4+sjsZdJR
+TsspRfHV1qoq+8YoFYNGUxm77mwE5qs9KGFfSlNkKWwtLjdfn4tDA8nKyXjvhE1K
+O/iX4+yFBPAqPS2lHxwMeBRvUCRtteMnpbYf0Sfg16qhP7vPeJiXVtYy1yNoHPJd
+pRDOw3Q0RD7qGmBww4ZgmssO6/RGfxk0YeJY5xTUb0bdfvz8QJBrcwmRui9ef7E=
+=lw1m
+-----END PGP SIGNATURE-----
