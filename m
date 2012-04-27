@@ -1,57 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/13
-Message-ID: <50CA05DF.9060701@redhat.com>
-Date: Thu, 13 Dec 2012 09:44:15 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/27/4
+Message-ID: <4F99E63C.2040208@redhat.com>
+Date: Thu, 26 Apr 2012 18:20:12 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Timo Warns <Warns@...-Sense.DE>
-Subject: Re: Remote file inclusion by office applications
+CC: Xin Li <delphij@...phij.net>, d@...phij.net, FreeBSD Security Team <secteam@...ebsd.org>
+Subject: Re: CVE Request: programming error in crypt(3)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/13/2012 07:59 AM, Timo Warns wrote:
-> I would like to hear some opinions on whether remote file inclusion
-> by office applications should be considered as security-relevant.
-
-At a minimum it can violate confidentiality (e.g. using to track
-opening of a file), at worst it can be used a vector for attack code.
-
-> - Under certain conditions, remote content is directly embedded
-> into a document. This may allow to extract confidential data. For
-> example, LibreOffice/OpenOffice directly embed remote content when
-> converting a document into the PDF format. An attacker may send a
-> document referencing confidential data to a victim asking the
-> victim to convert the file. If the victim converts and sends the
-> document back, the attacker receives the confidential data.
+CVE-2012-2143On 04/26/2012 03:36 PM, Xin Li wrote:
+> Hi,
 > 
-> In my opinion, these issues are a question of user expectation.
-> Users are aware that web browsers may access remote content even
-> when opening local files. I don't think users are aware that office
-> application may do the same. An 'offline mode' for office
-> applications that is enabled by default could meet user
-> expectations.
+> I'd like to request a CVE number for a programming error in
+> FreeBSD's crypt(3) implementation, which prevents it from
+> generating a right hash from input in certain circumstances.
 > 
-> [1]
-> http://carnal0wnage.attackresearch.com/2011/11/embeding-link-to-network-share-in-word.html
->
+> We will publish the details in an upcoming advisory.
 > 
-[2]
-http://docs.oasis-open.org/office/v1.2/os/OpenDocument-v1.2-os-part1.html#__RefHeading__1415852_253892949
+> Thanks in advance!
+> 
+> Cheers,
 
-I just did some googling for LibreOffice and going through the config
-UI in LibreOffice and can't find the option to disable or have it
-prompt me when loading external data references. If anyone knows how
-to block external data in LibreOffice by default I'd love to know how.
-
-I'm kind of leaning towards classifying this as a security issue since
-I expected there is some way to disable it or at least tell it to
-prompt me when a document tries to go get an external data source
-(e.g. "this document contains external data, the URLs/file paths it is
-trying to  reference are: [list of locations]") but apparently there
-is no way to disable/have this prompt (at least that I can find in
-LibreOffice)?
+Please use CVE-2012-2143 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -59,18 +32,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQygXfAAoJEBYNRVNeJnmTFqIP/iJnABzsYiXPXcnMTFYJgtEe
-6wtNLDjRPuHGFPaHZsaVzB8Ec46jvFKb7SdIRC9tIMuaTzXatPnx+TUDQltrgspc
-qCwNfNmoibza74fpLD6lWwk8CQDdYd5ftb0NQSAnrd1yVV9vy6IKFK7XeQG4zH1I
-e225XxWlKxMIixv5/8Sdqt8o5LvCEMpCDS7r5uZrU4wjnCJIpalzPUcfKSzvu0gU
-1hbnCiGl1GtQjuWP57kx2N8KOFF4Ly+byonHjlXEmceAIEnUjERqPgIwSV1eGV90
-v/j+21BZ0/5ikFK619g/mkLrBVnLb8sPpfe0wZ3sWkILmILkwqLZrWvaGPHvcRj0
-rV1nm0ErHgG+SbiOBBOburWUBE77bwqsMh0ZK4G+ufc0x4/Bdy1PDINBbDBIZOFj
-SkXMgbB4n/pW+DC8HtdgWCtVm5OvVIiRRt5KtMzdxIaaABJNlgfr3/4/LpRI66GR
-g/ak5fxjt6UghBg7TtTP2brg9UR4SRUwA8nf2mG1T9TUazpt0YGt9tWgKU3qiYoV
-T+Nr2RTPtUMOvf/cR20NTCw3hsCUH9Ll0SBTApyrWza3q27IANk9Opqx7Xa11tyN
-v6Fi8gCQ5mhO2lRTIuKTy8rqiAguYTqhBPqCvoDAJoG1ejIvHqYKgIsrn1x2H0of
-nxGHEWLWJbO8tGwnhmzo
-=iVPl
+iQIbBAEBAgAGBQJPmeY8AAoJEBYNRVNeJnmTaWIP9j8Bvajlg4HkBr4lCOTF4kYx
+dFIazJuzfYnGqvK4E2KzjFNuJL/Ch59hf9mBSBeGGRIMHtoCpR3o1zg0yqFE6ZHA
+ZKLFDLkBFzU3sL3PhZzKQiXMNaQYm3kFWsOfFkOsrX26NJoWn69uH0Iy2tDF07Aw
+R2zUtc4w9BkmPWFLKfrYgSrO36Khic2yH/eAM9/S6hOOlxfnNsUOZDOf/SaIn5y7
+lqUl4JEMqr+5Tm4PYVXvN0P16VlM5oxibyF3RWdew7XJeeg1SKJLZb1vGuEnN42Y
+WcbK1gIEE9SoRMG32sCi5egs2CmYfFYXj1jQwlmbUv+UvXsvXiE5akB/D1ziWy/x
+Yh/a+TucjKblvrqfy/5tlbbQKDxdoAPwWcMnQidOY7mPqVl3tWFAglAtIRcPT95p
+jWjIDHv8jxZzXp4qEy1riXJ6Ov5D6PfGNCmg9vbZmlLlXGBEpNXievLSgDUDVDBg
+CxCea1uwqoHtwID+jRyE47qCgwngSwVDO0esp1y/HEKCPrH2uSPdKMZkzp8RQua+
+WoT3uURtzDag0kfv/MhnAx0BvF20/OYFAgsYbh1IMbc9avEFIpvFflYuQW0rCgHK
+uq5sWOpjGimAnflIW8AZn6p+4h/DKFTRSmb7uY6x/ZkqFOHfRVcIYwH1gdm8IBWo
+zkYRipsGSnFb231WVo4=
+=jy5G
 -----END PGP SIGNATURE-----
