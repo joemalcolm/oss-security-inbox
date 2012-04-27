@@ -1,73 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/10/6
-Message-ID: <50C654E4.9050108@redhat.com>
-Date: Mon, 10 Dec 2012 14:32:20 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/27/1
+Message-ID: <4F99E1BF.7080902@redhat.com>
+Date: Thu, 26 Apr 2012 18:01:03 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@...o3.org" <security@...o3.org>
-Subject: TYPO3-CORE-SA-2012-005: Several Vulnerabilities in TYPO3 Core
+To: oss-security@...ts.openwall.com
+CC: Xin Li <delphij@...phij.net>, d@...phij.net, FreeBSD Security Team <secteam@...ebsd.org>
+Subject: Re: CVE Request: programming error in crypt(3)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-TYPO3-CORE-SA-2012-005: Several Vulnerabilities in TYPO3 Core
-https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-005/
+On 04/26/2012 03:36 PM, Xin Li wrote:
+> Hi,
+> 
+> I'd like to request a CVE number for a programming error in
+> FreeBSD's crypt(3) implementation, which prevents it from
+> generating a right hash from input in certain circumstances.
+> 
+> We will publish the details in an upcoming advisory.
+> 
+> Thanks in advance!
+> 
+> Cheers,
 
-I'm a little confused because multiple issues are listed together with
-a single CVSS2 score/etc.
-
-Can the Typo3 security team please confirm the following:
-
-> Component Type: TYPO3 Core Affected Versions: 4.5.0 up to 4.5.20,
-> 4.6.0 up to 4.6.13, 4.7.0 up
-to 4.7.5 and development releases of the 6.0 branch.
-> Vulnerability Types: SQL Injection, Cross-Site Scripting,
-Information Disclosure
-
-so no CVE's needed for this, this is simply a summary of the below issues?
-
-> Vulnerable subcomponent: TYPO3 Backend History Module Vulnerability
-> Type: SQL Injection, Cross-Site Scripting Solution: Update to the
-> TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
-fix the problem described!
-> Credits: Credits go to Thomas Worm who discovered and reported the
-issue.
-
-Did he discover both the SQL Injection and the Cross-Site Scripting
-issues? Can you provide a link to the specific code fixes?
-
-so 2 cve's needed correct?
-
-> Vulnerable subcomponent: TYPO3 Backend History Module Vulnerability
-> Type: Information Disclosure
-Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that fix
-the problem described!
-> Credits: Credits go to Core Team Member Oliver Hader who
-> discovered
-and fixed the issue.
-
-so one cve needed here? Can you provide a link to the specific code fixes?
-
-> Vulnerable subcomponent: TYPO3 Backend API Vulnerability Type:
-> Cross-Site Scripting Solution: Update to the TYPO3 version 4.5.21,
-> 4.6.14 or 4.7.6 that
-fix the problem described!
-> Credits: Credits go to Johannes Feustel who discovered and
-> reported
-the issue.
-
-so one cve needed here? Can you provide a link to the specific code fixes?
-
-> Vulnerability Type: Cross-Site Scripting Solution: Update to the
-> TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
-fix the problem described!
-> Credits: Credits go to Richard Brain who discovered and reported
-> the
-issue.
-
-so one cve needed here? Can you provide a link to the specific code fixes?
-
-Thanks for confirming this.
+If you want a CVE # with no info I'm going to have to decline as I
+can't verify anything and have no idea if it's a duplicate/etc (did
+FreeBSD assign one already perhaps?). Can you share the info with
+security@...ebsd.org and then have them request it (at least then I
+know it's legitimate) which might work.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -75,18 +36,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQxlTkAAoJEBYNRVNeJnmTdTYQAKM5Lx1uGF4FO5hEwl9Lv5pg
-JbW41XzMOLGyesGggUf39xhHnPqF7/tH0vmgDOM7pDUXdnRUiCbQaXc+oGcKQvtm
-QKYFy5YVo2DNkaluxjmta0bdbSzsi+istYYWQFrUcaHrVGsK9UOCXf7r7fKw6zD3
-om9ajiJG91EugEKgNm4kRrSlBJNCS2KUgf2DeSjuz5rU3Nq98qNtYi0ul4tPEKm0
-WLc+cun7DrKnhFHgKzYFjD3AHUh6KVfgo6uGF/GWtrw0aoknwnbadZ5RwT7L+svl
-yVCxWn1oB6HX5flBL2pkAicUWXs5dVRnn7wuAZb+HUCHw8dWFLl9ndqskfigrR3w
-WtCVSIMZkd10XNpV9T0y+hklWPyC5dPNrHpO78b/rrLvgAr8iJxrDSKY/dLZBAnr
-e3zekkwq8HzCGm/rbcKU2hJEUqIvCFo/n3SsTUBfh+IWriMJXYUHD49OmbO3MqVP
-mpb03U93OtI4YMsut5MWWC+oEgXcyT8HNEr4+Ft+9GdOwV2GVvHv/H+rmYU+xXXt
-JD+McS2Q0F4rAiGuQjEVlCN4rWoIAN+8K/KROQO2w5ZYIw5riwXf5Jt9x9m00vFj
-vkKwonhcQ+XF3O78v0YI7no39LpOiTm41MkLFcyuxuuNNw15rEvKCLPKGgTikZ0x
-SVfcAdMdFEU8jaAtUR7m
-=zzRG
+iQIcBAEBAgAGBQJPmeG/AAoJEBYNRVNeJnmTAIAP/2YPAUA99Xhykj197dmJaNar
+wkPE/gdcgmKLhgAYIxZkuEVRkI8c2M0zlh4XLVSQeXFfJmDJwLwXt83X/ozRxzB0
++YiyMh1zOg84m6zIeLlykvLC+0kcAHsPjmEVdJp3V0UXphFoeBYudpRzOy27H0OO
+WR1uzcb0+ivCtNcEzy/I1T77s/tD2DjI7hpYIVxfRjVUmeBkAMF09a/1A2/crshI
+HBx+lVRlBJleaWMCW4HO3R40L1PqTOlBb1piZC8VlzfA+oRg58FOvghMjfAbD3Q6
+eJtJLYn26zlI/GdAl50dCy90Ckh8j3vHxFDF+sRL2sCV8W1VHKm5r4AiE0nNnyTP
+plNY1XEmP6Uli8SUN/Z+iZ4iiEW/Cr2suL6hYGY7DcaH0HK+C6OhQjIH8aLaO0WI
+wXN0ofXkMhAz3zGNlQ9TmM/B51lIv28i3HcmZDYhoW7B5yOO1kGcW2NbfWcHujbG
+vdBPgqxNtrJVrUJcvZfzz2NVO0N0a67chz5o44fiye/yGcmuSbkSLj5Qw4/iy1Kf
+dSYG0qb76RNZ5PEBkkxNXPmLO+ZrgK/N+zZb6KYR8ul4YTDpx2IiF/xe4qIzvykG
+yi4AEMKIEztSplr9mS6mJwCdDgOpFrp26lw3Cww3IyicMnr1In6z8goCfbj4pJQc
+YG7BkJyhuk+lKVgvngHJ
+=jiYm
 -----END PGP SIGNATURE-----
