@@ -1,70 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/18
-Message-ID: <20120201235403.GC9659@openwall.com>
-Date: Thu, 2 Feb 2012 03:54:03 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/27/3
+Message-ID: <4F99E5BF.4030109@redhat.com>
+Date: Thu, 26 Apr 2012 18:18:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+CC: Eitan Adler <lists@...anadler.com>, Xin Li <delphij@...phij.net>, d@...phij.net, FreeBSD Security Team <secteam@...ebsd.org>
+Subject: Re: CVE Request: programming error in crypt(3)
 Content-Type: text/plain; charset=utf-8
 
-Marc,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thank you for your feedback.
+On 04/26/2012 06:09 PM, Eitan Adler wrote:
+> On 26 April 2012 20:01, Kurt Seifried <kseifried@...hat.com>
+> wrote: Can you share the info with
+>> security@...ebsd.org and then have them request it (at least then
+>> I know it's legitimate) which might work.
+> 
+> Xin Li is a member of the FreeBSD security team: 
+> http://www.freebsd.org/administration.html#t-secteam
 
-On Wed, Feb 01, 2012 at 04:02:54PM -0500, Marc Deslauriers wrote:
-> A week is a pretty short delay to prepare updates and perform the
-> necessary QA to get an issue out on time. Why are you pushing to get the
-> maximum reduced?
+Derp derp! What can I say, I'm a Linux guy... Will reply to the
+original email with a CVE.
 
-Why shorter embargo periods are preferable: vendors who are ready to
-push out their updates first don't have to sit on those updates waiting
-for others, users get their fixes sooner, the potential for leaks (or
-rediscovery) and exploit development in the wild before a fix is out is
-reduced, the potential for a vendor inadvertently releasing before the
-CRD is reduced (and in case this happens anyway, other vendors are
-likely "more ready" by that time since they knew the CRD was sooner),
-fewer embargoed issues are being tracked at the same time (less work,
-lower risk of errors).
 
-Of course, this is a tradeoff - just like the very existence of such
-closed lists is.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Why 7-11 days: a few issues were recently handled within 7 days fine -
-such as the sudo issue (easy fix provided by upstream and not needing
-much QA) and the Linux kernel /proc/<pid>/mem issue (vendors had to
-hurry up because the issue was mostly public).  So this may be realistic
-at least as a target (hence my wiki page edit) or maybe also as the
-maximum (hence my proposal).  Additionally, the original maximum of 14
-days may be seen as potentially including the extra days needed based
-on day-of-week: it is one week normal + some days from the other week
-when needed by day-of-week.  So maybe me trying to meet the reality
-(seen on a few occasions) by extending this to 14-19 days was wrong, and
-I instead should have proposed 7-11 days.  Hence the belated proposal.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Why me: I feel that it's my duty as list admin to propose the smallest
-maximum embargo period that list members might be willing and able to use.
-
-Why I am making this proposal now: this is triggered by a certain
-off-list discussion I just had; unfortunately, the other party does not
-permit me to post more about it.  However, as I wrote above, I feel that
-I have good reasons to give this proposal a try (see if it's acceptable
-or not) regardless of what triggered these thoughts now.
-
-> Reducing the maximum will just result in having everyone miss the
-> embargo date and putting users at risk.
-
-It's not that simple.
-
-Not "everyone" will miss the CRD.  Clearly, if some vendors on the list
-are comfortable with a shorter embargo they either expect to meet the
-CRD or find the issues for which they miss the CRD not important enough
-to fix before CRD anyway.
-
-I already provided some answers to "why" above, and here's one more: the
-change may also result in vendors' processes being adjusted to meet the
-faster pace.  I am unsure to which extent this is positive overall,
-though (considering that those changes may have side-effects).
-
-Thanks again,
-
-Alexander
+iQIcBAEBAgAGBQJPmeW/AAoJEBYNRVNeJnmTVWwP/3hS18oosTujzK9yy51XLhms
+EKpFFlbQgtntKFUsP8ClTLMBgT2XWnURiI/aRMYNqNeInSGHWAF0bSneHrws1Z9A
+3tvMzqaBPzZQ5y4Iv+YTVqI/MjD1haYttfRibTlf4hyvDvjjX+kF9yGOM9t5MfDY
+r+sUl96sZvxCqnSALW/qrlZ8g8sgK3N9jRUV3li/kzFo4uuYJTtVOnk0559nhFlG
+vsciJGVgw0skwcxGwax8v9mlXLUFP06FCt1+HOydvGgcm3OihHHlJ9T/Sft9Uq3W
+nC9NN4kgVnmkvvCxHsTuUYNPmPZF73juKBYlO5l+iHmLa7aAGMk/ML4WPVfRHfcR
+MTApPb+KUc5zbsHSMqN4NlP1+J6wLDcdfoe2+OAa2lJXFtd4B0nuA8oFfJZOCpFm
+Q/xxM3h3xoZDXuxpu84hP3bOEhSq7Q87KODI+eEzJoXKeN1YecqfCPxiRlq4f466
+YliHhP//o52FO/W6G/DRectWsWFrGFkGQpwGwVzIP/ctEETtENg855bwWltoMyzy
+CdEqMQTYc7+6618enttf3YyVAbMeFIpZihT4Vko2ggfFFzEZoAeRau+dS8qX3sZS
+l5YVr2hDqozXzEDQhoIu24Hx5R3vtjjIvf5kLnIy+YZNmv+tFJBQVlN3et83Xm/o
+CvVRCNWWb3D8nVBQe7nK
+=pBmc
+-----END PGP SIGNATURE-----
