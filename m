@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/05/1
-Message-ID: <506EBB45.8030509@canonical.com>
-Date: Fri, 05 Oct 2012 06:49:41 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request: html2ps
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/28/3
+Message-ID: <20120428122633.GA22862@lakka.kapsi.fi>
+Date: Sat, 28 Apr 2012 15:26:33 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: webcalendar before 1.2.5 XSS
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Sat, Apr 28, 2012 at 11:11:40AM +0200, Hanno Böck wrote:
+> Upstream release notes:
+> http://sourceforge.net/mailarchive/message.php?msg_id=28915339
+> 
+>  - Fixes for various security vulnerabilities include LFI (local
+> file inclusion), XSS (cross site scripting) and others.
+> 
+> 
+> Further info for the XSS:
+> http://seclists.org/bugtraq/2012/Jan/128
+> 
+> The local file inclusion here
+> http://www.naked-security.com/nsa/208799.htm
+> is said to be CVE-2012-1496, but no info on the CVE database yet.
+> 
+> 
+> -- 
+> Hanno Böck		mail/jabber: hanno@...eck.de
+> GPG: BBB51E42		http://www.hboeck.de/
 
-I don't believe a CVE was ever assigned to this html2ps flaw in 2009:
+These might be related (at least the second one):
 
-Directory traversal vulnerability in html2ps before 1.0b7 allows remote
-attackers to read arbitrary files via directory traversal sequences in
-SSI directives
+http://osvdb.org/show/osvdb/81329 http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-1495
+http://osvdb.org/show/osvdb/81330 http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-1496
 
-See:
+I can request more details from the vendor and email Mitre so we get those CVEs updated.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=548633
-https://bugzilla.redhat.com/show_bug.cgi?id=526513
-http://packetstormsecurity.org/files/81614/html2ps-1.0-beta5-File-Disclosure.html
-
-Thanks,
-
-Marc.
-
-
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+- Henri Salo
