@@ -1,72 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/14/3
-Message-ID: <4FB1527E.9030005@redhat.com>
-Date: Mon, 14 May 2012 12:44:14 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/28/1
+Message-ID: <20120428111140.4407aa18@hsalkjdhsa.lan>
+Date: Sat, 28 Apr 2012 11:11:40 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Steve Kemp <steve@...ve.org.uk>
-Subject: Re: CVE request: Bytemark Symbiosis
+Subject: CVE request: webcalendar before 1.2.5 XSS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Upstream release notes:
+http://sourceforge.net/mailarchive/message.php?msg_id=28915339
 
-On 05/14/2012 06:41 AM, Steve Kemp wrote:
-> 
-> Symbiosis is an easy to use collection of tools, utilities, and
-> configuration files for mass hosting virtual domains using Apache,
-> Exim4, Dovecot, PureFTPD, and several other daemons.
-> 
-> The code behind the system is freely available, and it is widely
-> used by at least one hosting company.  The code itself is
-> available, along with documentation, here:
-> 
-> http://symbiosis.bytemark.co.uk/
-> 
-> Unfortunately releases between these two mercurial identifiers
-> contained a significant flaw:
-> 
-> mercurial ID:   1068 date:        Wed Feb 01 11:49:57 2012 +0000
-> 
-> And
-> 
-> changeset:   1326 date:        Thu May 10 08:35:13 2012 +0100
-> 
-> 
-> IMAP/POP3/SMTP authentication would accept any password for any
-> valid email account.  (Logins are of the form $user@...main.)
-> 
-> This was fixed with the following commit:
-> 
-> https://projects.bytemark.co.uk/projects/symbiosis/repository/diff?rev=1327&rev_to=1322
->
->  Please could a CVE identifier be allocated such that we may use it
-> in our documentation.
-
-Please use CVE-2012-2368 for this issue.
-
-> Steve
+ - Fixes for various security vulnerabilities include LFI (local
+file inclusion), XSS (cross site scripting) and others.
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Further info for the XSS:
+http://seclists.org/bugtraq/2012/Jan/128
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+The local file inclusion here
+http://www.naked-security.com/nsa/208799.htm
+is said to be CVE-2012-1496, but no info on the CVE database yet.
 
-iQIcBAEBAgAGBQJPsVJ9AAoJEBYNRVNeJnmT0KMP/RXheb+YHfhsp4fGngiIeiEt
-1ST4l+4SChl6EMJra0Z8i/Zp1b3N0QBU44dUH6eWRQlpBH8EREmUiRIea3H3nL1+
-hWac+y6Z/YZfODfoOljvE2/LrNue/eoyNUt4pT2W/UX5q3YsmIK2Seduhnm34n9N
-2CmJB5cflu+x9zGUoHsiMNuI05eZbbeyxceXUmBEoEKO1j01tulhDlAzNCfDx3Fl
-JbOm6vZBXotYlpJVEtbfU2tzVMOMB04FWzTh06Fh5ftwq4q0HxMsZ6TdTd82zX4y
-yWn3xIfdSB4/zAkmJmnybpjLtSOlRz4R6YCPrKuLKk/6c8UPuDtDwYWxLslvTlMq
-gWuMr/o/dKUVafQO2TMpSnKlhzOYq41GBmjDq7WDjsAcZppesUqp8CZcRaWZqkAn
-dnqW7wOppG6o7GsTw7fO9Lmp4URZdVbFk99DL4IqBhbXUEtorchf5Q6tNRVgdW4v
-UfdAiMKRjAa4M6uKqXGp4tf7s+S/Pwrt+T2O7LOjuzv/sDBUfifpazLCkRxeCzeU
-patcWOvrrR9ttE3QyjKKkBVLZjkkj6hkVRRCq8fs6i9c8vr5da01Tc44T9TgNY7D
-G+R8Ge1BBIsnOPk0VDIAOdbn3HCjtPpAUG91R0+01oNaP8/RiEZcGP83j17u9G35
-T9WKsGHvheUmQMh1o4wj
-=QAJN
------END PGP SIGNATURE-----
+
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
