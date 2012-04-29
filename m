@@ -1,47 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/09/3
-Message-ID: <1333954209.22006.6.camel@scapa>
-Date: Mon, 09 Apr 2012 08:50:09 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/29/1
+Message-ID: <4F9CE456.6020301@redhat.com>
+Date: Sun, 29 Apr 2012 00:48:54 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: gajim - code execution and sql injection
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: weak use of crypto in python-elixir can lead to information disclosure (CVE and peer review request)
 Content-Type: text/plain; charset=utf-8
 
-On dim., 2012-04-08 at 23:21 -0600, Kurt Seifried wrote:
-> On 04/08/2012 07:33 PM, Carlos Alberto Lopez Perez wrote:
-> > On 08/04/12 17:59, Kurt Seifried wrote:
-> >> On a side note: if you want a free SSL certificate please use 
-> >> something like http://cert.startcom.org/ which is included within
-> >> most browsers. cacert.org is not included in any (that I know of)
-> >> browsers, I have no idea what the cacert practices are (and I
-> >> can't find any documentation on their site) so there's no way
-> >> that root key will be loaded by myself (and most people I know).
-> > 
-> > 
-> > Cacert.org CA is trusted by the majority of Linux/BSD distributions
-> > and therefore for any browser running on it. 
-> > http://wiki.cacert.org/InclusionStatus
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/27/2012 02:40 PM, Vincent Danen wrote:
+> Could a CVE be assigned for the following issue?
 > 
-> According to the page you quote it's not in any Mozilla browsers by
-> default (or any major web browser that I can see), it's not in Fedora
-> or Red Hat Enterprise Linux or any derivatives of Red Hat Enterprise
-> Linux, or Ubuntu or SuSE Linux to name a few (not to mention Mac OS X
-> or Windows).
-
-Cacert.org is included in Debian ca-certificates package, and thus in
-the Ubuntu one (just stating fact, not that I find that good or bad).
+> It was reported that python-elixir, a library for ORM mapping on
+> top of SQLAlchemy with support for encrypting data stored in a
+> database, suffers from weak use of cryptography.  It uses Blowfish
+> in CFB mode, which has an additional parameter (IV), which is not
+> specified and thus defaults to zero.  CFB mode is only secure if
+> the the IV is unpredictable and different for every message.
+> Because of this, and because the encryption key is shared for each
+> database table (fields and rows), the same plaintext prefix is
+> always encrypted to an identical and corresponding ciphertext
+> prefix.  As a result, an attacker with access to the database could
+> figure out the plaintext values of encrypted text.
 > 
-> I don't understand why people choose a widely unsupported CA when
-> there are widely supported CAs like StartCom that offer free
-> certificates. Please, use supported CAs.
 > 
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=810013 
+> http://groups.google.com/group/sqlelixir/browse_thread/thread/efc16227514cffa?pli=1
+>
+>  http://elixir.ematia.de/trac/ticket/119
 
-This is a bit off-topic (for the thread, maybe not for the list). It
-seems that people like Cacert.org because of the trust model it
-represents (afaict it tries to fit the GPG web of trust to x509).
+Please use CVE-2012-2146 for this issue.
 
-Regads,
--- 
-Yves-Alexis
+> 
+> So far there has been no response from upstream, and we have what
+> I think is a suitable proposal to fix the flaw and a possible
+> migration script to ease migrating from an insecure encrypted db to
+> a secure one (noted in the google groups message).
+> 
+> Not sure if anyone else is shipping python-elixir at all, but if
+> you are, input on the proposed fix and migration script (in the
+> absence of an upstream response) would be fantastic.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPnORNAAoJEBYNRVNeJnmTVt8P/iLnoj3xpoIKZLcJswL8ISLN
+EeQTjDJhSFo9J+HjpiWWFZQH/XDF3tJVPpJcy3E/sOLV4GRMDy7lW30WKBxlQOEb
+b3MO4UVutTIyI4cr5ry+GLINzF4/YaifwI1KOUsVEKRPU8WYjdSnTsvNAn7QmmrI
+XuXz+MVm8xcNHOTJ1VkQyVBerERTjWdiT/Ik425mvcRIcB0NV3ruOS3V48qfFqIx
+WRdvkVSeSqqWyoB202X82lCUcMPxv/zXT755WUB7lcXvrcTjn8WNBCMEAjXDifNC
+yHc0eFH7WW56pLzcSJUwN897xt+LAjDrntObKbXJ1epe4a5DtZhlWfkd4MpNAhSS
+A+7U3vNKPJxTJ9R99Dj8XBXGlh1mM+NaBcQN5/bDxduRTHCQLjCTYPAxrIlZXD6n
+0JzBueDY003zzsUOqN/HuREI57+jNL+ODbzZz1/SHVUWcL6XEhAQF+R39osGV8Iu
+rZUFqX103nhSh7p4yEznTl2NtT3gyf2+6TiXgKfJAPfpchsEA9Ld14sp+FQjd4AN
+Rr7oqE8tiNecQwn58iAJ4vbYyhNcPOlB5eLEn6Oe8Wke707WBvP6M2NCP9pt0AwP
+itOMKo+Tbm42/bWEKUKo3L5VlCh2ZJBm1Efc1MkAl1qcT3VAeD6SiegTZD5DOVqy
+kQBYLJYUMlzt/WtXROBR
+=Ut6W
+-----END PGP SIGNATURE-----
