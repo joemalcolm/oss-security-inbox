@@ -1,38 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/15/1
-Message-ID: <50CBCEC8.3070000@redhat.com>
-Date: Fri, 14 Dec 2012 18:13:44 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/29/2
+Message-ID: <4F9CE5F3.4090906@redhat.com>
+Date: Sun, 29 Apr 2012 00:55:47 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: CVE request: thttpd: Denial of Service (App. crash, local)
+To: Steve Schnepp <steve.schnepp@...il.com>
+CC: 668667@...s.debian.org, oss-security@...ts.openwall.com, Helmut Grohne <helmut@...divi.de>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Bug#668667: CVE Request (minor) -- Two Munin graphing framework flaws
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/12/2012 03:57 AM, Matthias Weckbecker wrote:
-> Hi Kurt, Steve, vendors, ...,
-> 
-> I think I have never posted it to oss-sec. glibc's crypt() can
-> return NULL under some circumstances which causes thttpd to crash
-> while dereferencing:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=783165
-> 
-> Maybe you want to assign a CVE.
-> 
-> Matthias
-> 
+On 04/27/2012 09:41 AM, Steve Schnepp wrote:
+> On Wed, Apr 18, 2012 at 07:04, Kurt Seifried <kseifried@...hat.com>
+> wrote:
+>>> In addition munin parses parts of the query string. You are
+>>> allowed to modify the size of the image. By choosing a path 
+>>> "....png?size_x=20000&size_y=20000&uniquestuff" you can do the 
+>>> same attack while simultaneously using a large image size. The
+>>> raw image would be 381M (assuming 8bits/pixel) in this case. A
+>>> png version will likely be smaller, say 4M? So now you have an 
+>>> amplification of 4M/request. Note that this query can get a
+>>> node into swapping, because rrdtool needs to create the whole
+>>> image in main memory.
 
-- From the Novell bug:
-Matthias Weckbecker 2012-12-13 10:57:38 UTC
-For the sake of completeness (got reminded by some random dude on
-oss): This affects glibc 2.11 (as shipped with 11.4) (with thttpd-2.25b).
+Please use CVE-2012-2147 for this issue (specifying the size = lots of
+ram/storage space used up during image creation).
 
-Also can you post a link to the affected code? thanks.
+> 
+>> Ouch.
+> 
+> I believe I fixed the bug in r4825, since : - url with query string
+> aren't stored permanently anymore. - /tmp isn't used anymore per
+> default (to fix #668536)
+> 
+> Could you confirm that ?
+> 
+> OTOH, the issue about very big imgs that gets the cgi into
+> swapping isn't the same bug to be.
+> 
+> As Helmut noticed, there is already a size cap in rrd, so do I
+> still need implement one in munin ? If yes, would you mind to file
+> another bugreport (for RAM exhaustion) ?
+> 
+> Thx !
+> 
+> r4825: http://munin-monitoring.org/changeset/4825
+> 
+> -- Steve Schnepp http://blog.pwkf.org/
 
-Please use CVE-2012-5640 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -40,18 +56,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQy87IAAoJEBYNRVNeJnmTK0YP/jjyu9SeRrhpV9FCg0nUlfcJ
-bfqnrJEw9co7/JsMKJWKoIVqq8wDr4jxmyhANdlAZtapiFPlGficNBnpk+QgWSA9
-u1TWooq7tEf4flxXjPYa2JPopfxXHXBBupZSWPeTNxBLlUs1OoO+/EP9y52LI/jM
-SS9qTZhCBQdIqT9VEZlbY+D35cM+QfGVKf4Y2nzbMKTOdnDw46WCjA/ALI4KmVIc
-F+GpxHJdk541PDd5dnRSaYYK6Q6ImM8uWqIAWz1ag+Fgcbmidy79Hg/iWUY2zPll
-4pWA00lvM0EYeWpe2vhi0eOxHV0S5L51jFXgTsq2iJrLXe/BE9OrCcC9itccWMQ8
-RgWJJ5aXNV1Zd0Pt5fJ5NUTVye+7b8yxZCIGZl8sAl9fwMBKGhbfsgHhXT+RnnIM
-t9RWOt64RG2fkoc1s7I0m6VhCRm5r58VLv/HobeXDfEZmN1ca6/3Q5jotLOMwh2H
-Igy0v3Lkl8FqbZlQri+akC+q5yOVbN4wuU7Z2KbLZge2mGxMNdsAWGu1p5zKHLoZ
-6gPDE1Dktizb1q8Vy8nfOVYhNtpf3+Jj5J16Fxgc5fUa+IOs2uN690C30acdVZ6Q
-wMNnQsA9iVSP+YCc3WptXj2nQUUehjHh1xjp6HSmZbxLQdJTglOfi185Ouug3F/m
-9ZLaZdlwwFXNPJtSvTDy
-=484d
+iQIcBAEBAgAGBQJPnOXzAAoJEBYNRVNeJnmTLncP/RHZ+19XnFy/mLRv+CqqwOSB
+MEwn6nDbgN8+MP4uhq0542cOy0611VYpB8ftPJxWBPRWhLPuyYTtaxe87esYmLp6
+JTO/OPonytkmWrBtD7Ta7amxiJAJFERjoZVuByiY+aZAX9WsVYiCpzlAl7E8NL5u
+L11RuZU7vsnn7vSsRomlKcQ/eRMHouUKqwcVB8GAW0vh1V2l+bpAorBTZvI1/zPX
+QcDGYWX7w7GsmUXAe4P6TcpS9lXJDzHpYTf9YzSMLaPDDevhcoR+hwSdnia6Uz22
+mpH2mf/d2vCY0o1FKWwR7ZDB7I8zdUmRSx96Umo/UikJknbHEc4zwfSYW2TefZIv
+G8cGMSYo35i/chJpf23iIcvKIvkQSs+1FCHep7OLuF6R1P0XnxXx2q78v3GjZC6C
+u6gSia1jT672xo1qEMArEOzj3h9/tNLt0YdIR+vTENYo/qhZf5DidbYZvIjlA24b
+Krbz/Fbcf8ayzctwuWvju4Kep602eM002FnYowXbN9rziz636yIWqJiQMaPMHYYo
+A7Y9qJFCUcophkaY0WAc6E1doM/+yKYduIsDbenXFoSqS6NFyjmlTfNA7rbxeWC3
+HvDnM1tG5YLd2PpzfmvMZfyH95ora0ecAiqAbZyn/On4ddgh9jEdwn3E0wt6N3N3
+h9sOLiYT90i3gZibguID
+=E8X5
 -----END PGP SIGNATURE-----
