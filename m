@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/7
-Message-ID: <20120102033340.GA23572@openwall.com>
-Date: Mon, 2 Jan 2012 07:33:40 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/30/6
+Message-ID: <20120430223447.GL13910@redhat.com>
+Date: Mon, 30 Apr 2012 16:34:47 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+Cc: Vincent Untz <vuntz@...e.com>
+Subject: Re: CVE Request: libsoup 2.32.2 sets ssl trusted flag despite no verification
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jan 01, 2012 at 08:34:45PM -0500, Mike O'Connor wrote:
-> Any thoughts on what an appropriate default config for per-source
-> limits should be?  How many connections from a given source would
-> end up being too many for the default OpenSSH configuration?
+* [2012-04-24 12:04:24 +0200] Ludwig Nussel wrote:
 
-For popa3d, the default limits currently are 50 per-source, 500 total.
-Sessions are considered active for at least 10 seconds after start.
+>libsoup 2.32.2 does not verify certificates at all if an application does
+>not explicitly specify a file with trusted root CA's. Since that libsoup
+>version relies on the verification failure to clear the trust flag it
+>always considers ssl connections as trusted in that case.
+>
+>Reference:
+>https://bugzilla.novell.com/show_bug.cgi?id=758431
 
-This is considering users behind NAT who have mail checked every few
-minutes.
+Are you sure it's just this specific version of libsoup?  Looking at the
+code of earlier versions (such as 2.2.98), the patch noted in your bug
+would apply (unless there is some other context around it that would
+make this a non-issue?).  Did you look at other versions at all?
 
-For OpenSSH, we can use similar settings or something more flexible
-(more than just two limits).
+Thanks for any info.
 
-Alexander
+-- 
+Vincent Danen / Red Hat Security Response Team 
