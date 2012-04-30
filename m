@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/1
-Message-ID: <5023463B.2040008@redhat.com>
-Date: Thu, 09 Aug 2012 10:40:19 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/30/2
+Message-ID: <20120430071721.GA27228@kludge.henri.nerv.fi>
+Date: Mon, 30 Apr 2012 10:17:21 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: gnome-keyring: improper caching of gpg password/passphrase
+Subject: Re: CVE request: webcalendar before 1.2.5 XSS
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+On Sat, Apr 28, 2012 at 11:11:40AM +0200, Hanno Böck wrote:
+> Upstream release notes:
+> http://sourceforge.net/mailarchive/message.php?msg_id=28915339
+> 
+>  - Fixes for various security vulnerabilities include LFI (local
+> file inclusion), XSS (cross site scripting) and others.
+> 
+> 
+> Further info for the XSS:
+> http://seclists.org/bugtraq/2012/Jan/128
+> 
+> The local file inclusion here
+> http://www.naked-security.com/nsa/208799.htm
+> is said to be CVE-2012-1496, but no info on the CVE database yet.
+> 
+> 
+> -- 
+> Hanno Böck		mail/jabber: hanno@...eck.de
+> GPG: BBB51E42		http://www.hboeck.de/
 
-gnome-keyring does not obey the configuration asking it
-to stop caching passphrases after a while.
+CVE-identifier for XSS announced in here http://seclists.org/bugtraq/2012/Jan/128 has been requested in here http://seclists.org/oss-sec/2012/q1/416 which got CVE-2012-0846.
 
-More details and patches available at the following
-references:
+What other vulnerabilities there is in WebCalendar before 1.2.5?
 
-https://bugzilla.gnome.org/show_bug.cgi?id=681081
-https://bugzilla.redhat.com/show_bug.cgi?id=845426
-
-Upstream bug suggests that this is a regression from 3.3.x.
-But it seems some older versions may also be affected.
-
-Can a CVE id be please assigned to this issue?
-
-Thanks!
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+- Henri Salo
