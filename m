@@ -1,64 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/11/5
-Message-Id: <C4778AD0-1BE5-4AA9-A939-08123334574D@gmail.com>
-Date: Wed, 11 Apr 2012 17:15:09 -0400
-From: Xi Wang <xi.wang@...il.com>
-To: Petr Matousek <pmatouse@...hat.com>
-Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>, akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>, vuln@...unia.com
-Subject: Re: fix to CVE-2009-4307
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/30/3
+Message-ID: <4F9EEE8B.1010404@redhat.com>
+Date: Mon, 30 Apr 2012 13:56:59 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE-request: SilverStripe before 2.4.4
 Content-Type: text/plain; charset=utf-8
 
-On Apr 11, 2012, at 7:07 AM, Petr Matousek wrote:
-> Is there any compiler that is used to compile the kernel that turns the
-> CVE-2009-4307 fix not working (the groups_per_flex < 2 check)? I
-> see that in your commit description you mention equivalent form where
-> Clang optimizes away the "groups_per_flex == 0" check. Does Clang
-> optimize/change also the "groups_per_flex < 2" check in a similar way?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-For current version, no.
+On 04/30/2012 12:47 AM, Henri Salo wrote:
+> Can I get 2011 CVE-identifiers for SilverStripe issues fixed in
+> 2.4.4:
+> 
+> http://www.silverstripe.org/security-releases/
+> 
+> SQL information disclosure, SQL injection in Translatable
+> extension, Cross Site Request Forgery in various CMS interfaces,
+> XSS in controller action handling
+> 
+> Requested originally in http://seclists.org/oss-sec/2011/q1/12 but
+> never got assigned. I can collect information about other versions
+> too and request missing CVE-identifiers, but that will take some
+> time.
+> 
+> - Henri Salo
 
-> If not, I would not call it a incomplete fix as the issue with zero
-> division was fixed. But yes, we'd still want to include the Xi's commit.
+Ok went through the list a bit, the latest one already exists,
+assigned the 2011's:
 
-I agree.  Future compilers might break that, but it's ok for now.
+========================================
 
-> This is not only compiler specific but also architecture specific if I'm
-> not mistaken - on x86 the 1 << x shift can never become zero, whereas on
-> for example powerpc it can (for example slw instruction will give a zero
-> result when the shift amounts from 32 to 63).
+31 January 2012
+SilverStripe v2.4.7 - XSS in text transformations on templates and
+page title saving in CMS (details)
+SilverStripe v2.3.13 - See 2.4.7 (details)
+(already assigned) CVE-2012-0976 	Cross-site scripting (XSS)
+vulnerability in admin/EditForm in SilverStripe 2.4.6 allows remote
+authenticated users with Content Authors privileges to inject
+arbitrary web script or HTML via the Title parameter. NOTE: some of
+these details are obtained from third party information.
 
-You are right.  Actually the bug was found on s930/ppc with fsfuzzer.
+========================================
 
-        https://bugzilla.kernel.org/show_bug.cgi?id=14287
+18 October 2011
+SilverStripe v2.4.6 - XSS in anchor links, possible SQL injection with
+far eastern encodings, possible remote code execution through page
+comments (details)
+SilverStripe v2.3.12 - See 2.4.6 (details)
 
-If fsfuzzer were running on x86, it would not have tiggered this
-bug. ;-)
+CVE-2011-4958 Security: Cross-site scripting on anchor links
 
-You can also find the original patch there. 
+CVE-2011-4959 Security: Possible SQL injection for MySQL when using
+far east character encodings
 
-        groups_per_flex = 1 << sbi->s_log_groups_per_flex;
- 
-+        /* There are some situations, after shift the value of
-+           'groups_per_flex' can become zero and division with 0
-+           will result in fixpoint divide exception
-+         */
-+       if (groups_per_flex == 0)
-+               return 1;+
+CVE-2011-4960 Security: SQL injection in Folder::findOrMake()
+parameter (used mostly in author-only CMS through Upload::load())
 
-The check "groups_per_flex == 0" would be optimized away by Clang
-since it involves undefined behavior.  Fortunately, ext4 developers
-changed the original patch a little bit.
+CVE-2011-4961 Security: Privilege escalation from EDIT_PERMISSIONS to
+ADMIN for users access to the CMS (through Member->getCMSFields() and
+TreeMultiselectField)
 
-        http://www.spinics.net/lists/linux-ext4/msg16218.html
+CVE-2011-4962 Security: Potential remote code execution through
+serialization of page comment user submissions
 
-The revised patch combines
+========================================
 
-- an existing check "s_log_groups_per_flex == 0" (that is,
-  "groups_per_flex == 1") and
+I'll assign the 2010's when I get some more 2010 CVE's.
 
-- the proposed check "groups_per_flex == 0"
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-into "groups_per_flex < 2", which current compilers won't kill. ;-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-- xi
-
+iQIcBAEBAgAGBQJPnu6LAAoJEBYNRVNeJnmTKHQP/08l9r0+iXd4t3qXt1Nw3IRt
+Bwly+oIkAnHRDtklXujsnPuiCL2aYCTH5YpUxdXv+1GJm0sTdMnBFbeQwxZGJw4F
+v2GMewANR2j8+IIRY8UoLcVA+sMFMR+ELVnD2QFZZvxUwm7XX8f3T0Iy3WhM9xrP
+IQSTNFpptLscAI4vf2/53pUVDWgerYfc8MT1IW8IbOIn5xGEyXLOv1Fa/PFTzw1i
+Z0zS2sNe5LUDJzqFgMDcDu0ZufBrulPphYk0JqjD059jjCsEJo6faczc3z+1CJqu
+KxZNaJDh+bm5XoQE+Wed9oSjoX1JVRyShliyHwxGBV3o1A170y5Tx3gzVmRWA71n
+lZXDRSzI3qeyCytz5hywDLcXTuqukL/hsXBf49OpjahZTLAt7gIavXyD3HFhiuuD
+Ctjqm/yDsg1GY9jJiyemxBoowC3mA4FVoGo3Czx3tLFZLiJWVvxwg3UUDthFhcM0
+5f4mlo/N8LhQ2nCqNlLc7VMcakL97FgRlK1U9kSFU+Mqv3Rrne3xeqrB6I9Fc9Wl
+Jo6+hOu2vet2gDJ/1wEurXmemZN/2Qhpar7ckzhV+h9UxmURMtMXiAAYjUxFxRPl
+GJ4ujhI24FQAIkBmDmry5Od3Hpd9ZxmxVBp+GX5vNqGsT7UA7p/LGyKf+nWCNmLY
+Akvwi3mOmFNdTCLDajBA
+=as6p
+-----END PGP SIGNATURE-----
