@@ -1,84 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/26/4
-Message-ID: <4F70B928.7090308@redhat.com>
-Date: Mon, 26 Mar 2012 12:44:56 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/30/4
+Message-ID: <20120430225609.3f550281@hsalkjdhsa.lan>
+Date: Mon, 30 Apr 2012 22:56:09 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Zubin Mithra <zubin.mithra@...il.com>, Ludwig Nussel <ludwig.nussel@...e.de>, Dhanesh k <dhanesh1428@...il.com>
-Subject: Re: CVE-Request taglib vulnerabilities
+Subject: CVE request: spip before 1.9.2.o, 2.0.18 and 2.1.13 multiple XSS
 Content-Type: text/plain; charset=utf-8
 
-On 03/21/2012 12:19 PM, Zubin Mithra wrote:
-> On Wed, Mar 21, 2012 at 10:49 PM, Kurt Seifried <kseifried@...hat.com>wrote:
-> 
->> On 03/21/2012 09:42 AM, Ludwig Nussel wrote:
->>> Zubin Mithra wrote:
->>>> [...]
->>>> The issues which are present in the latest "release" but not in the
->> current
->>>> development head were :-
->>>>
->>>> [3] Lack of sanity checks of fields which were read, and were used for
->>>> allocating memory; crafted files would lead of application crash.
->>>
->>> Not an issue according to upstream:
->>> http://mail.kde.org/pipermail/taglib-devel/2012-March/002187.html
->>
->> Shouldn't it simply say "file to large" or "unable to allocate blah"
->> something rather than crashing? I assume by "large" file the file
->> doesn't actually need to be large, just the header information needs to
->> claim it is large?
->>
-> 
-> Yes, the file does not need to be large, it just needs to have a crafted
-> header.
-> 
-> On investigating the issue further, discussing with a developer Lukas
-> Laninsky and providing PoC's, we had confirmed that the root issue was an
-> Integer overflow - which would cause a large allocation and crash the
-> application.
-> 
-> The changeset that corrects it can be found here =>
-> https://github.com/taglib/taglib/commit/dcdf4fd954e3213c355746fa15b7480461972308
+http://www.securityfocus.com/bid/53216/info
+http://archives.rezo.net/archives/spip-en.mbox/U5QUZ6WJRAJC7H5BR7W5SQG6WCD3PXL7/
 
-Please use CVE-2012-1584 for this issue.
-
-> 
-> 
->>
->>>> [4] A one bit change in a working ogg file would cause a thread to loop
->>>> infinitely.
->>>
->>> http://mail.kde.org/pipermail/taglib-devel/2012-March/002191.html
->>>
->> https://github.com/taglib/taglib/commit/b3646a07348ffa276ea41a9dae03ddc63ea6c532
->>
->> Has this been confirmed? Does the looping thread actually cause a DoS,
->> simply slow down the application a bit, or?
->>
-> 
-> Yes, it just causes a thread to cause an infinite loop and does not cause
-> an application crash.
-
-Ok, not assigning a CVE then. Thanks!
-
-> 
-> 
->>
->>> cu
->>> Ludwig
->>
->>
->>
->> --
->> Kurt Seifried Red Hat Security Response Team (SRT)
->>
-> 
-> 
-> Regards,
-> Zubin Mithra
-> 
-
+Info is very limited, though I'd suggest just having one CVE referring
+to "multiple XSS".
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
