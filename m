@@ -1,64 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/23/2
-Message-ID: <Pine.GSO.4.64.1202231254510.17983@faron.mitre.org>
-Date: Thu, 23 Feb 2012 13:10:40 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/30/1
+Message-ID: <20120430064747.GA28485@kludge.henri.nerv.fi>
+Date: Mon, 30 Apr 2012 09:47:47 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-cc: muuratsalo experimental hack lab <muuratsalo@...il.com>, Ulli Horlacher <framstag@....uni-stuttgart.de>
-Subject: Re: Vulnerabilitites in Debian F*EX <= 20100208 and F*EX 20111129-2.
+Cc: Hanno Böck <hanno@...eck.de>
+Subject: CVE-request: SilverStripe before 2.4.4
 Content-Type: text/plain; charset=utf-8
 
+Can I get 2011 CVE-identifiers for SilverStripe issues fixed in 2.4.4:
 
-Nico Golde said:
+http://www.silverstripe.org/security-releases/
 
->>>> Can someone please assign a CVE id to this? Given that all of
->>>> the vulnerable input parameters are in the fup component, I
->>>> guess one id should be sufficient.
+SQL information disclosure, SQL injection in Translatable extension, Cross
+Site Request Forgery in various CMS interfaces, XSS in controller action
+handling
 
-We actually need two CVEs here.
+Requested originally in http://seclists.org/oss-sec/2011/q1/12 but never got assigned. I can collect information about other versions too and request missing CVE-identifiers, but that will take some time.
 
-Which components the vulnerabilities are in, is rarely relevant for 
-deciding how many CVEs to assign.  Much more critical is which versions 
-are affected.  The original researcher provided two advisories for 2 
-different versions.  So even though "fup" is affected, we mould need to 
-SPLIT if there are some items/vectors/issues that affect different 
-versions than others (hint: we will SPLIT.)
-
-Kurt said:
-
-> Please use CVE-2012-0869 for this issue.
-
-Here are the breakdowns for the two advisories/versions:
-
-F*EX <= 20100208
-   fup / from parameter
-   fup / to parameter
-   fup / id parameter
-
-F*EX 20111129-2
-   fup / id parameter
-
-
-So, based on the original report, we have:
-
-   20100208 only:
-     fup / from
-     fup / to
-
-   20100208 *and* 20111129-2
-     fup / id
-
-So, we MERGE the "fup" and "from" vectors since they affect the same 
-version, and we SPLIT these from the "id" vector. (For the incredibly 
-detail-oriented: whether the parameters come via GET or POST methods is 
-irrelevant for CVE.)
-
-Now, the question is which issue we link with CVE-2012-0869.  Since Debian 
-bug 660621 focuses on the id parameter, and that paremeter affects both 
-listed versions, I guess it makes sense to focus CVE-2012-0869 on the id 
-parameter.
-
-I've assigned CVE-2012-1293 for the "from" and "to" parameters that are 
-only listed for 20100208.
-
-- Steve
+- Henri Salo
