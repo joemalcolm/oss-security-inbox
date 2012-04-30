@@ -1,58 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/11/7
-Message-ID: <4F0E1E5F.4020902@redhat.com>
-Date: Wed, 11 Jan 2012 16:42:23 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/30/5
+Message-ID: <20120430215744.GK13910@redhat.com>
+Date: Mon, 30 Apr 2012 15:57:44 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: Wireshark multiple vulnerabilities
+Subject: Re: weak use of crypto in python-elixir can lead to information disclosure (CVE and peer review request)
 Content-Type: text/plain; charset=utf-8
 
-On 01/11/2012 09:19 AM, Agostino Sarubbo wrote:
-> According to secunia advisory: https://secunia.com/advisories/47494/ :
+* [2012-04-28 13:58:15 +0200] Florian Weimer wrote:
+
+>> CFB mode is only secure if the the IV is unpredictable and different
+>> for every message.
 >
-> Multiple vulnerabilities have been reported in Wireshark, which can be 
-> exploited by malicious people to cause a DoS (Denial of Service) and 
-> compromise a user's system.
+>There are a few additional requirements.  Without some form of message
+>authentication, chosen-ciphertext attacks are still possible even with
+>a random IV.
+
+I'm no crypto expert, so I don't have a comment on this (although I did
+note this message in our bug, so that those smarter than I can look at
+it).
+
+>> Because of this, and because the encryption key is shared for each
+>> database table (fields and rows), the same plaintext prefix is
+>> always encrypted to an identical and corresponding ciphertext
+>> prefix.  As a result, an attacker with access to the database could
+>> figure out the plaintext values of encrypted text.
 >
-> 1) NULL pointer dereference errors when reading certain packet information can 
-> be exploited to cause a crash.
->
-> 2) An error within the RLC dissector can be exploited to cause a buffer 
-> overflow via a specially crafted RLC packet capture file.
->
-> and according with upstream advisory:
->
-> 1)http://www.wireshark.org/security/wnpa-sec-2012-01.html
-> Name: Multiple Wireshark file parser vulnerabilities
-> Description:
-> Laurent Butti discovered that Wireshark failed to properly check record sizes 
-> for many packet capture file formats.
-> Impact:
-> It may be possible to make Wireshark crash by convincing someone to read a 
-> malformed packet trace file.
-Please use CVE-2012-0041 for this issue
->
-> 2)http://www.wireshark.org/security/wnpa-sec-2012-02.html
-> Name: Wireshark NULL pointer vulnerabilities
-> Description:
-> Wireshark was improperly handling NULL pointers when displaying packet 
-> information which could lead to a crash.
-> Impact:
-> It may be possible to make Wireshark crash by injecting a malformed packet 
-> onto the wire or by convincing someone to read a malformed packet trace file.
-Please use CVE-2012-0042 for this issue
->
-> 3)http://www.wireshark.org/security/wnpa-sec-2012-03.html
-> Name: Wireshark RLC dissector buffer overflow
-> Description:
-> The RLC dissector could overflow a buffer.
-> Impact:
-> It may be possible to make Wireshark crash by injecting a malformed packet 
-> onto the wire or by convincing someone to read a malformed packet trace file.
-Please use CVE-2012-0043 for this issue
+>And you can group by encrypted column values in the database.  That's
+>why I'm not sure if it's actually possible to address this issue in a
+>satisfying manner.
+
+So the encryption can be more fine-grained than just per-table?  You can
+also do it per-column?  If that's the case, this does sound a lot uglier
+to deal with.
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
