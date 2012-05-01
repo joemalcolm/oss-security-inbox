@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/6
-Message-ID: <4F09F304.6080001@redhat.com>
-Date: Mon, 09 Jan 2012 03:48:20 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/01/1
+Message-ID: <8762cg8997.fsf@mid.deneb.enyo.de>
+Date: Tue, 01 May 2012 12:51:16 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: Malicious devices & vulnerabilties
+Subject: Re: weak use of crypto in python-elixir can lead to information disclosure (CVE and peer review request)
 Content-Type: text/plain; charset=utf-8
 
-On 01/08/2012 07:19 PM, Florian Weimer wrote:
-> * Xi Wang:
-> 
->> I am wondering where to draw the line.  Should such device drivers
->> be considered vulnerable or not?  Thanks.
-> 
-> I think they should be considered vulnerable.  Some applications need
-> some robustness to attacks even from the local console (e.g., student
-> computer rooms).
-> 
-> USB is also a popular transport in many air-gapped environments.
+* Vincent Danen:
 
-I would consider them vulnerable with low security impacts. If you are
-fixing such issues, do post them to the list.
+>>And you can group by encrypted column values in the database.  That's
+>>why I'm not sure if it's actually possible to address this issue in a
+>>satisfying manner.
+>
+> So the encryption can be more fine-grained than just per-table?  You can
+> also do it per-column?  If that's the case, this does sound a lot uglier
+> to deal with.
 
-Thanks, Eugene
+This test case suggests to me that you have to specify the list of
+encrypted columns explicitly:
+
+<http://elixir.ematia.de/trac/browser/elixir/trunk/tests/test_encryption.py>
+
+Based on this example, it's not clear to me if the current
+implementation supports get_by with an encrypted column.  If this is a
+feature which needs preserving, there is no apparent way around
+convergent encryption.
