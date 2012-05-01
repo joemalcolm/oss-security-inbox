@@ -1,19 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/20
-Message-ID: <20120104000438.4a775851@w0wkgxv41q>
-Date: Wed, 4 Jan 2012 00:04:38 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/01/2
+Message-ID: <871un488o3.fsf@mid.deneb.enyo.de>
+Date: Tue, 01 May 2012 13:03:56 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS in wordpress 3.3
+Subject: Re: weak use of crypto in python-elixir can lead to information disclosure (CVE and peer review request)
 Content-Type: text/plain; charset=utf-8
 
-http://oldmanlab.blogspot.com/2012/01/wordpress-33-xss-vulnerability.html
+* Florian Weimer:
 
-Fix in 3.3.1:
-https://wordpress.org/news/2012/01/wordpress-3-3-1/
+> * Vincent Danen:
+>
+>>>And you can group by encrypted column values in the database.  That's
+>>>why I'm not sure if it's actually possible to address this issue in a
+>>>satisfying manner.
+>>
+>> So the encryption can be more fine-grained than just per-table?  You can
+>> also do it per-column?  If that's the case, this does sound a lot uglier
+>> to deal with.
+>
+> This test case suggests to me that you have to specify the list of
+> encrypted columns explicitly:
+>
+> <http://elixir.ematia.de/trac/browser/elixir/trunk/tests/test_encryption.py>
+>
+> Based on this example, it's not clear to me if the current
+> implementation supports get_by with an encrypted column.  If this is a
+> feature which needs preserving, there is no apparent way around
+> convergent encryption.
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+So it turns out that this passes the assert:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+        p = Person.get_by(password='r\\x9d\\xa8\\xb4\\x8d|\\xffp\\xf5\\x0e')
+        assert p.name == 'Jonathan LaCour'
+
+But this fails because p is None:
+
+        p = Person.get_by(ssn='123-45-6789')
+        assert p.name == 'Jonathan LaCour'
+
+This suggests to me that get_by on an encrypted column is not actually
+supported.
+
+The documentation doesn't describe which queries are supported:
+<http://elixir.ematia.de/apidocs/elixir.ext.encrypted.html>
