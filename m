@@ -1,24 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/16
-Message-ID: <1354059765.7676.18.camel@scapa>
-Date: Wed, 28 Nov 2012 00:42:45 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/01/4
+Message-ID: <4FA03986.3000107@redhat.com>
+Date: Tue, 01 May 2012 13:29:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: secure-testing-team@...ts.alioth.debian.org, Russ Allbery <rra@...ian.org>,  code@...zashack.org, temp66@...il.com
-Subject: Re: rssh: incorrect filtering of command line options
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: spip before 1.9.2.o, 2.0.18 and 2.1.13 multiple XSS
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2012-11-28 at 00:21 +0100, Yves-Alexis Perez wrote:
-> CVE-2012-2251
->         Incorrect filtering of the "--rsh" option: the filter preventing usage of the
->         "--rsh=" option would not prevent passing "--rsh". This vulnerability affects
->         upstream code.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/30/2012 02:56 PM, Hanno Böck wrote:
+> http://www.securityfocus.com/bid/53216/info 
+> http://archives.rezo.net/archives/spip-en.mbox/U5QUZ6WJRAJC7H5BR7W5SQG6WCD3PXL7/
+>
+>  Info is very limited, though I'd suggest just having one CVE
+> referring to "multiple XSS".
 > 
-This is indeed CVE-2012-2252, sorry for that.
 
-Regards,
--- 
-Yves-Alexis Perez
- Debian Security
+Please use CVE-2012-2151 for SPIP prior to 1.9.2o, 2.0.18 et 2.1.13
+xss vulns.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPoDmGAAoJEBYNRVNeJnmT96EP/3ZtmBqYNBk+OtUBDUZtivCK
+2gqjJjSZNhPTod3KNSVTLwVeG7S5fZ1Isct0kbNc0bAf8ww0N9xK4QsvSBSpAEiO
+y9Zo0EcBGNhbaVKPdQS9b1n0bC0ZUbVpIA7MScYRBBUnEBrBSP1zSn551XRgMpYE
+RCDZkYXEfGkvZUviUnrC9e38mxB7k/jr7tV+T/UVAR3LUjhraPNZTPckhUp9XqA/
+3H0z9ik8AHe7aT3Xo11FM837eJCRdoENzxCXiAphz4qgCUnt3NGWbUrdHKyDtq7W
+bMpcVCprmy0QmXMG0BWJXpscpH1SIcROC35OdApAySrPh2vmivM0L3e2yFrq/cul
+C/YFPCjJsdd53T7bZnpaeQchvSAVnHkrowyASyhF/RlBf/i8oewTnefmWjYKOpsQ
+2Oheu6len/cuCK2/0H+xjmFlQmlQDNa6smO9Q5PYn95AKzRKkdHRiRiRO0FTbIy1
+BVMLRCq0v+/Mg83DaJB1G7aqE6cIZEgyuJj/wc8tUDpd3X/4WkEJx8OEGKtH7aoc
+/nPrNZNpCcCLE5kekI5DgBN5DWX0gEtowRPdbgRG9ecevsJx8jsEAhhv43v6VrYo
+uCNKl6EIxONpIGUUTyEuxXhpZcpP5/o++GuPB97XGo90Jqsq62J2n//S18PjOJ7F
+3eE/1O1YFyaG0fwY5WaB
+=epre
+-----END PGP SIGNATURE-----
