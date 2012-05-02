@@ -1,42 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/08/2
-Message-ID: <20121008125123.GI13520@kludge.henri.nerv.fi>
-Date: Mon, 8 Oct 2012 15:51:23 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/7
+Message-ID: <20120502221425.GY13910@redhat.com>
+Date: Wed, 2 May 2012 16:14:25 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE-request: SMF index.php msg parameter SQL-injection (2005)
+Subject: Re: weak use of crypto in python-elixir can lead to information disclosure (CVE and peer review request)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 14, 2012 at 11:29:07AM -0600, Kurt Seifried wrote:
-> On 09/14/2012 06:40 AM, Henri Salo wrote:
-> > Hello list,
-> > 
-> > Old SQL-injection security issue in SMF does not have
-> > CVE-identifier. Could you please assign one from year 2005,
-> > thanks.
-> > 
-> > Affected versions: <= 1.0.4 Fixed in 1.0.5
-> > 
-> > References: http://osvdb.org/17458 
-> > http://secunia.com/advisories/15784/
-> > 
-> > - Henri Salo ps. never too late
-> > 
-> 
-> Can you confirm this isn't
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-4159
+* [2012-05-01 13:03:56 +0200] Florian Weimer wrote:
 
-To me this looks like a different vulnerability, because of different affected files and parameters.
+>* Florian Weimer:
+>
+>> * Vincent Danen:
+>>
+>>>>And you can group by encrypted column values in the database.  That's
+>>>>why I'm not sure if it's actually possible to address this issue in a
+>>>>satisfying manner.
+>>>
+>>> So the encryption can be more fine-grained than just per-table?  You can
+>>> also do it per-column?  If that's the case, this does sound a lot uglier
+>>> to deal with.
+>>
+>> This test case suggests to me that you have to specify the list of
+>> encrypted columns explicitly:
+>>
+>> <http://elixir.ematia.de/trac/browser/elixir/trunk/tests/test_encryption.py>
+>>
+>> Based on this example, it's not clear to me if the current
+>> implementation supports get_by with an encrypted column.  If this is a
+>> feature which needs preserving, there is no apparent way around
+>> convergent encryption.
+>
+>So it turns out that this passes the assert:
+>
+>        p = Person.get_by(password='r\\x9d\\xa8\\xb4\\x8d|\\xffp\\xf5\\x0e')
+>        assert p.name == 'Jonathan LaCour'
+>
+>But this fails because p is None:
+>
+>        p = Person.get_by(ssn='123-45-6789')
+>        assert p.name == 'Jonathan LaCour'
+>
+>This suggests to me that get_by on an encrypted column is not actually
+>supported.
+>
+>The documentation doesn't describe which queries are supported:
+><http://elixir.ematia.de/apidocs/elixir.ext.encrypted.html>
 
-CVE-2005-XXXX:
-index.php
-http://osvdb.org/17458
-http://www.securiteam.com/exploits/5HP0N0KG0O.html
+Thanks, Florian.  Seems like this thing is a bit messy.  I did post your
+questions to the Red Hat bug, and there were some developer responses
+there.
 
-CVE-2005-4159:
-Memberlist.php
-http://osvdb.org/21722
-http://archives.neohapsis.com/archives/bugtraq/2005-12/0090.html
+The long and short of it is that, despite what you've brought up, they
+feel the fix is still appropriate.
 
-- Henri Salo
+https://bugzilla.redhat.com/show_bug.cgi?id=810013#c33 (for this
+interested in the details).
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
