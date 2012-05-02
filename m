@@ -1,38 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/2
-Message-ID: <4F162EC9.4030404@redhat.com>
-Date: Tue, 17 Jan 2012 19:30:33 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/1
+Message-ID: <20120502052132.GA14818@openwall.com>
+Date: Wed, 2 May 2012 09:21:32 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
+Cc: Jeff Law <law@...hat.com>, Paul Wouters <pwouters@...hat.com>
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-On 01/17/2012 07:25 PM, Eugene Teo wrote:
-> "Jüri Aedla reported that the /proc/<pid>/mem handling really isn't very
-> robust, and it also doesn't match the permission checking of any of the
-> other related files.
->
-> This changes it to do the permission checks at open time, and instead of
-> tracking the process, it tracks the VM at the time of the open.  That
-> simplifies the code a lot, but does mean that if you hold the file
-> descriptor open over an execve(), you'll continue to read from the _old_ VM.
->
-> That is different from our previous behavior, but much simpler.  If
-> somebody actually finds a load where this matters, we'll need to revert
-> this commit.
->
-> I suspect that nobody will ever notice - because the process mapping
-> addresses will also have changed as part of the execve.  So you cannot
-> actually usefully access the fd across a VM change simply because all
-> the offsets for IO would have changed too."
->
-> http://git.kernel.org/linus/e268337dfe26dfc7efd422a804dbb27977a3cccc
->
-> Thanks, Eugene
-Please use CVE-2012-0056 for this issue.
+On Fri, Mar 30, 2012 at 11:05:32PM +0400, Solar Designer wrote:
+> On Fri, Mar 30, 2012 at 12:47:54PM -0600, Jeff Law wrote:
+> > On 03/30/2012 12:43 PM, Solar Designer wrote:
+> > >Do you realize that plenty of services that use crypt() - likely the
+> > >majority of them, even - don't handle NULL returns, so they will
+> > >segfault when these conditions are triggered?
+> > 
+> > Then, IMHO,  the app is clearly broken.  Crypt has been defined as 
+> > potentially returning NULL and at least for glibc has done so since the 
+> > introduction of sha256/sha512, if the app fails to check for that, then 
+> > the app needs to be fixed.
+> 
+> Sure.  I am not arguing against fixing the apps (in fact, I am planning
+> to fix one of mine - code originally written in 1998 or so - regardless
+> of what glibc does on this), but I am arguing for not having glibc
+> expose the problem.
+> 
+> Considering the age of Unix, SUSv2 and POSIX.1-2001 are fairly recent
+> (I think this may be when the NULL returns were first standardized), and
+> glibc's SHA-crypt is very young.  It still makes sense to support apps
+> older than that, including without changes.
 
--- 
+Paul Wouters (Red Hat) has started to fix the apps:
 
--- Kurt Seifried / Red Hat Security Response Team
+https://mobile.twitter.com/letoams/status/195181246614224896
 
+"sent crypt() NULL patches out for apg control-center cyrus-sasl openssh
+pam passwdqc ppp python screen shadow-utils sysvinit-tools yp-tools
+7 days ago"
+
+Thanks again, Paul!
+
+Alexander
