@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/14
-Message-ID: <20121114181112.GC2922@hal.local.invalid>
-Date: Wed, 14 Nov 2012 19:11:12 +0100
-From: Guido Berhoerster <guido+openwall.com@...hoerster.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/2
+Message-ID: <4FA0EE48.4080602@suse.de>
+Date: Wed, 02 May 2012 10:20:24 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vulnerabilities in Oki CUPS printer drivers
+Subject: Re: CVE Request: libsoup 2.32.2 sets ssl trusted flag despite no verification
 Content-Type: text/plain; charset=utf-8
 
-* Kurt Seifried <kseifried@...hat.com> [2012-11-14 18:42]:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+Vincent Danen wrote:
+> * [2012-04-24 12:04:24 +0200] Ludwig Nussel wrote:
 > 
-> On 09/18/2012 02:21 AM, Guido Berhoerster wrote:
-> > 
-> > Vulnerabilities in Oki CUPS printer drivers
-> > 
-> > The following describes a security vulnerability in several Oki 
-> > CUPS drivers. While I'm not aware that these drivers are packaged 
-> > in any ditribution, they are free software (licensed under the GPL 
-> > v2 or later) and made available via the Oki website and their FTP 
-> > server so I hope this is on topic here.
+>> libsoup 2.32.2 does not verify certificates at all if an application does
+>> not explicitly specify a file with trusted root CA's. Since that libsoup
+>> version relies on the verification failure to clear the trust flag it
+>> always considers ssl connections as trusted in that case.
+>>
+>> Reference:
+>> https://bugzilla.novell.com/show_bug.cgi?id=758431
 > 
-> Apologies for the delay on this, the files are no longer available on
-> the Oki ftpsite, so I assume the vendor "fixed" this by removing them?
-> I managed to dig up some copies of the file through google but they
-> don't contain the okijobaccounting script or the
-> rastertookimonochrome. So I can't confirm this (can anyone other than
-> the original reporter? (e.g. iSIGHT or iDefense? I'm pretty sure you
-> guys cover Oki as a vendor =).
-> 
+> Are you sure it's just this specific version of libsoup?  Looking at the
+> code of earlier versions (such as 2.2.98), the patch noted in your bug
+> would apply (unless there is some other context around it that would
+> make this a non-issue?).  Did you look at other versions at all?
 
-AFAICS all drivers have been replaced now, the new filter scripts
-seem to use /bin/mktemp and $TMPDIR which is set by CUPS.
-I have the vulnerable driver versions archieved and can make them
-available on request.
+No, we actually didn't.
+
+cu
+Ludwig
+
 -- 
-Guido Berhoerster
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
