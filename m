@@ -1,113 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/24
-Message-ID: <4F553E93.1010908@redhat.com>
-Date: Mon, 05 Mar 2012 15:30:43 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/5
+Message-ID: <4FA1659C.7040702@redhat.com>
+Date: Wed, 02 May 2012 10:49:32 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Roland Gruber <post@...andgruber.de>, Fabio Tranchitella <kobold@...ian.org>, Dmitry Butskoy <Dmitry@...skoy.name>
-Subject: Re: CVE Request -- LDAP Account Manager Pro / PhpLDAPadmin -- Multiple XSS flaws
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: dhcpcd 3.2.3 remote stack overflow / denial of service
 Content-Type: text/plain; charset=utf-8
 
-On 03/05/2012 03:36 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
->   originally (2012-03-01), the following cross-site (XSS) flaws were
-> reported
-> against LDAP Account Manager Pro (from Secunia advisory [1]):
-> 
-> * 1) Input passed to e.g. the "filteruid" POST parameter when filtering
-> result
-> sets in lam/templates/lists/list.php (when "type" is set to a valid
-> value) is
-> not properly sanitised before being returned to the user. This can be
-> exploited
-> to execute arbitrary HTML and script code in a user's browser session in
-> context of an affected site.
-> 
-> * 2) Input passed to the "filter" POST parameter in
-> lam/templates/3rdParty/pla/htdocs/cmd.php (when "cmd" is set to "export"
-> and
-> "exporter_id" is set to "LDIF") is not properly sanitised before being
-> returned
-> to the user. This can be exploited to execute arbitrary HTML and script
-> code in
-> a user's browser session in context of an affected site.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2012-1114 for these two issues (XSS, same reporter)
+On 05/02/2012 10:08 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> I would like a CVE for following issue:
+> 
+> One of our customers reported a crash of dhcpcd (a DHCP client)
+> version 3.2.3 as found in our products.
+> 
+> This was triggered by regular network traffic happening, so
+> attackers in the local network could inject such a packet.
+> 
+> The issue is apparently fixed in dhcpcd-4.0.2 (oldest GIT revision
+> of dhcpcd I can find), as it features the necessary checks on
+> cursory review.
+> 
+> 
+> Problem is that the "to copyed" size of a packet is decoded from
+> the network data and not checked against the maximum size of the
+> retrieved packet.
+> 
+> In dhcpcd 3.2.3 it is copied to a fixed size stackbuffer on some
+> paths and so overwrites stack.
+> 
+> On our SLE11 product this is caught by -fstack-protector, turning
+> this into a remote denial of service (crash).
+> 
+> Place to look for places like this:
+> 
+> bytes = get_udp_data(&pp, packet); if ((size_t)bytes >
+> sizeof(*dhcp)) { syslog(LOG_ERR, "%s: packet greater than DHCP size
+> from %s", iface->name, inet_ntoa(from)); continue; }
+> 
+> bytes is calculated from packet data and not bounded in
+> get_udp_data(). So without the if() check, it would later copy over
+> bytes into a fixed buffer in some paths.
+> 
+> Also: bytes = packet.bh_caplen - ETHER_HDR_LEN; if (bytes > len) 
+> bytes = len; memcpy(data, payload, bytes);
+> 
+> I have pasted the current patch we use against our quite heavily
+> patches dhcpcd 3.2.3 on
+> https://bugzilla.novell.com/show_bug.cgi?id=760334
+> 
+> Reference: https://bugzilla.novell.com/show_bug.cgi?id=760334
+> 
+> Ciao, Marcus
 
-> * 3) Input passed to the "attr" parameter in
-> lam/templates/3rdParty/pla/htdocs/cmd.php (when "cmd" is set to
-> "add_value_form" and "dn" is set to a valid value) is not properly
-> sanitised
-> before being returned to the user. This can be exploited to execute
-> arbitrary
-> HTML and script code in a user's browser session in context of an affected
-> site.
+For the record: this is about as perfect as a CVE request gets =)
 
-Please use CVE-2012-1115 for this vu;n (XSS, but different reporter)
+Please use CVE-2012-2152  for this issue.
 
-> References:
-> [1] http://secunia.com/advisories/48221/
-> [2] http://www.vulnerability-lab.com/get_content.php?id=458
-> 
-> Later (2012-03-03), it was reported:
-> [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=662050#15
-> 
-> that subset (for 'export', 'add_value_form', and 'dn' variables) of these
-> security flaws is applicable also against the code of PhpLDAPadmin, a
-> web-based
-> LDAP client.
-> 
-> Patches from LDAP Account Manager, which are applicable to PphLDAPAdmin:
-> [4]
-> http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/lib/export_functions.php?r1=1.4&r2=1.5
-> 
-> 
-> [5]
-> http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/htdocs/export.php?r1=1.1&r2=1.2
-> 
-> 
-> [6]
-> http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/htdocs/add_value_form.php?r1=1.6&r2=1.7
-> 
-> 
-> I would swear, I have seen LDAP Account Manager CVE request on OSS
-> security mailing list
-> recently, but can't find it now quickly right now. Kurt, please prior
-> assigning CVE ids
-> to "LDAP Account Manager Pro" please double check the main CVE mitre
-> database, if these
-> didn't get a CVE identifier yet.
-> 
-> Wrt to PhpLDAPAdmin side -- I am not sure, what's the relation of the
-> code between LAM and
-> PLA (if PLA is using / embedding some code of LAM directly or if there
-> were also some
-> customizations on the side of PLA upon LAM code embedding / inclusion).
-> Hopefully Roland,
-> Fabio, Dmitry can clarify here, how much the PhpLDAPAdmin code is
-> different from LDAP
-> Account Manager code (if it's just overtaken LAM code or PhpLDAPAdmin
-> have also made
-> their own customizations to the code)?
-> 
-> Roland, Fabio, Dmitry, basically what we are searching an answer for is,
-> if the PhpLDAPAdmin
-> code is different enough it safe to be considered as a different code
-> base and separate
-> CVE identifier to be allocated for it? (IOW one for LDAP Account Manager
-> Pro issues,
-> the other for PhpLDAPAdmin issues)
-> 
-> Kurt, once the above doubt solved and you checked and confirmed, that
-> LDAP Account Manager
-> issue did not get CVE identifier in the recent past yet, could you
-> allocate those?
-> 
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPoWWbAAoJEBYNRVNeJnmTSyQQANX5RzPCr5crrVvVdzbhHVeE
+E6eG+VrU1+6kW16ELlC6NntivQWXtx0PiwSR6WMqfaFw69+RJOAHTYYheQYjhAkv
+WzG84mqZHFAXRPwh7mB19vq4W2YhVt58MvDAQOXojX5FmBR9jPxXvKKU3qQR+6b3
+tU7JytuzJ7PCUHFLrERnKyda9yiawQvE09IJJpeiyIqha0ZHayYXCatyRetpMPQP
+8YzPOZ1aLBJEkbjFTY441npKH8tu0RyDyafhRjpz4i3YUT+XxpWRQ3oA7EnTfNWN
+izFp/epIQQ+YPPYs5mw5cLBZip2XvQhf2G+OLAMN9R+tySD32VqbBBrHP+OZoUrE
+XZjo2h1adm/r2siETX3mkdUvT8rxarJP9j2l0VQOQ8gIQViI7I+PjupA7mfFT2NS
+IOQrZeqlmzuJc9cnerlK5iED5BhAiXhvt3TzhDrUMRQNRL2QIRUeTb5lI34mtf2Y
+wSgl2wchARkN8c4Rok/zFMGDh+2MN/EmfscHqcBZJ9zhZ7giQADjcyG9wPMnJzmd
+GSDKmZMcQ8zIqyvZEE2OdoXc8SoKEwSDk7kD5eXw8NVn+mZY8knsCyGPLfCAEQX2
+qzDolOadO+1nyl/nENicdKCeV64dLe5x+8el7KWGlaID7bMpNMRfez0myUcOcvR/
+RgECkrqMseLYbStFKlS2
+=5d9X
+-----END PGP SIGNATURE-----
