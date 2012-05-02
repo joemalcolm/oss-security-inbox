@@ -1,43 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/27
-Message-ID: <CAAsmaPbCabXDvE=54eqbqAZtp+q9UJH_bgLF6WGERo80aeRnHA@mail.gmail.com>
-Date: Thu, 19 Jan 2012 17:35:23 -0600
-From: Tim Zingelman <tez@...bsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/8
+Message-ID: <20120502221752.GZ13910@redhat.com>
+Date: Wed, 2 May 2012 16:17:52 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Screen locking programs on Xorg 1.11
+Subject: Re: CVE Request: libsoup 2.32.2 sets ssl trusted flag despite no verification
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 19, 2012 at 1:18 PM, Florian Weimer <fw@...eb.enyo.de> wrote:
->> I recently found out that it is possible to kill a screensaver/screen
->> locker program on the latest version of Xorg (1.11 shipped with
->> archlinux, debian wheezy..) using the Ctrl+Alt+Multiply key binding.
->
-> This used to be, uhm, common knowledge:
->
-> | Option "AllowDeactivateGrabs" "boolean"
-> |     This option enables the use of the Ctrl+Alt+Keypad-Divide key
-> |     sequence to deactivate any active keyboard and mouse
-> |     grabs. Default: off.
-> |
-> | Option "AllowClosedownGrabs" "boolean"
-> |     This option enables the use of the Ctrl+Alt+Keypad-Multiply key
-> |     sequence to kill clients with an active keyboard or mouse grab as
-> |     well as killing any application that may have locked the server,
-> |     normally using the XGrabServer(3x) Xlib function. Default: off.
-> |
-> |     Note that the options AllowDeactivateGrabs and AllowClosedownGrabs
-> |     will allow users to remove the grab used by screen saver/locker
-> |     programs. An API was written to such cases. If you enable this
-> |     option, make sure your screen saver/locker is updated.
->
-> <http://www.x.org/archive/X11R6.8.1/doc/Xorg.1.html>
->
-> The API in question appears to be XF86MiscSetGrabKeysState:
->
-> <http://cvsweb.xfree86.org/cvsweb/xc/programs/Xserver/hw/xfree86/XF86Config.man?hideattic=0#rev1.6>
+* [2012-05-02 10:20:24 +0200] Ludwig Nussel wrote:
 
-Given this additional information isn't this a vulnerability issue in
-the various screen lock applications rather than an issue with the
-Xorg server?
+>Vincent Danen wrote:
+>> * [2012-04-24 12:04:24 +0200] Ludwig Nussel wrote:
+>>
+>>> libsoup 2.32.2 does not verify certificates at all if an application does
+>>> not explicitly specify a file with trusted root CA's. Since that libsoup
+>>> version relies on the verification failure to clear the trust flag it
+>>> always considers ssl connections as trusted in that case.
+>>>
+>>> Reference:
+>>> https://bugzilla.novell.com/show_bug.cgi?id=758431
+>>
+>> Are you sure it's just this specific version of libsoup?  Looking at the
+>> code of earlier versions (such as 2.2.98), the patch noted in your bug
+>> would apply (unless there is some other context around it that would
+>> make this a non-issue?).  Did you look at other versions at all?
+>
+>No, we actually didn't.
 
- - Tim
+At least 2.34 is vulnerable as well.  Older versions, at least 2.28,
+don't have the vulnerable feature (so it broke somewhere between 2.28
+and 2.32.2, likely when the feature was added).
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
