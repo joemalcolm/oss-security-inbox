@@ -1,65 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/2
-Message-ID: <4F628BFB.1060901@redhat.com>
-Date: Thu, 15 Mar 2012 18:40:27 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/3
+Message-Id: <201205020812.50322.sgrubb@redhat.com>
+Date: Wed, 2 May 2012 08:12:50 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-Subject: Re: CVE-request: apache's mod-fcgid does not respect configured FcgidMaxProcessesPerClass in VirtualHost
+Cc: Solar Designer <solar@...nwall.com>, Jeff Law <law@...hat.com>, Paul Wouters <pwouters@...hat.com>
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-On 03/15/2012 12:39 PM, Daniel Kahn Gillmor wrote:
-> Version 2.3.6 of mod-fcgid (the current published version from ASF
-> according to [0]) has a known problem that FcgidMaxProcessesPerClass
-> directives are not honored when they appear inside a VirtualHost stanza.
->
-> This is presents a risk for a denial of service because it means that
-> a remote attacker can violate the intent of the admin and overwhelm
-> the server running fcgid.
->
-> Could a CVE be assigned for this vulnerability?
->
-> If the admin declares that a given virtualhost should be limited to X
-> fastcgi processes (often in order to constrain RAM usage by the
-> vhost), any remote user can issue X+1 (or 10X, or whatever) concurrent
-> GET requests, which defeats the documented limit, and can result in
-> heavy swap or the oom-killer, which can cause a DoS on other services
-> on the host.
->
-> This bug has been fixed since the release of 2.3.6 in upstream's svn
-> (r1037727 of https://svn.apache.org/repos/asf/httpd/mod_fcgid/trunk)
-> with a narrowly-targeted one-line patch:
->
-> --- modules/fcgid/fcgid_spawn_ctl.c    (revision 1037726)
-> +++ modules/fcgid/fcgid_spawn_ctl.c    (revision 1037727)
-> @@ -178,7 +178,7 @@
->          if (current_node->inode == command->inode
->              && current_node->deviceid == command->deviceid
->              && !strcmp(current_node->cmdline, command->cmdline)
-> -            && current_node->vhost_id == sconf->vhost_id
-> +            && current_node->vhost_id == command->vhost_id
->              && current_node->uid == command->uid
->              && current_node->gid == command->gid)
->              break;
->
-> But this patch hasn't made it to any released version.
->
-> Debian has plans to release a Debian Security Advisory for the issue
-> and will resolve it with the above patch.
->
-> This problem is also documented at:
->
->  https://issues.apache.org/bugzilla/show_bug.cgi?id=49902
->  http://bugs.debian.org/615814
->
-> Regards,
->
->     --dkg
->
-> [0] https://httpd.apache.org/mod_fcgid/
-Please use CVE-2012-1181 for this issue.
+On Wednesday, May 02, 2012 01:21:32 AM Solar Designer wrote:
+> On Fri, Mar 30, 2012 at 11:05:32PM +0400, Solar Designer wrote:
+> > On Fri, Mar 30, 2012 at 12:47:54PM -0600, Jeff Law wrote:
+> > > On 03/30/2012 12:43 PM, Solar Designer wrote:
+> > > >Do you realize that plenty of services that use crypt() - likely the
+> > > >majority of them, even - don't handle NULL returns, so they will
+> > > >segfault when these conditions are triggered?
+> > > 
+> > > Then, IMHO,  the app is clearly broken.  Crypt has been defined as
+> > > potentially returning NULL and at least for glibc has done so since the
+> > > introduction of sha256/sha512, if the app fails to check for that, then
+> > > the app needs to be fixed.
+> > 
+> > Sure.  I am not arguing against fixing the apps (in fact, I am planning
+> > to fix one of mine - code originally written in 1998 or so - regardless
+> > of what glibc does on this), but I am arguing for not having glibc
+> > expose the problem.
+> > 
+> > Considering the age of Unix, SUSv2 and POSIX.1-2001 are fairly recent
+> > (I think this may be when the NULL returns were first standardized), and
+> > glibc's SHA-crypt is very young.  It still makes sense to support apps
+> > older than that, including without changes.
+> 
+> Paul Wouters (Red Hat) has started to fix the apps:
+> 
+> https://mobile.twitter.com/letoams/status/195181246614224896
+> 
+> "sent crypt() NULL patches out for apg control-center cyrus-sasl openssh
+> pam passwdqc ppp python screen shadow-utils sysvinit-tools yp-tools
+> 7 days ago"
 
--- 
+I gave Paul the following script to help locate anything that could be affected. 
+Maybe it is useful to find software we are not shipping? It does have an rpm 
+dependency, but you can switch that out to whatever you use for packaging.
 
--- Kurt Seifried / Red Hat Security Response Team
+-Steve
 
+
+#!/bin/sh
+# This program takes directories as input and looks for programs
+# that use the crypt function of glibc
+
+libdirs="/lib /lib64 /usr/lib /usr/lib64"
+progdirs="/bin /sbin /usr/bin /usr/sbin /usr/libexec"
+FOUND=0
+
+check() {
+	x=`readelf -s $1 2>/dev/null | grep crypt@...LIBC`
+	if [ x"$x" != "x" ] ; then
+		FOUND=1
+		package=`rpm -qf --queryformat "%{NAME}-%{VERSION}" $1 2>/dev/null`
+		if [ $? -eq 1 ] ; then
+			package="Not Owned"
+		fi
+		ls -l $1 | awk '{ printf "%-50s %s\n", $9, p} ' p="$package"
+	fi
+}
+
+scan () {
+	if [ "$1" = "1" ] ; then
+		dirs=$libdirs
+	elif [ "$1" = "2" ] ; then
+		dirs=$progdirs
+	elif [ "$1" = "3" ] ; then
+		dirs=$3
+	fi
+
+	for d in $dirs ; do
+		if [ ! -d $d ] ; then
+			continue
+		fi
+		files=`/usr/bin/find $d -name "$2" -type f 2>/dev/null`
+		for f in $files
+		do
+			check $f
+		done
+	done
+}
+
+if [ $# -eq 1 ] ; then
+	if [ -d $1 ] ; then
+		scan 3 '*' $1
+	else
+		echo "Input is not a directory"
+		exit 1
+	fi
+else
+	scan 1 '*.so'
+	scan 2 '*'
+fi
+
+if [ $FOUND -eq 0 ] ; then
+	# Nothing to report, just exit
+	echo "No problems found" 1>&2
+	exit 0
+fi
+exit 1
