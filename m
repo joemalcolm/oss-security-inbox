@@ -1,48 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/7
-Message-ID: <20121219163459.GA24439@kroah.com>
-Date: Wed, 19 Dec 2012 08:34:59 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/6
+Message-Id: <201205021843.q42IhDBV017927@linus.mitre.org>
+Date: Wed, 2 May 2012 14:43:13 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: Plug-and-wipe and Secure Boot semantics
+Cc: cve-assign@...re.org
+Subject: temporary file issue in Config::IniFiles Config-IniFiles perl-Config-IniFiles
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 19, 2012 at 10:20:12AM +0100, Florian Weimer wrote:
-> On 12/19/2012 06:39 AM, Greg KH wrote:
-> >>The Fedora 18 TC3 installer boots on the machine mentioned above, in
-> >>the factory default configuration.  Previous installer versions
-> >>showed a Secure Boot error message.  I've run into an installer bug,
-> >>though:
-> >><https://bugzilla.redhat.com/show_bug.cgi?id=888232>
-> >
-> >Previous versions of Fedora 18 betas didn't have a valid signed
-> >bootloader to allow anything to be installed, are you sure it's all
-> >properly built now?
-> 
-> Yes, or the UEFI implementation on the box is buggy.  It could not
-> boot the installer before, but now it can.
-> 
-> >But, more on-topic, how does UEFI secure boot have anything to do with
-> >this mailing list?
-> 
-> Aren't vendors basing their implementation on the open-source code
-> from Intel?  Or are you referring to the fact that Secure Boot has
-> little to do with security?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We don't know what vendors are basing their UEFI bios implementation on
-the open source version, I know there is at least one UEFI bios that is
-not based on the open source version, or so it is reported (the BSD
-license of Tianocore means that we will never really know.)
+https://bitbucket.org/shlomif/perl-config-inifiles/changeset/a08fa26f4f59
+CVE-2012-2451
 
-Determining what machine is running what bios from what company that was
-based on what version of the open source UEFI implementation is going to
-be a huge problem in the long run and something that I sure don't want
-to have to track.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-There have been reported bugs in the Tianocore in the past, I don't
-think they were "security" issues in and of themselves, should we be
-reporting them here to get CVE numbers if they are?
-
-thanks,
-
-greg k-h
+iQEcBAEBAgAGBQJPoX9dAAoJEGvefgSNfHMdBfUH/28Ib9CFmBOm+5OaTXUP1bcO
+wr7/kkf3ZlNoD5wIAGLrukrxcvglPq++mMGZmohULasD12k3WGc6gZXK5S5nBXBd
+BJ0bG2tR7ttPo2FO4kGbCXdZ0pPWBrZ0bFtPHoJh4q6P+Pkm7LePk9+jm4IxNNon
+u4M73h6IHHvmL4eo6h8ecBiVDzGZZ4RETU7UK2siR9P2BNFn+aTN2cowjT5uOnHo
+jKZBJmoDWzWlmK0u2eW0frJk9jiUF8ecx6BXWLu7L1pGn3VQWPV5qcuuXNStlhhr
+OMm8njI6FiNxUKflpECXLCkX/7UrD1jX0G3N69XC2CZ5N4q4D3ZzUeuSdYI65W0=
+=+ZwT
+-----END PGP SIGNATURE-----
