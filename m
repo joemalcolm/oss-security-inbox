@@ -1,35 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/6
-Message-ID: <4F69F6EE.9080905@suse.de>
-Date: Wed, 21 Mar 2012 16:42:38 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Zubin Mithra <zubin.mithra@...il.com>, Kurt Seifried <kseifried@...hat.com>, Dhanesh k <dhanesh1428@...il.com>
-Subject: Re: CVE-Request taglib vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/4
+Message-ID: <20120502160803.GH20471@suse.de>
+Date: Wed, 2 May 2012 18:08:03 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: dhcpcd 3.2.3 remote stack overflow / denial of service
 Content-Type: text/plain; charset=utf-8
 
-Zubin Mithra wrote:
-> [...]
-> The issues which are present in the latest "release" but not in the current
-> development head were :-
-> 
-> [3] Lack of sanity checks of fields which were read, and were used for
-> allocating memory; crafted files would lead of application crash.
+Hi,
 
-Not an issue according to upstream:
-http://mail.kde.org/pipermail/taglib-devel/2012-March/002187.html
+I would like a CVE for following issue:
 
-> [4] A one bit change in a working ogg file would cause a thread to loop
-> infinitely.
+One of our customers reported a crash of dhcpcd (a DHCP client) version
+3.2.3 as found in our products.
 
-http://mail.kde.org/pipermail/taglib-devel/2012-March/002191.html
-https://github.com/taglib/taglib/commit/b3646a07348ffa276ea41a9dae03ddc63ea6c532
+This was triggered by regular network traffic happening, so attackers
+in the local network could inject such a packet.
 
-cu
-Ludwig
+The issue is apparently fixed in dhcpcd-4.0.2 (oldest GIT revision of
+dhcpcd I can find), as it features the necessary checks on cursory review.
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+
+Problem is that the "to copyed" size of a packet is decoded from the network data
+and not checked against the maximum size of the retrieved packet.
+
+In dhcpcd 3.2.3 it is copied to a fixed size stackbuffer on some paths
+and so overwrites stack.
+
+On our SLE11 product this is caught by -fstack-protector, turning this
+into a remote denial of service (crash).
+
+Place to look for places like this:
+
+                bytes = get_udp_data(&pp, packet);
+                if ((size_t)bytes > sizeof(*dhcp)) {
+                        syslog(LOG_ERR,
+                            "%s: packet greater than DHCP size from %s",
+                            iface->name, inet_ntoa(from));
+                        continue;
+                }
+
+bytes is calculated from packet data and not bounded in get_udp_data().
+So without the if() check, it would later copy over bytes into a fixed buffer
+in some paths.
+
+Also:
+                bytes = packet.bh_caplen - ETHER_HDR_LEN;
+                if (bytes > len)
+                        bytes = len;
+                memcpy(data, payload, bytes);
+
+I have pasted the current patch we use against our quite heavily patches dhcpcd 3.2.3
+on https://bugzilla.novell.com/show_bug.cgi?id=760334
+
+Reference: https://bugzilla.novell.com/show_bug.cgi?id=760334
+
+Ciao, Marcus
