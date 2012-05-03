@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/21/5
-Message-ID: <20120121120814.GB10593@openwall.com>
-Date: Sat, 21 Jan 2012 16:08:14 +0400
-From: Solar Designer <solar@...nwall.com>
-To: "Samuel J. Greear" <sjg@...sjg.com>
-Cc: security@...gonflybsd.org, oss-security@...ts.openwall.com
-Subject: Re: weird crypt-sha* in DragonFly BSD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/03/3
+Message-ID: <20120503152702.GC6227@suse.de>
+Date: Thu, 3 May 2012 17:27:02 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: evolution-data-server lacks SSL checking in its libsoup users
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 20, 2012 at 12:22:51PM -0700, Samuel J. Greear wrote:
-> I saw this, my preference would be to get rid of all uses of alloca() and
-> use malloc(), ...
+Hi,
 
-I thought of this some more and I'm afraid that this change would not
-bring us much closer to fully solving the problem.  malloc() may fail,
-which we will need to handle somehow.  If we agree upon the desired
-behavior of crypt() on transient errors, then we can just as well
-continue using alloca() and simply treat allocation attempts larger than
-a certain size as errors.
+The libsoup SSL certificate checking problem Ludwig exposed is drawing some
+circles.
 
-Well, with malloc() we can have this size limit larger than with
-alloca(), especially if we try to make sure that we don't cross a guard
-page (so with alloca() we'd have to use a limit of like 2 KB then).
+I started looking at the libsoup users, first one is evolution-data-server,
 
-On the other hand, if we permit very long passwords to be passed to the
-SHA-crypt algorithm (and the specific service does not introduce its own
-limit), we also permit attackers to consume excessive amounts of CPU
-time per crypt() call - orders of magnitude more than what the sysadmin
-had intended (for typical password lengths).  So maybe 2 KB is a
-reasonable limit to impose at this level anyway (whereas services should
-use lower limits).
+None of the libsoup users there seem to handle SSL certificate trust correctly (or at all) in my eyes.
 
-Alexander
+In version 2.28 these are.
+	Groupwise protocol handling (server/groupwise/e-gw-connection.c)
+	Exchange protocol handling (server/exchange/lib/e2k-context.c)
+	Google (servers/google/libgdata-google/gdata-google-service.c)
+	calendar/backends/http/e-cal-backend-http.c
+	calendar/backends/caldav/e-cal-backend-caldav.c
+
+I do not fully understand the correct solution to this yet though, whether we need
+to pass in additional flags, or evaluate the "trusted" flag after the connect.
+
+https://bugzilla.novell.com/show_bug.cgi?id=760517
+
+Ciao, Marcus
