@@ -1,56 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/2
-Message-ID: <4F599098.5040602@redhat.com>
-Date: Thu, 08 Mar 2012 22:09:44 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: expat 2.1.0beta fixes 5 Denial of Service attacks, CVE's/details inside
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/03/4
+Message-ID: <1336067603.5166.14.camel@localhost>
+Date: Thu, 03 May 2012 12:53:23 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Michael Niedermayer <michaelni@....at>,  Måns Rullgård <mans@...sr.com>, fabian.yamaguchi@...uni-goettingen.de
+Subject: Security issue in libav/ffmpeg
 Content-Type: text/plain; charset=utf-8
 
-A link would have been helpful. Derp.
+A heap corruption security bug[1] was reported by Fabian Yamaguchi
+against libav in Ubuntu. This issue also affected ffmpeg.
 
-http://sourceforge.net/projects/expat/files/expat/2.1.0/
+This issue is now public and has been assigned CVE-2012-0947.
 
-On 03/08/2012 10:01 PM, Kurt Seifried wrote:
-> So expat is releasing an update (2.0.1 -> 2.1.0) which is the first one
-> in a while (which is a testament to the stability and reliability of
-> expat). If you want to help Karl Waclawek (karl@...lawek.net), the
-> author of expat out (and by extension pretty much everyone using Open
-> Source that parses xml using expat which is a lot of stuff), please test
-> the 2.1.0beta and send him feedback (works, doesn't work, etc.). Two of
-> the issues were already assigned CVE's back in 2009, the rest got 2012
-> because that where we are now.
-> 
-> Changes in Expat 2.1.0beta:
-> 
-> #2895533: CVE-2012-1147 - Resource leak in readfilemap.c.
-> http://mail.python.org/pipermail/expat-bugs/2009-November/002858.html
-> http://sourceforge.net/tracker/?func=detail&aid=2895533&group_id=10127&atid=110127
-> https://bugzilla.redhat.com/show_bug.cgi?id=801634
-> 
-> #1990430: CVE-2009-3720 - Parser crash with specially formatted UTF-8
-> sequences.
-> http://mail.python.org/pipermail/expat-bugs/2009-January/002781.html
-> http://sourceforge.net/tracker/?func=detail&atid=110127&aid=1990430&group_id=10127
-> https://bugzilla.redhat.com/show_bug.cgi?id=531697
-> 
-> #2894085: CVE-2009-3560 - Buffer over-read and crash in big2_toUtf8().
-> http://mail.python.org/pipermail/expat-bugs/2009-November/002846.html
-> http://sourceforge.net/tracker/?func=detail&atid=110127&aid=2894085&group_id=10127
-> https://bugzilla.redhat.com/show_bug.cgi?id=533174
-> 
-> #2958794: CVE-2012-1148 - Memory leak in poolGrow.
-> http://mail.python.org/pipermail/expat-bugs/2010-February/002870.html
-> http://sourceforge.net/tracker/?func=detail&atid=110127&aid=2958794&group_id=10127
-> https://bugzilla.redhat.com/show_bug.cgi?id=801648
-> 
-> #3496608: CVE-2012-0876 - Hash DOS attack.
-> http://blog.gmane.org/gmane.text.xml.expat.bugs/month=20120301
-> http://sourceforge.net/tracker/?func=detail&atid=110127&aid=3496608&group_id=10127
-> https://bugzilla.redhat.com/show_bug.cgi?id=786617
-> 
-> 
+Attached is a patch from upstream libav to fix the issue (thanks to Måns
+Rullgård). While the issue also affected ffmpeg, upstream ffmpeg fixed
+this some time ago in 3583c8706df0abbfa3ecdd6730f4f3d72a01fe6d.
 
+[1] https://launchpad.net/bugs/980963
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Jamie Strandboge             | http://www.canonical.com
+
+View attachment "0001-vqavideo-return-error-if-image-size-is-not-a-multipl.patch" of type "text/x-patch" (1226 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
