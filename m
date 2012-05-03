@@ -1,31 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/03/3
-Message-ID: <20120503152702.GC6227@suse.de>
-Date: Thu, 3 May 2012 17:27:02 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: evolution-data-server lacks SSL checking in its libsoup users
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/03/2
+Message-ID: <4FA1E056.9090304@redhat.com>
+Date: Wed, 02 May 2012 19:33:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Greg Knaddison <greg.knaddison@...uia.com>
+Subject: Re: CVE Request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The libsoup SSL certificate checking problem Ludwig exposed is drawing some
-circles.
+On 05/02/2012 06:53 PM, Greg Knaddison wrote:
+> Hello,
+> 
+> First, thanks to Kurt for getting us CVEs in advance on Drupal
+> core's latest release at http://drupal.org/node/1557938 with CVEs
+> on each issue.
+> 
+> This is a CVE request for the following contributed module issues:
+> 
+> http://drupal.org/node/1558248  SA-CONTRIB-2012-072 - cctags -
+> Cross Site Scripting (XSS) http://drupal.org/node/1557874
+> SA-CONTRIB-2012-071 - Glossify - Cross Site Scripting (XSS) -
+> Unsupported http://drupal.org/node/1557872  SA-CONTRIB-2012-070 -
+> Taxonomy Grid : Catalog - Cross Site Scripting (XSS) - Unsupported 
+> http://drupal.org/node/1557868  SA-CONTRIB-2012-069 - Addressbook
+> - Multiple vulnerabilities - Unsupported 
+> http://drupal.org/node/1557852  SA-CONTRIB-2012-068 - Node Gallery
+> - Cross Site Request Forgery (CSRF) - Unsupported 
+> http://drupal.org/node/1547738  SA-CONTRIB-2012-067 - Linkit -
+> Access bypass http://drupal.org/node/1547736  SA-CONTRIB-2012-066 -
+> Spaces and Spaces OG - Access Bypass http://drupal.org/node/1547686
+> SA-CONTRIB-2012-065 - Sitedoc - Information disclosure 
+> http://drupal.org/node/1547674  SA-CONTRIB-2012-064 - Ubercart - 
+> Multiple vulnerabilities http://drupal.org/node/1547660
+> SA-CONTRIB-2012-063 - RealName - Cross Site Scripting (XSS) 
+> http://drupal.org/node/1547520  SA-CONTRIB-2012-062 - Creative
+> Commons - Cross Site Scripting (XSS)
+> 
+> Other issues from 2012 that don't have a CVE per your policies: 
+> http://drupal.org/node/1515282  SA-CONTRIB-2012-056 - Janrain
+> Engage - Sensitive Data Protection Vulnerability 
+> http://drupal.org/node/1506542  SA-CONTRIB-2012-050 - CDN2 Video -
+> Unsupported
+> 
+> Thanks, Greg
+> 
 
-I started looking at the libsoup users, first one is evolution-data-server,
+Please use the following:
 
-None of the libsoup users there seem to handle SSL certificate trust correctly (or at all) in my eyes.
+CVE-2012-2154 Drupal SA-CONTRIB-2012-050 - CDN2 Video - XSS
+CVE-2012-2155 Drupal SA-CONTRIB-2012-050 - CDN2 Video - CSRF
 
-In version 2.28 these are.
-	Groupwise protocol handling (server/groupwise/e-gw-connection.c)
-	Exchange protocol handling (server/exchange/lib/e2k-context.c)
-	Google (servers/google/libgdata-google/gdata-google-service.c)
-	calendar/backends/http/e-cal-backend-http.c
-	calendar/backends/caldav/e-cal-backend-caldav.c
+CVE-2012-2296 Drupal SA-CONTRIB-2012-056 - Janrain Engage - Sensitive
+Data Protection Vulnerability
 
-I do not fully understand the correct solution to this yet though, whether we need
-to pass in additional flags, or evaluate the "trusted" flag after the connect.
+CVE-2012-2297 Drupal SA-CONTRIB-2012-062 - Creative Commons - XSS
 
-https://bugzilla.novell.com/show_bug.cgi?id=760517
+CVE-2012-2298 Drupal SA-CONTRIB-2012-063 - RealName - XSS
 
-Ciao, Marcus
+CVE-2012-2299 Drupal SA-CONTRIB-2012-064 - Ubercart - failure to
+encrypt data
+CVE-2012-2300 Drupal SA-CONTRIB-2012-064 - Ubercart - XSS
+CVE-2012-2301 Drupal SA-CONTRIB-2012-064 - Ubercart - Arbitrary PHP
+Execution
+
+CVE-2012-2302 Drupal SA-CONTRIB-2012-065 - Sitedoc - Information
+disclosure
+
+CVE-2012-2303 Drupal SA-CONTRIB-2012-066 - Spaces and Spaces OG -
+Access Bypass
+
+CVE-2012-2304 Drupal SA-CONTRIB-2012-067 - Linkit - Access bypass
+
+CVE-2012-2305 Drupal SA-CONTRIB-2012-068 - Node Gallery - CSRF
+
+CVE-2012-2306 Drupal SA-CONTRIB-2012-069 - Addressbook - SQL Injection
+CVE-2012-2307 Drupal SA-CONTRIB-2012-069 - Addressbook - CSRF
+
+CVE-2012-2308 Drupal SA-CONTRIB-2012-070 - Taxonomy Grid : Catalog - XSS
+
+CVE-2012-2309 Drupal SA-CONTRIB-2012-071 - Glossify - XSS
+
+CVE-2012-2310 Drupal SA-CONTRIB-2012-072 - cctags - XSS
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPoeBVAAoJEBYNRVNeJnmTOosQAKet4gG78Tgq9TeyfDBrLQga
+n+TTEhVEFRNA6dOrG9da0JMhrhIuS13pIDJ2wfupqIzL7Ti5yebEiQH+rJs13Ax+
+sXJUfj1f24x1D9J8uS3KVzREdKF+wl3Lta+TEiolgQxy4dqm4UCRbc+ChBcGCFca
++aA/tAwx4pbJrIoEj+7wTzq2tTaiv3vK/b8bbZENYgr0MXVIm9TFCHSgs8EsaLi9
+xFw9FumByrXy0+Ok/EBsGvIpo0sFTAeUsBhD00n45Pf47Y1fiCurgyTwjiNFUACi
+TwW/d1OEXHKGokRFNfHiwsJQtii4Q5erSUZ0Kxe99tIKTry9Wvx31UBW1QmDRJrn
+/M6lEMXJVWSJCoVrhEIAxiQOgzZDM2HxeJ//g+H4Q5VN4xcfPGf6dSCnPEldmoir
+xRXIYWhTYhaLYAg9VPVYc06907khHAupkZvD2N/fbaojIP91IJ3Ez7LdezHqwuKP
+qDdY6DuraXs6VEZ2esNmVGysR7g24XgLbOoOcM6LshCY425TqYHJw1lzJF3jqCWc
+KhtCVnm+GAv0ju7k8UR5iBPRsOzGMQfLJPWrFGB5ERe7WN+Ksy4yzGOAvKIZaIlB
+2G7ggm+deKWmh6D2gDtd6TLulIAg0oiItdG1bXoqcE8KQUKxjPhkFxWrvOwO3B2k
+HaHtzbKfv4P0/H1Uv4SP
+=FovE
+-----END PGP SIGNATURE-----
