@@ -1,70 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/2
-Message-ID: <5004D289.5020603@redhat.com>
-Date: Mon, 16 Jul 2012 20:48:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: libjs-swfupload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/14
+Message-ID: <20120504173528.GA731@openwall.com>
+Date: Fri, 4 May 2012 21:35:28 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Debian/Ubuntu php_crypt_revamped.patch
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, May 04, 2012 at 10:08:53AM -0600, Kurt Seifried wrote:
+> So I'm guessing this needs a CVE #?
 
-On 07/16/2012 01:07 PM, Nico Golde wrote:
-> Hi, * Kurt Seifried <kseifried@...hat.com> [2012-07-16 20:32]:
->> On 07/16/2012 12:17 PM, Nico Golde wrote:
->>> Hi, there is an XSS issue in libjs-swfupload. Can we get a CVE
->>> id for this?
->>> 
->>> Details: 
->>> https://nealpoole.com/blog/2012/05/xss-and-csrf-via-swf-applets-swfupload-plupload/
->>>
->>>
->>
->>> 
-http://code.google.com/p/swfupload/issues/detail?id=376
->>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681323
->>> 
->> 
->> There also appears to be a CSRF vulnerability. Is there a reason
->> for only mentioning the XSS?
-> 
-> The CSRF is for pupload which we don't ship and I haven't looked
-> at.
-> 
-> Cheers Nico
+The purpose of my posting wasn't to request a CVE id (although you may
+provide one), but rather to notify Ubuntu and others of the Debian bug
+that they may need to fix in Debian-derived distros, and to suggest that
+the patch be dropped from future versions.
 
-It's open source though, with the rest of it right?
+Speaking of CVE, though, I think that yes - this deserves one.  This is
+a security issue in two ways:
 
-Public service announcement/request:
+1. User authentication in some PHP apps may turn from fail-close to
+fail-open.
 
-When requesting CVE's it would be nice if people not only request
-CVE's for the specific bits in an update/etc. they care about, but for
-all the issues, then I have less work to do and we also get a more
-complete CVE database =).
+2. If a PHP app actually makes use of PHP crypt()'s ability to generate
+random salts (when no salt is provided), then empty strings may be
+generated in place of hashed passwords for newly set/changed passwords.
+Combined with #1 above, this may mean that authentication with any
+password will then succeed against such accounts.
 
+Since I expect that Ubuntu will fix this in a PHP update for 11.04, I
+guess they'll want to refer to a CVE id in the advisory.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Thanks,
 
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQBNKIAAoJEBYNRVNeJnmT1UoQAILX+PKDDotRajhIBInZVdxB
-4T3fvtzo4WJO64FnxXv6K3EXA0rl8GkG4cxmA5BZh62qP8YsowgtEaFJstOiOj+V
-RO0W8rTxrTLRURs1FFapfCZpO75zDjYkPtHlRoFxzirw9Fq3E47pyxkvd6v948Qo
-cH8qAn+7jKUpi2QTV/EzO9Yh67egMsxAtwT3vvnS3idguS4r5H8z/nDHMm0g/3O0
-lkmcwYVcJtd1uOPqtX/I3Q3uyzSPVuupYnLMONYUV6AUZaiSrg40prLPBv1/qjYy
-yGvRvXIOtj8N6yCbmCP+WgiS8roPSStd/klgZCC2bhUK4hiwN3eduHxRx0ZrH/w4
-2TWGShCJi4CFF2s3f0QfUyUM9tMlkiToW3SC/A7+nSPIBPtVMHmcEMhtyfCnjFdQ
-2MWWNDPy+XTCkq4opL9dXaDdHgm5aJHNwUqnx0xPq/CNSWefDdra5ZdzyLK0RgFj
-rbM30WC3USadkv7eVR6V2waxEMnuvg327soPM8pU+GU8l/f35Tzh3ZAk24tbJH3K
-wPRBnNdcvlg/EIVcl6h6JDP/5bQ59nBfw1nIZfPjm8VrxLTj/Q328Ml2cer6hcHV
-Rtv0N9XFpn7WrlmATbCpJ6vXj6NT07vNhD+dfLUPqb9jRpPH48NDHNB16FAagRI2
-ooNL0+chZSYW+UnozYqJ
-=TuOH
------END PGP SIGNATURE-----
+Alexander
