@@ -1,74 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/13
-Message-ID: <814167927.28074568.1352215380464.JavaMail.root@redhat.com>
-Date: Tue, 6 Nov 2012 10:23:00 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/8
+Message-ID: <4FA3FCE4.80607@redhat.com>
+Date: Fri, 04 May 2012 09:59:32 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Reed Loden <reed@...dloden.com>, Steven Christey <coley@...re.org>, security@...library.com
-Subject: Re: YUI 2.x security issue regarding embedded SWF files -- or, How Not To Handle A Security Disclosure
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: more tight ioctl permissions in dl2k driver
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/04/2012 05:13 PM, Kurt Seifried wrote:
->> On 11/04/2012 01:34 PM, Reed Loden wrote:
->>> I haven't seen this posted at all, but it seems there's some 
->>> (major?) security issue regarding the SWF files embedded in YUI
->>> 2. The YUI team has published a blog post regarding this problem 
->>> asking users to e-mail them for details.
->> 
->>> http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
->>
->>>  The comments are a great read. Ryan Grove (former Yahoo! and
->>> YUI core team guy) hits the point on the head regarding
->>> disclosure handling of the issue. Apparently, some
->>> people/companies have already been notified directly weeks ago,
->>> and this is how the YUI team is continuing the disclosure process
->>> by just asking projects to e-mail them instead of just releasing
->>> the fix to the public at this stage. :/
->> 
->>> Might want to go ahead and get a CVE assigned to whatever this 
->>> issue is, and hope more details come out of this soon so YUI 2 
->>> users can actually get patched instead of having to request
->>> access to the fix...
->> 
->>> ~reed (speaking only for himself)
->> 
->> Have any CVE's been issued for this issue? I can't find any. More
->> to the point does this kind of issue (is it a service strictly?)
->> even get a CVE? Steve?
->
-> Ok please use CVE-2012-5475 for this issue.
+On 05/04/2012 01:31 AM, Marcus Meissner wrote:
+> Hi,
 > 
-> Also can security@...library.com follow their disclosure policy listed
-> at and disclose the problem:
+> Can you please assign a CVE for this issue:
+> 
+> Stephan Mueller reported lack of capable(CAP_NET_ADMIN) checks in
+> private ioctls in the dl2k network card driver.
+> 
+> The netdev team will probably remove the handling of the
+> SIOCDEVPRIVATE* calls from this driver though and not use Jeffs
+> patch directly.
+> 
+> References: http://www.spinics.net/lists/netdev/msg196365.html 
+> http://www.spinics.net/lists/netdev/msg196381.html 
+> http://www.spinics.net/lists/netdev/msg196382.html 
+> https://bugzilla.novell.com/show_bug.cgi?id=758813
+> 
+> Ciao, Marcus
 
-Looks they already did:
-[1] http://www.yuiblog.com/blog/2012/11/05/post-mortem-swf-vulnerability-in-yui-2/
-[2] http://yuilibrary.com/support/20121030-vulnerability/
+Please use CVE-2012-2313 for this issue.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-> 
-> http://yuilibrary.com/security/
-> 
-> Disclosure of Security Issues
-> 
-> If you've discovered a security flaw in one of our products, please
-> contact us. Expect to receive an acknowledgement quickly with the best
-> way to track your report's status. You'll have a direct contact at YUI
-> while we investigate.
-> 
-> Since issues have varying impact, we ask for your patience while we
-> make sure everyone who uses our products is protected. We will
-> disclose a problem once it's confirmed and a resolution is available.
-> If a fix is required, our release will credit you for your discovery.
-> 
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPo/zkAAoJEBYNRVNeJnmTuJMP/1HBcIavIU91xlu5jQUGhpGu
+JqUnr4JVsITmxh+knn6G3mReWWNLwaeeNmlrbzbHiYQSje+kBXz/Oa3z/2quEaT2
+k8jX/MnNljHCet8o4tbru643EWCep93xLajJvU13jAdgpeuL6Cc/6S/cbLwl3o3B
+KzgfHmvSU1c83H+CKqpyqcusT4qUat0PMUXoSaXVCMeDVh1gAjGfxH5LBeJHJ3Dd
+blZsMx48NW+U7rDzyJ/m/gq1dsFGQskKgZoau8BLOjNVponP0hJwX7H0SvhkdMtZ
+640uihcispn8Ygma3y8MrEx7I3JogCP1gjI/MwqDiDdvBS38b7CQtgdcVdrmshtZ
+14ukvkzqpmibJWVzfgXUtCiHBcfI6Xr0kdcoXTrRJ7KSj2e1P6upc649FkfOT03e
+Cat6Ll3f34iulhVw6oRA8gWs464+2M37qIhbwUQ9g2yHA2Nk9UTzszKpInMSfrNo
+ixfOYJPNQDRezLqt6i0zHWhd80/BVmKKYPA5skWWWAuHRcJXGULEAZfOEj9HIVa/
+1VaHbrNIW8nAtXoayJsHt5Gm9m031OQ5+fOzVXviyY/0upUW0uTlpeeC2Rk9KhAL
+1RbekalLY4flBsDqAil0+LCjtWd/kIYzZvHLV7V+70NFWSfadruGxXZBUM++l6FQ
+rfj/IINY4WNv9LRSnn6+
+=GaWO
+-----END PGP SIGNATURE-----
