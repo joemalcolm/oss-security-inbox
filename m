@@ -1,68 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/26/6
-Message-ID: <20120726221413.GA26496@mobile003.mycingular.net>
-Date: Thu, 26 Jul 2012 15:14:13 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: oss-security@...ts.openwall.com, rubyonrails-security@...glegroups.com
-Subject: Ruby on Rails DoS Vulnerability in authenticate_or_request_with_http_digest (CVE-2012-3424)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/17
+Message-ID: <20120504194452.GC15689@suse.de>
+Date: Fri, 4 May 2012 21:44:52 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Steve Beattie <steve@...w.org>
+Subject: Re: CVE Request: evolution-data-server lacks SSL checking in its libsoup users
 Content-Type: text/plain; charset=utf-8
 
-DoS Vulnerability in authenticate_or_request_with_http_digest
+On Fri, May 04, 2012 at 10:03:20AM -0600, Kurt Seifried wrote:
+> On 05/04/2012 02:30 AM, Steve Beattie wrote:
+> > On Fri, May 04, 2012 at 10:03:11AM +0200, Marcus Meissner wrote:
+> >> This was already reported: 
+> >> https://bugzilla.gnome.org/show_bug.cgi?id=671537 
+> >> https://launchpad.net/bugs/933659   (private still)
+> >> 
+> >> so it might have a CVE already.
+> > 
+> > I've made the launchpad bug public now. There was no CVE assigned 
+> > in that report.
+> > 
+> > Thanks.
+> > 
+> 
+> Shouldn't these all be covered by the libsoup CVE:
+> 
+> > libsoup 2.32.2 does not verify certificates at all if an 
+> > application does not explicitly specify a file with trusted root 
+> > CA's. Since that libsoup version relies on the verification
+> > failure to clear the trust flag it always considers ssl connections
+> > as trusted in that case.
+> > 
+> > Reference: https://bugzilla.novell.com/show_bug.cgi?id=758431
+> > 
+> > cu Ludwig
+> > 
+> Please use CVE-2012-2132 for this issue.
 
-There is a DoS vulnerability in Action Pack digest authentication handling in Rails.
-This vulnerability has been assigned the CVE identifier CVE-2012-3424.
+That really depends if it is the task of libsoup or the task of the
+applications I think. So who is lacking the checks...
 
-Versions Affected:  3.x.
-Not affected:       2.3.5 - 2.3.14
-Fixed Versions:     3.0.16, 3.1.7, 3.2.7
+Our opinion is that the default should be "good" in libsoup, so a CVE
+is needed there in all cases.
 
-Impact 
------- 
-
-All users using Digest Authentication support in Rails should upgrade
-immediately.  Impacted code uses any of the `with_http_digest` controller
-helper methods.  For example:
-
-    class MyController < ApplicationController
-      def index
-        authenticate_or_request_with_http_digest(REALM) do |uname|
-          # ...
-        end
-      end
-    end
-
-Releases 
--------- 
-The 3.0.16, 3.1.7 & 3.2.7 releases are available at the normal locations. 
-
-
-Workarounds 
------------ 
-There are no feasible workarounds for this issue. 
-
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-
-* 3-0-digest_auth_dos.patch - Patch for 3.0 series 
-* 3-1-digest_auth_dos.patch - Patch for 3.1 series 
-* 3-2-digest_auth_dos.patch - Patch for 3.2 series 
-
-Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
-------- 
-Thanks to Charlie Somerville for reporting this issue!
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-0-digest_auth_dos.patch" of type "text/plain" (1156 bytes)
-
-View attachment "3-1-digest_auth_dos.patch" of type "text/plain" (1156 bytes)
-
-View attachment "3-2-digest_auth_dos.patch" of type "text/plain" (1157 bytes)
-
-Content of type "application/pgp-signature" skipped
+Ciao, Marcus
