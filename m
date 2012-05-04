@@ -1,43 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/4
-Message-ID: <944349183.5728929.1349278590272.JavaMail.root@redhat.com>
-Date: Wed, 3 Oct 2012 11:36:30 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request (minor) -- mc: Improper sanitization of MC_EXT_SELECTED variable when viewing multiple files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/16
+Message-ID: <CANTw=MOqq1-irLVrj+_dxsRvNCu-7ACY-4YBXAH6awL_C4AAXA@mail.gmail.com>
+Date: Fri, 4 May 2012 14:25:06 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Debian/Ubuntu php_crypt_revamped.patch
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Fri, May 4, 2012 at 2:18 PM, Daniel Kahn Gillmor wrote:
+> On 05/04/2012 01:35 PM, Solar Designer wrote:
+>> The purpose [is] to notify Ubuntu and others of the Debian bug
+>> that they may need to fix in Debian-derived distros, and to suggest that
+>> the patch be dropped from future versions.
+>
+> If your goal is to get the patch dropped from Debian and Debian-derived
+> distributions, the most reliable way to do that is to file a bug against
+> the Debian php packages explaining your reasons for that.
 
-  based on https://bugs.gentoo.org/show_bug.cgi?id=436518:
+Security issue reporters are usually not held responsible for
+reporting the issues that they find to every affected distribution
+themselves.  That is why common id numbers (CVEs) are important.  They
+give us a common reference for every problem.  Then its the job of
+those of us representing such distributions to pass the information on
+to the appropriate tracking systems within our own focus areas.
 
-A security flaw was found in the way Midnight Commander,
-a user-friendly text console file manager and visual
-shell, performed sanitization of MC_EXT_SELECTED
-environment variable when multiple files were selected
-(first selected file was used as actual content of the
-MC_EXT_SELECTED variable, while the remaining files were
-provided as arguments to the temporary script, handling
-the F3 / Enter key press event). A remote attacker could
-provide a specially-crafted archive that, when expanded
-and previewed by the victim could lead to arbitrary code
-execution with the privileges of the user running mc
-executable.
-
-References:
-[1] https://bugs.gentoo.org/show_bug.cgi?id=436518
-
-Upstream ticket:
-[2] https://www.midnight-commander.org/ticket/2913
-
-I need to confess this one is a bit on the border
-(the attack to succeed the victim would need to
-perform couple of steps), but basically the scenario
-is possible.
-
-Could you allocate a CVE id for this one?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Best wishes,
+Mike
