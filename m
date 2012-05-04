@@ -1,35 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/6
-Message-ID: <4F05C2DB.9050404@mvista.com>
-Date: Thu, 05 Jan 2012 05:33:47 -1000
-From: akuster <akuster@...sta.com>
-To: Petr Matousek <pmatouse@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/20
+Message-ID: <87vckbtxhr.fsf@mid.deneb.enyo.de>
+Date: Sat, 05 May 2012 00:03:28 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: more tight ioctl permissions in dl2k driver
 Content-Type: text/plain; charset=utf-8
 
-Could it be said that this issue was introduced by these two commits in
-2.6.16 ?
+* Marcus Meissner:
 
-0771dfefc9e538f077d0b43b6dec19a5a67d0e70
-34f192c6527f20c47ccec239e7d51a27691b93fc
+> Stephan Mueller reported lack of capable(CAP_NET_ADMIN) checks
+> in private ioctls in the dl2k network card driver.
 
-- Armin
-
-On 01/04/2012 12:10 PM, Petr Matousek wrote:
-> Move "exit_robust_list" into mm_release() and clear them
-> 
-> We don't want to get rid of the futexes just at exit() time, we want to
-> drop them when doing an execve() too, since that gets rid of the
-> previous VM image too.
-> 
-> Doing it at mm_release() time means that we automatically always do it
-> when we disassociate a VM map from the task.
-> 
-> Upstream patches:
-> 8141c7f3e7aee618312fa1c15109e1219de784a7
-> fc6b177dee33365ccb29fe6d2092223cf8d679f9
-> 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=771764
-> 
+Have you tested the driver with actual hardware under load?
+The last time I tested it, it was not really usable.
