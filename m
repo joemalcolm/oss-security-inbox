@@ -1,73 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/25/2
-Message-ID: <50D91B24.5030500@redhat.com>
-Date: Mon, 24 Dec 2012 20:19:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>, Mateusz Jurczyk <j00ru.vx@...il.com>
-Subject: Re: CVE Request - Multiple security fixes in freetype - 2.4.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/3
+Message-ID: <20120504073644.GE16166@suse.de>
+Date: Fri, 4 May 2012 09:36:44 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: more tight ioctl permissions in dl2k driver
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 12/24/2012 06:58 PM, Huzaifa Sidhpurwala wrote:
-> Merry Christmas!
+On Fri, May 04, 2012 at 09:31:44AM +0200, Marcus Meissner wrote:
+> Hi,
 > 
-> Multiple security issues were reported by Mateusz Jurczyk of
-> Google security team. These have been fixed in freetype 2.4.11 
-> Details are as follows.
+> Can you please assign a CVE for this issue:
 > 
-> * NULL Pointer Dereference in bdf_free_font Bug:
-> https://savannah.nongnu.org/bugs/?37905 Patch: 
-> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=9b6b5754b57c12b820e01305eb69b8863a161e5a
-
-Please
+> Stephan Mueller reported lack of capable(CAP_NET_ADMIN) checks
+> in private ioctls in the dl2k network card driver.
 > 
-use CVE-2012-5668 for this issue.
-
-> * Out-of-bounds read in _bdf_parse_glyphs Bug:
-> https://savannah.nongnu.org/bugs/?37906 Patch: 
-> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=07bdb6e289c7954e2a533039dc93c1c136099d2d
-
-Please
+> The netdev team will probably remove the handling of the SIOCDEVPRIVATE*
+> calls from this driver though and not use Jeffs patch directly.
 > 
-use CVE-2012-5669 for this issue.
+> References:
+> 	http://www.spinics.net/lists/netdev/msg196365.html
+> 	http://www.spinics.net/lists/netdev/msg196381.html
+> 	http://www.spinics.net/lists/netdev/msg196382.html
+> 	https://bugzilla.novell.com/show_bug.cgi?id=758813
 
-> * Out-of-bounds write in _bdf_parse_glyphs Bug:
-> https://savannah.nongnu.org/bugs/?37907 Patch: 
-> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=7f2e4f4f553f6836be7683f66226afac3fa979b8
+Missed the mainline commit reference, which is now at:
 
-Please
-> 
-use CVE-2012-5670 for this issue.
+https://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=1bb57e940e1958e40d51f2078f50c3a96a9b2d75
 
+commit 1bb57e940e1958e40d51f2078f50c3a96a9b2d75
+Author: Jeff Mahoney <jeffm@...e.com>
+Date:   Wed Apr 25 14:32:09 2012 +0000
 
-> Can CVEs be please assigned to these issues?
-> 
-> Thanks!
-> 
+    dl2k: Clean up rio_ioctl
+    
+    The dl2k driver's rio_ioctl call has a few issues:
+    - No permissions checking
+    - Implements SIOCGMIIREG and SIOCGMIIREG using the SIOCDEVPRIVATE numbers
+    - Has a few ioctls that may have been used for debugging at one point
+      but have no place in the kernel proper.
+    
+    This patch removes all but the MII ioctls, renumbers them to use the
+    standard ones, and adds the proper permission check for SIOCSMIIREG.
+    
+    We can also get rid of the dl2k-specific struct mii_data in favor of
+    the generic struct mii_ioctl_data.
+    
+    Since we have the phyid on hand, we can add the SIOCGMIIPHY ioctl too.
+    
+    Most of the MII code for the driver could probably be converted to use
+    the generic MII library but I don't have a device to test the results.
+    
+    Reported-by: Stephan Mueller <stephan.mueller@...ec.com>
+    Signed-off-by: Jeff Mahoney <jeffm@...e.com>
+    Signed-off-by: David S. Miller <davem@...emloft.net>
 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQ2RsfAAoJEBYNRVNeJnmT49IP/0OTKhq+GuD4V69fmVPEi7Bm
-f5+kCi6mpYhxPmGs0uHRJFe6NFxgIRVQ4z/bMGyjGhlsoFMl8wNuPxLPcLvBtCoH
-GIkU7Znji7ap1t6t/+rfTIA0xGq3itGz2nG0XVrAj/U/TMASsBS9hksqw9GdQO+p
-D7XmlZXzFKRzlTooP7zcxkn1ZuLc/RZQH8KSfMuLXwVrA4At0cg5/IkbhzWNTLaH
-OnbvNixPax7clADZV3/P1myun14yU63lqVjUTR6j4HNpVYX1nw3i3foMx//l1ieh
-m3aYslRftjSCAX1CAX/SsQosgoJUv4/PUHDwJ14kLqlNXfmmduAs9U3hOeuBROM7
-Zc1b7DmYQ8ocpGtOShqqg2PeQ7JfshYHyqxTmSi/D2AxhjdTyTLXW3Ce7mHwabh/
-GUU+ugy2NFTdZvTLvZ0+9AYXvo50K6KK5Qelb14ovzpEXehZDeHk6HsjvRvqf6IM
-jquy1oHV4nX0/3mnP/y1wfpCfrBQ8LX8qXu78wbjaLH58GNIEgpowNT1GI7FidX7
-WBKo1T2MlUBgd2pezy3lCW8KouBUc3yujdBLoXpOafkyI1IbXn+UlybAZZMWo9SE
-os9srumXOjFb03PmueixZYr/S2iDZMtwVeYWl3OTkxw/l/vMGUmQQHcYlU/8LQJq
-fWvJbv2ZN6+/jiNbM3gM
-=/y1l
------END PGP SIGNATURE-----
