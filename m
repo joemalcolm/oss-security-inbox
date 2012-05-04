@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/28/2
-Message-ID: <CAHmME9rzmkJNNF+bADWzfNYEDoY8jpsJNPFb4YW6r7N9ecjrGg@mail.gmail.com>
-Date: Fri, 28 Dec 2012 09:04:49 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Frederick Townes <ftownes@...edge.com>
-Subject: CVE Request: W3 Total Cache - public cache exposure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/15
+Message-ID: <4FA41D8D.5040107@fifthhorseman.net>
+Date: Fri, 04 May 2012 14:18:53 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Debian/Ubuntu php_crypt_revamped.patch
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+On 05/04/2012 01:35 PM, Solar Designer wrote:
+> The purpose [is] to notify Ubuntu and others of the Debian bug
+> that they may need to fix in Debian-derived distros, and to suggest that
+> the patch be dropped from future versions.
 
-W3 Total Cache: http://wordpress.org/extend/plugins/w3-total-cache/
+If your goal is to get the patch dropped from Debian and Debian-derived
+distributions, the most reliable way to do that is to file a bug against
+the Debian php packages explaining your reasons for that.
 
-CVE request for three separate issues:
+	--dkg
 
-1. Cache allows directory listing of hash-key listings, exposing hash keys.
 
-2. Hash keys are easily predictable, in the case of (1) not existing.
-
-3. Cached database values are downloadable by their hash keys on the public
-internet, exposing sensitive information like password hashes.
-
-Fixing (3) mitigates (1) and (2), so assign this either three CVEs or one
-CVE.
-
-Source: http://seclists.org/fulldisclosure/2012/Dec/242
-
-The vendor, copied on this email, currently has not issued a fix.
-
-Thanks,
-Jason
-
+Download attachment "signature.asc" of type "application/pgp-signature" (1031 bytes)
