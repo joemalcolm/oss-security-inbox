@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/06/2
-Message-Id: <201210052354.25850.geissert@debian.org>
-Date: Fri, 5 Oct 2012 23:54:24 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/2
+Message-ID: <20120504073241.GA5651@kludge.henri.nerv.fi>
+Date: Fri, 4 May 2012 10:32:41 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: piwigo XSS in password.php
+Subject: Re: CVE-request: OpenKM 5.1.7 Privilege Escalation / OS Command Execution (XSRF based)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Mar 23, 2012 at 09:09:30AM -0600, Kurt Seifried wrote:
+> On 03/23/2012 04:00 AM, Henri Salo wrote:
+> > Can I get CVE-identifiers for these two security vulnerabilities?
+> > 
+> > http://osvdb.org/show/osvdb/78105 COMPASS-2012-001
+> > http://osvdb.org/show/osvdb/78106 COMPASS-2012-002
+> > 
+> > - Henri Salo
+> 
+> I'm going to need some original vendor information (name, site, etc.).
+> 
+> -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
 
-A XSS vulnerability has been reported in piwigo's password.php before 2.4.4:
-http://piwigo.org/bugs/view.php?id=0002750
-http://secunia.com/advisories/50510/
+Hello Kurt and list,
 
-However, as stated in the Secunia advisory, the fix does not entirely address 
-the issue. For context, the stripslashes/strip_tags'ed POST variable is 
-included in the template as following:
-<input type="text" id="username_or_email" name="username_or_email" ... 
-value="{$username_or_email}">
+I received following information from Paco Avila from OpenKM. I hope this clarifies things.
 
-(some parts redacted for clarity)
+"OpenKM Permission Weakness Admin Privilege Escalation"
+COMPASS-2012-001 / OSVDB:78105 / SA47424:
+Diff: AuthServlet.diff
+Issue tracker: http://issues.openkm.com/view.php?id=1973
 
-So, two ids are needed. Thanks in advance.
+"OpenKM Arbitrary Admin User Creation CSRF"
+COMPASS-2012-002 / OSVDB:78106 / SA47420:
+Diff: scripting.diff
+Issue tracker: http://issues.openkm.com/view.php?id=1750
 
-Piwigo 2.3.1 also seems to be affected but 2.1.2 doesn't.
+- Henri Salo
 
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+View attachment "AuthServlet.diff" of type "text/x-diff" (8743 bytes)
+
+View attachment "scripting.diff" of type "text/x-diff" (3551 bytes)
