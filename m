@@ -1,45 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/12
-Message-ID: <20120831164028.GF19175@dhcp-25-225.brq.redhat.com>
-Date: Fri, 31 Aug 2012 18:40:28 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: request_module() OOM local DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/10
+Message-ID: <4FA3FE7C.2010101@redhat.com>
+Date: Fri, 04 May 2012 18:06:20 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Peter Jones <pjones@...hat.com>
+Subject: CVE Request -- anaconda: Weak permissions by writing password configuration file in bootloader configuration module
 Content-Type: text/plain; charset=utf-8
 
-As Tetsuo Handa pointed out, request_module() can stress the system
-while the oom-killed caller sleeps in TASK_UNINTERRUPTIBLE.
+Hello Kurt, Steve, vendors,
 
-The task T uses "almost all" memory, then it does something which
-triggers request_module().  Say, it can simply call sys_socket().  This
-in turn needs more memory and leads to OOM.  oom-killer correctly
-chooses T and kills it, but this can't help because it sleeps in
-TASK_UNINTERRUPTIBLE and after that oom-killer becomes "disabled" by the
-TIF_MEMDIE task T.
+   a security flaw was found in the way bootloader configuration module of
+Anaconda, a graphical system installer, stored password hashes when performing
+write of password configuration file (0755 permissions were used instead of
+0700 ones). A local users could use this flaw to obtain password hashes and
+conduct brute force password guessing attacks (possibly leading to password
+circumvention, machine reboot or use of custom kernel or initrd command line
+parameters).
 
-A local unprivileged user can make the system unusable.
-
-Upstream fixes:
-(1) 70834d30 "usermodehelper: use UMH_WAIT_PROC consistently"
-(2) b3449922 "usermodehelper: introduce umh_complete(sub_info)"
-(3) d0bd587a "usermodehelper: implement UMH_KILLABLE"
-(4) 9d944ef3 "usermodehelper: kill umh_wait, renumber UMH_* constants"
-(5) 5b9bd473 "usermodehelper: ____call_usermodehelper() doesn't need
-do_exit()"
-(6) 3e63a93b "kmod: introduce call_modprobe() helper"
-(7) 1cc684ab "kmod: make __request_module() killable"
-
-According to the reporter, (1) and (4) are optional and safer to
-exclude.
-
-Acknowledgements:
-
-Red Hat would like to thank Tetsuo Handa for reporting this issue.
+Upstream patch:
+[1] http://git.fedorahosted.org/git/?p=anaconda.git;a=commit;h=03ef13b625cc06873a924e0610340f8489fd92df
 
 References:
-https://bugs.launchpad.net/ubuntu/+source/linux/+bug/963685
-https://bugzilla.redhat.com/show_bug.cgi?id=853474
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=819031
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Could you allocate a CVE identifier for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
