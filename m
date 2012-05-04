@@ -1,79 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/5
-Message-ID: <E1T9C4K-0003Su-2p@mariner.uk.xensource.com>
-Date: Wed, 5 Sep 2012 10:38:44 +0100
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 12 (CVE-2012-3494) - hypercall set_debugreg vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/6
+Message-ID: <4FA3B6DD.1070503@suse.de>
+Date: Fri, 04 May 2012 13:00:45 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: evolution-data-server lacks SSL checking in its libsoup users
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Marcus Meissner wrote:
+> I started looking at the libsoup users, first one is evolution-data-server,
+> 
+> None of the libsoup users there seem to handle SSL certificate trust correctly (or at all) in my eyes.
+> 
+> In version 2.28 these are.
+> 	Groupwise protocol handling (server/groupwise/e-gw-connection.c)
+> 	Exchange protocol handling (server/exchange/lib/e2k-context.c)
+> 	Google (servers/google/libgdata-google/gdata-google-service.c)
+> 	calendar/backends/http/e-cal-backend-http.c
+> 	calendar/backends/caldav/e-cal-backend-caldav.c
+> 
+> I do not fully understand the correct solution to this yet though, whether we need
+> to pass in additional flags, or evaluate the "trusted" flag after the connect.
 
-            Xen Security Advisory CVE-2012-3494 / XSA-12
-                             version 3
+One would have thought that such abstraction libraries were invented to
+make life for application programmers easier. Openssl in all it's
+ugliness at least provides SSL_CTX_set_default_verify_paths(). gnutls
+doesn't have an equivalent. It's utterly stupid to require each and
+every application to hard code the path to a certificate bundle.
+Defaulting to not doing any checks at all if the application programmer
+forgot to set the magic option isn't exactly clever either.
+I think we should just patch libsoup to do the checks by default against
+the system certificates instead of starting to patch all it's users.
+Since we do not have a certificate bundle file in older distros we'd
+need to patch libsoup to use the certificate directory instead anyways.
 
-	      hypercall set_debugreg vulnerability
+I wonder why everyone insists in using an unmanageable bundle file
+instead of the directory with individual files...
 
-UPDATES IN VERSION 3
-====================
+cu
+Ludwig
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-set_debugreg allows writes to reserved bits of the DR7 debug control
-register on x86-64.
-
-IMPACT
-======
-
-A malicious guest can cause the host to crash, leading to a DoS.
-
-If the vulnerable hypervisor is run on future hardware, the impact of
-the vulnerability might be widened depending on the future assignment
-of the currently-reserved debug register bits.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems running 64-bit paravirtualised guests.
-
-The vulnerability dates back to at least Xen 4.0.  4.0, 4.1, the 4.2
-RCs, and xen-unstable.hg are all vulnerable.
-
-MITIGATION
-==========
-
-This issue can be mitigated by ensuring (inside the guest) that the
-kernel is trustworthy, or by running only 32-bit or HVM guests.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch will resolve the issue.
-
-PATCH INFORMATION
-=================
-
-The attached patch resolves this issue:
-
- Xen unstable, 4.1 and 4.0		xsa12-all.patch
-
-$ sha256sum xsa12-all.patch
-2415ee133e28b1c848c5ae3ce766cc2a67009bad8d026879030a6511b85dbc13  xsa12-all.patch
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQRx0+AAoJEIP+FMlX6CvZnMAH/0fcm9nfiChokydCyqXgdKtJ
-U2NqeqKzEP6emwLE+cvc+2EBP40fiBXsNATVdXc6Vx15eyzSMfJD3ndYF9OaKMVH
-MVP6KU/tyK1G/9WgQK9PHBj/Kzp8hwrY0Qw45od7z+R7XMGieLH9l1O1xwkNCYDw
-R8Xy2GI9IqsXLNpwy3BFYSyGYIX9o8/aBx4ZxHCV8H0OYUWv5hDGZZVXPDqGm11c
-N+qmUaPV2QlW8Aoww1SiwW5E+/CpyJT5+awEMgZ4IOHPbCBXJfyXbw4aMM2q5Soe
-mStqvPKL4H10SahaygdjxO+e4NqCHao0rYUXXpUr+aikIXvEearukp3FezR5IUE=
-=/LmZ
------END PGP SIGNATURE-----
-
-Download attachment "xsa12-all.patch" of type "application/octet-stream" (1011 bytes)
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
