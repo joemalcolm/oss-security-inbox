@@ -1,48 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/10
-Message-ID: <4F677C01.4060706@redhat.com>
-Date: Mon, 19 Mar 2012 12:33:37 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/13
+Message-ID: <4FA40008.3090204@redhat.com>
+Date: Fri, 04 May 2012 10:12:56 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Greg Knaddison <greg.knaddison@...uia.com>, security@...pal.org
-Subject: Re: Re: [security] Drupal CORE and Drupal Contrib
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: OpenKM 5.1.7 Privilege Escalation / OS Command Execution (XSRF based)
 Content-Type: text/plain; charset=utf-8
 
-On 03/16/2012 04:40 PM, Greg Knaddison wrote:
-> Hi Kurt,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/04/2012 01:32 AM, Henri Salo wrote:
+> On Fri, Mar 23, 2012 at 09:09:30AM -0600, Kurt Seifried wrote:
+>> On 03/23/2012 04:00 AM, Henri Salo wrote:
+>>> Can I get CVE-identifiers for these two security
+>>> vulnerabilities?
+>>> 
+>>> http://osvdb.org/show/osvdb/78105 COMPASS-2012-001 
+>>> http://osvdb.org/show/osvdb/78106 COMPASS-2012-002
+>>> 
+>>> - Henri Salo
+>> 
+>> I'm going to need some original vendor information (name, site,
+>> etc.).
+>> 
+>> -- Kurt Seifried Red Hat Security Response Team (SRT)
 > 
-> We started considering associating CVEs with our Security Advisories
-> (SAs) in September of 2011. At the time we discussed it with Josh
-> Bressers, Jan Lieskovsky, Steven M. Christey and decided that it would
-> only be practical to do it for Drupal core for now and we could
-> considering doing it for contrib in the future. Since that discussion
-> there has only been one SA for Drupal core which I think has the CVEs
-> on it: SA-CORE-2012-001 - Drupal core multiple vulnerabilities -
-> http://drupal.org/node/1425084
+> Hello Kurt and list,
 > 
-> Is there another SA for core that I'm not considering? Is there a
-> better way to list the CVE numbers?
-> 
-> There have been several SAs for contributed modules and we would
-> gladly update them with CVEs. If you can send an email with a link to
-> the SA and the CVE-id to use that would be great.
+> I received following information from Paco Avila from OpenKM. I
+> hope this clarifies things.
 
-Ok starting with core:
+Perfect, thanks!
 
-http://drupal.org/node/1231510
-SA-CORE-2011-003 - Drupal core - Access bypass
-This was already assigned CVE-2011-2726
+> "OpenKM Permission Weakness Admin Privilege Escalation" 
+> COMPASS-2012-001 / OSVDB:78105 / SA47424: Diff: AuthServlet.diff 
+> Issue tracker: http://issues.openkm.com/view.php?id=1973
 
-http://drupal.org/node/1204582
-SA-CORE-2011-002 - Drupal core - Access bypass
-This was already assigned CVE-2011-2687
+Please use CVE-2012-2315 for this issue.
 
-http://drupal.org/node/1168756
-SA-CORE-2011-001 - Drupal core - Multiple vulnerabilities
-Can't find any CVE's, do they need to be assigned?
+> "OpenKM Arbitrary Admin User Creation CSRF" COMPASS-2012-002 /
+> OSVDB:78106 / SA47420: Diff: scripting.diff Issue tracker:
+> http://issues.openkm.com/view.php?id=1750
+
+Please use CVE-2012-2316 for this issue.
 
 
+> - Henri Salo
 
 
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPpAAIAAoJEBYNRVNeJnmTq6MQAKdbrnpD6WqmbRf1gIaD80LF
+oJdMFT58ofFlCzslMDbWGv4lmOM+pSDLVrFgV20jFn9h6XqiAD9Kou77PM3XzgsK
+tqVzCePwkvLr5grFBTu72UDoiSyJzITtQgLQkijnwovU4TCvUTSMqio3Z2WaCqqR
+mTfc9rC67XE76CgxwXxg4TCRw7Dk/Cnh+rpCYAtCPVSxkFwlsf639TMx5zAq/wkF
+K7HPDCC5qYcJN6EpmeHCbINTVwtN8LxYuxdabUTAST2FU7WzxV1cxXikexs8SvFl
+0B9YL6zEeaQ0AVpnAhEhGOnyEVH6S50FZPIPWJ5+fpC1mBrpD592TDPzf/7B4pVU
+0wvq7KNEActSqYhQpxlYmkmHQcKqgtIIPVi/cpkDOE36xyAF/ZAt+fKfYt87tZGw
+wqgCxl6h958+/T51JMG2c1pC2+PqwAdIzamFaMk6+vsHBAJSp/QXZ/xP6MgxrOk3
+Uonm3eM1s10thvMxLFNjcYT9Gh39a4R/F7uc1sZkJ/ipLIQo5Z6e1ffI3KBotXYn
+F78uDUEgrwjQQQByX1d4KRDsb8+xtG34rov9G0lAyOYN+9dXys8tlnRmffBGXPrm
+iwDPBsO+/U7zzY5xI7oC+rZk7M17kgMh+l6AXDeFWCpqpKCOESY3Hn9yDmLNRYKG
+AA1P7EVOfVxXXxU48/hb
+=QQra
+-----END PGP SIGNATURE-----
