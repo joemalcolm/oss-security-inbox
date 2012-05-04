@@ -1,78 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/2
-Message-ID: <508EC70F.4040006@redhat.com>
-Date: Mon, 29 Oct 2012 12:12:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Andres Gomez <agomez@...idsignal.com>
-Subject: Re: CVE Request: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/21
+Message-ID: <20120504224002.GG70483@dojo.mi.org>
+Date: Fri, 4 May 2012 18:40:02 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: PHP-CGI query string parameter vulnerability (CVE-2012-1823 / CVE-2012-2311, CERT VU#520827)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+:On Sat, May 05, 2012 at 12:22:19AM +0400, Solar Designer wrote:
+:> Hi,
+:> 
+:> I guess most of you have heard of this one already, yet it should be in
+:> here as well.  The original issue was tracked as CERT VU#520827,
+:> CVE-2012-1823.  PHP 5.4.2 and 5.3.12 were released with an incomplete
+:> fix, and apparently CVE-2012-2311 refers to that incomplete fix issue.
+:> 
+:> http://eindbazen.net/2012/05/php-cgi-advisory-cve-2012-1823/
+:> http://www.php-security.net/archives/11-Mitigation-for-CVE-2012-1823-CVE-2012-2311.html
+:> http://www.kb.cert.org/vuls/id/520827
+:> http://www.reddit.com/r/PHP/comments/t3pr8/how_serious_is_this/
+:> http://www.reddit.com/r/netsec/comments/t4lxw/phpcgi_query_string_parameter_vulnerability_leads/
+:> http://www.metasploitminute.com/2012/05/cve-2012-1823-php-cgi-bug.html
+:> http://www.opennet.ru/opennews/art.shtml?num=33765 (in Russian)
+:
+:What I find particulary interesting is that the reporters apparently notified PHP
+:on January 17th. :/
 
-On 10/29/2012 09:12 AM, Andres Gomez wrote:
-> Hi, Could a CVE be assigned to this issue?
-> 
-> Name: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow Software: PLIB
-> 1.8.5 Software link: http://plib.sourceforge.net/ Vulnerability
-> Type: Stack Based Buffer overflow References:
-> http://www.exploit-db.com/exploits/21831/ 
-> http://www.securityfocus.com/bid/55839
-> 
-> Vulnerability Details: Plib is prone to stack based Buffer overflow
-> in the error function in ssg/ssgParser.cxx when it loads 3d model
-> files as X (Direct x), ASC, ASE, ATG, and OFF, if a very long error
-> message is passed to the function, in line 68:
-> 
-> 
-> // Output an error void _ssgParser::error( const char *format, ...
-> ) { char msgbuff[ 255 ]; va_list argp;
-> 
-> char* msgptr = msgbuff; if (linenum) { msgptr += sprintf (
-> msgptr,"%s, line %d: ", path, linenum ); }
-> 
-> va_start( argp, format ); 68        vsprintf( msgptr, format, argp
-> ); va_end( argp );
-> 
-> ulSetError ( UL_WARNING, "%s", msgbuff ) ; }
-> 
-> Thanks,
-> 
-> Andres Gomez.
-> 
-> -- CONFIDENTIALITY NOTICE:
-> 
-> This transmission is intended for the use of the individual or
-entity > to  which it is addressed, and it may contain information
-that is
-> confidential  or privileged under law. If the reader of this
-> message is not the intended  recipient, you are hereby notified
-> that retention, dissemination,  distribution or copying of this
-> e-mail is strictly prohibited. If you  received this e-mail in
-> error, please notify the sender immediately and  destroy the
-> original. Thank you.
+...but the associated PHP bug appears to have only been opened on May
+2nd.  I wonder if it slipped through some cracks because it was being
+handled outside of "normal" bug processes.  Hmmm...
 
-Please send an email without an attempt at creating an obligation for
-the receiver and I'll assign a CVE.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Potluck supper: prayer and medication to follow."         -Anguished English
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQjscPAAoJEBYNRVNeJnmT0OMQAMRQJvQXblxI5w27Vu3GjAoI
-h06k2wyvHvziIYxKpxnegrLugtEAE8mgEiRVi5wGUCLcZ+7MyMtAuPUddbWARwA/
-j/z2uxRCKIAArNIZMvsYZh3HMyHCQYvxCK/fFwwB+7UsMZ/YOQbB8zBcKPgMwLcO
-bUGvAcXmBXoRpQLJ8MFOGR56Khn2xrSL+c+xSBxPcG01MwUIIlaKsx0k8+UOGKsd
-1dIgjolu6JS7o06L9xukkl7XYif/rbFwbGrWNSz6RG1Pbe+Dyg3mqcsE0yZnm6Sq
-T6UkcKbuJxP/81FtscohwutRIi6mvc1z6JEVbwDYuStCJBYhu0gcPDhRetA8KaTS
-gUxnse1wkCEMt6yfzLVNCGhxJ9t+fF2U8PSSCcDgvSv3GiQVgl60rSArcsG6xd1J
-sQBZRaWxZWnBq8Q6SdT0XJAskXsHSoWBm459TrOqnUtGTGO6DzfjgpE2mzTyUwUB
-ItPIDvEW4hDn9zHJ3TM/JyC/R2FV7EeGfShTl+On/oPOslH0X9Ag9k9jxc42c1fS
-sWgQYm9uutiI5KxMyVaHbREm3SBeIj5iEmaGXH8+mrtcY/IeiThS4bVaAlXgErOz
-HLlgqGBttFE1Tv7wUEPUVQJ3fW0K7itph6O99zagVGDIiI3mN4cak1hfSsMemsOO
-ZB+s7FiFl3U/YGIn5X6k
-=YIfs
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
