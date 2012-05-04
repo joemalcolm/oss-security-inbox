@@ -1,63 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/2
-Message-ID: <4FC5EC0B.5010804@oracle.com>
-Date: Wed, 30 May 2012 10:44:43 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: tcp: drop SYN+FIN messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/1
+Message-ID: <20120504073143.GC16166@suse.de>
+Date: Fri, 4 May 2012 09:31:44 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: more tight ioctl permissions in dl2k driver
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Can you please assign a CVE for this issue:
 
-Recently we have a couple of queries relating to a Nessus "TCP/IP
-SYN+FIN Packet Filtering Weakness".   This has not been helped by the
-fact that [1] actually points (indrectly) to CVE-2002-2438 which is
-actually a SYN+RST problem.
+Stephan Mueller reported lack of capable(CAP_NET_ADMIN) checks
+in private ioctls in the dl2k network card driver.
 
-The Nessus script actually appears to detect this problem (also
-described in [2]):
-
-commit fdf5af0daf8019cec2396cdef8fb042d80fe71fa
-Author: Eric Dumazet <eric.dumazet@...il.com>
-Date:   Fri Dec 2 23:41:42 2011 +0000
-
-    tcp: drop SYN+FIN messages
-   
-    Denys Fedoryshchenko reported that SYN+FIN attacks were bringing his
-    linux machines to their limits.
-   
-    Dont call conn_request() if the TCP flags includes SYN flag
-   
-    Reported-by: Denys Fedoryshchenko <denys@...p.net.lb>
-    Signed-off-by: Eric Dumazet <eric.dumazet@...il.com>
-    Signed-off-by: David S. Miller <davem@...emloft.net>
-
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 78dd38c..0cbb440 100644
-- --- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -5811,6 +5811,8 @@ int tcp_rcv_state_process(struct sock *sk, struct
-sk_buff *skb,
-             goto discard;
- 
-         if (th->syn) {
-+            if (th->fin)
-+                goto discard;
-             if (icsk->icsk_af_ops->conn_request(sk, skb) < 0)
-                 return 1;
- 
+The netdev team will probably remove the handling of the SIOCDEVPRIVATE*
+calls from this driver though and not use Jeffs patch directly.
 
 References:
-[1] http://www.nessus.org/plugins/index.php?view=single&id=11618
-[2] http://markmail.org/thread/l6y5vu3tub434z4w
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+	http://www.spinics.net/lists/netdev/msg196365.html
+	http://www.spinics.net/lists/netdev/msg196381.html
+	http://www.spinics.net/lists/netdev/msg196382.html
+	https://bugzilla.novell.com/show_bug.cgi?id=758813
 
-iF4EAREIAAYFAk/F7AoACgkQRQu7fpQvo8iHgwD+K4uHEOheYdcAopAYWUDystWm
-KfrN/P2vvbM8vJ7PxvYA/3WX3KE87EdiGScqhZWXI0/A1PPe+yTVM5+1iwqCR4hk
-=OtXl
------END PGP SIGNATURE-----
-
+Ciao, Marcus
