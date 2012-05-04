@@ -1,95 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/11
-Message-ID: <4FB27AE1.4070401@redhat.com>
-Date: Tue, 15 May 2012 09:48:49 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: micah anderson <micah@...eup.net>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: sympa (try again)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/18
+Message-ID: <20120504202219.GA1111@openwall.com>
+Date: Sat, 5 May 2012 00:22:19 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: PHP-CGI query string parameter vulnerability (CVE-2012-1823 / CVE-2012-2311, CERT VU#520827)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 05/15/2012 09:26 AM, micah anderson wrote:
-> 
-> On Fri, 11 May 2012 23:58:33 -0600, Kurt Seifried
-> <kseifried@...hat.com> wrote:
->> Ok I see this one and several more:
->> 
->> ================================
->> 
->> 6.1.11		May 11, 2012 Bug fixes: [7358] wwsympa/wwsympa.fcgi.in:
->> Fixing a potential security issue related to archives
-> 
-> This is the CVE-2012-2352 that you assigned, upstream Sympa has
-> now created a page for security issues, this is one is detailed on
-> there:
-> 
-> https://www.sympa.org/security_advisories#security_advisories
-> 
->> 
->> 6.1.1           October 22, 2010 This version includes a lots
->> news such as DKIM support, autosignoff footer link included in
->> lists messages, ... Various vulnerability have been solved in
->> 6.1.1 : cross side scripting, cross-Site request forgeries, brute
->> force attack, DOS. These vulnerabilities were identified with the
->> help of P. Gardenat (Rectorat de Rennes) during a security audit
->> on Sympa. - --------------------- web_tt2/error.tt2,
->> wwsympa/wwsympa.fcgi.in:  Now shared document can't	be read or
->> edited unless list is open. This is a security fix
->> 
->> ================================
->> 
->> 6.0		1st October 2009 Security: - - [reported by T. Retout] SQL
->> injection threat removed by using place holders instead of direct
->> sprint in a query. - - [Submitted by N. Bertrand, univ.
->> Minnesota] Basic logs in debug don't issue the password
->> unencrypted in the logs for function Auth::ldap_authentication.
->> This way, this password won't be sent unencrypted to a possible
->> syslog server. - - [#4439] [#4440] [reported by O.Berger]
->> security vulnerability which use a file in /tmp. - - [#4430]
->> store temporary files in Sympa's own tmp directory instead of
->> /tmp to prevent symlink attacks
-> 
-> These issues were fixed a very long time ago, there was a security 
-> advisory in 2010, here is the French CERT advisory for them:
-> 
-> http://www.certa.ssi.gouv.fr/site/CERTA-2010-AVI-505/
-> 
-> It appears that besides this most recent CVE, the only CVEs issued
-> for Sympa have been in 2008, so these were not assigned numbers.
+I guess most of you have heard of this one already, yet it should be in
+here as well.  The original issue was tracked as CERT VU#520827,
+CVE-2012-1823.  PHP 5.4.2 and 5.3.12 were released with an incomplete
+fix, and apparently CVE-2012-2311 refers to that incomplete fix issue.
 
-Please include links with more direct information (e.g. sympa
-changelog/code commits).
+http://eindbazen.net/2012/05/php-cgi-advisory-cve-2012-1823/
+http://www.php-security.net/archives/11-Mitigation-for-CVE-2012-1823-CVE-2012-2311.html
+http://www.kb.cert.org/vuls/id/520827
+http://www.reddit.com/r/PHP/comments/t3pr8/how_serious_is_this/
+http://www.reddit.com/r/netsec/comments/t4lxw/phpcgi_query_string_parameter_vulnerability_leads/
+http://www.metasploitminute.com/2012/05/cve-2012-1823-php-cgi-bug.html
+http://www.opennet.ru/opennews/art.shtml?num=33765 (in Russian)
 
-> micah
-> 
-> ps - I would sign this message, but it seems like it would be eaten
-> by EZLM :(
-> 
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPsnrhAAoJEBYNRVNeJnmTia8P/0G3Vju/9YtqaNAMKy73pLpk
-TOfAMRL8ytdVjO7lpp5dXSZlH2wWXCaRQ5ZnrvwIAT/d02hZPlGVbgwqcuE1eZ7o
-Tqebs/hqA6Upf87XqOdhvTCIqMBlERu3kqJE0jptI33mpJOSjMefEKAotI1yjRiZ
-MFoSBilklllrFd+tQw5K50XC0ao1d1Gl/TWHs9lqLcgxwRBczi9Bc0gv0G4LSUuK
-2VdRpZYEECL1oom/8O6fytZvajAP5obJg4Wixg4ksoawr+lrH8zWypjKs6xHOHVh
-YwDmP5PwaG3Ez+hj6oU6WUA65P3hElIDZu2J99tdRY3Xh5u/ThZIdsyfet+OuSzz
-ONBTVGkYU0M9/KAmLe7PpqHB9OWQsAAZbgI40eBB9+uGQwxU93jX0i7qLrF0EA2a
-u54LWv8YB5KsqB26TirNc7bbXmZzHOvw1Z1wK4wHpxdkGSFJNmjuv/3UshktF6mt
-I2ajYMYA3rTtsRSmb6eU+tK7ZSb0am4njt1JExGtufjc3Q+AqOkQCCJqt7s6gr+r
-qbtGko8zhPvHk0hox/NnTtFX9NOioNj9dDTYnoQxCTIZ+can0sQcw8QLoZEVOTFF
-8Du3ZhX8gYC5CISFt5n1cJuiJf/YkykrqBvnHVz4bSizr0Wm44yutczHKyQIVJkP
-0j8UYQLMHH0vqwqScWO2
-=sumu
------END PGP SIGNATURE-----
+Alexander
