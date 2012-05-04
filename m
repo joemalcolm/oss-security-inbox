@@ -1,38 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/8
-Message-ID: <50C97AB9.70701@codebrainz.ca>
-Date: Wed, 12 Dec 2012 22:50:33 -0800
-From: Matthew Brush <mbrush@...ebrainz.ca>
-To: Eitan Adler <lists@...anadler.com>
-CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>, Nick Treleaven <nick.treleaven@...nternet.com>,  Colomban Wendling <lists.ban@...besfolles.org>, Enrico Troeger <enrico.troeger@...na.de>,  Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com, jonathan.underwood@...il.com
-Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/9
+Message-ID: <4FA3FDC8.8020905@redhat.com>
+Date: Fri, 04 May 2012 10:03:20 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Steve Beattie <steve@...w.org>
+Subject: Re: CVE Request: evolution-data-server lacks SSL checking in its libsoup users
 Content-Type: text/plain; charset=utf-8
 
-On 12-12-12 09:54 PM, Eitan Adler wrote:
-> On 12 December 2012 11:51, Jan Lieskovsky <jlieskov@...hat.com> wrote:
->> The questions:
->> 1) should Geany escape the filenames?,
->
-> Up to the maintainers.
->
->> 2) is this a security issue or not?
->
-> Unlikely.  Is there a way a malicious document could cause code
-> execution without user action?
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-If I understand correctly, if someone messed with the user's 
-configuration directory where the "geany.conf" file is stored, and they 
-modified the "recent files" stored in there that Geany opens 
-automatically on next startup, then assuming that it doesn't choke on 
-the weird filename and that the user didn't notice the weird filename in 
-several places in the GUI, they could technically blindly activate a 
-build command, causing the malicious filename/command to run.
+On 05/04/2012 02:30 AM, Steve Beattie wrote:
+> On Fri, May 04, 2012 at 10:03:11AM +0200, Marcus Meissner wrote:
+>> This was already reported: 
+>> https://bugzilla.gnome.org/show_bug.cgi?id=671537 
+>> https://launchpad.net/bugs/933659   (private still)
+>> 
+>> so it might have a CVE already.
+> 
+> I've made the launchpad bug public now. There was no CVE assigned 
+> in that report.
+> 
+> Thanks.
+> 
 
-I have no idea how much of a risk it actually is (relative to someone 
-already having hacked your machine/$HOME files), but I'm personally not 
-opposed to going to reasonable lengths to ensure our code/program is secure.
+Shouldn't these all be covered by the libsoup CVE:
 
-Cheers,
-Matthew Brush
+> libsoup 2.32.2 does not verify certificates at all if an 
+> application does not explicitly specify a file with trusted root 
+> CA's. Since that libsoup version relies on the verification
+> failure to clear the trust flag it always considers ssl connections
+> as trusted in that case.
+> 
+> Reference: https://bugzilla.novell.com/show_bug.cgi?id=758431
+> 
+> cu Ludwig
+> 
+Please use CVE-2012-2132 for this issue.
 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPo/3IAAoJEBYNRVNeJnmTtPkQAKI4X13+7i3fStpzFpHamaUi
+5/xgP6q+2ln/XVk11v4M6hN0VTr2gITPFk51x+MVnm+i9uBd8s5EtovrueA+eE8t
+bISTs6WSDDFrpOlR3nW1DN65bW9WT75dp1c4ehWZJXDtlOIeYAjKh+Avc0lxLLVM
+KeIaTv5nFHGaTth6ajreuW3esDYXAZ/mTlEfdyiUq2+6JtqE8TVl4sXRN0GOl7Ra
+wlBE8M28C3p8aqyeY5Esxq3chLNFF7WFaMkOkgNv5okpFrJ+QQ/8lT1nOf4pPgm8
+ndDk69ICcNkfFerBxNY58Qb8BLD022qJOAaYsbAfty1//gLXtUjqf5Zq/c2o3DJ4
+EaClDiLPAjwbc6T5JlDyatTdwLNlFDdziJTk3f0TU9Qffx7adbeCyPIA42GCnQp5
+pS+xsAIayCW3S7cAT/quy4F7dOppSWJ9qT4wJjCvIvQejnOS4qmQNL7GLac4REgU
+wMYYW6DKGWb0zOW0WTP58IC+Ros3nK+YiHyyg8tpG9SvtGC7L8CE532Y1eXwZT9/
+WccuEL3gQ9zOl3Y9EmTkj/770+msIRyjRQmuKpGwk/oUuKANlIfy4LwdSgD/PiGG
+3jlIZjdNOic6OM0N3TKbvDuKp+tBy41lYig1e4AGSpPeX5oFF380MERWw+GZFx2+
+dyiNsiZOsrcJTOYCKAMd
+=WbnO
+-----END PGP SIGNATURE-----
