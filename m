@@ -1,117 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/27
-Message-ID: <5915e2b1-eb30-498d-94c7-05c6e9e7660b@zimbra>
-Date: Fri, 16 Mar 2012 15:24:14 -0500 (CDT)
-From: "Matthew  Jordan" <mjordan@...ium.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Asterisk: AST-2012-002 and AST-2012-003 flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/7
+Message-ID: <20120504153151.GA32354@openwall.com>
+Date: Fri, 4 May 2012 19:31:51 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Debian/Ubuntu php_crypt_revamped.patch
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+Boaz Rymland reported to me what he thought was a phpass bug, where any
+password would be valid when authenticated against a NULL or empty
+password hash.  (Indeed, the password hash shouldn't normally be NULL or
+empty, but it is better for authentication code to be fail-close rather
+than fail-open.)  At first, I was not able to reproduce the problem, but
+after exchanging a few e-mails we were able to narrow it down to PHP
+crypt() call returning an empty string when called with NULL or an empty
+string for the salt argument on Boaz' Ubuntu 11.04 system with php5
+5.3.5-1ubuntu7.7.  I was still not able to reproduce that on other
+systems (with other versions of PHP).
 
------ Original Message -----
-> From: "Kurt Seifried" <kseifried@...hat.com>
-> To: oss-security@...ts.openwall.com
-> Cc: "Jan Lieskovsky" <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, "Matt Jordan"
-> <mjordan@...ium.com>
-> Sent: Friday, March 16, 2012 12:57:15 PM
-> Subject: Re: [oss-security] CVE Request -- Asterisk: AST-2012-002 and AST-2012-003 flaws
-> 
-> On 03/16/2012 05:47 AM, Jan Lieskovsky wrote:
-> > Hello Kurt, Steve, vendors,
-> > 
-> > 1) AST-2012-002:
-> > 
-> > An out-of stack-based buffer write flaw was found in the way the
-> > Miliwatt
-> > application of the Asterisk, open source telephony toolkit,
-> > performed
-> > generation of constant audio tone at 1000Hz (the 'o' option) from
-> > certain,
-> > provided audio packets, when the 'internal_timing' Asterisk
-> > configuration file
-> > option was disabled. In this configuration, a remote attacker could
-> > provide a
-> > specially-crafted audio packet file, which once processed by the
-> > Miliwatt
-> > application would lead to that application crash, or, potentially
-> > arbitrary
-> > code execution with the privileges of the user running the
-> > application.
-> > 
-> > Upstream security advisory:
-> > [1] http://downloads.asterisk.org/pub/security/AST-2012-002.pdf
-> > 
-> > Asterisk v1.8.10.1 announcement:
-> > [2] http://www.asterisk.org/node/51797
-> > 
-> > Upstream patch against the v1.8 branch:
-> > [3]
-> > http://downloads.asterisk.org/pub/security/AST-2012-002-1.8.diff
-> > 
-> > References:
-> > [4] https://bugs.gentoo.org/show_bug.cgi?id=408431
-> > [5] https://bugzilla.redhat.com/show_bug.cgi?id=804038
-> 
-> Please use CVE-2012-1183 for Asterisk AST-2012-002
-> 
-> 
-> > 2) AST-2012-003:
-> > 
-> > A stack-based buffer overflow flaw was found in the way Asterisk
-> > Manager
-> > Interface of Asterisk, open source telephony toolkit, performed
-> > processing of
-> > certain HTTP Digest Authentication headers. A remote attacker,
-> > attempting to
-> > connect to the HTTP session could send a HTTP Digest Authentication
-> > header with
-> > specially-crafted values for certain fields, which once processed
-> > by the
-> > Asterisk parse digest authorization header functionality would lead
-> > to
-> > asterisk
-> > crash, or, potentially arbitrary code execution with the privileges
-> > of
-> > the user
-> > running the application.
-> > 
-> > Upstream security advisory:
-> > [1] http://downloads.asterisk.org/pub/security/AST-2012-003.pdf
-> > 
-> > Asterisk v1.8.10.1 announcement:
-> > [2] http://www.asterisk.org/node/51797
-> > 
-> > Upstream patch against the v1.8 branch:
-> > [3]
-> > http://downloads.asterisk.org/pub/security/AST-2012-003-1.8.diff
-> > 
-> > References:
-> > [4] https://bugs.gentoo.org/show_bug.cgi?id=408431
-> > [5] https://bugzilla.redhat.com/show_bug.cgi?id=804042
-> > 
-> > Could you allocate two ids for these issues?
-> 
-> 
-> Please use CVE-2012-1184 for Asterisk AST-2012-003
-> 
-> 
-> > Thank you && Regards, Jan.
-> > --
-> > Jan iankko Lieskovsky / Red Hat Security Response Team
-> > 
-> > P.S.: Cc-ed Matt Jordan of the Asterisk team, so once the ids are
-> > assigned, he
-> >       can update the advisories.
-> 
-> 
-> --
-> Kurt Seifried Red Hat Security Response Team (SRT)
+Today, I downloaded and built clean PHP 5.3.5 on an Owl system.
+I still could not trigger the problem.  Then I applied
+debian/patches/php_crypt_revamped.patch from Debian's
+php5_5.3.5-1.diff.gz - and the problem finally appeared.
 
-Thanks Kurt.  We'll get those added to the advisories right away.
+Original:
 
-Matthew Jordan
-Digium, Inc. | Software Developer
-445 Jan Davis Drive NW - Huntsville, AL 35806 - USA
-Check us out at: http://digium.com & http://asterisk.org
+php@owl:~ $ ~/php-5.3.5/bin/php -r 'echo crypt("pass", null), "\n";'
+$1$l5Nwx5hu$NhostJ7i8jP1B.4C4zaiM78.
+
+With Debian patch:
+
+php@owl:~ $ ~/php-5.3.5-debian/bin/php -r 'echo crypt("pass", null), "\n";'
+
+php@owl:~ $ 
+
+(empty string was printed).
+
+It turns out that the patch first appeared in Debian's 5.3.2-1 in
+response to almost a non-issue (different behavior across PHP versions
+for an invalid salt string) and general feeling that PHP should be using
+system-provided crypto instead of its bundled code when possible
+(questionable to me: each approach has its pros and cons):
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=572601
+
+The handling of NULL/empty salt strings was corrected in 5.3.6-1, as
+well as in 5.3.3-7+squeeze4 (stable-security):
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=581170
+
+Apparently, that fix never made it into Ubuntu 11.04 updates - so I
+guess this should happen now.
+
+Overall, the patch looks problematic to me.  Here's another problem with
+it, still reproducible on 5.3.10-1ubuntu3 (Ubuntu 12.04):
+
+user@...ntu:~$ php -r 'echo crypt("pass", "_J9..Salt"), "\n";'
+_J9..Saltr2Hq6I3ZH0s
+user@...ntu:~$ php -r 'echo crypt("pass", "_J9..Saltr2Hq6I3ZH0s"), "\n";'
+_J0LlWX63dRZg
+
+That non-security bug is with the "salt_len == 9" check added with the
+patch.  So phpass' authentication against CRYPT_EXT_DES hashes, which it
+tries to support, would be failing on Debian/Ubuntu systems.  I guess I
+need to introduce a workaround for it now, complicating the code. :-(
+
+I think it may be best to drop this patch from further versions of
+Debian/Ubuntu - and not reintroduce it even in response to the likely
+"bug" reports from Debian users complaining about the behavior change
+from previous versions of Debian.
+
+I agree that the code in upstream PHP may need improvement, but that
+patch does not improve it, and the deviation from upstream is bad.
+Altering the behavior of PHP on specific distros beyond what may
+normally happen due to PHP's ./configure is undesirable and should only
+be done for very good reasons.
+
+Sorry for the rant.
+
+Alexander
