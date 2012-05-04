@@ -1,37 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/10
-Message-ID: <20120828140853.GA15518@suse.de>
-Date: Tue, 28 Aug 2012 16:08:53 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/12
+Message-ID: <4FA3FF5D.1080508@redhat.com>
+Date: Fri, 04 May 2012 10:10:05 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-Request: apache2-mod_php5 AddHandler content confusion
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Peter Jones <pjones@...hat.com>
+Subject: Re: CVE Request -- anaconda: Weak permissions by writing password configuration file in bootloader configuration module
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-So far I have not seen any CVE for the recent
-"apache2-mod_php5 remote code execution due to multiple extension feature of 'AddHandler's"
-where you can treat a blah.php.gif as a PHP script due to sloppy
-configs. [1]
+On 05/04/2012 10:06 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> a security flaw was found in the way bootloader configuration
+> module of Anaconda, a graphical system installer, stored password
+> hashes when performing write of password configuration file (0755
+> permissions were used instead of 0700 ones). A local users could
+> use this flaw to obtain password hashes and conduct brute force
+> password guessing attacks (possibly leading to password 
+> circumvention, machine reboot or use of custom kernel or initrd
+> command line parameters).
+> 
+> Upstream patch: [1] 
+> http://git.fedorahosted.org/git/?p=anaconda.git;a=commit;h=03ef13b625cc06873a924e0610340f8489fd92df
+>
+> 
+> 
+> References: [2] https://bugzilla.redhat.com/show_bug.cgi?id=819031
+> 
+> Could you allocate a CVE identifier for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
-Can someone assign a CVE? At the quick look, I cant see who actually
-discovered this.
+Please use CVE-2012-2314 for this issue.
 
-Sebastian
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-[1] https://bugzilla.novell.com/show_bug.cgi?id=775852
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+iQIcBAEBAgAGBQJPo/9cAAoJEBYNRVNeJnmTnigP/i4qm/8SxQCKtSdbA0ltS78N
+fP9gwLS3bXpCxmGidoNxhq3ukA96IObKO4+O4Ofsjpb7En5JiSat1J7t56g8Sy9g
+wn5GfYzwmRiPnqTppZWr8mdJEFaSDd9bGP02oCyUnfl3h6OE5Wflm+7St5qJYZNk
+GOLAdMAhgho2kEiR1btKRrfHhlZStcz3yNvHWAGF3ZC8Hx+UTbOTqMU9i7/7vo+s
+CVfPH2vTjCSEy/0qYhC9o4uGSVUaw6yUDaUx8JPWBWXkxHQZV4UdJl38iW6ytl1j
+k8AwTan3FnfRQOPlb6xIHgsV5Z3iUzYzzF73gOMzq8rZOhy97kb/WM4FHkpj/Z3r
+1IxtbHbF4H97in6SXTVtsUVGKIylmXUn0dU6Q/jq90vbCuXUBEpXRG05sEjP1AQC
+zMmvNVvJDaDHiDOFADHJTx7DZYrlbWoE1RkKFDQNaII+tv7eZeLShQIoUWNTyy/R
+DnuTgtfft9jzIrOGY6QuloRIUWsEQSPii/QjBbzbTvRdnF5H0Fy9+eOQ3D7zWdYA
+ZcFGg/8tZ7xUQs3+pW6JVt3klWqLF/xc6oVb1O/zWbKE3042XzxvpkhuroYHrC69
+jetWJVTGPfVjq2hNYPAhf81MbtDK0HSa0dqZkkXJj9IYAGHLK6Q+uzCtlXjLsdy4
+UKzYa4YPHIOyYDq1YH5F
+=3W0O
+-----END PGP SIGNATURE-----
