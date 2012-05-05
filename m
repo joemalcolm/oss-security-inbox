@@ -1,43 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/17
-Message-ID: <5099769D.7050904@redhat.com>
-Date: Tue, 06 Nov 2012 13:44:13 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: YUI 2.x security issue regarding embedded SWF files -- or, How Not To Handle A Security Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/05/1
+Message-ID: <4FA474ED.5010806@redhat.com>
+Date: Fri, 04 May 2012 20:31:41 -0400
+From: Russell Bryant <rbryant@...hat.com>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com
+Subject: [OSSA 2012-006] Horizon session fixation and reuse
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/06/2012 08:23 AM, Jan Lieskovsky wrote:
-> Looks they already did: [1]
-> http://www.yuiblog.com/blog/2012/11/05/post-mortem-swf-vulnerability-in-yui-2/
->
-> 
-[2] http://yuilibrary.com/support/20121030-vulnerability/
+OpenStack Security Advisory: 2012-006
+CVE: 2012-05-04
+Date: Friday, May 4
+Title: Horizon session fixation and reuse
+Impact: Critical
+Reporter: Thomas Biege, SUSE
+Products: Horizon
+Affects: All versions
 
-well not when I had posted the message =)
+Description:
+Thomas Biege from SUSE reported a vulnerability in OpenStack Dashboard
+(Horizon). Under specific circumstances it is possible to reuse
+session cookies from another user, potentially allowing access to
+unauthorized information and capabilities.
+Fixes:
+Folsom:
+https://github.com/openstack/horizon/commit/041b1c44c7d6cf5429505067c32f8f35166a8bab
+2012.1:
+https://github.com/openstack/horizon/commit/abc532fa90eac1cc970423339347e318aa8d1b1a
 
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-2144
+https://bugs.launchpad.net/horizon/+bug/978896
+
+Notes:
+This fix will be included in the folsom-1 development milestone and in
+a future 2012.1 (essex) release.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+Russell Bryant
+OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQmXadAAoJEBYNRVNeJnmTS4MQAKR4aKWjYWsM3iW6l9xd4Gyb
-HVlXKrHUO1LE8FH6Aer/0UTvIq4eglM1GIhr3NYre0VF6R2fJpPjnsEvmGq5Gcme
-gzBdJWffiwIkFRciFGC+4cspBQcFmUe0efGmDgJVJ7AAz7PfmMlUjihSbycFjFjO
-K+BUdH7uzAznJms+pZ58lfxRr5VIH8+y4hdEPYqO7FFQh16J+KwUZ7GUgrzLGHsV
-jjudz0eGQRAha0SaXokM6DlrW3CGIlGp+wJICPDKPeBgl1cRMjuMWQgbssfRjEGM
-dA5y9B/bLXSFs7mPfpwCWVPmLRSGxRewyNCM4uHg9in3xQUOp4+74GqMROGypNuC
-YNDudrzRb7ZK0YcvzKXHCzcdSBX/hbMr+aq2V8K/zModeAs8kYd93nWWJojEZxMK
-7oAmJsiC5k/6UmvUZYO3PVFLlBCX6qN4Dova2/tugC8XYQYoKv5Fk98wU89Mz8zz
-AQSjCzMKEmXe0+UmMCrKRy/c0+9sBEmZcHS4SYuf1xUyNcSwWZ+cXxUKGw8s3muv
-2GcyLEEjcVoRO8zrKFz0pnQwo4SKCqV62rVigU1CPSbADLw6jahp8kNQpU9805M9
-u8RaV7CRbBUsS8Pr5QqevjKmCYoKI5FnoGXi5WH5QB2lni74KyQ7a/0EnvY9+Nsk
-Z6zU2TrQ/86VchVYWd3B
-=CRgZ
+iEYEARECAAYFAk+kdO0ACgkQFg9ft4s9SAYLsgCgptN3zZrEpOCPsbbSfPiPz7J5
+BegAoK2D0D1YHP08xt3iSdGQ7OKXuyLT
+=CYxN
 -----END PGP SIGNATURE-----
