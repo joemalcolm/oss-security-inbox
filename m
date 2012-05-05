@@ -1,66 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/10
-Message-ID: <877gwd4g91.fsf@algae.riseup.net>
-Date: Tue, 15 May 2012 11:26:50 -0400
-From: micah anderson <micah@...eup.net>
-To: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: sympa (try again)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/05/2
+Message-ID: <4FA5BDF0.4040103@redhat.com>
+Date: Sat, 05 May 2012 17:55:28 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Debian/Ubuntu php_crypt_revamped.patch
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Fri, 11 May 2012 23:58:33 -0600, Kurt Seifried <kseifried@...hat.com> wrote:
-> Ok I see this one and several more:
+On 05/04/2012 11:35 AM, Solar Designer wrote:
+> On Fri, May 04, 2012 at 10:08:53AM -0600, Kurt Seifried wrote:
+>> So I'm guessing this needs a CVE #?
 > 
-> ================================
+> The purpose of my posting wasn't to request a CVE id (although you
+> may provide one), but rather to notify Ubuntu and others of the
+> Debian bug that they may need to fix in Debian-derived distros, and
+> to suggest that the patch be dropped from future versions.
 > 
-> 6.1.11		May 11, 2012
-> Bug fixes:
-> [7358] wwsympa/wwsympa.fcgi.in:  Fixing a potential security issue
-> related to archives
-
-This is the CVE-2012-2352 that you assigned, upstream Sympa has now
-created a page for security issues, this is one is detailed on there:
-
-https://www.sympa.org/security_advisories#security_advisories
-
+> Speaking of CVE, though, I think that yes - this deserves one.
+> This is a security issue in two ways:
 > 
-> 6.1.1           October 22, 2010
-> This version includes a lots news such as DKIM support, autosignoff
-> footer link included in lists messages, ...
-> Various vulnerability have been solved in 6.1.1 : cross side scripting,
-> cross-Site request forgeries, brute force attack, DOS. These
-> vulnerabilities were identified with the help of P. Gardenat (Rectorat
->  de Rennes) during a security audit on Sympa.
-> - ---------------------
-> web_tt2/error.tt2, wwsympa/wwsympa.fcgi.in:  Now shared document
-> can't	be read or edited unless list is open. This is a security fix
+> 1. User authentication in some PHP apps may turn from fail-close
+> to fail-open.
 > 
-> ================================
+> 2. If a PHP app actually makes use of PHP crypt()'s ability to
+> generate random salts (when no salt is provided), then empty
+> strings may be generated in place of hashed passwords for newly
+> set/changed passwords. Combined with #1 above, this may mean that
+> authentication with any password will then succeed against such
+> accounts.
 > 
-> 6.0		1st October 2009
-> Security:
-> - - [reported by T. Retout] SQL injection threat removed by using place
-> holders instead of direct sprint in a query.
-> - - [Submitted by N. Bertrand, univ.  Minnesota] Basic logs in debug
-> don't issue the password  unencrypted in the logs for function
-> Auth::ldap_authentication. This way, this password won't be sent
-> unencrypted to a possible syslog server.
-> - - [#4439] [#4440] [reported by O.Berger] security vulnerability which
-> use a file in /tmp.
-> - - [#4430] store temporary files in Sympa's own tmp directory instead
-> of /tmp to prevent symlink attacks
+> Since I expect that Ubuntu will fix this in a PHP update for 11.04,
+> I guess they'll want to refer to a CVE id in the advisory.
+> 
+> Thanks,
+> 
+> Alexander
 
-These issues were fixed a very long time ago, there was a security
-advisory in 2010, here is the French CERT advisory for them:
+Please use CVE-2012-2317 for this issue.
 
-http://www.certa.ssi.gouv.fr/site/CERTA-2010-AVI-505/
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-It appears that besides this most recent CVE, the only CVEs issued for
-Sympa have been in 2008, so these were not assigned numbers.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-micah
-
-ps - I would sign this message, but it seems like it would be eaten by
-EZLM :(
-
-
+iQIcBAEBAgAGBQJPpb3sAAoJEBYNRVNeJnmTMKYP/2xzCpV+UpDSj4TjY5nx4vzj
+yp5qt2jLWvb36/mZE4QfamIcp8jARGDSQPkFQ/dY5sjn/fTpdKzBVNbFvDcHTwuu
+nfsPp1owlXrqW3SPVTpUjl+FpeRIdWhYoj3H5Le2vFkWVxjwt7CmJEITU88lr3/8
+fklX1RMqVEy7EPWjnLmfvO4oLa9d2FrB2R3EnYPt32zxSJZEIBIqladGIHpiJTS/
+f+IuRjHvNJUODQ+Bz+Rh/CONwPXUXVqAft75FHIkAg/8SxZ2ILd5kDX7uh3quWvj
+5U2TleRNEF024DWvo4yt20gvPGRH+eSTBOnZqNfjPJk6vAJutyGuMam0LnEni6ht
+WSRFj78xnlBcw8BX5kYEeNviTDUGC1nN45cymEOtFrwsHlz+rJ1A0IaDNlSnmCN8
+OnhWTkmLc4vq74gPc6omgd/C76xrtTEGFgFpYEY3Fl9SN3hyuW5QxYVqIFOob4RP
+4X1aYFpoc1RV6ow3Q8VIy8cTqK7rPD5mME5AGBrXg0gwH94mroaVfEyNDtX6GWY7
+yea9WJB5LsaSDhg4WQe7is7V0MgMFz4PHOtFWyeeNFHAadXSz8KTUqX1CJCeWY2q
+6a6R7p8PTDpJnTtnXFZQKXRpqDlNXaQyNlYHCQwwjIXwLExBqvKdoBaCpezNPn6d
+vR2zG4anSx0QbFTZga9Z
+=8hhh
+-----END PGP SIGNATURE-----
