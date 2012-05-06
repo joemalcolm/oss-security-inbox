@@ -1,48 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/6
-Message-ID: <506C967E.1070304@redhat.com>
-Date: Wed, 03 Oct 2012 13:48:14 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/06/1
+Message-ID: <4FA5BF4F.7080505@redhat.com>
+Date: Sat, 05 May 2012 18:01:19 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Tyler Hicks <tyhicks@...onical.com>, coley@...us.mitre.org, security@...ntu.com, security@...y-lang.org
-Subject: Re: CVE Request: Ruby safe level bypasses
+Subject: Re: CVE id request for links2
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/02/2012 04:32 PM, Tyler Hicks wrote:
-> Hello - Upstream Ruby has fixed[1] exception methods that
-> incorrectly allowed safe level bypasses. These bypasses allowed
-> untainted strings to be modified by untrusted code in safe level
-> 4.
+On 04/11/2012 06:10 PM, Nico Golde wrote:
+> Hi, * Kurt Seifried <kseifried@...hat.com> [2012-04-10 21:56]:
+>> On 04/09/2012 08:43 PM, Nico Golde wrote:
+> [...]
+>>> I discovered some out of memory accesses in links2 graphics
+>>> mode that could be potentially used to run exploits. I fixed
+>>> them in links-2.6. For Debian Squeeze, I am sending this patch
+>>> that backports the fixes to links-2.3pre1. Apply the patch and 
+>>> distribute patched packages links and links2 through 
+>>> security.debian.org.
+>>> 
+>>> 
+>>> [...] This patch fixes:
+>>> 
+>>> Buffer overflow when pasting too long text from clipboard to
+>>> dialog boxes (not remotely exploitable)
+>> 
+>> Can this result in code execution?
 > 
-> Note that the changes to exc_to_s() and name_err_to_s(), in
-> error.c, are similar to the fix for CVE-2011-1005, but the Ruby
-> advisory[2] made it clear that Ruby 1.9.x was not affected by
-> CVE-2011-1005. It turns out that the vulnerability was later
-> reintroduced to Ruby's trunk in revision 29456. Ruby 1.9.3-p0 and
-> later is affected.
-> 
-> While Shugo Maeda was fixing the issue above, he noticed that 
-> name_err_mesg_to_str() had a similar flaw. Ruby 1.8.x, along with 
-> 1.9.3-p0 and later is affected.
-> 
-> I believe that these issues need two separate CVEs. Both issues
-> are fixed in the same upstream patch[1]. Could you please allocate
-> ids?
-> 
-> Thanks, Tyler
-> 
-> [1]
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37068
->
-> 
-[2]
-http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/
-> 
+> I am not sure about this one. For out of memory write in dip.c, my
+> guess is yes, it is basically possible to write past an allocated
+> buffer. Even though I can't tell you what data would reside in that
+> area.
 
-Please use CVE-2012-4464 for this issue.
+Is it exploitable for anything beyond a crash?
+
+> For the xbm decoder, the problem has basically been that
+> xbm_decode() did not indicate an error when decoding xbm images and
+> thus the callers would continue to operate on the parsed structures
+> even though the image is faulty.
+
+Is it exploitable for anything beyond a crash?
+
+> Cheers Nico
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -50,19 +52,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQbJZ+AAoJEBYNRVNeJnmTKVwP/AwS0w4x1fIIUZ4oakCOL04s
-PDhRjSxppmJK3v4hXsTgXlIrb3Le0cOw0equzs07f87OBRC2Tm05Xai2Xx3a9iFZ
-Sa/fdR9+LSSpg8NCULvXArZYW/mOLNLFXJ7XJSK3cttOdAKb99vKnaX/nuLigFMu
-hnmr9+qES/rwkUiRQeik6OPNldYiQX3HxZ+ORoyCnDOx0hhX7YoV7fbGl8q2vEaQ
-VER+epOX2eIiYjSuyCSbUhRYt4httanoDqGUPZYnpITNs2MIrEOsrxizePnZ2RZd
-LjM7NilP+tGcOT9ilc6AxO/jvPGcAHARcg+s3EchTsO98ui9cn2GejyYvRHZE7Kz
-cQd46bQs2xigL69s/s6wA/PSTFFYrfxc0hh3pOlO3Bw44Aajz0/sKCNDeJao9+dx
-iD2vC3Umezv98Zrdw7wRx4kfp1Fu9Rrjl5cDMTBrsfEV26wVAlQGmaO8FljAhdAQ
-nFcY9rxoETeSOdhXkl9gi/J31NJ4B5F64cTUI1vNnO+X0ujxFtnftUgUykCq19Ne
-aTCwrrch4BUsAcwoEtBzpHMrhsnF4oeHGV0Pz2Q7yGe+bc1if4KV0GoT2jUSn8ye
-AbGNSwNKDSYZHRNChjbu1+Pjr3mgs9ftg2dZUdLDUqlLKhbSUlcwXvPBPYn8OWdU
-b/Wmxe0vimxCE5mD50gP
-=JCMw
+iQIcBAEBAgAGBQJPpb9PAAoJEBYNRVNeJnmTyuwQAKyzVtBNiPAklnKdc1qBSF2b
+tLqqA9iFSggrSR9BrscTWism8GMVtkNAemNbhGSWOvm0iKEBLi8cul3EsAjZvaIQ
+vJPHOT+8fAFgrjxaNkmhUlGpNCh0mjqPNQwrZ9t9GPyvqMxaVVch4z+zXhF4627H
+P+BmUJnLha86s3Lmk6dsaoMXo49Afg+pf1waeBECXSTlM5yU0LiYPlEEYaLO9lmr
+FC6i5nNGD4SzIZtQPdBca8rmQ2EW30GzWT/vTXv23V7ZdGqVw5UQCdnHTSmPiZVc
+MCwi1zBsx5HeqnjPWJPEUH+CezlN0/uGiWUAd+5BZZOnqi5NWzbcJnsIkR+B5Pln
+DHVxz2yH33lH2JtDQwWpphn8drD8XGGJrBYicqlHXoqhgVQZixnun6ils7MfEsCL
+iK1D+8FabAKVNiJAxfJYFtsSjtCGIXlk9atzcKy7GQfkDniLoyqaRMuNmWNTPD0V
+PR4ZssNWunYnNKKO8uGY0AaLjXzU3QW/hKH8dgghf6N3+Xb08x9BR7IeeFenlC8m
+MppwCIOuyWsKn6l0DajkgeeDvycQJyFCVsnnhbLGbT/I7GcJJ5bm2/Jc3CoMO+c5
+sPt1LaiRFYxKnHnGyGqOzGO3lkm/jodcHeLCijYl8V8xIEaUymfkrfsgKCWetR1Z
++Uh/FC82SB4YSTAwDSS7
+=+gp8
 -----END PGP SIGNATURE-----
