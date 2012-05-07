@@ -1,24 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/8
-Message-ID: <50DF3694.7030409@larpwiki.de>
-Date: Sat, 29 Dec 2012 19:29:40 +0100
-From: Tilmann Haak <tilmann@...pwiki.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/13
+Message-ID: <20120507184041.0d3b8cae@hsalkjdhsa.lan>
+Date: Mon, 7 May 2012 18:40:41 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MoinMoin Wiki (path traversal vulnerability)
+Subject: CVE request: mybb before 1.6.7
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+According to release notes
+http://blog.mybb.com/2012/04/01/mybb-1-6-7-update-1-8-development/
+five security issues have been fixed:
 
-there is a path traversal issue in MoinMoin wiki (version 1.9.3 -
-1.9.5). The vulnerability resides in the AttachFile action (function
-_do_attachment_move in action/AttachFile.py). It fails to properly
-sanitize file names.
+SQL injection vulnerability within the Admin Control Panel (ACP) in
+user search (reported by Nathan Malcolm, MyBB SQA Team)
 
-Details can be found at: http://moinmo.in/SecurityFixes
+SQL injection vulnerability within the ACP in Mail Log (reported by
+Nathan Malcolm, MyBB SQA Team)
 
-A fix is available at: http://hg.moinmo.in/moin/1.9/rev/3c27131a3c52
+SQL injection vulnerability within the ACP in User Inline Moderation
+(reported by Jammerx2, MyBB Developer)
 
-Is it possible to get a CVE number for this one?
+XSS within the ACP where an orphaned attachment has a malformed
+filename (reported by Nathan Malcolm, MyBB SQA Team)
 
-kind regards,
-   Tilmann
+Full Path Disclosure if malformed forumread cookie is used
+
+
+Please assign CVEs
+
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
