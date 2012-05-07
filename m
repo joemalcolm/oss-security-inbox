@@ -1,46 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/24/8
-Message-ID: <5037C3B3.6060807@redhat.com>
-Date: Fri, 24 Aug 2012 12:10:59 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/12
+Message-ID: <4FA7F15D.3060101@redhat.com>
+Date: Mon, 07 May 2012 09:59:25 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Thomas Pollet <thomas.pollet@...il.com>
-Subject: Re: zenoss issues
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request: Pidgin XMPP remote crash (#62)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/24/2012 11:15 AM, Kurt Seifried wrote:
-> On 08/24/2012 01:33 AM, Thomas Pollet wrote:
->> Hello,
+On 05/07/2012 09:54 AM, Kurt Seifried wrote:
+> On 05/07/2012 09:53 AM, Kurt Seifried wrote:
+>> Could I request that a CVE be issued for a possible 
+>> remotely-triggerable crash in Pidgin?  To my knowledge no CVE 
+>> exists for this issue.  The issue is described at 
+>> http://pidgin.im/news/security/?id=62
 > 
->> I have found xss and command execution problems with zenoss. I 
->> created a bugreport which can be found at 
->> http://jira.zenoss.com/jira/browse/ZEN-3183 . However the zenoss 
->> developers don't seem to be able to reproduce the issues.
+>> The Pidgin project has just released version 2.10.4 which fixes
+>> the issue.
 > 
->> Another issue, reported by Emanuel Bronshtein can be found at 
->> http://jira.zenoss.com/jira/browse/ZEN-3153
 > 
->> Regards, Thomas Pollet
+> Please use CVE-2012-2323 for this issue.
 > 
-> I can't access this page, it requires a login. Is there a public 
-> resource you can reference, or can you get this page made public so
-> it can be referenced?
 
-Just to be clear I am unwilling (and unable) to accept reference links
-for OpenSource related CVE assignments that require:
-
-1) a login (it's highly annoying and leads to points 2 and 3), this
-also breaks automated tools that download related links in the CVE
-database, not cool.
-2) click through agreements (often required for logins)
-3) acceptance of restrictive forms of legal agreements (e.g. NDAs)
-
-You need to source public information that is easily accessible and
-can be downloaded without significant human intervention (like
-creating an account).
+Argh I can't read this early in the morning. I failed to notice it
+already had a CVE #. Reject CVE-2012-2323 (CVE-2012-2214 was already
+assigned).
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -50,17 +36,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQN8OzAAoJEBYNRVNeJnmTcwYP/RWEdT93aa8w0TfxO6thbx5z
-HEvrA/pknIqPhu+qzoR5J4x8fnOkE10l2IMeGnf4rh45hx8YGgF6Cz4esgkYSBTd
-WIH+Ebm7fiMtcGICqYXNWh80/AdtcjfUmIKZlodg+u2QjLfbZWhzz0N+5mkYE4iR
-YmFKox8lRucXGRCo/6wtZ4O2xR/sOzHsh2iwHNTVSbOuzaxhLmFSz7+yPqX6lwZB
-rLfBQp6uBAYZohPFFbmfGRtlo6JhEZPeE1zlLA9RMLq2gt20+fzweTTbDLR5kBpY
-DyrpyU5j36HOgdb18zB1PezugZki5AHyKA+pl5tz4nAcuNQTTmzhma/8G6W4mfKP
-Xik5clFxxHNSIoVp+u5cZRRMXS9QmYGgKv7sMDKDkic2eGYqxyCrglJqPnbzRcm2
-b18nyDK6vaLAxnbu5TWuSVoHw4g8VK3GLJHy0CJjLP2gzDpio+s3RGDSS1wTk+F7
-++T92vNJJEH3z3/krsbIto9uE9z2ql3FrQomYD+5yrfB3/P/ONMP8xhSIiz7Tk8C
-9Qm2/BgfNDOExRuhgwfHVwzaxqG18OAPQmoJnDyRqPfy8cKiWa4OA/ZgRz/zYuyg
-MVVk+jl18thGoQoZ6S4MYy8fsbxNPaapmuWQOdzWqFtHr+wMOtZKFZOupYYtBxp4
-cwX15jb3qlOjxEcdg2nX
-=O2cE
+iQIcBAEBAgAGBQJPp/FdAAoJEBYNRVNeJnmTIC4QAIxTcMgFNRTSbO2bKOleYLa7
+JSaC80i+uC4FcqE2vXlequabscxdxE8ksYn6HnVLY2qGcm0C68N26aYNkmfp+2zV
+DeFAxKtfwUZQcAyoQbk3ltUkHjh6rxVmooVrx9LKFcblzVtn4pVcIaGYM7kk55c+
+8dC5wwzhzoneuaZaRIBs32pXSTxUVwqqiIoPWCvHtzC6W0FI+c8IWqtIdg3aV7ec
+wMRZmE6JMPYUi8fm0+VcldTklFvneCbL3MRh7O7P/llBenJREAu0Ti5lG64u5mvD
+krZjUB/LopiwOviX+AuhRuPYHwiJgSSUF0uGSyOqlX64KuNcoX1PnupAM7YTrNQv
+sbGP521UaAQ7XOfqRMmtdFUqm8DsWQWbT2Jod0QVyLhYYX7g7ez24Zv7pze5AGO6
+Icri09XowIlUauCDVLPv2LCvhZizxsH97OWPCyy22pe/r1qqB3fgH6NDGDk0isty
+6eX1+zNiYw8R8LBnHwOE75jp377GSRne6HQhnIe08pDXsu7VrVt8ZaJ7SaSb53Dl
+6DF7XDAJ58SseM9npDWvyCTU0cWEuZAfK7yrOTDVpP6864JX/azb7q6PxEqQ+MmQ
+0BAR2LiFYS8xswXqTSKRRdp/hbxlRNx8L/nso4kFVLT5zQZg9m7jiX9OOY++NNV1
+6Ueijoa4e7TVJ/0QpaRH
+=oPQK
 -----END PGP SIGNATURE-----
