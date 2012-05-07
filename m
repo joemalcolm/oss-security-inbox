@@ -1,119 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/12/1
-Message-ID: <20439.12248.291249.667993@mariner.uk.xensource.com>
-Date: Tue, 12 Jun 2012 13:02:32 +0100
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xensource.com, xen-devel@...ts.xensource.com, xen-users@...ts.xensource.com, oss-security@...ts.openwall.com
-Subject: Xen Security Advisory 7 (CVE-2012-0217) - PV privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/5
+Message-ID: <4FA7C941.3020808@redhat.com>
+Date: Mon, 07 May 2012 15:08:17 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Sebastian Krahmer <krahmer@...e.de>
+CC: oss-security@...ts.openwall.com
+Subject: Re: connman heads up / CVE requests
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Sebastian,
 
-              Xen Security Advisory CVE-2012-0217 / XSA-7
-                            version 9
+On 05/07/2012 10:27 AM, Sebastian Krahmer wrote:
+> Hi,
+>
+> I reported several issues
 
-           64-bit PV guest privilege escalation vulnerability
+Just to confirm, you have meant four issues:
+1) Conman doesn't check for the origin of netlink messages
+    (from https://bugzilla.novell.com/show_bug.cgi?id=715172#c4)
 
-UPDATES IN VERSION 9
-====================
+    with patches:
+    [1a] 
+http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=c1b968984212b46bea1330f5ae029507b9bfded9
+    [1b] 
+http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=b0ec6eb4466acc57a9ea8be52c17b674b6ea0618
 
-Public release.  Previous versions were embargoed.
+2) Check hostname validity prior setting the hostname in loopback
+    plug-in:
+    (from https://bugzilla.novell.com/show_bug.cgi?id=715172#c4)
 
-ISSUE DESCRIPTION
-=================
+    with patches:
+    [2a] 
+http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=26ace5c59f790bce0f1988b88874c6f2c480fd5a
+    [2b] 
+http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=a5f540db7354b76bcabd0a05d8eb8ba2bff4e911
 
-Rafal Wojtczuk has discovered a vulnerability which can allow a 64-bit
-PV guest kernel running on a 64-bit hypervisor to escalate privileges
-to that of the host by arranging for a system call to return via
-sysret to a non-canonical RIP.  Intel CPUs deliver the resulting
-exception in an undesirable processor state.
+3) DHCPv6 option parsing vulnerable to DoS (endless loop):
+    (from https://bugzilla.novell.com/show_bug.cgi?id=715172#c9)
 
-IMPACT
-======
+    with patches:
+    There doesn't seem to be upstream patches for this yet.
 
-Guest administrators can gain control of the host.
+4) Check vpnc options for validity prior saving them:
+    (from https://bugzilla.novell.com/show_bug.cgi?id=715172#c10):
 
-Depending on the particular guest kernel it is also possible that
-non-privileged guest user processes can also elevate their privileges
-to that of the host.
+    with patches:
+    [4a] 
+http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=651b5920aceb10a5c53424a9723d9365ba612316
 
-VULNERABLE SYSTEMS
-==================
+> to the connman developers last week and it
+> seems they made patches for most of them which were
+> posted on their mailing list. The one that I am missing is related
+> to the GKeyFile/VPN settings storage.
 
-All systems running 64 bit Xen hypervisor running 64 bit PV guests on
-Intel CPUs are vulnerable to this issue.
+So yet another patch is needed to correct this except [4a]? Or is
+[4a] unrelated to this?
 
-Systems using AMD CPUs are not vulnerable to this privilege
-escalation. AMD have issued the following statement:
-   AMD processors' SYSRET behavior is such that a non-canonical
-   address in RCX does not generate a #GP while in CPL0. We have
-   verified this with our architecture team, with our design team, and
-   have performed tests that verified this on silicon. Therefore, this
-   privilege escalation exposure is not applicable to any AMD
-   processor.
+> I did not review the
+> patches itself, except checking them slightly.
+> The bug report is here:
+>
+> https://bugzilla.novell.com/show_bug.cgi?id=715172
+>
+> It was not a full review, so some parts remain unchecked.
+>
+> Some dists seem to ship it and before it goes the wicd way,
+> I'd rather ask for CVE's myself.
 
-While investigating this, it was noted that some older AMD CPUs will
-lock up under similar circumstances, causing a denial of service. See
-XSA-9 for details.
+For now could you confirm count of the issues and links to
+patches, where appropriate? (this will be needed anyway for
+purpose of CVE request)
 
-MITIGATION
-==========
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-This issue can be mitigated by running HVM (fully-virtualised)
-or 32 bit PV guests only.
+>
+> Sebastian
+>
 
-RESOLUTION
-==========
-
-Applying the appropriate attached patch will resolve the issue.
-
-These patches also resolve the issue described in XSA-8 (CVE-2012-0128).
-
-These changes have been made to the staging Xen repositories:
-                    XSA-7:              XSA-8:
- xen-unstable.hg     25480:76eaf5966c05  25200:80f4113be500+25204:569d6f05e1ef
- xen-4.1-testing.hg  23299:f08e61b9b33f  23300:0fec1afa4638
- xen-4.0-testing.hg  21590:dd367837e089  21591:adb943a387c8
- xen-3.4-testing.hg  19996:894aa06e4f79  19997:ddb7578abb89
-
-PATCH INFORMATION
-=================
-
-The attached patches resolve both this issue and that reported in
-XSA-8 (CVE-2012-0128).
-
- xen-unstable 25204:569d6f05e1ef or later    xsa7-xsa8-unstable-recent.patch  
- xen-unstable 25199:6092641e3644 or earlier  xsa7-xsa8-unstable-apr16.patch
- Xen 4.1, 4.1.x                              xsa7-xsa8-xen-4.1.patch
- Xen 4.0, 4.0.x                              xsa7-xsa8-xen-4.0.patch
- Xen 3.4, 3.4.x                              xsa7-xsa8-xen-3.4.patch
-
-$ sha256sum xsa7-xsa8-*patch
-00853d799d24af16b17c8bbbdb5bb5144a8a7fad31467c4be3d879244774f8d2  xsa7-xsa8-unstable-apr16.patch
-71f9907a58c1a1cd601d8088faf8791923d78f77065b94dba8df2a61f512530d  xsa7-xsa8-unstable-recent.patch
-55fb925a7f4519ea31a0bc42d3ee83093bb7abd98b3a0e4f58591f1ae738840a  xsa7-xsa8-xen-3.4.patch
-6a7e39121ec1f134351fdf34f494d108500aaa4190a9f7965e81c4e96270924e  xsa7-xsa8-xen-4.0.patch
-52d8288718b4a833eb437fd18d92b7d412fbe01900dbd0b437744a1df4d459da  xsa7-xsa8-xen-4.1.patch
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJP1yqTAAoJEIP+FMlX6CvZntwH/jzuqabF9yGMIXQBckjZUv1E
-XeY9dbz1uGoMzy0mBFufwbJQqdBt89SNYDkr2BxKxSghSvBs608KHuh8giF1hzvm
-8oP2K5T3Rk/jl0gdc3VlZz15Yi9kVEDUOSu2rPQLbhmiv6ht+Y2Of2cp63RioEvq
-G2QQouHDsipCUZV4Ow5xnPY/KBifh46uCCnLDjV5Q/6WScI8VOIreOADryOpn2+/
-8QmyCo2Sl2F+YxlbCl7k3qyqihaSONymeVg0pkJbH5LmRdTQnJX9fMJSQvfV6Bxs
-U4PD4ve0C9+/Usz4XFejlQLt/kv4ZNPD6QF2rXei3oElmYAVcHL2XdLVCNLbAeY=
-=S6KX
------END PGP SIGNATURE-----
-
-
-Download attachment "xsa7-xsa8-unstable-recent.patch" of type "application/octet-stream" (1589 bytes)
-
-Download attachment "xsa7-xsa8-unstable-apr16.patch" of type "application/octet-stream" (5044 bytes)
-
-Download attachment "xsa7-xsa8-xen-4.1.patch" of type "application/octet-stream" (4939 bytes)
-
-Download attachment "xsa7-xsa8-xen-4.0.patch" of type "application/octet-stream" (3960 bytes)
-
-Download attachment "xsa7-xsa8-xen-3.4.patch" of type "application/octet-stream" (3960 bytes)
