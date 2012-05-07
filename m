@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/1
-Message-ID: <4FFCF55E.6020603@redhat.com>
-Date: Wed, 11 Jul 2012 09:09:10 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/3
+Message-ID: <4FA78B7E.6070806@pre-sense.de>
+Date: Mon, 07 May 2012 10:44:46 +0200
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-Subject: Openjpeg: heap-buffer overflow when processing JPEG2000 image files
+Subject: CVE request: Linux kernel: Buffer overflow in HFS plus filesystem
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+The Linux kernel (at least 3.x <= 3.3.4 and 2.6.x <= 2.6.35.13) contains
+a vulnerability in the driver for HFS plus file systems that may be
+exploited for code execution or privilege escalation.
 
-We have found a heap-buffer overflow in openjpeg, details are as
-follows:
+A specially-crafted HFS plus filesystem can cause a buffer overflow via
+the memcpy() call of hfs_bnode_read() (in fs/hfsplus/bnode.c). The functions
 
-Description:
-A heap-based buffer overflow was found in the way OpenJPEG, an
-open-source JPEG 2000 codec written in C language, performed parsing of
-JPEG2000 having certain number of tiles and tilesizes. A remote
-attacker could provide a specially crafted JPEG 2000 file, which when
-opened in an application linked against openjpeg would lead to that
-application crash, or, potentially arbitrary code execution with the
-privileges of the user running the application.
+	hfsplus_rename_cat() (in fs/hfsplus/catalog.c) and
+	hfsplus_readdir() (in fs/hfsplus/dir.c)
 
-Upstream patch:
-http://code.google.com/p/openjpeg/source/detail?r=1727
+call hfs_bnode_read() with values that result in a memcpy() call with a
+fixed-length destination buffer and both, a source buffer and length,
+that are read from the filesystem without sufficient validation.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=835767
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681075
+The buffer overflows were previously fixed in the HFS filesystem driver
+and have been assigned CVE-2009-4020 (commit
+ec81aecb29668ad71f699f4e7b96ec46691895b6 [1]).
+Commit 6f24f892871acc47b40dd594c63606a17c714f77 ("hfsplus: fix a
+potential buffer overflow") [2] also fixes the issue in the HFS plus
+filesystem driver.
 
-This issue has been assigned CVE-2012-3358
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+[1] http://git.kernel.org/linus/ec81aecb29668ad71f699f4e7b96ec46691895b6
+[2] http://git.kernel.org/linus/6f24f892871acc47b40dd594c63606a17c714f77
 
