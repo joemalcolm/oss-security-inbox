@@ -1,101 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/11
-Message-ID: <4F677CAE.3060506@redhat.com>
-Date: Mon, 19 Mar 2012 12:36:30 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/4
+Message-ID: <20120507091557.GA9247@suse.de>
+Date: Mon, 7 May 2012 11:15:58 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: Joomla! Security News 2012-03-16
+Subject: Re: CVE Request: more tight ioctl permissions in dl2k driver
 Content-Type: text/plain; charset=utf-8
 
-On 03/16/2012 06:12 AM, Henri Salo wrote:
-> Can we assign CVE-identifiers for these two vulnerabilities?
+On Sat, May 05, 2012 at 12:03:28AM +0200, Florian Weimer wrote:
+> * Marcus Meissner:
 > 
-> 20120304 - Core - Password Change http://developer.joomla.org/security/news/394-20120304-core-password-change.html
+> > Stephan Mueller reported lack of capable(CAP_NET_ADMIN) checks
+> > in private ioctls in the dl2k network card driver.
+> 
+> Have you tested the driver with actual hardware under load?
+> The last time I tested it, it was not really usable.
 
-Please use CVE-2012-1562 for this issue (20120304)
+No, this was a source level audit only.
 
-> 20120303 - Core - Privilege Escalation http://developer.joomla.org/security/news/395-20120303-core-privilege-escalation.html
-
-Please use CVE-2012-1563 for this issue (20120303)
-
-
-> With Joomla you are never safe!
-> 
-> - Henri Salo
-> 
-> ----- Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
-> 
-> Date: Fri, 16 Mar 2012 12:09:18 +0000
-> From: Joomla! Developer Network - Security News <no_reply@...mla.org>
-> To: henri@...v.fi
-> Subject: Joomla! Security News
-> 
-> Joomla! Developer Network - Security News
-> 
-> ///////////////////////////////////////////
-> [20120304] - Core - Password Change
-> 
-> Posted: 16 Mar 2012 12:21 AM PDT
-> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/JukET1dgfDM/394-20120304-core-password-change.html?utm_source=feedburner&utm_medium=email
-> 
-> 
-> Project: Joomla!
-> SubProject: All
->  Severity: High
-> Versions: 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x releases
-> Exploit type: Password Change
-> Reported Date: 2012-March-8
-> Fixed Date: 2012-March-15
-> 
-> Description
-> 
-> Insufficient randomness leads to password reset vulnerability.
-> Affected Installs
-> 
-> Joomla! versions 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x versions
-> Solution
-> 
-> Upgrade to version 2.5.3
-> 
-> Reported by George Argyros and Aggelos Kiayias
-> Contact
-> 
-> The JSST at the Joomla! Security Center.
-> 
-> 
-> 
-> ///////////////////////////////////////////
-> [20120303] - Core - Privilege Escalation
-> 
-> Posted: 15 Mar 2012 05:00 AM PDT
-> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/n5w8L96w-LM/395-20120303-core-privilege-escalation.html?utm_source=feedburner&utm_medium=email
-> 
-> 
-> Project: Joomla!
-> SubProject: All
->  Severity: High
-> Versions: 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x releases
-> Exploit type: Privilege Escalation
-> Reported Date: 2012-March-12
-> Fixed Date: 2012-March-15
-> 
-> Description
-> 
-> Programming error allows privilege escalation in some cases.
-> Affected Installs
-> 
-> Joomla! versions 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x versions
-> Solution
-> 
-> Upgrade to version 2.5.3
-> 
-> Reported by Jeff Channel
-> Contact
-> 
-> The JSST at the Joomla! Security Center.
-> 
-
-
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Ciao, Marcus
