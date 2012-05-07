@@ -1,34 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/25/7
-Message-ID: <4FBFCB22.8090203@redhat.com>
-Date: Fri, 25 May 2012 12:10:42 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/7
+Message-ID: <4FA7EFAE.8080706@redhat.com>
+Date: Mon, 07 May 2012 09:52:14 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Peter van Dijk <peter.van.dijk@...herlabs.nl>
-Subject: Re: CVE Request: powerdns does not clear supplementary groups
+CC: Mark Doliner <mark@...gant.net>
+Subject: Re: CVE request: A Pidgin remote crash
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/25/2012 11:59 AM, Peter van Dijk wrote:
-> Hello list,
+On 05/06/2012 11:40 PM, Mark Doliner wrote:
+> Could I request that a CVE be issued for a possible 
+> remotely-triggerable crash in Pidgin? To my knowledge no CVE
+> exists for this issue. The issue is described at 
+> http://pidgin.im/news/security/?id=63
 > 
-> On May 25, 2012, at 19:55 , Kurt Seifried wrote:
+> The Pidgin project has just released version 2.10.4 which fixes
+> the
+issue.
 > 
->> Ok this part I did not know, so this is an obvious trust
->> boundary violation (the intention was to drop privileges but it
->> instead ADDS root privileges).
->> 
->> Please use CVE-2012-2653 for this issue.
-> 
-> 
-> Just in case this slipped by someone - the example given (that adds
-> root) is not for PowerDNS but for arpwatch!
-> 
-> Kind regards,
+> Thanks, Mark
 
-Yeah we probably should have started a new thread at some point =).
+Please use CVE-2012-2318 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -38,17 +33,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPv8siAAoJEBYNRVNeJnmTmBEP/3knGQ2O9jYENr9iEDNHF6WT
-WefK13a5Rs4y24HnPk9QfiAdZMp5UAsUGQzKT6quUlcLQqhj+OpRSkynhC8lfu9r
-0DJ6YhCDW0LH4XLDk7/DedWK0kUPLLnfESxqnnvDQWT+sDRbdFNEFxZWN9TqWxlG
-JTyupBoxNr7Ozy7O53cYE9t82Aseg+BJr2Rd7/b6cuV0gLls96PE7o39Z6/IAVYc
-tcQmxOIZ+pbEmzFS0IzAUHN5KitvNndVnclGpbTwh2+ZsPRHGuiWXGSDBm9WXTi4
-OVA4qbFHQ244SzFZybgxWfj8yC726JnDI48vwBcnr6OJr+KvZBgdtxPfeQMNSxSf
-GA5Y30KU1cxR0TvjhdIMvhFRKnH0ybYXCDkuHRYhFyyoISOaA9WgqN3CLd1f5U5L
-e+AMShz8HDqNpNTGb1JiG+SMswoa+z3/utIlq8kQGbsyjtZThcter6IJNqRxaEDN
-QoWhxSVYXg3OIj4aBNAgeY3yhGI02wfbEjNP874IXpU3h4LqktRcktfT5+c5JzBy
-1d8gF2kx2rifwsj7CF0eR2vkOFHfFRSLosw9yzlhvXxtS5K8BXjxgBnZ2olgySBn
-2A6kOl2Uz29hPv6xZrrkhEbrxBRBpuSedQ15S1kzznF6C3bbrAjOm/sjfFwKe8K2
-ZrG3jxeZ64chYMJ7LOQ0
-=wrpl
+iQIcBAEBAgAGBQJPp++uAAoJEBYNRVNeJnmTUYsQAMbx+5ga0uwTFsECcUOPdtSt
+Jj5BmzmL4m+MPJvoXnaf8L4tPwj1U+Rw8sMwOZmBHLV+Yok29OebnDC62Uds4fEF
+GMolbQDAb+WaVQwte0BFO4kKTtkT/A4VDMEmcdeZDlXInU0nX3dP3Qbkv9hoOzy8
+7uy/dwFve0os0cTk/b8/+OMwDOeBg/14dMLJcJ9eiomU1pPfvCLMw1Rx/KlbN5P6
+XMyfC5d4KK8Bh/M4uM/T/eP541ZKnCFJ5Y1XV7a1pKlYi5tef1IUvw2w5sxUgmU6
+9S8a8OWoXrQc+Iunl2jTVWsztT7zmVl/JTafUNwProY/L80iQfIB7vx+DLF04R7i
+NbimTuQhYK7lpXW8bLA58d+hkUdzfBEiMxgoVrGi20ishblpwtETz3eIcaT6g7i6
+yx/Pjh/fTzf4VbFBvKOYmnCrnDFjUU4Ui9sE9TCfwFP36IFYPknfLoHWWRVTduLi
+8E0ILj5+7R6OMYDrzUWoUZxTMzComBF93TWFt+kjlQvxeEpjs7UFRLlaWfeGSYEG
+khW0S55D2ZoeBIq6bY+Kx6T0OmPSoJ/WwovQjx/Da/FV20KG9KExLsvdL9KEGm+B
+TUz0zeSmaBtoc3aPq48WaHmq6VbGuwfbQnW8LPEFWp0eJ96fra02262YWUt8XT7S
+LLOcXUj+FSKMcnHVwkZl
+=zwKk
 -----END PGP SIGNATURE-----
