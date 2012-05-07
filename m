@@ -1,64 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/1
-Message-ID: <20120926065719.GA1295@suse.de>
-Date: Wed, 26 Sep 2012 08:57:19 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/10
+Message-ID: <4FA7F06C.9050700@redhat.com>
+Date: Mon, 07 May 2012 09:55:24 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: CVE Request: libtiff: Heap-buffer overflow when processing a TIFF image with PixarLog Compression
+CC: Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: connman heads up / CVE requests
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 25, 2012 at 10:56:02AM -0600, Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+On 05/07/2012 07:59 AM, Sebastian Krahmer wrote:
+> Hi,
 > 
-> On 09/25/2012 03:06 AM, Huzaifa Sidhpurwala wrote:
-> > On 09/23/2012 08:29 AM, Solar Designer wrote:
-> > 
-> >> "libtiff 4.0.3 brings "various memory buffer access fixes". Does
-> >> it fix more than CVE-2012-3401?"
-> >> 
-> >> to which I have no answer.  The change log does in fact mention 
-> >> "Various memory buffer access fixes." as the very first change
-> >> listed for libtiff.  Perhaps someone should review code changes.
-> >> 
-> > 
-> > I had a look at the libtiff-4.0.3 commit logs and found one issue
-> > which seems to bring a possibility of heap-based buffer overflow
-> > when using a tiff file with PixarLog compression format.
-> > 
-> > More details at: 
-> > https://bugzilla.redhat.com/show_bug.cgi?id=860198
-> > 
-> > Though memory overwrite outside the heap-buffer is only a few
-> > bytes, one cannot really overwrite possible arbitrary code
-> > execution.
+> Thanks for disassembling my mail :)
+> 
+> 
+>> 1) Conman doesn't check for the origin of netlink messages (from
+>> https://bugzilla.novell.com/show_bug.cgi?id=715172#c4)
+>> 
+>> with patches: [1a] 
+>> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=c1b968984212b46bea1330f5ae029507b9bfded9
+>>
+>> 
+[1b]
+>> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=b0ec6eb4466acc57a9ea8be52c17b674b6ea0618
+>
+>> 
+> Yes.
 
-This conclusion leaves me a bit puzzled. :) Even just "a few bytes" are
-often enough to trigger code exec. In particular if you get a big bounty for it.
+Please use CVE-2012-2320 for this issue.
 
-As well as the patch:
+>> 
+>> 2) Check hostname validity prior setting the hostname in
+>> loopback plug-in: (from
+>> https://bugzilla.novell.com/show_bug.cgi?id=715172#c4)
+>> 
+>> with patches: [2a] 
+>> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=26ace5c59f790bce0f1988b88874c6f2c480fd5a
+>>
+>> 
+[2b]
+>> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=a5f540db7354b76bcabd0a05d8eb8ba2bff4e911
+>
+>> 
+> Yes. The severity of this is quite high, its a default remote root
+> exploit, as connman is requesting hostname per dhcp by default and
+> not checking for shell escapes. (I did not check whether they clean
+> any other strings that could appear and could contain newlines etc.
+> when its written to a config file)
+
+Please use CVE-2012-2321 for this issue.
 
 
--	sp->tbuf = (uint16 *) _TIFFmalloc(tbuf_size);
-+	sp->tbuf = (uint16 *) _TIFFmalloc(tbuf_size+sizeof(uint16)*sp->stride);
+>> 
+>> 3) DHCPv6 option parsing vulnerable to DoS (endless loop): (from
+>> https://bugzilla.novell.com/show_bug.cgi?id=715172#c9)
+>> 
+>> with patches: There doesn't seem to be upstream patches for this
+>> yet.
+> 
+> I think its this: 
+> http://lists.connman.net/pipermail/connman/2012-May/009473.html
 
-If there were sizeof(uint16)*sp->stride bytes missing before, this is really
-more than just a few bytes. I checked that the mult cannot overflow,
-as sp->stride seems to be uint16. However, I think the add can actually wrap,
-(at least on ILP32) as tbuf_size can be 0xffffffff or so.
-I think the patch is broken and just shifts the hole.
+Please use CVE-2012-2322 for this issue.
 
-Plus, there are more occurences of _TIFFmalloc(tbuf_size) inside this file,
-one in PixarLogSetupEncode() and one in PixarLogSetupDecode() (but it might be
-that the Encode can never be triggered like so by attackers).
 
-Sebastian
+> 
+>> 
+>> 4) Check vpnc options for validity prior saving them: (from
+>> https://bugzilla.novell.com/show_bug.cgi?id=715172#c10):
+> 
+> AFAIK there is no patch for it yet. Upstream needs to
+> verify/confirm these, but I think its a real bug that lets you
+> overwrite files.
 
--- 
+I will wait until this is confirmed, when it is please reply to the list.
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+> Sebastian
+> 
 
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPp/BsAAoJEBYNRVNeJnmT28EP/1GoRdI2u2LyKTe0xbxy5ZZb
+j0+XJaUz80TC7tOf0RuVpZOe9U3dympabOHCtLM+9o0DzqAgE/erVHxIA+8UPHeY
+IURc3/ABN5Na/SgUd1WbPTGmxbRq9cShkZf32R9Qzw6dNf6aQ3hAPmlSNlJu9O2O
+76REIWD83b11GYmjj9RwX5ARvybzy+/4RMI6MUXFd8Tz+PmKKh3nHzRnBUC85iYv
+bbsk5UnLGC9ISlJ9ytiAEDvGlt64dOGrUkVY9Cj5XwxUA01Qzi94SeF7XmEvPy4i
+q+Uk7Pp4ZTB57IDHtXcTtjvKQGpE3SonRx7mT6LE/Asbg8+6iQIS+biyq/jh8VmB
+a2cbQQm52pgCqSVCmWgtn6qGdGUPFXYpBsQ1xv8SAcOqXBrXor7PYulVcM+cly65
+X8s0GKIpp3sw9rsdHy3aZW04FRSe3ij/TKvjHsxx43652nPExrB3GdAJNXsvdvzP
+WrJ2TR9F52DSsSucPdsVAWtrAE0QTlISYhRvx1T6RSmY9/xFobzl76alidsrHSMQ
+KcGmr7kJTwOwfyZDe1B4lx2dXyAdt4rA1w/W8rY3uhGDDbI1REGvaviz3NivqLox
+4qBkNxLkHiDZceTF3guKisQp3ElKKQ4jRvvyHk37XcgXgNswun5d7/2gFxT9KI00
+U4Cvy8m7wuN4wcfkJ8ZA
+=h+ql
+-----END PGP SIGNATURE-----
