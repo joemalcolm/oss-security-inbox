@@ -1,33 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/11/1
-Message-ID: <20120211085047.GA18474@openwall.com>
-Date: Sat, 11 Feb 2012 12:50:47 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/6
+Message-ID: <20120507135922.GC31485@suse.de>
+Date: Mon, 7 May 2012 15:59:22 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: MySQL 0-day - does it need a CVE?
+Subject: Re: connman heads up / CVE requests
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 10, 2012 at 12:36:46AM +0400, Solar Designer wrote:
-> The table at the bottom of:
+Hi,
+
+Thanks for disassembling my mail :)
+
+
+> 1) Conman doesn't check for the origin of netlink messages
+>    (from https://bugzilla.novell.com/show_bug.cgi?id=715172#c4)
 > 
-> http://www.oracle.com/technetwork/topics/security/cpujan2012-366304.html
+>    with patches:
+>    [1a] 
+> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=c1b968984212b46bea1330f5ae029507b9bfded9
+>    [1b] 
+> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=b0ec6eb4466acc57a9ea8be52c17b674b6ea0618
+
+Yes.
+
 > 
-> lists 27 MySQL vulnerabilities, all with CVE IDs and CVSS scoring - but
-> little other info.
+> 2) Check hostname validity prior setting the hostname in loopback
+>    plug-in:
+>    (from https://bugzilla.novell.com/show_bug.cgi?id=715172#c4)
+> 
+>    with patches:
+>    [2a] 
+> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=26ace5c59f790bce0f1988b88874c6f2c480fd5a
+>    [2b] 
+> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=a5f540db7354b76bcabd0a05d8eb8ba2bff4e911
 
-Here's a more direct link:
+Yes. The severity of this is quite high, its a default remote root exploit, as
+connman is requesting hostname per dhcp by default and not checking for
+shell escapes.
+(I did not check whether they clean any other strings that could appear
+and could contain newlines etc. when its written to a config file)
 
-http://www.oracle.com/technetwork/topics/security/cpujan2012-366304.html#AppendixMSQL
+> 
+> 3) DHCPv6 option parsing vulnerable to DoS (endless loop):
+>    (from https://bugzilla.novell.com/show_bug.cgi?id=715172#c9)
+> 
+>    with patches:
+>    There doesn't seem to be upstream patches for this yet.
 
-(e.g. for referring to in distro advisories).
+I think its this:
+http://lists.connman.net/pipermail/connman/2012-May/009473.html
 
-News story summarizing the problem (in Russian, sorry):
 
-http://www.opennet.ru/opennews/art.shtml?num=33051
+> 
+> 4) Check vpnc options for validity prior saving them:
+>    (from https://bugzilla.novell.com/show_bug.cgi?id=715172#c10):
 
-It also mentions that Oracle Linux merely reuses RHEL's updates to
-MySQL without any reference to Oracle's own MySQL vulnerability/fix
-info.  So it is not even clear whether Oracle Linux has these 27 bugs in
-MySQL fixed or not, despite of MySQL being an Oracle product.
+AFAIK there is no patch for it yet. Upstream needs to verify/confirm these,
+but I think its a real bug that lets you overwrite files.
 
-Alexander
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
