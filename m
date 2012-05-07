@@ -1,23 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/16
-Message-ID: <4F037312.3030906@redhat.com>
-Date: Tue, 03 Jan 2012 14:28:50 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/2
+Message-ID: <20120507082741.GA31485@suse.de>
+Date: Mon, 7 May 2012 10:27:41 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: libfpx "Free_All_Memory()" Double-Free Vulnerability
+Subject: connman heads up / CVE requests
 Content-Type: text/plain; charset=utf-8
 
-On 01/02/2012 01:01 PM, Agostino Sarubbo wrote:
-> Hi,
->
-> seems there is not a CVE assigned for libfpx "Free_All_Memory()" Double-Free 
-> Vulnerability.
-> Reference: https://secunia.com/advisories/47246/
->
-Please use CVE-2012-0025 for this issue.
+Hi,
+
+I reported several issues to the connman developers last week and it
+seems they made patches for most of them which were
+posted on their mailing list. The one that I am missing is related
+to the GKeyFile/VPN settings storage. I did not review the
+patches itself, except checking them slightly.
+The bug report is here:
+
+https://bugzilla.novell.com/show_bug.cgi?id=715172
+
+It was not a full review, so some parts remain unchecked.
+
+Some dists seem to ship it and before it goes the wicd way,
+I'd rather ask for CVE's myself.
+
+Sebastian
 
 -- 
 
--- Kurt Seifried / Red Hat Security Response Team
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
