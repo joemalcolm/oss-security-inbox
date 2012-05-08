@@ -1,32 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/3
-Message-ID: <20120119021234.GP1624@redhat.com>
-Date: Wed, 18 Jan 2012 19:12:34 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/08/6
+Message-ID: <20120508120359.63afe711@hsalkjdhsa.lan>
+Date: Tue, 8 May 2012 12:03:59 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: crak.otaku@...il.com
-Subject: CVE request: tucan insecure plugin update mechanism
+Subject: CVE request: XSS and SQL injection in serendipity before 1.7.1
 Content-Type: text/plain; charset=utf-8
 
-Saw a Debian bug report about tucan and how it insecurely handles
-"plugin" updates (which are basically python scripts).  These "plugins"
-are executed with the privileges of the user running tucan, and because
-there is no authenticity checking (plugins are not signed, doesn't look
-like there are any certificate checks when connecting to the update
-server, etc.), it's prone to MITM attacks where an attacker could
-basically run arbitrary code as the user running tucan.
+http://blog.s9y.org/archives/240-Serendipity-1.6.1-released.html
 
-I'm not sure how popular this program is or how widely used, but this is
-definitely not good design.
+"This release mainly addresses two security issues found by Stefan
+Schurtz (thanks a lot, again!). One is a XSS issue in the media
+database panel, the other an SQL injection in the media database
+section. Both issues can only be exploited if you are logged in to your
+blog and you click a specially crafted link. The SQL injection cannot
+be used to extract sensitive information from the database or delete
+data."
 
-References:
+The webpage of the vulnerability researcher is
+http://www.rul3z.de/
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=656388
-https://bugzilla.redhat.com/show_bug.cgi?id=782999
-http://code.google.com/p/tucan/
-
-(I'm cc'ing who I hope is one of the lead developers, although it
-doesn't look like much development has been done in the last year)
+However, there seems to be no information yet about those vulns,
+probably they'll appear there soon.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
