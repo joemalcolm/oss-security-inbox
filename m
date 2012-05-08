@@ -1,82 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/12/4
-Message-ID: <20120612212908.GA81647@mobile-166-187-102-087.mycingular.net>
-Date: Tue, 12 Jun 2012 14:29:08 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: oss-security@...ts.openwall.com, rubyonrails-security@...glegroups.com
-Subject: Ruby on Rails Unsafe Query Generation Risk in Ruby on Rails (CVE-2012-2694)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/08/1
+Message-ID: <20120508000817.GA13604@openwall.com>
+Date: Tue, 8 May 2012 04:08:17 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
 Content-Type: text/plain; charset=utf-8
 
-Unsafe Query Generation Risk in Ruby on Rails
+On Wed, Jan 04, 2012 at 11:10:59PM +0100, Petr Matousek wrote:
+> Move "exit_robust_list" into mm_release() and clear them
+> 
+> We don't want to get rid of the futexes just at exit() time, we want to
+> drop them when doing an execve() too, since that gets rid of the
+> previous VM image too.
+> 
+> Doing it at mm_release() time means that we automatically always do it
+> when we disassociate a VM map from the task.
+> 
+> Upstream patches:
+> 8141c7f3e7aee618312fa1c15109e1219de784a7
+> fc6b177dee33365ccb29fe6d2092223cf8d679f9
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=771764
 
-There is a vulnerability when Active Record is used in conjunction with parameter parsing from Rack via Action Pack. This vulnerability has been assigned the CVE identifier CVE-2012-2694.
+RHSA-2012:0107-1 summarizes this as:
 
-Versions Affected:  ALL versions
-Not affected:       NONE
-Fixed Versions:     3.2.6, 3.1.6, 3.0.14
+"A flaw was found in the way the Linux kernel handled robust list pointers
+of user-space held futexes across exec() calls. A local, unprivileged user
+could use this flaw to cause a denial of service or, eventually, escalate
+their privileges. (CVE-2012-0028, Important)"
 
-Impact 
------- 
-Due to the way Active Record interprets parameters in combination with the way that Rack parses query parameters, it is possible for an attacker to issue unexpected database queries with "IS NULL" where clauses.  This issue does *not* let an attacker insert arbitrary values into an SQL query, however they can cause the query to check for NULL where most users wouldn't expect it.
+Is there a known attack vector (for either/both of the impacts mentioned
+above), and what is it?
 
-For example, a system has password reset with token functionality:
+Here's what I arrived at after looking at the code for a little while:
 
-    unless params[:token].nil?
-      user = User.find_by_token(params[:token])
-      user.reset_password!
-    end
+Indeed, execve() may make the new process relatively privileged (SUID,
+SGID, fscaps), and thus being able to write into its memory is a
+security issue.  However, it appears that robust_list (and its compat
+counterpart) is only used for such writes when the process itself is
+exiting (with the aim being to notify other threads sharing the same
+mm).  If so, the question is whether and how writes into an exiting
+process' memory may be exploited.  We're already in do_exit() at this
+point, and it's just a few lines before we detach from and likely
+destroy the mm.  Well, if that process itself is multi-threaded (and
+other threads are not exiting yet), it possibly can be exploited
+(through affecting those other threads).  Is this the only attack
+scenario?  Do we know of any SUID/SGID/fscaps-privileged multi-threaded
+programs?  OK, I suppose that some proprietary ones exist (likely with
+plenty of vulnerabilities in them). ;-)
 
-An attacker can craft a request such that `params[:token]` will return `['xyz', nil]`.  The `['xyz', nil]` value will bypass the test for nil, but will still add an "IN ('xyz', NULL)" clause to the SQL query.
+BTW, kernel/fork.c: copy_process() resets the new process' or thread's
+robust_list pointers to NULL, but I think this does not prevent the
+scenario above because the parent's robust_list pointers are not reset
+and they're the ones that matter for attack against the new thread.
+However, this may help prevent the attack when there's a privileged
+wrapper around a multi-threaded program, if that wrapper does a fork()
+before execve()'ing the program.
 
-All users running an affected release should either upgrade or use one of the work arounds immediately. All users running an affected release should upgrade immediately. Please note, this vulnerability is a variant of CVE-2012-2660, even if you upgraded to address that issue, you must take action again.
+It is entirely possible that I have missed something crucial, and thus
+any/all of the above reasoning may be wrong.
 
+I'd appreciate any comments.
 
-Releases
--------- 
-The FIXED releases are available at the normal locations. 
-
-Workarounds
------------ 
-This problem can be mitigated by casting the parameter to a sting before passing it to Active Record.  For example:
-
-    unless params[:token].nil? || params[:token].to_s.empty?
-      user = User.find_by_token(params[:token].to_s)
-      user.reset_password!
-    end
-
-Note the parameter is still cast to a string before being send to Active Record.This is because an array with a nil value can still bypass the `to_s.empty?` test:
-
-    >> ['xyz', nil].to_s
-    => "xyz"
-    >> ['xyz', nil].to_s.empty?
-    => false
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-
-* 3-0-null_array_param.patch - Patch for 3.0 series 
-* 3-1-null_array_param.patch - Patch for 3.1 series 
-* 3-2-null_array_param.patch - Patch for 3.2 series 
-
-Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
-------- 
-
-Thanks to the following people for reporting this bug:
-
-  * Egor Homakov
-  * Paul Lynch
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-0-null_array_param.patch" of type "text/plain" (1934 bytes)
-
-View attachment "3-1-null_array_param.patch" of type "text/plain" (1932 bytes)
-
-View attachment "3-2-null_array_param.patch" of type "text/plain" (1933 bytes)
-
-Content of type "application/pgp-signature" skipped
+Alexander
