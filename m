@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/10
-Message-ID: <20120706222139.GI1678@suse.de>
-Date: Sat, 7 Jul 2012 00:21:40 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: XSS in a Mono System.web error page 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/08/4
+Message-Id: <201205081043.19357.a3li@gentoo.org>
+Date: Tue, 8 May 2012 10:43:15 +0200
+From: Alex Legler <a3li@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: node.js <0.6.17/0.7.8 HTTP server information disclosure
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-A Nessus scan of a Novell product using Mono Web revealed a XSS attack
-in the Mono System.Web library.
+I didn't see a CVE/request for this one yet:
 
-The Mono team commited a fix to their GIT.
+http://blog.nodejs.org/2012/05/07/http-server-security-vulnerability-please-
+upgrade-to-0-6-17/
 
-References:
-	https://bugzilla.novell.com/show_bug.cgi?id=769799
-	https://github.com/mono/mono/commit/d16d4623edb210635bec3ca3786481b82cde25a2
+"A carefully crafted attack request can cause the contents of the HTTP 
+parser’s buffer to be appended to the attacking request’s header, making it 
+appear to come from the attacker. Since it is generally safe to echo back 
+contents of a request, this can allow an attacker to get an otherwise 
+correctly designed server to divulge information about other requests. It is 
+theoretically possible that it could enable header-spoofing attacks, though 
+such an attack has not been demonstrated."
 
-The XSS is in the error popup of the "Forbidden extension" filter method,
-which filters out e.g. ".dll" files.
+Fix: https://github.com/joyent/node/commit/c9a231d
 
-Ciao, Marcus
+Thanks,
+Alex
+
+-- 
+Alex Legler <a3li@...too.org>
+Gentoo Security/Ruby/Infrastructure
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
