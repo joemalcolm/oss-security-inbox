@@ -1,22 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/9
-Message-ID: <CAF6rxg=5PdGYmLFKrwHi9GTW6ZELgwfTYMrJerxD+iLPmihLTQ@mail.gmail.com>
-Date: Sun, 1 Jan 2012 23:41:09 -0500
-From: Eitan Adler <lists@...anadler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/08/3
+Message-ID: <20120508083722.GC5761@kludge.henri.nerv.fi>
+Date: Tue, 8 May 2012 11:37:22 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+Subject: CVE-request: MyBB before 1.6.1
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jan 1, 2012 at 10:54 PM, Kurt Seifried <kseifrie@...hat.com> wrote:
-> Long term I'd like to see more work on hash cash type solutions, being able to
-> arbitrarily set or have a reactive system that requires increased work on the client
-> end to prove they are a legitimate client would help with this whole DoS/DDoS class > of problem to some degree.
+Can I get 2010 CVE-identifiers for these two vulnerabilities, thanks.
 
-But what if the attacker has a 10,000 node bot net? Wouldn't they just
-abuse the victimized computers even further?
+1. MyBB search.php keywords Parameter SQL Injection
+
+MyBB contains a flaw that may allow an attacker to carry out an SQL injection attack. The issue is due to the search.php script not properly sanitizing user-supplied input to the keywords parameter. This may allow an attacker to inject or manipulate SQL queries in the back-end database, allowing for the manipulation or disclosure of arbitrary data."""
+
+Reference: http://osvdb.org/show/osvdb/70013
+Advisory: http://yehg.net/lab/pr0js/advisories/%5Bmybb1.6%5D_sql_injection
+
+2. MyBB private.php keywords Parameter SQL Injection
+
+MyBB contains a flaw that may allow an attacker to carry out an SQL injection attack. The issue is due to the private.php script not properly sanitizing user-supplied input to the keywords parameter. This may allow an attacker to inject or manipulate SQL queries in the back-end database, allowing for the manipulation or disclosure of arbitrary data.
+
+Reference: http://osvdb.org/show/osvdb/70014
+Advisory: http://yehg.net/lab/pr0js/advisories/%5Bmybb1.6%5D_sql_injection
+
+Both fixed in 1.6.1, same reporter but different php-file so do we want to merge these or should there be two CVEs? Please note that there is issue:
+
+======================================================
+Name: CVE-2010-4522
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4522
+Phase: Assigned (20101209)
+Category:
+Reference: MLIST:[oss-security] 20101220 CVE Request: MyBB XSS bugs
+Reference: URL:http://openwall.com/lists/oss-security/2010/12/20/1
+Reference: MLIST:[oss-security] 20101221 Re: CVE Request: MyBB XSS bugs
+Reference: URL:http://openwall.com/lists/oss-security/2010/12/22/2
+Reference: CONFIRM:http://blog.mybb.com/2010/12/15/mybb-1-6-1-release-1-4-14-update/
+
+Multiple cross-site scripting (XSS) vulnerabilities in MyBB (aka
+MyBulletinBoard) 1.4.14, and 1.6.x before 1.6.1, allow remote
+attackers to inject arbitrary web script or HTML via vectors related
+to (1) editpost.php, (2) member.php, and (3) newreply.php.
 
 
+Current Votes:
+None (candidate not yet proposed)
+======================================================
 
--- 
-Eitan Adler
+I do not understand why 1.6.1 release did not say anything about fixes to SQL-injection vulnerabilities.
+
+- Henri Salo
