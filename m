@@ -1,34 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/1
-Message-ID: <4F209832.8090600@redhat.com>
-Date: Wed, 25 Jan 2012 17:02:58 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/08/7
+Message-ID: <4FA98495.4010503@redhat.com>
+Date: Tue, 08 May 2012 14:39:49 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
 CC: Henri Salo <henri@...v.fi>
-Subject: Re: TWSL2012-002: Multiple Vulnerabilities in WordPress
+Subject: Re: CVE-request: MyBB before 1.6.1
 Content-Type: text/plain; charset=utf-8
 
-On 01/25/2012 08:31 AM, Henri Salo wrote:
-> FYI: http://seclists.org/fulldisclosure/2012/Jan/416
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/08/2012 02:37 AM, Henri Salo wrote:
+> Can I get 2010 CVE-identifiers for these two vulnerabilities,
+> thanks.
 > 
-> - Henri
+> 1. MyBB search.php keywords Parameter SQL Injection
+> 
+> MyBB contains a flaw that may allow an attacker to carry out an SQL
+> injection attack. The issue is due to the search.php script not
+> properly sanitizing user-supplied input to the keywords parameter.
+> This may allow an attacker to inject or manipulate SQL queries in
+> the back-end database, allowing for the manipulation or disclosure
+> of arbitrary data."""
+> 
+> Reference: http://osvdb.org/show/osvdb/70013 Advisory:
+> http://yehg.net/lab/pr0js/advisories/%5Bmybb1.6%5D_sql_injection
+> 
+> 2. MyBB private.php keywords Parameter SQL Injection
+> 
+> MyBB contains a flaw that may allow an attacker to carry out an SQL
+> injection attack. The issue is due to the private.php script not
+> properly sanitizing user-supplied input to the keywords parameter.
+> This may allow an attacker to inject or manipulate SQL queries in
+> the back-end database, allowing for the manipulation or disclosure
+> of arbitrary data.
 
-Uh correct me if I am wrong but these already have CVE's? From the link:
+Merged, same reporter, same issue type, same version #. Please use
+CVE-2010-5096 for these issues.
 
-Finding 1: PHP Code Execution and Persistent Cross Site Scripting
-Vulnerabilities via 'setup-config.php' page.
-CVE: CVE-2011-4899
-
-Finding 2: Multiple Cross Site Scripting Vulnerabilities in
-'setup-config.php' page
-CVE: CVE-2012-0782
-
-Finding 3: MySQL Server Username/Password Disclosure Vulnerability via
-'setup-config.php' page
-CVE: CVE-2011-4898
+> - Henri Salo
 
 
--- 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- Kurt Seifried / Red Hat Security Response Team
-kseifried@...hat.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPqYSVAAoJEBYNRVNeJnmTWgQP/2L9BbpAJ5tZLnD7NGNtFEee
+wcfjZBbY7DhNBEVaXFwBd1HR5FM0ZBQen2NbxzhIYY2meYr4FWvxwAaLwUHy1Zmg
+Lgl5vfXIKsi6tZdjwtRho+FdqN9a9Utx5vgk2VA4uVSyc8nL40ixjLJspc9tPtPV
+ue8jXd4RHhY4MQeApzjSCDY+irrgddeAyQAncjE2nSKAIftWZurq9lZP4UQaXgUT
+xTuxtHVkbK92zZgwPWDJE2U6el9hBNEoolGW6VcGsWdgiHgoyiI6Nlx+zJPIq4Nf
+nLQHX1dhG+mcxT/RxbqxQtqywccv3FiuejxD+3JJPNcTy7jXrl/y3xQGYMtr53EW
+FEVbOVR6gXh365DbDNTEgX+HJbOOo/6Mgr9rgrtBhI4LcXx+x6tXO3BCkTjtjgXG
+Uc5VpBx+Uckxayx67YzXWSj/2cVrKqJGzhY0ZloHOYFLBF1DZMh0o9W6fkZFQYK9
+8wa+p/Lt4kHCiPQBSLiIS2H5na8juMjVDqE5pQBeu5+kzc9Nco2sHqgFfYBwXWI0
+J8c5pwlDEuwcLT+JcmkQPf/dtgwbhwcxYRyZ1t4AQ8Z+J/D8nDRYqCtiMisNYw/G
+1HGpTB/vXzJYt08EiPlSX5wwRIv+2C9KKwZheir6iKZk7MAKcx6OWhDxMjMg2Zzs
+mjRe+jvIUYvHWL2HO5wk
+=+1R+
+-----END PGP SIGNATURE-----
