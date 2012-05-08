@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/04/4
-Message-ID: <1364590.E2sLDAi04o@devil>
-Date: Sat, 04 Aug 2012 17:56:26 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: Jeff Mitchell <mitchell@....org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request for Calligra
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/08/2
+Message-ID: <20120508003153.GA13773@openwall.com>
+Date: Tue, 8 May 2012 04:31:53 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
 Content-Type: text/plain; charset=utf-8
 
-On Saturday 04 August 2012 11:44:33 Jeff Mitchell wrote:
-> I don't know what Kurt wants, as he didn't respond to my email.
-> 
-> What information do you want?
-Take a look here, an example of CVE description: 
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-2677
+Petr, all -
 
-Integer overflow in the ordered_malloc function in boost/pool/pool.hpp in 
-Boost Pool before 3.9 makes it easier for context-dependent attackers to 
-perform memory-related attacks such as buffer overflows via a large size 
-value, which causes less memory to be allocated than expected.
+On Tue, May 08, 2012 at 04:08:17AM +0400, Solar Designer wrote:
+> Indeed, execve() may make the new process relatively privileged (SUID,
+> SGID, fscaps), and thus being able to write into its memory is a
+> security issue.  However, it appears that robust_list (and its compat
+> counterpart) is only used for such writes when the process itself is
+> exiting (with the aim being to notify other threads sharing the same
+> mm).  If so, the question is whether and how writes into an exiting
+> process' memory may be exploited.  We're already in do_exit() at this
+> point, and it's just a few lines before we detach from and likely
+> destroy the mm.  Well, if that process itself is multi-threaded (and
+> other threads are not exiting yet), it possibly can be exploited
+> (through affecting those other threads).
 
-So, in this case, if you don't provide to any info, what Kurt should write?
- 
-> What commit code do you want?
-Please post the diff between the vulnerable code and the fix so we are sure 
-that is a security issue.
+https://bugzilla.redhat.com/show_bug.cgi?id=771764#c4 describes that the
+bug was inadvertently triggered in normal usage of certain programs, and
+how it was rather difficult to figure out.  My question is: was exit of
+a multi-threaded program involved and relevant?  If not, then there must
+be something wrong with my reasoning, because I don't currently see how
+the bug may otherwise have visible consequences.
 
--- 
-Agostino Sarubbo / ago -at- gentoo.org
-Gentoo/AMD64 Arch Security Liaison
-GPG: 0x7CD2DC5D
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Alexander
