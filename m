@@ -1,79 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/4
-Message-ID: <20120316021811.GA11031@openwall.com>
-Date: Fri, 16 Mar 2012 06:18:11 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/09/1
+Message-ID: <4FA9F63E.10004@redhat.com>
+Date: Tue, 08 May 2012 22:44:46 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: running the distros lists
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: Piwik before 1.7
 Content-Type: text/plain; charset=utf-8
 
-Josh, Kurt, all -
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu, Mar 15, 2012 at 08:33:41AM -0400, Josh Bressers wrote:
-> This task strikes me as a timesink that results in minimal value. It's in
-> the best interest of all list members to fix issues in a timely manner. The
-> historic vendor-sec never had a serious problem with CRD. They were often
-> outside of the current proposed 14 day span, but that's just a reality of
-> how things go. We all have more work to do than time, so some things are
-> bound to suffer.
+On 05/08/2012 03:03 AM, Hanno Böck wrote:
+> Hi,
+> 
+> http://piwik.org/blog/2012/02/7775/
+> 
+> Information is very rare: "We would like to thank the following
+> security researchers for their responsible disclosure of XSS &
+> click-jacking issues: Piotr Duszynski, Sergey Markov, Mauro
+> Gentile."
+> 
+> I'd suggest assigning 3 CVEs with subjects like
+> 
+> "Unknown XSS or clickjacking issue identified by Piotr Duszynski" 
+> "Unknown XSS or clickjacking issue identified by Sergey Markov" 
+> "Unknown XSS or clickjacking issue identified by Mauro Gentile"
 
-This makes some sense, but:
 
-1. I think that merely proposing a CRD for every reported issue right
-away is not a timesink.  I could probably be doing it myself, but I'd
-like to get other list members more involved in running the list in
-general, I feel that I am already contributing by administering the
-list setup (so it's not my turn to contribute more), and I think that
-someone with a vendor affected by a larger percentage of the issues is
-in a better position to propose CRDs.
+We would like to thank the following security researchers for their
+responsible disclosure of XSS & click-jacking issues: Piotr Duszynski,
+Sergey Markov, Mauro Gentile.
+Thank you for disclosing security issues to the Piwik team, ensuring a
+healthy and safe experience for the whole community!
 
-2. It is bad that embargo periods on the historic vendor-sec were often
-pretty long.  I don't want the same to be happening on the distros list.
-Yes, the reality is that some issues will end up being embargoed for
-longer than many of us would have liked, but let's try to reduce the
-embargo periods whenever we can and to the extent possible.  Proposing a
-CRD early on is a step in that direction.
+I can't find anything else. Can you send the code commits that address
+this?
 
-> Trying to get a couple people to do this is going to be a losing battle.
 
-Maybe, but why (in your opinion)?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-> We need to think about how to best let the list police itself.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Do you have any specific proposal?
-
-What I am thinking is that with only a few of us being responsible for
-doing some well-specified things we will actually have to be doing those
-things or be prepared to explain why we failed, apologize for that, and
-adjust our actions going forward.
-
-On the other hand, with the list membership at large being responsible
-for running the list in accordance with certain goals and policies, no
-one in particular is responsible.  When things go wrong, there's not
-much we can do - no one in particular feels like it's his/her fault, no
-one in particular is going to change anything going forward.  We can
-only choose between ignoring the problem, calling it a non-problem,
-shutting the list down, or switching to the "few responsible list
-members" scheme that I am proposing now.  I simply see no other options.
-
-> It certainly
-> won't be 100% perfect, but I think even an 80% reasonable CRD agreement
-> goal is acceptable (perfect is the enemy of the good comes to mind).
-
-Maybe, but why can't we have a CRD proposed within a day in 100% of
-cases?  Not all of those initially proposed CRDs will be agreed to, but
-at least proposing them without delay is desirable, I think.
-
-> I would suggest some reasonable guidelines (that are not enforced
-> strictly), then see how things go for a while. If it's deemed unacceptable,
-> a better solution can be worked on.
-
-We already have what I think are reasonable guidelines.  We see how
-things are going: many of the reported issues linger without even a
-proposed CRD for days.  I find that unacceptable because at least in
-some cases it leads to increased total embargo periods.  Thus, I think
-we're ready to discuss and hopefully arrive at a solution.
-
-Thanks,
-
-Alexander
+iQIcBAEBAgAGBQJPqfY9AAoJEBYNRVNeJnmT9e0P/3UnlrnerMhSiuiz92/pUbgx
+UsLmE8xzHF+Rmx1dg+8JwBm2Zqtooq11Z5a0LKAqayOjCerbpo5pFkCGM3ehN7ML
+3Tf79W0tIsMZYz5WdKfhan7EOx/6yloIL+5/TrAVoszWxjXiA+QYCG1IdGHDGOdD
+yZxAcSfWgUDIdMAmoICS0eD4n/dCDdxEIcKtoq1ZjjRV0nVC7is7hbt/YWCEsV7E
+sHqdy7Cz2HP7eMr00FlScX0/pdmpfhyWvyWXnESnmCtfLPKni7ts1Ld6JrTGgUAO
+SBZFOBHoCgyaABkSkOWsVkHcPQ/stQvgtQ94/Sp900m6bqpP+tMGnfoObnwqRM5M
+BcE42obPh0a4JEDB6I09l8uxdecCbHvBsSK4oAsoweTJUiBMVm9KUvWL25GYwFQP
+ze5vxkDDDapg/3lZPMFjt2U+FXzPiFau24NYCTIAl8kMloNcRRxIXEINXhu23WPr
+57qb7sLRaDvSHbLemYlmWS1EzcbBxSPGA/M58OULjHDn2Mah3J2yMGLr3FGGtxNH
+l8t3cKrBFtjfkFyNeQBm2kgt516Qzk3Z+f6024V4vkLn5ZsQLGhSM69457/+yv+T
+O+uaaimLnG3AqjLC5LC1W+hCXamRKxCQ8NNS4+xNLn2FsM6RRxmGP5X/LMpDmdXZ
+2qxvMC3JuwZAIJpPHOtC
+=iid8
+-----END PGP SIGNATURE-----
