@@ -1,38 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/1
-Message-ID: <4F551A8B.8030409@rolandgruber.de>
-Date: Mon, 05 Mar 2012 20:56:59 +0100
-From: Roland Gruber <post@...andgruber.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/09/5
+Message-ID: <4FAA8DCD.40305@redhat.com>
+Date: Wed, 09 May 2012 17:31:25 +0200
+From: Stefan Cornelius <scorneli@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Fabio Tranchitella <kobold@...ian.org>,  Dmitry Butskoy <Dmitry@...skoy.name>
-Subject: Re: CVE Request -- LDAP Account Manager Pro / PhpLDAPadmin -- Multiple XSS flaws
+CC: thomas.swan@...il.com, bbraun@...ack.net
+Subject: CVE-2012-0862 assignment notification: xinetd enables unintentional services over tcpmux port
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi,
 
-On 05.03.2012 11:36, Jan Lieskovsky wrote:
-> Wrt to PhpLDAPAdmin side -- I am not sure, what's the relation of the
-> code between LAM and
-> PLA (if PLA is using / embedding some code of LAM directly or if there
-> were also some
-> customizations on the side of PLA upon LAM code embedding / inclusion).
-> Hopefully Roland,
-> Fabio, Dmitry can clarify here, how much the PhpLDAPAdmin code is
-> different from LDAP
-> Account Manager code (if it's just overtaken LAM code or PhpLDAPAdmin
-> have also made
-> their own customizations to the code)?
+Thomas Swan of FedEx reported a service disclosure flaw in xinetd.
+xinetd allows for services to be configured with the TCPMUX or
+TCPMUXPLUS service types, which makes those services available on port
+1, as per RFC 1078 [1], if the tcpmux-server service is enabled.  When
+the tcpmux-server service is enabled, xinetd would expose _all_ enabled
+services via the tcpmux port, instead of just the configured service(s).
+This could allow a remote attacker to bypass firewall restrictions and
+access services via the tcpmux port.
 
-LDAP Account Manager includes a reduced copy of the phpLDAPadmin code. I already checked if phpLDAPadmin contains a fix and it seems to be vulnerable,
-too. Therefore, I cloned the Debian bug.
+In order for enabled services handled by xinetd to be exposed via the
+tcpmux port, the tcpmux-server service must be enabled (by default it is
+disabled).
 
-The Debian bug report contains a patch for Debian Stable. Debian packages for Unstable are here:
+This has been assigned CVE-2012-0862.
 
-http://www.ldap-account-manager.org/static/debian-packages/
+Thomas Swan also provided a patch [2], which has been reviewed by a
+former xinetd upstream maintainer and the Red Hat xinetd maintainer
+(upstream didn't respond to our contact attempts).
 
+-- References --
 
+[1] Red Hat bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=790940
+
+[2] Proposed patch:
+https://bugzilla.redhat.com/attachment.cgi?id=583311
+
+Thanks and kind regards,
 -- 
-
-Best regards
-
-Roland
+Stefan Cornelius / Red Hat Security Response Team
