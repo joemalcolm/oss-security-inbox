@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/25/2
-Message-ID: <20120125150114.GB4413@foo.fgeek.fi>
-Date: Wed, 25 Jan 2012 17:01:14 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/09/8
+Message-ID: <20120509193055.GD2769@dhcp-25-225.brq.redhat.com>
+Date: Wed, 9 May 2012 21:30:55 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fwd Joomla! Security News 2012-01
+Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 25, 2012 at 04:17:47PM +0200, Henri Salo wrote:
-> Does someone know if these already have CVE-identifiers? Joomla just released this advisory.
+On Tue, May 08, 2012 at 04:31:53AM +0400, Solar Designer wrote:
+> On Tue, May 08, 2012 at 04:08:17AM +0400, Solar Designer wrote:
+> > Indeed, execve() may make the new process relatively privileged (SUID,
+> > SGID, fscaps), and thus being able to write into its memory is a
+> > security issue.  However, it appears that robust_list (and its compat
+> > counterpart) is only used for such writes when the process itself is
+> > exiting (with the aim being to notify other threads sharing the same
+> > mm).  If so, the question is whether and how writes into an exiting
+> > process' memory may be exploited.  We're already in do_exit() at this
+> > point, and it's just a few lines before we detach from and likely
+> > destroy the mm.  Well, if that process itself is multi-threaded (and
+> > other threads are not exiting yet), it possibly can be exploited
+> > (through affecting those other threads).
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=771764#c4 describes that the
+> bug was inadvertently triggered in normal usage of certain programs, and
+> how it was rather difficult to figure out.  My question is: was exit of
+> a multi-threaded program involved and relevant?  If not, then there must
+> be something wrong with my reasoning, because I don't currently see how
+> the bug may otherwise have visible consequences.
 
-This is why I don't like Joomla. They jumped from 1.7 to 2.5.0 and support for 1.7.x is following:
+In this case single-threaded (privileged) Xorg was run with a stale
+robust list pointer that accidentally fell into MMIO area (see how
+ioperm() is implemnted on IA64). Because of the way ill-sized MMIO
+requests (exit_robust_list()) were handled in qemu-dm, the result was
+guest crash (all of this happened in Xen guest).
 
-"Please note that version 1.7 will reach end of life on 24 February 2012."
-
-EOL for 1.7.x means also 1.6.x, which both are still heavily uesd.
-
-http://www.joomla.org/download.html
-http://www.joomla.org/announcements/release-news/5403-joomla-250-released.html
-
-Joomla is part of oCERT "The oCERT team is a volunteer-based force of well-known security professionals from major Open Source projects, vendors and the security community."
-
-Basicly the end of support for 1.7.x and 1.6.x means that if you go to support-forum and ask something you will be asked for your software version number and if it isn't 2.5.0 they will tell you to upgrade, before you will get more help.
-
-- Henri Salo
+-- 
+Petr Matousek / Red Hat Security Response Team
