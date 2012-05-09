@@ -1,29 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/1
-Message-ID: <50988D29.2010905@redhat.com>
-Date: Tue, 06 Nov 2012 09:38:09 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/09/2
+Message-ID: <4FA9FF8E.5090701@redhat.com>
+Date: Tue, 08 May 2012 23:24:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: gegl: Integer overflow, leading to heap-based buffer overflow by parsing PPM image headers
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: XSS and SQL injection in serendipity before 1.7.1
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-An integer overflow, leading to heap-based buffer overflow was found in 
-the way portable pixmap format (PPM) image file format handler of GEGL, 
-a graph based image processing framework, processed certain input PPM 
-image file headers. A remote attacker could provide a specially-crafted 
-PPM image that when opened in gegl executable would lead to crash, or, 
-potentially arbitrary code execution with the privileges of the user 
-running the binary.
+On 05/08/2012 04:03 AM, Hanno Böck wrote:
+> http://blog.s9y.org/archives/240-Serendipity-1.6.1-released.html
+> 
+> "This release mainly addresses two security issues found by Stefan 
+> Schurtz (thanks a lot, again!). One is a XSS issue in the media 
+> database panel, the other an SQL injection in the media database 
+> section. Both issues can only be exploited if you are logged in to
+> your blog and you click a specially crafted link. The SQL injection
+> cannot be used to extract sensitive information from the database
+> or delete data."
+> 
+> The webpage of the vulnerability researcher is 
+> http://www.rul3z.de/
+> 
+> However, there seems to be no information yet about those vulns, 
+> probably they'll appear there soon.
 
-This issue was found by Murray McAllister, Red Hat Security Response Team.
+Please use:
 
-We have assigned CVE-2012-4433 to this issue.
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=856300
+CVE-2012-2331 Serendipity 1.6.0 XSS issue
+CVE-2012-2332 Serendipity 1.6.0 SQL Injection issue
 
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPqf+OAAoJEBYNRVNeJnmTVaYQANPqzjCYb6yLtGRYE6tA8fo2
+YiCYUI3TkRUJfIc+h/JZ+UauL3+BCc3U8ZUZun8h3B3FTYTF272qHKeurP+wkHIz
+d6MxWUaguDpnGetKjgTfPhrrbzXpqcEEhWE3mqlDI/+wT/M9wZWslfikdYz9ELVT
+lHBprwN7ATM3rFTkXrIKU8UlUzOFkwFEi8aaQTK0djOOKAb5ZjSj52QyRKcoOS7B
+tY8t8OVUFGd3mfemiTa8i08KdYZ0EkbLfNYFoiLs9R+sqehhpnneY3sHQHiBQX5h
+EVBiJ4NT8J0pm/IYuDqpxUK4rQfNlQr6K4SzVuo32KpQG9UGcq8EMJjp5//phzFY
+8wGuGP7WQGJtr+JNRJXSWyya/1P67jaqYZC/YzjAZURiighd2lFk4B+oo8DOAzEJ
+h+oMd+4LYQFx8lL8dqUhev1SuuIlEOUbT0KXyU7pUWj0ICeylT41iOz9u2uIlFvt
+CIxbsaYfV7EQfJjSR15oq91Z/upfJn+pQlO51W+S6lrFcl9uxFSgzPZ/G399hBW8
+yhmsM7Bw0Q0hgiqfCIEJqrP0NaBaLX0ufxsy6Q6uyqCK4C7v9S6PeLvZuDQvcEHZ
+25R0XwvPnlNTOl93jbVx9LGQ2EhE4OFPTioyiwdsFd9eF/ptiLDIXeikVZopnJo9
+jynfmxzFVljNP3tMvXsm
+=oANW
+-----END PGP SIGNATURE-----
