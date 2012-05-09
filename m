@@ -1,62 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/2
-Message-ID: <50DFB4C8.80507@redhat.com>
-Date: Sat, 29 Dec 2012 20:28:08 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/09/4
+Message-ID: <20120509114534.77d3e838@redhat.com>
+Date: Wed, 9 May 2012 11:45:34 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>, team@...urity.debian.org
-Subject: Re: Inkscape reads .eps files from /tmp instead of the current directory
+Cc: cve-assign@...re.org
+Subject: Re: PHP-CGI query string parameter vulnerability (CVE-2012-1823 / CVE-2012-2311, CERT VU#520827)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sat, 5 May 2012 00:22:19 +0400 Solar Designer wrote:
 
-On 12/29/2012 03:31 AM, Salvatore Bonaccorso wrote:
-> Hi
+> I guess most of you have heard of this one already, yet it should be
+> in here as well.  The original issue was tracked as CERT VU#520827,
+> CVE-2012-1823.  PHP 5.4.2 and 5.3.12 were released with an incomplete
+> fix, and apparently CVE-2012-2311 refers to that incomplete fix issue.
 > 
-> Going trough some bugreports in Debian I noticed [1], [2] I
-> haven't found a CVE for "Inkscape reads .eps files from /tmp
-> instead of the current directory".
-> 
-> If one has file foo.eps in current directory, and /tmp/foo.eps is 
-> present
-> 
-> $ inkscape foo.eps
-> 
-> opens the copy in /tmp/foo.eps
-> 
-> Does this warrants a CVE? If so could you assign one?
+> http://eindbazen.net/2012/05/php-cgi-advisory-cve-2012-1823/
+> http://www.php-security.net/archives/11-Mitigation-for-CVE-2012-1823-CVE-2012-2311.html
+> http://www.kb.cert.org/vuls/id/520827
+> http://www.reddit.com/r/PHP/comments/t3pr8/how_serious_is_this/
+> http://www.reddit.com/r/netsec/comments/t4lxw/phpcgi_query_string_parameter_vulnerability_leads/
+> http://www.metasploitminute.com/2012/05/cve-2012-1823-php-cgi-bug.html
+> http://www.opennet.ru/opennews/art.shtml?num=33765 (in Russian)
 
-Yes, please use CVE-2012-6076 for this issue. Relying on file names to
-be not guessed so mystery content isn't opened up is not such a good
-thing.
+The incomplete fix part seems to have got bit messy, at least with
+respect to CVE assignment.  Following issues were fixed in 5.4.3 /
+5.3.13 that were not covered by 5.4.2 / 5.3.12 fixes.
 
-> [1]: http://bugs.debian.org/654341 [2]:
-> https://bugs.launchpad.net/inkscape/+bug/911146
-> 
-> Regards, Salvatore
+1) Incorrect detection of = in query string, that made it possible to
+bypass the fix using %3D.  This was addressed by:
+
+-       if(*decoded_query_string == '-' && strchr(decoded_query_string, '=') == NULL) {
++       if(*decoded_query_string == '-' && strchr(query_string, '=') == NULL) {
+
+which is noted as Mitigation option 3 in De Eindbazen's blog.
+Following the timeline / updates there, this should be what triggered
+CVE-2012-2311 assignment.
+
+2) The fix from 1) did not address the problem for use cases where
+"unsafe" wrapper script, similar to the one pointed out in De
+Eindbazen's blog, is used.  It seems that was first mentioned in
+Christopher Kunz's (php-security.net) blog mentioning that the PHP
+re-fix is still incomplete, though it's questionable if this is to be
+considered a PHP flaw.  Upstream warned about this insecure wrapper
+script problem:
+
+http://www.php.net/archive/2012.php#id2012-05-06-1
+
+and even added a fix / work around for it to PHP:
+
+http://git.php.net/?p=php-src.git;a=blob;f=sapi/cgi/cgi_main.c;h=a7ac26f0#l1569
+
+3) The fix from 1) only made PHP skip one php_getopt() call out of two
+that are reachable in the CGI mode (the third php_getopt() call is in
+the if (!cgi && !fastcgi) block).  As the consequence, PHP was still
+parsing following arguments:
+
+- -h / -? - this seems harmless, as makes PHP output usage info, which
+  triggers Internal Server Error in httpd
+- -T - this was mentioned as DoS vector:
+
+https://bugs.php.net/bug.php?id=61910#1336220802
+http://www.php-security.net/archives/9-New-PHP-CGI-exploit-CVE-2012-1823.html
+
+The impact of this is rather limited as clients needs to consume all
+generated output too keep this running.  May offer some advantage of
+simple many requests DoS e.g. Keep-Alive is disabled and there's per-IP
+connection limit.
 
 
+This is upstream commit that was used in 5.4.2 / 5.3.12:
+
+http://git.php.net/?p=php-src.git;a=commitdiff;h=168e8920be77f3b55a3ae688270b752579681f6e
+
+and this is correction from 5.4.3 / 5.3.13:
+
+http://git.php.net/?p=php-src.git;a=commitdiff;h=000e84aa88ce16deabbf61e7086fc8db63ca88aa
+
+(both links are for PHP-5.3 branch commits).
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+I'm not sure if there is any standard approach to using "incomplete
+fix" CVE(s) in cases like this.  Should CVE-2012-2311 only be used for
+1), or for all changes upstream did in 5.4.3 / 5.3.13?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+It should be noted that vendors updates released so far (Ubuntu, SUSE,
+RHEL) only have 1) fixed, and some (Ubuntu, SUSE) even mention
+CVE-2012-2311.  If CVE-2012-2311 is expected to be used for all fixes
+1) - 3), there's probably a need for new non-upstream CVE to cover 3)
+and possibly 2) (as mentioned above, it's not really PHP flaw :).
 
-iQIcBAEBAgAGBQJQ37TIAAoJEBYNRVNeJnmTXAgQAMdcyZMVT4Kfz+ERKIRAC+vc
-gzaDlCxW0+fVhNDYWczAb8ZY48XfoJATlGZWovKrGJNhvkQn1UV9JY6LdeY9Zexm
-xIvc2HLYGQdZxaQWk+1p1pya22cXSRV2dFdPsL+bO47myOQX27AKP6utNGKYwfew
-jEre2B3C81pAnaj0+beDMZZZgKbl1HqNMnu84k6kBrMpbdwwAKVje5MQXKBQbURh
-SZKd4A/IMoSfkaRkc4SF7g/0v/+xf4OB7TRF3ekXUwCh75T0fwX84WVU48Z/0b4i
-Jvl3kiFy5aGO46vJGktXzJDkfxSXYE9g4FYnD3xrIPm04MbtzZdoS+ecjUNFVc++
-hD0ujicLKFDGsi/7eFjavHa2f5u9ZUn0l94Jq4U+zacuZTv6MbZLRDzo0ZNZTVjp
-27XGyLWWt/k4k441JzXyUb/NGoF1tMmMuffViyT9kp8ycUKBE4JtMuuIIvK3Nh74
-mzyMi0jBZn/a0FQcRfaOrCeT/tyyAkDKzm+OwBIx2OlpamrnS6A6a9szgEae9xop
-tM0LpdJPk6MMbZUQnNVqcltNN4+eGOr90j58GMa6NjqYXs7vinx0w6z+rxLNX8XW
-HL7r6sQu0w5pc5s0hPBlIDK8TjSrGCUVEPIzY0/yVOTS3ZjcRHQdQKLCERjgpSg6
-4TJCxh6q9rAlIly/5cI6
-=Fy2c
------END PGP SIGNATURE-----
+CCing cve-assign@...re for a guidance.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
