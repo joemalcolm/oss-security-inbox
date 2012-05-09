@@ -1,53 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/27/6
-Message-ID: <503BAEDE.1070800@redhat.com>
-Date: Mon, 27 Aug 2012 11:31:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/09/7
+Message-ID: <20120509192104.GC2769@dhcp-25-225.brq.redhat.com>
+Date: Wed, 9 May 2012 21:21:05 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: joomla before 1.5.26 password change
+Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, May 08, 2012 at 04:08:17AM +0400, Solar Designer wrote:
+<snip>
+> Well, if that process itself is multi-threaded (and
+> other threads are not exiting yet), it possibly can be exploited
+> (through affecting those other threads).  Is this the only attack
+> scenario?
 
-On 08/27/2012 03:14 AM, Hanno Böck wrote:
-> I think this one 
-> http://developer.joomla.org/security/news/396-20120305-core-password-change.html
->
-> 
-never got a CVE.
-> 
-> Note what may be confusing: 1.5.25 and 1.5.26 both fixed a
-> password change vuln, the earlier one already got a CVE
-> (CVE-2011-4321), but they seem to be different issues.
+This is the attack scenario that I considered when filing this bug, yes.
 
-Already assigned:
+> Do we know of any SUID/SGID/fscaps-privileged multi-threaded
+> programs?  OK, I suppose that some proprietary ones exist (likely with
+> plenty of vulnerabilities in them). ;-)
 
-CVE-2012-1598 Joomla! 396-20120305-core-password-change.html
+I haven't looked extensively for those. I can imagine such programs, but
+I admit I come from Windows world, so I might be a little bit biased.
 
-http://seclists.org/oss-sec/2012/q1/783
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQO67dAAoJEBYNRVNeJnmTlMIQAKQJ9zOPxhD7v7Z3zc61SLyW
-tlu22cym3RMkLMnaWBl3gnVB78dqAw+NIr1fGNFHrhf1sSSmHzIAdzTA+obuYXbr
-c18JntIk01QLIaPalakIf2RamebY+mg5fkrA7SlXsoz+qs9d1cUsCPm/1FYbwmaK
-eyqafUYHbj0g3i20K2GKmKeNpfBMWmZlu/ljvcTz7Efypt80tkZUZIM9ZhjqhosA
-ukftayKMbZ7czSF+/JSsp4JKMRYJlf8Ekhbjhukladba9nZQusvfUkcG2/J+iUHw
-rzhhaXcNemmBf8uwP00QhrzpTOjhh0YLEDAPiigRaNhGEgen1aRmVrX7uPRuIpBj
-xQpXj4h3jMBbqdJCZNn2UNYPu+tA9MgHKU35PLycHxhZTQVkrGj/qPaBrPeGs0CM
-mtxfDmmez+Iht7mjEoJS5BVTUPIdFHWWqttZ0pg3PIYoiOexnMayc+PnG9sODHl3
-9yF1nczfWK+arDFKHHdUCtMy2wLocy4///TLTo0Xe05aHyZdwRUQTWJWS/ZtV5Fn
-vg/JGviZIjSp66w8gep3WlQY+9PoLBoPQ3g8qaTjymMYi/EfLoyAzWYColIvSoOY
-vTF9RTd6N9HP+hB9KH0SREdg3qfvJT8yBSQkP4YyOGVoG04RWo/AWgjX+vhZC5pS
-m/bjRjr/444IydIyNma0
-=yEOr
------END PGP SIGNATURE-----
+Petr
