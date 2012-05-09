@@ -1,27 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/13
-Message-ID: <4F6CC567.1060302@redhat.com>
-Date: Fri, 23 Mar 2012 12:48:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE Request: Geeklog 1.7.1 <= Cross Site Scripting Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/09/6
+Message-Id: <201205091859.q49IxeCm016467@linus.mitre.org>
+Date: Wed, 9 May 2012 14:59:40 -0400 (EDT)
+From: cve-assign@...re.org
+To: thoger@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: PHP-CGI query string parameter vulnerability (CVE-2012-1823 / CVE-2012-2311, CERT VU#520827)
 Content-Type: text/plain; charset=utf-8
 
-On 03/23/2012 02:56 AM, Henri Salo wrote:
-> Original request here: http://seclists.org/oss-sec/2011/q1/547
-> 
-> http://www.geeklog.net/article.php/geeklog-1.7.1sr1
-> http://project.geeklog.net/cgi-bin/hgwebdir.cgi/geeklog/rev/20a98e6bab20
-> http://yehg.net/lab/pr0js/advisories/[geeklog1.7.1]_cross_site_scripting
-> http://osvdb.org/show/osvdb/70245
-> http://secunia.com/advisories/42775/
-> 
-> This might have been left unassigned because of 'admin/configuration.php', but at least Geeklog thinks this as important security vulnerability. Needs 2010 identifier, thanks.
-> 
-> - Henri Salo
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2011-4942 for this issue.
+>The incomplete fix part seems to have got bit messy, at least with
+>respect to CVE assignment.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+The total number of CVE IDs should be 4. Comments below:
+
+>1) Incorrect detection of = in query string, that made it possible to
+>bypass the fix using %3D.  This was addressed by:
+>
+>-       if(*decoded_query_string == '-' && strchr(decoded_query_string, '=') == NULL) {
+>+       if(*decoded_query_string == '-' && strchr(query_string, '=') == NULL) {
+>
+>which is noted as Mitigation option 3 in De Eindbazen's blog.
+>Following the timeline / updates there, this should be what triggered
+>CVE-2012-2311 assignment.
+
+CVE-2012-2311 is for only this specific %3D fix listed as "1)" above.
+
+
+>2) The fix from 1) did not address the problem for use cases where
+>"unsafe" wrapper script, similar to the one pointed out in De
+>Eindbazen's blog, is used.  It seems that was first mentioned in
+>Christopher Kunz's (php-security.net) blog mentioning that the PHP
+>re-fix is still incomplete, though it's questionable if this is to be
+>considered a PHP flaw.  Upstream warned about this insecure wrapper
+>script problem:
+>
+>http://www.php.net/archive/2012.php#id2012-05-06-1
+>
+>and even added a fix / work around for it to PHP:
+>
+>http://git.php.net/?p=php-src.git;a=blob;f=sapi/cgi/cgi_main.c;h=a7ac26f0#l1569
+
+This needs a separate CVE ID (different from both CVE-2012-1823 and
+CVE-2012-2311). MITRE is considering the "insecure wrapper script" to
+be a distributable product because the code has been available for
+some time on a public web site, and the (admittedly tiny) script
+codebase has apparently sometimes been copied and adapted for use at
+multiple web-hosting providers.
+
+The script codebase is, of course, open source.
+
+In many cases, MITRE would not bother to assign a CVE ID for a
+vulnerability in a "product" of this type (i.e., a product that is
+arguably not even packaged for distribution and does not even have a
+product name). However, in this case, the product and its
+vulnerability have become commonly recognized and discussed because of
+the connection to the other PHP-CGI issues. Therefore, a CVE name is
+useful.
+
+This can be temporarily called CVE-2012-NEW-1.
+
+
+>3) The fix from 1) only made PHP skip one php_getopt() call out of two
+>that are reachable in the CGI mode (the third php_getopt() call is in
+>the if (!cgi && !fastcgi) block).  As the consequence, PHP was still
+>parsing following arguments:
+>
+>- -h / -? - this seems harmless, as makes PHP output usage info, which
+>  triggers Internal Server Error in httpd
+>- -T - this was mentioned as DoS vector:
+>
+>https://bugs.php.net/bug.php?id=61910#1336220802
+>http://www.php-security.net/archives/9-New-PHP-CGI-exploit-CVE-2012-1823.html
+>
+>The impact of this is rather limited as clients needs to consume all
+>generated output too keep this running.  May offer some advantage of
+>simple many requests DoS e.g. Keep-Alive is disabled and there's per-IP
+>connection limit.
+>
+>
+>This is upstream commit that was used in 5.4.2 / 5.3.12:
+>
+>http://git.php.net/?p=php-src.git;a=commitdiff;h=168e8920be77f3b55a3ae688270b752579681f6e
+>
+>and this is correction from 5.4.3 / 5.3.13:
+>
+>http://git.php.net/?p=php-src.git;a=commitdiff;h=000e84aa88ce16deabbf61e7086fc8db63ca88aa
+>
+>(both links are for PHP-5.3 branch commits).
+
+This one also needs a separate CVE ID (different from both
+CVE-2012-1823 and CVE-2012-2311). Compared to CVE-2012-2311, it
+apparently has the same "affected versions" relative to official
+upstream release numbers. However, the affected versions are different
+in PHP packages from multiple Linux distributions. In this situation,
+it seems best to have two separate CVE names (CVE-2012-2311 and a new
+one) for the two different issues with php_getopt - in other words:
+
+  CVE-2012-2311:   the vulnerability that exists when the php_getopt
+                   for cases 'c' 'n' 'd' 'b' and 's' is not skipped
+  
+  CVE-2012-NEW-2:  the vulnerability that exists when the php_getopt
+                   for cases 'T' and 'h' is not skipped
+
+
+If this is agreeable, we would like Red Hat to make the specific CVE
+assignments for the "CVE-2012-NEW-1" and "CVE-2012-NEW-2" labels
+referenced above. If, for any reason, Red Hat doesn't want to make
+these two CVE assignments, please let us know.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJPqr0JAAoJEGvefgSNfHMd1UwH/A5vqEM0POOWHA1BGatxOtBx
+MClM3XzyBCg5PUV+kw8kUsu43U0rPGApbJoD9cEkODQie7IV7BSOo9JxVh54Bc2J
+XndXCLEcYUtan2rss9LWQ2AYPF5/5Ip532vVOpBtc4A/EGcoDWXkeKAwQHNBHLF/
+4Bned6MEwca+WVaCwQtkF5111votD8UmqU9794E261Oy3DgKs8RyN33P/l9UF3Cf
+/oAvLFUvZfheUdvWwyCXY/sVn6JUupsHYqyo+F9TK4nMGf/GkgXXIU0VCwOaeMni
+YvL6zGOOSS482JHeUSk0wWlGOHUKx8g7y6P8BMKCEm6sG4ka1HRP8g2RhBf8Uno=
+=1WAo
+-----END PGP SIGNATURE-----
