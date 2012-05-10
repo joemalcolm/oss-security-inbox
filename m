@@ -1,146 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/07/4
-Message-ID: <CA+O_gMwAWqoBDX+MsaxNsbRVD2adi+oSQBVVW94_QAhDWnMSTA@mail.gmail.com>
-Date: Mon, 8 Oct 2012 11:14:55 +1300
-From: Robbie MacKay <robbie@...ahidi.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Heather Leson <HLeson@...ahidi.com>
-Subject: Re: CVE request for Ushahidi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/10/5
+Message-ID: <4FAC11C2.5060507@x-tnd.be>
+Date: Thu, 10 May 2012 21:06:42 +0200
+From: Johan Cwiklinski <mailings@...nd.be>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: galette sql injection
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
-I've realised one of the SQL injections was incorrectly assigned
+Hello,
 
-SQL injection in Check-in API
-https://github.com/ushahidi/Ushahidi_Web/commit/68d9916 was credited to
-postmodern and assigned CVE-2012-3469
-It should have been credited to: Kees Cook and assigned to CVE-2012-3470
+Versions 0.63x of galette (out-of-date but mostly used versions for now)
+have an sql injection vulnerability.
 
-Regards,
+Could a CVE be assigned for this vulnerability?
 
-Robbie
+This issue has been reported on project's tracker:
+http://redmine.ulysses.fr/issues/250
 
-On Fri, Aug 10, 2012 at 5:51 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+The issue has been fixed
+(http://redmine.ulysses.fr/projects/galette/repository/revisions/8c13ec159ba),
+a new release and an official announcment from the project will come
+very soon.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 08/01/2012 10:50 PM, Robbie Mackay wrote:
-> > Hi Kurt, I've added info on which researcher discovered the
-> > vulnerability in each commit. Anything other info needed?
-> >
-> > Thanks, Robbie Mackay Software Developer, External Projects,
-> > Ushahidi Inc
->
-> Ok I split these up by reporter as per CVE guidelines.
->
-> ***********************
-> > * Multiple SQL injections (Reported by Timothy D. Morgan, Kees
-> > Cook, postmodern )
->
-> =====================
-> > https://github.com/ushahidi/Ushahidi_Web/commit/fdb48d1 (identified
-> > by Ushahidi dev team)
-> > https://github.com/ushahidi/Ushahidi_Web/commit/4764792 (identified
-> > by Ushahidi dev team)
-> > https://github.com/ushahidi/Ushahidi_Web/commit/d954093 (identified
-> > by Ushahidi dev team)
->
-> Please use CVE-2012-3468 for these issues
->
-> =====================
-> > https://github.com/ushahidi/Ushahidi_Web/commit/6f6a919
-> > (postmodern)
-> > https://github.com/ushahidi/Ushahidi_Web/commit/68d9916
-> > (postmodern)
-> > https://github.com/ushahidi/Ushahidi_Web/commit/e0e2b66
-> > (postmodern)
-> > https://github.com/ushahidi/Ushahidi_Web/commit/a11d43c
-> > (postmodern)
->
-> Please use CVE-2012-3469 for these issues
->
-> =====================
-> > https://github.com/ushahidi/Ushahidi_Web/commit/3301e48 (Kees
-> > Cook)
->
-> Please use CVE-2012-3470 for these issues
->
-> =====================
-> > https://github.com/ushahidi/Ushahidi_Web/commit/3f14fa0 (Timothy
-> > D. Morgan)
->
-> Please use CVE-2012-3471 for these issues
->
-> **************************
-> > * Missing authentication on comments, reports, email API calls
-> > (Reported by Kees Cook, Dennison Williams)
->
->
-> =====================
-> > https://github.com/ushahidi/Ushahidi_Web/commit/4c24325 (Dennison
-> > Williams)
->
-> Please use CVE-2012-3472 for these issues
->
-> =====================
-> > https://github.com/ushahidi/Ushahidi_Web/commit/f67f4ad (Kees
-> > Cook) https://github.com/ushahidi/Ushahidi_Web/commit/13ca6f4 (Kees
-> > Cook)
->
-> Please use CVE-2012-3473 for these issues
->
-> **************************
-> > * User details exposed in comments API (Discovered by internal dev
-> > team) https://github.com/ushahidi/Ushahidi_Web/commit/529f353
->
-> Please use CVE-2012-3474 for these issues
->
-> **************************
-> > * Admin user hijacking through the installer (Reported by Wil
-> > Clouser) https://github.com/ushahidi/Ushahidi_Web/commit/7892559
-> > https://github.com/ushahidi/Ushahidi_Web/commit/fcdad03
->
-> Please use CVE-2012-3475 for these issues
->
-> **************************
-> > * Stored XSS on member profile pages (Reported by Amy K. Farrell)
-> > https://github.com/ushahidi/Ushahidi_Web/commit/00eae4f
->
-> Please use CVE-2012-3476 for these issues
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
->
-> iQIcBAEBAgAGBQJQI/iPAAoJEBYNRVNeJnmTvAsQAIuh48sIqfM2/07hWmp0uHAX
-> azRSwwHA863udTc9Mkk7GAKwBToZvIzOuITGhfZFIAPIs8wnzAYLNn8fjy2iKfFd
-> 7E7ihEmK1EVeYdwa1KAULaJkyqfiiK0ThMZ9M+oV4KStyqR2C0EPtSXGt+qBeFPE
-> fwVqv/FIyadvVic/y/GIKubF29urV8ji7OtYxNQoT2Zll7Kr9J2GUNUdykrK5lZz
-> ibYpgfZgpNkhHkNy59GYkPtlZMpmWqIMTHhlEMEYGvqakLfU9tO8wL4cYq3oSL9I
-> ihHCeSW1pWzcjjw2CKcfzc7ZCbRd/8PucVOCcIZyaTHcHSG3/A34YWWzLdRrFsix
-> ivZoRJv/zRCL4Jc2Fr+U24iKly4wwGpQ/pyOxA7o/aOy1r4Mf9M7maR40AGSqB8z
-> WQfkzfJZ6b5FuPtWssLHl2LdfRR1/6y/uOzi9LVtzp4vEbi3JZLp4UxNQ8mJOJLe
-> RSNwBOehO9pYHzOppmYsecaNiarpdLKDXzNvHVMl00BUzm0QaHV/3yQAxek/cLPK
-> 0b46CYOl85Cd6Ff1OQ6fUL1IDp7Sb2/25/eS32z1b5rcvulfkFXTdL3EoR03H09q
-> PgS9XSdnjZK/4O1kZpXGryWIe1aq6IOTHbjqX8oWo7+I+tgeWsGuZdlLRE99Gunq
-> 0krB19ynPqhtYZNe8jcp
-> =CTk4
-> -----END PGP SIGNATURE-----
->
-
-
+Thank you!
 
 -- 
-Robbie Mackay
-
-Software Developer, External Projects
-Ushahidi Inc
-m: +64 27 576 2243
-e: robbie@...ahidi.com
-skype: robbie.mackay
-
+Johan Cwiklinski
