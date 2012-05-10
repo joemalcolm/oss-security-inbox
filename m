@@ -1,64 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/20/1
-Message-ID: <50D2910B.6060904@redhat.com>
-Date: Wed, 19 Dec 2012 21:16:11 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/10/2
+Message-ID: <20120510070852.GA25491@openwall.com>
+Date: Thu, 10 May 2012 11:08:52 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal core, and contributed modules
+Cc: thomas.swan@...il.com, bbraun@...ack.net
+Subject: Re: CVE-2012-0862 assignment notification: xinetd enables unintentional services over tcpmux port
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 12/19/2012 02:28 PM, Forest Monsen wrote:
-> Hello! I'd like to request CVE identifiers for several issues with 
-> core and contributed modules:
+On Wed, May 09, 2012 at 05:31:25PM +0200, Stefan Cornelius wrote:
+> Thomas Swan of FedEx reported a service disclosure flaw in xinetd.
+> xinetd allows for services to be configured with the TCPMUX or
+> TCPMUXPLUS service types, which makes those services available on port
+> 1, as per RFC 1078 [1], if the tcpmux-server service is enabled.  When
+> the tcpmux-server service is enabled, xinetd would expose _all_ enabled
+> services via the tcpmux port, instead of just the configured service(s).
+> This could allow a remote attacker to bypass firewall restrictions and
+> access services via the tcpmux port.
 > 
-> SA-CORE-2012-166: Multiple vulnerabilities 
-> http://drupal.org/SA-CORE-2012-004 (Looks like three identifiers
-> necessary here?)
-
-Access bypass (User module search - Drupal 6 and 7)
-Please use CVE-2012-5651 for this issue.
-
-Access bypass (Upload module - Drupal 6)
-Please use CVE-2012-5652 for this issue.
-
-Arbitrary PHP code execution (File upload modules - Drupal 6 and 7)
-Please use CVE-2012-5653 for this issue.
-
-> SA-CONTRIB-2012-173 - Nodewords: Information disclosure 
-> http://drupal.org/node/1859282
-
-Please use CVE-2012-5654 for this issue.
-
-> SA-CONTRIB-2012-174 - Context - Information Disclosure 
-> http://drupal.org/node/1870550
-
-Please use CVE-2012-5655 for this issue.
-
-> Thanks, Forest
+> In order for enabled services handled by xinetd to be exposed via the
+> tcpmux port, the tcpmux-server service must be enabled (by default it is
+> disabled).
 > 
+> This has been assigned CVE-2012-0862.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+This is now reported fixed in xinetd 2.3.15.  From xinetd-2.3.15/CHANGELOG:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+2.3.15
+        If the address we're binding to is a multicast address, do the
+                multicast join.
+        Merge the Fedora patch to turn off libwrap processing on tcp
+                rpc services. Patch xinetd-2.3.12-tcp_rpc.patch.
+        Merge the Fedora patch to add labeled networking.
+                Patch xinetd-2.3.14-label.patch r1.4.
+        Merge the Fedora patch to fix getpeercon() for labeled networking
+                in MLS environments.
+                Patch xinetd-2.3.14-contextconf.patch r1.1
+        Merge the Fedora patch for int->ssize_t.
+                Patch xinetd-2.3.14-ssize_t.patch r1.1
+                Some modifications to this patch were necessary.
+        Change compiler flags, -Wconversion generates excessive and
+                unnecessary warnings with gcc, particularly all
+                cases of ntohs(uint16_t).
+                http://gcc.gnu.org/bugzilla/show_bug.cgi?id=6614
+                Additionally add -Wno-unused to prevent unnecessary
+                warnings regarding unused function parameters when
+                the function is a callback conforming to a standard
+                interface.
+        Change version number to 2.3.15devel, indicating an interim
+                developmental source snapshot.
+        Merge patch from Thomas Swan regarding CVE-2012-0862
 
-iQIcBAEBAgAGBQJQ0pEKAAoJEBYNRVNeJnmT3m8P/AtLcWrUckVnBEoARQfphuqE
-dV5FlHBOyX+vrmapMl/4LgqSnSdjG4LCiCwyJ/meZlGF1dkuSutRAZq/gVp6lEY9
-y6upxe/UnMZjroTeS9bUE/SqIM0IG/gqisW59BrHOgaIsERMowoDhLVp0mAcML5R
-IxrPQWLACceoEtVbEcKndh5slp8uOnyYOv1MTRuST66OB0rln+RlHwb77guR30Fu
-lkk98to73WLs8tSGrKXUaBt9XlpXgPgvHsFRs5TCkftBmoc8QMeZPWYEZz2RSnar
-98zPexrZ4ijdA9raBnanBEbQsdmITV/uOc1+P6f0wfZ1VtuICktolBytJiOY+Lxx
-zSq+EJkr/lqF/BEhGjrBvYH9gDGy1BeBgBiVWMIUfdH2q6jUQUbnqfWW+wR9csG3
-6LM1exHklb0/ahIBTqmIOrNpLbkGqPO21daDinehEg/45b0BANbNSP7nwxZZpHfT
-1VajmwDAcApdO/VRD2AKReylNhungmG1Fc7lakJPH9b3/P8ZVF5K1pdhmjzOJNwg
-nKTZI7GRlKckqETd8Iy/5t+raKPQTvGu+kJwAouObHx1Mkn6b7bpVqWgVlu8R08j
-rGAkmmvBrY78k7szzpOiJ7OoGmB5wb44X122yLUSX2UP7j6dZZVeiCVBhz5odWZI
-zKZpPsD6mdLYojwkUeMj
-=hfqG
------END PGP SIGNATURE-----
+SHA-256 of xinetd-2.3.15.tar.gz that I just downloaded is
+bf4e060411c75605e4dcbdf2ac57c6bd9e1904470a2f91e01ba31b50a80a5be3.
+Unfortunately, there's no signature.
+
+While we're at it, if anyone cares about these xinetd builtin services
+and their issues (and it seems so), I think xinetd 2.3.14+ dropping
+bad_port_check() is also a vulnerability that distros need to patch.
+We do:
+
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/xinetd/xinetd-2.3.14-up-revert-bad_port_check.diff?rev=1.1
+
+(haven't updated to 2.3.15 yet, but that patch will stay the same - it
+merely re-introduces the checks that existed in 2.3.13 and below).
+
+Alexander
