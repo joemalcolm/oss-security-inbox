@@ -1,42 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/2
-Message-ID: <50AF7BD8.1010605@redhat.com>
-Date: Fri, 23 Nov 2012 14:36:24 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/10/4
+Message-ID: <4FABF4F7.3080501@redhat.com>
+Date: Thu, 10 May 2012 11:03:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Gajim fails to handle invalid certificates
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: phpMyFAQ default password 1.3.2
 Content-Type: text/plain; charset=utf-8
 
-On 11/14/2012 10:36 AM, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 11/14/2012 02:19 AM, Florian Weimer wrote:
->> On 11/14/2012 08:19 AM, Kurt Seiifried wrote:
->>
->>> So do we consider this to be an OpenSSL issue of gajim? I'm sure
->>> gajim is not the only program that does something like this.
->>
->> As far as I understand things, it is not necessarily at all to set
->> a verification callback in OpenSSL.  If you load the root
->> certificate store and examine SSL_get_verify_result, that should be
->> sufficient.  You can even look at the peer certificate and continue
->> anyway if the user has overridden the certificate validity.  So
->> far, I haven't found a good reason to use a verify callback at all.
->> You need it to implement a custom PKIX validation policy, but that
->> should be pretty rare.  (I still have to check older OpenSSL
->> versions, though, perhaps there, the behavior was different.)
->>
->> Anyway, if application developers set a verification callback, it
->> is their responsibility to implement it correctly.  Therefore, I
->> don't think this is an OpenSSL issue.
->
-> Makes sense, just wanted to confirm this problem resides within Gajim.
-> Please use CVE-2012-5524 for this issue.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Regarding the OpenSSL behavior, there appears to be a related bug report:
+On 05/10/2012 01:39 AM, Henri Salo wrote:
+> This is very old issue from 2003 without CVE-identifier.
+> 
+> Description:
+> 
+> By default, phpMyFAQ installs with a default password. An
+> unspecified account has an unspecified password which is publicly
+> known and documented. This allows attackers to trivially access the
+> program or system and gain privileged access.
+> 
+> http://osvdb.org/show/osvdb/81714 
+> http://www.phpmyfaq.de/changelog.php
+> 
+> Is there a general CVE-identifier for issues like default password,
+> which I think would be OK in case like this? If user upgraded
+> installation from old version to new this was not fixed in the
+> process.
+> 
+> - Henri Salo
 
-<http://rt.openssl.org/Ticket/Display.html?id=2768&user=guest&pass=guest>
+I'll need at least the account name so I can confirm this. Or if you
+diff the code I'm guessing it will stand out easily.
 
--- 
-Florian Weimer / Red Hat Product Security Team
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPq/T3AAoJEBYNRVNeJnmTme0P/1q/22FTmG05Zd5XLE2Bbjcs
+93uATy91vsqfRuv0kP9zOnZaMhn4gus5xo+42jAq/cvH+ewrLxYJjxVlIoimC4Pi
+QSsTP/FeNCgNP5zsvKMy/03ffBIQw2cuQwNQKbu7L9Vxuv2g8MJJBPLjkuylBO4P
+yg0j2/RtEMXzOEa+b4pPe0CBAEwOD6KNAvoEtK3018YYGG8csN/HqgVFkpFhJq+y
+wjF1ei2R+QzA5Ig0YduAbEn/zynuvNhLgj5RVWq58wHo0fi003tsWKRQvEaEXwr0
+mz+Yg9fDp1tOb3UcvbMqc3w8LK4UyeXJjy5TEvS3kKwdRKTKTX9y6oqkJqEjebxA
+Nz/JciajoKp+xa0dXs/0TYvDvxYivuOAJR65OUPrPsNgsOOW4bUU5dMnnlFJ5t4T
+38W8Co2B7ishu4BeG2AHcyS2xrS7o7GtOJbUSsaMn7L1HLwOS0L/YNQG92IaxJVf
+iRWAa4TonGQjdrl8tPtiT4hEZHkaGTZrC9Ym1VUWyZhu/j2N3Gy1CY5RoVi7jN1J
+KtTo3+BeQQyCLIVARnNXLdxLTHb6JHBO/ULZ9YwhbKJtUgjvdJqaSfau0Xcbj6or
+XTbaQ9kxohewDwjohKZSxdXjc8Nteoja1F6AnAsGA5kFuJqljF6UCfqwsT/d0gZc
+3a4KLwqt+d+yfYd8ljWs
+=h+nZ
+-----END PGP SIGNATURE-----
