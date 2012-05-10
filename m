@@ -1,88 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/16/2
-Message-ID: <20120516112650.GZ2075@yoink.cs.uwaterloo.ca>
-Date: Wed, 16 May 2012 07:26:50 -0400
-From: Ian Goldberg <iang@...uwaterloo.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/10/3
+Message-ID: <20120510073930.GD9421@kludge.henri.nerv.fi>
+Date: Thu, 10 May 2012 10:39:30 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Doug Barton <dougb@...eBSD.org>, steven@...nbsd.org, deraadt@...nbsd.org, gdt@...bsd.org, intrigeri <intrigeri@...ian.org>, paul@...herpunks.ca, Thibaut VARENE <varenet@...ian.org>, Rob Smits <rdfsmits@...uwaterloo.ca>
-Subject: Format string security flaw in pidgin-otr
+Subject: CVE-request: phpMyFAQ default password 1.3.2
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+This is very old issue from 2003 without CVE-identifier.
 
-Off-the-Record Messaging (OTR) Security Advisory 2012-01
+Description:
 
-Format string security flaw in pidgin-otr
+By default, phpMyFAQ installs with a default password. An unspecified account has an unspecified password which is publicly known and documented. This allows attackers to trivially access the program or system and gain privileged access.
 
-Versions 3.2.0 and earlier of the pidgin-otr plugin contain a format
-string security flaw.  This flaw could potentially be exploited by
-a remote attacker to cause arbitrary code to be executed on the user's
-machine.
+http://osvdb.org/show/osvdb/81714
+http://www.phpmyfaq.de/changelog.php
 
-The flaw is in pidgin-otr, not in libotr.  Other applications which use
-libotr are not affected.
+Is there a general CVE-identifier for issues like default password, which I think would be OK in case like this? If user upgraded installation from old version to new this was not fixed in the process.
 
-CVE-2012-2369 has been assigned to this issue.
-
-The recommended course of action is to upgrade pidgin-otr to version
-3.2.1 immediately.  The new version can be obtained here:
-
-Windows installer:
-    http://otr.cypherpunks.ca/binaries/windows/pidgin-otr-3.2.1-1.exe
-gpg signature:
-    http://otr.cypherpunks.ca/binaries/windows/pidgin-otr-3.2.1-1.exe.asc
-
-Windows zip file:
-    http://otr.cypherpunks.ca/binaries/windows/pidgin-otr-3.2.1.zip
-gpg signature:
-    http://otr.cypherpunks.ca/binaries/windows/pidgin-otr-3.2.1.zip.asc
-
-Source code:
-    http://otr.cypherpunks.ca/pidgin-otr-3.2.1.tar.gz
-gpg signature:
-    http://otr.cypherpunks.ca/pidgin-otr-3.2.1.tar.gz.asc
-
-git repository:
-    git://otr.git.sourceforge.net/gitroot/otr/pidgin-otr (branch 3.2_dev)
-
-Version 4.0.0 (soon to be released) does not suffer from this flaw.
-
-Linux and *BSD vendors and package maintainers have been notified, and
-updated packages should be available from them.
-
-If upgrading to version 3.2.1 is not possible, please apply the
-following patch to 3.2.0:
-
-
-- --- a/otr-plugin.c
-+++ b/otr-plugin.c
-@@ -296,7 +296,7 @@ static void still_secure_cb(void *opdata, ConnContext *conte
- 
- static void log_message_cb(void *opdata, const char *message)
- {
-- -    purple_debug_info("otr", message);
-+    purple_debug_info("otr", "%s", message);
- }
- 
- static int max_message_size_cb(void *opdata, ConnContext *context)
-
-
-
-Our heartfelt thanks to intrigeri <intrigeri@...m.org> for finding and
-alerting us to this flaw.
-
-Followups to the otr-users mailing list <otr-users@...ts.cypherpunks.ca>,
-please.
-
-Your OTR development team,
-    Ian Goldberg <iang@...uwaterloo.ca>
-    Rob Smits <rdfsmits@...uwaterloo.ca>
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iD8DBQFPsVyO3tZOuyuofFwRAiQYAJ0W3h+HC4b0bSYM/3FbDtzh/VwC1ACeLOFw
-dct2xKgjvPupH6aKZ5jdJEo=
-=iofn
------END PGP SIGNATURE-----
+- Henri Salo
