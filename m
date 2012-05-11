@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/11
-Message-Id: <201211061506.qA6F6OKa014851@core.courtesan.com>
-Date: Tue, 06 Nov 2012 10:06:24 -0500
-From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
-To: oss-security@...ts.openwall.com
-cc: disclosure@....org
-Subject: Re: Re: TTY handling when executing code in different lower-privileged context (su, virt containers)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/6
+Message-ID: <4680B31DCCC3B6428FB4E85ED9D540D02415BE38@SRVEXCH.oppida.fr>
+Date: Fri, 11 May 2012 09:31:04 +0000
+From: Luc ABRIC <luc.abric@...ida.fr>
+To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
+CC: Karim SLAMANI <karim.slamani@...ida.fr>, Valérian PERRET <valerian.perret@...ida.fr>, Yann MICHARD <yann.michard@...ida.fr>
+Subject: CVE-2012-1597: XSS in eZ Publish
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 06 Nov 2012 15:06:57 +0100, Marcus Meissner wrote:
+Hi everyone,
 
-> Ludwig Nussel tried to also use pseudo tty, but this gets kind of
-> messy soon, especially if you start with the signal handling required
-> (ctrl-z and ctrl-c over su are supposed to work...).
+eZ Publish just released details and fix for this XSS vulnerability that Yann MICHARD discovered a few months ago:
+http://share.ez.no/community-project/security-advisories/ezsa-2012-006-xss-exploit-on-ezjscore-run-command-when-using-firefox
+The advisory provides details about the fix itself.
 
-Using a pseudo tty and still having job control work requires you
-use an extra process in the new session to be the parent of the
-command.  Otherwise the kernel considers the process group to be
-an "orphan" and won't deliver SIGTSTP, SIGTTOU, SIGTTIN etc.
+Please update the CVE-2012-1597 details with those informations.
 
-It does get somewhat messy as you need to catch job control signals
-from the user's tty and pass them on to the process running in the
-new pty.  This is what sudo does when I/O logging is enabled or the
-"use_pty" option is specified.
+Regards,
+Luc ABRIC
+IT Security Expert
 
-Simply using setsid() to create a new session for sudo is not a
-workable solution as it breaks too many things.  For example, using
-sudo in a pipeline would no longer work properly.
+6 avenue du Vieil Etang - Bâtiment B
+78180 Montigny-le-Bretonneux
+Phone: +33 (0)1 30 14 19 00
+Fax:       +33 (0)1 30 14 19 09
+Mobile: +33 (0)6 26 87 62 14
+luc.abric@...ida.fr
 
- - todd
+www.oppida.fr
+
+
+
