@@ -1,33 +1,10 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/9
-Message-ID: <k10c6v$c45$1@ger.gmane.org>
-Date: Tue, 21 Aug 2012 11:15:24 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/7
+Message-ID: <87zk9e7lvw.fsf@algae.riseup.net>
+Date: Fri, 11 May 2012 11:55:31 -0400
+From: micah anderson <micah@...eup.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- php-geshi / GeSHi (1.0.8.11): Remote directory traversal and information disclosure in the cssgen contrib module (plus possibly XSS, but it needs upstream to confirm)
+Subject: CVE request: sympa
 Content-Type: text/plain; charset=utf-8
 
-Hi Jan, everyone,
-
-[can't seem to follow-up via email, sorry for not CC'ing the others]
-
-Jan Lieskovsky wrote:
->   Issue #B:
->   ---------
->   Then there is a report about non-persistent XSS flaw, that have been
->   fixed in the contrib module of 1.0.8.11 version too:
->   [4] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=685323
-> 
->   but I was unable to find the relevant upstream patch (and above Debian
->   BTS entry doesn't contain further information too, which could be acted
->   upon).
-
-The fix is:
-http://geshi.svn.sourceforge.net/viewvc/geshi?view=revision&revision=2508
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+Content of type "application/pgp-signature" skipped
