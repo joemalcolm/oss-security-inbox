@@ -1,17 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/5
-Message-Id: <201204190829.48828.holger@layer-acht.org>
-Date: Thu, 19 Apr 2012 08:29:46 +0200
-From: Holger Levsen <holger@...er-acht.org>
-To: 668667@...s.debian.org
-Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com, Helmut Grohne <helmut@...divi.de>, "Steven M. Christey" <coley@...us.mitre.org>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: [Packaging] Bug#668667: CVE Request (minor) -- Two Munin graphing framework flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/2
+Message-ID: <4FAC7907.4090600@redhat.com>
+Date: Thu, 10 May 2012 20:27:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Greg Knaddison <greg.knaddison@...uia.com>, security@...pal.org
+Subject: Re: CVE Request for Drupal contributed modules - 2012-05-10
 Content-Type: text/plain; charset=utf-8
 
-On Donnerstag, 19. April 2012, Kenyon Ralph wrote:
-> On Debian, symlinks to enable plugins are installed by default, and an
-> apache2 configuration is automatically activated. So, on Debian, if
-> your httpd is publicly-accessible, the munin pages and CGI will be
-> publicly-accessible.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-though on Debian, apache is only accessable on localhost per default.
+On 05/10/2012 01:38 PM, Greg Knaddison wrote:
+> Hello,
+> 
+> This is a CVE request for the following contributed module issues:
+> 
+> http://drupal.org/node/1569482 SA-CONTRIB-2012-073 - Glossary - 
+> Cross-Site Scripting (XSS) http://drupal.org/node/1569508
+> SA-CONTRIB-2012-074 - Contact Forms - Access Bypass 
+> http://drupal.org/node/1569512 SA-CONTRIB-2012-075 - Take Control
+> - Cross Site Request Forgery (CSRF)
+
+CVE-2012-2339 Drupal SA-CONTRIB-2012-073
+CVE-2012-2340 Drupal SA-CONTRIB-2012-074
+CVE-2012-2341 Drupal SA-CONTRIB-2012-075
+
+> Thanks, Greg
+> 
+> -- Director Security Services | +1-720-310-5623 Skype:
+> greg.knaddison | http://twitter.com/greggles | http://acquia.com
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPrHkHAAoJEBYNRVNeJnmTzWEP/00M8Jt6WhgoVqbGOvXRwEMk
+J9evRtLfbdEo4qUthunCv/dqjdDx1b33IVxupIgKPWXYUqIUmaPmmX8mEPcMLwlD
+UcX9AhYv0JiCTH/Kd2MGoiq8mUi7vQVe6qRt9po2h3hxOHdLAEWzWHz89GkYZjsC
+rpz9RoPBh2D/ZBbc2sDPlYQRwokNGbJ4T9CuHV4Z3BP/8n4v4oBvru0G3kfpjcDx
+BRKe93ny7r1Ja4BS6e1Vue7HWCDJ205N6xmy089dji5Ow5MLczPqokWqaaLBdhcE
++3bCHqfoq66xZdtEaoom3Fu6hGiIjlvVwZrdYhJCbNQRyckkVI1Dy1pH3ued8KuY
+sjz4wy7/mXIfmDg8E+1QkD6q0A0gQB36SOqKF6m5gUWXhPLbVcmr8mckidtafbcY
+5V53yERKuSz2PLUHenjGz0N4GHaaevbgWZ50Bf9+mjLSQWg1+svQnjk+AE5p7wt1
+sAUl6cLjLeaPpW3uiFOI0IrN5uEeFLGexMkEtNKUgpl/ERBK1lKU4qTF7dIYeCg1
+Mw+U1C2H2SQ1CBGvHoUNMQanyC2djbUCFGUNKB1flqwHoFo6fWSxNUuCNB913UFI
+C807stda+R7Oga4QEMt7iBZQm/uDuxL//SMKz2gfQKMPmGEo3xX5wjCHqVrMQZSi
+m4A/fPWUGqRXh/x3qXo3
+=y6b9
+-----END PGP SIGNATURE-----
