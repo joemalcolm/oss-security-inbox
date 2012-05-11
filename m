@@ -1,59 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/25/3
-Message-ID: <4F979BC1.5090404@redhat.com>
-Date: Wed, 25 Apr 2012 00:37:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/4
+Message-ID: <20120511031515.GA28318@openwall.com>
+Date: Fri, 11 May 2012 07:15:15 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler aligned_end is not updated
+Subject: OpenSSL invalid TLS/DTLS record attack (CVE-2012-2333)
 Content-Type: text/plain; charset=utf-8
+
+I think these should be in here given the importance of OpenSSL, as well
+as to encourage relevant follow-ups.
+
+----- Forwarded message -----
+
+Subject: OpenSSL Security Advisory
+Date: Thu, 10 May 2012 23:47:57 +0200 (CEST)
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/25/2012 12:35 AM, Kurt Seifried wrote:
-> Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler 
-> aligned_end is not updated
-> 
-> does not appear to affect Python 2.x
-> 
-> memory leak/crashes/etc.
-> 
-> http://bugs.python.org/issue14579
-> 
-> Author: Serhiy Storchaka (storchaka) 	Date: 2012-04-14 18:46
-> 
-> In the utf-16 decoder after calling
-> unicode_decode_call_errorhandler aligned_end is not updated. This
-> may potentially cause data leaks, memory damage, and crash. The bug
-> introduced by implementation of the issue #4868. In a similar
-> situation in the utf-8 decoder aligned_end is updated.
-> 
-> ========
-> 
-> More discussion and links to the patches/etc. in the bug.
-> 
+OpenSSL Security Advisory [10 May 2012]
+=======================================
 
-Please use CVE-2012-2135 for this issue.
+Invalid TLS/DTLS record attack (CVE-2012-2333)
+===============================================
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+A flaw in the OpenSSL handling of CBC mode ciphersuites in TLS 1.1, 1.2 and
+DTLS can be exploited in a denial of service attack on both clients and
+servers.
+
+DTLS applications are affected in all versions of OpenSSL. TLS is only
+affected in OpenSSL 1.0.1 and later.
+
+Thanks to Codenomicon for discovering this issue using Fuzz-o-Matic fuzzing
+as a service testing platform.
+
+The fix was developed by Stephen Henson of the OpenSSL core team.
+
+Affected users should upgrade to OpenSSL 1.0.1c, 1.0.0j or 0.9.8x
+
+References
+==========
+
+URL for this Security Advisory:
+http://www.openssl.org/news/secadv_20120510.txt
+
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-iQIcBAEBAgAGBQJPl5vBAAoJEBYNRVNeJnmTc5wQANv/7hfBeBKnEdSktxtBVqIB
-6YvNbWHzc4mAE8YmhghOaDEGhJ/0z8QpkypBglQAgPEUhOV06fhnHuLylCpGGQXC
-LfY4zY7LzZKvavlDlTJC++v4OIi3+gSqgGCXFR1f89uZiitFvt7KqnR7zf4kT1ID
-IbgZSSeQt9MxD6Pa3JEQYG3zdsyGW3YbF4dDWYjFTk7BQl/NcWxxr1jgLPHvJgUE
-C6EnCO2IWrGjhmqF0Po/7kBPMPYUALlFfDHsr16lMvtStBnXLT9Eyz0pdZzlkH04
-8eOuaxmLR2OxGoK3ViCM16ib89IvjzJv/F3xZ3cpwBJmoKstgl6TR3pPE81bhoUv
-gZpwPa77QehivYDDiLc6Zek2aIWc1QNRv47x59DUJIchDomcHipSvUWTOB+8f913
-qhbXuqKCeG1js5YBAE/zNnq3W2ub4op68tT1ZlVO/wcUdPhJvCbULBve/5wUGN+v
-0g6rzUK+jSzaqK26shOvFIZZSgN7tDcrPJ1mKuqocQ/8+zAGJEw5Tlp+kJ6CGdjt
-02lWmo9svNvTusYnNaMMbmcHcQx5kfKH/Ic4LkJ6C7tXr7/8DBoQ2yMOTc3etS+s
-hwiUAOXLBfbyLw/OQzG57s8brkapo5PYpAbRpKlaMCKHgunMKjPpQa1RYHBx4uoX
-VPDXf6hbjLBKrsNYM71g
-=xCOX
+iQEVAwUBT6w226LSm3vylcdZAQKTzgf/cksRhBmKkc5BWGXHxRuNEpr7SplMvM1k
+5HcyLrlUKE4E2tredaylgYhbpy9+50e8euv8cWdD5ErBklJ9SGso2YKl/FVOSO0e
+T5MyGgOeQ4jAeyLlBahw6O74bUYrO3WntVyLJDrH6gRGN1dDjenMPErPUKUQGUMw
+8Yy0JXbxIVhw731ymL6Iv2DuleFZvGCdSgPXbX39qXrAe5mD5wd5jGP50f7S0mEO
+mj6/3zPxAHLrn5H9XXwqgebEylQkCHWdMIxSqYihea865/BShT5lXJdLief7YDlh
+YEJVquVjGlRgTJZeq6YZab5c1Lg+Jlc9cxtniQv1QaAgfryEJ5biPQ==
+=/mgW
 -----END PGP SIGNATURE-----
+______________________________________________________________________
+OpenSSL Project                                 http://www.openssl.org
+Announcement Mailing List                 openssl-announce@...nssl.org
+Automated List Manager                           majordomo@...nssl.org
+
+----- End forwarded message -----
