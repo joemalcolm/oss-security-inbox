@@ -1,69 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/05/1
-Message-ID: <50BECD9D.2040706@redhat.com>
-Date: Tue, 04 Dec 2012 21:29:17 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/3
+Message-ID: <4FAC7949.6050704@redhat.com>
+Date: Thu, 10 May 2012 20:28:25 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>, Moritz Muehlenhoff <jmm@...ian.org>, Steven Christey <coley@...re.org>
-Subject: Re: CVE request: Dovecot DoS in 2.x (fixed in 2.1.11)
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: TYPO3 TYPO3-SA-2010-022 still without CVE
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/04/2012 03:48 PM, Vincent Danen wrote:
-> * [2012-12-04 23:01:42 +0100] Moritz Muehlenhoff wrote:
+On 05/10/2012 03:43 PM, Henri Salo wrote:
+> Hello,
 > 
->> On Tue, Dec 04, 2012 at 06:12:29PM +0100, Matthias Weckbecker
->> wrote:
->>> Hi Kurt, Vincent, vendors, ...
->>> 
->>> Quoting Kurt Seifried <kseifried@...hat.com>:
->>>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->>>> 
->>>> On 12/03/2012 10:33 AM, Vincent Danen wrote:
->>>>> Could a CVE be assigned for the following please?
->>>>> 
->>>>> Dovecot 2.1.11 was released and includes a fix for a crash 
->>>>> condition when the IMAP server was issued a SEARCH command
->>>>> with multiple KEYWORD parameters.  An authenticated remote
->>>>> user could use this flaw to crash Dovecot.
->>>>> 
->>> [...]
->>>>> 
->>>>> 
->>>>> Thanks.
->>>> 
->>>> Please use CVE-2012-5620 for this issue.
->>>> 
->>> 
->>> We were discussing this issue too at [1] and think that it does
->>> only affect the current connection, no subsequent (i.e. new)
->>> connections are affected.
->>> 
->>> What's your opinion wrt this?
->>> 
->>> [1] https://bugzilla.novell.com/show_bug.cgi?id=792642
->> 
->> Upstream (Timo Sirainen) disputed the issue in the Debian BTS: 
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695138#15
+> Issues in TYPO3-SA-2010-022 are still without CVE-identifiers if I
+> am correct.
 > 
-> Ahhh... yes, Timo is correct.  If you're only DoS'ing your own 
-> connection, I wouldn't consider this a flaw.
+> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-sa-2010-022/
+>
 > 
-> I (mistakenly) thought this took down the entire dovecot server.
-> My apologies.
+OSVDB: 70116,70117,70118,70119,70120,70121,70122,70123
+> http://secunia.com/advisories/35770/ 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607286
 > 
-> Can we have this CVE rejected or disputed?  As Timo says, it's a 
-> pointless CVE.
+> Originally requested in here
+> http://seclists.org/oss-sec/2011/q1/76
 > 
-> Thanks, and sorry about that.
-> 
+> - Henri Salo
 
-Please REJECT CVE-2012-5620, this only affects the users session and
-thus no security boundary is crossed (users can of course always close
-their own session, and there is no way to trigger the client to do
-this remotely).
+CVE-2012-2342 TYPO3-SA-2010-022 #1 frontend click enlarge XSS
+CVE-2012-2343 TYPO3-SA-2010-022 #1 frontend form content object XSS
+CVE-2012-2344 TYPO3-SA-2010-022 #2 PHP file inclusion protection API
+CVE-2012-2345 TYPO3-SA-2010-022 #3 Install Tool XSS
+CVE-2012-2346 TYPO3-SA-2010-022 #4 Backend Remote File Disclosure
+CVE-2012-2347 TYPO3-SA-2010-022 #4 Backend Path Traversal
+CVE-2012-2348 TYPO3-SA-2010-022 #4 Backend SQL Injection
+CVE-2012-2349 TYPO3-SA-2010-022 #5 Database API info disclosure
+
+
+split #1 because it affects different versions, split #4 because it's
+3 separate issues, same as the vendor did.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -71,18 +48,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQvs2dAAoJEBYNRVNeJnmTyi4QAMDt3VQDHKSdyKxzlhl13bh9
-E7ZH5eEM+LFNNOcmr7IAzuQqICJOQCuUSqRUZzac8bzdliAjOZu9S08TzlNHudWS
-SW14FhkT7rUoVtOd79nK43qzTT6SWB+4tOGWofrCZqG6zVsDxyoFnc7Oz+alaQoj
-naYoP+cgjZHm7vt57HALNqqv4EJwF4wgNqSNaQton8zN/B7b7W4jiY43H0mCe7rh
-zffHHiNAfTU707qpQ1Vuv1gpzTDfZgI785m5YjVgGzw1ZnIE0Ej2VG+/zE9ih6M1
-Hx5ugjcR1wxlVLWtrvd7taK06ENq42U0COIL+WEVeXI0es1xSN7v8BBdCS4kWruw
-3p8mvjTBuLezR6oX+lpOTUip73Dl1RUdT3yeOXIcmvq8YENsPppEuh0IV+ZSOTWn
-YoLmDBsMl5mLJ5rvwtkUoofF1k03HjArYHT1tqZdDxNqBXR4uIA51Z08l3Zs1gbJ
-fRr9Tix2FJq+UHLMRyj+nOBHdgFCEt38Le+b8BAFmxVyyDDRYst8nTODtjd5hsXu
-0yc/zPoMiThXBCQsODmqC69O1b8tZQPaEzbeK5wWhaAvP72YNbkywz2s1MBNawrq
-tE+aBG5rBx5B1bZXFp5q9KXXZrxyImhEKghQaZjXVQ+SnAHwWM7NAiLO1ZTm+mBx
-CAS6p8GBL6XvgxFoqgbD
-=XLuU
+iQIcBAEBAgAGBQJPrHlJAAoJEBYNRVNeJnmT/P0P+gJYKh0SguAkp8cMnZpoMt8v
+gy57tZtKme5puOg8wW+XOFMfWMrApVz7oEF/dehJ+Uf0X/cjuS5vu5gTlQ9Y2efj
+HrYNHcPC7aJSp5dxZ2hVYvio/CoyBvoJNRmms7guGQgZsx9YZRMTARlg89J3+D8e
+Q2vtdMruoAoq79VHSRu/zuijA4s1QGSTufcA6ZVJp1mTYE6m60EozQYxWc6IZfch
+dzR26OqMF1AruD387JlK4u+P6PXPp6MH9ExaCIZybVgEzdh1RSBo8+7HaHLbqeUr
+B6hD2/GXVVXZYHed8+S+B5Zshr9YAN8awGkmPleXCed+6ZCCkbuHOHyRkzE9BNHR
+tvxcBO86gAf2QOSS4CrBCWirrYOgMM/IKLTzxFyL8I1t+PvI/Abh45nW6+LGtya/
+6J9/NrdiZRccmRkR8aVq05UNeLFdHJyXAQPmbnZ2y/wGwZkkVDDjnu1ddtb5fGe2
+q4qxnXgmiH1UW7TcLvD90ZZ0rHbUfqF0SzmWXu/IEArGLfmn+ziDFEjpLcOxTrCG
+S5MaRc9mGuC4WCB5GuLXpoWL7+Db/cdZ6bAITE3/rIHJMoyhUxahXBa85pUYlf7m
+z+yTJOv+8TmtzXDzENKSIStHbR68wmjp+GyyMb0F9czunqFq74WnsSqf5cWza121
+Qz4Pu+K3dRJrsUsV0cpl
+=So9V
 -----END PGP SIGNATURE-----
