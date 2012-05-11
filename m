@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/14/1
-Message-ID: <20120614013338.GO1540@redhat.com>
-Date: Wed, 13 Jun 2012 19:33:38 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/11
+Message-ID: <CANQXiXODXWhoO5gj7qe6gCPOyjkbYGraRNc25Ls+iX+MxOZuwA@mail.gmail.com>
+Date: Fri, 11 May 2012 14:04:43 -0600
+From: Jonathan Niehof <jtniehof@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS in uselang http parameter (mediawiki)
+Subject: CVE request: pam_shield
 Content-Type: text/plain; charset=utf-8
 
-Mediawiki 1.17.5, 1.18.4, and 1.19.1 were released today to fix a XSS
-vulnerability in the useland http parameter.
+Requestor: Jonathan Niehof, jtniehof@...il.com
+package: pam_shield, http://www.heiho.net/pam_shield/index.html
 
-References:
+Type of vulnerability:
+This utility is intended to block IP addresses showing suspicious
+behaviour, to disarm a potential attack. In versions before 0.9.4, if
+configuration option "allow_missing_dns" is set to no, it performs no
+blocking. This setting is used in the example configuration file,
+which is installed by default in Debian. Thus, systems using the
+suggested or default configuration receive no protection.
 
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2012-June/000118.html
-https://bugzilla.wikimedia.org/show_bug.cgi?id=36938
-https://bugzilla.redhat.com/show_bug.cgi?id=831876
+This vulnerability provides no vector for an attacker, local or
+remote, to gain any privileges. It simply fails to provide the
+intended protection.
 
-I didn't spot a CVE name in the release, so requesting one here.
+Mainline fix: https://github.com/walterdejong/pam_shield/commit/afa7b246018787fe6028289c414c33292641e1e0
+Debian bug report and fix:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=658830
 
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Vulnerable versions: mainline up to and including 0.9.3. Debian up to
+and including 0.9.2-3.2
+First fixed versions: mainline 0.9.4. Debian 0.9.2-3.3
