@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/1
-Message-ID: <50403E7B.1020705@redhat.com>
-Date: Thu, 30 Aug 2012 22:32:59 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/1
+Message-ID: <4FAC78F1.5010903@redhat.com>
+Date: Thu, 10 May 2012 20:26:57 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Thomas Biege <thomas@...e.de>
-Subject: Re: CVE request: crowbar XSS
+CC: Johan Cwiklinski <mailings@...nd.be>
+Subject: Re: CVE-request: galette sql injection
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/30/2012 06:15 AM, Thomas Biege wrote:
+On 05/10/2012 01:06 PM, Johan Cwiklinski wrote:
+> Hello,
 > 
-> Hi,
-> Matthias Weckbecker of SUSE Linux Products GmbH has found the following
-> issue in crowbar:
+> Versions 0.63x of galette (out-of-date but mostly used versions for
+> now) have an sql injection vulnerability.
 > 
-> http://crowbar.test.de:3000/utils?waiting=true&file=foo'%3B})%
-> 3B}alert(document.cookie)</script><!--
+> Could a CVE be assigned for this vulnerability?
 > 
-> https://github.com/SUSE-Cloud/barclamp-crowbar/commit/90e905b7668a1cc884fb70040f96c7a0a287de48
-> https://github.com/SUSE-Cloud/barclamp-crowbar/commit/a82ed926c6e3ba2b0cada213c35e4b00f34ea629
+> This issue has been reported on project's tracker: 
+> http://redmine.ulysses.fr/issues/250
 > 
-> Cheers,
-> Thomas
+> The issue has been fixed 
+> (http://redmine.ulysses.fr/projects/galette/repository/revisions/8c13ec159ba),
+>
+> 
+a new release and an official announcment from the project will come
+> very soon.
+> 
+> Thank you!
 
-Please use CVE-2012-3551 for this issue.
+Please use CVE-2012-2338 for this issue.
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -34,19 +40,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQQD57AAoJEBYNRVNeJnmTRRwQAJQ9FNgVLZOOot7BqQeeK0V7
-+/UHgz8C7i/lrNGRfoMPxg21a9nKb7ol4jzNnpeG4dHsmFdMfkXm5f3qvbvWkd+n
-zJsDd/JmNQ9bUPHRVXYyZaJhzEy+/dOxs2ItT1Fq5Bh2s1gZQT0nSIwG0ITku0K1
-NDy9/1rHSnpmJUa8asyNSWC39xBaPTW5xxqRW0SbJ/ogtzL4WhESl9Hn1+yiKzwn
-v6+/TH6Bg32P2c7WItppS6DVOVGyV+yIHlm8X1s+HbBpf1rDo6HS0/sJ/HUTp3SU
-9bnzX7X6DPdlyjIPIgJbs6Xq4F5lfytlguIahrOR3GmJoBHVl/oGrlOxaPqTUtwn
-Y/0crH3QFN9Eb6PUf9DMODTBGJ+XryD//6eXfoHrTMHBi4vUWfA3svK5GLKB1+Lj
-+n/Mk0IpRPBcRtkQ1zVlwDmyixWfBeYNRVfdQiEL5yCpHO5z0sDZDiijG/6vPdZ0
-wAUEIRy6FzbuCkCrJ4nH9wtCVdvXD/gBZDUp4fhDt2vsnesg5Rv1UrROyNw19IJO
-/eatRGSWbzLCo1PdNib/nqtUsHNf3c3wsqBHASrK9jjSPvv94b97DcKoRylzD/6V
-/D21JeNc1mY50iJdIxmJXokmev4qXhS3p9uxW1NvUKs9A0YXhhWeVF13YXajtIOl
-zmOj/jXJ4jIRY0EXiYDX
-=r8Gw
+iQIcBAEBAgAGBQJPrHjxAAoJEBYNRVNeJnmTH3QP/2ndZBsV5A9QDGw4CEnOQEt8
+Ms7rX5dMFw1BePrDAk5/AauHEyzS660XuXzfkppA7LYP84s2QZTAYYy4REUAxO47
+cDIuLlq2ECIE4EtBIzgvF6c1hNiXznlwgu2woXgxRxiCR/9rYK/v3xZCCDL21MOq
+jhMm8vLhPNcfa5c2R7ywvFPGq8J5vMnLzlLkKp+1sU61xketv/deH2+LwnBhZNhW
+h+PRLmfCLDS39IhZJmPvoRRIMe5Fuu9mV7Qu/1CKTze0WLclzBPlf6PXOO309op+
+htOrjOAmXxWLbw1PXEj9ih35YN8ByT+MMGdaQQ0nnD06Mp/o+7bdSq5Pl12oTVEo
+8f9xFHUN22XydT95y19XymTnZzOv4yAfs18WIPzZOkwH54N11WovXPUJCzWywHcl
+0/Bb/KXa8s0KCQT2iPzB8PS7K5+7dN1KMAB8IsIcYE7S7Mk/AuDQH1TNtDvwbw6K
+n9SC9IzLJardoavhSPWMJDYugCW993OiHiBI6V+CX1i+y+tyOMC3tgYl7RQ/Zilv
+hzjrHgP7H6B2/87qS82Vz0lLiy8nSsCeSdv336N85On6WWTnKJIwydaKhMe8cXsl
+6wmKRRH+nM2cCv9WEk4mW2YZ6AElJMX3CHpTvz8kkqYW7WE5cOGmXEQda/licsZj
+qUkzRgNIFPZdWnq2Uzl6
+=z3ba
 -----END PGP SIGNATURE-----
