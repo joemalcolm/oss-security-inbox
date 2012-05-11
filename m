@@ -1,51 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/16
-Message-Id: <201209121242.18230.geissert@debian.org>
-Date: Wed, 12 Sep 2012 12:42:17 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: Tomas Hoger <thoger@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: opencryptoki insecure lock files handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/8
+Message-ID: <87txzm7fyu.fsf@algae.riseup.net>
+Date: Fri, 11 May 2012 14:03:21 -0400
+From: micah <micah@...eup.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: sympa (try again)
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 09 September 2012 07:29:23 Tomas Hoger wrote:
-> On Fri, 7 Sep 2012 11:26:34 -0500 Raphael Geissert wrote:
-> > > There were following problems that I'm aware of:
-> > > 
-> > > - /tmp/.pkapi_xpk - This was normally created by pcksslotd (running
-> > > as root).  Symlink attack on this did not allow corrupting /
-> > > truncating files, but allowed creating new empty files at arbitrary
-> > > locations.
-> > > 
-> > > - /tmp/.pkcs11spinloc - I believe this is created by opencryptoki
-> > >   clients.  In addition to the above, there's a chmod to make this
-> > > file world writable.  This may get created by non-root user, but
-> > > chmod may still run later with root privileges later.
-> > > 
-> > > Those files do not seem to get removed as part of the normal
-> > > operation, so replacing them with symlinks if they already exist is
-> > > limited by /tmp stickiness.  Attacker does not need to be pkcs11
-> > > group member.
-> > 
-> > Correct, and to make it clear: /tmp/.pkcs11spinloc *is* chmod'ed by
-> > pcksslotd to make it world-writable.
-> 
-> When do pkcsslotd does that, and which version?  It does not happen on
-> its start or stop, or when client as pkcsconf queries for some data.
 
-I apparently confused it with another set of CreateXProcLock and 
-XProcUnLock's. pkcsslotd indeed doesn't seem to chmod spinloc.
+Hi,
 
-Regarding /tmp/.pkapi_xpk, it is created by pkcsslotd with S_IRWXU|S_IRWXG|
-S_IRWXO (but not chmoded). Upstream's init script seems to set a umask of 
-077, but at least Debian's doesn't :-/
+Please assign a CVE for Sympa, any version prior to 6.1.11. It is
+possible to open the archive management ("arc_manage") page for any
+list, even those set to only be available to members, giving anyone the
+option to download the archive, or delete the archive.
 
-> If pkcs11 group member can make pkcsslotd chmod lock file, pkcs11 group
-> membership need to be assumed root equivalent without any additional
-> condition.
+http://www.sympa.org/distribution/latest-stable/NEWS
+https://sourcesup.renater.fr/scm/viewvc.php/branches/sympa-6.0-branch/wwsympa/wwsympa.fcgi.in?root=sympa&r1=6706&r2=7358&pathrev=7358
 
-Agreed.
+thank you,
+micah
 
-Cheers,
+ps - for some reason the previous message is formatted strange, so I'm
+sending this one without the signature
+
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+
