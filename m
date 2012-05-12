@@ -1,41 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/06/3
-Message-ID: <20121006073426.GD30113@kludge.henri.nerv.fi>
-Date: Sat, 6 Oct 2012 10:34:26 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/12/5
+Message-ID: <4FADFEEF.1070506@redhat.com>
+Date: Sat, 12 May 2012 00:10:55 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, Kurt Seifried <kseifried@...hat.com>, cve-assign@...re.org, coley <coley@...re.org>
-Subject: CVE-request for piwigo issues (second request)
+CC: Moritz Muehlenhoff <jmm@...ian.org>, Henri Salo <henri@...v.fi>, cve-assign@...re.org
+Subject: Re: CVE-request: TYPO3 TYPO3-SA-2010-022 still without CVE
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Old CVE-request did not get filled. At least the CVE is not listed in Mitre's list, OSVDB, Secunia or Debian security-tracker. Request done in: http://www.openwall.com/lists/oss-security/2010/12/07/1
+> But these are from 2010, they should not have 2012-* IDs?
+> 
+> Cheers, Moritz
 
-"""
-piwigo:
-a1) CSRF
-a2) SQL injection
-a3) stored XSS
-http://secunia.com/advisories/41365/
-http://piwigo.org/releases/2.1.3
-http://www.exploit-db.com/exploits/14973/
-(the issues mentioned by the exploit-db entry appear to be the same that 
-were fixed in 2.1.3)
-b) search.php SQL injection
-http://secunia.com/advisories/38305/
-http://piwigo.org/releases/2.0.8
-c) CSRF in the admin panel:
-http://secunia.com/advisories/37681/
-http://www.exploit-db.com/exploits/10417
-(the exploit-db entry details two other issues, but are "admin-only" -- feel 
-free to assign or ignore those.)
-"""
+Correct.
 
-SA41365: 2010
-SA38305: 2010
-SA37681: 2009
+CVE-2012-2342 **REJECT** wrong year
+CVE-2012-2343 **REJECT** wrong year
+CVE-2012-2344 **REJECT** wrong year
+CVE-2012-2345 **REJECT** wrong year
+CVE-2012-2346 **REJECT** wrong year
+CVE-2012-2347 **REJECT** wrong year
+CVE-2012-2348 **REJECT** wrong year
+CVE-2012-2349 **REJECT** wrong year
 
-I am happy to provide more information if needed (or in clearner format). Please double-verify that these haven't been assigned before you assign IDs, please.
 
-- Henri Salo
+CVE-2010-5097 TYPO3-SA-2010-022 #1 frontend click enlarge XSS
+CVE-2010-5098 TYPO3-SA-2010-022 #1 frontend form content object XSS
+CVE-2010-5099 TYPO3-SA-2010-022 #2 PHP file inclusion protection API
+CVE-2010-5100 TYPO3-SA-2010-022 #3 Install Tool XSS
+CVE-2010-5101 TYPO3-SA-2010-022 #4 Backend Remote File Disclosure
+CVE-2010-5102 TYPO3-SA-2010-022 #4 Backend Path Traversal
+CVE-2010-5103 TYPO3-SA-2010-022 #4 Backend SQL Injection
+CVE-2010-5104 TYPO3-SA-2010-022 #5 Database API info disclosure
+
+My apologies.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPrf7vAAoJEBYNRVNeJnmTcu0QAIN2ZFU2LvAQAt6+fwS5WBVw
+ak2cuMPoTj9Wtq8QWXMxChm0CKZGCgKSw4REHhsiTfU6lwuKSzeLv+WkKt4rC7CL
+tVycQiQtOcKcs1N+IWzABP28hpZvI14+LTbnECRVviSa/0ncYN4hny75Inw0XMNd
+QWjI3VN6oMblmdPDpN748f0v+QB/z/sj/TfSXcs0ZvcjaNdrzMGNinXY5AhHJRAN
+NOuletborCBOOqmFnzK79WmGN1/cCRR4/mGol0kEddTFA6svoHP8ywp5sU3G48WD
+JaRLwJiqzSV96gQs+XTBYheLlRwAkZLp9KGkdQPL893yWgXCbhPQBs8fFHll9GF3
+HGwlkqtc0PEXso7ilKvvG3UN0OHoML6U2TCDrZzRzZIQa8pA85oW9Vib632hRHTz
+JpFEix/uGWYTmWud2qELTwS2w3QTxP1z4PMU8nf0wCvzcvOXUNhERMKnZzzHwQSA
+6K+lzhJKBQ9sXebHHJevrMo8U5cXHSg3AUP16nnbJmPh+8JYEpgGW8E1BlTLr+ny
+wuxgjhdFJN/kSGUw1glgZoJ09FMKVyPiyiNm9bnLwo1XHuh0AJS9HiwhJ9hc3m5B
+vFOvEQDgKTlRhUj78WuQVpNYm0ofqfLp7+EWxrB2SGidVpDDPDnC8X0lYXklPXDH
+TY86G7v8FcENxtg1kTmH
+=a0ip
+-----END PGP SIGNATURE-----
