@@ -1,57 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/5
-Message-ID: <20120102011138.GA22953@openwall.com>
-Date: Mon, 2 Jan 2012 05:11:38 +0400
-From: Solar Designer <solar@...nwall.com>
-To: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: weird crypt-sha* in DragonFly BSD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/12/1
+Message-ID: <4FADF8B3.4070005@fifthhorseman.net>
+Date: Sat, 12 May 2012 01:44:19 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+Subject: ezmlm signature mangling [was: Re: CVE request: sympa (try again)]
 Content-Type: text/plain; charset=utf-8
 
-Matt - as far as I can see, nothing has been done on this yet.
-DragonFly still uses by far the weakest password hashing of all *BSDs
-(and even of all non-ancient Unix-like systems) by default.  I suggest
-that you revert to MD5-crypt ASAP - should be a trivial change for you
-to make.  Then change the default to bcrypt or something else
-(reasonable) in the future (when you have time).  Thanks!
+On 05/11/2012 02:03 PM, micah wrote:
+> ps - for some reason the previous message is formatted strange, so I'm
+> sending this one without the signature
 
-On Tue, Nov 15, 2011 at 06:35:02AM +0400, Solar Designer wrote:
-> Hi,
-> 
-> Matthew - when I read that DragonFly moved to using SHA-256 for
-> passwords by default, I thought this was referring to the SHA-256 based
-> flavor of Ulrich Drepper's SHA-crypt.  This would not be the best choice
-> to make, in my opinion, but it would not be that bad.  However, I just
-> found this:
-> 
-> http://gitweb.dragonflybsd.org/dragonfly.git/tree/HEAD:/lib/libcrypt
-> 
-> Are these crypt-sha256.c and/or crypt-sha512.c files actually in use?
-> I hope not...  They do not include any password stretching, resulting in
-> password hashes that are much quicker to crack than MD5-crypt's.
-> 
-> There's also minor weirdness in the code - such as two local pointer
-> variables being declared static seemingly for no reason, and only
-> "final" but not "ctx" being zeroized in the end.  But even this lack of
-> proper cleanup is very minor compared to the lack of stretching.
-> 
-> Oh, also the "$3$" prefix was apparently previously used for NTLM:
-> 
-> http://en.wikipedia.org/wiki/Crypt_(Unix)#NT_Hash_Scheme
-> 
-> "FreeBSD used the $3$ prefix for this."
-> 
-> http://search.cpan.org/~zefram/Authen-Passphrase/lib/Authen/Passphrase/NTHash.pm
-> 
-> "... crypt string must consist of "$3$$" (note the extra "$") followed
-> by the hash in lowercase hexadecimal."
-> 
-> BTW, I looked at DragonFly's code while analyzing a more subtle issue
-> with Ulrich's SHA-crypt:
-> 
-> http://www.openwall.com/lists/oss-security/2011/11/15/1
-> 
-> I thought that maybe you reimplemented it in a better fashion avoiding
-> that issue, but I found this... %-)
-> 
-> Alexander
+Comparing the received version of the message with its original source,
+it appears that the mailing list software (ezmlm?) mangled Micah's
+message by modifying the internal mime parts of the message, despite
+them being wrapped inside a multipart/signed block.  This contravenes
+the relevant standards [0], which indicate that the data within a
+multipart/signed MIME part needs to be treated by any MTA as opaque.
+
+I don't know who updates ezmlm these days, but that probably needs to be
+addressed if there's an expectation that people should be able to send
+cryptographically-signed messages with non-ASCII text to the list.
+
+	--dkg
+
+[0] https://tools.ietf.org/html/rfc3156#section-3
