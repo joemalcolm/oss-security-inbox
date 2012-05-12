@@ -1,16 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/20
-Message-ID: <87vckbtxhr.fsf@mid.deneb.enyo.de>
-Date: Sat, 05 May 2012 00:03:28 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: more tight ioctl permissions in dl2k driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/12/6
+Message-ID: <878vgx772h.fsf@algae.riseup.net>
+Date: Sat, 12 May 2012 11:27:50 -0400
+From: micah anderson <micah@...eup.net>
+To: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: sympa (try again)
 Content-Type: text/plain; charset=utf-8
 
-* Marcus Meissner:
+On Fri, 11 May 2012 23:58:33 -0600, Kurt Seifried <kseifried@...hat.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 05/11/2012 12:03 PM, micah wrote:
+> > 
+> > Hi,
+> > 
+> > Please assign a CVE for Sympa, any version prior to 6.1.11. It is 
+> > possible to open the archive management ("arc_manage") page for
+> > any list, even those set to only be available to members, giving
+> > anyone the option to download the archive, or delete the archive.
+> > 
+> > http://www.sympa.org/distribution/latest-stable/NEWS 
+> > https://sourcesup.renater.fr/scm/viewvc.php/branches/sympa-6.0-branch/wwsympa/wwsympa.fcgi.in?root=sympa&r1=6706&r2=7358&pathrev=7358
+> >
+> >  thank you, micah
+> > 
+> > ps - for some reason the previous message is formatted strange, so
+> > I'm sending this one without the signature
+> > 
+> 
+> Ok I see this one and several more:
+> 
+> ================================
+> 
+> 6.1.11		May 11, 2012
+> Bug fixes:
+> [7358] wwsympa/wwsympa.fcgi.in:  Fixing a potential security issue
+> related to archives
+> 
+> Can you confirm these and I will assign CVE's for the outstanding issues.
 
-> Stephan Mueller reported lack of capable(CAP_NET_ADMIN) checks
-> in private ioctls in the dl2k network card driver.
+I am only able to confirm the above issue, I am not a sympa developer I
+just was involved in the above issue. 
 
-Have you tested the driver with actual hardware under load?
-The last time I tested it, it was not really usable.
+What sort of 'confirmation' are you looking for? It seems like the
+changelog entries are pretty good confirmation. Perhaps you are looking
+for more details of the issues, those you could obtain from the sympa
+list.
+
+micah
