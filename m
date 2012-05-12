@@ -1,21 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/14/2
-Message-ID: <50CA7CA7.9070306@redhat.com>
-Date: Thu, 13 Dec 2012 18:11:03 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/12/3
+Message-ID: <4FADFD3D.8050202@redhat.com>
+Date: Sat, 12 May 2012 00:03:41 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE for tog-pegasus Hash DoS issue from 2011
+To: oss-security@...ts.openwall.com
+CC: Jonathan Niehof <jtniehof@...il.com>
+Subject: Re: CVE request: pam_shield
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-I forgot to assign this a CVE apparently.
+On 05/11/2012 02:04 PM, Jonathan Niehof wrote:
+> Requestor: Jonathan Niehof, jtniehof@...il.com package: pam_shield,
+> http://www.heiho.net/pam_shield/index.html
+> 
+> Type of vulnerability: This utility is intended to block IP
+> addresses showing suspicious behaviour, to disarm a potential
+> attack. In versions before 0.9.4, if configuration option
+> "allow_missing_dns" is set to no, it performs no blocking. This
+> setting is used in the example configuration file, which is
+> installed by default in Debian. Thus, systems using the suggested
+> or default configuration receive no protection.
+> 
+> This vulnerability provides no vector for an attacker, local or 
+> remote, to gain any privileges. It simply fails to provide the 
+> intended protection.
+> 
+> Mainline fix:
+> https://github.com/walterdejong/pam_shield/commit/afa7b246018787fe6028289c414c33292641e1e0
+>
+> 
+Debian bug report and fix:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=658830
+> 
+> Vulnerable versions: mainline up to and including 0.9.3. Debian up
+> to and including 0.9.2-3.2 First fixed versions: mainline 0.9.4.
+> Debian 0.9.2-3.3
 
-http://bugzilla.openpegasus.org/show_bug.cgi?id=9182
-https://bugzilla.redhat.com/show_bug.cgi?id=796015
-
-please use CVE-2011-4967 for this issue.
+Please use CVE-2012-2350 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -23,18 +46,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQynynAAoJEBYNRVNeJnmTlU8P/3Wv4Y6ULul57ps+QcS60I1j
-DkoshZ9Na06TzypfCR+OHs85wsvx7PdLA9YFkQB5AmapRgtzMEfWi2cqsiHaKnWe
-T79AyU2pOG6d8PTJr5RLV9am42FdHYJjDOqlBgwpZWGKC3UDj/ognOxwsnuhT0rt
-d+5nAQpwxFd22yu69tAGp0siDzpZpAZMTcbFI07ThG4RAkCpUlq5xs9zzqoATGNs
-riCrl+WFk/ASGVxZNyDiewfNuIdmAuFStOUCc8wleq4A1rNMpNbG5cyRsXh+yeTS
-TCsZD7zCVPPk4or5BJk4tDiGscTfiKNeabsOR3EJgfhREmycZ05WL5uiFRRCbXfR
-kU9w4enfRN2AsdMz5Z6DVlmrjlXxwRrZ4JOCh0aLbQTQ+PPpom6cauR3W6I9jqfx
-fyt+O04H1W4oSuYPPuvMp9Qt+Ir7QiZugGOZmd+Aewj0QxR9XUPlmddCGNdvWZ65
-K2yzW3xvomCykvledlCCJGljvaX1ckzg/K1u93GBxq26MQFiqEeaqPsMhekaHqMA
-FLVeQf4tI/AMmRr/LqwqS6Kb5Jz0ZH6qTGgbnTusE8Mbb4IZWab/NDuStq9+vvxA
-ePUZ0FB4E7RwRGMPs3bU25yCDGkF5LSjgazLmf7zO2YJ2+h0H2zP9bVHlGPov/Jo
-PTJZbbPhayy8sSekZhEi
-=QI5c
+iQIcBAEBAgAGBQJPrf08AAoJEBYNRVNeJnmTP10QAMbritfcSQm60+Rjgkg6FKF/
+X45IzwYAxWyIG+zSCE00j+w6pfESMiip1v0tOgdghkdSAdkTqUW2qKUZpyqoZbUR
+9RE18yCTNkepgGo8GLzNypIhGSRIe3OttnVrvS1Hpia7caUOj6HjVQ6hL83KSSsj
+i15LusFkX6AdttF6rlMfDIlwBl1Smo4cqq6XK6rYD5224eRo/X7oc40vITmLazeL
+CuI0R/dhCXko7zJgWpGpR4ZjUT7Kh9UmSkICRrjO7W9x15KfH/gYpTn5h98DVbbn
+BJxbJIRJ3SNm8E/TvuCQOjHwA08avKbhh/GbCzMMsHx9HdiwvQIYQ9EtSjQg0uQp
+kJuSArU8IF42CrQo6Y2vl7PjspwsH2JeVtCN0eD3dSwolYI/0K3gi4iJPVCkUr39
+uigNj26/17a6OeW/6340U47PuQuN4EjZ0wJYvxgNLsGfJlfMnh1NJ5IMEe9LFPDT
+H54a6cdHGaAh8yQ7vBtdEiU9jvIKUaWaP2KRRMs3Czqd7B+B+7E3WLzvKVJJZo9u
+HUyQeB9CEe8EaPx3bLdVU8Zfxu8iUu5pqYrKPm03GAm5LQGXgmArCJJwzfdCfQf0
+TAeApI2ORlPrT100NPKPgHH5u0ltd/d1CQ1AkTx2IR7L2Ylq5SjH0AaOX0oisnvg
+1fhv5SLXUwsxmGLPwYDz
+=ZJa3
 -----END PGP SIGNATURE-----
