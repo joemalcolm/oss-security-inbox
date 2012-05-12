@@ -1,40 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/01/3
-Message-ID: <20120101155309.GA28339@ngolde.de>
-Date: Sun, 1 Jan 2012 16:53:09 +0100
-From: Nico Golde <nion@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/12/7
+Message-ID: <20120512171943.GA1018@openwall.com>
+Date: Sat, 12 May 2012 21:19:43 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+Cc: micah anderson <micah@...eup.net>
+Subject: Re: ezmlm signature mangling [was: Re: CVE request: sympa (try again)]
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-given the hash DoS I remembered a small program I wrote some time last year to 
-demonstrate why the default configuration of openssh sucks (MaxStartups and 
-LoginGraceTime). I attached the program.
-So now I'm wondering about two issues. I just tested this with dropbear 0.52 
-and I am still able to DoS it just fine even though at least 
-http://www.securityfocus.com/bid/17024 claims that this has been fixed in 
-Dropbear SSH Server 0.48. The other thing is that I'm wondering how to 
-properly handle this issue with openssh?  This certainly is no vulnerability 
-that is straight-forward to fix and it might even be that openssh would argue 
-that this is a problem.
+On Sat, May 12, 2012 at 01:44:19AM -0400, Daniel Kahn Gillmor wrote:
+> On 05/11/2012 02:03 PM, micah wrote:
+> > ps - for some reason the previous message is formatted strange, so I'm
+> > sending this one without the signature
+> 
+> Comparing the received version of the message with its original source,
+> it appears that the mailing list software (ezmlm?) mangled Micah's
+> message by modifying the internal mime parts of the message, despite
+> them being wrapped inside a multipart/signed block.  This contravenes
+> the relevant standards [0], which indicate that the data within a
+> multipart/signed MIME part needs to be treated by any MTA as opaque.
+> 
+> I don't know who updates ezmlm these days, but that probably needs to be
+> addressed if there's an expectation that people should be able to send
+> cryptographically-signed messages with non-ASCII text to the list.
+> 
+> 	--dkg
+> 
+> [0] https://tools.ietf.org/html/rfc3156#section-3
 
-This is certainly a very easy DoS and given that this definitely 
-affects Debian configurations and also the default configuration, I feel 
-uncomfortable to further ignore this problem.
+Thank you for looking into this issue.  I also briefly looked into it
+yesterday.  My guess is that the issue might have been triggered by the
+rather unusual MIME section boundary strings ("=-=-=").  Maybe these are
+specific to Notmuch.  We had other signed messages in here, which got
+through to the list just fine.  For just one affected message in 7658
+(total on this list so far), I think I am not going to bother to
+investigate this further and patch it.
 
-I think its time to discuss this and work on a fix. Solar Designer is 
-proposing something along the lines of per-source limits which seems like a 
-reasonable solution to me (I guess he will send more information on this).
-What do you (especially the people shipping openssh) think about this?
-
-Kind regards
-Nico
-
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-View attachment "sockext.c" of type "text/x-csrc" (3789 bytes)
-
-Content of type "application/pgp-signature" skipped
+Alexander
