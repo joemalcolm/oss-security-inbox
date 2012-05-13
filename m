@@ -1,65 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/7
-Message-ID: <4F7C799E.8050309@redhat.com>
-Date: Wed, 04 Apr 2012 10:41:02 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/13/2
+Message-ID: <20120513115739.432d8d8e@hsalkjdhsa.lan>
+Date: Sun, 13 May 2012 11:57:39 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, Filippo Cavallarin <filippo.cavallarin@...seq.it>
-Subject: Re: CVE request: OSClass directory traversal vulnerability
+Subject: Re: CVE request: Piwik before 1.7
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+[...]
 
-On 04/03/2012 02:43 AM, Henri Salo wrote:
-> On Mon, Apr 02, 2012 at 11:45:12AM -0600, Kurt Seifried wrote:
->> The actual blog entry:
->> http://osclass.org/blog/2012/03/05/osclass-2-3-6/
->> 
->> doesn't mention anything about directory traversal. Do you have a
->> link on their site, or the commit showing the problem or the
->> fix?
->> 
->> -- Kurt Seifried Red Hat Security Response Team (SRT)
-> 
-> http://osclass.org/blog/2012/03/05/osclass-2-3-6/ "Special thanks
-> to Filippo Cavallarin again for reporting a security vulnerability
-> in combine.php file. If you’re using that file in your theme, I
-> strongly recommend to update it. Please, remember to visit the wiki
-> if you don’t know how to update OSClass."
-> 
-> Here is the diff:
-> https://github.com/osclass/OSClass/commit/09aa689ae424dc2bec6f857e7179ae4afdbbd2a9#diff-4
->
-> 
-Full changelog: http://doc.osclass.org/Changelog
-> 
-> Fixed in 2.3.6.
-> 
-> - Henri Salo
+Or to sum up: Piwik thinks "security by obscurity" is a good idea...
 
-Thanks Henri, that's exactly the kind of information CVE requests need =)
+I agree to Henri, we should assign CVEs anyway.
 
-Please use CVE-2012-1617 for this issue.
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPfHmdAAoJEBYNRVNeJnmTyYgP/iqYXXfZRp1hnDZZwJPThFqC
-CfV+eIaol1nzRZqYsyeeWFyXIM3IWOq8EKR15erAdQ4aQOt641SdE4QXysTc0FEd
-WU+PdS7qOPDj4ToJ9aHQk+hyXJ+Dv7iae7C2i4dqT49CLPT6vPQvR5WpGDz9iNLg
-OxB2lpPzXqPktiOLpqtSvQGsQfhs3cv3eWjU/XxpW9d/nTdnh2k968oVZAJ9NQo1
-c+LY7S102i3JamQWKK2oEPHyG1qksM1PzPOAQxgpumuNbdbxW2z+jPEHlOk7csdD
-7S757Pnw+zVJoMXmnLvLRjy5AhZ01OWMDXutAvfzuRLpTY+3hBO0M7eRA1HIOeWX
-bdwhhXcdX6IgQalwEBpbIAiycMdoNagRIQg9rIaNtZUPKOaYEVKrivXM/djSGH51
-FzoODhy8Q8wDFW16FSjy78CMtXu+t+jLON29QyZvRktf/XXatCf99iWHi3JNpKpj
-dD+imFbYYaGXMCPR3fESsIw6IBH5JEa4zkrUMkKGsbwo7JHHkS4RRSzvC7nhsSsF
-t4hawiAvgW/Ipe8gmkFSNZvhK+3AJqGall9xiIQuUkNBuEWgc/dazNuYQgMyC3ns
-PzViz72meMUE1eMBTqIck18O3kPJe+C3IbdIpGd/niEzuCepYNt86h60Jxaokm+V
-9iPDgi+3SkRsieKizSZ/
-=4bO1
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
