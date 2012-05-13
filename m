@@ -1,91 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/8
-Message-ID: <4F012A89.2070606@redhat.com>
-Date: Sun, 01 Jan 2012 20:54:49 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/13/3
+Message-ID: <4FAFEDB1.7010202@redhat.com>
+Date: Sun, 13 May 2012 11:21:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: Piwik before 1.7
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-OpenSSH and Dropbear
+On 05/13/2012 03:57 AM, Hanno Böck wrote:
+> [...]
+> 
+> Or to sum up: Piwik thinks "security by obscurity" is a good
+> idea...
+> 
+> I agree to Henri, we should assign CVEs anyway.
+> 
 
-Attack of the zombie clients
+Ok well do a code diff and post it, XSS is usually pretty easy to spot
+in PHP.
 
-So an old problem has reared its ugly head. Many services, especially those that require authentication will hold a new connection open for some time in order to give the client time to authenticate. If a user is expected to type their password in then the amount of time the connections must be held open for needs to be on the order of tens of seconds if not a minute or more (especially if you use two factor authentication or other things that require the user to take some action). This is especially true for those that support cryptographic connections such as SSH and anything SSL or TLS enabled incur expensive computation, especially on the server. 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-By establishing a large number of connections and holding them open (this typically requires only a few packets or less per second from the attackers system) an attacker can hold a connection open indefinitely or until a timeout condition is reached. 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-We have seen this attack before: SYN flooding, Slowloris, airline seat reservations, email spam, password brute forcing attacks, etc.
-
-There are several general classes of mitigation and response to these attacks (please note that I present several which won't apply to OpenSSH, but I feel we should think about them as this class of problem affects services other than OpenSSH):
-
-1) Early drops
-
-By dropping a connection early the server can reduce workload and make resources available for legitimate clients. The downside of this is that services that require some form of interactive authentication (e.g. SSH with a password) rely on a human to type the password in which typically takes a few seconds. In this case early drops are more likely to affect legitimate clients rather than attackers.
-
-2) Random drops
-
-Another strategy is to randomly drop connections when load gets high. The theory is that legitimate connections will continue to try and connect, by dropping connections and reducing load there is a better chance that legitimate clients will get through. Unfortunately with a typical DoS or DDoS style attack to attackers connections will vastly outnumber legitimate connection attempts.
-
-3) Progressive timeouts/lockouts
-
-To prevent password guessing attacks at the console some Linux systems implement a progressive timeout, if you get the password wrong you have to wait a second, if you get it wrong again you have to wait 2 seconds, then 4 seconds, etc. This reduces the number of attempts an attacker can make. In terms of OpenSSH we could for example implement a lockout, if you connect but fail to login you have to wait 10 seconds, the second time you need to wait 20 seconds, etc. There are a large number of downsides to this however: you need to store a database of IP's or networks to lockout and for how long, you may have multi user systems connecting to yours which means one user making a typo (or maliciously fail to login, thus locing everyone else out). 
-
-4) Reputation based systems
-
-Reputation based systems are another strategy to deal with attackers. Email uses this more than any other protocol, largely due to the semi-centralized nature of email (you typically send email to a local server that then sends it to the remote end's server as opposed to initiating a direct connection from your workstation to the remote server). Databases like ORBS and so on attempt to maintain a comprehensive list of known "bad" systems and networks that you probably don't want to accept email from. The problem with these (especially for things like SSH and web clients) is two fold: you end up playing whack-a-mole with the bad guys and you can't simply block connections from residential ISPs for example since there is often a legitimate need for administrators/users/etc to login from home.
-
-However approaching reputation based systems from a white listing view may work, for example if an IP address successfully connects and authenticates that IP can be stored, and in future it can be given preference over unknown IP addresses. This could be extended, for example by doing a WHOIS look-up on the IP and white listing the entire network that IP is from (thus for clients with dynamic IP they aren't constantly having to get back on the white list). 
-
-5) port knocking
-
-Another possible approach is to add a transparent layer of authentication/firewalling in front of the server. Port knocking simply put makes the client send a packet to either a specific port # (e.g. port 47362) before they can access port 22, or they must send a packet with specific contents (e.g. a password/shared secret). One thought for longer term research here is to combine port knocking with the TCP-IP handshake, send back a nonce and the client must hash the nonce+shared secret and reply with it in order to gain access to the desired port. This of course would require a retrofit of existing TCP-IP stacks/applications, you'd have to store a list of shared secrets/passwords and the hosts/networks associated with them and so on, but is included because I think it's interesting =).
-
-6) hash cash and work functions
-
-The idea here is simple, make the attack computationally expensive and the attacker will not be able to cause as much trouble. For large scale or sustained attacks simply increase the work function (like bcrypt, you can effectively select how much work it is to decrypt the password), this could also be done in the fly, as an increasingly number of connections occur increase the work function. 
-
-7) Grey listing
-
-This is more applicable to email but can work with other protocols potentially. Basically you tell clients that their connection cannot be serviced and that they should come back later and try again. Legitimate clients will come back and attempt to connect again, most illegitimate clients (at least in the spam world) will simply move on and try other hosts. This type of solution will probably not work well with interactive protocols such as SSH or for targeted attacks. 
-
-8) Syn cookies
-
-While specific to TCP-IP some protocols can lend themselves to similar approaches. The problem with SYN flooding attacks was that the attacker simply forged a lot of SYN packets, creating thousands of partially opened connections on the victims system. SYN cookies exploited the fact that TCP-IP sequence numbers obeyed certain rules, by specially crafting the sequence ID the server could then drop the locally held connection, if the client replied legitimately then the server could reconstruct the information needed for the connection based on the information in the packet sent by the client.
-
-9) VPN connections
-
-Connections to sensitive services can be proxied via VPNs, but in this case, where we are worried about DoS/DDoS attacks that only moves the problem elsewhere (to the VPN server, most of which can be attacked in a similar manner). I include this for completeness however.
-
-10) make the client prove they are legit
-
-This approach is taken widely on the web, CAPTCHAs, JavaScript, Flash and so on can all be used to weed out bots and automated clients, giving preferential treatment to legitimate web clients (well, at least those not running NoScript/etc.). Unfortunately with OpenSSH this solution isn't overly applicable.
-
-
--------------
-
-But what if the attacker has a 10,000 node bot net?
-
-I think at this point the only realistic solution is some sort of hash cash with a heavy workload and a reputation based / white listing system, so once you successfully authenticate from a given IP or network that IP or network gets preference for future connections. Port knocking could also potentially work in this situation. This of course fails if the attacker has the same IP as you (e.g. a NAT'ed wireless network) or is on the same network as you are.
-
--------------
-
-The first three solutions (early drops, random drops and progressive timeouts) can be implemented in OpenSSH server side without requiring any changes to the protocol or clients.
-
-Reputation based systems can be implemented within OpenSSH (but I wouldn't, because it is a bad bad idea) or at the OS level in firewall code, reputation based systems would require no changes to OpenSSH clients or the protocol.
-
-Port knocking can implemented at the OS or firewall level, but requires client software and user training/etc. Widespread deployment isn't going to happen anytime soon (although I'd be curious to see how adoption would be if we shipped something to support it by default). 
-
-The rest of the solutions do not lend themselves to this problem or would require significant changes to the OpenSSH protocol/client/server which is a bad bad idea.
-
-Anything we do to address this issue should be extremely simple and conservative, the OpenSSH server and client are very stable and robust pieces of code, any modifications to them make me nervous. 
-
-I suspect the simplest and more effective solution might be some form of progressive timeout for IP's that fail to authenticate (drop the connection entry silently and ignore them in favor of real clients). 
-
-Long term I'd like to see more work on hash cash type solutions, being able to arbitrarily set or have a reactive system that requires increased work on the client end to prove they are a legitimate client would help with this whole DoS/DDoS class of problem to some degree.
---
-
--- Kurt Seifried / Red Hat Security Response Team
-
+iQIcBAEBAgAGBQJPr+2xAAoJEBYNRVNeJnmTJjwP/iRNMVoCw8VRhsC9MbUchMj5
+Hnmg0ILmQtqCGC/DUA2hUE8qJld+zIEhNvDlApVt16SSijhJxMYVudW3vIHtkrn/
+TTfOx30WfV5BCMrmEVLyU2w9SKl5MK84OVM74x7Z4Eu1QGHTkcvs+DnQK6JK6vwe
+clLFoXJgyYyudZdOOp6mDY08K9ymqsZPCk9OhprB6gQBaCWyuzR6MNNvtK8zyLae
+hvUoH4qHs5vtAG0yn8YcYIOboiSEkEP0K6vkAHQ6pTtIDfQE7PmQ65NhE6r/713P
+XgAP/1vJrDAWXxvPmJWoFu7acFpBpaWBwk5G/SpokGd6m3En0D1wlJIfcWPg9Rxq
+M4zS8tcMddZLH0IeYR8clPcP+45TmrjDxU5VRJbNjpFl02Q4yoh7IYmFhTcUS5te
+Pz4j6PrwJNpZlIu9AOA0CD27PbT4HN7EtPGhB++b/HjzQJpu+8pzz1eOsBwjKhj/
+deApfspAjXeV7PdTItAPfSuvrW+A1cr7ajPstVbMpeTD9eooaeu64FP5mAvuR+pR
+rJP7sNFAhItgqErSUmMG2CJVvTrHKlv7RxN4N6NNvZ24barz8kabQQZliZMgflCt
+dyeUtlq1jGYmhNwqOVY1SdPeWCHvdUcWHHldVdKSanuZw+vK55Ud83KtsrCLkU5/
+gYEVbw8qL6C3hB05SUYM
+=m6R8
+-----END PGP SIGNATURE-----
