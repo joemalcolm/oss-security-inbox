@@ -1,33 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/8
-Message-ID: <4F4B721F.1020802@redhat.com>
-Date: Mon, 27 Feb 2012 13:07:59 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Vasiliy Kulikov <segoon@...nwall.com>, Petr Sabata <psabata@...hat.com>
-Subject: CVE Request -- Multiple instances of insecure temporary file use
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/14/2
+Message-ID: <4FB11BB1.2010605@dest-unreach.org>
+Date: Mon, 14 May 2012 16:50:25 +0200
+From: Gerhard Rieger <gerhard@...t-unreach.org>
+To: oss-security@...ts.openwall.com
+Subject: socat security advisory
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   multiple instances (by checking for ATM technology support, checking for Xtables
-extension support, checking for setns() system call support, and in
-dhcp-client-script example script) of insecure temporary file use were found
-in iproute. A local attacker could use this flaw to conduct symbolic link
-attacks (modify or remove files via specially-crafted link names).
+Socat security advisory 3
 
-References:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=797878
+Overview
+  A heap based buffer overflow vulnerability has been found with data
+  that happens to be output on the READLINE address. Successful
+  exploitation may allow an attacker to execute arbitrary code with
+  the privileges of the socat process.
 
-Upstream patches:
-[2] 
-http://git.kernel.org/?p=linux/kernel/git/shemminger/iproute2.git;a=commitdiff;h=e557d1ac3a156ba7521ba44b0b412af4542f83f8
+Vulnerability Id: CVE-2012-0219
 
-[3] 
-http://git.kernel.org/?p=linux/kernel/git/shemminger/iproute2.git;a=commitdiff;h=20ed7b24df05eadf83168d1d0ce0052a31380928
+Details
+  This vulnerability can be exploited when socat is invoked with the
+  READLINE address (this is usually only used interactively) without
+  option "prompt" and without option "noprompt" and an attacker
+  succeeds to provide malicious data to the other (arbitrary) address
+  that is then transferred by socat to the  READLINE address for
+  output.
+  The problem was caused by a coding error in function
+  xioscan_readline().
 
-Could you allocate a CVE identifier for this?
+Testcase
+  To check your socat program do the following:
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+    perl -e 'print "\r"."A"x 513' >/tmp/socat-data
+    socat readline exec:'cat /tmp/socat-data'
+
+  When socat crashes with a signal (e.g. SIGSEGV) and does not output
+  any 'A' it is vulnerable.
+
+Workaround
+  Use option "prompt" or option "noprompt" with the READLINE address.
+
+Affected versions
+  1.4.0.0 - 1.7.2.0
+  2.0.0-b1 - 2.0.0-b4
+
+Not affected or corrected versions
+  1.0.0.0 - 1.3.2.2
+  1.7.2.1 and later
+  2.0.0-b5 and later
+
+Download
+  The updated sources can be downloaded from:
+    http://www.dest-unreach.org/socat/download/socat-1.7.2.1.tar.gz
+    http://www.dest-unreach.org/socat/download/socat-2.0.0-b5.tar.gz
+  Patch to 1.7.2.0:
+    http://www.dest-unreach.org/socat/download/socat-1.7.2.1.patch.gz
+  Patch to 2.0.0-b4:
+    http://www.dest-unreach.org/socat/download/socat-2.0.0-b5.patch.gz
+
+History
+  2012/04/22 vulnerability report received
+  2012/04/22 fix to 1.7.2.0 generated
+  2012/04/27 fix to 2.0.0-b4 generated
+  2012/05/14 fixes published
+
+Credits
+  Full credits to Johan Thillemann for finding and reporting this issue.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQEcBAEBAgAGBQJPsRulAAoJEBszgb37UeYgi0wH/0xEApMf2oEk93GQWcG3abnl
+PadXWh0Z1MnsmBMEYQR+dwqy+SveCBuJvn7sztGTLLKmcd2IoXXqF5lpLUT5lfcf
+HLjYrwBuPgqOJg21lqXZ0p5jLOhitqtX66mr+KiOZ11lkcXZDorv/Mpsf+0g2oYY
+7foPTLud41rmhKQAA2haLLwYWb7qTrh1GF49HVpumFv9Sq+qrHkGNiuK9MMv7kqq
+t+MoTTxWYhmaR7uOyhEpS+nISHWPlGhSmypnxWuOFWctgu3YuT0SE4mdRv2qJNyk
+akm3s+Sn4OWtc0GMYtKgXIFZWLAEyFVykKnWMRclzEamsFBe/gXHUOeyGJDbsU8=
+=L+w3
+-----END PGP SIGNATURE-----
