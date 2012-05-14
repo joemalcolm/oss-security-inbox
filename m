@@ -1,22 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/15
-Message-ID: <4F197F9B.4020005@redhat.com>
-Date: Fri, 20 Jan 2012 22:52:11 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/14/1
+Message-ID: <20120514124113.GA3634@steve.org.uk>
+Date: Mon, 14 May 2012 13:41:13 +0100
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
+Subject: CVE request: Bytemark Symbiosis
 Content-Type: text/plain; charset=utf-8
 
-On 01/19/2012 12:05 PM, Eugene Teo wrote:
-> On 01/19/2012 04:43 AM, Kees Cook wrote:
->> What's the problem with the old logic in the mem handling? (Why does this
->> need a CVE?)
-> 
-> This is a possible local privilege escalation issue on a system with
-> ASLR disabled, combined with other exploitation techniques.
 
-Detailed information can be found here,
-https://access.redhat.com/kb/docs/DOC-69129
+  Symbiosis is an easy to use collection of tools, utilities,
+ and configuration files for mass hosting virtual domains
+ using Apache, Exim4, Dovecot, PureFTPD, and several other
+ daemons.
 
-Thanks, Eugene
+  The code behind the system is freely available, and it
+ is widely used by at least one hosting company.  The code
+ itself is available, along with documentation, here:
+
+    http://symbiosis.bytemark.co.uk/
+
+  Unfortunately releases between these two mercurial
+ identifiers contained a significant flaw:
+
+  mercurial ID:   1068
+  date:        Wed Feb 01 11:49:57 2012 +0000
+
+  And
+
+  changeset:   1326
+  date:        Thu May 10 08:35:13 2012 +0100
+
+
+  IMAP/POP3/SMTP authentication would accept any password
+ for any valid email account.  (Logins are of the form
+ $user@...main.)
+
+  This was fixed with the following commit:
+
+    https://projects.bytemark.co.uk/projects/symbiosis/repository/diff?rev=1327&rev_to=1322
+
+  Please could a CVE identifier be allocated such that we
+ may use it in our documentation.
+
+Steve
+-- 
+Debian GNU/Linux System Administration
+http://www.debian-administration.org/
+
