@@ -1,65 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/5
-Message-ID: <4FFD5643.6030503@redhat.com>
-Date: Wed, 11 Jul 2012 12:32:35 +0200
-From: Stefan Cornelius <scorneli@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/14/3
+Message-ID: <4FB1527E.9030005@redhat.com>
+Date: Mon, 14 May 2012 12:44:14 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: glibc formatted printing vulnerabilities
+CC: Steve Kemp <steve@...ve.org.uk>
+Subject: Re: CVE request: Bytemark Symbiosis
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-there are further vulnerabilities in glibc's formatted printing
-functionality.
+On 05/14/2012 06:41 AM, Steve Kemp wrote:
+> 
+> Symbiosis is an easy to use collection of tools, utilities, and
+> configuration files for mass hosting virtual domains using Apache,
+> Exim4, Dovecot, PureFTPD, and several other daemons.
+> 
+> The code behind the system is freely available, and it is widely
+> used by at least one hosting company.  The code itself is
+> available, along with documentation, here:
+> 
+> http://symbiosis.bytemark.co.uk/
+> 
+> Unfortunately releases between these two mercurial identifiers
+> contained a significant flaw:
+> 
+> mercurial ID:   1068 date:        Wed Feb 01 11:49:57 2012 +0000
+> 
+> And
+> 
+> changeset:   1326 date:        Thu May 10 08:35:13 2012 +0100
+> 
+> 
+> IMAP/POP3/SMTP authentication would accept any password for any
+> valid email account.  (Logins are of the form $user@...main.)
+> 
+> This was fixed with the following commit:
+> 
+> https://projects.bytemark.co.uk/projects/symbiosis/repository/diff?rev=1327&rev_to=1322
+>
+>  Please could a CVE identifier be allocated such that we may use it
+> in our documentation.
 
-1) It was discovered that the formatted printing functionality in glibc
-did not properly honor the size of a structure when calculating the
-amount of memory to allocate. A remote attacker could provide a
-specially crafted sequence of format specifiers, leading to an
-undersized buffer allocation and subsequent stack corruption, resulting
-in a crash or, potentially, FORTIFY_SOURCE format string protection
-mechanism bypass, when processed.
+Please use CVE-2012-2368 for this issue.
 
-References:
-http://sourceware.org/bugzilla/show_bug.cgi?id=12445
-http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=84a4211850e3d23a9d3a4f3b294752a3b30bc0ff
-https://bugzilla.redhat.com/show_bug.cgi?id=833703
-
-2) It was discovered that the formatted printing functionality in glibc
-used extend_alloca() incorrectly. "nspecs_max" is incorrectly passed to
-extend_alloca, which modifies the value in "nspecs_max" when allocating
-the memory. A remote attacker could provide a specially crafted sequence
-of format specifiers, leading to a desynchronization within the buffer
-size handling, resulting in the use of uninitialized memory or,
-potentially, FORTIFY_SOURCE format string protection mechanism bypass,
-when processed.
-
-References:
-http://sourceware.org/bugzilla/show_bug.cgi?id=13446
-http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=a4647e727a2a52e1259474c13f4b13288938bed4
-https://bugzilla.redhat.com/show_bug.cgi?id=833704
-
-It seems like 1) and 2) were introduced by the following commit:
-http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=1d498daa95384e5c9ad5bcb35e7a996e5869ac39
-
-
-3) It was discovered that the formatted printing functionality in glibc
-did not properly restrict the use of alloca(). A remote attacker could
-provide a specially crafted sequence of format specifiers, leading to a
-crash or, potentially, FORTIFY_SOURCE format string protection mechanism
-bypass, when processed.
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=826943
-
-Red Hat patch backports/testcases for RHEL6 that include a patch for this:
-https://bugzilla.redhat.com/attachment.cgi?id=594722&action=diff
-
-Red Hat patch backport/testcase for RHEL5 (older glibc versions)
-https://bugzilla.redhat.com/attachment.cgi?id=594727&action=diff
+> Steve
 
 
-Thanks in advance and kind regards
--- 
-Stefan Cornelius / Red Hat Security Response Team
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPsVJ9AAoJEBYNRVNeJnmT0KMP/RXheb+YHfhsp4fGngiIeiEt
+1ST4l+4SChl6EMJra0Z8i/Zp1b3N0QBU44dUH6eWRQlpBH8EREmUiRIea3H3nL1+
+hWac+y6Z/YZfODfoOljvE2/LrNue/eoyNUt4pT2W/UX5q3YsmIK2Seduhnm34n9N
+2CmJB5cflu+x9zGUoHsiMNuI05eZbbeyxceXUmBEoEKO1j01tulhDlAzNCfDx3Fl
+JbOm6vZBXotYlpJVEtbfU2tzVMOMB04FWzTh06Fh5ftwq4q0HxMsZ6TdTd82zX4y
+yWn3xIfdSB4/zAkmJmnybpjLtSOlRz4R6YCPrKuLKk/6c8UPuDtDwYWxLslvTlMq
+gWuMr/o/dKUVafQO2TMpSnKlhzOYq41GBmjDq7WDjsAcZppesUqp8CZcRaWZqkAn
+dnqW7wOppG6o7GsTw7fO9Lmp4URZdVbFk99DL4IqBhbXUEtorchf5Q6tNRVgdW4v
+UfdAiMKRjAa4M6uKqXGp4tf7s+S/Pwrt+T2O7LOjuzv/sDBUfifpazLCkRxeCzeU
+patcWOvrrR9ttE3QyjKKkBVLZjkkj6hkVRRCq8fs6i9c8vr5da01Tc44T9TgNY7D
+G+R8Ge1BBIsnOPk0VDIAOdbn3HCjtPpAUG91R0+01oNaP8/RiEZcGP83j17u9G35
+T9WKsGHvheUmQMh1o4wj
+=QAJN
+-----END PGP SIGNATURE-----
