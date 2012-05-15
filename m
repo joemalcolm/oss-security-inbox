@@ -1,32 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/5
-Message-ID: <4F71E3F2.5010201@redhat.com>
-Date: Tue, 27 Mar 2012 09:59:46 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/3
+Message-ID: <CABrd9SRNi8ujdMPz+dWcW_eP+-ztiM1q+V21F4EbeJjY2YyuOA@mail.gmail.com>
+Date: Tue, 15 May 2012 10:58:29 +0100
+From: Ben Laurie <benl@...gle.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: distutils creates ~/.pypirc insecurely
+Subject: Re: Using FreeBSD Capsicum for program and library sandboxing
 Content-Type: text/plain; charset=utf-8
 
-On 03/27/2012 08:15 AM, Vincent Danen wrote:
-> Standard flaw where a file that contains a username and password is
-> written with insecure permissions.  This only affects python 2.6 and
-> higher.
-> 
-> Could a CVE name be assigned to this flaw?  I don't think one has been
-> already.
-> 
-> References:
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650555
-> https://bugzilla.redhat.com/show_bug.cgi?id=758905
-> http://bugs.python.org/issue13512
-> http://bugs.python.org/file23824/pypirc-secure.diff
-> 
-> Thanks.
-> 
+On 15 May 2012 02:52, Solar Designer <solar@...nwall.com> wrote:
+> Hi,
+>
+> A couple of days ago, Ben Laurie posted to the Secure Coding list about
+> using FreeBSD's experimental Capsicum support in the kernel to sandbox
+> bzip2 and libtiff ("wrapping it such that the calling application is
+> unaware it is wrapped") - as two initial examples, I presume.  I found
+> this very interesting.
 
-Please use CVE-2012-1587 for this issue.
+Thanks.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+If you want to see the libtiff work, it's here:
+https://github.com/benlaurie/libtiff
+
+So far, I've wrapped enough (transparently!) to make a couple of
+trivial applications work. These are slightly cut-down versions of a
+couple of apps provided with libtiff. They're cut down because they
+add custom tags, which means registering callbacks, and I haven't
+designed how to wrap that yet :-)
+
+Before I do, I want to move onto a more "real" application. Not sure
+what I should choose, though, so suggestions are welcome...
+
+All new code is the wrapped/ subdirectory - so far I have not had to
+make any changes to libtiff, which is nice, but I do not rule it out.
+
+This one includes a rudimentary RPC compiler.
