@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/2
-Message-ID: <4F34AE98.8040701@redhat.com>
-Date: Thu, 09 Feb 2012 22:43:52 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/1
+Message-ID: <20120515013314.GA9673@openwall.com>
+Date: Tue, 15 May 2012 05:33:14 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: CVE request: surf
+Cc: Keegan McAllister <mcallister.keegan@...il.com>
+Subject: Automatic binary hardening with Autoconf
 Content-Type: text/plain; charset=utf-8
 
-On 02/09/2012 05:24 PM, Florian Weimer wrote:
-> surf does not protect its cookie jar against access read access from
-> other local users, as reported by Jakub Wilk in this Debian bug:
-> 
-> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659296>
-> 
-> Could someone please assign a CVE for this?
+Hi,
 
-So for surf suckless (http://surf.suckless.org/) please use CVE-2012-0842
+I'd like this sort of topics to be brought up in here, so I'll start by
+referring to some blog posts.
 
-> uzbl <http://uzbl.org/> (in the uzbl-browser wrapper script) and
-> netsurf <http://www.netsurf-browser.org/> (the nsgtk_check_homedir
-> function creates the dot directory with world-readable settings) have
-> a similar issue, but are from different code bases.  I think those
-> should get distinct CVEs, too.
+Here's an interesting one by Keegan McAllister:
 
-I'll need advisories or code commits, or links to the vuln code to
-assign CVE's (I need more information). Thanks!
+http://mainisusuallyafunction.blogspot.com/2012/05/automatic-binary-hardening-with.html
 
+This suggests (and shows how) individual programs that use autoconf may
+automatically enable the usual set of compile-time hardening settings
+that are otherwise normally provided by builds for/by/on hardened
+distros only.  This is not rocket science, yet the provided examples may
+be reused and it may become a trend.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Also interesting are the performance impact numbers (up to 30%), which
+are far worse than those I've seen posted before (up to 5.8%):
+
+http://d-sbd.alioth.debian.org/www/?page=pax_pie
+
+Perhaps this has to do with the specific code being protected and
+benchmarked (some crypto code in Mosh?)  http://mosh.mit.edu
+
+An edit to this comment:
+
+https://github.com/keithw/mosh/issues/79#issuecomment-4683789
+
+says that the impact is less with Ubuntu 12.04's GCC 4.6.3 - but I think
+this may be because Ubuntu's GCC has some of the hardening enabled by
+default (so its baseline performance is worse, not the impact is less).
+
+Alexander
