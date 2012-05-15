@@ -1,49 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/27/7
-Message-ID: <503BAFB1.8060402@redhat.com>
-Date: Mon, 27 Aug 2012 11:34:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/7
+Message-ID: <20120515122950.GA15372@suse.de>
+Date: Tue, 15 May 2012 14:29:50 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Thomas Biege <thomas@...e.de>
-Subject: Re: CVE request: crowbar ohai plugin: local privilege (root) escalation due to insecure tmp file handling
+Subject: Re: Automatic binary hardening with Autoconf
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 08/27/2012 09:31 AM, Thomas Biege wrote:
+On Tue, May 15, 2012 at 08:13:31AM -0400, Steve Grubb wrote:
+> On Monday, May 14, 2012 09:33:14 PM Solar Designer wrote:
+> > I'd like this sort of topics to be brought up in here, so I'll start by
+> > referring to some blog posts.
+> > 
+> > Here's an interesting one by Keegan McAllister:
+> > 
+> > http://mainisusuallyafunction.blogspot.com/2012/05/automatic-binary-hardeni
+> > ng-with.html
+> > 
+> > This suggests (and shows how) individual programs that use autoconf may
+> > automatically enable the usual set of compile-time hardening settings
+> > that are otherwise normally provided by builds for/by/on hardened
+> > distros only.  This is not rocket science, yet the provided examples may
+> > be reused and it may become a trend.
 > 
-> Hi, insecure handling of tmp files can lead to executing arbitrary
-> shell commands as root:
-> 
-> https://github.com/SUSE-Cloud/barclamp-deployer/commit/b6454268a067fc77ff5de82057b5b53b3cc38b87
->
-> 
-> 
-> Thanks, Thomas
+> I think there are conflicting goals in projects like this. There are times when 
+> someone may want to go all out and harden everything as much as possible. But 
+> there is a cost to that...either startup or runtime. Not all programs have the 
+> same threat model and consequence if attacked successfully. Apps that are at 
+> greatest risk are: set[ug]id/fs based capabilities, network facing apps, 
+> daemons, or parsers of untrusted media. It would be hard to argue that the "cat" 
+> program needs full relro and bind now.
 
-Please use CVE-2012-3537 for this issue.
+You never know. I'd even say that the cat gets the most untrusted input
+ever. Everything and the world has been piped
+through cat since epoch. And similar surprises will happen to all the
+non threatening programs that are not seen as risk like file, ls, ps etc.
+until one realizes that some procmail/cups or whatever filter is using it.
+And then, Murphy is entering the dance floor.
 
+Sebastian
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-- 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-iQIcBAEBAgAGBQJQO6+xAAoJEBYNRVNeJnmTNXIQAMDkKHGS3fnHwSy1kbJ360R6
-SAPvLzLy6pKPn7MjucJjBlLp1D6ZXUDnh7tSoenC6lPi8ROV1m8+hzi1z1TJyukw
-70gebhFsgL1p2XXkOMIhGeRDvZmeyGKetkAJuotJnhpz5y95RMVk0NDbE5PoH2Ke
-BK1bKsSyrC94uViC0IpShuv4cfWjZ30C8O4LPZdT4yDHnHAd1AXMewV1vK8q5Xus
-2js77SXidWKTgcVA/x2NRm0tJbaU5gQb/8hlpzk/8wivA2lKL7QJPPeUtKDun4Vv
-XVN7G0JZuaxmLEDi07akPAX6+wL0W5yxD0ucQicPci0J3Kz9A5lzVnt3v+IB3Bkv
-q/M9VPfNxHXFl165vTIqI0jJepwEsHiBAFiElimXWmsxTULXsFQcQtRnBFKTgiEU
-kPoTxEGfm/IqOnR7RMSqE2WSGE2J0D2aZnj+thr5pWvc60t7G5I0ODOM+nYUlj1q
-91JbDA73tRUO9EPoN3T6b8HP4btH0GJs4KRDFU6Z4jQpIQyujg/Zn60iCVDAZd43
-lFhE42JVPuXg+ebifEe4P0iJBELXH2pEF7ZVXkQG1KM/sSHpUyQ9CDtGXKu3QyW3
-mpQAPT7J/GxnqU7UuTkaSORlg21SWXcBCjC5LHb2ze4LgE+5uLFcpHcWw9cTx7pZ
-555709TUMstu9IZq/3gJ
-=g4XD
------END PGP SIGNATURE-----
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
