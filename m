@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/4
-Message-ID: <4FC60C36.1010301@oracle.com>
-Date: Wed, 30 May 2012 13:01:58 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/2
+Message-ID: <20120515015208.GA9834@openwall.com>
+Date: Tue, 15 May 2012 05:52:08 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
+Subject: Using FreeBSD Capsicum for program and library sandboxing
 Content-Type: text/plain; charset=utf-8
 
-On 30/05/12 10:44, John Haxby wrote:
->
-> Recently we have a couple of queries relating to a Nessus "TCP/IP
-> SYN+FIN Packet Filtering Weakness".   This has not been helped by the
-> fact that [1] actually points (indrectly) to CVE-2002-2438 which is
-> actually a SYN+RST problem.
-[snip]
+Hi,
 
-Sigh.   Enigmail seems to be unable to sign messages for me.   The
-references in the message are all independenty verifiable though.
+A couple of days ago, Ben Laurie posted to the Secure Coding list about
+using FreeBSD's experimental Capsicum support in the kernel to sandbox
+bzip2 and libtiff ("wrapping it such that the calling application is
+unaware it is wrapped") - as two initial examples, I presume.  I found
+this very interesting.
 
-jch
+Ben's blog post on bzip2, showing 13 steps (separate git commits, kind
+of a tutorial) that were needed to sandbox bzip2:
 
+http://www.links.org/?p=1242
+
+Secure Coding list posting also mentioning the work on libtiff:
+
+http://krvw.com/pipermail/sc-l/2012/002801.html
+
+Secure Coding mailing list (SC-L):
+
+http://www.securecoding.org/list/
+
+Alexander
