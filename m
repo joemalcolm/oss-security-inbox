@@ -1,42 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/1
-Message-ID: <20120515013314.GA9673@openwall.com>
-Date: Tue, 15 May 2012 05:33:14 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Keegan McAllister <mcallister.keegan@...il.com>
-Subject: Automatic binary hardening with Autoconf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/10
+Message-ID: <877gwd4g91.fsf@algae.riseup.net>
+Date: Tue, 15 May 2012 11:26:50 -0400
+From: micah anderson <micah@...eup.net>
+To: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: sympa (try again)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I'd like this sort of topics to be brought up in here, so I'll start by
-referring to some blog posts.
+On Fri, 11 May 2012 23:58:33 -0600, Kurt Seifried <kseifried@...hat.com> wrote:
+> Ok I see this one and several more:
+> 
+> ================================
+> 
+> 6.1.11		May 11, 2012
+> Bug fixes:
+> [7358] wwsympa/wwsympa.fcgi.in:  Fixing a potential security issue
+> related to archives
 
-Here's an interesting one by Keegan McAllister:
+This is the CVE-2012-2352 that you assigned, upstream Sympa has now
+created a page for security issues, this is one is detailed on there:
 
-http://mainisusuallyafunction.blogspot.com/2012/05/automatic-binary-hardening-with.html
+https://www.sympa.org/security_advisories#security_advisories
 
-This suggests (and shows how) individual programs that use autoconf may
-automatically enable the usual set of compile-time hardening settings
-that are otherwise normally provided by builds for/by/on hardened
-distros only.  This is not rocket science, yet the provided examples may
-be reused and it may become a trend.
+> 
+> 6.1.1           October 22, 2010
+> This version includes a lots news such as DKIM support, autosignoff
+> footer link included in lists messages, ...
+> Various vulnerability have been solved in 6.1.1 : cross side scripting,
+> cross-Site request forgeries, brute force attack, DOS. These
+> vulnerabilities were identified with the help of P. Gardenat (Rectorat
+>  de Rennes) during a security audit on Sympa.
+> - ---------------------
+> web_tt2/error.tt2, wwsympa/wwsympa.fcgi.in:  Now shared document
+> can't	be read or edited unless list is open. This is a security fix
+> 
+> ================================
+> 
+> 6.0		1st October 2009
+> Security:
+> - - [reported by T. Retout] SQL injection threat removed by using place
+> holders instead of direct sprint in a query.
+> - - [Submitted by N. Bertrand, univ.  Minnesota] Basic logs in debug
+> don't issue the password  unencrypted in the logs for function
+> Auth::ldap_authentication. This way, this password won't be sent
+> unencrypted to a possible syslog server.
+> - - [#4439] [#4440] [reported by O.Berger] security vulnerability which
+> use a file in /tmp.
+> - - [#4430] store temporary files in Sympa's own tmp directory instead
+> of /tmp to prevent symlink attacks
 
-Also interesting are the performance impact numbers (up to 30%), which
-are far worse than those I've seen posted before (up to 5.8%):
+These issues were fixed a very long time ago, there was a security
+advisory in 2010, here is the French CERT advisory for them:
 
-http://d-sbd.alioth.debian.org/www/?page=pax_pie
+http://www.certa.ssi.gouv.fr/site/CERTA-2010-AVI-505/
 
-Perhaps this has to do with the specific code being protected and
-benchmarked (some crypto code in Mosh?)  http://mosh.mit.edu
+It appears that besides this most recent CVE, the only CVEs issued for
+Sympa have been in 2008, so these were not assigned numbers.
 
-An edit to this comment:
+micah
 
-https://github.com/keithw/mosh/issues/79#issuecomment-4683789
+ps - I would sign this message, but it seems like it would be eaten by
+EZLM :(
 
-says that the impact is less with Ubuntu 12.04's GCC 4.6.3 - but I think
-this may be because Ubuntu's GCC has some of the hardening enabled by
-default (so its baseline performance is worse, not the impact is less).
 
-Alexander
