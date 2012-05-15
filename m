@@ -1,27 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/11
-Message-ID: <3978202.EgPzrIJlpi@devil>
-Date: Fri, 14 Sep 2012 20:21:27 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/6
+Message-ID: <20120515122858.GF10671@suse.de>
+Date: Tue, 15 May 2012 14:28:58 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: bacula: Console ACL Bypass
+Cc: Solar Designer <solar@...nwall.com>, Keegan McAllister <mcallister.keegan@...il.com>
+Subject: Re: Automatic binary hardening with Autoconf
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Tue, May 15, 2012 at 08:13:31AM -0400, Steve Grubb wrote:
+...
 
->From secunia advisory https://secunia.com/advisories/50535/ :
+> > Also interesting are the performance impact numbers (up to 30%), which
+> > are far worse than those I've seen posted before (up to 5.8%):
+> > 
+> > http://d-sbd.alioth.debian.org/www/?page=pax_pie
+> 
+> This is because the stack canary is a random number. Imagine adding a "function 
+> call" between every intended function call to grab a random number. Because of 
+> this, we want sensible security. You have to live with the performance hit or 
+> have some heuristic that you use to decide which apps get the special treatment.
 
-The security issue is caused due to an error within the implementation of 
-console ACLs, which can be exploited to gain access to certain restricted 
-functionality and e.g. dump resources.
-The security issue is reported in versions prior to 5.2.11.
+The stack random number is coming via AT_RANDOM ELF aux vector, but 
+yes, the %gs:xxx -> stack write based setup is of course swallowing time.
 
-Patch: http://sourceforge.net/projects/bacula/files/bacula/5.2.11/0001-Fix-
-bug-1932-director-crash.patch
+> Also, I have been studying the stack-protector, FORTIFY_SOURCE, ASLR (which is 
+> how I found the ASLR bypass for fs capability programs recently), and RELRO. It 
+> turns out there are many holes in the protection we all expect is working. Not 
+> mentioned in the blog is the fact that with compiler optimizations being on, 
+> stack-protector and FORTIFY_SOURCE do not work. There are many other loopholes, 
+> like an array of structs do not get any stack-protector treatment. Nor do arrays 
+> of ints. And the stack-protector is only checked on function exit. So, you may 
+> have a function that gets overflowed and passes corrupted variables around and it 
+> may do something irreversable like call execve or create a file based on those.
 
-Can you assign a CVE for this issue?
--- 
-Agostino Sarubbo / ago -at- gentoo.org
-Gentoo/AMD64 Arch Security Liaison
-GPG: 0x7CD2DC5D
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Yes, some stuff can get the -fstack-protector-all treatment for this to facilitate
+all function, but of course most of your notes still apply.
+
+It is a heuristic, and getting it more complete might be easy, or might get
+difficult.
+
+> We found that compiler flags alone were not enough. For example, if you want to 
+> set partial RELRO to be the default, there are a large number of programs which 
+> do not take the LD_FLAGS environmental variable. The common fix appears to be to 
+> patch binutils to add partial RELRO on all linking.
+
+SUSE has changed binutils on our request to default to "-z relro",
+so applications do not need to care about that anymore.
+
+"-z now" we did not dare to force yet, as it does cause slow downs.
+ 
+> I created a shell script that can be used to "grade" an installed system based 
+> on my own policy. http://people.redhat.com/sgrubb/files/rpm-chksec
+> 
+> This will take an rpm name as input and verify each ELF file to see if its 
+> compiled with the intended flags to most effectively use PIE and RELRO. Green is 
+> good, Orange could use work but is acceptable, and Red needs fixing. It has a 
+> mode --all that is the equivalent of using rpm -qa and feeding the packages to 
+> it. In this mode it will only give a summary result for the package. To find 
+> which files don't comply, re-run using just the package name. 
+
+Hook it into rpmlint ... :)
+
+Ciao, Marcus
