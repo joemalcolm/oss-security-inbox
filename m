@@ -1,31 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/17/5
-Message-ID: <20120417115417.GA26547@kludge.henri.nerv.fi>
-Date: Tue, 17 Apr 2012 14:54:17 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/9
+Message-ID: <4FB27485.3000309@redhat.com>
+Date: Tue, 15 May 2012 09:21:41 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "security@...o3.org" <security@...o3.org>
-Subject: CVE-request: TYPO3-CORE-SA-2012-002 XSS in TYPO3 Core
+CC: Sean Amoss <ackle@...too.org>
+Subject: Re: CVE Request: gdk-pixbuf Integer overflow in XBM file loader
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Marcus KrauseMember from the TYPO3 Security Team said they did not yet request CVE-identifier for this vulnerability released today so here we go.
+On 05/15/2012 05:50 AM, Sean Amoss wrote:
+> Hello,
+> 
+> I have not seen a CVE assigned for this issue yet:
+> 
+> "It's possible to crash any application with memory allocation
+> error, or potentially corrupt heap because width/height parameters
+> isn't properly verified."
+> 
+> 
+> References: https://bugs.gentoo.org/show_bug.cgi?id=412033 
+> https://bugs.launchpad.net/ubuntu/+source/gdk-pixbuf/+bug/681150
+> 
+> Upstream bug: https://bugzilla.gnome.org/show_bug.cgi?id=672811
+> 
+> Upstream commit: 
+> http://git.gnome.org/browse/gdk-pixbuf/commit/?id=4f0f465f991cd454d03189497f923eb40c170c22
+>
+> 
+> 
+> Thanks, Sean
+> 
 
-Announce of XSS: http://lists.typo3.org/pipermail/typo3-announce/2012/000241.html
-Announce of new versions: http://lists.typo3.org/pipermail/typo3-announce/2012/000242.html
-Advisory: http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-002/
+Classic, -1, and this is why we should never trust user input =).
+Please use CVE-2012-2370 for this issue.
 
-Component Type: TYPO3 Core
-Affected Versions: 4.4.0 up to 4.4.14, 4.5.0 up to 4.5.14, 4.6.0 up to 4.6.7 and development releases of the 4.7 branch.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Problem Description: Failing to properly encode the output, the default TYPO3 Exception Handler is susceptible to Cross-Site Scripting.
-We are not aware of a possibilty to exploit this vulnerability without third party extensions being installed that put user input in exception messages.
-However it has come to our attention that extensions using the extbase MVC framework can be used to exploit this vulnerability if these extensions accept objects in controller actions.
-In general and especially when in doubt if the above conditions are met, we highly recommend users of affected versions to update as soon as possible.
-Imortant Note: In case you have configured your own exception handler for TYPO3 you need to make sure that the exception messages are properly encoded within this exception handler before they are presented.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Solution: Update to the TYPO3 versions 4.4.15, 4.5.15 or 4.6.8 that fix the problem described!
-Credits: Credits go to Security Team Member Helmut Hummel who discovered and reported the issue.
-
-- Henri Salo
+iQIcBAEBAgAGBQJPsnSCAAoJEBYNRVNeJnmT+TUQANXCu7e0gR8iz5udwsUqvopf
+uNF3MJWRtsSsZYv98CfYmEVc4sOjw8dMvuROxwQMDXHt2HDl4SmC2CXL5EH/7z/U
+05BQlKMSJWSGtqc1k/S0GMyKD590oTOu0T4hexisWBtwEm46vO62EqyyAhhdPcpe
+EtYiZZ5HlNIw4w9/W1ypxaIvtO9TYS5F5foNu/x9ltioFuW6AHyImCbOqzyT/18x
+AiJrDupLj7DL1NZgRMZx+AuVqt6uaLji1u29WWcQNVUtt7xWWdF5+yuizNUXvSvn
+FvPOAMedu/P6k9CzmI1nIfE7fcVh2aV0xzYBG+anyYD4Cl81QaYwfW2B8bCjP4/o
+fOi/EgbxmJirbTXH2uBMPY0opa67/0YX7NnNhTEDKH8t7UtI5MoASGZ4CoRVGybw
+vnGHiJNEvwkfVjzHxc7CbP7uTvmzZNcDpA8GPtl4pBKW+5AIjQPuvFeOalIRWJ2Z
+N+0bxlb1oyBajW1k+Pq9MpzVZ0lfp9DyWNppJuoSKZdxcUCDCePlgP4PjYqBHn36
+ey8/M6sR+Fw9rvY+OizeXQVd+daX7jNH5hQho+ZHsyYzwAlPcy3PDpjRJg5Kp/H+
+/+qdZraaKcLKtCFld6EkrlyEJVt3383x6D7yqEPFsoMZribkKz5hqo1JjOEqw1lm
+QDpSFjq0c4gEAE0CLqyv
+=EC1j
+-----END PGP SIGNATURE-----
