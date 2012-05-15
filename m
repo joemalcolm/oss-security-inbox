@@ -1,34 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/26
-Message-ID: <CAOtvbJzvSFkNWMru6k=ik-Et1Lyj9tnhaW6AkPQu=EoRkWkOSQ@mail.gmail.com>
-Date: Mon, 27 Feb 2012 22:09:38 +0100
-From: Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Mateusz Goik <mateusz.goik@...antsoft.pl>,  "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>,  Radoslaw Lisowski <radoslaw.lisowski@...il.com>, kontakt@...antsoft.pl
-Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/12
+Message-ID: <20120515194125.GA10065@kludge.henri.nerv.fi>
+Date: Tue, 15 May 2012 22:41:25 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: WordPress wp-facethumb plugin reflected XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Affected versions: 0.9.0 - 0.11.0 (0.11.1 is not vulnerable)
+Hello,
 
-Vulnerability:
+WordPress plugin wp-facethumb version 0.1 is affected to reflected XSS vulnerability. This issue is fixed in version 0.2. Could I get 2012 CVE-identifier for this issue, thanks.
 
-Any javascript code could be executed from Kadu History Window in
-following conditions:
-* application owner send a prepared SMS and content of this SMS was
-stored in history file
-* owner of application has an attacker on his buddy list, attacker
-sets a prepared presence message/status description and this presence
-message/status description is stored in history file
+Changelog: http://plugins.svn.wordpress.org/wp-facethumb/trunk/readme.txt
+Original advisory: http://cxsecurity.com/issue/WLB-2012050106
+My report to developer: http://wordpress.org/support/topic/plugin-wp-facethumb-reflected-xss-vulnerability-cwe-79
+Plugin URL: http://wordpress.org/extend/plugins/wp-facethumb/ (will show up very soon. WP admins disabled this until fix is done)
 
-and then:
+Diff included between tags 0.1 and 0.2.
 
-* owner of application views given SMS or presence message/status
-description in history window
+- Henri Salo
 
-
-Javascript code was allowed to:
-* load any file from WEB, by <img> or <script> tags, even <object>
-with flash files were possible
-* read files from local file system
-* (not confirmed by myself) write files to local file system
-* show javascript windows (like alert)
+View attachment "wp-facethumb.diff" of type "text/x-diff" (11086 bytes)
