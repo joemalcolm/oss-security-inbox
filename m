@@ -1,38 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/16
-Message-ID: <20120710143044.GE5296@suse.de>
-Date: Tue, 10 Jul 2012 16:30:44 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/16/2
+Message-ID: <20120516112650.GZ2075@yoink.cs.uwaterloo.ca>
+Date: Wed, 16 May 2012 07:26:50 -0400
+From: Ian Goldberg <iang@...uwaterloo.ca>
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+Cc: Doug Barton <dougb@...eBSD.org>, steven@...nbsd.org, deraadt@...nbsd.org, gdt@...bsd.org, intrigeri <intrigeri@...ian.org>, paul@...herpunks.ca, Thibaut VARENE <varenet@...ian.org>, Rob Smits <rdfsmits@...uwaterloo.ca>
+Subject: Format string security flaw in pidgin-otr
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 10, 2012 at 06:22:28PM +0400, Solar Designer wrote:
-> On Tue, Jul 10, 2012 at 04:11:12PM +0200, Sebastian Krahmer wrote:
-> > I am fine with either solution and would prefer upstream patches
-> > anyway, but it turned out in past that nobody from upstream
-> > is willing to add such patches.
-> 
-> If this is not for upstream and you only need it working on a particular
-> distro with glibc, then why not use __secure_getenv()?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Indeed, if it is a exported symbol on the glibc versions we ship,
-we should consider this. I remember a discussion that it was somehow
-not available in the past.
+Off-the-Record Messaging (OTR) Security Advisory 2012-01
 
-Sebastian
+Format string security flaw in pidgin-otr
+
+Versions 3.2.0 and earlier of the pidgin-otr plugin contain a format
+string security flaw.  This flaw could potentially be exploited by
+a remote attacker to cause arbitrary code to be executed on the user's
+machine.
+
+The flaw is in pidgin-otr, not in libotr.  Other applications which use
+libotr are not affected.
+
+CVE-2012-2369 has been assigned to this issue.
+
+The recommended course of action is to upgrade pidgin-otr to version
+3.2.1 immediately.  The new version can be obtained here:
+
+Windows installer:
+    http://otr.cypherpunks.ca/binaries/windows/pidgin-otr-3.2.1-1.exe
+gpg signature:
+    http://otr.cypherpunks.ca/binaries/windows/pidgin-otr-3.2.1-1.exe.asc
+
+Windows zip file:
+    http://otr.cypherpunks.ca/binaries/windows/pidgin-otr-3.2.1.zip
+gpg signature:
+    http://otr.cypherpunks.ca/binaries/windows/pidgin-otr-3.2.1.zip.asc
+
+Source code:
+    http://otr.cypherpunks.ca/pidgin-otr-3.2.1.tar.gz
+gpg signature:
+    http://otr.cypherpunks.ca/pidgin-otr-3.2.1.tar.gz.asc
+
+git repository:
+    git://otr.git.sourceforge.net/gitroot/otr/pidgin-otr (branch 3.2_dev)
+
+Version 4.0.0 (soon to be released) does not suffer from this flaw.
+
+Linux and *BSD vendors and package maintainers have been notified, and
+updated packages should be available from them.
+
+If upgrading to version 3.2.1 is not possible, please apply the
+following patch to 3.2.0:
 
 
--- 
+- --- a/otr-plugin.c
++++ b/otr-plugin.c
+@@ -296,7 +296,7 @@ static void still_secure_cb(void *opdata, ConnContext *conte
+ 
+ static void log_message_cb(void *opdata, const char *message)
+ {
+- -    purple_debug_info("otr", message);
++    purple_debug_info("otr", "%s", message);
+ }
+ 
+ static int max_message_size_cb(void *opdata, ConnContext *context)
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
 
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
 
+Our heartfelt thanks to intrigeri <intrigeri@...m.org> for finding and
+alerting us to this flaw.
+
+Followups to the otr-users mailing list <otr-users@...ts.cypherpunks.ca>,
+please.
+
+Your OTR development team,
+    Ian Goldberg <iang@...uwaterloo.ca>
+    Rob Smits <rdfsmits@...uwaterloo.ca>
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iD8DBQFPsVyO3tZOuyuofFwRAiQYAJ0W3h+HC4b0bSYM/3FbDtzh/VwC1ACeLOFw
+dct2xKgjvPupH6aKZ5jdJEo=
+=iofn
+-----END PGP SIGNATURE-----
