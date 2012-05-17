@@ -1,61 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/24/1
-Message-ID: <50876AEE.8000008@redhat.com>
-Date: Tue, 23 Oct 2012 22:13:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Matthieu Aubry <matthieu.aubry@...il.com>
-CC: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: XSS in piwik before 1.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/17/3
+Message-ID: <CAB9ZNAz3Hkbajo6JeOQZd7YHAbvYnJG24NUCu0Ku7t+7QJ63Uw@mail.gmail.com>
+Date: Thu, 17 May 2012 16:29:11 -0500
+From: Andres Gomez <agomez@...idsignal.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  vuln@...unia.com
+Subject: Re: CVE Request: Planeshift buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Planeshift is an online multiplayer role playing game which is open source (
+http://en.wikipedia.org/wiki/PlaneShift_(video_game)) and "chatbubbles.xml"
+is a sort of configuration file for chat windows inside the game, so I
+can't be changed directly by remote users.
 
-On 10/23/2012 04:12 PM, Matthieu Aubry wrote:
-> 
-> 
-> I hate to break it to you but I did a quick file diff and the XSS 
-> stuff is pretty easy to spot. Any attacker who wants to find the 
-> vulnerability will, quickly. Not giving out information really
-> only harms the people that actually benefit from knowing (e.g. your
-> users and vendors, it's just one more thing to figure out).\
-> 
-> 
-> We know and understand how diff work, remember that we are building
-> a major open source software? So yes we are fully aware how easy it
-> is to find XSS by doing a diff...
-> 
-> We disagree that giving out exploits and more info about the hacks,
-> will help security and our users : it will NOT. Supporting
-> researchers to find security bugs in open source projects, however
-> has helped us a lot: http://piwik.org/security/
+2012/5/17 Kurt Seifried <kseifried@...hat.com>
+>
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 05/17/2012 08:52 AM, Andres Gomez wrote:
+> > Name: Stack-based buffer overflow in Planeshift 0.5.9 and earlier
+> > Software: Planeshift 0.5.9 Software link:
+> > http://www.planeshift.it/ Vulnerability Type: Buffer overflow
+> >
+> > Vulnerability Details:
+> >
+> > There is a buffer overflow in planeshift/src/client/chatbubbles.cpp
+> > line 223:
+> >
+> > . . .
+> >
+> > // align csString align = chatNode->GetAttributeValue("align");
+> > align.Downcase(); if (align == "right") chat.textSettings.align =
+> > ETA_RIGHT; else if (align == "center") chat.textSettings.align =
+> > ETA_CENTER; else chat.textSettings.align = ETA_LEFT;
+> >
+> > // prefix 223>  strcpy(chat.effectPrefix,
+> > chatNode->GetAttributeValue("effectPrefix"));
+> >
+> > //enabled . . .
+> >
+> > this line reads a tag inside chatbubbles.xml called effectPrefix.
+> > If that string is very long, for example:
+> >
+> > <chat type="say" enabled="yes" colourR="186" colourG="168"
+> > colourB="126" shadowR="108" shadowG="98" shadowB="73" align="left"
+> > effectPrefix="chatbubble_AAAAA....AAAAA" />
+> >
+> > It will overwrite effectPrefix[64] buffer, which can lead even to
+> > arbitrary code execution.
+> >
+> >
+> > Could a CVE be assigned to this issue?
+>
+> I'm not familiar with this software (it's a game?) the chat bubbles,
+> can they come from remote users (like some sort of internal game chat)?
+>
+>
+> > Thanks,
+> >
+> > Andres Gomez.
+> >
+>
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+>
+> iQIcBAEBAgAGBQJPtV+JAAoJEBYNRVNeJnmTRtcP/R+w6vfmWPlfF2DDjxmOS25f
+> qpAnIWXWQWAQ0xv1AJbbeuCd/ChnYG6BHiRpe3RQFHm2LeFJugfWIMrwJyWyVkuD
+> cf4/5+hxhc7tY8vze51C9budUQZoeo+jalGt5eoOk0mCUqDR2RoLn8Pg2UEzsloO
+> HNNWlWJ2xP3Qt2cuHbBMQIa3RUA0vFh+cUSP2mvLe//pS/FljLt5k78kV1wzAUEw
+> DsuxNYoNJ5DoMWSCltsXSsN0tbIGr5vlHkHkWfXzs7POB2dRtJakJj30AkPdpt7r
+> FZuwoEuvPRsLgrNa6LFpnsbFI9Bw0St3K+XKm+upa0S0o8plI/iUYFhuZOdTkpyf
+> GaHtSpRoeVZgW8M/yvM3k3Lh/nPywI/ORBrdLcELrgrjMTh/rMyAgh4IBYTYNpaX
+> Lyca8ZigbmyHzgWF8v/oujdu+9Pu9sdxlPxLMBv9omYa9Sqr8M6U0+OPbXDYzJD1
+> NQ1ReT2YYQml/KcX3H9/IQ9TL+/1/lpWnY5pEbx6ya/X7jVNKkkDOBAkwkSzgEgD
+> x5xYC8hxhXSDov3iIpzeZBlN3shRP+BKXCbhbb9ZxPN0fOI8IuJNVUaSzAxTQb5f
+> +jJuoWVkdr2Rp5cmOonX1wFo1LRvNH8ZD6FXOb+ano+Hwktm+aJCjyxpSSmqXOHb
+> mYPLwJ9J3ZupuIgFY/lx
+> =EgCI
+> -----END PGP SIGNATURE-----
 
-I never said anything about giving out exploits.
+-- 
+--
+AVISO DE CONFIDENCIALIDAD:
 
-I simply pointed out that trying to hide details of an issue is only
-going to annoy legitimate users/vendors and does not to actually
-protect against attackers who also know how to use diff. Transparency
-in the security process is important, it helps build trust, and it
-helps users/vendors deal with the issues more quickly and efficiently.
+Esta transmisión se entiende para uso del destinatario o la entidad a la 
+que va dirigida y puede contener información confidencial o protegida por 
+la ley. Si el lector de este mensaje no fuera el destinatario, considérese 
+por este medio informado que la retención, difusión, o copia de este correo 
+electrónico está estrictamente prohibida. Si recibe este mensaje por error, 
+por favor notifique inmediatamente al emisor y destruya el original. Gracias
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+--
+CONFIDENTIALITY NOTICE:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+This transmission is intended for the use of the individual or entity to 
+which it is addressed, and it may contain information that is confidential 
+or privileged under law. If the reader of this message is not the intended 
+recipient, you are hereby notified that retention, dissemination, 
+distribution or copying of this e-mail is strictly prohibited. If you 
+received this e-mail in error, please notify the sender immediately and 
+destroy the original. Thank you.
 
-iQIcBAEBAgAGBQJQh2ruAAoJEBYNRVNeJnmT2IEQAIzp9Uiuof1Uj2bgxZEZQHPU
-bdNIvCvmuOR4r9GLdOb2ok1NXIdK1yNI6Hm8g13pE4cfS/m8JJw12gKlUXFn0DxM
-CcMYH+x97yNP2DJbbXWxNUT26E556WDlu5zZhV/wxfDEJtRyYiHt/eSfsO4pS/fF
-BEhb0wZZhghNN0vvUVmsnrQPpX5y32ObJIQ6K1WdkEwA3g/c5+U31krhJvoI//q0
-JNiprR35Ywvk+J5j1ZfA6EaLow+VnqVDuwyAl3KxLe5hyxcwvjSepddulFzrYxU9
-8a1cN6EZb6YSM+5UHcPnOC/upky/32dMfHRkZrJxT14hV7rHMvkAYvxhgtPCeKyR
-K71l3lCFJa2hy0P0DDoFjbYi6HwQkZbfmz3owADKCuwIc7OUdD4I2NXiAKH1st3y
-zVX8GuTk2yaRBxKVKEb5A8x+Ke9rSSbAo4ys+IhYToToWk7Mdlmuifniq2QahLNB
-pOhXNzMzfKKlgW5CxwFv6UnKiekvb3UYD6a7UeQ26aWMKuZlOT1ui4ipM2Ox1U1l
-9Kv0OR3AlZslG3jaHTPPOIIF45VU8K+p9p1rGbvZOUurnfkrhuKXUqUDqDQG/YN8
-Bn7fb09iNEM3S4tut+71JRleT96nmx9DUH5cYm7cTgLPzcC98AW0/wUK/Sn/5WRJ
-xiAyZYYPtHTgvebejEe+
-=1HLT
------END PGP SIGNATURE-----
