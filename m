@@ -1,56 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/11
-Message-Id: <619C7F26-5636-41CC-996D-1EFA28AE35B3@acquia.com>
-Date: Mon, 29 Oct 2012 12:39:52 -0700
-From: Angie Byron <angela.byron@...uia.com>
-To: Angie Byron <angela.byron@...uia.com>
-Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>, David Rothstein <drothstein@...il.com>, Greg Knaddison <greg.knaddison@...il.com>
-Subject: Re: CVE request: Drupal SA-CORE-2012-003
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/17/1
+Message-ID: <CAB9ZNAwKURikFpnx+yB7wirq_aEwxLFZgDGZOBnd=ND4TLDmrw@mail.gmail.com>
+Date: Thu, 17 May 2012 09:52:09 -0500
+From: Andres Gomez <agomez@...idsignal.com>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  vuln@...unia.com
+Subject: CVE Request: Planeshift buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Oh, right, and Greg's new address. :D
+Name: Stack-based buffer overflow in Planeshift 0.5.9 and earlier
+Software: Planeshift 0.5.9
+Software link: http://www.planeshift.it/
+Vulnerability Type: Buffer overflow
 
-On Oct 29, 2012, at 12:38 PM, Angie Byron wrote:
+Vulnerability Details:
 
-> Looping in David Rothstein. I'm no longer the release manager for D7, so I'm not sure what the CVE process was.
-> 
-> On Oct 29, 2012, at 11:52 AM, Kurt Seifried wrote:
-> 
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA1
->> 
->> On 10/29/2012 12:17 PM, Moritz Muehlenhoff wrote:
->>> Hi, please assign a CVE ID for SA-CORE-2012-003: 
->>> http://drupal.org/node/1815912
->>> 
->>> Cheers, Moritz
->>> 
->> 
->> The page says "CVE: Requested" but I haven't seen the request, so I
->> can only assume it went to Mitre directly? I don't want to create
->> duplicates. Angela/Greg can you confirm what's up with the CVE here?
->> Thanks.
->> 
->> - -- 
->> Kurt Seifried Red Hat Security Response Team (SRT)
->> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->> 
->> -----BEGIN PGP SIGNATURE-----
->> Version: GnuPG v1.4.12 (GNU/Linux)
->> 
->> iQIcBAEBAgAGBQJQjtBYAAoJEBYNRVNeJnmTmO4P/3BDsde7eNgjt/xkrcV5IwZz
->> dw/bn2jMjkcW2Ze/UIxCTK8GmYNCSqoQ+wYcdqVOkk2Q5rp5wmtRVppM4rPO8vho
->> Dy4p039WQ827Vaz1iBk8F2I136WPybTh2XPB9Yrc5XuMuTYdxJyKXkUQlgp+2sBl
->> G6reX0E2vb8Yu47591rxQyF4gY6nvnA7W2cpTVM1UzmlhAjmHOeR+yoCT8BGJ79F
->> wkbXT3ax/8gtzmhz39x1gqU6b5HHjUH2PdOMKxYP65NzVKyqQvPYAFMb5n5kYKFS
->> woLz6UCTVfOD+wLpOiUTEDYGhJhNn1e8/LJZTdt7LxEZ9HTI+NtQ2daBfFI176MI
->> 6jxqCtVimouwWqJw9zv7lXc08bHHNVUQiyebaxb/mthwZ9Gn1YBIp9+8r/1o48Y2
->> TV3QlPYDjtuvECyR45R6V33ts2xgR6v8UCrXg2KKovL1ArIGFiA0yHz0lTokJJX6
->> FIciLmGFGFeacN0K4RluFK3K+t8PLvJ1imNE9X8oWTV7OGNcABj4uGbdZAsIwoMf
->> D4eImxpnVFaMa6657PUANRUvaxm8bwhoT36ODC+zz10Hv8SA1Wu86X2I72ktwJrm
->> K5RAW5ujOS6qX0pSa7Pf1gLgC6YVX+RdIredeTd7ATdO26eAbLdYRwK81jYITD4i
->> OIwAc8R+GuBMi0ZmdFDc
->> =10SK
->> -----END PGP SIGNATURE-----
-> 
+There is a buffer overflow in planeshift/src/client/chatbubbles.cpp line
+223:
+
+       .
+       .
+       .
+
+        // align
+        csString align = chatNode->GetAttributeValue("align");
+        align.Downcase();
+        if (align == "right")
+            chat.textSettings.align = ETA_RIGHT;
+        else if (align == "center")
+            chat.textSettings.align = ETA_CENTER;
+        else
+            chat.textSettings.align = ETA_LEFT;
+
+        // prefix
+223>  strcpy(chat.effectPrefix,
+chatNode->GetAttributeValue("effectPrefix"));
+
+        //enabled
+        .
+        .
+        .
+
+this line reads a tag inside chatbubbles.xml called effectPrefix. If that
+string is very long, for example:
+
+<chat type="say" enabled="yes" colourR="186" colourG="168" colourB="126"
+shadowR="108" shadowG="98" shadowB="73" align="left"
+effectPrefix="chatbubble_AAAAA....AAAAA" />
+
+It will overwrite effectPrefix[64] buffer, which can lead even to arbitrary
+code execution.
+
+
+Could a CVE be assigned to this issue?
+
+Thanks,
+
+Andres Gomez.
+
+-- 
+--
+AVISO DE CONFIDENCIALIDAD:
+
+Esta transmisión se entiende para uso del destinatario o la entidad a la 
+que va dirigida y puede contener información confidencial o protegida por 
+la ley. Si el lector de este mensaje no fuera el destinatario, considérese 
+por este medio informado que la retención, difusión, o copia de este correo 
+electrónico está estrictamente prohibida. Si recibe este mensaje por error, 
+por favor notifique inmediatamente al emisor y destruya el original. Gracias
+
+--
+CONFIDENTIALITY NOTICE:
+
+This transmission is intended for the use of the individual or entity to 
+which it is addressed, and it may contain information that is confidential 
+or privileged under law. If the reader of this message is not the intended 
+recipient, you are hereby notified that retention, dissemination, 
+distribution or copying of this e-mail is strictly prohibited. If you 
+received this e-mail in error, please notify the sender immediately and 
+destroy the original. Thank you.
 
