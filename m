@@ -1,61 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/10/2
-Message-ID: <4F5AEB61.3070509@redhat.com>
-Date: Fri, 09 Mar 2012 22:49:21 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/9
+Message-ID: <4FB640D6.6090809@redhat.com>
+Date: Fri, 18 May 2012 14:30:14 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Eric Leblond <eric@...it.org>
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+CC: Solar Designer <solar@...nwall.com>, "Todd C. Miller" <Todd.Miller@...rtesan.com>, Daniel Kopecek <dkopecek@...hat.com>
+Subject: Re: sudo: IP addresses in sudoers with netmask may match additional hosts (CVE-2012-2337)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 03/09/2012 04:01 PM, Eric Leblond wrote:
-> Hello,
-> 
-> On Mon, 2012-02-27 at 14:46 +0100, Eric Leblond wrote:
->> Hello,
->> 
->> On Mon, 2012-02-27 at 05:25 +0400, Solar Designer wrote:
->>> Eugene, all -
->>> 
->>> On Mon, Feb 27, 2012 at 09:19:59AM +0800, Eugene Teo wrote:
-> ...
-> 
->> e it to Eric much earlier),
->>> Eric would post to the list e.g. in January and ask for the
->>> issue to be kept private until March - thereby violating the
->>> list's maximum embargo period.
-> 
-> The slides and videos of my CansecWest talk are available: 
-> http://home.regit.org/2012/03/playing-with-network-layers-to-bypass-firewalls-filtering-policy/
+Hi Solar,
+
+On 05/18/2012 01:57 PM, Solar Designer wrote:
+> Hi,
 >
->  I've done a complete description of the attack and also
-> demonstrate the need to be careful with the use of helpers.
-> 
-> BR,
+> (I was hoping someone else would bring this in here once it became public.)
 
-Are there any specific issues for which you need CVE's? (haven't had
-time to view the slides yet, hopefully soon).
+Yes, my fault (Thought not to forget to do so on Wednesday, but
+got distracted by something else, and in the end it resulted me not to
+send it completely :().
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Apologize for that and thank you for sending it.
 
-iQIcBAEBAgAGBQJPWuthAAoJEBYNRVNeJnmTIM8QAMJkVHzHjQOAGyKXuajUfwLo
-EHX2pd7gosTir5Bi5MB6IJFlzDBRDPzD9Sj3m3zc+pYdory/J0yS38/iwodm4qAZ
-M6i/MV0Fs6WB+WWYlgj/8wD3o+0vU2qaBkQ2Y6CUw+fh1EV+uB5eh/JiE4s2kLrc
-gmhM3tc/4ebAzJT0LD8IZKqVokRvSkNSLltcW13fLVY2+kJxy4Skf2NrqBdtkwDT
-5C8d4CuGyOe6iJ9fWQ3B2PCC+pf4S9Ywmef5omJv6v9hzlqxm8DQ49vjkkTToK71
-VHjsPHSLcJnGjm08NlEb8Yhvh+oDWWiAYosRT9nBtGSoFou+WZGXKdQOQcMRRwd2
-7Iwng4VRUqzqYqa93SQ07974SfzscF6hs1QWslUWXqHZfStp95iY6SU/shCuEyX8
-PerHjlmnyayq8EuJWb9Wvv7/4a7/BEfYduKC8fRbtRnbNpgwtIk3VEo2aLRHHfeh
-cVIwUEgkMHFH0jzBghVrHnkteHAH3B37YWjIt3VHc6n8BWr516s8uleoclrM1q5S
-15fkrnjCbRGqjRPOnCzPzKP0g0kRqotmr8VbJpTd4i2JBMm7sZk9ip2+F+iJRw8d
-f4e2n2mfRW0X4uUVUXXyCX7fMZ3H0mR52FBhOD8+I+PwwHrbgRcgTjjXp0qzcl+Y
-fSFjEfrMd1BAwIHNW7Uz
-=KyjP
------END PGP SIGNATURE-----
+Will do better job next time.
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>
+> A sudo advisory was published by upstream and corrected versions were
+> released on 2012-05-16:
+>
+> http://www.sudo.ws/sudo/alerts/netmask.html
+>
+> "Summary:
+> A flaw exists in the IP network matching code in sudo versions 1.6.9p3
+> through 1.8.4p4 that may result in the local host being matched even
+> though it is not actually part of the network described by the IP
+> address and associated netmask listed in the sudoers file or in LDAP.
+> As a result, users authorized to run commands on certain IP networks may
+> be able to run commands on hosts that belong to other networks not
+> explicitly listed in sudoers.
+>
+> Sudo versions affected:
+> Sudo versions 1.6.9p3 through 1.8.4p4 inclusive are affected.  The bug
+> only has an effect when the sudoers file (or LDAP sudoers data) using a
+> host specification that grants permissions using an IP address with an
+> associated netmask, e.g. 10.0.1.0/255.255.255.0 or 10.0.2.0/24."
+>
+> This is CVE-2012-2337.
+>
+> Red Hat Bugzilla entries:
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=820677
+> https://bugzilla.redhat.com/show_bug.cgi?id=822175
+>
+> Ubuntu advisory:
+>
+> http://www.ubuntu.com/usn/usn-1442-1/
+>
+> Debian tracking:
+>
+> http://security-tracker.debian.org/tracker/CVE-2012-2337
+>
+> Alexander
+
