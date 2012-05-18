@@ -1,96 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/11
-Message-ID: <50342023.8090903@redhat.com>
-Date: Tue, 21 Aug 2012 17:56:19 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/10
+Message-Id: <201205181630.q4IGTpwf024734@linus.mitre.org>
+Date: Fri, 18 May 2012 12:29:51 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, Benny Baumann <BenBE@...hi.org>, Benny Baumann <BenBE@...rphia.de>, Nigel McNie <nigel@...hi.org>
-Subject: Re: CVE Request -- php-geshi / GeSHi (1.0.8.11): Remote directory traversal and information disclosure in the cssgen contrib module (plus possibly XSS, but it needs upstream to confirm)
+Cc: cve-assign@...re.org
+Subject: CVE-2012-2759 WordPress Login With Ajax plugin re-enlistment XSS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/21/2012 09:05 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, Ben, Nigel, vendors,
-> 
-> Issue #A: --------- A directory traversal and information
-> disclosure (local file inclusion) flaws were found in the cssgen 
-> contrib module (application to generate custom CSS files) of GeSHi,
-> a generic syntax highlighter, performed sanitization of
-> 'geshi-path' and 'geshi-lang-path' HTTP GET / POST variables. A
-> remote attacker could provide a specially-crafted URL that, when
-> visited could lead to local file system traversal or, potentially,
-> ability to read content of any local file, accessible with the
-> privileges of the user running the webserver.
-> 
-> References: [1]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=685324 [2]
-> https://bugzilla.redhat.com/show_bug.cgi?id=850425
-> 
-> Upstream patch: [3]
-> http://geshi.svn.sourceforge.net/viewvc/geshi?view=revision&revision=2507
-
-Please
-> 
-use CVE-2012-3521 for this issue.
-
-> Issue #B: --------- Then there is a report about non-persistent XSS
-> flaw, that have been fixed in the contrib module of 1.0.8.11
-> version too: [4]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=685323
-> 
-> but I was unable to find the relevant upstream patch (and above
-> Debian BTS entry doesn't contain further information too, which
-> could be acted upon).
-> 
-> Thus I am Cc-in GeSHi upstream to this post to shed the light on
-> the XSS flaw [4].
-> 
-> Ben, Nigel, could you please clarify what was the relevant upstream
-> patch for the Debian BTS#685323 / Non-persistent XSS vulnerability
-> in contrib script [4] issue? Thank you for that, Jan.
-> 
-> Kurt, once the second issue clarified, could you allocate CVE ids
-> for these?
-> 
-
-> The fix is: 
-> http://geshi.svn.sourceforge.net/viewvc/geshi?view=revision& 
-> revision=2508
-> 
-> Cheers, -- Raphael Geissert - Debian Developer www.debian.org -
-> get.debian.net
-
-Please use CVE-2012-3522 for this issue.
-
-
-
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-> 
-
+http://wordpress.org/extend/plugins/login-with-ajax/changelog/
+3.0.4.1
+fixed xss vulnerability for re-enlistment on wordpress repo, more on the way
+CVE-2012-2759
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJQNCAjAAoJEBYNRVNeJnmTsXQP/3hn67j+7v3GLAyHYnX3nalE
-eBM+YyMfaDcTEVYcHlQLKx+I2/GEKfb7q+IRPVVChFiXWdM7qLnAG5VOLAoM1SJe
-bPVXbwaTWAXMMRhnYN4ssD0w9bcy6eNX02ugOWhL4mo7mpLN1GW4DXHGerHe+s8e
-PTLeyS45UEEvKln4hvj0we9sCPJAmazKR/j1dxmeJsA9MOihauK8VLr9l5tM+gj9
-EmXnuzIfOGPasDZGIjCTITQD0C+FkrQ67t50RD2J29cLanB+Ev5TR22KZYPeeoRQ
-2KOsRa1dn7RW3MUtpw53dnYbJfI3NKSPHk2GzXSss20zxWMGntU0U+3gX878BGLj
-FJzwjbLOQUhsjJvb7C3cYukq0bbQ02cgCXz6d92dOa5o5OgsTxa2EdWElbctFMCT
-47cYHaJW4KICpybCcaoju+Z0U8Vwn/b28K+7pcxJYOoE6MgtKDVowtyiGc8sAHAU
-aqYQUh/9Hy7LC4qwCa5XPxeiQFe9/o+xWvGfYV6S+1G+Zl7wEOrTwkX8Tw+qJKBb
-99NwYMNi4sJmI5CDBW6O4ChiEwDUVtHYg+AfgRUxLRJcvc+BNQH03/Gb01kT4Q2G
-VmSR+jX2tOL8bkqkk6//JG0FU1Nz0l5CgEQUpryxww+x0gtQb4el1FJQIDfnc4Dw
-fC6smDP2CWsL3rv6GH+B
-=tO+2
+iQEcBAEBAgAGBQJPtnfwAAoJEGvefgSNfHMdg94H/RdJHNldZaiCyZBaQwyEP0mJ
+TTlNRnU6yQFcCj7YB+jmwgR8MxdU26fKppFBswAdCpcHonMR8smEU22GRNegnB2K
+AY7xUsyzstG+BaBmuscdJYjJ7H6GT8jcf0PQn+1ZddJYQOmP0darogvZrtvSFvz/
+1Ae9Vac0l7Op2Ww3ruc3MAa2JzG1BSyjPJOCQy5Hv83xUyETt49WyrhOtMZfLS4f
+DPmWOXG95GKAdep+BQmc87hzPoh9YNBu3t9CL9uGuYkDNvhoTPJJCA2ze+iMxpgU
+vTsdF128jGoc2WKOFAEwR1YTcpaSFW1cW59uJjqYj5sEaXjUP3ZLhBFfOZxvY10=
+=FxLk
 -----END PGP SIGNATURE-----
