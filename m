@@ -1,65 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/02/6
-Message-ID: <501AD035.9010304@redhat.com>
-Date: Thu, 02 Aug 2012 13:08:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, debian@...ckmann.de
-Subject: openvswitch world writable directories (CVE-2012-3449)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/2
+Message-ID: <4FB5B6A9.2080505@redhat.com>
+Date: Fri, 18 May 2012 10:40:41 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: 100 bugs in Open Source C/C++ projects
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Here's a long list of bugs found in numerous open source projects. I
+found it at
+http://www.gamedev.net/page/resources/_/technical/general-programming/100-bugs-in-open-source-cc-projects-r2886.
 
-Andreas Beckmann debian@...ckmann.de reports:
+I suspect some of them are security bugs. I am not sure if the author
+has filed any bugs, or contact any of the upstream projects. If you are
+in this list, please start looking at them.
 
-openvswitch-pki creates the following world writable directories during
-installation:
+    Apache HTTP Server - http://httpd.apache.org/
+    Audacity - http://audacity.sourceforge.net/
+    Chromium - http://www.chromium.org/
+    Clang - http://clang-analyzer.llvm.org/
+    CMake - http://www.cmake.org/
+    Crystal Space 3D SDK - http://www.crystalsp.../main/Main_Page
+    Emule - http://www.emule.com/
+    FAR Manager - http://www.farmanager.com/
+    FCE Ultra - http://fceux.com/web/home.html
+    Fennec Media Project - http://fennec.sourceforge.net/
+    G3D Content Pak - http://sourceforge.n...ojects/g3d-cpp/
+    IPP Samples - http://www.viva64.com/go.php?url=449
+    Lugaru - http://www.wolfire.com/lugaru
+    Miranda IM - http://www.miranda-im.org/
+    MySQL - http://www.mysql.com/
+    Newton Game Dynamics - http://newtondynamic...orum/newton.php
+    Notepad++ - http://notepad-plus-plus.org/
+    Pixie - http://www.renderpixie.com/
+    PNG library - http://libpng.org/pub/png/
+    QT - http://qt.nokia.com/products/
+    ReactOS - http://www.reactos.org/en/
+    Shareaza - http://www.shareaza.com/
+    SMTP Client with SSL/TLS - http://www.codeproje...P/smtp_ssl.aspx
+    StrongDC++ - http://strongdc.sour...ex.php?lang=eng
+    Swiss-Army Knife of Trace - http://www.codeproje.../tracetool.aspx
+    TortoiseSVN - http://tortoisesvn.net/
+    Ultimate TCP/IP - http://www.codeproje...imateTCPIP.aspx
+    VirtualDub - http://www.virtualdub.org/
+    WinDjView - http://windjview.sourceforge.net/
+    WinMerge - http://winmerge.org/
+    Wolfenstein 3D - http://en.wikipedia..../Wolfenstein_3D
+    Crypto++ - http://www.cryptopp.com/
+    Quake-III-Arena - https://github.com/i...Quake-III-Arena
+    And some others.
 
-    drwx-wx-wx 2 root root 40 Aug  1 05:32
-/var/lib/openvswitch/pki/controllerca/incoming
-    drwx-wx-wx 2 root root 40 Aug  1 05:32
-/var/lib/openvswitch/pki/switchca/incoming
-
-Even if an ordinary local user cannot list the contents of the
-directory, he may correctly derive/guess filenames (unless they are
-exclusively $(mktemp)) and delete and replace files in there.
-
-I don't know how openvswitch-pki works, how it uses this directory,
-what probelms could possibly arise out of this.
-
-References:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=683665
-
-
-Please note on Fedora 16 and 17 run the command:
-
-/usr/bin/ovs-pki --force init
-
-to create the directories.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=845350
-
-Please use CVE-2012-3449 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQGtA1AAoJEBYNRVNeJnmTETMP/iUw/f1q01JnQdyeY1f1R+E0
-FYVJb1lE/oS6K5Dan/ZEeXkz4h5vPsB0hwB+CN0rHpMf0rj+RXS2ydbR1/Yhc5cj
-49GkKjq+AO9qUOYkwGZyercil7r34yQHMivmCcvIMv3gpaEfA+X7oD4640hmggk3
-tbtBmJBAQJNnUkBOdTBZxkCfpTS0/DSnezvF82G77//nb5wHtkgKHP7QeTnZmH4p
-1nKxrQoPIpQOchNxWk15jo8+Y3tLTvMNV0jtciKM+/ufb7WcWt/wSZID5z1RWyfN
-ErRU3kGZgUlKHjOOVY9hajCE7FtfRwvubPMlCBLbpKenEEOv1R7glO6cWBwii1oJ
-3MeaNx0IgeQRnJRz2W+pqi2rZAuMwz17/9D8BD+ALghAGgpHBRY7YmrTq/voCrNV
-qFuuJoBocPsTygeqsl+1e0uV4HpkiFo2bwwYT7wFN9D1zay/4/05A8xpd58lH1O6
-fhyyGV8NsBpiP+dyFQWXb2qdm+djd7YKyGm2uCTvvD62etC/3ptqGAzMIv9k/6E7
-wgqSZeGJxsIq3+p6wDgUlbHhSUnNa4ZhyE/sL//CucesX1L8HZtDbRpyKBJ45ZfA
-apOERBRedQcFhysX0BCBWx3gZbQhmFd8Djd9nsCZVNeOb8w3/YBXOnpFU/hWrg5E
-1Xsh6Mg+iWBVLsGdBudi
-=vHIS
------END PGP SIGNATURE-----
+Eugene
+--
+Eugene Teo / Red Hat Security Response Team
