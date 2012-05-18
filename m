@@ -1,54 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/4
-Message-ID: <5048E3A7.6030803@redhat.com>
-Date: Thu, 06 Sep 2012 11:55:51 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/7
+Message-ID: <20120518113005.GM26453@dhcp-25-225.brq.redhat.com>
+Date: Fri, 18 May 2012 13:30:06 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request - mcrypt buffer overflow flaw
+Subject: CVE Request -- kernel: incomplete fix for CVE-2011-4131
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The fix for CVE-2011-4131 was not complete. Malicious NFS server could
+still crash the clients when more than 2 GETATTR bitmap words are
+returned in response to the FATTR4_ACL attribute request.
 
-On 09/06/2012 08:37 AM, Vincent Danen wrote:
-> I don't believe a CVE has been assigned to this, could one be?
-> 
-> A buffer overflow was reported [1],[2] in mcrypt version 2.6.8 and
-> earlier due to a boundary error in the processing of an encrypted file
-> (via the check_file_head() function in src/extra.c).  If a user were
-> tricked into attempting to decrypt a specially-crafted .nc encrypted
-> flie, this flaw would cause a stack-based buffer overflow that could
-> potentially lead to arbitrary code execution.
-> 
-> References:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=855029
-> https://secunia.com/advisories/50507/
-> https://bugs.gentoo.org/show_bug.cgi?id=434112
-> http://packetstormsecurity.org/files/116268/mcrypt-2.6.8-Buffer-Overflow-Proof-Of-Concept.html
+Upstream fixes:
+20e0fa98b751facf9a1101edaefbc19c82616a68
+5794d21ef4639f0e33440927bb903f9598c21e92
+5a00689930ab975fdd1b37b034475017e460cf2a
 
-Please use CVE-2012-4409 for this issue.
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=822869
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQSOOnAAoJEBYNRVNeJnmT/PUP/R6C79hCk1xi99UXcPG2kw6d
-dkomXu8f5YbalbvIEwy3ekpndT+A1oj+VJu+msdBtV9eC5Q1EHw7LhHP4f8wkzYx
-cpJCDhG9FpOZV1K8kG12lyloG2n5nXvVAZrGGqgnrl5AAq52tySmNJzkLV51DSAI
-pQAhLiaaxiOjcb3VHFPIUswUCzx6nCgz5+u2NaCCTOHWBpDzP4viw2mu5KxSEu/6
-tqptSU6qLuCJ1I5sjGIMYPJH9ACj0vTdqAwHq4sQRVeXIlDgZioGAAPc9cW4mwop
-ZrvAYH8rJxbpCdthioxINitj4J6Pz02yYBTfPboT3OZQDs4xOJ8MEdOgVyGC5W9H
-tvzbeBXI2mdZQN5bfXiTPsLiv+9gQTh9oGsoV7A722BWOn7jYZgpPHXEVTd9M5Lj
-sAdWzkS7hTWfwei2obHXKRShkuw4rk/uaN6/DHoMPxE4Sdy9Xu3jlakL4KNqC8VT
-eS0NuEAz8n6PAu+MJLT5F6azNJYVFUkUIiDIrwAjdnGHurm/WqMGY8BOo0nHo/zb
-hJL1sdzoPQVR4Nq6hT7FuYkkIkA2WDbCEg1BVMgI2j7785zTt7+ncflJyYvBTTRX
-Z4PpTteSAzOSdi3aDMYNdVjhLUn4Vhup+t09VJPt9so+/gIIGpWghTubFZM02jxK
-CrgWc8/81S6PrE29lRZU
-=JshC
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
