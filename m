@@ -1,39 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/13/2
-Message-ID: <20120313100250.19f1bc12@redhat.com>
-Date: Tue, 13 Mar 2012 10:02:50 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/8
+Message-ID: <20120518115726.GA22126@openwall.com>
+Date: Fri, 18 May 2012 15:57:26 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE request: openssl: null pointer dereference issue
+Cc: "Todd C. Miller" <Todd.Miller@...rtesan.com>, Daniel Kopecek <dkopecek@...hat.com>
+Subject: sudo: IP addresses in sudoers with netmask may match additional hosts (CVE-2012-2337)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 12 Mar 2012 13:46:07 -0600 Kurt Seifried wrote:
+Hi,
 
-> Please use CVE-2012-1165 for this issue.
+(I was hoping someone else would bring this in here once it became public.)
 
-To clarify, the reply should have looked as:
+A sudo advisory was published by upstream and corrected versions were
+released on 2012-05-16:
 
- -- 8< --
+http://www.sudo.ws/sudo/alerts/netmask.html
 
-> Note that additional similar issue in mime_param_cmp was fixed in
-> 0.9.8u and 1.0.0h as:
->   http://cvs.openssl.org/chngview?cn=22252
-> 
-> This can also be triggered by malformed S/MIME message.
+"Summary:
+A flaw exists in the IP network matching code in sudo versions 1.6.9p3
+through 1.8.4p4 that may result in the local host being matched even
+though it is not actually part of the network described by the IP
+address and associated netmask listed in the sudoers file or in LDAP.
+As a result, users authorized to run commands on certain IP networks may
+be able to run commands on hosts that belong to other networks not
+explicitly listed in sudoers.
 
-Please use CVE-2012-1165 for this issue.
+Sudo versions affected:
+Sudo versions 1.6.9p3 through 1.8.4p4 inclusive are affected.  The bug
+only has an effect when the sudoers file (or LDAP sudoers data) using a
+host specification that grants permissions using an IP address with an
+associated netmask, e.g. 10.0.1.0/255.255.255.0 or 10.0.2.0/24."
 
-> The above commit also corrects an issue with the previous mime_hdr_cmp
-> fix that could cause the function to return either "less than" or
-> "greater than" when comparing NULL to non-NULL.  There's no known
-> security impact of this change, it seems it could cause verification /
-> decryption to fail when it can succeed. Reported by "bla".
+This is CVE-2012-2337.
 
- -- 8< --
+Red Hat Bugzilla entries:
 
-to make ti clear that CVE-2012-1165 is for the mime_param_cmp issue
-rather than mime_hdr_cmp fix correction.
+https://bugzilla.redhat.com/show_bug.cgi?id=820677
+https://bugzilla.redhat.com/show_bug.cgi?id=822175
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Ubuntu advisory:
+
+http://www.ubuntu.com/usn/usn-1442-1/
+
+Debian tracking:
+
+http://security-tracker.debian.org/tracker/CVE-2012-2337
+
+Alexander
