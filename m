@@ -1,51 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/11/3
-Message-ID: <4F36F53E.6090206@redhat.com>
-Date: Sat, 11 Feb 2012 16:09:50 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/4
+Message-ID: <4FB5DF7B.9050409@redhat.com>
+Date: Thu, 17 May 2012 23:34:51 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: CVE request: surf
+To: Andres Gomez <agomez@...idsignal.com>
+CC: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, vuln@...unia.com
+Subject: Re: CVE Request: Planeshift buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 02/10/2012 03:11 PM, Florian Weimer wrote:
-> * Kurt Seifried:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/17/2012 09:53 PM, Andres Gomez wrote:
+> Hi kurt,
 > 
->> On 02/09/2012 05:24 PM, Florian Weimer wrote:
->>> surf does not protect its cookie jar against access read access from
->>> other local users, as reported by Jakub Wilk in this Debian bug:
->>>
->>> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659296>
->>>
->>> Could someone please assign a CVE for this?
->>
->> So for surf suckless (http://surf.suckless.org/) please use CVE-2012-0842
+> The fact that only local user can modify program files doesn't
+> mean there is no security risk, there are a lot of examples but
+> look at this:
 > 
-> Oops.  I mistook this for the HTTP client library.  Your reference is
-> correct, and it appears I consistently wrote "surf" (the correct
-> spelling).
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4620
+
+That's a very different scenario than this one as I understand it.
+TORCS actually has a realistic requirement for using TORCS files
+supplied by the user (that are downloaded from remote sites/etc.).
+
+> this is very similar, only local user can modify software files,
+> but as defined by Mitre this bug "allows user-assisted remote
+> attackers to execute arbitrary code", because an attacker can
+> deceive a user to download and use a specially crafted file. I
+> accept the fact that "chatbubbles.xml" being a configuration file
+> makes it harder to be replaced, but still there is a risk.
+
+In the case of Planeshift the chatbubbles.xml is not supplied by the
+user, it comes with the program and is installed into a system
+directory. This is very different from the TORCS situation. If you can
+convince a user to start replacing system config files than almost
+every program needs a CVE by that definition (I can think of a few
+hundred programs on Linux that have config files that result in other
+programs/script/commands being run that can be easily obfuscated to do
+nastiness).
+
+Steven: comments, do you think this needs a CVE?
+
+> Thanks for the feedback,
 > 
->>> uzbl <http://uzbl.org/> (in the uzbl-browser wrapper script) and
->>> netsurf <http://www.netsurf-browser.org/> (the nsgtk_check_homedir
->>> function creates the dot directory with world-readable settings) have
->>> a similar issue, but are from different code bases.  I think those
->>> should get distinct CVEs, too.
->>
->> I'll need advisories or code commits, or links to the vuln code to
->> assign CVE's (I need more information). Thanks!
-> 
-> Jakub has filed bugs:
+> Andres Gomez
 
-Not ideal (I'd prefer upstream stuff) but it'll do.
-
-> uzbl: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659379
-
-Please use CVE-2012-0843 for this issue.
-
-> netsurf: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659376
-
-Please use CVE-2012-0844 for this issue.
-
-
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPtd97AAoJEBYNRVNeJnmT1QUP/3/cd2e5yH06fM07eGbLcb2Q
+bOo4JsWhkDlkWV3t/Z02Ws6pWqL3349I4yHr79PDQXdoZcCyY2EAm7F7qz/C+DV+
+4oCyPidZp/LihIqe4gpKs6Vzlzb9COiD8AlHKpkOKa5myUTVDeWpYgB0UYj/dfnZ
+Of527MeK55eVOXzqAgPXFjfutQtRy31ibJ4KikHHHbE8PO+2OqpXZmgp1zgA4nnw
+NZffzTe51GYGmFSTBaZlWGNgXN9qBZmevOmVOm577x5pBOOaewo22wFpHt8kf3U7
+WrBHSPn5PZ4j4hfNeduss0j6s/Xk/2jlqDIN7vi1Orod9GN+CXo1TV538Z+XjMz5
+CsolfvS5zfvfwTR4h9BxNWGuuu4gTSQXLo+uE4MnJhFqIjdEVeP9EY/CvebYipcp
++W9ceKz7v05fsaGe2UauY/QxuJpWKSsBKC77KiAErrqx3j9Wmd/3ENSYoh1wWDii
+KJ5iHpxWRVZ19XWlCeOm5XzeeaThNOZZ+fQQx/0V6e9JkVNENc1nnilcV+htUhMj
+cgWkLxLR7Bx71ti4kmY1cAPaWXcPzSFHhXcmL/qew66pJri6MawL1KTtzK9d346B
+j9NcxjKszVpFrM19i1Q4+qbkYMiPFNOzCH52T362TrlYWGVr0BHNhaO1eK5vFYwr
+EnNL8GTA4W/olByNcrBy
+=isTV
+-----END PGP SIGNATURE-----
