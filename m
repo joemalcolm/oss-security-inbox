@@ -1,63 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/3
-Message-ID: <508F32FF.2060907@redhat.com>
-Date: Mon, 29 Oct 2012 19:53:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>, security@...gle.com
-Subject: Re: CVE request: XSS is Google Web Toolkit (GWT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/3
+Message-ID: <CAB9ZNAw9vZZKGKyiHANxw+v0gomhqqzxR3xywzPOV13Q5bviAQ@mail.gmail.com>
+Date: Thu, 17 May 2012 22:53:02 -0500
+From: Andres Gomez <agomez@...idsignal.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  vuln@...unia.com
+Subject: Re: CVE Request: Planeshift buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi kurt,
 
-On 10/29/2012 07:26 PM, David Jorm wrote:
-> I note that with the release of google web toolkit (GWT) 2.5, a
-> security flaw has been resolved. The best details I can find are
-> at:
-> 
-> https://developers.google.com/web-toolkit/release-notes#Release_Notes_2_4_0
-> (scroll to "Security vulnerability in GWT 2.4")
-> 
-> The release notes state:
-> 
-> "Recently, the GWT team discovered a cross-site scripting
-> vulnerability in the 2.4 Beta and Release Candidate releases (not
-> in v2.3 GA or v2.4 GA). This vulnerability was partially fixed in
-> the 2.4 GA release and completely fixed in the 2.5 GA release. If
-> you have an app that's been built with 2.4 then you'll need to get
-> the latest 2.5 release, recompile your app, and redeploy."
-> 
-> I can't find any details on the flaw, a CVE ID, a public bug or a
-> commit. I have contacted security@...gle asking for these details,
-> but no response yet. Can we assign a CVE ID to this flaw in the
-> absence of these details?
-> 
-> Thanks
+The fact that only local user can modify program files doesn't mean there
+is no security risk, there are a lot of examples but look at this:
 
-Just confirming with the Google security team they haven't assigned a
-CVE for this issue (I can't find anything at all, and Google is still
-a CVE Naming Authority correct?). Any ways unless I hear otherwise
-I'll assign a CVE for this tomorrow.
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4620
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+this is very similar, only local user can modify software files, but as
+defined by Mitre this bug "allows user-assisted remote attackers to execute
+arbitrary code", because an attacker can deceive a user to download and use
+a specially crafted file. I accept the fact that "chatbubbles.xml" being a
+configuration file makes it harder to be replaced, but still there is a
+risk.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Thanks for the feedback,
 
-iQIcBAEBAgAGBQJQjzL/AAoJEBYNRVNeJnmTfvIP/A/663U4FWWEuMpz8GKyQ+Y6
-8iebsrNtu+2HehBmwmpi8fY4c8q+G6brxzOt786fGTY+3MufmHLdbyD9xthpxTtV
-t1fAjuevjk4mL+bouJheXdGIaCD5uJLfW+6WSUFoHK/iUmaafpXi5BMJEjTg9Vze
-Ye4XPoeCCFHkSbrucwDPgJBbziqXqUCZ2jHm90ay0qrrSP5Om3wkm8EFx26LkNik
-QvGiv3fyc3sHSUg/yucwufnUGVK+BIONfJjOipj/aeiXh0jyA7sst041t8aG88en
-ODwgRVsVKyVQ/afh3CMbefSSd2dLR6meSeE/7+uQKepAiG7j7FrgPjdR0mxX/xh+
-a6Dk69KMlJqqbjb2hJ+zCUos/uJRQYQVQkVYuxW745BIdnifoBc7DRj8vzhADooO
-GsrGKW0nLFIFqHGqXXx8W/M5ZX7YnU6rz9XmKyH8eA12iBqw4zQdOa2qAjR0ADRA
-m8NzB8CHwjcC3OBi+YLjpgy40JGhrAvTS5wSFVySkAMs+w657xf6bNf7WfLeJada
-ATvA6UTy/1Ye88OdOD5At500eG3JrTRiZVm23dHPXtjQPScUgnGL5s85tsd5O23d
-pTbKwsETH8PUGlcaFrTP363mG+89+d9BssbnkT4OKFnbIaGC44a69oXQJEPkyxey
-FVHKtRr4QdaVIP3vBk85
-=VofW
------END PGP SIGNATURE-----
+Andres Gomez
+
+2012/5/17 Kurt Seifried <kseifried@...hat.com>
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 05/17/2012 03:29 PM, Andres Gomez wrote:
+> > Planeshift is an online multiplayer role playing game which is
+> > open source (http://en.wikipedia.org/wiki/PlaneShift_(video_game))
+> > and "chatbubbles.xml" is a sort of configuration file for chat
+> > windows inside the game, so I can't be changed directly by remote
+> > users.
+>
+> It doesn't sounds like any security boundary is being crossed.
+>
+> If you can edit that file I'm guessing you can also modify the other
+> game files (executables, libraries, etc.), so there is no escalation
+> of privilege as far as I can tell. If the ifle is owned by a unique
+> user (e.g. it's a local config thing) again, if you can edit a users
+> files you already have access, so no escalation of privilege. If this
+> is correct then I will not be assigning a CVE.
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+>
+> iQIcBAEBAgAGBQJPtaKRAAoJEBYNRVNeJnmThwQP/iLSfGP5gGSQOIN8skNBns6S
+> dr/Obla/Xjy1iADbIAuTTYcvvdp07HYlJANDN+VMKSPRQVpmhZhbr0hVq7FNsNZ9
+> L2j2BW6kpde0PxhKV6hOpLjUOATgfNYg573XPZNUKU7qEqRVAFasYjqikEiGV+lq
+> h63ISGt/bLVvTyZaJAqeUkZz6AWa9sQBYyJ4ixYatyuipA67dfD4bqkbpYwiYtV1
+> uy7b24hvW4GTV4bkz3LbZUNxzJuxCn2fv/HCMbbgXV6zlbw9/IhGrQfSyYOGzcn3
+> ZJtsByq+kzDDZdZ5QE3fGQRud0+5a4dc00cth9gyh76wHgfH6GGNDcdA3YVzcmBv
+> 8rPR36LcUHvYCRLzn4+aP6A/y3FZOK++P/f5NofkuAMQsXmenGKhWuL3nex7LGRV
+> NYfycw+T89F1wPK5EB6HN0xjmfSxDKgsajHKuV4iJ0EqPwA45zVEFeFSAgqMhVBi
+> rVofuOF46iBeHYQHzW8tKU6y13+uC6kMh78U9ekFR1sAR5pYrot5BakBJkCsWUo7
+> 6X6NVl68OXiDXo8TkI9/OuDJFI7VVnzj2ccsOVRmAB+DKIqqRa6BRvv5aZ50OpfA
+> Q+0+0aPsLWJ7lMSDizvFDDw0PhdqPq3vkinBBKRVvSbs9UG1KnNt7ADzn7O7vigR
+> dXWRpeRoRNhHO/dfQawV
+> =Gbu8
+> -----END PGP SIGNATURE-----
+>
+
+-- 
+--
+AVISO DE CONFIDENCIALIDAD:
+
+Esta transmisión se entiende para uso del destinatario o la entidad a la 
+que va dirigida y puede contener información confidencial o protegida por 
+la ley. Si el lector de este mensaje no fuera el destinatario, considérese 
+por este medio informado que la retención, difusión, o copia de este correo 
+electrónico está estrictamente prohibida. Si recibe este mensaje por error, 
+por favor notifique inmediatamente al emisor y destruya el original. Gracias
+
+--
+CONFIDENTIALITY NOTICE:
+
+This transmission is intended for the use of the individual or entity to 
+which it is addressed, and it may contain information that is confidential 
+or privileged under law. If the reader of this message is not the intended 
+recipient, you are hereby notified that retention, dissemination, 
+distribution or copying of this e-mail is strictly prohibited. If you 
+received this e-mail in error, please notify the sender immediately and 
+destroy the original. Thank you.
+
