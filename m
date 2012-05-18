@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/10
-Message-ID: <50991DA0.3060403@mvista.com>
-Date: Tue, 06 Nov 2012 06:24:32 -0800
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/15
+Message-ID: <CANTw=MN_zwQjcrXqpV6K-HuHWQmZ97J80_eSwBnoptFZoDoO6w@mail.gmail.com>
+Date: Fri, 18 May 2012 17:48:22 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: Request for linux-distros@...openwall.org membership
+Subject: CVE id request: devotee (debian vote engine) cryptographically weak random numbers permit discovery of secret ballot submissions
 Content-Type: text/plain; charset=utf-8
 
-Henri,
+Hi,
 
+It has been disclosed [0] that the debian vote engine (devotee) [1]
+uses cryptographically weak pseudo-random numbers (intended to be
+48-bit, but really only 32-bit due to the use of a 32-bit seed feeding
+the 48-bit number generator) to generate ballot secret monikers.  This
+allows unprivileged persons to brute force the contents of presumably
+secret election ballots, and makes it possible to calculate the
+contents of secret voter ballots in all past debian elections.
 
-On 11/05/2012 09:53 AM, Henri Salo wrote:
-> On Mon, Nov 05, 2012 at 05:02:52PM +0530, Premchand Koneru wrote:
->> I recently joined the Montavista Security team and request membership to
->> thelinux-distros@...openwall.org  list, so that I may participate fully
->> in reporting and fixing vulnerabilities in Montavista. Here is my
->> GPG fingerprint:
->>
->> pub   2048R/5DA060C7 2012-11-05
->>       Key fingerprint = 7DF9 45B4 3116 8D5C D3C0  2A15 EADE D5B2 5DA0 60C7
->> uid                  Premchand Koneru<pkoneru@...sta.com  <mailto:pkoneru@...sta.com>>
->> sub   2048R/BE364B01 2012-11-05
->>
->> Thank you for consideration.
-> 
-> This is first time I heard about Montavista. Where is your package- and bug-tracker? Does Montavista use CVE?
-> 
+Ideally, devotee should use a random secret moniker with fully 64 (or
+preferably 128) bits that would require years rather than minutes or
+days to brute force [2].
 
-Our information can be found at:
-http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
+The source also uses /dev/urandom, which has less entropy than /dev/random.
 
-- Armin
+Please assign an id for this issue.
 
+Thanks,
+Mike
 
+[0] https://lists.debian.org/debian-devel/2012/04/msg00528.html
+[1] http://anonscm.debian.org/gitweb/?p=users/srivasta/debian/devotee.git
+[2] http://www.codinghorror.com/blog/2006/07/brute-force-key-attacks-are-for-dummies.html
