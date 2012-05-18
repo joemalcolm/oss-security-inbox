@@ -1,79 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/6
-Message-ID: <4680B31DCCC3B6428FB4E85ED9D540D00323B3@SRVEXCH.oppida.fr>
-Date: Mon, 19 Mar 2012 09:06:21 +0000
-From: Luc ABRIC <luc.abric@...ida.fr>
-To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
-CC: Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, Valérian PERRET <valerian.perret@...ida.fr>, "'jkn@...no'" <jkn@...no>
-Subject: CVE request: eZ Publish: insecure direct object reference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/14
+Message-Id: <201205182028.q4IKSafO029791@linus.mitre.org>
+Date: Fri, 18 May 2012 16:28:36 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2012-2762 Serendipity include/functions_trackbacks.inc.php SQL injection
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-My initial CVE ID request was dropped because it was missing some details. Here comes a re-submission.
+https://github.com/s9y/Serendipity/commit/87153991d06bc18fe4af05f97810487c4a340a92
+http://blog.s9y.org/archives/241-Serendipity-1.6.2-released.html
+CVE-2012-2762
 
-After posting to oss-security I was asked a few questions by Kurt Seifried from Redhat SRT while the vendor was contacted by Secunia asking for pretty much the same informations. Secunia then decided it wasn't their role to handle this vulnerability.
-I don't know if that's part of the process but I feel like you should know to avoid any duplicated work.
+(different affected versions than CVE-2012-2332)
 
-1) Email address of requester
-yann.michard@...ida.fr, luc.abric@...ida.fr & jkn@...no.
-Yann MICHARD discovered the vulnerability, so all the credits goes to him.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-2) Software name and optionally vendor name
-Vendor: Ez
-Product name: Ez Publish
-Editions: both Enterprise & Community
-
-3) At least one of (to determine is this a security issue):
-  1. Type of vulnerability
-OWASP A4: Insecure direct object reference
-
-  2. Exploitation vectors
-Access to the vulnerable website (no need for any credentials)
-
-  3. Attack outcome
-A browser is enough to execute the attack.
-
-4) For Open Source at least one of:
-  1. Link to vulnerable source code or fix Not available yet.
-
-  2. Link to source code change log
-Not available yet.
-
-  3. Link to security advisory
-Not available yet.
-
-  4. Link to bug entry
-http://issues.ez.no/19238
-The vendor does not want to release more details until a fix is pushed to the clients
-
-  5. Request comes from project member (a.k.a. "trust me, it's a problem") Jostein Knudsen <jkn@...no> from Ez can confirm the vulnerability.
-
-5) Affected version(s) (3.2.4, 3.x, current version, all current releases, something) The whole 4.x serie it seems (4.1 to 4.6 from the bug entry).
-
-6) Whether or not this has been previously requested (i.e. on OSS-Sec or to cve-assign) Well yeah but it seems that the request didn't have enough information.
-
-7) Is this an Open Source or commercial software request Both, the affected software has 2 editions, one open-source, one commercial.
-
-8) Is this an embargoed issue (if yes and commercial: send to cve-assign, if yes and open source: send to vs-sec?) Not really sure what you mean by embargoed.
-The French government asked us not do disclose any details until a fix is available AND installed on their systems because it affects some high profile websites.
-We didn't plan on releasing any details before the fix anyway.
-
-9) IF multiple issues are listed please list affected versions for each issue and/or who reported them (so we can determine CVE split/merge).
-It's the first issue we're publishing regarding this application.
-
-
-Regards,
-Luc ABRIC
-IT Security Expert
-
-6 avenue du Vieil Etang - Bâtiment B
-78180 Montigny-le-Bretonneux
-Phone: +33 (0)1 30 14 19 00
-Fax:       +33 (0)1 30 14 19 09
-Mobile: +33 (0)6 26 87 62 14
-luc.abric@...ida.fr
-
-www.oppida.fr
-
-
+iQEcBAEBAgAGBQJPtrB3AAoJEGvefgSNfHMd840H/i+ReLRXmlQRN4sqkhzEqkj5
+bgJfdSd2l9eU50wCdZtqOeV2Os8mLpDeO1KR4IFIQNcXGVJsh4z3wbTHF4WkNHaF
+8CqrzReerujVmhSABl2U4mz7m1/KoQCBdzKcF1dGbFMlUSGuUZpYi8+mFvHFieig
+54zhO5kiQJyAJJMb8xjcxkmvhxC2OD2rTULmw+zqswRGVVKpOPIxiB6m8d9zYLnD
+JFT31MtfNLmT9YwvTYctaU/Q9y2kP6yRdmYyPB0tojhXfURNCd5O5XRpf3L2Fqx3
+p01iJBap3unzTEcN9MnkK03vm0cvzpNRycbqfaPcoyf0e7TP6Vv44qFJ83NX1HE=
+=6lp5
+-----END PGP SIGNATURE-----
