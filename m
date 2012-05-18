@@ -1,21 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/30/1
-Message-ID: <20120430064747.GA28485@kludge.henri.nerv.fi>
-Date: Mon, 30 Apr 2012 09:47:47 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>
-Subject: CVE-request: SilverStripe before 2.4.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/6
+Message-ID: <4FB62711.8080800@redhat.com>
+Date: Fri, 18 May 2012 12:40:17 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Tornado (python-tornado): Tornado v2.2.1 tornado.web.RequestHandler.set_header() fix to prevent header injection
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2011 CVE-identifiers for SilverStripe issues fixed in 2.4.4:
+Hello Kurt, Steve, vendors,
 
-http://www.silverstripe.org/security-releases/
+Package:
+--------
+Tornado is an open source version of the scalable, non-blocking web server
+and tools that power FriendFeed:
 
-SQL information disclosure, SQL injection in Translatable extension, Cross
-Site Request Forgery in various CMS interfaces, XSS in controller action
-handling
+URL: http://www.tornadoweb.org/
+----
 
-Requested originally in http://seclists.org/oss-sec/2011/q1/12 but never got assigned. I can collect information about other versions too and request missing CVE-identifiers, but that will take some time.
+Issue:
+------
+A possibility of header injection / response splitting flaw was found in the
+way web request handler of Tornado, a scalable, non-blocking web server and
+tools, performed sanitization of input arguments, provided to routine setting
+the HTTP response header name and value. If an application using the Tornado
+web framework accepted untrusted user input and based on that input updated the
+HTTP headers content (to redirect the user etc.), by providing a
+specially-crafted input a remote attacker could use this flaw to perform
+cross-site scripting attacks, cross-user defacement, web cache poisoning etc.
 
-- Henri Salo
+Upstream v2.2.1 release changelog:
+[1] http://www.tornadoweb.org/documentation/releases/v2.2.1.html
+
+References:
+[2] https://bugs.gentoo.org/show_bug.cgi?id=415903
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=822852
+
+Could you allocate a CVE id for this? (should be CVE-2012-* one)
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
