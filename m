@@ -1,42 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/26/4
-Message-ID: <20120226215329.GA17311@openwall.com>
-Date: Mon, 27 Feb 2012 01:53:29 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/1
+Message-ID: <4FB5A291.6060401@redhat.com>
+Date: Thu, 17 May 2012 19:14:57 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Andres Gomez <agomez@...idsignal.com>
+CC: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, vuln@...unia.com
+Subject: Re: CVE Request: Planeshift buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 26, 2012 at 10:05:55PM +0100, Eric Leblond wrote:
-> On Sun, 2012-02-26 at 12:17 -0700, Kurt Seifried wrote:
-> > Are there any helpers that can be abused to open holes in the firewall
-> > externally, or is it only internal clients that can cause problems and
-> > trigger the firewall to improperly allow network traffic in/out.
-> 
-> No, attacker has to be on a network directly connected to the firewall.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I guess by "internal clients" Kurt was referring to machines behind the
-firewall (e.g., someone clicking an URL that has a string looking like
-an FTP command embedded in it, thereby triggering the FTP helper to open
-a hole - stuff that was discussed in late 1990s and partially mitigated
-by hardening the helpers at the time), whereas by "attacker on a network
-directly connected to the firewall" Eric means that the attacker may be
-_outside_ the firewall (behind its WAN interface), but on the same
-network segment (e.g., the attacker might have compromised a nearby
-server, such as of another customer at a colocation facility).
+On 05/17/2012 03:29 PM, Andres Gomez wrote:
+> Planeshift is an online multiplayer role playing game which is
+> open source (http://en.wikipedia.org/wiki/PlaneShift_(video_game))
+> and "chatbubbles.xml" is a sort of configuration file for chat
+> windows inside the game, so I can't be changed directly by remote
+> users.
 
-It is known that a machine will generally receive and process a packet
-routed to one of its NICs by MAC address even if the destination IP
-address is that of another NIC or even loopback (e.g., it is possible to
-access services bound to 127.0.0.1 in this way - but only from directly
-connected machines).  Without rp_filter or equivalent, it is possible to
-have these packets' source addresses match the other NIC's network
-segment.  My _guess_ (based solely on the info posted in here so far) is
-that the gist of Eric et al.'s new attack is to apply this approach
-against a protocol helper.  The novelty is thus in combining these known
-things together to arrive at something that to the best of my knowledge
-has not yet been discussed.
+It doesn't sounds like any security boundary is being crossed.
 
-I suppose Eric will tell us if this is the correct guess or not. ;-)
+If you can edit that file I'm guessing you can also modify the other
+game files (executables, libraries, etc.), so there is no escalation
+of privilege as far as I can tell. If the ifle is owned by a unique
+user (e.g. it's a local config thing) again, if you can edit a users
+files you already have access, so no escalation of privilege. If this
+is correct then I will not be assigning a CVE.
 
-Alexander
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPtaKRAAoJEBYNRVNeJnmThwQP/iLSfGP5gGSQOIN8skNBns6S
+dr/Obla/Xjy1iADbIAuTTYcvvdp07HYlJANDN+VMKSPRQVpmhZhbr0hVq7FNsNZ9
+L2j2BW6kpde0PxhKV6hOpLjUOATgfNYg573XPZNUKU7qEqRVAFasYjqikEiGV+lq
+h63ISGt/bLVvTyZaJAqeUkZz6AWa9sQBYyJ4ixYatyuipA67dfD4bqkbpYwiYtV1
+uy7b24hvW4GTV4bkz3LbZUNxzJuxCn2fv/HCMbbgXV6zlbw9/IhGrQfSyYOGzcn3
+ZJtsByq+kzDDZdZ5QE3fGQRud0+5a4dc00cth9gyh76wHgfH6GGNDcdA3YVzcmBv
+8rPR36LcUHvYCRLzn4+aP6A/y3FZOK++P/f5NofkuAMQsXmenGKhWuL3nex7LGRV
+NYfycw+T89F1wPK5EB6HN0xjmfSxDKgsajHKuV4iJ0EqPwA45zVEFeFSAgqMhVBi
+rVofuOF46iBeHYQHzW8tKU6y13+uC6kMh78U9ekFR1sAR5pYrot5BakBJkCsWUo7
+6X6NVl68OXiDXo8TkI9/OuDJFI7VVnzj2ccsOVRmAB+DKIqqRa6BRvv5aZ50OpfA
+Q+0+0aPsLWJ7lMSDizvFDDw0PhdqPq3vkinBBKRVvSbs9UG1KnNt7ADzn7O7vigR
+dXWRpeRoRNhHO/dfQawV
+=Gbu8
+-----END PGP SIGNATURE-----
