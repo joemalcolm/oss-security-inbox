@@ -1,68 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/31/5
-Message-ID: <50E19DC2.60608@moritz-naumann.com>
-Date: Mon, 31 Dec 2012 15:14:26 +0100
-From: Moritz Naumann <oss-security@...itz-naumann.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/13
+Message-ID: <4FB689DC.20900@redhat.com>
+Date: Fri, 18 May 2012 11:41:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: henri@...v.fi, security@...plemachines.org, irist.ir@...il.com
-Subject: Re: Dispute CVE-2012-5903 SMF index.php scheduled-parameter XSS
+Subject: Re: CVE Request -- kernel: incomplete fix for CVE-2011-4131
 Content-Type: text/plain; charset=utf-8
 
-On 31.12.2012 11:42 Henri Salo wrote:
-[..]
-> Until someone provides a working PoC I dispute this issue. SMF hasn't replied to my emails about this. Please note there is several comments[1][2] in forums about this too.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/18/2012 05:30 AM, Petr Matousek wrote:
+> The fix for CVE-2011-4131 was not complete. Malicious NFS server
+> could still crash the clients when more than 2 GETATTR bitmap words
+> are returned in response to the FATTR4_ACL attribute request.
 > 
-[..]
-> It's not a security vulnerability if attacker already has administrator access to the application. Should we REJECT CVE-2012-5903?
+> Upstream fixes: 20e0fa98b751facf9a1101edaefbc19c82616a68 
+> 5794d21ef4639f0e33440927bb903f9598c21e92 
+> 5a00689930ab975fdd1b37b034475017e460cf2a
+> 
+> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=822869
+> 
+> Thanks,
 
-Based on the authors' description it would seem more likely that the
-attack would use social engineering to trick the legitimate forum admin
-into accessing this URL with a payload in it, which would then trigger
-in his browser and disclose the admins' session cookie to an attacker by
-means of cross site scripting. Like you, I don't see how the value
-passed to the "scheduled" parameter would be echoed out, though.
+Please use CVE-2012-2375 for this issue.
 
-While it doesn't directly impact treatment of this latest report, I'd
-like to point out that there has been a previous report by the same
-author on the same product back in october, which I was also unable to
-reproduce:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-From:    irist.ir@...il.com
-To:      bugtraq@...urityfocus.com
-Date:    Tue, 23 Oct 2012 19:20:10 GMT
-Subject: Smf 2.0.2 Cross-Site Scripting Vulnerability
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-# Exploit Title : Smf 2.0.2 Cross-Site Scripting Vulnerability
-#
-# Author        : IrIsT.Ir
-#
-# Discovered By : Am!r
-
-http://packetstormsecurity.com/files/117618/SMF-2.0.2-Cross-Site-Scripting.html
-
-
-Same for a supposed vulnerability in Wordpress which was reported the
-day after:
-
-From:    irist.ir@...il.com
-To:      bugtraq@...urityfocus.com
-Subject: Wordpress 3.4 Cross-Site Scripting Vulnerability
-
-# Exploit Title : Wordpress 3.4 Cross-Site Scripting Vulnerability
-#
-# Author        : IrIsT.Ir
-#
-# Discovered By : Am!r
-
-
-
-I contacted the sender address back then, pointing out that:
-
-> it's an XSS if the application returns the input in an unencoded way,
-> allowing an attacker (or victim) to inject script code into the
-> applications output. I don't see how this is the case with the SMF or
-> Wordpress code you quoted.
-
-I have not received a reply.
-
-Moritz
+iQIcBAEBAgAGBQJPtoncAAoJEBYNRVNeJnmTEn4P/ivawBkc6pRsnsqOot1eIm0h
+J4CP3vC5yEu4qUZloUt/hOqw6XUiKOsfbEozClJ4txn8YJc62Wl6xee9BjQl+dOB
+BIAKfkhEns3MIgoc+L4ODE76Vyamn1jtABX6DhLShREEY2HCXArO1IHMhfW8u9FQ
+AFowP05JPBasVb4w6Xzb+MMvbREgyO40q0Zs10Uk5IxHbeDX0jqqRJsgXOmIk6KZ
+UIZN4s9e2dGWQ0N1j/l8WQa+08Cg6DEaHIj8zybU86b2mzblPRx3Jh98YNruam0f
+JFgU9/dIBWMrZXg1iX1xMzLGkY3p4fW+k33RR6dzuL0gu7QvP0yj3MGFr2CFmvHI
+r+yz8bVXMpWd5Evn2B8SCgc7SqpfwK1GHbGqg5k6v0SZbxIlaut8znEFoqpCEkAj
+My/4S2AfDNRcSbzlRjyvNQroyBXt51P4lCsRZ86OYgEmB+FsCTJzj/F2U3cnIz41
+KP2nA4+tJZOoUKjLanwrBxLlCgZGX5TEl1Rj/1PO2tWNqiLXQjO1Owa9wsfLAFwJ
+b3MSjcaDJQmeXp2Ya6l18Zsh21pmsDrPQavR98YrsO4BOhajsno2Bj8mdytjCmZd
+MShMw2ItAbF004DF+xnmc+e+PZuc2iqTy+X7VZNWaj3hIncCGMWiF/L/F6UghtTS
+H0LIgJP8nwsp/4cmYHsZ
+=wG27
+-----END PGP SIGNATURE-----
