@@ -1,21 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/13/1
-Message-ID: <4F87D5F7.1020704@redhat.com>
-Date: Fri, 13 Apr 2012 12:59:59 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Heap corruption in openjpeg
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/19/2
+Message-ID: <DD8B8FEBBFAF9E488F63FF0F1A69EDD108DA3A10@ftrdmel1>
+Date: Sat, 19 May 2012 21:20:36 +0200
+From: <fabrice.fontaine@...nge.com>
+To: <henri@...v.fi>, <touko.korpela@....fi>
+Cc: <oss-security@...ts.openwall.com>
+Subject: RE: libupnp buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+You can find the list of source code commits for the 1.6.16 here: http://pupnp.git.sourceforge.net/git/gitweb.cgi?p=pupnp/pupnp;a=log;h=01d7c05fb882bb1904f5022a33eef8a68d8b8bdc.
 
-While looking at openjpeg, i found the following bug in their tracker,
-which still seems to be un-addressed.
-http://code.google.com/p/openjpeg/issues/detail?id=5
+Moreover, the most important bug fixes have been added in the tracker: http://sourceforge.net/tracker/?atid=841026&group_id=166957&func=browse.
 
-I dont think a CVE id has been assigned to this issue yet.
+To sum up, most of the issues were about memory leaks (http://sourceforge.net/tracker/?func=detail&aid=3497009&group_id=166957&atid=841026), a few of them were about security like an out of bound access (http://sourceforge.net/tracker/?func=detail&aid=3496933&group_id=166957&atid=841026, classified as CWE-119 by Coverity). However, most of the other "security" changes have been made to:
+	- replace strcpy or sprint by strncpy or snprintf as using sprintf is seen as a defect by coverity (CWE-676)
+ 	- remove implicit integer conversion between unsigned and signed (seen as CWE-681 by Coverity)
 
+Best Regards,
 
+Fabrice
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+-----Message d'origine-----
+De : Henri Salo [mailto:henri@...v.fi] 
+Envoyé : samedi 19 mai 2012 20:47
+À : Touko Korpela
+Cc : FONTAINE Fabrice RD-MAPS-REN; oss-security@...ts.openwall.com
+Objet : Re: libupnp buffer overflows
+
+On Fri, May 18, 2012 at 10:22:52PM +0300, Touko Korpela wrote:
+> On Fri, May 18, 2012 at 08:43:52PM +0200, Florian Weimer wrote:
+> > * Touko Korpela:
+> > 
+> > > Upstream changelog for libupnp (/usr/share/doc/libupnp6/changelog.gz) lists
+> > > many fixes for buffer overflows in version 1.6.16. Should this be added to
+> > > tracker and check if CVE number is allocated?
+> > 
+> > It seems that the list of issues is fairly long.  Have you got a list
+> > of source code commits?
+> 
+> Unfortunately, no. I only noticed this from the changelog.
+> Maybe maintainer and/or upstream can tell if this can be exploited.
+
+Fabrice replied: 
+"""
+Those issues were found by Coverity (http://www.coverity.com). Coverity affects CWE identifiers like CWE-170 but I haven't kept the CWE identifiers of all the fixed bugs.
+"""
+
+Did you Fabrice verify if these had security impact? I can try to help if needed.
+
+- Henri Salo
