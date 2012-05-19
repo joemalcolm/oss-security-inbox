@@ -1,74 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/30/1
-Message-ID: <501621F3.5090402@redhat.com>
-Date: Sun, 29 Jul 2012 23:56:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: ImageMagick Magick_png_malloc() / GraphicsMagick png_IM_malloc() size issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/19/1
+Message-ID: <20120519184707.GA8073@kludge.henri.nerv.fi>
+Date: Sat, 19 May 2012 21:47:07 +0300
+From: Henri Salo <henri@...v.fi>
+To: Touko Korpela <touko.korpela@....fi>
+Cc: fabrice.fontaine@...nge.com, oss-security@...ts.openwall.com
+Subject: Re: libupnp buffer overflows
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, May 18, 2012 at 10:22:52PM +0300, Touko Korpela wrote:
+> On Fri, May 18, 2012 at 08:43:52PM +0200, Florian Weimer wrote:
+> > * Touko Korpela:
+> > 
+> > > Upstream changelog for libupnp (/usr/share/doc/libupnp6/changelog.gz) lists
+> > > many fixes for buffer overflows in version 1.6.16. Should this be added to
+> > > tracker and check if CVE number is allocated?
+> > 
+> > It seems that the list of issues is fairly long.  Have you got a list
+> > of source code commits?
+> 
+> Unfortunately, no. I only noticed this from the changelog.
+> Maybe maintainer and/or upstream can tell if this can be exploited.
 
-I was going to request an embargo date for this issue once I had
-spoken with ImageMagick however they felt an embargo was not needed
-and publicly committed a source code fix for the issue, so this issue
-is no longer private.
+Fabrice replied: 
+"""
+Those issues were found by Coverity (http://www.coverity.com). Coverity affects CWE identifiers like CWE-170 but I haven't kept the CWE identifiers of all the fixed bugs.
+"""
 
-===========================
+Did you Fabrice verify if these had security impact? I can try to help if needed.
 
-Tom Lane (tgl@...hat.com) found an issue in ImageMagick. Basically
-CVE-2011-3026 deals with libpng memory allocation, limitations have been
-added so that a bad PNG can't cause the system to allocate a lot of
-memory causing a denial of service. However on further investigation of
-ImageMagick Tom Lane found that PNG malloc function (Magick_png_malloc)
-in turn calls AcquireMagickMemory with an improper size argument:
-
-#ifdef PNG_USER_MEM_SUPPORTED
-static png_voidp Magick_png_malloc(png_structp png_ptr,png_uint_32 size)
-{
-  (void) png_ptr;
-  return((png_voidp) AcquireMagickMemory((size_t) size));
-}
-
-This is incorrect, the size argument should be declared
-png_alloc_size_t according to 1.5, or png_size_t according to 1.2.
-
-"As this function stands, it invisibly does the wrong thing for any
-request over 4GB.  On big-endian architectures it very possibly will
-do the wrong thing even for requests less than that. So the reason why
-the hard-wired 4GB limit prevents a core dump is that it masks the ABI
-mismatch here."
-
-So basically we have memory allocations problems that can probably
-lead to a denial of service.
-
-===========================
-
-For more information please see:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=844101
-https://bugzilla.redhat.com/show_bug.cgi?id=844105
-
-
-
-- -- Kurt Seifried Red Hat Security Response Team (SRT) PGP: 0x5E267993
-A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQFiHzAAoJEBYNRVNeJnmTsM0QAL7mEDEB92oY3kf99f/DLidS
-O7DAqCVKqbqGh81kkxvg3YTzMKubtsI15W+doY2UwNkDEWeuKGKoBLsYzpLK+/zt
-gTGlJTC5sC69NYB/LSbBoUW8vm9dAEbIlVzdM9BuftvtXx3Ytsu3ss7u7tZ1IaE4
-aLMe1ttj+jpzEAlSGCZCCU8GduPiwHubBAJuTomQ9mAoXfwoxEKiv/T4DiQoE9Gf
-eZv5MlhUpiMleLvItcPLs91d1B7fnAKmPtv+6RvZpFWgFMnAUNaTThYPraylBMXc
-dpyL7xj2eGa3+3SONJ+ydqEpBfP5Fck9HV09mXyg/EOzg5XlgFtwID3Nez3208yS
-/HpdW8p5DQvvXnCklDQc2DwFii3qk4Z13J6MucFjnTwX/2YSkqOWTzcNRSGOEBQh
-zxL2oXlyT7fQFAi2l37DlE6+y+egta6QWmpxU6v0dzvdliDN9TkXWsjSVKZ8iOiC
-8g2uvuL+AdUFRMB7PN/SxUZElDmM/iKtx8sii0iWxmClrSIO53aDO9Hoo5LEva/R
-MGY+ZOHfulbVy1TyRN4+zAZ++0j+EpDWaiMhhQmmCwX2pUShtl4fZ0gGNbni1I+m
-StUXWjkKSHjVEcZ8wtLg6CvmpeKNJw1n438ml5ZZVpFx9WB6rxOZixgEX0WtfEI3
-KON6EIqz9kD+KeFBh9+N
-=QjKj
------END PGP SIGNATURE-----
+- Henri Salo
