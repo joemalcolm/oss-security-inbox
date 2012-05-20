@@ -1,126 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/12/2
-Message-ID: <20439.12295.26429.618451@mariner.uk.xensource.com>
-Date: Tue, 12 Jun 2012 13:03:19 +0100
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xensource.com, xen-devel@...ts.xensource.com, xen-users@...ts.xensource.com, oss-security@...ts.openwall.com
-Subject: Xen Security Advisory 8 (CVE-2012-0218) - syscall/enter guest DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/20/3
+Message-ID: <CAPYM6Vx=8PUi9sBvS8Z5jQ=9wq2dzNSN3rxcn5fS1=e7UYexnw@mail.gmail.com>
+Date: Sun, 20 May 2012 17:47:35 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
+Subject: Acuity CMS 2.6.x <= Path Traversal Arbitrary File Access
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+1. OVERVIEW
 
-               Xen Security Advisory CVE-2012-0218 / XSA-8
-                              version 7
-
-     guest denial of service on syscall/sysenter exception generation
-
-UPDATES IN VERSION 7
-====================
-
-Public release.  Previous versions were embargoed.
-
-ISSUE DESCRIPTION
-=================
-
-When guest user code running inside a Xen guest operating system
-attempts to execute a syscall or sysenter instruction, but when the
-guest operating system has not registered a handler for that
-instruction, a General Protection Fault may need to be injected into
-the guest.
-
-It has been discovered that the code in Xen which does this fails to
-clear a flag requesting exception injection, with the result that a
-future exception taken by the guest and handled entirely inside Xen
-will also be injected into the guest despite Xen having handled it
-already, probably crashing the guest.
-
-IMPACT
-======
-
-User space processes on some guest operating systems may be able to
-crash the guest.
-
-VULNERABLE SYSTEMS
-==================
-
-HVM guests are not vulnerable.
-
-32- and 64-bit PV guests may be vulnerable, depending on the CPU
-hardware, the guest operating system, and its exact kernel version and
-configuration.
-
-MITIGATION
-==========
-
-This issue can be mitigated by running HVM (fully-virtualised).
-
-In some cases this issue can be mitigated by upgrading the guest
-kernel to one which installs hooks for sysenter and/or syscall, as
-applicable.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch will resolve the issue.
-
-These patches also resolve the (more serious) issue described in
-XSA-7 (CVE-2012-0217).
-
-These changes have been made to the staging Xen repositories:
-                    XSA-7:              XSA-8:
- xen-unstable.hg     25480:76eaf5966c05  25200:80f4113be500+25204:569d6f05e1ef
- xen-4.1-testing.hg  23299:f08e61b9b33f  23300:0fec1afa4638
- xen-4.0-testing.hg  21590:dd367837e089  21591:adb943a387c8
- xen-3.4-testing.hg  19996:894aa06e4f79  19997:ddb7578abb89
-
-PATCH INFORMATION
-=================
-
-The attached patches resolve both this issue and that reported in
-XSA-7 (CVE-2012-0217).
-
- xen-unstable 25204:569d6f05e1ef or later    xsa7-xsa8-unstable-recent.patch  
- xen-unstable 25199:6092641e3644 or earlier  xsa7-xsa8-unstable-apr16.patch
- Xen 4.1, 4.1.x                              xsa7-xsa8-xen-4.1.patch
- Xen 4.0, 4.0.x                              xsa7-xsa8-xen-4.0.patch
- Xen 3.4, 3.4.x                              xsa7-xsa8-xen-3.4.patch
-
-$ sha256sum xsa7-xsa8-*patch
-00853d799d24af16b17c8bbbdb5bb5144a8a7fad31467c4be3d879244774f8d2  xsa7-xsa8-unstable-apr16.patch
-71f9907a58c1a1cd601d8088faf8791923d78f77065b94dba8df2a61f512530d  xsa7-xsa8-unstable-recent.patch
-55fb925a7f4519ea31a0bc42d3ee83093bb7abd98b3a0e4f58591f1ae738840a  xsa7-xsa8-xen-3.4.patch
-6a7e39121ec1f134351fdf34f494d108500aaa4190a9f7965e81c4e96270924e  xsa7-xsa8-xen-4.0.patch
-52d8288718b4a833eb437fd18d92b7d412fbe01900dbd0b437744a1df4d459da  xsa7-xsa8-xen-4.1.patch
-
-NOTE REGARDING EMBARGO
-======================
-
-The fix for this issue has already been published as xen-unstable.hg
-changesets 25200:80f4113be500 and 25204:569d6f05e1ef.  However, this
-has not been flagged as a security problem, and since the affected
-area of code is the same as that for XSA-7 (CVE-2012-0217), we have
-concluded that this advisory should be under the same embargo as
-XSA-7.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJP1yqMAAoJEIP+FMlX6CvZQRoH/1Do71YkaMvKoPo/VCHqUuB1
-5mJve/SiTK5Y5kggnLfnpZeuLjlntHCT5F//Do7N21WDVdwZXFBItlvjhKyNGA0Y
-ohqzqzAQ0c2l/mE3ToaLhhtuFb8U06q8Ud+pQ9QbMHHpJvGXPzDbNG12L/fZDwyf
-ZbMqB2j8+TVuRXPlbdZabNUAcZ+HOJHb1NloKCbX0qwMG4p5FJ3OdkDX7r5OjPKj
-sIJAaltBINGjRrqYMLB4UUQdrftu1ftfU/GFVYy8+t3uNj0fBgkCPUlGbbQs2SF2
-+VtLUUG6rzVlRdHyhVMswz3sZtR7Tow6xwPk3Sr4yfrI15rH2pUJI7if8vZ1ZQ8=
-=elZi
------END PGP SIGNATURE-----
+Acuity CMS 2.6.x (ASP-based) versions are vulnerable to Path Traversal.
 
 
-Download attachment "xsa7-xsa8-unstable-recent.patch" of type "application/octet-stream" (1589 bytes)
+2. BACKGROUND
 
-Download attachment "xsa7-xsa8-unstable-apr16.patch" of type "application/octet-stream" (5044 bytes)
+Acuity CMS is a powerful but simple, extremely easy to use, low
+priced, easy to deploy content management system. It is a leader in
+its price and feature class.
 
-Download attachment "xsa7-xsa8-xen-4.1.patch" of type "application/octet-stream" (4939 bytes)
 
-Download attachment "xsa7-xsa8-xen-4.0.patch" of type "application/octet-stream" (3960 bytes)
+3. VULNERABILITY DESCRIPTION
 
-Download attachment "xsa7-xsa8-xen-3.4.patch" of type "application/octet-stream" (3960 bytes)
+The issue is due to the script, /admin/file_manager/browse.asp, not
+properly sanitizing user input, specifically directory traversal style
+attacks (e.g., ../../) supplied via the 'path' parameter. It would
+allow the attacker to access arbitrary files outside of web root
+directory.
+
+
+4. VERSIONS AFFECTED
+
+Tested with version 2.6.2.
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://localhost/admin/file_manager/browse.asp?field=&form=&path=../../
+
+
+6. SOLUTION
+
+The Acunity CMS is no longer in active development.
+It is recommended to user another CMS in active development and support.
+
+
+7. VENDOR
+
+The Collective
+http://www.thecollective.com.au/
+
+
+8. CREDIT
+
+Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2012-05-20: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5Bacuity_cms2.6%20x_(asp)%5D_path_traversal
+
+#yehg [2012-05-20]
