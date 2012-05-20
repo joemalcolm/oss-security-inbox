@@ -1,43 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/4
-Message-ID: <20120220145449.GC15321@ngolde.de>
-Date: Mon, 20 Feb 2012 15:54:49 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/20/2
+Message-ID: <4FB8721E.5000406@redhat.com>
+Date: Sat, 19 May 2012 22:25:02 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vulnerabilitites in Debian F*EX <= 20100208 and F*EX 20111129-2.
+CC: msantand@....sans.org
+Subject: Re: CVE Request: PHP 5.4.3 on Windows com_print_typeinfo() Buffer Overflow (?)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Henri Salo <henri@...v.fi> [2012-02-20 14:16]:
-> On Mon, Feb 20, 2012 at 01:15:10PM +0100, Nico Golde wrote:
-> > * muuratsalo experimental hack lab <muuratsalo@...il.com> [2012-02-20 12:51]:
-> > > I am Nicola Fioravanti aka muuratsalo | muuratsalo experimental hack lab.
-> > > I am writing you because I have discovered some vulnerabilities in
-> > > Debian F*EX <= 20100208 (stable) and F*EX 20111129-2. (testing and
-> > > unstable)
-> > > I have already contacted the Author who confirmed the vulnerabilities
-> > > and applied the suggested fixes.
-> > > A major update of F*EX  has been released on the 15th of February
-> > > 2012. The Debian Mantainer of the package is working on it.
-> > > Together with the Author we decided not to release any public advisory
-> > > before the release of the new Debian package.
-> > > 
-> > > I would be grateful if you could assign CVE ids to the discovered issues.
-> > 
-> > I asked Nicola to send this to oss-security as the impact of this bug is 
-> > fairly low in my opinion and the issue is public via the upstream changelog.
-> > 
-> > Can someone please assign a CVE id to this? Given that all of the vulnerable 
-> > input parameters are in the fup component, I guess one id should be 
-> > sufficient.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/19/2012 10:23 PM, Kurt Seifried wrote:
+> Original sources: 
+> https://isc.sans.edu/diary/PHP+5+4+Remote+Exploit+PoC+in+the+wild/13255
+>
 > 
-> Is there a Debian bug-report about this issue?
+http://packetstormsecurity.org/files/112851/php54-exec.txt
+> http://www.exploit-db.com/exploits/18861/ 
+> http://www.reddit.com/r/netsec/comments/tuyp3/isc_diary_php_54_remote_exploit_poc_in_the_wild/
+>
+>  From the exploit:
+> 
+> // Exploit Title: PHP 5.4 (5.4.3) Code Execution 0day (Win32) //
+> Exploit author: 0in (Maksymilian Motyl) // Email:
+> 0in(dot)email(at)gmail.com // * Bug with Variant type parsing
+> originally discovered by Condis // Tested on Windows XP SP3 fully
+> patched (Polish)
+> 
+> There appears to be a buffer overflow in com_print_typeinfo(), it 
+> appears to only affect PHP on Windows (COM object related).
 
-Yes, http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=660621
+Please use CVE-2012-2376 for this issue.
 
-Cheers
-Nico
-P.S. the bug report does not mention the other vulnerable parameters as I 
-forgot those
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Content of type "application/pgp-signature" skipped
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPuHIeAAoJEBYNRVNeJnmTQXoP/3OD9gIBD2mC8aHtktZeSVHt
+4lWz1ONf6cMazdiOZjHGF7OK/ZIIFoocAVpwxKUjCoTWRPoboQOnrenY/ff0kD/x
+MqIm84i51Yqzjbh+3MM9muzjJ2PmvahNmlV7hjEcyJWHww8NiEs1kxtGGrGcb0dU
+caJSkCaauXrlbBOpwOpx56WiKebuV5v0kxPTs6fQSapmyAiBL82k+194VYJ6GKHS
+vU8vf9XF3XGV+Z/wojRaETN5nBRtcssKJCUHquin+PRmyZoljyQFpj7QKm1uNXAX
+A14kYz0XjwqgkJxjVWaGF5Y7tcWsAIUcxNby6WyBK1ewzQpiyVPt5/W9/OyWzs31
+Dxi78nm5MlCq0xVkTUpvg9bVvnEyg+ZkA2FKVnwJl+AWAP0p3QEDrn7ocyEJl7PU
+6FpTQ+JYN13p1bJrGJsP1SXhh8/pyA0BsYUEyREQmgo6CA6p6vTvRHxIXdpEf1dt
+T0P/iBXPLb7+kK5m8UMlXQ7cGfRusO2qJFt9ratT+K/cEoKDutvNCmSaucfDNgLS
+tx/+BiC5e/MmAaMUOgGwAw2bP2LTWKNj/xAg4rpkQm4oYZHgfsGLpeTnd/MogLpH
+DYzAADhuDcZbkY0qy31vNINC4aWUcr+2nqEeSHNdoTHev4h540iUHdm4juPX3czc
+J3CFF70WsHikbJeyrPx/
+=YHEn
+-----END PGP SIGNATURE-----
