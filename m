@@ -1,69 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/3
-Message-ID: <CAHmME9ofxu3M1s5HZ6pFhN54Aw4ZYngmuydPMtBubFHowF+Q-A@mail.gmail.com>
-Date: Thu, 9 Feb 2012 03:28:16 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: Djalal Harouni <tixxdz@...ndz.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux procfs infoleaks via self-read by a SUID/SGID program (was: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/20/1
+Message-ID: <4FB871B2.8020908@redhat.com>
+Date: Sat, 19 May 2012 22:23:14 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, msantand@....sans.org
+Subject: CVE Request: PHP 5.4.3 on Windows com_print_typeinfo() Buffer Overflow (?)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 9, 2012 at 00:03, Djalal Harouni <tixxdz@...ndz.org> wrote:
->
-> BTW lseek() on seq files will only succeed on /proc/self/ files.
->
-> chsh which is a setuid on most of the distros will read stdin and print
-> errors to stderr, this is why it can be used as a target program, I did
-> not search but if there is another program then it may be our 'winner'.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This issue is actually somewhat similar to the /proc/pid/mem issue a
-few weeks ago. Seems like Linus' logic from this commit [1] should be
-applied to the rest of proc.
+Original sources:
+https://isc.sans.edu/diary/PHP+5+4+Remote+Exploit+PoC+in+the+wild/13255
+http://packetstormsecurity.org/files/112851/php54-exec.txt
+http://www.exploit-db.com/exploits/18861/
+http://www.reddit.com/r/netsec/comments/tuyp3/isc_diary_php_54_remote_exploit_poc_in_the_wild/
 
+- From the exploit:
 
+// Exploit Title: PHP 5.4 (5.4.3) Code Execution 0day (Win32)
+// Exploit author: 0in (Maksymilian Motyl)
+// Email: 0in(dot)email(at)gmail.com
+// * Bug with Variant type parsing originally discovered by Condis
+// Tested on Windows XP SP3 fully patched (Polish)
 
-> $ for i in $(seq 460 480); \
->  do ./procfs_leak_2 /usr/bin/chfn /proc/self/smaps $i; done
-> Password: chfn: PAM authentication failed
-> Password: chfn: PAM authentication failed
-> Password: chfn: PAM authentication failed
-> Password: chfn: PAM authentication failed
-> Password: chfn: PAM authentication failed
-> Password: chfn: PAM authentication failed
-> Password: chfn: PAM authentication failed
-> Password: chfn: PAM authentication failed
-> Password: Changing the user information for tixxdz
-> Enter the new value, or press ENTER for the default
->        Full Name: tixxdz
->                Room Number [er]:       Work Phone []:  Home Phone []:
->                chfn: invalid room number: '00608000-0060a000 rw-p
->                00008000 08:01 218841
->                /usr/bin/chfn'
-> Password: chfn: PAM authentication failed
-> Password: chfn: PAM authentication failed
->
->
-> This was tested on Ubuntu, Debian default setuid 'chfn'.
->
+There appears to be a buffer overflow in com_print_typeinfo(), it
+appears to only affect PHP on Windows (COM object related).
 
-Awesome! Nice work.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-> You can do this to leak maps of libc... since the lseek() on /proc/self
-> will pass the ptrace_may_access() check.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-
-> Solar as I've said above I believe that there is a compilcated problem
-> about these files, should I discuss them here or just finish my patches
-> and try to discuss them on lkml ?
->
-
-Let me know if you move it to LKML -- I'm curious to see how this pans out.
-
-
-> Thanks.
->
-> > Alexander
->
-
-
-[1] http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=e268337dfe26dfc7efd422a804dbb27977a3cccc
+iQIcBAEBAgAGBQJPuHGyAAoJEBYNRVNeJnmTzdsP/3whmwu6ImrekHLWJQ/lsms7
+ZRyIlkawEmTD6VO1PqJ/IN+a4Gid168ARsQV0KOsKJ9dd9cdcGBIRQ3qT1ENfplG
+MnL9B89Z75l7Zk28exVXCJcKvCczN83g/tMVUBceGH2hk8bQYbcykYeUTBiXVCsa
+JA9E8wPMmNQjRHvkbKL1Ec3uMLJuZAAx8OIqSi87PXalVtOyfR+EXFJnGo8VemID
+tyhb7UOk7toUJFG77pIal0LkXbE6P9JTjibzLtmvMMrmwXzrRlxA4XBqCeHIpbk5
+Dc+ukBDYK/BqhXl3OoetbYXglrSV2HjRKAQSpiZe/3iTm41foiDRjc4YBZFgKXf8
+DY5P3/022VHVXKou88+QFZjr1yGRqlncheZL44cZzvoWCPAR6XjDAlzJP4Gh2FGn
+E6hHoa1Sy70k06nKxUPx7KEzZ+KoUAF1pqsw9mzE6Dv4k4BsREGaceDXpwu8loaY
+jzaI28SQtVMFsVB1Lgpd2jt4U2ZLbtbsmlyHNw2EYwJrWE+/Rq4zD0VLzq4OMArv
+brkQ/xQCZG+feNVnpXrqv4zKCgYBKZWgQqZxSpEJHmRzhSzXvIh/FOxkbp6Lf+Sh
++1Z6puxEOHlEO20I5D4DD//r+8YqIb0zerKClsKAQj7Q54LYOAC62g6AbePW95S5
+3gBx2LxCAFlwMwrUB2zm
+=aBYa
+-----END PGP SIGNATURE-----
