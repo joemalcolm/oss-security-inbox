@@ -1,136 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/2
-Message-ID: <20120810154652.0a2f4027@redhat.com>
-Date: Fri, 10 Aug 2012 15:46:52 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, coley@...us.mitre.org
-Cc: secalert_us@...cle.com, John Haxby <john.haxby@...cle.com>
-Subject: Re: MySQL CVEs (was: Security vulnerability in MySQL/MariaDB sql/password.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/21/1
+Message-ID: <20120521063831.GA30799@suse.de>
+Date: Mon, 21 May 2012 08:38:31 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: some drm overflow checks
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 3 Aug 2012 14:23:58 +0200 Tomas Hoger wrote:
+Hi,
 
-> On Wed, 27 Jun 2012 13:47:05 +0200 Tomas Hoger wrote:
-> 
-> > On Mon, 18 Jun 2012 18:50:01 +0200 Tomas Hoger wrote:
-> > 
-> > > Additionally, following bugs try to collect info on MySQL security
-> > > fixes in the last released and an upcoming Oracle CPU:
-> > > 
-> > > https://bugzilla.redhat.com/show_bug.cgi?id=832477
-> > > https://bugzilla.redhat.com/show_bug.cgi?id=832540
-> > > 
-> > > It would be nice if Oracle could confirm the mapping between CVEs
-> > > and particular issues to avoid any incorrect guesses.
-> > 
-> > I was really hoping to see some comments form Oracle security team and
-> > an explicit confirmation of the correct CVE guesses.  Is there a good
-> > reason why CVE mapping for public issues can not be provided?
-> 
-> July CPU does not mention any of the CVEs that were previously
-> mentioned here.
-> 
-> http://www.oracle.com/technetwork/topics/security/cpujul2012-392727.html#AppendixMSQL
-> 
-> Judging from the CVSS scores, CVE-2012-2122 (password checking issue)
-> is not duplicated by any CVE listed.  This does not sound too
-> surprising, as it's quite likely no Oracle MySQL build was really
-> affected by this flaw, which would explain why this may have not been
-> treated as security for binary packages.
-> 
-> There does not seem to be any obvious explanation why CVE-2012-2749 and
-> CVE-2012-2750 are not listed.  It's quite possible they are duplicates
-> of or covered by (as it seems some CVEs refer to more than one issue)
-> CVE-2012-1734 and CVE-2012-1689 respectively.
-> 
-> Looking at the issue that affected 5.1 versions and going through the
-> change between affected and fixed versions, it seems CVEs form the CPU
-> refer to the following issues:
-> 
-> 
-> 2012-07 CPU
-> -----------
-> 
-> CVE-2012-0540 GIS Extension
-> 
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.7
-> BUG#12414917 - ISCLOSED() CRASHES ON 64-BIT BUILDS
-> 
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.8
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.9
-> BUG#12537203 - CRASH WHEN SUBSELECTING GLOBAL VARIABLES IN GEOMETRY FUNCTION ARGUMENTS
-> 
-> 
-> CVE-2012-1734 Server Optimizer
-> 
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.16
-> Bug#11766300 59387: FAILING ASSERTION: CURSOR->POS_STATE == 1997660512 (BTR_PCUR_IS_POSITIONE
-> Bug#13639204 64111: CRASH ON SELECT SUBQUERY WITH NON UNIQUE INDEX
-> -> CVE-2012-2749
-> 
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.13
-> Bug#13031606 VALUES() IN A SELECT STATEMENT CRASHES SERVER
-> 
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.3
-> Bug#13519724 63793: CRASH IN DTCOLLATION::SET(DTCOLLATION &SET)
-> 
-> 
-> CVE-2012-1689 Server Optimizer
-> -> dupe of / overlaps with CVE-2012-2750?
-> 
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3695
-> Bug#13012483:EXPLAIN EXTENDED, PREPARED STATEMENT, CRASH IN CHECK_SIMPLE_EQUALITY
-> 
-> 
-> +++++++++++
-> 
-> 
-> 2012-04 CPU
-> -----------
-> 
-> CVE-2012-1703 Server Optimizer
-> 
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.9.1
-> Bug #11765810 58813: SERVER THREAD HANGS WHEN JOIN + WHERE + GROUP BY IS EXECUTED TWICE FROM P
-> 
-> 
-> CVE-2012-0583 MyISAM
-> 
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/1810.4002.1
-> Bug#12361113: CRASH WHEN "LOAD INDEX INTO CACHE" WITH TOO SMALL KEY CACHE
-> 
-> 
-> CVE-2012-1688 Server DML
-> 
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.8.4
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/2661.806.4
-> Bug#13510739 63775: SERVER CRASH ON HANDLER READ NEXT AFTER DELETE RECORD
-> -> CVE-2012-2102
-> 
-> 
-> CVE-2012-1690 Server Optimizer
-> 
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.8.5
-> Bug#12663165 SP DEAD CODE REMOVAL DOESN'T UNDERSTAND CONTINUE HANDLERS
-> 
-> 
-> Oracle security team, please confirm the mapping above if it's correct,
-> or provide corrections.
+spotted in xorls blog, who spotted it in the kernel stable changelog:
+https://xorl.wordpress.com/2012/05/17/linux-kernel-drm-intel-i915-multiple-ioctl-integer-overflows/
 
-Assuming that upstream is probably not likely to stop ignoring these
-requests, I wonders what would be the least bad approach to this CVE
-wise.  Apparently, if anyone needs to backport any of this and don't
-want to risk using wrong Oracle id because of an incorrect guess, I
-think the only way to to request new "public" CVE for these issues.
-Rather obvious drawback of such approach is that several CVEs are
-likely to be duplicated, or even triplicated (it's possible that
-CVE-2012-2750 and CVE-2012-1689 are for the same thing, but neither of
-them can be mapped to bug 13012483).
+It has two issues:
 
-Steven, can you think of any least damaging approach from the CVE point
-of view?
+1. overflow of cliprect kmalloc as args->num_cliprects is not bounded
+  and passed in via a user ioctl.
 
-Thank you!
+  Fixed via ed8cd3b2cd61004cab85380c52b1817aca1ca49b in mainline:
+  commit ed8cd3b2cd61004cab85380c52b1817aca1ca49b
+  Author: Xi Wang <xi.wang@...il.com>
+  Date:   Mon Apr 23 04:06:41 2012 -0400
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+    drm/i915: fix integer overflow in i915_gem_execbuffer2()
+
+    On 32-bit systems, a large args->buffer_count from userspace via ioctl
+    may overflow the allocation size, leading to out-of-bounds access.
+
+    This vulnerability was introduced in commit 8408c282 ("drm/i915:
+    First try a normal large kmalloc for the temporary exec buffers").
+
+
+  8408c282 was added Feb 21 2011, and seemingly added during 2.6.38 development.
+
+
+2. same file, overflow in args->buffer_count.
+
+   Fix is in mainline 44afb3a04391a74309d16180d1e4f8386fdfa745
+
+   commit 44afb3a04391a74309d16180d1e4f8386fdfa745
+   Author: Xi Wang <xi.wang@...il.com>
+   Date:   Mon Apr 23 04:06:42 2012 -0400
+
+    drm/i915: fix integer overflow in i915_gem_do_execbuffer()
+
+    On 32-bit systems, a large args->num_cliprects from userspace via ioctl
+    may overflow the allocation size, leading to out-of-bounds access.
+
+    This vulnerability was introduced in commit 432e58ed ("drm/i915: Avoid
+    allocation for execbuffer object list").
+
+
+   432e58ed was added during 2.6.37 development.
+
+
+I think it needs 2 CVEs, due to the different kernel versions introducing it.
+
+Ciao, Marcus
