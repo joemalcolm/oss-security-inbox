@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/12
-Message-ID: <4F4D561C.5080301@redhat.com>
-Date: Tue, 28 Feb 2012 15:33:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, mateusz.goik@...antsoft.pl
-Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/21/2
+Message-ID: <CANTw=MNxkfPVVF8FDb_QuL3ZnpN-tcOhP3fxc02VYAvSQ6gtQg@mail.gmail.com>
+Date: Mon, 21 May 2012 14:49:51 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: devotee (debian vote engine) cryptographically weak random numbers permit discovery of secret ballot submissions
 Content-Type: text/plain; charset=utf-8
 
-On 02/28/2012 09:32 AM, cve-assign@...re.org wrote:
->> Any javascript code could be executed from Kadu History Window
->> in following conditions:
-> 
-> CVE-2012-1410 is assigned to this Kadu issue.
-> 
-> We are confused about
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=749036
-> 
-> This is a bug report about this Kadu vulnerability, but it has a
-> CVE assignment of CVE-2006-7248 for a vulnerability in the 
-> SMIME_read_PKCS7 function in OpenSSL 0.9.7i. Our perspective is
-> that this means CVE-2006-7248 has been assigned to multiple issues
-> (the Kadu issue and the OpenSSL issue), so we'll now proceed to
-> REJECT CVE-2006-7248 sometime later today unless there's a
-> substantial objection.
+On Fri, May 18, 2012 at 6:39 PM, Kurt Seifried wrote:
+> This appears to be a service more than software, and although the
+> source is available (see git link) it appears to be out of date?
+>
+> http://lists.debian.org/debian-www/2012/04/msg00200.html
 
-Please use CVE-2006-7249 for the kadu XSS vulnerability. Sorry about
-the mess.
+Yes, the publicly available source repo is out of date right now, but
+that won't always be the case.  Debian had a change in secretary, so
+workflows have changed, and ideally a more public mode of operation
+should be gotten back to.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+> Can you confirm the vulnerability is in the software you linked to,
+> and that this has actually been downloaded/used outside of Debian?
+
+Yes, it is indeed an issue in the software implementation itself.  See
+original report for exact code lines that are flawed.
+
+I can neither confirm nor not confirm that devotee is used outside of
+debian, but it does seem like an obvious choice for online election
+management.  It is however planned to be package for debian [0], and
+ubuntu automatically syncs debian, so eventually they will also get
+the package.  it is important that an id be assigned so that they are
+aware that they will need to check the package when they do that sync.
+
+[0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=470995
