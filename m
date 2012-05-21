@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/10
-Message-ID: <4F15E1A6.6000204@redhat.com>
-Date: Tue, 17 Jan 2012 14:01:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/21/3
+Message-ID: <20120521202242.GA24491@inutil.org>
+Date: Mon, 21 May 2012 22:22:42 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: golismero symlink vulnerability
+Subject: CVE-2011-3102 / libxml2
 Content-Type: text/plain; charset=utf-8
 
-On 01/17/2012 11:28 AM, Henri Salo wrote:
-> User-triggered update-mechanism is vulnerable to symlink-attack in all GoLismero-versions before revision 2b3bb43d6867. Vulnerable code was in ./libs/updater.py, which I rewrote.
->
-> Vulnerable versions:
-> - GoLISMERO_last.zip (Nov 14, 2011)
-> - GoLISMERO_v0.6.3.zip (Nov 9, 2011)
-> - All Git-revisions before 2b3bb43d6867
->
-> Reported to author: 2011-11-17
-> Fixed by me: 2012-01-17
-> Link to the commit: http://code.google.com/p/golismero/source/detail?r=2b3bb43d68676efd687361f7de29380189031ab8
->
-> I fixed this, because developer had lack of time. I am asking for CVE, because this software is used in backtrack where golismero is executed as root-user.
->
-> Should get 2012 ID as this was publicly announced 2012-01-17. I haven't read all the code yet so there might be other issues too. I am not the original developer, but helped a bit after I found this vulnerability.
->
-> - Henri Salo
-Good request! Please use CVE-2012-0054 for this issue.
+Hi,
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3102 points to
+http://code.google.com/p/chromium/issues/detail?id=125462, which is
+a 404.
 
--- 
+http://googlechromereleases.blogspot.de/2012/05/stable-channel-update.html
+references Jueri Aedla for the credits. I suppose this is related to this
+libxml2 upstream commit:
+http://git.gnome.org/browse/libxml2/commit/?id=d8e1faeaa99c7a7c07af01c1c72de352eb590a3e
 
--- Kurt Seifried / Red Hat Security Response Team
+Can anyone of the involved parties at Chrome and Red Hat please confirm?
 
+Cheers,
+        Moritz
