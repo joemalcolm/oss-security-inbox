@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/13
-Message-ID: <50521347.7080301@redhat.com>
-Date: Thu, 13 Sep 2012 11:09:27 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/10
+Message-ID: <4FBBD11F.8020507@redhat.com>
+Date: Tue, 22 May 2012 11:47:11 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>, me@...fdog.net
-Subject: Re: CVE for Virtualbox 0x8 DoS?
+CC: Felipe Pena <felipensp@...il.com>
+Subject: Re: CVE request: PHP Phar - arbitrary code execution
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/13/2012 10:59 AM, Raphael Geissert wrote:
-> Hi,
+On 05/20/2012 12:09 PM, Felipe Pena wrote:
+> Hi, Can anyone assing a CVE id for the following PHP's phar
+> extension integer overflow vulnerability? (Secunia SA44335)
 > 
-> Has a CVE id been finally assigned for the following issue? 
-> http://www.halfdog.net/Security/2012/VirtualBoxSoftwareInterrupt0x8GuestCrash/
->
->  Regards,
+> Private report: https://bugs.php.net/bug.php?id=61065
 > 
+> Discovered by: Alexander Gavrun
+> 
+> Original Advisory: 
+> http://0x1byte.blogspot.com/2011/04/php-phar-extension-heap-overflow.html
 
-- From that page:
-
-20120910: Oracle security decides, that CVE should be assigned
-
-Can Oracle/halfdog.net communicate the CVE to the community please?
+Please
+> 
+use CVE-2012-2386 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -32,19 +32,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQUhNHAAoJEBYNRVNeJnmT1/oP/1rlN+wvSOEoluw2xC00MbXr
-mGUXbhycfHQCjPYn/06P+dQ40bDQCKEPqquQyAfxFtvcJ5zJRCGaNC1gld4g58H0
-uQrOaQ62rsJm2wk7bzBLNwvIZ+OK1f+hFYvl3xEmuwspLSTOB7HCbWdjGAXSY6V/
-GOcyHE3tFnlE+s2hvIQ0URfqjdfzy/wZRDzZGi8r18jn1HpD1Flr6JNqEPjiVzPT
-qBoDi/nWFcPz/ccJhCfobvKNxCMdNWywkKmtelVZroALDPAqho8A1NoDkMqCZxtS
-gPP8vawiLS9LUMOsuwZWkFIjcCvmtUMoBXyY/niMfyvxmps1UHIcJDE29L6+LTYu
-M+f+dsIUnC8hTsnQFVIyG71eQcnJ63i+F52QuHhy/f0GR7xgT8fOLYhReBUpZ2uq
-h/ZvdIfvm22hwPhB2K+I/bNRzbRN95ABtDt/piiozqu7D1bekof18NQa/WStWuJ5
-Gp++wll8HJFIssDMK8aKtRaF4r+ThjXpBnfow9VI36MnsIPBEryY4gxsT7Hlu4O6
-dePJUgePlh/GHdIDLn0Zk2OcbZPKeJnIufBeDrr5kQRmD383MlxL+ssnHyKfZ/Dr
-KE15thW5K30kyORIF/F4+UB1wCrLH7I1hCqemVTnBd9q/HVTFLgv8mkkSRM1zRP4
-/Chf43xuv+94ReXG0e20
-=F5DV
+iQIcBAEBAgAGBQJPu9EfAAoJEBYNRVNeJnmTnLMQAMQcvrrfTxm6bD5P5+gChfO1
+PJB21AAuD2KX7KAW7YqOhCckjwTYG0n2slAUggUlCeWk/aDaVcnfKe2UQ5n0asKj
+ewd7uPkV0iWV9SQ5qjyYD6h1bawaS2mLTojefPUIMAlR8jg9n11lqRe6SN3vzJh5
+OBEj7vy4g95Hav7/UIHGmpUP6vAQwqwxafOprhwCXMg04qdj52Px0G0Okf+5Rk8S
+hdeu/I2SqRCm1GoGOdc+ABn8AZoxrL2rw2UfvZyjrCg/nlbgP1qMMGP9/JcsHRTL
+2lU2al7Z4LAlB+mtFHxUqzCDMNAnGYM95XHSKhVRGCi8xojgC+T2v8EFarX6neW2
+cbi02jbd8CzWX5kMc/i3MoTbyLXghZxI/gm1kIuf1Ff/MCzqs+YqBVlzUNthoijE
+ESPMTSebI7qIRkeVlGiyFALcyftYibgw/3ufHLXtiN3ARP9CSLocizAak5VHmo52
+khwmSQq5wuYxG4+R+jZKZAgA5vziL3ZN/AHtSpmuUvcFeh64262zqtDhSj31N+Tl
+uUUQewB4fQwo1Q1loVEmjdBPmSM3C3bAFIS++bAWUQyrIHKv8CheTG53hBlU/X0O
+Of0aJMVLRO6CiGuhGWddZlVKRBeeq6bgJ4tjYyq6PV++WJ3A979oimUVSsutqtKs
+N6mIQ5uVKFZ069M0zvwa
+=K0uz
 -----END PGP SIGNATURE-----
