@@ -1,78 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/05/3
-Message-ID: <4FA5BE77.9020603@redhat.com>
-Date: Sat, 05 May 2012 17:57:43 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/3
+Message-ID: <20120522094359.GC31404@kludge.henri.nerv.fi>
+Date: Tue, 22 May 2012 12:43:59 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, Steve Beattie <steve@...w.org>
-Subject: Re: CVE Request: evolution-data-server lacks SSL checking in its libsoup users
+Subject: Re: CVE request: Serendipity before 1.6.2 SQL Injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 05/04/2012 01:44 PM, Marcus Meissner wrote:
-> On Fri, May 04, 2012 at 10:03:20AM -0600, Kurt Seifried wrote:
->> On 05/04/2012 02:30 AM, Steve Beattie wrote:
->>> On Fri, May 04, 2012 at 10:03:11AM +0200, Marcus Meissner
->>> wrote:
->>>> This was already reported: 
->>>> https://bugzilla.gnome.org/show_bug.cgi?id=671537 
->>>> https://launchpad.net/bugs/933659   (private still)
->>>> 
->>>> so it might have a CVE already.
->>> 
->>> I've made the launchpad bug public now. There was no CVE
->>> assigned in that report.
->>> 
->>> Thanks.
->>> 
->> 
->> Shouldn't these all be covered by the libsoup CVE:
->> 
->>> libsoup 2.32.2 does not verify certificates at all if an 
->>> application does not explicitly specify a file with trusted
->>> root CA's. Since that libsoup version relies on the
->>> verification failure to clear the trust flag it always
->>> considers ssl connections as trusted in that case.
->>> 
->>> Reference: https://bugzilla.novell.com/show_bug.cgi?id=758431
->>> 
->>> cu Ludwig
->>> 
->> Please use CVE-2012-2132 for this issue.
+On Tue, May 22, 2012 at 11:05:02AM +0200, Hanno Böck wrote:
+> Upstream:
+> http://blog.s9y.org/archives/241-Serendipity-1.6.2-released.html
+> Advisory:
+> https://www.htbridge.com/advisory/HTB23092
 > 
-> That really depends if it is the task of libsoup or the task of
-> the applications I think. So who is lacking the checks...
+> Upstream description of the issue:
+> "The error here is that input is not properly validated and can be used
+> (when magic_quotes_gpc is off) to inject SQL code to a SQL query; since
+> our DB layer does not execute multiple statements, and the involved SQL
+> query is not used to produce output code, we regard the impact as low.
+> Nevertheless, please upgrade your installation."
 > 
-> Our opinion is that the default should be "good" in libsoup, so a
-> CVE is needed there in all cases.
+> Please assign CVE.
 > 
-> Ciao, Marcus
+> -- 
+> Hanno Böck		mail/jabber: hanno@...eck.de
+> GPG: BBB51E42		http://www.hboeck.de/
 
-Ok, if someone wants to make a list of the affected libsoup users with
-links and whatnot that are using libsoup and fixing their use of it
-feel free to post it so I can get them CVEs as needed.
+Is this same as: http://seclists.org/oss-sec/2012/q2/352
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+It looks to me as a same issue.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPpb53AAoJEBYNRVNeJnmT5gsP/ROIpL4I1i4m/NFTvZNY8/Oz
-y1KrddqhEKY5SO7C5k1PYeOAaCWpyEGna6CZN6CGUlQ/81KNXd1qaoFbvcVnT/pG
-tl9Wdk9oJ4ovTWxo6VpEM6YgjfmbSH7x4zo2s2zcWfzFuhHg9zIrOa/V02CniTDa
-T32ErvaiyBsB+3JbOzndS1tX6dtO+Vmg9/+WpQYCNNNiXN/Psg4h5pKLbMC8APzq
-z1tsRJNVD+2JHqjASd4xn0Kxjo0X+DrvpfRrAJ7xgVHgAoEoe3QysFOB9Vto1vFU
-JeqyrCU+LLM44NLwq5ENbPBKYnJ2ULzpxPTfG70skv8eN0Jj4T5XPjXcb0cbHHGC
-Q1RrM3t2puMzWY53MrfS1+Xi0fKQBxcZ8xIPaxvJ7Je+mVeASGxoa2+I+Rln1jPE
-o8Ma16S0ttSqnnThSfq+eCMBq/g+m6DddN7FpowH6z/Rmgaeh5/aHvcviY4JF3i2
-85GSfMbLALG+MxXnKENN96jbjp684NeXvD826YhdETEXczYZt3NRcBrn7o6etPta
-87au4w7zeJwPNfyS50GumkAXud/yVnQi1y8O5CtYBIM6VdOommX7mzswYhFk7wed
-PgPj4Un5McK+hws8We/uMJ9S9SlndL2emdMqg/f6/TLUCwKQwKtcHnU9GMR774qT
-JRR1FOX9kL18hrg1m4WO
-=OnRu
------END PGP SIGNATURE-----
+- Henri Salo
