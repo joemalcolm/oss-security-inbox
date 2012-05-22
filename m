@@ -1,120 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/20/2
-Message-ID: <1149080254.34288889.1353412631370.JavaMail.root@redhat.com>
-Date: Tue, 20 Nov 2012 06:57:11 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: Attila Bogar <attila.bogar@...guamatics.com>, Raphael Geissert <geissert@...ian.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- mcrypt: stack-based buffer overflow by encryption / decryption of overly long file names
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/11
+Message-ID: <4FBBD170.7060106@redhat.com>
+Date: Tue, 22 May 2012 11:48:32 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Michael Gilbert <mgilbert@...ian.org>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: devotee (debian vote engine) cryptographically weak random numbers permit discovery of secret ballot submissions
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
------ Original Message -----
-> For my own clarification - where does this long file name come from?  If 
-> it's only provided on the command line, then I don't see how this would be 
-> a vulnerability, since the person executing mcrypt would only be attacking 
-> themselves.  (CVE-2012-4409 is still OK since one wouldn't expect code 
-> execution when decrypting the contents of a file.)
-
-Was originally thinking of this being a security flaw more in the decryption scenario
-(encryption one was noted only for completeness that it has the same issue) than
-in the encryption one.
-
-Previously considered scenario was remote user would trick the local one to
-decrypt provided file (obviously the local user might not check if filename
-isn't too long prior decryption). But after further review looks mcrypt doesn't
-support asymmetric cryptography / keys (which I didn't know in the moment of requesting
-a CVE id), only the symmetric one, which makes this scenario impossible / unlikely.
-
-Considering the above, I think you are right and CVE-2012-4527 should be probably
-rejected.
-
-Right now I can't think of a case, how this could be possible to (mis)use for an
-attack.
-
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+On 05/21/2012 12:49 PM, Michael Gilbert wrote:
+> On Fri, May 18, 2012 at 6:39 PM, Kurt Seifried wrote:
+>> This appears to be a service more than software, and although
+>> the source is available (see git link) it appears to be out of
+>> date?
+>> 
+>> http://lists.debian.org/debian-www/2012/04/msg00200.html
 > 
-> Thanks,
-> Steve
+> Yes, the publicly available source repo is out of date right now,
+> but that won't always be the case.  Debian had a change in
+> secretary, so workflows have changed, and ideally a more public
+> mode of operation should be gotten back to.
+> 
+>> Can you confirm the vulnerability is in the software you linked
+>> to, and that this has actually been downloaded/used outside of
+>> Debian?
+> 
+> Yes, it is indeed an issue in the software implementation itself.
+> See original report for exact code lines that are flawed.
+> 
+> I can neither confirm nor not confirm that devotee is used outside
+> of debian, but it does seem like an obvious choice for online
+> election management.  It is however planned to be package for
+> debian [0], and ubuntu automatically syncs debian, so eventually
+> they will also get the package.  it is important that an id be
+> assigned so that they are aware that they will need to check the
+> package when they do that sync.
+> 
+> [0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=470995
 
+Please use CVE-2012-2387 for this issue.
 
-On Thu, 18 Oct 2012, Kurt Seifried wrote:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 10/18/2012 07:50 AM, Jan Lieskovsky wrote:
->> Hello Kurt, Steve, vendors,
->>
->>   Attila Bogar reported a stack-based buffer overflow
->> in the way MCrypt, a crypt() package and crypt(1) command
->> replacement, used to encrypt / decrypt files with overly
->> long names (longer than 128 bytes). A remote attacker
->> could provide a specially-crafted file that, when processed
->> by the mcrypt too, would lead to mcrypt executable crash [*].
->>
->> A different vulnerability than CVE-2012-4409:
->> [1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4409
->>
->> Note: Using Red Hat bugzilla record for CVE-2012-4409 since
->> particular Mitre record is not described yet.
->>
->> References:
->> [2] https://bugzilla.redhat.com/show_bug.cgi?id=867790
->>
->> Patch proposed by Attila:
->> [3] https://bugzilla.redhat.com/show_bug.cgi?id=867790#c0
->>
->> Reproducer:
->> To reproduce let mcrypt encrypt / decrypt file with name
->> longer ~128 bytes.
->>
->> Could you allocate a CVE id for this?
->>
->> Thank you && Regards, Jan.
->> --
->> Jan iankko Lieskovsky / Red Hat Security Response Team
->>
->> [*] FORTIFY_SOURCE protection mechanism would mitigate this
->> deficiency to result into crash only. But on systems, without
->> FORTIFY_SOURCE protection being applied, the impact might be
->> higher.
->>
->> P.S.: I am not sure about relation of this issue to the issue
->>       Raphael Geissert reported previously:
->>       [4] http://www.openwall.com/lists/oss-security/2012/10/02/1
->>
->>       so CC-in him too, he to clarify if [2] == [4], or if
->>       they are yet different issues. Raphael, please clarify.
->>       Thanks, Jan.
->>
->
-> Please use CVE-2012-4527 for this issue.
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
->
-> iQIcBAEBAgAGBQJQgE3DAAoJEBYNRVNeJnmTP1UP/j6LR69c0tuOKaN/wWTtLu7J
-> yfbsXmQLd7PfrqSl748bzLdGEVjvAZ/r2GvyPbNRv/Wl1zV6LGRkuOmuq7XRC5JB
-> VGLsQlg6g8NZ7n1SGh+oDWSQ16CihzE25G0lf/qO4xCs6aKfcSfpYEM1rQANp9O4
-> vZB7bWOZj1iBmUrrHsh/bnANAbaLdV/JN4747i0fMFB/aFhILvRFJk284FUFjQgY
-> oE6Gqs5DIwFBZYyLYEj/2sqcvxw1vBMLE48QrIuVpJIColK7hU3fGIEBJRJUPVXn
-> JkR3F0egpkkm7+p72OxayTt9YgY69GJCouY+xfY4Si5yZvwMaHvTy341TgT6H5F7
-> 76SYtmoTGKWKa/L9TUAYQkxhzPkUP6syu3HyVvuPRdLEL7Bv3DX+LQAX5/a0QnwB
-> B7SftW+yoH4/h/+wRCrza4cViuiF1pKjD+OVEXQUWH/Ih9OF0I9mZIbiequV4ZRB
-> odHVOuyNwPdxYDtC63joBaPGO6ldL9t2HsJSbn5mmT27HIlrUiSkkxaRGfeYJaDE
-> t2iUMiPqzP0VgmxwgrYgYdNgOrv+4T1p7QBWJ7w9Auy0fDMwyFo+ZxPo2xkfkoPh
-> CcAev7nv5S53nUae/zfl15KLr/ta2j7pIaPgoHwZtlfaXy4u3Qsfoy1kKD6FGmEg
-> 9RTi0YQOif4AYghYtb28
-> =TH3z
-> -----END PGP SIGNATURE-----
->
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPu9FwAAoJEBYNRVNeJnmTC5wP/2J4s3zTHl0Pxa9jfHsLxsxh
+Ofn7gEK8gjcpCXG924ak5TNNxN62WJDLIoefCC+NFlEe2KEp9cbfv364bgp4z0bw
+bhKUQtEJHjMywHd5+rkGxFZZFay7a0cnIBQBdv1L/RLGDIrKg4rhBW51oyr5p05W
+Yd9l19X6Rw9XhQ21e5xIVXnPm4zjN8Rujd2gSarzTWYx9OJX7LMaDDYwSrqPmCv3
+OetHIbArddqYJfJ+rr0WoJBJwWpjdezRbmKLab5ZjviuQJlG/xBKieWqW49rfv7z
+DwfIFRGAjLGszR6/HNUzdr6zJVmVGenttWYA3TruQJV/Arih5gbY6OYfiJ3M+Az+
+KgZxqbqMImMI3Uma4tNxPB6JldFWK1UNGmSwoFMNqR6me610/yTvJiP9afISEkv9
+xYToWU0eej1abPnAfohDsCXOHHrMp11VFfEKXdcWjD0B2/doGFyX1EJLAJGJ6hK5
+XGAul8XftVhiFbF3pmr6+yj0esEL7VP9Ae4XFPr4scxKC7wLQF2p29Hicq4KJPX4
+pnaoZUkjSCRHNH+ZZM6gu7I+3B8XT0wLw2BcSj1npZddwtuR8lpJ8P4cqCb7mmgx
+17Ti4gOAyCTV+VKOSFgxdQGlIoC0ytKU1T1M+TI8342t1rCBNb9STK2RoUyVjMqa
+A7aPCI6+nuz7nEZOLDFO
+=7mbW
+-----END PGP SIGNATURE-----
