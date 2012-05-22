@@ -1,71 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/10
-Message-Id: <201202281918.q1SJIEH0004968@linus.mitre.org>
-Date: Tue, 28 Feb 2012 14:18:14 -0500 (EST)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/4
+Message-ID: <20120522091849.GC12178@stro.at>
+Date: Tue, 22 May 2012 11:18:49 +0200
+From: maximilian attems <max@...o.at>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Cc: oss-security@...ts.openwall.com, klibc@...or.com
+Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 18 May 2011, Dan Rosenberg wrote:
 
->Argh sorry cut and paste the wrong CVE # into novell's bugzilla. Can
->we just remove it from there please?
+> On Wed, May 18, 2011 at 4:29 PM, maximilian attems <max@...o.at> wrote:
+> > On Wed, May 18, 2011 at 04:13:05PM -0400, Dan Rosenberg wrote:
+> >> Might it be worth fixing the insecure temporary file usage?
+> >>
+> >> 122         snprintf(fn, sizeof(fn), "/tmp/net-%s.conf", dev->name);
+> >> 123         f = fopen(fn, "w");
+> >>
+> >> What if someone else has already created that file, or put a symlink
+> >> or hard link there?
+> >
+> > for the initramfs case I don't see how.
+> > outside of initramfs usage I'd agree that this needs fixing.
+> >
+> 
+> Right, this only applies after boot is done.
 
-Removing Comment 4 from
-https://bugzilla.novell.com/show_bug.cgi?id=749036 is definitely a
-good idea, but MITRE will also do a REJECT of the CVE-2006-7248
-identifier to address the issue more completely.
+As klibc main target is initramfs usage this use case hasn't come up much,
+so wasn't top priority. Just got reminded today by checking ipconfig
+backlog patches.
+ 
+> >> What if someone overwrites your string with
+> >> command injection characters despite your stripping?
+> >
+> > please be more verbose, what example do you have in mind?
+> >
+> 
+> Sorry for not being clear.  If you're concerned about scripts parsing
+> this file while it has command injection strings in it, what's to stop
+> someone from putting a malicious file there if one doesn't already
+> exist?  It sounds like the scripts that depend on this file should
+> probably be fixed here, or the file itself should be moved to a
+> location where it's not writable by unprivileged users.
+ 
+ipconfig in latest klibc git uses /run as you suggested.
+http://git.kernel.org/?p=libs/klibc/klibc.git;a=summary
 
-We often see vendors of CVE compatible products and services picking
-up new CVE mappings from oss-security postings, and from references
-cited in oss-security postings, and this often happens on the day of
-the posting. Some vendors primarily just want the mapping, and aren't
-really investigating the issues or possible discrepancies. So, here,
-it's plausible that:
+thank you.
 
-  1. Vendor already discovered the web page for "Bug 749036 - VUL-0:
-     kadu: allows to inject js code."
-
-  2. Vendor quickly skimmed the text of 749036 and saw "use
-     CVE-2006-7248 for this issue." Vendor did not bother to go to the
-     openssl-dev link, or even consider that openssl-dev is not a
-     common forum for discussing Kadu.
-
-  3. Vendor immediately jumped to the conclusion that CVE-2006-7248 is
-     assigned to the Kadu issue, and updated a data set that
-     ultimately gets pushed out to their customers.
-
-  4. Sometime in the future, their customer decides to look up
-     CVE-2006-7248 on the MITRE CVE web site.
-
-  4a. If CVE-2006-7248 is a regular CVE entry about an OpenSSL
-      vulnerability, the customer might reach any of a variety of
-      incorrect conclusions, especially because Kadu apparently uses
-      OpenSSL through the QCA OSSL plugin for libqca2. The customer
-      might, for example, infer that CVE-2006-7248 is an unpatched
-      vulnerability affecting the Kadu EncryptionNgPlugin component.
-
-  4b. If CVE-2006-7248 is a rejected CVE entry that points to the
-      correct CVE identifiers for the Kadu issue and the OpenSSL
-      issue, then there's probably more hope that the customer will
-      find the correct information.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S S145
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJPTSZKAAoJEGvefgSNfHMdpkkH/3PWGuCMgWU4ct823t69sPp6
-cIg9uryKHy/gWkJ6o66BLhSBrQxELjmY6zih/kA/OZP8zvrwaE1Y0bNFtoDS34cl
-aacPKfjpreHM6swa53BAhEiRIiKJB+IpD7X68LRkjGEeTAG3aZ1yoW41G0Ega9Ia
-uIyCKF0Z1cLyXcHvMMH3pau74MYIlzJtzdkOkVu24/2iifWlf91xMpH7xA6nmXlx
-uUNGSm2BgiKBp0KsYBi8CxweuohqbRcuD5/TC7F/pqZpMhkRL9mmdNhApgGCP+y5
-ydKgxbqvWfPxu83ru/PHttQs0F9ugYAB8fBoM6sWy6/Ki/I1i+sduJqcGIVRHis=
-=Ule+
------END PGP SIGNATURE-----
+-- 
+maks
