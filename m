@@ -1,47 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/2
-Message-ID: <4F123D77.5020700@redhat.com>
-Date: Sat, 14 Jan 2012 19:44:07 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/5
+Message-ID: <20120522140513.2dd21ac5@hsalkjdhsa.lan>
+Date: Tue, 22 May 2012 14:05:13 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-Subject: Re: CVE affected for PHP 5.3.9 ?
+Cc: henri@...v.fi
+Subject: Re: CVE request: Serendipity before 1.6.2 SQL Injection
 Content-Type: text/plain; charset=utf-8
 
-On 01/14/2012 05:15 PM, Nicolas Grégoire wrote:
->> Right but the script has to have the line
->> <sax:output href="0wn3d.php" method="text">
-> Wrong.
->
-> The PHP code only has to call transformToXML() after having loaded the
-> malicious XSLT code via importStylesheet(). The XML data itself is
-> irrelevant for this bug and the "sax:output" tag isn't in the PHP script
-> but in the XSLT stylesheet provided by the attacker.
->
-> # LOAD XML FILE 
-> $XML = new DOMDocument(); 
-> $XML->loadXML( $sXml ); 
->
-> # LOAD XSLT FILE 
-> $XSL = new DOMDocument(); 
-> $XSL->loadXML( $sXsl ); // Content of $xXsl may be untrusted !
->
-> # START XSLT 
-> $xslt = new XSLTProcessor(); 
-> $xslt->importStylesheet( $XSL );
->
-> # TRASNFORM & PRINT 
-> print $xslt->transformToXML( $XML ); // File creation !
->
-> Nicolas
->
-So the attacker can control the output file name/location via a
-malformed input from the attacker only? This would have been good to
-have in your original info (we could have avoided this back and forth).
-Can you provide a reproducer (vuln script and a malicious input) that
-shows this in action (e.g. creates a local php file).
+On Tue, 22 May 2012 12:43:59 +0300
+Henri Salo <henri@...v.fi> wrote:
+
+> Is this same as: http://seclists.org/oss-sec/2012/q2/352
+> 
+> It looks to me as a same issue.
+
+Yep, you're probably right. Damn, why didn't I see this...?
 
 -- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
--- Kurt Seifried / Red Hat Security Response Team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
