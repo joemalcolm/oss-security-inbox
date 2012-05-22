@@ -1,70 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/10
-Message-ID: <50A3D58A.9030500@redhat.com>
-Date: Wed, 14 Nov 2012 10:31:54 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Henri Salo <henri@...v.fi>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: SMF index.php msg parameter SQL-injection (2005)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/6
+Message-ID: <4FBB9A5A.9010803@redhat.com>
+Date: Tue, 22 May 2012 15:53:30 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Behdad Esfahbod <behdad@...dad.org>
+Subject: CVE Request -- mosh (and probably vte too): mosh server DoS (long loop) due improper parsing of terminal parameters in terminal dispatcher
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-On 10/08/2012 06:51 AM, Henri Salo wrote:
-> On Fri, Sep 14, 2012 at 11:29:07AM -0600, Kurt Seifried wrote:
->> On 09/14/2012 06:40 AM, Henri Salo wrote:
->>> Hello list,
->>> 
->>> Old SQL-injection security issue in SMF does not have 
->>> CVE-identifier. Could you please assign one from year 2005, 
->>> thanks.
->>> 
->>> Affected versions: <= 1.0.4 Fixed in 1.0.5
->>> 
->>> References: http://osvdb.org/17458 
->>> http://secunia.com/advisories/15784/
->>> 
->>> - Henri Salo ps. never too late
->>> 
->> 
->> Can you confirm this isn't 
->> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-4159
-> 
-> To me this looks like a different vulnerability, because of
-> different affected files and parameters.
-> 
-> CVE-2005-XXXX: index.php http://osvdb.org/17458 
-> http://www.securiteam.com/exploits/5HP0N0KG0O.html
+   based on:
+   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871
+   [2] https://github.com/keithw/mosh/issues/271
 
-Please use CVE-2005-4891 for this issue.
+A) Mosh issue:
+==============
+A denial of service flaw was found in the way mosh, a remote terminal application, performed 
+processing of parameters that have been passed to the terminal in the terminal dispatcher class 
+(previously there was no limit for the count of parameters, which were allowed to be passed to the 
+dispatcher). A remote atttacker could use this flaw to cause a denial of service (mosh server to 
+enter long for loop when trying to process the paramaters) via specially-crafted escape sequence string.
 
-> CVE-2005-4159: Memberlist.php http://osvdb.org/21722 
-> http://archives.neohapsis.com/archives/bugtraq/2005-12/0090.html
-> 
-> - Henri Salo
-> 
+Upstream ticket:
+[3] https://github.com/keithw/mosh/issues/271
 
+Relevant upstream patch:
+[4] https://github.com/keithw/mosh/commit/9791768705528e911bfca6c4d8aa88139035060e
 
+References:
+[5] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871
+[6] https://bugzilla.redhat.com/show_bug.cgi?id=823943
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+Could you allocate a CVE id for this? (issue confirmed by mosh upstream)
 
-iQIcBAEBAgAGBQJQo9WJAAoJEBYNRVNeJnmT2NEQAIu7riVk8t9Jltgi9HUDWgZp
-4mgyLGOX5Bh88+w6ZGwfk0c1GoMRycQDI0pm0jPib65buP9wYobNJxmIpfGKi55Y
-AvvmDCUuHkzslzNGPS0pkId+u8h/bzZ5oNy9vP50D2tpCcg6ByHhXdj6wJPtryel
-zDWVYfBaxLPZM9gVxZ1T2Fhbvhdow/LbDTgRBA7t7/WtGKMXw5uREtOfzAy3GsCt
-WzFdUV0q4X9bbDNlB9vQOLpU9jyDPkHDJfezNzzWFo7tE3AL/u9JP19mzwJg7gjy
-KSuZy1esnpvoa15iTFAvtU2w7dU8QvARqAOw7c1pfQWirPrquFGxOySiT+5hNC36
-jkf+6Mpf0fMKTCpeUa2+aenaej+TQ9e+045EHprmpc5PJeuSTsvOUWot61051G3v
-8gyJ37QLi86gYlgxjEluj3rNxwK+TzBjItYZEu4EXC5dOGLM7H4vcHjsIh94kkX5
-yC3jqLtVBBFJgbVa7NnZQoZIpLoNYqQqdF9/kocVwgStUEJEOl8RubvPqpZmKXeq
-yP1nZNeYE6mRNXEzUmgXzpuYLa/Yv6yOf9XeKJ2YzRga60K890aYJY5f4nI51EFq
-uBYnPYVqDHMaaBuHMwy7jHGzd6XERvHXje22xqIcRObse0dTJVvtw4T9x2+Fv9Pd
-MglXDAKxcLejzFCIi/Nf
-=sxjC
------END PGP SIGNATURE-----
+B) vte issue:
+=============
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871#5
+
+there is similar issue in vte too (Gnome bug private for now):
+https://bugzilla.gnome.org/show_bug.cgi?id=676090
+
+Cc-ed Behdad Esfahbod on this post to clarify, what are the upstream plans
+regarding this report in vte and if the CVE id has been already assigned for
+it.
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
