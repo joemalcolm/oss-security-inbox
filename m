@@ -1,44 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/13
-Message-ID: <4F4BB11B.8050003@redhat.com>
-Date: Mon, 27 Feb 2012 09:36:43 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/9
+Message-ID: <4FBBCF6B.8050506@redhat.com>
+Date: Tue, 22 May 2012 11:39:55 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Vasiliy Kulikov <segoon@...nwall.com>, Petr Sabata <psabata@...hat.com>
-Subject: Re: CVE Request -- Multiple instances of insecure temporary file use
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Behdad Esfahbod <behdad@...dad.org>
+Subject: Re: CVE Request -- mosh (and probably vte too): mosh server DoS (long loop) due improper parsing of terminal parameters in terminal dispatcher
 Content-Type: text/plain; charset=utf-8
 
-On 02/27/2012 05:07 AM, Jan Lieskovsky wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/22/2012 07:53 AM, Jan Lieskovsky wrote:
 > Hello Kurt, Steve, vendors,
 > 
->   multiple instances (by checking for ATM technology support, checking
-> for Xtables
-> extension support, checking for setns() system call support, and in
-> dhcp-client-script example script) of insecure temporary file use were
-> found
-> in iproute. A local attacker could use this flaw to conduct symbolic link
-> attacks (modify or remove files via specially-crafted link names).
+>   based on:
+>   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871
+>   [2] https://github.com/keithw/mosh/issues/271
+> 
+> A) Mosh issue:
+> ==============
+> A denial of service flaw was found in the way mosh, a remote terminal
+> application, performed processing of parameters that have been passed to
+> the terminal in the terminal dispatcher class (previously there was no
+> limit for the count of parameters, which were allowed to be passed to
+> the dispatcher). A remote atttacker could use this flaw to cause a
+> denial of service (mosh server to enter long for loop when trying to
+> process the paramaters) via specially-crafted escape sequence string.
+> 
+> Upstream ticket:
+> [3] https://github.com/keithw/mosh/issues/271
+> 
+> Relevant upstream patch:
+> [4]
+> https://github.com/keithw/mosh/commit/9791768705528e911bfca6c4d8aa88139035060e
+> 
 > 
 > References:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=797878
+> [5] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871
+> [6] https://bugzilla.redhat.com/show_bug.cgi?id=823943
 > 
-> Upstream patches:
-> [2]
-> http://git.kernel.org/?p=linux/kernel/git/shemminger/iproute2.git;a=commitdiff;h=e557d1ac3a156ba7521ba44b0b412af4542f83f8
+> Could you allocate a CVE id for this? (issue confirmed by mosh upstream)
+
+Please use CVE-2012-2385 for this issue.
+
+> B) vte issue:
+> =============
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871#5
 > 
+> there is similar issue in vte too (Gnome bug private for now):
+> https://bugzilla.gnome.org/show_bug.cgi?id=676090
 > 
-> [3]
-> http://git.kernel.org/?p=linux/kernel/git/shemminger/iproute2.git;a=commitdiff;h=20ed7b24df05eadf83168d1d0ce0052a31380928
-> 
-> 
-> Could you allocate a CVE identifier for this?
-> 
+> Cc-ed Behdad Esfahbod on this post to clarify, what are the upstream plans
+> regarding this report in vte and if the CVE id has been already assigned
+> for
+> it.
+
+Will wait for confirmation.
+
 > Thank you && Regards, Jan.
 > -- 
 > Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Please use CVE-2012-1088 for these issues (same codebase/same
-discoverer/same issue type/same version so merging).
 
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPu89rAAoJEBYNRVNeJnmTLrAP/3q6tRebtqt9w4Dqgtku62ib
+eCKs+EYrgAKmThklXgxbXcHEgT71mAkaX1M9qbQSjodhqeFlvOOodkQ0/sjOd+6q
+YaZfsiLT43bC4ky35nW/ddhv+l3xuAte3gvnN947PvCGe6wOU/rBZ3KDEjCJDevf
+Ob93NfBAqKC5pw+9Sw1CQHHK/kQMY2BL9gqcFriISqhVYYZRCw0/wFnQOdINNq+4
+U2nxMfx9NkobOhDKSYZ0s8QHumcYJY0cVIS8mHDRYf0BHV4y+wSCZTASQnrDOXv4
+qxWVgLVb3aFCxTL3oExpKgKqS+YCh4TrE9+4zaLqG/Yn7MDjWmrvqskTznzlQx5T
+AbyIbPwXkIy+uhhP7n9Wm7eAUgSq47ZqpQb51Vi4dY2rioudIq8dmH3Fi7pa+EHE
+yCHjOf/YtkYYHVykP5LeT5b5WkmLCjR9VxkKkSsxXwT3hfZf+TQP7k3Q1D3IIhqz
+tJSoUWx8ydEapj94GwTSP8MDVohZsPtnQICZKIbzWO4Yem4NkL7Gibdcqz+/l0HS
+jja1VsoVMKp3GshM+9hTes0Kil/zpyxuW419cQk6rqS0bbbackSVAnkudGt4GyH7
+awYBkhmUjfL0YXiZx/wHE9zLrb1v7J8Beujnaq6XoBzFyklBm+Xp8IISdOKyHgHm
+NXSsanFLjGm0ogF3+cYQ
+=Ws5Q
+-----END PGP SIGNATURE-----
