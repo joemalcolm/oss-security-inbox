@@ -1,14 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/9
-Message-ID: <20120120053504.GK7143@alex.ibm>
-Date: Fri, 20 Jan 2012 09:35:04 +0400
-From: Alexander Pletnev <pletnev.rusalex@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: pdf attacks vectors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/2
+Message-ID: <4FBB58D1.7070200@redhat.com>
+Date: Tue, 22 May 2012 11:13:53 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Moritz Muehlenhoff <jmm@...ian.org>
+CC: oss-security@...ts.openwall.com, Daniel Veillard <veillard@...hat.com>
+Subject: Re: CVE-2011-3102 / libxml2
 Content-Type: text/plain; charset=utf-8
 
-Hi guys, im working with an web app, and going to create PDFs on-the-fly with user related data. 
-Therefore im writinig to oss-security. What are a pdf attacks vector need's to be avoided by my app ?
 
-In other words, what is the most dangerous pdf attack vectors ?
+Hi Moritz,
+
+On 05/21/2012 10:22 PM, Moritz Muehlenhoff wrote:
+> Hi,
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3102 points to
+> http://code.google.com/p/chromium/issues/detail?id=125462, which is
+> a 404.
+>
+> http://googlechromereleases.blogspot.de/2012/05/stable-channel-update.html
+> references Jueri Aedla for the credits. I suppose this is related to this
+> libxml2 upstream commit:
+> http://git.gnome.org/browse/libxml2/commit/?id=d8e1faeaa99c7a7c07af01c1c72de352eb590a3e
+
+Yes, we have previously checked with Daniel and he confirmed this one -^ would be
+the correct one.
+
+(have updated our bugzilla entry to state it in more exact way:
+https://bugzilla.redhat.com/show_bug.cgi?id=822109#c2)
+
+>
+> Can anyone of the involved parties at Chrome and Red Hat please confirm?
+
+Without not to leak too much, Daniel also clarified this problem would be
+of higher impact / security relevance for Google Chrome instances due the
+way they use XPointer functionality. On common Linux libxml2 instances
+additional functionality to be involved is needed this to be exploited
+in that way as it has been for Google Chrome case.
+
+Hope this helps. Let us know if we can be of any further advice.
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>
+> Cheers,
+>          Moritz
 
