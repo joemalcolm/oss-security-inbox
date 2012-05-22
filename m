@@ -1,35 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/7
-Message-ID: <50C9CE53.8020004@pre-sense.de>
-Date: Thu, 13 Dec 2012 13:47:15 +0100
-From: Timo Warns <warns@...-sense.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Robust XML validation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/13
+Message-ID: <alpine.DEB.2.00.1205221444120.22824@dr-wily.mit.edu>
+Date: Tue, 22 May 2012 15:29:17 -0400 (EDT)
+From: Keith Winstein <keithw@....EDU>
+To: jlieskov@...hat.com
+cc: Keith Winstein <keithw@....edu>, mosh-devel@....edu, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- mosh (and probably vte too): mosh server DoS (long loop) due improper parsing of terminal parameters in terminal dispatcher
 Content-Type: text/plain; charset=utf-8
 
-On 12.12.2012 18:11, Florian Weimer wrote:
-> I'm working on guidelines for robust XML parsing and I noticed that 
-> there are some denial-of-service issues related to validation which do 
-> not seem widely documented (but were apparently known when SGML was 
-> specified).
+Hello,
 
-I'm interested in such guidelines. Will they be public?
+I am the author of Mosh, and somebody pointed me to your CVE request: 
+http://seclists.org/oss-sec/2012/q2/370
 
-> I wonder if we should care about this in the sense that we should 
-> prepare fixes, or if it is sufficient to recommend to validate against 
-> trusted schemas/DTDs only.  (I've found an implementation which gets 
-> right the things I tested so far, so efficient implementations aren't 
-> impossible.)
+I have not been part of this process before -- do we (the upstream) have a 
+role here?
 
-Validating against trusted schemas/DTDs would not be sufficient in my
-opinion. For example, such validations are not effective against the
-billion laughs attack (http://en.wikipedia.org/wiki/Billion_laughs).
+I don't want to butt in inappropriately, but I also don't want it to seem 
+(by our silence) like we agree with the description in the CVE request.
 
-Moreover, some projects deliberately decide against schema validation.
-For example, when fixing CVE-2012-2665, LibreOffice developers have
-decided against validating the manifest.xml against a schema or DTD.
-If I understood correctly, the reason was that omitting validations
-allows to open documents in a future format on a best-effort basis (as
-an alternative to annoying the user with a "format not supported" message).
+The writeup is not accurate. We're grateful for the bug report by Timo 
+Juhani Lindfors, but to say "issue confirmed by mosh upstream" makes it 
+sound like we confirm _this_ issue.
 
-Regards, Timo
+We have written about this issue in the URL linked from the request: 
+https://github.com/keithw/mosh/issues/271
+
+In general, the application sending ANSI escape sequences is a trusted 
+party. It is allowed to do things like disable the user's keyboard by 
+sending "\e[2h", which is interpreted by xterm and Terminal.app.
+
+That's a DoS as well, but (like this one) it's not really a security 
+vulnerability. Because ANSI escape sequences can do arbitrary things to 
+the user's terminal, programs that allow untrusted user-to-user 
+communication (including write(1), wall(1), and e-mail and newsgroup 
+readers) need to filter these out.
+
+Here's my suggested text for the issue description:
+
+===
+Mosh versions 1.2 and earlier allow an application to cause the 
+mosh-server to consume large amounts of CPU time with a short ANSI escape 
+sequence. In addition, a malicious mosh-server can cause the mosh-client 
+to consume large amounts of CPU time with a short ANSI escape sequence. 
+This arises because there was no limit on the value of the "repeat" 
+parameter in some ANSI escape sequences, so even large and nonsensical 
+values would be interpreted by Mosh's terminal emulator.
+===
+
+This gets away from the suggestion that the problem relates to "improper 
+parsing" or the "count of parameters" (it's about wanting a limit on the 
+_value_ of parameters so the terminal emulator doesn't do huge amounts of 
+work to execute a very short sequence), or to data coming from "a remote 
+attacker."
+
+Best regards,
+Keith
