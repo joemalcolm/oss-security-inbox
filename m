@@ -1,40 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/3
-Message-ID: <4F505ABB.5030902@redhat.com>
-Date: Thu, 01 Mar 2012 22:29:31 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/11
+Message-Id: <201205231601.46051.mweckbecker@suse.de>
+Date: Wed, 23 May 2012 16:01:45 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Ludwig Nussel <ludwig.nussel@...e.de>, Dan Williams <dcbw@...hat.com>
-Subject: Re: CVE Request: NetworkManager arbitrary file access
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "John W. Linville" <linville@...hat.com>
+Subject: Re: CVE request(?): hostapd: improper file permissions of hostapd's config leaks credentials
 Content-Type: text/plain; charset=utf-8
 
-On 02/29/2012 02:48 AM, Ludwig Nussel wrote:
-> Hi,
-> 
-> Connections in NetworkManager 0.9 store path names to certificates and
-> key files. That means NM (or rather wpa_supplicant which gets
-> configured by NM) accesses the user's files as root. A user who is
-> allowed to add connections (default for locally logged in users) may
-> specify arbitrary file names. NM happily accepts files of any other
-> user, including root and even device files. Fortunately it's read
-> access only.
-> 
-> The safe approach would be to stream the actual content of the
-> certificate and key files to NM and have NM store that directly.
-> In fact NM 0.7 does just that for system connections (but forgets to
-> store the key so those connections won't actually work).
-> 
-> NM 0.6 is also affected.
-> 
-> Reproducer for NM 0.9 attached, you need to edit the file names and
-> then run e.g.
-> $ nmw.py new wlan0 yourssid
-> 
-> cu
-> Ludwig
-> 
+On Wednesday 23 May 2012 11:15:48 Jan Lieskovsky wrote:
+> Hi Matthias,
+>
 
-Please use CVE-2012-1096 for this issue.
+Hi Jan,
+
+>    thank you for your request.
+>
+> On 05/23/2012 10:21 AM, Matthias Weckbecker wrote:
+> > Hi Kurt,
+> > Hi vendors,
+> >
+> > not too critical in my opinion, but I think still worth to be at least
+> > mentioned briefly as other distros such as Fedora 16 were affected too:
+> >
+> > https://bugzilla.novell.com/show_bug.cgi?id=740964
+> >
+> > I'm not sure whether this issue should get a CVE,
+>
+> We have previously checked this with John W.Linville (Cc-ed on this post
+> too) with reply from him being as inlined below:
+>
+
+OK, thank you for your explanation. Although I don't agree with you (as it's 
+like shipping /etc/shadow world-readable and saying it has to be adjusted to 
+reflect the administrator's needs), I can live with no CVE being assigned for
+this. I wouldn't say that this is a critical issue anyway.
+
+Thanks,
+Matthias
+
+> ---<inline>---
+> Jan,
+>
+> I think you understand it all correctly.
+>
+> Thanks,
+>
+> John
+>
+> On Thu, 2012-05-17 at 12:44 +0200, Jan Lieskovsky wrote:
+>  > Hello John,
+>  >
+>  >    this is due the following Novell bug:
+>  >    [1] https://bugzilla.novell.com/show_bug.cgi?id=740964
+>  >
+>  > I have checked that Fedora hostapd versions, have permissions like
+>  > (thus insecure too):
+>  >
+>  > # ls -l /etc/hostapd/hostapd.conf
+>  > -rw-r--r--. 1 root root 722 Feb  9  2011 /etc/hostapd/hostapd.conf
+>  >
+>  > I am taking the default content of /etc/hostapd/hostapd.conf
+>  > as an example configuration (thus something which should the
+>  > administrator of the system to update to reflect their needs
+>  > to get hostapd for their wireless network configuration to
+>  > work properly.
+>  >
+>  > Thus as such I would say this is just issue of proper configuration
+>  > (in the moment of editing the configuration file the administrator
+>  > should update the permissions on the config file too to ensure WPA
+>  > password wouldn't leak, right?), than a real security flaw.
+>  >
+>  > Do you agree with this view or should I request CVE identifier
+>  > for this issue and we should get hostapd packages in Fedora updated
+>  > to correct this?
+>  >
+>  > Thank you && Regards, Jan.
+>  > --
+>  > Jan iankko Lieskovsky / Red Hat Security Response Team
+>  >
+>  > P.S.:
+>  >
+>  > For the other part of Novell bug (permissions for hostapd.wpa_psk
+>  > in Fedora versions there doesn't seem to be other hostapd.wpa_psk
+>  > than just:
+>  >
+>  > /usr/share/doc/hostapd-0.7.3/hostapd.wpa_psk
+>  >
+>  > which I think is there for documentation / config sample purposes).
+>  > Thus I would not consider this second part as a security issue.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Matthias Weckbecker, Junior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
