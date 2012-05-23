@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/1
-Message-ID: <20120320041808.GA1288@redhat.com>
-Date: Mon, 19 Mar 2012 22:18:08 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/6
+Message-ID: <4FBC41FA.7020208@behdad.org>
+Date: Tue, 22 May 2012 21:48:42 -0400
+From: Behdad Esfahbod <behdad@...dad.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: maradns deleted domain record cache persistance flaw
+CC: Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Christian Persch <chpe@...me.org>
+Subject: Re: CVE Request -- mosh (and probably vte too): mosh server DoS (long loop) due improper parsing of terminal parameters in terminal dispatcher
 Content-Type: text/plain; charset=utf-8
 
-I haven't seen a request for this yet:
+[+chpe]
 
-It was reported that MaraDNS suffers from a flaw where it is susceptible to
-spoofing attacks.  Due to an error in the cache update policy, which does not
-properly handle revoked domain names, a remote attacker could keep a domain
-name resolvable after it has been deleted from the registration.
+On 05/22/2012 09:53 AM, Jan Lieskovsky wrote:
 
-This flaw is fixed in versions 1.3.0.7.15 and 1.4.12, and is reported to affect
-all prior versions.
+> B) vte issue:
+> =============
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871#5
+> 
+> there is similar issue in vte too (Gnome bug private for now):
+> https://bugzilla.gnome.org/show_bug.cgi?id=676090
+> 
+> Cc-ed Behdad Esfahbod on this post to clarify, what are the upstream plans
+> regarding this report in vte and if the CVE id has been already assigned for
+> it.
 
-References:
+Christian Persch, CC'ed, has already produced two patches to address these issues:
 
-http://www.maradns.org/changelog.html
-https://secunia.com/advisories/48492/
-https://bugzilla.redhat.com/show_bug.cgi?id=804770
+  * Limit all parsed integers in escape sequences to 65535.  This is in line
+with the mosh change,
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+  * In the specific sequences mentioned in the original report, limit to
+screen metrics (columns, rows, etc) the same way that xterm does this.
+
+The patches have not been committed yet from what I can see.  If there's a
+coordinated embargo release date being set for this, we can respect that I
+believe.
+
+behdad
