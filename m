@@ -1,33 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/7
-Message-Id: <201210171248.19746.geissert@debian.org>
-Date: Wed, 17 Oct 2012 12:48:19 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/16
+Message-ID: <4FBD284F.5060809@redhat.com>
+Date: Wed, 23 May 2012 12:11:27 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: radsecproxy incorrect x.509 certificate validation
+Subject: Re: CVE request: Multiple vulnerabilities in LogAnalyzer
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Ralf Paffrath discovered that radsecproxy may incorrectly accept a client 
-certificate if the certificates chain was validated with the CA settings of 
-one configuration block but the other certificate constraints failed, and the 
-certificate constraints of another configuration block passed (ignoring this 
-other config block's CA settings.)
+On 05/23/2012 06:13 AM, Filippo Cavallarin wrote:
+> Hello, Can I get a CVE identifier for this issue:
+> 
+> http://www.codseq.it/advisories/multiple_vulnerabilities_in_loganalyzer
+>
+>  Here is the changelog
+> 
+> http://loganalyzer.adiscon.com/news/loganalyzer-v3-4-3-v3-stable-released
+>
+>  Thanks,
+> 
+> Filippo Cavallarin
+> 
+> 
+> C o d S e q Development with an eye on security 
+> ------------------------------------------------------------------------
+>
+> 
+Castello 2005, 30122 Venezia
+> Tel: 041 88 761 58 - Fax: 041 81 064 714 - Cell: 346 66 93 254 c.f.
+> CVLFPP82B27L736J - p.iva 03737650279 http://www.codseq.it -
+> filippo.cavallarin@...seq.it
 
-This issue has been fixed in version 1.6.1. However, it introduces a minor 
-regression as it ignores some configuration blocks (see the references for 
-further details.)
+Can you confirm that the config.php has sensitive information within it?
 
-Could a CVE id be assigned?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Thanks in advance. 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-References:
-https://project.nordu.net/browse/RADSECPROXY-43
-https://postlister.uninett.no/sympa/arc/radsecproxy/2012-09/msg00001.html
-https://postlister.uninett.no/sympa/arc/radsecproxy/2012-09/msg00006.html
-
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+iQIcBAEBAgAGBQJPvShPAAoJEBYNRVNeJnmTn7wP/RQ3HePcA+MniyxdVxad8XIJ
+Lui61HW0cEOeK7vPx+5D1KBdV09U4P9wI/73ql1lvFo2OvtqsyNEQLn0JBXgBdHv
+ybKi6obhk374xmr+zlWMBbt983S/A4BxuYFWuU0dCQA6jm7rAM1wQRutuBSIdzx8
+3iLQr/LVAHkJFxKIjHvpZerDHW+Nh/+SLS2cMLDBXNGFnhJD1RyJlT4ZDgszdyFW
+A6sKwz+O4p4L3XIcLjHjzwiwBcirzzyBphY/bh/b+WTsAM3IbDHrNcAl5nUyAKBf
+6M+Up8LhFDLlEzHqLHQUr3fenAxVrz4PHS1RGlspeE8jWCz/FtnFbWxqYiTDvTUi
+JbJpB33bVmM8NEdZds9hF+y+h0TyF0Y2JadU3fAdbLaMnWQyH6lxNYntQnWoEOI1
+KGKzP3vVPdFwyXIa2PWfiz9EHrFOScH/fXMX65e3pybxMHvUyisnJNw/khBImQLW
+BRu0Lh+cVvsUwkr0tX/GxmbeR7pVakgcRp09ihGto7CwtIXOpEJ4pqrqCjHJRKM+
+vJ7HUR72cuGriAaHrAwPWGu2UM8G7niXerGrn6YBcRos3zgIIMa9YKQCVqR8DhLd
+NH9WH4vhgF1cMHRaU6Az2uZx34nWYGNw59x2eO6H6uRWrN6cREVhxTXf6QtQOv4m
+wrTY5Ael++jgxy7++Pjq
+=j8ar
+-----END PGP SIGNATURE-----
