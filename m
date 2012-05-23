@@ -1,72 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/21
-Message-ID: <4f914ef0.c5b70e0a.01bd.71c6@mx.google.com>
-Date: Fri, 20 Apr 2012 11:56:28 +0000
-From: "pinto.elia@...il.com" <pinto.elia@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: R: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/18
+Message-ID: <4FBD2B73.9060005@redhat.com>
+Date: Wed, 23 May 2012 12:24:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: David Black <disclosure@....org>
+Subject: Re: CVE request: cobbler command injection
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-----Messaggio originale----
-Da: Andrew Morton
-Inviato:  20/04/2012, 00:04 
-A: Marcus Meissner
-Cc: OSS Security List; security@...nel.org; Sukadev Bhattiprolu; Serge Hallyn; Eric W. Biederman; Pavel Emelyanov
-Oggetto: [oss-security] Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+On 05/23/2012 02:39 AM, David Black wrote:
+> It was reported that it was possible to perform command injection 
+> through the cobbler xmlrpc api[0][1]. This issue was fixed in the
+> git commit found at [2]. Can a CVE be assigned to this issue?
+> 
+> 
+> [0] https://bugs.launchpad.net/ubuntu/+source/cobbler/+bug/978999 
+> [1] https://github.com/cobbler/cobbler/issues/141 [2]
+> https://github.com/cobbler/cobbler/commit/6d9167e5da44eca56bdf42b5776097a6779aaadf
 
+Please
+> 
+use CVE-2012-2395 for this issue.
 
-(cc's added)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-On Thu, 19 Apr 2012 23:48:20 +0200
-Marcus Meissner <meissner@...e.de> wrote:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-> Hi,
-> 
-> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
-> namespace leak caused by vsftpd.
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=757783
-> 
-> He provided a simple reproducer:
-> 
-> #include <stdio.h>
-> #include <errno.h>
-> #include <signal.h>
-> #include <sched.h>
-> #include <linux/sched.h>
-> #include <unistd.h>
-> #include <sys/syscall.h>
-> 
-> int main(int argc, char *argv[])
-> {
->     int i, ret;
-> 
->     for (i = 0; i < 10000; i++) {
-> 
->         if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC |
-> CLONE_NEWNET | SIGCHLD, NULL)))
->             return 0;
-> 
->         if (-1 == ret) {
->             perror("clone");
->             break;
->         }
-> 
->     }
->     return 0;
-> }
-> 
-> 
-> and checking "cat /proc/slabinfo|grep pid_namespace"
-> gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
-> 
-> 
-> Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
-> fixed between 3.1 and 3.2 (but someone else cross check perhaps).
-> 
-> Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
-> but it seems not helping.
-> 
-> Ciao, Marcus
-
+iQIcBAEBAgAGBQJPvStzAAoJEBYNRVNeJnmTGVwP/0dZWeEOJJg6fLfr66ToY6C4
+33MB059f5k/ePfd/0hJwpNtSImvfACH+SvwLcGfCsVbj0HRPKg9EdkZlBRXplS50
+EK9rL70casIG0p2DDxtd9L4AU8Kl6dsYGaoN3fL9nq3VdYtKJH0bHz1ryWaCG7ZN
+k0tDHRnPPfpcNxQNkvLiutRK2r0iR9ctzUioMErSFaee+mIVDCv3MNoGCnf4y/xH
+ijGB6GtuVAOLJzujSGyOLi6KdUgGJk2x9h6QUTN/iT9NE9/ukCrsdJP37MQUX3Sm
+Ft0fVlLcPt50FBq/ypEfrN7fl2P+isGpqpKBbI01qBQl9CiNOj3GoGOV2xsmlGU7
+u832wbCLW/T1jRCacxfsjUCHiiEJBKOdd14HEuHStKpZY2FAwwVkSC35GcTfu+gA
+KtggmRYuQUKUZFu2unyWxtV6Thk97eT9UqWxrXj8UYoCl8YfaQXi0U+Ap2QB8Khr
+xVxzPsCl9tCuOlZMNss1YAXvwwjHu9o6AHX3tgPqjFFIveWxsOxRZSJ/ZveNgqjf
+9JZuQvkODn4AD9NXwUgjjcokD7yfxOog43UWuoKOkNj71Eaxk+jU4Xk/mee3T7Wn
+zbXtOA/T9EO5Zu4yZB4El8bKm+9FJRlPk1LuQWTXlqW65vaZAkvd2PS2ifW2C74+
+IyFclW5b9DOlyAMnTH7H
+=TMiW
+-----END PGP SIGNATURE-----
