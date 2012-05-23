@@ -1,33 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/15
-Message-Id: <201208281439.23428.geissert@debian.org>
-Date: Tue, 28 Aug 2012 14:39:22 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, secteam@...ebsd.org
-Subject: CVE request: FreeBSD SCTP remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/4
+Message-ID: <CAJzxamJYb5tHL+92vXkX+yWYpaPMh+7G-oF_hud6F+gZpRxmRw@mail.gmail.com>
+Date: Wed, 23 May 2012 18:39:10 +1000
+From: David Black <disclosure@....org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: cobbler command injection
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 28 August 2012 03:50:41 Simon L. B. Nielsen wrote:
-> On Tue, Aug 28, 2012 at 7:25 AM, Raphael Geissert <geissert@...ian.org> 
-wrote:
-> > There appears to be a remote DoS (via a NULL pointer dereference in the
-> > kernel) vulnerability in FreeBSD's SCTP implementation[1].
-> > 
-> > Has a CVE id been assigned to it already?
-> > 
-> > [1]http://www.exploit-db.com/exploits/20226/
-> 
-> I don't think have one gotten assigned, but probably should. Probably
-> best to go to Mitre to make sure we don't accidentally get a
-> duplicate. Feel free to requeste one, or I can do it later. Please cc:
-> secteam@...ebsd.org on any request to minimize risk of confusion.
+It was reported that it was possible to perform command injection
+through the cobbler xmlrpc api[0][1]. This issue was fixed in the git
+commit found at [2].
+Can a CVE be assigned to this issue?
 
-Kurt, could you please assign one?
 
-Thanks in advance.
-
-Kind regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+[0] https://bugs.launchpad.net/ubuntu/+source/cobbler/+bug/978999
+[1] https://github.com/cobbler/cobbler/issues/141
+[2] https://github.com/cobbler/cobbler/commit/6d9167e5da44eca56bdf42b5776097a6779aaadf
