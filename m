@@ -1,28 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/16
-Message-ID: <CANTw=MOqq1-irLVrj+_dxsRvNCu-7ACY-4YBXAH6awL_C4AAXA@mail.gmail.com>
-Date: Fri, 4 May 2012 14:25:06 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/15
+Message-ID: <4FBD27A2.2010108@redhat.com>
+Date: Wed, 23 May 2012 12:08:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Debian/Ubuntu php_crypt_revamped.patch
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: haproxy trash buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 4, 2012 at 2:18 PM, Daniel Kahn Gillmor wrote:
-> On 05/04/2012 01:35 PM, Solar Designer wrote:
->> The purpose [is] to notify Ubuntu and others of the Debian bug
->> that they may need to fix in Debian-derived distros, and to suggest that
->> the patch be dropped from future versions.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/23/2012 11:37 AM, Vincent Danen wrote:
+> Could a CVE be assigned to this flaw please?
+> 
+> A flaw was reported in HAProxy where, due to a boundary error when 
+> copying data into the trash buffer, an external attacker could
+> cause a buffer overflow.  Exploiting this flaw could lead to the
+> execution of arbitrary code, however it requires non-default
+> settings for the global.tune.bufsize configuration option (must be
+> set to a value greater than the default), and also that header
+> rewriting is enabled (via, for example, the regrep or rsprep
+> directives).
+> 
+> This flaw is reported against 1.4.20, prior versions may also be 
+> affected.  This has been fixed upstream in version 1.4.21 and in
+> git.
+> 
+> References:
+> 
+> https://secunia.com/advisories/49261/ 
+> http://haproxy.1wt.eu/download/1.4/src/CHANGELOG 
+> http://haproxy.1wt.eu/git?p=haproxy-1.4.git;a=commit;h=30297cb17147a8d339eb160226bcc08c91d9530b
 >
-> If your goal is to get the patch dropped from Debian and Debian-derived
-> distributions, the most reliable way to do that is to file a bug against
-> the Debian php packages explaining your reasons for that.
+>  https://bugzilla.redhat.com/show_bug.cgi?id=824542
 
-Security issue reporters are usually not held responsible for
-reporting the issues that they find to every affected distribution
-themselves.  That is why common id numbers (CVEs) are important.  They
-give us a common reference for every problem.  Then its the job of
-those of us representing such distributions to pass the information on
-to the appropriate tracking systems within our own focus areas.
+Please use CVE-2012-2391 for this issue.
 
-Best wishes,
-Mike
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPvSeiAAoJEBYNRVNeJnmTFTwP/0gQi4YSBbmGuUlRsrn3bl1b
+VQV1kO0Ipk2vq2fsG7FEhwnobS8KWlYRHU8UGfgbCjPjAKRwkE0y5m59GeauND+e
+PMKYMLGuvEKY42kxgS6A3FsfAnWO6dyNtxTkCM/HnCmKuXoOpQAcx6cj26UlECvf
+Lu+3GOcYwyZJqevgW7dI2YUtNxvwYuQOUtOd0ha/XW0MXmvRhlRdu/+9C1ait1wG
+VIcbrlU0oGGmJR/0nG5S6ajrjf0vPHcNlDOL/fNLZqrkf//Pjvm9ozGKwyRHDSnj
+JplRrchBSBBGyP383vOYF5/7RL0ZL6r+XfJrs7fUGXuVcNmA5GpQNVV03DuzFs0e
+FNWqUROjcCWGJJHsB3Ks2WNmLfoj5OM7Pf/1rTteCCgI3qZ/hEXHc8pK2W/Hd4pu
+hifcx53J9UEZ8HqpKhjAxNGhpuJ7ZReXaF4diKFMue2fZIFCJMtOmB1Epr2WHi1A
+ym1n+nTz+lrMhbFBJiHdgx/KhPlxOxAWD9X34ENLR+emViSO4KwOpgmP0SnbiyNR
+MW4HjInUfb2UclBhDqJclPm+2D5xLMH23VIOMk8g7cvPheVJ+Qu7P2hmTuKaAs/Y
+pGkV/Cc7jiXaMmfFocYnhjhZtNO9pU8V4aq3/xxgUG32Rm8cUmEyyb4CieYIOcEI
+nbTapWRRQHCDY93/3fD8
+=2CdO
+-----END PGP SIGNATURE-----
