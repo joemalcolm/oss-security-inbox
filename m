@@ -1,78 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/31/5
-Message-ID: <20120531191529.GB79783@higgins.local>
-Date: Thu, 31 May 2012 12:15:29 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/14
+Message-ID: <4FBD265C.2020403@redhat.com>
+Date: Wed, 23 May 2012 12:03:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Unsafe Query Generation Risk in Ruby on Rails (CVE-2012-2660)
+Subject: Re: CVE Request -- kernel: huge pages: memory leak on mmap failure
 Content-Type: text/plain; charset=utf-8
 
-Unsafe Query Generation Risk in Ruby on Rails
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There is a vulnerability when Active Record is used in conjunction with parameter parsing from Rack via Action Pack. This vulnerability has been assigned the CVE identifier CVE-2012-2660.
+On 05/23/2012 04:35 AM, Petr Matousek wrote:
+> Description of problem: When called for anonymous (non-shared)
+> mappings, hugetlb_reserve_pages() does a resv_map_alloc(). It
+> depends on code in hugetlbfs's vm_ops->close() to release that
+> allocation.
+> 
+> However, in the mmap() failure path, we do a plain unmap_region() 
+> without the remove_vma() which actually calls vm_ops->close().
+> 
+> An unprivileged local user could use this flaw to crash the
+> system.
+> 
+> References: https://bugzilla.redhat.com/show_bug.cgi?id=824345 
+> http://www.spinics.net/lists/linux-mm/msg34763.html
+> 
+> Proposed upstream fix: https://lkml.org/lkml/2012/5/21/385
+> 
+> Thanks,
 
-Versions Affected:  ALL versions
-Not affected:       NONE
-Fixed Versions:     3.2.4, 3.1.5, 3.0.13
+Please use CVE-2012-2390 for this issue.
 
-Impact 
------- 
-Due to the way Active Record interprets parameters in combination with the way that Rack parses query parameters, it is possible for an attacker to issue unexpected database queries with "IS NULL" where clauses.  This issue does *not* let an attacker insert arbitrary values into an SQL query, however they can cause the query to check for NULL where most users wouldn't expect it.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-For example, a system has password reset with token functionality:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-    unless params[:token].nil?
-      user = User.find_by_token(params[:token])
-      user.reset_password!
-    end
-
-An attacker can craft a request such that `params[:token]` will return `[nil]`.  The `[nil]` value will bypass the test for nil, but will still add an "IS NULL" clause to the SQL query.
-
-All users running an affected release should either upgrade or use one of the work arounds immediately. 
-
-Releases
--------- 
-The FIXED releases are available at the normal locations. 
-
-Workarounds
------------ 
-This problem can be mitigated by testing for `[nil]`.  For example:
-
-    unless params[:token].nil? || params[:token] == [nil]
-      user = User.find_by_token(params[:token])
-      user.reset_password!
-    end
-
-Another possible workaround is to cast to a known type and test against that type.  For example:
-
-    unless params[:token].to_s.empty?
-      user = User.find_by_token(params[:token])
-      user.reset_password!
-    end
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-
-* 3-0-null_param.patch - Patch for 3.0 series 
-* 3-1-null_param.patch - Patch for 3.1 series 
-* 3-2-null_param.patch - Patch for 3.2 series 
-
-Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
-------- 
-
-Thanks to Ben Murphy for reporting the vulnerability to us, and to Chad Pyne of thoughtbot for helping us verify the fix.
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-0-null_param.patch" of type "text/plain" (2362 bytes)
-
-View attachment "3-1-null_param.patch" of type "text/plain" (2316 bytes)
-
-View attachment "3-2-null_param.patch" of type "text/plain" (2317 bytes)
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJPvSZcAAoJEBYNRVNeJnmTr8oQANqp/NZct0rBOM4TjvWZZGNy
+htHC5hF9dBCkSLV1Kvn97kmLjFJkyV3Uk733/JF3nPHdQGY5C1toUTT0XFC0tvMU
+Pq1y2o6feaxn65pQW6vu4b2a7HJrOw2LNw6/SFNIG6oSg3uomhhhMUi2cNZ8gB5S
+R3qy56sdmhzKkeTon20ql9ZNHORYH5n9Ig6zliqqjJa217H2kz6JQRItFvNS2hp8
+bEFLx8JAVdBVILgPSQ9cIrA7G2rNn2DpisW7++2J0JDMYTqHmDcAN4ZEiXvcd7ZO
+0hHTsR8Qx1rey0EjPL+40tG6h7B5e96B8Waj0ZEfuL4/XK1CWcp+VlA61WRrRNvM
+D2OeUzDKMCDqkyP4ZHCS/5Pr+OTuU2bm8jkDETn1lomIh64mFRlpJbD6riRZrCV3
+z3MQPT817gELvKYPEtmtGfI+SAgoTCh5ky7j0O8YzkXZHqWzux5qcx6RN+dewFsd
+NMm7tbDrep+nKbnqKDdWautDPch90I0lxBq82XnPVdUq2u+XEP7pgJUbp9iHWw17
+6zDWNh0X4P//qfXTTZVLxBds4Xj6McvQs8M9NdubG8ZFKaOFtV22uff0PWZO3mbi
+3qlEXElSrBx/h91RfC3qgcgGse9jwpGdWzQGUrqgZPV9lQJr1Je3KvHIPYgObJOd
+BTvTwY/Y/lYD/2bmuh/9
+=BPUl
+-----END PGP SIGNATURE-----
