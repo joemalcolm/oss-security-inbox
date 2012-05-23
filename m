@@ -1,23 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/21/3
-Message-ID: <20120521202242.GA24491@inutil.org>
-Date: Mon, 21 May 2012 22:22:42 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/9
+Message-Id: <0309C67B-4F6F-4E67-A6C4-B2066DA3922E@codseq.it>
+Date: Wed, 23 May 2012 14:21:15 +0200
+From: Filippo Cavallarin <filippo.cavallarin@...seq.it>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2011-3102 / libxml2
+Subject: CVE request: Multiple vulnerabilities in LogAnalyzer
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3102 points to
-http://code.google.com/p/chromium/issues/detail?id=125462, which is
-a 404.
+Hello,
+Can I get a CVE identifier for this issue:
 
-http://googlechromereleases.blogspot.de/2012/05/stable-channel-update.html
-references Jueri Aedla for the credits. I suppose this is related to this
-libxml2 upstream commit:
-http://git.gnome.org/browse/libxml2/commit/?id=d8e1faeaa99c7a7c07af01c1c72de352eb590a3e
+http://www.codseq.it/advisories/multiple_vulnerabilities_in_loganalyzer
 
-Can anyone of the involved parties at Chrome and Red Hat please confirm?
+Here is the changelog:
 
-Cheers,
-        Moritz
+http://loganalyzer.adiscon.com/news/loganalyzer-v3-4-3-v3-stable-released
+
+Thanks,
+
+
+
+Filippo Cavallarin
+
+
+C o d S e q
+Development with an eye on security
+------------------------------------------------------------------------
+Castello 2005, 30122 Venezia
+Tel: 041 88 761 58 - Fax: 041 81 064 714 - Cell: 346 66 93 254
+c.f. CVLFPP82B27L736J - p.iva 03737650279
+http://www.codseq.it - filippo.cavallarin@...seq.it
+
