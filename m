@@ -1,52 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/26/5
-Message-ID: <4F70BA18.1010606@redhat.com>
-Date: Mon, 26 Mar 2012 12:48:56 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fw@...eb.enyo.de>, smcv@...ian.org
-Subject: Re: CVE-2010 Request: quake3 / openarena-server: DDoS by processing 'getstatus' and 'rcon' packets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/10
+Message-ID: <4FBCDA57.2060907@redhat.com>
+Date: Wed, 23 May 2012 14:38:47 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Gerald Combs <gerald@...eshark.org>
+Subject: CVE Request -- wireshark: wnpa-sec-2012-08, wnpa-sec-2012-09, wnpa-sec-2012-10
 Content-Type: text/plain; charset=utf-8
 
-On 03/26/2012 07:09 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
->   yet in 2010 the following problem has been corrected in Quake3 /
-> OpenArena:
-> 
->   A distributed denial of service flaw was found in the way Quake3 Arena /
-> OpenArena servers used to handle 'getstatus' and 'rcon' (remote command)
-> connectionless requests. A remote attacker could use this flaw to perform
-> distributed denial of service attack against the target server IP
-> gameserver by
-> spoofing certain packets.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=665656
-> [2] http://openarena.ws/board/index.php?topic=4391.0
-> [3] http://www.ioquake.org/forums/viewtopic.php?f=12&t=1694
-> [4] http://www.urbanterror.info/forums/topic/27825-drdos/
-> [5]
-> http://lists.ioquake.org/pipermail/ioquake3-ioquake.org/2012-January/004778.html
-> 
-> [6] https://bugzilla.redhat.com/show_bug.cgi?id=806898
-> 
-> Relevant upstream patch:
-> [7] http://icculus.org/pipermail/quake3-commits/2010-January/001679.html
-> 
-> Could you allocate a CVE-2010-* CVE identifier for this issue?
-> 
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> P.S.: There doesn't seem to be a CVE identifier for this issue yet:
->       http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=quake3
-> 
->       mentions various Quake3 related security flaws, but doesn't
->       this concrete issue yet.
+Hello Kurt, Steve, vendors,
 
-Please use CVE-2010-5077 for this issue.
+   the following recent Wireshark upstream advisories:
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+A) http://www.wireshark.org/security/wnpa-sec-2012-08.html
+
+    References (upstream bugs and Red Hat bugzilla entry):
+    [1] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6805 (802.11)
+    [2] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7118 (802.3)
+    [3] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7119 (ANSIMAP)
+    [4] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7120 (ASF)
+    [5] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7121 (BACAPP)
+    [6] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7122 (HCIEVT)
+    [7] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7124 (LTP)
+    [8] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7125 (R3)
+    [9] https://bugzilla.redhat.com/show_bug.cgi?id=824411
+
+B) http://www.wireshark.org/security/wnpa-sec-2012-09.html
+
+    References:
+    [1] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7138
+    [2] https://bugzilla.redhat.com/show_bug.cgi?id=824413
+
+C) http://www.wireshark.org/security/wnpa-sec-2012-10.html
+
+    References:
+    [1] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7221
+    [2] https://bugzilla.redhat.com/show_bug.cgi?id=824419
+
+doesn't seem to have CVE identifiers yet.
+
+Could you allocate three of them?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
