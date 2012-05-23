@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/15
-Message-ID: <504A2EFD.5060400@redhat.com>
-Date: Fri, 07 Sep 2012 11:29:33 -0600
-From: Jeff Law <law@...hat.com>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Jakub Jelinek <jakub@...hat.com>
-Subject: Re: CVE Request -- glibc: strcoll() integer overflow leading to buffer overflow + another alloca() stack overflow issue (upstream #14547 && #14552)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/7
+Message-ID: <20120523103511.GX20735@dhcp-25-225.brq.redhat.com>
+Date: Wed, 23 May 2012 12:35:12 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- kernel: huge pages: memory leak on mmap failure
 Content-Type: text/plain; charset=utf-8
 
-On 09/07/2012 11:21 AM, Kurt Seifried wrote:
->> 2) Issue #2 (mentioned here only for completeness, but I am not of
->> the opinion this should receive a CVE identifier. See argumentation
->> below [but open to glibc upstream / others to disprove it]).
->
-> I will hold off on issuing a CVE for this then. Anyone want to weigh in?
->> alloca() stack overflow (first issue from the report below)
->> Upstream bug report: [3]
->> http://sourceware.org/bugzilla/show_bug.cgi?id=14552
->>
->> If I have looked correctly this is expected / known behaviour of
->> alloca() - from the manual page: [4]
->> http://linux.die.net/man/3/alloca
-Just because it's known/expected behaviour doesn't mean it's not a 
-potential attack vector.  Blowing out the stack is definitely a vector 
-for attack:
+Description of problem:
+When called for anonymous (non-shared) mappings, hugetlb_reserve_pages()
+does a resv_map_alloc(). It depends on code in hugetlbfs's
+vm_ops->close() to release that allocation.
 
-http://www.phrack.org/issues.html?issue=67&id=9#article
-http://www.phrack.com/issues.html?issue=63&id=14#article
+However, in the mmap() failure path, we do a plain unmap_region()
+without the remove_vma() which actually calls vm_ops->close(). 
 
-Jeff
+An unprivileged local user could use this flaw to crash the system.
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=824345
+http://www.spinics.net/lists/linux-mm/msg34763.html
+
+Proposed upstream fix:
+https://lkml.org/lkml/2012/5/21/385
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
