@@ -1,49 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/11
-Message-ID: <4F05D8AB.2020809@redhat.com>
-Date: Thu, 05 Jan 2012 10:06:51 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/13
+Message-ID: <4FBD259E.9000809@redhat.com>
+Date: Wed, 23 May 2012 11:59:58 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Hicks <d@...id.au>
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+CC: Matthias Weckbecker <mweckbecker@...e.de>
+Subject: Re: CVE request(?): hostapd: improper file permissions of hostapd's config leaks credentials
 Content-Type: text/plain; charset=utf-8
 
-On 01/05/2012 04:22 AM, David Hicks wrote:
-> The question these approaches raise is whether it is advisable to
-> reinvent rate limiting in each and every network daemon. Performing rate
-> limiting at the system/interface level prevents unwanted and expensive
-> context switches to each daemon. Configuration and maintenance is much
-> simpler because administrators don't need to learn 50 different ways to
-> configure rate limiting for each daemon. There is also less risk for
-> bugs to be written into the rate limiting implementation of each daemon.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-To a large degree yes, because each daemon is different and the daemon
-also knows how bad things are getting, the firewall doesn't. Ideally the
-daemons should be auto-tuning and degrading politely to prevent
-dying/killing the system/etc. so the admin doesn't have to explicitly
-learn how to tune it. THiss problem occurs with firewall limiting
-anyways, how many connections per second per C class (or whatever) can I
-safely allow to daemon X? What happens if we upgrade/downgrade the
-server daemon X runs on? What happens if server X takes additional
-duties or is modified in another way that affects the load it can
-handle? I vote for daemons that auto-tune intelligently because I am
-lazy =).
+On 05/23/2012 02:21 AM, Matthias Weckbecker wrote:
+> Hi Kurt, Hi vendors,
+> 
+> not too critical in my opinion, but I think still worth to be at
+> least mentioned briefly as other distros such as Fedora 16 were
+> affected too:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=740964
 
-> On a technical note, rate limiting requires a small amount of memory
-> (buckets) to store information about recent connections. For this
-> reason, allowing IPv6 rate limiting granularity at the /128 level would
-> be inadvisable as an attacker with /64 addresses could quickly exhaust
-> the table capacity/available memory. The design of the data structures
-> and algorithms for the table need to be very efficient. Taking it down
-> another level, a table that is larger than available L1-L3 cache could
-> further degrade performance ([4] and [5] discuss hash tables and CPU
-> cache).
-Again we could do something clever like auto-tune and start
-consolidating buckets if the tables start getting too large.
+Please use CVE-2012-2389 for this issue.
+
+> I'm not sure whether this issue should get a CVE, but in the past
+> similar vulnerabilities got a CVE (e.g. CVE-2012-0863).
+
+Indeed they have, my all time favourite example of this kind of flaw
+is CVE-2002-0849 =).
+
+> 
+> Thanks, Matthias
+> 
 
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
--- Kurt Seifried / Red Hat Security Response Team
-
+iQIcBAEBAgAGBQJPvSWeAAoJEBYNRVNeJnmTswEQAN4cL2LE+aZQFcP4qbQCLVx4
+J7k22Qmt1RZvRt8oMTMOx/uYnVi60ZsxU4JxU+MuzFJadIQ2nfjk3wG6sXAvQ3FH
+2VZf0aB8NchhGikIBw7u4imp6zC6Wx5UaREEWp2F3KToCCWbZv8jUg9eZGKryiqE
+fzZmfAVNlgBjuSRJ1Pt3ictxkbuwfSINddSj3UZeZiZ5WcmcTxh8ZeurMm+PwxDB
+GE3gsQ1vVuNROq2lKc0yl6d+syEPFRJKFd2eqQTwRTYYfZbNgwDyG3zzp6UL8zgb
+02quSIarL0idEQ8R6IVf7OdK4KZAehEQgWgUJ48GaWv+cAEbqaTc6IYCjHx+/KlZ
+mwrNJS8bB5kE3o21otDimi+vkEdaOF05MYPqa29tlkvFB3Uq04AJyz0BLlMHMd/3
+FuWuPzBjFNqy8K4AllCxnz5Lcuz1Ppv6Qyu3oEBTVyZsMhHvDOc79hIMVZ3E3ZNK
+RgBROYqx+7TE0yAEJaTmsTIy0q42aVB4q9sxo4fMoBE35HGVfK480Ct8wZc5ejV5
++8ZVCaH3AmbPkK3eh9/mms1RyLdQKl8ONJY9Y/BTgUUZD+CUqyWb3Wnyt5qJI4pN
+yS/UrVRZp1ICU8/En55DzOfDtTbF0FQmeN3ANQUszqJF8th+SyylQZNW8AdEM4Cf
+XdRhz8TpVjY2IXTqwRw/
+=2J5e
+-----END PGP SIGNATURE-----
