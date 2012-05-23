@@ -1,120 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/10
-Message-ID: <4F86FEEA.5090304@redhat.com>
-Date: Thu, 12 Apr 2012 10:12:26 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/1
+Message-ID: <4FBC2E05.8050807@redhat.com>
+Date: Tue, 22 May 2012 18:23:33 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, David Black <disclosure@....org>
-Subject: Re: CVE request: cobbler lack of csrf protection, code execution
+CC: Keith Winstein <keithw@....EDU>, jlieskov@...hat.com, mosh-devel@....EDU, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE Request -- mosh (and probably vte too): mosh server DoS (long loop) due improper parsing of terminal parameters in terminal dispatcher
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/12/2012 05:46 AM, Jan Lieskovsky wrote:
-> Thank you for this post, David.
+On 05/22/2012 01:29 PM, Keith Winstein wrote:
+> Hello,
 > 
-> Just administrative note -- all of these security issues should get
-> CVE-2011-* CVE identifiers, as all of the Ubuntu bugs have been
-> reported in 2011 yet (2011-09-28 exactly).
+> I am the author of Mosh, and somebody pointed me to your CVE
+> request: http://seclists.org/oss-sec/2012/q2/370
 > 
-> On 04/12/2012 11:39 AM, David Black wrote:
->> Hi, I reported some bugs a while ago in cobbler which never
->> received CVE ID, could the follow bugs receive CVE ID ? 1. lack
->> of csrf protection in the cobbler web interface (vulnerable to 
->> csrf attacks) 
->> https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858878
->
->> 
-> Some further references / patches information I was able to found: 
-> 1) Ubuntu patch by Robie Basak:
-> 
-> http://bazaar.launchpad.net/~racb/ubuntu/oneiric/cobbler/858878_858883/revision/53
->
-> 
-> 
-> 2) Red Hat bugzilla entry: 
-> https://bugzilla.redhat.com/show_bug.cgi?id=811937
+> I have not been part of this process before -- do we (the upstream)
+> have a role here?
 
-Please use CVE-2011-4952 for this issue (CSRF).
+Yes, ideally you should include the CVE # where appropriate in
+ChangeLogs, NEWS files, web pages, email announcements, source code
+comments, etc. This will make tracking the issue easier, and allow
+vendors to quickly locate the vulnerable code, the code fix and so on.
 
->> 2. code execution on the cobbler host through use of yaml.loads
->> on potentially untrusted user input 
->> https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883
->
->> 
-> Though only yaml.load privilege escalation vector has been
-> mentioned in this post, from further look noticed two ways for
-> privilege escalation: 1) (possibly remote) privilege escalation via
-> yaml.load / by processing management parameters:
-> 
-> References: 
-> https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883
->
-> 
-(Ubuntu bug)
-> 
-> Ubuntu patch from Robie Basak: * Backport safe YAML load from
-> upstream. (LP: #858883):
-> 
-> http://bazaar.launchpad.net/~racb/ubuntu/oneiric/cobbler/858878_858883/revision/54
->
-> 
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=811920 (Red Hat bug)
+In a perfect world a patch file labled something like
+mosh-version-CVE-2012-2385.patch linked from your security web page
+makes life really easy especially for vendors that backport security
+fixes (e.g. Red Hat) rather than rebasing to a newer version (e.g.
+Fedora).
 
-Please use CVE-2011-4953 for this issue (yaml.load).
+> I don't want to butt in inappropriately, but I also don't want it
+> to seem (by our silence) like we agree with the description in the
+> CVE request.
 
+Feel free to correct it =) Obviously the chances of getting an
+accurate description are much better if the vendor participates.
 
-> 2) local privilege escalation due to insecure use of
-> PYTHON_EGG_CACHE location:
+> The writeup is not accurate. We're grateful for the bug report by
+> Timo Juhani Lindfors, but to say "issue confirmed by mosh upstream"
+> makes it sound like we confirm _this_ issue.
 > 
-> References: 
-> https://bugs.launchpad.net/ubuntu/+source/cobbler/+bug/858875
-> (Ubuntu bug) https://fedorahosted.org/cobbler/ticket/688 (upstream
-> ticket)
+> We have written about this issue in the URL linked from the
+> request: https://github.com/keithw/mosh/issues/271
 > 
-> https://d-feet.fedorahosted.org/cobbler/attachment/ticket/688/58_fix_egg_cache.patch
->
->  (relevant upstream patch) 
-> https://bugzilla.redhat.com/show_bug.cgi?id=811926 (Red Hat bug)
+> In general, the application sending ANSI escape sequences is a
+> trusted party. It is allowed to do things like disable the user's
+> keyboard by sending "\e[2h", which is interpreted by xterm and
+> Terminal.app.
+> 
+> That's a DoS as well, but (like this one) it's not really a
+> security vulnerability. Because ANSI escape sequences can do
+> arbitrary things to the user's terminal, programs that allow
+> untrusted user-to-user communication (including write(1), wall(1),
+> and e-mail and newsgroup readers) need to filter these out.
+> 
+> Here's my suggested text for the issue description:
+> 
+> === Mosh versions 1.2 and earlier allow an application to cause
+> the mosh-server to consume large amounts of CPU time with a short
+> ANSI escape sequence. In addition, a malicious mosh-server can
+> cause the mosh-client to consume large amounts of CPU time with a
+> short ANSI escape sequence. This arises because there was no limit
+> on the value of the "repeat" parameter in some ANSI escape
+> sequences, so even large and nonsensical values would be
+> interpreted by Mosh's terminal emulator. ===
+> 
+> This gets away from the suggestion that the problem relates to
+> "improper parsing" or the "count of parameters" (it's about wanting
+> a limit on the _value_ of parameters so the terminal emulator
+> doesn't do huge amounts of work to execute a very short sequence),
+> or to data coming from "a remote attacker."
 
-Please use CVE-2011-4954 for this issue (PYTHON_EGG_CACHE).
+CC'ing Steve @Mitre so he has a copy.
 
-> Kurt, could you allocate three 2011 CVE ids for these issues? i)
-> the first for CSRF issue, ii)  the second for the yaml.load priv
-> esc issue, iii) the third for the PYTHON_EGG_CACHE local priv esc
-> issue
-> 
-> David, would be great if you could confirm the three ids are
-> necessary.
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
->> 
->> -- Thank you.
-> 
+> Best regards, Keith
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPhv7qAAoJEBYNRVNeJnmT+gMP/31vupdJ6Xfi/ic4i3zfxtYj
-+yUYtODnMV3oyJqWbpC6Di1vnImAPGKG76gGUaoXQk6/e9sbz2P5EipCJbwQ9KHk
-+0tzVxdYUJYAdN2Wi91Md7dkdKnkfAd4nN7NhVO3PsLXOGV/Dq793KNfK7pkqEgV
-IJ/sXGcx947Onh5eZAjK3cHNczb0osRw7yIdlHG/0f0ylSGnXgyRKsFLTq/erV5F
-ef2jq6E/X1UnGBm1svuw2clhb7FRnihvtt+pnttaXN1flCoL6nUQ4wjndjZxEa7d
-IcnkIoz7oUQVLlCemnhDL+FbOWOhKFLqCPAC4awgx5OKa5aoxZNkC6HB/wd4VFvp
-49zCZooGCwGDpEXjHvWjuCIKohCzUKVLyqQOs2cMaLNzrdAovuyJibpvYrqBcMBY
-wQO0ACyz/if1UE4edZh3pOxcLPN5tSOgEZ5DLWGEENaHJVq3yJDuy/NtFvA5N7aN
-ODWKSzYS91zq5Rc16cNj9anFe7zkDOmy9khnKFf3CeEGODEh/G0jp0YZ06hmHLgP
-ybYcX//ao9UOYco7vlc00fPkfNJgH+3detaCIXYEobz6brgvK3QmXQvpi4FrRLAH
-ALO4YlQmNmmQdU6BmAtmQIG/0KSOkt8i8QYWnWMaJAET4/0VgFujl8mP0JUIQ2gM
-KgCGfp5YrEoVdVQRWZOC
-=Bzh3
+iQIcBAEBAgAGBQJPvC4FAAoJEBYNRVNeJnmTzYIP/RQU/pRNRmvZi0oWrjuDgfku
+pooo0iWBiaIqILvwCW1bYia3ZZuIoI3Z1gS4cfiGePyXmndnFEQtpjxNK+pj53CC
+rNNYX7ua72NUOI4HEMAT3oUNstxKAJBIWNV1skhr6Tlq/iFxm8rtCviQGs7DEpfr
+LHCQIFemqrd7qioPeKTdjA1bZK3EAZpyU3BphNOtnnb7+KjyfbdeGZv8nZQnWZW8
+fpHge2z57WYSzEuArWUAsLZwroDXuvecs6UUmrxoFuU3Hj3sX2pIiw4VPmioh0Os
+bXBhyKAo5wjxWfd6I3QSysxbAZYzHvAkdJ/tGS22T8QNqHJhat4ZOFIxiUs+0Ulw
+iwsfo2sB5dAQ28k6cXM0eQJDElMsXXuLB3BzleTCSv0iw9Dw7oPt7rnN6DIsZzdl
+ZwF+tb6zVkL/WSAnw1k7FbAnVjpuoHZnmiXsLi4IyOcq08usevKR/oWAYVUQyj9L
+7KXJVNGBnANFyHwBrA2EywzFPg+f1D8z2l6gMCnKE299wU/vup2iKT1Pg6q/edsN
+bToiPVey+5jRtLlUSeyaiEkD+6NXWJfE22cKp+eKlOa24u6eYnsaFRcFOBxajzQF
+Gf1R8kA+w6ZcXOOW7s6JFr7AaJBwQATpBhDWSLNG3cbxGaUDBYrEByWMlNk5cBSc
+EctFYIj5/KGUBkids1kt
+=rr+u
 -----END PGP SIGNATURE-----
