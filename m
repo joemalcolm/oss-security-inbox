@@ -1,26 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/2
-Message-ID: <50332077.9050903@redhat.com>
-Date: Mon, 20 Aug 2012 23:45:27 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/17
+Message-ID: <4FBD29C2.6090305@redhat.com>
+Date: Wed, 23 May 2012 12:17:38 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: ocaml-xml-light: hash table collisions CPU usage DoS CVE-2012-3514
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Gerald Combs <gerald@...eshark.org>
+Subject: Re: CVE Request -- wireshark: wnpa-sec-2012-08, wnpa-sec-2012-09, wnpa-sec-2012-10
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Xml-Light has been moved to google code SVN here :
-http://ocamllibs.googlecode.com/svn/trunk/xml-light/
+On 05/23/2012 06:38 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> the following recent Wireshark upstream advisories:
+> 
+> A) http://www.wireshark.org/security/wnpa-sec-2012-08.html
+> 
+> References (upstream bugs and Red Hat bugzilla entry): [1]
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6805 (802.11) 
+> [2] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7118
+> (802.3) [3]
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7119 (ANSIMAP) 
+> [4] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7120 (ASF) 
+> [5] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7121
+> (BACAPP) [6]
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7122 (HCIEVT) 
+> [7] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7124 (LTP) 
+> [8] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7125 (R3) 
+> [9] https://bugzilla.redhat.com/show_bug.cgi?id=824411
 
-I've applied a fix in r234 by using String Map instead of Hashtbl for
-DTD proof.
+Please use CVE-2012-2392 for these issues.
 
-Best,
-Nicolas
+> B) http://www.wireshark.org/security/wnpa-sec-2012-09.html
+> 
+> References: [1]
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7138 [2]
+> https://bugzilla.redhat.com/show_bug.cgi?id=824413
 
-Please use CVE-2012-3514 for this issue.
+Please use CVE-2012-2393 for these issues.
 
+> C) http://www.wireshark.org/security/wnpa-sec-2012-10.html
+> 
+> References: [1]
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7221 [2]
+> https://bugzilla.redhat.com/show_bug.cgi?id=824419
+
+Please use CVE-2012-2394 for these issues.
+
+> doesn't seem to have CVE identifiers yet.
+> 
+> Could you allocate three of them?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
 
 - -- 
@@ -31,17 +65,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQMyB2AAoJEBYNRVNeJnmT2LsP/R61a+0G7wbAr3wJ6UUrZnZQ
-uxjWASbL1gPUQ0S/Oglo3VPBddgT63DiEHEZ43pjZAwe7kmfvPFCFNbWlGn7sfVT
-M06U44AXArfmyBmutCJJl9iqPTIWN7lgC9QvrjMEcXc+rLod3gNodMiKVRSXhSkm
-Kva9SOwI/iyVAhjSYlMGf/FVwhyOJb4eB3IqXGGaTheoVEoJyxrMoqOhI2+o8jnC
-6r4paBkNs5N7MnjmoSnGWtra1Ndm6ZFG/d015LUcE4poU8D2nPkfQx8LaVMR7xPk
-ZEaJNClAseZ0bcKRugxZ5ROlbkA1wW/2sGADV8MsdaQiC01dp1TgtqmlA4WFX1rr
-wBUY5Y5ZzoEpmWHPAG7SsY1gN+rNiOQtAjXwxxX8N3YpclRE5N7a88YfoqfEPjAa
-SkkePgXTHznIl+CQG5w4W+mtXd2Ui/HLnkdyLRUpq7/O/DVCgT3YJE/KUeyYGLuK
-lHJ4NoJX2WV4BurhmfV0mMhyRJii0L/c7KzSwD+vR2A2D7fBOZMfGnDzL8lCTI9K
-mTn0doedKWGVt+YjE+agOsKkOALGpHVlUmJQQnRDofEJ/gq4Mvi1/d9C0OWxYokY
-qF7tp982t+fNVxJMGsums8sVhWrdnaSZAhjwiHuLMTPUP+O+UOIYCcW29wGwJrU1
-hwhBkaWtQuw/j9nY7OM8
-=CEnw
+iQIcBAEBAgAGBQJPvSnCAAoJEBYNRVNeJnmT3WAP/ROKsmmsrbgxlmkXmcIu5ybM
+mdh19/1trkaU3l/jqeBlY1hIF1R4N6qvfNRwa2SdoPWaa3StubXlMHQ4XThMNQze
+0yAQ2E/GD4LvnYjUBp9VLZbSYHDc61IJ5umwpU/cf9LPYSV+nBl5yVGLY/ynnidP
+EGDFJqYodmpfPCvTBdD3eZI2/gSqyy+kVznYUnduZZw30k7tvL0cVc9Vw3BA6DDG
+QtoSxCyzNQM872QI11xilaBAEbqhNfnjepIE6U7ar8SyX2TnEi7vw/J0Ex4w3PMu
+CYC/JZeRQxCh30oimcZFQWHsC5lbNvdyUzg1T1xGJvE1TDXkWLorGw9hkFZ/kjZW
+zjto/CtyfXgNo9VwNWZuH6JckNShG/k2nraYNfjcmbEUlyyJkE/xVG0u2rXg1XO3
+KHNqegvWfyRv4+pxbdPYQ/A+UmVaBnrwosTzMmOrtWXYQzYoT+SYCHjugdLyoP7l
+7Indj4SoOKMFz4FilYDb98JOiU/NUtuGvMk34Q+ugbCsoRRcxx5oioNhs0IDpvaz
+TPbNlhBMb1mvoz6/CHkoditwCrsjzidbj8m7Mdx8P2KSx2k+SVm4+A5T+NnxCPb7
+77em0xfs+GWzbpLJPPXqgwjnxJv6voQFUpiZMSBOYwUeYYfJIU7FPnriEMW+Pqu9
+xuEQJNO16mRlotD/gUnl
+=ppUO
 -----END PGP SIGNATURE-----
