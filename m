@@ -1,74 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/1
-Message-ID: <50DE8130.2070005@redhat.com>
-Date: Fri, 28 Dec 2012 22:35:44 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/12
+Message-ID: <20120523173723.GJ1286@redhat.com>
+Date: Wed, 23 May 2012 11:37:23 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>, Frederick Townes <ftownes@...edge.com>
-Subject: Re: CVE Request: W3 Total Cache - public cache exposure
+Subject: CVE request: haproxy trash buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Could a CVE be assigned to this flaw please?
 
-On 12/28/2012 01:04 AM, Jason A. Donenfeld wrote:
-> Hi Kurt,
-> 
-> W3 Total Cache:
-> http://wordpress.org/extend/plugins/w3-total-cache/
-> 
-> CVE request for three separate issues:
-> 
-> 1. Cache allows directory listing of hash-key listings, exposing
-> hash keys.
+A flaw was reported in HAProxy where, due to a boundary error when
+copying data into the trash buffer, an external attacker could cause a
+buffer overflow.  Exploiting this flaw could lead to the execution of
+arbitrary code, however it requires non-default settings for the
+global.tune.bufsize configuration option (must be set to a value greater
+than the default), and also that header rewriting is enabled (via, for
+example, the regrep or rsprep directives).
 
-As I understand it this is more of an .htaccess type issue than an
-actual issue with W3 total cache? Is this documented anywhere in the
-W3 total cache documents?
+This flaw is reported against 1.4.20, prior versions may also be
+affected.  This has been fixed upstream in version 1.4.21 and in git.
 
-> 2. Hash keys are easily predictable, in the case of (1) not
-> existing.
+References:
 
-explanation/algorithm/?
+https://secunia.com/advisories/49261/
+http://haproxy.1wt.eu/download/1.4/src/CHANGELOG
+http://haproxy.1wt.eu/git?p=haproxy-1.4.git;a=commit;h=30297cb17147a8d339eb160226bcc08c91d9530b
+https://bugzilla.redhat.com/show_bug.cgi?id=824542
 
-> 3. Cached database values are downloadable by their hash keys on
-> the public internet, exposing sensitive information like password
-> hashes.
-
-Do they need to be downloadable? That is to say can these hash values
-be protected, or must they be exposed?
-
-> Fixing (3) mitigates (1) and (2), so assign this either three CVEs
-> or one CVE.
-> 
-> Source: http://seclists.org/fulldisclosure/2012/Dec/242
-> 
-> The vendor, copied on this email, currently has not issued a fix.
-> 
-> Thanks, Jason
-
-Thanks in advance, with more details I will be able to properly assign
-the CVE identifier(s).
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ3oEwAAoJEBYNRVNeJnmTcl4P/ipw4D+IzvSLdwYkNOxmGJkZ
-Nk0w7iJRk/vHtWgbvCP3OGlFr66gTN1cfk3Rye/ED0kwV0Sy+dEqmblsXCTwmx3G
-glC+4sADmQ0AcePVgvWnYv6K5oHgINs7NuPbSsWwdVF+BQCXykYOOYXYpBERkRjX
-+CZVEuhMqy4xTi/sgcQiHB4iHZtSLjLB8OOh9+THUsmqf65H3urgPWJbAzOaudxY
-PR4+McAKMz0dpshzQVDyZMcSduQBmjhXRCW0RinEyekFshZnvDbk3wkMb+6/Wk36
-ekSE/3/zmLIvoRu0iZBhOeLFUNT+oSZfa8AQmMs++Z8huyTI9OjAPxXrlRAdnbHA
-0V9/41exnPOwq0W3QKsPzOz0YsRImFo+qfC6KWt77ZsgWfjkWB64l4XmSvhe3U2o
-ywoi8XFTuI5e6z/0GAW5zpa/EYqCqV44mCMHYocU8CXzLaXGqbIHv9VK7JH77X2u
-RRUIF9sDN/vRej987Fp7MhQgK7cFtRRNECLipe3jeJE3cY9egHMTGfDh+N/3Bg0+
-8d5ekkwZAtoDePfFJo7aGwY/CDFxS7izMxwb8nUM0iQUfoukLWdgS/PQmCX9EOcb
-tDzDD4Odw36SaN4k5f9fd0CSn0f6+LsPybE/BHDQmJ9mZaK73CcrwIU8s0IoIEOG
-An9aPfHyvuiPILuGSgWe
-=h95j
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
