@@ -1,124 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/9
-Message-ID: <5029553A.50500@gmx.de>
-Date: Mon, 13 Aug 2012 21:27:54 +0200
-From: Matthias Andree <matthias.andree@....de>
-To: oss-security@...ts.openwall.com
-Subject: CVE ID request for fetchmail segfault in NTLM protocol exchange
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/5
+Message-ID: <4FBCAAC4.9020206@redhat.com>
+Date: Wed, 23 May 2012 11:15:48 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Matthias Weckbecker <mweckbecker@...e.de>
+CC: oss-security@...ts.openwall.com, "John W. Linville" <linville@...hat.com>
+Subject: Re: CVE request(?): hostapd: improper file permissions of hostapd's config leaks credentials
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Matthias,
 
-Please assign a CVE ID for the problem described below.  Note that the
-text below is a *draft* security advisory that will change before being
-officially released.
+   thank you for your request.
 
+On 05/23/2012 10:21 AM, Matthias Weckbecker wrote:
+> Hi Kurt,
+> Hi vendors,
+>
+> not too critical in my opinion, but I think still worth to be at least
+> mentioned briefly as other distros such as Fedora 16 were affected too:
+>
+> https://bugzilla.novell.com/show_bug.cgi?id=740964
+>
+> I'm not sure whether this issue should get a CVE,
 
-fetchmail-SA-2012-02: DoS possible with NTLM authentication in debug mode
+We have previously checked this with John W.Linville (Cc-ed on this post too)
+with reply from him being as inlined below:
 
-Topics:		fetchmail denial of service in NTLM protocol phase
+---<inline>---
+Jan,
 
-Author:		Matthias Andree
-Version:	draft
-Announced:	2012-08-13
-Type:		crash while reading from bad memory location
-Impact:		fetchmail segfaults and aborts, stalling inbound mail
-Danger:		low
-Acknowledgment:	J. Porter Clark
+I think you understand it all correctly.
 
-CVE Name:	(TBD)
-URL:		http://www.fetchmail.info/fetchmail-SA-2012-02.txt
-Project URL:	http://www.fetchmail.info/
+Thanks,
 
-Affects:	- fetchmail releases 5.0.8 up to and including 6.3.21
-		  when compiled with NTLM support enabled
+John
 
-Not affected:	- fetchmail releases compiled with NTLM support disabled
-		- fetchmail releases 6.3.22 and newer
+On Thu, 2012-05-17 at 12:44 +0200, Jan Lieskovsky wrote:
+ > Hello John,
+ >
+ >    this is due the following Novell bug:
+ >    [1] https://bugzilla.novell.com/show_bug.cgi?id=740964
+ >
+ > I have checked that Fedora hostapd versions, have permissions like
+ > (thus insecure too):
+ >
+ > # ls -l /etc/hostapd/hostapd.conf
+ > -rw-r--r--. 1 root root 722 Feb  9  2011 /etc/hostapd/hostapd.conf
+ >
+ > I am taking the default content of /etc/hostapd/hostapd.conf
+ > as an example configuration (thus something which should the
+ > administrator of the system to update to reflect their needs
+ > to get hostapd for their wireless network configuration to
+ > work properly.
+ >
+ > Thus as such I would say this is just issue of proper configuration
+ > (in the moment of editing the configuration file the administrator
+ > should update the permissions on the config file too to ensure WPA
+ > password wouldn't leak, right?), than a real security flaw.
+ >
+ > Do you agree with this view or should I request CVE identifier
+ > for this issue and we should get hostapd packages in Fedora updated
+ > to correct this?
+ >
+ > Thank you && Regards, Jan.
+ > --
+ > Jan iankko Lieskovsky / Red Hat Security Response Team
+ >
+ > P.S.:
+ >
+ > For the other part of Novell bug (permissions for hostapd.wpa_psk
+ > in Fedora versions there doesn't seem to be other hostapd.wpa_psk
+ > than just:
+ >
+ > /usr/share/doc/hostapd-0.7.3/hostapd.wpa_psk
+ >
+ > which I think is there for documentation / config sample purposes).
+ > Thus I would not consider this second part as a security issue.
+-- 
+John W. Linville            The water won't run clean until you get
+linville@...hat.com                       the pigs out of the creek.
 
-Corrected in:	2012-08-13 Git, among others, see commit
-		3fbc7cd331602c76f882d1b507cd05c1d824ba8b
+---</inline>---
 
-		2012-08-xx fetchmail 6.3.22 release tarball
+Thus basically from the above, we wouldn't look at this one as a
+security flaw, because this is more question of proper configuration,
+rather than a real security flaw (the administrator needs in any
+case edit /etc/hostapd/hostapd.conf it to suite their needs / their
+local wireless configuration before being able to use the hostapd
+service. And in that moment [when entering sensitive WPA information
+there], they should also change the permissions of the hostapd
+configuration it to be more secure / not readable by all local users).
 
+Thus maybe something to be explicitly mentioned in the documentation
+(change permissions of the config file post update), but not a security
+flaw.
 
-0. Release history
-==================
+> but in the past similar
+> vulnerabilities got a CVE (e.g. CVE-2012-0863).
 
-2012-08-13 0.1	draft
+ From http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-0863 and
+mainly from:
+https://bugs.launchpad.net/ubuntu/+source/mumble/+bug/783405/comments/0
 
+the passwords in this case were stored in plaintext in the database,
+which is something slightly different.
 
-1. Background
-=============
+Hope this helps.
 
-fetchmail is a software package to retrieve mail from remote POP3, IMAP,
-ETRN or ODMR servers and forward it to local SMTP, LMTP servers or
-message delivery agents. fetchmail supports SSL and TLS security layers
-through the OpenSSL library, if enabled at compile time and if also
-enabled at run time, in both SSL/TLS-wrapped mode on dedicated ports as
-well as in-band-negotiated "STARTTLS" and "STLS" modes through the
-regular protocol ports.
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-
-2. Problem description and Impact
-=================================
-
-Fetchmail version 5.0.8 added NTLM support. This code sent the NTLM
-authentication request, but never checked if the received response was
-NTLM protocol exchange, or a server-side error message.  Instead,
-fetchmail tried to decode the error message as though it were
-base64-encoded protocol exchange, and could then segfault depending of
-buffer contents, while reading data from bad memory locations.
-
-
-3. Solution
-===========
-
-Install fetchmail 6.3.22 or newer.
-
-The fetchmail source code is always available from
-<http://developer.berlios.de/project/showfiles.php?group_id=1824>.
-
-Distributors are encouraged to review the NEWS file and move forward to
-6.3.22, rather than backport individual security fixes, because doing so
-routinely misses other fixes crucial to fetchmail's proper operation,
-for which no security announcements are issued, or documentation.
-
-Fetchmail 6.3.X releases have always been made with a focus on unchanged
-user and program interfaces so as to avoid disruptions when upgrading
-from 6.3.X to 6.3.Y with Y > X.  Care was taken to not change the
-interface incompatibly.
-
-
-A. Copyright, License and Non-Warranty
-======================================
-
-(C) Copyright 2012 by Matthias Andree, <matthias.andree@....de>.
-Some rights reserved.
-
-This work is licensed under the
-Creative Commons Attribution-NoDerivs 3.0 Germany License (CC BY-ND 3.0).
-
-To view a copy of this license, visit
-http://creativecommons.org/licenses/by-nd/3.0/de/deed.en
-or send a letter to:
-
-Creative Commons
-444 Castro Street
-Suite 900
-MOUNTAIN VIEW, CALIFORNIA 94041
-USA
-
-
-THIS WORK IS PROVIDED FREE OF CHARGE AND WITHOUT ANY WARRANTIES.
-Use the information herein at your own risk.
-
-END of fetchmail-SA-2012-02
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iEYEARECAAYFAlApVTQACgkQvmGDOQUufZUV9wCgxrs06ykXu52whi9dgFdWC7PR
-6WsAoJAWCoIBQjUr6WSaFSvK6lEEevDa
-=BCaJ
------END PGP SIGNATURE-----
+>
+> Thanks,
+> Matthias
+>
