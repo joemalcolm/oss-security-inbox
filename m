@@ -1,43 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/10
-Message-ID: <CA+TgmoaBc8x=ppVB_DhvASPyor5KN6JoXw0qNgFfDubtbM0zWw@mail.gmail.com>
-Date: Fri, 30 Mar 2012 11:27:29 -0400
-From: Robert Haas <robertmhaas@...il.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, security@...tgresql.org
-Subject: Re: [pgsql-security] postgresql-jdbc 8.1 SQL injection with postgresql server 9.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/9
+Message-ID: <20120524201004.GA3940@openwall.com>
+Date: Fri, 25 May 2012 00:10:04 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: powerdns does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 30, 2012 at 8:51 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
-> Postgresql 9.1 turned "standard conforming strings" on by default[1][2].
-> postgresql-jdbc before version 8.2-504 however did not know about that
-> kind of string and escaped single quotes with a backslash always. When
-> such an old version of postgresql-jdbc is used with a newer postgresql
-> server it not only breaks when strings contain single quotes, it also
-> allows for SQL injections[3].
-> The bug is neither in postgresql-jdbc as it was working correctly at the
-> time it was released, nor is it really postgresql 9.1's fault which I
-> guess doesn't expect and can't detect such an old jdbc adapter. The
-> security issue arises when mixing the old adapter and the new server.
+Kurt -
 
-Right.  This issue has been previously reported to pgsql-security.
-The position of the pgsql-jdbc project is that a client version should
-be used with a matching server version; therefore, the project views
-the proposed combination as an unsupported configuration.  Moreover,
-PostgreSQL 8.2.x and postgresql-jdbc-8.2-x were desupported in general
-as of December 2011.  The end of life dates for each major release are
-documented on our web site[1], and the pgsql-jdbc download site[2]
-clearly identifies this version of the driver as an "archived version"
-rather than a "supported version".  As a rule, bug fix and security
-updates are not released for versions which are no longer supported;
-users are advised to update to a supported version.  Users of
-pgsql-jdbc are further advised to use a major version that matches the
-PostgreSQL server to which they are connecting.
+On Thu, May 24, 2012 at 12:40:10PM -0600, Kurt Seifried wrote:
+> Supplemental groups enabled a user to be a member of more than one
+> group at a time (us old timers remember the joys of "newgrp"). Why
+> would anyone want this? You could for example create a group that has
+> permissions to access logging, terminals (e.g. modems, remember those?
+> =) and then add users to it as appropriate (and centralize
+> account/permissions management somewhat and all that good stuff).
 
-[1] http://www.postgresql.org/support/versioning/
-[2] http://jdbc.postgresql.org/download.html
+That's what initgroups(3) is for.  If a program that is supposed to drop
+privs calls neither setgroups() nor initgroups(), or if it fails to
+check the return value from these and refuse to proceed on failure, then
+it is vulnerable.
 
--- 
-Robert Haas
-EnterpriseDB: http://www.enterprisedb.com
-The Enterprise PostgreSQL Company
+> So what happens when a program starts running as say root, and root
+> has supplemental groups (like "bin" or "daemon" and the program drops
+> its primary user/group but fails to drop supplementary groups, is that
+> a security issue,
+
+Definitely.
+
+> and is it worthy of a CVE identifier?
+
+It should be.
+
+> Having supplementary groups is intentional [...]
+
+Having supplementary groups of the new (pseudo-)user, possibly yes.
+Having supplementary groups of the old switched-from user, no.
+
+Alexander
