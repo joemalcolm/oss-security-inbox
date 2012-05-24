@@ -1,79 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/6
-Message-ID: <4F2A0E63.8010000@redhat.com>
-Date: Wed, 01 Feb 2012 21:17:39 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/10
+Message-ID: <4FBE9B02.3090903@redhat.com>
+Date: Thu, 24 May 2012 14:33:06 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
 CC: Solar Designer <solar@...nwall.com>
-Subject: Re: distros & linux-distros embargo period and message format
+Subject: Re: CVE Request: powerdns does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
-On 02/01/2012 07:01 PM, Solar Designer wrote:
-> On Wed, Feb 01, 2012 at 07:29:05PM -0500, Marc Deslauriers wrote:
->> This means vendors will be keeping information about the vulnerability
->> private until they are confident they are able to release within a week,
->> at which point they will then share the information with other vendors
->> who will scramble to get their updates ready.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/24/2012 02:10 PM, Solar Designer wrote:
+> Kurt -
 > 
-> Yes, this is one of the things I expect to be happening, too.
+> On Thu, May 24, 2012 at 12:40:10PM -0600, Kurt Seifried wrote:
+>> Supplemental groups enabled a user to be a member of more than
+>> one group at a time (us old timers remember the joys of
+>> "newgrp"). Why would anyone want this? You could for example
+>> create a group that has permissions to access logging, terminals
+>> (e.g. modems, remember those? =) and then add users to it as
+>> appropriate (and centralize account/permissions management
+>> somewhat and all that good stuff).
 > 
-> You asked me "why", but not "why not" - and this matches our roles for
-> this discussion well. ;-)
+> That's what initgroups(3) is for.  If a program that is supposed to
+> drop privs calls neither setgroups() nor initgroups(), or if it
+> fails to check the return value from these and refuse to proceed on
+> failure, then it is vulnerable.
 > 
->> As a distro, I now have two choices: I sit on vulnerabilities until our
->> own QA and testing is done, at which point I send them to the list and
+>> So what happens when a program starts running as say root, and
+>> root has supplemental groups (like "bin" or "daemon" and the
+>> program drops its primary user/group but fails to drop
+>> supplementary groups, is that a security issue,
 > 
-> Why can't you send to the list when you are half-way done, if 2 weeks
-> would have been enough for you normally?
+> Definitely.
 > 
->> hope that 7 days is enough for everyone else, or I simply stop using the
->> list for anything that's more than trivial and contact other vendors
->> directly.
+>> and is it worthy of a CVE identifier?
 > 
-> Another option: contact large vendors who need more time for QA first
-> (2 weeks before CRD), post to the list later (1 week before CRD).  There
-> are possibly just a few large vendors/distros who need this (I am
-> thinking Ubuntu, Red Hat, SUSE - and that might be all).
+> It should be.
 > 
-> Also, when you post to the list, you're able to share more info with
-> other vendors (those on the list): not only info on the bug, but also
-> your patches (perhaps already partially tested), advisory draft, etc.
-> That way, it is easier for other vendors to be done in 1 more week.
+>> Having supplementary groups is intentional [...]
 > 
-> Drawbacks:
-> - Large vendors gain an advantage.
-> - Fixes may be worse since no input is provided by other/smaller vendors
-> early on (e.g., I would not have a chance to identify a shortcoming in a
-> patch being tested by Ubuntu until the patch is already sent to QA, so
-> is too late to revise unless it fails QA).
+> Having supplementary groups of the new (pseudo-)user, possibly
+> yes. Having supplementary groups of the old switched-from user,
+> no.
 > 
 > Alexander
 
-I'm seeing a LOT of guaranteed downsides to this shorter embargo period
-(vendor-sec-1-week-embargo@, vendor-sec-2-week-embargo@, increased
-workloads, decreased testing/QA time, decreased trust in the community,
-decreased discussion of patches/fixes/workarounds/root causes, etc.)
-against the _potential_ risk of an issue being revealed prior to the
-embargo date, which has the _potential_ to have an impact (so a
-potential risk for an outcome that may potentially be bad, in other
-words pretty low). And even if we make this change (shorter embargo
-periods) that risk of early disclosure is still present! I'm just not
-sure we're gaining anything worthwhile.
+Ahh I realize something I forgot to cover in my email is the
+distinction between vulnerability and vector, e.g. if program "foo"
+(for the sake of argument let's say it is a text editor) doesn't drop
+supplementary groups correctly than exploitation of it would be easy,
+so in this case I'd agree it was a security vuln. But when a program
+with much more limited operations doesn't drop privileges, unless it
+directly leads to some sort of exploit/elevated access/etc. than I'm
+inclined to say while it's not good, it's not a vulnerability per se.
 
-This doesn't appear to have been a significant problem in the past or
-present. Is something changing to significantly increase this risk that
-we (the community) are unaware of? You allude to:
-
-"Why I am making this proposal now: this is triggered by a certain
-off-list discussion I just had; unfortunately, the other party does not
-permit me to post more about it."
-
-Which is awfully vague. I think it's important for there to be openness,
-transparency and honesty in this process or else it won't work. Like you
-pointed out earlier vendors may choose to stop playing together, which
-would REALLY not be good for the vendors or the Open Source community
-long term.
-
-
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPvpsCAAoJEBYNRVNeJnmTHIIQAIA3A/fehKMDeXegQ8t7ObbK
+PT+eTwn5TbRwxkdmvloF3wVFUoAv6C58obq349AmOKc/BXaM4Nf3tgnxiUKLm570
+yPjDdBGECBtMrLftQ5LMSwZCkygZicD1JRbS9moJJOoR9xK005FAZM1P3LJOo7Bv
+S4gNTD2Vz3p0v09o7axTsNfAcA/May5hOJ5jmSq+Oj098ShPGVmtAmQkfADRa+mP
+xjtC7qFojDbwR3OANRUqU0FTHym4PmroVyWBAgrZNnaIywNz0JTyVXIII03Iv6H+
+fAHxXshQ9NSTlizoKmm2ylmAI7u4/s/EWBE9P89Qo/m5ei0CKpc5i1YfzK7bD0zL
+Q4Y4WEFSNxpath2nQ/SUJe3E9P/yI6SsL2jjxFvf+qnfNtVSMAXFOLS6rmoE4ioj
+wo4Hu7HBfkVnW9AJL/dAtSh6Xjv7AnxXHLb3yQ/9oOaaXRm0wNdJVTyw3BsvOHuf
+d7Q/4GQhCKVDnXgCUpBQHa9ccqqfnVT9aReWueSf1N1NMVxJJOIcst+KtaEhm6Wt
+i/tCMXc3alIeeMn8CzK66XaS/hToSwB73NTsaze4wSyJMUIqM1nlO64mOv5KNwZM
+DYvj35I2ICK31prIAFVlGxaNRNExW+ofv4l4RvyTXREpU4ew0sgRMjzoJWw0+0sk
+is3phnptl1+es4JrjRye
+=dDuN
+-----END PGP SIGNATURE-----
