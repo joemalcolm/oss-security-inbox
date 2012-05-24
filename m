@@ -1,56 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/22/1
-Message-ID: <20121222001931.GA8468@hunt>
-Date: Fri, 21 Dec 2012 16:19:31 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com, eggert@...ucla.edu
-Subject: CVE Request: grep
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/13
+Message-ID: <20120524225646.GA4742@openwall.com>
+Date: Fri, 25 May 2012 02:56:46 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: powerdns does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, all.
+On Thu, May 24, 2012 at 06:15:53PM -0400, Steve Grubb wrote:
+> Here is a real life case:
+> 
+> + if ( initgroups(pw->pw_name, NULL) != 0 || setgid(pw->pw_gid) != 0 ||
+> +                                setuid(pw->pw_uid) != 0 ) 
+> 
+> This is not upstream. This is a patch to drop capabilities by changing uid/gid. 
+> The person writing the patch intended to do the right thing - but failed. See 
+> the bug? This is in a network facing daemon that parses untrusted network 
+> packets.
 
-Paul, I've included you on Cc: to help determine if several grep patches
-are security-relevant.
+Wow.  The NULL results in group 0 being added to the supplementary
+groups list (so it survives the setgid(), at least on my quick test).
 
-A bug reporter [1] that claims he has, or can produce, a code execution
-exploit against grep < 2.11. I've verified that our grep 2.10 package
-segfaults on the amd64 platform with the simple reproducer:
+How did you spot this?  Compiler warning?
 
-$ perl -e 'print "x"x(2**31)' | grep x > /dev/null
-Segmentation fault (core dumped)
+"passing arg 2 of `initgroups' makes integer from pointer without a cast"
 
-This specific problem was patched [2] with the following checkin:
-http://git.savannah.gnu.org/cgit/grep.git/commit/?id=cbbc1a45b9f843c811905c97c90a5d31f8e6c189
-
-This checkin adds this text to the NEWS file:
-
-+ grep no longer dumps core on lines whose lengths do not fit in 'int'.
-+ (e.g., lines longer than 2 GiB on a typical 64-bit host).
-+ Instead, grep either works as expected, or reports an error.
-+ An error can occur if not enough main memory is available, or if the
-+ GNU C library's regular expression functions cannot handle such long lines.
-+ [bug present since "the beginning"]
-
-Please assign a CVE number for this problem.
-
-
-Several other checkins around the 2.11 timeframe also look like they
-may be security-relevant:
-
-PCRE over-long line fix:
-http://git.savannah.gnu.org/cgit/grep.git/commit/?id=4572ea4649d025e51463d48c2d06a1c66134cdb8
-
-Integer overflow issues:
-http://git.savannah.gnu.org/cgit/grep.git/commit/?id=8fcf61523644df42e1905c81bed26838e0b04f91
-
-Paul, are any security issues fixed with those patches? Did I overlook
-any other patches that need CVE numbers?
-
-Thanks
-
-
-1: https://bugs.launchpad.net/ubuntu/+source/grep/+bug/1091473
-2: http://lists.gnu.org/archive/html/bug-grep/2012-12/msg00004.html
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Alexander
