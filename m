@@ -1,55 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/8
-Message-ID: <50536963.3020006@redhat.com>
-Date: Fri, 14 Sep 2012 11:29:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/25/2
+Message-Id: <20120524235038.BF49F97124@rebar.astron.com>
+Date: Thu, 24 May 2012 19:50:38 -0400
+From: christos@...las.com (Christos Zoulas)
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: SMF index.php msg parameter SQL-injection (2005)
+Subject: Re: CVE Request: powerdns does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On May 24,  7:18pm, sgrubb@...hat.com (Steve Grubb) wrote:
+-- Subject: Re: [oss-security] CVE Request: powerdns does not clear supplemen
 
-On 09/14/2012 06:40 AM, Henri Salo wrote:
-> Hello list,
-> 
-> Old SQL-injection security issue in SMF does not have
-> CVE-identifier. Could you please assign one from year 2005,
-> thanks.
-> 
-> Affected versions: <= 1.0.4 Fixed in 1.0.5
-> 
-> References: http://osvdb.org/17458 
-> http://secunia.com/advisories/15784/
-> 
-> - Henri Salo ps. never too late
-> 
+| On Thursday, May 24, 2012 06:56:46 PM Solar Designer wrote:
+| > On Thu, May 24, 2012 at 06:15:53PM -0400, Steve Grubb wrote:
+| > > Here is a real life case:
+| > > 
+| > > + if ( initgroups(pw->pw_name, NULL) != 0 || setgid(pw->pw_gid) != 0 ||
+| > > +                                setuid(pw->pw_uid) != 0 )
+| > > 
+| > > This is not upstream. This is a patch to drop capabilities by changing
+| > > uid/gid. The person writing the patch intended to do the right thing -
+| > > but failed. See the bug? This is in a network facing daemon that parses
+| > > untrusted network packets.
+| > 
+| > Wow.  The NULL results in group 0 being added to the supplementary
+| > groups list (so it survives the setgid(), at least on my quick test).
+| 
+| Yes. If you put that one snippet of code into google, you would find arpwatch is 
+| the culprit.
 
-Can you confirm this isn't
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-4159
+there is one more:
 
-? thanks.
+http://users.jyu.fi/~mesrik/pkg/tcpdump/tcpdump-3.7.1-droproot2.patch
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQU2liAAoJEBYNRVNeJnmT/9oP+gI9G43TB6Yrd7XBCimfJtD2
-UjrAYWk6WU/BPytajLa2aX7chgaFJBKFoTjllcWZwn2g5nQilURSjqqAS4VGc6tM
-EmkQq3q1pMJP+1iylIo7NoowOvK24/2AcVCOoMdBk/U9UD/UqECUIH30HkIb2Oss
-tsWjH4WbR7ASU/Iu7G0PCYEdczGHmfbOZ9Xo9LaDKp/9je4F5xSnrA+Vcc/obEkE
-UfMVofyEVPbp8lJvUxH3y5A2KbwoxF9SZ/KH8N9lyDE6vDO929KBrKLEIDPHfTLG
-LfDJaKfCdCDu8pDlPJIygkvvpLX1YunWL7Xeozg1uqr4GjhmM4NU2rIQeiVdZwx5
-9UkJONopwjMHKO9O7ii43ScNDs4EhqaG97IF0aa1rARSU7Sn/7u8JYEW4MEqqfpE
-bQuHQh+tiE5jnktkU21UWX2x+ZkRPi01PhDs98SVXAYNkWE2618lB1zzTELLRAO4
-LQzwiVtENhUwyfzbSwilkJOH3kmaGrmpWRDMMc/WNO9sCkZxuRCWHWVl9TCGzsAx
-FMn74Z3yDunwvA5++PJFsyk0cKU3vmaGqEQn+xM9JXnWSc0q0olJfG380LMIy+h1
-61iZy+biKlVIBfYYXexeZNJKNan5b/NnHNZ/8LANBqWC2/kRM4KjdIAyJRAYhQk7
-KyPJjvszZ1kXAVHQAkLk
-=RNr0
------END PGP SIGNATURE-----
+christos
