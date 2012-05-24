@@ -1,112 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/5
-Message-Id: <E1TYG2R-00010J-89@xenbits.xen.org>
-Date: Tue, 13 Nov 2012 12:56:23 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 25 (CVE-2012-4544,CVE-2012-2625) - Xen domain builder Out-of-memory due to malicious kernel/ramdisk
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/14
+Message-Id: <201205241918.14998.sgrubb@redhat.com>
+Date: Thu, 24 May 2012 19:18:14 -0400
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: powerdns does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thursday, May 24, 2012 06:56:46 PM Solar Designer wrote:
+> On Thu, May 24, 2012 at 06:15:53PM -0400, Steve Grubb wrote:
+> > Here is a real life case:
+> > 
+> > + if ( initgroups(pw->pw_name, NULL) != 0 || setgid(pw->pw_gid) != 0 ||
+> > +                                setuid(pw->pw_uid) != 0 )
+> > 
+> > This is not upstream. This is a patch to drop capabilities by changing
+> > uid/gid. The person writing the patch intended to do the right thing -
+> > but failed. See the bug? This is in a network facing daemon that parses
+> > untrusted network packets.
+> 
+> Wow.  The NULL results in group 0 being added to the supplementary
+> groups list (so it survives the setgid(), at least on my quick test).
 
-       Xen Security Advisory CVE-2012-4544,CVE-2012-2625 / XSA-25
-                            version 2
+Yes. If you put that one snippet of code into google, you would find arpwatch is 
+the culprit.
+ 
+> How did you spot this?  Compiler warning?
+>
+> "passing arg 2 of `initgroups' makes integer from pointer without a cast"
 
-   Xen domain builder Out-of-memory due to malicious kernel/ramdisk
+It was more of an empirical thing. I had a script that started all daemons and 
+it walked the proc tree.  If any uid != 0, it would check to see if there were 
+any supplemental groups. Arpwatch had different supplemental groups than 
+everything else that did this wrong, so I looked at the code to see what was 
+different and found this bug.
 
-UPDATES IN VERSION 2
-====================
-
-Clarify that XSA-25 is reporting, via the Xen.org security process,
-both CVE-2012-4544 and CVE-2012-2625.
-
-Also we would like to apologise for the fact that xen-announce's copy
-of version 1 of this advisory was delayed in mailing list moderation.
-
-ISSUE DESCRIPTION
-=================
-
-The Xen PV domain builder contained no validation of the size of the
-supplied kernel or ramdisk either before or after decompression. This
-could cause the toolstack to consume all available RAM in the domain
-running the domain builder.  (CVE-2012-4544)
-
-Additionally, under similar circumstances pygrub consume excessive
-amount of memory under similar circumstances to the above.
-(CVE-2012-2625)
-
-IMPACT
-======
-
-A malicious guest administrator who can supply a kernel or ramdisk can
-exhaust memory in domain 0 leading to a denial of service attack.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are vulnerable.
-
-MITIGATION
-==========
-
-Running only trusted kernels and ramdisks will avoid these
-vulnerabilities.
-
-Using pvgrub also avoids these vulnerabilities since the builder will
-run in guest context. (nb: use of pygrub *is* vulnerable).
-
-Running only HVM guests will avoid these vulnerabilities.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves these issues.
-
-The pygrub problem (CVE-2012-2625) was fixed in xen-unstable (and the
-fix inherited by Xen 4.2.x) in revision 25589:60f09d1ab1fe but not
-called out as a security problem.  This fix is also included, where
-necessary, in the patches below.
-
-xsa25-unstable.patch        Xen unstable
-xsa25-4.2.patch             Xen 4.2.x
-xsa25-4.1.patch             Xen 4.1.x
-
-$ sha256sum xsa25*.patch
-613e4b82cdc9cabf9cbd52076118887b298c47e680c2066a28a77f12e9f90606  xsa25-4.1.patch
-135bc089d003f9b97991764c37b1ab8d37e9cbcfa1b9bd7429b4503abe00c8f5  xsa25-4.2.patch
-534495b7eef6e599f5814f0a67fc84fbe2e8eee9d223a09ad178ff63bdcda3dd  xsa25-unstable.patch
-
-Note that these patches impose a new size limit of 1Gby on both the
-compressed and uncompressed sizes of ramdisks.  On some systems it may
-be desirable to relax these limits and risk virtual address or memory
-exhaustion in the toolstack.  This can be achieved by setting
-XC_DOM_DECOMPRESS_MAX to the desired limit (in bytes). This can be
-done by building with "APPEND_CFLAGS=-DXC_DOM_DECOMPRESS_MAX=<limit>"
-or by editing tools/libxc/xc_dom.h directly.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-These issues have already been discussed in public in various places,
-including https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-2625
-and http://bugs.debian.org/688125.  This advisory is therefore not
-subject to an embargo.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQokGyAAoJEIP+FMlX6CvZl7wH/RdoQHGDcbgVEh5fuS5VzPpw
-RZ0sm6bpI7eclqaN6+thX9SA5qeycvyj2zq769yUGSiHR+BUNw6HRJZ+XAAF0IIx
-nb4VEdS2+Hz1kyTUAeZu3z/5HyfFamKY9Lhhj/47DBTtO5Xl1pjOCA0bC4ZDtIm1
-ffFVhOmTcmQEWXW1z27Vj9hSgQeGsqHTcOys6H0nYpLITDIZqBkGv8MZl4X0/Wtl
-zs2prG8HEWsysKel5Q/dt7De84OV3LgP1/2a+aMkLi+RgKWP+naKAXfYqVAS4mLw
-K+mv2MrmhgNxzEWp/sZX0q1QNvnJf+xKYHOBcP+hUlQIQwD/NQejdAdmNVPem7s=
-=Pfj+
------END PGP SIGNATURE-----
-
-Download attachment "xsa25-4.1.patch" of type "application/octet-stream" (16353 bytes)
-
-Download attachment "xsa25-4.2.patch" of type "application/octet-stream" (12666 bytes)
-
-Download attachment "xsa25-unstable.patch" of type "application/octet-stream" (12510 bytes)
+-Steve
