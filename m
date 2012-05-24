@@ -1,55 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/7
-Message-ID: <20120515122950.GA15372@suse.de>
-Date: Tue, 15 May 2012 14:29:50 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/11
+Message-ID: <20120524205730.GA4095@openwall.com>
+Date: Fri, 25 May 2012 00:57:30 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Automatic binary hardening with Autoconf
+Subject: Re: CVE Request: powerdns does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 15, 2012 at 08:13:31AM -0400, Steve Grubb wrote:
-> On Monday, May 14, 2012 09:33:14 PM Solar Designer wrote:
-> > I'd like this sort of topics to be brought up in here, so I'll start by
-> > referring to some blog posts.
-> > 
-> > Here's an interesting one by Keegan McAllister:
-> > 
-> > http://mainisusuallyafunction.blogspot.com/2012/05/automatic-binary-hardeni
-> > ng-with.html
-> > 
-> > This suggests (and shows how) individual programs that use autoconf may
-> > automatically enable the usual set of compile-time hardening settings
-> > that are otherwise normally provided by builds for/by/on hardened
-> > distros only.  This is not rocket science, yet the provided examples may
-> > be reused and it may become a trend.
-> 
-> I think there are conflicting goals in projects like this. There are times when 
-> someone may want to go all out and harden everything as much as possible. But 
-> there is a cost to that...either startup or runtime. Not all programs have the 
-> same threat model and consequence if attacked successfully. Apps that are at 
-> greatest risk are: set[ug]id/fs based capabilities, network facing apps, 
-> daemons, or parsers of untrusted media. It would be hard to argue that the "cat" 
-> program needs full relro and bind now.
+Kurt -
 
-You never know. I'd even say that the cat gets the most untrusted input
-ever. Everything and the world has been piped
-through cat since epoch. And similar surprises will happen to all the
-non threatening programs that are not seen as risk like file, ls, ps etc.
-until one realizes that some procmail/cups or whatever filter is using it.
-And then, Murphy is entering the dance floor.
+On Thu, May 24, 2012 at 02:33:06PM -0600, Kurt Seifried wrote:
+> [...] when a program
+> with much more limited operations doesn't drop privileges, unless it
+> directly leads to some sort of exploit/elevated access/etc. than I'm
+> inclined to say while it's not good, it's not a vulnerability per se.
 
-Sebastian
+It's a case of a security feature not working as intended.  Previously,
+CVEs were sometimes assigned and sometimes not in such cases, and I
+failed to see a pattern in that. ;-)  Consider e.g. CVE-2006-5794 ("it
+is believed that this issue is only exploitable by leveraging
+vulnerabilities in the unprivileged process, which are not known to
+exist").  Are you maybe trying to draw the line between "security
+feature" and "security hardening"?  Even if so, I fail to see how
+OpenSSH's privsep is more of a "security feature", whereas another
+daemon's dropping of root privs is "security hardening".  These look
+very similar to me in terms of what they're intended and expected to
+achieve, so I think it's the same category, whatever we call it.
 
--- 
+Now, I imagine there could be a subtle case if e.g. a downstream distro
+or a fork of a project introduces privilege dropping, which is not in
+the main code base, and there turns out to be a flaw in that, which
+weakens the added security (but not to the point of being worse than the
+original).  It would feel a bit weird to say that the hardened revision
+is vulnerable whereas the original is not, even though the original is
+not any safer.  In such cases, I guess whether this is CVE-worthy or not
+will depend on whether the added hardening was advertised to and
+expected by users/admins of the hardened revision or not.  If it was an
+undocumented extra, then it failing to improve things is probably not
+what people would expect to be tracked as a security vulnerability.
+However, if it was documented and expected to function, then it becomes
+a vulnerability to track just like any other one of similar severity.
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+I hope this helps.
 
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Alexander
