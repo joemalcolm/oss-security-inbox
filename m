@@ -1,68 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/28
-Message-ID: <CAAPiX_KfLD7F_okhJ=USQZSBhUEyD_gNRCR8fgpsNCUt95Sc-A@mail.gmail.com>
-Date: Fri, 16 Mar 2012 16:40:18 -0600
-From: Greg Knaddison <greg.knaddison@...uia.com>
-To: security@...pal.org, Kurt Seifried <kseifried@...hat.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: [security] Drupal CORE and Drupal Contrib
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/12
+Message-Id: <201205241815.53463.sgrubb@redhat.com>
+Date: Thu, 24 May 2012 18:15:53 -0400
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: CVE Request: powerdns does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+On Thursday, May 24, 2012 04:57:30 PM Solar Designer wrote:
+> Kurt -
+> 
+> On Thu, May 24, 2012 at 02:33:06PM -0600, Kurt Seifried wrote:
+> > [...] when a program
+> > with much more limited operations doesn't drop privileges, unless it
+> > directly leads to some sort of exploit/elevated access/etc. than I'm
+> > inclined to say while it's not good, it's not a vulnerability per se.
+> 
+> It's a case of a security feature not working as intended. 
 
-We started considering associating CVEs with our Security Advisories
-(SAs) in September of 2011. At the time we discussed it with Josh
-Bressers, Jan Lieskovsky, Steven M. Christey and decided that it would
-only be practical to do it for Drupal core for now and we could
-considering doing it for contrib in the future. Since that discussion
-there has only been one SA for Drupal core which I think has the CVEs
-on it: SA-CORE-2012-001 - Drupal core multiple vulnerabilities -
-http://drupal.org/node/1425084
+I have to agree. Changing UID/GID from root to something else is a security 
+feature by reducing privileges and write access to system files. Not doing it 
+correctly is CWE-271. Looking it up, you can easily find 2 CVE's that are about 
+not dropping supplemental groups.
 
-Is there another SA for core that I'm not considering? Is there a
-better way to list the CVE numbers?
+If it were intended that you change uid/gid but retain a supplemental group, 
+then you don't understand how /etc/group was supposed to be setup and used. 
+Additionally you would have called initgroups() to pickup the new group 
+memberships associated with that acct. So, its always wrong to call setgid()||
+setuid() without taking care of supplemental groups.
 
-There have been several SAs for contributed modules and we would
-gladly update them with CVEs. If you can send an email with a link to
-the SA and the CVE-id to use that would be great.
-
-Our biggest problem with trying to integrate CVE values to the SAs for
-contributed modules is that the contributed projects are all run by
-individual volunteers and we don't reliably know the date we are going
-to release those. My understanding is that we can ask for a 2 week
-embargo on CVE requests and that would work most of the time but not
-all. We're working to improve the predictability of this process, but
-I think it's too early to consider getting CVE's in advance.
-
-Thanks,
-Greg
-
-On Fri, Mar 16, 2012 at 11:51 AM, Kurt Seifried <kseifried@...hat.com> wrote:
-> I was going to ask this next week but now seems topical: looking at
-> http://drupal.org/security/contrib
->
-> I see drupal core (at least one thing there needs a CVE), and no CVE's
-> listed on that page. Would it be possible to get Drupal to list CVE's
-> assigned for the issue on that page? It would make life easier for all
-> concerned.
->
-> Ditto for the contrib page, 41 issues so far this year, I think a bunch
-> have CVE's assigned but am not sure. Would it be possible to get Drupal
-> to list CVE's assigned for the issue on that page? It would make life
-> easier for all concerned.
->
-> I was planning to do a missing CVE assignment for Drupal this weekend
-> (I'm guessing 40?).
->
->
-> --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> --
-> [ Security | http://lists.drupal.org/mailman/listinfo/security ]
-> [Security team mailing list management and scheduling is documented here | https://security.drupal.org/handling-list-emails]
+Failing to drop supplemental groups, though, is not a vulnerability. Its an 
+exposure to risk because you can bet someone will find another hole and exploit 
+it and these extra privs allow them to escalate further.
 
 
+> Previously,
+> CVEs were sometimes assigned and sometimes not in such cases, and I
+> failed to see a pattern in that. ;-)  Consider e.g. CVE-2006-5794 ("it
+> is believed that this issue is only exploitable by leveraging
+> vulnerabilities in the unprivileged process, which are not known to
+> exist").  Are you maybe trying to draw the line between "security
+> feature" and "security hardening"?  Even if so, I fail to see how
+> OpenSSH's privsep is more of a "security feature", whereas another
+> daemon's dropping of root privs is "security hardening".  These look
+> very similar to me in terms of what they're intended and expected to
+> achieve, so I think it's the same category, whatever we call it.
+> 
+> Now, I imagine there could be a subtle case if e.g. a downstream distro
+> or a fork of a project introduces privilege dropping, which is not in
+> the main code base, and there turns out to be a flaw in that, which
+> weakens the added security (but not to the point of being worse than the
+> original).  It would feel a bit weird to say that the hardened revision
+> is vulnerable whereas the original is not, even though the original is
+> not any safer.  In such cases, I guess whether this is CVE-worthy or not
+> will depend on whether the added hardening was advertised to and
+> expected by users/admins of the hardened revision or not.  If it was an
+> undocumented extra, then it failing to improve things is probably not
+> what people would expect to be tracked as a security vulnerability.
+> However, if it was documented and expected to function, then it becomes
+> a vulnerability to track just like any other one of similar severity.
 
--- 
-Director Security Services | +1-720-310-5623
-Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
+
+Here is a real life case:
+
++ if ( initgroups(pw->pw_name, NULL) != 0 || setgid(pw->pw_gid) != 0 ||
++                                setuid(pw->pw_uid) != 0 ) 
+
+This is not upstream. This is a patch to drop capabilities by changing uid/gid. 
+The person writing the patch intended to do the right thing - but failed. See 
+the bug? This is in a network facing daemon that parses untrusted network 
+packets.
+
+-Steve
