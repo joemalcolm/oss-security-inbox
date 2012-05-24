@@ -1,36 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/16/1
-Message-Id: <20121016000107.4A0056EA62@zanzibar.garbagecollect.jp>
-Date: Tue, 16 Oct 2012 09:01:08 +0900
-From: "U.Nakamura" <usa@...bagecollect.jp>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, Vincent Danen <vdanen@...hat.com>, security@...y-lang.org
-Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/3
+Message-ID: <4FBE77D4.4080109@mvista.com>
+Date: Thu, 24 May 2012 11:03:00 -0700
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: mm: read_pmd_atomic: 32bit PAE pmd walk vs pmd_populate SMP race condition
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+is 1a5a9906d4e8d1976b701f889d8f35d54b928f25 the upstream fix?
 
-In message "Re: [oss-security] CVE request: ruby file creation due in insertion of illegal NUL character"
-    on Oct.14,2012 04:48:50, <kseifried@...hat.com> wrote:
-> > The fix is located here:
-> >
-> > http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37163
-> >
-> > I don't see a CVE name associated with the announcement or commit, so
-> > I don't believe one has been assigned.
-> >
-> Agreed, user controlled file creation in this manner is definitely a
-> security issue.
+-armin
+
+On 05/18/2012 02:37 AM, Petr Matousek wrote:
+> When holding the mmap_sem for reading, pmd_offset_map_lock should only
+> run on a pmd_t that has been read atomically from the pmdp
+> pointer, otherwise we may read only half of it leading to this crash.
 > 
-> Please use CVE-2012-4522 for this issue.
-
-Thank you.
-
-I've added the mention about the CVE number to the announcement
-on Ruby Web SIte.
-
-
-Regards,
--- 
-U.Nakamura <usa@...bagecollect.jp>
-
+> PID: 11679  TASK: f06e8000  CPU: 3   COMMAND: "do_race_2_panic"
+>  #0 [f06a9dd8] crash_kexec at c049b5ec
+>  #1 [f06a9e2c] oops_end at c083d1c2
+>  #2 [f06a9e40] no_context at c0433ded
+>  #3 [f06a9e64] bad_area_nosemaphore at c043401a
+>  #4 [f06a9e6c] __do_page_fault at c0434493
+>  #5 [f06a9eec] do_page_fault at c083eb45
+>  #6 [f06a9f04] error_code (via page_fault) at c083c5d5
+>     EAX: 01fb470c EBX: fff35000 ECX: 00000003 EDX: 00000100 EBP:
+>     00000000
+>     DS:  007b     ESI: 9e201000 ES:  007b     EDI: 01fb4700 GS:  00e0
+>     CS:  0060     EIP: c083bc14 ERR: ffffffff EFLAGS: 00010246
+>  #7 [f06a9f38] _spin_lock at c083bc14
+>  #8 [f06a9f44] sys_mincore at c0507b7d
+>  #9 [f06a9fb0] system_call at c083becd
+>                          start           len
+>     EAX: ffffffda  EBX: 9e200000  ECX: 00001000  EDX: 6228537f
+>     DS:  007b      ESI: 00000000  ES:  007b      EDI: 003d0f00
+>     SS:  007b      ESP: 62285354  EBP: 62285388  GS:  0033
+>     CS:  0073      EIP: 00291416  ERR: 000000da  EFLAGS: 00000286
+> 
+> This should be a longstanding bug affecting x86 32bit PAE without
+> THP. Only archs with 64bit large pmd_t and 32bit unsigned long should
+> be affected.
+> 
+> An unprivileged local user could use this flaw to crash the system.
+> 
+> Proposed fix:
+> http://permalink.gmane.org/gmane.linux.kernel.mm/78590
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=822821
+> http://permalink.gmane.org/gmane.linux.kernel.mm/78590
+> 
+> Thanks,
