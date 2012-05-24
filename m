@@ -1,37 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/13/7
-Message-ID: <4F886B75.70605@redhat.com>
-Date: Fri, 13 Apr 2012 12:07:49 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/8
+Message-ID: <4FBE92D1.9060905@redhat.com>
+Date: Thu, 24 May 2012 13:58:09 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Stefan Cornelius <scorneli@...hat.com>, secalert_us@...cle.com
-Subject: Re: CVE request: mysql: Server crash on HANDLER READ NEXT after DELETE
+CC: Miloslav Trmac <mitr@...hat.com>, David Black <disclosure@....org>, Peter van Dijk <peter.van.dijk@...herlabs.nl>, Bert Hubert <bert.hubert@...herlabs.nl>
+Subject: Re: CVE Request: powerdns does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/13/2012 11:58 AM, Stefan Cornelius wrote:
-> Hi,
+On 05/24/2012 01:10 PM, Miloslav Trmac wrote:
+> ----- Original Message -----
+>> So what happens when a program starts running as say root, and
+>> root has supplemental groups (like "bin" or "daemon" and the
+>> program drops its primary user/group but fails to drop
+>> supplementary groups, is that a security issue, and is it worthy
+>> of a CVE identifier?
+>> 
+>> For most cases I'm going to say probably not (aka no). Having 
+>> supplementary groups is intentional and allows permissions to be
+>> more fine grained, you can for example make root a member of
+>> "logging" so that even when the app drops root privileges would
+>> still have the supplementary group of "logging" and can do its
+>> logging or whatever.
 > 
-> MySQL 5.5.22 fixed a denial of service flaw in the way MySQL
-> processed HANDLER READ NEXT statements after deleting a record. A
-> remote, authenticated MySQL user could use this flaw to cause
-> mysqld daemon abort.
+> Yes, the existence of supplementary groups is intentional - but
+> that doesn't mean that inheriting supplementary groups is
+> intentional.
 > 
-> References: [1]
-> http://dev.mysql.com/doc/refman/5.5/en/news-5-5-22.html [2]
-> https://bugs.gentoo.org/show_bug.cgi?id=411503 [3] 
-> http://eromang.zataz.com/2012/04/10/oracle-mysql-innodb-bugs-13510739-and-63775-dos-demo/
->
->  Upstream commit: 
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/3097.15.15
->
->  Red Hat bug: https://bugzilla.redhat.com/show_bug.cgi?id=812431
+> From the administrator's point of view, the privileges are
+> effectively assigned to "the user" as an "atomic" identity - they
+> are configured in /etc/passwd and /etc/group _and associated with
+> an UID_.  In "ordinary" case, programs running with a specific UID
+> are expected to always use the same primary GID, and same primary
+> groups.  Yes, the implementation does not match the administrator's
+> point of view, the UID, GID and supplementary groups are sparete,
+> and , e.g. setuid/setgid may cause a different configuration from
+> the "primary" case, or switching privileges temporarily creates
+> non-ordinary situations.  Still, I think that keeping the
+> administrator's point of view in mind is important.
 > 
-> Thanks and kind regards,
+> In the above example, if there really is a "logging" group, and an
+> application is configured to drop privileges and switch to uid
+> $APP_UID, the administrator would expect that whether the app
+> should or should not have the "logging" group membership is
+> configured in /etc/groups for $APP_UID, not for root.  So, I can't
+> see that as an argument for intentionally not dropping
+> supplementary groups. Mirek
 
-Please use CVE-2012-2102 for this issue.
+Ok I'll admit it, bad example, but I couldn't think of anything better
+offhand. Any ways like I said if someone can make a compelling
+argument that these should all be security issues that's great, if not
+I'll continue to default this to a security hardening issue unless
+someone brings up specific instances that need to be dealt with as a
+security fix.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -41,17 +65,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPiGt1AAoJEBYNRVNeJnmT0mQP/joHG5GXPsWofNR4niSr51wL
-FKdqpIapxlIA+fJI+UmHVaS2uu094QOsWpXjpzCP0Lo1MmRDxGIySgx+N+QhCMjY
-NIUlr24QX4iVUJ6KVsKRYK8bZeF9nkYyB8Mc67ON60mLLMLt/HSwtTy/LBOjI/DO
-GzdG0YfU+aoxRMiW/Zg4De0mVaVys0RBeyMAVwNW2GXB3qNlprLD7UpMLqM8iTio
-MvEofvU8ljsb4y56I1vBBAq5rMkNnqOJY3FvOV2yf52JQ1/G8njtX/1+to1l8UNU
-sbWz1JPWf9KQDA1TXK5hVEfnQjVVt6/UaDgZcwqUJXN5sZomCVPdEm8RLj/zOe1a
-LWoXgrmuZvaFmwJf97zx4vxQ9knNscjmNQKA7g/qNNqApP8wqsgj+VwnkcuJmG9c
-IHCzicwU1vIYjF2wuA0t9/a+uw22qzdm3PLVNNcqXN7yinNNfFKL/xUzqyMS+QHy
-3oj3adwvEY+WUlJZ0lI34md/mp9pzmFE/pcMtCYyZ81OlREYfTYae1zOWqpvK3WL
-upxluLOtRlhB+Dc4W1cUvLWtLqWqq7+S4xxlDIQGyAX8eJJXxDg6g+J3ucpVygAU
-TmDyBdA0cMpO5Fu03Pt24ibnorsKTOUxL2tN3SD//7igJZK4B1/xGMPfz6c9SsZy
-DEI9L0Z+yvqnjWnr/t+H
-=nwmt
+iQIcBAEBAgAGBQJPvpLRAAoJEBYNRVNeJnmTckQQAJM5wgUAeYJlXXiCgkjW+u9/
+T/SLE2S/cszH2iCTDYbzoUZOVbd/a92tlM/SEA+OwGt1/0UR4OtTtH99EjU93TzH
+ejWOJAzcyM1XRsuttcAbwKnCY7tNRxrBkzxMp8bE2Mdpt+NB3BJhyczpliU1SaRp
+5gNAIZK+LnxsTsP7YAlI5dMfFLKcr5UnZEGzJ4M6boNvC6+N6LAIukjLpTGR1kLr
+Uwq3YHQj0R4OzyYpaqmuaYbIbF+E9OAp/yrToZ7wyaeEHaXuj4ePd6pm50M/2nP3
+/c0lSidCAh7n/5PISFDNg2wn8YN5juhVbUSwgKUM1Bmli2Db5CjyEDHP2Io8WVO2
+sLzMHFVSDKdJ5gU7yoeAKxCXTqB7Jc1aUQ7h1IeDtdgIb3eqi+1+m+i7IVbBI0XS
+g3ZFAj1DO5idOseaveHSQhIfQpcZq/Ak30LXJULoJqsUkf/KxXNug9uu/8bpW/PY
+vluiLaGm+HOhT6YBOOA8Mz8kBlVf4jPw1wovytsChxZ40OXktflII9NaBI9n/8Bd
+oJTXg36pbqOrNWlxUSeQRD5rtPfz2nLU7GDqZUvT75evf2FdewboXGxb2Fdx49SR
+h/znEa3O5w87YYh2WjxvLqcl45wCmFa9wgj+ZaFPHFtLjXCTllmLIg30RAeUNvxg
+uAmGCpqTV+sYbsTRtVnf
+=0vyF
 -----END PGP SIGNATURE-----
