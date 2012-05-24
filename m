@@ -1,18 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/4
-Message-ID: <4F179696.8080406@redhat.com>
-Date: Thu, 19 Jan 2012 12:05:42 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/25/1
+Message-ID: <20120524233054.GA6157@rivest.dlitz.net>
+Date: Thu, 24 May 2012 19:30:54 -0400
+From: "Dwayne C. Litzenberger" <dlitz@...tz.net>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
+Subject: CVE-2012-2417 - PyCrypto <= 2.5 insecure ElGamal key generation
 Content-Type: text/plain; charset=utf-8
 
-On 01/19/2012 04:43 AM, Kees Cook wrote:
-> What's the problem with the old logic in the mem handling? (Why does this
-> need a CVE?)
+CVE-2012-2417 https://bugs.launchpad.net/pycrypto/+bug/985164
 
-This is a possible local privilege escalation issue on a system with
-ASLR disabled, combined with other exploitation techniques.
+PyCrypto (also known as python-crypto) versions 2.5 and earlier implement 
+incorrect ElGamal key generation.  The bug has been fixed in PyCrypto 
+2.6, which was released this morning.  Details below:
 
-Eugene
+     In the ElGamal schemes (for both encryption and signatures), g is
+     supposed to be the generator of the entire Z^*_p group. However, in
+     PyCrypto 2.5 and earlier, g is more simply the generator of a random
+     sub-group of Z^*_p.
+
+     The result is that the signature space (when the key is used for
+     signing) or the public key space (when the key is used for encryption)
+     may be greatly reduced from its expected size of log(p) bits, possibly
+     down to 1 bit (the worst case if the order of g is 2).
+
+     While it has not been confirmed, it has also been suggested that an
+     attacker might be able to use this fact to determine the private key.
+
+Anyone using ElGamal keys should generate new keys as soon as practical.
+
+Any additional information about this bug will be tracked at the above URL.
+
+-- 
+Dwayne C. Litzenberger <dlitz@...tz.net>
+  OpenPGP: 19E1 1FE8 B3CF F273 ED17  4A24 928C EC13 39C2 5CF7
+
+Download attachment "signature.asc" of type "application/pgp-signature" (223 bytes)
