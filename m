@@ -1,46 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/12/3
-Message-ID: <20120212095225.GA25344@foo.fgeek.fi>
-Date: Sun, 12 Feb 2012 11:52:25 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/6
+Message-Id: <201205241516.33315.sgrubb@redhat.com>
+Date: Thu, 24 May 2012 15:16:33 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Webcalendar 1.2.4 location XSS
+Cc: Kurt Seifried <kseifried@...hat.com>, David Black <disclosure@....org>, Peter van Dijk <peter.van.dijk@...herlabs.nl>, Bert Hubert <bert.hubert@...herlabs.nl>
+Subject: Re: CVE Request: powerdns does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 12, 2012 at 10:17:46AM +0200, Henri Salo wrote:
-> On Sat, Feb 11, 2012 at 11:04:19PM -0500, Eitan Adler wrote:
-> > On Sat, Feb 11, 2012 at 11:41 AM, Henri Salo <henri@...v.fi> wrote:
-> > > This seems to be missing 2012 CVE.
-> > >
-> > > Original report: http://seclists.org/bugtraq/2012/Jan/128
-> > > Project page: https://sourceforge.net/projects/webcalendar/
-> > > Version affected: 1.2.4 (the newest)
+On Thursday, May 24, 2012 02:40:10 PM Kurt Seifried wrote:
+> CC'ing the PowerDNS guys.
+> 
+> On 05/24/2012 10:20 AM, David Black wrote:
+> > Powerdns does not drop/clear supplementary groups in its dropPrivs
+> > routine where the intent is to drop privileges.
 > > 
-> > So far as I could see the newest version is 1.2.3
-> > (http://sourceforge.net/projects/webcalendar/?source=directory and
-> > http://www.k5n.us/webcalendar.php?topic=News don't list 1.2.4)
+> > The relevant code can be found in pdns/unix_utility.cc /
+> > pdns-recursor-3.3/unix_utility.cc [0].
+> > 
+> > Can a CVE id be assigned for this issue?
+> > 
+> > 
+> > [0] pdns/unix_utility.cc / pdns-recursor-3.3/unix_utility.cc //
+> > Drops the program's privileges. void Utility::dropPrivs( int uid,
+> > int gid ) { if(gid) { if(setgid(gid)<0) {
+> > theL()<<Logger::Critical<<"Unable to set effective group id to
+> > "<<gid<<": "<<stringerror()<<endl; exit(1); } else
+> > theL()<<Logger::Info<<"Set effective group id to "<<gid<<endl;
+> > 
+> > }
+> > 
+> > if(uid) { if(setuid(uid)<0) { theL()<<Logger::Critical<<"Unable to
+> > set effective user id to "<<uid<<":  "<<stringerror()<<endl;
+> > exit(1); } else theL()<<Logger::Info<<"Set effective user id to
+> > "<<uid<<endl; } }
 > 
-> Page http://sourceforge.net/projects/webcalendar/files/webcalendar%201.2/ lists 1.2.4 version. I have no idea why the other page doesn't list it at all. No reply to bug-report: http://sourceforge.net/tracker/?func=detail&aid=3472745&group_id=3870&atid=103870 and only thing I found strange in the report is "Version: 1.2.5" as there isn't such available. I can verify this advisory if you want.
+> So the dropping of groups and the dropping of supplementary groups has
+> come up a lot recently, here are my personal thoughts on the matter
+> (with thanks to Steve Grubb for explaining some of the trickier bits).
+> These are of course my personal opinions, any mistakes/errors are mine
+> entirely and so on.
 > 
-> - Henri Salo
+> Dropping of the primary user and group privileges is a well known
+> security feature in many programs (e.g. bind, dhcp, apache, etc.). The
+> idea being programs need root to bind to privileged ports/etc. But
+> once done don't need root access. I think clearly in this case if a
+> program is running as root, and claims to give up root privileges but
+> fails to, that is a security issue and worthy of a CVE. In the case
+> where a program does NOT drop privileges, and this feature has now
+> been added (and assuming it works), I think this qualifies as security
+> hardening, not a security fix and NOT worthy of a CVE.
+> 
+> Now it gets messy. What about the dropping of supplementary groups?
+> 
+> Supplemental groups enabled a user to be a member of more than one
+> group at a time (us old timers remember the joys of "newgrp"). Why
+> would anyone want this? You could for example create a group that has
+> permissions to access logging, terminals (e.g. modems, remember those?
+> =) and then add users to it as appropriate (and centralize
+> account/permissions management somewhat and all that good stuff).
+> 
+> So what happens when a program starts running as say root, and root
+> has supplemental groups (like "bin" or "daemon" and the program drops
+> its primary user/group but fails to drop supplementary groups, is that
+> a security issue, and is it worthy of a CVE identifier?
+> 
+> For most cases I'm going to say probably not (aka no). Having
+> supplementary groups is intentional and allows permissions to be more
+> fine grained, you can for example make root a member of "logging" so
+> that even when the app drops root privileges would still have the 
+> supplementary group of "logging" and can do its logging or whatever.
 
-So if you have javascript enabled in *.sourceforge.net this PoC works in demo-page: http://webcalendar.sourceforge.net/demo/view_entry.php?id=2142&date=20120212 and I also tested this in version 1.2.4 (modified 2011-08-09) and it works as stored XSS. Changelog for 1.2.4 says:
+Supplemental groups are just for file access or anything that does a group 
+permission check. The only way to determine if this is a security problem is to 
+run the find command looking for any file with that group. Maybe something like 
+this (assuming root):
 
-Version 1.2.4 (08 Aug 2011)
- - Fixed XSS vulnerability: malicious javascript in event descriptions submitted
-   by public can do bad things (create admin account, delete events, etc.)
-   when the pending event is viewed by the admin.
- - Fixed bug: PHP warnings on search
- - Removed PHP warnings
- - Bug fix: undefined function date_default_timezone_set in older versions
-   of PHP.
+find / -path /proc -prune -o -type f -gid 0 -perm /00030 -printf "%-55p %g\t%M\n" 
 
-I can't find release 1.2.5 from SF project-page nor in http://www.k5n.us/downloads.php or in news. If the code indeed has stored XSS in versions 1.2.3 and 1.2.4 there probably is more of them. SHA256 for WebCalendar-1.2.4.tar.gz is: 09dea6511bf692f08e08a1a6088e547517a11ba746dde6b5e2cd57bb0081cfee
+What programs that don't drop privs correctly does is call attention to it as 
+something that should be attacked because it can be used as a stepping stone to 
+other parts of the system. On the programming side, these should always be fixed 
+so that we err on the side of caution. On the CVE issuing side you probably want 
+to see what files exist with permissions that could be used to help decide its 
+importance.
 
-At the moment download counts:
-1.2.4 zip 8644
-1.2.4 tar.gz 1838
+For example, there are a number of files that are group root writable and even 
+more that are group root readable. So, dropping root badly can eventually lead 
+to system compromise in a few steps. but when other groups are involved, you 
+need to run the find command.
 
-Definitely needs a 2012 CVE-identifier.
+For anyone wanting to go bug hunting, I have a script here:
+http://people.redhat.com/sgrubb/security/find-nodrop-groups
+that can be used. It finds many, many problems dropping supplemental groups. More 
+than I alone want to fix.
 
-- Henri Salo
+-Steve
+
+
+> So unless someone makes a compelling argument that these are security
+> issues I'm going to err on the side of "security hardening" instead of
+> "security fix" for dropping supplementary groups, but of course not
+> all issues are the same so if you have a specific issue and think it
+> deserves a CVE make a case on OSS-sec.
+> 
+> * Should these issues be fixed? yes. Dropping privileges where
+> possible is usually a good idea, until things break though and then
+> people start disabling things like SELinux or running everything as
+> root to "make it work" :P.
