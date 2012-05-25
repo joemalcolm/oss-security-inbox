@@ -1,60 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/17/2
-Message-ID: <4FB55F89.3010107@redhat.com>
-Date: Thu, 17 May 2012 14:28:57 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/25/5
+Message-ID: <4FBFC7A6.8010603@redhat.com>
+Date: Fri, 25 May 2012 11:55:50 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Andres Gomez <agomez@...idsignal.com>, bugtraq@...urityfocus.com, vuln@...unia.com
-Subject: Re: CVE Request: Planeshift buffer overflow
+CC: Solar Designer <solar@...nwall.com>, Steve Grubb <sgrubb@...hat.com>
+Subject: Re: CVE Request: powerdns does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/17/2012 08:52 AM, Andres Gomez wrote:
-> Name: Stack-based buffer overflow in Planeshift 0.5.9 and earlier 
-> Software: Planeshift 0.5.9 Software link:
-> http://www.planeshift.it/ Vulnerability Type: Buffer overflow
+On 05/24/2012 04:56 PM, Solar Designer wrote:
+> On Thu, May 24, 2012 at 06:15:53PM -0400, Steve Grubb wrote:
+>> Here is a real life case:
+>> 
+>> + if ( initgroups(pw->pw_name, NULL) != 0 || setgid(pw->pw_gid)
+>> != 0 || +                                setuid(pw->pw_uid) != 0
+>> )
+>> 
+>> This is not upstream. This is a patch to drop capabilities by
+>> changing uid/gid. The person writing the patch intended to do the
+>> right thing - but failed. See the bug? This is in a network
+>> facing daemon that parses untrusted network packets.
 > 
-> Vulnerability Details:
+> Wow.  The NULL results in group 0 being added to the supplementary 
+> groups list (so it survives the setgid(), at least on my quick
+> test).
 > 
-> There is a buffer overflow in planeshift/src/client/chatbubbles.cpp
-> line 223:
+> How did you spot this?  Compiler warning?
 > 
-> . . .
+> "passing arg 2 of `initgroups' makes integer from pointer without a
+> cast"
 > 
-> // align csString align = chatNode->GetAttributeValue("align"); 
-> align.Downcase(); if (align == "right") chat.textSettings.align =
-> ETA_RIGHT; else if (align == "center") chat.textSettings.align =
-> ETA_CENTER; else chat.textSettings.align = ETA_LEFT;
-> 
-> // prefix 223>  strcpy(chat.effectPrefix, 
-> chatNode->GetAttributeValue("effectPrefix"));
-> 
-> //enabled . . .
-> 
-> this line reads a tag inside chatbubbles.xml called effectPrefix.
-> If that string is very long, for example:
-> 
-> <chat type="say" enabled="yes" colourR="186" colourG="168"
-> colourB="126" shadowR="108" shadowG="98" shadowB="73" align="left" 
-> effectPrefix="chatbubble_AAAAA....AAAAA" />
-> 
-> It will overwrite effectPrefix[64] buffer, which can lead even to
-> arbitrary code execution.
-> 
-> 
-> Could a CVE be assigned to this issue?
+> Alexander
 
-I'm not familiar with this software (it's a game?) the chat bubbles,
-can they come from remote users (like some sort of internal game chat)?
+Ok this part I did not know, so this is an obvious trust boundary
+violation (the intention was to drop privileges but it instead ADDS
+root privileges).
 
-
-> Thanks,
-> 
-> Andres Gomez.
-> 
-
+Please use CVE-2012-2653 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -64,17 +49,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPtV+JAAoJEBYNRVNeJnmTRtcP/R+w6vfmWPlfF2DDjxmOS25f
-qpAnIWXWQWAQ0xv1AJbbeuCd/ChnYG6BHiRpe3RQFHm2LeFJugfWIMrwJyWyVkuD
-cf4/5+hxhc7tY8vze51C9budUQZoeo+jalGt5eoOk0mCUqDR2RoLn8Pg2UEzsloO
-HNNWlWJ2xP3Qt2cuHbBMQIa3RUA0vFh+cUSP2mvLe//pS/FljLt5k78kV1wzAUEw
-DsuxNYoNJ5DoMWSCltsXSsN0tbIGr5vlHkHkWfXzs7POB2dRtJakJj30AkPdpt7r
-FZuwoEuvPRsLgrNa6LFpnsbFI9Bw0St3K+XKm+upa0S0o8plI/iUYFhuZOdTkpyf
-GaHtSpRoeVZgW8M/yvM3k3Lh/nPywI/ORBrdLcELrgrjMTh/rMyAgh4IBYTYNpaX
-Lyca8ZigbmyHzgWF8v/oujdu+9Pu9sdxlPxLMBv9omYa9Sqr8M6U0+OPbXDYzJD1
-NQ1ReT2YYQml/KcX3H9/IQ9TL+/1/lpWnY5pEbx6ya/X7jVNKkkDOBAkwkSzgEgD
-x5xYC8hxhXSDov3iIpzeZBlN3shRP+BKXCbhbb9ZxPN0fOI8IuJNVUaSzAxTQb5f
-+jJuoWVkdr2Rp5cmOonX1wFo1LRvNH8ZD6FXOb+ano+Hwktm+aJCjyxpSSmqXOHb
-mYPLwJ9J3ZupuIgFY/lx
-=EgCI
+iQIcBAEBAgAGBQJPv8emAAoJEBYNRVNeJnmTOS0P/Auu3FH4/CL9HEk9cDlZI7yV
+CdwfjVCE9TbNq+0eGLMNqdcYHB480oKRiv2Hz+qRbZKEzsUkiFPz4AdC/OvYfb2J
+ZuI8qqj3vNHCARr8O522rom0InfmIDhFgbq/b5Hde08B80C7s6p15j6tOet8YT8r
+b7deG21Z5GZ0AmEPxKB0Y2nXrOG6ahkVXg2sRTVE6vE22yleS7k6tSw6cTBichoa
+F1weUygQxEKRtKIawr6e9Kr39xQepBBxhnUQMSnQiZgDYT/fW4QTCDD/Z+IiY51Q
+H+dUMKV/oqFIcXy4ht0sdq12dABuZ6+06BwC7oS/pMeDebAOIAybDqvNcnrEk1fw
+rJt/ZS+Rxbk7b6jdNeTskOlRtKOZkGz+Bs1uMcZhPXVmcNpv1pbq70AJHIwD1E2X
+LPYQS30xiGqfIdcGGZ9qbfwrPHXCydQdA5M1nqncV5PkqmHqDqsjjnzyCot7UqE4
+3t4+ycwZM0OO5Rcy5ia4wl0dgzW/TsxICapjz2fP120uXIE/WrAB1SX7pMoUq/c2
+brzDdIbiiGcgrEaf4kQ59gwLSvRBSyeZCpc2eVIwxyEqFJs77HkdhTvd4/D/wIN5
+KcqpOhiVNfJvZ8IfcaAwE+ynOJNdRajAJdBLDdx3YsyYNFDZsH4ZQIERDKlYE+N/
+g4nRuNmNSs/QLf+8hN7f
+=vkqb
 -----END PGP SIGNATURE-----
