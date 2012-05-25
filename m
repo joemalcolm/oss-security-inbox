@@ -1,116 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/1
-Message-ID: <20120102000950.GA22463@openwall.com>
-Date: Mon, 2 Jan 2012 04:09:50 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/25/6
+Message-Id: <058B9966-6771-4E8D-8FE1-17175D7C625A@netherlabs.nl>
+Date: Fri, 25 May 2012 19:59:48 +0200
+From: Peter van Dijk <peter.van.dijk@...herlabs.nl>
 To: oss-security@...ts.openwall.com
-Cc: Colin Percival <cperciva@...ebsd.org>, dillon@...llo.backplane.com, Christos Zoulas <christos@...las.com>, deraadt@...nbsd.org, Todd Miller <Todd.Miller@...rtesan.com>
-Subject: Re: OpenBSD bcrypt error return
+Subject: Re: CVE Request: powerdns does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
-Christos Zoulas has fixed the issue below in NetBSD (for NetBSD 6).
-There are also some related updates to the crypt.3 man page that are not
-yet seen via NetBSD's CVSweb (but are available via anoncvs).
+Hello list,
 
-The approach now taken in NetBSD is to have the underlying functions (in
-bcrypt.c and others) return NULL on error, to rename what used to be
-crypt() to static __crypt(), and to create crypt() as a wrapper around
-it that turns NULL returns into either "*0" or "*1":
+On May 25, 2012, at 19:55 , Kurt Seifried wrote:
 
-char *
-crypt(const char *key, const char *salt)
-{
-	char *res = __crypt(key, salt);
-	if (res)
-		return res;
-	/* How do I handle errors ? Return "*0" or "*1" */
-	return __UNCONST(salt[0] == '*' && salt[1] == '0' ? "*1" : "*0");
-}
-
-The man page now says:
-
-     The behavior of crypt() on errors isn't well standardized.  Some imple-
-     mentations simply can't fail (unless the process dies, in which case they
-     obviously can't return), others return NULL or a fixed string.  Most
-     implementations don't set errno, but some do.  Version 2 of the Single
-     UNIX Specification (``SUSv2'') specifies only returning NULL and setting
-     errno as a valid behavior, and defines only one possible error (ENOSYS,
-     ``The functionality is not supported on this implementation.'') Unfortu-
-     nately, most existing applications aren't prepared to handle NULL returns
-     from crypt().  The description below corresponds to this implementation
-     of crypt() only.  The behavior may change to match standards, other
-     implementations or existing applications.
-
-     crypt() may only fail (and return) when passed an invalid or unsupported
-     setting, in which case it returns a pointer to a magic string that is
-     shorter than 13 characters and is guaranteed to differ from setting.
-     This behavior is safe for older applications which assume that crypt()
-     can't fail, when both setting new passwords and authenticating against
-     existing password hashes.
-
-(This is based on the crypt(3) man page I wrote for Owl many years ago.)
-
-It also says:
-
-     Before NetBSD 6 crypt() returned either NULL or : on error.
-
-On Tue, Nov 15, 2011 at 08:20:29AM +0400, Solar Designer wrote:
-> On Tue, Nov 15, 2011 at 07:14:17AM +0400, Solar Designer wrote:
-> > The bcrypt implementation from OpenBSD, now also found in FreeBSD and
-> > NetBSD, returns a constant string on error.
-> > 
-> > http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/crypt/
-> > http://www.freebsd.org/cgi/cvsweb.cgi/src/secure/lib/libcrypt/
-> > http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libcrypt/
+> Ok this part I did not know, so this is an obvious trust boundary
+> violation (the intention was to drop privileges but it instead ADDS
+> root privileges).
 > 
-> Oh, and of course it is also in DragonFly:
-> 
-> http://gitweb.dragonflybsd.org/dragonfly.git/tree/HEAD:/secure/lib/libcrypt
-> 
-> > static char    error[] = ":";
-> > 
-> > Clearly, ":" can't match a field value in an /etc/passwd-like file,
-> > which is great, but what happens if one of those errors occurs when
-> > setting a new password?  Luckily, the specific errors being checked for
-> > have to do with unsupported or invalid salt strings, so they can't
-> > happen on a properly configured system.  Nevertheless, this may be a
-> > disaster waiting to happen - e.g., if a new "$2" prefix is introduced
-> > (like I did when dealing with the crypt_blowfish bug), support for it is
-> > added to a password-changing program, but an appropriate update to libc
-> > or libcrypt is not yet deployed on a system.
-> > 
-> > Thus, to avoid this disaster, this poor way of handling errors may also
-> > get in the way of adding support for such extra "$2" prefixes on *BSD,
-> > unfortunately.  This is something I forgot about when deciding on those
-> > this summer, even though I was aware of this issue in OpenBSD since 1998
-> > or so.
-> > 
-> > Yes, I did report this issue to OpenBSD folks at least twice - last time
-> > this summer, after it was independently discovered by Zefram.
-> > 
-> > Maybe FreeBSD and/or NetBSD will want to patch it, or at least to be
-> > aware of the risk - hence the posting in here.
-> > 
-> > The fix may be to reuse the approach from crypt_blowfish:
-> > 
-> > int _crypt_output_magic(const char *setting, char *output, int size)
-> > {
-> > 	if (size < 3)
-> > 		return -1;
-> > 
-> > 	output[0] = '*';
-> > 	output[1] = '0';
-> > 	output[2] = '\0';
-> > 
-> > 	if (setting[0] == '*' && setting[1] == '0')
-> > 		output[1] = '1';
-> > 
-> > 	return 0;
-> > }
-> > 
-> > This may be done in bcrypt.c or in wrapper code common for all crypt(3)
-> > hash types.
-> > 
-> > Proactive security, anyone?
-> > 
-> > Alexander
+> Please use CVE-2012-2653 for this issue.
+
+
+Just in case this slipped by someone - the example given (that adds root) is not for PowerDNS but for arpwatch!
+
+Kind regards,
+-- 
+Peter van Dijk
+Netherlabs Computer Consulting BV - http://www.netherlabs.nl/
+
