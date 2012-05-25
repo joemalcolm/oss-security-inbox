@@ -1,52 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/13/3
-Message-ID: <4F88148A.1030109@redhat.com>
-Date: Fri, 13 Apr 2012 13:56:58 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Heap corruption in openjpeg
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/25/3
+Message-ID: <20120525041109.GN1286@redhat.com>
+Date: Thu, 24 May 2012 22:11:09 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: Kurt Seifried <kseifrie@...hat.com>, oss-security@...ts.openwall.com
+Subject: CVE-2011-2906 should have been rejected (kernel non-security issue)
 Content-Type: text/plain; charset=utf-8
 
-Thank you for this post, Huzaifa.
+Hi, Steve.  Just a friendly heads-up on what came through CVENEW today:
 
-On 04/13/2012 09:29 AM, Huzaifa Sidhpurwala wrote:
-> Hi All,
->
-> While looking at openjpeg, i found the following bug in their tracker,
-> which still seems to be un-addressed.
-> http://code.google.com/p/openjpeg/issues/detail?id=5
->
-> I dont think a CVE id has been assigned to this issue yet.
+> Name: CVE-2011-2906 (kernel)
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2906 [Open
+> URL]
+> Final-Decision:
+> Interim-Decision:
+> Modified:
+> Proposed:
+> Assigned: 20110727
+> Category:
+> Reference: MLIST:[oss-security] 20110810 Re: CVE requests: Two kernel
+> issues
+> Reference: URL:http://www.openwall.com/lists/oss-security/2011/08/09/8
+> [Open URL]
+> Reference:
+> CONFIRM:http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-
+> [Open URL]
+> 2.6.git;a=commit;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
+> Reference:
+> CONFIRM:http://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.1
+> [Open URL]
+> Reference:
+> CONFIRM:https://github.com/torvalds/linux/commit/b5b515445f4f5a905c5dd27e6e682868ccd6c09d
+> [Open URL]
+> 
+> Integer signedness error in the pmcraid_ioctl_passthrough function in
+> drivers/scsi/pmcraid.c in the Linux kernel before 3.1 allows local
+> users to cause a denial of service (memory consumption or memory
+> corruption) via a negative size value in an ioctl call.
 
-Yes, doesn't look so one got assigned for this one yet, since:
-http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=openjpeg
+This should be rejected as per the message two responses after the first
+reference above:
 
-provides just recent CVE-2012-1499. To the:
+http://www.openwall.com/lists/oss-security/2011/08/10/2
 
-http://code.google.com/p/openjpeg/issues/detail?id=5
+where Eugene says, based on the "this isn't a security flaw" message
+from Dan Rosenberg.
 
-issue itself:
+Can you add a "REJECT" or "DISPUTED" note or whatever?  This probably
+should have never been written up.
 
-1) It should get a CVE-2009-* identifier (upstream
-ticket is public from 2009-Jul-31).
+Thanks.
 
-2) From the issue reasons investigation, it seems to
-be combination of heap-based buffer invalid reads and
-writes by processing certain Gray16 TIFF images, leading
-to invalid free (when such corrupted memory allocated
-for tile encoder / decoder handle (TCD) is attempted
-to be freed).
-
-More official description in Red Hat bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=812317
-
-Kurt, could you allocate a 2009 CVE id?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->
->
->
+-- 
+Vincent Danen / Red Hat Security Response Team 
