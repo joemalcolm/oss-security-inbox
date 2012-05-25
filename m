@@ -1,31 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/25/2
-Message-ID: <1330200636.2515.28.camel@scapa>
-Date: Sat, 25 Feb 2012 21:10:36 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/25/7
+Message-ID: <4FBFCB22.8090203@redhat.com>
+Date: Fri, 25 May 2012 12:10:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+CC: Peter van Dijk <peter.van.dijk@...herlabs.nl>
+Subject: Re: CVE Request: powerdns does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
-On sam., 2012-02-25 at 19:37 +0100, Eric Leblond wrote:
-> Impact:
-> An attacker on a local network can open some pinholes in a firewall
-> which is not correctly protected.
-> Fix:
-> None, the issue has to be fixed in the firewall configuration.
-> Workaround:
-> Apply a strict anti-spoofing policy for IPv4 and IPv6 as described in
-> the document "Secure use of iptables and connection tracking helpers" 
-> This document was written after private disclosure of the attack to the
-> Netfilter's team.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/25/2012 11:59 AM, Peter van Dijk wrote:
+> Hello list,
 > 
+> On May 25, 2012, at 19:55 , Kurt Seifried wrote:
+> 
+>> Ok this part I did not know, so this is an obvious trust
+>> boundary violation (the intention was to drop privileges but it
+>> instead ADDS root privileges).
+>> 
+>> Please use CVE-2012-2653 for this issue.
+> 
+> 
+> Just in case this slipped by someone - the example given (that adds
+> root) is not for PowerDNS but for arpwatch!
+> 
+> Kind regards,
 
-Did you check how the various frontends to iptables (ferm, ufw,
-shorewall and the gazillon others)? They might generate an “insecure”
-ruleset and might be candidate to a fix.
+Yeah we probably should have started a new thread at some point =).
 
-Regards,
--- 
-Yves-Alexis
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPv8siAAoJEBYNRVNeJnmTmBEP/3knGQ2O9jYENr9iEDNHF6WT
+WefK13a5Rs4y24HnPk9QfiAdZMp5UAsUGQzKT6quUlcLQqhj+OpRSkynhC8lfu9r
+0DJ6YhCDW0LH4XLDk7/DedWK0kUPLLnfESxqnnvDQWT+sDRbdFNEFxZWN9TqWxlG
+JTyupBoxNr7Ozy7O53cYE9t82Aseg+BJr2Rd7/b6cuV0gLls96PE7o39Z6/IAVYc
+tcQmxOIZ+pbEmzFS0IzAUHN5KitvNndVnclGpbTwh2+ZsPRHGuiWXGSDBm9WXTi4
+OVA4qbFHQ244SzFZybgxWfj8yC726JnDI48vwBcnr6OJr+KvZBgdtxPfeQMNSxSf
+GA5Y30KU1cxR0TvjhdIMvhFRKnH0ybYXCDkuHRYhFyyoISOaA9WgqN3CLd1f5U5L
+e+AMShz8HDqNpNTGb1JiG+SMswoa+z3/utIlq8kQGbsyjtZThcter6IJNqRxaEDN
+QoWhxSVYXg3OIj4aBNAgeY3yhGI02wfbEjNP874IXpU3h4LqktRcktfT5+c5JzBy
+1d8gF2kx2rifwsj7CF0eR2vkOFHfFRSLosw9yzlhvXxtS5K8BXjxgBnZ2olgySBn
+2A6kOl2Uz29hPv6xZrrkhEbrxBRBpuSedQ15S1kzznF6C3bbrAjOm/sjfFwKe8K2
+ZrG3jxeZ64chYMJ7LOQ0
+=wrpl
+-----END PGP SIGNATURE-----
