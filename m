@@ -1,30 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/9
-Message-ID: <4F50FE18.70407@redhat.com>
-Date: Fri, 02 Mar 2012 10:06:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jussi Eronen <juhani.eronen@...ora.fi>
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/28/1
+Message-ID: <4FC33AC1.5070404@redhat.com>
+Date: Mon, 28 May 2012 10:43:45 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Mitre CVE assign department <cve-assign@...re.org>
+CC: oss-security@...ts.openwall.com
+Subject: Duplicate CVE identifiers (CVE-2012-2391 and CVE-2012-2942) assigned to HAProxy issue
 Content-Type: text/plain; charset=utf-8
 
-On 03/02/2012 01:32 AM, Jussi Eronen wrote:
-> On 02/27/2012 03:19 AM, Eugene Teo wrote:
->>> this some months ago. I've also tried to contact the various CERT
->>> but they refused to handle the case or did not reply to my
->>> requests.
->>
->> In future, if you tried to get help but you couldn't, feel free to
->> send us an email at linux-distros vs.openwall.org.
-> 
-> You could also consider contacting us at vulncoord@...ora.fi. Our main
-> focus is on multi-vendor cases, where we feel that coordination could
-> have its benefits.
-> 
-> -Jussi / CERT-FI
+Hello Steve, vendors,
 
-Just curious, why is that not something@...t.fi? Why does CERT-FI not
-run it's own email, instead using @ficora.fi?
+previously the CVE identifier of CVE-2012-2391 has been assigned to the following issue:
+[1] http://www.openwall.com/lists/oss-security/2012/05/23/12
+[2] http://www.openwall.com/lists/oss-security/2012/05/23/15
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Today when checking CVE new mail, noticed the CVE-2012-2942 yet:
+
+======================================================
+Name: CVE-2012-2942
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-2942 [Open URL]
+Final-Decision:
+Interim-Decision:
+Modified:
+Proposed:
+Assigned: 20120527
+Category:
+Reference: CONFIRM:http://haproxy.1wt.eu/#news [Open URL]
+Reference: CONFIRM:http://haproxy.1wt.eu/download/1.4/src/CHANGELOG [Open URL]
+Reference: 
+CONFIRM:http://haproxy.1wt.eu/git?p=haproxy-1.4.git;a=commit;h=30297cb17147a8d339eb160226bcc08c91d9530b 
+[Open URL]
+Reference: BID:53647
+Reference: URL:http://www.securityfocus.com/bid/53647 [Open URL]
+Reference: SECUNIA:49261
+Reference: URL:http://secunia.com/advisories/49261 [Open URL]
+Reference: XF:haproxy-trash-bo(75777)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/75777 [Open URL]
+
+Buffer overflow in the trash buffer in the header capture
+functionality in HAProxy before 1.4.21, when global.tune.bufsize is
+set to a value greater than the default and header rewriting is
+enabled, allows remote attackers to cause a denial of service and
+possibly execute arbitrary code via unspecified vectors.
+
+
+Both of these are referring to the same issue.
+
+Steve, CVE-assign could you clarify which CVE id should be kept and
+which one should be rejected as duplicate?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
