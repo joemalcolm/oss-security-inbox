@@ -1,21 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/6
-Message-ID: <20121127114114.75b33c69@redhat.com>
-Date: Tue, 27 Nov 2012 11:41:14 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/9
+Message-ID: <4FC502C0.6000201@redhat.com>
+Date: Tue, 29 May 2012 11:09:20 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libproxy issue
+CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+Subject: Re: CVE Request: XXE vulnerability in Restlet
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 27 Nov 2012 11:17:33 +0100 Matthias Weckbecker wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> there is a format string issue with libproxy:
+On 05/29/2012 04:38 AM, Nicolas Grégoire wrote:
+> Hello,
 > 
->   https://bugzilla.novell.com/show_bug.cgi?id=791086
-> 
-> Version 0.4.10 isn't affected anymore according to Shawn Chang.
+> version 2.0.14 of the Restlet Java Framework corrects an XML
+> External Entity vulnerability: 
+> http://blog.restlet.com/2012/05/23/restlet-framework-2-1-rc5-and-2-0-14-released/
+>
+>  Regards, Nicolas
 
-https://code.google.com/p/libproxy/source/detail?r=475 apparently.
+Please use CVE-2012-2656 for this issue. Also is there a specific
+source file/etc that contains the fix?
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPxQLAAAoJEBYNRVNeJnmTt0kP/3EsNgiHZJG2jKSSAQ62xfeo
+3SBLZ18X9r2I8kARkhgxo1SJrTWVPoO8vh7XZ1WBkPhErxTq7zHKHONJ3Eo9QfJu
+oChBtaXV8Ot7P85ggkposlzcBc6bLY+dL9n1DS7oQKnJOfsYD43SSEMt/uEiWpzH
+gbUnevdKlE1BEbuMf2kffhdw3TV9ccfCkhlp2ZII9WjnEN4nSmz68U4JfuKkK7H9
+VZGDbCgkSd14iRRgcvuARJfa4nFrkH9R7qCcs1HcCym/clPz9iXig6bISfWCxmxr
+tp6McA8ZRz8ANhehc+qxjUhkRfdlwK8FWlOQlZEs5HJ4ZTbs9fY+f47veLd5JKrF
+hRU4bTDmJBkwVqj+ZnZSvF4bt62PlSPCuvde7cn8VpdwUSFlwluXPLvENNTYQXPa
+a225ScMWdqwMKZumJ0/BneIwFO+xToBz6nCRJWDp6ASIqOvwQ6Fx6ojcTKmZz+3X
+gnrW/Iu3gc98o3rnxY/nEg77EJaG0PKGIo21QIhy92ap1NiOP6idwZw7UpxECFRd
+FvljD6OQ+xhe4viXWvosQB3v8WyAsBnRSLef6Gjhh7kMV+YovGabwD0O7synAYa+
+MoH+AjUwKa3Pho0YG/tOZFfznLr1N/wP9pGsOoheDsTQ7/0bKpeb826BB0O+efuS
+TJOqwhutSDdqn3+NLADb
+=YfAp
+-----END PGP SIGNATURE-----
