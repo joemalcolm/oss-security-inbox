@@ -1,64 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/13
-Message-ID: <4F8488FB.8010705@redhat.com>
-Date: Tue, 10 Apr 2012 13:24:43 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/4
+Message-ID: <1338287920.16666.114.camel@new-desktop>
+Date: Tue, 29 May 2012 12:38:40 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-CC: Andres Gomez <agomez@...idsignal.com>
-Subject: Re: CVE Request: FlightGear and Simgear Multiple vulnerabilities
+Subject: CVE Request: XXE vulnerability in Restlet
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 04/10/2012 09:23 AM, Andres Gomez wrote:
-> Hi,
-> 
-> could I please get CVEs assigned to the following issues?:
-> 
-> Multiple format string vulnerabilities have been found in
-> flightgear and simgear (version <= 2.6) as described in the mail
-> thread:
-> 
-> http://sourceforge.net/mailarchive/message.php?msg_id=28957051
+version 2.0.14 of the Restlet Java Framework corrects an XML External
+Entity vulnerability:
+http://blog.restlet.com/2012/05/23/restlet-framework-2-1-rc5-and-2-0-14-released/
 
-Please use CVE-2012-2090 for these issues.
-
-> Also multiple buffer overflow vulnerabilities were found in the
-> same software as described in:
-> 
-> http://sourceforge.net/mailarchive/message.php?msg_id=29011989
-
-Please use CVE-2012-2091 for these issues.
-
-> They are still unpatched but developers have not demostrated any
-> interest on fixing these issues.
-> 
-> Thanks,
-> 
-> Andres Gomez
+Regards,
+Nicolas
 
 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPhIj7AAoJEBYNRVNeJnmTtSkQAJ7CxrY7/5HRS4xN25lDNH4J
-V3UAmjIt8c29Ujg6REWiUCdk0qYm7TMgpnS9LpCEXXIX/yA4sBXRTI7yJpEZxdKN
-xwgxuXPIvmEZkLT+112rMWsCn/wmJ0uQH/lSU3rb/vi7YGr0Jx11QcoR4UmdWbNs
-W7OTwuTbUDTI6ZK8OozyjtZDmz9K8HjFKhFAcGteNFyXv0xdmb7Vq3108mcuk9SC
-V56Nz0Q07QzUlPxN4IgQ/V1bpP1fx13bKOzFQGFjCmlprffPzUzTgYJkwX1G75Bn
-W1UrjUyWa2T40LiTOyquFaHnzOXrz6oJ+i3ulL0WNEJ/TxMSdAWSXA9ZvMK6ddQd
-jAN487we1sAmbXX3ZJuWQ1X//2uKMnGoV4P971w6omShWR+AyjXpdpCvyiRmayL2
-T317mzqpXXfsHRasyFRu/E2vf5ulkCcR6lmeJxk33vJ1D3NqIAyk3SUgPxETE86T
-JmpxgmY5o0CsW7FXUUwraT4sL60AeBo4SqKZnfyTNtrrQce+KD8TEMy+Lq3n1IW8
-Mxe/EVoXwmx01aRyTo8dTPlK0CJoClVx28CzzisNPHCTPJTeRfylVDFxRWUyhbAJ
-8ES+pWasU4OKYVBZWvlM5IRNxpsCbTQ1XOM1ElQKeNoDlutFNHFbexVlB8ZHv+Ue
-niS4tZwHZ4Kv5zg+Mpgu
-=FZ9c
------END PGP SIGNATURE-----
