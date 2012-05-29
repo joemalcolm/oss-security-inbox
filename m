@@ -1,61 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/16/4
-Message-ID: <20120416105541.GD25530@kludge.henri.nerv.fi>
-Date: Mon, 16 Apr 2012 13:55:41 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: g13net@...il.com
-Subject: CVE-request: Timesheet Next Gen 1.5.2 Multiple SQLi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/2
+Message-ID: <1205290958560.29711@mjc.redhat.com>
+Date: Tue, 29 May 2012 10:00:10 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
+To: Solar Designer <solar@...nwall.com>
+cc: oss-security@...ts.openwall.com
+Subject: linux-distros unsubscriptions
 Content-Type: text/plain; charset=utf-8
 
-Can I get one 2012 CVE-identifier for Timesheet Next Gen 1.5.2 multiple SQL-injections. Thomas Richards said the vendor is working on the patch.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://sourceforge.net/apps/mantisbt/tsheetx/view.php?id=122
-http://osvdb.org/show/osvdb/79804
-http://secunia.com/advisories/48239/
+Please unsubscribe eteo@...hat.com and rdecarva@...hat.com from linux-distros.  Eugene
+has left Red Hat, and Ramon has moved to our Product Security Team and no longer
+responds to upcoming vulnerabilities.
 
-- Henri Salo
+Thanks, Mark
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-http://seclists.org/bugtraq/2012/Mar/10
-"""
-# Exploit Title: Timesheet Next Gen 1.5.2 Multiple SQLi
-# Date: 02/23/12
-# Author: G13
-# Software Link: https://sourceforge.net/projects/tsheetx/
-# Version: 1.5.2
-# Category: webapps (php)
-#
-
-##### Vulnerability #####
-
-The login.php page has multiple SQL injection vulnerabilities. Both
-the 'username' and 'password'
-parameters are vulnerable to SQL Injection.
-
-The vulnerability exists via the POST method.
-
-##### Vendor Notification #####
-
-02/23/12 - Vendor Notified
-02/26/12 - Email sent to each developer, developer responds
-02/29/12 - Confirmation by developer requested
-03/02/12 - Disclosure
-
-##### Exploit #####
-
-http://localhost/timesheet/
-
-POST /timesheet/login.php HTTP/1.1
-Host: localhost
-User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:10.0.2)
-Gecko/20100101 Firefox/10.0.2
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: en-us,en;q=0.5
-Accept-Encoding: gzip, deflate
-Connection: keep-alive
-Referer: http://localhost/timesheet/login.php
-Cookie: PHPSESSID=3b624f789e37fa3bdade432da
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 52
-redirect=&username=[SQLi]&password=[SQLi]&Login=submit
-"""
+iQCVAwUBT8SPtu6tTP1JpWPZAQJU5wQAqy0tpuog7ZH05U1xa5IDj8ZreDS/4qtY
+SO8nTpZG323/XMi5SYm//r82EpCM5TzLaSMH9hurtK0FqMiVldOt54sJ6CPA74QO
+0tdiU7A/7WnaYCFQ8Wo2Ud0hGtq3sBJfWhwPAantCzfSeKM8WVaBE/3TIAw0g23l
+dvwM4ZLVVTM=
+=ctbS
+-----END PGP SIGNATURE-----
