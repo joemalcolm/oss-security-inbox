@@ -1,42 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/28/1
-Message-ID: <5013899F.30803@redhat.com>
-Date: Sat, 28 Jul 2012 00:41:35 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Quick question regarding CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/5
+Message-ID: <20120529104620.GA24474@openwall.com>
+Date: Tue, 29 May 2012 14:46:20 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Mark J Cox <mjc@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: linux-distros unsubscriptions
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Mark -
 
-Just checking my records, I feel like I'm missing an OpenStack CVE, is
-this list complete for 2012?
+On Tue, May 29, 2012 at 10:00:10AM +0100, Mark J Cox wrote:
+> Please unsubscribe eteo@...hat.com and rdecarva@...hat.com from linux-distros.  Eugene
+> has left Red Hat, and Ramon has moved to our Product Security Team and no longer
+> responds to upcoming vulnerabilities.
 
-CVE-2012-3371
-CVE-2012-3361
-CVE-2012-3360
-CVE-2012-2654
-CVE-2012-2144
-CVE-2012-2101
-CVE-2012-2094
+I've just unsubscribed them.
 
-- -Kurt
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Thanks,
 
-iQIcBAEBAgAGBQJQE4mfAAoJEBYNRVNeJnmT/TMQAIHo6pgkDciS5VEv6XNxKCEr
-bwvJx7f+9XDACPbxYUD3/7Fz3BEXh19LFssuIpgLB9D+cG2hH4SEzRSbrwhkpNUP
-pdo+pPlWekOBumQkQz/3YaQVT8WxeBqyTameZPbfxJqcFqZqKLyVzfc6tKOJPhkA
-lI3NFHISxHoBR8uCJ8pWuODskI87JjY5SfGxtTvldz6/gBCqcxppHPB8/kLF8SGa
-Cv2AxG7/Ad1dTdWUhCv6UrgjVh0lz6cGiifijo33DXrGMlJf5ifJda5wWP9DuFRQ
-Qi/AsjwWilRUJlwW9otErJusbdpjdwGP68TNGqH1lS9o0j53o8202KDMMgnL4c1G
-LKf1RPKFx2a8clPmqbLTQrW0W6q4fmI8jIMQzuvb5jD7yvBgKKDY7rXRPm66rHty
-f3YvkOi7S3S538lYZnQfQ0EbuhkgtF7bLlQRfrvW/+bmdeGk3e60Lmg/3hAE2HVx
-fOYqDj4HVvBm8L5PLDD+KHpz8B+ffW1yJHgkF2Yy30eFHEdlXvfuDnC5gvjqxl/K
-urCcQmX2VwFhaJfMrHwC358OQHmrXH5jbmT1tf4NHeQrtSVf9iBU84mzVb0xd58s
-r9mvWgQBBB7Vu6akAkUuzLp6AbCGlOcqHEwnZt2l5NWYnEZnYHgQwO4SJuQ6tXy2
-VXpjgTzEPxsv2yiRJzEg
-=iTq9
------END PGP SIGNATURE-----
+Alexander
