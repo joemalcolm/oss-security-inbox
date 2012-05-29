@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/17/1
-Message-ID: <4F3E7BF5.1050307@redhat.com>
-Date: Fri, 17 Feb 2012 09:10:29 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: YGN Ethical Hacker Group <lists@...g.net>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CubeCart 3.0.20 (3.0.x) and lower | Open URL Redirection Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/3
+Message-ID: <1338285169.4437.2.camel@Brinn>
+Date: Tue, 29 May 2012 10:52:49 +0100
+From: Caolán McNamara <caolanm@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Apache OpenOffice.Org Security Team" <ooo-security@...ubator.apache.org>, LibreOffice Security Team <officesecurity@...ts.freedesktop.org>, Florian Weimer <fw@...eb.enyo.de>, David Tardon <dtardon@...hat.com>
+Subject: Re: [Officesecurity] Kind request to update upstream CVE-2012-2334 advisories they to reflect arbitrary code execution possibility too and OSS list notification
 Content-Type: text/plain; charset=utf-8
 
-On 02/16/2012 04:27 PM, YGN Ethical Hacker Group wrote:
-> Not Affective.
+On Mon, 2012-05-28 at 17:09 +0200, Jan Lieskovsky wrote:
+> For what is related against upstream patches -- upon testing we can confirm,
+> the original ones were complete and this is in no way a new security flaw.
 
-I assume you mean "Not affected"? ("Not affective" is slightly ambiguous).
+...
 
-> The version 4 and 5 have their own issues which we'll publish after
-> vendor has fixed.
+> But something, which got corrected upstream in previous release(s), and
+> should mention possibility of arbitrary code execution too in order to properly
+> describe this deficiency.
 > 
-> 
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
+> OpenOffice.org / LibreOffice upstreams - please update your advisories to
+> reflect this if possible yet.
 
+Done, for LibreOffice, updated description to reflect overflow
+possibilities.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+C.
+
