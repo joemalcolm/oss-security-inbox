@@ -1,54 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/6
-Message-ID: <20120913153957.GA4168@cmpxchg8b.com>
-Date: Thu, 13 Sep 2012 17:39:57 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: Vincent Danen <vdanen@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: note on gnome shell extensions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/11
+Message-ID: <1338319222.16666.294.camel@new-desktop>
+Date: Tue, 29 May 2012 21:20:22 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: XXE vulnerability in Restlet
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 10, 2012 at 02:48:38PM -0600, Vincent Danen wrote:
-> * [2012-09-08 18:14:10 -0600] Kurt Seifried wrote:
-> SUSE has some interesting info in their bug:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
-> 
-> By the sounds of it, this should be harmless.  Vincent Untz says that
-> the browser plugin doesn't actually install the extensions, it's passed
-> to another process via a dbus call to gnome-shell, which sends the uuid
-> of the extension to the extensions.gnome.org web site in order to
-> download the extension.
-> 
-> See:
-> 
-> http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
-> http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
-> 
-> which is:
-> 
-> let message = Soup.form_request_new_from_hash('GET', REPOSITORY_URL_INFO, params);
-> 
-> And REPOSITORY_URL_INFO is hardcoded earlier:
-> 
-> const REPOSITORY_URL_BASE = 'https://extensions.gnome.org';
-> const REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE + '/download-extension/%s.shell-extension.zip';
-> const REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE + '/extension-info/';
-> const REPOSITORY_URL_UPDATE   = REPOSITORY_URL_BASE + '/update-info/';
-> 
-> I don't think this is something that can be exploited, based on the
-> above.
 
-Not sure I follow the logic, can't I just upload something malicious to
-extensions.gnome.org and then force you to download it? I mean, I can
-try it if you're not convinced it's possible.
+> Please use CVE-2012-2656 for this issue.
 
-They surely do not have a magical technique for determining if my code
-is or can become malicious.
+Thanks !
 
-Tavis.
+> Also is there a specific source file/etc that contains the fix?
 
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
+The changelog refers to this change:
+https://github.com/restlet/restlet-framework-java/commit/115c17c1f9aab4bd431ae44a36741b86be4c5f53
+
+However, this one (safer default values for options like
+"secureProcessing" and "expandingEntityRefs") seems much more relevant:
+https://github.com/restlet/restlet-framework-java/commit/ec692bd3b5e386261413210191b179fec22b6cd2
+
+By the way, credits are wrong (I'm the original reporter) and should be
+fixed soon.
+
+Nicolas
+
