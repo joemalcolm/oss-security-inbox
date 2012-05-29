@@ -1,76 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/8
-Message-ID: <5075A86B.6080607@mh-sec.de>
-Date: Wed, 10 Oct 2012 18:55:07 +0200
-From: Marc Heuse <mh@...sec.de>
-To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Fwd: IPv6 DOS vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/1
+Message-ID: <4FC48846.3030906@redhat.com>
+Date: Tue, 29 May 2012 10:26:46 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Apache OpenOffice.Org Security Team" <ooo-security@...ubator.apache.org>, LibreOffice Security Team <officesecurity@...ts.freedesktop.org>
+CC: oss-security@...ts.openwall.com, Florian Weimer <fweimer@...hat.com>, Caolán McNamara <caolanm@...hat.com>, David Tardon <dtardon@...hat.com>
+Subject: Re: Kind request to update upstream CVE-2012-2334 advisories they to reflect arbitrary code execution possibility too and OSS list notification
 Content-Type: text/plain; charset=utf-8
 
-Alexander kicked me several times in the ass to finally forward this
-email to oss-security as the embargo time is gone ... so here it is.
+On 05/28/2012 05:09 PM, Jan Lieskovsky wrote:
+> Hello Apache OpenOffice.org, LibreOffice Security Teams, vendors,
+>
+> originally the CVE-2012-2334 security flaw has been described as follows:
+> [1] http://www.openoffice.org/security/cves/CVE-2012-2334.html
+> [2] http://www.libreoffice.org/advisories/cve-2012-2334/
+>
+> during internal audit of relevant upstream patches:
+> [3] http://cgit.freedesktop.org/libreoffice/core/commit/?id=28a6558f9d3ca2dda3191f8b5b3f2378ee2533da
+> [4] http://cgit.freedesktop.org/libreoffice/core/commit/?id=512401decb286ba0fc3031939b8f7de8649c502e
+>
+> it has been observed by Florian Weimer that the [4] patch also corrected
+> and integer overflow, being present in the SvxMSDffManager::GetFidclData()
+> routine, which might lead under certain circumstances to possibility
+> of arbitrary code execution too.
+>
+> Update CVE-2012-2334 flaw description is at:
+> [5] https://bugzilla.redhat.com/show_bug.cgi?id=821803#c0
+>
+> This post is intended to serve as kind request to OpenOffice.org and
+> LibreOffice upstream, they to update their corresponding advisories
+> ([1], [2]) to reflect this fact.
+>
+> For what is related against upstream patches -- upon testing we can confirm,
+> the original ones were complete and this is in no way a new security flaw.
+>
+> But something, which got corrected upstream in previous release(s), and
+> should mention possibility of arbitrary code execution too in order to properly
+> describe this deficiency.
+>
+> OpenOffice.org / LibreOffice upstreams - please update your advisories to
+> reflect this if possible yet.
+>
+> OSS vendors, please note this notification (for case you previously categorized
+> fix for the CVE-2012-2334 flaw as something to be postponed due to lower
+> impact).
 
+Hello Apache OpenOffice.org, LibreOffice Security Teams, vendors,
 
--------- Original-Nachricht --------
-Betreff: IPv6 DOS vulnerabilities
-Von: Marc Heuse <mh@...sec.de>
-An: Microsoft Security Response Center <secure@...rosoft.com>,
-security-officer@...eBSD.org, product-security@...le.com
-Kopie (CC): distros@...openwall.org
+   updating the credit information yet it to sound more correctly / appropriately:
 
-Hi folks,
+>
+> Credit for the discovery should go to: Florian Weimer of Red Hat
 
-this is just a short, quick email about two unspectecular IPv6
-implementation weaknesses that result in local network denial-of-service
-issues in Windows, *BSD (Free and Net, Open not tested) and OS X.
-distros@ is in cc: for information purposes, although it seems that
-Linux is not affected, you might want to test though as I have only
-tested this with a 2.6.x kernel.
+The above should have read as:
+"Florian Weimer, Red Hat Product Security Team"
 
+Please use this new / latter form in your advisories.
 
-Issue #1:
-
-Flooding the local target with ICMPv6 Neighbor Solicitation messages.
-As this is handled by the kernel, it consumes all CPU power that is
-there, leaving no or too little CPU for the user space.
-
-All except of OS/X went to 100% CPU, OS X went to 60%+ on a QuadCore
-Macbook Pro. But my test machine was not able to produce enough packets
-to even closely get to the satturation point of the network, so the 100%
-CPU might be reachable there too.
-
-In short: a fast multicore CPU helps to negate the impact (unless you
-are Windows, then this does not help).
-
-Test tool: flood_solicate eth0 <IPv6-Linklocal-Address-of-Target>
-(from the package at www.thc.org/thc-ipv6)
-
-
-Issue #2:
-
-Flooding the local network with ICMPv6 Router Advertisement packets
-containing multiple Routing entries result in either 100% CPU (Windows
-all Versions with IPv6 enabled) or some noticable CPU impact however
-IPv6 seem to break for *BSD and OS X. The BSD based systems do not reply
-to any ICMPv6 Neighbor Solicitation requests anymore, when trying to
-send locally from the victim systems you get errors (e.g. "connect
-failed" or "no multicast address on interface")
-
-(yes, this is basically a similar issue like RA flooding with autoconfig
-prefixes from two years ago)
-
-I have an unreleased test tool for this attack, if necessary I can
-package it and send it if needed.
-
-
-(I am sitting on this for over a half year now, sorry for that)
-
-Greets,
-Marc
-
+Thank you && Regards, Jan.
 --
-Marc Heuse
-www.mh-sec.de
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-PGP: FEDD 5B50 C087 F8DF 5CB9  876F 7FDD E533 BF4F 891A
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> P.S.: Would you need further background details due this, contact me or
+> Florian off list.
+>
+
