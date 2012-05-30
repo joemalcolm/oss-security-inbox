@@ -1,38 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/30/5
-Message-ID: <20120430215744.GK13910@redhat.com>
-Date: Mon, 30 Apr 2012 15:57:44 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/8
+Message-ID: <87bol55xws.fsf@mid.deneb.enyo.de>
+Date: Wed, 30 May 2012 20:25:23 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: weak use of crypto in python-elixir can lead to information disclosure (CVE and peer review request)
+Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
 Content-Type: text/plain; charset=utf-8
 
-* [2012-04-28 13:58:15 +0200] Florian Weimer wrote:
+* John Haxby:
 
->> CFB mode is only secure if the the IV is unpredictable and different
->> for every message.
->
->There are a few additional requirements.  Without some form of message
->authentication, chosen-ciphertext attacks are still possible even with
->a random IV.
+> Recently we have a couple of queries relating to a Nessus "TCP/IP
+> SYN+FIN Packet Filtering Weakness".   This has not been helped by the
+> fact that [1] actually points (indrectly) to CVE-2002-2438 which is
+> actually a SYN+RST problem.
 
-I'm no crypto expert, so I don't have a comment on this (although I did
-note this message in our bug, so that those smarter than I can look at
-it).
+Reading the discussion here,
 
->> Because of this, and because the encryption key is shared for each
->> database table (fields and rows), the same plaintext prefix is
->> always encrypted to an identical and corresponding ciphertext
->> prefix.  As a result, an attacker with access to the database could
->> figure out the plaintext values of encrypted text.
->
->And you can group by encrypted column values in the database.  That's
->why I'm not sure if it's actually possible to address this issue in a
->satisfying manner.
+  <http://comments.gmane.org/gmane.linux.network/213981>
 
-So the encryption can be more fine-grained than just per-table?  You can
-also do it per-column?  If that's the case, this does sound a lot uglier
-to deal with.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+it seems to me that this is just a performance optimization which
+could be bypassed by using different flags, so I don't think there's a
+vulnerability or fix here, except the general lack of source IP
+address validation in IP networks.
