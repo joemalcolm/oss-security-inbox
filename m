@@ -1,36 +1,207 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/10
-Message-ID: <4F60F49F.7040803@redhat.com>
-Date: Wed, 14 Mar 2012 13:42:23 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: running the distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/31/1
+Message-ID: <01d901cd3eb4$effa5c10$cfef1430$@reactionis.com>
+Date: Wed, 30 May 2012 23:38:29 +0100
+From: "Joseph Sheridan" <joe@...ctionis.com>
+To: "'full-disclosure'" <full-disclosure@...ts.grok.org.uk>, "'bugtraq'" <bugtraq@...urityfocus.com>, <secalert@...urityreason.com>, <bugs@...uritytracker.com>, "'vuln'" <vuln@...unia.com>, <vuln@...urity.nnov.ru>, <news@...uriteam.com>, <moderators@...db.org>, <submissions@...ketstormsecurity.org>, <submit@...ecurity.com>, <oss-security@...ts.openwall.com>
+Subject: ScriptFu Server Buffer Overflow in GIMP <= 2.6
 Content-Type: text/plain; charset=utf-8
 
-> I think that ideally the person would (try to) identify the upstreams,
-> downstreams, and other affected projects to contact, ask the reporter
-> for approval, upon the approval inform those other projects that there's
-> a security issue and ask them if they'd like more info and if they're OK
-> with the proposed maximum embargo period (CC'ing the list on those
-> preliminary notifications), and if they accept then finally pass the
-> actual info on to them (also CC'ing the list) and add them to the CC
-> list on further correspondence.
+Vulnerability Summary
 
-Can we also maintain a public database of upstream contacts? I seem to
-remember a few different efforts to do this but can't find anything
-current. This would save a ton of time. It would of course have to be
-maintained (maybe a scheme like emailing the people listed every few
-months and offering a "click here to confirm you're still the security
-contact" and a "click here to be removed as the contact" to help keep it
-up to date). Also things like PGP keys/etc would be nice to have in
-this. It strikes me that this would actually be a valuable project for
-Mitre, similar to CPE, maybe the "SCE" ("Security Contact Enumeration")?
+=================
 
-As anyone trying to notify multiple upstreams knows, it can be a
-horribly painful process.
+ 
 
-> Alexander
+There is a buffer overflow in the script-fu server component of GIMP 
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+(the GNU Image Manipulation Program) in all 2.6 versions (Windows and Linux
+versions) affecting both 
+
+the script-fu console and the script-fu network server. A crafted msg to the
+
+
+script-fu server overflows a buffer and overwrites several function pointers
+
+
+allowing the attacker to gain control of EIP and potentially execute
+arbitrary 
+
+code. This issue is fixed in the latest, stable GIMP version (currently
+2.8.0).
+
+ 
+
+CVE number: CVE-2012-2763
+
+Impact: high
+
+Vendor Homepage: http://www.gimp.org/
+
+Date found: 18/05/2012
+
+Found by: Joseph Sheridan of Reaction Information Security
+
+Homepage: http://www.reactionpenetrationtesting.co.uk
+
+ 
+
+This advisory is posted at:
+
+http://www.reactionpenetrationtesting.co.uk/advisories/scriptfu-buffer-overf
+low-GIMP-2.6.html
+
+ 
+
+PoC Code is available here:
+
+http://www.reactionpenetrationtesting.co.uk/advisories/scriptfubof.c
+
+ 
+
+Affected Products
+
+=================
+
+ 
+
+Vulnerable Products
+
++------------------
+
+ 
+
+The following products are known to be affected by this vulnerability:
+
+ 
+
+  * GIMP <= 2.6.12 (Windows or Linux builds)
+
+ 
+
+Products Confirmed Not Vulnerable
+
++--------------------------------
+
+ 
+
+The following products are known not to be affected by this
+
+vulnerability:
+
+ 
+
+  * GIMP 2.8.0 (current stable release)
+
+ 
+
+Details
+
+=======
+
+ 
+
+There is a buffer overflow in the command parsing code such that a long
+command
+
+overwrites various function pointers on the heap and gives the attacker full
+control 
+
+of EIP. The following command sent to the script-fu server will trigger the 
+
+vulnerability:
+
+ 
+
+(file-bmp-load 123
+
+aaaaaaaaaaaaa...a*1000...aaaaaaaaaa
+
+raw-filename)
+
+ 
+
+Impact
+
+======
+
+ 
+
+Successful exploitation of the vulnerability may result in remote code
+execution.
+
+ 
+
+Solution
+
+===========
+
+Upgrade to the latest stable version of GIMP (currently 2.8 branch) - the
+2.6 branch is 
+
+no longer supported by the GIMP development team.
+
+ 
+
+Workarounds
+
+===========
+
+ 
+
+A workaround would be not to use this feature on a vulnerable version of
+GIMP.
+
+The GIMP development team have strongly suggested only using the 
+
+script-fu network server in a secure/sandboxed environment due to 
+
+security concerns.
+
+ 
+
+Updates
+
+============
+
+ 
+
+Future updates of this advisory, if any, will be placed on the ReactionIS
+
+corporate website, but may or may not be actively announced on
+
+mailing lists or newsgroups. Users concerned about this problem are
+
+encouraged to check the URL below for any updates:
+
+ 
+
+http://www.reactionpenetrationtesting.co.uk/advisories/scriptfu-buffer-overf
+low-GIMP-2.6.html
+
+ 
+
+============================================================================
+====
+
+ 
+
+Reaction Information Security 
+
+Lombard House Business Centre,
+
+Suite 117,
+
+12-17 Upper Bridge Street,
+
+Canterbury, Kent, CT1 2NF
+
+ 
+
+Phone: +44 (0)1227 785050
+
+Email: research () reactionis {dot} co {dot} uk
+
+Web: http://www.reactionpenetrationtesting.co.uk
+
+
