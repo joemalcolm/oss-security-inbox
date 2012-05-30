@@ -1,52 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/9
-Message-ID: <CAB9ZNAxSdLHfU=FzBbDOaHgX6n-qoHdcq5yheWFdTx9pJwuauA@mail.gmail.com>
-Date: Tue, 10 Apr 2012 10:23:26 -0500
-From: Andres Gomez <agomez@...idsignal.com>
-To: oss-security@...ts.openwall.com, vuln@...unia.com,  bugtraq@...urityfocus.com
-Subject: CVE Request: FlightGear and Simgear Multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/14
+Message-ID: <CA+5g0SLAHYOi+dd5Wv8a=BOhTK5Fanwb4pZ+Ct9SSKVsHmLAvQ@mail.gmail.com>
+Date: Wed, 30 May 2012 17:42:59 -0300
+From: Felipe Pena <felipensp@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Tomas Hoger <thoger@...hat.com>
+Subject: Re: CVE id request: Multiple buffer overflow in unixODBC
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+2012/5/30 Kurt Seifried <kseifried@...hat.com>:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 05/30/2012 11:40 AM, Felipe Pena wrote:
+>> Hi all,
+>>
+>> 2012/5/30 Kurt Seifried <kseifried@...hat.com>:
+>>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>>>
+>>> On 05/30/2012 02:07 AM, Tomas Hoger wrote:
+>>>> On Tue, 29 May 2012 09:42:42 -0300 Felipe Pena wrote:
+>>>>
+>>>>> Multiple buffer overflow in unixODBC
+>>>>> ===========================
+>>>>>
+>>>>> The library unixODBC doesn't check properly the input from
+>>>>> FILEDSN=, DRIVER= options in the DSN, which causes buffer
+>>>>> overflow when passed to the SQLDriverConnect() function.
+>>>>
+>>>> Reports like this - covering bugs in parsing of the
+>>>> configuration parameters (i.e. generally trusted input) -
+>>>> should include some reasoning why these should be considered
+>>>> security.  Nothing obvious not intended to break PHP safe_mode
+>>>> comes to mind.
+>>>>
+>>>
+>>> Ahh my bad, I misunderstood this to be options that could be
+>>> passed by the program as a standard part of the query, and thus
+>>> controlled by the attacker. If this is indeed limited to
+>>> configuration files and there are not extenuating circumstances
+>>> that allow exploitation I will have to REJECT these CVEs.
+>>>
+>>
+>> It isn't limited to the configuration files. Such input can be
+>> passed to the `isql' interactive tool that come together unixODBC.
+>> The same string can be used to connect through PHP PDO, for
+>> example.
+>>
+>> $ pwd .../unixodbc/src/unixODBC-2.3.1/exe $ ./isql
+>> "FILEDSN=$(python -c "print 'A'*10000");UID=user" -k Segmentation
+>> fault
+>>
+>> If it isn't characterized a security issue I'm sorry.
+>>
+>> Thanks.
+>>
+>
+> Is this something that an attacker can typically control, or does the
+> PHP author need to write code that does this?
+>
 
-could I please get CVEs assigned to the following issues?:
-
-Multiple format string vulnerabilities have been found in flightgear and
-simgear (version <= 2.6) as described in the mail thread:
-
-http://sourceforge.net/mailarchive/message.php?msg_id=28957051
-
-Also multiple buffer overflow vulnerabilities were found in the same
-software as described in:
-
-http://sourceforge.net/mailarchive/message.php?msg_id=29011989
-
-They are still unpatched but developers have not demostrated any interest
-on fixing these issues.
-
-Thanks,
-
-Andres Gomez
+Nop. Beyond the isql one, I can't find a way to control externally the DSN.
 
 -- 
---
-AVISO DE CONFIDENCIALIDAD:
-
-Esta transmisión se entiende para uso del destinatario o la entidad a la 
-que va dirigida y puede contener información confidencial o protegida por 
-la ley. Si el lector de este mensaje no fuera el destinatario, considérese 
-por este medio informado que la retención, difusión, o copia de este correo 
-electrónico está estrictamente prohibida. Si recibe este mensaje por error, 
-por favor notifique inmediatamente al emisor y destruya el original. Gracias
-
---
-CONFIDENTIALITY NOTICE:
-
-This transmission is intended for the use of the individual or entity to 
-which it is addressed, and it may contain information that is confidential 
-or privileged under law. If the reader of this message is not the intended 
-recipient, you are hereby notified that retention, dissemination, 
-distribution or copying of this e-mail is strictly prohibited. If you 
-received this e-mail in error, please notify the sender immediately and 
-destroy the original. Thank you.
-
+Regards,
+Felipe Pena
