@@ -1,39 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/16
-Message-ID: <4FBD284F.5060809@redhat.com>
-Date: Wed, 23 May 2012 12:11:27 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/10
+Message-ID: <4FC66EDD.7090903@redhat.com>
+Date: Wed, 30 May 2012 13:02:53 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Multiple vulnerabilities in LogAnalyzer
+CC: Felipe Pena <felipensp@...il.com>, Tomas Hoger <thoger@...hat.com>
+Subject: Re: CVE id request: Multiple buffer overflow in unixODBC
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/23/2012 06:13 AM, Filippo Cavallarin wrote:
-> Hello, Can I get a CVE identifier for this issue:
+On 05/30/2012 11:40 AM, Felipe Pena wrote:
+> Hi all,
 > 
-> http://www.codseq.it/advisories/multiple_vulnerabilities_in_loganalyzer
->
->  Here is the changelog
+> 2012/5/30 Kurt Seifried <kseifried@...hat.com>:
+>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>> 
+>> On 05/30/2012 02:07 AM, Tomas Hoger wrote:
+>>> On Tue, 29 May 2012 09:42:42 -0300 Felipe Pena wrote:
+>>> 
+>>>> Multiple buffer overflow in unixODBC
+>>>> ===========================
+>>>> 
+>>>> The library unixODBC doesn't check properly the input from 
+>>>> FILEDSN=, DRIVER= options in the DSN, which causes buffer 
+>>>> overflow when passed to the SQLDriverConnect() function.
+>>> 
+>>> Reports like this - covering bugs in parsing of the
+>>> configuration parameters (i.e. generally trusted input) -
+>>> should include some reasoning why these should be considered
+>>> security.  Nothing obvious not intended to break PHP safe_mode
+>>> comes to mind.
+>>> 
+>> 
+>> Ahh my bad, I misunderstood this to be options that could be
+>> passed by the program as a standard part of the query, and thus
+>> controlled by the attacker. If this is indeed limited to
+>> configuration files and there are not extenuating circumstances
+>> that allow exploitation I will have to REJECT these CVEs.
+>> 
 > 
-> http://loganalyzer.adiscon.com/news/loganalyzer-v3-4-3-v3-stable-released
->
->  Thanks,
+> It isn't limited to the configuration files. Such input can be
+> passed to the `isql' interactive tool that come together unixODBC.
+> The same string can be used to connect through PHP PDO, for
+> example.
 > 
-> Filippo Cavallarin
+> $ pwd .../unixodbc/src/unixODBC-2.3.1/exe $ ./isql
+> "FILEDSN=$(python -c "print 'A'*10000");UID=user" -k Segmentation
+> fault
 > 
+> If it isn't characterized a security issue I'm sorry.
 > 
-> C o d S e q Development with an eye on security 
-> ------------------------------------------------------------------------
->
+> Thanks.
 > 
-Castello 2005, 30122 Venezia
-> Tel: 041 88 761 58 - Fax: 041 81 064 714 - Cell: 346 66 93 254 c.f.
-> CVLFPP82B27L736J - p.iva 03737650279 http://www.codseq.it -
-> filippo.cavallarin@...seq.it
 
-Can you confirm that the config.php has sensitive information within it?
+Is this something that an attacker can typically control, or does the
+PHP author need to write code that does this?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -43,17 +66,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPvShPAAoJEBYNRVNeJnmTn7wP/RQ3HePcA+MniyxdVxad8XIJ
-Lui61HW0cEOeK7vPx+5D1KBdV09U4P9wI/73ql1lvFo2OvtqsyNEQLn0JBXgBdHv
-ybKi6obhk374xmr+zlWMBbt983S/A4BxuYFWuU0dCQA6jm7rAM1wQRutuBSIdzx8
-3iLQr/LVAHkJFxKIjHvpZerDHW+Nh/+SLS2cMLDBXNGFnhJD1RyJlT4ZDgszdyFW
-A6sKwz+O4p4L3XIcLjHjzwiwBcirzzyBphY/bh/b+WTsAM3IbDHrNcAl5nUyAKBf
-6M+Up8LhFDLlEzHqLHQUr3fenAxVrz4PHS1RGlspeE8jWCz/FtnFbWxqYiTDvTUi
-JbJpB33bVmM8NEdZds9hF+y+h0TyF0Y2JadU3fAdbLaMnWQyH6lxNYntQnWoEOI1
-KGKzP3vVPdFwyXIa2PWfiz9EHrFOScH/fXMX65e3pybxMHvUyisnJNw/khBImQLW
-BRu0Lh+cVvsUwkr0tX/GxmbeR7pVakgcRp09ihGto7CwtIXOpEJ4pqrqCjHJRKM+
-vJ7HUR72cuGriAaHrAwPWGu2UM8G7niXerGrn6YBcRos3zgIIMa9YKQCVqR8DhLd
-NH9WH4vhgF1cMHRaU6Az2uZx34nWYGNw59x2eO6H6uRWrN6cREVhxTXf6QtQOv4m
-wrTY5Ael++jgxy7++Pjq
-=j8ar
+iQIcBAEBAgAGBQJPxm7dAAoJEBYNRVNeJnmTHm0P+QFmzxjK80GEYPaTGh39TzuZ
+nh0tqb3KcpU6oBDFKMuaXJSGcuVHPKY3peVHTnRfybwcpHw3mWmR7/Zwiilufu9S
+yiYfareQ4aPzoTJfc6+0npCGEIbArv8+jltHoAMyW6UDgIDP71D/ytzky5Dq7FQR
+G4XxxlsOiCQpeDFUjXn0tfUcrbhQ8sf/ztjSSGeffvQXaS9DFjqwHu2UUbTP3QJr
+aOmwRJ/f58RRYAmMtlH04SB/qhikLwstIBzJFF8FWzOXTWwAramiqsXBZ7fx5ba9
+6098U9CP3fwzaey1GPfW/bYbLM/kuls1EvViUHsebrTZqTA/8VnndJ2xJW2AuOmg
+H0M4B13956lu9LAxLfliCQApfPjLydzm8MavKCtMhAO16on/ZmXPSSk6ihAD7IWX
+Cvg+yjgdP5aGWBCQKeUSvCLVMi95iaIrcJAffeoiF9O66mhFGGTmu3Bz9flm5Ajk
+b4AQIt4bwgpoCs/BYdp3bKAa+Mm4vKp0mOEz1VGvfRr5xhLA/35llPBRIpbQ6CYC
+0lY5felqga00jVfeRQoJ7TT4It6a24XToZ/SAyIsrQtZwfa9V8XwqRS21QdynGiT
+3qSUZniDigbFqkLyiIhBmiCYII9m7eq/M8q3cBuZvMycYVjPL4mz4dXU9L4mCey9
+UBbu0D801RaWSvp3O/xP
+=wmqL
 -----END PGP SIGNATURE-----
