@@ -1,86 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/6
-Message-ID: <CAPYM6Vw6nqoatrrBVgp0y3yQQwpBgNBf1jezSTqbYzhA5ww6cg@mail.gmail.com>
-Date: Tue, 21 Feb 2012 01:05:41 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
-Subject: Dolphin 7.0.7 <= Multiple Cross Site Scripting Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/13
+Message-ID: <4FC68028.4050005@redhat.com>
+Date: Wed, 30 May 2012 14:16:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: John Haxby <john.haxby@...cle.com>
+Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Dolphin 7.0.7 and lower versions are vulnerable to Cross Site Scripting.
+On 05/30/2012 02:07 PM, Kurt Seifried wrote:
+> On 05/30/2012 12:48 PM, John Haxby wrote:
+> 
+>> On 30 May 2012, at 19:25, Florian Weimer wrote:
+> 
+>>> * John Haxby:
+>>> 
+>>>> Recently we have a couple of queries relating to a Nessus 
+>>>> "TCP/IP SYN+FIN Packet Filtering Weakness".   This has not
+>>>> been helped by the fact that [1] actually points (indrectly)
+>>>> to CVE-2002-2438 which is actually a SYN+RST problem.
+>>> 
+>>> Reading the discussion here,
+>>> 
+>>> <http://comments.gmane.org/gmane.linux.network/213981>
+>>> 
+>>> it seems to me that this is just a performance optimization 
+>>> which could be bypassed by using different flags, so I don't 
+>>> think there's a vulnerability or fix here, except the general 
+>>> lack of source IP address validation in IP networks.
+> 
+>> That's the same thread that I referred to but I didn't reach the 
+>> same conclusion that you did.   It is possible to block SYN+FIN
+>> in iptables, but the distros I'm aware of don't have that kind
+>> of check in place so people will be vulnerable to this kind of
+>> DoS.
+> 
+>> The conclusion from the thread was that SYN+FIN is not a
+>> legitimate packet so the kernel should drop it.   The nessus
+>> people seem to think the same thing: they have a test for this
+>> (although they refer to the SYN+RST fix from a decade ago).    If
+>> there's a consensus that we don't need a CVE then we can go to
+>> nessus and have them fix, remove or update their test.
+> 
+>> One could argue that if SYN+FIN doesn't need a CVE then SYN+RST 
+>> didn't either since it can be blocked by the same, or very
+>> similar, iptables rule.
+> 
+>> jch
+> 
+> No this definitely gets a CVE (see previous email), it directly 
+> bypasses a security mechanism that is documented (man iptables,
+> --syn section), and other parts of iptables do handle it correctly
+> as far as I can tell (e.g. --state NEW). It allows bypass of
+> firewall rules as documented, so if that doesn't get a CVE then
+> nothing the world has gone upside down =).
 
-
-2. BACKGROUND
-
-Dolphin is the only "all-in-one" free community software platform for
-creating your own social networking, community or online dating site
-without any limits and under your full control. Dolphin comes with
-hundreds of features, module plugins and tools. Everything is included
-and extension posibilities are literally endless. You can use it for
-free with a BoonEx link in the footer or buy a $99 permanent license
-to remove that requirement.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Multiple parameters (explain,photos_only,online_only,mode) were not
-properly sanitized, which allows attacker to conduct Cross Site
-Scripting attack. This may allow an attacker to create a specially
-crafted URL that would execute arbitrary script code in a victim's
-browser.
-
-
-4. VERSIONS AFFECTED
-
-7.0.7 and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-Vulnerable Parameter: explain
-
-http://localhost/dolph/explanation.php?explain=%27%22%3E%3Cscript%3Ealert%28/xss/%29%3C/script%3E
-
-
-Vulnerable Parameters: photos_only,online_only,mode
-
-http://localhost/dolph/viewFriends.php?iUser=1&page=1&per_page=32&sort=activity&photos_only='"><script>alert(/xss/)</script>
-
-http://localhost/dolph/viewFriends.php?iUser=1&page=1&per_page=32&sort=activity&online_only='"><script>alert(/xss/)</script>
-
-http://localhost/dolph/viewFriends.php?iUser=1&page=1&sort=activity&mode='"><script>alert(/xss/)</script>
-
-
-6. SOLUTION
-
-Upgade to the latest version of Dolphine.
-
-
-7. VENDOR
-
-BoonEx Pty Ltd
-http://www.boonex.com/
-
-
-8. CREDIT
-
-Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+Sorry I got that backwards (getting over a bad head cold), any ways
+the point is packets with an invalid set of flags should generally not
+get treated as legitimate (and over the years there have been many
+efforts to block these types of attacks/etc., witness OpenBSD's pf's
+normalizing and so on).
 
 
-9. DISCLOSURE TIME-LINE
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-2011-06-09: notified vendor
-2011-10-24: fixed version, 7.0.8, released
-2012-02-20: vulnerability disclosed
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5BDolphin_7.0.7%5D_xss
-BoonEx Home Page: http://www.boonex.com/
-
-
-#yehg [2012-02-20]
+iQIcBAEBAgAGBQJPxoAoAAoJEBYNRVNeJnmTULUP/Ao6/F53KVGwG00pZQf7bVR6
+ZS2miGuUTwzZlEbXfF2trwDHZC6L5XHyEyQ5EWg+xHGrhVjr19BXZ/N2Ol5uFwQk
+JtHvU4aCvpQKRNYeieLeUa4kr1G74L27xFvP1P8zkaLRpmXnG944iG7NLgK8+51j
+wFScIqKwX6IQ2ccAzuchKEptPQvC4GNHEjIxMjKJ5MItaiQZPz3G+NmYW1Ko6HXj
+gK3VeU3oq4wHPqz8EBEr+jISTsxEXcL0M5qJ1BeQsCRrP+fB5kxGr1uX5hzcHQan
+T0MhW/1PlBlION/OFRlqJ/5nhtBo3RT86oO2gLKLAHJN2pr6XFqjIncAjrzt5iKD
+6F3gB1VFLzIlA+mW9Ec4MtPidLi/GiEvFuO0qJIzDmntmJxUUniO80JZbnSfI8pX
+cay/pt7PDrH8KTvOcxYPWoCIIpoKrc4wIefsTFbbwP1O/+ctlM/ysYSDJ92lVxBt
+p51ySsTvyfGc+zLm4ZorsuYh+Z+4ySK2cN3k5fIHsG/TU8bXhAQo3Tq0tygMroGx
+1u2MWub1k+T3jyRwkj72WvnjFUAzijN4LoOjMtTB3nye+9GrRf1T2MG4qd/ZlLlK
+H9BOj6LkxuZwwEYVeOpNplh58ZnUtDtDF5OCJtolJ1HjQwmVW9Oi4Vdc1VsDCr4J
+8HKtohRsweWXkDpsia1k
+=I1ny
+-----END PGP SIGNATURE-----
