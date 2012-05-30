@@ -1,52 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/10
-Message-ID: <4F218A2F.4000203@redhat.com>
-Date: Thu, 26 Jan 2012 10:15:27 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/12
+Message-ID: <4FC67DF9.1000503@redhat.com>
+Date: Wed, 30 May 2012 14:07:21 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Christian Boltz <oss-securrity@...ltz.de>
-Subject: Re: CVE request: PostfixAdmin SQL injections and XSS
+CC: John Haxby <john.haxby@...cle.com>
+Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
 Content-Type: text/plain; charset=utf-8
 
-On 01/26/2012 04:07 AM, Christian Boltz wrote:
-> Hello,
-> 
-> we (the upstream PostfixAdmin developers) received a report about SQL
-> injections and XSS in PostfixAdmin. 
-> 
-> Please assign a CVE number to those issues.
-> 
-> The issues are fixed in PostfixAdmin 2.3.5, which I'll release today or 
-> tomorrow.
-> 
-> 
-> For reference, here's the changelog with all details:
-> 
->   - fix SQL injection in pacrypt() (if $CONF[encrypt] == 'mysql_encrypt')
->   - fix SQL injection in backup.php - the dump was not mysql_escape()d, 
->     therefore users could inject SQL (for example in the vacation message)
->     which will be executed when restoring the database dump.
->     WARNING: database dumps created with backup.php from 2.3.4 or older might
->              contain malicious SQL. Double-check before using them!
->   - fix XSS with $_GET[domain] in templates/menu.php and edit-vacation
->   - fix XSS in some create-domain input fields
->   - fix XSS in create-alias and edit-alias error message
->   - fix XSS (by values stored in the database) in fetchmail list view,
->     list-domain and list-virtual
->   - create-domain: fix SQL injection (only exploitable by superadmins)
->   - add missing $LANG['pAdminDelete_admin_error']
->   - don't mark mailbox targets with recipient delimiter as "forward only"
->   - wrap hex2bin with function_exists() - PHP 5.3.8 has it as native function
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-
-So basically we have two sets of vulnerabilities: multiple SQL
-injections and multiple XSS vulnerabilities, correct?
-
-
-> Gruß
+On 05/30/2012 12:48 PM, John Haxby wrote:
 > 
-> Christian Boltz
+> On 30 May 2012, at 19:25, Florian Weimer wrote:
+> 
+>> * John Haxby:
+>> 
+>>> Recently we have a couple of queries relating to a Nessus
+>>> "TCP/IP SYN+FIN Packet Filtering Weakness".   This has not been
+>>> helped by the fact that [1] actually points (indrectly) to
+>>> CVE-2002-2438 which is actually a SYN+RST problem.
+>> 
+>> Reading the discussion here,
+>> 
+>> <http://comments.gmane.org/gmane.linux.network/213981>
+>> 
+>> it seems to me that this is just a performance optimization
+>> which could be bypassed by using different flags, so I don't
+>> think there's a vulnerability or fix here, except the general
+>> lack of source IP address validation in IP networks.
+> 
+> That's the same thread that I referred to but I didn't reach the
+> same conclusion that you did.   It is possible to block SYN+FIN in
+> iptables, but the distros I'm aware of don't have that kind of
+> check in place so people will be vulnerable to this kind of DoS.
+> 
+> The conclusion from the thread was that SYN+FIN is not a legitimate
+> packet so the kernel should drop it.   The nessus people seem to
+> think the same thing: they have a test for this (although they
+> refer to the SYN+RST fix from a decade ago).    If there's a
+> consensus that we don't need a CVE then we can go to nessus and
+> have them fix, remove or update their test.
+> 
+> One could argue that if SYN+FIN doesn't need a CVE then SYN+RST
+> didn't either since it can be blocked by the same, or very similar,
+> iptables rule.
+> 
+> jch
 
+No this definitely gets a CVE (see previous email), it directly
+bypasses a security mechanism that is documented (man iptables, --syn
+section), and other parts of iptables do handle it correctly as far as
+I can tell (e.g. --state NEW). It allows bypass of firewall rules as
+documented, so if that doesn't get a CVE then nothing the world has
+gone upside down =).
 
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPxn35AAoJEBYNRVNeJnmT1OgP/0q1axsnDoz7OhjNW5Cjzo9f
+x0H72pYGOm3J/luxpCX78/Myzs+YubPkkmYrg37QCZpKJQXljGMRlyNNvDrkUo+C
+adeZH5vGIqD2uNwUmFmqPIf5WZezaWBXj1wdVAAk67rF6w4y31u2VJFj3Lytuq1z
+3xelQl8qfdj8UTOB3+4MMGuuMX8udCMcER+6JgtdaunVXqxppqICk7BLANJbWAPG
+jCPi8HcVp8NYpvwjhMW4ezLlMPls64Bq4Ar47woOyycYYgjBobSzCID5yhqvzLX8
+dXA2Hi/6B6G1xPlrwVjAPfUcnD8H9TJAzRGtZU0LfN2UaY/x3F3Pt1tpdZN1u2yB
+SzRnn2ko+rXTrOXF97gW8IrgvPnw9Zai2GsPoVjZAcN2zAHfLirfgq3gM3ZCV68/
+u5tMdk/+mEJ3K/Haspr6o09c0G6k6hZuU9JDqUaKW3kfyTeYUcOSyJarpI+nDkOy
+lyKhgOHrgw6B8D5itdJXH4VZoa6eMygFlCU9AanPxn/1bhEgBv4Tr7Jke8dnd6uZ
+gByj+mC50ShDMOpCNfsc+8Xpqy5PahwH1zD1P5SPJgJJ9dCTM8JHdzBsJe3AykL+
+snJBYSQ65VwmTkDH4/vgtWKqzsXjNuWvsU5ZyIuy4sjWs1uHUIVvIARSTuoAj3Ql
+72aYlQSD704yaxxa6rnW
+=Uq2f
+-----END PGP SIGNATURE-----
