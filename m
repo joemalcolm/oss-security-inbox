@@ -1,44 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/2
-Message-ID: <1354083449.7676.21.camel@scapa>
-Date: Wed, 28 Nov 2012 07:17:29 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: Derek Martin <code@...zashack.org>
-Cc: oss-security@...ts.openwall.com,  secure-testing-team@...ts.alioth.debian.org, Russ Allbery <rra@...ian.org>, temp66@...il.com
-Subject: Re: rssh: incorrect filtering of command line options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/4
+Message-ID: <4FC60C36.1010301@oracle.com>
+Date: Wed, 30 May 2012 13:01:58 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
 Content-Type: text/plain; charset=utf-8
 
-On mar., 2012-11-27 at 17:40 -0600, Derek Martin wrote:
-> On Wed, Nov 28, 2012 at 12:21:03AM +0100, Yves-Alexis Perez wrote:
-> > CVE-2012-2251
-> > 	Incorrect filtering of command line when using rsync protocol. It was
-> > 	for example possible to pass dangerous options after a "--" switch. The rsync
-> > 	protocol support has been added in a Debian (and Fedora/Red Hat) specific
-> > 	patch, so this vulnerability doesn't affect upstream.
-> > 
-> > CVE-2012-2251
-> 
-> I believe this one was meant to be CVE-2012-2252...
+On 30/05/12 10:44, John Haxby wrote:
+>
+> Recently we have a couple of queries relating to a Nessus "TCP/IP
+> SYN+FIN Packet Filtering Weakness".   This has not been helped by the
+> fact that [1] actually points (indrectly) to CVE-2002-2438 which is
+> actually a SYN+RST problem.
+[snip]
 
-Yes, sorry for that, I reformated the advisory at the last minute and
-did a wrong copy/paste…
-> 
-> > 	Incorrect filtering of the "--rsh" option: the filter preventing usage of the
-> > 	"--rsh=" option would not prevent passing "--rsh". This vulnerability affects
-> > 	upstream code.
-> 
-> I've uploaded rssh-2.3.4 to the project's web page, as well as to
-> sourceforge.  This update includes the fix for CVE-2012-2252, and also
-> rolls up a fix for CVE-2012-3478, for which I had previously only
-> posted a patch.  Additionally there are some mostly trivial updates
-> for code and build clean-up.
-> 
-Thank you for your time and help on this, it was a pleasure working with
-you.
+Sigh.   Enigmail seems to be unable to sign messages for me.   The
+references in the message are all independenty verifiable though.
 
-Regards,
--- 
-Yves-Alexis Perez
- Debian Security
+jch
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
