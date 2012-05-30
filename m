@@ -1,70 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/23/5
-Message-ID: <4F1DD6C0.5040706@redhat.com>
-Date: Mon, 23 Jan 2012 14:53:04 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: spamdyke buffer overflow vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/7
+Message-ID: <CA+5g0S+0PHoU8Pdnewj5XS+WvvnUxgEkOd=dZjpuGB6soGB7GA@mail.gmail.com>
+Date: Wed, 30 May 2012 14:40:06 -0300
+From: Felipe Pena <felipensp@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Tomas Hoger <thoger@...hat.com>
+Subject: Re: CVE id request: Multiple buffer overflow in unixODBC
 Content-Type: text/plain; charset=utf-8
 
-On 01/20/2012 06:35 PM, Kurt Seifried wrote:
-> On 01/20/2012 01:42 AM, Agostino Sarubbo wrote:
->> According to secunia advisory:
->> https://secunia.com/advisories/47548/ :
->> Description:
->>
->> Some vulnerabilities have been reported in spamdyke, which potentially can be 
->> exploited by malicious people to compromise a vulnerable system.
->>
->> The vulnerabilities are caused due to boundary errors related to the incorrect 
->> use of the "snprintf()" and "vsnprintf()" functions, which can be exploited to 
->> cause buffer overflows.
->>
->> The vulnerabilities are reported in versions prior to 4.3.0.
->>
->>
->> Solution
->> Update to version 4.3.0.
->>
->>
->> and from upstream changelog:
->> http://www.spamdyke.org/documentation/Changelog.txt :
->>
->> Fixed a number of very serious errors in the usage ofc.
->>     The return value was being used as the length of the string printed into
->>     the buffer, but the return value really indicates the length of the string
->>     that *could* be printed if the buffer were of infinite size. Because the
->>     returned value could be larger than the buffer's size, this meant remotely
->>     exploitable buffer overflows were possible, depending on spamdyke's
->>     configuration.
->>
->> and from upstream mailing list:
->> http://www.mail-archive.com/spamdyke-release@spamdyke.org/msg00014.html
->>
->> it also fixes a series of major bugs 
->> that could lead to buffer overflows.  Depending on spamdyke's configuration, 
->> these could cause remotely exploitable security holes.  Please upgrade 
->> immediately!
->>
->> Please assign a CVE
->>
-> Can you include some links to actual code commits? I want to prevent
-> duplicates and more information would aid in that.
-> 
+Hi all,
 
-Ugh so I downloaded (www.spamdyke.org/download.html) and diff'ed
-spamdyke 4.2.1 and 4.3.0 and checked for snprint/vsnprintf occurances
-being replaced, there's about 80 (all virtually identical fixes). I also
-checked 4.3.0 to 4.3.1, no more of those fixes, so it's safe to say this
-fix at least is largely confined to the 4.3.0 update.
+2012/5/30 Kurt Seifried <kseifried@...hat.com>:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 05/30/2012 02:07 AM, Tomas Hoger wrote:
+>> On Tue, 29 May 2012 09:42:42 -0300 Felipe Pena wrote:
+>>
+>>> Multiple buffer overflow in unixODBC ===========================
+>>>
+>>> The library unixODBC doesn't check properly the input from
+>>> FILEDSN=, DRIVER= options in the DSN, which causes buffer
+>>> overflow when passed to the SQLDriverConnect() function.
+>>
+>> Reports like this - covering bugs in parsing of the configuration
+>> parameters (i.e. generally trusted input) - should include some
+>> reasoning why these should be considered security.  Nothing obvious
+>> not intended to break PHP safe_mode comes to mind.
+>>
+>
+> Ahh my bad, I misunderstood this to be options that could be passed by
+> the program as a standard part of the query, and thus controlled by
+> the attacker. If this is indeed limited to configuration files and
+> there are not extenuating circumstances that allow exploitation I will
+> have to REJECT these CVEs.
+>
 
-Please use CVE-2012-0802 for this issue.
+It isn't limited to the configuration files. Such input can be passed
+to the `isql' interactive tool that come together unixODBC. The same
+string can be used to connect through PHP PDO, for example.
 
+$ pwd
+.../unixodbc/src/unixODBC-2.3.1/exe
+$ ./isql "FILEDSN=$(python -c "print 'A'*10000");UID=user" -k
+Segmentation fault
 
+If it isn't characterized a security issue I'm sorry.
+
+Thanks.
 
 -- 
-
---
-
--- Kurt Seifried / Red Hat Security Response Team
+Regards,
+Felipe Pena
