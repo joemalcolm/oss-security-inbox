@@ -1,47 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/5
-Message-ID: <20120105152454.GT723@yuggoth.org>
-Date: Thu, 5 Jan 2012 15:24:55 +0000
-From: The Fungi <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/9
+Message-Id: <1D32004A-3106-4E79-8803-A5FFD01D6084@oracle.com>
+Date: Wed, 30 May 2012 19:48:24 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
 Content-Type: text/plain; charset=utf-8
 
-On 2012-01-05 22:22:21 +1100 (+1100), David Hicks wrote:
-> OpenBSD's pf also allows for connection rate limiting with the
-> "max-src-conn-rate" restriction. I haven't investigated how this works
-> in comparison to iptables/hashlimit or whether it can support grouping
-> of addresses sharing a common mask.
 
-As far as I know, it doesn't. I use it like this in front of my
-public shell servers:
+On 30 May 2012, at 19:25, Florian Weimer wrote:
 
-   # stall brute force attacks... expects options like:
-   # (max-src-conn 100, max-src-conn-rate 15/5, overload <brutes> flush global)
-   # after a rule that can add brutes to the table of offenders
-   # once an hour, a cron job removes all entries at least an hour old
-   # (this can be adjusted near the end of /var/cron/tabs/root if necessary)
-   # to see what's in the table: sudo pfctl -t brutes -T show
-   # to manually remove entries: sudo pfctl -t brutes -T delete
-   1.2.3.4 5.6.7.8
-   table <brutes> persist
-   block drop log quick from <brutes>
-[...]
-   pass log quick proto tcp to $shell port ssh keep state ( max-src-conn 100, max-src-conn-rate 15/5, overload <brutes> flush global )
+> * John Haxby:
+> 
+>> Recently we have a couple of queries relating to a Nessus "TCP/IP
+>> SYN+FIN Packet Filtering Weakness".   This has not been helped by the
+>> fact that [1] actually points (indrectly) to CVE-2002-2438 which is
+>> actually a SYN+RST problem.
+> 
+> Reading the discussion here,
+> 
+>  <http://comments.gmane.org/gmane.linux.network/213981>
+> 
+> it seems to me that this is just a performance optimization which
+> could be bypassed by using different flags, so I don't think there's a
+> vulnerability or fix here, except the general lack of source IP
+> address validation in IP networks.
 
-...and then in /var/cron/tabs/root I have:
+That's the same thread that I referred to but I didn't reach the same conclusion that you did.   It is possible to block SYN+FIN in iptables, but the distros I'm aware of don't have that kind of check in place so people will be vulnerable to this kind of DoS.
 
-   0 * * * * /sbin/pfctl -q -t brutes -T expire 3600
+The conclusion from the thread was that SYN+FIN is not a legitimate packet so the kernel should drop it.   The nessus people seem to think the same thing: they have a test for this (although they refer to the SYN+RST fix from a decade ago).    If there's a consensus that we don't need a CVE then we can go to nessus and have them fix, remove or update their test.
 
-Works well enough for a single-address attacker or an attacker with
-a limited number of addresses available, but it's obviously not
-robust against an attacker who decides to source connections from
-their entire IPv6 /64. To date it's put a good dent in the
-brute-force account guessing noise in my logs, though I'm not sure
-how long that will last as more and more attackers start working
-around the increasing number of source tracking mechanisms
-throttling their efforts.
--- 
-{ IRL(Jeremy_Stanley); WWW(http://fungi.yuggoth.org/); PGP(43495829);
-WHOIS(STANL3-ARIN); SMTP(fungi@...goth.org); FINGER(fungi@...goth.org);
-MUD(kinrui@...arsis.mudpy.org:6669); IRC(fungi@....yuggoth.org#ccl); }
+One could argue that if SYN+FIN doesn't need a CVE then SYN+RST didn't either since it can be blocked by the same, or very similar, iptables rule.
+
+jch
