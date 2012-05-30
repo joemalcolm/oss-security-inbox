@@ -1,24 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/13
-Message-ID: <4F04BC2F.6030202@redhat.com>
-Date: Wed, 04 Jan 2012 13:53:03 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/15
+Message-ID: <CAAPiX_J7mMJhLi-+MLXY5Vr++N3KYX+v56fmqj=_HKdTTDBYjQ@mail.gmail.com>
+Date: Wed, 30 May 2012 14:54:55 -0600
+From: Greg Knaddison <greg.knaddison@...uia.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: Pidgin
+Subject: CVE Request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-On 01/04/2012 10:26 AM, Moritz Muehlenhoff wrote:
-> Hi,
-> It seems that this older Pidgin issue never received a CVE assignment:
-> http://www.pidgin.im/news/security/?id=50
->
-> Cheers,
->         Moritz
-Minor issue, but stuff in memory does have a bad habit of ending up in
-other places (swap/etc.). Please use CVE-2011-4922 for this issue.
+Hello,
+
+This is a batch CVE request for several advisories of contributed
+modules released recently. Let me know if you have any questions.
+
+Thanks,
+Greg Knaddison on behalf of the Drupal Security Team
+
+http://drupal.org/node/1608864 | SA-CONTRIB-2012-090 - File depot -
+Session Management Vulnerability
+http://drupal.org/node/1608854 | SA-CONTRIB-2012-089 - Counter - SQL
+Injection (unsupported)
+http://drupal.org/node/1608828 | SA-CONTRIB-2012-088 - Mobile Tools -
+Cross Site Scripting (XSS)
+http://drupal.org/node/1608822 | SA-CONTRIB-2012-087 - Comment
+Moderation - Cross Site Request Forgery
+http://drupal.org/node/1608780 | SA-CONTRIB-2012-086 - Amadou - Cross
+Site Scripting
+http://drupal.org/node/1597414 | SA-CONTRIB-2012-085 - BrowserID -
+Multiple Vulnerabilities
+* CSRF that leads to privilege escalation/impersonation
+
+http://drupal.org/node/1597364 | SA-CONTRIB-2012-084 - Search API -
+Cross Site Scripting (XSS)
+http://drupal.org/node/1597262 | SA-CONTRIB-2012-083 - Taxonomy List -
+Cross Site Scripting (XSS)
+http://drupal.org/node/1585960 | SA-CONTRIB-2012-082 - Zen - Cross
+Site Scripting
+http://drupal.org/node/1585890 | SA-CONTRIB-2012-081 - Aberdeen -
+Cross Site Scripting
+http://drupal.org/node/1585678 | SA-CONTRIB-2012-080 - Hostmaster
+(Aegir) - Access Bypass and Cross Site Scripting (XSS)
+http://drupal.org/node/1585648 | SA-CONTRIB-2012-079 - Post Affiliate
+Pro - Cross Site Scripting (XSS) and Access Bypass - Unsupported
+http://drupal.org/node/1585564 | SA-CONTRIB-2012-078 - Smart
+Breadcrumb - Cross Site Scripting (XSS)
+http://drupal.org/node/1585544 | SA-CONTRIB-2012-077 - Advertisement -
+Cross Site Scripting & Information Disclosure
+http://drupal.org/node/1585532 | SA-CONTRIB-2012-076 - Ubercart
+Product Keys Access Bypass
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Director Security Services | +1-720-310-5623
+Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
