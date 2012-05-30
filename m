@@ -1,53 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/7
-Message-ID: <503520B9.7040606@redhat.com>
-Date: Wed, 22 Aug 2012 12:11:05 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/2
+Message-ID: <4FC5EC0B.5010804@oracle.com>
+Date: Wed, 30 May 2012 10:44:43 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-CC: Thijs Kinkhorst <thijs@...ian.org>
-Subject: Re: CVE Request: Apache mod RPAF denial of service
+Subject: CVE Request -- kernel: tcp: drop SYN+FIN messages
 Content-Type: text/plain; charset=utf-8
 
+
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-On 08/22/2012 03:57 AM, Thijs Kinkhorst wrote:
-> Hi,
-> 
-> Sébastien Bocahu reported to the Debian security team a denial of
-> service issue in the Apache module RPAF (reverse proxy add
-> forward).
-> 
-> http://bugs.debian.org/683984
-> 
-> Version 0.6 is not affected, 0.5 is and we've released a security
-> update for that. Can someone please assign a CVE id to this issue?
-> 
-> 
-> Thanks, Thijs
+Recently we have a couple of queries relating to a Nessus "TCP/IP
+SYN+FIN Packet Filtering Weakness".   This has not been helped by the
+fact that [1] actually points (indrectly) to CVE-2002-2438 which is
+actually a SYN+RST problem.
 
-Please use CVE-2012-3526 for this issue.
+The Nessus script actually appears to detect this problem (also
+described in [2]):
 
+commit fdf5af0daf8019cec2396cdef8fb042d80fe71fa
+Author: Eric Dumazet <eric.dumazet@...il.com>
+Date:   Fri Dec 2 23:41:42 2011 +0000
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+    tcp: drop SYN+FIN messages
+   
+    Denys Fedoryshchenko reported that SYN+FIN attacks were bringing his
+    linux machines to their limits.
+   
+    Dont call conn_request() if the TCP flags includes SYN flag
+   
+    Reported-by: Denys Fedoryshchenko <denys@...p.net.lb>
+    Signed-off-by: Eric Dumazet <eric.dumazet@...il.com>
+    Signed-off-by: David S. Miller <davem@...emloft.net>
 
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 78dd38c..0cbb440 100644
+- --- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -5811,6 +5811,8 @@ int tcp_rcv_state_process(struct sock *sk, struct
+sk_buff *skb,
+             goto discard;
+ 
+         if (th->syn) {
++            if (th->fin)
++                goto discard;
+             if (icsk->icsk_af_ops->conn_request(sk, skb) < 0)
+                 return 1;
+ 
+
+References:
+[1] http://www.nessus.org/plugins/index.php?view=single&id=11618
+[2] http://markmail.org/thread/l6y5vu3tub434z4w
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQNSC4AAoJEBYNRVNeJnmTw6gQALECxioLQHwoWkqUFiULss14
-MnJayXAzWQzR0R+HG5CzJXwqy4t0P6cSlWnrEFKAfqZpOHMTZOC4EeubbKTY7N6x
-CLb/Wnn929ZFggiJ5ufBuG7o8t/TiHzyIN5jXrNLxukF2Y06+hL5tortjp3OYAV9
-kmzqF5yGDBDuEl7JqxJYdaQqTPbhy55D/nCNNxW4AlE823FQdFqQWjMD56072MZb
-Z3F6vBvoPQ/1waELrMRu84+n4gPCMxdji/1/2+39CGBbWu42ey+ApnozdZiWYM+w
-v5wBPy1oTDqhbNeYf2biIMWA/e2fmX5PV/hl/SpKkSnmE33Q6S/ecfk9etEbAG6j
-VhnpT+82L8CgpX/tOoRENeKNLgp6+k5j2igLi9ZNkl4dOVG7ZxxhcK/XcLIgRmlv
-xLDc7VDkAtFTXd2qwt4xsZT7u0OAwrgAjWw6YnBrhMzul75AmNrBQU1AIO777xkF
-T5mS9VitHqnB5XNpvLDlyXlADAV1Wc112zSjsQEHRn7VkELvUX/0cgsexS5dqk+L
-DwJPFcf+s4aDE8ui7bjLSTRRCDA0drQCCSSVn1qm9vBu39NYYhJb/P0E+GvcaD5J
-BdxuL2gtiwgMAFgcXNcptg6v8SAqAg0q8hjnPi+PcSMXqGsqfZQZKkcqGh/LDaMm
-W/JbiByC96MHSvm6zw3N
-=MX/G
+iF4EAREIAAYFAk/F7AoACgkQRQu7fpQvo8iHgwD+K4uHEOheYdcAopAYWUDystWm
+KfrN/P2vvbM8vJ7PxvYA/3WX3KE87EdiGScqhZWXI0/A1PPe+yTVM5+1iwqCR4hk
+=OtXl
 -----END PGP SIGNATURE-----
+
