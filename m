@@ -1,87 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/7
-Message-Id: <E1T9D0R-0004Zb-5d@xenbits.xen.org>
-Date: Wed, 05 Sep 2012 10:38:47 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 14 (CVE-2012-3496) - XENMEM_populate_physmap DoS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/5
+Message-ID: <20120530165602.GD1295@kludge.henri.nerv.fi>
+Date: Wed, 30 May 2012 19:56:02 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: Steve Langasek <vorlon@...ian.org>
+Subject: Re: CVE id request: Multiple buffer overflow in unixODBC
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, May 30, 2012 at 10:07:02AM +0200, Tomas Hoger wrote:
+> On Tue, 29 May 2012 09:42:42 -0300 Felipe Pena wrote:
+> 
+> > Multiple buffer overflow in unixODBC
+> > ===========================
+> > 
+> > The library unixODBC doesn't check properly the input from FILEDSN=,
+> > DRIVER= options in the DSN, which causes buffer overflow when passed
+> > to the SQLDriverConnect() function.
+> 
+> Reports like this - covering bugs in parsing of the configuration
+> parameters (i.e. generally trusted input) - should include some
+> reasoning why these should be considered security.  Nothing obvious not
+> intended to break PHP safe_mode comes to mind.
+> 
+> -- 
+> Tomas Hoger / Red Hat Security Response Team
 
-            Xen Security Advisory CVE-2012-3496 / XSA-14
-                             version 3
+Debian-report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=675058
 
-           XENMEM_populate_physmap DoS vulnerability
+Maintainer is also asking why this is security related issue. Can I get short description thanks.
 
-UPDATES IN VERSION 3
-====================
-
-Public release.  Credit Matthew Daley.
-
-ISSUE DESCRIPTION
-=================
-
-XENMEM_populate_physmap can be called with invalid flags.  By calling
-it with MEMF_populate_on_demand flag set, a BUG can be triggered if a
-translating paging mode is not being used.
-
-IMPACT
-======
-
-A malicious guest kernel can crash the host.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen systems running PV guests.  Systems running only HVM guests
-are not vulnerable.
-
-The vulnerability dates back to at least Xen 4.0.  4.0, 4.1, the 4.2
-RCs, and xen-unstable.hg are all vulnerable.
-
-MITIGATION
-==========
-
-This issue can be mitigated by ensuring that the guest kernel is
-trustworthy or by running only HVM guests.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch will resolve the issue.
-
-CREDIT
-======
-
-Thanks to Matthew Daley for finding this vulnerability (and that in
-XSA-12) and notifying the Xen.org security team.
-
-PATCH INFORMATION
-=================
-
-The attached patches resolve this issue
-
- xen-unstable                                xsa14-unstable.patch
- Xen 4.1, 4.1.x, 4.0, 4.0.x, 3.4 and 3.4.x   xsa14-xen-3.4-and-4.x.patch
-
-$ sha256sum xsa14-*.patch
-7a2e119b114708420c3484ecc338c7a198097f40e0d38854756dfa69c4c859a8  xsa14-unstable.patch
-41a1ee1da7e990dc93b75fad0d46b66a2bda472e9aa288c91d1dc5d15d2c2012  xsa14-xen-3.4-and-4.x.patch
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQRyVAAAoJEIP+FMlX6CvZF0IH/RV88Xqc9SdwrDZ7w6uwsRt+
-2keNPNyDBYxoYeqEqP9q/zICmxEqHMk/1zvSksimuIoiblliYQPHcJjhYhiBA8aX
-tarL2byKK+AE/1xvgh1BZiizCR6UV33Zi2PNdB3aaLizh82+70Lbx4ZtDg3zCpEo
-cvXGyMrNwzxMS+7ORuBAC9gtMke3sBeLua4KvGMhuByDIbW+9/7124YSGo30vFa3
-VHmZ8995ishkSQyzgvZVLMQ+y2G1GofUqa4gPRcNoMCULKGGkqJCyHPZfuAOY+w+
-0Cy/WDIE1HZd6DIn+09IoHe+StkyPgqYkai+QYwxS+JW/vpns82fpsAtmOF64tg=
-=EONA
------END PGP SIGNATURE-----
-
-Download attachment "xsa14-unstable.patch" of type "application/octet-stream" (681 bytes)
-
-Download attachment "xsa14-xen-3.4-and-4.x.patch" of type "application/octet-stream" (672 bytes)
+- Henri Salo
