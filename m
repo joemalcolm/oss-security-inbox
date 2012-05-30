@@ -1,17 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/6
-Message-ID: <20120711123257.GD26071@kludge.henri.nerv.fi>
-Date: Wed, 11 Jul 2012 15:32:57 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: reba@...rs.berlios.de, pereira@...biz.de
-Subject: CVE-request: plow buffer overflow vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/3
+Message-ID: <4FC5EF5C.1090104@redhat.com>
+Date: Wed, 30 May 2012 11:58:52 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Richard Mudgett <rmudgett@...ium.com>
+CC: oss-security@...ts.openwall.com, Jeffrey Ollie <jeff@...tech.us>
+Subject: Update of upstream patch links for AST-2012-007 / CVE-2012-2947 advisory needed
 Content-Type: text/plain; charset=utf-8
 
-Can you assign 2012 CVE-identifier for plow buffer overflow issue reported in here: http://seclists.org/bugtraq/2012/Jul/22
+Hello Richard,
 
-After discussion with Pereira I checked several versions of the code and affected code is at least in versions 0.0.1, 0.0.2. Sorry but I was unable to find proper version control commits. Version 0.0.1 is still suggested at least in sourceforge page http://sourceforge.net/projects/plow.berlios/
+   this is due the links to patches, as being listed in AST-2012-007 advisory:
+   [1] http://downloads.asterisk.org/pub/security/AST-2012-007.html
 
-I am unable to compile this software in my Debian stable or unstable system so I can't verify these using the PoC.
+They are obviously result of copy-n-paste problem from previous upstream AST-2012-006
+advisory:
+1) Though link name being http://downloads.asterisk.org/pub/security/AST-2012-007-1.8.11-cert.diff
+    it points to:
+    http://downloads.asterisk.org/pub/security/AST-2012-006-1.8.diff
 
-- Henri Salo
+2) http://downloads.asterisk.org/pub/security/AST-2012-007-1.8.diff (link name) =>
+    http://downloads.asterisk.org/pub/security/AST-2012-006-1.8.diff (link target)
+
+3) http://downloads.asterisk.org/pub/security/AST-2012-007-10.diff (link name) =>
+    http://downloads.asterisk.org/pub/security/AST-2012-006-1.8.diff (link target)
+
+ From what I can tell (from upstream ticket), the proper AST-2012-007 upstream patch
+for v1.8.x branch is this one:
+https://code.asterisk.org/code/rdiff/asterisk/branches/1.8/channels/chan_iax2.c?r1=366880&r2=367781&u&N
+
+Could you please update the links in AST-2012-007 for other branches too, so they
+would reflect relevant */chan_iax2.c change?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
