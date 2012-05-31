@@ -1,34 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/2
-Message-ID: <4FDABF82.4040602@redhat.com>
-Date: Thu, 14 Jun 2012 22:52:18 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/31/3
+Message-ID: <4FC7AE15.9050302@redhat.com>
+Date: Thu, 31 May 2012 11:44:53 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: CVE Request: NetworkManager creates an open network when asked to create an adhoc-WPA network
+CC: John Haxby <john.haxby@...cle.com>
+Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/14/2012 10:28 PM, Huzaifa Sidhpurwala wrote:
-> Hi All,
+On 05/30/2012 02:02 PM, Kurt Seifried wrote:
+> On 05/30/2012 03:44 AM, John Haxby wrote:
 > 
-> In NetworkManager, when a new wireless network was created with 
-> WPA/WPA2 security, it created an open/insecure network. From the
-> commit, it seems the bug exists in the kernel.
+>> Recently we have a couple of queries relating to a Nessus "TCP/IP
+>>  SYN+FIN Packet Filtering Weakness".   This has not been helped
+>> by the fact that [1] actually points (indrectly) to
+>> CVE-2002-2438 which is actually a SYN+RST problem.
 > 
-> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=782627 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655972 
-> http://cgit.freedesktop.org/NetworkManager/NetworkManager/commi/?id=69247a00eacd00617acbf1dfcee8497437b8ad39
->
->  The patch disables WPA adhoc networks completely untill a better 
-> solution is found.
+>> The Nessus script actually appears to detect this problem (also 
+>> described in [2]):
 > 
-> Can a CVE id be please assigned to this issue?
+>> commit fdf5af0daf8019cec2396cdef8fb042d80fe71fa Author: Eric 
+>> Dumazet <eric.dumazet@...il.com> Date:   Fri Dec 2 23:41:42 2011 
+>> +0000
+> 
+>> tcp: drop SYN+FIN messages
+> 
+>> Denys Fedoryshchenko reported that SYN+FIN attacks were bringing 
+>> his linux machines to their limits.
+> 
+>> Dont call conn_request() if the TCP flags includes SYN flag
+> 
+>> Reported-by: Denys Fedoryshchenko <denys@...p.net.lb> 
+>> Signed-off-by: Eric Dumazet <eric.dumazet@...il.com>
+>> Signed-off-by: David S. Miller <davem@...emloft.net>
+> 
+>> diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c index 
+>> 78dd38c..0cbb440 100644 --- a/net/ipv4/tcp_input.c +++ 
+>> b/net/ipv4/tcp_input.c @@ -5811,6 +5811,8 @@ int 
+>> tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb, goto 
+>> discard;
+> 
+>> if (th->syn) { +            if (th->fin) +                goto 
+>> discard; if (icsk->icsk_af_ops->conn_request(sk, skb) < 0)
+>> return 1;
+> 
+> 
+>> References: [1] 
+>> http://www.nessus.org/plugins/index.php?view=single&id=11618 [2] 
+>> http://markmail.org/thread/l6y5vu3tub434z4w
+> 
+> Please use CVE-2012-2663 for this issue.
+> 
+> This is tracked by Red Hat as:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=826702
 
-Please use CVE-2012-2736 for this issue.
-
+To clarify: CVE-2012-2663 is for the --syn processing flaw of SYN+FIN
+packets in iptables (user space tools). c
+Also if people could test their firewalls to make sure this still
+doesn't affect other operating systems that would probably be a good idea.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -38,17 +71,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJP2r+CAAoJEBYNRVNeJnmTEVQQAIpgUZ32ZsM02zM9mdQliKmT
-EIT3pUU1mWit++/4PXvm34HH8Hy/p06nvhfxyBib42hNfuFCd+8+i+oe2c6wrcAq
-QAVNjS7FXoGdTQMh1zXeTlIz4vi7f7181iGLhXKkCcwpuXvn9vyKgU4GFIqb/Gcr
-FYUbBR0KXX+5cwyUNuhoxOAzo4ruPiEFqmbHUFzTJgXBdelF8GZyH0YuuhJCZ5Fw
-OQh8QZ36/B4uMoFVeN6igUderHem0+dShEtCzE5qGtH1dVINJvHzTlzd+l6x5SpF
-At+YdnK8s/osj8aXdmwIMfJnQ4gIF+/r78BM2tJt1KVOqyAArk+nU64/ElawpTMF
-gdLlDDSDkIqlpOPB57e880ADHlYJ4uAUs418vI3m41/vjEH7DE+9QfIqa7emAX20
-GNICJHbk9KWYf3990sX+IVfSeDOSLjKFcn7MgyQNnRrV13ZFd72aqMr5w8Da/Z0N
-tuqAWPQYejZ1RB9Vq5wm8AFO1vE9YpDzLLn1KwFQ0ni5jctlKpDpeKTNkWLzRODG
-f/1vTCn8Qruog5q2mMWKAl90BrH9HTotxf2H+XD/nGov0bZBKvOieS7YpsorQBps
-R18ee4NAiZV5KZjQ1SUE1oDo/e79omjR5uQm7pcE9u0L2uXDt7Gde+T81OoyNcB4
-0T5+RX5tGGn5hnuz/vUD
-=KrCw
+iQIbBAEBAgAGBQJPx64VAAoJEBYNRVNeJnmTw14P91Gh46mkb+TJN9QiINhYXBMG
+Iv/QTd8p3KDWQCYyqD77YEWvS4fSkkKjtoPNgDBirzzsh9lMhd5NsdGfHMvra1V0
+P/ce4UgjH89Iqh+FqpZXQVA921BIQ3DPQbZF+ByH/9zisGBVrpu1OjKhFWD7vnFw
+ueBjv2qmrtQ3T9i54MsWnDRufJhl3f6v3VJxPvTzvAwR1NTW3kmT0QhxiSZH+Fif
+WOdpKF6A1xjQwesOHhopi3U4A+LF6v8VWuqignmd7CY2rSiGfE3CEEu+6kdCmC91
+UG72SeG0lBxumraC+wUhgKRppgW+lQbF7QSJ9yixZKQQf6jF+H5fiwigX+Y4FbJu
+xbSiePyEanSPnDPPF+nNa+hobKieQtiCqsv1ureMgrKFJZWPANW3Qk2Fs1NbHgOi
+tOSVsHqD7eooev1TdruvLB2ve130AGQOyIe96vYNWVeUB40GRlXWyVf1rFiDLilb
+fag2aS+K/G3YdjO4WXO9FtQNXsF+jQB2uAAPxhRZl5vu6LJBc+UVtLDGSNARDwAI
+K2n6mn+oGPqvpSQk0fhEx/1VjPaYNp3yQHJuwJPOapWdW2ZXpycfRubj5kfuac4b
+61Edj5fGEq4GcykdRSbSYyQUE4BAZTjHriPhSXRXmS7sylBePk2VFBUGf70jVqrl
+6q01VsPA6gYc8cOnlmM=
+=12Jg
 -----END PGP SIGNATURE-----
