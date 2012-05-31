@@ -1,53 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/5
-Message-ID: <4F674D8A.80900@redhat.com>
-Date: Mon, 19 Mar 2012 16:15:22 +0100
-From: Stefan Cornelius <scorneli@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/31/4
+Message-ID: <20120531191656.GC79783@higgins.local>
+Date: Thu, 31 May 2012 12:16:56 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-1185 / CVE-2012-1186 assignment notification - incomplete ImageMagick fixes for CVE-2012-0247 / CVE-2012-0248
+Subject: SQL Injection Vulnerability in Ruby on Rails (CVE-2012-2661)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+SQL Injection Vulnerability in Ruby on Rails
 
-The original fixes for the ImageMagick issues CVE-2012-0247 and
-CVE-2012-0248 are incomplete.
+There is a SQL injection vulnerability in Active Record, version 3.0 and later. This vulnerability has been assigned the CVE identifier CVE-2012-2661.
 
-The original fix for CVE-2012-0247 failed to check for the possibility
-of an integer overflow when computing the sum of "number_bytes" and
-"offset". This resulted in a wrap around into a value smaller than
-"length", making original CVE-2012-0247 introduced "length" check still
-to be possible to bypass, leading to memory corruption.
+Versions Affected:  3.0.0 and ALL later versions
+Not affected:       2.3.14
+Fixed Versions:     3.2.4, 3.1.5, 3.0.13
 
-We have assigned CVE-2012-1185 identifier for the incomplete fix of the
-CVE-2012-0247 issue.
+Impact 
+------ 
+Due to the way Active Record handles nested query parameters, an attacker can use a specially crafted request to inject some forms of SQL into your application's SQL queries.
 
-Relevant upstream patches:
-[1]
-http://trac.imagemagick.org/changeset/6998/ImageMagick/branches/ImageMagick-6.7.5/magick/profile.c
-[2]
-http://trac.imagemagick.org/changeset/6998/ImageMagick/branches/ImageMagick-6.7.5/magick/property.c
+All users running an affected release should upgrade immediately.
 
-Red Hat Bugzilla bug:
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-1185
+Impacted code directly passes request params to the `where` method of an ActiveRecord class like this:
 
+    Post.where(:id => params[:id]).all
 
-The original fix for CVE-2012-0248 failed to correct the denial of
-service condition in "profile.c" source code part, too. This still
-allowed the specially-crafted image file, when processed for example by
-the "convert" executable, to cause original CVE-2012-0248 problem
-(denial of service).
+An attacker can make a request that causes `params[:id]` to return a specially crafted hash that will cause the WHERE clause of the SQL statement to query an arbitrary table with some value.
 
-We have assigned CVE-2012-1186 identifier for the incomplete fix of the
-CVE-2012-0248 issue.
+Releases 
+-------- 
+The FIXED releases are available at the normal locations. 
 
-Relevant upstream patch (same as [1] above):
-[4]
-http://trac.imagemagick.org/changeset/6998/ImageMagick/branches/ImageMagick-6.7.5/magick/profile.c
+Workarounds 
+----------- 
+This issue can be mitigated by casting the parameter to an expected value.  For example, change this:
 
+    Post.where(:id => params[:id]).all
 
-Red Hat Bugzilla entry:
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-1186
+to this:
 
-Thanks and kind regards,
+    Post.where(:id => params[:id].to_s).all
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset.  We have also provided a patch for the 3.0 series despite the fact it is unmaintained.
+
+* 3-0-params_sql_injection.patch - Patch for 3.0 series 
+* 3-1-params_sql_injection.patch - Patch for 3.1 series 
+* 3-2-params_sql_injection.patch - Patch for 3.2 series 
+
+Please note that only the  3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+------- 
+
+Thanks to Ben Murphy for reporting the vulnerability to us, and to Chad Pyne of thoughtbot for helping us verify the fix.
+
 -- 
-Stefan Cornelius / Red Hat Security Response Team
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-0-params_sql_injection.patch" of type "text/plain" (2318 bytes)
+
+View attachment "3-1-params_sql_injection.patch" of type "text/plain" (3559 bytes)
+
+View attachment "3-2-params_sql_injection.patch" of type "text/plain" (3560 bytes)
+
+Content of type "application/pgp-signature" skipped
