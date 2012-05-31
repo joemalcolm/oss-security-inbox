@@ -1,28 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/4
-Message-ID: <20120314152447.GP3308@redhat.com>
-Date: Wed, 14 Mar 2012 09:24:47 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/31/2
+Message-ID: <20120531164424.3151f7d9@redhat.com>
+Date: Thu, 31 May 2012 16:44:24 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: pyfribidi buffer overflow flaw
+Cc: Kurt Seifried <kseifried@...hat.com>, Felipe Pena <felipensp@...il.com>
+Subject: Re: CVE id request: Multiple buffer overflow in unixODBC
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned for this issue please?  I don't think it's come
-through here yet.
+On Wed, 30 May 2012 13:02:53 -0600 Kurt Seifried wrote:
 
-A buffer overflow flaw was reported in pyfribidi's
-fribidi_utf8_to_unicode() function, due to it handling at most 3 bytes
-for a single unicode character.  If a 4-byte utf-8 sequence was
-supplied, it would generate 2 unicode characters which would overflow
-the logical buffer.  This has been fixed in pyfribidi 0.11.
+> On 05/30/2012 11:40 AM, Felipe Pena wrote:
+>
+> > It isn't limited to the configuration files. Such input can be
+> > passed to the `isql' interactive tool that come together unixODBC.
+> > The same string can be used to connect through PHP PDO, for
+> > example.
 
-References:
+Agree, anything that parses such connect string can be crashed this
+way.  The question is if any trust boundary is crossed with that, which
+depends on whether there are any apps that allow untrusted connect
+strings.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=663189
-https://github.com/pediapress/pyfribidi/issues/2
-https://github.com/pediapress/pyfribidi/commit/d2860c655357975e7b32d84e6b45e98f0dcecd7a
-http://www.securityfocus.com/bid/52451/info
-https://bugzilla.redhat.com/show_bug.cgi?id=801896
+> > $ ./isql "FILEDSN=$(python -c "print 'A'*10000");UID=user" -k
+
+Anyone having shell access to run isql directly should be assumed to
+have ability to edit ~/.odbcinst.ini, which should be enough to crash
+isql or inject code to it without having to trigger one of the
+mentioned overflows.
+
+> Is this something that an attacker can typically control, or does the
+> PHP author need to write code that does this?
+
+For PHP applications, would you assume attacker can typically control
+settings as database name, host, port or username?  It's not really
+quite common.  Possible use cases that come to mind:
+
+- DB management application similar to phpMyAdmin, that may take some
+  DB connection info as input from user.  If something like that exists
+  for ODBC, another question would be if the info from user can
+  actually be used to sneak in values for FILEDSN or DRIVER.
+- Of course, this may allow safe_mode bypass, which may not be possible
+  via odbcinst.ini (e.g. PHP script may not be allowed to edit it and
+  safe_mode does not allow setting ODBCINSTINI environment variable).
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Tomas Hoger / Red Hat Security Response Team
