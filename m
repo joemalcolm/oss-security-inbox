@@ -1,58 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/8
-Message-ID: <50940466.60601@redhat.com>
-Date: Fri, 02 Nov 2012 11:35:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/01/3
+Message-ID: <4FC8EF36.1090800@oracle.com>
+Date: Fri, 01 Jun 2012 17:35:02 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- pgbouncer: DoS (pooler server shutdown) by adding database with large name
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
 Content-Type: text/plain; charset=utf-8
 
+
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-On 11/02/2012 04:53 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> a denial of service flaw was found in the way pgbouncer, a
-> lightweight connection pooler for PostgreSQL, performed processing
-> of client requests attempting to add new database(s) with large
-> name(s). A remote attacker could use this flaw to cause pooler
-> server shutdown.
-> 
-> Relevant upstream patch: [1]
-> http://git.postgresql.org/gitweb/?p=pgbouncer.git;a=commitdiff;h=4b92112b820830b30cd7bc91bef3dd8f35305525
->
->  References: [2]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692103 [3]
-> https://bugzilla.redhat.com/show_bug.cgi?id=872527
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+On 01/06/12 17:12, Kurt Seifried wrote:
+> 2) OS level, should we allow SYN+FIN at all? Is this a responsibility
+> for the operating system? To some degree yes, it should probably not
+> create a connection based on a mangled SYN packet (and this has been
+> fixed in the 3.x series). Is this a security issue or a security
+> hardening, debatable, but in any event it's a separate code base
+> (kernel) so it would get a separate CVE from the iptables side.
 
-Please use CVE-2012-4575 for this issue.
+I am inclined to think that we should have a separate CVE for the kernel
+here.   Unless I'm mistaken, a packet with SYN+FIN has no legitimate
+business being in the Internet any more than the old SYN+RST has.   It's
+security hardening in that firewall rules to discard packets with odd
+combinations of flags are often deployed by people setting up "serious"
+firewalls but most machines out there, whether or not they have iptables
+set up, don't go to those lengths.  Certainly none of the machines I
+have access to that have "out of the box" iptables configurations would
+appear to defend against SYN+FIN for open ports.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+- From a purely pragmatic point of view the Nessus plugin at
+http://www.nessus.org/plugins/index.php?view=single&id=11618 can be read
+in two ways: there's either a flaw in the firewall or there's a flaw in
+the kernel.    The fact that the references there talk about a kernel
+patch for SYN+RST was what lead me to read it as meaning the latter.
 
+It seems that the commit I originally mentioned
+(fdf5af0daf8019cec2396cdef8fb042d80fe71fa) made it through intact into
+3.4 so perhaps we should have a CVE for this? 
+
+jch
+
+(Hoping that finally I've found the combination of things for enigmail
+to correctly sign this one.)
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQlARmAAoJEBYNRVNeJnmTLMMP/R3wwdJ2OPhSGH6/kgUOEnU8
-WG2jR6UVUAZu8eyylKZFLAUlEq+SgFsjJiwU9rL0/P1SHM/gXaElIEyeuJ3irETD
-zQVvofBQRuvj+eqmiUCOCeamaYM6OedUoeTiduvZ2r44My0FvzPyN09NFtGpP+BC
-WdadJ6Hlpb1x6gjpNQqtxxI3z8Lw9/VUWuJW1kcXT/FYKy30FyMwi5qIP0xV2mPe
-dzKcWR5HtaTjatZp+LqnR3NhC6hsa0YHdTQwqGtHdG6ePa9ipp5uhPW+tsQEydlk
-5qmr/64cxOa+5soGX6F3ReODuymBPPJAOu39TY9X47b5xAWkwqZGmXAj0Ny3iNlY
-M7ZlGv+7vIoxXzJ72L8e/LILfNr7QJHEtdv57vd6pvPFtx0Eur76o7Cug+DZc1Nv
-Z0yCFmvRcDaA4iDNK5WNjPDyTIFZY/dbCrG2P8XcgGs+Skc3qRP5yPmx8J3a1O/b
-tkjaNYJwdpKEQQOU8bbpP8rpGmE4T5XO/fY9o5rpfzzWuet5Z0mhzWgThucB1Lkn
-mb2M12Klr4FU3qHjdQ9y/Vrqazo9O1pkCHmaw1O0PbgiVgkfEsGMk6Qi+EIKdBSl
-R2WswIrvkpr7sWDmFjdbo4WIaWFqI0AWb/LorEHydQdrXTTpKvs7ePfv+I5dScNy
-8QU/b/x0BBqzE0eJuS4J
-=GJ07
+iF4EAREIAAYFAk/I7zUACgkQRQu7fpQvo8iTCwEAgWfW3DOIMPoUPdHCKemIeSnV
+7dpQ5dhFOR/vkbqK0C4BAKhy6gV+nWMprbbyG5uM7rVh8CF+u1BEw44U/TnLL/lr
+=kTRA
 -----END PGP SIGNATURE-----
+
