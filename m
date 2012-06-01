@@ -1,84 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/4
-Message-ID: <20120227105530.GA12285@suse.de>
-Date: Mon, 27 Feb 2012 11:55:30 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/01/4
+Message-ID: <4FC91429.1050301@redhat.com>
+Date: Fri, 01 Jun 2012 13:12:41 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+CC: John Haxby <john.haxby@...cle.com>
+Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I know that the 127.0.0.1 trick worked in past, but for loopback
-addresses this isnt working anymore since quite a while.
-You will get a 'martian destination', regardless of routing
-or rp_filter's set. If we talk about a Linux kernel:
+On 06/01/2012 10:35 AM, John Haxby wrote:
+> I am inclined to think that we should have a separate CVE for the
+> kernel here.   Unless I'm mistaken, a packet with SYN+FIN has no
+> legitimate business being in the Internet any more than the old
+> SYN+RST has.   It's security hardening in that firewall rules to
+> discard packets with odd combinations of flags are often deployed
+> by people setting up "serious" firewalls but most machines out
+> there, whether or not they have iptables set up, don't go to those
+> lengths.  Certainly none of the machines I have access to that have
+> "out of the box" iptables configurations would appear to defend
+> against SYN+FIN for open ports.
 
-ip_route_input_slow()
-{
-[...]
-        if (ipv4_is_lbcast(daddr) || ipv4_is_zeronet(daddr) ||
-            ipv4_is_loopback(daddr))
-                goto martian_destination;
-[...]
-}
+In my limited testing with iptables on RHEL 6.2 it appears that
+- --state NEW works properly, and won't allow SYN+FIN to create
+connections (I used hping3 and the SYN+FIN Packets were blocked).
 
-Or I am doing something seriously wrong. No idea what Solaris
-or BSD's are doing.
-For 'real' NIC's this trick is however still working, even if
-the machine is a host (not a router). This leaves some room for
-accessing internal admin interfaces from outside. :)
-However, playing with source addresses to defeat firewalls should be
-difficult, since most dists enable rp_filter.
+So the default ruleset:
 
-my 2ct's
-Sebastian
+- -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+- -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j DROP
+- -A INPUT -j REJECT --reject-with icmp-host-prohibited
 
-On Mon, Feb 27, 2012 at 01:53:29AM +0400, Solar Designer wrote:
-> On Sun, Feb 26, 2012 at 10:05:55PM +0100, Eric Leblond wrote:
-> > On Sun, 2012-02-26 at 12:17 -0700, Kurt Seifried wrote:
-> > > Are there any helpers that can be abused to open holes in the firewall
-> > > externally, or is it only internal clients that can cause problems and
-> > > trigger the firewall to improperly allow network traffic in/out.
-> > 
-> > No, attacker has to be on a network directly connected to the firewall.
-> 
-> I guess by "internal clients" Kurt was referring to machines behind the
-> firewall (e.g., someone clicking an URL that has a string looking like
-> an FTP command embedded in it, thereby triggering the FTP helper to open
-> a hole - stuff that was discussed in late 1990s and partially mitigated
-> by hardening the helpers at the time), whereas by "attacker on a network
-> directly connected to the firewall" Eric means that the attacker may be
-> _outside_ the firewall (behind its WAN interface), but on the same
-> network segment (e.g., the attacker might have compromised a nearby
-> server, such as of another customer at a colocation facility).
-> 
-> It is known that a machine will generally receive and process a packet
-> routed to one of its NICs by MAC address even if the destination IP
-> address is that of another NIC or even loopback (e.g., it is possible to
-> access services bound to 127.0.0.1 in this way - but only from directly
-> connected machines).  Without rp_filter or equivalent, it is possible to
-> have these packets' source addresses match the other NIC's network
-> segment.  My _guess_ (based solely on the info posted in here so far) is
-> that the gist of Eric et al.'s new attack is to apply this approach
-> against a protocol helper.  The novelty is thus in combining these known
-> things together to arrive at something that to the best of my knowledge
-> has not yet been discussed.
-> 
-> I suppose Eric will tell us if this is the correct guess or not. ;-)
-> 
-> Alexander
+should work, so you could do you clever --syn bits first and then have
+that set to protect stuff from SYN+FIN.
 
--- 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+iQIcBAEBAgAGBQJPyRQpAAoJEBYNRVNeJnmTTxEQAJedLa1Xc6R3nVawEyxp3OLo
+5+HTXnjW6SDLELpkV3abUUeZswrY7F3IYN6hKrcLm+1lCsTmubP5fhGa8Ta1RceH
+GqyxCn+7OTFr3JfT8nHIhV9bSNCIPpPStaVO319WfVNVOqvzXnmVeTid0AuMLOem
+DIgwLpZx/WQqxTXY26t3nabrnolVIZdlV7zMxyV+k8OC7kzyU80cCbG4n6ErDcpj
+rPcydQVa6GTxidX+CzEXtsnVUWfHBcVwQLO60biHOjD7S0ZCHbQhMrj/CA9RAPsH
+9ltWC5sw6VSSGWv2J07dzop4IPzIUJeX/fMzI3HLGvhFuUPbH6AjgiadE0mgBlmB
+A3sXJAGr4yZqkUD/Z09tfy20RR+UFfao9dlR4MdBvigPVfPXJIgYAwP0R8s7wDA5
+SPiQ52mYV+PwgH1akEZjtq4aj25RbSXWwqn/ALVu1Dqau77ti6+MVLu9+uxCx0S8
+ZURyt0/OJjQXF6qrEtYZeaAz8OpaOTp8qaPAngoY9gtBFiHQW9xUDFpUMhvabGMO
+gmV3E5+DZ/+PQu1RbVfb4Ou65/yhS1daophXeiGCGeysW3rEoqvw/kESfeDMkotL
+WoxRGT4Jhg4JnqykuF5Z5A/U+EeqSI9qVgmkjkq30YU4MZb+teEmuitTTjWHu3LU
+V/y1Emz8j7zDb7Xi2I2h
+=e4JD
+-----END PGP SIGNATURE-----
