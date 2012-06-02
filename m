@@ -1,29 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/22/1
-Message-ID: <4F4480C4.90606@redhat.com>
-Date: Wed, 22 Feb 2012 11:14:36 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/02/1
+Message-ID: <4FCA0867.1060504@gentoo.org>
+Date: Sat, 02 Jun 2012 14:34:47 +0200
+From: Stefan Behte <craig@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: libxml2: hash table collisions CPU usage DoS
+Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
 Content-Type: text/plain; charset=utf-8
 
-Juraj Somorovsky reported that certain XML parsers/servers are affected 
-by the same, or similar, flaw as the hash table collisions CPU usage 
-denial of service.  Sending a specially crafted message to an XML 
-service can result in longer processing time, which could lead to a 
-denial of service.  It is reported that this attack on XML can be 
-applied on different XML nodes (such as entities, element attributes, 
-namespaces, various elements in the XML security, etc.).
+Hi,
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=787067
-https://rhn.redhat.com/errata/RHSA-2012-0324.html
+I'm writing because the patch is missing something; in
+http://git.kernel.org/?p=linux/kernel/git/davem/net-next.git;a=commitdiff;h=fdf5af0daf8019cec2396cdef8fb042d80fe71fa
+the issue was fixed for SYN-FIN, but IMHO it's still open für SYN-PSH
+and SYN-URG.
 
-Patch:
-http://git.gnome.org/browse/libxml2/commit/?id=8973d58b7498fa5100a876815476b81fd1a2412a
+# Victim:
+Locally, I ran:
+ab2 -n 10000 -c 100 http://localhost/
+The performance was about 4500 requests/s
 
-This has been assigned CVE-2012-0841
+# Attacker:
+iptables -A OUTPUT -d ${VICTIM} -p tcp --dport 80 --tcp-flags
+SYN,ACK,RST RST -j DROP
+I modified synful.c to send SYN-FIN: this results in no open SYN_RECV
+states on the victim, the ab2 benchmark performs as usual.
 
+However, sending SYN+URG causes a immediate increase of SYN_RECV to 256
+and ab2 won't even finish, only very few requests succeed.
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Enabling tcp_syncookies is an immediate fix, though.
+
+So my question is: isn't this the same thing as CVE-2012-2663? If so,
+this works for me:
+
+--- a/net/ipv4/tcp_input.c	2012-06-02 14:16:16.720034382 +0200
++++ b/net/ipv4/tcp_input.c	2012-06-02 14:16:53.337038807 +0200
+@@ -5864,6 +5864,10 @@
+ 		if (th->syn) {
+ 			if (th->fin)
+ 				goto discard;
++			if (th->urg)
++				goto discard;
++			if (th->psh)
++				goto discard;
+ 			if (icsk->icsk_af_ops->conn_request(sk, skb) < 0)
+ 				return 1;
+
+References:
+http://markmail.org/thread/fbfyuiugtfyx6pl4#query:+page:1+mid:fbfyuiugtfyx6pl4+state:results
+http://www.spinics.net/lists/netfilter-devel/msg21245.html
+http://www.spinics.net/lists/netfilter-devel/msg21248.html
+https://bugzilla.redhat.com/show_bug.cgi?id=826702
+http://www.securityfocus.com/bid/53733/info ("Vulnerable" list is wrong
+btw.)
+
+Best regards,
+
+Stefan Behte
