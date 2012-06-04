@@ -1,61 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/2
-Message-ID: <4F0B8CE5.3050502@redhat.com>
-Date: Mon, 09 Jan 2012 17:57:09 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, cyd@....org, deng@...domsample.de, ulm@...too.org, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request: CEDET/Emacs global-ede-mode file loading vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/04/3
+Message-ID: <CAAPiX_+t3qfdyvW+zLahqr=1JjypV_70pG2HRysC1MzNzN1ipQ@mail.gmail.com>
+Date: Mon, 4 Jun 2012 11:02:57 -0600
+From: Greg Knaddison <greg.knaddison@...uia.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-I'll assign this a CVE once I have determined the code base status (are
-these considered the same codebase, or have they forked enough to be
-considered separate code bases? Also I need to ensure this hasn't
-already been assigned a CVE. CC'ing relevant developers as well.
+I didn't see a response nor this message in the archives at
+http://www.openwall.com/lists/oss-security/2012/05/
 
+But I do see it in twitter at
+https://twitter.com/oss_security/status/207950141695606784
 
-EMACS
+Is that lack of acknowledgment a subtle way to say "Greg, you really
+really need to sign your mails!" If so I will figure it out :)
 
-Hiroshi Oota has found a security flaw in EDE (part of CEDET), a
-development tool included in Emacs.  EDE can store various information
-about a project, such as how to build the project, in a file named
-Project.ede in the project directory tree.  When the minor mode
-`global-ede-mode' is enabled, visiting a file causes Emacs to look for
-Project.ede in the file's directory or one of its parent directories.
-If Project.ede is present, Emacs automatically reads and evaluates the
-first Lisp expression in it.
+Greg
 
-This design exposes EDE users to the danger of loading malicious code
-from one file (Project.ede), simply by visiting another file in the same
-directory tree.
-
-REF
-http://lists.gnu.org/archive/html/emacs-devel/2012-01/msg00387.html
-https://bugs.gentoo.org/show_bug.cgi?id=398241
-https://bugs.gentoo.org/show_bug.cgi?id=398239
-https://bugs.gentoo.org/show_bug.cgi?id=398227
-
-
-CEDET
->>> Does this also affect the standalone version of CEDET, i.e. cedet-1.0
->>> from <http://cedet.sourceforge.net/>?
+On Wed, May 30, 2012 at 2:54 PM, Greg Knaddison
+<greg.knaddison@...uia.com> wrote:
+> Hello,
 >
->> Yes.
+> This is a batch CVE request for several advisories of contributed
+> modules released recently. Let me know if you have any questions.
 >
-> The patch for Emacs 23 fails for it, unfortunately. In case anyone is
-> interested, a (almost trivially) backported version of the patch can
-> be found here:
+> Thanks,
+> Greg Knaddison on behalf of the Drupal Security Team
 >
-<http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/app-emacs/cedet/files/cedet-1.0-ede_security_fix.patch>
+> http://drupal.org/node/1608864 | SA-CONTRIB-2012-090 - File depot -
+> Session Management Vulnerability
+> http://drupal.org/node/1608854 | SA-CONTRIB-2012-089 - Counter - SQL
+> Injection (unsupported)
+> http://drupal.org/node/1608828 | SA-CONTRIB-2012-088 - Mobile Tools -
+> Cross Site Scripting (XSS)
+> http://drupal.org/node/1608822 | SA-CONTRIB-2012-087 - Comment
+> Moderation - Cross Site Request Forgery
+> http://drupal.org/node/1608780 | SA-CONTRIB-2012-086 - Amadou - Cross
+> Site Scripting
+> http://drupal.org/node/1597414 | SA-CONTRIB-2012-085 - BrowserID -
+> Multiple Vulnerabilities
+> * CSRF that leads to privilege escalation/impersonation
+>
+> http://drupal.org/node/1597364 | SA-CONTRIB-2012-084 - Search API -
+> Cross Site Scripting (XSS)
+> http://drupal.org/node/1597262 | SA-CONTRIB-2012-083 - Taxonomy List -
+> Cross Site Scripting (XSS)
+> http://drupal.org/node/1585960 | SA-CONTRIB-2012-082 - Zen - Cross
+> Site Scripting
+> http://drupal.org/node/1585890 | SA-CONTRIB-2012-081 - Aberdeen -
+> Cross Site Scripting
+> http://drupal.org/node/1585678 | SA-CONTRIB-2012-080 - Hostmaster
+> (Aegir) - Access Bypass and Cross Site Scripting (XSS)
+> http://drupal.org/node/1585648 | SA-CONTRIB-2012-079 - Post Affiliate
+> Pro - Cross Site Scripting (XSS) and Access Bypass - Unsupported
+> http://drupal.org/node/1585564 | SA-CONTRIB-2012-078 - Smart
+> Breadcrumb - Cross Site Scripting (XSS)
+> http://drupal.org/node/1585544 | SA-CONTRIB-2012-077 - Advertisement -
+> Cross Site Scripting & Information Disclosure
+> http://drupal.org/node/1585532 | SA-CONTRIB-2012-076 - Ubercart
+> Product Keys Access Bypass
+>
+> --
+> Director Security Services | +1-720-310-5623
+> Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
 
-A new CEDET 1.0.1 (or similar) will be released soon. The bzr repos
-trunk and newtrunk were updated.
-
-REF
-http://lists.gnu.org/archive/html/emacs-devel/2012-01/msg00401.html
-http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/app-emacs/cedet/files/cedet-1.0-ede_security_fix.patch
 
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Director Security Services | +1-720-310-5623
+Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
