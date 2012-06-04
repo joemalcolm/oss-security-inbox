@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/4
-Message-ID: <CAGyNYUOr=4kSTDL4gs9PXMffJ81a-=Tkx9tMhr-CAt2JQUKw0w@mail.gmail.com>
-Date: Fri, 20 Apr 2012 11:10:10 +0800
-From: Eugene Teo <eugeneteo@...nel.sg>
-To: "Eric W. Biederman" <ebiederm@...ssion.com>
-Cc: Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>,  security@...nel.org, Sukadev Bhattiprolu <sukadev@...ibm.com>,  Serge Hallyn <serge.hallyn@...onical.com>, Pavel Emelyanov <xemul@...nvz.org>
-Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/04/4
+Message-ID: <20120604170939.GA14910@openwall.com>
+Date: Mon, 4 Jun 2012 21:09:39 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-> So we know what is holding the pid namespace reference.
->
-> Additional thoughts.
->
-> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
+On Mon, Jun 04, 2012 at 11:02:57AM -0600, Greg Knaddison wrote:
+> I didn't see a response nor this message in the archives at
+> http://www.openwall.com/lists/oss-security/2012/05/
 
-No.
+The message is seen here:
 
-> Is there a corresponding task_struct leak?
+http://www.openwall.com/lists/oss-security/2012/05/30/15
 
-Yes.
+The "month view" currently shows Subjects of only up to 10 messages per
+day, with a "more messages" link in place of the 10th message in case
+there are more than 10.  The "day view" shows all messages for that day:
 
-> I don't have much of a clue or much concern as this seems fixed in later kernels but I am happy to suggest things to look for to help narrow this down.
+http://www.openwall.com/lists/oss-security/2012/05/30/
 
-I'm helping to provide more information.
+Maybe we should adjust this setting - say, to 30 or even 100 (messages
+per day shown in month view)?
 
-Thanks, Eugene
+> But I do see it in twitter at
+> https://twitter.com/oss_security/status/207950141695606784
+> 
+> Is that lack of acknowledgment a subtle way to say "Greg, you really
+> really need to sign your mails!" If so I will figure it out :)
+
+I don't know why no one has replied.  I guess this was not intentional
+and someone will reply now.  Kurt?
+
+Alexander
