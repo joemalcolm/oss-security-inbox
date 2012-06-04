@@ -1,53 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/9
-Message-ID: <20121128171342.GA29348@trasgu>
-Date: Wed, 28 Nov 2012 18:13:42 +0100
-From: Ricardo Mones <ricardo@...es.org>
-To: Vincent Danen <vdanen@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- vCalendar plugin for Claws Mail: credentials exposed on interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/04/1
+Message-ID: <4FCC7131.5000709@redhat.com>
+Date: Mon, 04 Jun 2012 10:26:25 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Symfony / php-symfony-symfony: Session fixation flaw corrected in upstream 1.4.18 version
 Content-Type: text/plain; charset=utf-8
 
-  Hi Vincent,
+Hello Kurt, Steve, vendors,
 
-On Wed, Nov 28, 2012 at 09:44:53AM -0700, Vincent Danen wrote:
-> * [2012-11-15 13:36:13 +0100] Ricardo Mones wrote:
-> 
-> > This has been reported on our bugzilla:
-> > http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2782
-> >
-> > There's still not fix available. Could a CVE id be allocated for this if
-> >appropriate?
-> >
-> > thanks in advance,
-> >
-> >P.S.: I'm not subscribed to the list.
-> 
-> I don't know if this ever got a CVE or not; if it did I don't see a
-> reference.
-> 
-> Also, according to this bug report it's fixed, but I can't find the
-> patch in your CVS tracker.  Can you provide a link to it?
+   a session fixation flaw was found in the way Symfony, an open-source PHP web applications 
+development framework, performed removal of user credential, adding several user credentials at once 
+and 'user authenticated' settings change by regenerating session ID. A remote attacker could provide 
+a specially-crafted URL, that when visited by a valid Symfony application user (victim) could lead 
+to unauthorized access to the victim's user account.
 
-  Unfortunately tracker only tracks changes to core, not to plugins, but
-the patch it's commited also into the Debian packaging, so this link may
-serve:
+References:
+[1] https://bugs.gentoo.org/show_bug.cgi?id=418427
+[2] http://symfony.com/blog/security-release-symfony-1-4-18-released
+[3] http://trac.symfony-project.org/browser/tags/RELEASE_1_4_18/CHANGELOG
 
-http://anonscm.debian.org/gitweb/?p=users/mones/claws-mail-extra-plugins.git;a=commitdiff;h=a3f91d21b32dd0b63b28ccb0c6f7a73939b14c9a
+Upstream patch:
+[4] http://trac.symfony-project.org/changeset/33466?format=diff&new=33466
 
-> And, if a CVE hasn't been assigned, perhaps Kurt or someone could assign
-> one?
+Could you allocate a CVE id for this? (afaics there hasn't been
+requested one for this issue yet during last month / from the start
+of June 2012)
 
-  It't got one, but seems the list was not included in recipients:
-
-> Please use CVE-2012-5527 for this issue.
-
-  regards,
--- 
-  Ricardo Mones 
-  ~
-  00:45 < hammar> cool.. have you used rssyl?                          
-  00:46 <@Ticho> um, yes                            Seen on #sylpheed
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
