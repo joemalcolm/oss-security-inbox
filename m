@@ -1,58 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/6
-Message-ID: <4FC4BE70.7000608@oracle.com>
-Date: Tue, 29 May 2012 13:17:52 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request (2002): Linux TCP stack could accept invalid TCP flag combinations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/04/2
+Message-Id: <80235D14-8236-4E47-B552-7C4B94560727@gmail.com>
+Date: Mon, 4 Jun 2012 12:04:35 -0400
+From: Xi Wang <xi.wang@...il.com>
+To: Petr Matousek <pmatouse@...hat.com>
+Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>, akuster <akuster@...sta.com>, "Steven M. Christey" <coley@...us.mitre.org>, vuln@...unia.com
+Subject: Re: fix to CVE-2009-4307
 Content-Type: text/plain; charset=utf-8
 
-On 03/02/12 10:37, Marcus Meissner wrote:
-> Hi,
->
-> After a customer query likely coming from erroneous Security Scanner output,
->
-> this issue from 2002 has no CVE id yet as far as I see:
->
-> http://www.kb.cert.org/vuls/id/464113
->
-> It describes a problem where firewalls might let some TCP flags combinations
-> pass (e.g. all with RST flag set) and the OS (e.g. Linux) stack would in turn
-> accept a TCP session it might not have accepted otherwise.
->
-> The protection added in Linux 2.4.20 is checking for the RST (reset) flag
-> when a SYN packet is received, which was I think the main attack scenario.
->
-> The relevant part of the 2.4.20 patch is:
->
-> @@ -3667,6 +3693,9 @@
->                 if(th->ack)
->                         return 1;
->
-> +               if(th->rst)
-> +                       goto discard;
-> +
->                 if(th->syn) {
->                         if(tp->af_specific->conn_request(sk, skb) < 0)
->                                 return 1;
->
->
-> The check still exists in current mainline git, so the issue is still fixed.
->
-> Ciao, Marcus
+On Apr 11, 2012, at 7:07 AM, Petr Matousek wrote:
+> 
+> On Wed, Apr 04, 2012 at 12:19:43AM -0400, Xi Wang wrote:
+>> 
+>> 
+>> BTW, the second commit (d50f2ab6) might still allow a buffer overflow
+>> later.  See another patch https://lkml.org/lkml/2012/2/20/422 (though
+>> it was rejected).
+>> 
+>> In ext4_resize_fs():
+>> 
+>>   flexbg_size = 1 << es->s_log_groups_per_flex;
+>>   ...
+>>   flex_gd = alloc_flex_gd(flexbg_size);
+>> 
+>> and in alloc_flex_gd():
+>> 
+>>   flex_gd->count = flexbg_size;
+>>   flex_gd->groups = kmalloc(sizeof(...) * flexbg_size, ...);
+>> 
+>> Note that the kmalloc size could be smaller than expected due to
+>> multiplication overflow (flexbg_size = 1 << s_log_groups_per_flex
+>> could be very large since s_log_groups_per_flex could be as large
+>> as 31).  Array access flex_gd groups[i] could be out of bounds in
+>> that case.
+> 
+> As Xi points out, there might be other problems in the code. Those
+> should get a separate CVE without referencing CVE-2009-4307 IMHO.
 
-I suspect that this actually came from here:
+Update: the issue was fixed upstream.
 
-http://www.nessus.org/plugins/index.php?view=single&id=11618
+http://git.kernel.org/linus/967ac8af4475ce45474800709b12137aa7634c77
 
-It's entirely possible that there's a typo in the web page because it
-talks about TCP+FIN but refers to web pages dealing with the much older
-TCP+RST.
-
-There is actually a SYN+FIN discard fix in the mainline kernel which
-would appear to be a DoS ("Denys Fedoryshchenko reported that SYN+FIN
-attacks were bringing his linux machines to their limits.") should we
-have a CVE for this issue?  (I'll ask in a separate message if so.)
-
-jch
+- xi
