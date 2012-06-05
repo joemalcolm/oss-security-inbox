@@ -1,67 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/5
-Message-ID: <CA+KYVfhuP4v+EdR=v8KB=dNcjtshv=xxy-A6t_SYJFy3VmvP2w@mail.gmail.com>
-Date: Thu, 13 Sep 2012 11:17:06 -0400
-From: andi abes <andi.abes@...il.com>
-To: Russell Bryant <rbryant@...hat.com>
-Cc: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com,  openstack-announce@...ts.openstack.org
-Subject: Re: [Openstack] [OSSA 2012-012] Horizon, Open redirect through 'next' parameter (CVE-2012-3540)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/05/1
+Message-Id: <36617FD3-6265-4329-9138-6203268449D1@gmail.com>
+Date: Tue, 5 Jun 2012 01:54:17 -0400
+From: Xi Wang <xi.wang@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: memory allocator upstream patches
 Content-Type: text/plain; charset=utf-8
 
-Has a fix for this been  backported to essex/stable branch?
+Hi,
 
-On Thu, Aug 30, 2012 at 11:35 AM, Russell Bryant <rbryant@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> This advisory included the wrong CVE.  It was CVE-2012-3540.  Sorry
-> about that.
->
-> On 08/30/2012 11:10 AM, Russell Bryant wrote:
->> OpenStack Security Advisory: 2012-012 CVE: CVE-2012-3542
->
-> This should have been CVE-2012-3540
->
->> Date: August 30, 2012 Title: Open redirect through 'next'
->> parameter Impact: Medium Reporter: Thomas Biege (SUSE) Products:
->> Horizon Affects: Essex (2012.1)
->>
->> Description: Thomas Biege from SUSE reported a vulnerability in
->> Horizon authentication mechanism. By adding a malicious 'next'
->> parameter to a Horizon authentication URL and enticing an
->> unsuspecting user to follow it, the victim might get redirected
->> after authentication to a malicious site where useful information
->> could be extracted. Only setups running Essex are affected.
->>
->> Fixes: 2012.1:
->> https://github.com/openstack/horizon/commit/35eada8a27323c0f83c400177797927aba6bc99b
->>
->>  References:
->> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3542
->
-> This should have been:
->
->     http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3540
->
->> https://bugs.launchpad.net/horizon/+bug/1039077
->>
->> Notes: This fix will be included in a future Essex (2012.1)
->> release.
->
-> - --
-> Russell Bryant
-> OpenStack Vulnerability Management Team
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
->
-> iEYEARECAAYFAlA/iDEACgkQFg9ft4s9SAbPBQCgndIk58K5ZF71PCxmWfDjV9MO
-> 4yoAoJDGBeqC4TbJnyo+AsEeQYeTQEe6
-> =zO6p
-> -----END PGP SIGNATURE-----
->
-> _______________________________________________
-> Mailing list: https://launchpad.net/~openstack
-> Post to     : openstack@...ts.launchpad.net
-> Unsubscribe : https://launchpad.net/~openstack
-> More help   : https://help.launchpad.net/ListHelp
+I would like to share some upstream patches of two specific types
+of memory allocator vulnerabilities.
+
+* malloc(n) size overflow.
+
+Consider the following code pattern.
+
+	n = read_from_input();
+	p = malloc(n);
+	if (p)
+		memcpy(p, input_buffer, n);
+
+Some malloc() implementations internally perform alignment/padding
+for a large n, and the allocation size wraps around to a small
+integer.  That means they would allocate a smaller buffer than
+expected, leading to buffer overflow.
+
+* calloc(n, size) size overflow.
+
+Some calloc() implementations don't check for n * size multiplication
+overflow, and would allocate a smaller buffer than expected,
+leading to buffer overflow.
+
+The two types of vulnerabilities can be easily reproduced using
+malloc(-1) and calloc(BIG-VALUE, BIG-VALUE).  If the return values
+are non-null, the implementations are likely to be problematic.
+
+See a more complete list at:
+
+http://kqueue.org/blog/2012/03/05/memory-allocator-security-revisited/
+
+Below are some recent upstream fixes.
+
+
+Boehm-Demers-Weiser GC (libgc)
+==============================
+
+malloc() size overflow, upstream patch (revised by the developers):
+
+https://github.com/ivmai/bdwgc/commit/be9df82919960214ee4b9d3313523bff44fd99e1
+
+The bug in mallocx.c was found by Ivan Maidanski.
+
+calloc() size overflow, upstream patch (revised by the developers):
+
+https://github.com/ivmai/bdwgc/commit/e10c1eb9908c2774c16b3148b30d2f3823d66a9a
+https://github.com/ivmai/bdwgc/commit/6a93f8e5bcad22137f41b6c60a1c7384baaec2b3
+https://github.com/ivmai/bdwgc/commit/83231d0ab5ed60015797c3d1ad9056295ac3b2bb
+
+
+bionic (Android libc)
+=====================
+
+malloc() size overflow, upstream patch (revised by the developers):
+
+https://github.com/android/platform_bionic/commit/7f5aa4f35e23fd37425b3a5041737cdf58f87385
+
+NB: this vulnerability could only be triggered in debug mode, the
+same as CVE-2009-0607, calloc() size overflow.
+
+
+nedmalloc
+=========
+
+malloc() size overflow, upstream patch:
+
+https://github.com/ned14/nedmalloc/commit/1a759756639ab7543b650a10c2d77a0ffc7a2000
+
+calloc() size overflow, upstream patch:
+
+https://github.com/ned14/nedmalloc/commit/2965eca30c408c13473c4146a9d47d547d288db1
+
+
+Hoard
+=====
+
+http://www.hoard.org/
+
+malloc() size overflow, confirmed by the developers via email in
+this March, no upstream patch available (since 3.8).
+
+calloc() size overflow, which should only happen on non-glibc
+platforms (e.g., Mac OS X).  It has not been confirmed by the
+developers, but one can easily reproduce it.
+
+
+boost::pool
+===========
+
+ordered_malloc() (similar to calloc()) size overflow, upstream patch:
+
+https://svn.boost.org/trac/boost/changeset/78326
+
+
+- xi
