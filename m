@@ -1,36 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/25/1
-Message-ID: <50D90835.3060208@redhat.com>
-Date: Tue, 25 Dec 2012 07:28:13 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/05/3
+Message-ID: <20120605070814.GA16474@openwall.com>
+Date: Tue, 5 Jun 2012 11:08:14 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, Mateusz Jurczyk <j00ru.vx@...il.com>
-Subject: CVE Request - Multiple security fixes in freetype - 2.4.11
+Subject: BIND: Handling of zero length rdata can cause named to terminate unexpectedly
 Content-Type: text/plain; charset=utf-8
 
-Merry Christmas!
+Hi,
 
-Multiple security issues were reported by Mateusz Jurczyk of Google
-security team. These have been fixed in freetype 2.4.11
-Details are as follows.
+I think we should have this in here.  This is CVE-2012-1667.
 
-* NULL Pointer Dereference in bdf_free_font
-Bug: https://savannah.nongnu.org/bugs/?37905
-Patch:
-http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=9b6b5754b57c12b820e01305eb69b8863a161e5a
+http://www.isc.org/software/bind/advisories/cve-2012-1667
 
-* Out-of-bounds read in _bdf_parse_glyphs
-Bug: https://savannah.nongnu.org/bugs/?37906
-Patch:
-http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=07bdb6e289c7954e2a533039dc93c1c136099d2d
+"Handling of zero length rdata can cause named to terminate unexpectedly
 
-* Out-of-bounds write in _bdf_parse_glyphs
-Bug: https://savannah.nongnu.org/bugs/?37907
-Patch:
-http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=7f2e4f4f553f6836be7683f66226afac3fa979b8
+Summary:
+Processing of DNS resource records where the rdata field is zero length
+may cause various issues for the servers handling them.
 
-Can CVEs be please assigned to these issues?
+CVE: CVE-2012-1667
+Posting date: 04 Jun 2012
+Program Impacted: BIND
+Versions affected: 9.0.x -> 9.6.x, 9.4-ESV->9.4-ESV-R5-P1, 9.6-ESV->9.6-ESV-R7, 9.7.0->9.7.6, 9.8.0->9.8.3, 9.9.0->9.9.1
+Severity: Critical
+Exploitable: Remotely
 
-Thanks!
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Description:
+This problem was uncovered while testing with experimental DNS record
+types. It is possible to add records to BIND with null (zero length)
+rdata fields.
+
+Processing of these records may lead to unexpected outcomes. Recursive
+servers may crash or disclose some portion of memory to the client.
+Secondary servers may crash on restart after transferring a zone
+containing these records. Master servers may corrupt zone data if the
+zone option "auto-dnssec" is set to "maintain". Other unexpected
+problems that are not listed here may also be encountered.
+
+Impact: This issue primarily affects recursive nameservers.
+Authoritative nameservers will only be impacted if an administrator
+configures experimental record types with no data. If the server is
+configured this way, then secondaries can crash on restart after
+transferring that zone. Zone data on the master can become corrupted if
+the zone with those records has named configured to manage the DNSSEC
+key rotation."
+
+"Solution:
+Upgrade to BIND version 9.6-ESV-R7-P1, 9.7.6-P1, 9.8.3-P1, or 9.9.1-P1
+
+Acknowledgment: Dan Luther, Level3 Communications, for finding the
+issue, Jeffrey A. Spain, Cincinnati Day School, for replication and
+testing."
+
+Sounds like backporting time...
+
+Alexander
