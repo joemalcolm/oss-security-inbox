@@ -1,50 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/3
-Message-ID: <1344590752.31390.13.camel@gummipuppe>
-Date: Fri, 10 Aug 2012 11:25:52 +0200
-From: Bruno Kleinert <fuddl@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/05/2
+Message-ID: <4FCDA590.5060307@redhat.com>
+Date: Tue, 05 Jun 2012 00:22:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Possible data loss or data modification in ownCloud
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Symfony / php-symfony-symfony: Session fixation flaw corrected in upstream 1.4.18 version
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I stumbled over a security bug in owncloud 4.0.5 and 4.0.4 as it is
-packaged in Debian sid/unstable and wheezy/testing, with the result of
-data loss or modification, depending on the configuration of owncloud.
-Though I tested and reproduced this flaw only with the Debian packages,
-an ownCloud developer confirmed that this bug is not Debian-specific.
+On 06/04/2012 12:39 PM, Kurt Seifried wrote:
+> On 06/04/2012 02:26 AM, Jan Lieskovsky wrote:
+>> Hello Kurt, Steve, vendors,
+> 
+>> a session fixation flaw was found in the way Symfony, an 
+>> open-source PHP web applications development framework,
+>> performed removal of user credential, adding several user
+>> credentials at once and 'user authenticated' settings change by
+>> regenerating session ID. A remote attacker could provide a
+>> specially-crafted URL, that when visited by a valid Symfony
+>> application user (victim) could lead to unauthorized access to
+>> the victim's user account.
+> 
+>> References: [1] https://bugs.gentoo.org/show_bug.cgi?id=418427
+>> [2] 
+>> http://symfony.com/blog/security-release-symfony-1-4-18-released
+>>  [3] 
+>> http://trac.symfony-project.org/browser/tags/RELEASE_1_4_18/CHANGELOG
+>
+>>  Upstream patch: [4] 
+>> http://trac.symfony-project.org/changeset/33466?format=diff&new=33466
+>
+>>  Could you allocate a CVE id for this? (afaics there hasn't been
+>>  requested one for this issue yet during last month / from the 
+>> start of June 2012)
+> 
+>> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat 
+>> Security Response Team
+> 
+> Please use CVE-2011-4964 for this issue.
 
-It is possible for regular users of owncloud to overwrite files that are
-shared read-only by another owncloud user via WebDAV.
+Argh I was not paying attention and assigned the wrong year.
 
-To reproduce I did the following steps on Debian sid/unstable and also
-wheezy/testing:
-     1. Install owncloud packages
-     2. Open http://localhost/owncloud and finish installation by
-        creating an admin user
-     3. Log in as admin user and create two regular users user1 and
-        user2
-     4. Log into owncloud as user1 and create an empty text file
-     5. Share this file to user2 and leave the "can edit" checkbox
-        unchecked as it is by default
-     6. Log in via WebDAV as user2 (I used nautilus of GNOME 3)
-     7. Navigate to the empty file, open, edit and save it
-     8. user1's once empty file now contains the changes from user2
+Please REJECT CVE-2011-4964 and use CVE-2012-2667 instead.
 
-If version control is activated in ownCloud, user1 could revert the file
-to its previous state, but if it's *not* activated, user1's data is
-lost.
 
-I contacted an ownCloud developer who sent me a patch, that was applied
-to their development branch to address this issue. I had to adjust it a
-little to make it apply against ownCloud 4.0.5 in Debian sid/unstable.
-The patch should now be included in the latest Debian sid/unstable
-owncloud 4.0.5debian2-2 package. I attach the adjusted patch to this
-mail.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Best regards - Fuddl
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-View attachment "fix-webdav-security.diff" of type "text/x-patch" (1826 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQIcBAEBAgAGBQJPzaWQAAoJEBYNRVNeJnmTMDcP/2hbtd1AoA+mDHT6Hdtf42Ox
+/i8LUoRhWMRwJpRtO5OqF4XXkJfTFqSLi7qpiTopKwlWU8Yzeji0w+sfVUpThpd1
+04RCHGdMwLagbN9vhjK3Dh4xpygQrCJfWBcnRs5woLuoFKW3NjDGy8Jmb2Kmdane
+UXPTuOx8Bj42X9aIQ+iMqhSqqSLcKJ2ck9AyFkIMolbmkoUcF82b3QzS86LpugdU
+SbU37Ka2Zmk/UrG8zxsRzyiO55LGw9OoHXyssl8JbXmXXeB4XCRRkcYnjrEhQ/JD
+Nc03OGxURqVZcRj2fqDOcthFn84ZFlLmG4LP7Kz4ug0iG/80RwngQ48chcQK3fN6
+98BSq2KsWSarApHaDHgAtERdqmHAzA+WwBO6AbdovxX68HsBceoF6bHVGd0ngBuc
+sBkzkpvwmBdPWxJiYBf7j6kqffahcfoLhEaHfRDSUvhffJHAP6RTah6hpiH0s9ne
+9R5yIwnmSGIjylQnXamSm9Dv3gvNGwAvZ3IN9vD9pA3MVLXOdI5/PlO81dty36L2
+mO9hDVOw+vs2x2tB1oHsa3cWdq6G0N6/M7I5ehM7uytqyKldnuV9+oEt9o6JLy3A
+ubf/Vr++P8e2mzu/vVlMLCwYfMNBHkLlL2V2qAeecie0zp9h5chRWRf5UuwFuAPa
+HBX2duLeFeaiZdcyO0zG
+=b1WB
+-----END PGP SIGNATURE-----
