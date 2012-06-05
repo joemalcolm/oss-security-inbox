@@ -1,36 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/9
-Message-ID: <Pine.GSO.4.64.1209241553550.17650@faron.mitre.org>
-Date: Mon, 24 Sep 2012 16:03:20 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/05/4
+Message-ID: <20120605215402.GD1540@redhat.com>
+Date: Tue, 5 Jun 2012 15:54:02 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+Subject: CVE request: openldap does not honor TLSCipherSuite configuration option
 Content-Type: text/plain; charset=utf-8
 
+Could a CVE be assigned to this issue?
 
-FYI, this discussion is an interesting example of what I've called the 
-"snowball effect" in CVE when new kinds of issues arise that test the 
-boundaries of what should or should not belong in CVE - allowing one (or a 
-handful) could open the door to hundreds or thousands of other products 
-that have the same issue.
+It was reported that OpenLDAP, when using the Mozilla NSS backend, would
+ignore any TLSCipherSuite configuration settings.  When the
+TLSCipherSuite setting is configured, OpenLDAP would use the default
+cipher suite, ignoring the setting.
 
-Personally, I would expect a security/privacy-preserving product to select 
-the most conservative file permissions that it knows won't violate the 
-user's intention; in this case, the permissions of the original "source" 
-file, as further restricted by the user-specified umask.  If the user 
-calls gpg with a world-readable file and a "promiscuous" umask, then they 
-deserve what they get.  If a product decides to be more restrictive than 
-even the user specifies, then that's OK, but I would view it as a 
-hardening measure, which generally doesn't get a CVE.
+While the default cipher suite contains some weak ciphers (e.g.
+MD5-based), it is still not easy to break the encryption to obtain
+sensitive information.  However, if an administrator wishes to enforce
+the use of stronger ciphers by overriding the defaults using
+TLSCipherSuite, they should be able to trust that, when the
+configuration items is in place, the stronger ciphers are used.  Due to
+this flaw, that is not the case.
 
-Note that's a personal view, not any "official" CVE decision. This is 
-still an ongoing discussion.
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=825875
+http://www.openldap.org/its/index.cgi?findid=7285
+http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=2c2bb2e
 
-There is historical precedent for archivers like ZIP or tar that have race 
-conditions where they initially create files world-readable (in some 
-cases, probably inheriting umask) and don't restrict the permissions until 
-after the extraction is complete.  That's a more clear example, however, 
-because the products have functionality that intends to impose the 
-required permissions, but don't do it quickly enough.
 
-- Steve
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
