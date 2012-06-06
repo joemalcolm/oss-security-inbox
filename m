@@ -1,43 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/1
-Message-ID: <50909991.9050504@redhat.com>
-Date: Tue, 30 Oct 2012 21:22:57 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/12
+Message-ID: <4FCF890A.2060106@redhat.com>
+Date: Wed, 06 Jun 2012 10:44:58 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>
-Subject: Re: CVE request: XSS is Google Web Toolkit (GWT)
+CC: Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: CVE-Request: hyper-v daemon
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/29/2012 07:26 PM, David Jorm wrote:
-> I note that with the release of google web toolkit (GWT) 2.5, a
-> security flaw has been resolved. The best details I can find are
-> at:
+On 06/06/2012 08:59 AM, Sebastian Krahmer wrote:
+> Hi,
 > 
-> https://developers.google.com/web-toolkit/release-notes#Release_Notes_2_4_0
-> (scroll to "Security vulnerability in GWT 2.4")
+> The hyper-v daemon fails to check origin of netlink messages. 
+> Please see
 > 
-> The release notes state:
+> https://bugzilla.novell.com/show_bug.cgi?id=761200
 > 
-> "Recently, the GWT team discovered a cross-site scripting
-> vulnerability in the 2.4 Beta and Release Candidate releases (not
-> in v2.3 GA or v2.4 GA). This vulnerability was partially fixed in
-> the 2.4 GA release and completely fixed in the 2.5 GA release. If
-> you have an app that's been built with 2.4 then you'll need to get
-> the latest 2.5 release, recompile your app, and redeploy."
+> Can someone from the usual suspects assign a CVE? :)
 > 
-> I can't find any details on the flaw, a CVE ID, a public bug or a
-> commit. I have contacted security@...gle asking for these details,
-> but no response yet. Can we assign a CVE ID to this flaw in the
-> absence of these details?
-> 
-> Thanks
+> thanks, Sebastian
 
-Ok no replies from Google security@ or anyone else at Google.
 
-Please use CVE-2012-4563 for this issue.
+Please use CVE-2012-2669 for this issue.
 
 
 - -- 
@@ -46,18 +33,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQkJmRAAoJEBYNRVNeJnmT34sQAN1rirRTx9B9EhfXGZ0GiRlF
-4XB4UNa6INoW+UREF13ju/QKvdm6oB6c4FtP4FhgoN37Zv11xZqARZlNxlIjgSXB
-JaJMLCpP6d4+AA1xnPqBN6aLYYlCyuQ0M9zoIuUJH8dVk51Y4XReJUbQh7Oq+63v
-X04dJN52jncMQmjlOkMl1RUErhXWyvz3gwS58TKFZvrUJVQPxnVqwUR3kpMowpZr
-NmtDGYu19LMnG6Bwm2pNn7NYy0zPPiG437C+R3QKajAKv2gQoZ7QP/dynlEdVUvb
-ne2YR/Ts5Dsh+3WEzhDUB2mmcrTyxGvUgDLVgvVfpWhGW9dTmbAf9Ym7bs2+J6ob
-/30uff5NsITdyzHfneuahB5K69I94Ez4LboCdYpyHokkBouR7lMQODsykOIC7V92
-rIAK5bs1GB8NI0Km4g4UasZiVb43nIBfmQiRoJ6gQ8VL/PCRFzkUovaldcxX0PYM
-cWfcTSKJP9yxOiu16NLzbtzUJpJMaQ7rqj4GEqGoTJVnwEhVI/rZwcCodWrBnWkd
-PAEQ/VOs6QUH3um6nFQQ/adOlkHw3LfVDZd1oeSe92oP71nSuu/egVz69ALTsK+L
-pMi3C489b8M7L6x+7e14TjajBopi8FuMvglZyrW70W6Try5h4r7iKH2VYESd/7gM
-NfzX4to45zP1Wi1axTLi
-=2YY8
+iQIcBAEBAgAGBQJPz4kKAAoJEBYNRVNeJnmTC+YP/1Jd86rSt2MWYL7fd9PY8lsU
+D8OJJ0WXPQmIpI/rz68f/efeqnt6TYYbqAEZHkdQW12t0kvNs1jy7CMPinatgjqg
+j8419ASmL/DVaZi0bSJ0HhZnD76j7R340h5/ps5hBPgEJVOZ2YMR2ylUzkk+fBQp
+90LvCyCNlkhCaTy/mqIzwhsB/bL/ABq1+PwPEKhGOCfHlFN3E57em+Ju6wG2aQAS
+hH7Cg+VeQhCRSAr0jzymH6RgH4gtyKtJ67pXwkwBkB0/g2SHlIRnwAoXDdouJCMN
+K/31B6GUqBRUDHUQHtFioamOzdZIJrev1jLQrukBifewPHcAv09xqKx+4Ij+ZlW+
+/eyNVoxQOUy67THdk8fFc7es0dwowb7vNFfJFOAhf6OZq2HdQGe4/WHxPasqLN5n
+2jLyB/I/V4jbrzQR0n0IfEkrm+ssO+0ODNt7DhS1y9ZajeslBCioLIkwHB6aEVao
+VOLx7LvYm96/BSWId1wRLHY1zI3yAB+YHiVPcRVFeY4kmBK/E2Ky/Kr2eYC8IKrx
+ioSQ1/Qp1BrxxRIMxbKhySGcLGfrZC+s7nZ5siQiAONzcmzQMq8jpTa+B64O57yG
+p1BYFhsg4jvcS5UZs7L/vQdDzAMAvsgaWE+vqkYvkIrQSZyLuTK7i6pCsWe3ob7M
+4qp5TwBkBfHsdQ8ns1TB
+=w5EU
 -----END PGP SIGNATURE-----
