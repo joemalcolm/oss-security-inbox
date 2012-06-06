@@ -1,46 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/7
-Message-ID: <4F109933.30407@redhat.com>
-Date: Fri, 13 Jan 2012 13:50:59 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/6
+Message-ID: <4FCF54CB.4030502@xync.org>
+Date: Wed, 06 Jun 2012 09:02:03 -0400
+From: Mark Hoopes <xync@...c.org>
 To: oss-security@...ts.openwall.com
-CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-Subject: Re: CVE affected for PHP 5.3.9 ?
+Subject: Arbitrary File Upload/Execution in Collabtive
 Content-Type: text/plain; charset=utf-8
 
-On 01/13/2012 11:08 AM, Nicolas Grégoire wrote:
-> Le vendredi 13 janvier 2012 à 09:54 -0700, Kurt Seifried a écrit :
->> I'm not clear on how this crosses a security boundary
-> Some applications *will* process untrusted XSLT stylesheets.
->
-> The most basic example is online XSLT gateways :
-> http://www.shell-tools.net/index.php?op=xslt
-> http://online-toolz.com/tools/xslt-transformation.php
->
-> You may find more with Google and a dork like [inurl:php
-> inurl:"xsl=http"]. This is often used to adapt the layout of a page to
-> the browser (desktop vs. mobile).
->
-> There's too some more complex cases where untrusted XSLT may be used,
-> like parsing SVG images, XML-DSig signatures or SAML tokens, ...
->
-> Regards,
-> Nicolas
->
->
-Ok I'm still not clear on what the security claim is. Are you saying you
-can cause arbitrary text output via XSL/XML mangling tricks? And
-combined with having a script that uses something like "<sax:output
-href="0wn3d.php" method="text">" you can put arbitrary text content into
-this file which could then result in the file being parsed? The problem
-is you'd have to write a script that does this, writes to a local file
-with a file ending in .php or .shtml or whatever, in which case it's
-pretty clear the script writer MEANT to do that. Again I'm still not
-clear on what/how a security boundary is being crossed. How does this
-elevate privileges or give you remote access that you wouldn't already
-if you can upload arbitrary PHP scripts?
+This disclosure was posted to Bugtraq yesterday 
+(http://www.securityfocus.com/archive/1/522973/30/0/threaded).  I am 
+submitting it to oss-security as a request to have a CVE ID assigned.
 
--- 
+TITLE: Arbitrary File Upload/Execution in Collabtive
+DATE: 06-04-2012
+PRODUCT: Collabtive Web-Based Project Management Software 
+(http://collabtive.o-dyn.de/)
+VERSIONS: 0.7.5, 0.6.1 confirmed.  All versions <= 0.7.5 probable
+RESEARCHER: Mark Hoopes (xync@...c.org/)
+ADDITIONAL INFORMATION: 
+http://xync.org/2012/06/04/Arbitrary-File-Upload-in-Collabtive.html
 
--- Kurt Seifried / Red Hat Security Response Team
+Vulnerability:
+During the upload of an avatar image for a Collabtive user, the 
+manageuser.php script checks the file type using the MIME type provided 
+in the POST request (via the $_FILES['userfile']['type'] variable) 
+rather than by extension.  This MIME type can be spoofed via an 
+intercepting proxy or custom POST script allowing a malicious user to 
+upload an arbitrary file.  This file will be placed in a predictable web 
+accessible path with an easily determined name.  In most installations, 
+execution from this directory is not restricted which allows a remote 
+attacker to execute a PHP script uploaded this way with the privileges 
+of the web user.
+
+Access to the avatar upload function is restricted to logged in users, 
+but because of Collabtive's design decisions in implementing OpenID 
+support, this is easily accomplished.  If an unknown user supplies a 
+valid OpenID v1.0 URL as the username on the login page, Collabtive will 
+automatically create a new user based on the referenced credentials.  
+That new user is not authorized to access any projects, but is 
+authorized to upload an avatar image.  This allows an attacker with no 
+other knowledge of the host site or its users to exploit the vulnerability.
+
+Fix:
+Upgrade to Collabtive v0.7.6 or greater
+Source: 
+http://sourceforge.net/projects/collabtive/files/collabtive/0.7.6/collabtive076.zip/download
+Release Notes: http://www.collabtive.o-dyn.de/blog/?p=426
+
+Workaround:
+Disable script execution of the upload directory via .htaccess for 
+Apache or similar web servers.  This should apply at minimum to the 
+/files/[template]/avatar directory but can safely be applied to the 
+entire /files directory.
+
+Sample contents of the .htaccess file are:
+   Options -Indexes
+   Options -ExecCGI
+   AddHandler cgi-script .php .php3 .php4 .phtml .pl .py .jsp .asp .htm 
+.shtml .sh .cgi
+
+Note 'AllowOverride Options AddHandler' or 'AllowOverride All' must be 
+enabled in the main httpd.conf file for this directory or inherited from 
+a parent directory.
+See http://www.mysql-apache-php.com/fileupload-security.htm
+
+Additional References:
+http://xync.org/2012/06/04/Arbitrary-File-Upload-in-Collabtive.html
+
+http://www.php.net/manual/en/features.file-upload.post-method.php see 
+comments for $_FILES['userfile']['type']
+
+
+TIMELINE:
+   April 18, 2012 - Issue reported to developers
+   April 19, 2012 - Fix committed to Collabtive github
+   May 30,  2012 - Collabtive version 0.7.6 released w/ fix
+   June 4, 2012 - Vulnerability published
 
