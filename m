@@ -1,62 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/8
-Message-ID: <20121003203055.GB3711@boyd>
-Date: Wed, 3 Oct 2012 13:30:56 -0700
-From: Tyler Hicks <tyhicks@...onical.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, coley@...us.mitre.org, security@...ntu.com, security@...y-lang.org
-Subject: Re: CVE Request: Ruby safe level bypasses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/9
+Message-ID: <4FCF8B67.2090202@redhat.com>
+Date: Wed, 06 Jun 2012 10:55:03 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Mark Hoopes <xync@...c.org>
+Subject: Re: Arbitrary File Upload/Execution in Collabtive
 Content-Type: text/plain; charset=utf-8
 
-On 2012-10-03 13:48:14, Kurt Seifried wrote:
-> On 10/02/2012 04:32 PM, Tyler Hicks wrote:
-> > Hello - Upstream Ruby has fixed[1] exception methods that
-> > incorrectly allowed safe level bypasses. These bypasses allowed
-> > untainted strings to be modified by untrusted code in safe level
-> > 4.
-> > 
-> > Note that the changes to exc_to_s() and name_err_to_s(), in
-> > error.c, are similar to the fix for CVE-2011-1005, but the Ruby
-> > advisory[2] made it clear that Ruby 1.9.x was not affected by
-> > CVE-2011-1005. It turns out that the vulnerability was later
-> > reintroduced to Ruby's trunk in revision 29456. Ruby 1.9.3-p0 and
-> > later is affected.
-> > 
-> > While Shugo Maeda was fixing the issue above, he noticed that 
-> > name_err_mesg_to_str() had a similar flaw. Ruby 1.8.x, along with 
-> > 1.9.3-p0 and later is affected.
-> > 
-> > I believe that these issues need two separate CVEs. Both issues
-> > are fixed in the same upstream patch[1]. Could you please allocate
-> > ids?
-> > 
-> > Thanks, Tyler
-> > 
-> > [1]
-> > http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37068
-> >
-> > 
-> [2]
-> http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/
-> > 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 06/06/2012 07:02 AM, Mark Hoopes wrote:
+> This disclosure was posted to Bugtraq yesterday 
+> (http://www.securityfocus.com/archive/1/522973/30/0/threaded).  I
+> am submitting it to oss-security as a request to have a CVE ID
+> assigned.
 > 
-> Please use CVE-2012-4464 for this issue.
+> TITLE: Arbitrary File Upload/Execution in Collabtive DATE:
+> 06-04-2012 PRODUCT: Collabtive Web-Based Project Management
+> Software (http://collabtive.o-dyn.de/) VERSIONS: 0.7.5, 0.6.1
+> confirmed.  All versions <= 0.7.5 probable RESEARCHER: Mark Hoopes
+> (xync@...c.org/) ADDITIONAL INFORMATION: 
+> http://xync.org/2012/06/04/Arbitrary-File-Upload-in-Collabtive.html
+>
+>  Vulnerability: During the upload of an avatar image for a
+> Collabtive user, the manageuser.php script checks the file type
+> using the MIME type provided in the POST request (via the
+> $_FILES['userfile']['type'] variable) rather than by extension.
+> This MIME type can be spoofed via an intercepting proxy or custom
+> POST script allowing a malicious user to upload an arbitrary file.
+> This file will be placed in a predictable web accessible path with
+> an easily determined name.  In most installations, execution from
+> this directory is not restricted which allows a remote attacker to
+> execute a PHP script uploaded this way with the privileges of the
+> web user.
+> 
+> Access to the avatar upload function is restricted to logged in
+> users, but because of Collabtive's design decisions in implementing
+> OpenID support, this is easily accomplished.  If an unknown user
+> supplies a valid OpenID v1.0 URL as the username on the login page,
+> Collabtive will automatically create a new user based on the
+> referenced credentials. That new user is not authorized to access
+> any projects, but is authorized to upload an avatar image.  This
+> allows an attacker with no other knowledge of the host site or its
+> users to exploit the vulnerability.
+> 
+> Fix: Upgrade to Collabtive v0.7.6 or greater Source: 
+> http://sourceforge.net/projects/collabtive/files/collabtive/0.7.6/collabtive076.zip/download
+>
+>  Release Notes: http://www.collabtive.o-dyn.de/blog/?p=426
+> 
+> Workaround: Disable script execution of the upload directory via
+> .htaccess for Apache or similar web servers.  This should apply at
+> minimum to the /files/[template]/avatar directory but can safely be
+> applied to the entire /files directory.
+> 
+> Sample contents of the .htaccess file are: Options -Indexes Options
+> -ExecCGI AddHandler cgi-script .php .php3 .php4 .phtml .pl .py .jsp
+> .asp .htm .shtml .sh .cgi
+> 
+> Note 'AllowOverride Options AddHandler' or 'AllowOverride All' must
+> be enabled in the main httpd.conf file for this directory or
+> inherited from a parent directory. See
+> http://www.mysql-apache-php.com/fileupload-security.htm
+> 
+> Additional References: 
+> http://xync.org/2012/06/04/Arbitrary-File-Upload-in-Collabtive.html
+>
+>  http://www.php.net/manual/en/features.file-upload.post-method.php
+> see comments for $_FILES['userfile']['type']
+> 
+> 
+> TIMELINE: April 18, 2012 - Issue reported to developers April 19,
+> 2012 - Fix committed to Collabtive github May 30,  2012 -
+> Collabtive version 0.7.6 released w/ fix June 4, 2012 -
+> Vulnerability published
+> 
 
-Hi Kurt - I think that two CVE ids are needed here.
+Please use CVE-2012-2670 for this issue.
 
-All issues are fixed in the same upstream patch but some issues in that
-patch affect different versions. I'll use the notation from "CVE
-Abstraction Content Decisions: Rationale and Application" to describe
-how I see it:
+BTW very nicely formatted/informative email, well done. Also bonus
+points for offering a workaround =).
 
-S1: The vulnerability found in exc_to_s()
-S2: The vulnerability found in name_err_to_s()
-S3: The vulnerability found in name_err_mesg_to_str()
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-S1, S2 and S3 are the same type of bug. S1 and S2 appear in the same
-versions (1.9.3-p0 and newer), so MERGE them. S3 appears in 1.8.x, as
-well as 1.9.3-p0 and newer, so SPLIT it from S1 and S2.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Tyler
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQIcBAEBAgAGBQJPz4tnAAoJEBYNRVNeJnmTfgEQAJK6aOlQx3XH2JB1NZ2kFUn2
+XVvk8aF9fFmo2fIz0hvIhiNSwy8dhbrgisw35Cg8GfnMWQncgI/gTJUbcYKw76mb
+SsDf1iZDAFGEJYRdqyXijrbHCfFG27ZoOkEyZ1lmwDb10nIngZUt6RQBDI3dnWUn
+YVGG6EbV9a9HJjcDuKf3dsnMy8p/hXap3TNDM8p32N36KvUBAcGKEdvTmL0u9oIu
+R8bBOEqm0+Awd7a3KkmwQWar5QpcQGHrob9Gp5XG1muoeNC+CGbjvenbeWzzSVr4
+tDub2Sh3Wx61w5Ff5ppqPjd2haeV5ZOaiimGoht9E0+mrSJPY4NOCMRxIvUfd2IR
+E6Avj2bpATxBEfU5JBloh9UbqLR37WItAU49idIwDr9zqVKKG/wgUSWOTzS+47oU
+h4+eLtFovS3rNJxNZBh0OTk0uUJ3735N5LArje45SIiyxnUT0Wi7gcUV9JlV203K
+/mEVRMI/0Jvd0FYKzEeXbvRV+4HcMTiSCG6OP4SZsbIDRFMUEsQ30Nw950IN+gTb
+vcHUQEBxumK5zdBZ+zDEidEsKLjkPDiJSQ2Ng8VGSDy2rqUl9ACJnX27BSsqqZJA
+iooyA0yMbXKwTs1LjYZulDu5l11mRtAXF331QbIG4AtnD2tvE2QPjk1CMJouPE40
+ihjZQBiBHTEFTlzB8rCO
+=NwJS
+-----END PGP SIGNATURE-----
