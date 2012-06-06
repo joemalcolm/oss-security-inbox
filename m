@@ -1,22 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/02/4
-Message-ID: <20120802151012.29e0b0dd@redhat.com>
-Date: Thu, 2 Aug 2012 15:10:12 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: <oss-security@...ts.openwall.com>
-Subject: IcedTea-Web security fixes in 1.1.6 and 1.2.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/5
+Message-ID: <4FCF22FF.2060908@redhat.com>
+Date: Wed, 06 Jun 2012 11:29:35 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Kurt Seifried <kseifried@...hat.com>
+CC: oss-security@...ts.openwall.com, Matthias Weckbecker <mweckbecker@...e.de>
+Subject: Re: CVE request: rack-cache caches sensitive headers (Set-Cookie)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Thanks for your report, Matthias.
 
-IcedTea-Web versions 1.1.6 and 1.2.1 fix two security issues:
+On 06/06/2012 11:09 AM, Matthias Weckbecker wrote:
+> Hi Kurt, Steve, vendors,
+>
+> rake-cache caches sensitive response headers such as Set-Cookie. Attackers
+> with access to the cache could possibly obtain other user's cookies to e.g.
+> bypass authentication.
+>
+> More information (including patch) available at our bugzilla:
+>    https://bugzilla.novell.com/show_bug.cgi?id=763650
+>
+> Kurt, could you possibly assign a CVE for this issue, please? Thank you in
+> advance!
 
-http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2012-July/019580.html
+Kurt, once assigned please note it in our bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=824520
 
-Additional information and links can be found in Red Hat bugs:
+too.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3422
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3423
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+>
+> Matthias
+>
+
