@@ -1,74 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/09/3
-Message-ID: <4FFAE8CF.9040005@redhat.com>
-Date: Mon, 09 Jul 2012 16:21:03 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, David Woodhouse <dwmw2@...radead.org>, Daniel Berrange <berrange@...hat.com>, Daniel Veillard <veillard@...hat.com>
-Subject: Re: CVE Request -- dnsmasq: When being run by libvirt open DNS proxy (reachable out-of the virtual network set for the particular guest domain too) is created
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/4
+Message-Id: <201206061109.19639.mweckbecker@suse.de>
+Date: Wed, 6 Jun 2012 11:09:19 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: rack-cache caches sensitive headers (Set-Cookie)
 Content-Type: text/plain; charset=utf-8
 
+Hi Kurt, Steve, vendors,
 
-Steve,
+rake-cache caches sensitive response headers such as Set-Cookie. Attackers 
+with access to the cache could possibly obtain other user's cookies to e.g. 
+bypass authentication.
 
-   some kind of strange request (since I have requested
-the CVE id originally), but didn't previously think of
-it that following way -- which component would the CVE id be
-actually assigned to, dnsmasq or libvirt?
+More information (including patch) available at our bugzilla:
+  https://bugzilla.novell.com/show_bug.cgi?id=763650
 
-   From my understanding it's a combination of both of them,
-which is making it a security flaw (libvirt has announced
-to provide DNS masquerade and due to a bug in one component,
-actually providing that functionality, this allowed a DDoS
-attacks).
+Kurt, could you possibly assign a CVE for this issue, please? Thank you in
+advance!
 
-   Once libvirt announced the separation, is it it's
-responsibility to handle it? And as such security flaw in
-libvirt?
+Matthias
 
-   For the dnsmasq package, it doesn't look like a security
-flaw (rather as bug, when handling certain CLI option -- it
-would not ignore packets as instructed).
-
-   I am not completely sure, there has been similar enough
-example in the past, which could help us to decide which
-component the particular CVE identifier should be assigned
-to.
-
-   Could you clarify / help us to understand Mitre's opinion
-here?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-On 07/09/2012 02:04 PM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->    David Woodhouse reported a deficiency in the way dnsmasq,
-> a lightweight, easy to configure DNS forwarder and DHCP server,
-> when being run under libvirt, a library providing simple
-> virtualization API, performed processing of packets coming
-> outside of virtual network set for the particular guest domain.
->
->    When libvirt was configured to provide a range of public
-> IP addresses to its guest domains and dnsmasq was instructed
-> to discard packets originating from other interfaces, than
-> specified on the command line via the --bind-interface option,
-> those packets (coming from 'prohibited' interfaces) were not
-> dropped properly and subsequently processed.
->
->    A remote attacker could use this flaw to cause a distributed
-> denial of service, as demonstrated in the report [1] via "stream
-> of spoofed DNS queries producing large results".
->
-> References:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=833033
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+-- 
+Matthias Weckbecker, Junior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
