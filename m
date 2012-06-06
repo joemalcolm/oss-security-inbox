@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/8
-Message-ID: <87fwfozn1i.fsf@mid.deneb.enyo.de>
-Date: Mon, 09 Jan 2012 20:35:53 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/7
+Message-ID: <20120606145959.GB27595@suse.de>
+Date: Wed, 6 Jun 2012 16:59:59 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Malicious devices & vulnerabilties
+Subject: CVE-Request: hyper-v daemon
 Content-Type: text/plain; charset=utf-8
 
-* Kurt Seifried:
+Hi,
 
-> Firewire has DMA. 
->
-> http://cansecwest.com/core05/2005-firewire-cansecwest.swf
->
-> eSATA - also does DMA.
->
-> Thunderbolt also does DMA. 
->
-> In other words a lot of the newer/higher end interfaces all do DMA
-> which is ... a problem.
+The hyper-v daemon fails to check origin of netlink messages.
+Please see
 
-Gigabit Ethernet adapters also do DMA.  Is it really the case that the
-(e)SATA implementation is as problematic as IEEE 1394?  I don't think
-SATA exposes the DMA functionality over the wire.
+https://bugzilla.novell.com/show_bug.cgi?id=761200
+
+Can someone from the usual suspects assign a CVE? :)
+
+thanks,
+Sebastian
+
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
