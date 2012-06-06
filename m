@@ -1,36 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/11/2
-Message-ID: <50C765CC.1080609@canonical.com>
-Date: Tue, 11 Dec 2012 10:56:44 -0600
-From: Jamie Strandboge <jamie@...onical.com>
-To: coley@...us.mitre.org
-CC: oss-security@...ts.openwall.com, security <security@...ntu.com>
-Subject: CVE request: perl-modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/8
+Message-ID: <4FCF8BA2.2030406@redhat.com>
+Date: Wed, 06 Jun 2012 10:56:02 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: oss-security@...ts.openwall.com, Matthias Weckbecker <mweckbecker@...e.de>
+Subject: Re: CVE request: rack-cache caches sensitive headers (Set-Cookie)
 Content-Type: text/plain; charset=utf-8
 
-Debian recently fixed the following security bug:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695224
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-"Locale::Maketext is a core l10n library that expands templates found in
-strings.
+On 06/06/2012 03:29 AM, Jan Lieskovsky wrote:
+> Thanks for your report, Matthias.
+> 
+> On 06/06/2012 11:09 AM, Matthias Weckbecker wrote:
+>> Hi Kurt, Steve, vendors,
+>>
+>> rake-cache caches sensitive response headers such as Set-Cookie.
+>> Attackers
+>> with access to the cache could possibly obtain other user's cookies to
+>> e.g.
+>> bypass authentication.
+>>
+>> More information (including patch) available at our bugzilla:
+>>    https://bugzilla.novell.com/show_bug.cgi?id=763650
+>>
+>> Kurt, could you possibly assign a CVE for this issue, please? Thank
+>> you in
+>> advance!
+> 
+> Kurt, once assigned please note it in our bug:
+> https://bugzilla.redhat.com/show_bug.cgi?id=824520
+> 
+> too.
+> 
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+>>
+>> Matthias
+>>
 
-Two problems were found, reported, and patched-for by Brian Carlson of
-cPanel, and these fixes are now in blead and on the CPAN.
-
-The commit in question is
-http://perl5.git.perl.org/perl.git/commit/1735f6f53ca19f99c6e9e39496c486af323ba6a8
-
-The flaws are:
-
-* in a [method,x,y,z] template, the method could be a fully-qualified name
-* template expansion did not properly quote metacharacters, allowing
-  code injection through a malicious template
-
-Please upgrade your Locale::Maketext, especially if you allow user-provided
-templates."
-
--- 
-Jamie Strandboge                 http://www.ubuntu.com/
+Please use CVE-2012-2671 for this issue.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (900 bytes)
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPz4uhAAoJEBYNRVNeJnmTKzcP+we7VUVdFw3LqAfqRFmGE1zY
+0gq+Sd/ReM0GITRiDbtMOXGqy7DT6ivvuvaQ5T7skIWbNkvanSiv+6F+YeTgIQsX
+U9rkk4FeEkrmP5f7vVxPuhNSRWec8gjPkuxCzlQaBLlXmW21xP0fdGJ6wwxwGJAr
+SBsL/5MbsvO+R4WjChTio8fZ5aky8o+DWK1ShSN61FVciX+nSvCdvsL40OOki0TF
+6Enw/Cod5uccYsQgLNSfC0opWuLlHW/wZn2IcpZdL+Mp5cE69qy9dHLs8RS0uu/O
+TuWbzzgZZdt/aZPj6DE7mqWoW0n82H8eSK8HQPeA0K2e4U1q7CKgdiW8U/LR76Yp
+5xaUKvhyDWoqsYiP6UXIGYE30nRtHOuFFXxBbmE4kM/wAJtywrLmeD8yZIrRd4Kd
+2oJ4NLvfZkRz4nbhhWN+JI9AmoMn0NgG4KfXcK788Ve99MpNGp4Ym3V3b7TR78R3
+1awyCtjbCiQbGdmFKUKTToBNQ3DYFh9LOFzmksoOwdCfVJ8JhLmaUNkKCohmzH+Z
+8QxklQy39u148ZDNLS1CvIPT+R6oQtotHltLot+nGbAXoL6L4+uzQe58/GYnVnpl
+aJeC+R8acTRyMfCv8713bSeqZzt2U3M0QGEEePPPLq2sluAWIMC/hD1W8aI2RfiN
+T1pdH/XovTCpR35FCGut
+=ijcr
+-----END PGP SIGNATURE-----
