@@ -1,59 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/22/2
-Message-ID: <4FE3F017.9050101@redhat.com>
-Date: Thu, 21 Jun 2012 22:09:59 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/11
+Message-ID: <4FCF8C3A.6070500@redhat.com>
+Date: Wed, 06 Jun 2012 10:58:34 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Breno Silva Pinto <BPinto@...stwave.com>, Stefan Esser <stefan.esser@...tioneins.de>
-Subject: Re: mod_security CVE request
+CC: Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: CVE-Request: hyper-v daemon
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/21/2012 10:03 PM, Kurt Seifried wrote:
-> CVE request for mod_security multi-part bypass:
-> 
-> This issue was partially fixed in 2009 and then corrected
-> completely (I hope =) in 2012, so 2 CVE's.
-> 
-> 2009: 
-> https://www.modsecurity.org/fisheye/browse/modsecurity/m2/branches/2.5.x/apache2/msc_multipart.c?r2=1419&r1=1366
-
-Please
-> 
-use CVE-2009-5031 for this issue.
-
-> 2012: commit c5d749a0d809cf24335cd35720d7eac99ba7ea44 Author:
-> brenosilva <brenosilva@...7d574-64ec-4062-9424-5e00b32a252b> Date:
-> Fri Jun 1 20:16:06 2012 +0000 MODSEC-312 svn co 
-> https://mod-security.svn.sourceforge.net/svnroot/mod-security/m2/trunk
+On 06/06/2012 08:59 AM, Sebastian Krahmer wrote:
+> Hi,
 >
-> 
-modsecurity
-> svn diff  -r 1917:1918
+> The hyper-v daemon fails to check origin of netlink messages.
+> Please see
+>
+> https://bugzilla.novell.com/show_bug.cgi?id=761200
+>
+> Can someone from the usual suspects assign a CVE?
+>
+> thanks, Sebastian
 
-Please use CVE-2012-2751 for this issue.
+Please use CVE-2012-2669 for this issue.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Apologies if this shows up twice, the first one appears to have gotten
+eaten somewhere.
+
+- -- Kurt Seifried Red Hat Security Response Team (SRT) PGP: 0x5E267993
+A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJP4/AXAAoJEBYNRVNeJnmTHV0QAMa2oPEBpIPcJw3OlUCOuWBC
-RhmNCR0n8Jake43p/aDL8X6BmbQ6++1gQrlqkrWzGCd79iIZ6N1qI7PDtajRLLAP
-9S82E+1iyCILcgJEExbVeEme2UVncUHTulXIaiE+1YLcaIT6G+O23rHFMZ1xwnvd
-x+lDqAGxJxlnzEkQjH1Q4jpoZXSsuyeIUIfgysLreczjL1YjZMn9Jn5X69dvXHr+
-XkLuWkE3KO+EuKA4FB5Mnf4atq7D4k/e8UvVgxveY56de2P3F63EXBhL8e+7HH6P
-eMIwpHl7GvLyHqzui2xoLwcVa7cdYBa35eUDBML+pc3B+K5EvpicUbSPrBKYpzyH
-X89izH2OGm3ZziPWatddXBSQLrYcbPcPqMEw8Flzm7cyg/0EqUcpjJA26y7lItsC
-Fbeq2wzQhVClDD5uIzEWSQWE/bm5UNucfJUqKY6y0qiRjb815lJqoLu9SUk0DRNn
-NPsqQmBFj1IB2nDfllR8SvJAGfFJF+RuVVgif6IkF+pSnewmqy9ezxyz33+EawlO
-8pXz7AoxF1dfUT6x1Ld73D1vMIgpo/uZNqoH618E3CxiYPwcSAUVViC/AmmTHDzJ
-sIA5PDyhJaOntNzY3B5TiXK1GZEpXB5gmX90/HbxUpzvRpqkriW0QgTtxeoeT3jl
-4uIjKraKXQxUUa/dv4C7
-=tzkC
+iQIcBAEBAgAGBQJPz4w6AAoJEBYNRVNeJnmTiQ4QANC/Iop9IQvjKv4WYSKepXHD
+oNNl8TIQWWQTwAz2RaVagEAGYIo0tu0SYsc2eU4GjK0O2ns0TEmVBkgso7v3nhJx
+TgcVWjdIE/0oJFUXB+DUxTk2l60+BrmzJ/iSM9465CHbztSVcsy1jW7KNhouJX9Y
+a53AxoM7Yu8QDrInvPfQWVLt0g4rr7gn/Z35cit75/Kwvb5mec3JFgmOaCaDfnZb
+9KSULMrdCednoqjf3dCmVD+wfrgNRnta+z/HXouF+kWbHEvKoQYuI7cli4EHCqvq
+3ym3MXbhCm40A5imyjlYdB9bmpRbMvSLxCiAedc8mpnCl7CL+3rscg6N4U1kSIRD
+JQ19ygJ/lFJ8i29nYJvK8jIh4ch9syoqvnFhH6yvhgzt7qdps2NDqjEaRvr03PlS
+MhM2tBqNvP3nQbWeOPIgxDNWCQfP0pbh0TrmH/AesbqXHk+PC35O0BoARP6IWK2M
+AkIuDGye0IP/tbR9WQmZOOSGSoZrZktgL/96QaAb+cz1aIUQ0hWHs4QgcmEiF4Qs
+EwmIa9fvM69S6CuZ0N/u5P60eavKcBTNcCU166v2lXfeUPJPXXNCdxkMie+lOkg9
+epL3yBLl3dvK5JHDguAaPYTVgpruH+oBrFJF9im4f8r9pZRMAnw/K8XTjGFgYbBp
+tPGEUaQWFJeAa8LnWLoN
+=ZrOv
 -----END PGP SIGNATURE-----
