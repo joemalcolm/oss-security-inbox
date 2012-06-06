@@ -1,34 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/12
-Message-ID: <50328189.6030606@redhat.com>
-Date: Mon, 20 Aug 2012 12:27:21 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/3
+Message-ID: <4FCEE92A.5060402@redhat.com>
+Date: Tue, 05 Jun 2012 23:22:50 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: taskstats: use-after-free in xacct_add_tsk()
+CC: Tomas Hoger <thoger@...hat.com>, Felipe Pena <felipensp@...il.com>
+Subject: Re: CVE id request: Multiple buffer overflow in unixODBC
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/20/2012 11:25 AM, Petr Matousek wrote:
-> An use-after-free flaw has been found in the way taskstat's
-> TASKSTATS_CMD_ATTR_PID command and exiting tasks with already freed mm
-> interacted. An unprivileged local user could use this flaw to crash the
-> system or leak kernel memory.
+On 05/31/2012 08:44 AM, Tomas Hoger wrote:
+> On Wed, 30 May 2012 13:02:53 -0600 Kurt Seifried wrote:
 > 
-> Please note that the fix below is from year 2006.
+>> On 05/30/2012 11:40 AM, Felipe Pena wrote:
+>> 
+>>> It isn't limited to the configuration files. Such input can be 
+>>> passed to the `isql' interactive tool that come together
+>>> unixODBC. The same string can be used to connect through PHP
+>>> PDO, for example.
 > 
-> Upstream fix:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f0ec1aaf54caddd21c259aea8b2ecfbde4ee4fb9
+> Agree, anything that parses such connect string can be crashed
+> this way.  The question is if any trust boundary is crossed with
+> that, which depends on whether there are any apps that allow
+> untrusted connect strings.
 > 
-> References:
-> http://bugzilla.openvz.org/show_bug.cgi?id=2294
-> https://bugzilla.redhat.com/show_bug.cgi?id=849722
+>>> $ ./isql "FILEDSN=$(python -c "print 'A'*10000");UID=user" -k
 > 
-> Thanks,
+> Anyone having shell access to run isql directly should be assumed
+> to have ability to edit ~/.odbcinst.ini, which should be enough to
+> crash isql or inject code to it without having to trigger one of
+> the mentioned overflows.
+> 
+>> Is this something that an attacker can typically control, or does
+>> the PHP author need to write code that does this?
+> 
+> For PHP applications, would you assume attacker can typically
+> control settings as database name, host, port or username?  It's
+> not really quite common.  Possible use cases that come to mind:
+> 
+> - DB management application similar to phpMyAdmin, that may take
+> some DB connection info as input from user.  If something like that
+> exists for ODBC, another question would be if the info from user
+> can actually be used to sneak in values for FILEDSN or DRIVER. - Of
+> course, this may allow safe_mode bypass, which may not be possible 
+> via odbcinst.ini (e.g. PHP script may not be allowed to edit it
+> and safe_mode does not allow setting ODBCINSTINI environment
+> variable).
+> 
 
-Please use CVE-2012-3510 for this issue.
-
+Forgot to follow up, in light of this I think it's safe to let the CVE
+stand as is.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -38,17 +61,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQMoGJAAoJEBYNRVNeJnmTKDMP/0NF2Vka50AbpYA8dd9YD/Cm
-7dBbM0inaXPRclycbqGR8jhARF9JYq6AQd84nCeazJZJ8QA2rG+miUm3bePiYEPk
-dBpZugs2GW1Q1UjVHKvQoJ8NQh4vh+z9Xqf/8Rzuoo87O2YFcz3MD81WL3JEq29a
-nvYW1C0sgPpxXy9GQlw0HiY4D9KVgflHx62bjCfrNr0c+5tgmZe3M0CtorvmCzQW
-WiU3OTW39BHmUKyHcaDqcDcjiRVP5Y3zPmBq/72PfluccHoTeKYfKjDjwEjjvVyf
-yeYzr2ayPDyY4orW9ACTv4AXPPeuHDw0cFYUmAurzycmSGufnXgmg8OZf4hOk4oH
-StNYNeeM7WjaoxXsY7+nUEVFgN7BchCmLQE7TMVD6IHCpu3mG+MdKmLymP/yL2xL
-ne20qB8C956vPrLTy2M7Z15YWivwazPmnXEpR/5KIRxxt3KWZJMh9fyWrKu+pg3i
-GNsOei9gABH1O7DZ6TBmOo0zOq1EJGQMHQjVhTIfs2462Yykz8QLMzEcXV7tzMsP
-dSnUT+C8QtwBrfD/3gbVhvdmXku8oY4lUo6ZTjSAAg4tRu4Au8iCxBuhHTttenuH
-qstTVfIB9tgnQExDdzIIe/Np8THIJPXJkXHBLPJf4uT9dEdfIcPRmDnp9wIZiI1V
-zCzKDuMvydpTpa1CW8DK
-=tI6r
+iQIcBAEBAgAGBQJPzukqAAoJEBYNRVNeJnmTskMP/0xfDKnEm5jXoNld34jYG+Ph
+RwMNBj5VICzdOTCNWdqNd4RmEzN9bEyQS3h859IIE0W3JOZXvZV+jMXFKaqIEO12
+12cpUHoALz85Gettke7HDulcPzojzpYAezq/Ifw+L+pV180gJrxRooHXmnUXCjeK
+W7xEPaJWRRdcIstnp1b7vNaNOr219gWG+ftuEvNNzFD8dV0C1hXtBWYq42XSP3rm
+OFL9prwIaRnWGL8jjYiJFeRTmckiFwU+1i/FOR9ig9fUjWaJjBN+CbYlwCRxH5l4
+HemaYGhYLwKh7/lJHDBvz3xa3kFeuChtBuk8OsxTrLJ7hKXOUGVCyiBUGMaHjAKO
+143EOcw6iPbOjyEUuLjbKFBao+cK5qgYvLOcX2jWsct+RHYa22GcJr736G/1JRHc
+1vFJZSn4VMwNuNgmvRy272JjJqrAXGMzhysN+Dck/s2U9zu1YS50V1hrz9JFtNZj
+BYTJV2rh/f4JUuRNH0tM7BJTo6gGr81+FFgEYcrnxZm1/SwndJ8SOQ63PCs9qwZE
+EqlCeQQxCR4W0rldWEAsWuaHNvyANyw14ReAFGoh6/tsMiCUBqKn++OeMG93BwKE
+E0SdlwaCY7u5yd94WbyhvEYKEdWEBJiXysVigsh9Jbujr3dt3fuXQCv6M0FlQT8l
+ViSlgG6MXmrI2eQfkBDP
+=RZi3
 -----END PGP SIGNATURE-----
