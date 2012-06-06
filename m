@@ -1,132 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/09/4
-Message-ID: <4F82BD00.3000107@ispconfig.org>
-Date: Mon, 09 Apr 2012 12:42:08 +0200
-From: "ISPConfig.org - Till Brehm" <t.brehm@...config.org>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  lathama@...il.com
-Subject: Re: CVE for ISPConfig 3.0.4.3 "Add new Webdav user" can chmod and chown entire server from client interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/2
+Message-ID: <20120606050444.GA7966@kludge.henri.nerv.fi>
+Date: Wed, 6 Jun 2012 08:04:44 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: openldap does not honor TLSCipherSuite configuration option
 Content-Type: text/plain; charset=utf-8
 
-The Bug has been filed by "hakong" on April 3 in the ISPConfig 
-bugtracker and
-has been fixed on April 4  in SVN stable branch, Revision 3020.
+On Tue, Jun 05, 2012 at 03:54:02PM -0600, Vincent Danen wrote:
+> Could a CVE be assigned to this issue?
+> 
+> It was reported that OpenLDAP, when using the Mozilla NSS backend, would
+> ignore any TLSCipherSuite configuration settings.  When the
+> TLSCipherSuite setting is configured, OpenLDAP would use the default
+> cipher suite, ignoring the setting.
+> 
+> While the default cipher suite contains some weak ciphers (e.g.
+> MD5-based), it is still not easy to break the encryption to obtain
+> sensitive information.  However, if an administrator wishes to enforce
+> the use of stronger ciphers by overriding the defaults using
+> TLSCipherSuite, they should be able to trust that, when the
+> configuration items is in place, the stronger ciphers are used.  Due to
+> this flaw, that is not the case.
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=825875
+> http://www.openldap.org/its/index.cgi?findid=7285
+> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=2c2bb2e
+> 
+> 
+> Thanks.
+> 
+> -- 
+> Vincent Danen / Red Hat Security Response Team
 
-See bugrepport for fast workaround and patch update instructions:
+Reported to Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=676309
 
-http://bugtracker.ispconfig.org/index.php?do=details&task_id=2157 
-<http://bugtracker.ispconfig.org/index.php?do=details&task_id=2157>
-
-or get revision 3020 from ISPConfig 3.0.4 SVN stable branch to get the 
-update:
-
-svn://svn.ispconfig.org/ispconfig3/branches/ispconfig-3.0.4
-
-The Bug is fixed in ISPConfig 3.0.4.4 which will get released on April 
-10, 2012.
-
-The contact info of the ispconfig project can be found here:
-
-http://www.ispconfig.org/imprint/
-
-Till Brehm
-ISPConfig.org
-
--- 
-ISPConfig UG (haftungsbeschränkt)
-Ritterstrasse 21
-21335 Lüneburg
-Tel +49-4131-707771
-Fax +49-4131-407175
-Email info@...config.org
---
-
-
-
-
-Am 08.04.2012 23:22, schrieb Kurt Seifried:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> Main website: http://www.ispconfig.org/
->
-> CC'ing various addresses I found on their site/docs. They don't appear
-> to have any real contact info.
->
-> Originally seen on Reddit, link to bug report:
->
-> http://bugtracker.ispconfig.org/index.php?do=details&task_id=2157
->
-> Filed by "hakong"
-> ========================
-> Details
-> Through the client interface, I was able to chmod and chown the root
-> directory (/) of my server to web3:client9 and 770 using the "Add new
-> Webdav user" by using ../../../../../../../../../../../../ as a path.
-> This can probably be exploited in some way too.
-> Just tried this on a fresh install of ISPConfig version 3.0.4.3, and
-> it worked, had to re-install the entire VM. This has to be fixed as
-> soon as possible.
-> ========================
->
-> Quick check of svn and generate log (to see revisions) and a diff (to
-> look at the interesting revision, check date in bug report):
->
-> svn co svn://svn.ispconfig.org/ispconfig3/trunk/
-> cd trunk
-> svn log -v --limit 10 | less
-> svn diff -r 3018:3027>  ../3018-3027.diff
->
-> and we then this:
->
-> Index: interface/web/sites/webdav_user_edit.php
-> ===================================================================
-> - --- interface/web/sites/webdav_user_edit.php	(revision 3018)
-> +++ interface/web/sites/webdav_user_edit.php	(revision 3027)
-> @@ -114,7 +114,9 @@
->   		 */
->   		if(isset($this->dataRecord['username'])&&
-> trim($this->dataRecord['username']) == '') $app->tform->errorMessage
-> .= $app->tform->lng('username_error_empty').'<br />';
->   		if(isset($this->dataRecord['username'])&&
-> empty($this->dataRecord['parent_domain_id']))
-> $app->tform->errorMessage .=
-> $app->tform->lng('parent_domain_id_error_empty').'<br />';
-> - -
-> +		if(isset($this->dataRecord['dir'])&&
-> stristr($this->dataRecord['dir'],'..')) $app->tform->errorMessage .=
-> $app->tform->lng('dir_dot_error').'<br />';
-> +		if(isset($this->dataRecord['dir'])&&
-> stristr($this->dataRecord['dir'],'./')) $app->tform->errorMessage .=
-> $app->tform->lng('dir_slashdot_error').'<br />';
-> +		
->   		parent::onSubmit();
->   	}
->
-> Which confirms this flaw quite nicely.
->
-> Please use CVE-2012-2087 for this issue.
->
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
->
-> iQIcBAEBAgAGBQJPggGuAAoJEBYNRVNeJnmTxbsP/2jDl88uR6oxoAEpBIkvrNzT
-> xFD8mcMx3ak5lapXyLMFt1yjOXo4uF7DYlLi76i12fvJ3AO+4+/J+tH7A0Do8Vf3
-> sH8IAcYZ6iq+NnNF8MhnpTia6dC38gCYb6fqGxL8OrR0jxRDv2XfmKjOHPKQ9x5S
-> DL/wmDuj4wKfOjoJbmqEpk6ECry2zWBREQTASGjChkLGKt9LvLCtRrkfq2yAidMD
-> zhYKGyn0YRcySKV2EURP0hHw2Z0N5aVx3PBgu6CfUM2/KrcXx/sC8e3twP43uoC0
-> ySpFLgrDrLcjwY9/Yzvbiqor2iA2lse2rXjrVAbwjMJ8pwIEhOj6gGq26tQR/WYF
-> RoJpY5ZDXYuN1qSO2bAkD1xP3p/6sGrvz9hejc6X1DJGYEEv5Aje3XvZA1PJ4hZf
-> 31ASe/MZMiHSN6YbyClz6JdUG9aQW4qPWI7Pl1DE5SqenwU8eQvhNm+S/yMebwyZ
-> skcMFojcZvFhd/HqR8idgUvyQKJ3ZlWxOooX6AOiyB8kghTt5oKUOUhPzs36rh0h
-> WdHEnh23OCjPcxbVZsxh4XkTkH9K6oc770TvVJ7TrieAXZmvbSexyK2FP7ShUhhx
-> kojxB1nBeIcYIX//Dc/JZUZHyrTjNeAm3RobtY0srgYu8FTme6rk45CTw+dmHN2h
-> onlMmeJvYm7vrSw18a0/
-> =1Dxw
-> -----END PGP SIGNATURE-----
->
-
+- Henri Salo
