@@ -1,28 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/10/3
-Message-ID: <504E1162.6000405@redhat.com>
-Date: Mon, 10 Sep 2012 18:12:18 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/1
+Message-ID: <4FCE9E51.80602@redhat.com>
+Date: Tue, 05 Jun 2012 18:03:29 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jeff Law <law@...hat.com>, Jakub Jelinek <jakub@...hat.com>
-Subject: Re: CVE Request -- glibc: strcoll() integer overflow leading to buffer overflow + another alloca() stack overflow issue (upstream #14547 && #14552)
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: openldap does not honor TLSCipherSuite configuration option
 Content-Type: text/plain; charset=utf-8
 
-On 09/07/2012 07:21 PM, Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->> 2) Issue #2 (mentioned here only for completeness, but I am not of
->> the opinion this should receive a CVE identifier. See argumentation
->> below [but open to glibc upstream / others to disprove it]).
+On 06/05/2012 03:54 PM, Vincent Danen wrote:
+> Could a CVE be assigned to this issue?
+> 
+> It was reported that OpenLDAP, when using the Mozilla NSS backend,
+> would ignore any TLSCipherSuite configuration settings.  When the 
+> TLSCipherSuite setting is configured, OpenLDAP would use the
+> default cipher suite, ignoring the setting.
+> 
+> While the default cipher suite contains some weak ciphers (e.g. 
+> MD5-based), it is still not easy to break the encryption to obtain 
+> sensitive information.  However, if an administrator wishes to
+> enforce the use of stronger ciphers by overriding the defaults
+> using TLSCipherSuite, they should be able to trust that, when the 
+> configuration items is in place, the stronger ciphers are used.
+> Due to this flaw, that is not the case.
+> 
+> References: https://bugzilla.redhat.com/show_bug.cgi?id=825875 
+> http://www.openldap.org/its/index.cgi?findid=7285 
+> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=2c2bb2e
 >
-> I will hold off on issuing a CVE for this then. Anyone want to weigh in?
+> 
+> 
+> Thanks.
 
-It looks as if the alloca issue was introduced at the same time as the 
-malloc-related overflow:
+Please use CVE-2012-2668 for this issue.
 
-http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=5358d026c74
 
-So perhaps one CVE is enough for glibc bugs 14552 and 14547 because the 
-problems are similar and affect the same versions.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- 
-Florian Weimer / Red Hat Product Security Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJPzp5RAAoJEBYNRVNeJnmTlycP/RinjoXTx14EFSYVrM8r7XW4
+x/4No+CPYcBYsorCger/rce7BKZfxhs4Wy8KX/haKwCzWWYhObyd61xZ8dZlRAPi
+z2C0qk2ev8ZMmykb3Fi0gqyPQuBB7Y7jtfV9+Sf6G+PSWGcGlnkfbGgelefUQTM4
++dXalBtzgbROdNjiNocSrKshtS4wwJkntoX1TuIxQxS/GB16/xyYfA38T24eXFId
+6IFs/HJzrS0fBCbaxT22dkZtveUYUFEcpPAKCqWMHOIpHHguFWN5BNk/aWQ+f8ym
+88PCNtDiglxMYwvxwVDRXjUSHGMBsL3DENzaq47AUnjWVjVuY4UjyK4HhOUY0jbY
+Zp+6S4Cdt2f6LdxTnfewQNo6IyKhOTilqvL7LAPa+2TrATMLhIgex4gmsuKS/OT1
+qT04ac5qcoIFWtEscMvevXtSLT+sxF1NSgkGimXQJ1X94kEh7iDceRxiD3B+s4vm
+KvHFbXT3aV7Q/zrgBXJRwC6rOqrw0qofTgDz/kG95u23YgcgXLbWblV5YJ538SCq
+fLIAGm2BbVUP2iQS1Un26nYmLUfXKQB/tIzq7AUbMH8mKzpjZTOIFrm4+uZwexQ7
+Vy93nab9FYx1X6CKRTGdJWgQghqpGAEc4V/+kRCNQQLaNp0GYxjwqsmve/SbP/Mw
+skDiqlVbXhIwsIard6/r
+=yy8y
+-----END PGP SIGNATURE-----
