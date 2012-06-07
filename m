@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/7
-Message-ID: <20120124172819.GA27764@inutil.org>
-Date: Tue, 24 Jan 2012 18:28:19 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/11
+Message-Id: <20120607155336.856E214DBE6@smtp.hushmail.com>
+Date: Thu, 07 Jun 2012 16:53:36 +0100
+From: "Dex" <0x41@...h.ai>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: Suhosin extension / as31
+Subject: Re: WHMCS 5.0.2> SQLi CVE Request
 Content-Type: text/plain; charset=utf-8
 
-Please please assign two CVE IDs:
+Because securityfocus seem incapable of reading code, which I guess
+should be expected from an operation like that, they link to the vuln
+check code.
+The exploit code is available at PacketStorm:
+http://packetstormsecurity.org/files/113106/WHMCS-Blind-SQL-Injection.html
 
-1. Suhosin extension "transparent cookie encryption 
-   buffer overflow"
-   
-   http://seclists.org/fulldisclosure/2012/Jan/295
-
-2. Insecure temporary file in as31 assembler
-
-   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655496
-
-Cheers,
-        Moritz
+On Thursday, June 07, 2012 at 4:48 PM, Dex  wrote:Hello all
+I'd like to  request a CVE for this bug please so that I can be
+cool/save the planet.http://www.securityfocus.com/bid/53711
+It is what was patched with this patch from WHMCS
+http://www.securityfocus.com/bid/53770http://blog.whmcs.com/?t=47828
+Thanks in advance,dx7r
+I hate myself for this.
