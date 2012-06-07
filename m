@@ -1,42 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/3
-Message-ID: <50BD5809.4040007@redhat.com>
-Date: Mon, 03 Dec 2012 18:55:21 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/4
+Message-ID: <4FD03614.1050303@redhat.com>
+Date: Wed, 06 Jun 2012 23:03:16 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Damien Sandras <dsandras@...onix.com>, Eugen Dedu <eugen.dedu@...pm.univ-fcomte.fr>
-Subject: Re: CVE Request -- Ekiga (x < 4.0.0): DoS (crash) after receiving call from other party with not UTF-8 valid name
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Some notes on CVE's and group privilege dropping
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/03/2012 10:36 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> a denial of service flaw was found in the way Ekiga, a Gnome based
-> SIP/H323 teleconferencing application, processed information from
-> certain OPAL connections ([certain] UTF-8 strings were not verified
-> for validity prior showing them). A remote attacker (other party
-> with a not UTF-8 valid name) could use this flaw to cause ekiga
-> executable crash.
-> 
-> Upstream bug report: [1]
-> https://bugzilla.gnome.org/show_bug.cgi?id=653009
-> 
-> Relevant upstream patch: [2]
-> http://git.gnome.org/browse/ekiga/commit/?id=7d09807257
-> 
-> References: [3]
-> http://ftp.gnome.org/pub/gnome/sources/ekiga/4.0/ekiga-4.0.0.news 
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=883058
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+So there are a lot of group privilege related issues in Linux and UNIX
+programs due to the simple fact a lot of stuff needs limited elevated
+privileges for something like binding to a privileged port or
+accessing a file with restricted permissions. The usual solution is to
+start running as root (using setuid or setgid), execute the code
+requiring privilege and then drop privileges to an account such as
+"apache", "bind" or the user running the program. Many programs fail
+to properly drop privileges, in some cases they even manage to add
+additional privileges in an attempt to drop them leading to security
+risks and trust boundary violations. On the other hand some privilege
+dropping problems are quite benign and can be classified as security
+hardening.
 
-Please use CVE-2012-5621 for this issue.
+So with this in mind when is a group dropping issue severe enough to
+be considered a security fix as opposed to security hardening, and for
+what should a CVE be assigned (please note that this is not set in
+stone, make a good case for something and it can potentially get a CVE).
+
+1) Is there a trust boundary violated, or an exploit for this to gain
+privilege, gain access, cause a significant DoS, etc.? Examples would
+be arpwatch adding root privileges. Especially if you can show exploit
+code for this then it's pretty obviously a security issue.
+
+====
+As reported on the oss-security mailing list [1] the
+arpwatch-drop.patch as included in Red Hat arpwatch packages does not
+properly drop capabilities when changing uid/gid. It calls
+initgroups() as:
+
++ if ( initgroups(pw->pw_name, NULL) != 0 || setgid(pw->pw_gid) != 0 ||
++ setuid(pw->pw_uid) != 0 )
+
+However in this case, the NULL results in group 0 being added to the
+supplementary groups list.
+====
+
+2) Is the program documented as dropping privileges, do people expect
+it to drop privileges and be relying on this as a secure feature? If
+so it would earn a CVE (security features that fail to work typically
+get a CVE).
+
+3) Does the program attempt to drop privileges in code? This is where
+things become a grey area, if it is not documented as such (in
+documents, source code, etc.) and people generally don't rely on it to
+drop privileges I'm less inclined to assign a CVE and class this
+instead as a security hardening issue. Unless it falls into the first
+category of having an exploit or something clever that can be
+triggered, then make a case.
+
+4) The program makes no attempt at all to drop privileges, typically
+no CVE issued as this is security hardening. Unless it falls into the
+first category of having an exploit or something clever that can be
+triggered, then make a case.
+
+More info: Steve Grubb has made some excellent postings on this:
+
+http://www.openwall.com/lists/oss-security/2012/05/24/6
+http://people.redhat.com/sgrubb/security/find-nodrop-groups
+
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -44,18 +77,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQvVgJAAoJEBYNRVNeJnmTnTkP/1g3hZfD+vEtvLiYKi4ZN3e0
-818jnR4mwGxCOriqdgdDuR9in1xcKbs3vocCRdAw5y8MlAQrHf0m0+BinIKNPwHs
-lTpfuj3XXl8TpMNjIeQ0hPmQb3wLINt7myzlBQZlc7TXWNT8OTwkT+hIBcHYvxzh
-eXm2EDu3z1uW6QiUNCGVESWoMlQmg2s5LaoRHvoc2dBBsEuIgoA5aEcn7XofOe7c
-8tL1IEqwpNvBgBSB+PTmMeThSDCtGTzHw/9yrH6WBykKj7CyPsYpvqgD/q6+8cnH
-vARomEY6WfTqS6cYo1/D8L87s+iWjbGXrUUESeSRy3IYVLt5GxA7xGqXwRWmFeCi
-xYwEqpfIDghDyuTF4eCUsZUG7sdrUVXGtJ6qh00DaPwCDxhNDUapzgY5wloVrbjt
-+hqxK7QnlFXANpoFARirBuYhd6Q4tym940RoHmbWieoKIel0PRwK76q9RwjxWUUh
-p2YIi2/dyTiwWx9tsdIB77QqKI2agBQrwDLLQiXEHtimBb15ivHm+IPT5AUvyn1r
-gQloUzFYJ8ieSaPyKzHcJiU7Z80KXhyAAAbVc2iJ0QhJ1MtYjUUd70Hc4DTwzDb4
-hLwii6qtffVE+xuCIqOfZgerP2NdeSy85qXaYMuPyZMK2fA0bk9nFTyBWe3UTsOb
-7o3KugCHrmdBh1U2CKYP
-=zJJ0
+iQIcBAEBAgAGBQJP0DYUAAoJEBYNRVNeJnmTzl4QALUup0ZTGe431nMtnmCNbnGV
+SNLaD5JOEK1O0Ix1bY1kgXcj8gJnYDuf/ZDIRN+y/ua+rM9OlUvixBIoe3WIB/CK
+ZWtqq3l6FjNdRMtqnwQt6ANbt5KUlqs8yb12hp5wPnAJXUIPpRM5am9Tuexku/B/
+ukbcGjsiqGk8EzcV9+/9ik52q1mfFK9B+nEgyikAb3rIp61Bm5Ocn9krtqT1u4vl
+Fni/bAYkbmAUFbpQVSdV7g5uq3j+44+Zopyl05EijDbZ25B/o1BUkB9rUSyCqlxx
++L0WE1PeuIdavZzBQj4JmFJnVyzBWLYwoGwunW1vqoE+4x8BUYB4INyvyk/3fxb9
+yjYzhBuYFUxF7nyuDbZc8PWjScMAVSxEk9jGtlgfZrxEdj9kZR+kClQAakQcD5/O
+/lBF3eWM2Fsyzh1DY057fUjkNnTHg/m4sA1h1P+UyzYx/9Qj058zlYibtmYM6VIR
+Uf58L5RJUv151+w5SgRWbq7cCRjOYs1J9irWm0JkAsl/jMIy+TO95D+pLhfGb+KS
+FCtdOju119plF9dCoaOk0KmQrGkEnUaD3v9XrpLOB+xh5HBj/lOsNdLeTpKAiRTZ
+bFXZlTuWYZ3KCSH429RPffHkwYanCfLfPlMoYLR7GLy+5sC4WESnzUvnDciYK/q5
+yNvNWYgRqWmRBNY/ofA+
+=9eHl
 -----END PGP SIGNATURE-----
