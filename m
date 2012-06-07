@@ -1,160 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/31/2
-Message-ID: <50173318.5040701@redhat.com>
-Date: Mon, 30 Jul 2012 19:21:28 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Django 1.3.1 and 1.4.0 security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/9
+Message-ID: <4FD0CAC0.90004@redhat.com>
+Date: Thu, 07 Jun 2012 17:37:36 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Xi Wang <xi.wang@...il.com>, Kurt Seifried <kseifried@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: memory allocator upstream patches
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 07/30/2012 07:16 PM, Kurt Seifried wrote:
-> https://www.djangoproject.com/weblog/2012/jul/30/security-releases-issued/
+Hello Xi, Kurt,
+
+   thank you for your report and notification.
+
+It doesn't look that the issues below have got CVE identifiers
+assigned yet. Thus assuming your report was also a simultaneous
+request for the identifiers, not just notification, correct?
+Can you confirm that?
+
+Kurt,
+
+   once confirmed, could you please allocate CVE ids for these
+flaws? (me not sure if the 'bionic' one case below being open-source,
+but for the rest the request(s) look valid).
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+On 06/05/2012 07:54 AM, Xi Wang wrote:
+> Hi,
 >
->  Security releases issued
-> 
-> Today the Django team is issuing multiple releases -- Django 1.3.2
-> and Django 1.4.1 -- to remedy security issues reported to us.
-> 
-> All users are encouraged to upgrade Django immediately.
-> 
-> ========================================= Cross-site scripting in
-> authentication views
-> 
-> The login() and logout() views provided in Django's authentication 
-> framework make use of the common "POST-redirect-GET" pattern; a 
-> configurable querystring parameter can be used to specify the
-> location to redirect to on successful submission. Currently, those
-> views perform basic validation to ensure that the redirect location
-> does not specify a different domain.
-> 
-> However, this validation does not check the scheme of the target
-> URL; armed with this knowledge, an attacker can craft, for example,
-> a data: scheme URL which will execute JavaScript.
-> 
-> Some browsers are known to currently provide protection against
-> this issue: Google Chrome in particular explicitly disallows
-> redirects to data: scheme URLs. However, several other major
-> browsers do permit such redirects.
-> 
-> After careful consideration of this issue, we have decided that
-> the safest course of action involves a slight break to backwards 
-> compatibility. Although temporary mitigation could be achieved
-> through more stringent validation in the relevant views, the root
-> issue lies in Django's HTTP response classes, which currently do
-> not perform any validation of redirect targets. The fact that some
-> major browsers already disallow certain URL schemes in redirects
-> indicates that the impact of this change is likely to be minimal.
-> 
-> As such, the following change is being made despite breaking API 
-> compatibility:
-> 
-> django.http.HttpResponseRedirect and 
-> django.http.HttpResponsePermanentRedirect now subclass a common
-> base class, django.http.HttpResponseRedirectBase. That base class
-> defines an explicit whitelist of allowed URL schemes. Attempts to
-> instantiate a redirect with a URL of a scheme not in the whitelist
-> will raise the exception 
-> django.core.exceptions.SuspiciousOperation, which is already
-> employed for similar purposes in other parts of Django's codebase
-> (e.g., to warn of possible session tampering).
-> 
-> End-user code which issues redirects is unlikely to be affected
-> unless it either explicitly requires redirecting to an unsupported
-> scheme, or accepts the target URL from a user-supplied parameter.
-> 
-> In the former case, subclassing the appropriate redirect class 
-> (HttpResponseRedirect for status code 302, 
-> HttpResponsePermanentRedirect for status code 301) and overriding
-> the allowed_schemes list will be sufficient. The default value of 
-> allowed_schemes is ['http', 'https', 'ftp'].
-> 
-> In the latter case, code which accepts user-supplied parameters
-> can attempt to instantiate the redirect, catch the
-> SuspiciousOperation exception, and fall back to an alternate
-> location as needed.
-> 
-> At present, Django's authentication views will leave this
-> exception uncaught. This means site administrators will receive
-> error reports if/when that exception is raised. It is likely that
-> future Django releases will begin catching this exception, after
-> allowing some time for users of Django to observe behavior and
-> judge their exposure to potential issues.
+> I would like to share some upstream patches of two specific types
+> of memory allocator vulnerabilities.
+>
+> * malloc(n) size overflow.
+>
+> Consider the following code pattern.
+>
+> 	n = read_from_input();
+> 	p = malloc(n);
+> 	if (p)
+> 		memcpy(p, input_buffer, n);
+>
+> Some malloc() implementations internally perform alignment/padding
+> for a large n, and the allocation size wraps around to a small
+> integer.  That means they would allocate a smaller buffer than
+> expected, leading to buffer overflow.
+>
+> * calloc(n, size) size overflow.
+>
+> Some calloc() implementations don't check for n * size multiplication
+> overflow, and would allocate a smaller buffer than expected,
+> leading to buffer overflow.
+>
+> The two types of vulnerabilities can be easily reproduced using
+> malloc(-1) and calloc(BIG-VALUE, BIG-VALUE).  If the return values
+> are non-null, the implementations are likely to be problematic.
+>
+> See a more complete list at:
+>
+> http://kqueue.org/blog/2012/03/05/memory-allocator-security-revisited/
+>
+> Below are some recent upstream fixes.
+>
+>
+> Boehm-Demers-Weiser GC (libgc)
+> ==============================
+>
+> malloc() size overflow, upstream patch (revised by the developers):
+>
+> https://github.com/ivmai/bdwgc/commit/be9df82919960214ee4b9d3313523bff44fd99e1
+>
+> The bug in mallocx.c was found by Ivan Maidanski.
+>
+> calloc() size overflow, upstream patch (revised by the developers):
+>
+> https://github.com/ivmai/bdwgc/commit/e10c1eb9908c2774c16b3148b30d2f3823d66a9a
+> https://github.com/ivmai/bdwgc/commit/6a93f8e5bcad22137f41b6c60a1c7384baaec2b3
+> https://github.com/ivmai/bdwgc/commit/83231d0ab5ed60015797c3d1ad9056295ac3b2bb
+>
+>
+> bionic (Android libc)
+> =====================
+>
+> malloc() size overflow, upstream patch (revised by the developers):
+>
+> https://github.com/android/platform_bionic/commit/7f5aa4f35e23fd37425b3a5041737cdf58f87385
+>
+> NB: this vulnerability could only be triggered in debug mode, the
+> same as CVE-2009-0607, calloc() size overflow.
+>
+>
+> nedmalloc
+> =========
+>
+> malloc() size overflow, upstream patch:
+>
+> https://github.com/ned14/nedmalloc/commit/1a759756639ab7543b650a10c2d77a0ffc7a2000
+>
+> calloc() size overflow, upstream patch:
+>
+> https://github.com/ned14/nedmalloc/commit/2965eca30c408c13473c4146a9d47d547d288db1
+>
+>
+> Hoard
+> =====
+>
+> http://www.hoard.org/
+>
+> malloc() size overflow, confirmed by the developers via email in
+> this March, no upstream patch available (since 3.8).
+>
+> calloc() size overflow, which should only happen on non-glibc
+> platforms (e.g., Mac OS X).  It has not been confirmed by the
+> developers, but one can easily reproduce it.
+>
+>
+> boost::pool
+> ===========
+>
+> ordered_malloc() (similar to calloc()) size overflow, upstream patch:
+>
+> https://svn.boost.org/trac/boost/changeset/78326
+>
+>
+> - xi
 
-Please use CVE-2012-3442 for this issue.
-
-> ========================================= Denial-of-service in
-> image validation
-> 
-> Django's form system includes field types for handling file
-> uploads, including a field class -- django.forms.ImageField -- for
-> uploading images, which can perform some validation of image
-> formats.
-> 
-> Part of that validation involves detecting corrupted image files, 
-> using routines provided by the Python Imaging Library (PIL).
-> 
-> The check as it currently exists in Django is vulnerable, however, 
-> because it will read the entire image file, including
-> decompressing compressed formats as needed. It is trivially
-> possible to craft a reasonably-sized file which, when decompressed
-> in this fashion, grows to enormous size, consuming available memory
-> and offering the ability to perform a denial-of-service attack.
-> 
-> To mitigate this, image validation will now make use of PIL's 
-> Image.verify() method, which performs some validation checks but
-> does not decompress or read the entire image file.
-
-Please use CVE-2012-3443 for this issue.
-
-> ========================================= Denial-of-service via
-> get_image_dimensions()
-> 
-> Django's image-handling facilities also include helper methods to 
-> determine the dimensions of an image. Currently, the process for
-> this involves reading a 1024-byte chunk from the start of the file,
-> and passing to PIL to determine the dimensions; if insufficient
-> data is provided, further 1024-byte chunks are read until PIL is
-> able to return a definite answer.
-> 
-> While this works well for image formats which store enough
-> information in their headers to determine dimensions, it can result
-> in large quantities of read/process cycles for formats which do
-> not. In particular, larger TIFF images can require tens of
-> thousands of such cycles, tying up or timing out worker
-> processes/threads and consuming enough server resources to result
-> in an effective denial-of-service.
-> 
-> To mitigate this, the algorithm for determining image dimensions
-> is being changed; the initial attempt will still use a 1024-byte
-> chunk, but the chunk size will be doubled on each successive read.
-> Testing has demonstrated that this reduces time to process TIFF
-> files by multiple orders of magnitude.
-
-
-Please use CVE-2012-3444 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQFzMYAAoJEBYNRVNeJnmTj7sP/Re9MoIsUj3AOPRwr/jj0H4M
-OPmJwKgwDmafDBqv+WrsseE4XSigt/oqPFA4ZHapK5VZq5fSkbbUaypJiiNJejD8
-8LsN1eyayNOnNYh5Yzvwm0F1ufa/ePwwOOQwdr7zos9NzTbVi5PoBfYh3Ab/kKDk
-n36i7Y8LmS0ODMCPKNMnBFIuv11CGlIoVu0zYyBTaHN1DWK/d2Z+XqwCd6gQQLei
-RkdsAkfMqWbN9C8kK55bhIINs1yIy8GEILct2hgEN1cNNUOndZ+zNxCBwKrdTf5o
-1TWHRdBO8VE/++FuBnit8w6jPJ+roNgxIvfzO+CGHeR0BP9kvUgo+pt0eVa/+TuC
-eGKeKb7R74lzSN0SpXTrk4zerDwuIDqgV0QLkNRNVxxnEyRAdgYrD48x5FP9IEX+
-i1XYVVLBMn+zhX+08Ha+2Zqyxs1XUyoijJ3egExoFHM+4BGKv4v3xCggkCzH/9np
-ZkTNQg2xXsBnXqZCJoCHY2VKr+AVfKE8hNAClmVQ0Lax1yABk5q29kZFIicq1ZSc
-/rkqNr0pV8W5nATVn3GdiwVxNtC9VycvvBHdmiN3HiQQci5Z48sf6fFC1oOkg4p+
-hVCgsi6QM8lP3YZBh43zMoHNVE7f/Pvfnp6wResu0zJPC1bA2CmwV0JoP77TTgNF
-635AxZRERcx9pxWMuw+J
-=oCIg
------END PGP SIGNATURE-----
