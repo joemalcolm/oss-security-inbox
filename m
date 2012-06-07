@@ -1,38 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/8
-Message-ID: <5050BFD5.5070606@redhat.com>
-Date: Wed, 12 Sep 2012 11:01:09 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/12
+Message-ID: <4FD0F4EA.6010301@redhat.com>
+Date: Thu, 07 Jun 2012 12:37:30 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: tor
+CC: John Haxby <john.haxby@...cle.com>
+Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/12/2012 06:34 AM, Nico Golde wrote:
-> Hi, from the tor release notes[0]: Changes in version 0.2.2.39 -
-> 2012-09-11 Tor 0.2.2.39 fixes two more opportunities for remotely
-> triggerable assertions.
+On 06/07/2012 01:31 AM, John Haxby wrote:
 > 
-> o Security fixes: - Fix an assertion failure in tor_timegm() that
-> could be triggered by a badly formatted directory object. Bug found
-> by fuzzing with Radamsa. Fixes bug 6811; bugfix on 0.2.0.20-rc. -
-> Do not crash when comparing an address with port value 0 to an 
-> address policy. This bug could have been used to cause a remote 
-> assertion failure by or against directory authorities, or to allow
-> some applications to crash clients. Fixes bug 6690; bugfix on
-> 0.2.1.10-alpha.
+> On 01/06/12 20:12, Kurt Seifried wrote:
+>> In my limited testing with iptables on RHEL 6.2 it appears that 
+>> --state NEW works properly, and won't allow SYN+FIN to create 
+>> connections (I used hping3 and the SYN+FIN Packets were
+>> blocked).
 > 
-> I have not seen CVE ids for these issues. Can you assign ids for
-> them?
+>> So the default ruleset:
 > 
-> [0]
-> https://gitweb.torproject.org/tor.git/blob/release-0.2.2:/ReleaseNotes
->
->  Kind regards Nico
+>> -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT -A INPUT
+>> -m state --state NEW -m tcp -p tcp --dport 22 -j DROP -A INPUT -j
+>> REJECT --reject-with icmp-host-prohibited
+> 
+>> should work, so you could do you clever --syn bits first and then
+>> have that set to protect stuff from SYN+FIN.
+> 
+> What happens if you have "-j ACCEPT" instead of "-j DROP"?   I
+> would expect that sshd wouldn't see the connection but you would
+> get all the unpleasant side effects that made T/TCP deprecated.
 
-Can you attach links to the code commits? thanks
+Ooops yeah typo, that DROP should have been ACCEPT. So to summarize
+properly:
+
+- -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+- -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+- -A INPUT -j REJECT --reject-with icmp-host-prohibited
+
+results in ICMP unreachable (the -F -S bypasses the "--dport 22 -j
+ACCEPT" but gets caught in the final "icmp-host-prohibited" rule) with:
+
+hping3 -c 3 -n -S -F -p 22 192.168.51.195
+
+with:
+
+- -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+- -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j DROP
+- -A INPUT -j REJECT --reject-with icmp-host-prohibited
+
+with hping -F -S the packets bypass the "--dport 22 -j DROP" and get
+caught by the icmp-host-prohibited
+
+with hping -S the packets get caught by "the "--dport 22 -j DROP"" as
+expected.
+
+So basically --state new works fine and dandy.
+
+
+> jch
+> 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -40,19 +68,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQUL/VAAoJEBYNRVNeJnmThS4QAJPaR7hTDD8WRK1TJRnFe0at
-cOkJu7JhHNpzPzzTsEufE3taeowOapQVOjZXDkATWjS5zZqOvvtPmIH+zJISLEp8
-YSACD81eNQzwuvebR8puU+noIC+CJy1TvRtUQq2dYJj0wOkdJ3Iw+FyR9X6B0Bbe
-viXf/hn4Dy++F2iyM0m6kbjKLlvKzmvYgXFYRegWDZ2sf+32tMiXXl63zC/xx6uN
-NBjtEo5Oo2x2sWYPGu8q+49kvNuYK3T3q+Y5OY+IOCdVv4lwXWDFeBwQo7LxrYV/
-ASF90E7A6Y8sAa+WqzT2hDdwXM3i2ksPYE6zfXbVk2dlK8LDKje51lL/kV0MP+OW
-gMxwmI5LkvR8K6LHl3XxxLrRio2KVuIybvd8wszx1u4e7iaxNY/P/G3fLj25x0MC
-Gx5Zid7R2TiP5CpvpGLi6zyQ/WhX+DytCLqYa4M1HHfEUAZAcxjAyCmPX3+4CMSb
-b4y4MSYCft343PbzQSaRP5O/zCYxUsgQGpJGFQkhYNa8ePP0LoUX94P3eeXCcwSN
-XXgUhVPLJi8309HZT7lMSEWSH3rwN2sjZkNBXT2a7bTadFQspQLXK7W9caAl+H0P
-KhW9uuHb3g6UWo6UfHJtlOmL912VyKYwha4lQhO9bDvh5jKL41bD52POWSlDCSIh
-FFLWi8oRa49isnXVBlqF
-=RPjF
+iQIcBAEBAgAGBQJP0PTqAAoJEBYNRVNeJnmTqqAP/3DwwV7TjMj5voRSpc1X1jIb
+BDMc05DgCxQ1PuVZJbxcFZ9sK7Wch+gRVryDqcgINj8FfUDdeO5rBLz/eXWf+7SX
+2ift2JguG/hR/7SUF91rP9fVA9UKvwpum4x2aI2NRrluHfu8LHGvVVI2TVQOFFXR
+UAWFCrFeP4MNw+Jv3qVdYFiUzjgbdBedzT1PPWtA30hyb6iggfbWYmOoiKxvE3k6
+1uHEhuqtiriIMD4DFK17s+eVuX6RDz3vWUSnH/5h+ZADuhTUdqBDBFOO6J8nrB0B
+PCCYECJbUcBZcT9LhrvpoIbz8NiGFz46OAiBzLJo6MjM+c17kT5HPHOxJnY/psN3
+/VEICPGBb3ggAWkYJnz5l+sZmBaKrPUeXW//YDN7brr8MZgVnbZ6pdNRoRDTMrfA
+UF/UMCmHwkPOObvlFpMUp0fJnGu3BX6JKBGVVCLm3UVKsV5n0AgcaQ3Ji/MLwSke
+YR2wSnM0MFWh0c+ZgSwQ4Qtc51YXe31JC4bmOz8Y469xTSQbd1evOgxDOVqgklcE
+Nyv6wzSAdtSBvTWr/1JwTAPGiCgNq7TX0hZdZIZt4eR5A2umwLJ0UWW/oITvNwAp
+j+7g0bp0hz7mWW6IEvNavuomcCjky9FpWvAvcnKhUwMsR5pmXBt0ZR6f6j3bFqbx
+E7wc+pzPrR/tROyn0aHc
+=dzax
 -----END PGP SIGNATURE-----
