@@ -1,41 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/2
-Message-ID: <b91d07ac-d53d-4ac6-bab5-818b80ffa3f6@zmail14.collab.prod.int.phx2.redhat.com>
-Date: Mon, 09 Jan 2012 00:11:24 -0500 (EST)
-From: Kurt Seifried <kseifrie@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Malicious devices & vulnerabilties
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/5
+Message-ID: <4FD058E7.6060508@oracle.com>
+Date: Thu, 07 Jun 2012 08:31:51 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: Kurt Seifried <kseifried@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
 Content-Type: text/plain; charset=utf-8
 
-Firewire has DMA. 
 
-http://cansecwest.com/core05/2005-firewire-cansecwest.swf
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-eSATA - also does DMA.
+On 01/06/12 20:12, Kurt Seifried wrote:
+> In my limited testing with iptables on RHEL 6.2 it appears that
+> --state NEW works properly, and won't allow SYN+FIN to create
+> connections (I used hping3 and the SYN+FIN Packets were blocked).
+>
+> So the default ruleset:
+>
+> -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+> -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j DROP
+> -A INPUT -j REJECT --reject-with icmp-host-prohibited
+>
+> should work, so you could do you clever --syn bits first and then have
+> that set to protect stuff from SYN+FIN.
 
-Thunderbolt also does DMA. 
+What happens if you have "-j ACCEPT" instead of "-j DROP"?   I would
+expect that sshd wouldn't see the connection but you would get all the
+unpleasant side effects that made T/TCP deprecated.
 
-In other words a lot of the newer/higher end interfaces all do DMA which is ... a problem.
+jch
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
--Kurt
+iF4EAREIAAYFAk/QWOYACgkQRQu7fpQvo8i5MwEAiJseTDYDaW2AsQaAz444Y7gv
+Qjbh/Y9rPosBsO0QFlYA/jTuPFgSN38RNVI3l78kh7Cwh9zrBVIXKDG3JPTxakuc
+=rjvP
+-----END PGP SIGNATURE-----
 
------ Original Message -----
-From: "Xi Wang" <xi.wang@...il.com>
-To: oss-security@...ts.openwall.com
-Sent: Sunday, January 8, 2012 1:13:37 PM
-Subject: Re: [oss-security] Malicious devices & vulnerabilties
-
-On Jan 8, 2012, at 6:19 AM, Florian Weimer wrote:
-> I think they should be considered vulnerable.  Some applications need
-> some robustness to attacks even from the local console (e.g., student
-> computer rooms).
-
-Thanks for bringing that up.  Student computer rooms are a
-nice example, and a good old memory. ;-)
-
-> USB is also a popular transport in many air-gapped environments.
-
-What else might be on this "untrusted" device list?  Firewire?
-I guess those in the PC box don't count.
-
-- xi
