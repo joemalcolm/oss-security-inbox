@@ -1,28 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/3
-Message-ID: <20120625093006.GA9493@openwall.com>
-Date: Mon, 25 Jun 2012 13:30:06 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/3
+Message-ID: <4FD01806.5070009@redhat.com>
+Date: Wed, 06 Jun 2012 20:55:02 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@....org
-Subject: Xen vulnerability disclosure process, recent timeline
+CC: David Jorm <djorm@...hat.com>
+Subject: Re: CVE request: Mojarra allows deployed web applications to read FacesContext from other applications
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Here's a surprisingly detailed posting on Xen's vulnerability disclosure
-process and how the recent set of issues was handled (detailed timeline):
+On 06/06/2012 08:02 PM, David Jorm wrote:
+> Could a CVE please be assigned for this issue:
+> 
+> It was found that in Mojarra, the FacesContext that is made
+> available during application startup is held in a ThreadLocal. The
+> reference is not properly cleaned up in all cases. As a result, if
+> a JSF WAR calls FacesContext.getCurrentInstance() during
+> application startup, another WAR can get access to the leftover
+> context and thus get access to the other WAR's resources.
+> 
+> References: Upstream Mojarra bug:
+> http://java.net/jira/browse/JAVASERVERFACES-2436 Bug for
+> JBoss-specific impacts:
+> https://issues.jboss.org/browse/JBPAPP-9197
+> 
+> Thanks
 
-http://lists.xen.org/archives/html/xen-devel/2012-06/msg01072.html
+Please use CVE-2012-2672 for this issue.
 
-As always, this is all about tradeoffs, and many of the issues sound
-very familiar - yet I appreciate this level of transparency.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Regarding Xen's "pre-disclosure list", are messages on it PGP-encrypted
-to the recipients?  Perhaps this should be made a requirement and
-mentioned at http://www.xen.org/projects/security_vulnerability_process.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-It feels likely that in practice most leaks will be via means unaffected
-by the use of encryption, yet using PGP encryption is worthwhile.
-
-Alexander
+iQIcBAEBAgAGBQJP0BgFAAoJEBYNRVNeJnmTQ8MP/36Pjn/wI3mr4cPIlKZnorx+
+DtUT0sgolqZlzISvDewIIWE3lGBx3/q5Wcl7We0Pbs8C3zgU6zDMnEAp2hCoibTR
+qxQji5sJVVMOucQg1qoleeINPNoM0zNFJzkTf0dI+UrI+DoFjOi3uEQPxF11bOQi
+inDagx6Rws0+pX5xNEpakQeX/WHh8MoB6e0tr2bPVOgWerXIMvgTVPmXKTtjH0gw
+JuPd0EOcYHSBy2I5XM2tDORm/va/wOPn/TIqOQeH/dSA/iX13eVaVy+SomsvHpkB
+ioseSDHHS4v+7/V/lCYUOo05f8COMT4HYpVA85hBQP5vwwX1afXV213AkfPlpGB4
+kM3gcwr+v/gL9CmPyKFCLBmbHgdBMxGVk7AbSmvvZ2F52E7zEYGIR+CNZLz55aC8
+OoR20rK4umqJEfraBMa4zOnFBuE9twSxO7kdCGDAJcnqTPKkBo/tQKqmViKPvOph
+5DhRCWKQeWitnLW/ZNFQfTa4ZLfvsH1BERntSeWeFpwsaY/t0HqTw+5wcdBRqAiY
+ZXic3ZTmidxAnn/hhrF/8gEERlgp7r4TqcTX+16XE0rfyqsoB2hr+BfUy2O30nX8
+0An4qf9cdYLhDJO4bURpMT5zGUZ2ZKyk4SuZogj3/PJBGAecgIv11TGMhk8Ufzhv
+DlDOg3pw0Jr6pkUraOV8
+=6u/u
+-----END PGP SIGNATURE-----
