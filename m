@@ -1,55 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/26/5
-Message-ID: <1330295871.1973.11.camel@tiger.regit.org>
-Date: Sun, 26 Feb 2012 23:37:51 +0100
-From: Eric Leblond <eric@...it.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/6
+Message-ID: <20120607082204.GA8042@suse.de>
+Date: Thu, 7 Jun 2012 10:22:04 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+Subject: Re: CVE-Request: hyper-v daemon
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-
-On Mon, 2012-02-27 at 01:53 +0400, Solar Designer wrote:
-> On Sun, Feb 26, 2012 at 10:05:55PM +0100, Eric Leblond wrote:
-> > On Sun, 2012-02-26 at 12:17 -0700, Kurt Seifried wrote:
-> > > Are there any helpers that can be abused to open holes in the firewall
-> > > externally, or is it only internal clients that can cause problems and
-> > > trigger the firewall to improperly allow network traffic in/out.
+On Thu, Jun 07, 2012 at 10:35:24AM +0900, Greg KH wrote:
+> On Wed, Jun 06, 2012 at 04:59:59PM +0200, Sebastian Krahmer wrote:
+> > Hi,
 > > 
-> > No, attacker has to be on a network directly connected to the firewall.
+> > The hyper-v daemon fails to check origin of netlink messages.
+> > Please see
+> > 
+> > https://bugzilla.novell.com/show_bug.cgi?id=761200
 > 
-> I guess by "internal clients" Kurt was referring to machines behind the
-> firewall (e.g., someone clicking an URL that has a string looking like
-> an FTP command embedded in it, thereby triggering the FTP helper to open
-> a hole - stuff that was discussed in late 1990s and partially mitigated
-> by hardening the helpers at the time), whereas by "attacker on a network
-> directly connected to the firewall" Eric means that the attacker may be
-> _outside_ the firewall (behind its WAN interface), but on the same
-> network segment (e.g., the attacker might have compromised a nearby
-> server, such as of another customer at a colocation facility).
+> Is there a fix for this anywhere yet?
 
-This is a correct definition of the condition on the network required
-for the attack.
+Attached to the bugreport and here. It is the same patch as pasted in #c3 of this report.
 
-> It is known that a machine will generally receive and process a packet
-> routed to one of its NICs by MAC address even if the destination IP
-> address is that of another NIC or even loopback (e.g., it is possible to
-> access services bound to 127.0.0.1 in this way - but only from directly
-> connected machines).  Without rp_filter or equivalent, it is possible to
-> have these packets' source addresses match the other NIC's network
-> segment.  My _guess_ (based solely on the info posted in here so far) is
-> that the gist of Eric et al.'s new attack is to apply this approach
-> against a protocol helper.  The novelty is thus in combining these known
-> things together to arrive at something that to the best of my knowledge
-> has not yet been discussed.
-> 
-> I suppose Eric will tell us if this is the correct guess or not. ;-)
+Ciao, Marcus
 
-Correct guess :)
-
-BR,
--- 
-Eric Leblond 
-Blog: http://home.regit.org/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+View attachment "hyper-v.tools.hv.hv_kvp_daemon.c.patch" of type "text/x-patch" (731 bytes)
