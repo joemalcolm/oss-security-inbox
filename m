@@ -1,41 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/8
-Message-ID: <20121106140657.GF31783@suse.de>
-Date: Tue, 6 Nov 2012 15:06:57 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, disclosure@....org
-Subject: Re: Re: TTY handling when executing code in different lower-privileged context (su, virt containers)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/2
+Message-ID: <06b9cc6a-6f31-4ba8-a71c-cf386efb05b8@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Wed, 06 Jun 2012 22:02:02 -0400 (EDT)
+From: David Jorm <djorm@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Mojarra allows deployed web applications to read FacesContext from other applications
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 07, 2012 at 12:37:25AM +1100, David Black wrote:
-> >In both cases, paranoid administrators might decide to use /dev/null
-> >as stdin/stdout/stderr when just starting non-interactive programs in
-> >different context, while they could replace the privileged shell with
-> >exec when interactive context switch is needed (no shell, no escalation).
-> >
-> >Any opinions on that?
-> >
-> 
-> 
-> Perhaps if sudo/su determine if a user is running 'interactively' they
-> could use a pseudo-pty ?
+Could a CVE please be assigned for this issue:
 
-There were fixes released btw ...  (If we are talking about the same
-problem.)
+It was found that in Mojarra, the FacesContext that is made available during application startup is held in a ThreadLocal. The reference is not properly cleaned up in all cases. As a result, if a JSF WAR calls FacesContext.getCurrentInstance() during application startup, another WAR can get access to the leftover context and thus get access to the other WAR's resources.
 
-SUSE at least did release fixes for the terminal character injection,
-by opening a new session.
+References:
+Upstream Mojarra bug: http://java.net/jira/browse/JAVASERVERFACES-2436
+Bug for JBoss-specific impacts: https://issues.jboss.org/browse/JBPAPP-9197
 
-(CVE-2005-4890 is this whole issue I think.)
+Thanks
+-- 
+David Jorm / Red Hat Security Response Team
 
-
-Ludwig Nussel tried to also use pseudo tty, but this gets kind of
-messy soon, especially if you start with the signal handling required
-(ctrl-z and ctrl-c over su are supposed to work...).
-
-Fun enough, after release one of our customers reported to actually use
-code like:
-
-	su nobody -c "echo Test >/dev/tty" 
-
-Ciao, Marcus
