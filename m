@@ -1,93 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/15
-Message-ID: <20120710143040.GA17770@suse.de>
-Date: Tue, 10 Jul 2012 16:30:40 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/7
+Message-ID: <20120607085634.GA25065@kroah.com>
+Date: Thu, 7 Jun 2012 17:56:34 +0900
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: ecryptfs headsup
+Subject: Re: CVE-Request: hyper-v daemon
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 10, 2012 at 04:21:13PM +0200, Sebastian Krahmer wrote:
-> 
-> It is a potential privilege escalation since the pam module
-> was not setting uid/gid(list) appropriately and the suid
-> binary did not clear environment before exec'ing umount.
-> I do not know whether MS_NOSUID was really needed (and maybe
-> MS_NODEV is, but I was not able to create dev files).
-> Unfortunally we found ecryptfs not really stable inside the kernel
-> and Marcus is still rebooting :)
-
-This means ...
-
-So far we have not yet found a specific security issue.
-
-Ciao, Marcus
- 
-> Sebastian
-> 
-> On Tue, Jul 10, 2012 at 08:07:28AM -0600, Kurt Seifried wrote:
-> > -----BEGIN PGP SIGNED MESSAGE-----
-> > Hash: SHA1
-> > 
-> > On 07/10/2012 05:33 AM, Sebastian Krahmer wrote:
+On Thu, Jun 07, 2012 at 10:22:04AM +0200, Marcus Meissner wrote:
+> On Thu, Jun 07, 2012 at 10:35:24AM +0900, Greg KH wrote:
+> > On Wed, Jun 06, 2012 at 04:59:59PM +0200, Sebastian Krahmer wrote:
 > > > Hi,
 > > > 
-> > > We made a hardening patch for ecryptfs utils. It is finally ready, 
-> > > using sysconf(_SC_NGROUPS_MAX) :)
+> > > The hyper-v daemon fails to check origin of netlink messages.
+> > > Please see
 > > > 
-> > > I dont know whether a CVE is needed, maybe if you already ship it
-> > > suid root (we do not).
-> > > 
-> > > It can be found here:
-> > > 
-> > > https://bugzilla.novell.com/show_bug.cgi?id=740110
-> > > 
-> > > Sebastian
+> > > https://bugzilla.novell.com/show_bug.cgi?id=761200
 > > 
-> > Well what is the security vulnerability / trust boundary that can be
-> > broken using this issue?
-> > 
-> > - -- 
-> > Kurt Seifried Red Hat Security Response Team (SRT)
-> > PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> > 
-> > 
-> > 
-> > -----BEGIN PGP SIGNATURE-----
-> > Version: GnuPG v1.4.12 (GNU/Linux)
-> > Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-> > 
-> > iQIcBAEBAgAGBQJP/DcgAAoJEBYNRVNeJnmT3R8P/0cRjsBbmwVeMwKUbwzZPUrB
-> > qIZcQEtx+VfQo/pWasY+DudbszVlg7ZKEkOkORMGPeiCYWofElWG3YFM0vzPQALA
-> > gBLCXOUYzGqZ9ZF754hizqSYOhPa9aQHV0yB/NPlYGhl1MZSjQx6/brsYs1EDOZU
-> > Kn3bslL3vgp3mzhoDjTKyiLjndaVlFagQVlmcgXlm6YtzkFFkqCTdOU1IU0vElAO
-> > hgeWzqNXH1ykEDxY6cZCpog+t28VhpbPG87qA2C2ErgZdfTulCaip4LsfP5B5fGY
-> > nW0Z1vfFRn+2b3iR7YZBmcVbzgO2FUEBhKTRgKWyhDZ4Lee298CKm47dxXDt/T0Q
-> > PB5Q1a9oJKCcitApyYKqK5f3kZ82uPJJt2jorVRN41ppBIGLbKQurGlYZUXb62Xc
-> > Lyv4rxL+4/ejJXi6XQCTrHzzJf35Y9JSFsvO0bqXR/xwHtumWs44p6SDW34xtp5y
-> > Vif1wrYqUUAzKEZkN7w8kzQA3Sz6hXOBiadqcNf7qkaGQ/0HlIfGB3abo7/OlJVB
-> > 2Jf+HH5bM+5oiXA5fKwqq07dNUj9sGptOmuZVhfFsOE1H46WCKqhBGBgsanU94x9
-> > W/3IUyq4wEAH3lJQypXh65kZoJGc+5CDeypQ2eo9/RI1jmrjxIR5GeN/WVcPRJtY
-> > MByzHCJ43wPYEVl25/eV
-> > =7ydb
-> > -----END PGP SIGNATURE-----
+> > Is there a fix for this anywhere yet?
 > 
-> -- 
-> 
-> ~ perl self.pl
-> ~ $_='print"\$_=\47$_\47;eval"';eval
-> ~ krahmer@...e.de - SuSE Security Team
-> 
-> ---
-> SUSE LINUX Products GmbH,
-> GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-> Maxfeldstraße 5
-> 90409 Nürnberg
-> Germany
-> 
+> Attached to the bugreport and here. It is the same patch as pasted in #c3 of this report.
 
--- 
-Working, but not speaking, for the following german company:
-SUSE LINUX Products GmbH, HRB 16746 (AG Nuernberg)
-Geschaeftsfuehrer: Jeff Hawn, Jennifer Guild, Felix Imendoerffer
+Thanks, as this tool is part of the Linux kernel, is someone going to
+send a patch upstream to get this fixed there?
+
+thanks,
+
+greg k-h
