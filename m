@@ -1,68 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/11
-Message-ID: <4FA7F098.8020702@redhat.com>
-Date: Mon, 07 May 2012 09:56:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/08/1
+Message-ID: <20120608061734.GA32386@kludge.henri.nerv.fi>
+Date: Fri, 8 Jun 2012 09:17:34 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Timo Warns <warns@...-sense.de>
-Subject: Re: CVE request: Linux kernel: Buffer overflow in HFS plus filesystem
+Subject: Re: CVE request: Piwik before 1.7
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 05/07/2012 02:44 AM, Timo Warns wrote:
-> The Linux kernel (at least 3.x <= 3.3.4 and 2.6.x <= 2.6.35.13)
-> contains a vulnerability in the driver for HFS plus file systems
-> that may be exploited for code execution or privilege escalation.
+On Tue, May 08, 2012 at 10:44:46PM -0600, Kurt Seifried wrote:
+> On 05/08/2012 03:03 AM, Hanno Böck wrote:
+> > Hi,
+> > 
+> > http://piwik.org/blog/2012/02/7775/
+> > 
+> > Information is very rare: "We would like to thank the following
+> > security researchers for their responsible disclosure of XSS &
+> > click-jacking issues: Piotr Duszynski, Sergey Markov, Mauro
+> > Gentile."
+> > 
+> > I'd suggest assigning 3 CVEs with subjects like
+> > 
+> > "Unknown XSS or clickjacking issue identified by Piotr Duszynski" 
+> > "Unknown XSS or clickjacking issue identified by Sergey Markov" 
+> > "Unknown XSS or clickjacking issue identified by Mauro Gentile"
 > 
-> A specially-crafted HFS plus filesystem can cause a buffer overflow
-> via the memcpy() call of hfs_bnode_read() (in fs/hfsplus/bnode.c).
-> The functions
 > 
-> hfsplus_rename_cat() (in fs/hfsplus/catalog.c) and 
-> hfsplus_readdir() (in fs/hfsplus/dir.c)
+> We would like to thank the following security researchers for their
+> responsible disclosure of XSS & click-jacking issues: Piotr Duszynski,
+> Sergey Markov, Mauro Gentile.
+> Thank you for disclosing security issues to the Piwik team, ensuring a
+> healthy and safe experience for the whole community!
 > 
-> call hfs_bnode_read() with values that result in a memcpy() call
-> with a fixed-length destination buffer and both, a source buffer
-> and length, that are read from the filesystem without sufficient
-> validation.
+> I can't find anything else. Can you send the code commits that address
+> this?
 > 
-> The buffer overflows were previously fixed in the HFS filesystem
-> driver and have been assigned CVE-2009-4020 (commit 
-> ec81aecb29668ad71f699f4e7b96ec46691895b6 [1]). Commit
-> 6f24f892871acc47b40dd594c63606a17c714f77 ("hfsplus: fix a potential
-> buffer overflow") [2] also fixes the issue in the HFS plus 
-> filesystem driver.
 > 
-> [1]
-> http://git.kernel.org/linus/ec81aecb29668ad71f699f4e7b96ec46691895b6
->
-> 
-[2] http://git.kernel.org/linus/6f24f892871acc47b40dd594c63606a17c714f77
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Please use CVE-2012-2319 for this issue.
+After long email conversation with the vendor we are not getting any details from them. This http://dev.piwik.org/trac/changeset/5804 might be related as Nicob pointed out. Could we still assign CVE-identifiers for these three issues?
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPp/CYAAoJEBYNRVNeJnmT1YQQANJylNvJD3TWpJVeAFltrFpV
-hxYSPq03/99qJS+aCOre56JoVZL0GvpTik3iCsfngjZJxawS7ntaEelTqN2BJofG
-tupyQayC4pCMfhTf+y6BA+7nMbf8pDBDbxjLE3Khdwj7xx29uI0KpzErTUsaNAEA
-NFsh8Od1UGnAYsvGRDoVAQgMu4J1X9Ld99jGzpsYv8G7BkMMRPQ27rNRP6nzEzLl
-rz/FfSA40zo8uJjw5JJ+V+Jx6siGlUdrITx+lwV3M8LbkbckneKZLdiCtOSWlE//
-kN/VPuT174dD8iBew6Zm1rsiGafqX5vZ4lUrg+sPvlpEi3gIEZAIx5uyFYgL0NFR
-fVuckfOlfg4COpNj0zq8dswW1sA5vgbdSLPCrtRTrM8A2IaA26LNOGC1afd8E++3
-8soJfNVuempwwuHalv0h5rPh2Cju4NpjhbUKStYPK+9TYKBjMItYsmgFpEcslX6u
-HZB01YPeHjc3/E2crvF/ksT1/Q3p7Kc53Bkf5QI/y23KcDh7degsnowpe9FD99oQ
-qQpZOleNiEFlkDnCb6KXRzsrObAQg1dU136qUQKc/CfSR7tmYz8jtIOYHNx7NIvN
-KfD/zJnNebHReJoRgt+7zRxiQp9er5lgiUo7xU1Yg/3JyUZr/d66Zo5sSyllX2VN
-rwWSOFDG8DhBlCFLcfVM
-=XY4f
------END PGP SIGNATURE-----
+- Henri Salo
