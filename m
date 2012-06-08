@@ -1,41 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/30/1
-Message-ID: <CAEJizbZ5GVz+7OAZ=YYn3PT9ZxC==C7oOET9SFAQjNYKSdX2Ew@mail.gmail.com>
-Date: Sat, 30 Jun 2012 10:14:37 +0100
-From: Benji <me@...ji.com>
-To: oss-security@...ts.openwall.com
-Cc: "joe@...ctionis.com" <joe@...ctionis.com>,  "full-disclosure@...ts.grok.org.uk" <full-disclosure@...ts.grok.org.uk>,  "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>,  "secalert@...urityreason.com" <secalert@...urityreason.com>,  "bugs@...uritytracker.com" <bugs@...uritytracker.com>, "vuln@...unia.com" <vuln@...unia.com>,  "vuln@...urity.nnov.ru" <vuln@...urity.nnov.ru>, "news@...uriteam.com" <news@...uriteam.com>,  "moderators@...db.org" <moderators@...db.org>,  "submissions@...ketstormsecurity.org" <submissions@...ketstormsecurity.org>,  "submit@...ecurity.com" <submit@...ecurity.com>
-Subject: Re: RE: GIMP FIT File Format DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/08/2
+Message-ID: <4FD1B941.7060305@oracle.com>
+Date: Fri, 08 Jun 2012 09:35:13 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: Kurt Seifried <kseifried@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
 Content-Type: text/plain; charset=utf-8
 
-hey! let them having something to add to CV! Stop be fun police!
-Everyone know security isnt actually about security, just make CV look
-super cool.
+On 07/06/12 19:37, Kurt Seifried wrote:
+> On 06/07/2012 01:31 AM, John Haxby wrote:
+>
+> > On 01/06/12 20:12, Kurt Seifried wrote:
+> >> In my limited testing with iptables on RHEL 6.2 it appears that
+> >> --state NEW works properly, and won't allow SYN+FIN to create
+> >> connections (I used hping3 and the SYN+FIN Packets were
+> >> blocked).
+>
+> >> So the default ruleset:
+>
+> >> -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT -A INPUT
+> >> -m state --state NEW -m tcp -p tcp --dport 22 -j DROP -A INPUT -j
+> >> REJECT --reject-with icmp-host-prohibited
+>
+> >> should work, so you could do you clever --syn bits first and then
+> >> have that set to protect stuff from SYN+FIN.
+>
+> > What happens if you have "-j ACCEPT" instead of "-j DROP"?   I
+> > would expect that sshd wouldn't see the connection but you would
+> > get all the unpleasant side effects that made T/TCP deprecated.
+>
+> Ooops yeah typo, that DROP should have been ACCEPT. So to summarize
+> properly:
+>
+> -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+> -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+> -A INPUT -j REJECT --reject-with icmp-host-prohibited
+>
+> results in ICMP unreachable (the -F -S bypasses the "--dport 22 -j
+> ACCEPT" but gets caught in the final "icmp-host-prohibited" rule) with:
+>
+> hping3 -c 3 -n -S -F -p 22 192.168.51.195
+>
+> with:
+>
+> -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+> -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j DROP
+> -A INPUT -j REJECT --reject-with icmp-host-prohibited
+>
+> with hping -F -S the packets bypass the "--dport 22 -j DROP" and get
+> caught by the icmp-host-prohibited
+>
+> with hping -S the packets get caught by "the "--dport 22 -j DROP"" as
+> expected.
+>
+> So basically --state new works fine and dandy.
+>
+>
+> > jch
+>
+>
 
-On Fri, Jun 29, 2012 at 10:45 PM, Morris, Patrick <patrick.morris@...com> wrote:
->
->> -----Original Message-----
->> From: Joseph Sheridan [mailto:joe@...ctionis.com]
->> Sent: Friday, June 29, 2012 3:56 AM
->> To: 'full-disclosure'; 'bugtraq'; secalert@...urityreason.com;
->> bugs@...uritytracker.com; 'vuln'; vuln@...urity.nnov.ru;
->> news@...uriteam.com; moderators@...db.org;
->> submissions@...ketstormsecurity.org; submit@...ecurity.com; oss-
->> security@...ts.openwall.com; bugs@...uritytracker.com
->> Subject: GIMP FIT File Format DoS
->>
->> Summary
->> =======
->>
->> There is a file handling DoS in GIMP (the GNU Image Manipulation
->> Program) for
->> the 'fit' file format affecting all versions (Windows and Linux) up to
->> and
->> including 2.8.0. A file in the fit format with a malformed 'XTENSION'
->> header
->> will cause a crash in the GIMP program.
->
-> Is a crash in a single-user program really a security vulnerability? I could
-> understand if there was evidence that this could lead to privilege escalation
-> or other actual security issue, but this sounds like a garden-variety crash
-> bug to me.
+Good.   That makes the kernel change just hardening then.   If you're
+not using iptables you're leaving yourself open to all kinds of abuse
+anyway so I don't think we need a CVE for the kernel.
+
+jch
