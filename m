@@ -1,59 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/04/6
-Message-Id: <572D94E3-8897-4EB6-B7D5-F017BC5C755A@brauerranch.com>
-Date: Thu, 4 Oct 2012 12:15:51 -0600
-From: Joshua Brauer <joshua@...uerranch.com>
-To: kseifried@...hat.com, oss-security@...ts.openwall.com
-Subject: CVE Request for Drupal Contributed Modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/09/1
+Message-ID: <1339229952.28538.22@d.hx.id.au>
+Date: Sat, 09 Jun 2012 18:19:12 +1000
+From: David Hicks <d@...id.au>
+To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
+Cc: MantisBT Developer Mailing List <mantisbt-dev@...ts.sourceforge.net>
+Subject: CVE requests (x2) for Mantis Bug Tracker (MantisBT) before 1.2.11
 Content-Type: text/plain; charset=utf-8
 
+CVE REQUEST #1
 
-This is a batch CVE request for several already published/resolved issues with contributed modules for the Drupal project.
+Title: Reporters can edit arbitrary bugnotes via SOAP API
+Affected: MantisBT 1.2.10 and earlier versions
+Not affected: MantisBT 1.2.11
 
-http://drupal.org/node/1679820 | SA-CONTRIB-2012-112 - Ubercart SecureTrading - Failure to follow guideline/specification
-http://drupal.org/node/1679888 | SA-CONTRIB-2012-113 - Drupal Commons - Access Bypass
-http://drupal.org/node/1691446 | SA-CONTRIB-2012-114 - Campaign Monitor - Cross Site Scripting (XSS)
-http://drupal.org/node/1700578 | SA-CONTRIB-2012-115 - Gallery formatter - Cross Site Scripting (XSS)
+Description:
+Roland Becker and Damien Regad (MantisBT developers) found that any user
+able to report issues via the SOAP interface could also modify any
+bugnotes (comments) created by other users. In a default/typical
+MantisBT installation, SOAP API is enabled and any user can sign up to
+report new issues. This vulnerability therefore impacts upon many public
+facing MantisBT installations.
 
-
-Multiple Vulnerabilities:
-http://drupal.org/node/1700584 | SA-CONTRIB-2012-116 - Subuser - Cross Site Request Forgery (CSRF)
-http://drupal.org/node/1700584 | SA-CONTRIB-2012-116 - Subuser - Access Bypass
-
-http://drupal.org/node/1700588 | SA-CONTRIB-2012-117 - Location - Access Bypass
-http://drupal.org/node/1700594 | SA-CONTRIB-2012-118 - Secure Login - Open Redirect
-http://drupal.org/node/1708058 | SA-CONTRIB-2012-119 - Excluded Users - Cross Site Scripting (XSS)
-http://drupal.org/node/1708198 | SA-CONTRIB-2012-120 - Monthly Archive by Node Type - Access Bypass
-http://drupal.org/node/1719392 | SA-CONTRIB-2012-121 - Shorten URLs - Cross Site Scripting (XSS)
-http://drupal.org/node/1719402 | SA-CONTRIB-2012-122 - Better Revisions - Cross Site Scripting (XSS)
-http://drupal.org/node/1719462 | SA-CONTRIB-2012-123 - Shibboleth authentication - Access Bypass
-http://drupal.org/node/1719482 | SA-CONTRIB-2012-124 - Mime Mail - Access Bypass
+References:
+[1] http://www.mantisbt.org/bugs/view.php?id=14340
 
 
 
-Multiple Vulnerabilities:
-http://drupal.org/node/1719548 | SA-CONTRIB-2012-125 - Chaos tool suite (ctools) - Local File Inclusion
-http://drupal.org/node/1719548 | SA-CONTRIB-2012-125 - Chaos tool suite (ctools) - Cross Site Scripting (XSS)
+CVE REQUEST #2
 
-http://drupal.org/node/1732946 | SA-CONTRIB-2012-126 - Hotblocks - Cross Site Scripting (XSS) and Denial of Service (DoS)
-http://drupal.org/node/1732980 | SA-CONTRIB-2012-127 - Custom Publishing Options - Cross Site Scripting (XSS) Vulnerability
-http://drupal.org/node/1733056 | SA-CONTRIB-2012-128 - Elegant Theme - Cross Site Scripting (XSS)
-http://drupal.org/node/1762160 | SA-CONTRIB-2012-129 - Activism - Access Bypass
+Title: delete_attachments_threshold not checked on attachment deletion
+Affected: MantisBT 1.2.10 and earlier versions
+Not affected: MantisBT 1.2.11
 
+Description:
+Roland Becker (MantisBT developer) found that the
+delete_attachments_threshold permission was not being checked when a
+user attempted to delete an attachment from an issue. The more generic
+update_bug_threshold permission was being checked instead. MantisBT
+administrators may have been under the false impression that their
+configuration of the delete_attachments_threshold was successfully
+preventing unwanted users from deleting attachments.
 
-
-Multiple Vulnerabilities:
-http://drupal.org/node/1762220 | SA-CONTRIB-2012-130 - Jstool - Access Bypass
-http://drupal.org/node/1762220 | SA-CONTRIB-2012-130 - Jstool - Arbitrary code inclusion
-
-http://drupal.org/node/1762470 | SA-CONTRIB-2012-131 - Email Field - Access Bypass
-http://drupal.org/node/1762480 | SA-CONTRIB-2012-132 - Announcements - Access Bypass
-http://drupal.org/node/1762482 | SA-CONTRIB-2012-133 - Taxonomy Image - Cross Site Scripting (XSS) & Arbitrary PHP code execution
-
-
-Thanks,
-Josh - on behalf of the Drupal security team.
+References:
+[1] http://www.mantisbt.org/bugs/view.php?id=14016
 
 
 
+With thanks,
+David Hicks
+MantisBT Developer
+#mantisbt irc.freenode.net
+http://www.mantisbt.org/bugs/
 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
