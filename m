@@ -1,39 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/2
-Message-ID: <20120220121509.GK19343@ngolde.de>
-Date: Mon, 20 Feb 2012 13:15:10 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/09/2
+Message-ID: <20120609153038.GA27575@meddwl.fritz.box>
+Date: Sat, 9 Jun 2012 17:30:38 +0200
+From: Sergei Golubchik <serg@...typrogram.com>
 To: oss-security@...ts.openwall.com
-Cc: Ulli Horlacher <framstag@....uni-stuttgart.de>
-Subject: Re: Vulnerabilitites in Debian F*EX <= 20100208 and F*EX 20111129-2.
+Subject: Security vulnerability in MySQL/MariaDB sql/password.c
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* muuratsalo experimental hack lab <muuratsalo@...il.com> [2012-02-20 12:51]:
-> I am Nicola Fioravanti aka muuratsalo | muuratsalo experimental hack lab.
-> I am writing you because I have discovered some vulnerabilities in
-> Debian F*EX <= 20100208 (stable) and F*EX 20111129-2. (testing and
-> unstable)
-> I have already contacted the Author who confirmed the vulnerabilities
-> and applied the suggested fixes.
-> A major update of F*EX  has been released on the 15th of February
-> 2012. The Debian Mantainer of the package is working on it.
-> Together with the Author we decided not to release any public advisory
-> before the release of the new Debian package.
-> 
-> I would be grateful if you could assign CVE ids to the discovered issues.
+Hi
 
-I asked Nicola to send this to oss-security as the impact of this bug is 
-fairly low in my opinion and the issue is public via the upstream changelog.
+We have recently found a serious security bug in MariaDB and MySQL.
+So, here, we'd like to let you know about what the issue and its impact
+is. At the end you can find a patch, in case you need to patch an older
+unsuported MySQL version.
 
-Can someone please assign a CVE id to this? Given that all of the vulnerable 
-input parameters are in the fup component, I guess one id should be 
-sufficient.
+All MariaDB and MySQL versions up to 5.1.61, 5.2.11, 5.3.5, 5.5.22 are
+vulnerable.
+MariaDB versions from 5.1.62, 5.2.12, 5.3.6, 5.5.23 are not.
+MySQL versions from 5.1.63, 5.5.24, 5.6.6 are not.
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+This issue got assigned an id CVE-2012-2122.
 
-Content of type "application/pgp-signature" skipped
+Here's the issue. When a user connects to MariaDB/MySQL, a token (SHA
+over a password and a random scramble string) is calculated and compared
+with the expected value. Because of incorrect casting, it might've
+happened that the token and the expected value were considered equal,
+even if the memcmp() returned a non-zero value. In this case
+MySQL/MariaDB would think that the password is correct, even while it is
+not.  Because the protocol uses random strings, the probability of
+hitting this bug is about 1/256.
+
+Which means, if one knows a user name to connect (and "root" almost
+always exists), she can connect using *any* password by repeating
+connection attempts. ~300 attempts takes only a fraction of second, so
+basically account password protection is as good as nonexistent. 
+Any client will do, there's no need for a special libmysqlclient library.
+
+But practically it's better than it looks - many MySQL/MariaDB builds
+are not affected by this bug.
+
+Whether a particular build of MySQL or MariaDB is vulnerable, depends on
+how and where it was built. A prerequisite is a memcmp() that can return
+an arbitrary integer (outside of -128..127 range). To my knowledge gcc
+builtin memcmp is safe, BSD libc memcmp is safe. Linux glibc
+sse-optimized memcmp is not safe, but gcc usually uses the inlined
+builtin version.
+
+As far as I know, official vendor MySQL and MariaDB binaries are not
+vulnerable.
+
+Regards,
+Sergei Golubchik
+MariaDB Security Coordinator
+
+References:
+
+MariaDB bug report: https://mariadb.atlassian.net/browse/MDEV-212
+MariaDB fix: http://bazaar.launchpad.net/~maria-captains/maria/5.1/revision/3144
+
+MySQL bug report: http://bugs.mysql.com/bug.php?id=64884
+MySQL fix: http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.17
+MySQL changelog:
+  http://dev.mysql.com/doc/refman/5.1/en/news-5-1-63.html
+  http://dev.mysql.com/doc/refman/5.5/en/news-5-5-24.html
+
