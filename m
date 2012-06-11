@@ -1,31 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/13/4
-Message-ID: <4F5F4E6E.9070908@redhat.com>
-Date: Tue, 13 Mar 2012 19:11:02 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/11/5
+Message-ID: <4FD61E4A.4050108@redhat.com>
+Date: Mon, 11 Jun 2012 10:35:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for PHP 5.3.x Corrupted $_FILES indices lead to security concern
+Subject: Re: CVE request -- libguestfs: virt-edit doesn't preserve file permissions
 Content-Type: text/plain; charset=utf-8
 
-On 03/09/2012 02:26 AM, Kurt Seifried wrote:
-> Just looking through http://www.php.net/ChangeLog-5.php#5.4.0
->
-> Fixed bug #55500 (Corrupted $_FILES indices lead to security concern).
->
-> https://bugs.php.net/bug.php?id=55500
-> (still locked)
->
-> But the blog posting:
->
-> https://nealpoole.com/blog/2011/10/directory-traversal-via-php-multi-file-uploads/
->
-> has details and it appears to be a security issue. I have emailed
-> security@....net twice, no response in a week so I'm sending the request
-> to OSS-sec.
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This has been assigned CVE-2012-1172.
+On 06/11/2012 10:21 AM, Petr Matousek wrote:
+> Description of the problem: virt-edit creates a new file when it is
+> used and thus does not preserve file permissions, file owner and
+> SELinux context on the files that it was editing.
+> 
+> As a consequence, if certain security-sensitive files in the guest 
+> were edited using virt-edit, they would become world-readable.
+> 
+> Proposed upstream patch: 
+> https://www.redhat.com/archives/libguestfs/2012-February/msg00034.html
+>
+>  References: 
+> https://www.redhat.com/archives/libguestfs/2012-February/msg00033.html
+>
+> 
+https://bugzilla.redhat.com/show_bug.cgi?id=788642
+> 
+> Thanks,
 
+Please use CVE-2012-2690 for this issue.
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP1h5KAAoJEBYNRVNeJnmTD04QAL0e/1ngZ6Jj7/LrTBn+2tE2
+PDO4Qo59ab/R1h0UL6+DS3lT1gMw+pVugP6RbGl2op2XnMEvGzUQ/AxbWSWgM8N3
+U8Jb2qNOP2p74J263v6D7/LrytKuphyWNkNZo39Is7fMZRDfxqcRQngUFo8OrUsR
+MTpk9jlHDAce8rU5DIEC4nogUpzK9GjV9/RAh7MozB0H696fLACWOcECzRRcIc0N
+gpCTg5Id84n0SjPEOcCdqkMXRyzMRGCCzTiagSCA5++0UChzfyQIIlRVHksCs5zX
+sMfYlI31tqYmokqOyxNGkK+k91fXxwDRnZlwHN6hnK6jj0WZ8R6rjG9TA+VHjzWZ
+YOIgd0QdEVtLMaRgYaOv1AFR6gtPbkm7zqUEqcF++UQub79z5mYshzFZYtW20ei2
+1lH4XQrhuJFWpLQJZxryLCeSUd3rQeBqsaAdhWaaffcarfdN4rN+ZbN3WXhMt8mC
+sjdVWAkmhB+vZfNiWv2Hd0Auxlww8w2jYwPBIrUAqr5ozxyF7KboM41fzrvroD/W
++srUEXKmw3pWvz0K+apzxMtDO1FdCv3Lz0VlestqojsEsgMoQE6sTHKShU5UTors
+zL9b9W4pkmvamNtdSK40f0nGtTKJzPbqwzSpfwo7Cx+nmhEVkQjdF+KJNvpDLfO+
++tpMtNrGMOl3MdX/p6qf
+=MbYs
+-----END PGP SIGNATURE-----
