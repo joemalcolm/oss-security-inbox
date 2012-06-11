@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/12
-Message-ID: <4F132DE5.3030202@redhat.com>
-Date: Sun, 15 Jan 2012 12:49:57 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/11/1
+Message-ID: <20120611162118.GL28152@dhcp-25-225.brq.redhat.com>
+Date: Mon, 11 Jun 2012 18:21:19 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>, Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: Wireshark multiple vulnerabilities
+Subject: CVE request -- libguestfs: virt-edit doesn't preserve file permissions
 Content-Type: text/plain; charset=utf-8
 
-On 01/12/2012 10:55 PM, Huzaifa Sidhpurwala wrote:
->
-> There are 6 file format crashes here. In the interest of vendors,
-> which dont always rebase to the newer version, would it be convenient
-> to split these into 6 CVEs?
->
-> I doubt some older versions are affected by only some crashers.
->
->
+Description of the problem:
+virt-edit creates a new file when it is used and thus does not
+preserve file permissions, file owner and SELinux context on the
+files that it was editing.
 
-I agree in principle, however in practice this is a lot of work (as you
-well know =). I guess my question/concern would be is who does the
-research to verify all this, and what if it varies by version (i.e. it
-is 6 separate issues in an older version but the newer version combined
-some code into a common library for example so it's only a single issue,
-but with multiple avenues of attack/etc.). In other words a lot of
-potential work.
+As a consequence, if certain security-sensitive files in the guest
+were edited using virt-edit, they would become world-readable.
 
+Proposed upstream patch:
+https://www.redhat.com/archives/libguestfs/2012-February/msg00034.html
+
+References:
+https://www.redhat.com/archives/libguestfs/2012-February/msg00033.html
+https://bugzilla.redhat.com/show_bug.cgi?id=788642
+
+Thanks,
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Petr Matousek / Red Hat Security Response Team
