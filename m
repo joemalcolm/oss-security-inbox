@@ -1,84 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/9
-Message-ID: <mpro.m839x23w5e1110nsi.taviso@cmpxchg8b.com>
-Date: Wed, 1 Aug 2012 20:27:04 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/11/3
+Message-ID: <4FD62999.5090209@redhat.com>
+Date: Mon, 11 Jun 2012 11:23:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: NVidia Linux driver
+Subject: Re: CVE request -- libvirt: address bus= device= when identicle vendor ID/product IDs usb devices attached are ignored
 Content-Type: text/plain; charset=utf-8
 
-Marcus Meissner <meissner@...e.de> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On Wed, Aug 01, 2012 at 09:32:44AM -0400, Marc Deslauriers wrote:
-> > On Wed, 2012-08-01 at 15:12 +0200, Tavis Ormandy wrote:
-> > > Marc Deslauriers
-> > > <marc.deslauriers@...onical.com> wrote:
-> > > 
-> > > > Hello,
-> > > > 
-> > > > Could a CVE please be assigned to the following issue:
-> > > > 
-> > > > The binary NVidia Linux driver allows local users to access
-> > > > arbitrary memory locations by leveraging GPU device-node read/write
-> > > > privileges, and escalate privileges to root. Possibly an incomplete
-> > > > fix for CVE-2012-0946.
-> > > > 
-> > > > See:
-> > > > 
-> > > > http://seclists.org/fulldisclosure/2012/Aug/4
-> > > > 
-> > > > Thanks,
-> > > > 
-> > > > Marc.
-> > > 
-> > > I know that at least Gentoo does this since ~2006:
-> > > 
-> > > 35 # !!! SECURITY WARNING !!! 36 # DO NOT MODIFY OR REMOVE THE DEVICE
-> > > FILE RELATED OPTIONS UNLESS YOU KNOW 37 # WHAT YOU ARE DOING. 38 #
-> > > ONLY ADD TRUSTED USERS TO THE VIDEO GROUP, THESE USERS MAY BE ABLE TO
-> > > CRASH, 39 # COMPROMISE, OR IRREPARABLY DAMAGE THE MACHINE. 40 options
-> > > nvidia NVreg_DeviceFileMode=432 NVreg_DeviceFileUID=0
-> > > NVreg_DeviceFileGID=VIDEOGID NVreg_ModifyDeviceFiles=1
-> > > 
-> > > 
-> > >
-http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/x11-drivers/nvidia-drivers/files/nvidia?revision=1.3&view=markup
-> > 
-> > 
-> > Well, getting rid of static groups like that is what consolekit and udev
-> > are for. Ideally, permissions would be granted on the device based on
-> > which user is at the console, as it currently done with other devices.
-> > Unfortunately, the design of the binary driver makes it hard to do, as
-> > it resets permissions itself when X loads.
-> > 
-> >
-https://bugs.launchpad.net/ubuntu/+source/nvidia-graphics-drivers/+bug/979307
+On 06/11/2012 10:29 AM, Petr Matousek wrote:
+> Description of the problem: libvirt ignores address bus= device=
+> when identicle vendor ID/product IDs usb devices attached with
+> either virsh or virt-manager.
 > 
-> The NVIDIA is explicitly not allowed to use the udev device structure, as
-> udev device handling requires GPL interfaces and can only be called from
-> GPL drivers.
+> As a consequence, wrong USB device can be assigned to the wrong
+> guest.
 > 
-> Thats why it is strange this way.
-> 
-> And yes, the exploit turns "I have a bad feeling about this" about this
-> device definitely into "this is bad".
-> 
+> References and proposed upstream patch: 
+> https://www.redhat.com/archives/libvir-list/2012-April/msg01494.html
+>
+>  Thanks,
 
-Yes, but even without this neat exploit, I suspect unprivileged users would
-have been able to physically set the machine on fire if you didn't trust
-them.
+Although there is no direct and simple way to trigger this behavior
+(short of having physical access) a security boundary is crossed. An
+example scenario: a cloud provider offers to attach a USB drive to the
+VM so you can export the data to the HD which is then fedexed to the
+customer overnight, or stored separately as a backup, etc. (lets face
+it, 3tb delivered overnight is a lot faster than any internet link
+I'll ever have).
 
-(E.g. disable all fans via nvidiactl, overclock like crazy then submit heavy
-workload).
+The problem is that when USB devices are attached it's possible for
+the specification of which VM the device is supposed to be attached to
+to be ignored, resulting in it being attached to a different VM,
+giving it direct access to the hardware.
 
-This is why we disabled it in Gentoo, a user reported that one of his users
-overclocked a card and disabled the fans, resulting in a big (physical)
-mess.
+Please use CVE-2012-2693 for this issue.
 
-Tavis.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
+iQIcBAEBAgAGBQJP1imZAAoJEBYNRVNeJnmT2bEQAI8YlBBK0Rq98bHOxVFrUBdW
+FTC1QJjFjQBVN3tG3JasMP6L38mvqeyBPbz+TxfSK8WXzs2VO+hw5ZNoFodLZ1VQ
+r01xJmXelX1Cdxu+jFngJhzipGLH0TCjXQFbhTshdA7NxwFhFxdYLe8IJrR+QXWt
+coIhpJbHSOa3XblRKDwOT4qcgZCW3/hvSJm9GuMqDNGgkG5ieU9mCkoWFBOYIfuc
+iW+sESS+DTtL8utL1S8KulxXdsTVutpDJf9Iu3Tq1JeSv02t/l0hFASCymX0kRZS
+e1wrXw9sKhrS1HVRkAW7JJIx2g1nnnatWsdIk7Av9HU1ySDhhpSvJ9nz9btoX6ev
+9rhdpwO9RbMqkGiY6KBtIDSGQLwYmBYZcoCFwpKiaZ08pa16pBeoSh4K/9GpVYw+
++Q1nr0yvFWCSzD2oLjZzvRzQnjhDfw9zXbmRhx5EqmOEy//VjPGLnNT9BybJ0Va7
+tVTaraRls1arA7hju6UPMd8vo9VqZq52h9fCr9+ja8MQOrkLoAG2LBdLgqMYwYv6
+bptMJBGhyJEithT/qZAZnIxk901L3xAVH2oY8PuEsi/L8jFHt92wEZ3scIbJESrG
+SVcHkt5HcRv9iuoUwCLBdlCAT9BzTRQGBG96a/s/hKkyVhj8kprYTwYPrfJbdjf+
+rcyx+D/2dfEbj5YcOj3q
+=UdD1
+-----END PGP SIGNATURE-----
