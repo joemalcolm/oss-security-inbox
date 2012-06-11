@@ -1,49 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/03/6
-Message-ID: <501C12A0.9000108@redhat.com>
-Date: Fri, 03 Aug 2012 12:04:16 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/11/4
+Message-ID: <4FD62195.8020307@redhat.com>
+Date: Mon, 11 Jun 2012 10:49:25 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: openvswitch world writable directories (CVE-2012-3449)
+CC: Dex <0x41@...h.ai>
+Subject: Re: Re: WHMCS 5.0.2> SQLi CVE Request
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/03/2012 12:04 AM, Yves-Alexis Perez wrote:
-> On jeu., 2012-08-02 at 13:08 -0600, Kurt Seifried wrote:
->> Andreas Beckmann debian@...ckmann.de reports:
->> 
->> openvswitch-pki creates the following world writable directories 
->> during installation:
->> 
-> […]
+On 06/07/2012 09:53 AM, Dex wrote:
+> Because securityfocus seem incapable of reading code, which I
+> guess should be expected from an operation like that, they link to
+> the vuln check code. The exploit code is available at PacketStorm: 
+> http://packetstormsecurity.org/files/113106/WHMCS-Blind-SQL-Injection.html
+>
+>  On Thursday, June 07, 2012 at 4:48 PM, Dex  wrote:Hello all I'd
+> like to  request a CVE for this bug please so that I can be 
+> cool/save the planet.http://www.securityfocus.com/bid/53711 It is
+> what was patched with this patch from WHMCS 
+> http://www.securityfocus.com/bid/53770http://blog.whmcs.com/?t=47828
+>
 > 
->> Please use CVE-2012-3449 for this issue.
-> 
-> I'm unsure if you want to allocate CVEs for all this kind of
-> issues, but Andreas is currently reporting a bunch of bugs for
-> those. See:
+Thanks in advance,dx7r
+> I hate myself for this.
 
-If a security boundary is crossed then yup. E.g. you can monkey with
-the programs log files/config/etc. (cover up attacks/etc.) or possibly
-crash the program/cause a dos (forcing it to append/process huge
-files, etc.). Alternatively you can use the directory to stash files
-(and typically the admin only expects /tmp/, /var/tmp/) and so on.
-
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=683649 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=683647
-> 
-> and I guess there might be more to come since it's the result of 
-> piuparts tests run against the whole archive.
-
-Basically it's a lot like /tmp/ file creation issues. They are low
-level, rarely fatal, but they are security issues that need to be
-addressed. I'll do separate emails for them to make tracking easier.
-
-> Regards,
-> 
+So I looked at the info and the patch and there isn't really much info
+apart from "SQL Injection" and the patch is base64 and requires some
+special loader. Can someone post the actual PHP and/or details, a
+bugzilla, or?
 
 
 - -- 
@@ -54,17 +41,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQHBKfAAoJEBYNRVNeJnmT3Z8QALhQ17t1psZCdrxvzW/aaBvx
-g5cwQEZjZWJkeFq+1GS+RHQ5wdtXdI0x7d5WhK0t4hQFPqcSyvzn+UJV2QFeXH+m
-F71i0IXt473Wa6G/XdkwQMYpzkF5FIkNHeKJAC4HOg1a3qsu2H8BKHl2fMKT7MDh
-HuZVOFVqVqZiqe3zNHEXfHbPebeJQEPATtROIncTAbPKXZnbc4Y+i6IEIwXLjZk0
-jDm+O16CopmivuLopy8AxT6Z1z18fNigvevOQBjtiHRPR0S1giynV8/CUn5C5cBN
-BuhaVzYT/FkHE02ayeAEq4NApYdJbvBWGmo5mOg/hmchhVL00qBPeTOFCo1w72QM
-vxfGKCRHL4Cm1SvQraY+nOwl9sLBpEvSkpFUdrITBpF03muE9KMgo5DnyU5kKf4D
-6mBDy+RCBWXMk8wC7tgaUSUJ1qKeW/hO2w/aKwSXkmsK8X3u8NzCS2ezUZva/Nk7
-Y4UssGijN8wwQb52//Ab3mximiV3ucHDZlZOmGHNUpVSPrAmW3KES0dJMhyHiGh+
-gR0E7lHrf5HA4XTH3/VLee9fWVNcY3D8FmyLEjixDtEGQub/ehiNV9DrZXrun+Jg
-XYLlzTBIXNeAmWHSnpOsTTGO6KI45SxcJEe0jrcDlhQXv2ygDohiYZxik6jDQeKc
-kycbiI0+K4QCEKd/7X1v
-=t7K3
+iQIcBAEBAgAGBQJP1iGVAAoJEBYNRVNeJnmTgOcQAI4Eo/L7IzbFOiY19+zVzoEu
+Gg+JzbX1T5mr7Ymp8eho9l25bGVYZSzjsk1wm7c7zEdcShxMeFQhH6eHGJ7Q1vEg
+R8tTVF0Cp9kKL4SLxcMU3gePUv/N0r0PTtVuuhDy/XrEQOhTR38UXID8HSE6lVo0
+XeQJ1026O+rQPGipfCFOocXZ+bFkcbEcBTH9r0xeCLF3I5zFvtOKKVraChkakbVt
+tj4fX9XDCuu+d1Dc5PkQ2DTETlDLIgIAkMFTCyIe3GdQqXHNh6hNh1r2ZOX7p22s
+wSYtL8r3R/4wF4VhFab7ZZfR/zciyGPg4u0bNIIdSGtRaHGGwLAIW743uWkp5sLh
+8it3f5i8VVGn/C7PWqGwT8eIaCVz1Vr36sVpELW4OYnKyHEfgxfHOoVyU+kaxHi/
+pOeYfwh8J+HixvtRs729Ktq40KDrvfx6jU5SUrmATgRWDlWLDEQ5NIRCZNbWdFgu
+8WXH6ntN6v6hOfdR7OgbPcRNX2thVSDyvU+YzZf505BvuFo4F8LteKKZxlKGE/QR
+5Ez+Js3jr+wLL11c/Vi+xHkpa9dYXOGIDN7WMzhVHJGcnrh6+G+JrN1cNQ1BVHp1
+IJG40KT/QKIqBmU2rShi0ydxTGmu5yYtBioIAHwCxTKQ3nQ5ACzeQKljF7YRh9yE
+9M91KeD4LEqIa8FJyRss
+=Ntgp
 -----END PGP SIGNATURE-----
