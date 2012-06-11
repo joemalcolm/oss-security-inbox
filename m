@@ -1,36 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/10
-Message-ID: <20120102121523.GA17440@ugly.local>
-Date: Mon, 2 Jan 2012 13:15:23 +0100
-From: Oswald Buddenhagen <ossi@....org>
-To: Solar Designer <solar@...nwall.com>
-Cc: Jeff Mitchell <mitchell@....org>, oss-security@...ts.openwall.com, cve@...re.org
-Subject: Re: Disputing CVE-2011-4122
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/11/2
+Message-ID: <20120611162944.GM28152@dhcp-25-225.brq.redhat.com>
+Date: Mon, 11 Jun 2012 18:29:45 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request -- libvirt: address bus= device= when identicle vendor ID/product IDs usb devices attached are ignored
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 28, 2011 at 03:25:09AM +0400, Solar Designer wrote:
-> On Mon, Dec 26, 2011 at 11:39:55PM -0500, Jeff Mitchell wrote:
-> > So kcheckpass, at least for the moment, punts all of this down to
-> > OpenPAM. Is it *nice*? No. Is it *valid*? Yes, unless OpenPAM changes
-> > its programming guide to require sanity checking of inputs at a higher
-> > level (and then it should still do its own checking anyways).
-> 
-> Sure, but is it valid and not a vulnerability when installing a package
-> (containing kcheckpass) unexpectedly (for a sysadmin) lets any user on
-> the system
-> invoke any of the configured PAM stacks, some of which may have
-> side-effects?
-> 
-i pondered this possibility when i initially added the override
-parameter to kcheckpass, but i couldn't come up with anything usefully
-exploitable - it would have to be some right which is granted to the
-user *only* by this particular service - but not full logins. this seems
-a bit far-fetched. so while you have a valid point in principle, it
-doesn't seem particularly relevant for desktop systems.
+Description of the problem:
+libvirt ignores address bus= device= when identicle vendor
+ID/product IDs usb devices attached with either virsh or virt-manager.
 
-fwiw, linux-pam's pam_unix has an own setuid helper for shadow pw
-verification for some time now. most services don't actually need root
-for authentication at all. consequently, it is usually not useful to
-install kcheckpass setuid root at all, which makes this whole discussion
-somewhat irrelevant in the first place (except that the upstream
-makefiles will still try to install with setuid root).
+As a consequence, wrong USB device can be assigned to the wrong guest.
+
+References and proposed upstream patch:
+https://www.redhat.com/archives/libvir-list/2012-April/msg01494.html
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
