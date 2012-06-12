@@ -1,43 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/6
-Message-ID: <20120102013445.GC944@dojo.mi.org>
-Date: Sun, 1 Jan 2012 20:34:45 -0500
-From: "Mike O'Connor" <mjo@...o.mi.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/12/2
+Message-ID: <20439.12295.26429.618451@mariner.uk.xensource.com>
+Date: Tue, 12 Jun 2012 13:03:19 +0100
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xensource.com, xen-devel@...ts.xensource.com, xen-users@...ts.xensource.com, oss-security@...ts.openwall.com
+Subject: Xen Security Advisory 8 (CVE-2012-0218) - syscall/enter guest DoS
 Content-Type: text/plain; charset=utf-8
 
-:On Sun, Jan 01, 2012 at 04:53:09PM +0100, Nico Golde wrote:
-:> given the hash DoS I remembered a small program I wrote some time last year to 
-:> demonstrate why the default configuration of openssh sucks (MaxStartups and 
-:> LoginGraceTime).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-FWIW, we've had to adjust the default MaxStartups for our ssh-heavy
-cluster management software for many years now.  It doesn't even take
-a casual abuser to deny service to all.
+               Xen Security Advisory CVE-2012-0218 / XSA-8
+                              version 7
 
-:I think not only the default configuration, but also the approach behind
-:MaxStartups sucks (either a fixed limit or RED).  In fact, I told this
-:to OpenSSH folks before, and I proposed an alternative, but clearly I
-:should have done more (contributed code) in order for anything to change.
-:
-:To be fair, there are also things that I do like about MaxStartups: the
-:idea to limit only not-yet-authenticated sessions (or to limit them
-:separately from authenticated sessions) and the close-a-pipe-fd trick.
-:
-:> ... how to properly handle this issue with openssh?
-:
-:In the same way that I did in popa3d, I think: per-source limits.  Maybe
-:also per-source-netblock (e.g., separately for /8, /16, /24 - although
-:this is IPv4-specific and these don't reflect actual netblock allocations).
+     guest denial of service on syscall/sysenter exception generation
 
-Any thoughts on what an appropriate default config for per-source
-limits should be?  How many connections from a given source would
-end up being too many for the default OpenSSH configuration?
+UPDATES IN VERSION 7
+====================
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"I need a vacation."                                          -The Terminator
+Public release.  Previous versions were embargoed.
 
-Content of type "application/pgp-signature" skipped
+ISSUE DESCRIPTION
+=================
+
+When guest user code running inside a Xen guest operating system
+attempts to execute a syscall or sysenter instruction, but when the
+guest operating system has not registered a handler for that
+instruction, a General Protection Fault may need to be injected into
+the guest.
+
+It has been discovered that the code in Xen which does this fails to
+clear a flag requesting exception injection, with the result that a
+future exception taken by the guest and handled entirely inside Xen
+will also be injected into the guest despite Xen having handled it
+already, probably crashing the guest.
+
+IMPACT
+======
+
+User space processes on some guest operating systems may be able to
+crash the guest.
+
+VULNERABLE SYSTEMS
+==================
+
+HVM guests are not vulnerable.
+
+32- and 64-bit PV guests may be vulnerable, depending on the CPU
+hardware, the guest operating system, and its exact kernel version and
+configuration.
+
+MITIGATION
+==========
+
+This issue can be mitigated by running HVM (fully-virtualised).
+
+In some cases this issue can be mitigated by upgrading the guest
+kernel to one which installs hooks for sysenter and/or syscall, as
+applicable.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch will resolve the issue.
+
+These patches also resolve the (more serious) issue described in
+XSA-7 (CVE-2012-0217).
+
+These changes have been made to the staging Xen repositories:
+                    XSA-7:              XSA-8:
+ xen-unstable.hg     25480:76eaf5966c05  25200:80f4113be500+25204:569d6f05e1ef
+ xen-4.1-testing.hg  23299:f08e61b9b33f  23300:0fec1afa4638
+ xen-4.0-testing.hg  21590:dd367837e089  21591:adb943a387c8
+ xen-3.4-testing.hg  19996:894aa06e4f79  19997:ddb7578abb89
+
+PATCH INFORMATION
+=================
+
+The attached patches resolve both this issue and that reported in
+XSA-7 (CVE-2012-0217).
+
+ xen-unstable 25204:569d6f05e1ef or later    xsa7-xsa8-unstable-recent.patch  
+ xen-unstable 25199:6092641e3644 or earlier  xsa7-xsa8-unstable-apr16.patch
+ Xen 4.1, 4.1.x                              xsa7-xsa8-xen-4.1.patch
+ Xen 4.0, 4.0.x                              xsa7-xsa8-xen-4.0.patch
+ Xen 3.4, 3.4.x                              xsa7-xsa8-xen-3.4.patch
+
+$ sha256sum xsa7-xsa8-*patch
+00853d799d24af16b17c8bbbdb5bb5144a8a7fad31467c4be3d879244774f8d2  xsa7-xsa8-unstable-apr16.patch
+71f9907a58c1a1cd601d8088faf8791923d78f77065b94dba8df2a61f512530d  xsa7-xsa8-unstable-recent.patch
+55fb925a7f4519ea31a0bc42d3ee83093bb7abd98b3a0e4f58591f1ae738840a  xsa7-xsa8-xen-3.4.patch
+6a7e39121ec1f134351fdf34f494d108500aaa4190a9f7965e81c4e96270924e  xsa7-xsa8-xen-4.0.patch
+52d8288718b4a833eb437fd18d92b7d412fbe01900dbd0b437744a1df4d459da  xsa7-xsa8-xen-4.1.patch
+
+NOTE REGARDING EMBARGO
+======================
+
+The fix for this issue has already been published as xen-unstable.hg
+changesets 25200:80f4113be500 and 25204:569d6f05e1ef.  However, this
+has not been flagged as a security problem, and since the affected
+area of code is the same as that for XSA-7 (CVE-2012-0217), we have
+concluded that this advisory should be under the same embargo as
+XSA-7.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJP1yqMAAoJEIP+FMlX6CvZQRoH/1Do71YkaMvKoPo/VCHqUuB1
+5mJve/SiTK5Y5kggnLfnpZeuLjlntHCT5F//Do7N21WDVdwZXFBItlvjhKyNGA0Y
+ohqzqzAQ0c2l/mE3ToaLhhtuFb8U06q8Ud+pQ9QbMHHpJvGXPzDbNG12L/fZDwyf
+ZbMqB2j8+TVuRXPlbdZabNUAcZ+HOJHb1NloKCbX0qwMG4p5FJ3OdkDX7r5OjPKj
+sIJAaltBINGjRrqYMLB4UUQdrftu1ftfU/GFVYy8+t3uNj0fBgkCPUlGbbQs2SF2
++VtLUUG6rzVlRdHyhVMswz3sZtR7Tow6xwPk3Sr4yfrI15rH2pUJI7if8vZ1ZQ8=
+=elZi
+-----END PGP SIGNATURE-----
+
+
+Download attachment "xsa7-xsa8-unstable-recent.patch" of type "application/octet-stream" (1589 bytes)
+
+Download attachment "xsa7-xsa8-unstable-apr16.patch" of type "application/octet-stream" (5044 bytes)
+
+Download attachment "xsa7-xsa8-xen-4.1.patch" of type "application/octet-stream" (4939 bytes)
+
+Download attachment "xsa7-xsa8-xen-4.0.patch" of type "application/octet-stream" (3960 bytes)
+
+Download attachment "xsa7-xsa8-xen-3.4.patch" of type "application/octet-stream" (3960 bytes)
