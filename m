@@ -1,27 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/10/6
-Message-ID: <CAAPiX_+7WCJzL22F_HMPWjr+wEfQkccU765QHWayBxkCOtbG3Q@mail.gmail.com>
-Date: Thu, 10 May 2012 15:38:07 -0400
-From: Greg Knaddison <greg.knaddison@...uia.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...pal.org
-Subject: CVE Request for Drupal contributed modules - 2012-05-10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/12/5
+Message-ID: <20120612213029.GB81647@mobile-166-187-102-087.mycingular.net>
+Date: Tue, 12 Jun 2012 14:30:29 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: oss-security@...ts.openwall.com, rubyonrails-security@...glegroups.com
+Subject: Ruby on Rails SQL Injection (CVE-2012-2695)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+SQL Injection Vulnerability in Ruby on Rails
 
-This is a CVE request for the following contributed module issues:
+There is a SQL injection vulnerability in Active Record, in ALL versions. This vulnerability has been assigned the CVE identifier CVE-2012-2695.
 
-http://drupal.org/node/1569482 SA-CONTRIB-2012-073 - Glossary -
-Cross-Site Scripting (XSS)
-http://drupal.org/node/1569508 SA-CONTRIB-2012-074 - Contact Forms -
-Access Bypass
-http://drupal.org/node/1569512 SA-CONTRIB-2012-075 - Take Control -
-Cross Site Request Forgery (CSRF)
+Versions Affected:  ALL versions
+Not affected:       NONE
+Fixed Versions:     3.2.6, 3.1.6, 3.0.14
 
-Thanks,
-Greg
+Impact 
+------ 
+Due to the way Active Record handles nested query parameters, an attacker can use a specially crafted request to inject some forms of SQL into your application's SQL queries.
 
---
-Director Security Services | +1-720-310-5623
-Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
+All users running an affected release should upgrade immediately. Please note, this vulnerability is a variant of CVE-2012-2661, even if you upgraded to address that issue, you must take action again.
+
+Impacted code directly passes request params to the `where` method of an ActiveRecord class like this:
+
+    Post.where(:id => params[:id]).all
+
+An attacker can make a request that causes `params[:id]` to return a specially crafted hash that will cause the WHERE clause of the SQL statement to query an arbitrary table with some value.
+
+Releases 
+-------- 
+The FIXED releases are available at the normal locations. 
+
+Workarounds 
+----------- 
+This issue can be mitigated by casting the parameter to an expected value.  For example, change this:
+
+    Post.where(:id => params[:id]).all
+
+to this:
+
+    Post.where(:id => params[:id].to_s).all
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset.  We have also provided a patch for the 3.0 series despite the fact it is unmaintained.
+
+* 2-3-sql-injection.patch - Patch for 2.3 series 
+* 3-0-sql-injection.patch - Patch for 3.0 series 
+* 3-1-sql-injection.patch - Patch for 3.1 series 
+* 3-2-sql-injection.patch - Patch for 3.2 series 
+
+Please note that only the  3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+------- 
+
+Thanks to Justin Collins of Twitter for the backport to 2.3 and to the
+following security researchers who reported the vulnerability and helped
+us verify the fixes (in alphabetical order):
+
+  * Ernie Miller
+  * Gabriel Quadros
+  * Takeshi Terada of Mitsui Bussan Secure Directions, Inc.
+  * Tomás D'Stefano
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "2-3-sql-injection.patch" of type "text/plain" (3271 bytes)
+
+View attachment "3-0-sql-injection.patch" of type "text/plain" (2390 bytes)
+
+View attachment "3-1-sql-injection.patch" of type "text/plain" (2401 bytes)
+
+View attachment "3-2-sql-injection.patch" of type "text/plain" (2402 bytes)
+
+Content of type "application/pgp-signature" skipped
