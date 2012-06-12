@@ -1,55 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/14
-Message-ID: <4F84899C.6090003@redhat.com>
-Date: Tue, 10 Apr 2012 13:27:24 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: cobbler (Ubuntu-specific)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/12/4
+Message-ID: <20120612212908.GA81647@mobile-166-187-102-087.mycingular.net>
+Date: Tue, 12 Jun 2012 14:29:08 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: oss-security@...ts.openwall.com, rubyonrails-security@...glegroups.com
+Subject: Ruby on Rails Unsafe Query Generation Risk in Ruby on Rails (CVE-2012-2694)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Unsafe Query Generation Risk in Ruby on Rails
 
-On 04/10/2012 08:29 AM, Marc Deslauriers wrote:
-> Could we please get a CVE assigned to the following issue?:
-> 
-> A Ubuntu-specific script called "cobbler-ubuntu-import" in the
-> Ubuntu cobbler package downloads isos from a mirror, and checks
-> them against MD5SUMS, but does not verify the validity of that
-> MD5SUMS file itself against the MD5SUMS.gpg. This was fixed in
-> version 2.2.2-0ubuntu32 of the package.
-> 
-> Bug: https://bugs.launchpad.net/ubuntu/+source/cobbler/+bug/974460
-> 
-> Commit: 
-> http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/precise/cobbler/precise/revision/98
->
->  Thanks,
-> 
-> Marc.
+There is a vulnerability when Active Record is used in conjunction with parameter parsing from Rack via Action Pack. This vulnerability has been assigned the CVE identifier CVE-2012-2694.
 
-Please use CVE-2012-2092 for this issue.
+Versions Affected:  ALL versions
+Not affected:       NONE
+Fixed Versions:     3.2.6, 3.1.6, 3.0.14
+
+Impact 
+------ 
+Due to the way Active Record interprets parameters in combination with the way that Rack parses query parameters, it is possible for an attacker to issue unexpected database queries with "IS NULL" where clauses.  This issue does *not* let an attacker insert arbitrary values into an SQL query, however they can cause the query to check for NULL where most users wouldn't expect it.
+
+For example, a system has password reset with token functionality:
+
+    unless params[:token].nil?
+      user = User.find_by_token(params[:token])
+      user.reset_password!
+    end
+
+An attacker can craft a request such that `params[:token]` will return `['xyz', nil]`.  The `['xyz', nil]` value will bypass the test for nil, but will still add an "IN ('xyz', NULL)" clause to the SQL query.
+
+All users running an affected release should either upgrade or use one of the work arounds immediately. All users running an affected release should upgrade immediately. Please note, this vulnerability is a variant of CVE-2012-2660, even if you upgraded to address that issue, you must take action again.
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Releases
+-------- 
+The FIXED releases are available at the normal locations. 
 
-iQIcBAEBAgAGBQJPhImcAAoJEBYNRVNeJnmT6igP/2c9cgMx9AqAig2Ls3eII/5K
-hF7xOh1XdEDMW3Hy2ZzH3EwkH4YSXZAdOLjckWUcf4J5eP2CjaUdHMOm1u46ejwC
-jmUj40W8VYubPZmJbrzE4uSy2hL7K67Vk8jF0BEVDWkzcPV6oeqzjE81Ab3mPklf
-U0nyFF8KAEzhIuLOrvh5fUM33Wd57CRlnSaNlD+MV+z8NB61EReSHesT6IsdKN9S
-WO7hferjRX+kdVlRuhkNY3Yua5jReEGkQt4iVoM07I9mGkTjcuU7/emV/RtSKsx5
-AewOxuZ2ez/MADJ3g7679/7hn/7oeG7GEd2Y7f7oAnQJ0/vG2k5T1OGcTpbiiQld
-XVKE+a1h7xYKHpUd5YyJivCJXO0UqU+ZD4Uqp0Mpvuapy6UHiPSKk4Uwxnu3DL5E
-XG5VPenv8sgKbRsS8b5eUz/mgoOvDKYCeGJ4mDYF7ZbPND2gBpz2gFF/s5/J+AJC
-qK1gAMsMu6TPwp4k7kVwVM7LkQ2B1YIMIeOrRvdvCNbg1u2+O9IYR12MGEfQbsSJ
-qdyTHagVY48ue5wEpOPXy1rDpd9JAtD0Rz+drfpkR0dP7SRwfLS9jxuoulqw+G57
-BT81Sy9pGOg7OUI3MIZDtK6vTgFb+bUn27MoS249NNJvylZgFXpCtwHDctQH0wvt
-sjgJhJObRbYRzjQ5wcIA
-=eKfp
------END PGP SIGNATURE-----
+Workarounds
+----------- 
+This problem can be mitigated by casting the parameter to a sting before passing it to Active Record.  For example:
+
+    unless params[:token].nil? || params[:token].to_s.empty?
+      user = User.find_by_token(params[:token].to_s)
+      user.reset_password!
+    end
+
+Note the parameter is still cast to a string before being send to Active Record.This is because an array with a nil value can still bypass the `to_s.empty?` test:
+
+    >> ['xyz', nil].to_s
+    => "xyz"
+    >> ['xyz', nil].to_s.empty?
+    => false
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+
+* 3-0-null_array_param.patch - Patch for 3.0 series 
+* 3-1-null_array_param.patch - Patch for 3.1 series 
+* 3-2-null_array_param.patch - Patch for 3.2 series 
+
+Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+------- 
+
+Thanks to the following people for reporting this bug:
+
+  * Egor Homakov
+  * Paul Lynch
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-0-null_array_param.patch" of type "text/plain" (1934 bytes)
+
+View attachment "3-1-null_array_param.patch" of type "text/plain" (1932 bytes)
+
+View attachment "3-2-null_array_param.patch" of type "text/plain" (1933 bytes)
+
+Content of type "application/pgp-signature" skipped
