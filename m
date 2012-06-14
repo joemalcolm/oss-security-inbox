@@ -1,94 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/08/3
-Message-ID: <20121008125646.GA17238@pre-sense.de>
-Date: Mon, 8 Oct 2012 14:56:47 +0200
-From: Timo Warns <Warns@...-Sense.DE>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/14/2
+Message-ID: <4FD945B7.6000700@redhat.com>
+Date: Wed, 13 Jun 2012 20:00:23 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [PRE-SA-2012-07] hostapd: Missing EAP-TLS message length validation
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: XSS in uselang http parameter (mediawiki)
 Content-Type: text/plain; charset=utf-8
 
-The issue described below has been reported to the distros list with
-a timeline as follows:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-2012-09-20:
-    - notification of Jouni Malinen of the hostapd project
+On 06/13/2012 07:33 PM, Vincent Danen wrote:
+> Mediawiki 1.17.5, 1.18.4, and 1.19.1 were released today to fix a
+> XSS vulnerability in the useland http parameter.
+> 
+> References:
+> 
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2012-June/000118.html
+>
+>  https://bugzilla.wikimedia.org/show_bug.cgi?id=36938 
+> https://bugzilla.redhat.com/show_bug.cgi?id=831876
+> 
+> I didn't spot a CVE name in the release, so requesting one here.
+> 
+> Thanks.
 
-2012-09-21:
-    - verification of the vulnerability and provision of patch
-      by Jouni Malinen
-    - agreement on an advisory release date of 2012-10-08
-
-2012-09-24:
-    - notification of distros@...openwall.org
-
-2012-10-07:
-    - patch becomes available in hostapd's public git repository
-
-2012-10-08:
-    - release of advisory
-
-      
-PRE-CERT Security Advisory
-==========================
-
-* Advisory: PRE-SA-2012-07
-* Released on: 8 October 2012
-* Affected product: Hostapd 0.6 - 1.0
-* Impact: denial of service
-* Origin: specially crafted EAP-TLS messages
-* CVSS Base Score: 7.8
-    Impact Subscore: 6.9
-    Exploitability Subscore: 10
-  CVSS Vector: (AV:N/AC:L/Au:N/C:N/I:N/A:C)
-* Credit: Timo Warns (PRESENSE Technologies GmbH)
-* CVE Identifier: CVE-2012-4445
+Please use CVE-2012-2698 for this issue.
 
 
-Summary
--------
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-The internal EAP authentication server of hostapd does not sufficiently
-validate the message length field of EAP-TLS messages, which can be
-exploited for a denial-of-service via specially crafted EAP-TLS messages
-(before authentication).
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Hostapd has a function eap_server_tls_process_fragment() used by its
-internal EAP authentication server for handling fragmented EAP-TLS
-messages. The function (indirectly) calls wpabuf_overflow() aborting
-the application in case of potential buffer overflows. Such a situation
-can be triggered by an attacker sending an EAP-TLS message with
-
-    a) the "More Fragments" flag set and
-    b) an "TLS Message Length" value that is smaller than the size of
-       the "TLS Data" field.
-
-The vulnerability can be exploited only if hostapd is configured to use
-its internal EAP authentication server, either directly for IEEE 802.11x
-or when using hostapd as a RADIUS authentication server. 
-
-Affected is hostapd in versions 0.6 - 1.0. The issue was introduced with
-commit
-http://hostap.epitest.fi/gitweb/gitweb.cgi?p=hostap.git;a=commitdiff;h=34f564dbd5168626da55a7119b04832e98793160
-
-
-Solution
---------
-
-A patch is available at
-http://w1.fi/gitweb/gitweb.cgi?p=hostap.git;a=commitdiff;h=586c446e0ff42ae00315b014924ec669023bd8de
-
-
-References
-----------
-
-When further information becomes available, this advisory will be
-updated. The most recent version of this advisory is available at:
-
-http://www.pre-cert.de/advisories/PRE-SA-2012-07.txt
-
-
-Contact
---------
-
-PRE-CERT can be reached under precert@...-secure.de. For PGP key
-information, refer to http://www.pre-cert.de/.
+iQIcBAEBAgAGBQJP2UW3AAoJEBYNRVNeJnmTzoAQAK+JAdhD9oR6YMlxf/ZRGgjT
+66IlnIemwu0Rcy1/iFJ5uSgrIUkCTda1pEzmKQBur1ghtPaFPG7pK9x4o9rnwoYT
+671DGRRT8XYjxuj+cb6Lkt4POyLZVuGygOr90eYilPSgjw4sTcBfyN6+2/OyPZfY
+xsu1FXNUJHpOXy9A5Y8VdQk/KIdKSr5arV/llBFhF7ypeWQzC4fkp2o+uuCQMynJ
+fBZXHH4/Rlx8+3ITYxN/doJnNoL0XnVXSnIvJ0mo1gMNphn4R3S1tnALHHdc3pV8
+igcbV/PBgk/eBtfqvPkzxsgr/LlhwtW5VxHWDhJ1BFqDMvhJnMA7PlO3gfj4lP/g
+cWzTxd/KQFhwR1f1g885i/fowVFhC/fb6/mhSrin9xDxcDRrFAZa8g3+ME9RIZo7
+54i62XTp+M5coWjTb6GzcIBc2qjZbIEILIrr21s5K8eiyv0TUYK9voUwvc4kCLui
+JaDesIIU6RRwtlrodILnEgxdTif67ZxQlSdRg8/Rexkd5VI0396anpR+nF2weua4
+5CDlYNc4g5RJm0a4GfYOlmJoO3nzm8ZHLpViTVVg/cEw5Qdv/81UgobPyTF761V7
+UIt0O/PEB0Vc+v/j8R9d2yvQSz+TIRp0cLywSoEP5jO0rv4O/DYQ7FsZfah4LrQ+
+Wz9FJ3zPAb/AbsWKct76
+=3kjY
+-----END PGP SIGNATURE-----
