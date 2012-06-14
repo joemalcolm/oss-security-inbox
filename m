@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/04/2
-Message-ID: <51698648.klcKoNKZH2@devil>
-Date: Sat, 04 Aug 2012 16:58:24 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/14/1
+Message-ID: <20120614013338.GO1540@redhat.com>
+Date: Wed, 13 Jun 2012 19:33:38 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for Calligra
+Subject: CVE request: XSS in uselang http parameter (mediawiki)
 Content-Type: text/plain; charset=utf-8
 
-On Saturday 04 August 2012 09:15:22 Jeff Mitchell wrote:
-> Hi,
-> 
-> A buffer overflow attack can lead to arbitrary code execution. Can we
-> get a CVE for this issue, please?
-> 
-> Thanks,
-> Jeff
-Please post commit code and please provide more information (as Kurt want)
+Mediawiki 1.17.5, 1.18.4, and 1.19.1 were released today to fix a XSS
+vulnerability in the useland http parameter.
+
+References:
+
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2012-June/000118.html
+https://bugzilla.wikimedia.org/show_bug.cgi?id=36938
+https://bugzilla.redhat.com/show_bug.cgi?id=831876
+
+I didn't spot a CVE name in the release, so requesting one here.
+
+Thanks.
 
 -- 
-Agostino Sarubbo / ago -at- gentoo.org
-Gentoo/AMD64 Arch Security Liaison
-GPG: 0x7CD2DC5D
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Vincent Danen / Red Hat Security Response Team 
