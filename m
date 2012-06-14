@@ -1,80 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/11/5
-Message-ID: <1352624495.17241.50.camel@scapa>
-Date: Sun, 11 Nov 2012 10:01:35 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/3
+Message-ID: <4FDA6B12.4030305@debian.org>
+Date: Thu, 14 Jun 2012 23:52:02 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: 692791@...s.debian.org, team@...urity.debian.org
-Subject: Re: Privilege escalation (lpadmin -> root) in cups
+Subject: CVE-2012-3345: symlink attack in ioquake3 >= r1773, < r2253
 Content-Type: text/plain; charset=utf-8
 
-On dim., 2012-11-11 at 00:18 -0700, Kurt Seifried wrote:
-> On 11/10/2012 05:49 AM, Yves-Alexis Perez wrote:
-> > Hi,
-> > 
-> > a Debian user reported a bug in our BTS concerning cupsd. The bug
-> > is available at
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692791 and 
-> > upstream bug at http://www.cups.org/str.php?L4223 (restricted
-> > because it's tagged security).
-> > 
-> > I'm unsure right now if it's an upstream issue or specific to
-> > Debian.
-> 
-> On Red Hat Enterprise 6 and Fedora 16 the file is owned by root:sys,
-> and the cupsd.conf defaults to:
-> 
-> <Location /admin/conf>
->   AuthType Default
->   Require user @SYSTEM
->   Order allow,deny
-> </Location>
+This was meant to be released tomorrow (and that's what I told vendors),
+but the patch was accidentally committed and announced upstream a day
+early, so I'm sending the advisory out straight away.
 
-As far as I can tell, @SYSTEM is defined using SystemGroup and defaults
-to lpadmin.
-> 
-> so that should be like "root", "bin" and "adm" so yeah it would appear
-> to be vendor specific.
+Background
+==========
 
-Well, in Debian (and upstream) case it's lpadmin -> root but in your
-case it'd be bin -> root and adm -> root. Maybe adm is intended to be
-root anyway but I guess that's not the case for bin?
+ioquake3 [IOQ] is a fork of the Quake III Arena (id Tech 3) game engine,
+and has become the de facto upstream for that engine since id Software
+ceased to develop it. It is also used (unmodified, modified or forked)
+in various open-source and proprietary games including OpenArena [OA],
+Reaction [REA], Smokin' Guns [SGN], Tremulous [TREM], Turtle Arena [TA],
+Urban Terror [URT] and World of Padman [WOP].
 
-The whole point is that people with access to the admin web interface
-can force cupsd to read or write files with the user running cupsd
-(root).
-> 
-> > Basically, members of the lpadmin group (which is the group having
-> > admin rights to cups, meaning they're supposed to be able to
-> > add/remove printeers etc.) have admin access to the web interface,
-> > where they can edit the config file and set some “dangerous”
-> > directives (like the log filenames), which enable them to read or
-> > write files as the user running the cupsd webserver.
-> > 
-> > In Debian case at least, it's run as root, meaning we have a
-> > privilege escalation issue from lpadmin group to root.
-> 
-> I think as a rule cupsd runs as root, to touch the various files/dirs/etc.
-> 
-> > A fix would be to not run cupsd web server as root, and maybe to 
-> > restrict it to some kind of chroot so it doesn't have access to 
-> > sensitive files
-> 
-> Tricky, /dev/*, log dirs, etc. Probably better to just use a print
-> specific user/group and make all the standard locations owned by it,
-> and require the admin to setup anything like say
-> /non-standard/log/printers/ and so on.
-> 
-> > Can a CVE be allocated for this?
-> 
-> Please use CVE-2012-5519 for this issue. Also if other vendors could
-> check the permissions/configs/etc. and reply if they are vulnerable
-> that would be good.
+Vulnerability
+=============
 
-Thanks.
+Access vector: local
+Authentication required: local system
+Impact: victim overwrites file of attacker's choice with a predictable
+integer
 
-Regards,
--- 
-Yves-Alexis
+Since svn revision 1773, ioquake3 has written its process ID to the file
+/tmp/ioq3.pid (or ioq3.pid in a world-writeable location) under the
+following circumstances:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+* running on non-Mac Unix and TMPDIR not set, or set to a
+  world-writeable location; or
+* running on Mac OS and FSFindFolder() for a temporary directory fails
+  or returns a world-writeable location
+
+On a multi-user system, an attacker could create a symbolic link
+/tmp/ioq3.pid pointing to any file owned by a user who plays an
+ioquake3-based game. When the victim runs ioquake3, the target file will
+be overwritten and replaced with the process ID of ioquake3.
+
+The effect of this attack depends on the file being overwritten: it
+could be simple vandalism (destroy one of the victim's files), or it
+could have further security implications if knowledge of the contents of
+a target file is used for authentication (in a system similar to
+pam_dotfile [DOT], for instance).
+
+For the dedicated server, the process ID is written to ioq3_server.pid,
+but the attack is essentially the same. For forks of ioquake3, the
+filename will typically include the name of the fork instead, e.g.
+openarena.pid.
+
+Affected versions
+=================
+
+* ioquake3 >= svn r1773, < r2253 [ANNOUNCE]
+* OpenArena 0.8.8
+* Reaction beta 1.0
+* Smokin' Guns 1.1
+* Tremulous "trunk" >= svn r2125
+* Tremulous "gpp" >= svn r2140
+* Turtle Arena >= svn r204 (all releases named Turtle Arena)
+* World of Padman >= 1.5.2 beta
+
+Unaffected versions
+===================
+
+* ioquake3 1.36
+* ioquake3 <= svn r1772
+* OpenArena <= 0.8.5
+* Smokin' Guns <= 1.1b4
+* Tremulous "trunk" <= svn r2124
+* Tremulous "gpp" <= svn r2139
+* Tremulous GPP1
+* Tremulous <= 1.1.0
+* Turtle Arena <= svn r203
+* TMNT Arena 20091211 (former name of Turtle Arena)
+* ioUrbanTerror 2007-12-20 client
+* ioUrbanTerror 2007-12-20 server
+* World of Padman <= 1.5.0
+
+Solution
+========
+
+The patches at <http://ioquake3.org/files/CVE-2012-3345/> have been
+reviewed by the ioquake3 maintainers and were committed to ioquake3 svn
+(as a single patch) as r2253.
+
+Patch 0001 fixes the vulnerability by writing the pid file into the
+ioquake3 user's home directory (e.g. ~/.q3a/ioq3.pid for an unmodified
+engine with default configuration) instead of the temporary directory.
+
+Patch 0002 is recommended, but not strictly necessary to fix the
+vulnerability. It removes the functions to get the temporary directory,
+as a precaution against other unsafe uses.
+
+On Debian testing/unstable systems, this is fixed in ioquake3 version
+1.36+svn2224-4. Debian stable is not vulnerable.
+
+References
+==========
+
+[ANNOUNCE]
+http://ioquake3.org/2012/06/14/cve-2012-3345-symlink-attack-in-ioquake3-r1773/
+[IOQ] http://ioquake3.org/
+[OA] http://openarena.ws/
+[REA] http://www.rq3.com/
+[SGN] http://www.smokin-guns.net/
+[TREM] http://tremulous.net/
+[TA] http://ztm.x10hosting.com/ta/
+[URT] http://www.urbanterror.info/home/
+[WOP] http://worldofpadman.com/website/
+[DOT] http://0pointer.de/lennart/projects/pam_dotfile/
+
