@@ -1,40 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/9
-Message-ID: <4F4D1564.9050000@redhat.com>
-Date: Tue, 28 Feb 2012 18:56:52 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Marcus Meissner <meissner@...e.de>
-Subject: CVE Request (minor) -- osc: Improper sanitization of terminal emulator escape sequences when displaying build log and build status
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/7
+Message-ID: <4FDB4567.1040502@coochey.net>
+Date: Fri, 15 Jun 2012 15:23:35 +0100
+From: Giles Coochey <giles@...chey.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 9 (CVE-2012-2934) - PV guest host DoS (AMD erratum #121)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, Marcus, vendors,
+On 14/06/2012 19:20, Florian Weimer wrote:
+> * Xen org security team:
+>
+>> There is no software fix for this issue. The workaround suggested by
+>> AMD in erratum #121 cannot be applied to Xen since the relevant address
+>> is under guest control.
+>>
+>> Applying the patch will cause Xen to detect vulnerable systems and
+>> refuse to boot.
+> This response puzzles me.  Isn't this changing a potential denial of
+> service (a para-virtualized guest could attempt an exploit) to a
+> definite one (the system won't boot)?  Why is this a good idea?
+It ensures that the user of the system is aware of the risks.
 
-   a security flaw was found in the way osc, the Python language based command
-line client for the openSUSE build service, displayed build logs and build
-status for particular build. A rogue repository server could use this flaw to
-modify window's title, or possibly execute arbitrary commands or overwrite
-files via a specially-crafted build log or build status output containing an
-escape sequence for a terminal emulator.
+This position will only occur when the patch to the vulnerability is 
+applied (i.e. during an out of service upgrade). The admins of the 
+system should always read the release notes to patches and upgrades - 
+otherwise they wouldn't know what else might be broken, deprecated.
 
-References:
-[1] https://bugzilla.novell.com/show_bug.cgi?id=749335
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=798353
+I think it's the right approach.
 
-I need to conclude, I don't know how OBS repositories work (if there is a chance
-of a rogue server being present). In any case, this issue is on the border
-(pretty unlikely someone could alter content of OBS package during build --
-in that case there would be more urgent issues than just particular terminal
-window title change).
+-- 
+Regards,
 
-But strictly taken, the trust boundary is crossed in the moment, someone
-would schedule OBS build and wouldn't expect the build log / status can
-perform terminal "side" effect yet.
+Giles Coochey, CCNA, CCNAS
+NetSecSpec Ltd
++44 (0) 7983 877438
+http://www.coochey.net
+http://www.netsecspec.co.uk
+giles@...chey.net
 
-Marcus, please correct me if you don't agree this should get a CVE identifier.
 
-If no one having objections and request appropriate, could you allocate one?
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4928 bytes)
