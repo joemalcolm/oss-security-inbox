@@ -1,41 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/27
-Message-ID: <50526FF0.4090002@redhat.com>
-Date: Thu, 13 Sep 2012 17:44:48 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/2
+Message-ID: <4FDABF82.4040602@redhat.com>
+Date: Thu, 14 Jun 2012 22:52:18 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: DoS in OpenSLP
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: CVE Request: NetworkManager creates an open network when asked to create an adhoc-WPA network
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/13/2012 04:10 PM, Vincent Danen wrote:
-> Quoting Secunia's report:
+On 06/14/2012 10:28 PM, Huzaifa Sidhpurwala wrote:
+> Hi All,
 > 
-> Georgi Geshev has discovered a vulnerability in OpenSLP, which can
-> be exploited by malicious people to cause a DoS (Denial of
-> Service).
+> In NetworkManager, when a new wireless network was created with 
+> WPA/WPA2 security, it created an open/insecure network. From the
+> commit, it seems the bug exists in the kernel.
 > 
-> The vulnerability is caused due to an out-of-bounds read error
-> within the "SLPIntersectStringList()" function
-> (common/slp_compare.c) when processing service requests and can be
-> exploited to cause a crash via a specially crafted request.
+> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=782627 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655972 
+> http://cgit.freedesktop.org/NetworkManager/NetworkManager/commi/?id=69247a00eacd00617acbf1dfcee8497437b8ad39
+>
+>  The patch disables WPA adhoc networks completely untill a better 
+> solution is found.
 > 
-> The vulnerability is confirmed in version 1.2.1. Other versions may
-> also be affected.
-> 
-> References:
-> 
-> https://secunia.com/advisories/50130/ 
-> https://bugs.gentoo.org/show_bug.cgi?id=434918 
-> https://bugzilla.redhat.com/show_bug.cgi?id=857242
-> 
-> Could a CVE be assigned to this?  There is no upstream bug report
-> or patch that I can see.
+> Can a CVE id be please assigned to this issue?
 
-Please use CVE-2012-4428 for this issue.
+Please use CVE-2012-2736 for this issue.
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -43,19 +36,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQUm/wAAoJEBYNRVNeJnmT1J4QAJ8kfvCpMhKF74zn3T/FpZVs
-/EnZIoODxYzmbAX9xHXC8NasDZSff/wm7OkKnYFHCEtM5RubAuaEfJv+g3W57SZt
-yvScLyHqOMOvD+TlwpA/EhjXSA++zeiMP46s3CzPcWITUO4Nc1LAe/r/EkB3YOSx
-j3TRD3m7cYBYszZOnRVy/avdThAbwOiy8u6wnNfTHLq6z/bzSxmJgbz6RkGbRsVP
-+dvESU/WbXudJ91YVBnvTHscPUW4f+UVfnFBiOJToivHreqOi2G6dKNt9FmF2XYs
-hNYC7HOMJfp485ZPDqF2U7Nhg7iBGzbtD3MW/3+k6fW/zD5Lc+75aO3Y8OBVNy1Q
-CRBDSThL5FOLmASQRq/88d4oBwaV2d1KPtetj78xZWgpaFChwo6jyXpb+dVE6LIO
-IyKQyvu8WZI5cD3EwPlBNds7kRldEYxJZ5TiYZhCFZd/Q29J9f5sMmGS3kFNSXND
-F8tk32J/LorWAmSDLYMVED6qp3WT+Fpgy38D6mQApF/pXzY0pJHvEaQxUXMtpyGs
-jgDZaY7H/Tz8wmxW9As50dFr7r/HrT5p15Q7FpxwvVJUVJeAyt9vP2Oz8au3YBbg
-C5HoHJ3PMI3ccDkzblQwaRGHmjohw0hVeswqn7XqMkv/KdLa4ggns8XHxfS1J33r
-sc/JUdKuqHMDBAXY5lbr
-=pld/
+iQIcBAEBAgAGBQJP2r+CAAoJEBYNRVNeJnmTEVQQAIpgUZ32ZsM02zM9mdQliKmT
+EIT3pUU1mWit++/4PXvm34HH8Hy/p06nvhfxyBib42hNfuFCd+8+i+oe2c6wrcAq
+QAVNjS7FXoGdTQMh1zXeTlIz4vi7f7181iGLhXKkCcwpuXvn9vyKgU4GFIqb/Gcr
+FYUbBR0KXX+5cwyUNuhoxOAzo4ruPiEFqmbHUFzTJgXBdelF8GZyH0YuuhJCZ5Fw
+OQh8QZ36/B4uMoFVeN6igUderHem0+dShEtCzE5qGtH1dVINJvHzTlzd+l6x5SpF
+At+YdnK8s/osj8aXdmwIMfJnQ4gIF+/r78BM2tJt1KVOqyAArk+nU64/ElawpTMF
+gdLlDDSDkIqlpOPB57e880ADHlYJ4uAUs418vI3m41/vjEH7DE+9QfIqa7emAX20
+GNICJHbk9KWYf3990sX+IVfSeDOSLjKFcn7MgyQNnRrV13ZFd72aqMr5w8Da/Z0N
+tuqAWPQYejZ1RB9Vq5wm8AFO1vE9YpDzLLn1KwFQ0ni5jctlKpDpeKTNkWLzRODG
+f/1vTCn8Qruog5q2mMWKAl90BrH9HTotxf2H+XD/nGov0bZBKvOieS7YpsorQBps
+R18ee4NAiZV5KZjQ1SUE1oDo/e79omjR5uQm7pcE9u0L2uXDt7Gde+T81OoyNcB4
+0T5+RX5tGGn5hnuz/vUD
+=KrCw
 -----END PGP SIGNATURE-----
