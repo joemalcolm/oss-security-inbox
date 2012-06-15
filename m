@@ -1,38 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/26/4
-Message-ID: <4F99BFE3.2000603@delphij.net>
-Date: Thu, 26 Apr 2012 14:36:35 -0700
-From: Xin Li <delphij@...phij.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/10
+Message-Id: <F17995E7-81C0-4976-A8F4-DC43F310CE32@oracle.com>
+Date: Fri, 15 Jun 2012 20:42:27 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-CC: d@...phij.net, FreeBSD Security Team <secteam@...ebsd.org>
-Subject: CVE Request: programming error in crypt(3)
+Subject: Re: Xen Security Advisory 9 (CVE-2012-2934) - PV guest host DoS (AMD erratum #121)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-Hi,
+On 15 Jun 2012, at 19:09, Florian Weimer wrote:
 
-I'd like to request a CVE number for a programming error in FreeBSD's
-crypt(3) implementation, which prevents it from generating a right
-hash from input in certain circumstances.
+> * Giles Coochey:
+> 
+>> On 14/06/2012 19:20, Florian Weimer wrote:
+>>> * Xen org security team:
+>>> 
+>>>> There is no software fix for this issue. The workaround suggested by
+>>>> AMD in erratum #121 cannot be applied to Xen since the relevant address
+>>>> is under guest control.
+>>>> 
+>>>> Applying the patch will cause Xen to detect vulnerable systems and
+>>>> refuse to boot.
+>>> This response puzzles me.  Isn't this changing a potential denial of
+>>> service (a para-virtualized guest could attempt an exploit) to a
+>>> definite one (the system won't boot)?  Why is this a good idea?
+>> It ensures that the user of the system is aware of the risks.
+>> 
+>> This position will only occur when the patch to the vulnerability is
+>> applied (i.e. during an out of service upgrade). The admins of the
+>> system should always read the release notes to patches and upgrades - 
+>> otherwise they wouldn't know what else might be broken, deprecated.
+> 
+> Sure, but why refuse to boot?  Wouldn't it be sufficient to refuse
+> creating DomUs, and still create Dom0?  (Perhaps this suggestion
+> doesn't make any sense—I'm not familiar with Xen.)
 
-We will publish the details in an upcoming advisory.
 
-Thanks in advance!
+It still makes sense.   There's no easy mechanism to let the hypervisor pass the do-not-create-domU message to dom0 so that the person creating the guest will find out.   There's also a logical problem: dom0 is itself a PV guest.
 
-Cheers,
-- -- 
-Xin LI <delphij@...phij.net>	https://www.delphij.net/
-FreeBSD - The Power to Serve!		Live free or die
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (FreeBSD)
+The admin can take preventative action to disable untrusted PV guests and stopping the system booting is definitely the best way of attracting attention without having potentially difficult to diagnose problems.
 
-iQEcBAEBCAAGBQJPmb/jAAoJEG80Jeu8UPuzJqEH/1jVL0ji4MtIHfXqpX62V3ID
-nNDB3Hcul+MNexxNp6vKEGjjwNV/Pd867RsIwBBrkqTfY4oQIoBi7HEN5q/BMHiL
-4QwMfwDefq50MXt1sKU5J4hCpG8vtrtTy1/Be2IZIQ/b4ODNiQ3ie2neEn3101Sw
-g2IRjrkz7OP0Ju0SSXOIELfvK7K3Uhre/snkb8Pg/67xIt23bNLH9Iewl1v/EqGe
-JGxN5/nbWUFwPdPt0BSfQ4pIkNtUglvX79iNy/EEdNRoaCa/Jtotu1t8rqBmlPpr
-z9JiQma0q1WlXz+05Y+GkDL+X5swuy5BfPkIZIFuPA2mIOGMgprcYmCL1Qf2lJk=
-=Ydn3
------END PGP SIGNATURE-----
+jch
