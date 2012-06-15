@@ -1,32 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/4
-Message-ID: <Pine.GSO.4.64.1201112105100.701@faron.mitre.org>
-Date: Wed, 11 Jan 2012 21:20:54 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: Wireshark multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/6
+Message-ID: <4FDAE67A.1040801@redhat.com>
+Date: Fri, 15 Jun 2012 01:38:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Henri Salo <henri@...v.fi>
+CC: oss-security@...ts.openwall.com, Greg Knaddison <greg.knaddison@...uia.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, 11 Jan 2012, Kurt Seifried wrote:
+On 06/15/2012 12:19 AM, Henri Salo wrote:
+> On Wed, Jun 13, 2012 at 08:32:11PM -0600, Kurt Seifried wrote:
+>> CVE-2012-2699 SA-CONTRIB-2012-073 - Glossary - Cross-Site Scripting (XSS)
+>> CVE-2012-2700 SA-CONTRIB-2012-074 - Contact Forms - Access Bypass
+>> CVE-2012-2701 SA-CONTRIB-2012-075 - Take Control - Cross Site Request
+>> Forgery (CSRF)
+> 
+> These were already assigned.
+> 
+> Request: http://www.openwall.com/lists/oss-security/2012/05/10/6
+> Response: http://www.openwall.com/lists/oss-security/2012/05/11/2
+> 
+> Reject new identifiers or can we use this in future Drupal contrib issues?
+> 
+> - Henri Salo
 
-> On 01/11/2012 09:19 AM, Agostino Sarubbo wrote:
->> According to secunia advisory: https://secunia.com/advisories/47494/ :
->>
->> Multiple vulnerabilities have been reported in Wireshark, which can be
->> exploited by malicious people to cause a DoS (Denial of Service) and
->> compromise a user's system.
->>
->> 1) NULL pointer dereference errors when reading certain packet information can
->> be exploited to cause a crash.
+Thanks, I didn't check my previous email (like I'm supposed to, to make
+sure exact scenario doesn't happen).
 
-In this case, if a network monitor can be crashed, an attacker might be 
-able to launch an attack undetected.  As such, NULL pointer dereferences 
-and other crashers in security-relevant products often count for CVEs, so 
-Kurt, please assign one for this.
+Please reject the following 3 CVE's, they were previously assigned:
 
-See http://www.openwall.com/lists/oss-security/2011/09/14/9 for further 
-explanation from me.
+CVE-2012-2699 SA-CONTRIB-2012-073 - Glossary - Cross-Site Scripting (XSS)
+CVE-2012-2700 SA-CONTRIB-2012-074 - Contact Forms - Access Bypass
+CVE-2012-2701 SA-CONTRIB-2012-075 - Take Control - Cross Site Request
+Forgery (CSRF)
 
-- Steve
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP2uZ6AAoJEBYNRVNeJnmT4/AP/1BxvFh3bWBsVKvnqrLDChiH
+UPlvTF8RMBjrS99dpf+K/23jj4oTacOklt8e0VUfLXEf6yZ5/hvlduFc6QrE0LGU
+O4XsYxo8kMEv5P4XQcTVVBuB5RZEqQ5njoaCfdWTPBRB06333aE07b+hZLc25loZ
+037acu6EkLyrk0XG99J3vOabUP+UKGkhkSz5L/t5czvqsSztoelm2z6LCjeUI9Zb
+UhmldabB4sPoYyFTHHmk01gKgibpR3Ck9MTW0bpFtAkTGN9xiPecysBrruvpvvRz
+UBmz+hQ0/7c0ebNH8dB/axJqUx/70cxirYNj/FlF+YCW4ZH4ceLpefzndE3Vp2Pb
+UAznBwikXDMRSpa+DsB+NL/inP52PTbsrUGwRZUdyzn4PNcdag6OA1eXluTglxTS
+Va7es8Q5Th10lXYHTRV558zR80jHkvHDlGu8/vPYne87d9yzYSiyRYvkQonZ1y2M
+9bQSLq63OqBabnM+NTSVODGJ8R6OlISyO5m7dbw7bv39OPY7W/sl8cVvCof+7YdM
+vuYYSQMQXLZIMu9V8lpi+zWj5F+Ym/c2dQCCQbhd2uN8n682o2nNPDqgJyKgCW7o
+kC7E48xyI9HNPfg5jWZ58jrVLC1NJR+oCqc8OHLik9n/MLSKqKoJnUgpDc/tirvx
+gBj4hwWsuO+JQEQs+KcG
+=Xe5H
+-----END PGP SIGNATURE-----
