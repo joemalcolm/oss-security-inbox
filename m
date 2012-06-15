@@ -1,96 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/21/1
-Message-ID: <20121221110558.GA7583@netbsd.org>
-Date: Fri, 21 Dec 2012 11:05:58 +0000
-From: David Holland <dholland-oss-security@...bsd.org>
-To: oss-security@...ts.openwall.com
-Subject: Isearch insecure temporary files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/11
+Message-ID: <4FDB93A7.2050308@redhat.com>
+Date: Fri, 15 Jun 2012 13:57:27 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Stefan Cornelius <scorneli@...hat.com>
+CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Behdad Esfahbod <behdad@...dad.org>
+Subject: Re: CVE Request -- mosh (and probably vte too): mosh server DoS (long loop) due improper parsing of terminal parameters in terminal dispatcher
 Content-Type: text/plain; charset=utf-8
 
-NetBSD pkgsrc ships an old text search package called Isearch, which I
-found tonight (in the course of making it compile with a modernish C++
-compiler) to contain garden-variety /tmp races.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Does anyone else ship it? I don't think this is worth a CVE unless
-someone does; the package appears to be dead upstream.
+On 06/15/2012 11:59 AM, Stefan Cornelius wrote:
+> On 05/22/2012 07:39 PM, Kurt Seifried wrote:
+>>> B) vte issue: ============= 
+>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871#5
+> 
+>>> there is similar issue in vte too (Gnome bug private for now):
+>>>  https://bugzilla.gnome.org/show_bug.cgi?id=676090
+> 
+>>> Cc-ed Behdad Esfahbod on this post to clarify, what are the 
+>>> upstream plans regarding this report in vte and if the CVE id
+>>> has been already assigned for it.
+> 
+>> Will wait for confirmation.
+> 
+> 
+> Hi,
+> 
+> I think http://www.openwall.com/lists/oss-security/2012/05/23/6 is
+> a reasonable confirmation. Additionally, upstream fixed this in
+> 0.32.2: 
+> http://ftp.gnome.org/pub/GNOME/sources/vte/0.32/vte-0.32.2.news
+> 
+> In case you agree that all requirements are fulfilled, could you
+> please assign a CVE to the B) part?
+> 
+> Thanks in advance and kind regards,
 
-http://gnats.netbsd.org/47360 for reference; the relevant portions of
-the patches cited follow.
+Please use CVE-2012-2738 for this issue.
 
---- doctype/anzmeta.cxx~	2000-10-11 14:02:15.000000000 +0000
-+++ doctype/anzmeta.cxx
-@@ -1446,9 +1448,21 @@ ANZMETA::Present (const RESULT& ResultRe
- 	    } else {
- 	      STRING s_cmd;
- 	      //CHR* c_cmd;
--	      CHR *TmpName;
-+	      CHR TmpName[64];
-+	      int fd;
- 
--	      TmpName = tempnam("/tmp", "mpout");
-+	      strcpy(TmpName, "/tmp/mpoutXXXXXX");
-+	      fd = mkstemp(TmpName);
-+	      if (fd < 0) {
-+		 /*
-+		  * Apparently failure is not an option here, so
-+		  * proceed in a way that at least won't be insecure.
-+		  */
-+		 strcpy(TmpName, "/dev/null");
-+	      }
-+	      else {
-+		 close(fd);
-+	      }
- 
-           cout << "[ANZMETA::Present] no docs found, so build Fly cmd" << endl;
- 
---- doctype/fgdc.cxx~	2000-09-06 18:20:30.000000000 +0000
-+++ doctype/fgdc.cxx
-@@ -1824,10 +1826,22 @@ FGDC::Present (const RESULT& ResultRecor
- 	      return;
- 	    } else {
- 	      STRING s_cmd;
--	      CHR *TmpName;
--
--	      TmpName = tempnam("/tmp", "mpout");
-+	      CHR TmpName[64];
-+	      int fd;
- 
-+	      strcpy(TmpName, "/tmp/mpoutXXXXXX");
-+	      fd = mkstemp(TmpName);
-+	      if (fd < 0) {
-+		 /*
-+		  * Apparently failure is not an option here, so
-+		  * proceed in a way that at least won't be insecure.
-+		  */
-+		 strcpy(TmpName, "/dev/null");
-+	      }
-+	      else {
-+		 close(fd);
-+	      }
-+	      
- 	      BuildCommandLine(mpCommand, HoldFilename, RecordSyntax, 
- 			       TmpName, &s_cmd);
- 	      system(s_cmd);
---- src/marc.cxx.orig	1998-05-12 16:49:10.000000000 +0000
-+++ src/marc.cxx
-@@ -194,9 +194,15 @@ MARC::GetPrettyBuffer(STRING *Buffer)
- {
-   /*
-   // Cheese, cheese, cheese;-)
--  char *tempfile = tempnam("/tmp", "marc");
-+  char tempfile[32];
-+  strcpy(tempfile, "/tmp/marcXXXXXX");
-+  int tempfd = mkstemp(tempfile);
-+  if (tempfd < 0) {
-+    *Buffer = "MARC::GetPrettyBuffer() failed to open temp file";
-+    return;
-+  }
-   FILE *fp;
--  if((fp = fopen(tempfile, "w")) == NULL) {
-+  if((fp = fdopen(tempfd, "w")) == NULL) {
-     *Buffer = "MARC::GetPrettyBuffer() failed to open temp file";
-     return;
-   }
--- 
-David A. Holland
-dholland@...bsd.org
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP25OnAAoJEBYNRVNeJnmTfRAQAKhtUxuCxr9qGvssp2dsF7+h
+eKMGKwEiQfof8CSZJYh6TBVA1ywb0RbIBK8te6pRN7HFBSTQYttrwiVXtfNStXLQ
+V5+5/IE6oCwtBduVlGpITnnzCMn5BjHvXGbrzQacAQdeaBaOfHgLP+oBXZmrqrkO
+Hj/eIsFBwAyY0ETC/FrEuZFAf544bE3P2Az8dn8qWRS3jrIisVAZHlbvjHoTzy/W
+ALJ2JPbuMQC+dlS9AyRwFr9b3q0D9E8pe03HxDUCTCltjizgsSDx+wNO1HeDSpAD
+XBShdMrnXPddznjVQi2Kx3dY23upa+595Qq2lAOVun9bq/BBQDw0Xj2XjuO0olS5
+n/rPoT4QK6wyX+KGM4tCDQWa3d3BCv3HvaDqYp1DVJhdS3AzU/lml4JCiuif0i3H
+gB8Sa0ybK78WbUDU9+C1OacpZBMbsyCDunQ/YPLwERwVn7QqJvXrvx6sQjzNI77e
+BuLGM3JZFQhOYyCemUsdkNRK7ocf2eGWQQi2mybKwmy4ph48WLhY1PIRLqhqZjUw
+T/i6xeaY4G30h/p6A9Cecb/Teormse8yhUY3s0EJ/3Hxc09cfrNo0hsaRDr7haEm
+/OJzH635LqUwndsXyO6qMRK3I7rY5JS0ztSEGbSlAo2iTrBDfjBxMjkpt2STBqZH
+V9Cldd7gAN5PADYDzdiz
+=b9Af
+-----END PGP SIGNATURE-----
