@@ -1,46 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/30/1
-Message-ID: <50B7F927.5090208@ushahidi.com>
-Date: Fri, 30 Nov 2012 13:09:11 +1300
-From: Robbie Mackay <robbie@...ahidi.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/5
+Message-ID: <20120615061914.GD6989@kludge.henri.nerv.fi>
+Date: Fri, 15 Jun 2012 09:19:14 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Heather Leson <HLeson@...ahidi.com>
-Subject: CVE request for Ushahidi security vulnerability 2012-008
+Cc: Greg Knaddison <greg.knaddison@...uia.com>, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE Request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Jun 13, 2012 at 08:32:11PM -0600, Kurt Seifried wrote:
+> CVE-2012-2699 SA-CONTRIB-2012-073 - Glossary - Cross-Site Scripting (XSS)
+> CVE-2012-2700 SA-CONTRIB-2012-074 - Contact Forms - Access Bypass
+> CVE-2012-2701 SA-CONTRIB-2012-075 - Take Control - Cross Site Request
+> Forgery (CSRF)
 
-The following vulnerability was found in Ushahidi and fixed in the
-Ushahidi 2.6.1 release.
-Could you please assign a CVE?
+These were already assigned.
 
-Forgotten password challenges were guessable based on users last login
-and email address.
-The issue was discovered by Timothy D. Morgan
+Request: http://www.openwall.com/lists/oss-security/2012/05/10/6
+Response: http://www.openwall.com/lists/oss-security/2012/05/11/2
 
-Security advisory:
-http://ushahidi.com/index.php/security/alert/sa-web-2012-008
-Issue: https://github.com/ushahidi/Ushahidi_Web/issues/646
-Commit:
-https://github.com/ushahidi/Ushahidi_Web/commit/e8c7ecd42818c331db8945d20f8b1865bc6d157e
+Reject new identifiers or can we use this in future Drupal contrib issues?
 
-- -- 
-Robbie Mackay
-
-Software Developer, External Projects
-Ushahidi Inc
-e: robbie@...ahidi.com
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (Darwin)
-Comment: GPGTools - http://gpgtools.org
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQEcBAEBAgAGBQJQt/kmAAoJEKnxsxigzOTXkQwH/izEngpyMz20xT7rXR6XKIsI
-soyPHtDYhrAao+8MbqorqkUYH0PELJ5F3mevo1StKx05oDrHfIjdGq7OqM6/BSeS
-1skF3H9o0D6bPD2pDlva/F1yCST9fEnhru6Tn8pcKyJeZK82zLlo669KDs8AcFOX
-0pifIa/Bv6zhGzbiRRQrF/JfQm/a5VARfOy2CZgAi5+ee6L+4/lizt5q51QMflGd
-COCbRh6gq7ORWCguoE36keWWgCc4D+ducq2zkGvwfbnBuZrwbJZOh4rEiYphCAR5
-i2XIh8MXt8gppMKE4ewpKcrW6hUnmVBYn5gMfqRrB3IkUBjFtTFDK2xCwaTcEzM=
-=4a/A
------END PGP SIGNATURE-----
+- Henri Salo
