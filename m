@@ -1,75 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/03/2
-Message-ID: <4FF31853.9020601@openstack.org>
-Date: Tue, 03 Jul 2012 18:05:39 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com
-Subject: [OSSA 2012-008] Arbitrary file injection/corruption through directory traversal issues (CVE-2012-3360, CVE-2012-3361)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/9
+Message-ID: <878vfoh2gg.fsf@mid.deneb.enyo.de>
+Date: Fri, 15 Jun 2012 20:09:19 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 9 (CVE-2012-2934) - PV guest host DoS (AMD erratum #121)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+* Giles Coochey:
 
-OpenStack Security Advisory: 2012-008
-CVE: 2012-3360, 2012-3361
-Date: July 3, 2012
-Title: Arbitrary file injection/corruption through directory traversal
-issues
-Impact: Critical
-Reporter: Matthias Weckbecker (SUSE Security team), Pádraig Brady (Red
-Hat)
-Products: Nova
-Affects: All versions
+> On 14/06/2012 19:20, Florian Weimer wrote:
+>> * Xen org security team:
+>>
+>>> There is no software fix for this issue. The workaround suggested by
+>>> AMD in erratum #121 cannot be applied to Xen since the relevant address
+>>> is under guest control.
+>>>
+>>> Applying the patch will cause Xen to detect vulnerable systems and
+>>> refuse to boot.
+>> This response puzzles me.  Isn't this changing a potential denial of
+>> service (a para-virtualized guest could attempt an exploit) to a
+>> definite one (the system won't boot)?  Why is this a good idea?
+> It ensures that the user of the system is aware of the risks.
+>
+> This position will only occur when the patch to the vulnerability is
+> applied (i.e. during an out of service upgrade). The admins of the
+> system should always read the release notes to patches and upgrades - 
+> otherwise they wouldn't know what else might be broken, deprecated.
 
-Description:
-Matthias Weckbecker from SUSE Security team reported a vulnerability
-in Nova compute nodes handling of file injection in disk images. By
-requesting files to be injected in malicious paths, a remote
-authenticated user could inject files in arbitrary locations on the
-host file system, potentially resulting in full compromise of the
-compute node. Only Essex and later setups running the OpenStack API
-over libvirt-based hypervisors are affected.
-
-Upon further inspection of the code, Pádraig Brady from Red Hat found
-an additional vulnerability. By crafting a malicious image and
-requesting an instance based on it, a remote authenticated user may
-corrupt arbitrary files on the host filesystem, potentially resulting
-in a denial of service. This affects all setups.
-
-Fixes:
-Folsom:
-https://github.com/openstack/nova/commit/2427d4a99bed35baefd8f17ba422cb7aae8dcca7
-Essex:
-https://github.com/openstack/nova/commit/b0feaffdb2b1c51182b8dce41b367f3449af5dd9
-Diablo: see patch at https://review.openstack.org/9268
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-3360
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-3361
-https://bugs.launchpad.net/nova/+bug/1015531
-
-Notes:
-This fix will be included in the folsom-2 development milestone
-(published this week) and in future Essex and Diablo releases.
-
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBCAAGBQJP8xhQAAoJEFB6+JAlsQQjxrwP/0riLbaI8tCRfKeR6I2ATXIU
-1QTOjn6TzQOhUNKwP63OzeUmu1xg7gI/XscWYLgxPYetsysao7YUgsy7PcVSznQh
-Ii7LM7WnrxpanP3SOOM4qJQ4d3MZvP8qP0R9hQ1XAtdE9T4yB3aDvzf+XVXFFLad
-nnF9meI5xPe+Ws70BH0rTo2XNcTTukpnNxOwYC4Sayx0cHvMCjLMr6RWOoPCftDd
-WFDOeJNuSEh1NcDwt6qgPCQMLBS/+WavnQFf6EuBdjkASAtONDYblkxyYPRSsf8y
-xYDVjrYUcJ5YeDwI2vbqKCP9EMuwb0JSfep767OIbupgIMm7rTjW+vEsns4e2d1m
-2WovMHlV9ar7zpTIeqjAYE/BzUlRaOa7+JRJwy8F2awbu5oQUeOLq8XeAyo5Ag8C
-zjYMut/OuHEdqMQY+eLqtPVcaNg801wXEfgdn8zuE41qXkk6yyAFJJUPlkBeMqiE
-8cHEeJJwBDP5deHJIESzraeOUTFBXXoABhxdehAa708y4BWGt0/EG5SeHg38HoZs
-gODHzZ5D+rgRYZsMV3JanAoB27QH4LQfPc1WLCM20wJSppZXq4KjngNA9trV68Na
-+LKR+/EAZvOmpJMsymhuTgc9uRNRTlhC85NGquBzK2TZtlfJzI/qADV7fQPnWVQZ
-JJcGXBOJw/J7rCmBIDuQ
-=/7QJ
------END PGP SIGNATURE-----
+Sure, but why refuse to boot?  Wouldn't it be sufficient to refuse
+creating DomUs, and still create Dom0?  (Perhaps this suggestion
+doesn't make any sense—I'm not familiar with Xen.)
