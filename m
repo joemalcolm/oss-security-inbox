@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/01/1
-Message-ID: <50414B42.2080901@wireshark.org>
-Date: Fri, 31 Aug 2012 16:39:46 -0700
-From: Gerald Combs <gerald@...eshark.org>
-To: Eygene Ryabinkin <rea-sec@...elabs.ru>
-CC: oss-security@...ts.openwall.com, Jan Safranek <jsafrane@...hat.com>,  Martin Wilck <martin.wilck@...fujitsu.com>
-Subject: Re: CVE Request -- wireshark (X >= 1.6.8): DoS (excessive CPU use and infinite loop) in DRDA dissector
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/4
+Message-ID: <1339738999.10233.23.camel@scapa>
+Date: Fri, 15 Jun 2012 07:43:19 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: CVE Request: NetworkManager creates an open network when asked to create an adhoc-WPA network
 Content-Type: text/plain; charset=utf-8
 
-On 8/31/12 3:48 AM, Eygene Ryabinkin wrote:
-> Wed, Aug 29, 2012 at 11:39:11AM -0400, Jan Lieskovsky wrote:
->> a denial of service flaw was found in the way Distributed Relational
->> Database Architecture (DRDA) dissector of Wireshark, a network
->> traffic analyzer, performed processing of certain DRDA packet
->> capture files. A remote attacker could create a specially-crafted
->> capture file that, when opened could lead to wireshark executable to
->> consume excessive amount of CPU time and hang with an infinite loop.
-> [...]
->> Affected versions: Seems to affect wireshark 1.6.x versions and
->>                    later (1.0.x and 1.2.x definitely aren't affected)
+On jeu., 2012-06-14 at 22:52 -0600, Kurt Seifried wrote:
+> On 06/14/2012 10:28 PM, Huzaifa Sidhpurwala wrote:
+> > Hi All,
+> > 
+> > In NetworkManager, when a new wireless network was created with 
+> > WPA/WPA2 security, it created an open/insecure network. From the
+> > commit, it seems the bug exists in the kernel.
+> > 
+> > Reference: https://bugzilla.redhat.com/show_bug.cgi?id=782627 
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655972 
+> > http://cgit.freedesktop.org/NetworkManager/NetworkManager/commi/?id=69247a00eacd00617acbf1dfcee8497437b8ad39
+> >
+> >  The patch disables WPA adhoc networks completely untill a better 
+> > solution is found.
+> > 
+> > Can a CVE id be please assigned to this issue?
 > 
-> 1.5.x is affected too: 1.5.0 was the first release in which the
-> handling for the multiple DRDA commands was added to.  1.4 has no
-> such code, whereas 1.5.0 has the while loop that provokes DoS.
+> Please use CVE-2012-2736 for this issue.
+> 
+> 
 
-Note that 1.5.0 wasn't an official release. Odd-numbered minor revisions
-are development releases preceding the next even-numbered (and official)
-release.
+And shouldn't something been done on the kernel part? I'm not sure how
+it behaves but if it silently create an open ad-hoc connection while it
+was requested a wpa one by the application, that looks like something
+warranting a CVE too.
 
+Regards,
+-- 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
