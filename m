@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/7
-Message-ID: <Pine.GSO.4.64.1201121219340.28039@faron.mitre.org>
-Date: Thu, 12 Jan 2012 12:31:08 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/16/1
+Message-ID: <20120616051956.710ca1af@hsalkjdhsa>
+Date: Sat, 16 Jun 2012 05:19:56 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: Wireshark multiple vulnerabilities
+Subject: CVE request: phplist before 2.10.18 XSS and sql injection
 Content-Type: text/plain; charset=utf-8
 
+http://www.exploit-db.com/exploits/18639/
 
-On Wed, 11 Jan 2012, Kurt Seifried wrote:
+cite from there:
+"Desc: Input passed via the parameter 'sortby' is not properly
+sanitised before being returned to the user or used in SQL queries.
+This can be exploited to manipulate SQL queries by injecting
+arbitrary SQL code. The param 'num' is vulnerable to a XSS issue
+where the attacker can execute arbitrary HTML and script code in
+a user's browser session in context of an affected site."
 
-> On 01/11/2012 07:20 PM, Steven M. Christey wrote:
->>
->> In this case, if a network monitor can be crashed, an attacker might
->> be able to launch an attack undetected.  As such, NULL pointer
->> dereferences and other crashers in security-relevant products often
->> count for CVEs, so Kurt, please assign one for this.
->>
-> From what I read the first #1 and #2 (secunia) map to wireshark
-> wnpa-sec-2012-02.html and wnpa-sec-2012-03.html respectively, so they
-> should be all good? Or did I misread it (this is entirely possible =).
+Upstreams release notes for 2.10.18:
+http://www.phplist.com/?lid=567
+mentions:
+"This version fixes a few small bugs and a security issue that was
+found. The security issues fixed require the administrator to be logged
+in. Therefore the vulnerability can be classified as "intermediate".
+There's no immediate danger of the vulnerabilities to be exploited
+remotely."
 
-No, my fault, sorry about that - I misread it.  No new CVE needed.  Using 
-Agostino's original request, Item 1 from SECUNIA:47494 is the same as 
-Wireshark item 2 (wnpa-sec-2012-02.html) as listed later in Agostino's 
-request, to which you had already assigned CVE-2012-0042.  I originally 
-read this like there were separate requests, and I missed that there were 
-overlapping references that talked about the same issue.
+Please assign two CVEs.
 
-- Steve
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
