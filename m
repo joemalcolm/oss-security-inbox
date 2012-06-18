@@ -1,38 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/5
-Message-ID: <4FCF22FF.2060908@redhat.com>
-Date: Wed, 06 Jun 2012 11:29:35 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/18/1
+Message-ID: <4FDF2E05.9090708@redhat.com>
+Date: Mon, 18 Jun 2012 15:32:53 +0200
 From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com, Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: CVE request: rack-cache caches sensitive headers (Set-Cookie)
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Josh Bressers <josh@...ss.net>
+Subject: CVE Request -- Revelation: 1) Limits effective password length to 32 characters 2) Doesn't iterate the passphrase through SHA algorithm to derive the encryption key
 Content-Type: text/plain; charset=utf-8
 
-Thanks for your report, Matthias.
+Hello Kurt, Steve, vendors,
 
-On 06/06/2012 11:09 AM, Matthias Weckbecker wrote:
-> Hi Kurt, Steve, vendors,
->
-> rake-cache caches sensitive response headers such as Set-Cookie. Attackers
-> with access to the cache could possibly obtain other user's cookies to e.g.
-> bypass authentication.
->
-> More information (including patch) available at our bugzilla:
->    https://bugzilla.novell.com/show_bug.cgi?id=763650
->
-> Kurt, could you possibly assign a CVE for this issue, please? Thank you in
-> advance!
+   multiple security flaws have been found in Revelation, a password manager for GNOME 2. Specifically:
 
-Kurt, once assigned please note it in our bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=824520
+1) It was found that Revelation limited effective password lengths to thirty two characters,
+which made it easier for context-dependent attackers to successfully conduct brute-force
+password guessing attacks,
 
-too.
+2) It was found that Revelation did not iterate the particular passphrase through some of
+the SHA family of hashing algorithms, in order to derive the encryption key, which made it
+easier (in that scenario there were only 7 bits to vary on each character) for context-dependent
+attackers to successfully conduct dictionary based password guessing attacks.
+
+Upstream ticket:
+[1] http://oss.codepoet.no/revelation/issue/61/file-format-magic-string-version-mismatch
+
+Further references:
+[2] https://bugs.gentoo.org/show_bug.cgi?id=421571
+[3] http://lists.fedoraproject.org/pipermail/devel/2012-June/168607.html
+[4] http://knoxin.blogspot.co.uk/2012/06/revelation-password-manager-considered.html
+[5] http://westhoffswelt.de/blog/0046_from_revelation_security_to_android_password_managers.html
+
+Could you allocate two CVE ids for these? (I think two are needed for each
+of the issues)
 
 Thank you && Regards, Jan.
 --
 Jan iankko Lieskovsky / Red Hat Security Response Team
 
->
-> Matthias
->
+P.S.: Kurt - regarding time, when this issue has been reported for the first time (thus
+       which CVE-201*- id to allocate), it is necessary to find this it out yet.
+
+       Upstream ticket [1] was reported on 2012-02-06 (which would suggest CVE-2012-* one
+       to be allocated), but the rest of the links mention this issue has been known for
+       longer time, thus please investigate yet. I wanted to Cc- the original ticket
+       reporter 'hannibal218bc' on this request (he to clarify), but I doesn't seem to be
+       able to find his proper email address / contact. Sorry for that.
+
 
