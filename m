@@ -1,61 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/27/1
-Message-ID: <50DC86AA.2070200@redhat.com>
-Date: Thu, 27 Dec 2012 10:34:34 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/19/4
+Message-ID: <Pine.GSO.4.64.1206191503350.25927@faron.mitre.org>
+Date: Tue, 19 Jun 2012 15:05:04 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: Curl insecure usage
+cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...-smtp.mitre.org>, Josh Bressers <josh@...ss.net>
+Subject: Re: CVE Request -- Revelation: 1) Limits effective password length to 32 characters 2) Doesn't iterate the passphrase through SHA algorithm to derive the encryption key
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 12/26/2012 04:38 AM, Moritz Muehlenhoff wrote:
-> On Thu, Nov 29, 2012 at 10:44:36PM +0100, Moritz Mühlenhoff wrote:
->>> Also can someone collate and post a list of all the other apps
->>> using curl insecurely and need CVE's with appropriate links to
->>> the upstreams/etc? Thanks.
->> 
->> There are some, which are potentially affected, but where
->> discussion with upstream is still pending.
-> 
-> Here are two more, please assign CVE IDs (both discovered by 
-> Alessandro Ghedini):
-> 
-> 1. Falcon programming language: 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=696681
+On Mon, 18 Jun 2012, Kurt Seifried wrote:
 
-Please use CVE-2012-6070 for this issue.
+> Assigned 2012 CVE's as the first clear mention of the issues is in the
+> codepoet.no ticket. The Blog entry for 2010 mentions the issue
+> indirectly so I'm going with the more concrete mention.
 
-> 2. NuSOAP PHP package: 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=696707
+This is a reasonable approach to take.  The year portion of a CVE 
+identifier can't always be associated with the actual year of disclosure, 
+and in this case, it's arguable what counts as "sufficient disclosure" 
+anyway.  A couple minutes of investigation is sufficient.
 
-Please use CVE-2012-6071 for this issue.
-
-> Cheers, Moritz
-> 
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQ3IaqAAoJEBYNRVNeJnmTM7gQAI0notT9HWHAejaFh0wX5eV3
-t/DThiMq41KvczOLibEdyjuOnS4aVfrlwaj/oNs36m4YprDoU9Ggh18gGboC7/5s
-eRhfdzYy9lmhCKhq2mjG3IJVZKfZBCC670dlAvOHPdjEOH6/5Te+ZHhzPNlwYy5Z
-uTIL3SJDxH9uUTsA2g5AydZNlNB5tv52Vr8vrVlqXgRxJPn7GeXXoHozFbwf9MJ+
-2dsCiXaoZAUIJPacZqwVdtR0lBxD8VPw9rH3/f5KNG8NwzAjtkKy5rT3UcKmv14c
-cXzbJi+9tT6VV7+mCukImoO/GNbx637O/cU8/J3yz8NTFDSHStJn6KKzA9sAuy0m
-PyYGphOLHAQZRduTE5qGBN0HAVHpaROY6vIZLeSyq2wrG+G56wzOgzaNS90FTUJc
-Dn5ScEZOoy6mwKnO2B1m48NLYE8KdHUPcxjzeEv0oIH1kyvVh+D2UfUP6Q7zPvaG
-oMuU0R15HnsCQpVYJtiqAHXNb8O1iQi8TSPbQrrr5/FQthGZPi1m04RNEsrahfat
-a+l6SjvcgzHf5CmRjKs9n21jbUt/95UiXTKg9ZpLTPqBM6K8JTnhK6NnK72FGvDg
-u4iY2ART4UAM52d5U0p0yYUB2kgRVc59dl2Zn5CXsO+qL8IHeSGjMvYzQeglvpAS
-XokT44eCQNLJZuIyyAZE
-=XOex
------END PGP SIGNATURE-----
+- Steve
