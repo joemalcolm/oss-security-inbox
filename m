@@ -1,56 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/11
-Message-ID: <20120316121219.GA22101@kludge.henri.nerv.fi>
-Date: Fri, 16 Mar 2012 14:12:19 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/19/1
+Message-ID: <20120619124102.GA26045@lakka.kapsi.fi>
+Date: Tue, 19 Jun 2012 15:41:02 +0300
 From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Joomla! Security News 2012-03-16
+Subject: Joomla! Security News 2012-06-19
 Content-Type: text/plain; charset=utf-8
 
-Can we assign CVE-identifiers for these two vulnerabilities?
+Two issues without CVEs again. Could I get those assigned, thanks.
 
-20120304 - Core - Password Change http://developer.joomla.org/security/news/394-20120304-core-password-change.html
-20120303 - Core - Privilege Escalation http://developer.joomla.org/security/news/395-20120303-core-privilege-escalation.html
-
-With Joomla you are never safe!
+1. 20120601 - Core - Privilege Escalation
+2. 20120602 - Core - Information Disclosure
 
 - Henri Salo
+ps. forwarded email from Joomla below
 
 ----- Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
 
-Date: Fri, 16 Mar 2012 12:09:18 +0000
+Subject: Joomla! Security News
 From: Joomla! Developer Network - Security News <no_reply@...mla.org>
 To: henri@...v.fi
-Subject: Joomla! Security News
 
 Joomla! Developer Network - Security News
 
 ///////////////////////////////////////////
-[20120304] - Core - Password Change
+[20120601] - Core - Privilege Escalation
 
-Posted: 16 Mar 2012 12:21 AM PDT
-http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/JukET1dgfDM/394-20120304-core-password-change.html?utm_source=feedburner&utm_medium=email
+Posted: 19 Jun 2012 12:21 AM PDT
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/I2o1kbJKIVQ/470-20120601-core-privilege-escalation.html?utm_source=feedburner&utm_medium=email
 
 
 Project: Joomla!
 SubProject: All
- Severity: High
-Versions: 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x releases
-Exploit type: Password Change
-Reported Date: 2012-March-8
-Fixed Date: 2012-March-15
+ Severity: Medium High
+Versions: 2.5.4 and all earlier 2.5.x versions
+Exploit type: Privilege Escalation
+Reported Date: 2012-April-29
+Fixed Date: 2012-June-18
 
 Description
 
-Insufficient randomness leads to password reset vulnerability.
+Inadequate checking leads to possible user privilege escalation.
 Affected Installs
 
-Joomla! versions 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x versions
+Joomla! versions 2.5.4 and all earlier 2.5.x versions
 Solution
 
-Upgrade to version 2.5.3
+Upgrade to version 2.5.5
 
-Reported by George Argyros and Aggelos Kiayias
+Reported by Nils Rückmann
 Contact
 
 The JSST at the Joomla! Security Center.
@@ -58,31 +56,31 @@ The JSST at the Joomla! Security Center.
 
 
 ///////////////////////////////////////////
-[20120303] - Core - Privilege Escalation
+[20120602] - Core - Information Disclosure
 
-Posted: 15 Mar 2012 05:00 AM PDT
-http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/n5w8L96w-LM/395-20120303-core-privilege-escalation.html?utm_source=feedburner&utm_medium=email
+Posted: 19 Jun 2012 12:21 AM PDT
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/K71HzujRDDs/471-20120602-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
 
 
 Project: Joomla!
 SubProject: All
- Severity: High
-Versions: 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x releases
-Exploit type: Privilege Escalation
-Reported Date: 2012-March-12
-Fixed Date: 2012-March-15
+ Severity: Low
+Versions: 2.5.4 and all earlier 2.5.x versions
+Exploit type: Information Disclosure
+Reported Date: 2012-May-1
+Fixed Date: 2012-June-18
 
 Description
 
-Programming error allows privilege escalation in some cases.
+Inadequate filtering leads SQL error and information disclosure.
 Affected Installs
 
-Joomla! versions 2.5.2, 2.5.1, 2.5.0, and all 1.7.x and 1.6.x versions
+Joomla! versions 2.5.4 and all earlier 2.5.x versions
 Solution
 
-Upgrade to version 2.5.3
+Upgrade to version 2.5.5
 
-Reported by Jeff Channel
+Reported by Jakub Galczyk
 Contact
 
 The JSST at the Joomla! Security Center.
