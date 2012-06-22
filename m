@@ -1,118 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/2
-Message-ID: <CAANPUCgqhoyXoEGARyNMHxpDe9OC=B+9JvFd-7ZSSqmP2kYhwA@mail.gmail.com>
-Date: Tue, 30 Oct 2012 15:17:20 -0600
-From: Greg Knaddison <greg.knaddison@...il.com>
-To: security@...pal.org
-Cc: oss-security@...ts.openwall.com, Henri Salo <henri@...v.fi>
-Subject: Re: [security] Strange CVE situation (at least one ID should come of this)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/22/1
+Message-ID: <4FE3EE99.1030007@redhat.com>
+Date: Thu, 21 Jun 2012 22:03:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Breno Silva Pinto <BPinto@...stwave.com>, Stefan Esser <stefan.esser@...tioneins.de>
+Subject: mod_security CVE request
 Content-Type: text/plain; charset=utf-8
 
-The start of this thread appears to be
-http://www.openwall.com/lists/oss-security/2012/10/26/4 and from
-reading that my sense is that you're debating about what to do if you
-find software that is in-use, abandoned by the authors, and has
-vulnerabilities.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The Drupal project has a policy of waiting some period of time for a
-fix (no less than 2 weeks, but longer than that if the maintainer
-appears to be making some progress). If no fix is provided by the
-maintainer then the security team will:
-* Publish and e-mail a security advisory suggesting that users disable
-the module as an immediate solution
-* Mark the project as "unsupported" in the code management system
-hosted on drupal.org
-* Add a big red warning to the project page on drupal.org that
-includes a suggestion for people interested in maintaining the module
-to try to fix the issue and then apply to become a mainainer of the
-module
+CVE request for mod_security multi-part bypass:
 
-We do allocate a "security advisory" for these, but our rules and
-processes for how to do that are less stringent than the process for
-CVEs. For example: We often do a single advisory for multiple projects
-that are affected by the same issue or have the same resolution (i.e.
-unpublishing). The goal of bunching them together is that it will
-improve the "signal to noise" ratio for subscribers of our notices. We
-have to balance the fact that many Drupal site admins are not
-technical people with the fact that our security advisory process
-covers thousands of modules (meaning we often have 5 or 10 advisories
-to send out per week).
+This issue was partially fixed in 2009 and then corrected completely
+(I hope =) in 2012, so 2 CVE's.
 
-Since Drupal 6, Drupal core has included a feature that is enabled by
-default that makes a request to a drupal.org server to determine if a
-site is running up to date modules. If a module (or theme, they are
-somewhat interchangeable for this purpose) is out of date AND has a
-security issue then Drupal will put up a big red warning to users
-logged in as site administrators letting them know that an update is
-available. This update status can also be configured in core to send
-an email to the site administrator letting them know about the
-problem. In Drupal 7 it is the default to opt-in to the update system
-and to get emails about necessary security updates. If a module has
-been marked as "unsupported" then this update system will show the big
-warning and encourage the site admin to go to the drupal.org project
-page to get more information where they will see the big red warning
-the security team put on the page.
+2009:
+https://www.modsecurity.org/fisheye/browse/modsecurity/m2/branches/2.5.x/apache2/msc_multipart.c?r2=1419&r1=1366
 
-I believe all of this information is available in
-http://drupal.org/node/101497 and sub-pages, though it may be hard to
-find it all.
+2012: commit c5d749a0d809cf24335cd35720d7eac99ba7ea44
+Author: brenosilva <brenosilva@...7d574-64ec-4062-9424-5e00b32a252b>
+Date:   Fri Jun 1 20:16:06 2012 +0000
+MODSEC-312
+svn co
+https://mod-security.svn.sourceforge.net/svnroot/mod-security/m2/trunk
+modsecurity
+svn diff  -r 1917:1918
 
-My research into how WordPress handles 3rd party plugins is that they
-have a similar update mechanism, but it has no concept of a security
-update vs. a regular update and their list of security updates only
-covers WordPress core. I believe Joomla's situation is similar to
-WordPress though Joomla does have a big wiki of insecure plugins that
-Henri mentioned - http://docs.joomla.org/Vulnerable_Extensions_List
 
-Regards,
-Greg
 
-On Tue, Oct 30, 2012 at 2:28 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 10/30/2012 11:39 AM, Henri Salo wrote:
->> On Tue, Oct 30, 2012 at 01:34:07PM -0400, Steven M. Christey
->> wrote:
->>> Perhaps the OSS community could borrow an idea from one of the
->>> framework vendors with lots of third-party modules - I forget if
->>> it was Joomla or Drupal - who actively maintained a list of
->>> poorly maintained or obsolete software.
->>
->> There is at least http://docs.joomla.org/Vulnerable_Extensions_List
->> and Drupal is coordinating contrib modules too (code reviews,
->> advisories, etc). I don't know if Joomla security guys handle
->> vulnerable extensions in some level or not.
->>
->> - Henri Salo
->
-> Does Drupal throw up a warning if you try to use one of these extensions?
->
-> It occurs to me we need a mechanism similar to CRL/OCSP for software,
-> especially things with plugins like Drupal/WordPress/Firefox/Chrome so
-> that we can at least warn users of bad software.
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJQkDhYAAoJEBYNRVNeJnmTPpYP/jL2WyeKwCZLEbWR0jb84cd6
-> Z+qJ/g9XvMicZr7n8n4huNqBF1K4eZ8/GN+JSj53XA8WA/CWFfpZ6POMxbxzQnq4
-> nVGl6iB4/mnnRFHMcCejAwV/bNi5W2yOlAkVBwbzPc2UM2X2iG3vEWOs+m8AfT0E
-> Psde9Mj2X7hoVNy/nH0uIgPomQIT0ErIPYv/4fJgROKoIQGCWF7JG9WiWGboHNfd
-> lnxYDrC0JLB2EG1P3aFarL6LRCIXyC7C344TbRd4l3Ye6H99Auw8ZheSbiYlITUH
-> HDlUj/PemXruY04p4CLymXklGKIqi9ZTpfPnpHJyyMn4U3kdgM/ZE7hFlT1xl7mu
-> 8/qvGj772E942LUrnpGmW3iATVOkBzmEg7IjOOiAzW9XsujV4Nmpsm1B1+GFOded
-> u9FnUDoJa4oqpY0zkr2YI43UzfIV+vb0lBdrAQsxk3xame/8lgJSh7nw90PjKV8p
-> oulkVDcqpnZoleflztgloGP0CqxBF91AoDOyPLX2UygopYCt8FvvcMCUhIupS1HO
-> 0HBsHP+karYpnh3R0MO67UVcaN+h93Pd98Zzyr23mnnLMdvxXC4e2pUPDBFObqkH
-> UaB2eTqZVPaa1swOT5Z5lRJLU6BDwW/ITD6odg7tuxi64go18PPK1O3EBdz8bs9V
-> 2ntc+2tdD5xT95aAAiS7
-> =qntM
-> -----END PGP SIGNATURE-----
-> --
-> [ Security | http://lists.drupal.org/mailman/listinfo/security ]
-> [Security team mailing list management and scheduling is documented here | https://security.drupal.org/handling-list-emails]
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP4+6VAAoJEBYNRVNeJnmTc2IQAN1Ti27MyN7LXfOr+nV3Mt0J
+R81ZwVMDIn0leHUzuFkquXU95aZ181MmmGY50R3ndJ2s0byHWRhog91V9Asi+9C/
+0eQ1+GXdSfNc0eFqZAgIxBUdSnfvdB2f4rjwEXJATtzW8GuWNvxkvKAyRgH17JSm
+NoxG6230J9DYT1kSqfKcBZyQpDowewzLRvZ2oMGOD0NeZVh0zzCX9NWVy6/U0jfj
+wZv7Ijgh8yrgP5XodX3jkC76SW8Sx+2HQsJwqHkLDzmEXnGx54itcTR0KJQlVAm9
+DcB4ci/6jXd4yigkaS6GHlov2M0bb65DXvdMJVnS4BBLZeWpD7oAzSHQjw2lOLzz
+qeFTOPb7zvbC2z9vseEzqK8N/W6ZAKKal8Jqa9458UUiH0SCNfkRv3LVqsrrm2xS
+Jkkjdtu3WhQvcqCRL6TgCN/FGGldmN8Pj0VnN1SxXsF+URiipbZhD5vabs1GL950
+U31Ow9KevKw+FGxGH0DwXC9s1rMpXamK8Tl1stPYd4gaJy5l728u4yHnEJWfmNFu
+u0vZ/B5ujqdzWNal2pYCE1NtPRe2vfWcuoRzzhxtvz6bFst/s87M7v+mOliomeQF
+QjdPyRoIwEmb+ckz3qxvW+r48UJhVy3OHy23+ZbIbg51MfslBTLlZqYqA5ohN3Ao
+JsjNCtSkWMjR55K2vMdi
+=5gNG
+-----END PGP SIGNATURE-----
