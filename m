@@ -1,35 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/02/3
-Message-ID: <20121002210648.GG2064@redhat.com>
-Date: Tue, 2 Oct 2012 15:06:48 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/24/3
+Message-ID: <877guwra9u.fsf@mid.deneb.enyo.de>
+Date: Sun, 24 Jun 2012 17:37:33 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-3504: insecure temporary file usage in genkey perl script
+Subject: Re: Xen Security Advisory 9 (CVE-2012-2934) - PV guest host DoS (AMD erratum #121)
 Content-Type: text/plain; charset=utf-8
 
-I'm not sure if anyone other than Red Hat ships and uses the genkey
-script (we package it as part of the crypto-utils package), but Joe
-Orton found some insecure usage of temporary files.  He had reported
-that it writes to a file called "list" in the current working directory
-without first checking to see if it existed, so it could be used to
-clobber other user's files, if executed as root.
+* Marcus Meissner:
 
-Our current versions of Fedora and Red Hat Enterprise Linux 6 use this
-vulnerable genkey.pl script; earlier versions did not have the
-vulnerable bits.  Looking at it a bit further, it seems like there's a
-few other places where it clobbers files.
+> We actually adjusted our patch for XSA-9 so that dom0 boots, but
+> refuses to boot domUs.
 
-Our bug report is here:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=849256
-
-I've also got in there a patch that uses the File::Temp to create
-temporary files properly (somewhat tested).
-
-Just a heads-up in case anyone else is shipping this perl script as
-well.
-
-The name CVE-2012-3504 was assigned to this issue.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Thanks, this was helpful.
