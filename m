@@ -1,59 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/13/4
-Message-ID: <50004FBD.8070807@redhat.com>
-Date: Fri, 13 Jul 2012 10:41:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/24/1
+Message-Id: <201206240203.00827.luciano@debian.org>
+Date: Sun, 24 Jun 2012 02:03:00 +0200
+From: Luciano Bello <luciano@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: KDE Pim
+Subject: CVE request: CSRF in eXtplorer
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+John Leitch has discovered a CSRF vulnerability in eXtplorer:
+http://www.autosectools.com/Advisories/eXtplorer.2.1.RC3_Cross-
+site.Request.Forgery_174.html
 
-On 07/13/2012 06:25 AM, Marc Deslauriers wrote:
-> Hello,
-> 
-> Could a CVE please be assigned to the following issue:
-> 
-> Javascript and external images were being loaded while rendering
-> HTML email in kmail. The downloaded Javascript was then being
-> interpreted.
-> 
-> See:
-> 
-> https://projects.kde.org/projects/kde/kdepim/repository/revisions/dbb2f72f4745e00f53031965a9c10b2d6862bd54
->
->  https://bugs.launchpad.net/ubuntu/+source/kdepim/+bug/1022690
-> 
-> Thanks,
-> 
-> Marc.
+Can you please assign a CVE id to it?
 
-This seems like a security hardening issue to me, but I'm not a KDE
-person so did kdepim advertise itself as not executing JavaScript/etc?
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQAE+9AAoJEBYNRVNeJnmTd50QAKPY4gsmPOBN14itVxpFbLa/
-etA5qhAbjowB5+w7v14XT/hWCrGooolhsOD9ajhmJOww3UBAe6n29Yrn8nW2h3dY
-Fhbr9gez//ZskEPhih0OSte2JtAl2BgQaZdoS32YK8JqSJwmsqy+p4cD1vwc5D2F
-auXTXblFAPWMBMLjJofXTtVxcXqdoMh5PZ7gxL3+m0zgP9ofYCfgW7z30BKYy95z
-HFYrbPGWKGv7qwnpxCcs7mvWyl7BzlesQipQ1rNAWjDWm44RaJ5SH7lv71qhASSH
-DhvzdSFxTyl/Mq+7M+1/xgmIpf0Q7KtdAzKWejh2GxJ+TtpaCldmgEC90PzSluAA
-yT4+QgDjufDNpNzIiE6O/ngcF87SdkNeNqCxZauDSMp+x9pUYVgFC++BNtr7iLLx
-JPorWHHXeok4GPDfsrHVh4H/L1firwg0+Yba8XFj0j0X2wWp+M1GldgZ6F7KNFnZ
-G6cVQuFxQLeG3A0f2zCMKd07AI7myv365h6jcUC7Fbvx7gWqzw41mRSrssmIXGHR
-8IN63xH/AQGxn49dc05p4tc0CMj3JX6Jd+oNLRVdWyKr2rnEFKABYXAP143VZ2Vi
-KroKezmM9irLiIGYOWtgJjOmEvWWxZhnd0NVB6eVoGjiUtUzPRheaa9NM6IhmtZm
-vtnSkf3cVYd1bjsZWyI7
-=vzio
------END PGP SIGNATURE-----
+Cheers, luciano
