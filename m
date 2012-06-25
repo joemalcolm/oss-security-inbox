@@ -1,15 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/2
-Message-ID: <20120103182322.GC5573@foo.fgeek.fi>
-Date: Tue, 3 Jan 2012 20:23:22 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request: PHP Booking Calendar 10e XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/5
+Message-ID: <4FE86979.8060701@redhat.com>
+Date: Mon, 25 Jun 2012 15:36:57 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Hans Spaans <hans.spaans@...it.nl>, Josselin Mouette <joss@...ian.org>, Bastien Nocera <bnocera@...hat.com>
+Subject: CVE 2011-* Request -- rhythmbox (context plug-in): Insecure temporary directory use by loading template files for 'Album', 'Lyrics', and 'Artist' tabs
 Content-Type: text/plain; charset=utf-8
 
-Should this vulnerability get CVE?
+Hello Kurt, Steve, vendors,
 
-Original report: http://seclists.org/bugtraq/2011/Dec/123
-Report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3469106&group_id=132702&atid=724998
+   An insecure temporary directory use flaw was found in the way Rhythmbox, an integrated music 
+management application based on the powerful GStreamer media framework, performed loading of HTML 
+template files, used for rendering of 'Album', 'Lyrics', and 'Artist' tabs. Previously the 
+'/tmp/context' directory has been searched as module directory when loading the HTML template files. 
+A local attacker could use this flaw to conduct symbolic link attacks (possibly leading to 
+attacker's ability to execute arbitrary HTML template file in the context of user running the 
+rhythmbox executable).
 
-- Henri Salo
+Upstream bug report:
+[1] https://bugzilla.gnome.org/show_bug.cgi?id=678661
+
+References:
+[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=616673
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=835076
+
+Please note the [2] bug has been reported / opened on:
+"Date: Sun, 06 Mar 2011 14:58:46 +0100" yet, so this should
+get a CVE-2011-* identifier. Could you allocate one?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
