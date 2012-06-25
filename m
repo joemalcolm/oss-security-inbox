@@ -1,58 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/13
-Message-ID: <alpine.DEB.2.00.1205221444120.22824@dr-wily.mit.edu>
-Date: Tue, 22 May 2012 15:29:17 -0400 (EDT)
-From: Keith Winstein <keithw@....EDU>
-To: jlieskov@...hat.com
-cc: Keith Winstein <keithw@....edu>, mosh-devel@....edu, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- mosh (and probably vte too): mosh server DoS (long loop) due improper parsing of terminal parameters in terminal dispatcher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/7
+Message-ID: <4FE89A3B.2020201@redhat.com>
+Date: Mon, 25 Jun 2012 11:04:59 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Hans Spaans <hans.spaans@...it.nl>, Josselin Mouette <joss@...ian.org>, Bastien Nocera <bnocera@...hat.com>
+Subject: Re: CVE 2011-* Request -- rhythmbox (context plug-in): Insecure temporary directory use by loading template files for 'Album', 'Lyrics', and 'Artist' tabs
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I am the author of Mosh, and somebody pointed me to your CVE request: 
-http://seclists.org/oss-sec/2012/q2/370
+On 06/25/2012 07:36 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> An insecure temporary directory use flaw was found in the way 
+> Rhythmbox, an integrated music management application based on the 
+> powerful GStreamer media framework, performed loading of HTML
+> template files, used for rendering of 'Album', 'Lyrics', and
+> 'Artist' tabs. Previously the '/tmp/context' directory has been
+> searched as module directory when loading the HTML template files.
+> A local attacker could use this flaw to conduct symbolic link
+> attacks (possibly leading to attacker's ability to execute
+> arbitrary HTML template file in the context of user running the
+> rhythmbox executable).
+> 
+> Upstream bug report: [1]
+> https://bugzilla.gnome.org/show_bug.cgi?id=678661
+> 
+> References: [2]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=616673 [3]
+> https://bugzilla.redhat.com/show_bug.cgi?id=835076
+> 
+> Please note the [2] bug has been reported / opened on: "Date: Sun,
+> 06 Mar 2011 14:58:46 +0100" yet, so this should get a CVE-2011-*
+> identifier. Could you allocate one?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
-I have not been part of this process before -- do we (the upstream) have a 
-role here?
+Please use CVE-2012-3355 for this issue.
 
-I don't want to butt in inappropriately, but I also don't want it to seem 
-(by our silence) like we agree with the description in the CVE request.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-The writeup is not accurate. We're grateful for the bug report by Timo 
-Juhani Lindfors, but to say "issue confirmed by mosh upstream" makes it 
-sound like we confirm _this_ issue.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-We have written about this issue in the URL linked from the request: 
-https://github.com/keithw/mosh/issues/271
-
-In general, the application sending ANSI escape sequences is a trusted 
-party. It is allowed to do things like disable the user's keyboard by 
-sending "\e[2h", which is interpreted by xterm and Terminal.app.
-
-That's a DoS as well, but (like this one) it's not really a security 
-vulnerability. Because ANSI escape sequences can do arbitrary things to 
-the user's terminal, programs that allow untrusted user-to-user 
-communication (including write(1), wall(1), and e-mail and newsgroup 
-readers) need to filter these out.
-
-Here's my suggested text for the issue description:
-
-===
-Mosh versions 1.2 and earlier allow an application to cause the 
-mosh-server to consume large amounts of CPU time with a short ANSI escape 
-sequence. In addition, a malicious mosh-server can cause the mosh-client 
-to consume large amounts of CPU time with a short ANSI escape sequence. 
-This arises because there was no limit on the value of the "repeat" 
-parameter in some ANSI escape sequences, so even large and nonsensical 
-values would be interpreted by Mosh's terminal emulator.
-===
-
-This gets away from the suggestion that the problem relates to "improper 
-parsing" or the "count of parameters" (it's about wanting a limit on the 
-_value_ of parameters so the terminal emulator doesn't do huge amounts of 
-work to execute a very short sequence), or to data coming from "a remote 
-attacker."
-
-Best regards,
-Keith
+iQIcBAEBAgAGBQJP6Jo6AAoJEBYNRVNeJnmTw/MQALV9lNTYVGsaGF5DDvnqSyNT
+i+EqGjSphdwMqjPMrvkRt30OHF9cQrfUcw5EwMGVfBpcI/OSZzSyZKrFDoW9EVxt
+c+aLx19i457Qe2cmRaWW/UYvXSadlwyKaZpM9B+aVfw+rnRW9ElV+sswkc9iTvkV
+MOz5Ytf3dBD6gf9XsM8cPGG9Cp4fLnkOErU3BVEJgJWM2i3GhxzWMvWTZJLBghvM
+epF4im0QR+H2UzyJ34u4tZMxJ6SXrk2vRD7UD4b4KqpL7Hs44qIaMemCDoNXx9ig
+uFjQZniH+5NIzWGrsHyrRncIKemLTeZ07cVjcj5AWwrkIT8ZNd9TM9YuG1JyyXMg
+HInmzY3etSYyrJNAZmoxylQ7HGeB7cKLipKjfO5RzBwMvFaZXLrxVTVeXZORqBQm
+XNN7SvOj9K+HT0f92ApLqUniBmgBqF8thZYlpGaAoZ9FvPkg08nhMhZP38ozlLet
+wLrbPEoq8Y0AD9bfpDfum05OgIBRO+3O/yMEG8lyd9EUfM5Fmh+BpuDYzvn98ISx
+RVD2O+3A4zwsx4hQ+kioQdH5W0KHTN49Oo9it4qvVE0e9VLALNs5b2oNUKiTWhLV
+sObvjNuEqEB3fxXhhBsq3YBJEJqdhRMsvGvozVzfXmDR+gQqtumm5c5kMQnElTcQ
+gZmj4ULU3d9tWoWhJMRb
+=dMAJ
+-----END PGP SIGNATURE-----
