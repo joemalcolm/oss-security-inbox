@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/12
-Message-ID: <20120523173723.GJ1286@redhat.com>
-Date: Wed, 23 May 2012 11:37:23 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/9
+Message-ID: <20120625223427.GA9305@inutil.org>
+Date: Tue, 26 Jun 2012 00:34:27 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: haproxy trash buffer overflow flaw
+Cc: Luciano Bello <luciano@...ian.org>
+Subject: Re: CVE request: CSRF in eXtplorer
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to this flaw please?
+Kurt Seifried wrote:
 
-A flaw was reported in HAProxy where, due to a boundary error when
-copying data into the trash buffer, an external attacker could cause a
-buffer overflow.  Exploiting this flaw could lead to the execution of
-arbitrary code, however it requires non-default settings for the
-global.tune.bufsize configuration option (must be set to a value greater
-than the default), and also that header rewriting is enabled (via, for
-example, the regrep or rsprep directives).
+> > John Leitch has discovered a CSRF vulnerability in eXtplorer: 
+> > http://www.autosectools.com/Advisories/eXtplorer.2.1.RC3_Cross- 
+> > site.Request.Forgery_174.html
+> > 
+> > Can you please assign a CVE id to it?
+> > 
+> > Cheers, luciano
+> 
+> Does this affect any versions other than just 2.1 RC3?
 
-This flaw is reported against 1.4.20, prior versions may also be
-affected.  This has been fixed upstream in version 1.4.21 and in git.
+The upstream version, which is in Debian stable (2.1.0b6,
+I suppose that refers to beta6) is affected and was released 
+in 2010, so this is not just a regression in a short-lived 
+release candidate.
 
-References:
-
-https://secunia.com/advisories/49261/
-http://haproxy.1wt.eu/download/1.4/src/CHANGELOG
-http://haproxy.1wt.eu/git?p=haproxy-1.4.git;a=commit;h=30297cb17147a8d339eb160226bcc08c91d9530b
-https://bugzilla.redhat.com/show_bug.cgi?id=824542
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Cheers,
+        Moritz
