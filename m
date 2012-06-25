@@ -1,23 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/10
-Message-ID: <CAF6rxgmRuACf8XaeB-tHOyFw58Vbqm4pZTBcXoMLF_5a6Ef0bQ@mail.gmail.com>
-Date: Thu, 6 Sep 2012 18:46:55 -0400
-From: Eitan Adler <lists@...anadler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/6
+Message-ID: <4FE86B05.9070506@redhat.com>
+Date: Mon, 25 Jun 2012 15:43:33 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, Paul Wise <pabs@...ian.org>,  Cyril Brulebois <kibi@...ian.org>
-Subject: Re: CVE-2010 Request -- blender: Insecure temporary file use by creating file string in undo save quit Blender kernel routine (re-occurrence of CVE-2008-1103)
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Hans Spaans <hans.spaans@...it.nl>, Josselin Mouette <joss@...ian.org>, Bastien Nocera <bnocera@...hat.com>
+Subject: Re: CVE 2011-* Request -- rhythmbox (context plug-in): Insecure temporary directory use by loading template files for 'Album', 'Lyrics', and 'Artist' tabs
 Content-Type: text/plain; charset=utf-8
 
-On 6 September 2012 13:56, Kurt Seifried <kseifried@...hat.com> wrote:
->> Upstream ticket: [1]
->> https://projects.blender.org/tracker/index.php?func=detail&aid=22509&group_id=9&atid=498
-
->> Could you allocate a CVE-2010- identifier for this?
+On 06/25/2012 03:36 PM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 >
-> Please use CVE-2012-4410 for this issue.
+> An insecure temporary directory use flaw was found in the way Rhythmbox, an integrated music
+> management application based on the powerful GStreamer media framework, performed loading of HTML
+> template files, used for rendering of 'Album', 'Lyrics', and 'Artist' tabs. Previously the
+> '/tmp/context' directory has been searched as module directory when loading the HTML template files.
+> A local attacker could use this flaw to conduct symbolic link attacks (possibly leading to
+> attacker's ability to execute arbitrary HTML template file in the context of user running the
+> rhythmbox executable).
+>
+> Upstream bug report:
+> [1] https://bugzilla.gnome.org/show_bug.cgi?id=678661
+>
+> References:
+> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=616673
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=835076
+>
+> Please note the [2] bug has been reported / opened on:
+> "Date: Sun, 06 Mar 2011 14:58:46 +0100" yet, so this should
+> get a CVE-2011-* identifier. Could you allocate one?
 
-Why the 2012 CVE when the issue was reported in 2010?
+Replying to myself, since I forgot to mention this in the
+previous post -- it doesn't look this has get a CVE identifier
+previously:
+   http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=rhythmbox
 
+so please allocate one.
 
--- 
-Eitan Adler
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
