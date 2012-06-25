@@ -1,78 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/9
-Message-ID: <87y5i9dxmc.fsf@mid.deneb.enyo.de>
-Date: Sat, 10 Nov 2012 21:14:03 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/1
+Message-ID: <4FE7F40E.8040407@redhat.com>
+Date: Sun, 24 Jun 2012 23:15:58 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: TYPO3-CORE-SA-2012-005
+CC: Luciano Bello <luciano@...ian.org>
+Subject: Re: CVE request: CSRF in eXtplorer
 Content-Type: text/plain; charset=utf-8
 
-<http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-005/>
-identifies the following vulnerabilities:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-| Vulnerable subcomponent: TYPO3 Backend History Module
-| Vulnerability Type: SQL Injection, Cross-Site Scripting
- 
-| Problem Description: Due to missing encoding of user input, the
-| history module is susceptible to SQL Injection and Cross-Site
-| Scripting. A valid backend login is required to exploit this
-| vulnerability.
-| 
-| Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that fix
-| the problem described!
-|
-| Credits: Credits go to Thomas Worm who discovered and reported the
-| issue.
+On 06/23/2012 06:03 PM, Luciano Bello wrote:
+> John Leitch has discovered a CSRF vulnerability in eXtplorer: 
+> http://www.autosectools.com/Advisories/eXtplorer.2.1.RC3_Cross- 
+> site.Request.Forgery_174.html
+> 
+> Can you please assign a CVE id to it?
+> 
+> Cheers, luciano
 
-(Probably needs two CVEs, one for SQL injection, one for cross-site
-scripting.)
+Does this affect any versions other than just 2.1 RC3?
 
-| Vulnerable subcomponent: TYPO3 Backend History Module
-| Vulnerability Type: Information Disclosure
+# A cross-site request forgery vulnerability in eXtplorer 2.1 RC3 can be
+# exploited to create a new admin.
 
-| Problem Description: Due to a missing access check, regular editors
-| could see the history view of arbitrary records, only by forging a
-| proper URL for the History Module. A valid backend login is required
-| to exploit this vulnerability.
-|
-| Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
-| fix the problem described!
-|
-| Credits: Credits go to Core Team Member Oliver Hader who discovered
-| and fixed the issue.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-And:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-| Vulnerable subcomponent: TYPO3 Backend API
-| Vulnerability Type: Cross-Site Scripting
-
-| Problem Description: Failing to properly HTML-encode user input the
-| tree render API (TCA-Tree) is susceptible to Cross-Site
-| Scripting. TYPO3 Versions below 6.0 does not make us of this API,
-| thus is not exploitable, if no third party extension is installed
-| which uses this API. A valid backend login is required to exploit
-| this vulnerability.
-|
-| Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
-| fix the problem described!
-|
-| Credits: Credits go to Johannes Feustel who discovered and reported
-| the issue.
-
-(The version range appears to be different from the cross-site
-scripting above.)
-
-| Vulnerable subcomponent: TYPO3 Backend API
-| Vulnerability Type: Cross-Site Scripting
-
-| Problem Description: Failing to properly encode user input, the
-| function menu API is susceptible to Cross-Site Scripting. A valid
-| backend login is required to exploit this vulnerability.
-|
-| Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
-| fix the problem described!
-|
-| Credits: Credits go to Richard Brain who discovered and reported the
-| issue.
-
-(This can perhaps be merged with the first cross-site scripting CVE.)
+iQIcBAEBAgAGBQJP5/QOAAoJEBYNRVNeJnmT+ckQANr2mpLfaXlH9WAuXceoOzzn
+ve2B609LhHyr0p+8KI4adqYxRN/pmxIIYVP9WPVftrBBqYmc4YxeDY3CkFNc7BLe
+W0pkCQ39G2EUzTDqWAYp+IWNnFPVdjrmawUccmV2RvBZa5pE2qWclAUlqdkpwSMo
+u8rpSSEra2b1C54XLxV18WqbmysceeYDsUBkK7Ma9rztk4RJ559392KFNYycnrWJ
+/9yb5hzehnrJp0DnZ5cCyiUD+eMsI48YlWRQti8NS0rgMxOE5JgdwuTEdpCJzF1y
+cndzjOkYidKUC9ABnLSbSb0AWxNeEhi4B6gh9J44IyyxqkKpcStoOukBJkguL0JU
++RmEscdPCkn1zAOWaF2zrXEiu7A+asEPzTX7jX3IJmPCO5nfwQYfLRDjXyaTZck6
+9PNhfpFe2w8IAMW77NlFIN+CORI2VWz45K3i0zqTYBysqmGWb7jeljsur2vkG09p
+1FgkRLH6iCspuiCV1g5BHcUqQW88lK+XgSh4wWT2FDSlPpoRTEX1p6cdKyGop+w5
+2iY6nf+pPbSThbVHq4O+WwY+lIF7VIveVGrPx85BIttOBYMi9OV9Gz59UmvKeekS
+dwSlho7NU6mkeuj/ta1Y0LL+VCNL4Er8hethsRuF7BKyJUOM6UpFVgwHKLyAnIsj
+mDqJyK6wW2PPnQYheH7V
+=PaP+
+-----END PGP SIGNATURE-----
