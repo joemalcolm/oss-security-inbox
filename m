@@ -1,46 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/18/1
-Message-ID: <50300D5D.7020904@redhat.com>
-Date: Sat, 18 Aug 2012 15:47:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/3
+Message-ID: <20120625093006.GA9493@openwall.com>
+Date: Mon, 25 Jun 2012 13:30:06 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Jamie Strandboge <jamie@...onical.com>
-Subject: Re: CVE request: tinyproxy
+Cc: security@....org
+Subject: Xen vulnerability disclosure process, recent timeline
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 08/17/2012 02:57 PM, Jamie Strandboge wrote:
-> Hi,
-> 
-> A DoS was reported against tinyproxy: 
-> https://banu.com/bugzilla/show_bug.cgi?id=110#c2
-> 
-> This was reported in: 
-> https://bugs.launchpad.net/ubuntu/+source/tinyproxy/+bug/1036985
+Here's a surprisingly detailed posting on Xen's vulnerability disclosure
+process and how the recent set of issues was handled (detailed timeline):
 
-Please use CVE-2012-3505 for this issue.
+http://lists.xen.org/archives/html/xen-devel/2012-06/msg01072.html
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+As always, this is all about tradeoffs, and many of the issues sound
+very familiar - yet I appreciate this level of transparency.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Regarding Xen's "pre-disclosure list", are messages on it PGP-encrypted
+to the recipients?  Perhaps this should be made a requirement and
+mentioned at http://www.xen.org/projects/security_vulnerability_process.html
 
-iQIcBAEBAgAGBQJQMA1cAAoJEBYNRVNeJnmTJM4P/3pFR6KHObWL6aA9u7BHL+4+
-B8P9tLtrKMjqocUr0Wsi2IvsBKIvRzGSQ2qsnX6cLg5LiW+A5OWtASbiQUbqDGd2
-eRwc2iSq3UHfnroFFLBY2CnbPCfu2R8xE+joB4JGvG/f5PTWPfcVfWf+E9es+xke
-QP1mqNk+yPrFhlu+o9QPTvAU+P6rTfaqxj+hNE1u0WLBG7YCsu66BQSiQ/i/6l28
-Yfx5xPVFdR/0eXCa8jc3gRWlKjgJW848VsQcE0iGr//kmITXixlnBQ9SK3EZHmTk
-oMwL/Xwv+RVP0GhI4m/0WopN3ZC/ntpVJwk+UtMqWAmPAh7l6euwWIT5paXCYdsV
-VV6nOhMbOo/Onl0zRdmleFMu8AAXRzUqLdDeH0hwO9rELUoTH4bdJLtWuRctj+Os
-hZTi9qNFuUVi2kU3rUCp6ftI89ZuYylLuLLbcRcjROMuwiLyoNyBMWZpxbAh//0n
-FoXfJg5uHn92QXely0pNG7sNSoPUA2UDakh3ZI9anBb9ID4oOSCRIiZJuNvUQat0
-aIl3SwQiG60Q8VdJf2a0SjO6e3zWS2AUziOFNQ2F7G3CwKqWFRr84KOA/V6oqpeY
-VXNE1PN2Kae6fE/Yz9riHKpEXn0w8Zm07AGWigBMXsQ7e444pHqypu/y/HL/BiRx
-3gsNMv0djYoeZ+4U25sR
-=ZuG9
------END PGP SIGNATURE-----
+It feels likely that in practice most leaks will be via means unaffected
+by the use of encryption, yet using PGP encryption is worthwhile.
+
+Alexander
