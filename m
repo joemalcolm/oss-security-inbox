@@ -1,26 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/3
-Message-ID: <20120820093046.GE24310@kludge.henri.nerv.fi>
-Date: Mon, 20 Aug 2012 12:30:46 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/2
+Message-ID: <4FE7F47D.6000702@redhat.com>
+Date: Sun, 24 Jun 2012 23:17:49 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Roundcube XSS issues
+CC: Felipe Pena <felipensp@...il.com>
+Subject: Re: CVE request: Full path disclosure in DokuWiki
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 20, 2012 at 12:25:08PM +0300, Henri Salo wrote:
-> Can I get CVE-identifiers (2012) to issues listed below, thanks. Fixed in version: 0.8.1
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Sorry fixed in 0.8.0.
+On 06/24/2012 06:40 AM, Felipe Pena wrote:
+> Full path disclosure in DokuWiki 
+> ======================================== DokuWiki is a simple to
+> use Wiki aimed at the documentation needs of a small company. It
+> works on plain text files and thus needs no database. It has a 
+> simple but powerful syntax which makes sure the datafiles remain
+> readable outside the Wiki.
+> 
+> The POST input 'prefix' is not checked/casted for proper data type
+> before passing to PHP's substr() function, which lead to displays
+> an warning with sensitive information on server with PHP error
+> level enabled:
+> 
+> $PRE   = cleanText(substr($_POST['prefix'], 0, -1));
+> 
+> $ curl -dprefix[]=1 http://localhost/dokuwiki/doku.php 2> /dev/null
+> | grep Warning <b>Warning</b>:  substr() expects parameter 1 to be
+> string, array given in <b>/var/www/dokuwiki/doku.php</b> on line
+> <b>47</b><br /> <b>Warning</b>:  Cannot modify header information -
+> headers already sent by (output started at
+> /var/www/dokuwiki/doku.php:47) in 
+> <b>/var/www/dokuwiki/inc/actions.php</b> on line <b>180</b><br />
+> 
+> Affected versions: ======================================== - Angua
+> (RC1) - Rincewind - Anteater
+> 
+> References: ======================================== 
+> http://www.freelists.org/post/dokuwiki/Fwd-DokuWiki-Full-path-disclosure
+>
+>  Credits: ======================================== This
+> vulnerability was discovered by Felipe Pena. Twitter: @felipensp
 
-> XSS-vulnerability: http://trac.roundcube.net/ticket/1488519
-> SCM: http://trac.roundcube.net/changeset/a7d5e3e8580466639a18da35af13b97dc3765c16/github
+Please use CVE-2012-3354 for this issue.
 
-http://secunia.com/advisories/50212/
-http://www.securelist.com/en/advisories/50212
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-> Three XSS-vulnerabilities: http://trac.roundcube.net/ticket/1488613
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-http://secunia.com/advisories/50279/
-http://www.securelist.com/en/advisories/50279
-
-- Henri Salo
+iQIcBAEBAgAGBQJP5/R9AAoJEBYNRVNeJnmTuy4QAMQ1Lde156PpN81VAVaE9XUk
+vcZ6arWAvYIJzMMYlwVZlWdfhQbds4v0IbuefugnsS7XMD5/+Gn0Y07ulqTWiDMY
+dQ6ESNkVvTW959S977aSullrYlF3LDgYxb48dvclza8fxQxQZRKGZ/ppHJ2+CGqn
+sGwiJjF/zAQDYRiNl9+FE2aLrWjUTU1IEIwAHzPMa/jMO/XPhMVjU48JntMd1f/n
+rcpUbTVByY2dFaPGpH8APFCjPlCk3fkWZCzGmGRNkZQBvGrGBFOHdbeP+zSITwd5
+ksQqhzOG4X43VGMpkMREgMc9+korDplKGAjBGGHZKOGQA6ad3rjspHpnmfkyn7wY
+Ug3aolQtwsOyzYBA/LRpYNZcRTYGRRSnoutjNkGaAZHjiLKixrlmv99CxubCefLf
+d0q7qF1gMaZX3bY1X9cYcatKDI/26Xlr1zsDYXyQsmqNbqqsvaZ98lq3dR3r1BbD
+kEIkEF2kCvB8XEtgpPni7MwyLI5vf7iFOMyVzVmgT8jvTME1dpph0aL7L0nm65Ko
+YkgGk8ppC3wN2v9AC6N/fAAFUzPuCUGmIDDMqXL6/T/4Kxem0a2NzlTdxpUgQqgW
+m7xs0HgdBjRpeTD8Oz0yWpirQDjplLpbNRC08ZekRn8Tuz4pjtveHuSJMNLeNPOs
+vO1optUzhVkE9I0lJAuE
+=gzwk
+-----END PGP SIGNATURE-----
