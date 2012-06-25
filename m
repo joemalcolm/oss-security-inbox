@@ -1,45 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/12
-Message-ID: <4F721289.9090207@vsecurity.com>
-Date: Tue, 27 Mar 2012 12:18:33 -0700
-From: VSR Advisories <advisories@...curity.com>
-To: Solar Designer <solar@...nwall.com>
-CC: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk,  oss-security@...ts.openwall.com
-Subject: Re: CVE-2012-0037: libraptor - XXE in RDF/XML File Interpretation (Multiple office products affected)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/4
+Message-ID: <4FE85398.4090109@suse.de>
+Date: Mon, 25 Jun 2012 14:03:36 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com, Dirk Müller <dmueller@...e.com>
+Subject: CVE Request: viewvc
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+Hi,
 
-As a researcher, I find the distros list a useful resource to enable quick and
-simultaneous notification of many open source OS distributions.
+Changelog of viewvc 1.1.15:
+http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.15/CHANGES
 
+Version 1.1.15 (released 22-Jun-2012)
 
-> When it became apparent that this was to be violated since one or two of 
-> the affected upstreams wanted much more time, the reporter (Timothy D. 
-> Morgan of VSR Security) explained that at the time of his initial 
-> notification he had thought that 14 days would in fact be enough.  While 
-> this sounds like a rather fundamental problem with a maximum embargo time 
-> policy (it is always possible that something new is discovered during 
-> discussion, which may invalidate the initial time estimate of the 
-> reporter), I've just added the following verbiage to hopefully reduce the 
-> number of such occurrences going forward:
-> 
-> "If you have not yet notified upstream projects/developers of the affected 
-> software, other affected distro vendors, and/or affected Open Source 
-> projects, you may want to do so before notifying one of these mailing
-> lists in order to ensure that these other parties are OK with the maximum
-> embargo period that would apply (and if not, then you may have to delay
-> your notification to the mailing list), unless you're confident you'd
-> choose to ignore their preference anyway and disclose the issue publicly
-> soon as per the policy stated here."
+   * security fix: complete authz support for remote SVN views (issue #353)
+   * security fix: log msg leak in SVN revision view with unreadable copy source
 
-I think this is a good idea.  I likely misunderstood the process you want
-researchers to follow when it comes to using the distros list.  While I think
-the time to release for this issue was excessive, I should have nailed down a
-release date with the upstreams prior to notifying the distros list.
+The first one seems to be this one:
+http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2758
 
+The second one:
+http://viewvc.tigris.org/issues/show_bug.cgi?id=353
+http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2755
+http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2756
+http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2757
+http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2759
+http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2760
 
-I'll reserve some additional comments for the oss-security list exclusively.
+cu
+Ludwig
 
-Thanks,
-tim
+-- 
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+
