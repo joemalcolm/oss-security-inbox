@@ -1,28 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/13
-Message-ID: <20120419142819.GH29881@dhcp-25-225.brq.redhat.com>
-Date: Thu, 19 Apr 2012 16:28:20 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/8
+Message-ID: <4FE8C33B.6050100@redhat.com>
+Date: Mon, 25 Jun 2012 13:59:55 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- kernel: macvtap: zerocopy: vector length is not validated before pinning user pages
+CC: Ludwig Nussel <ludwig.nussel@...e.de>, Dirk Müller <dmueller@...e.com>
+Subject: Re: CVE Request: viewvc
 Content-Type: text/plain; charset=utf-8
 
-Currently we do not validate the vector length before calling
-get_user_pages_fast(), host stack could be easily overflowed by
-malicious guest driver who gives us a descriptors with length greater
-than MAX_SKB_FRAGS.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A privileged guest user could use this flaw to induce stack overflow on
-the host with attacker non-controlled data (some bits can be guessed, as
-it will be pointers to kernel memory) but with attacker controlled
-length.
+On 06/25/2012 06:03 AM, Ludwig Nussel wrote:
+> Hi,
+> 
+> Changelog of viewvc 1.1.15: 
+> http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.15/CHANGES
+>
+> 
+> 
+> Version 1.1.15 (released 22-Jun-2012)
+> 
+> * security fix: complete authz support for remote SVN views (issue
+> #353)
 
-Proposed fix thread:
-http://marc.info/?l=linux-netdev&m=133455718001608&w=2
+Please use CVE-2012-3356 for this issue
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=814278
+> * security fix: log msg leak in SVN revision view with unreadable
+> copy source
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Please use CVE-2012-3357 for this issue
+
+
+> The first one seems to be this one: 
+> http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2758
+>
+>  The second one: 
+> http://viewvc.tigris.org/issues/show_bug.cgi?id=353 
+> http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2755
+>
+> 
+http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2756
+> http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2757
+>
+> 
+http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2759
+> http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2760
+>
+>  cu Ludwig
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP6MM6AAoJEBYNRVNeJnmTw74QANaDGEyGk2EV0CtjDBAdDzJz
+JgTbhuVWRQtCqtyUuyFmNte0znTZontJcYE3URRSMR0lIc8EyjKRhpe1ya5wdxhr
+OqJWOUHtCDdvCyYtIFQ4FiY6biOFcmMO9g7xcf2F/ZbXYQXLhB/TmHKDAt0p+yaH
+LN8E1mPVeldT8kXikarmcjBv8qU5rUue24bOAfrht+9rtLbNCcvKgnLl1r7JoCeu
+3DJjPHA+34Bx9CNotjHlVU+6qt3nfo3V8Re9nqUf7drNGV12c+InKItbDVcFHZrf
+4+RXOo8oZYrjXDoxWs64NXl8qfQ6d8ee9iOKW1oAyN5kswfxnl70eOm1nEPsW5zN
+c635Ds9R4nY+VHAgrbM6kkZl5tIykFQP3KbecAG5+CPW72no+IV3fmeyYOq7Wp1G
+ib6weGQF5fhvS1U/zUYgxyoG7Y3DCm+B9OFPphBld3s0eUMLAHX8njGuKIjDNrmA
+NZ+r68Mj1ZFxRi1yv2GHMQjI8652Qlv76Xtpn0RqozTBVF7Ium7gwfdpw88+bjPP
+ocjJUMR3QrCX8a29JxQMAnhpRx4hNtk7uJHu/YMkNrJ+LCQ7SJSxki+vdmkqvuFW
+vZs0N0kXauNtSlgas4pf1M1JK+eqqh9MMIKKL0W6d3JQyujRKwJejIMMU8hm/TeJ
+/gHBurbMC80AH0u0B18y
+=/CS1
+-----END PGP SIGNATURE-----
