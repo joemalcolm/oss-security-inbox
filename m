@@ -1,81 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/15
-Message-ID: <50410498.2090709@redhat.com>
-Date: Fri, 31 Aug 2012 12:38:16 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: php header() header injection detection bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/26/3
+Message-ID: <4FE9AEC0.1010906@redhat.com>
+Date: Tue, 26 Jun 2012 14:44:48 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Mitre CVE assign department <cve-assign@...re.org>
+CC: oss-security@...ts.openwall.com, Thomas Spura <tomspur@...oraproject.org>
+Subject: CVE-2012-2639 reject request (duplicate of CVE-2011-4940)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Steve, vendors,
 
-On 08/29/2012 12:26 PM, Raphael Geissert wrote:
-> Hi,
-> 
-> Reviewing a list of CVE ids that were assigned from the Debian CNA
-> pool, I noticed there is one [id] for php5 that hasn't been made
-> public yet the issue has already been re-re-reported and in this
-> one last round finally fixed.
-> 
-> I'm talking about https://bugs.php.net/60227
-> 
-> It was independently reported by two persons but as of this time
-> their reports (#54182 and #54006) are still hidden behind the
-> "security bug" curtain of PHP's bug tracker. Back when they were
-> reported, I had assigned the following id: CVE-2011-1398 "header
-> injection detection bypass." Note that the id only applies to the
-> CR bypass part of the issue.
-> 
-> Then it came this other report (#60227, originally reported as
-> #60028 by the same person but tagged security, which hid it too),
-> which lead to finally fixing the bug (but please beware of the
-> original fix by reading [1]).
-> 
-> Unless I missed something, the CR bypass issue was never assigned a
-> CVE id once it became public. Please do correct me if I'm wrong.
-> 
-> [1] http://article.gmane.org/gmane.comp.php.devel/70584
-> 
-> Cheers,
-> 
+   due the recently assigned CVE-2012-2639:
 
-Apologies in advance for my questions but I'm a bit confused (also I
-don't have access to PHP security bugs so I'm a bit in the dark here).
+======================================================
+Name: CVE-2012-2639
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-2639
+Final-Decision:
+Interim-Decision:
+Modified:
+Proposed:
+Assigned: 20120514
+Category:
+Reference: CONFIRM:http://bugs.python.org/issue11442
+Reference: JVN:JVN#51176027
+Reference: URL:http://jvn.jp/en/jp/JVN51176027/index.html
+Reference: JVNDB:JVNDB-2012-000063
+Reference: URL:http://jvndb.jvn.jp/jvndb/JVNDB-2012-000063
 
-1) I don't see #54182 and #54006 in the PHP ChangeLog, have these been
-fixed?
+The list_directory function in Lib/SimpleHTTPServer.py in
+SimpleHTTPServer in Python before 2.5.6c1, 2.6.x before 2.6.7 rc2, and
+2.7.x before 2.7.2 does not place a charset parameter in the
+Content-Type HTTP header, which makes it easier for remote attackers
+to conduct cross-site scripting (XSS) attacks against Internet
+Explorer 7 via UTF-7 encoding.
 
-Assuming they were fixed at some point this leads me to ask:
 
-2) Are you saying that the "header injection detection bypass" wasn't
-completely fixed by the patches for #54182 and #54006, and then
-someone reported #60227, originally reported as #60028 which has been
-fixed needs a second CVE (e.g. the "an incomplete fix for original
-issue led to a second fix being pushed" thing)?
+Could you reject it? (as it is a duplicate of CVE-2011-4940):
 
-Or am I getting this completely wrong (this is also possible).
+https://bugzilla.redhat.com/show_bug.cgi?id=835496#c2
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4940
+http://www.openwall.com/lists/oss-security/2012/03/15/1
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQQQSYAAoJEBYNRVNeJnmTI1oP/AzygB3R/neUg/MwCG+MHr9b
-sCY2oQtp9f5X5Bq/SdKi/eK7/5UD5auUZnS2egocfvQKYZgP9GtWTvA9bXiaDSp0
-jq9sTNEx5vLyWjtV/3376uMd443sa1uTb1cd2phDh2JEMfs0+MhIbp4o4N7FicHI
-DW0my/hHZOa2yvZ/aGwGSFivIy8016rQmOg2OPXHOSrio/i/tSWSs9ZRlxhyj/u1
-nwaSyfTi2V4mVpG5/sdsKL+RQV+Vsg1iOu99wFrjiHV7NH20wVlPgd3Jx/iPKytf
-gjLHjIVY5YWEMBZZuNgVI2JVqnkJb3B5fuT7wuloEbdjvRcHnKO3Sw6g7VWQcmlS
-CAE5Hvi/Uj84+PAm9VnVI5ZBwIv17G0cQgaCP8QUd2rlNl7zrJ0cSaKD6zs4536x
-P/Wzm/yOBax3/B3ZA1OgG4DIk2gku8ml3WRh9hEHLage/4mXBaLfRaeMRX6FxogX
-Z3c3IbojaUlz8mNJCMinfB49XdOSSNE1YO+TAjLQdDt3jGIMBuHetkFGD/XLoLNg
-PNFp+W75UtL6aTRNnMNl3zTULTzVhnvwLb1gafGGGKHcsrvqCTZpDsDxojafaP4Q
-QQx1m8tJSq/vrTvqD4r5KqpnRa/2F66DiphyCGXk1DmF1VLSPJxWpOmbzxVD4ISh
-6OzkRs8Qf5Kwqueu6jYz
-=GTXS
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
