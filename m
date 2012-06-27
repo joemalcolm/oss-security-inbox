@@ -1,37 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/13/4
-Message-ID: <4F3932FD.7050606@redhat.com>
-Date: Mon, 13 Feb 2012 08:57:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Daniel Callaghan <dcallagh@...hat.com>, David Malcolm <dmalcolm@...hat.com>
-Subject: Re: CVE Request -- python (SimpleXMLRPCServer): DoS (excessive CPU usage) via malformed XML-RPC / HTTP POST request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/10
+Message-ID: <Pine.GSO.4.64.1206271319290.4361@faron.mitre.org>
+Date: Wed, 27 Jun 2012 13:36:45 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Kurt Seifried <kseifried@...hat.com>
+cc: Henri Salo <henri@...v.fi>, oss-security@...ts.openwall.com, Greg Knaddison <greg.knaddison@...uia.com>, "Steven M. Christey" <coley@...-smtp.mitre.org>
+Subject: Re: CVE Request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-On 02/13/2012 07:03 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
->   we have been notified by Daniel Callaghan via:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=789790
-> 
-> about a denial of service flaw present in the way
-> Simple XML-RPC Server module of Python processed
-> client connections, that were closed prior the
-> complete request body has been received. A remote
-> attacker could use this flaw to cause Python Simple
-> XML-RPC based server process to consume excessive
-> amount of CPU.
-> 
-> Issue has been reported upstream at:
-> [2] http://bugs.python.org/issue14001
-> 
-> Could you allocate a CVE identifier for this?
-> 
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Please use CVE-2012-0845 for this issue.
+All,
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+I have several clarifications and corrections to this latest Drupal 
+request and CVE response, on top of the dupes already listed.  The most 
+important notes are listed first.
+
+(Greg and Kurt, the number of duplicates and unassigned CVEs in this batch 
+is understandable due to various factors such as amount and assignments 
+from mutiple sources, but it's disconcerting.  Maybe we should talk 
+off-list and figure out how to minimize these problems in the future.)
+
+>CVE-2012-2709 SA-CONTRIB-2012-081 - Aberdeen - Cross Site Scripting
+
+This is a duplicate that might look like a typo at first.
+
+Around May 21, MITRE originally published CVE-2012-2907 (NOTE THE 
+DIFFERENT NUMBER STARTING WITH "29" INSTEAD OF "27").
+
+CVE-2012-2907 is in more active use, so keep CVE-2012-2907.
+
+We will REJECT CVE-2012-2709.
+
+(Kurt, CVE-2012-2709 belongs to you.  If you actually intended to list the 
+already-published CVE-2012-2907 and made a typo to CVE-2012-2709, please 
+make sure you've removed CVE-2012-2709 from your pool.)
+
+
+> CVE-2012-2713 SA-CONTRIB-2012-085 - BrowserID - Multiple
+>     Vulnerabilities - CSRF
+> CVE-2012-2714 SA-CONTRIB-2012-085 - BrowserID - Multiple
+>     Vulnerabilities - BrowserID login theft
+
+The description in SA-CONTRIB-2012-085 is not clear, but it seems that
+CVE-2012-2714 might be the natural consequence of exploiting the CSRF.
+The title "multiple vulnerabilities" does not help.  Any thoughts on
+this one?
+
+
+
+>CVE-2012-2727 SA-CONTRIB-2012-098 - Janrain Capture - Open Redirect
+
+SA-CONTRIB-2012-098 mentioned a second separate issue for "An
+additional security weakness occurs when the module creates a new
+local user account."
+
+CVE-2012-2727 - open redirect
+
+(new) CVE-2012-3798 - disclosure of portions of passwords
+
+
+> CVE-2012-2723 SA-CONTRIB-2012-094
+
+A close reading of SA-CONTRIB-2012-094 suggests that there should be
+two CVEs.  Part of the advisory does seem to imply that the XSS is
+resultant from the CSRF; but it also says "This vulnerability is
+mitigated by the fact that an attacker must have a role with the
+maestro admin permissions," which implies that users with maestro
+admin permissions should not be allowed to conduct XSS attacks
+themselves.  This could probably be argued either way.
+
+CVE-2012-2723 - XSS
+
+(new) CVE-2012-3799 - CSRF
+
+
+> CVE-2012-2721 SA-CONTRIB-2012-092 - Organic Groups - Cross Site
+> Scripting (XSS) and Access Bypass
+
+This is 2 types of issues, thus needs 2 CVEs.
+
+CVE-2012-2721 - Access Bypass
+
+(new) CVE-2012-3800 - XSS
+
+> CVE-2012-2706 SA-CONTRIB-2012-079 - Post Affiliate Pro - Cross Site
+> Scripting (XSS) and Access Bypass - Unsupported
+
+Two vuln types, two CVEs needed.
+
+CVE-2012-2706 - XSS
+(new) CVE-2012-3802 - unspecified read of commisions
+
+
+- Steve
