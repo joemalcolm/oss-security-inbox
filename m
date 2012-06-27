@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/10
-Message-ID: <1326493857.7887.287.camel@new-desktop>
-Date: Fri, 13 Jan 2012 23:30:57 +0100
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE affected for PHP 5.3.9 ?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/3
+Message-ID: <4FEAD940.8060609@redhat.com>
+Date: Wed, 27 Jun 2012 11:58:24 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Enrico Scholz <enrico.scholz@...ormatik.tu-chemnitz.de>, Tom Woodward <tomwoodward.mail@...il.com>
+Subject: CVE Request -- dtach: Memory portion (random stack data) disclosure to the client by unclean client disconnect
 Content-Type: text/plain; charset=utf-8
 
-Le vendredi 13 janvier 2012 à 13:50 -0700, Kurt Seifried a écrit :
-> Again I'm still not clear on what/how a security boundary is being
-> crossed. How does this elevate privileges or give you remote access
-> that you wouldn't already if you can upload arbitrary PHP scripts?
+Hello Kurt, Steve, vendors,
 
-XSLT 1.0, as defined by the W3C, doesn't allow to save the result of a
-XSL transformation to the file system. This feature is an extension
-provided by libxslt itself. As PHP 5 uses libxslt as its XSLT engine,
-PHP applications parsing external/untrusted XSLT expose this feature.
+   a portion of memory (random stack data) disclosure flaw was found in the way dtach, a simple 
+program emulating the detach feature of screen, performed client connection termination under 
+certain circumstances. A remote attacker could use this flaw to potentially obtain sensitive 
+information by issuing a specially-crafted dtach client connection close request.
 
-An attacker can provide specially crafted XSLT code which will create an
-arbitrary file with chosen content ("0wn3d.php" in my example). Then,
-this PHP file is requested by the attacker and executed.
+Upstream ticket:
+[1] http://sourceforge.net/tracker/?func=detail&aid=3517812&group_id=36489&atid=417357
 
-Somewhat similar to an undocumented file upload feature ...
+Preliminary proposed patch:
+[2] http://sourceforge.net/tracker/download.php?group_id=36489&atid=417357&file_id=441195&aid=3517812
 
-Regards,
-Nicolas
+References:
+[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625302
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=812551
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=835849
 
+Could you allocate a CVE id for this issue?
 
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
