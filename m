@@ -1,45 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/24
-Message-ID: <4F6396C6.8080505@redhat.com>
-Date: Fri, 16 Mar 2012 13:38:46 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/1
+Message-ID: <4FEAB168.3010305@redhat.com>
+Date: Wed, 27 Jun 2012 01:08:24 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Mark Stanislav <mark.stanislav@...il.com>
-CC: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: CVE Requests
+To: oss-security@...ts.openwall.com
+CC: Moritz Muehlenhoff <jmm@...ian.org>, Luciano Bello <luciano@...ian.org>
+Subject: Re: CVE request: CSRF in eXtplorer
 Content-Type: text/plain; charset=utf-8
 
-On 03/16/2012 12:30 PM, Mark Stanislav wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 06/25/2012 04:34 PM, Moritz Muehlenhoff wrote:
+> Kurt Seifried wrote:
 > 
-> Is "VS@" supposed to be vendor-sec; the defunct list? Or is there
-> another list I am not aware of? If so, can you please give me the *full*
-> address? Thanks.
-
-Sorry it is: http://oss-security.openwall.org/wiki/mailing-lists/distros
-
-> I'd say you may want to coordinate that documentation with Steve Christy
-> as the nine times he allocated CVEs for me directly, this sort of
-> conversation never came up. I can understand frustration on your part
-> that people may not be educated, but realize that if CNAs handle this
-> process differently, it may not be a matter of education on how 'the
-> system works' but rather consistency within the entire process, agnostic
-> of whom is allocating a CVE.
-
-We're working on it.
-
-> I again, do appreciate your time but I suppose I'll just wait for Steve
-> or whomever is manning cve@...re to contact me back.
-
-I'm simply loathe to assign CVE's for which I get no details from a
-third party especially when they have sent requests in to Mitre already.
-How do I know if Mitre has or has not assigned a CVE yet? We basically
-end up with a race condition (and duplicates).
-
-
-> Best,
+>>> John Leitch has discovered a CSRF vulnerability in eXtplorer: 
+>>> http://www.autosectools.com/Advisories/eXtplorer.2.1.RC3_Cross-
+>>>  site.Request.Forgery_174.html
+>>> 
+>>> Can you please assign a CVE id to it?
+>>> 
+>>> Cheers, luciano
+>> 
+>> Does this affect any versions other than just 2.1 RC3?
 > 
-> -Mark
+> The upstream version, which is in Debian stable (2.1.0b6, I suppose
+> that refers to beta6) is affected and was released in 2010, so this
+> is not just a regression in a short-lived release candidate.
+> 
+> Cheers, Moritz
 
+Please use CVE-2012-3362 for this issue.
 
-
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP6rFoAAoJEBYNRVNeJnmT67QQALffg4LsBWnWEKeeg7zzn52y
+Xt33VLQVGcuRPV89AF6csYA8DpukcGm7xdywp6mJugLnM+HwazpBBoO/eMGCUlYg
+aAord9gNLh6nmI76jXnDUq0djpSogpttw9zRuN9hI8w6OL/UqVTo4V8PfATPCasW
+OtA/q6SiYK6fED6TuZtsgln72C+llYVY6UZMee/DTgG5WtXRUwQ01o4Xn9ZXGR1Y
+GRZagMDDY2YJwcxrHxDt0b765gsQQDJq/jW7ECgybZL4OoRbp3DiHvXMzCSbs6fD
+Omon9c/rGVLdxwKbHymuvrbPnNVGNV1LOCTVVxN6ppeKL8TFoOaNB+/qmhZvg/fn
+cmNz0VpzZI/ZJ3u/8QFvhWwAnAytD8tNUPQ4NMcMcVt6ShhG/z43+x6Gel0KMRUA
+rpcT+4oL7dNUtL82CTZAph9UZ6/9OzsqDdp7MJSW0YfubKuIH1HuIKNStX3UvHwJ
+DkpTEkxkJIhgzXnwLabmVCHwmIRfwjBlPKdJ5BYjq+cQ61eiP8FRkQHbueFnEXv9
+DzKjnwwL211LcBUrXt5TivalM0BsLv4x1oDHKp3J1oHvhYxsH2AiLNnvCNbdtCfc
+rm0M0UXd0onFLDDZ9Nmit2b1aebj/ZayA0gFdiRCrtk7yfXXXRwgZxu/oOZzD5Nr
+HvtU+jE9UkhI3capbXK/
+=v3np
+-----END PGP SIGNATURE-----
