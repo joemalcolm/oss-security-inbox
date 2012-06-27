@@ -1,47 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/11/4
-Message-ID: <509F5171.4010105@redhat.com>
-Date: Sun, 11 Nov 2012 00:19:13 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/11
+Message-ID: <20120627183222.GW1302@redhat.com>
+Date: Wed, 27 Jun 2012 12:32:22 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- Linux kernel: mm/hotplug: failure in propagating hot-added memory to other nodes
+Subject: CVE request: arbitrary code exec in bcfg2
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+bcfg2 suffers from an arbitrary code execution flaw due to the Trigger
+plugin.  Upstream has corrected the issue in git, but no released
+packages are available and it looks like this has been around for a
+while (indicated that 1.x is affected as well, up to and including the
+current 1.2.2 release).
 
-On 11/10/2012 02:36 PM, Petr Matousek wrote:
-> A NULL pointer dereference flaw has been found in the way a new
-> node's hot-added memory is propagated to other nodes zonelists. An
-> unprivileged local user can use this flaw to crash the system.
-> 
-> Upstream fix: 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=08dff7b7d629807dbb1f398c68dd9cd58dd657a1
->
->  References: https://bugzilla.redhat.com/show_bug.cgi?id=875374
-> 
-> Thanks,
+Looks like an authenticated remote root compromise (need to be able to
+log into bcfg2 to exploit it, and bcfg2 typically runs as root).
 
-Please use CVE-2012-5517 for this issue.
+Could a CVE be assigned to this please?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+References:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+http://permalink.gmane.org/gmane.comp.sysutils.bcfg2.devel/4539
+http://trac.mcs.anl.gov/projects/bcfg2/changeset/a524967e8d5c4c22e49cd619aed20c87a316c0be
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=679272
+https://bugzilla.redhat.com/show_bug.cgi?id=835985
 
-iQIcBAEBAgAGBQJQn1FxAAoJEBYNRVNeJnmTWvsQAMrDnTBXuhLY9/6NXDEgTVYE
-xt7129w8UB5GFs78XNqualrLydpWL238QVaysv9JzgPmPwi25LNi3UPvcUitqjH8
-FfFVuB+RnltlbJGzu1JlIe7N7sMA87V3laAmIdyoUKOYjyfB3kSA5PUzcWGrq1/v
-g8ADw4VpmxuLMk8M1tx0xja+lk/LXH9XgOvyS+e1a7gDyCKCG3GWyT+dyikrQ/O1
-2R/SVoYVh6cD8qGtb/voaVKK0KVwzNFrdDe2wDe/IcA+pS6PMuMaz0ml2D5wdlMS
-5WBSSCD6ZH/nXOub6viCFDW0UDhyvpkgZXt0P2ix0EUyTlPcWFeDwQ/4fq4RCI+j
-aY6GXyDsJPE8V1u+khz7KGFyvBm+y6jq2UCirjshQ7rYeovdbd1BeVDrfBy4ReYR
-kTM6VAIwz+GRcaRXgUyIYyR/mpqVtsngPlro23CDHBvifI48uF1H+9MaNYXdrVai
-9kkcEuOsTs2NzwNgfchuuTgpHkb38zk8RJ49vjFwp8LcNII5fpn9zWuLkb5baRMw
-S5yI5NKpaHH1zgQI8hEd7yGUe6i7SNd7nYsCAWltUsrqJykMe8bBdgX5sgyB40VR
-o6Mk/Mj8nE+UaMSc83Vb4Q7SAq0cgxDSuNGIulR6e3eLMO3FlUsOAbnB2uMvtfFa
-4bPtoBYIQKCvtjCXLqWu
-=mPQs
------END PGP SIGNATURE-----
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
