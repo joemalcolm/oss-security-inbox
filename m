@@ -1,19 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/6
-Message-ID: <CAJzxamKO5NXLVmXe7HGHU8f4dXOg9ohKCJ2eKqDJyVO7TSbn+A@mail.gmail.com>
-Date: Thu, 12 Apr 2012 19:39:31 +1000
-From: David Black <disclosure@....org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request: cobbler lack of csrf protection, code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/5
+Message-ID: <20120627131318.GA30758@cmpxchg8b.com>
+Date: Wed, 27 Jun 2012 15:13:18 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: oss-security@...ts.openwall.com
+Subject: please verify unusual x.509 constraints are handled
 Content-Type: text/plain; charset=utf-8
 
-Hi, I reported some bugs a while ago in cobbler which never received
-CVE ID, could the follow bugs receive CVE ID ?
-1. lack of csrf protection in the cobbler web interface (vulnerable to
-csrf attacks) https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858878
-2. code execution on the cobbler host through use of yaml.loads on
-potentially untrusted user input
-https://bugs.launchpad.net/ubuntu/oneiric/+source/cobbler/+bug/858883
+List, just an FYI, I've noticed a Korean CA appears to always set the cA
+bit in the X.509 basicContraints, then uses pathLenConstraint and
+keyUsage bits to restrict the results.
 
---
-Thank you.
+I have no idea what crazy software they're using that generates these
+certificates, but they're in the Microsoft trusted certificate
+store on all Windows machines, and are therefore possibly (probably?)
+cross-signed from other CAs. Maybe someone can check the EFF corpus if
+there is interest.
+
+While arguably the X.509 specifications permit this, I find it hard to
+believe that these bits are checked consistently by all implementations.
+AFAICT, GnuTLS does not check these constraints, but OpenSSL does.
+
+I've produced an example from one of the weaker certificates, hopefully
+you can use this to check whatever implementation you're using handles
+this correctly. If you get an error about pathLen exceeded, or improper
+usage, then it's probably good. If you get a message about revokation or
+some other error about canonicalization*, then you might have a problem.
+
+$ cat local-cert.pem Mengsk.pem sms.hallym.ac.kr.pem CA134040001.pem GPKIRootCA.pem | certtool -e
+Certificate[0]: C=KR,O=Tanaris,CN=localhost
+        Issued by: C=KR,ST=Koprulu Sector,O=Terran Dominion,CN=Mengsk Certificate Authority
+        Verifying against certificate[1].
+        Verification output: Verified.
+
+Certificate[1]: C=KR,ST=Koprulu Sector,O=Terran Dominion,CN=Mengsk Certificate Authority
+        Issued by: C=KR,O=Government of Korea,OU=Group of Server,OU=,CN=sms.hallym.ac.kr
+        Verifying against certificate[2].
+        Verification output: Verified.
+
+Certificate[2]: C=KR,O=Government of Korea,OU=Group of Server,OU=,CN=sms.hallym.ac.kr
+        Issued by: C=KR,O=Government of Korea,OU=GPKI,CN=CA134040001
+        Verifying against certificate[3].
+        Verification output: Verified.
+
+Microsoft asked them to revoke these certificates earlier this month,
+but they publish CRL via ldap, so I don't know if these are really
+visible.  Regardless, I think it's important to verify that
+implementations handle these combinations of constraints.
+
+Tavis.
+
+* The problem with canonicalization is the subjectName/issuerName DN
+  should be canonicalized, but this isnt always implemented. In this
+  case the PrintableString doesnt match the UTF8String. If this is the
+  only problem with the chain reported, then there is a bug.
+
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
+
+Download attachment "CA134040001.pem" of type "application/octet-stream" (1574 bytes)
+
+Download attachment "GPKIRootCA.pem" of type "application/octet-stream" (1289 bytes)
+
+Download attachment "local-cert.pem" of type "application/octet-stream" (4394 bytes)
+
+Download attachment "Mengsk.pem" of type "application/octet-stream" (3648 bytes)
+
+Download attachment "sms.hallym.ac.kr.pem" of type "application/octet-stream" (4684 bytes)
