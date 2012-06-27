@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/5
-Message-ID: <1331582630.3983.14.camel@mdlinux>
-Date: Mon, 12 Mar 2012 16:03:50 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: ldm (LTSP display manager)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/4
+Message-ID: <20120627134705.4688e5a0@redhat.com>
+Date: Wed, 27 Jun 2012 13:47:05 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: secalert_us@...cle.com
+Cc: oss-security@...ts.openwall.com, serg@...typrogram.com
+Subject: Re: MySQL CVEs (was: Security vulnerability in MySQL/MariaDB sql/password.c)
 Content-Type: text/plain; charset=utf-8
 
-Could we please get a CVE assigned to the following issue?:
+On Mon, 18 Jun 2012 18:50:01 +0200 Tomas Hoger wrote:
 
-Starting with ldm 2.2.x, upstream switched to using wwm as a minimal window manager.
-It was discovered that wwm ships with keybindings that allow spawning an xterm.
+> Additionally, following bugs try to collect info on MySQL security
+> fixes in the last released and an upcoming Oracle CPU:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=832477
+> https://bugzilla.redhat.com/show_bug.cgi?id=832540
+> 
+> It would be nice if Oracle could confirm the mapping between CVEs and
+> particular issues to avoid any incorrect guesses.
 
-As the ldm greeter runs as root, this allows for a passwordless root shell.
+I was really hoping to see some comments form Oracle security team and
+an explicit confirmation of the correct CVE guesses.  Is there a good
+reason why CVE mapping for public issues can not be provided?
 
-Bug:
-https://bugs.launchpad.net/ubuntu/+source/ldm/+bug/953340
-
-Commit:
-http://bazaar.launchpad.net/~ltsp-upstream/ltsp/ldm-trunk/revision/1419
-
-Thanks,
-
-Marc.
-
+Thank you!
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
-
-
+Tomas Hoger / Red Hat Security Response Team
