@@ -1,34 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/3
-Message-ID: <4F1E4237.6020608@redhat.com>
-Date: Mon, 23 Jan 2012 22:31:35 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/2
+Message-ID: <4FEAB24C.8040103@redhat.com>
+Date: Wed, 27 Jun 2012 01:12:12 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Michael Gilbert <michael.s.gilbert@...il.com>
-Subject: Re: CVE id assignment dates
+CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+Subject: Re: XXE in Zend
 Content-Type: text/plain; charset=utf-8
 
-On 01/23/2012 06:05 PM, Michael Gilbert wrote:
-> On Mon, Jan 23, 2012 at 3:04 PM, Steven M. Christey wrote:
->> We do not publish any dates related to disclosure, patch, or vendor
->> notification; interested parties can consult other databases that explicitly
->> track this information, such as OSVDB.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 06/26/2012 06:12 AM, Nicolas Grégoire wrote:
+> Hello,
 > 
-> Just curious, why not?  It seems like this kind of information would
-> be invaluable for researchers interested anthropological/statistical
-> studies of security vulnerabilities.
+> this Zend XXE vulnerability was published without a CVE: 
+> http://framework.zend.com/security/advisory/ZF2012-01
 > 
-> Best wishes,
-> Mike
+> Regards, Nicolas
+> 
 
-If you'd like to do the work/research needed to nail these down I'm sure
-someone (I can't speak on behalf of Mitre) would accept the data, but
-speaking from experience (at iSIGHT/iDefense) it is a LOT of work in
-some cases (you start going down rabbit holes pretty quickly, things
-that appear simple often are not), so to do it consistently for all
-issues (even within a "small" group of packages or vendors) is a full
-time job for more than one person.
+Please use CVE-2012-3363 for this issue.
 
---
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- Kurt Seifried / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP6rJMAAoJEBYNRVNeJnmTjT8P/0xt69iPnvQzTzBXqkIkrfK1
+al1wlJLH5mXL9ajQ90uuGSrR3/8dzcwcE4/jmYn5f4yAt1dBSYFppSFQfBHl2XXb
+f527RFzHtNr8corGRJW4doqbOqHnNADpvIh/uVBcVL8p4NONlnBhho9N9ymH/YF3
+zF1Rg4DlbiIdSL60jd0Ws3aZp+kdX6vU6tVsWyyT2ML6M4YRJ1YDgp2iz/vd/US7
+CKgAjdZ6Zs98CYCFTFjm+SsHCoSp5QkyZF7CIrrnRJzVRn5g9Bwdc85S7fwW3zuq
+ahfuReWXEwUCP4QUm2GKUotclZrwQ78RjvVGNB5CHPYEMZcA8eDGIE79intoY1Vf
+z652Ltx79N0wTFfV1hFh5/JM7EwKXPVHdHv+GCIP/9vGQioH7FEEByOmye1kzW4o
+AeIM345Wo5H8D0/hHVggvkUvWrOSbo/zWIEF4/ji6+Fm3hqVEfWQJ0+QnvvP1RRR
+7JQVGY4hw9vP6UMI26C+1T2Mo+S2iXzQL3Xj1SxUKcbwvq7ZnV0Bc3qbVTibgKku
+TPNKiJDgpsER4GCe4+f8+LX37JctQJaG8KAnIMEwvwCSBIkkpH+F0SQczVF+paUx
+vMaFiyu6mRyCsO7AjKFnJQf3e1NHCihCvqZpxg4AyQLBCgThjrL1RLAHaut6VUmH
+XING7OYKU3X2rTm24AZU
+=YFqh
+-----END PGP SIGNATURE-----
