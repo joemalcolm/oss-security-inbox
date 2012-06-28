@@ -1,55 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/28/2
-Message-ID: <4FC39533.4060909@redhat.com>
-Date: Mon, 28 May 2012 17:09:39 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Apache OpenOffice.Org Security Team" <ooo-security@...ubator.apache.org>, LibreOffice Security Team <officesecurity@...ts.freedesktop.org>
-CC: oss-security@...ts.openwall.com, Florian Weimer <fw@...eb.enyo.de>, Caolán McNamara <caolanm@...hat.com>, David Tardon <dtardon@...hat.com>
-Subject: Kind request to update upstream CVE-2012-2334 advisories they to reflect arbitrary code execution possibility too and OSS list notification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/1
+Message-ID: <4FEBA510.3090809@redhat.com>
+Date: Wed, 27 Jun 2012 18:28:00 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: arbitrary code exec in bcfg2
 Content-Type: text/plain; charset=utf-8
 
-Hello Apache OpenOffice.org, LibreOffice Security Teams, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   originally the CVE-2012-2334 security flaw has been described as follows:
-   [1] http://www.openoffice.org/security/cves/CVE-2012-2334.html
-   [2] http://www.libreoffice.org/advisories/cve-2012-2334/
+On 06/27/2012 12:32 PM, Vincent Danen wrote:
+> bcfg2 suffers from an arbitrary code execution flaw due to the
+> Trigger plugin.  Upstream has corrected the issue in git, but no
+> released packages are available and it looks like this has been
+> around for a while (indicated that 1.x is affected as well, up to
+> and including the current 1.2.2 release).
+> 
+> Looks like an authenticated remote root compromise (need to be able
+> to log into bcfg2 to exploit it, and bcfg2 typically runs as
+> root).
+> 
+> Could a CVE be assigned to this please?
+> 
+> References:
+> 
+> http://permalink.gmane.org/gmane.comp.sysutils.bcfg2.devel/4539 
+> http://trac.mcs.anl.gov/projects/bcfg2/changeset/a524967e8d5c4c22e49cd619aed20c87a316c0be
+>
+>  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=679272 
+> https://bugzilla.redhat.com/show_bug.cgi?id=835985
+> 
+> Thanks.
 
-during internal audit of relevant upstream patches:
-[3] http://cgit.freedesktop.org/libreoffice/core/commit/?id=28a6558f9d3ca2dda3191f8b5b3f2378ee2533da
-[4] http://cgit.freedesktop.org/libreoffice/core/commit/?id=512401decb286ba0fc3031939b8f7de8649c502e
+Please use CVE-2012-3366 for this issue.
 
-it has been observed by Florian Weimer that the [4] patch also corrected
-and integer overflow, being present in the SvxMSDffManager::GetFidclData()
-routine, which might lead under certain circumstances to possibility
-of arbitrary code execution too.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Update CVE-2012-2334 flaw description is at:
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=821803#c0
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-This post is intended to serve as kind request to OpenOffice.org and
-LibreOffice upstream, they to update their corresponding advisories
-([1], [2]) to reflect this fact.
-
-For what is related against upstream patches -- upon testing we can confirm,
-the original ones were complete and this is in no way a new security flaw.
-
-But something, which got corrected upstream in previous release(s), and
-should mention possibility of arbitrary code execution too in order to properly
-describe this deficiency.
-
-OpenOffice.org / LibreOffice upstreams - please update your advisories to
-reflect this if possible yet.
-
-OSS vendors, please note this notification (for case you previously categorized
-fix for the CVE-2012-2334 flaw as something to be postponed due to lower
-impact).
-
-Credit for the discovery should go to: Florian Weimer of Red Hat
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: Would you need further background details due this, contact me or
-         Florian off list.
-
+iQIcBAEBAgAGBQJP66UPAAoJEBYNRVNeJnmTMiEQAK8J+IZ7SNzjwnwFzqpMQxbV
+UM6iv7vs9Y9a2MyIN1msCLEzQIKN/b+p/56vSBA1K1djD2mRslC5bABpxS1V2nVA
+/E1sG5AF/jx4aNCH2dxcPUoWV+msPSgwpujHqVG2QHDfMZsTP/+ieY9e1aCdBumC
+OdRiQkkFZG3f+yzGeSjdjOJse5APZorPrYPvR1jIxQIbn7BtgbRtW80y1Q4LWA4F
+DUuevtfY43HPdCdauvUksobnjN7jMItDm/QJAnhuXtgRjb7RRCT9a6t+p44x+CDi
+XqmHzfvTfi5xjw/2oncJf5lxtKVJhljn9R+5CeJlHn+/foVtb945EAMk+mSzqpVp
+Ucpg8GXW5V0/W3hA7Ss/xBoN9BcSaI1daRC5+nmOAuBHIb+4yCqr2MYIl4rWlTz8
+7BMMZsCBSmPtwKa1bCu3vr6+90GLZPh6hp5cIyc4Ls4zbIo7Rlqe8wS24CWGrS32
+YyGQAfHE1dgq8TnGOZWpTYwBtT8BsU7vHiblMoq6EhjdaedLvXKqz2By2pm5/J19
+us6IcIzlxVOjGlRONDDFRVpC6rgu73T7gde200TnGruHFB3TZT6ZuHbdRzzGl0Nj
+bZvqxc5xnS7g3fva1ftN8dx+NcdW4VnFSH2x6QVuZwEPyyIHLOL5kBR0hznhmEBy
+a5Q/V9QEy08qCiU5Gzj8
+=KkK/
+-----END PGP SIGNATURE-----
