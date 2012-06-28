@@ -1,141 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/12/3
-Message-ID: <20439.12319.545744.59925@mariner.uk.xensource.com>
-Date: Tue, 12 Jun 2012 13:03:43 +0100
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xensource.com, xen-devel@...ts.xensource.com, xen-users@...ts.xensource.com, oss-security@...ts.openwall.com
-Subject: Xen Security Advisory 9 (CVE-2012-2934) - PV guest host DoS (AMD erratum #121)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/10
+Message-ID: <3f2a01b4ac04a45461a3eeafce2e3e8f.squirrel@webmail.nux.se>
+Date: Thu, 28 Jun 2012 19:40:35 +0200
+From: "Oden Eriksson" <oeriksson@...driva.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-	     Xen Security Advisory CVE-2012-2934 / XSA-9
-                            version 3
-
-		   PV guest host Denial of Service
-
-UPDATES IN VERSION 3
-====================
-
-Public release.  Previous versions were embargoed.
-
-Remove leftover statement that CVE number had not been assigned.
-The correct CVE for this issue is CVE-2012-2934.
-
-ISSUE DESCRIPTION
-=================
-
-A Xen user has discovered that some older AMD CPUs can be made to lock
-up due to AMD processor erratum #121.
-
-This issue was discovered during testing of the fix for XSA-7
-(CVE-2012-0217). Although the two issues are unrelated the situations
-which can trigger them may overlap.
-
-REFERENCES
-==========
-
-AMD Erratum #121 is described in "Revision Guide for AMD Athlon 64 and AMD
-Opteron Processors": http://support.amd.com/us/Processor_TechDocs/25759.pdf
-
-IMPACT
-======
-
-A guest user or administrator of a 64 bit PV guest on a vulnerable
-system can cause the processor to lock up, leading to a Denial of
-Service attack against the host.
-
-Systems which run only 32 bit guest kernels are not vulnerable.
-
-VULNERABLE SYSTEMS
-==================
-
-The following 130nm and 90nm (DDR1-only) AMD processors are subject
-to this erratum:
-
- * First-generation AMD-Opteron(tm) single and dual core processors
-   in either 939 or 940 packages:
-   * AMD Opteron(tm) 100-Series Processors
-   * AMD Opteron(tm) 200-Series Processors
-   * AMD Opteron(tm) 800-Series Processors
- * AMD Athlon(tm) processors in either 754, 939 or 940 packages
- * AMD Sempron(tm) processor in either 754 or 939 packages
- * AMD Turion(tm) Mobile Technology in 754 package
-
-None of the affected processors support AMD SVM.  Therefore, any
-system which has any HVM Xen guests is not vulnerable.
-
-This issue does not affect Intel processors.
-
-MITIGATION
-==========
-
-Running a 64 bit PV guest kernel (which must necessarily be host
-administrator controlled) which itself contains the fix for erratum
-#121 will prevent unprivileged users in guests from exploiting this
-issue.  All Windows operating systems and current versions of the
-Linux and Solaris kernels, for example, are known to contain the fix
-for erratum #121.
-
-There is no mitigation when running untrusted 64 bit guest kernels or
-against untrusted administrators of 64 bit guests.
-
-Systems which run only 32 bit PV guest kernels are not
-vulnerable. Note that this may mean only booting known good kernels or
-vetting any user supplied kernels to ensure they are not 64 bit.
-
-RESOLUTION
-==========
-
-There is no software fix for this issue. The workaround suggested by
-AMD in erratum #121 cannot be applied to Xen since the relevant address
-is under guest control.
-
-Applying the patch will cause Xen to detect vulnerable systems and
-refuse to boot. A command line override is provided to allow users who
-accept the risks or who are able to mitigate as above to continue to
-do so. To activate the override add "allow_unsafe" to your hypervisor
-command line.
-
-This change has been made to the staging Xen repositories:
-  xen-unstable.hg      25481:bc2f3a848f9a
-  xen-4.1-testing.hg   23301:a9c0a89c08f2
-  xen-4.0-testing.hg   21592:e35c8bb53255
-
-PATCH INFORMATION
-=================
-
- xen-unstable                                xsa9-unstable.patch  
- Xen 4.1, 4.1.x                              xsa9-xen-4.1.patch
- Xen 4.0, 4.0.x                              xsa9-xen-4.0.patch
-
-$ sha256sum xsa9-*.patch
-b48a2f1d5a7eb52f8533dccfb8bf0d6d403609011c1dd5915bcfcea92a5e8873  xsa9-unstable.patch
-8ec1fa01b8094750e908bd5992b451e5c2acbe97ea1061e20c9244909d960262  xsa9-xen-4.0.patch
-cb7686178ec8a2f021c01ae9706bfb3f1f44a098dba5723f1a645d959da5f2f3  xsa9-xen-4.1.patch
-
-NOTE REGARDING EMBARGO
-======================
-
-Due to the relationship between this issue and XSA-7 (CVE-2012-0217),
-we have concluded that this advisory should be under the same embargo
-as XSA-7.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJP1yzzAAoJEIP+FMlX6CvZXvgH/1og/ULBFEj1E5i7eySDdbMl
-RtFfxCXbtTcsUvBQNZ6oKLKYyumhfQPhGUyhq5epuxZVhFmYEHdztH3Gf1fQLXuN
-AhGLomV3vA5ANzs2Dc+jvMhM25VWGekZbqQCfV+3FhZEyiqneUGbVUrvIJlpe3LH
-b5g4gWgvPpsFUewTtR7MgqJgBbVi1KbIc69r1Fh3Y+i6/KczxDwGUXtcVv1BZ3HJ
-Qkts3oT2bEFiqUgPtZKdRnKJegRJGQipOueqQMzYO5xtzElqGJVuD9C01VK2Qxzh
-Og7jsvajNM+9ulw5tTkbc2p84KBKaV2zrivfLfptir5IZOhI6RN6v880iyrNvpw=
-=X3We
------END PGP SIGNATURE-----
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 06/28/2012 12:13 AM, Pierre Joye wrote:
+>> hi Kurt!
+>>
+>> On Thu, Jun 28, 2012 at 7:12 AM, Kurt Seifried
+>> <kseifried@...hat.com> wrote:
+>>
+>>> So simply querying:
+>>>
+>>> ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+>>>
+>>> e.g.:
+>>>
+>>> http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+>>>
+>>> shows authors, SAPI modules (and their authors) and normal
+>>> modules (and their authors), resulting in a significant
+>>> information disclosure (version #'s can be narrowed down from the
+>>> authors list).
+>>>
+>>> This has already been reported, but no CVE was assigned:
+>>>
+>>> https://bugs.php.net/bug.php?id=55497
+>>>
+>>> It is mentioned in http://php.net/manual/en/ini.core.php however
+>>> it is enabled by default:
+>>>
+>>> ; Decides whether PHP may expose the fact that it is installed on
+>>> the server ; (e.g. by adding its signature to the Web server
+>>> header).  It is no security ; threat in any way, but it makes it
+>>> possible to determine whether you use PHP ; on your server or
+>>> not.
+>>>
+>>> ; http://www.php.net/manual/en/ini.core.php#ini.expose-php
+>>>
+>>> expose_php = On
+>>
+>> Why would it require a CVE and why is it seen as a security issue?
+>> Sure it could be, like unfiltered input and the like but...
+>>
+>> Cheers,
+>
+> I wasn't asking for a CVE for this issue (no "CVE Request: in
+> subject), This is more of a place holder/information (oss-security is
+> read by a lot of security vendors/etc, and is for more than just CVE
+> assignments) and to make sure people are aware of the issue, since I
+> wasn't even aware of it until someone pointed it out to me.
+>
+> Exposing the fact that I am running PHP is one thing. Exposing exactly
+> which modules I have loaded is quite another.
 
 
-Download attachment "xsa9-unstable.patch" of type "application/octet-stream" (2194 bytes)
+http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
 
-Download attachment "xsa9-xen-4.1.patch" of type "application/octet-stream" (1603 bytes)
+That url does not show loaded modules. One can also use for example:
 
-Download attachment "xsa9-xen-4.0.patch" of type "application/octet-stream" (1698 bytes)
+disable_functions = phpinfo
+
+in /etc/php.ini
+
+So, I guess that's sufficent.
+
+-- 
+Regards // Oden Eriksson
+Security team manager - Mandriva
+CEO NUX AB
+
