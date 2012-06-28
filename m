@@ -1,45 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/19
-Message-ID: <4FFC951A.20405@gmail.com>
-Date: Tue, 10 Jul 2012 16:48:26 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/3
+Message-ID: <CAEZPtU453yPvKx_Lmc5WUhnf9xMv=abScd0tnsx4xSFaPQOP2g@mail.gmail.com>
+Date: Thu, 28 Jun 2012 08:13:14 +0200
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>,  Kurt Seifried <kseifried@...hat.com>
-Subject: Re: ecryptfs headsup
+Cc: security@....net
+Subject: Re: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
 Content-Type: text/plain; charset=utf-8
 
-On 07/10/2012 10:30 AM, Marcus Meissner wrote:
-> On Tue, Jul 10, 2012 at 04:21:13PM +0200, Sebastian Krahmer wrote:
->>
->> It is a potential privilege escalation since the pam module
->> was not setting uid/gid(list) appropriately and the suid
->> binary did not clear environment before exec'ing umount.
->> I do not know whether MS_NOSUID was really needed (and maybe
->> MS_NODEV is, but I was not able to create dev files).
->> Unfortunally we found ecryptfs not really stable inside the kernel
->> and Marcus is still rebooting :)
+hi Kurt!
+
+On Thu, Jun 28, 2012 at 7:12 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+
+> So simply querying:
 >
-> This means ...
+> ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
 >
-> So far we have not yet found a specific security issue.
+> e.g.:
 >
-> Ciao, Marcus
+> http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
 >
+> shows authors, SAPI modules (and their authors) and normal modules
+> (and their authors), resulting in a significant information disclosure
+> (version #'s can be narrowed down from the authors list).
+>
+> This has already been reported, but no CVE was assigned:
+>
+> https://bugs.php.net/bug.php?id=55497
+>
+> It is mentioned in http://php.net/manual/en/ini.core.php however it is
+> enabled by default:
+>
+> ; Decides whether PHP may expose the fact that it is installed on the
+> server
+> ; (e.g. by adding its signature to the Web server header).  It is no
+> security
+> ; threat in any way, but it makes it possible to determine whether you
+> use PHP
+> ; on your server or not.
+>
+> ; http://www.php.net/manual/en/ini.core.php#ini.expose-php
+>
+> expose_php = On
 
-This reminds me...
+Why would it require a CVE and why is it seen as a security issue?
+Sure it could be, like unfiltered input and the like but...
 
-If an unprivileged user can mount ecryptfs shares (e.g. via the setuid-root
-mount helper shipped on Ubuntu) and has the ability to mount user-controlled
-filesystems (either network filesystems via setuid mount helpers like mount.cifs
-or mount.nfs, or formatted USB drives via physical access), it's possible to
-escalate privileges to root because the setuid ecryptfs helper does not mount
-filesystems with the nosuid or nodev flags.
+Cheers,
+-- 
+Pierre
 
-An attacker can create an ecryptfs filesystem on his own machine on a network
-filesystem or USB drive, and then mount that ecryptfs filesystem on the victim
-machine for a setuid-root backdoor.  Hard-coding nosuid and nodev into the
-setuid ecryptfs helper would resolve this, but I'm not sure that's workable for
-Ubuntu home directories.
-
--Dan
-
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
