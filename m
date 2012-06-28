@@ -1,35 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/16/1
-Message-ID: <20120616051956.710ca1af@hsalkjdhsa>
-Date: Sat, 16 Jun 2012 05:19:56 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/9
+Message-ID: <20120628145930.GD1302@redhat.com>
+Date: Thu, 28 Jun 2012 08:59:30 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: phplist before 2.10.18 XSS and sql injection
+Subject: accountsservice local file disclosure flaw (CVE-2012-2737)
 Content-Type: text/plain; charset=utf-8
 
-http://www.exploit-db.com/exploits/18639/
+Good day, all.
 
-cite from there:
-"Desc: Input passed via the parameter 'sortby' is not properly
-sanitised before being returned to the user or used in SQL queries.
-This can be exploited to manipulate SQL queries by injecting
-arbitrary SQL code. The param 'num' is vulnerable to a XSS issue
-where the attacker can execute arbitrary HTML and script code in
-a user's browser session in context of an affected site."
+A local file disclosure flaw was discovered by Florian Weimer of the Red
+Hat Product Security Team in accountsservice.  From what I understand,
+there are a few distros that use this due to newer GNOME.
 
-Upstreams release notes for 2.10.18:
-http://www.phplist.com/?lid=567
-mentions:
-"This version fixes a few small bugs and a security issue that was
-found. The security issues fixed require the administrator to be logged
-in. Therefore the vulnerability can be classified as "intermediate".
-There's no immediate danger of the vulnerabilities to be exploited
-remotely."
+The offending code was added here:
 
-Please assign two CVEs.
+http://cgit.freedesktop.org/accountsservice/commit/?id=69b526a6cd4c078732068de2ba393cf9242a404b
+
+A patch to correct the flaw is attached to our bugzilla bug and will be
+committed upstream shortly.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=832532
+
+The issue is described as follows:
+
+Florian Weimer found a local file disclosure flaw in accountsservice, an
+account management system using D-Bus for querying and manipulating user
+accounts.  The implementation of the SetIconFile method of the
+org.freedesktop.Accounts.User D-Bus interface can disclose arbitrary
+files due to a race condition in user_change_icon_file_authorized_cb()
+in /usr/libexec/accounts-daemon.  When this function calls
+get_caller_uid(), it uses PolicyKit to obtain the UID of the requesting
+process from /proc.  At the time the UID is fetched, it may not match
+the original UID making the D-Bus request if the process has executed an
+SUID binary.
+
+It has been assigned the name CVE-2012-2737.
+
+The distros mailing list was notified of this flaw on Monday (20120625)
+and made public today (20120628).
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Vincent Danen / Red Hat Security Response Team
