@@ -1,29 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/14
-Message-ID: <4F56618B.5050009@redhat.com>
-Date: Tue, 06 Mar 2012 12:12:11 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/4
+Message-Id: <201206280858.52127.mweckbecker@suse.de>
+Date: Thu, 28 Jun 2012 08:58:51 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Joomla! Security News 2012-03
+Subject: Re: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
 Content-Type: text/plain; charset=utf-8
 
-On 03/06/2012 06:30 AM, Henri Salo wrote:
-> Can I get two CVE-identifiers for these security vulnerabilities listed below.
-> 
-> http://developer.joomla.org/security/news/392-20120302-core-xss-vulnerability.html
+Hi Kurt,
 
-Please use CVE-2012-1117 for this issue
+On Thursday 28 June 2012 07:12:52 Kurt Seifried wrote:
+> So simply querying:
+>
+> ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+>
+> e.g.:
+>
+> http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+>
+> shows authors, SAPI modules (and their authors) and normal modules
+> (and their authors), resulting in a significant information disclosure
+> (version #'s can be narrowed down from the authors list).
+>
+> This has already been reported, but no CVE was assigned:
+>
 
-> http://developer.joomla.org/security/news/391-20120301-core-sql-injection.html
+Well, I don't think it should get one. expose_php is no news and so it is
+expectable that it will make things like e.g. PHP's version number appear
+in the HTTP response. Hiding it is security by obscurity and with the same 
+argument you could say that it's a vulnerability that PHP's source code is
+open source. IMHO.
 
-Please use CVE-2012-1116 for this issue
+[...]
 
-Please note, smaller Joomla! #, smaller CVE # (trying to keep things in
-sync as much as possible =).
+Matthias
 
-> - Henri Salo
->  
+PS: If such things happen regardless of expose_php's value it is of course
+worth a CVE.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Matthias Weckbecker, Junior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
