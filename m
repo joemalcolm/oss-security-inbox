@@ -1,19 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/24/5
-Message-ID: <20120824110821.GC17896@kludge.henri.nerv.fi>
-Date: Fri, 24 Aug 2012 14:08:21 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: Stripe Capture the Flag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/6
+Message-ID: <1340879657.2516.16.camel@guybrush>
+Date: Thu, 28 Jun 2012 12:34:17 +0200
+From: Johannes Schlüter <johannes@....net>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  security@....net
+Subject: Re: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 24, 2012 at 08:29:10AM +0200, Filip Palian wrote:
-> As you have pointed out, most CTFs are Open Source related and
-> definietly focus on security. This is exacly what the name of the list
-> is. As many may think, it's not cve-designation list only (obviously I
-> may be wrong about that).
+Hi,
 
-You are correct. This list isn't and shouldn't be in the future only about CVE-requests, but in my opinion one of the best sources to get CVE-identifiers for open source software vulnerabilities thanks to guys like Kurt. In my opinion well planned CTFs are welcome to list as long as it does not go to product marketing and similar activities.
+On Wed, 2012-06-27 at 23:12 -0600, Kurt Seifried wrote:
+> http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+> 
+> shows authors, SAPI modules (and their authors) and normal modules
+> (and their authors), resulting in a significant information disclosure
+> (version #'s can be narrowed down from the authors list).
 
-- Henri Salo
-ps. have a nice weekend and stay safe
+I have barely seen attackers actually trying to figure out the version
+number. 99% are directly trying to exploit known vectors using some
+scripts. And to get the version number there's a way simpler way, also
+controlled using the same php.ini setting:
+
+    $ echo "HEAD / HTTP/1.0\n" | nc www.php.net 80 | grep PHP
+    Server: Apache/1.3.41 (Unix) PHP/5.2.17
+    X-Powered-By: PHP/5.2.17
+
+johannes
+
+
