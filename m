@@ -1,43 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/3
-Message-Id: <201209062056.30161.geissert@debian.org>
-Date: Thu, 6 Sep 2012 20:56:24 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: php header() header injection detection bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/2
+Message-ID: <4FEBE7D4.6050104@redhat.com>
+Date: Wed, 27 Jun 2012 23:12:52 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, security@....net
+Subject: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 05 September 2012 12:05:43 cve-assign@...re.org wrote:
-[...]
-> In the actual situation, the
-> https://bugs.php.net/patch-display.php?bug_id=60227&patch=SAPI.diff&revis
-> ion=1320563128 patch had a logic flaw related to the "((p = memchr(s,
-> '\n', (e - s))) || (p = memchr(s, '\r', (e - s))))" expression. MITRE
-> prefers to categorize this type of situation as an "incorrect fix" not an
-> "incomplete fix." Admittedly, for many CVE users it doesn't matter.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-You are indeed right, it is is better to categorize it as an incorrect fix.
+So simply querying:
 
-> Note 2: We probably haven't found the exact affected 5.4.0RC versions,
-> but this doesn't matter much because those versions aren't widely
-> used. Specifically, we don't know whether there's a supported download
-> location for every pre-release version that ever existed, but we
-> happened to find the http://php.marvel.strk.jp/archive/ directory.
-> Here, 5.4.0alpha3 (August 2011) does not check for '\r' at all,
-> whereas 5.4.0RC2 (December 2011) can check for '\r' but has the
-> above-mentioned logic flaw. This is consistent with the 2011-11-06 SVN
-> date listed in bug 60227.
+?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
 
-Since RCs and alphas are published in user dirs, and not in the main release 
-system, I don't think they are actively archived.
+e.g.:
 
-However, taking a look at the 5.4.0RC1 tag in git, it seems the issue was 
-indeed introduced in RC2:
-https://github.com/php/php-src/blob/php-5.4.0RC1/main/SAPI.c#L715
-And to confirm it in RC2:
-https://github.com/php/php-src/blob/php-5.4.0RC2/main/SAPI.c#L715
+http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+shows authors, SAPI modules (and their authors) and normal modules
+(and their authors), resulting in a significant information disclosure
+(version #'s can be narrowed down from the authors list).
+
+This has already been reported, but no CVE was assigned:
+
+https://bugs.php.net/bug.php?id=55497
+
+It is mentioned in http://php.net/manual/en/ini.core.php however it is
+enabled by default:
+
+; Decides whether PHP may expose the fact that it is installed on the
+server
+; (e.g. by adding its signature to the Web server header).  It is no
+security
+; threat in any way, but it makes it possible to determine whether you
+use PHP
+; on your server or not.
+
+; http://www.php.net/manual/en/ini.core.php#ini.expose-php
+
+expose_php = On
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP6+fUAAoJEBYNRVNeJnmTk5UQAJebKDKDxL/7HWz3rPcgonLl
++45EykI+EPgH2dTmPk1vImMa+o074TgPdZYgsupDZc2jiHkyK8qo29zV3VZgg0Gk
+U8o4V1sZbt/dHiwZYagPOn4zz5A9Z+QNgnWiNCD4FZyWIBRDzWRrqfrHUjmHKPC1
+f50OHEvm1Gsu05jchyH8klj1MlIeLN86ZzlONieDU6nf8i93qLSd6R9EK/HpsET7
+6OMyrLlRNECiozruGhkCx7Eb0B1kjKESnwhiTWJh3xmnyK4ec2iICKvD3oOl7cFm
+FwXl59Iy41gpaHQW6qGyWSp942pLcQjWxixgFapJaqmnJyvE94OMdYr/dsOBHpo/
+329V66HBEFqIeC3tOLWVdKoor0EzRWbSerBbybyYhge48r3Ofn+QOKk8+1Oo2rpw
+AG7shGxDVCoAG77liMP7uKpFSnhVaBQTpKmqP16ca0e6IeqgJJKKUaj/ZFzyLVdV
+KvbhzPhHPG9vmjHtfgj1DRxQop4O2uVzvPNtXw/H0F8MqFNCpT/P4BQ5uXYPBqAE
+YdOAiS0hbdd5SRwRwLRXFRnbz14o8td36xRg1OcngPnaAZ4fnA/1xAtlDNHutUbZ
+OxNdpX0q2RfcqdXyiLoNp0n8BK+2cpNB/2yDvpolwyxKAfoVL5whgxKc52FzTe6l
+BrJsFUQkSUq+niiiaE7U
+=Xv+O
+-----END PGP SIGNATURE-----
