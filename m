@@ -1,35 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/8
-Message-ID: <4F677838.2080906@redhat.com>
-Date: Mon, 19 Mar 2012 12:17:28 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/29/1
+Message-ID: <4FED1D83.1000805@redhat.com>
+Date: Thu, 28 Jun 2012 21:14:11 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE request: piwik before 1.6
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Enrico Scholz <enrico.scholz@...ormatik.tu-chemnitz.de>, Tom Woodward <tomwoodward.mail@...il.com>
+Subject: Re: CVE Request -- dtach: Memory portion (random stack data) disclosure to the client by unclean client disconnect
 Content-Type: text/plain; charset=utf-8
 
-On 03/18/2012 01:20 AM, Henri Salo wrote:
-> This case is still not handled. Information from the URL:
-> 
-> The Piwik 1.5 release addresses a critical security vulnerability, which affect all Piwik users that have let granted some access to the "anonymous" user. Users should upgrade immediately.
-> 
-> Piwik 1.5 contains a remotely exploitable vulnerabiliy that could allow a remote attacker to execute arbitrary code. Only Installations that have granted untrusted view access to their stats (ie. grant "view" access to a website to anonymous) are at risk.
-> 
-> CVE ID: not yet assigned
-> Known Versions Affected: Piwik 1.2, 1.3, and 1.4
-> 
-> This issue was disclosed to us privately and safely. Our thanks to Neal Poole for discovering and reporting the issue to the Piwik Security Team. Neal is the first bounty recipient of Piwik's Security Bug Bounty program.
-> 
-> This release also includes Zend Framework 1.11.6 which addresses a potential SQL injection vector when using PDO_MySql. Piwik users should be unaffected as it has used UTF-8 since Piwik 0.5.
-> 
-> - Henri Salo
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://piwik.org/blog/2011/06/piwik-1-5-security-advisory/
+On 06/27/2012 03:58 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> a portion of memory (random stack data) disclosure flaw was found
+> in the way dtach, a simple program emulating the detach feature of
+> screen, performed client connection termination under certain
+> circumstances. A remote attacker could use this flaw to potentially
+> obtain sensitive information by issuing a specially-crafted dtach
+> client connection close request.
+> 
+> Upstream ticket: [1] 
+> http://sourceforge.net/tracker/?func=detail&aid=3517812&group_id=36489&atid=417357
+>
+> 
+> 
+> Preliminary proposed patch: [2] 
+> http://sourceforge.net/tracker/download.php?group_id=36489&atid=417357&file_id=441195&aid=3517812
+>
+> 
+> 
+> References: [3]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625302 [4]
+> https://bugzilla.redhat.com/show_bug.cgi?id=812551 [5]
+> https://bugzilla.redhat.com/show_bug.cgi?id=835849
+> 
+> Could you allocate a CVE id for this issue?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
-Please use CVE-2011-4941 for this issue.
+Please use CVE-2012-3368 for this issue.
 
-
-
-
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP7R2DAAoJEBYNRVNeJnmT7uIP/2gnoIsX8SAs4q0Dlvtbdu2y
+apxeoM8Rk1rg9bUaVvMRnzIX4YGnbmdwaOT3uttXyMeYByCgfJcFoW0MhhNvs2C5
+iZ09i2m78wR8QLp6+6BBo7FR6n+uKqyDz2bWc9QeqpxzAH2kar+gKmtEd8XfstOp
+Up6VHi9TYrNs02KsIObsZci3RJAIwihahQmv/8rXYKD0ktyQ+nV7geDHg+VhSxvE
+nHascnJgDxeC/pSiSw9szUCAczsZ+4ngGMVhkPuMXIknSj0tqwEPRJIM2U2X/s+z
+fVUJKaZY5cSJFKYcyvubJzwyq7c1hNrEtaLBqQjuSQ9GJLkKYQUmXuErC0vJPWkh
+8n/jEke++OrrIzd6DVua6f2WX0d6DCJdDbg1fg4BqMV7Sj6/XH7/+n56DHyKyAsg
+a8A14lSOUPeae3t8C5E8xuuPpsAZoNSTclOIy7zl8o2Qtl83bhVfLmAYmOqq1T41
+XWmjK5YzrkcrZ9H/Q4gM+e1hgwMuaOLMkxv9E4DT8W8/e3/IkjIZ9MsELS9Tllio
+4msi/MqnEmlro/doDuSI7FVHv1uBO7JNRG0+l1nMs7DRX2VIr1D7Wj9ivpVWAOtY
+dGlhB9vQQi4FD++NT11KpL8FTGTqZo5nG7hU3dsV7j0Kn7PxAWitl6x2qgNzfUx2
+4lWKs3wgmKa1AN+yvwPi
+=5A2p
+-----END PGP SIGNATURE-----
