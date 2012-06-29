@@ -1,67 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/6
-Message-ID: <20120410034316.GL16793@ngolde.de>
-Date: Tue, 10 Apr 2012 05:43:16 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Cc: asterix@...aule.org
-Subject: gajim insecure file creation when using latex
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/29/2
+Message-ID: <025901cd55e5$7eac8680$7c059380$@reactionis.com>
+Date: Fri, 29 Jun 2012 11:54:01 +0100
+From: "Joseph Sheridan" <joe@...ctionis.com>
+To: "'full-disclosure'" <full-disclosure@...ts.grok.org.uk>, "'bugtraq'" <bugtraq@...urityfocus.com>, <secalert@...urityreason.com>, <bugs@...uritytracker.com>, "'vuln'" <vuln@...unia.com>, <vuln@...urity.nnov.ru>, <news@...uriteam.com>, <moderators@...db.org>, <submissions@...ketstormsecurity.org>, <submit@...ecurity.com>, <oss-security@...ts.openwall.com>, <bugs@...uritytracker.com>
+Subject: Irfanview Plugins JLS Decompression
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Gajim seems to support latex in instant messages. This is implemented by
-dumping the content to a .tex template on disk and converting the result to an 
-image. To prevent security problems, it is at least checking the input for 
-dangerous latex commands such as \input (as far as I can see nothing is 
-missing from this list).
+Summary
+=======
 
-However, it fails to create this temporary file in a secure manner:
-From src/common/latex.py:
-60 def get_tmpfile_name():
-61         random.seed()
-62         int_ = random.randint(0, 100)
-63         return os.path.join(gettempdir(), 'gajimtex_' + int_.__str__())
-...
-113 def latex_to_image(str_):
-114         result = None
-115         exitcode = 0
-116 
-117         try:
-118                 bg_str, fg_str = gajim.interface.get_bg_fg_colors()
-119         except:
-120                 # interface may not be available when we test latext at startup
-121                 bg_str, fg_str = 'rgb 1.0 1.0 1.0', 'rgb 0.0 0.0 0.0'
-122 
-123         # filter latex code with bad commands
-124         if check_blacklist(str_):
-125                 # we triggered the blacklist, immediately return None
-126                 return None
-127 
-128         tmpfile = get_tmpfile_name()
-130         # build latex string
-131         write_latex(os.path.join(tmpfile + '.tex'), str_)
-and finally:
-65 def write_latex(filename, str_):
-66         texstr = '\\documentclass[12pt]{article}\\usepackage[dvips]{graphicx}'
-67         texstr += '\\usepackage{amsmath}\\usepackage{amssymb}'
-68         texstr += '\\pagestyle{empty}'
-69         texstr += '\\begin{document}\\begin{large}\\begin{gather*}'
-70         texstr += str_
-71         texstr += '\\end{gather*}\\end{large}\\end{document}'
-72 
-73         file_ = open(filename, "w+")
-74         file_.write(texstr)
-75         file_.flush()
-76         file_.close()
+IrfanView Formats PlugIn is prone to an overflow condition. The JLS Plugin 
+(jpeg_ls.dll) library fails to properly sanitize user-supplied input 
+resulting in a heap-based buffer overflow. With a specially crafted JLS 
+compressed image file, a context-dependent attacker could potentially 
+execute arbitrary code.
 
-I think this is of pretty minor severity even though it still allows a local attacker
-to overwrite files the victim has write access to with latex content by using symlinks
-and latex IMs are used.
+CVE number: CVE-2012-3585
+Impact: high
+Vendor Homepage: http://www.ifranview.com/
+Vendor Notified: 16/06/2012
+Found by: Joseph Sheridan of Reaction Information Security
+href="http://www.reactionpenetrationtesting.co.uk/joseph-sheridan.html
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+This advisory is posted at:
+http://www.reactionpenetrationtesting.co.uk/Irfanview-JLS-Heap-Overflow.html
 
-Content of type "application/pgp-signature" skipped
+POC file posted at:
+http://www.reactionpenetrationtesting.co.uk/vuln.jls
+
+Affected Products
+=================
+
+Irfanview Plugins version 4.33
+
+
+Details
+=======
+
+IrfanView Formats PlugIn is prone to an overflow condition. The JLS Plugin 
+(jpeg_ls.dll) library fails to properly sanitize user-supplied input 
+resulting in a heap-based buffer overflow. With a specially crafted JLS 
+compressed image file, a context-dependent attacker could potentially 
+execute arbitrary code.
+
+Impact
+======
+
+If a user could be enticed to open a malicious JLS file, the attack could 
+result in remote code execution.
+
+Solution
+===========
+Upgrade to Irfanview Plugins version 4.34
+
+The following jls dll has been patched:
+http://www.irfanview.net/plugins/jpeg_ls.zip
+
+
+Distribution
+============
+
+In addition to posting on the website, a text version of this notice
+is posted to the following e-mail and Usenet news recipients.
+
+  * bugtraq () securityfocus com
+  * full-disclosure () lists grok org uk
+  * oss [dash] security [dash] subscribe [at] lists [dot] openwall [dot] com or 
+
+Future updates of this advisory, if any, will be placed on the ReactionIS
+corporate website, but may or may not be actively announced on
+mailing lists or newsgroups. Users concerned about this problem are
+encouraged to check the URL below for any updates:
+
+http://www.reactionpenetrationtesting.co.uk/Irfanview-JLS-Heap-Overflow.html
+
+==============================================================================
+
+Reaction Information Security 
+Lombard House Business Centre,
+Suite 117,
+12-17 Upper Bridge Street,
+Canterbury, Kent, CT1 2NF
+
+Phone: +44 (0)1227 785050
+Email: research () reactionis {dot} co {dot} uk
+Web: http://www.reactionpenetrationtesting.co.uk
+
+
+Joseph Sheridan
+Technical Director
+Principal Consultant
+CHECK Team Leader, CREST Infrastructure, CREST Application, CISSP
+Tel: 07812052515
+Web: www.reactionis.com
+Email: joe@...ctionis.co.uk
+
+Reaction Information Security Limited.
+Registered in England No: 6929383
+Registered Office: 1, The Mews, 69 New Dover Road, Canterbury, CT1 3DZ
+ 
+This email and any files transmitted with it are confidential and are intended solely for the use of the individual to whom they are addressed. If you are not the intended recipient please notify the sender. Any unauthorised dissemination or copying of this email or its attachments and any use or disclosure of any information contained in them, is strictly prohibited.
+
+ Please consider the environment before printing this email
+
+
+
