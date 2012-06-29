@@ -1,35 +1,136 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/23
-Message-ID: <4F917A32.8050006@redhat.com>
-Date: Fri, 20 Apr 2012 17:01:06 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Eric Hodel <drbrain@...ment7.net>, Evan Phoenix <evan@....io>, Vít Ondruch <vondruch@...hat.com>
-Subject: CVE Request -- rubygems: Two security fixes in upstream v1.8.23 version
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/29/3
+Message-ID: <025b01cd55e5$c81a7020$584f5060$@reactionis.com>
+Date: Fri, 29 Jun 2012 11:56:04 +0100
+From: "Joseph Sheridan" <joe@...ctionis.com>
+To: "'full-disclosure'" <full-disclosure@...ts.grok.org.uk>, "'bugtraq'" <bugtraq@...urityfocus.com>, <secalert@...urityreason.com>, <bugs@...uritytracker.com>, "'vuln'" <vuln@...unia.com>, <vuln@...urity.nnov.ru>, <news@...uriteam.com>, <moderators@...db.org>, <submissions@...ketstormsecurity.org>, <submit@...ecurity.com>, <oss-security@...ts.openwall.com>, <bugs@...uritytracker.com>
+Subject: GIMP FIT File Format DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, Eric, Evan, vendors,
+Summary
+=======
 
-   two security fixes has been recently corrected in upstream rubygems-v1.8.23 version:
-   #1 RubyGems now disallows redirection from HTTPS to HTTP.
-   #2 RubyGems now verifies SSL connections.
+There is a file handling DoS in GIMP (the GNU Image Manipulation Program) for
+the 'fit' file format affecting all versions (Windows and Linux) up to and 
+including 2.8.0. A file in the fit format with a malformed 'XTENSION' header 
+will cause a crash in the GIMP program.
 
-References:
-[1] https://github.com/rubygems/rubygems/blob/1.8/History.txt (rubygems History.txt)
-[2] https://github.com/rubygems/rubygems/commit/d4c7eafb8efe1e13a7abf5be5a5b4548870b15b7
-     (relevant rubygems git commit)
-[3] http://www.ruby-lang.org/en/news/2012/04/20/ruby-1-9-3-p194-is-released/
-     (Ruby v1.9.3-p194 version announcement)
-[4] http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&sortby=date&revision=35404
-     (Ruby language SVN repository commit)
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=814718
-     (Red Hat bugzilla entry)
+CVE number: CVE-2012-3236
+Vendor Homepage: http://www.gimp.org/
+Date reported to vendor: 25/05/2012
+Found by Joseph Sheridan:
+href="http://www.reactionpenetrationtesting.co.uk/joseph-sheridan.html
 
-Both of [2] and [4] patches include fixes for both issues. For the case #2
-the security implications are clear.
+This advisory is posted at:
+http://www.reactionpenetrationtesting.co.uk/FIT-file-handling-DoS.html
 
-Kurt, could you allocate two CVE ids for these issues?
+PoC file is available here:
+http://www.reactionpenetrationtesting.co.uk/vuln.fit
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Affected Products
+=================
+
+Vulnerable Products
++------------------
+
+The following products are known to be affected by this vulnerability:
+
+  * GIMP <= 2.8.0 (Windows or Linux builds)
+
+Products Not Vulnerable
++--------------------------------
+  * GIMP 2.8.1 
+
+Details
+=======
+
+There is a file handling DoS in GIMP (the GNU Image Manipulation Program) for
+the 'fit' file format affecting all versions (Windows and Linux) up to 2.8.0. 
+A file in the fit format with a malformed 'XTENSION' header will cause a crash 
+in the GIMP program. The flaw is triggered by opening a crafted 'fit' file or 
+allowing the file explorer dialog to preview the file.
+
+A file in the fit format starting as follows will trigger the crash:
+XTENSIONaaaaaaaaaaaaaaaaaaaaaa...aaaaaaaaaaaaaaaaaaaaaaaaHEADER2...
+
+The vulnerable code is in the fits-io.c lines where the program attempts to 
+copy from a null pointer:
+
+ {
+   fdat = fits_decode_card (fits_search_card (hdr, "XTENSION"), typ_fstring);
+   strcpy (hdulist->xtension, fdat->fstring);
+ }
+ 
+ This code can be patched by changing it to the following (as GIMP 2.8.1):
+ 
+    fdat = fits_decode_card (fits_search_card (hdr, "XTENSION"), typ_fstring);
+   if(fdat != NULL) {
+    strcpy (hdulist->xtension, fdat->fstring);
+   } else {
+     strcpy (errmsg, "No valid XTENSION header found.");
+     goto err_return;
+   }
+ 
+Impact
+======
+
+Successful exploitation of the vulnerability may result in an application 
+crash and denial of service.
+
+Solution
+===========
+The GIMP team have provided an update for this issue (release 2.8.1).
+
+Workarounds
+===========
+
+The fits-io.c file can be patched as above.
+
+Distribution
+============
+
+In addition to posting on the website, a text version of this notice
+is posted to the following e-mail and Usenet news recipients.
+
+  * bugtraq () securityfocus com
+  * full-disclosure () lists grok org uk
+  * oss [dash] security [dash] subscribe [at] lists [dot] openwall [dot] com 
+
+Future updates of this advisory, if any, will be placed on the ReactionIS
+corporate website, but may or may not be actively announced on
+mailing lists or newsgroups. Users concerned about this problem are
+encouraged to check the URL below for any updates:
+
+http://www.reactionpenetrationtesting.co.uk/FIT-file-handling-DoS.html
+
+============================================================================
+
+Reaction Information Security 
+Lombard House Business Centre,
+Suite 117,
+12-17 Upper Bridge Street,
+Canterbury, Kent, CT1 2NF
+
+Phone: +44 (0)1227 785050
+Email: research () reactionis {dot} co {dot} uk
+Web: http://www.reactionpenetrationtesting.co.uk
+
+
+Joseph Sheridan
+Technical Director
+Principal Consultant
+CHECK Team Leader, CREST Infrastructure, CREST Application, CISSP
+Tel: 07812052515
+Web: www.reactionis.com
+Email: joe@...ctionis.co.uk
+
+Reaction Information Security Limited.
+Registered in England No: 6929383
+Registered Office: 1, The Mews, 69 New Dover Road, Canterbury, CT1 3DZ
+ 
+This email and any files transmitted with it are confidential and are intended solely for the use of the individual to whom they are addressed. If you are not the intended recipient please notify the sender. Any unauthorised dissemination or copying of this email or its attachments and any use or disclosure of any information contained in them, is strictly prohibited.
+
+ Please consider the environment before printing this email
+
+
+
