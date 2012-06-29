@@ -1,21 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/1
-Message-ID: <87r4y3a63j.fsf@mid.deneb.enyo.de>
-Date: Fri, 10 Feb 2012 01:24:00 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: surf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/29/4
+Message-ID: <B70713EB4E55C84C963B37DE9E63011B50DBD6C6@G4W3223.americas.hpqcorp.net>
+Date: Fri, 29 Jun 2012 21:45:39 +0000
+From: "Morris, Patrick" <patrick.morris@...com>
+To: "joe@...ctionis.com" <joe@...ctionis.com>, "full-disclosure@...ts.grok.org.uk" <full-disclosure@...ts.grok.org.uk>, "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>, "secalert@...urityreason.com" <secalert@...urityreason.com>, "bugs@...uritytracker.com" <bugs@...uritytracker.com>, "vuln@...unia.com" <vuln@...unia.com>, "vuln@...urity.nnov.ru" <vuln@...urity.nnov.ru>, "news@...uriteam.com" <news@...uriteam.com>, "moderators@...db.org" <moderators@...db.org>, "submissions@...ketstormsecurity.org" <submissions@...ketstormsecurity.org>, "submit@...ecurity.com" <submit@...ecurity.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "bugs@...uritytracker.com" <bugs@...uritytracker.com>
+Subject: RE: GIMP FIT File Format DoS
 Content-Type: text/plain; charset=utf-8
 
-surf does not protect its cookie jar against access read access from
-other local users, as reported by Jakub Wilk in this Debian bug:
 
-<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=659296>
+> -----Original Message-----
+> From: Joseph Sheridan [mailto:joe@...ctionis.com]
+> Sent: Friday, June 29, 2012 3:56 AM
+> To: 'full-disclosure'; 'bugtraq'; secalert@...urityreason.com;
+> bugs@...uritytracker.com; 'vuln'; vuln@...urity.nnov.ru;
+> news@...uriteam.com; moderators@...db.org;
+> submissions@...ketstormsecurity.org; submit@...ecurity.com; oss-
+> security@...ts.openwall.com; bugs@...uritytracker.com
+> Subject: GIMP FIT File Format DoS
+>
+> Summary
+> =======
+>
+> There is a file handling DoS in GIMP (the GNU Image Manipulation
+> Program) for
+> the 'fit' file format affecting all versions (Windows and Linux) up to
+> and
+> including 2.8.0. A file in the fit format with a malformed 'XTENSION'
+> header
+> will cause a crash in the GIMP program.
 
-Could someone please assign a CVE for this?
+Is a crash in a single-user program really a security vulnerability? I could 
+understand if there was evidence that this could lead to privilege escalation 
+or other actual security issue, but this sounds like a garden-variety crash 
+bug to me.
 
-uzbl <http://uzbl.org/> (in the uzbl-browser wrapper script) and
-netsurf <http://www.netsurf-browser.org/> (the nsgtk_check_homedir
-function creates the dot directory with world-readable settings) have
-a similar issue, but are from different code bases.  I think those
-should get distinct CVEs, too.
+Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (6231 bytes)
