@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/23/1
-Message-ID: <4F4671C2.8090407@redhat.com>
-Date: Thu, 23 Feb 2012 18:05:06 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Clay Gerrard <clay.gerrard@...il.com>, Ian Bicking <ianbicking@...il.com>, Jan Pokorny <jpokorny@...hat.com>, David Malcolm <dmalcolm@...hat.com>, Luke Macken <lmacken@...hat.com>
-Subject: CVE Request -- python-paste-script: Supplementary groups not dropped when started an application with "paster serve" as root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/30/1
+Message-ID: <CAEJizbZ5GVz+7OAZ=YYn3PT9ZxC==C7oOET9SFAQjNYKSdX2Ew@mail.gmail.com>
+Date: Sat, 30 Jun 2012 10:14:37 +0100
+From: Benji <me@...ji.com>
+To: oss-security@...ts.openwall.com
+Cc: "joe@...ctionis.com" <joe@...ctionis.com>,  "full-disclosure@...ts.grok.org.uk" <full-disclosure@...ts.grok.org.uk>,  "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>,  "secalert@...urityreason.com" <secalert@...urityreason.com>,  "bugs@...uritytracker.com" <bugs@...uritytracker.com>, "vuln@...unia.com" <vuln@...unia.com>,  "vuln@...urity.nnov.ru" <vuln@...urity.nnov.ru>, "news@...uriteam.com" <news@...uriteam.com>,  "moderators@...db.org" <moderators@...db.org>,  "submissions@...ketstormsecurity.org" <submissions@...ketstormsecurity.org>,  "submit@...ecurity.com" <submit@...ecurity.com>
+Subject: Re: RE: GIMP FIT File Format DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+hey! let them having something to add to CV! Stop be fun police!
+Everyone know security isnt actually about security, just make CV look
+super cool.
 
-   a security flaw was found in the way Paster, a pluggable command-line frontend,
-when started as root (for example to have access to privileged port) to serve a
-web based application, performed privileges dropping upon startup
-(supplementary groups were not dropped properly regardless of the UID, GID
-specified in the .ini configuration file or in the --user and --group CL
-arguments). A remote attacker could use this flaw for example to read / write
-root GID accessible files, if the particular web application provided remote
-means for local file manipulation.
-
-Credit / Issue Reported by: Clay Gerrard
-
-References:
-[1] http://groups.google.com/group/paste-users/browse_thread/thread/2aa651ba331c2471
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=796790
-
-Patch proposed by the issue reporter:
-[3] https://bitbucket.org/ianb/pastescript/pull-request/3/fix-group-permissions-for-pastescriptserve
-
-Upstream patch:
-[4] https://bitbucket.org/ianb/pastescript/changeset/a19e462769b4
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+On Fri, Jun 29, 2012 at 10:45 PM, Morris, Patrick <patrick.morris@...com> wrote:
+>
+>> -----Original Message-----
+>> From: Joseph Sheridan [mailto:joe@...ctionis.com]
+>> Sent: Friday, June 29, 2012 3:56 AM
+>> To: 'full-disclosure'; 'bugtraq'; secalert@...urityreason.com;
+>> bugs@...uritytracker.com; 'vuln'; vuln@...urity.nnov.ru;
+>> news@...uriteam.com; moderators@...db.org;
+>> submissions@...ketstormsecurity.org; submit@...ecurity.com; oss-
+>> security@...ts.openwall.com; bugs@...uritytracker.com
+>> Subject: GIMP FIT File Format DoS
+>>
+>> Summary
+>> =======
+>>
+>> There is a file handling DoS in GIMP (the GNU Image Manipulation
+>> Program) for
+>> the 'fit' file format affecting all versions (Windows and Linux) up to
+>> and
+>> including 2.8.0. A file in the fit format with a malformed 'XTENSION'
+>> header
+>> will cause a crash in the GIMP program.
+>
+> Is a crash in a single-user program really a security vulnerability? I could
+> understand if there was evidence that this could lead to privilege escalation
+> or other actual security issue, but this sounds like a garden-variety crash
+> bug to me.
