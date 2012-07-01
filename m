@@ -1,23 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/5
-Message-ID: <4FFC2A93.5030803@redhat.com>
-Date: Tue, 10 Jul 2012 15:13:55 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/01/1
+Message-Id: <20120701024401.ED97214DBD8@smtp.hushmail.com>
+Date: Sat, 30 Jun 2012 21:44:01 -0500
+From: mancha@....hush.com
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+Subject: Re: ScriptFu Server Buffer Overflow in GIMP <= 2.6
 Content-Type: text/plain; charset=utf-8
 
-On 07/10/2012 03:09 PM, Sebastian Krahmer wrote:
+Below find a patch for the 2.6.x branch of GIMP to address a potential
+buffer overflow in the script-fu server (CVE-2012-2763) reported on this list
+by J. Sheridan (http://www.openwall.com/lists/oss-security/2012/05/31/1)
 
-> There are certainly also other libs that will receive a patch.
+ --mancha
 
-Perhaps we can put a getenv_secure() into libc, which will perform all 
-the appropriate checks (including future checks we do not know about 
-yet)?  Duplicating the code in many libraries does not seem prudent.
+======================
 
-(OTOH, library code should never use getenv(), but it's a long way to that.)
+Fix for CVE-2012-2763 for GIMP 2.6.x by mancha. Based on commit
+76155d79df8d497. Thanks to muks, Kevin, and Ankh for identifying the
+relevant code change.
 
--- 
-Florian Weimer / Red Hat Product Security Team
+Ref: Fixed potential buffer overflow in readstr_upto().
 
+----------
+
+--- a/plug-ins/script-fu/tinyscheme/scheme.c            2012-06-30
++++ b/plug-ins/script-fu/tinyscheme/scheme.c            2012-06-30
+@@ -1727,7 +1727,8 @@ static char *readstr_upto(scheme *sc, ch
+     c = inchar(sc);
+     len = g_unichar_to_utf8(c, p);
+     p += len;
+-  } while (c && !is_one_of(delim, c));
++  } while ((p - sc->strbuff < sizeof(sc->strbuff)) &&
++          (c && !is_one_of(delim, c)));
+
+   if(p==sc->strbuff+2 && c_prev=='\\')
+     *p = '\0';
 
