@@ -1,28 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/9
-Message-ID: <Pine.GSO.4.64.1208311255450.21616@faron.mitre.org>
-Date: Fri, 31 Aug 2012 13:00:01 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: Three CVE requests: at-spi2-atk, as31, naxsi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/02/1
+Message-ID: <4FF21181.6090600@redhat.com>
+Date: Mon, 02 Jul 2012 15:24:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, security@...dpress.org, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE #'s for WordPress 3.4.1 release
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Fri, 6 Jul 2012, Kurt Seifried wrote:
+http://codex.wordpress.org/Version_3.4.1
 
->> 2. Insecure tempfile handling in the as31 assembler
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655496 Homepage:
->> http://wiki.erazor-zone.de/doku.php?id=wiki:projects:linux:as31
->
-> Please use CVE-2012-3379 for this issue.
+Lists several security issues as corrected:
+
+- -Privilege Escalation/XSS. Critical. Administrators and editors in
+multisite were accidentally allowed to use unfiltered_html for 3.4.0.
+- -CSRF. Additional CSRF protection in the customizer.
+- -Information Disclosure: Disclosure of post contents to authors and
+contributors (such as private or draft posts).
+- -Hardening: Deprecate wp_explain_nonce(), which could reveal
+unnecessary information.
+- -Hardening: Require a child theme to be activated with its intended
+parent only.
+
+Have CVE #'s been assigned for these issues?
 
 
-This is a duplicate of CVE-2012-0808, assigned back in January (and also 
-requested by Moritz ;-)  CVE-2012-0808 has 20,000+ Google hits, has an 
-established description, was assigned earlier, and has the same level of 
-authoritative vendor references (i.e. bug reports).  So, we will keep it.
 
-So, REJECT CVE-2012-3379 as a duplicate of CVE-2012-0808.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-- Steve
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP8hGBAAoJEBYNRVNeJnmTFeYQALr3NJwGigRW2vPW66LpPiP0
+1qZz5hj4uKV9W/KSr3QRXQ8+txfqXNypnbXbLtvqtxIkIXnF2MLL6u7hi39JZph6
+Vx/Tn2Fzk3ec1uQj3lUi9Cx4/bcl8TXp+Z4Q7Rq9g1WJH21UzZ2PTDnaX9Losy7Y
+6w1LYjVoNTuEjtYfGPMQJl+LoQdKf0UHAEugVonDjHzxr9gBbvfcQds4zEBv46pZ
+BVrInfn5SPRxaFAVIAWu3yzMyblTMjssJ969HzLcMaPzMrrD/GNFKNu/lameKIoj
+ynAe2+wxCwhhZ+aoXTIMDut+f5L879kMWcQIBYAtXPOsrCHtlMmKkcu3ewKtWbwx
+gGPShan0k/CZBrCn7MITe2QO33j/YpgqI7SYg7TAgHFlxqHQBc0TqX7h6ij0WMMD
+6RCpnn0eO1HwbwmWSigLgTKzNcRkTJrA0R7Qo772DVevnyK9Nqs/LvGrJLQ2+IkX
+0JPkDQf4dTGgOQlElESCbyZ0DTEATsjIvu9WdUlIgIPdvdsZPPk7uSfFs5bIo5bA
+4LwE9zNdfpUfedhF4VmNO+tJA3+DhA7iFfrz7GVAAXdhMseBhyWiuemphAaFkxEc
+oMKV0nudnkWAuv5LVDeCkqDqpjskTAPSyva4k/91KAgtouYxNhtQD7dbFLR2cZdx
+c2YAM+D7Xq65Ik9rRsg1
+=2Zdu
+-----END PGP SIGNATURE-----
