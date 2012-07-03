@@ -1,124 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/16/2
-Message-ID: <20120116171204.GA20122@openwall.com>
-Date: Mon, 16 Jan 2012 21:12:04 +0400
-From: Solar Designer <solar@...nwall.com>
-To: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>
-Cc: oss-security@...ts.openwall.com, magnum <john.magnum@...hmail.com>
-Subject: Re: weird crypt-sha* in DragonFly BSD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/03/3
+Message-ID: <4FF340DF.5050807@redhat.com>
+Date: Tue, 03 Jul 2012 12:58:39 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marcus Meissner <meissner@...e.de>, jack@...e.cz
+Subject: Re: CVE Request: Stability fixes in UDF Logical Volume Descriptor handling
 Content-Type: text/plain; charset=utf-8
 
-Matt -
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-magnum proceeded to implement support for DragonFly's SHA-2 based hashes
-in John the Ripper - to hopefully make you reconsider sooner rather than
-later.  While doing so, he ended up finding a nasty bug that I
-previously did not notice: the code uses sizeof(magic) instead of
-strlen(magic), where "magic" is a pointer.  Thus, the resulting hashes
-are non-portable between 32-bit and 64-bit systems, and additionally
-they may be non-portable between different 64-bit versions/builds of
-DragonFly (let alone to/from other systems).  While this lack of
-portability might make some attacks on stolen/leaked hashes more
-difficult (it certainly is an issue that we have to consider when adding
-support for these hashes to JtR), I doubt that this is what you want.
-
-I strongly recommend that you revert to FreeBSD's MD5-crypt ASAP.
-
-More detail here:
-
-http://www.openwall.com/lists/john-dev/2012/01/16/1
-http://www.openwall.com/lists/john-dev/2012/01/16/4
-
-For now, we'll support only the 32-bit flavor of these hashes in JtR.
-If you keep them in DragonFly for much longer, we'll likely do something
-about supporting the 64-bit flavors as well.
-
-The speeds on one CPU core (in a E5420):
-
-Reference (heavily optimized and parallelized FreeBSD MD5-crypt, 12
-hashes computed in parallel):
-
-Benchmarking: FreeBSD MD5 [SSE2i 12x]... DONE
-Raw:    25320 c/s real, 25320 c/s virtual
-
-DragonFly's alternatives:
-
-Benchmarking: DragonFly BSD SHA-256 w/ bug (32-bit) [OpenSSL 32/64]...  DONE
-Many salts:     1663K c/s real, 1646K c/s virtual
-Only one salt:  1479K c/s real, 1494K c/s virtual
-
-Benchmarking: DragonFly BSD SHA-512 w/ bugs (32-bit) [OpenSSL 64/64]...  DONE
-Many salts:     1377K c/s real, 1377K c/s virtual
-Only one salt:  1257K c/s real, 1257K c/s virtual
-
-That's 65 times faster cracking - before we even started optimizing.
-
-8-way OpenMP on 2xE5420 (8 cores), reference:
-
-Benchmarking: FreeBSD MD5 [SSE2i 12x]... (8xOMP) DONE
-Raw:    202368 c/s real, 25264 c/s virtual
-
-(215k c/s is possible with Intel's compiler, but I did not bother here.)
-
-DragonFly's alternatives:
-
-Benchmarking: DragonFly BSD SHA-256 w/ bug (32-bit) [OpenSSL 32/64]... (8xOMP) DONE
-Many salts:     10870K c/s real, 1370K c/s virtual
-Only one salt:  6119K c/s real, 763973 c/s virtual
-
-Benchmarking: DragonFly BSD SHA-512 w/ bugs (32-bit) [OpenSSL 64/64]... (8xOMP) DONE
-Many salts:     8509K c/s real, 1065K c/s virtual
-Only one salt:  5207K c/s real, 656587 c/s virtual
-
-That's roughly a 50x speedup - again, for unoptimized DragonFly hashing
-vs. optimized FreeBSD hashing.
-
-With full optimizations, the difference will be more like 500x for the
-SHA-256 flavor.
-
-Please let us know if you're going to do anything about these issues.
-
-Thanks,
-
-Alexander
-
-On Tue, Nov 15, 2011 at 06:35:02AM +0400, Solar Designer wrote:
+On 07/03/2012 07:22 AM, Marcus Meissner wrote:
 > Hi,
 > 
-> Matthew - when I read that DragonFly moved to using SHA-256 for
-> passwords by default, I thought this was referring to the SHA-256 based
-> flavor of Ulrich Drepper's SHA-crypt.  This would not be the best choice
-> to make, in my opinion, but it would not be that bad.  However, I just
-> found this:
+> People (do not know who) reported to the kernel security team and
+> Jan Kara some UDF filesystem crashes.
 > 
-> http://gitweb.dragonflybsd.org/dragonfly.git/tree/HEAD:/lib/libcrypt
+> Jan Kara did some fixes in the UDF fs and they were committed to
+> mainline already, both actual bugfixes and some more sanity 
+> checking for hardening.
 > 
-> Are these crypt-sha256.c and/or crypt-sha512.c files actually in use?
-> I hope not...  They do not include any password stretching, resulting in
-> password hashes that are much quicker to crack than MD5-crypt's.
+> Buffer overreads or overwrites would have been possible.
 > 
-> There's also minor weirdness in the code - such as two local pointer
-> variables being declared static seemingly for no reason, and only
-> "final" but not "ctx" being zeroized in the end.  But even this lack of
-> proper cleanup is very minor compared to the lack of stretching.
 > 
-> Oh, also the "$3$" prefix was apparently previously used for NTLM:
+> I think a single CVE is sufficient.
+
+Were they discovered by the same person or different people?
+
 > 
-> http://en.wikipedia.org/wiki/Crypt_(Unix)#NT_Hash_Scheme
 > 
-> "FreeBSD used the $3$ prefix for this."
+> The two mainline commits: 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=1df2ae31c724e57be9d7ac00d78db8a5dabdd050
+>
 > 
-> http://search.cpan.org/~zefram/Authen-Passphrase/lib/Authen/Passphrase/NTHash.pm
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=adee11b2085bee90bd8f4f52123ffb07882d6256
 > 
-> "... crypt string must consist of "$3$$" (note the extra "$") followed
-> by the hash in lowercase hexadecimal."
 > 
-> BTW, I looked at DragonFly's code while analyzing a more subtle issue
-> with Ulrich's SHA-crypt:
+> commit 1df2ae31c724e57be9d7ac00d78db8a5dabdd050 Author: Jan Kara
+> <jack@...e.cz> Date:   Wed Jun 27 21:23:07 2012 +0200
 > 
-> http://www.openwall.com/lists/oss-security/2011/11/15/1
+> udf: Fortify loading of sparing table
 > 
-> I thought that maybe you reimplemented it in a better fashion avoiding
-> that issue, but I found this... %-)
+> Add sanity checks when loading sparing table from disk to avoid
+> accessing unallocated memory or writing to it.
 > 
-> Alexander
+> Signed-off-by: Jan Kara <jack@...e.cz>
+> 
+> commit adee11b2085bee90bd8f4f52123ffb07882d6256 Author: Jan Kara
+> <jack@...e.cz> Date:   Wed Jun 27 20:20:22 2012 +0200
+> 
+> udf: Avoid run away loop when partition table length is corrupted
+> 
+> Check provided length of partition table so that (possibly
+> maliciously) corrupted partition table cannot cause accessing data
+> beyond current buffer.
+> 
+> Signed-off-by: Jan Kara <jack@...e.cz>
+> 
+> Ciao, Marcus
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP80DfAAoJEBYNRVNeJnmTyl0QAKI/qmZuqI7wuo625eyIYAGD
+GSgVG5a2VTbD6m4XcRFUkQACSCcyTH1RWEEr8eM8m2htZSiS12wvUGkYntGUmwRh
+o/Hf+Kyrn2Nmvf9EaDgMTLerOZf/xSh8Bm2jOGRkUzgDOrSAOVHMaLk1uYNfRsVy
+E6R2SJXLldMtmV4/L2xuqLU9tpdcFrK4EHTSEDDFb4B46eXvi1qhh5xLxmPIdvEC
+i8/19fWlw96TygoJvZxGaIlIuzj0noN70pJqc5XCmDeM0zCGfPSHBi4ZZOjfWEvs
+mVd4Xqm56USmovY1aO0EJRRI/EFgUuEA43x5uvR32oC+4qtMpJCeQRAeQyUPTeVv
+8VxaORs8SK8433lDzEf6NzIBKbl2Rd4ombGEr7/v9rnzLfWXlO+3CDdXCJ252bLQ
+Ao09tSoAFaAs08H3cVSvXKieE4osllfk78eJq+GMmhNPO/LNQRIoTpoBVNE9mJqt
+Sx9TmviPSBrbmMc4y7XmUvS4QWlM9rXzsaYwDSK0C4zi8FmqJq4yWehTKU6qNh2m
+e3DPm6glJVBlTc9m260xTUz4AZBJKDDc8LUJUPGljRj9kCOYnKIqrnHLD31CkWLB
+rDRMSy4RlbDKD7YnSe4B7sr+x05FGM7OipF+zU8faCujYAMuToqDZCeDDcDQDm8Y
+wr6NsvukqZ3nbgfh56mT
+=1CD+
+-----END PGP SIGNATURE-----
