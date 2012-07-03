@@ -1,64 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/10
-Message-ID: <50B3B846.6060708@redhat.com>
-Date: Mon, 26 Nov 2012 11:43:18 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/03/4
+Message-ID: <4FF35A19.5010804@pre-sense.de>
+Date: Tue, 03 Jul 2012 22:46:17 +0200
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Sawyer X <xsawyerx@...n.org>, Petr Pisar <ppisar@...hat.com>
-Subject: Re: CVE Request -- Dancer.pm / perl-Dancer / libdancer-perl: Newline injection due to improper CRLF escaping in cookie() and cookies() methods (different vulnerability than CVE-2012-5526)
+Subject: Re: CVE Request: Stability fixes in UDF Logical Volume Descriptor handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Am 03.07.2012 20:58, schrieb Kurt Seifried:
+> On 07/03/2012 07:22 AM, Marcus Meissner wrote:
+> 
+>> People (do not know who) reported to the kernel security team and
+>> Jan Kara some UDF filesystem crashes.
+> 
+>> Jan Kara did some fixes in the UDF fs and they were committed to
+>> mainline already, both actual bugfixes and some more sanity 
+>> checking for hardening.
+>> 
+>> I think a single CVE is sufficient.
+> 
+> Were they discovered by the same person or different people?
 
-On 11/26/2012 11:06 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
->   a security flaw was found in the way Dancer.pm,
-> lightweight yet powerful web application framework
-> / Perl language module, performed sanitization of
-> values to be used for cookie() and cookies() methods.
-> A remote attacker could use this flaw to inject arbitrary
-> headers into responses from (Perl) applications, that use
-> Dancer.pm. A different vulnerability than CVE-2012-5526.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=694279
-> [2] https://github.com/sukria/Dancer/issues/859
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=880329
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> P.S.: The issue is different / unrelated than similar
->       recent CGI.pm, CVE-2012-5526, flaw (the presence
->       / absence of the CGI.pm CVE-2012-5526 fix doesn't
->       have impact on it).
-> 
+I reported the following issue for sparing tables on 2012-06-17 to
+security@...nel.org. Eugene Teo informed Jan Kara, who is the maintainer
+for the UDF filesystem, on the same day. Jan had a closer look at the
+UDF code and identified all other issues addressed by the patches.
 
-Please use CVE-2012-5572 for this issue.
+| udf_load_logicalvol() in fs/udf/super.c parses the number of sparing
+| tables and stores the sparing tables on the heap:
+|
+| (1286)  for (j = 0; j < spm->numSparingTables; j++) {
+| [...]
+| (1293)    map->s_type_specific.s_sparing.
+| (1294)	    s_spar_map[j] = bh2;
+|
+| map is of type udf_part_map, whose
+| s_type_specific.s_sparing.s_spar_map
+| member can only hold 4 pointers to buffer_head structs.
+|
+| spm->numSparingTables is read from the file system and not further
+| validated. A corrupted file system with numSparingTables > 4 causes
+| a heap overflow.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQs7hGAAoJEBYNRVNeJnmT0gsP/RE8jm9pBxcXxN47xB8K5Elp
-f9wl3D0qWOK/nBqL/OIyy6gJ/8+0Gm5y9QKYvanwMEss668PKkflgZ/Bffa9t2+4
-1eya1Y+UX/+CN7UE9uNsiYPuRb1PlB6aPo/V9Mf+X+So+QvbrwDt8e+dVupK9XDW
-ZJDhP7tJGOR3Mfly+5IDSqJf7cg9WtRpfrPXiyGVTEHwvE6ocE2Qnc8WQ46ZCGLN
-lDdMMsawpieqO7ItF0co46k0KaU0Lhu5wS7CjU2h6GRRMI3+VDYiBuqsn4t+HwI8
-wQUcd0LVidfSDFuFwHcf3Wt08SvPG6fiH9Kx/vwo5gvsi7L5lB2xxviEufuqwTpL
-V3rlGY1uI+KbHlI/sqZUKKuXLuuG76P6VrTb/Qoh1YoRfpbZrqSvvtBjn+RmIWe+
-x6jucEBqWE9zivj1GsstCfbthVGHAxNmNYZC7JByUZDB9Eyrk3/2CLfM4BwV3EcA
-DOTACUJF5M+DZTq2uGvt/5T4EoO4Nk/h7v/KjpjwZjKvvxbca5/zD7aBzBRvBwpO
-ObDZcFwigZea4mYbOic1zE4uVb7Wzq9c/WUV9REI4ZAa1nbNAI3RaxS0ONWmiZOn
-2jSUylOEi0TpjyQCN68WQHnWhbVpEQ0SycUdagykBWHCOJm7Xpx4vFp8bbSSZaTS
-+Ot4A2E2OfLGAoE13rfN
-=6/g3
------END PGP SIGNATURE-----
+Regards, Timo
