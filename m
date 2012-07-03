@@ -1,34 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/30/2
-Message-ID: <20120430071721.GA27228@kludge.henri.nerv.fi>
-Date: Mon, 30 Apr 2012 10:17:21 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: webcalendar before 1.2.5 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/03/1
+Message-ID: <20120703132217.GG18781@suse.de>
+Date: Tue, 3 Jul 2012 15:22:17 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: jack@...e.cz
+Subject: CVE Request: Stability fixes in UDF Logical Volume Descriptor handling
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 28, 2012 at 11:11:40AM +0200, Hanno Böck wrote:
-> Upstream release notes:
-> http://sourceforge.net/mailarchive/message.php?msg_id=28915339
-> 
->  - Fixes for various security vulnerabilities include LFI (local
-> file inclusion), XSS (cross site scripting) and others.
-> 
-> 
-> Further info for the XSS:
-> http://seclists.org/bugtraq/2012/Jan/128
-> 
-> The local file inclusion here
-> http://www.naked-security.com/nsa/208799.htm
-> is said to be CVE-2012-1496, but no info on the CVE database yet.
-> 
-> 
-> -- 
-> Hanno Böck		mail/jabber: hanno@...eck.de
-> GPG: BBB51E42		http://www.hboeck.de/
+Hi,
 
-CVE-identifier for XSS announced in here http://seclists.org/bugtraq/2012/Jan/128 has been requested in here http://seclists.org/oss-sec/2012/q1/416 which got CVE-2012-0846.
+People (do not know who) reported to the kernel security team
+and Jan Kara some UDF filesystem crashes.
 
-What other vulnerabilities there is in WebCalendar before 1.2.5?
+Jan Kara did some fixes in the UDF fs and they were committed
+to mainline already, both actual bugfixes and some more sanity
+checking for hardening.
 
-- Henri Salo
+Buffer overreads or overwrites would have been possible.
+
+
+I think a single CVE is sufficient.
+
+
+The two mainline commits:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=1df2ae31c724e57be9d7ac00d78db8a5dabdd050
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=adee11b2085bee90bd8f4f52123ffb07882d6256
+
+
+commit 1df2ae31c724e57be9d7ac00d78db8a5dabdd050
+Author: Jan Kara <jack@...e.cz>
+Date:   Wed Jun 27 21:23:07 2012 +0200
+
+    udf: Fortify loading of sparing table
+
+    Add sanity checks when loading sparing table from disk to avoid accessing
+    unallocated memory or writing to it.
+
+    Signed-off-by: Jan Kara <jack@...e.cz>
+
+commit adee11b2085bee90bd8f4f52123ffb07882d6256
+Author: Jan Kara <jack@...e.cz>
+Date:   Wed Jun 27 20:20:22 2012 +0200
+
+    udf: Avoid run away loop when partition table length is corrupted
+    
+    Check provided length of partition table so that (possibly maliciously)
+    corrupted partition table cannot cause accessing data beyond current buffer.
+    
+    Signed-off-by: Jan Kara <jack@...e.cz>
+
+Ciao, Marcus
