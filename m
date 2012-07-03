@@ -1,44 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/7
-Message-ID: <20120105155010.GC16919@dhcp-25-225.brq.redhat.com>
-Date: Thu, 5 Jan 2012 16:50:11 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: akuster <akuster@...sta.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: futex: clear robust_list on execve
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/03/2
+Message-ID: <4FF31853.9020601@openstack.org>
+Date: Tue, 03 Jul 2012 18:05:39 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com
+Subject: [OSSA 2012-008] Arbitrary file injection/corruption through directory traversal issues (CVE-2012-3360, CVE-2012-3361)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 05, 2012 at 05:33:47AM -1000, akuster wrote:
-> Could it be said that this issue was introduced by these two commits in
-> 2.6.16 ?
-> 
-> 0771dfefc9e538f077d0b43b6dec19a5a67d0e70
-> 34f192c6527f20c47ccec239e7d51a27691b93fc
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Looks correct.
+OpenStack Security Advisory: 2012-008
+CVE: 2012-3360, 2012-3361
+Date: July 3, 2012
+Title: Arbitrary file injection/corruption through directory traversal
+issues
+Impact: Critical
+Reporter: Matthias Weckbecker (SUSE Security team), Pádraig Brady (Red
+Hat)
+Products: Nova
+Affects: All versions
 
-Petr
+Description:
+Matthias Weckbecker from SUSE Security team reported a vulnerability
+in Nova compute nodes handling of file injection in disk images. By
+requesting files to be injected in malicious paths, a remote
+authenticated user could inject files in arbitrary locations on the
+host file system, potentially resulting in full compromise of the
+compute node. Only Essex and later setups running the OpenStack API
+over libvirt-based hypervisors are affected.
 
-> 
-> - Armin
-> 
-> On 01/04/2012 12:10 PM, Petr Matousek wrote:
-> > Move "exit_robust_list" into mm_release() and clear them
-> > 
-> > We don't want to get rid of the futexes just at exit() time, we want to
-> > drop them when doing an execve() too, since that gets rid of the
-> > previous VM image too.
-> > 
-> > Doing it at mm_release() time means that we automatically always do it
-> > when we disassociate a VM map from the task.
-> > 
-> > Upstream patches:
-> > 8141c7f3e7aee618312fa1c15109e1219de784a7
-> > fc6b177dee33365ccb29fe6d2092223cf8d679f9
-> > 
-> > Reference:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=771764
-> > 
+Upon further inspection of the code, Pádraig Brady from Red Hat found
+an additional vulnerability. By crafting a malicious image and
+requesting an instance based on it, a remote authenticated user may
+corrupt arbitrary files on the host filesystem, potentially resulting
+in a denial of service. This affects all setups.
 
--- 
-Petr Matousek / Red Hat Security Response Team
+Fixes:
+Folsom:
+https://github.com/openstack/nova/commit/2427d4a99bed35baefd8f17ba422cb7aae8dcca7
+Essex:
+https://github.com/openstack/nova/commit/b0feaffdb2b1c51182b8dce41b367f3449af5dd9
+Diablo: see patch at https://review.openstack.org/9268
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-3360
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-3361
+https://bugs.launchpad.net/nova/+bug/1015531
+
+Notes:
+This fix will be included in the folsom-2 development milestone
+(published this week) and in future Essex and Diablo releases.
+
+- -- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBCAAGBQJP8xhQAAoJEFB6+JAlsQQjxrwP/0riLbaI8tCRfKeR6I2ATXIU
+1QTOjn6TzQOhUNKwP63OzeUmu1xg7gI/XscWYLgxPYetsysao7YUgsy7PcVSznQh
+Ii7LM7WnrxpanP3SOOM4qJQ4d3MZvP8qP0R9hQ1XAtdE9T4yB3aDvzf+XVXFFLad
+nnF9meI5xPe+Ws70BH0rTo2XNcTTukpnNxOwYC4Sayx0cHvMCjLMr6RWOoPCftDd
+WFDOeJNuSEh1NcDwt6qgPCQMLBS/+WavnQFf6EuBdjkASAtONDYblkxyYPRSsf8y
+xYDVjrYUcJ5YeDwI2vbqKCP9EMuwb0JSfep767OIbupgIMm7rTjW+vEsns4e2d1m
+2WovMHlV9ar7zpTIeqjAYE/BzUlRaOa7+JRJwy8F2awbu5oQUeOLq8XeAyo5Ag8C
+zjYMut/OuHEdqMQY+eLqtPVcaNg801wXEfgdn8zuE41qXkk6yyAFJJUPlkBeMqiE
+8cHEeJJwBDP5deHJIESzraeOUTFBXXoABhxdehAa708y4BWGt0/EG5SeHg38HoZs
+gODHzZ5D+rgRYZsMV3JanAoB27QH4LQfPc1WLCM20wJSppZXq4KjngNA9trV68Na
++LKR+/EAZvOmpJMsymhuTgc9uRNRTlhC85NGquBzK2TZtlfJzI/qADV7fQPnWVQZ
+JJcGXBOJw/J7rCmBIDuQ
+=/7QJ
+-----END PGP SIGNATURE-----
