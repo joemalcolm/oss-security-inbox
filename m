@@ -1,97 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/3
-Message-ID: <20120202005431.GA10019@openwall.com>
-Date: Thu, 2 Feb 2012 04:54:31 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/04/3
+Message-ID: <4FF4ACC3.9030301@redhat.com>
+Date: Wed, 04 Jul 2012 14:51:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+CC: Timo Warns <warns@...-sense.de>
+Subject: Re: CVE Request: Stability fixes in UDF Logical Volume Descriptor handling
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 01, 2012 at 05:25:32PM -0700, Kurt Seifried wrote:
-> On 02/01/2012 04:54 PM, Solar Designer wrote:
-...
-> > Of course, this is a tradeoff - just like the very existence of such
-> > closed lists is.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/03/2012 02:46 PM, Timo Warns wrote:
+> Am 03.07.2012 20:58, schrieb Kurt Seifried:
+>> On 07/03/2012 07:22 AM, Marcus Meissner wrote:
+>> 
+>>> People (do not know who) reported to the kernel security team
+>>> and Jan Kara some UDF filesystem crashes.
+>> 
+>>> Jan Kara did some fixes in the UDF fs and they were committed
+>>> to mainline already, both actual bugfixes and some more sanity
+>>>  checking for hardening.
+>>> 
+>>> I think a single CVE is sufficient.
+>> 
+>> Were they discovered by the same person or different people?
 > 
-> Against the certainty that the end of the embargo brings, so we're
-> putting a potential risk (rediscovery/etc.) against a guarented risk
-> (details will become available when the embargo ends. I'm not claiming
-> to know which is better
+> I reported the following issue for sparing tables on 2012-06-17 to 
+> security@...nel.org. Eugene Teo informed Jan Kara, who is the
+> maintainer for the UDF filesystem, on the same day. Jan had a
+> closer look at the UDF code and identified all other issues
+> addressed by the patches.
+> 
+> | udf_load_logicalvol() in fs/udf/super.c parses the number of
+> sparing | tables and stores the sparing tables on the heap: | |
+> (1286)  for (j = 0; j < spm->numSparingTables; j++) { | [...] |
+> (1293)    map->s_type_specific.s_sparing. | (1294)
+> s_spar_map[j] = bh2; | | map is of type udf_part_map, whose |
+> s_type_specific.s_sparing.s_spar_map | member can only hold 4
+> pointers to buffer_head structs. | | spm->numSparingTables is read
+> from the file system and not further | validated. A corrupted file
+> system with numSparingTables > 4 causes | a heap overflow.
+> 
+> Regards, Timo
+> 
 
-We don't really have a choice as to the details becoming public - we
-only have (limited) choice as to when.
+Just a placeholder: I'm waiting for a reply from Steve to see if we
+can violate CVE assignment guidelines and put this under one CVE (it
+should probably be two but sorting it out seems like it might not be
+worthwhile).
 
-> but I think two weeks is already pretty short,
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-OK, thanks for sharing your opinion.
 
-> reducing that to say a week only saves 7 days but potentially increases
-> workload 100% or more (we have half as much time to deal with it).
 
-Below in this same message you wrote that "most Linux vendors are now
-responding to 500-1000 security issues per year", which means that you
-almost always have multiple issues being worked on in parallel.  Thus,
-there should be _no_ increase in workload because if you have to work
-on each issue twice faster, you have twice fewer issues to work on at
-the same time.  So the workload should stay roughly the same.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-On the other hand, the "500-1000 security issues per year" figure might
-not be relevant - I'll comment on that below.
-
-> I think the shortened embargo time is rapidly approaching the limit of
-> maximum benefit (that is balancing time to fix against the chance of it
-> becoming public and putting systems/people at risk). Personally I think
-> hard rules are not a good idea here, I would support guidelines that
-> have some flexibility, not all cases are the same.
-
-Some people would prefer no rules/guidelines at all - but in that case
-use of a public list right away is likely better. ;-)
-
-More to the point, I am not proposing completely removing the
-flexibility.  With a maximum of 7-11 days, the preference may be even
-lower than that - like 4 days.  Not surprisingly, you don't seem to like
-this - but I think I should have asked anyway.
-
-> I don't have the data handy but I know most Linux vendors are now
-> responding to 500-1000 security issues per year and getting the majority
-> of them fixed by the time the issue goes public or very shortly
-> thereafter,
-
-How many of these are embargoed?  I think maybe 50 or so?  This still
-leaves one embargoed issue handled every week, on average, which may be
-enough not to significantly increase the workload with a shorter embargo
-(one issue handled per week or two issues handled per two weeks -
-almost the same thing).
-
-> I'm not sure we can speed this up much (this works tends to
-> be highly serialized, find the bug, assess the bug, fix the bug, QA the
-> software, etc.).
-
-In general, yes.  However, the "find" step is usually mostly done by the
-time the issue gets to the list, and the QA team might work more closely
-with the security team (maybe, or maybe not).  I can see that
-speculatively testing non-final fixes from the security team may
-increase the total workload, though (in case the security team chooses
-to revise the fix for its own reasons).  This might add cost to the
-vendor, but there's also a benefit: quicker fixes to the users, other
-vendors not having to wait.  There might even be a business/commercial
-justification to this change.
-
-> Also I haven't really seen any cases in the open source world of a leak
-> of information leading to widespread exploitation/problems (and if there
-> have been I'd love to know).
-
-This argument, assuming that it's true, also means that there's little
-to lose by posting to a public list right away or by not having fixes
-ready by a CRD in some case.
-
-...or do you feel that a leak to certain unintended parties who may
-exploit the issue to a limited scale (and choose not to make the issue
-public) is less of a problem than publication of the issue (which may
-result in widespread exploitation)?  This is non-obvious.  While in the
-former case fewer systems may be compromised, in the latter case
-experienced people and companies with experienced IT security staff
-(capable of more than just installing vendors' patches) are given a
-better chance to defend their systems.
-
-Alexander
+iQIcBAEBAgAGBQJP9KzDAAoJEBYNRVNeJnmTvbgP/jSW/zU8uclVkHT3Ptrk1e8c
+bieZ0Bq5HRU4j+aAgXOu/EALADfc9rpvg5UslKWWeWZM/UiVSP2bR82Ol+z5B15m
+AHvNBN11nU+v1vCwQBqxFie4qd9wA8iCzvm8RJ/NYhpfs7XzC/BsbVJJvIu0v4/d
+AExQqh97ICLiPC/tVXfFaO0o8WpCcgAbqKUZdXb5OpZSvON4HznNL1HntKo2yVRN
+Q1bghF1Ya+EhPqgtUqL43euU2EUg0utWb97guolRKwtlKcrVOnjYj3ntESbmxTQj
+xFt11H8DG11OrrvagqXmyiZ5g8jBslJTF12/8Eyx6Oya4A8FFoQ2E5MSVOSNIT3I
+5yPTfNsUqrtJxdg4h9V2SsE/yd2BCycMbc4V4TlQ7BqhV6v6P6xJO4FVEGDJQhDK
+Upo1SizihICXRMphDrNpru0TFEAGFgFOoWyMXZD1o897PSPDxZPDqIa0lZKyuTmt
+b81VkEntKOU0KD6aC0GWYiqMvDFWrzO0E9840WNUZJ+wcXi1D/TYz6pZtAnuZx30
+iD4e2eeXZjOSO/J9fIN3arQBZs3NLZx7TzeMQ6j5e0x72w8wl4IEGtzxxIQM0gvv
+jYJq/8cbFUUv7xx8s/yhqQmAYstKIYLdRYGNeEhGcz01m4Wbms5bu1grW01Kuwf5
+T/dQmJDH9MMoWdT8PkSc
+=XqIW
+-----END PGP SIGNATURE-----
