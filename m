@@ -1,50 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/8
-Message-ID: <20120518115726.GA22126@openwall.com>
-Date: Fri, 18 May 2012 15:57:26 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/04/2
+Message-ID: <4FF46FF1.20504@redhat.com>
+Date: Wed, 04 Jul 2012 10:31:45 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Todd C. Miller" <Todd.Miller@...rtesan.com>, Daniel Kopecek <dkopecek@...hat.com>
-Subject: sudo: IP addresses in sudoers with netmask may match additional hosts (CVE-2012-2337)
+Subject: Re: CVE Request -- kernel: epoll: can leak file descriptors when returning -ELOOP
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-(I was hoping someone else would bring this in here once it became public.)
+On 07/04/2012 01:19 AM, Petr Matousek wrote:
+> An epoll_ctl(,EPOLL_CTL_ADD,,) operation can return '-ELOOP' to
+> prevent circular epoll dependencies from being created.  However,
+> in that case we do not properly clear the 'tfile_check_list'.
+> 
+> An unprivileged local user could use this flaw to crash the
+> system.
+> 
+> Regression introduced via 28d82dc1c4edbc352129f97f4ca22624d1fe61de 
+> commit.
+> 
+> Upstream fix: 13d518074a952d33d47c428419693f63389547e9
+> 
+> References: https://lkml.org/lkml/2012/3/27/65 
+> https://lkml.org/lkml/2012/4/17/247 
+> https://bugzilla.redhat.com/show_bug.cgi?id=837502
+> 
+> Thanks,
 
-A sudo advisory was published by upstream and corrected versions were
-released on 2012-05-16:
+Please use CVE-2012-3375 for this issue.
 
-http://www.sudo.ws/sudo/alerts/netmask.html
 
-"Summary:
-A flaw exists in the IP network matching code in sudo versions 1.6.9p3
-through 1.8.4p4 that may result in the local host being matched even
-though it is not actually part of the network described by the IP
-address and associated netmask listed in the sudoers file or in LDAP.
-As a result, users authorized to run commands on certain IP networks may
-be able to run commands on hosts that belong to other networks not
-explicitly listed in sudoers.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Sudo versions affected:
-Sudo versions 1.6.9p3 through 1.8.4p4 inclusive are affected.  The bug
-only has an effect when the sudoers file (or LDAP sudoers data) using a
-host specification that grants permissions using an IP address with an
-associated netmask, e.g. 10.0.1.0/255.255.255.0 or 10.0.2.0/24."
 
-This is CVE-2012-2337.
 
-Red Hat Bugzilla entries:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-https://bugzilla.redhat.com/show_bug.cgi?id=820677
-https://bugzilla.redhat.com/show_bug.cgi?id=822175
-
-Ubuntu advisory:
-
-http://www.ubuntu.com/usn/usn-1442-1/
-
-Debian tracking:
-
-http://security-tracker.debian.org/tracker/CVE-2012-2337
-
-Alexander
+iQIcBAEBAgAGBQJP9G/uAAoJEBYNRVNeJnmTQ0gQAKEDLP9MS+7TfgdvZwW0WvUp
+/yn9FiWGZ7I9J0cXfPA/UNF4DOb4kZ4SbZBRwPwPKm8+KlP2CczDfSIXqHniyTWP
+DYA1bahNPjesFIDuLWm7aZE+Joj3S2ptQzrrlGLmMEM/SzftI9cAs63bBVj0FgP1
+cyckX/qkvhla5OlD3lrHmqFUpXE5z375mR26g7pvQPSwUibdVSPz1AQCydiUjU00
+BnTWbhXfWBAzLh38phj1Fi9McoefzBG4Ih0ACf/WqkP3SnJzNpNccMpMK57qqICK
+B1hXmkIIjK+taa7/URJJmXz62wEYkC1COaXgbXx6fwc0xsCIjAQoOx4ZBCqlK69D
+WYV9qQz3whByMtAF210MiHvUaH6V3it2UU02v+YKO+LYi40TRBH6DiIpNKg/ghrV
+Pnwn8Q4Hp7YjKEoQqo33WjyH3U/PXjLIkIOpf/DAQeTJ1ERuhNH0TsQzVMLbYCCd
+N9mmUNJQbfPWxH5g5JfxzZXmGYfYcrvUNQechfwrZ9ZOwrUDyP+ip0tKvWWqu54/
+7UiZ/QJoUGACqqFyX6FcUw2nQladfYtDmyKHJZE9uvwz8DeZhB8OnMomTDjoUWsU
+Ep3+Fla8lUvEzUa7XZ4sirDlP58l2PDb6x2ylYDIRY3zGuRMpwz1LKz0TZoldhFu
+MyPWFd6InJk96QZ64PVn
+=jYse
+-----END PGP SIGNATURE-----
