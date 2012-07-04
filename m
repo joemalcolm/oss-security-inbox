@@ -1,54 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/17
-Message-ID: <Pine.GSO.4.64.1209051820410.14248@faron.mitre.org>
-Date: Wed, 5 Sep 2012 18:25:09 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-cc: Lukas Reschke <lukas@...tuscode.ch>
-Subject: Re: Re: CVE - ownCloud
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/04/1
+Message-ID: <20120704071950.GE19060@dhcp-25-225.brq.redhat.com>
+Date: Wed, 4 Jul 2012 09:19:50 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- kernel: epoll: can leak file descriptors when returning -ELOOP
 Content-Type: text/plain; charset=utf-8
 
+An epoll_ctl(,EPOLL_CTL_ADD,,) operation can return '-ELOOP' to prevent
+circular epoll dependencies from being created.  However, in that case
+we do not properly clear the 'tfile_check_list'.
 
-On Sat, 1 Sep 2012, Kurt Seifried wrote:
+An unprivileged local user could use this flaw to crash the system.
 
-> - -------------
-> Version 4.0.6 Aug 1th 2012
->
-> Security: Check for Admin user in
-> appconfig.php (CSRF)
-> Registered user could change app configs without admin rights.
-> https://github.com/owncloud/core/commit/9605e1926c6081e88326bf78a02c1d1b83126c4f
-> Security: Several CSRF security fixes
-> The admin settings and the bookmark app wasn't checking the CSRF token.
-> https://github.com/owncloud/core/commit/38271ded753bc9ea9943cef3c2706f8d71f3a58f
-> and
-> https://github.com/owncloud/core/commit/93579d88dcea389205c01ddf6da41f37ad9b8745
->
-> CVS merged into a single CVE
->
-> Please use CVE-2012-4393 for these issues.
+Regression introduced via 28d82dc1c4edbc352129f97f4ca22624d1fe61de
+commit.
 
-Our interpretation is that this line item is not CSRF:
+Upstream fix:
+13d518074a952d33d47c428419693f63389547e9
 
-   "Registered user could change app configs without admin rights"
+References:
+https://lkml.org/lkml/2012/3/27/65
+https://lkml.org/lkml/2012/4/17/247
+https://bugzilla.redhat.com/show_bug.cgi?id=837502
 
-It's a permissions/authorization problem.  It's made WORSE by CSRF, but 
-even without CSRF, a registered user could do something they shouldn't.
-
-So, we assigned CVE-2012-4752 for "Registered user could change app 
-configs without admin rights"
-
-
-> Version 4.0.5 July 20th
-> Reflected XSS (XSS)
-> The filelist wasn't sanitzing HTML values in image files.
-> https://github.com/owncloud/core/commit/d203fa2c50f4b2791e68e2b8ab9a0f8b94f9c9f8
->
-> Please use CVE-2012-4394 for this issue.
-
-The 4.0.5 changelog at http://owncloud.org/changelog/ also says "Several 
-CSRF security fixes"
-
-So, we assigned CVE-2012-4753 for the CSRF fixed by 4.0.5.
-
-- Steve
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
