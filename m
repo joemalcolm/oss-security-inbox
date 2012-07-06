@@ -1,97 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/2
-Message-ID: <1328142545.4754.24.camel@mdlinux>
-Date: Wed, 01 Feb 2012 19:29:05 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/3
+Message-ID: <4FF72160.3000806@redhat.com>
+Date: Fri, 06 Jul 2012 11:33:20 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: Three CVE requests: at-spi2-atk, as31, naxsi
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2012-02-02 at 03:54 +0400, Solar Designer wrote:
-> Marc,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/05/2012 01:00 PM, Moritz Muehlenhoff wrote:
+> Hi, please assign CVE IDs for the following issues:
 > 
-> Thank you for your feedback.
+> 1. Insecure tempfile handling in the Gnome accessibiliy component
+> at-spi2-atk 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=678026 
+> https://bugzilla.gnome.org/show_bug.cgi?id=678348
+
+Please use CVE-2012-3378 for this issue.
+
+> 2. Insecure tempfile handling in the as31 assembler 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655496 Homepage:
+> http://wiki.erazor-zone.de/doku.php?id=wiki:projects:linux:as31
+
+Please use CVE-2012-3379 for this issue.
+
+> 3. File disclosure in Naxsi web application firewall module for
+> Nginx (also shipped in the Debian nginx package): 
+> http://code.google.com/p/naxsi/ 
+> http://code.google.com/p/naxsi/source/detail?r=307
+
+Please use CVE-2012-3380 for this issue.
+
+> Cheers, Moritz
 > 
-> On Wed, Feb 01, 2012 at 04:02:54PM -0500, Marc Deslauriers wrote:
-> > A week is a pretty short delay to prepare updates and perform the
-> > necessary QA to get an issue out on time. Why are you pushing to get the
-> > maximum reduced?
-> 
-> Why shorter embargo periods are preferable: vendors who are ready to
-> push out their updates first don't have to sit on those updates waiting
-> for others, users get their fixes sooner, the potential for leaks (or
-> rediscovery) and exploit development in the wild before a fix is out is
-> reduced, the potential for a vendor inadvertently releasing before the
-> CRD is reduced (and in case this happens anyway, other vendors are
-> likely "more ready" by that time since they knew the CRD was sooner),
-> fewer embargoed issues are being tracked at the same time (less work,
-> lower risk of errors).
 
-This means vendors will be keeping information about the vulnerability
-private until they are confident they are able to release within a week,
-at which point they will then share the information with other vendors
-who will scramble to get their updates ready.
+Also for temporary file creation please note that it is very easy to
+avoid:
 
-As a distro, I now have two choices: I sit on vulnerabilities until our
-own QA and testing is done, at which point I send them to the list and
-hope that 7 days is enough for everyone else, or I simply stop using the
-list for anything that's more than trivial and contact other vendors
-directly.
+Bash
+Simply use ?mktemp? (?man mktemp? for details).
 
-> Why 7-11 days: a few issues were recently handled within 7 days fine -
-> such as the sudo issue (easy fix provided by upstream and not needing
-> much QA) and the Linux kernel /proc/<pid>/mem issue (vendors had to
-> hurry up because the issue was mostly public).
+C
+use mkstemp() (?man mkstemp? for details).
 
-Yes, those are two excellent examples of basically one line fixes where
-a week was sufficient to publish updates. I don't think they should be
-used as a reference to determine what an acceptable delay is.
+C++
+use mkstemp() (?man mkstemp? for details).
 
->   So this may be realistic
-> at least as a target (hence my wiki page edit) or maybe also as the
-> maximum (hence my proposal).  Additionally, the original maximum of 14
-> days may be seen as potentially including the extra days needed based
-> on day-of-week: it is one week normal + some days from the other week
-> when needed by day-of-week.  So maybe me trying to meet the reality
-> (seen on a few occasions) by extending this to 14-19 days was wrong, and
-> I instead should have proposed 7-11 days.  Hence the belated proposal.
+Perl
+use mkstemp()
+http://perldoc.perl.org/File/Temp.html#MKTEMP-FUNCTIONS
 
-For us, 7-11 is too short for certain complexe issues. 14-19 is a
-reasonable delay to backport patches, perform adequate QA and publish.
+Python
+Simply use ?mkstemp? from the ?tempfile? module:
+http://docs.python.org/library/tempfile.html#tempfile.mkstemp
 
-> 
-> Why me: I feel that it's my duty as list admin to propose the smallest
-> maximum embargo period that list members might be willing and able to use.
-> 
-> Why I am making this proposal now: this is triggered by a certain
-> off-list discussion I just had; unfortunately, the other party does not
-> permit me to post more about it.  However, as I wrote above, I feel that
-> I have good reasons to give this proposal a try (see if it's acceptable
-> or not) regardless of what triggered these thoughts now.
-> 
-> > Reducing the maximum will just result in having everyone miss the
-> > embargo date and putting users at risk.
-> 
-> It's not that simple.
-> 
-> Not "everyone" will miss the CRD.  Clearly, if some vendors on the list
-> are comfortable with a shorter embargo they either expect to meet the
-> CRD or find the issues for which they miss the CRD not important enough
-> to fix before CRD anyway.
+QT
+use QTemporaryFile
+http://qt-project.org/doc/qt-4.8/qtemporaryfile.html
 
-Or, they have waited until they were ready before telling everyone else
-about it simply to adhere to the new list rules.
+Ruby
+use Tempfile
+http://www.ruby-doc.org/stdlib-1.9.3/libdoc/tempfile/rdoc/Tempfile.html#method-c-new
 
-> I already provided some answers to "why" above, and here's one more: the
-> change may also result in vendors' processes being adjusted to meet the
-> faster pace.  I am unsure to which extent this is positive overall,
-> though (considering that those changes may have side-effects).
 
-This will result in issues becoming public before everyone's updates are
-ready to be published, nothing more.
-
-Marc.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
+iQIcBAEBAgAGBQJP9yFgAAoJEBYNRVNeJnmTtd4QAMcgx+OxP3bHR8kjXNnlMus3
+5kTKIJ7kf0tSB8SWJqAtQiDrf3hVG6X/DPD4dnJqlKrWXsu6bd/PxGIMLO4FMZY9
+j3pJFWxHEuZ+lLneH6BIa4M6AejIKdKgZtSY3iFiAcQSAsX4+p5VytfDuCINGJO3
+zmbTGY1d0AGyKacmDFexsWTv+kZBy7mnOXQrjOEsGsVRxhobK7b3z1EFGOuhkvbA
+1uoDj/vr9lYFr0EaG5h5L+Qx4VdHMjTp1YfxyGoMIX6as53IMidbACaN5MM6tnEu
+DRaUH5nwMN8hEr4yFPbGfuTpdCCiba8I1IDRVuFRlXLc2iplRdauVDGPa9/XhASq
+JrtVHapl5Lm3bGVN8PhkYB6+peSsZPWB+4VP2Qfpm+SoBAYXqGvqzJL8F1by0L4p
+TLcJDmnyXh50kRCjoVfcppNemIXCAhnFpzQ70fwySnPUorWIthWqNrqR4d+OPWjr
+KR5tltaTWB0O7mwsgDxiKGv8T0hf270NGAgfa0U1K4vhnmArdFzr09+4E/lO8XpW
+uUSR76+vV5GSKS9f1YedNkfeXC9UVj+rwS60XHW4Tt6Fh3TCUngVMcnsMeWXV4yi
+xB1LnSvnA0o56oPizNz1Ysqu6E6lqQ0OhgbILNxOtbh5cqRsjmp0bDdOMN51zkkH
+IgsVcL4wiL6B3zqDpOAC
+=sx2U
+-----END PGP SIGNATURE-----
