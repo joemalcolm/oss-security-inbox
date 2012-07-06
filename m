@@ -1,53 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/13
-Message-ID: <50328196.9010203@redhat.com>
-Date: Mon, 20 Aug 2012 12:27:34 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/11
+Message-ID: <4FF7672B.7050001@redhat.com>
+Date: Fri, 06 Jul 2012 16:31:07 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: mm: use-after-free in madvise_remove()
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: XSS in a Mono System.web error page
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/20/2012 12:07 PM, Petr Matousek wrote:
-> A use-after-free flaw has been found in madvise_remove() function
-> in the Linux kernel. madvise_remove() can race with munmap (causing
-> a use-after-free of the vma) or with close (causing a
-> use-after-free of the struct file). An unprivileged local user can
-> use this flaw to crash the system.
+On 07/06/2012 04:21 PM, Marcus Meissner wrote:
+> Hi,
 > 
-> Upstream fix: 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=9ab4233dd08036fe34a89c7dc6f47a8bf2eb29eb
->
->  Introduced in: 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=90ed52ebe48181d3c5427b3bd1d24f659e7575ad
->
->  References: https://bugzilla.redhat.com/show_bug.cgi?id=849734
+> A Nessus scan of a Novell product using Mono Web revealed a XSS
+> attack in the Mono System.Web library.
 > 
-> Thanks,
+> The Mono team commited a fix to their GIT.
+> 
+> References: https://bugzilla.novell.com/show_bug.cgi?id=769799 
+> https://github.com/mono/mono/commit/d16d4623edb210635bec3ca3786481b82cde25a2
+>
+>  The XSS is in the error popup of the "Forbidden extension" filter
+> method, which filters out e.g. ".dll" files.
+> 
+> Ciao, Marcus
 
-Please use CVE-2012-3511 for this issue.
+Please use CVE-2012-3382 for this issue.
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQMoGWAAoJEBYNRVNeJnmTCbUP/iMzPXqPImIN9n6FN1D7GQu+
-hdqUCdYKYHSLP/bSFxBuNLaxwGQvVrymEN6dkn3tvTgDh1YnPXEXngcXWwwNPcHR
-CxFJTBs+6O08MZL8dfB9PxHSXi9jcBOi28aOeqcCVG3slumJJnliSxjTw3XUWvOV
-jLzFA1+TLswamky9j3xYchnD5mywy5jrkPXhZb5cuAnVU/+c0WNIKNFVf1snKHwC
-23EdGc/XEa5qs+RmNhVCzxnOgjfvm1hq33A0vs2bCBS6R2hNzAwt1gxZRKhMfcJT
-yHgAEgUZ7gbTbaKlDQvDL8pl4o1L4tEk8Xd0v89iHfqSIRk5vyzah9S4LIK5NnmY
-CcDt/NVddT4nO5rAIFHO2Lk5UX07yGGUW4gP5DQor/gozz/EFeOU2KzP95Q4qfZ+
-tX8Z6iR74fl+b8DlDwX5RfyoqflhwkKanhsTtYgFvpbO5TFDUsp4Z3trcIRmNowu
-+r2rSGRzts2FRPjPtuFpzcsJaR8R3tXaPkY2zhNWChc2XAK48fcFr9bPMS9v+z6x
-r6rq3+rL1cPRxmPB12ID6hQ8+9ttAUtDUW1OW29r6Nk3PFCYVgf0GYUhMjDs/r9g
-L5xhi2b4QSb0b4WzvtM754lQCYOmYmbjeqlolWWmgNo3LRxPo4DK0uTsiszzUlNC
-50ubEHrBqFAtBmvY059S
-=9hDa
+iQIcBAEBAgAGBQJP92crAAoJEBYNRVNeJnmT/NEP/RQhU2JTHMhkXz95QGgroEwv
+/VnhcCOLeJAI0e0pjCJdHmqgfx6wJ2+Munst4M53TNtzkzCwYm4IV4HSYpNn2YTg
+qAAAgGfB579WmrMuBs6FXkDCarmerq1XeGuPeHEte/Lt2ktbgtTMMWp2zAEEnoHj
+6Ab6xy/e1odohJieJxp8fg1ZsksB765AhU/pTQVSY0LEKYzOmX7mcLMxntOinGP+
+HqTuRa/ITr9B2YdgEJ5XbCjaUs4S9C1jsC4y/5teoI29XTBEHmw0+tMYouUJvRry
+Kc2SIGhgie8uOVas9m+5c58unRq35ya73zTNIYA0lBE4F6vt+NjkpPdFDAQHMKeT
+pQYyTtlT9o75gp/sQfTZWJPtYcwvxFCF928i+7lrd0gpFfa1v+38DLFgI7//oySZ
+PMg3AeDIgvtSMOBRal5/VQLG7WHW7ZLpugqbPmY+BRbSqY+plHSwoAFG3XKp7S2h
+OmLI6DBQMgfo/cOA2qU9DfmbJP6efWISZrjPsEOLamydV2QxqG9j28Hpu9WLFMin
+47f7aAQzAs290U8ZV2bRlMsS8yGZG6ZqNKH5imrwyZQVYiEX8UdOK2irHnAtaY/U
+4K8ymglnNYEO0UIF84dSL7o1kRyiMsKbMisSmCi1FhZAfDmVAh4s2HvIiObZpE/A
+b1w1Zo/3EKv6Av7E1SGw
+=gScU
 -----END PGP SIGNATURE-----
