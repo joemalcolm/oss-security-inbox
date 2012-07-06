@@ -1,58 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/02/1
-Message-ID: <50BAEE73.2000706@redhat.com>
-Date: Sat, 01 Dec 2012 23:00:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: king cope <isowarez.isowarez.isowarez@...glemail.com>
-CC: full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org, security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, moderators@...db.org
-Subject: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/6
+Message-ID: <eab0a880-d46c-4a94-bfd6-c0f119fff26d@zimbra>
+Date: Fri, 06 Jul 2012 16:26:16 -0500 (CDT)
+From: "Matthew  Jordan" <mjordan@...ium.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: Moritz Muehlenhoff <jmm@...ian.org>, Asterisk Security Team <security@...erisk.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request:  Asterisk
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+AST-2012-010 uses CVE-2012-3863.  The appropriate documents have been
+updated to reflect the assigned CVE.
 
-On 12/01/2012 02:26 PM, king cope wrote:
-> (see attachment)
+Thanks
+
+--
+Matthew Jordan
+Digium, Inc. | Software Developer
+445 Jan Davis Drive NW - Huntsville, AL 35806 - USA
+Check us out at: http://digium.com & http://asterisk.org
+
+----- Original Message -----
+> From: "Kurt Seifried" <kseifried@...hat.com>
+> To: oss-security@...ts.openwall.com
+> Cc: "Moritz Muehlenhoff" <jmm@...ian.org>, "Asterisk Security Team" <security@...erisk.org>
+> Sent: Friday, July 6, 2012 12:21:14 PM
+> Subject: Re: [oss-security] CVE request:  Asterisk
 > 
-> Cheerio, Kingcope
-
-So normally for MySQL issues Oracle would assign the CVE #. However in
-this case we have a bit of a time constraint (it's a weekend and this
-is blowing up quickly)  and the impacts are potentially quite severe.
-So I've spoken with some other Red Hat SRT members and we feel it is
-best to get CVE #'s assigned for these issues quickly so we can refer
-to them properly.
-
-If Oracle security has already assigned CVE's for these please let us
-and the public know so we can use the correct numbers. Also if Oracle
-can let the public know which versions of MySQL are affected (e.g.
-5.0.x, 5.1.x, 5.5.x, etc.) that would be very helpful to everyone I am
-sure.
-
-I am also adding MySQL, Oracle, MariaDB, OSS-SEC, Steven Christey,
-cve-assign and OSVDB to the CC so that everyone is aware of what is
-going on.
-
-http://seclists.org/fulldisclosure/2012/Dec/4
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQuu5zAAoJEBYNRVNeJnmTF8sP/10htpTkb298u/Szo3yOcRiE
-8HgMwXPVGFhPh0d/avRgIocYeJxIH9oUf7xN/A53TXktgp7CZZUMhJAh4Hv5mrFn
-moVGxs3qBaTT8+zFa8Ea7VUqzYXUGdMNPBeyijyw18WRHu7ETrUg2pXREkr056ol
-GRt5BuMyzz7sdlLNCYWki+uMIxWtnyjw4ngkNCcAbDuPGdmIxwTiNQ8oOLWRgs/+
-ybL0EXWIJgeBWBdsx0nlJNrL6gHqCsfZduKNl95MAdFHRMiOFrc/GQWfL81d+q86
-upWQ+S7U8or/dpcD7eKInSmGvjgoFR+cF1S2lkDqBLXg2ER8aZzemaG/8p+m4ICH
-Cef7Zt7q5F+FaSC4wOeCmmR0SmeA1ZO1krY8Ur3oyuYr39Iegk1O48hAzAP4RbDS
-+m0pPFNanDuW2h9NSjAx19C2qgEMoMGCaTpJY1mfF3Zus5ctxXyYtNU1g/yIGr3f
-E2boYVOYW4CPJSRGkeF6n1Vf+c+Sov/0/enxJxUsf9tA58iQUSQNsI+aSj71oI3v
-1Y0/Ce3FKAJRkgY374TD+K834ruhFAO9xJXdA1MSDdz4rJ1uQusIKufz3ubjHCWP
-KhgpV2Pp1Gq5+XGuNPKn06cNh8a/oYubMNpQBxeIbWYm6eFuUvwnSP9ki+hPLjvw
-fa9hdUARqamhayQbkNdH
-=sXhV
------END PGP SIGNATURE-----
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 07/06/2012 08:55 AM, Moritz Muehlenhoff wrote:
+> > Hi,
+> > 
+> > 2. asterisk: Possible resource leak on uncompleted re-invite
+> > transactions
+> > http://downloads.asterisk.org/pub/security/AST-2012-010.html
+> > 
+> > Cheers, Moritz
+> 
+> This issue does not appear to have a CVE yet ("TBD"). If you like I
+> can assign one for it. Otherwise if you have gotten a CVE for it
+> please reply (and include OSS-security so everyone knows =). Thanks.
+> 
+> 
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
+> 
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+> 
+> iQIcBAEBAgAGBQJP9x6KAAoJEBYNRVNeJnmTSaQQAJgQX10VvuD15Yqp5ud/huKp
+> riOx3tkR7Zg+8YHXjHyghqeB6pdW+j9bFdKs8M7xszJZIiTGMvBu51rHG2dDmssG
+> a2Yvmw+y4rQFKxuz3gET7mPPD3dZ7fj1c5tj9omG6S3groVHk0DJt+t+NhpYCnjf
+> OOpe6+h+cvszU9coYgVDnMkjzOK70aPonW/SUrYYgNQMVrUcG+w/8MMi+ViO8vTu
+> eZC4SruIEeUvumwiU/Mp+U95v6/wo2AQwkJVCqoI5sKO6eDzqw3W7quFrTvxdx8z
+> xSHNMPslvK02whJM88ciAvAnxVTZOo1SHZQLyGI6G+EVc6D9gfW+uDpSttfgejBg
+> J73dxSC3yFLD9kk+SgdlJSwxgGaeUwGqquYgcH6XUkvyLcOz3K3/Zitrf2Ki3V+3
+> fLdvqy54tNqWZgp66wToKu7qaGw3w7Gr18A3jlipNTjY6udmlIEb5pZZHlVN3Y9W
+> RxlcBMRymB6Z/Ya3rxS2HwjmIPAhdb0wCjLquo2hS3zKkuUgiMpFK9vVXIFN4reG
+> pTVCdgUifzGZGXtp3g4G/LXuytH8B625nNMUpZIJyWv3dRr8/JybOx17jyNyZYhJ
+> dLPDEGa5ay/qQE/3BZ0QIDq43BmaOmsNCXWpR7bFTOYxwJC7M7UyMzUUXR2PW6vx
+> PZe6x+BEW8HAiolJpuOm
+> =ln6p
+> -----END PGP SIGNATURE-----
+> 
