@@ -1,11 +1,11 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/2
-Message-ID: <4FF71E1B.7050101@redhat.com>
-Date: Fri, 06 Jul 2012 11:19:23 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/4
+Message-ID: <4FF71E8A.80706@redhat.com>
+Date: Fri, 06 Jul 2012 11:21:14 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: VLC / Asterisk
+CC: Moritz Muehlenhoff <jmm@...ian.org>, Asterisk Security Team <security@...erisk.org>
+Subject: Re: CVE request:  Asterisk
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
@@ -14,26 +14,15 @@ Hash: SHA1
 On 07/06/2012 08:55 AM, Moritz Muehlenhoff wrote:
 > Hi,
 > 
-> Please assign CVE IDs:
-> 
-> 1. heap-based buffer overflow in VLC's Ogg demuxer Fixed in the VLC
-> 2.0.2 release
-> 
-> Commit: 
-> http://git.videolan.org/?p=vlc/vlc-2.0.git;a=commitdiff;h=16e9e126333fb7acb47d363366fee3deadc8331e
-
-Please
-> 
-use CVE-2012-3377 for this issue.
-
 > 2. asterisk: Possible resource leak on uncompleted re-invite
 > transactions 
 > http://downloads.asterisk.org/pub/security/AST-2012-010.html
-
-Splitting this issue into a separate email thread.
-
-> Cheers, Moritz
 > 
+> Cheers, Moritz
+
+This issue does not appear to have a CVE yet ("TBD"). If you like I
+can assign one for it. Otherwise if you have gotten a CVE for it
+please reply (and include OSS-security so everyone knows =). Thanks.
 
 
 - -- 
@@ -46,17 +35,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJP9x4bAAoJEBYNRVNeJnmTepIQAIfun+T8HGlTN+Wqg3scHa69
-o83lg53s9TxuyY8cwXS82bSfPpwk9eLg+YL0huF+yTG6Ziqq4txEo5FQdVzWPJ4p
-qveE4qglOevmCNuenU3w6YRUhxX6cXvyWHg0RpFianZKrmn6xn4doguik/9NLg6w
-KGPk/9eoTYpQ8mrw1kRbA5ClRLvfZCPkXFzu3xOKKBcLKhAmruLFQwHR5ykC28PN
-ydbbHnbE2QQhXwFsEt4g1x1dBeGq7Jgj9fsE0FI52WvjPlAOhGJaw+wA3xijy9fy
-N8GF4feqxuP7xbkD3KRfcKTXyXgLXRvMQ/NtFN0LxfvWthVCv+63soC2RFLBuw7g
-WbE7AdOv/a1BhaX66LfcGFA5m4P64GNrBbz6/BMLzbzGtIUIgV2/OYCXRWJ8QPnq
-jDWKK5lgyjwyKKrq73/DLJP5CcjulCdB9ErBbcdPgZ9cezukvdki2cVOJj3EhC93
-ibFbdZZSE/WYwYiPajQ0ZPUW5VZrfF2uiqoCkW2fbg1SNfpOzQMnEzbdGljIZAPZ
-TMH63p2n9Bt4Ct0JlsvZ0phpPQbMXVMkXqpkQXfKELcX4jjD2pRcIm7F/7tG9YqP
-KvzoBJRvaH0+Or7UMuL7fXZ1BbemEWJ9AMoRo/9jEZXerPTeekeVlku4KGxQeNEs
-K0sNKSlCM48/RdGLRqfH
-=wIFY
+iQIcBAEBAgAGBQJP9x6KAAoJEBYNRVNeJnmTSaQQAJgQX10VvuD15Yqp5ud/huKp
+riOx3tkR7Zg+8YHXjHyghqeB6pdW+j9bFdKs8M7xszJZIiTGMvBu51rHG2dDmssG
+a2Yvmw+y4rQFKxuz3gET7mPPD3dZ7fj1c5tj9omG6S3groVHk0DJt+t+NhpYCnjf
+OOpe6+h+cvszU9coYgVDnMkjzOK70aPonW/SUrYYgNQMVrUcG+w/8MMi+ViO8vTu
+eZC4SruIEeUvumwiU/Mp+U95v6/wo2AQwkJVCqoI5sKO6eDzqw3W7quFrTvxdx8z
+xSHNMPslvK02whJM88ciAvAnxVTZOo1SHZQLyGI6G+EVc6D9gfW+uDpSttfgejBg
+J73dxSC3yFLD9kk+SgdlJSwxgGaeUwGqquYgcH6XUkvyLcOz3K3/Zitrf2Ki3V+3
+fLdvqy54tNqWZgp66wToKu7qaGw3w7Gr18A3jlipNTjY6udmlIEb5pZZHlVN3Y9W
+RxlcBMRymB6Z/Ya3rxS2HwjmIPAhdb0wCjLquo2hS3zKkuUgiMpFK9vVXIFN4reG
+pTVCdgUifzGZGXtp3g4G/LXuytH8B625nNMUpZIJyWv3dRr8/JybOx17jyNyZYhJ
+dLPDEGa5ay/qQE/3BZ0QIDq43BmaOmsNCXWpR7bFTOYxwJC7M7UyMzUUXR2PW6vx
+PZe6x+BEW8HAiolJpuOm
+=ln6p
 -----END PGP SIGNATURE-----
