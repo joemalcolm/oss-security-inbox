@@ -1,56 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/17/1
-Message-ID: <4FDD3469.8030404@redhat.com>
-Date: Sat, 16 Jun 2012 19:35:37 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/8
+Message-ID: <4FF75BC7.2010001@redhat.com>
+Date: Fri, 06 Jul 2012 15:42:31 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: java hashdos vulnerability
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: sblim-sfcb: insecure LD_LIBRARY_PATH usage
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/15/2012 03:13 PM, Hanno Böck wrote:
-> Hi,
+On 07/06/2012 03:41 PM, Kurt Seifried wrote:
+> Originally found at: 
+> https://bugzilla.novell.com/show_bug.cgi?id=770234
 > 
-> Seems java is fixing HashDos finally: 
-> http://mail.openjdk.java.net/pipermail/core-libs-dev/2012-May/010238.html
->
->  They don't mention hashdos, but the interesting part is here: "The
-> enhanced hashing implementation uses the murmur3 hashing 
-> algorithm[1] along with random hash seeds and index masks"
+> Marcus Meissner 2012-07-06 12:18:54 UTC
 > 
-> random hash seeds is what prevents hashdos.
+> found by grep.
 > 
-> Further info here: 
-> http://armoredbarista.blogspot.de/2012/02/investigating-hashdos-issue.html
->
->  Please assign CVE.
+> /etc/init.d/sfcb uses:
 > 
-> cu,
+> LD_LIBRARY_PATH=/usr/lib:$LD_LIBRARY_PATH
+> 
+> which is insecure if LD_LIBRARY_PATH is empty. It makes binaries
+> use libraries from the current directory, which is a problem if
+> e.g. a administrator starts the sfcb service from a untrusted
+> directory.
+> 
+> Also it uses it to set /usr/lib, a default path.
+> 
+> Just get rid of the whole if ... as it is useless.
+> 
+> This is now filed in Red Hat: 
+> https://bugzilla.redhat.com/show_bug.cgi?id=838160
 
-Please use CVE-2012-2739 for this issue.
+Please use CVE-2012-3381 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJP3TRpAAoJEBYNRVNeJnmTxn0QAKxwvxvhuT1kRmfgIQBHCIIv
-TbPsz7Ve53LbyT2tEXwWzEO406sUbtUK1rC6ziWkZraihCghkX7pYwG3CkFKRDcj
-RCos6/THW6aJ1X3BIeOJnFYLPdX+ayEKa9lkVOBB8DChnNT6gDfCnWHwcr0K6nhs
-hiwoofIjlbwA9HZnDGFt4INUv19Eo3AQ/q6j99N+o+nraRye/DUoYU+VZe4rLICQ
-sCHdkKdGWp5889lItap19hWLTSWNjzkXIyZIcVAc7qw7NAApLVRrA7kCVOQHc4+4
-YQTHy/6jaPdjFjwRNyKFczIq5i3BO9tcAr8SQrrjujImMCCDGwgk2k8Pti6KSAJE
-9w1lL2uUHCKdRvheUZi2NppbMDnhlqtnugFDZdePHUp5JeAk2Er6fNIjH6r8LKym
-3AuWhCRlxQ1aH0qcck8K/7CgcfzSLNixgDoU0OVmlmZ8qn/wp7bNddQKOyQ0A72q
-VBnnD9qRQ8hx1ZL3keybUMP63yymOwlVHzb1cKJwbgiT21+Pr7mxekrPkmixPiah
-Ac6LsMOiyU9N04aAed18N1CHcm5hfU+fKZGXn6J4HLzjTN4VYcitfE/qWYaJLuRm
-6mvlpBEVMpgbteT3Rv2aJ7Bhhd1EQ/sbOMUbU7UH5/nX2ntt6PZ3ph4Gcx99ML68
-VvgDhCr3p/bOQh8uFZZu
-=3E+5
+iQIcBAEBAgAGBQJP91vGAAoJEBYNRVNeJnmT5pQP/itPwd/YT5ea2oo/n4BbfYxC
+q0Vz2bsa3GpLCbv+4nx4rDFDxnThH1AJXCnYjorK1ssyAG7TfKG9sffABeWGw9dL
+ZQNzhfeK7fx/lIRrG8Mb7iU5BsgulA9uv9gr32rXFTZMOLcs2v/CKyo98LaxDFx1
+aeP65r2mbn8uyrdXj3iZTcxk8EDCtLlfXsU8xhCc9l9c1Lqtgh2uTPa9kV0XZf0n
+8MigcvzUjKdxWAvScjSGDnm4X/7UIUQdN5IDgcZKhRJ4UkEmrl1fSTEYOg0p8av3
+rxANTXe7FfyLCJRM8yYjDIzFf0bi5t8VitotS/SrCI7cSumbbLl1lZcclxqRLvdv
+lbKsFRvbqgcle8rXsDGkCBq4M3dVFiqIZyhh3JSIOmkaGHJ1wRM+m93Q2aubFRU/
+3Rz7aYTTepkSyGaQh9quD2psvPo1y//TBf/1pcNs9CTvlITH4iayjZpbwaCZDNSQ
+/MWUXiJvsKzev1vCm4AwYmToxj4ZM1H4TQlCF1nFz2XklwbC3R8ta9blTzRYOfBr
+pY7GMFmkDNaVy53+26UeIuJaLyrk0rfomi5oqJI2kGaDulWVcpnOAi3xo2V9ziVb
+tZam8L4k97utFw27VMhJKD+0PkrDTdGu/wMZFxUBwpRK/77AWZy+SKDTbceIJ+tY
+31zanQNxf+GTo3Isbt/P
+=NOGk
 -----END PGP SIGNATURE-----
