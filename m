@@ -1,32 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/8
-Message-ID: <20121113145227.6c809a10@melee>
-Date: Tue, 13 Nov 2012 14:52:27 +0000
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: mantis before 1.2.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/10
+Message-ID: <20120706222139.GI1678@suse.de>
+Date: Sat, 7 Jul 2012 00:21:40 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: XSS in a Mono System.web error page 
 Content-Type: text/plain; charset=utf-8
 
-http://www.mantisbt.org/bugs/changelog_page.php?version_id=150
+Hi,
 
-New mantis bugtracker release. Two fixes are security relevant
-(althouhg both sound minor)
+A Nessus scan of a Novell product using Mono Web revealed a XSS attack
+in the Mono System.Web library.
 
+The Mono team commited a fix to their GIT.
 
-- 0014496: [security] Workflow Transitions: Minimal Access Level to
-  Change to this status has no correct 'default' (dregad) - resolved.
-http://www.mantisbt.org/bugs/view.php?id=14496
+References:
+	https://bugzilla.novell.com/show_bug.cgi?id=769799
+	https://github.com/mono/mono/commit/d16d4623edb210635bec3ca3786481b82cde25a2
 
+The XSS is in the error popup of the "Forbidden extension" filter method,
+which filters out e.g. ".dll" files.
 
-- 0014704: [security] Clone and Move issue with Copy bug notes - user
-  get email notice from project without access (dregad) - closed.
-http://www.mantisbt.org/bugs/view.php?id=14704
-
-
-Please assign CVEs.
-
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Ciao, Marcus
