@@ -1,136 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/25/1
-Message-ID: <20120125141747.GA4413@foo.fgeek.fi>
-Date: Wed, 25 Jan 2012 16:17:47 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Fwd Joomla! Security News 2012-01
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/7
+Message-ID: <4FF75B81.5060608@redhat.com>
+Date: Fri, 06 Jul 2012 15:41:21 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Marcus Meissner <meissner@...e.de>
+Subject: CVE Request: sblim-sfcb: insecure LD_LIBRARY_PATH usage
 Content-Type: text/plain; charset=utf-8
 
-Does someone know if these already have CVE-identifiers? Joomla just released this advisory.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-- Henri Salo
+Originally found at:
+https://bugzilla.novell.com/show_bug.cgi?id=770234
 
------ Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
+Marcus Meissner 2012-07-06 12:18:54 UTC
 
-Date: Wed, 25 Jan 2012 13:21:21 +0000
-From: Joomla! Developer Network - Security News <no_reply@...mla.org>
-To: henri@...v.fi
-Subject: Joomla! Security News
+found by grep.
 
-Joomla! Developer Network - Security News
+/etc/init.d/sfcb uses:
 
-///////////////////////////////////////////
-[20120101] - Core - Information Disclosure
+LD_LIBRARY_PATH=/usr/lib:$LD_LIBRARY_PATH
 
-Posted: 23 Jan 2012 01:45 AM PST
-http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/MYKnZ2QJKYE/382-20120101-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
+which is insecure if LD_LIBRARY_PATH is empty. It makes binaries use
+libraries from the current directory, which is a problem if e.g. a
+administrator
+starts the sfcb service from a untrusted directory.
 
-Project: Joomla!
-SubProject: All
-Severity: Low
-Versions: 1.7.3 and all earlier 1.7 and 1.6 versions
-Exploit type: Information Disclosure
-Reported Date: 2012-January-07
-Fixed Date: 2012-January-24
+Also it uses it to set /usr/lib, a default path.
 
-Description
-Inadequate filtering leads to information disclosure.
-Affected Installs
-Joomla! version 1.7.3 and all earlier versions
-Solution
-Upgrade to version 1.7.4 or 2.5.0 or higher
-Reported by Cyrille Barthelemy
-Contact
-The JSST at the Joomla! Security Center.
+Just get rid of the whole if ... as it is useless.
+
+This is now filed in Red Hat:
+https://bugzilla.redhat.com/show_bug.cgi?id=838160
 
 
 
-///////////////////////////////////////////
-[20120102] - Core - XSS Vulnerability
-
-Posted: 23 Jan 2012 01:45 AM PST
-http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/XAEsWEG3dgU/383-20120102-core-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
-
-Project: Joomla!
-SubProject: All
-Severity: Moderate
-Versions: 1.7.3 and all earlier 1.7 and 1.6 versions
-Exploit type: XSS Vulnerability
-Reported Date: 2011-November-16
-Fixed Date: 2012-January-24
-
-Description
-Inadequate filtering leads to XSS vulnerability.
-Affected Installs
-Joomla! version 1.7.3 and all earlier versions
-Solution
-Upgrade to version 1.7.4 or 2.5.0 or higher
-Reported by Ankita Kapadia
-Contact
-The JSST at the Joomla! Security Center.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-///////////////////////////////////////////
-[20120103] - Core - Information Disclosure
-
-Posted: 23 Jan 2012 01:45 AM PST
-http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/Ed0TMAvyQ4g/384-20120103-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
-
-Project: Joomla!
-SubProject: All
-Severity: Low
-Versions: 1.7.3 and all earlier 1.7 and 1.6 versions
-Exploit type: Information Disclosure
-Reported Date: 2011-December-19
-Fixed Date: 2012-January-24
-
-Description
-Inadequate filtering leads to information disclosure.
-Affected Installs
-Joomla! version 1.7.3 and all earlier versions
-Solution
-Upgrade to version 1.7.4 or 2.5.0 or higher
-Reported by Jean-Marie Simonet
-Contact
-The JSST at the Joomla! Security Center.
-
-
-
-///////////////////////////////////////////
-[20120104] - Core - XSS Vulnerability
-
-Posted: 23 Jan 2012 01:45 AM PST
-http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/K4UuOr8BroM/385-20120104-core-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
-
-Project: Joomla!
-SubProject: All
-Severity: Moderate
-Versions: 1.7.3 and all earlier versions
-Exploit type: XSS Vulnerability
-Reported Date: 2012-January-22
-Fixed Date: 2012-January-24
-
-Description
-Inadequate filtering leads to XSS vulnerability.
-Affected Installs
-Joomla! version 1.7.3 and all earlier 1.7 and 1.6 versions
-Solution
-Upgrade to version 1.7.4 or 2.5.0 or higher
-Reported by David Jardin
-Contact
-The JSST at the Joomla! Security Center.
-
-
-
---
-You are subscribed to email updates from "Joomla! Developer Network -
-Security News."
-To stop receiving these emails, you may unsubscribe now: http://feedburner.google.com/fb/a/mailunsubscribe?k=JWlBXz9w0F12fWtPu46jwc9_Jcc
-
-Email delivery powered by Google.
-Google Inc., 20 West Kinzie, Chicago IL USA 60610
-
-
------ End forwarded message -----
+iQIcBAEBAgAGBQJP91uBAAoJEBYNRVNeJnmTKW4QALklqfWzdbraJkF1nLWPGGK/
+WKq7LPunaDlN+4HgwL/96zSeUkw2NeoOW6+1SNWJLLQx1u2W8hvHCAzIYoQTPGzi
+OI7j5146He2Zaxle44AwRQGrb59eYaX7SL2mQfGFec1zZr5MeOMvOHg8v+sXltLb
+/iTVR0oblgpMZ6AxE6O6m84Fbkhwv+cTjHjbYkExtDqtVORjOVMj1GbBQljXjxOt
+Lcw1XQEux86/n/V12Ef71O4i6QdvW6Z3tg3GlukrA0G7Igofl3mgCRki3kRaazER
+b5cb1r7OhDtaqIFmHukS7W3RjK+mX0A/dcDSUqJ2CfhsKyGm+gAyNtwLixoiFpoY
+oAbkqY3tXOV6SkXEikayTB34M+2GSv/k3iVnAK8DQ2HLSj+5iWaXZK/R43f0E6bj
+1TmlQKqu0GI/3LwwvWUROF0NI+Gwp87yLJfFnyy7OW2amQrYpY50dCuZzMyDMOT6
+pBUEsZFuFTkOqzrOCVTRk18GTBW+233CgGFbc33VXdNxyJv+EY32Wl0kb15fag6L
+4DfsKUZToa4exOHncFiRfNKWBpleBPQd/mBPXHrI+PGhiVkCqPpNmSEXl4gr9Yz2
+lK90vBGU2Pn6PkkRyBC0Ov8Z2o0RiCcnwveUxLQy8kfTApw4GBaHkfO0kIlVr8Tm
+uYTMZWbteB7c6Sy8tkOS
+=fr9l
+-----END PGP SIGNATURE-----
