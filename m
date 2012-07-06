@@ -1,77 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/27/1
-Message-ID: <503AFAD4.7030507@redhat.com>
-Date: Sun, 26 Aug 2012 22:43:00 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/5
+Message-Id: <201207062001.q66K1HRx022870@linus.mitre.org>
+Date: Fri, 6 Jul 2012 16:01:17 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-CC: Jan Willamowius <jan@...lamowius.de>
-Subject: Re: Re: information request on security bug fix in GNU Gatekeeper 3.1
+Cc: cve-assign@...re.org
+Subject: Re: CVE request:  Asterisk
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/25/2012 02:29 AM, Jan Willamowius wrote:
-> Hi Raphael,
-> 
-> I was planning to give people a few days to update before
-> releasing detailed information.
-> 
-> But you are right, the possibility to create an unlimited number
-> of connections each with its own thread handling it is the issue
-> that creates an easy possibility for a DOS attack.
-> 
-> Regards, Jan
+>> 2. asterisk: Possible resource leak on uncompleted re-invite
+>> transactions
+>> http://downloads.asterisk.org/pub/security/AST-2012-010.html
 
-Please use CVE-2012-3534 for this issue.
+>This issue does not appear to have a CVE yet ("TBD").
 
-> -- Jan Willamowius, Founder of the GNU Gatekeeper Project EMail : 
-> jan@...lamowius.de Website: http://www.gnugk.org Support: 
-> http://www.willamowius.com/gnugk-support.html Raphael Geissert
-> wrote:
->>> Hi Jan,
->>> 
->>> On the announcement of release 3.1 of GNU Gatekeeper[1] there's
->>> a mention of a security bug fix. Could you please shed some
->>> light on the security issue? is it related to the status port
->>> connection limit feature that was recently added in [2] and 
->>> similar?
->>> 
->>> Thanks in advance.
->>> 
->>> Found via secunia SA50343 [3]
->>> 
->>> [1]http://www.gnugk.org/gnugk-3.1.html 
->>> [2]http://openh323gk.cvs.sourceforge.net/viewvc/openh323gk/openh323gk/GkStatus.cxx?r1=1.132&r2=1.133
->>
->>> 
-> [3]http://secunia.com/advisories/50343/
->>> 
->>> Kind regards, -- Raphael Geissert - Debian Developer 
->>> www.debian.org - get.debian.net
->>> 
-> 
-
+MITRE sent them a CVE name in response to their request this week.
+Their request did not happen to include the specific mapping to the
+AST-2012-010 identifier, so for now we will not mention the specific
+CVE name here, because there's a small chance that the request was
+actually not about AST-2012-010. There's a larger chance that this CVE
+name will be added to the AST-2012-010 document soon.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJQOvrUAAoJEBYNRVNeJnmTsGYQAIvW6Lz/7nlxSuRwVTqszXpF
-00HBW9tMo3SfG50t3UOlRHJhj8t0wEzcItCNtk6zacm23BnM/spg4q64gNlgJJLP
-UT6FQ8TTGRD618pxO9GkT4x4Eb9pN4oFkgl4jr9aC/N8Vxrk/9D5zETWUfPQV0Ok
-WdZmN6EmrX1V94RwJ5SvFrdZSPk+PyFDJiC5wkmhYVO6oyUDr144UxOCtvyB3aqx
-5cqc+oJBABX9ONNm1RWDVtMNd/kt0knGMYrtlJAUfZYyySn3OGdUZKICzi8/gsCK
-3HgYN+OByZmvtJA38JcKHjntgs4+lS5trpVGAWfzVW1QeToOWqO/4m6Jcq78MPrm
-5BiQ3Zck+RZnGPXH6lNqNeBmSYNyzR4++GlmLgT4AFHEq6NNs0T4sUJwQ8+33wKe
-CnvJWvDXsVyw2PQ6r4rW3w/qPMtcGTHn5EQNL4VsYy34gN4NJuMcSmr808H/cBgE
-b2f92MuyRogQtI2jAB+5JX8Ig3w92LocMZNi9kDjjB89tgIANhm9F194ta4pQTU+
-Jh6+vzc8czNDGKT9L5CGlkUnbfg+JSk6PbO05Bc3oTCDKFtvWiqq+IhG88bBosh9
-3TEGSU6jZLdsgVt+amtts7YOByntH67o0m4jBTnBmQIp9UbELw/7XnG0ZMdPtOU/
-BI5KHJXru5Fdg2RMXgHh
-=Vnji
+iQEcBAEBAgAGBQJP90KqAAoJEGvefgSNfHMdmcYH/RFzmRv/40WZk7DlCxEvw8rP
+ss+Zj1b57BIEV3gRaJYo33xI39F+eXPtvedzQV+nkgFigd5OMP5Po0/reHYDrOc/
+vgV6s/v698dmMuBE+WGYBTvZDaUSDmRE6Bp3DQdnRVqfM7G6CRUBVkLMUNbX3qeI
+s7liWytRPJGY8GwqgLfXnU69lN+ieDQcVsr0UR3P67d2CjuWiAwiCs3cTMh/EkLU
+mQvMZcIgkiE2L80Cjl6eWf8oCkMTKQWvviMZTlgQp+BhdWvEuLaYtzr2FIDgX26c
+98NERM3xQNGJB3pKLbF00a6/dwprCAeJ1OL7yawReyGWXi6O+A4FJ3clup1i6lk=
+=gnRo
 -----END PGP SIGNATURE-----
