@@ -1,42 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/26/2
-Message-ID: <4F706A6D.5030207@redhat.com>
-Date: Mon, 26 Mar 2012 15:09:01 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE-2010 Request: quake3 / openarena-server: DDoS by processing 'getstatus' and 'rcon' packets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/08/1
+Message-ID: <4FF90AFD.7040702@redhat.com>
+Date: Sat, 07 Jul 2012 22:22:21 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: security@...dpress.org, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE #'s for WordPress 3.4.1 release
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   yet in 2010 the following problem has been corrected in Quake3 / OpenArena:
+Seeing as how I have heard back from security@...dpress.org on another
+matter, but not this one (nor has Steve said "don't do it" =), I can
+only assume CVE #'s have not been assigned. If CVE's were issued for
+these issues they have not been published anywhere I can find them.
+Google:
 
-   A distributed denial of service flaw was found in the way Quake3 Arena /
-OpenArena servers used to handle 'getstatus' and 'rcon' (remote command)
-connectionless requests. A remote attacker could use this flaw to perform
-distributed denial of service attack against the target server IP gameserver by
-spoofing certain packets.
+site:wordpress.org CVE-2012
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=665656
-[2] http://openarena.ws/board/index.php?topic=4391.0
-[3] http://www.ioquake.org/forums/viewtopic.php?f=12&t=1694
-[4] http://www.urbanterror.info/forums/topic/27825-drdos/
-[5] http://lists.ioquake.org/pipermail/ioquake3-ioquake.org/2012-January/004778.html
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=806898
+returns 12 results, most of which are CVE-2012-1835.
 
-Relevant upstream patch:
-[7] http://icculus.org/pipermail/quake3-commits/2010-January/001679.html
+On 07/02/2012 03:24 PM, Kurt Seifried wrote:
+> http://codex.wordpress.org/Version_3.4.1
+> 
+> Lists several security issues as corrected:
+> 
+> -Privilege Escalation/XSS. Critical. Administrators and editors in 
+> multisite were accidentally allowed to use unfiltered_html for
+> 3.4.0.
 
-Could you allocate a CVE-2010-* CVE identifier for this issue?
+Please use CVE-2012-3383 for this issue.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+> -CSRF. Additional CSRF protection in the customizer.
 
-P.S.: There doesn't seem to be a CVE identifier for this issue yet:
-       http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=quake3
+Please use CVE-2012-3384 for this issue.
 
-       mentions various Quake3 related security flaws, but doesn't
-       this concrete issue yet.
+> -Information Disclosure: Disclosure of post contents to authors
+> and contributors (such as private or draft posts).
+
+Please use CVE-2012-3385 for this issue.
+
+> -Hardening: Deprecate wp_explain_nonce(), which could reveal 
+> unnecessary information. -Hardening: Require a child theme to be
+> activated with its intended parent only.
+
+Hopefully these are in fact only hardening issues and not security
+issues, so no CVE. More details (like links to the code commits) would
+be appreciated though.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP+Qr9AAoJEBYNRVNeJnmTEnIP/1eUWbW3uCJB9NM5/5cTinGt
+jU3cNGBKLIjJfo16nYBcbFeihUdp6RxFy5Mz63104W9UOvyS3qLW6avU8wQ34u+7
+QfDCmFKM/7rRfJk2T6e5eJY6PANqmUpkOob2xqtXd44yCbT2feKr6E1EzkqkmXdl
+mqt6RtsiBqxNKRR9BWC5ZSFDmcHjcBX1SWFn8xWBanC2hZk2c2g5zA18ZEatKhsY
+gfVsSznm5VxTutvQtUhhKh8D7pVtVpydm5tb8vXiEjYTrhnOrlyhMvdgSO0PuQTf
+OvD3BNnGSG0JKLnwl8R7uUlhOAuHMweI0DdQGNR+vOTmMvc1FLtT5RTKb2a4ojhq
+nQ3V0RxLJn2ZMEkbV+E7HBwEILBKPDzIuCBm1LmPyD7kaEWkwJrmPzhn0MRS/67H
+nBT89hikxTmiGH8kUSjaSVPHRz2RrCPEHjp9mfjhe4huDit9eB5Fe3QKE52VVhUJ
+oqenf0g9f51sG4s4ail7ubmb/908TlhSDX56UK21Irb3OTjOgi5lnzVbcOq2OX3n
+YmWeXzO6QyIq0OK+GIGpp3WlDd00AKgg1Ip/wxa2aNDIAM3WTy9QGkk35F3SIg0p
+MA4tFgbZkbFIPVo4QJVdat0oGP0Q/AdC7Ts7DsASJnT3Qq/p/EaFa6D9MOEngX9N
+Xx2JZ3K6FExbFo6c1+L0
+=mpKg
+-----END PGP SIGNATURE-----
