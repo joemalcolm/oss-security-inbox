@@ -1,95 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/16/6
-Message-ID: <075901cd7bf2$370f63f0$a52e2bd0$@reactionis.co.uk>
-Date: Thu, 16 Aug 2012 22:00:48 +0100
-From: "research" <research@...ctionis.co.uk>
-To: "'full-disclosure'" <full-disclosure@...ts.grok.org.uk>, "'bugtraq'" <bugtraq@...urityfocus.com>, <secalert@...urityreason.com>, <bugs@...uritytracker.com>, "'vuln'" <vuln@...unia.com>, <vuln@...urity.nnov.ru>, <news@...uriteam.com>, <moderators@...db.org>, <submissions@...ketstormsecurity.org>, <submit@...ecurity.com>, <oss-security@...ts.openwall.com>
-Subject: GIMP Scriptfu Python Remote Command Execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/09/3
+Message-ID: <4FFAE8CF.9040005@redhat.com>
+Date: Mon, 09 Jul 2012 16:21:03 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, David Woodhouse <dwmw2@...radead.org>, Daniel Berrange <berrange@...hat.com>, Daniel Veillard <veillard@...hat.com>
+Subject: Re: CVE Request -- dnsmasq: When being run by libvirt open DNS proxy (reachable out-of the virtual network set for the particular guest domain too) is created
 Content-Type: text/plain; charset=utf-8
 
-Summary
-=======
 
-There is an arbitrary command execution vulnerability in the scriptfu
-network server 
-console in the GIMP 2.6 branch. It is possible to use a python scriptfu
-command to run
-arbitrary operating-system commands and potentially take full control of the
-host.
+Steve,
 
-The advisory is posted here:
-http://www.reactionpenetrationtesting.co.uk/GIMP-scriptfu-python-command-exe
-cution.html
+   some kind of strange request (since I have requested
+the CVE id originally), but didn't previously think of
+it that following way -- which component would the CVE id be
+actually assigned to, dnsmasq or libvirt?
 
-CVE number: CVE-2012-4245
-Vendor homepage: http://www.gimp.org/
-Vendor notified: 9/8/2012
+   From my understanding it's a combination of both of them,
+which is making it a security flaw (libvirt has announced
+to provide DNS masquerade and due to a bug in one component,
+actually providing that functionality, this allowed a DDoS
+attacks).
 
+   Once libvirt announced the separation, is it it's
+responsibility to handle it? And as such security flaw in
+libvirt?
 
-Affected Products
-=================
+   For the dnsmasq package, it doesn't look like a security
+flaw (rather as bug, when handling certain CLI option -- it
+would not ignore packets as instructed).
 
-GIMP 2.6 branch (Windows or Linux builds)
+   I am not completely sure, there has been similar enough
+example in the past, which could help us to decide which
+component the particular CVE identifier should be assigned
+to.
 
-Non-Affected Products
-=====================
+   Could you clarify / help us to understand Mitre's opinion
+here?
 
-The Scriptfu network server component does not currently work in the GIMP
-2.8 branch 
-(Windows or Linux builds). 
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Details
-=======
-
-There is an arbitrary command execution vulnerability in the scriptfu
-network server 
-console in the GIMP 2.6 branch. It is possible to use a python scriptfu
-command to run
-arbitrary operating-system commands and potentially take full control of the
-host.
-The following command will write "foo" to "/tmp/owned":
-
-(python-fu-eval 0 "file = open('/tmp/owned','w')\nfile.write('foo')")
-
-
-Impact
-======
-
-Successful exploitation of the vulnerability may result in remote command
-execution.
-
-Solution
-===========
-No solution has been implemented at this stage apart from the workaround
-below.
-
-Workaround
-===========
-
-Do not enable the scriptfu network server.
-The GIMP development team have stated that this component was not designed
-with security
- in mind and therefore should not be used in production environments.
-
-Distribution
-============
-
-In addition to posting on the website, a text version of this notice
-is posted to the following e-mail and Usenet news recipients.
-
-  * bugtraq () securityfocus com
-  * full-disclosure () lists grok org uk
-
-Future updates of this advisory, if any, will be placed on the ReactionIS
-corporate website, but may or may not be actively announced on
-mailing lists or newsgroups. Users concerned about this problem are
-encouraged to check the URL below for any updates:
-
-http://www.reactionpenetrationtesting.co.uk/GIMP-scriptfu-python-command-exe
-cution.html
-
-============================================================================
-====
-
+On 07/09/2012 02:04 PM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>    David Woodhouse reported a deficiency in the way dnsmasq,
+> a lightweight, easy to configure DNS forwarder and DHCP server,
+> when being run under libvirt, a library providing simple
+> virtualization API, performed processing of packets coming
+> outside of virtual network set for the particular guest domain.
+>
+>    When libvirt was configured to provide a range of public
+> IP addresses to its guest domains and dnsmasq was instructed
+> to discard packets originating from other interfaces, than
+> specified on the command line via the --bind-interface option,
+> those packets (coming from 'prohibited' interfaces) were not
+> dropped properly and subsequently processed.
+>
+>    A remote attacker could use this flaw to cause a distributed
+> denial of service, as demonstrated in the report [1] via "stream
+> of spoofed DNS queries producing large results".
+>
+> References:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=833033
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
 
