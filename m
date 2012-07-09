@@ -1,49 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/9
-Message-ID: <4F109ADD.80906@redhat.com>
-Date: Fri, 13 Jan 2012 13:58:05 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for OpenTTD - use CVE-2012-0049!
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/09/4
+Message-ID: <20120709224735.GB17170@kludge.henri.nerv.fi>
+Date: Tue, 10 Jul 2012 01:47:49 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, moderators@...db.org
+Cc: m.razavi777@...il.com, larry0@...com
+Subject: CVE-request: Basilic 1.5.14 diff.php remote code execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 01/13/2012 01:56 PM, Kurt Seifried wrote:
-> On 01/09/2012 11:48 AM, Kurt Seifried wrote:
->> On 01/07/2012 08:13 AM, Rubidium wrote:
->>> Hi folks,
->>>
->>> we, the OpenTTD developers, have identified a security vulnerability in
->>> OpenTTD (an open source game with multiplayer). Would you be so kind
->>> as to allocate a CVE id for this issue?
->>>
->>> The issue concerns a denial of service vulnerability in the form of a
->>> slow read attack preventing anyone to join the server, and preventing
->>> the continuation of a game when 'pause on join' is enabled. This
->>> attack requires the attacker to be authorized, but most servers do not
->>> implement authorization. The first vulnerable version is 0.3.5, the
->>> upcoming 1.1.5 release will have the issue fixed.
->>>
->>> Once a CVE id is allocated, the issue and fix will be documented at
->>> http://security.openttd.org/CVE-2012-xxxx
->>>
->>> Thanks in advance,
->>> Remko 'Rubidium' Bijker
->>>
->>> (Please CC me, I'm not subscribed)
->> Need more information like a code commit to link to.
->>
->> -- Kurt Seifried / Red Hat Security Response Team
-> Rubidium replied to me offlist:
->
-> http://vcs.openttd.org/svn/changeset/23764
->
-> Please use CVE-2012-0048 for this issue.
->
->
->
-Augh typo, that should have been CVE-2012-0049!
+Hello,
 
--- 
+Can you assign 2012 CVE-identifier for Basilic 1.5.14 diff.php remote code execution vulnerability, thanks.
 
--- Kurt Seifried / Red Hat Security Response Team
+Bugtraq ID: 54234
+Announcement: http://seclists.org/bugtraq/2012/Jul/1
+Verification: http://seclists.org/bugtraq/2012/Jul/42
+Example URL: http://www.example.com/basilic/Config/diff.php?file=%26cat%20/etc/passwd&amp;new=1&amp;old=2
+Metasploit PoC: http://downloads.securityfocus.com/vulnerabilities/exploits/54234.rb
 
+OSVDB guys could you create item for this issue. Thank you :)
+
+- Henri Salo
