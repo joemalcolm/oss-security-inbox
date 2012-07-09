@@ -1,46 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/22/3
-Message-Id: <201211221438.58193.mweckbecker@suse.de>
-Date: Thu, 22 Nov 2012 14:38:57 +0100
-From: Matthias Weckbecker <mweckbecker@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Marc Deslauriers <marc.deslauriers@...onical.com>
-Subject: Re: CVE Request: Python keyring
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/09/1
+Message-ID: <4FFAC8D3.20404@redhat.com>
+Date: Mon, 09 Jul 2012 14:04:35 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, David Woodhouse <dwmw2@...radead.org>, Daniel Berrange <berrange@...hat.com>, Daniel Veillard <veillard@...hat.com>
+Subject: CVE Request -- dnsmasq: When being run by libvirt open DNS proxy (reachable out-of the virtual network set for the particular guest domain too) is created
 Content-Type: text/plain; charset=utf-8
 
-Hi Marc,
+Hello Kurt, Steve, vendors,
 
-On Monday 19 November 2012 17:09:07 Marc Deslauriers wrote:
-> On 12-11-16 11:14 AM, Marc Deslauriers wrote:
-> > Hello,
-> >
-> > Python keyring before 0.10 created keyring files world-readable by
-> > default.
-> >
-[...]
-> >
-> > Could a CVE please be assigned to this issue?
->
-> Actually, that fix only changes the permissions on database files that
-> were migrated from previous versions, it doesn't fix permissions on
-> newly created database files.
->
-> It would appear python-keyring still creates new database files with
-> inappropriate permissions.
->
+   David Woodhouse reported a deficiency in the way dnsmasq,
+a lightweight, easy to configure DNS forwarder and DHCP server,
+when being run under libvirt, a library providing simple
+virtualization API, performed processing of packets coming
+outside of virtual network set for the particular guest domain.
 
-New bug report seems to be at [1], I assume. Has there already been a CVE
-assigned actually?
+   When libvirt was configured to provide a range of public
+IP addresses to its guest domains and dnsmasq was instructed
+to discard packets originating from other interfaces, than
+specified on the command line via the --bind-interface option,
+those packets (coming from 'prohibited' interfaces) were not
+dropped properly and subsequently processed.
 
-[1] http://bitbucket.org/kang/python-keyring-lib/issue/76/insecure-database-file-permissions
-(with patches attached too)
+   A remote attacker could use this flaw to cause a distributed
+denial of service, as demonstrated in the report [1] via "stream
+of spoofed DNS queries producing large results".
 
-> Marc.
+References:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=833033
 
-Thanks, Matthias
+Could you allocate a CVE id for this?
 
--- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
