@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/13
-Message-ID: <20120316155319.GA11923@openwall.com>
-Date: Fri, 16 Mar 2012 19:53:19 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Mark Stanislav <mark.stanislav@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/09/2
+Message-Id: <201207091341.q69DfgxW011440@linus.mitre.org>
+Date: Mon, 9 Jul 2012 09:41:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2012-3881 RTG and RTG2: 95.php/rtg.php/view.php SQL injection
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 16, 2012 at 12:20:37AM -0400, Mark Stanislav wrote:
-> None of the details of these issues have been publicly discussed or released as I am trying (without much success) to allocate a CVE prior to sending out a coordinated advisory including that identifier as I always have done and as the mitre site indicates to do.
-> 
-> There are no reference links to provide and I am not publicizing details on this list before the developer can be informed of the CVE.
-> 
-> I'm happy to take this off list as I am sure no one cares about any of this discussion
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-No, please keep this on the list.  Discussions on how to handle
-vulnerability disclosure (including the CVE ID assignment step) are
-definitely on topic for oss-security.
+https://code.google.com/p/rtg2/issues/detail?id=35
+RTG 0.7.4 (http://sourceforge.net/projects/rtg/)
+RTG2 0.9.2 (http://code.google.com/p/rtg2/)
+95.php rtg.php view.php SQL injection
+CVE-2012-3881
 
-Thanks,
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-Alexander
-(a moderator for oss-security)
+iQEcBAEBAgAGBQJP+t7SAAoJEGvefgSNfHMdsyMH+QHrfZezCVr3/GePoobfIzv1
+IXAjewXsEW7VQHW4URXL5al4un3GGYcN95TUmaen5RqzkVkXH/XNmAdpudPWadQL
+YgP/j7ziIZjxmxNLy/moKQyoGqIV/tFpiiHiP5hOTmTXrFkX6lIiqC1bVysTxIPp
+vnF0+xUMtJuXl6tzdbXagQ95ao+vWLAznCht1T6GelUcRv1yfxJn+f+4nIxL3bmR
+X/WJQHKkZZqHXKrHySR7JivbgqgYlCQJjPGiv20pnIx2Nj1KdM7rtDIgE+2YK3Ut
+g+b4mlatAyWVixqsgI/YjR4Ea4ssCaxabNNp8ZnB6oXOLqPq7gBJTX2J4K53+vM=
+=S0yq
+-----END PGP SIGNATURE-----
