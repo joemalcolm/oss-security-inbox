@@ -1,62 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/1
-Message-ID: <4FCE9E51.80602@redhat.com>
-Date: Tue, 05 Jun 2012 18:03:29 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: openldap does not honor TLSCipherSuite configuration option
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/13
+Message-ID: <20120710142113.GD5296@suse.de>
+Date: Tue, 10 Jul 2012 16:21:13 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ecryptfs headsup
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 06/05/2012 03:54 PM, Vincent Danen wrote:
-> Could a CVE be assigned to this issue?
+It is a potential privilege escalation since the pam module
+was not setting uid/gid(list) appropriately and the suid
+binary did not clear environment before exec'ing umount.
+I do not know whether MS_NOSUID was really needed (and maybe
+MS_NODEV is, but I was not able to create dev files).
+Unfortunally we found ecryptfs not really stable inside the kernel
+and Marcus is still rebooting :)
+
+Sebastian
+
+On Tue, Jul 10, 2012 at 08:07:28AM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> It was reported that OpenLDAP, when using the Mozilla NSS backend,
-> would ignore any TLSCipherSuite configuration settings.  When the 
-> TLSCipherSuite setting is configured, OpenLDAP would use the
-> default cipher suite, ignoring the setting.
+> On 07/10/2012 05:33 AM, Sebastian Krahmer wrote:
+> > Hi,
+> > 
+> > We made a hardening patch for ecryptfs utils. It is finally ready, 
+> > using sysconf(_SC_NGROUPS_MAX) :)
+> > 
+> > I dont know whether a CVE is needed, maybe if you already ship it
+> > suid root (we do not).
+> > 
+> > It can be found here:
+> > 
+> > https://bugzilla.novell.com/show_bug.cgi?id=740110
+> > 
+> > Sebastian
 > 
-> While the default cipher suite contains some weak ciphers (e.g. 
-> MD5-based), it is still not easy to break the encryption to obtain 
-> sensitive information.  However, if an administrator wishes to
-> enforce the use of stronger ciphers by overriding the defaults
-> using TLSCipherSuite, they should be able to trust that, when the 
-> configuration items is in place, the stronger ciphers are used.
-> Due to this flaw, that is not the case.
+> Well what is the security vulnerability / trust boundary that can be
+> broken using this issue?
 > 
-> References: https://bugzilla.redhat.com/show_bug.cgi?id=825875 
-> http://www.openldap.org/its/index.cgi?findid=7285 
-> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=2c2bb2e
->
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 > 
 > 
-> Thanks.
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+> 
+> iQIcBAEBAgAGBQJP/DcgAAoJEBYNRVNeJnmT3R8P/0cRjsBbmwVeMwKUbwzZPUrB
+> qIZcQEtx+VfQo/pWasY+DudbszVlg7ZKEkOkORMGPeiCYWofElWG3YFM0vzPQALA
+> gBLCXOUYzGqZ9ZF754hizqSYOhPa9aQHV0yB/NPlYGhl1MZSjQx6/brsYs1EDOZU
+> Kn3bslL3vgp3mzhoDjTKyiLjndaVlFagQVlmcgXlm6YtzkFFkqCTdOU1IU0vElAO
+> hgeWzqNXH1ykEDxY6cZCpog+t28VhpbPG87qA2C2ErgZdfTulCaip4LsfP5B5fGY
+> nW0Z1vfFRn+2b3iR7YZBmcVbzgO2FUEBhKTRgKWyhDZ4Lee298CKm47dxXDt/T0Q
+> PB5Q1a9oJKCcitApyYKqK5f3kZ82uPJJt2jorVRN41ppBIGLbKQurGlYZUXb62Xc
+> Lyv4rxL+4/ejJXi6XQCTrHzzJf35Y9JSFsvO0bqXR/xwHtumWs44p6SDW34xtp5y
+> Vif1wrYqUUAzKEZkN7w8kzQA3Sz6hXOBiadqcNf7qkaGQ/0HlIfGB3abo7/OlJVB
+> 2Jf+HH5bM+5oiXA5fKwqq07dNUj9sGptOmuZVhfFsOE1H46WCKqhBGBgsanU94x9
+> W/3IUyq4wEAH3lJQypXh65kZoJGc+5CDeypQ2eo9/RI1jmrjxIR5GeN/WVcPRJtY
+> MByzHCJ43wPYEVl25/eV
+> =7ydb
+> -----END PGP SIGNATURE-----
 
-Please use CVE-2012-2668 for this issue.
+-- 
 
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPzp5RAAoJEBYNRVNeJnmTlycP/RinjoXTx14EFSYVrM8r7XW4
-x/4No+CPYcBYsorCger/rce7BKZfxhs4Wy8KX/haKwCzWWYhObyd61xZ8dZlRAPi
-z2C0qk2ev8ZMmykb3Fi0gqyPQuBB7Y7jtfV9+Sf6G+PSWGcGlnkfbGgelefUQTM4
-+dXalBtzgbROdNjiNocSrKshtS4wwJkntoX1TuIxQxS/GB16/xyYfA38T24eXFId
-6IFs/HJzrS0fBCbaxT22dkZtveUYUFEcpPAKCqWMHOIpHHguFWN5BNk/aWQ+f8ym
-88PCNtDiglxMYwvxwVDRXjUSHGMBsL3DENzaq47AUnjWVjVuY4UjyK4HhOUY0jbY
-Zp+6S4Cdt2f6LdxTnfewQNo6IyKhOTilqvL7LAPa+2TrATMLhIgex4gmsuKS/OT1
-qT04ac5qcoIFWtEscMvevXtSLT+sxF1NSgkGimXQJ1X94kEh7iDceRxiD3B+s4vm
-KvHFbXT3aV7Q/zrgBXJRwC6rOqrw0qofTgDz/kG95u23YgcgXLbWblV5YJ538SCq
-fLIAGm2BbVUP2iQS1Un26nYmLUfXKQB/tIzq7AUbMH8mKzpjZTOIFrm4+uZwexQ7
-Vy93nab9FYx1X6CKRTGdJWgQghqpGAEc4V/+kRCNQQLaNp0GYxjwqsmve/SbP/Mw
-skDiqlVbXhIwsIard6/r
-=yy8y
------END PGP SIGNATURE-----
