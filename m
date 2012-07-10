@@ -1,18 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/01/3
-Message-ID: <20120301210739.GB22073@foo.fgeek.fi>
-Date: Thu, 1 Mar 2012 23:07:39 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/1
+Message-ID: <4FFBA4DC.6020404@redhat.com>
+Date: Mon, 09 Jul 2012 21:43:24 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: Joomla core information disclosure 1.7.1
+CC: Henri Salo <henri@...v.fi>, moderators@...db.org, m.razavi777@...il.com, larry0@...com
+Subject: Re: CVE-request: Basilic 1.5.14 diff.php remote code execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It seems that this issue does not yet have CVE-identifier.
+On 07/09/2012 04:47 PM, Henri Salo wrote:
+> Hello,
+> 
+> Can you assign 2012 CVE-identifier for Basilic 1.5.14 diff.php
+> remote code execution vulnerability, thanks.
+> 
+> Bugtraq ID: 54234 Announcement:
+> http://seclists.org/bugtraq/2012/Jul/1 Verification:
+> http://seclists.org/bugtraq/2012/Jul/42 Example URL:
+> http://www.example.com/basilic/Config/diff.php?file=%26cat%20/etc/passwd&amp;new=1&amp;old=2
+>
+> 
+Metasploit PoC:
+http://downloads.securityfocus.com/vulnerabilities/exploits/54234.rb
+> 
+> OSVDB guys could you create item for this issue. Thank you :)
+> 
+> - Henri Salo
 
-http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
+Please use CVE-2012-3399 for this issue.
 
-I can't never be sure with Joomla so maybe someone wants to verify this before assigment.
 
-- Henri Salo
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP+6TcAAoJEBYNRVNeJnmT9/MP/0K1Y+MhOtdBVRFTaxayUrGa
+LJ0DrnhY81fdEUPy9r5mwFe+aqKDZJ8JrT+nyI1n4Mn6uknTdAPetl97V4kM8iir
+XSAlanRETxWzX9fVLmHo/CZBrpoKU6kpXanZZLPi3iVuZF++zXugV+knmZDz+MVg
+QYLK/sHu2iQMlx8EG5IHFNC8YLLSv++ept/6bbHnMN24b8lnhe64ePdkRFLXBe/N
++r4b7z1V6jZTwH4RLGMJruPsoXA2EroiJCwOLjyo/rv+Hp6XfQoKp2it+T4wu/kK
+gAxb/6bmvw6dlBk/ccvCIIDUReD52tfdyZ39kTstZqc7KQwYKrDgj8t07VXbbxDx
+8qz5goHZJwbLM4GyKeUpj0kGa0geAZzJlvxZKvT7v14WYf4suFcUaoT8+IZt8Pmq
+WjmISuGQOBgPYcMLjYE1sE8WTlJhe///8LABT4gROsBYyljb4N29DiydMimF0x/f
+BOrkzlYuFaSfs6Pco8E7tkBNpzp5rFctef4QIQdO6K1nAZJ7Ovigq+gh9QVeIh1M
+e9575CNotVUO1bYY+x48y370zbe8J+HKxhx3yM3i7jFPVwRKE0Pn+vkAxxoyb6GY
+PTHxIWAFvr82qXWdqnLvR4MQ4Evm0HeF+TdjKQidXWQMQFYvVyp1yxt76EZUMGwc
+Fk9yOwA7LAw7U/A15/rI
+=UFYv
+-----END PGP SIGNATURE-----
