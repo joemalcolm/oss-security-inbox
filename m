@@ -1,46 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/17
-Message-ID: <50C9F232.7000905@herbesfolles.org>
-Date: Thu, 13 Dec 2012 16:20:18 +0100
-From: Colomban Wendling <lists.ban@...besfolles.org>
-To: Andreas Ericsson <ae@....se>
-CC: Jan Lieskovsky <jlieskov@...hat.com>,  Eitan Adler <lists@...anadler.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Nick Treleaven <nick.treleaven@...nternet.com>, Enrico Troeger <enrico.troeger@...na.de>,  Matthew Brush <mbrush@...ebrainz.ca>, Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com,  jonathan underwood <jonathan.underwood@...il.com>, oss-security@...ts.openwall.com
-Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/5
+Message-ID: <4FFC2A93.5030803@redhat.com>
+Date: Tue, 10 Jul 2012 15:13:55 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
-Le 13/12/2012 12:51, Andreas Ericsson a écrit :
-> On 12/13/2012 12:21 PM, Jan Lieskovsky wrote:
-> [...]
->
->> The difference when running it directly from the command line is
->> that Bash would escape those files for you, so even with crafted names
->> nothing bad / suspicious would happen (and project would build
->> if syntactically correct).
->>
-> 
-> Except that people wouldn't manually compile thousands of files
-> one by one. That's where build systems come in.
+On 07/10/2012 03:09 PM, Sebastian Krahmer wrote:
 
-Yes, and for manual compilation to even have a chance to work one would
-tweak a lot the build command to match the project's needs (inclusion
-paths, link paths, etc.), so one has to be told to do so.
+> There are certainly also other libs that will receive a patch.
 
-So I don't think it's more problematic than telling an user to run say,
-"sudo cp -f that_file_I_sent_you /bin/sh".  Nobody can protect an user
-from that, only the user can do it.
+Perhaps we can put a getenv_secure() into libc, which will perform all 
+the appropriate checks (including future checks we do not know about 
+yet)?  Duplicating the code in many libraries does not seem prudent.
 
->> To the difference, in the Geany scenario, the file name(s) would
->> be passed to command line directly as they are (and if the project
->> would build or not at the end isn't what matters here).
->>
-> 
-> For the original report to be valid, the file would still have to
-> be loaded into geany, or the report should have been about some
-> other program. This is not a security issue that concerns geany.
+(OTOH, library code should never use getenv(), but it's a long way to that.)
 
-All this said, I think the issue should still be addressed, because
-although it doesn't looks so security-related to me, it's not good to
-choke on quotes or whatever.  But that's not oss-security's problem :)
+-- 
+Florian Weimer / Red Hat Product Security Team
 
-Regards,
-Colomban
+
