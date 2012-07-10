@@ -1,49 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/30/1
-Message-ID: <503F0DA1.50206@redhat.com>
-Date: Thu, 30 Aug 2012 00:52:17 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/16
+Message-ID: <20120710143044.GE5296@suse.de>
+Date: Tue, 10 Jul 2012 16:30:44 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Simon ." <bofh666ftw@...glemail.com>
-Subject: Re: [icinga-web] rmtmp-files.sh
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 08/29/2012 12:48 PM, Simon . wrote:
-> Hi all,
+On Tue, Jul 10, 2012 at 06:22:28PM +0400, Solar Designer wrote:
+> On Tue, Jul 10, 2012 at 04:11:12PM +0200, Sebastian Krahmer wrote:
+> > I am fine with either solution and would prefer upstream patches
+> > anyway, but it turned out in past that nobody from upstream
+> > is willing to add such patches.
 > 
-> 
-> Icinga-web (icinga.org)
-> 
-> I have found rmtmp-files.sh being called from the Makefile. This
-> only works, if it will either be piped trough sh or the variable
-> RMTMP_FORCE is set. Neither is the case. But, there is still a bug
-> in the script.
+> If this is not for upstream and you only need it working on a particular
+> distro with glibc, then why not use __secure_getenv()?
 
-Can you post a link to the files in question? Thanks.
+Indeed, if it is a exported symbol on the glibc versions we ship,
+we should consider this. I remember a discussion that it was somehow
+not available in the past.
+
+Sebastian
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-- 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-iQIcBAEBAgAGBQJQPw2gAAoJEBYNRVNeJnmTQD0QALY/L25Zdr6Stkho8GL4Ce3p
-iwOcj2D/NFxO/bybUodEz6LIhFiCwzgbJUfCQeubL0GeH87b52ECCBtQByu9pLdU
-66gd6YHfLD1cnQ85Qo9+N1LlJ5CXcLxwvXiRqdRJK2sA/Tis+LXpRRLpsDar5QEo
-MFLfGaT+KMZ017II1GyyCQWvKP/U+KA6ClWaBhf5uXPi+Nfni7XnBR6cUHg/LEnU
-A2FwJk35IlxS9KmmOMCFBUKi5tZr2zJMVO9qUw55mqGmoc3JonMDaFU8kU8J/UAB
-olSLz7JZVAcRI5bqWmuQ7YPxNFg1rJCsDP7yu8nks7nbnrKOK1/Fnj6Vq8H3t/of
-xIOhpCkHW/yrtMnh2g8m8JUJk7Eg5RfcnlcL8qxIvO6fLCgYHraJuSl5njhdJblQ
-omzrS2DvwdcL2ghAHcWMPPlaU9cerm247sqLCyuAlyp+t01hsdlfXbbRnpOWRTbN
-7B+ZwAAvUubOs0tSkfBeIlC3I2j4Nag9GpU0OxJV2ywRA+WQil8EV9HV1lgvLxgw
-YQShv1ONNR3vK0l7tDF9NhY2Npd+fNv3s71A52+9JvShEpH13P2+PHzhODQ43m4P
-W7Fs7obOf4flo7VmO68pwZGCOxt/Rgl0Qe8aklpOpHrH8D9+QgW3cufDJd4OVzQ5
-ig/3uHKAnkTHSR6+OW4p
-=SHBu
------END PGP SIGNATURE-----
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
