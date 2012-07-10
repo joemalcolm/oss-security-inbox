@@ -1,38 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/3
-Message-ID: <20121203075135.GA1072@meddwl>
-Date: Mon, 3 Dec 2012 08:51:35 +0100
-From: Sergei Golubchik <serg@...monty.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/2
+Message-ID: <20120710221340.GA2168@boyd>
+Date: Tue, 10 Jul 2012 15:13:41 -0700
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, king cope <isowarez.isowarez.isowarez@...glemail.com>, full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org, security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
-Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
+Cc: Marcus Meissner <meissner@...e.de>, Kurt Seifried <kseifried@...hat.com>, Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: ecryptfs headsup
 Content-Type: text/plain; charset=utf-8
 
-Hi, king cope!
+On 2012-07-10 16:48:26, Dan Rosenberg wrote:
+> On 07/10/2012 10:30 AM, Marcus Meissner wrote:
+> > On Tue, Jul 10, 2012 at 04:21:13PM +0200, Sebastian Krahmer wrote:
+> >>
+> >> It is a potential privilege escalation since the pam module
+> >> was not setting uid/gid(list) appropriately and the suid
+> >> binary did not clear environment before exec'ing umount.
+> >> I do not know whether MS_NOSUID was really needed (and maybe
+> >> MS_NODEV is, but I was not able to create dev files).
+> >> Unfortunally we found ecryptfs not really stable inside the kernel
+> >> and Marcus is still rebooting :)
+> >
+> > This means ...
+> >
+> > So far we have not yet found a specific security issue.
+> >
+> > Ciao, Marcus
+> >
+> 
+> This reminds me...
+> 
+> If an unprivileged user can mount ecryptfs shares (e.g. via the setuid-root
+> mount helper shipped on Ubuntu) and has the ability to mount user-controlled
+> filesystems (either network filesystems via setuid mount helpers like mount.cifs
+> or mount.nfs, or formatted USB drives via physical access), it's possible to
+> escalate privileges to root because the setuid ecryptfs helper does not mount
+> filesystems with the nosuid or nodev flags.
+> 
+> An attacker can create an ecryptfs filesystem on his own machine on a network
+> filesystem or USB drive, and then mount that ecryptfs filesystem on the victim
+> machine for a setuid-root backdoor.  Hard-coding nosuid and nodev into the
+> setuid ecryptfs helper would resolve this, but I'm not sure that's workable for
+> Ubuntu home directories.
 
-On Dec 02, king cope wrote:
-> Hi,
-> My opinion is that the FILE to admin privilege elevation should be
-> patched.  What is the reason to have FILE and ADMIN privileges
-> seperated when with this exploit FILE privileges equate to ALL ADMIN
-> privileges.
-> I understand that it's insecure to have FILE privileges attached to a
-> user.  But if this a configuration issue and not a vulnerability then
-> as stated above there must be something wrong with the privilege
-> management in this SQL server.
+This vulnerability is limited to physical access via formatted USB
+drives because the eCryptfs filesystem code does not work on top of
+network filesystems.
 
-You've missed that part of my reply:
+Additionally, I believe that the encrypted home source and destination
+mount points were hard-coded up until ecryptfs-utils version 86.
+Versions before that should not be vulnerable to the setuid-root binary
+on a USB drive attack mentioned above.
 
-> > Additionally, MySQL (and MariaDB) provides a --secure-file-priv
-> > option that allows to restrict all FILE operations to a specific
-> > directory.
+Dustin - Would you have any objections to forcing the nosuid and nodev
+mount options in the mount.ecryptfs_private helper?
 
-Normally, if a DBA wants to grant FILE privilege to users, the server
-will have something like secure-file-priv=/tmp/mysql (for example)
-specified in the configuration file. This way any operation allowed by
-the FILE privilege (like SELECT ... OUTFILE) will only be able to access
-files under the /tmp/mysql/ path.
+Tyler
 
-Regards,
-Sergei
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
