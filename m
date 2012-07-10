@@ -1,73 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/1
-Message-Id: <E1TYG2A-0000z4-Uh@xenbits.xen.org>
-Date: Tue, 13 Nov 2012 12:56:06 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 20 (CVE-2012-4535) - Timer overflow DoS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/7
+Message-ID: <4FFC3516.9070504@redhat.com>
+Date: Tue, 10 Jul 2012 15:58:46 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 07/10/2012 03:43 PM, Solar Designer wrote:
+> On Tue, Jul 10, 2012 at 03:13:55PM +0200, Florian Weimer wrote:
+>> Perhaps we can put a getenv_secure() into libc, which will perform all
+>> the appropriate checks (including future checks we do not know about
+>> yet)?  Duplicating the code in many libraries does not seem prudent.
+>
+> We already have __secure_getenv() in glibc, which I think is what
+> libraries like this should be using on systems with glibc.
 
-                 Xen Security Advisory CVE-2012-4535 / XSA-20
-                                version 2
+Sebastian's patches also include a check on prctl(PR_GET_DUMPABLE).  I'm 
+not sure if the libc approach (compare effective and real UIDs/GIDs on 
+process start and base process environment trust decisions on that) is 
+equivalent.
 
-                       Timer overflow DoS vulnerability
+-- 
+Florian Weimer / Red Hat Product Security Team
 
-UPDATES IN VERSION 2
-====================
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-A guest which sets a VCPU with an inappropriate deadline can cause an
-infinite loop in Xen, blocking the affected physical CPU
-indefinitely.
-
-IMPACT
-======
-
-A malicious guest administrator can trigger the bug.  If the Xen
-watchdog is enabled, the whole system will crash.  Otherwise the guest
-can cause the system to become completely unresponsive.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen from at least 3.4 onwards are vulnerable, to every
-kind of guest.
-
-Systems with only trusted guest kernels are not vulnerable.
-
-MITIGATION
-==========
-
-There is no mitigation available other than to use a trusted guest
-kernel.
-
-RESOLUTION
-==========
-
-The attached patch resolves this issue.  The same patch is applicable
-to all affected versions.
-
-$ sha256sum xsa20.patch
-954f43a3b912d551b6534d3962d0bab3db820222a3bff211b545e526f9161c71  xsa20.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQokGkAAoJEIP+FMlX6CvZzB0H/2H7Z/zxYOQtC2QLT77voNvI
-/dCGnO+tUxcn9zsPOTkQjTmd7XrSaCdV9IoKmssZCwTBlHzRiwvFWQBinqrU8SZb
-8UCv4O1zxg4Ygv/9nlJVxI8Xq9+uyxc/RaMeKlMCsW2rSKut9zmHI9HU+FT5kqG9
-0vEXhZW4/MwOFbH+03LoHgjXqW8LOLNZtBg9u5rF5iCDLnltdAC//3kFXA5UG391
-JAzAdBUOOaf2OAnL4tEpEV6ksmeaxjckg63P5T61MUqiFJo/5AL5tu0kEKGHF7jH
-X4tDkSoV7Rbma4kNN3SbYjAkYGtsrGDeVS7HlhPbyZpKQVUJN+bSMYto3r8lVMM=
-=nj9Z
------END PGP SIGNATURE-----
-
-Download attachment "xsa20.patch" of type "application/octet-stream" (1498 bytes)
