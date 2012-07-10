@@ -1,47 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/4
-Message-ID: <20120711090503.GA13858@suse.de>
-Date: Wed, 11 Jul 2012 11:05:03 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/3
+Message-ID: <20120710221556.GB2168@boyd>
+Date: Tue, 10 Jul 2012 15:15:57 -0700
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: simon.mcvittie@...labora.co.uk
-Subject: Re: libdbus hardening
+Cc: Marcus Meissner <meissner@...e.de>, Kurt Seifried <kseifried@...hat.com>, Dan Rosenberg <dan.j.rosenberg@...il.com>, Dustin Kirkland <dustin.kirkland@...zang.com>
+Subject: Re: ecryptfs headsup
 Content-Type: text/plain; charset=utf-8
 
-
-Hi,
-
-Ok. We are not in a hurry. I added the new patch to
-
-https://bugzilla.novell.com/show_bug.cgi?id=697105
-
-using __secure_getenv().
-
-You seem to be in the AUTHORS list, so is this Cc enough
-to notify upstream? :)
-
-Sebastian
-
-On Tue, Jul 10, 2012 at 06:37:40PM +0100, Simon McVittie wrote:
-> On 10/07/12 14:09, Sebastian Krahmer wrote:
-> > We are going to add a libdbus hardening patch:
+On 2012-07-10 15:13:40, Tyler Hicks wrote:
+> On 2012-07-10 16:48:26, Dan Rosenberg wrote:
+> > On 07/10/2012 10:30 AM, Marcus Meissner wrote:
+> > > On Tue, Jul 10, 2012 at 04:21:13PM +0200, Sebastian Krahmer wrote:
+> > >>
+> > >> It is a potential privilege escalation since the pam module
+> > >> was not setting uid/gid(list) appropriately and the suid
+> > >> binary did not clear environment before exec'ing umount.
+> > >> I do not know whether MS_NOSUID was really needed (and maybe
+> > >> MS_NODEV is, but I was not able to create dev files).
+> > >> Unfortunally we found ecryptfs not really stable inside the kernel
+> > >> and Marcus is still rebooting :)
+> > >
+> > > This means ...
+> > >
+> > > So far we have not yet found a specific security issue.
+> > >
+> > > Ciao, Marcus
+> > >
+> > 
+> > This reminds me...
+> > 
+> > If an unprivileged user can mount ecryptfs shares (e.g. via the setuid-root
+> > mount helper shipped on Ubuntu) and has the ability to mount user-controlled
+> > filesystems (either network filesystems via setuid mount helpers like mount.cifs
+> > or mount.nfs, or formatted USB drives via physical access), it's possible to
+> > escalate privileges to root because the setuid ecryptfs helper does not mount
+> > filesystems with the nosuid or nodev flags.
+> > 
+> > An attacker can create an ecryptfs filesystem on his own machine on a network
+> > filesystem or USB drive, and then mount that ecryptfs filesystem on the victim
+> > machine for a setuid-root backdoor.  Hard-coding nosuid and nodev into the
+> > setuid ecryptfs helper would resolve this, but I'm not sure that's workable for
+> > Ubuntu home directories.
 > 
-> I haven't seen any mention of this upstream, despite the Novell bug
-> apparently being two months old. Please send it upstream for discussion
-> and review.
+> This vulnerability is limited to physical access via formatted USB
+> drives because the eCryptfs filesystem code does not work on top of
+> network filesystems.
 > 
->     smcv (currently on holiday, so won't be reviewing it right now)
+> Additionally, I believe that the encrypted home source and destination
+> mount points were hard-coded up until ecryptfs-utils version 86.
+> Versions before that should not be vulnerable to the setuid-root binary
+> on a USB drive attack mentioned above.
+> 
+> Dustin - Would you have any objections to forcing the nosuid and nodev
+> mount options in the mount.ecryptfs_private helper?
 
--- 
+Sorry, I forgot to add Dustin to cc. 
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+Tyler
 
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
