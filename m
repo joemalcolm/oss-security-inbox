@@ -1,41 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/10/2
-Message-Id: <201212101900.qBAIxqSM006255@linus.mitre.org>
-Date: Mon, 10 Dec 2012 13:59:52 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/17
+Message-ID: <20120710143458.GA9661@openwall.com>
+Date: Tue, 10 Jul 2012 18:34:58 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2012-6303 WaveSurfer and Snack Sound Toolkit buffer overflows
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Jul 10, 2012 at 04:30:44PM +0200, Sebastian Krahmer wrote:
+> On Tue, Jul 10, 2012 at 06:22:28PM +0400, Solar Designer wrote:
+> > If this is not for upstream and you only need it working on a particular
+> > distro with glibc, then why not use __secure_getenv()?
+> 
+> Indeed, if it is a exported symbol on the glibc versions we ship,
+> we should consider this. I remember a discussion that it was somehow
+> not available in the past.
 
-We have assigned CVE-2012-6303 to these multiple buffer overflows in
-WaveSurfer and Snack Sound Toolkit:
+That was about __libc_enable_secure.  I'm not sure if the same applies
+to __secure_getenv() or not.  In Owl and ALT Linux, both are available
+for apps.  You could/should make your glibc export these, too.
 
-Disclosures:    http://www.exploit-db.com/exploits/19772/
-                http://secunia.com/advisories/49889/
-Product source: http://www.speech.kth.se/snack/
-                http://wavesurfer.svn.sourceforge.net/viewvc/wavesurfer/trunk/wavesurfer/
-                (The www.speech.kth.se site refers to "Snack v2.2.10
-                 released December 01 Bug fix release" but this is
-                 apparently about December 01 2004 -- not about a 2012
-                 release.)
+http://www.openwall.com/lists/oss-security/2011/05/16/11
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJQxi9YAAoJEGvefgSNfHMdrCcH/jKtUz094PCrTXbrtpNhih4j
-zi1zyqdybNMAdmcGGZYs/5pgBym8a1avhRxsSfDsnSC6/1F/bKgw9LzHOprFT9bt
-wn/TleyhHY+5sDcatxLUtwsLsoHCuQPOW4qe2EPXZu22zWOOwrS+ZX0rSE6iGHF2
-2K0my22Dx49ARL/uUIvtCS0B5C8f3EM3NnMg6bNgLQXgmD1FuAqD2WgQ2iIvdcx/
-9JH6xeEOBfA7AsNPIwHWQaIK3KTUEWxOr6Gp9L321TzBIUVsxjrEFgwGD7cRPvNk
-JoAIUOqITXRcocKCsoz9TdwXK2mkFWrW5Dt6ieTAH8itAlDQBHZsE4Fs0WD8Sac=
-=B8hW
------END PGP SIGNATURE-----
+Alexander
