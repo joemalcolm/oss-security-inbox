@@ -1,20 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/9
-Message-ID: <4F6C924F.9080501@redhat.com>
-Date: Fri, 23 Mar 2012 09:10:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/12
+Message-ID: <20120710141433.GC5296@suse.de>
+Date: Tue, 10 Jul 2012 16:14:33 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: MyBB 1.6 <= SQL Injection
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
-On 03/23/2012 02:38 AM, Henri Salo wrote:
-> There was a request with same subject in here: http://seclists.org/oss-sec/2011/q1/545 (2011)
+On Tue, Jul 10, 2012 at 06:07:03PM +0400, Solar Designer wrote:
+> On Tue, Jul 10, 2012 at 03:58:46PM +0200, Florian Weimer wrote:
+> > On 07/10/2012 03:43 PM, Solar Designer wrote:
+> > >We already have __secure_getenv() in glibc, which I think is what
+> > >libraries like this should be using on systems with glibc.
+> > 
+> > Sebastian's patches also include a check on prctl(PR_GET_DUMPABLE).  I'm 
+> > not sure if the libc approach (compare effective and real UIDs/GIDs on 
+> > process start and base process environment trust decisions on that) is 
+> > equivalent.
 > 
-> I don't think this one got assigned and I couldn't find the CVE-identifier so I am requsting it again.
+> glibc also uses AT_SECURE.
 > 
-> - Henri Salo
+> PR_GET_DUMPABLE catches the extra case of a process that started e.g. as
+> root and has since switched creds, but do we actually want to restrict
+> processing of env vars in that case?  Perhaps not, and so AT_SECURE is
+> more appropriate.
 
-Is there a link on the MyBB site describing this issue/update?
+It is indeed, if you are inside libc. :) But I dont want to parse /proc/self/auxv
+from libdbus and do not know any other portable way (I dont want to walk
+the stack base either to find auxv).
+Maybe my patch is even breaking dbus daemon itself, if it dropped to dbus user?
+
+Thats someting upstream could tell us :)
+
+Sebastian
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
