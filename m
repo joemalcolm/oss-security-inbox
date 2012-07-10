@@ -1,25 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/7
-Message-ID: <20120117182821.GF942@foo.fgeek.fi>
-Date: Tue, 17 Jan 2012 20:28:21 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/15
+Message-ID: <20120710143040.GA17770@suse.de>
+Date: Tue, 10 Jul 2012 16:30:40 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: golismero symlink vulnerability
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: ecryptfs headsup
 Content-Type: text/plain; charset=utf-8
 
-User-triggered update-mechanism is vulnerable to symlink-attack in all GoLismero-versions before revision 2b3bb43d6867. Vulnerable code was in ./libs/updater.py, which I rewrote.
+On Tue, Jul 10, 2012 at 04:21:13PM +0200, Sebastian Krahmer wrote:
+> 
+> It is a potential privilege escalation since the pam module
+> was not setting uid/gid(list) appropriately and the suid
+> binary did not clear environment before exec'ing umount.
+> I do not know whether MS_NOSUID was really needed (and maybe
+> MS_NODEV is, but I was not able to create dev files).
+> Unfortunally we found ecryptfs not really stable inside the kernel
+> and Marcus is still rebooting :)
 
-Vulnerable versions:
-- GoLISMERO_last.zip (Nov 14, 2011)
-- GoLISMERO_v0.6.3.zip (Nov 9, 2011)
-- All Git-revisions before 2b3bb43d6867
+This means ...
 
-Reported to author: 2011-11-17
-Fixed by me: 2012-01-17
-Link to the commit: http://code.google.com/p/golismero/source/detail?r=2b3bb43d68676efd687361f7de29380189031ab8
+So far we have not yet found a specific security issue.
 
-I fixed this, because developer had lack of time. I am asking for CVE, because this software is used in backtrack where golismero is executed as root-user.
+Ciao, Marcus
+ 
+> Sebastian
+> 
+> On Tue, Jul 10, 2012 at 08:07:28AM -0600, Kurt Seifried wrote:
+> > -----BEGIN PGP SIGNED MESSAGE-----
+> > Hash: SHA1
+> > 
+> > On 07/10/2012 05:33 AM, Sebastian Krahmer wrote:
+> > > Hi,
+> > > 
+> > > We made a hardening patch for ecryptfs utils. It is finally ready, 
+> > > using sysconf(_SC_NGROUPS_MAX) :)
+> > > 
+> > > I dont know whether a CVE is needed, maybe if you already ship it
+> > > suid root (we do not).
+> > > 
+> > > It can be found here:
+> > > 
+> > > https://bugzilla.novell.com/show_bug.cgi?id=740110
+> > > 
+> > > Sebastian
+> > 
+> > Well what is the security vulnerability / trust boundary that can be
+> > broken using this issue?
+> > 
+> > - -- 
+> > Kurt Seifried Red Hat Security Response Team (SRT)
+> > PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> > 
+> > 
+> > 
+> > -----BEGIN PGP SIGNATURE-----
+> > Version: GnuPG v1.4.12 (GNU/Linux)
+> > Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+> > 
+> > iQIcBAEBAgAGBQJP/DcgAAoJEBYNRVNeJnmT3R8P/0cRjsBbmwVeMwKUbwzZPUrB
+> > qIZcQEtx+VfQo/pWasY+DudbszVlg7ZKEkOkORMGPeiCYWofElWG3YFM0vzPQALA
+> > gBLCXOUYzGqZ9ZF754hizqSYOhPa9aQHV0yB/NPlYGhl1MZSjQx6/brsYs1EDOZU
+> > Kn3bslL3vgp3mzhoDjTKyiLjndaVlFagQVlmcgXlm6YtzkFFkqCTdOU1IU0vElAO
+> > hgeWzqNXH1ykEDxY6cZCpog+t28VhpbPG87qA2C2ErgZdfTulCaip4LsfP5B5fGY
+> > nW0Z1vfFRn+2b3iR7YZBmcVbzgO2FUEBhKTRgKWyhDZ4Lee298CKm47dxXDt/T0Q
+> > PB5Q1a9oJKCcitApyYKqK5f3kZ82uPJJt2jorVRN41ppBIGLbKQurGlYZUXb62Xc
+> > Lyv4rxL+4/ejJXi6XQCTrHzzJf35Y9JSFsvO0bqXR/xwHtumWs44p6SDW34xtp5y
+> > Vif1wrYqUUAzKEZkN7w8kzQA3Sz6hXOBiadqcNf7qkaGQ/0HlIfGB3abo7/OlJVB
+> > 2Jf+HH5bM+5oiXA5fKwqq07dNUj9sGptOmuZVhfFsOE1H46WCKqhBGBgsanU94x9
+> > W/3IUyq4wEAH3lJQypXh65kZoJGc+5CDeypQ2eo9/RI1jmrjxIR5GeN/WVcPRJtY
+> > MByzHCJ43wPYEVl25/eV
+> > =7ydb
+> > -----END PGP SIGNATURE-----
+> 
+> -- 
+> 
+> ~ perl self.pl
+> ~ $_='print"\$_=\47$_\47;eval"';eval
+> ~ krahmer@...e.de - SuSE Security Team
+> 
+> ---
+> SUSE LINUX Products GmbH,
+> GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+> Maxfeldstraße 5
+> 90409 Nürnberg
+> Germany
+> 
 
-Should get 2012 ID as this was publicly announced 2012-01-17. I haven't read all the code yet so there might be other issues too. I am not the original developer, but helped a bit after I found this vulnerability.
-
-- Henri Salo
+-- 
+Working, but not speaking, for the following german company:
+SUSE LINUX Products GmbH, HRB 16746 (AG Nuernberg)
+Geschaeftsfuehrer: Jeff Hawn, Jennifer Guild, Felix Imendoerffer
