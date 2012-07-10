@@ -1,40 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/12
-Message-ID: <4F631572.1020408@op5.se>
-Date: Fri, 16 Mar 2012 11:26:58 +0100
-From: Andreas Ericsson <ae@....se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/19
+Message-ID: <4FFC951A.20405@gmail.com>
+Date: Tue, 10 Jul 2012 16:48:26 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>,  Mark Stanislav <mark.stanislav@...il.com>
-Subject: Re: CVE Requests
+CC: Marcus Meissner <meissner@...e.de>,  Kurt Seifried <kseifried@...hat.com>
+Subject: Re: ecryptfs headsup
 Content-Type: text/plain; charset=utf-8
 
-On 03/16/2012 04:41 AM, Kurt Seifried wrote:
-> 
-> I need the actual info, please refer to:
-> 
-> http://www.openwall.com/lists/oss-security/2012/03/16/2
-> http://www.openwall.com/lists/oss-security/2012/03/15/9
-> http://www.openwall.com/lists/oss-security/2012/03/14/6
-> http://www.openwall.com/lists/oss-security/2012/03/12/7
-> 
+On 07/10/2012 10:30 AM, Marcus Meissner wrote:
+> On Tue, Jul 10, 2012 at 04:21:13PM +0200, Sebastian Krahmer wrote:
+>>
+>> It is a potential privilege escalation since the pam module
+>> was not setting uid/gid(list) appropriately and the suid
+>> binary did not clear environment before exec'ing umount.
+>> I do not know whether MS_NOSUID was really needed (and maybe
+>> MS_NODEV is, but I was not able to create dev files).
+>> Unfortunally we found ecryptfs not really stable inside the kernel
+>> and Marcus is still rebooting :)
+>
+> This means ...
+>
+> So far we have not yet found a specific security issue.
+>
+> Ciao, Marcus
+>
 
-Those mails are all exemplary requests for CVE id's, ofcourse, but the
-fact that they are all already fixed and released means that 100% of
-the work is already done. At that point, assigning a CVE id is mostly
-useless and is done as a "just for the record" thing.
+This reminds me...
 
-The need for unified identifier for a particular issue is greatest
-when discussing the problem and its potential solutions; Not how
-someone actually solved it after it's already done. If CVE is to become
-a thing for changelogs only, all those projects that don't use one
-but rely on commit-messages instead won't use CVE id's at all, and the
-usefulness of the CVE database dwindles.
+If an unprivileged user can mount ecryptfs shares (e.g. via the setuid-root
+mount helper shipped on Ubuntu) and has the ability to mount user-controlled
+filesystems (either network filesystems via setuid mount helpers like mount.cifs
+or mount.nfs, or formatted USB drives via physical access), it's possible to
+escalate privileges to root because the setuid ecryptfs helper does not mount
+filesystems with the nosuid or nodev flags.
 
--- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+An attacker can create an ecryptfs filesystem on his own machine on a network
+filesystem or USB drive, and then mount that ecryptfs filesystem on the victim
+machine for a setuid-root backdoor.  Hard-coding nosuid and nodev into the
+setuid ecryptfs helper would resolve this, but I'm not sure that's workable for
+Ubuntu home directories.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+-Dan
+
