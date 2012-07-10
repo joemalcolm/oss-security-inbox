@@ -1,35 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/09/2
-Message-Id: <201207091341.q69DfgxW011440@linus.mitre.org>
-Date: Mon, 9 Jul 2012 09:41:42 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/14
+Message-ID: <20120710142228.GA9450@openwall.com>
+Date: Tue, 10 Jul 2012 18:22:28 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2012-3881 RTG and RTG2: 95.php/rtg.php/view.php SQL injection
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Jul 10, 2012 at 04:11:12PM +0200, Sebastian Krahmer wrote:
+> I am fine with either solution and would prefer upstream patches
+> anyway, but it turned out in past that nobody from upstream
+> is willing to add such patches.
 
-https://code.google.com/p/rtg2/issues/detail?id=35
-RTG 0.7.4 (http://sourceforge.net/projects/rtg/)
-RTG2 0.9.2 (http://code.google.com/p/rtg2/)
-95.php rtg.php view.php SQL injection
-CVE-2012-3881
+If this is not for upstream and you only need it working on a particular
+distro with glibc, then why not use __secure_getenv()?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+> I tried a year ago with openssl and AFAIK its still suffering
+> (at least I never heared back).
+> 
+> If you compile your openssh '--with-ssl-engine' you have
+> an easy root exploit (given that ssh-keysign is mode 04755
+> such as on Debian) via OPENSSL_config().
+> 
+> If you ask me, thats quite poor for a framework that wants to
+> add security to the system.
+> So, I do not have any problems adding our own patch sets rather
+> than waiting for another year.
 
-iQEcBAEBAgAGBQJP+t7SAAoJEGvefgSNfHMdsyMH+QHrfZezCVr3/GePoobfIzv1
-IXAjewXsEW7VQHW4URXL5al4un3GGYcN95TUmaen5RqzkVkXH/XNmAdpudPWadQL
-YgP/j7ziIZjxmxNLy/moKQyoGqIV/tFpiiHiP5hOTmTXrFkX6lIiqC1bVysTxIPp
-vnF0+xUMtJuXl6tzdbXagQ95ao+vWLAznCht1T6GelUcRv1yfxJn+f+4nIxL3bmR
-X/WJQHKkZZqHXKrHySR7JivbgqgYlCQJjPGiv20pnIx2Nj1KdM7rtDIgE+2YK3Ut
-g+b4mlatAyWVixqsgI/YjR4Ea4ssCaxabNNp8ZnB6oXOLqPq7gBJTX2J4K53+vM=
-=S0yq
------END PGP SIGNATURE-----
+Of course.
+
+Alexander
