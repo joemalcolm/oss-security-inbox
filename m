@@ -1,33 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/23/3
-Message-ID: <20120223181100.GO2608@dhcp-25-225.brq.redhat.com>
-Date: Thu, 23 Feb 2012 19:11:01 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/6
+Message-ID: <20120710134336.GA8972@openwall.com>
+Date: Tue, 10 Jul 2012 17:43:36 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- kernel: block: CLONE_IO io_context refcounting issues
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
-With CLONE_IO, copy_io() increments both ioc->refcount and
-ioc->nr_tasks. However exit_io_context() only decrements
-ioc->refcount if ioc->nr_tasks reaches 0.
+On Tue, Jul 10, 2012 at 03:13:55PM +0200, Florian Weimer wrote:
+> Perhaps we can put a getenv_secure() into libc, which will perform all 
+> the appropriate checks (including future checks we do not know about 
+> yet)?  Duplicating the code in many libraries does not seem prudent.
 
-With CLONE_IO, parent's io_context->nr_tasks is incremented, but never
-decremented whenever copy_process() fails afterwards, which prevents
-exit_io_context() from calling IO schedulers exit functions.
+We already have __secure_getenv() in glibc, which I think is what
+libraries like this should be using on systems with glibc.
 
-An unprivileged local user could use these flaws cause denial of
-service.
+Apparently, it was even in LSB until 1.3 inclusive, but was since
+dropped from there?
 
-Upstream fixes:
-61cc74fbb87af6aa551a06a370590c9bc07e29d9
-b69f2292063d2caf37ca9aec7d63ded203701bf3
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=796829
-http://comments.gmane.org/gmane.linux.kernel/922519
-
-Looks like it got fixed in Linux kernel 2.6.33(-rc1).
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Alexander
