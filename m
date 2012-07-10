@@ -1,59 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/2
-Message-ID: <20120710221340.GA2168@boyd>
-Date: Tue, 10 Jul 2012 15:13:41 -0700
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/4
+Message-ID: <20120710130913.GA5296@suse.de>
+Date: Tue, 10 Jul 2012 15:09:13 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Marcus Meissner <meissner@...e.de>, Kurt Seifried <kseifried@...hat.com>, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: ecryptfs headsup
+Subject: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
-On 2012-07-10 16:48:26, Dan Rosenberg wrote:
-> On 07/10/2012 10:30 AM, Marcus Meissner wrote:
-> > On Tue, Jul 10, 2012 at 04:21:13PM +0200, Sebastian Krahmer wrote:
-> >>
-> >> It is a potential privilege escalation since the pam module
-> >> was not setting uid/gid(list) appropriately and the suid
-> >> binary did not clear environment before exec'ing umount.
-> >> I do not know whether MS_NOSUID was really needed (and maybe
-> >> MS_NODEV is, but I was not able to create dev files).
-> >> Unfortunally we found ecryptfs not really stable inside the kernel
-> >> and Marcus is still rebooting :)
-> >
-> > This means ...
-> >
-> > So far we have not yet found a specific security issue.
-> >
-> > Ciao, Marcus
-> >
-> 
-> This reminds me...
-> 
-> If an unprivileged user can mount ecryptfs shares (e.g. via the setuid-root
-> mount helper shipped on Ubuntu) and has the ability to mount user-controlled
-> filesystems (either network filesystems via setuid mount helpers like mount.cifs
-> or mount.nfs, or formatted USB drives via physical access), it's possible to
-> escalate privileges to root because the setuid ecryptfs helper does not mount
-> filesystems with the nosuid or nodev flags.
-> 
-> An attacker can create an ecryptfs filesystem on his own machine on a network
-> filesystem or USB drive, and then mount that ecryptfs filesystem on the victim
-> machine for a setuid-root backdoor.  Hard-coding nosuid and nodev into the
-> setuid ecryptfs helper would resolve this, but I'm not sure that's workable for
-> Ubuntu home directories.
+Hi,
 
-This vulnerability is limited to physical access via formatted USB
-drives because the eCryptfs filesystem code does not work on top of
-network filesystems.
+We are going to add a libdbus hardening patch:
 
-Additionally, I believe that the encrypted home source and destination
-mount points were hard-coded up until ecryptfs-utils version 86.
-Versions before that should not be vulnerable to the setuid-root binary
-on a USB drive attack mentioned above.
+https://bugzilla.novell.com/show_bug.cgi?id=697105
 
-Dustin - Would you have any objections to forcing the nosuid and nodev
-mount options in the mount.ecryptfs_private helper?
+This is because some suid binaries (Xorg and others) are linked against libdbus and
+it seems not right to allow users to route polkit or other
+system messages to a fake dbusd via $DBUS_SYSTEM_BUS_ADDRESS.
 
-Tyler
+If anyone has a better patch or something even easier, just let us know.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+There are certainly also other libs that will receive a patch.
+
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
