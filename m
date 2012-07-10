@@ -1,23 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/25/7
-Message-ID: <20120425163137.GF2798@kludge.henri.nerv.fi>
-Date: Wed, 25 Apr 2012 19:31:37 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/3
+Message-ID: <20120710113315.GA3946@suse.de>
+Date: Tue, 10 Jul 2012 13:33:15 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler aligned_end is not updated
+Subject: ecryptfs headsup
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 25, 2012 at 12:50:55PM +0200, Florian Weimer wrote:
-> * Kurt Seifried:
-> 
-> > Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler
-> > aligned_end is not updated
-> >
-> > does not appear to affect Python 2.x
-> 
-> 3.1 seems to be affected as well (according to reproducer and commit
-> log).
+Hi,
 
-Yes it is. I confirmed this also with Debian 3.1.3-12+squeeze1
+We made a hardening patch for ecryptfs utils. It is finally ready,
+using sysconf(_SC_NGROUPS_MAX) :)
 
-- Henri Salo
+I dont know whether a CVE is needed, maybe if you already
+ship it suid root (we do not).
+
+It can be found here:
+
+https://bugzilla.novell.com/show_bug.cgi?id=740110
+
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
