@@ -1,109 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/1
-Message-ID: <505A6D2C.4070208@redhat.com>
-Date: Wed, 19 Sep 2012 19:11:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/11
+Message-ID: <20120710141112.GB5296@suse.de>
+Date: Tue, 10 Jul 2012 16:11:12 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Michael Rash <mbr@...herdyne.org>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Damien Stuart <dstuart@...uart.org>
-Subject: Re: Re: CVE Request -- fwknop 2.0.3: Multiple security issues
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 09/19/2012 03:26 PM, Michael Rash wrote:
-> On Sep 19, 2012, Jan Lieskovsky wrote:
+I am fine with either solution and would prefer upstream patches
+anyway, but it turned out in past that nobody from upstream
+is willing to add such patches.
+I tried a year ago with openssl and AFAIK its still suffering
+(at least I never heared back).
+
+If you compile your openssh '--with-ssl-engine' you have
+an easy root exploit (given that ssh-keysign is mode 04755
+such as on Debian) via OPENSSL_config().
+
+If you ask me, thats quite poor for a framework that wants to
+add security to the system.
+So, I do not have any problems adding our own patch sets rather
+than waiting for another year.
+
+Another lib that should receive a patch is libudev.
+
+Sebastian
+
+
+On Tue, Jul 10, 2012 at 05:43:36PM +0400, Solar Designer wrote:
+> On Tue, Jul 10, 2012 at 03:13:55PM +0200, Florian Weimer wrote:
+> > Perhaps we can put a getenv_secure() into libc, which will perform all 
+> > the appropriate checks (including future checks we do not know about 
+> > yet)?  Duplicating the code in many libraries does not seem prudent.
 > 
->> Hello Kurt, Steve, vendors,
->> 
->> multiple securit issues have been corrected in 2.0.3 upstream
->> version of fwknop
->> (http://www.cipherdyne.org/blog/categories/software-releases.html):
->>
->> 
--
----------------------------------------------------------------------------
->> 1) multiple DoS / code execution flaws: Upstream patch: [1]
->> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=d46ba1c027a11e45821ba897a4928819bccc8f22
->>
->>
->> 
-2) server did not properly validate allow IP addresses from malicious
->> authenticated clients Upstream patch: [2]
->> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=f4c16bc47fc24a96b63105556b62d61c1ba7d799
->>
->>
->> 
-3) strict filesystem permissions for various fwknop files are not verified
->> 4) local buffer overflow in --last processing with a maliciously
->> constructed ~/.fwknop.run file Upstream patch: [3]
->> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=a60f05ad44e824f6230b22f8976399340cb535dc
->>
->>
->> 
-For the remaining ones:
->> ======================= 5) several conditions in which the server
->> did not properly throw out maliciously constructed variables in
->> the access.conf file Upstream patch: [4]
->> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=e2c0ac4821773eb335e36ad6cd35830b8d97c75a
->>
->>
->> 
-Note: This doesn't look like a security flaw (previously possible to
-provide malicious values
->> to access.conf file, but I assume it would required administrator
->> privileges).
->> 
->> 6) [test suite] Added a new fuzzing capability to ensure proper
->> server-side input validation. Note: Test-suite add-on, no CVE
->> needed.
->> 
->> 7) Fixed RPM builds by including the $(DESTDIR) prefix for
->> uninstall-local and install-exec-hook stages in Makefile.am. 
->> Upstream patch: [5]
->> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=c5b229c5c87657197b0c814ff22127d870b55753
->>
->>  Note: Also doesn't look like a fix for a security flaw.
->> 
->> Could you allocate CVE ids for issues 1), 2), 3), and 4) ?
->> 
->> [Cc-ed Damien and Michael from fwknop upstream to confirm they
->> {the first four} should receive a CVE identifier].
+> We already have __secure_getenv() in glibc, which I think is what
+> libraries like this should be using on systems with glibc.
 > 
-> I would say that the first four should receive CVE identifiers,
-> yes. For 5), it could be a security issue in older versions of
-> fwknop if the umask at install time was permissive enough to allow
-> non-admin users to modify the access.conf file, but this is
-> unlikely I think so probably doesn't deserve a CVE identifier.
-
-I will be doing the CVE assignments in a bit (need to check up on
-these) but as far as access to config files due to bad umask, that's a
-configuration problem that doesn't deserve a CVE in this instance (and
-in most instances).
-
-> Thanks,
+> Apparently, it was even in LSB until 1.3 inclusive, but was since
+> dropped from there?
 > 
+> Alexander
 
+-- 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
-iQIcBAEBAgAGBQJQWm0sAAoJEBYNRVNeJnmT3JMP/0yrgcn2A9uSN23JDxzbwdCa
-R5pS/umjjxagwPNEt5BheLVQkKb8BUU2ly9Q6Vrz8mIOfz5td0xP7QGJYsZ4NGSA
-M/s9pR96fjaGR2NQhxEqu6udpWdHcfVRWHzVVbtWxhIfskP7IBauMotMNeZnDAqD
-zPFwj4UsX6HNznRwxY7O6V20bOs5+/dwI2H0N9YLKiVghEK9eTjh/4usLYjKvufy
-8p+Hqxeq8LRDh4Y32pSKGK8YQEtuqsXd6pKEPV3gT6qLi3wAnd5gfzYFphL2o5/2
-pzTtWQ8Jh2VfqIOeHp53xdvHV2nhh6T1njHOLDEgVi6/24n3kRPNXomFeymoLDZw
-exl9HBB91QInW2/R9COl4WHvOwSOeAu12o99PytjhmtLzJ/D7CWQw0M1ZwVdPBL6
-ahQeNNgHOUtzx0pGoQSFKUDKBX+aW0ktcOHeYfucMEj0n6+u7gfpBiMuo19a+wuc
-uI/4M7A1/dNRW829Zet+fUOGj28nFqLwKaymIWP47rVSqUKmSDKUHlCjN4OBp0Ky
-LpS4ne0ggccXg2LxFpQIDXtOQyB1BlOxmz0C6hrV0XySLSNSgFG5l2R3RMF5v3fq
-u3g9l1EA40U3irtdeI1VvgdX50/qG0KEd/ZABuYDwjP/wGVgz0OjeKvVPb3THmEt
-dgCSkWB2agBxqrFn9oek
-=gKL9
------END PGP SIGNATURE-----
