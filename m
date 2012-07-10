@@ -1,22 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/1
-Message-ID: <20120607013524.GC16281@kroah.com>
-Date: Thu, 7 Jun 2012 10:35:24 +0900
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/10
+Message-ID: <4FFC3720.4010000@redhat.com>
+Date: Tue, 10 Jul 2012 08:07:28 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: hyper-v daemon
+CC: Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: ecryptfs headsup
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 06, 2012 at 04:59:59PM +0200, Sebastian Krahmer wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/10/2012 05:33 AM, Sebastian Krahmer wrote:
 > Hi,
 > 
-> The hyper-v daemon fails to check origin of netlink messages.
-> Please see
+> We made a hardening patch for ecryptfs utils. It is finally ready, 
+> using sysconf(_SC_NGROUPS_MAX) :)
 > 
-> https://bugzilla.novell.com/show_bug.cgi?id=761200
+> I dont know whether a CVE is needed, maybe if you already ship it
+> suid root (we do not).
+> 
+> It can be found here:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=740110
+> 
+> Sebastian
 
-Is there a fix for this anywhere yet?
+Well what is the security vulnerability / trust boundary that can be
+broken using this issue?
 
-thanks,
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-greg k-h
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP/DcgAAoJEBYNRVNeJnmT3R8P/0cRjsBbmwVeMwKUbwzZPUrB
+qIZcQEtx+VfQo/pWasY+DudbszVlg7ZKEkOkORMGPeiCYWofElWG3YFM0vzPQALA
+gBLCXOUYzGqZ9ZF754hizqSYOhPa9aQHV0yB/NPlYGhl1MZSjQx6/brsYs1EDOZU
+Kn3bslL3vgp3mzhoDjTKyiLjndaVlFagQVlmcgXlm6YtzkFFkqCTdOU1IU0vElAO
+hgeWzqNXH1ykEDxY6cZCpog+t28VhpbPG87qA2C2ErgZdfTulCaip4LsfP5B5fGY
+nW0Z1vfFRn+2b3iR7YZBmcVbzgO2FUEBhKTRgKWyhDZ4Lee298CKm47dxXDt/T0Q
+PB5Q1a9oJKCcitApyYKqK5f3kZ82uPJJt2jorVRN41ppBIGLbKQurGlYZUXb62Xc
+Lyv4rxL+4/ejJXi6XQCTrHzzJf35Y9JSFsvO0bqXR/xwHtumWs44p6SDW34xtp5y
+Vif1wrYqUUAzKEZkN7w8kzQA3Sz6hXOBiadqcNf7qkaGQ/0HlIfGB3abo7/OlJVB
+2Jf+HH5bM+5oiXA5fKwqq07dNUj9sGptOmuZVhfFsOE1H46WCKqhBGBgsanU94x9
+W/3IUyq4wEAH3lJQypXh65kZoJGc+5CDeypQ2eo9/RI1jmrjxIR5GeN/WVcPRJtY
+MByzHCJ43wPYEVl25/eV
+=7ydb
+-----END PGP SIGNATURE-----
