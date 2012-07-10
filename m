@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/10/1
-Message-ID: <504DD06A.9060209@redhat.com>
-Date: Mon, 10 Sep 2012 13:35:06 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: Jeff Law <law@...hat.com>
-CC: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jakub Jelinek <jakub@...hat.com>
-Subject: Re: CVE Request -- glibc: strcoll() integer overflow leading to buffer overflow + another alloca() stack overflow issue (upstream #14547 && #14552)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/9
+Message-ID: <20120710140703.GA9261@openwall.com>
+Date: Tue, 10 Jul 2012 18:07:03 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
-On 09/07/2012 07:29 PM, Jeff Law wrote:
+On Tue, Jul 10, 2012 at 03:58:46PM +0200, Florian Weimer wrote:
+> On 07/10/2012 03:43 PM, Solar Designer wrote:
+> >We already have __secure_getenv() in glibc, which I think is what
+> >libraries like this should be using on systems with glibc.
+> 
+> Sebastian's patches also include a check on prctl(PR_GET_DUMPABLE).  I'm 
+> not sure if the libc approach (compare effective and real UIDs/GIDs on 
+> process start and base process environment trust decisions on that) is 
+> equivalent.
 
->>> If I have looked correctly this is expected / known behaviour of
->>> alloca() - from the manual page: [4]
->>> http://linux.die.net/man/3/alloca
+glibc also uses AT_SECURE.
 
-> Just because it's known/expected behaviour doesn't mean it's not a
-> potential attack vector.  Blowing out the stack is definitely a vector
-> for attack:
+PR_GET_DUMPABLE catches the extra case of a process that started e.g. as
+root and has since switched creds, but do we actually want to restrict
+processing of env vars in that case?  Perhaps not, and so AT_SECURE is
+more appropriate.
 
-I agree.  If the frame address leaks or can be deduced, an unbounded 
-alloca (or VLA) can be abused as a POKE.  I think this might apply in 
-this case because the writes to the allocated memory area are incremental.
-
--- 
-Florian Weimer / Red Hat Product Security Team
+Alexander
