@@ -1,105 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/23
-Message-ID: <20120913215412.GD355@redhat.com>
-Date: Thu, 13 Sep 2012 15:54:12 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/1
+Message-ID: <4FFCF55E.6020603@redhat.com>
+Date: Wed, 11 Jul 2012 09:09:10 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: note on gnome shell extensions
+Subject: Openjpeg: heap-buffer overflow when processing JPEG2000 image files
 Content-Type: text/plain; charset=utf-8
 
-* [2012-09-13 19:59:46 +0200] Tavis Ormandy wrote:
+Hi All,
 
->Vincent Danen <vdanen@...hat.com> wrote:
->
->> * [2012-09-13 18:03:33 +0200] Marcus Meissner wrote:
->>
->> > On Thu, Sep 13, 2012 at 05:39:57PM +0200, Tavis Ormandy wrote:
->> > > On Mon, Sep 10, 2012 at 02:48:38PM -0600, Vincent Danen wrote:
->> > > > * [2012-09-08 18:14:10 -0600] Kurt Seifried wrote: SUSE has some
->> > > > interesting info in their bug:
->> >> >
->> > > > https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
->> >> >
->> > > > By the sounds of it, this should be harmless.  Vincent Untz says
->> > > > that the browser plugin doesn't actually install the extensions,
->> > > > it's passed to another process via a dbus call to gnome-shell, which
->> > > > sends the uuid of the extension to the extensions.gnome.org web site
->> > > > in order to download the extension.
->> >> >
->> > > > See:
->> >> >
->> > > > http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
->> > > >
->http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
->> >> >
->> > > > which is:
->> >> >
->> > > > let message = Soup.form_request_new_from_hash('GET',
->> > > > REPOSITORY_URL_INFO, params);
->> >> >
->> > > > And REPOSITORY_URL_INFO is hardcoded earlier:
->> >> >
->> > > > const REPOSITORY_URL_BASE = 'https://extensions.gnome.org'; const
->> > > > REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE +
->> > > > '/download-extension/%s.shell-extension.zip'; const
->> > > > REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE + '/extension-info/';
->> > > > const REPOSITORY_URL_UPDATE   = REPOSITORY_URL_BASE +
->> > > > '/update-info/';
->> >> >
->> > > > I don't think this is something that can be exploited, based on the
->> > > > above.
->> >>
->> > > Not sure I follow the logic, can't I just upload something malicious
->> > > to extensions.gnome.org and then force you to download it? I mean, I
->> > > can try it if you're not convinced it's possible.
->> >
->> > There are supposed to be reviewers before it gets activated, but exactly
->> > this concern Sebastian also voiced.
->> >
->> > > They surely do not have a magical technique for determining if my code
->> > > is or can become malicious.
->> >
->> > Exactly.
->>
->> Yeah, this is definitely a possibility, but could happen regardless of
->> this with some social engineering (hey, download my cool foo extension!)
->> and have something malicious up there.  This is pretty much the same
->> thing, just making it easier.
->
->Well, no. This is like saying it's pointless to patch vulnerabilities,
->because I can just make you download malware. You can't just make me
->download malware, because I know how to make trust decisions.
->
->You could make me download a malicious gnome extension, because you can do
->so without interaction or my consent.
+We have found a heap-buffer overflow in openjpeg, details are as
+follows:
 
-Oh... I misunderstood then.  There's no dialog whatsoever?
+Description:
+A heap-based buffer overflow was found in the way OpenJPEG, an
+open-source JPEG 2000 codec written in C language, performed parsing of
+JPEG2000 having certain number of tiles and tilesizes. A remote
+attacker could provide a specially crafted JPEG 2000 file, which when
+opened in an application linked against openjpeg would lead to that
+application crash, or, potentially arbitrary code execution with the
+privileges of the user running the application.
 
->> It's not much different than having a malicious app in the
->> iTunes/Android/Whatever app store.  The flaw there isn't so much in the
->> app store, but the app.  Wouldn't the same thought apply here?
->>
->
->I've uploaded my malicious android app, how do I make you install it?
->
->I can create http://foo.com/malware.rpm, that's clearly not a vulnerability
->and working as designed. But if I can force you to download and install it
->without you having the opportunity to make a trust decision, that clearly is
->a vulnerability.
->
->Do you agree that I can upload something malicious to extensions.gnome.org?
->
->Do you agree that I can make you install it without consent, interaction, or
->the opportunity to make a trust decision?
->
->If so, then I don't understand the objection :-)
+Upstream patch:
+http://code.google.com/p/openjpeg/source/detail?r=1727
 
-Yes, you're right.  Sorry, I misunderstood the fact that it was a
-silent/invisible install.  I assumed (or read too quickly) and thought
-it would be something similar to any other app install where it would at
-least ask for some kind of authorization.
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=835767
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681075
 
-Pay no attention to me.  =)
+This issue has been assigned CVE-2012-3358
+
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
+
