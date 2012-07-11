@@ -1,78 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/2
-Message-ID: <4FFBA5E0.4070408@redhat.com>
-Date: Mon, 09 Jul 2012 21:47:44 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/16
+Message-ID: <4FFDB6B7.9030808@redhat.com>
+Date: Wed, 11 Jul 2012 11:24:07 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, Timo Warns <warns@...-sense.de>
-Subject: Re: CVE Request: Stability fixes in UDF Logical Volume Descriptor handling
+CC: Henri Salo <henri@...v.fi>, reba@...rs.berlios.de, pereira@...biz.de
+Subject: Re: CVE-request: plow buffer overflow vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/06/2012 03:51 PM, Marcus Meissner wrote:
-> On Wed, Jul 04, 2012 at 02:51:15PM -0600, Kurt Seifried wrote:
->> On 07/03/2012 02:46 PM, Timo Warns wrote:
->>> Am 03.07.2012 20:58, schrieb Kurt Seifried:
->>>> On 07/03/2012 07:22 AM, Marcus Meissner wrote:
->>>> 
->>>>> People (do not know who) reported to the kernel security
->>>>> team and Jan Kara some UDF filesystem crashes.
->>>> 
->>>>> Jan Kara did some fixes in the UDF fs and they were
->>>>> committed to mainline already, both actual bugfixes and
->>>>> some more sanity checking for hardening.
->>>>> 
->>>>> I think a single CVE is sufficient.
->>>> 
->>>> Were they discovered by the same person or different people?
->>> 
->>> I reported the following issue for sparing tables on 2012-06-17
->>> to security@...nel.org. Eugene Teo informed Jan Kara, who is
->>> the maintainer for the UDF filesystem, on the same day. Jan had
->>> a closer look at the UDF code and identified all other issues 
->>> addressed by the patches.
->>> 
->>> | udf_load_logicalvol() in fs/udf/super.c parses the number of 
->>> sparing | tables and stores the sparing tables on the heap: |
->>> | (1286)  for (j = 0; j < spm->numSparingTables; j++) { | [...]
->>> | (1293)    map->s_type_specific.s_sparing. | (1294) 
->>> s_spar_map[j] = bh2; | | map is of type udf_part_map, whose | 
->>> s_type_specific.s_sparing.s_spar_map | member can only hold 4 
->>> pointers to buffer_head structs. | | spm->numSparingTables is
->>> read from the file system and not further | validated. A
->>> corrupted file system with numSparingTables > 4 causes | a heap
->>> overflow.
->>> 
->>> Regards, Timo
->>> 
->> 
->> Just a placeholder: I'm waiting for a reply from Steve to see if
->> we can violate CVE assignment guidelines and put this under one
->> CVE (it should probably be two but sorting it out seems like it
->> might not be worthwhile).
+On 07/11/2012 06:32 AM, Henri Salo wrote:
+> Can you assign 2012 CVE-identifier for plow buffer overflow issue
+> reported in here: http://seclists.org/bugtraq/2012/Jul/22
 > 
-> Unclear ...
+> After discussion with Pereira I checked several versions of the
+> code and affected code is at least in versions 0.0.1, 0.0.2. Sorry
+> but I was unable to find proper version control commits. Version
+> 0.0.1 is still suggested at least in sourceforge page
+> http://sourceforge.net/projects/plow.berlios/
 > 
-> 1 reporter 1 developer fixing this bug and making stability fixes
-> on the side
+> I am unable to compile this software in my Debian stable or
+> unstable system so I can't verify these using the PoC.
 > 
-> Might just be 1 issue.
-> 
-> CIao, Marcus
+> - Henri Salo
 
-Apologies, I misunderstood the original email:
-
-> People (do not know who) reported to the kernel security team and
-> Jan Kara some UDF filesystem crashes.
-
-I misunderstood that to mean 2 reporters.
-
-Please use CVE-2012-3400 for these issues.
-
-
-
+Please use CVE-2012-3407 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -84,17 +38,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJP+6XgAAoJEBYNRVNeJnmTs8AP+wbie7KU8gNXaVmLvLKRXymE
-Kdb9ugVyPlhgOQ6/6aWRNeM5BY5j1kRx7Eq7HL5xCYibiB4x8eBzj33HhKB+vXzl
-A6vI0rykKE3G5dr9ccc28cXmx60yTDnmDfJ+51n+/JDQUWKts+FWI+zpHG8LBXvM
-U+Z02owe9Srp4pAVsXD+H7uab9riEW4Khd0l7W28fgzE4JtSVcij1v0T3EBohFEQ
-Dr7fATymsEh2wLEmWuyROVdJNXg+vbrgqUAqe9XO//SwmfhstU3QGeODue/ykjYo
-TQIwk+PVMrEn959msw4/MOmCW2Vy6UI1RoQhyr7I9QQHrkr9jaXKRLFE2Wufuo9U
-DGgy0tr+etoetxNq1Mko3sIVDIumf2PnwY2574h9LB/Dt1qCEEfj+DsvvTMZGcvZ
-vxiA+BQXOywpETU1G1ArR2xxMLnky/NQQ410Nwpzh+DzRzlaqDBbfEXCoE5iarew
-Kp9phzYanZUF223xtvTHukY2sgbuoPyui2qacC64Y1EBrEYfpedPrQu34JXHGpvk
-j4SzPq3+Pwic0McG/9mYyaaFoZ/KW+Cyi8JadlqX/kgQGZ0ALrh2wY3hIm21jsdK
-H5VR7JdcNH0RKvjye7/Y/8fBRefCTxh9GT8+gq0MFSkgE68LOcD+i6zCd75AR4pV
-CdjDbUrVcdBdaNF9Z+U9
-=n+1P
+iQIcBAEBAgAGBQJP/ba3AAoJEBYNRVNeJnmTzYsQAJDgqJIaHLjZZ24Zm4YgDDD4
+ks/4AAGD78fA8VnFeKsYnHwYBc9+Zj4G4d1/V+WkI2Aet7F87yEwf5CPKFVWqoYc
+91tobDOeorLPZ9GJ1RfTDW5fNEQQm9bpEudCc6pkJyuKIVkVWLbeE1Zmb5E6lcbK
+/jEDWIB3uC7RTh+LAAlNkMVckPfFBhIPsrG8W1KclynbkvKEAo3Ph+aboa89dWKf
+pV90mQdaS9huZLK0WcwDg6EuBXKif+PzttgwM6Rghd+Kreh6GgJiedYwggJqS21S
+lI6dPsBR/ITl0B+eGyYliDTwSR8+VoK6eOjDqMWHXUyz+MCGku4z5pkLY5VkDmG9
+NGVKRk6fXXPTcAWWWqP4hCQxFV94Fu+v7+fpb9kZjDrt6tPPt7qvuewGoPOcwCuF
+z6rImm0H88V19yIWtKSfeK9JNrauTNLlCWvz+c+d1hRCxvULHXG6bq1mV9s6XY2m
+LfMvCxGgh/syz0FQAxo2BFOr92g4/nncq80FSNBuqh5p4of1efuXI7wqz4haIhIN
+H9IYxWMPnGI+dPLPDa7PApsGWGDxk+d+Bi+4MkQceWA0z0bRpcQmE30RKMvnhtkp
+Pe9H9QhX63S3YYfeBKE9ao4mPpNjpAQ3PqXdocz7NllRm/4dUQlsg3NUkRn8xG1G
+9Po3fy+nvhByJx3NPPvz
+=VvFI
 -----END PGP SIGNATURE-----
