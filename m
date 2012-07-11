@@ -1,40 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/22/8
-Message-ID: <CA+T2pCHEGu8_Yk=5_s9fmjiAZ_awX-uaCnM4aVS37j-if=k43w@mail.gmail.com>
-Date: Thu, 22 Mar 2012 13:16:29 -0500
-From: William Pitcock <nenolod@...eferenced.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: atheme.org Security Advisory ASA-2012-03-01: Improper cleanup of CertFP entries may result in undefined behaviour
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/21
+Message-ID: <4FFDF256.3070003@redhat.com>
+Date: Wed, 11 Jul 2012 15:38:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Moses Mendoza <moses@...petlabs.com>
+Subject: Re: Re: Fwd: New Security Vulnerabilities in Puppet
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wednesday, March 21, 2012, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 03/21/2012 12:55 PM, William Pitcock wrote:
->> atheme.org Security Advisory
->> ASA-2012-03-01
->>
->> Original release: March 20, 2012.
->> Last update: March 20, 2012.
->>
->> Copyright (c) 2012 atheme.org and it's contributors.
->> All rights reserved.
->>
->> Distribution of this document in full, or in part is allowed,
->> provided that it remains in unmodified form and the above
->> copyright notice and this permission notice remain unchanged.
->
-> That makes no sense "or in part is allowed, provided that it remains in
-> unmodified form" and I just violated this replying to you I guess.
+On 07/11/2012 12:04 PM, Kurt Seifried wrote:
+> On 07/11/2012 10:37 AM, Moses Mendoza wrote:
+>>>> 
+>>>> Vulnerability 5 Agents with certnames of IP addresses can be 
+>>>> impersonated (low) *Affected Versions: 2.7.x, 2.6.x If an 
+>>>> authenticated host with a certname of an IP address changes
+>>>> IP addresses, and a second host assumes the first host's
+>>>> former IP address, the second host will be treated by the
+>>>> puppet master as the first one, giving the second host access
+>>>> to the first host's catalog. Note: This will not be fixed in
+>>>> Puppet versions prior to the forthcoming 3.x. Instead, with
+>>>> this announcement IP-based authentication in Puppet < 3.x is 
+>>>> deprecated.
+> 
+> After some further communications with them it has been decided to 
+> assign this issue a CVE. Please use CVE-2012-3408 for this issue.
+> 
+> Moses: can you confirm that a CVE page with links to the code 
+> commits/etc will be created? Thanks.
 
-Yes we should probably change our language for future advisories.
+Excellent: http://puppetlabs.com/security/cve/cve-2012-3408/
 
->
-> Also did you want a CVE # for this issue?
+Thanks!
 
-That would be useful -- I know that suse, debian and gentoo carry the
-software as part of their IRC server packages.
 
-William
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP/fJWAAoJEBYNRVNeJnmTCB8QAIDuxD5Ev4WOGXwGQP8A9FN0
+vTPjvXh0iWOEOE19w06SndABA0i724aDTs7gUhux7jcn6URKxkVtfo6WISHUXZVd
++vWNJkWikeBoRKuEAYJxiQ0eJjzmJI3TG1D+GuPE7FYsGTaoiAT5pJqySSY0bnup
+GN5L5pa/dxseKNxK/h5///Z6xqNlpQCafeAkVOxLm6/SCa2BsnnXjnppi+IQ+OwV
+wmjFhgLHy2JNeaCzLx0t6jh+sNSyuy8KZySF3yPtd+OMs1SlutXzktVbeIIwKlEX
+c4EXmT/zlK68+GQxqASagRyr6+ZrmGNlOVXSSz9mxwRLQb2/CijQ64RAUYcBapIx
+XIzSIcuRydQy1itGZ1e6UUxlaDLcaU9DKXkZcg0CWERq8O/+H5f1YuiuMF/u9Ph/
+gghWiOoDFun0OrXJ+gsk/hMUl5Ikl+cSnn/SoKC1hnsuKUCfXTIsJRvnAiKdyNzh
+rMTN0DJTJIQR14oIJB1o6COEMVUdlNGIYONkIaAT3wBw0BpwDfVvdf56NRX8FZWr
+4FG/CsSOiG9vVXQHYgOW0DinKav8/8Lr0ZbZPFKVxDt51uBVhMNPkgsMTr3UfSCo
+QMbYXmKNOSR8WbKv4YRhcYlzyrUtMFVvCzf/Tpq/R/l64ilOHJpjl5JyYx+Kapue
+MhzBeg1fOgcdtGYfsuSe
+=eQVt
+-----END PGP SIGNATURE-----
