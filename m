@@ -1,57 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/19
-Message-ID: <4F199011.1050106@redhat.com>
-Date: Fri, 20 Jan 2012 17:02:25 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/5
+Message-ID: <4FFD5643.6030503@redhat.com>
+Date: Wed, 11 Jul 2012 12:32:35 +0200
+From: Stefan Cornelius <scorneli@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Joshua Colp <jcolp@...ium.com>
-Subject: Re: CVE Request -- Asterisk AST-2012-001 / Remote DoS while processing crypto line for media stream with non-existing RTP
+Subject: CVE request: glibc formatted printing vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 01/20/2012 04:55 PM, Steven M. Christey wrote:
->
-> CVE-2012-0885 was already assigned to AST-2012-001 based on a request from the upstream vendor. They
-> probably updated their advisory since your initial request:
->
-> http://downloads.asterisk.org/pub/security/AST-2012-001.html
+Hi,
 
-Thanks for your prompt reply, Steve. It has been truly updated
-already (checked by forcing Firefox to renew it's cached).
+there are further vulnerabilities in glibc's formatted printing
+functionality.
 
-Thank you, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+1) It was discovered that the formatted printing functionality in glibc
+did not properly honor the size of a structure when calculating the
+amount of memory to allocate. A remote attacker could provide a
+specially crafted sequence of format specifiers, leading to an
+undersized buffer allocation and subsequent stack corruption, resulting
+in a crash or, potentially, FORTIFY_SOURCE format string protection
+mechanism bypass, when processed.
 
->
-> - Steve
->
->
-> On Fri, 20 Jan 2012, Jan Lieskovsky wrote:
->
->> Hello Kurt, Steve, vendors,
->>
->> a denial of service flaw was found in the way asterisk processed certain
->> requests to negotiate secure video stream, when the res_srtp Asterisk module
->> has been loaded and video support has not been enabled. A remote attacker could
->> provide a specially-crafted media stream negotiation request, which once
->> processed by Asterisk would lead to asterisk daemon crash by processing crypto
->> line for such media stream.
->>
->> References:
->> [1] http://downloads.asterisk.org/pub/security/AST-2012-001.html
->> [2] https://issues.asterisk.org/jira/browse/ASTERISK-19202
->> [3] https://bugzilla.redhat.com/show_bug.cgi?id=783487
->>
->> Upstream patch against the v1.8.x branch:
->> [4] http://downloads.asterisk.org/pub/security/AST-2012-001-1.8.diff
->>
->> Upstream patch against the v1.10.x branch:
->> [5] http://downloads.asterisk.org/pub/security/AST-2012-001-10.diff
->>
->> Could you allocate a CVE identifier for this?
->>
->> Thank you && Regards, Jan.
->> --
->> Jan iankko Lieskovsky / Red Hat Security Response Team
->>
+References:
+http://sourceware.org/bugzilla/show_bug.cgi?id=12445
+http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=84a4211850e3d23a9d3a4f3b294752a3b30bc0ff
+https://bugzilla.redhat.com/show_bug.cgi?id=833703
+
+2) It was discovered that the formatted printing functionality in glibc
+used extend_alloca() incorrectly. "nspecs_max" is incorrectly passed to
+extend_alloca, which modifies the value in "nspecs_max" when allocating
+the memory. A remote attacker could provide a specially crafted sequence
+of format specifiers, leading to a desynchronization within the buffer
+size handling, resulting in the use of uninitialized memory or,
+potentially, FORTIFY_SOURCE format string protection mechanism bypass,
+when processed.
+
+References:
+http://sourceware.org/bugzilla/show_bug.cgi?id=13446
+http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=a4647e727a2a52e1259474c13f4b13288938bed4
+https://bugzilla.redhat.com/show_bug.cgi?id=833704
+
+It seems like 1) and 2) were introduced by the following commit:
+http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=1d498daa95384e5c9ad5bcb35e7a996e5869ac39
+
+
+3) It was discovered that the formatted printing functionality in glibc
+did not properly restrict the use of alloca(). A remote attacker could
+provide a specially crafted sequence of format specifiers, leading to a
+crash or, potentially, FORTIFY_SOURCE format string protection mechanism
+bypass, when processed.
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=826943
+
+Red Hat patch backports/testcases for RHEL6 that include a patch for this:
+https://bugzilla.redhat.com/attachment.cgi?id=594722&action=diff
+
+Red Hat patch backport/testcase for RHEL5 (older glibc versions)
+https://bugzilla.redhat.com/attachment.cgi?id=594727&action=diff
+
+
+Thanks in advance and kind regards
+-- 
+Stefan Cornelius / Red Hat Security Response Team
 
