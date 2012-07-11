@@ -1,77 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/28/6
-Message-ID: <CAPYM6VwqO0BqhDsnURVV7ctCb=bnSH9H6FcbyM6POMTVeA+-jg@mail.gmail.com>
-Date: Sun, 29 Jul 2012 03:07:40 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
-Subject: ocPortal 7.1.5 <= | Open URL Redirection Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/15
+Message-ID: <4FFDB7F2.8060703@redhat.com>
+Date: Wed, 11 Jul 2012 11:29:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: Overflow fix in bash 4.2 patch 33
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-ocPoral CMS 7.1.5 and lower versions are vulnerable to Open URL Redirection.
+On 07/11/2012 10:15 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> the bash maintainer kindly mailed us and other vendors a
+> notification of a overflow in the bash "test" builtin when
+> "/dev/fd/..." filenames are used.
+> 
+> ftp://ftp.gnu.org/pub/gnu/bash/bash-4.2-patches/bash42-033
+> 
+> Reproducer: test -e /dev/fd/111111111111111111111111111111111
+> 
+> Problem is caught by -D_FORTIFY_SOURCE=2 if enabled, and likely
+> also by -fstack-protector (not tested)
+> 
+> Goes all the way back to old bashes.
+> 
+> The likeliness of people able to inject those filenames into shell
+> scripts and not being able to execute shellcode themselves is
+> however slim. (setuid root shell scripts are not possible.)
+> 
+> Security (CVE) relevant scenario we thought of is breaking out of
+> a restricted shell mode.
+> 
+> Ciao, Marcus
 
+Can you give a more concrete example, e.g. you're talking about
+http://www.gnu.org/software/bash/manual/html_node/The-Restricted-Shell.html
+I assume? Are we simply talking about violating those restrictions?
 
-2. BACKGROUND
-
-ocPortal is the website Content Management System (a CMS) for building
-and maintaining a dynamic website. ocPortal's powerful feature-set
-means there's always a way to accomplish your vision. Not only does
-ocPortal's CMS have all the features you'd expect: for instance photo
-galleries, news, file downloads and community forums/chats, but it
-does so whilst meeting the highest accessibility and professional
-standards. It is also smart enough to go beyond page management, to
-automatically handle search engine optimisation, and provide
-aggressive hack attack prevention.
-
-
-3. VULNERABILITY DESCRIPTION
-
-ocPoral CMS 7.1.5 and lower versions contain a flaw that allows a
-remote cross site redirection attack. This flaw exists because the
-application does not properly sanitise the "redirect" parameter.  This
-allows an attacker to create a specially crafted URL, that if clicked,
-would redirect a victim from the intended legitimate web site to an
-arbitrary web site of the attacker's choice.
-
-
-4. VERSIONS AFFECTED
-
-Tested on 7.1.5
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://localhost/ocportal/index.php?page=login&type=misc&redirect=http://attacker.in
-
-
-6. SOLUTION
-
-Upgrade to the latest version.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-7. VENDOR
 
-ocPortal Development Team
-http://www.ocportal.com/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-
-8. CREDIT
-
-Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2012-03-06: notified vendor
-2012-03-21: patched version,7.1.6, released
-2012-07-29: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5Bocportal_7x%5D_open_url_redirection
-
-
-#yehg [2012-07-29]
+iQIcBAEBAgAGBQJP/bfyAAoJEBYNRVNeJnmTdSAQAKEQWS2YeX/NME/jHFxW4GbA
+38G/FZKpkG8XajwBv+NxbMAamj8nJBJfpuT7vLo4Yd6WY/SKQ2pG5dTZJqKQSsUe
+tLDXl2tW6gRKzhhlXZ/4ZzH7KvH+zjfwTDy4pcNKrj8cp1vZ+idv61JMwSLEmi/G
+cPRrMRgxAl+zR6xfM02sySXxNL7wczG2x7td8s7eLhi9AsEDG3PEACFLLeaYUuaQ
+x0OK4eJPDqOSHAx6Q7FzupMYuu3A55x7Y2KFcXMpD8rkOYTwTFSZuE47Q3TggUza
+JidAHWNhrJ6NaxZW8sjnnSSCdAyBzAy3kEgPYr/7Rb0J4DvyI+b+wmx4Jl2Cv2tl
+6KcTqglRrZPITl52aQrtYH9f9EtsgbOlhRgYydqyDaRRvBiOqIZCTgqOQmzIf3mf
+3Wy6Gvy8dUcMEAioyePTXC3u4MguOrNV86OoGUZ41rif3F3szLc5YEbQgTBUQbTo
+H/Rzj+1wL1z+buY2FceC4Se+CAj3fFgHgj/LO8o3Nnb0tBibkp3ABYuEVgwpKtkB
+fDWgTDKW54lY3IwM2v8dCrVzL5jwFQGoJA+8K1jQEUL1JDHAvx4bvlfT3N6hXMEF
+WQTn/cNWUVZVRsfoOMAljXxyKxkD8SJLma4uhO8gmZq2JCUPig9iOEdkkqwFdCYo
+IZok0OzBba1dgGsmpoJg
+=5JOy
+-----END PGP SIGNATURE-----
