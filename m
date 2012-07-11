@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/18
-Message-ID: <20120103220426.GB10452@foo.fgeek.fi>
-Date: Wed, 4 Jan 2012 00:04:27 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request: Multiple e107 vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/11
+Message-ID: <20120711161507.GA10208@suse.de>
+Date: Wed, 11 Jul 2012 18:15:07 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Overflow fix in bash 4.2 patch 33 
 Content-Type: text/plain; charset=utf-8
 
-1) Multiple Script URI XSS
-http://osvdb.org/show/osvdb/78047
+Hi,
 
-2) e107_admin/users.php resend_name Parameter XSS
-http://osvdb.org/show/osvdb/78048
+the bash maintainer kindly mailed us and other vendors a notification of
+a overflow in the bash "test" builtin when "/dev/fd/..." filenames are used.
 
-3) User Signatures link BBCode XSS
-http://osvdb.org/show/osvdb/78049
+ftp://ftp.gnu.org/pub/gnu/bash/bash-4.2-patches/bash42-033
 
-4) usersettings.php username Parameter SQL Injection
-http://osvdb.org/show/osvdb/78050
+Reproducer:
+	test -e /dev/fd/111111111111111111111111111111111
 
-Secunia advisory: http://secunia.com/advisories/46706/
+Problem is caught by -D_FORTIFY_SOURCE=2 if enabled, and likely also
+by -fstack-protector (not tested)
 
-I do not know where to find SCM links. Secunia can probably help if needed.
+Goes all the way back to old bashes.
 
-- Henri Salo
+The likeliness of people able to inject those filenames into shell scripts
+and not being able to execute shellcode themselves is however slim.
+(setuid root shell scripts are not possible.)
+
+Security (CVE) relevant scenario we thought of is breaking out of a
+restricted shell mode.
+
+Ciao, Marcus
