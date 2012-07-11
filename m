@@ -1,63 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/16
-Message-ID: <20120105185350.GB10290@kiste2>
-Date: Thu, 5 Jan 2012 19:53:51 +0100
-From: Michael Niedermayer <michaelni@....at>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/19
+Message-ID: <20120711192951.GC16475@boyd>
+Date: Wed, 11 Jul 2012 12:29:52 -0700
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Requests for FFmpeg 0.9.1
+Cc: Kurt Seifried <kseifried@...hat.com>, Dustin Kirkland <dustin.kirkland@...zang.com>, Marcus Meissner <meissner@...e.de>, Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Re: ecryptfs headsup
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven
+On 2012-07-11 10:48:48, Kurt Seifried wrote:
+> So it sounds like a non privileged user on an Ubuntu machine can
+> insert a USB stick/etc with a file system that gets automatically
+> mounted, said file system can contain setuid root binaries for example
+> which the user can then execute, elevating privileges?
 
-On Thu, Jan 05, 2012 at 12:37:44PM -0500, Steven M. Christey wrote:
-> 
-> Michael, this is a well-organized request, thank you!
-> 
-> 
-> >I tried to sort the issues a little according to type to make this huge
-> >list a bit less ugly. Also feel free to skip things considered too
-> >minor, iam not sure where the threshold of "too minor" is.
-> 
-> A couple thoughts on this one, I hope this makes sense.
-> 
-> My VERY limited understanding of ffmpeg is that it is single-user,
-> and it can only process a single file from a single source, without
-> multiple "sessions" or "actions" using data from different sources.
-> If that is the case, then crashers like NULL dereferences and
-> divide-by-zero might not qualify for inclusion in CVE.  With
-> products like web browsers and document editors, a crash from one
-> single window or tab could cause a denial of service by closing
-> *other* independent windows or tabs that the user may care about;
-> with things like kernels or servers, a crash affects many sessions
-> and users.  So if ffmpeg only processes one file at a time, a basic
-> crasher probably doesn't get a CVE.
-> 
-> If the crash is strongly associated with data integrity, e.g. memory
-> corruption or invalid free's, then it would get a CVE - since we
-> make a conservative assumption that a code-execution exploit *might*
-> be found by someone, and the consequence might be more than DoS.
-> I've been somewhat agnostic about out-of-range reads.
-> 
-> However, such crashes that appear in the *libraries* provided by
-> ffmpeg would qualify, since those libraries might be used in an
-> independent product for which a crash is a security issue (for
-> example, a product might use a library function to convert the audio
-> for a large number of files that have been uploaded from many users,
-> and a single crash prevents other users' files from being converted.
-> In this way, shared libraries are treated more conservatively.)
+Correct, but it isn't limited to Ubuntu. I believe that other distros
+ship /sbin/mount.ecryptfs_private as setuid-root, too.
 
-Very well said, i fully agree.
+Tyler
 
-I should have clarified this in my initial post, but
-these issues IIRC are all in the ffmpeg libraries libavcodec
-& libavformat. They are used by at least youtube, chrome, videolan,
-our ffserver, mplayer, mencoder, xine, gstreamer and quite a few others.
-
-[...]
--- 
-Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
-
-I know you won't believe me, but the highest form of Human Excellence is
-to question oneself and others. -- Socrates
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
