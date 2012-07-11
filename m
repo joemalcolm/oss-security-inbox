@@ -1,23 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/2
-Message-ID: <CAHmME9pdxOeQ4WnT_WPTbt5MKCJ158DJHGH8M8=-J3HyL_Y86Q@mail.gmail.com>
-Date: Thu, 9 Feb 2012 03:15:56 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/10
+Message-ID: <CAH5b-BXJwgK-3snZyGc=cUrTxstwsBsLTstZzeDQ5DesKPh-DA@mail.gmail.com>
+Date: Wed, 11 Jul 2012 16:12:09 +0200
+From: yersinia <yersinia.spiros@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux procfs infoleaks via self-read by a SUID/SGID program (was: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access)
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 9, 2012 at 00:03, Djalal Harouni <tixxdz@...ndz.org> wrote:
+Dunno if OT.
 
-> Hi Solar, Jason,
+But exists in other linux libc implementation similar more secure
+alternatives to getenv ?
+
+Thanks
+
+2012/7/11, Solar Designer <solar@...nwall.com>:
+> On Wed, Jul 11, 2012 at 11:05:03AM +0200, Sebastian Krahmer wrote:
+>> Ok. We are not in a hurry. I added the new patch to
+>>
+>> https://bugzilla.novell.com/show_bug.cgi?id=697105
+>>
+>> using __secure_getenv().
 >
-> Nice one Jason, and I've also found this according to this tweet:
-> http://twitter.com/#!/tixxdz/status/165818331092365312
+> You could want to add a #warning after the #else (when __secure_getenv
+> is not detected by the configure script), although I'd prefer these
+> things to be fail-close (build failing if __secure_getenv is expected to
+> be present, but is not detected).  This is an issue with
+> security-related autoconf checks in general.
+>
+> Alexander
+>
 
-
-http://git.zx2c4.com/CVE-2012-0056/commit/?id=105eded1abc03c5610cf912d4939809b2f06627e
-
-2012-01-25 (for the record)
-
-probably this has been known by a lot of folks for a while though
-
+-- 
+Inviato dal mio dispositivo mobile
