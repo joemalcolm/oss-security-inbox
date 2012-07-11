@@ -1,64 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/6
-Message-ID: <4F59E523.9040206@redhat.com>
-Date: Fri, 09 Mar 2012 12:10:27 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-CC: Niko Tyni <ntyni@...ian.org>, Dominic Hargreaves <dom@...th.li>
-Subject: CVE Request -- libdbd-pg-perl / perl-DBD-Pg && libyaml-libyaml-perl / perl-YAML-LibYAML: Multiple format string flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/20
+Message-ID: <20120711213729.GQ28340@outflux.net>
+Date: Wed, 11 Jul 2012 14:37:29 -0700
+From: Kees Cook <kees@...ntu.com>
+To: Stefan Cornelius <scorneli@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: glibc formatted printing vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi Stefan,
 
-Case #1:
-========
-Two format string flaws were found in the way perl-DBD-Pg, a Perl language
-PostgreSQL DBI implementation, performed:
-1) turning of database notices into appropriate Perl language warning messages,
-2) preparation of particular DBD statement.
+On Wed, Jul 11, 2012 at 12:32:35PM +0200, Stefan Cornelius wrote:
+> 3) It was discovered that the formatted printing functionality in glibc
+> did not properly restrict the use of alloca(). A remote attacker could
+> provide a specially crafted sequence of format specifiers, leading to a
+> crash or, potentially, FORTIFY_SOURCE format string protection mechanism
+> bypass, when processed.
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=826943
+> 
+> Red Hat patch backports/testcases for RHEL6 that include a patch for this:
+> https://bugzilla.redhat.com/attachment.cgi?id=594722&action=diff
+> 
+> Red Hat patch backport/testcase for RHEL5 (older glibc versions)
+> https://bugzilla.redhat.com/attachment.cgi?id=594727&action=diff
 
-A rogue server could provide a specially-crafted database warning or
-specially-crafted DBD statement, which once processed by the perl-DBD-Pg
-interface would lead to perl-DBD-Pg based process crash.
+Is there an upstream commit proposed for this one? I see it mixed into
+the RH patch with fixes for 1) and 2).
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661536
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=801733
+Thanks,
 
-CPAN ticket:
-[3] https://rt.cpan.org/Public/Bug/Display.html?id=75642
+-Kees
 
-Patch proposed by Niko Tyni:
-[4] 
-https://rt.cpan.org/Ticket/Attachment/1047954/547725/0001-Explicitly-warn-and-croak-with-controlled-format-str.patch
-
-Case #2:
-========
-Multiple format string flaws were found in the way perl-YAML-LibYAML, Perl YAML
-serialization using XS and libyaml, performed:
-1) error reporting by loading of general YAML stream,
-2) error reporting by loading of YAML node,
-3) error reporting by loading of YAML mapping into a Perl hash, and
-4) error reporting by loading of YAML sequence into a Perl array.
-
-A remote attacker could provide a specially-crafted YAML document, which once
-processed by the perl-YAML-LibYAML interface would lead to perl-YAML-LibYAML
-based process crash.
-
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661548
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=801738
-
-CPAN tickets:
-[3] https://rt.cpan.org/Public/Bug/Display.html?id=75365
-[4] https://rt.cpan.org/Public/Bug/Display.html?id=46507
-
-Proposed patch:
-[5] https://rt.cpan.org/Ticket/Attachment/920541/477607/YAML-LibYAML-0.35-format-error.patch
-
-Could you allocate two CVE ids for these? (one for libdbd-pg-perl / perl-DBD-Pg
-and one for libyaml-libyaml-perl / perl-YAML-LibYAML)
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Kees Cook
