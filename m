@@ -1,22 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/5
-Message-ID: <20120309084751.GB26809@foo.fgeek.fi>
-Date: Fri, 9 Mar 2012 10:47:51 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request: appRain CMF uploadify.php File Upload Remote PHP Code Execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/9
+Message-ID: <CANT6BaMnMdJu3tdvfAMF3Hh+davFVuebmZfSgPkD4Dyy_cwwiw@mail.gmail.com>
+Date: Wed, 11 Jul 2012 09:08:12 -0500
+From: Dustin Kirkland <dustin.kirkland@...zang.com>
+To: Tyler Hicks <tyhicks@...onical.com>
+Cc: oss-security@...ts.openwall.com, Marcus Meissner <meissner@...e.de>,  Kurt Seifried <kseifried@...hat.com>, Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: ecryptfs headsup
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this security vulnerability, thank you.
+On Tue, Jul 10, 2012 at 5:15 PM, Tyler Hicks <tyhicks@...onical.com> wrote:
+> On 2012-07-10 15:13:40, Tyler Hicks wrote:
+>> On 2012-07-10 16:48:26, Dan Rosenberg wrote:
+>> > On 07/10/2012 10:30 AM, Marcus Meissner wrote:
+>> > > On Tue, Jul 10, 2012 at 04:21:13PM +0200, Sebastian Krahmer wrote:
+>> > >>
+>> > >> It is a potential privilege escalation since the pam module
+>> > >> was not setting uid/gid(list) appropriately and the suid
+>> > >> binary did not clear environment before exec'ing umount.
+>> > >> I do not know whether MS_NOSUID was really needed (and maybe
+>> > >> MS_NODEV is, but I was not able to create dev files).
+>> > >> Unfortunally we found ecryptfs not really stable inside the kernel
+>> > >> and Marcus is still rebooting :)
+>> > >
+>> > > This means ...
+>> > >
+>> > > So far we have not yet found a specific security issue.
+>> > >
+>> > > Ciao, Marcus
+>> > >
+>> >
+>> > This reminds me...
+>> >
+>> > If an unprivileged user can mount ecryptfs shares (e.g. via the setuid-root
+>> > mount helper shipped on Ubuntu) and has the ability to mount user-controlled
+>> > filesystems (either network filesystems via setuid mount helpers like mount.cifs
+>> > or mount.nfs, or formatted USB drives via physical access), it's possible to
+>> > escalate privileges to root because the setuid ecryptfs helper does not mount
+>> > filesystems with the nosuid or nodev flags.
+>> >
+>> > An attacker can create an ecryptfs filesystem on his own machine on a network
+>> > filesystem or USB drive, and then mount that ecryptfs filesystem on the victim
+>> > machine for a setuid-root backdoor.  Hard-coding nosuid and nodev into the
+>> > setuid ecryptfs helper would resolve this, but I'm not sure that's workable for
+>> > Ubuntu home directories.
+>>
+>> This vulnerability is limited to physical access via formatted USB
+>> drives because the eCryptfs filesystem code does not work on top of
+>> network filesystems.
+>>
+>> Additionally, I believe that the encrypted home source and destination
+>> mount points were hard-coded up until ecryptfs-utils version 86.
+>> Versions before that should not be vulnerable to the setuid-root binary
+>> on a USB drive attack mentioned above.
+>>
+>> Dustin - Would you have any objections to forcing the nosuid and nodev
+>> mount options in the mount.ecryptfs_private helper?
 
-Advisory: http://seclists.org/bugtraq/2012/Jan/127
-http://osvdb.org/show/osvdb/78473
-http://www.securityfocus.com/bid/51576
+Hi Tyler, et al.-
 
-Discovered and vendor informed: 2011-12-19
-Vendor ack: 2011-12-20
-Disclosure and exploit: 2012-01-19
+I don't have any objections at all with adding nosuid and nodev to the
+hardcoded mount.ecryptfs_private options.
 
-Does this get 2011 or 2012 ID?
+Actually, I seem to recall this coming up recently before.  I can't
+find the bug or email thread (must have been IRC), but I recall
+offering to commit, test, and release that change immediately.  I
+believe I was asked to wait to do that until a CVE had been
+published...  I can't find any record of that conversation though, so
+that's just from memory.
 
-- Henri Salo
+Shall I go ahead and commit/test/release that now, Tyler?
+
+-- 
+:-Dustin
+
+Dustin Kirkland
+Chief Architect
+Gazzang, Inc.
+www.gazzang.com
