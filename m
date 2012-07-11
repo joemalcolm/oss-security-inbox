@@ -1,33 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/02/7
-Message-ID: <CAFB=mGCzb01Vw8xASU+uEzR0rYnsperv0=N5ScbVXTu33a3NRw@mail.gmail.com>
-Date: Sun, 2 Dec 2012 21:36:04 +0100
-From: king cope <isowarez.isowarez.isowarez@...glemail.com>
-To: Yves-Alexis Perez <corsac@...ian.org>
-Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>,  full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com,  todd@...ketstormsecurity.org, submit@...sec.com,  Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org,  security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
-Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/13
+Message-ID: <4FFDAD1B.7010608@openstack.org>
+Date: Wed, 11 Jul 2012 18:43:07 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com
+Subject: [OSSA 2012-009] Scheduler denial of service through scheduler_hints (CVE-2012-3371)
 Content-Type: text/plain; charset=utf-8
 
-Correct, I tell that from experience because I've seen many
-configurations where the least privileged user has file privs enabled.
-If we leave it that way the attackers will be more happy, it's not
-decision to patch it or not, just a hint .
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Regard,
+OpenStack Security Advisory: 2012-009
+CVE: CVE-2012-3371
+Date: July 11, 2012
+Title: Scheduler denial of service through scheduler_hints
+Impact: Medium
+Reporter: Dan Prince (Red Hat)
+Products: Nova
+Affects: Essex, Folsom series
 
-Kingcope
+Description:
+Dan Prince from Red Hat reported a vulnerability in Nova scheduler
+nodes. By creating servers with malicious scheduler_hints, an
+authenticated user may generate a huge amount of database calls,
+potentially resulting in a Denial of Service attack against Nova
+scheduler nodes. Only setups exposing the OpenStack API and enabling
+DifferentHostFilter and/or SameHostFilter are affected.
 
+Fixes:
+Folsom:
+https://github.com/openstack/nova/commit/034762e8060dcf0a11cb039b9d426b0d0bb1801d
+Essex:
+https://github.com/openstack/nova/commit/25f5bd31805bd21d7b7e3583c775252aa8f737e9
 
-2012/12/2 Yves-Alexis Perez <corsac@...ian.org>:
-> On dim., 2012-12-02 at 21:17 +0100, king cope wrote:
->> My opinion is that the FILE to admin privilege elevation should be patched.
->> What is the reason to have FILE and ADMIN privileges seperated when
->> with this exploit
->> FILE privileges equate to ALL ADMIN privileges.
->
-> Maybe because you might not want admins to have read/write access to the
-> filesystem anyway?
->
-> Regards,
-> --
-> Yves-Alexis
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-3371
+https://bugs.launchpad.net/nova/+bug/1017795
+
+Notes:
+This fix will be included in the folsom-3 development milestone
+(published next month) and in future Essex releases.
+
+- -- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBCAAGBQJP/a0VAAoJEFB6+JAlsQQjRdIP/3jbLZFlixAbH6IXGlcXPnDj
+CFPTKo+cCbKjRWarbY738O17M4mYrFRnSq+o6tsQ4+YAgHtEtsSsAhimJ49y1H6G
+uQo8KURudVEiZ/ues2GJl4fQuEhRHCBaBhvCqIkhlY3s3OnvCzLGVWTQs48y8SdY
+7o4PyV7zwMugidiugEwW3DxtzOQyPNrt0y5KuWem1QTc+ODSPRyfxEp0FpPoZ6Hj
+t6C+E3mZ1FNO119W+IjhhSJjEiyeg0pEZeCeqQaapoSRbwZXiCo/qPOuE9KQD2oW
+jgnZ21HmMAQC5YsOLwuRL6/1Ht/Yl/TBF0oVRPTh9T7+Lfzp2y1dXwVlmwOzjnVO
+3nWA5l9Kuk7lOOjsQCzxCVSH92QyBfR+9XdDzRqDZzBF+tpq/5rI7qCzcpz+4RMM
+UH+6tvdB0Nye/eH0m8RP0HcxTEpM+1uPP/YDVWcP3IB9tLG9YAT6ZfGYf95N12kS
+tyqxklt952vgTEHqXqkW4as2bx0E8oigHRzGEWCCmtaMGs1QmM70p0Q1rC/QNyOp
+ZX63yj9eldl7wn9VUV03Ixe29qWrPLrpLg4gYEu4V53II0+9vmzHMTzWrQR4/HGw
+jgnwu4/OPEvpiN67fOUWLa6ZbX4XxBomwCD+CzJUblcWT19ukJKCrFLLYYq5m+PQ
+OZnFoLBQnTXPwWi+URXo
+=pIZB
+-----END PGP SIGNATURE-----
