@@ -1,21 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/24/3
-Message-ID: <CAN00zFCNA+rSNt6LDto06G-AETXMqXFqeWqY9V3gM=vXi7igvQ@mail.gmail.com>
-Date: Fri, 24 Aug 2012 09:33:31 +0200
-From: Thomas Pollet <thomas.pollet@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/8
+Message-ID: <20120711133128.GA11965@openwall.com>
+Date: Wed, 11 Jul 2012 17:31:28 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: zenoss issues
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Wed, Jul 11, 2012 at 11:05:03AM +0200, Sebastian Krahmer wrote:
+> Ok. We are not in a hurry. I added the new patch to
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=697105
+> 
+> using __secure_getenv().
 
-I have found xss and command execution problems with zenoss. I created a
-bugreport which can be found at http://jira.zenoss.com/jira/browse/ZEN-3183 .
-However the zenoss developers don't seem to be able to reproduce the issues.
+You could want to add a #warning after the #else (when __secure_getenv
+is not detected by the configure script), although I'd prefer these
+things to be fail-close (build failing if __secure_getenv is expected to
+be present, but is not detected).  This is an issue with
+security-related autoconf checks in general.
 
-Another issue, reported by Emanuel Bronshtein can be found at
-http://jira.zenoss.com/jira/browse/ZEN-3153
-
-Regards,
-Thomas Pollet
-
+Alexander
