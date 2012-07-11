@@ -1,48 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/2
-Message-ID: <4F0FC735.6030508@redhat.com>
-Date: Fri, 13 Jan 2012 11:25:01 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/22
+Message-ID: <20120711221852.GC24047@kludge.henri.nerv.fi>
+Date: Thu, 12 Jul 2012 01:18:52 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: Wireshark multiple vulnerabilities
+Subject: Re: CVE Request: Overflow fix in bash 4.2 patch 33
 Content-Type: text/plain; charset=utf-8
 
-On 01/12/2012 05:12 AM, Kurt Seifried wrote:
-On 01/12/2012 05:12 AM, Kurt Seifried wrote:
-> On 01/11/2012 09:19 AM, Agostino Sarubbo wrote:
->> According to secunia advisory: https://secunia.com/advisories/47494/ :
->>
->> Multiple vulnerabilities have been reported in Wireshark, which can be
->> exploited by malicious people to cause a DoS (Denial of Service) and
->> compromise a user's system.
->>
->> 1) NULL pointer dereference errors when reading certain packet information can
->> be exploited to cause a crash.
->>
->> 2) An error within the RLC dissector can be exploited to cause a buffer
->> overflow via a specially crafted RLC packet capture file.
->>
->> and according with upstream advisory:
->>
->> 1)http://www.wireshark.org/security/wnpa-sec-2012-01.html
->> Name: Multiple Wireshark file parser vulnerabilities
->> Description:
->> Laurent Butti discovered that Wireshark failed to properly check record sizes
->> for many packet capture file formats.
->> Impact:
->> It may be possible to make Wireshark crash by convincing someone to read a
->> malformed packet trace file.
-> Please use CVE-2012-0041 for this issue
+On Wed, Jul 11, 2012 at 06:15:07PM +0200, Marcus Meissner wrote:
+> ftp://ftp.gnu.org/pub/gnu/bash/bash-4.2-patches/bash42-033
+> 
+> Reproducer:
+> 	test -e /dev/fd/111111111111111111111111111111111
 
-There are 6 file format crashes here. In the interest of vendors, which 
-dont always rebase to the newer version, would it be convenient to split 
-these into 6 CVEs?
+Hello,
 
-I doubt some older versions are affected by only some crashers.
+Reported to Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681278
 
-
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+- Henri Salo
