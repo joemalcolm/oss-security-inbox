@@ -1,71 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/02/1
-Message-Id: <201210021342.45766.geissert@debian.org>
-Date: Tue, 2 Oct 2012 13:42:44 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request - mcrypt buffer overflow flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/7
+Message-ID: <4FFD76D2.306@redhat.com>
+Date: Wed, 11 Jul 2012 14:51:30 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
-Kurt,
+On 07/10/2012 04:30 PM, Sebastian Krahmer wrote:
 
-I think at least one more CVE id needs to be assigned:
+>> If this is not for upstream and you only need it working on a particular
+>> distro with glibc, then why not use __secure_getenv()?
+>
+> Indeed, if it is a exported symbol on the glibc versions we ship,
+> we should consider this. I remember a discussion that it was somehow
+> not available in the past.
 
-On Saturday 15 September 2012 19:22:06 Raphael Geissert wrote:
-> On Tuesday 11 September 2012 10:19:38 Eygene Ryabinkin wrote:
-> > Unfortunately, mcrypt's check_file_head() in combination with
-> > decrypt_general() is a bit worse: it allows to overwrite up to 50
-> > bytes of stack buffers from decrypt_general(), namely local_algorithm,
-> > local_mode, local_keymode.  And in some curcumstances to overwrite
-> > even 2-3 extra bytes (not more, since buf[3] will contain '\0'), though
-> > it is not very much controllable path.
-> > 
-> > The problem is that no length checks are done in combos
-> > read_until_null/strcpy.  Function read_until_null() allows for up to
-> > 100 bytes to be read and it won't NUL-terminate the buffer, so strcpy
-> > can do perform access even further (read from tmp_buf and writes to
-> > the said buffers; but this is the uncontrolled way I was talking
-> > about).
-> > 
-> > The modified PoC is at
-> > 
-> >   http://codelabs.ru/security/mcrypt/poc-cve-2012-4409.py
-> > 
-> > With it I was able to overwrite the salt_size@...rypt_general()
-> > and to trigger the call to malloc() for the chunk of 0x42424242 bytes
-> > via _mcrypt_malloc() that lead to bus error because of subsequent
-> > memmove():
-> [...]
-> 
-> > I wasn't yet able to smash the stack of decrypt_general(), because
-> > BUFFER_SIZE is 1024 and tmp_buf prevents me to reach the top of the
-> > stack frame (provided that compiler won't rearrange local variables),
-> > so I was not able to go past it.  Thus it looks like a temporary
-> > memory consumption/DoS.
-> 
-> Another week, another couple of patches. One makes it use strncpy and
-> forces a NUL on the last byte of local_algorithm, local_mode, and
-> local_keymode. Their values are checked later on, so it seems safe to
-> pass unvalidated data.
-> The size of the buffers is hard-coded to avoid making many changes to the
-> code.
+__secure_getenv() is declared and documented in <stdlib.h>, so it's not 
+likely to go away, especially if we start using it more widely.
 
-I think this needs a separate id, since fixes were released by Fedora and 
-Debian referencing CVE-2012-4409 but only for the original report.
-
-Eygene's followup issues have been fixed in Debian without referencing a CVE 
-id.
-
-> Once those issues were fixed I noticed that salt_size is not initialized
-> if the salt flag is not set. The result is an inconditional call to
-> malloc, with an uninitialized int as argument. This can lead to a
-> non-attacker-controlled memory consumption DoS in most cases.
-> It makes me think nobody actually ever used it without a salt.
-
-I've no strong opinion on whether this deserves an id.
-
-Cheers,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Florian Weimer / Red Hat Product Security Team
+
+
