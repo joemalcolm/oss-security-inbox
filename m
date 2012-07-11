@@ -1,105 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/10/5
-Message-ID: <4F353AD1.1050904@esec.fr.sogeti.com>
-Date: Fri, 10 Feb 2012 16:42:09 +0100
-From: Emilien Girault <egirault@...c.fr.sogeti.com>
-To: oss-security@...ts.openwall.com
-Subject: [vs] CVE-2012-1037 GLPI <= 0.80.61 LFI/RFI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/14
+Message-ID: <4FFDC042.8000707@redhat.com>
+Date: Wed, 11 Jul 2012 12:04:50 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Moses Mendoza <moses@...petlabs.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Fwd: New Security Vulnerabilities in Puppet
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I found a File Inclusion vulnerability in GLPI <= 0.80.61. I contacted the project team; 
-the bug is now patched and a new version is available (0.80.7).
+On 07/11/2012 10:37 AM, Moses Mendoza wrote:
+>>> 
+>>> Vulnerability 5 Agents with certnames of IP addresses can be 
+>>> impersonated (low) *Affected Versions: 2.7.x, 2.6.x If an 
+>>> authenticated host with a certname of an IP address changes IP 
+>>> addresses, and a second host assumes the first host's former
+>>> IP address, the second host will be treated by the puppet
+>>> master as the first one, giving the second host access to the
+>>> first host's catalog. Note: This will not be fixed in Puppet
+>>> versions prior to the forthcoming 3.x. Instead, with this
+>>> announcement IP-based authentication in Puppet < 3.x is
+>>> deprecated.
 
-I've published the advisory on fulldisclosure:
+After some further communications with them it has been decided to
+assign this issue a CVE. Please use CVE-2012-3408 for this issue.
 
-http://seclists.org/fulldisclosure/2012/Feb/157 <http://seclists.org/fulldisclosure/2012/Feb/157>
+Moses: can you confirm that a CVE page with links to the code
+commits/etc will be created? Thanks.
 
-CVE-2012-1037: GLPI <= 0.80.61 LFI/RFI
-
-Severity: Important
-
-Vendor: GLPI - http://www.glpi-project.org
-
-Versions Affected
-=================
-
-All versions between 0.78 and 0.80.61
-
-Description
-===========
-
-GLPI fails to properly sanitize the GET 'sub_type' parameter in the front/popup.php file:
-
-  [...]
-  checkLoginUser();
-
-  if (isset($_GET["popup"])) {
-     $_SESSION["glpipopup"]["name"] = $_GET["popup"];
-  }
- 
-  if (isset($_SESSION["glpipopup"]["name"])) {
-    switch ($_SESSION["glpipopup"]["name"]) {
-  [...]
-    case "add_ruleparameter" :
-           popHeader($LANG['ldap'][35], $_SERVER['PHP_SELF']);
-           include strtolower($_GET['sub_type']."Parameter.php");   // <======= 
-           break;
-  [...]
-  
-To be triggered, the attacker needs to be authenticated. However, GLPI provides default accounts that often aren't 
-changed or disabled:
-
-    glpi/glpi
-    tech/tech
-    normal/normal
-    post-only/postonly
-
-Impact
-======
-
-Since there is a suffix, the vulnerability can be used as a RFI (requires allow_url_include = On).
-
-For LFI, the target file has to end up with "parameter.php". GLPI automatically escapes all GET and POST parameters 
-with addslashes(), so the null byte technique is not usable. I have not tested exploitation using the path truncation 
-technique but it might be possible.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-Mitigation
-==========
 
-Upgrade to GLPI 0.80.7.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-
-Exploit
-=======
-
-http://<server>/front/popup.php?popup=add_ruleparameter&sub_type=<file>
-
-
-Timeline
-========
-
-08 feb 2012 - Found the bug.
-09 feb 2012 - Contacted the GLPI Team.
-09 feb 2012 - Bug fixed & new version available.
-
-Thanks to the GLPI team for being responsive!
-
-References
-==========
-
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-1037
-https://forge.indepnet.net/projects/glpi/versions/685
-https://forge.indepnet.net/projects/glpi/repository/revisions/17457/diff/branches/0.80-bugfixes/front/popup.php
-
-I think you can package the new version into security updates.
-Please let me know if you need any more details.
-
-Best regards,
-
--- 
-Emilien Girault
-
-
+iQIcBAEBAgAGBQJP/cBCAAoJEBYNRVNeJnmTy20P/RSOFcMm17lRy6ZYGZNBeXxp
+AD/yyljK4eAIGOG7Nvbx9AIce1BRbb+MdxJbRqFtVhO26bRgiCGViM6I0o6lyEKH
+Wh0HeLls5YtgxcNquhyJsvQQOaZ8uWRa7j09Pzm6YL0076rTxS0o7jPIt0dudRSe
+u3IfbsxRWPaiurDw9XhkhxuZYGpdRf6c0XR0aHtbFwnt5Huwjf8p8GnyP16rwQcR
+csr+IcWixMNZULIqh1+NoUG1uJiWYfK7LZ54q3Bm3yVWRBLzqOzao1pa9jWJwAxy
+9saqOwP3TKbpDh43QcLaiT88taK71vcyezhvIlZH2LwPKk0eQSYfXAw65/bTaKIv
+iCBcYgeasV5/xPYXBVglAuwqYbd1CEJTKZGenYGAPdxxrm63HIlzFeWJnL02sQZe
++6g0AVGJ6J6bHPI7TgEZsMXrEo8rfrKtAOYlDp5YsMC0YQQX4wovFbhJi0EcTeu0
+uOS80adyvVDgHxdE6A3SOq3+458aCuiQ4rkp1Tf0Au/20u0zFGaytMITnJGmmFfB
+NPrSNQvknuK8C/t4C7MS4lTAJu1CvTjWzeeAxgLRPb9zyEgdkEiu0yTdUH8twG5O
+xfG3c0sp0jOmaKGDblTNKvMxicKppbBp2ZBmT0NbBLTG02NDCucTtOQfWizYWmDB
+It5g13Hj2PmBbNOuWifm
+=CbYi
+-----END PGP SIGNATURE-----
