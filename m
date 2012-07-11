@@ -1,58 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/10
-Message-ID: <505CADFC.7010202@redhat.com>
-Date: Fri, 21 Sep 2012 12:12:12 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/4
+Message-ID: <20120711090503.GA13858@suse.de>
+Date: Wed, 11 Jul 2012 11:05:03 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: monkey CGI scripts executed without dropping RUID/RGID root
+Cc: simon.mcvittie@...labora.co.uk
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 09/21/2012 07:38 AM, Henri Salo wrote:
-> Hello,
+Hi,
+
+Ok. We are not in a hurry. I added the new patch to
+
+https://bugzilla.novell.com/show_bug.cgi?id=697105
+
+using __secure_getenv().
+
+You seem to be in the AUTHORS list, so is this Cc enough
+to notify upstream? :)
+
+Sebastian
+
+On Tue, Jul 10, 2012 at 06:37:40PM +0100, Simon McVittie wrote:
+> On 10/07/12 14:09, Sebastian Krahmer wrote:
+> > We are going to add a libdbus hardening patch:
 > 
-> Please assign 2012 CVE-identifier for following monkey
-> vulnerability:
+> I haven't seen any mention of this upstream, despite the Novell bug
+> apparently being two months old. Please send it upstream for discussion
+> and review.
 > 
-> The Monkey webserver retains RUID/RGID root so that it can regain
-> root as needed to perform privileged operations. Unfortunately,
-> monkey does not drop RUID/RGID root before executing CGI scripts.
-> This allows any user with write access to a cgi-bin directory to
-> gain local root. It would also allow a remote attacker to do the
-> same in combination with a CGI/PHP script that has any remote code
-> execution bug.
-> 
-> Reported by John Lightsey in
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=688008 Affected
-> Debian-version is 0.9.3-1 (haven't tested upstream package) Project
-> page: http://www.monkey-project.com/
-> 
-> - Henri Salo
+>     smcv (currently on holiday, so won't be reviewing it right now)
 
-Please use CVE-2012-4443 for this issue
+-- 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
-iQIcBAEBAgAGBQJQXK38AAoJEBYNRVNeJnmTf8sP/2QWmTgCNtJMrs/iKqp/mOGx
-dGP0z+bu1ZcdrHR97B2gYy0z9wguyOx5R+pDEyd6IFPe8PCIbJLA5SGgx9aHMi31
-Q0njfagpqtwQugDxvP/yTqBfdp8QhUoExiYsry3lhu2Dg/7uN2hpex1tBY+sx6GY
-qziqb+NGoKezMmcMO4C3mbh0wtGRXVWDOs73UCP208/RTO5GOczgDHKiIXViSpDf
-hpM2am1n/JXasUYzz3J/cyibHg3PPmOZk9eMd6N+Wy1rmPekl9Wy/QHsXsmUv2lm
-1bdfhtHhWx9iAwUOjZrb1NnnWItltoaH8L+gUX/Cr4TFjNB1nizAD79jUL4DRSft
-jDkWBR0oeqQdPPYjWdjT97gbf8+LjyloQUqbTIrqN5j2sTsu+JtWD3jSMrUn10C/
-SyDFITk+JLWP7D2dWYILGUMioN6TB7TVaIIY0M1z6K/99No6ztPFAOf/RlQLRD44
-qomwr1mRE2hYlzLNGTikBecGt20vnBDmGj1LO/S39M9YhF82lqaOuuv1T/+7A2pC
-AxQVlckGhOCtMpKniaC61wllYdrhEhXWANogm4AA4/VAz/YdRUUgFPYXLAcxVaX5
-t3FfzNNeo2fQ42/kO4HbcpjH+F4IQSKF0dTkUOnju8KyR7/vMSxeWHXW6kWiY/Qp
-v68A5rKh4uwoarc+ZEbQ
-=m1pI
------END PGP SIGNATURE-----
