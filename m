@@ -1,29 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/4
-Message-ID: <20121031143119.GS13903@dhcp-25-225.brq.redhat.com>
-Date: Wed, 31 Oct 2012 15:31:20 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/12/1
+Message-ID: <20120712011604.GF16475@boyd>
+Date: Wed, 11 Jul 2012 18:16:05 -0700
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: net: divide by zero in tcp algorithm illinois
+Cc: Kurt Seifried <kseifried@...hat.com>, Dustin Kirkland <dustin.kirkland@...zang.com>, Marcus Meissner <meissner@...e.de>, Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Re: ecryptfs headsup
 Content-Type: text/plain; charset=utf-8
 
-Description of the problem:
-Reading TCP stats when using TCP Illinois congestion control algorithm
-can cause a divide by zero kernel oops.
+On 2012-07-11 17:27:41, Kurt Seifried wrote:
+> On 07/11/2012 10:48 AM, Kurt Seifried wrote:
+> >> Hi Tyler, et al.-
+> > 
+> >> I don't have any objections at all with adding nosuid and nodev
+> >> to the hardcoded mount.ecryptfs_private options.
+> > 
+> >> Actually, I seem to recall this coming up recently before.  I 
+> >> can't find the bug or email thread (must have been IRC), but I 
+> >> recall offering to commit, test, and release that change 
+> >> immediately.  I believe I was asked to wait to do that until a
+> >> CVE had been published...  I can't find any record of that
+> >> conversation though, so that's just from memory.
+> > 
+> >> Shall I go ahead and commit/test/release that now, Tyler?
+> > 
+> > So it sounds like a non privileged user on an Ubuntu machine can 
+> > insert a USB stick/etc with a file system that gets automatically 
+> > mounted, said file system can contain setuid root binaries for
+> > example which the user can then execute, elevating privileges?
+> 
+> Please use CVE-2012-3409 for the ecryptfs mount.ecryptfs_private which
+> allows setuid and dev enabled filesystems, this affects multiple Linux
+> vendors.
+>
+> Just to confirm: this only affects systems with a setuid
+> mount.ecryptfs_private?
 
-An unprivileged local user could use this flaw to crash the system.
+There are two separate issues here. The first is with the attack vector
+described above.
 
-Proposed upstream patch:
-http://thread.gmane.org/gmane.linux.network/247871
+An attacker could trivially craft a lower encrypted filesystem on a USB
+drive. It would be automatically mounted in most distros these
+days and the mount flags would most likely contain MS_NOSUID. However,
+setuid and setgid bits in the USB drive's filesystem would still be
+honored if a setuid-root mount.ecryptfs_private was available on the
+system because it was not forcing the MS_NOSUID mount flag on the mounts
+that it set up.
 
-Acknowledgements:
+If we distill that down a little more, it means that it is possible to
+mount eCryptfs, *without* MS_NOSUID, on top of a filesystem that is
+mounted with MS_NOSUID and eCryptfs will happily honor the setuid and
+setgid bits at its layer. I tend to lean towards that being a
+non-security, but serious, filesystem stacking bug but I could be
+convinced otherwise. It would definitely be an administrator error, but
+I don't know what behavior an admin should expect in this situation. Any
+thoughts?
 
-This issue was discovered by Rodrigo Freire of Red Hat.
+Tyler
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=871848
-http://thread.gmane.org/gmane.linux.network/247871
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
