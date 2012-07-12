@@ -1,30 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/7
-Message-ID: <20121126164857.GB2689@redhat.com>
-Date: Mon, 26 Nov 2012 09:48:57 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/12/2
+Message-ID: <4FFE6B32.5080108@redhat.com>
+Date: Thu, 12 Jul 2012 08:14:10 +0200
+From: Stefan Cornelius <scorneli@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: tor DoS via SENDME cells
+CC: Kees Cook <kees@...ntu.com>
+Subject: Re: CVE request: glibc formatted printing vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-I've not seen a CVE for this yet, could one get assigned?
+On 07/11/2012 11:37 PM, Kees Cook wrote:
+> Hi Stefan,
+> 
+> On Wed, Jul 11, 2012 at 12:32:35PM +0200, Stefan Cornelius wrote:
+>> 3) It was discovered that the formatted printing functionality in glibc
+>> did not properly restrict the use of alloca(). A remote attacker could
+>> provide a specially crafted sequence of format specifiers, leading to a
+>> crash or, potentially, FORTIFY_SOURCE format string protection mechanism
+>> bypass, when processed.
+>>
+>> References:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=826943
+>>
+>> Red Hat patch backports/testcases for RHEL6 that include a patch for this:
+>> https://bugzilla.redhat.com/attachment.cgi?id=594722&action=diff
+>>
+>> Red Hat patch backport/testcase for RHEL5 (older glibc versions)
+>> https://bugzilla.redhat.com/attachment.cgi?id=594727&action=diff
+> 
+> Is there an upstream commit proposed for this one? I see it mixed into
+> the RH patch with fixes for 1) and 2).
+> 
+> Thanks,
+> 
+> -Kees
+> 
 
-It was reported that Tor suffered from a denial of service
-vulnerability due to an error when handling SENDME cells.  This could be
-exploited to cause excessive consumption of memory resources within an
-entry node.
+Hi Kees,
 
-This is fixed in upstream version 0.2.3.25.
+Unfortunately, I'm currently unaware of an upstream patch for this. I've
+asked our maintainers for the status of this and, hopefully, I can
+provide you with a better response soon.
 
-References:
-
-https://secunia.com/advisories/51329/
-https://trac.torproject.org/projects/tor/ticket/6252
-https://gitweb.torproject.org/arma/tor.git/commitdiff/b9b54568c0bb64c32bd0b362954bdbc8c1234b16
-https://bugzilla.redhat.com/show_bug.cgi?id=880310
-https://bugs.gentoo.org/show_bug.cgi?id=444804
-
-Thanks.
-
+Kind regards,
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Stefan Cornelius / Red Hat Security Response Team
+
+
