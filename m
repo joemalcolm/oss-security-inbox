@@ -1,41 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/31/2
-Message-ID: <4F27515A.3040403@redhat.com>
-Date: Mon, 30 Jan 2012 19:26:34 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/12/4
+Message-ID: <4FFF0170.4080500@redhat.com>
+Date: Thu, 12 Jul 2012 10:55:12 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: gnusound 0.7.5 file name handling format string issue
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: Overflow fix in bash 4.2 patch 33
 Content-Type: text/plain; charset=utf-8
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=654270#24
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Package: gnusound
-Version: 0.7.5-3
-Severity: serious
+On 07/12/2012 08:04 AM, Marcus Meissner wrote:
+> On Wed, Jul 11, 2012 at 11:29:22AM -0600, Kurt Seifried wrote:
+>> On 07/11/2012 10:15 AM, Marcus Meissner wrote:
+>>> Hi,
+>>> 
+>>> the bash maintainer kindly mailed us and other vendors a 
+>>> notification of a overflow in the bash "test" builtin when 
+>>> "/dev/fd/..." filenames are used.
+>>> 
+>>> ftp://ftp.gnu.org/pub/gnu/bash/bash-4.2-patches/bash42-033
+>>> 
+>>> Reproducer: test -e /dev/fd/111111111111111111111111111111111
+>>> 
+>>> Problem is caught by -D_FORTIFY_SOURCE=2 if enabled, and
+>>> likely also by -fstack-protector (not tested)
+>>> 
+>>> Goes all the way back to old bashes.
+>>> 
+>>> The likeliness of people able to inject those filenames into
+>>> shell scripts and not being able to execute shellcode
+>>> themselves is however slim. (setuid root shell scripts are not
+>>> possible.)
+>>> 
+>>> Security (CVE) relevant scenario we thought of is breaking out
+>>> of a restricted shell mode.
+>>> 
+>>> Ciao, Marcus
+>> 
+>> Can you give a more concrete example, e.g. you're talking about 
+>> http://www.gnu.org/software/bash/manual/html_node/The-Restricted-Shell.html
+>>
+>> 
+I assume? Are we simply talking about violating those restrictions?
+> 
+> Yes. Breaking out of the restricted shell using this issue.
+> 
+> $ bash -r bash: /dev/pts/9: Gesperrt: Die Ausgabe darf nicht
+> umgeleitet werden. $ test -f
+> /dev/fd/111111111111111111111111111111111111111111111111111111111111111
+>
+> 
+*** buffer overflow detected ***: bash terminated
+> ...
+> 
+> So basically without fortification measures you can inject a ASCII
+> based shell-code to execute code you shouldn't.
+> 
+> (One can argue that of how secure you evaluate restricted shells
+> ...)
+> 
+> Ciao, Marcus
 
-which was the last release in 2008.
-
-diff --git a/src/gtk2/gui_dialogs.c b/src/gtk2/gui_dialogs.c
-index e85cf88..540e67a 100644
---- a/src/gtk2/gui_dialogs.c
-+++ b/src/gtk2/gui_dialogs.c
-@@ -56,6 +56,7 @@ gui_yes_no(const char *title,
-                                     GTK_DIALOG_MODAL,
-                                     GTK_MESSAGE_QUESTION,
-                                     GTK_BUTTONS_YES_NO,
-+                                    "%s",
-                                     message);
-     button = gtk_dialog_run(GTK_DIALOG(dialog));
-     switch(button) {
-@@ -95,6 +96,7 @@ gui_alert(const char *format,
-                                     GTK_DIALOG_MODAL,
-                                     GTK_MESSAGE_INFO,
-                                     GTK_BUTTONS_CLOSE,
-+                                    "%s",
-                                     wordwrap(message, 60));
-     gtk_dialog_run(GTK_DIALOG(dialog));
-     gtk_widget_destroy(dialog);
+Please use CVE-2012-3410 for this issue. The --restricted stuff is
+advertised as a security measure and this can be used to bypass it, so
+it gets a CVE.
 
 
--- 
+
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJP/wFtAAoJEBYNRVNeJnmTAQAQALE+Ae4WI4RXoYgQ+FdsMd3Q
+x5rlOlAYDSN/ug65OPOZ9y3s1igcb7cuggaGo7LmWDjA9P7Jg5E4i1rHn/vFFBjE
+G1ZKU/ep9Y2HSqTGMOSxKm+sXkoV2ZIdMFH4Q7TB1hpp0i9E+ju4Saj5k2y0ayoj
+E8x5tvR90JYHP5c1s0bnJQISb4yncYruYaVqdVa3AVMmdZVgiklGAmLKsSCbZCrZ
+cCdmTnGZW8R++LR1goZBVkOUFYwygP1AeBvyqGhBJpe638xpVcp9XtTewUQokDCF
+Mieqfppx0N9r1slV59y1O0KIqzD1oq/GmK5xChrxDXUnpsuwLWtAoRQfO6wSbSr5
+2OgE3/vnfAFUW7Dg+U2SomYNamCtQQTn0aI+UPwD/nwoSgI+WqcBjFs33AhE4tnP
+OclmWJEsk79AFw1UzVNWM6medmADa9EPMImLfi/DHa3G4sb7aJwzwevwfjFP7AN8
+7mHPSYBCKjnhIg7RUfaeJtBBot3B+c1cYiN0uW6LDEP+I0CwvVlSCaCYL23VSpEZ
+hP7rUua4NFeozhskq+OvWq4zDzkCet5QMTFi4/obFx4LKA+XGlEW6K4GqDDOphNK
+Wt3qmSzD7wJov1fNx2G7ZY7q9UtKLjwOcuHYPKsnRjwu6ATjAw+FZF9RuuibcdF9
+8S1NSGX3hoeUpcGcg3Tx
+=oSt+
+-----END PGP SIGNATURE-----
