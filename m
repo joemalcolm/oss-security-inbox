@@ -1,97 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/4
-Message-ID: <50609516.9050202@redhat.com>
-Date: Mon, 24 Sep 2012 11:15:02 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/12/5
+Message-ID: <4FFF0550.6030906@redhat.com>
+Date: Thu, 12 Jul 2012 11:11:44 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Tavis Ormandy <taviso@...xchg8b.com>
-Subject: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, David Woodhouse <dwmw2@...radead.org>, Daniel Berrange <berrange@...hat.com>, Daniel Veillard <veillard@...hat.com>
+Subject: Re: Re: CVE Request -- dnsmasq: When being run by libvirt open DNS proxy (reachable out-of the virtual network set for the particular guest domain too) is created
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/24/2012 02:42 AM, Tavis Ormandy wrote:
-> Matthias Weckbecker <mweckbecker@...e.de> wrote:
+On 07/09/2012 08:21 AM, Jan Lieskovsky wrote:
 > 
->> On Friday 21 September 2012 23:47:48 Michael Gilbert wrote:
->> [...]
->>> 
->>> So anyway, I suppose this creates more questions than answers,
->>> but I guess its worth thinking about.  After all, what did the
->>> user really expect?  If they had intended that original file to
->>> be private, and now its not, is that appropriate?  Is it more
->>> appropriate to assume all users know how to use umask
->>> appropriately?
->>> 
->> 
->> IMO if one bothers to encrypt a file at all it was certainly
->> intended to be private and only supposed to be readable by a
->> certain user / user group and not by just everyone. Otherwise
->> encryption would be pointless, or are there any other reasons for
->> encrypting a file?
->> 
->>> Best wishes, Mike
->> 
->> Thanks, Matthias
->> 
+> Steve,
 > 
-> I agree. Users do know how to use umask properly, but this isn't
-> what umask is for. The umask for the low order bits are only
-> applied if the program requested 0666, it's still the
-> responsibility of the program to choose the appropriate
-> permissions.
+>   some kind of strange request (since I have requested
+> the CVE id originally), but didn't previously think of
+> it that following way -- which component would the CVE id be
+> actually assigned to, dnsmasq or libvirt?
 > 
-> Creating sensitive files with 0666 and then saying "set your umask"
-> is just wrong.
+>   From my understanding it's a combination of both of them,
+> which is making it a security flaw (libvirt has announced
+> to provide DNS masquerade and due to a bug in one component,
+> actually providing that functionality, this allowed a DDoS
+> attacks).
 > 
-> Tavis.
+>   Once libvirt announced the separation, is it it's
+> responsibility to handle it? And as such security flaw in
+> libvirt?
+> 
+>   For the dnsmasq package, it doesn't look like a security
+> flaw (rather as bug, when handling certain CLI option -- it
+> would not ignore packets as instructed).
+> 
+>   I am not completely sure, there has been similar enough
+> example in the past, which could help us to decide which
+> component the particular CVE identifier should be assigned
+> to.
+> 
+>   Could you clarify / help us to understand Mitre's opinion
+> here?
+> 
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> On 07/09/2012 02:04 PM, Jan Lieskovsky wrote:
+>> Hello Kurt, Steve, vendors,
+>>
+>>    David Woodhouse reported a deficiency in the way dnsmasq,
+>> a lightweight, easy to configure DNS forwarder and DHCP server,
+>> when being run under libvirt, a library providing simple
+>> virtualization API, performed processing of packets coming
+>> outside of virtual network set for the particular guest domain.
+>>
+>>    When libvirt was configured to provide a range of public
+>> IP addresses to its guest domains and dnsmasq was instructed
+>> to discard packets originating from other interfaces, than
+>> specified on the command line via the --bind-interface option,
+>> those packets (coming from 'prohibited' interfaces) were not
+>> dropped properly and subsequently processed.
+>>
+>>    A remote attacker could use this flaw to cause a distributed
+>> denial of service, as demonstrated in the report [1] via "stream
+>> of spoofed DNS queries producing large results".
+>>
+>> References:
+>> [1] https://bugzilla.redhat.com/show_bug.cgi?id=833033
+>>
+>> Could you allocate a CVE id for this?
+>>
+>> Thank you && Regards, Jan.
+>> -- 
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-So where do we draw the line? tar? By this definition any program that
-has stores sensitive data (passwords/etc.) or has potentially
-sensitive output (so email, web clients, chat clients, file
-downloaders, text editors, etc.) needs to internally pick some "safe"
-default and apply it and/or umask (whichever is more secure I guess).
+Please use CVE-2012-3411 for this issue.
 
-Personally I think applying file permissions at the program level is
-in general (outside of some highly specific instances like encryption
-key generation and storage in a file) a very very bad place to do
-this. Moving it up a layer to the OS (e.g. umask, home dir
-permissions, etc.) makes way more sense I think.
+Something along the lines of:
 
-However if people want to go ahead with this then a short list would be:
+When dnsmasq is used in conjunctions with certain configurations of
+libvirtd, network packets from prohibited networks (e.g. packets that
+should not be passed in) may be sent to the dnsmasq application and
+processed. This can result in DNS amplification attacks for example.
 
-OpenSSH/any SSH or encrypted connection client
-OpenSSL/anything that generates certificates/keys/etc.
-GPG/PGP/anything that provides file encryption/decryption
-Email clients (email is almost always sensitive, stored passwords/certs)
-Web clients (cached web pages are sensitive, stored passwords/certs)
-Chat programs (IRC, MSN, etc.) (stored passwords/certs)
-Any programs storing financial/accounting data (GnuCash, etc.).
-Any programs storing health related data (GnuHealth, etc.).
-File editing programs were previously mentioned
 
-I'm sure I've missed a few.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIbBAEBAgAGBQJQYJUWAAoJEBYNRVNeJnmT5JUP+KBjgs7vitdo0o4q2luViHr3
-k9NI6Lj1UzG6vfmATdkjN7J2XnkApcsAWijg1iWXQmq3zhv3EK3cHZ0QUkd2P4nu
-nKAwl22vTVF4COQYGOs0Fe0uKTKskuSGqQTdEG71OBBsZH4MJs6C7jk/0mDmjYqq
-dqEjil1+jTFrxTBWuXGbRt1qdQxKS3Acq8uCRkm7tbp5+K7P99cRT8CXX6ITef92
-NZm8bolYFxMlCKMEj8NqeB0mX4QePw6IINadccHg6u/PadxuJHK+z5z2N9+cLdxq
-ZGfZ6w5jvih5UBZXvS3Khlg5YGlkJCIwcTLZz2OFXcSzcuoEGXFiHDpeIeiNwoO4
-1St1c2TBpSHG11CdNQUVnhxaF8QMuDvw34L6hr7uuER2p44QeWEc/s2AVPt7/Y7+
-Nheuhsp1TPeOpAyOFdR9L2xdDuN8HH07OkKnPk9IsNpNUqOARkzhzO8dWGydFLrb
-iKwuzlsa3qNkJk0qwGm4IktB5jcqOaAm/XYi5SRGY+dDPhFkebpILwqoq6rZ6Aoi
-+CCV8+Md0M3MU0rOkzu82Td96oK/rllPkA2DVFpapADrinl9eDycJJaxejGssyZY
-Z7N6eArUa296aTcyjuo3cqJsrr6Jn/Dkmdp4yoxGb4VdDCLHdXDnu4bdENqmbPEX
-NBIlDihtzuK2t0AKLus=
-=a3Rt
+iQIcBAEBAgAGBQJP/wVQAAoJEBYNRVNeJnmTa5MP/juolmLDYii0fwdQLB7SVLvP
+kJ47tuT92uvU3aeUEceb8cjnqxL2c4RUZjy3Qbn+8JALwk5/MnD/831D6D5O+THi
+l4uP07rHx35kW2aXcmo2kJmzgF0qieMoZQdZ8yCpwa8NmLUPnNiDOFOVwgaHpITK
+o5vj8Qgl+LGDT0f1dkQ/fV7+uufNcCCDv+l8VogVJEogpglfSsyj5Xfe+QaCa+FA
+e7P67735VY37Stgav3dmf+N/AE7QUOxFnOUFsdLYEpBnKzo9mTrdnkMc0J0JuUff
+Sl7ZnVXyHdP7Rt4HKf7a2dgH35WraqKVhiJ6BleIGHwmtUt/LgKttWLduFaWfbs9
+vA6nuGELSkVQb7Dy6V0yUXP8s1q+jHDCHWxcBgqfWX+AHBtNUoUJxn4OXLTvNeaL
+lU56r55Re2EyVnyvpoVrt7zjoy2IJ0h5MgQ/iBah6mgWTCywNDNqzB+AQsbTOFqB
+kWPNxBOYbf7udVb8vFhgAe8qV4z2BiZRJkXtjCYBh5PYb6kiUZUZVVx8wB55gVrc
+hTvEytyQumhelZzqB+PX2wuCJ56+quOS+SBCuOXlAXtvqXDfCS7FMvITu7hCy+dy
+Le3HUtdZ0bevZgoN64ZzGQXUxm8eAamz8tCtHp6xk7jFodY49f4oDsWIBY7JngiG
+x/1VA6wDL/gWg1xzO7U9
+=59ca
 -----END PGP SIGNATURE-----
