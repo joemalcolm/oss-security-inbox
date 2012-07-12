@@ -1,68 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/9
-Message-ID: <4F9001B7.2010309@redhat.com>
-Date: Thu, 19 Apr 2012 14:14:47 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, officesecurity@...ts.freedesktop.org, Caolán McNamara <caolanm@...hat.com>, Miklos Vajna <vmiklos@...e.cz>, David Tardon <dtardon@...hat.com>, Carlo Di Dato <shinnai@...istici.org>
-Subject: CVE Request (minor) -- LibreOffice (X >= v3.5.0): DoS (excessive CPU use) in the RTF tokenizer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/12/3
+Message-ID: <20120712140359.GB5098@suse.de>
+Date: Thu, 12 Jul 2012 16:04:00 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Overflow fix in bash 4.2 patch 33
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Wed, Jul 11, 2012 at 11:29:22AM -0600, Kurt Seifried wrote:
+> On 07/11/2012 10:15 AM, Marcus Meissner wrote:
+> > Hi,
+> > 
+> > the bash maintainer kindly mailed us and other vendors a
+> > notification of a overflow in the bash "test" builtin when
+> > "/dev/fd/..." filenames are used.
+> > 
+> > ftp://ftp.gnu.org/pub/gnu/bash/bash-4.2-patches/bash42-033
+> > 
+> > Reproducer: test -e /dev/fd/111111111111111111111111111111111
+> > 
+> > Problem is caught by -D_FORTIFY_SOURCE=2 if enabled, and likely
+> > also by -fstack-protector (not tested)
+> > 
+> > Goes all the way back to old bashes.
+> > 
+> > The likeliness of people able to inject those filenames into shell
+> > scripts and not being able to execute shellcode themselves is
+> > however slim. (setuid root shell scripts are not possible.)
+> > 
+> > Security (CVE) relevant scenario we thought of is breaking out of
+> > a restricted shell mode.
+> > 
+> > Ciao, Marcus
+> 
+> Can you give a more concrete example, e.g. you're talking about
+> http://www.gnu.org/software/bash/manual/html_node/The-Restricted-Shell.html
+> I assume? Are we simply talking about violating those restrictions?
 
-   a denial of service flaw was found in the way the LibreOffice RTF Tokenizer
-used to resolve certain keywords being present in the Rich Text Format (RTF)
-document. A remote attacker could provide a specially-crafted RTF file, which
-once opened by a local, unsuspecting LibreOffice tools suite user would lead to
-excessive CPU usage by the tool used for opening that file.
+Yes. Breaking out of the restricted shell using this issue.
 
-Upstream bug report:
-[1] https://bugs.freedesktop.org/show_bug.cgi?id=48640
+$ bash -r
+bash: /dev/pts/9: Gesperrt: Die Ausgabe darf nicht umgeleitet werden.
+$ test -f /dev/fd/111111111111111111111111111111111111111111111111111111111111111
+*** buffer overflow detected ***: bash terminated
+...
 
-Upstream patch (against 3.5 branch):
-[2] 
-http://cgit.freedesktop.org/libreoffice/core/commit/?id=51c8c95b2864b49e7bcbd824eacedb5778a758c0&g=libreoffice-3-5
+So basically without fortification measures you can inject a ASCII based
+shell-code to execute code you shouldn't.
 
-References:
-[3] 
-http://didasec.wordpress.com/2012/04/16/libreoffice-3-5-2-2-soffice-exesoffice-bin-memory-corruption/
-[4] http://shinnai.altervista.org/exploits/SH-016-20120416.html
-[5] http://seclists.org/fulldisclosure/2012/Apr/201
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=814223
+(One can argue that of how secure you evaluate restricted shells ...)
 
- From investigation of the reproducers provided at:
-[7] https://bugs.freedesktop.org/show_bug.cgi?id=48640#c0 ('Crash PoC')
-
-the particular error message:
-terminate called after throwing an instance of 'std::bad_alloc'
-   what(): std::bad_alloc
-
-Program received signal SIGABRT, Aborted.
-0X00111416 in __kernel_vsyscall ()
-
-seems to be just standard C++ (STL) error message / exception, that
-the requested memory allocation failed. From my investigation
-the relevant process termination in this case is safe from security
-point of view (standard way how C++ handles memory allocation failures).
-
-Though Caolán , Miklos or LibreOffice upstream can clarify further if
-this should be considered to be a security flaw (due to internal
-implementation details I am not aware of and might lead to memory
-corruption announced at [7]).
-
-But as noted earlier, I don't think this is a security flaw, which
-should get a CVE identifier.
-
-[8] https://bugs.freedesktop.org/show_bug.cgi?id=48640#c1 ('DoS PoC')
-
-This one (on LibreOffice >= v.3.5.0 using the new RTF tokenizer implementation)
-truly leads to denial of service (excessive CPU consumption and hang) while
-trying to process that RTF file. So this case might be applicable
-for CVE-2012-* identifier assignment.
-
-Kurt, if LibreOffice upstream approves, could you allocate CVE id
-for the 'RTF Tokenizer resolve keyword DoS / CPU usage issue' [8] ?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Ciao, Marcus
