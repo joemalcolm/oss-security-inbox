@@ -1,47 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/26/3
-Message-ID: <4FE9AEC0.1010906@redhat.com>
-Date: Tue, 26 Jun 2012 14:44:48 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Mitre CVE assign department <cve-assign@...re.org>
-CC: oss-security@...ts.openwall.com, Thomas Spura <tomspur@...oraproject.org>
-Subject: CVE-2012-2639 reject request (duplicate of CVE-2011-4940)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/13/3
+Message-ID: <1342182313.3057.78.camel@mdlinux>
+Date: Fri, 13 Jul 2012 08:25:13 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: KDE Pim
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+Hello,
 
-   due the recently assigned CVE-2012-2639:
+Could a CVE please be assigned to the following issue:
 
-======================================================
-Name: CVE-2012-2639
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-2639
-Final-Decision:
-Interim-Decision:
-Modified:
-Proposed:
-Assigned: 20120514
-Category:
-Reference: CONFIRM:http://bugs.python.org/issue11442
-Reference: JVN:JVN#51176027
-Reference: URL:http://jvn.jp/en/jp/JVN51176027/index.html
-Reference: JVNDB:JVNDB-2012-000063
-Reference: URL:http://jvndb.jvn.jp/jvndb/JVNDB-2012-000063
+Javascript and external images were being loaded while rendering HTML
+email in kmail. The downloaded Javascript was then being interpreted.
 
-The list_directory function in Lib/SimpleHTTPServer.py in
-SimpleHTTPServer in Python before 2.5.6c1, 2.6.x before 2.6.7 rc2, and
-2.7.x before 2.7.2 does not place a charset parameter in the
-Content-Type HTTP header, which makes it easier for remote attackers
-to conduct cross-site scripting (XSS) attacks against Internet
-Explorer 7 via UTF-7 encoding.
+See:
+
+https://projects.kde.org/projects/kde/kdepim/repository/revisions/dbb2f72f4745e00f53031965a9c10b2d6862bd54
+
+https://bugs.launchpad.net/ubuntu/+source/kdepim/+bug/1022690
+
+Thanks,
+
+Marc.
 
 
-Could you reject it? (as it is a duplicate of CVE-2011-4940):
 
-https://bugzilla.redhat.com/show_bug.cgi?id=835496#c2
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4940
-http://www.openwall.com/lists/oss-security/2012/03/15/1
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
