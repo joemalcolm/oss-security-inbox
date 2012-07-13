@@ -1,94 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/09/2
-Message-ID: <509CBB93.6040207@redhat.com>
-Date: Fri, 09 Nov 2012 01:15:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/13/1
+Message-Id: <201207130201.q6D21KRW020141@linus.mitre.org>
+Date: Thu, 12 Jul 2012 22:01:20 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request --- acceptation of overlapping ipv6 fragments
+Cc: cve-assign@...re.org
+Subject: GLPI 0.83.2 CVE-2012-4002 CSRF and CVE-2012-4003 XSS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/08/2012 03:15 PM, Petr Matousek wrote:
-> Accepting overlapping fragmented ipv6 packets can lead to
-> Operating Systems (OS) fingerprinting, IDS/IPS insertion/evasion,
-> firewall evasion.
-> 
-> Do not accept such packets.
-> 
-> Linux kernel upstream fix: 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=70789d7052239992824628db8133de08dc78e593
->
->  References: http://tools.ietf.org/rfc/rfc5722.txt 
-> https://media.blackhat.com/bh-eu-12/Atlasis/bh-eu-12-Atlasis-Attacking_IPv6-WP.pdf
->
->  Thanks,
+https://forge.indepnet.net/projects/glpi/versions/771
 
-So the rational here is that:
+CVE-2012-4002:
+  Bug #3704: CSRF prevention step 1
+  Bug #3707: CSRF prevention step 2
 
-1) The RFC says overlapping IPv6 fragments should be dropped (in fact
-all the fragments for that datagram should be dropped).
-2) Generally speaking there is no real legitimate case for overlapping
-IPv6 (or IPv4) fragments, and in fact they are quite dangerous:
+CVE-2012-4003:
+  Bug #3705: Security XSS for few items
 
-http://www.ietf.org/proceedings/72/slides/6man-5.pdf
-- -Overlapping fragments were allowed in the original
-IPv4 specification (RFC791)
-- -RFC1858 described an overlapping fragment attack
-that can be used to overwrite the TCP flags inside a
-packet
-
-IPv6 datagrams can include a destination options
-header
-- -This header belongs to the fragmentable part of the
-datagram
-- -TCP header can be much further into the fragmentable
-part
-- -Makes it possible to even overwrite port info.
-
-So basically IPv6 overlapping fragments are quite dangerous and can
-potentially be used to bypass firewalls/IDS/NIDS/etc.
-
-Also I'm guessing there are a lot of "embedded" (not sure what term to
-use when network devices now have full computers in them, e.g.
-photocopiers) IPv6 stacks that will not handle overlapping fragments
-(crash, memory overwrite, who knows) and cannot be upgraded by users
-(since the devices are not supported/not supported properly by the
-makers).
-
-So in a nutshell by not implementing RFC5722 we allow all manner of
-poorly defined and probably unwanted behaviours to take place,
-additionally we may end up passing nasty traffic to back end systems
-that cannot handle it well (and are expecting the front end machines
-to sanitize the traffic).
-
-So to this end I am assigning CVE-2012-4444 (been saving it, it's easy
-to remember =) for "failure to implement RFC5722 properly, allowing
-overlapping fragmented IPv6 packets to be processed or passed to other
-systems resulting in all sorts of potential unknown badness with
-unknown consequences". It looks like more than just Linux is affected,
-so if you know of other systems that are affected by this please reply
-to this thread so we have a list.
+MITRE happened to receive additional details from the discoverer
+(attack vectors, etc.) but did not receive information about when (if
+ever) or where the discoverer plans to publish an advisory.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJQnLuTAAoJEBYNRVNeJnmTN3wP/28+RpDqy+LOh9cvInOhPUpo
-LROLLXnPsSo12L/QD+SUch9BWrky/tb9k4wZNilt4E4ANIPYxLHlCpGPA5CzTnMP
-DfZ01VK4LCM1PLJXXmnkeltGS+TKKQg2eb5gKT8CcCpaJggnnLAmvpByykglSd48
-xESLbirwK4ZADhnXo01OjZUgHH+osh+0xrXKUmAEV3vs79Tiv2W26/wFIlFP9zbJ
-bsI2XyyycvC2O7YErh5Hf3OuQCZd9xBWr7oe0Y7IHN6WSzlZOuwvLoXqqp8f+kss
-aRRKUIrqnARvEH6kCMDx87hbitI1ChwD/EChPzZPJuS4LYiVjwEysot1hS+3L7rv
-+49mazvMHinJumCnlmktpBRQEgP0qFYEf3QATTRAJhwDEsE1w/QyNbw1KSiDQHEk
-k3rbRmoUNs0akLFhkMJwslVPQAUZvfBueH2pk68ssKrXVMaWtE/wpkAHD3+yZpWK
-BbaxAerbYrc+2DgjPoAvwZEaGfp9S78u9IukabdxaaMPkXlhRptiJJf1yFgw95PV
-3h1ceptHrxG2V+dPA94Bxah/QT0qFj/UkaNoOsyETDU7YUZ87w77QsF9QfFJ7Tj1
-OcabyWtXkCvbZbveCybD+knxwQhZW0rdee6lWimi5L8Org2rZwnRNi2pHrcQ/ZuN
-U6wk/FHC3M/YcuBu6ZJZ
-=tcuu
+iQEcBAEBAgAGBQJP/4AGAAoJEGvefgSNfHMd5eUIAJB0lo+t4gVxb43FOj7ab96M
+EyULWkh7d80rujb2eQMMdS/eQuebQHO69SHncz94hndlI2f+G7FqnekMB8i9934w
+cSj5/8VYVFeuthZ8s9241lafReq6jaZhpm4kWjhQor85dB5br4EZz02Ir/piGkQN
+nMPvJmma8e3r12+D0VrGEJWbNv5EVVmzgk8lV3Fqt4kVPX1fuOnfWAzMZdzjQQVB
+tIad/kRxdYSx+kIvo6H3Z0OanEoIYYVFhI5y11Vxm4yW4wUHsIRKvRX5Eau2e7fL
+DGsWHf5ZqBT9V1K8rCo22r2NocuMNjgmWeeIpK6G/VLv7d7ZK2PHxplo6zruoYo=
+=qjpy
 -----END PGP SIGNATURE-----
