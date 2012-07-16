@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/6
-Message-ID: <1072716807.31631289.1352906909059.JavaMail.root@redhat.com>
-Date: Wed, 14 Nov 2012 10:28:29 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/16/6
+Message-ID: <20120716190725.GA2180@ngolde.de>
+Date: Mon, 16 Jul 2012 21:07:26 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Damyan Ivanov <dmn@...ian.org>, Philippe Makowski <makowski@...ebird-fr.eu.org>
-Subject: CVE Request -- firebird: DoS (NULL pointer dereference) while preparing an empty query with trace enabled
+Subject: Re: CVE id request: libjs-swfupload
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi,
+* Kurt Seifried <kseifried@...hat.com> [2012-07-16 20:32]:
+> On 07/16/2012 12:17 PM, Nico Golde wrote:
+> > Hi, there is an XSS issue in libjs-swfupload. Can we get a CVE id
+> > for this?
+> > 
+> > Details: 
+> > https://nealpoole.com/blog/2012/05/xss-and-csrf-via-swf-applets-swfupload-plupload/
+> >
+> > 
+> http://code.google.com/p/swfupload/issues/detail?id=376
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681323
+> > 
+> 
+> There also appears to be a CSRF vulnerability. Is there a reason for
+> only mentioning the XSS?
 
-  a denial of service flaw was found in the way the TraceManager of Firebird,
-a SQL relational database management system, performed preparation of an empty
-dynamic SQL query. When the trace mode was enabled, a remote, authenticated
-database user could use this flaw to cause the Firebird server to crash with
-a NULL pointer dereference.
+The CSRF is for pupload which we don't ship and I haven't looked at.
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=693210
-[2] http://tracker.firebirdsql.org/browse/CORE-3884
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=876613
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Relevant upstream patch:
-[4] http://firebird.svn.sourceforge.net/viewvc/firebird?pathrev=54702&revision=54702&view=revision
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Content of type "application/pgp-signature" skipped
