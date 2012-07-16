@@ -1,66 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/11
-Message-ID: <50803684.906@halfdog.net>
-Date: Thu, 18 Oct 2012 17:04:04 +0000
-From: halfdog <me@...fdog.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/16/2
+Message-ID: <5003CB29.2090001@internetionals.nl>
+Date: Mon, 16 Jul 2012 10:04:57 +0200
+From: Justin Ossevoort <justin@...ernetionals.nl>
 To: oss-security@...ts.openwall.com
-CC: Frank Mehnert <frank.mehnert@...cle.com>,  Kurt Seifried <kseifried@...hat.com>, Raphael Geissert <geissert@...ian.org>
-Subject: Re: Re: CVE for Virtualbox 0x8 DoS?
+Subject: Re: Re: ecryptfs headsup
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 13/07/12 22:13, Dustin Kirkland wrote:
+> Yeah, the other thing I'd add is that in order to perform this attack
+> (create a filesystem on a USB drive, have physical access to the
+> system, plug in the USB drive), the attacking user could just as
+> easily drop their favorite LiveISO on that same USB drive, reboot the
+> system, and mount the hard drive with root access.  I do see the
+> difference, in that the current issue allows for a live attack against
+> a running system, as opposed to an offline attack against a system at
+> rest.
 
-Frank Mehnert wrote:
-> Hi,
-> 
-> On Friday 14 September 2012 12:12:44 halfdog wrote:
->> Hi,
->>
->> Kurt Seifried wrote:
->>> On 09/13/2012 10:59 AM, Raphael Geissert wrote:
->>>> Hi,
->>>>
->>>> Has a CVE id been finally assigned for the following issue?
->>>> http://www.halfdog.net/Security/2012/VirtualBoxSoftwareInterrupt0x8Guest
->>>> Crash/
->>>>
->>>>  Regards,
->>>
->>> - From that page:
->>>
->>> 20120910: Oracle security decides, that CVE should be assigned
->>>
->>> Can Oracle/halfdog.net communicate the CVE to the community
->>> please?
->>
->> I do not have that information yet. The information about intended CVE
->> assignment till October update was exchanged off list, contact on
->> Oracle side was Mr. Mehnert.
->>
->> Early disclosure of this issue was due to misconception, that Oracle
->> would have assessed severity, need for CVE and communication of
->> disclosure timeline before releasing patch as maintenance release. The
->> early disclosure mixed up the whole
->> reporting/analyze/classify/CVE-assign/disclosure process somehow.
-> 
-> The security folks told me that there will be a CVE which will be
-> visible with the next scheduled Oracle CPU date (in October 2012).
+"Local access" doesn't imply the ability to reboot or interrupt the boot
+loader of a machine.
+There are some remote desktop/vm like uses (where people can sometimes
+plug their own drives) or partially shielded kiosk like machines (where
+you can unplug a usb keyboard/mouse).
+Also hardened systems with full disk encryption or with a locked bios
+which prohibits other boot orders are real targets in this cases.
 
-Seems that Oracle CPU day was 2012-10-16, CVE is CVE-2012-3221
+An online attack is definitely more serious than the known offline
+attacks for which most relevant machines are more or less shielded.
 
-I've collected references to this issue from HTTP referers and added
-them at the bottom of
+Regards,
 
-http://www.halfdog.net/Security/2012/VirtualBoxSoftwareInterrupt0x8GuestCrash/
-
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iEYEARECAAYFAlCANncACgkQxFmThv7tq+5TlQCeMoALN1LK57w1P0U6h00NXGVh
-l/UAn1Lfp5s0S6lRPq358XEP5AKbITSi
-=M5Gj
------END PGP SIGNATURE-----
+	justin....
