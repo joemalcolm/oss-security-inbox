@@ -1,31 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/10
-Message-ID: <4F0CAB52.4020601@redhat.com>
-Date: Tue, 10 Jan 2012 14:19:14 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/16/5
+Message-ID: <50045D83.1090900@redhat.com>
+Date: Mon, 16 Jul 2012 12:29:23 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Xi Wang <xi.wang@...il.com>
-Subject: Re: CVE request: kernel: xfs heap overflow
+Subject: Re: CVE id request: libjs-swfupload
 Content-Type: text/plain; charset=utf-8
 
-On 01/10/2012 11:57 AM, Xi Wang wrote:
-> Commit ef14f0c1578dce4b688726eb2603e50b62d6665a introduced an integer
-> overflow in the ACL handling code, which could further lead to
-> heap-based buffer overflow via a crafted filesystem.
->
-> Upstream commits:
-> http://git.kernel.org/linus/fa8b18edd752a8b4e9d1ee2cd615b82c93cf8bba
-> http://git.kernel.org/linus/093019cf1b18dd31b2c3b77acce4e000e2cbc9ce
->
-> Both commits are needed to fix the vulnerability.
->
-> The vulnerability seems to first appear in 2.6.32-rc1.  3.2 contains
-> only the first commit.
->
-> - xi
-Do you need a CVE for this?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
--- 
+On 07/16/2012 12:17 PM, Nico Golde wrote:
+> Hi, there is an XSS issue in libjs-swfupload. Can we get a CVE id
+> for this?
+> 
+> Details: 
+> https://nealpoole.com/blog/2012/05/xss-and-csrf-via-swf-applets-swfupload-plupload/
+>
+> 
+http://code.google.com/p/swfupload/issues/detail?id=376
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681323
+> 
+> Cheers Nico
+> 
 
--- Kurt Seifried / Red Hat Security Response Team
+There also appears to be a CSRF vulnerability. Is there a reason for
+only mentioning the XSS?
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQBF2DAAoJEBYNRVNeJnmT4FQP/1PFGBLf0LGnmcW8owqtxDcl
+D404TJbfeCReqEkX+jHSpNgo+GvJOh1dHYsEV/epMudPNIfYeWJDZCo8co0JApl/
+IfwFZLj9SWuqF2OBK73RzBsKAnvRIaA7MhRS95T6gfA7CSjD1cFHbbzU2sVSIBFc
+hmK3plOS/WtCjTskQkjrFWuAtMDkw/FxmColCZ7ypYR+A2lN9NFojrJfzc9LyOsV
+fhnjm2FA0zc/Q2xs/o3FMuB7ZNYPfqAvZ2in1ME0XUHqAvPZ1Z1xi2mb/Ck1gJFQ
+6s9o0ZyAPb5tQmsB0tGXeE+maua7JrFYZeTRzgZNukpPzYiNAZPVem0aWGCgXuzb
+U1yGxEJR0715e7qjFqVC/Gmm+E12bR6nDI0Zw+TEsVMHDJMkvmeNegQ780d8xMRB
+1wYo7vPZAvTR65PVP5a2LaJTVY1DE5KDG75ajYO2i4KMLUZ5Sc9RAvyscgiGD9kO
+0mtZnjMa8hdqWwCdtwmIHU4hh0D769b/hddbgJyeXSMZaLU8P+7l1015s+jxVfus
+YSltIEfapkSYjowsG6m3WOIi8JwLrqtWrsGiS5WQfiYFxJ0KYXeMFj058QlQ5Hdx
+ebVCgOtSoqpyDH6CYo+pFN2hvBcpDzngqvYfE6ujqqSHYogULuSY29H4NF7dUzVp
+cgrCwk9Z2eGj2tnQwo8u
+=k/2Y
+-----END PGP SIGNATURE-----
