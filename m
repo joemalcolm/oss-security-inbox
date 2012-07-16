@@ -1,51 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/19
-Message-Id: <201203161837.44351.tmb@65535.com>
-Date: Fri, 16 Mar 2012 18:37:43 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/16/1
+Message-ID: <20120716075551.GB31259@suse.de>
+Date: Mon, 16 Jul 2012 09:55:51 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Mark Stanislav <mark.stanislav@...il.com>, "Adam D. Barratt" <adam@...m-barratt.org.uk>, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE Requests
+Cc: Tyler Hicks <tyhicks@...onical.com>, Kurt Seifried <kseifried@...hat.com>, Marcus Meissner <meissner@...e.de>, Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Re: ecryptfs headsup
 Content-Type: text/plain; charset=utf-8
 
-On Friday 16 Mar 2012 16:11:04 Mark Stanislav wrote:
-> All points being made are very much valid and I certainly understand how
-> contextually oss-sec may be used to allocation requests under different
-> circumstances.
+
+Indeed, there are various issues in the ecryptfs tool that made me scratch
+my head but are not serious vulnerabilities and cannot be fixed so easily
+w/o rewriting the entire file handling. Yes, some of the checks could
+probably be removed.
+So the main focus was that its runs with euid of the user. :)
+The one real issue was the missing MS_NOSUID|MS_NODEV.
+
+Sebastian
+
+On Sat, Jul 14, 2012 at 07:41:44AM +0200, Jason A. Donenfeld wrote:
+> Hi,
 > 
-> So here's my situation, I'm up for suggestions (of which, "wait longer", is
-> perfectly viable!)...
+> There's another almost-hole (almost, like the umount env clearing)
+> that the patch in that bug report fixes:
 > 
-> 1) March 1st, I sent 2 of these CVEs over to Steve Christy at MITRE who had
-> previously allocated 9 prior CVEs in a day or two generally
-> 2) March 8th, after not hearing back from Steve, I contacted
-> cve@...redirectly with all 5
-> 3) March 15th, after not hearing back from MITRE, I contacted Kurt off list
-> as I've noted his helpfulness doing allocations
-> 3a) Kurt pointed me to email the list, rather than him directly (which is
-> perfectly fine, but perhaps not the context I was aiming for initially)
+> At line 538, this code is added:
+> 
+> 	if (strstr(alias, "..")) {
+> 		fputs("Invalid alias", stderr);
+> 		exit(1);
+> 	}
+> 
+> Ostensibly this is to prevent the subsequent call to
+> 
+>         lock_counter(pwd->pw_name, uid, alias);
+> 
+> from crafting the path name like this:
+> 
+>        asprintf(&f, "%s/%s-%s-%s", TMP, FSTYPE, u, alias)
+> 
+> where alias might have ".." in it, and then making a file like this:
+> 
+>       open(f, O_RDWR | O_CREAT | O_NOFOLLOW, 0600)
+> 
+> which takes special care to specify O_NOFOLLOW too, and then
+> afterwards, it checks to see if it's owned by the correct user and
+> makes certain it's a regular file.
+> 
+> Fortunately, the call at the beginning of the program to seteuid(uid)
+> prevents this from being too traumatic. But, the strstr check was
+> added apparently as a security consideration; correct me if I'm
+> mistaken.
+> 
+> 
+> 
+> 
+> There's actually one use of the alias variable before such sanitation
+> that is almost a big hole, but isn't, due again to the seteuid(uid) at
+> the beginning of the program. At line 525 we have:
+> 
+> if (read_config(pwd->pw_dir, uid, alias, &src, &dest, &opts2) < 0) {
+> 
+> read_config forms a file name like this:
+> 
+> if (asprintf(&fnam, "%s/.ecryptfs/%s.conf", pw_dir, alias) < 0) {
+> 
+> It then makes a smart security check to ensure that it's not a symlink
+> and that it's owned by uid:
+> 
+> if (stat(fnam, &mstat)!=0 || (!S_ISREG(mstat.st_mode) || mstat.st_uid!=uid)) {
+>     fputs("Bad file\n", stderr);
+>     free(fnam);
+>     return -1;
+> }
+> 
+> After it does this, it opens the file for reading with a standard fopen:
+> 
+> fin = fopen(fnam, "r");
+> 
+> And then it reads the various settings out of fin.
+> 
+> There's a race condition on fnam, since you could make fnam a valid
+> file, but immediately after the stat(2) call, swap it for a symlink.
+> I'm not sure this is really an issue, though, since geteuid(uid) has
+> already been called, so it's not as if the subsequent fopen is allowed
+> to read just any file. It does pose the question, though, of why that
+> stat check is there in the first place, if it can be subverted like
+> that. The solution is just to open the fd first, and then check the
+> permissions and whatnot with fstat(2).
+> 
+> Jason Donenfeld
 
-Josh Bressers (Josh, correct me if I'm using your name in vain) used to be 
-quite happy to assign CVEs for undisclosed (embargoed) F/OSS issues providing 
-details were forthcoming with the request.   If Josh is no longer able to 
-fulfil that role due to a change of circumstance at Redhat it would be nice if 
-someone stepped into the breach -  be that Redhat, Debian or one of the other 
-CNAs.  There is definately a place for "disclosed to project, being/been fixed, 
-not public - can I have a CVE?" without deferring to the distros list or MITRE 
-- most of the time projects can respond in a timely fashion, so a minimum 
-effort approach is ideal.
-
-As an aside, the public address for MITRE on the web site is wrong AFAIK.  
-Quoting Steve Christey:
-
-"Apologies for the delay.  In the future, please use cve-assign@...re.org 
-for requests related to CVE reservation."
-
-From last time I went to MITRE (for a closed source product).
-
-Tim
 -- 
-Tim Brown
-<mailto:tmb@...35.com>
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
