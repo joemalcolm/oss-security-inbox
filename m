@@ -1,68 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/17
-Message-ID: <20120420100256.GG15515@suse.de>
-Date: Fri, 20 Apr 2012 12:02:56 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: "Eric W. Biederman" <ebiederm@...ssion.com>
-Cc: oss-security@...ts.openwall.com, Eugene Teo <eugeneteo@...nel.sg>, "security@...nel.org" <security@...nel.org>, Sukadev Bhattiprolu <sukadev@...ibm.com>, Serge Hallyn <serge.hallyn@...onical.com>
-Subject: Re: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/8
+Message-ID: <12931834.Zmy5xRxSLL@asterix.site>
+Date: Tue, 17 Jul 2012 14:06:40 +0200
+From: David Faure <faure@....org>
+To: laurent Montel <montel@....org>
+Cc: Vincent Danen <vdanen@...hat.com>, oss-security@...ts.openwall.com, Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com
+Subject: Re: CVE Request: KDE Pim
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 20, 2012 at 02:06:48AM -0700, Eric W. Biederman wrote:
-> Marcus Meissner <meissner@...e.de> writes:
-> 
-> > On Fri, Apr 20, 2012 at 09:14:58AM +0400, Pavel Emelyanov wrote:
-> >> On 04/20/2012 07:10 AM, Eugene Teo wrote:
-> >> >> So we know what is holding the pid namespace reference.
-> >> >>
-> >> >> Additional thoughts.
-> >> >>
-> >> >> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
-> >> > 
-> >> > No.
-> >> > 
-> >> >> Is there a corresponding task_struct leak?
-> >> > 
-> >> > Yes.
-> >> > 
-> >> >> I don't have much of a clue or much concern as this seems fixed in later kernels but I am happy to suggest things to look for to help narrow this down.
-> >> > 
-> >> > I'm helping to provide more information.
-> >> 
-> >> Is there also a vfsmount struct leak as well? The pidns creating implies
-> >> kern-mount-ing of a proc and it should be released when child reaper of
-> >> the namespace dies.
-> >
-> > Yes, apparently (mnt_cache jumps 2*tries).
-> 
-> The other mnt_cache entry looks like the internal mount for the ipc
-> mqueue superblock/namespace.
-> 
-> > I diffed slabinfo before and after approx 7500 tries on a freshly rebooted machine (3.1.10), here
-> > are the suspicious large jumps:
-> 
-> Hmm.  This smells like unreaped zombies, we will drop the mounts from at
-> least the pid namespace in release_task -> proc_flush_task which you
-> can't avoid if you get as far as release_task(), and release_task
-> is the guts of the zombie reaper.  If the mounts still exist the
-> processes should still be visible in /proc.
-> 
-> Is this really steady state data?  Have the zombies really been reaped?
-> Perhaps there is a signal deliver bug to init where it isn't noticing it
-> has re parented children?
-> 
-> Otherwise these numbers should change and go down as processes are
-> reaped and we can get a clue about where the bug is by looking at what
-> has leaked.
+On Tuesday 17 July 2012 10:18:06 laurent Montel wrote:
+> Security problem is that we allows to use javascript.
+> In 4.4 we don't have it.
 
-It seems stale ... I checked now (2 hours later) and the numbers are still
-in these ranges.
-There are no zombies of the process visible in ps, nor in "ls /proc".
+And here's a testcase for the actual bug.
+In kmail, Ctrl+O, open this .mbox, click on the HTML version, enable HTML 
+rendering, a javascript messagebox pops up.
+Not sure what can really be exploited here (xmlhttprequest?), but at least 
+this way one can prove that 4.4 isn't affected, and test the 4.9 fix.
 
-The testcase itself does leave zombies and have them reaped by init when
-it finishes apparently.
+-- 
+David Faure, faure@....org, http://www.davidfaure.fr
+Sponsored by Nokia to work on KDE, incl. KDE Frameworks 5
 
-systemd init is used here, but my 3.0.x machine uses goold old sysvinit,
-so it seems unrelated to systemd.
-
-Ciao, Marcus
+Download attachment "html.mbox" of type "application/mbox" (1692 bytes)
