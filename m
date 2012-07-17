@@ -1,30 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/10
-Message-Id: <201210311730.28969.geissert@debian.org>
-Date: Wed, 31 Oct 2012 17:30:28 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/2
+Message-ID: <5004D289.5020603@redhat.com>
+Date: Mon, 16 Jul 2012 20:48:41 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: LetoDMS, more issues
+Subject: Re: CVE id request: libjs-swfupload
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 31 October 2012 09:31:13 Kurt Seifried wrote:
-> On 10/30/2012 01:28 PM, Raphael Geissert wrote:
-> > On Friday 05 October 2012 23:11:36 Raphael Geissert wrote:
-> >> Regression in the above patch (fixed after the release of
-> >> 3.3.9):
-> >> http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/o
-> >> ut/out.UsrMgr.php?r1=982&r2=981&pathrev=982
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/16/2012 01:07 PM, Nico Golde wrote:
+> Hi, * Kurt Seifried <kseifried@...hat.com> [2012-07-16 20:32]:
+>> On 07/16/2012 12:17 PM, Nico Golde wrote:
+>>> Hi, there is an XSS issue in libjs-swfupload. Can we get a CVE
+>>> id for this?
+>>> 
+>>> Details: 
+>>> https://nealpoole.com/blog/2012/05/xss-and-csrf-via-swf-applets-swfupload-plupload/
+>>>
+>>>
+>>
+>>> 
+http://code.google.com/p/swfupload/issues/detail?id=376
+>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681323
+>>> 
+>> 
+>> There also appears to be a CSRF vulnerability. Is there a reason
+>> for only mentioning the XSS?
 > 
-> Does this regression cause a security issue (e.g. did accidentally
-> putting htmlspecialchars() in actually cause a new XSS?).
+> The CSRF is for pupload which we don't ship and I haven't looked
+> at.
+> 
+> Cheers Nico
 
-I don't think so. The commit log says[1]:
-"no need to escape with htmlspecialchars() because UI::contentSubHeading() 
-does it too."
+It's open source though, with the rest of it right?
 
-[1]http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=982
+Public service announcement/request:
 
-Thanks,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+When requesting CVE's it would be nice if people not only request
+CVE's for the specific bits in an update/etc. they care about, but for
+all the issues, then I have less work to do and we also get a more
+complete CVE database =).
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQBNKIAAoJEBYNRVNeJnmT1UoQAILX+PKDDotRajhIBInZVdxB
+4T3fvtzo4WJO64FnxXv6K3EXA0rl8GkG4cxmA5BZh62qP8YsowgtEaFJstOiOj+V
+RO0W8rTxrTLRURs1FFapfCZpO75zDjYkPtHlRoFxzirw9Fq3E47pyxkvd6v948Qo
+cH8qAn+7jKUpi2QTV/EzO9Yh67egMsxAtwT3vvnS3idguS4r5H8z/nDHMm0g/3O0
+lkmcwYVcJtd1uOPqtX/I3Q3uyzSPVuupYnLMONYUV6AUZaiSrg40prLPBv1/qjYy
+yGvRvXIOtj8N6yCbmCP+WgiS8roPSStd/klgZCC2bhUK4hiwN3eduHxRx0ZrH/w4
+2TWGShCJi4CFF2s3f0QfUyUM9tMlkiToW3SC/A7+nSPIBPtVMHmcEMhtyfCnjFdQ
+2MWWNDPy+XTCkq4opL9dXaDdHgm5aJHNwUqnx0xPq/CNSWefDdra5ZdzyLK0RgFj
+rbM30WC3USadkv7eVR6V2waxEMnuvg327soPM8pU+GU8l/f35Tzh3ZAk24tbJH3K
+wPRBnNdcvlg/EIVcl6h6JDP/5bQ59nBfw1nIZfPjm8VrxLTj/Q328Ml2cer6hcHV
+Rtv0N9XFpn7WrlmATbCpJ6vXj6NT07vNhD+dfLUPqb9jRpPH48NDHNB16FAagRI2
+ooNL0+chZSYW+UnozYqJ
+=TuOH
+-----END PGP SIGNATURE-----
