@@ -1,69 +1,204 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/11
-Message-ID: <CAJAoHJkAFMLR0CD9MMG1i96WKdQ6-UVkQmRjoG0Dgkk-DnU=Lw@mail.gmail.com>
-Date: Fri, 7 Sep 2012 08:47:28 -0700
-From: Andrey Petrov <andrey.petrov@...zow.net>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Jamie Strandboge <jamie@...ntu.com>,  oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- urllib3: Does not check for SSL certificates by default
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/1
+Message-ID: <5004B9BF.7080003@moodle.com>
+Date: Tue, 17 Jul 2012 09:02:55 +0800
+From: Michael de Raadt <michaeld@...dle.com>
+To: oss-security@...ts.openwall.com
+Subject: Moodle security notifications public
 Content-Type: text/plain; charset=utf-8
 
-Hi there, I'm the author of urllib3.
+The following security notifications have now been made public. Thanks 
+to OSS members for their cooperation.
 
-I would be happy to make urllib3 verify SSL certs by default but I'm not
-familiar enough with the nuances of locating the CA's in a distro-agnostic
-manner. If anyone has experience or ideas in doing this, please let me
-know. Bonus points if it works on OSX.
 
-Thanks!
-- Andrey
+=======================================================================
+MSA-12-0039: File upload validation issue
 
-On Fri, Sep 7, 2012 at 7:41 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+Topic:             file_save_draft_area_files() does not validate
+                    references are allowed
+Severity/Risk:     Minor
+Versions affected: 2.3
+Reported by:       Petr Škoda
+Issue no.:         MDL-33948
+CVE Identifier:    CVE-2012-3387
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-33948
+Description:
+Where file shortcuts/aliases were not permitted, this was being
+validated at the client, but not on the server.
 
-> Steve,
->
->   in relation to this one the following question has been
-> raised internally - it's OK to assign CVE identifier for
-> end user applications, proclaiming to perform SSL certificates
-> verification, but not doing that.
->
->   But what about the libraries? Obviously urllib3 when instructed
-> to do so, performs the verification. The question is should it
-> get a CVE identifier or not? Could you clarify Mitre's opinion /
-> view on this?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> > Hello Kurt, Steve, vendors,
-> >
-> >   it was reported that urllib3, a Python HTTP library
-> > with thread-safe connection pooling and file post support,
-> > did not perform SSL certificates verification by default.
-> > A rogue HTTP server could use this flaw to conduct
-> > man-in-the-middle (MITM) attacks.
-> >
-> > References:
-> > [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686872
-> > [2]
-> https://bugs.launchpad.net/ubuntu/+source/python-urllib3/+bug/1047054
-> > [3] https://bugzilla.redhat.com/show_bug.cgi?id=855320
-> >     (the bug actually has python-requests in the summary,
-> >      but only due the fact it contains embedded urllib3)
-> >
-> > Patch applied by the Ubuntu Linux distribution:
-> > [4]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=python-urllib3_1.3-2ubuntu1.debdiff;att=1;bug=686872
-> >
-> > Reproducer:
-> > [5]
-> https://bugs.launchpad.net/ubuntu/+source/python-urllib3/+bug/1047054/comments/0
-> >
-> > Could you allocate a CVE id for this?
-> >
-> > Thank you && Regards, Jan.
-> > --
-> > Jan iankko Lieskovsky / Red Hat Security Response Team
->
+=======================================================================
+MSA-12-0040: Capabilities issue through caching
+
+Topic:             lib/accesslib.php is_enrolled doesn't check
+                    capabilities for cached users
+Severity/Risk:     Minor
+Versions affected: 2.3, 2.2 to 2.2.3+
+Reported by:       Andrew Nicols
+Issue no.:         MDL-33916
+CVE Identifier:    CVE-2012-3388
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-33916
+Description:
+Capability checks were not working properly after a user record had
+been cached.
+
+=======================================================================
+MSA-12-0041: XSS issue in LTI module
+
+Topic:             XSS vulnerabilities in /mod/lti/typessettings.php
+                    (POST parameters: lti_typename, lti_toolurl)
+Severity/Risk:     Serious
+Versions affected: 2.3, 2.2 to 2.2.3+
+Reported by:       Dan Poltawski
+Issue no.:         MDL-31692
+CVE Identifier:    CVE-2012-3389
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-31692
+Description:
+Parameters used by the LTI (External tool) module were not being
+sufficiently cleaned.
+
+=======================================================================
+MSA-12-0042: File access issue in blocks
+
+Topic:             Missing permissions check in pluginfile for blocks
+Severity/Risk:     Minor
+Versions affected: 2.2 to 2.2.3+, 2.1 to 2.1.6+
+Reported by:       Juan Leyva
+Issue no.:         MDL-32155
+Workaround:        Do not embed sensitive documents in HTML blocks
+CVE Identifier:    CVE-2012-3390
+Changes (2.2): 
+http://git.moodle.org/gw?p=moodle.git;a=commit;h=c58c05ad4f22c6ee1e136a7d4caaddd809a7134d
+Description:
+Files embedded by a block (eg., the HTML block) were accessible after
+the block had been hidden.
+
+=======================================================================
+MSA-12-0043: Early information access issue in forum
+
+Topic:             Forum displays Q&A posts in RSS feeds before users
+                    have correct access
+Severity/Risk:     Minor
+Versions affected: 2.2 to 2.2.3+, 2.1 to 2.1.6+
+Reported by:       Andrew Nicols
+Issue no.:         MDL-32199
+Workaround:        Do not provide RSS access to Q&A forums
+CVE Identifier:    CVE-2012-3391
+Changes (2.2): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=refs%2Fheads%2FMOODLE_22_STABLE&st=commit&s=MDL-32199
+Description:
+Q&A forum posts should not be visible to students until they have
+contributed a post, however an RSS feed from such a forum was
+displaying all posts.
+
+=======================================================================
+MSA-12-0044: Capability check issue in forum subscriptions
+
+Topic:             Add some capability checks etc to
+                    mod/forum/unsubscribeall.php
+Severity/Risk:     Minor
+Versions affected: 2.2 to 2.2.3+, 2.1 to 2.1.6+
+Reported by:       Andrew Davis
+Issue no.:         MDL-31460
+CVE Identifier:    CVE-2012-3392
+Changes (2.2): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=refs%2Fheads%2FMOODLE_22_STABLE&st=commit&s=MDL-31460
+Description:
+The capability for students to unsubscribe from forums was not being
+checked properly.
+
+=======================================================================
+MSA-12-0045: Injection potential in admin for repositories
+
+Topic:             HTML/JS Injection possible in repository names
+Severity/Risk:     Minor
+Versions affected: 2.2 to 2.2.3+, 2.1 to 2.1.6+
+Reported by:       Daniel Compton
+Issue no.:         MDL-33808
+CVE Identifier:    CVE-2012-3393
+Changes (2.2): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=refs%2Fheads%2FMOODLE_22_STABLE&st=commit&s=MDL-33808
+Description:
+The administration setting that allowed renaming of repositories
+was not being filtered.
+
+=======================================================================
+MSA-12-0046: Insecure protocol redirection in LDAP authentication
+
+Topic:             redirect() "forgets" https
+Severity/Risk:     Minor
+Versions affected: 2.3, 2.2 to 2.2.3+, 2.1 to 2.1.6+, 2.0 to 2.0.9+
+Reported by:       Christophe
+Issue no.:         MDL-23254
+CVE Identifier:    CVE-2012-3394
+Changes (2.2): 
+http://git.moodle.org/gw?p=moodle.git;a=commit;h=9d8d2ee6192e8b7ebb6713bd6215e06f94e2a9f7
+Description:
+Users redirected during a login utilising LDAP were being redirected
+from https to http protocol.
+
+=======================================================================
+MSA-12-0047: SQL injection potential in Feedback module
+
+Topic:             Feedback module abuses data_submitted
+Severity/Risk:     Serious
+Versions affected: 2.2 to 2.2.3+, 2.1 to 2.1.6+, 2.0 to 2.0.9+
+Reported by:       Dan Marsden
+Issue no.:         MDL-27675
+CVE Identifier:    CVE-2012-3395
+Changes (2.2): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=9d8d2ee6192e8b7ebb6713bd6215e06f94e2a9f7&st=commit&s=MDL-27675
+Description:
+The Feedback module was accepting some form data without filtering.
+
+=======================================================================
+MSA-12-0048: Possible XSS in cohort administration
+
+Topic:             Possible XSS vuln caused by MDL-31691 commit
+Severity/Risk:     Minor
+Versions affected: 2.3, 2.2 to 2.2.3+, 2.1 to 2.1.6+, 2.0 to 2.0.9+
+Reported by:       Eugene
+Issue no.:         MDL-34045
+CVE Identifier:    CVE-2012-3396
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-34045
+Description:
+Fields used in the administration of cohorts were not being correctly
+filtered.
+
+=======================================================================
+MSA-12-0049: Group restricted activity displayed to all users
+
+Topic:             Grouping restriction settings not applied correctly
+                    when Restrict Access set to greyed-out
+Severity/Risk:     Minor
+Versions affected: 2.3, 2.2 to 2.2.3+, 2.1 to 2.1.6+, 2.0 to 2.0.9+
+Reported by:       Luke Tucker
+Issue no.:         MDL-33466
+CVE Identifier:    CVE-2012-3397
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-33466
+Description:
+"Restrict access" conditions were incorrectly overriding grouping
+settings when displaying activities.
+
+=======================================================================
+MSA-12-0050: Potential DOS attack through database activity
+
+Topic:             database activity advanced search can be very
+                    dangerous (backport of MDL-17327)
+Severity/Risk:     Minor
+Versions affected: 2.2 to 2.2.3+, 2.1 to 2.1.6+, 2.0 to 2.0.9+,
+                    1.9 to 1.9.18+
+Reported by:       Séverin Terrier
+Issue no.:         MDL-32126
+CVE Identifier:    CVE-2012-3398
+Changes (2.2): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=refs%2Fheads%2FMOODLE_22_STABLE&st=commit&s=MDL-32126
+Description:
+Inefficient queries on a database activity with a large number of
+records could have caused long periods of high CPU load, crippling a
+system.
 
