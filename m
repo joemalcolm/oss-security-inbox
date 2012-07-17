@@ -1,23 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/10
-Message-Id: <201210301323.10990.geissert@debian.org>
-Date: Tue, 30 Oct 2012 13:23:10 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com, coley <coley@...re.org>
-Subject: Re: Strange CVE situation (at least one ID should come of this)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/13
+Message-ID: <20120717194629.GD20785@ngolde.de>
+Date: Tue, 17 Jul 2012 21:46:29 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: libjs-swfupload
 Content-Type: text/plain; charset=utf-8
 
-On Friday 26 October 2012 14:54:15 Josh Bressers wrote:
-> * It uses MD5 passwords
-> * The shadow file is directly modified without locking (which could lead
-> to a race condition)
-> * If you get the password wrong, it doesn't unlink the empty temporary
-> file.
+Hi,
+* Kurt Seifried <kseifried@...hat.com> [2012-07-17 21:43]:
+[...] 
+Thanks for the ids!
 
-By looking at the README:
-* It leaks the password via the process list
+> Please use  CVE-2012-3415 for the libjs-swfupload CSRF issue
 
-Cheers,
+This should be plupload in case this has also been noted wrong in the CVE id 
+description.
+
+Cheers
+Nico
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
