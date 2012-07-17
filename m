@@ -1,113 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/10
-Message-ID: <4FCF8C51.6090606@redhat.com>
-Date: Wed, 06 Jun 2012 10:58:57 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Mark Hoopes <xync@...c.org>
-Subject: Re: Arbitrary File Upload/Execution in Collabtive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/4
+Message-ID: <5298129.1aQAUmsEvM@kspread>
+Date: Tue, 17 Jul 2012 10:18:06 +0200
+From: laurent Montel <montel@....org>
+To: Vincent Danen <vdanen@...hat.com>
+Cc: oss-security@...ts.openwall.com, Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com, faure@....org
+Subject: Re: CVE Request: KDE Pim
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Le lundi 16 juillet 2012 11:47:59 Vincent Danen a écrit :
+> * [2012-07-13 10:41:33 -0600] Kurt Seifried wrote:
+> >On 07/13/2012 06:25 AM, Marc Deslauriers wrote:
+> >> Hello,
+> >> 
+> >> Could a CVE please be assigned to the following issue:
+> >> 
+> >> Javascript and external images were being loaded while rendering
+> >> HTML email in kmail. The downloaded Javascript was then being
+> >> interpreted.
+> >> 
+> >> See:
+> >> 
+> >> https://projects.kde.org/projects/kde/kdepim/repository/revisions/dbb2f72
+> >> f4745e00f53031965a9c10b2d6862bd54>> 
+> >>  https://bugs.launchpad.net/ubuntu/+source/kdepim/+bug/1022690
+> >> 
+> >> Thanks,
+> >> 
+> >> Marc.
+> >
+> >This seems like a security hardening issue to me, but I'm not a KDE
+> >person so did kdepim advertise itself as not executing JavaScript/etc?
+> 
+> Doing some digging, it looks like this was introduced in kdepim 4.4, and
+> would not affect earlier versions.  Can anyone confirm this?
 
- On 06/06/2012 07:02 AM, Mark Hoopes wrote:
-> This disclosure was posted to Bugtraq yesterday 
-> (http://www.securityfocus.com/archive/1/522973/30/0/threaded).  I 
-> am submitting it to oss-security as a request to have a CVE ID 
-> assigned.
-> 
-> TITLE: Arbitrary File Upload/Execution in Collabtive DATE: 
-> 06-04-2012 PRODUCT: Collabtive Web-Based Project Management 
-> Software (http://collabtive.o-dyn.de/) VERSIONS: 0.7.5, 0.6.1 
-> confirmed.  All versions <= 0.7.5 probable RESEARCHER: Mark Hoopes 
-> (xync@...c.org/) ADDITIONAL INFORMATION: 
-> http://xync.org/2012/06/04/Arbitrary-File-Upload-in-Collabtive.html
->
->
-> 
-Vulnerability: During the upload of an avatar image for a
-> Collabtive user, the manageuser.php script checks the file type 
-> using the MIME type provided in the POST request (via the 
-> $_FILES['userfile']['type'] variable) rather than by extension. 
-> This MIME type can be spoofed via an intercepting proxy or custom 
-> POST script allowing a malicious user to upload an arbitrary file. 
-> This file will be placed in a predictable web accessible path with 
-> an easily determined name.  In most installations, execution from 
-> this directory is not restricted which allows a remote attacker to 
-> execute a PHP script uploaded this way with the privileges of the 
-> web user.
-> 
-> Access to the avatar upload function is restricted to logged in 
-> users, but because of Collabtive's design decisions in
-> implementing OpenID support, this is easily accomplished.  If an
-> unknown user supplies a valid OpenID v1.0 URL as the username on
-> the login page, Collabtive will automatically create a new user
-> based on the referenced credentials. That new user is not
-> authorized to access any projects, but is authorized to upload an
-> avatar image.  This allows an attacker with no other knowledge of
-> the host site or its users to exploit the vulnerability.
-> 
-> Fix: Upgrade to Collabtive v0.7.6 or greater Source:
-> 
-http://sourceforge.net/projects/collabtive/files/collabtive/0.7.6/collabtive076.zip/download
-> 
-> Release Notes: http://www.collabtive.o-dyn.de/blog/?p=426
-> 
-> Workaround: Disable script execution of the upload directory via 
-> .htaccess for Apache or similar web servers.  This should apply at 
-> minimum to the /files/[template]/avatar directory but can safely
-> be applied to the entire /files directory.
-> 
-> Sample contents of the .htaccess file are: Options -Indexes
-> Options -ExecCGI AddHandler cgi-script .php .php3 .php4 .phtml .pl
-> .py .jsp .asp .htm .shtml .sh .cgi
-> 
-> Note 'AllowOverride Options AddHandler' or 'AllowOverride All'
-> must be enabled in the main httpd.conf file for this directory or 
-> inherited from a parent directory. See 
-> http://www.mysql-apache-php.com/fileupload-security.htm
-> 
-> Additional References: 
-> http://xync.org/2012/06/04/Arbitrary-File-Upload-in-Collabtive.html
->
->
-> 
-http://www.php.net/manual/en/features.file-upload.post-method.php
-> see comments for $_FILES['userfile']['type']
-> 
-> 
-> TIMELINE: April 18, 2012 - Issue reported to developers April 19, 
-> 2012 - Fix committed to Collabtive github May 30,  2012 - 
-> Collabtive version 0.7.6 released w/ fix June 4, 2012 - 
-> Vulnerability published
-> 
-Please use CVE-2012-2670 for this issue.
+No it was added in 4.6 or 4.7 when we ported to akonadi2
+In 4.4 it didn't use *WebKit*
 
-BTW very nicely formatted/informative email, well done. Also bonus
-points for offering a workaround =).
+and it didn't use same code :
+it used DOM::
 
-Apologies if this shows up twice, the first one appears to have gotten
-eaten somewhere.
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+'  try {
+   // Create a DOM Document from the HTML source
+   DOM::HTMLDocument doc;
+   doc.open();
+   doc.write( htmlSource );
+   doc.close();
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+   mIsQuotedLine = false;
+   mIsFirstTextNodeInLine = true;
+   processNode( doc.documentElement() );
+   return doc.toString().string();
+ }
+'
 
-iQIcBAEBAgAGBQJPz4xQAAoJEBYNRVNeJnmT6j8QAJh5iapqSrgo8OgV66MA0L4M
-7uCrty6uNJjKRYQmob3amt+4WaH1PA+ublJ7By2FWxzf8MmvvSC4bqzZMZsUs7nA
-bHE+MBgNWJSWNsRF8i8M/AV/LHi5RdWX64VoQsgfYCleqc6PnGSr+JcBNtuAYOOx
-4JzExRybF7zkUX6fQlKPf8QTMZZtjRRzZ0sAu2MSmhjLzOEib3gvAanc8yW/MO17
-6aEdlEWjEJ5puNnl8H2PPJEV6MXIqlsT04IMj41l3GMVXbHjkgnkKkF13TUx/D3h
-tDUjlEg+n7Gfg9PgHKCHVpbK2b1J08JIOSdctXEAYwcQFhvobunmqC8XRonrIlyR
-N3iL9HqYWFOibpaD+L5yCOxvOu+0L9xhQiABKz6tS3T7a842ehZ76Yn0MoL5+6Nf
-2UG0ezfYq8b5f8P1hJX+etOnK0J6yMEBvDMNFf+ie1cRBIlGAU6iVmuUK8loU+mW
-mrT7C3KhULRBxKi+ZfXgk9FtB/v6529epL31QDFz6vINaRPyea3D1RN4Nom/g3b2
-fcHq2R6smI7hHBdObfofj8SAFFm3JW2uvtXQUIc05nQLKZo9APsjkuK3DjXstlQ2
-7yiAlhsG9qwViFoevIN5/RDCUa/6rpKnrDwES2qO3FcrgppMdiYMGisGUfcHLfiC
-NKY0rs7nYQD7U7PRBeEP
-=bUUQ
------END PGP SIGNATURE-----
+So for me it's just kmail > 4.6 (we released an old 4.6-akonadi)
+
+not necessary to try to fix in 4.4
+
+I CC David if he has more infos.
+
+I hope that it helps.
+
+Security problem is that we allows to use javascript.
+In 4.4 we don't have it.
+
+
+
+Regards.
+
+
+
+> I'm cc'ing Laurent Montel who made the commit, and who should be able to
+> shed some light as to when the vulnerability was introduced, and also
+> answer Kurt's question above.
+> 
+> Laurent, any information you can provide would be appreciated.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
+-- 
+Laurent Montel | laurent.montel@...b.com | KDE/Qt Senior Software Engineer
+KDAB (France) S.A.S., a KDAB Group company
+Tel. France +33 (0)4 90 84 08 53, Sweden (HQ) +46-563-540090
+KDAB - Qt Experts - Platform-independent software solutions
