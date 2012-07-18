@@ -1,35 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/11/5
-Message-ID: <87lipeqh5l.fsf@engster.org>
-Date: Wed, 11 Jan 2012 18:32:22 +0100
-From: David Engster <deng@...domsample.de>
-To: Chong Yidong <cyd@....org>
-Cc: Kurt Seifried <kseifried@...hat.com>,  oss-security@...ts.openwall.com,  ulm@...too.org,  "Steven M. Christey" <coley@...us.mitre.org>, "Eric M. Ludlam" <eric@...ge-engine.com>
-Subject: Re: CVE Request: CEDET/Emacs global-ede-mode file loading vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/18/1
+Message-ID: <50062A82.6080809@redhat.com>
+Date: Tue, 17 Jul 2012 21:16:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: libjs-swfupload
 Content-Type: text/plain; charset=utf-8
 
-Chong Yidong writes:
-> Kurt Seifried <kseifried@...hat.com> writes:
->
->> I'll assign this a CVE once I have determined the code base status (are
->> these considered the same codebase, or have they forked enough to be
->> considered separate code bases? Also I need to ensure this hasn't
->> already been assigned a CVE. CC'ing relevant developers as well.
->
-> No, this hasn't already been assigned a CVE.  The upstream CEDET 1.0 is
-> largely the same codebase as the CEDET distributed in Emacs.  The
-> version in Emacs omits some CEDET components, and added some plumbing to
-> integrate CEDET into the Emacs build system.  But the main part of the
-> Emacs Lisp code, including the part affected by this flaw, is the same.
->
-> David, could you write up a version of the fix that applies to the CEDET
-> 1.0 tarball?  I think distributors who package CEDET will want it.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A patch for cedet-1.0 was posted here:
+On 07/17/2012 01:46 PM, Nico Golde wrote:
+> Hi, * Kurt Seifried <kseifried@...hat.com> [2012-07-17 21:43]: 
+> [...] Thanks for the ids!
+> 
+>> Please use  CVE-2012-3415 for the libjs-swfupload CSRF issue
+> 
+> This should be plupload in case this has also been noted wrong in
+> the CVE id description.
+> 
+> Cheers Nico
+> 
 
-http://sourceforge.net/mailarchive/forum.php?thread_name=87lipg3dw5.fsf%40engster.org&forum_name=cedet-devel
+Sorry got a little bit cutty and pasty instead of typing. Correct:
 
-In the meantime, Eric published a bugfix-release cedet-1.0.1, so
-distributors should upgrade to that.
+Please use  CVE-2012-3415 for the plupload CSRF issue
 
--David
+Vulnerability #2: CSRF in Plupload
+
+The Plupload applet called Security.allowDomain('*') to allow the
+applet to be used from any domain (so it could be served from S3, for
+instance). That meant people could interact with the Plupload applet
+from any other site on the Internet by embedding it on a page and
+using JavaScript. But due to the way the same-origin policy works in
+Flash, the applet could still make requests back to the domain on
+which it was hosted. In addition, people can specify the full URL for
+an upload request via JavaScript and the result of that request (ie:
+the HTML of the resulting page) is passed back via JavaScript to the
+embedding page.
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQBiqCAAoJEBYNRVNeJnmTBu8P/RHCEtYcd7QsWGuaiRUrpRCy
+XEK1x5beKZ8qc7YRb7qtEeNBSrnCk16TZ91WyX+V8E/hC5g+faj5J61DCOVNpd+T
+jvKHEjOz5YA+nyFmKjQOIsFPmhpL0G2CD+3EZ8na8X7jEejJmg8b9rQ88x6Jqu20
+s/juGiuUGlXf0JVLioRymGrFlxiPlnD1ilbcJmGAFTnYHd5C+Ss3jYrTG4v3NREg
+y7SBML7KeFG8xd0lB7EuQ8ZGXKlwalPLbVCurcLROKCPsIf92LgKjMHcSMIs4t6u
+fchhY8qQJVvcxnxrmlBVPnSOLUWNvcKBrAN96oi88KuYOxU/gHqFRSAK+mLgfrDj
+XtE8MRv27+LJ1fxKGy6jjbh1JCXBaOylqeERe01PwmnOeEnX4m9RFkkK/hRNg6hp
+JWEEfteV/LaP93ga6/fYo9jy/8dVT3ZF5DX/y9rbqrpF8KRRQ7awqT9oJZdUz8Co
+rCs0Zey4i+BjGrfHRrNQdPYuQYZmE7v28RAsHLr+VpMFLM5Zlxq00lBUJmkBRH9X
+uyy4yLSjdAxoM/84iXzzxVIcUJ+xYqAWIvScj+mejzTFqG7nzafAHJwBL9w1A3Zc
+NhUIzkgvzZYWSmG966iINHGtuSt549jQzjcFXVXt1Qer1jWFRdWWGBINecsPbVFe
+itJ1UYaxim9HgMbHD2RE
+=ePvM
+-----END PGP SIGNATURE-----
