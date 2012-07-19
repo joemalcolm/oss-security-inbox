@@ -1,75 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/11/6
-Message-ID: <4FD61FFB.2010906@redhat.com>
-Date: Mon, 11 Jun 2012 10:42:35 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/19/5
+Message-ID: <50083A2E.4080708@redhat.com>
+Date: Thu, 19 Jul 2012 10:47:42 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Hicks <d@...id.au>, MantisBT Developer Mailing List <mantisbt-dev@...ts.sourceforge.net>
-Subject: Re: CVE requests (x2) for Mantis Bug Tracker (MantisBT) before 1.2.11
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: CVE Request: quota: incorrect use of tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/09/2012 02:19 AM, David Hicks wrote:
-> CVE REQUEST #1
+On 07/19/2012 02:36 AM, Huzaifa Sidhpurwala wrote:
+> Hi All,
 > 
-> Title: Reporters can edit arbitrary bugnotes via SOAP API Affected:
-> MantisBT 1.2.10 and earlier versions Not affected: MantisBT 1.2.11
+> rquotad seems to re-use good_client implementation from portmap. 
+> The way good_client called tcp_wrappers via hosts_ctl was not
+> correct, possibly causing hosts access rules defined in
+> hosts.{allow,deny} not to be honored.
 > 
-> Description: Roland Becker and Damien Regad (MantisBT developers)
-> found that any user able to report issues via the SOAP interface
-> could also modify any bugnotes (comments) created by other users.
-> In a default/typical MantisBT installation, SOAP API is enabled and
-> any user can sign up to report new issues. This vulnerability
-> therefore impacts upon many public facing MantisBT installations.
+> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=566717
 > 
-> References: [1] http://www.mantisbt.org/bugs/view.php?id=14340
+> Can a CVE id be please allocated to this issue? (Possibly 2010 i
+> think)
+> 
+> Thanks!.
 
-Please use CVE-2012-2691 for this issue.
 
-> CVE REQUEST #2
-> 
-> Title: delete_attachments_threshold not checked on attachment
-> deletion Affected: MantisBT 1.2.10 and earlier versions Not
-> affected: MantisBT 1.2.11
-> 
-> Description: Roland Becker (MantisBT developer) found that the 
-> delete_attachments_threshold permission was not being checked when
-> a user attempted to delete an attachment from an issue. The more
-> generic update_bug_threshold permission was being checked instead.
-> MantisBT administrators may have been under the false impression
-> that their configuration of the delete_attachments_threshold was
-> successfully preventing unwanted users from deleting attachments.
-> 
-> References: [1] http://www.mantisbt.org/bugs/view.php?id=14016
-
-Please use CVE-2012-2692 for this issue.
-
-> With thanks, David Hicks MantisBT Developer #mantisbt
-> irc.freenode.net http://www.mantisbt.org/bugs/
-> 
-
+Please use CVE-2012-3417 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJP1h/7AAoJEBYNRVNeJnmT8w8QAKahNEkjgTSY7YvMkD0H3VKn
-NqfaAUapbeVqbeALakhUtZzRy6ZaVP8PxRFJi8rSHTtRuUbOYUa0O+yiGBL2euHr
-NUcxLMWHx3l1aDzEMztGAzIt1qns/znUnI1q/bWkxB2T9EdIFmQ91FPJ2YQOU3Fk
-Mqa5yDRFQTHmqOvMeY/gExPoRIeuHfsrgLAc7Jeq6D5k+TzKBYkclCwDleFMyh2k
-zF6BdKlOFffWp+PjWLp7xOtRm3Lbea3CZXAx+2pW74REGFB5LEzaqKhSoUk1AVL3
-5xrUbcp+Dt0IZX2adC8Kckx3qIxys4VxeAOsy2pkqtD+Hn3RI1qdLWtPyANPywn1
-DKh7toKmZo/LjByZHxhnSEbarPyaorTh8dh9FuqxcZFrs1Oxmb7VMOU4xGQZnrGf
-1X5FOBRXHFnCXgvhfpvTDfyUoyWLvp8NsxIxRZhAq0IHdirqIO6huh2+eWPiqv3c
-eDiVu648oiyhnxzJcEJRczXUZKxRxe0yxza8s+pdHtaHZ3jXD9pM/DIssD3mtwFk
-VCAoRKAdxi5HCKVSZXyMPs7SlPZld8eXzpi7uqgncGiiSA8dt+F3TZCgS0llG/j2
-87/r1CpXb43/sjok9GxQzU3B11/frzQPg+9ddgyXHn2WakXnVxqxosNZhVE9fJ+f
-Q+FtswtJ5cOR7CWjS8CM
-=xLig
+iQIcBAEBAgAGBQJQCDouAAoJEBYNRVNeJnmTouIP/2PjTaMq3KNCTFBjcn3A4XFa
+ifF7uXRNP2n9HWhUYC2RVK/fXU20yFNwLIZ589ZhLiEvjO2TTFXw6JX/r5rjBCmx
+UxTqJNEuBYcWyThEeWCZXCgPvUGhR0l00UW79lbNOvDs6jAikr/IRBSwiu8YwCK8
+PFYLgolRUngmumnSBxDUCYhD3PyAk/lKKAQdmbe7NDWwOtuCBqnA7s3QfTqUDRRS
+mbss+NWNJ33ObQ2JWnt8EdXTFsAF7j1i9FFNwgRXP9iL9Iw4BtXFImvkJZebTe1O
+TOWUoTJ2IBq0+9IJpcXH3CfbpXIh7cMLabdSMjdJFjPfe0l0jSz7DPw4jIbVCU7+
++Kf7VZwKDam4kXNzUqQw7J9NRbIYUtVKnlUaCG942EZzsG0g5tF0/ylQGmhuQzxj
+rjggsf6jJ6umwQNRMnZ0BJVTwx38vq6yseTTYgkMY1ihMdQySuksTLLix4JCjRY7
+2HmmlBJTLKWzgtJXiHmQIc0sG4CULqiBLKHSnYG0OIRuAWPUdZTAvysyfF0pK8Ww
+xGmspmzPNgIKNtKuz66WMVd6tFQHdFlXtbtTMawsSQG0lymclYBrCPf0jbQoeySc
+kc/Gys/PiJFlAywNkByl9jOz44jZ56zkzmVx2P8ef1h9rQ4GnItMI5vlFqfEPEqR
+SXr4PzU6J2zbuUJlBA08
+=Z/mG
 -----END PGP SIGNATURE-----
