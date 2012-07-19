@@ -1,61 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/05/1
-Message-ID: <509704A8.8090409@redhat.com>
-Date: Sun, 04 Nov 2012 17:13:28 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Reed Loden <reed@...dloden.com>, Steven Christey <coley@...re.org>
-Subject: Re: YUI 2.x security issue regarding embedded SWF files -- or, How Not To Handle A Security Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/19/3
+Message-ID: <20120719152850.GB23558@kludge.henri.nerv.fi>
+Date: Thu, 19 Jul 2012 18:28:50 +0300
+From: Henri Salo <henri@...v.fi>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: tiff2pdf: Heap-based buffer overflow due to improper initialization of T2P context struct pointer
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 11/04/2012 01:34 PM, Reed Loden wrote:
-> I haven't seen this posted at all, but it seems there's some
-> (major?) security issue regarding the SWF files embedded in YUI 2.
-> The YUI team has published a blog post regarding this problem
-> asking users to e-mail them for details.
+On Thu, Jul 19, 2012 at 08:15:59AM +0530, Huzaifa Sidhpurwala wrote:
+> Hi All,
 > 
-> http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
->
->  The comments are a great read. Ryan Grove (former Yahoo! and YUI
-> core team guy) hits the point on the head regarding disclosure
-> handling of the issue. Apparently, some people/companies have
-> already been notified directly weeks ago, and this is how the YUI
-> team is continuing the disclosure process by just asking projects
-> to e-mail them instead of just releasing the fix to the public at
-> this stage. :/
+> I found the following flaw in the tiff2pdf tool, shipped with libtiff:
 > 
-> Might want to go ahead and get a CVE assigned to whatever this
-> issue is, and hope more details come out of this soon so YUI 2
-> users can actually get patched instead of having to request access
-> to the fix...
+> A heap-based buffer overflow flaw was found in the way tiff2pdf, a TIFF
+> image to a PDF document conversion tool, of libtiff, a library of
+> functions for manipulating TIFF (Tagged Image File Format) image format
+> files, performed write of TIFF image content into particular PDF
+> document file, when not properly initialized T2P context struct pointer
+> has been provided by tiff2pdf (application requesting the conversion)
+> as one of parameters for the routine performing the write. A remote
+> attacker could provide a specially-crafted TIFF image format file, that
+> when processed by tiff2pdf would lead to tiff2pdf executable crash or,
+> potentially, arbitrary code execution with the privileges of the user
+> running the tiff2pdf binary.
 > 
-> ~reed (speaking only for himself)
+> This issue has been assigned CVE-2012-3401.
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=837577
+> 
+> The relevant patch for the issue has been applied to upstream
+> libtiff-4.0.2 branch
+> 
+> Thanks!
+> 
+> 
+> -- 
+> Huzaifa Sidhpurwala / Red Hat Security Response Team
 
-Have any CVE's been issued for this issue? I can't find any. More to
-the point does this kind of issue (is it a service strictly?) even get
-a CVE? Steve?
+Do you know which versions are affected?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQlwSoAAoJEBYNRVNeJnmTR2IP/AuM+UOoUrGTTtuY/xeUZSTx
-ff0uCbCB7cJND189EpAJGmhfMi8Q0yCjNVdyDUu2FtOgEAOfJDGcN0vySufeepLw
-aUoDt5Hjc+LTb1Bx+DoXo3j2cPEEeutpt7IcDotfVDNYzEnqfpixGv8PurumGq/a
-hRgP+SkocKO9IOVvatIKAOB3xr94jcSEtE2nB4mfKZd5tSG43e3HMmL2TBRSgjRV
-4SqHDvydyK8th6tZjpCexbgt/SzxRCjuZgWeUwJUM8kAXxsxcvytgdSKBQqz0teY
-M9I+C+2Fa8DEeprD9pXir68MuUDXu09ps8Ldzd9wrXKCWrgSHeRiUKvzfg7KER++
-Dby6q1CE35rS3Jma1uohauifgNVQg+lAmzt+fK7h6DvcCNJnWvzM+2t1GpYnFuiD
-MRyqytQbBzWUSwuHb+GWzL4HUdFFJg4XtQngyJKpQcVk+TNw2uphRaf3KVmLsWE8
-8m2FN1dTsUTAZSk7upkAldYhwKPweaMKrQCqq6drzuGiykHYPzYpgKXVvTx2tz+Z
-cUVc7fxy9SZV7p0VHb39Wa4+gQztojX2y8phCJCgZOAkPEmU4hoy+/97482L3od8
-W48mNc1ugmoUF/+3luT0S4FFqn4k1FW4LGQf3nPEcMtsvkruGWNBIeLyRQGusnr+
-PnQnohDli058jmPzlKFC
-=smQ8
------END PGP SIGNATURE-----
+- Henri Salo
