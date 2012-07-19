@@ -1,49 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/13
-Message-ID: <4FB689DC.20900@redhat.com>
-Date: Fri, 18 May 2012 11:41:48 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/19/2
+Message-ID: <5007C6F4.4070602@redhat.com>
+Date: Thu, 19 Jul 2012 14:06:04 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: incomplete fix for CVE-2011-4131
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE Request: quota: incorrect use of tcp_wrappers
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi All,
 
-On 05/18/2012 05:30 AM, Petr Matousek wrote:
-> The fix for CVE-2011-4131 was not complete. Malicious NFS server
-> could still crash the clients when more than 2 GETATTR bitmap words
-> are returned in response to the FATTR4_ACL attribute request.
-> 
-> Upstream fixes: 20e0fa98b751facf9a1101edaefbc19c82616a68 
-> 5794d21ef4639f0e33440927bb903f9598c21e92 
-> 5a00689930ab975fdd1b37b034475017e460cf2a
-> 
-> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=822869
-> 
-> Thanks,
+rquotad seems to re-use good_client implementation from portmap.
+The way good_client called tcp_wrappers via hosts_ctl was not correct,
+possibly causing hosts access rules defined in hosts.{allow,deny} not to
+be honored.
 
-Please use CVE-2012-2375 for this issue.
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=566717
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Can a CVE id be please allocated to this issue? (Possibly 2010 i think)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Thanks!.
 
-iQIcBAEBAgAGBQJPtoncAAoJEBYNRVNeJnmTEn4P/ivawBkc6pRsnsqOot1eIm0h
-J4CP3vC5yEu4qUZloUt/hOqw6XUiKOsfbEozClJ4txn8YJc62Wl6xee9BjQl+dOB
-BIAKfkhEns3MIgoc+L4ODE76Vyamn1jtABX6DhLShREEY2HCXArO1IHMhfW8u9FQ
-AFowP05JPBasVb4w6Xzb+MMvbREgyO40q0Zs10Uk5IxHbeDX0jqqRJsgXOmIk6KZ
-UIZN4s9e2dGWQ0N1j/l8WQa+08Cg6DEaHIj8zybU86b2mzblPRx3Jh98YNruam0f
-JFgU9/dIBWMrZXg1iX1xMzLGkY3p4fW+k33RR6dzuL0gu7QvP0yj3MGFr2CFmvHI
-r+yz8bVXMpWd5Evn2B8SCgc7SqpfwK1GHbGqg5k6v0SZbxIlaut8znEFoqpCEkAj
-My/4S2AfDNRcSbzlRjyvNQroyBXt51P4lCsRZ86OYgEmB+FsCTJzj/F2U3cnIz41
-KP2nA4+tJZOoUKjLanwrBxLlCgZGX5TEl1Rj/1PO2tWNqiLXQjO1Owa9wsfLAFwJ
-b3MSjcaDJQmeXp2Ya6l18Zsh21pmsDrPQavR98YrsO4BOhajsno2Bj8mdytjCmZd
-MShMw2ItAbF004DF+xnmc+e+PZuc2iqTy+X7VZNWaj3hIncCGMWiF/L/F6UghtTS
-H0LIgJP8nwsp/4cmYHsZ
-=wG27
------END PGP SIGNATURE-----
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
+
