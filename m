@@ -1,44 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/8
-Message-ID: <4F2C1318.4010708@redhat.com>
-Date: Fri, 03 Feb 2012 10:02:16 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/19/1
+Message-ID: <500774E7.5040103@redhat.com>
+Date: Thu, 19 Jul 2012 08:15:59 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Ian Campbell <ijc@....org>
-Subject: Re: Adding Xen.org contact to linux-distros security list
+Subject: tiff2pdf: Heap-based buffer overflow due to improper initialization of T2P context struct pointer
 Content-Type: text/plain; charset=utf-8
 
-On 02/03/2012 02:33 AM, Ian Campbell wrote:
-> Hello,
-> 
-> Would it be possible for myself to be subscribed to the linux-distros
-> security list as a representative of Xen.org?
-> 
-> Although Xen.org is not a distro we do incorporate upstream software and
-> one of our upstreams (qemu) uses this list as their embargoed security
-> announcement channel. We would like to be able to co-ordinate the
-> release of fixes into our own qemu trees.
-> 
-> Many thanks,
-> 
-> Ian.
+Hi All,
 
-I think this is something that should be discussed (I'm not specifically
-against Xen joining, but I'm worried about the precedent it might set).
-Many projects incorporate upstream software, if we lower the bar of
-entry in this respect we may get a lot more people on the list. This
-might not be a good idea (more chances of leaks/etc.).
+I found the following flaw in the tiff2pdf tool, shipped with libtiff:
 
-My understanding of the way the vs security list is used is that
-upstream is typically notified (after all, they usually are the ones
-fixing the issue), and that people not on the list can post to the list
-to notify it of upcoming stuff (this happens all the time), we then CC
-them on communications about the issue they reported to keep them in the
-loop. For something this specific might it not be a better idea for Xen
-just go straight to the qemu project so they can be notified of the
-embargoed issues?
+A heap-based buffer overflow flaw was found in the way tiff2pdf, a TIFF
+image to a PDF document conversion tool, of libtiff, a library of
+functions for manipulating TIFF (Tagged Image File Format) image format
+files, performed write of TIFF image content into particular PDF
+document file, when not properly initialized T2P context struct pointer
+has been provided by tiff2pdf (application requesting the conversion)
+as one of parameters for the routine performing the write. A remote
+attacker could provide a specially-crafted TIFF image format file, that
+when processed by tiff2pdf would lead to tiff2pdf executable crash or,
+potentially, arbitrary code execution with the privileges of the user
+running the tiff2pdf binary.
 
+This issue has been assigned CVE-2012-3401.
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=837577
+
+The relevant patch for the issue has been applied to upstream
+libtiff-4.0.2 branch
+
+Thanks!
 
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
+
