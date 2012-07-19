@@ -1,18 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/15/1
-Message-ID: <20120415080358.GB20272@kludge.henri.nerv.fi>
-Date: Sun, 15 Apr 2012 11:03:58 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Wikidforum 2.10 multiple XSS and SQL-injection vulnerabilities SSCHADV2012-005
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/19/4
+Message-ID: <5008326D.1010700@redhat.com>
+Date: Thu, 19 Jul 2012 21:44:37 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: Henri Salo <henri@...v.fi>
+CC: oss-security@...ts.openwall.com
+Subject: Re: tiff2pdf: Heap-based buffer overflow due to improper initialization of T2P context struct pointer
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 13, 2012 at 10:08:03AM -0600, Kurt Seifried wrote:
-> Have you actually verified this first hand (e.g. done a successful SQL
-> injection attack) against an installation of Wikidforum?
+On 07/19/2012 08:58 PM, Henri Salo wrote:
+> 
+> Do you know which versions are affected?
+> 
 
-Nope. My SQL-injection guru-powers are not enough for this. I think something bad could be done via those unescaped inputs, but at the moment I can't make a proper PoC for the list so my vote goes for "no CVE" until someone gives working PoC for this.
+I know that 3.9.x upto the latest 4.0.2 are affected.
+Older versions may be affected as well, i am not sure
+about that.
 
-I also created this item (no response yet) http://www.wikidforum.com/forum/forum-software_29/wikidforum-support_31/sschadv2012-005-unfixed-xss-and-sql-injection-security-vulnerabilities_188.html
 
-- Henri Salo
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
+
+
