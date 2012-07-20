@@ -1,35 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/16
-Message-ID: <4F198C62.5090706@redhat.com>
-Date: Fri, 20 Jan 2012 16:46:42 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Joshua Colp <jcolp@...ium.com>
-Subject: CVE Request -- Asterisk AST-2012-001 / Remote DoS while processing crypto line for media stream with non-existing RTP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/20/1
+Message-ID: <CAH5b-BWT+=sWPPYT8gVA60Agw4EDU-b+tOJfprmxZgjUMSfbEw@mail.gmail.com>
+Date: Fri, 20 Jul 2012 18:12:53 +0200
+From: yersinia <yersinia.spiros@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE for JBOSS EAP 5.0(twiddle and jmx invocations) ?
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Following this apparently RFE on JBOSS
+https://issues.jboss.org/browse/JBPAPP-3391?_sscc=t
+i have found a nice description, and an  proposed patch, about it here
+http://objectopia.com/2009/10/01/securing-jmx-invoker-layer-in-jboss/.
 
-   a denial of service flaw was found in the way asterisk processed certain
-requests to negotiate secure video stream, when the res_srtp Asterisk module
-has been loaded and video support has not been enabled. A remote attacker could
-provide a specially-crafted media stream negotiation request, which once
-processed by Asterisk would lead to asterisk daemon crash by processing crypto
-line for such media stream.
+But the last link describe - apparently - a serious bug in the JBoss JMX
+Invoker Layer, a missing authentication that can
+produce a serious problem. Reading the other response i don't think there
+is today the possibility to enforce a true mitigation
+in JBOSS, apart putting in place some form a network control (aka a
+firewall). This is for JBOSS 5.0, i know that twiddle is no longer
+in JBoss EAP 6.0 which provides a totally new, much improved, secure and
+scriptable management interface.
 
-References:
-[1] http://downloads.asterisk.org/pub/security/AST-2012-001.html
-[2] https://issues.asterisk.org/jira/browse/ASTERISK-19202
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=783487
+Do you think this can require a CVE for JBOSS EAP 5?
 
-Upstream patch against the v1.8.x branch:
-[4] http://downloads.asterisk.org/pub/security/AST-2012-001-1.8.diff
+Thanks in advance
 
-Upstream patch against the v1.10.x branch:
-[5] http://downloads.asterisk.org/pub/security/AST-2012-001-10.diff
-
-Could you allocate a CVE identifier for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
