@@ -1,77 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/3
-Message-ID: <50B2C24D.6070007@redhat.com>
-Date: Sun, 25 Nov 2012 18:13:49 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/23/2
+Message-ID: <500CF9A8.4050601@redhat.com>
+Date: Mon, 23 Jul 2012 01:13:44 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>, daniel@...nsecurityfoundation.org
-Subject: Re: CVE Request for Drupal Contributed Modules
+CC: David Jorm <djorm@...hat.com>
+Subject: Re: CVE for JBOSS EAP 5.0(twiddle and jmx invocations) ?
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Thanks to daniel@...nsecurityfoundation.org who caught a pretty
-significant error I made (I typo'ed 154->155 and forgot to assign for
-154).
-
-On 11/20/2012 01:35 PM, Kurt Seifried wrote:
-> On 11/17/2012 10:29 PM, Forest Monsen wrote:
->> Hello!
+On 07/22/2012 11:35 PM, David Jorm wrote:
+> On 07/21/2012 02:12 AM, yersinia wrote:
+>> Following this apparently RFE on JBOSS 
+>> https://issues.jboss.org/browse/JBPAPP-3391?_sscc=t i have found
+>> a nice description, and an  proposed patch, about it here 
+>> http://objectopia.com/2009/10/01/securing-jmx-invoker-layer-in-jboss/.
+>>
+>>
+>> 
+But the last link describe - apparently - a serious bug in the JBoss JMX
+>> Invoker Layer, a missing authentication that can produce a
+>> serious problem. Reading the other response i don't think there 
+>> is today the possibility to enforce a true mitigation in JBOSS,
+>> apart putting in place some form a network control (aka a 
+>> firewall). This is for JBOSS 5.0, i know that twiddle is no
+>> longer in JBoss EAP 6.0 which provides a totally new, much
+>> improved, secure and scriptable management interface.
+>> 
+>> Do you think this can require a CVE for JBOSS EAP 5?
+>> 
+>> Thanks in advance
+>> 
 > 
->> Here's a batch CVE request for a number of previously published 
->> and resolved issues with contributed modules for the Drupal 
->> project. As noted in 
->> http://www.openwall.com/lists/oss-security/2012/11/05/4, I have 
->> volunteered to coordinate our CVE requests.
+> Thanks for bringing this up. As I see it, there's two issues here:
 > 
->> Forest Monsen, on behalf of the Drupal Security Team
+> 1) twiddle.sh accepting credentials as command-line arguments,
+> meaning they could be exposed to another local user via a process
+> listing (JBPAPP-3391)
 > 
-> Please see bottom of email for CVEs
+> This issue affects JBoss AS 5 and EAP 5, but as you noted not AS 7
+> or EAP 6. It is my opinion that this is indeed a low impact
+> security flaw, and a candidate for a CVE ID. I would give it the
+> following CVSSv2 score: 2.1/AV:L/AC:L/Au:N/C:P/I:N/A:N. Kurt, can
+> you please assign a CVE ID for this flaw?
 
-Ahh I made an error, simplest way to clean this up seems to be reject
-the one and properly assign for 154 which I forgot to do.
+Please use CVE-2009-5066 for this issue.
 
-
->> - SA-CONTRIB-2012-154 - Basic webmail - Cross Site Scripting 
->> http://drupal.org/node/1808852
+> 2) AuthenticationInterceptor in jmx-invoker-service.xml is
+> commented out by default, allowing unauthenticated access to the
+> JMX Invoker
 > 
->> - SA-CONTRIB-2012-154 - Basic webmail - Information Disclosure 
->> http://drupal.org/node/1808852
+> This issue only affects JBoss AS community releases, not EAP or
+> other supported JBoss products. The JBoss AS community releases
+> prior to AS 7 opted for open by default configuration rather than
+> secure by default configuration. AS 7 and all supported JBoss
+> products have secure defaults applied. It is my opinion that this
+> is a configuration and documentation issue rather than a security
+> issue. Documentation for securing the invokers on JBoss AS
+> community releases is available here:
 > 
->> - SA-CONTRIB-2012-155 - ShareThis - Cross Site Scripting (XSS) 
->> http://drupal.org/node/1808856
+> https://community.jboss.org/wiki/SecureTheInvokers
 
-> Please use the following:
-> 
-> CVE-2012-5545 Drupal SA-CONTRIB-2012-155 XSS CVE-2012-5546 Drupal
-> SA-CONTRIB-2012-155 Information Disclosure
+Agreed, configuration issue.
 
-Please REJECT CVE-2012-5546. The one assigned for CVE-2012-5545 is fine.
+> Thanks -- David Jorm / Red Hat Security Response Team
 
-For 154:
-
-SA-CONTRIB-2012-154 - XSS please use
-SA-CONTRIB-2012-154 - Information disclosure please use
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQssJNAAoJEBYNRVNeJnmTbv4P/1I9wlpp4Om9TLUq9HjcyUbJ
-2BozganGckQQAtwFxearF6Dlbk+LCcS8n4p/heFeTACG89CevlAHhP3h57vAVp1S
-5vmCdoiwxIE4lv3Dn24iX0UxcQGnUU6WY9n6BZqhcWH2NWFbRMPyF/Ce0LwIgfYy
-Dt+0NCh+fRn2Czlpnmo84zzVu3TN51mRNGzEFPDhL2ZdMwP3Krt4PjUi23aEOKgj
-bKblX0p5rKn8Ey8LfoddTOmsSZ7n/6oh5+4qAH11YfuIFGQFDDCcRELuu3R/vw+P
-NPBZjNSTZyo6MnF82mYncKq3qBDpxRxH0hYsRnp+5sA8qGi1nq1GSDhuua02h9VL
-Nd/wulZf4R8fNRyug4BZz89MKq00A6D9W45gO+wQPM6piWu0sNn6bXQn58CxMohm
-82AghIvc4rKltGBHdqlTz+agtf2G7vKupjZPsXUfO75t6dHYFtWQX4RRhxXTAzxy
-oIjznaUeC9WqFpXeUAcznlRzJPoz9+VhxUd3LZiDPWBRXLy0kQ8R3AKWjv4WeP2E
-zokvqf0gFq0VsMBVRTWLDo+EKNhYsTIU6+JPe/zpt2pbdzzOjY2EhfQQ26jM93xB
-708aPXq2YSQQ9bdSsekB1kjzYqCJBkh0Z2bdwN1HrDlH2BH7zx/piENEr/dptksz
-HPy0SSjeDis8mTwnA9ec
-=s48E
+iQIcBAEBAgAGBQJQDPmoAAoJEBYNRVNeJnmTxyEQANq7tUSCZgIgnVte30YAAj+n
+RI0IPImWIVrsTh+/bEubpl21XtZ50PuXLB3LOO6ATK9IeOcEaloh0oHi5uS2T4Ro
+ZdKYDVQJme6BBle3nxzYefi+Dy5JM3QsRtTpU1CxnJyl+hIBPq+CNLTdqrmFHm1i
+oPneeOkL5UJjuyl8MxjQeFwwcLp1G/d1BvkfZNXcxdwb5i2jqP//9BH88yBSzTuZ
+9lpJzJzlRJFhuCixjVgm2nui7wgAR4Wlr0QwclS0BkArEhXDjMDc667Ptg5srILb
+DUOGs0/uRsRHe5fcy+RYWi5u5ILEaxAVn4bkgd+06vR1kV3V9cfcxTUVe0ndCj/x
+wN1jlOT2umPNF78u0LjDhUQgX8I4DAafbyn2bXzagR4Kbwb8CmOslAzfTX/FYw0C
+cTbpSmJlCw8NbULvUM8MzHfC8GCvTJxnqjvXwtNtFLsuDWWMJh4klEeEZ8gLAhmB
+89p2JiZRw8sC/z3P0o3XP9FGLL9a9C2vfcUyN05ndmRKJQa9Z6Ry8xJOFVhZdpyV
+6U1/VMmWzaIlxVYn50ypEXQuawVTB2I0hlC/QabYpe+00IZFMzsG7DA2aHD/aWwH
+TcoualpRWbiNzIhby7uXWL45yoMZ5Q+/wmk5y1ODavm/9ZaJ3sUjgReAGl//czCv
+nfYABN4h/P8MoUMZbHk6
+=zBZB
 -----END PGP SIGNATURE-----
