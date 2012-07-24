@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/1
-Message-ID: <4F4D6ACF.2010705@redhat.com>
-Date: Tue, 28 Feb 2012 17:01:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/24/3
+Message-ID: <500E449B.2070801@redhat.com>
+Date: Tue, 24 Jul 2012 12:15:47 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: vladz <vladz@...zero.fr>
-Subject: Re: CVE request: init script x11-common creates directories in insecure manners
+Subject: CVE Request: libpng: Out-of heap-based buffer read by inflating certain PNG images
 Content-Type: text/plain; charset=utf-8
 
-On 02/28/2012 10:55 AM, vladz wrote:
-> Hi,
-> 
-> I've reported a small vulnerability to Debian.  Due to an insecure file
-> creation, a local user can gain root privileges right after the 
-> "x11-common" service is started.
-> 
->   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661627
-> 
-> Could you allocate CVE id for this issue?
-> 
-> Thank you,
-> vladz.
-> 
+Hi All,
 
-Please use CVE-2012-1093 for this issue.
+An out-of heap-based buffer read flaw was found in the way libpng, a
+library of functions or creating and manipulating PNG (Portable Network
+Graphics) image format files, performed reading of PNG image file data
+when decompressing certain images. A remote attacker could provide a
+specially-crafted PNG file, which once opened in an application linked
+against libpng would lead to that application crash.
 
-P.S. is this Debian specific?
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668082
+
+Can a CVE id be please assigned to this issue.
+
+Thanks!
+
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
+
