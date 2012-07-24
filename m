@@ -1,71 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/5
-Message-ID: <6011606.WFIUfj6TO8@tux.boltz.de.vu>
-Date: Thu, 26 Jan 2012 12:07:12 +0100
-From: Christian Boltz <oss-securrity@...ltz.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/24/5
+Message-ID: <500ECF53.4000702@redhat.com>
+Date: Tue, 24 Jul 2012 10:37:39 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: PostfixAdmin SQL injections and XSS
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: CVE Request: libpng: Out-of heap-based buffer read by inflating certain PNG images
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-we (the upstream PostfixAdmin developers) received a report about SQL
-injections and XSS in PostfixAdmin. 
+On 07/24/2012 12:45 AM, Huzaifa Sidhpurwala wrote:
+> Hi All,
+> 
+> An out-of heap-based buffer read flaw was found in the way libpng,
+> a library of functions or creating and manipulating PNG (Portable
+> Network Graphics) image format files, performed reading of PNG
+> image file data when decompressing certain images. A remote
+> attacker could provide a specially-crafted PNG file, which once
+> opened in an application linked against libpng would lead to that
+> application crash.
+> 
+> References: [1]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668082
+> 
+> Can a CVE id be please assigned to this issue.
+> 
+> Thanks!
 
-Please assign a CVE number to those issues.
+Just a quick note: this was previously fixed in 1.2.48 by removing the
+offending function.
 
-The issues are fixed in PostfixAdmin 2.3.5, which I'll release today or 
-tomorrow.
-
-
-For reference, here's the changelog with all details:
-
-  - fix SQL injection in pacrypt() (if $CONF[encrypt] == 'mysql_encrypt')
-  - fix SQL injection in backup.php - the dump was not mysql_escape()d, 
-    therefore users could inject SQL (for example in the vacation message)
-    which will be executed when restoring the database dump.
-    WARNING: database dumps created with backup.php from 2.3.4 or older might
-             contain malicious SQL. Double-check before using them!
-  - fix XSS with $_GET[domain] in templates/menu.php and edit-vacation
-  - fix XSS in some create-domain input fields
-  - fix XSS in create-alias and edit-alias error message
-  - fix XSS (by values stored in the database) in fetchmail list view,
-    list-domain and list-virtual
-  - create-domain: fix SQL injection (only exploitable by superadmins)
-  - add missing $LANG['pAdminDelete_admin_error']
-  - don't mark mailbox targets with recipient delimiter as "forward only"
-  - wrap hex2bin with function_exists() - PHP 5.3.8 has it as native function
-
-If you are interested in the exact code changes, run
-    svn diff -r 1180:1335 https://postfixadmin.svn.sourceforge.net/svnroot/postfixadmin/branches/postfixadmin-2.3
+Please use CVE-2012-3425 for this issue.
 
 
-Severity: that's a good question, please judge yourself ;-)
-
-The most critical part is probably the SQL injection in pacrypt() because it is
-used in the login form, which means it's available to non-authentificated
-users. On the positive side, I'd guess the mysql_encrypt encryption method is
-used rarely.
-
-The affected code in pacrypt() is ($pw was not escaped, $salt comes from the
-database (the first 2 characters of the current hashed password)):
-            $res=db_query("SELECT ENCRYPT('".$pw."','".$salt."');");
-or when hashing a new password
-            $res=db_query("SELECT ENCRYPT('".$pw."');");
-
-db_query() is a wrapper that uses (depending on the configured database)
-mysql_query, mysqli_query or pg_query.
-
-The other issues are limited to authentificated users.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-Gruß
 
-Christian Boltz
--- 
->So, Helm aufsetz und auf Steine wart ...
-*werf*
-*Steine! Flache Steine! Runde Steine! Grosse Steine! Kleine Steine!*
-*Wer will noch mal, wer hat noch nicht?*
-[> Manfred Tremmel und David Haller in suse-linux]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
+iQIcBAEBAgAGBQJQDs9TAAoJEBYNRVNeJnmTDYcP/3mWsa1Evprd8ByAJdbmns9I
+7d7TSx1+eqSMsPM8lvz1CdpF/yx/BRfW+2vgwlvyX0172hLU40NazjQdXEjQORQH
+HJxUGQiav7JaOf/w8u5/5VivUOGOBn35dWfdExabj0Fia8QpRWjsiM8c3cyIf2lZ
+al5gGcXUKWHZVwfFAT5oc+bGM/cc7FK686VGFVJ27Akz3Qm80DuWM9d6FHEROS0Q
+c+mHRKsHn1WM7bnJAPcADbvAffCFpdnhjcBVDQdRCxi0O+zmRd402YmnLmnc3ZiE
+iAYUL4AlXeqmMUu48A4SpRsugkoIGKHG94t3grHzZyX2MfF7IcBMGYUS+D0R8Bsy
++TPvp/3Ocr/rC2/cBGi81q/3+NUTFvYaIV9KCg3DfJi2npiDWue0wGBu1+wE2LTO
+KJBu6G2kxFLZOmV6jxtEpx2Y6rQkG3bg2zaep3vkFiT7q/rNmm0Z+vQ9hasHWjIW
+DRg9anbvID0DHeKYoaWbACIvNJR4iJpH2JrBtHjclH811gV4mnBitksguR4yKRX/
+Z3qAnbgIOrU0dzt7m833eXPJarU93bcEzBI2e0/mkPfBBfNWCy/PWJ2M61yd/pyZ
+DKWQCIMDNmLnTP8Gq98pWaWEQzm/PYjdmQj1tN2tUz86Gh2R3zBumDq7dD7Es8eC
+PRI8BV1B3P9U9GwaF6h9
+=1uE/
+-----END PGP SIGNATURE-----
