@@ -1,56 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/8
-Message-ID: <4FA3FCE4.80607@redhat.com>
-Date: Fri, 04 May 2012 09:59:32 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/24/4
+Message-ID: <20120724072652.GA21558@kludge.henri.nerv.fi>
+Date: Tue, 24 Jul 2012 10:26:52 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: more tight ioctl permissions in dl2k driver
+Cc: sschurtz@...nline.de
+Subject: CVE-request: WordPress plugin Count Per Day XSS (SSCHADV2012-015)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 05/04/2012 01:31 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> Can you please assign a CVE for this issue:
-> 
-> Stephan Mueller reported lack of capable(CAP_NET_ADMIN) checks in
-> private ioctls in the dl2k network card driver.
-> 
-> The netdev team will probably remove the handling of the
-> SIOCDEVPRIVATE* calls from this driver though and not use Jeffs
-> patch directly.
-> 
-> References: http://www.spinics.net/lists/netdev/msg196365.html 
-> http://www.spinics.net/lists/netdev/msg196381.html 
-> http://www.spinics.net/lists/netdev/msg196382.html 
-> https://bugzilla.novell.com/show_bug.cgi?id=758813
-> 
-> Ciao, Marcus
+Can we assign 2012 CVE-identifier for XSS vulnerability in WordPress plugin Count Per Day, thanks.
 
-Please use CVE-2012-2313 for this issue.
+Original advisory: http://www.darksecurity.de/advisories/2012/SSCHADV2012-015.txt
+OSVDB: http://osvdb.org/show/osvdb/83491
+Secunia advisory: http://secunia.com/advisories/49692/
+Vendor page: http://www.tomsdimension.de/wp-plugins/count-per-day
+SCM: http://plugins.trac.wordpress.org/changeset/571926/count-per-day#file22
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Fixed in version 3.2 of the plugin, which I manually verified.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPo/zkAAoJEBYNRVNeJnmTuJMP/1HBcIavIU91xlu5jQUGhpGu
-JqUnr4JVsITmxh+knn6G3mReWWNLwaeeNmlrbzbHiYQSje+kBXz/Oa3z/2quEaT2
-k8jX/MnNljHCet8o4tbru643EWCep93xLajJvU13jAdgpeuL6Cc/6S/cbLwl3o3B
-KzgfHmvSU1c83H+CKqpyqcusT4qUat0PMUXoSaXVCMeDVh1gAjGfxH5LBeJHJ3Dd
-blZsMx48NW+U7rDzyJ/m/gq1dsFGQskKgZoau8BLOjNVponP0hJwX7H0SvhkdMtZ
-640uihcispn8Ygma3y8MrEx7I3JogCP1gjI/MwqDiDdvBS38b7CQtgdcVdrmshtZ
-14ukvkzqpmibJWVzfgXUtCiHBcfI6Xr0kdcoXTrRJ7KSj2e1P6upc649FkfOT03e
-Cat6Ll3f34iulhVw6oRA8gWs464+2M37qIhbwUQ9g2yHA2Nk9UTzszKpInMSfrNo
-ixfOYJPNQDRezLqt6i0zHWhd80/BVmKKYPA5skWWWAuHRcJXGULEAZfOEj9HIVa/
-1VaHbrNIW8nAtXoayJsHt5Gm9m031OQ5+fOzVXviyY/0upUW0uTlpeeC2Rk9KhAL
-1RbekalLY4flBsDqAil0+LCjtWd/kIYzZvHLV7V+70NFWSfadruGxXZBUM++l6FQ
-rfj/IINY4WNv9LRSnn6+
-=GaWO
------END PGP SIGNATURE-----
+- Henri Salo
