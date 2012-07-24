@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/24/3
-Message-ID: <500E449B.2070801@redhat.com>
-Date: Tue, 24 Jul 2012 12:15:47 +0530
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/24/2
+Message-ID: <500E3D65.4090208@redhat.com>
+Date: Tue, 24 Jul 2012 11:45:01 +0530
 From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: libpng: Out-of heap-based buffer read by inflating certain PNG images
+Subject: Re: Wireshark before 1.8.1 (etc.) CVE-2012-4048 CVE-2012-4049
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+On 07/24/2012 10:14 AM, cve-assign@...re.org wrote:
+> CVE-2012-4048  http://www.wireshark.org/security/wnpa-sec-2012-11.html
+> CVE-2012-4049  http://www.wireshark.org/security/wnpa-sec-2012-12.html
+> 
+> (We've already asked the upstream vendor to remove the bug 7221
+> reference from wnpa-sec-2012-12, and insert the correct bug number.)
+> 
 
-An out-of heap-based buffer read flaw was found in the way libpng, a
-library of functions or creating and manipulating PNG (Portable Network
-Graphics) image format files, performed reading of PNG image file data
-when decompressing certain images. A remote attacker could provide a
-specially-crafted PNG file, which once opened in an application linked
-against libpng would lead to that application crash.
+Combing through the wireshark commits, the following seems to be the
+correct bug. (But do wait for upstream)
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668082
-
-Can a CVE id be please assigned to this issue.
-
-Thanks!
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7209
 
 
 -- 
 Huzaifa Sidhpurwala / Red Hat Security Response Team
+
 
