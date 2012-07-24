@@ -1,46 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/5
-Message-ID: <20120821125847.GM5405@dhcp-25-225.brq.redhat.com>
-Date: Tue, 21 Aug 2012 14:58:48 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: akuster <akuster@...sta.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: taskstats: use-after-free in xacct_add_tsk()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/24/1
+Message-Id: <201207240444.q6O4iI5q000540@linus.mitre.org>
+Date: Tue, 24 Jul 2012 00:44:18 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Wireshark before 1.8.1 (etc.) CVE-2012-4048 CVE-2012-4049
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 21, 2012 at 05:53:55AM -0700, akuster wrote:
-> Petr,
-> 
-> If I am not mistaken, this was introduced via
-> 9acc1853519a0473620d424105f9d49ea5b4e62e and only if TASK_XACCT is enabled.
-> 
-> is that correct?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-That looks correct.
+CVE-2012-4048  http://www.wireshark.org/security/wnpa-sec-2012-11.html
+CVE-2012-4049  http://www.wireshark.org/security/wnpa-sec-2012-12.html
 
-Petr
+(We've already asked the upstream vendor to remove the bug 7221
+reference from wnpa-sec-2012-12, and insert the correct bug number.)
 
-> 
-> regards,
-> Armin
-> 
-> 
-> On 08/20/2012 10:25 AM, Petr Matousek wrote:
-> > An use-after-free flaw has been found in the way taskstat's
-> > TASKSTATS_CMD_ATTR_PID command and exiting tasks with already freed mm
-> > interacted. An unprivileged local user could use this flaw to crash the
-> > system or leak kernel memory.
-> > 
-> > Please note that the fix below is from year 2006.
-> > 
-> > Upstream fix:
-> > http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f0ec1aaf54caddd21c259aea8b2ecfbde4ee4fb9
-> > 
-> > References:
-> > http://bugzilla.openvz.org/show_bug.cgi?id=2294
-> > https://bugzilla.redhat.com/show_bug.cgi?id=849722
-> > 
-> > Thanks,
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
--- 
-Petr Matousek / Red Hat Security Response Team
+iQEcBAEBAgAGBQJQDiUTAAoJEGvefgSNfHMdjrQIAKM1GfGhtEsTI1abIOAWYIEo
+h/wWvyQRLq6VGEfxCwT2hGiUke2wWo8izaoODVGrImkZTlt88ry07omhKTf8BFSE
+AUvSX3nQGbxZn3T8DxNwMt8MXKAYEr8nyogdgpM9xx/bGNb+7TUcFju6d5BIEGdl
+mqy2Dw4tGjLOGx4RbkTtylYWnnhxCYWkbQQZihx4G7BVU2n1iSR4B47H7MPTrWuL
+iCsO+coRBDAht7ikuRMzMLr62K6SrRkjH+clDztpxlD3z/9c1R84bIyGzwLzaqxg
+T0oKXjz1t6vlDkNFvm/CmqtR0S59+QToGNKARjxC7NDdXRya/ZiaiYBjDvJh5LM=
+=Qp7Q
+-----END PGP SIGNATURE-----
