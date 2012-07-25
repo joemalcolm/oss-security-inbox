@@ -1,47 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/6
-Message-ID: <4FA3B6DD.1070503@suse.de>
-Date: Fri, 04 May 2012 13:00:45 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/25/1
+Message-ID: <50104616.80209@redhat.com>
+Date: Wed, 25 Jul 2012 21:16:38 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: evolution-data-server lacks SSL checking in its libsoup users
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
-Marcus Meissner wrote:
-> I started looking at the libsoup users, first one is evolution-data-server,
-> 
-> None of the libsoup users there seem to handle SSL certificate trust correctly (or at all) in my eyes.
-> 
-> In version 2.28 these are.
-> 	Groupwise protocol handling (server/groupwise/e-gw-connection.c)
-> 	Exchange protocol handling (server/exchange/lib/e2k-context.c)
-> 	Google (servers/google/libgdata-google/gdata-google-service.c)
-> 	calendar/backends/http/e-cal-backend-http.c
-> 	calendar/backends/caldav/e-cal-backend-caldav.c
-> 
-> I do not fully understand the correct solution to this yet though, whether we need
-> to pass in additional flags, or evaluate the "trusted" flag after the connect.
+On 07/17/2012 12:08 PM, Florian Weimer wrote:
 
-One would have thought that such abstraction libraries were invented to
-make life for application programmers easier. Openssl in all it's
-ugliness at least provides SSL_CTX_set_default_verify_paths(). gnutls
-doesn't have an equivalent. It's utterly stupid to require each and
-every application to hard code the path to a certificate bundle.
-Defaulting to not doing any checks at all if the application programmer
-forgot to set the magic option isn't exactly clever either.
-I think we should just patch libsoup to do the checks by default against
-the system certificates instead of starting to patch all it's users.
-Since we do not have a certificate bundle file in older distros we'd
-need to patch libsoup to use the certificate directory instead anyways.
+> Note that GNU libc will likely change the name to secure_getenv.
+> Upstream does not want to document __secure_getenv as-is.
 
-I wonder why everyone insists in using an unmanageable bundle file
-instead of the directory with individual files...
+This will be part of glibc 2.17.  autoconf instructions are available here:
 
-cu
-Ludwig
+<http://sourceware.org/glibc/wiki/Tips_and_Tricks/secure_getenv>
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Florian Weimer / Red Hat Product Security Team
