@@ -1,24 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/01/4
-Message-Id: <201209011235.35043.geissert@debian.org>
-Date: Sat, 1 Sep 2012 12:35:33 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: security@...uts.apache.org
-Subject: CVE request: Apache Struts S2-010 and S2-011
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/26/4
+Message-ID: <20497.25251.118584.533875@mariner.uk.xensource.com>
+Date: Thu, 26 Jul 2012 16:30:43 +0100
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xensource.com, xen-devel@...ts.xensource.com, xen-users@...ts.xensource.com, oss-security@...ts.openwall.com
+Subject: Xen Security Advisory 10 - HVM guest user mode MMIO emulation DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Apache Struts 2.3.4.1 fixes the vulnerabilities described in S2-010 (CSRF) 
-and S2-011 (DoS).
 
-Could CVE ids be assigned please?
+                 Xen Security Advisory XSA-10
 
-[1] http://struts.apache.org/2.x/docs/s2-010.html
-[2] http://struts.apache.org/2.x/docs/s2-011.html
+	 HVM guest user mode MMIO emulation DoS vulnerability
 
-Sincerely,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+ISSUE DESCRIPTION
+=================
+
+Internal data of the emulator for MMIO operations may, under
+certain rare conditions, at the end of one emulation cycle be left
+in a state affecting a subsequent emulation such that this second
+emulation would fail, causing an exception to be reported to the
+guest kernel where none is expected.
+
+IMPACT
+======
+
+Guest mode unprivileged (user) code, which has been granted
+the privilege to access MMIO regions, may leverage that access
+to crash the whole guest.
+
+VULNERABLE SYSTEMS
+==================
+
+All HVM guests exposing MMIO ranges to unprivileged (user) mode.
+
+All versions of Xen which support HVM guests are vulnerable to this issue.
+
+MITIGATION
+==========
+
+This issue can be mitigated by running PV (para-virtualised)
+guests only, or by ensuring (inside the guest) that MMIO regions
+can be accessed only by trustworthy processes.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch will resolve the issue.
+
+NOTE REGARDING CVE
+==================
+
+We do not yet have a CVE Candidate number for this vulnerability.
+
+PATCH INFORMATION
+=================
+
+The attached patches resolve this issue
+
+$ sha256sum xsa10-*.patch
+f96b7849194901d7f663895f88c2ca4f4721559f1c1fe13bba515336437ab912  xsa10-4.x.patch
+fb9dead017dfea99ad3e8d928582e67160c76518b7fe207d9a3324811baf06dd  xsa10-unstable.patch
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQEWB0AAoJEIP+FMlX6CvZYhUH+wVPIAAfKPp5p5TYvY90nAbR
+O427AbXKDD0Gval78ygQSIiQIrmP0l5MZdx/FsXfw5cXyNHWJDHrwzA9jXzfYeor
+boFvYCjdgyeh6cBM7BR2OFgoB+v3KmMSZOSDfH87SYzZTpK1+2ImDgsoaI5cqUMN
+x92bXzqohZhcG/5PBhdVaEdj3KTGCHZYwjieUdi5BbWsQry9Rzd7nV6TsRHAaBkW
++9s3XxtobMNMJyr2t7ZKO1YwfLSprpfFcZk4zfdLLFMBvvPoF7V+Pi3PJ+8S38QN
+YcyhPoLgoTqSKZ7buyMux9JwSzn8yi4ETMHMTc3VGFQZQwnlNeMWVEUG2CiYVn8=
+=H0Nc
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa10-unstable.patch" of type "application/octet-stream" (1086 bytes)
+
+Download attachment "xsa10-4.x.patch" of type "application/octet-stream" (1130 bytes)
