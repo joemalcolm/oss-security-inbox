@@ -1,123 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/8
-Message-ID: <4FEB2C03.6010808@redhat.com>
-Date: Wed, 27 Jun 2012 09:51:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: Kernel [PATCH] NFC: prevent multiple buffer overflows in NCI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/26/6
+Message-ID: <20120726221413.GA26496@mobile003.mycingular.net>
+Date: Thu, 26 Jul 2012 15:14:13 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: oss-security@...ts.openwall.com, rubyonrails-security@...glegroups.com
+Subject: Ruby on Rails DoS Vulnerability in authenticate_or_request_with_http_digest (CVE-2012-3424)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+DoS Vulnerability in authenticate_or_request_with_http_digest
 
-http://marc.info/?l=linux-kernel&m=134030878917784&w=2
+There is a DoS vulnerability in Action Pack digest authentication handling in Rails.
+This vulnerability has been assigned the CVE identifier CVE-2012-3424.
 
+Versions Affected:  3.x.
+Not affected:       2.3.5 - 2.3.14
+Fixed Versions:     3.0.16, 3.1.7, 3.2.7
 
-List:       linux-kernel
-Subject:    [PATCH] NFC: prevent multiple buffer overflows in NCI
-From:       Dan Rosenberg <dan.j.rosenberg () gmail ! com>
-Date:       2012-06-21 19:56:12
-Message-ID: 4FE37C5C.4090009 () gmail ! com
-[Download message RAW]
+Impact 
+------ 
 
-Fix multiple remotely-exploitable stack-based buffer overflows due to
-the NCI code pulling length fields directly from incoming frames and
-copying too much data into statically-sized arrays. Fortunately, there
-don't appear to be any active users of this code (yet).
+All users using Digest Authentication support in Rails should upgrade
+immediately.  Impacted code uses any of the `with_http_digest` controller
+helper methods.  For example:
 
-This patch fixes the overflows, but I suspect the code will need to be
-completely reworked since this doesn't address the more systemic
-problem of failing to check that the values read from incoming frame
-data aren't from beyond the end of the pulled skb data. Build tested only.
+    class MyController < ApplicationController
+      def index
+        authenticate_or_request_with_http_digest(REALM) do |uname|
+          # ...
+        end
+      end
+    end
 
-Signed-off-by: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Cc: stable@...nel.org
-Cc: security@...nel.org
-Cc: Lauro Ramos Venancio <lauro.venancio@...nbossa.org>
-Cc: Aloisio Almeida Jr <aloisio.almeida@...nbossa.org>
-Cc: Samuel Ortiz <sameo@...ux.intel.com>
-Cc: David S. Miller <davem@...emloft.net>
-Cc: Ilan Elias <ilane@...com>
-- ---
- net/nfc/nci/ntf.c |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/net/nfc/nci/ntf.c b/net/nfc/nci/ntf.c
-index cb26461..2ab196a 100644
-- --- a/net/nfc/nci/ntf.c
-+++ b/net/nfc/nci/ntf.c
-@@ -106,7 +106,7 @@ static __u8
-*nci_extract_rf_params_nfca_passive_poll(struct
-nci_dev *ndev,
- 	nfca_poll->sens_res = __le16_to_cpu(*((__u16 *)data));
- 	data += 2;
- -	nfca_poll->nfcid1_len = *data++;
-+	nfca_poll->nfcid1_len = min_t(__u8, *data++, NFC_NFCID1_MAXSIZE);
-  	pr_debug("sens_res 0x%x, nfcid1_len %d\n",
- 		 nfca_poll->sens_res, nfca_poll->nfcid1_len);
-@@ -130,7 +130,7 @@ static __u8
-*nci_extract_rf_params_nfcb_passive_poll(struct
-nci_dev *ndev,
- 			struct rf_tech_specific_params_nfcb_poll *nfcb_poll,
- 						     __u8 *data)
- {
-- -	nfcb_poll->sensb_res_len = *data++;
-+	nfcb_poll->sensb_res_len = min_t(__u8, *data++, NFC_SENSB_RES_MAXSIZE);
-  	pr_debug("sensb_res_len %d\n", nfcb_poll->sensb_res_len);
- @@ -145,7 +145,7 @@ static __u8
-*nci_extract_rf_params_nfcf_passive_poll(struct
-nci_dev *ndev,
- 						     __u8 *data)
- {
- 	nfcf_poll->bit_rate = *data++;
-- -	nfcf_poll->sensf_res_len = *data++;
-+	nfcf_poll->sensf_res_len = min_t(__u8, *data++, NFC_SENSF_RES_MAXSIZE);
-  	pr_debug("bit_rate %d, sensf_res_len %d\n",
- 		 nfcf_poll->bit_rate, nfcf_poll->sensf_res_len);
-@@ -331,7 +331,7 @@ static int
-nci_extract_activation_params_iso_dep(struct
-nci_dev *ndev,
- 	switch (ntf->activation_rf_tech_and_mode) {
- 	case NCI_NFC_A_PASSIVE_POLL_MODE:
- 		nfca_poll = &ntf->activation_params.nfca_poll_iso_dep;
-- -		nfca_poll->rats_res_len = *data++;
-+		nfca_poll->rats_res_len = min_t(__u8, *data++, 20);
- 		pr_debug("rats_res_len %d\n", nfca_poll->rats_res_len);
- 		if (nfca_poll->rats_res_len > 0) {
- 			memcpy(nfca_poll->rats_res,
-@@ -341,7 +341,7 @@ static int
-nci_extract_activation_params_iso_dep(struct
-nci_dev *ndev,
-  	case NCI_NFC_B_PASSIVE_POLL_MODE:
- 		nfcb_poll = &ntf->activation_params.nfcb_poll_iso_dep;
-- -		nfcb_poll->attrib_res_len = *data++;
-+		nfcb_poll->attrib_res_len = min_t(__u8, *data++, 50);
- 		pr_debug("attrib_res_len %d\n", nfcb_poll->attrib_res_len);
- 		if (nfcb_poll->attrib_res_len > 0) {
- 			memcpy(nfcb_poll->attrib_res,
+Releases 
+-------- 
+The 3.0.16, 3.1.7 & 3.2.7 releases are available at the normal locations. 
 
 
+Workarounds 
+----------- 
+There are no feasible workarounds for this issue. 
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+* 3-0-digest_auth_dos.patch - Patch for 3.0 series 
+* 3-1-digest_auth_dos.patch - Patch for 3.1 series 
+* 3-2-digest_auth_dos.patch - Patch for 3.2 series 
 
-iQIcBAEBAgAGBQJP6ywDAAoJEBYNRVNeJnmTV1cQAL4ZibvyN/kCcsGj1dm50BYu
-P8IoXZRDPczqDOLr8TQChabpIdBm9O9390RIg2ElO+0UtXDe2Q0AcDxglcam7hcV
-4hU2hE69PKsgjrQ0u0/jVGZorSHpTJq0InHCU/Xw5DI9Bhfa0WHXlRqGlly+Es+5
-gd43h4s/BDTpVxofWQ1aJcyKIzOVUP1usdfPHbPO5aJl0hCk3k4ADNFCV8U45Sn2
-+wD/3c7BM6DH2uDyayylzRaEBamXYqz1cBWhbiq3/O90r1lk5MLXczowZbNfbpGN
-iw1rCZFIqoLMB6+yQHMOIGHA9i+E2Jx7K11zN5hpbpnVCGCquNICVTthjdFPcuC1
-BgotvaoW2+kJVe6ml4Ws6oIL4lBgAn9cJOEEBbQptIJvMMsM6BGJ/lu4F6/dHRqg
-xXNZtn4B655weFMJj9CNw6p7yLzcKQ7WuMLctXTHeo9GRAztzUsT25aK0FRjdF8s
-s9KB7WW+Ifpfg4c4OEkG6wL3QkUYfkiOYY3/UxMm5sLSL4RWXVaEp+LXlM9tpd2j
-HHqj5tOjacb0ZVkYVOFqE8ZWwoHDAqhWvBF1GT920vwAdY1B7HJGczY6DoPU4fvX
-ej1JtEK8hd1plkAXW6TNm+hfxBK5Ul0LhylQWohZnGE/wEW2oY9aSfJD0AOaSTx3
-6u4dnWcQ4YkgyofWCY05
-=QMC3
------END PGP SIGNATURE-----
+Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+------- 
+Thanks to Charlie Somerville for reporting this issue!
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-0-digest_auth_dos.patch" of type "text/plain" (1156 bytes)
+
+View attachment "3-1-digest_auth_dos.patch" of type "text/plain" (1156 bytes)
+
+View attachment "3-2-digest_auth_dos.patch" of type "text/plain" (1157 bytes)
+
+Content of type "application/pgp-signature" skipped
