@@ -1,63 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/3
-Message-ID: <20120102001841.GC22463@openwall.com>
-Date: Mon, 2 Jan 2012 04:18:41 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/26/3
+Message-ID: <20120726152511.GN12159@dhcp-25-225.brq.redhat.com>
+Date: Thu, 26 Jul 2012 17:25:12 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Colin Percival <cperciva@...ebsd.org>, dillon@...llo.backplane.com, Christos Zoulas <christos@...las.com>, deraadt@...nbsd.org, Todd Miller <Todd.Miller@...rtesan.com>
-Subject: Re: *BSD's DES-based crypt(3) treats all invalid salt chars as '.'
+Subject: CVE Request -- kernel: recv{from,msg}() on an rds socket can leak kernel memory
 Content-Type: text/plain; charset=utf-8
 
-Christos Zoulas merged the relevant ones of my FreeSec code changes into
-NetBSD, for NetBSD 6.  Thus, starting with NetBSD 6, its crypt(3) will
-have almost the same semantics for invalid two-character salts that
-recent PHP's crypt() and UFC-crypt in glibc do.
+Two similar issues:
 
-Other *BSDs are welcome to merge these changes, too.
+1) Reported by Jay Fenlason and Doug Ledford:
+recvfrom() on an RDS socket can disclose sizeof(struct
+sockaddr_storage)-sizeof(struct sockaddr_in) bytes of kernel stack to
+userspace when receiving a datagram.
 
-On Tue, Nov 15, 2011 at 07:54:04AM +0400, Solar Designer wrote:
-> Hi,
-> 
-> The traditional DES-based crypt(3) accepts a salt string consisting of
-> characters from a certain base-64 alphabet, normally encoding a 12-bit
-> salt value in two characters.
-> 
-> What happens when the salt string contains characters outside of the
-> usual base-64 alphabet is implementation-specific.  Typically,
-> implementations map those invalid salts onto the 12-bit values in one of
-> several ways.  FreeSec, an otherwise very good implementation by David
-> Burren, appears to be the only widespread implementation that maps all
-> invalid salt characters onto just one 6-bit value - zero.  FreeSec is
-> the implementation used by FreeBSD, OpenBSD, DragonFly BSD.  The code in
-> NetBSD is different, but it appears to share this problem.  Indeed,
-> these systems don't use the DES-based hashes by default, and even if
-> they did they'd be OK because they'd use valid salts, but the issue here
-> is with third-party programs that are not as careful - especially web
-> apps invoking this code via PHP's crypt() (whether the underlying
-> system's crypt(3) or PHP's own code is used depends on PHP version and
-> build).
-> 
-> Thus, with poorly written programs combined with this property of
-> crypt(3) on *BSD's we get effectively matching salts, which a password
-> cracker aware of this property can take advantage of for much faster
-> offline attacks.
-> 
-> I patched the FreeSec code to match UFC-crypt's handling of invalid
-> salts about 20 months ago:
-> 
-> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_freesec.c
-> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_freesec.h
-> 
-> This did not matter much for Owl because we do not actually override
-> glibc's UFC-crypt for the traditional hashes (we use FreeSec for
-> "extended" hashes with 24-bit salts, which are not produced by naive
-> apps), however I made those changes primarily for reuse of the code in
-> PHP - and the changes went into a certain version of PHP (5.3.2+, IIRC).
-> 
-> Now I welcome *BSD's to reuse these as well.  Yes, this sort of breaks
-> compatibility with existing invalid-salt hashes produced on those
-> systems, but those will be easy to fix if necessary by explicitly
-> changing their invalid salt characters to '.' (and thus making the
-> problem even more apparent).
-> 
-> Alexander
+2) Reported by Jay Fenlason:
+recv{from,msg}() on an RDS socket can disclose sizeof(struct
+sockaddr_storage) bytes of kernel stack to userspace when other code
+paths are taken.
+
+Both issues end in rds_recvmsg() so one CVE is sufficient.
+
+Upstream commit:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=06b6a1cf6e776426766298d055bb3991957d90a7
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
