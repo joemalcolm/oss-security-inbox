@@ -1,62 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/24/3
-Message-Id: <FF4D7923-ADBD-4843-84E3-53D3EDEC9DD3@yassl.com>
-Date: Fri, 24 Feb 2012 15:04:53 -0800
-From: Larry Stefonic <larry@...sl.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Tomas Hoger <thoger@...hat.com>, support@...sl.com
-Subject: Re: MySQL 0-day - does it need a CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/26/5
+Message-ID: <50117632.5080608@redhat.com>
+Date: Thu, 26 Jul 2012 10:54:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: recv{from,msg}() on an rds socket can leak kernel memory
 Content-Type: text/plain; charset=utf-8
 
-Kurt,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks for the cc.  We're looking into the issue.
-
-LS
-
-Larry Stefonic
-www.yassl.com
-Skype:  Stefonic
-http://twitter.com/CyaSSL
-+1 206 369 4800
-
-On Feb 24, 2012, at 12:28 PM, Kurt Seifried wrote:
-
-> On 02/24/2012 03:11 AM, Tomas Hoger wrote:
->> On Thu, 09 Feb 2012 10:20:14 -0700 Kurt Seifried wrote:
->> 
->>> https://lists.immunityinc.com/pipermail/canvas/2012-February/000011.html
->> 
->> ...
->> 
->>> We are releasing a working MySQL 5.5.20 remote 0day exploit with this
->>> update.The exploit has been tested with
->>> mysql-5.5.20-debian6.0-i686.deb on Debian 6.0.
->> 
->> Note also:
->> 
->> https://lists.immunityinc.com/pipermail/canvas/2012-February/000014.html
->> http://partners.immunityinc.com/movies/VD-MySQL-5_5_20.mov
->> 
->> According to the video, it should be "yassl buffer overflow".
->> 
+On 07/26/2012 09:25 AM, Petr Matousek wrote:
+> Two similar issues:
 > 
-> Ok according to the video:
+> 1) Reported by Jay Fenlason and Doug Ledford: recvfrom() on an RDS
+> socket can disclose sizeof(struct sockaddr_storage)-sizeof(struct
+> sockaddr_in) bytes of kernel stack to userspace when receiving a
+> datagram.
 > 
-> This vulnerability affects the yaSSL authentication portion (so SSL
-> certificate based authentication of clients).
+> 2) Reported by Jay Fenlason: recv{from,msg}() on an RDS socket can
+> disclose sizeof(struct sockaddr_storage) bytes of kernel stack to
+> userspace when other code paths are taken.
 > 
-> This attack is "reliable", usually works on the first try, but if it
-> fails it will DoS MySQL and MySQL will require a restart.
+> Both issues end in rds_recvmsg() so one CVE is sufficient.
 > 
-> So it sounds like this might actually be a yaSSL vulnerability and not
-> specific to MySQL. CC'ing support@...sl.com so they are aware of this
-> potential issue.
-> 
-> Please use CVE-2012-0882 for this issue.
-> 
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+> Upstream commit: 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=06b6a1cf6e776426766298d055bb3991957d90a7
+>
+>  Thanks,
 > 
 
+Please use CVE-2012-3430 for this issue.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQEXYvAAoJEBYNRVNeJnmT2xgP/3/+IXnN0/M36uR/5AtDq/Ds
+4EW7tgQ6jCa/VxElIM33SaDhvavgSCVEihmlf59NfhcQkpxZpS2WhXLSJt42rcwc
+Sd++3P9M99G2dEWbkxZ58A6JoM8svWUN2s6eVHFRCIjrkBLB3ZUqaQ3IGISOPwNo
+fxG2aIIF3g6ELfYgwPaiSBQ1GB5dIy88yPIUgziW+fpILkjUpcLIwGu04+il+Tq7
+TLEC7jLXPR4lk3g/ZW1Hhl8Ra4Udc+y9Qw9xNcC0A/ev+R35OofqSNl6GqNUQ6iQ
+VYBBDuq+BGZHBSj/3HMcg2szoINipBxkRkwYLYFyiLjtMS0lbNSUIFYelIGO6mac
+lQW/B9lm9yqbgMRMCZ27P1BDtRmfJfApYRycGSsJHFZ87j3SMpy2CsLxw9Y3CH2E
+38/sYVM3DBsz4a0Di3ci2TFW0+PcT9rpOgBfnLybH8AmNFqM76diIgcd9Er32Mbv
+V+EuKLEr2dqigj05FnCuwaB++RUYUytxNwKnKSKzqIwVhNOKxBgQwsMPgCjYamxl
+iLCptjcXJZ1qZD1NRvNSjrkJVHEZYr8+4AFhltb977UNXsNCjmCiPDmzekGhK6JH
+IrqFjLFVaT1FeSqjxVStj/kMRqTFb0rt2RD7LE615N/ml5XAx8NWSJ7qJuLYK4uL
+SEea9Kji1W98/iUIznjm
+=5tH+
+-----END PGP SIGNATURE-----
