@@ -1,44 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/2
-Message-ID: <4F5E3411.1050205@redhat.com>
-Date: Mon, 12 Mar 2012 18:36:17 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- openldap (slapd): Assertion failure by processing search queries requesting only attributes for particular entry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/26/2
+Message-ID: <CAH5b-BVqSBV1EhHBzwwHAJ2sUVCemk-H6Hq491DDMFtaAmfKMg@mail.gmail.com>
+Date: Thu, 26 Jul 2012 14:59:44 +0200
+From: yersinia <yersinia.spiros@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Wed, Jul 25, 2012 at 9:16 PM, Florian Weimer <fweimer@...hat.com> wrote:
 
-   a denial of service flaw was found in the way the slapd server of the OpenLDAP,
-the Lightweight Directory Access Protocol applications and development suite,
-processed certain search queries requesting only attributes (no values) for a
-particular entry. A remote attacker could issue a specially-crafted LDAP search
-query, which once processed by a vulnerable slapd server would lead to
-assertion failure (slapd abort).
+> On 07/17/2012 12:08 PM, Florian Weimer wrote:
+>
+>  Note that GNU libc will likely change the name to secure_getenv.
+>> Upstream does not want to document __secure_getenv as-is.
+>>
+>
+> This will be part of glibc 2.17.  autoconf instructions are available here:
+>
+> <http://sourceware.org/glibc/**wiki/Tips_and_Tricks/secure_**getenv<http://sourceware.org/glibc/wiki/Tips_and_Tricks/secure_getenv>
+> >
+>
+>
+> FWIW, i have just updated rpm5 (5.4) and popt (1.17) thanks to this thread.
 
-Upstream bug report:
-[1] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7143
+Thank you
 
-Original upstream patch:
-[2] 
-http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=ef2f5263de8802794e528cc2648ecfca369302ae
+Elia
 
-Further patches:
-[3] 
-http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=430256fafb85028443d7964a5ab1f4bbf8b2db38
+> --
+> Florian Weimer / Red Hat Product Security Team
+>
 
-[4] 
-http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=463c1fa25d45e393dc1f1ea235286f79e872fad0
-
-References:
-[5] http://www.openldap.org/software/release/changes.html
-[6] https://bugs.gentoo.org/show_bug.cgi?id=407941
-[7] https://secunia.com/advisories/48372/
-[8] https://bugzilla.redhat.com/show_bug.cgi?id=802514
-
-Could you allocate a CVE identifier for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
