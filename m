@@ -1,68 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/07/4
-Message-ID: <509A8CBD.7000400@plone.org>
-Date: Wed, 07 Nov 2012 16:30:53 +0000
-From: Matthew Wilkes <matthew.wilkes@...ne.org>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>, Jan Pokorny <jpokorny@...hat.com>,  Plone Security Team <security@...ne.org>, Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: CVE Request - Zope / Plone: Multiple vectors corrected within 20121106 fix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/27/5
+Message-ID: <1343425359.4658.13.camel@lagune.teich>
+Date: Fri, 27 Jul 2012 23:42:39 +0200
+From: frosch <frosch@...nttd.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
-Hi *,
+Hello,
 
-Jan has asked me for a breakdown of what patches in our bulk hotfix 
-relate to what issues, so here you go:
+we, the OpenTTD developers, have identified a security vulnerability in
+OpenTTD (an open source game with multiplayer). Would you be so kind as 
+to allocate a CVE id for this issue?
 
-https://plone.org/products/plone/security/advisories/20121106/01 - 
-registerConfiglet.py
-https://plone.org/products/plone/security/advisories/20121106/02 - 
-setHeader.py
-https://plone.org/products/plone/security/advisories/20121106/03 - 
-allowmodule.py
-https://plone.org/products/plone/security/advisories/20121106/04 - 
-python_scripts.py createObject
-https://plone.org/products/plone/security/advisories/20121106/05 - 
-get_request_var_or_attr.py
-https://plone.org/products/plone/security/advisories/20121106/06 - 
-kssdevel.py
-https://plone.org/products/plone/security/advisories/20121106/07 - 
-widget_traversal.py
-https://plone.org/products/plone/security/advisories/20121106/08 - 
-uid_catalog.py
-https://plone.org/products/plone/security/advisories/20121106/09 - gtbn.py
-https://plone.org/products/plone/security/advisories/20121106/10 - 
-python_scripts.py {u,}translate
-https://plone.org/products/plone/security/advisories/20121106/11 - 
-python_scripts.py go_back
-https://plone.org/products/plone/security/advisories/20121106/12 - 
-kupu_spellcheck.py
-https://plone.org/products/plone/security/advisories/20121106/13 - 
-membership_tool.py
-https://plone.org/products/plone/security/advisories/20121106/14 - 
-queryCatalog.py
-https://plone.org/products/plone/security/advisories/20121106/15 - 
-python_scripts.py formatColumns
-https://plone.org/products/plone/security/advisories/20121106/16 - 
-renameObjectsByPaths.py
-https://plone.org/products/plone/security/advisories/20121106/17 - 
-at_download.py
-https://plone.org/products/plone/security/advisories/20121106/18 - 
-safe_html.py
-https://plone.org/products/plone/security/advisories/20121106/19 - ftp.py
-https://plone.org/products/plone/security/advisories/20121106/20 - 
-widget_traversal.py
-https://plone.org/products/plone/security/advisories/20121106/21 - atat.py
-https://plone.org/products/plone/security/advisories/20121106/22 - 
-python_scripts.py
-https://plone.org/products/plone/security/advisories/20121106/23 - 
-django_crypto.py
-https://plone.org/products/plone/security/advisories/20121106/24 - 
-random_string
+The issue concerns a denial of service vulnerabilty which enables
+an attacker to force the server into an invalid game state. The
+server will abort upon detecting this state.
+This attack can be performed using an unmodified client via normal
+game interaction. The attack requires authorization, but most servers
+do not implement authorization. The first vulnerable version is 0.6.0,
+the upcoming 1.2.2 release will have the issue fixed.
+
+Once a CVE id is allocated, the issue and fix will be documented at
+http://security.openttd.org/CVE-2012-xxxx
+
+Thanks in advance,
+Christoph 'frosch' Elsenhans
+
+(Please CC me, I'm not subscribed)
 
 
-> =>  preliminary 24 CVE ids needed.
 
-Once we get twenty four assigned I'll match them against this list in 
-the same order.
-
-Matt
