@@ -1,108 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/1
-Message-ID: <20120201004205.GA5261@openwall.com>
-Date: Wed, 1 Feb 2012 04:42:05 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/27/1
+Message-ID: <50124CDC.70401@redhat.com>
+Date: Fri, 27 Jul 2012 02:10:04 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Apache HTTP Server 2.2.22 Released
+CC: "Xen.org security team" <security@....org>, xen-announce@...ts.xensource.com, xen-devel@...ts.xensource.com, xen-users@...ts.xensource.com
+Subject: Re: Xen Security Advisory 10 - HVM guest user mode MMIO emulation DoS
 Content-Type: text/plain; charset=utf-8
 
-I think that only posting to oss-security when there's not yet a CVE ID
-assigned (to request one) is weird.  I think it may be more beneficial
-to post in here about all security issues in Open Source software -
-well, or at least in widely used pieces of software.  As a special case,
-when an issue that was first discussed on the private linux-distros or
-distros lists is made public, I think this should include a posting to
-oss-security (and not only vendor advisories sent via their usual
-channels, which vary by vendor).  (No, the Apache issues below were not
-on the distros lists.)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
------ Forwarded message from "William A. Rowe Jr." <wrowe@...che.org> -----
+On 07/26/2012 09:30 AM, Xen.org security team wrote:
+> 
+> Xen Security Advisory XSA-10
+> 
+> HVM guest user mode MMIO emulation DoS vulnerability
+> 
+> ISSUE DESCRIPTION =================
+> 
+> Internal data of the emulator for MMIO operations may, under 
+> certain rare conditions, at the end of one emulation cycle be left 
+> in a state affecting a subsequent emulation such that this second 
+> emulation would fail, causing an exception to be reported to the 
+> guest kernel where none is expected.
+> 
+> IMPACT ======
+> 
+> Guest mode unprivileged (user) code, which has been granted the
+> privilege to access MMIO regions, may leverage that access to crash
+> the whole guest.
+> 
+> VULNERABLE SYSTEMS ==================
+> 
+> All HVM guests exposing MMIO ranges to unprivileged (user) mode.
+> 
+> All versions of Xen which support HVM guests are vulnerable to this
+> issue.
+> 
+> MITIGATION ==========
+> 
+> This issue can be mitigated by running PV (para-virtualised) guests
+> only, or by ensuring (inside the guest) that MMIO regions can be
+> accessed only by trustworthy processes.
+> 
+> RESOLUTION ==========
+> 
+> Applying the appropriate attached patch will resolve the issue.
+> 
+> NOTE REGARDING CVE ==================
+> 
+> We do not yet have a CVE Candidate number for this vulnerability.
+> 
+> PATCH INFORMATION =================
+> 
+> The attached patches resolve this issue
+> 
+> $ sha256sum xsa10-*.patch 
+> f96b7849194901d7f663895f88c2ca4f4721559f1c1fe13bba515336437ab912
+> xsa10-4.x.patch 
+> fb9dead017dfea99ad3e8d928582e67160c76518b7fe207d9a3324811baf06dd
+> xsa10-unstable.patch
 
-Date: Tue, 31 Jan 2012 16:34:24 -0600
-From: "William A. Rowe Jr." <wrowe@...che.org>
-To: announce@...pd.apache.org
-Subject: Apache HTTP Server 2.2.22 Released
-
-                       Apache HTTP Server 2.2.22 Released
-
-   The Apache Software Foundation and the Apache HTTP Server Project are
-   pleased to announce the release of version 2.2.22 of the Apache HTTP
-   Server ("Apache").  This version of Apache is principally a security
-   and bug fix release, including the following significant security fixes:
-
-   * SECURITY: CVE-2011-3368 (cve.mitre.org)
-     Reject requests where the request-URI does not match the HTTP
-     specification, preventing unexpected expansion of target URLs in
-     some reverse proxy configurations.
-
-   * SECURITY: CVE-2011-3607 (cve.mitre.org)
-     Fix integer overflow in ap_pregsub() which, when the mod_setenvif module
-     is enabled, could allow local users to gain privileges via a .htaccess
-     file.
-
-   * SECURITY: CVE-2011-4317 (cve.mitre.org)
-     Resolve additional cases of URL rewriting with ProxyPassMatch or
-     RewriteRule, where particular request-URIs could result in undesired
-     backend network exposure in some configurations.
-
-   * SECURITY: CVE-2012-0021 (cve.mitre.org)
-     mod_log_config: Fix segfault (crash) when the '%{cookiename}C' log format
-     string is in use and a client sends a nameless, valueless cookie, causing
-     a denial of service. The issue existed since version 2.2.17.
-
-   * SECURITY: CVE-2012-0031 (cve.mitre.org)
-     Fix scoreboard issue which could allow an unprivileged child process
-     could cause the parent to crash at shutdown rather than terminate
-     cleanly.
-
-   * SECURITY: CVE-2012-0053 (cve.mitre.org)
-     Fixed an issue in error responses that could expose "httpOnly" cookies
-     when no custom ErrorDocument is specified for status code 400.
-
-   The Apache HTTP Project thanks halfdog, Context Information Security Ltd,
-   Prutha Parikh of Qualys, and Norman Hippert for bringing these issues to
-   the attention of the security team.
-
-   We consider this release to be the best version of Apache available, and
-   encourage users of all prior versions to upgrade.
-
-   Apache HTTP Server 2.2.22 is available for download from:
-
-     http://httpd.apache.org/download.cgi
-
-   Please see the CHANGES_2.2 file, linked from the download page, for a
-   full list of changes.  A condensed list, CHANGES_2.2.22 includes only
-   those changes introduced since the prior 2.2 release.  A summary of all
-   of the security vulnerabilities addressed in this and earlier releases
-   is available:
-
-     http://httpd.apache.org/security/vulnerabilities_22.html
-
-   This release includes the Apache Portable Runtime (APR) version 1.4.5
-   and APR Utility Library (APR-util) version 1.4.2, bundled with the tar
-   and zip distributions.  The APR libraries libapr and libaprutil (and
-   on Win32, libapriconv version 1.2.1) must all be updated to ensure
-   binary compatibility and address many known security and platform bugs.
-   APR-util version 1.4 represents a minor version upgrade from earlier
-   httpd source distributions, which previously included version 1.3.
-
-   Apache 2.2 offers numerous enhancements, improvements, and performance
-   boosts over the 2.0 codebase.  For an overview of new features
-   introduced since 2.0 please see:
-
-     http://httpd.apache.org/docs/2.2/new_features_2_2.html
-
-   This release builds on and extends the Apache 2.0 API.  Modules written
-   for Apache 2.0 will need to be recompiled in order to run with Apache
-   2.2, and require minimal or no source code changes.
-
-     http://svn.apache.org/repos/asf/httpd/httpd/branches/2.2.x/VERSIONING
-
-   When upgrading or installing this version of Apache, please bear in mind
-   that if you intend to use Apache with one of the threaded MPMs (other
-   than the Prefork MPM), you must ensure that any modules you will be
-   using (and the libraries they depend on) are thread-safe.
+Please use CVE-2012-3432 for this issue.
 
 
------ End forwarded message -----
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQEkzcAAoJEBYNRVNeJnmTBi8QANKeCCOiniLKp5+1LvYXr3rE
+uV9UijoVTBu6WNtB2L9NXRrenHBvGv38+tmVVg7pCqHkU9nrzhmg4zc8qZY8LJ/V
+/ZnYuVoWZ/hG+KNi8/NQIiDAiDu4Ip9NnMSW9SdYPVEFSQN4JCQufYOxjCGNzOj1
+QidDoyb7i63UAFXj4nvdFmJKVYSvegI+H46vGVkQabBdZ2LXuCHYCw54ZZ0nFqKj
+LU3t/468DmBn1Gk2EUdufV/NWxWpD33pjwTkMFbYH/C5cSHUMx6UUkD48EWu0YAs
+MxjigqXHKiXEPsoyfULppRTaxE969MsWDhrjrptymZjasmcXl+v/opmVYT9DJ1gF
+pAHU0o862p1gcdhBuk/n2DB8HFSk5MJbytDz0KzxgEDrqhFO4AIeAVq6//wXPnym
+nxNTY/6MQazc+S+coiNvBAtr1sT6CWgHsd0DLLQh/PQZ1DVDKRfufd9LfI7PdPFH
+gjHp81MArk39vFM5vT01Ac0aG4pj8kTwpTHwt84VL05hj6R/GcB56/526fmmgnan
+6KlwufXZkZjP6lteIeidK9NVOhRId5VEL0EguQAc5z8cavl6oD1P+AaECZct+h5r
+jMHxeQSf0ggQL6zRGBOU6Dlt2+Cg4FjRpWO8iGe0PlZb+XTFUsPk8/OWEKHa2Rlp
+tXhMnEfhzvKZLMg53D+S
+=qRMf
+-----END PGP SIGNATURE-----
