@@ -1,58 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/15/6
-Message-ID: <50A55C45.5090108@redhat.com>
-Date: Thu, 15 Nov 2012 14:19:01 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Petr Pisar <ppisar@...hat.com>, Mark Stosberg <mark@...mersault.com>
-Subject: Re: CVE Request -- perl-CGI: Newline injection due to improper CRLF escaping in Set-Cookie and P3P headers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/27/3
+Message-ID: <20498.43045.246578.277491@mariner.uk.xensource.com>
+Date: Fri, 27 Jul 2012 15:39:33 +0100
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+Subject: Xen Security Advisory 10 (CVE-2012-3432) - HVM user mode MMIO emul DoS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/15/2012 07:47 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> a security flaw was found in the way CGI.pm, a Perl module to 
-> handle Common Gateway Interface requests and responses, performed 
-> sanitization of values to be used for Set-Cookie and P3P headers. 
-> If a Perl CGI.pm module based CGI application reused cookies
-> values and accepted untrusted input from web browser(s), a remote
-> attacker could use this flaw to in an unauthorized way alter member
-> items of the cookie or add new items.
-> 
-> References: [1]
-> http://cpansearch.perl.org/src/MARKSTOS/CGI.pm-3.63/Changes [2]
-> https://github.com/markstos/CGI.pm/pull/23 [3]
-> https://bugzilla.redhat.com/show_bug.cgi?id=877015
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
 
-Please use CVE-2012-5526 for this issue.
+            Xen Security Advisory CVE-2012-3432 / XSA-10
+                          version 2
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+	 HVM guest user mode MMIO emulation DoS vulnerability
+
+UPDATES IN VERSION 2
+====================
+
+CVE candidate number assigned.
+
+Xen versions 3.2 and earlier are not, in fact, vulnerable; they have
+an entirely different emulation mechanism.
+
+ISSUE DESCRIPTION
+=================
+
+Internal data of the emulator for MMIO operations may, under
+certain rare conditions, at the end of one emulation cycle be left
+in a state affecting a subsequent emulation such that this second
+emulation would fail, causing an exception to be reported to the
+guest kernel where none is expected.
+
+IMPACT
+======
+
+Guest mode unprivileged (user) code, which has been granted
+the privilege to access MMIO regions, may leverage that access
+to crash the whole guest.
+
+VULNERABLE SYSTEMS
+==================
+
+All HVM guests exposing MMIO ranges to unprivileged (user) mode.
+
+Xen versions 3.3 and later are vulnerable to this issue.
+
+MITIGATION
+==========
+
+This issue can be mitigated by running PV (para-virtualised)
+guests only, or by ensuring (inside the guest) that MMIO regions
+can be accessed only by trustworthy processes.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch will resolve the issue.
+
+PATCH INFORMATION
+=================
+
+The attached patches resolve this issue
+
+$ sha256sum xsa10-*.patch
+f96b7849194901d7f663895f88c2ca4f4721559f1c1fe13bba515336437ab912  xsa10-4.x.patch
+fb9dead017dfea99ad3e8d928582e67160c76518b7fe207d9a3324811baf06dd  xsa10-unstable.patch
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQpVxFAAoJEBYNRVNeJnmTkwYP/2AXwV4+NlsfZwQsrwjJwAHZ
-KXvtFzDscvUdghWwvzc6O5zLhvLGgPSb0lHdeDiW3LnC+tEJ7xLyFS0oAGtbGFtA
-TpY1z60l8WY0k0iG+9tLuuJVjILOBnfGGydICBHmbLENZGtx4d+bO4Nd3JJYgBX/
-/W+7gGuY7N+QnvnqQ55lK4nwwHFz9KxX4jJvobh0Q4m2XfSo+8vKj6IAUSskLIb8
-+Yd7zBqaoGsQ/ompMLrBRdjI4I884iTDoOGPk3I0NU5kfmTRWDENgRHQ9QtXIsut
-co7IeVJmBrx+1Rco7PjLUDaVH3NrsyTU+doS/WVetlTqJhwX/uN2vSzYPM6hOl2B
-/7mBXoQOwv7u4fx9aucFQ9KT+a1+5J9SBw0UiT+uVQ0VSSrgHH+RyTX3LGZPiARF
-eE0mbfsrBORbCQ2SxqrPFfKIiegpJrctCXF5hsBM9z3M+aY1GeamwTMCohjkO3s2
-MIIbkCnHCQKl0HUfutG6KX9LReSLFXMA083mhvxOIdZf6jRviQ2MQcPPIxIW1HfJ
-f+N/mRH7TgoXDUhXl9wMGzLDgr5JITQu0g6IyX4i+2jKlUUmR41PiVF/Edw5yoH6
-fP4B2vi/fhV1BvCGczrZ3gbjvzP5pTBLAozZuR00TCEPLvt4rkQ62+/mV3p7mipC
-P61odBpdDdyAa5Ef6vZ6
-=+1C4
+iQEcBAEBAgAGBQJQEqbqAAoJEIP+FMlX6CvZEhIIALkIViTZtEbQ6nWy3Y1U/sm5
+BDZUPOeqF5KFV9EXQJcoKM1PGBMBgzeqA4n024k6o9mDimn0PVujSJC+2iX728Sz
+WW/k5y96q2ixzTmaU0y8X5p6pl+nbCNMQ8In7WysB2XetGHY+b5b80uIVH1Sj1IS
+QxrMO2HywQSUDNNQq3bD2jQjuIgewh7rMskxXiPWnlPg7MHx4D/jt/O4sP0bnZn2
+kvFad8TV9aB3I1dwdI2YJ3Ng3W162Tai6i2lJB1OQUJt0sIARXeXZYVOrkkAY5Tv
+SjNCCra0NZoaLjOlY0CWwqluPegJAnq1iFb5cF86nwZcoMCIh9OL+0SLyIJEAvg=
+=sOWo
 -----END PGP SIGNATURE-----
+
+View attachment "xsa10-4.x.patch" of type "text/plain" (1130 bytes)
+
+View attachment "xsa10-unstable.patch" of type "text/plain" (1087 bytes)
