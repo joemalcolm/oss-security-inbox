@@ -1,48 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/29/1
-Message-ID: <CA+KYVfiCkC_5SGN8BCLFfTmNovhkwQcPYvypBLXrFpQfVNmyjQ@mail.gmail.com>
-Date: Fri, 28 Sep 2012 19:56:44 -0400
-From: andi abes <andi.abes@...il.com>
-To: Russell Bryant <rbryant@...hat.com>
-Cc: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com,  openstack-announce@...ts.openstack.org
-Subject: Re: [Openstack] [OSSA 2012-016] Token authorization for a user in a disabled tenant is allowed (CVE-2012-4457)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/27/2
+Message-ID: <50124D84.8080005@redhat.com>
+Date: Fri, 27 Jul 2012 02:12:52 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, sschurtz@...nline.de
+Subject: Re: CVE-request: WordPress plugin Count Per Day XSS (SSCHADV2012-015)
 Content-Type: text/plain; charset=utf-8
 
-is the plan going forward to announce these on friday afternoons?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Fri, Sep 28, 2012 at 4:50 PM, Russell Bryant <rbryant@...hat.com> wrote:
-> OpenStack Security Advisory: 2012-016
-> CVE: CVE-2012-4457
-> Date: September 28, 2012
-> Title: Token authorization for a user in a disabled tenant is allowed
-> Impact: High
-> Reporter: Rohit Karajgi (NTT Data)
-> Affects: Essex (prior to 2012.1.2), Folsom (prior to folsom-3
-> development milestone)
+On 07/24/2012 01:26 AM, Henri Salo wrote:
+> Hello,
+> 
+> Can we assign 2012 CVE-identifier for XSS vulnerability in
+> WordPress plugin Count Per Day, thanks.
+> 
+> Original advisory:
+> http://www.darksecurity.de/advisories/2012/SSCHADV2012-015.txt 
+> OSVDB: http://osvdb.org/show/osvdb/83491 Secunia advisory:
+> http://secunia.com/advisories/49692/ Vendor page:
+> http://www.tomsdimension.de/wp-plugins/count-per-day SCM:
+> http://plugins.trac.wordpress.org/changeset/571926/count-per-day#file22
 >
-> Description:
-> Rohit Karajgi reported a vulnerability in Keystone. It was possible to
-> get a token that is authorized for a disabled tenant. Once the token is
-> established with authorization on the tenant, keystone would respond 200
-> OK to token validation requests from other OpenStack services, allowing
-> the user to work with the tenant's resources.
->
-> Folsom fix: (Included in 2012.2)
-> http://github.com/openstack/keystone/commit/4ebfdfaf23c6da8e3c182bf3ec2cb2b7132ef685
->
-> Essex fix: (Included in 2012.1.2)
-> http://github.com/openstack/keystone/commit/5373601bbdda10f879c08af1698852142b75f8d5
->
-> References:
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4457
-> https://bugs.launchpad.net/keystone/+bug/988920
->
-> --
-> Russell Bryant
-> OpenStack Vulnerability Management Team
->
-> _______________________________________________
-> Mailing list: https://launchpad.net/~openstack
-> Post to     : openstack@...ts.launchpad.net
-> Unsubscribe : https://launchpad.net/~openstack
-> More help   : https://help.launchpad.net/ListHelp
+>  Fixed in version 3.2 of the plugin, which I manually verified.
+> 
+> - Henri Salo
+> 
+
+Sorry forgot to about this one. Please use CVE-2012-3434 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQEk2EAAoJEBYNRVNeJnmTlyUP/ivkklXhU+nObX/T80m9ujIF
+JJcoejmbkl8kVsBhezT0wm8vKKKJpgHAvI/7M/IrEBw2OAXjQETWCkxWqOAGvgyG
+zFXsFSFPpVYyOtrfTdF4PIE+6rw54rT/n0FOSwZa3MyrDEFRydzreUzpovDm32b3
+xeAuXu0wixgxCr4p6RmuKbeFIoInIJhwBKf2NgcUP1DumjIGru0yryLwg7kI+FaK
+wTlgHNEuCiWN5tPvHd5EmVMi9KPTDiRFpaylSUvu28O6aaV4FPtlSd7TVseuyEz2
+Fkv0R/kUgimmoBtfN0K79nTgkLTZ79ETGQWC7uwH6lQLCd3wYRbUdn6XvLiE3+r0
+euEoeWVitEec0RnZns/xpULuXZvL0tbwBdCyQ1ipbmeY3fVyYrSE84hgb3SOddbi
+MEBZODZgsiK5UUL6d3mxRPHYwTHxs6ZJyd1AHbXAZjX0smJ7+t0e/Lfd1JiDZaqP
+IzDeRZDSXwjzhBfIEMfzK+fjbCSa5lZA0Ufc7dRzvjzz0uAWobOLWEOexvYpMjZZ
+vetfsKz0PDbg/9gajz2SsTMQk47MS3w882igYzkIq/pDgHiJQkKh/Rl/8bglfNpn
+HwNnlcl3XYzuGMrHAb2zSKhe11TPprMe+OK0+dNwprZx6lEqnDbLgM+8tHYevThp
+Oe9yvBL8mx/xKX3PhTj8
+=cUhC
+-----END PGP SIGNATURE-----
