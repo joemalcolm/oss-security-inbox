@@ -1,50 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/27/4
-Message-ID: <4F99E63C.2040208@redhat.com>
-Date: Thu, 26 Apr 2012 18:20:12 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/28/1
+Message-ID: <5013899F.30803@redhat.com>
+Date: Sat, 28 Jul 2012 00:41:35 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Xin Li <delphij@...phij.net>, d@...phij.net, FreeBSD Security Team <secteam@...ebsd.org>
-Subject: Re: CVE Request: programming error in crypt(3)
+Subject: Quick question regarding CVEs
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-CVE-2012-2143On 04/26/2012 03:36 PM, Xin Li wrote:
-> Hi,
-> 
-> I'd like to request a CVE number for a programming error in
-> FreeBSD's crypt(3) implementation, which prevents it from
-> generating a right hash from input in certain circumstances.
-> 
-> We will publish the details in an upcoming advisory.
-> 
-> Thanks in advance!
-> 
-> Cheers,
+Just checking my records, I feel like I'm missing an OpenStack CVE, is
+this list complete for 2012?
 
-Please use CVE-2012-2143 for this issue.
+CVE-2012-3371
+CVE-2012-3361
+CVE-2012-3360
+CVE-2012-2654
+CVE-2012-2144
+CVE-2012-2101
+CVE-2012-2094
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+- -Kurt
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIbBAEBAgAGBQJPmeY8AAoJEBYNRVNeJnmTaWIP9j8Bvajlg4HkBr4lCOTF4kYx
-dFIazJuzfYnGqvK4E2KzjFNuJL/Ch59hf9mBSBeGGRIMHtoCpR3o1zg0yqFE6ZHA
-ZKLFDLkBFzU3sL3PhZzKQiXMNaQYm3kFWsOfFkOsrX26NJoWn69uH0Iy2tDF07Aw
-R2zUtc4w9BkmPWFLKfrYgSrO36Khic2yH/eAM9/S6hOOlxfnNsUOZDOf/SaIn5y7
-lqUl4JEMqr+5Tm4PYVXvN0P16VlM5oxibyF3RWdew7XJeeg1SKJLZb1vGuEnN42Y
-WcbK1gIEE9SoRMG32sCi5egs2CmYfFYXj1jQwlmbUv+UvXsvXiE5akB/D1ziWy/x
-Yh/a+TucjKblvrqfy/5tlbbQKDxdoAPwWcMnQidOY7mPqVl3tWFAglAtIRcPT95p
-jWjIDHv8jxZzXp4qEy1riXJ6Ov5D6PfGNCmg9vbZmlLlXGBEpNXievLSgDUDVDBg
-CxCea1uwqoHtwID+jRyE47qCgwngSwVDO0esp1y/HEKCPrH2uSPdKMZkzp8RQua+
-WoT3uURtzDag0kfv/MhnAx0BvF20/OYFAgsYbh1IMbc9avEFIpvFflYuQW0rCgHK
-uq5sWOpjGimAnflIW8AZn6p+4h/DKFTRSmb7uY6x/ZkqFOHfRVcIYwH1gdm8IBWo
-zkYRipsGSnFb231WVo4=
-=jy5G
+iQIcBAEBAgAGBQJQE4mfAAoJEBYNRVNeJnmT/TMQAIHo6pgkDciS5VEv6XNxKCEr
+bwvJx7f+9XDACPbxYUD3/7Fz3BEXh19LFssuIpgLB9D+cG2hH4SEzRSbrwhkpNUP
+pdo+pPlWekOBumQkQz/3YaQVT8WxeBqyTameZPbfxJqcFqZqKLyVzfc6tKOJPhkA
+lI3NFHISxHoBR8uCJ8pWuODskI87JjY5SfGxtTvldz6/gBCqcxppHPB8/kLF8SGa
+Cv2AxG7/Ad1dTdWUhCv6UrgjVh0lz6cGiifijo33DXrGMlJf5ifJda5wWP9DuFRQ
+Qi/AsjwWilRUJlwW9otErJusbdpjdwGP68TNGqH1lS9o0j53o8202KDMMgnL4c1G
+LKf1RPKFx2a8clPmqbLTQrW0W6q4fmI8jIMQzuvb5jD7yvBgKKDY7rXRPm66rHty
+f3YvkOi7S3S538lYZnQfQ0EbuhkgtF7bLlQRfrvW/+bmdeGk3e60Lmg/3hAE2HVx
+fOYqDj4HVvBm8L5PLDD+KHpz8B+ffW1yJHgkF2Yy30eFHEdlXvfuDnC5gvjqxl/K
+urCcQmX2VwFhaJfMrHwC358OQHmrXH5jbmT1tf4NHeQrtSVf9iBU84mzVb0xd58s
+r9mvWgQBBB7Vu6akAkUuzLp6AbCGlOcqHEwnZt2l5NWYnEZnYHgQwO4SJuQ6tXy2
+VXpjgTzEPxsv2yiRJzEg
+=iTq9
 -----END PGP SIGNATURE-----
