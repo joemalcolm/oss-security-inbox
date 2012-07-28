@@ -1,61 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/06/1
-Message-ID: <20120206042738.GA26810@openwall.com>
-Date: Mon, 6 Feb 2012 08:27:38 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/28/7
+Message-ID: <50145B05.9070805@redhat.com>
+Date: Sat, 28 Jul 2012 15:35:01 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access
+CC: frosch <frosch@...nttd.org>
+Subject: Re: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I just analyzed this issue a little bit and thought I'd post a followup
-to the thread on oss-security, but to my surprise I could not find the
-issue mentioned in here, even though "nearby" ones (e.g. fixed in RHEL
-at about the same time) were brought to this list.  I guess this has to
-do with differences in CVE assignment - when an issue already has a CVE
-ID, it is less likely to be brought up in here - which I find wrong.
-This shouldn't be just a CVE ID assignment list, but a general Open
-Source security list.  Anyway, to the specific issue:
+On 07/28/2012 04:53 AM, frosch wrote:
+> 
+>> On 07/27/2012 03:42 PM, frosch wrote:
+>>> Hello,
+>>> 
+>>> we, the OpenTTD developers, have identified a security 
+>>> vulnerability in OpenTTD (an open source game with
+>>> multiplayer). Would you be so kind as to allocate a CVE id for
+>>> this issue?
+>>> 
+>>> The issue concerns a denial of service vulnerabilty which
+>>> enables an attacker to force the server into an invalid game
+>>> state. The server will abort upon detecting this state. This
+>>> attack can be performed using an unmodified client via normal
+>>> game interaction. The attack requires authorization, but most
+>>> servers do not implement authorization. The first vulnerable
+>>> version is 0.6.0, the upcoming 1.2.2 release will have the
+>>> issue fixed.
+>>> 
+>>> Once a CVE id is allocated, the issue and fix will be
+>>> documented at http://security.openttd.org/CVE-2012-xxxx
+>>> 
+>>> Thanks in advance, Christoph 'frosch' Elsenhans
+>>> 
+>>> (Please CC me, I'm not subscribed)
+>> 
+>> Sorry can you please provide links to an advisory, code commit,
+>> or something so we have a reference?
+>> 
+> trunk commit: http://vcs.openttd.org/svn/changeset/24439/ Bug
+> report: http://bugs.openttd.org/task/5254
+> 
+> Later on http://security.openttd.org/CVE-2012-xxxx will supply
+> patches for all vulnerable versions, and also link to the bug
+> tracker and related commits.
+> 
+> Regards
 
-http://rhn.redhat.com/errata/RHSA-2012-0007.html says "A missing
-validation flaw was found in the Linux kernel's m_stop() implementation.
-A local, unprivileged user could use this flaw to trigger a denial of
-service. (CVE-2011-3637, Moderate)"  So I wanted to verify whether the
-impact is in fact limited to a DoS.  More links:
+Perfect, thanks. Please use CVE-2012-3436 for this issue.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=747848
+P.S. with respect to "In some cases ships could be covered with land."
+couldn't the ship sail into a cave or over hanging cliff? ;)
 
-The fix, which I confirmed that it's included in at least OpenVZ's
-linux-2.6.18-274.17.1.el5.028stab097.1, which is what I happen to care
-about at this time:
 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=76597cd31470fa130784c78fadb4dab2e624a723
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--	vma_stop(priv, vma);
-+	if (!IS_ERR(vma))
-+		vma_stop(priv, vma);
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Linus' commit message:
-
-"When m_start returns an error, the seq_file logic will still call m_stop
-with that error entry, so we'd better make sure that we check it before
-using it as a vma.
-
-Introduced by commit ec6fd8a4355c ("report errors in /proc/*/*map*
-sanely"), which replaced NULL with various ERR_PTR() cases.
-
-(On ia64, you happen to get a unaligned fault instead of a page fault,
-since the address used is generally some random error code like -EPERM)"
-
-The commit referenced above as one that introduced the bug:
-
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=ec6fd8a4355c
-
-Thus, _assuming_ that the bug was in fact introduced by that commit
-alone, it does appear to me that we have a mere DoS here - the pointer
-being referenced has to be some -Exxx access code and nothing more
-arbitrary.  Good.  (Additionally, the current fix only catches 4095
-possible values, so if the problem were worse, it would be insufficient.)
-
-Alexander
+iQIcBAEBAgAGBQJQFFsFAAoJEBYNRVNeJnmTkYsP/3ASyyww0GSXBDa/5ySEL64A
+LoIsy9m+rxUU/5C1sRLLDTNehrJ2HE8/yaOeJU1TpBX9jY21jcBu9YLJgPK0i7tT
+ameFOO11bn7zuQ7nssyB6Wo5QALivdhCX21sgN240oVCqse+h/zZkYYob2Xmc/Z0
+QlgjUAxwtLB1t/z31WU4rRVu9Rp2ArHjCRpuHSuTco9e2SHUQ6UsZZnfK9DxhGx6
+ZdXtw5Ts6LAMYXcNackrhnifEcSURPZXGgWc09qABfUYAyyrsncXwiRMDxrRad1o
+zJR46C3xJW1T+3SV8tLbSEv8X2VlRifguVzF6JRUpDl0T6Xe0kjPkNa6lHJ9jmTn
+CLrVxpdSnzuyII1iuaeuPUjd5jm5hCnhTyHOH/mZyb4gxOQ/GXiXRdz3bhn2wcFc
+BT+23wMJxWXU50NnAsqUTahW9r/7V0y0xc5gzfg0YRvNb3MeSZiHTBKM+zzeDEHr
+cUGfhHjof5Ad9YSSiRzwfwVXiP1eGoabJcQQGIdRmf0KG7S1y8GGT1xpT2J3Clnq
+xygcbpUQQewaMenvyYm3OPtGz2i3yLITHZXMN7SBPL3P4RC1QFiLgSzqXfr0EGI+
+zqRdoi4FdSkN4rtIbF0iAJ8gF/LawrqWJ136q+vlGcZOl6AlPShCgEek5s1unQ8n
+CWWRtNMcc6cwJ4jES5Fm
+=6xJd
+-----END PGP SIGNATURE-----
