@@ -1,32 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/14/2
-Message-ID: <20120214145100.GA29632@openwall.com>
-Date: Tue, 14 Feb 2012 18:51:00 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/28/3
+Message-ID: <50138A34.4070805@redhat.com>
+Date: Sat, 28 Jul 2012 00:44:04 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Subscribe to linux-distros?
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: Zabbix SQL injection flaw (CVE request)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 13, 2012 at 10:17:46AM +0100, Marcus Meissner wrote:
-> On Mon, Feb 13, 2012 at 09:57:37AM +0100, Matthias Weckbecker wrote:
-> > I'm a member of the SUSE Security Team. I joined the team in August 2011. 
-> > 
-> > Could you possibly subscribe me to the linux-distros list too, please? I'm 
-> > CC'ing Marcus Meissner (manager of the SUSE Security Team) and Thomas Biege
-> > (project manager security).
-> > 
-> >  pub   4096R/EA16D1D2 2011-07-27
-> >        Key fingerprint = D3B4 1D62 7C6A 2FFF B764  2BFA E4A4 9B9D EA16 D1D2
-> >  uid                  Matthias Weckbecker <mweckbecker@...e.de>
-> >  sub   4096R/1FBE90CA 2011-07-27
-...
-> I confirm that Matthias is member of my team.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Marcus, I assume that you also meant to confirm that Matthias should be
-subscribed.  So I've just subscribed Matthias.
+On 07/27/2012 05:05 PM, Vincent Danen wrote:
+> Could a CVE be assigned to this please?
+> 
+> An SQL injection flaw was found in Zabbix, where input passed via
+> the "itemid" parameter to popup_bitem.php is not properly sanitized
+> before being used in an SQL query.
+> 
+> The report was against version 2.0.1, but the upstream bug report
+> [1] indicates this also affects 1.8.x.  Upstream has patched [2]
+> this, and there is a potential patch for 1.8.x [3].
+> 
+> [1] https://support.zabbix.com/browse/ZBX-5348 [2] 
+> http://git.zabbixzone.com/zabbix2.0/.git/commit/333a3a5542ba8a2c901c24b7bf5440f41f1f4f54
+>
+>  [3] https://gist.github.com/3181678
+> 
+> Other references:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=843927 
+> https://bugs.gentoo.org/show_bug.cgi?id=428372
+> 
+> Thanks.
 
-(As we've seen from Gentoo's example, which I appreciated, a distro may
-reasonably delegate just a few representatives from their security team
-to also be on the distros list.  So these are distinct things.)
+Please use CVE-2012-3435 for this issue.
 
-Alexander
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQE4o0AAoJEBYNRVNeJnmTluYQANTczLP8n/QyflI7B8d1OdHH
+xIU5vjTAAXKEb0G24AkqD1TbGHFg765bTQH55F75ZGkMbw28JedaOG0iwhlFbJ4o
+HzSLaDV0kVsWyQnZFVnbhEkaxtctQtvPONOOlE6+fy5xyXl5bhY5AD/rXCO6+5f1
+c9bxlfl2jjlHMhopEGZ7qfcsWxHc2yIVm+THKSWr8QHwmscC1XPrlwYlaGLn4Vpw
+9BoILPKK6VwFjKeNze20kQ6pz8FKZlW+J2lTxFWQMBlNuO73nVwjCohMVF6SYguo
+NbNO/0TToMx/ZLlkbblcOnDwzoy3dQo+H93Wo2T/bOwI2dpSr1/Lb1el3GgiZ/e6
+ltG/G41FRd79qRpgfgJ9rrTtRc3JYPXGu+exvrHY5fjjhJDduBmLEecshecKVa8y
+guazlrVAGiYgId6HQ9NVtodwCbzOdQ4awuU22RadeAmxlDgYjz4V6dGRUyhY1LH1
+xSXcTIjFfPsh0ony5ZiTPFmyV1uU3tS/diZ+Xla/zPIQ0esIkeW1n/6m+0Y5e1WU
+TKzkCXULAm3A6PKwRnIfn+d0L1Tedtkld1V2WENxxD38+61yfyzXQakNtpD/3d3c
+FwpnXXg83l/HGpTnB+yRoxbNcSUuwBYmYxe/BSBd0IRhQUlqsZFnnZPcBV5bGR9Z
+bnK1p3rRzTZdYbDvhzEQ
+=Ln7u
+-----END PGP SIGNATURE-----
