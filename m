@@ -1,38 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/9
-Message-ID: <20120312213807.GA31947@openwall.com>
-Date: Tue, 13 Mar 2012 01:38:07 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/28/2
+Message-ID: <501389E3.3000407@redhat.com>
+Date: Sat, 28 Jul 2012 00:42:43 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: running the distros lists
+CC: frosch <frosch@...nttd.org>
+Subject: Re: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I could use some help running the distros list and its linux-distros
-sub-list.  Specifically, when issues are being brought to these lists,
-the initial messages very often lack a proposed coordinated release date
-(CRD).  Currently there's no specific person (nor a group smaller than
-the entire membership of the list) who would be responsible for getting
-a CRD agreed upon ASAP, yet this is something that needs to happen for
-each and every issue.  When everyone is responsible for this, it also
-means that no one in particular is responsible.  This needs to change.
+On 07/27/2012 03:42 PM, frosch wrote:
+> Hello,
+> 
+> we, the OpenTTD developers, have identified a security
+> vulnerability in OpenTTD (an open source game with multiplayer).
+> Would you be so kind as to allocate a CVE id for this issue?
+> 
+> The issue concerns a denial of service vulnerabilty which enables 
+> an attacker to force the server into an invalid game state. The 
+> server will abort upon detecting this state. This attack can be
+> performed using an unmodified client via normal game interaction.
+> The attack requires authorization, but most servers do not
+> implement authorization. The first vulnerable version is 0.6.0, the
+> upcoming 1.2.2 release will have the issue fixed.
+> 
+> Once a CVE id is allocated, the issue and fix will be documented
+> at http://security.openttd.org/CVE-2012-xxxx
+> 
+> Thanks in advance, Christoph 'frosch' Elsenhans
+> 
+> (Please CC me, I'm not subscribed)
 
-Could one or several distros and/or linux-distros list members please
-accept this responsibility?  I can't seem to allocate enough of my own
-time to this job, sorry.  (I am already putting some of my time into
-other aspects of running these lists, as you're aware.)  Additionally, I
-think that some other list members are better qualified for it because
-more of the issues affect their products.
+Sorry can you please provide links to an advisory, code commit, or
+something so we have a reference?
 
-I think Kurt, Vincent, and/or Jan (the Red Hat folks) could do this job
-well, especially considering that they're currently the ones to assign
-CVE IDs anyway (so could as well assign IDs and propose CRDs in the same
-message), but anyone else is welcome to volunteer for this thankless job
-as well.
 
-Please let us all know.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Thanks,
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Alexander
+iQIcBAEBAgAGBQJQE4njAAoJEBYNRVNeJnmTyXUQANRMA6VLhvNn1Odvqu3sJNv9
+C0IOzkxLmudQtrYw4SzRUVf8Epqb4I2gN3DJHVZFXM+IZBJk7lNNoIFn0ffest68
+BVQUB78hfl+t0awGNJShsUNZh3uPgl2Bb495BmlxEW27L79GEb6U6x/aHvgYWsfL
+gHmWQE/xWDM1sohJSiANc0CNFsS7XU4hhBz0ghE7dXHscJtDiN7aCFPl6Yd6VWAo
+92b2/8PSIht5+XYZf22JxvxhMyRgMlBqQNesNdBXaYbFBRYx3tSBlRez1y6Chbe4
+pWmdfYeXw3m4t2FOsKqkEFhYUZW6z8CVcBGML+ZFJI9gRsY/tN48fvhL8Xdc8rng
+aUeK4UhJzpZj2mXg2gdnpt8BEa9Vu/KDf22EHWdbIddBhj1bekcEyNtu1EfJtRp4
+6xbEwdcOSk09ICBte+0BmVsRBc7HQLNFf4QG+0TTzP6G/1bMrj5yvWczEciWn2DR
+Zmm/imPcy2HNtsp0Ot2pafVJsuNHiWL5KZcPgt2PbN/DH8NDmMfV4ufIfcTrC0f4
+Tby8pUBaXkcgTTff1F/qZhqNUvoFHlcVb1cfKKhh6p8yhQ2BcZGIpw1VLTgVaEcP
+iZpAN0KJkvHu72YeYeP+op7ll0uziZw0s9wNp/754uJbskbAKmDXNAIKBbk1KoUI
+CwSv4XyuCGwpPtWtfqc1
+=bnbQ
+-----END PGP SIGNATURE-----
