@@ -1,39 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/22/2
-Message-Id: <20121122115501.6d632266fe01a30db935717f@linguamatics.com>
-Date: Thu, 22 Nov 2012 11:55:01 +0000
-From: Attila Bogár <attila.bogar@...guamatics.com>
-To: Matthias Weckbecker <mweckbecker@...e.de>
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE Request -- mcrypt: stack-based buffer overflow by encryption / decryption of overly long file names
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/28/6
+Message-ID: <CAPYM6VwqO0BqhDsnURVV7ctCb=bnSH9H6FcbyM6POMTVeA+-jg@mail.gmail.com>
+Date: Sun, 29 Jul 2012 03:07:40 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
+Subject: ocPortal 7.1.5 <= | Open URL Redirection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+1. OVERVIEW
 
-On Thu, 22 Nov 2012 10:48:05 +0100
-> 
-> A program that runs with higher privileges and executes mcrypt with external
-> user-controlled input possibly? Maybe a bit far fetched, but not impossible.
+ocPoral CMS 7.1.5 and lower versions are vulnerable to Open URL Redirection.
 
-The problem I tried to solve, when discovered the overflow was:
 
-Alice:
-- store encrypted parts of the filesystem recursively
-- keep permissions and ownership informations
-- bundling can't be used - must support incremental updates and delete
-- burn into multi session rock ridge DVD /this is not relevant/
+2. BACKGROUND
 
-Bob:
-- restores the backup recursively from the DVD
+ocPortal is the website Content Management System (a CMS) for building
+and maintaining a dynamic website. ocPortal's powerful feature-set
+means there's always a way to accomplish your vision. Not only does
+ocPortal's CMS have all the features you'd expect: for instance photo
+galleries, news, file downloads and community forums/chats, but it
+does so whilst meeting the highest accessibility and professional
+standards. It is also smart enough to go beyond page management, to
+automatically handle search engine optimisation, and provide
+aggressive hack attack prevention.
 
-Alice and Bob is using "find /dir -type f -exec mcrypt" for encrypt/decrypt as root.
 
-What about if the DVD filenames have been tampered during transit... ...or encrypting user data, which can have any filename combinations?
+3. VULNERABILITY DESCRIPTION
 
-Do not run mcrypt as root is not a valid answer, but I know it can be solved in userland.
+ocPoral CMS 7.1.5 and lower versions contain a flaw that allows a
+remote cross site redirection attack. This flaw exists because the
+application does not properly sanitise the "redirect" parameter.  This
+allows an attacker to create a specially crafted URL, that if clicked,
+would redirect a victim from the intended legitimate web site to an
+arbitrary web site of the attacker's choice.
 
-Regards,
-  Attila
 
--- 
-Attila Bogár <attila.bogar@...guamatics.com>
+4. VERSIONS AFFECTED
+
+Tested on 7.1.5
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://localhost/ocportal/index.php?page=login&type=misc&redirect=http://attacker.in
+
+
+6. SOLUTION
+
+Upgrade to the latest version.
+
+
+7. VENDOR
+
+ocPortal Development Team
+http://www.ocportal.com/
+
+
+8. CREDIT
+
+Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2012-03-06: notified vendor
+2012-03-21: patched version,7.1.6, released
+2012-07-29: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5Bocportal_7x%5D_open_url_redirection
+
+
+#yehg [2012-07-29]
