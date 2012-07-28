@@ -1,54 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/8
-Message-ID: <4FDB77F6.90209@redhat.com>
-Date: Fri, 15 Jun 2012 19:59:18 +0200
-From: Stefan Cornelius <scorneli@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Behdad Esfahbod <behdad@...dad.org>
-Subject: Re: CVE Request -- mosh (and probably vte too): mosh server DoS (long loop) due improper parsing of terminal parameters in terminal dispatcher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/28/5
+Message-ID: <1343472812.6401.20.camel@lagune.teich>
+Date: Sat, 28 Jul 2012 12:53:32 +0200
+From: frosch <frosch@...nttd.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 05/22/2012 07:39 PM, Kurt Seifried wrote:
->> B) vte issue: ============= 
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871#5
+> On 07/27/2012 03:42 PM, frosch wrote:
+> > Hello,
+> > 
+> > we, the OpenTTD developers, have identified a security
+> > vulnerability in OpenTTD (an open source game with multiplayer).
+> > Would you be so kind as to allocate a CVE id for this issue?
+> > 
+> > The issue concerns a denial of service vulnerabilty which enables 
+> > an attacker to force the server into an invalid game state. The 
+> > server will abort upon detecting this state. This attack can be
+> > performed using an unmodified client via normal game interaction.
+> > The attack requires authorization, but most servers do not
+> > implement authorization. The first vulnerable version is 0.6.0, the
+> > upcoming 1.2.2 release will have the issue fixed.
+> > 
+> > Once a CVE id is allocated, the issue and fix will be documented
+> > at http://security.openttd.org/CVE-2012-xxxx
+> > 
+> > Thanks in advance, Christoph 'frosch' Elsenhans
+> > 
+> > (Please CC me, I'm not subscribed)
 > 
->> there is similar issue in vte too (Gnome bug private for now): 
->> https://bugzilla.gnome.org/show_bug.cgi?id=676090
+> Sorry can you please provide links to an advisory, code commit, or
+> something so we have a reference?
 > 
->> Cc-ed Behdad Esfahbod on this post to clarify, what are the
->> upstream plans regarding this report in vte and if the CVE id has
->> been already assigned for it.
-> 
-> Will wait for confirmation.
-> 
+trunk commit: http://vcs.openttd.org/svn/changeset/24439/
+Bug report: http://bugs.openttd.org/task/5254
 
-Hi,
+Later on http://security.openttd.org/CVE-2012-xxxx will supply patches
+for all vulnerable versions, and also link to the bug tracker and
+related commits.
 
-I think http://www.openwall.com/lists/oss-security/2012/05/23/6 is a
-reasonable confirmation. Additionally, upstream fixed this in 0.32.2:
-http://ftp.gnome.org/pub/GNOME/sources/vte/0.32/vte-0.32.2.news
-
-In case you agree that all requirements are fulfilled, could you please
-assign a CVE to the B) part?
-
-Thanks in advance and kind regards,
-
-- -- 
-Stefan Cornelius / Red Hat Security Response Team
+Regards
 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQEcBAEBAgAGBQJP23f1AAoJEETwiYCjVSmPUN0H/1NUI3DHZkJkm3wTR36/YBd1
-huq4Hxbtidvj/rm1ojXNkBNU+oyYLHV1fID79jt9y5TuQZs6erkHQXjsw8LzoGbl
-Oc71epwlnon5sE7SFOJ8AvEBRzHXldeBOHkTKd2J7YkSu+RK4oM+qUh6ZWxVA0Ac
-vdlhYkdHZZIpodOIXV281qNkM9SGG1UmQ5uKQaUGmEfH2AuvqyIq4+RdZb3howSw
-mlniH5k1uGUNKGCwXaeaz8Oza6qhXJz3pTvv/09ZQJqApHd7BSkOyyGIAgNLk5FQ
-KO5u+WBpJRoTzgw5cqyVVGWTtP0GM/O/zlgYR2shuOHEXvGLcqMP/Hd+E/PblRY=
-=qBFl
------END PGP SIGNATURE-----
