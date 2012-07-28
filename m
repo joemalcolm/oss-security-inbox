@@ -1,34 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/27/6
-Message-ID: <5064A40C.8080003@fifthhorseman.net>
-Date: Thu, 27 Sep 2012 15:07:56 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com,  Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: dracut creates world readable initramfs images
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/28/4
+Message-ID: <50138C6C.9060007@redhat.com>
+Date: Sat, 28 Jul 2012 00:53:32 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Quick question regarding CVEs
 Content-Type: text/plain; charset=utf-8
 
-On 09/27/2012 01:51 PM, Kurt Seifried wrote:
-> On 09/27/2012 11:21 AM, Daniel Kahn Gillmor wrote:
->> On 09/27/2012 05:07 AM, Huzaifa Sidhpurwala wrote:
->>> When the root filesystem contained sensitive information
->>> (password based authentication for iSCSI systems or encrypted
->>> root filesystem crypttab password information), an attacker could
->>> use this flaw to obtain this information.
->>>
->>> This issue has been assigned CVE-2012-4453
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/28/2012 12:41 AM, Kurt Seifried wrote:
+> Just checking my records, I feel like I'm missing an OpenStack CVE,
+> is this list complete for 2012?
 > 
->> the subject line says "creates non-world readable initramfs
->> images". should that be "creates world-readable initramfs images"
->> instead?
+> CVE-2012-3371 CVE-2012-3361 CVE-2012-3360 CVE-2012-2654 
+> CVE-2012-2144 CVE-2012-2101 CVE-2012-2094
 > 
-> Yes indeed!
+> -Kurt
 
-FWIW, this seems similar to a buggy interaction between the dropbear and
-initramfs-tools packages in debian that was handled a couple years ago:
- http://bugs.debian.org/578117
-
-	--dkg
+Ah nevermind, Mitre still has some (like CVE-2012-1585) listed as
+reserved which is why I got confused.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1031 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQE4xsAAoJEBYNRVNeJnmTwMYQAMIDjM/tIUT8AFXaCFYd17sk
+vlvmll5k3R7Hafnfns9FdCnJmXLlUVuv/Ho/+uBNbnLy3IJVgs6qKi1qflGQn1mL
+s52W+DRjaDxfZWbIYPd+btnuqS0U1bHh7Pp9exSD54rwXFHfY5+/ZsEbIeDs/7Cl
+qJnNFpfHo3ZIW/y9JsuHBX33xMfLZ8IESrHoWmjWHtedjCk1RXbodikZHalQQGSi
+AEmXryd9zAF2z4fzQEhXTlhxMQkiRn9gn9KxU6v1PFft/vPpYoERDQth0sTAcXcS
+beW4qZda+chk8LDp+58eTv2iFJp99U0lTqrk/PFhegeWaABTaVtolpz5SpgpSulH
+Fvn0aTFGOj1aoOSDgr8WLZtIqS7JfGS2ZR6sM7QHZjl0dO3Qt9x0vuAo5VIxDA1K
+bK8b+xThnQbHIo1JVHgePfZPD4d2noaxN/55eHvfnLOfEykXlbvLxbsej7dAshiF
+8dd6FKuLFsk0M3aQYV4nwFNnfftqaq6B2NjilFbJd6ra560VFBEQ6rseSKJMp2Qy
+CXpS87L/2mAwBz5mSR0p7gaM6s0KAY/jD+O4wypWmiuAFMnXmv9+DG4zDwZ6nxSR
+IjFEoNSLh+X1NtQbOvCnreEZrrIZl8Z20TrJX3UsBeYD/AwuE2JbuVkKI/nxx3gZ
+gZ+jJ9P1LeG6npxEoXcb
+=iH4Q
+-----END PGP SIGNATURE-----
