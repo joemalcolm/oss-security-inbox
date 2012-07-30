@@ -1,20 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/9
-Message-ID: <20120117195825.GA3256@foo.fgeek.fi>
-Date: Tue, 17 Jan 2012 21:58:25 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/30/2
+Message-ID: <50164B49.30205@suse.de>
+Date: Mon, 30 Jul 2012 10:52:25 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: pwgen: non-uniform distribution of passwords
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 17, 2012 at 11:51:31PM +0400, Solar Designer wrote:
-> It was just pointed out to me off-list that the man page for pwgen
-> specifically mentions that this kind of passwords "should not be used in
-> places where the password could be attacked via an off-line brute-force
-> attack."  I had missed that detail or at least I did not recall it.
+Simon McVittie wrote:
+> On 10/07/12 14:09, Sebastian Krahmer wrote:
+>> We are going to add a libdbus hardening patch:
+>>
+>> https://bugzilla.novell.com/show_bug.cgi?id=697105
+>>
+>> This is because some suid binaries (Xorg and others) are linked against libdbus
 > 
-> This kind of documentation certainly mitigates the problem to some extent.
+> The tl;dr: version if (e.g.) your Xorg binary still uses HAL and is also
+> setuid, ensure that it cleans its environment using a whitelist before
+> its first use of libdbus, libhal, any other non-trivial library, or exec().
+> 
+> In off-list discussion with the other D-Bus upstream maintainers,
+> consensus was that binaries with greater privileges than their parent
+> process (setuid or VFS capabilities) must not use non-trivial libraries
+> [...]
+> In particular, we do not support use of libdbus in setuid binaries that
+> do not sanitize their environment before their first call into libdbus.
 
-I'll bet most of the end-users will also miss this if you did.
+PAM modules of systemd and consolekit use libdbus though. PAM can't
+scrub the environment before calling modules as those modules may want
+to do something with the information gained from the original
+environment (like e.g. pam_xauth).
 
-- Henri Salo
+cu
+Ludwig
+
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
