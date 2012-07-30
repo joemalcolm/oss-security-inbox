@@ -1,65 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/6
-Message-ID: <50AFC249.7070108@redhat.com>
-Date: Fri, 23 Nov 2012 11:36:57 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/30/5
+Message-ID: <50165955.3020401@suse.de>
+Date: Mon, 30 Jul 2012 11:52:21 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, security@...de.org
-Subject: Re: CVE Request -- (Horde) IMP (prior v5.0.24-git): Obscure XSS issue when uploading attachments.
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Florian Weimer wrote:
+> On 07/30/2012 10:59 AM, Ludwig Nussel wrote:
+>> Florian Weimer wrote:
+>>> On 07/17/2012 12:08 PM, Florian Weimer wrote:
+>>>
+>>>> Note that GNU libc will likely change the name to secure_getenv.
+>>>> Upstream does not want to document __secure_getenv as-is.
+>>>
+>>> This will be part of glibc 2.17.  autoconf instructions are available here:
+>>>
+>>> <http://sourceware.org/glibc/wiki/Tips_and_Tricks/secure_getenv>
+>>
+>> Now the next step would be to make glibc automatically use secure_getenv
+>> when running setuid root and require programs to explicitly call
+>> insecure_getenv() or something like that :-)
+> 
+> You're welcome to absorb the transition costs. 8-) I looked into this
+> briefly, and the potentially insecure getenv calls are not in the
+> majority, so we'd have to expect quite a bit of breakage, or at least
+> add a configurable whitelist of variable names in a file in /etc.
 
-On 11/23/2012 10:46 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> Horde upstream within Horde Groupware Webmail Edition version
-> 4.0.9 release corrected also one XSS issue in IMP: [1]
-> http://lists.horde.org/archives/announce/2012/000840.html * Mail
-> changes: * Fixed obscure XSS issue when uploading attachments.
-> 
-> Upstream patch:
-> https://github.com/horde/horde/commit/1550c6ecd7204f9579fcbb09ec7089e01b0771e2
->
-> 
-References:
-https://github.com/horde/horde/blob/1550c6ecd7204f9579fcbb09ec7089e01b0771e2/imp/docs/CHANGES
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-> P.S.: No Red Hat bugzilla entry available, since this issue did
-> not affect versions of IMP, as shipped with Fedora / Fedora EPEL.
-> 
-> P.S.#2: The other XSS from [1]: Calendar changes: * Fixed XSS issue
-> in portal blocks.
-> 
-> is already covered within my previous (Kronolith related) request.
-> 
+Potential breakage would only occur in setuid programs that actually use
+getenv for valid purposes though. I wonder how many of those actually
+exist.
 
-Please use CVE-2012-5565 for this issue.
+> FWIW, I consider PAM and NSS (Name Service Switch) the major problem
+> areas, too.  Do you know if the APIs would allow confining plug-ins to
+> subprocesses?  Then we only have to solve the transparent child
+> process problem.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+No idea. I'd probably rather implement the setuid binary itself as
+client/server program and get rid of setuid in the first place instead
+of trying to play tricks in PAM though.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+cu
+Ludwig
 
-iQIcBAEBAgAGBQJQr8JJAAoJEBYNRVNeJnmTPswP/2M1CsC7Iirut0OYhaQWjPEj
-Qqvab1qDeKw8QyxASBOarOEEWpXbbIhJ6DrmdBxlnI7zZAAo/SFiQKqqFKw8J0t3
-7DzKUzVk/HymGz8ZbtECW9DT116jDGGLXP9zhH+LGB39Q98woSE9Fzr0ZlgV6gmk
-zwkurc/tb6xz03VQgceex8DwEn+Xm/7uFez3cxcK4zgy6AKUKIX3n9kbUIv8tpV6
-mn41PaJojZ8sZMSzgIhcXz/0SYK0doA9oRvpyHWTQGE3gqF1rtz2kxYVNNg2VnAf
-udQ7jPHQTh8Wb5O47Uhgw/m1ywvys8V1Kh+5KcSBAmjFsctFBoPKjs+vEOqia+EM
-fb3QDRtastF3WiRUbtnCQEPvXA/DEOnt9Za5cvstofxThIMhtzYInKbnUws1SMeI
-c/z+Z3386DI4L7mbb0cOBlEGE/4PEvoohu7uueKsKE7Rc1bNYJvjuAWA8QkCBrcW
-LwedfuXoeO6zBH6lx1H65/XfNXFvL9fqlCKhEv8i9129zcAbbIWZNwxi46kAtP6Q
-m4NvvowC68HOCeMrr3Tz10JEZvLfmsveoR2X219wa4vZJk6Z7pkHBAocI2qMbEaM
-YbSO0I1URvtCYH2OCMFLMiMJBuurBBrZ82QwM5GkN1dypNnGSSL3r6UzJvbCnRHe
-vTbrDfwM5z4P2JjrSxpV
-=G5Z1
------END PGP SIGNATURE-----
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
