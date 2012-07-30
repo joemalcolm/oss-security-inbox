@@ -1,31 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/25
-Message-ID: <4F18A73D.7020807@redhat.com>
-Date: Thu, 19 Jan 2012 16:29:01 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/30/4
+Message-ID: <50164FD0.5080606@redhat.com>
+Date: Mon, 30 Jul 2012 11:11:44 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: usbmuxd 1.0.7 "receive_packet()" Buffer Overflow Vulnerability
+CC: Ludwig Nussel <ludwig.nussel@...e.de>
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
-rigan has reported a vulnerability in usbmuxd, which potentially can be
-exploited by malicious people with physical access to compromise a
-vulnerable system.
+On 07/30/2012 10:59 AM, Ludwig Nussel wrote:
+> Florian Weimer wrote:
+>> On 07/17/2012 12:08 PM, Florian Weimer wrote:
+>>
+>>> Note that GNU libc will likely change the name to secure_getenv.
+>>> Upstream does not want to document __secure_getenv as-is.
+>>
+>> This will be part of glibc 2.17.  autoconf instructions are available here:
+>>
+>> <http://sourceware.org/glibc/wiki/Tips_and_Tricks/secure_getenv>
+>
+> Now the next step would be to make glibc automatically use secure_getenv
+> when running setuid root and require programs to explicitly call
+> insecure_getenv() or something like that :-)
 
-The vulnerability is caused due to a boundary error within the
-"receive_packet()" function (libusbmuxd/libusbmuxd.c) when processing a
-property list containing an overly long "SerialNumber" field, which can
-be exploited to cause a heap-based buffer overflow.
+You're welcome to absorb the transition costs. 8-) I looked into this 
+briefly, and the potentially insecure getenv calls are not in the 
+majority, so we'd have to expect quite a bit of breakage, or at least 
+add a configurable whitelist of variable names in a file in /etc.
 
-Successful exploitation may allow the execution of arbitrary code, but
-requires that the attacker is able to connect a malicious USB device.
-
-https://secunia.com/advisories/47545/
-https://bugs.gentoo.org/show_bug.cgi?id=399409
-
-source code commit:
-http://git.marcansoft.com/?p=usbmuxd.git;a=commitdiff;h=f794991993af56a74795891b4ff9da506bc893e6
+FWIW, I consider PAM and NSS (Name Service Switch) the major problem 
+areas, too.  Do you know if the APIs would allow confining plug-ins to 
+subprocesses?  Then we only have to solve the transparent child process 
+problem.
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Florian Weimer / Red Hat Product Security Team
