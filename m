@@ -1,50 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/06/4
-Message-ID: <20121006225034.GA2688@openwall.com>
-Date: Sun, 7 Oct 2012 02:50:34 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/30/7
+Message-ID: <5016BF21.2080901@redhat.com>
+Date: Mon, 30 Jul 2012 11:06:41 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: password hashing
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: icinga sample db creation scripts
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I was too shy to spam oss-security with this, but a list member (who is
-also on Openwall's announce list) asked me to.  Armed with this excuse,
-let me tell you that I made two presentations on password hashing this
-year.  It's everything you wanted to know about password hashing since
-1960s to present day and the near future, and more. ;-)
+On 07/30/2012 07:01 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> Icinga ships some sample DB creationscripts which give out too
+> much privileges.
+> 
+> References: https://bugzilla.novell.com/show_bug.cgi?id=767319 
+> https://git.icinga.org/?p=icinga-doc.git;a=commitdiff;h=619a08ca1178144b8a3a5caafff32a2d3918edab
+>
+> 
+https://git.icinga.org/?p=icinga-core.git;a=commitdiff;h=712813d3118a5b9e5a496179cab81dbe91f69d63
+> 
+> Reported by Lars Vogdt of SUSE via Tim Hardeck to Incinga.
+> 
+> Ciao, Marcus
 
-Password security: past, present, future
-(with strong bias towards password hashing)
-http://www.openwall.com/presentations/PHDays2012-Password-Security/
+Please use CVE-2012-3441 for this issue.
 
-Password hashing at scale
-(for Internet companies with millions of users)
-http://www.openwall.com/presentations/YaC2012-Password-Hashing-At-Scale/
 
-Discussion of the latter at /r/crypto:
-http://www.reddit.com/r/crypto/comments/10zjdo/password_hashing_for_orgs_with_millions_of_users/
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-and on john-users (click "thread-next"):
-http://www.openwall.com/lists/john-users/2012/10/05/3
-(I intend to reply to the questions raised further in that thread.)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-SHA-3 is deliberately not mentioned on the slides yet.  I briefly
-thought of retroactively adding a few mentions of it (YaC 2012 was a day
-too early), but decided not to.  SHA-3 should be similar to DES (read:
-very good) in context of possible defensive use of FPGAs.  As to
-PBKDF2-HMAC-SHA-3, things are less clear, although it's probably weaker
-than PBKDF2-HMAC-SHA-512 (is it also weaker than -SHA-256? than -SHA-1?
-not sure).  (In this context, "weaker" means it allows for even more
-efficient attack-optimized implementations than the other hash type,
-resulting in higher passwords tested per second rate for the same
-processing cost of defensive use.)  I prefer to keep only fairly
-reliable information on the slides, and not speculate on important
-issues there (but I do speculate here, as you can see).  Those of you
-who follow @solardiz on Twitter probably already know a bit more on my
-expectations and reasoning for throughput-optimized parallelized
-implementations of SHA-3, due to the too-many-tweet conversation I had
-with @marshray. ;-)
-
-Alexander
+iQIcBAEBAgAGBQJQFr8hAAoJEBYNRVNeJnmThm8QALEGeIMoU3GUHILe/0qxd5Cb
+U9VTa5e2it5t34ccrXNpO8qocpWbMm38/wMlL+3ogE1aPrer8KwmRkTBIc0CpoVl
+WqLE0cgwf3YlzaWhogs5kMRDDW8MknWi6WCrnXdEwSqGmIWw34xC0dvZVouo02TM
+HHJlSB/VDFWlx5YpvuqNPb17K6rg+mQ1rbHV6kHDFH0O4PY8DAC1xbIS9nJN7Q6v
+moqlJwAC9KuYBN6y3dcZtn/dJr3SF8VhP01HrJDhszPx3AwMklvw97hBF3CGeepJ
+g2ZC+MhQh/EDpkdNN3hoBYnPnE3Id6XoB7Onv/7RnG9S0Mi6MK27SfvJpwscye8m
+bCLv2NiHcijjZtGnWWQX/PRf98nIFGuTEIRpjL/z9skVkUKgDtIyco5xnUUCcYCv
+0JJVzbWreCJ2KY7FFCn9RQFX21t17//zTVhC6e8ad4t1MWZRpuFdMcP+XIdlaf5Z
+X32FienXrk8lzdB1c6nLdqnKE4CPZHUNfwL/AkhztLc1BhNrxcdMju4f/4j75jm5
+fsW8V4O9wWypDjhXXTuHuj/JhBdkvp/BNP2NhyOV15ZOVDpI3xHTwW1e3T1OeYWd
+UEdMP4sEDtXou4OS7P/WRaJ/5QTKzY2cZ4N6QWiF8DNH/dM59o+hI7r2oXB5CQti
+r7Comaq2vJ67FkmTispH
+=M/mm
+-----END PGP SIGNATURE-----
