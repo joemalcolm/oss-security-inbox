@@ -1,61 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/24
-Message-ID: <4F4BEBC3.8030307@redhat.com>
-Date: Mon, 27 Feb 2012 13:46:59 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: DesktopOnNet 3 Beta LFI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/30/6
+Message-ID: <20120730130113.GE19431@suse.de>
+Date: Mon, 30 Jul 2012 15:01:13 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: icinga sample db creation scripts
 Content-Type: text/plain; charset=utf-8
 
-On 02/27/2012 07:10 AM, Whitney Houston wrote:
-> I forget to say, I want CVE number. give it to me.
-> 
-> On Mon, Feb 27, 2012 at 2:10 PM, Whitney Houston
-> <i4m4l1v3b17ch3z@...il.com>wrote:
-> 
->> Hello list
->>
->> I want to report serious scary issue, I find this vulnerability that make
->> me fall off chair and giggle like silly slut.
->>
->> Project: http://sourceforge.net/projects/don3/
->>
->> <?php
->> require('system/switches.php');
->>
->> if
->> (file_exists('applications/'.$_GET["app"].'.don3app/'.$_GET["app"].'.php')){
->>         $appfile = $_GET["app"];
->>         $app_path = "applications/".$appfile.".don3app/";
->> } else {
->>         $appfile = "frontpage";
->>         $app_path = "applications/frontpage.don3app/";
->> }
->>
->> if (file_exists("library/$appfile.don3lib")){
->>         $topper_array = don3_read_don3lib($appfile.".don3lib");
->>         $title = $topper_array[0];
->> } else {
->>         $title = "ERROR T1";
->> }
->>
->>
->> $topper_includer = 'applications/'.$appfile.'.don3app/'.$appfile.'.php';
->>
->> ....
->>
->> include ($topper_includer);
->>
->>
->> Obviously I keep this bug super secret for many month but now i release
->> for all, after my recent death.
->>
->> xx
->>
+Hi,
 
+Icinga ships some sample DB creationscripts which give out too much
+privileges.
 
-Can you please state which version(s) are vulnerable and which specific
-files are vulnerable? Thanks.
+References:
+https://bugzilla.novell.com/show_bug.cgi?id=767319
+https://git.icinga.org/?p=icinga-doc.git;a=commitdiff;h=619a08ca1178144b8a3a5caafff32a2d3918edab
+https://git.icinga.org/?p=icinga-core.git;a=commitdiff;h=712813d3118a5b9e5a496179cab81dbe91f69d63
 
+Reported by Lars Vogdt of SUSE via Tim Hardeck to Incinga.
+
+Ciao, Marcus
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Open Linux Security Engineer Position at SUSE: http://bit.ly/Li4RbS
