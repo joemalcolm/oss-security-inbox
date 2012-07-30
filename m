@@ -1,61 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/13
-Message-ID: <50410178.5050406@redhat.com>
-Date: Fri, 31 Aug 2012 12:24:56 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/30/1
+Message-ID: <501621F3.5090402@redhat.com>
+Date: Sun, 29 Jul 2012 23:56:03 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: Three CVE requests: at-spi2-atk, as31, naxsi
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: ImageMagick Magick_png_malloc() / GraphicsMagick png_IM_malloc() size issue
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/31/2012 11:00 AM, Steven M. Christey wrote:
-> 
-> On Fri, 6 Jul 2012, Kurt Seifried wrote:
-> 
->>> 2. Insecure tempfile handling in the as31 assembler 
->>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655496
->>> Homepage: 
->>> http://wiki.erazor-zone.de/doku.php?id=wiki:projects:linux:as31
->>
->>
->>> 
-Please use CVE-2012-3379 for this issue.
-> 
-> 
-> This is a duplicate of CVE-2012-0808, assigned back in January (and
-> also requested by Moritz ;-)  CVE-2012-0808 has 20,000+ Google
-> hits, has an established description, was assigned earlier, and has
-> the same level of authoritative vendor references (i.e. bug
-> reports).  So, we will keep it.
-> 
-> So, REJECT CVE-2012-3379 as a duplicate of CVE-2012-0808.
-> 
-> - Steve
+I was going to request an embargo date for this issue once I had
+spoken with ImageMagick however they felt an embargo was not needed
+and publicly committed a source code fix for the issue, so this issue
+is no longer private.
 
-100% my fault, I didn't check the sources I normally should have.
+===========================
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Tom Lane (tgl@...hat.com) found an issue in ImageMagick. Basically
+CVE-2011-3026 deals with libpng memory allocation, limitations have been
+added so that a bad PNG can't cause the system to allocate a lot of
+memory causing a denial of service. However on further investigation of
+ImageMagick Tom Lane found that PNG malloc function (Magick_png_malloc)
+in turn calls AcquireMagickMemory with an improper size argument:
 
+#ifdef PNG_USER_MEM_SUPPORTED
+static png_voidp Magick_png_malloc(png_structp png_ptr,png_uint_32 size)
+{
+  (void) png_ptr;
+  return((png_voidp) AcquireMagickMemory((size_t) size));
+}
+
+This is incorrect, the size argument should be declared
+png_alloc_size_t according to 1.5, or png_size_t according to 1.2.
+
+"As this function stands, it invisibly does the wrong thing for any
+request over 4GB.  On big-endian architectures it very possibly will
+do the wrong thing even for requests less than that. So the reason why
+the hard-wired 4GB limit prevents a core dump is that it masks the ABI
+mismatch here."
+
+So basically we have memory allocations problems that can probably
+lead to a denial of service.
+
+===========================
+
+For more information please see:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=844101
+https://bugzilla.redhat.com/show_bug.cgi?id=844105
+
+
+
+- -- Kurt Seifried Red Hat Security Response Team (SRT) PGP: 0x5E267993
+A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQQQF3AAoJEBYNRVNeJnmTUOsQAJjoVuXpcZXO1GdewvlTfYZN
-VD+6mGS1CqcAYpPPoi35NpBjxRVSEPOxngxNXgz/CbmNDM2XP8hGxXcee4B86bH6
-SQU8ZWtdqfZG5UbSn+bOlHa7otDhcyZzaD/ebuzEoeb+KDMZB5tG2/E+APSgLaTe
-YJcVd5WATFh0aDT+NaC6/BNY+EipvJNY2lLKr2RReDZ29SGcfKMyU2t6vvvVxntn
-6zYxmWaUKGbpJwkwMIkLHoAFZoP/4Pbt33Fv//alROH5H9cOHnRTXgXkTYSRZaG8
-Y9VaFsNnZTGhlOPjdOzMJnkntAjUY/PR31yljsW21VRGlZGNbvxNceeFGnI1p0g0
-ICnXOh81UsVd9jxRrUh9y8Fls0WWNvdtgV8EZ7z/7geP8HLRTQFiO6pSvHWeVDRX
-e2EcHDVSgL5nqqk1mAl5pmJEvJF48t0CBqX3PUXaEoQJvv2BLsP1mFGb7JXGMiE+
-fPWnp2LbjM4vM9xxWILCP62GsWuJKIvbuUZQ96WiUOGyuwlfKhi7ju4wJcQ7iewW
-nYvvg2J+jXANhxSpscpsyYLGW3UCvwdCjCbkGW3hKU8udvc3h1iUARV9W8v4B19h
-HU6SNb3HAh/TXQCrIYpu6kWlj46hTy+sDy+pJip6UNjlN9yj+N2PB/cay2l0cA2O
-xtdNj2i78EpdSkveMtJ0
-=tpsu
+iQIcBAEBAgAGBQJQFiHzAAoJEBYNRVNeJnmTsM0QAL7mEDEB92oY3kf99f/DLidS
+O7DAqCVKqbqGh81kkxvg3YTzMKubtsI15W+doY2UwNkDEWeuKGKoBLsYzpLK+/zt
+gTGlJTC5sC69NYB/LSbBoUW8vm9dAEbIlVzdM9BuftvtXx3Ytsu3ss7u7tZ1IaE4
+aLMe1ttj+jpzEAlSGCZCCU8GduPiwHubBAJuTomQ9mAoXfwoxEKiv/T4DiQoE9Gf
+eZv5MlhUpiMleLvItcPLs91d1B7fnAKmPtv+6RvZpFWgFMnAUNaTThYPraylBMXc
+dpyL7xj2eGa3+3SONJ+ydqEpBfP5Fck9HV09mXyg/EOzg5XlgFtwID3Nez3208yS
+/HpdW8p5DQvvXnCklDQc2DwFii3qk4Z13J6MucFjnTwX/2YSkqOWTzcNRSGOEBQh
+zxL2oXlyT7fQFAi2l37DlE6+y+egta6QWmpxU6v0dzvdliDN9TkXWsjSVKZ8iOiC
+8g2uvuL+AdUFRMB7PN/SxUZElDmM/iKtx8sii0iWxmClrSIO53aDO9Hoo5LEva/R
+MGY+ZOHfulbVy1TyRN4+zAZ++0j+EpDWaiMhhQmmCwX2pUShtl4fZ0gGNbni1I+m
+StUXWjkKSHjVEcZ8wtLg6CvmpeKNJw1n438ml5ZZVpFx9WB6rxOZixgEX0WtfEI3
+KON6EIqz9kD+KeFBh9+N
+=QjKj
 -----END PGP SIGNATURE-----
