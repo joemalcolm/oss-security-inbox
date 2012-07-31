@@ -1,53 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/15
-Message-ID: <20121113202432.309c5fe2@melee>
-Date: Tue, 13 Nov 2012 20:24:32 +0000
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/31/7
+Message-ID: <50181E3A.2050400@redhat.com>
+Date: Tue, 31 Jul 2012 12:04:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: CVE request: mantis before 1.2.12
+Subject: Re: CVE Request -- libvirt: crash in virTypedParameterArrayClear
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-On Tue, 13 Nov 2012 11:26:39 -0700
-Kurt Seiifried <kseifried@...hat.com> wrote:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+On 07/31/2012 08:59 AM, Petr Matousek wrote:
+> It has been found that sending crafted RPC command with nparams set
+> to 0 can lead to libvirtd accessing random memory, possibly leading
+> to crash. A remote attacker could use this flaw to crash libvirtd
+> (DoS).
 > 
-> On 11/13/2012 07:52 AM, Hanno Böck wrote:
-> > http://www.mantisbt.org/bugs/changelog_page.php?version_id=150
-> > 
-> > New mantis bugtracker release. Two fixes are security relevant 
-> > (althouhg both sound minor)
+> Upstream proposed fix: 
+> https://www.redhat.com/archives/libvir-list/2012-July/msg01650.html
+>
+>  References: 
+> https://www.redhat.com/archives/libvir-list/2012-July/msg01650.html
+>
 > 
-> Just to confirm I understand these issues:
+https://bugzilla.redhat.com/show_bug.cgi?id=844734
+> 
+> Thanks,
 
-I'm not really into the development and only made the request based on
-the release changelog, but I think I agree for the second being an
-information disclosure, the first seems to be more general a
-"wrong permission"-issue, although the consequence is probably also
-"just" an information disclosure.
+Please use CVE-2012-3445 for this issue.
+
 
 - -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQIcBAEBCAAGBQJQoqyDAAoJEKWIAHK7tR5C3Q0P/R4Doqli1gTdwwcu2UCJUYdg
-yj3mDvg8aIDXcIYlF9eKsQgY5a4LpzPmlyWQg/5sF5HgNViQmqH9S8eDbpqRhpeb
-j38HxyjekZ1qFBpW3KT3LpSI2BJKbdIESJLn+VhsBEFoRly+/b9GO8UoebQIkhIF
-vvpap3kDSUSQJv0TLWZ3j82EcTyaOcn4JABOpIeAPvgyZK9tUPmcI/88XSnSZiHj
-FOx4QYNAEiD6ryPQlJLxZdfe4+7jFIB5qaTuPuafuAr6NDLw7CST8WgFKDkhRbYD
-yQJaMYvKKOpjA6pwID8cPeZL3FO9Ijukgt+gUFngiJy986z7CMGpaNFncg59YxBr
-6c1ppUWYPPVIWRt2HFw3MLaqGydGtp9bc1s9Rb3TJgBc+6NYNYgIADN0V9uDL536
-Of+3uVjtGIkEQwzrVq+EWPmfpoGF1e+t3cFyf+ISaCMabwQnqP2tCcBBpYa9MOFu
-sxuvCBa4Vk0HRqgkS15m6L7PntaEL/iJZ0OSBke5lljouX/t8WmtSWzL/2AMEJ8d
-CyDe1JQ7H8b6b2mY4hkuZYiTtrLe/GNusBXyWPQqzAYpRhzzMOGs1X830CJ1PSbJ
-RpeA6m/V4V+xvib0hadvrEO5p0Cp8ZWVIZgFZQ9+nCQ8hajSHzOzJoEM8dDWNGuo
-meG04rDUkMkU7Jch5F9v
-=qj8K
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQGB46AAoJEBYNRVNeJnmTdMIQAN5YS7Szy4JMB7uzxAjky6dv
+yOHNu7VWuRr1G4rvKuJ9U06ipurJLI2M2+TMvgQQiDoWVEVdAn6pLRtEHwYuipG7
+tqtwHEcLQt9Z7MQrQfzJlEMDw2v1Q43qIlKyi+BkHExEczxj+RsROYLFl0jMHAOW
+DPzDFUiCtjnK5WscAhOHTd7eZ/AiwRsotso4CXswosDV3Er69p1xGOc0AawbJF2J
+lT5CEEEd3KgEeKavWArEec2bi/nLH1hbQcNEaIhMXotsgLzUvc69X2+8Z1ZO9D50
+k1bTjgxtXNEAw4Cc/Klj9rDzmtJ5irk3L/WFZKN43G2q2+aye/5xsqz7uYs+Rngg
+0AA+Sz/w3kyX9COf9QJ8gJN0KsLWmBdYyje43to+owZlFVAR46Ws+QvFWSfJPOHD
+02CrcD9WCCphNeJ12BFG+ffNAJGO7GqGRcW0RdmRCtBeR08TIUPskwBPL3eqb+Bt
+PIgcIyOFapbzzA/M+Ncj3x6G2Cusi/rbbv+hb1Nnpkbt9dJ445C4pZrr6DBbzngU
+OUb6Ip+6HfGf9xFfFEwlJQs0+oE591LTUlr5TDsyIqcZ4DWylIN8+R82MNRK1bqN
+AJtpk5f/MgwrETxbt7JNe7p/Wew+A1mr6Vq2u8b7AKz8smrxTW0kH4w3yA73huIG
+vPq7Rz6bJPZmuwNxdnH5
+=cFpj
 -----END PGP SIGNATURE-----
