@@ -1,28 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/22
-Message-ID: <4F637D8E.5090702@redhat.com>
-Date: Fri, 16 Mar 2012 11:51:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, security@...pal.org
-Subject: Drupal CORE and Drupal Contrib
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/31/4
+Message-ID: <20120731145944.GC14466@dhcp-25-225.brq.redhat.com>
+Date: Tue, 31 Jul 2012 16:59:44 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- libvirt: crash in virTypedParameterArrayClear
 Content-Type: text/plain; charset=utf-8
 
-I was going to ask this next week but now seems topical: looking at
-http://drupal.org/security/contrib
+It has been found that sending crafted RPC command with nparams set to 0
+can lead to libvirtd accessing random memory, possibly leading to crash.
+A remote attacker could use this flaw to crash libvirtd (DoS).
 
-I see drupal core (at least one thing there needs a CVE), and no CVE's
-listed on that page. Would it be possible to get Drupal to list CVE's
-assigned for the issue on that page? It would make life easier for all
-concerned.
+Upstream proposed fix:
+https://www.redhat.com/archives/libvir-list/2012-July/msg01650.html
 
-Ditto for the contrib page, 41 issues so far this year, I think a bunch
-have CVE's assigned but am not sure. Would it be possible to get Drupal
-to list CVE's assigned for the issue on that page? It would make life
-easier for all concerned.
+References:
+https://www.redhat.com/archives/libvir-list/2012-July/msg01650.html
+https://bugzilla.redhat.com/show_bug.cgi?id=844734
 
-I was planning to do a missing CVE assignment for Drupal this weekend
-(I'm guessing 40?).
-
-
+Thanks,
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Petr Matousek / Red Hat Security Response Team
