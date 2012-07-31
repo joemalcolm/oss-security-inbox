@@ -1,25 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/6
-Message-ID: <20120607082204.GA8042@suse.de>
-Date: Thu, 7 Jun 2012 10:22:04 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/31/6
+Message-ID: <50181EF9.20900@redhat.com>
+Date: Tue, 31 Jul 2012 12:07:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: hyper-v daemon
+CC: Robbie MacKay <robbie@...ahidi.com>, Heather Leson <HLeson@...ahidi.com>
+Subject: Re: CVE request for Ushahidi
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 07, 2012 at 10:35:24AM +0900, Greg KH wrote:
-> On Wed, Jun 06, 2012 at 04:59:59PM +0200, Sebastian Krahmer wrote:
-> > Hi,
-> > 
-> > The hyper-v daemon fails to check origin of netlink messages.
-> > Please see
-> > 
-> > https://bugzilla.novell.com/show_bug.cgi?id=761200
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 07/30/2012 06:22 PM, Robbie MacKay wrote:
+> The Ushahidi team have been notified of the following security 
+> vulnerabilities thanks to volunteers from OWASP Portland. These
+> will be fixed in the upcoming 2.5 release. Could you please
+> allocate CVEs for the following issues?
 > 
-> Is there a fix for this anywhere yet?
+> * Multiple SQL injections (Reported by Timothy D. Morgan, Kees
+> Cook, postmodern ) 
+> https://github.com/ushahidi/Ushahidi_Web/commit/fdb48d1 
+> https://github.com/ushahidi/Ushahidi_Web/commit/6f6a919 
+> https://github.com/ushahidi/Ushahidi_Web/commit/4764792 
+> https://github.com/ushahidi/Ushahidi_Web/commit/d954093 
+> https://github.com/ushahidi/Ushahidi_Web/commit/3301e48 
+> https://github.com/ushahidi/Ushahidi_Web/commit/68d9916 
+> https://github.com/ushahidi/Ushahidi_Web/commit/e0e2b66 
+> https://github.com/ushahidi/Ushahidi_Web/commit/a11d43c 
+> https://github.com/ushahidi/Ushahidi_Web/commit/3f14fa0
+> 
+> * Missing authentication on comments, reports, email API calls 
+> (Reported by Kees Cook, Dennison Williams) 
+> https://github.com/ushahidi/Ushahidi_Web/commit/4c24325 
+> https://github.com/ushahidi/Ushahidi_Web/commit/f67f4ad
+> 
+> * User details exposed in comments API (Discovered by internal dev
+> team) https://github.com/ushahidi/Ushahidi_Web/commit/529f353
+> 
+> * Admin user hijacking through the installer (Reported by Wil
+> Clouser) https://github.com/ushahidi/Ushahidi_Web/commit/7892559 
+> https://github.com/ushahidi/Ushahidi_Web/commit/fcdad03
+> 
+> * Stored XSS on member profile pages (Reported by Amy K. Farrell) 
+> https://github.com/ushahidi/Ushahidi_Web/commit/00eae4f
+> 
+> Thanks in advance,
+> 
+> Robbie Mackay
 
-Attached to the bugreport and here. It is the same patch as pasted in #c3 of this report.
+You'll need to list which commits were found by which security
+reporter (e.g. which ones are Reported by Timothy D. Morgan, Kees
+Cook, postmodern). Thanks.
 
-Ciao, Marcus
+> 
+> Software Developer, External Projects Ushahidi Inc e:
+> robbie@...ahidi.com skype: robbie.mackay
+> 
 
-View attachment "hyper-v.tools.hv.hv_kvp_daemon.c.patch" of type "text/x-patch" (731 bytes)
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQGB75AAoJEBYNRVNeJnmTXOgP/0+SNuFY4FsvllIvTlYczDfC
+P0woU7Seudh0usvCuzbIoWvDCRWjtI0A5hDzXhnRexEch5VWLQL39Z+Aqf/zLLZY
+8S+brvQkvLL3UYi83+K9Rsr47srx6NXGM3zTwHtjvF3o52IVnAXTBQOxjdf6XIN5
+GYNcEvqzpRWmTPumxrb7Z5ub52RA3JEOzu9vjxinV/HuxovgpB593s4Ze1I2TdZ5
+3FsEiWElZK5TtrFIgR+bYcpzil0XWOjMy67xnxRqnSzxywKSsR65o2eNJQeS+Sj6
+ixwDI9TW/7auv99kwIY+kBjrSOSkudxRjPPIp59lwxFADR7PUE5/TDtNAOTbywF0
+PGRHD/5SsBFCFbltc8Qnhjp0luZAHbA0KMg2xe4ikwkvONUu1m69f176TGk8t2xI
+9lxFy1jmJiwL8ECP4BP0ZaC/6QQQYP+wzLTqjg9D7HHu7YvEh/IjkbIp1t7/STdl
+rHN6fZ/JZEmO57BZbyuQvzhFqKPMpFjCayrh2HwTmIidqAn0YinOsia4zM6pwmVm
+H9ZjdDpOOiMAGyY0HLFTigAiHtYVbje4YjeegrJZJaoCid0zWkLgiQmXBP5GYjv3
+hAvVUHn8rh3EwKy3F4Lgo/x3mmDGHPSL7lLwmNIoIk+/PBtQlGbcNcnVDfgaHieh
+zkMRgNUcUrFcvwwwb1wi
+=jcgN
+-----END PGP SIGNATURE-----
