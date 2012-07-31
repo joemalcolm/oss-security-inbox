@@ -1,36 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/7
-Message-ID: <1135979052.30921844.1347018626424.JavaMail.root@redhat.com>
-Date: Fri, 7 Sep 2012 07:50:26 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/31/5
+Message-ID: <1343750985.4723.7.camel@lagune.teich>
+Date: Tue, 31 Jul 2012 18:09:45 +0200
+From: frosch <frosch@...nttd.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Andrey Petrov <andrey.petrov@...zow.net>, Jamie Strandboge <jamie@...ntu.com>
-Subject: CVE Request -- urllib3: Does not check for SSL certificates by default
+Subject: Re: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+> >> On 07/27/2012 03:42 PM, frosch wrote:
+> >>> Hello,
+> >>> 
+> >>> we, the OpenTTD developers, have identified a security 
+> >>> vulnerability in OpenTTD (an open source game with
+> >>> multiplayer). Would you be so kind as to allocate a CVE id for
+> >>> this issue?
+> >>> 
+> >>> The issue concerns a denial of service vulnerabilty which
+> >>> enables an attacker to force the server into an invalid game
+> >>> state. The server will abort upon detecting this state. This
+> >>> attack can be performed using an unmodified client via normal
+> >>> game interaction. The attack requires authorization, but most
+> >>> servers do not implement authorization. The first vulnerable
+> >>> version is 0.6.0, the upcoming 1.2.2 release will have the
+> >>> issue fixed.
+> >>> 
+> >>> Once a CVE id is allocated, the issue and fix will be
+> >>> documented at http://security.openttd.org/CVE-2012-xxxx
+> >>> 
+> >>> Thanks in advance, Christoph 'frosch' Elsenhans
+> >>> 
+> >>> (Please CC me, I'm not subscribed)
+> >> 
+> >> Sorry can you please provide links to an advisory, code commit,
+> >> or something so we have a reference?
+> >> 
+> > trunk commit: http://vcs.openttd.org/svn/changeset/24439/ Bug
+> > report: http://bugs.openttd.org/task/5254
+> > 
+> > Later on http://security.openttd.org/CVE-2012-xxxx will supply
+> > patches for all vulnerable versions, and also link to the bug
+> > tracker and related commits.
+> > 
+> > Regards
+> 
+> Perfect, thanks. Please use CVE-2012-3436 for this issue.
+> 
+> P.S. with respect to "In some cases ships could be covered with land."
+> couldn't the ship sail into a cave or over hanging cliff? ;)
 
-  it was reported that urllib3, a Python HTTP library
-with thread-safe connection pooling and file post support,
-did not perform SSL certificates verification by default.
-A rogue HTTP server could use this flaw to conduct
-man-in-the-middle (MITM) attacks.
+The detailed description is now public on
+http://security.openttd.org/CVE-2012-3436
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686872
-[2] https://bugs.launchpad.net/ubuntu/+source/python-urllib3/+bug/1047054
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=855320
-    (the bug actually has python-requests in the summary,
-     but only due the fact it contains embedded urllib3)
+Note that both the problem description and patches have been updated
+to cover a second case of this bug, so if you downloaded the patches
+before 2012-07-31 16:00 UTC, please download them again.
 
-Patch applied by the Ubuntu Linux distribution:
-[4] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=python-urllib3_1.3-2ubuntu1.debdiff;att=1;bug=686872
 
-Reproducer:
-[5] https://bugs.launchpad.net/ubuntu/+source/python-urllib3/+bug/1047054/comments/0
 
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
