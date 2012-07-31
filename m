@@ -1,63 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/05/2
-Message-ID: <4F0570DF.5010801@apache.org>
-Date: Thu, 05 Jan 2012 09:43:59 +0000
-From: Mark Thomas <markt@...che.org>
-To: Vincent Danen <vdanen@...hat.com>
-CC: oss-security@...ts.openwall.com, krahmer@...e.de,  cve-assign@...re.org, Tomcat Security List <security@...cat.apache.org>
-Subject: Re: Re: CVE-2011-4858 confusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/31/3
+Message-ID: <CA+O_gMzcN-qMjRPCwEyYUJb2+MKNARm2DJ3ZWeT886T-EVCXyg@mail.gmail.com>
+Date: Tue, 31 Jul 2012 12:22:16 +1200
+From: Robbie MacKay <robbie@...ahidi.com>
+To: oss-security@...ts.openwall.com
+Cc: Heather Leson <HLeson@...ahidi.com>
+Subject: CVE request for Ushahidi
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The Ushahidi team have been notified of the following security
+vulnerabilities thanks to volunteers from OWASP Portland.
+These will be fixed in the upcoming 2.5 release.
+Could you please allocate CVEs for the following issues?
 
-On 04/01/2012 20:02, Vincent Danen wrote:
-> * [2012-01-04 09:50:48 -0500] cve-assign@...re.org wrote:
-> 
->> MITRE is still working on this. Our current perspective is that 
->> CVE-2011-4084 is one vulnerability that was confirmed by the
->> upstream vendor, and CVE-2011-4858 is a different vulnerability
->> that was not confirmed by the upstream vendor. There are
->> apparently related test cases and test results that are not yet
->> public.
-> 
-> We received an email from upstream Tomcat asking us to make that
-> change. CVE-2011-4858 is the CVE for the hash collision issue.
-> 
-> I'm cc'ing Mark who made the original request to us.  Mark, could
-> you please clarify?
+* Multiple SQL injections (Reported by Timothy D. Morgan, Kees Cook,
+postmodern )
+https://github.com/ushahidi/Ushahidi_Web/commit/fdb48d1
+https://github.com/ushahidi/Ushahidi_Web/commit/6f6a919
+https://github.com/ushahidi/Ushahidi_Web/commit/4764792
+https://github.com/ushahidi/Ushahidi_Web/commit/d954093
+https://github.com/ushahidi/Ushahidi_Web/commit/3301e48
+https://github.com/ushahidi/Ushahidi_Web/commit/68d9916
+https://github.com/ushahidi/Ushahidi_Web/commit/e0e2b66
+https://github.com/ushahidi/Ushahidi_Web/commit/a11d43c
+https://github.com/ushahidi/Ushahidi_Web/commit/3f14fa0
 
-CVE-2011-4858 refers to the JVM hash collision vulnerability as it
-affects Apache Tomcat.
+* Missing authentication on comments, reports, email API calls
+(Reported by Kees
+Cook, Dennison Williams)
+https://github.com/ushahidi/Ushahidi_Web/commit/4c24325
+https://github.com/ushahidi/Ushahidi_Web/commit/f67f4ad
 
-The Apache Tomcat security team made the following announcement
-regarding this issue:
-http://markmail.org/message/jni4gb5biaolh66t
+* User details exposed in comments API (Discovered by internal dev team)
+https://github.com/ushahidi/Ushahidi_Web/commit/529f353
 
-CVE-2011-4084 was going to be used for an DoS issue unrelated to hash
-collisions but due to the confusion caused by oCERT incorrectly using
-- -4084 rather than -4858 in their announcement of the hash collision
-issue -4084 will be marked as rejected and a new CVE reference will be
-used for the DoS issue unrelated to hash collisions. When the Tomcat
-security team is ready to publish details of that issue, it will do so
-under a completely new CVE.
+* Admin user hijacking through the installer (Reported by Wil Clouser)
+https://github.com/ushahidi/Ushahidi_Web/commit/7892559
+https://github.com/ushahidi/Ushahidi_Web/commit/fcdad03
 
-Mark
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (MingW32)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+* Stored XSS on member profile pages (Reported by Amy K. Farrell)
+https://github.com/ushahidi/Ushahidi_Web/commit/00eae4f
 
-iQIcBAEBAgAGBQJPBXDfAAoJEBDAHFovYFnnGXAP/1EX/c/AOyU8DEp+xjS0AP2y
-9ZWrEXwVeA4uVwZyS3hexPZdz4bkPpk/7ptR1dZOvsuPcU9rrgGaL9m2pVUAjF2t
-FwlyVC8Zv6rpICLYNhBeDaJ1v7lY/Dhznr/ZUCBpSh/CfrVI17YR4dwufeG47DkF
-FsKz28O4+/mjtsJBQl1/CHPBM+XrwTlC4+Q/uPngz8NkbtbWWCzyeRDjymHBNRNZ
-IUUXALBYISwNii3n7Rt9ctWM/irMX+3EfJmxa9Ijim+jIIwLwTK+NdBoSzwDNQTJ
-m5l9WG+TbpDC/jm8+UhywQM6HDI5BgaoBCBPHUxnKLWtxioGNkwjk0xoNz3O+bce
-wK3lr3WesEg78d1RpFvLh7eMLB9HrX7P/WFsmWODqH88OfHtvbvftegTj+5l4xcc
-902zGicZ5vPQw/EfyzYrpvKYd1Owpu+r8EoMWO7SpARnrX1bmb+Z67kYYVOYZecC
-uQEKMMC9uVyDaKFn8VyaNWOVZCCSYS9ngEAN/P3T5hF5NzbBtGRiuRsfqd3LglWG
-jqnGcGXFzKzQ8QlZePh3PCKbNu88vvZlB8qxx2WUtXvAj5eDfG2/FNTZSLDbs7Af
-0cuZqRUZ6BFOEQ493gZJFVtKq5eqYXAOAbBM9TmEZdCLIPPhh1aXYa6KGhDh5T4e
-VBq5yJOimjf+zl6QUS4d
-=UDhE
------END PGP SIGNATURE-----
+Thanks in advance,
+
+Robbie Mackay
+
+Software Developer, External Projects
+Ushahidi Inc
+e: robbie@...ahidi.com
+skype: robbie.mackay
+
