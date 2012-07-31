@@ -1,64 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/11
-Message-ID: <2384070.dh9IlZCrYN@tux.boltz.de.vu>
-Date: Thu, 26 Jan 2012 18:55:11 +0100
-From: Christian Boltz <oss-securrity@...ltz.de>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: PostfixAdmin SQL injections and XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/31/8
+Message-Id: <201207311844.q6VIibEG011425@linus.mitre.org>
+Date: Tue, 31 Jul 2012 14:44:37 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: RSGallery2 before 2.3.0 (etc.) CVE-2012-3554 CVE-2012-4071
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Am Donnerstag, 26. Januar 2012 schrieb Kurt Seifried:
-> On 01/26/2012 04:07 AM, Christian Boltz wrote:
-> > we (the upstream PostfixAdmin developers) received a report about
-> > SQL injections and XSS in PostfixAdmin.
-> > 
-> > Please assign a CVE number to those issues.
-> > 
-> > The issues are fixed in PostfixAdmin 2.3.5, which I'll release
-> > today or tomorrow.
-> > 
-> > For reference, here's the changelog with all details:
-> >   - fix SQL injection in pacrypt() (if $CONF[encrypt] ==
-> >   'mysql_encrypt') 
-> >   - fix SQL injection in backup.php - the dump
-> >   was not mysql_escape()d,>   
-> >     therefore users could inject SQL (for example in the
-> >     vacation message) which will be executed when restoring
-> >     the database dump. WARNING: database dumps created with
-> >     backup.php from 2.3.4 or older might>     
-> >              contain malicious SQL. Double-check
-> >              before using them!
-> >   - fix XSS with $_GET[domain] in templates/menu.php and
-> >   edit-vacation - fix XSS in some create-domain input fields
-> >   - fix XSS in create-alias and edit-alias error message
-> >   - fix XSS (by values stored in the database) in fetchmail list
-> >   view, list-domain and list-virtual
-> >   - create-domain: fix SQL injection (only exploitable by
-> >   superadmins) 
-> >   - add missing $LANG['pAdminDelete_admin_error']
-> >   - don't mark mailbox targets with recipient delimiter as
-> >   "forward only" 
-> >   - wrap hex2bin with function_exists()  - PHP 5.3.8 has it 
-> >   as native function
+http://extensions.joomla.org/extensions/photos-a-images/photo-gallery/142
+http://joomlacode.org/gf/project/rsgallery2/news/
+http://www.rsgallery2.nl/announcements/rsgallery2_3.2.0_and_2.3.0_released_16845.0.html
 
-> So basically we have two sets of vulnerabilities: multiple SQL
-> injections and multiple XSS vulnerabilities, correct?
+"The RSGallery2 team is pleased to announce the release of RSGallery2
+3.2.0 for Joomla 2.5.x and RSGallery2 2.3.0 for Joomla 1.5.x. These
+are security releases, users are advised to upgrade immediately. A
+special thank you goes to Stergios Kolios."
 
-Yes, correct.
-(For completeness: the last 3 items ($LANG, the "forward only" marker 
-and the hex2bin change) are non-security fixes.)
+This announcement already has CVE assignments (at least CVE-2012-3554
+and CVE-2012-4071; possibly others) but we are still coordinating with
+the researcher to determine if any details will be released.
+Therefore, this message about the CVE assignments may be useful to
+only a limited audience.
 
+The changelog.php files in the RSGallery2 2.3.0 and 3.2.0 downloads
+currently do not label any specific changelog entries as security
+fixes with their "* -> Security Fix" notation. It might or might not
+turn out that one or more of the changelog entries actually is
+associated with either CVE-2012-3554 or CVE-2012-4071.
 
-Gruß
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-Christian Boltz
--- 
-> /etc/sysconfig/powersave/cpufreq contains the line:
-> # the next lover CPU frequency. Increasing this value lowers the
-             ^^^^^
-we should keep that one ;)
-[Michael Gross in https://bugzilla.novell.com/show_bug.cgi?id=183704]
-
+iQEcBAEBAgAGBQJQGCcGAAoJEGvefgSNfHMd6gMIALSNKsFP/VU+FlJ+/Zrtr1jC
+eNDbFycw54tuSXdgyCAqIoS4uxyYbi6UaS+QRJbUMyvaiDUZ6UywvaBEUFDcxxpY
+7nYFYOGeMBz+6qs1Q/mfXu4FAfqOYnDoFXTAosTyYdFFLPBMUdga5+awNHk9mYh9
+rUMnlHpGrszmoYhbtxs1xtvwTNGq13rpYmPB8yUTxUuAFnON9yT7umpVKHWJR0G/
+kT4c35Zt1KR7vydbHwgXePYWm1LdcvbWpfxARy46qSznbGubqOK5GwnDVP4ygvkw
+7egMxRe48ab3zrpXMhINnH9eNq/I8dBMwB6KPSNh3gI3OzSek5pAA3FrH8MnbWM=
+=rRcu
+-----END PGP SIGNATURE-----
