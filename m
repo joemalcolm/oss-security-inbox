@@ -1,41 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/15
-Message-ID: <4FBD27A2.2010108@redhat.com>
-Date: Wed, 23 May 2012 12:08:34 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/31/1
+Message-ID: <501731FF.2000005@redhat.com>
+Date: Mon, 30 Jul 2012 19:16:47 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: haproxy trash buffer overflow flaw
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: Django 1.3.1 and 1.4.0 security issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/23/2012 11:37 AM, Vincent Danen wrote:
-> Could a CVE be assigned to this flaw please?
-> 
-> A flaw was reported in HAProxy where, due to a boundary error when 
-> copying data into the trash buffer, an external attacker could
-> cause a buffer overflow.  Exploiting this flaw could lead to the
-> execution of arbitrary code, however it requires non-default
-> settings for the global.tune.bufsize configuration option (must be
-> set to a value greater than the default), and also that header
-> rewriting is enabled (via, for example, the regrep or rsprep
-> directives).
-> 
-> This flaw is reported against 1.4.20, prior versions may also be 
-> affected.  This has been fixed upstream in version 1.4.21 and in
-> git.
-> 
-> References:
-> 
-> https://secunia.com/advisories/49261/ 
-> http://haproxy.1wt.eu/download/1.4/src/CHANGELOG 
-> http://haproxy.1wt.eu/git?p=haproxy-1.4.git;a=commit;h=30297cb17147a8d339eb160226bcc08c91d9530b
->
->  https://bugzilla.redhat.com/show_bug.cgi?id=824542
+https://www.djangoproject.com/weblog/2012/jul/30/security-releases-issued/
 
-Please use CVE-2012-2391 for this issue.
+Security releases issued
+
+Today the Django team is issuing multiple releases -- Django 1.3.2 and
+Django 1.4.1 -- to remedy security issues reported to us.
+
+All users are encouraged to upgrade Django immediately.
+
+=========================================
+Cross-site scripting in authentication views
+
+The login() and logout() views provided in Django's authentication
+framework make use of the common "POST-redirect-GET" pattern; a
+configurable querystring parameter can be used to specify the location
+to redirect to on successful submission. Currently, those views
+perform basic validation to ensure that the redirect location does not
+specify a different domain.
+
+However, this validation does not check the scheme of the target URL;
+armed with this knowledge, an attacker can craft, for example, a data:
+scheme URL which will execute JavaScript.
+
+Some browsers are known to currently provide protection against this
+issue: Google Chrome in particular explicitly disallows redirects to
+data: scheme URLs. However, several other major browsers do permit
+such redirects.
+
+After careful consideration of this issue, we have decided that the
+safest course of action involves a slight break to backwards
+compatibility. Although temporary mitigation could be achieved through
+more stringent validation in the relevant views, the root issue lies
+in Django's HTTP response classes, which currently do not perform any
+validation of redirect targets. The fact that some major browsers
+already disallow certain URL schemes in redirects indicates that the
+impact of this change is likely to be minimal.
+
+As such, the following change is being made despite breaking API
+compatibility:
+
+    django.http.HttpResponseRedirect and
+django.http.HttpResponsePermanentRedirect now subclass a common base
+class, django.http.HttpResponseRedirectBase.
+    That base class defines an explicit whitelist of allowed URL
+schemes. Attempts to instantiate a redirect with a URL of a scheme not
+in the whitelist will raise the exception
+django.core.exceptions.SuspiciousOperation, which is already employed
+for similar purposes in other parts of Django's codebase (e.g., to
+warn of possible session tampering).
+
+End-user code which issues redirects is unlikely to be affected unless
+it either explicitly requires redirecting to an unsupported scheme, or
+accepts the target URL from a user-supplied parameter.
+
+In the former case, subclassing the appropriate redirect class
+(HttpResponseRedirect for status code 302,
+HttpResponsePermanentRedirect for status code 301) and overriding the
+allowed_schemes list will be sufficient. The default value of
+allowed_schemes is ['http', 'https', 'ftp'].
+
+In the latter case, code which accepts user-supplied parameters can
+attempt to instantiate the redirect, catch the SuspiciousOperation
+exception, and fall back to an alternate location as needed.
+
+At present, Django's authentication views will leave this exception
+uncaught. This means site administrators will receive error reports
+if/when that exception is raised. It is likely that future Django
+releases will begin catching this exception, after allowing some time
+for users of Django to observe behavior and judge their exposure to
+potential issues.
+
+=========================================
+Denial-of-service in image validation
+
+Django's form system includes field types for handling file uploads,
+including a field class -- django.forms.ImageField -- for uploading
+images, which can perform some validation of image formats.
+
+Part of that validation involves detecting corrupted image files,
+using routines provided by the Python Imaging Library (PIL).
+
+The check as it currently exists in Django is vulnerable, however,
+because it will read the entire image file, including decompressing
+compressed formats as needed. It is trivially possible to craft a
+reasonably-sized file which, when decompressed in this fashion, grows
+to enormous size, consuming available memory and offering the ability
+to perform a denial-of-service attack.
+
+To mitigate this, image validation will now make use of PIL's
+Image.verify() method, which performs some validation checks but does
+not decompress or read the entire image file.
+
+=========================================
+Denial-of-service via get_image_dimensions()
+
+Django's image-handling facilities also include helper methods to
+determine the dimensions of an image. Currently, the process for this
+involves reading a 1024-byte chunk from the start of the file, and
+passing to PIL to determine the dimensions; if insufficient data is
+provided, further 1024-byte chunks are read until PIL is able to
+return a definite answer.
+
+While this works well for image formats which store enough information
+in their headers to determine dimensions, it can result in large
+quantities of read/process cycles for formats which do not. In
+particular, larger TIFF images can require tens of thousands of such
+cycles, tying up or timing out worker processes/threads and consuming
+enough server resources to result in an effective denial-of-service.
+
+To mitigate this, the algorithm for determining image dimensions is
+being changed; the initial attempt will still use a 1024-byte chunk,
+but the chunk size will be doubled on each successive read. Testing
+has demonstrated that this reduces time to process TIFF files by
+multiple orders of magnitude.
+
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -45,17 +135,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPvSeiAAoJEBYNRVNeJnmTFTwP/0gQi4YSBbmGuUlRsrn3bl1b
-VQV1kO0Ipk2vq2fsG7FEhwnobS8KWlYRHU8UGfgbCjPjAKRwkE0y5m59GeauND+e
-PMKYMLGuvEKY42kxgS6A3FsfAnWO6dyNtxTkCM/HnCmKuXoOpQAcx6cj26UlECvf
-Lu+3GOcYwyZJqevgW7dI2YUtNxvwYuQOUtOd0ha/XW0MXmvRhlRdu/+9C1ait1wG
-VIcbrlU0oGGmJR/0nG5S6ajrjf0vPHcNlDOL/fNLZqrkf//Pjvm9ozGKwyRHDSnj
-JplRrchBSBBGyP383vOYF5/7RL0ZL6r+XfJrs7fUGXuVcNmA5GpQNVV03DuzFs0e
-FNWqUROjcCWGJJHsB3Ks2WNmLfoj5OM7Pf/1rTteCCgI3qZ/hEXHc8pK2W/Hd4pu
-hifcx53J9UEZ8HqpKhjAxNGhpuJ7ZReXaF4diKFMue2fZIFCJMtOmB1Epr2WHi1A
-ym1n+nTz+lrMhbFBJiHdgx/KhPlxOxAWD9X34ENLR+emViSO4KwOpgmP0SnbiyNR
-MW4HjInUfb2UclBhDqJclPm+2D5xLMH23VIOMk8g7cvPheVJ+Qu7P2hmTuKaAs/Y
-pGkV/Cc7jiXaMmfFocYnhjhZtNO9pU8V4aq3/xxgUG32Rm8cUmEyyb4CieYIOcEI
-nbTapWRRQHCDY93/3fD8
-=2CdO
+iQIcBAEBAgAGBQJQFzH/AAoJEBYNRVNeJnmTLCYQAKJbZEkjIPxKpT779Hi4d5PW
+WFi1kDTAFwhuCeGR6qE5m8wPiOh3kN6GsEl5iTq+6Io7+JkYKwkAMY0B+dEbkYdI
+PW6L4axW2wOODF3XINEdaINPulokpt3zpDa5v7YxDSM3u1U2Ec6Mn2CNq2gakbF/
+twXvZ3QEce+YqdCMcFB/U2ERfGG8Smqa9Fu898L48n3yrMRkbyWETKPEci/97MNN
+CWjyIpLOm8evxfWxLR7OlsAMRqLPifXZn4IyohggYZfEu79ZPeDPdF9eYGXZZqLA
+QovMKJ/LM8RTw2TeYoGloJEFZEiHHGZemfOiHVgYYoXExQKeFWBOS8RGKEilkaoI
+nrBfKfHwmdelVqp56ViA+EOMwTq9devZem9Z5QtsPRO4Axjl3UGoTSVky7qjICzB
+59lS04vEKm7l2U7u5SoJ2LrOaPoxQdSbMFQD5vOc/kX+0VmnGVa8GnxBf0uuPLAf
+y8pDh5rzw2EnPQplTBx6th9WI5MZFJ9CT0E0dyQoZxMPDuV/FmHHybB7dDdI5UiE
+21533rm/VrKaWtbhWVvJGA62ZqnccqgiWbhhRkvU0eHs9WySQphJbnvRQRMSJoHi
+VkFIfwANsMsGzFKvdgBCs+q5h57RIZKQNa+/5rh68g2AqMc6b1iDMw6uxVKO+6oQ
+6W3eKc0PQgZfHv+b2JKG
+=C792
 -----END PGP SIGNATURE-----
