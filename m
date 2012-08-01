@@ -1,33 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/13
-Message-Id: <201209251541.q8PFfT4D012369@linus.mitre.org>
-Date: Tue, 25 Sep 2012 11:41:29 -0400 (EDT)
-From: cve-assign@...re.org
-To: jlieskov@...hat.com
-Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request - phpMyAdmin: PMASA-2012-5 incident
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/7
+Message-ID: <5019609F.7080407@redhat.com>
+Date: Wed, 01 Aug 2012 11:00:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com
+Subject: Re: CVE Request: NVidia Linux driver
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->http://www.phpmyadmin.net/home_page/security/PMASA-2012-5.php
+On 08/01/2012 06:58 AM, Marc Deslauriers wrote:
+> Hello,
+> 
+> Could a CVE please be assigned to the following issue:
+> 
+> The binary NVidia Linux driver allows local users to access
+> arbitrary memory locations by leveraging GPU device-node read/write
+> privileges, and escalate privileges to root. Possibly an incomplete
+> fix for CVE-2012-0946.
+> 
+> See:
+> 
+> http://seclists.org/fulldisclosure/2012/Aug/4
+> 
+> Thanks,
+> 
+> Marc.
 
-Use CVE-2012-5159.
+I do Open Source CVE assignments only, the Nvidia driver is binary
+only and closed source. You'll need to go to Mitre to get a CVE for
+this: cve-assign@...re.org (they handle the closed source stuff).
+
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQEcBAEBAgAGBQJQYc7gAAoJEGvefgSNfHMdoPAH/0IhU72liM77DvNiuR9RAXU2
-whJBRvMjeftuF/lZJ8eP0WNlStBgnX5rtcFCAVIO6FIGfD8sXAnaJiN9rDqx0mQ/
-4ESanXi3fNCn69d+0sjQhG7BaCDIaU0bMxfmqGbb7NRJdCKX2U9dE3Jn6+vBhn8b
-iphmN15tQzO2BBjNe3V7VMdSn6m0IX7l2mXjaWKgxtWXTGzF56xtzFD5Pa2cEwe7
-/DHncBcgPTL2Fkz4Os5WxoAlzNCDPQBnhXWVU6S0zMUnjM8KPwnNcxSUbzHhJNMj
-P+AxuuJifyiWxBnVZ7i/4vZQ1vE5DpAGLwG3yu5jvzCvdZXeXal90xeHaWXLSig=
-=/x/0
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQGWCfAAoJEBYNRVNeJnmTmYYP/3Myqj2EocA4jxj9Plhv1xyE
+P/mTlxPkwvi6Rlra2Mszhm7mDga1UOiHD/lqZ/CnyCjnEe8pY2pv9/Xbo4lxfZcv
+VruzRlWOeUjltZJxsinTR0j3JGhBFe/SKRg1qV1bEs05y8NASITS7J0QiBxwMse6
+P3hTHQ/9Sgh0VBZjdF2RpeV9+AMCyl/hIyyahRLtobyLqXBDaaMJdRqTRCqv4sbY
+7Vo6ZOG8FanD6gqLuLKqXt6hPz8j1fcHWhS73ySIL7e6T9P0rle7VI9aeHBiTEz5
+lh2zDqPxepMvy9E9CMFBNxay0cPcsOSw24YhxzFx+bjy+LdSbF+Z/GvxqU/pnuLz
+yCOlxianMVcvn3/Zr2YvnfHMfq/uq0/ShzSsQAwwM6NljFSL4RieD/aB21Ah76ao
+eMWScJmgmUPKwEPQelb7iCj/7vaEnU/SN1iB5jIPlM4aHqN0nPi/jiJZjac+EgxB
+FnRUoWs9ad06uoziSrz6bJW4HJJQjAHl3isPTZbxmHI/rLEExUu+DdCQnaFEHT0b
+e3cxHV865KecWasez13PnBfhQhH50D5PQhJLkbcQtEv7Hqvhrx0WPH9RhFYjWQtD
+jMOTfEcMLtfeETjncArwwiZQLRxDjVr2cCamlmVj4pMAGOcJa4qSCRvRIz9Rq73p
+Xpi1H5D/2gluae+oisvp
+=Rpar
 -----END PGP SIGNATURE-----
