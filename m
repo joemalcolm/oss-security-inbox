@@ -1,62 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/15
-Message-ID: <4F04BFE1.90604@redhat.com>
-Date: Wed, 04 Jan 2012 14:08:49 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Moritz Mühlenhoff <jmm@...til.org>, Craig Barratt <cbarratt@...rs.sourceforge.net>, cve-assign@...re.org, security@...ntu.com
-Subject: Re: CVE Request: Security issue in backuppc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/4
+Message-ID: <1343827511.32192.92.camel@mdlinux>
+Date: Wed, 01 Aug 2012 09:25:11 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: Petr Matousek <pmatouse@...hat.com>
+Cc: oss-security@...ts.openwall.com, coley@...us.mitre.org, security@...ntu.com
+Subject: Re: CVE Request: NVidia Linux driver
 Content-Type: text/plain; charset=utf-8
 
-On 01/03/2012 02:21 PM, Kurt Seifried wrote:
-> On 01/03/2012 12:55 PM, Moritz Mühlenhoff wrote:
->> On Thu, Oct 27, 2011 at 04:00:48PM -0500, Jamie Strandboge wrote:
->>> Hi Craig,
->>>
->>> While preparing updates to fix CVE-2011-3361 in Ubuntu I discovered
->>> another XSS vulnerability in View.pm when accessing the following URLs
->>> in backuppc:
->>> index.cgi?action=view&type=XferLOG&num=<XSS here>&host=<some host>
->>> index.cgi?action=view&type=XferErr&num=<XSS here>&host=<some host>
->>>
->>> You are being emailed as the upstream contact. Please keep
->>> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
->>>
->>> To oss-security, can I have a CVE for this? It is essentially the same
->>> vulnerability and fix as for CVE-2011-3361, but in CGI/View.pm instead
->>> of CGI/Browse.pm. Attached is a patch to fix this issue. Tested on
->>> 3.0.0, 3.1.0, 3.2.0 and 3.2.1.
->> *ping*
->>
->> This hasn't ended up in a CVE assignment.
->>
->> Cheers,
->>         Moritz
-> I believe as per ADT4 these issues should be merged into the existing
-> CVE-2011-3361:
->
-> ADT4:
->
->
+On Wed, 2012-08-01 at 15:13 +0200, Petr Matousek wrote:
+> Hi Marc,
+> 
+> On Wed, Aug 01, 2012 at 08:58:16AM -0400, Marc Deslauriers wrote:
+> > Hello,
+> > 
+> > Could a CVE please be assigned to the following issue:
+> > 
+> > The binary NVidia Linux driver allows local users to access arbitrary
+> > memory locations by leveraging GPU device-node read/write privileges,
+> > and escalate privileges to root. Possibly an incomplete fix for
+> > CVE-2012-0946.
+> > 
+> > See:
+> > 
+> > http://seclists.org/fulldisclosure/2012/Aug/4
+> 
+> did you test that the exploit works on NVIDIA driver that should contain
+> the CVE-2012-0946 fix?
 
-As Steve has pointed out, this was incorrect (different researcher found
-the second vuln). So the previous issue:
+Yes, I have successfully tested it on 295.40.
 
-CVE-2011-3361 is related to "Ensure $num is numeric in lib/BackupPC/CGI/Browse.pm to avoid XSS attack."
+Marc.
 
-=====================
-
-For this new issue please use CVE-2011-4923 which covers:
-
-View.pm XSS vulnerabilities exploited via urls such as:
-
-index.cgi?action=view&type=XferLOG&num=<XSS here>&host=<some host>
-index.cgi?action=view&type=XferErr&num=<XSS here>&host=<some host>
-
-Sorry for the mess.
-
-
--- 
-
--- Kurt Seifried / Red Hat Security Response Team
 
