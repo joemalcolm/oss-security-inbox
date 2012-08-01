@@ -1,36 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/16/4
-Message-ID: <507D828E.9000308@fifthhorseman.net>
-Date: Tue, 16 Oct 2012 11:51:42 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/8
+Message-ID: <1343845129.32192.112.camel@mdlinux>
+Date: Wed, 01 Aug 2012 14:18:49 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, coley@...us.mitre.org, security@...ntu.com
+Subject: Re: CVE Request: NVidia Linux driver
 Content-Type: text/plain; charset=utf-8
 
-On 10/16/2012 08:40 AM, Matthias Weckbecker wrote:
-> Technically, this would also apply to Perl (at least with 5.12.3). 
+Hi,
 
-It's also the case with perl 5.14.2 (just tested). :/
+Could a CVE please get assigned to the following issue...
 
-on the other hand, python and php seem to both have some sort of an
-internal check in place, so there's a difference of expectation somewhere:
+Thanks!
 
-0 dkg@pip:~$ python -c 'f = open("python\0foo"); f.write("test");'
-Traceback (most recent call last):
-  File "<string>", line 1, in <module>
-TypeError: file() argument 1 must be encoded string without NULL bytes,
-not str
-1 dkg@pip:~$
-
-0 dkg@pip:~$ echo | php -B 'if ($x = fopen("php\0foo", "w")) fwrite($x,
-"test");'
-PHP Warning:  fopen() expects parameter 1 to be a valid path, string
-given in Command line begin code on line 1
-0 dkg@pip:~$
-
-hth,
-
-	--dkg
+Marc.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1031 bytes)
+
+On Wed, 2012-08-01 at 11:00 -0600, Kurt Seifried wrote:
+> On 08/01/2012 06:58 AM, Marc Deslauriers wrote:
+> > Hello,
+> > 
+> > Could a CVE please be assigned to the following issue:
+> > 
+> > The binary NVidia Linux driver allows local users to access
+> > arbitrary memory locations by leveraging GPU device-node read/write
+> > privileges, and escalate privileges to root. Possibly an incomplete
+> > fix for CVE-2012-0946.
+> > 
+> > See:
+> > 
+> > http://seclists.org/fulldisclosure/2012/Aug/4
+> > 
+> > Thanks,
+> > 
+> > Marc.
+> 
+> I do Open Source CVE assignments only, the Nvidia driver is binary
+> only and closed source. You'll need to go to Mitre to get a CVE for
+> this: cve-assign@...re.org (they handle the closed source stuff).
+> 
+> 
+
+
+
