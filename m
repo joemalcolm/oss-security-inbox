@@ -1,84 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/27/3
-Message-ID: <20498.43045.246578.277491@mariner.uk.xensource.com>
-Date: Fri, 27 Jul 2012 15:39:33 +0100
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-Subject: Xen Security Advisory 10 (CVE-2012-3432) - HVM user mode MMIO emul DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/6
+Message-ID: <20120801133931.GC1472@suse.de>
+Date: Wed, 1 Aug 2012 15:39:32 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: NVidia Linux driver
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Aug 01, 2012 at 09:32:44AM -0400, Marc Deslauriers wrote:
+> On Wed, 2012-08-01 at 15:12 +0200, Tavis Ormandy wrote:
+> > Marc Deslauriers <marc.deslauriers@...onical.com>
+> > wrote:
+> > 
+> > > Hello,
+> > > 
+> > > Could a CVE please be assigned to the following issue:
+> > > 
+> > > The binary NVidia Linux driver allows local users to access arbitrary
+> > > memory locations by leveraging GPU device-node read/write privileges, and
+> > > escalate privileges to root. Possibly an incomplete fix for CVE-2012-0946.
+> > > 
+> > > See:
+> > > 
+> > > http://seclists.org/fulldisclosure/2012/Aug/4
+> > > 
+> > > Thanks,
+> > > 
+> > > Marc.
+> > 
+> > I know that at least Gentoo does this since ~2006:
+> > 
+> > 35 # !!! SECURITY WARNING !!!
+> > 36 # DO NOT MODIFY OR REMOVE THE DEVICE FILE RELATED OPTIONS UNLESS YOU KNOW
+> > 37 # WHAT YOU ARE DOING.
+> > 38 # ONLY ADD TRUSTED USERS TO THE VIDEO GROUP, THESE USERS MAY BE ABLE TO
+> > CRASH,
+> > 39 # COMPROMISE, OR IRREPARABLY DAMAGE THE MACHINE.
+> > 40 options nvidia NVreg_DeviceFileMode=432 NVreg_DeviceFileUID=0
+> > NVreg_DeviceFileGID=VIDEOGID NVreg_ModifyDeviceFiles=1
+> > 
+> > 
+> > http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/x11-drivers/nvidia-drivers/files/nvidia?revision=1.3&view=markup
+> 
+> 
+> Well, getting rid of static groups like that is what consolekit and udev
+> are for. Ideally, permissions would be granted on the device based on
+> which user is at the console, as it currently done with other devices.
+> Unfortunately, the design of the binary driver makes it hard to do, as
+> it resets permissions itself when X loads.
+> 
+> https://bugs.launchpad.net/ubuntu/+source/nvidia-graphics-drivers/+bug/979307
 
+The NVIDIA is explicitly not allowed to use the udev device structure,
+as udev device handling requires GPL interfaces and can only be called
+from GPL drivers.
 
-            Xen Security Advisory CVE-2012-3432 / XSA-10
-                          version 2
+Thats why it is strange this way.
 
-	 HVM guest user mode MMIO emulation DoS vulnerability
+And yes, the exploit turns "I have a bad feeling about this" about this device
+definitely into "this is bad".
 
-UPDATES IN VERSION 2
-====================
-
-CVE candidate number assigned.
-
-Xen versions 3.2 and earlier are not, in fact, vulnerable; they have
-an entirely different emulation mechanism.
-
-ISSUE DESCRIPTION
-=================
-
-Internal data of the emulator for MMIO operations may, under
-certain rare conditions, at the end of one emulation cycle be left
-in a state affecting a subsequent emulation such that this second
-emulation would fail, causing an exception to be reported to the
-guest kernel where none is expected.
-
-IMPACT
-======
-
-Guest mode unprivileged (user) code, which has been granted
-the privilege to access MMIO regions, may leverage that access
-to crash the whole guest.
-
-VULNERABLE SYSTEMS
-==================
-
-All HVM guests exposing MMIO ranges to unprivileged (user) mode.
-
-Xen versions 3.3 and later are vulnerable to this issue.
-
-MITIGATION
-==========
-
-This issue can be mitigated by running PV (para-virtualised)
-guests only, or by ensuring (inside the guest) that MMIO regions
-can be accessed only by trustworthy processes.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch will resolve the issue.
-
-PATCH INFORMATION
-=================
-
-The attached patches resolve this issue
-
-$ sha256sum xsa10-*.patch
-f96b7849194901d7f663895f88c2ca4f4721559f1c1fe13bba515336437ab912  xsa10-4.x.patch
-fb9dead017dfea99ad3e8d928582e67160c76518b7fe207d9a3324811baf06dd  xsa10-unstable.patch
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQEqbqAAoJEIP+FMlX6CvZEhIIALkIViTZtEbQ6nWy3Y1U/sm5
-BDZUPOeqF5KFV9EXQJcoKM1PGBMBgzeqA4n024k6o9mDimn0PVujSJC+2iX728Sz
-WW/k5y96q2ixzTmaU0y8X5p6pl+nbCNMQ8In7WysB2XetGHY+b5b80uIVH1Sj1IS
-QxrMO2HywQSUDNNQq3bD2jQjuIgewh7rMskxXiPWnlPg7MHx4D/jt/O4sP0bnZn2
-kvFad8TV9aB3I1dwdI2YJ3Ng3W162Tai6i2lJB1OQUJt0sIARXeXZYVOrkkAY5Tv
-SjNCCra0NZoaLjOlY0CWwqluPegJAnq1iFb5cF86nwZcoMCIh9OL+0SLyIJEAvg=
-=sOWo
------END PGP SIGNATURE-----
-
-View attachment "xsa10-4.x.patch" of type "text/plain" (1130 bytes)
-
-View attachment "xsa10-unstable.patch" of type "text/plain" (1087 bytes)
+Ciao, Marcus
