@@ -1,35 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/7
-Message-ID: <20120606145959.GB27595@suse.de>
-Date: Wed, 6 Jun 2012 16:59:59 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/5
+Message-ID: <1343827964.32192.96.camel@mdlinux>
+Date: Wed, 01 Aug 2012 09:32:44 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-Request: hyper-v daemon
+Subject: Re: Re: CVE Request: NVidia Linux driver
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, 2012-08-01 at 15:12 +0200, Tavis Ormandy wrote:
+> Marc Deslauriers <marc.deslauriers@...onical.com>
+> wrote:
+> 
+> > Hello,
+> > 
+> > Could a CVE please be assigned to the following issue:
+> > 
+> > The binary NVidia Linux driver allows local users to access arbitrary
+> > memory locations by leveraging GPU device-node read/write privileges, and
+> > escalate privileges to root. Possibly an incomplete fix for CVE-2012-0946.
+> > 
+> > See:
+> > 
+> > http://seclists.org/fulldisclosure/2012/Aug/4
+> > 
+> > Thanks,
+> > 
+> > Marc.
+> 
+> I know that at least Gentoo does this since ~2006:
+> 
+> 35 # !!! SECURITY WARNING !!!
+> 36 # DO NOT MODIFY OR REMOVE THE DEVICE FILE RELATED OPTIONS UNLESS YOU KNOW
+> 37 # WHAT YOU ARE DOING.
+> 38 # ONLY ADD TRUSTED USERS TO THE VIDEO GROUP, THESE USERS MAY BE ABLE TO
+> CRASH,
+> 39 # COMPROMISE, OR IRREPARABLY DAMAGE THE MACHINE.
+> 40 options nvidia NVreg_DeviceFileMode=432 NVreg_DeviceFileUID=0
+> NVreg_DeviceFileGID=VIDEOGID NVreg_ModifyDeviceFiles=1
+> 
+> 
+> http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/x11-drivers/nvidia-drivers/files/nvidia?revision=1.3&view=markup
 
-The hyper-v daemon fails to check origin of netlink messages.
-Please see
 
-https://bugzilla.novell.com/show_bug.cgi?id=761200
+Well, getting rid of static groups like that is what consolekit and udev
+are for. Ideally, permissions would be granted on the device based on
+which user is at the console, as it currently done with other devices.
+Unfortunately, the design of the binary driver makes it hard to do, as
+it resets permissions itself when X loads.
 
-Can someone from the usual suspects assign a CVE? :)
+https://bugs.launchpad.net/ubuntu/+source/nvidia-graphics-drivers/+bug/979307
 
-thanks,
-Sebastian
+Marc.
 
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
 
