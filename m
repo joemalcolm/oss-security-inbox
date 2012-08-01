@@ -1,52 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/10
-Message-ID: <20120203230721.GA18730@openwall.com>
-Date: Sat, 4 Feb 2012 03:07:21 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Ian Campbell <ijc@....org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Adding Xen.org contact to linux-distros security list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/9
+Message-ID: <mpro.m839x23w5e1110nsi.taviso@cmpxchg8b.com>
+Date: Wed, 1 Aug 2012 20:27:04 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: NVidia Linux driver
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 03, 2012 at 09:33:05AM +0000, Ian Campbell wrote:
-> Would it be possible for myself to be subscribed to the linux-distros
-> security list as a representative of Xen.org?
+Marcus Meissner <meissner@...e.de> wrote:
 
-I think not.  We had a few exceptions like this on vendor-sec, but when
-setting up the linux-distros list I proposed not to be making such
-exceptions anymore and everyone seemed to agree.  In fact, that's even
-reflected in the list name - on purpose.
+> On Wed, Aug 01, 2012 at 09:32:44AM -0400, Marc Deslauriers wrote:
+> > On Wed, 2012-08-01 at 15:12 +0200, Tavis Ormandy wrote:
+> > > Marc Deslauriers
+> > > <marc.deslauriers@...onical.com> wrote:
+> > > 
+> > > > Hello,
+> > > > 
+> > > > Could a CVE please be assigned to the following issue:
+> > > > 
+> > > > The binary NVidia Linux driver allows local users to access
+> > > > arbitrary memory locations by leveraging GPU device-node read/write
+> > > > privileges, and escalate privileges to root. Possibly an incomplete
+> > > > fix for CVE-2012-0946.
+> > > > 
+> > > > See:
+> > > > 
+> > > > http://seclists.org/fulldisclosure/2012/Aug/4
+> > > > 
+> > > > Thanks,
+> > > > 
+> > > > Marc.
+> > > 
+> > > I know that at least Gentoo does this since ~2006:
+> > > 
+> > > 35 # !!! SECURITY WARNING !!! 36 # DO NOT MODIFY OR REMOVE THE DEVICE
+> > > FILE RELATED OPTIONS UNLESS YOU KNOW 37 # WHAT YOU ARE DOING. 38 #
+> > > ONLY ADD TRUSTED USERS TO THE VIDEO GROUP, THESE USERS MAY BE ABLE TO
+> > > CRASH, 39 # COMPROMISE, OR IRREPARABLY DAMAGE THE MACHINE. 40 options
+> > > nvidia NVreg_DeviceFileMode=432 NVreg_DeviceFileUID=0
+> > > NVreg_DeviceFileGID=VIDEOGID NVreg_ModifyDeviceFiles=1
+> > > 
+> > > 
+> > >
+http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/x11-drivers/nvidia-drivers/files/nvidia?revision=1.3&view=markup
+> > 
+> > 
+> > Well, getting rid of static groups like that is what consolekit and udev
+> > are for. Ideally, permissions would be granted on the device based on
+> > which user is at the console, as it currently done with other devices.
+> > Unfortunately, the design of the binary driver makes it hard to do, as
+> > it resets permissions itself when X loads.
+> > 
+> >
+https://bugs.launchpad.net/ubuntu/+source/nvidia-graphics-drivers/+bug/979307
+> 
+> The NVIDIA is explicitly not allowed to use the udev device structure, as
+> udev device handling requires GPL interfaces and can only be called from
+> GPL drivers.
+> 
+> Thats why it is strange this way.
+> 
+> And yes, the exploit turns "I have a bad feeling about this" about this
+> device definitely into "this is bad".
+> 
 
-Thanks for bringing the topic up anyway.  It helps to know what's in
-demand and see what solutions we have (or don't have).
+Yes, but even without this neat exploit, I suspect unprivileged users would
+have been able to physically set the machine on fire if you didn't trust
+them.
 
-> Although Xen.org is not a distro we do incorporate upstream software and
-> one of our upstreams (qemu) uses this list as their embargoed security
-> announcement channel. We would like to be able to co-ordinate the
-> release of fixes into our own qemu trees.
+(E.g. disable all fans via nvidiactl, overclock like crazy then submit heavy
+workload).
 
-I think you should contact the QEMU folks and ask them to CC you on
-relevant notifications.  I think they will start doing it if they don't
-mind.  And if they do mind, then it'd be inappropriate to bypass that.
+This is why we disabled it in Gentoo, a user reported that one of his users
+overclocked a card and disabled the fans, resulting in a big (physical)
+mess.
 
-Meanwhile, I've edited this wiki page:
+Tavis.
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
 
-to ask reporters to consider notifying not only distro vendors, but also
-affected Open Source projects (if applicable).  Specifically:
-
-"If the security issue you're reporting affects other systems as well
-(from vendors not represented on these lists), please consider notifying
-other affected distro vendors and/or Open Source projects as well and
-mention what you're doing on this or what you'd like done on it in your
-notification to the list."
-
-where "distro vendors" and "Open Source projects" are links to:
-
-http://oss-security.openwall.org/wiki/vendors
-http://oss-security.openwall.org/wiki/software
-
-You could want to add Xen.org contact information to the latter page.
-
-Alexander
