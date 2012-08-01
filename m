@@ -1,40 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/10
-Message-ID: <20120209190131.GA25225@foo.fgeek.fi>
-Date: Thu, 9 Feb 2012 21:01:31 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/3
+Message-ID: <mpro.m82vby3w5e1110nsi.taviso@cmpxchg8b.com>
+Date: Wed, 1 Aug 2012 15:12:00 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: MySQL 0-day - does it need a CVE?
+Subject: Re: CVE Request: NVidia Linux driver
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 09, 2012 at 10:20:14AM -0700, Kurt Seifried wrote:
-> https://lists.immunityinc.com/pipermail/canvas/2012-February/000011.html
-> 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Hi,
-> 
-> We are releasing a working MySQL 5.5.20 remote 0day exploit with this
-> update.The exploit has been tested with mysql-5.5.20-debian6.0-i686.deb
-> on Debian 6.0.
-> 
-> Best,
-> Intevydis Ltd.
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.10 (Darwin)
-> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-> 
-> iEYEARECAAYFAk8xdTEACgkQY8Flb3OI+Q2zXwCfQL5y+R8n+ipdMYIRdoVPkEdF
-> yeoAn26p3KmY0+WYFqKrb9/A3frNo2Xm
-> =m+1k
-> -----END PGP SIGNATURE-----
-> 
-> Does this need a CVE # or have you already gotten one from Mitre?
-> 
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+Marc Deslauriers <marc.deslauriers@...onical.com>
+wrote:
 
-No idea. I don't see this in MITRE's CVE-list yet and it seems that some information is going around Internet, but nobody is telling exact facts.
+> Hello,
+> 
+> Could a CVE please be assigned to the following issue:
+> 
+> The binary NVidia Linux driver allows local users to access arbitrary
+> memory locations by leveraging GPU device-node read/write privileges, and
+> escalate privileges to root. Possibly an incomplete fix for CVE-2012-0946.
+> 
+> See:
+> 
+> http://seclists.org/fulldisclosure/2012/Aug/4
+> 
+> Thanks,
+> 
+> Marc.
 
-- Henri Salo
+I know that at least Gentoo does this since ~2006:
+
+35 # !!! SECURITY WARNING !!!
+36 # DO NOT MODIFY OR REMOVE THE DEVICE FILE RELATED OPTIONS UNLESS YOU KNOW
+37 # WHAT YOU ARE DOING.
+38 # ONLY ADD TRUSTED USERS TO THE VIDEO GROUP, THESE USERS MAY BE ABLE TO
+CRASH,
+39 # COMPROMISE, OR IRREPARABLY DAMAGE THE MACHINE.
+40 options nvidia NVreg_DeviceFileMode=432 NVreg_DeviceFileUID=0
+NVreg_DeviceFileGID=VIDEOGID NVreg_ModifyDeviceFiles=1
+
+
+http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/x11-drivers/nvidia-drivers/files/nvidia?revision=1.3&view=markup
+
+Tavis.
+
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
+
