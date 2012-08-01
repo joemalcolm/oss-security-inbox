@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/2
-Message-Id: <201208221157.40610.thijs@debian.org>
-Date: Wed, 22 Aug 2012 11:57:35 +0200
-From: Thijs Kinkhorst <thijs@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/10
+Message-ID: <20120801212023.GQ16112@redhat.com>
+Date: Wed, 1 Aug 2012 15:20:23 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Apache mod RPAF denial of service
+Subject: CVE request: Ganglia Web 3.5.1
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Not a lot of details on this one, but could a CVE be assigned to this?
 
-Sébastien Bocahu reported to the Debian security team a denial of service 
-issue in the Apache module RPAF (reverse proxy add forward).
+Upstream has released Ganglia Web 3.5.1 [1] which includes a fix for a
+security flaw going back to 3.1.7 and possibly earlier versions.  This
+flaw can lead to the arbitrary execution of scripts with the privileges
+of the web user (apache or nobody), which could possibly lead to other
+compromises or data exposure.  This flaw has been fixed in upstream
+3.5.1.  No further information is currently available regarding the flaw
+or a patch.
 
-http://bugs.debian.org/683984
+[1] http://ganglia.info/?p=549
 
-Version 0.6 is not affected, 0.5 is and we've released a security update for 
-that. Can someone please assign a CVE id to this issue?
+Other references:
 
+https://bugzilla.redhat.com/show_bug.cgi?id=845124
+https://bugs.gentoo.org/show_bug.cgi?id=428776
+https://secunia.com/advisories/50047/
 
-Thanks,
-Thijs
-
-Download attachment "signature.asc " of type "application/pgp-signature" (491 bytes)
+-- 
+Vincent Danen / Red Hat Security Response Team 
