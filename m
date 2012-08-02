@@ -1,51 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/11
-Message-Id: <201210102312.35755.timb@nth-dimension.org.uk>
-Date: Wed, 10 Oct 2012 23:12:25 +0100
-From: Tim Brown <timb@...-dimension.org.uk>
-To: oss-security@...ts.openwall.com
-Cc: security@....org
-Subject: Pre-advisory for Konqueror 4.7.3 (other versions may be affected)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/02/2
+Message-ID: <501A0709.2050808@ushahidi.com>
+Date: Thu, 02 Aug 2012 16:50:17 +1200
+From: Robbie Mackay <robbie@...ahidi.com>
+To: Kurt Seifried <kseifried@...hat.com>
+CC: oss-security@...ts.openwall.com, Heather Leson <HLeson@...ahidi.com>
+Subject: Re: CVE request for Ushahidi
 Content-Type: text/plain; charset=utf-8
 
-Taken from NDSA20121010:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
---8<--------
-This advisory comes in 4 related parts:
+Hi Kurt,
+I've added info on which researcher discovered the vulnerability in
+each commit. Anything other info needed?
 
-1) The Konqueror web browser is vulnerable to type confusion
-leading to memory disclosure.  The root cause of this is the
-same as CVE-2010-0046 reported by Chris Rohlf which affected
-WebKit.
+Thanks,
+Robbie Mackay
+Software Developer, External Projects, Ushahidi Inc
 
-2) The Konqueror web browser is vulnerable to an out of bounds
-memory access when accessing the canvas.  In this case the
-vulnerability was identified whilst playing with bug #43813 from
-Google's Chrome repository.
+* Multiple SQL injections (Reported by Timothy D. Morgan, Kees Cook,
+postmodern )
+https://github.com/ushahidi/Ushahidi_Web/commit/fdb48d1 (identified by
+Ushahidi dev team)
+https://github.com/ushahidi/Ushahidi_Web/commit/6f6a919 (postmodern)
+https://github.com/ushahidi/Ushahidi_Web/commit/4764792 (identified by
+Ushahidi dev team)
+https://github.com/ushahidi/Ushahidi_Web/commit/d954093 (identified by
+Ushahidi dev team)
+https://github.com/ushahidi/Ushahidi_Web/commit/3301e48 (Kees Cook)
+https://github.com/ushahidi/Ushahidi_Web/commit/68d9916 (postmodern)
+https://github.com/ushahidi/Ushahidi_Web/commit/e0e2b66 (postmodern)
+https://github.com/ushahidi/Ushahidi_Web/commit/a11d43c (postmodern)
+https://github.com/ushahidi/Ushahidi_Web/commit/3f14fa0 (Timothy D.
+Morgan)
 
-3) The Konqueror web browser is vulnerable to a NULL pointer
-dereference leading to a crash.
+* Missing authentication on comments, reports, email API calls
+(Reported by Kees Cook, Dennison Williams)
+https://github.com/ushahidi/Ushahidi_Web/commit/4c24325 (Dennison
+Williams)
+https://github.com/ushahidi/Ushahidi_Web/commit/f67f4ad (Kees Cook)
+https://github.com/ushahidi/Ushahidi_Web/commit/13ca6f4 (Kees Cook)
 
-4) The Konqueror web browser is vulnerable to a "use-after-free"
-class flaw when the context menu is used whilst the document
-DOM that is being changed from within Javascript.
+* User details exposed in comments API (Discovered by internal dev team)
+https://github.com/ushahidi/Ushahidi_Web/commit/529f353
 
-These flaws were identified during an analysis of previously
-reported vulnerabilities that affected Google's Chrome web
-browser.  It is believed that only vulnerability 1 is/was common
-to the two code bases.
+* Admin user hijacking through the installer (Reported by Wil Clouser)
+https://github.com/ushahidi/Ushahidi_Web/commit/7892559
+https://github.com/ushahidi/Ushahidi_Web/commit/fcdad03
 
---8<--------
+* Stored XSS on member profile pages (Reported by Amy K. Farrell)
+https://github.com/ushahidi/Ushahidi_Web/commit/00eae4f
 
-I'm pre-advising on these flaws since I've not heard anything from the KDE 
-project in about 8 months regarding 3 and 4 and we are aware that 1 and 2 have 
-been fixed.  I'll give it 7 days and then drop technical details.  Vendors with 
-an interest can contact me off list.
 
-Tim
--- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
+On 1/08/12 6:07 AM, Kurt Seifried wrote:
+> On 07/30/2012 06:22 PM, Robbie MacKay wrote:
+>> The Ushahidi team have been notified of the following security 
+>> vulnerabilities thanks to volunteers from OWASP Portland. These 
+>> will be fixed in the upcoming 2.5 release. Could you please 
+>> allocate CVEs for the following issues?
+> 
+>> * Multiple SQL injections (Reported by Timothy D. Morgan, Kees 
+>> Cook, postmodern ) 
+>> https://github.com/ushahidi/Ushahidi_Web/commit/fdb48d1 
+>> https://github.com/ushahidi/Ushahidi_Web/commit/6f6a919 
+>> https://github.com/ushahidi/Ushahidi_Web/commit/4764792 
+>> https://github.com/ushahidi/Ushahidi_Web/commit/d954093 
+>> https://github.com/ushahidi/Ushahidi_Web/commit/3301e48 
+>> https://github.com/ushahidi/Ushahidi_Web/commit/68d9916 
+>> https://github.com/ushahidi/Ushahidi_Web/commit/e0e2b66 
+>> https://github.com/ushahidi/Ushahidi_Web/commit/a11d43c 
+>> https://github.com/ushahidi/Ushahidi_Web/commit/3f14fa0
+> 
+>> * Missing authentication on comments, reports, email API calls 
+>> (Reported by Kees Cook, Dennison Williams) 
+>> https://github.com/ushahidi/Ushahidi_Web/commit/4c24325 
+>> https://github.com/ushahidi/Ushahidi_Web/commit/f67f4ad
+> 
+>> * User details exposed in comments API (Discovered by internal
+>> dev team)
+>> https://github.com/ushahidi/Ushahidi_Web/commit/529f353
+> 
+>> * Admin user hijacking through the installer (Reported by Wil 
+>> Clouser) https://github.com/ushahidi/Ushahidi_Web/commit/7892559
+>>  https://github.com/ushahidi/Ushahidi_Web/commit/fcdad03
+> 
+>> * Stored XSS on member profile pages (Reported by Amy K. Farrell)
+>>  https://github.com/ushahidi/Ushahidi_Web/commit/00eae4f
+> 
+>> Thanks in advance,
+> 
+>> Robbie Mackay
+> 
+> You'll need to list which commits were found by which security 
+> reporter (e.g. which ones are Reported by Timothy D. Morgan, Kees 
+> Cook, postmodern). Thanks.
+> 
+> 
+>> Software Developer, External Projects Ushahidi Inc e: 
+>> robbie@...ahidi.com skype: robbie.mackay
+> 
+> 
+> 
+> 
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (Darwin)
+Comment: GPGTools - http://gpgtools.org
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQEcBAEBAgAGBQJQGgcJAAoJEKnxsxigzOTXl7oH/1u8LLLxzy7SAKNxmVLPTwCK
+TKA8dal726TeIqyforOdXFABKkie+PjdeIBQM9FBHhgnAAQNhNa+K/DR9xg59JTd
+BjpAO/J4yyteyJdxh8+Xi31xbsWUyPdHDa79nLQ0PsetmXRd8EJ4xaL/EWK5N6hL
+OGnrQqujy4jTpwulf43D+gO7Rd6iZS4i+ghCUPpQ5IUeSvIMW5dYFrhgOLKjT5b/
+okfdxBASbTZhc7nNZc0giQ4rGUrdcSOxQF7O0A2w2zELV/hBTRBN8mtBuY7DSgVO
+bLUjsHjKcFCbK90VoKdjxhTW7+KtLTUtdhanN4QzM7uRAqa8V1DTaBssn3Nu2YU=
+=tBbs
+-----END PGP SIGNATURE-----
