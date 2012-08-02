@@ -1,22 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/10/3
-Message-ID: <4F5AEBF0.8020907@redhat.com>
-Date: Fri, 09 Mar 2012 22:51:44 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/02/6
+Message-ID: <501AD035.9010304@redhat.com>
+Date: Thu, 02 Aug 2012 13:08:37 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Python Hash DoS (Issue 13703)
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, debian@...ckmann.de
+Subject: openvswitch world writable directories (CVE-2012-3449)
 Content-Type: text/plain; charset=utf-8
 
-On 03/09/2012 10:48 PM, Kurt Seifried wrote:
-> Can I please get a CVE for the Python Hash DoS:
-> 
-> This is an offshoot of oCERT-2011-003
-> 
-> http://bugs.python.org/issue13703
-> https://bugzilla.redhat.com/show_bug.cgi?id=750555
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2012-1150 for this issue.
+Andreas Beckmann debian@...ckmann.de reports:
+
+openvswitch-pki creates the following world writable directories during
+installation:
+
+    drwx-wx-wx 2 root root 40 Aug  1 05:32
+/var/lib/openvswitch/pki/controllerca/incoming
+    drwx-wx-wx 2 root root 40 Aug  1 05:32
+/var/lib/openvswitch/pki/switchca/incoming
+
+Even if an ordinary local user cannot list the contents of the
+directory, he may correctly derive/guess filenames (unless they are
+exclusively $(mktemp)) and delete and replace files in there.
+
+I don't know how openvswitch-pki works, how it uses this directory,
+what probelms could possibly arise out of this.
+
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=683665
 
 
--- 
+Please note on Fedora 16 and 17 run the command:
+
+/usr/bin/ovs-pki --force init
+
+to create the directories.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=845350
+
+Please use CVE-2012-3449 for this issue.
+
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQGtA1AAoJEBYNRVNeJnmTETMP/iUw/f1q01JnQdyeY1f1R+E0
+FYVJb1lE/oS6K5Dan/ZEeXkz4h5vPsB0hwB+CN0rHpMf0rj+RXS2ydbR1/Yhc5cj
+49GkKjq+AO9qUOYkwGZyercil7r34yQHMivmCcvIMv3gpaEfA+X7oD4640hmggk3
+tbtBmJBAQJNnUkBOdTBZxkCfpTS0/DSnezvF82G77//nb5wHtkgKHP7QeTnZmH4p
+1nKxrQoPIpQOchNxWk15jo8+Y3tLTvMNV0jtciKM+/ufb7WcWt/wSZID5z1RWyfN
+ErRU3kGZgUlKHjOOVY9hajCE7FtfRwvubPMlCBLbpKenEEOv1R7glO6cWBwii1oJ
+3MeaNx0IgeQRnJRz2W+pqi2rZAuMwz17/9D8BD+ALghAGgpHBRY7YmrTq/voCrNV
+qFuuJoBocPsTygeqsl+1e0uV4HpkiFo2bwwYT7wFN9D1zay/4/05A8xpd58lH1O6
+fhyyGV8NsBpiP+dyFQWXb2qdm+djd7YKyGm2uCTvvD62etC/3ptqGAzMIv9k/6E7
+wgqSZeGJxsIq3+p6wDgUlbHhSUnNa4ZhyE/sL//CucesX1L8HZtDbRpyKBJ45ZfA
+apOERBRedQcFhysX0BCBWx3gZbQhmFd8Djd9nsCZVNeOb8w3/YBXOnpFU/hWrg5E
+1Xsh6Mg+iWBVLsGdBudi
+=vHIS
+-----END PGP SIGNATURE-----
