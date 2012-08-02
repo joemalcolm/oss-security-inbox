@@ -1,40 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/10
-Message-ID: <20120103204943.GA4123@openwall.com>
-Date: Wed, 4 Jan 2012 00:49:43 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/02/5
+Message-ID: <20120802151903.6e9d9d34@redhat.com>
+Date: Thu, 2 Aug 2012 15:19:03 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: <oss-security@...ts.openwall.com>
+Subject: bind-dyndb-ldap DoS CVE-2012-3429
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi!
 
-One of the ideas I have is to make the per-source limit(s) dynamic -
-based on the remaining number of free slots (for a given category, if
-applicable - e.g., with per-netblock limits).
+bind-dyndb-ldap bug can be used to remotely DoS named.  Additional
+details and patch link can be found in Red Hat bug:
 
-The attached Perl script simulates a worst-case scenario for an
-algorithm implementing this.  Specifically, with 1000 slots and
-allocations starting at 10 slots per source (and reducing all the way to
-1 per source as we're about to run out of free slots), we're able to
-accept connections from at least 292 different source addresses.
-With 1000 slots, but starting at 50 slots per source, we're able to
-accept connections from at least 88 different source addresses.
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3429
 
-$ ./persource.pl | wc -l
-292
-$ for n in {10..1}; do ./persource.pl | fgrep -cx $n; done
-10
-12
-12
-14
-17
-20
-24
-34
-49
-100
-
-Alexander
-
-View attachment "persource.pl" of type "text/plain" (333 bytes)
+-- 
+Tomas Hoger / Red Hat Security Response Team
