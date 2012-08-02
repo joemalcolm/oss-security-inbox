@@ -1,39 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/4
-Message-ID: <4FE85398.4090109@suse.de>
-Date: Mon, 25 Jun 2012 14:03:36 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com, Dirk Müller <dmueller@...e.com>
-Subject: CVE Request: viewvc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/02/4
+Message-ID: <20120802151012.29e0b0dd@redhat.com>
+Date: Thu, 2 Aug 2012 15:10:12 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: <oss-security@...ts.openwall.com>
+Subject: IcedTea-Web security fixes in 1.1.6 and 1.2.1
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi!
 
-Changelog of viewvc 1.1.15:
-http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.15/CHANGES
+IcedTea-Web versions 1.1.6 and 1.2.1 fix two security issues:
 
-Version 1.1.15 (released 22-Jun-2012)
+http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2012-July/019580.html
 
-   * security fix: complete authz support for remote SVN views (issue #353)
-   * security fix: log msg leak in SVN revision view with unreadable copy source
+Additional information and links can be found in Red Hat bugs:
 
-The first one seems to be this one:
-http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2758
-
-The second one:
-http://viewvc.tigris.org/issues/show_bug.cgi?id=353
-http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2755
-http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2756
-http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2757
-http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2759
-http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2760
-
-cu
-Ludwig
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3422
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3423
 
 -- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-
+Tomas Hoger / Red Hat Security Response Team
