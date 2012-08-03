@@ -1,71 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/9
-Message-ID: <50A3D438.20602@redhat.com>
-Date: Wed, 14 Nov 2012 10:26:16 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Ralf Schlatterbeck <rsc@...tux.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michel Alexandre Salim <michel+fdr@...vestre.me>, Richard Jones <richard@...hanicalcat.net>
-Subject: Re: Re: CVE Request -- roundup: Multiple XSS flaws plus other security related fixes corrected in upstream 1.4.20 version
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/03/4
+Message-ID: <1344010022.4642.170.camel@deadeye.wl.decadent.org.uk>
+Date: Fri, 3 Aug 2012 17:07:02 +0100
+From: Ben Hutchings <bhutchings@...arflare.com>
+To: <oss-security@...ts.openwall.com>
+CC: linux-net-drivers <linux-net-drivers@...arflare.com>
+Subject: Remote DoS in Linux sfc driver through TCP MSS option (CVE-2012-3412)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Issue
+-----
 
-On 11/10/2012 05:28 AM, Ralf Schlatterbeck wrote:
-> On Sat, Nov 10, 2012 at 06:54:46AM -0500, Jan Lieskovsky wrote:
->> [A] * issue2550729: Fix password history display for anydbm
->> backend, thanks to Ralf Hemmecke for reporting. (Ralf) [3]
->> http://issues.roundup-tracker.org/issue2550729
->> 
->> [D] * Fix wrong execute permissions on some files, thanks to
->> Cheer Xiao for the patch. (Ralf)
->> 
->> Cc-ed Ralf Schlatterbeck on this post too to clarify, if issues
->> [A] and [D] would also have security implications / IOW if those
->> would be security flaws too.  Ralf please clarify. Thank you,
->> Jan.
-> 
-> [A] Doesn't have security implications if roundup is correnctly 
-> configured. The bug would create a python backtrace. Unless the
-> "debug" option in section [web] is set (which is explicitly
-> discouraged) this will only display "an error has occurred" in the
-> web-interface. Even if someone sets the debug option in a
-> production release only the hashed password could be disclosed.
-> Note that this bug only affects the anydbm backend which should not
-> be used for a production version either.
+On Linux, a peer (or local user) may cause TCP to use a nominal MSS of
+as little as 88 (actual MSS of 76 with timestamps).  Given that we have
+a sufficiently prodigious local sender and the peer ACKs quickly enough,
+it is nevertheless possible to grow the window for such a connection
+to the point that we will try to send just under 64K at once.  This
+results in a single skb that expands to 861 segments.
 
-How is the password hashed?
+In the sfc driver, such an skb will require hundreds of DMA descriptors;
+a substantial fraction of a TX ring or even more than a full ring.  The
+TX queue selected for the skb may stall and trigger the TX watchdog
+repeatedly (since the problem skb will be retried after the TX reset).
 
-> [D] No security implications: Fixed some permissions on files in 
-> roundup/cgi and locale directories. These are not accessible via
-> the web-server. So this doesn't constitute a remote vulnerability.
-> Local users don't gain anything executing these files as no
-> privilege escalation is involved (they could copy the file which is
-> readable anyway and make their local copy executable).
-> 
-> Ralf
-> 
+Fix
+---
+
+This issue is fixed in David Miller's net.git repository by the
+following commits:
+
+30b678d net: Allow driver to limit number of GSO segments per skb
+7e6d06f sfc: Fix maximum number of TSO segments and minimum TX queue size
+1485348 tcp: Apply device TSO segment limit earlier
+
+The out-of-tree sfc driver, available from
+<https://support.solarflare.com>, was fixed in a different way (not
+dependent on kernel changes) in version 3.2.1.6099.
+
+The OpenOnload package, available from
+<http://www.openonload.org/download.html>, was updated to include the
+fixed sfc driver in version 201205-u1.
+
+The fixed sfc driver will be included in a new EnterpriseOnload release
+shortly.
+
+Mitigation
+----------
+
+If all processes that may send on the sfc interface use Onload, or do
+not use TCP, the vulnerability does not exist.
+
+The vulnerability can otherwise be avoided by making a temporary
+configuration change.  For an sfc interface named eth0, either:
+
+a. Increase the TX queue size:
+       ethtool -G eth0 tx 4096
+   This can increase TX latency and memory usage.
+
+or:
+
+b. Disable TSO:
+       ethtool -K eth0 tso off
+   This can reduce TX throughput and/or increase CPU usage.
+
+-- 
+Ben Hutchings, Staff Engineer, Solarflare
+Not speaking for my employer; that's the marketing department's job.
+They asked us to note that Solarflare product names are trademarked.
 
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQo9Q4AAoJEBYNRVNeJnmTHoEP/j7npeWvm5yQjofgZhJeletQ
-n5nbn3hOEcmVS0mgE3MJQP9kp8Aeq4hH3IfuGPVUs/ip37+hCJjbk2uh6cmM7/PV
-8BUgPHeSnPjSzaWcyWsxtvfXI8joc1V5RQdCJb3Amei5YAqndrMFUs+7TjSFWWDI
-Y0rMwPo0+gOYsc5CYFOyXPsWAttBmuJqWxBM8H9d2QKIn/9WJOB2aiREgXlyHDHC
-huQOWXRioDl5JIY/n+CkMFBxvWVwIiRqvImnPYhvx1Iv53io7Wvk8C6SbEfEhUFZ
-XZviLRg3vYmvaHdfc68DmzVAJNNbS/bfd513GCumiUXd5Lj/82uVXRzYfzoKESNK
-MucHQy2wppo6RvP9MjTsqt3PPS41bvkBHUBPUBNfDbKHyJnOV/ZcIxZx2NfSMuwQ
-ZadK/bhC9BfTggF/zWkenhCgIeNMD8POmZ3sJSZAxjt48CtlMn/YxmEzEVWlG/ut
-tcsw843Vo3KvciLjb2lLAD8DSZwARsr7weuaeBc6ml0EDm04rWndm9DnxgLrckGt
-vP3VC5g8fq/Idii6z+zwqfJZnsEZTSc0QYQHmtuLcC/zsDerl5hv9HJjlZWZPREg
-nmr+Aec+yow/o1J4XOcXOiwUw889N1YMKIMZddaJFNNUZKaRSYo2eQVHT7XtST87
-eVYKoyEBbgF0qLIa3+Km
-=/mbR
------END PGP SIGNATURE-----
