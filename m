@@ -1,44 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/8
-Message-Id: <201209251108.57886.mweckbecker@suse.de>
-Date: Tue, 25 Sep 2012 11:08:57 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/03/7
+Message-ID: <501C1321.4090700@redhat.com>
+Date: Fri, 03 Aug 2012 12:06:25 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Andreas Beckmann <debian@...ckmann.de>
+Subject: CVE ASSIGNMENT: extplorer: creates world writable directory /var/lib/extplorer/ftp_tmp
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Monday 24 September 2012 22:03:20 Steven M. Christey wrote:
-> FYI, this discussion is an interesting example of what I've called the
-> "snowball effect" in CVE when new kinds of issues arise that test the
-> boundaries of what should or should not belong in CVE - allowing one (or a
-> handful) could open the door to hundreds or thousands of other products
-> that have the same issue.
+extplorer: creates world writable directory /var/lib/extplorer/ftp_tmp
 
-Well, I think we are already past of this effect: Looking at [1], I could find
-multiple CVE that have been assigned for such issues.
+bugs.debian.org/cgi-bin/bugreport.cgi?bug=683649
 
-[1] http://cwe.mitre.org/data/definitions/732.html
+Package: extplorer
+Version: 2.1.0b6+dfsg.3-3
+Severity: grave
+Tags: security
+Justification: user security hole
+User: debian-qa@...ts.debian.org
+Usertags: piuparts
 
->
-> Personally, I would expect a security/privacy-preserving product to select
-> the most conservative file permissions that it knows won't violate the
-> user's intention; in this case, the permissions of the original "source"
-> file, as further restricted by the user-specified umask.  If the user
-> calls gpg with a world-readable file and a "promiscuous" umask, then they
+Hi,
 
-Even if the encrypted file is not world-readable, the result (=decrypted file)
-is going to be placed world-readable as long as the default umask (=0022) was
-used.
+during a test with piuparts I noticed that your packages creates a world
+writable directory:
 
-[...]
-> - Steve
+    drwxrwxrwx 2 root root 60 Aug  1 07:46 /var/lib/extplorer/ftp_tmp
 
-Thanks, Matthias
+There any local user may delete/replace arbitrary files that were not
+created by the user himself.
 
--- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+If the write permissions cannot be restricted to a user or group, the
+sticky bit should be set on the directory to prevent users from
+manipulating files they don't own.
+
+
+Andreas
+
+
+Please use CVE-2012-3454 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQHBMhAAoJEBYNRVNeJnmTEwQP/3LeBbxnOOJieArdbEkJPZZg
+Z6LSDc89DrRIB2M2y5Mfjng39WgLmDk/Nn9t20ht6f5NypThm0vXu/G/+veMFvqu
+OcY2O9AkN3aixkW8gzog4Owv4xpwh4LyMkcOhVkUZSiZt1LcW4uHvc5rgl//xe+k
+VO+bHLz5KkN2kpdhB6Baj1uoLCLuv/X1D031iGaiJi/rXJY8pLLF9BTQYtLKSvzH
+sDafYfkvVjJKQzm0BWGpCVnnDc7YWKqom0WLRRBpEOi3u2cs0wICpzLMidAclADi
+DZe+wPw/ZQAhFN85Vtp/zBzZ1sVu/jhTODEEl00SNR6EDBzmkvWXmz0RD/tX3Hi5
+aGIp8H0Ek/QfVYQ0zBM3kiAE0rPtQW8Hhs3E4wy+spQYbFJ8h5x4C0yAGz2jW9ni
+xpn2kW0VrE32Jj141i/Xmpszf4sgliUeiRWaL/2jc/7/Z6qrl+N/ZJH93MCtEGmu
+Y3vKA1uVE9lJcbpfKWAKgpKgJToZQMj4eM4TYcjJJ64gmVCWfB1G2VqCYWyX/RFt
+PBPxYsqlaMSLWYPlYN51A3uWz6iiP1bfU8/h1biU0sEZPyvOFmEzv64MMKPQakZx
+U3vL9hAkRhg1ANus2sAWTECdSvlpop7qDd0rwHqR3N+vuOMpRer/LALlFmgwKxo3
+PhFZegy/eLjRaLfO2ao5
+=JAx5
+-----END PGP SIGNATURE-----
