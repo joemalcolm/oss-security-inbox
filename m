@@ -1,27 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/3
-Message-ID: <20120117091745.GA31441@foo.fgeek.fi>
-Date: Tue, 17 Jan 2012 11:17:45 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: gpw password generator giving short password at low rate
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/03/2
+Message-ID: <20120803142358.0a78351d@redhat.com>
+Date: Fri, 3 Aug 2012 14:23:58 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: secalert_us@...cle.com
+Cc: oss-security@...ts.openwall.com, serg@...typrogram.com, John Haxby <john.haxby@...cle.com>
+Subject: Re: MySQL CVEs (was: Security vulnerability in MySQL/MariaDB sql/password.c)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 17, 2012 at 09:51:05AM +0100, Yves-Alexis Perez wrote:
-> we were pointed at a bug in gpw (a password generator), which makes it
-> generate shorter password than required at a rate of ~20 over 1 million.
-> The bug is at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651510
-> (so already public) and I'm wondering if that deserves a CVE:
-> 
-> * gpw seems unmaintained (upstream and in Debian since around 2006)
-> * I'm not sure people even use it
-> * people using it interactively will notice the password has the wrong
-> size
-> 
-> But as it may be used in a script, then it might still be a real issue.
-> 
-> What do people think?
+On Wed, 27 Jun 2012 13:47:05 +0200 Tomas Hoger wrote:
 
-I think this is security issue and should receive CVE. Is this program used in other distributions we could notify? Has this been fixed in other versions?
+> On Mon, 18 Jun 2012 18:50:01 +0200 Tomas Hoger wrote:
+> 
+> > Additionally, following bugs try to collect info on MySQL security
+> > fixes in the last released and an upcoming Oracle CPU:
+> > 
+> > https://bugzilla.redhat.com/show_bug.cgi?id=832477
+> > https://bugzilla.redhat.com/show_bug.cgi?id=832540
+> > 
+> > It would be nice if Oracle could confirm the mapping between CVEs
+> > and particular issues to avoid any incorrect guesses.
+> 
+> I was really hoping to see some comments form Oracle security team and
+> an explicit confirmation of the correct CVE guesses.  Is there a good
+> reason why CVE mapping for public issues can not be provided?
 
-- Henri Salo
+July CPU does not mention any of the CVEs that were previously
+mentioned here.
+
+http://www.oracle.com/technetwork/topics/security/cpujul2012-392727.html#AppendixMSQL
+
+Judging from the CVSS scores, CVE-2012-2122 (password checking issue)
+is not duplicated by any CVE listed.  This does not sound too
+surprising, as it's quite likely no Oracle MySQL build was really
+affected by this flaw, which would explain why this may have not been
+treated as security for binary packages.
+
+There does not seem to be any obvious explanation why CVE-2012-2749 and
+CVE-2012-2750 are not listed.  It's quite possible they are duplicates
+of or covered by (as it seems some CVEs refer to more than one issue)
+CVE-2012-1734 and CVE-2012-1689 respectively.
+
+Looking at the issue that affected 5.1 versions and going through the
+change between affected and fixed versions, it seems CVEs form the CPU
+refer to the following issues:
+
+
+2012-07 CPU
+-----------
+
+CVE-2012-0540 GIS Extension
+
+http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.7
+BUG#12414917 - ISCLOSED() CRASHES ON 64-BIT BUILDS
+
+http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.8
+http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.9
+BUG#12537203 - CRASH WHEN SUBSELECTING GLOBAL VARIABLES IN GEOMETRY FUNCTION ARGUMENTS
+
+
+CVE-2012-1734 Server Optimizer
+
+http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.16
+Bug#11766300 59387: FAILING ASSERTION: CURSOR->POS_STATE == 1997660512 (BTR_PCUR_IS_POSITIONE
+Bug#13639204 64111: CRASH ON SELECT SUBQUERY WITH NON UNIQUE INDEX
+-> CVE-2012-2749
+
+http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.13
+Bug#13031606 VALUES() IN A SELECT STATEMENT CRASHES SERVER
+
+http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.3
+Bug#13519724 63793: CRASH IN DTCOLLATION::SET(DTCOLLATION &SET)
+
+
+CVE-2012-1689 Server Optimizer
+-> dupe of / overlaps with CVE-2012-2750?
+
+http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3695
+Bug#13012483:EXPLAIN EXTENDED, PREPARED STATEMENT, CRASH IN CHECK_SIMPLE_EQUALITY
+
+
++++++++++++
+
+
+2012-04 CPU
+-----------
+
+CVE-2012-1703 Server Optimizer
+
+http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.9.1
+Bug #11765810 58813: SERVER THREAD HANGS WHEN JOIN + WHERE + GROUP BY IS EXECUTED TWICE FROM P
+
+
+CVE-2012-0583 MyISAM
+
+http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/1810.4002.1
+Bug#12361113: CRASH WHEN "LOAD INDEX INTO CACHE" WITH TOO SMALL KEY CACHE
+
+
+CVE-2012-1688 Server DML
+
+http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.8.4
+http://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/2661.806.4
+Bug#13510739 63775: SERVER CRASH ON HANDLER READ NEXT AFTER DELETE RECORD
+-> CVE-2012-2102
+
+
+CVE-2012-1690 Server Optimizer
+
+http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.8.5
+Bug#12663165 SP DEAD CODE REMOVAL DOESN'T UNDERSTAND CONTINUE HANDLERS
+
+
+Oracle security team, please confirm the mapping above if it's correct,
+or provide corrections.
+
+Thank you!
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
