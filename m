@@ -1,106 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/10
-Message-ID: <4FA7F06C.9050700@redhat.com>
-Date: Mon, 07 May 2012 09:55:24 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/03/1
+Message-ID: <1343973852.3878.49.camel@scapa>
+Date: Fri, 03 Aug 2012 08:04:12 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: connman heads up / CVE requests
+Subject: Re: openvswitch world writable directories (CVE-2012-3449)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 05/07/2012 07:59 AM, Sebastian Krahmer wrote:
-> Hi,
+On jeu., 2012-08-02 at 13:08 -0600, Kurt Seifried wrote:
+> Andreas Beckmann debian@...ckmann.de reports:
 > 
-> Thanks for disassembling my mail :)
+> openvswitch-pki creates the following world writable directories
+> during
+> installation:
 > 
-> 
->> 1) Conman doesn't check for the origin of netlink messages (from
->> https://bugzilla.novell.com/show_bug.cgi?id=715172#c4)
->> 
->> with patches: [1a] 
->> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=c1b968984212b46bea1330f5ae029507b9bfded9
->>
->> 
-[1b]
->> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=b0ec6eb4466acc57a9ea8be52c17b674b6ea0618
->
->> 
-> Yes.
+[…]
 
-Please use CVE-2012-2320 for this issue.
+> Please use CVE-2012-3449 for this issue.
 
->> 
->> 2) Check hostname validity prior setting the hostname in
->> loopback plug-in: (from
->> https://bugzilla.novell.com/show_bug.cgi?id=715172#c4)
->> 
->> with patches: [2a] 
->> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=26ace5c59f790bce0f1988b88874c6f2c480fd5a
->>
->> 
-[2b]
->> http://git.kernel.org/?p=network/connman/connman.git;a=commit;h=a5f540db7354b76bcabd0a05d8eb8ba2bff4e911
->
->> 
-> Yes. The severity of this is quite high, its a default remote root
-> exploit, as connman is requesting hostname per dhcp by default and
-> not checking for shell escapes. (I did not check whether they clean
-> any other strings that could appear and could contain newlines etc.
-> when its written to a config file)
+I'm unsure if you want to allocate CVEs for all this kind of issues, but
+Andreas is currently reporting a bunch of bugs for those. See:
 
-Please use CVE-2012-2321 for this issue.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=683649
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=683647
 
+and I guess there might be more to come since it's the result of
+piuparts tests run against the whole archive.
 
->> 
->> 3) DHCPv6 option parsing vulnerable to DoS (endless loop): (from
->> https://bugzilla.novell.com/show_bug.cgi?id=715172#c9)
->> 
->> with patches: There doesn't seem to be upstream patches for this
->> yet.
-> 
-> I think its this: 
-> http://lists.connman.net/pipermail/connman/2012-May/009473.html
+Regards,
+-- 
+Yves-Alexis
 
-Please use CVE-2012-2322 for this issue.
-
-
-> 
->> 
->> 4) Check vpnc options for validity prior saving them: (from
->> https://bugzilla.novell.com/show_bug.cgi?id=715172#c10):
-> 
-> AFAIK there is no patch for it yet. Upstream needs to
-> verify/confirm these, but I think its a real bug that lets you
-> overwrite files.
-
-I will wait until this is confirmed, when it is please reply to the list.
-
-> Sebastian
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPp/BsAAoJEBYNRVNeJnmT28EP/1GoRdI2u2LyKTe0xbxy5ZZb
-j0+XJaUz80TC7tOf0RuVpZOe9U3dympabOHCtLM+9o0DzqAgE/erVHxIA+8UPHeY
-IURc3/ABN5Na/SgUd1WbPTGmxbRq9cShkZf32R9Qzw6dNf6aQ3hAPmlSNlJu9O2O
-76REIWD83b11GYmjj9RwX5ARvybzy+/4RMI6MUXFd8Tz+PmKKh3nHzRnBUC85iYv
-bbsk5UnLGC9ISlJ9ytiAEDvGlt64dOGrUkVY9Cj5XwxUA01Qzi94SeF7XmEvPy4i
-q+Uk7Pp4ZTB57IDHtXcTtjvKQGpE3SonRx7mT6LE/Asbg8+6iQIS+biyq/jh8VmB
-a2cbQQm52pgCqSVCmWgtn6qGdGUPFXYpBsQ1xv8SAcOqXBrXor7PYulVcM+cly65
-X8s0GKIpp3sw9rsdHy3aZW04FRSe3ij/TKvjHsxx43652nPExrB3GdAJNXsvdvzP
-WrJ2TR9F52DSsSucPdsVAWtrAE0QTlISYhRvx1T6RSmY9/xFobzl76alidsrHSMQ
-KcGmr7kJTwOwfyZDe1B4lx2dXyAdt4rA1w/W8rY3uhGDDbI1REGvaviz3NivqLox
-4qBkNxLkHiDZceTF3guKisQp3ElKKQ4jRvvyHk37XcgXgNswun5d7/2gFxT9KI00
-U4Cvy8m7wuN4wcfkJ8ZA
-=h+ql
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
