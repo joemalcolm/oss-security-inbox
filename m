@@ -1,53 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/3
-Message-ID: <CAEZPtU453yPvKx_Lmc5WUhnf9xMv=abScd0tnsx4xSFaPQOP2g@mail.gmail.com>
-Date: Thu, 28 Jun 2012 08:13:14 +0200
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/03/6
+Message-ID: <501C12A0.9000108@redhat.com>
+Date: Fri, 03 Aug 2012 12:04:16 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@....net
-Subject: Re: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+CC: Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: openvswitch world writable directories (CVE-2012-3449)
 Content-Type: text/plain; charset=utf-8
 
-hi Kurt!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu, Jun 28, 2012 at 7:12 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+On 08/03/2012 12:04 AM, Yves-Alexis Perez wrote:
+> On jeu., 2012-08-02 at 13:08 -0600, Kurt Seifried wrote:
+>> Andreas Beckmann debian@...ckmann.de reports:
+>> 
+>> openvswitch-pki creates the following world writable directories 
+>> during installation:
+>> 
+> […]
+> 
+>> Please use CVE-2012-3449 for this issue.
+> 
+> I'm unsure if you want to allocate CVEs for all this kind of
+> issues, but Andreas is currently reporting a bunch of bugs for
+> those. See:
 
-> So simply querying:
->
-> ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
->
-> e.g.:
->
-> http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
->
-> shows authors, SAPI modules (and their authors) and normal modules
-> (and their authors), resulting in a significant information disclosure
-> (version #'s can be narrowed down from the authors list).
->
-> This has already been reported, but no CVE was assigned:
->
-> https://bugs.php.net/bug.php?id=55497
->
-> It is mentioned in http://php.net/manual/en/ini.core.php however it is
-> enabled by default:
->
-> ; Decides whether PHP may expose the fact that it is installed on the
-> server
-> ; (e.g. by adding its signature to the Web server header).  It is no
-> security
-> ; threat in any way, but it makes it possible to determine whether you
-> use PHP
-> ; on your server or not.
->
-> ; http://www.php.net/manual/en/ini.core.php#ini.expose-php
->
-> expose_php = On
+If a security boundary is crossed then yup. E.g. you can monkey with
+the programs log files/config/etc. (cover up attacks/etc.) or possibly
+crash the program/cause a dos (forcing it to append/process huge
+files, etc.). Alternatively you can use the directory to stash files
+(and typically the admin only expects /tmp/, /var/tmp/) and so on.
 
-Why would it require a CVE and why is it seen as a security issue?
-Sure it could be, like unfiltered input and the like but...
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=683649 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=683647
+> 
+> and I guess there might be more to come since it's the result of 
+> piuparts tests run against the whole archive.
 
-Cheers,
--- 
-Pierre
+Basically it's a lot like /tmp/ file creation issues. They are low
+level, rarely fatal, but they are security issues that need to be
+addressed. I'll do separate emails for them to make tracking easier.
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+> Regards,
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQHBKfAAoJEBYNRVNeJnmT3Z8QALhQ17t1psZCdrxvzW/aaBvx
+g5cwQEZjZWJkeFq+1GS+RHQ5wdtXdI0x7d5WhK0t4hQFPqcSyvzn+UJV2QFeXH+m
+F71i0IXt473Wa6G/XdkwQMYpzkF5FIkNHeKJAC4HOg1a3qsu2H8BKHl2fMKT7MDh
+HuZVOFVqVqZiqe3zNHEXfHbPebeJQEPATtROIncTAbPKXZnbc4Y+i6IEIwXLjZk0
+jDm+O16CopmivuLopy8AxT6Z1z18fNigvevOQBjtiHRPR0S1giynV8/CUn5C5cBN
+BuhaVzYT/FkHE02ayeAEq4NApYdJbvBWGmo5mOg/hmchhVL00qBPeTOFCo1w72QM
+vxfGKCRHL4Cm1SvQraY+nOwl9sLBpEvSkpFUdrITBpF03muE9KMgo5DnyU5kKf4D
+6mBDy+RCBWXMk8wC7tgaUSUJ1qKeW/hO2w/aKwSXkmsK8X3u8NzCS2ezUZva/Nk7
+Y4UssGijN8wwQb52//Ab3mximiV3ucHDZlZOmGHNUpVSPrAmW3KES0dJMhyHiGh+
+gR0E7lHrf5HA4XTH3/VLee9fWVNcY3D8FmyLEjixDtEGQub/ehiNV9DrZXrun+Jg
+XYLlzTBIXNeAmWHSnpOsTTGO6KI45SxcJEe0jrcDlhQXv2ygDohiYZxik6jDQeKc
+kycbiI0+K4QCEKd/7X1v
+=t7K3
+-----END PGP SIGNATURE-----
