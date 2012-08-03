@@ -1,29 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/7
-Message-ID: <20120607085634.GA25065@kroah.com>
-Date: Thu, 7 Jun 2012 17:56:34 +0900
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: hyper-v daemon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/03/8
+Message-ID: <501C1363.8090606@redhat.com>
+Date: Fri, 03 Aug 2012 12:07:31 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Andreas Beckmann <debian@...ckmann.de>
+Subject: CVE ASSIGNMENT: logol: creates world writable directory: /var/lib/logol/results
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 07, 2012 at 10:22:04AM +0200, Marcus Meissner wrote:
-> On Thu, Jun 07, 2012 at 10:35:24AM +0900, Greg KH wrote:
-> > On Wed, Jun 06, 2012 at 04:59:59PM +0200, Sebastian Krahmer wrote:
-> > > Hi,
-> > > 
-> > > The hyper-v daemon fails to check origin of netlink messages.
-> > > Please see
-> > > 
-> > > https://bugzilla.novell.com/show_bug.cgi?id=761200
-> > 
-> > Is there a fix for this anywhere yet?
-> 
-> Attached to the bugreport and here. It is the same patch as pasted in #c3 of this report.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks, as this tool is part of the Linux kernel, is someone going to
-send a patch upstream to get this fixed there?
+logol: creates world writable directory: /var/lib/logol/results
 
-thanks,
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=683647
 
-greg k-h
+Package: logol
+Version: 1.5.0-2
+Severity: grave
+Tags: security
+Justification: user security hole
+User: debian-qa@...ts.debian.org
+Usertags: piuparts
+
+Hi,
+
+during a test with piuparts I noticed that your packages creates a world
+writable directory:
+
+    drwxrwxrwx 2 root root 40 Jul  1 21:59 /var/lib/logol/results
+
+There any local user may delete/replace arbitrary files that were not
+created by the user himself.
+
+
+Andreas
+
+Please use CVE-2012-3453 for this issue.
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQHBNiAAoJEBYNRVNeJnmTIqQQANPvksz6G4rNQERjkF9lJgxo
+9yVY8WINtOzHXnSxKl5fmyMxDkTTH0Rr268X1tPN13htoFRNJwyxl0VLnyUUWRhe
+i+wsrBhbGZmHW2f7ZJ3PmMkAehlj7PTfbnmx1wdcmvAtXxDjStQfwDfSnuT3PvLa
+8WkdQ3RpYuZrDpi6+d9A2nI3Y9EwWLhwS5Pp/BwlZhkGf+jtXGb0aJhvQ8zprdkU
+4gEkoscgIm7AFYvUveKBwJCIHlqFVjSMRNOPxMpWpGYKQWrLxW3UNwxcmpWWiADg
+zLRJFsjgXiE4qNAjJNZPU2rMbpdgIAQCQ0HDL1zutoEjMglm5vEisEdnk2AjYevR
+GlohleGU3e6X7JyN1HDX+8Vh2dLYBvYCU2/Hpfdk28RtM5vjAd9cYh9QcpwyK9ot
+14p4FaG7HyMBbINtbmSACQaZp0MrVa0N35/++/h5Bq+G5t0/L+hBpYEswShYyMvj
+cNrqbPsZwWeB/6obxZdMcav4IYTXYUktsaM/kp3EDVG/JpmFXRTMnHQ6c9BuEDaZ
+lrc2tsHFaaYWtfzItlC9UZOTObWLv/pLX/1u9cvCcP8mrqs4Kjj3XvTk2gehxuEZ
+KA4F/G+sO7WC2y1oC/ejc3J92E1uyMoFm5lXMxuve0v2n+ItzSFa6nw9ZHHwHjyK
+dzIBQKWkfG4GOaDQyVjN
+=eGgi
+-----END PGP SIGNATURE-----
