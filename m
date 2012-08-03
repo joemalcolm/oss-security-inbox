@@ -1,21 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/5
-Message-ID: <87zka1cnqo.fsf@mid.deneb.enyo.de>
-Date: Tue, 24 Apr 2012 14:34:23 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/03/3
+Message-ID: <20120803131217.GA16635@suse.de>
+Date: Fri, 3 Aug 2012 15:12:17 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: gnome-screensaver 3.4.2 locked only active screen
 Content-Type: text/plain; charset=utf-8
 
-* Sebastian Krahmer:
+Hi,
 
-> Indeed, the point was to also check against fscaps:
->
-> https://bugzilla.novell.com/show_bug.cgi?id=694598
->
-> At least it should be considered for future builds. The mount.nfs
-> case was only interesting for the suid bit.
+(FYI ... if no one shipped g-s 3.4.2, it probably does not need a CVE.
+ openSUSE 12.2 fixed it during development.)
 
-Okay.  Our mount.nfs doesn't seem to use libgssglue.  I wonder if you
-use a different code base, or if this is something that's going to be
-come relevant to use with a newer upstream version, too.
+gnome-screensaver 3.4.2 (the only version affected) had the screenlock
+on multi-display settings only locking the screen with active focus.
+The other displayscreens staid unlocked and usable.
+
+https://bugzilla.gnome.org/679441
+
+Ciao, Marcus
+-- 
+Open Linux Security Engineer Position at SUSE: http://bit.ly/Li4RbS
