@@ -1,81 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/11
-Message-Id: <E1T9DYh-0005Tm-0t@xenbits.xen.org>
-Date: Wed, 05 Sep 2012 11:14:11 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 18 (CVE-2012-3516) - grant table entry swaps have inadequate bounds checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/03/5
+Message-ID: <501C11CE.1040206@redhat.com>
+Date: Fri, 03 Aug 2012 12:00:46 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: gnome-screensaver 3.4.2 locked only active screen
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-            Xen Security Advisory CVE-2012-3516 / XSA-18
-                           version 2
+On 08/03/2012 07:12 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> (FYI ... if no one shipped g-s 3.4.2, it probably does not need a
+> CVE. openSUSE 12.2 fixed it during development.)
+> 
+> gnome-screensaver 3.4.2 (the only version affected) had the
+> screenlock on multi-display settings only locking the screen with
+> active focus. The other displayscreens staid unlocked and usable.
+> 
+> https://bugzilla.gnome.org/679441
+> 
+> Ciao, Marcus
 
-       grant table entry swaps have inadequate bounds checking
+The bug entry shows multiple people complaining so looks like it's out
+there. Please use CVE-2012-3452 for this issue.
 
-UPDATES IN VERSION 2
-====================
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The grant table hypercall's GNTTABOP_swap_grant_ref sub-operation does
-not perform adequate checks on the input grant references.
-
-IMPACT
-======
-
-A malicious guest kernel or administrator can crash the host.
-
-It may be possible for an attacker to swap a valid grant reference,
-which they control, with an invalid one allowing them to write
-abitrary values to hypervisor memory. This could potentially lead to a
-privilege escalation.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen-unstable, including Xen 4.2 release candidates are vulnerable to
-this issue.
-
-Xen 4.1 and earlier do not include this hypercall and are therefore
-not vulnerable.
-
-MITIGATION
-==========
-
-The only mitigation is not to run guests which have untrusted
-administrators.
-
-RESOLUTION
-==========
-
-Applying the attached patch will resolve the issue.
-
-PATCH INFORMATION
-=================
-
-The attached patch resolves this issue
-
-    Xen unstable                               xsa18-unstable.patch
-
-$ sha256sum xsa18-unstable.patch
-ad354a1964fc52b0e48d405514156935cc8dfcb5bdaee307e3e74afcc0ca8914  xsa18-unstable.patch
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQEcBAEBAgAGBQJQRzP3AAoJEIP+FMlX6CvZ350H/jfmrx6a1pNYF3KYtVVIXu1y
-ZERi/qxji162XGvB+7gdq+IdhLYAeWXRFF309U1FwcRxaQJPRAT024q6Hs+ITr9i
-L7OnSP9s+UHT4251X3UlOnEfQyKF6NKJIYbamQbfVIvVPdUtNLj4SKYqxlvjyyc3
-DpqiARD5f9+i7OkcojvhXszlbMgbpSQ8TYCW5De0dTkZgKQYq2hRuYf/1hmZ1lJt
-vFEkTCFxO7uxoH6gulyuEjszDYFAUmE3xdxKbT11mIkwnS1wfgp4Ob5H0ioSDNJo
-oOxqt4KsuNXHDW/B8QlxnQejKBL0INtmOjh7GMox4bvxg4gP57ZlDweC2lkR37c=
-=dD8C
+iQIcBAEBAgAGBQJQHBHOAAoJEBYNRVNeJnmToAkP/0MSpx/h5wMy418bALPn0kmK
+6nXkem9mvSsURW6LMvlOIscvWcCOLL90orV5HQQnfRf2zoxfWaSEylYxwCuWenFq
+nVMDBcc8kehBcyc1NrFNEyKiSS640/hvlBUjUtwIsYHFmkTnYa24M507LEhs/5tn
+Ey/t5KqNtWt5xCyvrU9tEjcv4lWfW700sDMYl9TgDIDBu6CLHAPDWmAvbTUugaL9
+RvFnaFaXfb8fLF3h2dJuxMEr0vFn3l//tdtHBi4N4v8u5Q1+uOii0skFObw+SZis
+4CRAfGi9t4ss5Vcp8RjuSBngQmHSXVssoETRnRBT00QgK52V2NVELLQy1QeG0nUr
+6Z6mcwX2Vi/AA4T0oIDEh5WHYrZyYkQ1EOZ5XmE65DLqykmAQzfAw21A9e6W7unq
+UH8FseAZCBGdjn0slgjKbtSO15GiUmtQ9ir6VURf8khkzxRJsAC4MF1UWvspjshA
+HDVUf67bLfgMnoGs44li0xujDB7v6nwRizwy5siZm6kaid/B8PxBjRWU6i8IRWfP
+O1HQ2p/HCmRVs3nIcJonaeGRfhBK6ooXasfiYKrKOjhSWd5tMt5HcfSsIA+H1blO
+z68n5DgIhiuZA+SQmhQHKAgkQYY4DHmjDMozKE4pUNxR+VNZziXVpwWor9dl7NQU
+JEbKXtUjdkT45fbfp8Ke
+=B99R
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa18-unstable.patch" of type "application/octet-stream" (1368 bytes)
