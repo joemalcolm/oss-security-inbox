@@ -1,26 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/03/5
-Message-ID: <4F7B5A32.2000705@redhat.com>
-Date: Tue, 03 Apr 2012 14:14:42 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/04/2
+Message-ID: <51698648.klcKoNKZH2@devil>
+Date: Sat, 04 Aug 2012 16:58:24 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, security@...mla.org
-Subject: Re: CVE-request: Joomla 2012-04 398-20120307 399-20120308
+Subject: Re: CVE request for Calligra
 Content-Type: text/plain; charset=utf-8
 
-On 04/03/2012 07:01 AM, Henri Salo wrote:
-> Can I get two CVE-identifiers for these issues in Joomla:
+On Saturday 04 August 2012 09:15:22 Jeff Mitchell wrote:
+> Hi,
 > 
-> http://developer.joomla.org/security/news/398-20120307-core-information-disclosure.html
-
-Please use CVE-2012-1611 for this issue.
-
-> http://developer.joomla.org/security/news/399-20120308-core-xss-vulnerability.html
-
-Please use CVE-2012-1612 for this issue.
-
-> - Henri Salo
-
+> A buffer overflow attack can lead to arbitrary code execution. Can we
+> get a CVE for this issue, please?
+> 
+> Thanks,
+> Jeff
+Please post commit code and please provide more information (as Kurt want)
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Agostino Sarubbo / ago -at- gentoo.org
+Gentoo/AMD64 Arch Security Liaison
+GPG: 0x7CD2DC5D
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
