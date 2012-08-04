@@ -1,53 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/7
-Message-ID: <20120201205459.GA8715@openwall.com>
-Date: Thu, 2 Feb 2012 00:54:59 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/04/5
+Message-ID: <501D54C1.9030502@kde.org>
+Date: Sat, 04 Aug 2012 12:58:41 -0400
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request for Calligra
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 20, 2012 at 01:44:45PM +0400, Solar Designer wrote:
-> http://oss-security.openwall.org/wiki/mailing-lists/distros
+On 08/04/2012 11:56 AM, Agostino Sarubbo wrote:
+> On Saturday 04 August 2012 11:44:33 Jeff Mitchell wrote:
+>> I don't know what Kurt wants, as he didn't respond to my email.
+>>
+>> What information do you want?
+> Take a look here, an example of CVE description: 
+> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-2677
 > 
-> to state the following:
+> Integer overflow in the ordered_malloc function in boost/pool/pool.hpp in 
+> Boost Pool before 3.9 makes it easier for context-dependent attackers to 
+> perform memory-related attacks such as buffer overflows via a large size 
+> value, which causes less memory to be allocated than expected.
 > 
-> "Please note that the maximum acceptable embargo period for issues
-> disclosed to these lists is 14 to 19 days, with embargoes longer than 14
-> days (up to 19) allowed in case the issue is reported on a Thursday or a
-> Friday and the proposed coordinated disclosure date is thus adjusted to
-> fall on a Monday or (preferably) a Tuesday.  Please do not ask for a
-> longer embargo.  In fact, embargoes shorter than 14 days are preferable."
+> So, in this case, if you don't provide to any info, what Kurt should write?
+>  
+>> What commit code do you want?
+> Please post the diff between the vulnerable code and the fix so we are sure 
+> that is a security issue.
+> 
 
-I've just revised the last sentence above to say "In fact, embargo
-periods shorter than 7 days are preferable."
+Hi,
 
-Can we possibly afford to change the maximum to 7 to 11 days (depending
-on day of week)?  That is, 7 days is the standard maximum, up to 11 days
-is possible if the issue is reported on a Thursday or a Friday (only in
-these two cases).  I am for this change (in both my list member for
-Openwall and my list admin capacity).  What about others?
+You can read all about the details of the vulnerability in the Black Hat
+2012 presentation by Charlie Miller
+(http://media.blackhat.com/bh-us-12/Briefings/C_Miller/BH_US_12_Miller_NFC_attack_surface_WP.pdf)
+-- details of the Calligra (and KOffice) exploit start at page 39.
 
-(In fact, I'd prefer an even shorter maximum, but I am proposing what I
-think has a chance to be approved by others without making the list a
-lot less useful to them.)
+Unfortunately, he did not notify us ahead of time of his intent to
+disclose, so it's already public.
 
-Also, I added the following to the wiki page:
+Thanks,
+Jeff
 
-"Please note that any/all list postings may be made public once the
-corresponding security issue is publicly disclosed, so please do not
-post information that you want to stay private forever."
 
-with a footnote that says:
-
-"There was/is intent to be making all list postings public with a delay,
-which is currently not yet implemented for technical reasons, but it may
-be implemented and applied retroactively - that is, including to past
-postings."
-
-Those "technical reasons" are me not being aware of a program to
-mass-decrypt an mbox with PGP/MIME messages (producing an mbox with
-decrypted messages).  I'd appreciate it if someone finds or writes
-this program.
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
