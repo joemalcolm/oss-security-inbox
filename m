@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/11
-Message-ID: <20120104200226.GK23586@redhat.com>
-Date: Wed, 4 Jan 2012 13:02:26 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/04/3
+Message-ID: <501D4361.3020508@kde.org>
+Date: Sat, 04 Aug 2012 11:44:33 -0400
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-Cc: krahmer@...e.de, cve-assign@...re.org, Mark Thomas <markt@...che.org>
-Subject: Re: Re: CVE-2011-4858 confusion
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request for Calligra
 Content-Type: text/plain; charset=utf-8
 
-* [2012-01-04 09:50:48 -0500] cve-assign@...re.org wrote:
+On 08/04/2012 10:58 AM, Agostino Sarubbo wrote:
+> On Saturday 04 August 2012 09:15:22 Jeff Mitchell wrote:
+>> Hi,
+>>
+>> A buffer overflow attack can lead to arbitrary code execution. Can we
+>> get a CVE for this issue, please?
+>>
+>> Thanks,
+>> Jeff
+> Please post commit code and please provide more information (as Kurt want)
 
->MITRE is still working on this. Our current perspective is that
->CVE-2011-4084 is one vulnerability that was confirmed by the upstream
->vendor, and CVE-2011-4858 is a different vulnerability that was not
->confirmed by the upstream vendor. There are apparently related test
->cases and test results that are not yet public.
+I don't know what Kurt wants, as he didn't respond to my email.
 
-We received an email from upstream Tomcat asking us to make that change.
-CVE-2011-4858 is the CVE for the hash collision issue.
+What information do you want?
 
-I'm cc'ing Mark who made the original request to us.  Mark, could you
-please clarify?
+What commit code do you want?
 
-Thanks.
+--Jeff
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
