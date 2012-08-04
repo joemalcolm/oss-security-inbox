@@ -1,24 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/11/3
-Message-ID: <87fw7ut3k9.fsf@windlord.stanford.edu>
-Date: Fri, 10 Aug 2012 22:12:22 -0700
-From: Russ Allbery <rra@...nford.edu>
-To: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/04/4
+Message-ID: <1364590.E2sLDAi04o@devil>
+Date: Sat, 04 Aug 2012 17:56:26 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: Jeff Mitchell <mitchell@....org>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: rssh command-line parsing vulnerability
+Subject: Re: CVE request for Calligra
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...hat.com> writes:
+On Saturday 04 August 2012 11:44:33 Jeff Mitchell wrote:
+> I don't know what Kurt wants, as he didn't respond to my email.
+> 
+> What information do you want?
+Take a look here, an example of CVE description: 
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-2677
 
-> Not sure why I didn't get this a CVE earlier, please use CVE-2012-3478
-> for this issue. Red Hat reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=820414
+Integer overflow in the ordered_malloc function in boost/pool/pool.hpp in 
+Boost Pool before 3.9 makes it easier for context-dependent attackers to 
+perform memory-related attacks such as buffer overflows via a large size 
+value, which causes less memory to be allocated than expected.
 
-Thanks!  I'm happy to share the patches that I have for the Debian package
-if Red Hat would also like to use them.  They're somewhat different than
-upstream (or, rather, I had to layer additional patches on top of
-upstream) because Debian adds support for the new rsync protocol flags and
-for svnserve as a supported program, which required changes to the patch.
+So, in this case, if you don't provide to any info, what Kurt should write?
+ 
+> What commit code do you want?
+Please post the diff between the vulnerable code and the fix so we are sure 
+that is a security issue.
 
 -- 
-Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
+Agostino Sarubbo / ago -at- gentoo.org
+Gentoo/AMD64 Arch Security Liaison
+GPG: 0x7CD2DC5D
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
