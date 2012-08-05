@@ -1,39 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/14
-Message-ID: <4F678A44.5090808@redhat.com>
-Date: Mon, 19 Mar 2012 13:34:28 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/05/2
+Message-ID: <501ED51C.808@redhat.com>
+Date: Sun, 05 Aug 2012 14:18:36 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, root@...uxmint.com
-Subject: LinuxMint - temp file creation vulns in mintNanny and mintUpdate
+To: oss-security@...ts.openwall.com
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request for Calligra
 Content-Type: text/plain; charset=utf-8
 
->mscherer@...hat.com reported these to me:
->
->Two issues in LinuxMint:
->
->First a temporary file creation flaw in mintNanny:
->
->https://github.com/linuxmint/mintnanny/blob/master/usr/lib/linuxmint/mintNanny/mintNanny.py#L70
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2012-1566 for this issue
+On 08/04/2012 08:58 AM, Agostino Sarubbo wrote:
+> On Saturday 04 August 2012 09:15:22 Jeff Mitchell wrote:
+>> Hi,
+>> 
+>> A buffer overflow attack can lead to arbitrary code execution.
+>> Can we get a CVE for this issue, please?
+>> 
+>> Thanks, Jeff
+> Please post commit code and please provide more information (as
+> Kurt want)
+> 
 
->Secondly a temporary file creation flaw in mintUpdate:
->
->https://github.com/linuxmint/mintupdate/blob/master/usr/lib/linuxmint/mintUpdate/mintUpdate.py#L1444
+Yes Kurt does want. Also please note it's a 3day weekend in most of
+Canada, hence me actually not being here constantly and enjoying some
+time off =)
 
-Please use CVE-2012-1567 for this issue.
-
-Also a note on fixing these issues:
-
-Python
-
-Simply use “mkstemp” from the “tempfile” module:
-
-http://docs.python.org/library/tempfile.html#tempfile.mkstemp
-
-I tried to find a LinuxMint security contact, nothing on the website
-(e.g. http://www.linuxmint.com/teams.php), someone suggested
-root@...uxmint.com, here's hoping they see it.
-
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQHtUcAAoJEBYNRVNeJnmT7r0QAKz0u7MWN3N1YFLrVnLxbaso
+9KSTGZTHH7mvlGR1JUVjl89XrpBU/8SYM9+JazcTH1Et8xuGIdVM/26EeUiX/A38
++1s3xm2GYsuf6o9hPZthrO3oQACZrRgTus4QMf9Csxu37If6cokMzdzrcvPPL71S
+i/VXaMPKvEBP0mT7vDQsjRQqYe1erWJtOOQ6Ez1qUw1Ddta5ETdzj7yHPQRbA10f
+NwvhkqJXzfN9rQISYzDaemRKJePtskrzzkddpNWXF5M+uwKpOvu5QAS3X6Pbo8H8
+I+QbWree3HPtLpvfRt6Na/4SpIeylx8Sp04KUCWvmt3Di77/Hagru3dEHIJGJVL7
+3rg/P+qdwHT15n/HpxjVckAQ4r0CyIgy86jOcoZ/BQCEk7N42P3GenpvdoX/lBgk
+KtH7s8fDXS63QmqVP3vah34tmIg731gSbIUnNgX+blB5r7z7+hZmEWLfVFJkH9xR
+NhnSj4dTxwgQ7LXtreiVyRtshlI9KJ92m7mFP47a5HxuuVv6JeniqyCtkRNty+w2
+AnRSB3N86NPqHD6v2AcVdqfCyw5PAm9fPYzfvV54/JfmYGqL5YxlbSUpTrFfZz1J
+JddidGtQvdSUhk2MxJYMFxSoBnirWb6s2CaCOHQLLDD088Zoq4h7dXgUY1HA1ooI
+kOTERHkNGBOvKe8I8ydu
+=enb2
+-----END PGP SIGNATURE-----
