@@ -1,62 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/21
-Message-ID: <4FFDF256.3070003@redhat.com>
-Date: Wed, 11 Jul 2012 15:38:30 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/05/1
+Message-ID: <CADvE9N=kJ4uyJOq72cuXYqq_ygsoRq19kLCVb3w7cp1irRXPXg@mail.gmail.com>
+Date: Sun, 5 Aug 2012 15:06:06 +0000
+From: "Jorge Manuel B. S. Vicetto" <jmbsvicetto@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Moses Mendoza <moses@...petlabs.com>
-Subject: Re: Re: Fwd: New Security Vulnerabilities in Puppet
+Subject: Re: CVE request for Calligra
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi.
 
-On 07/11/2012 12:04 PM, Kurt Seifried wrote:
-> On 07/11/2012 10:37 AM, Moses Mendoza wrote:
->>>> 
->>>> Vulnerability 5 Agents with certnames of IP addresses can be 
->>>> impersonated (low) *Affected Versions: 2.7.x, 2.6.x If an 
->>>> authenticated host with a certname of an IP address changes
->>>> IP addresses, and a second host assumes the first host's
->>>> former IP address, the second host will be treated by the
->>>> puppet master as the first one, giving the second host access
->>>> to the first host's catalog. Note: This will not be fixed in
->>>> Puppet versions prior to the forthcoming 3.x. Instead, with
->>>> this announcement IP-based authentication in Puppet < 3.x is 
->>>> deprecated.
-> 
-> After some further communications with them it has been decided to 
-> assign this issue a CVE. Please use CVE-2012-3408 for this issue.
-> 
-> Moses: can you confirm that a CVE page with links to the code 
-> commits/etc will be created? Thanks.
-
-Excellent: http://puppetlabs.com/security/cve/cve-2012-3408/
-
-Thanks!
+On Sat, Aug 4, 2012 at 4:58 PM, Jeff Mitchell <mitchell@....org> wrote:
+> On 08/04/2012 11:56 AM, Agostino Sarubbo wrote:
+>> On Saturday 04 August 2012 11:44:33 Jeff Mitchell wrote:
+>>> What commit code do you want?
+>> Please post the diff between the vulnerable code and the fix so we are sure
+>> that is a security issue.
+>>
+>
+> Hi,
+>
+> You can read all about the details of the vulnerability in the Black Hat
+> 2012 presentation by Charlie Miller
+> (http://media.blackhat.com/bh-us-12/Briefings/C_Miller/BH_US_12_Miller_NFC_attack_surface_WP.pdf)
+> -- details of the Calligra (and KOffice) exploit start at page 39.
+>
+> Unfortunately, he did not notify us ahead of time of his intent to
+> disclose, so it's already public.
+>
+> Thanks,
+> Jeff
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+As reported by Thorsten Zachmann to the kde-packagers ml, here are the
+commit ids:
 
 
+The commit IDs for master is
+8652ab672eaaa145dfb3782f5011de58aa4cc046
+https://projects.kde.org/projects/calligra/repository/diff?rev=8652ab672eaaa145dfb3782f5011de58aa4cc046&rev_to=6e0323801dd144ad36720949fbef01d992a8e801
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+The commit ID for calligra/2.5 is
+f04d585ca1d3ee27f125d0129a23ca7b7850902d
+https://projects.kde.org/projects/calligra/repository/diff?rev=f04d585ca1d3ee27f125d0129a23ca7b7850902d&rev_to=b1bf5264e31cdab9e0b2fa74b7ae8393d6195af1
 
-iQIcBAEBAgAGBQJP/fJWAAoJEBYNRVNeJnmTCB8QAIDuxD5Ev4WOGXwGQP8A9FN0
-vTPjvXh0iWOEOE19w06SndABA0i724aDTs7gUhux7jcn6URKxkVtfo6WISHUXZVd
-+vWNJkWikeBoRKuEAYJxiQ0eJjzmJI3TG1D+GuPE7FYsGTaoiAT5pJqySSY0bnup
-GN5L5pa/dxseKNxK/h5///Z6xqNlpQCafeAkVOxLm6/SCa2BsnnXjnppi+IQ+OwV
-wmjFhgLHy2JNeaCzLx0t6jh+sNSyuy8KZySF3yPtd+OMs1SlutXzktVbeIIwKlEX
-c4EXmT/zlK68+GQxqASagRyr6+ZrmGNlOVXSSz9mxwRLQb2/CijQ64RAUYcBapIx
-XIzSIcuRydQy1itGZ1e6UUxlaDLcaU9DKXkZcg0CWERq8O/+H5f1YuiuMF/u9Ph/
-gghWiOoDFun0OrXJ+gsk/hMUl5Ikl+cSnn/SoKC1hnsuKUCfXTIsJRvnAiKdyNzh
-rMTN0DJTJIQR14oIJB1o6COEMVUdlNGIYONkIaAT3wBw0BpwDfVvdf56NRX8FZWr
-4FG/CsSOiG9vVXQHYgOW0DinKav8/8Lr0ZbZPFKVxDt51uBVhMNPkgsMTr3UfSCo
-QMbYXmKNOSR8WbKv4YRhcYlzyrUtMFVvCzf/Tpq/R/l64ilOHJpjl5JyYx+Kapue
-MhzBeg1fOgcdtGYfsuSe
-=eQVt
------END PGP SIGNATURE-----
+The commit ID for calligra/2.4 is
+7d72f7dd8d28d18c59a08a7d43bd4e0654043103
+https://projects.kde.org/projects/calligra/repository/diff?rev=7d72f7dd8d28d18c59a08a7d43bd4e0654043103&rev_to=7a9fa21b1f812b74b3e1501480dd14d10aeb347b
+
+Regards,
+
+Jorge Manuel B. S. Vicetto
