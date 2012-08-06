@@ -1,31 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/12
-Message-ID: <4F6780AB.2050705@redhat.com>
-Date: Mon, 19 Mar 2012 12:53:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, corryl80@...il.com, bugtraq@...urityfocus.com
-Subject: Re: Case YVS Image Gallery
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/06/2
+Message-ID: <20120806074850.GB1919@suse.de>
+Date: Mon, 6 Aug 2012 09:48:50 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Linux kernel net/rds max socket length checking
 Content-Type: text/plain; charset=utf-8
 
-On 02/27/2012 02:39 PM, Henri Salo wrote:
-> On Mon, Feb 27, 2012 at 09:31:52AM -0700, Kurt Seifried wrote:
->> If you make a list of issues (e.g. XSS, CSRF, etc) with the code
->> examples I can assign the various blocks of issues CVEs.
-> 
-> 1. ./administration/install.php opens ../functions/db_connect.php and writes to file without input validation leading to PHP code injection with all variables if any contains for example: ";} ?> <?php print("Hello World"); exit("") ?>
-> 
-> Note that install guide in web says: "after instalation is complete, delete the "install.php" file" and install.php does not need permissions.
+Hi,
 
-Never heard back, for now I'm going to go with the "it's documented,
-therefore it's not a bug but a config issue"
+Kernel memory information leak in the RDS protocol.
+(commit also has a testcase)
 
-> 2. ./administration/create_album.php does not have proper input validation leading to stored XSS, which can only be added by administrators, but I don't think this as a limit after other vulnerabilities. XSS will also be shown to normal users (mainpage).
-> 
-> - Henri Salo
+https://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=06b6a1cf6e776426766298d055bb3991957d90a7
 
-Please use CVE-2012-1564 for the XSS in administration/create_album.php
-issue.
+Ciao, Marcus
+
+commit 06b6a1cf6e776426766298d055bb3991957d90a7
+Author: Weiping Pan <wpan@...hat.com>
+Date:   Mon Jul 23 10:37:48 2012 +0800
+
+    rds: set correct msg_namelen
+    
+    Jay Fenlason (fenlason@...hat.com) found a bug,
+    that recvfrom() on an RDS socket can return the contents of random kernel
+    memory to userspace if it was called with a address length larger than
+    sizeof(struct sockaddr_in).
+    rds_recvmsg() also fails to set the addr_len paramater properly before
+    returning, but that's just a bug.
+    There are also a number of cases wher recvfrom() can return an entirely bogus
+    address. Anything in rds_recvmsg() that returns a non-negative value but does
+    not go through the "sin = (struct sockaddr_in *)msg->msg_name;" code path
+    at the end of the while(1) loop will return up to 128 bytes of kernel memory
+    to userspace.
+    
+    And I write two test programs to reproduce this bug, you will see that in
+    rds_server, fromAddr will be overwritten and the following sock_fd will be
+    destroyed.
+    Yes, it is the programmer's fault to set msg_namelen incorrectly, but it is
+    better to make the kernel copy the real length of address to user space in
+    such case.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Open Linux Security Engineer Position at SUSE: http://bit.ly/Li4RbS
