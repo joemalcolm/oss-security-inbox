@@ -1,94 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/01/1
-Message-ID: <Pine.GSO.4.64.1210312253001.15861@faron.mitre.org>
-Date: Wed, 31 Oct 2012 23:02:19 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: joshua@...uia.com, oss-security@...ts.openwall.com
-cc: greg.knaddison@...il.com, angela.byron@...uia.com
-Subject: Re: CVE Request for Drupal Contributed Modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/06/5
+Message-ID: <50201491.7020201@redhat.com>
+Date: Mon, 06 Aug 2012 13:01:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jeff Mitchell <mitchell@....org>, Charlie Miller <charlie.miller@...uvant.com>, "Jorge Manuel B. S. Vicetto" <jmbsvicetto@...il.com>
+Subject: Re: CVE request for Calligra
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Joshua and others on the Drupal team,
+On 08/06/2012 06:45 AM, Jeff Mitchell wrote:
+> On 08/05/2012 07:27 PM, Charlie Miller wrote:
+>> Hi Kurt.
+>> 
+>> Yes, sorry I didn't report directly to the correct people.  I
+>> only knew that the vulnerability existed for sure in the Nokia
+>> Documents app and also in the version of Koffice I happen to have
+>> on my system. I didn't know what library it was in (I'd never
+>> even heard of Calligra), if it was already known about upstream,
+>> what other software depend on this library, etc.  As you're
+>> probably aware, it can be a very time consuming process to try to
+>> get that stuff sorted out, so I just report it to the vendor and
+>> let them deal with these issues.  In that spirit, I reported to
+>> Nokia early last month.  As for your questions, I have not asked
+>> for CVE's for any of these vulnerabilities.  Feel free to request
+>> them yourselves.  I believe the only vulnerability I know enough
+>> details about to say is a security issue is the one in the
+>> document about parsing word documents.  I hope that clears up any
+>> questions you might have. Thanks!
+> 
+> Hi there,
+> 
+> As you may have heard, Nokia has a few issues these days with
+> MeeGo, so it's not surprising that they haven't contacted upstreams
+> if you reported it to them  :-)
+> 
+> Calligra is a (maintained) fork of KOffice. At this point it's not
+> clear to me, based on commit activity, if KOffice is maintained.
+> 
+> Regardless, I guess I'd like a CVE for both (or two CVEs, depending
+> on your preferences).
+> 
+> --Jeff
 
-It appears that the following followup questions by Kurt Seifried were 
-missed during some of the confusion over contacts and email addresses for 
-Drupal-related security issues.
-
-Please respond to the comments in this email, as it supercedes Kurt's 
-email from October 7.
-
-
-On Sun, 7 Oct 2012, Kurt Seifried wrote:
-
->>
->>
->> Multiple Vulnerabilities: http://drupal.org/node/1719548 |
->> SA-CONTRIB-2012-125 - Chaos tool suite (ctools) - Local File
->> Inclusion http://drupal.org/node/1719548 | SA-CONTRIB-2012-125 -
->> Chaos tool suite (ctools) - Cross Site Scripting (XSS)
->
-> This sounds like a single issue with two possible outcomes?
->
-> The module doesn't sufficiently validate css import statements to
-> confirm they only include css content appropriate to show to end
-> users. This could allow a malicious user to add sensitive content from
-> the site (e.g. settings.php) exposing that sensitive content to
-> visitors of the page. It could also be used to execute a Cross Site
-> Scripting attack.
->
-> Links to the code commits fixing this would be helpful.
-
-Your answer to this question will help determine whether we have one CVE 
-or two.
-
-
->> http://drupal.org/node/1732946 | SA-CONTRIB-2012-126 - Hotblocks -
->> Cross Site Scripting (XSS) and Denial of Service (DoS)
->
-> This is a multiple CVE issue?
-
-Kurt - we investigated the advisory and it's pretty clear that the two are 
-distinct, so we assigned the following CVEs (Drupal people, please take 
-note):
-
-CVE-2012-5704 - DoS (infinite loop with self-referencing block)
-CVE-2012-5705 - XSS
+It looks like koffice is mostly dead so I'm going to consider calligra a
+forked code base (since it is maintained =), so 2 CVE's.
 
 
->> Multiple Vulnerabilities: http://drupal.org/node/1762220 |
->> SA-CONTRIB-2012-130 - Jstool - Access Bypass
->> http://drupal.org/node/1762220 | SA-CONTRIB-2012-130 - Jstool -
->> Arbitrary code inclusion
->
-> The description/vulns don't seem to match up on this one. Can you clarify?
->
-> The module does not protect its menu paths, which contain sensitive
-> information about all javascript files on the site and their contents.
-> The module does not validate filenames which can lead to potential
-> read/write access to arbitrary files on the server.
->
-> Links to the code commits fixing this would be helpful.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Drupal team - if these both have the same root cause, such as a directory 
-traversal issue, then they would receive one CVE since they are the same 
-type of issue - even if there are different impacts.  Otherwise, two CVEs 
-might be needed.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
->> http://drupal.org/node/1762482 | SA-CONTRIB-2012-133 - Taxonomy
->> Image - Cross Site Scripting (XSS) & Arbitrary PHP code execution
-> So this is the same root issue, not filtering file uploads allowing an
-> attacker to upload arbitrary stuff (including PHP code), the outcome
-> of which could be PHP code execution, or XSS (or other things I
-> suppose like DoS, CSRF, etc.)?
-
-This is the same basic issue as the last one.  If there's one root cause 
-in which file uploads aren't prevented when they should, then they might 
-receive only one CVE.
-
-(Basically, if a user X is intentionally allowed to do action Y, but a 
-vulnerability allows somebody to become X - then we don't assign a 
-separate CVE ID for Y.)
-
-Thanks,
-Steve
+iQIcBAEBAgAGBQJQIBSRAAoJEBYNRVNeJnmTY8gP/1mRUswwM6tmos1dn4irNoCV
+TpVPrKeykKtlvAhbs7gkESthOKLCNvJ9Yw15DFfC/WIF+HFXCk+9rIuRNqZzOvk4
+SQ1NVW7a3DgFYODDxh3dtQC+l5Pc/uTpbMF5lInvirSamxyoGf4390rAzy8NMdEl
+V6proz15AT+RnjtaUD5wEAx7kIUoBoxfhxO+afoJE7b5lNP11QUu4nNBR4u5vnDu
+JkzER9I2qJscynoNjZ2ka/93wfp7+Pp0Ys3rlX3zGS6dtEs5tIh69Z2jqRBU5IrK
+0gWt8FqGjxJT3kYIX7c+CYjAxzw2b8bDCUjyY5Wph/KR37TjKZmzXHoLCauTqTsP
+Lf2wPHmEFnPJtBQASVm6/Un2gSOWEwnXBx6oAOU9rtOH/AtsE8OCJS6EZVmBSp/p
+RZ9kv+I6nQtoe0QtL91xDOicWC12bjgYc89qaBHK6OOWJT69j5qXlCM1batPdloE
+MPd6QRZiDBTrFQ/sq6rPgdzvqJRwfVdr46yvy+xDb6BWY/bGaFVD01oRQ6+1N+mk
+Ucp3RBBdFEpEOBprR1clUfDeK5GiDIm8DTJxnGML3yzlo/GDHEoNFdWUXOOKCPEv
+WZDBk60ktrV/e45E3yrvQenOPnG42UQMnuaBBtCpElTRX+7dFuIjrzWhTgnTiMUs
+p64rpfycd+1aj+y57pK9
+=jKit
+-----END PGP SIGNATURE-----
