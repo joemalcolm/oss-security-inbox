@@ -1,29 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/6
-Message-ID: <20120920161014.2a4f9d0c@redhat.com>
-Date: Thu, 20 Sep 2012 16:10:14 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/06/4
+Message-ID: <501FBC5C.6070609@kde.org>
+Date: Mon, 06 Aug 2012 08:45:16 -0400
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-Cc: geissert@...ian.org
-Subject: Re: CVE request: opencryptoki insecure lock files handling
+CC: Charlie Miller <charlie.miller@...uvant.com>,  Kurt Seifried <kseifried@...hat.com>, "Jorge Manuel B. S. Vicetto" <jmbsvicetto@...il.com>
+Subject: Re: CVE request for Calligra
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 12 Sep 2012 12:42:17 -0500 Raphael Geissert wrote:
-
-> > When do pkcsslotd does that, and which version?  It does not happen
-> > on its start or stop, or when client as pkcsconf queries for some
-> > data.
+On 08/05/2012 07:27 PM, Charlie Miller wrote:
+> Hi Kurt.
 > 
-> I apparently confused it with another set of CreateXProcLock and 
-> XProcUnLock's. pkcsslotd indeed doesn't seem to chmod spinloc.
+> Yes, sorry I didn't report directly to the correct people.  I only
+> knew that the vulnerability existed for sure in the Nokia Documents
+> app and also in the version of Koffice I happen to have on my system.
+> I didn't know what library it was in (I'd never even heard of
+> Calligra), if it was already known about upstream, what other
+> software depend on this library, etc.  As you're probably aware, it
+> can be a very time consuming process to try to get that stuff sorted
+> out, so I just report it to the vendor and let them deal with these
+> issues.  In that spirit, I reported to Nokia early last month.  As
+> for your questions, I have not asked for CVE's for any of these
+> vulnerabilities.  Feel free to request them yourselves.  I believe
+> the only vulnerability I know enough details about to say is a
+> security issue is the one in the document about parsing word
+> documents.  I hope that clears up any questions you might have.
+> Thanks!
 
-Ok, so I think we need 1 CVE for the two insecure temporary file uses,
-unless we want to split each temporary file issue under a separate
-CVE.  I don't believe there's a real need to assign CVE for 2.4.1
-(which did not improve things on systems with world writable /var/lock)
-or 2.4.2 (which re-opens the attack for pkcs11 group members on systems
-with restricted /var/lock, but improves things on systems with world
-writable /var/lock).
+Hi there,
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+As you may have heard, Nokia has a few issues these days with MeeGo, so
+it's not surprising that they haven't contacted upstreams if you
+reported it to them  :-)
+
+Calligra is a (maintained) fork of KOffice. At this point it's not clear
+to me, based on commit activity, if KOffice is maintained.
+
+Regardless, I guess I'd like a CVE for both (or two CVEs, depending on
+your preferences).
+
+--Jeff
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
