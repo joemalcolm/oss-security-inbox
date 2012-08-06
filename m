@@ -1,29 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/30/6
-Message-ID: <20120430223447.GL13910@redhat.com>
-Date: Mon, 30 Apr 2012 16:34:47 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Vincent Untz <vuntz@...e.com>
-Subject: Re: CVE Request: libsoup 2.32.2 sets ssl trusted flag despite no verification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/06/8
+Message-ID: <1344289342.3411.20.camel@fermat.scientia.net>
+Date: Mon, 06 Aug 2012 23:42:22 +0200
+From: Christoph Anton Mitterer <calestyo@...entia.net>
+To: Kurt Seifried <kseifried@...hat.com>, 683879@...s.debian.org
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE ASSIGN: pnp4nagios: process_perfdata.cfg world readable
 Content-Type: text/plain; charset=utf-8
 
-* [2012-04-24 12:04:24 +0200] Ludwig Nussel wrote:
+Hi Kurt.
 
->libsoup 2.32.2 does not verify certificates at all if an application does
->not explicitly specify a file with trusted root CA's. Since that libsoup
->version relies on the verification failure to clear the trust flag it
->always considers ssl connections as trusted in that case.
->
->Reference:
->https://bugzilla.novell.com/show_bug.cgi?id=758431
+Assigning a CVE might be a bit overkill... ?! ;-)
 
-Are you sure it's just this specific version of libsoup?  Looking at the
-code of earlier versions (such as 2.2.98), the patch noted in your bug
-would apply (unless there is some other context around it that would
-make this a non-issue?).  Did you look at other versions at all?
+Anyway... let be forward this to the Debian bug report for the records:
 
-Thanks for any info.
+On Mon, 2012-08-06 at 13:28 -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=683879
+> 
+> Package: pnp4nagios-bin
+> Version: 0.6.16-1
+> Severity: important
+> Tags: security
+> 
+> 
+> Hi.
+> 
+> Marking as severity important as it might have security implications.
+> 
+> process_perfdata.cfg shouldn't be world-readable.
+> Event though not used per default in Debian, it contains the "KEY"
+> option which may be used (in alternative to "KEY_FILE") to hold
+> the Gearman shared secret.
+> 
+> Cheers,
+> Chris.
+> 
+> ==============================
+> This affects 0.6 only, 0.4 doesn't support KEYS.
+> 
+> # A shared password which will be used for
+> # encryption of data pakets. Should be at least 8
+> # bytes long. Maximum length is 32 characters.
+> #
+> KEY = should_be_changed
+> 
+> =============================
+> 
+> Please use CVE-2012-3457 for this issue.
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+> 
+> iQIcBAEBAgAGBQJQIBr2AAoJEBYNRVNeJnmTn3AQAJzz5cPSK4/1TGfNpO78cG7S
+> Tos7jeicNmviWKsbE0QgzXmBqcOCq+Zrbi5bwhYBHpWHe60rBsFLETR0LEho0P03
+> HRy4PmAP7hd3Uj/4UBORdsDnMS2Tn7/4dVIIv25JAgsYTJLyKm5WpMW5Th1+YX19
+> qEagGADORA9Ed+St+v3dxkoA5Ux82R+a8Y+zYI3/sX2ajSjWWvp5c7Z/dMGAm/QG
+> 26uxOxhBrFMVoa07ySbV2w0TE9xbEh1uqI33rwEK3sUgcRNnvnOD2j1F9tt3QoEY
+> Qw5oUygazSf5ofgMFH0P/PNlqzCXngsU4/oaOcabVWx6zI2JrOjWfZNywNVfjjK5
+> YV2pzzMIG1cOl2y/3c9q0U5mUwdXEF7Z9rtdqGK0YfGJS+RsdkETiy43zTSRYS9y
+> VXnTHarkikZ1/pNOiEqrVpeGUddri0YKWI8ZeXwThUzr1xvhC50i0+KoeZW1WWAz
+> J2f+5VQBuyQU8mw8JXca+QJA+BsHy//TdP6EyFa5crpLPK4UzfmjGYdQKK3G8bpV
+> HOmCJRSNu1jGvrvt4CErW1O2rr7OBKN8ATw6G64xWLCV2pPIQ3uhFCOYu6fUt2tY
+> U2RYtRHjWLUJseu+LadzEwZ3FCJsFQGORHxrTucMCkAQ6QkDgm+9vyzMirdvKgHa
+> dhN68WG5tZ4CecyHgZxq
+> =HMaW
+> -----END PGP SIGNATURE-----
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+
+Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (5450 bytes)
