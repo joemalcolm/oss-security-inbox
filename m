@@ -1,42 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/12
-Message-ID: <50B3B86F.5060205@redhat.com>
-Date: Mon, 26 Nov 2012 11:43:59 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/06/6
+Message-ID: <502015DA.6010400@redhat.com>
+Date: Mon, 06 Aug 2012 13:07:06 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Symfony (php-symfony-symfony) < 1.4.20: Ability to read arbitrary files on the server, readable with the web server privileges
+CC: Charlie Miller <charlie.miller@...uvant.com>, "Jorge Manuel B. S. Vicetto" <jmbsvicetto@...il.com>
+Subject: Re: CVE request for Calligra
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/26/2012 08:06 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On 08/05/2012 05:27 PM, Charlie Miller wrote:
+> Hi Kurt.
 > 
-> Symfony upstream has released 1.4.20 version: [1]
-> http://symfony.com/blog/security-release-symfony-1-4-20-released
+> Yes, sorry I didn't report directly to the correct people.  I only
+> knew that the vulnerability existed for sure in the Nokia Documents
+> app and also in the version of Koffice I happen to have on my
+> system.  I didn't know what library it was in (I'd never even heard
+> of Calligra), if it was already known about upstream, what other
+> software depend on this library, etc.  As you're probably aware, it
+> can be a very time consuming process to try to get that stuff
+> sorted out, so I just report it to the vendor and let them deal
+> with these issues.  In that spirit, I reported to Nokia early last
+> month.  As for your questions, I have not asked for CVE's for any
+> of these vulnerabilities.  Feel free to request them yourselves.  I
+> believe the only vulnerability I know enough details about to say
+> is a security issue is the one in the document about parsing word
+> documents.  I hope that clears up any questions you might have.
+> Thanks!
 > 
-> correcting one security flaw: "An information disclosure flaw was
-> found in the way Symfony, an open-source PHP web framework,
-> sanitized certain HTTP POST request values. A remote attacker could
-> use this flaw to obtain (unauthorized) read access to arbitrary
-> system files, readable with the privileges of the web server
-> process."
+> Charlie
 > 
-> References: [2] https://bugs.gentoo.org/show_bug.cgi?id=444696 [3]
-> https://bugzilla.redhat.com/show_bug.cgi?id=880240
+> On Aug 5, 2012, at 3:25 PM, Kurt Seifried wrote:
 > 
-> Relevant upstream patch: [4]
-> http://trac.symfony-project.org/changeset/33598
+> On 08/05/2012 09:06 AM, Jorge Manuel B. S. Vicetto wrote:
+>>>> Hi.
+>>>> 
+>>>> On Sat, Aug 4, 2012 at 4:58 PM, Jeff Mitchell
+>>>> <mitchell@....org> wrote:
+>>>>> On 08/04/2012 11:56 AM, Agostino Sarubbo wrote:
+>>>>>> On Saturday 04 August 2012 11:44:33 Jeff Mitchell wrote:
+>>>>>>> What commit code do you want?
+>>>>>> Please post the diff between the vulnerable code and the
+>>>>>> fix so we are sure that is a security issue.
+>>>>>> 
+>>>>> 
+>>>>> Hi,
+>>>>> 
+>>>>> You can read all about the details of the vulnerability in
+>>>>> the Black Hat 2012 presentation by Charlie Miller (c)
+>>>>> 
+>>>>> 
+> -- details of the Calligra (and KOffice) exploit start at page 39.
+>>>>> 
+>>>>> Unfortunately, he did not notify us ahead of time of his
+>>>>> intent to disclose, so it's already public.
 > 
-> Could you allocate a CVE id for this?
+> I suspect he may not have known about it (this is the first time I
+> can remember hearing of Calligra). Trying to keep track of all
+> possible project forks is pretty much impossible in the modern Open
+> Source world.
 > 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+> Charlie 1): have you requested CVE #'s for this issue for Koffice?
 > 
+> Charlie 2): it appears there are quite a few other security issues
+> in the presentation, are they in open source components, if yes can
+> you please send a CVE request(s) for the issue to oss-security@ so
+> I can assign CVE's for them? Thanks.
+> 
+> Once Charlie replies (either way) I'll assign CVE's.
+> 
+>>>>> 
+>>>>> Thanks, Jeff
+>>>> 
+>>>> 
+>>>> As reported by Thorsten Zachmann to the kde-packagers ml,
+>>>> here are the commit ids:
+>>>> 
+>>>> 
+>>>> The commit IDs for master is 
+>>>> 8652ab672eaaa145dfb3782f5011de58aa4cc046 c
+>>>> 
+>>>> The commit ID for calligra/2.5 is 
+>>>> f04d585ca1d3ee27f125d0129a23ca7b7850902d 
+>>>> https://projects.kde.org/projects/calligra/repository/diff?rev=f04d585ca1d3ee27f125d0129a23ca7b7850902d&rev_to=b1bf5264e31cdab9e0b2fa74b7ae8393d6195af1
+>>>>
+>>>>
+>>>> 
+The commit ID for calligra/2.4 is
+>>>> 7d72f7dd8d28d18c59a08a7d43bd4e0654043103 
+>>>> https://projects.kde.org/projects/calligra/repository/diff?rev=7d72f7dd8d28d18c59a08a7d43bd4e0654043103&rev_to=7a9fa21b1f812b74b3e1501480dd14d10aeb347b
+>>>>
+>>>>
+>>>> 
+Regards,
+>>>> 
+>>>> Jorge Manuel B. S. Vicetto
+>>>> 
 
-Please use CVE-2012-5574 for this issue.
+For this DOC rendering issue please use CVE-2012-3455 for KOffice and
+please use 2012-3456 for Calligra.
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -44,18 +109,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQs7hvAAoJEBYNRVNeJnmTSRsQAKV0x1tXVcNJHhxRNRgUHUA7
-2jUghnUu0hnEbJHfCNzlGByHegPi7nikL0IJyKT7vNHEuSSgHQYj/Kkp7xod0CQD
-nKg0fnxAtWocvGLbkVE22yNull9TlKZ7ltVZDvcj9IQ8fte5wV6qsxmOyTICC6Fb
-iVKBj2uo+5GVye3ZcB8ka+q29D6VTsUvnjAB0YYX7yfr9FTM8zwRLkTUSz/YCZi9
-AUMDMiWTeSYvNwhO0vciBV/W8H6kgYg6wVqWTpOWM/MSc8PBvqKFxgHECZubifY6
-LLlVbmljqgH4jvpz1YSMld3aZ95toSS6/9X+sELuKGnQcZKh+wZ1Ae5XVP0OQprX
-5s3gyT60nd3Nf2nMbB+SKX0KLeZa7kGC5oalG5GVr/LFSiOJPnkrjTDo64LwEAqz
-ORDV3Sict9JomqbwzzVyRr/Qc/dVsfxUvVU7zH74Cw1MplCyV9tTi9VvhVgB/4hH
-tF0pmSIFFbvMnis2yyVcJwHkpgQ1fFax8ZLhqamevd5aiVSzlXmO8aQr68UeobmH
-36h+JPob3rIAvV4h4g4TGAY/ovDPrNOCtXvpqi1Ozp2hsxcFa9pBYqWA9k9iovSi
-xiRn+2arJ+Pnxwkig5YLrfApKHbNBzA5Gt6r9mxyFZcUX2h1SFVcpQIy3r/lrZ+q
-fgSPlh/Hk3i27f9lY6Y0
-=wFPm
+iQIcBAEBAgAGBQJQIBXaAAoJEBYNRVNeJnmTV/wQAI2BRqWGJwDMKoh2jUduowkU
+xp+5Rf3dPJhI0o9FVaTkk7kWkmLnheecervdNwmthoL6l0D/yvl26gxcBaCr5CBq
+JwQNsIeA4sNBJ4gDSCB7CQ1EpRJnCAar/M6wPAg9lUfwNqH+NKD4TJxvpELoOYiu
+17Hgj36KnGn/hEmaq7ugIBpf0nY+PDjGwMI+SeCiLBMJU92y49MA6kjbZ5wZZcnA
+91pedfhW1Ia1P/4HhTV/WfcepfyqYAld+QMPiq66JHPLxbXY4sZu3F8Ff9RfwBK7
+an+auUf3ITng2CscSjjlRtabQdPismt1JS9eI/X6A+kjB3oE6tFOW5rM0DWitH+B
+E7MvwJW9rV3VTleQlQgzQEJJrJWRdDpJrwmCAgYDD5OEdjmoXSJQD9/2oWJmcED0
+pQC6jt3hOZAXsu2XO6Ib0QBKCSfgJ7gFT3u5YJbydAWLxN8B+P6H4fUupbVhcDCS
+eN/WZRSdKzXICglriLM+CdG8r0tmQbC+76KwKtvtEYrQRJv/S8Hpc3RaRxWVcEpW
+6JW0Hacol4xoZDPyl25VQlNqcaekXKUdFHYZJic0cv5OEeRnmYA6jcZEgDmvZWFo
+HReRIsstQjWGsjli90U7EQQHt7ZwyaccXpOnIfPXw1I/31PBJViMBuL4Zuxuue4H
+RQvuo6IFqkXGFCBNneK5
+=S3Bf
 -----END PGP SIGNATURE-----
