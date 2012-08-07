@@ -1,53 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/16/5
-Message-ID: <50045D83.1090900@redhat.com>
-Date: Mon, 16 Jul 2012 12:29:23 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: libjs-swfupload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/07/1
+Message-ID: <50217C02.2000906@openstack.org>
+Date: Tue, 07 Aug 2012 22:35:14 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2012-011] Compute node filesystem injection/corruption (CVE-2012-3447)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-On 07/16/2012 12:17 PM, Nico Golde wrote:
-> Hi, there is an XSS issue in libjs-swfupload. Can we get a CVE id
-> for this?
-> 
-> Details: 
-> https://nealpoole.com/blog/2012/05/xss-and-csrf-via-swf-applets-swfupload-plupload/
->
-> 
-http://code.google.com/p/swfupload/issues/detail?id=376
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681323
-> 
-> Cheers Nico
-> 
+OpenStack Security Advisory: 2012-011
+CVE: CVE-2012-3447
+Date: August 7, 2012
+Title: Compute node filesystem injection/corruption
+Impact: Critical
+Reporter: Pádraig Brady (Red Hat)
+Products: Nova
+Affects: All versions
 
-There also appears to be a CSRF vulnerability. Is there a reason for
-only mentioning the XSS?
+Description:
+Pádraig Brady from Red Hat discovered that the fix implemented for
+CVE-2012-3361 (OSSA-2012-008) was not covering all attack scenarios. By
+crafting a malicious image with root-readable-only symlinks and
+requesting a server based on it, an authenticated user could still
+corrupt arbitrary files (all setups affected) or inject arbitrary files
+(Essex and later setups with OpenStack API enabled and a libvirt-based
+hypervisor) on the host filesystem, potentially resulting in full
+compromise of that compute node.
+
+Folsom fix:
+https://github.com/openstack/nova/commit/ce4b2e27be45a85b310237615c47eb53f37bb5f3
+
+Essex fix:
+https://github.com/openstack/nova/commit/d9577ce9f266166a297488445b5b0c93c1ddb368
+
+Diablo fix:
+https://review.openstack.org/#/c/10953/
+
+References:
+https://bugs.launchpad.net/nova/+bug/1031311
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3447
+
+Notes:
+This fix will be included in the upcoming Nova 2012.1.2 stable update
+(due Thursday) and the Folsom-3 development milestone (due next week).
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQBF2DAAoJEBYNRVNeJnmT4FQP/1PFGBLf0LGnmcW8owqtxDcl
-D404TJbfeCReqEkX+jHSpNgo+GvJOh1dHYsEV/epMudPNIfYeWJDZCo8co0JApl/
-IfwFZLj9SWuqF2OBK73RzBsKAnvRIaA7MhRS95T6gfA7CSjD1cFHbbzU2sVSIBFc
-hmK3plOS/WtCjTskQkjrFWuAtMDkw/FxmColCZ7ypYR+A2lN9NFojrJfzc9LyOsV
-fhnjm2FA0zc/Q2xs/o3FMuB7ZNYPfqAvZ2in1ME0XUHqAvPZ1Z1xi2mb/Ck1gJFQ
-6s9o0ZyAPb5tQmsB0tGXeE+maua7JrFYZeTRzgZNukpPzYiNAZPVem0aWGCgXuzb
-U1yGxEJR0715e7qjFqVC/Gmm+E12bR6nDI0Zw+TEsVMHDJMkvmeNegQ780d8xMRB
-1wYo7vPZAvTR65PVP5a2LaJTVY1DE5KDG75ajYO2i4KMLUZ5Sc9RAvyscgiGD9kO
-0mtZnjMa8hdqWwCdtwmIHU4hh0D769b/hddbgJyeXSMZaLU8P+7l1015s+jxVfus
-YSltIEfapkSYjowsG6m3WOIi8JwLrqtWrsGiS5WQfiYFxJ0KYXeMFj058QlQ5Hdx
-ebVCgOtSoqpyDH6CYo+pFN2hvBcpDzngqvYfE6ujqqSHYogULuSY29H4NF7dUzVp
-cgrCwk9Z2eGj2tnQwo8u
-=k/2Y
+iQIcBAEBCAAGBQJQIXv+AAoJEFB6+JAlsQQjnJUQAI+Vp+GCMXAei/ktStVFrkXC
+ilgIjBB5mcbrj/TGlnqhkS0MB0+kmo8Ucy4tI0O+gAqYaPNcEp6bbGr5pOby8Gdk
+DehvQuTi4Rvvypnb7ORM+DjqPBtNGGMWKJzO84ls98Ev0z+6Soi4vmQal78wvwpX
+3UbyqZG9P85QlDyyK+x/Af2D0YVCQffQ93/7UJi2OwB0hwHy+RS4WN7rYJGD2vh0
+50jQYSgw/rrBSUPNupjEH+mXT/DM93z93qWmxHD6TYYUK9MmrfkfUPx8Ki8Fn5oQ
+9znwXsIK5h3uexe2dHbABKaIm3AnMP3wCrKynEEjFV/no00r/Evm2zsdam31O3Bv
+DV8ng6sdSnvltQK2s8F3blp3tNpsAp12QkC0BDI9FlYAACdaTBnDcVhKh4HoO84T
+cRakJhfj23472GgmwwkIcPNEcfY1fWngUqN4rF2XUggtXzeEHyyqoiZIm4s4ns5+
+DkSCmo5qBNbcos1C0BNeyPQ+wdF5U7wzQfggC6SRoKcPj/Mp8P5LCvgjPKwNtBuq
+gzAVPSlx0Zehlqqey8zkUUGQ4btxiKP5+iwrKajY6QfqgtkqEsG46GR+tm+ygDNR
+T8ltuixqMWpLPVUFZClaxV0MytSMdjhIgywkzyqHg9bzP4N3MztsGnIBPdQ0HC3a
+P85xQ28EFbBC5tIZ4WRe
+=C2MN
 -----END PGP SIGNATURE-----
