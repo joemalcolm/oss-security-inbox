@@ -1,28 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/9
-Message-ID: <507EF57E.1010209@debian.org>
-Date: Wed, 17 Oct 2012 19:14:22 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/08/3
+Message-ID: <5022A23B.5080805@redhat.com>
+Date: Wed, 08 Aug 2012 11:30:35 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request -- libotr: Multiple heap-based buffer overflows in the Base64 decoder
 Content-Type: text/plain; charset=utf-8
 
-On 17/10/12 18:03, Kurt Seifried wrote:
-> Avtually looking at that page it appears that no modern file 
-> systems allows NUL in a file name (and in general I suspect it's a
-> bad idea/leads to some nasty edge case issues).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Anything that, directly or indirectly, uses Unix-style APIs to access
-files can't possibly support NUL in a filename anyway, since those
-APIs receive the filename as a NUL-terminated string.
+On 08/08/2012 11:18 AM, Jan Lieskovsky wrote:
+> -------- Original Message -------- Subject: CVE Request -- libotr: 
+> Multiple heap-based buffer overflows in the Base64 decoder Date: 
+> Tue, 07 Aug 2012 17:29:35 +0200 From: Jan Lieskovsky 
+> <jlieskov@...hat.com> Reply-To: oss-security@...ts.openwall.com
+> To: Steven M. Christey <coley@...us.mitre.org> CC: 
+> oss-security@...ts.openwall.com,  Justin Ferguson 
+> <jnferguson@...il.com>, Ian Goldberg <ian@...herpunks.ca>
+> 
+> Hello Kurt, Steve, vendors,
+> 
+> multiple heap-based buffer overflow flaws were found in the way the
+> Base64 decoder of libotr, an Off-The-Record Messaging library and
+> toolkit, performed decoding of certain messages. A remote attacker
+> could provide a specially-crafted OTR message that once processed
+> in an application linked against libotr would lead to that
+> application crash or, potentially, arbitrary code execution with
+> the privileges of the user running the application.
+> 
+> References: [1] 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=684121 [2] 
+> http://lists.cypherpunks.ca/pipermail/otr-dev/2012-July/001347.html
+>
+>
+[3]
+> 
+https://bugzilla.redhat.com/show_bug.cgi?id=846377
+> 
+> Relevant upstream patches: [4]
+> 
+http://otr.git.sourceforge.net/git/gitweb.cgi?p=otr/libotr;a=commitdiff;h=b17232f86f8e60d0d22caf9a2400494d3c77da58
+> 
+> 
+> 
+> [5]
+> 
+http://otr.git.sourceforge.net/git/gitweb.cgi?p=otr/libotr;a=commitdiff;h=6d4ca89cf1d3c9a8aff696c3a846ac5a51f762c1
+> 
+> 
+> 
+> [6]
+> 
+http://otr.git.sourceforge.net/git/gitweb.cgi?p=otr/libotr;a=commitdiff;h=1902baee5d4b056850274ed0fa8c2409f1187435
+> 
+> 
+> 
+> Could you allocate a CVE id for these issues?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat 
+> Security Response Team
+> 
+> P.S.: There doesn't seem to be a CVE identifier for these issues 
+> yet: http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=libotr
+> 
+> 
 
-> Personally I think the perlopentut case makes sense, using NUL as
-> an end of string marker. What happens if stuff comes after it
-> though?
+Please use CVE-2012-3461 for this issue.
 
-For Perl, one possibility would be to continue to treat an input of
-"foo\0" as equivalent to "foo" (so that you can use "./ foo \0" to
-mean " foo ", as documented), but disallow NULs anywhere except the
-last position.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-    S
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQIqI7AAoJEBYNRVNeJnmTpJQQAJPIROc9M77l3ewXZVW5luk3
+X5IrOToSTIxGld4rXf+uSFIKm/FKHssHkylQcDomWPJlOYOPwlZlg+V6g+ErTHb3
+Up/f/1yD43rf1R3YtsmATlJFJxYQv5aO/fz3+Rk8CkyHICzWtFKZPisK+U4Ufo9f
+Q4stSmM39ylO8pX8eSYcVbcoyGMvQWTjBa+pGIlrVx+5k/UXtcZ2Q+MmsuOxDxe+
+nNSMvy9uqmSRvBweBF9yhuNH0wemIi7yADA85i+tvjgKWo9kugSbhH6I+/ZURvoF
+B0DYYM36Mwl89bcefA9jXpGD62XdWZxh8mpzODHd5lVGNLvBoJiQTRj55/1hxT2N
+2ywlEOGMFJr49Bro8ubbifr4wao2HXzMnwNRkooMeu4FCunn5sh8RRlgMpmQXnvE
+JQrIAVq32JCpRd9cFZHgMTnYDFJYZn+S1Kt8fCkoPCT8RIqjrg6E21nKfBMSyBLw
+dgrkS4wMy3Nbcsa7hVKGOcgyWiGLa+sO6fMoo/r1QC74v24afvPn/gzE0MnW0wz9
+dvL1RyXW0M5vpAGG47/kvWdhmFuXmyR/5t25XmlUUBqKEXpgXsyPKQAMDIvNOVxl
+Ir1xxtjTij1lCJqF/A7zZeSpltCDxlFkwFztNyBuRqydqCf6/vjEH1VMhQ8FduNt
+nTYJWozr5DgjGKVxSy8A
+=N6qB
+-----END PGP SIGNATURE-----
