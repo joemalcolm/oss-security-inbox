@@ -1,57 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/5
-Message-ID: <1344621384.13241.73.camel@scapa>
-Date: Fri, 10 Aug 2012 10:56:24 -0700
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: argyros.george@...il.com, Aggelos Kiayias <aggelos@...yias.com>
-Subject: Re: Randomness Attacks Against PHP Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/08/2
+Message-ID: <50229EEB.8090406@redhat.com>
+Date: Wed, 08 Aug 2012 11:16:27 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Test email - please ignore
 Content-Type: text/plain; charset=utf-8
 
-On jeu., 2012-08-09 at 11:19 -0700, Yves-Alexis Perez wrote:
-> Hi list,
-> 
-> I'm currently at the Usenix Security 2012 conference, where there was a
-> nice paper about randomness vulnerabilities in PHP applications. I
-> invite you to read the paper[1] but in summary, a lot of PHP
-> applications make false assumption about the true randomness of the core
-> PHP random functions and it might lead to attacks, for example using the
-> “password reset” features.
-> 
-> Paper authors tried to port this to PHP security team, but it seems the
-> answer was that it was an application problem. Some examples are given
-> in the paper, but I have no idea where exactly the vulnerabilities
-> really lie. The various rand() functions used by application developers
-> might just not hold up to the expectations, or the developers might just
-> don't know that they should use a cryptographically secure random
-> function.
-> 
-> In any case, I guess some discussion might be needed on how to really
-> fix those vulnerabilities, and here seems like a good place. I've just
-> added the two papers authors to CC:, but it might be interesting to
-> bring PHP security team and applications developers in the loop.
-> 
- ven., 2012-08-10 at 09:57 -0700, Aggelos Kiayias wrote:
-Hi Yves-Alexis -
-> 
-> my student George Argyros brought the below to my attention - (but I  
-> have not received any e-mail myself - )
+This is just a test email, please ignore.
 
-Sorry, I tried to add you to CC: of the initial mail but it seems I
-failed
-
-> thanks for taking this initiative - I think it is important to find  
-> the optimal way to resolve these problems and
-> relying on web application developers to have the expertise to
-resolve  
-> these problems on their side is totally unrealistic. 
-
-To be honest, I don't have any position on this. I was merely forwarding
-your work to raise awareness on this list, but I have no idea what's the
-correct way to move forward.
-
-Regards,
 -- 
-Yves-Alexis
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
