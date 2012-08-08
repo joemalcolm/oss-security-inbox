@@ -1,34 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/1
-Message-Id: <201209241033.12515.mweckbecker@suse.de>
-Date: Mon, 24 Sep 2012 10:33:12 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/08/1
+Message-ID: <5021C00D.2020902@kde.org>
+Date: Tue, 07 Aug 2012 21:25:33 -0400
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+CC: Kurt Seifried <kseifried@...hat.com>,  Charlie Miller <charlie.miller@...uvant.com>, "Jorge Manuel B. S. Vicetto" <jmbsvicetto@...il.com>
+Subject: Re: CVE request for Calligra
 Content-Type: text/plain; charset=utf-8
 
-On Friday 21 September 2012 23:47:48 Michael Gilbert wrote:
-[...]
->
-> So anyway, I suppose this creates more questions than answers, but I
-> guess its worth thinking about.  After all, what did the user really
-> expect?  If they had intended that original file to be private, and
-> now its not, is that appropriate?  Is it more appropriate to assume
-> all users know how to use umask appropriately?
->
+On 08/06/2012 03:07 PM, Kurt Seifried wrote:
+> For this DOC rendering issue please use CVE-2012-3455 for KOffice and
+> please use 2012-3456 for Calligra.
 
-IMO if one bothers to encrypt a file at all it was certainly intended to be
-private and only supposed to be readable by a certain user / user group and
-not by just everyone. Otherwise encryption would be pointless, or are there
-any other reasons for encrypting a file?
+Great -- thanks to everyone who helped.
 
-> Best wishes,
-> Mike
+--Jeff
 
-Thanks, Matthias
 
--- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
