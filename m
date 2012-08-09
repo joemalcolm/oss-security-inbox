@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/13/1
-Message-Id: <201207130201.q6D21KRW020141@linus.mitre.org>
-Date: Thu, 12 Jul 2012 22:01:20 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/7
+Message-ID: <1344536350.13241.51.camel@scapa>
+Date: Thu, 09 Aug 2012 11:19:14 -0700
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: GLPI 0.83.2 CVE-2012-4002 CSRF and CVE-2012-4003 XSS
+Cc: argyros.george@...il.com
+Subject: Randomness Attacks Against PHP Applications
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi list,
 
-https://forge.indepnet.net/projects/glpi/versions/771
+I'm currently at the Usenix Security 2012 conference, where there was a
+nice paper about randomness vulnerabilities in PHP applications. I
+invite you to read the paper[1] but in summary, a lot of PHP
+applications make false assumption about the true randomness of the core
+PHP random functions and it might lead to attacks, for example using the
+“password reset” features.
 
-CVE-2012-4002:
-  Bug #3704: CSRF prevention step 1
-  Bug #3707: CSRF prevention step 2
+Paper authors tried to port this to PHP security team, but it seems the
+answer was that it was an application problem. Some examples are given
+in the paper, but I have no idea where exactly the vulnerabilities
+really lie. The various rand() functions used by application developers
+might just not hold up to the expectations, or the developers might just
+don't know that they should use a cryptographically secure random
+function.
 
-CVE-2012-4003:
-  Bug #3705: Security XSS for few items
+In any case, I guess some discussion might be needed on how to really
+fix those vulnerabilities, and here seems like a good place. I've just
+added the two papers authors to CC:, but it might be interesting to
+bring PHP security team and applications developers in the loop.
 
-MITRE happened to receive additional details from the discoverer
-(attack vectors, etc.) but did not receive information about when (if
-ever) or where the discoverer plans to publish an advisory.
+Regards,
+-- 
+Yves-Alexis
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+[1]:
+https://www.usenix.org/conference/usenixsecurity12/i-forgot-your-password-randomness-attacks-against-php-applications
 
-iQEcBAEBAgAGBQJP/4AGAAoJEGvefgSNfHMd5eUIAJB0lo+t4gVxb43FOj7ab96M
-EyULWkh7d80rujb2eQMMdS/eQuebQHO69SHncz94hndlI2f+G7FqnekMB8i9934w
-cSj5/8VYVFeuthZ8s9241lafReq6jaZhpm4kWjhQor85dB5br4EZz02Ir/piGkQN
-nMPvJmma8e3r12+D0VrGEJWbNv5EVVmzgk8lV3Fqt4kVPX1fuOnfWAzMZdzjQQVB
-tIad/kRxdYSx+kIvo6H3Z0OanEoIYYVFhI5y11Vxm4yW4wUHsIRKvRX5Eau2e7fL
-DGsWHf5ZqBT9V1K8rCo22r2NocuMNjgmWeeIpK6G/VLv7d7ZK2PHxplo6zruoYo=
-=qjpy
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
