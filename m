@@ -1,53 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/6
-Message-ID: <50DFB7E8.5070202@redhat.com>
-Date: Sat, 29 Dec 2012 20:41:28 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Tilmann Haak <tilmann@...pwiki.de>, tw-public@....de
-Subject: Re: CVE request: MoinMoin Wiki (path traversal vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/8
+Message-ID: <CAKecwXDuTszn0UijMP3YRbCHUVWh=VzBtnZW=mzFy_CGN1UH6Q@mail.gmail.com>
+Date: Thu, 9 Aug 2012 18:24:39 -0300
+From: Santiago Pastorino <santiago@...works.com>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Ruby on Rails Potential XSS Vulnerability in select_tag prompt
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+There is a vulnerability in Ruby on Rails in the select_tag helper
+method when a "prompt" is supplied. This vulnerability has been
+assigned the CVE identifier CVE-2012-3463.
 
-On 12/29/2012 11:29 AM, Tilmann Haak wrote:
-> Hi all,
-> 
-> there is a path traversal issue in MoinMoin wiki (version 1.9.3 - 
-> 1.9.5). The vulnerability resides in the AttachFile action
-> (function _do_attachment_move in action/AttachFile.py). It fails to
-> properly sanitize file names.
-> 
-> Details can be found at: http://moinmo.in/SecurityFixes
-> 
-> A fix is available at:
-> http://hg.moinmo.in/moin/1.9/rev/3c27131a3c52
-> 
-> Is it possible to get a CVE number for this one?
-> 
-> kind regards, Tilmann
+Versions Affected:  3.x.
+Not affected:       2.3.x
+Fixed Versions:     3.2.8, 3.1.8, 3.0.17
 
-Please use CVE-2012-6080 for this issue.
+Impact
+- ------
+When a "prompt" value is supplied to the `select_tag` helper, the
+"prompt" value is not escaped.  If untrusted data is not escaped, and
+is supplied as the prompt value, there is a potential for XSS attacks.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Vulnerable code will look something like this:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+    select_tag("name", options, :prompt => UNTRUSTED_INPUT)
 
-iQIcBAEBAgAGBQJQ37foAAoJEBYNRVNeJnmTbKcP/2oAyAcuPak2580QRo3KdiCB
-bxM9LuXfCW3eYqIV3pU/wzuN9N+JVvfmEgstP+EKV+mrumjzjWcyFfcHdsfJGBDh
-LzYZsgTM3XiKhOXyaGbv6KNWW9bx1R9HTGPIFRtEiszY253AO/KDXZIB3pRMfWUK
-l4I9RB99/o94HSk+Bp9f+cjthIABt6vBZK+EECqIRJxMtguwF15QOjz3P3cyO4OZ
-ouM7T73G3iXoZ3svyjuT+oVBjck4DZQy6niZ2LywzZaShRfnZGofcAcCvFAnKspj
-lGUhb5YR7k4qSOuAqibnI/OVVMnRTly/ouMcl//OlobpW0lvY6GlMGaRJK6LyfML
-W6zr1RCB7nAlp14mZ+8Jl3rBrJ/OyQhH/EsqTCU8Lu3thye4FHstMtqR5kYmDNkf
-cdYCU+MT4UR0IuvuZSbXNWz0Rz9Ig9VTPoRui16CpezPtn0QeaqM2624WOLau1TE
-MHXZA6w7+92+/yb4RPIHQ+iTx1DKQ2aVjo7poJBFXzPHm8dW1WJQMQFSuAYix61S
-b54n4YAFaGThj5IWfnswNHz7qq2g8vpBkent0OIWMAXSdC430/GPdetBI8mmlph1
-3894/KQCaE68bIkKzn5lminT4e9UAglsmLRhLg8NkuzH+3SNto/6vwud2quz4AsA
-mCyVaMybICzEo2pil/W9
-=L88+
------END PGP SIGNATURE-----
+All users running an affected release should either upgrade or use one
+of the work arounds immediately.
+
+Releases
+- --------
+The 3.2.8, 3.1.8, and 3.0.17 releases are available at the normal locations.
+
+Workarounds
+- -----------
+
+A possible workaround for this vulnerability is to escape user input
+supplied to the prompt key:
+
+    select_tag("name", options, :prompt => h(UNTRUSTED_INPUT))
+
+
+Patches
+- -------
+To aid users who aren't able to upgrade immediately we have provided
+patches for the two supported release series.  They are in git-am
+format and consist of a single changeset.
+
+* 3-0-select_tag_prompt.patch - Patch for 3.0 series
+* 3-1-select_tag_prompt.patch - Patch for 3.1 series
+* 3-2-select_tag_prompt.patch - Patch for 3.2 series
+
+Please note that only the 3.1.x and 3.2.x series are supported at
+present.  Users of earlier unsupported releases are advised to upgrade
+as soon as possible as we cannot guarantee the continued availability
+of security fixes for unsupported releases.
+
+---
+
+Santiago Pastorino
+WyeWorks Co-founder
+http://www.wyeworks.com
+
+Twitter: http://twitter.com/spastorino
+Github: http://github.com/spastorino
+
+Download attachment "3-2-select_tag_prompt.patch" of type "application/octet-stream" (2611 bytes)
+
+Download attachment "3-1-select_tag_prompt.patch" of type "application/octet-stream" (2611 bytes)
+
+Download attachment "3-0-select_tag_prompt.patch" of type "application/octet-stream" (2585 bytes)
