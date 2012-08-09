@@ -1,46 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/15/1
-Message-ID: <20121115003132.GA6428@openwall.com>
-Date: Thu, 15 Nov 2012 04:31:32 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/5
+Message-ID: <5023F88F.80803@redhat.com>
+Date: Thu, 09 Aug 2012 11:51:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Premchand Koneru <pkoneru@...sta.com>
-Subject: Re: Request for linux-distros@...openwall.org membership
+CC: Robbie Mackay <robbie@...ahidi.com>, Heather Leson <HLeson@...ahidi.com>
+Subject: Re: CVE request for Ushahidi
 Content-Type: text/plain; charset=utf-8
 
-All -
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Mon, Nov 12, 2012 at 09:14:55PM +0530, Premchand Koneru wrote:
-> It should be available now. Please try again with the same key.
+On 08/01/2012 10:50 PM, Robbie Mackay wrote:
+> Hi Kurt, I've added info on which researcher discovered the
+> vulnerability in each commit. Anything other info needed?
+> 
+> Thanks, Robbie Mackay Software Developer, External Projects,
+> Ushahidi Inc
 
-I've just subscribed Premchand to linux-distros (and hence to distros as
-well).
+Ok I split these up by reporter as per CVE guidelines.
 
-I feel that the question of MontaVista's list membership is _mostly_
-separate from who is subscribed for MontaVista, although I do see _some_
-overlap between these two questions:  If MontaVista appoints someone not
-known in the community for doing relevant work before, then arguably
-this does suggest that MontaVista is less likely to be making good use
-of advance notification that the list provides.
+***********************
+> * Multiple SQL injections (Reported by Timothy D. Morgan, Kees
+> Cook, postmodern )
 
-A Google web search for "Premchand Koneru" finds primarily this very
-thread on oss-security.  This does look like a bad sign to me.
+=====================
+> https://github.com/ushahidi/Ushahidi_Web/commit/fdb48d1 (identified
+> by Ushahidi dev team) 
+> https://github.com/ushahidi/Ushahidi_Web/commit/4764792 (identified
+> by Ushahidi dev team) 
+> https://github.com/ushahidi/Ushahidi_Web/commit/d954093 (identified
+> by Ushahidi dev team)
 
-That said, Premchand is now subscribed, and I think we may want to
-revisit the topic of which distros are on the lists - a separate topic.
+Please use CVE-2012-3468 for these issues
 
-I think that MontaVista are not the only ones making arguably too little
-use of the info, and that's not good overall.  To single out MontaVista
-just because they happened to ask for a new person to be subscribed now
-would be wrong.  (In fact, by asking they demonstrated that they at
-least care, which is a good sign.)
+=====================
+> https://github.com/ushahidi/Ushahidi_Web/commit/6f6a919
+> (postmodern) 
+> https://github.com/ushahidi/Ushahidi_Web/commit/68d9916
+> (postmodern) 
+> https://github.com/ushahidi/Ushahidi_Web/commit/e0e2b66
+> (postmodern) 
+> https://github.com/ushahidi/Ushahidi_Web/commit/a11d43c
+> (postmodern)
 
-I think it will never be clear where to draw the line, nor whether to
-host these lists at all.  It's always a trade-off, and it's subjective.
-As yet another non-perfect workaround, though, we could setup yet
-another two lists with just the distros who have demonstrated making
-good and timely use of the info - then let senders decide who to notify
-(all or the selected few).  Would this work well?  I doubt it, but we
-could try.
+Please use CVE-2012-3469 for these issues
 
-Alexander
+=====================
+> https://github.com/ushahidi/Ushahidi_Web/commit/3301e48 (Kees
+> Cook)
+
+Please use CVE-2012-3470 for these issues
+
+=====================
+> https://github.com/ushahidi/Ushahidi_Web/commit/3f14fa0 (Timothy
+> D. Morgan)
+
+Please use CVE-2012-3471 for these issues
+
+**************************
+> * Missing authentication on comments, reports, email API calls 
+> (Reported by Kees Cook, Dennison Williams)
+
+
+=====================
+> https://github.com/ushahidi/Ushahidi_Web/commit/4c24325 (Dennison 
+> Williams)
+
+Please use CVE-2012-3472 for these issues
+
+=====================
+> https://github.com/ushahidi/Ushahidi_Web/commit/f67f4ad (Kees
+> Cook) https://github.com/ushahidi/Ushahidi_Web/commit/13ca6f4 (Kees
+> Cook)
+
+Please use CVE-2012-3473 for these issues
+
+**************************
+> * User details exposed in comments API (Discovered by internal dev
+> team) https://github.com/ushahidi/Ushahidi_Web/commit/529f353
+
+Please use CVE-2012-3474 for these issues
+
+**************************
+> * Admin user hijacking through the installer (Reported by Wil
+> Clouser) https://github.com/ushahidi/Ushahidi_Web/commit/7892559 
+> https://github.com/ushahidi/Ushahidi_Web/commit/fcdad03
+
+Please use CVE-2012-3475 for these issues
+
+**************************
+> * Stored XSS on member profile pages (Reported by Amy K. Farrell) 
+> https://github.com/ushahidi/Ushahidi_Web/commit/00eae4f
+
+Please use CVE-2012-3476 for these issues
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQI/iPAAoJEBYNRVNeJnmTvAsQAIuh48sIqfM2/07hWmp0uHAX
+azRSwwHA863udTc9Mkk7GAKwBToZvIzOuITGhfZFIAPIs8wnzAYLNn8fjy2iKfFd
+7E7ihEmK1EVeYdwa1KAULaJkyqfiiK0ThMZ9M+oV4KStyqR2C0EPtSXGt+qBeFPE
+fwVqv/FIyadvVic/y/GIKubF29urV8ji7OtYxNQoT2Zll7Kr9J2GUNUdykrK5lZz
+ibYpgfZgpNkhHkNy59GYkPtlZMpmWqIMTHhlEMEYGvqakLfU9tO8wL4cYq3oSL9I
+ihHCeSW1pWzcjjw2CKcfzc7ZCbRd/8PucVOCcIZyaTHcHSG3/A34YWWzLdRrFsix
+ivZoRJv/zRCL4Jc2Fr+U24iKly4wwGpQ/pyOxA7o/aOy1r4Mf9M7maR40AGSqB8z
+WQfkzfJZ6b5FuPtWssLHl2LdfRR1/6y/uOzi9LVtzp4vEbi3JZLp4UxNQ8mJOJLe
+RSNwBOehO9pYHzOppmYsecaNiarpdLKDXzNvHVMl00BUzm0QaHV/3yQAxek/cLPK
+0b46CYOl85Cd6Ff1OQ6fUL1IDp7Sb2/25/eS32z1b5rcvulfkFXTdL3EoR03H09q
+PgS9XSdnjZK/4O1kZpXGryWIe1aq6IOTHbjqX8oWo7+I+tgeWsGuZdlLRE99Gunq
+0krB19ynPqhtYZNe8jcp
+=CTk4
+-----END PGP SIGNATURE-----
