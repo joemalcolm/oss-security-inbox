@@ -1,35 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/8
-Message-ID: <846296467.37907315.1353953215439.JavaMail.root@redhat.com>
-Date: Mon, 26 Nov 2012 13:06:55 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/2
+Message-ID: <5023485A.2090800@redhat.com>
+Date: Wed, 08 Aug 2012 23:19:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Sawyer X <xsawyerx@...n.org>, Petr Pisar <ppisar@...hat.com>
-Subject: CVE Request -- Dancer.pm / perl-Dancer / libdancer-perl: Newline injection due to improper CRLF escaping in cookie() and cookies() methods (different vulnerability than CVE-2012-5526)
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: CVE Request: gnome-keyring: improper caching of gpg password/passphrase
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  a security flaw was found in the way Dancer.pm,
-lightweight yet powerful web application framework
-/ Perl language module, performed sanitization of
-values to be used for cookie() and cookies() methods.
-A remote attacker could use this flaw to inject arbitrary
-headers into responses from (Perl) applications, that use
-Dancer.pm. A different vulnerability than CVE-2012-5526.
+On 08/08/2012 11:10 PM, Huzaifa Sidhpurwala wrote:
+> Hi All,
+> 
+> gnome-keyring does not obey the configuration asking it to stop
+> caching passphrases after a while.
+> 
+> More details and patches available at the following references:
+> 
+> https://bugzilla.gnome.org/show_bug.cgi?id=681081 
+> https://bugzilla.redhat.com/show_bug.cgi?id=845426
+> 
+> Upstream bug suggests that this is a regression from 3.3.x. But it
+> seems some older versions may also be affected.
+> 
+> Can a CVE id be please assigned to this issue?
+> 
+> Thanks!
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=694279
-[2] https://github.com/sukria/Dancer/issues/859
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=880329
+Please use CVE-2012-3466 for this issue.
 
-Could you allocate a CVE id for this?
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-P.S.: The issue is different / unrelated than similar
-      recent CGI.pm, CVE-2012-5526, flaw (the presence
-      / absence of the CGI.pm CVE-2012-5526 fix doesn't
-      have impact on it).
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQI0haAAoJEBYNRVNeJnmT4SwQALVKkEje7tgKBOTNE8L0IDmW
+WN4LR4I25PGpd9qs8IirMtcXDre1daayQkJP1r3modVQ6jLq0UHcc+gV5Pv6/Wkh
+N3/DWT7L3gCXHjzkeDQJAsiV2UeJTGRz39wsWRyQGwMdZdNp/50B6FWo6YfP2C8Z
++iWdRkgDvQxlUmSq1NqfQtuWU0X8aZxUZUxzEKfA6N5q7idQPkVocy6FeuxN2MGh
+IYJ426Ov7J42hvbBUONphFu4syq1to54uFyeVngcOy0pvKgV6h5BWsOPuXuu4b9T
+par36GNavCfCAIVBADSJwTWghHdauPKKnuNQFqwLmWU1cw19QATv1q6+sxLSLWT1
+7HT0rL/tUIsKgI70K1VC11yTXvcoKzNTe1lsaMoKw9Dyl/wEO8dKEKflGL+GpqOQ
+a17A1qz3K7VxCR0bM0ztT+ocsmvpJGw5pOnSP0thWxV/vnp5waZyW9Z6Ul49n+6P
+wzI68iHAHTN+d/P3TpzxOxS/YxRFagdrWNZcrWkCSOCraMf3fCY84A83lNKlRP6g
+CAaZ0yjSsn8MZXQPp8AwzMmA4hjOvAq3ZJZcjyGGvT2B2vgdTmEd9ODi1M834wLg
+4LDe5vZofnaU80l00eYN/miavShdyDAEdla60jcV+BGcgcNiw8ik+0WISSjHjLA8
+mG98psivTMRZe5Y7x6W/
+=c7Eq
+-----END PGP SIGNATURE-----
