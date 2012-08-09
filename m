@@ -1,62 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/2
-Message-ID: <4F505818.4030202@redhat.com>
-Date: Thu, 01 Mar 2012 22:18:16 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/1
+Message-ID: <5023463B.2040008@redhat.com>
+Date: Thu, 09 Aug 2012 10:40:19 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE Request (minor) -- osc: Improper sanitization of terminal emulator escape sequences when displaying build log and build status
+Subject: CVE Request: gnome-keyring: improper caching of gpg password/passphrase
 Content-Type: text/plain; charset=utf-8
 
-On 02/28/2012 03:44 PM, Marcus Meissner wrote:
-> On Tue, Feb 28, 2012 at 06:56:52PM +0100, Jan Lieskovsky wrote:
->> Hello Kurt, Steve, Marcus, vendors,
->>
->>   a security flaw was found in the way osc, the Python language based 
->>   command
->> line client for the openSUSE build service, displayed build logs and build
->> status for particular build. A rogue repository server could use this flaw 
->> to
->> modify window's title, or possibly execute arbitrary commands or overwrite
->> files via a specially-crafted build log or build status output containing an
->> escape sequence for a terminal emulator.
->>
->> References:
->> [1] https://bugzilla.novell.com/show_bug.cgi?id=749335
->> [2] https://bugzilla.redhat.com/show_bug.cgi?id=798353
->>
->> I need to conclude, I don't know how OBS repositories work (if there is a 
->> chance
->> of a rogue server being present). In any case, this issue is on the border
->> (pretty unlikely someone could alter content of OBS package during build --
->> in that case there would be more urgent issues than just particular terminal
->> window title change).
->>
->> But strictly taken, the trust boundary is crossed in the moment, someone
->> would schedule OBS build and wouldn't expect the build log / status can
->> perform terminal "side" effect yet.
->>
->> Marcus, please correct me if you don't agree this should get a CVE 
->> identifier.
->>
->> If no one having objections and request appropriate, could you allocate one?
-> 
-> I am not fully convinced it needs a CVE.
-> 
-> It basically boils down to the old "logfile with content that might be controlled
-> by an attacker pasted raw to a terminal" issue.
-> 
-> There is some more control on the person who builds a specific package what is output
-> thant there usually is in logfiles though.
-> 
-> A rogue server is unlikely, however a malicious packager could echo "bad escape code"
-> in his build and then ask for help on our IRC channels or mailinglists with package Y on project X.
-> (anyone can create an account and build packages ... and asking for help is not uncommon)
-> e.g. with "look at logfile with: 'osc buildlog home:user foopackage standard i586'.)
-> 
-> Ciao, Marcus
+Hi All,
 
-Please use CVE-2012-1095 for this issue.
+gnome-keyring does not obey the configuration asking it
+to stop caching passphrases after a while.
+
+More details and patches available at the following
+references:
+
+https://bugzilla.gnome.org/show_bug.cgi?id=681081
+https://bugzilla.redhat.com/show_bug.cgi?id=845426
+
+Upstream bug suggests that this is a regression from 3.3.x.
+But it seems some older versions may also be affected.
+
+Can a CVE id be please assigned to this issue?
+
+Thanks!
+
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
