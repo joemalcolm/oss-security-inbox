@@ -1,59 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/11
-Message-ID: <20121204224821.GE2689@redhat.com>
-Date: Tue, 4 Dec 2012 15:48:21 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: Moritz Muehlenhoff <jmm@...ian.org>
-Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE request: Dovecot DoS in 2.x (fixed in 2.1.11)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/9
+Message-ID: <CAKecwXBQttvv4sJsZTkBT9nS2bQrRff1sFxU68L8iXXdeEngBA@mail.gmail.com>
+Date: Thu, 9 Aug 2012 18:25:11 -0300
+From: Santiago Pastorino <santiago@...works.com>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
+Subject: XSS Vulnerability in strip_tags
 Content-Type: text/plain; charset=utf-8
 
-* [2012-12-04 23:01:42 +0100] Moritz Muehlenhoff wrote:
+XSS Vulnerability in strip_tags
 
->On Tue, Dec 04, 2012 at 06:12:29PM +0100, Matthias Weckbecker wrote:
->> Hi Kurt, Vincent, vendors, ...
->>
->> Quoting Kurt Seifried <kseifried@...hat.com>:
->> >-----BEGIN PGP SIGNED MESSAGE-----
->> >Hash: SHA1
->> >
->> >On 12/03/2012 10:33 AM, Vincent Danen wrote:
->> >>Could a CVE be assigned for the following please?
->> >>
->> >>Dovecot 2.1.11 was released and includes a fix for a crash
->> >>condition when the IMAP server was issued a SEARCH command with
->> >>multiple KEYWORD parameters.  An authenticated remote user could
->> >>use this flaw to crash Dovecot.
->> >>
->> [...]
->> >>
->> >>
->> >>Thanks.
->> >
->> >Please use CVE-2012-5620 for this issue.
->> >
->>
->> We were discussing this issue too at [1] and think that it does only
->> affect the current connection, no subsequent (i.e. new) connections
->> are affected.
->>
->> What's your opinion wrt this?
->>
->> [1] https://bugzilla.novell.com/show_bug.cgi?id=792642
->
->Upstream (Timo Sirainen) disputed the issue in the Debian BTS:
->http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695138#15
+There is a vulnerability in the strip_tags helper of Ruby on Rails
+which could allow an attacker to execute arbitrary javascript. This
+vulnerability has been assigned the CVE identifier CVE-2012-3465.
 
-Ahhh... yes, Timo is correct.  If you're only DoS'ing your own
-connection, I wouldn't consider this a flaw.
+Versions Affected:  All.
+Not affected:       Applications not using strip_tags
+Fixed Versions:     3.2.8, 3.1.8, 3.0.17
 
-I (mistakenly) thought this took down the entire dovecot server.  My
-apologies.
+Impact
+- ------
+There is an XSS vulnerability in the strip_tags helper in Ruby on
+Rails, the helper doesn't correctly handle malformed html.  As a
+result an attacker can execute arbitrary javascript through the use of
+specially crafted malformed html.  All users who rely on strip_tags
+for XSS protection should upgrade or use the work around immediately.
 
-Can we have this CVE rejected or disputed?  As Timo says, it's a
-pointless CVE.
+Releases
+- --------
+The 3.2.8 and 3.1.8 releases are available at the normal locations.
 
-Thanks, and sorry about that.
+Workarounds
+- -----------
+For users running earlier releases we have provided a work around,
+place the attached file into the config/initializers directory of your
+application.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Patches
+- -------
+To aid users who aren't able to upgrade immediately we have provided
+patches for the two supported release series.  They are in git-am
+format and consist of a single changeset.
+
+* 3-0-strip_tags.patch - Patch for 3.0 series
+* 3-1-strip_tags.patch - Patch for 3.1 series
+* 3-2-strip_tags.patch - Patch for 3.2 series
+
+Please note that only the 3.1.x and 3.2.x series are supported at
+present.  Users of earlier unsupported releases are advised to upgrade
+as soon as possible as we cannot guarantee the continued availability
+of security fixes for unsupported releases.
+
+Credits
+- -------
+
+Thanks to Marek from Nethemba (www.nethemba.com) for reporting this issue!
+
+---
+
+Santiago Pastorino
+WyeWorks Co-founder
+http://www.wyeworks.com
+
+Twitter: http://twitter.com/spastorino
+Github: http://github.com/spastorino
+
+Download attachment "3-2-strip_tags.patch" of type "application/octet-stream" (1850 bytes)
+
+Download attachment "3-1-strip_tags.patch" of type "application/octet-stream" (1850 bytes)
+
+Download attachment "3-0-strip_tags.patch" of type "application/octet-stream" (1850 bytes)
