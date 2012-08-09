@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/8
-Message-Id: <201210181251.39653.mweckbecker@suse.de>
-Date: Thu, 18 Oct 2012 12:51:39 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/6
+Message-ID: <20120809180145.GS1458@redhat.com>
+Date: Thu, 9 Aug 2012 12:01:45 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
+Subject: CVE-2012-3467: Unauthorized access (authentication bypass) from client to broker due to use of NullAuthenticator in shadow connections
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 17 October 2012 20:14:22 Simon McVittie wrote:
-[...]
->
-> For Perl, one possibility would be to continue to treat an input of
-> "foo\0" as equivalent to "foo" (so that you can use "./ foo \0" to
-> mean " foo ", as documented), but disallow NULs anywhere except the
-> last position.
->
+Just a heads up to advise those shipping qpid-cpp of the following flaw:
 
-Although this is a very elegant solution it's on the other hand probably not
-trivially implemented, because NUL is mostly treated as the end of a string.
-Simply reading beyond it to check whether there is something else that might
-need to be taken into account will likely result in more work for Kurt. ;-)
+In the AMQP messaging scheme implementation each broker can have both, direct
+connections and shadow connections. A shadow connection represents a connection
+to another broker in the cluster. Members use shadow connections to simulate
+the actions of other brokers, so that all members arrive at the same time.
+Output for shadow connections is just discarded, brokers only send data to
+their directly-connected clients.
 
->     S
+A security flaw was found in the way the Qpid C++ libraries implementation,
+used by AMQP client applications to exchange messages with an AMQP message
+broker using the AMQP protocol, performed authentication for certain shadow
+connections. An AMQP client application could issue a phoney shadow connection
+to the AMQP broker, leading into situation that AMQP broker to consider the
+connection it to be a legitimate connection from another AMQP broker,
+subsequently using NullAuthenticator mechanism for authentication, allowing the
+AMQP client application to bypass the authentication.
 
-Matthias
+
+This has been assigned the name CVE-2012-3467.
+
+References:
+
+https://issues.apache.org/jira/browse/QPID-3849
+http://svn.apache.org/viewvc?view=revision&revision=1352992
+https://bugzilla.redhat.com/show_bug.cgi?id=836276
+
+Also, as a aide note, this affects (possibly Red Hat-specific naming
+convention) the qpid-cpp-server-cluster package, other qpid packages  are not
+affected.
 
 -- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Vincent Danen / Red Hat Security Response Team 
