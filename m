@@ -1,28 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/11
-Message-ID: <1338319222.16666.294.camel@new-desktop>
-Date: Tue, 29 May 2012 21:20:22 +0200
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: XXE vulnerability in Restlet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/10
+Message-ID: <CAKecwXBygjS6SBTT21AR-T4X5QBsg8PT4OVrRd1g5W6sarkNmQ@mail.gmail.com>
+Date: Thu, 9 Aug 2012 18:24:57 -0300
+From: Santiago Pastorino <santiago@...works.com>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Potential XSS Vulnerability in Ruby on Rails
 Content-Type: text/plain; charset=utf-8
 
+There is a vulnerability in the HTML escaping code in Ruby on Rails.
+This vulnerability has been assigned the CVE identifier CVE-2012-3464.
 
-> Please use CVE-2012-2656 for this issue.
+Versions Affected:  All.
+Not affected:       None
+Fixed Versions:     3.2.8, 3.1.8, 3.0.17
 
-Thanks !
+Impact
+- ------
+The HTML escaping code in Ruby on Rails does not escape all
+potentially dangerous characters.  In particular the code does not
+escape the single quote character.  The helpers used in Rails itself
+never use single quotes, so most applications are unlikely to be
+vulnerable, however all users running an affected release should still
+upgrade.
 
-> Also is there a specific source file/etc that contains the fix?
+Releases
+- --------
+The 3.2.8 and 3.1.8 releases are available at the normal locations.
 
-The changelog refers to this change:
-https://github.com/restlet/restlet-framework-java/commit/115c17c1f9aab4bd431ae44a36741b86be4c5f53
+Workarounds
+- -----------
 
-However, this one (safer default values for options like
-"secureProcessing" and "expandingEntityRefs") seems much more relevant:
-https://github.com/restlet/restlet-framework-java/commit/ec692bd3b5e386261413210191b179fec22b6cd2
+For users on earlier releases or who are unable to upgrade, you can
+install the attached file into config/initializers.  This will upgrade
+the rails helper to use the Rack::Utils.escape_html helper which does
+escape the single quote character.  However the Rack helper also
+escapes the '/' character, this is likely to cause test failures if
+your application is expecting the values of URLs to be unencoded.
+These tests however browsers will correctly decode the values and
+function as expected.
 
-By the way, credits are wrong (I'm the original reporter) and should be
-fixed soon.
+Patches
+- -------
+To aid users who aren't able to upgrade immediately we have provided
+patches for the two supported release series.  They are in git-am
+format and consist of a single changeset.
 
-Nicolas
+* 3-0-escape_html.patch - Patch for 3.0 series
+* 3-1-escape_html.patch - Patch for 3.1 series
+* 3-2-escape_html.patch - Patch for 3.2 series
 
+Please note that only the 3.1.x and 3.2.x series are supported at
+present.  Users of earlier unsupported releases are advised to upgrade
+as soon as possible as we cannot guarantee the continued availability
+of security fixes for unsupported releases.
+
+---
+
+Santiago Pastorino
+WyeWorks Co-founder
+http://www.wyeworks.com
+
+Twitter: http://twitter.com/spastorino
+Github: http://github.com/spastorino
+
+Download attachment "single_quote_escape_workaround.rb" of type "application/octet-stream" (549 bytes)
+
+Download attachment "3-2-escape_html.patch" of type "application/octet-stream" (12672 bytes)
+
+Download attachment "3-1-escape_html.patch" of type "application/octet-stream" (22772 bytes)
+
+Download attachment "3-0-escape_html.patch" of type "application/octet-stream" (21414 bytes)
