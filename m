@@ -1,32 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/14
-Message-ID: <20120710142228.GA9450@openwall.com>
-Date: Tue, 10 Jul 2012 18:22:28 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/3
+Message-ID: <1344590752.31390.13.camel@gummipuppe>
+Date: Fri, 10 Aug 2012 11:25:52 +0200
+From: Bruno Kleinert <fuddl@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+Subject: Possible data loss or data modification in ownCloud
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 10, 2012 at 04:11:12PM +0200, Sebastian Krahmer wrote:
-> I am fine with either solution and would prefer upstream patches
-> anyway, but it turned out in past that nobody from upstream
-> is willing to add such patches.
+Hi there,
 
-If this is not for upstream and you only need it working on a particular
-distro with glibc, then why not use __secure_getenv()?
+I stumbled over a security bug in owncloud 4.0.5 and 4.0.4 as it is
+packaged in Debian sid/unstable and wheezy/testing, with the result of
+data loss or modification, depending on the configuration of owncloud.
+Though I tested and reproduced this flaw only with the Debian packages,
+an ownCloud developer confirmed that this bug is not Debian-specific.
 
-> I tried a year ago with openssl and AFAIK its still suffering
-> (at least I never heared back).
-> 
-> If you compile your openssh '--with-ssl-engine' you have
-> an easy root exploit (given that ssh-keysign is mode 04755
-> such as on Debian) via OPENSSL_config().
-> 
-> If you ask me, thats quite poor for a framework that wants to
-> add security to the system.
-> So, I do not have any problems adding our own patch sets rather
-> than waiting for another year.
+It is possible for regular users of owncloud to overwrite files that are
+shared read-only by another owncloud user via WebDAV.
 
-Of course.
+To reproduce I did the following steps on Debian sid/unstable and also
+wheezy/testing:
+     1. Install owncloud packages
+     2. Open http://localhost/owncloud and finish installation by
+        creating an admin user
+     3. Log in as admin user and create two regular users user1 and
+        user2
+     4. Log into owncloud as user1 and create an empty text file
+     5. Share this file to user2 and leave the "can edit" checkbox
+        unchecked as it is by default
+     6. Log in via WebDAV as user2 (I used nautilus of GNOME 3)
+     7. Navigate to the empty file, open, edit and save it
+     8. user1's once empty file now contains the changes from user2
 
-Alexander
+If version control is activated in ownCloud, user1 could revert the file
+to its previous state, but if it's *not* activated, user1's data is
+lost.
+
+I contacted an ownCloud developer who sent me a patch, that was applied
+to their development branch to address this issue. I had to adjust it a
+little to make it apply against ownCloud 4.0.5 in Debian sid/unstable.
+The patch should now be included in the latest Debian sid/unstable
+owncloud 4.0.5debian2-2 package. I attach the adjusted patch to this
+mail.
+
+Best regards - Fuddl
+
+View attachment "fix-webdav-security.diff" of type "text/x-patch" (1826 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
