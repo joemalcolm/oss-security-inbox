@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/24
-Message-ID: <20120913221021.GE355@redhat.com>
-Date: Thu, 13 Sep 2012 16:10:21 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/8
+Message-ID: <502590A9.1050107@debian.org>
+Date: Fri, 10 Aug 2012 23:52:25 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: DoS in OpenSLP
+CC: Bruno Kleinert <fuddl@...ian.org>
+Subject: Re: Possible data loss or data modification in ownCloud
 Content-Type: text/plain; charset=utf-8
 
-Quoting Secunia's report:
+On 10/08/12 10:25, Bruno Kleinert wrote:
+> if ($source) { +               switch ($mode) { +
+> case 'r+': +                       case 'rb+': ... +
+> case 'a': +                       case 'ab': +
+> if (!$this->is_writable($path)) { +
+> return false; +                               }
 
-Georgi Geshev has discovered a vulnerability in OpenSLP, which can be
-exploited by malicious people to cause a DoS (Denial of Service).
+I find this suspicious. Surely this should be enumerating the modes
+that are safe, rather than the modes that are not safe? With that
+patch, if a new value for $mode is added, it's assumed to be a read
+operation. It seems much safer to assume that unknown modes are writes:
 
-The vulnerability is caused due to an out-of-bounds read error within
-the "SLPIntersectStringList()" function (common/slp_compare.c) when
-processing service requests and can be exploited to cause a crash via a
-specially crafted request.
+    switch ($mode) {
+        case 'r':
+        case 'rb':
+            break;
+        default:
+            if (!$this->is_writable($path)) {
+                return false;
+            }
+    }
 
-The vulnerability is confirmed in version 1.2.1. Other versions may also
-be affected.
-
-References:
-
-https://secunia.com/advisories/50130/
-https://bugs.gentoo.org/show_bug.cgi?id=434918
-https://bugzilla.redhat.com/show_bug.cgi?id=857242
-
-Could a CVE be assigned to this?  There is no upstream bug report or
-patch that I can see.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Regards,
+    S
