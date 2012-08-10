@@ -1,38 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/31/4
-Message-Id: <0A8384E9-C571-4968-A362-03BE466D1241@wired-net.gr>
-Date: Tue, 31 Jan 2012 08:32:42 +0200
-From: Nanakos Chrysostomos <nanakos@...ed-net.gr>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Jonathan Wiltshire <jmw@...ian.org>, Gian Piero Carrubba <gpiero@...rf.it>, "team@...urity.debian.org" <team@...urity.debian.org>
-Subject: Re: Re: Yubiserver package ships with pre-filled identities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/5
+Message-ID: <1344621384.13241.73.camel@scapa>
+Date: Fri, 10 Aug 2012 10:56:24 -0700
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: argyros.george@...il.com, Aggelos Kiayias <aggelos@...yias.com>
+Subject: Re: Randomness Attacks Against PHP Applications
 Content-Type: text/plain; charset=utf-8
 
+On jeu., 2012-08-09 at 11:19 -0700, Yves-Alexis Perez wrote:
+> Hi list,
+> 
+> I'm currently at the Usenix Security 2012 conference, where there was a
+> nice paper about randomness vulnerabilities in PHP applications. I
+> invite you to read the paper[1] but in summary, a lot of PHP
+> applications make false assumption about the true randomness of the core
+> PHP random functions and it might lead to attacks, for example using the
+> “password reset” features.
+> 
+> Paper authors tried to port this to PHP security team, but it seems the
+> answer was that it was an application problem. Some examples are given
+> in the paper, but I have no idea where exactly the vulnerabilities
+> really lie. The various rand() functions used by application developers
+> might just not hold up to the expectations, or the developers might just
+> don't know that they should use a cryptographically secure random
+> function.
+> 
+> In any case, I guess some discussion might be needed on how to really
+> fix those vulnerabilities, and here seems like a good place. I've just
+> added the two papers authors to CC:, but it might be interesting to
+> bring PHP security team and applications developers in the loop.
+> 
+ ven., 2012-08-10 at 09:57 -0700, Aggelos Kiayias wrote:
+Hi Yves-Alexis -
+> 
+> my student George Argyros brought the below to my attention - (but I  
+> have not received any e-mail myself - )
 
-On 31 Ιαν 2012, at 4:22, Kurt Seifried <kseifried@...hat.com> wrote:
+Sorry, I tried to add you to CC: of the initial mail but it seems I
+failed
 
-> On 01/30/2012 03:14 PM, Nanakos Chrysostomos wrote:
->
->>> Is this account documented/the impact documented?
->>>
->>
->> What do you mean?
->
-> Is this issue clearly documented, e.g. do the docs say "WARNING: A
-> DEFAULT ACCOUNT IS ENABLED. THIS IS NOT SAFE. IT MUST BE REMOVED PRIOR
-> TO PRODUCTION USE" and so on.
->
+> thanks for taking this initiative - I think it is important to find  
+> the optimal way to resolve these problems and
+> relying on web application developers to have the expertise to
+resolve  
+> these problems on their side is totally unrealistic. 
 
-No it's not. In the meantime I have fixed both upstream versions  
-provided through my site and a new package version has been sponsored  
-in Debian that eliminates the problem. Is anything else that has to be  
-done?
+To be honest, I don't have any position on this. I was merely forwarding
+your work to raise awareness on this list, but I have no idea what's the
+correct way to move forward.
 
-Thanks?
-Chris.
+Regards,
+-- 
+Yves-Alexis
 
-
-> Steve: thoughts/comments?
->
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
