@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/9
-Message-Id: <9625A18F-DF8A-4E9A-90C1-AEE43366676C@gmail.com>
-Date: Sun, 8 Jan 2012 15:21:57 -0500
-From: Xi Wang <xi.wang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/4
+Message-ID: <CAFJuDmPK8PGZH2zo4fvMoT7xR09Nb_oWzMnX5zH-gA4ZzT1pAg@mail.gmail.com>
+Date: Fri, 10 Aug 2012 04:55:19 -0400
+From: Adam Caudill <adam@...mcaudill.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Malicious devices & vulnerabilties
+Subject: CVE Request: NeoInvoice Blind SQL Injection in signup_check.php
 Content-Type: text/plain; charset=utf-8
 
-On Jan 8, 2012, at 12:07 PM, Greg KH wrote:
-> They should be considered buggy, yes, and as such, the kernel developers
-> will fix any reported problems (or we should, if not, please let me
-> know.)
+All,
 
-Thanks for the clarification.  CVE-2011-0712 (long product name)
-was fixed like a year ago.
+There is a blind SQL injection issue with NeoInvoice
+(https://github.com/tlhunter/neoinvoice).
 
-http://git.kernel.org/linus/eaae55da
+Requester: adam@...mcaudill.com
+Software: NeoInvoice
+Attack Type: Blind SQL Injection
+Vulnerable Code:
+https://github.com/tlhunter/neoinvoice/blob/5e7af94641cba17df9141e95108c369cfb6e6dd5/public/signup_check.php#L29
 
-The usb audio format parser was just fixed upstream.
+Affected Version: Current version; project doesn't seem to be using versions.
 
-http://git.kernel.org/?p=linux/kernel/git/tiwai/sound.git;a=commit;h=4fa0e81b
+Status: Author has been notified; awaiting a response.
 
-- xi
+-- Adam Caudill
