@@ -1,16 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/02/2
-Message-ID: <20120402152512.GA1205@kludge.henri.nerv.fi>
-Date: Mon, 2 Apr 2012 18:25:12 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, security@...abletype.org
-Cc: bressers@...hat.com, steffen.joeris@...lelinux.de
-Subject: CVEs assigned for Movable Type 4.36 and 5.05 security updates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/7
+Message-ID: <87628q1nak.fsf@windlord.stanford.edu>
+Date: Fri, 10 Aug 2012 13:53:39 -0700
+From: Russ Allbery <rra@...nford.edu>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: rssh command-line parsing vulnerability
 Content-Type: text/plain; charset=utf-8
 
-http://www.movabletype.org/2011/05/movable_type_51_and_505_436_security_update.html
+Hello all,
 
-CVE-2011-5084: A remote attacker could execute arbitrary code in a logged-in users' web browser.
-CVE-2011-5085: A remote attacker could read or modify the contents in the system under certain circumstances.
+I'm the Debian maintainer of the rssh package, which has a security
+vulnerability in its command-line parsing disclosed some time back on the
+rssh mailing list and on BUGTRAQ.  I'm preparing a security update for
+Debian and would like a CVE for tracking purposes.
 
-- Henri Salo
+The security advisory from the upstream maintainer is at:
+http://sourceforge.net/mailarchive/message.php?msg_id=29235647
+
+Here are the relevant contents:
+
+| rssh is a shell for restricting SSH access to a machine to only scp,
+| sftp, or a small set of similar applications.  
+| 
+|   http://www.pizzashack.org/rssh/
+| 
+| Henrik Erkkonen has discovered that, through clever manipulation of
+| environment variables on the ssh command line, it is possible to
+| circumvent rssh.  As far as I can tell, there is no way to effect a
+| root compromise, except of course if the root account is the one
+| you're attempting to protect with rssh...
+| 
+[...]
+| 
+| Note in particular that ensuring that the AcceptEnv sshd configuration
+| option need not be turned on for this exploit to work.
+
+I think this would fit the definition of "local privilege escalation" in
+that it allows users with a restricted shell to run commands they
+shouldn't be able to run.
+
+The last two messages on the thread linked above contain a patch.  (Be
+aware that they've been mangled by the Sourceforge mailing list archive,
+so you have to download them to see them.)  There has been no subsequent
+formal release, just the patch in that thread.
+
+-- 
+Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
