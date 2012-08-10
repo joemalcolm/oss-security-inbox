@@ -1,64 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/8
-Message-ID: <5091452E.8080306@redhat.com>
-Date: Wed, 31 Oct 2012 09:35:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/1
+Message-ID: <50250663.2000907@kde.org>
+Date: Fri, 10 Aug 2012 09:02:27 -0400
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>, Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org
-Subject: Re: CVE Request: Python keyring
+CC: Kurt Seifried <kseifried@...hat.com>,  Charlie Miller <charlie.miller@...uvant.com>, "Jorge Manuel B. S. Vicetto" <jmbsvicetto@...il.com>
+Subject: Re: CVE request for Calligra
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 10/30/2012 01:27 PM, Raphael Geissert wrote:
-> On Friday 05 October 2012 15:21:57 Marc Deslauriers wrote:
->> Hello,
->> 
->> Python keyring before 0.9.1 was using the user-supplied password 
->> insecurely.
->> 
->> From the 0.9.1 changelog:
->> 
->> CryptedFileKeyring now uses PBKDF2 to derive the key from the
->> user's password and a random hash. The IV is chosen randomly as
->> well. All the stored passwords are encrypted at once. Any
->> keyrings using the old format will be automatically converted to
->> the new format (but will no longer be compatible with 0.9 and
->> earlier). The user's password is no longer limited to 32
->> characters. PyCrypto 2.5 or greater is now required for this
->> keyring.
->> 
->> See:
->> 
->> http://pypi.python.org/pypi/keyring#id2 
->> https://bugs.launchpad.net/ubuntu/+source/python-keyring/+bug/1004845
->
->> 
-> Could a CVE id be assigned please?
+On 08/07/2012 09:25 PM, Jeff Mitchell wrote:
+> On 08/06/2012 03:07 PM, Kurt Seifried wrote:
+>> For this DOC rendering issue please use CVE-2012-3455 for KOffice and
+>> please use 2012-3456 for Calligra.
 > 
-> Thanks,
+> Great -- thanks to everyone who helped.
+> 
+> --Jeff
+> 
 
-Please use CVE-2012-4571 for this issue.
+Sorry for the delay, had to put out a few hardware-related fires.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+This is now documented in KDE Security Advisory 20120810-1:
+http://www.kde.org/info/security/advisory-20120810-1.txt
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Thanks,
+Jeff
 
-iQIcBAEBAgAGBQJQkUUuAAoJEBYNRVNeJnmT31MP/Rtf0gogMeONxkrT/HV/TzdB
-bdOtVsowwczBuRtGd1x1gH9x/IAtCLhjGUxD3ZOOE/7F5lUsD1C/RTqDzR2xNRhZ
-XDaG3QKo0zBLMvwy1gVBFZbNNLaRqqWft8KniXWvATyXHHXmzfnLsuV9l/mzPVQS
-n/8ARJs+p5SfNP6d0vyPTMlu04Juw7oo/VuMkSSSCnMQ79//rBS4zWlWC0itU5d0
-BaEugmxaSxkM8Mk6hSM51zcieBShs/pnneJQfugnhowDwov7k/PqPXMjU/84bbLi
-oT5LfZbqSFnhVLxHFocRScHu96rs1qKh/hjKbfPCaJNwpSp1IPHeHzhTNtincxIq
-NHM7xQ/qa6A4yl5XZHX7jED9SX7Qrfe0KzaEkqr8zI9wIYwrVF1SgFO9GN/1V3yv
-CkdC9EEh6s+etKHwnVlrzd9aFTM/A9u44vDvrD8tlAK3WEzsWrqN6SbGAd+8l4/l
-Pr5Ys53WnT8ca7grxs9ezw5WRrqDcAQzGFfHs6ntJwF42/cIO4OO9l7WQPR5aTn1
-LgOCsnHYm6tTnxI4Kg5YZ27wfDvr/62bRMZJt7O5r4PqttoML5EJr4T49vUiDg/J
-93kHkQIJpwHgluNVxhv6kqd/zy3Pm5LSBrSt+5HW5sQsxqCqpO54IcuQV2cdssrZ
-03A84K5389hgNQyU8aLK
-=AOwV
------END PGP SIGNATURE-----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
