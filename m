@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/5
-Message-ID: <20120717090855.GA20785@ngolde.de>
-Date: Tue, 17 Jul 2012 11:08:55 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: libjs-swfupload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/11/4
+Message-ID: <CAHmME9rSFPhj_GizgrpeS2mXX9bpyX0yE7vWWK+mgDrxk2UXrA@mail.gmail.com>
+Date: Sat, 11 Aug 2012 17:31:23 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Tunnel Blick: Multiple Vulnerabilities to Local Root and DoS (OS X)
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-* Kurt Seifried <kseifried@...hat.com> [2012-07-17 04:49]:
-> It's open source though, with the rest of it right?
 
-Yes.
+Tunnel Blick, a popular OpenVPN manager for Macintosh, has several
+vulnerabilities in an SUID helper. I'm not sure if this is the place
+to report vulnerabilities in Macintosh software, but Tunnel Blick is
+open source.
 
-> Public service announcement/request:
-> 
-> When requesting CVE's it would be nice if people not only request
-> CVE's for the specific bits in an update/etc. they care about, but for
-> all the issues, then I have less work to do and we also get a more
-> complete CVE database =).
+>From the bug report [1] on the vulnerable code [2]:
 
-Agreed, sorry for my lazyness :)
+1. A race condition in file permissions checking can lead to local root.
+(PoC: [3])
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+2. Insufficient checking of merely 0:0 744 can lead to local root on
+systems with particular configurations.
 
-Content of type "application/pgp-signature" skipped
+3. Insufficient validation of path names can allow for arbitrary
+kernel module loading, which can lead to local root.
+
+4. Insufficient validation of path names can allow execution of
+arbitrary scripts as root, leading to local root.
+(PoC: [4])
+
+5. Insufficient path validation in errorExitIfAttackViaString can lead
+to deletion of files as root, leading to DoS.
+
+6. Allowing OpenVPN to run with user given configurations can lead to
+local root.
+
+Thanks,
+Jason
+
+[1] http://code.google.com/p/tunnelblick/issues/detail?id=212
+[2] http://code.google.com/p/tunnelblick/source/browse/trunk/tunnelblick/openvpnstart.m?r=2095
+[3] http://git.zx2c4.com/Pwnnel-Blicker/tree/pwnnel-blicker.c
+[4] http://git.zx2c4.com/Pwnnel-Blicker/tree/pwnnel-blicker-for-kids.sh
