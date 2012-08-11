@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/7
-Message-ID: <20120103185209.GA8849@foo.fgeek.fi>
-Date: Tue, 3 Jan 2012 20:52:09 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/11/7
+Message-ID: <CA+TcGd8ttW7ESrfYne24AAjcdf8TyEcRrWOdwvg5f+tWeswypg@mail.gmail.com>
+Date: Sat, 11 Aug 2012 08:54:55 -0700
+From: Kyle Creyts <kyle.creyts@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: maradns hash table collision cpu dos
+Subject: Re: Tunnel Blick: Multiple Vulnerabilities to Local Root and DoS (OS X)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 03, 2012 at 11:42:44AM -0700, Vincent Danen wrote:
-> MaraDNS has released an updated version to fix this hash table collision
-> DoS.  Could a CVE be assigned to it?
-> 
-> References:
-> 
-> http://samiam.org/blog/20111229.html
-> http://samiam.org/blog/20111230.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=771428
-> 
-> Thanks.
-> 
-> -- 
-> Vincent Danen / Red Hat Security Response Team
+Has he also met all conditions for requesting CVEs for these
+vulnerabilities?
+On Aug 11, 2012 8:46 AM, "Solar Designer" <solar@...nwall.com> wrote:
 
-Please note: http://www.openwall.com/lists/oss-security/2012/01/02/12
+> On Sat, Aug 11, 2012 at 05:31:23PM +0200, Jason A. Donenfeld wrote:
+> > Tunnel Blick, a popular OpenVPN manager for Macintosh, has several
+> > vulnerabilities in an SUID helper. I'm not sure if this is the place
+> > to report vulnerabilities in Macintosh software, but Tunnel Blick is
+> > open source.
+>
+> I just want to confirm that this is on-topic (since Open Source) and
+> desirable, as long as you also notify the maintainers (which you did).
+>
+> Thanks,
+>
+> Alexander
+>
 
-- Henri Salo
