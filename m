@@ -1,44 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/13
-Message-ID: <20120330195639.57a62a09@redhat.com>
-Date: Fri, 30 Mar 2012 19:56:39 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/3
+Message-ID: <5028957A.5090409@redhat.com>
+Date: Sun, 12 Aug 2012 23:49:46 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
+CC: "Jason A. Donenfeld" <Jason@...c4.com>
+Subject: Re: Tunnel Blick: Multiple Vulnerabilities to Local Root and DoS (OS X)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 15 Nov 2011 06:13:24 +0400 Solar Designer wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Alternatively, crypt(3) and crypt_r(3) (and the reference code for
-> SHA-crypt?) could refuse to work on overly long key or/and salt
-> strings, but then the question is what they should do on error.
-> crypt(3) returning NULL and setting errno is SUSv2-compliant, but in
-> practice is unexpected by many programs.  Thus, I think the functions
-> would need to return a string that is guaranteed not to match the
-> salt string, e.g. with something like:
+On 08/11/2012 09:31 AM, Jason A. Donenfeld wrote:
+> Hi,
 > 
-> 	buffer[0] = '*';
-> 	buffer[1] = '0';
-> 	buffer[2] = '\0';
-> 	if (salt[0] == '*' && salt[1] == '0')
-> 		buffer[1] = '1';
+> Tunnel Blick, a popular OpenVPN manager for Macintosh, has several 
+> vulnerabilities in an SUID helper. I'm not sure if this is the
+> place to report vulnerabilities in Macintosh software, but Tunnel
+> Blick is open source.
 > 
-> (but also need to check buflen).
+> From the bug report [1] on the vulnerable code [2]:
 > 
-> Finally, we could use malloc() instead of alloca(), but this doesn't
-> eliminate the need to potentially handle an error condition (what if
-> malloc() returns NULL?)
+> 1. A race condition in file permissions checking can lead to local
+> root. (PoC: [3])
+> 
+> 2. Insufficient checking of merely 0:0 744 can lead to local root
+> on systems with particular configurations.
+> 
+> 3. Insufficient validation of path names can allow for arbitrary 
+> kernel module loading, which can lead to local root.
+> 
+> 4. Insufficient validation of path names can allow execution of 
+> arbitrary scripts as root, leading to local root. (PoC: [4])
+> 
+> 5. Insufficient path validation in errorExitIfAttackViaString can
+> lead to deletion of files as root, leading to DoS.
+> 
+> 6. Allowing OpenVPN to run with user given configurations can lead
+> to local root.
+> 
+> Left one out.
+> 
+> 7. Race condition in process killing.
 
-FYI, a fix just got committed upstream, which makes glibc use malloc
-instead of alloca for long inputs and hence possibly make crypt() return
-NULL on errors:
+Sorry maybe it's just late but I'm not finding any links to the
+vulnerable code/fixed code which makes it difficult to verify these
+issues. If you could put links to the affected code/lines so I can
+quickly verify that would be helpful. E.g. I might need to merge some
+of these (#3 and #4 and #5 for example are all input validation?).
 
-http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=b8dc394ddfd58bc5d0fe9ecfc970fc42b789a9df
+> Thanks, Jason
+> 
+> [1] http://code.google.com/p/tunnelblick/issues/detail?id=212 [2]
+> http://code.google.com/p/tunnelblick/source/browse/trunk/tunnelblick/openvpnstart.m?r=2095
+>
+> 
+[3] http://git.zx2c4.com/Pwnnel-Blicker/tree/pwnnel-blicker.c
+> [4]
+> http://git.zx2c4.com/Pwnnel-Blicker/tree/pwnnel-blicker-for-kids.sh
+>
+> 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Upstream discussion:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-http://sourceware.org/ml/libc-alpha/2012-03/msg01138.html
-http://sourceware.org/ml/libc-alpha/2012-03/msg01158.html
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+iQIcBAEBAgAGBQJQKJV6AAoJEBYNRVNeJnmTUKoP/RFPVbuAKsrTOKea0fbSVXA5
+gVqmHHuK0vEmJfi4HaUhKUsV5Vx+fq08TR+16CCYhCJwfZhzPcUPSYyswaXuP0Wi
+ZR8d+/jRPxRssBNeHkOey6ec2SaVwCJtVjnpaJAz0URE9421DX8217J9daOxcpK9
+WVelp+jJuye9n5ykezGIg/dufZ3LMvZmdDHaD7Wce7Lx3dfvSSjSjwZZAPM36uzY
+WpTdil0pvv/wmmN4tECUOCC2oEaroJc8iKQa3/U3RHFUtIPRvNanS++uKmVgNSrk
+FP/xZie4TrduciHxTPUEfx3ubiLEqQO0Xm90EU6l6zesIqeNSxt7O42V9UX0ukk4
+6PqkC/u/NbGfxm+W+GGOuN0HHEhl0Xvpq/kUKSIqCVHchEeWP/S59VbM48/0MhEC
+kWpbaKrOEfA9RG9uChYRiM3B4AO71yCRCksy+8QcvlOldoVnbGA239+aQ82CbCr3
+JC+rDJyViyzj7p06cF03lZ6WZ5zgbRBtp6Ijn7MXRV55fpYuCIyC83js9Mp6DZaT
++wnUM0iy5CzbKXUmcslw3//t6QO3+aVD0hiYK4HrjUYq4rwY+E8IYd5Hn5F7Tim5
+rgrghd56GMe4cBn03/GUs6xVourQdUjyObN3MuLl+I8B9st34+AM0eSLvEeF+shE
+yXjS0VBOlI2YOK46f/DK
+=D+SB
+-----END PGP SIGNATURE-----
