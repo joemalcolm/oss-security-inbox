@@ -1,39 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/14
-Message-ID: <13315562.h1Mja6Y9oR@asterix.site>
-Date: Tue, 17 Jul 2012 22:23:26 +0200
-From: David Faure <faure@....org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, laurent Montel <montel@....org>, Vincent Danen <vdanen@...hat.com>, Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: KDE Pim
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/9
+Message-ID: <5029553A.50500@gmx.de>
+Date: Mon, 13 Aug 2012 21:27:54 +0200
+From: Matthias Andree <matthias.andree@....de>
+To: oss-security@...ts.openwall.com
+Subject: CVE ID request for fetchmail segfault in NTLM protocol exchange
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 17 July 2012 13:37:38 Kurt Seifried wrote:
-> The rendering engine/etc used by KDE Pim didn't support JavaScript
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yes (it was disabled from the html engine on purpose).
+Please assign a CVE ID for the problem described below.  Note that the
+text below is a *draft* security advisory that will change before being
+officially released.
 
-> Things changed and JavaScript support was introduced
 
-Yes, but by mistake (the code that re-colors quotes in html email was ported 
-to webkit, and javascript support is enabled there by default).
-Your phrasing makes it sound like it was "support that was added 
-intentionnally", which wasn't the case.
+fetchmail-SA-2012-02: DoS possible with NTLM authentication in debug mode
 
-> The devels realize this, and quickly move to disable JavaScript.
+Topics:		fetchmail denial of service in NTLM protocol phase
 
-Yes (although we discovered it by investigating a crash due to the fact that 
-remote images were starting to get loaded too, and then abruptly interrupted, 
-something which got disabled at the same time).
+Author:		Matthias Andree
+Version:	draft
+Announced:	2012-08-13
+Type:		crash while reading from bad memory location
+Impact:		fetchmail segfaults and aborts, stalling inbound mail
+Danger:		low
+Acknowledgment:	J. Porter Clark
 
-> It seems like JavaScript was never meant to be supported in KDE Pim,
-> so in light of that I'm going to assign this a CVE as JavaScript
-> introduces a significant number of security issues and also violated
-> the principle of least surprise.
+CVE Name:	(TBD)
+URL:		http://www.fetchmail.info/fetchmail-SA-2012-02.txt
+Project URL:	http://www.fetchmail.info/
 
-Makes sense to me.
+Affects:	- fetchmail releases 5.0.8 up to and including 6.3.21
+		  when compiled with NTLM support enabled
 
--- 
-David Faure, faure@....org, http://www.davidfaure.fr
-Sponsored by Nokia to work on KDE, incl. KDE Frameworks 5
+Not affected:	- fetchmail releases compiled with NTLM support disabled
+		- fetchmail releases 6.3.22 and newer
 
+Corrected in:	2012-08-13 Git, among others, see commit
+		3fbc7cd331602c76f882d1b507cd05c1d824ba8b
+
+		2012-08-xx fetchmail 6.3.22 release tarball
+
+
+0. Release history
+==================
+
+2012-08-13 0.1	draft
+
+
+1. Background
+=============
+
+fetchmail is a software package to retrieve mail from remote POP3, IMAP,
+ETRN or ODMR servers and forward it to local SMTP, LMTP servers or
+message delivery agents. fetchmail supports SSL and TLS security layers
+through the OpenSSL library, if enabled at compile time and if also
+enabled at run time, in both SSL/TLS-wrapped mode on dedicated ports as
+well as in-band-negotiated "STARTTLS" and "STLS" modes through the
+regular protocol ports.
+
+
+2. Problem description and Impact
+=================================
+
+Fetchmail version 5.0.8 added NTLM support. This code sent the NTLM
+authentication request, but never checked if the received response was
+NTLM protocol exchange, or a server-side error message.  Instead,
+fetchmail tried to decode the error message as though it were
+base64-encoded protocol exchange, and could then segfault depending of
+buffer contents, while reading data from bad memory locations.
+
+
+3. Solution
+===========
+
+Install fetchmail 6.3.22 or newer.
+
+The fetchmail source code is always available from
+<http://developer.berlios.de/project/showfiles.php?group_id=1824>.
+
+Distributors are encouraged to review the NEWS file and move forward to
+6.3.22, rather than backport individual security fixes, because doing so
+routinely misses other fixes crucial to fetchmail's proper operation,
+for which no security announcements are issued, or documentation.
+
+Fetchmail 6.3.X releases have always been made with a focus on unchanged
+user and program interfaces so as to avoid disruptions when upgrading
+from 6.3.X to 6.3.Y with Y > X.  Care was taken to not change the
+interface incompatibly.
+
+
+A. Copyright, License and Non-Warranty
+======================================
+
+(C) Copyright 2012 by Matthias Andree, <matthias.andree@....de>.
+Some rights reserved.
+
+This work is licensed under the
+Creative Commons Attribution-NoDerivs 3.0 Germany License (CC BY-ND 3.0).
+
+To view a copy of this license, visit
+http://creativecommons.org/licenses/by-nd/3.0/de/deed.en
+or send a letter to:
+
+Creative Commons
+444 Castro Street
+Suite 900
+MOUNTAIN VIEW, CALIFORNIA 94041
+USA
+
+
+THIS WORK IS PROVIDED FREE OF CHARGE AND WITHOUT ANY WARRANTIES.
+Use the information herein at your own risk.
+
+END of fetchmail-SA-2012-02
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAlApVTQACgkQvmGDOQUufZUV9wCgxrs06ykXu52whi9dgFdWC7PR
+6WsAoJAWCoIBQjUr6WSaFSvK6lEEevDa
+=BCaJ
+-----END PGP SIGNATURE-----
