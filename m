@@ -1,62 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/7
-Message-ID: <Pine.GSO.4.64.1210301317090.17286@faron.mitre.org>
-Date: Tue, 30 Oct 2012 13:34:07 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Kurt Seifried <kseifried@...hat.com>
-cc: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
-Subject: Re: Strange CVE situation (at least one ID should come of this)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/1
+Message-ID: <87lihjscfo.fsf@gnu.org>
+Date: Mon, 13 Aug 2012 11:22:51 +0800
+From: Chong Yidong <cyd@....org>
+To: oss-security@...ts.openwall.com
+Subject: Security flaw in GNU Emacs file-local variables
 Content-Type: text/plain; charset=utf-8
 
+Paul Ling has found a security flaw in the file-local variables code in
+GNU Emacs.  We are preparing a new Emacs release to address this flaw,
+and would like to request a CVE.
 
-> On 10/26/2012 01:54 PM, Josh Bressers wrote:
->>
->> If I was to list the security problems I found after a few minutes
->> of looking, they are:
->>
->> * It uses MD5 passwords * The shadow file is directly modified
->> without locking (which could lead to a race condition) * If you get
->> the password wrong, it doesn't unlink the empty temporary file.
->>
->> None are really a big deal, you *could* run this and probably never
->> notice these problems.
->>
->> Fundamentally though, this thing should get one CVE ID that
->> basically say "don't use this". How have situations like this been
->> handled in the past?
+When the Emacs user option `enable-local-variables' is set to `:safe'
+(the default value is t), Emacs should automatically refuse to evaluate
+`eval' forms in file-local variable sections.  Due to the bug, Emacs
+instead automatically evaluates such `eval' forms.  Thus, if the user
+changes the value of `enable-local-variables' to `:safe', visiting a
+malicious file can cause automatic execution of arbitrary Emacs Lisp
+code with the permissions of the user.
 
-To have a CVE for "don't use this" is not consistent with long-existing 
-practice.  I don't recall ever intentionally assigning a CVE for such a 
-thing - after all, CVE is about vulnerabilities, and "don't use this" is 
-awfully vague.
+The bug is present in Emacs 23.2, 23.3, 23.4, and 24.1.
 
-Deployment of risky software is effectively a configuration or asset 
-management issue, which is well outside the scope of CVE. (Maybe it's more 
-like a Common Configuration Enumeration (CCE) issue.)
+Attached are patches to fix this bug for Emacs 23.4 and Emacs 24.1,
+written by Glenn Morris.  (The 23.4 patch should apply to the rest of
+the Emacs 23.x series.)
 
-In other words - we really shouldn't use CVE to handle this problem.  It 
-is feature creep, and I believe that it WOULD become a huge mess.  Maybe 
-this would work for some, but not for all of CVE's consumers, which is a 
-wide variety of people and use cases.  I understand that there is a 
-problem here, though.
+Bug tracker ref: http://debbugs.gnu.org/cgi/bugreport.cgi?bug=12155
 
-It looks like Josh laid out at least 3 different security issues in your 
-initial request.  Those can/should get CVEs assigned, even if there aren't 
-full details.  The lack of a vendor CONFIRM reference or advisory, tells 
-the consumer that the vendor hasn't addressed it.
 
-Perhaps the OSS community could borrow an idea from one of the framework 
-vendors with lots of third-party modules - I forget if it was Joomla or 
-Drupal - who actively maintained a list of poorly maintained or obsolete 
-software.
+View attachment "local-vars-patch-23.4.patch" of type "text/x-diff" (1373 bytes)
 
-In the broadest sense, however, such old software is still useful for 
-people who are starting in vulnerability research, or just doing it for 
-fun; many people who audit what MITRE calls "phpGolf" applications, go on 
-to do more substantive research.
-
-Perhaps it is time to re-examine Crispin Cowan's Sardonix project, which 
-tried to match vulnerability researchers with open source projects, in 
-order to build reputations for both.
-
-- Steve
+View attachment "local-vars-patch-24.1.patch" of type "text/x-diff" (1374 bytes)
