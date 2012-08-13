@@ -1,82 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/7
-Message-ID: <4FBBCD22.4070300@redhat.com>
-Date: Tue, 22 May 2012 11:30:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: maximilian attems <max@...o.at>, Dan Rosenberg <dan.j.rosenberg@...il.com>, klibc@...or.com
-Subject: Re: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/4
+Message-ID: <924551826.11812407.1344855143001.JavaMail.root@redhat.com>
+Date: Mon, 13 Aug 2012 06:52:23 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, "Joseph S. Myers" <joseph@...esourcery.com>, Jeff Law <law@...hat.com>
+Subject: CVE Request -- glibc: Integer overflows, leading to stack-based buffer overflows in strto* related routines
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-On 05/22/2012 03:18 AM, maximilian attems wrote:
-> On Wed, 18 May 2011, Dan Rosenberg wrote:
-> 
->> On Wed, May 18, 2011 at 4:29 PM, maximilian attems <max@...o.at>
->> wrote:
->>> On Wed, May 18, 2011 at 04:13:05PM -0400, Dan Rosenberg wrote:
->>>> Might it be worth fixing the insecure temporary file usage?
->>>> 
->>>> 122         snprintf(fn, sizeof(fn), "/tmp/net-%s.conf",
->>>> dev->name); 123         f = fopen(fn, "w");
->>>> 
->>>> What if someone else has already created that file, or put a
->>>> symlink or hard link there?
->>> 
->>> for the initramfs case I don't see how. outside of initramfs
->>> usage I'd agree that this needs fixing.
->>> 
->> 
->> Right, this only applies after boot is done.
-> 
-> As klibc main target is initramfs usage this use case hasn't come
-> up much, so wasn't top priority. Just got reminded today by
-> checking ipconfig backlog patches.
-> 
->>>> What if someone overwrites your string with command injection
->>>> characters despite your stripping?
->>> 
->>> please be more verbose, what example do you have in mind?
->>> 
->> 
->> Sorry for not being clear.  If you're concerned about scripts
->> parsing this file while it has command injection strings in it,
->> what's to stop someone from putting a malicious file there if one
->> doesn't already exist?  It sounds like the scripts that depend on
->> this file should probably be fixed here, or the file itself
->> should be moved to a location where it's not writable by
->> unprivileged users.
-> 
-> ipconfig in latest klibc git uses /run as you suggested. 
-> http://git.kernel.org/?p=libs/klibc/klibc.git;a=summary
-> 
-> thank you.
+  multiple integer overflows, leading to stack-based buffer overflows were found in various stdlib functions of GNU libc (strtod, strtof, strtold, strtod_l and related routines). If an application, using the affected stdlib functions, did not perform user-level sanitization of provided inputs, a local attacker could use this flaw to cause such an application to crash or, potentially, execute arbitrary code with the privileges of the user running the application.
 
+Upstream bug report:
+[1] http://sourceware.org/bugzilla/show_bug.cgi?id=14459
 
-Please use CVE-2012-2382 for this issue.
+Upstream patch (might not be the final one):
+[2] http://sourceware.org/ml/libc-alpha/2012-08/msg00202.html
 
+References:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=847715
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Could you allocate a CVE id for this?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPu80iAAoJEBYNRVNeJnmT7lIQANTIzxsVWW71U4sPvz2oW5Mz
-ircifRsWec1hdeaVL22jOO/G/Oe0fR/pWeH68SLt0ANcA7RxVkackVmMFiND1FBI
-w3eSHGbc2DcmeTN6HCbCxZji6MGNoJTrNwAUyI0EygbMtlUhqDzvCE7yqlpxzrgo
-cFh22AWv1pqvxU0c3Kwp7XKwBrL4CfkRO8Klj2ysYhIwxCM0tEHVropf2Kvbed+e
-Fi4tHl15hkOxFcZWKpBvywPle4uSntGHLyvkjm4wMfEGFjxpLGcuYUpnMPDnSZPV
-KRwqzRfXccudfW6QomXWPqY2J//iv7DH5bdp3C77ahxp2Spj/oubN30QlNPvtgF7
-QCGXB1aQW25T7XzpAccQvvLQmD3mUi3NVcYni1hgpBz91qjQCt22ogd5ySATZHCy
-Q95TSWo0ekGx/SiyYSA2sFUnzQed4eSpqzA4Tr71WCcrJHlasIyMyjMn77RKfjkH
-WLGCp+9P6dHJv+CY5rweHLtghvVX4+ceRJ0WQpqV/Ovx87zDn3+cFXGXL43smFeD
-U4c3k63p78RjLXfobiS+fgvDkMFwt28QPvwjSzh8zYvLQpWJhaeOOsMuybmQJSi3
-TNGChwHasIMKomxDL7F5jdy/A+waT1msw3LYs8omrc7pH9KsqTO0ruEKsgTM109x
-O72HCG+dM9E08aCfTpAZ
-=9jZ9
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
