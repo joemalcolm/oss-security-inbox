@@ -1,60 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/1
-Message-ID: <1330422418.14828.11.camel@tiger.regit.org>
-Date: Tue, 28 Feb 2012 10:46:58 +0100
-From: Eric Leblond <eric@...it.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/6
+Message-ID: <50292790.8060109@redhat.com>
+Date: Mon, 13 Aug 2012 10:13:04 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, "Joseph S. Myers" <joseph@...esourcery.com>, Jeff Law <law@...hat.com>
+Subject: Re: CVE Request -- glibc: Integer overflows, leading to stack-based buffer overflows in strto* related routines
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Mon, 2012-02-27 at 19:13 +0100, Florian Weimer wrote:
-> * Eric Leblond:
+On 08/13/2012 04:52 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> > I've discovered a generic attack on firewall using Application Level
-> > Gateway (like Netfilter or Checkpoint).
+> multiple integer overflows, leading to stack-based buffer overflows
+> were found in various stdlib functions of GNU libc (strtod, strtof,
+> strtold, strtod_l and related routines). If an application, using
+> the affected stdlib functions, did not perform user-level
+> sanitization of provided inputs, a local attacker could use this
+> flaw to cause such an application to crash or, potentially, execute
+> arbitrary code with the privileges of the user running the
+> application.
 > 
-> This is rediscovered every two to five years.  Here's mine
-> (from 2005, but it's been proposed before):
+> Upstream bug report: [1]
+> http://sourceware.org/bugzilla/show_bug.cgi?id=14459
 > 
-> <http://www.enyo.de/fw/security/java-firewall/>
+> Upstream patch (might not be the final one): [2]
+> http://sourceware.org/ml/libc-alpha/2012-08/msg00202.html
 > 
-> > Secure use of iptables and connection tracking helpers:
-> > http://home.regit.org/netfilter-en/secure-use-of-helpers/
+> References: [3] https://bugzilla.redhat.com/show_bug.cgi?id=847715
 > 
-> I think your filters aren't effective against sandboxed Java code on
-> the client.
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-Interesting point. On this abnormal usage of helper, I fear more
-"malicious" software. I'm even surprised that a wonderful network
-evasion software like Shype is not using this technique.
+Please use CVE-2012-3480  for this issue.
 
-> 
-> I think there are other client-side sandboxes which allow de-facto
-> unrestricted access (with server cooperation).  Doesn't Flash require
-> just a policy file on the server to open up arbitrary ports?
-> 
-> You could exclude the magic Silverlight port range:
-> 
-> | One additional restriction on using the sockets classes is that the
-> | destination port range that a network application is allowed to
-> | connect to must be within the range of 4502-4534.
-> 
-> <http://msdn.microsoft.com/en-us/library/cc645032%28v=vs.95%29.aspx>
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Regarding Netfilter, the FTP helper will only do the analysis if you
-connect to port 21 (or to match params specified by CT target). There is
-no need to limit traffic on other ports.
-Thus, it seems the approach explained in Netfilter document is correct:
-only activate the helpers to trusted server (if you can) or accept the
-fact that abnormal usage can be done. Regarding this last point, I will
-update the document to be more precise about the potential attack and
-evasion.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Best regards,
--- 
-Eric Leblond 
-Blog: http://home.regit.org/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQIcBAEBAgAGBQJQKSeQAAoJEBYNRVNeJnmTaNQQAM/vJRknkhy21Hpjmazbbbp9
+XsIC6rY7iNVjp6wYfuYWhA01UHgXzCSpyrvrnCcITYl6ISm2JP1fBX7eWoBkTcz4
+7YTa1ibUZZrl4pqg2Yehc888rBCeQhHn2T+T9HEQJz08iLv1B6KVXYekxr7k1ncf
+d/1yTSITnJkwN7tjuHkn0rQhtvFOWM3auMRoWLI1uHxvNEocclAxcxEURmPBnVJE
+MzVcTmwuEA8SM1far+IxZF0OZTEFLlOn/IhLouB+uP8gTvec9ORbHPjdq5fZe3O/
+E8SlhNCXdCY6uZvOSe/J3YHQRFTbDuyFAxkad5fwViRYfply4pwro8NTw43JxNvg
+6BTvBd9BYExo9H95/BTC0sMoI6a83CPYNPzMoorgxxfV9RfbmJy4N/IfqwzQwt6Y
+0KEBfn8bfJlP14LH6uNc05gpCAB01GixAlhUddJn9VXU8yxeWtg95hLPUgJoD0cx
+fnq0iuhRIeVHYcKcxRitEzfh8BurRKgCDg9WG1dHNbvsKi8CkmwayNvrDkwYF+1g
+g3RCfaarQyFMPcBoFtGvbORRsPVFi6gyoEsFrl4agPoE3p/ADWBOvJ8b1uHBH8MV
+kBZ/nPJpPj3EOIO1oSJmHR8sto+/Pj1ghNS+8tzmI1gr/EtxbesrsmRJMwvHoUnC
+FlD14c8vXgIOJCDWYp9D
+=cDR/
+-----END PGP SIGNATURE-----
