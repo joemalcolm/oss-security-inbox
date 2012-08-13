@@ -1,67 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/26/3
-Message-ID: <fi2QtF5hKhscE3ZHFcRYNKXtLYQ@4aHDgZMJRtcLnIeEgVOjcu6DpEM>
-Date: Mon, 27 Aug 2012 00:54:36 +0400
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
-To: oss-security@...ts.openwall.com
-Cc: Henri Salo <henri@...v.fi>, Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE-request: Roundcube XSS issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/10
+Message-Id: <F640638B-5C30-484C-9D62-C0771569151F@groovie.org>
+Date: Mon, 13 Aug 2012 15:26:43 -0700
+From: Ben Bangert <ben@...ovie.org>
+To: pylons-discuss@...glegroups.com
+Cc: pylons-devel@...glegroups.com, oss-security@...ts.openwall.com
+Subject: ANN: Beaker 1.6.4 released with important security update
 Content-Type: text/plain; charset=utf-8
 
-Fri, Aug 24, 2012 at 10:29:42PM -0400, Steven M. Christey wrote:
-> 
-> On Mon, 20 Aug 2012, Kurt Seifried wrote:
-> 
-> >> 2, Issue 2a: Description: Stored XSS in e-mail body. Ticket:
-> >> http://trac.roundcube.net/ticket/1488613 Upstream patch:
-> >>
-> >> [snip]
-> >>
-> >> Issue 2b: Self XSS in e-mail body (Signature). Ticket:
-> >> http://trac.roundcube.net/ticket/1488613 Upstream patch:
-> >[snip]
-> >
-> > Please use CVE-2012-3508 for these two issues (same version, same type
-> > of vuln so cve merge).
-> 
-> Further investigation into ticket 1488613 shows that the developer thinks 
-> that issue 2b doesn't need a backport to 0.7.  This would suggest a SPLIT 
-> based on different affected versions.
+Beaker is a high-level Python library providing caching and sessions for use in web applications. The session implementation comes with crypto-based cookie encryption that support PyCrypto, pycryptopp, and now NSS crypto.
 
-Why?  2a doesn't affect 0.7.x, because wash_attribs in these versions
-has the following code
-{{{
-      if (isset($this->_html_attribs[$key]) ||
-         ($key == 'href' && preg_match('/^(http:|https:|ftp:|mailto:|#).+/i', $value)))
-        $t .= ' ' . $key . '="' . htmlspecialchars($value, ENT_QUOTES) . '"';
-}}}
-while 0.8.x used to have
-{{{
-      if (isset($this->_html_attribs[$key]) ||
-         ($key == 'href' && preg_match('!^([a-z][a-z0-9.+-]+:|//|#).+!i', $value)))
-        $t .= ' ' . $key . '="' . htmlspecialchars($value, ENT_QUOTES) . '"';
-}}}
+Prior to this release, an attacker could possibly determine some content of cookie-based sessions encrypted with PyCrypto due to how the data was encrypted. This flaw did not affect pycryptopp sessions, nor does it allow an attacker to change data as a separate HMAC is used to sign the encrypted payload. Red Hat found and supplied a patch to fix this flaw, thanks!
 
-As one can see, version from 0.7.x won't allow "javascript:" as
-0.8.x's version will, so 0.7.x is clean from this bug (checked sources
-for 0.7.1, 0.7.2 and 0.7.3).
+CVE-2012-3458
+Fix in beaker: https://github.com/bbangert/beaker/commit/91becae76101cf87ce8cbfabe3af2622fc328fe5
 
-> Plus it's not immediately clear whether this "self XSS" is really an XSS 
-> or not - if I can modify my own signature, then I already have the 
-> "privileges" on my browser to run script.  But, if this "self XSS" is 
-> really just reflected XSS, then that's a security issue to worry about. 
-> This requires expertise in the Roundcube codebase to answer for sure, 
-> though.
+Applying this update will change the hashing of sessions encrypted with PyCrypto, invalidating existing ones.
 
-Basing on the fix,
-  https://github.com/roundcube/roundcubemail/commit/c086978f6a91eacb339fd2976202fca9dad2ef32
-I believe that the "self XSS" is only triggered when user composes
-e-mail in HTML mode and one of his text signatures contains some HTML
-code.  The issue shows up only when a message is composed (so, it
-doesn't matter for the signatures of received mails) and XSS is
-triggered by the contents of the signature that the user has for his
-identity.  So, only the entity that can edit user's signatures will
-provoke this XSS, thus this vulnerability can be used only with some
-other one that will allow to modify user's signatures.
--- 
-Eygene
+Changelog for this release:
+
+* Fix bug with key_length not being coerced to a int for comparison. Patch by
+  Greg Lavallee.
+* Fix bug with cookie invalidation not clearing the cookie data. Patch by
+  Vasiliy Lozovoy.
+* Added ability to pass in cookie_path for the Session. Patch by Marcin
+  Kuzminski.
+* Add NSS crypto support to Beaker. Patch by Miloslav Trmac of Redhat.
+* Fix security bug with pycrypto not securing data such that an attacker could
+  possibly determine parts of the encrypted payload. Patch by Miloslav Trmac of
+  Redhat. See `CVE-2012-3458 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-3458>`_.
+* Add ability to specify schema for database-backed sessions. Patch by Vladimir
+  Tananko.
+* Fix issue with long key names in memcached backend. Patch by Guillaume
+  Taglang.
+
+
+Cheers,
+Ben
