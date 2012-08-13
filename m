@@ -1,68 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/10
-Message-ID: <4F632863.8090707@redhat.com>
-Date: Fri, 16 Mar 2012 12:47:47 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Matt Jordan <mjordan@...ium.com>
-Subject: CVE Request -- Asterisk: AST-2012-002 and AST-2012-003 flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/2
+Message-ID: <502893CC.8090709@redhat.com>
+Date: Sun, 12 Aug 2012 23:42:36 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Chong Yidong <cyd@....org>
+Subject: Re: Security flaw in GNU Emacs file-local variables
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-1) AST-2012-002:
+On 08/12/2012 09:22 PM, Chong Yidong wrote:
+> Paul Ling has found a security flaw in the file-local variables
+> code in GNU Emacs.  We are preparing a new Emacs release to address
+> this flaw, and would like to request a CVE.
+> 
+> When the Emacs user option `enable-local-variables' is set to
+> `:safe' (the default value is t), Emacs should automatically refuse
+> to evaluate `eval' forms in file-local variable sections.  Due to
+> the bug, Emacs instead automatically evaluates such `eval' forms.
+> Thus, if the user changes the value of `enable-local-variables' to
+> `:safe', visiting a malicious file can cause automatic execution of
+> arbitrary Emacs Lisp code with the permissions of the user.
+> 
+> The bug is present in Emacs 23.2, 23.3, 23.4, and 24.1.
+> 
+> Attached are patches to fix this bug for Emacs 23.4 and Emacs
+> 24.1, written by Glenn Morris.  (The 23.4 patch should apply to the
+> rest of the Emacs 23.x series.)
+> 
+> Bug tracker ref:
+> http://debbugs.gnu.org/cgi/bugreport.cgi?bug=12155
 
-An out-of stack-based buffer write flaw was found in the way the Miliwatt
-application of the Asterisk, open source telephony toolkit, performed
-generation of constant audio tone at 1000Hz (the 'o' option) from certain,
-provided audio packets, when the 'internal_timing' Asterisk configuration file
-option was disabled. In this configuration, a remote attacker could provide a
-specially-crafted audio packet file, which once processed by the Miliwatt
-application would lead to that application crash, or, potentially arbitrary
-code execution with the privileges of the user running the application.
+Please use CVE-2012-3479 for this issue.
 
-Upstream security advisory:
-[1] http://downloads.asterisk.org/pub/security/AST-2012-002.pdf
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Asterisk v1.8.10.1 announcement:
-[2] http://www.asterisk.org/node/51797
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-Upstream patch against the v1.8 branch:
-[3] http://downloads.asterisk.org/pub/security/AST-2012-002-1.8.diff
-
-References:
-[4] https://bugs.gentoo.org/show_bug.cgi?id=408431
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=804038
-
-2) AST-2012-003:
-
-A stack-based buffer overflow flaw was found in the way Asterisk Manager
-Interface of Asterisk, open source telephony toolkit, performed processing of
-certain HTTP Digest Authentication headers. A remote attacker, attempting to
-connect to the HTTP session could send a HTTP Digest Authentication header with
-specially-crafted values for certain fields, which once processed by the
-Asterisk parse digest authorization header functionality would lead to asterisk
-crash, or, potentially arbitrary code execution with the privileges of the user
-running the application.
-
-Upstream security advisory:
-[1] http://downloads.asterisk.org/pub/security/AST-2012-003.pdf
-
-Asterisk v1.8.10.1 announcement:
-[2] http://www.asterisk.org/node/51797
-
-Upstream patch against the v1.8 branch:
-[3] http://downloads.asterisk.org/pub/security/AST-2012-003-1.8.diff
-
-References:
-[4] https://bugs.gentoo.org/show_bug.cgi?id=408431
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=804042
-
-Could you allocate two ids for these issues?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: Cc-ed Matt Jordan of the Asterisk team, so once the ids are assigned, he
-       can update the advisories.
+iQIcBAEBAgAGBQJQKJPMAAoJEBYNRVNeJnmTfa8QAMp9laqz/ihbWisZWmHk5kkQ
+1afhhPxgSOauIPnuc2myWIP53lu8buJOgXOCo1Tl6fvfjMGu8zWJ3gr3xnqRyYjr
+m1EbiUZtrqdlyukvkReU08CVWmW8lXkn6W3znc3S6JQNq+eRxgBXMvcbAtNnJzKA
+ri6ApmMIqKZkbV9p8hqyHeNcdCdfi4nrjBr4vff6UX4SM1hqe05P6DOa8FCoRDIj
+Wt81d3zUenGwuVyFaRknuqw0dwQ6svwjCpcpsZnEiwjPZG+8IDlo8aCrvuThKh+x
+DTcD3Lt8Vr7+6QhAf7a20PDwJvM1KcinkHDQ1qE6ZvmxcdTJmoY0R+2wZqdnX2UZ
+f7mlqS8GPxH4V173ypz98eM0IhI/E4ZXSlTHg0vThq33QJ9NNjQ0OuDJhM5fuikF
+vY/s2n2TymrEAIjP6CMwZjZfSe56SzcJadR3Pq56H7RD+zSJYJmfasWbK56acjHA
+qE5xxvunO7UZPMAsYqUMGIqVCv5EsiDmmoFF/Xtlk98/at8AWfKNt27IGqPU+io3
+ShpGjDcptN8yitOPaPcEaAim6ndfObL4LlLozNv85M71oJ7tcDGiVBPaPRIjB0AJ
+bXpunXMcEigQlazVy/T4CIv7r2P2ZR64at16t0LKiR4XiTL016rjUkhSuHdPSdU3
+FS+YTLukIBYRDIFbbJss
+=jFS2
+-----END PGP SIGNATURE-----
