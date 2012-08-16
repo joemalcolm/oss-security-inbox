@@ -1,24 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/18/5
-Message-ID: <20120918145332.GJ4492@redhat.com>
-Date: Tue, 18 Sep 2012 08:53:32 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: note on gnome shell extensions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/16/6
+Message-ID: <075901cd7bf2$370f63f0$a52e2bd0$@reactionis.co.uk>
+Date: Thu, 16 Aug 2012 22:00:48 +0100
+From: "research" <research@...ctionis.co.uk>
+To: "'full-disclosure'" <full-disclosure@...ts.grok.org.uk>, "'bugtraq'" <bugtraq@...urityfocus.com>, <secalert@...urityreason.com>, <bugs@...uritytracker.com>, "'vuln'" <vuln@...unia.com>, <vuln@...urity.nnov.ru>, <news@...uriteam.com>, <moderators@...db.org>, <submissions@...ketstormsecurity.org>, <submit@...ecurity.com>, <oss-security@...ts.openwall.com>
+Subject: GIMP Scriptfu Python Remote Command Execution
 Content-Type: text/plain; charset=utf-8
 
-* [2012-09-18 08:43:29 +0200] Sebastian Krahmer wrote:
+Summary
+=======
 
->Yes, Vincent Untz did:
->
->https://bugzilla.gnome.org/show_bug.cgi?id=684215
+There is an arbitrary command execution vulnerability in the scriptfu
+network server 
+console in the GIMP 2.6 branch. It is possible to use a python scriptfu
+command to run
+arbitrary operating-system commands and potentially take full control of the
+host.
 
-Perfect, thank you for that.
+The advisory is posted here:
+http://www.reactionpenetrationtesting.co.uk/GIMP-scriptfu-python-command-exe
+cution.html
 
->On Mon, Sep 17, 2012 at 02:28:23PM -0600, Vincent Danen wrote:
->> * [2012-09-13 17:43:16 -0600] Kurt Seifried wrote:
->>
->> Has anyone reported this to upstream yet?
+CVE number: CVE-2012-4245
+Vendor homepage: http://www.gimp.org/
+Vendor notified: 9/8/2012
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+
+Affected Products
+=================
+
+GIMP 2.6 branch (Windows or Linux builds)
+
+Non-Affected Products
+=====================
+
+The Scriptfu network server component does not currently work in the GIMP
+2.8 branch 
+(Windows or Linux builds). 
+
+Details
+=======
+
+There is an arbitrary command execution vulnerability in the scriptfu
+network server 
+console in the GIMP 2.6 branch. It is possible to use a python scriptfu
+command to run
+arbitrary operating-system commands and potentially take full control of the
+host.
+The following command will write "foo" to "/tmp/owned":
+
+(python-fu-eval 0 "file = open('/tmp/owned','w')\nfile.write('foo')")
+
+
+Impact
+======
+
+Successful exploitation of the vulnerability may result in remote command
+execution.
+
+Solution
+===========
+No solution has been implemented at this stage apart from the workaround
+below.
+
+Workaround
+===========
+
+Do not enable the scriptfu network server.
+The GIMP development team have stated that this component was not designed
+with security
+ in mind and therefore should not be used in production environments.
+
+Distribution
+============
+
+In addition to posting on the website, a text version of this notice
+is posted to the following e-mail and Usenet news recipients.
+
+  * bugtraq () securityfocus com
+  * full-disclosure () lists grok org uk
+
+Future updates of this advisory, if any, will be placed on the ReactionIS
+corporate website, but may or may not be actively announced on
+mailing lists or newsgroups. Users concerned about this problem are
+encouraged to check the URL below for any updates:
+
+http://www.reactionpenetrationtesting.co.uk/GIMP-scriptfu-python-command-exe
+cution.html
+
+============================================================================
+====
+
+
+
