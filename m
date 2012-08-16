@@ -1,42 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/2
-Message-ID: <20120504073241.GA5651@kludge.henri.nerv.fi>
-Date: Fri, 4 May 2012 10:32:41 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/16/1
+Message-ID: <502C7E3A.6090405@redhat.com>
+Date: Thu, 16 Aug 2012 10:29:38 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: OpenKM 5.1.7 Privilege Escalation / OS Command Execution (XSRF based)
+Subject: pcp: Multiple security flaws
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 23, 2012 at 09:09:30AM -0600, Kurt Seifried wrote:
-> On 03/23/2012 04:00 AM, Henri Salo wrote:
-> > Can I get CVE-identifiers for these two security vulnerabilities?
-> > 
-> > http://osvdb.org/show/osvdb/78105 COMPASS-2012-001
-> > http://osvdb.org/show/osvdb/78106 COMPASS-2012-002
-> > 
-> > - Henri Salo
-> 
-> I'm going to need some original vendor information (name, site, etc.).
-> 
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+Hi All,
 
-Hello Kurt and list,
+Multiple security flaws in pcp were discovered by Florian Weimer of the
+Red Hat Product Security Team. These issues have been addressed in
+pcp-3.6.5.
 
-I received following information from Paco Avila from OpenKM. I hope this clarifies things.
+Details about the flaws and upstream patches are available in the
+following Red Hat bugs.
 
-"OpenKM Permission Weakness Admin Privilege Escalation"
-COMPASS-2012-001 / OSVDB:78105 / SA47424:
-Diff: AuthServlet.diff
-Issue tracker: http://issues.openkm.com/view.php?id=1973
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3418
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3419
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3420
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3421
 
-"OpenKM Arbitrary Admin User Creation CSRF"
-COMPASS-2012-002 / OSVDB:78106 / SA47420:
-Diff: scripting.diff
-Issue tracker: http://issues.openkm.com/view.php?id=1750
-
-- Henri Salo
-
-View attachment "AuthServlet.diff" of type "text/x-diff" (8743 bytes)
-
-View attachment "scripting.diff" of type "text/x-diff" (3551 bytes)
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
