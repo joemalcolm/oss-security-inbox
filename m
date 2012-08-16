@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/4
-Message-ID: <fvIo7EKaKXRprJopK5rfAGepQQY@OEL+AGsq2qOfta3tVB3M+FMK4kc>
-Date: Fri, 31 Aug 2012 14:48:27 +0400
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
-To: oss-security@...ts.openwall.com
-Cc: Gerald Combs <gerald@...eshark.org>, Jan Safranek <jsafrane@...hat.com>, Martin Wilck <martin.wilck@...fujitsu.com>
-Subject: Re: CVE Request -- wireshark (X >= 1.6.8): DoS (excessive CPU use and infinite loop) in DRDA dissector
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/16/5
+Message-ID: <Pine.GSO.4.64.1208161709570.23191@faron.mitre.org>
+Date: Thu, 16 Aug 2012 17:22:40 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Tomas Hoger <thoger@...hat.com>
+cc: oss-security@...ts.openwall.com, coley@...-smtp.mitre.org, secalert_us@...cle.com, John Haxby <john.haxby@...cle.com>
+Subject: Re: MySQL CVEs (was: Security vulnerability in MySQL/MariaDB sql/password.c)
 Content-Type: text/plain; charset=utf-8
 
-Wed, Aug 29, 2012 at 11:39:11AM -0400, Jan Lieskovsky wrote:
-> a denial of service flaw was found in the way Distributed Relational
-> Database Architecture (DRDA) dissector of Wireshark, a network
-> traffic analyzer, performed processing of certain DRDA packet
-> capture files. A remote attacker could create a specially-crafted
-> capture file that, when opened could lead to wireshark executable to
-> consume excessive amount of CPU time and hang with an infinite loop.
-[...]
-> Affected versions: Seems to affect wireshark 1.6.x versions and
->                    later (1.0.x and 1.2.x definitely aren't affected)
 
-1.5.x is affected too: 1.5.0 was the first release in which the
-handling for the multiple DRDA commands was added to.  1.4 has no
-such code, whereas 1.5.0 has the while loop that provokes DoS.
--- 
-Eygene
+All,
+
+I'm really not sure about the best way to handle this.  We definitely want 
+to avoid duplicates or triplicates as much as possible.
+
+I of course don't speak for Oracle, but they are generally reluctant to 
+comment on CVE mappings or exploit details in any public forum (although 
+they have privately provided CVEs to the original researchers if asked). 
+I will discuss this issue with them using existing CVE communication 
+channels, but I'm not sure when I will have an answer or clarification 
+that resolves this complicated interaction between open source and closed 
+source philosophies.
+
+Meanwhile, I will ensure that we have updates for the already-assigned 
+CVEs that are not covered in Oracle CPUs, and note the *potential* 
+duplicates in the descriptions, along with the usual statement that 
+emphasizes that Oracle has not commented.
+
+- Steve
