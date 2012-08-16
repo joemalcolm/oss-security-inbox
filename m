@@ -1,53 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/3
-Message-ID: <508EC786.3010600@redhat.com>
-Date: Mon, 29 Oct 2012 12:14:30 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/16/2
+Message-ID: <502D11BD.6040009@gentoo.org>
+Date: Thu, 16 Aug 2012 11:29:01 -0400
+From: Sean Amoss <ackle@...too.org>
 To: oss-security@...ts.openwall.com
-CC: Chris Coulson <chris.coulson@...onical.com>
-Subject: Re: CVE request: use-after-free in libunity-webapps
+CC: Gentoo Linux Security Team <security@...too.org>
+Subject: CVE Request: SquidClamav insufficient escaping flaws
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kurt,
 
-On 10/28/2012 09:37 AM, Chris Coulson wrote:
-> Hi,
-> 
-> libunity-webapps provides functionality shared between browser
-> addons that are available for Firefox and Chromium. A
-> use-after-free bug was found in libunity-webapps which could
-> potentially be exploited to crash the users browser or run
-> arbitrary code.
-> 
-> Reference:
-> 
-> https://launchpad.net/bugs/1068495
-> 
-> Could you please allocate a CVE for this?
-> 
-> Thanks, Chris
+It appears that this has not yet received a CVE:
 
-Please use CVE-2012-4551 for this issue.
+The upstream notification [1] shows SquidClamav 5.8 and 6.7 fixes a URL
+escaping issue which could lead to a daemon crash [2]. SquidClamav 5.8
+also fixes escaping issues in CGI scripts [3].
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+References:
+[1] http://squidclamav.darold.net/news.html
+[2] https://github.com/darold/squidclamav/commit/80f74451f628264d1d9a1f1c0bbcebc932ba5e00
+[3] https://github.com/darold/squidclamav/commit/5806d10a31183a0b0d18eccc3a3e04e536e2315b
+[4] https://bugs.gentoo.org/show_bug.cgi?id=428778
 
-iQIcBAEBAgAGBQJQjseGAAoJEBYNRVNeJnmTlCQP/1pToxUTlJrFOQtcX7IUTiqp
-hob1GFoPJqhJkIK5vi6At1IGaiR6KhcTPywRP/2JCkwou03N+7yVXuCzN2mZEz5D
-ponCurDUmHJOHetzvoWRf3LvZKMv/hwUE3nzLgzrw0n7PeRTqhHOHxCfqjPQMolM
-qr+AMpRmHtkV2ljA84FNT+GiwnakoFpE+DjmmoTNiQj0fTa3gdVHqDKRnBG4k4s3
-hg7jcMCzKzShw0NQpgGvSEC42RrDmrgeTkxeZngKkhvy/wfaNhwasffSI6YFBFAO
-ehnF7x/1FsN1PzhnWjETEqHr0DiiWNsOKK/LeoSVGTQRki4NK7srZyKLd2MPzt+D
-cZIK4uPpq9I6JM+yUXxhvHcL3cqZWGQc08CxI/WfeORNFcyZyikr9OQdB6HjshE2
-SaJn0pY7MhPOb/x4rPInIwCw97bBuHstug3ojfri/jLjMRUNRKll0+EWYVminqzI
-PZ8WIU1ttktlC82EcRtPTggRsEOQS6GNYC3oVBh1WJBz8l3WzndqZUnxQ7plvxNP
-n6IHchAicI7S6K4xROgZJIt8Vdc44sGM09MGMLzYmpo5yKo60IPSVf4LSfKP8aJc
-uxv0EAPAqNK4ieHa6jTCaJD1YeKcHQ1S3ZgkVNOW59P5EiaWaAmizwP/VFSyPo6r
-3df3NFGiV62QpR0gwR5g
-=UJTz
------END PGP SIGNATURE-----
+
+Thanks,
+Sean
+
+-- 
+Sean Amoss
+Gentoo Security | GLSA Coordinator
+E-Mail	  : ackle@...too.org
+GnuPG ID  : E928357A
+GnuPG FP  : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (295 bytes)
