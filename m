@@ -1,27 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/03/4
-Message-ID: <1336067603.5166.14.camel@localhost>
-Date: Thu, 03 May 2012 12:53:23 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Michael Niedermayer <michaelni@....at>,  Måns Rullgård <mans@...sr.com>, fabian.yamaguchi@...uni-goettingen.de
-Subject: Security issue in libav/ffmpeg
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/16/4
+Message-ID: <502D25F3.60300@redhat.com>
+Date: Thu, 16 Aug 2012 10:55:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Sean Amoss <ackle@...too.org>, Gentoo Linux Security Team <security@...too.org>
+Subject: Re: CVE Request: SquidClamav insufficient escaping flaws
 Content-Type: text/plain; charset=utf-8
 
-A heap corruption security bug[1] was reported by Fabian Yamaguchi
-against libav in Ubuntu. This issue also affected ffmpeg.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This issue is now public and has been assigned CVE-2012-0947.
+On 08/16/2012 09:29 AM, Sean Amoss wrote:
+> Hi Kurt,
+> 
+> It appears that this has not yet received a CVE:
+> 
+> The upstream notification [1] shows SquidClamav 5.8 and 6.7 fixes a
+> URL escaping issue which could lead to a daemon crash [2].
+> SquidClamav 5.8 also fixes escaping issues in CGI scripts [3].
+> 
+> 
+> References: [1] http://squidclamav.darold.net/news.html [2]
+> https://github.com/darold/squidclamav/commit/80f74451f628264d1d9a1f1c0bbcebc932ba5e00
+>
+> 
+[3]
+https://github.com/darold/squidclamav/commit/5806d10a31183a0b0d18eccc3a3e04e536e2315b
+> [4] https://bugs.gentoo.org/show_bug.cgi?id=428778
+> 
+> 
+> Thanks, Sean
 
-Attached is a patch from upstream libav to fix the issue (thanks to Måns
-Rullgård). While the issue also affected ffmpeg, upstream ffmpeg fixed
-this some time ago in 3583c8706df0abbfa3ecdd6730f4f3d72a01fe6d.
+Please use CVE-2012-3501 for this issue.
 
-[1] https://launchpad.net/bugs/980963
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- 
-Jamie Strandboge             | http://www.canonical.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-View attachment "0001-vqavideo-return-error-if-image-size-is-not-a-multipl.patch" of type "text/x-patch" (1226 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQIcBAEBAgAGBQJQLSXzAAoJEBYNRVNeJnmT3VIP/1l8Bg2kMnBaK7E5VBLhOmgk
+/DH9iFX8XWOCiOSqBdOUn3dvcubStSwXQD00rNiTFa2fgi7OJW0VAv0OdNkqrh9D
+iMw6nFkNuXLdRxvqB8G7p0yAjmVdQbRG7mFbtdoFNDnNdkxzDLHvrLPCoPariCeR
+hLlWmFo4UxU++8hjLpNYKSK2orirVPuMr73xRKnbGXlbwR/po3QprFt52OgiLFy/
+GfYrOZFOe8S9ikW0AucifibBEDoWyURFRfGt9oeDgmUz/gQRdrfCdpdCcOsb1EKo
+mZOX5TXWjTTMCdZGyKcV0qB1+aS3JbTVRONbzs3W6KHYKbpVVucQvFxP9zB/vVLy
+97VPHS1+QyUqh+rdAO7+Xi6344tkAQUt4Pmhru9weihZmCZK/D+Kdxv7KUa/pfm/
+mbyDq7Y8apwt2mmFtuUp1Evt9A8lyoMfl6pMSlxgUVAgUjiM00Slqwp2B+wiqnuf
+mkO49YrFwgF6xu8Ecqgpp5hbFHu/gse7HE1aQXBUELGTPUwr2y6PcF07bVAtH6yo
+VO6DvSEPWHDM5MgGHC2Fim7V2epqOzMF8MNxW8y2i+N03i1LKQQc4yKXNZuD2PLA
+EBD6Q2WvVv/BbbLmsSepSU5eLemWn8JhxT9H+w85hQxJuXlJhv8j/kE2+rwRW/nK
+Kf4DL7TdjS8kSymNrLAk
+=lEcD
+-----END PGP SIGNATURE-----
