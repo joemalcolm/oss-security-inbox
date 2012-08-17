@@ -1,37 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/12/3
-Message-Id: <201211121801.qACI0rnZ023597@linus.mitre.org>
-Date: Mon, 12 Nov 2012 13:00:53 -0500 (EST)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: VLC 2.0.4 SHAddToRecentDocs CVE-2012-5855
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/17/1
+Message-ID: <CAPMrQTR6RJ3ke7xQnGeWZp23CQH=pL_63UMYS4t0XjVxTNjNSg@mail.gmail.com>
+Date: Fri, 17 Aug 2012 13:26:13 +0300
+From: Julius Kivimäki <julius.kivimaki@...il.com>
+To: research <research@...ctionis.co.uk>
+Cc: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
+Subject: Re: [Full-disclosure] GIMP Scriptfu Python Remote Command Execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Where exactly is the vulnerability here? I am unable to see it myself, it
+appears that you are using an eval function to evaluate code which isn't
+exactly a security issue.
 
-We have assigned CVE-2012-5855 for this issue in the SHAddToRecentDocs
-function in VideoLAN VLC media player 2.0.4:
+2012/8/17 research <research@...ctionis.co.uk>
 
-  http://www.securityfocus.com/archive/1/524626
+> Summary
+> =======
+>
+> There is an arbitrary command execution vulnerability in the scriptfu
+> network server
+> console in the GIMP 2.6 branch. It is possible to use a python scriptfu
+> command to run
+> arbitrary operating-system commands and potentially take full control of
+> the
+> host.
+>
+> The advisory is posted here:
+>
+> http://www.reactionpenetrationtesting.co.uk/GIMP-scriptfu-python-command-exe
+> cution.html
+>
+> CVE number: CVE-2012-4245
+> Vendor homepage: http://www.gimp.org/
+> Vendor notified: 9/8/2012
+>
+>
+> Affected Products
+> =================
+>
+> GIMP 2.6 branch (Windows or Linux builds)
+>
+> Non-Affected Products
+> =====================
+>
+> The Scriptfu network server component does not currently work in the GIMP
+> 2.8 branch
+> (Windows or Linux builds).
+>
+> Details
+> =======
+>
+> There is an arbitrary command execution vulnerability in the scriptfu
+> network server
+> console in the GIMP 2.6 branch. It is possible to use a python scriptfu
+> command to run
+> arbitrary operating-system commands and potentially take full control of
+> the
+> host.
+> The following command will write "foo" to "/tmp/owned":
+>
+> (python-fu-eval 0 "file = open('/tmp/owned','w')\nfile.write('foo')")
+>
+>
+> Impact
+> ======
+>
+> Successful exploitation of the vulnerability may result in remote command
+> execution.
+>
+> Solution
+> ===========
+> No solution has been implemented at this stage apart from the workaround
+> below.
+>
+> Workaround
+> ===========
+>
+> Do not enable the scriptfu network server.
+> The GIMP development team have stated that this component was not designed
+> with security
+>  in mind and therefore should not be used in production environments.
+>
+> Distribution
+> ============
+>
+> In addition to posting on the website, a text version of this notice
+> is posted to the following e-mail and Usenet news recipients.
+>
+>   * bugtraq () securityfocus com
+>   * full-disclosure () lists grok org uk
+>
+> Future updates of this advisory, if any, will be placed on the ReactionIS
+> corporate website, but may or may not be actively announced on
+> mailing lists or newsgroups. Users concerned about this problem are
+> encouraged to check the URL below for any updates:
+>
+>
+> http://www.reactionpenetrationtesting.co.uk/GIMP-scriptfu-python-command-exe
+> cution.html
+>
+>
+> ============================================================================
+> ====
+>
+>
+>
+> _______________________________________________
+> Full-Disclosure - We believe in it.
+> Charter: http://lists.grok.org.uk/full-disclosure-charter.html
+> Hosted and sponsored by Secunia - http://secunia.com/
+>
 
-It is unclear whether there are situations in which the erroneous
-string-length calculation could occur without any user interaction.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJQoTfzAAoJEGvefgSNfHMd95cH/Rp6o4tY+GY7kNy5S5CrXNlb
-eWXg6RQMxXCjSZ1DuSsXMQBVA26oscwmK8sUu1XtD9UGmcdybVauUroUSxmxadEg
-DlJFNH658/Rj1zpsMx93Q8zKbN06UFbEpervjns2gRkeFBnlwl4yQjMDz4bwMn4j
-y+WYkwmwcMtb/NNQojwUpo6hsHP+X0W1FyUIatFFznWPq6KLuVlVd48dMnlWRwSO
-P+XjVrICOYQjkU1iDU2ziBo008RRi/qKDmGbKT19AJUUN8m8h/dnOgdK+DTTgnrX
-txUK2gNpOVh1oD2u+UgHFTdbjILYrQM7xP1v8UGM/W5iRuTisGs3F8ysSNinOik=
-=QtBE
------END PGP SIGNATURE-----
