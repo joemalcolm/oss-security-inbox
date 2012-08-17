@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/22/4
-Message-ID: <CAF6bG8f-8_yEu839ZiowwpJ3A0fmVCZj=b3h1V2d3h4VLqUvow@mail.gmail.com>
-Date: Sat, 22 Dec 2012 02:26:40 +0200
-From: Marko Lindqvist <cazfi74@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: About CVE-2012-5645
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/17/2
+Message-ID: <502E5B11.5040305@coochey.net>
+Date: Fri, 17 Aug 2012 15:54:09 +0100
+From: Giles Coochey <giles@...chey.net>
+To: Julius Kivimäki <julius.kivimaki@...il.com>
+CC: research <research@...ctionis.co.uk>, vuln@...urity.nnov.ru, vuln <vuln@...unia.com>, news@...uriteam.com, secalert@...urityreason.com, submit@...ecurity.com, bugs@...uritytracker.com, full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>, submissions@...ketstormsecurity.org, oss-security@...ts.openwall.com, moderators@...db.org
+Subject: Re: [Full-disclosure] GIMP Scriptfu Python Remote Command Execution
 Content-Type: text/plain; charset=utf-8
 
-I saw message that Freeciv bug #20003 has been assigned
-CVE-2012-5645 : http://seclists.org/oss-sec/2012/q4/484
+On 17/08/2012 11:26, Julius Kivimäki wrote:
+> Where exactly is the vulnerability here? I am unable to see it myself, 
+> it appears that you are using an eval function to evaluate code which 
+> isn't exactly a security issue.
+>
+The vulnerability appears to lie that this script-fu server just opens a 
+TCP port, un-authenticated and un-encrypted and allows execution to run 
+in the context of the server.
 
-I'd like to clarify things a bit. It was not single issue, but more
-like two separate issues. Most importantly this leads to patch listed
-(http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21670) to
-fix only part of the problems described. Something like:
+As mentioned, the GIMP Dev team say it is a feature that wasn't designed 
+with security in mind, so if you were to use it, you would be advised to 
+wrap it.
 
-A denial of service flaw was found in the way the server component
-of Freeciv, a turn-based, multi-player, X based strategy game,
-processed certain packets (invalid packets with whole packet
-length lower than packet header size). A
-remote attacker could send a specially-crafted packet that, when
-processed would lead to freeciv server to terminate (due to memory
-exhaustion)
+-- 
+Regards,
 
-
-The other half:
-A denial of service flaw was found in the way the server component
-of Freeciv, a turn-based, multi-player, X based strategy game,
-processed certain packets (syntactically valid
-packets, but whose processing would lead to an infinite loop). A
-remote attacker could send a specially-crafted packet that, when
-processed would lead to freeciv server to become unresponsive (due to
-excessive CPU use).
-
-is fixed in
-http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21701
+Giles Coochey, CCNA, CCNAS
+NetSecSpec Ltd
++44 (0) 7983 877438
+http://www.coochey.net
+http://www.netsecspec.co.uk
+giles@...chey.net
 
 
 
- Both are fixed in 2.3.3 (and patch versions applied to the stable
-branch S2_3 release was made from:
-http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21672 ,
-http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21703 )
-
-
- - ML
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4968 bytes)
