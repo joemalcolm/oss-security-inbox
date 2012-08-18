@@ -1,62 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/31/6
-Message-ID: <50181EF9.20900@redhat.com>
-Date: Tue, 31 Jul 2012 12:07:53 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/18/1
+Message-ID: <50300D5D.7020904@redhat.com>
+Date: Sat, 18 Aug 2012 15:47:09 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Robbie MacKay <robbie@...ahidi.com>, Heather Leson <HLeson@...ahidi.com>
-Subject: Re: CVE request for Ushahidi
+CC: Jamie Strandboge <jamie@...onical.com>
+Subject: Re: CVE request: tinyproxy
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/30/2012 06:22 PM, Robbie MacKay wrote:
-> The Ushahidi team have been notified of the following security 
-> vulnerabilities thanks to volunteers from OWASP Portland. These
-> will be fixed in the upcoming 2.5 release. Could you please
-> allocate CVEs for the following issues?
+On 08/17/2012 02:57 PM, Jamie Strandboge wrote:
+> Hi,
 > 
-> * Multiple SQL injections (Reported by Timothy D. Morgan, Kees
-> Cook, postmodern ) 
-> https://github.com/ushahidi/Ushahidi_Web/commit/fdb48d1 
-> https://github.com/ushahidi/Ushahidi_Web/commit/6f6a919 
-> https://github.com/ushahidi/Ushahidi_Web/commit/4764792 
-> https://github.com/ushahidi/Ushahidi_Web/commit/d954093 
-> https://github.com/ushahidi/Ushahidi_Web/commit/3301e48 
-> https://github.com/ushahidi/Ushahidi_Web/commit/68d9916 
-> https://github.com/ushahidi/Ushahidi_Web/commit/e0e2b66 
-> https://github.com/ushahidi/Ushahidi_Web/commit/a11d43c 
-> https://github.com/ushahidi/Ushahidi_Web/commit/3f14fa0
+> A DoS was reported against tinyproxy: 
+> https://banu.com/bugzilla/show_bug.cgi?id=110#c2
 > 
-> * Missing authentication on comments, reports, email API calls 
-> (Reported by Kees Cook, Dennison Williams) 
-> https://github.com/ushahidi/Ushahidi_Web/commit/4c24325 
-> https://github.com/ushahidi/Ushahidi_Web/commit/f67f4ad
-> 
-> * User details exposed in comments API (Discovered by internal dev
-> team) https://github.com/ushahidi/Ushahidi_Web/commit/529f353
-> 
-> * Admin user hijacking through the installer (Reported by Wil
-> Clouser) https://github.com/ushahidi/Ushahidi_Web/commit/7892559 
-> https://github.com/ushahidi/Ushahidi_Web/commit/fcdad03
-> 
-> * Stored XSS on member profile pages (Reported by Amy K. Farrell) 
-> https://github.com/ushahidi/Ushahidi_Web/commit/00eae4f
-> 
-> Thanks in advance,
-> 
-> Robbie Mackay
+> This was reported in: 
+> https://bugs.launchpad.net/ubuntu/+source/tinyproxy/+bug/1036985
 
-You'll need to list which commits were found by which security
-reporter (e.g. which ones are Reported by Timothy D. Morgan, Kees
-Cook, postmodern). Thanks.
-
-> 
-> Software Developer, External Projects Ushahidi Inc e:
-> robbie@...ahidi.com skype: robbie.mackay
-> 
-
+Please use CVE-2012-3505 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -66,17 +30,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQGB75AAoJEBYNRVNeJnmTXOgP/0+SNuFY4FsvllIvTlYczDfC
-P0woU7Seudh0usvCuzbIoWvDCRWjtI0A5hDzXhnRexEch5VWLQL39Z+Aqf/zLLZY
-8S+brvQkvLL3UYi83+K9Rsr47srx6NXGM3zTwHtjvF3o52IVnAXTBQOxjdf6XIN5
-GYNcEvqzpRWmTPumxrb7Z5ub52RA3JEOzu9vjxinV/HuxovgpB593s4Ze1I2TdZ5
-3FsEiWElZK5TtrFIgR+bYcpzil0XWOjMy67xnxRqnSzxywKSsR65o2eNJQeS+Sj6
-ixwDI9TW/7auv99kwIY+kBjrSOSkudxRjPPIp59lwxFADR7PUE5/TDtNAOTbywF0
-PGRHD/5SsBFCFbltc8Qnhjp0luZAHbA0KMg2xe4ikwkvONUu1m69f176TGk8t2xI
-9lxFy1jmJiwL8ECP4BP0ZaC/6QQQYP+wzLTqjg9D7HHu7YvEh/IjkbIp1t7/STdl
-rHN6fZ/JZEmO57BZbyuQvzhFqKPMpFjCayrh2HwTmIidqAn0YinOsia4zM6pwmVm
-H9ZjdDpOOiMAGyY0HLFTigAiHtYVbje4YjeegrJZJaoCid0zWkLgiQmXBP5GYjv3
-hAvVUHn8rh3EwKy3F4Lgo/x3mmDGHPSL7lLwmNIoIk+/PBtQlGbcNcnVDfgaHieh
-zkMRgNUcUrFcvwwwb1wi
-=jcgN
+iQIcBAEBAgAGBQJQMA1cAAoJEBYNRVNeJnmTJM4P/3pFR6KHObWL6aA9u7BHL+4+
+B8P9tLtrKMjqocUr0Wsi2IvsBKIvRzGSQ2qsnX6cLg5LiW+A5OWtASbiQUbqDGd2
+eRwc2iSq3UHfnroFFLBY2CnbPCfu2R8xE+joB4JGvG/f5PTWPfcVfWf+E9es+xke
+QP1mqNk+yPrFhlu+o9QPTvAU+P6rTfaqxj+hNE1u0WLBG7YCsu66BQSiQ/i/6l28
+Yfx5xPVFdR/0eXCa8jc3gRWlKjgJW848VsQcE0iGr//kmITXixlnBQ9SK3EZHmTk
+oMwL/Xwv+RVP0GhI4m/0WopN3ZC/ntpVJwk+UtMqWAmPAh7l6euwWIT5paXCYdsV
+VV6nOhMbOo/Onl0zRdmleFMu8AAXRzUqLdDeH0hwO9rELUoTH4bdJLtWuRctj+Os
+hZTi9qNFuUVi2kU3rUCp6ftI89ZuYylLuLLbcRcjROMuwiLyoNyBMWZpxbAh//0n
+FoXfJg5uHn92QXely0pNG7sNSoPUA2UDakh3ZI9anBb9ID4oOSCRIiZJuNvUQat0
+aIl3SwQiG60Q8VdJf2a0SjO6e3zWS2AUziOFNQ2F7G3CwKqWFRr84KOA/V6oqpeY
+VXNE1PN2Kae6fE/Yz9riHKpEXn0w8Zm07AGWigBMXsQ7e444pHqypu/y/HL/BiRx
+3gsNMv0djYoeZ+4U25sR
+=ZuG9
 -----END PGP SIGNATURE-----
