@@ -1,60 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/1
-Message-ID: <507624A1.9030504@redhat.com>
-Date: Wed, 10 Oct 2012 19:45:05 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: libsocialweb untrusted connection to flickr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/1
+Message-ID: <005d01cd7e62$f826ce80$e8746b80$@reactionis.co.uk>
+Date: Mon, 20 Aug 2012 00:32:58 +0100
+From: "research" <research@...ctionis.co.uk>
+To: 'Julius Kivimäki' <julius.kivimaki@...il.com>
+Cc: "'full-disclosure'" <full-disclosure@...ts.grok.org.uk>, "'bugtraq'" <bugtraq@...urityfocus.com>, <secalert@...urityreason.com>, <bugs@...uritytracker.com>, "'vuln'" <vuln@...unia.com>, <vuln@...urity.nnov.ru>, <news@...uriteam.com>, <moderators@...db.org>, <submissions@...ketstormsecurity.org>, <submit@...ecurity.com>, <oss-security@...ts.openwall.com>
+Subject: RE: [Full-disclosure] GIMP Scriptfu Python Remote Command Execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The scriptfu network server (when enabled) does not require authentication
+and will run commands from anyone that can connect to its tcp port (usually
+10008).
 
-On 10/10/2012 03:20 PM, Vincent Danen wrote:
-> A similar request was made last year for libsocialweb connecting
-> to Twitter, and it seems to be doing the same to Flickr now
-> (probably has been all this time).
-> 
-> Same situation: opens an HTTP (non-SSL) connection to Flickr when
-> no Flickr account is configured, and without the user's permission
-> or knowledge.
-> 
-> Could a CVE be assigned to this (or has one been assigned
-> already)?
-> 
-> Request for the Twitter issue is here (for reference):
-> 
-> http://www.openwall.com/lists/oss-security/2011/11/09/3
-> 
-> and the Red Hat bug:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=863206
-> 
-> Thanks.
+ 
+
+From: Julius Kivimäki [mailto:julius.kivimaki@...il.com] 
+Sent: 17 August 2012 11:26
+To: research
+Cc: full-disclosure; bugtraq; secalert@...urityreason.com;
+bugs@...uritytracker.com; vuln; vuln@...urity.nnov.ru; news@...uriteam.com;
+moderators@...db.org; submissions@...ketstormsecurity.org;
+submit@...ecurity.com; oss-security@...ts.openwall.com
+Subject: Re: [Full-disclosure] GIMP Scriptfu Python Remote Command Execution
+
+ 
+
+Where exactly is the vulnerability here? I am unable to see it myself, it
+appears that you are using an eval function to evaluate code which isn't
+exactly a security issue.
+
+2012/8/17 research <research@...ctionis.co.uk>
+
+Summary
+=======
+
+There is an arbitrary command execution vulnerability in the scriptfu
+network server
+console in the GIMP 2.6 branch. It is possible to use a python scriptfu
+command to run
+arbitrary operating-system commands and potentially take full control of the
+host.
+
+The advisory is posted here:
+http://www.reactionpenetrationtesting.co.uk/GIMP-scriptfu-python-command-exe
+<http://www.reactionpenetrationtesting.co.uk/GIMP-scriptfu-python-command-ex
+e%0d%0acution.html> 
+cution.html
+
+CVE number: CVE-2012-4245
+Vendor homepage: http://www.gimp.org/
+Vendor notified: 9/8/2012
 
 
-Please use CVE-2012-4511 for this issue.
+Affected Products
+=================
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+GIMP 2.6 branch (Windows or Linux builds)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Non-Affected Products
+=====================
 
-iQIcBAEBAgAGBQJQdiShAAoJEBYNRVNeJnmTgUgP/ifAY50s7uaC1mv9BbKnhLHQ
-HpWeAp53NXR6gq8BkD6Cj5sTzJ/ZVCXFXApjdyzoFY1pLusFWmL8JYeitYbD/i4i
-FlfFDiojNwqQu9uplN4X/tm3y4BJ2owZZev6F15MwI2R/tc4dDQxQXS0drNTcMf4
-pH4qz59e9xFPK+c6c11oyr3doqkVdcRSqZnBMYmNwb7V6OBnNgjVrwM199Y+vPJu
-LSYMgsfVluixbzUoE4XWnQw8JFzjpgDb3mZoYAx3yAwC1ptMV77SeOLao3cojseH
-Vwx9iKJxi+Ihoh3S0YAct5eMefhkUDRbC07PN+NJQ7RoqsB1YmzUG26pBn89gk9P
-OsW/1yjIcTUDKQrgmp5qilEPvT15f1YquZR2KZ3e1LTbKzT4fvqHaIih+324gHNS
-Pl7JU8lbkc+VYtSF19GvJBzPErcdBw7JNn212Hv7kU8xZzIPrW3yQxsC60hqb3i0
-BZt8bgdOKGHIcbUPROIb/TDqkWuyGhdI+Xeie1JTZwk84nZ/1xhSzIRx4ZDZbLod
-dFKXI5CpUlovOhEIjwCgSKDv8nG4cLbXOiRH1I7hdLU2hkz0TGhfrofTWyzpoEPN
-jwT/afH2UYaRAoRqP4DF19aNjyX8BuCwebFymQFLqxdO+G6t4eqzYR9bRUY3s7o0
-cEjpf01CwFbebaMah3U8
-=hjZG
------END PGP SIGNATURE-----
+The Scriptfu network server component does not currently work in the GIMP
+2.8 branch
+(Windows or Linux builds).
+
+Details
+=======
+
+There is an arbitrary command execution vulnerability in the scriptfu
+network server
+console in the GIMP 2.6 branch. It is possible to use a python scriptfu
+command to run
+arbitrary operating-system commands and potentially take full control of the
+host.
+The following command will write "foo" to "/tmp/owned":
+
+(python-fu-eval 0 "file = open('/tmp/owned','w')\nfile.write('foo')")
+
+
+Impact
+======
+
+Successful exploitation of the vulnerability may result in remote command
+execution.
+
+Solution
+===========
+No solution has been implemented at this stage apart from the workaround
+below.
+
+Workaround
+===========
+
+Do not enable the scriptfu network server.
+The GIMP development team have stated that this component was not designed
+with security
+ in mind and therefore should not be used in production environments.
+
+Distribution
+============
+
+In addition to posting on the website, a text version of this notice
+is posted to the following e-mail and Usenet news recipients.
+
+  * bugtraq () securityfocus com
+  * full-disclosure () lists grok org uk
+
+Future updates of this advisory, if any, will be placed on the ReactionIS
+corporate website, but may or may not be actively announced on
+mailing lists or newsgroups. Users concerned about this problem are
+encouraged to check the URL below for any updates:
+
+http://www.reactionpenetrationtesting.co.uk/GIMP-scriptfu-python-command-exe
+<http://www.reactionpenetrationtesting.co.uk/GIMP-scriptfu-python-command-ex
+e%0d%0acution.html> 
+cution.html
+
+============================================================================
+====
+
+
+
+_______________________________________________
+Full-Disclosure - We believe in it.
+Charter: http://lists.grok.org.uk/full-disclosure-charter.html
+Hosted and sponsored by Secunia - http://secunia.com/
+
+ 
+
+
