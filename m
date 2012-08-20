@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/07/1
-Message-ID: <20121107071220.GA19837@hunt>
-Date: Tue, 6 Nov 2012 23:12:20 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/4
+Message-ID: <20120820114536.436fa637@hsalkjdhsa>
+Date: Mon, 20 Aug 2012 11:45:36 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request -- axis2, axis2c
+Subject: Re: CVE-request: Roundcube XSS issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, all,
+On Mon, 20 Aug 2012 12:30:46 +0300
+Henri Salo <henri@...v.fi> wrote:
 
-I did not find CVEs for Axis2 or Axis2/c when going through the pile of
-CVEs generated from the paper:
+> On Mon, Aug 20, 2012 at 12:25:08PM +0300, Henri Salo wrote:
+> > Can I get CVE-identifiers (2012) to issues listed below, thanks.
+> > Fixed in version: 0.8.1
+> 
+> Sorry fixed in 0.8.0.
 
-http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
+Sure?
+Release notes for 0.8.1 list XSS issues:
+http://sourceforge.net/news/?group_id=139281&id=309011
 
-Axis appeared to get CVE-2012-5784 but it is my understanding that Axis2
-and Axis2/c are different codebases and should therefore get their own
-CVE entries.
+Release notes for 0.8.0 don't:
+http://sourceforge.net/news/?group_id=139281&id=308917
 
-shmat_cccs12.pdf claims Axis2 is vulnerable but silent on Axis2/c.
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-Has anyone else looked into if Axis2/c is vulnerable? (I gave it a very
-cursory inspection.) The project pages are silent on the issue.
-
-Did I overlook these CVE entries?
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
