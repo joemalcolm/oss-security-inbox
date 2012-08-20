@@ -1,74 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/11
-Message-ID: <4F4BAFF8.3070401@redhat.com>
-Date: Mon, 27 Feb 2012 09:31:52 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/12
+Message-ID: <50328189.6030606@redhat.com>
+Date: Mon, 20 Aug 2012 12:27:21 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, corryl80@...il.com, bugtraq@...urityfocus.com
-Subject: Re: Case YVS Image Gallery
+Subject: Re: CVE Request -- kernel: taskstats: use-after-free in xacct_add_tsk()
 Content-Type: text/plain; charset=utf-8
 
-On 02/27/2012 04:32 AM, Henri Salo wrote:
-> http://osvdb.org/show/osvdb/79477
-> 
-> The software "YVS Image Gallery" seems to be full of security issues. For example one can have lots of fun with this. Copy from installation.php:
-> 
-> """
->     case(isset($_POST['db_name'])):
-> 
->         $host = $_POST['host'];
->         $db_name = $_POST['db_name'];
->         $db_user_name = $_POST['db_user_name'];
->         $db_password = $_POST['db_password'];
-> 
->         $admin_name = $_POST['admin_name'];
->         $admin_password = $_POST['admin_password'];
-> 
->         $o_host = $_POST['o_host'];
->         $o_db_name = $_POST['o_db_name'];
->         $o_db_user_name = $_POST['o_db_user_name'];
->         $o_db_password = $_POST['o_db_password'];
-> 
->         //read in the file
->         $file = "../functions/db_connect.php";
->         $fh = fopen($file, 'r+');
->         $contents = fread($fh, filesize($file));
-> 
->         //set up the text to change
->         $text_to_change = array();
->         $new_text = array();
-> 
->         $text_to_change[] = '$dbhost="'.$o_host.'"';
->         $text_to_change[] = '$dbuser="'.$o_db_user_name.'"';
->         $text_to_change[] = '$dbpass="'.$o_db_password.'"';
->         $text_to_change[] = '$dbname="'.$o_db_name.'"';
-> 
->         $new_text[] = '$dbhost="'.$host.'"';
->         $new_text[] = '$dbuser="'.$db_user_name.'"';
->         $new_text[] = '$dbpass="'.$db_password.'"';
->         $new_text[] = '$dbname="'.$db_name.'"';
-> 
->         $new_contents = str_replace($text_to_change, $new_text, $contents);
->         fclose($fh);
-> 
->         // Open file to write
->         $fh = fopen($file, 'r+');
->         fwrite($fh, $new_contents);
->         fclose($fh);
-> 
->         //set up new admin user
-> 
->         include '../functions/db_connect.php';
-> 
->         db_connect();
-> """
-> 
-> I'll bet this software is not used much, but I can list all problems I can find if we want to assign CVE-identifiers to cases like these. No contact information of developer found. Any ideas how to get these fixed or get the code out of internet. The package is also hosted in here: http://www.hotscripts.com/listing/yvs-image-gallery/ (and probably others).
-> 
-> - Henri Salo
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-If you make a list of issues (e.g. XSS, CSRF, etc) with the code
-examples I can assign the various blocks of issues CVEs.
+On 08/20/2012 11:25 AM, Petr Matousek wrote:
+> An use-after-free flaw has been found in the way taskstat's
+> TASKSTATS_CMD_ATTR_PID command and exiting tasks with already freed mm
+> interacted. An unprivileged local user could use this flaw to crash the
+> system or leak kernel memory.
+> 
+> Please note that the fix below is from year 2006.
+> 
+> Upstream fix:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f0ec1aaf54caddd21c259aea8b2ecfbde4ee4fb9
+> 
+> References:
+> http://bugzilla.openvz.org/show_bug.cgi?id=2294
+> https://bugzilla.redhat.com/show_bug.cgi?id=849722
+> 
+> Thanks,
 
--- 
+Please use CVE-2012-3510 for this issue.
+
+
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQMoGJAAoJEBYNRVNeJnmTKDMP/0NF2Vka50AbpYA8dd9YD/Cm
+7dBbM0inaXPRclycbqGR8jhARF9JYq6AQd84nCeazJZJ8QA2rG+miUm3bePiYEPk
+dBpZugs2GW1Q1UjVHKvQoJ8NQh4vh+z9Xqf/8Rzuoo87O2YFcz3MD81WL3JEq29a
+nvYW1C0sgPpxXy9GQlw0HiY4D9KVgflHx62bjCfrNr0c+5tgmZe3M0CtorvmCzQW
+WiU3OTW39BHmUKyHcaDqcDcjiRVP5Y3zPmBq/72PfluccHoTeKYfKjDjwEjjvVyf
+yeYzr2ayPDyY4orW9ACTv4AXPPeuHDw0cFYUmAurzycmSGufnXgmg8OZf4hOk4oH
+StNYNeeM7WjaoxXsY7+nUEVFgN7BchCmLQE7TMVD6IHCpu3mG+MdKmLymP/yL2xL
+ne20qB8C956vPrLTy2M7Z15YWivwazPmnXEpR/5KIRxxt3KWZJMh9fyWrKu+pg3i
+GNsOei9gABH1O7DZ6TBmOo0zOq1EJGQMHQjVhTIfs2462Yykz8QLMzEcXV7tzMsP
+dSnUT+C8QtwBrfD/3gbVhvdmXku8oY4lUo6ZTjSAAg4tRu4Au8iCxBuhHTttenuH
+qstTVfIB9tgnQExDdzIIe/Np8THIJPXJkXHBLPJf4uT9dEdfIcPRmDnp9wIZiI1V
+zCzKDuMvydpTpa1CW8DK
+=tI6r
+-----END PGP SIGNATURE-----
