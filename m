@@ -1,19 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/2
-Message-ID: <20120306070659.GA12689@foo.fgeek.fi>
-Date: Tue, 6 Mar 2012 09:06:59 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/7
+Message-ID: <1173026147.16672073.1345465789446.JavaMail.root@redhat.com>
+Date: Mon, 20 Aug 2012 08:29:49 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: phxEventManager search.php search_terms Parameter SQL Injection
+Cc: oss-security@...ts.openwall.com, Nils Philippsen <nils@...hat.com>
+Subject: The Gimp CEL plug-in CVE-2012-3403 issue
 Content-Type: text/plain; charset=utf-8
 
-Can we assign 2012 CVE-identifier for this vulnerability?
+Hello vendors,
 
-http://www.osvdb.org/show/osvdb/79738
+  see below a report about the GIMP's CEL plug-in CVE-2012-3403 issue:
+----------------------------------------------------------------------
+Summary: Gimp (CEL plug-in): heap buffer overflow when loading external palette files
 
-"phxEventManager contains a flaw that may allow an attacker to carry out an SQL injection attack. The issue is due to the search.php script not properly sanitizing user-supplied input to the 'search_terms' parameter. This may allow an attacker to inject or manipulate SQL queries in the back-end database, allowing for the manipulation or disclosure of arbitrary data."
+CVE: CVE-2012-3403
 
-Original report: http://seclists.org/fulldisclosure/2012/Mar/4
-Vendor report: http://sourceforge.net/tracker/?func=detail&atid=697109&aid=3496086&group_id=123602
+Description:
+A heap-based buffer overflow flaw, leading to invalid free, was found in the
+way KiSS CEL file format plug-in of Gimp, the GNU Image Manipulation Program,
+performed loading of certain palette files. A remote attacker could provide
+a specially-crafted KiSS palette file that, when opened in Gimp would cause
+the CEL plug-in to crash or, potentially, execute arbitrary code with the
+privileges of the user running the gimp executable.
 
-- Henri Salo
+CVSSv2: 6.8/AV:N/AC:M/Au:N/C:P/I:P/A:P
+
+Affected versions: All up to the latest upstream one
+
+Patch:
+------
+See https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3403
+    https://bugzilla.redhat.com/show_bug.cgi?id=839020#c19
+
+for patchset covering upstream v2.2.x, v2.6.x, v2.8.x, and current
+master branch versions.
+
+Credit:
+1, Issue found by: Murray McAllister,  Red Hat Security Response Team
+2, Reproducer by:  Murray McAllister,  Red Hat Security Response Team 
+
+----------------------------------------------------------------------
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
