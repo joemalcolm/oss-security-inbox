@@ -1,78 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/3
-Message-ID: <4F8E4CC3.5040607@redhat.com>
-Date: Tue, 17 Apr 2012 23:10:27 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/13
+Message-ID: <50328196.9010203@redhat.com>
+Date: Mon, 20 Aug 2012 12:27:34 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, Hanno Böck <hanno@...eck.de>, Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: CVE-request: WordPress 3.1.1
+Subject: Re: CVE Request -- kernel: mm: use-after-free in madvise_remove()
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/17/2012 03:35 AM, Henri Salo wrote:
-> I previously requested CVE-identifiers for two WordPress 3.1.1
-> issues (2011), which are still not assigned.
+On 08/20/2012 12:07 PM, Petr Matousek wrote:
+> A use-after-free flaw has been found in madvise_remove() function
+> in the Linux kernel. madvise_remove() can race with munmap (causing
+> a use-after-free of the vma) or with close (causing a
+> use-after-free of the struct file). An unprivileged local user can
+> use this flaw to crash the system.
 > 
->> 1) Certain unspecified input is not properly sanitised before
->> being returned to the user. This can be exploited to execute
->> arbitrary HTML and script code in a user's browser session in
->> context of an affected site. http://osvdb.org/show/osvdb/72141
-> 
-> Hanno Böck said in http://seclists.org/oss-sec/2012/q1/151 that
-> CVE-2012-0287 is for this issue.
-> 
-> ====================================================== Name:
-> CVE-2012-0287 Status: Candidate URL:
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-0287 Phase:
-> Assigned (20120103) Category: Reference:
-> MISC:http://oldmanlab.blogspot.com/2012/01/wordpress-33-xss-vulnerability.html
+> Upstream fix: 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=9ab4233dd08036fe34a89c7dc6f47a8bf2eb29eb
 >
+>  Introduced in: 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=90ed52ebe48181d3c5427b3bd1d24f659e7575ad
+>
+>  References: https://bugzilla.redhat.com/show_bug.cgi?id=849734
 > 
-Reference: CONFIRM:https://wordpress.org/news/2012/01/wordpress-3-3-1/
-> Reference: SECTRACK:1026542 Reference:
-> URL:http://www.securitytracker.com/id?1026542
-> 
-> Cross-site scripting (XSS) vulnerability in wp-comments-post.php
-> in WordPress 3.3.x before 3.3.1, when Internet Explorer is used,
-> allows remote attackers to inject arbitrary web script or HTML via
-> the query string in a POST operation that is not properly handled
-> by the "Duplicate comment detected" feature.
-> 
-> 
-> Current Votes: None (candidate not yet proposed) 
-> ======================================================
-> 
-> It seems to be assigned for 3.3.1 and not for 3.1.1. Sorry for my
-> mistake also in last emails.
-> 
->> 2) The "make_clickable()" function in wp-includes/formatting.php
->> does not properly check the URL length in comments before passing
->> it to the PCRE library, which can be exploited to cause a crash. 
->> http://osvdb.org/show/osvdb/72142
->> 
->> http://wordpress.org/news/2011/04/wordpress-3-1-1/ 
->> http://secunia.com/advisories/44038/ 
->> http://seclists.org/cert/2011/63
-> 
-> Still no CVE.
-> 
->> I even contacted WordPress administrators and asked if this does
->> have CVE, but they haven't replied for some reason.
-> 
-> Still no answer.
-> 
-> Can we now assign CVE-identifiers for 3.1.1 issues, thanks? List of
-> issues in 3.1.1 can be found from here
-> http://core.trac.wordpress.org/query?status=closed&resolution=fixed&milestone=3.1.1&group=resolution&order=priority
-> and related news article in here
-> http://wordpress.org/news/2011/04/wordpress-3-1-1/
-> 
-> - Henri Salo
+> Thanks,
 
-Can you make a clean list of security issues and the versions
-affected? Thanks.
+Please use CVE-2012-3511 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -82,17 +37,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPjkzDAAoJEBYNRVNeJnmT/38P/j++BHPUsrJmNF6eu5rJdEu5
-fBFp0M1h+bEkaAC/BeRq4P4eHxsJYYTK+SwXnZpEd7lsJyZcmvTgU/kBmW97Ropx
-0vnAeno/dsxe2ghJtQCC03vi32QCv4IkGVK+j4v0yqJvHS99p6aH+hHOu64MNZ+y
-AywKw6pvpSpA3JjJAzZQj9LU7Rtjyhab0cPnlb2LuWwgWsZhVsJipDmHkAmuwdRo
-iXuTm4yYroTescVKyt6LFrmEr0Xg9jmz/tD78ebfIm5WtK8/0a5DNWIUTSc30xnR
-IIuik7umg+bRI3/ujL+ocy6j+hWDiYAniPgA5xbEb3NPw9D6XnJyuUK8Or5ypeWb
-R5rFNcUxnN2SWVZnRIScUBZAaV0jFMlWwoWfUJLDYZLDSNspQwmNw1mq9wzz1TAu
-5XY1X1EJimvu8tDlHKWkT6mNNxesevwfXVhPbyyz7TBFHjsWtGN6EI3WWP8I+q7x
-WzpW3c9PZ7bCuhH7qQDeQZjZUYAZr/+ABnFJneSSB9ivZGR+qUCHNOe7JDhb1tFQ
-+aWxZk8vBgS/axuDJmHMbvFFq14I1jSWkjTuN8dzvTywi0Mmoy5U/tgPSCdXnL/S
-iJnUmQBwq2KDCdLAuo4jvoEeFyVMEea52NHeWmSS9iqiYhJr6PG26Vh5ViGAi3zk
-6HJPopg1Gohg7N+OG9ar
-=gpwu
+iQIcBAEBAgAGBQJQMoGWAAoJEBYNRVNeJnmTCbUP/iMzPXqPImIN9n6FN1D7GQu+
+hdqUCdYKYHSLP/bSFxBuNLaxwGQvVrymEN6dkn3tvTgDh1YnPXEXngcXWwwNPcHR
+CxFJTBs+6O08MZL8dfB9PxHSXi9jcBOi28aOeqcCVG3slumJJnliSxjTw3XUWvOV
+jLzFA1+TLswamky9j3xYchnD5mywy5jrkPXhZb5cuAnVU/+c0WNIKNFVf1snKHwC
+23EdGc/XEa5qs+RmNhVCzxnOgjfvm1hq33A0vs2bCBS6R2hNzAwt1gxZRKhMfcJT
+yHgAEgUZ7gbTbaKlDQvDL8pl4o1L4tEk8Xd0v89iHfqSIRk5vyzah9S4LIK5NnmY
+CcDt/NVddT4nO5rAIFHO2Lk5UX07yGGUW4gP5DQor/gozz/EFeOU2KzP95Q4qfZ+
+tX8Z6iR74fl+b8DlDwX5RfyoqflhwkKanhsTtYgFvpbO5TFDUsp4Z3trcIRmNowu
++r2rSGRzts2FRPjPtuFpzcsJaR8R3tXaPkY2zhNWChc2XAK48fcFr9bPMS9v+z6x
+r6rq3+rL1cPRxmPB12ID6hQ8+9ttAUtDUW1OW29r6Nk3PFCYVgf0GYUhMjDs/r9g
+L5xhi2b4QSb0b4WzvtM754lQCYOmYmbjeqlolWWmgNo3LRxPo4DK0uTsiszzUlNC
+50ubEHrBqFAtBmvY059S
+=9hDa
 -----END PGP SIGNATURE-----
