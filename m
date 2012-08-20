@@ -1,20 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/5
-Message-ID: <50C9BBA7.5020307@debian.org>
-Date: Thu, 13 Dec 2012 11:27:35 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/10
+Message-ID: <20120820172510.GF5405@dhcp-25-225.brq.redhat.com>
+Date: Mon, 20 Aug 2012 19:25:11 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
+Subject: CVE Request -- kernel: taskstats: use-after-free in xacct_add_tsk()
 Content-Type: text/plain; charset=utf-8
 
-On 13/12/12 11:21, Jan Lieskovsky wrote:
-> Is the user prior building expected to investigate file name of
-> each of them for sanity? This is where trust boundary is crossed -
-> someone could send you a tarball: "Here is the source you were
-> searching for." You would go to build it in Geany..
+An use-after-free flaw has been found in the way taskstat's
+TASKSTATS_CMD_ATTR_PID command and exiting tasks with already freed mm
+interacted. An unprivileged local user could use this flaw to crash the
+system or leak kernel memory.
 
-If Geany is willing to run 'make', as it appears to be, then you already
-have to trust the sender of a source tree - a Makefile can contain
-arbitrary shell commands, by design.
+Please note that the fix below is from year 2006.
 
-    S
+Upstream fix:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f0ec1aaf54caddd21c259aea8b2ecfbde4ee4fb9
+
+References:
+http://bugzilla.openvz.org/show_bug.cgi?id=2294
+https://bugzilla.redhat.com/show_bug.cgi?id=849722
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
