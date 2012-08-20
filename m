@@ -1,27 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/5
-Message-Id: <201209242350.45147.geissert@debian.org>
-Date: Mon, 24 Sep 2012 23:50:44 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: Tomas Hoger <thoger@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: opencryptoki insecure lock files handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/6
+Message-ID: <1591326075.16670108.1345465587615.JavaMail.root@redhat.com>
+Date: Mon, 20 Aug 2012 08:26:27 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: oss-security@...ts.openwall.com, Nils Philippsen <nils@...hat.com>, Florian Weimer <fweimer@...hat.com>
+Subject: The Gimp PSD plug-in CVE-2012-3402 issue
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 20 September 2012 09:10:14 Tomas Hoger wrote:
-> Ok, so I think we need 1 CVE for the two insecure temporary file uses,
-> unless we want to split each temporary file issue under a separate
-> CVE.  I don't believe there's a real need to assign CVE for 2.4.1
-> (which did not improve things on systems with world writable /var/lock)
-> or 2.4.2 (which re-opens the attack for pkcs11 group members on systems
-> with restricted /var/lock, but improves things on systems with world
-> writable /var/lock).
+Hello vendors,
 
-I think two ids is more appropriate given that the issue isn't fixed in 2.4.1 
-for systems with world writable /var/lock. 2.4.2, on the other hand, covers 
-boths scenarios (given that pkcs11 group membership is already considered 
-root-equivalent.)
+  see below report about the GIMP's PSD plug-in CVE-2012-3402 issue:
+--------------------------------------------------------------------
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Summary: Gimp (PSD plug-in): Heap-buffer overflow by decoding certain PSD headers
+
+CVE: CVE-2012-3402
+
+Description:
+A heap-based buffer overflow flaw was found in the way Adobe Photoshop(tm) PSD plug-in
+of Gimp, the GNU Image Manipulation Program, performed decoding of headers, when loading
+certain Adobe Photoshop image files. A remote attacker could provide a specially-crafted
+PSD image file that, when opened in Gimp would lead to PSD plug-in crash or, potentially,
+arbitrary code execution with the privileges of the user running gimp executable.
+
+Note: A different flaw than CVE-2009-3909.
+
+CVSSv2: 6.8/AV:N/AC:M/Au:N/C:P/I:P/A:P
+
+Affected versions: X <= 2.2.13
+                   Newer versions (gimp-v2.6.X, gimp-v2.8.X, master) are not affected
+                   by this issue.
+
+Credit (please credit both people or no one):
+1, Issue found by: Jan Lieskovsky,  Red Hat Security Response Team
+2, Reproducer by:  Florian Weimer,  Red Hat Product Security Team
+
+Further issue details and relevant patch in:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3402
+
+--------------------------------------------------------------------
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
