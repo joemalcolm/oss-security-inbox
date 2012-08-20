@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/7
-Message-ID: <CANTw=MNVfX66J+wFSvgiYX1SsFywFwtXcDRg-LUWDjTpJ=GxJQ@mail.gmail.com>
-Date: Thu, 19 Jan 2012 00:49:25 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/8
+Message-Id: <201208201452.43981.mweckbecker@suse.de>
+Date: Mon, 20 Aug 2012 14:52:43 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Screen locking programs on Xorg 1.11
+Subject: The Gimp GIF plug-in CVE-2012-3481 issue
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 18, 2012 at 8:53 PM, Michael Gilbert wrote:
-> On Wed, Jan 18, 2012 at 7:03 PM, Gu1 wrote:
->> Hi,
->> I recently found out that it is possible to kill a screensaver/screen
->> locker program on the latest version of Xorg (1.11 shipped with
->> archlinux, debian wheezy..) using the Ctrl+Alt+Multiply key binding.
->>
->> This behavior seems to have been introduced in a recent commit[1] and i
->> couldn't find a way to disable it.
->>
->> All screen locking programs i tested (gnome-screensaver, kscreenlocker,
->> slock, slimlock...), are basically rendered useless.
->>
->> Not sure if this is a bug or a feature... :)
->
-> All I can say is wow.  A key combo/code that reproducibly kills all
-> screen lockers is definitely *not* a feature.  This demonstrates the
-> importance of code review in critical code.  Nice find.
+Hi,
 
-As a temporary solution, I've found that commenting lines 44-49 in
-/usr/share/X11/xkb/compat/xfree86 (actual location may vary for your
-distro; mine is a debian system), which are
+so here is the 3rd one:
 
-    interpret XF86_Ungrab {
-        action = Private(type=0x86, data="Ungrab");
-    };
-    interpret XF86_ClearGrab {
-        action = Private(type=0x86, data="ClsGrb");
-    };
+specially crafted GIF image files could cause a heap-based buffer overflow via 
+an integer overflow of the 'height' / 'len' properties of the file.
+Attackers could exploit this to cause a Denial of Service (Application crash)
+or to (potentially) execute arbitrary code in the context of the user running 
+gimp.
 
-and running "setxkbmap $(setxkbmap -query | grep layout | awk '{print
-$2}')" solves the problem.
+Reference(s):
+https://bugzilla.novell.com/show_bug.cgi?id=776572
 
-Best wishes,
-Mike
+Thanks to Jan Lieskovsky and Florian Weimer for joining me in researching this
+flaw.
+
+Matthias
+
+-- 
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
