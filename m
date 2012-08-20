@@ -1,36 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/8
-Message-ID: <1148513156.18244084.1345565469794.JavaMail.root@redhat.com>
-Date: Tue, 21 Aug 2012 12:11:09 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/3
+Message-ID: <20120820093046.GE24310@kludge.henri.nerv.fi>
+Date: Mon, 20 Aug 2012 12:30:46 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- inn (nnrpd): Prone to STARTTLS plaintext command injection
+Subject: Re: CVE-request: Roundcube XSS issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Mon, Aug 20, 2012 at 12:25:08PM +0300, Henri Salo wrote:
+> Can I get CVE-identifiers (2012) to issues listed below, thanks. Fixed in version: 0.8.1
 
-  the STARTTLS implementation in INN's NNTP server for readers,
-nnrpd, before 2.5.3 does not properly restrict I/O buffering,
-which allows man-in-the-middle attackers to insert commands
-into encrypted sessions by sending a cleartext command that
-is processed after TLS is in place, related to a "plaintext
-command injection" attack, a similar issue to CVE-2011-0411.
+Sorry fixed in 0.8.0.
 
-References:
-[1] https://www.isc.org/software/inn/2.5.3article
-[2] https://bugs.gentoo.org/show_bug.cgi?id=432002
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=850478
+> XSS-vulnerability: http://trac.roundcube.net/ticket/1488519
+> SCM: http://trac.roundcube.net/changeset/a7d5e3e8580466639a18da35af13b97dc3765c16/github
 
-Relevant upstream patch
-(the 'diff -Nurp inn-2.5.2/nnrpd/misc.c inn-2.5.3/nnrpd/misc.c' part):
-[4] ftp://ftp.isc.org/isc/inn/inn-2.5.2-2.5.3.diff.gz
+http://secunia.com/advisories/50212/
+http://www.securelist.com/en/advisories/50212
 
-Could you allocate a CVE id for this?
+> Three XSS-vulnerabilities: http://trac.roundcube.net/ticket/1488613
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+http://secunia.com/advisories/50279/
+http://www.securelist.com/en/advisories/50279
 
-P.S.: There doesn't seem to be one for this issue yet:
-      http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=plaintext+command+injection
+- Henri Salo
