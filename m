@@ -1,72 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/19
-Message-ID: <4f914ecb.6468b40a.5543.ffffeb90@mx.google.com>
-Date: Fri, 20 Apr 2012 11:55:48 +0000
-From: "pinto.elia@...il.com" <pinto.elia@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: R: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/5
+Message-ID: <20120820103750.GA30925@kludge.henri.nerv.fi>
+Date: Mon, 20 Aug 2012 13:37:50 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-request: Roundcube XSS issues
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Aug 20, 2012 at 11:45:36AM +0200, Hanno Böck wrote:
+> Sure?
 
-----Messaggio originale----
-Da: Andrew Morton
-Inviato:  20/04/2012, 00:04 
-A: Marcus Meissner
-Cc: OSS Security List; security@...nel.org; Sukadev Bhattiprolu; Serge Hallyn; Eric W. Biederman; Pavel Emelyanov
-Oggetto: [oss-security] Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+Sorry I failed badly once again.
 
+>From SA50279 http://trac.roundcube.net/ticket/1488613 "The vulnerability is confirmed in version 0.8.0. Other versions may also be affected." 
+>From SA50212 http://trac.roundcube.net/ticket/1488519 "The vulnerability is reported in versions prior to 0.8.0."
 
-(cc's added)
-
-On Thu, 19 Apr 2012 23:48:20 +0200
-Marcus Meissner <meissner@...e.de> wrote:
-
-> Hi,
-> 
-> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
-> namespace leak caused by vsftpd.
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=757783
-> 
-> He provided a simple reproducer:
-> 
-> #include <stdio.h>
-> #include <errno.h>
-> #include <signal.h>
-> #include <sched.h>
-> #include <linux/sched.h>
-> #include <unistd.h>
-> #include <sys/syscall.h>
-> 
-> int main(int argc, char *argv[])
-> {
->     int i, ret;
-> 
->     for (i = 0; i < 10000; i++) {
-> 
->         if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC |
-> CLONE_NEWNET | SIGCHLD, NULL)))
->             return 0;
-> 
->         if (-1 == ret) {
->             perror("clone");
->             break;
->         }
-> 
->     }
->     return 0;
-> }
-> 
-> 
-> and checking "cat /proc/slabinfo|grep pid_namespace"
-> gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
-> 
-> 
-> Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
-> fixed between 3.1 and 3.2 (but someone else cross check perhaps).
-> 
-> Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
-> but it seems not helping.
-> 
-> Ciao, Marcus
-
+- Henri Salo
