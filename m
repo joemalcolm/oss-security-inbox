@@ -1,42 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/22/4
-Message-ID: <4F943EB0.5000605@redhat.com>
-Date: Sun, 22 Apr 2012 19:24:00 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- DokuWiki: XSS and CSRF due improper escaping of 'target' parameter in preprocessing edit form data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/10
+Message-ID: <20120821212824.GB1866@inutil.org>
+Date: Tue, 21 Aug 2012 23:28:24 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Typo3
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi,
+please assign CVE IDs for the latest Typo3 security issues:
+http://typo3.org/support/teams-security-security-bulletins/security-bulletins-single-view/article/several-vulnerabilities-in-typo3-core/ :
 
-   a cross-site scripting (XSS) and cross-site request forgery (CSRF) flaws were
-found in the way DokuWiki, a standards compliant, simple to use Wiki, performed
-sanitization of the 'target' parameter when preprocessing edit form data. A
-remote attacker could provide a specially-crafted URL, which once visited by a
-valid DokuWiki user would lead to arbitrary HTML or web script execution in the
-context of logged in DokuWiki user.
+1.
 
-References:
-[1] https://secunia.com/advisories/48848/
-[2] http://ircrash.com/uploads/dokuwiki.txt
-[3] https://bugs.gentoo.org/show_bug.cgi?id=412891
-[4] http://bugs.dokuwiki.org/index.php?do=details&task_id=2487
-     (upstream bug report for the XSS issue)
-[5] http://bugs.dokuwiki.org/index.php?do=details&task_id=2488
-     (upstream bug report for the CSRF issue)
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=815122
-     (Red Hat bugzilla entry)
+Vulnerable subcomponent: TYPO3 Backend Help System
+Vulnerability Type: Insecure Unserialize leading to a possible Arbitrary Code Execution
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:H/Au:S/C:P/I:C/A:N/E:P/RL:O/RC:C (What's that?)
+Problem Description: Due to a missing signature (HMAC) for a parameter in the view_help.php file, an attacker could unserialize arbitrary objects within TYPO3. We are aware of a working exploit, which can lead to arbitrary code execution. A valid backend user login or multiple successful cross site request forgery attacks are required to exploit this vulnerability.
+Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that fix the problem described!
+Credits: Credits go to Felix Wilhelm who discovered and reported the issue.
 
-Discovered by : Khashayar Fereidani
 
-Proof of Concept URL:
-http://sitename/doku.php?do=edit&id=S9F8W2A&target=<script>alert(123)</script>
+2.
 
-Could you allocate a 2012 CVE id for this issue? (one is enough because
-only 'target' parameter isn't properly escaped, leading to XSS or CSRF
-{see [2] for further examples})
+Vulnerable subcomponent: TYPO3 Backend
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:M/Au:S/C:P/I:P/A:N/E:F/RL:O/RC:C (What's that?)
+Problem Description: Failing to properly HTML-encode user input in several places, the TYPO3 backend is susceptible to Cross-Site Scripting. A valid backend user is required to exploit these vulnerabilities.
+Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that fix the problem described!
+Credits: Credits go to Pavel Vaysband, Security Team Member Markus Bucher, Core Team Member Susanne Moog, Jan Bednarik,  who discovered and reported the issues.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+3.
+
+Vulnerable subcomponent: TYPO3 Backend
+Vulnerability Type: Information Disclosure
+Severity: Low
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:P/I:N/A:N/E:F/RL:O/RC:C (What's that?)
+Problem Description: Accessing the configuration module discloses the Encryption Key. A valid backend user with access to the configuration module is required to exploit this vulnerability.
+Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that fix the problem described!
+Credits: Credits go to Mario Rimann who discovered and reported the issue.
+
+4.
+
+Vulnerable subcomponent: TYPO3 HTML Sanitizing API
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:P/I:P/A:N/E:U/RL:O/RC:C (What's that?)
+Problem Description: By not removing several HTML5 JavaScript events, the API method t3lib_div::RemoveXSS() fails to filter specially crafted HTML injections, thus is susceptible to Cross-Site Scripting. Failing to properly encode for JavaScript the API method t3lib_div::quoteJSvalue(), it is susceptible to Cross-Site Scripting.
+Note: Developers should never rely on the blacklist of RemoveXSS() alone, but should always properly encode user input before outputting it again.
+Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that fix the problem described!
+Credits: Credits go to Andreas Schnapp and Christian Nösterer who discovered and reported the issues.
+
+5.
+
+Vulnerable subcomponent: TYPO3 Install Tool
+Vulnerability Type: Cross-Site Scripting
+Severity: Low
+Suggested CVSS v2.0: AV:N/AC:H/Au:S/C:P/I:P/A:N/E:F/RL:O/RC:C (What's that?)
+Problem Description: Failing to properly sanitize user input, the Install Tool is susceptible to Cross-Site Scripting.
+Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that fix the problem described!
+Credits: Credits go to Security Team Member Georg Ringer who discovered and reported the issue. 
+
+Cheers,
+        Moritz
