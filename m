@@ -1,59 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/4
-Message-ID: <50BD57F5.9080504@redhat.com>
-Date: Mon, 03 Dec 2012 18:55:01 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/9
+Message-ID: <k10c6v$c45$1@ger.gmane.org>
+Date: Tue, 21 Aug 2012 11:15:24 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: Dovecot DoS in 2.x (fixed in 2.1.11)
+Subject: Re: CVE Request -- php-geshi / GeSHi (1.0.8.11): Remote directory traversal and information disclosure in the cssgen contrib module (plus possibly XSS, but it needs upstream to confirm)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Jan, everyone,
 
-On 12/03/2012 10:33 AM, Vincent Danen wrote:
-> Could a CVE be assigned for the following please?
-> 
-> Dovecot 2.1.11 was released and includes a fix for a crash
-> condition when the IMAP server was issued a SEARCH command with
-> multiple KEYWORD parameters.  An authenticated remote user could
-> use this flaw to crash Dovecot.
-> 
-> The upstream fix was to remove the keyword merging code.  This
-> code does not exist in Dovecot 1.x, but it does affect 2.x
-> versions, at least as far back as 2.0.9 (earliest version I
-> checked).
-> 
-> References:
-> 
-> http://www.dovecot.org/list/dovecot-news/2012-November/000235.html 
-> http://secunia.com/advisories/51455 
-> http://hg.dovecot.org/dovecot-2.1/rev/0306792cc843 
-> https://bugzilla.redhat.com/show_bug.cgi?id=883060
-> 
-> 
-> Thanks.
+[can't seem to follow-up via email, sorry for not CC'ing the others]
 
-Please use CVE-2012-5620 for this issue.
+Jan Lieskovsky wrote:
+>   Issue #B:
+>   ---------
+>   Then there is a report about non-persistent XSS flaw, that have been
+>   fixed in the contrib module of 1.0.8.11 version too:
+>   [4] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=685323
+> 
+>   but I was unable to find the relevant upstream patch (and above Debian
+>   BTS entry doesn't contain further information too, which could be acted
+>   upon).
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+The fix is:
+http://geshi.svn.sourceforge.net/viewvc/geshi?view=revision&revision=2508
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
-iQIcBAEBAgAGBQJQvVf1AAoJEBYNRVNeJnmTm+cP/3EJPDqt7UsmNiL/SEEDoArJ
-Jg3FuJCnGrMC3MHiZhmAaaeGErP2qzVsB74X+xeRt6tML/KVbUjlSiMJnFDDYiEV
-hNOmlPZKU8h9on84QbkRLTTwGYC64ugwAgihcw8oTQ3djaW1krlBXRkAeqF1iQI5
-R8ereH+DGK9fGfBf16fQihhOnawURqP+Ggdmfx/5AqJQRgFnJhJ48ub6CCETA+0f
-VtrVph3FBEYphW2J7NhXg8xGT37/dyzTsmNGaSA4kD+B/W5shtqBBdDPND1nMNLD
-RwLw6NpkxI6QuOoCgbQsA1VYGdemPr0kNBkspf2kpe441EI+xLz7UdOHn2IT6DM9
-28wppRZbjU/Sr1wciRDO6hI5L8VMrtLGf1plkmwvdTBiXh8fUtmLkvVqizFJ1d0K
-Z8tE2ZLsaZdLJIH0P5RFi/kPC+PNh5wr785jmSvfZiFEj76Dj5GcxuPDWS/6ahU6
-czTbqjeVGtR7KBYjwKSbxVaW4+IZy9H67zBgVlvvA9Goi4mkKo50oYBh1PH6ILVh
-YXFlPiSjrblIiwFCUxsBIdJdQ1Wn+9EUNGMfKYlqFXiMK5uqDzglz+/EsZyXCjRi
-DMalSuZAgmDUsAFmyrm7pZFf9M2/pyloHnzufgr4m7kL3yFjODj6Bt8rDIkodQz8
-+fI9BUILwv3SWtc323iS
-=hyvM
------END PGP SIGNATURE-----
+
