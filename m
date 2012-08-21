@@ -1,60 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/04/3
-Message-ID: <CANTw=MNk8mvdueF4YaM-Z4VpQM7A+mMX7UPvRV6Va8j0O+zhjA@mail.gmail.com>
-Date: Fri, 3 Feb 2012 22:00:24 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/5
+Message-ID: <20120821125847.GM5405@dhcp-25-225.brq.redhat.com>
+Date: Tue, 21 Aug 2012 14:58:48 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: akuster <akuster@...sta.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: taskstats: use-after-free in xacct_add_tsk()
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 3, 2012 at 8:45 PM, Solar Designer wrote:
-> On Fri, Feb 03, 2012 at 08:26:26PM -0500, Michael Gilbert wrote:
->> I think the important aspect here is the transparency of the private
->> discussion (after an appropriate delay), rather than the length of the
->> delay itself.
->
-> Thank you for sharing your opinion.
->
-> Yet the delay itself matters too.  There are different opinions as to
-> whether it is "the important aspect" or not.
+On Tue, Aug 21, 2012 at 05:53:55AM -0700, akuster wrote:
+> Petr,
+> 
+> If I am not mistaken, this was introduced via
+> 9acc1853519a0473620d424105f9d49ea5b4e62e and only if TASK_XACCT is enabled.
+> 
+> is that correct?
 
-That's why I think its more appropriate to defer such decisions to the
-researcher who understands the complexity of the problem at hand (of
-course hopefully allowing negotiation with those affected to choose a
-disclosure date that can be met).
+That looks correct.
 
->> That can be set by the researcher (with some reasonable
->> maximum, like a month).
->>
->> We all should be able to see what is going on over in the closed list.
->>  Although it is unlikely being used for nefarious purposes (hiding
->> issues permanently, etc.), transparency (after a delay) is the only
->> way to show that it is not.  Anyway, 30 days seems appropriate.
->
-> I don't mind.  Like I said, I need a tool - a program to mass-decrypt a
-> PGP/MIME mbox, producing another mbox.  I think such a program might be
-> generally useful.  Well, or alternatively I need to introduce a
-> different mechanism for the archive - not treat it as a regular
-> subscriber like I intended to.
+Petr
 
-Completely unfleshed out, but a pseudo-bash script along the lines of
-the following should do it:
+> 
+> regards,
+> Armin
+> 
+> 
+> On 08/20/2012 10:25 AM, Petr Matousek wrote:
+> > An use-after-free flaw has been found in the way taskstat's
+> > TASKSTATS_CMD_ATTR_PID command and exiting tasks with already freed mm
+> > interacted. An unprivileged local user could use this flaw to crash the
+> > system or leak kernel memory.
+> > 
+> > Please note that the fix below is from year 2006.
+> > 
+> > Upstream fix:
+> > http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f0ec1aaf54caddd21c259aea8b2ecfbde4ee4fb9
+> > 
+> > References:
+> > http://bugzilla.openvz.org/show_bug.cgi?id=2294
+> > https://bugzilla.redhat.com/show_bug.cgi?id=849722
+> > 
+> > Thanks,
 
-  echo "" > newmbox
-  gpg-agent --allow-preset-passphrase
-  /usr/lib/gnupg2/gpg-preset-passphrase --preset <cache id>
-  cat mbox | while read line; do
-      test <header> && echo $line >> /tmp/header
-      test <body> && echo $line >> /tmp/body
-      if [ <end off body> ]; then
-          cat /tmp/header >> newmbox
-          cat /tmp/body | gpg --decrypt >> newmbox
-      fi
-  done
-  /usr/lib/gnupg2/gpg-preset-passphrase --forget
-
-Obviously a bit more work there to figure out appropriate conditionals
-to put in the angle brackets.
-
-Best wishes,
-Mike
+-- 
+Petr Matousek / Red Hat Security Response Team
