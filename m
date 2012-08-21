@@ -1,46 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/01/2
-Message-ID: <871un488o3.fsf@mid.deneb.enyo.de>
-Date: Tue, 01 May 2012 13:03:56 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/8
+Message-ID: <1148513156.18244084.1345565469794.JavaMail.root@redhat.com>
+Date: Tue, 21 Aug 2012 12:11:09 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: weak use of crypto in python-elixir can lead to information disclosure (CVE and peer review request)
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- inn (nnrpd): Prone to STARTTLS plaintext command injection
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer:
+Hello Kurt, Steve, vendors,
 
-> * Vincent Danen:
->
->>>And you can group by encrypted column values in the database.  That's
->>>why I'm not sure if it's actually possible to address this issue in a
->>>satisfying manner.
->>
->> So the encryption can be more fine-grained than just per-table?  You can
->> also do it per-column?  If that's the case, this does sound a lot uglier
->> to deal with.
->
-> This test case suggests to me that you have to specify the list of
-> encrypted columns explicitly:
->
-> <http://elixir.ematia.de/trac/browser/elixir/trunk/tests/test_encryption.py>
->
-> Based on this example, it's not clear to me if the current
-> implementation supports get_by with an encrypted column.  If this is a
-> feature which needs preserving, there is no apparent way around
-> convergent encryption.
+  the STARTTLS implementation in INN's NNTP server for readers,
+nnrpd, before 2.5.3 does not properly restrict I/O buffering,
+which allows man-in-the-middle attackers to insert commands
+into encrypted sessions by sending a cleartext command that
+is processed after TLS is in place, related to a "plaintext
+command injection" attack, a similar issue to CVE-2011-0411.
 
-So it turns out that this passes the assert:
+References:
+[1] https://www.isc.org/software/inn/2.5.3article
+[2] https://bugs.gentoo.org/show_bug.cgi?id=432002
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=850478
 
-        p = Person.get_by(password='r\\x9d\\xa8\\xb4\\x8d|\\xffp\\xf5\\x0e')
-        assert p.name == 'Jonathan LaCour'
+Relevant upstream patch
+(the 'diff -Nurp inn-2.5.2/nnrpd/misc.c inn-2.5.3/nnrpd/misc.c' part):
+[4] ftp://ftp.isc.org/isc/inn/inn-2.5.2-2.5.3.diff.gz
 
-But this fails because p is None:
+Could you allocate a CVE id for this?
 
-        p = Person.get_by(ssn='123-45-6789')
-        assert p.name == 'Jonathan LaCour'
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-This suggests to me that get_by on an encrypted column is not actually
-supported.
-
-The documentation doesn't describe which queries are supported:
-<http://elixir.ematia.de/apidocs/elixir.ext.encrypted.html>
+P.S.: There doesn't seem to be one for this issue yet:
+      http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=plaintext+command+injection
