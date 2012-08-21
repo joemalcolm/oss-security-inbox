@@ -1,89 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/13
-Message-ID: <4F6784EF.8040804@redhat.com>
-Date: Mon, 19 Mar 2012 13:11:43 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Luc ABRIC <luc.abric@...ida.fr>, Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, Valérian PERRET <valerian.perret@...ida.fr>, "'jkn@...no'" <jkn@...no>
-Subject: Re: CVE request: eZ Publish: insecure direct object reference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/4
+Message-ID: <503384E3.8010903@mvista.com>
+Date: Tue, 21 Aug 2012 05:53:55 -0700
+From: akuster <akuster@...sta.com>
+To: Petr Matousek <pmatouse@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: taskstats: use-after-free in xacct_add_tsk()
 Content-Type: text/plain; charset=utf-8
 
-On 03/19/2012 03:06 AM, Luc ABRIC wrote:
-> Hi,
-> 
-> My initial CVE ID request was dropped because it was missing some details. Here comes a re-submission.
-> 
-> After posting to oss-security I was asked a few questions by Kurt Seifried from Redhat SRT while the vendor was contacted by Secunia asking for pretty much the same informations. Secunia then decided it wasn't their role to handle this vulnerability.
-> I don't know if that's part of the process but I feel like you should know to avoid any duplicated work.
-> 
-> 1) Email address of requester
-> yann.michard@...ida.fr, luc.abric@...ida.fr & jkn@...no.
-> Yann MICHARD discovered the vulnerability, so all the credits goes to him.
-> 
-> 2) Software name and optionally vendor name
-> Vendor: Ez
-> Product name: Ez Publish
-> Editions: both Enterprise & Community
-> 
-> 3) At least one of (to determine is this a security issue):
->   1. Type of vulnerability
-> OWASP A4: Insecure direct object reference
-> 
->   2. Exploitation vectors
-> Access to the vulnerable website (no need for any credentials)
-> 
->   3. Attack outcome
-> A browser is enough to execute the attack.
-> 
-> 4) For Open Source at least one of:
->   1. Link to vulnerable source code or fix Not available yet.
-> 
->   2. Link to source code change log
-> Not available yet.
-> 
->   3. Link to security advisory
-> Not available yet.
-> 
->   4. Link to bug entry
-> http://issues.ez.no/19238
-> The vendor does not want to release more details until a fix is pushed to the clients
-> 
->   5. Request comes from project member (a.k.a. "trust me, it's a problem") Jostein Knudsen <jkn@...no> from Ez can confirm the vulnerability.
-> 
-> 5) Affected version(s) (3.2.4, 3.x, current version, all current releases, something) The whole 4.x serie it seems (4.1 to 4.6 from the bug entry).
-> 
-> 6) Whether or not this has been previously requested (i.e. on OSS-Sec or to cve-assign) Well yeah but it seems that the request didn't have enough information.
-> 
-> 7) Is this an Open Source or commercial software request Both, the affected software has 2 editions, one open-source, one commercial.
-> 
-> 8) Is this an embargoed issue (if yes and commercial: send to cve-assign, if yes and open source: send to vs-sec?) Not really sure what you mean by embargoed.
-> The French government asked us not do disclose any details until a fix is available AND installed on their systems because it affects some high profile websites.
-> We didn't plan on releasing any details before the fix anyway.
-> 
-> 9) IF multiple issues are listed please list affected versions for each issue and/or who reported them (so we can determine CVE split/merge).
-> It's the first issue we're publishing regarding this application.
+Petr,
 
-Perfect, this way if it comes up again there is enough info that
-hopefully someone will match it up =).
+If I am not mistaken, this was introduced via
+9acc1853519a0473620d424105f9d49ea5b4e62e and only if TASK_XACCT is enabled.
 
-Please use CVE-2012-1565 for this issue
+is that correct?
 
-> 
-> Regards,
-> Luc ABRIC
-> IT Security Expert
-> 
-> 6 avenue du Vieil Etang - Bâtiment B
-> 78180 Montigny-le-Bretonneux
-> Phone: +33 (0)1 30 14 19 00
-> Fax:       +33 (0)1 30 14 19 09
-> Mobile: +33 (0)6 26 87 62 14
-> luc.abric@...ida.fr
-> 
-> www.oppida.fr
-> 
-> 
+regards,
+Armin
 
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+On 08/20/2012 10:25 AM, Petr Matousek wrote:
+> An use-after-free flaw has been found in the way taskstat's
+> TASKSTATS_CMD_ATTR_PID command and exiting tasks with already freed mm
+> interacted. An unprivileged local user could use this flaw to crash the
+> system or leak kernel memory.
+> 
+> Please note that the fix below is from year 2006.
+> 
+> Upstream fix:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f0ec1aaf54caddd21c259aea8b2ecfbde4ee4fb9
+> 
+> References:
+> http://bugzilla.openvz.org/show_bug.cgi?id=2294
+> https://bugzilla.redhat.com/show_bug.cgi?id=849722
+> 
+> Thanks,
