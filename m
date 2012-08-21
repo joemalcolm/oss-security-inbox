@@ -1,72 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/16/6
-Message-ID: <4F8C70C4.9010301@redhat.com>
-Date: Mon, 16 Apr 2012 13:19:32 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/6
+Message-ID: <50339434.6030500@redhat.com>
+Date: Tue, 21 Aug 2012 07:59:16 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, helmut@...divi.de
-Subject: Re: CVE Request (minor) -- Two Munin graphing framework flaws
+CC: Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- Tor 0.2.2.38: Three issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/16/2012 07:54 AM, Jan Lieskovsky wrote:
+On 08/21/2012 04:10 AM, Jan Lieskovsky wrote:
 > Hello Kurt, Steve, vendors,
 > 
-> the following three problems has been recently reported against
-> Munin: [1] Insecure temp file use in the qmailscan plug-in:
+> Tor upstream has recently released v0.2.2.38 version, correcting
+> three security flaws:
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=812889 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668778
-
-Please use CVE-2012-2103 for this issue.
-
-> [2] Possibility to inject escape sequences into Munin's log file:
+> 1) tor: Read from freed memory and double free by processing failed
+> DNS request Upstream ticket: [1]
+> https://trac.torproject.org/projects/tor/ticket/6480
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=812885 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668666
-
-Please use CVE-2012-2104 for this issue.
-
-> [3] Remote users can fill /tmp filesystem: Red Hat would not
-> consider this to be a security flaw => no RH BTS entry.
+> Relevant patch: [2]
+> https://gitweb.torproject.org/tor.git/commitdiff/62637fa22405278758febb1743da9af562524d4c
+>
+>  References: [3]
+> https://lists.torproject.org/pipermail/tor-announce/2012-August/000086.html
+>
 > 
-> Original report: 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668667
+[4] https://bugzilla.novell.com/show_bug.cgi?id=776642
+> [5] https://bugzilla.redhat.com/show_bug.cgi?id=849949
 
-I reread this one a few times, I'm not clear on what:
+Please use CVE-2012-3517 for this issue.
 
-==========
-printf 'GET
-/cgi-bin/munin-cgi-graph/localdomain/localhost.localdomain/vmstat-day.png?foo
-HTTP/1.0\r\nHost: localhost\r\nConnection: close\r\n\r\n' | nc
-localhost 80
-
-Provided that the filename actually exists, munin will render the image
-==========
-
-means exactly, does the file vmstat-day.png need to exist where? It
-seems like if the image is of any size (say 20k or more) the
-amplification (each get request = 20k of tmp space usage) and the
-files have to be deleted manually it might qualify as a DoS.
-
-helmut@...divi.de can you shed more light on this?
-
-> For the first two -- though both of them having minor security
-> impact, under suitable circumstances they could lead to trust
-> boundary crossing => under our opinion they should get a
-> (CVE-2012-*) identifiers.
+> 2) tor: Unitialized memory read by reading vote or consensus
+> document with unrecognized flavor name Upstream ticket: [6]
+> https://trac.torproject.org/projects/tor/ticket/6530
 > 
-> For the third issue -- we wouldn't consider it to be a security 
-> flaw. Just as something, which on improperly configured machine 
-> could allow to fill in /tmp filesystem (just another way how to do
-> it, when the particular service isn't properly configured).
+> Relevant patches: [7]
+> https://gitweb.torproject.org/tor.git/commitdiff/57e35ad3d91724882c345ac709666a551a977f0f
+>
 > 
-> Could you allocate CVE ids for the first two issues?
+[8]
+https://gitweb.torproject.org/tor.git/commitdiff/55f635745afacefffdaafc72cc176ca7ab817546
+> 
+> References: [9]
+> https://lists.torproject.org/pipermail/tor-announce/2012-August/000086.html
+>
+> 
+[10] https://bugzilla.novell.com/show_bug.cgi?id=776642
+> Note: No Red Hat bug (Fedora tor versions already updated && EPEL
+> one not affected).
+
+Please use CVE-2012-3518 for this issue.
+
+> 3) tor: Client's relays path information leak Upstream ticket: [11]
+> https://trac.torproject.org/projects/tor/ticket/6537
+> 
+> Relevant patches: [12]
+> https://gitweb.torproject.org/tor.git/commitdiff/308f6dad20675c42b29862f4269ad1fbfb00dc9a
+>
+> 
+[13]
+https://gitweb.torproject.org/tor.git/commitdiff/d48cebc5e498b0ae673635f40fc57cdddab45d5b
+> 
+> References: [14]
+> https://lists.torproject.org/pipermail/tor-announce/2012-August/000086.html
+>
+> 
+[15] https://bugzilla.novell.com/show_bug.cgi?id=776642
+> Note: No Red Hat bug (same as in case 2,).
+
+Please use CVE-2012-3519 for this issue.
+
+> Could you allocate a CVE ids for these?
 > 
 > Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
 > Security Response Team
+> 
 
 
 - -- 
@@ -77,17 +88,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPjHDEAAoJEBYNRVNeJnmTJUoP/RqxHJ4MeQcTA+iBu39MeD2y
-1luFwUixuopRuF/QmY2x6CJSK6rqBtqD/PiPPGcP6Gy1JL/Ij3aFgWAvqwYQdD3o
-ElHlvktZnqzMneRgdcaEi5TPMOBqlNJpyIB3AXHm+nlgmIX/wBl8tO1a8fbC3H3l
-2dzGJwfj1tJeURl3szzRu242i+Agy2/nxCwNZpkXS7Bnp9j/a2Gk/ZtqN40lkPaL
-e9eYPvw2Q19VznN6ZfzcxLbsFf3WYPjbYBKMYsP/84B56MzDYo6mf6+NslGos6zB
-l+sN8MXoch2WRKkXduDYcVSxt1Kkdr5rn3IzqJOvVn8bY5aFTgOMSOHLJ7bymwps
-TdIh6a2dDs1RoITOfvCOkyC0RTjWARQHhDahQNv+BGsFuUT6515ai6QdlzFnEkZO
-QjQj7wy6QJLbWBwIN1OOruFkw1Sni7U18t130HwnnGjm1Jsimxgqf8UnAjru/rMf
-gRYTr8FRBkdiePPEMhlo57dWL5MjrOHMyXN6yVfrEpFcMGI2Nk2CELsJDwDH/rzn
-z8kPRJxYijcnl+dT50OpLZambqVrFEs4jYGGyijEkX1jgz9Xry1Oylnc5treED5x
-VX8rNN0BaMXNYQrcdAuOAUgU2scGpt3qqVg1KXs3CfYEnNey2PToOXX9tAAQ6hif
-JAg9ojcjKAdFUj4uRbS3
-=OZ1d
+iQIcBAEBAgAGBQJQM5Q0AAoJEBYNRVNeJnmTloIQANccXHhHc8/RrckiTuW3DcuL
+DwxwVZSDkKuFAP0/o5Msg+IzMjAIWX6ErH8t/kA0XB7blzoheFwA5cqcwJCn55/B
+k6ZLdgSF8/gHfBkB4PmuxJ5S+00LB7Inr3FTfEoQ1yMKIy6YBC8tyYQ9ehwWlTmq
+pC3yJQNn3JvcN648ghasmLM0Mp2q2wtRjn1wU0eOPLWHwan4gb0BYQfDEnU32eXv
+iHInP6Z7v72kcOBTAq7Cq7B/Pa0E4GGlCdWwBKcG4RsP352qvAnd0mQ9zKxnCXkW
+z4kiSQQhAVFldsfsWqyj07HW4oH+c+gSFH5rcnO7r+IzH+EmSq+hqnYfrpTPtswV
+mjsCIzQtNEGn/lSSB9SWX8X9lu/WWbxyYH2iSSANPFsqlu/BK05MKIQ/u1IDoS3g
+lJxpyfEl21mZPS+DwlPL6wPQOlI4sDQZKrBKwRh/3AHoQ/jaSogOH1FYK+jplwbU
+xBX7mzSvk9Ql1sOXGXGiK43uVI3mSKfe+8c5w7mcEzMFKTKIPMncNmZyMzdY066O
+RgDEcZHVx/nTLCq+h2XiZTwnkvqjAMX2VCOrewxJG/TgWf+/P+8LU0F65YezB/K4
+PmYONiqJyGBv17vxY9AMuTTc/rS8GbclajkxBP4hc28P+rkM8FjbysV5DfndH8y4
+lLOxgCstJclruuWzhHAH
+=j7Ff
 -----END PGP SIGNATURE-----
