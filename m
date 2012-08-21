@@ -1,43 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/6
-Message-ID: <4FB62711.8080800@redhat.com>
-Date: Fri, 18 May 2012 12:40:17 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Tornado (python-tornado): Tornado v2.2.1 tornado.web.RequestHandler.set_header() fix to prevent header injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/1
+Message-ID: <503315BB.90005@redhat.com>
+Date: Mon, 20 Aug 2012 22:59:39 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Two munin issues, now with CVEs
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Package:
---------
-Tornado is an open source version of the scalable, non-blocking web server
-and tools that power FriendFeed:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=684075
+From: Stevie Trujillo <stevie.trujillo@...il.com>
+To: submit@...s.debian.org
+Subject: Subject: munin: insecure state file handling, munin->root
+privilege escalation in smart_ plugin
 
-URL: http://www.tornadoweb.org/
-----
+Please use CVE-2012-3512 for this issue.
 
-Issue:
-------
-A possibility of header injection / response splitting flaw was found in the
-way web request handler of Tornado, a scalable, non-blocking web server and
-tools, performed sanitization of input arguments, provided to routine setting
-the HTTP response header name and value. If an application using the Tornado
-web framework accepted untrusted user input and based on that input updated the
-HTTP headers content (to redirect the user etc.), by providing a
-specially-crafted input a remote attacker could use this flaw to perform
-cross-site scripting attacks, cross-user defacement, web cache poisoning etc.
 
-Upstream v2.2.1 release changelog:
-[1] http://www.tornadoweb.org/documentation/releases/v2.2.1.html
 
-References:
-[2] https://bugs.gentoo.org/show_bug.cgi?id=415903
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=822852
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=684076
+From: Stevie Trujillo <stevie.trujillo@...il.com>
+To: submit@...s.debian.org
+Subject: munin-cgi-graph: User can load new config, pointing log to
+arbitrary file
 
-Could you allocate a CVE id for this? (should be CVE-2012-* one)
+Please use CVE-2012-3513 for this issue.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQMxW7AAoJEBYNRVNeJnmTySQP/A71mseEYiODMo6GZIwdQNG9
+1u8I3G715U6Hh/Zu0m6qdHWKzRQVZNsw6us1RAEMMOcYGaUOhK7nUsmqZ0ayGcdL
+etc2/oiKzUDPhSbLeAKI1PG+fky6QifNDP7uyngdFBgAotP8Fwy1gn16mNbaJEKU
+dhTNeJ8yxAkj6SS0hg20/cttAUFRc8s+oqmeS9MEInbFFsE9CKQkSIRvQpaPA+un
+l0MytKnOjZlinaYWv1dATGKAdMTOv8mA9I/M1XECpivXPVc5gBYZGYN2CWY3rhxX
+H5ATlGYpog61md7NtJdQUCAQ1Nx4OrXzNBxpS/vdSpxrWGDlMx9HGkVBFbLBgKpx
+iLHQRrB8Q4q9GxZA3o4lnVSGs95ncm6HuLchcmS7t2nJ7fa4WlIVKmZo50lYYyO8
+l9h9NgJ3HqgT3iP4iGEJfEG8Q7aI6S6OFYdGgld/Fj6QOtDHh6ab3Ld70su/3n6b
+4xSgz1bzOdqYZNvc6Ut/6uxk3jHhjkltC5qch5tGjuMg2GkS/KrhROVuEpg5+psw
+17naEZepCT++UD293+QgJSRRDthR+uVbpG6Wn08FtRnsiwHef5NvOys9lOC8+vHK
+WMGnkmiOhtH+0eVKaYRqRLZKOgXtHqDWeVBHzwVG6uwciQL5CX1oox3JkEN0eMQF
+L+MafB6n9JLJAaJhEbCf
+=emHA
+-----END PGP SIGNATURE-----
