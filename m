@@ -1,124 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/02/8
-Message-ID: <CAAPiX_+Pbf372n0wE8gmsCTUeNHN+EiWALFcT6sppNppE1ENDA@mail.gmail.com>
-Date: Thu, 2 Aug 2012 14:18:48 -0600
-From: Greg Knaddison <greg.knaddison@...uia.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Joshua Brauer <joshua.brauer@...uia.com>
-Subject: Re: CVE Request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/12
+Message-ID: <503420EC.7090802@redhat.com>
+Date: Tue, 21 Aug 2012 17:59:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- inn (nnrpd): Prone to STARTTLS plaintext command injection
 Content-Type: text/plain; charset=utf-8
 
-I've now updated these keeping in mind the followup e-mails by Henri
-and Steven about some duplicates and some additional values that
-needed to be assigned.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We are currently behind on 17 advisories that are on drupal.org but do
-not yet have a CVE. I asked the team if anyone else wanted to take
-over the process of requesting and updating advisories with CVEs.
-Joshua Brauer (cc'd here) has agreed to take this over as of August
-15th.
+On 08/21/2012 10:11 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> the STARTTLS implementation in INN's NNTP server for readers, 
+> nnrpd, before 2.5.3 does not properly restrict I/O buffering, which
+> allows man-in-the-middle attackers to insert commands into
+> encrypted sessions by sending a cleartext command that is processed
+> after TLS is in place, related to a "plaintext command injection"
+> attack, a similar issue to CVE-2011-0411.
+> 
+> References: [1] https://www.isc.org/software/inn/2.5.3article [2]
+> https://bugs.gentoo.org/show_bug.cgi?id=432002 [3]
+> https://bugzilla.redhat.com/show_bug.cgi?id=850478
+> 
+> Relevant upstream patch (the 'diff -Nurp inn-2.5.2/nnrpd/misc.c
+> inn-2.5.3/nnrpd/misc.c' part): [4]
+> ftp://ftp.isc.org/isc/inn/inn-2.5.2-2.5.3.diff.gz
+> 
+> Could you allocate a CVE id for this?
 
-For completeness, CVE-2012-2922 was recently assigned to a path
-disclosure issue in Drupal 7.14 that was fixed in Drupal 7.15.  The
-Drupal Security Team's opinion is that it's a php configuration
-mistake to display these kinds of errors to the screen and therefore
-Drupal 7.15 was not marked as a security update and did not get a
-security advisory. We're opinion to alternate opinions on the issue if
-someone has a case why this should be considered a security issue in
-Drupal.
+Please use CVE-2012-3523 for this issue.
 
-Regards,
-Greg
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+> P.S.: There doesn't seem to be one for this issue yet: 
+> http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=plaintext+command+injection
+>
+> 
+no inn CVEs since .. 2004, wow.
 
-On Wed, Jun 13, 2012 at 10:32 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> Apologies for the delay in CRUPAL SA-CONTRIB CVE assignments, here's
-> the current batch:
->
->
-> CVE-2012-2699 SA-CONTRIB-2012-073 - Glossary - Cross-Site Scripting (XSS)
-> CVE-2012-2700 SA-CONTRIB-2012-074 - Contact Forms - Access Bypass
-> CVE-2012-2701 SA-CONTRIB-2012-075 - Take Control - Cross Site Request
-> Forgery (CSRF)
-> CVE-2012-2702 SA-CONTRIB-2012-076 - Ubercart Product Keys Access Bypass
-> CVE-2012-2703 SA-CONTRIB-2012-077 - Advertisement - Cross Site
-> Scripting & Information Disclosure - XSS
-> CVE-2012-2704 SA-CONTRIB-2012-077 - Advertisement - Cross Site
-> Scripting & Information Disclosure - Information Disclosure
-> CVE-2012-2705 SA-CONTRIB-2012-078 - Smart Breadcrumb - Cross Site
-> Scripting (XSS)
-> CVE-2012-2706 SA-CONTRIB-2012-079 - Post Affiliate Pro - Cross Site
-> Scripting (XSS) and Access Bypass - Unsupported
-> CVE-2012-2707 SA-CONTRIB-2012-080 - Hostmaster (Aegir) - Access Bypass
-> and Cross Site Scripting (XSS) - access bypass
-> CVE-2012-2708 SA-CONTRIB-2012-080 - Hostmaster (Aegir) - Access Bypass
-> and Cross Site Scripting (XSS) - XSS
-> CVE-2012-2709 SA-CONTRIB-2012-081 - Aberdeen - Cross Site Scripting
-> CVE-2012-2710 SA-CONTRIB-2012-082 - Zen - Cross Site Scripting
-> CVE-2012-2711 SA-CONTRIB-2012-083 - Taxonomy List - Cross Site
-> Scripting (XSS)
-> CVE-2012-2712 SA-CONTRIB-2012-084 - Search API - Cross Site Scripting
-> (XSS)
-> CVE-2012-2713 SA-CONTRIB-2012-085 - BrowserID - Multiple
-> Vulnerabilities - CSRF
-> CVE-2012-2714 SA-CONTRIB-2012-085 - BrowserID - Multiple
-> Vulnerabilities - BrowserID login theft
-> CVE-2012-2715 SA-CONTRIB-2012-086 - Amadou - Cross Site Scripting
-> CVE-2012-2716 SA-CONTRIB-2012-087 - Comment Moderation - Cross Site
-> Request Forgery
-> CVE-2012-2717 SA-CONTRIB-2012-088 - Mobile Tools - Cross Site
-> Scripting (XSS)
-> CVE-2012-2718 SA-CONTRIB-2012-089 - Counter - SQL Injection (unsupported)
-> CVE-2012-2719 SA-CONTRIB-2012-090 - File depot - Session Management
-> Vulnerability
-> CVE-2012-2720 SA-CONTRIB-2012-091 - Token Authentication - Access bypass
-> CVE-2012-2721 SA-CONTRIB-2012-092 - Organic Groups - Cross Site
-> Scripting (XSS) and Access Bypass
-> CVE-2012-2722 SA-CONTRIB-2012-093 - Node Embed - Access Bypass
-> CVE-2012-2723 SA-CONTRIB-2012-094 - Maestro module - Cross Site
-> Request Forgery (CSRF), Cross Site Scripting (XSS)
-> CVE-2012-2724 SA-CONTRIB-2012-095 - Simplenews - Information Disclosure
-> CVE-2012-2725 SA-CONTRIB-2012-096 - Authoring HTML - Cross Site
-> Scripting (XSS)
-> CVE-2012-2726 SA-CONTRIB-2012-097 - Protest - Cross Site Scripting (XSS)
-> CVE-2012-2727 SA-CONTRIB-2012-098 - Janrain Capture - Open Redirect
-> CVE-2012-2728 SA-CONTRIB-2012-099 - Node Hierarchy - Cross Site
-> Request Forgery (CSRF)
-> CVE-2012-2729 SA-CONTRIB-2012-100 - SimpleMeta - Cross Site Request
-> Forgery (CSRF)
-> CVE-2012-2730 SA-CONTRIB-2012-101 - Protected Node - Access Bypass
-> CVE-2012-2731 SA-CONTRIB-2012-102 - Ubercart AJAX Cart - Potential
-> Disclosure of user Session ID
-> CVE-2012-2732 SA-CONTRIB-2012-103 - Global Redirect - Open Redirect
->
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
->
-> iQIcBAEBAgAGBQJP2U0rAAoJEBYNRVNeJnmTvmYQAIPqLmDYtoOZ0qvQwnJ2D3ZG
-> CfGfstBLRTrlEkhSMiEHLztjBCUEnsBz8hvFZ1vA3dBkWuvw4BLBHaONHJ/GZES8
-> lMpdVh/1nP0AwqYSOloHjvHOZlI57xWbrmqi517gYM2cBDyZ13527bCeFTAVNOnS
-> 9uE60cWJfpCrejLrGj7AtZgLPBuyWFnAfPHEDWbZCrq+Di1fjddYK5JBQRTrUE5E
-> W1rtx43b3KrO33MgQ33TAdmFkMKXulK4BBUT44DyB2OD2DBqsCi/xgFXRBtu7hii
-> RVGYBCw6YxXXW8y86eF10nsURSwl3IZImtaA/z/me9wEPZEG+Mdjmf5zc85kZVtj
-> BS8CoOJq1dbNMmPBWptG5tdITWlrRZLEHc2RgjiiVsoSlIPH+X+mg9bvwNkayDzQ
-> 2UhSFqxP1FFeC/HoWekCA7ZScQhQ1qLdOzUfKTMMAYb06kD7A3ZrQPF3r10UHSLh
-> +hE09FF8UiTJo9WsOK7oeFnByWLtcvOs2lQ2AHWIHbsfPxNC9ckHz7AyLHkypPg0
-> qPc+Ljw8LVvNnJSodFWszqRwi+1mAAfTqbvoXYh8EcGIMDiPDBJPX5AtMFjARQs1
-> 8ikC5ABumFv/yvlVuksDl9HfPGqd6oBXG8ZyMoFKoyHHIDZprJ8Y0SxUMTy3DIaP
-> t3ETs2fViyvuPN+S+itX
-> =6Pqs
-> -----END PGP SIGNATURE-----
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-
--- 
-Director Security Services | +1-720-310-5623
-Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
+iQIcBAEBAgAGBQJQNCDsAAoJEBYNRVNeJnmTutoQALqU+yEnN0EqATMMYI7u9Hc2
+fNjscaKceMZ3SYt6rLX7nek8kw0aDRU+dp1Fok2Mce/O6fd03t+EjYmYH04exYNd
+k3raTCyhHmZGr3b/KEapIXV2qvPxZBwoS9OU4zQCa8Kzge6E7lmwiWmb2nn7yBYK
+ItahJJZ0kA1zFro5lXro1cYV6ekgYCe3b787aniR2m7vXj/XRSd3u28+NR1LglFH
+YxRVJgRNr9Lvc0SRsNkSLlDWraiwUfpaEsMU5Y16m4BRCgdS6Fqh24vbMx9FE9Np
+fug0KbUk82TZG55Uel5kWxM9Lyaqbh2eWnl+qO0IlcPbnNyIGe9EajtjN46PYx83
+tD+pkaZxFreAM9dpDWkT7n4nnEIG61unGX6RAx0Gjfhm9HQqKD35T2I1gh4aGLFr
+nNVtHPCagvA9J70txbjo7AfQNg/Q3CLgsnl3dtFGmXeT8Icvil3x4qvTiF5qAF8z
+G1MOcdeabJZ1gFnmmNGIeJH6afs258QKriEMPF+Y0YvLA126BGSeWCJawfgg7g3k
+yzgsQ0UHm9wtqxTn0ApjooSyr9qWmVS9C8zCH4+mdYF8QrABF18/hrZZOKKo/ez5
+M6I9X9z6tr8QlglmzN2HqfUI1K6g2vlz+Rxc6icP5lCmNondkLr8m7cEONe6uDGI
+KbNKhyb0CLYQCAYyuGS5
+=ZKTD
+-----END PGP SIGNATURE-----
