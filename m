@@ -1,65 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/12
-Message-ID: <4F872505.6010504@redhat.com>
-Date: Thu, 12 Apr 2012 12:55:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/7
+Message-ID: <1558113393.18184847.1345561502579.JavaMail.root@redhat.com>
+Date: Tue, 21 Aug 2012 11:05:02 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, Stefan Schurtz <sschurtz@...nline.de>
-Subject: Re: CVE-request: Wikidforum 2.10 multiple XSS and SQL-injection vulnerabilities SSCHADV2012-005
+Cc: oss-security@...ts.openwall.com, Benny Baumann <BenBE@...hi.org>, Benny Baumann <BenBE@...rphia.de>, Nigel McNie <nigel@...hi.org>
+Subject: CVE Request -- php-geshi / GeSHi (1.0.8.11): Remote directory traversal and information disclosure in the cssgen contrib module (plus possibly XSS, but it needs upstream to confirm)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, Ben, Nigel, vendors,
 
-On 04/12/2012 01:49 AM, Henri Salo wrote:
-> Hello,
-> 
-> These three 2012 issues are without CVE-identifiers. XSS
-> vulnerabilities can be joined to one CVE if I am correct.
-> 
-> Affected version: 2.10 Advisory ID: SSCHADV2012-005 Bugtraq:
-> http://seclists.org/bugtraq/2012/Mar/45
-> 
-> Vulnerabilities: http://osvdb.org/show/osvdb/80838 Wikidforum
-> Search Field XSS http://osvdb.org/show/osvdb/80839 Wikidforum
-> Advanced Search Multiple Field XSS 
-> http://osvdb.org/show/osvdb/80840 Wikidforum Advanced Search
-> Multiple Field SQL Injection
+  Issue #A:
+  ---------
+  A directory traversal and information disclosure
+  (local file inclusion) flaws were found in the cssgen
+  contrib module (application to generate custom CSS files)
+  of GeSHi, a generic syntax highlighter, performed sanitization
+  of 'geshi-path' and 'geshi-lang-path' HTTP GET / POST variables.
+  A remote attacker could provide a specially-crafted URL that,
+  when visited could lead to local file system traversal or,
+  potentially, ability to read content of any local file,
+  accessible with the privileges of the user running the webserver.
 
-Please use CVE-2012-2099 for these XSS issues.
+  References:
+  [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=685324
+  [2] https://bugzilla.redhat.com/show_bug.cgi?id=850425
 
-Also I couldn't really confirm the SQL injections so not assigning a
-CVE, if you can find confirmation I'll assign a CVE.
+  Upstream patch:
+  [3] http://geshi.svn.sourceforge.net/viewvc/geshi?view=revision&revision=2507
 
-> Advisory URLs: 
-> http://www.darksecurity.de/advisories/2012/SSCHADV2012-005.txt 
-> http://www.darksecurity.de/index.php?/202-SSCHADV2012-005-Wikidforum-2.10-Multiple-security-vulnerabilities.html
->
->  I also contacted vendor just to be sure:
-> http://www.wikidforum.com/forum/forum-software_29/wikidforum-support_31/sschadv2012-005-unfixed-xss-and-sql-injection-security-vulnerabilities_188.html
->
->  - Henri Salo
+  Issue #B:
+  ---------
+  Then there is a report about non-persistent XSS flaw, that have been
+  fixed in the contrib module of 1.0.8.11 version too:
+  [4] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=685323
 
+  but I was unable to find the relevant upstream patch (and above Debian BTS
+  entry doesn't contain further information too, which could be acted upon).
 
+  Thus I am Cc-in GeSHi upstream to this post to shed the light on the XSS flaw [4].
+  
+  Ben, Nigel, could you please clarify what was the relevant upstream patch for the
+  Debian BTS#685323 / Non-persistent XSS vulnerability in contrib script [4] issue?
+  Thank you for that, Jan.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Kurt, once the second issue clarified, could you allocate CVE ids for these?
 
-iQIcBAEBAgAGBQJPhyUEAAoJEBYNRVNeJnmTzvcP/2W/Flev8Z85jhhNRyPqkBlP
-h3fVBEqE1WekN91HoQoU/EZnoRhKiMhcxtZCMy2L19nmUWZgFW+J5D10ioZ+TQJu
-I9g4/cx9j1nkU46h2Y9nWB6VUu9yb9LD+ZCRPKD1IStDcXpSrNNouWJewQvnHF7K
-sgc5NP60olPNfJ2DkbOlh0Vl/41o/BweeZ7DymU8pRW8bUk+fgy1Z5W6wmQcI5qm
-LJzQZPkZM0m5x8G6t15Hjzcx4OG8cmQ84WyH08FIgZBn9B8tsz6bfFruCmCwaJH+
-Ul9iqUS7ye5dha3+qFeFDDcnn20mG0aZwuP6WDD270MKqQ+ZkhyO+xKcehC2+Ua+
-ISJKfgk6HE+8apgM2/vPtqi+MNMgYZGdFhy3PLmTkPXJ5c278a5b0r8j4LO0dOmP
-s0sliL+pPVh/6O69vr/+lpglkPfaQN/ikoGMwavIEUtI7d5U3KmyJENO9G6iEO2Z
-HLU+rf90DxY41MV1pHm23KkImLoz6aEnpUtKTV9nxJ8qoMttJy+OYALUEWG98N7s
-E8U52Ja5YWW6ecDE7/Jc/nFruCixZSzfzlXML7tXpfLoSMMivEGVffNgut5jgw+M
-uXwgUTgrrCRTjScQXOlvvOgjp2JX2hTPebztXu7kA8SKDOW9LLFNjnjzo87Yr/2s
-Uz1yRzZmvGYs1m8olEwM
-=eATf
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
