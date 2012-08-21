@@ -1,29 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/6
-Message-ID: <50D19054.204@lab.b-care.net>
-Date: Wed, 19 Dec 2012 11:00:52 +0100
-From: Frédéric Basse <frederic.basse@....b-care.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/3
+Message-ID: <1397477942.17925147.1345543811747.JavaMail.root@redhat.com>
+Date: Tue, 21 Aug 2012 06:10:11 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2012-6426] LemonLDAP-NG SAML XML Signature Wrapping
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- Tor 0.2.2.38: Three issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-The name CVE-2012-6426 was assigned to this issue.
-See http://jira.ow2.org/browse/LEMONLDAP-570
-(Security advisory to follow)
-- -- 
-Frédéric Basse - Thales Communications & Security
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+  Tor upstream has recently released v0.2.2.38 version, correcting three
+security flaws:
 
-iQEcBAEBAgAGBQJQ0ZBUAAoJEG39VVx5rCjD+f0H/3WzeIcgSf/UrBkfJ0UlyEAF
-Ql/YvXDbi1P2fgeZnx0U5cK6/qMgJ9Zna5qp3L2Rp4t7Oyuj3dNsuZ0JTA2eWJFJ
-rK+Dtzw37zrdCXTb7kmpqOHH/pld4anzlkRONm4M2LEmVt6m8ral6SxC7WwmvpVp
-uW9MchgjRlATTMiA9f17J6np2NPRTa1Fti+2wVRsfzCy7YZlIkuiTC3NkXxXq+P+
-tT0uXOIO9sOBP0r4AbzO9oXhl9GJPqOoiWW5PpjGY5JtHsWUSXX0Kdls1Q+Ht7FE
-0haQJiKU677kKq3J5j6ebZHF3ux7wyjuBgpfxuXyrV4yx2IEyrbEJzbuBvmkcD0=
-=9+Do
------END PGP SIGNATURE-----
+1) tor: Read from freed memory and double free by processing failed DNS request
+   Upstream ticket:
+   [1] https://trac.torproject.org/projects/tor/ticket/6480
+
+   Relevant patch:
+   [2] https://gitweb.torproject.org/tor.git/commitdiff/62637fa22405278758febb1743da9af562524d4c
+
+   References:
+   [3] https://lists.torproject.org/pipermail/tor-announce/2012-August/000086.html
+   [4] https://bugzilla.novell.com/show_bug.cgi?id=776642
+   [5] https://bugzilla.redhat.com/show_bug.cgi?id=849949
+
+2) tor: Unitialized memory read by reading vote or consensus document with unrecognized flavor name
+   Upstream ticket:
+   [6] https://trac.torproject.org/projects/tor/ticket/6530
+
+   Relevant patches:
+   [7] https://gitweb.torproject.org/tor.git/commitdiff/57e35ad3d91724882c345ac709666a551a977f0f
+   [8] https://gitweb.torproject.org/tor.git/commitdiff/55f635745afacefffdaafc72cc176ca7ab817546
+
+   References:
+   [9] https://lists.torproject.org/pipermail/tor-announce/2012-August/000086.html
+   [10] https://bugzilla.novell.com/show_bug.cgi?id=776642
+   Note: No Red Hat bug (Fedora tor versions already updated && EPEL one not affected).
+
+3) tor: Client's relays path information leak
+   Upstream ticket:
+   [11] https://trac.torproject.org/projects/tor/ticket/6537
+
+   Relevant patches:
+   [12] https://gitweb.torproject.org/tor.git/commitdiff/308f6dad20675c42b29862f4269ad1fbfb00dc9a
+   [13] https://gitweb.torproject.org/tor.git/commitdiff/d48cebc5e498b0ae673635f40fc57cdddab45d5b
+
+   References:
+   [14] https://lists.torproject.org/pipermail/tor-announce/2012-August/000086.html
+   [15] https://bugzilla.novell.com/show_bug.cgi?id=776642
+   Note: No Red Hat bug (same as in case 2,).
+
+Could you allocate a CVE ids for these?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
