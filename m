@@ -1,35 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/14/4
-Message-ID: <50CAE46F.3000200@redhat.com>
-Date: Fri, 14 Dec 2012 09:33:51 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/2
+Message-Id: <201208221157.40610.thijs@debian.org>
+Date: Wed, 22 Aug 2012 11:57:35 +0200
+From: Thijs Kinkhorst <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Daniel Kahn Gillmor <dkg@...thhorseman.net>, Kurt Seifried <kseifried@...hat.com>, Timo Warns <Warns@...-Sense.DE>
-Subject: Re: Remote file inclusion by office applications
+Subject: CVE Request: Apache mod RPAF denial of service
 Content-Type: text/plain; charset=utf-8
 
-On 12/13/2012 07:53 PM, Daniel Kahn Gillmor wrote:
+Hi,
 
-> For local file inclusion, libreoffice at leasts prompts me with:
->
-> -----------
->   This document contains one or more links to external data.
->
->   Would you like to change the document, and update all links to get the
->   most recent data?
->
->   [Yes] [No]
-> -----------
->
-> but it doesn't tell me what those documents are.
+Sébastien Bocahu reported to the Debian security team a denial of service 
+issue in the Apache module RPAF (reverse proxy add forward).
 
-This is based on a similar Microsoft Office prompt and implements 
-required functionality (for different use cases involving linked 
-documents).  It is not a security prompt by any means, and it predates 
-macro security prompts by several years.
+http://bugs.debian.org/683984
 
-(I'm pretty sure Microsoft Office supports external documents with UNC 
-names, FWIW.)
+Version 0.6 is not affected, 0.5 is and we've released a security update for 
+that. Can someone please assign a CVE id to this issue?
 
--- 
-Florian Weimer / Red Hat Product Security Team
+
+Thanks,
+Thijs
+
+Download attachment "signature.asc " of type "application/pgp-signature" (491 bytes)
