@@ -1,17 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/25/4
-Message-ID: <CAJzxamJQKVAFzR7Qmd1do=wozj-XuBghCz7DaKiWAb8A5w_ZHQ@mail.gmail.com>
-Date: Fri, 25 May 2012 23:04:51 +1000
-From: David Black <disclosure@....org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Miloslav Trmac <mitr@...hat.com>,  Peter van Dijk <peter.van.dijk@...herlabs.nl>, Bert Hubert <bert.hubert@...herlabs.nl>
-Subject: Re: CVE Request: powerdns does not clear supplementary groups
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/1
+Message-ID: <20120822072025.GR5405@dhcp-25-225.brq.redhat.com>
+Date: Wed, 22 Aug 2012 09:20:26 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2012-3520 kernel: af_netlink: invalid handling of SCM_CREDENTIALS passing
 Content-Type: text/plain; charset=utf-8
 
-Morning, I only asked for a CVE for this issue in powerdns because I
-have seen other projects asking for CVE id's regarding this exact
-issue. If it shouldn't get one then it shouldn't get one :-)
+A flaw was found in the way Netlink messages without explicitly set
+SCM_CREDENTIALS were delivered. The kernel passes all-zero
+SCM_CREDENTIALS ancillary data to the receiver if the sender did not
+provide such data, instead of including the correct data from the peer
+(as it is the case with AF_UNIX). Programs that set SO_PASSCRED option
+on the Netlink socket and rely on SCM_CREDENTIALS for authentication
+might accept spoofed messages and perform privileged actions on behalf
+of the unprivileged attacker.
 
+Introduced in:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=16e572626961
 
---
-Thank you.
+Upstream fix:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=e0e3cea46d31
+
+Acknowledgements:
+
+Red Hat would like to thank Pablo Neira Ayuso for for reporting this
+issue.
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
