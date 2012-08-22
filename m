@@ -1,34 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/15/2
-Message-ID: <505411D9.8040705@redhat.com>
-Date: Fri, 14 Sep 2012 23:27:53 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/8
+Message-ID: <50352121.8070209@redhat.com>
+Date: Wed, 22 Aug 2012 12:12:49 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: Re: CVE request: bacula: Console ACL Bypass
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: Typo3
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/14/2012 12:49 PM, Agostino Sarubbo wrote:
-> On Friday 14 September 2012 20:21:27 you wrote:
->> Patch:
->> http://sourceforge.net/projects/bacula/files/bacula/5.2.11/0001-Fix-
->>
->> 
-bug-1932-director-crash.patch
-> 
-> Wrong link. This is the right commit code: 
-> http://www.bacula.org/git/cgit.cgi/bacula/commit/?id=67debcecd3d530c429e817e1d778e79dcd1db905
+On 08/21/2012 03:28 PM, Moritz Muehlenhoff wrote:
+> Hi, please assign CVE IDs for the latest Typo3 security issues: 
+> http://typo3.org/support/teams-security-security-bulletins/security-bulletins-single-view/article/several-vulnerabilities-in-typo3-core/
+> :
 
-http://www.bacula.org/en/?page=news
-Version
-> 
-5.2.11 version is a bug fix release.
-Make dump_resource respect console ACL's (security fix)
 
-Please use CVE-2012-4430 for this issue.
+> 1.
+> 
+> Vulnerable subcomponent: TYPO3 Backend Help System Vulnerability
+> Type: Insecure Unserialize leading to a possible Arbitrary Code
+> Execution Severity: Medium Suggested CVSS v2.0:
+> AV:N/AC:H/Au:S/C:P/I:C/A:N/E:P/RL:O/RC:C (What's that?) Problem
+> Description: Due to a missing signature (HMAC) for a parameter in
+> the view_help.php file, an attacker could unserialize arbitrary
+> objects within TYPO3. We are aware of a working exploit, which can
+> lead to arbitrary code execution. A valid backend user login or
+> multiple successful cross site request forgery attacks are required
+> to exploit this vulnerability. Solution: Update to the TYPO3
+> version 4.5.19, 4.6.12 or 4.7.4 that fix the problem described! 
+> Credits: Credits go to Felix Wilhelm who discovered and reported
+> the issue.
+
+Please use CVE-2012-3527 TYPO3-CORE-SA-2012-004: TYPO3 Backend Help
+System Code Exec
+
+> 
+> 2.
+> 
+> Vulnerable subcomponent: TYPO3 Backend Vulnerability Type:
+> Cross-Site Scripting Severity: Medium Suggested CVSS v2.0:
+> AV:N/AC:M/Au:S/C:P/I:P/A:N/E:F/RL:O/RC:C (What's that?) Problem
+> Description: Failing to properly HTML-encode user input in several
+> places, the TYPO3 backend is susceptible to Cross-Site Scripting. A
+> valid backend user is required to exploit these vulnerabilities. 
+> Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that
+> fix the problem described! Credits: Credits go to Pavel Vaysband,
+> Security Team Member Markus Bucher, Core Team Member Susanne Moog,
+> Jan Bednarik,  who discovered and reported the issues.
+
+
+Please use CVE-2012-3528 for TYPO3-CORE-SA-2012-004: TYPO3 Backend XSS
+
+
+> 3.
+> 
+> Vulnerable subcomponent: TYPO3 Backend Vulnerability Type:
+> Information Disclosure Severity: Low Suggested CVSS v2.0:
+> AV:N/AC:L/Au:S/C:P/I:N/A:N/E:F/RL:O/RC:C (What's that?) Problem
+> Description: Accessing the configuration module discloses the
+> Encryption Key. A valid backend user with access to the
+> configuration module is required to exploit this vulnerability. 
+> Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that
+> fix the problem described! Credits: Credits go to Mario Rimann who
+> discovered and reported the issue.
+
+
+Please use CVE-2012-3529 for TYPO3-CORE-SA-2012-004: TYPO3 Backend
+Information Disclosure
+
+> 4.
+> 
+> Vulnerable subcomponent: TYPO3 HTML Sanitizing API Vulnerability
+> Type: Cross-Site Scripting Severity: Medium Suggested CVSS v2.0:
+> AV:N/AC:M/Au:N/C:P/I:P/A:N/E:U/RL:O/RC:C (What's that?) Problem
+> Description: By not removing several HTML5 JavaScript events, the
+> API method t3lib_div::RemoveXSS() fails to filter specially crafted
+> HTML injections, thus is susceptible to Cross-Site Scripting.
+> Failing to properly encode for JavaScript the API method
+> t3lib_div::quoteJSvalue(), it is susceptible to Cross-Site
+> Scripting. Note: Developers should never rely on the blacklist of
+> RemoveXSS() alone, but should always properly encode user input
+> before outputting it again. Solution: Update to the TYPO3 version
+> 4.5.19, 4.6.12 or 4.7.4 that fix the problem described! Credits:
+> Credits go to Andreas Schnapp and Christian Nösterer who discovered
+> and reported the issues.
+
+
+
+Please use CVE-2012-3530 for TYPO3-CORE-SA-2012-004: TYPO3 HTML
+Sanitizing API XSS
+
+
+
+> 5.
+> 
+> Vulnerable subcomponent: TYPO3 Install Tool Vulnerability Type:
+> Cross-Site Scripting Severity: Low Suggested CVSS v2.0:
+> AV:N/AC:H/Au:S/C:P/I:P/A:N/E:F/RL:O/RC:C (What's that?) Problem
+> Description: Failing to properly sanitize user input, the Install
+> Tool is susceptible to Cross-Site Scripting. Solution: Update to
+> the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that fix the problem
+> described! Credits: Credits go to Security Team Member Georg Ringer
+> who discovered and reported the issue.
+
+
+
+Please use CVE-2012-3531 for TYPO3-CORE-SA-2012-004: TYPO3 Install
+Tool XSS
+
+> Cheers, Moritz
+> 
 
 
 - -- 
@@ -37,19 +120,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQVBHZAAoJEBYNRVNeJnmTClQP+gJTYbyU3TQRwlS+Uw/WRVgY
-VLXgNj/LyL79xeUWnHFp9G5PQ0/PBke3pQUcN4m0aRj5VGXO+qncFZzApxwUtrFJ
-n6Ryyi9Pimhyt/P3AEJtM0GrNO0foicumrT1RmV+JABW32zm93xAgXWaj5CnPj0F
-x58Ze2OQf/+ISYik2QwARpTDn2xC7OkCwzuirDrG1ZcqTRwuZz3dlfVAHb7P61dD
-h75B2MPa4YT8qkwnetF4GpIB26jPe3jOnTgnZ0G7eJrw4SpXzQYRBKPcxTRVCICz
-xKWR8/RhRxb70+7FIx48MsnlNLZEflN96yuzJTeugSeGNBTAxw95GPsxnAy+dz94
-RfUpoPd2oYh9W1LnlzgUOc3lAb7fL8pEij1F1z/L+Iww/25lT9tNOn4yx6pFcjny
-454rEMs/BXuzXcoSqQSDeiUuOm8xlaWjNCAXc0QNoSE0FmEn7UR6laNOL/TG18XP
-9KFywuzFHC5nJ0htOj9hCYGWs1JG/uQcIxTJ5gbIBUc5nVPedyoCKDGn8H0wNGHN
-9mJ3oU3ue7j7Vht0bc6dAVTOUP+GGdw7WpW3oYbIdAzrInfLa+rMJUpz0OXR4+7R
-IA5nyDD4Vet1opUTF7pLXQfubAbqJQNJXg/r4haVZPuBNJO/dwB03ksZXP0xHbcr
-cCsGatjD/vv7whBjAoPP
-=jLGU
+iQIcBAEBAgAGBQJQNSEhAAoJEBYNRVNeJnmTuI0P/1mgfYQsQDbcXwTpVfVnEwuL
+3k/CBIvep52MpNdrHLq8+opEXAMLe7Ia2sKTs6KqgL0V97uCUbe8heAoyGvPdgRv
+R7Fndbhy67L+LbsfpRgrfXImDhEyROQg3Qvg1CsQVsum5ZoYUU+WnOKkZgUuAa7i
+HhbuKOP1nbMtx/cQubpuHmUtlImBpUNrn5XCyWRIDOLlyOUIO4otxK0kPm8LO7M5
+FOq8FwY68UhSIF4ecslXBCqbqkA9mAKgWHDYXnoVrgsSAovHtPCns5WXaZrwFBvo
+D06WVO0fd4PKcN9D9/BWhcaLASl4nzOq4XpGpE+EU3f5e6IXQxmnW9cP41XI5wyn
+Iwhm6ythIsJRXmv21uSUpXkH452MmonQ/UNlnksZWKInLTVn9EwZ3aCzG1PhT61f
+ahV8nX+lq6P6w4tAS91MkpBgHHBYM/Wg4cFJRccRw609GW6JaWI3e1dHbaLG54kq
+sr/Ld+g7Zx/17pTV/FdFPElxTd20EmhHNQPVa7yV7QKfB5vJyU08thzcV88Dn2Bh
+ceJgQ+MiuBMjr2iZ89QM/iMrbu8qq/bdtJDA/5R+GAB0KRuRVrOTFWENCvTPqB4M
+faB7FlE944Ou11XKUhP9WHCwOay/159/6MhyqqxIxMQdwGtEJkIRgKgYv9i/FZfG
+lRcnpbr1H7n5mmE2xHXt
+=PI4N
 -----END PGP SIGNATURE-----
