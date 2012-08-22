@@ -1,42 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/5
-Message-ID: <20120209064726.GB5144@openwall.com>
-Date: Thu, 9 Feb 2012 10:47:26 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/5
+Message-ID: <3050518.19302482.1345649330278.JavaMail.root@redhat.com>
+Date: Wed, 22 Aug 2012 11:28:50 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux procfs infoleaks via self-read by a SUID/SGID program (was: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access)
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- jabberd2: Prone to unsolicited XMPP Dialback attacks
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 09, 2012 at 12:03:20AM +0100, Djalal Harouni wrote:
-> I've some kernel patches which are not ready yet, I was planning to send
-> them to lkml and to the kernel-hardening lists to get feedback from the
-> kernel developers.
+Hello Kurt, Steve, vendors,
 
-I suggest that you bring this to kernel-hardening first to see how it
-fits in with what others have been working on and to consider their
-feedback - I think Kees and Vasiliy are also doing something in this
-area.  When you have patches ready for LKML, post them to LKML and CC
-the thread to kernel-hardening.
+  a security flaw was found in the XMPP Dialback protocol implementation of jabberd2, OpenSource server implementation of the Jabber protocols (Verify Response and Authorization Response were not checked within XMPP protocol server to server session). A rogue XMPP server could use this flaw to spoof one or more domains, when communicating with vulnerable server implementation, possibly leading into XMPP's Server Dialback protections bypass.
 
-> On Wed, Feb 08, 2012 at 02:12:58PM +0400, Solar Designer wrote:
-> > Nice.  I guess the same works for /proc/self/mem as well, including with
-> > lseek().  Using this for more than just an ASLR bypass may be tricky -
+References:
+[1] http://xmpp.org/resources/security-notices/server-dialback/
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=850872
 
-> I thing that same thing will not work for /proc/self/mem since it was
-> patched, after the execl() the fd will still referece the old
-> /proc/self/maps of the maps.c program, not the 'chsh' one.
+Upstream patch:
+[3] https://github.com/Jabberd2/jabberd2/commit/aabcffae560d5fd00cd1d2ffce5d760353cf0a4d
 
-(You mean /proc/self/mem.)  Sure.  I was thinking of older kernels (e.g.
-RHEL5) that did not yet have write support for "mem".  I currently care
-about these more than I do about current mainline kernels in part
-because I dislike the "keep old mm" fix anyway (I think we'll need to
-deal with this differently) and in part because these still do allow
-read access to "mem" (nothing was patched in RHEL5 as it relates to this
-issue yet).
+Could you allocate a CVE id for this?
 
-> Just set your user password to (without quotes):
-> "Locked:                0 kB"
-
-I like this.
-
-Alexander
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
