@@ -1,56 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/6
-Message-ID: <50BD8985.7040509@redhat.com>
-Date: Mon, 03 Dec 2012 22:26:29 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/6
+Message-ID: <503520A5.5070906@redhat.com>
+Date: Wed, 22 Aug 2012 12:10:45 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>, security-2012@...irrelmail.org
-Subject: Re: Strange CVE situation (at least one ID should come of this)
+CC: Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- jabberd2: Prone to unsolicited XMPP Dialback attacks
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/26/2012 01:54 PM, Josh Bressers wrote:
-> Hello,
+On 08/22/2012 09:28 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> This Squirrelmail plugin came to my attention a few weeks back: 
-> http://squirrelmail.org/plugin_view.php?id=117
+> a security flaw was found in the XMPP Dialback protocol
+> implementation of jabberd2, OpenSource server implementation of the
+> Jabber protocols (Verify Response and Authorization Response were
+> not checked within XMPP protocol server to server session). A rogue
+> XMPP server could use this flaw to spoof one or more domains, when
+> communicating with vulnerable server implementation, possibly
+> leading into XMPP's Server Dialback protections bypass.
 > 
-> It's from 2004, which is suspect in itself, but I took a look after
-> someone asked. It's pretty scary in there.
+> References: [1]
+> http://xmpp.org/resources/security-notices/server-dialback/ [2]
+> https://bugzilla.redhat.com/show_bug.cgi?id=850872
 > 
-> If I was to list the security problems I found after a few minutes
-> of looking, they are:
+> Upstream patch: [3]
+> https://github.com/Jabberd2/jabberd2/commit/aabcffae560d5fd00cd1d2ffce5d760353cf0a4d
+>
+>  Could you allocate a CVE id for this?
 > 
-> * It uses MD5 passwords
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
-Going with this one since there's a good number of MD5 related CVE's
-already.
-
-Please use CVE-2012-5623 for this issue.
-
-> * The shadow file is directly modified without locking (which could
-> lead to a race condition) * If you get the password wrong, it
-> doesn't unlink the empty temporary file.
-> 
-> None are really a big deal, you *could* run this and probably never
-> notice these problems.
-> 
-> Fundamentally though, this thing should get one CVE ID that
-> basically say "don't use this". How have situations like this been
-> handled in the past?
-> 
-> I mailed the Squirrelmail security team. They never responded.
-> Regardless of their response though, the plugin site says it has
-> been downloaded more than 100K times, so I suspect it's still in
-> use somewhere. My goal in this CVE request is to raise awareness so
-> hopefully people stop using this (and get the Squirrelmail guys to
-> remove it from their site).
-> 
-> Thanks.
-> 
-
+Please use CVE-2012-3525 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -58,18 +42,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQvYmFAAoJEBYNRVNeJnmTnQ4P/iA61xUAae2kvq3DyFH3E3A0
-yzwTleZMOUSd5hDYSpk29OZPRMpnoX6q/fUe2EV/zyw7paY9JekuByvYy9WBaWtO
-2SfiwyEwh+LnxsjZ8SjS+xOOQ3SRojdty6dlq+cbUTsh9QE+Y9KcAs55Cn9z02e0
-23XhgVIImRfYp0qCkZbXBw1q8C1swttfMx4xR1HPh5vsxXfC9ExzHjJPe+0Gippg
-XGBD/TvDs777on1n+254gn5eDisnZOt37NQxS48zTb9dPVVBhLngTT6ENafkdTxw
-DlUljG35R3IugYJs5kX5N1ktEYLWChoxuygTgbAlGdEqoGHI/Q1qFYO8qp+60af8
-mXNN3o64oM3ESIGI2660/EZhoLfaN20l7QI1paDUHxEprUv/lHt0vv1fINZMWqGZ
-9qNxBkgFg0iA4z0n41xxDK3J0Utd5KvDt00JOnpfm9h3zb8Ed3AlpbDkDJO3c/TH
-bLIq/RH9wuRh1mcVEqlzzWWk/K3tNZgRfBHoy1Jr2e0YxyVAr4UkWFGkZLMqXtql
-LWru3BAOqX/ltVP2Ch1cux7XD/0hwD3CPfcMu73psKoh5Ln9rtz13Ux5e4hKCLuO
-zRSCqd9TgKzx917L/tnEq9oXQBFfCZOQqCPAtOSQPYGWGFZx0do9pCZ2Z3haEC3D
-5j4YcPuG4evM2S5G2aoZ
-=6R68
+iQIcBAEBAgAGBQJQNSClAAoJEBYNRVNeJnmTI9sP/j4Z9gG+wMEVBO4NaTT9o6Ta
+bSnPYbHHWt8lQ4/9/XKYwIp0ErA7aRrqwlyDHL9meqK1RTex54fzPpcX25qkMIk/
+GkhFkHRWdMLj6WP0pe4l46GpqntlBLC6/kiMbZTr92/6hGINkNMU+2V3/ZeCk2w4
+vS+RrwhTPcKhKMDZN9Xw05KB/+XxoGk6NQ3vgL+DVbmjobpiSHz1hhHr2ACQ50dR
+PKZ472f12hBJueWYKmUx/PLZ23ElpfJDYVONplE0rc+jemGmobNdGfS+1NxU4qhI
+KolXjoieXYg2ePOfLBkuwpd0ua94L2LuMdRmk2KTQ8wLrDInNr2tXQ+xISPsTRtF
+inLiBppohkanRYCkqJezLTNFyl4+i4SrbALA9MrfBqWjwiSe3IK+OSHEZE5/M7nW
+vPE0j0O/b1xZ2+0HAJ4KGwURwlHw7bszjPVKtozRKto4Prsn6pdxJTWrqp0h/NmQ
+srMCppzXLepcYfPkCnDTJYlho2wxrktXDa2cTgNNhQT2qnMdiTHsgzPZBlxEPhge
+I2GUD9wBPVh3FPEQKyxC/nrU47LZfht8n04xeVZDyJ/9h27gL6PcvY7AxhQ7tdQq
+dwEFaV1OTbTtfMmDz/iTgrhy35eajcP03k9R1KM/gwDmc/rSlMntK531SHsRJ22M
+7tW+3Bt3YgJJMH/pRb7A
+=WeUA
 -----END PGP SIGNATURE-----
