@@ -1,100 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/05/4
-Message-ID: <506F2900.2060403@redhat.com>
-Date: Fri, 05 Oct 2012 12:37:52 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/4
+Message-ID: <20120822103107.GA12007@openwall.com>
+Date: Wed, 22 Aug 2012 14:31:07 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Vit Ondruch <vondruch@...hat.com>, Ruby Security Team <security@...y-lang.org>
-Subject: Re: CVE Request -- ruby (1.8.x with patched CVE-2011-1005): Incomplete fix for CVE-2011-1005 for NameError#to_s method when used on objects
+Cc: argyros.george@...il.com, Aggelos Kiayias <aggelos@...yias.com>
+Subject: Re: Randomness Attacks Against PHP Applications
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 10/05/2012 09:26 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On Thu, Aug 09, 2012 at 11:19:14AM -0700, Yves-Alexis Perez wrote:
+> I'm currently at the Usenix Security 2012 conference, where there was a
+> nice paper about randomness vulnerabilities in PHP applications. I
+> invite you to read the paper[1] but in summary, a lot of PHP
+> applications make false assumption about the true randomness of the core
+> PHP random functions and it might lead to attacks, for example using the
+> ???password reset??? features.
 > 
-> Originally, Common Vulnerabilities and Exposures assigned an
-> identifier of CVE-2011-1005 to the following vulnerability:
-> 
-> The safe-level feature in Ruby 1.8.6 through 1.8.6-420, 1.8.7 
-> through 1.8.7-330, and 1.8.8dev allows context-dependent attackers
-> to modify strings via the Exception#to_s method, as demonstrated by
-> changing an intended pathname.
-> 
-> with the following upstream patch: [1]
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?revision=30903&view=revision
->
->  Based on later upstream patch for different (CVE-2012-4464 and
-> CVE-2012-4466) issues: [2]
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37068
->
->  it was found that original upstream 1.8.x ruby patch for
-> CVE-2011-1005 issue was not complete, when the NameError#to_s()
-> method was used on / with Ruby objects (the test logic in
-> 'test_to_s_taintness_propagation' test from [1] was actually
-> reversed {Hint: Compare the test for Ruby Object cases in both [1]
-> and [2]}, so the test returned success also on still vulnerable
-> instances).
-> 
-> A different vulnerability than CVE-2011-1005, CVE-2012-4464, and
-> CVE-2012-4466.
-> 
-> References: [3] https://bugzilla.redhat.com/show_bug.cgi?id=863484
-> 
-> This issue was discovered by Vit Ondruch of Red Hat.
-> 
-> Ruby Security Team previously in a private email to Vit confirmed 
-> (still) presence of this issue on ruby 1.8.7 versions and provided 
-> a patch for it: <snip> The behavior of SVN trunk is correct.
-> 
-> The fix for CVE-2011-1005 was insufficient, and NameError#to_s has
-> a problem in 1.8.7.
-> 
-> Please apply the attached patch for 1.8.7.
-> 
-> -- Shugo Maeda
-> 
-> error.c.diff
-> 
-> --- error.c.orig	2012-10-04 23:26:42.000611741 +0900 +++ error.c
-> 2012-10-04 23:26:48.960524245 +0900 @@ -665,9 +665,6 @@
-> 
-> if (NIL_P(mesg)) return rb_class_name(CLASS_OF(exc)); 
-> StringValue(str); -    if (str != mesg) { -	OBJ_INFECT(str, mesg); 
-> -    } return str; }
-> 
-> </snip>
-> 
-> Could you allocate a CVE identifier to this (for those package
-> versions, which have applied patch for originally CVE-2011-1005
-> already)?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+> Paper authors tried to port this to PHP security team, but it seems the
+> answer was that it was an application problem.
 
-Please use CVE-2012-4481 for this issue.
+Here's a vulnerability in and attack on session IDs of PHP proper:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+http://blog.ptsecurity.com/2012/08/not-so-random-numbers-take-two.html
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+This is not exactly the same topic (PHP apps vs. PHP itself), yet it's
+closely related and the timing of it was provoked by the same research.
 
-iQIcBAEBAgAGBQJQbyj/AAoJEBYNRVNeJnmTMPQP/3pDiCaUQvrdqkVC6rEPwbzW
-MUjNOnIvH01fejHXimrMy12sL+T1gq/jz9wwbspFI/iDenUl2US0K91Wy3PUk6FU
-3K6e2V5G4cN8/8Oqz2IE5gDsYJBMyrE4P5zXJocScRC1ZAOnBHASHOb88LQCa+dR
-9MW5/+G/RlocRKQhLmugN7xlewRxKlOhYBL4Vl5FM0xxeLBvEdKO9FDilp0HyEoC
-EuMh3oc0xJDlc8HzUa1tlAswhhpkWAxJP8VkGwGl1sUMkn5p4DVyJH3hylXTq+rd
-bmXTVhpj3hlmygvxq1dQllvP/e6MLWPbuPbn0Hxt0hJwXP4mW0kGYdu0hr+u4EVR
-eoFzy8/fuiutKg2BH9tzYygQr2jJAfg6dKQBX6OQSNpM+tgPEw6HqZMUBJeGr+Ie
-ZrnnlUhtS3qHmvb/B5EzLJq/OytmlHPvvPKUjqSo6P4IvTjvGYOf9AoTFMpUEhK9
-Ll8dACNJOo57frqIzohshkCrXXHFXvLKBMk0wLPbc2CCEXMeGaqYijEhHpg/pNDS
-NAmSmhRWU5obK1G1jDR7zmjle6TsEzCJF19W+If2eTNLBUeGyI6N+N3VK9bn23rI
-7HVRTPnFxuuxsF5nUlybixLP/eBDnfpgdlEVZ8tcRhljtVKfReo0P0Qolv1HbRKC
-i2h3TGe65Q6nnZ0WP0Lz
-=5BI3
------END PGP SIGNATURE-----
+Alexander
