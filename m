@@ -1,67 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/12
-Message-ID: <4FB689A8.1010607@redhat.com>
-Date: Fri, 18 May 2012 11:40:56 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/23/2
+Message-ID: <50364BAA.5000102@igalia.com>
+Date: Thu, 23 Aug 2012 17:26:34 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Tornado (python-tornado): Tornado v2.2.1 tornado.web.RequestHandler.set_header() fix to prevent header injection
+Subject: Re: Stripe Capture the Flag
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 22/08/12 21:45, Solar Designer wrote:
+> Hi all,
+> 
+> On Wed, Aug 22, 2012 at 12:01:27PM -0700, John Collison wrote:
+>> We built a wargame around web security vulnerabilities. The nine
+>> levels are built atop fairly standard web software stacks, with
+>> increasingly tricky exploits required, and a special-edition t-shirt
+>> at the end. It's as much for fun and education as anything else. Would
+>> love to have you play!
+>>
+>> Link: https://stripe-ctf.com
+>> Blogpost: https://stripe.com/blog/capture-the-flag-20
+> 
+> As a moderator for oss-security, I hesitated about approving the posting
+> above, but I decided to give it a try so that list members and not
+> moderators can decide whether such postings are welcome or not (for
+> future occasions).  As previously discussed, we're currently rejecting
+> conference and e-magazine CFPs, as well as e-magazine issue
+> announcements.  In a way, CTF announcements are similar, however they
+> might be less frequent (although this might change if we become known
+> for approving them for distribution).  Another aspect is Open Source
+> relevance.  I guess most CTFs are Open Source relevant, but they may
+> lack sufficient Open Source focus for this list.
+> 
+> Please help us decide.
+> 
+> Thanks,
+> 
+> Alexander
+> 
 
-On 05/18/2012 04:40 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> Package: -------- Tornado is an open source version of the
-> scalable, non-blocking web server and tools that power FriendFeed:
-> 
-> URL: http://www.tornadoweb.org/ ----
-> 
-> Issue: ------ A possibility of header injection / response
-> splitting flaw was found in the way web request handler of Tornado,
-> a scalable, non-blocking web server and tools, performed
-> sanitization of input arguments, provided to routine setting the
-> HTTP response header name and value. If an application using the 
-> Tornado web framework accepted untrusted user input and based on
-> that input updated the HTTP headers content (to redirect the user
-> etc.), by providing a specially-crafted input a remote attacker
-> could use this flaw to perform cross-site scripting attacks,
-> cross-user defacement, web cache poisoning etc.
-> 
-> Upstream v2.2.1 release changelog: [1]
-> http://www.tornadoweb.org/documentation/releases/v2.2.1.html
-> 
-> References: [2] https://bugs.gentoo.org/show_bug.cgi?id=415903 [3]
-> https://bugzilla.redhat.com/show_bug.cgi?id=822852
-> 
-> Could you allocate a CVE id for this? (should be CVE-2012-* one)
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+I am loving this CTF, is very fun and didactic since it covers several
+web frameworks (nodejs, php, python, ... ), also the feature of being
+integrated with github is awesome.
 
-Please use CVE-2012-2374 for this issue.
+Personally I would like to see more CTFs announcements on this list like
+this.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Thanks for sharing!
 
-iQIcBAEBAgAGBQJPtomnAAoJEBYNRVNeJnmTt6QQAM5JUGGwQxV8LmGuKsFAUmN5
-yfcDxNhY9b1a8lMFBfnNuFG9dSf+DbuAYgbe3hqPiFlj6fWMofIXcsUxPoUEuTLf
-5dkdypWOqun1BRLr72vyGxvO7KPoSijAvm8K2q7N3sPhB0D1bj914xhw1XCHorj5
-zJ7/6krCefJY2bCGt90zqzjN/pAVXYYoi5i0czZAaiVDjcj87udgXVgzk3MjX7zh
-+UFxL5tJaWE9jZsXD61JkFhq/ZvKhfSjGbj1gmcNQxf7FFWoXoKLttHrb3gXHQxX
-BHEnUgs2zUzrm66Z4hLvztUMw5iJWawJh5s0UtIQaWagrSUY9QeTzeiDej5ppRfC
-h+41F8n0R1C94e598vCoOEQUXHBDrvJBRSws/ihJyojtOMjQ839X2zKDtcdM/+Nn
-9q/eL/qrGpCpPfZsKLrT/66glDcbW0ENUaB6EYvn5d3Wx38MkX+KTccqz9v9OKV5
-arbFvYr+32AE7AHyxG8UKzSlN/3yz8QlO+6E3ajvAAbndlF+2LbOPtN8X2k0/pUI
-iPWI3yrtF84GMb9MUmfC3SEnHKZe/K3n3WPCFkyj2VpPv7IFwafCloc6ccUXRfpC
-MaLplHIotptFWgIYtHwqO3IqcM2Vp0XqsUv02Sfa9ghbt4rJVgEelNcXf7F5mU0W
-P75K9LZVPjfFbQSKMakn
-=7TSV
------END PGP SIGNATURE-----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
