@@ -1,14 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/01/1
-Message-ID: <CAD1NwhhnF4088u9WSe6Q1B_VJxcLHX4zEYbJUiEDFbJpdiKCPQ@mail.gmail.com>
-Date: Fri, 30 Nov 2012 19:20:16 +0100
-From: Lukas Reschke <lukas@...tuscode.ch>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, security@...cloud.org,  Jamie Strandboge <jamie@...onical.com>
-Subject: Re: [security] CVE Request: owncloud
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/23/1
+Message-ID: <5035E0A0.3010107@redhat.com>
+Date: Thu, 23 Aug 2012 13:19:52 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Any information on mesa/CVE-2012-2864?
 Content-Type: text/plain; charset=utf-8
 
-All advisories updated.
+On 08/22/2012 03:39 PM, Moritz Muehlenhoff wrote:
+> Hi,
+> I noticed the following on
+> http://googlechromereleases.blogspot.de/2012/08/stable-channel-update-for-chrome-os.html :
+> 
+>     [$3133.7] [141901] Critical CVE-2012-2864: Mesa array overflow. Credit to miaubiz.
+> 
+> The Google bug tracker entry is closed, does anyone have additional information?
+> 
 
-Thanks
-Lukas
+The patch for this problem is being discussed by mesa upstream afaik.
+
+More information available at:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-2864
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
