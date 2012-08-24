@@ -1,33 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/10/5
-Message-ID: <4F5AF227.5050900@redhat.com>
-Date: Fri, 09 Mar 2012 23:18:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/24/1
+Message-ID: <CALJS2HUFGN12UL4vUsvnr6vTF=SqmR15g4OzNjM7nmiNqFB02w@mail.gmail.com>
+Date: Fri, 24 Aug 2012 10:10:23 +0700
+From: Thanh Nguyen <rd@...ecurity.net>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: appRain CMF uploadify.php File Upload Remote PHP Code Execution
+Subject: Re: Stripe Capture the Flag
 Content-Type: text/plain; charset=utf-8
 
-On 03/09/2012 01:47 AM, Henri Salo wrote:
-> Can I get CVE-identifier for this security vulnerability, thank you.
-> 
-> Advisory: http://seclists.org/bugtraq/2012/Jan/127
-> http://osvdb.org/show/osvdb/78473
-> http://www.securityfocus.com/bid/51576
-> 
-> Discovered and vendor informed: 2011-12-19
-> Vendor ack: 2011-12-20
-> Disclosure and exploit: 2012-01-19
-> 
-> Does this get 2011 or 2012 ID?
-> 
-> - Henri Salo
+On Thu, Aug 23, 2012 at 2:45 AM, Solar Designer <solar@...nwall.com> wrote:
+> As a moderator for oss-security, I hesitated about approving the posting
+> above, but I decided to give it a try so that list members and not
+> moderators can decide whether such postings are welcome or not (for
+> future occasions).  As previously discussed, we're currently rejecting
+> conference and e-magazine CFPs, as well as e-magazine issue
+> announcements.  In a way, CTF announcements are similar, however they
+> might be less frequent (although this might change if we become known
+> for approving them for distribution).  Another aspect is Open Source
+> relevance.  I guess most CTFs are Open Source relevant, but they may
+> lack sufficient Open Source focus for this list.
 
-Generally public disclosure otherwise we get to play insane "when did
-this become a security issue philosophy games", plus pragmatically
-public issue = known = can assign a CVE =).
+-1
 
-Please use CVE-2012-1153 for this issue.
+While I love to play CTF, I think this kind of CTF announcement is an
+off-topic for this list.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+cheers,
+
+--rd
