@@ -1,39 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/1
-Message-ID: <4F330E66.4030507@redhat.com>
-Date: Wed, 08 Feb 2012 17:08:06 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/24/8
+Message-ID: <5037C3B3.6060807@redhat.com>
+Date: Fri, 24 Aug 2012 12:10:59 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: apr - Hash DoS vulnerability
+CC: Thomas Pollet <thomas.pollet@...il.com>
+Subject: Re: zenoss issues
 Content-Type: text/plain; charset=utf-8
 
-On 02/08/2012 10:26 AM, Moritz Muehlenhoff wrote:
-> Hi,
-> APR (Apache Portable Runtime) is affected by the hash collision DoS 
-> class, please assign a CVE ID:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 08/24/2012 11:15 AM, Kurt Seifried wrote:
+> On 08/24/2012 01:33 AM, Thomas Pollet wrote:
+>> Hello,
 > 
-> The upstream discussion can be found here:
-> http://www.mail-archive.com/dev%40apr.apache.org/msg24439.html
+>> I have found xss and command execution problems with zenoss. I 
+>> created a bugreport which can be found at 
+>> http://jira.zenoss.com/jira/browse/ZEN-3183 . However the zenoss 
+>> developers don't seem to be able to reproduce the issues.
 > 
-> Cheers,
->         Moritz
+>> Another issue, reported by Emanuel Bronshtein can be found at 
+>> http://jira.zenoss.com/jira/browse/ZEN-3153
+> 
+>> Regards, Thomas Pollet
+> 
+> I can't access this page, it requires a login. Is there a public 
+> resource you can reference, or can you get this page made public so
+> it can be referenced?
 
-Please use CVE-2012-0840 for this issue.
+Just to be clear I am unwilling (and unable) to accept reference links
+for OpenSource related CVE assignments that require:
 
-They posted a first attempt at a fix:
-http://www.mail-archive.com/dev%40apr.apache.org/msg24473.html
+1) a login (it's highly annoying and leads to points 2 and 3), this
+also breaks automated tools that download related links in the CVE
+database, not cool.
+2) click through agreements (often required for logins)
+3) acceptance of restrictive forms of legal agreements (e.g. NDAs)
 
-Actual commit:
-http://mail-archives.apache.org/mod_mbox/apr-commits/201201.mbox/%3C20120115003715.071D423888FD@eris.apache.org%3E
+You need to source public information that is easily accessible and
+can be downloaded without significant human intervention (like
+creating an account).
 
-Reply about this commit:
-r1231605 and r1231858 cause massive regressions and test case failures
-in httpd.
-
-so probably not the final fix.
-
-If someone could reply to this with the final fix that'd be helpful.
-
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJQN8OzAAoJEBYNRVNeJnmTcwYP/RWEdT93aa8w0TfxO6thbx5z
+HEvrA/pknIqPhu+qzoR5J4x8fnOkE10l2IMeGnf4rh45hx8YGgF6Cz4esgkYSBTd
+WIH+Ebm7fiMtcGICqYXNWh80/AdtcjfUmIKZlodg+u2QjLfbZWhzz0N+5mkYE4iR
+YmFKox8lRucXGRCo/6wtZ4O2xR/sOzHsh2iwHNTVSbOuzaxhLmFSz7+yPqX6lwZB
+rLfBQp6uBAYZohPFFbmfGRtlo6JhEZPeE1zlLA9RMLq2gt20+fzweTTbDLR5kBpY
+DyrpyU5j36HOgdb18zB1PezugZki5AHyKA+pl5tz4nAcuNQTTmzhma/8G6W4mfKP
+Xik5clFxxHNSIoVp+u5cZRRMXS9QmYGgKv7sMDKDkic2eGYqxyCrglJqPnbzRcm2
+b18nyDK6vaLAxnbu5TWuSVoHw4g8VK3GLJHy0CJjLP2gzDpio+s3RGDSS1wTk+F7
+++T92vNJJEH3z3/krsbIto9uE9z2ql3FrQomYD+5yrfB3/P/ONMP8xhSIiz7Tk8C
+9Qm2/BgfNDOExRuhgwfHVwzaxqG18OAPQmoJnDyRqPfy8cKiWa4OA/ZgRz/zYuyg
+MVVk+jl18thGoQoZ6S4MYy8fsbxNPaapmuWQOdzWqFtHr+wMOtZKFZOupYYtBxp4
+cwX15jb3qlOjxEcdg2nX
+=O2cE
+-----END PGP SIGNATURE-----
