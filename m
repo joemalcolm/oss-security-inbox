@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/13/3
-Message-ID: <4FAFEDB1.7010202@redhat.com>
-Date: Sun, 13 May 2012 11:21:53 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/24/7
+Message-ID: <5037B69A.9010801@redhat.com>
+Date: Fri, 24 Aug 2012 11:15:06 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: Piwik before 1.7
+CC: Thomas Pollet <thomas.pollet@...il.com>
+Subject: Re: zenoss issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/13/2012 03:57 AM, Hanno Böck wrote:
-> [...]
+On 08/24/2012 01:33 AM, Thomas Pollet wrote:
+> Hello,
 > 
-> Or to sum up: Piwik thinks "security by obscurity" is a good
-> idea...
+> I have found xss and command execution problems with zenoss. I
+> created a bugreport which can be found at
+> http://jira.zenoss.com/jira/browse/ZEN-3183 . However the zenoss
+> developers don't seem to be able to reproduce the issues.
 > 
-> I agree to Henri, we should assign CVEs anyway.
+> Another issue, reported by Emanuel Bronshtein can be found at 
+> http://jira.zenoss.com/jira/browse/ZEN-3153
 > 
+> Regards, Thomas Pollet
 
-Ok well do a code diff and post it, XSS is usually pretty easy to spot
-in PHP.
+I can't access this page, it requires a login. Is there a public
+resource you can reference, or can you get this page made public so it
+can be referenced?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -31,17 +36,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPr+2xAAoJEBYNRVNeJnmTJjwP/iRNMVoCw8VRhsC9MbUchMj5
-Hnmg0ILmQtqCGC/DUA2hUE8qJld+zIEhNvDlApVt16SSijhJxMYVudW3vIHtkrn/
-TTfOx30WfV5BCMrmEVLyU2w9SKl5MK84OVM74x7Z4Eu1QGHTkcvs+DnQK6JK6vwe
-clLFoXJgyYyudZdOOp6mDY08K9ymqsZPCk9OhprB6gQBaCWyuzR6MNNvtK8zyLae
-hvUoH4qHs5vtAG0yn8YcYIOboiSEkEP0K6vkAHQ6pTtIDfQE7PmQ65NhE6r/713P
-XgAP/1vJrDAWXxvPmJWoFu7acFpBpaWBwk5G/SpokGd6m3En0D1wlJIfcWPg9Rxq
-M4zS8tcMddZLH0IeYR8clPcP+45TmrjDxU5VRJbNjpFl02Q4yoh7IYmFhTcUS5te
-Pz4j6PrwJNpZlIu9AOA0CD27PbT4HN7EtPGhB++b/HjzQJpu+8pzz1eOsBwjKhj/
-deApfspAjXeV7PdTItAPfSuvrW+A1cr7ajPstVbMpeTD9eooaeu64FP5mAvuR+pR
-rJP7sNFAhItgqErSUmMG2CJVvTrHKlv7RxN4N6NNvZ24barz8kabQQZliZMgflCt
-dyeUtlq1jGYmhNwqOVY1SdPeWCHvdUcWHHldVdKSanuZw+vK55Ud83KtsrCLkU5/
-gYEVbw8qL6C3hB05SUYM
-=m6R8
+iQIcBAEBAgAGBQJQN7aaAAoJEBYNRVNeJnmTUrwQALvVeXJogyu8i9lk4lha8cee
+Oynp0jJREIRh1j6XTs+1JZgpHhVpd60rUWnodZ7/6VeYNiBhRtREg1Vgry9I/DDL
+++KVrs9J5J9pt2PnVn44KhRWDp/wu9JJgDIUbVI+axmgk2EW8MVFtMPR9T0wNgkD
+F3WMksNh4S+4QhK+XSy6iwZUD3Xz1/2mxCdLOO8kw4MFr8YUhlXwRIgI9Mfn+5Vd
+6fbMGIkWTnyVCxwJWCYOLL/d1+Q7KYK4yt5dzyE6FfPG0coicVfC92qf8LU+6Ibp
+MMI8I5kP7J3HAzHj9/hRnFhgBusuvuINf2FmgmGO07FXSWsOfsCbc1sGa3027OqR
+VBZA0EojDb1DqJk9WXhB1pgw+JDGtzaNeZtHHq9ZAjvM2sOHilVLqSRTO3nTQAyy
+32rF3HI5kPoWBrDijZ4iRvLd1kL3+WvpIypi3oAxNJ4H14W9otXv7S2pJJhxDYEt
+jzdnSPC36fAdA4JMsZJTa0EeFOSmgr+FTjLY5OfzKMI8OJmZxsjBZu2VO2wwpX/c
+VmZlda6LeogPxuAZqvJT3w1D1vGjFFO5cq0NF6wYe9n/Lwefgx4RO3f7hQnnNYcT
+O1+YNoTYVVBl3VEok7nsv8dURchpReqP2R/XQWoOeIsRF/e2cecSTOLn8w+Axi6Y
+U0oaP/YefSUdPucbfo67
+=SLU8
 -----END PGP SIGNATURE-----
