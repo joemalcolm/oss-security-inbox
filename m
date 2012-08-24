@@ -1,59 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/10
-Message-ID: <1331337282.30207.16.camel@tiger.regit.org>
-Date: Sat, 10 Mar 2012 00:54:42 +0100
-From: Eric Leblond <eric@...it.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/24/5
+Message-ID: <20120824110821.GC17896@kludge.henri.nerv.fi>
+Date: Fri, 24 Aug 2012 14:08:21 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+Subject: Re: Stripe Capture the Flag
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, Aug 24, 2012 at 08:29:10AM +0200, Filip Palian wrote:
+> As you have pointed out, most CTFs are Open Source related and
+> definietly focus on security. This is exacly what the name of the list
+> is. As many may think, it's not cve-designation list only (obviously I
+> may be wrong about that).
 
-On Sat, 2012-03-10 at 02:16 +0300, ArkanoiD wrote:
-> Am I the only one here with strong deja vu feeling? :-)
+You are correct. This list isn't and shouldn't be in the future only about CVE-requests, but in my opinion one of the best sources to get CVE-identifiers for open source software vulnerabilities thanks to guys like Kurt. In my opinion well planned CTFs are welcome to list as long as it does not go to product marketing and similar activities.
 
-Cool ;)
-
-Do you have any pointer/url to share ?
-
-BR,
-> 
-> On Sat, Mar 10, 2012 at 12:01:21AM +0100, Eric Leblond wrote:
-> > Hello,
-> > 
-> > On Mon, 2012-02-27 at 14:46 +0100, Eric Leblond wrote:
-> > > Hello,
-> > > 
-> > > On Mon, 2012-02-27 at 05:25 +0400, Solar Designer wrote:
-> > > > Eugene, all -
-> > > > 
-> > > > On Mon, Feb 27, 2012 at 09:19:59AM +0800, Eugene Teo wrote:
-> > ...
-> > 
-> > > e it to Eric much earlier),
-> > > > Eric would post to the list e.g. in January and ask for the issue to be
-> > > > kept private until March - thereby violating the list's maximum embargo
-> > > > period.
-> > 
-> > The slides and videos of my CansecWest talk are available:
-> > http://home.regit.org/2012/03/playing-with-network-layers-to-bypass-firewalls-filtering-policy/
-> > 
-> > I've done a complete description of the attack and also demonstrate the
-> > need to be careful with the use of helpers.
-> > 
-> > BR,
-> > -- 
-> > Eric Leblond 
-> > Blog: http://home.regit.org/
-> > 
-> > email protected and scanned by AdvascanTM - keeping email useful - www.advascan.com 
-> > 
-> > 
-> 
-> 
-
--- 
-Eric Leblond 
-Blog: http://home.regit.org/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+- Henri Salo
+ps. have a nice weekend and stay safe
