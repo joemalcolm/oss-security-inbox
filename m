@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/05/1
-Message-ID: <20120405093027.GB18070@suse.de>
-Date: Thu, 5 Apr 2012 11:30:27 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: expat hash collision fix too predictable?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/24/6
+Message-ID: <20120824164216.GB1460@redhat.com>
+Date: Fri, 24 Aug 2012 10:42:17 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: oVirt 3.1 does not validate server certificates in python sdk and cli (CVE-2012-3533)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi folks.  This is a heads-up for anyone who may be shipping oVirt.
+oVirt 3.1 added a new python SDK and CLI which do various fancy things.
+It supports connecting to servers over SSL, but did not have support for
+validating certificates, which could lead to a mitm attack.
 
-while reviewing a expat regression (likely caused by the hash collision denial of service fix, but unclear)
-i stumbled about the randomness it uses.
+I've assigned CVE-2012-3533 to this issue.  It is corrected in git
+already.
 
-	static unsigned long
-	generate_hash_secret_salt(void)
-	{
-	  unsigned int seed = time(NULL) % UINT_MAX;
-	  srand(seed);
-	  return rand();
-	}
+References:
 
-and it is seeded once at parser object creation.
+http://wiki.ovirt.org/wiki/Release_Notes#Interfaces
+http://gerrit.ovirt.org/#/c/7209/
+http://gerrit.ovirt.org/#/c/7249/
+https://bugzilla.redhat.com/show_bug.cgi?id=851672
 
-This is better than not seeding, but I am not sure if it is sufficient.
-
-Ciao, Marcus
+-- 
+Vincent Danen / Red Hat Security Response Team 
