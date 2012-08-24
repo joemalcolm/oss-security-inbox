@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/6
-Message-ID: <4F5430B2.5000207@redhat.com>
-Date: Sun, 04 Mar 2012 20:19:14 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/24/4
+Message-ID: <CAN00zFCCVEDG9dUK893by9GfAduRoEDSEmD+UMjLitF+gaxNNw@mail.gmail.com>
+Date: Fri, 24 Aug 2012 12:04:06 +0200
+From: Thomas Pollet <thomas.pollet@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Mühlenhoff <jmm@...til.org>, Debian Security Team <security@...ian.org>
-Subject: Re: CVE request: notmuch
+Subject: Re: zenoss issues
 Content-Type: text/plain; charset=utf-8
 
-On 03/04/2012 11:50 AM, Moritz Mühlenhoff wrote:
-> Hi,
-> please assign a CVE for this issue in "notmuch" (fixed in DSA 2416):
-> http://lists.debian.org/debian-security-announce/2012/msg00044.html
-> 
-> Fix:
-> http://git.notmuchmail.org/git/notmuch/commit/ae438ccd8c77831158c7c30f19710d798ee4a6b4
-> 
-> Cheers,
->         Moritz
+Hi,
 
-Please use CVE-2012-1103 for this issue.
+I have found that zenoss displays snmp output like syslocation unfiltered
+in the web interface.
+http://jira.zenoss.com/jira/browse/ZEN-3192
+I suspect there are many more bugs in this package.
 
-Potentially stupid Q, why no CVE request from Debian? I'm happy to
-assign them, especially for stuff that qualifies for a DSA, it will
-almost certainly qualify for a CVE. If you need one for an embargoed
-issue please email the OpenWall vs list
-(http://oss-security.openwall.org/wiki/mailing-lists/distros) and I can
-assign it there.
+Regards,
+Thomas
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+On 24 August 2012 09:33, Thomas Pollet <thomas.pollet@...il.com> wrote:
+
+> Hello,
+>
+> I have found xss and command execution problems with zenoss. I created a
+> bugreport which can be found at
+> http://jira.zenoss.com/jira/browse/ZEN-3183 . However the zenoss
+> developers don't seem to be able to reproduce the issues.
+>
+> Another issue, reported by Emanuel Bronshtein can be found at
+> http://jira.zenoss.com/jira/browse/ZEN-3153
+>
+> Regards,
+> Thomas Pollet
+>
+
