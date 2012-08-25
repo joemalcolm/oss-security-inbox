@@ -1,41 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/13
-Message-Id: <201210301346.21627.geissert@debian.org>
-Date: Tue, 30 Oct 2012 13:46:21 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/25/1
+Message-ID: <Pine.GSO.4.64.1208242057510.13749@faron.mitre.org>
+Date: Fri, 24 Aug 2012 20:59:04 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: radsecproxy incorrect x.509 certificate validation
+cc: Gentoo Linux Security Team <security@...too.org>
+Subject: Re: CVE Request: SquidClamav insufficient escaping flaws
 Content-Type: text/plain; charset=utf-8
 
-Hi again,
 
-On Wednesday 17 October 2012 12:48:19 Raphael Geissert wrote:
-> Ralf Paffrath discovered that radsecproxy may incorrectly accept a client
-> certificate if the certificates chain was validated with the CA settings
-> of one configuration block but the other certificate constraints failed,
-> and the certificate constraints of another configuration block passed
-> (ignoring this other config block's CA settings.)
-> 
-> This issue has been fixed in version 1.6.1. However, it introduces a
-> minor regression as it ignores some configuration blocks (see the
-> references for further details.)
+On Thu, 16 Aug 2012, Sean Amoss wrote:
 
-While checking the issue I noticed that the same issue also affects 
-radsecproxy's DTLS support, which was not fixed. Upstream has now released 
-version 1.6.2 addressing the vulnerability in its DTLS support code.
+> The upstream notification [1] shows SquidClamav 5.8 and 6.7 fixes a URL
+> escaping issue which could lead to a daemon crash [2]. SquidClamav 5.8
+> also fixes escaping issues in CGI scripts [3].
+>
+>
+> References:
+> [1] http://squidclamav.darold.net/news.html
+> [2] https://github.com/darold/squidclamav/commit/80f74451f628264d1d9a1f1c0bbcebc932ba5e00
+> [3] https://github.com/darold/squidclamav/commit/5806d10a31183a0b0d18eccc3a3e04e536e2315b
+> [4] https://bugs.gentoo.org/show_bug.cgi?id=428778
 
-Now, the thing is that upstream re-used the previously assigned CVE id 
-CVE-2012-4523. According to the guidelines a new id should be assigned since 
-they affect different versions even if the issues are related.
+It appears that [3] is an XSS issue, so this needs a separate CVE because 
+it's a different type of encoding problem than [2].
 
-So, I guess a new id is in order?
+Use CVE-2012-4667 for the XSS.
 
-References:
-http://git.nordu.net/?p=radsecproxy.git;a=commit;h=3682c935facf5ccd7fa600644bbb76957155c680
-https://postlister.uninett.no/sympa/arc/radsecproxy/2012-10/msg00001.html
-https://project.nordu.net/browse/RADSECPROXY-43
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+- Steve
