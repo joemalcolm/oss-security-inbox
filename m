@@ -1,37 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/07/2
-Message-ID: <509A0D78.9020605@redhat.com>
-Date: Wed, 07 Nov 2012 17:27:52 +1000
-From: David Jorm <djorm@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- axis2, axis2c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/25/2
+Message-ID: <Pine.GSO.4.64.1208242222430.13749@faron.mitre.org>
+Date: Fri, 24 Aug 2012 22:29:42 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: Henri Salo <henri@...v.fi>, Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE-request: Roundcube XSS issues
 Content-Type: text/plain; charset=utf-8
 
-On 11/07/2012 05:12 PM, Seth Arnold wrote:
-> Hello Kurt, Steve, all,
->
-> I did not find CVEs for Axis2 or Axis2/c when going through the pile of
-> CVEs generated from the paper:
->
-> http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
->
-> Axis appeared to get CVE-2012-5784 but it is my understanding that Axis2
-> and Axis2/c are different codebases and should therefore get their own
-> CVE entries.
->
-> shmat_cccs12.pdf claims Axis2 is vulnerable but silent on Axis2/c.
->
-> Has anyone else looked into if Axis2/c is vulnerable? (I gave it a very
-> cursory inspection.) The project pages are silent on the issue.
->
-> Did I overlook these CVE entries?
->
-> Thanks
 
-Axis2/Java has been assigned CVE-2012-5785. There is no CVE ID for 
-Axis2/c that I am aware of, and I am not aware that anyone has 
-investigated whether it is vulnerable.
+On Mon, 20 Aug 2012, Kurt Seifried wrote:
 
-Thanks
---
-David Jorm / Red Hat Security Response Team
+>> 2, Issue 2a: Description: Stored XSS in e-mail body. Ticket:
+>> http://trac.roundcube.net/ticket/1488613 Upstream patch:
+>>
+>> [snip]
+>>
+>> Issue 2b: Self XSS in e-mail body (Signature). Ticket:
+>> http://trac.roundcube.net/ticket/1488613 Upstream patch:
+>[snip]
+>
+> Please use CVE-2012-3508 for these two issues (same version, same type
+> of vuln so cve merge).
+
+Further investigation into ticket 1488613 shows that the developer thinks 
+that issue 2b doesn't need a backport to 0.7.  This would suggest a SPLIT 
+based on different affected versions.
+
+Plus it's not immediately clear whether this "self XSS" is really an XSS 
+or not - if I can modify my own signature, then I already have the 
+"privileges" on my browser to run script.  But, if this "self XSS" is 
+really just reflected XSS, then that's a security issue to worry about. 
+This requires expertise in the Roundcube codebase to answer for sure, 
+though.
+
+So, we should probably SPLIT this CVE.
+
+CVE-2012-3508 - Issue 2a - Stored XSS in e-mail body
+
+(new) CVE-2012-4668 - Issue 2b - Self XSS in e-mail body (Signature)
+
+- Steve
