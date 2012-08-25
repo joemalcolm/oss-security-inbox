@@ -1,70 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/1
-Message-ID: <CAB9ZNAzGw28VtkKwa1FoaccMBFg5VT1YZ0mJjSJbTEhiphRT4g@mail.gmail.com>
-Date: Mon, 29 Oct 2012 10:12:22 -0500
-From: Andres Gomez <agomez@...idsignal.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/25/4
+Message-ID: <20120825102959.54d7e9dc@janhh3.site>
+Date: Sat, 25 Aug 2012 10:29:59 +0200
+From: Jan Willamowius <jan@...lamowius.de>
+To: oss-security@...ts.openwall.com, jan@...lamowius.de
+Subject: Re: information request on security bug fix in GNU Gatekeeper 3.1
 Content-Type: text/plain; charset=utf-8
 
-Hi, Could a CVE be assigned to this issue?
+Hi Raphael,
 
-Name: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
-Software: PLIB 1.8.5
-Software link: http://plib.sourceforge.net/
-Vulnerability Type: Stack Based Buffer overflow
-References: http://www.exploit-db.com/exploits/21831/
-                   http://www.securityfocus.com/bid/55839
+I was planning to give people a few days to update before releasing
+detailed information.
 
-Vulnerability Details: Plib is prone to stack based Buffer overflow in the
-error function in ssg/ssgParser.cxx when it loads 3d model files as X
-(Direct x), ASC, ASE, ATG, and OFF, if a very long error message is passed
-to the function, in line 68:
+But you are right, the possibility to create an unlimited number of
+connections each with its own thread handling it is the issue that
+creates an easy possibility for a DOS attack.
 
-
-// Output an error
-void _ssgParser::error( const char *format, ... )
-{
-  char msgbuff[ 255 ];
-  va_list argp;
-
-  char* msgptr = msgbuff;
-  if (linenum)
-  {
-    msgptr += sprintf ( msgptr,"%s, line %d: ",
-      path, linenum );
-  }
-
-  va_start( argp, format );
-68        vsprintf( msgptr, format, argp );
-  va_end( argp );
-
-  ulSetError ( UL_WARNING, "%s", msgbuff ) ;
-}
-
-Thanks,
-
-Andres Gomez.
+Regards,
+Jan
 
 -- 
---
-AVISO DE CONFIDENCIALIDAD:
+Jan Willamowius, Founder of the GNU Gatekeeper Project
+EMail  : jan@...lamowius.de
+Website: http://www.gnugk.org
+Support: http://www.willamowius.com/gnugk-support.html
 
-Esta transmisión se entiende para uso del destinatario o la entidad a la 
-que va dirigida y puede contener información confidencial o protegida por 
-la ley. Si el lector de este mensaje no fuera el destinatario, considérese 
-por este medio informado que la retención, difusión, o copia de este correo 
-electrónico está estrictamente prohibida. Si recibe este mensaje por error, 
-por favor notifique inmediatamente al emisor y destruya el original. Gracias
 
---
-CONFIDENTIALITY NOTICE:
-
-This transmission is intended for the use of the individual or entity to 
-which it is addressed, and it may contain information that is confidential 
-or privileged under law. If the reader of this message is not the intended 
-recipient, you are hereby notified that retention, dissemination, 
-distribution or copying of this e-mail is strictly prohibited. If you 
-received this e-mail in error, please notify the sender immediately and 
-destroy the original. Thank you.
+Raphael Geissert wrote:
+> Hi Jan,
+> 
+> On the announcement of release 3.1 of GNU Gatekeeper[1] there's a mention of 
+> a security bug fix.
+> Could you please shed some light on the security issue? is it related to the 
+> status port connection limit feature that was recently added in [2] and 
+> similar?
+> 
+> Thanks in advance.
+> 
+> Found via secunia SA50343 [3]
+> 
+> [1]http://www.gnugk.org/gnugk-3.1.html
+> [2]http://openh323gk.cvs.sourceforge.net/viewvc/openh323gk/openh323gk/GkStatus.cxx?r1=1.132&r2=1.133
+> [3]http://secunia.com/advisories/50343/
+> 
+> Kind regards,
+> -- 
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
+> 
 
