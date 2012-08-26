@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/6
-Message-ID: <20120112083138.GA16901@inutil.org>
-Date: Thu, 12 Jan 2012 09:31:38 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/26/2
+Message-ID: <CUEJgQkFPWo3cH/SZsHQjAvasZk@C07ykyUPv6bSEDpjtBW7yGFRb24>
+Date: Sun, 26 Aug 2012 23:32:00 +0400
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Mediawiki
+Cc: Henri Salo <henri@...v.fi>, Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE-request: Roundcube XSS issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE ID for a new security issue fixed in Mediawiki
-1.17.2:
+Mon, Aug 20, 2012 at 10:11:28AM -0600, Kurt Seifried wrote:
+> On 08/20/2012 05:24 AM, Jan Lieskovsky wrote:
+> > Upon code review, I don't think this issue affects 0.7.x versions, 
+> > we ship in Fedora and EPEL (iilc the Larry skin was introduced
+> > only in 0.8.x version and in 0.7.x version the related code looks 
+> > different).
 
-=== Security changes ===
-* (bug 33117) prop=revisions allows deleted text to be exposed through
-cache pollution.
+That's true: the issue is that the $hkey was used in the ternary
+operator (copy'n'paste error) and $hkey wasn't initialized at the
+point, so the condition will be false, thus the 'show' mode will be
+used.  And this code appears only in 0.8-beta and 0.8-rc.  0.8.0 fixes
+the issue and it doesn't exist in the 0.7.x, because there were no
+processing for the 'valueof' attribute in rcmail_message_headers().
 
-http://svn.wikimedia.org/svnroot/mediawiki/tags/REL1_17_2/phase3/RELEASE-NOTES
-https://bugzilla.wikimedia.org/show_bug.cgi?id=33117
-https://www.mediawiki.org/wiki/Special:Code/MediaWiki/108686
-https://www.mediawiki.org/wiki/Special:Code/MediaWiki/108687
+> > I don't have filed RH bug for this based on the above. 
+> > Could you have a look and confirm this?
+> 
+> Please use CVE-2012-3507 for this issue.
 
-Cheers,
-        Moritz
+At NVD I see that version specification is "prior to 0.8.0",
+  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-3507
+though
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=cve-2012-3507
+shows only a stub without details.  The proper version specification
+will be "Roundcube from 0.8.x series prior to 0.8.0".
+-- 
+Eygene
