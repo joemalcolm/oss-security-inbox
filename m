@@ -1,64 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/12
-Message-ID: <20121114171411.GA29305@kroah.com>
-Date: Wed, 14 Nov 2012 09:14:11 -0800
-From: Greg KH <gregkh@...uxfoundation.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/26/3
+Message-ID: <fi2QtF5hKhscE3ZHFcRYNKXtLYQ@4aHDgZMJRtcLnIeEgVOjcu6DpEM>
+Date: Mon, 27 Aug 2012 00:54:36 +0400
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel handling of IPv6 temporary addresses
+Cc: Henri Salo <henri@...v.fi>, Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE-request: Roundcube XSS issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 14, 2012 at 10:43:22AM +0200, George Kargiotakis wrote:
-> Hello all,
+Fri, Aug 24, 2012 at 10:29:42PM -0400, Steven M. Christey wrote:
 > 
-> Due to the way the Linux kernel handles the creation of IPv6 temporary
-> addresses a malicious LAN user can remotely disable them altogether
-> which may lead to privacy violations and information disclosure.
+> On Mon, 20 Aug 2012, Kurt Seifried wrote:
 > 
-> By default the Linux kernel uses the 'ipv6.max_addresses' option to
-> specify how many IPv6 addresses an interface may have. The
-> 'ipv6.regen_max_retry' option specifies how many times the kernel will
-> try to create a new address.
+> >> 2, Issue 2a: Description: Stored XSS in e-mail body. Ticket:
+> >> http://trac.roundcube.net/ticket/1488613 Upstream patch:
+> >>
+> >> [snip]
+> >>
+> >> Issue 2b: Self XSS in e-mail body (Signature). Ticket:
+> >> http://trac.roundcube.net/ticket/1488613 Upstream patch:
+> >[snip]
+> >
+> > Please use CVE-2012-3508 for these two issues (same version, same type
+> > of vuln so cve merge).
 > 
-> Currently, in net/ipv6/addrconf.c,lines 898-910, there is no
-> distinction between the events of reaching max_addresses for an
-> interface and failing to generate a new address. Upon
-> reaching any of the above conditions the following error is emitted by
-> the kernel times 'regen_max_retry' (default value 3): 
-> 
-> [183.793393] ipv6_create_tempaddr(): retry temporary address
-> regeneration [183.793405] ipv6_create_tempaddr(): retry temporary
-> address regeneration [183.793411] ipv6_create_tempaddr(): retry
-> temporary address regeneration
-> 
-> After 'regen_max_retry' is reached the kernel completely disables
-> temporary address generation for that interface.
-> 
-> [183.793413] ipv6_create_tempaddr(): regeneration time exceeded -
-> disabled temporary address support
-> 
-> RFC4941 3.3.7 specifies that disabling temp_addresses MUST happen upon
-> failure to create non-unique addresses which is not the above case.
-> Addresses would have been created if the kernel had a higher
-> 'ipv6.max_addresses' limit.
-> 
-> A malicious LAN user can send a limited amount of RA prefixes and thus
-> disable IPv6 temporary address creation for any Linux host. Recent
-> distributions which enable the IPv6 Privacy extensions by default, like
-> Ubuntu 12.04 and 12.10, are vulnerable to such attacks.
-> 
-> Due to the kernel's default values for valid (604800) and preferred
-> (86400) lifetimes, this scenario may even occur under normal usage when
-> a Router sends both a public and a ULA prefix, which is not an uncommon
-> scenario for IPv6. 16 addresses are not enough with the current default
-> timers when more than 1 prefix is advertised.
-> 
-> The kernel should at least differentiate between the two cases of
-> reaching max_addresses and being unable to create new addresses, due to
-> DAD conflicts for example.
+> Further investigation into ticket 1488613 shows that the developer thinks 
+> that issue 2b doesn't need a backport to 0.7.  This would suggest a SPLIT 
+> based on different affected versions.
 
-Have you discussed this with the upstream Linux kernel networking
-developers?
+Why?  2a doesn't affect 0.7.x, because wash_attribs in these versions
+has the following code
+{{{
+      if (isset($this->_html_attribs[$key]) ||
+         ($key == 'href' && preg_match('/^(http:|https:|ftp:|mailto:|#).+/i', $value)))
+        $t .= ' ' . $key . '="' . htmlspecialchars($value, ENT_QUOTES) . '"';
+}}}
+while 0.8.x used to have
+{{{
+      if (isset($this->_html_attribs[$key]) ||
+         ($key == 'href' && preg_match('!^([a-z][a-z0-9.+-]+:|//|#).+!i', $value)))
+        $t .= ' ' . $key . '="' . htmlspecialchars($value, ENT_QUOTES) . '"';
+}}}
 
-thanks,
+As one can see, version from 0.7.x won't allow "javascript:" as
+0.8.x's version will, so 0.7.x is clean from this bug (checked sources
+for 0.7.1, 0.7.2 and 0.7.3).
 
-greg k-h
+> Plus it's not immediately clear whether this "self XSS" is really an XSS 
+> or not - if I can modify my own signature, then I already have the 
+> "privileges" on my browser to run script.  But, if this "self XSS" is 
+> really just reflected XSS, then that's a security issue to worry about. 
+> This requires expertise in the Roundcube codebase to answer for sure, 
+> though.
+
+Basing on the fix,
+  https://github.com/roundcube/roundcubemail/commit/c086978f6a91eacb339fd2976202fca9dad2ef32
+I believe that the "self XSS" is only triggered when user composes
+e-mail in HTML mode and one of his text signatures contains some HTML
+code.  The issue shows up only when a message is composed (so, it
+doesn't matter for the signatures of received mails) and XSS is
+triggered by the contents of the signature that the user has for his
+identity.  So, only the entity that can edit user's signatures will
+provoke this XSS, thus this vulnerability can be used only with some
+other one that will allow to modify user's signatures.
+-- 
+Eygene
