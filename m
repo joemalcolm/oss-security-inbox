@@ -1,41 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/29/3
-Message-ID: <50672FC3.5010107@redhat.com>
-Date: Sat, 29 Sep 2012 13:28:35 -0400
-From: Russell Bryant <rbryant@...hat.com>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com, andi abes <andi.abes@...il.com>
-Subject: Re: Re: [Openstack] [OSSA 2012-016] Token authorization for a user in a disabled tenant is allowed (CVE-2012-4457)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/27/6
+Message-ID: <503BAEDE.1070800@redhat.com>
+Date: Mon, 27 Aug 2012 11:31:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: joomla before 1.5.26 password change
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/29/2012 02:18 AM, Kurt Seifried wrote:
-> On 09/28/2012 05:56 PM, andi abes wrote:
->> is the plan going forward to announce these on friday
->> afternoons?
+On 08/27/2012 03:14 AM, Hanno Böck wrote:
+> I think this one 
+> http://developer.joomla.org/security/news/396-20120305-core-password-change.html
+>
 > 
-> I can't speak for OpenStack but the history of these vulns is that 
-> they have been public since May 2012 and April 2012, but were not 
-> labelled as security, they were noticed, CVE's were assigned and I 
-> think the idea was to notify people quickly since they're have a 
-> significant impact and have been around for a while.
+never got a CVE.
+> 
+> Note what may be confusing: 1.5.25 and 1.5.26 both fixed a
+> password change vuln, the earlier one already got a CVE
+> (CVE-2011-4321), but they seem to be different issues.
 
-Correct.  Normally, we only announce on Tuesday through Thursday.  In
-the case of the two announced yesterday (Friday), these were issues
-fixed a good while ago in the open so we were just now catching up and
-labeling them properly.
+Already assigned:
 
-Thanks,
+CVE-2012-1598 Joomla! 396-20120305-core-password-change.html
+
+http://seclists.org/oss-sec/2012/q1/783
+
 
 - -- 
-Russell Bryant
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iEYEARECAAYFAlBnL8MACgkQFg9ft4s9SAYz3wCfYo+RnuaEtkEtUGmczPwvQiSh
-yc8An30yhBv+SA1HZxlF2D+gEEUeOM6R
-=RMEV
+iQIcBAEBAgAGBQJQO67dAAoJEBYNRVNeJnmTlMIQAKQJ9zOPxhD7v7Z3zc61SLyW
+tlu22cym3RMkLMnaWBl3gnVB78dqAw+NIr1fGNFHrhf1sSSmHzIAdzTA+obuYXbr
+c18JntIk01QLIaPalakIf2RamebY+mg5fkrA7SlXsoz+qs9d1cUsCPm/1FYbwmaK
+eyqafUYHbj0g3i20K2GKmKeNpfBMWmZlu/ljvcTz7Efypt80tkZUZIM9ZhjqhosA
+ukftayKMbZ7czSF+/JSsp4JKMRYJlf8Ekhbjhukladba9nZQusvfUkcG2/J+iUHw
+rzhhaXcNemmBf8uwP00QhrzpTOjhh0YLEDAPiigRaNhGEgen1aRmVrX7uPRuIpBj
+xQpXj4h3jMBbqdJCZNn2UNYPu+tA9MgHKU35PLycHxhZTQVkrGj/qPaBrPeGs0CM
+mtxfDmmez+Iht7mjEoJS5BVTUPIdFHWWqttZ0pg3PIYoiOexnMayc+PnG9sODHl3
+9yF1nczfWK+arDFKHHdUCtMy2wLocy4///TLTo0Xe05aHyZdwRUQTWJWS/ZtV5Fn
+vg/JGviZIjSp66w8gep3WlQY+9PoLBoPQ3g8qaTjymMYi/EfLoyAzWYColIvSoOY
+vTF9RTd6N9HP+hB9KH0SREdg3qfvJT8yBSQkP4YyOGVoG04RWo/AWgjX+vhZC5pS
+m/bjRjr/444IydIyNma0
+=yEOr
 -----END PGP SIGNATURE-----
