@@ -1,35 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/21/2
-Message-ID: <CANTw=MNxkfPVVF8FDb_QuL3ZnpN-tcOhP3fxc02VYAvSQ6gtQg@mail.gmail.com>
-Date: Mon, 21 May 2012 14:49:51 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: devotee (debian vote engine) cryptographically weak random numbers permit discovery of secret ballot submissions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/27/2
+Message-ID: <503B1173.7050009@redhat.com>
+Date: Mon, 27 Aug 2012 11:49:31 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Heap-based buffer overflow in openjpeg
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 18, 2012 at 6:39 PM, Kurt Seifried wrote:
-> This appears to be a service more than software, and although the
-> source is available (see git link) it appears to be out of date?
->
-> http://lists.debian.org/debian-www/2012/04/msg00200.html
+Hi Folks,
 
-Yes, the publicly available source repo is out of date right now, but
-that won't always be the case.  Debian had a change in secretary, so
-workflows have changed, and ideally a more public mode of operation
-should be gotten back to.
+I discovered a heap-based buffer-overflow in openjpeg, when decoding
+JPEG200 images. More details at:
 
-> Can you confirm the vulnerability is in the software you linked to,
-> and that this has actually been downloaded/used outside of Debian?
+https://bugzilla.redhat.com/show_bug.cgi?id=842918
+http://code.google.com/p/openjpeg/issues/detail?id=170
 
-Yes, it is indeed an issue in the software implementation itself.  See
-original report for exact code lines that are flawed.
+This seems to affect versions 1.3 , upto the latest release
+version.
 
-I can neither confirm nor not confirm that devotee is used outside of
-debian, but it does seem like an obvious choice for online election
-management.  It is however planned to be package for debian [0], and
-ubuntu automatically syncs debian, so eventually they will also get
-the package.  it is important that an id be assigned so that they are
-aware that they will need to check the package when they do that sync.
+Upstream is currently working on the fix.
 
-[0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=470995
+Can a CVE id be please assigned to this flaw?
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
