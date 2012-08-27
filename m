@@ -1,62 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/21
-Message-ID: <20121213222932.072dc28c@melee>
-Date: Thu, 13 Dec 2012 22:29:32 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/27/7
+Message-ID: <503BAFB1.8060402@redhat.com>
+Date: Mon, 27 Aug 2012 11:34:41 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: CVE request: opus codec before 1.0.2
+CC: Thomas Biege <thomas@...e.de>
+Subject: Re: CVE request: crowbar ohai plugin: local privilege (root) escalation due to insecure tmp file handling
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-On Tue, 11 Dec 2012 11:02:15 -0700
-Kurt Seifried <kseifried@...hat.com> wrote:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+On 08/27/2012 09:31 AM, Thomas Biege wrote:
 > 
-> On 12/11/2012 05:32 AM, Hanno Böck wrote:
-> > http://lists.xiph.org/pipermail/opus/2012-December/001846.html
-> > 
-> > sounds like a low-severity security issue:
-> > 
-> > "Opus 1.0.2 fixes an out-of-bounds read that could be triggered by
-> > a malicious Opus packet by causing an integer wrap-around in the
-> > padding code. Considering that the packet would have to be at least
-> > 16 MB in size and that no out-of-bounds write is possible, the
-> > severity is very low."
-> > 
-> > Fixed in opus 1.0.2.
+> Hi, insecure handling of tmp files can lead to executing arbitrary
+> shell commands as root:
 > 
-> What's the security impact? does the service crash?
+> https://github.com/SUSE-Cloud/barclamp-deployer/commit/b6454268a067fc77ff5de82057b5b53b3cc38b87
+>
+> 
+> 
+> Thanks, Thomas
 
-I don't know any details, just read the release announcement and it
-sounded security relevant.
+Please use CVE-2012-3537 for this issue.
 
-This is the commit:
-http://git.xiph.org/?p=opus.git;a=commit;h=466c879a063e77941b95a6a0298905ba707667ac
-
-Sorry, I don't know more.
 
 - -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQIcBAEBCAAGBQJQyki/AAoJEKWIAHK7tR5CxZ8P/A40tOa/eto6cCuBMY7DIOmu
-mjzMR6rvirmCUaWNLnhlPulSctF4TZNfJtRGSVPvxKSKcvqMqNJjG64A2nhIVmFt
-3DU/OaB2TvmiMQWQv+d3MXtN1rfzRNfSViUHTXKhMH2WaZgc5efjo5ZRcYiFtBG9
-nIpjZZKv7VhbM8nJ0hB3+l6pQF3x7CVCHilt9Rguk301bI8WzxejHsZub4w0uyiB
-UTpwmNEXif9KwLP5a8xLmWTiCem88Tfsytz+JaZmJWlnQX+X+dJjb8YG06LC7kyy
-bPbGsin1gFje2Cpl88sZxb4BoKn6aRoBfW6SeLHU7U9BFFAQE145jbEglVQnIPz/
-c3dxTg8lQieXOzWPmCzJ158pW/7qCEFCKktTPshJpFGALM3f8BO+nWotv/mOcJCK
-AqzoJ0mbx6bTtO+w9EC+WHeVtzimuaiGIg40l+NI7nc+EXbXWxSVnT5PgN/hbv1h
-n+Bn4dgpejWsxQH1KGyHPrYpruqfCaLDpuPKaxLQlzcS3+WDUyKYUbTQR1+xF2Ff
-Wj0R93jGdkFBYf1g43MwFe0vr46eNMeKHDi/ULg/tKq00YtTIa3FOdm7JQGTNEAL
-8qwfP/dCO88i6UZ54tdRJQMXbXCupRDZQ5Nbv/jwZtZzfFwXf+4nfLQWFhr+aIv+
-0R8bD6KcvpHpGSl9MnZo
-=SlcG
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQO6+xAAoJEBYNRVNeJnmTNXIQAMDkKHGS3fnHwSy1kbJ360R6
+SAPvLzLy6pKPn7MjucJjBlLp1D6ZXUDnh7tSoenC6lPi8ROV1m8+hzi1z1TJyukw
+70gebhFsgL1p2XXkOMIhGeRDvZmeyGKetkAJuotJnhpz5y95RMVk0NDbE5PoH2Ke
+BK1bKsSyrC94uViC0IpShuv4cfWjZ30C8O4LPZdT4yDHnHAd1AXMewV1vK8q5Xus
+2js77SXidWKTgcVA/x2NRm0tJbaU5gQb/8hlpzk/8wivA2lKL7QJPPeUtKDun4Vv
+XVN7G0JZuaxmLEDi07akPAX6+wL0W5yxD0ucQicPci0J3Kz9A5lzVnt3v+IB3Bkv
+q/M9VPfNxHXFl165vTIqI0jJepwEsHiBAFiElimXWmsxTULXsFQcQtRnBFKTgiEU
+kPoTxEGfm/IqOnR7RMSqE2WSGE2J0D2aZnj+thr5pWvc60t7G5I0ODOM+nYUlj1q
+91JbDA73tRUO9EPoN3T6b8HP4btH0GJs4KRDFU6Z4jQpIQyujg/Zn60iCVDAZd43
+lFhE42JVPuXg+ebifEe4P0iJBELXH2pEF7ZVXkQG1KM/sSHpUyQ9CDtGXKu3QyW3
+mpQAPT7J/GxnqU7UuTkaSORlg21SWXcBCjC5LHb2ze4LgE+5uLFcpHcWw9cTx7pZ
+555709TUMstu9IZq/3gJ
+=g4XD
 -----END PGP SIGNATURE-----
