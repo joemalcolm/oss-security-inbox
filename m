@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/25/1
-Message-ID: <Pine.GSO.4.64.1208242057510.13749@faron.mitre.org>
-Date: Fri, 24 Aug 2012 20:59:04 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/27/10
+Message-Id: <201208271543.41921.geissert@debian.org>
+Date: Mon, 27 Aug 2012 15:43:39 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-cc: Gentoo Linux Security Team <security@...too.org>
-Subject: Re: CVE Request: SquidClamav insufficient escaping flaws
+Subject: CVE request: letodms multiple issues
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Thu, 16 Aug 2012, Sean Amoss wrote:
+Multiple vulnerabilities have been found in LetoDMS[1].
+Could CVE ids be assigned, please? Thanks in advance.
 
-> The upstream notification [1] shows SquidClamav 5.8 and 6.7 fixes a URL
-> escaping issue which could lead to a daemon crash [2]. SquidClamav 5.8
-> also fixes escaping issues in CGI scripts [3].
->
->
-> References:
-> [1] http://squidclamav.darold.net/news.html
-> [2] https://github.com/darold/squidclamav/commit/80f74451f628264d1d9a1f1c0bbcebc932ba5e00
-> [3] https://github.com/darold/squidclamav/commit/5806d10a31183a0b0d18eccc3a3e04e536e2315b
-> [4] https://bugs.gentoo.org/show_bug.cgi?id=428778
+They are said to be fixed in 3.3.7[2], quoting the changelog:
 
-It appears that [3] is an XSS issue, so this needs a separate CVE because 
-it's a different type of encoding problem than [2].
+> --------------------------------------------------------------------------
+> 
+>                     Changes in version 3.3.7
+> -------------------------------------------------------------------------- 
+> major security update which fixeѕ lots of possible XSS and
+> CSRF attacts
 
-Use CVE-2012-4667 for the XSS.
+Without looking at anything else other than the diff, I'm not personally 
+convinced that the changes are enough/that there are no other 
+vulnerabilities. That said, I'm most likely not going to spend time on it.
 
+[1]http://www.exploit-db.com/exploits/20759/
+[2]http://forums.letodms.com/showthread.php?tid=768
 
-- Steve
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
