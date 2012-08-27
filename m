@@ -1,34 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/10
-Message-ID: <4F5101A5.8050706@redhat.com>
-Date: Fri, 02 Mar 2012 10:21:41 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/27/8
+Message-ID: <503BAFD3.5030709@redhat.com>
+Date: Mon, 27 Aug 2012 11:35:15 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Joomla core information disclosure 1.7.1
+CC: Thomas Pollet <thomas.pollet@...il.com>
+Subject: Re: Re: zenoss issues
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Huh?
+On 08/24/2012 04:04 AM, Thomas Pollet wrote:
+> Hi,
 > 
-> http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
+> I have found that zenoss displays snmp output like syslocation
+> unfiltered in the web interface. 
+> http://jira.zenoss.com/jira/browse/ZEN-3192 I suspect there are
+> many more bugs in this package.
 > 
-> and
+> Regards, Thomas
 > 
-> http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
-
-Sorry that second one should have been:
-
-http://developer.joomla.org/security/news/370-20111001-core-information-disclosure.html
-
-> are entirely different issues (one is "Weak encryption causes potential
-> information disclosure" the other is "Inadequate error checking causes
-> potential information disclosure."), so two issues, two CVE's. We split
-> based on (among other things) the underlying issues, not the outcome.
+> On 24 August 2012 09:33, Thomas Pollet <thomas.pollet@...il.com>
+> wrote:
 > 
-> These two CVE's are fine.
-> 
+>> Hello,
+>> 
+>> I have found xss and command execution problems with zenoss. I
+>> created a bugreport which can be found at 
+>> http://jira.zenoss.com/jira/browse/ZEN-3183 . However the zenoss 
+>> developers don't seem to be able to reproduce the issues.
+>> 
+>> Another issue, reported by Emanuel Bronshtein can be found at 
+>> http://jira.zenoss.com/jira/browse/ZEN-3153
+>> 
+>> Regards, Thomas Pollet
+
+Just a reminder that no public links have been posted, if you could
+please do so I will assign a CVE #.
 
 
--- 
+
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQO6/SAAoJEBYNRVNeJnmTKIQQALkZNy/lAiXL6Pit0kTJkdwq
+0emVwdBJ37QhxFTZc61yt6dSxgQRIjhbn9SLiGMkVR58UqVU/e5FbXxZZgGUYT/5
+JQEvzZ8UuS0GiPD5zqtmT2rXbA9BEDnmxPaIeHY9gisMAaRvR8cMNc9htS6X+Hqu
+BN9rFgHcNN8VwZ1yuB6VHxZLLncTUgmYW69tbKu7OU/1WSmyE6MmW/OVKiopv373
+/w61EAL2NYhw0IFa8eLUnoJEQPNg75VkJ5SKsb9SEaZPCDdSQ8SUEGMDVQX1Pqu3
+ieYJZ6uNrveZk2hkAb8oXt+/V4rokjUpfuP+xWxm1GYuSE0jBwzv0VmK2URuj2GI
+TWUq4+ROLEA+u+Sp7LaD64VPG+LLZuJ2sPSGx5/Ug23I1qYYkYSJ0IjAsQf9rISz
+FCilwag7yFz+FUcSmZsj4j8cZtN7yB0cASgC8o/SuYbHnM0+D0zXxsB8r1f70XeM
+ZBK6OJpsxxjAiutpSeneVbcIv4zZwcb+O89zvl/KltLwYsYi+fa/dxHzO3o3y+od
+ZQTz69mCzDPucqjA5jaLhYtnbOHb/RnF2RpeOULyIVgKBPVVhEZz6ocbq6PHyjis
+Rb9paATIJxDm0dHsAee0xnpYtpzn46/p6iWa35obUe6wdWfhdayCgqooVvW6iFax
+G6yB9TZnlivN0wW4B46n
+=k4hV
+-----END PGP SIGNATURE-----
