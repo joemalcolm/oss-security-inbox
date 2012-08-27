@@ -1,49 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/28/2
-Message-ID: <508CD52F.201@redhat.com>
-Date: Sun, 28 Oct 2012 00:48:15 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/27/3
+Message-ID: <503B1449.2060808@redhat.com>
+Date: Mon, 27 Aug 2012 00:31:37 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>, cgit@...mli.net
-Subject: Re: CVE Request: cgit command injection
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: CVE Request: Heap-based buffer overflow in openjpeg
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/27/2012 08:10 PM, Jason A. Donenfeld wrote:
-> Hi Kurt,
+On 08/27/2012 12:19 AM, Huzaifa Sidhpurwala wrote:
+> Hi Folks,
 > 
-> From
-> http://git.zx2c4.com/cgit/commit/?id=7ea35f9f8ecf61ab42be9947aae1176ab6e089bd
->
+> I discovered a heap-based buffer-overflow in openjpeg, when
+> decoding JPEG200 images. More details at:
 > 
-:
+> https://bugzilla.redhat.com/show_bug.cgi?id=842918 
+> http://code.google.com/p/openjpeg/issues/detail?id=170
 > 
-> "syntax-highlighting.sh: Fix command injection.
+> This seems to affect versions 1.3 , upto the latest release 
+> version.
 > 
-> By not quoting the argument, an attacker with the ability to add
-> files to the repository could pass arbitrary arguments to the
-> highlight command, in particular, the --plug-in argument which can
-> lead to arbitrary command execution.
+> Upstream is currently working on the fix.
 > 
-> This patch adds simple argument quoting."
-> 
-> 
-> The vulnerable script is not a hard requirement and is more in the 
-> "contrib" variety of things. That said, lots of users do wind up
-> using it verbatim, as it's simple and works well, so this does
-> affect a decent number of folks.
-> 
-> The patch for it will be released in the upcoming cgit release,
-> along with the previous CVE for that buffer overflow. I'll send the
-> list an update when that release is made.
-> 
-> 
-> Thanks, Jason
+> Can a CVE id be please assigned to this flaw?
 
-Ouch. Please use CVE-2012-4548 for this issue.
-
+Please use CVE-2012-3535 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -51,18 +35,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQjNUrAAoJEBYNRVNeJnmTh/oP/23yPigb0OaKUljZY1ZmBJq/
-DhuZLpUxqP3g4hfDXo4USBut8MLv7vksGBwJeF9D/AgAE6p3U2R7W6ycKgWX4Rvx
-AXu29Eqz8IY1cxuKKrFaUbPr06sUlhnkYpVXog81+iqUlECe5MRDtr70NEJXRe9L
-94DsGJglckmC6XgRZ3UwG2eracfdqTFiMQ/J8kiw7DsPAjOEZzrdp5VkoEnheLsQ
-ltWNcEMh5rWfyTMv7fMyJ34JC3iDfYjkghK6ihCBlr8uSyq98gjMt27nz74twH4A
-tIVtDoWoPmBXJePghnGuAI+hjtRpAWV5bwmVx78hBy+I5eUU+rW2ljOMmg3kA3lN
-DTDDApnmD+WrLTyEwLTPSIAJCAKcGdtOIfYiHmLJ7E/26yyks/p2JvXexSfeWWKK
-yAV9IdJdx4Wtf32Y2hYELWnQfBjx4bFoOG4QgsGrSyMi5lzVhqXJeXWsnBG9P7Mg
-ZEFed2po4HjNoH4IxbQTOtW1fZmNbYDaMsMfRSqgJt27j+d7Vg/oabdxXyEbM59D
-/+ELYf3twprQFkLUboLIU7LtseqOOjTYFIqYWddryXf+MJisaBNWqBkV7VV5WaTe
-t+zUlWH1SWyaJ/i+WO4ddSyqNv0RI8BJOo5hyczsWsj7xXefNEGuXdlO+nhvBHmb
-ijnlLFH+YHjs6fT1WBSX
-=HicY
+iQIcBAEBAgAGBQJQOxRJAAoJEBYNRVNeJnmTfdsP/i8ksY0ZJjMbGf+deF6vJ+3d
+NLzLLhZZVJZrqeuVJN6IL+94x24OTOMbnZHVkC3aQzl7K0ucM5pblTA7hOcOI1cw
+T2Yy9+Yr7K8zZ8c3GJIZ5TH3PsYHMdtm5FGAUPIg2h+dOWIVvm9xD8ldus0qXt5C
+paPWCmq9ZrQPnrOPqDB7KyklRPnS16mYK8hzL3tpkSD2FwjBDxqXDLvC8cHHIu/5
+znZUl4tVt8tHGwAHxBjeNRZ7h8no+Sq2mcfVRGCCCQhO/YRRnCGllbHIAfMb+LeT
+M+Ylw8MewFGcA+MBV4ju0KtDbT3W7626+H349xJoyJnPpjF6atfZsnBNzWVYa+t0
+S2Okgnun6TBzhmbDGr9HyTTF1G59pIC3/OpTU8XAHLsZctBwTonD1Zv9+Lo0ZV12
+6P5rrPXAI5GvdeV9okhTF6LAY5JyrUCuLNo4eWsJ/gWo24kYvvXBDsT0ZIPCW9Y2
+fg6ZMBpQo1q3b9c5pr4QvRhRXgqvWfbiL36Vj+zMk2oP0bgA/NuOrGeAuXmpqUQ9
+KCxU2rkBGGr4bJEGQxe7e3uyelgiU9rxyH3ygDrJhm/+E/wGraPmOPNxs0jTwF9n
+DREFBeZ4ZbL+UQYsTzQou9RRjmkt4Ptw1I7nc6u05lK6nDEJv8Ev3fjPubRk75HQ
+Cfv+kRwwgfFR4x9bbymu
+=4189
 -----END PGP SIGNATURE-----
