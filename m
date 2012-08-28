@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/10
-Message-ID: <20120820172510.GF5405@dhcp-25-225.brq.redhat.com>
-Date: Mon, 20 Aug 2012 19:25:11 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/5
+Message-Id: <201208280012.43923.geissert@debian.org>
+Date: Tue, 28 Aug 2012 00:12:42 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: taskstats: use-after-free in xacct_add_tsk()
+Subject: Re: CVE request: letodms multiple issues
 Content-Type: text/plain; charset=utf-8
 
-An use-after-free flaw has been found in the way taskstat's
-TASKSTATS_CMD_ATTR_PID command and exiting tasks with already freed mm
-interacted. An unprivileged local user could use this flaw to crash the
-system or leak kernel memory.
+On Monday 27 August 2012 20:32:16 Kurt Seifried wrote:
+> On 08/27/2012 02:43 PM, Raphael Geissert wrote:
+> > Multiple vulnerabilities have been found in LetoDMS[1]. Could CVE
+> > ids be assigned, please? Thanks in advance.
+[...]
+> >>  major security update which fixeѕ lots of possible XSS and CSRF
+> >> 
+> >> attacts
+> 
+> That's two sets of vulns, can you send me the links to the code
+> updates? I'm assuming they are in
+> http://mydms.svn.sourceforge.net/viewvc/mydms/ somewhere? Thanks.
 
-Please note that the fix below is from year 2006.
+Not helpful, it's all in:
+http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=853
 
-Upstream fix:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f0ec1aaf54caddd21c259aea8b2ecfbde4ee4fb9
-
-References:
-http://bugzilla.openvz.org/show_bug.cgi?id=2294
-https://bugzilla.redhat.com/show_bug.cgi?id=849722
-
-Thanks,
+Cheers,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
