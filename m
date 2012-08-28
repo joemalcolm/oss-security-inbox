@@ -1,57 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/25
-Message-ID: <4F639876.1080106@redhat.com>
-Date: Fri, 16 Mar 2012 13:45:58 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Tim Brown <tmb@...35.com>, Mark Stanislav <mark.stanislav@...il.com>, "Adam D. Barratt" <adam@...m-barratt.org.uk>
-Subject: Re: CVE Requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/15
+Message-Id: <201208281439.23428.geissert@debian.org>
+Date: Tue, 28 Aug 2012 14:39:22 -0500
+From: Raphael Geissert <geissert@...ian.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, secteam@...ebsd.org
+Subject: CVE request: FreeBSD SCTP remote DoS
 Content-Type: text/plain; charset=utf-8
 
-On 03/16/2012 12:37 PM, Tim Brown wrote:
-> On Friday 16 Mar 2012 16:11:04 Mark Stanislav wrote:
->> All points being made are very much valid and I certainly
->> understand how contextually oss-sec may be used to allocation
->> requests under different circumstances.
->> 
->> So here's my situation, I'm up for suggestions (of which, "wait
->> longer", is perfectly viable!)...
->> 
->> 1) March 1st, I sent 2 of these CVEs over to Steve Christy at
->> MITRE who had previously allocated 9 prior CVEs in a day or two
->> generally 2) March 8th, after not hearing back from Steve, I
->> contacted cve@...redirectly with all 5 3) March 15th, after not
->> hearing back from MITRE, I contacted Kurt off list as I've noted
->> his helpfulness doing allocations 3a) Kurt pointed me to email
->> the list, rather than him directly (which is perfectly fine, but
->> perhaps not the context I was aiming for initially)
+On Tuesday 28 August 2012 03:50:41 Simon L. B. Nielsen wrote:
+> On Tue, Aug 28, 2012 at 7:25 AM, Raphael Geissert <geissert@...ian.org> 
+wrote:
+> > There appears to be a remote DoS (via a NULL pointer dereference in the
+> > kernel) vulnerability in FreeBSD's SCTP implementation[1].
+> > 
+> > Has a CVE id been assigned to it already?
+> > 
+> > [1]http://www.exploit-db.com/exploits/20226/
 > 
-> Josh Bressers (Josh, correct me if I'm using your name in vain)
-> used to be quite happy to assign CVEs for undisclosed (embargoed)
-> F/OSS issues providing details were forthcoming with the request.
-> If Josh is no longer able to fulfil that role due to a change of
-> circumstance at Redhat it would be nice if someone stepped into the
-> breach -  be that Redhat, Debian or one of the other CNAs.  There
-> is definately a place for "disclosed to project, being/been fixed,
->  not public - can I have a CVE?" without deferring to the distros
-> list or MITRE - most of the time projects can respond in a timely
-> fashion, so a minimum effort approach is ideal.
+> I don't think have one gotten assigned, but probably should. Probably
+> best to go to Mitre to make sure we don't accidentally get a
+> duplicate. Feel free to requeste one, or I can do it later. Please cc:
+> secteam@...ebsd.org on any request to minimize risk of confusion.
 
-You may have uh noticed me assigning 200+ cve's in the last few
-months. I took over for Josh. I am unwilling to public assign CVE's
-that are likely to end up with duplicates (e.g. no information CVE's
-already sent in as a request to Mitre).
+Kurt, could you please assign one?
 
-I am quite happy to assign "secret" or whatever you want to call them
-CVE's (I do it all the time on linux-distros list for embargoed
-issues) but I'm also trying to avoid duplicates and other messes. If
-the issue is so secret you can't even give me a version #, brief
-description, etc. than chances are Mitre needs to handle it.
+Thanks in advance.
 
-I'm asking for pretty basic info like version #'s affected and ideally
-fixed if you got it. This doesn't need to be complicated.
-
-http://oss-security.openwall.org/wiki/mailing-lists/distros
-
+Kind regards,
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
