@@ -1,110 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/9
-Message-ID: <4F7CA1E8.7090606@redhat.com>
-Date: Wed, 04 Apr 2012 13:32:56 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/4
+Message-ID: <503C2479.7020701@redhat.com>
+Date: Mon, 27 Aug 2012 19:52:57 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Tom Lane <tgl@...hat.com>, pgsql-jdbc@...tgresql.org, Steffen Dettmer <steffen@...t.de>
-Subject: Re: CVE DISPUTE notification: postgresql-jdbc: SQL injection due improper escaping of JDBC statement parameters
+CC: David Jorm <djorm@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, hdm@...asploit.com, jdrake@...p.org
+Subject: Re: CVE Request: Java 7 code execution 0day
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/30/2012 06:28 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> originally, the following deficiency has been reported by Steffen 
-> Dettmer: [1] http://seclists.org/bugtraq/2012/Mar/125
-> 
-> A SQL injection flaw was found in the way postgresql-jdbc, a JDBC
-> driver for PostgreSQL database, performed escaping of certain JDBC
-> statement parameters. A remote attacker could provide a JDBC
-> statement with specially-crafted parameters, which once processed
-> by the postgresql-jdbc driver would lead to SQL injection.
-> 
-> References: [2]
-> http://lists.opensuse.org/opensuse-security/2012-03/msg00024.html 
-> [3] https://bugzilla.novell.com/show_bug.cgi?id=754273 [4]
-> https://bugzilla.redhat.com/show_bug.cgi?id=807394
-> 
-> Upon further issue investigation and discussion with Tom Lane of
-> PostgreSQL upstream and JDBC driver upstream the following
-> conclusion has been provided:
-> 
-> The upstream development team of the JDBC driver for the
-> PostgreSQL database does not consider improper escaping of certain
-> JDBC statement / query parameters, when the JDBC driver of version
-> older than the version of underlying PostgresSQL server is being
-> used, to be a security defect. In general, the JDBC driver for the
-> PostgreSQL database does not promise to work with server releases
-> newer than the driver release.
+Argh I didn't check my CVE email so I failed to see Mitre assigned a
+CVE for this a few hours ago.
 
-Apologies for the delay, at first I agreed with the above, but then I
-checked and I think it's a bit more nuanced than that.
+======================================================
+Name: CVE-2012-4681
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-4681 [Open
+URL]
+Final-Decision:
+Interim-Decision:
+Modified:
+Proposed:
+Assigned: 20120827
+Category:
+Reference:
+MISC:http://blog.fireeye.com/research/2012/08/zero-day-season-is-not-over-yet.html
+[Open URL]
+Reference:
+MISC:http://labs.alienvault.com/labs/index.php/2012/new-java-0day-exploited-in-the-wild/
+[Open URL]
+Reference:
+MISC:https://community.rapid7.com/community/metasploit/blog/2012/08/27/lets-start-the-week-with-a-new-java-0day
+[Open URL]
 
-First off: I agree this is not an issue in PostgreSQL upstream. This
-issue only occurs with an ancient unsupported and obsolete version of
-the JDBC driver when being used with a newer version of PostgreSQL.
+Oracle Java 7 Update 6, and possibly other versions, allows remote
+attackers to execute arbitrary code via a crafted applet, as exploited
+in the wild in August 2012 using Gondzz.class and Gondvv.class.
 
-However having stated that there is a security boundary violation
-going on. Just because a software component is out of date or not
-supported doesn't mean security bugs shouldn't at least be
-acknowledged (software tends to live past its designed lifetime). Add
-to this the fact that someone actually reported it we can state with
-some certainty that it affected at least one person, ergo there is a
-reasonable chance it may affect others.
 
-So I checked the CVE database, we have 64 instances of "when used
-with", some reasonable examples:
+> Please use CVE-2012-3539 for this issue in Java from Oracle.
+> Please note that additional CVE's may be issued if it is discovered
+> that this issue affects over versions of Java/etc.
 
-CVE-2009-4040,Candidate,"Cross-site scripting (XSS) vulnerability in
-phpMyFAQ before 2.0.17 and 2.5.x before 2.5.2, when used with Internet
-Explorer 6 or 7, allows remote attackers to inject arbitrary web
-script or HTML via unspecified parameters to the search
-page.","CONFIRM:http://www.phpmyfaq.de/advisory_2009-09-01.php
+Please REJECT CVE-2012-3539.
 
-CVE-2008-2705,Candidate,"Unspecified vulnerability in Sun Java System
-Access Manager (AM) 7.1, when used with certain versions and
-configurations of Sun Directory Server Enterprise Edition (DSEE),
-allows remote attackers to bypass authentication via unspecified
-vectors.","SUNALERT:238416
-
-So I think it's safe to say that we can (and should) assign CVE's
-based on the unintended interactions of products (assigning a CVE
-helps ensure that people are more likely to find out, security
-scanners all love to pick up on CVE's, etc.). I'm going to assign a
-CVE for this and suggest a description of (stolen directly from the
-first bug report
-(http://lists.opensuse.org/opensuse-security/2012-03/msg00024.html):
-
-"When using PostgreSQL JDBC driver version 8.1 to connect to a
-PostgreSQL version 9.1 database, escaping of JDBC statement parameters
-does not work and SQL injection attacks are possible. It should be
-noted that the PostgreSQL JDBC driver version 8.1 is officially
-obsolete and should not be used."
-
-Please use CVE-2012-1618 for this issue.
+The correct CVE for this Java issue is CVE-2012-4681 as assigned by Mitre.
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJPfKHoAAoJEBYNRVNeJnmT/u4QAI03PTYXs1ceSoMIZ1ORjj7x
-vFTKfdOaXercFFonIrVzf4e54gCObUJgse3rdz6ONh59FkqDSDW1WISYhLi+pMAj
-fLCng+vaB3ctiI6KurenKpy1fIWg9CsNTsx+9N2UG0JorMYp9hhih/9KRcwcvbLV
-TXl7psu7OhOKc6J2re1bjQO+gbyVPZxvkYfs1CvXvIh27FWWzoNFYLL34rRdZIwo
-fcfy5z7AWEehxpPRRBijllYVQambqdXu2m8PBRLn7pgy/dRPuDbn/yiKcC39+1EK
-jcaiFH7P1XtXXQouy13Ta3yhHsZiVDZmNyR+YKnRYQIY9ICjFNxR+rdBbSM0f2Eu
-JO1Sa9eewe7bsylIchIRoVtGuzvOlxv18Dujp6iD7pvIaLNJ9uuuabz9lX/9rm3p
-WX++VxYk+k+cGOGjttnlSfiS+TYnFjLgS6fM4AAp6oBPg13ndrKJL4m7qYNoJzjd
-S4JhOxn8VcgRFAo8otLzIRxWrsYYG8/xybr5/NESmC8hcr0mhYUIGyLx5qu0/QAR
-ri1QT3BPs7SoqGGaJHUZtqOK/vAkDHn1SdA/VopWcpk2XmP2rd0h0Mh+jkA3Pd6C
-SaL2HvwRq9a9T9rJozESHnPd8HqvDgaUdKADcYEV9xS+axZMHRPpHSppvt93GKao
-ClES06wUx2zOrWyNijbF
-=jlUp
+iQIcBAEBAgAGBQJQPCR4AAoJEBYNRVNeJnmT4mQQAIY3wypf8b0LrEjjhA1WOOt6
+le7O12mFuH5hS3C1EWgpRQQ5XsrbwGRiTqTE2wlvvetFhku65wRJiOnS5rpcVhdM
+7nkCAEVrQhvJeHZnDtwaAEJdLKA8ASDUrSqGrHu54JiEYYr9g3qHul4Xl7UOXGkX
+Nh1AB61vs/jd4xZiJTjF2KeOAfadqq5+dRZwZz09T5DsDFfmH6b8xtWCRCQaa8gm
+E1PRdj1qyswkgfbAJcde+73UxTPE9ICOL+h8GQoAc4/tfMwqnjrh/M9y2gx1WHMU
++nNM1Y3x9gtqxtfp75Cm7y3W9Jx8VTzKt6Q/XGZedP4iG5RWQ0i2Zq16Z2FLwLxD
+vI5U7zorjscVQW+UntRKbajsso5LE/b7jFSZjPa//ww/chpvHQ/MG19WxwwePj6R
+JQHnlPNXWpjESrmzWYHbKnTDCH8oWZ1OyF68yXDYzlg9L+75Jaqw+rUAPR+S87kp
+g+U/YzBKAbSJf7xLr28iBs0Lyt6RH1JShtTLNWe9BjW07jHdwUdnJqDdftSWkGOW
+sxnlBHeCPIxoTThpbH4ie8sb9lH251vF4F++xKbhnjRr2fpjCHL2HcaZDUPH7Md5
+g7uejMnlKALsh7TVjwl6LE9+qhiE1KBEq9hrf66Y5d0OV3n8GmEXlkMoL5V2ZYbL
+1RVL4me4Un/bvRH8biRM
+=6idH
 -----END PGP SIGNATURE-----
