@@ -1,51 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/4
-Message-ID: <4FF71E8A.80706@redhat.com>
-Date: Fri, 06 Jul 2012 11:21:14 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>, Asterisk Security Team <security@...erisk.org>
-Subject: Re: CVE request:  Asterisk
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/12
+Message-ID: <20120828151944.GB15466@suse.de>
+Date: Tue, 28 Aug 2012 17:19:45 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Hash collision issue in Mono/C# (similar to Microsoft .NET issue)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 07/06/2012 08:55 AM, Moritz Muehlenhoff wrote:
-> Hi,
-> 
-> 2. asterisk: Possible resource leak on uncompleted re-invite
-> transactions 
-> http://downloads.asterisk.org/pub/security/AST-2012-010.html
-> 
-> Cheers, Moritz
+The hash collision problem can also be found in the C# Mono implementation.
 
-This issue does not appear to have a CVE yet ("TBD"). If you like I
-can assign one for it. Otherwise if you have gotten a CVE for it
-please reply (and include OSS-security so everyone knows =). Thanks.
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3414
+describes the issue for the Microsoft .NET runtime, but as the issue
+is also in the Mono implementation it needs a different
+CVE there.
 
+References:
+https://bugzilla.novell.com/show_bug.cgi?id=739119
+https://github.com/mono/mono/commit/2ab1a051058fee5ea3aec2e071fba7000b693488
+https://github.com/mono/mono/commit/c3e088bf2fc22d66d0f17b74676de366f661c3eb
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP9x6KAAoJEBYNRVNeJnmTSaQQAJgQX10VvuD15Yqp5ud/huKp
-riOx3tkR7Zg+8YHXjHyghqeB6pdW+j9bFdKs8M7xszJZIiTGMvBu51rHG2dDmssG
-a2Yvmw+y4rQFKxuz3gET7mPPD3dZ7fj1c5tj9omG6S3groVHk0DJt+t+NhpYCnjf
-OOpe6+h+cvszU9coYgVDnMkjzOK70aPonW/SUrYYgNQMVrUcG+w/8MMi+ViO8vTu
-eZC4SruIEeUvumwiU/Mp+U95v6/wo2AQwkJVCqoI5sKO6eDzqw3W7quFrTvxdx8z
-xSHNMPslvK02whJM88ciAvAnxVTZOo1SHZQLyGI6G+EVc6D9gfW+uDpSttfgejBg
-J73dxSC3yFLD9kk+SgdlJSwxgGaeUwGqquYgcH6XUkvyLcOz3K3/Zitrf2Ki3V+3
-fLdvqy54tNqWZgp66wToKu7qaGw3w7Gr18A3jlipNTjY6udmlIEb5pZZHlVN3Y9W
-RxlcBMRymB6Z/Ya3rxS2HwjmIPAhdb0wCjLquo2hS3zKkuUgiMpFK9vVXIFN4reG
-pTVCdgUifzGZGXtp3g4G/LXuytH8B625nNMUpZIJyWv3dRr8/JybOx17jyNyZYhJ
-dLPDEGa5ay/qQE/3BZ0QIDq43BmaOmsNCXWpR7bFTOYxwJC7M7UyMzUUXR2PW6vx
-PZe6x+BEW8HAiolJpuOm
-=ln6p
------END PGP SIGNATURE-----
+Ciao, Marcus
