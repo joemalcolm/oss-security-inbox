@@ -1,35 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/11
-Message-ID: <4F5667E3.3030303@redhat.com>
-Date: Tue, 06 Mar 2012 12:39:15 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/14
+Message-ID: <503D0876.1070604@redhat.com>
+Date: Tue, 28 Aug 2012 12:05:42 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Kish Guest Posting Plugin for WordPress File Upload Remote PHP Code Execution
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: Hash collision issue in Mono/C# (similar to Microsoft .NET issue)
 Content-Type: text/plain; charset=utf-8
 
-On 03/06/2012 12:31 AM, Henri Salo wrote:
-> Can we assign CVE-identifier for this security vulnerability, thanks.
-> 
-> http://osvdb.org/show/osvdb/78479
-> http://www.securityfocus.com/bid/51638
-> http://secunia.com/advisories/47688/
-> http://www.exploit-db.com/exploits/18412/
-> 
-> Plugin is disabled in WordPress (doesn't show up in http://wordpress.org/extend/plugins/), but SVN can be found from here: http://plugins.svn.wordpress.org/kish-guest-posting/trunk/
-> 
-> File http://plugins.svn.wordpress.org/kish-guest-posting/trunk/readme.txt says:
-> 
-> """
-> = 1.2 =
-> security update for Uploadify Script
-> """
-> 
-> But I haven't tested (yet) if that is valid fix for the vulnerability.
-> 
-> - Henri Salo
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2012-1125 for this issue.
+On 08/28/2012 09:19 AM, Marcus Meissner wrote:
+> Hi,
+> 
+> The hash collision problem can also be found in the C# Mono
+> implementation.
+> 
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3414 
+> describes the issue for the Microsoft .NET runtime, but as the
+> issue is also in the Mono implementation it needs a different CVE
+> there.
+> 
+> References: https://bugzilla.novell.com/show_bug.cgi?id=739119 
+> https://github.com/mono/mono/commit/2ab1a051058fee5ea3aec2e071fba7000b693488
+>
+> 
+https://github.com/mono/mono/commit/c3e088bf2fc22d66d0f17b74676de366f661c3eb
+> 
+> Ciao, Marcus
 
--- 
+Please use CVE-2012-3543 for this issue.
+
+
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQPQh2AAoJEBYNRVNeJnmTO/UQALbSaUvcdAKvWfQBawGMKpPL
+BwchHbYhaTXeC0oPtW6lfSTg7DrzaAN0YPazw1+RsIWaHgyzZbLUdsze1rkVQRuB
+KQOXLs7IDo0pjBoPNotVxeVLDjf/giPhAC6hum5M8/hw+PJNE0c7d0W6QyESFWP8
+X9bRDIRDmUvd+Wy5H7+/UkPXn5I6cNoQxL0Xb4xgNNIgZfctbSP6sD0zYtmWUCRR
+yDhYuhOs9WTWID+6Jte31Du3dBSQQPTWqPbaBf9a0EnsnLw3qk63f9m20Xb6CUYU
+CPR/ji40/k7EfjiJRNR6c7Zpar0+otl0s+um3ADIAUUktEt//4FRcMNltzfKH4xY
+ezPOqoob09J0hlfjoidQIJFN+Prtujh2Yd+LQbN5Kd2ibQQ+rcNVsKQjh2gUZivP
+jcPL7DmCED9Wj2FhYpx+8XKH3nMpl+rWYJ6FwS8tl9HSuFD2xYyrtiIDgCsWb9dY
+Wxj4rycT7zqHDrTXT/qj/Qk6JB0tOxmWnikjbv5NQ1DrpJJwO3ZA2hR9co9dT7cl
+x+WWeIdd2NrEqanzckHbrG4sOMCM5tYJo3zSy5ggZHc++56C/SKKe7lsUj/d6xcF
++IYk3eDbSsSJ/0FYUJJ6FnMZfNxM15z36gpMF/4aO35KxGPHf3d2aY8MDlxjjzJn
+Ickbw3tnRrszvw7YwdzD
+=HcSG
+-----END PGP SIGNATURE-----
