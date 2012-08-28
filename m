@@ -1,52 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/03/5
-Message-ID: <501C11CE.1040206@redhat.com>
-Date: Fri, 03 Aug 2012 12:00:46 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/8
+Message-Id: <201208280107.20720.geissert@debian.org>
+Date: Tue, 28 Aug 2012 01:07:20 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: gnome-screensaver 3.4.2 locked only active screen
+Subject: Re: CVE request: letodms multiple issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tuesday 28 August 2012 00:49:51 Kurt Seifried wrote:
+> Welp if someone summarizes it I'll assign CVE's happily =).
 
-On 08/03/2012 07:12 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> (FYI ... if no one shipped g-s 3.4.2, it probably does not need a
-> CVE. openSUSE 12.2 fixed it during development.)
-> 
-> gnome-screensaver 3.4.2 (the only version affected) had the
-> screenlock on multi-display settings only locking the screen with
-> active focus. The other displayscreens staid unlocked and usable.
-> 
-> https://bugzilla.gnome.org/679441
-> 
-> Ciao, Marcus
+As per EDB-ID: 20759, there are at least the following issues:
 
-The bug entry shows multiple people complaining so looks like it's out
-there. Please use CVE-2012-3452 for this issue.
+> 1. Reflected XSS in Login Page.
+But in fact it's not just the login page. However, since it's the same kind 
+of vulnerability, I'd just assign one for all the out/ reflected XSS'.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 2. Stored XSS in Document Owner/User name (when viewing user document).
+> 3. Stored XS in Calendar.
+Perhaps those two could be covered by only one id.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+> 4. Change Password CSRF.
 
-iQIcBAEBAgAGBQJQHBHOAAoJEBYNRVNeJnmToAkP/0MSpx/h5wMy418bALPn0kmK
-6nXkem9mvSsURW6LMvlOIscvWcCOLL90orV5HQQnfRf2zoxfWaSEylYxwCuWenFq
-nVMDBcc8kehBcyc1NrFNEyKiSS640/hvlBUjUtwIsYHFmkTnYa24M507LEhs/5tn
-Ey/t5KqNtWt5xCyvrU9tEjcv4lWfW700sDMYl9TgDIDBu6CLHAPDWmAvbTUugaL9
-RvFnaFaXfb8fLF3h2dJuxMEr0vFn3l//tdtHBi4N4v8u5Q1+uOii0skFObw+SZis
-4CRAfGi9t4ss5Vcp8RjuSBngQmHSXVssoETRnRBT00QgK52V2NVELLQy1QeG0nUr
-6Z6mcwX2Vi/AA4T0oIDEh5WHYrZyYkQ1EOZ5XmE65DLqykmAQzfAw21A9e6W7unq
-UH8FseAZCBGdjn0slgjKbtSO15GiUmtQ9ir6VURf8khkzxRJsAC4MF1UWvspjshA
-HDVUf67bLfgMnoGs44li0xujDB7v6nwRizwy5siZm6kaid/B8PxBjRWU6i8IRWfP
-O1HQ2p/HCmRVs3nIcJonaeGRfhBK6ooXasfiYKrKOjhSWd5tMt5HcfSsIA+H1blO
-z68n5DgIhiuZA+SQmhQHKAgkQYY4DHmjDMozKE4pUNxR+VNZziXVpwWor9dl7NQU
-JEbKXtUjdkT45fbfp8Ke
-=B99R
------END PGP SIGNATURE-----
+And this one definitely needs its own id.
+
+
+If one is to review the code base, there are probably many more. The changes 
+made to the SQL queries are just a hint.
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
