@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/30/3
-Message-ID: <50164D0F.9010105@suse.de>
-Date: Mon, 30 Jul 2012 10:59:59 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/11
+Message-ID: <CAC8HS2EdCCfBhibB3y_QWL0WLX_Dyhua=WUPR0vOLBuHuRodMQ@mail.gmail.com>
+Date: Tue, 28 Aug 2012 09:50:41 +0100
+From: "Simon L. B. Nielsen" <simon@...eBSD.org>
+To: Raphael Geissert <geissert@...ian.org>
+Cc: oss-security@...ts.openwall.com, secteam@...ebsd.org
+Subject: Re: CVE for FreeBSD SCTP remote DoS?
 Content-Type: text/plain; charset=utf-8
 
-Florian Weimer wrote:
-> On 07/17/2012 12:08 PM, Florian Weimer wrote:
-> 
->> Note that GNU libc will likely change the name to secure_getenv.
->> Upstream does not want to document __secure_getenv as-is.
-> 
-> This will be part of glibc 2.17.  autoconf instructions are available here:
-> 
-> <http://sourceware.org/glibc/wiki/Tips_and_Tricks/secure_getenv>
+On Tue, Aug 28, 2012 at 7:25 AM, Raphael Geissert <geissert@...ian.org> wrote:
+> Hi everyone,
+>
+> There appears to be a remote DoS (via a NULL pointer dereference in the
+> kernel) vulnerability in FreeBSD's SCTP implementation[1].
+>
+> Has a CVE id been assigned to it already?
+>
+> [1]http://www.exploit-db.com/exploits/20226/
 
-Now the next step would be to make glibc automatically use secure_getenv
-when running setuid root and require programs to explicitly call
-insecure_getenv() or something like that :-)
-
-cu
-Ludwig
+I don't think have one gotten assigned, but probably should. Probably
+best to go to Mitre to make sure we don't accidentally get a
+duplicate. Feel free to requeste one, or I can do it later. Please cc:
+secteam@...ebsd.org on any request to minimize risk of confusion.
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Simon L. B. Nielsen
+Hat: FreeBSD Security Officer
