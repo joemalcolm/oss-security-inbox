@@ -1,21 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/14
-Message-ID: <20120328182647.20aaaf4f@hsalkjdhsa>
-Date: Wed, 28 Mar 2012 18:26:47 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/10
+Message-ID: <20120828140853.GA15518@suse.de>
+Date: Tue, 28 Aug 2012 16:08:53 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: egroupware before 1.8.002 various security issues
+Subject: CVE-Request: apache2-mod_php5 AddHandler content confusion
 Content-Type: text/plain; charset=utf-8
 
-http://comments.gmane.org/gmane.comp.web.egroupware.german/33144
+Hi,
 
-"
-1. Fixes regarding security issues like 'local file inclusion', 'sql 
-injection', 'reflected xss' and 'open redirect'.
-"
+So far I have not seen any CVE for the recent
+"apache2-mod_php5 remote code execution due to multiple extension feature of 'AddHandler's"
+where you can treat a blah.php.gif as a PHP script due to sloppy
+configs. [1]
+
+Can someone assign a CVE? At the quick look, I cant see who actually
+discovered this.
+
+Sebastian
+
+[1] https://bugzilla.novell.com/show_bug.cgi?id=775852
+
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
