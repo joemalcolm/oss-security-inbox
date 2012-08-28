@@ -1,67 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/12/5
-Message-ID: <5078265A.3070408@redhat.com>
-Date: Fri, 12 Oct 2012 08:16:58 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: libproxy PAC downloading buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/1
+Message-ID: <1613029028.21951072.1346113627373.JavaMail.root@redhat.com>
+Date: Mon, 27 Aug 2012 20:27:07 -0400 (EDT)
+From: David Jorm <djorm@...hat.com>
+To: "oss-security " <oss-security@...ts.openwall.com>
+Subject: CVE Request: Java 7 code execution 0day
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi All
 
-On 10/12/2012 08:02 AM, Matthias Weckbecker wrote:
-> On Friday 12 October 2012 15:46:47 Kurt Seifried wrote:
->> On 10/12/2012 02:43 AM, Tomas Hoger wrote:
->>> Hi!
->>> 
->>> libproxy 0.4.9 fixes a buffer overflow reported by Tomas Mraz:
->>> 
->>> http://code.google.com/p/libproxy/source/detail?r=853 
->>> https://groups.google.com/forum/?fromgroups=#!topic/libproxy/VxZ8No7mT0E
->>
->>
->>> 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4504
->> 
->>> Upstream announcement also mentions another issue -
->>> CVE-2012-4505. It is related, but different problem that was
->>> found in pre-0.4 versions while investigating if they were
->>> affected by CVE-2012-4504.
->>> 
->>> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4505
->> 
->> Please use CVE-2012-4521 for this issue.
-> 
-> Wasn't this rather a CVE notification than a CVE request? At least
->  it looked like this to me. The announcement mentions two CVE.
-> 
-> Matthias
-> 
+A 0-day flaw exploited in the wild has been reported to affect Java 7:
 
-Please REJECT CVE-2012-4521, sorry I literally just woke up and can't
-read so good it seems. Mea culpa.
+http://blog.fireeye.com/research/2012/08/zero-day-season-is-not-over-yet.html
+http://pastie.org/4594319
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+This issue was confirmed to allow unsigned applet to bypass Java applet restrictions and run arbitrary code on users' systems. A lot of public information is now available for this flaw:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+http://www.h-online.com/security/news/item/Warning-on-critical-Java-hole-1676219.html
+http://www.deependresearch.org/2012/08/java-7-0-day-vulnerability-information.html
+https://community.rapid7.com/community/metasploit/blog/2012/08/27/lets-start-the-week-with-a-new-java-0day
+https://github.com/rapid7/metasploit-framework/commit/52ca1083c22de7022baf7dca8a1756909f803341
 
-iQIcBAEBAgAGBQJQeCZaAAoJEBYNRVNeJnmTw/4QALxRjQNmDcaTVp3F1J+dESnU
-JZLy2QX22cfgXIj6SW4bZI8CMSCfUHfiYsPcOMTnSNsKpCZIb/HonhIfqyuRQilU
-ZLuPiA9DsUqlgD7MXCsQIXbSia3oNusWgh7Me5ntaA601mWFZFS9E3HWM4UY1m7W
-iq7LuF2Q+9ZKvgw9kETIYAUnjo78ZtqYImBaE1ZAS2+vxTuIg30hbt3eMBksgsW8
-LPYgA6REetSkyi6kxoV02avhcASBh20mIvrABH0KWqXr6+Ivw4BxUddbXbnwTYJP
-eZvei439bypDnU6t+a+Jqd2MFIWNifSyqsGu3gkgX2P72xDGMBhUVdX/bNu3ditI
-SBo3DfH+vueE4wclQhlRyu6apBna4kPXnJM2wtiK1k+ND7HNUT/H5z8isLA0m4NH
-Ci5jpHtq8OQTFxlpwjmHfhWERsRhWI/JDfkKWu/ovR836hNolBCU8/2UihV4MQKO
-Uivf3/JbkkIB1BM55Yv5uUVEIVjxT6mzEFWjUbP0PLrQlKa6SFAXRRtYTHk/hnCt
-h1qInmrzrovwZiansGs9Sm4X6gW2N+0hiAsMJUb6PuTRlqGqKfwmc0HexxbCpOw1
-yQ/k9Z/PBHMVhiVlro7sFdHUqeak60cIDRXJzamOG96HlQC0W3TJ8QXJQgFdySBL
-uZ26meQPR3om/cvPe1m8
-=GvzZ
------END PGP SIGNATURE-----
+This flaw does not have a CVE ID assigned. I contacted Oracle asking if they have assigned one, but got no response. Can someone please assign a CVE ID to this flaw?
+
+Thanks
+-- 
+David Jorm / Red Hat Security Response Team
+
