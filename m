@@ -1,26 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/6
-Message-Id: <201208280037.11197.geissert@debian.org>
-Date: Tue, 28 Aug 2012 00:37:10 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/7
+Message-ID: <503C5BFF.9090509@redhat.com>
+Date: Mon, 27 Aug 2012 23:49:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jan Willamowius <jan@...lamowius.de>
-Subject: Re: information request on security bug fix in GNU Gatekeeper 3.1
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE request: letodms multiple issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Saturday 25 August 2012 03:29:59 Jan Willamowius wrote:
-> But you are right, the possibility to create an unlimited number of
-> connections each with its own thread handling it is the issue that
-> creates an easy possibility for a DOS attack.
+On 08/27/2012 11:12 PM, Raphael Geissert wrote:
+> On Monday 27 August 2012 20:32:16 Kurt Seifried wrote:
+>> On 08/27/2012 02:43 PM, Raphael Geissert wrote:
+>>> Multiple vulnerabilities have been found in LetoDMS[1]. Could
+>>> CVE ids be assigned, please? Thanks in advance.
+> [...]
+>>>> major security update which fixeѕ lots of possible XSS and
+>>>> CSRF
+>>>> 
+>>>> attacts
+>> 
+>> That's two sets of vulns, can you send me the links to the code 
+>> updates? I'm assuming they are in 
+>> http://mydms.svn.sourceforge.net/viewvc/mydms/ somewhere?
+>> Thanks.
+> 
+> Not helpful, it's all in: 
+> http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=853
+>
+>  Cheers,
 
-Thanks for the details. It would be great if you mentioned the CVE id that 
-Kurt assigned on the announcement web page.
+Welp if someone summarizes it I'll assign CVE's happily =).
 
-Thanks again.
 
-Kind regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQPFv/AAoJEBYNRVNeJnmTKNYQAIB32eJHAlSy2QpKKHwMmhzd
+MKJQGtjhylmMainr5c3TapFibCYypov7/cmNHQcpH8taC7iwOvg0lPqEp815gK7p
+MCtvT+hS8DhnxGaUZkrQYoryJorKtk8rHdhIy3GJHoFRcdRPwR2VK2ZPUygeh4+c
+izrwt6oLo1GCABM3+sCOl4zhJJSAfYqflHg6co190HlQLQjs2xlQbA4NkZPbQeP/
+SD8VQxWhvFnFgLy5wXn58NyONOYNegkzJ1/islPMac5+cwDhu0Kay4cIn3KW5V0/
+pRe1ePz6KFe/8/GbiUCbGKvuD65AzK9LHis2JjqAqtz69DoJ6EsY1v6Tb047XCwZ
+A5guJbs/i9nLH4vw7gIfGczaGW3mNdkQl8U0NlNjfEg59hyPRJcMVZhoiRI98JFX
+7XtVveK5cmpkC+eyx4frRlgeT7T2rE7khUdEdH8n1m71O7z/gaFWojXTHWNLOJ2h
+Hu0UkDQ84eMoDMS/GRoO0vaOcSJBwlvsk1NwcI8Dvg2jS3pCMy7SuN6K1aFRTn6f
+9P6hF++0uQKobgMXWRTDBDskU/C2s0j+IomjcCQtlRHHiZBsgIlaH+ofYTeV1p9Z
+7rYcRK3N+xwmU3zoEI4acpR40xD3dnUfIZ1tHeuXgG7A6oGSP3tQKLrHXAnT4GqU
+jjIqR4fuJDmD1T6RYrtW
+=jVGZ
+-----END PGP SIGNATURE-----
