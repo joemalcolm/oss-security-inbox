@@ -1,34 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/4
-Message-ID: <20120302065827.GA3858@foo.fgeek.fi>
-Date: Fri, 2 Mar 2012 08:58:27 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/29/7
+Message-ID: <CAATyssdfnVaVGoB=wLhcsD58fCB4u9m=HipDfEzNbb=UaAo=LQ@mail.gmail.com>
+Date: Wed, 29 Aug 2012 20:48:00 +0200
+From: "Simon ." <bofh666ftw@...glemail.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Joomla core information disclosure 1.7.1
+Subject: [icinga-web] rmtmp-files.sh
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 01, 2012 at 10:14:40PM -0700, Kurt Seifried wrote:
-> On 03/01/2012 02:07 PM, Henri Salo wrote:
-> > Hello,
-> > 
-> > It seems that this issue does not yet have CVE-identifier.
-> > 
-> > http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
-> > 
-> > I can't never be sure with Joomla so maybe someone wants to verify this before assigment.
-> > 
-> > - Henri Salo
-> 
-> Looks like you asked for one for 20111001
-> (http://seclists.org/oss-sec/2011/q4/89) but I can't find a request for
-> 20111002 anywhere.
-> 
-> For Joomla! core information disclosure 20111002 please use CVE-2011-4937.
-> 
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+Hi all,
 
-http://seclists.org/oss-sec/2012/q1/524 so the CVE seems to be CVE-2011-3629. Sorry again for the hassle. I think CVE-2011-4937 is now duplicate. How do we get Joomla's security personnel to request CVE-identifiers by themselves and add them to advisories? They do belong to oCERT.
 
-- Henri Salo
-ps. SORRY :)
+Icinga-web (icinga.org)
+
+I have found rmtmp-files.sh being called from the Makefile.
+This only works, if it will either be piped trough sh or the
+variable RMTMP_FORCE is set. Neither is the case. But,
+there is still a bug in the script.
+
+ls
+foo.bak  important.nak  rmtmp-files.sh
+sh -x rmtmp-files.sh ". -iname *.nak -o"
++ PATTERN='-iname .DS_Store -o -iname Thumbs.db -o \
+-iname *~ -o -iname ._* -o -iname *.bak'
++ ACTION=-print
++ DIR='. -iname *.nak -o'
+++ find . -iname important.nak -o -iname .DS_Store -o \
+-iname Thumbs.db -o -iname '*~' -o -iname '._*' -o -iname foo.bak
++ for F in '`find $DIR $PATTERN`'
++ REPLY=
++ [[ ! -n '' ]]
++ echo -n 'Delete ./important.nak'
+Delete ./important.nak+ [[ -n '' ]]
++ [[ -n '' ]]
++ [[ '' == \y ]]
++ for F in '`find $DIR $PATTERN`'
++ REPLY=
++ [[ ! -n '' ]]
++ echo -n 'Delete ./foo.bak'
+Delete ./foo.bak+ [[ -n '' ]]
++ [[ -n '' ]]
++ [[ '' == \y ]]
++ exit 0
+
+Testing for $1 as a directory should somehow fix this.
+
+
+Greetings
+Simon
