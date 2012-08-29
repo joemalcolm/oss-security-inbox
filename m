@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/19
-Message-ID: <20120103223903.GA11131@ngolde.de>
-Date: Tue, 3 Jan 2012 23:39:03 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/29/2
+Message-ID: <891129010.23135020.1346254751784.JavaMail.root@redhat.com>
+Date: Wed, 29 Aug 2012 11:39:11 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+Cc: oss-security@...ts.openwall.com, Gerald Combs <gerald@...eshark.org>, Jan Safranek <jsafrane@...hat.com>, Martin Wilck <martin.wilck@...fujitsu.com>
+Subject: CVE Request -- wireshark (X >= 1.6.8): DoS (excessive CPU use and infinite loop) in DRDA dissector
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Solar Designer <solar@...nwall.com> [2012-01-03 02:58]:
-> On Tue, Jan 03, 2012 at 12:33:01AM +0100, Nico Golde wrote:
-> > P.S. if anyone has a clue on why that script still works with dropbear, even 
-> > though it already seems to implement per-ip based connection counting...
-> 
-> Does it still work?  I was not able to reproduce that.  I built Dropbear
-> 2011.54, generated an RSA host key with "./dropbearkey -t rsa -f
-> dropbear_rsa_host_key" and started the service with "./dropbear -r
-> dropbear_rsa_host_key -p 2222". 
+Hello Kurt, Steve, Gerald, vendors,
 
-Ignore my P.S., I tested this again and the patch works as expected.
-Sorry for the confusion...
+  a denial of service flaw was found in the way Distributed Relational Database Architecture (DRDA) dissector of Wireshark, a network traffic analyzer, performed processing of certain DRDA packet capture files. A remote attacker could create a specially-crafted capture file that, when opened could lead to wireshark executable to consume excessive amount of CPU time and hang with an infinite loop.
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+Issue found by: Martin Wilck
 
-Content of type "application/pgp-signature" skipped
+Upstream bug report:
+[1] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7666
+
+Reproducer:
+[2] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7666#c0
+
+References:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=849926
+
+Affected versions: Seems to affect wireshark 1.6.x versions and
+                   later (1.0.x and 1.2.x definitely aren't affected)
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
