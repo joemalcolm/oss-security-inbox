@@ -1,66 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/23
-Message-ID: <50CA662D.6080600@redhat.com>
-Date: Thu, 13 Dec 2012 16:35:09 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/29/5
+Message-Id: <201208291326.35248.geissert@debian.org>
+Date: Wed, 29 Aug 2012 13:26:34 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: opus codec before 1.0.2
+Subject: php header() header injection detection bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 12/13/2012 02:29 PM, Hanno Böck wrote:
-> On Tue, 11 Dec 2012 11:02:15 -0700 Kurt Seifried
-> <kseifried@...hat.com> wrote:
-> 
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
-> 
->> On 12/11/2012 05:32 AM, Hanno Böck wrote:
->>> http://lists.xiph.org/pipermail/opus/2012-December/001846.html
->>> 
->>> sounds like a low-severity security issue:
->>> 
->>> "Opus 1.0.2 fixes an out-of-bounds read that could be triggered
->>> by a malicious Opus packet by causing an integer wrap-around in
->>> the padding code. Considering that the packet would have to be
->>> at least 16 MB in size and that no out-of-bounds write is
->>> possible, the severity is very low."
->>> 
->>> Fixed in opus 1.0.2.
-> 
->> What's the security impact? does the service crash?
-> 
-> I don't know any details, just read the release announcement and
-> it sounded security relevant.
-> 
-> This is the commit: 
-> http://git.xiph.org/?p=opus.git;a=commit;h=466c879a063e77941b95a6a0298905ba707667ac
->
->  Sorry, I don't know more.
+Reviewing a list of CVE ids that were assigned from the Debian CNA pool, I 
+noticed there is one [id] for php5 that hasn't been made public yet the 
+issue has already been re-re-reported and in this one last round finally 
+fixed.
 
-No problem, not assigning for now unless someone comes up with a
-security impact/additional info/etc.
+I'm talking about https://bugs.php.net/60227 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+It was independently reported by two persons but as of this time their 
+reports (#54182 and #54006) are still hidden behind the "security bug" 
+curtain of PHP's bug tracker. Back when they were reported, I had assigned 
+the following id: CVE-2011-1398 "header injection detection bypass."
+Note that the id only applies to the CR bypass part of the issue.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Then it came this other report (#60227, originally reported as #60028 by the 
+same person but tagged security, which hid it too), which lead to finally 
+fixing the bug (but please beware of the original fix by reading [1]).
 
-iQIcBAEBAgAGBQJQymYtAAoJEBYNRVNeJnmTTQUP/jjV257wSvsTrrQ4bzZlRd/i
-yMotxGpZcCca+mKnGX8JT5fMOOvirVwB4VIXgOdFBS5JLYtSFTQR8yxRMBQxztrU
-qeQ+acv3BZEvc/jq/lvw9BE2uICwTzMLVgUZLP8MslmwdOLKrSFOxEftmoFFpxBF
-XQa4Yck1NdQms3tWCu/kblj7dAt0neYdKsdUthlvD0BGCyO5fpWVNNxdNlgBsINf
-0KUDAahC3dy14g7IIeWfaFHUq5Z5JHfYkbIXUdEl/GcdZHQkcKgC13sNCmeROYAZ
-8/8cFe9GEwHGwrtbYB9IFxu4Uqo6G2pIWQNsTmM9hgtj2kdZ8qiZjM+hAKvU+ojQ
-zH6ZhWP4ruqkaOFJj5/3MJaVvzitHcKVA0D5J/F7BMwwhFYtnL9YMn67dAHcY1ZW
-TraEWWyIXxmeTWi0kn8Yb+qOKLCmVdsO4viiP0bZdXcovCs3WmCtbgfXP0pPi2Po
-Dk77wt/MUkwRbpfhzOBDrj7+z3rfMa2Qp+YLaBux2O1gGgUdNa4h1DrfwsieajvS
-KwuRe47Mb/82wSI7L9l+ikdeV1k/N1pfmyxcLw6iExJgAhDDG2IE8kIFHqbFCDzU
-76RUYEb6UCxGjdSDgeaJzZsByE1Y3Haup6Ai7uJYMP7ENfXzx+lsh+uRXPQWZnRz
-KMR9Q2yU9X2TyWGQf7qd
-=heyf
------END PGP SIGNATURE-----
+Unless I missed something, the CR bypass issue was never assigned a CVE id 
+once it became public. Please do correct me if I'm wrong.
+
+[1] http://article.gmane.org/gmane.comp.php.devel/70584
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
