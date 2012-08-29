@@ -1,42 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/5
-Message-ID: <508ECA88.7040902@gentoo.org>
-Date: Mon, 29 Oct 2012 14:27:20 -0400
-From: Sean Amoss <ackle@...too.org>
-To: cve@...re.org, "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com,  Gentoo Linux Security Team <security@...too.org>, xtophe@...eolan.org
-Subject: VideoLAN TiVo Demuxer Duplicate CVEs (CVE-2011-5231 and CVE-2012-0023)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/29/3
+Message-ID: <87zk5dy3dl.fsf@mid.deneb.enyo.de>
+Date: Wed, 29 Aug 2012 20:11:50 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2012-3509: objalloc_alloc integer overflows in libiberty
 Content-Type: text/plain; charset=utf-8
 
-Steve, MITRE, vendors:
+Sang Kil Cha discovered that _objalloc_alloc does not guard the
+addition of CHUNK_HEADER_SIZE to the length against overflow.  This
+can cause _objalloc_alloc to return a pointer to a memory region which
+is smaller than expected.
 
-It appears that there may be two CVE's for the same issue:
+The pointer alignment arithmetic in the objalloc_alloc macro misses an
+overflow check as well, with similar consequences.
 
-CVE-2011-5231 - Double free vulnerability in the get_chunk_header
-function in modules/demux/ty.c in VideoLAN VLC media player 0.9.0
-through 1.1.12 allows remote attackers to cause a denial of service
-(crash) and possibly execute arbitrary code via a crafted TiVo (TY) file.
+GCC bug:
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-5231
+http://gcc.gnu.org/bugzilla/show_activity.cgi?id=54411
 
-References to http://www.videolan.org/security/sa1108.html
+Patch under review:
 
-=======================================================================
+http://gcc.gnu.org/ml/gcc-patches/2012-08/msg01986.html
 
-CVE-2012-0023 - Buffer overflow in VLC TiVo demuxer
-
-CVE Assignment: http://www.openwall.com/lists/oss-security/2012/01/03/12
-
-References http://www.videolan.org/security/sa1108.html in assignment above
-
-
-Thanks,
-Sean
--- 
-Sean Amoss
-Gentoo Security | GLSA Coordinator
-E-Mail	  : ackle@...too.org
-GnuPG FP  : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (295 bytes)
+(I believe GCC has the master copy of this file, but does not use it
+itself.  libiberty is part of binutils and GDB, too.)
