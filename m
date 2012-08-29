@@ -1,34 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/30/2
-Message-ID: <4F262B5F.4070100@redhat.com>
-Date: Sun, 29 Jan 2012 22:32:15 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/29/6
+Message-ID: <503E5F51.2080808@redhat.com>
+Date: Wed, 29 Aug 2012 12:28:33 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: (maybe) CVE request: libvpx before 1.0 crasher
+CC: Raphael Geissert <geissert@...ian.org>, secteam@...ebsd.org
+Subject: Re: CVE request: FreeBSD SCTP remote DoS
 Content-Type: text/plain; charset=utf-8
 
-On 01/28/2012 06:39 AM, Hanno Böck wrote:
-> libvpx (webm library) has released a new version that fixes a
-> crasher bug: 
-> http://blog.webmproject.org/2012/01/vp8-codec-sdk-duclair-released.html
->
->  I'm not 100% sure if and in what situation crash bugs qualify as 
-> security issues.
-> 
-> However, I tend to think that this one does. libvpx is used in
-> browsers and crashing browsers seems an issue to me. Also, it could
-> be used to crash automatic media re-encoding-services (e.g.
-> backends of video websites like youtube).
-> 
-> So I'd request a CVE.
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yeah generally speaking crashes in file parsers used by other
-applications (especially web browsers =) are generally a problem (I'd
-be pretty annoyed to lose 40 tabs all at once).
+On 08/28/2012 01:39 PM, Raphael Geissert wrote:
+> On Tuesday 28 August 2012 03:50:41 Simon L. B. Nielsen wrote:
+>> On Tue, Aug 28, 2012 at 7:25 AM, Raphael Geissert
+>> <geissert@...ian.org>
+> wrote:
+>>> There appears to be a remote DoS (via a NULL pointer
+>>> dereference in the kernel) vulnerability in FreeBSD's SCTP
+>>> implementation[1].
+>>> 
+>>> Has a CVE id been assigned to it already?
+>>> 
+>>> [1]http://www.exploit-db.com/exploits/20226/
+>> 
+>> I don't think have one gotten assigned, but probably should.
+>> Probably best to go to Mitre to make sure we don't accidentally
+>> get a duplicate. Feel free to requeste one, or I can do it later.
+>> Please cc: secteam@...ebsd.org on any request to minimize risk of
+>> confusion.
+> 
+> Kurt, could you please assign one?
+> 
+> Thanks in advance.
+> 
+> Kind regards,
 
-Please use CVE-2012-0823 for this issue.
+Sorry thought this was going to mitre, had to make sure they didn't
+assign one yet.
 
--- 
+Please use CVE-2012-3549 for this issue.
+
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQPl9RAAoJEBYNRVNeJnmTs7YP/3g+fl8JXye6WO1l5fP+nWnq
+y5DCW/QPKyrDjCIBZaMkdwSJoULWmoZTYg60atYyvmYIIOIJ0rny0JRVmJzFbTni
+lz0rOQFZz4W1X0AJicHx2B08ItB2Gpza1kMW0YlTH3fL5Mm+mt1e87r6/GSxgNHr
+JvA5Dw/3FF8p4MnRsDyDhgWicHUFi5Ir42q3vWk/EUqGvx9g4lHZrDQ9Be0yAP/4
+ebQt3w6/wnMgEL4FS15f5KswZKZ3lesFgNTY8I2xPv0GqUHryyf3I3VSdACB/kqm
+L/I0KOADP1yTL3eViIs7Jn6kuUYo74K9PDXT6SI0mkkJPXkbEUpquh8rtdkXxN6l
+samtvfNCFaGbgStXO4F3SEMBaojkgnWp9/KkdfaQV/VPOG+rUVR/yX7YRuDDcpU9
+eeeuJuumzMXbqrYBmt1oh5SYefxD/2MRRjb56VkP6MncbKMCIsAz+vFGCXrpO9a3
+4dzDZ/wxV93tSP48SQzvEhQCIyuFZqfahyKgDx5u1D0H5asY2qLEHeo8ZFQsGMlP
+gmLejzhlZterpdFRB/++zmwkst58Wyj1PtEhsOpYooRHSeUv8WBmJCHJLFzV/3nA
+3Rm+uhw1D/MNUnNigYh/8IsLanidOkLvIOGrKhVv2UyiwuJ0U3hA4aXGbgxXr+aj
+1l1yZmn1KTLlP3kpT6Fo
+=WlKT
+-----END PGP SIGNATURE-----
