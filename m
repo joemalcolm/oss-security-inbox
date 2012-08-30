@@ -1,26 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/9
-Message-ID: <20120511200613.GA26142@inutil.org>
-Date: Fri, 11 May 2012 22:06:14 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/30/3
+Message-ID: <20120830150435.GA11405@openwall.com>
+Date: Thu, 30 Aug 2012 19:04:35 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mahara
+Subject: Re: Stripe Capture the Flag
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-please assign a CVE ID for this issue in Mahara, which was released as 
-http://www.debian.org/security/2012/dsa-2467:
 
-| It was discovered that Mahara, the portfolio, weblog, and resume builder, 
-| had an insecure default with regards to SAML-based authentication used 
-| with more than one SAML identity provider. Someone with control over one 
-| IdP could impersonate users from other IdP's.
+Thank you all for the feedback on this sort of postings.  Besides the
+feedback we've seen in here, I also got two off-list replies, both from
+active list members (who wanted to keep the number of postings in this
+thread down, hence did not post to the list):
 
-Upstream bug is:
-https://bugs.launchpad.net/mahara/+bug/932909
+One person suggested that CTF announcements be approved selectively -
+most CTF announcements rejected (especially those requiring physical
+presence and scheduled for a specific time, since few people are
+able to participate in those), but some interesting ones accepted
+(especially online infosec games available to play any time).
 
-Upstream commit:
-http://gitorious.org/mahara/mahara/commit/f07be6020e70fa8f53cd77fdcd63e7fd7ff8aaea
+The other person felt strongly that all of them should be rejected, so
+that we have a high-quality discussion list.
 
-Cheers,
-        Moritz
+(The above is my interpretation of the responses.  I am not posting them
+verbatim as I'd need to ask permission first, which I am too lazy to do.)
+
+On Fri, Aug 24, 2012 at 08:29:10AM +0200, Filip Palian wrote:
+> As many may think, it's not cve-designation list only (obviously I
+> may be wrong about that).
+
+This list is definitely not meant to be limited to CVE assignments.
+I'd like to see more discussion in here - preferably of specific
+technical issues rather than of policies and such (thus, I'd like this
+message I am posting now to be more of an exception than the rule).
+
+> In the other hand, it would be sad to see oss-security list turning
+> into the place, where people are writing walktroughs, spoilers and
+> asks for help (which IMHO would be unavoidable).
+> Filtering all the garbage could be overhelming for moderators.
+
+Well, we're not receiving any of these so far, and in fact let me dare
+to post this link:
+
+http://www.reddit.com/r/netsec/comments/z188v/stripe_web_security_ctf_is_over_i_wrote_up/
+
+which in turn includes links to several writeups / walk-throughs for
+Stripe CTF.  Warning: those who want to play the CTF for real should
+avoid visiting those links prematurely.
+
+> Maybe you will consider launching a dedicated list for CTFs only?
+
+I'm not seeing enough demand for this.  Besides, doesn't such a list
+already exist?  I must admit I'm not aware of one.  Perhaps not only for
+CTFs, but also for other "similar" stuff we're rejecting: conference and
+(e-)magazine CFPs, (e-)magazine issue announcements, repeated security
+tool announcements (new versions).  It'd have to be limited to those
+"weird" topics only, and exclude postings that would be on topic for
+oss-security and other lists. %-)  (Excluding other topics would be
+difficult as any posting may result in discussion that would include
+postings on-topic for another list.  A (bad) solution could be to keep
+that list announcement-only, rejecting any follow-ups.)  Would anyone
+want to be on that list?  What could it be called?
+
+Alexander
