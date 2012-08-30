@@ -1,101 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/4
-Message-ID: <505186AB.8090404@redhat.com>
-Date: Thu, 13 Sep 2012 01:09:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Andrew Nacin <nacin@...dpress.org>, Hanno Boeck <hanno@...eck.de>, security@...dpress.org
-Subject: Re: CVEs for wordpress 3.4.2 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/30/6
+Message-ID: <503F8991.9040505@redhat.com>
+Date: Thu, 30 Aug 2012 11:41:05 -0400
+From: Russell Bryant <rbryant@...hat.com>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2012-013] Keystone, Lack of authorization for adding users to tenants (CVE-2012-3542)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/12/2012 11:49 AM, Andrew Nacin wrote:
-> On Wed, Sep 12, 2012 at 1:04 PM, Kurt Seifried
-> <kseifried@...hat.com> wrote:
-> 
->> On 09/12/2012 04:38 AM, Hanno Boeck wrote:
->>> I can't find CVEs assigend for the issues fixed in wordpress 
->>> 3.4.2.
->>> 
->>> http://wordpress.org/news/2012/09/wordpress-3-4-2/
->>> 
->>> 
->>> Sadly, the information is quite limited: "Version 3.4.2 also
->>> fixes a few security issues and contains some security
->>> hardening. The vulnerabilities included potential privilege
->>> escalation and a bug that affects multisite installs with
->>> untrusted users. These issues were discovered and fixed by the
->>> WordPress security team."
->>> 
->>> I suggest assigning two: 1. potential privilege escalation 2. 
->>> problem with untrusted users on multisite installations unless 
->>> someone has more information.
->> 
->> Can security@...dpress.org provide clarification on this please?
-> 
-> 
-> The second one there is CVE-2012-3383. 3.4.1 remained affected;
-> fixed in 3.4.2.
-> 
-> We are more specific on our version pages. From 
-> http://codex.wordpress.org/Version_3.4.2:
-> 
-> * Fix unfiltered HTML capabilities in multisite (this is
-> CVE-2012-3383) * Fix possible privilege escalation in the Atom
-> Publishing Protocol endpoint
+OpenStack Security Advisory: 2012-013
+CVE: CVE-2012-3542
+Date: August 30, 2012
+Title: Lack of authorization for adding users to tenants
+Impact: Critical
+Reporter: Dolph Mathews (Rackspace)
+Products: Keystone
+Affects: Essex, Folsom
 
-Please use CVE-2012-4421 for this issue.
+Description:
+Dolph Mathews reported a vulnerability in Keystone. When attempting to
+update a user's default tenant, Keystone will only partially deny the
+request when a user is not authorized to complete this action. The API
+responds with 401 Not Authorized and the user's default tenant is not
+changed. However, the user is still granted membership to this new
+tenant.The result is that any client that can reach the administrative
+API (deployed on port 35357, by default) can add any user to any tenant.
 
-> * Allow operations on network plugins only through the network
-> admin
+Fixes:
+Folsom:
+https://github.com/openstack/keystone/commit/c13d0ba606f7b2bdc609a7f388334e5efec3f3aa
+2012.1:
+https://github.com/openstack/keystone/commit/5438d3b5a219d7c8fa67e66e538d325a61617155
 
-Please use CVE-2012-4422 for this issue.
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3542
+https://bugs.launchpad.net/keystone/+bug/1040626
 
-> Details for the other two:
-
-Thanks for the details
-
-> * AtomPub allowed contributors to publish posts, which is normally
-> reserved for users of an author role or higher. This should be
-> considered low risk, low impact. An additional mitigating factor is
-> that AtomPub is off by default and rarely enabled. (In WordPress
-> 3.5, AtomPub will no longer be a part of core.)
-> 
-> * For multisite, plugins that must be activated network-wide could
-> be activated by a non-network administrator. This is only if they
-> were already installed by a network administrator, but left
-> inactive. This could also only occur if the network administrator
-> allowed individual site administrators to manage plugins -- by
-> default, this is not the case, and it is rare. Again, not 
-> particularly high risk or impact.
-> 
-> Regards,
-> 
-> Andrew Nacin Lead Developer WordPress
-> 
-
+Notes:
+This fix will be included in the folsom-rc1 development milestone and in
+a future Essex (2012.1) release.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+Russell Bryant
+OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQUYarAAoJEBYNRVNeJnmT2roP/0hahIE+kTjQzB2dVeyOR6vK
-Ro0npwJsEXX3T1+5pJYRWNMuMcblWqF2u76qOzLb5RMmuzYgKgO83C8TeoEh4Ec/
-v46bLImZ0d1007Q4tBq0XJSKT84qDCWg4DQRD7uvCA+viamYYtlkSZ98Rm0erMMS
-IIKq2cvav+WSGrr/Xfl+Q0z0I2nZTQVh8qZ3gxlyvLeIJM8HcxvvYbZWvaPx3GZp
-8xn5Hto5w+L3XLnrH0KI10g3svUpiRu9F7pFtdOo0PwWHja+tBkIVLqshCardijC
-eicgTxwzueKrA6iBUWgazxxkGXH03QvGYSz+3i2uy4InNFF4ygQWM3gOYNfK8M7B
-ZXNc1x/aeExjXVahkg505bAT7GhzvN4GymzNui8TT92vvGqqWO9k9GNRspwZ6YfT
-TnpEFAf4I4jSLaSArwnwu68ESLd7vTU42dKhOR/fQtxy7OHSjWfzqm+nBOCyUv0A
-LViGOn4wYKp+aTD86drDBBGFlshEyGURHRwUAV9twG8xu3fFF8hW5x/zDZ64RCac
-tt/L5oOgfa0v1QgNfsk/CCs0ey08QHQJZCxQDM2jl3q4T3eHuKKlyVYe+dKcKboH
-Tp6N3FogISlfsHwRju0K7NHI4ocnVxE8Dp//nRoPblq3ZZ+cbA57Sx2zaumXRVHC
-lB2EKrwcV1fLmf4PIEab
-=Z5q5
+iEYEARECAAYFAlA/iZEACgkQFg9ft4s9SAZ0zQCeKEqxWbDFum/f6l00H0x6FL2L
+QEEAn3eer5owk4/lEktxTMrdIhtnyaaL
+=vdh7
 -----END PGP SIGNATURE-----
