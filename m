@@ -1,86 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/9
-Message-Id: <E1T9DXH-0005Qg-SS@xenbits.xen.org>
-Date: Wed, 05 Sep 2012 11:12:43 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 16 (CVE-2012-3498) - PHYSDEVOP_map_pirq index vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/30/7
+Message-ID: <CAATyssfZTc0W2-6F3xixDz3RRbYHPbKoVzx3rL0cOoC1_URAGw@mail.gmail.com>
+Date: Thu, 30 Aug 2012 19:54:18 +0200
+From: "Simon ." <bofh666ftw@...glemail.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [icinga-web] rmtmp-files.sh
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-            Xen Security Advisory CVE-2012-3498 / XSA-16
-                             version 3
+sure, sory for late reply:
 
-               PHYSDEVOP_map_pirq index vulnerability
+https://git.icinga.org/?p=icinga-web.git;a=blob;f=bin/rmtmp-files.sh;h=8212061cb7d6b4ccff855230ff3878e02f060249;hb=602daf47a000db4eab2848b0af4a3080d1328fcf
 
-UPDATES IN VERSION 3
-====================
+or see latest release.
 
-Public release.  Credit Matthew Daley.
 
-ISSUE DESCRIPTION
-=================
-
-PHYSDEVOP_map_pirq with MAP_PIRQ_TYPE_GSI does not range check
-map->index.
-
-IMPACT
-======
-
-A malicious HVM guest kernel can crash the host.  It might also be
-able to read hypervisor or guest memory.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen systems running HVM guests.  PV guests are not vulnerable.
-
-The vulnerability dates back to Xen 4.1.  Xen 4.0 is not vulnerable.
-4.1, the 4.2 RCs, and xen-unstable.hg are vulnerable.
-
-MITIGATION
-==========
-
-This issue can be mitigated by ensuring that the guest kernel is
-trustworthy, or by running only PV guests.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch will resolve the issue.
-
-CREDIT
-======
-
-Thanks to Matthew Daley for finding this vulnerability (and that in
-XSA-12) and notifying the Xen.org security team.
-
-PATCH INFORMATION
-=================
-
-The attached patches resolve this issue
-
-  Xen unstable                                  xsa16-unstable.patch
-  Xen 4.1, 4.1.x                                xsa16-xen-4.1.patch
-
-$ sha256sum xsa16-*.patch
-f8db42898620112c8e77bf116645d650b3671d4ccc49adcad09c7b4591d55cab  xsa16-unstable.patch
-4b76d554b23977443209e45d3a2404d63695eb3020ff87a8e16e5e25cbddff31  xsa16-xen-4.1.patch
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQRyVFAAoJEIP+FMlX6CvZkqkH/2k5sdGWVThawtjkpTfx8L3T
-d0QnlJYstbvGxNkRvaafj32jApGkHWwr/Rd4w1MPxXXJOU6bmXjKKXAugVj0wl5Z
-PZeVtek46S3sSNCavLH7kL1SVZoCikEH2+kv9edGhKOXxO3C+8FkM+HvoZU7tQco
-ppUhEfINP9WidXlWSEmK2nhZdvrLW7KeqHTQmwx6AC1mUE0YdaF2oTZRPyOgRwIx
-quYJ3hLiQiQD3eUV56iqNO19/D4jpPibBG33yurdzahRivuLTb7XD+QfKfEDZ1WC
-SVqIRJha84QBjHLTtPIgmjyF8ysUXnPLol1NTxpIBFX98OCw9Ery0Zic/poFjcc=
-=7hrh
------END PGP SIGNATURE-----
-
-Download attachment "xsa16-unstable.patch" of type "application/octet-stream" (936 bytes)
-
-Download attachment "xsa16-xen-4.1.patch" of type "application/octet-stream" (1054 bytes)
+On Thu, Aug 30, 2012 at 8:52 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 08/29/2012 12:48 PM, Simon . wrote:
+>> Hi all,
+>>
+>>
+>> Icinga-web (icinga.org)
+>>
+>> I have found rmtmp-files.sh being called from the Makefile. This
+>> only works, if it will either be piped trough sh or the variable
+>> RMTMP_FORCE is set. Neither is the case. But, there is still a bug
+>> in the script.
+>
+> Can you post a link to the files in question? Thanks.
+>
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+>
+> iQIcBAEBAgAGBQJQPw2gAAoJEBYNRVNeJnmTQD0QALY/L25Zdr6Stkho8GL4Ce3p
+> iwOcj2D/NFxO/bybUodEz6LIhFiCwzgbJUfCQeubL0GeH87b52ECCBtQByu9pLdU
+> 66gd6YHfLD1cnQ85Qo9+N1LlJ5CXcLxwvXiRqdRJK2sA/Tis+LXpRRLpsDar5QEo
+> MFLfGaT+KMZ017II1GyyCQWvKP/U+KA6ClWaBhf5uXPi+Nfni7XnBR6cUHg/LEnU
+> A2FwJk35IlxS9KmmOMCFBUKi5tZr2zJMVO9qUw55mqGmoc3JonMDaFU8kU8J/UAB
+> olSLz7JZVAcRI5bqWmuQ7YPxNFg1rJCsDP7yu8nks7nbnrKOK1/Fnj6Vq8H3t/of
+> xIOhpCkHW/yrtMnh2g8m8JUJk7Eg5RfcnlcL8qxIvO6fLCgYHraJuSl5njhdJblQ
+> omzrS2DvwdcL2ghAHcWMPPlaU9cerm247sqLCyuAlyp+t01hsdlfXbbRnpOWRTbN
+> 7B+ZwAAvUubOs0tSkfBeIlC3I2j4Nag9GpU0OxJV2ywRA+WQil8EV9HV1lgvLxgw
+> YQShv1ONNR3vK0l7tDF9NhY2Npd+fNv3s71A52+9JvShEpH13P2+PHzhODQ43m4P
+> W7Fs7obOf4flo7VmO68pwZGCOxt/Rgl0Qe8aklpOpHrH8D9+QgW3cufDJd4OVzQ5
+> ig/3uHKAnkTHSR6+OW4p
+> =SHBu
+> -----END PGP SIGNATURE-----
