@@ -1,17 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/22/2
-Message-ID: <CAD1NwhiLhhbnaVwUDd6P2sPZhLdaNwkPMdWi=rLWMqisTRw9Jw@mail.gmail.com>
-Date: Fri, 21 Dec 2012 22:29:56 +0100
-From: Lukas Reschke <lukas@...tuscode.ch>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/30/1
+Message-ID: <503F0DA1.50206@redhat.com>
+Date: Thu, 30 Aug 2012 00:52:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: ownCloud
+CC: "Simon ." <bofh666ftw@...glemail.com>
+Subject: Re: [icinga-web] rmtmp-files.sh
 Content-Type: text/plain; charset=utf-8
 
-ownCloud 4.5.5 and 4.0.10 are bringing two security fixes:
-http://owncloud.org/changelog/
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-- Auth bypass in user_webdavauth and user_ldap (oC-SA-2012-001)
-- XSS vulnerability in bookmarks (oC-SA-2012-007)
+On 08/29/2012 12:48 PM, Simon . wrote:
+> Hi all,
+> 
+> 
+> Icinga-web (icinga.org)
+> 
+> I have found rmtmp-files.sh being called from the Makefile. This
+> only works, if it will either be piped trough sh or the variable
+> RMTMP_FORCE is set. Neither is the case. But, there is still a bug
+> in the script.
 
-Thanks
-Lukas
+Can you post a link to the files in question? Thanks.
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQPw2gAAoJEBYNRVNeJnmTQD0QALY/L25Zdr6Stkho8GL4Ce3p
+iwOcj2D/NFxO/bybUodEz6LIhFiCwzgbJUfCQeubL0GeH87b52ECCBtQByu9pLdU
+66gd6YHfLD1cnQ85Qo9+N1LlJ5CXcLxwvXiRqdRJK2sA/Tis+LXpRRLpsDar5QEo
+MFLfGaT+KMZ017II1GyyCQWvKP/U+KA6ClWaBhf5uXPi+Nfni7XnBR6cUHg/LEnU
+A2FwJk35IlxS9KmmOMCFBUKi5tZr2zJMVO9qUw55mqGmoc3JonMDaFU8kU8J/UAB
+olSLz7JZVAcRI5bqWmuQ7YPxNFg1rJCsDP7yu8nks7nbnrKOK1/Fnj6Vq8H3t/of
+xIOhpCkHW/yrtMnh2g8m8JUJk7Eg5RfcnlcL8qxIvO6fLCgYHraJuSl5njhdJblQ
+omzrS2DvwdcL2ghAHcWMPPlaU9cerm247sqLCyuAlyp+t01hsdlfXbbRnpOWRTbN
+7B+ZwAAvUubOs0tSkfBeIlC3I2j4Nag9GpU0OxJV2ywRA+WQil8EV9HV1lgvLxgw
+YQShv1ONNR3vK0l7tDF9NhY2Npd+fNv3s71A52+9JvShEpH13P2+PHzhODQ43m4P
+W7Fs7obOf4flo7VmO68pwZGCOxt/Rgl0Qe8aklpOpHrH8D9+QgW3cufDJd4OVzQ5
+ig/3uHKAnkTHSR6+OW4p
+=SHBu
+-----END PGP SIGNATURE-----
