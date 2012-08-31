@@ -1,25 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/9
-Message-ID: <Pine.GSO.4.64.1209111726360.22593@faron.mitre.org>
-Date: Tue, 11 Sep 2012 17:37:11 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/16
+Message-ID: <20120831182332.GA2125@jwilk.net>
+Date: Fri, 31 Aug 2012 20:23:32 +0200
+From: Jakub Wilk <jwilk@...ian.org>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Florian Weimer <fweimer@...hat.com>, Oracle Security Team <secalert_us@...cle.com>
-Subject: Re: CVE Request (minor) -- JVM: heap memory disclosure (possibly various JDKs)
+Subject: Re: [Notification] CVE-2012-3500 - rpmdevtools, devscripts: TOCTOU race condition in annotate-output
 Content-Type: text/plain; charset=utf-8
 
+* Jan Lieskovsky <jlieskov@...hat.com>, 2012-08-31, 11:22:
+>A TOCTOU race condition was found in the way 'annotate-output' (used to 
+>execute a program annotating the output linewise with time and stream) 
+>tool of rpmdevtools, a suite of scripts and (X)Emacs support files to 
+>aid in development of RPM packages, performed management of its 
+>temporary files used for standard output and standard error output. A 
+>local attacker could use this flaw to conduct symbolic link attacks, 
+>possibly leading to their ability in an unauthorized way to alter files 
+>belonging to the user running the 'annotate-output' tool.
 
-Jan/Kurt,
+The vulnerable code appears to be:
 
-The bug report appears to be describing a narrow class of vulnerability 
-that could affect multiple codebases that implement Java Virtual Machines, 
-not just Oracle's; if so, then a separate CVE would be needed for each 
-REPORTED codebase, and CVE-2012-4416 is ONLY for bug id 7196857 for the 
-Oracle-supported JVM.
+OUT=`mktemp --tmpdir annotate.XXXXXX` || exit 1
+ERR=`mktemp --tmpdir annotate.XXXXXX` || exit 1
+rm -f $OUT $ERR
+mkfifo $OUT $ERR || exit 1
 
-I wonder about the severity of the issue, but given the possibility that 
-applications might access an array before a fill, and applications may 
-depend on there being "empty" elements after initialization, this seems 
-reasonable for a CVE.
+But mkfifo will never create a FIFO over a symlink; the underlying 
+library function fails with EEXISTS when "pathname already exists. This 
+includes the case where pathname is a symbolic link, dangling or not." 
+So AFAICS it's just a DoS, not something giving the attacker "ability in 
+an unauthorized way to alter files".
 
-- Steve
+-- 
+Jakub Wilk
