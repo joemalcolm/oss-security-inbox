@@ -1,41 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/11
-Message-ID: <20121113153623.GE13903@dhcp-25-225.brq.redhat.com>
-Date: Tue, 13 Nov 2012 16:36:23 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: Marcus Meissner <meissner@...e.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- Linux kernel: mm/hotplug: failure in propagating hot-added memory to other nodes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/11
+Message-ID: <5040F938.6030004@redhat.com>
+Date: Fri, 31 Aug 2012 11:49:44 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: net: slab corruption due to improper synchronization around inet->opt
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 13, 2012 at 04:21:19PM +0100, Marcus Meissner wrote:
-> On Sun, Nov 11, 2012 at 12:19:13AM -0700, Kurt Seifried wrote:
-> > On 11/10/2012 02:36 PM, Petr Matousek wrote:
-> > > A NULL pointer dereference flaw has been found in the way a new
-> > > node's hot-added memory is propagated to other nodes zonelists. An
-> > > unprivileged local user can use this flaw to crash the system.
-> > > 
-> > > Upstream fix: 
-> > > http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=08dff7b7d629807dbb1f398c68dd9cd58dd657a1
-> > >
-> > >  References: https://bugzilla.redhat.com/show_bug.cgi?id=875374
-> > > 
-> > > Thanks,
-> > 
-> > Please use CVE-2012-5517 for this issue.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 08/31/2012 10:11 AM, Petr Matousek wrote:
+> Description of the problem: Lack proper synchronization to
+> manipulate inet->opt ip_options can lead to system crash.
 > 
-> Our Mel Gorman wonders how this is a security issue.
+> Problem is that ip_make_skb() calls ip_setup_cork() and
+> ip_setup_cork() possibly makes a copy of ipc->opt (struct
+> ip_options), without any protection against another thread
+> manipulating inet->opt. Another thread can change inet->opt pointer
+> and free old one under us.
 > 
-> A local attacker would need to wait for the administrator to hot-add
-> memory, which seems unlikely on first thought?
+> Given right server application (setting socket options and
+> processing traffic over the same socket at the same time), remote
+> attacker could use this flaw to crash the system. More likely
+> though, local unprivileged user could use this flaw to crash the
+> system.
+> 
+> Upstream fix: 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f6d8bd051c391c1c0458a30b2a7abcd939329259
+>
+>  Thanks,
 
-Yes, it is unlikely, but not impossible. This unlikely condition
-is reflected in the CVSSv2 [1] score -- AC:H -- which Red Hat uses to
-rate the severity of the security issues and also reflected in the
-impact rating [2].
+Please use CVE-2012-3552 for this issue.
 
-  [1] http://www.first.org/cvss/cvss-guide.html
-  [2] https://access.redhat.com/security/updates/classification/
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- 
-Petr Matousek / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQQPk3AAoJEBYNRVNeJnmTr4MQAN43Jo7Nzj0XlElHltuXQLip
+jLGxHN+TuetYh93t6Uw1l2x6uH87a69BRrWoBe8uiihmp0QdGiVfzVeFLEtD7wQW
+ScoXrghc9ru1fz+eZVkmB/f5/jMc4B+Yl/leqVGp+Eab8BLavdrUibQTAXOs7nmD
+vAMN95nCgEoTTiKQnf0HnSxYY67cv29duTvWpDE9N5Qr+Vf2x+0uyuXhpyPhp/ZE
+94n7cOHiimJ7hEEXafPKAjcohxvU3WhzvpbHtZ7gNNaTQfq3LRrt7E64NZKXsner
+Y3F7Q6yvN8t+96fTYqTJeRG6MJwCDLs/m2d1v1ynO+CMjsQTKLM3d+9AeBOY/RBC
+uhFtKVJe/CCokPs3+c08659ecvC+Usf+XooBiHP2tr2IKby/suBdKJXqiF9str7j
+RIpuUVS7QDKiz+73R4XXQF3K0bB2FXP7sGnFvmyWkYoyqtZUxEf2IE+svNHDPEyD
+350n6A5QHwloL1adkQ36eSX8vLLHs1Q9zYNOBhkGMHjahz+MQuUUzlDjJJq7ysNl
++QwKbdtyoTBD0P8VfbQHrt9uw86DxaJTJMJnuEy0Xz3utPy2ysC+ogo6tvn3/nTR
+pOL4Qeov82jci72oicw7Wna5mrLB4x3j3sxXbZ3Nv88J0CxRmSd3exhe0qZoDNoX
+C3TaxTH3xMFkEExW/aW5
+=OvkL
+-----END PGP SIGNATURE-----
