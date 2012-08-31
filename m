@@ -1,38 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/4
-Message-ID: <4680B31DCCC3B6428FB4E85ED9D540D00321AF@SRVEXCH.oppida.fr>
-Date: Thu, 15 Mar 2012 08:59:56 +0000
-From: Luc ABRIC <luc.abric@...ida.fr>
-To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
-CC: Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, "'jkn@...no'" <jkn@...no>
-Subject: CVE request: eZ Publish: unspecified vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/20
+Message-Id: <201208311742.15714.geissert@debian.org>
+Date: Fri, 31 Aug 2012 17:42:14 -0500
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: php header() header injection detection bypass
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-We identified 2 critical vulnerabilities affecting the eZ Publish application in both commercial and community edition.
+On Friday 31 August 2012 13:38:16 Kurt Seifried wrote:
+> Apologies in advance for my questions but I'm a bit confused (also I
+> don't have access to PHP security bugs so I'm a bit in the dark here).
+>
+> 1) I don't see #54182 and #54006 in the PHP ChangeLog, have these been
+> fixed?
+[...]
+> 2) Are you saying that the "header injection detection bypass" wasn't
+> completely fixed by the patches for #54182 and #54006, and then
+> someone reported #60227, originally reported as #60028 which has been
+> fixed needs a second CVE (e.g. the "an incomplete fix for original
+> issue led to a second fix being pushed" thing)?
 
-eZ Systems Enterprise just opened the following issue regarding the most critical vulnerability:
-http://issues.ez.no/19238
-The 2nd issue will lead to another item in the bugtracker as soon as its confirmed by eZ.
+All the bug reports I mentioned are about exactly the same issue. The non-
+public ones have been marked as duplicates of the public one.
 
-Is it enough to request a CVE ID, at least for the first issue?
+I'm aware of at least 5.4.0 RC5 containing the incomplete fix[1], but I don't 
+know in which exact RC version it made its way into. 5.4.0 beta2 was still 
+vulnerable to CVE-2011-1398.
 
-We're waiting for the editor to roll out a fix before releasing more details (including our exploit).
+PHP 5.4.1 RC1 already had the proper fix.
 
-Regards,
-Luc ABRIC.
+So, since at least PHP 5.4.0 had the incomplete fix, I guess a new CVE for 
+the incomplete fix is in order. Kurt, could you please assign one?
 
-IT Security Expert at Oppida
+Please let me know if it's not clear enough yet.
 
-6 avenue du Vieil Etang - Bâtiment B
-78180 Montigny-le-Bretonneux
-Phone: +33 (0)1 30 14 19 00
-Fax: +33 (0)1 30 14 19 09
-Mobile: +33 (0)6 26 87 62 14
-Mail: luc.abric@...ida.fr
+[1]http://svn.php.net/viewvc/?view=revision&revision=318820
+(referenced from #60227)
 
-Website: www.oppida.fr
-
-
-
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
