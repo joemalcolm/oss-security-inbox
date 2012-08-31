@@ -1,25 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/07/3
-Message-ID: <20121007163001.GA22010@kludge.henri.nerv.fi>
-Date: Sun, 7 Oct 2012 19:30:01 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/6
+Message-ID: <1848832289.24879971.1346423678094.JavaMail.root@redhat.com>
+Date: Fri, 31 Aug 2012 10:34:38 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...mla.org
-Subject: CVE request: Joomla two XSS vulnerabilities fixed in 2.5.7
+Cc: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
+Subject: CVE Request -- MediaWiki 1.19.2 and 1.18.5 multiple security flaws
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello Kurt, Steve, vendors,
 
-I think these two Joomla security issues does not have CVE-identifiers:
+  multiple security flaws were corrected in recent (1.19.2,
+and 1.18.5) versions of MediaWiki, a wiki engine:
 
-http://www.joomla.org/announcements/release-news/5463-joomla-2-5-7-released.html
-http://secunia.com/advisories/49678/
-Versions: 2.5.6 and all earlier 2.5.x versions
+1) Stored XSS via a File::link to a non-existing image
+   Upstream bug:
+   [1] https://bugzilla.wikimedia.org/show_bug.cgi?id=39700
 
-1) http://developer.joomla.org/security/news/539-20120901-core-xss-vulnerability
+   Upstream patch against the 1.19 version:
+   [2] https://bugzilla.wikimedia.org/show_bug.cgi?id=39700#c11
 
-2) http://developer.joomla.org/security/news/540-20120902-core-xss-vulnerability
-http://osvdb.org/show/osvdb/83490
-http://www.darksecurity.de/advisories/2012/SSCHADV2012-014.txt
+   Upstream patch against the 1.18 version:
+   [3] https://bugzilla.wikimedia.org/show_bug.cgi?id=39700#c12
 
-- Henri Salo
+   References:
+   [4] http://www.gossamer-threads.com/lists/wiki/mediawiki/295767
+   [5] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330
+   [6] https://bugzilla.redhat.com/show_bug.cgi?id=853409
+
+2) Multiple DOM-based XSS flaws due improper filtering of uselang parameter
+   in combination with JS gadgets
+   Upstream bug:
+   [7] https://bugzilla.wikimedia.org/show_bug.cgi?id=37587
+
+   Relevant upstream patch:
+   [8] https://gerrit.wikimedia.org/r/#/c/13336/
+
+   References:
+   [9]  http://www.gossamer-threads.com/lists/wiki/mediawiki/295767
+   [10] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330
+   [11] https://bugzilla.redhat.com/show_bug.cgi?id=853417
+
+3) CSRF tokens, available via API, not protected when X-Frame-Options headers used
+   Upstream bug:
+   [12] https://bugzilla.wikimedia.org/show_bug.cgi?id=39180
+
+   Relevant upstream patch:
+   [13] https://gerrit.wikimedia.org/r/#/c/20472/
+
+   References:
+   [14] http://www.gossamer-threads.com/lists/wiki/mediawiki/295767
+   [15] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330
+   [16] https://bugzilla.redhat.com/show_bug.cgi?id=853426
+
+4) Did not prevent account creation for IP addresses blocked with GlobalBlocking
+   Upstream bug:
+   [17] https://bugzilla.wikimedia.org/show_bug.cgi?id=39824
+
+   Upstream patch against the 1.18 version:
+   [18] https://bugzilla.wikimedia.org/show_bug.cgi?id=39824#c0
+
+   References:
+   [19] http://www.gossamer-threads.com/lists/wiki/mediawiki/295767
+   [20] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330
+   [21] https://bugzilla.redhat.com/show_bug.cgi?id=853440
+
+5) Password saved always to the local MediaWiki database and
+   possibility to use old passwords for non-existing accounts
+   in the external auth system
+   Upstream bug:
+   [22] https://bugzilla.wikimedia.org/show_bug.cgi?id=39184
+
+   Upstream patch:
+   [23] https://bugzilla.wikimedia.org/show_bug.cgi?id=39184#c1
+
+   References:
+   [24] http://www.gossamer-threads.com/lists/wiki/mediawiki/295767
+   [25] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330
+   [26] https://bugzilla.redhat.com/show_bug.cgi?id=853442
+
+6) Metadata about blocks, hidden by a user with suppression rights,
+   was visible to administrators
+   Upstream bug:
+   [27] https://bugzilla.wikimedia.org/show_bug.cgi?id=39823
+
+   Patch for 1.18 branch:
+   [28] https://bugzilla.wikimedia.org/show_bug.cgi?id=39823#c1
+
+   References:
+   [29] http://www.gossamer-threads.com/lists/wiki/mediawiki/295767
+   [30] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330
+   [31] No Red Hat bugzilla entry, since this did not affect
+        MediaWiki versions, as shipped across various Red Hat products.
+
+Could you allocate CVE ids for these?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
