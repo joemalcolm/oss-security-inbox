@@ -1,50 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/6
-Message-ID: <4FBB9A5A.9010803@redhat.com>
-Date: Tue, 22 May 2012 15:53:30 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Behdad Esfahbod <behdad@...dad.org>
-Subject: CVE Request -- mosh (and probably vte too): mosh server DoS (long loop) due improper parsing of terminal parameters in terminal dispatcher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/13
+Message-ID: <50410178.5050406@redhat.com>
+Date: Fri, 31 Aug 2012 12:24:56 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: Three CVE requests: at-spi2-atk, as31, naxsi
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   based on:
-   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871
-   [2] https://github.com/keithw/mosh/issues/271
+On 08/31/2012 11:00 AM, Steven M. Christey wrote:
+> 
+> On Fri, 6 Jul 2012, Kurt Seifried wrote:
+> 
+>>> 2. Insecure tempfile handling in the as31 assembler 
+>>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655496
+>>> Homepage: 
+>>> http://wiki.erazor-zone.de/doku.php?id=wiki:projects:linux:as31
+>>
+>>
+>>> 
+Please use CVE-2012-3379 for this issue.
+> 
+> 
+> This is a duplicate of CVE-2012-0808, assigned back in January (and
+> also requested by Moritz ;-)  CVE-2012-0808 has 20,000+ Google
+> hits, has an established description, was assigned earlier, and has
+> the same level of authoritative vendor references (i.e. bug
+> reports).  So, we will keep it.
+> 
+> So, REJECT CVE-2012-3379 as a duplicate of CVE-2012-0808.
+> 
+> - Steve
 
-A) Mosh issue:
-==============
-A denial of service flaw was found in the way mosh, a remote terminal application, performed 
-processing of parameters that have been passed to the terminal in the terminal dispatcher class 
-(previously there was no limit for the count of parameters, which were allowed to be passed to the 
-dispatcher). A remote atttacker could use this flaw to cause a denial of service (mosh server to 
-enter long for loop when trying to process the paramaters) via specially-crafted escape sequence string.
+100% my fault, I didn't check the sources I normally should have.
 
-Upstream ticket:
-[3] https://github.com/keithw/mosh/issues/271
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Relevant upstream patch:
-[4] https://github.com/keithw/mosh/commit/9791768705528e911bfca6c4d8aa88139035060e
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-References:
-[5] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=823943
-
-Could you allocate a CVE id for this? (issue confirmed by mosh upstream)
-
-B) vte issue:
-=============
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871#5
-
-there is similar issue in vte too (Gnome bug private for now):
-https://bugzilla.gnome.org/show_bug.cgi?id=676090
-
-Cc-ed Behdad Esfahbod on this post to clarify, what are the upstream plans
-regarding this report in vte and if the CVE id has been already assigned for
-it.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJQQQF3AAoJEBYNRVNeJnmTUOsQAJjoVuXpcZXO1GdewvlTfYZN
+VD+6mGS1CqcAYpPPoi35NpBjxRVSEPOxngxNXgz/CbmNDM2XP8hGxXcee4B86bH6
+SQU8ZWtdqfZG5UbSn+bOlHa7otDhcyZzaD/ebuzEoeb+KDMZB5tG2/E+APSgLaTe
+YJcVd5WATFh0aDT+NaC6/BNY+EipvJNY2lLKr2RReDZ29SGcfKMyU2t6vvvVxntn
+6zYxmWaUKGbpJwkwMIkLHoAFZoP/4Pbt33Fv//alROH5H9cOHnRTXgXkTYSRZaG8
+Y9VaFsNnZTGhlOPjdOzMJnkntAjUY/PR31yljsW21VRGlZGNbvxNceeFGnI1p0g0
+ICnXOh81UsVd9jxRrUh9y8Fls0WWNvdtgV8EZ7z/7geP8HLRTQFiO6pSvHWeVDRX
+e2EcHDVSgL5nqqk1mAl5pmJEvJF48t0CBqX3PUXaEoQJvv2BLsP1mFGb7JXGMiE+
+fPWnp2LbjM4vM9xxWILCP62GsWuJKIvbuUZQ96WiUOGyuwlfKhi7ju4wJcQ7iewW
+nYvvg2J+jXANhxSpscpsyYLGW3UCvwdCjCbkGW3hKU8udvc3h1iUARV9W8v4B19h
+HU6SNb3HAh/TXQCrIYpu6kWlj46hTy+sDy+pJip6UNjlN9yj+N2PB/cay2l0cA2O
+xtdNj2i78EpdSkveMtJ0
+=tpsu
+-----END PGP SIGNATURE-----
