@@ -1,79 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/10
-Message-ID: <3f2a01b4ac04a45461a3eeafce2e3e8f.squirrel@webmail.nux.se>
-Date: Thu, 28 Jun 2012 19:40:35 +0200
-From: "Oden Eriksson" <oeriksson@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/8
+Message-ID: <20120831161152.GE19175@dhcp-25-225.brq.redhat.com>
+Date: Fri, 31 Aug 2012 18:11:53 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+Subject: CVE Request -- kernel: net: slab corruption due to improper synchronization around inet->opt
 Content-Type: text/plain; charset=utf-8
 
+Description of the problem:
+Lack proper synchronization to manipulate inet->opt ip_options can lead
+to system crash.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 06/28/2012 12:13 AM, Pierre Joye wrote:
->> hi Kurt!
->>
->> On Thu, Jun 28, 2012 at 7:12 AM, Kurt Seifried
->> <kseifried@...hat.com> wrote:
->>
->>> So simply querying:
->>>
->>> ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
->>>
->>> e.g.:
->>>
->>> http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
->>>
->>> shows authors, SAPI modules (and their authors) and normal
->>> modules (and their authors), resulting in a significant
->>> information disclosure (version #'s can be narrowed down from the
->>> authors list).
->>>
->>> This has already been reported, but no CVE was assigned:
->>>
->>> https://bugs.php.net/bug.php?id=55497
->>>
->>> It is mentioned in http://php.net/manual/en/ini.core.php however
->>> it is enabled by default:
->>>
->>> ; Decides whether PHP may expose the fact that it is installed on
->>> the server ; (e.g. by adding its signature to the Web server
->>> header).  It is no security ; threat in any way, but it makes it
->>> possible to determine whether you use PHP ; on your server or
->>> not.
->>>
->>> ; http://www.php.net/manual/en/ini.core.php#ini.expose-php
->>>
->>> expose_php = On
->>
->> Why would it require a CVE and why is it seen as a security issue?
->> Sure it could be, like unfiltered input and the like but...
->>
->> Cheers,
->
-> I wasn't asking for a CVE for this issue (no "CVE Request: in
-> subject), This is more of a place holder/information (oss-security is
-> read by a lot of security vendors/etc, and is for more than just CVE
-> assignments) and to make sure people are aware of the issue, since I
-> wasn't even aware of it until someone pointed it out to me.
->
-> Exposing the fact that I am running PHP is one thing. Exposing exactly
-> which modules I have loaded is quite another.
+Problem is that ip_make_skb() calls ip_setup_cork() and ip_setup_cork()
+possibly makes a copy of ipc->opt (struct ip_options), without any
+protection against another thread manipulating inet->opt. Another thread
+can change inet->opt pointer and free old one under us.
 
+Given right server application (setting socket options and processing
+traffic over the same socket at the same time), remote attacker could
+use this flaw to crash the system. More likely though, local
+unprivileged user could use this flaw to crash the system.
 
-http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+Upstream fix:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f6d8bd051c391c1c0458a30b2a7abcd939329259
 
-That url does not show loaded modules. One can also use for example:
-
-disable_functions = phpinfo
-
-in /etc/php.ini
-
-So, I guess that's sufficent.
-
+Thanks,
 -- 
-Regards // Oden Eriksson
-Security team manager - Mandriva
-CEO NUX AB
-
+Petr Matousek / Red Hat Security Response Team
