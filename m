@@ -1,56 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/15
-Message-ID: <4F902D88.90607@redhat.com>
-Date: Thu, 19 Apr 2012 09:21:44 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/4
+Message-ID: <fvIo7EKaKXRprJopK5rfAGepQQY@OEL+AGsq2qOfta3tVB3M+FMK4kc>
+Date: Fri, 31 Aug 2012 14:48:27 +0400
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: CVE request: latex2man / texlive
+Cc: Gerald Combs <gerald@...eshark.org>, Jan Safranek <jsafrane@...hat.com>, Martin Wilck <martin.wilck@...fujitsu.com>
+Subject: Re: CVE Request -- wireshark (X >= 1.6.8): DoS (excessive CPU use and infinite loop) in DRDA dissector
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Wed, Aug 29, 2012 at 11:39:11AM -0400, Jan Lieskovsky wrote:
+> a denial of service flaw was found in the way Distributed Relational
+> Database Architecture (DRDA) dissector of Wireshark, a network
+> traffic analyzer, performed processing of certain DRDA packet
+> capture files. A remote attacker could create a specially-crafted
+> capture file that, when opened could lead to wireshark executable to
+> consume excessive amount of CPU time and hang with an infinite loop.
+[...]
+> Affected versions: Seems to affect wireshark 1.6.x versions and
+>                    later (1.0.x and 1.2.x definitely aren't affected)
 
-On 04/19/2012 07:20 AM, Matthias Weckbecker wrote:
-> Hi Kurt, Steve, vendors,
-> 
-> recently there has been an issue reported by Helmut Grohne in
-> latex2man. It seems to be different from what we had the other day
-> (CVE-2012-2093 [1]). Bug report of the new issue is available at:
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668779
-> 
-> Does this qualify for a CVE?
-
-Sigh. And this is why people using bash should use mktemp(), all other
-languages you probably want to use mkstemp().
-
-Please use CVE-2012-2120 for this issue.
-
-> Thanks, Matthias
-> 
-> [1] http://seclists.org/oss-sec/2012/q2/56
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPkC2HAAoJEBYNRVNeJnmT+bsP/iEFU3TXvzZyyQaP5Jrck7Yi
-rCshcwpEnhoqCMvVvFpJdc5BfDVVcPGg92TG3V2TQdBqiB0l0CfndX+Q6IIAJLTo
-hsX0fgg5rd6m6ftzDKtkQ4lGlvP3Vu32CdtJET8PInmNQ/9pVvsPvit3zYRCaBen
-osffDlB9AbKYHbdGNeMBlYMOgjbtwNhzv+on48bjVW2VzXYFpX2yLkO8B964u022
-iunDz0zCaRcAnOV1MvU9+v2mEvdb8gsGkFGvBYxKuXmv7APYYeJNr0qQS4PgxJwI
-ePf0vxjfEbNIyHmMJ57zQrDZ2EqQKySqwvqJDgSKFn49NxYzP05/qiExujKSB86r
-wws4y/xyIkkIFhFmRGNRR3i7c2vW8Zg/hvqLjZygrhkl1QLR+ZhYDIlKDYAV25Bh
-RjShj9n5gCsd+kHdpqO7lq0u+4itZV8ff67NRk+VbulQ1OV5QShvMdh0MEGScbxm
-HmQXObfZsSvtPyiYq+F1fiTO5DgiW6bhHNF7x7OZKDAlZZTfcEL5lu9vo4ocnRxP
-Czm4qWxdn1PIXyN8x33vTsn0zt/CbxwvZ8KoO53hsq7N/iOz5RxFnwd1MafUDIze
-HFQlplE7GPJxX9kL7Ax9Qs8FnSzmWifZZvwwIqUsHm0GqZ77tk85yZQ66DxDR4QI
-l3lmFq7tUJUA+CzRAjip
-=UDOO
------END PGP SIGNATURE-----
+1.5.x is affected too: 1.5.0 was the first release in which the
+handling for the multiple DRDA commands was added to.  1.4 has no
+such code, whereas 1.5.0 has the while loop that provokes DoS.
+-- 
+Eygene
