@@ -1,46 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/6
-Message-ID: <508ED058.8060608@redhat.com>
-Date: Mon, 29 Oct 2012 12:52:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>, Angela Byron <angela.byron@...uia.com>, Greg Knaddison <greg.knaddison@...uia.com>
-Subject: Re: CVE request: Drupal SA-CORE-2012-003
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/01/1
+Message-ID: <50414B42.2080901@wireshark.org>
+Date: Fri, 31 Aug 2012 16:39:46 -0700
+From: Gerald Combs <gerald@...eshark.org>
+To: Eygene Ryabinkin <rea-sec@...elabs.ru>
+CC: oss-security@...ts.openwall.com, Jan Safranek <jsafrane@...hat.com>,  Martin Wilck <martin.wilck@...fujitsu.com>
+Subject: Re: CVE Request -- wireshark (X >= 1.6.8): DoS (excessive CPU use and infinite loop) in DRDA dissector
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 10/29/2012 12:17 PM, Moritz Muehlenhoff wrote:
-> Hi, please assign a CVE ID for SA-CORE-2012-003: 
-> http://drupal.org/node/1815912
+On 8/31/12 3:48 AM, Eygene Ryabinkin wrote:
+> Wed, Aug 29, 2012 at 11:39:11AM -0400, Jan Lieskovsky wrote:
+>> a denial of service flaw was found in the way Distributed Relational
+>> Database Architecture (DRDA) dissector of Wireshark, a network
+>> traffic analyzer, performed processing of certain DRDA packet
+>> capture files. A remote attacker could create a specially-crafted
+>> capture file that, when opened could lead to wireshark executable to
+>> consume excessive amount of CPU time and hang with an infinite loop.
+> [...]
+>> Affected versions: Seems to affect wireshark 1.6.x versions and
+>>                    later (1.0.x and 1.2.x definitely aren't affected)
 > 
-> Cheers, Moritz
-> 
+> 1.5.x is affected too: 1.5.0 was the first release in which the
+> handling for the multiple DRDA commands was added to.  1.4 has no
+> such code, whereas 1.5.0 has the while loop that provokes DoS.
 
-The page says "CVE: Requested" but I haven't seen the request, so I
-can only assume it went to Mitre directly? I don't want to create
-duplicates. Angela/Greg can you confirm what's up with the CVE here?
-Thanks.
+Note that 1.5.0 wasn't an official release. Odd-numbered minor revisions
+are development releases preceding the next even-numbered (and official)
+release.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQjtBYAAoJEBYNRVNeJnmTmO4P/3BDsde7eNgjt/xkrcV5IwZz
-dw/bn2jMjkcW2Ze/UIxCTK8GmYNCSqoQ+wYcdqVOkk2Q5rp5wmtRVppM4rPO8vho
-Dy4p039WQ827Vaz1iBk8F2I136WPybTh2XPB9Yrc5XuMuTYdxJyKXkUQlgp+2sBl
-G6reX0E2vb8Yu47591rxQyF4gY6nvnA7W2cpTVM1UzmlhAjmHOeR+yoCT8BGJ79F
-wkbXT3ax/8gtzmhz39x1gqU6b5HHjUH2PdOMKxYP65NzVKyqQvPYAFMb5n5kYKFS
-woLz6UCTVfOD+wLpOiUTEDYGhJhNn1e8/LJZTdt7LxEZ9HTI+NtQ2daBfFI176MI
-6jxqCtVimouwWqJw9zv7lXc08bHHNVUQiyebaxb/mthwZ9Gn1YBIp9+8r/1o48Y2
-TV3QlPYDjtuvECyR45R6V33ts2xgR6v8UCrXg2KKovL1ArIGFiA0yHz0lTokJJX6
-FIciLmGFGFeacN0K4RluFK3K+t8PLvJ1imNE9X8oWTV7OGNcABj4uGbdZAsIwoMf
-D4eImxpnVFaMa6657PUANRUvaxm8bwhoT36ODC+zz10Hv8SA1Wu86X2I72ktwJrm
-K5RAW5ujOS6qX0pSa7Pf1gLgC6YVX+RdIredeTd7ATdO26eAbLdYRwK81jYITD4i
-OIwAc8R+GuBMi0ZmdFDc
-=10SK
------END PGP SIGNATURE-----
