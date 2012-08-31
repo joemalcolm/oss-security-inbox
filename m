@@ -1,22 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/07/3
-Message-ID: <20120407124524.GA3482@pisco.westfalen.local>
-Date: Sat, 7 Apr 2012 14:45:24 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/9
+Message-ID: <Pine.GSO.4.64.1208311255450.21616@faron.mitre.org>
+Date: Fri, 31 Aug 2012 13:00:01 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Frank Warmerdam <warmerdam@...ox.com>, zdi@...pingpoint.com, M Hjkoko <m-hjkoko@...mail.com>
-Subject: Re: libtiff tif_getimage.c integer overflow leading to heap overwrite when parsing certain TIFF files (ZDI-CAN-1221 / CVE-2012-1173)
+cc: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: Three CVE requests: at-spi2-atk, as31, naxsi
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 07, 2012 at 03:58:45PM +0400, Solar Designer wrote:
 
-> So far, I am only aware of Mandrake having announced this via
-> MDVSA-2012:054 published on April 5.  Some other distros appear to have
-> patched the issue or/and have made changelog/bug entries relating to it
-> public without issuing an advisory yet.
+On Fri, 6 Jul 2012, Kurt Seifried wrote:
 
-Not quite, the Debian update was released on the April 4:
-http://lists.debian.org/debian-security-announce/2012/msg00077.html
+>> 2. Insecure tempfile handling in the as31 assembler
+>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655496 Homepage:
+>> http://wiki.erazor-zone.de/doku.php?id=wiki:projects:linux:as31
+>
+> Please use CVE-2012-3379 for this issue.
 
-Cheers,
-        Moritz
+
+This is a duplicate of CVE-2012-0808, assigned back in January (and also 
+requested by Moritz ;-)  CVE-2012-0808 has 20,000+ Google hits, has an 
+established description, was assigned earlier, and has the same level of 
+authoritative vendor references (i.e. bug reports).  So, we will keep it.
+
+So, REJECT CVE-2012-3379 as a duplicate of CVE-2012-0808.
+
+- Steve
