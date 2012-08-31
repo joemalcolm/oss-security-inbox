@@ -1,55 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/5
-Message-ID: <507EEB6C.40506@debian.org>
-Date: Wed, 17 Oct 2012 18:31:24 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/17
+Message-ID: <50411296.2000506@mvista.com>
+Date: Fri, 31 Aug 2012 12:37:58 -0700
+From: akuster <akuster@...sta.com>
+To: Petr Matousek <pmatouse@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: net: slab corruption due to improper synchronization around inet->opt
 Content-Type: text/plain; charset=utf-8
 
-On 17/10/12 10:44, Fabian Keil wrote:
-> Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
->> On 10/16/2012 08:40 AM, Matthias Weckbecker wrote:
->>> Technically, this would also apply to Perl (at least with
->>> 5.12.3).
->> 
->> It's also the case with perl 5.14.2 (just tested). :/
+
+Petr,
+
+Is there a range of affected kernel versions?
+
+Was this issue introduced by 1c32c5ad6fac8cee1a77449f5abf211e911ff830?
+
+- Armin
+
+On 08/31/2012 09:11 AM, Petr Matousek wrote:
+> Description of the problem:
+> Lack proper synchronization to manipulate inet->opt ip_options can lead
+> to system crash.
 > 
-> At least for Perl I consider this a feature.
-
-It's difficult to reason about whether this is a bug or a feature
-without knowing the justification for treating the Ruby version as a
-security vulnerability, which was not included in the announcement.
-
-One possible justification is this: suppose a webapp writes files with
-an attacker-controlled name to the web-server-visible /uploads/
-directory, using this pseudocode:
-
-    if (filename ends with .jpg) {
-      open_for_writing(filename).write(content)
-    }
-    else {
-      error "that's not a JPEG, go away"
-    }
-
-and suppose that the web server also executes *.php files in that
-directory. Then an attacker could upload "evil.php\0.jpg", and browse
-to http://example.com/uploads/evil.php to get their payload executed.
-
-Is this what the Ruby people had in mind, or is there some other
-attack vector I'm not seeing?
-
-> if there is no white list [of characters] in the first place, the
-> Perl script probably has bigger issues.
-
-As you imply, that pseudocode is a bad idea anyway: the webapp should
-be ensuring that the filenames match a pattern more like
-/^[A-Za-z0-9_]\.jpg$/ (or not allowing user-controlled filenames at
-all), and/or the web server should be configured so it never trusts
-files in the uploads directory (either as executable code or something
-like .htaccess).
-
-Anything vulnerable to this sort of trickery is probably vulnerable to
-file-overwriting attacks via "../" path segments, too.
-
-    S
+> Problem is that ip_make_skb() calls ip_setup_cork() and ip_setup_cork()
+> possibly makes a copy of ipc->opt (struct ip_options), without any
+> protection against another thread manipulating inet->opt. Another thread
+> can change inet->opt pointer and free old one under us.
+> 
+> Given right server application (setting socket options and processing
+> traffic over the same socket at the same time), remote attacker could
+> use this flaw to crash the system. More likely though, local
+> unprivileged user could use this flaw to crash the system.
+> 
+> Upstream fix:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f6d8bd051c391c1c0458a30b2a7abcd939329259
+> 
+> Thanks,
+> 
