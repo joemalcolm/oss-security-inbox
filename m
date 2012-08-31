@@ -1,57 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/9
-Message-ID: <CANTw=MOVE0H=jqGX28Vb+DKKFC4cqxf7juoSPagc0c+TRuu3qA@mail.gmail.com>
-Date: Fri, 21 Sep 2012 11:31:47 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/1
+Message-ID: <50403E7B.1020705@redhat.com>
+Date: Thu, 30 Aug 2012 22:32:59 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+CC: Thomas Biege <thomas@...e.de>
+Subject: Re: CVE request: crowbar XSS
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 21, 2012 at 6:37 AM, Tomas Mraz wrote:
-> On Fri, 2012-09-21 at 12:20 +0200, Matthias Weckbecker wrote:
->> Hello Steve, Kurt, Vitezslav, Tomas, vendors,
->>
->> we have recently been notified about a potential issue with gpg: When files
->> are en/de-crypted the result is written world-readable by default.
->> Short example (quote from [1]):
->>
->>  # de-crypting
->>  % gpg sikrit.gpg
->>  % ll sikrit*
->>    -rw-r--r-- 1 gp users  12 Sep 17 09:41 sikrit
->>    -rw------- 1 gp users 480 Sep 17 09:40 sikrit.gpg
->>  # en-crypting
->>  % echo "my password" > sikrit
->>  % chmod go= sikrit
->>  % ll sikrit
->>    -rw------- 1 gp users 12 Sep 17 09:38 sikrit
->>  % gpg -e -r pfeifer sikrit
->>  % wipe sikrit
->>  % ll sikrit.gpg
->>    -rw-r--r-- 1 gp users 480 Sep 17 09:40 sikrit.gpg
->>
->> [1] https://bugzilla.novell.com/show_bug.cgi?id=780943
->>
->> Wouldn't one usually expect files that were previously encrypted to contain
->> sensitive content (that's probably why content is encrypted at all)? And if
->> so, shouldn't such files be only readable by certain users / group of users
->> by default? Otherwise, a file that is e.g. decrypted in /tmp might leak due
->> to the file permissions being too loose.
->>
->> I'm not quite sure whether to assign a CVE for this, so I thought I'd just
->> add a question mark behind the subject and let the list (and Kurt) decide.
->
-> I suppose the permissions respect the user's umask so I do not think
-> this is a real security issue in the gpg itself. Although using the
-> permissions of the original file when creating the decrypted/encrypted
-> one (still modified with the user's umask) would be more appropriate. So
-> in my opinion this does not warrant a CVE but improvement in the
-> upstream gnupg code would be appreciated I think.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Any security weakness can qualify for the E in CVE.  Really the point
-of CVE is increasing awareness.  So whether any issue is a very minor
-E is really immaterial, but lets give it a number so those who
-actually care can become aware and take action.
+On 08/30/2012 06:15 AM, Thomas Biege wrote:
+> 
+> Hi,
+> Matthias Weckbecker of SUSE Linux Products GmbH has found the following
+> issue in crowbar:
+> 
+> http://crowbar.test.de:3000/utils?waiting=true&file=foo'%3B})%
+> 3B}alert(document.cookie)</script><!--
+> 
+> https://github.com/SUSE-Cloud/barclamp-crowbar/commit/90e905b7668a1cc884fb70040f96c7a0a287de48
+> https://github.com/SUSE-Cloud/barclamp-crowbar/commit/a82ed926c6e3ba2b0cada213c35e4b00f34ea629
+> 
+> Cheers,
+> Thomas
 
-Best wishes,
-Mike
+Please use CVE-2012-3551 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQQD57AAoJEBYNRVNeJnmTRRwQAJQ9FNgVLZOOot7BqQeeK0V7
++/UHgz8C7i/lrNGRfoMPxg21a9nKb7ol4jzNnpeG4dHsmFdMfkXm5f3qvbvWkd+n
+zJsDd/JmNQ9bUPHRVXYyZaJhzEy+/dOxs2ItT1Fq5Bh2s1gZQT0nSIwG0ITku0K1
+NDy9/1rHSnpmJUa8asyNSWC39xBaPTW5xxqRW0SbJ/ogtzL4WhESl9Hn1+yiKzwn
+v6+/TH6Bg32P2c7WItppS6DVOVGyV+yIHlm8X1s+HbBpf1rDo6HS0/sJ/HUTp3SU
+9bnzX7X6DPdlyjIPIgJbs6Xq4F5lfytlguIahrOR3GmJoBHVl/oGrlOxaPqTUtwn
+Y/0crH3QFN9Eb6PUf9DMODTBGJ+XryD//6eXfoHrTMHBi4vUWfA3svK5GLKB1+Lj
++n/Mk0IpRPBcRtkQ1zVlwDmyixWfBeYNRVfdQiEL5yCpHO5z0sDZDiijG/6vPdZ0
+wAUEIRy6FzbuCkCrJ4nH9wtCVdvXD/gBZDUp4fhDt2vsnesg5Rv1UrROyNw19IJO
+/eatRGSWbzLCo1PdNib/nqtUsHNf3c3wsqBHASrK9jjSPvv94b97DcKoRylzD/6V
+/D21JeNc1mY50iJdIxmJXokmev4qXhS3p9uxW1NvUKs9A0YXhhWeVF13YXajtIOl
+zmOj/jXJ4jIRY0EXiYDX
+=r8Gw
+-----END PGP SIGNATURE-----
