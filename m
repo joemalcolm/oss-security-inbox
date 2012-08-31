@@ -1,39 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/1
-Message-ID: <4F696A73.3030003@ficora.fi>
-Date: Wed, 21 Mar 2012 07:43:15 +0200
-From: Jussi Eronen <juhani.eronen@...ora.fi>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/14
+Message-ID: <5041029B.60607@redhat.com>
+Date: Fri, 31 Aug 2012 12:29:47 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: contao before 2.11.4 sql injection
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hello,
-
-(Sorry for the late reply)
-
-On 03/02/2012 07:06 PM, Kurt Seifried wrote:
-> On 03/02/2012 01:32 AM, Jussi Eronen wrote:
->> You could also consider contacting us at vulncoord@...ora.fi. Our main
->> focus is on multi-vendor cases, where we feel that coordination could
->> have its benefits.
+On 08/31/2012 04:21 AM, Hanno Böck wrote:
+> bug tracker info: https://github.com/contao/core/issues/4427
 > 
-> Just curious, why is that not something@...t.fi? Why does CERT-FI not
-> run it's own email, instead using @ficora.fi?
+> Upstream changelog: 
+> http://contao.org/en/changelog/versions/2.11.html "Fixed a critical
+> privilege escalation vulnerability which allowed regular users to
+> make themselves administrators (thanks to Fabian Mihailowitsch)
+> (see #4427)."
+> 
+> I think this has no CVE yet, please assign CVE.
 
-Long story short: historical reasons. Our host organisation (FICORA,
-Finnish Communications Regulatory Authority, something like the FCC in
-the US) provides some basic services for us. We may switch to using
-cert.fi also in email at some point.
 
-- -Jussi
+Please use CVE-2012-4383 for this issue.
+
+One note/comment, in the github discussion I see:
+
+"I think it is more urgent than the previous two security fixes, but
+as you say it only works for backend users (but even if they have no
+user module available). I would not thread it as immediate release,
+but also not wait a few weeks..."
+
+so it looks like they have other issues that may need CVE's as well?
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iEYEARECAAYFAk9panIACgkQb5sSMzb1qN3RLgCeMrF20wA14AibGeH07kZLMSRW
-azMAn3XYXqfTCkOx2BThwbVG60PfNLrX
-=N6SG
+iQIcBAEBAgAGBQJQQQKbAAoJEBYNRVNeJnmTrcoP/1xMq/fkeYggmEj3jnDSORms
+u/GEr6oNVe8SYeDe89noVGJ3jxypuCvXG4alu8m+ICYluymi8v+znrjUdSeUX6zY
+7pIOd4jCI+lhzq0GFu7kDdkfyLze2LnA0gEK0iypcEjEVQWhyYavB/k2IkanXzhB
+zAAuwSrL7A05ZAWGhcfEq6N/LLHF07s4JZiGCl+p5b1FZkWqHd6CbWO57R+aymaS
+JA1g/QwqgZjhiJaeyLyczT2Bj6fAk2uPo7/2JJgfX+29S3UoiGKLFpfaI9y8EQ7r
+M5ruB7s2c2wfj1hjLw4qzV479H0x+f4+38avBuJe7tLHdOgZkB1CHLAPdZQ5j6zB
+s+vi+XPysKztG+/rXeaXW28PajIr2Qk842tPPxzhaz5HUhbO9Wcx38yisfZWGyoa
++DDlMD8h97bJyB02SwsaFhwO64kgSGDil0CyGSm+GJ85Dn3s0NZVQqdZPpGCogoF
+XXj75D9AiSHOR51/+Z9HDpI0tO63NQgi5oS04++/Ke9YoKuGv8GHzXW2szLytKHQ
+tYb4qV0u6ZhiRmmomi7h1j9Jpf9s1XIhWESXuh6JbhbNqKkRYIcEvU3gXagzpVq/
+bcY0LRQJgI8eWXpqGQ4qg9ZQh6nfFydY1xC/hnP43GYOP1mI7YoGfi6LaL30pVmV
+HcUAXdR4VMgIdmRHnX7V
+=wvPn
 -----END PGP SIGNATURE-----
