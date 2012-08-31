@@ -1,122 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/11
-Message-ID: <5005BF02.8080805@redhat.com>
-Date: Tue, 17 Jul 2012 13:37:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: laurent Montel <montel@....org>, Vincent Danen <vdanen@...hat.com>, Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com, faure@....org
-Subject: Re: CVE Request: KDE Pim
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/3
+Message-ID: <20120831103448.GA23147@inutil.org>
+Date: Fri, 31 Aug 2012 12:34:48 +0200
+From: Moritz Muehlenhoff <jmm@...til.org>
+To: michaelni@....at
+Cc: oss-security@...ts.openwall.com
+Subject: Information on security issues fixed in ffmpeg 0.11?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Michael,
 
-On 07/17/2012 02:18 AM, laurent Montel wrote:
-> Le lundi 16 juillet 2012 11:47:59 Vincent Danen a écrit :
->> * [2012-07-13 10:41:33 -0600] Kurt Seifried wrote:
->>> On 07/13/2012 06:25 AM, Marc Deslauriers wrote:
->>>> Hello,
->>>> 
->>>> Could a CVE please be assigned to the following issue:
->>>> 
->>>> Javascript and external images were being loaded while
->>>> rendering HTML email in kmail. The downloaded Javascript was
->>>> then being interpreted.
->>>> 
->>>> See:
->>>> 
->>>> https://projects.kde.org/projects/kde/kdepim/repository/revisions/dbb2f72
->>>>
->>>> 
-f4745e00f53031965a9c10b2d6862bd54>>
->>>> https://bugs.launchpad.net/ubuntu/+source/kdepim/+bug/1022690
->>>>
->>>>
->>>> 
-Thanks,
->>>> 
->>>> Marc.
->>> 
->>> This seems like a security hardening issue to me, but I'm not a
->>> KDE person so did kdepim advertise itself as not executing
->>> JavaScript/etc?
->> 
->> Doing some digging, it looks like this was introduced in kdepim
->> 4.4, and would not affect earlier versions.  Can anyone confirm
->> this?
-> 
-> No it was added in 4.6 or 4.7 when we ported to akonadi2 In 4.4 it
-> didn't use *WebKit*
-> 
-> and it didn't use same code : it used DOM::
-> 
-> '  try { // Create a DOM Document from the HTML source 
-> DOM::HTMLDocument doc; doc.open(); doc.write( htmlSource ); 
-> doc.close();
-> 
-> mIsQuotedLine = false; mIsFirstTextNodeInLine = true; processNode(
-> doc.documentElement() ); return doc.toString().string(); } '
-> 
-> So for me it's just kmail > 4.6 (we released an old 4.6-akonadi)
-> 
-> not necessary to try to fix in 4.4
-> 
-> I CC David if he has more infos.
-> 
-> I hope that it helps.
-> 
-> Security problem is that we allows to use javascript. In 4.4 we
-> don't have it.
-> 
-> 
-> 
-> Regards.
-> 
-> 
-> 
->> I'm cc'ing Laurent Montel who made the commit, and who should be
->> able to shed some light as to when the vulnerability was
->> introduced, and also answer Kurt's question above.
->> 
->> Laurent, any information you can provide would be appreciated.
->> 
->> -- Vincent Danen / Red Hat Security Response Team
+[Adding the oss-security mailing list to CC, which is used by
+all major distros to discuss security issues in open source
+software]
 
-This one is a gray area however based on my understanding of the
-following:
+http://ffmpeg.org/security.html lists several CVE ID, which
+have been fixed in ffmpeg 0.11;
 
-The rendering engine/etc used by KDE Pim didn't support JavaScript
-Things changed and JavaScript support was introduced
-The devels realize this, and quickly move to disable JavaScript.
+CVE-2012-2772, CVE-2012-2774, CVE-2012-2775, CVE-2012-2776, CVE-2012-2777,
+CVE-2012-2779, CVE-2012-2782, CVE-2012-2783, CVE-2012-2784, CVE-2012-2785,
+CVE-2012-2786, CVE-2012-2787, CVE-2012-2788, CVE-2012-2789, CVE-2012-2790,
+CVE-2012-2791, CVE-2012-2792, CVE-2012-2793, CVE-2012-2794, CVE-2012-2795,
+CVE-2012-2796, CVE-2012-2797, CVE-2012-2798, CVE-2012-2799, CVE-2012-2800,
+CVE-2012-2801, CVE-2012-2802, CVE-2012-2803, CVE-2012-2804,
 
-It seems like JavaScript was never meant to be supported in KDE Pim,
-so in light of that I'm going to assign this a CVE as JavaScript
-introduces a significant number of security issues and also violated
-the principle of least surprise.
+Do you additional information on these issues, preferably a matching git
+commit to the CVE IDs?
 
-Please use CVE-2012-3413 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQBb7/AAoJEBYNRVNeJnmTcJkP+gIW8N0N9KitiRPNUY5pNeqs
-J44di4JuUITVStptpN00+ZcV/bnySSLgfxEMHJwKRv3eQOk+CpcvaZqJLgEDXE+V
-ymY0k0UZS6vxBCu+NpqKk3EBHlNHoZHcyu+6QzDXhUDB+VdBjuze5oBkN5dlh923
-Pin14Oh1wFvlBH7RuCHdtiwooBGdsJ1nIS+3s/FdA8aUbnCdPefp6PXGYCpXRO/O
-7QAACltjdFGuzMKybWhqO6xtZcb7VAqYlqV4Bur+BKN8hDvr79LzpoTyscnwrZZA
-hFBD3T+R9NUTZHei8wkNkm9hPUntcFRJeafJjMupRcuiZAeJq/bOnYeCs+dLOFkn
-VkmcAxYlWqBCosAXD17tbTaKWOF/2Rg8C8AlmlMegjkOAoLf8vTkjMgdwf0T57a2
-7BW8PceNW+hOPi+fM6Tn2HbLNDdkdo+dSlelvw1mH62v21y/2aB99qsADtwy0g5o
-mr6Q1w+bU0vg71PcpLzUDupXlFwhJZDVm7/uPqIn8fbOxiNCaSPvYg6sw30gUxXl
-G4dJLGKynwdQE1tYZOmab40N6jrTv4XUpc59ISNOi08HUSG5ZU6JQ6DV8BJ9PKvU
-rEJsizRrOpM/2Lz3NcYWG15r1IzedJ4m6d8H45MCoCZQ0ojvJwcOErStI6UGwXJl
-BPomIYD3PlFMbTwj2MjH
-=AYwS
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
