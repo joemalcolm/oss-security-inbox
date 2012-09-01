@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/8
-Message-ID: <4F6C922A.9000206@redhat.com>
-Date: Fri, 23 Mar 2012 09:09:30 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/01/4
+Message-Id: <201209011235.35043.geissert@debian.org>
+Date: Sat, 1 Sep 2012 12:35:33 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: OpenKM 5.1.7 Privilege Escalation / OS Command Execution (XSRF based)
+Cc: security@...uts.apache.org
+Subject: CVE request: Apache Struts S2-010 and S2-011
 Content-Type: text/plain; charset=utf-8
 
-On 03/23/2012 04:00 AM, Henri Salo wrote:
-> Can I get CVE-identifiers for these two security vulnerabilities?
-> 
-> http://osvdb.org/show/osvdb/78105 COMPASS-2012-001
-> http://osvdb.org/show/osvdb/78106 COMPASS-2012-002
-> 
-> - Henri Salo
+Hi,
 
-I'm going to need some original vendor information (name, site, etc.).
+Apache Struts 2.3.4.1 fixes the vulnerabilities described in S2-010 (CSRF) 
+and S2-011 (DoS).
 
+Could CVE ids be assigned please?
+
+[1] http://struts.apache.org/2.x/docs/s2-010.html
+[2] http://struts.apache.org/2.x/docs/s2-011.html
+
+Sincerely,
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
