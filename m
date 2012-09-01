@@ -1,43 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/10
-Message-Id: <F17995E7-81C0-4976-A8F4-DC43F310CE32@oracle.com>
-Date: Fri, 15 Jun 2012 20:42:27 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/01/2
+Message-ID: <50417AA8.9040205@redhat.com>
+Date: Fri, 31 Aug 2012 21:02:00 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 9 (CVE-2012-2934) - PV guest host DoS (AMD erratum #121)
+CC: Gerald Combs <gerald@...eshark.org>, Eygene Ryabinkin <rea-sec@...elabs.ru>, Jan Safranek <jsafrane@...hat.com>, Martin Wilck <martin.wilck@...fujitsu.com>
+Subject: Re: CVE Request -- wireshark (X >= 1.6.8): DoS (excessive CPU use and infinite loop) in DRDA dissector
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 15 Jun 2012, at 19:09, Florian Weimer wrote:
-
-> * Giles Coochey:
-> 
->> On 14/06/2012 19:20, Florian Weimer wrote:
->>> * Xen org security team:
->>> 
->>>> There is no software fix for this issue. The workaround suggested by
->>>> AMD in erratum #121 cannot be applied to Xen since the relevant address
->>>> is under guest control.
->>>> 
->>>> Applying the patch will cause Xen to detect vulnerable systems and
->>>> refuse to boot.
->>> This response puzzles me.  Isn't this changing a potential denial of
->>> service (a para-virtualized guest could attempt an exploit) to a
->>> definite one (the system won't boot)?  Why is this a good idea?
->> It ensures that the user of the system is aware of the risks.
+On 08/31/2012 05:39 PM, Gerald Combs wrote:
+> On 8/31/12 3:48 AM, Eygene Ryabinkin wrote:
+>> Wed, Aug 29, 2012 at 11:39:11AM -0400, Jan Lieskovsky wrote:
+>>> a denial of service flaw was found in the way Distributed
+>>> Relational Database Architecture (DRDA) dissector of Wireshark,
+>>> a network traffic analyzer, performed processing of certain
+>>> DRDA packet capture files. A remote attacker could create a
+>>> specially-crafted capture file that, when opened could lead to
+>>> wireshark executable to consume excessive amount of CPU time
+>>> and hang with an infinite loop.
+>> [...]
+>>> Affected versions: Seems to affect wireshark 1.6.x versions
+>>> and later (1.0.x and 1.2.x definitely aren't affected)
 >> 
->> This position will only occur when the patch to the vulnerability is
->> applied (i.e. during an out of service upgrade). The admins of the
->> system should always read the release notes to patches and upgrades - 
->> otherwise they wouldn't know what else might be broken, deprecated.
+>> 1.5.x is affected too: 1.5.0 was the first release in which the 
+>> handling for the multiple DRDA commands was added to.  1.4 has
+>> no such code, whereas 1.5.0 has the while loop that provokes
+>> DoS.
 > 
-> Sure, but why refuse to boot?  Wouldn't it be sufficient to refuse
-> creating DomUs, and still create Dom0?  (Perhaps this suggestion
-> doesn't make any sense—I'm not familiar with Xen.)
+> Note that 1.5.0 wasn't an official release. Odd-numbered minor
+> revisions are development releases preceding the next even-numbered
+> (and official) release.
 
+But was it released and people downloaded it? If so it qualifies.
+Unless it's like an internal beta or not released at all it counts as
+software (otherwise Google Chrome beta and so on would never get a CVE
+=).
 
-It still makes sense.   There's no easy mechanism to let the hypervisor pass the do-not-create-domU message to dom0 so that the person creating the guest will find out.   There's also a logical problem: dom0 is itself a PV guest.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-The admin can take preventative action to disable untrusted PV guests and stopping the system booting is definitely the best way of attracting attention without having potentially difficult to diagnose problems.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-jch
+iQIcBAEBAgAGBQJQQXqoAAoJEBYNRVNeJnmTlSYQANCLIIVQ66+6azj9it7I7rx7
+2KfqP7xhQ4LNzMD+YybLUohr15DMDXQI2UxtKIo7Lgp48Pgxcu3oGaiH+D03wrhg
+28JTpdofsbKN9STWlEBVgqJymVaPQXzh18pJw3ZtpL1cvBce+y5Zh83b/A5c2uGh
+hFZCtmgjiRpua7VIp+gFj7vYaO9KqNPbuhb0V2bdQtu8E24m5n1YRQ3bvIM0/MIP
+YETD3qCSJ8GcO+VFv7uZyDjsKawsQ9icgiPjGpxyrYcZFwsbGn0PdBX06Och9Rq+
+mcq2oG3/bOgGYzZ8vWQtUkNr36lBxG7nNEaZQwAvMKyhiRG+zFMC+4kY1ZGKG6GA
+fYA+yVXjBbdgfE63HlbLFe3XUEFOiF06rmSrAPJQNBCxZqWsQ60/JwQTsPsw+63+
+yR3523RMjwzWzlY8zXeV+7OFN1wq/oqd4eNYixFTBULQhbEb1qC6Ck13xAvx7xVh
+rcnHLNV2YV5UCqCRRJqUXu+SPEMdVkmQ5PjQ/Ld9C8zz2a5KRCgdw5lV77nj4pwh
+1Ozn0B01rRbPl7JuWXo7JVEBnOoSs7WN+kcNewVdbHJiLvEtbkdL1V1Jj854iCH0
+P7v924kzWp0jA4lY1cj0/UdNLCQKV/1QhaLuYAeJB4YtRXXQXFs17efKl/1MIXwD
+PWDstArDCw4AjDuuqIUw
+=6uLd
+-----END PGP SIGNATURE-----
