@@ -1,52 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/4
-Message-ID: <508F335F.5080304@redhat.com>
-Date: Mon, 29 Oct 2012 19:54:39 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/01/5
+Message-ID: <504296AE.5080005@redhat.com>
+Date: Sat, 01 Sep 2012 17:13:50 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Mühlenhoff <jmm@...til.org>, coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: Django
+CC: Raphael Geissert <geissert@...ian.org>, security@...uts.apache.org
+Subject: Re: CVE request: Apache Struts S2-010 and S2-011
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/29/2012 05:18 PM, Moritz Mühlenhoff wrote:
-> On Tue, Oct 30, 2012 at 12:10:00AM +0100, Seth Arnold wrote:
->> Hello Kurt, Steve, all,
->> 
->> Django recently released updates 1.3.4 and 1.4.2 to address a
->> Host: header poisoning problem and incorrect HttpOnly cookie
->> documentation (only wrong in 1.4.x).
->> 
->> I believe only the header poisoning problem requires a CVE (the
->> other problem is documentation; Django application authors may
->> make a mistake in their code if they go by the faulty
->> documentation), but I thought I should mention both in this CVE
->> request email as the Django announcement mentioned both:
->> 
->> https://www.djangoproject.com/weblog/2012/oct/17/security/
->> 
->> Commits: master:
->> https://github.com/django/django/commit/9305c0e12d43c4df999c3301a1f0c742264a657e
->>
->> 
-1.4 branch:
-https://github.com/django/django/commit/92d3430f12171f16f566c9050c40feefb830a4a3
->> 1.3 branch:
->> https://github.com/django/django/commit/b45c377f8f488955e0c7069cad3f3dd21910b071
->
->> 
-> This should be CVE-2012-4520: 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=691145
+On 09/01/2012 11:35 AM, Raphael Geissert wrote:
+> Hi,
 > 
-> Cheers, Moritz
+> Apache Struts 2.3.4.1 fixes the vulnerabilities described in S2-010
+> (CSRF) and S2-011 (DoS).
 > 
+> Could CVE ids be assigned please?
 
-Thanks, good catch! BTW this is why I really, REALLY, REALLY!!! want
-the projects to request CVE's when they release security updates, it
-really prevents duplication, plus it also gets the CVE # out quickly
-and makes tracking everything way easier.
+Yes, confirmed struts 2.3.4.1 was released August 11, 2012.
+
+====
+
+> [1] http://struts.apache.org/2.x/docs/s2-010.html
+
+When using Struts 2 token mechanism for CSRF protection, token check
+may be bypassed by misusing known session attributes
+
+Please use CVE-2012-4386 for this issue.
+
+====
+
+> [2] http://struts.apache.org/2.x/docs/s2-011.html
+
+Long request parameter names might significantly promote the
+effectiveness of DOS attacks
+
+Please use CVE-2012-4387 for this issue.
+
+These don't appear to affect struts 1.2.x/1.3.x.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -54,18 +47,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQjzNfAAoJEBYNRVNeJnmTrsEQAN6G4CMQIC9sFghBcbNKqWBp
-Zmg505ZPoPeX3i97Jnte/lc/Um1pCDf9cDdwrlDhPGzmEI5+wRWmZRHGV6Dpl5V5
-826cOnCMdmcxqeKsnSq1qdELLtpHvNzwTBWNqPhUa4utY3CKbFUHpa3LLTU7ajq1
-BIezvrW3iceqUIUCelduvJexG2MNONDEmk8w7Zugr8HYMBE1Dw/rnpAD5/eFmjLb
-50M/Fu3mLhf3vmryB+FgMKpNDkmEHACtoSNBVz0c+Su2OsCIie2x/BzKD18NVbSw
-1ILZqHUonxhEIcAmFwr+UuQQPkfeX/8gL/v+jsMoAxW4Gxco8B5forFPHAyLoI94
-YFgNrK4onlTpmQwrgHGNGdcpJtg6iKEh9RfNPoTbvjb7o3thOoefVFzjbF8xPaMD
-XCLFlcnNyQQtF9f8d7rZdIllHPkLRVkLOypLHROMguC4pMdeqMYBY6SRmNj4ldtQ
-eXVtmJ7hG5mga3lXwQuKGdEogfv5cltrJa/SNnb1LaTt24SsxR9urtvQliyX8z2U
-NtWgbPMKFi3Px0NOc9lIGzfRBwaNbTbQRzilCUrH1gjwwhFC2N2RUHgD4z+L6wwu
-AA3yUS5iu2NGlQc9KshdH0vg2V8CFD5QsAlQFDfbFWUKEy6rtnnc8EyzQr360p3j
-gGL4wyk0GV/HCzLsoes/
-=XXzV
+iQIcBAEBAgAGBQJQQpauAAoJEBYNRVNeJnmTShsQAKIZvJnzfCPE8TZBy3hj265v
+vwDUwHUynvom4pEvXfORIY3ni2QmwGOD9mzUKr9WI3Qw+AGNsEjB7AeYYczxWbK/
+fmuqG5StLrZBMMZju/MseMcbgZcExom+xaas8S9/qU5aTbyx7QvAnnSO/W3xdOzy
+srEQlW4sSUrPQ3JqXJIYKMOPFoVWXKT4kpq3UF+2zQGunPRbn2FyCKzM7iWhKtKb
+XPdFYxbjKycnDlv8uKlSDeQiQVnDHfdT1jHnLVY9hao1EpF2lfOLT2OPapa5p7Td
+uRKgBNsGyIhZPKBRvSQKIs+WKD+SAFrkJ+fy01NnxGNpGUMXA/+vwMjOh+Jktbgr
+h30rJQNUtBIS83M0oL6zxj9oXKJ/rYFtCSc/XcQb3X7jdZ7vV9kKHVZlQ6yP/qCH
+mn6E0G9xzzs4FNat0rKlvSa13NQM736g9GH4stZOnzqMken7c24HizLLf3KUcXhE
+Mo/jiPUOTNufpzgdUdi+somDFKq4BPU9X4Vkiftid6BYDLruCmh+HODlUwRu6LVF
+UnGIGp1gdZAmTIS+O00TQb9Rne7PWyT+BRHHl454+k6cdIrQmyacYgKLxwBzcHCq
+jgWaDbTjS0cDsmjWMLFRGE3AIJ4wWod1vPMIQv5Tw6X25fGSRpUZqh0AVK/e8l5H
+3wFKAPZVfXNaLS74lNoW
+=bRtv
 -----END PGP SIGNATURE-----
