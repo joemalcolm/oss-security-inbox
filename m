@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/25
-Message-ID: <4F4BEC19.5040708@redhat.com>
-Date: Mon, 27 Feb 2012 13:48:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/01/3
+Message-ID: <20120901084900.GB716@gprs-internet-client-10.233.sonicduo.com>
+Date: Sat, 1 Sep 2012 12:49:00 +0400
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-CC: Mateusz Goik <mateusz.goik@...antsoft.pl>, Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>, Radoslaw Lisowski <radoslaw.lisowski@...il.com>, kontakt@...antsoft.pl
-Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+Cc: Gerald Combs <gerald@...eshark.org>, Jan Safranek <jsafrane@...hat.com>, Martin Wilck <martin.wilck@...fujitsu.com>
+Subject: Re: CVE Request -- wireshark (X >= 1.6.8): DoS (excessive CPU use and infinite loop) in DRDA dissector
 Content-Type: text/plain; charset=utf-8
 
-On 02/27/2012 09:13 AM, Mateusz Goik wrote:
-> Sorry. Tested on kadu 0.11.0..
-> 
-> Mateusz Goik.
-> 
-> On 02/27/2012 05:11 PM, Mateusz Goik wrote:
->> Hi,
->>
->> I would add it is possible - read / create files on users hdd. (using
->> the method - GET / PUT)
->> Tested on Backtrack 5 r1 (kadu 0.10.0 - compiled from source).
->>
->> Mateusz Goik
+Fri, Aug 31, 2012 at 09:02:00PM -0600, Kurt Seifried wrote:
+> But was it released
 
-Can you post a summary of the vulnerabilities and the affected
-version(s)? I'm sort of confused on this.
+Yes,
+  http://wiresharkdownloads.riverbed.com/wireshark/src/all-versions/
 
+> and people downloaded it?
+
+Can't say, but presumably -- yes.
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Eygene
