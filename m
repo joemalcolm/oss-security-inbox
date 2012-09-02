@@ -1,40 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/13
-Message-ID: <4F15E6BD.1030605@redhat.com>
-Date: Tue, 17 Jan 2012 14:23:09 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: gpw password generator giving short password at low rate
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/02/4
+Message-ID: <20120902213625.GE25092@kiste2>
+Date: Sun, 2 Sep 2012 23:36:25 +0200
+From: Michael Niedermayer <michaelni@....at>
+To: Moritz Muehlenhoff <jmm@...til.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Information on security issues fixed in ffmpeg 0.11?
 Content-Type: text/plain; charset=utf-8
 
-On 01/17/2012 02:24 AM, Yves-Alexis Perez wrote:
-> On mar., 2012-01-17 at 11:17 +0200, Henri Salo wrote:
->> On Tue, Jan 17, 2012 at 09:51:05AM +0100, Yves-Alexis Perez wrote:
->>> we were pointed at a bug in gpw (a password generator), which makes it
->>> generate shorter password than required at a rate of ~20 over 1 million.
->>> The bug is at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651510
->>> (so already public) and I'm wondering if that deserves a CVE:
->>>
->>> * gpw seems unmaintained (upstream and in Debian since around 2006)
->>> * I'm not sure people even use it
->>> * people using it interactively will notice the password has the wrong
->>> size
->>>
->>> But as it may be used in a script, then it might still be a real issue.
->>>
->>> What do people think?
->> I think this is security issue and should receive CVE. Is this program
->> used in other distributions we could notify? Has this been fixed in
->> other versions?
->>
-> Not that I know of (but I didn't know anything about gpw before reading
-> that bug report). It should be present in Debian derivatives, at least.
->
-> Regards,
-Please use CVE-2011-4931 for this issue.
+Hi Moritz
 
+On Fri, Aug 31, 2012 at 12:34:48PM +0200, Moritz Muehlenhoff wrote:
+> Hi Michael,
+> 
+> [Adding the oss-security mailing list to CC, which is used by
+> all major distros to discuss security issues in open source
+> software]
+> 
+> http://ffmpeg.org/security.html lists several CVE ID, which
+> have been fixed in ffmpeg 0.11;
+> 
+> CVE-2012-2772, CVE-2012-2774, CVE-2012-2775, CVE-2012-2776, CVE-2012-2777,
+> CVE-2012-2779, CVE-2012-2782, CVE-2012-2783, CVE-2012-2784, CVE-2012-2785,
+> CVE-2012-2786, CVE-2012-2787, CVE-2012-2788, CVE-2012-2789, CVE-2012-2790,
+> CVE-2012-2791, CVE-2012-2792, CVE-2012-2793, CVE-2012-2794, CVE-2012-2795,
+> CVE-2012-2796, CVE-2012-2797, CVE-2012-2798, CVE-2012-2799, CVE-2012-2800,
+> CVE-2012-2801, CVE-2012-2802, CVE-2012-2803, CVE-2012-2804,
+> 
+> Do you additional information on these issues, preferably a matching git
+> commit to the CVE IDs?
+
+Please recheck the page, ive added git hashes to them.
+
+[...]
 -- 
+Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
 
--- Kurt Seifried / Red Hat Security Response Team
+In a rich man's house there is no place to spit but his face.
+-- Diogenes of Sinope
 
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
