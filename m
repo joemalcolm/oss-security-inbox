@@ -1,87 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/06/9
-Message-ID: <4FCF8B67.2090202@redhat.com>
-Date: Wed, 06 Jun 2012 10:55:03 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/02/3
+Message-ID: <504398FB.5040507@redhat.com>
+Date: Sun, 02 Sep 2012 11:35:55 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Mark Hoopes <xync@...c.org>
-Subject: Re: Arbitrary File Upload/Execution in Collabtive
+To: Petr Matousek <pmatouse@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request -- kernel: request_module() OOM local DoS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/06/2012 07:02 AM, Mark Hoopes wrote:
-> This disclosure was posted to Bugtraq yesterday 
-> (http://www.securityfocus.com/archive/1/522973/30/0/threaded).  I
-> am submitting it to oss-security as a request to have a CVE ID
-> assigned.
-> 
-> TITLE: Arbitrary File Upload/Execution in Collabtive DATE:
-> 06-04-2012 PRODUCT: Collabtive Web-Based Project Management
-> Software (http://collabtive.o-dyn.de/) VERSIONS: 0.7.5, 0.6.1
-> confirmed.  All versions <= 0.7.5 probable RESEARCHER: Mark Hoopes
-> (xync@...c.org/) ADDITIONAL INFORMATION: 
-> http://xync.org/2012/06/04/Arbitrary-File-Upload-in-Collabtive.html
->
->  Vulnerability: During the upload of an avatar image for a
-> Collabtive user, the manageuser.php script checks the file type
-> using the MIME type provided in the POST request (via the
-> $_FILES['userfile']['type'] variable) rather than by extension.
-> This MIME type can be spoofed via an intercepting proxy or custom
-> POST script allowing a malicious user to upload an arbitrary file.
-> This file will be placed in a predictable web accessible path with
-> an easily determined name.  In most installations, execution from
-> this directory is not restricted which allows a remote attacker to
-> execute a PHP script uploaded this way with the privileges of the
-> web user.
-> 
-> Access to the avatar upload function is restricted to logged in
-> users, but because of Collabtive's design decisions in implementing
-> OpenID support, this is easily accomplished.  If an unknown user
-> supplies a valid OpenID v1.0 URL as the username on the login page,
-> Collabtive will automatically create a new user based on the
-> referenced credentials. That new user is not authorized to access
-> any projects, but is authorized to upload an avatar image.  This
-> allows an attacker with no other knowledge of the host site or its
-> users to exploit the vulnerability.
-> 
-> Fix: Upgrade to Collabtive v0.7.6 or greater Source: 
-> http://sourceforge.net/projects/collabtive/files/collabtive/0.7.6/collabtive076.zip/download
->
->  Release Notes: http://www.collabtive.o-dyn.de/blog/?p=426
-> 
-> Workaround: Disable script execution of the upload directory via
-> .htaccess for Apache or similar web servers.  This should apply at
-> minimum to the /files/[template]/avatar directory but can safely be
-> applied to the entire /files directory.
-> 
-> Sample contents of the .htaccess file are: Options -Indexes Options
-> -ExecCGI AddHandler cgi-script .php .php3 .php4 .phtml .pl .py .jsp
-> .asp .htm .shtml .sh .cgi
-> 
-> Note 'AllowOverride Options AddHandler' or 'AllowOverride All' must
-> be enabled in the main httpd.conf file for this directory or
-> inherited from a parent directory. See
-> http://www.mysql-apache-php.com/fileupload-security.htm
-> 
-> Additional References: 
-> http://xync.org/2012/06/04/Arbitrary-File-Upload-in-Collabtive.html
->
->  http://www.php.net/manual/en/features.file-upload.post-method.php
-> see comments for $_FILES['userfile']['type']
-> 
-> 
-> TIMELINE: April 18, 2012 - Issue reported to developers April 19,
-> 2012 - Fix committed to Collabtive github May 30,  2012 -
-> Collabtive version 0.7.6 released w/ fix June 4, 2012 -
-> Vulnerability published
-> 
+As Tetsuo Handa pointed out, request_module() can stress the system
+while the oom-killed caller sleeps in TASK_UNINTERRUPTIBLE.
 
-Please use CVE-2012-2670 for this issue.
+The task T uses "almost all" memory, then it does something which
+triggers request_module().  Say, it can simply call sys_socket().  This
+in turn needs more memory and leads to OOM.  oom-killer correctly
+chooses T and kills it, but this can't help because it sleeps in
+TASK_UNINTERRUPTIBLE and after that oom-killer becomes "disabled" by the
+TIF_MEMDIE task T.
 
-BTW very nicely formatted/informative email, well done. Also bonus
-points for offering a workaround =).
+A local unprivileged user can make the system unusable.
+
+Upstream fixes:
+(1) 70834d30 "usermodehelper: use UMH_WAIT_PROC consistently"
+(2) b3449922 "usermodehelper: introduce umh_complete(sub_info)"
+(3) d0bd587a "usermodehelper: implement UMH_KILLABLE"
+(4) 9d944ef3 "usermodehelper: kill umh_wait, renumber UMH_* constants"
+(5) 5b9bd473 "usermodehelper: ____call_usermodehelper() doesn't need
+do_exit()"
+(6) 3e63a93b "kmod: introduce call_modprobe() helper"
+(7) 1cc684ab "kmod: make __request_module() killable"
+
+According to the reporter, (1) and (4) are optional and safer to
+exclude.
+
+Acknowledgements:
+
+Red Hat would like to thank Tetsuo Handa for reporting this issue.
+
+References:
+https://bugs.launchpad.net/ubuntu/+source/linux/+bug/963685
+https://bugzilla.redhat.com/show_bug.cgi?id=853474
+
+Thanks,
+- -- 
+Petr Matousek / Red Hat Security Response Team
+
+====
+For some reason this wasn't in my email hence the new message and not
+a proper reply).
+
+Please use CVE-2012-4398 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -89,19 +59,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJPz4tnAAoJEBYNRVNeJnmTfgEQAJK6aOlQx3XH2JB1NZ2kFUn2
-XVvk8aF9fFmo2fIz0hvIhiNSwy8dhbrgisw35Cg8GfnMWQncgI/gTJUbcYKw76mb
-SsDf1iZDAFGEJYRdqyXijrbHCfFG27ZoOkEyZ1lmwDb10nIngZUt6RQBDI3dnWUn
-YVGG6EbV9a9HJjcDuKf3dsnMy8p/hXap3TNDM8p32N36KvUBAcGKEdvTmL0u9oIu
-R8bBOEqm0+Awd7a3KkmwQWar5QpcQGHrob9Gp5XG1muoeNC+CGbjvenbeWzzSVr4
-tDub2Sh3Wx61w5Ff5ppqPjd2haeV5ZOaiimGoht9E0+mrSJPY4NOCMRxIvUfd2IR
-E6Avj2bpATxBEfU5JBloh9UbqLR37WItAU49idIwDr9zqVKKG/wgUSWOTzS+47oU
-h4+eLtFovS3rNJxNZBh0OTk0uUJ3735N5LArje45SIiyxnUT0Wi7gcUV9JlV203K
-/mEVRMI/0Jvd0FYKzEeXbvRV+4HcMTiSCG6OP4SZsbIDRFMUEsQ30Nw950IN+gTb
-vcHUQEBxumK5zdBZ+zDEidEsKLjkPDiJSQ2Ng8VGSDy2rqUl9ACJnX27BSsqqZJA
-iooyA0yMbXKwTs1LjYZulDu5l11mRtAXF331QbIG4AtnD2tvE2QPjk1CMJouPE40
-ihjZQBiBHTEFTlzB8rCO
-=NwJS
+iQIcBAEBAgAGBQJQQ5j7AAoJEBYNRVNeJnmTxCAP/iAnk1EioSt9wkWZ48oF8xSJ
+/kYtqwkuCn4dAu27SN6W74WqdWImVZvkazsof4I4nYMmPzVxrR54Sq+wqy6hOCea
+v2hGTkjNdIG3aDZNHkpzzLpJUFCtLbHnH9f5Fdn/s/Xwhg1LFGsRWdA5vYlH0Kuy
+/xcV2+oysRahV5dv9M045IsQZjRQZBoMru532P5Lj8F7+O1WQ520fRLFn/VQ1fKV
+s1OFLU5Xjyhnt+irR/vFkpp2uAUmWOoo/voBoCK36bsHZdJEvOGhWNofeuUgNYmF
+5W4yia3/NXVBHEsb/5OCBIaxNvanFnji7SVisIpRe7i6xyC+rPiaFBDSoaQLXwRs
+tjy7ubYce95KCbALlZauIXc+V/uQrK5XazmGrUXcjPNymzE1SFCfKqgzdYGZ1X28
+XjizKvVCRSLsybo/RaYNd+b7wt04lXuY8XCPA1NlivMKRyvzEDpQdvCqjnV1FzfZ
+Id4WgbOUtf+Bagc6dqp/LD88T+V2AoUJ8GI1dY+7oIWX1F0n1yUQGZ62AzbZIxZG
+N/v7ro4AJEfTqSfyRzdjCiXzyC3WRDwjzmx2g9fARNvO3ydEGfB3XvKfNLZygVhS
+dwL+jAaUXvdLf7EXCFonE0mACwTrkJJdJN37ZJHz3Ub36c/+ued+vzT5+ugV5a++
+iTL0sYG0csCol8mXGF9Y
+=6mwA
 -----END PGP SIGNATURE-----
