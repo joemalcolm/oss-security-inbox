@@ -1,100 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/6
-Message-ID: <1848832289.24879971.1346423678094.JavaMail.root@redhat.com>
-Date: Fri, 31 Aug 2012 10:34:38 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/03/2
+Message-ID: <504468F6.10109@redhat.com>
+Date: Mon, 03 Sep 2012 02:23:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
-Subject: CVE Request -- MediaWiki 1.19.2 and 1.18.5 multiple security flaws
+CC: Henri Salo <henri@...v.fi>, pawel.wylecial@...il.com
+Subject: Re: CVE-request: CakePHP XXE injection
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  multiple security flaws were corrected in recent (1.19.2,
-and 1.18.5) versions of MediaWiki, a wiki engine:
+On 09/02/2012 11:35 PM, Henri Salo wrote:
+> Could you assign 2012 CVE-identifier for this issue?
+> 
+> Original advisory: http://seclists.org/bugtraq/2012/Jul/101 Vendor
+> security advisory:
+> http://bakery.cakephp.org/articles/markstory/2012/07/14/security_release_-_cakephp_2_1_5_2_2_1
+>
+> 
+OSVDB: http://osvdb.org/show/osvdb/84042
+> 
+> "CakePHP 2.1.5 and 2.2.1 have just been released. If you are using
+> CakePHP's `Xml` class, you should upgrade as soon as possible."
+> 
+> - Henri Salo
 
-1) Stored XSS via a File::link to a non-existing image
-   Upstream bug:
-   [1] https://bugzilla.wikimedia.org/show_bug.cgi?id=39700
+Please use CVE-2012-4399 for this issue.
 
-   Upstream patch against the 1.19 version:
-   [2] https://bugzilla.wikimedia.org/show_bug.cgi?id=39700#c11
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-   Upstream patch against the 1.18 version:
-   [3] https://bugzilla.wikimedia.org/show_bug.cgi?id=39700#c12
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-   References:
-   [4] http://www.gossamer-threads.com/lists/wiki/mediawiki/295767
-   [5] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330
-   [6] https://bugzilla.redhat.com/show_bug.cgi?id=853409
-
-2) Multiple DOM-based XSS flaws due improper filtering of uselang parameter
-   in combination with JS gadgets
-   Upstream bug:
-   [7] https://bugzilla.wikimedia.org/show_bug.cgi?id=37587
-
-   Relevant upstream patch:
-   [8] https://gerrit.wikimedia.org/r/#/c/13336/
-
-   References:
-   [9]  http://www.gossamer-threads.com/lists/wiki/mediawiki/295767
-   [10] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330
-   [11] https://bugzilla.redhat.com/show_bug.cgi?id=853417
-
-3) CSRF tokens, available via API, not protected when X-Frame-Options headers used
-   Upstream bug:
-   [12] https://bugzilla.wikimedia.org/show_bug.cgi?id=39180
-
-   Relevant upstream patch:
-   [13] https://gerrit.wikimedia.org/r/#/c/20472/
-
-   References:
-   [14] http://www.gossamer-threads.com/lists/wiki/mediawiki/295767
-   [15] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330
-   [16] https://bugzilla.redhat.com/show_bug.cgi?id=853426
-
-4) Did not prevent account creation for IP addresses blocked with GlobalBlocking
-   Upstream bug:
-   [17] https://bugzilla.wikimedia.org/show_bug.cgi?id=39824
-
-   Upstream patch against the 1.18 version:
-   [18] https://bugzilla.wikimedia.org/show_bug.cgi?id=39824#c0
-
-   References:
-   [19] http://www.gossamer-threads.com/lists/wiki/mediawiki/295767
-   [20] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330
-   [21] https://bugzilla.redhat.com/show_bug.cgi?id=853440
-
-5) Password saved always to the local MediaWiki database and
-   possibility to use old passwords for non-existing accounts
-   in the external auth system
-   Upstream bug:
-   [22] https://bugzilla.wikimedia.org/show_bug.cgi?id=39184
-
-   Upstream patch:
-   [23] https://bugzilla.wikimedia.org/show_bug.cgi?id=39184#c1
-
-   References:
-   [24] http://www.gossamer-threads.com/lists/wiki/mediawiki/295767
-   [25] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330
-   [26] https://bugzilla.redhat.com/show_bug.cgi?id=853442
-
-6) Metadata about blocks, hidden by a user with suppression rights,
-   was visible to administrators
-   Upstream bug:
-   [27] https://bugzilla.wikimedia.org/show_bug.cgi?id=39823
-
-   Patch for 1.18 branch:
-   [28] https://bugzilla.wikimedia.org/show_bug.cgi?id=39823#c1
-
-   References:
-   [29] http://www.gossamer-threads.com/lists/wiki/mediawiki/295767
-   [30] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330
-   [31] No Red Hat bugzilla entry, since this did not affect
-        MediaWiki versions, as shipped across various Red Hat products.
-
-Could you allocate CVE ids for these?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJQRGj2AAoJEBYNRVNeJnmTZs8QANnwWgywgyQEVVTB/cZo/GWG
+sCtVM/1tvipO3hwb67Bde1zaILYf75XMFtrpTwmIUaK3AKdzwMxg0RJt4A0Xuu6L
+MlXbDuEsXXiFrkRg+sxmlIM1cOBcWkktOCnyvduff/RR9MElpETq8B9z8/8lONDt
+L8YfEHszpUeLPIDwg+6g/IdcdaLfk3ZK7lVGgEzls8+nJJh1oKWb4kKbM7sLOYrL
+W9Fo0SysfYQtJCeObcAdgtytMBZHjZWoxTGTYN/uOJkOg6/kgT7yx1UkZe0gFBjA
+xvbKec1jaIGXhrukZ59gcGJx//wQV9dOLKOnozwTXGlKWMcnWW15gvVHUadjWxOp
+EYvU5p5NbBZ3IAvI730M2+bAsjyJH8jJKzFc+vMlhgVHOo6asrtkz6bUxUO4Xysi
+bRW7DlO5TC9wyu4okmbqGZnuF81JAan/k88RGbmfLf2JlwmCXMayumsTXv/GTm7B
+fM9Q9zfOgOuk09aefkT/QjcrSstQs9qbsGx7crQd46OT36/kP6Pms7yalGtb0lZW
+eFqQwWRnThd6pfEXWuMkcSbseA0BIlGWaFvzgBwYGxvojhme7tLd3k3qaQ1vPAPi
+ffVtOgnadUifSqP7p3NNq6juDz+fySLtefIGAnaB4Mfr9VViczvD6pYe2sGKzP4X
+S9VsUFjhNa3Rqd9G8c51
+=TRQe
+-----END PGP SIGNATURE-----
