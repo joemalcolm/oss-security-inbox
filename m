@@ -1,30 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/4
-Message-ID: <20120306095010.6420c670@hsalkjdhsa>
-Date: Tue, 6 Mar 2012 09:50:10 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/03/1
+Message-ID: <20120903053546.GA25405@kludge.henri.nerv.fi>
+Date: Mon, 3 Sep 2012 08:35:46 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mantisbt before 1.2.9
+Cc: pawel.wylecial@...il.com
+Subject: CVE-request: CakePHP XXE injection
 Content-Type: text/plain; charset=utf-8
 
-Release notes:
-http://www.mantisbt.org/blog/?p=156
-"MantisBT 1.2.9 release delivers 92 fixes and improvements including
-security fixes"
+Could you assign 2012 CVE-identifier for this issue?
 
-In the detailed changelog here
-http://www.mantisbt.org/bugs/changelog_page.php?version_id=140
-I find two security issues mentioned:
-http://www.mantisbt.org/bugs/view.php?id=10124
-"Bug in access_has_bug_level"
+Original advisory: http://seclists.org/bugtraq/2012/Jul/101
+Vendor security advisory: http://bakery.cakephp.org/articles/markstory/2012/07/14/security_release_-_cakephp_2_1_5_2_2_1
+OSVDB: http://osvdb.org/show/osvdb/84042
 
-and
-http://www.mantisbt.org/bugs/view.php?id=13816
-"0013816: Enhance history when copying issues"
+"CakePHP 2.1.5 and 2.2.1 have just been released. If you are using CakePHP's `Xml` class, you should upgrade as soon as possible."
 
-
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+- Henri Salo
