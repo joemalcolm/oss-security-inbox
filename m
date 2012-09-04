@@ -1,37 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/14/2
-Message-Id: <20120114160325.8128bd2f8d97a740dd1ac1c0@quodvis.net>
-Date: Sat, 14 Jan 2012 16:03:25 -0300
-From: Ignacio Espinosa <osu@...dvis.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/04/1
+Message-ID: <XUljpV38GK2eqN0MrQONPEseWkI@OEL+AGsq2qOfta3tVB3M+FMK4kc>
+Date: Tue, 4 Sep 2012 11:51:16 +0400
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-Subject: Re: CVE affected for PHP 5.3.9 ?
+Subject: Re: php header() header injection detection bypass
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 13 Jan 2012 13:50:59 -0700
-Kurt Seifried <kseifried@...hat.com> wrote:
-> [...]
-> Ok I'm still not clear on what the security claim is. Are you saying you
-> can cause arbitrary text output via XSL/XML mangling tricks? And
-> combined with having a script that uses something like "<sax:output
-> href="0wn3d.php" method="text">" you can put arbitrary text content into
-> this file which could then result in the file being parsed? The problem
-> is you'd have to write a script that does this, writes to a local file
-> with a file ending in .php or .shtml or whatever, in which case it's
-> pretty clear the script writer MEANT to do that. Again I'm still not
-> clear on what/how a security boundary is being crossed. How does this
-> elevate privileges or give you remote access that you wouldn't already
-> if you can upload arbitrary PHP scripts?
+Good day.
+
+Fri, Aug 31, 2012 at 05:42:14PM -0500, Raphael Geissert wrote:
+> All the bug reports I mentioned are about exactly the same issue. The non-
+> public ones have been marked as duplicates of the public one.
 > 
+> I'm aware of at least 5.4.0 RC5 containing the incomplete fix[1], but I don't 
+> know in which exact RC version it made its way into. 5.4.0 beta2 was still 
+> vulnerable to CVE-2011-1398.
 > 
+> PHP 5.4.1 RC1 already had the proper fix.
 
-You don't need to upload arbitrary php scripts to make this works. Just uploading a crafted xslt file will create (before patch)  a file with arbitrary content, php code for example, as write-access is set for default.
+As for PHP 5.3/5.2, the three patches are of concern,
+ [1] http://svn.php.net/viewvc/php/php-src/branches/PHP_5_3/main/SAPI.c?r1=321634&r2=322263
+ [2] http://svn.php.net/viewvc/php/php-src/trunk/main/SAPI.c?r1=321634&r2=323033
+ [3] http://svn.php.net/viewvc/php/php-src/branches/PHP_5_4/main/SAPI.c?r1=323986&r2=323985&pathrev=323986
 
--- snip --
-        <sax:output href="0wn3d.php" method="text">
-        <xsl:value-of select="'&lt;?php system(\$_GET[&quot;cmd&quot;]);?&gt;'"/>
--- snip --
+First one still has the possibility of injecting '\r' before the first '\n'.
+The second one kills the protection for the NUL byte check, so it won't
+allow header splitting for Apache SAPI, but FastCGI stuff will be affected,
+as per Stefan Esser's assessment,
+  http://thread.gmane.org/gmane.comp.php.devel/70584
+Third one fixes the issue.
 
+The check for 5.3 tags yields:
+ - 5.3.11, https://github.com/php/php-src/blob/704bbb3263d0ec9a6b4a767bbc516e55388f4b0e/main/SAPI.c#L593
+   has the issue completely fixed
+ - 5.3.10, https://github.com/php/php-src/blob/e4afa14812d10da7413096c742470fb0582ebc95/main/SAPI.c#L593
+   has none of the mentioned fixes.
 
+The check for 5.2 tags shows that
+ - 5.2.17, https://github.com/php/php-src/blob/dabfd7727f5496ebd913488f6a996117f8597686/main/SAPI.c
+   has none of the mentioned fixes.
+
+So, seems like we have the following vulnerable main versions:
+  5.2.0 <= php < 5.3.11, 5.4.0 <= php < 5.4.1.
 -- 
-Ignacio Espinosa <osu@...dvis.net>
+Eygene
