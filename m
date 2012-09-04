@@ -1,41 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/18
-Message-ID: <4F1811B6.2060403@redhat.com>
-Date: Thu, 19 Jan 2012 13:51:02 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/04/3
+Message-Id: <201209041825.28438.geissert@debian.org>
+Date: Tue, 4 Sep 2012 18:25:27 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>, Jan-Wijbrand Kolman <janwijbrand@...il.com>, Tres Seaver <tseaver@...ladion.com>, Zope Security Team <security-response@...e.org>, Radek Steiger <rsteiger@...hat.com>, Jan Pokorny <jpokorny@...hat.com>
-Subject: Re: CVE-2011-4924 assignment notification -- Zope2, Zope3: Incomplete upstream fix for CVE-2010-1104 issue
+Subject: Re: Re: php header() header injection detection bypass
 Content-Type: text/plain; charset=utf-8
 
-On 01/19/2012 01:42 PM, Yves-Alexis Perez wrote:
-> On jeu., 2012-01-19 at 13:12 +0100, Jan Lieskovsky wrote:
->> A cross site scripting (XSS) flaw was found in the way Zope2 and Zope3
->> performed error messages sanitization. If a remote attacker could trick a user,
->> who was logged into Zope2, into visiting a specially-crafted URL, it would lead
->> to arbitrary web script execution in the context of user's Zope2 session. If a
->> remote attacker could trick a user, who was logged into Zope3, into examining
->> error entries for particular Zope3 instance, it would lead to arbitrary web
->> script execution in the context of user's Zope3 session.
->
-> Does this mean CVE-2010-1104 applies to Zope3 too, or the fix for this
-> CVE created CVE-2011-4924?
+On Tuesday 04 September 2012 14:02:25 cve-assign@...re.org wrote:
+> >This is perfect, thanks. Please use CVE-2012-4388 for the incomplete
+> >fix for CVE-2011-1398.
+[...]
+> In the current situation, CVE-2011-1398 will probably be modified soon
+> to have a "NOTE: this vulnerability exists because of an incomplete
+> fix for CVE-####-####." sentence.
 
-The former. The CVE-2010-1104 issue was applicable to Zope3 too (just wasn't
-described in the description). The reason probably being the CVE-2010-1104
-to had been reported against Zope2 version only (according to particular
-LaunchPad bug).
+As far as I'm aware, there was no CVE assigned when the original header 
+injection/response splitting protection was added. I presume there wasn't 
+one because it was a security feature to protect applications that didn't 
+validate what was being passed to header()[1], not a fix for a vulnerability.
 
-Zope2 patch for CVE-2010-1104 was incomplete (still allowing XSS). Not sure,
-if there was some Zope3 patch for CVE-2010-1104 applied.
+[1] such as phpMyID: http://seclists.org/bugtraq/2008/Oct/4
+(which now I notice never got a CVE id)
 
-Jan-Wijbrand Kolman could you clarify and help us to understand original
-CVE-2010-1104 situation in Zope3?
+> Although a vulnerability statement such as "First one still has the
+> possibility of injecting '\r' before the first '\n'" can be associated
+> with the concept of an incomplete fix, MITRE does not consider the fix
+> to be an "incomplete fix for" a different CVE (that references a
+> better patch). In our terminology, the "incomplete fix for" phrase is
+> only used for pointers in the opposite direction. And, of course, CVEs
+> are assigned to vulnerabilities, not to fixes.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Perhaps I'm misunderstanding something, but the above is confusing me.
 
->
-> Regards,
+To me, this is what each of the ids represent:
+CVE-2011-1398: describes the protection bypass
+CVE-2012-4388: describes the failure to fully fix the protection bypass 
+(hence the "incomplete fix for CVE-2011-1398")
 
+
+P.S. I don't even mention the NUL-byte issue as, to the best of my 
+knowledge, never made it into a release.
+
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
