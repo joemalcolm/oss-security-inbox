@@ -1,42 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/24/3
-Message-Id: <201210242234.q9OMYeVW006681@linus.mitre.org>
-Date: Wed, 24 Oct 2012 18:34:40 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: VLC 2.0.3 libpng_plugin CVE-2012-5470
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/12
+Message-ID: <20120905114850.GB4164@suse.de>
+Date: Wed, 5 Sep 2012 13:48:50 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: pidgin lack of SSL checks
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-We have assigned CVE-2012-5470 for this issue in libpng_plugin in
-VideoLAN VLC media player 2.0.3 processing a PNG file:
+Beautiful rant... needs CVE I guess.
+http://developer.pidgin.im/ticket/15308
 
-  http://www.exploit-db.com/exploits/21889/
+Missing SSL checks in libpurples NSS SSL plugin allows MitM attacks.
 
-The "Rewritten support for images, including jpeg, png, xcf, bmp..."
-and "2.0.4 fixes numerous issues, including audio device selection, Qt
-and Mac OS interface, security issues and Windows wallpaper mode..."
-lines in http://www.videolan.org/vlc/releases/2.0.4.html may possibly
-be relevant here. There isn't an obvious mention of PNG on the
-http://trac.videolan.org/vlc/timeline?from=10%2F24%2F12&daysback=15
-ticket list.
+(funny side note here is that gnutls 3.x is GPLv3 and effectively
+ could taint any library/binary linking with it to be GPLv3 or newer.)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJQiGv9AAoJEGvefgSNfHMd684H/37tnXLm0bQK7/vdVK6Vmk/+
-ELm/9/62ijQOkDhQWUxS+ZmhP7L/jA24cieMHrpiTzlFOGrVX+ly3n6/nlpgyzFr
-Giq5fCIsIi1UD1eXftMsORmAQr+TjJ9ppV9D31C1HQO9itavnwb43kKVU8yrBZDv
-b+UTFX19iXyvNwMino7S3P9ibMxKNnqoP3nxM1Z4IwqOMB6ESp9RzQv0kp8xu5vq
-+Rb7vFsWqkdqg0Bs7ct65ehrW+7xRzoFQ/fCEUKeXi7j0jmZxHE46DSjtZNcj/Ox
-s9sWxaW/MQ6zc14vEf8R6Ouf/ur/E6zj2uXsF4Ajo2NQIiEntnglht3nsoO94VE=
-=eugH
------END PGP SIGNATURE-----
+Ciao, Marcus
+-- 
+Open Linux Security Engineer Position at SUSE: http://bit.ly/Li4RbS
