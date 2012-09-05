@@ -1,36 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/2
-Message-ID: <4F73ED7F.9090402@redhat.com>
-Date: Wed, 28 Mar 2012 23:05:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: clamav floating point exception in OLE2 scanner DoS (2007)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/14
+Message-ID: <20120905151825.GB14031@suse.de>
+Date: Wed, 5 Sep 2012 17:18:25 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: pidgin lack of SSL checks
 Content-Type: text/plain; charset=utf-8
 
-On 03/28/2012 12:51 AM, Henri Salo wrote:
-> Can I get 2007 CVE-identifier for "fix floating point exception when using ScanOLE2" vulnerability:
+On Wed, Sep 05, 2012 at 11:01:03AM -0400, Jan Lieskovsky wrote:
+> Hello Marcus, 
 > 
-> clamav (0.91.2-1) unstable; urgency=low
+> > Hi,
+> > 
+> > Beautiful rant... needs CVE I guess.
+> > http://developer.pidgin.im/ticket/15308
+> > 
+> > Missing SSL checks in libpurples NSS SSL plugin allows MitM attacks.
 > 
->   * New upstream version
->     - fix call to tolower() which led to a crash in libclamav
->     - fix possible NULL dereference, e.g. when parsing email with RFC2397
->       URI
->     - fix floating point exception when using ScanOLE2
->     - fix possible NULL dereference in rtf.c
+> Actually right now it looks there isn't an issue at all
+> (if I got that clarification correctly):
+> [1] http://developer.pidgin.im/ticket/15308#comment:3
 > 
->  -- Stephen Gran <sgran@...ian.org>  Tue, 21 Aug 2007 11:17:01 +0100
-> 
-> Different issue than CVE-2007-2650, which was fixed in 0.90.3
-> 
-> http://security-tracker.debian.org/tracker/TEMP-0000000-6B8835
-> 
-> Other issues have CVEs: CVE-2007-4510, CVE-2007-4560. I requested this CVE-identifier before, but it did not get assigned.
-> 
-> - Henri Salo
+> Thus I would wait with CVE assignment for a bit till "water surface
+> has had chance to quieten down".
 
-Please use CVE-2007-6745 for this issue.
+Yes, I just wanted to write about the same comment.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Sorry for the noise so far ... although I suspect there might be dragons.
+
+Ciao, Marcus
