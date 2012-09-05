@@ -1,67 +1,181 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/10
-Message-ID: <20120821212824.GB1866@inutil.org>
-Date: Tue, 21 Aug 2012 23:28:24 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Typo3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/8
+Message-Id: <E1T9DVJ-0005Jh-0F@xenbits.xen.org>
+Date: Wed, 05 Sep 2012 11:10:41 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 15 (CVE-2012-3497) - multiple TMEM hypercall vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign CVE IDs for the latest Typo3 security issues:
-http://typo3.org/support/teams-security-security-bulletins/security-bulletins-single-view/article/several-vulnerabilities-in-typo3-core/ :
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-1.
+            Xen Security Advisory CVE-2012-3497 / XSA-15
+                         version 2
 
-Vulnerable subcomponent: TYPO3 Backend Help System
-Vulnerability Type: Insecure Unserialize leading to a possible Arbitrary Code Execution
-Severity: Medium
-Suggested CVSS v2.0: AV:N/AC:H/Au:S/C:P/I:C/A:N/E:P/RL:O/RC:C (What's that?)
-Problem Description: Due to a missing signature (HMAC) for a parameter in the view_help.php file, an attacker could unserialize arbitrary objects within TYPO3. We are aware of a working exploit, which can lead to arbitrary code execution. A valid backend user login or multiple successful cross site request forgery attacks are required to exploit this vulnerability.
-Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that fix the problem described!
-Credits: Credits go to Felix Wilhelm who discovered and reported the issue.
+              multiple TMEM hypercall vulnerabilities
+
+UPDATES IN VERSION 2
+====================
+
+Public release.  Credit Matthew Daley.
+
+ISSUE DESCRIPTION
+=================
+
+Several sub-operations of the Transcendent Memory (TMEM) hypercall
+either do not correctly validate their inputs, do not correctly
+validate the privilege of the calling guest, or have other
+security-relevant bugs.
+
+A full list of the vulnerabilities in the TMEM system is not available
+at present.
+
+IMPACT
+======
+
+An unprivileged guest can overwrite hypervisor owned memory with the
+content of their choosing allowing them to escalate their privilege to
+that of the host.
+
+In addition an unprivileged guest can also crash the hypervisor,
+leading to a Denial of Service attack.
+
+VULNERABLE SYSTEMS
+==================
+
+ONLY installations where "tmem" is specified on the hypervisor command
+line are vulnerable.  Most Xen installations do not do so.
+
+All versions of Xen from 4.0 onward which have TMEM enabled and are
+running guests with untrusted administrators are vulnerable.
+
+Although we consider it unlikely, we have not been able to rule out
+the possibility that an malicious unprivileged user could exploit
+these issues via a trusted TMEM-aware kernel.  Therefore all
+administrators are advised to disable TMEM even if all guest kernels
+are controlled and trusted.
+
+MITIGATION
+==========
+
+Only systems which have TMEM enabled at boot time are affected by this
+issue.  By default TMEM is disabled unless it is explicitly enabled
+via the hypervisor command line option "tmem".
+
+TMEM has been described by its maintainers as a technology preview,
+and is therefore not supported by them for use in production systems.
+
+Pending a full security audit of the code, the Xen.org security team
+recommends that Xen users do not enable TMEM.
+
+RESOLUTION
+==========
+
+Work is ongoing, by the community maintainers for TMEM, to patch the
+specific bugs as they are found.  This includes both the multiple
+vulnerabilities initially reported to the Xen.org security team, and
+multiple further vulnerabilities which have been discovered since then
+during our ad-hoc code inspection.
+
+At the time of writing, a complete set of fixes even for known issues
+is not available.
+
+PROCESS FOR TMEM VULNERABILITIES
+================================
+
+Until TMEM has gained production maturity, the Xen.org security team
+intends (subject of course to the permission of anyone disclosing to
+us) to handle these and future TMEM vulnerabilities in public, as if
+they were normal non-security-related bugs.
+
+We therefore intend that currently-known vulnerabilities will be
+publicly disclosed on the xen-devel mailing list, as normal bug
+reports, at the expiry of the XSA-15 embargo.  In the meantime the
+list below may be helpful.
+
+Xen.org security team will ensure, on expiry of the embargo, that the
+documentation reflects TMEM's technology preview status.
+
+CREDIT
+======
+
+Thanks to Matthew Daley for finding these vulnerabilities (and that in
+XSA-12) and notifying the Xen.org security team.
+
+LIST OF KNOWN VULNERABILITIES
+=============================
+
+**NOTE** that this is unlikely to be a complete list of problems.
+
+**NOTE** that after publication of this advisory, after the embargo
+ends, the advisory will no longer be updated to extend this list of
+vulnerabilities.  See `Process for TMEM vulnerabilities', above.
 
 
-2.
+Multiple tmem save-related control ops do not check for NULL
+clients:
 
-Vulnerable subcomponent: TYPO3 Backend
-Vulnerability Type: Cross-Site Scripting
-Severity: Medium
-Suggested CVSS v2.0: AV:N/AC:M/Au:S/C:P/I:P/A:N/E:F/RL:O/RC:C (What's that?)
-Problem Description: Failing to properly HTML-encode user input in several places, the TYPO3 backend is susceptible to Cross-Site Scripting. A valid backend user is required to exploit these vulnerabilities.
-Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that fix the problem described!
-Credits: Credits go to Pavel Vaysband, Security Team Member Markus Bucher, Core Team Member Susanne Moog, Jan Bednarik,  who discovered and reported the issues.
+      TMEMC_SAVE_GET_CLIENT_WEIGHT, TMEMC_SAVE_GET_CLIENT_CAP,
+      TMEMC_SAVE_GET_CLIENT_FLAGS and TMEMC_SAVE_END do not check
+      that the cli_id used to find the client is valid, and can
+      hence dereference a NULL client. This allows a malicious
+      guest to crash the host (DoS), or, in the case of
+      TMEMC_SAVE_END, memory corruption (DoS or worse).
 
-3.
+Multiple tmem save-related control ops do not check guest output
+buffer pointers:
 
-Vulnerable subcomponent: TYPO3 Backend
-Vulnerability Type: Information Disclosure
-Severity: Low
-Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:P/I:N/A:N/E:F/RL:O/RC:C (What's that?)
-Problem Description: Accessing the configuration module discloses the Encryption Key. A valid backend user with access to the configuration module is required to exploit this vulnerability.
-Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that fix the problem described!
-Credits: Credits go to Mario Rimann who discovered and reported the issue.
+      The functions tmemc_save_get_next_page,
+      tmemc_save_get_next_inv and the TMEMC_SAVE_GET_POOL_UUID
+      subop do not check incoming guest output buffer pointers,
+      and do not use ie. copy_to_guest. A malicious guest can
+      crash the host or cause memory corruption (DoS / code
+      execution).
 
-4.
+Multiple tmem ops do not check for negative pool IDs:
 
-Vulnerable subcomponent: TYPO3 HTML Sanitizing API
-Vulnerability Type: Cross-Site Scripting
-Severity: Medium
-Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:P/I:P/A:N/E:U/RL:O/RC:C (What's that?)
-Problem Description: By not removing several HTML5 JavaScript events, the API method t3lib_div::RemoveXSS() fails to filter specially crafted HTML injections, thus is susceptible to Cross-Site Scripting. Failing to properly encode for JavaScript the API method t3lib_div::quoteJSvalue(), it is susceptible to Cross-Site Scripting.
-Note: Developers should never rely on the blacklist of RemoveXSS() alone, but should always properly encode user input before outputting it again.
-Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that fix the problem described!
-Credits: Credits go to Andreas Schnapp and Christian Nösterer who discovered and reported the issues.
+      The functions tmemc_save_get_next_page,
+      tmemc_restore_put_page and tmemc_restore_flush_page do not
+      check for negative pool IDs, allowing (at least) memory
+      corruption.
 
-5.
+do_tmem_destroy_pool does not check for invalid pool IDs:
 
-Vulnerable subcomponent: TYPO3 Install Tool
-Vulnerability Type: Cross-Site Scripting
-Severity: Low
-Suggested CVSS v2.0: AV:N/AC:H/Au:S/C:P/I:P/A:N/E:F/RL:O/RC:C (What's that?)
-Problem Description: Failing to properly sanitize user input, the Install Tool is susceptible to Cross-Site Scripting.
-Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that fix the problem described!
-Credits: Credits go to Security Team Member Georg Ringer who discovered and reported the issue. 
+      The function do_tmem_destroy_pool does not check for invalid
+      pool IDs, allowing a malicious guest to crash the host or
+      corrupt host memory (DoS / code execution).
 
-Cheers,
-        Moritz
+do_tmem_control's privilege check is commented out:
+
+      This allows any guest access to control stack operations
+      (many of which themselves do not have adequate argument
+      checking).
+
+tmh_copy_from_client and tmh_copy_to_client have an integer
+overflow vulnerability:
+
+      This can corrupt host memory.
+
+do_tmem_get()'s bad_copy error path leaves a spinlock held:
+
+      The next operation on the same object will hang the CPU.
+      This is a host DoS.
+
+do_tmem_op has at least one error path with broken locking checks:
+
+      This is a host DoS or worse.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQRyVDAAoJEIP+FMlX6CvZZSEH/11RvLycH5Qm0rkmWb16iuRU
+s9xmGDxGr6LDGLLYenp7RDc6FU7xjFxNeMhziIWckic2f0V1UtEqxiTHViEeOsOu
+AQfiwrUaaSf+fwcDqt07bb6gTynxyqS+faLKpk4bq89tKK1318JlxWN2gRtEW5g9
+KEo7Bt/O0hYuIJBlBWnH48OHPzGSrwVaw51NLt0oPqiWp4w3ObLRhVttKB7VWJlw
+OQR9hSStVWhKR68VUBd/LpTZTkX/Hn5qwhX6ltgQ10RW1n4cF2pvebiKu6CtePCl
+JVBJgn/4ZmaT1joJ8SpX/BONnLt0KHNrublB6vO++1m+7+lBA5qXL38gg4jl48E=
+=yP/R
+-----END PGP SIGNATURE-----
+
