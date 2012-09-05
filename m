@@ -1,89 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/13
-Message-ID: <4FC68028.4050005@redhat.com>
-Date: Wed, 30 May 2012 14:16:40 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: John Haxby <john.haxby@...cle.com>
-Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/9
+Message-Id: <E1T9DXH-0005Qg-SS@xenbits.xen.org>
+Date: Wed, 05 Sep 2012 11:12:43 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 16 (CVE-2012-3498) - PHYSDEVOP_map_pirq index vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/30/2012 02:07 PM, Kurt Seifried wrote:
-> On 05/30/2012 12:48 PM, John Haxby wrote:
-> 
->> On 30 May 2012, at 19:25, Florian Weimer wrote:
-> 
->>> * John Haxby:
->>> 
->>>> Recently we have a couple of queries relating to a Nessus 
->>>> "TCP/IP SYN+FIN Packet Filtering Weakness".   This has not
->>>> been helped by the fact that [1] actually points (indrectly)
->>>> to CVE-2002-2438 which is actually a SYN+RST problem.
->>> 
->>> Reading the discussion here,
->>> 
->>> <http://comments.gmane.org/gmane.linux.network/213981>
->>> 
->>> it seems to me that this is just a performance optimization 
->>> which could be bypassed by using different flags, so I don't 
->>> think there's a vulnerability or fix here, except the general 
->>> lack of source IP address validation in IP networks.
-> 
->> That's the same thread that I referred to but I didn't reach the 
->> same conclusion that you did.   It is possible to block SYN+FIN
->> in iptables, but the distros I'm aware of don't have that kind
->> of check in place so people will be vulnerable to this kind of
->> DoS.
-> 
->> The conclusion from the thread was that SYN+FIN is not a
->> legitimate packet so the kernel should drop it.   The nessus
->> people seem to think the same thing: they have a test for this
->> (although they refer to the SYN+RST fix from a decade ago).    If
->> there's a consensus that we don't need a CVE then we can go to
->> nessus and have them fix, remove or update their test.
-> 
->> One could argue that if SYN+FIN doesn't need a CVE then SYN+RST 
->> didn't either since it can be blocked by the same, or very
->> similar, iptables rule.
-> 
->> jch
-> 
-> No this definitely gets a CVE (see previous email), it directly 
-> bypasses a security mechanism that is documented (man iptables,
-> --syn section), and other parts of iptables do handle it correctly
-> as far as I can tell (e.g. --state NEW). It allows bypass of
-> firewall rules as documented, so if that doesn't get a CVE then
-> nothing the world has gone upside down =).
+            Xen Security Advisory CVE-2012-3498 / XSA-16
+                             version 3
 
-Sorry I got that backwards (getting over a bad head cold), any ways
-the point is packets with an invalid set of flags should generally not
-get treated as legitimate (and over the years there have been many
-efforts to block these types of attacks/etc., witness OpenBSD's pf's
-normalizing and so on).
+               PHYSDEVOP_map_pirq index vulnerability
 
+UPDATES IN VERSION 3
+====================
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Public release.  Credit Matthew Daley.
 
+ISSUE DESCRIPTION
+=================
+
+PHYSDEVOP_map_pirq with MAP_PIRQ_TYPE_GSI does not range check
+map->index.
+
+IMPACT
+======
+
+A malicious HVM guest kernel can crash the host.  It might also be
+able to read hypervisor or guest memory.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen systems running HVM guests.  PV guests are not vulnerable.
+
+The vulnerability dates back to Xen 4.1.  Xen 4.0 is not vulnerable.
+4.1, the 4.2 RCs, and xen-unstable.hg are vulnerable.
+
+MITIGATION
+==========
+
+This issue can be mitigated by ensuring that the guest kernel is
+trustworthy, or by running only PV guests.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch will resolve the issue.
+
+CREDIT
+======
+
+Thanks to Matthew Daley for finding this vulnerability (and that in
+XSA-12) and notifying the Xen.org security team.
+
+PATCH INFORMATION
+=================
+
+The attached patches resolve this issue
+
+  Xen unstable                                  xsa16-unstable.patch
+  Xen 4.1, 4.1.x                                xsa16-xen-4.1.patch
+
+$ sha256sum xsa16-*.patch
+f8db42898620112c8e77bf116645d650b3671d4ccc49adcad09c7b4591d55cab  xsa16-unstable.patch
+4b76d554b23977443209e45d3a2404d63695eb3020ff87a8e16e5e25cbddff31  xsa16-xen-4.1.patch
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIcBAEBAgAGBQJPxoAoAAoJEBYNRVNeJnmTULUP/Ao6/F53KVGwG00pZQf7bVR6
-ZS2miGuUTwzZlEbXfF2trwDHZC6L5XHyEyQ5EWg+xHGrhVjr19BXZ/N2Ol5uFwQk
-JtHvU4aCvpQKRNYeieLeUa4kr1G74L27xFvP1P8zkaLRpmXnG944iG7NLgK8+51j
-wFScIqKwX6IQ2ccAzuchKEptPQvC4GNHEjIxMjKJ5MItaiQZPz3G+NmYW1Ko6HXj
-gK3VeU3oq4wHPqz8EBEr+jISTsxEXcL0M5qJ1BeQsCRrP+fB5kxGr1uX5hzcHQan
-T0MhW/1PlBlION/OFRlqJ/5nhtBo3RT86oO2gLKLAHJN2pr6XFqjIncAjrzt5iKD
-6F3gB1VFLzIlA+mW9Ec4MtPidLi/GiEvFuO0qJIzDmntmJxUUniO80JZbnSfI8pX
-cay/pt7PDrH8KTvOcxYPWoCIIpoKrc4wIefsTFbbwP1O/+ctlM/ysYSDJ92lVxBt
-p51ySsTvyfGc+zLm4ZorsuYh+Z+4ySK2cN3k5fIHsG/TU8bXhAQo3Tq0tygMroGx
-1u2MWub1k+T3jyRwkj72WvnjFUAzijN4LoOjMtTB3nye+9GrRf1T2MG4qd/ZlLlK
-H9BOj6LkxuZwwEYVeOpNplh58ZnUtDtDF5OCJtolJ1HjQwmVW9Oi4Vdc1VsDCr4J
-8HKtohRsweWXkDpsia1k
-=I1ny
+iQEcBAEBAgAGBQJQRyVFAAoJEIP+FMlX6CvZkqkH/2k5sdGWVThawtjkpTfx8L3T
+d0QnlJYstbvGxNkRvaafj32jApGkHWwr/Rd4w1MPxXXJOU6bmXjKKXAugVj0wl5Z
+PZeVtek46S3sSNCavLH7kL1SVZoCikEH2+kv9edGhKOXxO3C+8FkM+HvoZU7tQco
+ppUhEfINP9WidXlWSEmK2nhZdvrLW7KeqHTQmwx6AC1mUE0YdaF2oTZRPyOgRwIx
+quYJ3hLiQiQD3eUV56iqNO19/D4jpPibBG33yurdzahRivuLTb7XD+QfKfEDZ1WC
+SVqIRJha84QBjHLTtPIgmjyF8ysUXnPLol1NTxpIBFX98OCw9Ery0Zic/poFjcc=
+=7hrh
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa16-unstable.patch" of type "application/octet-stream" (936 bytes)
+
+Download attachment "xsa16-xen-4.1.patch" of type "application/octet-stream" (1054 bytes)
