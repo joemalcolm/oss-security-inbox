@@ -1,32 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/11
-Message-ID: <20120711161507.GA10208@suse.de>
-Date: Wed, 11 Jul 2012 18:15:07 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: Overflow fix in bash 4.2 patch 33 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/6
+Message-ID: <E1T9Cbz-0003ZK-24@mariner.uk.xensource.com>
+Date: Wed, 5 Sep 2012 11:13:31 +0100
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 13 (CVE-2012-3495) - hypercall physdev_get_free_pirq vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-the bash maintainer kindly mailed us and other vendors a notification of
-a overflow in the bash "test" builtin when "/dev/fd/..." filenames are used.
+            Xen Security Advisory CVE-2012-3495 / XSA-13
+                             version 3
 
-ftp://ftp.gnu.org/pub/gnu/bash/bash-4.2-patches/bash42-033
+           hypercall physdev_get_free_pirq vulnerability
 
-Reproducer:
-	test -e /dev/fd/111111111111111111111111111111111
+UPDATES IN VERSION 3
+====================
 
-Problem is caught by -D_FORTIFY_SOURCE=2 if enabled, and likely also
-by -fstack-protector (not tested)
+Public release.  Credit Matthew Daley.
 
-Goes all the way back to old bashes.
+ISSUE DESCRIPTION
+=================
 
-The likeliness of people able to inject those filenames into shell scripts
-and not being able to execute shellcode themselves is however slim.
-(setuid root shell scripts are not possible.)
+PHYSDEVOP_get_free_pirq does not check that its call to get_free_pirq
+succeeded, and if it fails will use the error code as an array index.
 
-Security (CVE) relevant scenario we thought of is breaking out of a
-restricted shell mode.
+IMPACT
+======
 
-Ciao, Marcus
+A malicious guest might be able to cause the host to crash, leading to
+a DoS, depending on the exact memory layout.  Privilege escalation is
+a theoretical possibility which cannot be ruled out, but is considered
+unlikely.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen systems.
+
+Xen 4.1 is vulnerable.  Other versions of Xen are not vulnerable.
+
+MITIGATION
+==========
+
+This issue can be mitigated by ensuring (inside the guest) that the
+kernel is trustworthy and avoiding situations where something might
+repeatedly cause the attempted allocation of a physical irq.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch will resolve the issue.
+
+CREDIT
+======
+
+Thanks to Matthew Daley for finding this vulnerability (and that in
+XSA-12) and notifying the Xen.org security team.
+
+PATCH INFORMATION
+=================
+
+The attached patches resolve this issue
+
+  Xen 4.1, 4.1.x                           xsa13-xen-4.1.patch
+
+$ sha256sum xsa13-*.patch
+ad6e3e40ff56c7c25a94d8d9763d4b49f07802b90b4362ddbe4c86bf285c1239  xsa13-xen-4.1.patch
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQRyVqAAoJEIP+FMlX6CvZjrcH/A0xq4dTMtJpUc1WHyUi2aXd
+5ap+AA8w0XHLdosXnbxnsTCSsAdkUeBlPkqZAoGxrCGYrzP83T0cPrz8qjzN64KE
+Jaei9prTk7VFHa9aAz3OqFYjYd/d21CxI4goGJ4Z0tygys4lmkDeex2kEAj5dq7b
+0FLj6aIAVFYI3mWMztx4poOrz/BSCMk1YtrV5hZaY8i7Y6nhaOsPISveS0Dv4FPm
+YDGc93ykhOwEWCNqWFQGVndRihgUWQIUcb7f2SUfOC/FvbcJHGlP4Aojl4LUePqM
+bi/CR9cPESr7x1+1vcGUZybXALsRMBCJPrx1td3OCgqx8bwAbsQIszuFaWTtajY=
+=s7wG
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa13-xen-4.1.patch" of type "application/octet-stream" (1005 bytes)
