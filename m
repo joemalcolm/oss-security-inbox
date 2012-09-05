@@ -1,117 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/11
-Message-ID: <4FA3FF15.2090601@redhat.com>
-Date: Fri, 04 May 2012 10:08:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/15
+Message-Id: <201209051705.q85H5heF027063@linus.mitre.org>
+Date: Wed, 5 Sep 2012 13:05:43 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Debian/Ubuntu php_crypt_revamped.patch
+Cc: cve-assign@...re.org
+Subject: Re: php header() header injection detection bypass
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-So I'm guessing this needs a CVE #?
+>To me, this is what each of the ids represent:
+>CVE-2011-1398: describes the protection bypass
+>CVE-2012-4388: describes the failure to fully fix the protection bypass 
+>(hence the "incomplete fix for CVE-2011-1398")
 
-On 05/04/2012 09:31 AM, Solar Designer wrote:
-> Hi,
-> 
-> Boaz Rymland reported to me what he thought was a phpass bug, where
-> any password would be valid when authenticated against a NULL or
-> empty password hash.  (Indeed, the password hash shouldn't normally
-> be NULL or empty, but it is better for authentication code to be
-> fail-close rather than fail-open.)  At first, I was not able to
-> reproduce the problem, but after exchanging a few e-mails we were
-> able to narrow it down to PHP crypt() call returning an empty
-> string when called with NULL or an empty string for the salt
-> argument on Boaz' Ubuntu 11.04 system with php5 5.3.5-1ubuntu7.7.
-> I was still not able to reproduce that on other systems (with other
-> versions of PHP).
-> 
-> Today, I downloaded and built clean PHP 5.3.5 on an Owl system. I
-> still could not trigger the problem.  Then I applied 
-> debian/patches/php_crypt_revamped.patch from Debian's 
-> php5_5.3.5-1.diff.gz - and the problem finally appeared.
-> 
-> Original:
-> 
-> php@owl:~ $ ~/php-5.3.5/bin/php -r 'echo crypt("pass", null),
-> "\n";' $1$l5Nwx5hu$NhostJ7i8jP1B.4C4zaiM78.
-> 
-> With Debian patch:
-> 
-> php@owl:~ $ ~/php-5.3.5-debian/bin/php -r 'echo crypt("pass",
-> null), "\n";'
-> 
-> php@owl:~ $
-> 
-> (empty string was printed).
-> 
-> It turns out that the patch first appeared in Debian's 5.3.2-1 in 
-> response to almost a non-issue (different behavior across PHP
-> versions for an invalid salt string) and general feeling that PHP
-> should be using system-provided crypto instead of its bundled code
-> when possible (questionable to me: each approach has its pros and
-> cons):
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=572601
-> 
-> The handling of NULL/empty salt strings was corrected in 5.3.6-1,
-> as well as in 5.3.3-7+squeeze4 (stable-security):
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=581170
-> 
-> Apparently, that fix never made it into Ubuntu 11.04 updates - so
-> I guess this should happen now.
-> 
-> Overall, the patch looks problematic to me.  Here's another problem
-> with it, still reproducible on 5.3.10-1ubuntu3 (Ubuntu 12.04):
-> 
-> user@...ntu:~$ php -r 'echo crypt("pass", "_J9..Salt"), "\n";' 
-> _J9..Saltr2Hq6I3ZH0s user@...ntu:~$ php -r 'echo crypt("pass",
-> "_J9..Saltr2Hq6I3ZH0s"), "\n";' _J0LlWX63dRZg
-> 
-> That non-security bug is with the "salt_len == 9" check added with
-> the patch.  So phpass' authentication against CRYPT_EXT_DES hashes,
-> which it tries to support, would be failing on Debian/Ubuntu
-> systems.  I guess I need to introduce a workaround for it now,
-> complicating the code. :-(
-> 
-> I think it may be best to drop this patch from further versions of 
-> Debian/Ubuntu - and not reintroduce it even in response to the
-> likely "bug" reports from Debian users complaining about the
-> behavior change from previous versions of Debian.
-> 
-> I agree that the code in upstream PHP may need improvement, but
-> that patch does not improve it, and the deviation from upstream is
-> bad. Altering the behavior of PHP on specific distros beyond what
-> may normally happen due to PHP's ./configure is undesirable and
-> should only be done for very good reasons.
-> 
-> Sorry for the rant.
-> 
-> Alexander
+OK, what seems best at this point is the following:
 
+[revised CVE-2011-1398 description]
+
+  The sapi_header_op function in main/SAPI.c in PHP before 5.3.11 and
+  5.4.x before 5.4.0RC2 does not check for %0D sequences (aka carriage
+  return characters), which allows remote attackers to bypass an HTTP
+  response-splitting protection mechanism via a crafted URL, related
+  to improper interaction between the PHP header function and certain
+  browsers, as demonstrated by Internet Explorer and Google Chrome.
+
+[new CVE-2012-4388 description]
+
+  The sapi_header_op function in main/SAPI.c in PHP 5.4.0RC2 through
+  5.4.0 does not properly determine a pointer during checks for %0D
+  sequences (aka carriage return characters), which allows remote
+  attackers to bypass an HTTP response-splitting protection mechanism
+  via a crafted URL, related to improper interaction between the PHP
+  header function and certain browsers, as demonstrated by Internet
+  Explorer and Google Chrome. NOTE: this vulnerability exists because
+  of an incorrect fix for CVE-2011-1398.
+
+
+Note 1: We originally thought that there was interest in separate CVE
+IDs for "the header function is unsafe when a URL contains any
+recognized end-of-line character" and "the header function is unsafe
+when a URL contains a %0D sequence." If this were the case, the second
+CVE description would mention an "incomplete fix" for the first CVE.
+But, we now understand that the first CVE is not wanted at all, which
+seems reasonable.
+
+In the actual situation, the
+https://bugs.php.net/patch-display.php?bug_id=60227&patch=SAPI.diff&revision=1320563128
+patch had a logic flaw related to the "((p = memchr(s, '\n', (e - s)))
+|| (p = memchr(s, '\r', (e - s))))" expression. MITRE prefers to
+categorize this type of situation as an "incorrect fix" not an
+"incomplete fix." Admittedly, for many CVE users it doesn't matter.
+
+The mapping of the two CVEs to a vendor changelog is currently
+problematic because http://www.php.net/ChangeLog-5.php has two very
+similar references to "Fixed bug #60227" but one of the listed
+versions (5.4.0) has the code change with the above-mentioned logic
+flaw, whereas the other (5.3.11) has a different code change without
+this logic flaw.
+
+Note 2: We probably haven't found the exact affected 5.4.0RC versions,
+but this doesn't matter much because those versions aren't widely
+used. Specifically, we don't know whether there's a supported download
+location for every pre-release version that ever existed, but we
+happened to find the http://php.marvel.strk.jp/archive/ directory.
+Here, 5.4.0alpha3 (August 2011) does not check for '\r' at all,
+whereas 5.4.0RC2 (December 2011) can check for '\r' but has the
+above-mentioned logic flaw. This is consistent with the 2011-11-06 SVN
+date listed in bug 60227.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJPo/8VAAoJEBYNRVNeJnmTQyoP/jQqdJ6VeZe5cCcjElPQt5AN
-37zVkxkY0x5TZLhrrlWmuTGfeYKe9JitWlntQ8Ju9gaTcX6/pzRqRD7pmYkRyV2Q
-3hYXd+wMgirNxA+AjgePa+MqQBStpcg4mBeRcUx6fUjVzSLSYMlPgUKABXoEuDFM
-1kpYdz+1DTQlmSaV+SCQ11KUfIisNVJl1DzJrlneu27JrKbjf8TDLoxi4yuJyXNL
-ZEG+aUQtpo9H+oAP8UnAP2iUlvAKpAqdf44vyBRLHMs0DW8zTCYhINg6TNZXokne
-KzJ58tmGcW39nCC4BgYTK0C28ZsI7i1XGk+3ABuVMngFaDz8wXBRfx0Ht++TKED3
-zMkzeKeyKYfU8XSO6xt6aOUbXW2wLu5JAevdO/Bhe0aTvZJtHiFL2ocI8tyJN8Av
-9Ru66u8vD3hDslkn676MvZTIlrlR/gtBTOFHnjl233zaMERakH2ktxWgobr9qU2i
-9yN9ZYEUXVZv5wlJEK48c0pd337/gcDdcbGF4bFQ2AqfBt6RX+LKdgpxKH/9DztU
-YWA8sKu9yQ0UJ+PWLroDcoo92Q1XxmNN9LM5+4O+QgXnsNgwXo9BdTopfrcuuJr8
-OCkxcDt4nayz2aT1VGoid2hY7vQohaS24Yf3NILhx+cUiZDlPM24xpGN1FukWvlq
-RjYAtiCy3B7zyNEZBzxl
-=XSLr
+iQEcBAEBAgAGBQJQR4VAAAoJEGvefgSNfHMdT2cIAKLrbO/VRVzYstBpTXdDWe/i
+n7h1ihiDHjClMClApGx6EfzGgZ5sueAtFUkDvbxjp1yvCBYTmioOpAuaXZKEFXk2
+EgTYrNrPIRMpss0FnM+6ORVnnfZh7TlfipHnkICYLjbf901R02ijxVseeK4IkIlJ
+CN65rm65hu2qb/rdCeei/buTv+cp77xdZCkO+NeAj4VmC14/eVtTbXP5pkG73kxG
+OLkL9oQY/Inbdi2jR5oIHBKSW6EG2Nu9kXO6uX1L6FPcxTGN1TiRhKZo6pLicYg6
+CCiiCAR8hIB1+v1gLi8R0JfBBxF9q1LbyjnrowGNitiq305QSptBA1zLe2977O8=
+=cX+c
 -----END PGP SIGNATURE-----
