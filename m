@@ -1,88 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/04/4
-Message-Id: <B131652B-8D0E-4EC5-8BE2-C51C1DAAE358@brauerranch.com>
-Date: Wed, 3 Oct 2012 22:23:05 -0600
-From: Joshua Brauer <joshua@...uerranch.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for Drupal Contributed Modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/17
+Message-ID: <Pine.GSO.4.64.1209051820410.14248@faron.mitre.org>
+Date: Wed, 5 Sep 2012 18:25:09 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+cc: Lukas Reschke <lukas@...tuscode.ch>
+Subject: Re: Re: CVE - ownCloud
 Content-Type: text/plain; charset=utf-8
 
-Thanks these have been posted and I'll have more catching up tomorrow.
 
-Just to verify the process CVE-2012-4472 SA-CONTRIB-2012-108 is for multiple vulnerabilities which Drupal issued one advisory about. In the past I think these got separate CVE's and we have in our process to report it once for each vulnerability. Which leads to the questions:
-1) Should it have multiple CVE's?
-2) Should we be reporting these separately or all on one?
+On Sat, 1 Sep 2012, Kurt Seifried wrote:
 
-Thanks,
-Josh
+> - -------------
+> Version 4.0.6 Aug 1th 2012
+>
+> Security: Check for Admin user in
+> appconfig.php (CSRF)
+> Registered user could change app configs without admin rights.
+> https://github.com/owncloud/core/commit/9605e1926c6081e88326bf78a02c1d1b83126c4f
+> Security: Several CSRF security fixes
+> The admin settings and the bookmark app wasn't checking the CSRF token.
+> https://github.com/owncloud/core/commit/38271ded753bc9ea9943cef3c2706f8d71f3a58f
+> and
+> https://github.com/owncloud/core/commit/93579d88dcea389205c01ddf6da41f37ad9b8745
+>
+> CVS merged into a single CVE
+>
+> Please use CVE-2012-4393 for these issues.
 
-On Oct 3, 2012, at 8:20 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+Our interpretation is that this line item is not CSRF:
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 10/03/2012 06:06 PM, Joshua Brauer wrote:
->> 
->> This is a batch CVE request for several already published/resolved
->> issues with contributed modules for the Drupal project.
->> 
->> http://drupal.org/node/1649346 | SA-CONTRIB-2012-104 - Privatemsg -
->> Cross Site Scripting (XSS) http://drupal.org/node/1663306 |
->> SA-CONTRIB-2012-105 - Hashcash - Cross Site Scripting (XSS) 
->> http://drupal.org/node/1679412 | SA-CONTRIB-2012-106 - Listhandler
->> - Access Bypass http://drupal.org/node/1679422 |
->> SA-CONTRIB-2012-107 - Search autocomplete - Access bypass 
->> http://drupal.org/node/1679442 | SA-CONTRIB-2012-108 - Drag & Drop
->> Gallery - Arbitrary PHP code execution 
->> http://drupal.org/node/1679442 | SA-CONTRIB-2012-108 - Drag & Drop
->> Gallery - Cross Site Scripting http://drupal.org/node/1679442 |
->> SA-CONTRIB-2012-108 - Drag & Drop Gallery - Access bypass 
->> http://drupal.org/node/1679442 | SA-CONTRIB-2012-108 - Drag & Drop
->> Gallery - Cross Site Request Forgery http://drupal.org/node/1679442
->> | SA-CONTRIB-2012-108 - Drag & Drop Gallery - SQL Injection 
->> http://drupal.org/node/1679466 | SA-CONTRIB-2012-109 - Restrict
->> node page view - Access bypass http://drupal.org/node/1679486 |
->> SA-CONTRIB-2012-110 - Colorbox Node - Cross Site Scripting (XSS) 
->> http://drupal.org/node/1679532 | SA-CONTRIB-2012-111 - Security
->> Questions - Access Bypass
->> 
->> Thanks, Josh - on behalf of the Drupal security team.
-> 
-> Perfect, this is easy =).
-> 
-> Please use the following CVEs:
-> 
-> CVE-2012-4468 SA-CONTRIB-2012-104
-> CVE-2012-4469 SA-CONTRIB-2012-105
-> CVE-2012-4470 SA-CONTRIB-2012-106
-> CVE-2012-4471 SA-CONTRIB-2012-107
-> CVE-2012-4472 SA-CONTRIB-2012-108
-> CVE-2012-4473 SA-CONTRIB-2012-109
-> CVE-2012-4474 SA-CONTRIB-2012-110
-> CVE-2012-4475 SA-CONTRIB-2012-111
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-> 
-> iQIcBAEBAgAGBQJQbPJzAAoJEBYNRVNeJnmTcsQP/05luypQ2Wp6z+zsSHVd+a8x
-> zwj1De0kIKoEugjezID24IAYmy1G2QQTl57mRKEgb2WgWImqNBbUSvJ6fuSB9xq0
-> giSwvAWTmoFFzhJBLY1TaF3L+9uo58hqp6hxTH1BpNFTfkORnUvn/HaPanUmAo/9
-> DHG1R9efIYLvTTyD3ALoA8xcLTl33vnbTMgnubxOB+y/a6Ovhq1icueyshefmKGc
-> AFDqLbZGcpi9D1SF28ys0pNe9q1pGxysruDo9VPJILcfq+UJctVqsf036hRg95Et
-> LdhHHVk5vWVbb+yH9A0hWBxloO0iaXlIGJpPtx7xmbUVmewXWpiyvZ9Kh2/SYlEK
-> N4xSPEBIbTtbmgm0qjS/zVDd3vlW0ZOeN/TVmm/mg7DZngn3QfWTC1QJ7dIisGfO
-> 5FKy+NiA/kQSZdZs2GVR/Aq20oR1/kYH0YTORVR9YtdSvr0dsXv2xJIuXdeTgSR9
-> f8uo6KlISk/FOUUeLN/Eoe3VmmLm9MW7OkJY6kVaTD5M/TByPz6bCQxumfXrCw+/
-> OusmbwNcvBAmxQn9n9bD61+1JfvdYVsfVKafKQTpm9nXTJsQ1161trC36N1kaH5E
-> WU8LeeBANz14xEX6TQVqSwcXNfYDdm9++ePKP4tMQcPav3CHpF4jSPSSEMIQuCWl
-> zouflR/IkanhMJlXqCR/
-> =Vs4T
-> -----END PGP SIGNATURE-----
+   "Registered user could change app configs without admin rights"
+
+It's a permissions/authorization problem.  It's made WORSE by CSRF, but 
+even without CSRF, a registered user could do something they shouldn't.
+
+So, we assigned CVE-2012-4752 for "Registered user could change app 
+configs without admin rights"
 
 
+> Version 4.0.5 July 20th
+> Reflected XSS (XSS)
+> The filelist wasn't sanitzing HTML values in image files.
+> https://github.com/owncloud/core/commit/d203fa2c50f4b2791e68e2b8ab9a0f8b94f9c9f8
+>
+> Please use CVE-2012-4394 for this issue.
+
+The 4.0.5 changelog at http://owncloud.org/changelog/ also says "Several 
+CSRF security fixes"
+
+So, we assigned CVE-2012-4753 for the CSRF fixed by 4.0.5.
+
+- Steve
