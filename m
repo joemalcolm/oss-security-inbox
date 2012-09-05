@@ -1,23 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/2
-Message-ID: <CAOtvbJxHNtmbxdLxAaeq7BEvVbqqKyAi-mB7x2QZOJ5x8dM5_A@mail.gmail.com>
-Date: Tue, 28 Feb 2012 10:57:35 +0100
-From: Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>,  Radoslaw Lisowski <radoslaw.lisowski@...il.com>
-Subject: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/3
+Message-ID: <5X91y9vclvjbGwIrGTgD71sJlHk@+m7/7tdAJxmc/SLHlfN7lFkU4CQ>
+Date: Wed, 5 Sep 2012 10:19:52 +0400
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: php header() header injection detection bypass
 Content-Type: text/plain; charset=utf-8
 
-2012/2/27 Kurt Seifried <kseifried@...hat.com>:
-> On 02/27/2012 03:05 AM, Jan Lieskovsky wrote:
->> Hello Mariusz, Kurt, Steve, vendors,
->>
->>   [1] though https://bugzilla.novell.com/show_bug.cgi?id=749036#c0
->>   mentions CVE identifier has been already requested for this:
->>
->>   "The bug still doesn't have CVE number but will have in near future."
->
-> I can only assume they requested one directly from Mitre. Steve, is this
-> the case? If not I'll assign one.
+Tue, Sep 04, 2012 at 03:02:25PM -0400, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> > - 5.3.11, https://github.com/php/php-src/blob/704bbb3263d0ec9a6b4a767bbc516e55388f4b0e/main/SAPI.c#L593
+> >   has the issue completely fixed
+> 
+> Note that, in the
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-1398 entry, the
+> affected versions are "PHP before 5.3.11." (We do know that 5.3.11
+> was released about 2 months after 5.4.0.)
 
-We haven't requested CVE number yet. Could you do that for this issue?
+Yes, sorry: I seem to be messed two bugs and, as I discovered, was
+talking about CVE-2011-1398 in my previous message.
+-- 
+Eygene
