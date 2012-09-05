@@ -1,141 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/20/4
-Message-ID: <50ABE994.3040000@redhat.com>
-Date: Tue, 20 Nov 2012 13:35:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE Request for Drupal Contributed Modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/10
+Message-Id: <E1T9DXL-0005Qu-97@xenbits.xen.org>
+Date: Wed, 05 Sep 2012 11:12:47 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 17 (CVE-2012-3515) - Qemu VT100 emulation vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 11/17/2012 10:29 PM, Forest Monsen wrote:
-> Hello!
-> 
-> Here's a batch CVE request for a number of previously published
-> and resolved issues with contributed modules for the Drupal
-> project. As noted in
-> http://www.openwall.com/lists/oss-security/2012/11/05/4, I have
-> volunteered to coordinate our CVE requests.
-> 
-> Forest Monsen, on behalf of the Drupal Security Team
+            Xen Security Advisory CVE-2012-3515 / XSA-17
+                           version 2
 
-Please see bottom of email for CVEs
+               Qemu VT100 emulation vulnerability
 
-> - SA-CONTRIB-2012-146 - Simplenews Scheduler - Arbitrary code
-> execution http://drupal.org/node/1789284
-> 
-> - SA-CONTRIB-2012-147 - FileField Sources - Cross Site Scripting
-> (XSS) http://drupal.org/node/1789306
-> 
-> - SA-CONTRIB-2012-148 - Organic Groups - Access Bypass 
-> http://drupal.org/node/1796036
-> 
-> - SA-CONTRIB-2012-149 - Hostip - Cross Site Scripting (XSS) 
-> http://drupal.org/node/1802218
-> 
-> - SA-CONTRIB-2012-150 - Twitter Pull - Cross Site Scripting (XSS) 
-> http://drupal.org/node/1802230
-> 
-> - SA-CONTRIB-2012-151 - Commerce Extra Panes - Cross Site Request 
-> Forgery http://drupal.org/node/1802258
-> 
-> - SA-CONTRIB-2012-152 - Feeds - Access bypass 
-> http://drupal.org/node/1808832
-> 
-> - SA-CONTRIB-2012-153 - Mandrill - Information Disclosure 
-> http://drupal.org/node/1808846
-> 
-> - SA-CONTRIB-2012-154 - Basic webmail - Cross Site Scripting 
-> http://drupal.org/node/1808852
-> 
-> - SA-CONTRIB-2012-154 - Basic webmail - Information Disclosure 
-> http://drupal.org/node/1808852
-> 
-> - SA-CONTRIB-2012-155 - ShareThis - Cross Site Scripting (XSS) 
-> http://drupal.org/node/1808856
-> 
-> - SA-CONTRIB-2012-156 - Search API - Cross Site Request Forgery
-> (CSRF) http://drupal.org/node/1815770
-> 
-> - SA-CONTRIB-2012-157 - Time Spent - Cross Site Scripting (XSS) 
-> http://drupal.org/node/1822066
-> 
-> - SA-CONTRIB-2012-157 - Time Spent - Cross Site Request Forgery
-> (CSRF) http://drupal.org/node/1822066
-> 
-> - SA-CONTRIB-2012-157 - Time Spent - SQL Injection 
-> http://drupal.org/node/1822066
-> 
-> - SA-CONTRIB-2012-158 - MailChimp - Cross Site Scripting (XSS) 
-> http://drupal.org/node/1822166
-> 
-> - SA-CONTRIB-2012-159 - Password policy - Information disclosure 
-> http://drupal.org/node/1828340
-> 
-> - SA-CONTRIB-2012-160 - OM Maximenu - Cross Site Scripting (XSS) 
-> http://drupal.org/node/1834866
-> 
-> - SA-CONTRIB-2012-161 - Webform CiviCRM Integration - Access
-> Bypass http://drupal.org/node/1834868
-> 
-> - SA-CONTRIB-2012-162 - RESTful Web Services - Cross site request 
-> forgery (CSRF) http://drupal.org/node/1840740
-> 
-> - SA-CONTRIB-2012-163 - User Read-Only - Permission escalation 
-> http://drupal.org/node/1840886
-> 
-> - SA-CONTRIB-2012-164 - Smiley module and Smileys module - Cross
-> Site Scripting (XSS) http://drupal.org/node/1840892
-> 
-> - SA-CONTRIB-2012-165 - Chaos tool suite (ctools) - Cross Site 
-> Scripting (XSS) http://drupal.org/node/1840992
+UPDATES IN VERSION 2
+====================
 
-Please use the following:
+Public release.
 
-CVE-2012-5537 Drupal SA-CONTRIB-2012-146
-CVE-2012-5538 Drupal SA-CONTRIB-2012-147
-CVE-2012-5539 Drupal SA-CONTRIB-2012-148
-CVE-2012-5540 Drupal SA-CONTRIB-2012-149
-CVE-2012-5541 Drupal SA-CONTRIB-2012-150
-CVE-2012-5542 Drupal SA-CONTRIB-2012-151
-CVE-2012-5543 Drupal SA-CONTRIB-2012-152
-CVE-2012-5544 Drupal SA-CONTRIB-2012-153
-CVE-2012-5545 Drupal SA-CONTRIB-2012-155 XSS
-CVE-2012-5546 Drupal SA-CONTRIB-2012-155 Information Disclosure
-CVE-2012-5547 Drupal SA-CONTRIB-2012-156
-CVE-2012-5548 Drupal SA-CONTRIB-2012-157 XSS
-CVE-2012-5549 Drupal SA-CONTRIB-2012-157 CSRF
-CVE-2012-5550 Drupal SA-CONTRIB-2012-157 SQL Injection
-CVE-2012-5551 Drupal SA-CONTRIB-2012-158
-CVE-2012-5552 Drupal SA-CONTRIB-2012-159
-CVE-2012-5553 Drupal SA-CONTRIB-2012-160
-CVE-2012-5554 Drupal SA-CONTRIB-2012-161
-CVE-2012-5556 Drupal SA-CONTRIB-2012-162
-CVE-2012-5557 Drupal SA-CONTRIB-2012-163
-CVE-2012-5558 Drupal SA-CONTRIB-2012-164
-CVE-2012-5559 Drupal SA-CONTRIB-2012-165
+ISSUE DESCRIPTION
+=================
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+The device model used by fully virtualised (HVM) domains, qemu, does
+not properly handle escape VT100 sequences when emulating certain
+devices with a virtual console backend.
 
+IMPACT
+======
+
+An attacker who has sufficient privilege to access a vulnerable device
+within a guest can overwrite portions of the device model's address
+space. This can allow them to escalate their privileges to that of the
+device model process.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen systems running HVM guests are potentially vulnerable to this
+depending on the specific guest configuration. The default
+configuration is vulnerable.
+
+Guests using either the traditional "qemu-xen" or upstream qemu device
+models are vulnerable.
+
+MITIGATION
+==========
+
+This issue can be avoided by only running PV guests or by configuring
+HVM guests to not use the virtual console('vc') backend for any device.
+
+For serial devices specify in your guest configuration:
+     serial = 'none'
+in your guest configuration.
+
+For parallel port devices the syntax is toolstack specific.
+For xend specify in your guest configuration:
+     parallel = 'none'
+For xl specify in your guest configuration:
+     xl: device_model_args = ['-parallel', 'none']
+
+In both cases the default is to use the vulnerable 'vc' mode.
+
+You can confirm whether or not you are vulnerable by pressing
+Ctrl-Alt-<N> (for digit N) while connected to either the VNC or SDL
+console. If you are able to switch to a window displaying "serial" or
+"parallel" then you are vulnerable.
+
+The issue can also be mitigated by enabling the stub domain device
+model. In this case the attacked can only potentially gain control of
+the stub domain and not of the entire system.
+
+To enable stub domains specify in your guest configuration:
+    device_model = "stubdom-dm"
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch(es) will resolve the issue.
+
+PATCH INFORMATION
+=================
+
+The attached patches resolve this issue
+
+Traditional qemu tree
+   Xen 4.0, 4.1 and unstable         xsa17-qemu-xen-traditional-all.patch
+
+Upstream qemu tree (present in unstable only)
+   Xen unstable                      xsa17-qemu-xen-unstable.patch
+
+$ sha256sum xsa17-*.patch
+60215322d3fbbc2054dfc160a20d9e0811af88487c4edc2f6ea81dcd5cedf039  xsa17-qemu-xen-traditional-all.patch
+7b4bb59e7757080e7806a8b8eeb6b78fa0ffdfbfb28a7a379f7edff285bffd88  xsa17-qemu-xen-unstable.patch
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQq+mUAAoJEBYNRVNeJnmTMTwP/0aGGaza6YomFJs55tOYR0Ro
-IbaqollVILrYeXOnAg9mVkeGAUJWkx1VNJh6K/SIhAWZF1Diy4evBuT+FwHjq5uy
-rKwARLQ8BS62qnxLfSX/cXwQpCxk1jzbV9voiqKJkcsNxPz+1bfQxcD+qIocOCrg
-zn4+RAtEdOeHCd0rL+nEnt2pQTk3EeSx7paGC6JhMtiFksXY06QdgKYZac3AbPII
-MsysTKPJso3RfDHJc7i0v4fiTUn7HgzIU8UUPdkhPdMJ2Y/HXxdxJnzRhgnNlNkp
-XZWc9ifLxHGlZlDBDspMjcpgX/4B90akeq2gtCKxZXlYZO31VOAv8eE2w9xKhOB6
-v/0O6D+iT+4mThNjcSaQy1+3WVXyO2pG8zh/kMXWsWF0ZjSPgxQtuLzSpCFkDeu5
-iDVmrKT6cquuC6ae8O2FAk9mhlSftE4noS5yNETzm5i2130YUM2KcabXjzJsutHo
-lhFppm5pLXUrhsf4ukW1dF1AuMqSER7+NZLJ4APOuctkAdLz5C/jRjlx3k9OzCM5
-M/xcKQmgXLlvc5+LS6oqxgv9UL60DNpNrigfuqeMhSqQXKxhT0XJ8K4EW7lc/pJE
-gMODwy7LswyzwtQuZWkh0vMCqMoWDfL/8GdWxoEDrz2pTDYAwr0YsqV38+iwF+CC
-+ueqh5siyTISyiGn30hy
-=9r93
+iQEcBAEBAgAGBQJQRx1PAAoJEIP+FMlX6CvZUqUH/jeAAvQnoBp6YKzm78XSnnmk
+GI2C/LhH0xqR3wFoEmWeMsiO4lrGrASX6T31NTvHa8sOtFqlNpTfRhwQybwYR3aa
+cz9/4y2a54hD95P1nVmPF0PddmSP47QSpRdCj0projq1UGxIdwEhkNeSoM8h7dXO
+MegqZClsvJMKd8XEcjBF5Qg7u9vLrXilCx5+It7XNE31Jxpkr/fozBb7FnNtDGJj
+s4RN/UDU4Pu68XyZ7Dc5xEFdJW48tz4BIlxxXavILBRFSE1VEf7Gc8H9CsUtBPWB
+C/LCUjpHkAOmqdgFhiLnZ2u+2s79U0dtPDJMNmqaGgWH+AqGkU9Nq8XXODTyY9k=
+=gnuE
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa17-qemu-xen-traditional-all.patch" of type "application/octet-stream" (3537 bytes)
+
+Download attachment "xsa17-qemu-xen-unstable.patch" of type "application/octet-stream" (3537 bytes)
