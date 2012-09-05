@@ -1,21 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/1
-Message-ID: <4F73ED47.1090805@redhat.com>
-Date: Wed, 28 Mar 2012 23:04:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/4
+Message-ID: <20120905080903.GA6399@suse.de>
+Date: Wed, 5 Sep 2012 10:09:03 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: egroupware before 1.8.002 various security issues
+Subject: CVE-Request: openstack pickle de-serialization
 Content-Type: text/plain; charset=utf-8
 
-On 03/28/2012 10:26 AM, Hanno Böck wrote:
-> http://comments.gmane.org/gmane.comp.web.egroupware.german/33144
-> 
-> " 1. Fixes regarding security issues like 'local file inclusion', 
-> 'sql injection', 'reflected xss' and 'open redirect'. "
-> 
+Hi,
 
-Make a list with specific requests and information please.
+During openstack review we found that some parts of openstack
+used pickle to de-serialize data. This could be used to execute
+arbitrary code. Please check here:
+
+https://bugs.launchpad.net/swift/+bug/1006414
+
+Can someone please assign a CVE, for completeness?
+
+thx,
+Sebastian
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
