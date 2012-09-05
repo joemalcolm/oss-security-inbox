@@ -1,36 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/10
-Message-ID: <50D2318E.6010702@gmail.com>
-Date: Wed, 19 Dec 2012 13:28:46 -0800
-From: Forest Monsen <forest.monsen@...il.com>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal core, and contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/5
+Message-ID: <E1T9C4K-0003Su-2p@mariner.uk.xensource.com>
+Date: Wed, 5 Sep 2012 10:38:44 +0100
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 12 (CVE-2012-3494) - hypercall set_debugreg vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hello! I'd like to request CVE identifiers for several issues with
-core and contributed modules:
+            Xen Security Advisory CVE-2012-3494 / XSA-12
+                             version 3
 
-SA-CORE-2012-166: Multiple vulnerabilities
-http://drupal.org/SA-CORE-2012-004
-(Looks like three identifiers necessary here?)
+	      hypercall set_debugreg vulnerability
 
-SA-CONTRIB-2012-173 - Nodewords: Information disclosure
-http://drupal.org/node/1859282
+UPDATES IN VERSION 3
+====================
 
-SA-CONTRIB-2012-174 - Context - Information Disclosure
-http://drupal.org/node/1870550
+Public release.
 
-Thanks,
-Forest
+ISSUE DESCRIPTION
+=================
+
+set_debugreg allows writes to reserved bits of the DR7 debug control
+register on x86-64.
+
+IMPACT
+======
+
+A malicious guest can cause the host to crash, leading to a DoS.
+
+If the vulnerable hypervisor is run on future hardware, the impact of
+the vulnerability might be widened depending on the future assignment
+of the currently-reserved debug register bits.
+
+VULNERABLE SYSTEMS
+==================
+
+All systems running 64-bit paravirtualised guests.
+
+The vulnerability dates back to at least Xen 4.0.  4.0, 4.1, the 4.2
+RCs, and xen-unstable.hg are all vulnerable.
+
+MITIGATION
+==========
+
+This issue can be mitigated by ensuring (inside the guest) that the
+kernel is trustworthy, or by running only 32-bit or HVM guests.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch will resolve the issue.
+
+PATCH INFORMATION
+=================
+
+The attached patch resolves this issue:
+
+ Xen unstable, 4.1 and 4.0		xsa12-all.patch
+
+$ sha256sum xsa12-all.patch
+2415ee133e28b1c848c5ae3ce766cc2a67009bad8d026879030a6511b85dbc13  xsa12-all.patch
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iEYEARECAAYFAlDSMYAACgkQ/ILCL9e1Br4eEQCcC46wETeg9hbHm4TSdNlBXXNN
-GFkAnjkPqXYBpW/E+WoIzskeeIVoTfZA
-=OjMq
+iQEcBAEBAgAGBQJQRx0+AAoJEIP+FMlX6CvZnMAH/0fcm9nfiChokydCyqXgdKtJ
+U2NqeqKzEP6emwLE+cvc+2EBP40fiBXsNATVdXc6Vx15eyzSMfJD3ndYF9OaKMVH
+MVP6KU/tyK1G/9WgQK9PHBj/Kzp8hwrY0Qw45od7z+R7XMGieLH9l1O1xwkNCYDw
+R8Xy2GI9IqsXLNpwy3BFYSyGYIX9o8/aBx4ZxHCV8H0OYUWv5hDGZZVXPDqGm11c
+N+qmUaPV2QlW8Aoww1SiwW5E+/CpyJT5+awEMgZ4IOHPbCBXJfyXbw4aMM2q5Soe
+mStqvPKL4H10SahaygdjxO+e4NqCHao0rYUXXpUr+aikIXvEearukp3FezR5IUE=
+=/LmZ
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa12-all.patch" of type "application/octet-stream" (1011 bytes)
