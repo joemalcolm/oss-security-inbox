@@ -1,80 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/14/1
-Message-ID: <CAPYM6Vw7xJd8=y83gWCBcEtMEyBYQetSxE+9jobpnryMiKGtiQ@mail.gmail.com>
-Date: Mon, 15 Oct 2012 00:38:38 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
-Subject: SilverStripe CMS 2.4.7 <= Arbitrary URL Redirection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/2
+Message-ID: <5046C1EF.9030301@redhat.com>
+Date: Tue, 04 Sep 2012 21:07:27 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE request: moinmoin incorrect ACL evaluation for virtual groups
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-SilverStripe 2.4.7 and lower versions are vulnerable to Open URL Redirection.
+On 09/04/2012 05:44 PM, Raphael Geissert wrote:
+> Hi,
+> 
+> An issue has been discovered in the way MoinMoin evaluates ACLs and
+> virtual groups. The full description and fix is available at: 
+> http://hg.moinmo.in/moin/1.9/rev/7b9f39289e16
+> 
+> Could a CVE id be assigned please?
+> 
+> Additional reference: http://moinmo.in/SecurityFixes
+> 
+> Cheers,
 
-
-2. BACKGROUND
-
-SilverStripe CMS is easy for both developers and content authors to
-work with. The SilverStripe Framework keeps the code tucked away
-neatly so that it can be accessed easily by programmers but does not
-get in the way of content authors.
-
-
-3. VULNERABILITY DESCRIPTION
-
-SilverStripe CMS contains a flaw that allows a remote cross site
-redirection attack. This flaw exists because the application does not
-validate the "BackURL" parameter upon submission to the
-"/index.php/Security/login" script. This could allow a user to create
-a specially crafted URL, that if clicked, would redirect a victim from
-the intended legitimate web site to an arbitrary web site of the
-attacker's choosing.
+Please use CVE-2012-4404 for this issue.
 
 
-4. VERSIONS AFFECTED
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Tested on 2.4.7
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://localhost/index.php/Security/login?BackURL=//yehg.net
-
-
-6. SOLUTION
-
-Upgrade to the latest 3.x version.
-
-
-7. VENDOR
-
-SilverStripe Development Team
-http://www.silverstripe.org/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2012-02-06: notified vendor
-2012-10-15: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5BSilverStripe_2.4.7%5D_url_redirection
-
-#yehg [2012-10-15]
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+iQIcBAEBAgAGBQJQRsHvAAoJEBYNRVNeJnmTLdkP/1uxV4FWbihvZUcfpdTpaGTs
+GJcjfNrox49WJeAw9+vQ/Ijyhboege4WXQotOf4u940bOmXKlTbrwJLfmeRt1Rjx
+ZyemGP+J4f7EgF1Cq+xZ8y5r8+pZgv2h+zACx4cvKjHsv19maDwRgQmA5PG8ztDQ
+KY6hyaEvpyM2BQlxOp5/8ImyCfHXxjj4UynwntmDJ11HNH9Orye3jV1aysIrokZe
+XUMMVa8glkQnw+3AvcMjEv7ZoykdPzlFkR4IcYDubL+cCeSAGxxLJQdcCKU5jPgQ
++qxZTqYo6NPLHEr3OLUWI9S5TpYI7Pl+iARiTKZN27YnSDarsgTyqWsuIpkRSF+M
+ixkZoxiW1QdK+4PwlRPbBMcYpzvjIWVEwKq4WNeNu0WdeQQUEV0Q3ydjAG3pSa9w
+dQXxhQkmmnSoA990rKZ3kON7iF510b+1Io/v4aDlRS6EIz4AVuatzOUKpiPjb3wl
+7bimHScnytXVcbzJT8u8wxzAK6ymGIin598mbQbIyPusXVTWdbZiFlLCihSKxOf9
+iTv2Bwg3kajZii8/iTX+eCwTxs62FMYGpee/DOrARHLalnWkGd6djmUwvaduVUTt
+ZTzmGq6FjOL7JDpHPtrWtaKTD+nRl+B7RWkWTJV7zmWSNBS7q6lUvvIIiXYieACS
++3DkLgMjtYDlFDIzPLWk
+=iQVh
+-----END PGP SIGNATURE-----
