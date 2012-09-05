@@ -1,33 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/17/3
-Message-ID: <1757954311.48635700.1355765256599.JavaMail.root@redhat.com>
-Date: Mon, 17 Dec 2012 12:27:36 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request -- SQUID-2012:1 / Squid:  DoS (excessive resource consumption) via invalid Content-Length headers or via memory leaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/11
+Message-Id: <E1T9DYh-0005Tm-0t@xenbits.xen.org>
+Date: Wed, 05 Sep 2012 11:14:11 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 18 (CVE-2012-3516) - grant table entry swaps have inadequate bounds checking
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  A denial of service flaw was found in the way the CGI Cache Manager of the Squid proxy caching server
-processed certain requests. A remote attacker could this this flaw to cause the squid service to consume
-excessive amount of resources.
+            Xen Security Advisory CVE-2012-3516 / XSA-18
+                           version 2
 
-References:
-[1] http://www.squid-cache.org/Advisories/SQUID-2012_1.txt
-[2] https://bugs.gentoo.org/show_bug.cgi?id=447596
-[3] https://secunia.com/advisories/51545/
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=887962
+       grant table entry swaps have inadequate bounds checking
 
-Upstream patches:
-[5] http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10479.patch
-    (against the 3.1 branch)
-[6] http://www.squid-cache.org/Versions/v3/3.2/changesets/squid-3.2-11714.patch
-    (against the 3.2 branch)
+UPDATES IN VERSION 2
+====================
 
-Could you allocate a CVE id for this?
+Public release.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+ISSUE DESCRIPTION
+=================
+
+The grant table hypercall's GNTTABOP_swap_grant_ref sub-operation does
+not perform adequate checks on the input grant references.
+
+IMPACT
+======
+
+A malicious guest kernel or administrator can crash the host.
+
+It may be possible for an attacker to swap a valid grant reference,
+which they control, with an invalid one allowing them to write
+abitrary values to hypervisor memory. This could potentially lead to a
+privilege escalation.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen-unstable, including Xen 4.2 release candidates are vulnerable to
+this issue.
+
+Xen 4.1 and earlier do not include this hypercall and are therefore
+not vulnerable.
+
+MITIGATION
+==========
+
+The only mitigation is not to run guests which have untrusted
+administrators.
+
+RESOLUTION
+==========
+
+Applying the attached patch will resolve the issue.
+
+PATCH INFORMATION
+=================
+
+The attached patch resolves this issue
+
+    Xen unstable                               xsa18-unstable.patch
+
+$ sha256sum xsa18-unstable.patch
+ad354a1964fc52b0e48d405514156935cc8dfcb5bdaee307e3e74afcc0ca8914  xsa18-unstable.patch
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQRzP3AAoJEIP+FMlX6CvZ350H/jfmrx6a1pNYF3KYtVVIXu1y
+ZERi/qxji162XGvB+7gdq+IdhLYAeWXRFF309U1FwcRxaQJPRAT024q6Hs+ITr9i
+L7OnSP9s+UHT4251X3UlOnEfQyKF6NKJIYbamQbfVIvVPdUtNLj4SKYqxlvjyyc3
+DpqiARD5f9+i7OkcojvhXszlbMgbpSQ8TYCW5De0dTkZgKQYq2hRuYf/1hmZ1lJt
+vFEkTCFxO7uxoH6gulyuEjszDYFAUmE3xdxKbT11mIkwnS1wfgp4Ob5H0ioSDNJo
+oOxqt4KsuNXHDW/B8QlxnQejKBL0INtmOjh7GMox4bvxg4gP57ZlDweC2lkR37c=
+=dD8C
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa18-unstable.patch" of type "application/octet-stream" (1368 bytes)
