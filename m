@@ -1,22 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/5
-Message-ID: <4F50858D.3000708@ficora.fi>
-Date: Fri, 02 Mar 2012 10:32:13 +0200
-From: Jussi Eronen <juhani.eronen@...ora.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/7
+Message-Id: <E1T9D0R-0004Zb-5d@xenbits.xen.org>
+Date: Wed, 05 Sep 2012 10:38:47 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 14 (CVE-2012-3496) - XENMEM_populate_physmap DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 02/27/2012 03:19 AM, Eugene Teo wrote:
->> this some months ago. I've also tried to contact the various CERT
->> but they refused to handle the case or did not reply to my
->> requests.
-> 
-> In future, if you tried to get help but you couldn't, feel free to
-> send us an email at linux-distros vs.openwall.org.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-You could also consider contacting us at vulncoord@...ora.fi. Our main
-focus is on multi-vendor cases, where we feel that coordination could
-have its benefits.
+            Xen Security Advisory CVE-2012-3496 / XSA-14
+                             version 3
 
--Jussi / CERT-FI
+           XENMEM_populate_physmap DoS vulnerability
+
+UPDATES IN VERSION 3
+====================
+
+Public release.  Credit Matthew Daley.
+
+ISSUE DESCRIPTION
+=================
+
+XENMEM_populate_physmap can be called with invalid flags.  By calling
+it with MEMF_populate_on_demand flag set, a BUG can be triggered if a
+translating paging mode is not being used.
+
+IMPACT
+======
+
+A malicious guest kernel can crash the host.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen systems running PV guests.  Systems running only HVM guests
+are not vulnerable.
+
+The vulnerability dates back to at least Xen 4.0.  4.0, 4.1, the 4.2
+RCs, and xen-unstable.hg are all vulnerable.
+
+MITIGATION
+==========
+
+This issue can be mitigated by ensuring that the guest kernel is
+trustworthy or by running only HVM guests.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch will resolve the issue.
+
+CREDIT
+======
+
+Thanks to Matthew Daley for finding this vulnerability (and that in
+XSA-12) and notifying the Xen.org security team.
+
+PATCH INFORMATION
+=================
+
+The attached patches resolve this issue
+
+ xen-unstable                                xsa14-unstable.patch
+ Xen 4.1, 4.1.x, 4.0, 4.0.x, 3.4 and 3.4.x   xsa14-xen-3.4-and-4.x.patch
+
+$ sha256sum xsa14-*.patch
+7a2e119b114708420c3484ecc338c7a198097f40e0d38854756dfa69c4c859a8  xsa14-unstable.patch
+41a1ee1da7e990dc93b75fad0d46b66a2bda472e9aa288c91d1dc5d15d2c2012  xsa14-xen-3.4-and-4.x.patch
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQRyVAAAoJEIP+FMlX6CvZF0IH/RV88Xqc9SdwrDZ7w6uwsRt+
+2keNPNyDBYxoYeqEqP9q/zICmxEqHMk/1zvSksimuIoiblliYQPHcJjhYhiBA8aX
+tarL2byKK+AE/1xvgh1BZiizCR6UV33Zi2PNdB3aaLizh82+70Lbx4ZtDg3zCpEo
+cvXGyMrNwzxMS+7ORuBAC9gtMke3sBeLua4KvGMhuByDIbW+9/7124YSGo30vFa3
+VHmZ8995ishkSQyzgvZVLMQ+y2G1GofUqa4gPRcNoMCULKGGkqJCyHPZfuAOY+w+
+0Cy/WDIE1HZd6DIn+09IoHe+StkyPgqYkai+QYwxS+JW/vpns82fpsAtmOF64tg=
+=EONA
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa14-unstable.patch" of type "application/octet-stream" (681 bytes)
+
+Download attachment "xsa14-xen-3.4-and-4.x.patch" of type "application/octet-stream" (672 bytes)
