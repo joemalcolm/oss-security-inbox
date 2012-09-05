@@ -1,24 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/02/6
-Message-ID: <1354479884.3208.12.camel@scapa>
-Date: Sun, 02 Dec 2012 21:24:44 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/16
+Message-ID: <50478EFB.6010305@redhat.com>
+Date: Wed, 05 Sep 2012 11:42:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, king cope <isowarez.isowarez.isowarez@...glemail.com>,  full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com,  todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org,  security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>,  moderators@...db.org
-Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
+CC: Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: CVE-Request: openstack pickle de-serialization
 Content-Type: text/plain; charset=utf-8
 
-On dim., 2012-12-02 at 21:17 +0100, king cope wrote:
-> My opinion is that the FILE to admin privilege elevation should be patched.
-> What is the reason to have FILE and ADMIN privileges seperated when
-> with this exploit
-> FILE privileges equate to ALL ADMIN privileges. 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Maybe because you might not want admins to have read/write access to the
-filesystem anyway?
+On 09/05/2012 02:09 AM, Sebastian Krahmer wrote:
+> Hi,
+> 
+> During openstack review we found that some parts of openstack used
+> pickle to de-serialize data. This could be used to execute 
+> arbitrary code. Please check here:
+> 
+> https://bugs.launchpad.net/swift/+bug/1006414
+> 
+> Can someone please assign a CVE, for completeness?
+> 
+> thx, Sebastian
 
-Regards,
--- 
-Yves-Alexis
+Good catch, thanks. Please use CVE-2012-4406 for this issue.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQR477AAoJEBYNRVNeJnmTQQcQAIl2cU00nyNjDcaLDqZySh9T
+31I0mdSdg6MWB2445uPUVdyW1tAqM50V7dgEEHoodEaKUfgDxDoH38fUJ5m3MPs9
+5jK+7Bqj6ifoM6il+jg11fX+2VdILrXJVRTI8mv4a6Zqn1Fgruvfst2Ew3R2TknN
+iPAF/6IZGkmXQJG5+N8PzFV8MzSXy9w2C/49krMIWaFH9pxssnoreoKvghQH2b83
+COIzlN5zaAEi1YXgnMZqApp351KZxfp9pz76jF4K9YetTdwaZVHm/nTaqyTolaV/
+qz7Tu7gEp8p4CQyuv3wEPlioTLyxiaz7OscqiIpoDDnc9SZWgrsNyV2v5w2zrNPy
+fvZ5dl3zUvRgWPei8KZUUWV9TgxNndlXFm6Z5mbT42+XfpbfgDK0fbHdY1AVR7XG
+wqYFCWIlq2byrl7sTXYdi0/SOyI7L0mbogG+QhP+BqX62ZmF+ubx/9Zi82elAali
+ByoeXhBpP0sIprLz9zywKK+C7IF0cckKotKTTuC7FmmlbNp4M783+bSVCQnVZFep
+4AALNgTzTuyVcIH7CREyeJaM5Akk3Vwwav2ltcWs3B/W4BOGHzcuBi60wP+mV5ZC
+Iz1eSLzv7wAYogXOtUh3TAHwEzSt63sF/yjOZwOeml456C6j/ySJoJBSoReJj8Sw
+nY7RzYUhIuttYDgSdoMs
+=b2WA
+-----END PGP SIGNATURE-----
