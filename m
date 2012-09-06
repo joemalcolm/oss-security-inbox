@@ -1,88 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/03/3
-Message-ID: <4FF340DF.5050807@redhat.com>
-Date: Tue, 03 Jul 2012 12:58:39 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/3
+Message-ID: <1422053670.30227855.1346949801345.JavaMail.root@redhat.com>
+Date: Thu, 6 Sep 2012 12:43:21 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, jack@...e.cz
-Subject: Re: CVE Request: Stability fixes in UDF Logical Volume Descriptor handling
+Cc: Paul Wise <pabs@...ian.org>, Cyril Brulebois <kibi@...ian.org>
+Subject: CVE-2010 Request -- blender: Insecure temporary file use by creating file string in undo save quit Blender kernel routine (re-occurrence of CVE-2008-1103)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-On 07/03/2012 07:22 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> People (do not know who) reported to the kernel security team and
-> Jan Kara some UDF filesystem crashes.
-> 
-> Jan Kara did some fixes in the UDF fs and they were committed to
-> mainline already, both actual bugfixes and some more sanity 
-> checking for hardening.
-> 
-> Buffer overreads or overwrites would have been possible.
-> 
-> 
-> I think a single CVE is sufficient.
+  an insecure temporary file use flaw was found in the way
+'undo save quit' routine of Blender kernel of Blender, a 3D
+modeling, animation, rendering and post-production software
+solution, performed management of 'quit.blend' temporary file,
+used for session recovery purposes. A local attacker could use
+this flaw to conduct symbolic link attacks, leading to ability
+to overwrite arbitrary system file, accessible with the privileges
+of the user running the blender executable.
 
-Were they discovered by the same person or different people?
+Upstream ticket:
+[1] https://projects.blender.org/tracker/index.php?func=detail&aid=22509&group_id=9&atid=498
 
-> 
-> 
-> The two mainline commits: 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=1df2ae31c724e57be9d7ac00d78db8a5dabdd050
->
-> 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=adee11b2085bee90bd8f4f52123ffb07882d6256
-> 
-> 
-> commit 1df2ae31c724e57be9d7ac00d78db8a5dabdd050 Author: Jan Kara
-> <jack@...e.cz> Date:   Wed Jun 27 21:23:07 2012 +0200
-> 
-> udf: Fortify loading of sparing table
-> 
-> Add sanity checks when loading sparing table from disk to avoid
-> accessing unallocated memory or writing to it.
-> 
-> Signed-off-by: Jan Kara <jack@...e.cz>
-> 
-> commit adee11b2085bee90bd8f4f52123ffb07882d6256 Author: Jan Kara
-> <jack@...e.cz> Date:   Wed Jun 27 20:20:22 2012 +0200
-> 
-> udf: Avoid run away loop when partition table length is corrupted
-> 
-> Check provided length of partition table so that (possibly
-> maliciously) corrupted partition table cannot cause accessing data
-> beyond current buffer.
-> 
-> Signed-off-by: Jan Kara <jack@...e.cz>
-> 
-> Ciao, Marcus
-> 
+References:
+[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=584621
 
+This seems to be / is a re-occurrence of the CVE-2008-1103 flaw:
+[3] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1103
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-1103
+[5] https://bugs.launchpad.net/ubuntu/+source/blender/+bug/6671
+[6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=298167
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Could you allocate a CVE-2010- identifier for this?
 
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP80DfAAoJEBYNRVNeJnmTyl0QAKI/qmZuqI7wuo625eyIYAGD
-GSgVG5a2VTbD6m4XcRFUkQACSCcyTH1RWEEr8eM8m2htZSiS12wvUGkYntGUmwRh
-o/Hf+Kyrn2Nmvf9EaDgMTLerOZf/xSh8Bm2jOGRkUzgDOrSAOVHMaLk1uYNfRsVy
-E6R2SJXLldMtmV4/L2xuqLU9tpdcFrK4EHTSEDDFb4B46eXvi1qhh5xLxmPIdvEC
-i8/19fWlw96TygoJvZxGaIlIuzj0noN70pJqc5XCmDeM0zCGfPSHBi4ZZOjfWEvs
-mVd4Xqm56USmovY1aO0EJRRI/EFgUuEA43x5uvR32oC+4qtMpJCeQRAeQyUPTeVv
-8VxaORs8SK8433lDzEf6NzIBKbl2Rd4ombGEr7/v9rnzLfWXlO+3CDdXCJ252bLQ
-Ao09tSoAFaAs08H3cVSvXKieE4osllfk78eJq+GMmhNPO/LNQRIoTpoBVNE9mJqt
-Sx9TmviPSBrbmMc4y7XmUvS4QWlM9rXzsaYwDSK0C4zi8FmqJq4yWehTKU6qNh2m
-e3DPm6glJVBlTc9m260xTUz4AZBJKDDc8LUJUPGljRj9kCOYnKIqrnHLD31CkWLB
-rDRMSy4RlbDKD7YnSe4B7sr+x05FGM7OipF+zU8faCujYAMuToqDZCeDDcDQDm8Y
-wr6NsvukqZ3nbgfh56mT
-=1CD+
------END PGP SIGNATURE-----
+P.S.: Please note upstream seems to dispute the necessity
+      of the fix for this (Followup #1 after Paul's report).
+      
