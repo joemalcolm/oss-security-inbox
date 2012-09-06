@@ -1,107 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/3
-Message-Id: <201205020812.50322.sgrubb@redhat.com>
-Date: Wed, 2 May 2012 08:12:50 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/9
+Message-ID: <20120906204454.GL1356@redhat.com>
+Date: Thu, 6 Sep 2012 14:44:54 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, Jeff Law <law@...hat.com>, Paul Wouters <pwouters@...hat.com>
-Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
+Subject: Re: CVE request - mcrypt buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, May 02, 2012 01:21:32 AM Solar Designer wrote:
-> On Fri, Mar 30, 2012 at 11:05:32PM +0400, Solar Designer wrote:
-> > On Fri, Mar 30, 2012 at 12:47:54PM -0600, Jeff Law wrote:
-> > > On 03/30/2012 12:43 PM, Solar Designer wrote:
-> > > >Do you realize that plenty of services that use crypt() - likely the
-> > > >majority of them, even - don't handle NULL returns, so they will
-> > > >segfault when these conditions are triggered?
-> > > 
-> > > Then, IMHO,  the app is clearly broken.  Crypt has been defined as
-> > > potentially returning NULL and at least for glibc has done so since the
-> > > introduction of sha256/sha512, if the app fails to check for that, then
-> > > the app needs to be fixed.
-> > 
-> > Sure.  I am not arguing against fixing the apps (in fact, I am planning
-> > to fix one of mine - code originally written in 1998 or so - regardless
-> > of what glibc does on this), but I am arguing for not having glibc
-> > expose the problem.
-> > 
-> > Considering the age of Unix, SUSv2 and POSIX.1-2001 are fairly recent
-> > (I think this may be when the NULL returns were first standardized), and
-> > glibc's SHA-crypt is very young.  It still makes sense to support apps
-> > older than that, including without changes.
-> 
-> Paul Wouters (Red Hat) has started to fix the apps:
-> 
-> https://mobile.twitter.com/letoams/status/195181246614224896
-> 
-> "sent crypt() NULL patches out for apg control-center cyrus-sasl openssh
-> pam passwdqc ppp python screen shadow-utils sysvinit-tools yp-tools
-> 7 days ago"
+* [2012-09-06 15:11:27 -0500] Raphael Geissert wrote:
 
-I gave Paul the following script to help locate anything that could be affected. 
-Maybe it is useful to find software we are not shipping? It does have an rpm 
-dependency, but you can switch that out to whatever you use for packaging.
+>On Thursday 06 September 2012 09:37:14 Vincent Danen wrote:
+>> A buffer overflow was reported [1],[2] in mcrypt version 2.6.8 and
+>> earlier due to a boundary error in the processing of an encrypted file
+>> (via the check_file_head() function in src/extra.c).  If a user were
+>> tricked into attempting to decrypt a specially-crafted .nc encrypted
+>> flie, this flaw would cause a stack-based buffer overflow that could
+>> potentially lead to arbitrary code execution.
+>
+>I'm attaching a patch that makes mcrypt abort when the salt is longer than
+>the temp buffer it uses.
+>
+>While working on it, I noticed the err_ functions do not have a constant
+>printf format, yet there are calls such as:
+>      sprintf(tmperr, _("Input File: %s\n"), infile);
+>      err_info(tmperr);
+>[print_enc_info in src/extra.c]
+>
+>And a few others in src/mcrypt.c; for instance:
+>$ mcrypt --no-openpgp "%s.nc"
+>mcrypt: h?????????Fn???`.nc is not a regular file. Skipping...
+>
+>I'm attaching another patch that prevents the format string attacks.
 
--Steve
+Fantastic, thanks for this.  I suppose the format string issues may
+require another CVE name?  I'm not sure if they're exploitable or not
+(no chance right now to look at it further).
 
-
-#!/bin/sh
-# This program takes directories as input and looks for programs
-# that use the crypt function of glibc
-
-libdirs="/lib /lib64 /usr/lib /usr/lib64"
-progdirs="/bin /sbin /usr/bin /usr/sbin /usr/libexec"
-FOUND=0
-
-check() {
-	x=`readelf -s $1 2>/dev/null | grep crypt@...LIBC`
-	if [ x"$x" != "x" ] ; then
-		FOUND=1
-		package=`rpm -qf --queryformat "%{NAME}-%{VERSION}" $1 2>/dev/null`
-		if [ $? -eq 1 ] ; then
-			package="Not Owned"
-		fi
-		ls -l $1 | awk '{ printf "%-50s %s\n", $9, p} ' p="$package"
-	fi
-}
-
-scan () {
-	if [ "$1" = "1" ] ; then
-		dirs=$libdirs
-	elif [ "$1" = "2" ] ; then
-		dirs=$progdirs
-	elif [ "$1" = "3" ] ; then
-		dirs=$3
-	fi
-
-	for d in $dirs ; do
-		if [ ! -d $d ] ; then
-			continue
-		fi
-		files=`/usr/bin/find $d -name "$2" -type f 2>/dev/null`
-		for f in $files
-		do
-			check $f
-		done
-	done
-}
-
-if [ $# -eq 1 ] ; then
-	if [ -d $1 ] ; then
-		scan 3 '*' $1
-	else
-		echo "Input is not a directory"
-		exit 1
-	fi
-else
-	scan 1 '*.so'
-	scan 2 '*'
-fi
-
-if [ $FOUND -eq 0 ] ; then
-	# Nothing to report, just exit
-	echo "No problems found" 1>&2
-	exit 0
-fi
-exit 1
+-- 
+Vincent Danen / Red Hat Security Response Team 
