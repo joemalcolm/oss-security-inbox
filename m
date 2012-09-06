@@ -1,51 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/12/6
-Message-ID: <878vgx772h.fsf@algae.riseup.net>
-Date: Sat, 12 May 2012 11:27:50 -0400
-From: micah anderson <micah@...eup.net>
-To: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: sympa (try again)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/6
+Message-ID: <5048E3FD.9070603@redhat.com>
+Date: Thu, 06 Sep 2012 11:57:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 19 - guest administrator can access qemu monitor console
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 11 May 2012 23:58:33 -0600, Kurt Seifried <kseifried@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 05/11/2012 12:03 PM, micah wrote:
-> > 
-> > Hi,
-> > 
-> > Please assign a CVE for Sympa, any version prior to 6.1.11. It is 
-> > possible to open the archive management ("arc_manage") page for
-> > any list, even those set to only be available to members, giving
-> > anyone the option to download the archive, or delete the archive.
-> > 
-> > http://www.sympa.org/distribution/latest-stable/NEWS 
-> > https://sourcesup.renater.fr/scm/viewvc.php/branches/sympa-6.0-branch/wwsympa/wwsympa.fcgi.in?root=sympa&r1=6706&r2=7358&pathrev=7358
-> >
-> >  thank you, micah
-> > 
-> > ps - for some reason the previous message is formatted strange, so
-> > I'm sending this one without the signature
-> > 
-> 
-> Ok I see this one and several more:
-> 
-> ================================
-> 
-> 6.1.11		May 11, 2012
-> Bug fixes:
-> [7358] wwsympa/wwsympa.fcgi.in:  Fixing a potential security issue
-> related to archives
-> 
-> Can you confirm these and I will assign CVE's for the outstanding issues.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I am only able to confirm the above issue, I am not a sympa developer I
-just was involved in the above issue. 
 
-What sort of 'confirmation' are you looking for? It seems like the
-changelog entries are pretty good confirmation. Perhaps you are looking
-for more details of the issues, those you could obtain from the sympa
-list.
+> NOTE REGARDING CVE ==================
+> 
+> This issue was previously reported in a different context, not to
+> Xen upstream, and assigned CVE-2007-0998 and fixed in a different
+> way.  We have requested a new CVE for XSA-19 but it is not yet
+> available.
 
-micah
+Was this requested from me? I don't seem to have a copy of the request.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQSOP9AAoJEBYNRVNeJnmT/oIP/1H00QFB5D4POxuKsIZIld5R
+gv0nymc36gqdGk2vMD2F2o6ikwG9yuotkYcHnAOgXFanH9AgN0mQ+X1mQRongibp
+5anVmGOeTySuvaOc8A2aPcd6QwhtITafqM4O6NZ3Qdv3W9jGUnkmfLIUV+BBSJ+V
+HZNcSn14ec2f2oGRRqztntiPKdEzYdlSRetQCbKAXoEUSTavhCRWrNUMXFfFhIMj
+cOP7C11ej+45+BRa2Jj+lG3zzw6Ut4+bagsG4M5AD8z3wjQ9FPRKwEdP1Zct2tPb
+tZvly0zUhWVj36+gXSo4M7+6zHpEVGXaPZWQo67MHsJMLClEtdiXJGyYzs8RrLAq
+IhFc7ehQt1JqDwR3KvXeg9qdPUgTwp3OfTvtD9MRjXIYICf19Mr1O3hswEux0DtZ
+9V40L63tsj74udHnipwSB4BM7elGmB90PIzPFC9BNmzCCANyjRG6uD87pb7Cb4Xa
+vfPEV3+7vB/WjqCpeXmnWTeaqD0GFxaH87Sb0t2CwVjCx071Nox084RSRS2oFZHP
+u/1QPxQf+u1NmyjrKwUCgPLvpD4rsw8fx9ZtaN31KcTbHCXPtXHw+Fi1d9Jsqbue
+QgmMjHovpaPRfFiNUVXuQ7NsWT2+JmktRIMifEbizW1dwQv9s+cAkzW6dCerO+BS
+lODUtQV1KfQpfbCYVpgw
+=LmYg
+-----END PGP SIGNATURE-----
