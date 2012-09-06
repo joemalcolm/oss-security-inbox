@@ -1,40 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/8
-Message-ID: <50D2028B.9090903@redhat.com>
-Date: Wed, 19 Dec 2012 11:08:11 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/4
+Message-ID: <5048E3A7.6030803@redhat.com>
+Date: Thu, 06 Sep 2012 11:55:51 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Greg KH <greg@...ah.com>
-Subject: Re: Plug-and-wipe and Secure Boot semantics
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request - mcrypt buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/19/2012 09:34 AM, Greg KH wrote:
-> We don't know what vendors are basing their UEFI bios
-> implementation on the open source version, I know there is at least
-> one UEFI bios that is not based on the open source version, or so
-> it is reported (the BSD license of Tianocore means that we will
-> never really know.)
+On 09/06/2012 08:37 AM, Vincent Danen wrote:
+> I don't believe a CVE has been assigned to this, could one be?
 > 
-> Determining what machine is running what bios from what company
-> that was based on what version of the open source UEFI
-> implementation is going to be a huge problem in the long run and
-> something that I sure don't want to have to track.
+> A buffer overflow was reported [1],[2] in mcrypt version 2.6.8 and
+> earlier due to a boundary error in the processing of an encrypted file
+> (via the check_file_head() function in src/extra.c).  If a user were
+> tricked into attempting to decrypt a specially-crafted .nc encrypted
+> flie, this flaw would cause a stack-based buffer overflow that could
+> potentially lead to arbitrary code execution.
 > 
-> There have been reported bugs in the Tianocore in the past, I
-> don't think they were "security" issues in and of themselves,
-> should we be reporting them here to get CVE numbers if they are?
-
-If it's a security issue it should ideally get a CVE so it can be
-tracked. I only do Open Source CVE assignments though, for closed
-source stuff/etc you'd want to ask cve-assign@...re.org directly.
-
-> thanks,
+> References:
 > 
-> greg k-h
+> https://bugzilla.redhat.com/show_bug.cgi?id=855029
+> https://secunia.com/advisories/50507/
+> https://bugs.gentoo.org/show_bug.cgi?id=434112
+> http://packetstormsecurity.org/files/116268/mcrypt-2.6.8-Buffer-Overflow-Proof-Of-Concept.html
 
+Please use CVE-2012-4409 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -42,18 +36,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQ0gKLAAoJEBYNRVNeJnmTsnkP/icX2MQbPxUKwQS7VylIoq56
-yLRUmt49Mn2LGRv6j6SsB0oSOeS/f5uybLu+exAv5Vs1fhLv9wycw4mMQfDuPStK
-NmIUUf2P7boNCxxzYr7Kj7/1VAP7k7EnMiUYSvrFl8CLVNI5YyA//u5WX5kZVcg6
-w1tl98sMUBdLKftIruFO/bK8dCS+O6SICNKTQSEj5Kp+bPLx5wLWo1i0eO1YvzJu
-E7xKGiQWYbVZ88zPI3yRE/FIn739VPhAeNc9TEGPmKC1RefpcIwlZmyL1lVGMeha
-sX8mKRQUK1E1sOtME09tK3IQjHBzWYTlofojt8vjQ5a8bAlFeQolZvvfUMUYIWcf
-lPTpoDprIVkwbFVpGz82KRSIF5+v0/6G24qizIJGzpSYstZ97xj6X9fSg9bNAPq+
-Aj7/Cy8K55moJqIDkIv3yOkco784+F2/eqYIzlXXkMd0yuvIe22PtvlPyD1x2Lx0
-dOjj8yYxPAG1kA6xhHo6r/+2cAC4LNQ1B0jK1llcCpmJBkYGxGQXfT0Nztb2sRiH
-BBoWxkX8SPYIFHZhQGIDsRvQdSBtxsH3VVaG9G6V8UNvMe86Rak2bhN0qwnj4rZ3
-plie/zLzE1qKIMNtXq41ZyWqu2Id1U725mjEVGaTiie/VPQ1iEjPQ1dSa4POFI5G
-WUVPO0+NFdvBhhcGhL18
-=AJfT
+iQIcBAEBAgAGBQJQSOOnAAoJEBYNRVNeJnmT/PUP/R6C79hCk1xi99UXcPG2kw6d
+dkomXu8f5YbalbvIEwy3ekpndT+A1oj+VJu+msdBtV9eC5Q1EHw7LhHP4f8wkzYx
+cpJCDhG9FpOZV1K8kG12lyloG2n5nXvVAZrGGqgnrl5AAq52tySmNJzkLV51DSAI
+pQAhLiaaxiOjcb3VHFPIUswUCzx6nCgz5+u2NaCCTOHWBpDzP4viw2mu5KxSEu/6
+tqptSU6qLuCJ1I5sjGIMYPJH9ACj0vTdqAwHq4sQRVeXIlDgZioGAAPc9cW4mwop
+ZrvAYH8rJxbpCdthioxINitj4J6Pz02yYBTfPboT3OZQDs4xOJ8MEdOgVyGC5W9H
+tvzbeBXI2mdZQN5bfXiTPsLiv+9gQTh9oGsoV7A722BWOn7jYZgpPHXEVTd9M5Lj
+sAdWzkS7hTWfwei2obHXKRShkuw4rk/uaN6/DHoMPxE4Sdy9Xu3jlakL4KNqC8VT
+eS0NuEAz8n6PAu+MJLT5F6azNJYVFUkUIiDIrwAjdnGHurm/WqMGY8BOo0nHo/zb
+hJL1sdzoPQVR4Nq6hT7FuYkkIkA2WDbCEg1BVMgI2j7785zTt7+ncflJyYvBTTRX
+Z4PpTteSAzOSdi3aDMYNdVjhLUn4Vhup+t09VJPt9so+/gIIGpWghTubFZM02jxK
+CrgWc8/81S6PrE29lRZU
+=JshC
 -----END PGP SIGNATURE-----
