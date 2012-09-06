@@ -1,72 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/8
-Message-ID: <CAKecwXDuTszn0UijMP3YRbCHUVWh=VzBtnZW=mzFy_CGN1UH6Q@mail.gmail.com>
-Date: Thu, 9 Aug 2012 18:24:39 -0300
-From: Santiago Pastorino <santiago@...works.com>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
-Subject: Ruby on Rails Potential XSS Vulnerability in select_tag prompt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/8
+Message-Id: <201209061511.28627.geissert@debian.org>
+Date: Thu, 6 Sep 2012 15:11:27 -0500
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - mcrypt buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
-There is a vulnerability in Ruby on Rails in the select_tag helper
-method when a "prompt" is supplied. This vulnerability has been
-assigned the CVE identifier CVE-2012-3463.
+Hi,
 
-Versions Affected:  3.x.
-Not affected:       2.3.x
-Fixed Versions:     3.2.8, 3.1.8, 3.0.17
+On Thursday 06 September 2012 09:37:14 Vincent Danen wrote:
+> A buffer overflow was reported [1],[2] in mcrypt version 2.6.8 and
+> earlier due to a boundary error in the processing of an encrypted file
+> (via the check_file_head() function in src/extra.c).  If a user were
+> tricked into attempting to decrypt a specially-crafted .nc encrypted
+> flie, this flaw would cause a stack-based buffer overflow that could
+> potentially lead to arbitrary code execution.
 
-Impact
-- ------
-When a "prompt" value is supplied to the `select_tag` helper, the
-"prompt" value is not escaped.  If untrusted data is not escaped, and
-is supplied as the prompt value, there is a potential for XSS attacks.
+I'm attaching a patch that makes mcrypt abort when the salt is longer than 
+the temp buffer it uses.
 
-Vulnerable code will look something like this:
+While working on it, I noticed the err_ functions do not have a constant 
+printf format, yet there are calls such as:
+      sprintf(tmperr, _("Input File: %s\n"), infile);
+      err_info(tmperr);
+[print_enc_info in src/extra.c]
 
-    select_tag("name", options, :prompt => UNTRUSTED_INPUT)
+And a few others in src/mcrypt.c; for instance:
+$ mcrypt --no-openpgp "%s.nc" 
+mcrypt: h���Fn�`.nc is not a regular file. Skipping...
 
-All users running an affected release should either upgrade or use one
-of the work arounds immediately.
+I'm attaching another patch that prevents the format string attacks.
 
-Releases
-- --------
-The 3.2.8, 3.1.8, and 3.0.17 releases are available at the normal locations.
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
-Workarounds
-- -----------
+View attachment "mcrypt-format-strings.patch" of type "text/x-patch" (711 bytes)
 
-A possible workaround for this vulnerability is to escape user input
-supplied to the prompt key:
-
-    select_tag("name", options, :prompt => h(UNTRUSTED_INPUT))
-
-
-Patches
-- -------
-To aid users who aren't able to upgrade immediately we have provided
-patches for the two supported release series.  They are in git-am
-format and consist of a single changeset.
-
-* 3-0-select_tag_prompt.patch - Patch for 3.0 series
-* 3-1-select_tag_prompt.patch - Patch for 3.1 series
-* 3-2-select_tag_prompt.patch - Patch for 3.2 series
-
-Please note that only the 3.1.x and 3.2.x series are supported at
-present.  Users of earlier unsupported releases are advised to upgrade
-as soon as possible as we cannot guarantee the continued availability
-of security fixes for unsupported releases.
-
----
-
-Santiago Pastorino
-WyeWorks Co-founder
-http://www.wyeworks.com
-
-Twitter: http://twitter.com/spastorino
-Github: http://github.com/spastorino
-
-Download attachment "3-2-select_tag_prompt.patch" of type "application/octet-stream" (2611 bytes)
-
-Download attachment "3-1-select_tag_prompt.patch" of type "application/octet-stream" (2611 bytes)
-
-Download attachment "3-0-select_tag_prompt.patch" of type "application/octet-stream" (2585 bytes)
+View attachment "CVE-2012-4409.patch" of type "text/x-patch" (589 bytes)
