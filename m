@@ -1,64 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/12
-Message-ID: <5005BFC3.9050607@redhat.com>
-Date: Tue, 17 Jul 2012 13:40:51 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, "neal@...lpoole.com >> Neal Poole" <neal@...lpoole.com>
-Subject: Re: CVE id request: libjs-swfupload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/1
+Message-ID: <20120906143714.GG1356@redhat.com>
+Date: Thu, 6 Sep 2012 08:37:14 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request - mcrypt buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I don't believe a CVE has been assigned to this, could one be?
 
-On 07/16/2012 01:07 PM, Nico Golde wrote:
-> Hi, * Kurt Seifried <kseifried@...hat.com> [2012-07-16 20:32]:
->> On 07/16/2012 12:17 PM, Nico Golde wrote:
->>> Hi, there is an XSS issue in libjs-swfupload. Can we get a CVE
->>> id for this?
->>> 
->>> Details: 
->>> https://nealpoole.com/blog/2012/05/xss-and-csrf-via-swf-applets-swfupload-plupload/
->>>
->>>
->>
->>> 
-http://code.google.com/p/swfupload/issues/detail?id=376
->>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681323
->>> 
->> 
->> There also appears to be a CSRF vulnerability. Is there a reason
->> for only mentioning the XSS?
-> 
-> The CSRF is for pupload which we don't ship and I haven't looked
-> at.
-> 
-> Cheers Nico
+A buffer overflow was reported [1],[2] in mcrypt version 2.6.8 and
+earlier due to a boundary error in the processing of an encrypted file
+(via the check_file_head() function in src/extra.c).  If a user were
+tricked into attempting to decrypt a specially-crafted .nc encrypted
+flie, this flaw would cause a stack-based buffer overflow that could
+potentially lead to arbitrary code execution.
 
-Please use  CVE-2012-3414 for the libjs-swfupload XSS issue
+References:
 
-Please use  CVE-2012-3415 for the libjs-swfupload CSRF issue
+https://bugzilla.redhat.com/show_bug.cgi?id=855029
+https://secunia.com/advisories/50507/
+https://bugs.gentoo.org/show_bug.cgi?id=434112
+http://packetstormsecurity.org/files/116268/mcrypt-2.6.8-Buffer-Overflow-Proof-Of-Concept.html
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQBb/DAAoJEBYNRVNeJnmT674P+weoOJuLNtnOwwiLh2+2KPbZ
-bCJvYWCiCJPfEF3UG73jcomSo8KfooiJIZP9CfBiGLIi4JoLl2ch2g8WdgbVAz9X
-9rG/M+2M/1uWga3MsLoQiKwr9/Rou+BapCrTfWfN/yaUHRe5USoMwv3NL9cWZisz
-ZoJjrcLcoLmHE17rpmqClo/ei24+YSbkrNohpL/UCtOv1egDgIRceVUOeX44M+AA
-x+vyVDVpknSreHv+Q776ydtyrgjoJI0HfxAnAFydLiBb5Lo3KBIHSHZFCzdl1/rg
-kLSjsgxvXLKG5bqDjLG/Fpu9M1AwB0yt7GUTGefCQ8B3agwX1D6mbxYLPvrGW60x
-G0mv9O4Hag7OJeJ/pSAt4x9D8aR+Hhqx51Z4BwOK4hIwWqsBwvQhfTFz+pvwa+/w
-kET7qMEINUa/H2hgTq/zVe/xDtyAwRHZfxvJo9tdyDyaN60LZRi8rxPkUqhDGxcA
-ptw/ftG8k3jQMcm/CT46YtEyjt7xhlD4u6Uos0CcUh3BdNRM1yhqOlP5RfgDzWUi
-eKaJeVibFVHhXgIlzagKD5o/1+FzXhVGWWN/YaUHEEccuESvzpFHLnyn1982PCsv
-oC1yDGmPOs+HyEGuXrZvd8THUvaP+vj80n9jI9JymBDnvt74QFzpxZ8eAA98c6dm
-ZdZxGYuACP+zsN5Tyyb0
-=3Kl2
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
