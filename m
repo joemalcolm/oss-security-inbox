@@ -1,51 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/05/1
-Message-ID: <4FA474ED.5010806@redhat.com>
-Date: Fri, 04 May 2012 20:31:41 -0400
-From: Russell Bryant <rbryant@...hat.com>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com
-Subject: [OSSA 2012-006] Horizon session fixation and reuse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/5
+Message-Id: <E1T9vzh-0000k0-IX@xenbits.xen.org>
+Date: Fri, 07 Sep 2012 10:41:01 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 19 (CVE-2012-4411) - guest administrator can access qemu monitor console
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-OpenStack Security Advisory: 2012-006
-CVE: 2012-05-04
-Date: Friday, May 4
-Title: Horizon session fixation and reuse
-Impact: Critical
-Reporter: Thomas Biege, SUSE
-Products: Horizon
-Affects: All versions
+                 Xen Security Advisory CVE-2012-4411 / XSA-19
+			      version 2
 
-Description:
-Thomas Biege from SUSE reported a vulnerability in OpenStack Dashboard
-(Horizon). Under specific circumstances it is possible to reuse
-session cookies from another user, potentially allowing access to
-unauthorized information and capabilities.
-Fixes:
-Folsom:
-https://github.com/openstack/horizon/commit/041b1c44c7d6cf5429505067c32f8f35166a8bab
-2012.1:
-https://github.com/openstack/horizon/commit/abc532fa90eac1cc970423339347e318aa8d1b1a
+         guest administrator can access qemu monitor console
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-2144
-https://bugs.launchpad.net/horizon/+bug/978896
+UPDATES IN VERSION 2
+====================
 
-Notes:
-This fix will be included in the folsom-1 development milestone and in
-a future 2012.1 (essex) release.
+We have now been issued with a CVE number.
 
-- -- 
-Russell Bryant
-OpenStack Vulnerability Management Team
+ISSUE DESCRIPTION
+=================
+
+A guest administrator who is granted access to the graphical console
+of a Xen guest can access the qemu monitor.  The monitor can be used
+to access host resources.
+
+IMPACT
+======
+
+A malicious guest administrator can access host resources (perhaps
+belonging to other guests or the underlying system) and may be able to
+escalate their privilege to that of the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Installations where guest administrators do not have access to a
+domain's graphical console, or containing only PV domains configured
+without a graphical console, are not vulnerable.
+
+Installations where all guest administrators are trustworthy are not
+vulnerable, even if the guest operating systems themselves are
+untrusted.
+
+Systems using xend/xm: At least all versions since Xen 4.0 are
+affected.  Systems are vulnerable even if "monitor=no" is specified in
+the xm domain configuration file - this configuration option is not
+properly honoured in the vulnerable versions.
+
+Systems using libxl/xl: All versions are affected.  The "monitor="
+option is not understood, and is therefore ignored, by xl.  However,
+systems using the experimental device model version based on upstream
+qemu are NOT vulnerable; that is, Xen 4.2 RC systems with
+device_model_version="qemu_xen" specified in the xl domain config
+file.
+
+Systems using libvirt are vulnerable.  For "xen:" URIs, see xend/xm,
+above.  For "libxl:" URIs, all versions are affected.
+
+Systems based on the Xen Cloud Platform are NOT vulnerable.
+
+CONFIRMING VULNERABILITY
+========================
+
+Connect to the guest's VNC (or SDL) graphical display and make sure
+your focus is in that window.  Hold down CTRL and ALT and press 2.
+You will see a black screen showing one of "serial0", "parallel0" or
+"QEMU <version> monitor".  Repeat this exercise for other digits 3 to
+6.  CTRL+ALT+1 is the domain's normal graphical console.  Not all
+numbers will have screens attached, but note that you must release and
+re-press CTRL and ALT each time.
+
+If one of the accessible screens shows "QEMU <version> monitor" then
+you are vulnerable.  Otherwise you are not.
+
+MITIGATION
+==========
+
+With xl in Xen 4.1 and later, supplying the following config
+option in the VM configuration file will disable the monitor:
+   device_model_args=["-monitor","null"]
+
+With xend the following config option will disable the monitor:
+   monitor_path="null"
+Note that with a vulnerable version of the software specifying
+"monitor=0" will NOT disable the monitor.
+
+We are not currently aware of the availability of mitigation for
+systems using libvirt.
+
+NOTE REGARDING EMBARGO
+======================
+
+This issue was publicly discussed online by its discoverer.
+There is therefore no embargo.
+
+RESOLUTION
+==========
+
+The attached patch against qemu-xen-traditional
+(qemu-xen-4.*-testing.git) resolves this issue.
+
+$ sha256sum xsa19-qemu-all.patch
+19fc5ff9334e7e7ad429388850dc6e52e7062c21a677082e7a89c2f2c91365fa  xsa19-qemu-all.patch
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iEYEARECAAYFAk+kdO0ACgkQFg9ft4s9SAYLsgCgptN3zZrEpOCPsbbSfPiPz7J5
-BegAoK2D0D1YHP08xt3iSdGQ7OKXuyLT
-=CYxN
+iQEcBAEBAgAGBQJQSc6yAAoJEIP+FMlX6CvZ3MMIAJ3BfY4EXmye0ucZKU2zsrNx
+R9w3AXdZWywf9qWX9DvgnJ0r4v/1wukqYwqpShAYNRHnbc3M15/ipEyLZDS2L4I2
+On2mcaQeFAx5xIesRAaggyr4mQLoafCZxQO1ADPEIoyX97BBCJB85AjY5ctuoRX7
+vDIUCwcXENsSVoDu3jJxqwwvbLbR7CA//V6RmCCIV9JKqcAdnrCTbRnoC7auDBzq
+rbEqf9yyW2Md9Dul6S6j5RUim0CT7dJ7LlEbjRoyiDleHrK1T5UlfxHaCGhGa/ud
+YRkW34PogsB1/boOi6T03Eir7svNNfN46ZS8Y+Pf6Dkv765BabIKwhhl7idIDUM=
+=ayT8
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa19-qemu-all.patch" of type "application/octet-stream" (925 bytes)
