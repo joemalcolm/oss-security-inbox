@@ -1,32 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/7
-Message-ID: <20120330084716.GA16472@kludge.henri.nerv.fi>
-Date: Fri, 30 Mar 2012 11:47:16 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: phppgadmin before 5.0.4 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/8
+Message-ID: <1209860876.31092338.1347028868404.JavaMail.root@redhat.com>
+Date: Fri, 7 Sep 2012 10:41:08 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: Andrey Petrov <andrey.petrov@...zow.net>, Jamie Strandboge <jamie@...ntu.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- urllib3: Does not check for SSL certificates by default
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 28, 2012 at 11:09:17PM -0600, Kurt Seifried wrote:
-> On 03/28/2012 08:26 AM, Hanno Böck wrote:
-> > phppgadmin 5.0.4 fixes an xss, please assign CVE.
-> > 
-> > https://github.com/phppgadmin/phppgadmin/commit/e92a003624609a445c4cf57c9c3d1fcef0eae47c#diff-0
-> >
-> >  "Fix XSS in function.php, reported by Mateusz Goik"
-> > 
+Steve,
+
+  in relation to this one the following question has been
+raised internally - it's OK to assign CVE identifier for
+end user applications, proclaiming to perform SSL certificates
+verification, but not doing that.
+
+  But what about the libraries? Obviously urllib3 when instructed
+to do so, performs the verification. The question is should it
+get a CVE identifier or not? Could you clarify Mitre's opinion /
+view on this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> Hello Kurt, Steve, vendors,
 > 
-> Please use CVE-2012-1600  for this issue. Is there a link for the code
-> change?
-
-"""
-Fix XSS in function.php, reported by Mateusz Goik.
-
-I'm not sure why the name and the type the functions were not escaped
-*on purpose* here. There's no more reason here than in any other place
-with other PostgreSQL objects to not escape the name or the type...
-"""
-
-https://github.com/phppgadmin/phppgadmin/commit/74174ad639664b52cc1609ede0af8bc403e98a00
-
-- Henri Salo
+>   it was reported that urllib3, a Python HTTP library
+> with thread-safe connection pooling and file post support,
+> did not perform SSL certificates verification by default.
+> A rogue HTTP server could use this flaw to conduct
+> man-in-the-middle (MITM) attacks.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686872
+> [2] https://bugs.launchpad.net/ubuntu/+source/python-urllib3/+bug/1047054
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=855320
+>     (the bug actually has python-requests in the summary,
+>      but only due the fact it contains embedded urllib3)
+> 
+> Patch applied by the Ubuntu Linux distribution:
+> [4] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=python-urllib3_1.3-2ubuntu1.debdiff;att=1;bug=686872
+> 
+> Reproducer:
+> [5] https://bugs.launchpad.net/ubuntu/+source/python-urllib3/+bug/1047054/comments/0
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
