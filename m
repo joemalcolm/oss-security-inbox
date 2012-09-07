@@ -1,66 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/09/2
-Message-ID: <20120609153038.GA27575@meddwl.fritz.box>
-Date: Sat, 9 Jun 2012 17:30:38 +0200
-From: Sergei Golubchik <serg@...typrogram.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/13
+Message-ID: <504A2DF1.6090305@redhat.com>
+Date: Fri, 07 Sep 2012 11:25:05 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Security vulnerability in MySQL/MariaDB sql/password.c
+CC: Eitan Adler <lists@...anadler.com>, Jan Lieskovsky <jlieskov@...hat.com>, Paul Wise <pabs@...ian.org>, Cyril Brulebois <kibi@...ian.org>
+Subject: Re: CVE-2010 Request -- blender: Insecure temporary file use by creating file string in undo save quit Blender kernel routine (re-occurrence of CVE-2008-1103)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We have recently found a serious security bug in MariaDB and MySQL.
-So, here, we'd like to let you know about what the issue and its impact
-is. At the end you can find a patch, in case you need to patch an older
-unsuported MySQL version.
+On 09/06/2012 04:46 PM, Eitan Adler wrote:
+> On 6 September 2012 13:56, Kurt Seifried <kseifried@...hat.com>
+> wrote:
+>>> Upstream ticket: [1] 
+>>> https://projects.blender.org/tracker/index.php?func=detail&aid=22509&group_id=9&atid=498
+>
+>>>  Could you allocate a CVE-2010- identifier for this?
+>> 
+>> Please use CVE-2012-4410 for this issue.
+> 
+> Why the 2012 CVE when the issue was reported in 2010?
 
-All MariaDB and MySQL versions up to 5.1.61, 5.2.11, 5.3.5, 5.5.22 are
-vulnerable.
-MariaDB versions from 5.1.62, 5.2.12, 5.3.6, 5.5.23 are not.
-MySQL versions from 5.1.63, 5.5.24, 5.6.6 are not.
+*REJECT* CVE-2012-4410 - this has the wrong year. The issue was
+reported in 2010.
 
-This issue got assigned an id CVE-2012-2122.
+Please use CVE-2010-5105 for this issue, it has the correct year.
 
-Here's the issue. When a user connects to MariaDB/MySQL, a token (SHA
-over a password and a random scramble string) is calculated and compared
-with the expected value. Because of incorrect casting, it might've
-happened that the token and the expected value were considered equal,
-even if the memcmp() returned a non-zero value. In this case
-MySQL/MariaDB would think that the password is correct, even while it is
-not.  Because the protocol uses random strings, the probability of
-hitting this bug is about 1/256.
 
-Which means, if one knows a user name to connect (and "root" almost
-always exists), she can connect using *any* password by repeating
-connection attempts. ~300 attempts takes only a fraction of second, so
-basically account password protection is as good as nonexistent. 
-Any client will do, there's no need for a special libmysqlclient library.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-But practically it's better than it looks - many MySQL/MariaDB builds
-are not affected by this bug.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-Whether a particular build of MySQL or MariaDB is vulnerable, depends on
-how and where it was built. A prerequisite is a memcmp() that can return
-an arbitrary integer (outside of -128..127 range). To my knowledge gcc
-builtin memcmp is safe, BSD libc memcmp is safe. Linux glibc
-sse-optimized memcmp is not safe, but gcc usually uses the inlined
-builtin version.
-
-As far as I know, official vendor MySQL and MariaDB binaries are not
-vulnerable.
-
-Regards,
-Sergei Golubchik
-MariaDB Security Coordinator
-
-References:
-
-MariaDB bug report: https://mariadb.atlassian.net/browse/MDEV-212
-MariaDB fix: http://bazaar.launchpad.net/~maria-captains/maria/5.1/revision/3144
-
-MySQL bug report: http://bugs.mysql.com/bug.php?id=64884
-MySQL fix: http://bazaar.launchpad.net/~mysql/mysql-server/5.1/revision/3560.10.17
-MySQL changelog:
-  http://dev.mysql.com/doc/refman/5.1/en/news-5-1-63.html
-  http://dev.mysql.com/doc/refman/5.5/en/news-5-5-24.html
-
+iQIcBAEBAgAGBQJQSi3wAAoJEBYNRVNeJnmTDwkP/2M8nAer4GmImn+I2YNpKux4
+embiraOjmGZBj3mZZkUPP0YJNfMye4wQyVdqGWNiqFMerl6jmOP3tXlCR2eCqsdl
+R8KMPUR0leqbMD+pWIuh1fQO087+/gQi54ZhrY12Hb5lCbquiVBzrhWnglNT3zAB
+VqtaFI3oXboT8jx5S2lzByR8q7Fc3HruynnPo/1hjbooM2nyMTYm0gZDDMWblUoD
+8VYGFfVx0DvjaBSDMjBZ/KdKLrVhwdykh68suv15WU4BrgXktuqB2/ZzXojvJ5uu
+RSjzb1Venix0Q0zpk2rmlsiWjRidpVDfXJ8TQLkJAAjwWcxGsKrI2iUZdEunOiig
+/s6ENU5ZOJfXVfVb2jp1gUIxGt6dkpVFfQxPhNVBCNr0bpo9dlgSRlpMQoonaYM+
+1KjCjseHk5G7XAwhiwLkORviV4nE9NtUdcZsrCnnM/niywqt6yh2xajKqI9bmcrD
+vKBPMWCSoTFAi7h7P0eAMlM/gAbwnX43z7CHJRN41pIduvopQu5vERFlIKz0UXZ7
+ZuzMHR79K9j1CvbG0JlPrzk5YxIJekCEqUy62Wb6HByNX2DEbVY6cRbq0t74YqWb
+cQTkFquo/GqijzIFlQiqZ4CIhyPO3j6hZkO9WDXM99+Grg8DdAd5o6aMc72ovgo4
+uHVk891HVsCd7gCNEcLG
+=Y0oG
+-----END PGP SIGNATURE-----
