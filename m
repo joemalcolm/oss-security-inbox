@@ -1,51 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/1
-Message-ID: <50494329.3020105@redhat.com>
-Date: Thu, 06 Sep 2012 18:43:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Eitan Adler <lists@...anadler.com>, Jan Lieskovsky <jlieskov@...hat.com>, Paul Wise <pabs@...ian.org>, Cyril Brulebois <kibi@...ian.org>
-Subject: Re: CVE-2010 Request -- blender: Insecure temporary file use by creating file string in undo save quit Blender kernel routine (re-occurrence of CVE-2008-1103)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/15
+Message-ID: <504A2EFD.5060400@redhat.com>
+Date: Fri, 07 Sep 2012 11:29:33 -0600
+From: Jeff Law <law@...hat.com>
+To: Kurt Seifried <kseifried@...hat.com>
+CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Jakub Jelinek <jakub@...hat.com>
+Subject: Re: CVE Request -- glibc: strcoll() integer overflow leading to buffer overflow + another alloca() stack overflow issue (upstream #14547 && #14552)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 09/06/2012 04:46 PM, Eitan Adler wrote:
-> On 6 September 2012 13:56, Kurt Seifried <kseifried@...hat.com>
-> wrote:
->>> Upstream ticket: [1] 
->>> https://projects.blender.org/tracker/index.php?func=detail&aid=22509&group_id=9&atid=498
+On 09/07/2012 11:21 AM, Kurt Seifried wrote:
+>> 2) Issue #2 (mentioned here only for completeness, but I am not of
+>> the opinion this should receive a CVE identifier. See argumentation
+>> below [but open to glibc upstream / others to disprove it]).
 >
->>>  Could you allocate a CVE-2010- identifier for this?
->> 
->> Please use CVE-2012-4410 for this issue.
-> 
-> Why the 2012 CVE when the issue was reported in 2010?
+> I will hold off on issuing a CVE for this then. Anyone want to weigh in?
+>> alloca() stack overflow (first issue from the report below)
+>> Upstream bug report: [3]
+>> http://sourceware.org/bugzilla/show_bug.cgi?id=14552
+>>
+>> If I have looked correctly this is expected / known behaviour of
+>> alloca() - from the manual page: [4]
+>> http://linux.die.net/man/3/alloca
+Just because it's known/expected behaviour doesn't mean it's not a 
+potential attack vector.  Blowing out the stack is definitely a vector 
+for attack:
 
-Because sometimes I make mistakes and don't read so good =) Steven, is
-this worth fixing?
+http://www.phrack.org/issues.html?issue=67&id=9#article
+http://www.phrack.com/issues.html?issue=63&id=14#article
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQSUMpAAoJEBYNRVNeJnmTd40QAL4JmHREjbq2mM3bQyjAeJ0j
-tz8T49eCL0UdCqmIaQ+9F92u0CRGSk4zIxYDEl5NxX1RPnL6gUSXclr59GWwxNhq
-RXd5ZVktFCCrtJ0bQCnxHsDhEWrIhCs7ubhzKIKImgC8iHvzjDCb9j8xoqp4bPTT
-TxSek+/kGT/snBhvoAJyRhajE4vM+CTMIgRR4q/34c0FWXYiXzBpBL6gwaw8FCHk
-solarnVO55UKHXC9gcTILDGLgujeNeFxpu0pOUKP7eh1PrOiLytaNPeRE4edS8Ow
-bE521/XjKa18gTEXTRC79f9y5YXgi05ii9cti0Qn6F7a6GxAbk4jLqAB37Ihidz5
-bginH/T4hhgNGJk7ixkqEGFkL4273VWLmeBXXOfxNACaAvSbrqq/Zl6pQqqXjcbx
-0LcW9iKFdwYmL68sQGFd5OOQQw4WVRdnQDqIrweRINNjlAISsTy50hEmbcUmBlXt
-jnvZjIdvMcaNf/BObikd5jywHTnNuEvnj4YztFZ4eP7a7zU/kkipN1ujiz3+eZDZ
-wYsRFV1UMXQGum0iSYnIldUVxYaaD12zpsyKFDDf/rjfybhC8o6caZi11DrxtnX5
-EPoLBvVEfVXmK4MKVotRyaMras4IgWSkPCjPyXzI1LIcXJMFq2AsNRMEsQULFMWR
-cjdTno9fQsvAkAOXLAMB
-=BUrI
------END PGP SIGNATURE-----
+Jeff
