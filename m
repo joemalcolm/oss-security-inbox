@@ -1,59 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/21/2
-Message-ID: <4F1A1647.4050606@redhat.com>
-Date: Fri, 20 Jan 2012 18:35:03 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: spamdyke buffer overflow vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/9
+Message-ID: <1071141285.31186123.1347031530084.JavaMail.root@redhat.com>
+Date: Fri, 7 Sep 2012 11:25:30 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Florian Weimer <fweimer@...hat.com>, Jeff Law <law@...hat.com>, Jakub Jelinek <jakub@...hat.com>
+Subject: CVE Request -- glibc: strcoll() integer overflow leading to buffer overflow + another alloca() stack overflow issue (upstream #14547 && #14552)
 Content-Type: text/plain; charset=utf-8
 
-On 01/20/2012 01:42 AM, Agostino Sarubbo wrote:
-> According to secunia advisory:
-> https://secunia.com/advisories/47548/ :
-> Description:
->
-> Some vulnerabilities have been reported in spamdyke, which potentially can be 
-> exploited by malicious people to compromise a vulnerable system.
->
-> The vulnerabilities are caused due to boundary errors related to the incorrect 
-> use of the "snprintf()" and "vsnprintf()" functions, which can be exploited to 
-> cause buffer overflows.
->
-> The vulnerabilities are reported in versions prior to 4.3.0.
->
->
-> Solution
-> Update to version 4.3.0.
->
->
-> and from upstream changelog:
-> http://www.spamdyke.org/documentation/Changelog.txt :
->
-> Fixed a number of very serious errors in the usage of snprintf()/vsnprintf().
->     The return value was being used as the length of the string printed into
->     the buffer, but the return value really indicates the length of the string
->     that *could* be printed if the buffer were of infinite size. Because the
->     returned value could be larger than the buffer's size, this meant remotely
->     exploitable buffer overflows were possible, depending on spamdyke's
->     configuration.
->
-> and from upstream mailing list:
-> http://www.mail-archive.com/spamdyke-release@spamdyke.org/msg00014.html
->
-> it also fixes a series of major bugs 
-> that could lead to buffer overflows.  Depending on spamdyke's configuration, 
-> these could cause remotely exploitable security holes.  Please upgrade 
-> immediately!
->
-> Please assign a CVE
->
-Can you include some links to actual code commits? I want to prevent
-duplicates and more information would aid in that.
+Hello Kurt, Steve, Florian, Jeff, Jakub, vendors,
 
--- 
+1) Issue #1: 
+------------
+  An integer overflow, leading to buffer overflow
+flaw was found in the way the implementation of
+strcoll() routine, used to compare two strings
+based on the current locale, of glibc, the GNU
+libc libraries, performed calculation of memory
+requirements / allocation, needed for storage
+of the strings. If an application linked against
+glibc was missing an application-level sanity
+checks for validity of strcoll() arguments and
+accepted untrusted input, an attacker could use
+this flaw to cause the particular application
+to crash or, potentially, execute arbitrary code
+with the privileges of the user running the
+application.
 
+Upstream bug report (including reproducer):
+[1] http://sourceware.org/bugzilla/show_bug.cgi?id=14547
+
+References:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=855385
+
+Could you allocate a CVE identifier for this?
+
+2) Issue #2 (mentioned here only for completeness,
+but I am not of the opinion this should receive a CVE
+identifier. See argumentation below [but open to
+glibc upstream / others to disprove it]).
+
+alloca() stack overflow (first issue from the report below)
+Upstream bug report:
+[3] http://sourceware.org/bugzilla/show_bug.cgi?id=14552
+
+If I have looked correctly this is expected / known
+behaviour of alloca() - from the manual page:
+[4] http://linux.die.net/man/3/alloca
+
+"Return Value
+The alloca() function returns a pointer to the
+beginning of the allocated space. If the allocation
+causes stack overflow, program behavior is undefined."
+
+Under my opinion the above description covers also the
+case of 'alloca() stack overflow' as reported in bug [3].
+Further opinions / upstream comments appreciated though.
+
+Thank you && Regards, Jan.
 --
-
--- Kurt Seifried / Red Hat Security Response Team
-
+Jan iankko Lieskovsky / Red Hat Security Response Team
