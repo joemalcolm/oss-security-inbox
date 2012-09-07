@@ -1,53 +1,139 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/11
-Message-ID: <50B674FA.6030301@redhat.com>
-Date: Wed, 28 Nov 2012 13:32:58 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: Curl insecure usage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/16
+Message-Id: <emd0d6024e-114e-4969-a7b2-ef30ed5138a5@nathan>
+Date: Fri, 07 Sep 2012 19:33:42 +0000
+From: "Nathan March" <nathan@...net>
+To: "Xen.org security team" <security@....org>, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+Cc: "Xen.org security team" <security@....org>
+Subject: Re: [Xen-users] Xen Security Advisory 17 (CVE-2012-3515) - Qemu VT100 emulation vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+﻿Hi All,
 
-On 11/27/2012 03:55 PM, Steven M. Christey wrote:
-> 
-> Kurt,
-> 
-> My read is that these are fairly straightforward issues, although
-> the number of implementations with this problem may be rather high
-> :-(
+I'm guessing this wasn't intentional, but the patch for xsa17 does not 
+contain a complete path to the tools/ioemu-qemu-xen/ path:
 
-Yeah, just wanted to confirm since you guys have to write the
-descriptions (well in this case you can probably just use a template
-and replace the name/version #). I got no problem assigning lots of CVEs.
+--- a/console.c
++++ b/console.c
 
-> So, I'd say that these faulty implementations each deserve their
-> own CVE, instead of a single ID for Curl.
+Compared to all the other patches which provide a full path to the 
+patched file:
 
-Will do.
+--- a/xen/include/asm-x86/debugreg.h Mon Aug 06 12:28:03 2012 +0100
++++ b/xen/include/asm-x86/debugreg.h Wed Aug 15 12:00:21 2012 +0100
 
-> - Steve
+Little annoying since it means you have to track down which console.c 
+is being patched instead of just applying from the root xen build dir.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+- Nathan
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQtnT6AAoJEBYNRVNeJnmTVeYP/19m2xiVA3VldGeKL/VolXYA
-EGITcpUoiuq27/GKCEB/mVB4ReSy+DBz9zZxbxaRCFfia3CoTZdmkocW+0yWFK2D
-gKALNoF7S+BLqCQFY87xSRcAFjyAEiRKZj8bxkZBFOZgkURRSPQ3yhEwJ6KZJ7gU
-eYyt+8PbqoraWD/XQfonavIWJcpJxL72mWvA9jGYerXb0nxyZWSWJ47mAjj7QKI2
-Dc4f850Ytbuikwqe9jGw3CTJD8Iv7xqsf5OyPm3Qs2sAvprW/wuW/Vt5wiDCdt3g
-eqTZhtr32HzfyKuif1NlN3VBzUUmpHA6Bk6Q6w6ocxm90/Y4Jy9VG5Du9eWQMXrd
-lXtwxrvXJGyPwHGAdx89ewCAOTQhk8D2GkC7awzeEB0PDSC9keJVsn/Wo3Hlqujm
-UbQ7hT+Ri0/BJK4K04J/5ORkjhoise1M3c50+4uHz7JtJwX5w8y1sFx2Xbte6qL1
-A9w5QfrcoKb/fCsRyZNbUtaShAyB38TFBEjYK8Y+HgCErxOPW75P/ba91ORvj7md
-LQ2Xcz2WpLaH+O9gLvGY7cPcww8UkRRZraGqHYuKLN5lrx6JyXQBorcdbcsmiJb5
-XFvzWe1ZSa1FTmUeom14NjPYcOvI6CkgtUU796u81DOMJVsTiXKKniu0JbC6t4Z6
-+NBp0/x5rD+eMlUWnBgC
-=ruLl
------END PGP SIGNATURE-----
+------ Original Message ------
+From: "Xen.org security team" <security@....org>
+To: 
+xen-announce@...ts.xen.org;xen-devel@...ts.xen.org;xen-users@...ts.xen.org;oss-security@...ts.openwall.com
+Cc: "Xen.org security team" <security@....org>
+Sent: 9/5/2012 4:12:47 AM
+Subject: [Xen-users] Xen Security Advisory 17 (CVE-2012-3515) - Qemu 
+VT100 emulation vulnerability
+>-----BEGIN PGP SIGNED MESSAGE-----
+>Hash: SHA1
+>
+>           Xen Security Advisory CVE-2012-3515 / XSA-17
+>                          version 2
+>
+>              Qemu VT100 emulation vulnerability
+>
+>UPDATES IN VERSION 2
+>====================
+>
+>Public release.
+>
+>ISSUE DESCRIPTION
+>=================
+>
+>The device model used by fully virtualised (HVM) domains, qemu, does
+>not properly handle escape VT100 sequences when emulating certain
+>devices with a virtual console backend.
+>
+>IMPACT
+>======
+>
+>An attacker who has sufficient privilege to access a vulnerable device
+>within a guest can overwrite portions of the device model's address
+>space. This can allow them to escalate their privileges to that of the
+>device model process.
+>
+>VULNERABLE SYSTEMS
+>==================
+>
+>All Xen systems running HVM guests are potentially vulnerable to this
+>depending on the specific guest configuration. The default
+>configuration is vulnerable.
+>
+>Guests using either the traditional "qemu-xen" or upstream qemu device
+>models are vulnerable.
+>
+>MITIGATION
+>==========
+>
+>This issue can be avoided by only running PV guests or by configuring
+>HVM guests to not use the virtual console('vc') backend for any device.
+>
+>For serial devices specify in your guest configuration:
+>    serial = 'none'
+>in your guest configuration.
+>
+>For parallel port devices the syntax is toolstack specific.
+>For xend specify in your guest configuration:
+>    parallel = 'none'
+>For xl specify in your guest configuration:
+>    xl: device_model_args = ['-parallel', 'none']
+>
+>In both cases the default is to use the vulnerable 'vc' mode.
+>
+>You can confirm whether or not you are vulnerable by pressing
+>Ctrl-Alt-<N> (for digit N) while connected to either the VNC or SDL
+>console. If you are able to switch to a window displaying "serial" or
+>"parallel" then you are vulnerable.
+>
+>The issue can also be mitigated by enabling the stub domain device
+>model. In this case the attacked can only potentially gain control of
+>the stub domain and not of the entire system.
+>
+>To enable stub domains specify in your guest configuration:
+>   device_model = "stubdom-dm"
+>
+>RESOLUTION
+>==========
+>
+>Applying the appropriate attached patch(es) will resolve the issue.
+>
+>PATCH INFORMATION
+>=================
+>
+>The attached patches resolve this issue
+>
+>Traditional qemu tree
+>  Xen 4.0, 4.1 and unstable         xsa17-qemu-xen-traditional-all.patch
+>
+>Upstream qemu tree (present in unstable only)
+>  Xen unstable                      xsa17-qemu-xen-unstable.patch
+>
+>$ sha256sum xsa17-*.patch
+>60215322d3fbbc2054dfc160a20d9e0811af88487c4edc2f6ea81dcd5cedf039  xsa17-qemu-xen-traditional-all.patch
+>7b4bb59e7757080e7806a8b8eeb6b78fa0ffdfbfb28a7a379f7edff285bffd88  xsa17-qemu-xen-unstable.patch
+>-----BEGIN PGP SIGNATURE-----
+>Version: GnuPG v1.4.10 (GNU/Linux)
+>
+>iQEcBAEBAgAGBQJQRx1PAAoJEIP+FMlX6CvZUqUH/jeAAvQnoBp6YKzm78XSnnmk
+>GI2C/LhH0xqR3wFoEmWeMsiO4lrGrASX6T31NTvHa8sOtFqlNpTfRhwQybwYR3aa
+>cz9/4y2a54hD95P1nVmPF0PddmSP47QSpRdCj0projq1UGxIdwEhkNeSoM8h7dXO
+>MegqZClsvJMKd8XEcjBF5Qg7u9vLrXilCx5+It7XNE31Jxpkr/fozBb7FnNtDGJj
+>s4RN/UDU4Pu68XyZ7Dc5xEFdJW48tz4BIlxxXavILBRFSE1VEf7Gc8H9CsUtBPWB
+>C/LCUjpHkAOmqdgFhiLnZ2u+2s79U0dtPDJMNmqaGgWH+AqGkU9Nq8XXODTyY9k=
+>=gnuE
+>-----END PGP SIGNATURE-----
+>
+>
+
