@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/3
-Message-ID: <20121106102108.GA13925@devzero.fr>
-Date: Tue, 6 Nov 2012 11:21:08 +0100
-From: vladz <vladz@...zero.fr>
-To: halfdog <me@...fdog.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: TTY handling when executing code in different lower-privileged context (su, virt containers)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/14
+Message-ID: <CAF6rxgmwqc4pFZmN6EV3aSHNqX0QDFcXbn_cGqDdQk_=yf=AFA@mail.gmail.com>
+Date: Fri, 7 Sep 2012 13:27:32 -0400
+From: Eitan Adler <lists@...anadler.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>,  Paul Wise <pabs@...ian.org>, Cyril Brulebois <kibi@...ian.org>
+Subject: Re: CVE-2010 Request -- blender: Insecure temporary file use by creating file string in undo save quit Blender kernel routine (re-occurrence of CVE-2008-1103)
 Content-Type: text/plain; charset=utf-8
 
+On 7 September 2012 13:25, Kurt Seifried <kseifried@...hat.com> wrote:
+>
+> *REJECT* CVE-2012-4410 - this has the wrong year. The issue was
+> reported in 2010.
+>
+> Please use CVE-2010-5105 for this issue, it has the correct year.
 
-On Mon, Nov 05, 2012 at 07:22:37PM +0000, halfdog wrote:
-> During programming experiments I found some class of vulnerabilities
-> [1], that seem to be rediscovered again from time to time, but since
-> attack value is questionable, it was not fixed yet.
+Thanks.
 
-Nice.  I was just wondering why the SIGSTOP signal is used here?
-Sending a string starting with "exit;" to close the child process also
-does the trick, no?  When [1] was posted on the oss list, I wrote this
-little PoC [2] to hijacked interactive bash shell opened with "su -
-<user>".
+On 6 September 2012 20:43, Kurt Seifried <kseifried@...hat.com> wrote:
+> Because sometimes I make mistakes and don't read so good =) Steven, is
+> this worth fixing?
 
-> I would like to propose following "fix" for this problem: Modification
-> of man-page of su making this a known problem or feature, not a bug.
+:) You do really good work usually. Thanks for that!
 
-Changing the man page is a good idea.  Administrators (good ones) should
-never have to open users's interactive shells.  I mean, beside being a
-security problem, it's kind of invasion of privacy. ;)
-
-  [1] http://www.openwall.com/lists/oss-security/2011/12/20/2
-  [2] http://vladz.devzero.fr/svn/codes/bash/dontsu.sh
-
-vladz.
-
+-- 
+Eitan Adler
