@@ -1,30 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/10
-Message-ID: <20121113152119.GF31022@suse.de>
-Date: Tue, 13 Nov 2012 16:21:19 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/12
+Message-ID: <504A2D20.3030303@redhat.com>
+Date: Fri, 07 Sep 2012 11:21:36 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- Linux kernel: mm/hotplug: failure in propagating hot-added memory to other nodes
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Jeff Law <law@...hat.com>, Jakub Jelinek <jakub@...hat.com>
+Subject: Re: CVE Request -- glibc: strcoll() integer overflow leading to buffer overflow + another alloca() stack overflow issue (upstream #14547 && #14552)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 11, 2012 at 12:19:13AM -0700, Kurt Seifried wrote:
-> On 11/10/2012 02:36 PM, Petr Matousek wrote:
-> > A NULL pointer dereference flaw has been found in the way a new
-> > node's hot-added memory is propagated to other nodes zonelists. An
-> > unprivileged local user can use this flaw to crash the system.
-> > 
-> > Upstream fix: 
-> > http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=08dff7b7d629807dbb1f398c68dd9cd58dd657a1
-> >
-> >  References: https://bugzilla.redhat.com/show_bug.cgi?id=875374
-> > 
-> > Thanks,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 09/07/2012 09:25 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, Florian, Jeff, Jakub, vendors,
 > 
-> Please use CVE-2012-5517 for this issue.
+> 1) Issue #1: ------------ An integer overflow, leading to buffer
+> overflow flaw was found in the way the implementation of strcoll()
+> routine, used to compare two strings based on the current locale,
+> of glibc, the GNU libc libraries, performed calculation of memory 
+> requirements / allocation, needed for storage of the strings. If an
+> application linked against glibc was missing an application-level
+> sanity checks for validity of strcoll() arguments and accepted
+> untrusted input, an attacker could use this flaw to cause the
+> particular application to crash or, potentially, execute arbitrary
+> code with the privileges of the user running the application.
+> 
+> Upstream bug report (including reproducer): [1]
+> http://sourceware.org/bugzilla/show_bug.cgi?id=14547
+> 
+> References: [2] https://bugzilla.redhat.com/show_bug.cgi?id=855385
+> 
+> Could you allocate a CVE identifier for this?
 
-Our Mel Gorman wonders how this is a security issue.
+Please use CVE-2012-4412 for this issue.
 
-A local attacker would need to wait for the administrator to hot-add
-memory, which seems unlikely on first thought?
 
-Ciao, Marcus
+> 2) Issue #2 (mentioned here only for completeness, but I am not of
+> the opinion this should receive a CVE identifier. See argumentation
+> below [but open to glibc upstream / others to disprove it]).
+
+I will hold off on issuing a CVE for this then. Anyone want to weigh in?
+
+> alloca() stack overflow (first issue from the report below) 
+> Upstream bug report: [3]
+> http://sourceware.org/bugzilla/show_bug.cgi?id=14552
+> 
+> If I have looked correctly this is expected / known behaviour of
+> alloca() - from the manual page: [4]
+> http://linux.die.net/man/3/alloca
+> 
+> "Return Value The alloca() function returns a pointer to the 
+> beginning of the allocated space. If the allocation causes stack
+> overflow, program behavior is undefined."
+> 
+> Under my opinion the above description covers also the case of
+> 'alloca() stack overflow' as reported in bug [3]. Further opinions
+> / upstream comments appreciated though.
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQSi0fAAoJEBYNRVNeJnmTUq8P/3BfYom6D0ZyGkLe7pAhyJGn
+2M79MYN+Pnu4zD8P1lMAes8dCZpy2NETd/E0ZcQtyi4dCtw8XuSteRv19S+uOngm
+BYuqcQ50ir8hitRn8+FhoCWnwk0wwpbuY3y1fL85zSo6N97Sc4rRCH7j4/xyKOop
+gwnPe8h2lgteAmykoIhAo2eU4oHw2SuO55Vj/rK/2HxLX+EiiswMJHeiaQg9kGye
+GbsSMG7Erbug/hRV3ebyINHTSqDD258eDaEl6gW1WfXFQWt29Dxgd/cdn9vYkXZg
+nYTX9OH5jOMR6GShjZF/kecZBglXygcp6lJ0pmKMdu7QrufenrFFEhTkMGCy37ED
+/zaggEb83tWeWpunzPlhHiOMr4bCCDweLxpntxE2uskEKMFPQr408kLkysSjb+Yp
+P71r+5gSi6G4I29ZqDKQFzEFrzQ6fD/Mv5Fe9OLsbtY2lN5G4I65dOf6jmicp1rv
+2O0qmZPJ1XAEA3WIlTVBlFgL02gun2IBhykW19gLhNIoKUqtKDBD10uD/FJQuHQO
+ngXsdxWJ3yO/ovqGsfVPMOxamxiiznTpC5307YYbFAGqq1TesCr6jEa1y21QbVkU
+Th7O4VTYqLFrjMivpZB59pEtlphv1yWEaSfwdtgAkYhzVJclwCSiQnGa425dZ6aR
+nxt2czj7YwdfPP1oBBBO
+=vV+n
+-----END PGP SIGNATURE-----
