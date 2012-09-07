@@ -1,79 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/13/5
-Message-ID: <20120313160746.GA1873@openwall.com>
-Date: Tue, 13 Mar 2012 20:07:46 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/7
+Message-ID: <1135979052.30921844.1347018626424.JavaMail.root@redhat.com>
+Date: Fri, 7 Sep 2012 07:50:26 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: running the distros lists
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Andrey Petrov <andrey.petrov@...zow.net>, Jamie Strandboge <jamie@...ntu.com>
+Subject: CVE Request -- urllib3: Does not check for SSL certificates by default
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 13, 2012 at 12:44:03PM +0100, Thomas Klausner wrote:
-> On Tue, Mar 13, 2012 at 06:53:04AM +0400, Solar Designer wrote:
-> > What I'd like to be happening is for some list member(s) (not too many
-> > of them) to be proposing a CRD for each reported issue on the day it is
-> > reported.  Then those member(s) need to stay on top of all open issues
-> > and ensure the CRDs are met (if necessary, adjusting the CRDs as long as
-> > the list's limit permits).  Quite often, this will involve negotiations
-> > with other list members, with the reporter, with upstream(s), and with
-> > various other parties (such as related projects and distros who are not
-> > on the list).  Yes, this does sound CERT'ish. ;-)
-> 
-> Does this person contact upstream(s)?
-> If not, who does?
-> Does this person contact downstreams?
+Hello Kurt, Steve, vendors,
 
-I think that ideally the person would (try to) identify the upstreams,
-downstreams, and other affected projects to contact, ask the reporter
-for approval, upon the approval inform those other projects that there's
-a security issue and ask them if they'd like more info and if they're OK
-with the proposed maximum embargo period (CC'ing the list on those
-preliminary notifications), and if they accept then finally pass the
-actual info on to them (also CC'ing the list) and add them to the CC
-list on further correspondence.
+  it was reported that urllib3, a Python HTTP library
+with thread-safe connection pooling and file post support,
+did not perform SSL certificates verification by default.
+A rogue HTTP server could use this flaw to conduct
+man-in-the-middle (MITM) attacks.
 
-> Or are they assumed to read distros@?
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686872
+[2] https://bugs.launchpad.net/ubuntu/+source/python-urllib3/+bug/1047054
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=855320
+    (the bug actually has python-requests in the summary,
+     but only due the fact it contains embedded urllib3)
 
-No.
+Patch applied by the Ubuntu Linux distribution:
+[4] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=python-urllib3_1.3-2ubuntu1.debdiff;att=1;bug=686872
 
-> What if an up- or downstream claims to need longer (confer a recent issue)?
+Reproducer:
+[5] https://bugs.launchpad.net/ubuntu/+source/python-urllib3/+bug/1047054/comments/0
 
-If they want more time than we can give them, then we can choose between
-leaving them out of the loop and giving them whatever time we can give
-them (less than they want) - or we can leave this choice up to them.
-They may be unhappy and say that we're being irresponsible, but I see no
-obviously better approach.  Keeping issues embargoed for weeks or months
-is not obviously any less irresponsible.
+Could you allocate a CVE id for this?
 
-With the example that I guess you're referring to (which we may discuss
-in public in more detail once the corresponding issue is finally
-public), the reporter notified related projects (not on the distros
-list) without informing them of the maximum embargo period at the time,
-so they assumed they had plenty of time.  In my proposal above, I am
-trying to address this by asking other projects to accept the terms
-first (before being exposed to the vulnerability details).
-Unfortunately, that won't always work - e.g., a reporter not aware of
-this procedure of the distros list may contact other projects on his/her
-own and thereby create certain implied expectations on their part...
-
-I guess there's no perfect solution to this.
-
-> When CRD happens, who publishes what where?
-
-Everyone is free to publish via their usual channels (e.g., distro
-updates and advisories), plus I think we must start publishing all
-issues on oss-security.  It would also be nice to include a timeline
-along with every issue that was initially discussed in private.  I'd be
-happy if those distros list member(s) volunteering to help run the list
-would also accept the responsibility to post about each and every issue
-being made public to oss-security.
-
-> Or is it just a free-for-all afterwards?
-
-Yes, but I think we should also have the mandatory publication on
-oss-security.
-
-> Just off the top of my head :)
-
-That was a very useful set of reminders, thank you!
-
-Alexander
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
