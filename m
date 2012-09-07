@@ -1,47 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/8
-Message-ID: <1343845129.32192.112.camel@mdlinux>
-Date: Wed, 01 Aug 2012 14:18:49 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: NVidia Linux driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/11
+Message-ID: <CAJAoHJkAFMLR0CD9MMG1i96WKdQ6-UVkQmRjoG0Dgkk-DnU=Lw@mail.gmail.com>
+Date: Fri, 7 Sep 2012 08:47:28 -0700
+From: Andrey Petrov <andrey.petrov@...zow.net>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Jamie Strandboge <jamie@...ntu.com>,  oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- urllib3: Does not check for SSL certificates by default
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi there, I'm the author of urllib3.
 
-Could a CVE please get assigned to the following issue...
+I would be happy to make urllib3 verify SSL certs by default but I'm not
+familiar enough with the nuances of locating the CA's in a distro-agnostic
+manner. If anyone has experience or ideas in doing this, please let me
+know. Bonus points if it works on OSX.
 
 Thanks!
+- Andrey
 
-Marc.
+On Fri, Sep 7, 2012 at 7:41 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
 
-
-
-On Wed, 2012-08-01 at 11:00 -0600, Kurt Seifried wrote:
-> On 08/01/2012 06:58 AM, Marc Deslauriers wrote:
-> > Hello,
-> > 
-> > Could a CVE please be assigned to the following issue:
-> > 
-> > The binary NVidia Linux driver allows local users to access
-> > arbitrary memory locations by leveraging GPU device-node read/write
-> > privileges, and escalate privileges to root. Possibly an incomplete
-> > fix for CVE-2012-0946.
-> > 
-> > See:
-> > 
-> > http://seclists.org/fulldisclosure/2012/Aug/4
-> > 
-> > Thanks,
-> > 
-> > Marc.
-> 
-> I do Open Source CVE assignments only, the Nvidia driver is binary
-> only and closed source. You'll need to go to Mitre to get a CVE for
-> this: cve-assign@...re.org (they handle the closed source stuff).
-> 
-> 
-
-
+> Steve,
+>
+>   in relation to this one the following question has been
+> raised internally - it's OK to assign CVE identifier for
+> end user applications, proclaiming to perform SSL certificates
+> verification, but not doing that.
+>
+>   But what about the libraries? Obviously urllib3 when instructed
+> to do so, performs the verification. The question is should it
+> get a CVE identifier or not? Could you clarify Mitre's opinion /
+> view on this?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> > Hello Kurt, Steve, vendors,
+> >
+> >   it was reported that urllib3, a Python HTTP library
+> > with thread-safe connection pooling and file post support,
+> > did not perform SSL certificates verification by default.
+> > A rogue HTTP server could use this flaw to conduct
+> > man-in-the-middle (MITM) attacks.
+> >
+> > References:
+> > [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686872
+> > [2]
+> https://bugs.launchpad.net/ubuntu/+source/python-urllib3/+bug/1047054
+> > [3] https://bugzilla.redhat.com/show_bug.cgi?id=855320
+> >     (the bug actually has python-requests in the summary,
+> >      but only due the fact it contains embedded urllib3)
+> >
+> > Patch applied by the Ubuntu Linux distribution:
+> > [4]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=python-urllib3_1.3-2ubuntu1.debdiff;att=1;bug=686872
+> >
+> > Reproducer:
+> > [5]
+> https://bugs.launchpad.net/ubuntu/+source/python-urllib3/+bug/1047054/comments/0
+> >
+> > Could you allocate a CVE id for this?
+> >
+> > Thank you && Regards, Jan.
+> > --
+> > Jan iankko Lieskovsky / Red Hat Security Response Team
+>
 
