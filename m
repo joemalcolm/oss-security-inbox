@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/1
-Message-ID: <50250663.2000907@kde.org>
-Date: Fri, 10 Aug 2012 09:02:27 -0400
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/2
+Message-Id: <201209062003.25686.geissert@debian.org>
+Date: Thu, 6 Sep 2012 20:03:20 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>,  Charlie Miller <charlie.miller@...uvant.com>, "Jorge Manuel B. S. Vicetto" <jmbsvicetto@...il.com>
-Subject: Re: CVE request for Calligra
+Subject: CVE request: opencryptoki insecure lock files handling
 Content-Type: text/plain; charset=utf-8
 
-On 08/07/2012 09:25 PM, Jeff Mitchell wrote:
-> On 08/06/2012 03:07 PM, Kurt Seifried wrote:
->> For this DOC rendering issue please use CVE-2012-3455 for KOffice and
->> please use 2012-3456 for Calligra.
-> 
-> Great -- thanks to everyone who helped.
-> 
-> --Jeff
-> 
+Hi,
 
-Sorry for the delay, had to put out a few hardware-related fires.
+Niels Heinen (Google) discovered that openCryptoki 2.4.0 and older, when 
+spinlocks are used, incorrectly handle lock files stored in /tmp. It is 
+possible for an attacker to replace the lock files with symlinks and have 
+pkcsslotd (or others) fchmod the target of the symlink to make it world-
+writable, create arbitrary files, etc.
+In response, upstream released 2.4.1[1] which fixed the fchmod issue (commits 
+[3] and [4]).
+Niels discovered that 2.4.1 still allowed arbitrary files creation by 
+following symlinks. Upstream then released 2.4.2[2], fixing this last issue 
+(commits [5] and [6]).
 
-This is now documented in KDE Security Advisory 20120810-1:
-http://www.kde.org/info/security/advisory-20120810-1.txt
+Even with the fixes in 2.4.2, members of the pkcs11 group could still use 
+symlink attacks. However, as per upstream's documentation, members of such 
+group are expected to be trusted[7].
 
-Thanks,
-Jeff
+Could CVE ids be assigned?
 
+[1] 2.4.1 announcement:
+http://sourceforge.net/mailarchive/message.php?msg_id=28878345
+[2] 2.4.2 announcement:
+http://sourceforge.net/mailarchive/message.php?msg_id=29191022
+[3]http://opencryptoki.git.sourceforge.net/git/gitweb.cgi?p=opencryptoki/opencryptoki;a=commitdiff;h=b7fcb3eb0319183348f1f4fb90ede4edd6487c30
+[4]http://opencryptoki.git.sourceforge.net/git/gitweb.cgi?p=opencryptoki/opencryptoki;a=commitdiff;h=58345488c9351d9be9a4be27c8b407c2706a33a9
+[5]http://opencryptoki.git.sourceforge.net/git/gitweb.cgi?p=opencryptoki/opencryptoki;a=commitdiff;h=8a63b3b17d34718d0f8c7525f93b5eb3c623076a
+[6]http://opencryptoki.git.sourceforge.net/git/gitweb.cgi?p=opencryptoki/opencryptoki;a=commitdiff;h=5667edb52cd27b7e512f48f823b4bcc6b872ab15
+[7]http://opencryptoki.git.sourceforge.net/git/gitweb.cgi?p=opencryptoki/opencryptoki;a=blobdiff;f=man/man7/opencryptoki.7.in;h=5030bd2f6f698119e50926679041d0efcb2693df;hp=659a97976799cc6256df7a796c224bd30ba349d4;hb=7744b6224e80848596ac80a07745c7a588eef2a0;hpb=24950e95a84d125180a0e418a4822a97236f2cb0
 
-Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
