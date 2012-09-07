@@ -1,62 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/11
-Message-ID: <507EFC2D.6080605@redhat.com>
-Date: Wed, 17 Oct 2012 12:42:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/6
+Message-ID: <20120907133239.669c2bd3@redhat.com>
+Date: Fri, 7 Sep 2012 13:32:39 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE request: radsecproxy incorrect x.509 certificate validation
+Cc: geissert@...ian.org
+Subject: Re: CVE request: opencryptoki insecure lock files handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, 6 Sep 2012 20:03:20 -0500 Raphael Geissert wrote:
 
-On 10/17/2012 11:48 AM, Raphael Geissert wrote:
-> Hi,
-> 
-> Ralf Paffrath discovered that radsecproxy may incorrectly accept a
-> client certificate if the certificates chain was validated with the
-> CA settings of one configuration block but the other certificate
-> constraints failed, and the certificate constraints of another
-> configuration block passed (ignoring this other config block's CA
-> settings.)
-> 
-> This issue has been fixed in version 1.6.1. However, it introduces
-> a minor regression as it ignores some configuration blocks (see the
-> references for further details.)
-> 
-> Could a CVE id be assigned?
-> 
-> Thanks in advance.
-> 
-> References: https://project.nordu.net/browse/RADSECPROXY-43 
-> https://postlister.uninett.no/sympa/arc/radsecproxy/2012-09/msg00001.html
->
-> 
-https://postlister.uninett.no/sympa/arc/radsecproxy/2012-09/msg00006.html
-> 
+> Niels Heinen (Google) discovered that openCryptoki 2.4.0 and older,
+> when spinlocks are used, incorrectly handle lock files stored
+> in /tmp.
 
-Please use CVE-2012-4523 for this issue.
+AFAIK, this was reported to upstream more than once before it got
+fixed.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> It is possible for an attacker to replace the lock files with
+> symlinks and have pkcsslotd (or others) fchmod the target of the
+> symlink to make it world-writable, create arbitrary files, etc.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+There were following problems that I'm aware of:
 
-iQIcBAEBAgAGBQJQfvwtAAoJEBYNRVNeJnmT2BAP/2A5V4oLMJf8oxfmrjwjHjf5
-2hlcIYZtn0ScmAMfCkKIyxW99qftyV82yp21jSkdTER0LA+U8go40p6YhUAfSxDQ
-yaaIemJo0vKVLVNksa9PosrugFEoqF2P7olVKRtRyvuhLTizih4jwg04Mxq7s6S5
-Y/8KOCWLrdyJsYTrNFpfDfCxOLiBgVNdR6pxu5t8BMQ1UrW2INqcvCHrfM9m6hKG
-3WI2UUDUJZoEGsZwARYPQEoxpq0/rRyyos7YrofnATSaf0m/xI7zUCi585KxYigd
-n4mz9h5A9NSzm0p4B4AAOeBxR2T7J8BPHDEzIcVibYbm6GX9nxINcgr4Us6KWKkV
-NZvkAYXlQhXPliOQrwhS9Wan6YgwBLc/zQdLBghO8dA/pdpBAOQXyUWz2nVM2KjQ
-n30jsM+Dgby+74WuaTAKjzuW7ooaE4Et4//DxFIqJYMk4kYAJJrrH7Wl0Rku4agb
-Vo37rM0aZzzu1udPciuEdwLckvnNRl9ZypYRxG2TQGWOxbKPflMfNUmxZB6f3pp9
-3gXUI2nsysXJL9W3BEZ95BVJLqzhVwDygLP9Ikwd1e+Lse+yGD7HD85x3gT4obuk
-eyhl+7YAFSbxbp7UrjK1/3c2WO/Ze0rh3tRd2zo/P2N1/U/qgYrUMIUs6bP3b8nS
-nb0+JTm68XmEwEu02T+A
-=BwI6
------END PGP SIGNATURE-----
+- /tmp/.pkapi_xpk - This was normally created by pcksslotd (running as
+  root).  Symlink attack on this did not allow corrupting / truncating
+  files, but allowed creating new empty files at arbitrary locations.
+
+- /tmp/.pkcs11spinloc - I believe this is created by opencryptoki
+  clients.  In addition to the above, there's a chmod to make this file
+  world writable.  This may get created by non-root user, but chmod
+  may still run later with root privileges later.
+
+Those files do not seem to get removed as part of the normal operation,
+so replacing them with symlinks if they already exist is limited
+by /tmp stickiness.  Attacker does not need to be pkcs11 group member.
+
+> In response, upstream released 2.4.1[1] which fixed the fchmod issue
+> (commits [3] and [4]).
+
+2.4.1 moved those files that became /var/lock/LCK..opencryptoki
+and /var/lock/LCK..opencryptoki_stdll respectively.
+
+> Niels discovered that 2.4.1 still allowed arbitrary files creation by
+> following symlinks.
+
+Would you mind clarifying?  As files were moved to /var/lock, this
+should require attacker to have permissions to write to that directory.
+
+> Upstream then released 2.4.2[2], fixing this last issue (commits [5]
+> and [6]).
+
+What do 2.4.2 actually fix?  I think the move of /tmp/.pkcs11spinloc
+to /var/lock/LCK..opencryptoki_stdll probably created a regression in
+use cases where opencryptoki clients run without root privileges (or
+better to say without privileges to create the file in /var/lock/).
+
+Another move to pkcs11 group writable /var/lock/opencryptoki seems to
+resolve that, but it also negates benefits of the 2.4.1 security fix.
+Based on the rather quick look at the patches you pointed out, 2.4.2
+seems to have the same problems pre-2.4.1 had, with following changed
+conditions:
+- attacker now needs to be pkcs11 group member
+- lack of directory stickiness should make it easier to execute the
+  attack
+
+> Even with the fixes in 2.4.2, members of the pkcs11 group could still
+> use symlink attacks. However, as per upstream's documentation,
+> members of such group are expected to be trusted[7].
+
+Correct, any pkcs11 group member can easily compromise any other user
+using opencryptoki library see:
+https://bugzilla.redhat.com/show_bug.cgi?id=730635
+
+Upstream does not see that as an issue though...
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
