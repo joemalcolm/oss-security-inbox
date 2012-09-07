@@ -1,62 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/17/2
-Message-ID: <50CF54D8.50003@redhat.com>
-Date: Mon, 17 Dec 2012 10:22:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/3
+Message-Id: <201209062056.30161.geissert@debian.org>
+Date: Thu, 6 Sep 2012 20:56:24 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: fail2ban 0.8.8 fixes an input variable quoting flaw on <matches> content
+Subject: Re: Re: php header() header injection detection bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wednesday 05 September 2012 12:05:43 cve-assign@...re.org wrote:
+[...]
+> In the actual situation, the
+> https://bugs.php.net/patch-display.php?bug_id=60227&patch=SAPI.diff&revis
+> ion=1320563128 patch had a logic flaw related to the "((p = memchr(s,
+> '\n', (e - s))) || (p = memchr(s, '\r', (e - s))))" expression. MITRE
+> prefers to categorize this type of situation as an "incorrect fix" not an
+> "incomplete fix." Admittedly, for many CVE users it doesn't matter.
 
-On 12/17/2012 08:41 AM, Vincent Danen wrote:
-> Could a CVE be assigned to this issue please?
-> 
-> The release notes for fail2ban 0.8.8 indicate:
-> 
-> * [83109bc] IMPORTANT: escape the content of <matches> (if used in 
-> custom action files) since its value could contain arbitrary 
-> symbols.  Thanks for discovery go to the NBS System security team
-> 
-> This could cause issues on the system running fail2ban as it scans
-> log files, depending on what content is matched.  There isn't much
-> more detail about this issue than what is described above, so I
-> think it may largely depend on the type of regexp used (what it
-> matches) and the contents of the log file being scanned (whether or
-> not an attacher could insert something that could be used in a
-> malicious way).
-> 
-> References:
-> 
-> https://raw.github.com/fail2ban/fail2ban/master/ChangeLog 
-> http://sourceforge.net/mailarchive/message.php?msg_id=30193056 
-> https://github.com/fail2ban/fail2ban/commit/83109bc 
-> https://bugzilla.redhat.com/show_bug.cgi?id=887914 
-> https://bugs.gentoo.org/show_bug.cgi?id=447572
-> 
+You are indeed right, it is is better to categorize it as an incorrect fix.
 
-Please use CVE-2012-5642 for this issue.
+> Note 2: We probably haven't found the exact affected 5.4.0RC versions,
+> but this doesn't matter much because those versions aren't widely
+> used. Specifically, we don't know whether there's a supported download
+> location for every pre-release version that ever existed, but we
+> happened to find the http://php.marvel.strk.jp/archive/ directory.
+> Here, 5.4.0alpha3 (August 2011) does not check for '\r' at all,
+> whereas 5.4.0RC2 (December 2011) can check for '\r' but has the
+> above-mentioned logic flaw. This is consistent with the 2011-11-06 SVN
+> date listed in bug 60227.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Since RCs and alphas are published in user dirs, and not in the main release 
+system, I don't think they are actively archived.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+However, taking a look at the 5.4.0RC1 tag in git, it seems the issue was 
+indeed introduced in RC2:
+https://github.com/php/php-src/blob/php-5.4.0RC1/main/SAPI.c#L715
+And to confirm it in RC2:
+https://github.com/php/php-src/blob/php-5.4.0RC2/main/SAPI.c#L715
 
-iQIcBAEBAgAGBQJQz1TYAAoJEBYNRVNeJnmTQdgP/jRbo8ReeQJzUxAqsc0JiJ1a
-fC6e4hnTeYw1y8007NZkxbmdnvsgZvtFvUiBe6ovuGidIKXSWqYH3LjoC/0Oim4T
-NNTnL1wG8Ri93akY56/pyyHeZGamo1Ss1Kv4BgM0MXFfOOWTJmGPz1jn52E4VtBC
-gnVHIZ/gNxVbIVj0QVaj3tDJOhweg9ACkunVwDasMTRi1MgQKmT3i8IVgWsVGaAo
-xzxE1T1RXygjtbJNpMlBDmZP4+OjSeAzavAw81OP4j/Tse68PcBA2givh0SNG97T
-neEDyWtL8IvMxYPelgUyWi0jWHv96ymuKwfzkST81+yjSYc2JqN0FnOSa2kCjCtb
-tCG3K/Y2AKCbi8JozTjgDj1wTSh5I6z9DXiARan9m+JfZYChoESiQ960H1VGEd3t
-qJL43vr2FnWTHpClwp4O/CQyQ4XeN8ttxTgZdvZbYUZraSFxpNZfdW1dGVwrR4Kg
-opg06obA4B22o/JZmC7ZRFhFr/idY8IDXtRuuUJPnY9C6UazfP/Zv4EnylTMuYCY
-CvvL58t3SnruoJHplr8d6uZWrPgSqdK7XRFGIm/L7ISuNMe67swXa3SF8+gshpXu
-IIFa8qOK6QIejFMAT2BW5Xlp0Q/m3RB2cnVmEK000rLkuFlj2eYZr0aftD8uJ3Ub
-vZg8/UeljGebpb7n+7w3
-=mKR4
------END PGP SIGNATURE-----
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
