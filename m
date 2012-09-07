@@ -1,41 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/18/2
-Message-ID: <1774594234.49032364.1355840024011.JavaMail.root@redhat.com>
-Date: Tue, 18 Dec 2012 09:13:44 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/1
+Message-ID: <50494329.3020105@redhat.com>
+Date: Thu, 06 Sep 2012 18:43:21 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request -- Freeciv (X < 2.3.3): DoS (memory exhaustion or excessive CPU consumption) via malformed network packets
+CC: Eitan Adler <lists@...anadler.com>, Jan Lieskovsky <jlieskov@...hat.com>, Paul Wise <pabs@...ian.org>, Cyril Brulebois <kibi@...ian.org>
+Subject: Re: CVE-2010 Request -- blender: Insecure temporary file use by creating file string in undo save quit Blender kernel routine (re-occurrence of CVE-2008-1103)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  Freeciv upstream has released 2.3.3 version correcting one
-security issue:
+On 09/06/2012 04:46 PM, Eitan Adler wrote:
+> On 6 September 2012 13:56, Kurt Seifried <kseifried@...hat.com>
+> wrote:
+>>> Upstream ticket: [1] 
+>>> https://projects.blender.org/tracker/index.php?func=detail&aid=22509&group_id=9&atid=498
+>
+>>>  Could you allocate a CVE-2010- identifier for this?
+>> 
+>> Please use CVE-2012-4410 for this issue.
+> 
+> Why the 2012 CVE when the issue was reported in 2010?
 
-A denial of service flaw was found in the way the server component
-of Freeciv, a turn-based, multi-player, X based strategy game,
-processed certain packets (invalid packets with whole packet length
-lower than packet header size or syntactically valid packets, but
-whose processing would lead to an infinite loop). A remote attacker
-could send a specially-crafted packet that, when processed would lead
-to freeciv server to terminate (due to memory exhaustion) or become
-unresponsive (due to excessive CPU use).
+Because sometimes I make mistakes and don't read so good =) Steven, is
+this worth fixing?
 
-References:
-[1] http://aluigi.altervista.org/adv/freecivet-adv.txt
-[2] https://bugs.gentoo.org/show_bug.cgi?id=447490
-[3] http://freeciv.wikia.com/wiki/NEWS-2.3.3
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=888331
 
-Upstream bug report:
-[5] http://gna.org/bugs/?20003
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Relevant patch (against trunk):
-[6] http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21670
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJQSUMpAAoJEBYNRVNeJnmTd40QAL4JmHREjbq2mM3bQyjAeJ0j
+tz8T49eCL0UdCqmIaQ+9F92u0CRGSk4zIxYDEl5NxX1RPnL6gUSXclr59GWwxNhq
+RXd5ZVktFCCrtJ0bQCnxHsDhEWrIhCs7ubhzKIKImgC8iHvzjDCb9j8xoqp4bPTT
+TxSek+/kGT/snBhvoAJyRhajE4vM+CTMIgRR4q/34c0FWXYiXzBpBL6gwaw8FCHk
+solarnVO55UKHXC9gcTILDGLgujeNeFxpu0pOUKP7eh1PrOiLytaNPeRE4edS8Ow
+bE521/XjKa18gTEXTRC79f9y5YXgi05ii9cti0Qn6F7a6GxAbk4jLqAB37Ihidz5
+bginH/T4hhgNGJk7ixkqEGFkL4273VWLmeBXXOfxNACaAvSbrqq/Zl6pQqqXjcbx
+0LcW9iKFdwYmL68sQGFd5OOQQw4WVRdnQDqIrweRINNjlAISsTy50hEmbcUmBlXt
+jnvZjIdvMcaNf/BObikd5jywHTnNuEvnj4YztFZ4eP7a7zU/kkipN1ujiz3+eZDZ
+wYsRFV1UMXQGum0iSYnIldUVxYaaD12zpsyKFDDf/rjfybhC8o6caZi11DrxtnX5
+EPoLBvVEfVXmK4MKVotRyaMras4IgWSkPCjPyXzI1LIcXJMFq2AsNRMEsQULFMWR
+cjdTno9fQsvAkAOXLAMB
+=BUrI
+-----END PGP SIGNATURE-----
