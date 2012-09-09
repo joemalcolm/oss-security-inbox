@@ -1,93 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/11
-Message-ID: <4F42D1D9.1060102@redhat.com>
-Date: Mon, 20 Feb 2012 16:06:01 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/09/1
+Message-ID: <504BDF52.1010805@redhat.com>
+Date: Sat, 08 Sep 2012 18:14:10 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: YGN Ethical Hacker Group <lists@...g.net>, full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>, secalert@...urityreason.com, bugs@...uritytracker.com, vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com, moderators@...db.org, submissions@...ketstormsecurity.org, submit@...ecurity.com
-Subject: Re: Dolphin 7.0.7 <= Multiple Cross Site Scripting Vulnerabilities
+CC: Tavis Ormandy <taviso@...xchg8b.com>
+Subject: Re: note on gnome shell extensions
 Content-Type: text/plain; charset=utf-8
 
-On 02/20/2012 10:05 AM, YGN Ethical Hacker Group wrote:
-> 1. OVERVIEW
-> 
-> Dolphin 7.0.7 and lower versions are vulnerable to Cross Site Scripting.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Dolphin is the only "all-in-one" free community software platform for
-> creating your own social networking, community or online dating site
-> without any limits and under your full control. Dolphin comes with
-> hundreds of features, module plugins and tools. Everything is included
-> and extension posibilities are literally endless. You can use it for
-> free with a BoonEx link in the footer or buy a $99 permanent license
-> to remove that requirement.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> Multiple parameters (explain,photos_only,online_only,mode) were not
-> properly sanitized, which allows attacker to conduct Cross Site
-> Scripting attack. This may allow an attacker to create a specially
-> crafted URL that would execute arbitrary script code in a victim's
-> browser.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> 7.0.7 and lower
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> Vulnerable Parameter: explain
-> 
-> http://localhost/dolph/explanation.php?explain=%27%22%3E%3Cscript%3Ealert%28/xss/%29%3C/script%3E
-> 
-> 
-> Vulnerable Parameters: photos_only,online_only,mode
-> 
-> http://localhost/dolph/viewFriends.php?iUser=1&page=1&per_page=32&sort=activity&photos_only='"><script>alert(/xss/)</script>
-> 
-> http://localhost/dolph/viewFriends.php?iUser=1&page=1&per_page=32&sort=activity&online_only='"><script>alert(/xss/)</script>
-> 
-> http://localhost/dolph/viewFriends.php?iUser=1&page=1&sort=activity&mode='"><script>alert(/xss/)</script>
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgade to the latest version of Dolphine.
-> 
-> 
-> 7. VENDOR
-> 
-> BoonEx Pty Ltd
-> http://www.boonex.com/
-> 
-> 
-> 8. CREDIT
-> 
-> Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-06-09: notified vendor
-> 2011-10-24: fixed version, 7.0.8, released
-> 2012-02-20: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/%5BDolphin_7.0.7%5D_xss
-> BoonEx Home Page: http://www.boonex.com/
-> 
-> 
-> #yehg [2012-02-20]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2012-0873 for these XSS issues.
+On 09/08/2012 04:36 PM, Tavis Ormandy wrote:
+> List, I just installed Fedora 17 on a workstation. While
+> researching how to upgrade gnome 3 to version 2, I noticed it
+> installed a browser extension called "Gnome Shell Integration".
+> 
+> $ rpm -qf
+> /usr/lib64/mozilla/plugins/libgnome-shell-browser-plugin.so 
+> gnome-shell-3.4.1-5.fc17.x86_64
+> 
+> The NPPVpluginDescriptionString states "It can be used only by 
+> extensions.gnome.org", but I happen to know that is a tricky thing
+> to get right.
 
--- 
+Erk yeah not good.
+
+> The plugin incorrectly trusted hostname, and initialized. As far as
+> I can tell, the plugin will let you install new shell extensions, I
+> don't know what the impact of that is, can they contain native
+> code?
+> 
+> Tavis.
+
+Good news: In theory at least Gnome shell extensions are only
+JavaScript and (optional) CSS using the Gjs bindings, the JavaScript
+itself is run using SpiderMonkey. So no native code execution as far
+as I know.
+
+Bad news: It looks like it has bindings to run command lines from
+within a Gnome Shell Extensions:
+
+http://developer.gnome.org/glibmm/unstable/group__Spawn.html
+http://stackoverflow.com/questions/9606404/gnome-shell-extensions-stdout-from-glib-iochannel
+
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQS99SAAoJEBYNRVNeJnmTvRYP/1QQ/qjU6nxj+zMqQrYungID
+B0bhjhEz1HLWqgawKHEd2DlAMwBWXD0WmCiJEI6PONRQscp7N3+t5W9aoDwuKXwt
+fHu9MX74WdBnMMKYTb/irvzIgeTmmfIgcLTXqlruZU9UkpH2xUBAmFv0K/y1Dlvm
+sdVJAPWl/OtgPMh97mb/sRAm0ZBh/98MGGE5wjV/4Vy7/J8sxLKlwjEqYZZeDz9y
+af7idH8+fCSeN3s8o1AVsFn9TBMyXXKuMv0RNJnKp4B7oF3EGQt+clHQM95b567Y
+pF/vZSf+O0a23uqqXNllPlr5HQLqOfMFhNsiT70QjWDknfxAw6Z3DxtsTQ8I1Xb0
+v+z73jjGAaJTISSkn6f1BZ9SA0V5o92AqzvlXQy1CZfDjJPrCPIM29vOsnGJcVkx
+XJ6Cyl1HI0N+70qTRmBoSdYcamIz7oK+4x9mLA4ThDCyHCrhhr80iAab2MwHFkGi
+F3UXTOg+kn9nW1b2qBjd+TV5KVMy/Im+HqZBfhtg6uSRcO1mrvzk8fRQENdGqaN/
+4wc03phWzHJR15K2RSLVRAca442SZx7wbEDrb+9bAtHXzvbg/3VH+VhtWchKlcYj
+lF2PgaeR/pz7W59k2HpjXXqmRorXToMXPguDyyBzve7s2+mlsos8corD6vnBEwCX
+HHFgSi+B1flhyLj1ZRqq
+=YjRJ
+-----END PGP SIGNATURE-----
