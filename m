@@ -1,63 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/6
-Message-ID: <20120801133931.GC1472@suse.de>
-Date: Wed, 1 Aug 2012 15:39:32 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/09/2
+Message-ID: <20120909142923.2a6be606@redhat.com>
+Date: Sun, 9 Sep 2012 14:29:23 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: NVidia Linux driver
+Cc: geissert@...ian.org
+Subject: Re: CVE request: opencryptoki insecure lock files handling
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 01, 2012 at 09:32:44AM -0400, Marc Deslauriers wrote:
-> On Wed, 2012-08-01 at 15:12 +0200, Tavis Ormandy wrote:
-> > Marc Deslauriers <marc.deslauriers@...onical.com>
-> > wrote:
+On Fri, 7 Sep 2012 11:26:34 -0500 Raphael Geissert wrote:
+
+> > There were following problems that I'm aware of:
 > > 
-> > > Hello,
-> > > 
-> > > Could a CVE please be assigned to the following issue:
-> > > 
-> > > The binary NVidia Linux driver allows local users to access arbitrary
-> > > memory locations by leveraging GPU device-node read/write privileges, and
-> > > escalate privileges to root. Possibly an incomplete fix for CVE-2012-0946.
-> > > 
-> > > See:
-> > > 
-> > > http://seclists.org/fulldisclosure/2012/Aug/4
-> > > 
-> > > Thanks,
-> > > 
-> > > Marc.
+> > - /tmp/.pkapi_xpk - This was normally created by pcksslotd (running
+> > as root).  Symlink attack on this did not allow corrupting /
+> > truncating files, but allowed creating new empty files at arbitrary
+> > locations.
 > > 
-> > I know that at least Gentoo does this since ~2006:
+> > - /tmp/.pkcs11spinloc - I believe this is created by opencryptoki
+> >   clients.  In addition to the above, there's a chmod to make this
+> > file world writable.  This may get created by non-root user, but
+> > chmod may still run later with root privileges later.
 > > 
-> > 35 # !!! SECURITY WARNING !!!
-> > 36 # DO NOT MODIFY OR REMOVE THE DEVICE FILE RELATED OPTIONS UNLESS YOU KNOW
-> > 37 # WHAT YOU ARE DOING.
-> > 38 # ONLY ADD TRUSTED USERS TO THE VIDEO GROUP, THESE USERS MAY BE ABLE TO
-> > CRASH,
-> > 39 # COMPROMISE, OR IRREPARABLY DAMAGE THE MACHINE.
-> > 40 options nvidia NVreg_DeviceFileMode=432 NVreg_DeviceFileUID=0
-> > NVreg_DeviceFileGID=VIDEOGID NVreg_ModifyDeviceFiles=1
-> > 
-> > 
-> > http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/x11-drivers/nvidia-drivers/files/nvidia?revision=1.3&view=markup
+> > Those files do not seem to get removed as part of the normal
+> > operation, so replacing them with symlinks if they already exist is
+> > limited by /tmp stickiness.  Attacker does not need to be pkcs11
+> > group member.
 > 
+> Correct, and to make it clear: /tmp/.pkcs11spinloc *is* chmod'ed by 
+> pcksslotd to make it world-writable.
+
+When do pkcsslotd does that, and which version?  It does not happen on
+its start or stop, or when client as pkcsconf queries for some data.
+
+> > > In response, upstream released 2.4.1[1] which fixed the fchmod
+> > > issue (commits [3] and [4]).
+> > 
+> > 2.4.1 moved those files that became /var/lock/LCK..opencryptoki
+> > and /var/lock/LCK..opencryptoki_stdll respectively.
+> > 
+> > > Niels discovered that 2.4.1 still allowed arbitrary files
+> > > creation by following symlinks.
+> > 
+> > Would you mind clarifying?  As files were moved to /var/lock, this
+> > should require attacker to have permissions to write to that
+> > directory.
 > 
-> Well, getting rid of static groups like that is what consolekit and udev
-> are for. Ideally, permissions would be granted on the device based on
-> which user is at the console, as it currently done with other devices.
-> Unfortunately, the design of the binary driver makes it hard to do, as
-> it resets permissions itself when X loads.
+> At least in Debian (and its derivatives):
+> $ stat -c %a /var/lock/
+> 1777
+
+Right, agree that 2.4.1 does not make any relevant change
+where /var/lock has such permissions.
+
+> > > Upstream then released 2.4.2[2], fixing this last issue (commits
+> > > [5] and [6]).
+> > 
+> > What do 2.4.2 actually fix?  I think the move of /tmp/.pkcs11spinloc
+> > to /var/lock/LCK..opencryptoki_stdll probably created a regression
+> > in use cases where opencryptoki clients run without root privileges
+> > (or better to say without privileges to create the file
+> > in /var/lock/).
 > 
-> https://bugs.launchpad.net/ubuntu/+source/nvidia-graphics-drivers/+bug/979307
+> Given the above (/var/lock/ is world-writable), 2.4.1 doesn't cause a 
+> regression for non-root users.
+> 
+> The move to the subdirectory in /var/lock limits the attack surface
+> to members of the pkcs11 group, who are fully trusted, therefore
+> becoming a non-issue.
 
-The NVIDIA is explicitly not allowed to use the udev device structure,
-as udev device handling requires GPL interfaces and can only be called
-from GPL drivers.
+If pkcs11 group member can make pkcsslotd chmod lock file, pkcs11 group
+membership need to be assumed root equivalent without any additional
+condition.
 
-Thats why it is strange this way.
-
-And yes, the exploit turns "I have a bad feeling about this" about this device
-definitely into "this is bad".
-
-Ciao, Marcus
+-- 
+Tomas Hoger / Red Hat Security Response Team
