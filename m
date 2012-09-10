@@ -1,46 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/11
-Message-ID: <20120524205730.GA4095@openwall.com>
-Date: Fri, 25 May 2012 00:57:30 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: powerdns does not clear supplementary groups
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/10/1
+Message-ID: <504DD06A.9060209@redhat.com>
+Date: Mon, 10 Sep 2012 13:35:06 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Jeff Law <law@...hat.com>
+CC: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jakub Jelinek <jakub@...hat.com>
+Subject: Re: CVE Request -- glibc: strcoll() integer overflow leading to buffer overflow + another alloca() stack overflow issue (upstream #14547 && #14552)
 Content-Type: text/plain; charset=utf-8
 
-Kurt -
+On 09/07/2012 07:29 PM, Jeff Law wrote:
 
-On Thu, May 24, 2012 at 02:33:06PM -0600, Kurt Seifried wrote:
-> [...] when a program
-> with much more limited operations doesn't drop privileges, unless it
-> directly leads to some sort of exploit/elevated access/etc. than I'm
-> inclined to say while it's not good, it's not a vulnerability per se.
+>>> If I have looked correctly this is expected / known behaviour of
+>>> alloca() - from the manual page: [4]
+>>> http://linux.die.net/man/3/alloca
 
-It's a case of a security feature not working as intended.  Previously,
-CVEs were sometimes assigned and sometimes not in such cases, and I
-failed to see a pattern in that. ;-)  Consider e.g. CVE-2006-5794 ("it
-is believed that this issue is only exploitable by leveraging
-vulnerabilities in the unprivileged process, which are not known to
-exist").  Are you maybe trying to draw the line between "security
-feature" and "security hardening"?  Even if so, I fail to see how
-OpenSSH's privsep is more of a "security feature", whereas another
-daemon's dropping of root privs is "security hardening".  These look
-very similar to me in terms of what they're intended and expected to
-achieve, so I think it's the same category, whatever we call it.
+> Just because it's known/expected behaviour doesn't mean it's not a
+> potential attack vector.  Blowing out the stack is definitely a vector
+> for attack:
 
-Now, I imagine there could be a subtle case if e.g. a downstream distro
-or a fork of a project introduces privilege dropping, which is not in
-the main code base, and there turns out to be a flaw in that, which
-weakens the added security (but not to the point of being worse than the
-original).  It would feel a bit weird to say that the hardened revision
-is vulnerable whereas the original is not, even though the original is
-not any safer.  In such cases, I guess whether this is CVE-worthy or not
-will depend on whether the added hardening was advertised to and
-expected by users/admins of the hardened revision or not.  If it was an
-undocumented extra, then it failing to improve things is probably not
-what people would expect to be tracked as a security vulnerability.
-However, if it was documented and expected to function, then it becomes
-a vulnerability to track just like any other one of similar severity.
+I agree.  If the frame address leaks or can be deduced, an unbounded 
+alloca (or VLA) can be abused as a POKE.  I think this might apply in 
+this case because the writes to the allocated memory area are incremental.
 
-I hope this helps.
-
-Alexander
+-- 
+Florian Weimer / Red Hat Product Security Team
