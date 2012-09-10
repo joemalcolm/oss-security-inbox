@@ -1,70 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/16/1
-Message-Id: <201211160119.qAG1JKCG003568@linus.mitre.org>
-Date: Thu, 15 Nov 2012 20:19:20 -0500 (EST)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: mantis before 1.2.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/10/2
+Message-ID: <20120910134304.GB7234@vermeer.pre-sense.de>
+Date: Mon, 10 Sep 2012 15:43:04 +0200
+From: Timo Warns <Warns@...-Sense.DE>
+To: oss-security@...ts.openwall.com
+Subject: [PRE-SA-2012-06] FreeRADIUS: Stack Overflow in TLS-based EAP Methods
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The issue described below has been reported to the distros list with a timeline
+as follows:
 
->This is an information disclosure: "Consequently, saving the page
->without changes would cause the config to be saved with all access
->levels as 'viewer'."
+2012-08-29
+    - notification of security@...eradius.org
+    - confirmation by Alan DeKok (FreeRADIUS project leader)
+      with agreement on embargo period until 2012-09-10
+    - notification of distros@...openwall.org
 
->the first seems to be more general a "wrong permission"-issue,
->although the consequence is probably also "just" an information
->disclosure.
+2012-09-10
+    - release of FreeRADIUS 2.2.0
+    - public disclosure
 
-We didn't think this was about information disclosure. Our
-interpretation is that CVE-2012-5522 (aka bug 14496) is about which
-users are allowed to change the status of a bug:
 
-  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-5522
 
-http://www.mantisbt.org/manual/manual.configuration.status.settings.php
-says:
+PRE-CERT Security Advisory
+==========================
 
-  $g_update_bug_status_threshold
-  $g_set_status_threshold
+* Advisory: PRE-SA-2012-06
+* Released on: 10 September 2012
+* Affected product: FreeRADIUS 2.1.10 - 2.1.12
+* Impact: remote code execution
+* Origin: specially crafted client certificates
+* CVSS Base Score: 10
+    Impact Subscore: 10
+    Exploitability Subscore: 10
+  CVSS Vector: (AV:N/AC:L/Au:N/C:C/I:C/A:C)
+* Credit: Timo Warns (PRESENSE Technologies GmbH)
+* CVE Identifier: CVE-2012-3547
 
-  These settings control the access level required to promote a bug
-  to a new status once the bug is opened. $g_set_status_threshold
-  is an array indexed by the status value that allows a distinct
-  setting for each status. It defaults to blank. If the appropriate
-  status is not defined above, $g_update_bug_status_threshold is
-  used instead. The default is DEVELOPER.
 
-In other words, "all access levels as 'viewer'" doesn't mean that
-there's a confidentiality impact resulting from incorrect assignment
-of the VIEWER access level to additional persons. Instead, it means
-that there's an integrity impact because VIEWER access is sufficient
-to change a bug to any different status (Acknowledged, Confirmed,
-Assigned, Resolved, or Closed). The intended behavior was for VIEWER
-access to be insufficient, and DEVELOPER access to be sufficient. In a
-typical MantisBT installation, changing a bug to Closed would often be
-the worst scenario.
+Summary
+-------
 
-We agree that it's reasonable to have different CVE names for 14496
-and 14704, even though both are closely related to the concept of
-incorrect privilege management.
+A stack overflow vulnerability has been identified in FreeRADIUS that allows to
+remotely execute arbitrary code via specially crafted client certificates
+(before authentication). The vulnerability affects setups using TLS-based EAP
+methods (including EAP-TLS, EAP-TTLS, and PEAP).
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+FreeRADIUS defines a callback function cbtls_verify() for certificate
+verification. The function has a local buf array with a size of 64
+bytes. It copies the validity timestamp "not after" of a client
+certificate to the buf array:
 
-iQEcBAEBAgAGBQJQpZLbAAoJEGvefgSNfHMdo4oIAKhxVaPWYaFylDww/g2sNdKG
-3R6zhGT4KL/UY9yviQT9olJ8IhiCPBWLyGFBvfGg3OctIeLXeC82sZYjjIX/jrVq
-FcXcwyCgOFgyvcmjahf1lvhty9hqjaV1GwakMcjdDf1ICAGfg8HdGJwY/JVIOrRH
-POguh2u6g4LOqmuN7DfkyaxodCIbdMqccMiWkxFqzckmGPUQ4dHrWzfBvpRWYNod
-f/btKRGVm87nFVW38nnY3Vch/Ibxt63vPkH6mKJkhSxIRH94sIPwqb3deLMJZqt4
-2lqBP2NIL2mti01hJ3S5S70jm3bj33sTDJ+Ghyl1T+YkRDh7C0fxF84vUejo0Ik=
-=mN6v
------END PGP SIGNATURE-----
+    asn_time = X509_get_notAfter(client_cert);
+    if ((lookup <= 1) && asn_time && (asn_time->length < MAX_STRING_LEN)) {
+        memcpy(buf, (char*) asn_time->data, asn_time->length);
+        buf[asn_time->length] = '\0';
+
+The MAX_STRING_LEN constant is defined to be 254. If asn_time->length is
+greater than 64 bytes, but less than 254 bytes, buf overflows via the memcpy.
+
+Depending on the stack layout chosen by the compiler, the vulnerability allows
+to overflow the return address on the stack, which can be exploited for code
+execution.
+
+
+Solution
+--------
+
+The issue has been fixed in FreeRADIUS 2.2.0. Updates should be installed as
+soon as possible.
+
+
+References
+----------
+
+When further information becomes available, this advisory will be
+updated. The most recent version of this advisory is available at:
+
+http://www.pre-cert.de/advisories/PRE-SA-2012-06.txt
+
+
+Contact
+--------
+
+PRE-CERT can be reached under precert@...-secure.de. For PGP key
+information, refer to http://www.pre-cert.de/.
