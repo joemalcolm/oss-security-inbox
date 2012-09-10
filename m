@@ -1,23 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/7
-Message-ID: <50DF002E.5000708@gmx.de>
-Date: Sat, 29 Dec 2012 15:37:34 +0100
-From: Tilmann Haak <tilmann.haak@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/10/6
+Message-ID: <20120910204838.GD13402@redhat.com>
+Date: Mon, 10 Sep 2012 14:48:38 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MoinMoin Wiki (XSS in rss link)
+Cc: Tavis Ormandy <taviso@...xchg8b.com>
+Subject: Re: note on gnome shell extensions
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+* [2012-09-08 18:14:10 -0600] Kurt Seifried wrote:
 
-there is an XSS issue in MoinMoin wiki, version 1.9.5. Function
-rsslink() in "theme/__init__.py" does not properly escape the page name
-parameter.
+>-----BEGIN PGP SIGNED MESSAGE-----
+>Hash: SHA1
+>
+>On 09/08/2012 04:36 PM, Tavis Ormandy wrote:
+>> List, I just installed Fedora 17 on a workstation. While
+>> researching how to upgrade gnome 3 to version 2, I noticed it
+>> installed a browser extension called "Gnome Shell Integration".
+>>
+>> $ rpm -qf
+>> /usr/lib64/mozilla/plugins/libgnome-shell-browser-plugin.so
+>> gnome-shell-3.4.1-5.fc17.x86_64
+>>
+>> The NPPVpluginDescriptionString states "It can be used only by
+>> extensions.gnome.org", but I happen to know that is a tricky thing
+>> to get right.
+>
+>Erk yeah not good.
+>
+>> The plugin incorrectly trusted hostname, and initialized. As far as
+>> I can tell, the plugin will let you install new shell extensions, I
+>> don't know what the impact of that is, can they contain native
+>> code?
+>>
+>> Tavis.
+>
+>Good news: In theory at least Gnome shell extensions are only
+>JavaScript and (optional) CSS using the Gjs bindings, the JavaScript
+>itself is run using SpiderMonkey. So no native code execution as far
+>as I know.
+>
+>Bad news: It looks like it has bindings to run command lines from
+>within a Gnome Shell Extensions:
+>
+>http://developer.gnome.org/glibmm/unstable/group__Spawn.html
+>http://stackoverflow.com/questions/9606404/gnome-shell-extensions-stdout-from-glib-iochannel
 
-Details can be found at: http://moinmo.in/SecurityFixes
+SUSE has some interesting info in their bug:
 
-A fix is available at: http://hg.moinmo.in/moin/1.9/rev/c98ec456e493
+https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
 
-Could you please assign a CVE number?
+By the sounds of it, this should be harmless.  Vincent Untz says that
+the browser plugin doesn't actually install the extensions, it's passed
+to another process via a dbus call to gnome-shell, which sends the uuid
+of the extension to the extensions.gnome.org web site in order to
+download the extension.
 
-kind regards,
-   Tilmann
+See:
+
+http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
+http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
+
+which is:
+
+let message = Soup.form_request_new_from_hash('GET', REPOSITORY_URL_INFO, params);
+
+And REPOSITORY_URL_INFO is hardcoded earlier:
+
+const REPOSITORY_URL_BASE = 'https://extensions.gnome.org';
+const REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE + '/download-extension/%s.shell-extension.zip';
+const REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE + '/extension-info/';
+const REPOSITORY_URL_UPDATE   = REPOSITORY_URL_BASE + '/update-info/';
+
+I don't think this is something that can be exploited, based on the
+above.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
