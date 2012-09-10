@@ -1,43 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/19
-Message-ID: <20120912194004.GF17642@ngolde.de>
-Date: Wed, 12 Sep 2012 21:40:04 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/10/5
+Message-Id: <201209101359.28589.geissert@debian.org>
+Date: Mon, 10 Sep 2012 13:59:25 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: tor
+Subject: Re: CVE request - mcrypt buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Kurt Seifried <kseifried@...hat.com> [2012-09-12 19:01]:
-> On 09/12/2012 06:34 AM, Nico Golde wrote:
-> > Hi, from the tor release notes[0]: Changes in version 0.2.2.39 -
-> > 2012-09-11 Tor 0.2.2.39 fixes two more opportunities for remotely
-> > triggerable assertions.
-> > 
-> > o Security fixes: - Fix an assertion failure in tor_timegm() that
-> > could be triggered by a badly formatted directory object. Bug found
-> > by fuzzing with Radamsa. Fixes bug 6811; bugfix on 0.2.0.20-rc. -
-> > Do not crash when comparing an address with port value 0 to an 
-> > address policy. This bug could have been used to cause a remote 
-> > assertion failure by or against directory authorities, or to allow
-> > some applications to crash clients. Fixes bug 6690; bugfix on
-> > 0.2.1.10-alpha.
-> > 
-> > I have not seen CVE ids for these issues. Can you assign ids for
-> > them?
-> > 
-> > [0]
-> > https://gitweb.torproject.org/tor.git/blob/release-0.2.2:/ReleaseNotes
+On Thursday 06 September 2012 15:44:54 Vincent Danen wrote:
+> * [2012-09-06 15:11:27 -0500] Raphael Geissert wrote:
+> >I'm attaching a patch that makes mcrypt abort when the salt is longer
+> >than the temp buffer it uses.
+
+I should have probably mentioned this before for those reviewing the patch 
+(or better, added a comment to the patch):
+Even though the patch checks for salt_size > sizeof(tmp_buf) which is 101, 
+and later the memmove copies to decrypt_general() (src/classic.c)'s 
+local_salt, which is 100-long, the salt_size can't be an odd number (it is 
+decreased by one to make it even-numbered). So, there can't be a one-byte 
+overflow.
+
+> >I'm attaching another patch that prevents the format string attacks.
 > 
-> Can you attach links to the code commits? thanks
+> Fantastic, thanks for this.  I suppose the format string issues may
+> require another CVE name?  I'm not sure if they're exploitable or not
+> (no chance right now to look at it further).
 
-I didn't have them when I sent this mail. Should be:
-https://gitweb.torproject.org/tor.git/commitdiff/973c18bf0e84d14d8006a9ae97fde7f7fb97e404
-https://gitweb.torproject.org/tor.git/commitdiff/62d96284f7e0f81c40d5df7e53dd7b4dfe7e56a5
+I didn't spend much time on them, but none seemed to be exploitable.
 
-Cheers
-Nico
+Cheers,
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-
-Content of type "application/pgp-signature" skipped
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
