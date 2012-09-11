@@ -1,70 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/06/1
-Message-ID: <4FA5BF4F.7080505@redhat.com>
-Date: Sat, 05 May 2012 18:01:19 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/8
+Message-ID: <20120911173509.GA4154@ngolde.de>
+Date: Tue, 11 Sep 2012 19:35:09 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request for links2
+Subject: NTP authentication
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+we currently have a discussion[0] whether it makes sense to setup an NTP 
+infrastructure that allows to use autokey authentication or not. It's unclear 
+though how this would look like in practice currently with pool.ntp.org.
 
-On 04/11/2012 06:10 PM, Nico Golde wrote:
-> Hi, * Kurt Seifried <kseifried@...hat.com> [2012-04-10 21:56]:
->> On 04/09/2012 08:43 PM, Nico Golde wrote:
-> [...]
->>> I discovered some out of memory accesses in links2 graphics
->>> mode that could be potentially used to run exploits. I fixed
->>> them in links-2.6. For Debian Squeeze, I am sending this patch
->>> that backports the fixes to links-2.3pre1. Apply the patch and 
->>> distribute patched packages links and links2 through 
->>> security.debian.org.
->>> 
->>> 
->>> [...] This patch fixes:
->>> 
->>> Buffer overflow when pasting too long text from clipboard to
->>> dialog boxes (not remotely exploitable)
->> 
->> Can this result in code execution?
-> 
-> I am not sure about this one. For out of memory write in dip.c, my
-> guess is yes, it is basically possible to write past an allocated
-> buffer. Even though I can't tell you what data would reside in that
-> area.
+I thought this topic may be interesting to other people and especially 
+distributors as well. Is there any distro that is currently using NTP 
+authentication and is using their own pool? What are your opinions on this?
 
-Is it exploitable for anything beyond a crash?
+[0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=687166
 
-> For the xbm decoder, the problem has basically been that
-> xbm_decode() did not indicate an error when decoding xbm images and
-> thus the callers would continue to operate on the parsed structures
-> even though the image is faulty.
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
 
-Is it exploitable for anything beyond a crash?
-
-> Cheers Nico
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPpb9PAAoJEBYNRVNeJnmTyuwQAKyzVtBNiPAklnKdc1qBSF2b
-tLqqA9iFSggrSR9BrscTWism8GMVtkNAemNbhGSWOvm0iKEBLi8cul3EsAjZvaIQ
-vJPHOT+8fAFgrjxaNkmhUlGpNCh0mjqPNQwrZ9t9GPyvqMxaVVch4z+zXhF4627H
-P+BmUJnLha86s3Lmk6dsaoMXo49Afg+pf1waeBECXSTlM5yU0LiYPlEEYaLO9lmr
-FC6i5nNGD4SzIZtQPdBca8rmQ2EW30GzWT/vTXv23V7ZdGqVw5UQCdnHTSmPiZVc
-MCwi1zBsx5HeqnjPWJPEUH+CezlN0/uGiWUAd+5BZZOnqi5NWzbcJnsIkR+B5Pln
-DHVxz2yH33lH2JtDQwWpphn8drD8XGGJrBYicqlHXoqhgVQZixnun6ils7MfEsCL
-iK1D+8FabAKVNiJAxfJYFtsSjtCGIXlk9atzcKy7GQfkDniLoyqaRMuNmWNTPD0V
-PR4ZssNWunYnNKKO8uGY0AaLjXzU3QW/hKH8dgghf6N3+Xb08x9BR7IeeFenlC8m
-MppwCIOuyWsKn6l0DajkgeeDvycQJyFCVsnnhbLGbT/I7GcJJ5bm2/Jc3CoMO+c5
-sPt1LaiRFYxKnHnGyGqOzGO3lkm/jodcHeLCijYl8V8xIEaUymfkrfsgKCWetR1Z
-+Uh/FC82SB4YSTAwDSS7
-=+gp8
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
