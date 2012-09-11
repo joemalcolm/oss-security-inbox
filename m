@@ -1,34 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/05/4
-Message-ID: <20120605215402.GD1540@redhat.com>
-Date: Tue, 5 Jun 2012 15:54:02 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/6
+Message-ID: <504F70C0.8040809@redhat.com>
+Date: Tue, 11 Sep 2012 11:11:28 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: openldap does not honor TLSCipherSuite configuration option
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Oracle Security Team <secalert_us@...cle.com>
+Subject: Re: CVE Request (minor) -- JVM: heap memory disclosure (possibly various JDKs)
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to this issue?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It was reported that OpenLDAP, when using the Mozilla NSS backend, would
-ignore any TLSCipherSuite configuration settings.  When the
-TLSCipherSuite setting is configured, OpenLDAP would use the default
-cipher suite, ignoring the setting.
+On 09/11/2012 03:18 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> an information disclosure flaw was found in the way certain Java
+> Virtual Machines (JVM) used to initialize integer arrays (they have
+> had nonzero elements right after the allocation in certain
+> circumstances). An attacker could use this flaw to obtain
+> potentially sensitive information.
+> 
+> References (including the reproducer, workaround and further
+> details): [1]
+> http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=7196857 [2]
+> https://bugzilla.redhat.com/show_bug.cgi?id=856124
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+> P.S.:  Issue brought to us by Florian Weimer, Red Hat Product
+> Security Team (for case someone is tracking the initial reporter)
+> 
+> P.S#2: Oracle Security Team Cc-ed on this request too (to clarify 
+> if CVE id has been assigned to this already or not).
+> 
 
-While the default cipher suite contains some weak ciphers (e.g.
-MD5-based), it is still not easy to break the encryption to obtain
-sensitive information.  However, if an administrator wishes to enforce
-the use of stronger ciphers by overriding the defaults using
-TLSCipherSuite, they should be able to trust that, when the
-configuration items is in place, the stronger ciphers are used.  Due to
-this flaw, that is not the case.
+Please use CVE-2012-4416 for this issue.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=825875
-http://www.openldap.org/its/index.cgi?findid=7285
-http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=2c2bb2e
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+iQIcBAEBAgAGBQJQT3DAAAoJEBYNRVNeJnmT6EoP/iTl5HN/lsfqOi83/7UiYXVA
+MJyovSVnwWZ0Aqp0Ezw7AJei+VS0koiZAPy54I0ht4idSW2HDOFxH6mAbwAX2i7E
+pr3SZecVLb+V9OQs09hShV8eik4lQ+YuHVo/Ag3Q29QSBbncHH1WxbwQhcdttoW3
+W3Flwp7+z3cLhINHV1nMEufjwwgATBkM92h6/rM9wTZBDpW7yfE5mFWMUgL7fhxd
+9B4H4NJqiARKJ4Tuk6I9UOTNtQxG4Gvrb/3nWY6vWVJjU7N7ti4pHUa6pEMnM35T
+K6SYVQEeBgyLC5qxPQtbvYhjn8iT6NXkdtrDGlYXTeDBTqWJb5Mr6QnM4dbYZFfx
+y5dFJWyHhxKuvNMQU3Xi5/ht3ta7gGHtWpAPz6LB0l6MXR35Pdiuhf5ZzEWvLCkl
+jmtCK6WRcmcks6Bkseff/XDpdh7Fd9Pcot2XYOBxs4FkjV+Krqrmkf0DFemaxxO+
+QEX1tRJlZY+2iwmlhfAoc3Msnid0yS4pMcDOvWwhwjkxeZ0BIkn8Vjvo+BaZt3uG
+aQnr8GyveaXaF7xWwMmjUuoyo3WbeOlPo2C+go3MyUZbCLJsuRislJtPF4gDLrcr
+NvzlKPZuZ5DBNKUD2eRhPMM4r8tBQ0Dn5jcsR8cFsx0D7h8u19lgUsREJP8sqPxF
+aABJ8sMvexuvy7D0rrm9
+=NGRD
+-----END PGP SIGNATURE-----
