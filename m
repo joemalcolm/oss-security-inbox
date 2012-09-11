@@ -1,51 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/13/1
-Message-ID: <20120313025304.GA984@openwall.com>
-Date: Tue, 13 Mar 2012 06:53:04 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/5
+Message-ID: <Twg62mRyMEq8mEDOKY+tmvO+2tI@OEL+AGsq2qOfta3tVB3M+FMK4kc>
+Date: Tue, 11 Sep 2012 19:19:38 +0400
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: running the distros lists
+Subject: Re: CVE request - mcrypt buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
-I got a couple of off-list requests to clarify what kind of help is
-needed.  I'll do so below:
-
-On Tue, Mar 13, 2012 at 01:38:07AM +0400, Solar Designer wrote:
-> I could use some help running the distros list and its linux-distros
-> sub-list.  Specifically, when issues are being brought to these lists,
-> the initial messages very often lack a proposed coordinated release date
-> (CRD).  Currently there's no specific person (nor a group smaller than
-> the entire membership of the list) who would be responsible for getting
-> a CRD agreed upon ASAP, yet this is something that needs to happen for
-> each and every issue.  When everyone is responsible for this, it also
-> means that no one in particular is responsible.  This needs to change.
-
-What I'd like to be happening is for some list member(s) (not too many
-of them) to be proposing a CRD for each reported issue on the day it is
-reported.  Then those member(s) need to stay on top of all open issues
-and ensure the CRDs are met (if necessary, adjusting the CRDs as long as
-the list's limit permits).  Quite often, this will involve negotiations
-with other list members, with the reporter, with upstream(s), and with
-various other parties (such as related projects and distros who are not
-on the list).  Yes, this does sound CERT'ish. ;-)
-
-> Could one or several distros and/or linux-distros list members please
-> accept this responsibility?  I can't seem to allocate enough of my own
-> time to this job, sorry.  (I am already putting some of my time into
-> other aspects of running these lists, as you're aware.)  Additionally, I
-> think that some other list members are better qualified for it because
-> more of the issues affect their products.
+Thu, Sep 06, 2012 at 08:37:14AM -0600, Vincent Danen wrote:
+> A buffer overflow was reported [1],[2] in mcrypt version 2.6.8 and
+> earlier due to a boundary error in the processing of an encrypted file
+> (via the check_file_head() function in src/extra.c).  If a user were
+> tricked into attempting to decrypt a specially-crafted .nc encrypted
+> flie, this flaw would cause a stack-based buffer overflow that could
+> potentially lead to arbitrary code execution.
 > 
-> I think Kurt, Vincent, and/or Jan (the Red Hat folks) could do this job
-> well, especially considering that they're currently the ones to assign
-> CVE IDs anyway (so could as well assign IDs and propose CRDs in the same
-> message), but anyone else is welcome to volunteer for this thankless job
-> as well.
-
-Not exactly anyone else, but anyone who is currently on the distros list.
-
-> Please let us all know.
+> References:
 > 
-> Thanks,
-> 
-> Alexander
+> https://bugzilla.redhat.com/show_bug.cgi?id=855029
+> https://secunia.com/advisories/50507/
+> https://bugs.gentoo.org/show_bug.cgi?id=434112
+> http://packetstormsecurity.org/files/116268/mcrypt-2.6.8-Buffer-Overflow-Proof-Of-Concept.html
+
+Unfortunately, mcrypt's check_file_head() in combination with
+decrypt_general() is a bit worse: it allows to overwrite up to 50
+bytes of stack buffers from decrypt_general(), namely local_algorithm,
+local_mode, local_keymode.  And in some curcumstances to overwrite
+even 2-3 extra bytes (not more, since buf[3] will contain '\0'), though
+it is not very much controllable path.
+
+The problem is that no length checks are done in combos
+read_until_null/strcpy.  Function read_until_null() allows for up to
+100 bytes to be read and it won't NUL-terminate the buffer, so strcpy
+can do perform access even further (read from tmp_buf and writes to
+the said buffers; but this is the uncontrolled way I was talking
+about).
+
+The modified PoC is at
+  http://codelabs.ru/security/mcrypt/poc-cve-2012-4409.py
+With it I was able to overwrite the salt_size@...rypt_general()
+and to trigger the call to malloc() for the chunk of 0x42424242 bytes
+via _mcrypt_malloc() that lead to bus error because of subsequent
+memmove():
+{{{
+      salt = _mcrypt_malloc(salt_size);
+      memmove(salt, local_salt, salt_size);
+}}}
+
+I wasn't yet able to smash the stack of decrypt_general(), because
+BUFFER_SIZE is 1024 and tmp_buf prevents me to reach the top of the
+stack frame (provided that compiler won't rearrange local variables),
+so I was not able to go past it.  Thus it looks like a temporary
+memory consumption/DoS.
+-- 
+Eygene
