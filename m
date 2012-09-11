@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/13
-Message-ID: <5050C83C.1010400@redhat.com>
-Date: Wed, 12 Sep 2012 13:37:00 -0400
-From: Russell Bryant <rbryant@...hat.com>
-To: Matt Joyce <matt@...resistor.com>
-CC: Thierry Carrez <thierry@...nstack.org>, oss-security@...ts.openwall.com, openstack@...ts.launchpad.net, "(openstack@...ts.launchpad.net)" <openstack@...ts.launchpad.net>
-Subject: Re: [Openstack] [Openstack-announce] [OSSA 2012-014] Revoking a role does not affect existing tokens (CVE-2012-4413)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/10
+Message-Id: <201209111724.12213.geissert@debian.org>
+Date: Tue, 11 Sep 2012 17:24:10 -0500
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2012-2238: trytond missing permissions check in button model
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 09/12/2012 01:07 PM, Matt Joyce wrote:
-> This is not a repeat of cve-2012-3426?
+FYI, there's an issue affecting trytond 2.4's button model, allowing an 
+unauthorised user to execute otherwise-restricted code.
 
-It's related, but not the same.  That CVE did not include this
-specific issue (existing tokens including roles that may have since
-been revoked).  It was for some other problems around token
-expiration, though.
+References:
+http://news.tryton.org/2012/09/security-releases-for-trytond-24-series.html
+http://hg.tryton.org/2.4/trytond/rev/279f0031b461
+https://bugs.tryton.org/issue2757 (still hidden as of this time)
 
-For reference: https://lists.launchpad.net/openstack/msg15164.html
-
-- -- 
-Russell Bryant
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iEYEARECAAYFAlBQyDwACgkQFg9ft4s9SAYVGgCfcQuY/uk4HlXh9ToPqqSPl7Nf
-h6kAoK/ZUqvTeHSkPbWyi1Y8+PEkt4tD
-=Cz/+
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
