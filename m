@@ -1,58 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/5
-Message-ID: <508F5870.8070801@redhat.com>
-Date: Mon, 29 Oct 2012 22:32:48 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Greg Knaddison <greg.knaddison@...il.com>
-CC: Angie Byron <angela.byron@...uia.com>, Joshua Brauer <joshua@...uia.com>, oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>, David Rothstein <drothstein@...il.com>
-Subject: Re: CVE request: Drupal SA-CORE-2012-003
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/9
+Message-ID: <Pine.GSO.4.64.1209111726360.22593@faron.mitre.org>
+Date: Tue, 11 Sep 2012 17:37:11 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Florian Weimer <fweimer@...hat.com>, Oracle Security Team <secalert_us@...cle.com>
+Subject: Re: CVE Request (minor) -- JVM: heap memory disclosure (possibly various JDKs)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 10/29/2012 01:53 PM, Greg Knaddison wrote:
-> Joshua Brauer is responsible for all CVE requests for the Drupal
-> project.
-> 
-> We added "CVE: Requested" to our template to reduce the
-> possibility that someone else will see the advisory and request a
-> CVE on our behalf.
+Jan/Kurt,
 
-Ah ok, please request them then, I'm here to serve.
+The bug report appears to be describing a narrow class of vulnerability 
+that could affect multiple codebases that implement Java Virtual Machines, 
+not just Oracle's; if so, then a separate CVE would be needed for each 
+REPORTED codebase, and CVE-2012-4416 is ONLY for bug id 7196857 for the 
+Oracle-supported JVM.
 
-> On 10/29/2012 12:17 PM, Moritz Muehlenhoff wrote:
->>>>>> Hi, please assign a CVE ID for SA-CORE-2012-003: 
->>>>>> http://drupal.org/node/1815912
->>>>>> 
->>>>>> Cheers, Moritz
->>>>>> 
+I wonder about the severity of the issue, but given the possibility that 
+applications might access an array before a fill, and applications may 
+depend on there being "empty" elements after initialization, this seems 
+reasonable for a CVE.
 
-SA-CORE-2012-003 - Drupal core - Arbitrary PHP code execution
-Please use CVE-2012-4553 for this issue.
-
-SA-CORE-2012-003 - Drupal core - Information disclosure
-Please use CVE-2012-4554 for this issue.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQj1hwAAoJEBYNRVNeJnmTQfMP/jgKum7Q8hjg0nxsele0QHCB
-iFUuuNDzpvuIIuIZ44beO775S7AaFQhe/PPE3f0HOAhON+SN9RuCk4/IUffWRJOV
-5Xsw/Deb3RlkmJ5dtDPQ8DTFL6baCi+F0Fq5/EdiTbqaax/NeJQokECkGXlFaAg4
-AzCTaOFTkbQHgWYkz4x8WWJ8TC5TXgo1X/zvEbiMS5qlPcLNRRf2/8Omj8dKs2Q6
-w+6gJzEShyRS+y8K7D8RCsBDh+yKSBtJczdcWBzGKxvbAagWktXXNbnhFHWmlALc
-fFcCuHs0JbNZf0s0XZ2b00l1VpA+qt4ui8J5kOJbriNpUJoskWt50DOhnO6J5shc
-heRD/LLGZNY8ofHhfjGVJ9sJ0Y+GWzKFoshrU5DGFlPNECL8wGTODkPx1Z18Tt9+
-xFqA3zm6hKaqCKzMtRU//oJoIF99299om9I8yI137DN1rztc2yLUyQbjaym4lZi+
-uDNGHYsC7D1UXaDzxuTBBEoUKNxGaPzDfhq9qXPeJQNBdCxCON2V4odMmduopY57
-72wGWOc45AI1OvpHmPMnG0twzLjPMSWOJOBAB4rzYEd9Lu3jEr4yePirKqYD7mAg
-HUeqztvbkL7vaGfJ2zn2MZtaA4tuhZQYxQjteSFdAb0cEpe4fpZykPjqeuw7+eR7
-mSXd+655JtNXg+qJpi50
-=pbHE
------END PGP SIGNATURE-----
+- Steve
