@@ -1,51 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/28/5
-Message-ID: <50660D91.9020104@redhat.com>
-Date: Fri, 28 Sep 2012 16:50:25 -0400
-From: Russell Bryant <rbryant@...hat.com>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com
-Subject: [OSSA 2012-015] Some actions in Keystone admin API do not validate token (CVE-2012-4456)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/7
+Message-ID: <504F70D6.50206@redhat.com>
+Date: Tue, 11 Sep 2012 11:11:50 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: guacd
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-OpenStack Security Advisory: 2012-015
-CVE: CVE-2012-4456
-Date: September 28, 2012
-Title: Some actions in Keystone admin API do not validate token
-Impact: High
-Reporter: Jason Xu
-Products: Keystone
-Affects: Essex (prior to 2012.1.2), Folsom (prior to folsom-2
-development milestone)
+On 09/11/2012 06:06 AM, Nico Golde wrote:
+> Hi, there is a buffer overflow in the protocol handling of guacd. 
+> This issue is confirmed to result in code execution. Upstream fix: 
+> http://guac-dev.org/trac/changeset/7dcefa744b4a38825619c00ae8b47e5bae6e38c0/libguac
+>
+>  Can we please get a CVE id for this issue?
+> 
+> Kind regards Nico
 
-Description:
-Jaxon Xu reported a vulnerability in Keystone. Two admin API actions
-did not require a valid token.  The first was listing roles for a
-user.  The second was the ability to get, create, and delete services.
+Please use CVE-2012-4415 for this issue.
 
-Folom Fixes: (Included in 2012.2)
-http://github.com/openstack/keystone/commit/868054992faa45d6f42d822bf1588cb88d7c9ccb
-http://github.com/openstack/keystone/commit/1d146f5c32e58a73a677d308370f147a3271c2cb
-
-Essex Fixes: (Included in 2012.1.2)
-http://github.com/openstack/keystone/commit/14b136aed9d988f5a8f3e699bd4577c9b874d6c1
-http://github.com/openstack/keystone/commit/24df3adb3f50cbb5ada411bc67aba8a781e6a431
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4456
-https://bugs.launchpad.net/keystone/+bug/1006815
-https://bugs.launchpad.net/keystone/+bug/1006822
 
 - -- 
-Russell Bryant
-OpenStack Vulnerability Management Team
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iEYEARECAAYFAlBmDZAACgkQFg9ft4s9SAYPhACfTBNPMETkhmP8OG4g11VgZi11
-yCkAn2sc3GtVKy/m1Xq4fobHW45nyb5X
-=bkKK
+iQIcBAEBAgAGBQJQT3DWAAoJEBYNRVNeJnmTqPkP/RC0OyAAgtqpIx+64FcRfhYR
+6oLq7IIFblTUlTzxsgQ5oW6FHOn1qgsBIfmSdJ3cXcCHXZ0ttxdXTztB8wZ6f74H
+UY1XIqDUlOmTnhOKaat/aF89KpjM+3oDZt3V1vUzilMnBENXvBjRXctkQ6rY5mMn
+QNup+KFiYC6hy6LCGtliwxxm78YQgAc6M/j8F5mTLAKnp0MRIwVlpve7iFtM7FBw
+dKX4qVh+2OCsvk9ISi9c1lwfKAOfZIlznXz6ISJddBxtcrNPhcglzZJIfOMcYf5Z
+pbOTPRqFG0NWjGnZg9lfQDX1Ph9ieJltNz84adWK2kquKBzMNB22+Fb8sDssCVGB
+NUAV6ewfl/XhOUzGf2DSlUMT95F9TCFkMlsONvi5EXPb5oDws60wJmNZAZsnGxRm
+ZdrB4l4LCqIAXVsjI8CQOtsZNyc0+ShT9edKtIP1b6mZalPGtgxL+7otOQEx3aBA
+g/Kn7CxVPsxeb1s3bQvVL/MM2WhI/uGHj0oHcuFM2DceY6DXLxi0Bd06N7N+rLg2
+1L7ZU463/i1TcxcIXu7opgqfdA9Xb31l6BmG0n0bS1qKcaKjglZzIO5vRnpmskyx
+Ky8K3RLq4q25atVACx+3rs5Kpxj8/FxMnn5VkU1ihytZ8Ybj75IVyY57lLdLN+q6
+fI6Vwoi1qWeU3+l9ujR7
+=mxXs
 -----END PGP SIGNATURE-----
