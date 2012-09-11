@@ -1,33 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/8
-Message-ID: <4F5E58AC.7020906@redhat.com>
-Date: Mon, 12 Mar 2012 14:12:28 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/2
+Message-ID: <504F0AA6.5000509@redhat.com>
+Date: Tue, 11 Sep 2012 15:25:50 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: ldm (LTSP display manager)
+Subject: CVE-2012-4405 ghostscript, argyllcms: Array index error leading to heap-based bufer OOB write
 Content-Type: text/plain; charset=utf-8
 
-On 03/12/2012 02:03 PM, Marc Deslauriers wrote:
-> Could we please get a CVE assigned to the following issue?:
-> 
-> Starting with ldm 2.2.x, upstream switched to using wwm as a minimal window manager.
-> It was discovered that wwm ships with keybindings that allow spawning an xterm.
-> 
-> As the ldm greeter runs as root, this allows for a passwordless root shell.
-> 
-> Bug:
-> https://bugs.launchpad.net/ubuntu/+source/ldm/+bug/953340
-> 
-> Commit:
-> http://bazaar.launchpad.net/~ltsp-upstream/ltsp/ldm-trunk/revision/1419
-> 
-> Thanks,
-> 
-> Marc.
+Hi All,
 
-Please use CVE-2012-1166 for this issue.
+An array index error leading to heap-based buffer out-of-buffer bounds
+write flaw was found in the way International Color Consortium (ICC)
+Format library (aka icclib) as used in Ghostscript and Argyll Color
+Management System computed dimensional increment through the clut based
+on the count of input channels.
+
+This issue was reported by Marc Schönefeld
+
+It seems that the upstream version of ghostscript no longer uses
+embedded icclib so they are not affected.
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=854227
+Patch: https://bugzilla.redhat.com/attachment.cgi?id=609986
 
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
