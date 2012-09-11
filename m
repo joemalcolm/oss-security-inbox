@@ -1,19 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/31/6
-Message-ID: <20120131152229.GC24473@foo.fgeek.fi>
-Date: Tue, 31 Jan 2012 17:22:29 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Mibew messenger multiple XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/1
+Message-ID: <1668523201.32880772.1347355094813.JavaMail.root@redhat.com>
+Date: Tue, 11 Sep 2012 05:18:14 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Florian Weimer <fweimer@...hat.com>, Oracle Security Team <secalert_us@...cle.com>
+Subject: CVE Request (minor) -- JVM: heap memory disclosure (possibly various JDKs)
 Content-Type: text/plain; charset=utf-8
 
-This seems to need 2012 CVE-identifier.
+Hello Kurt, Steve, vendors,
 
-Advisory: http://seclists.org/bugtraq/2012/Jan/177
-Codseq own advisory: http://www.codseq.it/advisories/mibew_messenger_multiple_xss
-OSVDB: http://osvdb.org/show/osvdb/78663
-Secunia: http://secunia.com/advisories/47787/
+  an information disclosure flaw was found in the way certain
+Java Virtual Machines (JVM) used to initialize integer arrays
+(they have had nonzero elements right after the allocation in
+certain circumstances). An attacker could use this flaw to
+obtain potentially sensitive information.
 
-At the moment http://mibew.org/ does not work for me.
+References (including the reproducer, workaround and further details):
+[1] http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=7196857
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=856124
 
-- Henri Salo
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.:  Issue brought to us by Florian Weimer, Red Hat Product Security Team
+       (for case someone is tracking the initial reporter)
+
+P.S#2: Oracle Security Team Cc-ed on this request too (to clarify
+       if CVE id has been assigned to this already or not).
