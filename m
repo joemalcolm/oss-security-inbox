@@ -1,84 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/5
-Message-ID: <4FEC1BA7.5030403@redhat.com>
-Date: Thu, 28 Jun 2012 02:53:59 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/4
+Message-ID: <20120911130324.GA14488@meddwl.fritz.box>
+Date: Tue, 11 Sep 2012 15:03:24 +0200
+From: sergii@...em.net
 To: oss-security@...ts.openwall.com
-Subject: Re: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+Cc: security@...iadb.org
+Subject: Multiple SQL injections in MySQL/MariaDB
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi.
 
-On 06/28/2012 12:13 AM, Pierre Joye wrote:
-> hi Kurt!
-> 
-> On Thu, Jun 28, 2012 at 7:12 AM, Kurt Seifried
-> <kseifried@...hat.com> wrote:
-> 
->> So simply querying:
->> 
->> ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
->> 
->> e.g.:
->> 
->> http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
->> 
->> shows authors, SAPI modules (and their authors) and normal
->> modules (and their authors), resulting in a significant
->> information disclosure (version #'s can be narrowed down from the
->> authors list).
->> 
->> This has already been reported, but no CVE was assigned:
->> 
->> https://bugs.php.net/bug.php?id=55497
->> 
->> It is mentioned in http://php.net/manual/en/ini.core.php however
->> it is enabled by default:
->> 
->> ; Decides whether PHP may expose the fact that it is installed on
->> the server ; (e.g. by adding its signature to the Web server
->> header).  It is no security ; threat in any way, but it makes it
->> possible to determine whether you use PHP ; on your server or
->> not.
->> 
->> ; http://www.php.net/manual/en/ini.core.php#ini.expose-php
->> 
->> expose_php = On
-> 
-> Why would it require a CVE and why is it seen as a security issue? 
-> Sure it could be, like unfiltered input and the like but...
-> 
-> Cheers,
+Recently, our developer Kristian Nielsen have discovered multiple SQL
+injection like vulnerabilities in MySQL and MariaDB.
+As of today, all versions of MySQL are affected.
+Affected MariaDB versions are: 5.1.62 and below, 5.2.12 and below, 5.3.7 and
+below, 5.5.25 and below. Latest MariaDB releases 5.3.8 and 5.5.27 have
+this problem fixed.
 
-I wasn't asking for a CVE for this issue (no "CVE Request: in
-subject), This is more of a place holder/information (oss-security is
-read by a lot of security vendors/etc, and is for more than just CVE
-assignments) and to make sure people are aware of the issue, since I
-wasn't even aware of it until someone pointed it out to me.
+The issue is numerous places in the code where SQL statements are
+generated and written into the binary log. User-supplied identifiers
+(table names, field names, etc.) are not always properly quoted (for
+example, the proper quoted form of SPECI`AL is `SPECI``AL`), so
+authorised users that have privileges to modify a table (any
+non-temporary table) can inject arbitrary SQL into the binary log.
 
-Exposing the fact that I am running PHP is one thing. Exposing exactly
-which modules I have loaded is quite another.
+Such injected SQL will be executed by the slave or when a DBA does a
+mysqlbinlog|mysql style point-in-time recovery.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+During the normal MySQL replication (master-slave, not
+mysqlbinlog|mysql), the options to exploit these vulnerabilities are
+somewhat limited by the fact, that the slave does not execute many
+statements, when it expects the one. So, one can not inject a new SQL
+statement. But one can extend the WHERE condition, or modify tables that
+he usually would have no access to.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Just to be clear: to exploit this one needs a valid account on the
+server and privileges to modify data.
 
-iQIcBAEBAgAGBQJP7BunAAoJEBYNRVNeJnmTrWgP/RBMIViovfMnVcYeKhMIXmYV
-Rg4u1feGpAbwY4XgxuHJmeWFJXuiUQueZvl+ut4mw/ERZwXACi83im3tR706gk5U
-q6rwXdOw3Qlqu3bmwvP9M8TxsaFPFmBEzxxl797831iuwCPp8460z01EyG8xrf/0
-AGPi4b0xf1AiWEeiFQhruBbuw06HNepZFclvYtvQ/sBlonSfMCSYFKXlpj1AKdwD
-x5k8XW8RuYtJKoC2L2R36MXKJvesozGV0hiS6u2xbonUZ9UT+MuPMWtVLm35Mbgz
-Xp1DK95rh32OqC05//HldVzx5EhnUZ9sUupu+uvTXBcOjWKFeteig0K16pnhoENR
-589m5KiW4lPuoruaKqWdkz7Mbrpuhs/Cn8J7Kz+lXPH25WRVty51/RbsxcF+pVCQ
-9aZOC6IZkplgFFUKNDrJXH1zcXiHruYq5u3fy7dhMBT3R6ZGNyOhy0wphyR5qGHM
-qqOCi5HtEATWalW093YQcfAl23tFOLFx80SG3jQBeDr8iKJMfRtAJp2DjIHLKvdF
-psJfuzl4iN0cPPEqL/Kmp0CkzVLqiG4PRUWjSWUvCcnqwUoMY+Ppv2bKF4EXy+Yc
-y5Kfm//12RvTs81xdbCGVNPKUSXRfyR2Mh018tIJmCsqL5BlQq5JnoLXdxRdXxz1
-1fMeSb1mPw36hZ0N3DLE
-=8DQU
------END PGP SIGNATURE-----
+Regards,
+Sergei Golubchik
+MariaDB Security Coordinator
+
+References:
+
+1. MariaDB bug entry:
+
+    https://mariadb.atlassian.net/browse/MDEV-382
+
+2. MariaDB patches:
+
+    http://bazaar.launchpad.net/~maria-captains/maria/5.1/revision/3151.1.1
+    http://bazaar.launchpad.net/~maria-captains/maria/5.2/revision/3163.1.1
+    http://bazaar.launchpad.net/~maria-captains/maria/5.3/revision/3556.1.2
+    http://bazaar.launchpad.net/~maria-captains/maria/5.5/revision/3508
+
+3. MySQL bug entry:
+
+    http://bugs.mysql.com/66550
+
+4. The CVE id for this vulnerability is CVE-2012-4414
+
