@@ -1,71 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/9
-Message-ID: <508EDBF2.7050205@redhat.com>
-Date: Mon, 29 Oct 2012 13:41:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/3
+Message-ID: <20120911120635.GF7238@ngolde.de>
+Date: Tue, 11 Sep 2012 14:06:35 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-CC: Andrés Gómez Ramírez <andresgomezram7@...il.com>
-Subject: Re: CVE Request: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
+Subject: CVE id request: guacd
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+there is a buffer overflow in the protocol handling of guacd.
+This issue is confirmed to result in code execution.
+Upstream fix:
+http://guac-dev.org/trac/changeset/7dcefa744b4a38825619c00ae8b47e5bae6e38c0/libguac
 
-On 10/29/2012 01:02 PM, Andrés Gómez Ramírez wrote:
-> Sorry for the previous message, it was not intentional :)
+Can we please get a CVE id for this issue?
 
-Thanks.
+Kind regards
+Nico
 
-> Hi, Could a CVE be assigned to this issue?
-> 
-> Name: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow Software: PLIB
-> 1.8.5 Software link: http://plib.sourceforge.net/ Vulnerability
-> Type: Stack Based Buffer overflow References:
-> http://www.exploit-db.com/exploits/21831/ 
-> http://www.securityfocus.com/bid/55839
-> 
-> Vulnerability Details: Plib is prone to stack based Buffer overflow
-> in the error function in ssg/ssgParser.cxx when it loads 3d model
-> files as X (Direct x), ASC, ASE, ATG, and OFF, if a very long error
-> message is passed to the function, in line 68:
-> 
-> 
-> // Output an error void _ssgParser::error( const char *format, ...
-> ) { char msgbuff[ 255 ]; va_list argp;
-> 
-> char* msgptr = msgbuff; if (linenum) { msgptr += sprintf (
-> msgptr,"%s, line %d: ", path, linenum ); }
-> 
-> va_start( argp, format ); 68        vsprintf( msgptr, format, argp
-> ); va_end( argp );
-> 
-> ulSetError ( UL_WARNING, "%s", msgbuff ) ; }
-> 
-> Thanks,
-> 
-> Andres Gomez.
-> 
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
 
-Please use CVE-2012-4552 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQjtvyAAoJEBYNRVNeJnmTPckP/ifPXgu6oDGLdQGFxDfH/L/N
-osBeiFGp21SnFguzfvwjSQgAvco+VuBNL2R7WAZXqiXcsw9vOLSZB8JDelc1udxw
-HFQOK84i1U7kVisXNCkOmxcgdfxJIz9yclgx4WZXxQiYIbT4XdEF9KuYHPlFSlN4
-vyP/RruG2/zGACjL96r+9y17WJtbsf1qEDWmfF2GEXVb19rfzXyRu6R9o3UcWjqT
-jNm+wH63iEggxjyXPGEBUf3TIZAA0vNX18LWVs9V4H0mY56VepHGPtuchLkAduKh
-usaOSs1EAWP2jexi6/txJWGCNrHuoSbWn+CJ1FwUwzHMtRY+s8dgV3ZmproMGwcD
-eAjmPgQPsBHi4MGJNJ42mnH6x/q+fbI4B08yE2cNVqVZ2Ag3NuHQqofqfLcWL+ap
-m/lJ84KdZYmsoRE+aCPBrP98elyse6P1LSiQRk5aFQuinv/nYRz9WEqF9biXqFLC
-9F3JHJXfaseWhzzhFSwUHUVp6DERHhDJDBuyTYonjblVO7AABsKVTxcgQUzJDO+V
-EI2fFUHbCKqlcIoIAL6TGvDea3Gwsw3E8+5t7Yn1UJzulIN5ht2QsiYQzk6Mfbwg
-nviEvgPsyyYllTRUQMPlyabAAEEgDEsTLD2VuExCrYJS4rGfdfEK+jlEBUaFHw1D
-YQkN5FovxvMAHbeDZVIl
-=+9oQ
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
