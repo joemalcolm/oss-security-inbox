@@ -1,86 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/20/1
-Message-ID: <CAPYM6Vz8QeiJN-1vyEKTftWSWdT7A5U2+sEv7VAiDoutsENfsQ@mail.gmail.com>
-Date: Sat, 20 Oct 2012 12:18:21 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
-Subject: F5 FirePass SSL VPN 4xxx Series | Arbitrary URL Redirection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/7
+Message-ID: <5050BA25.5000800@openstack.org>
+Date: Wed, 12 Sep 2012 18:36:53 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2012-014] Revoking a role does not affect existing tokens (CVE-2012-4413)
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-F5 FirePass SSL VPN is vulnerable to Open URL Redirection.
+OpenStack Security Advisory: 2012-014
+CVE: CVE-2012-4413
+Date: September 12, 2012
+Title: Revoking a role does not affect existing tokens
+Impact: High
+Reporter: Dolph Mathews (Rackspace)
+Products: Keystone
+Affects: Essex, Folsom
 
+Description:
+Dolph Mathews reported a vulnerability in Keystone. Granting and
+revoking roles from a user is not reflected upon token validation for
+pre-existing tokens. Pre-existing tokens continue to be valid for the
+original set of roles for the remainder of the token's lifespan, or
+until explicitly invalidated. This fix invalidates all tokens held by
+a user upon role grant/revoke to circumvent the issue.
 
-2. BACKGROUND
+Folsom fix:
+http://github.com/openstack/keystone/commit/efb6b3fca0ba0ad768b3e803a324043095d326e2
 
-F5 FirePass SSL VPN provides secure remote access to enterprise
-applications and data for users over any device or network while
-protecting your corporate. (See
-http://www.f5.com/pdf/products/firepass-overview.pdf)
+Essex fix:
+http://github.com/openstack/keystone/commit/58ac6691a21675be9e2ffb0f84a05fc3cd4d2e2e
 
+References:
+https://bugs.launchpad.net/keystone/+bug/1041396
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4413
 
-3. VULNERABILITY DESCRIPTION
+Notes:
+This fix will be included in the future Keystone 2012.1.3 stable
+update and the upcoming Folsom-RC1 development milestone.
 
-F5 FirePass SSL VPN contains a flaw that allows a remote cross site
-redirection attack. This flaw exists because the application does not
-validate the "refreshURL" parameter upon submission to the
-"my.activation.cns.php3" script. This could allow a user to create a
-specially crafted URL, that if clicked, would redirect a victim from
-the intended legitimate web site to an arbitrary web site of the
-attacker's choosing.
+- -- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-
-4. VERSIONS AFFECTED
-
-4xxx Series
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-https://[VPN_HOST]/my.activation.cns.php3?langchar=&ui_translation=&refreshURL=http://yehg.net/
-
-
-6. SOLUTION
-
-We have not been informed of the fix.
-We believe this issue should be fixed by the time of releasing our advisory.
-
-
-7. VENDOR
-
-F5 Networks, Inc.
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2012-03-31: notified vendor
-2012-04-04: vendor acknowledged
-2012-10-20: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5BF5_firepass4x%5D_url_redirection
-OWASP Top 10 2010 - A 10:
-http://www.owasp.org/index.php/Top_10_2010-A10-Unvalidated_Redirects_and_Forwards
-SANS Top 25 - Rank 23: http://cwe.mitre.org/top25/#CWE-601
-CWE-601: http://cwe.mitre.org/data/definitions/601.html
-
-#yehg [2012-10-20]
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+iQIcBAEBCAAGBQJQULoUAAoJEFB6+JAlsQQjGacQAJUvJb+oIjh73KAYYuDpl/YP
+PqJa4nmjVin7CyQ8AbxHK63xrAQ7isPFpCCqtEmjZ5kvFCrJRHiQggHNqISRhnvo
++HyS6RSn4Vrp001PSZSmQI5MpgkeWhbOy+fk4/ZY7hFgUyS2YqC8YiK7DTMdKRBi
+toWOHRVWrmA4fUEDDcDdm9XzRseTC0cZAbj9bYAF+vXPdpxeGpq5l9Kb6yDezXGD
+62dFvHghVTWdUIN+gK4V4d77PoyeO9NRd4Ud0GjDpV/asQL31dW6B4aRPYVDPhL3
+7xcnhRsnZ3Y5J31n+7E/gMF+J+6kOaY/DNFZQ8chNW18kplYnmJnm7s3BJNjD512
+UF/S5A5sH1Rk/vwe2nAHSqvQ1Dq3K0sRvW3YCijG2Rdj3mhBOr6OlvT5uJmnkeJT
+GQQ8SR3y+ZLS/2EEW+cVjDMxV4Gnf9Zzrw/tSjVp6QLmJAkG8qrFmgdisQ/Jao4M
+ygE8ZVu8lJq7N8b+k8XkB+bhz9E9V6hYOUuGoifEHRIPki/Ed7++BcdVTQdQYpAL
+kDTaoVZt1+plwAu4ZBLxUg1vhVz19qgDc7UeoY1sPc1JcRWp/ONnp6K4z+Y+7Rsx
+3E4FLH0/qgFxKDHdGX91Plehk9dIEjHcGtKaXI8vOvGT17srYQaF6Y7rc+9TwaqI
+bggBCxcI2PLQgjuWyF4M
+=+6UN
+-----END PGP SIGNATURE-----
