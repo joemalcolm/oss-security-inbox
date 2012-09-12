@@ -1,26 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/27/6
-Message-ID: <20120427103316.GB18639@kludge.henri.nerv.fi>
-Date: Fri, 27 Apr 2012 13:33:16 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: OpenKM 5.1.7 Privilege Escalation / OS Command Execution (XSRF based)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/16
+Message-Id: <201209121242.18230.geissert@debian.org>
+Date: Wed, 12 Sep 2012 12:42:17 -0500
+From: Raphael Geissert <geissert@...ian.org>
+To: Tomas Hoger <thoger@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: opencryptoki insecure lock files handling
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 23, 2012 at 09:09:30AM -0600, Kurt Seifried wrote:
-> On 03/23/2012 04:00 AM, Henri Salo wrote:
-> > Can I get CVE-identifiers for these two security vulnerabilities?
+On Sunday 09 September 2012 07:29:23 Tomas Hoger wrote:
+> On Fri, 7 Sep 2012 11:26:34 -0500 Raphael Geissert wrote:
+> > > There were following problems that I'm aware of:
+> > > 
+> > > - /tmp/.pkapi_xpk - This was normally created by pcksslotd (running
+> > > as root).  Symlink attack on this did not allow corrupting /
+> > > truncating files, but allowed creating new empty files at arbitrary
+> > > locations.
+> > > 
+> > > - /tmp/.pkcs11spinloc - I believe this is created by opencryptoki
+> > >   clients.  In addition to the above, there's a chmod to make this
+> > > file world writable.  This may get created by non-root user, but
+> > > chmod may still run later with root privileges later.
+> > > 
+> > > Those files do not seem to get removed as part of the normal
+> > > operation, so replacing them with symlinks if they already exist is
+> > > limited by /tmp stickiness.  Attacker does not need to be pkcs11
+> > > group member.
 > > 
-> > http://osvdb.org/show/osvdb/78105 COMPASS-2012-001
-> > http://osvdb.org/show/osvdb/78106 COMPASS-2012-002
-> > 
-> > - Henri Salo
+> > Correct, and to make it clear: /tmp/.pkcs11spinloc *is* chmod'ed by
+> > pcksslotd to make it world-writable.
 > 
-> I'm going to need some original vendor information (name, site, etc.).
-> 
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+> When do pkcsslotd does that, and which version?  It does not happen on
+> its start or stop, or when client as pkcsconf queries for some data.
 
-Finally I got response from the vendor. I tried via several different ways. Now Paco Avila kindly said he will collect the information, but it will take a while.
+I apparently confused it with another set of CreateXProcLock and 
+XProcUnLock's. pkcsslotd indeed doesn't seem to chmod spinloc.
 
-- Henri Salo
+Regarding /tmp/.pkapi_xpk, it is created by pkcsslotd with S_IRWXU|S_IRWXG|
+S_IRWXO (but not chmoded). Upstream's init script seems to set a umask of 
+077, but at least Debian's doesn't :-/
+
+> If pkcs11 group member can make pkcsslotd chmod lock file, pkcs11 group
+> membership need to be assumed root equivalent without any additional
+> condition.
+
+Agreed.
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
