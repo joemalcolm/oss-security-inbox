@@ -1,44 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/11/6
-Message-Id: <1TXOkp-000IBp-CD@internal.tormail.org>
-Date: Sun, 11 Nov 2012 04:02:39 +0000
-From: y33t <y33t@...mail.org>
-To: <oss-security@...ts.openwall.com>
-Subject: Gajim fails to handle invalid certificates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/9
+Message-ID: <5050C085.20807@redhat.com>
+Date: Wed, 12 Sep 2012 11:04:05 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Hanno Boeck <hanno@...eck.de>, security@...dpress.org
+Subject: Re: CVEs for wordpress 3.4.2 release
 Content-Type: text/plain; charset=utf-8
 
-Gajim does not seem to properly handle invalid/broken/expired 
-certificates. The _ssl_verify_callback function in tls_nb.py is called 
-by OpenSSL for every certificate in the certificate chain (CA first, 
-server certificate last) but always return True whether an error was 
-encountered or not.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This forces OpenSSL to verify each certificate until none is left, at 
-which points it will call _ssl_verify_callback one last time with an 
-error number of 0.
+On 09/12/2012 04:38 AM, Hanno Boeck wrote:
+> I can't find CVEs assigend for the issues fixed in wordpress
+> 3.4.2.
+> 
+> http://wordpress.org/news/2012/09/wordpress-3-4-2/
+> 
+> 
+> Sadly, the information is quite limited: "Version 3.4.2 also fixes
+> a few security issues and contains some security hardening. The
+> vulnerabilities included potential privilege escalation and a bug
+> that affects multisite installs with untrusted users. These issues
+> were discovered and fixed by the WordPress security team."
+> 
+> I suggest assigning two: 1. potential privilege escalation 2.
+> problem with untrusted users on multisite installations unless
+> someone has more information.
 
-(This behavior is documented here:  man 3 SSL_CTX_set_verify
-"If verify_callback returns 1, the verification process is continued. 
-If verify_callback always returns 1, the TLS/SSL handshake will not be 
-terminated with respect to verification failures and the connection will 
-be established."
-And can be observed in function 
-crypto/x509/x509_vfy.c:internal_verify() in OpenSSL source code.)
+Can security@...dpress.org provide clarification on this please?
 
-_ssh_verify_callback only stores the last error code, which always is 0 
-unless an error was encountered in the deepest level of the chain (the 
-CA), so gajim will not warn as long as the CA is recognized.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-(...)
-
-This problem goes beyond expired certificates. It is also possible to 
-edit any existing and valid server certificate by changing the CN 
-manually. The certificate's signature will be become invalid and OpenSSL 
-will detect it and return errnum 7 ("Certificate signature failure") but 
-gajim will not warn and will proceed with the connection anyway...
-
-
-References:
-https://trac.gajim.org/ticket/7252
-
+iQIcBAEBAgAGBQJQUMCFAAoJEBYNRVNeJnmTf0AQAL3RfeJSF0MmIIauk1NTXfSJ
+BPILB9bQIe1EEnwbx9ArDE7uDfnTMHRkj5Bd7zXZE14y2rY/fHyOOFYCwEkIkDXj
+tNID0VQAZBRceykQfRRX7ECG416xrpDOb0JAno8weQ1g3ehKiWt9t8kAle6UGgSW
+TfG9XDOPNs8QPvYOxfd44yRh0/y4rPsX1ZvY7T//2x+dwp0ZF5+geCsABLiNJe9k
+4sDERYZxbpvxWE0q/fa/o362v9b33XnQCKWiTTx06oKVuMlEUam8YnkNq+18Tjko
+uZyOY4CRb2l0aIKlBPQ8WKjdTMD27yRKMundl3fWhbMam4zEVCUQrdtkpgvg6hBU
+2aFAONJNujs97fY6dfh64QDoopCjGiEkBnqOYazX9Loq7lPexdAthIdOlolYFACD
+OMyWkAKJM+fMXRmcbWeQH9PpXUPLcx2K15JVu783Rn6WOBvuilT9VLwIGsIceTYi
+nmECratK9wq3di8pCX1jRcDsm+wz4DgsH5zpiite2bJVW79IRAI+ETkLC9+Un6lZ
+hAclMGwQOv/gyAie/KRKSPPF1Ajan1qPDB6bAx7nppKoG5q2B4S8SwEOEwWASf/Q
+Gw/X8cfzW9vW+2aSPFcAZLODT16Z1twotJGJIJOwsRqgK45CSsyROPACUKD98+Y4
+jCLekjZCv/h2NBEe4+gZ
+=mUIn
+-----END PGP SIGNATURE-----
