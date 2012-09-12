@@ -1,46 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/7
-Message-ID: <504F70D6.50206@redhat.com>
-Date: Tue, 11 Sep 2012 11:11:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/6
+Message-ID: <20120912140433.GA4786@suse.de>
+Date: Wed, 12 Sep 2012 16:04:33 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: guacd
+Subject: libdbus CVE-2012-3524 fix
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 09/11/2012 06:06 AM, Nico Golde wrote:
-> Hi, there is a buffer overflow in the protocol handling of guacd. 
-> This issue is confirmed to result in code execution. Upstream fix: 
-> http://guac-dev.org/trac/changeset/7dcefa744b4a38825619c00ae8b47e5bae6e38c0/libguac
->
->  Can we please get a CVE id for this issue?
-> 
-> Kind regards Nico
+Hi,
 
-Please use CVE-2012-4415 for this issue.
+As the CRD is today, and list policy requires "opening" the
+distros-list posting, here is the forward.
+
+As a quick fix, the exploit can also be mitigated by properly
+placing the dbus-launch binary into the expected path, usually
+"/bin/dbus-launch", e.g.
+
+# ln -s /usr/bin/dbus-launch /bin/dbus-launch
+
+since for some reason, on most dists the binary is mis-placed
+into /usr/bin. This makes an execv() fail in libdbus itself,
+triggering an execvp().
+
+Sebastian
+
+----- Forwarded message from Sebastian Krahmer <krahmer@...e.de> -----
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Hi,
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+The recently discussed libdbus getenv() issue [1] turned out
+to be easily exploitable on various UNIX systems, including
+some Linux distributions. Common attack vectors are Xorg and
+spice-gtk via auto-launching [2].
+Properly patching requires fixes for libdbus and libgio,
+depending on which you link your suid binaries.
+Would be nice if someone from RH could forward their patch,
+as they have some developers upstream and possibly access to
+the private git commit (they also already assigned this CVE).
+My CRD proposal is Sept. 12th. As can be seen in [1], this issue
+is indeed public since 1+ year.
 
-iQIcBAEBAgAGBQJQT3DWAAoJEBYNRVNeJnmTqPkP/RC0OyAAgtqpIx+64FcRfhYR
-6oLq7IIFblTUlTzxsgQ5oW6FHOn1qgsBIfmSdJ3cXcCHXZ0ttxdXTztB8wZ6f74H
-UY1XIqDUlOmTnhOKaat/aF89KpjM+3oDZt3V1vUzilMnBENXvBjRXctkQ6rY5mMn
-QNup+KFiYC6hy6LCGtliwxxm78YQgAc6M/j8F5mTLAKnp0MRIwVlpve7iFtM7FBw
-dKX4qVh+2OCsvk9ISi9c1lwfKAOfZIlznXz6ISJddBxtcrNPhcglzZJIfOMcYf5Z
-pbOTPRqFG0NWjGnZg9lfQDX1Ph9ieJltNz84adWK2kquKBzMNB22+Fb8sDssCVGB
-NUAV6ewfl/XhOUzGf2DSlUMT95F9TCFkMlsONvi5EXPb5oDws60wJmNZAZsnGxRm
-ZdrB4l4LCqIAXVsjI8CQOtsZNyc0+ShT9edKtIP1b6mZalPGtgxL+7otOQEx3aBA
-g/Kn7CxVPsxeb1s3bQvVL/MM2WhI/uGHj0oHcuFM2DceY6DXLxi0Bd06N7N+rLg2
-1L7ZU463/i1TcxcIXu7opgqfdA9Xb31l6BmG0n0bS1qKcaKjglZzIO5vRnpmskyx
-Ky8K3RLq4q25atVACx+3rs5Kpxj8/FxMnn5VkU1ihytZ8Ybj75IVyY57lLdLN+q6
-fI6Vwoi1qWeU3+l9ujR7
-=mxXs
------END PGP SIGNATURE-----
+Sebastian
+
+[1] https://bugzilla.novell.com/show_bug.cgi?id=697105
+[2] http://stealth.openwall.net/null/dzug.c
+
+PS: This is a re-send, the first mail to distros list was probably
+catched by spam filter.
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imend?rffer, HRB 16746 (AG N?rnberg)
+Maxfeldstra?e 5
+90409 N?rnberg
+Germany
+
+
+
+----- End forwarded message -----
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
