@@ -1,33 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/9
-Message-ID: <878vfoh2gg.fsf@mid.deneb.enyo.de>
-Date: Fri, 15 Jun 2012 20:09:19 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/3
+Message-ID: <20120912133814.5015da7a@orange>
+Date: Wed, 12 Sep 2012 13:38:14 +0300
+From: Hanno Boeck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 9 (CVE-2012-2934) - PV guest host DoS (AMD erratum #121)
+Subject: CVEs for wordpress 3.4.2 release
 Content-Type: text/plain; charset=utf-8
 
-* Giles Coochey:
+I can't find CVEs assigend for the issues fixed in wordpress 3.4.2.
 
-> On 14/06/2012 19:20, Florian Weimer wrote:
->> * Xen org security team:
->>
->>> There is no software fix for this issue. The workaround suggested by
->>> AMD in erratum #121 cannot be applied to Xen since the relevant address
->>> is under guest control.
->>>
->>> Applying the patch will cause Xen to detect vulnerable systems and
->>> refuse to boot.
->> This response puzzles me.  Isn't this changing a potential denial of
->> service (a para-virtualized guest could attempt an exploit) to a
->> definite one (the system won't boot)?  Why is this a good idea?
-> It ensures that the user of the system is aware of the risks.
->
-> This position will only occur when the patch to the vulnerability is
-> applied (i.e. during an out of service upgrade). The admins of the
-> system should always read the release notes to patches and upgrades - 
-> otherwise they wouldn't know what else might be broken, deprecated.
+http://wordpress.org/news/2012/09/wordpress-3-4-2/
 
-Sure, but why refuse to boot?  Wouldn't it be sufficient to refuse
-creating DomUs, and still create Dom0?  (Perhaps this suggestion
-doesn't make any sense—I'm not familiar with Xen.)
+
+Sadly, the information is quite limited:
+"Version 3.4.2 also fixes a few security issues and contains some
+security hardening. The vulnerabilities included potential privilege
+escalation and a bug that affects multisite installs with untrusted
+users. These issues were discovered and fixed by the WordPress security
+team."
+
+I suggest assigning two:
+1. potential privilege escalation
+2. problem with untrusted users on multisite installations
+unless someone has more information.
