@@ -1,33 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/7
-Message-ID: <4F2169CA.2050509@hoffie.info>
-Date: Thu, 26 Jan 2012 15:57:14 +0100
-From: Christian Hoffmann <christian@...fie.info>
-To: marlowe@...agonism.org, oss-security@...ts.openwall.com
-Subject: Re: Request for CVE for Vulnerability in Tahoe-LAFS 1.9.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/13
+Message-ID: <5050C83C.1010400@redhat.com>
+Date: Wed, 12 Sep 2012 13:37:00 -0400
+From: Russell Bryant <rbryant@...hat.com>
+To: Matt Joyce <matt@...resistor.com>
+CC: Thierry Carrez <thierry@...nstack.org>, oss-security@...ts.openwall.com, openstack@...ts.launchpad.net, "(openstack@...ts.launchpad.net)" <openstack@...ts.launchpad.net>
+Subject: Re: [Openstack] [Openstack-announce] [OSSA 2012-014] Revoking a role does not affect existing tokens (CVE-2012-4413)
 Content-Type: text/plain; charset=utf-8
 
-Hallo Patrick,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 26.01.2012 15:15, Patrick R McDonald wrote:
-> I would like to request a CVE for a vulnerability in Tahoe-LAFS,
-> 
-> https://tahoe-lafs.org/pipermail/tahoe-announce/2012-January/000032.html
-I think CVE-2012-0051 has already been assigned to this vulnerability.
+On 09/12/2012 01:07 PM, Matt Joyce wrote:
+> This is not a repeat of cve-2012-3426?
 
-It is referenced in the Trac ticket (see below) which is mentioned in
-the above mail archive post, unless I'm confusing things.
+It's related, but not the same.  That CVE did not include this
+specific issue (existing tokens including roles that may have since
+been revoked).  It was for some other problems around token
+expiration, though.
 
+For reference: https://lists.launchpad.net/openstack/msg15164.html
 
-References:
-https://tahoe-lafs.org/trac/tahoe-lafs/ticket/1654
-http://seclists.org/oss-sec/2012/q1/135 (initial request)
-http://seclists.org/oss-sec/2012/q1/158 (CVE assignment)
+- -- 
+Russell Bryant
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-
-Best regards,
-
-Christian Hoffmann
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
+iEYEARECAAYFAlBQyDwACgkQFg9ft4s9SAYVGgCfcQuY/uk4HlXh9ToPqqSPl7Nf
+h6kAoK/ZUqvTeHSkPbWyi1Y8+PEkt4tD
+=Cz/+
+-----END PGP SIGNATURE-----
