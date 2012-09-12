@@ -1,57 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/02/1
-Message-ID: <5019C40D.2070605@redhat.com>
-Date: Wed, 01 Aug 2012 18:04:29 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: Ganglia Web 3.5.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/18
+Message-ID: <CAGYSk8dJDG4Z5YPf3Mye8h4YmrP1O_NXg+vt-7tMmCmvP4pxWA@mail.gmail.com>
+Date: Wed, 12 Sep 2012 10:34:40 -0700
+From: Matt Joyce <matt.joyce@...udscaling.com>
+To: Soren Hansen <soren@...ux2go.dk>
+Cc: Thierry Carrez <thierry@...nstack.org>, oss-security@...ts.openwall.com,  openstack-announce@...ts.openstack.org, openstack@...ts.launchpad.net
+Subject: Re: [Openstack] [OSSA 2012-014] Revoking a role does not affect existing tokens (CVE-2012-4413)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+hah!
 
-On 08/01/2012 03:20 PM, Vincent Danen wrote:
-> Not a lot of details on this one, but could a CVE be assigned to
-> this?
-> 
-> Upstream has released Ganglia Web 3.5.1 [1] which includes a fix
-> for a security flaw going back to 3.1.7 and possibly earlier
-> versions.  This flaw can lead to the arbitrary execution of scripts
-> with the privileges of the web user (apache or nobody), which could
-> possibly lead to other compromises or data exposure.  This flaw has
-> been fixed in upstream 3.5.1.  No further information is currently
-> available regarding the flaw or a patch.
-> 
-> [1] http://ganglia.info/?p=549
-> 
-> Other references:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=845124 
-> https://bugs.gentoo.org/show_bug.cgi?id=428776 
-> https://secunia.com/advisories/50047/
+On Wed, Sep 12, 2012 at 10:32 AM, Soren Hansen <soren@...ux2go.dk> wrote:
 
-Please use CVE-2012-3448 for this issue.
+> So if I can grant people access to a particular tenant, I can invalidate
+> everyone's tokens at will now?
+>
+> Best regards, Soren.
+> Sent from my phone. Please pardon my brevity.
+> On Sep 12, 2012 6:40 PM, "Thierry Carrez" <thierry@...nstack.org> wrote:
+>
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA256
+>>
+>> OpenStack Security Advisory: 2012-014
+>> CVE: CVE-2012-4413
+>> Date: September 12, 2012
+>> Title: Revoking a role does not affect existing tokens
+>> Impact: High
+>> Reporter: Dolph Mathews (Rackspace)
+>> Products: Keystone
+>> Affects: Essex, Folsom
+>>
+>> Description:
+>> Dolph Mathews reported a vulnerability in Keystone. Granting and
+>> revoking roles from a user is not reflected upon token validation for
+>> pre-existing tokens. Pre-existing tokens continue to be valid for the
+>> original set of roles for the remainder of the token's lifespan, or
+>> until explicitly invalidated. This fix invalidates all tokens held by
+>> a user upon role grant/revoke to circumvent the issue.
+>>
+>> Folsom fix:
+>>
+>> http://github.com/openstack/keystone/commit/efb6b3fca0ba0ad768b3e803a324043095d326e2
+>>
+>> Essex fix:
+>>
+>> http://github.com/openstack/keystone/commit/58ac6691a21675be9e2ffb0f84a05fc3cd4d2e2e
+>>
+>> References:
+>> https://bugs.launchpad.net/keystone/+bug/1041396
+>> http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4413
+>>
+>> Notes:
+>> This fix will be included in the future Keystone 2012.1.3 stable
+>> update and the upcoming Folsom-RC1 development milestone.
+>>
+>> - --
+>> Thierry Carrez (ttx)
+>> OpenStack Vulnerability Management Team
+>> -----BEGIN PGP SIGNATURE-----
+>> Version: GnuPG v1.4.11 (GNU/Linux)
+>> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+>>
+>> iQIcBAEBCAAGBQJQULoUAAoJEFB6+JAlsQQjGacQAJUvJb+oIjh73KAYYuDpl/YP
+>> PqJa4nmjVin7CyQ8AbxHK63xrAQ7isPFpCCqtEmjZ5kvFCrJRHiQggHNqISRhnvo
+>> +HyS6RSn4Vrp001PSZSmQI5MpgkeWhbOy+fk4/ZY7hFgUyS2YqC8YiK7DTMdKRBi
+>> toWOHRVWrmA4fUEDDcDdm9XzRseTC0cZAbj9bYAF+vXPdpxeGpq5l9Kb6yDezXGD
+>> 62dFvHghVTWdUIN+gK4V4d77PoyeO9NRd4Ud0GjDpV/asQL31dW6B4aRPYVDPhL3
+>> 7xcnhRsnZ3Y5J31n+7E/gMF+J+6kOaY/DNFZQ8chNW18kplYnmJnm7s3BJNjD512
+>> UF/S5A5sH1Rk/vwe2nAHSqvQ1Dq3K0sRvW3YCijG2Rdj3mhBOr6OlvT5uJmnkeJT
+>> GQQ8SR3y+ZLS/2EEW+cVjDMxV4Gnf9Zzrw/tSjVp6QLmJAkG8qrFmgdisQ/Jao4M
+>> ygE8ZVu8lJq7N8b+k8XkB+bhz9E9V6hYOUuGoifEHRIPki/Ed7++BcdVTQdQYpAL
+>> kDTaoVZt1+plwAu4ZBLxUg1vhVz19qgDc7UeoY1sPc1JcRWp/ONnp6K4z+Y+7Rsx
+>> 3E4FLH0/qgFxKDHdGX91Plehk9dIEjHcGtKaXI8vOvGT17srYQaF6Y7rc+9TwaqI
+>> bggBCxcI2PLQgjuWyF4M
+>> =+6UN
+>> -----END PGP SIGNATURE-----
+>>
+>> _______________________________________________
+>> Mailing list: https://launchpad.net/~openstack
+>> Post to     : openstack@...ts.launchpad.net
+>> Unsubscribe : https://launchpad.net/~openstack
+>> More help   : https://help.launchpad.net/ListHelp
+>>
+>
+> _______________________________________________
+> Mailing list: https://launchpad.net/~openstack
+> Post to     : openstack@...ts.launchpad.net
+> Unsubscribe : https://launchpad.net/~openstack
+> More help   : https://help.launchpad.net/ListHelp
+>
+>
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQGcQNAAoJEBYNRVNeJnmTaEcQANgvhjovtiu/E8wH9kLSle8T
-ImbL8A/0ufd0omQTCngXBNVhB5+xNksAyGC9lqKaYSmARLnlsUVW68ULiRKy1qQJ
-5PB9D4R+5SEjZzqhDLrH3A5GuxMhpbNTOmh/qw9b7FL7Jh+OktQtpdwY7rDuuQpV
-CCfx48I3pjmuuHAKUj7GnCmbWNCPXSTe/lAPWbqTC+9gNw0+IOx9hSZRC+muan4l
-tJILX1JyzRhJsw3DSnEjKVE5XvXlJ+DM62ghVzG0ZrjuUPtqMbxlBJj143t+SztW
-kp/2V9UVFK06nVC+wpEg35OIO3kZqDnPqJUIAIKMGaBkHb0iz1vKGagD5cWsU/zm
-7HauP0EyAHAK8EwCiQBloKRVCY12k2daakbr4PLqpjoqZunFr4fNL6Y+2bW+HwWn
-7deDzHFxcy6yDwaWmzz6QrKnePTnouvlFrXLEJ6pCiY4JcCU6zCNmIW6V45iyKkA
-baYS4fKqh8Nxsk1HhIz6U9Ge0C9sy351z7ZjqFOR6SzNeV8LkbqmrWP0TMHzFNa8
-HT2ie7E8OJnlovFZi/TphZwB3Sg17GKuMpE+GE3MjKpghratt60LB/dqD7TORS5A
-EG8lE0f6LD2Uh4fqR7XtorYQ9t28jVYDvWJ1i7PODecY5ZHooqd1QYad5apd0y9a
-GynX35poNXWsdfrge/Hb
-=gT+M
------END PGP SIGNATURE-----
