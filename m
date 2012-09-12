@@ -1,34 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/15/1
-Message-Id: <201210151550.43688.geissert@debian.org>
-Date: Mon, 15 Oct 2012 15:50:42 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/4
+Message-ID: <116504736.33630970.1347447312661.JavaMail.root@redhat.com>
+Date: Wed, 12 Sep 2012 06:55:12 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Oracle Security Team <secalert_us@...cle.com>, David Jorm <djorm@...hat.com>
+Subject: Re: CVE Request (minor) -- JVM: heap memory disclosure (possibly various JDKs)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Steve,
 
-Michael Stapelberg, Tollef Fog Heen, and Michael Biebl discovered that 
-dhclient was setting dhclient-script's PATH to one that included a 
-subdirectory of the build directory[1].
-This issue is caused by the way isc-dhcp is packaged in Debian.
+  thank you for the clarification.
 
-At least two versions of isc-dhcp for the amd64 (x86_64) architecture in 
-Debian were found two be setting PATH to a subdirectory of /home/zero79/, 
-which would allow a user with such HOME directory to be able to execute code 
-as root.
+> Jan/Kurt,
+> 
+> The bug report appears to be describing a narrow class of vulnerability 
+> that could affect multiple codebases that implement Java Virtual Machines, 
+> not just Oracle's;
 
-To clarify the bug report: it is not specific to samba or hooks in general, 
-PATH is injected in the environment passed to the execve() call that 
-executes dhclient-script.
+That's true, my yesterday's request was too wide, because in that moment we were
+not sure yet, which concrete JVM implementations would be affected by this
+deficiency (and which not).
 
-Since this issue doesn't affect the stable release, there won't be a DSA. 
-This email is just a heads up.
+> if so, then a separate CVE would be needed for each 
+> REPORTED codebase, and CVE-2012-4416 is ONLY for bug id 7196857 for the 
+> Oracle-supported JVM.
 
-[1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=690532
+Anyway, upon David's review (Cc-ed too) we can announce that this problem would
+affect / is specific only to Oracle Java SE 7 (java-1.7.0-oracle), and
+Java SE 7 as provided by OpenJDK 7 (java-1.7.0-openjdk).
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+So after above suggestion we will use CVE-2012-4416 for Oracle's codebase /
+Oracle supported JVM and the OpenJDK one should obtain another CVE identifier.
+
+I will clarify this situation in our bugs too yet.
+
+Kurt, could you allocate another CVE id then for the OpenJDK part of the
+story?
+
+> 
+> I wonder about the severity of the issue, but given the possibility that 
+> applications might access an array before a fill, and applications may 
+> depend on there being "empty" elements after initialization, this seems 
+> reasonable for a CVE.
+
+Florian clarified on this already (why to assign CVE id for these is appropriate
+approach).
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> - Steve
