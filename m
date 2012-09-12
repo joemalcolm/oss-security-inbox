@@ -1,94 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/18
-Message-ID: <CAGYSk8dJDG4Z5YPf3Mye8h4YmrP1O_NXg+vt-7tMmCmvP4pxWA@mail.gmail.com>
-Date: Wed, 12 Sep 2012 10:34:40 -0700
-From: Matt Joyce <matt.joyce@...udscaling.com>
-To: Soren Hansen <soren@...ux2go.dk>
-Cc: Thierry Carrez <thierry@...nstack.org>, oss-security@...ts.openwall.com,  openstack-announce@...ts.openstack.org, openstack@...ts.launchpad.net
-Subject: Re: [Openstack] [OSSA 2012-014] Revoking a role does not affect existing tokens (CVE-2012-4413)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/8
+Message-ID: <5050BFD5.5070606@redhat.com>
+Date: Wed, 12 Sep 2012 11:01:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: tor
 Content-Type: text/plain; charset=utf-8
 
-hah!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, Sep 12, 2012 at 10:32 AM, Soren Hansen <soren@...ux2go.dk> wrote:
+On 09/12/2012 06:34 AM, Nico Golde wrote:
+> Hi, from the tor release notes[0]: Changes in version 0.2.2.39 -
+> 2012-09-11 Tor 0.2.2.39 fixes two more opportunities for remotely
+> triggerable assertions.
+> 
+> o Security fixes: - Fix an assertion failure in tor_timegm() that
+> could be triggered by a badly formatted directory object. Bug found
+> by fuzzing with Radamsa. Fixes bug 6811; bugfix on 0.2.0.20-rc. -
+> Do not crash when comparing an address with port value 0 to an 
+> address policy. This bug could have been used to cause a remote 
+> assertion failure by or against directory authorities, or to allow
+> some applications to crash clients. Fixes bug 6690; bugfix on
+> 0.2.1.10-alpha.
+> 
+> I have not seen CVE ids for these issues. Can you assign ids for
+> them?
+> 
+> [0]
+> https://gitweb.torproject.org/tor.git/blob/release-0.2.2:/ReleaseNotes
+>
+>  Kind regards Nico
 
-> So if I can grant people access to a particular tenant, I can invalidate
-> everyone's tokens at will now?
->
-> Best regards, Soren.
-> Sent from my phone. Please pardon my brevity.
-> On Sep 12, 2012 6:40 PM, "Thierry Carrez" <thierry@...nstack.org> wrote:
->
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA256
->>
->> OpenStack Security Advisory: 2012-014
->> CVE: CVE-2012-4413
->> Date: September 12, 2012
->> Title: Revoking a role does not affect existing tokens
->> Impact: High
->> Reporter: Dolph Mathews (Rackspace)
->> Products: Keystone
->> Affects: Essex, Folsom
->>
->> Description:
->> Dolph Mathews reported a vulnerability in Keystone. Granting and
->> revoking roles from a user is not reflected upon token validation for
->> pre-existing tokens. Pre-existing tokens continue to be valid for the
->> original set of roles for the remainder of the token's lifespan, or
->> until explicitly invalidated. This fix invalidates all tokens held by
->> a user upon role grant/revoke to circumvent the issue.
->>
->> Folsom fix:
->>
->> http://github.com/openstack/keystone/commit/efb6b3fca0ba0ad768b3e803a324043095d326e2
->>
->> Essex fix:
->>
->> http://github.com/openstack/keystone/commit/58ac6691a21675be9e2ffb0f84a05fc3cd4d2e2e
->>
->> References:
->> https://bugs.launchpad.net/keystone/+bug/1041396
->> http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4413
->>
->> Notes:
->> This fix will be included in the future Keystone 2012.1.3 stable
->> update and the upcoming Folsom-RC1 development milestone.
->>
->> - --
->> Thierry Carrez (ttx)
->> OpenStack Vulnerability Management Team
->> -----BEGIN PGP SIGNATURE-----
->> Version: GnuPG v1.4.11 (GNU/Linux)
->> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
->>
->> iQIcBAEBCAAGBQJQULoUAAoJEFB6+JAlsQQjGacQAJUvJb+oIjh73KAYYuDpl/YP
->> PqJa4nmjVin7CyQ8AbxHK63xrAQ7isPFpCCqtEmjZ5kvFCrJRHiQggHNqISRhnvo
->> +HyS6RSn4Vrp001PSZSmQI5MpgkeWhbOy+fk4/ZY7hFgUyS2YqC8YiK7DTMdKRBi
->> toWOHRVWrmA4fUEDDcDdm9XzRseTC0cZAbj9bYAF+vXPdpxeGpq5l9Kb6yDezXGD
->> 62dFvHghVTWdUIN+gK4V4d77PoyeO9NRd4Ud0GjDpV/asQL31dW6B4aRPYVDPhL3
->> 7xcnhRsnZ3Y5J31n+7E/gMF+J+6kOaY/DNFZQ8chNW18kplYnmJnm7s3BJNjD512
->> UF/S5A5sH1Rk/vwe2nAHSqvQ1Dq3K0sRvW3YCijG2Rdj3mhBOr6OlvT5uJmnkeJT
->> GQQ8SR3y+ZLS/2EEW+cVjDMxV4Gnf9Zzrw/tSjVp6QLmJAkG8qrFmgdisQ/Jao4M
->> ygE8ZVu8lJq7N8b+k8XkB+bhz9E9V6hYOUuGoifEHRIPki/Ed7++BcdVTQdQYpAL
->> kDTaoVZt1+plwAu4ZBLxUg1vhVz19qgDc7UeoY1sPc1JcRWp/ONnp6K4z+Y+7Rsx
->> 3E4FLH0/qgFxKDHdGX91Plehk9dIEjHcGtKaXI8vOvGT17srYQaF6Y7rc+9TwaqI
->> bggBCxcI2PLQgjuWyF4M
->> =+6UN
->> -----END PGP SIGNATURE-----
->>
->> _______________________________________________
->> Mailing list: https://launchpad.net/~openstack
->> Post to     : openstack@...ts.launchpad.net
->> Unsubscribe : https://launchpad.net/~openstack
->> More help   : https://help.launchpad.net/ListHelp
->>
->
-> _______________________________________________
-> Mailing list: https://launchpad.net/~openstack
-> Post to     : openstack@...ts.launchpad.net
-> Unsubscribe : https://launchpad.net/~openstack
-> More help   : https://help.launchpad.net/ListHelp
->
->
+Can you attach links to the code commits? thanks
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQUL/VAAoJEBYNRVNeJnmThS4QAJPaR7hTDD8WRK1TJRnFe0at
+cOkJu7JhHNpzPzzTsEufE3taeowOapQVOjZXDkATWjS5zZqOvvtPmIH+zJISLEp8
+YSACD81eNQzwuvebR8puU+noIC+CJy1TvRtUQq2dYJj0wOkdJ3Iw+FyR9X6B0Bbe
+viXf/hn4Dy++F2iyM0m6kbjKLlvKzmvYgXFYRegWDZ2sf+32tMiXXl63zC/xx6uN
+NBjtEo5Oo2x2sWYPGu8q+49kvNuYK3T3q+Y5OY+IOCdVv4lwXWDFeBwQo7LxrYV/
+ASF90E7A6Y8sAa+WqzT2hDdwXM3i2ksPYE6zfXbVk2dlK8LDKje51lL/kV0MP+OW
+gMxwmI5LkvR8K6LHl3XxxLrRio2KVuIybvd8wszx1u4e7iaxNY/P/G3fLj25x0MC
+Gx5Zid7R2TiP5CpvpGLi6zyQ/WhX+DytCLqYa4M1HHfEUAZAcxjAyCmPX3+4CMSb
+b4y4MSYCft343PbzQSaRP5O/zCYxUsgQGpJGFQkhYNa8ePP0LoUX94P3eeXCcwSN
+XXgUhVPLJi8309HZT7lMSEWSH3rwN2sjZkNBXT2a7bTadFQspQLXK7W9caAl+H0P
+KhW9uuHb3g6UWo6UfHJtlOmL912VyKYwha4lQhO9bDvh5jKL41bD52POWSlDCSIh
+FFLWi8oRa49isnXVBlqF
+=RPjF
+-----END PGP SIGNATURE-----
