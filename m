@@ -1,50 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/18
-Message-ID: <Pine.GSO.4.64.1201201053330.12004@faron.mitre.org>
-Date: Fri, 20 Jan 2012 10:55:20 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Joshua Colp <jcolp@...ium.com>
-Subject: Re: CVE Request -- Asterisk AST-2012-001 / Remote DoS while processing crypto line for media stream with non-existing RTP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/2
+Message-ID: <50503B3E.6000004@redhat.com>
+Date: Wed, 12 Sep 2012 09:35:26 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Oracle Security Team <secalert_us@...cle.com>
+Subject: Re: CVE Request (minor) -- JVM: heap memory disclosure (possibly various JDKs)
 Content-Type: text/plain; charset=utf-8
 
+On 09/11/2012 11:37 PM, Steven M. Christey wrote:
 
-CVE-2012-0885 was already assigned to AST-2012-001 based on a request from 
-the upstream vendor.  They probably updated their advisory since your 
-initial request:
+> I wonder about the severity of the issue, but given the possibility that
+> applications might access an array before a fill, and applications may
+> depend on there being "empty" elements after initialization, this seems
+> reasonable for a CVE.
 
-   http://downloads.asterisk.org/pub/security/AST-2012-001.html
+My main concern is that untrusted code (in an applet or application 
+server) could use this issue to access private data which was previously 
+stored at the same location.
 
-- Steve
 
-
-On Fri, 20 Jan 2012, Jan Lieskovsky wrote:
-
-> Hello Kurt, Steve, vendors,
->
->  a denial of service flaw was found in the way asterisk processed certain
-> requests to negotiate secure video stream, when the res_srtp Asterisk module
-> has been loaded and video support has not been enabled. A remote attacker 
-> could
-> provide a specially-crafted media stream negotiation request, which once
-> processed by Asterisk would lead to asterisk daemon crash by processing 
-> crypto
-> line for such media stream.
->
-> References:
-> [1] http://downloads.asterisk.org/pub/security/AST-2012-001.html
-> [2] https://issues.asterisk.org/jira/browse/ASTERISK-19202
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=783487
->
-> Upstream patch against the v1.8.x branch:
-> [4] http://downloads.asterisk.org/pub/security/AST-2012-001-1.8.diff
->
-> Upstream patch against the v1.10.x branch:
-> [5] http://downloads.asterisk.org/pub/security/AST-2012-001-10.diff
->
-> Could you allocate a CVE identifier for this?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
+-- 
+Florian Weimer / Red Hat Product Security Team
