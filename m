@@ -1,39 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/7
-Message-ID: <1772258474.24916959.1346426538287.JavaMail.root@redhat.com>
-Date: Fri, 31 Aug 2012 11:22:18 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/19
+Message-ID: <20120912194004.GF17642@ngolde.de>
+Date: Wed, 12 Sep 2012 21:40:04 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: Thomas Woerner <twoerner@...hat.com>, Jim Meyering <meyering@...hat.com>, Ville Skyttä <ville.skytta@....fi>
-Subject: [Notification] CVE-2012-3500 - rpmdevtools, devscripts: TOCTOU race condition in annotate-output
+Subject: Re: CVE id request: tor
 Content-Type: text/plain; charset=utf-8
 
-Hello vendors,
+Hi,
+* Kurt Seifried <kseifried@...hat.com> [2012-09-12 19:01]:
+> On 09/12/2012 06:34 AM, Nico Golde wrote:
+> > Hi, from the tor release notes[0]: Changes in version 0.2.2.39 -
+> > 2012-09-11 Tor 0.2.2.39 fixes two more opportunities for remotely
+> > triggerable assertions.
+> > 
+> > o Security fixes: - Fix an assertion failure in tor_timegm() that
+> > could be triggered by a badly formatted directory object. Bug found
+> > by fuzzing with Radamsa. Fixes bug 6811; bugfix on 0.2.0.20-rc. -
+> > Do not crash when comparing an address with port value 0 to an 
+> > address policy. This bug could have been used to cause a remote 
+> > assertion failure by or against directory authorities, or to allow
+> > some applications to crash clients. Fixes bug 6690; bugfix on
+> > 0.2.1.10-alpha.
+> > 
+> > I have not seen CVE ids for these issues. Can you assign ids for
+> > them?
+> > 
+> > [0]
+> > https://gitweb.torproject.org/tor.git/blob/release-0.2.2:/ReleaseNotes
+> 
+> Can you attach links to the code commits? thanks
 
-  please see a report about CVE-2012-3500 rpmdevtools /
-devscripts issue below.
+I didn't have them when I sent this mail. Should be:
+https://gitweb.torproject.org/tor.git/commitdiff/973c18bf0e84d14d8006a9ae97fde7f7fb97e404
+https://gitweb.torproject.org/tor.git/commitdiff/62d96284f7e0f81c40d5df7e53dd7b4dfe7e56a5
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
 
--------------------------------------------------------
-Summary: rpmdevtools, devscripts: TOCTOU race condition in annotate-output
-
-Description:
-A TOCTOU race condition was found in the way 'annotate-output'
-(used to execute a program annotating the output linewise with
-time and stream) tool of rpmdevtools, a suite of scripts and
-(X)Emacs support files to aid in development of RPM packages,
-performed management of its temporary files used for standard
-output and standard error output. A local attacker could use
-this flaw to conduct symbolic link attacks, possibly leading
-to their ability in an unauthorized way to alter files belonging
-to the user running the 'annotate-output' tool.
-
-CVE id: CVE-2012-3500
-
-Credit: Issue found by Jim Meyering of Red Hat
-
-Proposed patch:
-  https://bugzilla.redhat.com/show_bug.cgi?id=848022#c2
+Content of type "application/pgp-signature" skipped
