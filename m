@@ -1,114 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/03/1
-Message-ID: <4F5164E0.2020607@redhat.com>
-Date: Fri, 02 Mar 2012 17:25:04 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/5
+Message-ID: <20120912123453.GA17642@ngolde.de>
+Date: Wed, 12 Sep 2012 14:34:53 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Mo Morsi <mmorsi@...hat.com>, Vít Ondruch <vondruch@...hat.com>
-Subject: Re: CVE Request -- Ruby on Rails (v3.0.12) / rubygem-actionpack: Two XSS flaws
+Subject: CVE id request: tor
 Content-Type: text/plain; charset=utf-8
 
-On 03/02/2012 04:34 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
->   as noted in:
->   [1]
-> http://weblog.rubyonrails.org/2012/3/1/ann-rails-3-0-12-has-been-released
-> 
-> Issue #A:
-> ----------
-> A cross-site scripting (XSS) flaw was found in the way the String class,
-> used
-> in Ruby on Rails, performed HTML escaping of SafeBuffer objects, when such
-> objects were manipulated directly via '[]' method or other methods, also
-> returning new instances of SafeBuffer object. By using these methods, such
-> newly returned SafeBuffer instances would be inadvertently marked as
-> HTML safe.
-> If a Ruby on Rails application used SafeBuffer objects this way, a remote
-> attacker could provide a specially-crafted input, which once processed
-> by such
-> SafeBuffer instance would pass the HTML escaping test without further
-> filtering, possibly leading to arbitrary HTML or webscript execution.
-> 
-> References:
-> [2A]
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/edd28f1e3d04e913
-> 
-> [3A] https://bugs.gentoo.org/show_bug.cgi?id=406547
-> [4A] https://bugzilla.redhat.com/show_bug.cgi?id=799275
-> 
-> Proposed upstream patches:
-> [5A]
-> http://groups.google.com/group/rubyonrails-security/attach/1c2e01a5e42722c9/3-0-safe-buffer-slice.patch?part=3
-> 
->     (against v3.0 branch)
-> 
-> [6A]
-> http://groups.google.com/group/rubyonrails-security/attach/1c2e01a5e42722c9/3-1-safe-buffer-slice.patch?part=4
-> 
->     (against v3.1 branch)
-> 
-> [7A]
-> http://groups.google.com/group/rubyonrails-security/attach/1c2e01a5e42722c9/3-2-safe-buffer-slice.patch?part=5
-> 
-> 
->     (against v3.2 branch)
+Hi,
+from the tor release notes[0]:
+Changes in version 0.2.2.39 - 2012-09-11
+  Tor 0.2.2.39 fixes two more opportunities for remotely triggerable 
+  assertions.
 
-Please use CVE-2012-1098 for this issue.
+  o Security fixes:
+    - Fix an assertion failure in tor_timegm() that could be triggered
+      by a badly formatted directory object. Bug found by fuzzing with
+      Radamsa. Fixes bug 6811; bugfix on 0.2.0.20-rc.
+    - Do not crash when comparing an address with port value 0 to an
+      address policy. This bug could have been used to cause a remote
+      assertion failure by or against directory authorities, or to
+      allow some applications to crash clients. Fixes bug 6690; bugfix
+      on 0.2.1.10-alpha.
 
+I have not seen CVE ids for these issues.
+Can you assign ids for them?
 
-> Issue #B:
-> ----------
-> A cross-site scripting (XSS) flaw was found in the way 'select' helper
-> method
-> of the Ruby on Rails performed HTML escaping of 'select' HTML tag
-> options, when
-> the tags were created manually. In this case, the select tag values
-> might end
-> up unescaped. A remote-attacker could provide a specially-crafted input
-> to Ruby
-> on Rails application, using select tags this way, which potentially
-> resulted
-> into arbitrary HTML or webscript execution.
-> 
-> References:
-> [2B]
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/9da0c515a6c4664
-> 
-> [3B] https://bugs.gentoo.org/show_bug.cgi?id=406547
-> [4B] https://bugzilla.redhat.com/show_bug.cgi?id=799276
-> 
-> Proposed upstream patches:
-> [5B]
-> http://groups.google.com/group/rubyonrails-security/attach/6fca4f5c47705488/3-0-select_options.patch?part=3
-> 
->     (against v3.0 branch)
-> 
-> [6B]
-> http://groups.google.com/group/rubyonrails-security/attach/6fca4f5c47705488/3-1-select_options.patch?part=4
-> 
->     (against v3.1 branch)
-> 
-> [7B]
-> http://groups.google.com/group/rubyonrails-security/attach/6fca4f5c47705488/3-2-select_options.patch?part=5
-> 
->     (against v3.2 branch)
-> 
-> Could you allocate CVE ids for these?
-> 
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+[0] https://gitweb.torproject.org/tor.git/blob/release-0.2.2:/ReleaseNotes
 
-Please use CVE-2012-1099 for this issue.
-
-
-Summary: different researchers so two CVE's.
-
-CVE-2012-1098 Ruby on rails 3.0.11 string class XSS vulnerability
-CVE-2012-1099 Ruby on rails 3.0.11 'select' helper method XSS vulnerability
-
-
+Kind regards
+Nico
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+
+Content of type "application/pgp-signature" skipped
