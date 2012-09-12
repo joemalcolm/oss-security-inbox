@@ -1,24 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/3
-Message-ID: <20120115140914.GG13740@foo.fgeek.fi>
-Date: Sun, 15 Jan 2012 16:09:14 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/11
+Message-ID: <5050C4B2.2050500@redhat.com>
+Date: Wed, 12 Sep 2012 11:21:54 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: WordPress 3.1.1
+CC: Matt Joyce <matt@...resistor.com>, Thierry Carrez <thierry@...nstack.org>, openstack@...ts.launchpad.net, "(openstack@...ts.launchpad.net)" <openstack@...ts.launchpad.net>
+Subject: Re: Re: [Openstack-announce] [OSSA 2012-014] Revoking a role does not affect existing tokens (CVE-2012-4413)
 Content-Type: text/plain; charset=utf-8
 
-If I am correct these WordPress issues are missing CVEs. I checked from MITREs CVE-list and tried Google. Needs two 2011 CVE.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-1) Certain unspecified input is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-http://osvdb.org/show/osvdb/72141
+On 09/12/2012 11:07 AM, Matt Joyce wrote:
+> This is not a repeat of cve-2012-3426?
 
-2) The "make_clickable()" function in wp-includes/formatting.php does not properly check the URL length in comments before passing it to the PCRE library, which can be exploited to cause a crash.
-http://osvdb.org/show/osvdb/72142
+Quite different:
 
-http://wordpress.org/news/2011/04/wordpress-3-1-1/
-http://secunia.com/advisories/44038/
-http://seclists.org/cert/2011/63
+CVE-2012-3426 OpenStack-Keystone: token expiration issues
+https://bugzilla.redhat.com/show_bug.cgi?id=843311
 
-I even contacted WordPress administrators and asked if this does have CVE, but they haven't replied for some reason.
+CVE-2012-4413 OpenStack-Keystone: role revocation token issues
+https://bugzilla.redhat.com/show_bug.cgi?id=855491
 
-- Henri Salo
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQUMSyAAoJEBYNRVNeJnmTtXkP/RrHCL0aOigaKrV4X/giNR3q
+KbUcbRl2evec6d5mNryQjOT+lAQK96DHApTCvjvVNFZ/ubFKn22A5ld761IAnsbV
+QE72PqM6UxriZFFujgW0RXRpjmmtTwcw0tjDb5xZh6PaVg41RJxMzjMNV8DmGLoi
+1Gg6YyQabD8RkkYxlCqSw2Msfo2a+Zh3VZRzM1HmZwyY69dwIdW6YfCyH+owfUgL
+rAjDpfX5sAc3rpEwfDrstV86UzdwI9bPDa9U2nuOM07/BP7FX+3DCi8R36hZq4ey
+caVermEytfVWiiLfARz0KC7O/KhTSmEKaVplLAdxNK716HstCjZTsFf72LchwnHP
+AG0gyu1em00wTAuR/oDXjOinwtnk14wKc4pZZa5g7TeCgG9N9KTyrXqEEuDPjdB7
+3gTWmhflKSQLzBkrhZ1AdurkFJolFLiYfIvfw4VlZjluYbHOkJkXhxLw6CHNLcOf
+QSzD+S5n6Glb16r5eHoBNdUk3bvdlm3B7eaIHWfnsnRFMuFegpnp5sEBqdtgd8nC
+KOD3U4KQI6BAtq3HI6YnsK8QuJC5PBLeT1nZmvmdD0S4v/wMQ8hLf7rPfm8xhtmZ
+6r6gKoPMgGDss/2dZWpX8upWt5X9IxBUimRc2ItKQZdII6s+iGclVixq7JqqEI30
+31C8uRBQ6pO6zCVXrU/q
+=RgK0
+-----END PGP SIGNATURE-----
