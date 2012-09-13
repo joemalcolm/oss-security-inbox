@@ -1,42 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/6
-Message-ID: <4FE86B05.9070506@redhat.com>
-Date: Mon, 25 Jun 2012 15:43:33 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/9
+Message-ID: <20120913181817.371dda1b@redhat.com>
+Date: Thu, 13 Sep 2012 18:18:17 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Hans Spaans <hans.spaans@...it.nl>, Josselin Mouette <joss@...ian.org>, Bastien Nocera <bnocera@...hat.com>
-Subject: Re: CVE 2011-* Request -- rhythmbox (context plug-in): Insecure temporary directory use by loading template files for 'Album', 'Lyrics', and 'Artist' tabs
+Subject: Re: libdbus hardening
 Content-Type: text/plain; charset=utf-8
 
-On 06/25/2012 03:36 PM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
-> An insecure temporary directory use flaw was found in the way Rhythmbox, an integrated music
-> management application based on the powerful GStreamer media framework, performed loading of HTML
-> template files, used for rendering of 'Album', 'Lyrics', and 'Artist' tabs. Previously the
-> '/tmp/context' directory has been searched as module directory when loading the HTML template files.
-> A local attacker could use this flaw to conduct symbolic link attacks (possibly leading to
-> attacker's ability to execute arbitrary HTML template file in the context of user running the
-> rhythmbox executable).
->
-> Upstream bug report:
-> [1] https://bugzilla.gnome.org/show_bug.cgi?id=678661
->
-> References:
-> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=616673
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=835076
->
-> Please note the [2] bug has been reported / opened on:
-> "Date: Sun, 06 Mar 2011 14:58:46 +0100" yet, so this should
-> get a CVE-2011-* identifier. Could you allocate one?
+On Tue, 10 Jul 2012 16:11:12 +0200 Sebastian Krahmer wrote:
 
-Replying to myself, since I forgot to mention this in the
-previous post -- it doesn't look this has get a CVE identifier
-previously:
-   http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=rhythmbox
+> If you compile your openssh '--with-ssl-engine' you have
+> an easy root exploit (given that ssh-keysign is mode 04755
+> such as on Debian) via OPENSSL_config().
 
-so please allocate one.
+Even though the above is not correct to the best of my knowledge (no
+openssh version I checked would call OPENSSL_config(NULL) from
+ssh-keysign, even when it's complied with --with-ssl-engine and
+installed setuid root; even though other openssh command line tools do
+end up calling OPENSSL_config(NULL)), this shows OpenSSL is not
+unlikely to be used in a privileged application and hence may allow
+privilege escalation via special OPENSSL_CONF or OPENSSL_ENGINES
+environment variables.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+OpenSSL also already protects access to certain environment variables
+(there are OPENSSL_issetugid() calls before getenv()), it does not do
+the same check for all variables it reads.  It seems that problem
+deserves a CVE.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
