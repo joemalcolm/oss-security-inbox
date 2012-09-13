@@ -1,46 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/11
-Message-ID: <4F173FB8.3090804@redhat.com>
-Date: Wed, 18 Jan 2012 14:55:04 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/3
+Message-ID: <505165A2.7030100@redhat.com>
+Date: Wed, 12 Sep 2012 22:48:34 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Ronald van den Blink <oss-security@...urityview.nl>
-Subject: Re: CVE request - Batavi 1.2.1 Fixes Blind SQL Injection vulnerability in boxToReload parameter of ajax.php
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Oracle Security Team <secalert_us@...cle.com>, David Jorm <djorm@...hat.com>
+Subject: Re: CVE Request (minor) -- JVM: heap memory disclosure (possibly various JDKs)
 Content-Type: text/plain; charset=utf-8
 
-On 01/18/2012 06:31 AM, Ronald van den Blink wrote:
-> Hi,
->
-> Can we please have a CVE assigned for the following fix in Batavi 1.2.1 (http://sourceforge.net/projects/batavi/files/).
->
-> As pointed out by Canberk BOLAT of Mavituna Security, version before 1.2.1 have a Blind SQL Injection Vulnerability in the boxToReload parameter of ajax.php. This has been fixed in Batavi 1.2.1.
->
-> Relevant part of the changelog:
->
-> For details about the changes of the downloaded version you'll find a changes.txt in the root folder of the package.
->
-> Version 1.2.1
->
-> [..]
->
-> Security:
->
-> - Fixed SQL injection in modules;
-> - Improvements methods of Database to handle it;
-> - All data which come from user going via special check to strip all dangerous values.
->
-> [..]
->
-> With kind regards,
->
-> Ronald van den Blink
-> Project Manager 
-> Iceshop BV
->
-> Iceshop BV is the main contributor to the next generation open source e-commerce software Batavi. Batavi is the first open source e-commerce software that can easy handle more than 100.000 products and has native Icecat (www.icecat.biz) integration. 
-Can you include a link to the code commit(s) that fiix this? Thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
--- 
+On 09/12/2012 04:55 AM, Jan Lieskovsky wrote:
+> Hello Steve,
+> 
+> thank you for the clarification.
+> 
+>> Jan/Kurt,
+>> 
+>> The bug report appears to be describing a narrow class of
+>> vulnerability that could affect multiple codebases that implement
+>> Java Virtual Machines, not just Oracle's;
+> 
+> That's true, my yesterday's request was too wide, because in that
+> moment we were not sure yet, which concrete JVM implementations
+> would be affected by this deficiency (and which not).
+> 
+>> if so, then a separate CVE would be needed for each REPORTED
+>> codebase, and CVE-2012-4416 is ONLY for bug id 7196857 for the 
+>> Oracle-supported JVM.
+> 
+> Anyway, upon David's review (Cc-ed too) we can announce that this
+> problem would affect / is specific only to Oracle Java SE 7
+> (java-1.7.0-oracle), and Java SE 7 as provided by OpenJDK 7
+> (java-1.7.0-openjdk).
+> 
+> So after above suggestion we will use CVE-2012-4416 for Oracle's
+> codebase / Oracle supported JVM and the OpenJDK one should obtain
+> another CVE identifier.
+> 
+> I will clarify this situation in our bugs too yet.
+> 
+> Kurt, could you allocate another CVE id then for the OpenJDK part
+> of the story?
+> 
+>> 
+>> I wonder about the severity of the issue, but given the
+>> possibility that applications might access an array before a
+>> fill, and applications may depend on there being "empty" elements
+>> after initialization, this seems reasonable for a CVE.
+> 
+> Florian clarified on this already (why to assign CVE id for these
+> is appropriate approach).
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+>> 
+>> - Steve
 
--- Kurt Seifried / Red Hat Security Response Team
+Please use CVE-2012-4420 for this issue in OpenJDK
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQUWWiAAoJEBYNRVNeJnmTsA0P/1WpRpGkrl0DUEI5Lve08CjB
+9Vi1U1RLNZBiuoh6he8qeGLY7lgZzbXwZdCBfxUc0IbFH2Vxr4JcIYfprXtg8c5O
+H4lUqgdXR09kWof9bR+DWqWKGcPp3UGSp1GzljPh3OrfdOj1DE7vErphG6SQaa16
+mVGlrmhU8DnUNbMRbswwbzFj7BrG3i3uWyO3t6IpUQvvtUB+tao82U/tg3TVN5it
+gYT6f6CTUsNQMSlk2Fu8rPr8zqA8Ik9D4lnOksA1KGhzyHshogRqybq/buWo3lfq
+rgLnyrCMOE/KwoXd8FXKaV9WjItrpys/IEFNLIAT+DN6SyZbKZh602n6WaJY9g6g
+DtIhrpjjNX7OX9zXiYsVC6oWTWakJmvhtFZifnY/rxUncyFPRkhcBiQ9EcHOHAoB
++m7CSXefjQlr9qeN44G1EBr8mWs+nm9ZteGpztlsfw15SWZLYWnTjTvf1qLt3ZQh
+uiPX1cs2ONgs0jfYyvK7l3IQcaLNTysh8qWgQsJnXTLmHMAKpiPkI9c+zF8T9HLP
+sXvGX7u5ArltSoig45ldhKUvHWBEfA+yKjh302my+bsnGi5jjTUp/Tlu62kOHUIY
+Xo0M1HetEKy9My4NoDAZpHSztTvCih8bNbeTCKTqOljJ94LarsMJ7Jswo2G00eBs
+O3ukJIMQ0S5+5GIS/eWN
+=9fyV
+-----END PGP SIGNATURE-----
