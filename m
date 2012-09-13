@@ -1,75 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/8
-Message-ID: <4FE8C33B.6050100@redhat.com>
-Date: Mon, 25 Jun 2012 13:59:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/17
+Message-Id: <201209131315.55338.geissert@debian.org>
+Date: Thu, 13 Sep 2012 13:15:54 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Ludwig Nussel <ludwig.nussel@...e.de>, Dirk Müller <dmueller@...e.com>
-Subject: Re: CVE Request: viewvc
+Subject: Re: CVE request - mcrypt buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 06/25/2012 06:03 AM, Ludwig Nussel wrote:
-> Hi,
+On Thursday 13 September 2012 12:12:14 Kurt Seifried wrote:
+> On 09/12/2012 11:00 AM, Raphael Geissert wrote:
+> > Since CVE-2012-4409 has been widely related to the salt issue, I
+> > guess we need another CVE id? One could cover all the other
+> > issues.
 > 
-> Changelog of viewvc 1.1.15: 
-> http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.15/CHANGES
->
-> 
-> 
-> Version 1.1.15 (released 22-Jun-2012)
-> 
-> * security fix: complete authz support for remote SVN views (issue
-> #353)
+> Can you post a summary of all these other issues ideally with the
+> links to code commits? Thanks.
 
-Please use CVE-2012-3356 for this issue
+The code has been abandoned for years. There are no fixes for those issues 
+from upstream.
 
-> * security fix: log msg leak in SVN revision view with unreadable
-> copy source
+The first paragraph of Eygene Ryabinkin's email summarises them pretty well.
 
-Please use CVE-2012-3357 for this issue
-
-
-> The first one seems to be this one: 
-> http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2758
->
->  The second one: 
-> http://viewvc.tigris.org/issues/show_bug.cgi?id=353 
-> http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2755
->
-> 
-http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2756
-> http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2757
->
-> 
-http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2759
-> http://viewvc.tigris.org/source/browse/viewvc?view=rev&revision=2760
->
->  cu Ludwig
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP6MM6AAoJEBYNRVNeJnmTw74QANaDGEyGk2EV0CtjDBAdDzJz
-JgTbhuVWRQtCqtyUuyFmNte0znTZontJcYE3URRSMR0lIc8EyjKRhpe1ya5wdxhr
-OqJWOUHtCDdvCyYtIFQ4FiY6biOFcmMO9g7xcf2F/ZbXYQXLhB/TmHKDAt0p+yaH
-LN8E1mPVeldT8kXikarmcjBv8qU5rUue24bOAfrht+9rtLbNCcvKgnLl1r7JoCeu
-3DJjPHA+34Bx9CNotjHlVU+6qt3nfo3V8Re9nqUf7drNGV12c+InKItbDVcFHZrf
-4+RXOo8oZYrjXDoxWs64NXl8qfQ6d8ee9iOKW1oAyN5kswfxnl70eOm1nEPsW5zN
-c635Ds9R4nY+VHAgrbM6kkZl5tIykFQP3KbecAG5+CPW72no+IV3fmeyYOq7Wp1G
-ib6weGQF5fhvS1U/zUYgxyoG7Y3DCm+B9OFPphBld3s0eUMLAHX8njGuKIjDNrmA
-NZ+r68Mj1ZFxRi1yv2GHMQjI8652Qlv76Xtpn0RqozTBVF7Ium7gwfdpw88+bjPP
-ocjJUMR3QrCX8a29JxQMAnhpRx4hNtk7uJHu/YMkNrJ+LCQ7SJSxki+vdmkqvuFW
-vZs0N0kXauNtSlgas4pf1M1JK+eqqh9MMIKKL0W6d3JQyujRKwJejIMMU8hm/TeJ
-/gHBurbMC80AH0u0B18y
-=/CS1
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
