@@ -1,24 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/2
-Message-ID: <50503B3E.6000004@redhat.com>
-Date: Wed, 12 Sep 2012 09:35:26 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Oracle Security Team <secalert_us@...cle.com>
-Subject: Re: CVE Request (minor) -- JVM: heap memory disclosure (possibly various JDKs)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/27
+Message-ID: <50526FF0.4090002@redhat.com>
+Date: Thu, 13 Sep 2012 17:44:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: DoS in OpenSLP
 Content-Type: text/plain; charset=utf-8
 
-On 09/11/2012 11:37 PM, Steven M. Christey wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> I wonder about the severity of the issue, but given the possibility that
-> applications might access an array before a fill, and applications may
-> depend on there being "empty" elements after initialization, this seems
-> reasonable for a CVE.
+On 09/13/2012 04:10 PM, Vincent Danen wrote:
+> Quoting Secunia's report:
+> 
+> Georgi Geshev has discovered a vulnerability in OpenSLP, which can
+> be exploited by malicious people to cause a DoS (Denial of
+> Service).
+> 
+> The vulnerability is caused due to an out-of-bounds read error
+> within the "SLPIntersectStringList()" function
+> (common/slp_compare.c) when processing service requests and can be
+> exploited to cause a crash via a specially crafted request.
+> 
+> The vulnerability is confirmed in version 1.2.1. Other versions may
+> also be affected.
+> 
+> References:
+> 
+> https://secunia.com/advisories/50130/ 
+> https://bugs.gentoo.org/show_bug.cgi?id=434918 
+> https://bugzilla.redhat.com/show_bug.cgi?id=857242
+> 
+> Could a CVE be assigned to this?  There is no upstream bug report
+> or patch that I can see.
 
-My main concern is that untrusted code (in an applet or application 
-server) could use this issue to access private data which was previously 
-stored at the same location.
+Please use CVE-2012-4428 for this issue.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- 
-Florian Weimer / Red Hat Product Security Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQUm/wAAoJEBYNRVNeJnmT1J4QAJ8kfvCpMhKF74zn3T/FpZVs
+/EnZIoODxYzmbAX9xHXC8NasDZSff/wm7OkKnYFHCEtM5RubAuaEfJv+g3W57SZt
+yvScLyHqOMOvD+TlwpA/EhjXSA++zeiMP46s3CzPcWITUO4Nc1LAe/r/EkB3YOSx
+j3TRD3m7cYBYszZOnRVy/avdThAbwOiy8u6wnNfTHLq6z/bzSxmJgbz6RkGbRsVP
++dvESU/WbXudJ91YVBnvTHscPUW4f+UVfnFBiOJToivHreqOi2G6dKNt9FmF2XYs
+hNYC7HOMJfp485ZPDqF2U7Nhg7iBGzbtD3MW/3+k6fW/zD5Lc+75aO3Y8OBVNy1Q
+CRBDSThL5FOLmASQRq/88d4oBwaV2d1KPtetj78xZWgpaFChwo6jyXpb+dVE6LIO
+IyKQyvu8WZI5cD3EwPlBNds7kRldEYxJZ5TiYZhCFZd/Q29J9f5sMmGS3kFNSXND
+F8tk32J/LorWAmSDLYMVED6qp3WT+Fpgy38D6mQApF/pXzY0pJHvEaQxUXMtpyGs
+jgDZaY7H/Tz8wmxW9As50dFr7r/HrT5p15Q7FpxwvVJUVJeAyt9vP2Oz8au3YBbg
+C5HoHJ3PMI3ccDkzblQwaRGHmjohw0hVeswqn7XqMkv/KdLa4ggns8XHxfS1J33r
+sc/JUdKuqHMDBAXY5lbr
+=pld/
+-----END PGP SIGNATURE-----
