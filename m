@@ -1,52 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/05/1
-Message-ID: <CADvE9N=kJ4uyJOq72cuXYqq_ygsoRq19kLCVb3w7cp1irRXPXg@mail.gmail.com>
-Date: Sun, 5 Aug 2012 15:06:06 +0000
-From: "Jorge Manuel B. S. Vicetto" <jmbsvicetto@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/25
+Message-ID: <20120913224835.GF355@redhat.com>
+Date: Thu, 13 Sep 2012 16:48:35 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for Calligra
+Subject: CVE request: information leak in vino
 Content-Type: text/plain; charset=utf-8
 
-Hi.
-
-On Sat, Aug 4, 2012 at 4:58 PM, Jeff Mitchell <mitchell@....org> wrote:
-> On 08/04/2012 11:56 AM, Agostino Sarubbo wrote:
->> On Saturday 04 August 2012 11:44:33 Jeff Mitchell wrote:
->>> What commit code do you want?
->> Please post the diff between the vulnerable code and the fix so we are sure
->> that is a security issue.
->>
->
-> Hi,
->
-> You can read all about the details of the vulnerability in the Black Hat
-> 2012 presentation by Charlie Miller
-> (http://media.blackhat.com/bh-us-12/Briefings/C_Miller/BH_US_12_Miller_NFC_attack_surface_WP.pdf)
-> -- details of the Calligra (and KOffice) exploit start at page 39.
->
-> Unfortunately, he did not notify us ahead of time of his intent to
-> disclose, so it's already public.
->
-> Thanks,
-> Jeff
+This one is a bit older, not sure why it hasn't been dealt with or
+reported earlier, but just copying my text from our bug:
 
 
-As reported by Thorsten Zachmann to the kde-packagers ml, here are the
-commit ids:
+It was reported that vino transmits all clipboard activity to
+anything listening on port 5900, including to clients that have not
+authenticated.  If a user were to have vino enabled (including requiring
+authentication), a remote user could access the port and see anything
+the user added to the clipboard sent over the port.
 
+To reproduce, enable vino with password protection (i.e. execute
+vino-preferences).  Connect to the VNC port (either locally or
+remotely), for instance:
 
-The commit IDs for master is
-8652ab672eaaa145dfb3782f5011de58aa4cc046
-https://projects.kde.org/projects/calligra/repository/diff?rev=8652ab672eaaa145dfb3782f5011de58aa4cc046&rev_to=6e0323801dd144ad36720949fbef01d992a8e801
+% nc -4 odvfc17 5900
+RFB 003.007
+@??zsh: command not found: zsh:@??[vdanen@...fc17]
 
-The commit ID for calligra/2.5 is
-f04d585ca1d3ee27f125d0129a23ca7b7850902d
-https://projects.kde.org/projects/calligra/repository/diff?rev=f04d585ca1d3ee27f125d0129a23ca7b7850902d&rev_to=b1bf5264e31cdab9e0b2fa74b7ae8393d6195af1
+The above two bits of output are from copying in the GNOME terminal,
+locally, on the system running vino.
 
-The commit ID for calligra/2.4 is
-7d72f7dd8d28d18c59a08a7d43bd4e0654043103
-https://projects.kde.org/projects/calligra/repository/diff?rev=7d72f7dd8d28d18c59a08a7d43bd4e0654043103&rev_to=7a9fa21b1f812b74b3e1501480dd14d10aeb347b
+The above was tested with Fedora 17's 3.4.2 version; the report
+indicates that 2.32 on Gentoo and 2.28 on Debian are also vulnerable.
 
-Regards,
+References:
 
-Jorge Manuel B. S. Vicetto
+https://bugs.gentoo.org/show_bug.cgi?id=434930
+https://bugzilla.gnome.org/show_bug.cgi?id=678434
+https://bugzilla.redhat.com/show_bug.cgi?id=857250
+
+I did a quick attempt to reproduce this with 2.13.5 but was unable to
+reproduce it, so somewhere between 2.13.5 and 2.28 this became a
+problem.  I've not dug into it further to see which version introduced
+this.
+
+There's no response in the upstream bug either, so no patches are
+available that I can see.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
