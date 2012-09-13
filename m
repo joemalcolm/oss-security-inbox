@@ -1,22 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/15
-Message-ID: <4FA41D8D.5040107@fifthhorseman.net>
-Date: Fri, 04 May 2012 14:18:53 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/15
+Message-ID: <505213EE.5000601@redhat.com>
+Date: Thu, 13 Sep 2012 11:12:14 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Debian/Ubuntu php_crypt_revamped.patch
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE request - mcrypt buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
-On 05/04/2012 01:35 PM, Solar Designer wrote:
-> The purpose [is] to notify Ubuntu and others of the Debian bug
-> that they may need to fix in Debian-derived distros, and to suggest that
-> the patch be dropped from future versions.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-If your goal is to get the patch dropped from Debian and Debian-derived
-distributions, the most reliable way to do that is to file a bug against
-the Debian php packages explaining your reasons for that.
+On 09/12/2012 11:00 AM, Raphael Geissert wrote:
+> On Tuesday 11 September 2012 10:19:38 Eygene Ryabinkin wrote:
+>> Unfortunately, mcrypt's check_file_head() in combination with 
+>> decrypt_general() is a bit worse: it allows to overwrite up to
+>> 50 bytes of stack buffers from decrypt_general(), namely
+>> local_algorithm, local_mode, local_keymode.  And in some
+>> curcumstances to overwrite even 2-3 extra bytes (not more, since
+>> buf[3] will contain '\0'), though it is not very much
+>> controllable path.
+> 
+> Thanks for the review of that part, one less item on my TODO list
+> :)
+> 
+> Since CVE-2012-4409 has been widely related to the salt issue, I
+> guess we need another CVE id? One could cover all the other
+> issues.
+> 
+> Cheers,
 
-	--dkg
+Can you post a summary of all these other issues ideally with the
+links to code commits? Thanks.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1031 bytes)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQUhPtAAoJEBYNRVNeJnmTJVsQANlKTdDueAHkuxslmj8yFOy4
+ETLA+kZwqg1sDz0jRfPozvS2HHFQLQLAX+w2ktgokc8S0iBQYKTbgF9488Gcg+pn
+ZqCPP+mAYQmPjg3RPNlxKWbdAOvqpafs2YdewtV2Ly+ozSN3HfnWZG1KzTrutk9b
+ygCRVw0N2wm30MXB2DLpikLyOuvhreD7QWaorpr6lsSv/ot/Iq4Dq4JArTjFUWnh
+ntNRYUvesTizfFEndZYm2rfP678n5kZ/4wi9U0g60EDg3ONeDXCwMb1s1VxVXTiO
+ICb3mZebY2skLIa9FakIEKHh2+J5J+7odHCFYItD0rBfRpoXxlVepn87vzBvlq1R
+bq/tqJ/nTY88O4ZKhNUzys1QxroUqN9bGYlKz9+8HPeyD6ReJmk+iWiwJpNbdjP4
+MnsM+U7yoiBewoqI792HuzLh4C6hWfUd0504mgi/hnLL+uIBigDXMKsGSoNwevt4
+YpLZRA3kpj3CV/lexS9WsK2Ee3Xx1BgPhmbIVGqQyJkWYkJYco0c5iVBBZPztbuG
+KQW2bZBCiopPLT4DeqwsLLeuqFCkaB2JzfBUBmuUX5k20OkEQ4aP2E2EyneyYjDk
+lRz82xM4qTii51SnnsqMosaNmWFpZHF3r2izdmD0fHWbfDAFYFW4c3uytDKxhk+f
+EdLUjuPBxs+Pl1leEOiJ
+=XGzG
+-----END PGP SIGNATURE-----
