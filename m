@@ -1,29 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/9
-Message-ID: <20120625223427.GA9305@inutil.org>
-Date: Tue, 26 Jun 2012 00:34:27 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/20
+Message-ID: <1347568144.3378.119.camel@scapa>
+Date: Thu, 13 Sep 2012 22:29:04 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Luciano Bello <luciano@...ian.org>
-Subject: Re: CVE request: CSRF in eXtplorer
+Cc: security@...dpress.org
+Subject: Re: CVEs for wordpress 3.4.2 release
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried wrote:
-
-> > John Leitch has discovered a CSRF vulnerability in eXtplorer: 
-> > http://www.autosectools.com/Advisories/eXtplorer.2.1.RC3_Cross- 
-> > site.Request.Forgery_174.html
-> > 
-> > Can you please assign a CVE id to it?
-> > 
-> > Cheers, luciano
+On mer., 2012-09-12 at 13:38 +0300, Hanno Boeck wrote:
+> I can't find CVEs assigend for the issues fixed in wordpress 3.4.2.
 > 
-> Does this affect any versions other than just 2.1 RC3?
+> http://wordpress.org/news/2012/09/wordpress-3-4-2/
+> 
+> 
+> Sadly, the information is quite limited:
+> "Version 3.4.2 also fixes a few security issues and contains some
+> security hardening. The vulnerabilities included potential privilege
+> escalation and a bug that affects multisite installs with untrusted
+> users. These issues were discovered and fixed by the WordPress security
+> team."
+> 
+> I suggest assigning two:
+> 1. potential privilege escalation
+> 2. problem with untrusted users on multisite installations
+> unless someone has more information.
 
-The upstream version, which is in Debian stable (2.1.0b6,
-I suppose that refers to beta6) is affected and was released 
-in 2010, so this is not just a regression in a short-lived 
-release candidate.
+It's alway pretty annoying to try to fix CVEs in wordpress releases,
+since they are usually allocated just on some release announcement, and
+thus identifying specific commits is pretty hard. It'd be nice if
+Wordpress security team could be in the loop since the beginning, it
+might help a bit later (so adding them to CC: now)
 
-Cheers,
-        Moritz
+Regards,
+-- 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
