@@ -1,31 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/11
-Message-ID: <CANQXiXODXWhoO5gj7qe6gCPOyjkbYGraRNc25Ls+iX+MxOZuwA@mail.gmail.com>
-Date: Fri, 11 May 2012 14:04:43 -0600
-From: Jonathan Niehof <jtniehof@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/23
+Message-ID: <20120913215412.GD355@redhat.com>
+Date: Thu, 13 Sep 2012 15:54:12 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: pam_shield
+Subject: Re: Re: note on gnome shell extensions
 Content-Type: text/plain; charset=utf-8
 
-Requestor: Jonathan Niehof, jtniehof@...il.com
-package: pam_shield, http://www.heiho.net/pam_shield/index.html
+* [2012-09-13 19:59:46 +0200] Tavis Ormandy wrote:
 
-Type of vulnerability:
-This utility is intended to block IP addresses showing suspicious
-behaviour, to disarm a potential attack. In versions before 0.9.4, if
-configuration option "allow_missing_dns" is set to no, it performs no
-blocking. This setting is used in the example configuration file,
-which is installed by default in Debian. Thus, systems using the
-suggested or default configuration receive no protection.
+>Vincent Danen <vdanen@...hat.com> wrote:
+>
+>> * [2012-09-13 18:03:33 +0200] Marcus Meissner wrote:
+>>
+>> > On Thu, Sep 13, 2012 at 05:39:57PM +0200, Tavis Ormandy wrote:
+>> > > On Mon, Sep 10, 2012 at 02:48:38PM -0600, Vincent Danen wrote:
+>> > > > * [2012-09-08 18:14:10 -0600] Kurt Seifried wrote: SUSE has some
+>> > > > interesting info in their bug:
+>> >> >
+>> > > > https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
+>> >> >
+>> > > > By the sounds of it, this should be harmless.  Vincent Untz says
+>> > > > that the browser plugin doesn't actually install the extensions,
+>> > > > it's passed to another process via a dbus call to gnome-shell, which
+>> > > > sends the uuid of the extension to the extensions.gnome.org web site
+>> > > > in order to download the extension.
+>> >> >
+>> > > > See:
+>> >> >
+>> > > > http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
+>> > > >
+>http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
+>> >> >
+>> > > > which is:
+>> >> >
+>> > > > let message = Soup.form_request_new_from_hash('GET',
+>> > > > REPOSITORY_URL_INFO, params);
+>> >> >
+>> > > > And REPOSITORY_URL_INFO is hardcoded earlier:
+>> >> >
+>> > > > const REPOSITORY_URL_BASE = 'https://extensions.gnome.org'; const
+>> > > > REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE +
+>> > > > '/download-extension/%s.shell-extension.zip'; const
+>> > > > REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE + '/extension-info/';
+>> > > > const REPOSITORY_URL_UPDATE   = REPOSITORY_URL_BASE +
+>> > > > '/update-info/';
+>> >> >
+>> > > > I don't think this is something that can be exploited, based on the
+>> > > > above.
+>> >>
+>> > > Not sure I follow the logic, can't I just upload something malicious
+>> > > to extensions.gnome.org and then force you to download it? I mean, I
+>> > > can try it if you're not convinced it's possible.
+>> >
+>> > There are supposed to be reviewers before it gets activated, but exactly
+>> > this concern Sebastian also voiced.
+>> >
+>> > > They surely do not have a magical technique for determining if my code
+>> > > is or can become malicious.
+>> >
+>> > Exactly.
+>>
+>> Yeah, this is definitely a possibility, but could happen regardless of
+>> this with some social engineering (hey, download my cool foo extension!)
+>> and have something malicious up there.  This is pretty much the same
+>> thing, just making it easier.
+>
+>Well, no. This is like saying it's pointless to patch vulnerabilities,
+>because I can just make you download malware. You can't just make me
+>download malware, because I know how to make trust decisions.
+>
+>You could make me download a malicious gnome extension, because you can do
+>so without interaction or my consent.
 
-This vulnerability provides no vector for an attacker, local or
-remote, to gain any privileges. It simply fails to provide the
-intended protection.
+Oh... I misunderstood then.  There's no dialog whatsoever?
 
-Mainline fix: https://github.com/walterdejong/pam_shield/commit/afa7b246018787fe6028289c414c33292641e1e0
-Debian bug report and fix:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=658830
+>> It's not much different than having a malicious app in the
+>> iTunes/Android/Whatever app store.  The flaw there isn't so much in the
+>> app store, but the app.  Wouldn't the same thought apply here?
+>>
+>
+>I've uploaded my malicious android app, how do I make you install it?
+>
+>I can create http://foo.com/malware.rpm, that's clearly not a vulnerability
+>and working as designed. But if I can force you to download and install it
+>without you having the opportunity to make a trust decision, that clearly is
+>a vulnerability.
+>
+>Do you agree that I can upload something malicious to extensions.gnome.org?
+>
+>Do you agree that I can make you install it without consent, interaction, or
+>the opportunity to make a trust decision?
+>
+>If so, then I don't understand the objection :-)
 
-Vulnerable versions: mainline up to and including 0.9.3. Debian up to
-and including 0.9.2-3.2
-First fixed versions: mainline 0.9.4. Debian 0.9.2-3.3
+Yes, you're right.  Sorry, I misunderstood the fact that it was a
+silent/invisible install.  I assumed (or read too quickly) and thought
+it would be something similar to any other app install where it would at
+least ask for some kind of authorization.
+
+Pay no attention to me.  =)
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
