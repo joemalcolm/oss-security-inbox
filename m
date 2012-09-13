@@ -1,123 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/06/2
-Message-Id: <E1T9ehq-0006nu-7Q@xenbits.xen.org>
-Date: Thu, 06 Sep 2012 16:13:26 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 19 - guest administrator can access qemu monitor console
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/10
+Message-ID: <20120913163053.GA355@redhat.com>
+Date: Thu, 13 Sep 2012 10:30:53 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: Marcus Meissner <meissner@...e.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: note on gnome shell extensions
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2012-09-13 18:03:33 +0200] Marcus Meissner wrote:
 
-                 Xen Security Advisory XSA-19
+>On Thu, Sep 13, 2012 at 05:39:57PM +0200, Tavis Ormandy wrote:
+>> On Mon, Sep 10, 2012 at 02:48:38PM -0600, Vincent Danen wrote:
+>> > * [2012-09-08 18:14:10 -0600] Kurt Seifried wrote:
+>> > SUSE has some interesting info in their bug:
+>> >
+>> > https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
+>> >
+>> > By the sounds of it, this should be harmless.  Vincent Untz says that
+>> > the browser plugin doesn't actually install the extensions, it's passed
+>> > to another process via a dbus call to gnome-shell, which sends the uuid
+>> > of the extension to the extensions.gnome.org web site in order to
+>> > download the extension.
+>> >
+>> > See:
+>> >
+>> > http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
+>> > http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
+>> >
+>> > which is:
+>> >
+>> > let message = Soup.form_request_new_from_hash('GET', REPOSITORY_URL_INFO, params);
+>> >
+>> > And REPOSITORY_URL_INFO is hardcoded earlier:
+>> >
+>> > const REPOSITORY_URL_BASE = 'https://extensions.gnome.org';
+>> > const REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE + '/download-extension/%s.shell-extension.zip';
+>> > const REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE + '/extension-info/';
+>> > const REPOSITORY_URL_UPDATE   = REPOSITORY_URL_BASE + '/update-info/';
+>> >
+>> > I don't think this is something that can be exploited, based on the
+>> > above.
+>>
+>> Not sure I follow the logic, can't I just upload something malicious to
+>> extensions.gnome.org and then force you to download it? I mean, I can
+>> try it if you're not convinced it's possible.
+>
+>There are supposed to be reviewers before it gets activated, but exactly
+>this concern Sebastian also voiced.
+>
+>> They surely do not have a magical technique for determining if my code
+>> is or can become malicious.
+>
+>Exactly.
 
-         guest administrator can access qemu monitor console
+Yeah, this is definitely a possibility, but could happen regardless of
+this with some social engineering (hey, download my cool foo extension!)
+and have something malicious up there.  This is pretty much the same
+thing, just making it easier.
 
+It's not much different than having a malicious app in the
+iTunes/Android/Whatever app store.  The flaw there isn't so much in the
+app store, but the app.  Wouldn't the same thought apply here?
 
-ISSUE DESCRIPTION
-=================
-
-A guest administrator who is granted access to the graphical console
-of a Xen guest can access the qemu monitor.  The monitor can be used
-to access host resources.
-
-IMPACT
-======
-
-A malicious guest administrator can access host resources (perhaps
-belonging to other guests or the underlying system) and may be able to
-escalate their privilege to that of the host.
-
-VULNERABLE SYSTEMS
-==================
-
-Installations where guest administrators do not have access to a
-domain's graphical console, or containing only PV domains configured
-without a graphical console, are not vulnerable.
-
-Installations where all guest administrators are trustworthy are not
-vulnerable, even if the guest operating systems themselves are
-untrusted.
-
-Systems using xend/xm: At least all versions since Xen 4.0 are
-affected.  Systems are vulnerable even if "monitor=no" is specified in
-the xm domain configuration file - this configuration option is not
-properly honoured in the vulnerable versions.
-
-Systems using libxl/xl: All versions are affected.  The "monitor="
-option is not understood, and is therefore ignored, by xl.  However,
-systems using the experimental device model version based on upstream
-qemu are NOT vulnerable; that is, Xen 4.2 RC systems with
-device_model_version="qemu_xen" specified in the xl domain config
-file.
-
-Systems using libvirt are vulnerable.  For "xen:" URIs, see xend/xm,
-above.  For "libxl:" URIs, all versions are affected.
-
-Systems based on the Xen Cloud Platform are NOT vulnerable.
-
-CONFIRMING VULNERABILITY
-========================
-
-Connect to the guest's VNC (or SDL) graphical display and make sure
-your focus is in that window.  Hold down CTRL and ALT and press 2.
-You will see a black screen showing one of "serial0", "parallel0" or
-"QEMU <version> monitor".  Repeat this exercise for other digits 3 to
-6.  CTRL+ALT+1 is the domain's normal graphical console.  Not all
-numbers will have screens attached, but note that you must release and
-re-press CTRL and ALT each time.
-
-If one of the accessible screens shows "QEMU <version> monitor" then
-you are vulnerable.  Otherwise you are not.
-
-MITIGATION
-==========
-
-With xl in Xen 4.1 and later, supplying the following config
-option in the VM configuration file will disable the monitor:
-   device_model_args=["-monitor","null"]
-
-With xend the following config option will disable the monitor:
-   monitor_path="null"
-Note that with a vulnerable version of the software specifying
-"monitor=0" will NOT disable the monitor.
-
-We are not currently aware of the availability of mitigation for
-systems using libvirt.
-
-NOTE REGARDING EMBARGO
-======================
-
-This issue was publicly discussed online by its discoverer.
-There is therefore no embargo.
-
-NOTE REGARDING CVE
-==================
-
-This issue was previously reported in a different context, not to Xen
-upstream, and assigned CVE-2007-0998 and fixed in a different way.  We
-have requested a new CVE for XSA-19 but it is not yet available.
-
-RESOLUTION
-==========
-
-The attached patch against qemu-xen-traditional
-(qemu-xen-4.*-testing.git) resolves this issue.
-
-$ sha256sum xsa19-qemu-all.patch
-19fc5ff9334e7e7ad429388850dc6e52e7062c21a677082e7a89c2f2c91365fa  xsa19-qemu-all.patch
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQSMr3AAoJEIP+FMlX6CvZ2O8H/2cZuOEMQd6ELDSmgj2fVaYl
-qpev3Ux50+wHsBf2JS4XMW+f6wwNWa8IBP1GL+SUvOLVr0PGYb8cbISy+zp6z+ku
-mAF1T19iaAMNc/feSYwgtLfYE9H25SbB4cuPg6YkyLf6dQn0KnEyf9GIJxHy0xir
-nU5XKEwhhJHw17cXZyagTBheXqrIRtIhgMNv3oQKg60NDc+2sMYwMmv7lgPVIvTZ
-5+rkY7RX34hBCw08qt/CEyI9OXKHL1jDjPM8QtCKuwDzaWI10yQxtLjWJCYEhGkH
-QqMHU6D8Q3DptCSZj/9urs7+oWGwb3TKR7rUc5v7NbiHlliEX5njDKrhxZpxvJg=
-=21pO
------END PGP SIGNATURE-----
-
-Download attachment "xsa19-qemu-all.patch" of type "application/octet-stream" (925 bytes)
+-- 
+Vincent Danen / Red Hat Security Response Team 
