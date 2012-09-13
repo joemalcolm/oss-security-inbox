@@ -1,100 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/15/2
-Message-ID: <CAHmME9oFvgdG+EDva9AUhYTA_xA47EpYb03Q4fNgbPVQ8kvKjA@mail.gmail.com>
-Date: Thu, 15 Nov 2012 01:48:29 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: gentoo-security@...too.org
-Subject: Fwd: [ANNOUNCE] CGIT v0.9.1 Released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/19
+Message-ID: <mpro.maavbm0atu7hc02hi.taviso@cmpxchg8b.com>
+Date: Thu, 13 Sep 2012 19:59:46 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: note on gnome shell extensions
 Content-Type: text/plain; charset=utf-8
 
-Hi guys,
+Vincent Danen <vdanen@...hat.com> wrote:
 
-Just emailing to let you know that CVE-2012-4465 and CVE-2012-4548
-have been fixed with the latest release of cgit.
+> * [2012-09-13 18:03:33 +0200] Marcus Meissner wrote:
+> 
+> > On Thu, Sep 13, 2012 at 05:39:57PM +0200, Tavis Ormandy wrote:
+> > > On Mon, Sep 10, 2012 at 02:48:38PM -0600, Vincent Danen wrote:
+> > > > * [2012-09-08 18:14:10 -0600] Kurt Seifried wrote: SUSE has some
+> > > > interesting info in their bug:
+> >> >
+> > > > https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
+> >> >
+> > > > By the sounds of it, this should be harmless.  Vincent Untz says
+> > > > that the browser plugin doesn't actually install the extensions,
+> > > > it's passed to another process via a dbus call to gnome-shell, which
+> > > > sends the uuid of the extension to the extensions.gnome.org web site
+> > > > in order to download the extension.
+> >> >
+> > > > See:
+> >> >
+> > > > http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
+> > > >
+http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
+> >> >
+> > > > which is:
+> >> >
+> > > > let message = Soup.form_request_new_from_hash('GET',
+> > > > REPOSITORY_URL_INFO, params);
+> >> >
+> > > > And REPOSITORY_URL_INFO is hardcoded earlier:
+> >> >
+> > > > const REPOSITORY_URL_BASE = 'https://extensions.gnome.org'; const
+> > > > REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE +
+> > > > '/download-extension/%s.shell-extension.zip'; const
+> > > > REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE + '/extension-info/';
+> > > > const REPOSITORY_URL_UPDATE   = REPOSITORY_URL_BASE +
+> > > > '/update-info/';
+> >> >
+> > > > I don't think this is something that can be exploited, based on the
+> > > > above.
+> >>
+> > > Not sure I follow the logic, can't I just upload something malicious
+> > > to extensions.gnome.org and then force you to download it? I mean, I
+> > > can try it if you're not convinced it's possible.
+> >
+> > There are supposed to be reviewers before it gets activated, but exactly
+> > this concern Sebastian also voiced.
+> >
+> > > They surely do not have a magical technique for determining if my code
+> > > is or can become malicious.
+> >
+> > Exactly.
+> 
+> Yeah, this is definitely a possibility, but could happen regardless of
+> this with some social engineering (hey, download my cool foo extension!)
+> and have something malicious up there.  This is pretty much the same
+> thing, just making it easier.
+ 
+Well, no. This is like saying it's pointless to patch vulnerabilities,
+because I can just make you download malware. You can't just make me
+download malware, because I know how to make trust decisions.
 
-Thanks,
-Jason
+You could make me download a malicious gnome extension, because you can do
+so without interaction or my consent.
 
+> It's not much different than having a malicious app in the
+> iTunes/Android/Whatever app store.  The flaw there isn't so much in the
+> app store, but the app.  Wouldn't the same thought apply here?
+> 
 
----------- Forwarded message ----------
-From: Jason A. Donenfeld <Jason@...c4.com>
-Date: Thu, Nov 15, 2012 at 1:46 AM
-Subject: [ANNOUNCE] CGIT v0.9.1 Released
-To: cgit@...mli.net
+I've uploaded my malicious android app, how do I make you install it?
 
+I can create http://foo.com/malware.rpm, that's clearly not a vulnerability
+and working as designed. But if I can force you to download and install it
+without you having the opportunity to make a trust decision, that clearly is
+a vulnerability.
 
-Hi everyone,
+Do you agree that I can upload something malicious to extensions.gnome.org?
 
-It is with pleasure that I announce the first release of cgit in
-months, version 0.9.1. This last release cycle has been a long one due
-to the disappearance of the former maintainer, Lars Hjemli, but rest
-assured, cgit is healthy and well, and I've been very pleased with the
-activity and excitement on this list.
+Do you agree that I can make you install it without consent, interaction, or
+the opportunity to make a trust decision?
 
-Without further ado, here's the changelog for the latest release:
+If so, then I don't understand the objection :-)
 
-== ChangeLog v0.9.1 ==
+Tavis.
 
-Enhancements:
-- path-selected submodule links
-- intelligent default branch guessing
-- /etc/mime.types lookup
-- gitweb.* and cgit.* git-config support
-- case insensitive sorting and age sorting
-- commit, repository, and section sorting
-- bold currently viewed page in pagination
-- support BSDs in makefile
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
 
-Security:
-- CVE-2012-4465: heap-buffer overflow in parsing.c
-- CVE-2012-4548: syntax highlighting command injection
-
-Bug Fixes:
-- transition maintainer to Jason Donenfeld (zx2c4)
-- download git snapshot from github instead of Lars' old server
-- css fixes
-- stablization of tests
-- more compatible default highlight script
-- suppress gzip timestamp so that tarballs only use tar timestamps
-- treat ctags as target in makefile
-- do not let global variables override certain local repo settings
-- print ampersand as proper html entity
-- use placeholder for empty commit subject
-- format diff view for addition and removal of files
-- point links at correct blob from ssdiff
-
-
-== Downloading ==
-
-The home of cgit is now here:
-http://git.zx2c4.com/cgit/about/
-
-The repository can be cloned by:
-$ git clone http://git.zx2c4.com/cgit
-
-A tarball of v0.9.1 is here:
-http://git.zx2c4.com/cgit/snapshot/cgit-0.9.1.tar.xz
- sha1 - faca1c822b035cd7fa5eda741f994255fde6608b
-If xz is no good for your distribution, a tar.gz and a tar.bz2 are
-available by tinkering with the URL.
-
-For verification, I've gpg signed the tag "v0.9.1" which you can
-verify by cloning the repo. My public key is 0xA5DE03AE:
-http://pgp.mit.edu:11371/pks/lookup?op=vindex&search=0x49FC7012A5DE03AE
-
-
-== Moving Forward ==
-
-For the next release cycle, there are a few things I look forward to seeing:
-- ssdiff tabulation fixes
-- authorization helper integration
-- fixing memory leaks
-- source file grepping
-
-
-Thanks so much to everyone who contributed with great patches and enhancements.
-
---
-Jason Donenfeld
-www.zx2c4.com
