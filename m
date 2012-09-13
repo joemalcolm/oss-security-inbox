@@ -1,49 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/2
-Message-ID: <4FBB58D1.7070200@redhat.com>
-Date: Tue, 22 May 2012 11:13:53 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Moritz Muehlenhoff <jmm@...ian.org>
-CC: oss-security@...ts.openwall.com, Daniel Veillard <veillard@...hat.com>
-Subject: Re: CVE-2011-3102 / libxml2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/2
+Message-ID: <505135A4.8010406@redhat.com>
+Date: Wed, 12 Sep 2012 19:23:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: tor
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi Moritz,
-
-On 05/21/2012 10:22 PM, Moritz Muehlenhoff wrote:
-> Hi,
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3102 points to
-> http://code.google.com/p/chromium/issues/detail?id=125462, which is
-> a 404.
+On 09/12/2012 01:40 PM, Nico Golde wrote:
+> Hi, * Kurt Seifried <kseifried@...hat.com> [2012-09-12 19:01]:
+>> On 09/12/2012 06:34 AM, Nico Golde wrote:
+>>> Hi, from the tor release notes[0]: Changes in version 0.2.2.39
+>>> - 2012-09-11 Tor 0.2.2.39 fixes two more opportunities for
+>>> remotely triggerable assertions.
+>>> 
+>>> o Security fixes: - Fix an assertion failure in tor_timegm()
+>>> that could be triggered by a badly formatted directory object.
+>>> Bug found by fuzzing with Radamsa. Fixes bug 6811; bugfix on
+>>> 0.2.0.20-rc. - Do not crash when comparing an address with port
+>>> value 0 to an address policy. This bug could have been used to
+>>> cause a remote assertion failure by or against directory
+>>> authorities, or to allow some applications to crash clients.
+>>> Fixes bug 6690; bugfix on 0.2.1.10-alpha.
+>>> 
+>>> I have not seen CVE ids for these issues. Can you assign ids
+>>> for them?
+>>> 
+>>> [0] 
+>>> https://gitweb.torproject.org/tor.git/blob/release-0.2.2:/ReleaseNotes
+>>
+>>
+>>> 
+Can you attach links to the code commits? thanks
+> 
+> I didn't have them when I sent this mail. Should be: 
+> https://gitweb.torproject.org/tor.git/commitdiff/973c18bf0e84d14d8006a9ae97fde7f7fb97e404
 >
-> http://googlechromereleases.blogspot.de/2012/05/stable-channel-update.html
-> references Jueri Aedla for the credits. I suppose this is related to this
-> libxml2 upstream commit:
-> http://git.gnome.org/browse/libxml2/commit/?id=d8e1faeaa99c7a7c07af01c1c72de352eb590a3e
+> 
+https://gitweb.torproject.org/tor.git/commitdiff/62d96284f7e0f81c40d5df7e53dd7b4dfe7e56a5
+> 
+> Cheers Nico
 
-Yes, we have previously checked with Daniel and he confirmed this one -^ would be
-the correct one.
+Thanks for the links. Please use CVE-2012-4419 for this issue.
 
-(have updated our bugzilla entry to state it in more exact way:
-https://bugzilla.redhat.com/show_bug.cgi?id=822109#c2)
 
->
-> Can anyone of the involved parties at Chrome and Red Hat please confirm?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Without not to leak too much, Daniel also clarified this problem would be
-of higher impact / security relevance for Google Chrome instances due the
-way they use XPointer functionality. On common Linux libxml2 instances
-additional functionality to be involved is needed this to be exploited
-in that way as it has been for Google Chrome case.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-Hope this helps. Let us know if we can be of any further advice.
-
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->
-> Cheers,
->          Moritz
-
+iQIcBAEBAgAGBQJQUTWkAAoJEBYNRVNeJnmT+QUP/RHczOGvPLxgw8PvzX+vihwQ
+UbtlYK+STddooFRpJUTUDjawjaY/KBKzMt1tus6vQrREZb0g9HDDQVtzgEz2fzXy
+KTko9atXNGiJZCJ8Q3UrtElL23QhzZco1+76pZso4jSVIOWLR2UWxFUmf7b1obVV
+OC51cxm8fTkHXYrvACYbmQGcO9tKOkHimJle4O3Kr7togiRVdqSIDotVJy/7PZ8P
++PeHRbA7E7Cu/atiDyfY25KvaLZtSL0H/9SwcYUxKQfI83eVqtyciU+7Yr5z8leT
+Lc7EmUmr7jCUEEhh/sP/8bX2iTEQiHyXDWFkFTddgyJpvTHcJOM2tYWTOrg3gR0K
+AD/R05vM2l9OLhFoGIbBPCk41ZtXa/zZTkAneFhhPQnmjjT/Qudw1h3YWO877O0C
+bNAq2r3b+/Hixs9DnK4CeMpuOWqQPkF7Bl6mODSlKz0MadR4rJsofawJ+nG8pnAP
+Wm9XautufJsDwjhKq9uOjM3E/r/KXLepm3Vr9ERhlU9unEDgrzTd0ycqU68jzFYV
+vtYB15eN7GOwfMh4YAFq8n+PZxk7fpeiKl3Hk+Q+IAYCYXEEkS+jDoUKyr2IV+J4
+JQeMEisOekJ/XT9gbkcewNN69oszO4WolQXXEX3S5wNMbFZ5Fbx4teuXRU1t7HSs
+L0f2zHBJpw1Zt86rpLj1
+=6GNC
+-----END PGP SIGNATURE-----
