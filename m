@@ -1,57 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/8
-Message-ID: <0d0d04ee-0c6e-496a-8e78-9d112d113acb@email.android.com>
-Date: Thu, 19 Apr 2012 19:20:45 -0700
-From: "Eric W. Biederman" <ebiederm@...ssion.com>
-To: Eugene Teo <eugeneteo@...nel.sg>,Marcus Meissner <meissner@...e.de>
-CC: OSS Security List <oss-security@...ts.openwall.com>,security@...nel.org,Sukadev Bhattiprolu <sukadev@...ibm.com>,Serge Hallyn <serge.hallyn@...onical.com>,Pavel Emelyanov <xemul@...nvz.org>
-Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/5
+Message-ID: <CA+KYVfhuP4v+EdR=v8KB=dNcjtshv=xxy-A6t_SYJFy3VmvP2w@mail.gmail.com>
+Date: Thu, 13 Sep 2012 11:17:06 -0400
+From: andi abes <andi.abes@...il.com>
+To: Russell Bryant <rbryant@...hat.com>
+Cc: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com,  openstack-announce@...ts.openstack.org
+Subject: Re: [Openstack] [OSSA 2012-012] Horizon, Open redirect through 'next' parameter (CVE-2012-3540)
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo <eugeneteo@...nel.sg> wrote:
+Has a fix for this been  backported to essex/stable branch?
 
->On Fri, Apr 20, 2012 at 5:48 AM, Marcus Meissner <meissner@...e.de>
->wrote:
->> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
->> namespace leak caused by vsftpd.
->>
->> https://bugzilla.novell.com/show_bug.cgi?id=757783
->>
->> He provided a simple reproducer:
->[...]
->>
->> and checking "cat /proc/slabinfo|grep pid_namespace"
->> gives 10000 more active slots after running it on 3.0.13 (+SUSE
->patches) and 3.1.10 (+SUSE patches).
->>
->> Running this on 3.2.0 (+SUSE Patches) did not result in more slots,
->so it was probably
->> fixed between 3.1 and 3.2 (but someone else cross check perhaps).
->>
->> Any idea welcome on which patch fixed this, I tried
->1b26c9b334044cff6d1d2698f2be41bc7d9a0864
->> but it seems not helping.
+On Thu, Aug 30, 2012 at 11:35 AM, Russell Bryant <rbryant@...hat.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
->I tested this with 3.0.25-rt44.57.el6rt.x86_64 yesterday, and I was
->able to trigger the issue. The process needs to be privileged with
->CAP_SYS_ADMIN.
+> This advisory included the wrong CVE.  It was CVE-2012-3540.  Sorry
+> about that.
 >
->Eric, besides struct pid_namespace, there is a corresponding struct
->pid_2 leak.
-
-Hmm.
-
-So we know what is holding the pid namespace reference.
-
-Additional thoughts.
-
-Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
-
-Is there a corresponding task_struct leak?
-
-Are the zombies getting reaped?
-
-I don't have much of a clue or much concern as this seems fixed in later kernels but I am happy to suggest things to look for to help narrow this down.
-
-Eric
-
+> On 08/30/2012 11:10 AM, Russell Bryant wrote:
+>> OpenStack Security Advisory: 2012-012 CVE: CVE-2012-3542
+>
+> This should have been CVE-2012-3540
+>
+>> Date: August 30, 2012 Title: Open redirect through 'next'
+>> parameter Impact: Medium Reporter: Thomas Biege (SUSE) Products:
+>> Horizon Affects: Essex (2012.1)
+>>
+>> Description: Thomas Biege from SUSE reported a vulnerability in
+>> Horizon authentication mechanism. By adding a malicious 'next'
+>> parameter to a Horizon authentication URL and enticing an
+>> unsuspecting user to follow it, the victim might get redirected
+>> after authentication to a malicious site where useful information
+>> could be extracted. Only setups running Essex are affected.
+>>
+>> Fixes: 2012.1:
+>> https://github.com/openstack/horizon/commit/35eada8a27323c0f83c400177797927aba6bc99b
+>>
+>>  References:
+>> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3542
+>
+> This should have been:
+>
+>     http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3540
+>
+>> https://bugs.launchpad.net/horizon/+bug/1039077
+>>
+>> Notes: This fix will be included in a future Essex (2012.1)
+>> release.
+>
+> - --
+> Russell Bryant
+> OpenStack Vulnerability Management Team
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+>
+> iEYEARECAAYFAlA/iDEACgkQFg9ft4s9SAbPBQCgndIk58K5ZF71PCxmWfDjV9MO
+> 4yoAoJDGBeqC4TbJnyo+AsEeQYeTQEe6
+> =zO6p
+> -----END PGP SIGNATURE-----
+>
+> _______________________________________________
+> Mailing list: https://launchpad.net/~openstack
+> Post to     : openstack@...ts.launchpad.net
+> Unsubscribe : https://launchpad.net/~openstack
+> More help   : https://help.launchpad.net/ListHelp
