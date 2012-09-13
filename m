@@ -1,92 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/3
-Message-ID: <50DFB67B.6050707@redhat.com>
-Date: Sat, 29 Dec 2012 20:35:23 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>, Frederick Townes <ftownes@...edge.com>
-Subject: Re: CVE Request: W3 Total Cache - public cache exposure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/7
+Message-ID: <CAGSj+QtPgUTmO8rO+_L7Z3X29xrPg5Zi1xQpewDKOzixyw01FQ@mail.gmail.com>
+Date: Thu, 13 Sep 2012 16:41:26 +0100
+From: Kiall Mac Innes <kiall@...agedit.ie>
+To: andi abes <andi.abes@...il.com>
+Cc: Russell Bryant <rbryant@...hat.com>, oss-security@...ts.openwall.com,  openstack-announce@...ts.openstack.org,  "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>
+Subject: Re: [Openstack] [OSSA 2012-012] Horizon, Open redirect through 'next' parameter (CVE-2012-3540)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+According to Russell's message - this bug only affects the essex/stable
+branch.. No backport is necessary I guess..
 
-On 12/29/2012 04:45 AM, Jason A. Donenfeld wrote:
-> On Sat, Dec 29, 2012 at 6:35 AM, Kurt Seifried
-> <kseifried@...hat.com> wrote:
->> 
->> 
->> As I understand it this is more of an .htaccess type issue than
->> an actual issue with W3 total cache? Is this documented anywhere
->> in the W3 total cache documents?
->> 
-> 
-> W3 generates .htaccess files and sets up the directory structure
-> and accesses. Nowhere is it documented that sysadmins should
-> additionally modify the .htaccess files to protect the cache, and
-> W3's own htaccess generation fails to protect it.
+Also - https://github.com/openstack/horizon/tree/stable/essex shows the
+most recent commit is the commit/fix he linked to..
 
-Please use CVE-2012-6077 for this issue.
+Thanks,
+Kiall
 
->>> 2. Hash keys are easily predictable, in the case of (1) not 
->>> existing.
->> 
->> explanation/algorithm/?
->> 
-> 
-> Sure:
-> 
-> query_md5=md5("SELECT * FROM ${db_prefix}users WHERE ID = 
-> '${user_id}'") key=md5("w3tc_${host}_${site_id}_sql_${query_md5}") 
-> url=" 
-> http://siteblabla/wp-content/w3tc/${key:0:1}/${key:1:1}/${key:2:1}/${key}"
+
+On Thu, Sep 13, 2012 at 4:17 PM, andi abes <andi.abes@...il.com> wrote:
+
+> Has a fix for this been  backported to essex/stable branch?
 >
->  "db_prefix" is by default "wp_", per wordpress config, and few
-> people go in and change that. "user_id" is an integer. IDs start at
-> 1 and increase for each added user. "site_id" is an integer that
-> also starts at 1 and increases for each site used in multi-site
-> wordpress. "host" is the hostname of the site. All of these values
-> are known or guessable.
+> On Thu, Aug 30, 2012 at 11:35 AM, Russell Bryant <rbryant@...hat.com>
+> wrote:
+> > -----BEGIN PGP SIGNED MESSAGE-----
+> > Hash: SHA1
+> >
+> > This advisory included the wrong CVE.  It was CVE-2012-3540.  Sorry
+> > about that.
+> >
+> > On 08/30/2012 11:10 AM, Russell Bryant wrote:
+> >> OpenStack Security Advisory: 2012-012 CVE: CVE-2012-3542
+> >
+> > This should have been CVE-2012-3540
+> >
+> >> Date: August 30, 2012 Title: Open redirect through 'next'
+> >> parameter Impact: Medium Reporter: Thomas Biege (SUSE) Products:
+> >> Horizon Affects: Essex (2012.1)
+> >>
+> >> Description: Thomas Biege from SUSE reported a vulnerability in
+> >> Horizon authentication mechanism. By adding a malicious 'next'
+> >> parameter to a Horizon authentication URL and enticing an
+> >> unsuspecting user to follow it, the victim might get redirected
+> >> after authentication to a malicious site where useful information
+> >> could be extracted. Only setups running Essex are affected.
+> >>
+> >> Fixes: 2012.1:
+> >>
+> https://github.com/openstack/horizon/commit/35eada8a27323c0f83c400177797927aba6bc99b
+> >>
+> >>  References:
+> >> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3542
+> >
+> > This should have been:
+> >
+> >     http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3540
+> >
+> >> https://bugs.launchpad.net/horizon/+bug/1039077
+> >>
+> >> Notes: This fix will be included in a future Essex (2012.1)
+> >> release.
+> >
+> > - --
+> > Russell Bryant
+> > OpenStack Vulnerability Management Team
+> > -----BEGIN PGP SIGNATURE-----
+> > Version: GnuPG v1.4.12 (GNU/Linux)
+> > Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+> >
+> > iEYEARECAAYFAlA/iDEACgkQFg9ft4s9SAbPBQCgndIk58K5ZF71PCxmWfDjV9MO
+> > 4yoAoJDGBeqC4TbJnyo+AsEeQYeTQEe6
+> > =zO6p
+> > -----END PGP SIGNATURE-----
+> >
+> > _______________________________________________
+> > Mailing list: https://launchpad.net/~openstack
+> > Post to     : openstack@...ts.launchpad.net
+> > Unsubscribe : https://launchpad.net/~openstack
+> > More help   : https://help.launchpad.net/ListHelp
+>
+> _______________________________________________
+> Mailing list: https://launchpad.net/~openstack
+> Post to     : openstack@...ts.launchpad.net
+> Unsubscribe : https://launchpad.net/~openstack
+> More help   : https://help.launchpad.net/ListHelp
+>
 
-Please use CVE-2012-6078 for this issue.
-
->>> 3. Cached database values are downloadable by their hash keys
->>> on the public internet, exposing sensitive information like
->>> password hashes.
->> 
->> Do they need to be downloadable? That is to say can these hash
->> values be protected, or must they be exposed?
->> 
-> 
-> They _must_ be protected. They _must not_ be exposed or
-> downloadable. The hash values are raw SQL query responses, so they
-> contain things like password hashes. The cache is used only
-> internally by the web application, and client browsers should never
-> have any direct contact with this cache.
-
-Please use CVE-2012-6079 for this issue.
-
-Thanks for the explanations.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ37Z7AAoJEBYNRVNeJnmT9wMQANakD23SI8oeDJyTAfpwTYju
-i1yRsLUjEVDvpO1ydv5xZw6GKTLPVB/Hm732tAa90YSOjBQHCfrFlMtflCYvgw66
-Ex++kTnLjdawh8BX9WGsCTFoiI4doYrBerSl/TmH6NwEo/fZP5fumeFaMdbUzXru
-QgXok5CpQQK0DqiDZLLwt7lHBjnbY+pylb7ddybS0SUX3AAC7brfVkabGQM+ZWjH
-hk7OQklJtG+oJbcj6+8tp65Kxp6hQsJPUGoLc7hu47HpidcnVT/KGYCX4huovZPv
-wdz7yLsJgIxO4IDe0NuZKdqeEV9YKKs2blTEAj76zs8EaYUOKscnjDButZdW12NJ
-FgXFr3ag43Li7Ro5tMUsbBq/hK2oJtysUJlwTZAlbGpEmMOtAS7CnoOtS55DzPOQ
-4pXljZ/f+7GMNnFEIF18MeLZZPMD5VH5Xu/Vf54C1AaBx1A1JOAIVfoycI2ts/tP
-c5ABAUNqkz43zn4Zwr6Edh58WJI1pgVy2/XwP1fGvUeaw/tUURvhVMQNKOiI6OfG
-Qp0z36ac93Y3NXGnj71rHxYmIaRZI7yR9yTCYTR5dESlqXZLUlSbzf6Nz6djqS/Q
-JR9JhxDaO1ysQ4+2ONBbcKxM/0U4Hg58SntsVxze03PmE5hYC9bF9UXaCDmEbInT
-bYrJ9nl/lslPd2LHnLbs
-=SO/W
------END PGP SIGNATURE-----
