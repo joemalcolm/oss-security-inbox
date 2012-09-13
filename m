@@ -1,37 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/20
-Message-ID: <20120711213729.GQ28340@outflux.net>
-Date: Wed, 11 Jul 2012 14:37:29 -0700
-From: Kees Cook <kees@...ntu.com>
-To: Stefan Cornelius <scorneli@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/6
+Message-ID: <20120913153957.GA4168@cmpxchg8b.com>
+Date: Thu, 13 Sep 2012 17:39:57 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: Vincent Danen <vdanen@...hat.com>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: glibc formatted printing vulnerabilities
+Subject: Re: note on gnome shell extensions
 Content-Type: text/plain; charset=utf-8
 
-Hi Stefan,
-
-On Wed, Jul 11, 2012 at 12:32:35PM +0200, Stefan Cornelius wrote:
-> 3) It was discovered that the formatted printing functionality in glibc
-> did not properly restrict the use of alloca(). A remote attacker could
-> provide a specially crafted sequence of format specifiers, leading to a
-> crash or, potentially, FORTIFY_SOURCE format string protection mechanism
-> bypass, when processed.
+On Mon, Sep 10, 2012 at 02:48:38PM -0600, Vincent Danen wrote:
+> * [2012-09-08 18:14:10 -0600] Kurt Seifried wrote:
+> SUSE has some interesting info in their bug:
 > 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=826943
+> https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
 > 
-> Red Hat patch backports/testcases for RHEL6 that include a patch for this:
-> https://bugzilla.redhat.com/attachment.cgi?id=594722&action=diff
+> By the sounds of it, this should be harmless.  Vincent Untz says that
+> the browser plugin doesn't actually install the extensions, it's passed
+> to another process via a dbus call to gnome-shell, which sends the uuid
+> of the extension to the extensions.gnome.org web site in order to
+> download the extension.
 > 
-> Red Hat patch backport/testcase for RHEL5 (older glibc versions)
-> https://bugzilla.redhat.com/attachment.cgi?id=594727&action=diff
+> See:
+> 
+> http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
+> http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
+> 
+> which is:
+> 
+> let message = Soup.form_request_new_from_hash('GET', REPOSITORY_URL_INFO, params);
+> 
+> And REPOSITORY_URL_INFO is hardcoded earlier:
+> 
+> const REPOSITORY_URL_BASE = 'https://extensions.gnome.org';
+> const REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE + '/download-extension/%s.shell-extension.zip';
+> const REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE + '/extension-info/';
+> const REPOSITORY_URL_UPDATE   = REPOSITORY_URL_BASE + '/update-info/';
+> 
+> I don't think this is something that can be exploited, based on the
+> above.
 
-Is there an upstream commit proposed for this one? I see it mixed into
-the RH patch with fixes for 1) and 2).
+Not sure I follow the logic, can't I just upload something malicious to
+extensions.gnome.org and then force you to download it? I mean, I can
+try it if you're not convinced it's possible.
 
-Thanks,
+They surely do not have a magical technique for determining if my code
+is or can become malicious.
 
--Kees
+Tavis.
 
 -- 
-Kees Cook
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
