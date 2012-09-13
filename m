@@ -1,70 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/4
-Message-ID: <20120102004928.GA22741@openwall.com>
-Date: Mon, 2 Jan 2012 04:49:28 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: deraadt@...nbsd.org, Todd Miller <Todd.Miller@...rtesan.com>, Colin Percival <cperciva@...ebsd.org>, dillon@...llo.backplane.com, Christos Zoulas <christos@...las.com>
-Subject: OpenBSD bcrypt 8-bit key_len wraparound
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/16
+Message-ID: <5052160B.2090002@redhat.com>
+Date: Thu, 13 Sep 2012 11:21:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Jeff Law <law@...hat.com>, Jakub Jelinek <jakub@...hat.com>
+Subject: Re: CVE Request -- glibc: strcoll() integer overflow leading to buffer overflow + another alloca() stack overflow issue (upstream #14547 && #14552)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Christos Zoulas of NetBSD discovered that the key_len variable was
-declared in bcrypt.c as u_int8_t and it would potentially wrap around here:
+On 09/10/2012 11:51 AM, Jan Lieskovsky wrote:
+> Hi Florian,
+> 
+> thank you for the clarification.
+> 
+>> On 09/07/2012 07:21 PM, Kurt Seifried wrote:
+>> 
+>>> 2) Issue #2 (mentioned here only for completeness, but I am not
+>>> of the opinion this should receive a CVE identifier. See
+>>> argumentation below [but open to glibc upstream / others to
+>>> disprove it]).
+>> 
+>> I will hold off on issuing a CVE for this then. Anyone want to
+>> weigh in?
+>> 
+>> It looks as if the alloca issue was introduced at the same time
+>> as the malloc-related overflow:
+>> 
+>> http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=5358d026c74
+>>
+>>
+>> 
+So perhaps one CVE is enough for glibc bugs 14552 and 14547 because the
+>> problems are similar and affect the same versions.
+> 
+> Should the alloca() issue get CVE identifier, then I would rather
+> use two CVE identifiers. Though those issues might affect same
+> glibc versions, one is integer overflow, leading to heap-based
+> buffer overflow, while the alloca() one would be stack-based buffer
+> overflow.
+> 
+> So to clearly identify, it would be better if the second one would
+> be allocated too (if Steve won't mind).
+> 
+> Kurt, could you allocate yet one then?
 
-key_len = strlen(key) + (minor >= 'a' ? 1 : 0);
+Please use CVE-2012-4424 for this issue.
 
-While bcrypt truncates very long passwords at 72 characters (by design),
-which is sort of expected behavior, the wraparound is not expected.  It
-is substantially different behavior than truncation.  For example, the
-following three kinds of passwords all produce the same hash as tested
-by calling crypt() with the same $2a$ salt from a C program on OpenBSD 4.6:
+Also the original report:
+http://sourceware.org/bugzilla/show_bug.cgi?id=14552#c0
 
-1. A string of 72 zeroes:
 
-000000000000000000000000000000000000000000000000000000000000000000000000
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-2. Any 255-character string starting with a "0", e.g.:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234
-
-3. Any 256-character string starting with a "0", e.g.:
-
-0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
-
-while #2 and #3 would produce the same hash anyway (because of
-truncation at 72), it is not expected that they produce the same hash as
-the obviously very weak password #1.  (John the Ripper will test all
-such passwords quickly if invoked with "--external=Repeats".)
-
-#2 and #3 would produce this same hash even if they contained a lot of
-entropy in character positions 2 through 72, which get ignored.
-
-Luckily, it is unrealistic that people will use passwords this long, yet
-there's a theoretical issue to fix here.
-
-Simply changing the type of key_len to u_int32_t (assuming that longer
-strings are not supported at higher levels anyway, which may or may not
-be the case) wouldn't fully do the trick because the underlying
-functions use u_int16_t for some reason.  Thus, we opted to fix the
-issue by limiting key_len to 72 or 73 right in that place:
-
-http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libcrypt/bcrypt.c.diff?r1=1.13&r2=1.15
-
-+	size_t len;
-
--	key_len = strlen(key) + (minor >= 'a' ? 1 : 0);
-+	len = strlen(key);
-+	if (len > 72)
-+		key_len = 72;
-+	else
-+		key_len = (uint8_t)len;
-+	key_len += minor >= 'a' ? 1 : 0;
-
-Other *BSDs may want to do the same.
-
-...Oh, and someone may want to check Solaris for this and for the ":"
-return bcrypt issue.  (I did not.)
-
-Alexander
+iQIcBAEBAgAGBQJQUhYLAAoJEBYNRVNeJnmTEQ4QANxQwR1plKLDC2HkgSi4dmMc
+JvQ6upCz9q2erXoWM/Y9AXqJnwmlNyMe5aZjV4FCwV6ezaubXAxwbtbGYUMrmWe1
+T0Ee6QrLZeXHRn998jb6iBoKP/F5/x9wDHaxy0XciOjacIE8Zq1+V+pcHkBK6YsG
+hEu+r2hLALV0HUNXofHTiNu2W36aSH2elhiS2c8SFzqdBxustlMvwqnWeXhi/W+S
+0ozaI7sxkIulTlBdOdTKo9+5OB+gcUCrYhMdBTnjgHc2ixpFBo3nykIvuawJKFIj
+4fZuIsFm7FsQRC+cPwjES6EuoSJyvNREqO3M90Iwj1nxFAFkKCnQ1p4w4295y7rG
+UKx7J4M0S8F5SICJ5YOmq59Ze7V0UeeDAzUejR2Tfhqbo2uBb2c1tZ2MbhnvVw2A
+itXh7LpAL5Y3LfxdCwnSFiy/DoGwJx7LnS7SiDHb+4fNjrJAUL3nl3IAm85myM0/
+XqGrVJtL5dun26UYX4Yv0ketXQ9Ahccs/bPCfD+2z/LXtz19vjfB5wl2oPb8f4uf
+6TlZ4xQOB61MsXIrbSBqPEjcch5IX6ejWcoXetO65P1q4UCktbrPMwuBXot7HLhN
+pgK8IHhkxLb/3tMvGen09soL7qERdt1IZK953DiMCLxYrnF6P0QMEq5LmZjCAMcm
+yTkAY7yb+CxnYl5/eDmd
+=ed8K
+-----END PGP SIGNATURE-----
