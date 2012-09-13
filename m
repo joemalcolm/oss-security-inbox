@@ -1,56 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/26/5
-Message-ID: <50117632.5080608@redhat.com>
-Date: Thu, 26 Jul 2012 10:54:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/12
+Message-Id: <201209131159.20788.geissert@debian.org>
+Date: Thu, 13 Sep 2012 11:59:19 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: recv{from,msg}() on an rds socket can leak kernel memory
+Cc: me@...fdog.net
+Subject: CVE for Virtualbox 0x8 DoS?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 07/26/2012 09:25 AM, Petr Matousek wrote:
-> Two similar issues:
-> 
-> 1) Reported by Jay Fenlason and Doug Ledford: recvfrom() on an RDS
-> socket can disclose sizeof(struct sockaddr_storage)-sizeof(struct
-> sockaddr_in) bytes of kernel stack to userspace when receiving a
-> datagram.
-> 
-> 2) Reported by Jay Fenlason: recv{from,msg}() on an RDS socket can
-> disclose sizeof(struct sockaddr_storage) bytes of kernel stack to
-> userspace when other code paths are taken.
-> 
-> Both issues end in rds_recvmsg() so one CVE is sufficient.
-> 
-> Upstream commit: 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=06b6a1cf6e776426766298d055bb3991957d90a7
->
->  Thanks,
-> 
+Has a CVE id been finally assigned for the following issue?
+http://www.halfdog.net/Security/2012/VirtualBoxSoftwareInterrupt0x8GuestCrash/
 
-Please use CVE-2012-3430 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQEXYvAAoJEBYNRVNeJnmT2xgP/3/+IXnN0/M36uR/5AtDq/Ds
-4EW7tgQ6jCa/VxElIM33SaDhvavgSCVEihmlf59NfhcQkpxZpS2WhXLSJt42rcwc
-Sd++3P9M99G2dEWbkxZ58A6JoM8svWUN2s6eVHFRCIjrkBLB3ZUqaQ3IGISOPwNo
-fxG2aIIF3g6ELfYgwPaiSBQ1GB5dIy88yPIUgziW+fpILkjUpcLIwGu04+il+Tq7
-TLEC7jLXPR4lk3g/ZW1Hhl8Ra4Udc+y9Qw9xNcC0A/ev+R35OofqSNl6GqNUQ6iQ
-VYBBDuq+BGZHBSj/3HMcg2szoINipBxkRkwYLYFyiLjtMS0lbNSUIFYelIGO6mac
-lQW/B9lm9yqbgMRMCZ27P1BDtRmfJfApYRycGSsJHFZ87j3SMpy2CsLxw9Y3CH2E
-38/sYVM3DBsz4a0Di3ci2TFW0+PcT9rpOgBfnLybH8AmNFqM76diIgcd9Er32Mbv
-V+EuKLEr2dqigj05FnCuwaB++RUYUytxNwKnKSKzqIwVhNOKxBgQwsMPgCjYamxl
-iLCptjcXJZ1qZD1NRvNSjrkJVHEZYr8+4AFhltb977UNXsNCjmCiPDmzekGhK6JH
-IrqFjLFVaT1FeSqjxVStj/kMRqTFb0rt2RD7LE615N/ml5XAx8NWSJ7qJuLYK4uL
-SEea9Kji1W98/iUIznjm
-=5tH+
------END PGP SIGNATURE-----
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
