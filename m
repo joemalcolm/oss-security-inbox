@@ -1,48 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/18
-Message-ID: <20120330190532.GA31396@openwall.com>
-Date: Fri, 30 Mar 2012 23:05:32 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Jeff Law <law@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/11
+Message-ID: <20120913165059.GA3371@dhcp-25-225.brq.redhat.com>
+Date: Thu, 13 Sep 2012 18:51:00 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- libvirt: null function pointer invocation in virNetServerProgramDispatchCall()
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 30, 2012 at 12:47:54PM -0600, Jeff Law wrote:
-> On 03/30/2012 12:43 PM, Solar Designer wrote:
-> >On Fri, Mar 30, 2012 at 12:27:31PM -0600, Jeff Law wrote:
-> >>I think the right way to handle the return value is to return NULL for
-> >>these cases.  It's posix complaint and the glibc crypt routines already
-> >>return NULL for exceptional conditions.
-> >
-> >Do you realize that plenty of services that use crypt() - likely the
-> >majority of them, even - don't handle NULL returns, so they will
-> >segfault when these conditions are triggered?
-> Then, IMHO,  the app is clearly broken.  Crypt has been defined as 
-> potentially returning NULL and at least for glibc has done so since the 
-> introduction of sha256/sha512, if the app fails to check for that, then 
-> the app needs to be fixed.
+It has been found that sending RPC message with an event as the RPC
+number, or RPC number that falls into gap in the RPC dispatch table, can
+lead to libvirtd accessing memory at page zero. A remote attacker could
+use this flaw to crash libvirtd (DoS).
 
-Sure.  I am not arguing against fixing the apps (in fact, I am planning
-to fix one of mine - code originally written in 1998 or so - regardless
-of what glibc does on this), but I am arguing for not having glibc
-expose the problem.
+Proposed upstream fix:
+https://www.redhat.com/archives/libvir-list/2012-September/msg00843.html
 
-Considering the age of Unix, SUSv2 and POSIX.1-2001 are fairly recent
-(I think this may be when the NULL returns were first standardized), and
-glibc's SHA-crypt is very young.  It still makes sense to support apps
-older than that, including without changes.
+References:
+https://www.redhat.com/archives/libvir-list/2012-September/msg00843.html
+https://bugzilla.redhat.com/show_bug.cgi?id=857133
 
-> I don't speak for glibc on this issue, so if you want to raise it on 
-> libc-alpha, go for it.
-
-I was hoping that you would take care of that. ;-)
-
-Anyway, given DragonFly's decision, various other systems returning NULL
-on various occasions (inconsistently), and your comment about glibc
-doing that for a while, I no longer have a strong opinion on the matter.
-
-We will likely continue to do the "*0" / "*1" thing in Owl (our distro
-that uses glibc with patches), though.
-
-Alexander
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
