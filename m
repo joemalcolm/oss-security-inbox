@@ -1,67 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/1
-Message-ID: <20120905022830.GA28964@openwall.com>
-Date: Wed, 5 Sep 2012 06:28:30 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/8
+Message-ID: <20120913160333.GG4928@suse.de>
+Date: Thu, 13 Sep 2012 18:03:33 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: (linux-)distros membership changes
+Cc: Vincent Danen <vdanen@...hat.com>
+Subject: Re: note on gnome shell extensions
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Sep 13, 2012 at 05:39:57PM +0200, Tavis Ormandy wrote:
+> On Mon, Sep 10, 2012 at 02:48:38PM -0600, Vincent Danen wrote:
+> > * [2012-09-08 18:14:10 -0600] Kurt Seifried wrote:
+> > SUSE has some interesting info in their bug:
+> > 
+> > https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
+> > 
+> > By the sounds of it, this should be harmless.  Vincent Untz says that
+> > the browser plugin doesn't actually install the extensions, it's passed
+> > to another process via a dbus call to gnome-shell, which sends the uuid
+> > of the extension to the extensions.gnome.org web site in order to
+> > download the extension.
+> > 
+> > See:
+> > 
+> > http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
+> > http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
+> > 
+> > which is:
+> > 
+> > let message = Soup.form_request_new_from_hash('GET', REPOSITORY_URL_INFO, params);
+> > 
+> > And REPOSITORY_URL_INFO is hardcoded earlier:
+> > 
+> > const REPOSITORY_URL_BASE = 'https://extensions.gnome.org';
+> > const REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE + '/download-extension/%s.shell-extension.zip';
+> > const REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE + '/extension-info/';
+> > const REPOSITORY_URL_UPDATE   = REPOSITORY_URL_BASE + '/update-info/';
+> > 
+> > I don't think this is something that can be exploited, based on the
+> > above.
+> 
+> Not sure I follow the logic, can't I just upload something malicious to
+> extensions.gnome.org and then force you to download it? I mean, I can
+> try it if you're not convinced it's possible.
 
-For the sake of (partial) transparency:
+There are supposed to be reviewers before it gets activated, but exactly
+this concern Sebastian also voiced.
+ 
+> They surely do not have a magical technique for determining if my code
+> is or can become malicious.
 
-There have been some recent changes in who is subscribed to the
-linux-distros@vs list for SUSE and Red Hat (unsubscribes only) and for
-Debian and Oracle (a few people leaving and joining).  For all new
-members, their subscription was requested by the vendor's security team.
+Exactly.
 
-Here's how many people are currently subscribed for each distro, on
-linux-distros:
-
-ALT Linux: 1
-Android: 1
-CentOS: 1
-Chrome OS: 1
-Debian: 4
-Frugalware: 1
-Gentoo: 2
-Mandriva: 1
-MontaVista Software: 1
-Openwall: 1
-Oracle: 2
-Pardus: 2
-Red Hat: 7
-rPath: 1
-Slackware: 1
-SUSE: 4
-Ubuntu: 6
-Wind River: 1
-
-On distros (in addition to all of the above):
-
-FreeBSD: 2
-NetBSD/pkgsrc: 3
-
-Initially, we had a policy to announce each person's (un)subscription in
-here, but this was noisy and it was maybe-reasonably criticized for
-potentially being too transparent - making some people and their specific
-e-mail addresses more of a target, although those joining early on were
-obvious targets as their distros' security contact persons anyway.
-(Of course, all mail from the list to its members is PGP-encrypted,
-which partially mitigates the problem in some cases.)
-
-Please let me know if we - the oss-security community - feel that we
-should return to that more/too transparent practice.  For now, I feel
-that only new vendors joining need to be announced/discussed in here,
-whereas routine changes of who from a distro's security team is
-subscribed may be handled off-list, and summaries like the above posted
-in here once in a while.
-
-For those who don't know what this is about, see:
-
-http://oss-security.openwall.org/wiki/mailing-lists/distros
-
-Thanks,
-
-Alexander
+Ciao, Marcus
