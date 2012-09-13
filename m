@@ -1,64 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/10
-Message-ID: <20120109224014.GK8030@nef.pbox.org>
-Date: Mon, 9 Jan 2012 23:40:14 +0100
-From: Alistair Crooks <agc@...src.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/22
+Message-ID: <50524680.7020805@redhat.com>
+Date: Thu, 13 Sep 2012 14:48:00 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Malicious devices & vulnerabilties
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE request - mcrypt buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 09, 2012 at 02:57:37PM +0100, Ludwig Nussel wrote:
-> Nice. Using fuse for mounting hot plugged devices where performance
-> isn't a priority anyways is what I dream about sometimes too :-)
-> I wonder how hard it would be to create some glue code and re-use the
-> existing kernel fs drivers 1:1.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I should have quoted further - this is from rump(3) on NetBSD:
+On 09/06/2012 02:11 PM, Raphael Geissert wrote:
+> Hi,
+> 
+> On Thursday 06 September 2012 09:37:14 Vincent Danen wrote:
+>> A buffer overflow was reported [1],[2] in mcrypt version 2.6.8
+>> and earlier due to a boundary error in the processing of an
+>> encrypted file (via the check_file_head() function in
+>> src/extra.c).  If a user were tricked into attempting to decrypt
+>> a specially-crafted .nc encrypted flie, this flaw would cause a
+>> stack-based buffer overflow that could potentially lead to
+>> arbitrary code execution.
+> 
+> I'm attaching a patch that makes mcrypt abort when the salt is
+> longer than the temp buffer it uses.
+> 
+> While working on it, I noticed the err_ functions do not have a
+> constant printf format, yet there are calls such as: 
+> sprintf(tmperr, _("Input File: %s\n"), infile); err_info(tmperr); 
+> [print_enc_info in src/extra.c]
+> 
+> And a few others in src/mcrypt.c; for instance: $ mcrypt
+> --no-openpgp "%s.nc" mcrypt: h���Fn�`.nc is not a regular file.
+> Skipping...
+> 
+> I'm attaching another patch that prevents the format string
+> attacks.
+> 
+> Cheers,
 
-     rump is part of the realization of a flexible anykernel architecture for
-     NetBSD.  An anykernel architecture enables using kernel code in a number
-     of different kernel models.  These models include, but are not limited
-     to, the original monolithic kernel, a microkernel server, or an exokernel
-     style application library.  rump itself makes it possible to run unmodi-
-     fied kernel components in a regular userspace process.  Most of the time
-     "unmodified" means unmodified source code, but some architectures can
-     also execute unmodified kernel module binaries in userspace.  Examples of
-     different use models are running file system drivers as userspace servers
-     (see p2k(3)) and being able to write standalone applications which under-
-     stand file system images.
+Please use CVE-2012-4426 for these format string issues.
 
-     Regardless of the kernel model used, a rump kernel is a fullfledged ker-
-     nel with its own virtual namespaces, including a file system hierarchy,
-     CPUs, TCP/UDP ports, device driver attachments and file descriptors.
-     This means that any modification to the system state on the host running
-     the rump kernel will not show up in the rump kernel and vice versa.  A
-     rump kernel may also be significantly more lightweight than the host, and
-     might not include for example file system support at all.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-FUSE has some limitations when it comes to devices - the NetBSD
-version of FUSE is layered on top of the rump puffs, for example, and
-there is a separate pud(4) "pass to userspace device" subsystem which
-deals specifically with devices.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-There's an interesting article on using multiple IP stacks with rump:
-
-	http://mail-index.netbsd.org/current-users/2011/01/18/msg015464.html
-
-	I've been working on a system call "hijacking" library on and
-	off for the past 1.5 weeks.  Support is at a stage where
-	TCP/IP works and I do my normal web surfing through a rump
-	tcp/ip server (plus I run a third tcp/ip stack for testing).
-
-	In contrast to heavyweight virtualization (usermode OS etc.),
-	the only setup required is configuring the TCP/IP stack, no
-	rootfs & full installation & long waits are necessary.  Server
-	"reboot" takes about 0.01s, so there's hardly a loss of
-	service for some applications with good restart capability
-	such as web browsing (especially since the browser itself does
-	not die).
-
-Oh, and this is completely separate from Xen and usermode virtualisation,
-but we're getting off topic here...
-
-Regards,
-Alistair
+iQIcBAEBAgAGBQJQUkZ/AAoJEBYNRVNeJnmTP9YP/11qqwwMjEnej8e4hRYFcqtB
+8w/nqDoOGDwyxMLRYW7K3OjS5oBxNUOSsLcuNjpeNOJ+9EKNXpSfCR66Q8pJ0DHT
+mCbkPWQFaRMXkFLJCtXA1c5vEGdC2bG6EACflxmKmnwUlT/zJzXDa1q1DD3re4hI
+HYy+dkFwVOvpyNoQhRLAi6KpRDzkTK6ohf7dMQmZ+1v2DKEtVja+fycWqJm09zRm
+Zoen4lZTeiZZT1nV8CQJrHjIuEeVnULyYZpVDUvzrWA4yttFalz+hsGUPSxwvGFp
+5iwm42i+Q20bLmij44c5i09kRuo6Cx1BhlfTwRLk3dMN7cDZGUd7jHuzaL/VlndI
+/ybY+3pNQZlvATn0y/fI53yaJhYypgnM+CUF+l4LaLGgneGj/hYamBGfEvcG9rJw
+vyI9c2Wxr07byFQXV9Z3Y73u+q4gePfXsjw2cMt59xlkugEvQMcviEdQMPp/RUMt
+KGHrbV2p4okxP35qo7zF7ztXG5/vW8bvIemwiYfaBnXBFArPCYgtYzpc4tlb/0Nj
+4ZtCQ8n63k62+PJpdTvXbMMtMXBTK04lJd8o1U7wtZpphJQbKl4A0bPYc6vWVarj
+fr6A8mp1bDI+hT1LH/nUjFmpudHafy5g3/9tiE+BG8Ozs1RUz3B4b6GzbuVjuTQq
+c5iHRTdGSQL2i6EBVuPW
+=G+yt
+-----END PGP SIGNATURE-----
