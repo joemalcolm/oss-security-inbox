@@ -1,33 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/9
-Message-ID: <20120103195519.GA5032@pisco.westfalen.local>
-Date: Tue, 3 Jan 2012 20:55:19 +0100
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/18
+Message-ID: <50523498.5020800@redhat.com>
+Date: Thu, 13 Sep 2012 13:31:36 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Craig Barratt <cbarratt@...rs.sourceforge.net>, cve-assign@...re.org, security@...ntu.com
-Subject: Re: CVE Request: Security issue in backuppc
+CC: Sebastian Krahmer <krahmer@...e.de>, Tomas Hoger <thoger@...hat.com>
+Subject: Re: libdbus CVE-2012-3524 fix
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 27, 2011 at 04:00:48PM -0500, Jamie Strandboge wrote:
-> Hi Craig,
-> 
-> While preparing updates to fix CVE-2011-3361 in Ubuntu I discovered
-> another XSS vulnerability in View.pm when accessing the following URLs
-> in backuppc:
-> index.cgi?action=view&type=XferLOG&num=<XSS here>&host=<some host>
-> index.cgi?action=view&type=XferErr&num=<XSS here>&host=<some host>
-> 
-> You are being emailed as the upstream contact. Please keep
-> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
-> 
-> To oss-security, can I have a CVE for this? It is essentially the same
-> vulnerability and fix as for CVE-2011-3361, but in CGI/View.pm instead
-> of CGI/Browse.pm. Attached is a patch to fix this issue. Tested on
-> 3.0.0, 3.1.0, 3.2.0 and 3.2.1.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-*ping*
+On 09/12/2012 08:04 AM, Sebastian Krahmer wrote:
+> 
+> Hi,
+> 
+> As the CRD is today, and list policy requires "opening" the 
+> distros-list posting, here is the forward.
+> 
+> As a quick fix, the exploit can also be mitigated by properly 
+> placing the dbus-launch binary into the expected path, usually 
+> "/bin/dbus-launch", e.g.
+> 
+> # ln -s /usr/bin/dbus-launch /bin/dbus-launch
+> 
+> since for some reason, on most dists the binary is mis-placed into
+> /usr/bin. This makes an execv() fail in libdbus itself, triggering
+> an execvp().
+> 
+> Sebastian
+> 
+> ----- Forwarded message from Sebastian Krahmer <krahmer@...e.de>
+> -----
+> 
+> 
+> Hi,
+> 
+> The recently discussed libdbus getenv() issue [1] turned out to be
+> easily exploitable on various UNIX systems, including some Linux
+> distributions. Common attack vectors are Xorg and spice-gtk via
+> auto-launching [2]. Properly patching requires fixes for libdbus
+> and libgio, depending on which you link your suid binaries. Would
+> be nice if someone from RH could forward their patch, as they have
+> some developers upstream and possibly access to the private git
+> commit (they also already assigned this CVE). My CRD proposal is
+> Sept. 12th. As can be seen in [1], this issue is indeed public
+> since 1+ year.
+> 
+> Sebastian
+> 
+> [1] https://bugzilla.novell.com/show_bug.cgi?id=697105 [2]
+> http://stealth.openwall.net/null/dzug.c
+> 
+> PS: This is a re-send, the first mail to distros list was probably 
+> catched by spam filter.
+> 
 
-This hasn't ended up in a CVE assignment.
+There is a second vulnerability as well:
 
-Cheers,
-        Moritz
+spice(with naughty env variables)+glib = glib executes "dbus-launch"
+from USER specific $PATH with elevated privileges.
+
+Please use CVE-2012-4425 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQUjSYAAoJEBYNRVNeJnmTk4sP+wdzE9/wHfqNVfYVcFmznaVJ
+L7WpVi6uQ0cLhQJAjePXn5Pd4yTVTFFDsbyeTj5KYOjtm3SFDKkXKP5J35IOh2F5
+hISU6tXeraLfBaODyjLrI92v+HaXjBRD0j9yF3NJRTvBrV8XR7zFIO/jPZbfynR0
+sWQbEs+kR9HWO3gbovTKNLK5QOz7Q86l9zR7NysFD3NAP4H8oqMcZXkHoRrhsmRd
+MeovVqtvrV1F1YjPg+XjX3cUx6iKsxhSlBXDCWKsNCgOE8T/8yfoy4N8ySYilp+2
+fDf+0dkvieyjYgmQHZikiQqQwGPRSvMbN3SB4wT1Ft81HDWehm9szoL3GVjawTeg
+nRPDqTEmXGd2FhDSH8QOtEAg/Y6Ju/rLI3CKv1Ee/uupNsX36xZsXvbFdYdTs/bv
+j8yfCMqiDJwdtEkjRUJODTaiyEffo0NRfzw1v/eQgXNi3EqeO9zbEbCi7iNQpdpj
+jEwKN4qTx35zV3YtSKV/GXVgzluL3v4X9BzhJmgai7vAw6DbnFaLrzKfRdww0OFK
+pkaX7dSXrTWLeDKz+/9C6W5o7lubShiZP0/J/db4Dsc/sR5NonJdmqZsDlKW8qDW
+75a3LvbSEcaxHqY8qPJjM9tVva8ULU7G5llgkH9w8IUzge+rv7MCC8kET8V9FUrO
+XLFf6X3InO+8d17jAmZg
+=4Pz0
+-----END PGP SIGNATURE-----
