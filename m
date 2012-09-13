@@ -1,31 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/1
-Message-ID: <505131F2.9020509@redhat.com>
-Date: Wed, 12 Sep 2012 19:08:02 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/26
+Message-ID: <50526F94.9050204@redhat.com>
+Date: Thu, 13 Sep 2012 17:43:16 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>
-Subject: Re: CVE Request: Apache Axis2 XML Signature Wrapping Attack
+CC: Tavis Ormandy <taviso@...xchg8b.com>
+Subject: Re: Re: note on gnome shell extensions
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/12/2012 12:06 AM, David Jorm wrote:
-> Juraj Somorovsky and colleagues have described an XML Signature
-> Wrapping (XSW) attack against a variety of platforms in a paper
-> delivered at USENIX [0]. Various platforms are covered, including
-> OpenSAML and Apache Axis2. OpenSAML is covered by CVE-2011-1411
-> [1], but I can't find a CVE ID for Axis2. Could one please be
-> assigned? The OpenSAML CVE ID is 2011 because some vendors were
-> given pre-notification of the issue in 2011. Since all the details
-> were made public in 2012, I suggest assigning a 2012 CVE ID for
-> Axis2.
+On 09/13/2012 11:59 AM, Tavis Ormandy wrote:
+> Vincent Danen <vdanen@...hat.com> wrote:
 > 
-> Thanks
+>> * [2012-09-13 18:03:33 +0200] Marcus Meissner wrote:
+>> 
+>>> On Thu, Sep 13, 2012 at 05:39:57PM +0200, Tavis Ormandy wrote:
+>>>> On Mon, Sep 10, 2012 at 02:48:38PM -0600, Vincent Danen
+>>>> wrote:
+>>>>> * [2012-09-08 18:14:10 -0600] Kurt Seifried wrote: SUSE has
+>>>>> some interesting info in their bug:
+>>>>> 
+>>>>> https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
+>>>>> 
+>>>>> By the sounds of it, this should be harmless.  Vincent Untz
+>>>>> says that the browser plugin doesn't actually install the
+>>>>> extensions, it's passed to another process via a dbus call
+>>>>> to gnome-shell, which sends the uuid of the extension to
+>>>>> the extensions.gnome.org web site in order to download the
+>>>>> extension.
+>>>>> 
+>>>>> See:
+>>>>> 
+>>>>> http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
+>>>>>
+>
+>>>>> 
+http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
+>>>>> 
+>>>>> which is:
+>>>>> 
+>>>>> let message = Soup.form_request_new_from_hash('GET', 
+>>>>> REPOSITORY_URL_INFO, params);
+>>>>> 
+>>>>> And REPOSITORY_URL_INFO is hardcoded earlier:
+>>>>> 
+>>>>> const REPOSITORY_URL_BASE = 'https://extensions.gnome.org';
+>>>>> const REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE + 
+>>>>> '/download-extension/%s.shell-extension.zip'; const 
+>>>>> REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE +
+>>>>> '/extension-info/'; const REPOSITORY_URL_UPDATE   =
+>>>>> REPOSITORY_URL_BASE + '/update-info/';
+>>>>> 
+>>>>> I don't think this is something that can be exploited,
+>>>>> based on the above.
+>>>> 
+>>>> Not sure I follow the logic, can't I just upload something
+>>>> malicious to extensions.gnome.org and then force you to
+>>>> download it? I mean, I can try it if you're not convinced
+>>>> it's possible.
+>>> 
+>>> There are supposed to be reviewers before it gets activated,
+>>> but exactly this concern Sebastian also voiced.
+>>> 
+>>>> They surely do not have a magical technique for determining
+>>>> if my code is or can become malicious.
+>>> 
+>>> Exactly.
+>> 
+>> Yeah, this is definitely a possibility, but could happen
+>> regardless of this with some social engineering (hey, download my
+>> cool foo extension!) and have something malicious up there.  This
+>> is pretty much the same thing, just making it easier.
 > 
+> Well, no. This is like saying it's pointless to patch
+> vulnerabilities, because I can just make you download malware. You
+> can't just make me download malware, because I know how to make
+> trust decisions.
+> 
+> You could make me download a malicious gnome extension, because you
+> can do so without interaction or my consent.
+> 
+>> It's not much different than having a malicious app in the 
+>> iTunes/Android/Whatever app store.  The flaw there isn't so much
+>> in the app store, but the app.  Wouldn't the same thought apply
+>> here?
+>> 
+> 
+> I've uploaded my malicious android app, how do I make you install
+> it?
+> 
+> I can create http://foo.com/malware.rpm, that's clearly not a
+> vulnerability and working as designed. But if I can force you to
+> download and install it without you having the opportunity to make
+> a trust decision, that clearly is a vulnerability.
+> 
+> Do you agree that I can upload something malicious to
+> extensions.gnome.org?
+> 
+> Do you agree that I can make you install it without consent,
+> interaction, or the opportunity to make a trust decision?
+> 
+> If so, then I don't understand the objection :-)
+> 
+> Tavis.
 
-Please use CVE-2012-4418 for this issue.
+Please use CVE-2012-4427 for this issue.
+
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -35,17 +118,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQUTHxAAoJEBYNRVNeJnmTNaoP/05HX0wLhIocgY3zCbgf8DY0
-gb4ZOiucjWY5/GYKSbSEd1vLL8XUVQQGyVlkqpxfmrVgcBFqVf7WWurPUbh9bhS4
-Xv2hIEiF4Hxu9KhDt0tNmcZVdbxdKKO88NpbnRbWEpx9AV7kz5O4uZKU0M7PqdE8
-xMVAwjZczD9iVy1/Ue0Zb72nwlFQhWlfYR5uKB4PD9fdvwMWQ/FLW1lg8vxsusF0
-DI6la0KmASUjK5rOlDmW537SetHDPm/t4F+C3KjRtv3rzOXuRc8Bj3Mb1sOoGoW4
-Ppwld7o9lHTM0xwLSkhXvZKyj9K2xC6qtW2r9xw+daDm6PFhLIgFBQUrZlYzJWiI
-eU4HQWjz5xAASZhYLr/td5hpcmh2Rawm4e/RA/IfHylddQ6pCevVN+bqPdExjKuI
-I5kN06lklJXP1iGqLbtnEXEbNExmYCNDXGu7AWbiypxAV/w4I/gDtz8PgjmhBZYa
-6vSr4rKoPiU73R+5VMCoIXHLr/Csk0S0wZXZYQif79nMYrcj+NcHlBOBSTJTEMYn
-Tfi/fR9Kc+yCdYdy1z8xdglxfRxKMeAhh+sBMKO2CBP49dp4zrSSowfU3p78GsIY
-joiv6C+IHxl4/xSNDGuwag8tyTI4NHdIZELn/CUy4I3rnmD8Rz/NOc2QAoLYnow0
-unIKJKrckZe3T+wtlMYb
-=fMqZ
+iQIcBAEBAgAGBQJQUm+UAAoJEBYNRVNeJnmTK/AP/3y+9lFhNKhkJ8tAbPoW4BY5
+l9SRL8b0ikcTH8YgyvUKGj/QErVru1s9V3yLmgXJB3KSPFexGscHQFMGs1zwA1ap
+LetcxqmOQjCYW+lffqDqBqP8CsL/6acTSUjbEIlhYn9qBPH+rLYlb9i1Hv3zw2Fj
+h8sD7kTnLJQurcEUB36IuMWncG+ffYlulPam/Jvhr7UpEsBDHzPm1zSJMTaKFxKk
+eQzGBEuEEZKwcvLXk/6ZR2hqq4B5DBatft39UXGFJlcqUG+EpRcI20Ra4Np1DlKi
+cQ3hJYAU9je2nmCV48ihNIFY2t8DNCthfqld6xDOaZxRd+GWhOPDR4PifDtO07mF
+vBpBqXCrOPNybIX3Kt+Lpbt+NqQCRfI0zgG0ipIoNPVGhSeq37flOOeLTC29rYRb
+Dk0ZARTq00TAJ8mq7FctU31S8qnLjgcjiKoFI9UUU+zk3WL3i6OjfNdkkTWV7T9i
+hYLkAkPg8OcDm/bOfWnxzLNZRo24bwWi/1ftj0sIs8xOO4QbE94y2/c5Byb0I/2k
+TIqQdRVruqLLSQ0md7kgxLvkVybzy2A4FYToKMiwmeMByR54C/H/e5TGOxmVLPeD
+ceqfTyZi2Zp7zWSEgFIwaG6jXD/HV9cpDyQnYeKVaVITCDSPGJgXYN6RZkkpKSEk
+3dm76Lc9jTSfg2PeY1Pb
+=rsga
 -----END PGP SIGNATURE-----
