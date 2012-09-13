@@ -1,78 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/10/4
-Message-ID: <4F5AF055.2070108@redhat.com>
-Date: Fri, 09 Mar 2012 23:10:29 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/13
+Message-ID: <50521347.7080301@redhat.com>
+Date: Thu, 13 Sep 2012 11:09:27 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Niko Tyni <ntyni@...ian.org>, Dominic Hargreaves <dom@...th.li>
-Subject: Re: CVE Request -- libdbd-pg-perl / perl-DBD-Pg && libyaml-libyaml-perl / perl-YAML-LibYAML: Multiple format string flaws
+CC: Raphael Geissert <geissert@...ian.org>, me@...fdog.net
+Subject: Re: CVE for Virtualbox 0x8 DoS?
 Content-Type: text/plain; charset=utf-8
 
-On 03/09/2012 04:10 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> Case #1:
-> ========
-> Two format string flaws were found in the way perl-DBD-Pg, a Perl language
-> PostgreSQL DBI implementation, performed:
-> 1) turning of database notices into appropriate Perl language warning
-> messages,
-> 2) preparation of particular DBD statement.
-> 
-> A rogue server could provide a specially-crafted database warning or
-> specially-crafted DBD statement, which once processed by the perl-DBD-Pg
-> interface would lead to perl-DBD-Pg based process crash.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661536
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=801733
-> 
-> CPAN ticket:
-> [3] https://rt.cpan.org/Public/Bug/Display.html?id=75642
-> 
-> Patch proposed by Niko Tyni:
-> [4]
-> https://rt.cpan.org/Ticket/Attachment/1047954/547725/0001-Explicitly-warn-and-croak-with-controlled-format-str.patch
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2012-1151 for this issue.
+On 09/13/2012 10:59 AM, Raphael Geissert wrote:
+> Hi,
+> 
+> Has a CVE id been finally assigned for the following issue? 
+> http://www.halfdog.net/Security/2012/VirtualBoxSoftwareInterrupt0x8GuestCrash/
+>
+>  Regards,
+> 
 
-> Case #2:
-> ========
-> Multiple format string flaws were found in the way perl-YAML-LibYAML,
-> Perl YAML
-> serialization using XS and libyaml, performed:
-> 1) error reporting by loading of general YAML stream,
-> 2) error reporting by loading of YAML node,
-> 3) error reporting by loading of YAML mapping into a Perl hash, and
-> 4) error reporting by loading of YAML sequence into a Perl array.
-> 
-> A remote attacker could provide a specially-crafted YAML document, which
-> once
-> processed by the perl-YAML-LibYAML interface would lead to
-> perl-YAML-LibYAML
-> based process crash.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=661548
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=801738
-> 
-> CPAN tickets:
-> [3] https://rt.cpan.org/Public/Bug/Display.html?id=75365
-> [4] https://rt.cpan.org/Public/Bug/Display.html?id=46507
-> 
-> Proposed patch:
-> [5]
-> https://rt.cpan.org/Ticket/Attachment/920541/477607/YAML-LibYAML-0.35-format-error.patch
+- From that page:
 
-Please use CVE-2012-1152 for this issue.
+20120910: Oracle security decides, that CVE should be assigned
 
-> Could you allocate two CVE ids for these? (one for libdbd-pg-perl /
-> perl-DBD-Pg
-> and one for libyaml-libyaml-perl / perl-YAML-LibYAML)
-> 
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Can Oracle/halfdog.net communicate the CVE to the community please?
 
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQUhNHAAoJEBYNRVNeJnmT1/oP/1rlN+wvSOEoluw2xC00MbXr
+mGUXbhycfHQCjPYn/06P+dQ40bDQCKEPqquQyAfxFtvcJ5zJRCGaNC1gld4g58H0
+uQrOaQ62rsJm2wk7bzBLNwvIZ+OK1f+hFYvl3xEmuwspLSTOB7HCbWdjGAXSY6V/
+GOcyHE3tFnlE+s2hvIQ0URfqjdfzy/wZRDzZGi8r18jn1HpD1Flr6JNqEPjiVzPT
+qBoDi/nWFcPz/ccJhCfobvKNxCMdNWywkKmtelVZroALDPAqho8A1NoDkMqCZxtS
+gPP8vawiLS9LUMOsuwZWkFIjcCvmtUMoBXyY/niMfyvxmps1UHIcJDE29L6+LTYu
+M+f+dsIUnC8hTsnQFVIyG71eQcnJ63i+F52QuHhy/f0GR7xgT8fOLYhReBUpZ2uq
+h/ZvdIfvm22hwPhB2K+I/bNRzbRN95ABtDt/piiozqu7D1bekof18NQa/WStWuJ5
+Gp++wll8HJFIssDMK8aKtRaF4r+ThjXpBnfow9VI36MnsIPBEryY4gxsT7Hlu4O6
+dePJUgePlh/GHdIDLn0Zk2OcbZPKeJnIufBeDrr5kQRmD383MlxL+ssnHyKfZ/Dr
+KE15thW5K30kyORIF/F4+UB1wCrLH7I1hCqemVTnBd9q/HVTFLgv8mkkSRM1zRP4
+/Chf43xuv+94ReXG0e20
+=F5DV
+-----END PGP SIGNATURE-----
