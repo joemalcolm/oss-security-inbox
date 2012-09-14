@@ -1,50 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/10
-Message-ID: <4FBBD11F.8020507@redhat.com>
-Date: Tue, 22 May 2012 11:47:11 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/2
+Message-ID: <20120914101542.2c647257@redhat.com>
+Date: Fri, 14 Sep 2012 10:15:42 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Felipe Pena <felipensp@...il.com>
-Subject: Re: CVE request: PHP Phar - arbitrary code execution
+Subject: Re: libdbus CVE-2012-3524 fix
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 12 Sep 2012 16:04:33 +0200 Sebastian Krahmer wrote:
 
-On 05/20/2012 12:09 PM, Felipe Pena wrote:
-> Hi, Can anyone assing a CVE id for the following PHP's phar
-> extension integer overflow vulnerability? (Secunia SA44335)
-> 
-> Private report: https://bugs.php.net/bug.php?id=61065
-> 
-> Discovered by: Alexander Gavrun
-> 
-> Original Advisory: 
-> http://0x1byte.blogspot.com/2011/04/php-phar-extension-heap-overflow.html
+> The recently discussed libdbus getenv() issue [1] turned out
+> to be easily exploitable on various UNIX systems, including
+> some Linux distributions. Common attack vectors are Xorg and
+> spice-gtk via auto-launching [2].
+> Properly patching requires fixes for libdbus and libgio,
+> depending on which you link your suid binaries.
 
-Please
-> 
-use CVE-2012-2386 for this issue.
+[ ... ]
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> [2] http://stealth.openwall.net/null/dzug.c
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Sebastian, can you confirm that this summary completely covers all your
+findings?
 
-iQIcBAEBAgAGBQJPu9EfAAoJEBYNRVNeJnmTnLMQAMQcvrrfTxm6bD5P5+gChfO1
-PJB21AAuD2KX7KAW7YqOhCckjwTYG0n2slAUggUlCeWk/aDaVcnfKe2UQ5n0asKj
-ewd7uPkV0iWV9SQ5qjyYD6h1bawaS2mLTojefPUIMAlR8jg9n11lqRe6SN3vzJh5
-OBEj7vy4g95Hav7/UIHGmpUP6vAQwqwxafOprhwCXMg04qdj52Px0G0Okf+5Rk8S
-hdeu/I2SqRCm1GoGOdc+ABn8AZoxrL2rw2UfvZyjrCg/nlbgP1qMMGP9/JcsHRTL
-2lU2al7Z4LAlB+mtFHxUqzCDMNAnGYM95XHSKhVRGCi8xojgC+T2v8EFarX6neW2
-cbi02jbd8CzWX5kMc/i3MoTbyLXghZxI/gm1kIuf1Ff/MCzqs+YqBVlzUNthoijE
-ESPMTSebI7qIRkeVlGiyFALcyftYibgw/3ufHLXtiN3ARP9CSLocizAak5VHmo52
-khwmSQq5wuYxG4+R+jZKZAgA5vziL3ZN/AHtSpmuUvcFeh64262zqtDhSj31N+Tl
-uUUQewB4fQwo1Q1loVEmjdBPmSM3C3bAFIS++bAWUQyrIHKv8CheTG53hBlU/X0O
-Of0aJMVLRO6CiGuhGWddZlVKRBeeq6bgJ4tjYyq6PV++WJ3A979oimUVSsutqtKs
-N6mIQ5uVKFZ069M0zvwa
-=K0uz
------END PGP SIGNATURE-----
+There are problems with handling of DBUS_SYSTEM_BUS_ADDRESS environment
+variable in both libdbus and glib/libgio when used in a privileged
+(setuid or setgid) application.
+
+libdbus is currently tracked via CVE-2012-3524, with two known attack
+variants:
+- unixexec:, which is only supported in recent dbus versions (1.5+ from
+  what I can see)
+- autolaunch: combined with malicious PATH setting, leading to
+  execution of the attacker's dbus-launch.  This affects pre-1.5 dbus
+  versions too.
+
+libgio got CVE-2012-4425:
+- autolaunch: or empty address, combined with PATH setting, similar to
+  the second libdbus variant
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
