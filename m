@@ -1,99 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/1
-Message-ID: <1327625373.3101.62.camel@mdlinux>
-Date: Thu, 26 Jan 2012 19:49:33 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/8
+Message-ID: <50536963.3020006@redhat.com>
+Date: Fri, 14 Sep 2012 11:29:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Debian (others?) openssh-server: Forced Command handling leaks private information to ssh clients
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: SMF index.php msg parameter SQL-injection (2005)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2012-01-26 at 16:22 -0700, Kurt Seifried wrote:
-> On 01/26/2012 04:19 PM, Kurt Seifried wrote:
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=657445
-> > 
-> > ======================================================================
-> > 
-> > From: Bjoern Buerger <bbu@...gutronix.de>
-> > To: Debian Bug Tracking System <submit@...s.debian.org>
-> > Subject: openssh-server: Forced Command handling leaks private
-> > information to ssh
-> >  clients
-> > Date: Thu, 26 Jan 2012 11:46:18 +0100
-> > 
-> > Package: openssh-server
-> > Version: 1:5.5p1-6+squeeze1
-> > Severity: normal
-> > 
-> > 
-> > The handling of multiple forced commands in ~/.ssh/authorized key leaks
-> > information about other configured forced commands to the user. This
-> > affects tools lile gitolite, which makes heavy use of forced commands
-> > (For gitolite, this bug means: A user can obtain some or all usernames
-> >  with access to the same gitolite setup by just using the verbose
-> >  switch of his ssh client, which is a really nasty thing).
-> > 
-> > Example:
-> > 
-> >  User "bbu" on machine "ptx" has three configured forced commands for
-> >  keys test{1,2,3}_rsa.pub:
-> > 
-> >  command="/usr/bin/first_command" ssh-rsa [...third_key...]
-> >  command="/usr/bin/second_command" ssh-rsa [...second_key...]
-> >  command="/usr/bin/third_command" ssh-rsa [...third_key...]
-> > 
-> >  Now, if the user of test1_rsa.pub uses the "-v" switch of
-> >  his ssh client, he gets just his command:
-> > 
-> >  foo@bar:~/ssh_debug$ ssh -i test1_rsa -v bbu@ptx 2>&1 | grep Forced\
-> > command
-> >  debug1: Remote: Forced command: /usr/bin/first_command
-> >  debug1: Remote: Forced command: /usr/bin/first_command
-> > 
-> >  but the user of test2_rsa.pub sees two commands:
-> > 
-> >  foo@bar:~/ssh_debug$ ssh -i test2_rsa -v bbu@ptx 2>&1 | grep Forced\
-> > command
-> >  debug1: Remote: Forced command: /usr/bin/first_command
-> >  debug1: Remote: Forced command: /usr/bin/second_command
-> >  debug1: Remote: Forced command: /usr/bin/first_command
-> >  debug1: Remote: Forced command: /usr/bin/second_command
-> > 
-> >  and for user of test3_rsa.pub:
-> > 
-> >  bbu@...ra:~/ssh_debug$ ssh -i test3_rsa -v bbu@ptx 2>&1 | grep Forced\
-> > command
-> >  debug1: Remote: Forced command: /usr/bin/first_command
-> >  debug1: Remote: Forced command: /usr/bin/second_command
-> >  debug1: Remote: Forced command: /usr/bin/third_command
-> >  debug1: Remote: Forced command: /usr/bin/first_command
-> >  debug1: Remote: Forced command: /usr/bin/second_command
-> >  debug1: Remote: Forced command: /usr/bin/third_command
-> > ======================================================================
-> > 
-> > I have confirmed that this works exactly as advertised on Debian 6. I
-> > have confirmed that RHEL/Fedora are not affected (you only get shown the
-> > command for your specific SSH key).
-> > 
-> > So Debian is definitely affected, but I am concerned others may be as
-> > well (is this Debian specific or does it affect all users of that
-> > version of OpenSSH?). I suggest you test this on your own distributions
-> > as well.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 09/14/2012 06:40 AM, Henri Salo wrote:
+> Hello list,
 > 
-> Please use CVE-2012-0814 for this issue. Also please let me know if
-> other Linux distributions are affected!
+> Old SQL-injection security issue in SMF does not have
+> CVE-identifier. Could you please assign one from year 2005,
+> thanks.
 > 
+> Affected versions: <= 1.0.4 Fixed in 1.0.5
+> 
+> References: http://osvdb.org/17458 
+> http://secunia.com/advisories/15784/
+> 
+> - Henri Salo ps. never too late
 > 
 
-Looks like this (I haven't tried...):
+Can you confirm this isn't
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-4159
 
-http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/auth-options.c.diff?r1=1.53;r2=1.54
+? thanks.
 
-Marc.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
+iQIcBAEBAgAGBQJQU2liAAoJEBYNRVNeJnmT/9oP+gI9G43TB6Yrd7XBCimfJtD2
+UjrAYWk6WU/BPytajLa2aX7chgaFJBKFoTjllcWZwn2g5nQilURSjqqAS4VGc6tM
+EmkQq3q1pMJP+1iylIo7NoowOvK24/2AcVCOoMdBk/U9UD/UqECUIH30HkIb2Oss
+tsWjH4WbR7ASU/Iu7G0PCYEdczGHmfbOZ9Xo9LaDKp/9je4F5xSnrA+Vcc/obEkE
+UfMVofyEVPbp8lJvUxH3y5A2KbwoxF9SZ/KH8N9lyDE6vDO929KBrKLEIDPHfTLG
+LfDJaKfCdCDu8pDlPJIygkvvpLX1YunWL7Xeozg1uqr4GjhmM4NU2rIQeiVdZwx5
+9UkJONopwjMHKO9O7ii43ScNDs4EhqaG97IF0aa1rARSU7Sn/7u8JYEW4MEqqfpE
+bQuHQh+tiE5jnktkU21UWX2x+ZkRPi01PhDs98SVXAYNkWE2618lB1zzTELLRAO4
+LQzwiVtENhUwyfzbSwilkJOH3kmaGrmpWRDMMc/WNO9sCkZxuRCWHWVl9TCGzsAx
+FMn74Z3yDunwvA5++PJFsyk0cKU3vmaGqEQn+xM9JXnWSc0q0olJfG380LMIy+h1
+61iZy+biKlVIBfYYXexeZNJKNan5b/NnHNZ/8LANBqWC2/kRM4KjdIAyJRAYhQk7
+KyPJjvszZ1kXAVHQAkLk
+=RNr0
+-----END PGP SIGNATURE-----
