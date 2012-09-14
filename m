@@ -1,83 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/12
-Message-ID: <4F848517.6050301@redhat.com>
-Date: Tue, 10 Apr 2012 13:08:07 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/10
+Message-ID: <50536B27.5080203@redhat.com>
+Date: Fri, 14 Sep 2012 11:36:39 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Greg Knaddison <greg.knaddison@...uia.com>
-Subject: Re: CVE's for Drupal Contrib 2012 001 through 057 (67 new CVE assignments)
+CC: Henri Salo <henri@...v.fi>, security@...dpress.org
+Subject: Re: CVE-request: WordPress insufficient permissions verification on XMLRPC interface
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/10/2012 10:30 AM, Greg Knaddison wrote:
-> I had a few questions/comments as I updated these - inline below:
+On 09/14/2012 06:55 AM, Henri Salo wrote:
+> Hello,
 > 
-> "NO CVE","SA-CONTRIB-2012-050","CDN2 Video -
->> Unsupported","https://drupal.org/node/1506542"
->> 
+> Please assign 2010 CVE-identifier for XML-RPC interface access
+> restriction bypass issue in WordPress.
 > 
-> While the backend service and module are no longer active, there
-> are 70 sites using this module who are vulnerable to CSRF/XSS. What
-> is the reason not to give it a CVE?
-
-I was under the impression that if the backend was off the plugin
-wouldn't work/expose the vuln, I could of course be wrong, if so I'll
-assign a CVE.
-
+> Description: WordPress contains a flaw related to the XML-RPC
+> remote publishing interface. The interface fails to properly
+> enforce access control restrictions, allowing a remote attacker to
+> bypass restrictions and improperly edit, publish or delete posts.
 > 
->> "NO CVE","SA-CONTRIB-2012-056","Janrain Engage - Sensitive Data 
->> Protection Vulnerability","https://drupal.org/node/1515282"
->> 
+> References: 1. http://osvdb.org/69761 2.
+> http://core.trac.wordpress.org/changeset/16803 3.
+> http://secunia.com/advisories/42553/ 4.
+> http://wordpress.org/news/2010/12/wordpress-3-0-3/ 5.
+> http://codex.wordpress.org/Version_3.0.3
 > 
-> We debated a bit about this one and whether to make it an SA or
-> not. In the end we decided that if a module were persisting the
-> password in plain text that would deserve an SA so this one
-> (persisting a login token in plain text) should also get an SA. Do
-> you have any guidance on how you think we should have handled it?
+> - Henri Salo
 
-Well the CVE inclusion decisions:
-
-Pro assignment:
-Does exploitation of the issue provide the attacker with extra
-privileges or information, or cause a denial of service, that the
-attacker would not already have before they attempt to exploit the issue?
-
-Anti-assignment:
-Is the issue site-specific? Is it only in an online service
-(software-as-a-service), on a specific web site, or only offered
-through hosting solutions that are under the full control of the vendor?
-Does the issue only affect a version that was never made generally
-available to the vendor's customers?
-
-> If you have any further suggestions on how we can improve the
-> content or formatting of the SAs please let me know.
-
-Direct links to the code commits fixing them would be nice =)
-
-> Thanks, Greg
-> 
-
-
-- -- 
+Please use CVE-2010-5106 for this issue.
+- --
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJPhIUXAAoJEBYNRVNeJnmTfGkP/3huqD45i6hpUn5QtkhmRH3L
-p/RpE2/muJIhyBFCYpTDQN4fqlt5TjHFLMCjDrm/be9h51mq54n4KNXLXGMPeax/
-ZDqg0LzZiTW918R5+zfIOtsf/rvUziT3GpNyOTVjWdNDa5hCF+SOeBiylXBIGVwk
-z1rYhC5r37FO5dmfgjk1fVCnprbKDavJjLaDn3kiPpDyj+UFUgEyiif/iTn1zJGh
-UazjNE8gxWB8NaLodihFZHqSy9aEUmoRSy0EPqFlbKPWHZzNvs4ju2MWuBjn+S/t
-lebnnvXcknnTbpQM1fm5AkC6GiXxblxgcRsJPzz2moAqfHg1uRl7s5W3IoZnoPCY
-Vw86JUWlDvQG9JNR0i7fGFsfBCN9K0M+i1zIa8ZqKNDZr6fiFULFZP7270bsPoYd
-SIPQDBb25hbri8v6MpomHFUFQa55LI+/10kGPshTt1fyOJMLDHfbsrj2OtU5Iy/p
-ehTTQUyZpSMQr/NoBNFIpuxbtKoGjIb1+F+RjQXJsCoeqbX2WniUGXXcRhhjzDtd
-aJIwfv6Tg7j838IwZPiKQwjho8a0bew4TXjwEBIqKm4ljm/c8tL5j/8Dqs1EShqn
-VB+5iRZF9tIfShZJuASGZq9oapwxjQvgd+V8yzq68EiUfWqOHWF6r0Gyme1UVZUK
-sWGz+Vgf3GyJVKWx+s/5
-=jemE
+iQIcBAEBAgAGBQJQU2smAAoJEBYNRVNeJnmTY9IQAN2N50T1wofPQddZM/5DUfJ8
+eoeFGX4DTAKZ7423Wzw/UlP0vBWQBUOrq/w6L2pbC5kJem9VIKU3cacvYNdncFno
+BwCbRajxKijpbdAflXo0bPaWoNWVXVDF7spH7MQxO2QZvrh8yx8dk5/nNpsjTC2P
+RAMQKYm5JlMrezZZbCYDFxXZVEUcRPTNLjLr4cqZUTcbA60VZTGXd54+Kq0KQzC9
+W15i7NvAvpJT/47Ej9z+NlOPXpqv8PmVzIiUZi32TYB3VS8mW4cHkp/PxdvAHxmT
+7NqpWfY1WIHKap/oCbZ1vRMakkD3zr+GxagQ3zI0H8mcb/aFUSNHZSutpC0XoKXW
+pbyEsXLAaO/NGS1hBJbUGAN7gaSaLujVu6wtItj1OV+cnFreS/q3V7kwanJNpj0v
+l9NjAydDPfSm7pvNwW+qmkUmdcJEW8a81oemA6n//PrY09i2DE1SpcLE6zGkTjoz
+Y9mw3M6QXrN3yM9sic/xGbC4xjAUSohJDR8kdCTs/Ea+XAHafwclVYwZHtg+2lNc
+BbVjkeFkUqAm4VXD7fZ2oWf4gWvRziaB/90s6LoXefKncdFFYv3e/07d+ofIR2rW
+mrpvxM6nIx5tEuPiXkvgxg0H3I7h3Z8gXqpRe4KmrJoZ8Uc9dOB7C36G2qDU7vff
+paPxYP7gMDMeedAm2DHE
+=Z/jr
 -----END PGP SIGNATURE-----
