@@ -1,38 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/1
-Message-ID: <20121003023754.GA5575@haig>
-Date: Tue, 2 Oct 2012 19:37:54 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: QT CRIME vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/6
+Message-Id: <201209141222.33220.frank.mehnert@oracle.com>
+Date: Fri, 14 Sep 2012 12:22:33 +0200
+From: Frank Mehnert <frank.mehnert@...cle.com>
+To: halfdog <me@...fdog.net>
+Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>, Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE for Virtualbox 0x8 DoS?
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, all,
+Hi,
 
-Qt has prepared a fix to the "CRIME" SSL/TLS attack by disabling
-compression but I cannot find a CVE.
-
-Some details can be found here
-http://permalink.gmane.org/gmane.comp.lib.qt.devel/6729 :
-> ...
-> The git changes are as follows:
-> 5.0: 5ea896fbc63593f424a7dfbb11387599c0025c74
-> 4.8: d41dc3e101a694dec98d7bbb582d428d209e5401
-> 4.7: 3488f1db96dbf70bb0486d3013d86252ebf433e0
+On Friday 14 September 2012 12:12:44 halfdog wrote:
+> Hi,
 > 
-> For older 4.x releases, the 4.7 patch is expected to work.
-> ...
+> Kurt Seifried wrote:
+> > On 09/13/2012 10:59 AM, Raphael Geissert wrote:
+> >> Hi,
+> >> 
+> >> Has a CVE id been finally assigned for the following issue?
+> >> http://www.halfdog.net/Security/2012/VirtualBoxSoftwareInterrupt0x8Guest
+> >> Crash/
+> >> 
+> >>  Regards,
+> > 
+> > - From that page:
+> > 
+> > 20120910: Oracle security decides, that CVE should be assigned
+> > 
+> > Can Oracle/halfdog.net communicate the CVE to the community
+> > please?
+> 
+> I do not have that information yet. The information about intended CVE
+> assignment till October update was exchanged off list, contact on
+> Oracle side was Mr. Mehnert.
+> 
+> Early disclosure of this issue was due to misconception, that Oracle
+> would have assessed severity, need for CVE and communication of
+> disclosure timeline before releasing patch as maintenance release. The
+> early disclosure mixed up the whole
+> reporting/analyze/classify/CVE-assign/disclosure process somehow.
 
-Some web links to the commits in question:
+The security folks told me that there will be a CVE which will be
+visible with the next scheduled Oracle CPU date (in October 2012).
 
-http://qt.gitorious.org/qt/qt/commit/3488f1db96dbf70bb0486d3013d86252ebf433e0
-http://qt.gitorious.org/qt/qt/commit/d41dc3e101a694dec98d7bbb582d428d209e5401
-http://qt.gitorious.org/qt/qtbase/commit/5ea896fbc63593f424a7dfbb11387599c0025c74
+Thanks,
 
+Frank
+-- 
+Dr.-Ing. Frank Mehnert
+Senior Manager Software Development Desktop Virtualization, VirtualBox
+ORACLE Deutschland B.V. & Co. KG | Werkstr. 24 | 71384 Weinstadt, Germany
 
-Please allocate a CVE for these fixes.
+Hauptverwaltung: Riesstr. 25, D-80992 München
+Registergericht: Amtsgericht München, HRA 95603
 
-Thank you
+Komplementärin: ORACLE Deutschland Verwaltung B.V.
+Hertogswetering 163/167, 3543 AS Utrecht, Niederlande
+Handelsregister der Handelskammer Midden-Niederlande, Nr. 30143697
+Geschäftsführer: Jürgen Kunz, Marcel van de Molen, Alexander van der Ven
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
