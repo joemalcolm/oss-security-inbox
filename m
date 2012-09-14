@@ -1,76 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/8
-Message-ID: <4F6236C2.9010708@redhat.com>
-Date: Thu, 15 Mar 2012 12:36:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/5
+Message-ID: <20120914125554.GB4728@kludge.henri.nerv.fi>
+Date: Fri, 14 Sep 2012 15:55:54 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Luc ABRIC <luc.abric@...ida.fr>, Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, "'jkn@...no'" <jkn@...no>
-Subject: Re: CVE request: eZ Publish: unspecified vulnerability
+Subject: CVE-request: WordPress insufficient permissions verification on XMLRPC interface
 Content-Type: text/plain; charset=utf-8
 
-On 03/15/2012 02:59 AM, Luc ABRIC wrote:
-> Hi,
-> 
-> We identified 2 critical vulnerabilities affecting the eZ Publish application in both commercial and community edition.
-> 
-> eZ Systems Enterprise just opened the following issue regarding the most critical vulnerability:
-> http://issues.ez.no/19238
-> The 2nd issue will lead to another item in the bugtracker as soon as its confirmed by eZ.
-> 
-> Is it enough to request a CVE ID, at least for the first issue?
-> 
-> We're waiting for the editor to roll out a fix before releasing more details (including our exploit).
-> 
-> Regards,
-> Luc ABRIC.
-> 
-> IT Security Expert at Oppida
-> 
-> 6 avenue du Vieil Etang - Bâtiment B
-> 78180 Montigny-le-Bretonneux
-> Phone: +33 (0)1 30 14 19 00
-> Fax: +33 (0)1 30 14 19 09
-> Mobile: +33 (0)6 26 87 62 14
-> Mail: luc.abric@...ida.fr
-> 
-> Website: www.oppida.fr
-> 
-> 
-> 
+Hello,
 
-No more info would be helpful. Some draft guidelines:
+Please assign 2010 CVE-identifier for XML-RPC interface access restriction bypass issue in WordPress.
 
-Information for CVE request, REQUIRED:
+Description: WordPress contains a flaw related to the XML-RPC remote publishing interface. The interface fails to properly enforce access control restrictions, allowing a remote attacker to bypass restrictions and improperly edit, publish or delete posts.
 
-1) Email address of requester (so we can contact them)
-2) Software name and optionally vendor name
-3) At least one of (to determine is this a security issue):
-  1. Type of vulnerability
-  2. Exploitation vectors
-  3. Attack outcome
-4) For Open Source at least one of:
-  1. Link to vulnerable source code or fix
-  2. Link to source code change log
-  3. Link to security advisory
-  4. Link to bug entry
-  5. Request comes from project member (a.k.a. "trust me, it's a problem")
-5) Affected version(s) (3.2.4, 3.x, current version, all current
-releases, something)
-6) Whether or not this has been previously requested (i.e. on OSS-Sec or
-to cve-assign)
-7) Is this an Open Source or commercial software request
-8) Is this an embargoed issue (if yes and commercial: send to
-cve-assign, if yes and open source: send to vs-sec?)
-9) IF multiple issues are listed please list affected versions for each
-issue and/or who reported them (so we can determine CVE split/merge).
+References:
+1. http://osvdb.org/69761
+2. http://core.trac.wordpress.org/changeset/16803
+3. http://secunia.com/advisories/42553/
+4. http://wordpress.org/news/2010/12/wordpress-3-0-3/
+5. http://codex.wordpress.org/Version_3.0.3
 
-Information for CVE request, REQUESTED:
-
-1) More of the above information of course
-2) Software version(s) fixed (if available)
-3) For closed source any of the information from "For Open Source at
-least one of:"
-4) Any additional information
-
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+- Henri Salo
