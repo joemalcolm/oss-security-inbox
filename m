@@ -1,94 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/29/2
-Message-ID: <50B6D47B.2090201@redhat.com>
-Date: Wed, 28 Nov 2012 20:20:27 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/11
+Message-ID: <3978202.EgPzrIJlpi@devil>
+Date: Fri, 14 Sep 2012 20:21:27 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-CC: Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE request for Drupal contributed modules
+Subject: CVE request: bacula: Console ACL Bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 11/28/2012 05:07 PM, Forest Monsen wrote:
-> Here's a batch CVE request for several previously published and 
-> resolved issues (except for SA-CONTRIB-2012-171, which was never 
-> resolved) in contributed modules for the Drupal project:
-> 
-> ###
-> 
-> SA-CONTRIB-2012-166 - Table of Contents - Access Bypass 
-> http://drupal.org/node/1841046
+>From secunia advisory https://secunia.com/advisories/50535/ :
 
-Please use CVE-2012-5584 for this issue.
+The security issue is caused due to an error within the implementation of 
+console ACLs, which can be exploited to gain access to certain restricted 
+functionality and e.g. dump resources.
+The security issue is reported in versions prior to 5.2.11.
 
-> SA-CONTRIB-2012-167 - Mixpanel - Cross site scripting (XSS) 
-> http://drupal.org/node/1853198
+Patch: http://sourceforge.net/projects/bacula/files/bacula/5.2.11/0001-Fix-
+bug-1932-director-crash.patch
 
-Please use CVE-2012-5585 for this issue.
-
-> SA-CONTRIB-2012-168 - Services - Information Disclosure 
-> http://drupal.org/node/1853200
-
-Please use CVE-2012-5586 for this issue.
-
-> SA-CONTRIB-2012-169 - Email Field - Cross Site Scripting and Access
-> bypass http://drupal.org/node/1853214
-
-Please use CVE-2012-5587 for this issue XSS
-Please use CVE-2012-5588 for this issue Access bypass
-
-> SA-CONTRIB-2012-170 - MultiLink - Access Bypass 
-> http://drupal.org/node/1853244
-
-Please use CVE-2012-5589 for this issue.
-
-> SA-CONTRIB-2012-171 - Webmail Plus - SQL injection - (unsupported) 
-> http://drupal.org/node/1853268
-
-Please use CVE-2012-5590 for this issue.
-
-> SA-CONTRIB-2012-172 - Zero Point - Cross Site Scripting (XSS) 
-> http://drupal.org/node/1853376
-
-Please use CVE-2012-5591 for this issue.
-
-> ###
-> 
-> Thanks!
-> 
-> Forest
-
-Summary:
-
-CVE-2012-5584 Drupal SA-CONTRIB-2012-166
-CVE-2012-5585 Drupal SA-CONTRIB-2012-167
-CVE-2012-5586 Drupal SA-CONTRIB-2012-168
-CVE-2012-5587 Drupal SA-CONTRIB-2012-169 XSS
-CVE-2012-5588 Drupal SA-CONTRIB-2012-169 Access Bypass
-CVE-2012-5589 Drupal SA-CONTRIB-2012-170
-CVE-2012-5590 Drupal SA-CONTRIB-2012-171
-CVE-2012-5591 Drupal SA-CONTRIB-2012-172
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQttR7AAoJEBYNRVNeJnmThV0QAKi2PwpbBHGVb4TMhdACMb2E
-fHYS3ZYn8FyyQ0zkFq03I3e4aEqugT0PPSlvtfJ3czR4YrJtwS8oc0rR8AZ6qWh5
-+o/ZLZQeYy0uVFCJY8IAg22chIv1gaR97cBrfOvU0nJdUKxdLDE/K3nZ4BqBNHzT
-/XyZcbyaMbE9dpOGY8UTlnIbZjcUcqfTvdOCZpI557+GQDyvx3bfgKAramfpTHUS
-U1sNUoRyJ+kTaEI4Auj+8mqvURenE6k/Yv9XLPzQ3Jqo7kdaHc5fkoU8nX+SRTmR
-3UnN4cTt8dQ5NxSu5E1ele+oLhTWxgl+WMdyzlTqB6KzgK9MRpPeeK8JRZU7oVYT
-ssChzFYSpLM+Sn2v8D1A+R8fkVqkN9qlkM/Tvz23tSHLcPgXfazjhiJsY0xzRbEG
-Z/yR8Ra9lzV1vuQLGfp3xqV4qVT1CUNOJJUdLvRe8DFcG7dM71AqLu9k0Xkv2ZVm
-cEwJFSJHeu9jtISXZDvyG4zvZ7hY2VI+Irr4v17mUZMxy9qr2rWhRCduXd2Gp5IG
-+EfY7mwiKmOfMhK6lWp1pDbDAXl34fIsz6n0Rb+TfQ2+HaleStg1Qa/9zWrk4Qce
-FLte/nAOTVa5b/FnuWhsbyCCgv6wMAmuJLiey5x7MqX0w3Kd8vrUTk2y4cnrXZG/
-gummamOH+PE8boxI2GTd
-=C7C1
------END PGP SIGNATURE-----
+Can you assign a CVE for this issue?
+-- 
+Agostino Sarubbo / ago -at- gentoo.org
+Gentoo/AMD64 Arch Security Liaison
+GPG: 0x7CD2DC5D
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
