@@ -1,44 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/9
-Message-ID: <20120424143151.GG18917@cmpxchg8b.com>
-Date: Tue, 24 Apr 2012 16:31:51 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/12
+Message-ID: <7287429.viJElHTH7h@devil>
+Date: Fri, 14 Sep 2012 20:49:34 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: bacula: Console ACL Bypass
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 24, 2012 at 09:47:24AM +0200, Tomas Hoger wrote:
-> On Sun, 22 Apr 2012 19:44:56 +0400 Solar Designer wrote:
-> 
-> > Turns out that file was mangled in transit.  Tavis has posted the
-> > correct one on this URL:
-> > 
-> > http://lock.cmpxchg8b.com/openssl-1.0.1-testcase-32bit.crt.gz
-> > 
-> > SHA-256:
-> > ac7acb168a6bfd65375eeec072acbf904f0f10e3bc5588c020aed4df4712d066
-> 
-> If you test your 0.9.x updates with this reproducer from Tavis, you
-> should still expect to see crashes, which are now corrected upstream in
-> 0.9.8w:
-> 
-> http://marc.info/?l=openssl-dev&m=133525318514423&w=2
-> 
-> This incomplete fix got CVE-2012-2131.
-> 
+On Friday 14 September 2012 20:21:27 you wrote:
+> Patch: http://sourceforge.net/projects/bacula/files/bacula/5.2.11/0001-Fix-
+> bug-1932-director-crash.patch
 
-Oops, indeed I didn't test with the 0.9.x build. I had tried (and
-failed) to mail it to openssl-security, but their MTA rejected it,
-so just skipped it as the 1.0.0 patch seemed correct.
-
-At the risk of being flamed for my progressive views on email size,
-please turn up the limits for security aliases! :-)
-
-Tavis.
-
+Wrong link.
+This is the right commit code:
+http://www.bacula.org/git/cgit.cgi/bacula/commit/?id=67debcecd3d530c429e817e1d778e79dcd1db905
 
 -- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
+Agostino Sarubbo / ago -at- gentoo.org
+Gentoo/AMD64 Arch Security Liaison
+GPG: 0x7CD2DC5D
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
