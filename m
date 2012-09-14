@@ -1,25 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/7
-Message-ID: <4FFD76D2.306@redhat.com>
-Date: Wed, 11 Jul 2012 14:51:30 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/7
+Message-ID: <505367B9.8010402@redhat.com>
+Date: Fri, 14 Sep 2012 11:22:01 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+CC: Frank Mehnert <frank.mehnert@...cle.com>, halfdog <me@...fdog.net>, Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE for Virtualbox 0x8 DoS?
 Content-Type: text/plain; charset=utf-8
 
-On 07/10/2012 04:30 PM, Sebastian Krahmer wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->> If this is not for upstream and you only need it working on a particular
->> distro with glibc, then why not use __secure_getenv()?
->
-> Indeed, if it is a exported symbol on the glibc versions we ship,
-> we should consider this. I remember a discussion that it was somehow
-> not available in the past.
+On 09/14/2012 04:22 AM, Frank Mehnert wrote:
+> Hi,
+> 
+> On Friday 14 September 2012 12:12:44 halfdog wrote:
+>> Hi,
+>> 
+>> Kurt Seifried wrote:
+>>> On 09/13/2012 10:59 AM, Raphael Geissert wrote:
+>>>> Hi,
+>>>> 
+>>>> Has a CVE id been finally assigned for the following issue? 
+>>>> http://www.halfdog.net/Security/2012/VirtualBoxSoftwareInterrupt0x8Guest
+>>>>
+>>>> 
+Crash/
+>>>> 
+>>>> Regards,
+>>> 
+>>> - From that page:
+>>> 
+>>> 20120910: Oracle security decides, that CVE should be assigned
+>>> 
+>>> Can Oracle/halfdog.net communicate the CVE to the community 
+>>> please?
+>> 
+>> I do not have that information yet. The information about
+>> intended CVE assignment till October update was exchanged off
+>> list, contact on Oracle side was Mr. Mehnert.
+>> 
+>> Early disclosure of this issue was due to misconception, that
+>> Oracle would have assessed severity, need for CVE and
+>> communication of disclosure timeline before releasing patch as
+>> maintenance release. The early disclosure mixed up the whole 
+>> reporting/analyze/classify/CVE-assign/disclosure process
+>> somehow.
+> 
+> The security folks told me that there will be a CVE which will be 
+> visible with the next scheduled Oracle CPU date (in October 2012).
+> 
+> Thanks,
+> 
+> Frank
 
-__secure_getenv() is declared and documented in <stdlib.h>, so it's not 
-likely to go away, especially if we start using it more widely.
+Thanks, can you post it here so people have something to reference and
+we can close this thread? Thanks.
 
--- 
-Florian Weimer / Red Hat Product Security Team
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
+iQIcBAEBAgAGBQJQU2e5AAoJEBYNRVNeJnmTD7wQAMFy2eqSVy/XBWQzwl6i4wap
++0Kz9AHVvz0AQJK982Tgle1BThA+fWI+6k6lyg6YqUaCHJbPQqMk3UqwashZXVzA
+xueoAZ+vn9vF6MONad8kHjyxS/lX5uSKULH2D5syr0GUe3pp5Mvji33vJ9odEQ7f
+M6n3DcLaY9vkfmWiwL43eHD4fz4ZDyxJR69JowMkAHgpcH8wjq4y4cGo3AbgI0Bv
+CjUT1pQbUtYiibK9oL398z6AACkFtEkP23kMyKNOdvj9Di3plSuRoTrvFNlAsFdH
+tJo/gk7tbaiRCsss7nBYYUVWfi3l4VbsWv+0hXmFeCPyrYkJDYUKGP5QhxkCnW4H
+DFHXBhLRHrQxNMT8Krp1iEXrh4UoHMgRA5nknPakt4RCl/H0blQXWAZuFWgqObw0
+WcvVSFGehfdmmWI1qoZpKzEocszvkGkacRjcasGzAde1CeN1NW9w7XsHn0iHozOd
+iPBp/Ri2Nb+DHHQsmcIkRyag7SKnjcGFUIaIkz5l/PUUN/q2qcqri3r9j/J+8LM9
+UmIrIOYz5SnNamdyysnCt03ctX9jSkhN9eI97FXrjkvITHTMDp0D3koK+8nCj675
+8ZRkwLEXo9H9Z6TMsb/Iqu0KDu+461RjkT7R374oGEfflw0SG5pgeevR31ztxP+q
++o70FT8CvgZAM2tVW/3F
+=jsAK
+-----END PGP SIGNATURE-----
