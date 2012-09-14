@@ -1,34 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/5
-Message-ID: <1560967117.37798326.1353942386093.JavaMail.root@redhat.com>
-Date: Mon, 26 Nov 2012 10:06:26 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request -- Symfony (php-symfony-symfony) < 1.4.20: Ability to read arbitrary files on the server, readable with the web server privileges
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/3
+Message-ID: <5053031C.1050009@halfdog.net>
+Date: Fri, 14 Sep 2012 10:12:44 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
+CC: Raphael Geissert <geissert@...ian.org>,  Frank Mehnert <frank.mehnert@...cle.com>
+Subject: Re: CVE for Virtualbox 0x8 DoS?
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  Symfony upstream has released 1.4.20 version:
-  [1] http://symfony.com/blog/security-release-symfony-1-4-20-released
+Hi,
 
-correcting one security flaw:
-"An information disclosure flaw was found in the way Symfony,
-an open-source PHP web framework, sanitized certain HTTP POST
-request values. A remote attacker could use this flaw to obtain
-(unauthorized) read access to arbitrary system files, readable
-with the privileges of the web server process."
+Kurt Seifried wrote:
+> On 09/13/2012 10:59 AM, Raphael Geissert wrote:
+>> Hi,
+> 
+>> Has a CVE id been finally assigned for the following issue? 
+>> http://www.halfdog.net/Security/2012/VirtualBoxSoftwareInterrupt0x8GuestCrash/
+>
+>>  Regards,
+> 
+> - From that page:
+> 
+> 20120910: Oracle security decides, that CVE should be assigned
+> 
+> Can Oracle/halfdog.net communicate the CVE to the community
+> please?
 
-References:
-[2] https://bugs.gentoo.org/show_bug.cgi?id=444696
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=880240
+I do not have that information yet. The information about intended CVE
+assignment till October update was exchanged off list, contact on
+Oracle side was Mr. Mehnert.
 
-Relevant upstream patch:
-[4] http://trac.symfony-project.org/changeset/33598
+Early disclosure of this issue was due to misconception, that Oracle
+would have assessed severity, need for CVE and communication of
+disclosure timeline before releasing patch as maintenance release. The
+early disclosure mixed up the whole
+reporting/analyze/classify/CVE-assign/disclosure process somehow.
 
-Could you allocate a CVE id for this?
+Kind regards,
+hd
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAlBTAwwACgkQxFmThv7tq+4lIgCgkmZSHkMtjlGniMX2CtPjpOB5
+HCAAoIrIkR0HEoM++CwjGpOSZSpes6Gj
+=+uCU
+-----END PGP SIGNATURE-----
