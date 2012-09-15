@@ -1,36 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/6
-Message-ID: <20120106180903.3a112f28@z6v6uh99fl>
-Date: Fri, 6 Jan 2012 18:09:03 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/15/1
+Message-ID: <20120915023658.GA7076@openwall.com>
+Date: Sat, 15 Sep 2012 06:36:58 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: wordpress plugin timthumb before 2.0 remote code execution
+Cc: argyros.george@...il.com, Aggelos Kiayias <aggelos@...yias.com>, Vladimir Vorontsov <vladimir.vorontsov@...ec.ru>, gifts <gifts.antichat@...il.com>
+Subject: Re: Randomness Attacks Against PHP Applications
 Content-Type: text/plain; charset=utf-8
 
-Am Thu, 03 Nov 2011 09:56:13 -0600
-schrieb Kurt Seifried <kseifried@...hat.com>:
-
-> On 11/03/2011 05:23 AM, Hanno Böck wrote:
-> > http://markmaunder.com/2011/08/01/zero-day-vulnerability-in-many-wordpress-themes/
-> >
-> > Seems this never got a CVE. German newspage heise reports lots of
-> > hacked wordpress blogs, most likely due to this issue:
-> > http://www.heise.de/security/meldung/Tausende-WordPress-Blogs-zur-Verbreitung-von-Schadcode-genutzt-1370660.html
-> >
-> Yes I remember this one (I actually had a friend's WordPress get
-> nailed via this).
+On Wed, Aug 22, 2012 at 02:31:07PM +0400, Solar Designer wrote:
+> On Thu, Aug 09, 2012 at 11:19:14AM -0700, Yves-Alexis Perez wrote:
+> > Paper authors tried to port this to PHP security team, but it seems the
+> > answer was that it was an application problem.
 > 
-> Fix: http://code.google.com/p/timthumb/
+> Here's a vulnerability in and attack on session IDs of PHP proper:
 > 
-> Please use CVE-2011-4106 for this issue.
+> http://blog.ptsecurity.com/2012/08/not-so-random-numbers-take-two.html
+> 
+> This is not exactly the same topic (PHP apps vs. PHP itself), yet it's
+> closely related and the timing of it was provoked by the same research.
 
-Mitre site on this is empty till today:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4106
+FWIW, here's a PHP mt_rand() seed cracker that I wrote:
 
-At least a short explanation and the three links would be nice.
+http://download.openwall.net/pub/projects/php_mt_seed/
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+It finds possible seeds given the very first mt_rand() output after
+being seeded with mt_srand().
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Here's a sample run.  First, generate a sample "random" number (using
+PHP 5.3.x in this case):
+
+$ php5 -r 'mt_srand(1234567890); echo mt_rand(), "\n";'
+1328851649
+
+Now build and run the cracker:
+
+$ make
+gcc -Wall -O2 -fomit-frame-pointer -fopenmp php_mt_seed.c -o php_mt_seed
+$ time ./php_mt_seed 1328851649
+Found 0, trying 654311424 - 671088639, speed 13631488 seeds per second
+seed = 658126103
+Found 1, trying 1224736768 - 1241513983, speed 13585543 seeds per second
+seed = 1234567890
+Found 2, trying 4278190080 - 4294967295, speed 13617003 seeds per second
+Found 2
+
+real    5m15.397s
+user    41m58.185s
+sys     0m0.044s
+
+In 5 minutes of real time (on an FX-8120 CPU), it found the original
+seed, another seed that also produces the same mt_rand() output, and it
+searched the rest of the 32-bit seed space (not finding other matches).
+
+Note that this is a lot slower than crackers for LCG PRNG seeds, which
+were crackable in way under 1 second even in 1990s (IIRC, some IDS
+products did that for potential Back Orifice backdoor traffic, to detect
+it regardless of password used).  There's a 397 iterations loop per seed
+tested here.  Of course, a rainbow table would be quick.
+
+Here's an OpenCL implementation by Gifts:
+
+https://github.com/Gifts/pyphp_rand_ocl
+
+According to Gifts, this one tests 190 million seeds per second on a GTX
+560 Ti, for a total running time of 22 seconds.
+
+Maybe these PoCs will help convince someone.
+
+Alexander
