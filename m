@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/11
-Message-ID: <4FDB93A7.2050308@redhat.com>
-Date: Fri, 15 Jun 2012 13:57:27 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/15/2
+Message-ID: <505411D9.8040705@redhat.com>
+Date: Fri, 14 Sep 2012 23:27:53 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Stefan Cornelius <scorneli@...hat.com>
-CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Behdad Esfahbod <behdad@...dad.org>
-Subject: Re: CVE Request -- mosh (and probably vte too): mosh server DoS (long loop) due improper parsing of terminal parameters in terminal dispatcher
+To: oss-security@...ts.openwall.com
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: Re: CVE request: bacula: Console ACL Bypass
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/15/2012 11:59 AM, Stefan Cornelius wrote:
-> On 05/22/2012 07:39 PM, Kurt Seifried wrote:
->>> B) vte issue: ============= 
->>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871#5
+On 09/14/2012 12:49 PM, Agostino Sarubbo wrote:
+> On Friday 14 September 2012 20:21:27 you wrote:
+>> Patch:
+>> http://sourceforge.net/projects/bacula/files/bacula/5.2.11/0001-Fix-
+>>
+>> 
+bug-1932-director-crash.patch
 > 
->>> there is similar issue in vte too (Gnome bug private for now):
->>>  https://bugzilla.gnome.org/show_bug.cgi?id=676090
-> 
->>> Cc-ed Behdad Esfahbod on this post to clarify, what are the 
->>> upstream plans regarding this report in vte and if the CVE id
->>> has been already assigned for it.
-> 
->> Will wait for confirmation.
-> 
-> 
-> Hi,
-> 
-> I think http://www.openwall.com/lists/oss-security/2012/05/23/6 is
-> a reasonable confirmation. Additionally, upstream fixed this in
-> 0.32.2: 
-> http://ftp.gnome.org/pub/GNOME/sources/vte/0.32/vte-0.32.2.news
-> 
-> In case you agree that all requirements are fulfilled, could you
-> please assign a CVE to the B) part?
-> 
-> Thanks in advance and kind regards,
+> Wrong link. This is the right commit code: 
+> http://www.bacula.org/git/cgit.cgi/bacula/commit/?id=67debcecd3d530c429e817e1d778e79dcd1db905
 
-Please use CVE-2012-2738 for this issue.
+http://www.bacula.org/en/?page=news
+Version
+> 
+5.2.11 version is a bug fix release.
+Make dump_resource respect console ACL's (security fix)
+
+Please use CVE-2012-4430 for this issue.
 
 
 - -- 
@@ -47,19 +37,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJP25OnAAoJEBYNRVNeJnmTfRAQAKhtUxuCxr9qGvssp2dsF7+h
-eKMGKwEiQfof8CSZJYh6TBVA1ywb0RbIBK8te6pRN7HFBSTQYttrwiVXtfNStXLQ
-V5+5/IE6oCwtBduVlGpITnnzCMn5BjHvXGbrzQacAQdeaBaOfHgLP+oBXZmrqrkO
-Hj/eIsFBwAyY0ETC/FrEuZFAf544bE3P2Az8dn8qWRS3jrIisVAZHlbvjHoTzy/W
-ALJ2JPbuMQC+dlS9AyRwFr9b3q0D9E8pe03HxDUCTCltjizgsSDx+wNO1HeDSpAD
-XBShdMrnXPddznjVQi2Kx3dY23upa+595Qq2lAOVun9bq/BBQDw0Xj2XjuO0olS5
-n/rPoT4QK6wyX+KGM4tCDQWa3d3BCv3HvaDqYp1DVJhdS3AzU/lml4JCiuif0i3H
-gB8Sa0ybK78WbUDU9+C1OacpZBMbsyCDunQ/YPLwERwVn7QqJvXrvx6sQjzNI77e
-BuLGM3JZFQhOYyCemUsdkNRK7ocf2eGWQQi2mybKwmy4ph48WLhY1PIRLqhqZjUw
-T/i6xeaY4G30h/p6A9Cecb/Teormse8yhUY3s0EJ/3Hxc09cfrNo0hsaRDr7haEm
-/OJzH635LqUwndsXyO6qMRK3I7rY5JS0ztSEGbSlAo2iTrBDfjBxMjkpt2STBqZH
-V9Cldd7gAN5PADYDzdiz
-=b9Af
+iQIcBAEBAgAGBQJQVBHZAAoJEBYNRVNeJnmTClQP+gJTYbyU3TQRwlS+Uw/WRVgY
+VLXgNj/LyL79xeUWnHFp9G5PQ0/PBke3pQUcN4m0aRj5VGXO+qncFZzApxwUtrFJ
+n6Ryyi9Pimhyt/P3AEJtM0GrNO0foicumrT1RmV+JABW32zm93xAgXWaj5CnPj0F
+x58Ze2OQf/+ISYik2QwARpTDn2xC7OkCwzuirDrG1ZcqTRwuZz3dlfVAHb7P61dD
+h75B2MPa4YT8qkwnetF4GpIB26jPe3jOnTgnZ0G7eJrw4SpXzQYRBKPcxTRVCICz
+xKWR8/RhRxb70+7FIx48MsnlNLZEflN96yuzJTeugSeGNBTAxw95GPsxnAy+dz94
+RfUpoPd2oYh9W1LnlzgUOc3lAb7fL8pEij1F1z/L+Iww/25lT9tNOn4yx6pFcjny
+454rEMs/BXuzXcoSqQSDeiUuOm8xlaWjNCAXc0QNoSE0FmEn7UR6laNOL/TG18XP
+9KFywuzFHC5nJ0htOj9hCYGWs1JG/uQcIxTJ5gbIBUc5nVPedyoCKDGn8H0wNGHN
+9mJ3oU3ue7j7Vht0bc6dAVTOUP+GGdw7WpW3oYbIdAzrInfLa+rMJUpz0OXR4+7R
+IA5nyDD4Vet1opUTF7pLXQfubAbqJQNJXg/r4haVZPuBNJO/dwB03ksZXP0xHbcr
+cCsGatjD/vv7whBjAoPP
+=jLGU
 -----END PGP SIGNATURE-----
