@@ -1,79 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/11
-Message-Id: <E1TfaBF-00067d-Un@xenbits.xen.org>
-Date: Mon, 03 Dec 2012 17:51:45 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 29 (CVE-2012-5513) - XENMEM_exchange may overwrite hypervisor memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/17/2
+Message-ID: <20120917072337.GC24015@suse.de>
+Date: Mon, 17 Sep 2012 09:23:37 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: libdbus CVE-2012-3524 fix
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-	     Xen Security Advisory CVE-2012-5513 / XSA-29
-                             version 3
+On Fri, Sep 14, 2012 at 10:15:42AM +0200, Tomas Hoger wrote:
+> On Wed, 12 Sep 2012 16:04:33 +0200 Sebastian Krahmer wrote:
+> 
+> > The recently discussed libdbus getenv() issue [1] turned out
+> > to be easily exploitable on various UNIX systems, including
+> > some Linux distributions. Common attack vectors are Xorg and
+> > spice-gtk via auto-launching [2].
+> > Properly patching requires fixes for libdbus and libgio,
+> > depending on which you link your suid binaries.
+> 
+> [ ... ]
+> 
+> > [2] http://stealth.openwall.net/null/dzug.c
+> 
+> Sebastian, can you confirm that this summary completely covers all your
+> findings?
 
-           XENMEM_exchange may overwrite hypervisor memory
+Um, I focused on the suid/daemons that we have on our dist, so theres
+indeed no claim that the list of attack vectors is complete. I cannot
+check any library/pam combination of any UNIX that is outthere. :)
+Though, I tried to be as 'complete as possible'.
+For example, you can also use su as attack vector if you run systemd
+(via pam_systemd and su keeping a parent pam-session as root, triggering
+pam_systemd.so load with user given environment; loading libdbus).
+And finally pam_ck_connector, but AFAIS this cannot be triggered
+as it only runs via login or login managers which dosn't leave room
+for DBUS_SYSTEM_BUS_ADDRESS passing so easily.
+But you know, these guys are maybe more clever than us and they get more
+money for their results. Thats the A in APT. :)
 
-UPDATES IN VERSION 3
-====================
+> 
+> There are problems with handling of DBUS_SYSTEM_BUS_ADDRESS environment
+> variable in both libdbus and glib/libgio when used in a privileged
+> (setuid or setgid) application.
+> 
+> libdbus is currently tracked via CVE-2012-3524, with two known attack
+> variants:
+> - unixexec:, which is only supported in recent dbus versions (1.5+ from
+>   what I can see)
+> - autolaunch: combined with malicious PATH setting, leading to
+>   execution of the attacker's dbus-launch.  This affects pre-1.5 dbus
+>   versions too.
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The handler for XENMEM_exchange accesses guest memory without range checking
-the guest provided addresses, thus allowing these accesses to include the
-hypervisor reserved range.
-
-IMPACT
-======
-
-A malicious guest administrator can cause Xen to crash.  If the out of address
-space bounds access does not lead to a crash, a carefully crafted privilege
-escalation cannot be excluded, even though the guest doesn't itself control
-the values written.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are vulnerable.
-
-The vulnerability is only exposed to PV guests.
-
-MITIGATION
-==========
-
-Running only HVM guests, or ensuring that PV guests only use trusted kernels,
-will avoid this vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa29-4.1.patch             Xen 4.1.x
-xsa29-4.2-unstable.patch    Xen 4.2.x, xen-unstable
+Ok, there is also 'nonce-tcp' which you could use to dump (parts of) secret files.
+There is also the option to use a UNIX socket that you dont have write permission
+to, writing semi-garbage to it (with root peer credentials), maybe triggering
+actions in daemons that are 'unexpected'.
 
 
-$ sha256sum xsa29*.patch
-7246a5534bc1e6a47bb6a860f6eb61c8353ad8b46209310783e823b4f7e2eae8  xsa29-4.1.patch
-54dcd3ac5c84903bfb04f8591107a74c27b079815f2c6843212e05f776873c73  xsa29-4.2-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+> 
+> libgio got CVE-2012-4425:
+> - autolaunch: or empty address, combined with PATH setting, similar to
+>   the second libdbus variant
 
-iQEcBAEBAgAGBQJQvOJ3AAoJEIP+FMlX6CvZ7u8IAM01+jNn5fwdGmoo/LIdH885
-nWr5aSc+qMqVuSvla0KKh1SOLFaVWFgovLN1Sfu2hAxLgrK3HxN86RqHU/vLo0k0
-KTFM+9xQlxhJNQzyQSiDryH/qSrHTQI6ERxUEYgfjtTieK8y30SZqkd6jBmwoir/
-nAMMP8oFmVevM2WfYEWjNNsWPaiUlUYP13qxiWGPcGzhcNNKRwcmrIY4N+F6kHID
-Ipl4l5vhoeSaQ0fKkcJKHa+3QGd+706jHZ5VTCwPdWBCnBJLFuMWbc2UlyIg2EB9
-N+3Olwf3jCF0zIzBJkomA+FAg+D7kw31DCjc+y1PdGIyuoMkk+JRwYFVkZcKLi4=
-=pD8C
------END PGP SIGNATURE-----
+Yes, but I didnt check libgio explicitely. There might be other issues lurking inside
+libgio.
 
-Download attachment "xsa29-4.1.patch" of type "application/octet-stream" (2087 bytes)
+Sebastian
 
-Download attachment "xsa29-4.2-unstable.patch" of type "application/octet-stream" (2099 bytes)
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
