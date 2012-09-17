@@ -1,25 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/3
-Message-ID: <20120912133814.5015da7a@orange>
-Date: Wed, 12 Sep 2012 13:38:14 +0300
-From: Hanno Boeck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVEs for wordpress 3.4.2 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/17/6
+Message-Id: <201209171158.22436.geissert@debian.org>
+Date: Mon, 17 Sep 2012 11:58:20 -0500
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com, argyros george <argyros.george@...il.com>
+Cc: Aggelos Kiayias <aggelos@...yias.com>, Vladimir Vorontsov <vladimir.vorontsov@...ec.ru>, gifts <gifts.antichat@...il.com>
+Subject: Re: Randomness Attacks Against PHP Applications
 Content-Type: text/plain; charset=utf-8
 
-I can't find CVEs assigend for the issues fixed in wordpress 3.4.2.
+On Monday 17 September 2012 10:36:46 Josh Bressers wrote:
+> > On Wed, Aug 22, 2012 at 02:31:07PM +0400, Solar Designer wrote:
+> > Maybe these PoCs will help convince someone.
 
-http://wordpress.org/news/2012/09/wordpress-3-4-2/
+Just a note regarding the sessionid case: IIRC since 5.4 
+session.entropy_length is set to, erm, 32 (bytes.)
+Basically it appends N bytes from /dev/urandom to the other input for the 
+digest and then it is computed.
+(why 32 bytes, and why still use md5 by default, well...)
 
+> I'm skeptical they will. I've been doing a lot of work for the past year
+> on various proactive security efforts. I keep coming back to two basic
+> things.
+[...]
+> Has anyone tried to talk to them about this further to see if
+> the issue is they don't understand, or are they being stubborn?
 
-Sadly, the information is quite limited:
-"Version 3.4.2 also fixes a few security issues and contains some
-security hardening. The vulnerabilities included potential privilege
-escalation and a bug that affects multisite installs with untrusted
-users. These issues were discovered and fixed by the WordPress security
-team."
+I think the main problem is education. For instance, there is no word about 
+mt_rand not being suitable for criptographic pourposes (much less what that 
+means.)
+Sure, searching for "crypt" in the page shows a few comments saying that it 
+isn't suitable, but:
+a) there are far more "encryption functions", "random password generators", 
+and similar stuff in the comments than those that do mention its weaknesses. 
+b) the official documentation itself doesn't say a word. It should say it loud 
+and clear.
 
-I suggest assigning two:
-1. potential privilege escalation
-2. problem with untrusted users on multisite installations
-unless someone has more information.
+Comments should also be moderated. Many examples available as comments in 
+the documentation are incorrect.
+
+Now, pointing it out is easy, but somebody has to actually do the work. 
+*That* is another issue.
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
