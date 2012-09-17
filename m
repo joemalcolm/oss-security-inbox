@@ -1,30 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/04/6
-Message-ID: <20120204044724.GA20171@openwall.com>
-Date: Sat, 4 Feb 2012 08:47:24 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/17/5
+Message-ID: <1375435.1OnNeEHNAf@devil>
+Date: Mon, 17 Sep 2012 18:36:25 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+Subject: CVE request: OptiPNG Palette Reduction Use-After-Free Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 03, 2012 at 11:20:35PM -0500, Michael Gilbert wrote:
-> I was trying to keep it simple.  I got the impression that your
-> concern was potentially needing to enter a passphrase to individually
-> decrypt each message.  Anyway, just throw in the appropriate munpack
-> calls above to handle the mime parts.
+Quoting the secunia advisory:
 
-There was not exactly a "concern" - I just said that I was not aware of
-a tool to do the job, and I still am not.  What you're proposing is to
-write an own tool (script).
+Description
+A vulnerability has been reported in OptiPNG, which can be exploited by 
+malicious people to potentially compromise a user's system.
 
-Thank you for the suggestion to use munpack, this is something I had not
-considered.  I was thinking of options that would produce (almost) the
-exact same mbox that we'd get if mail to subscribers were not encrypted.
-With the munpack approach, I think it might be trickier to arrive "back"
-at that (same original MIME types for each section, etc.)  I understand
-that initially this kind of correctness might not matter - you just want
-to see that the list is not being misused and that's all.
+The vulnerability is caused due to a use-after-free error related to the 
+palette reduction functionality. No further information is currently 
+available.
 
-This can definitely be done.  I just have other tasks to work on...
+Success exploitation may allow execution of arbitrary code.
 
-Alexander
+The vulnerability is reported in version 0.7, 0.7.1, and 0.7.2.
+
+
+Solution
+Update to version 0.7.3.
+
+
+Code commit:
+http://optipng.hg.sourceforge.net/hgweb/optipng/optipng/rev/f1d5d44670a2
+
+Additional info:
+Version 0.6.5 and earlier are not affected.
+-- 
+Agostino Sarubbo / ago -at- gentoo.org
+Gentoo/AMD64 Arch Security Liaison
+GPG: 0x7CD2DC5D
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
