@@ -1,19 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/3
-Message-ID: <d5e2ddf8-1040-4cc4-b024-b92efeb70a03@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Wed, 28 Mar 2012 01:29:27 -0400 (EDT)
-From: David Jorm <djorm@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Struts2 xsltResult local code execution flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/17/4
+Message-ID: <50574684.3010607@onsec.ru>
+Date: Mon, 17 Sep 2012 19:49:24 +0400
+From: Vladimir Vorontsov <vladimir.vorontsov@...ec.ru>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com, argyros.george@...il.com,  Aggelos Kiayias <aggelos@...yias.com>, gifts <gifts.antichat@...il.com>
+Subject: Re: Randomness Attacks Against PHP Applications
 Content-Type: text/plain; charset=utf-8
 
-A local code execution flaw has been identified in Struts2. I cannot find a CVE ID for it anywhere.
+Hi all,
 
-Original report: http://seclists.org/bugtraq/2012/Mar/110
-OSVDB: http://osvdb.org/80547
-X-Force: http://xforce.iss.net/xforce/xfdb/74319
+Main problem is code architecture.
+Do not use many calls of various rand() for random generating.
 
-Thanks
--- 
-David Jorm / Red Hat Security Response Team
+i.e. vulnerable code:
+function generateRandomString($len){
+	$chars = "qwertyuiopasdfghjklzxcvbnm,.1234567890";
+	for($i=0;$i<$len;$i++){
+		$rstr.=$chars[mt_rand(0,strlen($chars))];
+	}
+	return $rstr;
+}
 
+it is relevant for all pseudo-random generator, not only PHP.
+
+p.s. slides 18-21
+http://www.slideshare.net/d0znpp/dcg7812-cryptographyinwebapps-14052863
+
+15.09.12, 6:36, Solar Designer пишет:
+> On Wed, Aug 22, 2012 at 02:31:07PM +0400, Solar Designer wrote:
+>> On Thu, Aug 09, 2012 at 11:19:14AM -0700, Yves-Alexis Perez wrote:
+>>> Paper authors tried to port this to PHP security team, but it seems the
+>>> answer was that it was an application problem.
+>>
+>> Here's a vulnerability in and attack on session IDs of PHP proper:
+>>
+>> http://blog.ptsecurity.com/2012/08/not-so-random-numbers-take-two.html
+>>
+>> This is not exactly the same topic (PHP apps vs. PHP itself), yet it's
+>> closely related and the timing of it was provoked by the same research.
+> 
+> FWIW, here's a PHP mt_rand() seed cracker that I wrote:
+> 
+> http://download.openwall.net/pub/projects/php_mt_seed/
+> 
+> It finds possible seeds given the very first mt_rand() output after
+> being seeded with mt_srand().
+> 
+> Here's a sample run.  First, generate a sample "random" number (using
+> PHP 5.3.x in this case):
+> 
+> $ php5 -r 'mt_srand(1234567890); echo mt_rand(), "\n";'
+> 1328851649
+> 
+> Now build and run the cracker:
+> 
+> $ make
+> gcc -Wall -O2 -fomit-frame-pointer -fopenmp php_mt_seed.c -o php_mt_seed
+> $ time ./php_mt_seed 1328851649
+> Found 0, trying 654311424 - 671088639, speed 13631488 seeds per second
+> seed = 658126103
+> Found 1, trying 1224736768 - 1241513983, speed 13585543 seeds per second
+> seed = 1234567890
+> Found 2, trying 4278190080 - 4294967295, speed 13617003 seeds per second
+> Found 2
+> 
+> real    5m15.397s
+> user    41m58.185s
+> sys     0m0.044s
+> 
+> In 5 minutes of real time (on an FX-8120 CPU), it found the original
+> seed, another seed that also produces the same mt_rand() output, and it
+> searched the rest of the 32-bit seed space (not finding other matches).
+> 
+> Note that this is a lot slower than crackers for LCG PRNG seeds, which
+> were crackable in way under 1 second even in 1990s (IIRC, some IDS
+> products did that for potential Back Orifice backdoor traffic, to detect
+> it regardless of password used).  There's a 397 iterations loop per seed
+> tested here.  Of course, a rainbow table would be quick.
+> 
+> Here's an OpenCL implementation by Gifts:
+> 
+> https://github.com/Gifts/pyphp_rand_ocl
+> 
+> According to Gifts, this one tests 190 million seeds per second on a GTX
+> 560 Ti, for a total running time of 22 seconds.
+> 
+> Maybe these PoCs will help convince someone.
+> 
+> Alexander
+> 
+> 
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (244 bytes)
