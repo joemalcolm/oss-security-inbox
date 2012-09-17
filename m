@@ -1,33 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/1
-Message-ID: <87lihjscfo.fsf@gnu.org>
-Date: Mon, 13 Aug 2012 11:22:51 +0800
-From: Chong Yidong <cyd@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/17/1
+Message-ID: <5056A26B.5020905@moodle.com>
+Date: Mon, 17 Sep 2012 12:09:15 +0800
+From: Michael de Raadt <michaeld@...dle.com>
 To: oss-security@...ts.openwall.com
-Subject: Security flaw in GNU Emacs file-local variables
+Subject: Moodle security notifications public
 Content-Type: text/plain; charset=utf-8
 
-Paul Ling has found a security flaw in the file-local variables code in
-GNU Emacs.  We are preparing a new Emacs release to address this flaw,
-and would like to request a CVE.
+The following security notifications have now been made public. Thanks 
+to OSS members for their cooperation.
 
-When the Emacs user option `enable-local-variables' is set to `:safe'
-(the default value is t), Emacs should automatically refuse to evaluate
-`eval' forms in file-local variable sections.  Due to the bug, Emacs
-instead automatically evaluates such `eval' forms.  Thus, if the user
-changes the value of `enable-local-variables' to `:safe', visiting a
-malicious file can cause automatic execution of arbitrary Emacs Lisp
-code with the permissions of the user.
+=======================================================================
+MSA-12-0051: File upload size constraint issue
 
-The bug is present in Emacs 23.2, 23.3, 23.4, and 24.1.
+Topic:             /repository/repository_ajax.php allows you to supply
+                    -1 for "maxbytes" and side step moodle file size
+                    restrictions
+Severity/Risk:     Minor
+Versions affected: 2.3 to 2.3.1+, 2.2 to 2.2.4+
+Reported by:       Andrew Davis
+Issue no.:         MDL-30792
+CVE Identifier:    CVE-2012-4400
+Changes (master):  http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-30792
+Description:
+It was possible for a user to manipulate script parameters to upload a
+file larger than set limits.
 
-Attached are patches to fix this bug for Emacs 23.4 and Emacs 24.1,
-written by Glenn Morris.  (The 23.4 patch should apply to the rest of
-the Emacs 23.x series.)
+=======================================================================
+MSA-12-0052: Course topics permission issue
 
-Bug tracker ref: http://debbugs.gnu.org/cgi/bugreport.cgi?bug=12155
+Topic:             Permissions problems in topic course format
+Severity/Risk:     Minor
+Versions affected: 2.3 to 2.3.1+, 2.2 to 2.2.4+
+Reported by:       Alexander Bias
+Issue no.:         MDL-28207
+CVE Identifier:    2012-4401
+Changes (master):  http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28207
+Description:
+Users with course editing capabilities, but without permission to
+show/hide topics and set the current topic were able to complete
+these actions under certain conditions.
+
+=======================================================================
+MSA-12-0053: Blog file access issue
+
+Topic:             'publishstate' === 'public'
+Severity/Risk:     Minor
+Versions affected: 2.3 to 2.3.1+, 2.2 to 2.2.4+, 2.1 to 2.1.7+
+Reported by:       Kyle Decot
+Issue no.:         MDL-34585
+CVE Identifier:    CVE-2012-4407
+Changes (master):  http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-34585
+Description:
+Files embedded as part of a blog were being delivered without checking
+the publication state properly.
+
+=======================================================================
+MSA-12-0054: Course reset permission issue
+
+Topic:             Course reset not protected by proper capability
+Severity/Risk:     Minor
+Versions affected: 2.3 to 2.3.1+, 2.2 to 2.2.4+, 2.1 to 2.1.7+
+Reported by:       Rex Lorenzo
+Issue no.:         MDL-34519
+CVE Identifier:    CVE-2012-4408
+Changes (master):  http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-34519
+Description:
+The course reset link was protected by a correct permission but the
+reset page itself was being checked for a different permission.
+
+=======================================================================
+MSA-12-0055: Web service access token issue
+
+Topic:             A web service token allows the user to run functions
+                    from any external service, not just those linked to
+                    the external service the token is for
+Severity/Risk:     Serious
+Versions affected: 2.3 to 2.3.1+, 2.2 to 2.2.4+, 2.1 to 2.1.7+
+Reported by:       Nathan Mares
+Issue no.:         MDL-34368
+CVE Identifier:    CVE-2012-4402
+Changes (master):  http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-34368
+Description:
+Users with permission to access multiple services were able to use a
+token from one service to access another.
+
+=======================================================================
+MSA-12-0056: Information leak in drag-and-drop
+
+Topic:             Information disclosure in yui_combo.php
+Severity/Risk:     Minor
+Versions affected: 2.3 to 2.3.1+
+Reported by:       Mark Baseggio
+Issue no.:         MDL-35168
+CVE Identifier:    CVE-2012-4403
+Changes (master):  http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-35168
+Description:
+The drag-and-drop script was responding to bad requests with
+information that included the full path to scripts on the server.
 
 
-View attachment "local-vars-patch-23.4.patch" of type "text/x-diff" (1373 bytes)
-
-View attachment "local-vars-patch-24.1.patch" of type "text/x-diff" (1374 bytes)
