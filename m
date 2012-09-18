@@ -1,17 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/01/2
-Message-ID: <CAHmME9qPZH_hPGC0V2uv4Jg7rhBENT-dEa9P8aj6_a3_7VOQ3g@mail.gmail.com>
-Date: Thu, 1 Mar 2012 16:43:17 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/18/5
+Message-ID: <20120918145332.GJ4492@redhat.com>
+Date: Tue, 18 Sep 2012 08:53:32 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE request: init script x11-common creates directories in insecure manners
+Subject: Re: Re: note on gnome shell extensions
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 1, 2012 at 13:11, vladz <vladz@...zero.fr> wrote:
->
-> Yes, this is a Debian / Ubuntu specific issue.
->
-This issue might be mitigated by kernel.yama.protected_stick_symlinks,
-which is present at least on Ubuntu.
+* [2012-09-18 08:43:29 +0200] Sebastian Krahmer wrote:
 
+>Yes, Vincent Untz did:
+>
+>https://bugzilla.gnome.org/show_bug.cgi?id=684215
+
+Perfect, thank you for that.
+
+>On Mon, Sep 17, 2012 at 02:28:23PM -0600, Vincent Danen wrote:
+>> * [2012-09-13 17:43:16 -0600] Kurt Seifried wrote:
+>>
+>> Has anyone reported this to upstream yet?
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
