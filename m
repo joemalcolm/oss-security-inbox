@@ -1,43 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/22/3
-Message-ID: <20120422154456.GA4014@openwall.com>
-Date: Sun, 22 Apr 2012 19:44:56 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/18/2
+Message-ID: <5057CDFD.3020400@redhat.com>
+Date: Mon, 17 Sep 2012 19:27:25 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Tavis Ormandy <taviso@...xchg8b.com>
-Subject: Re: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
+CC: Agostino Sarubbo <ago@...too.org>
+Subject: Re: CVE request: OptiPNG Palette Reduction Use-After-Free Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 22, 2012 at 04:23:11PM +0400, Solar Designer wrote:
-> Tavis posted a followup to my message, where he attached a testcase that
-> was unfortunately above oss-security's message size limit - so the
-> message did not make it to the list.  I've gzip-compressed the file and
-> have re-attached it to this message now (it's only 3 KB when compressed).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Turns out that file was mangled in transit.  Tavis has posted the
-correct one on this URL:
+On 09/17/2012 10:36 AM, Agostino Sarubbo wrote:
+> Quoting the secunia advisory:
+> 
+> Description A vulnerability has been reported in OptiPNG, which can
+> be exploited by malicious people to potentially compromise a user's
+> system.
+> 
+> The vulnerability is caused due to a use-after-free error related
+> to the palette reduction functionality. No further information is
+> currently available.
+> 
+> Success exploitation may allow execution of arbitrary code.
+> 
+> The vulnerability is reported in version 0.7, 0.7.1, and 0.7.2.
+> 
+> 
+> Solution Update to version 0.7.3.
+> 
+> 
+> Code commit: 
+> http://optipng.hg.sourceforge.net/hgweb/optipng/optipng/rev/f1d5d44670a2
+>
+>  Additional info: Version 0.6.5 and earlier are not affected.
+> 
 
-http://lock.cmpxchg8b.com/openssl-1.0.1-testcase-32bit.crt.gz
+Please use CVE-2012-4432 for this issue.
 
-SHA-256: ac7acb168a6bfd65375eeec072acbf904f0f10e3bc5588c020aed4df4712d066
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-$ gzip -vl openssl-1.0.1-testcase-32bit.crt.gz
-method  crc     date  time           compressed        uncompressed  ratio uncompressed_name
-defla 879c374f Apr 22 18:57             1389433          1431655797  99.9% openssl-1.0.1-testcase-32bit.crt
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-With this one, I am able to trigger a problem on 32-bit (OpenSSL 1.0.0d
-with unrelated patches):
-
-$ zcat openssl-1.0.1-testcase-32bit.crt.gz | openssl x509 -inform DER
-*** glibc detected *** free(): invalid pointer: 0x45ff0008 ***
-Aborted
-
-That's in an OpenVZ container with privvmpages barrier at 3 GB.
-With 2 GB, I was getting:
-
-$ zcat openssl-1.0.1-testcase-32bit.crt.gz | openssl x509 -inform DER
-unable to load certificate
-3083651232:error:07069041:memory buffer routines:BUF_MEM_grow_clean:malloc failure:buffer.c:152:
-3083651232:error:0D06B041:asn1 encoding routines:ASN1_D2I_READ_BIO:malloc failure:a_d2i_fp.c:229:
-
-Alexander
+iQIcBAEBAgAGBQJQV839AAoJEBYNRVNeJnmT664QAI85o2ckKjTZ1uSNU0H4YliD
+L4RnENEPjiLwxXAaP5iHGvstnPHqGCHPrdRgjlVKe4FokQ+FIN8JR5/+wNpVTTDp
+gNs3A/jeuIM3EvJHBeJt3nI+372GwqyBJkd1YiRA/4NRVj/9bByw1e/sK2He0LLn
+t8q0GybXhGZBXngYQqgXRrP9EQq96eWzRE7gAkoq4+kkL9SsozNGcJxJDytQCJJT
+IckohRLWjqLLcFuhY1QfZ4YsJrGequbtTkq91iNZwOf6WVPoK00b90CsqGhqDehF
+jLlcopouSlvEKHr1jGpd2YS/m7EEfiix5h4kMzy8mcC+1Amg1iL6eKUauRn6IqwZ
+H8XKX8Tb35eHhspX1nTPR4fV8EbBtsNuwPuu86YP3V5tJhphTwixWQvDU4zPCAEi
++ecmEsib79BvJdp3v92i8yyytxUP0e6XltMBK488bkB2qmskkwYAByHD/tb/mbBf
+YcMJ3bE+57hpXH1j1acOKG/6Sa1pS5UJk92CI6AKzPMVwLX0Gon/OEKbNAy0OuI9
+UpEvkETnzw+hjed1EzV5J1bNFaQroUk587PkiN5Judm+uIj4lakduli3n8LdZn1H
+dAlHiDWkW6xv0jOl13J6vaAljDBMc4+sZnbUtWMzxlwYxc3KUl1sz3iVHXr7iKnO
+ZsN/rnFLGSTCZSSokbmP
+=Fnct
+-----END PGP SIGNATURE-----
