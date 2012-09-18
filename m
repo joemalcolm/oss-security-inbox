@@ -1,131 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/10
-Message-ID: <5040F9B7.8040903@redhat.com>
-Date: Fri, 31 Aug 2012 11:51:51 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/18/1
+Message-ID: <5057CCBB.6010702@redhat.com>
+Date: Mon, 17 Sep 2012 19:22:03 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: CVE Request -- MediaWiki 1.19.2 and 1.18.5 multiple security flaws
+CC: Raphael Geissert <geissert@...ian.org>, argyros george <argyros.george@...il.com>, Aggelos Kiayias <aggelos@...yias.com>, Vladimir Vorontsov <vladimir.vorontsov@...ec.ru>, gifts <gifts.antichat@...il.com>
+Subject: Re: Randomness Attacks Against PHP Applications
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/31/2012 08:34 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On 09/17/2012 10:58 AM, Raphael Geissert wrote:
+> On Monday 17 September 2012 10:36:46 Josh Bressers wrote:
+>>> On Wed, Aug 22, 2012 at 02:31:07PM +0400, Solar Designer
+>>> wrote: Maybe these PoCs will help convince someone.
 > 
-> multiple security flaws were corrected in recent (1.19.2, and
-> 1.18.5) versions of MediaWiki, a wiki engine:
-
-Top posting and in line:
-
-CVE-2012-4377 Stored XSS via a File::link to a non-existing image
-
-CVE-2012-4378 Multiple DOM-based XSS flaws due improper filtering of
-uselang parameter
-
-CVE-2012-4379 CSRF tokens, available via API, not protected when
-X-Frame-Options headers used
-
-CVE-2012-4380 Did not prevent account creation for IP addresses
-blocked with GlobalBlocking
-
-CVE-2012-4381 Password saved always to the local MediaWiki database
-
-CVE-2012-4382 Metadata about blocks
-
-> 1) Stored XSS via a File::link to a non-existing image Upstream
-> bug: [1] https://bugzilla.wikimedia.org/show_bug.cgi?id=39700
+> Just a note regarding the sessionid case: IIRC since 5.4 
+> session.entropy_length is set to, erm, 32 (bytes.) Basically it
+> appends N bytes from /dev/urandom to the other input for the digest
+> and then it is computed. (why 32 bytes, and why still use md5 by
+> default, well...)
 > 
-> Upstream patch against the 1.19 version: [2]
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=39700#c11
+>> I'm skeptical they will. I've been doing a lot of work for the
+>> past year on various proactive security efforts. I keep coming
+>> back to two basic things.
+> [...]
+>> Has anyone tried to talk to them about this further to see if the
+>> issue is they don't understand, or are they being stubborn?
 > 
-> Upstream patch against the 1.18 version: [3]
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=39700#c12
-> 
-> References: [4]
-> http://www.gossamer-threads.com/lists/wiki/mediawiki/295767 [5]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330 [6]
-> https://bugzilla.redhat.com/show_bug.cgi?id=853409
+> I think the main problem is education. For instance, there is no
+> word about mt_rand not being suitable for criptographic pourposes
+> (much less what that means.)
 
-Please use CVE-2012-4377 for this issue.
+Agreed. One example of a similar problem with good images displaying
+the issue clearly:
 
-> 2) Multiple DOM-based XSS flaws due improper filtering of uselang
-> parameter in combination with JS gadgets Upstream bug: [7]
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=37587
-> 
-> Relevant upstream patch: [8]
-> https://gerrit.wikimedia.org/r/#/c/13336/
-> 
-> References: [9]
-> http://www.gossamer-threads.com/lists/wiki/mediawiki/295767 [10]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330 [11]
-> https://bugzilla.redhat.com/show_bug.cgi?id=853417
+http://lcamtuf.coredump.cx/newtcp/
 
-Please use CVE-2012-4378 for this issue.
-
-> 3) CSRF tokens, available via API, not protected when
-> X-Frame-Options headers used Upstream bug: [12]
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=39180
+> Sure, searching for "crypt" in the page shows a few comments saying
+> that it isn't suitable, but: a) there are far more "encryption
+> functions", "random password generators", and similar stuff in the
+> comments than those that do mention its weaknesses. b) the official
+> documentation itself doesn't say a word. It should say it loud and
+> clear.
 > 
-> Relevant upstream patch: [13]
-> https://gerrit.wikimedia.org/r/#/c/20472/
+> Comments should also be moderated. Many examples available as
+> comments in the documentation are incorrect.
 > 
-> References: [14]
-> http://www.gossamer-threads.com/lists/wiki/mediawiki/295767 [15]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330 [16]
-> https://bugzilla.redhat.com/show_bug.cgi?id=853426
-
-Please use CVE-2012-4379 for this issue.
-
-> 4) Did not prevent account creation for IP addresses blocked with
-> GlobalBlocking Upstream bug: [17]
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=39824
+> Now, pointing it out is easy, but somebody has to actually do the
+> work. *That* is another issue.
 > 
-> Upstream patch against the 1.18 version: [18]
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=39824#c0
-> 
-> References: [19]
-> http://www.gossamer-threads.com/lists/wiki/mediawiki/295767 [20]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330 [21]
-> https://bugzilla.redhat.com/show_bug.cgi?id=853440
-
-Please use CVE-2012-4380 for this issue.
-
-> 5) Password saved always to the local MediaWiki database and 
-> possibility to use old passwords for non-existing accounts in the
-> external auth system Upstream bug: [22]
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=39184
-> 
-> Upstream patch: [23]
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=39184#c1
-> 
-> References: [24]
-> http://www.gossamer-threads.com/lists/wiki/mediawiki/295767 [25]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330 [26]
-> https://bugzilla.redhat.com/show_bug.cgi?id=853442
-
-Please use CVE-2012-4381 for this issue.
-
-> 6) Metadata about blocks, hidden by a user with suppression
-> rights, was visible to administrators Upstream bug: [27]
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=39823
-> 
-> Patch for 1.18 branch: [28]
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=39823#c1
-> 
-> References: [29]
-> http://www.gossamer-threads.com/lists/wiki/mediawiki/295767 [30]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=686330 [31] No Red
-> Hat bugzilla entry, since this did not affect MediaWiki versions,
-> as shipped across various Red Hat products.
-
-Please use CVE-2012-4382 for this issue.
-
-> Could you allocate CVE ids for these?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+> Cheers,
 > 
 
 
@@ -137,17 +63,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQQPm3AAoJEBYNRVNeJnmTQ/kP/RcvMqfAx+L+PD78RPypQYnd
-zZdoe5InbG+taAScuCn8hK1E5CSUJwD2tW6hCHIL20w7iIeoJGYQX9VjdMf27nK5
-dXhYODptEX/StCXkzXo79/KThEn7gneaolO0wNdhC7Nl+Jp2+0bFtVxbqOCcBVPn
-z3GKzQ4dvxJbFSMH7Id+agXVuPEaQHuz2+0cg20xfUow7YfWAcmdlm+ARuLN1abh
-MGlSOoY7QGRxTX/PqXeduaPWAu+Fsz+lPPC13kCXtNAhRysQeFdIcAodnRZ7SRuR
-mnj2YfzS+XjzjIF596G6a9n/YyAtWebkJedg6k9q3BuUbSGe/9nHxn3F0EDID+wT
-SoeCvRCDs6WfvJ5OP0ZYeE+z2boVpzA2L12JfR1iW22zYy/Y779yeS3dsjAtB7NE
-EZ5RXch/WEuHSeIa0CFFFEPL6Y76TpM5oZXp/R+MNiIzwwCcfUMI47P9sUsklsaM
-7lMjguJoT5xVGiTc8SnyY5k2MFt3iDU5+zpaG8k1qYq7Vj1pq3byeLhDsmI3I3+w
-ZCcuCH8/Mh7a9hGviLYB5AVZoCkB9qSYoSmHbfudq05rGsru+tk/NOa1oUC9LNUn
-AkYTlfssO8rBSeZ2Lg7MlHAmzmMz8QTf3OGA/E8RPkTv1qXqJvcAf+SyMe9a16Ob
-XtXUaz1oZxoBqRc1W/x+
-=CMss
+iQIcBAEBAgAGBQJQV8y7AAoJEBYNRVNeJnmTMsYP/jMjcOslDu6l8aoxpSqNcFmB
+hdRaVRNxBh3A/IK0Vg0syR1vmP8ShFlJCEZ9XUc+8v0E/s75EO6fWNsntKTSZY5s
+A646R13ENc46aPhBi2feO7PX/bVTsJVvwVMMrKLlwTWIGoyfbemAjkWRE5VBwr6x
+U+R1tp97wpK65LGjwmImgzCJMUqBXGuemm+jpJTMBltcACKvGp7h28wfJL66UR76
+mSV0F7YisjZ3gKHv5DmKxlzVRNx9KcKM3qaMjWVuAIicMz3CBsbJ68WXVRbraV0Q
+dXtkh5Uo/dfnfjXC6rPAMwkqOb7tdIB076alxTq16C2hbXrUVgroysJ4C4v16XTk
+qkZOH6jcZYWiQai/tDQA/DNAsKbBTNj8N6JRX7y1i0d8l1SGv+fbGtG2qTeZEs5R
+XhoVxKpEQUWrEU5yi7ToVasjqXUrE4cvD3n6RUX0s6IODjbm6Zbow/+F4PWIFJWF
+wr2GC9nGn3RKicLxi+/mUWgtukZljfneYJu0i+R9DPDjwd0IxgpaWre3c//JurK5
+AVX9clRdEEUZD4chzqDRdzv2xmJLDcevOo29s2XC8DzePWGRO+D7t+RhQkQ4C7JB
+AaZyGKCr9tosPKUVWm7UGIAWxvHaIBsvfcH6V+lGSMkeyCIeAYFV+cWjgP/aZnno
+Xeicv9GFtZPRw5ThRyFi
+=D8kI
 -----END PGP SIGNATURE-----
