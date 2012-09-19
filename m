@@ -1,52 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/31/3
-Message-ID: <CA+O_gMzcN-qMjRPCwEyYUJb2+MKNARm2DJ3ZWeT886T-EVCXyg@mail.gmail.com>
-Date: Tue, 31 Jul 2012 12:22:16 +1200
-From: Robbie MacKay <robbie@...ahidi.com>
-To: oss-security@...ts.openwall.com
-Cc: Heather Leson <HLeson@...ahidi.com>
-Subject: CVE request for Ushahidi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/19/2
+Message-ID: <1695043470.1858431.1348078239757.JavaMail.root@redhat.com>
+Date: Wed, 19 Sep 2012 14:10:39 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Damien Stuart <dstuart@...uart.org>, Michael Rash <mbr@...herdyne.org>
+Subject: CVE Request -- fwknop 2.0.3: Multiple security issues
 Content-Type: text/plain; charset=utf-8
 
-The Ushahidi team have been notified of the following security
-vulnerabilities thanks to volunteers from OWASP Portland.
-These will be fixed in the upcoming 2.5 release.
-Could you please allocate CVEs for the following issues?
+Hello Kurt, Steve, vendors,
 
-* Multiple SQL injections (Reported by Timothy D. Morgan, Kees Cook,
-postmodern )
-https://github.com/ushahidi/Ushahidi_Web/commit/fdb48d1
-https://github.com/ushahidi/Ushahidi_Web/commit/6f6a919
-https://github.com/ushahidi/Ushahidi_Web/commit/4764792
-https://github.com/ushahidi/Ushahidi_Web/commit/d954093
-https://github.com/ushahidi/Ushahidi_Web/commit/3301e48
-https://github.com/ushahidi/Ushahidi_Web/commit/68d9916
-https://github.com/ushahidi/Ushahidi_Web/commit/e0e2b66
-https://github.com/ushahidi/Ushahidi_Web/commit/a11d43c
-https://github.com/ushahidi/Ushahidi_Web/commit/3f14fa0
+  multiple securit issues have been corrected in 2.0.3 upstream version of
+fwknop (http://www.cipherdyne.org/blog/categories/software-releases.html):
+---------------------------------------------------------------------------
+1) multiple DoS / code execution flaws:
+   Upstream patch:
+   [1] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=d46ba1c027a11e45821ba897a4928819bccc8f22
 
-* Missing authentication on comments, reports, email API calls
-(Reported by Kees
-Cook, Dennison Williams)
-https://github.com/ushahidi/Ushahidi_Web/commit/4c24325
-https://github.com/ushahidi/Ushahidi_Web/commit/f67f4ad
+2) server did not properly validate allow IP addresses from malicious
+   authenticated clients
+   Upstream patch:
+   [2] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=f4c16bc47fc24a96b63105556b62d61c1ba7d799
 
-* User details exposed in comments API (Discovered by internal dev team)
-https://github.com/ushahidi/Ushahidi_Web/commit/529f353
+3) strict filesystem permissions for various fwknop files are not verified
+4) local buffer overflow in --last processing with a maliciously constructed ~/.fwknop.run file
+   Upstream patch:
+   [3] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=a60f05ad44e824f6230b22f8976399340cb535dc
 
-* Admin user hijacking through the installer (Reported by Wil Clouser)
-https://github.com/ushahidi/Ushahidi_Web/commit/7892559
-https://github.com/ushahidi/Ushahidi_Web/commit/fcdad03
+For the remaining ones:
+=======================
+5) several conditions in which the server did not properly throw out maliciously constructed variables in the access.conf file
+   Upstream patch:
+   [4] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=e2c0ac4821773eb335e36ad6cd35830b8d97c75a
 
-* Stored XSS on member profile pages (Reported by Amy K. Farrell)
-https://github.com/ushahidi/Ushahidi_Web/commit/00eae4f
+   Note: This doesn't look like a security flaw (previously possible to provide malicious values
+   to access.conf file, but I assume it would required administrator privileges).
 
-Thanks in advance,
+6) [test suite] Added a new fuzzing capability to ensure proper server-side input validation.
+   Note: Test-suite add-on, no CVE needed.
 
-Robbie Mackay
+7) Fixed RPM builds by including the $(DESTDIR) prefix for uninstall-local and
+   install-exec-hook stages in Makefile.am.
+   Upstream patch:
+   [5] http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=c5b229c5c87657197b0c814ff22127d870b55753
+   
+   Note: Also doesn't look like a fix for a security flaw.
 
-Software Developer, External Projects
-Ushahidi Inc
-e: robbie@...ahidi.com
-skype: robbie.mackay
+Could you allocate CVE ids for issues 1), 2), 3), and 4) ?
 
+[Cc-ed Damien and Michael from fwknop upstream to confirm
+they {the first four} should receive a CVE identifier].
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
