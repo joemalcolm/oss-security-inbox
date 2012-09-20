@@ -1,18 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/5
-Message-ID: <20120820103750.GA30925@kludge.henri.nerv.fi>
-Date: Mon, 20 Aug 2012 13:37:50 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Roundcube XSS issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/5
+Message-ID: <20120920155444.6d81422b@redhat.com>
+Date: Thu, 20 Sep 2012 15:54:44 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, Florian Weimer <fweimer@...hat.com>, Oracle Security Team <secalert_us@...cle.com>
+Subject: Re: CVE Request (minor) -- JVM: heap memory disclosure (possibly various JDKs)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 20, 2012 at 11:45:36AM +0200, Hanno Böck wrote:
-> Sure?
+On Tue, 11 Sep 2012 17:37:11 -0400 (EDT) Steven M. Christey wrote:
 
-Sorry I failed badly once again.
+> The bug report appears to be describing a narrow class of
+> vulnerability that could affect multiple codebases that implement
+> Java Virtual Machines, not just Oracle's; if so, then a separate CVE
+> would be needed for each REPORTED codebase, and CVE-2012-4416 is ONLY
+> for bug id 7196857 for the Oracle-supported JVM.
 
->From SA50279 http://trac.roundcube.net/ticket/1488613 "The vulnerability is confirmed in version 0.8.0. Other versions may also be affected." 
->From SA50212 http://trac.roundcube.net/ticket/1488519 "The vulnerability is reported in versions prior to 0.8.0."
+Out of curiosity, what is the definition of "reported codebase" here?
+I'm asking as 2 CVEs were assigned, one for Oracle JVM and one for
+OpenJDK JVM.  Those codebases are not unrelated though, both problems
+are quite likely to exist because of a bug in a shared code, which
+usually implies single CVE.
 
-- Henri Salo
+The current practice is that Java CVEs assigned by Oracle and used for
+Oracle Java SE are also used to refer to fixes applied to the
+open-sourced (OpenJDK) or licensed (IBM Java) JDK versions that share
+the vulnerable code.  For example, a single CVE-2012-4681 was used for
+the recent 0day flaw in Oracle Java SE 7, IBM Java SE 7 and OpenJDK 7.
+Is the use of CVE-2012-4681 for all 3 considered wrong?
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
