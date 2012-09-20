@@ -1,52 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/4
-Message-ID: <20120522091849.GC12178@stro.at>
-Date: Tue, 22 May 2012 11:18:49 +0200
-From: maximilian attems <max@...o.at>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Cc: oss-security@...ts.openwall.com, klibc@...or.com
-Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/3
+Message-ID: <505A84F2.3020103@redhat.com>
+Date: Wed, 19 Sep 2012 20:52:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request Smarty / php-Smarty: XSS in Smarty exception messages
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 18 May 2011, Dan Rosenberg wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On Wed, May 18, 2011 at 4:29 PM, maximilian attems <max@...o.at> wrote:
-> > On Wed, May 18, 2011 at 04:13:05PM -0400, Dan Rosenberg wrote:
-> >> Might it be worth fixing the insecure temporary file usage?
-> >>
-> >> 122         snprintf(fn, sizeof(fn), "/tmp/net-%s.conf", dev->name);
-> >> 123         f = fopen(fn, "w");
-> >>
-> >> What if someone else has already created that file, or put a symlink
-> >> or hard link there?
-> >
-> > for the initramfs case I don't see how.
-> > outside of initramfs usage I'd agree that this needs fixing.
-> >
+On 09/19/2012 11:43 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> Right, this only applies after boot is done.
-
-As klibc main target is initramfs usage this use case hasn't come up much,
-so wasn't top priority. Just got reminded today by checking ipconfig
-backlog patches.
- 
-> >> What if someone overwrites your string with
-> >> command injection characters despite your stripping?
-> >
-> > please be more verbose, what example do you have in mind?
-> >
+> a cross-site scripting (XSS) flaw was found in the way Smarty 
+> sanitized exception messages: [1]
+> http://secunia.com/advisories/50589/ [2]
+> http://code.google.com/p/smarty-php/source/browse/trunk/distribution/change_log.txt
+>
+>  Upstream patch: [3]
+> http://code.google.com/p/smarty-php/source/detail?r=4658
 > 
-> Sorry for not being clear.  If you're concerned about scripts parsing
-> this file while it has command injection strings in it, what's to stop
-> someone from putting a malicious file there if one doesn't already
-> exist?  It sounds like the scripts that depend on this file should
-> probably be fixed here, or the file itself should be moved to a
-> location where it's not writable by unprivileged users.
- 
-ipconfig in latest klibc git uses /run as you suggested.
-http://git.kernel.org/?p=libs/klibc/klibc.git;a=summary
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+> P.S.: Going through the OSS archive from 2012-09 it doesn't seem 
+> this has got a CVE identifier yet (but didn't look to posts from
+> previous months).
 
-thank you.
+I checked all CVE's for 2012/2011, this is new.
 
--- 
-maks
+Please use CVE-2012-4437 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQWoTyAAoJEBYNRVNeJnmTfMwP/jB4EoJKog4+DFg1Hn0RgEBE
+O1AxVy0T3ARaNMB3r1Nyc2bQv+G04x+uqJtGVc+OiEwTiDhDHkuHLakMHZ9NwpvH
+eHV8SyuIgasIJauLHf1aNp5iKsEmrc1302tBJX96DQF397r6aR33NwkDGvC0n1RO
+Fwdx/++IKjeKjih5gZPngEm42qes9XXECjQ8/Z6xGoYcm7UAJxdXAeYf427Kb2FK
+pZHFWPDFNb/uzwAF1hlmVhSzud87n9PyqRATtVn0EwpNhAyRoAQQ0ES9b+7wdg7P
+qN++F3lpf1ei0fQ/TewIOeuVhX56dHTkALFDaHx7QAo9X7WGNyW6505wJmIm/2cV
+OG4Z9uzQJV9q3DkuAzNl6olGi6d1E4IDdZoM+jV3A4p3OI3VG4vCGD2okVEeMnlQ
+LNgaOLOgn963P0YInNQOd2FfpvI41WuzMm0nm4s/9crS72tWsAXYhdujrv7k3R4g
+RMyRv8ljKZ3OvXHeYieSI3/cdm++Fa3gSLApIQH6BLFC6ParFubk/nHE5XtzURZl
+J5E60R3EgrwXDSO0foV4MgyBxd5RwkpUzlwQLm+mDLOe7ZQonqZEQToddMH3Ohai
+jSd8D1GEUUM1W/z+qkOmIK7+GTVluPpYiZNWpgfZPvVBmzlfk4zwa7aZPkZqtSAW
+H+CjF6SZlZMtGqwiT4F3
+=I8Kn
+-----END PGP SIGNATURE-----
