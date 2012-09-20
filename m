@@ -1,62 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/6
-Message-ID: <295875159.13372001.1349970479301.JavaMail.root@redhat.com>
-Date: Thu, 11 Oct 2012 11:47:59 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, Florian Weimer <fweimer@...hat.com>, Doug Ledford <dledford@...hat.com>, Sean Hefty <sean.hefty@...el.com>
-Subject: CVE Request -- librdmacm (one issue) / ibacm (two issues)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/1
+Message-ID: <505A6D2C.4070208@redhat.com>
+Date: Wed, 19 Sep 2012 19:11:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Michael Rash <mbr@...herdyne.org>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Damien Stuart <dstuart@...uart.org>
+Subject: Re: Re: CVE Request -- fwknop 2.0.3: Multiple security issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  multiple issues has been found in tools enabling InfiniBand functionality:
+On 09/19/2012 03:26 PM, Michael Rash wrote:
+> On Sep 19, 2012, Jan Lieskovsky wrote:
+> 
+>> Hello Kurt, Steve, vendors,
+>> 
+>> multiple securit issues have been corrected in 2.0.3 upstream
+>> version of fwknop
+>> (http://www.cipherdyne.org/blog/categories/software-releases.html):
+>>
+>> 
+-
+---------------------------------------------------------------------------
+>> 1) multiple DoS / code execution flaws: Upstream patch: [1]
+>> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=d46ba1c027a11e45821ba897a4928819bccc8f22
+>>
+>>
+>> 
+2) server did not properly validate allow IP addresses from malicious
+>> authenticated clients Upstream patch: [2]
+>> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=f4c16bc47fc24a96b63105556b62d61c1ba7d799
+>>
+>>
+>> 
+3) strict filesystem permissions for various fwknop files are not verified
+>> 4) local buffer overflow in --last processing with a maliciously
+>> constructed ~/.fwknop.run file Upstream patch: [3]
+>> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=a60f05ad44e824f6230b22f8976399340cb535dc
+>>
+>>
+>> 
+For the remaining ones:
+>> ======================= 5) several conditions in which the server
+>> did not properly throw out maliciously constructed variables in
+>> the access.conf file Upstream patch: [4]
+>> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=e2c0ac4821773eb335e36ad6cd35830b8d97c75a
+>>
+>>
+>> 
+Note: This doesn't look like a security flaw (previously possible to
+provide malicious values
+>> to access.conf file, but I assume it would required administrator
+>> privileges).
+>> 
+>> 6) [test suite] Added a new fuzzing capability to ensure proper
+>> server-side input validation. Note: Test-suite add-on, no CVE
+>> needed.
+>> 
+>> 7) Fixed RPM builds by including the $(DESTDIR) prefix for
+>> uninstall-local and install-exec-hook stages in Makefile.am. 
+>> Upstream patch: [5]
+>> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=c5b229c5c87657197b0c814ff22127d870b55753
+>>
+>>  Note: Also doesn't look like a fix for a security flaw.
+>> 
+>> Could you allocate CVE ids for issues 1), 2), 3), and 4) ?
+>> 
+>> [Cc-ed Damien and Michael from fwknop upstream to confirm they
+>> {the first four} should receive a CVE identifier].
+> 
+> I would say that the first four should receive CVE identifiers,
+> yes. For 5), it could be a security issue in older versions of
+> fwknop if the umask at install time was permissive enough to allow
+> non-admin users to modify the access.conf file, but this is
+> unlikely I think so probably doesn't deserve a CVE identifier.
 
-Issue #1 librdmacm - Tried to connect to port 6125 if ibacm.port was not found:
-===============================================================================
-  A security flaw was found in the way librdmacm, a userspace RDMA Communication
-Managment API allowing to specify connections using TCP/IP addresses even though
-it opens RDMA specific connections, performed binding to the underlying ib_acm
-service (librdmacm used default port value of 6125 to bind to ib_acm service).
-An attacker able to run a rogue ib_acm service could use this flaw to make
-librdmacm applications to use potentially bogus address resolution information.
+I will be doing the CVE assignments in a bit (need to check up on
+these) but as far as access to config files due to bad umask, that's a
+configuration problem that doesn't deserve a CVE in this instance (and
+in most instances).
 
-References: https://bugzilla.redhat.com/show_bug.cgi?id=865483
-Upstream patch: http://git.openfabrics.org/git?p=~shefty/librdmacm.git;a=commitdiff;h=4b5c1aa734e0e734fc2ba3cd41d0ddf02170af6d
+> Thanks,
+> 
 
-Credit: This issue was discovered by Florian Weimer of Red Hat Product Security Team.
 
-Issue #2 ibacm - DoS (ib_acm deamon crash) by joining responses for multicast destinations:
-===========================================================================================
-  A denial of service flaw was found in the way ibacm, an InfiniBand communication manager
-assistant, performed management of reference counts for multicast connections. The default
-reference count value for multicast connection is set to zero and when the multicast connection
-got released, an attempt was made to free it, possibly resulting in ib_acm service / daemon
-crash.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-References: https://bugzilla.redhat.com/show_bug.cgi?id=865492
-Relevant upstream patch: http://git.openfabrics.org/git?p=~shefty/ibacm.git;a=commit;h=c7d28b35d64333c262de3ec972c426423dadccf9
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-Issue previously corrected by upstream and its security implications pointed out later
-by Florian Weimer of Red Hat Product Security Team.
-
-Issue #3 ibacm - ib_acm service files created with world writable permissions (DoS):
-====================================================================================
-  A security flaw was found in the way ibacm, an InfiniBand communication manager
-assistant, created files used by ib_acm service - they were created with world
-writable permissions. A local attacker could use this flaw to 1) overwrite content
-of ib_acm daemon log file or 2) overwrite content of ib_acm daemon ibacm.port file
-(ability to mask certain actions or cause ib_acm to run on non-default port).
-
-References: https://bugzilla.redhat.com/show_bug.cgi?id=865499
-Relevant upstream patch: http://git.openfabrics.org/git?p=~shefty/ibacm.git;a=commit;h=d204fca2b6298d7799e918141ea8e11e7ad43cec
-
-Credit: This issue was discovered by Florian Weimer of Red Hat Product Security Team.
-
---
-
-Could you allocate CVE identifiers for these?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJQWm0sAAoJEBYNRVNeJnmT3JMP/0yrgcn2A9uSN23JDxzbwdCa
+R5pS/umjjxagwPNEt5BheLVQkKb8BUU2ly9Q6Vrz8mIOfz5td0xP7QGJYsZ4NGSA
+M/s9pR96fjaGR2NQhxEqu6udpWdHcfVRWHzVVbtWxhIfskP7IBauMotMNeZnDAqD
+zPFwj4UsX6HNznRwxY7O6V20bOs5+/dwI2H0N9YLKiVghEK9eTjh/4usLYjKvufy
+8p+Hqxeq8LRDh4Y32pSKGK8YQEtuqsXd6pKEPV3gT6qLi3wAnd5gfzYFphL2o5/2
+pzTtWQ8Jh2VfqIOeHp53xdvHV2nhh6T1njHOLDEgVi6/24n3kRPNXomFeymoLDZw
+exl9HBB91QInW2/R9COl4WHvOwSOeAu12o99PytjhmtLzJ/D7CWQw0M1ZwVdPBL6
+ahQeNNgHOUtzx0pGoQSFKUDKBX+aW0ktcOHeYfucMEj0n6+u7gfpBiMuo19a+wuc
+uI/4M7A1/dNRW829Zet+fUOGj28nFqLwKaymIWP47rVSqUKmSDKUHlCjN4OBp0Ky
+LpS4ne0ggccXg2LxFpQIDXtOQyB1BlOxmz0C6hrV0XySLSNSgFG5l2R3RMF5v3fq
+u3g9l1EA40U3irtdeI1VvgdX50/qG0KEd/ZABuYDwjP/wGVgz0OjeKvVPb3THmEt
+dgCSkWB2agBxqrFn9oek
+=gKL9
+-----END PGP SIGNATURE-----
