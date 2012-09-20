@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/9
-Message-Id: <6E6DFCC9-6BFC-4774-BCF7-903C61418524@nginx.com>
-Date: Thu, 12 Apr 2012 18:21:18 +0400
-From: Andrew Alexeev <andrew@...nx.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/6
+Message-ID: <20120920161014.2a4f9d0c@redhat.com>
+Date: Thu, 20 Sep 2012 16:10:14 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: nginx security advisory: mp4 module vulnerability, CVE-2012-2089
+Cc: geissert@...ian.org
+Subject: Re: CVE request: opencryptoki insecure lock files handling
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Wed, 12 Sep 2012 12:42:17 -0500 Raphael Geissert wrote:
 
-The nginx team has released stable version 1.0.15, and development
-version 1.1.19 of its nginx web server, which include a fix for a
-vulnerability discovered by Matthew Daley in nginx's standard mp4
-pseudo-streaming module.
+> > When do pkcsslotd does that, and which version?  It does not happen
+> > on its start or stop, or when client as pkcsconf queries for some
+> > data.
+> 
+> I apparently confused it with another set of CreateXProcLock and 
+> XProcUnLock's. pkcsslotd indeed doesn't seem to chmod spinloc.
 
-The following CVE-ID has been used: CVE-2012-2089 (privately
-assigned earlier by Kurt Seifried):
-
-http://nginx.org/en/security_advisories.html
-
-Description: a specially crafted mp4 file might allow to overwrite
-memory locations in a worker process, if ngx_http_mp4_module is 
-used, potentially resulting in arbitrary code execution.  The mp4
-module is not built in by default, and should be explicitly
-configured to be included in nginx.  By default nginx worker
-processes run under non-privileged user account.
-
-The problem affects nginx versions newer than 1.1.3, 1.0.7, built with
-the ngx_http_mp4_module, and "mp4" directive in the configuration.
-To check if mp4 module is included in nginx build, use "nginx -V".
-
-Users of nginx and mp4 pseudo-streaming module are kindly advised
-to upgrade to the latest nginx versions, or apply the following patch:
-
-http://nginx.org/download/patch.2012.mp4.txt
-
-
+Ok, so I think we need 1 CVE for the two insecure temporary file uses,
+unless we want to split each temporary file issue under a separate
+CVE.  I don't believe there's a real need to assign CVE for 2.4.1
+(which did not improve things on systems with world writable /var/lock)
+or 2.4.2 (which re-opens the attack for pkcs11 group members on systems
+with restricted /var/lock, but improves things on systems with world
+writable /var/lock).
 
 -- 
-Andrew Alexeev
-@nginxorg
-
+Tomas Hoger / Red Hat Security Response Team
