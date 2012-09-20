@@ -1,31 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/3
-Message-ID: <50A36229.7020908@redhat.com>
-Date: Wed, 14 Nov 2012 10:19:37 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: kseifried@...hat.com
-CC: oss-security@...ts.openwall.com
-Subject: Re: Gajim fails to handle invalid certificates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/7
+Message-ID: <20120920173506.GB32624@kludge.henri.nerv.fi>
+Date: Thu, 20 Sep 2012 20:35:06 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: security@...key-project.com
+Subject: CVE-request: monkey fails to drop supplemental groups when lowering privileges
 Content-Type: text/plain; charset=utf-8
 
-On 11/14/2012 08:19 AM, Kurt Seiifried wrote:
+Hello,
 
-> So do we consider this to be an OpenSSL issue of gajim? I'm sure gajim
-> is not the only program that does something like this.
+Please assign 2012 CVE-identifier for following monkey vulnerability:
 
-As far as I understand things, it is not necessarily at all to set a 
-verification callback in OpenSSL.  If you load the root certificate 
-store and examine SSL_get_verify_result, that should be sufficient.  You 
-can even look at the peer certificate and continue anyway if the user 
-has overridden the certificate validity.  So far, I haven't found a good 
-reason to use a verify callback at all.  You need it to implement a 
-custom PKIX validation policy, but that should be pretty rare.  (I still 
-have to check older OpenSSL versions, though, perhaps there, the 
-behavior was different.)
+Monkey webserver fails to drop supplemental groups when lowering privileges. This allows any local user on the system to read any fine that root's supplemental groups can access. Monkey does perform a filesystem access check to make sure that its EUID/EGID can access the target file, but this check is subject to TOCTOU flaws.
 
-Anyway, if application developers set a verification callback, it is 
-their responsibility to implement it correctly.  Therefore, I don't 
-think this is an OpenSSL issue.
+Reported by John Lightsey in http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=688007
+Affected Debian-version is 0.9.3-1 (haven't tested upstream package)
+Project page: http://www.monkey-project.com/
 
--- 
-Florian Weimer / Red Hat Product Security Team
+- Henri Salo
