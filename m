@@ -1,50 +1,139 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/11
-Message-ID: <CA+TgmoZ9vOYkqkNjNE+679ND3mx2ynHtPzwuKBQeWn3U5TmTkQ@mail.gmail.com>
-Date: Fri, 30 Mar 2012 11:45:24 -0400
-From: Robert Haas <robertmhaas@...il.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, security@...tgresql.org
-Subject: Re: [pgsql-security] postgresql-jdbc 8.1 SQL injection with postgresql server 9.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/8
+Message-ID: <CABY-coPLy7tOBNCrmRw9D7svNfTTQkQx7YOqnioHhk8VNTYWFg@mail.gmail.com>
+Date: Thu, 20 Sep 2012 14:31:19 -0400
+From: George Argyros <argyros.george@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Raphael Geissert <geissert@...ian.org>,  Aggelos Kiayias <aggelos@...yias.com>, Vladimir Vorontsov <vladimir.vorontsov@...ec.ru>,  gifts <gifts.antichat@...il.com>, solar@...nwall.com
+Subject: Re: Randomness Attacks Against PHP Applications
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 30, 2012 at 11:27 AM, Robert Haas <robertmhaas@...il.com> wrote:
-> On Fri, Mar 30, 2012 at 8:51 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
->> Postgresql 9.1 turned "standard conforming strings" on by default[1][2].
->> postgresql-jdbc before version 8.2-504 however did not know about that
->> kind of string and escaped single quotes with a backslash always. When
->> such an old version of postgresql-jdbc is used with a newer postgresql
->> server it not only breaks when strings contain single quotes, it also
->> allows for SQL injections[3].
->> The bug is neither in postgresql-jdbc as it was working correctly at the
->> time it was released, nor is it really postgresql 9.1's fault which I
->> guess doesn't expect and can't detect such an old jdbc adapter. The
->> security issue arises when mixing the old adapter and the new server.
->
-> Right.  This issue has been previously reported to pgsql-security.
-> The position of the pgsql-jdbc project is that a client version should
-> be used with a matching server version; therefore, the project views
-> the proposed combination as an unsupported configuration.  Moreover,
-> PostgreSQL 8.2.x and postgresql-jdbc-8.2-x were desupported in general
-> as of December 2011.  The end of life dates for each major release are
-> documented on our web site[1], and the pgsql-jdbc download site[2]
-> clearly identifies this version of the driver as an "archived version"
-> rather than a "supported version".  As a rule, bug fix and security
-> updates are not released for versions which are no longer supported;
-> users are advised to update to a supported version.  Users of
-> pgsql-jdbc are further advised to use a major version that matches the
-> PostgreSQL server to which they are connecting.
->
-> [1] http://www.postgresql.org/support/versioning/
-> [2] http://jdbc.postgresql.org/download.html
+FYI, we have also released some code to exploit such vulnerabilities
+about a month ago in github
+(https://github.com/GeorgeArgyros/Snowflake).  We hope that this
+framework will allow the easier development of exploits for such
+vulnerabilities.
+The main difference with the code mentioned in the previous posts, is
+that it may not always be possible to obtain the first output from
+mt_rand() after seeding. For example, many applications only leak
+truncated mt_rand() outputs in which case we should really compare
+bits of different mt_rand outputs to test whether we found the correct
+seed. For this reason, in our tool the user defines a "hash" function
+that expresses any mt_rand dependent output and then we search for a
+preimage for this hash function.
+We also include a python API for this functionalities as well as a
+sample exploit for mediawiki 1.18.1. Some POCs might indeed help...
 
-Small correction: the complaint we received was actually about
-postgresql-jdbc-8.1-x, which is listed as not supported.
-postgresql-jdbc-8.2-x is still listed as a supported version, but I
-believe you said this bug could only be reproduced with pre-8.2
-versions of JDBC.
+We will also release the gaussian solver based tool we developed in
+order to recover the internal state of mt_rand from its (truncated)
+outputs in the following days.
 
--- 
-Robert Haas
-EnterpriseDB: http://www.enterprisedb.com
-The Enterprise PostgreSQL Company
+Regarding the PHP security team my personal opinion is that they are
+mostly stubborn. The long standing debate between them and the
+security community probably does not help that (although personally I
+mostly agree with the security community in these debates).
+Nevertheless, when some new fundamental problem comes up with PHP they
+seem to try to find a way in which they can attribute that problem to
+someone else instead of searching for a way to fix it (the fact that
+they attribute this problem only to PHP application developers
+demonstrates that).
+
+I agree too that education is important. This is something that we
+came to an agreement with the PHP team (for example that additional
+information is needed on the mt_rand manual). However, as pointed out
+nothing has changed yet (the conversations between us and the PHP team
+took place in March/April).
+
+However I think that the specific issue goes beyond education. First
+of all, We believe that adding simple exploit mitigations such as
+secure seeding in these functions is something that should definitely
+happen. Secure seeding is easy to add using randomness from the
+operating system and furthermore it will incur a negligible
+performance overhead since it would happen only once in the process
+lifetime. This will make the exploitation of these vulnerabilities
+much more difficult (compare the simple attack of connecting to a
+fresh process and bruteforcing the seed with connecting repeatedly to
+the same process and using a complex algorithm to recover the internal
+state from the outputs).
+
+For a more concrete solution I think that the existence of secure
+PRNGs is not enough. Even if mt_rand() was producing secure random
+numbers we would still be having a lot of vulnerable applications just
+from the way this function is used. Just as PHP devs use
+session_start() to start a new PHP session there is a need for a
+generate_token() function that will return a random token and take
+care of providing the necessary level of security for this token.
+
+
+
+
+On Mon, Sep 17, 2012 at 9:22 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 09/17/2012 10:58 AM, Raphael Geissert wrote:
+>> On Monday 17 September 2012 10:36:46 Josh Bressers wrote:
+>>>> On Wed, Aug 22, 2012 at 02:31:07PM +0400, Solar Designer
+>>>> wrote: Maybe these PoCs will help convince someone.
+>>
+>> Just a note regarding the sessionid case: IIRC since 5.4
+>> session.entropy_length is set to, erm, 32 (bytes.) Basically it
+>> appends N bytes from /dev/urandom to the other input for the digest
+>> and then it is computed. (why 32 bytes, and why still use md5 by
+>> default, well...)
+>>
+>>> I'm skeptical they will. I've been doing a lot of work for the
+>>> past year on various proactive security efforts. I keep coming
+>>> back to two basic things.
+>> [...]
+>>> Has anyone tried to talk to them about this further to see if the
+>>> issue is they don't understand, or are they being stubborn?
+>>
+>> I think the main problem is education. For instance, there is no
+>> word about mt_rand not being suitable for criptographic pourposes
+>> (much less what that means.)
+>
+> Agreed. One example of a similar problem with good images displaying
+> the issue clearly:
+>
+> http://lcamtuf.coredump.cx/newtcp/
+>
+>> Sure, searching for "crypt" in the page shows a few comments saying
+>> that it isn't suitable, but: a) there are far more "encryption
+>> functions", "random password generators", and similar stuff in the
+>> comments than those that do mention its weaknesses. b) the official
+>> documentation itself doesn't say a word. It should say it loud and
+>> clear.
+>>
+>> Comments should also be moderated. Many examples available as
+>> comments in the documentation are incorrect.
+>>
+>> Now, pointing it out is easy, but somebody has to actually do the
+>> work. *That* is another issue.
+>>
+>> Cheers,
+>>
+>
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+>
+> iQIcBAEBAgAGBQJQV8y7AAoJEBYNRVNeJnmTMsYP/jMjcOslDu6l8aoxpSqNcFmB
+> hdRaVRNxBh3A/IK0Vg0syR1vmP8ShFlJCEZ9XUc+8v0E/s75EO6fWNsntKTSZY5s
+> A646R13ENc46aPhBi2feO7PX/bVTsJVvwVMMrKLlwTWIGoyfbemAjkWRE5VBwr6x
+> U+R1tp97wpK65LGjwmImgzCJMUqBXGuemm+jpJTMBltcACKvGp7h28wfJL66UR76
+> mSV0F7YisjZ3gKHv5DmKxlzVRNx9KcKM3qaMjWVuAIicMz3CBsbJ68WXVRbraV0Q
+> dXtkh5Uo/dfnfjXC6rPAMwkqOb7tdIB076alxTq16C2hbXrUVgroysJ4C4v16XTk
+> qkZOH6jcZYWiQai/tDQA/DNAsKbBTNj8N6JRX7y1i0d8l1SGv+fbGtG2qTeZEs5R
+> XhoVxKpEQUWrEU5yi7ToVasjqXUrE4cvD3n6RUX0s6IODjbm6Zbow/+F4PWIFJWF
+> wr2GC9nGn3RKicLxi+/mUWgtukZljfneYJu0i+R9DPDjwd0IxgpaWre3c//JurK5
+> AVX9clRdEEUZD4chzqDRdzv2xmJLDcevOo29s2XC8DzePWGRO+D7t+RhQkQ4C7JB
+> AaZyGKCr9tosPKUVWm7UGIAWxvHaIBsvfcH6V+lGSMkeyCIeAYFV+cWjgP/aZnno
+> Xeicv9GFtZPRw5ThRyFi
+> =D8kI
+> -----END PGP SIGNATURE-----
