@@ -1,111 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/18
-Message-ID: <4FFDAE70.6050103@redhat.com>
-Date: Wed, 11 Jul 2012 10:48:48 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/2
+Message-ID: <505A7F9E.4000203@redhat.com>
+Date: Wed, 19 Sep 2012 20:29:50 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: Dustin Kirkland <dustin.kirkland@...zang.com>
-CC: Tyler Hicks <tyhicks@...onical.com>, oss-security@...ts.openwall.com, Marcus Meissner <meissner@...e.de>, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: ecryptfs headsup
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Damien Stuart <dstuart@...uart.org>, Michael Rash <mbr@...herdyne.org>
+Subject: Re: CVE Request -- fwknop 2.0.3: Multiple security issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/11/2012 08:08 AM, Dustin Kirkland wrote:
-> On Tue, Jul 10, 2012 at 5:15 PM, Tyler Hicks
-> <tyhicks@...onical.com> wrote:
->> On 2012-07-10 15:13:40, Tyler Hicks wrote:
->>> On 2012-07-10 16:48:26, Dan Rosenberg wrote:
->>>> On 07/10/2012 10:30 AM, Marcus Meissner wrote:
->>>>> On Tue, Jul 10, 2012 at 04:21:13PM +0200, Sebastian Krahmer
->>>>> wrote:
->>>>>> 
->>>>>> It is a potential privilege escalation since the pam
->>>>>> module was not setting uid/gid(list) appropriately and
->>>>>> the suid binary did not clear environment before exec'ing
->>>>>> umount. I do not know whether MS_NOSUID was really needed
->>>>>> (and maybe MS_NODEV is, but I was not able to create dev
->>>>>> files). Unfortunally we found ecryptfs not really stable
->>>>>> inside the kernel and Marcus is still rebooting :)
->>>>> 
->>>>> This means ...
->>>>> 
->>>>> So far we have not yet found a specific security issue.
->>>>> 
->>>>> Ciao, Marcus
->>>>> 
->>>> 
->>>> This reminds me...
->>>> 
->>>> If an unprivileged user can mount ecryptfs shares (e.g. via
->>>> the setuid-root mount helper shipped on Ubuntu) and has the
->>>> ability to mount user-controlled filesystems (either network
->>>> filesystems via setuid mount helpers like mount.cifs or
->>>> mount.nfs, or formatted USB drives via physical access), it's
->>>> possible to escalate privileges to root because the setuid
->>>> ecryptfs helper does not mount filesystems with the nosuid or
->>>> nodev flags.
->>>> 
->>>> An attacker can create an ecryptfs filesystem on his own
->>>> machine on a network filesystem or USB drive, and then mount
->>>> that ecryptfs filesystem on the victim machine for a
->>>> setuid-root backdoor.  Hard-coding nosuid and nodev into the 
->>>> setuid ecryptfs helper would resolve this, but I'm not sure
->>>> that's workable for Ubuntu home directories.
->>> 
->>> This vulnerability is limited to physical access via formatted
->>> USB drives because the eCryptfs filesystem code does not work
->>> on top of network filesystems.
->>> 
->>> Additionally, I believe that the encrypted home source and
->>> destination mount points were hard-coded up until
->>> ecryptfs-utils version 86. Versions before that should not be
->>> vulnerable to the setuid-root binary on a USB drive attack
->>> mentioned above.
->>> 
->>> Dustin - Would you have any objections to forcing the nosuid
->>> and nodev mount options in the mount.ecryptfs_private helper?
+On 09/19/2012 12:10 PM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> Hi Tyler, et al.-
+> multiple securit issues have been corrected in 2.0.3 upstream
+> version of fwknop
+> (http://www.cipherdyne.org/blog/categories/software-releases.html):
+>
 > 
-> I don't have any objections at all with adding nosuid and nodev to
-> the hardcoded mount.ecryptfs_private options.
-> 
-> Actually, I seem to recall this coming up recently before.  I
-> can't find the bug or email thread (must have been IRC), but I
-> recall offering to commit, test, and release that change
-> immediately.  I believe I was asked to wait to do that until a CVE
-> had been published...  I can't find any record of that conversation
-> though, so that's just from memory.
-> 
-> Shall I go ahead and commit/test/release that now, Tyler?
+-
+---------------------------------------------------------------------------
+> 1) multiple DoS / code execution flaws: Upstream patch: [1]
+> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=d46ba1c027a11e45821ba897a4928819bccc8f22
 
-So it sounds like a non privileged user on an Ubuntu machine can
-insert a USB stick/etc with a file system that gets automatically
-mounted, said file system can contain setuid root binaries for example
-which the user can then execute, elevating privileges?
+Ok
+> 
+yeah this seems to be mostly changes related to char buf[32] to
+char buf[ACCESS_BUF_LEN], plus some logic cleanups (like making sure
+the port specified is larger than 0 and less than MAX_PORT). So I'll
+lump them all together rather than separate them.
+
+Please use CVE-2012-4434 for this issue.
+
+> 2) server did not properly validate allow IP addresses from
+> malicious authenticated clients Upstream patch: [2]
+> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=f4c16bc47fc24a96b63105556b62d61c1ba7d799
+
+Stupid
+> 
+question possibly (didn't look at the code apart from the fix).
+I see:
+
+if(char_ctr >= MAX_IPV4_STR_LEN)
+
+but nothing for IPv6 (does fwknopd even support ipv6?)... someone may
+want to check that.
+
+Please use CVE-2012-4435for this issue.
+
+> 3) strict filesystem permissions for various fwknop files are not
+> verified
+
+This seems more like security hardening. Generally speaking network
+daemons are not responsible for ensuring the safety of their own files
+(the system should have a sane configuration). Also if I assign a CVE
+for this then every single daemon that creates a config file and fails
+to check the permissions qualifies for a CVE that's a few hundred
+thousand CVEs =). For example: OpenSSH, it has a number of checks on
+file permissions, no CVE's for that.
+
+> 4) local buffer overflow in --last processing with a maliciously
+> constructed ~/.fwknop.run file Upstream patch: [3]
+> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=a60f05ad44e824f6230b22f8976399340cb535dc
+
+This
+> 
+is the MAX_CMDLINE_ARGS stuff specifically I assume?
+
+Please use CVE-2012-4436 for this issue.
+
+> For the remaining ones: ======================= 5) several
+> conditions in which the server did not properly throw out
+> maliciously constructed variables in the access.conf file Upstream
+> patch: [4]
+> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=e2c0ac4821773eb335e36ad6cd35830b8d97c75a
+>
+>  Note: This doesn't look like a security flaw (previously possible
+> to provide malicious values to access.conf file, but I assume it
+> would required administrator privileges).
+> 
+> 6) [test suite] Added a new fuzzing capability to ensure proper
+> server-side input validation. Note: Test-suite add-on, no CVE
+> needed.
+> 
+> 7) Fixed RPM builds by including the $(DESTDIR) prefix for
+> uninstall-local and install-exec-hook stages in Makefile.am. 
+> Upstream patch: [5]
+> http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=c5b229c5c87657197b0c814ff22127d870b55753
+>
+>  Note: Also doesn't look like a fix for a security flaw.
+> 
+> Could you allocate CVE ids for issues 1), 2), 3), and 4) ?
+> 
+> [Cc-ed Damien and Michael from fwknop upstream to confirm they {the
+> first four} should receive a CVE identifier].
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJP/a5wAAoJEBYNRVNeJnmTHT0P/1BCOUexoMZhapvsSpoZZaY7
-//5EJljz7NlzfdzLQ52zQ9FxjnTSzZMUCHq6dY2tLQxXUKjkSv+L4llMaRq3lIFe
-unl7TPj2qaf/ZHWV6Av+S14z4ChB/CJuSQVuIUBCioKSs6uJjEB7X+GG+wNAcGZ7
-H2l5ZDjERRc6v7wLL1OP+NwtSsYj4Pv+j0NJe1rJ7yh76mWwDpBlYCgWMUeJG5kg
-FnJWFS10YTLHuKb+rjwQfC4NN0ncPH1zVJo2ZjmvDJHtPbSpxbkDLBpulUDm+Arc
-s8eCjfOyArgHY87NlCOsfC9Cgr3TXcw39cyzX8RFyI2fl4Nk8bxj+N73ee7b4fgf
-PCmxBkddvEal7GDTQBihkaN1HgyGl36Qt1IlFTlVa71lfn7Lpr854Q+SeEMRxIIu
-7bPCRgoxJW/yMWn3dUBf7qQ0Vd6zFFZf1YH4iFxwULgNW2Tk1RTDLA5oUXsPw/Rc
-nijnjWpjTS32TxbjE/7nTSlrBo4uPTCZkvjW67b7bSBHQBRhJQG9B6rkbWZlS7rQ
-7yBCHiCcokO9yQ1W//6Om+XrGAPTZwCYhU3WiA4poLG0anLwnoSU8ASGaF2ajnMc
-Sre4vuBGRyW2ZIFMHUj5fSSlbNgF1Q3DgTooKT6c9gsr+LT8LMfPpNhd9B5PfF3L
-wKbOz7Ongn7yLZXpsDDb
-=N1iI
+iQIcBAEBAgAGBQJQWn+eAAoJEBYNRVNeJnmTJTwQALuiFHMtB+AOYoP3PQoPlW07
+ktfHS3t64Lv9to160PDabHMoGJg/MJyz+liA/mHRESXe6PhnPMdZKYquPtBsA7O9
+97NVUQolV5BpfUJTIZtLnIcIH5Sul+mmMj4QbglK5ZV50DGpN8gH9WX6irOn+gFI
+RNj5W6BnLnCPRJX4CXF+kjKB5BpZGv4TmdRzW9CvR7/j2S+QqbiYS6HCAaQXuqLS
+OF7W3l9JKY7I9yZP8LuaZ8duRImizhaueSBV9EqDLva8gtl+snI43ho+/eX64+vp
+HmlnkoChNwUpnAjHFsWqYwjQ2ztCMONlZh7jrptKltdWhVha5zlqv50NlEK2NscC
+IENCTcb/yWn/GYNYUs5sMn3LJZsuEgzaaTru3/CvSyFs6SbyYhOB3MAaU4AtBWR2
+T3Y8WNuUz6bf1ZkltIpJb9Nn9Qy57ZMH4BuDJCSDsrIhowwSiKKFAW9RWClLDzOz
+24reeMbm/aGXmCNwpzinEoexsWAv5GmvqtaOtyKNgCY2Yjl5Dot+0l6vkcb221hM
+9NELus8L20+NhMmAty+XYTnRs4YaezuwOyNroDce7DA2whml9hLEGcb5fv5dY4IE
+7Dcx+QttaOQn8Ixdoc3Wqx/dGrto67sajF3OWXz58YqLCj6XAP7kZZ6JxsIxi6Ki
+NChFqIKY+pLaEXTi0ewn
+=o1N7
 -----END PGP SIGNATURE-----
