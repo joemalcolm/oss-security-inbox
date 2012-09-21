@@ -1,68 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/19/4
-Message-ID: <5081A39B.7060902@redhat.com>
-Date: Fri, 19 Oct 2012 13:01:47 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/12
+Message-ID: <CANTw=MMB6jTrob0TutQFfAOmZ1zg3tsQ8tNoP1v7GZccHh_pFA@mail.gmail.com>
+Date: Fri, 21 Sep 2012 14:27:43 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, security@...mla.org
-Subject: Re: CVE request: Joomla two XSS vulnerabilities fixed in 2.5.7
+Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 10/07/2012 10:30 AM, Henri Salo wrote:
-> Hello,
-> 
-> I think these two Joomla security issues does not have
-> CVE-identifiers:
-> 
-> http://www.joomla.org/announcements/release-news/5463-joomla-2-5-7-released.html
+On Fri, Sep 21, 2012 at 2:18 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+>> Any security weakness can qualify for the E in CVE.  Really the
+>> point
 >
-> 
-http://secunia.com/advisories/49678/
-> Versions: 2.5.6 and all earlier 2.5.x versions
-> 
-> 1)
-> http://developer.joomla.org/security/news/539-20120901-core-xss-vulnerability
+> No, security vulnerabilities qualify, security hardening does not
+> necessarily qualify.
 
-Please
-> 
-use CVE-2012-4531 for this issue.
+Again E is for exposure, not vulnerability.
 
-> 2)
-> http://developer.joomla.org/security/news/540-20120902-core-xss-vulnerability
->
-> 
-http://osvdb.org/show/osvdb/83490
-> http://www.darksecurity.de/advisories/2012/SSCHADV2012-014.txt
+> In this case GnuPG respects umask. We can't assign a CVE for every
+> single program that has potentially sensitive output and fails to
+> ensure that the output is mode 0600 or whatever (what about extended
+> access controls?). Some programs choose to enforce permissions within
+> themselves (e.g. OpenSSH and key based authentication), but generally
+> speaking makeing sure a program with potentially sensitive output is
+> safe is the job of the system configuration, and you have several options:
 
-Please use CVE-2012-4532 for this issue.
+Think about it this way.  I open a file with mode 600 in vim, edit it,
+save it, and find it with mode 644?  That would be an exposure, would
+it not?
 
+Again, about as minor as you could get, but its still an E.
 
-> - Henri Salo
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQgaObAAoJEBYNRVNeJnmTvyMP+wT3uWTMZOvtdsexpikfNDcS
-zw0jzoLdaTWPYUKsa5E5roOOjmmV/WlNR8VbCAVLXb710rW57KX6Y85luZbs73oQ
-G5+w6GocF0heURpsPKNDZw1i4A6iy+LVGACT6BZ2djC8kXvciEl7peTOZKXEcAdJ
-fonjAuXJapDHreOaWzZ+1lpamSRc0/ckbmuMcAUygqqGiFn5o0pFePfoGfyW+cLl
-0rAmHCh/VfJRdPgQUKmYukExUY1alkTNGFb2uO5fjUR3vXurJY/oGEge4Sk5hiWr
-sfpnSQ2VPGg47APMDFV+y+7ZgADfXDMhbbqIfHT+6wioZkcmJecqYakciknaHQsi
-/vAkg65b0uaNp6Wt/tFID6eLuIjpZU2P90KVbqr1K4aNzy9Xmsq1Kn79dmJIv3rz
-fI8uFmg9SjrLQMFJ8Mp3aWZbUft1KyNPbqIwXHC6lRLhxcftDcN+if8IAgDxd5Ru
-rDras3PMvooKDRZNCCnEOdvl+jusqevb4YYBKqdpxuBhPYk4TrDDOGz1a8fa8hG5
-ez+zSPURvkDCBEmhH0+MXEVUP03HP4d6KQOaJRVlUeeFQjJOAIx39h7Dd7cSfBgU
-he9YIfiSRiLo3kBzXiby9RvyxEUsAk9Avz4imyxC/08uIFgGYXVjrYPZmlYCuj1y
-mhgSYqGdUfJVygF6KCqE
-=/yJ8
------END PGP SIGNATURE-----
+Best wishes,
+Mike
