@@ -1,117 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/22/8
-Message-ID: <50352121.8070209@redhat.com>
-Date: Wed, 22 Aug 2012 12:12:49 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/1
+Message-ID: <505BCE6C.1010805@redhat.com>
+Date: Thu, 20 Sep 2012 20:18:20 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: Typo3
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, info@...udbees.com, security@...udbees.com
+Subject: CVE Request: Jenkins and plugins
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/21/2012 03:28 PM, Moritz Muehlenhoff wrote:
-> Hi, please assign CVE IDs for the latest Typo3 security issues: 
-> http://typo3.org/support/teams-security-security-bulletins/security-bulletins-single-view/article/several-vulnerabilities-in-typo3-core/
-> :
+http://www.cloudbees.com/jenkins-advisory/jenkins-security-advisory-2012-09-17.cb
+Jenkins Security Advisory 2012-09-17
 
+This advisory announces security vulnerabilities that were found in
+Jenkins core and several plugins.
 
-> 1.
-> 
-> Vulnerable subcomponent: TYPO3 Backend Help System Vulnerability
-> Type: Insecure Unserialize leading to a possible Arbitrary Code
-> Execution Severity: Medium Suggested CVSS v2.0:
-> AV:N/AC:H/Au:S/C:P/I:C/A:N/E:P/RL:O/RC:C (What's that?) Problem
-> Description: Due to a missing signature (HMAC) for a parameter in
-> the view_help.php file, an attacker could unserialize arbitrary
-> objects within TYPO3. We are aware of a working exploit, which can
-> lead to arbitrary code execution. A valid backend user login or
-> multiple successful cross site request forgery attacks are required
-> to exploit this vulnerability. Solution: Update to the TYPO3
-> version 4.5.19, 4.6.12 or 4.7.4 that fix the problem described! 
-> Credits: Credits go to Felix Wilhelm who discovered and reported
-> the issue.
+The first vulnerability in Jenkins core allows unprivileged users to
+insert data into Jenkins master, which can lead to remote code
+execution. For this vulnerability to be exploited, the attacker must
+have an HTTP access to a Jenkins master, and he must have a read
+access to Jenkins.
 
-Please use CVE-2012-3527 TYPO3-CORE-SA-2012-004: TYPO3 Backend Help
-System Code Exec
+The second vulnerability in Jenkins core is a cross-site scripting
+vulnerability. This allows an attacker to craft a URL that points to
+Jenkins, and if a legitimate user clicks this link, the attacker will
+be able to hijack the user session.
 
-> 
-> 2.
-> 
-> Vulnerable subcomponent: TYPO3 Backend Vulnerability Type:
-> Cross-Site Scripting Severity: Medium Suggested CVSS v2.0:
-> AV:N/AC:M/Au:S/C:P/I:P/A:N/E:F/RL:O/RC:C (What's that?) Problem
-> Description: Failing to properly HTML-encode user input in several
-> places, the TYPO3 backend is susceptible to Cross-Site Scripting. A
-> valid backend user is required to exploit these vulnerabilities. 
-> Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that
-> fix the problem described! Credits: Credits go to Pavel Vaysband,
-> Security Team Member Markus Bucher, Core Team Member Susanne Moog,
-> Jan Bednarik,  who discovered and reported the issues.
+The third vulnerability is a cross-site scripting vulnerability in the
+Violations plugin.
 
+The fourth vulnerability is a cross-site scripting vulnerability in
+the CI game plugin.
 
-Please use CVE-2012-3528 for TYPO3-CORE-SA-2012-004: TYPO3 Backend XSS
+Several of these vulnerabilies were discovered by Avram Marius Gabriel.
+Severity:
 
+CloudBees rates the first vulnerability in the core as critical, as it
+allows malicious users to execute arbitrary code on the server. The
+othe three XSS vulnerabilities are rated as high, as they allow
+malicious users to escalate privileges.
+Fix:
+The following versions incorporate fixes to the vulnerabilities found
+in the Jenkins core.
 
-> 3.
-> 
-> Vulnerable subcomponent: TYPO3 Backend Vulnerability Type:
-> Information Disclosure Severity: Low Suggested CVSS v2.0:
-> AV:N/AC:L/Au:S/C:P/I:N/A:N/E:F/RL:O/RC:C (What's that?) Problem
-> Description: Accessing the configuration module discloses the
-> Encryption Key. A valid backend user with access to the
-> configuration module is required to exploit this vulnerability. 
-> Solution: Update to the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that
-> fix the problem described! Credits: Credits go to Mario Rimann who
-> discovered and reported the issue.
+    Main line users should upgrade to Jenkins 1.482
+    LTS users should upgrade to 1.466.2
+    Users of Jenkins Enterprise by CloudBees 1.466.x should upgrade to
+1.466.2.1
+    Users of Jenkins Enterprise by CloudBees 1.447.x should upgrade to
+1.447.3.1
+    Users of Jenkins Enterprise by CloudBees 1.424.x and earlier
+should upgrade to 1.424.6.11
+    The fix has already been deployed to DEV@...ud
 
+Users of the CloudBees Custom Update Center plugin needs to update to
+3.4 or later in order to work with these newer versions of Jenkins.
 
-Please use CVE-2012-3529 for TYPO3-CORE-SA-2012-004: TYPO3 Backend
-Information Disclosure
+To patch vulnerabilities in the plugins, upgrade to the following
+versions. These plugins should be available in your Jenkins' plugin
+update center UI in up to a day.
 
-> 4.
-> 
-> Vulnerable subcomponent: TYPO3 HTML Sanitizing API Vulnerability
-> Type: Cross-Site Scripting Severity: Medium Suggested CVSS v2.0:
-> AV:N/AC:M/Au:N/C:P/I:P/A:N/E:U/RL:O/RC:C (What's that?) Problem
-> Description: By not removing several HTML5 JavaScript events, the
-> API method t3lib_div::RemoveXSS() fails to filter specially crafted
-> HTML injections, thus is susceptible to Cross-Site Scripting.
-> Failing to properly encode for JavaScript the API method
-> t3lib_div::quoteJSvalue(), it is susceptible to Cross-Site
-> Scripting. Note: Developers should never rely on the blacklist of
-> RemoveXSS() alone, but should always properly encode user input
-> before outputting it again. Solution: Update to the TYPO3 version
-> 4.5.19, 4.6.12 or 4.7.4 that fix the problem described! Credits:
-> Credits go to Andreas Schnapp and Christian Nösterer who discovered
-> and reported the issues.
+    Users of the Violations plugin should upgrade to 0.7.11 or later
+    Users of the CI game plugin should upgrade to 1.19 or later
 
 
 
-Please use CVE-2012-3530 for TYPO3-CORE-SA-2012-004: TYPO3 HTML
-Sanitizing API XSS
-
-
-
-> 5.
-> 
-> Vulnerable subcomponent: TYPO3 Install Tool Vulnerability Type:
-> Cross-Site Scripting Severity: Low Suggested CVSS v2.0:
-> AV:N/AC:H/Au:S/C:P/I:P/A:N/E:F/RL:O/RC:C (What's that?) Problem
-> Description: Failing to properly sanitize user input, the Install
-> Tool is susceptible to Cross-Site Scripting. Solution: Update to
-> the TYPO3 version 4.5.19, 4.6.12 or 4.7.4 that fix the problem
-> described! Credits: Credits go to Security Team Member Georg Ringer
-> who discovered and reported the issue.
-
-
-
-Please use CVE-2012-3531 for TYPO3-CORE-SA-2012-004: TYPO3 Install
-Tool XSS
-
-> Cheers, Moritz
-> 
 
 
 - -- 
@@ -120,19 +74,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQNSEhAAoJEBYNRVNeJnmTuI0P/1mgfYQsQDbcXwTpVfVnEwuL
-3k/CBIvep52MpNdrHLq8+opEXAMLe7Ia2sKTs6KqgL0V97uCUbe8heAoyGvPdgRv
-R7Fndbhy67L+LbsfpRgrfXImDhEyROQg3Qvg1CsQVsum5ZoYUU+WnOKkZgUuAa7i
-HhbuKOP1nbMtx/cQubpuHmUtlImBpUNrn5XCyWRIDOLlyOUIO4otxK0kPm8LO7M5
-FOq8FwY68UhSIF4ecslXBCqbqkA9mAKgWHDYXnoVrgsSAovHtPCns5WXaZrwFBvo
-D06WVO0fd4PKcN9D9/BWhcaLASl4nzOq4XpGpE+EU3f5e6IXQxmnW9cP41XI5wyn
-Iwhm6ythIsJRXmv21uSUpXkH452MmonQ/UNlnksZWKInLTVn9EwZ3aCzG1PhT61f
-ahV8nX+lq6P6w4tAS91MkpBgHHBYM/Wg4cFJRccRw609GW6JaWI3e1dHbaLG54kq
-sr/Ld+g7Zx/17pTV/FdFPElxTd20EmhHNQPVa7yV7QKfB5vJyU08thzcV88Dn2Bh
-ceJgQ+MiuBMjr2iZ89QM/iMrbu8qq/bdtJDA/5R+GAB0KRuRVrOTFWENCvTPqB4M
-faB7FlE944Ou11XKUhP9WHCwOay/159/6MhyqqxIxMQdwGtEJkIRgKgYv9i/FZfG
-lRcnpbr1H7n5mmE2xHXt
-=PI4N
+iQIcBAEBAgAGBQJQW85sAAoJEBYNRVNeJnmTXvMP+gJwt6fdMYKE3PZ2w/Vx6GsV
+pAcQ9T+5uLUgt9ITcmcYJM+0N8AUq57RWgxtnyoElbI/ZbWQwqYIfkvhLqJA5tSl
+kaj7b8CjcH9bmH/ODCISF80Frmc+BUWfk8aS3gFhXkQUzat5zz1rue7ugl+Ef0Xk
+QOzND2vkfOzUrIIclY2l5nPqP0HoIdN19jI5uUV0ZKTK0kTgx55O0tOyOore/X8C
+g8H5jnDQjQOXCdRKc9mSwz8A8E2xjvvc2Hbdkys1E01x9GONRW373165Ukzc76Vd
+dapPMw0mEBpFEewYWS6yuNMttSOHaKXHtRe/tWFat/q61yeLyIxwDzUIJ3yHLq0n
+trRXjPpVAoV7OnlMIGLeZEUI3lIXN+JP7kj4iJFymmDDUQwpwUzTmPURmHIYIPYX
+ILnD1qTTbmscV0CZ0nBX0Tc8/tzp2/0An8DjRVt3ePJTjrY6rWUqYH46nm6DdZ00
+ZJiAhS0rDl+pZiZCseqT2hz7ZTVvAEwVe0rLeB7p8jypLRGRuUG08Dr090vkFpB/
+DQUMmWlXo/9cHJpTivtT3r5uQg5/Og5s3/z0ke01bM7fen08vFilmC70VJ3jLgdk
+5MulIFS1m69YvRxea9DcwN8PFAFj62wEA3r8fszA40k2P54OQhq7Xt1wIY8fxy9t
+YoNuQNh6zcm2ckIwWgYG
+=DlGG
 -----END PGP SIGNATURE-----
