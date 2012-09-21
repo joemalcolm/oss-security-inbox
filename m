@@ -1,67 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/7
-Message-ID: <4F72D229.2010900@redhat.com>
-Date: Wed, 28 Mar 2012 14:26:09 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/9
+Message-ID: <CANTw=MOVE0H=jqGX28Vb+DKKFC4cqxf7juoSPagc0c+TRuu3qA@mail.gmail.com>
+Date: Fri, 21 Sep 2012 11:31:47 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Gerald Combs <gerald@...eshark.org>
-Subject: CVE Request: Multiple wireshark security flaws resolved in 1.4.12 and 1.6.6
+Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-Hi Folks,
+On Fri, Sep 21, 2012 at 6:37 AM, Tomas Mraz wrote:
+> On Fri, 2012-09-21 at 12:20 +0200, Matthias Weckbecker wrote:
+>> Hello Steve, Kurt, Vitezslav, Tomas, vendors,
+>>
+>> we have recently been notified about a potential issue with gpg: When files
+>> are en/de-crypted the result is written world-readable by default.
+>> Short example (quote from [1]):
+>>
+>>  # de-crypting
+>>  % gpg sikrit.gpg
+>>  % ll sikrit*
+>>    -rw-r--r-- 1 gp users  12 Sep 17 09:41 sikrit
+>>    -rw------- 1 gp users 480 Sep 17 09:40 sikrit.gpg
+>>  # en-crypting
+>>  % echo "my password" > sikrit
+>>  % chmod go= sikrit
+>>  % ll sikrit
+>>    -rw------- 1 gp users 12 Sep 17 09:38 sikrit
+>>  % gpg -e -r pfeifer sikrit
+>>  % wipe sikrit
+>>  % ll sikrit.gpg
+>>    -rw-r--r-- 1 gp users 480 Sep 17 09:40 sikrit.gpg
+>>
+>> [1] https://bugzilla.novell.com/show_bug.cgi?id=780943
+>>
+>> Wouldn't one usually expect files that were previously encrypted to contain
+>> sensitive content (that's probably why content is encrypted at all)? And if
+>> so, shouldn't such files be only readable by certain users / group of users
+>> by default? Otherwise, a file that is e.g. decrypted in /tmp might leak due
+>> to the file permissions being too loose.
+>>
+>> I'm not quite sure whether to assign a CVE for this, so I thought I'd just
+>> add a question mark behind the subject and let the list (and Kurt) decide.
+>
+> I suppose the permissions respect the user's umask so I do not think
+> this is a real security issue in the gpg itself. Although using the
+> permissions of the original file when creating the decrypted/encrypted
+> one (still modified with the user's umask) would be more appropriate. So
+> in my opinion this does not warrant a CVE but improvement in the
+> upstream gnupg code would be appreciated I think.
 
-Multiple security flaws were resolved in the recent release
-of version 1.4.12 and 1.6.6. Details as follows, can CVE ids
-be please assigned to them?
+Any security weakness can qualify for the E in CVE.  Really the point
+of CVE is increasing awareness.  So whether any issue is a very minor
+E is really immaterial, but lets give it a number so those who
+actually care can become aware and take action.
 
-1. Null pointer dereference in ANSI A dissector:
-The ANSI A dissector could dereference a NULL pointer and crash.
-It may be possible to make Wireshark crash by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed
-packet trace file.
-
-Reference:
-http://www.wireshark.org/security/wnpa-sec-2012-04.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6823
-Patch: http://anonsvn.wireshark.org/viewvc?view=revision&revision=40962
-
-2. Dos/Infinite loop when in IEEE 802.11 dissector:
-The IEEE 802.11 dissector could go into an infinite loop.
-It may be possible to make Wireshark crash by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed
-packet trace file.
-
-Reference:
-http://www.wireshark.org/security/wnpa-sec-2012-05.html
-http://www.wireshark.org/security/wnpa-sec-2012-05.html
-Patch: http://anonsvn.wireshark.org/viewvc?view=revision&revision=40967
-
-3. Memory corruption when processing pcap/pcap-ng file formats:
-The pcap and pcap-ng file parsers could crash trying to read ERF data.
-It may be possible to make Wireshark crash convincing someone to read a
-malformed packet trace file.
-
-Reference:
-http://www.wireshark.org/security/wnpa-sec-2012-06.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6804
-Patch: http://anonsvn.wireshark.org/viewvc?view=revision&revision=41056
-
-4. Wireshark MP2T memory allocation flaw
-The MP2T dissector could try to allocate too much memory and crash.
-It may be possible to make Wireshark crash by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed
-packet trace file.
-
-Reference:
-http://www.wireshark.org/security/wnpa-sec-2012-07.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6833
-Possible Patch: 
-http://anonsvn.wireshark.org/viewvc?view=revision&revision=40978 (not sure)
-
-@Gerald,
-All your new advisory links on the wireshark security page are pointing
-to the same page, so you may want to correct that :)
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Best wishes,
+Mike
