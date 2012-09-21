@@ -1,65 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/13
-Message-ID: <4F721754.2040208@vsecurity.com>
-Date: Tue, 27 Mar 2012 12:39:00 -0700
-From: "Timothy D. Morgan" <tmorgan@...curity.com>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE-2012-0037: libraptor - XXE in RDF/XML File Interpretation (Multiple office products affected)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/5
+Message-ID: <505C4305.4040507@gmail.com>
+Date: Fri, 21 Sep 2012 06:35:49 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+CC: Matthias Weckbecker <mweckbecker@...e.de>, vcizek@...e.de,  tmraz@...hat.com
+Subject: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-Hi again,
+On 09/21/2012 06:20 AM, Matthias Weckbecker wrote:
+> Hello Steve, Kurt, Vitezslav, Tomas, vendors,
+>
+> we have recently been notified about a potential issue with gpg: When files
+> are en/de-crypted the result is written world-readable by default.
+> Short example (quote from [1]):
+>
+>  # de-crypting
+>  % gpg sikrit.gpg
+>  % ll sikrit*
+>    -rw-r--r-- 1 gp users  12 Sep 17 09:41 sikrit
+>    -rw------- 1 gp users 480 Sep 17 09:40 sikrit.gpg
+>  # en-crypting
+>  % echo "my password" > sikrit
+>  % chmod go= sikrit
+>  % ll sikrit
+>    -rw------- 1 gp users 12 Sep 17 09:38 sikrit
+>  % gpg -e -r pfeifer sikrit
+>  % wipe sikrit
+>  % ll sikrit.gpg 
+>    -rw-r--r-- 1 gp users 480 Sep 17 09:40 sikrit.gpg
+>
+> [1] https://bugzilla.novell.com/show_bug.cgi?id=780943
+>
+> Wouldn't one usually expect files that were previously encrypted to contain
+> sensitive content (that's probably why content is encrypted at all)? And if
+> so, shouldn't such files be only readable by certain users / group of users
+> by default? Otherwise, a file that is e.g. decrypted in /tmp might leak due
+> to the file permissions being too loose.
 
->> 2012-02-02    Notified OpenWall "distros" mailing list again, due to previous
->>               technical problems.
-> 
-> IIRC, the "technical problems" being referred to here were an attachment
-> not being re-encrypted to list members, so they only had partial info
-> until this point - essentially just the fact that there's a
-> vulnerability in those products, but with no detail; given the extra
-> embargo time (not needed by distro vendors) this may actually be good.
-> The list setup is a bit picky about what encrypted message formats it
-> supports (besides plaintext, they may be PGP/MIME or PGP inline, but
-> they can't have individual pre-encrypted attachments - this has since
-> been clarified on the wiki).
+GPG seems to just be honoring the umask:
 
-Actually, I didn't manually encrypt the attachment, but my mail client's PGP
-plugin likely did the equivalent.  PGP/MIME is definitely preferred, but since
-certain Windows-based mail clients utterly fail at interpreting it properly, I
-often fall back to old style PGP when sending messages to strangers.  I think
-your updated text helps.
+$ ll secret
+-rw------- 1 dan dan 9 Sep 21 06:31 secret
+$ umask 0777
+$ gpg -e -r dan secret
+$ ll secret.gpg
+---------- 1 dan dan 605 Sep 21 06:34 secret.gpg
 
+Still might be worth fixing though.
 
-> "If you have not yet notified upstream projects/developers of the
-> affected software, other affected distro vendors, and/or affected Open
-> Source projects, you may want to do so before notifying one of these
-> mailing lists in order to ensure that these other parties are OK with
-> the maximum embargo period that would apply (and if not, then you may
-> have to delay your notification to the mailing list), unless you're
-> confident you'd choose to ignore their preference anyway and disclose
-> the issue publicly soon as per the policy stated here."
+-Dan
 
-You may want to re-word this a little to make it utterly clear to those who
-don't take the time to think about it.  Perhaps something like "If expect
-upstream vendors to require more than 14-19 days to develop a fix, establish a
-release date with them prior to notifying this list".  You could also break it
-down in to step-by-step bullets.  That page has grown much larger now and it is
-tempting to skim...
-
-
-> Also, apparently it is still common practice to delay documenting
-> security fixes in office products as such - that is, since releases take
-> so long to prepare and test, they're first built with security fixes
-> included but undocumented, they're even made publicly available for
-> testing, and only then they're finalized and the security fixes become
-> publicly known as such.  This too is or should hopefully be a practice
-> of the past as it relates to some other software, and let's just pretend
-> that I naively hope it will be gone for these products (which is closely
-> related to being able to fix security issues and push such fixes to the
-> users quicker).
-
-I agree with you that releasing undocumented fixes carries significant risks.
-It's become clear to me that the LO/OO projects have a ways to go when it comes
-to release engineering.
-
-tim
