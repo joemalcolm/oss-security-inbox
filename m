@@ -1,85 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/4
-Message-ID: <4F291A3A.8040000@redhat.com>
-Date: Wed, 01 Feb 2012 11:55:54 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, berkeviktor@....com, Debian Security Team <security@...ian.org>, Paul Wise <pabs@...ian.org>, Joerg Reisenweber <joerg@...nmoko.org>, Christopher Aillon <caillon@...hat.com>, Remi Collet <Fedora@...illeCollet.com>, Jonathan Blandford <jrb@...hat.com>
-Subject: CVE Request (two ids) -- Xchat-WDK (prior 1499-4 [2012-01-18]) and Xchat-v2.8.6 on Maemo architecture -- Heap-based buffer overflow by processing UTF-8 line from server containing characters outside BMP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/10
+Message-ID: <505CADFC.7010202@redhat.com>
+Date: Fri, 21 Sep 2012 12:12:12 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: monkey CGI scripts executed without dropping RUID/RGID root
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, Viktor, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   a heap-based buffer overflow flaw was found in the way xchat, graphical IRC
-chat client, processed one line of text received from the server, when the text
-contained Unicode characters and some of the characters were outside of the
-Basic Multilingual Plane (BMP). A remote attacker could provide a
-specially-crafted Unicode string as a xchat channel or private message, which
-once processed would lead to denial of service (xchat client crash), or,
-potentially arbitrary code execution with the privileges of the user running
-xchat client.
+On 09/21/2012 07:38 AM, Henri Salo wrote:
+> Hello,
+> 
+> Please assign 2012 CVE-identifier for following monkey
+> vulnerability:
+> 
+> The Monkey webserver retains RUID/RGID root so that it can regain
+> root as needed to perform privileged operations. Unfortunately,
+> monkey does not drop RUID/RGID root before executing CGI scripts.
+> This allows any user with write access to a cgi-bin directory to
+> gain local root. It would also allow a remote attacker to do the
+> same in combination with a CGI/PHP script that has any remote code
+> execution bug.
+> 
+> Reported by John Lightsey in
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=688008 Affected
+> Debian-version is 0.9.3-1 (haven't tested upstream package) Project
+> page: http://www.monkey-project.com/
+> 
+> - Henri Salo
 
-This issue has been successfully reproduced on Xchat-WDK versions prior to:
-* 1499-4 (2012-01-18)
+Please use CVE-2012-4443 for this issue
 
-     add Non-BMP plugin to avoid client crashes
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-version. Also Joerg Reisenweber reports, this deficiency to have been exploited
-in the past on Xchat-v2.8.6 versions, as being used on Maemo architecture.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-The following Linux based xchat versions have been investigated against presence
-of this issue:
-* xchat-v2.6.6,
-* xchat-v2.8.6,
-* xchat-v2.8.8
-
-on various architectures (i386, x86_64, ppc64) with various versions of gtk2 library:
-* gtk-v2.10.4,
-* gtk-v2.18.9,
-* gtk-v2.24.7,
-* gtk-v2.14.7
-
-and presence of this flaw has not been observed on those Linux versions, which makes
-us think it is some Microsoft Windows 7 / Maemo architecture specific feature, which
-makes this issue to be visible on those Xchat derivatives.
-
-References:
-[1] http://code.google.com/p/xchat-wdk/issues/detail?id=132
-[2] http://code.google.com/p/xchat-wdk/issues/detail?id=134
-[3] http://code.google.com/p/xchat-wdk/issues/detail?id=135
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=786391
-
-Xchat-WDK upstream changelog:
-[5] http://www.xchat-wdk.org/home/changelog
-     part:
-     * 1499-4 (2012-01-18)
-
-     add Non-BMP plugin to avoid client crashes
-
-Particular Xchat-WDK upstream patch:
-[6] http://lwsitu.com/xchat/replace_non-bmp.diff
-
-Could you allocate two CVE ids for these flaws? (assuming two ids are
-necessary, because Xchat-WDK for MS Windows 7 case and Xchat-v2.8.6 for
-Maemo case can / should be considered as different source code bases).
-
-Steve, please advise if one id is sufficient or two should be used?
-
-Also, for the Xchat-WDK case it looks that v1499-6 corrected the issue
-for channel messages, but the issue is still present for 'private messages'
-case:
-[7] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c33
-[8] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c34
-[9] http://code.google.com/p/xchat-wdk/issues/detail?id=132#c36
-
-Though this assumption needs to be verified / confirmed yet.
-Viktor, could you please confirm or disprove it?
-
-If that assumption would have shown as valid, a third CVE identifier
-would need to be assigned yet for the incomplete Xchat-WDK v1499-6
-fix yet (addressing the issue for 'channel messages' case, but not
-for 'private messages' case).
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJQXK38AAoJEBYNRVNeJnmTf8sP/2QWmTgCNtJMrs/iKqp/mOGx
+dGP0z+bu1ZcdrHR97B2gYy0z9wguyOx5R+pDEyd6IFPe8PCIbJLA5SGgx9aHMi31
+Q0njfagpqtwQugDxvP/yTqBfdp8QhUoExiYsry3lhu2Dg/7uN2hpex1tBY+sx6GY
+qziqb+NGoKezMmcMO4C3mbh0wtGRXVWDOs73UCP208/RTO5GOczgDHKiIXViSpDf
+hpM2am1n/JXasUYzz3J/cyibHg3PPmOZk9eMd6N+Wy1rmPekl9Wy/QHsXsmUv2lm
+1bdfhtHhWx9iAwUOjZrb1NnnWItltoaH8L+gUX/Cr4TFjNB1nizAD79jUL4DRSft
+jDkWBR0oeqQdPPYjWdjT97gbf8+LjyloQUqbTIrqN5j2sTsu+JtWD3jSMrUn10C/
+SyDFITk+JLWP7D2dWYILGUMioN6TB7TVaIIY0M1z6K/99No6ztPFAOf/RlQLRD44
+qomwr1mRE2hYlzLNGTikBecGt20vnBDmGj1LO/S39M9YhF82lqaOuuv1T/+7A2pC
+AxQVlckGhOCtMpKniaC61wllYdrhEhXWANogm4AA4/VAz/YdRUUgFPYXLAcxVaX5
+t3FfzNNeo2fQ42/kO4HbcpjH+F4IQSKF0dTkUOnju8KyR7/vMSxeWHXW6kWiY/Qp
+v68A5rKh4uwoarc+ZEbQ
+=m1pI
+-----END PGP SIGNATURE-----
