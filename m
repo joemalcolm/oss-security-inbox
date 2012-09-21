@@ -1,77 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/7
-Message-ID: <50914441.2040605@redhat.com>
-Date: Wed, 31 Oct 2012 09:31:13 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/11
+Message-ID: <505CAF6A.108@redhat.com>
+Date: Fri, 21 Sep 2012 12:18:18 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: Re: CVE request: LetoDMS, more issues
+CC: Michael Gilbert <mgilbert@...ian.org>
+Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/30/2012 01:28 PM, Raphael Geissert wrote:
-> On Friday 05 October 2012 23:11:36 Raphael Geissert wrote:
->> Hi,
+On 09/21/2012 09:31 AM, Michael Gilbert wrote:
+> On Fri, Sep 21, 2012 at 6:37 AM, Tomas Mraz wrote:
+>> On Fri, 2012-09-21 at 12:20 +0200, Matthias Weckbecker wrote:
+>>> Hello Steve, Kurt, Vitezslav, Tomas, vendors,
+>>> 
+>>> we have recently been notified about a potential issue with
+>>> gpg: When files are en/de-crypted the result is written
+>>> world-readable by default. Short example (quote from [1]):
+>>> 
+>>> # de-crypting % gpg sikrit.gpg % ll sikrit* -rw-r--r-- 1 gp
+>>> users  12 Sep 17 09:41 sikrit -rw------- 1 gp users 480 Sep 17
+>>> 09:40 sikrit.gpg # en-crypting % echo "my password" > sikrit %
+>>> chmod go= sikrit % ll sikrit -rw------- 1 gp users 12 Sep 17
+>>> 09:38 sikrit % gpg -e -r pfeifer sikrit % wipe sikrit % ll
+>>> sikrit.gpg -rw-r--r-- 1 gp users 480 Sep 17 09:40 sikrit.gpg
+>>> 
+>>> [1] https://bugzilla.novell.com/show_bug.cgi?id=780943
+>>> 
+>>> Wouldn't one usually expect files that were previously
+>>> encrypted to contain sensitive content (that's probably why
+>>> content is encrypted at all)? And if so, shouldn't such files
+>>> be only readable by certain users / group of users by default?
+>>> Otherwise, a file that is e.g. decrypted in /tmp might leak
+>>> due to the file permissions being too loose.
+>>> 
+>>> I'm not quite sure whether to assign a CVE for this, so I
+>>> thought I'd just add a question mark behind the subject and let
+>>> the list (and Kurt) decide.
 >> 
->> Some more issues were fixed in LetoDMS...
->> 
->> * Fixed in 3.3.8 Multiple XSS: 
->> http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/inc/
->>
->> 
-inc.ClassUI.php?r1=930&r2=929&pathrev=930
->> http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/out
->>
->> 
-/out.DocumentNotify.php?r1=934&r2=933&pathrev=934 (and a few others
->> scattered in multiple other commits)
-
-Please use CVE-2012-4567 for this issue.
-
->> Missing CSRF protection (all part of the same thing): 
->> http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=927
->>
->> 
-http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=915
->> http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=914
->>
->> 
-http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=907
->> (and possibly some others...)
-
-Please use CVE-2012-4568 for this issue.
-
->> * Fixed in 3.3.9 Multiple XSS in out/out.UsrMgr.php: 
->> http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/out/
->>
->> 
-out.UsrMgr.php?r1=979&r2=978&pathrev=979
-
-Please use CVE-2012-4569 for this issue.
-
->> Regression in the above patch (fixed after the release of
->> 3.3.9): 
->> http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/out
->>
->> 
-/out.UsrMgr.php?r1=982&r2=981&pathrev=982
-
-Does this regression cause a security issue (e.g. did accidentally
-putting htmlspecialchars() in actually cause a new XSS?).
-
->> LetoDMS Core: * Fixed in 3.3.8: SQL injection: 
->> http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/Leto
->>
->> 
-DMS_Core/Core/inc.ClassDMS.php?r1=929&r2=928&pathrev=929
-
-Please use CVE-2012-4570 for this issue.
-
-> Could CVE ids be assigned please?
+>> I suppose the permissions respect the user's umask so I do not
+>> think this is a real security issue in the gpg itself. Although
+>> using the permissions of the original file when creating the
+>> decrypted/encrypted one (still modified with the user's umask)
+>> would be more appropriate. So in my opinion this does not warrant
+>> a CVE but improvement in the upstream gnupg code would be
+>> appreciated I think.
 > 
-> Thanks,
+> Any security weakness can qualify for the E in CVE.  Really the
+> point
+
+No, security vulnerabilities qualify, security hardening does not
+necessarily qualify.
+
+In this case GnuPG respects umask. We can't assign a CVE for every
+single program that has potentially sensitive output and fails to
+ensure that the output is mode 0600 or whatever (what about extended
+access controls?). Some programs choose to enforce permissions within
+themselves (e.g. OpenSSH and key based authentication), but generally
+speaking makeing sure a program with potentially sensitive output is
+safe is the job of the system configuration, and you have several options:
+
+1) a safe default umask
+2) using safe directory permissions, for example in RHEL /home/$USER
+is not accessible by group or other
+
+Again, it is nice if the program does this, but if the program does
+not it's not generally considered a security vulnerability (of course
+exceptions exist, for example servers that log username/password to a
+world readable log file for example). But this is not one of those
+exceptions.
+
+> of CVE is increasing awareness.  So whether any issue is a very
+> minor E is really immaterial, but lets give it a number so those
+> who actually care can become aware and take action.
+> 
+> Best wishes, Mike
 > 
 
 
@@ -81,18 +86,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQkURBAAoJEBYNRVNeJnmTIcsP/jb1jrtqPGyer9NxAc9sbdKD
-8ArAoQRqR70ufE+U73MKAqcWfCxOtTPVP5FuUCx0VG9+0CXW3alrZcwHReGHlLGA
-281ZQco4UrztL7soSVtddkbgC8dbUwcN+RPJtg+egct+LvLY1jRXp3MCD5sHyR1k
-7rEpdOe0m+vM93SgnTzQrYam5hhsRSExbYaYjHQD9JgPQY/VMkXFJj8T/hae0auH
-nhriitXO3y+W9LqWxft2q8D5MSuSa7xu/X8qu+CZhWt7ekj5z+GU2kPHHpjosG+8
-gO5QB+Ca8TtkobiJT/EuqRWPm+VatpRwjXCzMZRuhkpWuB10dpouqrB2mbw8qXMH
-CAiKcNKqx9uT8KY51VR1mDPWFCuM7uOsGmtnx4nmlrGLphZLVAhLHprQi1kpjozJ
-b3qP9OxgY+Of7dKGC2zHY2XuA0jithyLq0XMQ6fzw/2fMV8zc88JTpbxzxcmE8Lv
-ZWpHNZcXwwA6KHxHLCTDXCveGR6u44SaH6hFtCqh1Kg7hqYh3iUvyPrBIDbelv/S
-VnJvNrJQHJJvn65GIKwrLWEi8+Fc33IslR5qEZjYkJD73/W0fA3Jh0wnLTNTJlA7
-qTkUT0BkYp6A/o7G0Ljyo7ocM8LFVmfjERhlvn8sY0Iyy8X8JpI3xl58J+ReFOka
-UWJT2ypkJuEY8kag5cGM
-=Z9ZU
+iQIcBAEBAgAGBQJQXK9qAAoJEBYNRVNeJnmT9QMP/1yNU5yQoq/7rAZmDW9Q8HUh
+FjU4XTXHXt7V1lNajstrr979oSJffD7d4A4S8kkjrgsOz8ZJ5QASnomk6Wa66Wtj
+nVTtHnjDmtiNsc4rVGDm8fnD69tHayUVWaPtTavtCmqSG2WdPaU2+ilS1mtNmzFB
+NtB/qvV/J5yFkicWz5NDrckblt8tkhTFPwdGXBu1jmuZvfN0puXpxdX7C3oX76x+
+ZDSgzk8eYyLPNOUxEnyR3OixtNoHPH1jwu6VjH/rZfQU/ulSwWcgl+yCGJ7+Xf8t
+sDmyy6O2SltYWLBuMVFUvV64EeleZsPYr4XtJhok4AUKr1VxLUiYMQ7zCDlWJVBv
+YjQaaqNvDizBX+EOzy3KcpkHLpeYy22o94ByiUimeeNBv/QEWEO4blYXI2VYbhDe
+/7jNqxBPGbsrrFDm34w8UtbY/NN3lZvR7sW02XCCGaQHyEY+to3y9t4noR/kw2kk
+0NTQ4N6dLgS8ueXB41/Q9oXoWH9XDSWmuDUWcgXy7waQMWN9Qi7NlRLZTP7R9HxW
+Y45tJU0fJywTw1TV5ypJtALU0xHbW+aX1byzf5U7fAO65w0QqUx2/1o/Lpse2Es4
+Gpndh5YzgqSky9ZJ4baBhKeyHlaNtBMt2KY5pWyyWGqK74UWUJLtOPYYsBracZQV
++bn0dXBl7WvUIvDBP+dp
+=f2Xw
 -----END PGP SIGNATURE-----
