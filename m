@@ -1,58 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/16/1
-Message-ID: <4FB32DD3.6040400@redhat.com>
-Date: Tue, 15 May 2012 22:32:19 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/8
+Message-ID: <20120921133830.GA26867@kludge.henri.nerv.fi>
+Date: Fri, 21 Sep 2012 16:38:30 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: WordPress wp-facethumb plugin reflected XSS vulnerability
+Subject: CVE-request: monkey CGI scripts executed without dropping RUID/RGID root
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 05/15/2012 01:41 PM, Henri Salo wrote:
-> Hello,
-> 
-> WordPress plugin wp-facethumb version 0.1 is affected to reflected
-> XSS vulnerability. This issue is fixed in version 0.2. Could I get
-> 2012 CVE-identifier for this issue, thanks.
-> 
-> Changelog:
-> http://plugins.svn.wordpress.org/wp-facethumb/trunk/readme.txt 
-> Original advisory: http://cxsecurity.com/issue/WLB-2012050106 My
-> report to developer:
-> http://wordpress.org/support/topic/plugin-wp-facethumb-reflected-xss-vulnerability-cwe-79
->
-> 
-Plugin URL: http://wordpress.org/extend/plugins/wp-facethumb/ (will show
-up very soon. WP admins disabled this until fix is done)
-> 
-> Diff included between tags 0.1 and 0.2.
-> 
-> - Henri Salo
+Please assign 2012 CVE-identifier for following monkey vulnerability:
 
-Please use CVE-2012-2371 for this issue.
+The Monkey webserver retains RUID/RGID root so that it can regain root as
+needed to perform privileged operations. Unfortunately, monkey does not drop
+RUID/RGID root before executing CGI scripts. This allows any user with write
+access to a cgi-bin directory to gain local root. It would also allow a remote
+attacker to do the same in combination with a CGI/PHP script that has any
+remote code execution bug.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Reported by John Lightsey in http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=688008
+Affected Debian-version is 0.9.3-1 (haven't tested upstream package)
+Project page: http://www.monkey-project.com/
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPsy3TAAoJEBYNRVNeJnmTViQP/RKEwI5U+LgazdspGES6Y1P1
-bAezznORp2v/v+Na/ibBImahulldO/8CPfO+2n3jVSq2pxNKsdxxgxY/b3wr6DUs
-KQAev2FFG8XgF1G5Sj2hW5cjOMAU7kjkvwR2d/DmNVSGKEJcSHMalCj2wfWTcMk+
-VlhzKyhsnZM34HEDiJAPpX8PfENpo6bsy3S77bT9vA6mM1OyHrPcp4ADsOSvtBso
-ixJIZSF7rPen/O2iKOwT5iyQOW9zb/eoSsoYAtFHPvN9d/0woePZcuudKK+oNLXL
-Fwpldd/P9NqrCHqLJ1hvd4VB+q9LsNYO796BB9CSdB2t+cXBgU2m/Xd5QyAcfZG7
-Y7GBsviTDWk+JqkULLxkdPMM+8YTn0riIpoLbmnFjepox5bD4IUc7Z0T0TLIGq6O
-XglrJmrZ+SnMP/jywsWaOm+lo3cLWT2UK5FCHn42h+ZAb0WNaWJvwZoLVTPX6E1J
-Vp5qhdofzUrur5L7AqgCQaaFoP0hmeIWWaP8+GL2CE7COCHnYWnbUpAXuAaNMpLA
-fU7DFEN5QkqFVSjBXEq6svLQouFf2G4yV64dB3x5iuQm+1nCjPN4hqgg9HKGjJlD
-jGpIdlHS8bXCm7WeU9yLYBnp17yeC1eu8MLelo7xitd+QOYoJbBNb3F5Dl49oHc9
-WkTvfIGleHYXbwnZOoAR
-=E3AS
------END PGP SIGNATURE-----
+- Henri Salo
