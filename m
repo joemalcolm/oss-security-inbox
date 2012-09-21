@@ -1,41 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/5
-Message-ID: <CAFB=mGDg+UN7=w7Ve1BC8cXQXRHuzYgBdufUJKj6y5-Tp=Fmqw@mail.gmail.com>
-Date: Mon, 3 Dec 2012 16:52:55 +0100
-From: king cope <isowarez.isowarez.isowarez@...glemail.com>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>,  king cope <isowarez.isowarez.isowarez@...glemail.com>,  full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com,  todd@...ketstormsecurity.org, submit@...sec.com,  Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org,  security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
-Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/13
+Message-ID: <505CC068.6050403@redhat.com>
+Date: Fri, 21 Sep 2012 13:30:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Michael Gilbert <mgilbert@...ian.org>
+Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-Yes you are way right.
-Don't patch it!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-2012/12/3 Sergei Golubchik <serg@...monty.org>:
-> Hi, king cope!
->
-> On Dec 02, king cope wrote:
->> Hi,
->> My opinion is that the FILE to admin privilege elevation should be
->> patched.  What is the reason to have FILE and ADMIN privileges
->> seperated when with this exploit FILE privileges equate to ALL ADMIN
->> privileges.
->> I understand that it's insecure to have FILE privileges attached to a
->> user.  But if this a configuration issue and not a vulnerability then
->> as stated above there must be something wrong with the privilege
->> management in this SQL server.
->
-> You've missed that part of my reply:
->
->> > Additionally, MySQL (and MariaDB) provides a --secure-file-priv
->> > option that allows to restrict all FILE operations to a specific
->> > directory.
->
-> Normally, if a DBA wants to grant FILE privilege to users, the server
-> will have something like secure-file-priv=/tmp/mysql (for example)
-> specified in the configuration file. This way any operation allowed by
-> the FILE privilege (like SELECT ... OUTFILE) will only be able to access
-> files under the /tmp/mysql/ path.
->
-> Regards,
-> Sergei
->
+On 09/21/2012 12:27 PM, Michael Gilbert wrote:
+> On Fri, Sep 21, 2012 at 2:18 PM, Kurt Seifried
+> <kseifried@...hat.com> wrote:
+>>> Any security weakness can qualify for the E in CVE.  Really
+>>> the point
+>> 
+>> No, security vulnerabilities qualify, security hardening does
+>> not necessarily qualify.
+> 
+> Again E is for exposure, not vulnerability.
+> 
+>> In this case GnuPG respects umask. We can't assign a CVE for
+>> every single program that has potentially sensitive output and
+>> fails to ensure that the output is mode 0600 or whatever (what
+>> about extended access controls?). Some programs choose to enforce
+>> permissions within themselves (e.g. OpenSSH and key based
+>> authentication), but generally speaking makeing sure a program
+>> with potentially sensitive output is safe is the job of the
+>> system configuration, and you have several options:
+> 
+> Think about it this way.  I open a file with mode 600 in vim, edit
+> it, save it, and find it with mode 644?  That would be an exposure,
+> would it not?
+
+Not if it respects your umask. If you want privacy set your umask
+correctly. Programs can't know what they're supposed to do unless you
+tell them. And we tell the system using umask.
+
+> Again, about as minor as you could get, but its still an E.
+
+I'm confused. It's not exposed unless you configure umask wrong and
+run this in a public viewable directory. If you want a CVE for every
+single program that doesn't ensure it's (potentially sensitive) output
+is mode 0600 than that's basically, well, all the programs on a system.
+
+> Best wishes, Mike
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQXMBoAAoJEBYNRVNeJnmT0JsQANftNC0hArRkLz/enBNQ9XLs
+0ZJQRLZM5mh2h82hr9rvhpOAmmAPBQ/+mVsmDVs9MicPk3Vu7xyPkxLuzbd4L7C4
+I99nOZ4PGuGccN9+r6JOLg2JqKRKJIBPfxsfEIPdsQM7It7bGFkAr1w/ylEefnSB
+OOZREhu3NY7xM0ydbReQT7CLS3xiKbiRCi6qOXCa4mG/wVff9ZbxeVgvf4ZBPXby
+QW54CevK7KScUuHZ1UFniJdd++ockxnCDAQ5y7d6yQufECmtvPc+xPdj5U044xYm
+h4oiWB5HVxJ0d9Ca1shOVcl5f5pEfxzzO2YiyyamwB4eEkMttg+pYVK0mw5BzFLC
+iOlZFTTAZyFSremCgCzfa/tvOcSNr7Irhj5IFCV/J3ZwbzbmPuXR+xCn4Zs1pIez
+xwXtqfXlML5Ptr4KgKc3hWjWyP1FGtzHcV3+d61ZPRzTJ0Y1G55zGch30m8B527A
+QNXZ0czh/31Aoz2H5FyfGJYHFTq9FVTds/FuCMdPDL43zUtEq/OXTtEAdzY3Ul8H
+p6ZYhQx9nsKwX9p76XFKrXPnBMY6bP8WRspIF5TAIIuGhTWn/afcMZBkxrpBQHaL
+7SST84BMCfxWwanBZnjD9n+r0eVIfOgSe5ywBte7O0ZADjFO44XAt4nFnUMzwMOQ
+n2f3p5kLwpbVhX7rjC5Y
+=K+6A
+-----END PGP SIGNATURE-----
