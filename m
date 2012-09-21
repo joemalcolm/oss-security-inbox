@@ -1,45 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/06/4
-Message-ID: <501FBC5C.6070609@kde.org>
-Date: Mon, 06 Aug 2012 08:45:16 -0400
-From: Jeff Mitchell <mitchell@....org>
-To: oss-security@...ts.openwall.com
-CC: Charlie Miller <charlie.miller@...uvant.com>,  Kurt Seifried <kseifried@...hat.com>, "Jorge Manuel B. S. Vicetto" <jmbsvicetto@...il.com>
-Subject: Re: CVE request for Calligra
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/15
+Message-ID: <CANTw=MP2uKg9TAVGUjMSb4zG-MTY9BcYK2HDa2HfXSAytNm_xQ@mail.gmail.com>
+Date: Fri, 21 Sep 2012 17:47:48 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-On 08/05/2012 07:27 PM, Charlie Miller wrote:
-> Hi Kurt.
-> 
-> Yes, sorry I didn't report directly to the correct people.  I only
-> knew that the vulnerability existed for sure in the Nokia Documents
-> app and also in the version of Koffice I happen to have on my system.
-> I didn't know what library it was in (I'd never even heard of
-> Calligra), if it was already known about upstream, what other
-> software depend on this library, etc.  As you're probably aware, it
-> can be a very time consuming process to try to get that stuff sorted
-> out, so I just report it to the vendor and let them deal with these
-> issues.  In that spirit, I reported to Nokia early last month.  As
-> for your questions, I have not asked for CVE's for any of these
-> vulnerabilities.  Feel free to request them yourselves.  I believe
-> the only vulnerability I know enough details about to say is a
-> security issue is the one in the document about parsing word
-> documents.  I hope that clears up any questions you might have.
-> Thanks!
+On Fri, Sep 21, 2012 at 5:19 PM, Michael Gilbert wrote:
+> So, the point is that umask is more meant more as a fallback only when
+> there isn't better info available to make the right permissions
+> decision.
 
-Hi there,
+Although I think that interpretation would be a safer way to go about
+things, but thinking about it more broadly, it may open a large can of
+worms.  Would such a situation in all other applications be considered
+an exposure?
 
-As you may have heard, Nokia has a few issues these days with MeeGo, so
-it's not surprising that they haven't contacted upstreams if you
-reported it to them  :-)
+So another vim example
 
-Calligra is a (maintained) fork of KOffice. At this point it's not clear
-to me, based on commit activity, if KOffice is maintained.
+$ umask
+0077
+$ echo test > test
+umask 022
+$ vim test
+:w test2
+$ ls -l test2
+-rw-r--r-- 1 a a 5 Sep 21 17:33 test2
 
-Regardless, I guess I'd like a CVE for both (or two CVEs, depending on
-your preferences).
+Would this be an exposure since the user had original file permissions
+were 600, and the derived file is now 644?
 
---Jeff
+So anyway, I suppose this creates more questions than answers, but I
+guess its worth thinking about.  After all, what did the user really
+expect?  If they had intended that original file to be private, and
+now its not, is that appropriate?  Is it more appropriate to assume
+all users know how to use umask appropriately?
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
+Best wishes,
+Mike
