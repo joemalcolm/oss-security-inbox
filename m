@@ -1,27 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/20/11
-Message-ID: <20120820180704.GG5405@dhcp-25-225.brq.redhat.com>
-Date: Mon, 20 Aug 2012 20:07:04 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/4
+Message-Id: <201209211220.20425.mweckbecker@suse.de>
+Date: Fri, 21 Sep 2012 12:20:20 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: mm: use-after-free in madvise_remove()
+Cc: vcizek@...e.de, tmraz@...hat.com
+Subject: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-A use-after-free flaw has been found in madvise_remove() function in the
-Linux kernel. madvise_remove() can race with munmap (causing a
-use-after-free of the vma) or with close (causing a use-after-free of the
-struct file). An unprivileged local user can use this flaw to crash the
-system.
+Hello Steve, Kurt, Vitezslav, Tomas, vendors,
 
-Upstream fix:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=9ab4233dd08036fe34a89c7dc6f47a8bf2eb29eb
+we have recently been notified about a potential issue with gpg: When files
+are en/de-crypted the result is written world-readable by default.
+Short example (quote from [1]):
 
-Introduced in:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=90ed52ebe48181d3c5427b3bd1d24f659e7575ad
+ # de-crypting
+ % gpg sikrit.gpg
+ % ll sikrit*
+   -rw-r--r-- 1 gp users  12 Sep 17 09:41 sikrit
+   -rw------- 1 gp users 480 Sep 17 09:40 sikrit.gpg
+ # en-crypting
+ % echo "my password" > sikrit
+ % chmod go= sikrit
+ % ll sikrit
+   -rw------- 1 gp users 12 Sep 17 09:38 sikrit
+ % gpg -e -r pfeifer sikrit
+ % wipe sikrit
+ % ll sikrit.gpg 
+   -rw-r--r-- 1 gp users 480 Sep 17 09:40 sikrit.gpg
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=849734
+[1] https://bugzilla.novell.com/show_bug.cgi?id=780943
 
-Thanks,
+Wouldn't one usually expect files that were previously encrypted to contain
+sensitive content (that's probably why content is encrypted at all)? And if
+so, shouldn't such files be only readable by certain users / group of users
+by default? Otherwise, a file that is e.g. decrypted in /tmp might leak due
+to the file permissions being too loose.
+
+I'm not quite sure whether to assign a CVE for this, so I thought I'd just
+add a question mark behind the subject and let the list (and Kurt) decide.
+
+Thanks, Matthias
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
