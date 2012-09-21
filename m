@@ -1,48 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/4
-Message-ID: <CAAPiX_+yx=SR33RqQu4-ZmoW65i-Ffb9J5Ez8DB7V3asqRqesg@mail.gmail.com>
-Date: Wed, 11 Apr 2012 21:07:17 -0600
-From: Greg Knaddison <greg.knaddison@...uia.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/14
+Message-ID: <CANTw=MN47FpFD3BSy=1sXT1bgeYg+r_Ook1OtuPFX6+V2rGT=w@mail.gmail.com>
+Date: Fri, 21 Sep 2012 17:19:40 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
 To: Kurt Seifried <kseifried@...hat.com>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE's for Drupal Contrib 2012 001 through 057 (67 new CVE assignments)
+Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 11, 2012 at 8:10 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-
-> >>
-> >> Direct links to the code commits fixing them would be nice =)
-> >
-> > We probably can't do this, though it is a fairly common request.
-> > Our current policy is not to discuss the specific details for at
-> > least 2 weeks and closer to 6 months if possible. Project usage
-> > shows that most site builders don't upgrade very quickly.
+On Fri, Sep 21, 2012 at 3:30 PM, Kurt Seifried
+>> Think about it this way.  I open a file with mode 600 in vim, edit
+>> it, save it, and find it with mode 644?  That would be an exposure,
+>> would it not?
 >
-> Hrmm yeah that's a tough one. Do you do any regression testing to make
-> sure the new modules don't break things (if people know stuff is
-> unlikely to break they are more likely to upgrade quickly, usually any
-> ways).
->
+> Not if it respects your umask.
 
-As a project there is an automated testing framework integrated into the
-code hosted on drupal.org and a network of servers to run tests pretty
-quickly, but very few of the contributed modules take advantage of it
-(there are 16,000 of them after all). I don't think we've gone beyond
-anecdotes for why people don't upgrade rapidly but it's definitely
-something we're constantly working to improve the speed of the upgrade
-cycle.
+Editing does not invoke a umask because the program already knows what
+umask you really wanted for that file, and didn't need a default to
+guess at it.
 
+$ umask
+0077
+$ touch test
+$ ls -l test
+-rw------- 1 a a 5 Sep 21 17:09 test
+$ umask 022
+$ echo test > test
+$ ls -l test
+-rw------- 1 a a 5 Sep 21 17:09 test
 
-> Perfect! I was just thinking, as long as the main project
-> contributors/etc. (e.g. you guys in the case of Drupal) do the CVE
-> requests in a regular and public way (e.g. to OSS-sec) than there is
-> minimal chance of duplicates and other problems (e.g. someone else
-> sending a request to Mitre directly or whatever).
->
->
-Solid.
+> If you want privacy set your umask
+> correctly. Programs can't know what they're supposed to do unless you
+> tell them. And we tell the system using umask.
 
--- 
-Director Security Services | +1-720-310-5623
-Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
+Sure, umask applies a default set of permissions to new files, and the
+process of decrypting a file with gpg certainly creates a new file.
+But in this case, we can be more intelligent than the umask because we
+know the permissions of the original encrypted file, and don't need to
+guess at them using the umask.
 
+> I'm confused. It's not exposed unless you configure umask wrong and
+> run this in a public viewable directory. If you want a CVE for every
+> single program that doesn't ensure it's (potentially sensitive) output
+> is mode 0600 than that's basically, well, all the programs on a system.
+
+So, the point is that umask is more meant more as a fallback only when
+there isn't better info available to make the right permissions
+decision.
+
+Best wishes,
+Mike
