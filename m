@@ -1,69 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/12
-Message-ID: <20121127213222.GO2689@redhat.com>
-Date: Tue, 27 Nov 2012 14:32:22 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/22/1
+Message-ID: <20120922001914.GM26687@haig>
+Date: Fri, 21 Sep 2012 17:19:14 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2012-5532 hypervkvpd DoS
+Cc: jamie@...onical.com
+Subject: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-* [2012-11-27 11:55:35 -0700] Vincent Danen wrote:
+Hi,
 
->* [2012-11-27 11:21:03 -0700] Vincent Danen wrote:
->
->>Just a heads-up on a flaw that was found:
->>
->>Florian Weimer of the Red Hat Product Security Team discovered that hypervkvpd
->>would exit when it processed a spoofed Netlink packet that had been sent from
->>an untrusted local user, in the following code:
->>
->>       len = recvfrom(fd, kvp_recv_buffer, sizeof(kvp_recv_buffer), 0,
->>               addr_p, &addr_l);
->>
->>       if (len < 0 || addr.nl_pid) {
->>           syslog(LOG_ERR, "recvfrom failed; pid:%u error:%d %s",
->>                   addr.nl_pid, errno, strerror(errno));
->>           close(fd);
->>           return -1;
->>       }
->>
->>This has been corrected upstream already.
->>
->>References:
->>
->>https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=commit;h=95a69adab9acfc3981c504737a2b6578e4d846ef
->>https://bugzilla.redhat.com/show_bug.cgi?id=877572
->
->Ooops.  This is a bit embarrassing.
->
->This is actually CVE-2012-2669.  Please reject CVE-2012-5532 as a
->duplicate of CVE-2012-2669.
->
->Thanks.
+I recently joined the Ubuntu Security team and request membership to
+the linux-distros@...openwall.org list so that I may participate fully
+in reporting and fixing vulnerabilities in Ubuntu and FOSS. Here is my
+GPG fingerprint:
 
-Wow, ok, this is a little convoluted.  These actually are not the same
-thing.
+pub   2048R/9D8D2E97 2012-09-17
+      Key fingerprint = 4150 10F1 BA23 C8C7 20DF  B1F5 F321 7259 9D8D 2E97
+uid                  Seth Arnold <seth.arnold@...onical.com>
+uid                  Seth Arnold <seth.arnold@...ntu.com>
+uid                  Seth Arnold <seth.arnold@...il.com>
+sub   2048R/3CA5F3E5 2012-09-17
 
-The old fix is here (so this would be CVE-2012-2669):
+Thank you for your consideration. :)
 
-https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=blobdiff;f=tools/hv/hv_kvp_daemon.c;h=d9834b36294373f88d29731350ccc9d384b41788;hp=146fd6147e84be5cde2a66009f331f1b6ee2b805;hb=bcc2c9c3fff859e0eb019fe6fec26f9b8eba795c;hpb=cfaf025112d3856637ff34a767ef785ef5cf2ca9
+Seth
 
-This, however, while detecting the spoofed netlink packet would still
-cause the daemon to exit.  I'm not sure whether or not it actually fixed
-anything.
-
-This fix:
-
-https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=blobdiff;f=tools/hv/hv_kvp_daemon.c;h=c1d910243d49abe6012595d50227648873994ed8;hp=13c2a142331defeb539e40b9fe4d942f66c3aa4a;hb=95a69adab9acfc3981c504737a2b6578e4d846ef;hpb=aeba4a06f28fad11b1e61d150bd3cde3008b80c8
-
-fixes the previous commit so that now the daemon no longer exits on
-these bad packets.  This would be CVE-2012-5532.
-
-So CVE-2012-2669 is for "failing to check origin of netlink messages"
-and CVE-2012-5532 is for the "exiting upon receipt of spoofed netlink
-messages" (or something to that effect anyways).
-
-My apologies for the noise.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
