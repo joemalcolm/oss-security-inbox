@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/8
-Message-ID: <20120418192811.GO8020@outflux.net>
-Date: Wed, 18 Apr 2012 12:28:11 -0700
-From: Kees Cook <keescook@...omium.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Xorg input device format string flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/22/2
+Message-ID: <20120922042313.GA3458@openwall.com>
+Date: Sat, 22 Sep 2012 08:23:14 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Seth Arnold <seth.arnold@...onical.com>
+Cc: oss-security@...ts.openwall.com, jamie@...onical.com
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi Seth,
 
-Adding an input device with a malicious name can trigger a format
-string flaw in Xorg's logging subsystem. For builds of Xorg lacking
--D_FORTIFY_SOURCE=2 (or 32-bit systems lacking the fix to fortify[1])
-this can lead to arbitrary code execution as the Xorg user, usually
-root. When built with fortify, this is a denial of service, since Xorg
-will abort.
+On Fri, Sep 21, 2012 at 05:19:14PM -0700, Seth Arnold wrote:
+> I recently joined the Ubuntu Security team and request membership to
+> the linux-distros@...openwall.org list so that I may participate fully
+> in reporting and fixing vulnerabilities in Ubuntu and FOSS. Here is my
+> GPG fingerprint:
+> 
+> pub   2048R/9D8D2E97 2012-09-17
+>       Key fingerprint = 4150 10F1 BA23 C8C7 20DF  B1F5 F321 7259 9D8D 2E97
 
-Proposed solution patch series can be found here:
-    1/4 http://patchwork.freedesktop.org/patch/10000/
-    2/4 http://patchwork.freedesktop.org/patch/9998/
-    3/4 http://patchwork.freedesktop.org/patch/9999/
-    4/4 http://patchwork.freedesktop.org/patch/10001/
+I've just subscribed you.
 
--Kees
+Are you joining us here on oss-security as well?
 
-[1] http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=7c1f4834d398163d1ac8101e35e9c36fc3176e6e
-
--- 
-Kees Cook
-Chrome OS Security
+Alexander
