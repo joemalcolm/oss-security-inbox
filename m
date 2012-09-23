@@ -1,40 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/9
-Message-ID: <20120329083828.46fc3776@hsalkjdhsa.lan>
-Date: Thu, 29 Mar 2012 08:38:28 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: egroupware before 1.8.002 various security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/23/2
+Message-ID: <20120923025947.GA6812@openwall.com>
+Date: Sun, 23 Sep 2012 06:59:47 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: tiff2pdf: Heap-based buffer overflow due to improper initialization of T2P context struct pointer
 Content-Type: text/plain; charset=utf-8
 
-Am Wed, 28 Mar 2012 23:04:07 -0600
-schrieb Kurt Seifried <kseifried@...hat.com>:
-
-> On 03/28/2012 10:26 AM, Hanno Böck wrote:
-> > http://comments.gmane.org/gmane.comp.web.egroupware.german/33144
-> > 
-> > " 1. Fixes regarding security issues like 'local file inclusion', 
-> > 'sql injection', 'reflected xss' and 'open redirect'. "
-> > 
+On Thu, Jul 19, 2012 at 08:15:59AM +0530, Huzaifa Sidhpurwala wrote:
+> I found the following flaw in the tiff2pdf tool, shipped with libtiff:
 > 
-> Make a list with specific requests and information please.
+> A heap-based buffer overflow flaw was found in the way tiff2pdf, a TIFF
+> image to a PDF document conversion tool, of libtiff, a library of
+> functions for manipulating TIFF (Tagged Image File Format) image format
+> files, performed write of TIFF image content into particular PDF
+> document file, when not properly initialized T2P context struct pointer
+> has been provided by tiff2pdf (application requesting the conversion)
+> as one of parameters for the routine performing the write. A remote
+> attacker could provide a specially-crafted TIFF image format file, that
+> when processed by tiff2pdf would lead to tiff2pdf executable crash or,
+> potentially, arbitrary code execution with the privileges of the user
+> running the tiff2pdf binary.
 > 
+> This issue has been assigned CVE-2012-3401.
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=837577
+> 
+> The relevant patch for the issue has been applied to upstream
+> libtiff-4.0.2 branch
 
-Local file inclusion:
-http://packetstormsecurity.org/files/101676/eGroupware-1.8.001.20110421-Local-File-Inclusion.html
+This is finally patched in 4.0.3:
 
-SQL injection in 1.8.001:
-http://packetstormsecurity.org/files/100179/eGroupware-1.8.001-SQL-Injection.html
+http://www.remotesensing.org/libtiff/v4.0.3.html
 
-reflected xss:
-http://packetstormsecurity.org/files/100180/eGroupware-1.8.001-Cross-Site-Scripting.html
+Frank Denis additionally noted:
 
-open redirect:
-http://packetstormsecurity.org/files/101675/eGroupware-1.8.001.20110421-Open-Redirect.html
+http://twitter.com/jedisct1/status/249699555115945984
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+"libtiff 4.0.3 brings "various memory buffer access fixes". Does it fix
+more than CVE-2012-3401?"
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+to which I have no answer.  The change log does in fact mention
+"Various memory buffer access fixes." as the very first change listed
+for libtiff.  Perhaps someone should review code changes.
+
+Alexander
