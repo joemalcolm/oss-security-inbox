@@ -1,67 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/8
-Message-ID: <50BE2E85.5060200@redhat.com>
-Date: Tue, 04 Dec 2012 10:10:29 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/23/1
+Message-ID: <20120923015509.GA6395@openwall.com>
+Date: Sun, 23 Sep 2012 05:55:09 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, "Richard J. Moore" <rich@....org>
-Subject: Re: CVE Request -- Qt (x < 4.8.4): QML XmlHttpRequest insecure redirection
+Cc: vcizek@...e.de
+Subject: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Sep 21, 2012 at 12:37:00PM +0200, Tomas Mraz wrote:
+> On Fri, 2012-09-21 at 12:20 +0200, Matthias Weckbecker wrote:
+> >  # de-crypting
+> >  % gpg sikrit.gpg
+> >  % ll sikrit*
+> >    -rw-r--r-- 1 gp users  12 Sep 17 09:41 sikrit
+> >    -rw------- 1 gp users 480 Sep 17 09:40 sikrit.gpg
+[...]
+> I suppose the permissions respect the user's umask so I do not think
+> this is a real security issue in the gpg itself. Although using the
+> permissions of the original file when creating the decrypted/encrypted
+> one (still modified with the user's umask) would be more appropriate. So
+> in my opinion this does not warrant a CVE but improvement in the
+> upstream gnupg code would be appreciated I think.
 
-On 12/04/2012 07:58 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> Qt upstream has released 4.8.4 version correcting one security 
-> issue:
-> 
-> An information disclosure flaw was found in the way XMLHttpRequest 
-> object implementation in Qt, a software toolkit for developing 
-> applications, performed management of certain HTTP responses. 
-> Previous implementation allowed redirection from HTTP protocol to
-> file schemas. Also the redirection handling was performed 
-> automatically by QML application and could not be disabled. A
-> remote attacker could use this flaw to cause QML application in an
-> unauthorized way to read local file content by causing the HTTP
-> response for the application to be a redirect to a file: URL (file
-> scheme).
-> 
-> References: [1]
-> http://lists.qt-project.org/pipermail/announce/2012-November/000014.html
->
-> 
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=883415
-> 
-> Relevant upstream patch: [3]
-> https://codereview.qt-project.org/#change,40034
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+Agreed, and the "still modified with the user's umask" portion is very
+important.  I assume you mean orig.st_mode & ~umask.  With open(...,
+O_CREAT | ..., orig.st_mode) this does not need to be explicit, but with
+fchmod() it does.
 
-Please use CVE-2012-5624 for this issue.
+(Sorry for stating the obvious, but I am concerned that someone might
+patch GnuPG to just chmod to the original file's perms ignoring umask,
+which would be a dangerous change of behavior.)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQvi6FAAoJEBYNRVNeJnmTphkP/AmZ83+7kVystL5+DG5IHfb1
-5EOs3bm7csaxAVXaStv7NnU0fP5YpzCUrnYEjDhmB1zMMXla5oyW2+pLI48OnRKP
-0JotWmNm6l0bNKpM3P8xeb1nEeJjaXUGgoTX25/+N5+JDnH+qqQ4xlAS2+MlGGiu
-uVjU3Neb8TpBMqx8wuNA4qYevuVrhO5rjgEZcFO/BaQXXmPjB76Tdg5GDL4of+i+
-CLO6X/4TsTCarZ/cNekwDMKUzVgunD77H27cimpldcWoecmv2MZRFS1hei8w+iPQ
-intBhTzG+WzJxzSGgSOkY8eUJi8Hftdi8DuOqF4xebRjq91YxrGY6Wekfn5Lihjn
-SY3BeKZbp/FMxLAk/Ru06klmcFfFNyPf2AW2uGBSemAeYNdtKoOip+t25oQwjlxs
-LmzXMMEVUQVtbew8S58OKvrFyjLtSP74YBQ35+AN2uqn8a6nA6fe1jpGGRU2EuJy
-kVzokQKBeqy6rjZt1vGMOB0NhSxFUvNtR26LAkzwJ3cEecXiSG/73xcC26pm6D8+
-ZIXmT2iB9BalXySdXQigb89u6jSSI+pEMPxD2ooXbZCKkVXfu5u2Iysd16OA3SPf
-JsZfwmcmmfO6/ohDt2cSu/T8yYmG2Nao3qiyCtjHQ40q20dHOK8nBYFe2ccXV4md
-ztDQIrLrw7MR/sckdHxG
-=UliW
------END PGP SIGNATURE-----
+Alexander
