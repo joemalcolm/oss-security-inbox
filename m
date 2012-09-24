@@ -1,39 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/4
-Message-ID: <20120108170725.GA25464@kroah.com>
-Date: Sun, 8 Jan 2012 09:07:25 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/1
+Message-ID: <mpro.mavj4t08w7ckg02iz.taviso@cmpxchg8b.com>
+Date: Mon, 24 Sep 2012 23:46:06 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Malicious devices & vulnerabilties
+Subject: Re: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jan 07, 2012 at 06:01:46PM -0500, Xi Wang wrote:
-> Hi,
-> 
-> In general driver code trusts hardware devices and often doesn't
-> validate the data they respond with.  But how about USB devices
-> that an attacker could plug into a victim's computer?  For example,
-> an attacker may craft a USB device with a long product name to cause
-> a buffer overflow (CVE-2011-0712).
-> 
-> http://www.openwall.com/lists/oss-security/2011/02/16/5
-> http://twitter.com/#!/mwrlabs/status/44814759396249600
-> 
-> Here is another possible bug in the USB audio format parser I tried
-> to report upstream.
-> 
-> https://lkml.org/lkml/2012/1/4/215
-> 
-> I am wondering where to draw the line.  Should such device drivers
-> be considered vulnerable or not?  Thanks.
+Michael Gilbert <mgilbert@...ian.org> wrote:
 
-They should be considered buggy, yes, and as such, the kernel developers
-will fix any reported problems (or we should, if not, please let me
-know.)
+> On Mon, Sep 24, 2012 at 3:06 PM, Tavis Ormandy wrote:
+> > What complexity?
+> 
+> The complexity of fixing permission handling in just about every single
+> unix application.
+> 
 
-But note, as these almost always fall under the "you have physical
-access" category, their security impact is generally considered low.
+It's already a requirement, it's not complex. 
 
-thanks,
+> > > First of all, gpg is not the only application that would need to be
+> > > "privacy-aware". Every single application that produces new files from
+> > > existing ones to propagate permissions from those original files to
+> > > the new ones, which would be pretty much everything.
+> >
+> > I'm not sure what you're talking about, when you invoke open() with
+> > O_CREAT, you need to put the correct value in the third parameter. I
+> > don't know what that has to do with propogation.
+> 
+> If gpg is supposed to propagate permissions based on its input file
+> permissions to output files, then the broad implications are that whole
+> class of applications that derive new files need to do that as well.
 
-greg k-h
+I don't know what "propagate" means, it's supposed to put the permissions it
+wants in the parameters to open, yes. I think you're re-inventing capability
+systems, and are convinced that's what I want (I don't).
+
+> The point is retaining appropriate permissions across a chain of commands,
+> rather than resorting to the umask, which you are arguing is the wrong
+> thing to do for sensitive data.
+
+I would not argue any such thing, such capability systems are the domain of
+academics ;-).
+
+What I am saying is that if you want to create a file with 0644, you put
+0644 in the arguments to open, not set it to 0666 and say "fix your umask".
+
+> > I think you've misunderstood the problem, and it's trivial to solve.
+> 
+> No, I'm thinking about the broader implication.  If you're arguing that
+> gpg should be modified to better handle permissions, then all applications
+> potentially handling sensitive information should as well: file editors,
+> and what not.  Otherwise, what makes gpg such a special case?
+> 
+
+I think you've confused my post with someone elses.
+
+Tavis.
+
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
+
