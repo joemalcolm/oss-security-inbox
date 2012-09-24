@@ -1,37 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/8
-Message-ID: <4F0F5155.2060908@redhat.com>
-Date: Thu, 12 Jan 2012 14:32:05 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/8
+Message-ID: <CANTw=MMjSrAyot_HoetKcqp+wHCW3kzfYwG30n1OGXz0TbeUXA@mail.gmail.com>
+Date: Mon, 24 Sep 2012 15:56:32 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: Mediawiki
+Subject: Re: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-On 01/12/2012 01:31 AM, Moritz Muehlenhoff wrote:
-> Hi,
-> please assign a CVE ID for a new security issue fixed in Mediawiki
-> 1.17.2:
+On Mon, Sep 24, 2012 at 3:06 PM, Tavis Ormandy wrote:
+> Michael Gilbert <mgilbert@...ian.org> wrote:
 >
-> === Security changes ===
-> * (bug 33117) prop=revisions allows deleted text to be exposed through
-> cache pollution.
+>> On Mon, Sep 24, 2012 at 4:42 AM, Tavis Ormandy wrote:
+>> > I agree. Users do know how to use umask properly, but this isn't what
+>> > umask is for. The umask for the low order bits are only applied if the
+>> > program requested 0666, it's still the responsibility of the program to
+>> > choose the appropriate permissions.
+>> >
+>> > Creating sensitive files with 0666 and then saying "set your umask" is
+>> > just wrong.
+>>
+>> Think about the complexity potentially involved to solve these issues the
+>> right way.
 >
-> http://svn.wikimedia.org/svnroot/mediawiki/tags/REL1_17_2/phase3/RELEASE-NOTES
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=33117
-> https://www.mediawiki.org/wiki/Special:Code/MediaWiki/108686
-> https://www.mediawiki.org/wiki/Special:Code/MediaWiki/108687
+> What complexity?
+
+The complexity of fixing permission handling in just about every
+single unix application.
+
+>> First of all, gpg is not the only application that would need to be
+>> "privacy-aware". Every single application that produces new files from
+>> existing ones to propagate permissions from those original files to the
+>> new ones, which would be pretty much everything.
 >
-> Cheers,
->         Moritz
+> I'm not sure what you're talking about, when you invoke open() with O_CREAT,
+> you need to put the correct value in the third parameter. I don't know what
+> that has to do with propogation.
 
-=== Security changes ===
-* (bug 33117) prop=revisions allows deleted text to be exposed through cache pollution.
+If gpg is supposed to propagate permissions based on its input file
+permissions to output files, then the broad implications are that
+whole class of applications that derive new files need to do that as
+well.
 
+>>  In addition, piping
+>> would need to be permissions-aware to achieve the following:
+>>
+>> $ umask 077 $ touch sensitive-file $ umask 022 $ cat sensitive-file >
+>> sensitive-file2 $ ls -l sensitive-file* -rw------- 1 a a 0 Sep 24 13:09
+>> sensitive-file -rw------- 1 a a 0 Sep 24 13:09 sensitive-file2
+>
+> I cannot parse this argument, but "piping" is a very high level concept, and
+> of little relevance. We're talking about the third parameter to open when
+> O_CREAT is specified.
 
-Please use CVE-2012-0046 for this issue.
+The point is retaining appropriate permissions across a chain of
+commands, rather than resorting to the umask, which you are arguing is
+the wrong thing to do for sensitive data.
 
--- 
+So starting with sensitive-file a set of permissions, performing any
+kind of operations on it you need, then writing a sensitive-file-new
+at the end, that file has the same permissions as the original (rather
+than resorting to the umask to choose a default).
 
--- Kurt Seifried / Red Hat Security Response Team
+>> Also, in the gpg case, what should be done when starting with a 644,
+>> should the decrypted contents be 600 (acting more as a protective parent),
+>> or should it respect the original permissions (irrespective of the umask),
+>> or chose the more restrictive of both?
+>
+> I think you mean 0666, which is what gpg is requesting. I'm pretty sure they
+> did not really intend for that, and so it should be updated to request what
+> they actually want.
 
+The original example was 600 input permissions producing 644 output.
+My question is what should be done with the reverse case: 644 input,
+should the output be 644 (i.e. input permissions = output
+permissions), 600 (protective parenting), or something else?
+
+>> I'm not saying that these problems couldn't (or shouldn't) be solved, but
+>> it seems like a daunting task.
+>
+> I think you've misunderstood the problem, and it's trivial to solve.
+
+No, I'm thinking about the broader implication.  If you're arguing
+that gpg should be modified to better handle permissions, then all
+applications potentially handling sensitive information should as
+well: file editors, and what not.  Otherwise, what makes gpg such a
+special case?
+
+Best wishes,
+Mike
