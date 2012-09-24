@@ -1,15 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/08/2
-Message-ID: <50229EEB.8090406@redhat.com>
-Date: Wed, 08 Aug 2012 11:16:27 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Test email - please ignore
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/7
+Message-ID: <mpro.mavbqy074w43k02iz.taviso@cmpxchg8b.com>
+Date: Mon, 24 Sep 2012 21:06:34 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-This is just a test email, please ignore.
+Michael Gilbert <mgilbert@...ian.org> wrote:
+
+> On Mon, Sep 24, 2012 at 4:42 AM, Tavis Ormandy wrote:
+> > I agree. Users do know how to use umask properly, but this isn't what
+> > umask is for. The umask for the low order bits are only applied if the
+> > program requested 0666, it's still the responsibility of the program to
+> > choose the appropriate permissions.
+> >
+> > Creating sensitive files with 0666 and then saying "set your umask" is
+> > just wrong.
+> 
+> Think about the complexity potentially involved to solve these issues the
+> right way.
+
+What complexity?
+
+> First of all, gpg is not the only application that would need to be
+> "privacy-aware". Every single application that produces new files from
+> existing ones to propagate permissions from those original files to the
+> new ones, which would be pretty much everything.
+
+I'm not sure what you're talking about, when you invoke open() with O_CREAT,
+you need to put the correct value in the third parameter. I don't know what
+that has to do with propogation.
+
+>  In addition, piping
+> would need to be permissions-aware to achieve the following:
+> 
+> $ umask 077 $ touch sensitive-file $ umask 022 $ cat sensitive-file >
+> sensitive-file2 $ ls -l sensitive-file* -rw------- 1 a a 0 Sep 24 13:09
+> sensitive-file -rw------- 1 a a 0 Sep 24 13:09 sensitive-file2
+
+I cannot parse this argument, but "piping" is a very high level concept, and
+of little relevance. We're talking about the third parameter to open when
+O_CREAT is specified.
+
+> Also, in the gpg case, what should be done when starting with a 644,
+> should the decrypted contents be 600 (acting more as a protective parent),
+> or should it respect the original permissions (irrespective of the umask),
+> or chose the more restrictive of both?
+
+I think you mean 0666, which is what gpg is requesting. I'm pretty sure they
+did not really intend for that, and so it should be updated to request what
+they actually want. 
+
+
+> I'm not saying that these problems couldn't (or shouldn't) be solved, but
+> it seems like a daunting task.
+
+I think you've misunderstood the problem, and it's trivial to solve.
+
+Tavis.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
 
