@@ -1,60 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/21/1
-Message-ID: <4F910F0D.4060003@parallels.com>
-Date: Fri, 20 Apr 2012 11:23:57 +0400
-From: Pavel Emelyanov <xemul@...allels.com>
-To: "Eric W. Biederman" <ebiederm@...ssion.com>
-CC: Eugene Teo <eugeneteo@...nel.sg>, Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>, "security@...nel.org" <security@...nel.org>, Sukadev Bhattiprolu <sukadev@...ibm.com>, Serge Hallyn <serge.hallyn@...onical.com>
-Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/2
+Message-ID: <mpro.mauiu905c9q3k02iz.taviso@cmpxchg8b.com>
+Date: Mon, 24 Sep 2012 10:42:09 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-On 04/20/2012 11:20 AM, Eric W. Biederman wrote:
-> Pavel Emelyanov <xemul@...allels.com> writes:
-> 
->> On 04/20/2012 07:10 AM, Eugene Teo wrote:
->>>> So we know what is holding the pid namespace reference.
->>>>
->>>> Additional thoughts.
->>>>
->>>> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
->>>
->>> No.
->>>
->>>> Is there a corresponding task_struct leak?
->>>
->>> Yes.
->>>
->>>> I don't have much of a clue or much concern as this seems fixed in later kernels but I am happy to suggest things to look for to help narrow this down.
->>>
->>> I'm helping to provide more information.
->>
->> Is there also a vfsmount struct leak as well? The pidns creating implies
->> kern-mount-ing of a proc and it should be released when child reaper of
->> the namespace dies.
-> 
-> In this case the user is vsftp which is an entertaining user.
-> 
-> Roughly for every connection vsftp does:
-> - accepts the connection
-> - forks a server process
-> - unshares the network ipc and pid namespaces for additional isolation
-> - drops privilegs?
-> - serves up the file.
-> 
-> Since vsftp does not want any of the features of namespaces it does not
-> setup mounts or any of that.
+Matthias Weckbecker <mweckbecker@...e.de> wrote:
 
-I'm talking about the call to pid_ns_prepare_proc which does kern_mount
-thus bringing the proc sb in memory and pinning the init's pid on it.
+> On Friday 21 September 2012 23:47:48 Michael Gilbert wrote: [...]
+> >
+> > So anyway, I suppose this creates more questions than answers, but I
+> > guess its worth thinking about.  After all, what did the user really
+> > expect?  If they had intended that original file to be private, and now
+> > its not, is that appropriate?  Is it more appropriate to assume all
+> > users know how to use umask appropriately?
+> >
+> 
+> IMO if one bothers to encrypt a file at all it was certainly intended to
+> be private and only supposed to be readable by a certain user / user group
+> and not by just everyone. Otherwise encryption would be pointless, or are
+> there any other reasons for encrypting a file?
+> 
+> > Best wishes, Mike
+> 
+> Thanks, Matthias
+> 
 
-> vsftp simply wants a way to reduce the
-> the chance that a bug in the implemenation of vsftp will all the server
-> to be compromised.
-> 
-> To that extent I believe the reproduce program was very representative
-> of what vsftp is doing.
-> 
-> Eric
-> .
-> 
+I agree. Users do know how to use umask properly, but this isn't what umask
+is for. The umask for the low order bits are only applied if the program
+requested 0666, it's still the responsibility of the program to choose the
+appropriate permissions.
+
+Creating sensitive files with 0666 and then saying "set your umask" is just
+wrong.
+
+Tavis.
+
+
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
 
