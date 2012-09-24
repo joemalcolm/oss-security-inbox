@@ -1,42 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/6
-Message-Id: <201209211241.27240.mweckbecker@suse.de>
-Date: Fri, 21 Sep 2012 12:41:26 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/1
+Message-Id: <201209241033.12515.mweckbecker@suse.de>
+Date: Mon, 24 Sep 2012 10:33:12 +0200
 From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, vcizek@...e.de, tmraz@...hat.com
-Subject: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-On Friday 21 September 2012 12:35:49 Dan Rosenberg wrote:
-[...]
-> >
-> > [1] https://bugzilla.novell.com/show_bug.cgi?id=780943
-> >
-> > Wouldn't one usually expect files that were previously encrypted to
-> > contain sensitive content (that's probably why content is encrypted at
-> > all)? And if so, shouldn't such files be only readable by certain users /
-> > group of users by default? Otherwise, a file that is e.g. decrypted in
-> > /tmp might leak due to the file permissions being too loose.
->
-> GPG seems to just be honoring the umask:
->
-
-Yes, that's correct. I think, however, that many distros ship umask=0022 by
-default. That would be -rw-r--r--.
-
+On Friday 21 September 2012 23:47:48 Michael Gilbert wrote:
 [...]
 >
-> Still might be worth fixing though.
+> So anyway, I suppose this creates more questions than answers, but I
+> guess its worth thinking about.  After all, what did the user really
+> expect?  If they had intended that original file to be private, and
+> now its not, is that appropriate?  Is it more appropriate to assume
+> all users know how to use umask appropriately?
 >
 
-I thought so too.
+IMO if one bothers to encrypt a file at all it was certainly intended to be
+private and only supposed to be readable by a certain user / user group and
+not by just everyone. Otherwise encryption would be pointless, or are there
+any other reasons for encrypting a file?
 
-> -Dan
+> Best wishes,
+> Mike
 
-Thanks for your feedback so far!
-
-Matthias
+Thanks, Matthias
 
 -- 
 Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
