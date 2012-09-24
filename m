@@ -1,64 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/4
-Message-ID: <4F751321.1070903@redhat.com>
-Date: Thu, 29 Mar 2012 19:57:53 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/4
+Message-ID: <50609516.9050202@redhat.com>
+Date: Mon, 24 Sep 2012 11:15:02 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: CVE request: TYPO3-CORE-SA-2012-001
+CC: Tavis Ormandy <taviso@...xchg8b.com>
+Subject: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-On 03/29/2012 02:44 PM, Florian Weimer wrote:
-> I may have missed a previous request.  If I can count properly, there
-> are four different issues:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-You can count properly!
+On 09/24/2012 02:42 AM, Tavis Ormandy wrote:
+> Matthias Weckbecker <mweckbecker@...e.de> wrote:
+> 
+>> On Friday 21 September 2012 23:47:48 Michael Gilbert wrote:
+>> [...]
+>>> 
+>>> So anyway, I suppose this creates more questions than answers,
+>>> but I guess its worth thinking about.  After all, what did the
+>>> user really expect?  If they had intended that original file to
+>>> be private, and now its not, is that appropriate?  Is it more
+>>> appropriate to assume all users know how to use umask
+>>> appropriately?
+>>> 
+>> 
+>> IMO if one bothers to encrypt a file at all it was certainly
+>> intended to be private and only supposed to be readable by a
+>> certain user / user group and not by just everyone. Otherwise
+>> encryption would be pointless, or are there any other reasons for
+>> encrypting a file?
+>> 
+>>> Best wishes, Mike
+>> 
+>> Thanks, Matthias
+>> 
+> 
+> I agree. Users do know how to use umask properly, but this isn't
+> what umask is for. The umask for the low order bits are only
+> applied if the program requested 0666, it's still the
+> responsibility of the program to choose the appropriate
+> permissions.
+> 
+> Creating sensitive files with 0666 and then saying "set your umask"
+> is just wrong.
+> 
+> Tavis.
 
-> | Vulnerable subcomponent: Extbase Framework
-> | Affected Versions:
-> |   Versions 4.4.x and 4.5.x are not affected by this vulnerabilty.
-> | Vulnerability Type: Insecure Unserialize
-> | 
-> | Problem Description: Due to a missing signature (HMAC) for a request
-> | argument, an attacker could unserialize arbitrary objects within
-> | TYPO3.
-> | 
-> | To our knowledge it is neither possible to inject code through this
-> | vulnerability, nor are there exploitable objects within the TYPO3
-> | Core. However, there might be exploitable objects within third party
-> | extensions.
+So where do we draw the line? tar? By this definition any program that
+has stores sensitive data (passwords/etc.) or has potentially
+sensitive output (so email, web clients, chat clients, file
+downloaders, text editors, etc.) needs to internally pick some "safe"
+default and apply it and/or umask (whichever is more secure I guess).
 
-Please use CVE-2012-1605 for this issue.
+Personally I think applying file permissions at the program level is
+in general (outside of some highly specific instances like encryption
+key generation and storage in a file) a very very bad place to do
+this. Moving it up a layer to the OS (e.g. umask, home dir
+permissions, etc.) makes way more sense I think.
 
-> | Vulnerable subcomponent: TYPO3 Backend
-> | Vulnerability Type: Cross-Site Scripting
-> | 
-> | Problem Description: Failing to properly HTML-encode user input in
-> | several places, the TYPO3 backend is susceptible to Cross-Site
-> | Scripting. A valid backend user is required to exploit these
-> | vulnerabilities.
+However if people want to go ahead with this then a short list would be:
 
-Please use CVE-2012-1606 for this issue.
+OpenSSH/any SSH or encrypted connection client
+OpenSSL/anything that generates certificates/keys/etc.
+GPG/PGP/anything that provides file encryption/decryption
+Email clients (email is almost always sensitive, stored passwords/certs)
+Web clients (cached web pages are sensitive, stored passwords/certs)
+Chat programs (IRC, MSN, etc.) (stored passwords/certs)
+Any programs storing financial/accounting data (GnuCash, etc.).
+Any programs storing health related data (GnuHealth, etc.).
+File editing programs were previously mentioned
 
-> | Vulnerable subcomponent: TYPO3 Command Line Interface
-> | Vulnerability Type: Information Disclosure
-> |
-> | Problem Description: Accessing a CLI Script directly with a browser
-> | may disclose the database name used for the TYPO3 installation.
+I'm sure I've missed a few.
 
-Please use CVE-2012-1607 for this issue.
-
-> | Vulnerable subcomponent: TYPO3 HTML Sanitizing API
-> | Vulnerability Type: Cross-Site Scripting
-> |
-> | Problem Description: By not removing non printable characters, the API
-> | method t3lib_div::RemoveXSS() fails to filter specially crafted HTML
-> | injections, thus is susceptible to Cross-Site Scripting.
-
-Please use CVE-2012-1608 for this issue.
-
-> <http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-001/>
-
-
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIbBAEBAgAGBQJQYJUWAAoJEBYNRVNeJnmT5JUP+KBjgs7vitdo0o4q2luViHr3
+k9NI6Lj1UzG6vfmATdkjN7J2XnkApcsAWijg1iWXQmq3zhv3EK3cHZ0QUkd2P4nu
+nKAwl22vTVF4COQYGOs0Fe0uKTKskuSGqQTdEG71OBBsZH4MJs6C7jk/0mDmjYqq
+dqEjil1+jTFrxTBWuXGbRt1qdQxKS3Acq8uCRkm7tbp5+K7P99cRT8CXX6ITef92
+NZm8bolYFxMlCKMEj8NqeB0mX4QePw6IINadccHg6u/PadxuJHK+z5z2N9+cLdxq
+ZGfZ6w5jvih5UBZXvS3Khlg5YGlkJCIwcTLZz2OFXcSzcuoEGXFiHDpeIeiNwoO4
+1St1c2TBpSHG11CdNQUVnhxaF8QMuDvw34L6hr7uuER2p44QeWEc/s2AVPt7/Y7+
+Nheuhsp1TPeOpAyOFdR9L2xdDuN8HH07OkKnPk9IsNpNUqOARkzhzO8dWGydFLrb
+iKwuzlsa3qNkJk0qwGm4IktB5jcqOaAm/XYi5SRGY+dDPhFkebpILwqoq6rZ6Aoi
++CCV8+Md0M3MU0rOkzu82Td96oK/rllPkA2DVFpapADrinl9eDycJJaxejGssyZY
+Z7N6eArUa296aTcyjuo3cqJsrr6Jn/Dkmdp4yoxGb4VdDCLHdXDnu4bdENqmbPEX
+NBIlDihtzuK2t0AKLus=
+=a3Rt
+-----END PGP SIGNATURE-----
