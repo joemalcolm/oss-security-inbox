@@ -1,60 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/7
-Message-ID: <4FF75B81.5060608@redhat.com>
-Date: Fri, 06 Jul 2012 15:41:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Marcus Meissner <meissner@...e.de>
-Subject: CVE Request: sblim-sfcb: insecure LD_LIBRARY_PATH usage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/3
+Message-ID: <CANTw=MMvyiRCkUdUi2MZmzJMORJr13R4ZLWeMKYkZKzuW15fZQ@mail.gmail.com>
+Date: Mon, 24 Sep 2012 13:13:24 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Sep 24, 2012 at 4:42 AM, Tavis Ormandy wrote:
+> I agree. Users do know how to use umask properly, but this isn't what umask
+> is for. The umask for the low order bits are only applied if the program
+> requested 0666, it's still the responsibility of the program to choose the
+> appropriate permissions.
+>
+> Creating sensitive files with 0666 and then saying "set your umask" is just
+> wrong.
 
-Originally found at:
-https://bugzilla.novell.com/show_bug.cgi?id=770234
+Think about the complexity potentially involved to solve these issues
+the right way.
 
-Marcus Meissner 2012-07-06 12:18:54 UTC
+First of all, gpg is not the only application that would need to be
+"privacy-aware". Every single application that produces new files from
+existing ones to propagate permissions from those original files to
+the new ones, which would be pretty much everything.  In addition,
+piping would need to be permissions-aware to achieve the following:
 
-found by grep.
+$ umask 077
+$ touch sensitive-file
+$ umask 022
+$ cat sensitive-file > sensitive-file2
+$ ls -l sensitive-file*
+-rw------- 1 a a 0 Sep 24 13:09 sensitive-file
+-rw------- 1 a a 0 Sep 24 13:09 sensitive-file2
 
-/etc/init.d/sfcb uses:
+Also, in the gpg case, what should be done when starting with a 644,
+should the decrypted contents be 600 (acting more as a protective
+parent), or should it respect the original permissions (irrespective
+of the umask), or chose the more restrictive of both?
 
-LD_LIBRARY_PATH=/usr/lib:$LD_LIBRARY_PATH
+I'm not saying that these problems couldn't (or shouldn't) be solved,
+but it seems like a daunting task.
 
-which is insecure if LD_LIBRARY_PATH is empty. It makes binaries use
-libraries from the current directory, which is a problem if e.g. a
-administrator
-starts the sfcb service from a untrusted directory.
-
-Also it uses it to set /usr/lib, a default path.
-
-Just get rid of the whole if ... as it is useless.
-
-This is now filed in Red Hat:
-https://bugzilla.redhat.com/show_bug.cgi?id=838160
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP91uBAAoJEBYNRVNeJnmTKW4QALklqfWzdbraJkF1nLWPGGK/
-WKq7LPunaDlN+4HgwL/96zSeUkw2NeoOW6+1SNWJLLQx1u2W8hvHCAzIYoQTPGzi
-OI7j5146He2Zaxle44AwRQGrb59eYaX7SL2mQfGFec1zZr5MeOMvOHg8v+sXltLb
-/iTVR0oblgpMZ6AxE6O6m84Fbkhwv+cTjHjbYkExtDqtVORjOVMj1GbBQljXjxOt
-Lcw1XQEux86/n/V12Ef71O4i6QdvW6Z3tg3GlukrA0G7Igofl3mgCRki3kRaazER
-b5cb1r7OhDtaqIFmHukS7W3RjK+mX0A/dcDSUqJ2CfhsKyGm+gAyNtwLixoiFpoY
-oAbkqY3tXOV6SkXEikayTB34M+2GSv/k3iVnAK8DQ2HLSj+5iWaXZK/R43f0E6bj
-1TmlQKqu0GI/3LwwvWUROF0NI+Gwp87yLJfFnyy7OW2amQrYpY50dCuZzMyDMOT6
-pBUEsZFuFTkOqzrOCVTRk18GTBW+233CgGFbc33VXdNxyJv+EY32Wl0kb15fag6L
-4DfsKUZToa4exOHncFiRfNKWBpleBPQd/mBPXHrI+PGhiVkCqPpNmSEXl4gr9Yz2
-lK90vBGU2Pn6PkkRyBC0Ov8Z2o0RiCcnwveUxLQy8kfTApw4GBaHkfO0kIlVr8Tm
-uYTMZWbteB7c6Sy8tkOS
-=fr9l
------END PGP SIGNATURE-----
+Best wishes,
+Mike
