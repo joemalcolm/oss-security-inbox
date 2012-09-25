@@ -1,37 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/29/4
-Message-ID: <B70713EB4E55C84C963B37DE9E63011B50DBD6C6@G4W3223.americas.hpqcorp.net>
-Date: Fri, 29 Jun 2012 21:45:39 +0000
-From: "Morris, Patrick" <patrick.morris@...com>
-To: "joe@...ctionis.com" <joe@...ctionis.com>, "full-disclosure@...ts.grok.org.uk" <full-disclosure@...ts.grok.org.uk>, "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>, "secalert@...urityreason.com" <secalert@...urityreason.com>, "bugs@...uritytracker.com" <bugs@...uritytracker.com>, "vuln@...unia.com" <vuln@...unia.com>, "vuln@...urity.nnov.ru" <vuln@...urity.nnov.ru>, "news@...uriteam.com" <news@...uriteam.com>, "moderators@...db.org" <moderators@...db.org>, "submissions@...ketstormsecurity.org" <submissions@...ketstormsecurity.org>, "submit@...ecurity.com" <submit@...ecurity.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "bugs@...uritytracker.com" <bugs@...uritytracker.com>
-Subject: RE: GIMP FIT File Format DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/14
+Message-ID: <5061E222.8030506@redhat.com>
+Date: Tue, 25 Sep 2012 10:56:02 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: CVE Request: libtiff: Heap-buffer overflow when processing a TIFF image with PixarLog Compression
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> -----Original Message-----
-> From: Joseph Sheridan [mailto:joe@...ctionis.com]
-> Sent: Friday, June 29, 2012 3:56 AM
-> To: 'full-disclosure'; 'bugtraq'; secalert@...urityreason.com;
-> bugs@...uritytracker.com; 'vuln'; vuln@...urity.nnov.ru;
-> news@...uriteam.com; moderators@...db.org;
-> submissions@...ketstormsecurity.org; submit@...ecurity.com; oss-
-> security@...ts.openwall.com; bugs@...uritytracker.com
-> Subject: GIMP FIT File Format DoS
->
-> Summary
-> =======
->
-> There is a file handling DoS in GIMP (the GNU Image Manipulation
-> Program) for
-> the 'fit' file format affecting all versions (Windows and Linux) up to
-> and
-> including 2.8.0. A file in the fit format with a malformed 'XTENSION'
-> header
-> will cause a crash in the GIMP program.
+On 09/25/2012 03:06 AM, Huzaifa Sidhpurwala wrote:
+> On 09/23/2012 08:29 AM, Solar Designer wrote:
+> 
+>> "libtiff 4.0.3 brings "various memory buffer access fixes". Does
+>> it fix more than CVE-2012-3401?"
+>> 
+>> to which I have no answer.  The change log does in fact mention 
+>> "Various memory buffer access fixes." as the very first change
+>> listed for libtiff.  Perhaps someone should review code changes.
+>> 
+> 
+> I had a look at the libtiff-4.0.3 commit logs and found one issue
+> which seems to bring a possibility of heap-based buffer overflow
+> when using a tiff file with PixarLog compression format.
+> 
+> More details at: 
+> https://bugzilla.redhat.com/show_bug.cgi?id=860198
+> 
+> Though memory overwrite outside the heap-buffer is only a few
+> bytes, one cannot really overwrite possible arbitrary code
+> execution.
+> 
+> Can a CVE id be please assigned to the above flaw?
+> 
+> Found two other commits which seemed interesting, but i dont think 
+> they could cause arbitrary code execution and i dont want to call 
+> them security flaws.
+> 
+> 1. OOB read crash tif_packbits.c 2. Memory not properly initialised
+> in tif_fax3.c. Again this one was partly fixed in 4.0.2 and
+> completely fixed in 4.0.3
+> 
+> If anyone else wants to investigate these in more details, please
+> be my guest :)
+> 
+> Thanks!
+> 
 
-Is a crash in a single-user program really a security vulnerability? I could 
-understand if there was evidence that this could lead to privilege escalation 
-or other actual security issue, but this sounds like a garden-variety crash 
-bug to me.
+Please use CVE-2012-4447 for this issue.
 
-Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (6231 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQYeIiAAoJEBYNRVNeJnmTYxIQAKseYz981VGzSbT/rivo11yc
+uRwKbp0L37589oNaKbvRR6EhJUJDcOrR4TB7uSSV99DRZb8h50Fe05ZfTul94ws0
+bNkFSm3dAA2RhJDN/Zorpz49PODVYUlZCvPOp8gQttQGXBtqvnPG+FIHgApjIYP8
+7j2JN+H0fB4ZpgV0JmsDnto/N1mDCTj8S9B70L5gnVSxCo5qaDyV2cis/tyJLaeT
+oM3sJaJY9RDFXqexWhhCJIdzel/ho8II4aDRaLiCYuqL4kMFE3bun1dpIwDT2CxV
+bJyxxoI/3els5bslGnxTUWRDkVKSAgK3XfLaytnpAheMBFd2nlOG+6tA2ozoxoxz
+GZQ1SJd6eSoHkoEGU8XB7q4DS+wKSDXVWeziWI0V2BnaC07Ri08ShsNlav1p/9s3
+Yv/PzfzpMjiuRrXdGwP4K5YjaKar0kSY61f7alFP9UdlSX04sDskiKXWPXVWFBoK
+eHJbZRvDxzut2qO3DTkvISe3ek78V3V7uuUz85FhG5c6vevpoIcW/dGMFgVoWpnW
+HuhbqaAAljW/m6NzoExaJqUQUO2ppx5g+K7DUtNG6JrYfljB8ygOf6edn+bWqnAj
+wUPbnQcdoDwLUn2QLBYQ8ZCvOG3yQhdhrYnjoZaqtHPMx6pHoqDaeDhsr2t+FrFS
+rTedSPpoJtJXefPg46RZ
+=owEP
+-----END PGP SIGNATURE-----
