@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/12/3
-Message-ID: <20120112004407.GA13150@openwall.com>
-Date: Thu, 12 Jan 2012 04:44:07 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/6
+Message-Id: <201209242353.54353.geissert@debian.org>
+Date: Mon, 24 Sep 2012 23:53:53 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+Cc: George Argyros <argyros.george@...il.com>, Aggelos Kiayias <aggelos@...yias.com>, Vladimir Vorontsov <vladimir.vorontsov@...ec.ru>, gifts <gifts.antichat@...il.com>, Anthony Ferrara <ircmaxell@...il.com>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: Randomness Attacks Against PHP Applications
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sunday 23 September 2012 00:14:47 Solar Designer wrote:
+> > I agree too that education is important. This is something that we
+> > came to an agreement with the PHP team (for example that additional
+> > information is needed on the mt_rand manual). However, as pointed out
+> > nothing has changed yet (the conversations between us and the PHP team
+> > took place in March/April).
+> 
+> Did PHP 5.4's change of session IDs (vs. 5.3's) occur before or after
+> your conversations with them?
 
-FWIW, the approach with per source IP address limits is also used in
-ModSecurity's SecReadStateLimit and SecWriteStateLimit directives:
+If you are referring to using /dev/urandom for entropy by default, it was 
+changed because of:
+https://bugs.php.net/bug.php?id=51436
 
-http://sourceforge.net/apps/mediawiki/mod-security/index.php?title=Reference_Manual#SecReadStateLimit
+in 2010.
 
-SecWriteStateLimit is now being talked about in context of slow read
-attacks:
-
-http://blog.spiderlabs.com/2012/01/modsecurity-advanced-topic-of-the-week-mitigation-of-slow-read-denial-of-service-attack.html
-
-Alexander
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
