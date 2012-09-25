@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/3
-Message-ID: <CABrd9SRNi8ujdMPz+dWcW_eP+-ztiM1q+V21F4EbeJjY2YyuOA@mail.gmail.com>
-Date: Tue, 15 May 2012 10:58:29 +0100
-From: Ben Laurie <benl@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Using FreeBSD Capsicum for program and library sandboxing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/13
+Message-Id: <201209251541.q8PFfT4D012369@linus.mitre.org>
+Date: Tue, 25 Sep 2012 11:41:29 -0400 (EDT)
+From: cve-assign@...re.org
+To: jlieskov@...hat.com
+Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request - phpMyAdmin: PMASA-2012-5 incident
 Content-Type: text/plain; charset=utf-8
 
-On 15 May 2012 02:52, Solar Designer <solar@...nwall.com> wrote:
-> Hi,
->
-> A couple of days ago, Ben Laurie posted to the Secure Coding list about
-> using FreeBSD's experimental Capsicum support in the kernel to sandbox
-> bzip2 and libtiff ("wrapping it such that the calling application is
-> unaware it is wrapped") - as two initial examples, I presume.  I found
-> this very interesting.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks.
+>http://www.phpmyadmin.net/home_page/security/PMASA-2012-5.php
 
-If you want to see the libtiff work, it's here:
-https://github.com/benlaurie/libtiff
+Use CVE-2012-5159.
 
-So far, I've wrapped enough (transparently!) to make a couple of
-trivial applications work. These are slightly cut-down versions of a
-couple of apps provided with libtiff. They're cut down because they
-add custom tags, which means registering callbacks, and I haven't
-designed how to wrap that yet :-)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-Before I do, I want to move onto a more "real" application. Not sure
-what I should choose, though, so suggestions are welcome...
-
-All new code is the wrapped/ subdirectory - so far I have not had to
-make any changes to libtiff, which is nice, but I do not rule it out.
-
-This one includes a rudimentary RPC compiler.
+iQEcBAEBAgAGBQJQYc7gAAoJEGvefgSNfHMdoPAH/0IhU72liM77DvNiuR9RAXU2
+whJBRvMjeftuF/lZJ8eP0WNlStBgnX5rtcFCAVIO6FIGfD8sXAnaJiN9rDqx0mQ/
+4ESanXi3fNCn69d+0sjQhG7BaCDIaU0bMxfmqGbb7NRJdCKX2U9dE3Jn6+vBhn8b
+iphmN15tQzO2BBjNe3V7VMdSn6m0IX7l2mXjaWKgxtWXTGzF56xtzFD5Pa2cEwe7
+/DHncBcgPTL2Fkz4Os5WxoAlzNCDPQBnhXWVU6S0zMUnjM8KPwnNcxSUbzHhJNMj
+P+AxuuJifyiWxBnVZ7i/4vZQ1vE5DpAGLwG3yu5jvzCvdZXeXal90xeHaWXLSig=
+=/x/0
+-----END PGP SIGNATURE-----
