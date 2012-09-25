@@ -1,24 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/10
-Message-ID: <20120323161320.GD28663@suse.de>
-Date: Fri, 23 Mar 2012 17:13:20 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: inestlerode@...ibm.com
-Subject: openssl security issue or not? (CVE Request?)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/9
+Message-ID: <50617418.5010308@redhat.com>
+Date: Tue, 25 Sep 2012 14:36:32 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
+Subject: CVE Request: libtiff: Heap-buffer overflow when processing a TIFF image with PixarLog Compression
 Content-Type: text/plain; charset=utf-8
 
-Hi folks, Ivan,
+On 09/23/2012 08:29 AM, Solar Designer wrote:
 
-This patch:
-http://cvs.openssl.org/chngview?cn=22161
-fixes a decrypt error return values and according to the changelog
-"detects symmetric crypto errors" 
+> "libtiff 4.0.3 brings "various memory buffer access fixes". Does it fix
+> more than CVE-2012-3401?"
+> 
+> to which I have no answer.  The change log does in fact mention
+> "Various memory buffer access fixes." as the very first change listed
+> for libtiff.  Perhaps someone should review code changes.
+> 
 
-I am not sure if this counts as security issue in the end, but "not
-detecting a failed decrypt" seems to me like it is a security issue.
+I had a look at the libtiff-4.0.3 commit logs and found one issue which
+seems to bring a possibility of heap-based buffer overflow when using a
+tiff file with PixarLog compression format.
 
-Any comments?
+More details at:
+https://bugzilla.redhat.com/show_bug.cgi?id=860198
 
-Ciao, Marcus
-(also https://bugzilla.novell.com/show_bug.cgi?id=749210 )
+Though memory overwrite outside the heap-buffer is only a few bytes, one
+cannot really overwrite possible arbitrary code execution.
+
+Can a CVE id be please assigned to the above flaw?
+
+Found two other commits which seemed interesting, but i dont think
+they could cause arbitrary code execution and i dont want to call
+them security flaws.
+
+1. OOB read crash tif_packbits.c
+2. Memory not properly initialised in tif_fax3.c. Again this one was
+partly fixed in 4.0.2 and completely fixed in 4.0.3
+
+If anyone else wants to investigate these in more details, please be my
+guest :)
+
+Thanks!
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
