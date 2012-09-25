@@ -1,26 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/13
-Message-ID: <20120717194629.GD20785@ngolde.de>
-Date: Tue, 17 Jul 2012 21:46:29 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/3
+Message-ID: <CANTw=MM0DZ3+-peswQzkt1_nUeys_wR6uKe+4zewDafFCPJnvA@mail.gmail.com>
+Date: Mon, 24 Sep 2012 20:32:38 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: libjs-swfupload
+Subject: Re: Re: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Kurt Seifried <kseifried@...hat.com> [2012-07-17 21:43]:
-[...] 
-Thanks for the ids!
+On Mon, Sep 24, 2012 at 8:24 PM, Michael Gilbert
+<michael.s.gilbert@...il.com> wrote:
+> On Mon, Sep 24, 2012 at 5:46 PM, Tavis Ormandy wrote:
+>>> > I think you've misunderstood the problem, and it's trivial to solve.
+>>>
+>>> No, I'm thinking about the broader implication.  If you're arguing that
+>>> gpg should be modified to better handle permissions, then all applications
+>>> potentially handling sensitive information should as well: file editors,
+>>> and what not.  Otherwise, what makes gpg such a special case?
+>>>
+>>
+>> I think you've confused my post with someone elses.
+>
+> See Steve Christy's snowball post.  Again, I'm considering the
+> totality of the system.  Setting 644 as a default for gpg is I suppose
 
-> Please use  CVE-2012-3415 for the libjs-swfupload CSRF issue
+Correction, not 644, but using the input file's permissions as the
+basis for the output file's permissions (obviously before applying
+umask).
 
-This should be plupload in case this has also been noted wrong in the CVE id 
-description.
-
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Best wishes,
+Mike
