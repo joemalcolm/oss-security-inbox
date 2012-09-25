@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/3
-Message-ID: <1331725608.3983.178.camel@mdlinux>
-Date: Wed, 14 Mar 2012 07:46:48 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/2
+Message-ID: <CANTw=MMTpo4nmn06Hj+pXKkt9=TO5_idEi=XXGd-1xwYQHFrgw@mail.gmail.com>
+Date: Mon, 24 Sep 2012 20:24:00 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libgdata did not verify SSL certificates
+Subject: Re: Re: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2012-03-14 at 08:54 +0100, Ludwig Nussel wrote:
-> Hi,
-> 
-> libgdata did not verify SSL certificates:
-> 
-> http://git.gnome.org/browse/libgdata/commit/?id=6799f2c525a584dc998821a6ce897e463dad7840
-> http://git.gnome.org/browse/libgdata/commit/?h=libgdata-0-10&id=8eff8fa9138859e03e58c2aa76600ab63eb5c29c
-> https://bugzilla.gnome.org/show_bug.cgi?id=671535
-> https://bugzilla.novell.com/show_bug.cgi?id=752088
+On Mon, Sep 24, 2012 at 5:46 PM, Tavis Ormandy wrote:
+>> > I think you've misunderstood the problem, and it's trivial to solve.
+>>
+>> No, I'm thinking about the broader implication.  If you're arguing that
+>> gpg should be modified to better handle permissions, then all applications
+>> potentially handling sensitive information should as well: file editors,
+>> and what not.  Otherwise, what makes gpg such a special case?
+>>
+>
+> I think you've confused my post with someone elses.
 
-Please credit Vreixo Formoso for having discovered this.
+See Steve Christy's snowball post.  Again, I'm considering the
+totality of the system.  Setting 644 as a default for gpg is I suppose
+a step, but gpg is not the only application handling sensitive data.
+If that is the case, then there are a whole lot of other applications
+also not doing the right thing with your sensitive data including
+those that pipe and redirect stdin/stdout.  Again, I don't know how to
+make it any clearer, but I'm considering the broader implications, not
+just gpg.  I still don't understand again why gpg is so special?
 
-https://bugs.launchpad.net/ubuntu/+source/libgdata/+bug/938812
-
-Thanks,
-
-Marc.
-
-
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
+Best wishes,
+Mike
