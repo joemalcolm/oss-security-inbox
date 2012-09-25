@@ -1,72 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/4
-Message-ID: <50B46C7A.2000505@redhat.com>
-Date: Tue, 27 Nov 2012 00:32:10 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/8
+Message-Id: <201209251108.57886.mweckbecker@suse.de>
+Date: Tue, 25 Sep 2012 11:08:57 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>, Marc Deslauriers <marc.deslauriers@...onical.com>
-Subject: Re: CVE Request: Python keyring
+Subject: Re: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Steve,
 
-On 11/22/2012 06:38 AM, Matthias Weckbecker wrote:
-> Hi Marc,
-> 
-> On Monday 19 November 2012 17:09:07 Marc Deslauriers wrote:
->> On 12-11-16 11:14 AM, Marc Deslauriers wrote:
->>> Hello,
->>> 
->>> Python keyring before 0.10 created keyring files world-readable
->>> by default.
->>> 
-> [...]
->>> 
->>> Could a CVE please be assigned to this issue?
->> 
->> Actually, that fix only changes the permissions on database files
->> that were migrated from previous versions, it doesn't fix
->> permissions on newly created database files.
->> 
->> It would appear python-keyring still creates new database files
->> with inappropriate permissions.
->> 
-> 
-> New bug report seems to be at [1], I assume. Has there already been
-> a CVE assigned actually?
-> 
-> [1]
-> http://bitbucket.org/kang/python-keyring-lib/issue/76/insecure-database-file-permissions
+On Monday 24 September 2012 22:03:20 Steven M. Christey wrote:
+> FYI, this discussion is an interesting example of what I've called the
+> "snowball effect" in CVE when new kinds of issues arise that test the
+> boundaries of what should or should not belong in CVE - allowing one (or a
+> handful) could open the door to hundreds or thousands of other products
+> that have the same issue.
+
+Well, I think we are already past of this effect: Looking at [1], I could find
+multiple CVE that have been assigned for such issues.
+
+[1] http://cwe.mitre.org/data/definitions/732.html
+
 >
-> 
-(with patches attached too)
-> 
->> Marc.
-> 
-> Thanks, Matthias
+> Personally, I would expect a security/privacy-preserving product to select
+> the most conservative file permissions that it knows won't violate the
+> user's intention; in this case, the permissions of the original "source"
+> file, as further restricted by the user-specified umask.  If the user
+> calls gpg with a world-readable file and a "promiscuous" umask, then they
 
-Please use CVE-2012-5578 for this issue, Python keyring 0.10 new
-keyring creation file permissions, due to partial fix for CVE-2012-5577.
+Even if the encrypted file is not world-readable, the result (=decrypted file)
+is going to be placed world-readable as long as the default umask (=0022) was
+used.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+[...]
+> - Steve
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Thanks, Matthias
 
-iQIcBAEBAgAGBQJQtGx6AAoJEBYNRVNeJnmTGvsQANYU3Qp5iLgLUznJwvJjBS4m
-uVR7tkwGBvBiIDyQHwenFxHlTyQyeNqFptAs7wVKwvbBTAjIhltASP6kvFASR9EP
-PKGPYqyHpNokxf4KSHT2/X9dBe2nqEbFgn0WouMYSVqBWTjxhMi7fFhpWu25nirC
-uwEYn3SnuyCfg9aSLTVxRKq49hMSp6Wh1bkyxAqpDrKyB1K72yNQkDMhhI4RXDmW
-sFLKb/kNDQ3IH5SXdnp3PRFtgSmRy8h7Yq5P7OusTi+it9vSRtb/pN4OWEonCLc5
-ueI4MOVtvi57ppuQbn53BmjnqqtvUgxP0DnzRC0fP9mw7EkN5LXYrOLxhMYjoKoy
-Q+myrUYcypRQAZbfiX9FsBsTja9aOOyyqNHodiG1IWmuCjPaVIt7L90yh3d/jmRH
-ccrdsI/jXlw9cZR/pHRgM5BpFibe+baBuJo8zQIBVZutQj6nTKgEBwi/xjY5ubH/
-hEZPhFGZKpPKYvdr0Nnc3SapEpNl+WdTggBZuhJLpY9cRHStjxHb4QWhfZrfeezN
-evbwlRARADVKEBjXfu5/GSouweoaX0Mdd9s2tTOrPVfQNoDUM7yDDhROiT2IK1lE
-SYcZZ2H8dMQAWRW19UHVEMGIvUS5k+Xqu3fxibyycDvbgEc/S7n3PKsrVpn+s96G
-WdYifVcXHKIMDXUO1ICC
-=Zzx9
------END PGP SIGNATURE-----
+-- 
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
