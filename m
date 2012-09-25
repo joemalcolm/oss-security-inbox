@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/16/4
-Message-ID: <20120716181750.GJ18153@ngolde.de>
-Date: Mon, 16 Jul 2012 20:17:51 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: libjs-swfupload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/10
+Message-ID: <1122029455.1048762.1348577191990.JavaMail.root@redhat.com>
+Date: Tue, 25 Sep 2012 08:46:31 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, WordPress Security Team <security@...dpress.org>, Matej Cepl <mcepl@...hat.com>
+Subject: CVE Request -- WordPress (3,4.2): CSRF in the incoming links section of the dashboard
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-there is an XSS issue in libjs-swfupload. Can we get a CVE id for this?
+Hello Kurt, Steve, WordPress Security Team, vendors,
 
-Details:
-https://nealpoole.com/blog/2012/05/xss-and-csrf-via-swf-applets-swfupload-plupload/
-http://code.google.com/p/swfupload/issues/detail?id=376
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681323
+  an anonymous researcher called 'Akastep' has reported
+and CSRF flaw being present in the way WordPress of version
+v3.4.2 and earlier used to process incoming links section /
+widget of the dashboard.
 
-Cheers
-Nico
+References:
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+[1] http://packetstormsecurity.org/files/116785/WordPress-3.4.2-Cross-Site-Request-Forgery.html
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=860261
+[3] https://bugs.gentoo.org/show_bug.cgi?id=436198
+[4] https://secunia.com/advisories/50715/
 
-Content of type "application/pgp-signature" skipped
+AFAIK there is not an upstream ticket and patch for this issue
+yet (but might have overlooked something pretty obvious - WordPress
+upstream please clarify).
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
