@@ -1,55 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/22/1
-Message-ID: <5085D03B.6000505@redhat.com>
-Date: Mon, 22 Oct 2012 17:01:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>, services@...ik.org
-Subject: Re: CVE request: XSS in piwik before 1.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/5
+Message-Id: <201209242350.45147.geissert@debian.org>
+Date: Mon, 24 Sep 2012 23:50:44 -0500
+From: Raphael Geissert <geissert@...ian.org>
+To: Tomas Hoger <thoger@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: opencryptoki insecure lock files handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thursday 20 September 2012 09:10:14 Tomas Hoger wrote:
+> Ok, so I think we need 1 CVE for the two insecure temporary file uses,
+> unless we want to split each temporary file issue under a separate
+> CVE.  I don't believe there's a real need to assign CVE for 2.4.1
+> (which did not improve things on systems with world writable /var/lock)
+> or 2.4.2 (which re-opens the attack for pkcs11 group members on systems
+> with restricted /var/lock, but improves things on systems with world
+> writable /var/lock).
 
-On 10/21/2012 10:14 AM, Hanno Böck wrote:
-> Hi,
-> 
-> Piwik 1.9 fixes an XSS http://piwik.org/blog/2012/10/piwik-1-9/
-> 
-> Not many details though: "Security: thanks to Security Researcher
-> Maxim Rupp who responsibly disclosed a XSS via our security bounty
-> program"
-> 
-> Please assign CVE.
-> 
-> cu,
-> 
+I think two ids is more appropriate given that the issue isn't fixed in 2.4.1 
+for systems with world writable /var/lock. 2.4.2, on the other hand, covers 
+boths scenarios (given that pkcs11 group membership is already considered 
+root-equivalent.)
 
-I can't even find a previous version to download and diff, just
-"latest.zip" (so lame). I also can't find a security contact.
-
-Hopefully the release blog is correct.
-
-Please use CVE-2012-4541 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQhdA7AAoJEBYNRVNeJnmTCKMP/1rRJjW5qMpBwAUF9xhZk/MY
-pW98nh4uLtV+QeFERW/JWJ1JSx+xsNLh7lAhQVaVZbkPWSTdSlQVS/nvK7Ewj1Fk
-Zir53QSxRroeAQ0QrSgbxB3RSSvTefL5NMpZPkcCrbgFkBbOZG6e62jkraUIm3Lz
-YL/DBFfIlBGVw/NnL/mDtj3Jh/cdc8dy7AZacjERE9KPFd80kEyHAlKZsR5OAJZV
-nAtzXr3TPcZvIWJ2Ov3br5DnGGf0L9kt0hPssEWkG6JcUuEH6dL5W/XXzJ6gsIzf
-dervkbigBI/3jP5+t7XtkXKGv1JXWXZZBxVyQds92geitxIXhzvMg3YJO/TMAn7i
-Q7QvqAm7csQ5fH5Of769Zyj6HrtHi/xYiHBM9ePkYeAaJf3AwC4QeJGk61lj7HAk
-GgOZTTkxB+wlJw2GzZifxDSCmGA++w59oGTUjBS6vPogEyB83OKcSz+PW6t6Q9oI
-1OAIIR397Eo6tJ7qa3XRMubjBeG5V/hiQtlbeNv/Lzg5V362/6XmcWt8cJQyqnIr
-E3FTEzz4W/gMM7X6BrHLwvLjPdfBTG2JKH5UweSPyyQ6Yscc1ZAaGfzUbFBiU5tI
-rW2/P5iS+M6oTii+kQLdlKW6OdxyuKyDxOLlrhR71Nlsqp61XKJtS6k0aMwOZS3J
-q5UGpZCI8QGmIGDlWnOT
-=STzK
------END PGP SIGNATURE-----
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
