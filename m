@@ -1,63 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/8
-Message-ID: <4FF75BC7.2010001@redhat.com>
-Date: Fri, 06 Jul 2012 15:42:31 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/15
+Message-ID: <5061E23C.9050603@redhat.com>
+Date: Tue, 25 Sep 2012 10:56:28 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: sblim-sfcb: insecure LD_LIBRARY_PATH usage
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, WordPress Security Team <security@...dpress.org>, Matej Cepl <mcepl@...hat.com>
+Subject: Re: CVE Request -- WordPress (3,4.2): CSRF in the incoming links section of the dashboard
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/06/2012 03:41 PM, Kurt Seifried wrote:
-> Originally found at: 
-> https://bugzilla.novell.com/show_bug.cgi?id=770234
+On 09/25/2012 06:46 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, WordPress Security Team, vendors,
 > 
-> Marcus Meissner 2012-07-06 12:18:54 UTC
+> an anonymous researcher called 'Akastep' has reported and CSRF flaw
+> being present in the way WordPress of version v3.4.2 and earlier
+> used to process incoming links section / widget of the dashboard.
 > 
-> found by grep.
+> References:
 > 
-> /etc/init.d/sfcb uses:
+> [1]
+> http://packetstormsecurity.org/files/116785/WordPress-3.4.2-Cross-Site-Request-Forgery.html
+>
 > 
-> LD_LIBRARY_PATH=/usr/lib:$LD_LIBRARY_PATH
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=860261
+> [3] https://bugs.gentoo.org/show_bug.cgi?id=436198 [4]
+> https://secunia.com/advisories/50715/
 > 
-> which is insecure if LD_LIBRARY_PATH is empty. It makes binaries
-> use libraries from the current directory, which is a problem if
-> e.g. a administrator starts the sfcb service from a untrusted
-> directory.
+> AFAIK there is not an upstream ticket and patch for this issue yet
+> (but might have overlooked something pretty obvious - WordPress 
+> upstream please clarify).
 > 
-> Also it uses it to set /usr/lib, a default path.
+> Could you allocate a CVE id for this?
 > 
-> Just get rid of the whole if ... as it is useless.
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 > 
-> This is now filed in Red Hat: 
-> https://bugzilla.redhat.com/show_bug.cgi?id=838160
 
-Please use CVE-2012-3381 for this issue.
+Please use CVE-2012-4448 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJP91vGAAoJEBYNRVNeJnmT5pQP/itPwd/YT5ea2oo/n4BbfYxC
-q0Vz2bsa3GpLCbv+4nx4rDFDxnThH1AJXCnYjorK1ssyAG7TfKG9sffABeWGw9dL
-ZQNzhfeK7fx/lIRrG8Mb7iU5BsgulA9uv9gr32rXFTZMOLcs2v/CKyo98LaxDFx1
-aeP65r2mbn8uyrdXj3iZTcxk8EDCtLlfXsU8xhCc9l9c1Lqtgh2uTPa9kV0XZf0n
-8MigcvzUjKdxWAvScjSGDnm4X/7UIUQdN5IDgcZKhRJ4UkEmrl1fSTEYOg0p8av3
-rxANTXe7FfyLCJRM8yYjDIzFf0bi5t8VitotS/SrCI7cSumbbLl1lZcclxqRLvdv
-lbKsFRvbqgcle8rXsDGkCBq4M3dVFiqIZyhh3JSIOmkaGHJ1wRM+m93Q2aubFRU/
-3Rz7aYTTepkSyGaQh9quD2psvPo1y//TBf/1pcNs9CTvlITH4iayjZpbwaCZDNSQ
-/MWUXiJvsKzev1vCm4AwYmToxj4ZM1H4TQlCF1nFz2XklwbC3R8ta9blTzRYOfBr
-pY7GMFmkDNaVy53+26UeIuJaLyrk0rfomi5oqJI2kGaDulWVcpnOAi3xo2V9ziVb
-tZam8L4k97utFw27VMhJKD+0PkrDTdGu/wMZFxUBwpRK/77AWZy+SKDTbceIJ+tY
-31zanQNxf+GTo3Isbt/P
-=NOGk
+iQIcBAEBAgAGBQJQYeI8AAoJEBYNRVNeJnmT4TwQAIdWlJGkDQ3vCndzw54mk/2l
+ofmXj9S0IUCMxFirJmCC7J8uS9tF96TL3N/TVE4KXaBetdk/S3/iFLhrXrtZFbQ1
+ur0TLoVDxtczYJbUyRmxd9X3Sw1Is+jtBYUFEuWsxCkaPlxZQrot+ZFkbSFO8xo0
+CiidqPOdgKwg+buDXTcXiyuCyLkLBEmCA+JxUdcmbDUDx+z5lQKwaYJ3i/VGclND
+duyBgAN4Y9Ht6tYOpnjkHzN+YYRai8uEz+49MLBQkEDoYHZI1bVXi3lD8O8mCSC3
+br4oJfHcP60gqYvbS0mzvmnr+q0DJDhuCSu/vUbFv1xN2UpcnHGFsr9RR4BAPNnQ
+XN81MahJfF9H2810qpKiI0eISd4L03OFZxs9GX6NWd5zVdG0EG1efhWZbclfMNCC
+kJStBligCY4qccaO4et9MK3d2NW2BEznHwHDTiNnKbgS4CeZLOiA7ly81rPQZdEj
+u/Wit7jZC4ATp9plIeQ7i3pnp3JudgPvr3SZoGO7UYMvMrt2hVG8jqKS0HkNCKLN
+5QMXg0rS3VWu+yeOLH2clMYsbyoDukZQClX+T+6TvLvc2ie2ehzv5bBmwDlpCEb7
++JL28uUmtXcUTCdD2IuCTmvxhQSEPHFBINQCpsr8qYdNOvh99Y5brKEWzID2fT+i
+2KFQniM/uueV2pYtN/C+
+=xA69
 -----END PGP SIGNATURE-----
