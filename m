@@ -1,29 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/31/4
-Message-ID: <20121231104213.GA5226@kludge.henri.nerv.fi>
-Date: Mon, 31 Dec 2012 12:42:13 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/6
+Message-ID: <506320B3.8000605@redhat.com>
+Date: Wed, 26 Sep 2012 09:35:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...plemachines.org
-Subject: Dispute CVE-2012-5903 SMF index.php scheduled-parameter XSS
+Subject: Re: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I tried to reproduce CVE-2012-5903 SMF index.php scheduled-parameter XSS without luck. Does someone have a working payload for this? References:
+On Monday 24 September 2012 22:03:20 Steven M. Christey wrote:
+> FYI, this discussion is an interesting example of what I've called the
+> "snowball effect" in CVE when new kinds of issues arise that test the
+> boundaries of what should or should not belong in CVE - allowing one (or a
+> handful) could open the door to hundreds or thousands of other products
+> that have the same issue.
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-5903
-http://packetstormsecurity.org/files/111356/SMF-2.0.2-Cross-Site-Scripting.html
-http://xforce.iss.net/xforce/xfdb/74521
-http://www.securityfocus.com/bid/52822
-http://osvdb.org/80766
-http://en.securitylab.ru/nvd/432586.php
 
-Until someone provides a working PoC I dispute this issue. SMF hasn't replied to my emails about this. Please note there is several comments[1][2] in forums about this too.
+I think it might make sense to look at this issue along the lines of RFC
+rfc2119 and sort the problems out a bit.
 
-1: http://www.simplemachines.org/community/index.php?topic=491516.msg3445272#msg3445272
-2: http://www.simplemachines.org/community/index.php?topic=491516.msg3449057#msg3449057
+Classification of program output sensitivity, on a sliding scale:
 
-It's not a security vulnerability if attacker already has administrator access to the application. Should we REJECT CVE-2012-5903?
+MUST - GPG private key, OpenSSH private key, OpenSSL private keys,
+some log files for server apps, etc.
+[MUST - where having the file revealed would grossly impact
+security/negate the whole point of the operation/program or where
+there is a significant chance of sensitive data being output in the
+normal course of operations, for examples servers running in debug
+mode that log credentials in the log file]
 
-- Henri Salo
+SHOULD - Generic output from crypto programs/etc. health/finance apps
+[SHOULD - potentially sensitive data such as encrypted content, health
+and finance data, other regulated output, chat logs, etc. Things that
+would typically contain potentially sensitive data in output]
+
+MAY - Generic output from things like tar/archivers, editors, etc.
+[MAY - none or extremely minimal negative impact, performance
+wise/etc, for example a file down loader]
+
+SHOULD NOT - nothing comes to mind
+[SHOULD NOT - where securing the output has a negative impact]
+
+MUST NOT - nothing comes to mind
+[MUST NOT - where securing the output would have a significant
+negative impact]
+
+OPTIONAL - catch all for weirdness
+RECOMMENDED - anything can have one more more recommended
+
+Basically stick programs into this framework with evidence/reasoning as
+to why they fit there, please note that a program may fit into one or
+more categories, e.g. some output (like key creation) falls under MUST
+and some (like encrypted messages) fall under SHOULD (this is an
+example, I'm not saying encrypted messages are a "SHOULD" and not a
+"MUST", I just needed an example).
+
+So at least this way we bring some sanity/order to the problem rather
+than this general mishmash of "well it should" and so on.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQYyCzAAoJEBYNRVNeJnmTpRUQANs61iVcz+QJlsFMkH8brptV
+wIeJqKGRMlwAvcUM32ydj74F3ScNi4sZ6zy+UDLL3TS3m+BxMxGLhbBmJJh6rBWF
+LkhTarTYNhcbTdmrLNT4NqOgmVsFo4LShGD0V3uMFuQa01kGsW4VFBSwwfx0RaS2
+2g3hJ/JzJM92iO1fha281v6wdd79mRdRz69O/gQQlYbN8X0AIBDN9Kpd9M8bQJee
+ZGaoCpa0xh0GV0Ur+9ikR9OY+M619Fvnc/grV1ydL06A1MbLNMOxmo7fM2J4Zu/g
+sNm7364hoJdEso9QQg/OHPkDrzex8X6RIcz0UeMk/9/rbCMRvnE45crMjjpzdtnd
+Zcmpa1IvOToQKPu+LzqQ0p7Vqv7+/io9kb5DJJd0WaOQ5zPKddkIefHO+JgykW0R
+QdT0/H/RV49TDUs4w189WIdM98Hdeaf8KSnV4LEnjdPoYtM1I0pTQeAKEtlfWBhq
+eqTPze6ohZGm/VEHuX5HugcPY+a3oppr1UrVv4xiwGP7FPNoWCjAkzi63/RpunvP
+MusAI+9FBOHJO4hTcgamEng/C+wHvSIi3eVecTfCtEFAE4V8bhmJ4IVtvi3mIYG4
+6mWnTRIxy7Hxv/sguHTP+UKS/PREeqxn9vaGQ/JX7tNqj3a4RPiD+XFFfIdtxC7c
+lsE7kyw3NvTIVovVbZR6
+=QJk5
+-----END PGP SIGNATURE-----
