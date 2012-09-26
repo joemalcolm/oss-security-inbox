@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/15
-Message-Id: <201209121200.53051.geissert@debian.org>
-Date: Wed, 12 Sep 2012 12:00:52 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - mcrypt buffer overflow flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/3
+Message-ID: <1854551163.1629578.1348653253763.JavaMail.root@redhat.com>
+Date: Wed, 26 Sep 2012 05:54:13 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Noriko Hosoi <nhosoi@...hat.com>, Rich Megginson <rmeggins@...hat.com>
+Subject: CVE Request -- 389-ds-base: Change on SLAPI_MODRDN_NEWSUPERIOR is not evaluated in ACL (ACL rules bypass possible)
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 11 September 2012 10:19:38 Eygene Ryabinkin wrote:
-> Unfortunately, mcrypt's check_file_head() in combination with
-> decrypt_general() is a bit worse: it allows to overwrite up to 50
-> bytes of stack buffers from decrypt_general(), namely local_algorithm,
-> local_mode, local_keymode.  And in some curcumstances to overwrite
-> even 2-3 extra bytes (not more, since buf[3] will contain '\0'), though
-> it is not very much controllable path.
+Hello Kurt, Steve, vendors,
 
-Thanks for the review of that part, one less item on my TODO list :)
+  Noriko Hosoi of Red Hat notified us about the following deficiency:
 
-Since CVE-2012-4409 has been widely related to the salt issue, I guess we 
-need another CVE id? One could cover all the other issues.
+A possibility to bypass access control list (ACL) definitions was found
+in the way 389 Directory Server performed LDAP modifyRDN operation upon
+request from client. When a user has been granted access to set of DN
+entries, but denied access to a specific subset of those entries, it
+was possible the user to obtain temporary (till next Directory Server
+restart) access to that subset of entries (they should not have had
+otherwise ability to access) when the DN entry was moved via database
+modify RDN function.
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Upstream ticket:
+[1] https://fedorahosted.org/389/ticket/340
+
+Relevant upstream patch:
+[2] http://git.fedorahosted.org/cgit/389/ds.git/commit/?id=5beb93d42efb807838c09c5fab898876876f8d09
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
