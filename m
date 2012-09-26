@@ -1,23 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/12
-Message-ID: <4F73260D.40205@redhat.com>
-Date: Wed, 28 Mar 2012 08:54:05 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>
-Subject: Re: CVE request: Struts2 xsltResult local code execution flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/7
+Message-ID: <420283662.1872329.1348674717592.JavaMail.root@redhat.com>
+Date: Wed, 26 Sep 2012 11:51:57 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request -- php-ZendFramework: XSS vectors in multiple Zend Framework components (ZF2012-03)
 Content-Type: text/plain; charset=utf-8
 
-On 03/27/2012 11:29 PM, David Jorm wrote:
-> A local code execution flaw has been identified in Struts2. I cannot find a CVE ID for it anywhere.
-> 
-> Original report: http://seclists.org/bugtraq/2012/Mar/110
-> OSVDB: http://osvdb.org/80547
-> X-Force: http://xforce.iss.net/xforce/xfdb/74319
-> 
-> Thanks
+Hello Kurt, Steve, vendors,
 
-Please use CVE-2012-1592 for this issue.
+  upstream ZendFramework 2.0.1 version corrected one occurrence
+of cross-site scripting (XSS) flaw across multiple components
+(improper escaping of HTML, HTML attributes and / or URLs):
+[1] http://framework.zend.com/blog/zend-framework-2-0-1-released.html
+[2] http://framework.zend.com/security/advisory/ZF2012-03
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=860738
+[4] https://bugs.gentoo.org/show_bug.cgi?id=436210
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Relevant upstream patch:
+[5] https://github.com/zendframework/zf2/commit/27131ca9520bdf1d4c774c71459eba32f2b10733
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: While the aforementioned upstream [5] patch is against the 2.0.1
+      branch, after backport it would be applicable also against
+      ZendFramework 1 versions (relevant routines across the affected
+      components - at least those I checked have same definition).
