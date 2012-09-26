@@ -1,38 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/14
-Message-Id: <201205241918.14998.sgrubb@redhat.com>
-Date: Thu, 24 May 2012 19:18:14 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/9
+Message-ID: <50633DB3.6030305@redhat.com>
+Date: Wed, 26 Sep 2012 11:38:59 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: powerdns does not clear supplementary groups
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- php-ZendFramework: XSS vectors in multiple Zend Framework components (ZF2012-03)
 Content-Type: text/plain; charset=utf-8
 
-On Thursday, May 24, 2012 06:56:46 PM Solar Designer wrote:
-> On Thu, May 24, 2012 at 06:15:53PM -0400, Steve Grubb wrote:
-> > Here is a real life case:
-> > 
-> > + if ( initgroups(pw->pw_name, NULL) != 0 || setgid(pw->pw_gid) != 0 ||
-> > +                                setuid(pw->pw_uid) != 0 )
-> > 
-> > This is not upstream. This is a patch to drop capabilities by changing
-> > uid/gid. The person writing the patch intended to do the right thing -
-> > but failed. See the bug? This is in a network facing daemon that parses
-> > untrusted network packets.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 09/26/2012 09:51 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> Wow.  The NULL results in group 0 being added to the supplementary
-> groups list (so it survives the setgid(), at least on my quick test).
-
-Yes. If you put that one snippet of code into google, you would find arpwatch is 
-the culprit.
- 
-> How did you spot this?  Compiler warning?
+> upstream ZendFramework 2.0.1 version corrected one occurrence of
+> cross-site scripting (XSS) flaw across multiple components 
+> (improper escaping of HTML, HTML attributes and / or URLs): [1]
+> http://framework.zend.com/blog/zend-framework-2-0-1-released.html 
+> [2] http://framework.zend.com/security/advisory/ZF2012-03 [3]
+> https://bugzilla.redhat.com/show_bug.cgi?id=860738 [4]
+> https://bugs.gentoo.org/show_bug.cgi?id=436210
+> 
+> Relevant upstream patch: [5]
+> https://github.com/zendframework/zf2/commit/27131ca9520bdf1d4c774c71459eba32f2b10733
 >
-> "passing arg 2 of `initgroups' makes integer from pointer without a cast"
+>  Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+> P.S.: While the aforementioned upstream [5] patch is against the
+> 2.0.1 branch, after backport it would be applicable also against 
+> ZendFramework 1 versions (relevant routines across the affected 
+> components - at least those I checked have same definition).
+> 
 
-It was more of an empirical thing. I had a script that started all daemons and 
-it walked the proc tree.  If any uid != 0, it would check to see if there were 
-any supplemental groups. Arpwatch had different supplemental groups than 
-everything else that did this wrong, so I looked at the code to see what was 
-different and found this bug.
+Please use CVE-2012-4451 for this issue.
 
--Steve
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQYz2zAAoJEBYNRVNeJnmT+jQP/jvFyH4K7Tud+syxmJ/CAuYC
+zujMIaneourkv65ejnWxfxsldXgrmL3DSmcZHY8nJNV8JcQZ+C2L4pH79pR1DnA/
+OZIXm5AHEeOAZnwWGo7QhwOOZs8vIG9MEdwkIXZpsGdEtjQjt6EbFw/j0NAfEDFw
+q8yNYKH1KdiRGfhwAQhg9mMAHyrtnDMbTb4TJoc3KCLjgh7N4H608pWufZdbTHe5
+HjRPwlGC+3A4IP6F5VQrlXiwlu3woP3w8nmCOEM+xVGLwWYRg+umPigzGpEU6ciq
+YDF63SKwBOYPI3KQz9qN2lkcxkk0/Ddh0ucNDrOPSNlhUDWmlWTEIwdIO9jGHL2M
+DFP9TOL+G+R9wfXEE5SYGcR3QZSeAS+0q2IZ5N+ZEn0nWvXcUfVTJuSNzILLbouf
+5bIroTUW4kw73cQDKUNDiZOStawjq30/jZDvTnp2j8UoVM0CPKFLT2DnrLEqqBgK
+EDXCGIwt3w+yK7xEClWw/VP0VqOeEJQ+hbAairCOeBxVI5fHqNARwuxnLupH412x
+aBbw5s4RvmYCa7Nt+QtDyj4Ev+IvwXPe0rkJqqupKQwjDJBHeiP7ASvIaAqQAz6j
+IihObckVBVLO7+X4pGLloKjKXS6qoY2g/JTExXj7mVv0PHkEsKtpoCFg7bg1Xfvf
+1vpkdKGoDgwgTHDgsAtH
+=McJy
+-----END PGP SIGNATURE-----
