@@ -1,99 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/18/3
-Message-ID: <4FDF611B.9040602@redhat.com>
-Date: Mon, 18 Jun 2012 11:10:51 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Josh Bressers <josh@...ss.net>
-Subject: Re: CVE Request -- Revelation: 1) Limits effective password length to 32 characters 2) Doesn't iterate the passphrase through SHA algorithm to derive the encryption key
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/2
+Message-ID: <5062A892.6070105@redhat.com>
+Date: Wed, 26 Sep 2012 12:32:42 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: Sebastian Krahmer <krahmer@...e.de>
+CC: oss-security@...ts.openwall.com, Tom Lane <tgl@...hat.com>
+Subject: Re: CVE Request: libtiff: Heap-buffer overflow when processing a TIFF image with PixarLog Compression
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 06/18/2012 07:32 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On 09/26/2012 12:27 PM, Sebastian Krahmer wrote:
 > 
-> multiple security flaws have been found in Revelation, a password 
-> manager for GNOME 2. Specifically:
-> 
-> 1) It was found that Revelation limited effective password lengths
-> to thirty two characters, which made it easier for
-> context-dependent attackers to successfully conduct brute-force 
-> password guessing attacks,
-
-Please use CVE-2012-2742 for this issue
-
-> 2) It was found that Revelation did not iterate the particular 
-> passphrase through some of the SHA family of hashing algorithms, in
-> order to derive the encryption key, which made it easier (in that
-> scenario there were only 7 bits to vary on each character) for
-> context-dependent attackers to successfully conduct dictionary
-> based password guessing attacks.
-
-Please use CVE-2012-2743 for this issue.
-
-Assigned 2012 CVE's as the first clear mention of the issues is in the
- codepoet.no ticket. The Blog entry for 2010 mentions the issue
-indirectly so I'm going with the more concrete mention.
-
-> Upstream ticket: [1] 
-> http://oss.codepoet.no/revelation/issue/61/file-format-magic-string-version-mismatch
+> This conclusion leaves me a bit puzzled. :) Even just "a few bytes" are
+> often enough to trigger code exec. In particular if you get a big bounty for it.
 >
+Sure :)
+
+> As well as the patch:
 > 
 > 
-> Further references: [2]
-> https://bugs.gentoo.org/show_bug.cgi?id=421571 [3]
-> http://lists.fedoraproject.org/pipermail/devel/2012-June/168607.html
->
+> -	sp->tbuf = (uint16 *) _TIFFmalloc(tbuf_size);
+> +	sp->tbuf = (uint16 *) _TIFFmalloc(tbuf_size+sizeof(uint16)*sp->stride);
 > 
-[4]
-> http://knoxin.blogspot.co.uk/2012/06/revelation-password-manager-considered.html
->
->  [5] 
-> http://westhoffswelt.de/blog/0046_from_revelation_security_to_android_password_managers.html
->
+> If there were sizeof(uint16)*sp->stride bytes missing before, this is really
+> more than just a few bytes. I checked that the mult cannot overflow,
+> as sp->stride seems to be uint16. However, I think the add can actually wrap,
+> (at least on ILP32) as tbuf_size can be 0xffffffff or so.
+> I think the patch is broken and just shifts the hole.
 > 
+It seems that sp->stride is at most td_samplesperpixel.
+
+Re-thinking about the patch, it does seem a bit broken now.
+Tom,
+Any inputs on this?
+
+
+> Plus, there are more occurences of _TIFFmalloc(tbuf_size) inside this file,
+> one in PixarLogSetupEncode() and one in PixarLogSetupDecode() (but it might be
+> that the Encode can never be triggered like so by attackers).
 > 
-> Could you allocate two CVE ids for these? (I think two are needed
-> for each of the issues)
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-> P.S.: Kurt - regarding time, when this issue has been reported for
-> the first time (thus which CVE-201*- id to allocate), it is
-> necessary to find this it out yet.
-> 
-> Upstream ticket [1] was reported on 2012-02-06 (which would suggest
-> CVE-2012-* one to be allocated), but the rest of the links mention
-> this issue has been known for longer time, thus please investigate
-> yet. I wanted to Cc- the original ticket reporter 'hannibal218bc'
-> on this request (he to clarify), but I doesn't seem to be able to
-> find his proper email address / contact. Sorry for that.
-> 
+> Sebastian
 > 
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP32EbAAoJEBYNRVNeJnmTdt0QAJwROwaJ361H4Y3UxgZzvid4
-8PirpwQ0q2ptoPOnZyLXeVAuymXUG7iw7/eOuFvuoKvexOgi1HUHVYiDm9ccuKns
-lGTZtQD2agzOvOzLARu03+G6MThb9M/sMDLq+5jaNZqAVTbLQGHDXFkKOotu5X6e
-/1UEaXRGPGzOFhjdIzSWDmXmBhXzHzfL8ooghsAN4tWZOOFcrapj+KtAcNkZsezN
-PqfgLJPwaatOSZlz/1kIvVQO9DRuJ5grnxTV9qYoyjgP+AmFJVmZ9WiS/1RcE2ZU
-iHg2dsD1s47fzaMUfL7K8CaCXKOVRSWHhspmHa3yVUOXemuvVlPlVNV9VpuSBw6m
-Q6VFt3u8G8V/B3Dw/0OpYo7+Jh+YgmffEBInCAISIcu+9fKbKDpnfGaTqaotuWV5
-c5290ASZkSqJEBAQI/PNw+G14am803SxyNyDQ446bqwlxktQEmija3+MdRSkVqH8
-xiRzkkPWdYQMQOw0NWEE8xBR/p0PTPG+cMFe6QpfFqLCOFuAXTnx1HiL7+p1adqO
-BGUJm+58GnZ2vG+yKbUAHCRfQOFy4NGnDdW9/fBueNDLIUvO4EaTALfhu2oblfzz
-Dzh8tL4jw71XXAy3Ytf/KJrjPbUCDf2xgfogZeeRQuNzts9CMJVFYsI/5Ye2/ME3
-UchPcZ4iZqFKsM7/SOdL
-=bAR/
------END PGP SIGNATURE-----
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
