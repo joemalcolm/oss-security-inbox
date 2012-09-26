@@ -1,71 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/15/1
-Message-ID: <20120915023658.GA7076@openwall.com>
-Date: Sat, 15 Sep 2012 06:36:58 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/5
+Message-ID: <50631F57.9040905@redhat.com>
+Date: Wed, 26 Sep 2012 09:29:27 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: argyros.george@...il.com, Aggelos Kiayias <aggelos@...yias.com>, Vladimir Vorontsov <vladimir.vorontsov@...ec.ru>, gifts <gifts.antichat@...il.com>
-Subject: Re: Randomness Attacks Against PHP Applications
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Noriko Hosoi <nhosoi@...hat.com>, Rich Megginson <rmeggins@...hat.com>
+Subject: Re: CVE Request -- 389-ds-base: Change on SLAPI_MODRDN_NEWSUPERIOR is not evaluated in ACL (ACL rules bypass possible)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 22, 2012 at 02:31:07PM +0400, Solar Designer wrote:
-> On Thu, Aug 09, 2012 at 11:19:14AM -0700, Yves-Alexis Perez wrote:
-> > Paper authors tried to port this to PHP security team, but it seems the
-> > answer was that it was an application problem.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 09/26/2012 03:54 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> Here's a vulnerability in and attack on session IDs of PHP proper:
+> Noriko Hosoi of Red Hat notified us about the following
+> deficiency:
 > 
-> http://blog.ptsecurity.com/2012/08/not-so-random-numbers-take-two.html
+> A possibility to bypass access control list (ACL) definitions was
+> found in the way 389 Directory Server performed LDAP modifyRDN
+> operation upon request from client. When a user has been granted
+> access to set of DN entries, but denied access to a specific subset
+> of those entries, it was possible the user to obtain temporary
+> (till next Directory Server restart) access to that subset of
+> entries (they should not have had otherwise ability to access) when
+> the DN entry was moved via database modify RDN function.
 > 
-> This is not exactly the same topic (PHP apps vs. PHP itself), yet it's
-> closely related and the timing of it was provoked by the same research.
+> Upstream ticket: [1] https://fedorahosted.org/389/ticket/340
+> 
+> Relevant upstream patch: [2]
+> http://git.fedorahosted.org/cgit/389/ds.git/commit/?id=5beb93d42efb807838c09c5fab898876876f8d09
+>
+>  Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
-FWIW, here's a PHP mt_rand() seed cracker that I wrote:
+Please use CVE-2012-4450 for this issue.
 
-http://download.openwall.net/pub/projects/php_mt_seed/
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-It finds possible seeds given the very first mt_rand() output after
-being seeded with mt_srand().
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-Here's a sample run.  First, generate a sample "random" number (using
-PHP 5.3.x in this case):
-
-$ php5 -r 'mt_srand(1234567890); echo mt_rand(), "\n";'
-1328851649
-
-Now build and run the cracker:
-
-$ make
-gcc -Wall -O2 -fomit-frame-pointer -fopenmp php_mt_seed.c -o php_mt_seed
-$ time ./php_mt_seed 1328851649
-Found 0, trying 654311424 - 671088639, speed 13631488 seeds per second
-seed = 658126103
-Found 1, trying 1224736768 - 1241513983, speed 13585543 seeds per second
-seed = 1234567890
-Found 2, trying 4278190080 - 4294967295, speed 13617003 seeds per second
-Found 2
-
-real    5m15.397s
-user    41m58.185s
-sys     0m0.044s
-
-In 5 minutes of real time (on an FX-8120 CPU), it found the original
-seed, another seed that also produces the same mt_rand() output, and it
-searched the rest of the 32-bit seed space (not finding other matches).
-
-Note that this is a lot slower than crackers for LCG PRNG seeds, which
-were crackable in way under 1 second even in 1990s (IIRC, some IDS
-products did that for potential Back Orifice backdoor traffic, to detect
-it regardless of password used).  There's a 397 iterations loop per seed
-tested here.  Of course, a rainbow table would be quick.
-
-Here's an OpenCL implementation by Gifts:
-
-https://github.com/Gifts/pyphp_rand_ocl
-
-According to Gifts, this one tests 190 million seeds per second on a GTX
-560 Ti, for a total running time of 22 seconds.
-
-Maybe these PoCs will help convince someone.
-
-Alexander
+iQIcBAEBAgAGBQJQYx9XAAoJEBYNRVNeJnmTKi4P/RmXXD/LOtYKBLQ0ag5TIkZ3
+Ccr+18fhhvsshUF+DJccMyOozDE2BtAWM10KylFbek6FDefASl3ygTWc/8w2FwOu
+NaP4KFy2cm6b84M+lQL6xWZ8abL9M1PR+4MBE79pEKs5QBJXjbnxcJTAs6loJPVr
+b7NMRerndaJzTzSux9mTKFPYESrtWRnvdOvwALKN2Fg4pPBF06evs9P7MaNUjJnd
+P7tsucsqgDQBxE2Nw3efCiDfuNW4Q3YGOLgdMrKar64sbd8sbj2wIZ0ik9e6G2Hh
+LGCzWZc+8jX8UsZxH/U8uSyBAuV4eQVqqUxxEBUHqiErwZlx9U1vIra5vJ81hub1
+QNsK0hxbKd0RqguntD1iSawsTyrELu+Bje3AMXTRB/rr/rF8n3mmDEGOhy3GH2xo
+OF9TGAytVbBky2oHxdbLH/KEjVZ0PHUttNdVr3nq1ukfUf6F5+gL9cNU9VktcX6D
+PYfljJz5jHdtr61L5rYTfwtd14RHuCFxXf0qyDMwgYQkWydUp6nubLLs/SFfiAsX
++H08GKbi3Ixt8b+ms70XYqfNSmy17w1AvcyP3wqd72qwpzgII0gfTMn4upJribtc
+BS8yBiL6C4O6F9MpJUsMsRJPDaG35nUb6N1y+AOUhaeLRaqUwvDn/bdoliaXZqyI
+5gDYrkppGv9XzPRjGNrU
+=EtKB
+-----END PGP SIGNATURE-----
