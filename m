@@ -1,55 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/10
-Message-ID: <50536B27.5080203@redhat.com>
-Date: Fri, 14 Sep 2012 11:36:39 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, security@...dpress.org
-Subject: Re: CVE-request: WordPress insufficient permissions verification on XMLRPC interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/8
+Message-ID: <27084.1348677799@sss.pgh.pa.us>
+Date: Wed, 26 Sep 2012 12:43:19 -0400
+From: Tom Lane <tgl@...hat.com>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+cc: Sebastian Krahmer <krahmer@...e.de>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: libtiff: Heap-buffer overflow when processing a TIFF image with PixarLog Compression
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Huzaifa Sidhpurwala <huzaifas@...hat.com> writes:
+> On 09/26/2012 12:27 PM, Sebastian Krahmer wrote:
+>> As well as the patch:
+>> 
+>> 
+>> -	sp->tbuf = (uint16 *) _TIFFmalloc(tbuf_size);
+>> +	sp->tbuf = (uint16 *) _TIFFmalloc(tbuf_size+sizeof(uint16)*sp->stride);
+>> 
+>> If there were sizeof(uint16)*sp->stride bytes missing before, this is really
+>> more than just a few bytes. I checked that the mult cannot overflow,
+>> as sp->stride seems to be uint16. However, I think the add can actually wrap,
+>> (at least on ILP32) as tbuf_size can be 0xffffffff or so.
+>> I think the patch is broken and just shifts the hole.
+>> 
+> It seems that sp->stride is at most td_samplesperpixel.
 
-On 09/14/2012 06:55 AM, Henri Salo wrote:
-> Hello,
-> 
-> Please assign 2010 CVE-identifier for XML-RPC interface access
-> restriction bypass issue in WordPress.
-> 
-> Description: WordPress contains a flaw related to the XML-RPC
-> remote publishing interface. The interface fails to properly
-> enforce access control restrictions, allowing a remote attacker to
-> bypass restrictions and improperly edit, publish or delete posts.
-> 
-> References: 1. http://osvdb.org/69761 2.
-> http://core.trac.wordpress.org/changeset/16803 3.
-> http://secunia.com/advisories/42553/ 4.
-> http://wordpress.org/news/2010/12/wordpress-3-0-3/ 5.
-> http://codex.wordpress.org/Version_3.0.3
-> 
-> - Henri Salo
+> Re-thinking about the patch, it does seem a bit broken now.
+> Tom,
+> Any inputs on this?
 
-Please use CVE-2010-5106 for this issue.
-- --
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Yeah, I was wondering about the possibility of an overflow there too.
+The amount being added is very small but in principle tbuf_size could be
+just below the overflow threshold.  And I agree that it would be saner
+to increase tbuf_size itself.  Having said all that, I still don't
+understand why this buffer needs padding at all.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQU2smAAoJEBYNRVNeJnmTY9IQAN2N50T1wofPQddZM/5DUfJ8
-eoeFGX4DTAKZ7423Wzw/UlP0vBWQBUOrq/w6L2pbC5kJem9VIKU3cacvYNdncFno
-BwCbRajxKijpbdAflXo0bPaWoNWVXVDF7spH7MQxO2QZvrh8yx8dk5/nNpsjTC2P
-RAMQKYm5JlMrezZZbCYDFxXZVEUcRPTNLjLr4cqZUTcbA60VZTGXd54+Kq0KQzC9
-W15i7NvAvpJT/47Ej9z+NlOPXpqv8PmVzIiUZi32TYB3VS8mW4cHkp/PxdvAHxmT
-7NqpWfY1WIHKap/oCbZ1vRMakkD3zr+GxagQ3zI0H8mcb/aFUSNHZSutpC0XoKXW
-pbyEsXLAaO/NGS1hBJbUGAN7gaSaLujVu6wtItj1OV+cnFreS/q3V7kwanJNpj0v
-l9NjAydDPfSm7pvNwW+qmkUmdcJEW8a81oemA6n//PrY09i2DE1SpcLE6zGkTjoz
-Y9mw3M6QXrN3yM9sic/xGbC4xjAUSohJDR8kdCTs/Ea+XAHafwclVYwZHtg+2lNc
-BbVjkeFkUqAm4VXD7fZ2oWf4gWvRziaB/90s6LoXefKncdFFYv3e/07d+ofIR2rW
-mrpvxM6nIx5tEuPiXkvgxg0H3I7h3Z8gXqpRe4KmrJoZ8Uc9dOB7C36G2qDU7vff
-paPxYP7gMDMeedAm2DHE
-=Z/jr
------END PGP SIGNATURE-----
+			regards, tom lane
