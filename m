@@ -1,57 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/11
-Message-ID: <5040F938.6030004@redhat.com>
-Date: Fri, 31 Aug 2012 11:49:44 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/1
+Message-ID: <20120926065719.GA1295@suse.de>
+Date: Wed, 26 Sep 2012 08:57:19 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: net: slab corruption due to improper synchronization around inet->opt
+Cc: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: CVE Request: libtiff: Heap-buffer overflow when processing a TIFF image with PixarLog Compression
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Sep 25, 2012 at 10:56:02AM -0600, Kurt Seifried wrote:
 
-On 08/31/2012 10:11 AM, Petr Matousek wrote:
-> Description of the problem: Lack proper synchronization to
-> manipulate inet->opt ip_options can lead to system crash.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> Problem is that ip_make_skb() calls ip_setup_cork() and
-> ip_setup_cork() possibly makes a copy of ipc->opt (struct
-> ip_options), without any protection against another thread
-> manipulating inet->opt. Another thread can change inet->opt pointer
-> and free old one under us.
-> 
-> Given right server application (setting socket options and
-> processing traffic over the same socket at the same time), remote
-> attacker could use this flaw to crash the system. More likely
-> though, local unprivileged user could use this flaw to crash the
-> system.
-> 
-> Upstream fix: 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=f6d8bd051c391c1c0458a30b2a7abcd939329259
->
->  Thanks,
+> On 09/25/2012 03:06 AM, Huzaifa Sidhpurwala wrote:
+> > On 09/23/2012 08:29 AM, Solar Designer wrote:
+> > 
+> >> "libtiff 4.0.3 brings "various memory buffer access fixes". Does
+> >> it fix more than CVE-2012-3401?"
+> >> 
+> >> to which I have no answer.  The change log does in fact mention 
+> >> "Various memory buffer access fixes." as the very first change
+> >> listed for libtiff.  Perhaps someone should review code changes.
+> >> 
+> > 
+> > I had a look at the libtiff-4.0.3 commit logs and found one issue
+> > which seems to bring a possibility of heap-based buffer overflow
+> > when using a tiff file with PixarLog compression format.
+> > 
+> > More details at: 
+> > https://bugzilla.redhat.com/show_bug.cgi?id=860198
+> > 
+> > Though memory overwrite outside the heap-buffer is only a few
+> > bytes, one cannot really overwrite possible arbitrary code
+> > execution.
 
-Please use CVE-2012-3552 for this issue.
+This conclusion leaves me a bit puzzled. :) Even just "a few bytes" are
+often enough to trigger code exec. In particular if you get a big bounty for it.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+As well as the patch:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQQPk3AAoJEBYNRVNeJnmTr4MQAN43Jo7Nzj0XlElHltuXQLip
-jLGxHN+TuetYh93t6Uw1l2x6uH87a69BRrWoBe8uiihmp0QdGiVfzVeFLEtD7wQW
-ScoXrghc9ru1fz+eZVkmB/f5/jMc4B+Yl/leqVGp+Eab8BLavdrUibQTAXOs7nmD
-vAMN95nCgEoTTiKQnf0HnSxYY67cv29duTvWpDE9N5Qr+Vf2x+0uyuXhpyPhp/ZE
-94n7cOHiimJ7hEEXafPKAjcohxvU3WhzvpbHtZ7gNNaTQfq3LRrt7E64NZKXsner
-Y3F7Q6yvN8t+96fTYqTJeRG6MJwCDLs/m2d1v1ynO+CMjsQTKLM3d+9AeBOY/RBC
-uhFtKVJe/CCokPs3+c08659ecvC+Usf+XooBiHP2tr2IKby/suBdKJXqiF9str7j
-RIpuUVS7QDKiz+73R4XXQF3K0bB2FXP7sGnFvmyWkYoyqtZUxEf2IE+svNHDPEyD
-350n6A5QHwloL1adkQ36eSX8vLLHs1Q9zYNOBhkGMHjahz+MQuUUzlDjJJq7ysNl
-+QwKbdtyoTBD0P8VfbQHrt9uw86DxaJTJMJnuEy0Xz3utPy2ysC+ogo6tvn3/nTR
-pOL4Qeov82jci72oicw7Wna5mrLB4x3j3sxXbZ3Nv88J0CxRmSd3exhe0qZoDNoX
-C3TaxTH3xMFkEExW/aW5
-=OvkL
------END PGP SIGNATURE-----
+-	sp->tbuf = (uint16 *) _TIFFmalloc(tbuf_size);
++	sp->tbuf = (uint16 *) _TIFFmalloc(tbuf_size+sizeof(uint16)*sp->stride);
+
+If there were sizeof(uint16)*sp->stride bytes missing before, this is really
+more than just a few bytes. I checked that the mult cannot overflow,
+as sp->stride seems to be uint16. However, I think the add can actually wrap,
+(at least on ILP32) as tbuf_size can be 0xffffffff or so.
+I think the patch is broken and just shifts the hole.
+
+Plus, there are more occurences of _TIFFmalloc(tbuf_size) inside this file,
+one in PixarLogSetupEncode() and one in PixarLogSetupDecode() (but it might be
+that the Encode can never be triggered like so by attackers).
+
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
