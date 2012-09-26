@@ -1,155 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/12/1
-Message-ID: <0d1fe504-32cc-4084-96ce-1d9efe21d705@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Mon, 12 Mar 2012 07:18:07 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Roland Gruber <post@...andgruber.de>, Fabio Tranchitella <kobold@...ian.org>, Dmitry Butskoy <Dmitry@...skoy.name>
-Subject: Re: CVE Request -- LDAP Account Manager Pro / PhpLDAPadmin -- Multiple XSS flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/4
+Message-ID: <9F69795E29C890408AC2DAF646C89BB379DA607120@MAILBOX.arc.local>
+Date: Wed, 26 Sep 2012 12:34:09 +0200
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RFC: ntp behavior with spoofed source IPs
 Content-Type: text/plain; charset=utf-8
 
-Thank you for your reply and the ids, Kurt.
+Hi,
 
-Since you didn't explicitly mention CVE identifiers
-for phpLDAPAdmin, checking with you yet.
+While changing from openntpd (Ubuntu/universe) to ntp (main), a short evaluation of ntp configuration options was performed. Older ntp-versions on Ubuntu lucid do not support to disable ntp listening on all interfaces, even when using it just to synchronize with servers, but machine not delivering NTP services itself (see [1]). Newer versions come with a default configuration listening on all interfaces ([2]).
 
-Can we consider the CVE-2012-1114, CVE-2012-1115
-identifiers below to be valid also for phpLDAPAdmin code?
-
-According to Roland's reply:
-http://www.openwall.com/lists/oss-security/2012/03/06/1
-
-contains a reduced copy of phpLDAPAdmin's code.
-
-Though we issue only one CVE identifier for the original
-source code and can use that one also for projects, embedding
-that source, not sure the current situation wrt to these
-two is the correct one.
-
-Roland, could you clarify, if phpLDAPAdmin code would be vulnerable
-to all issues listed for LDAP Account Manager too or if phpLDAPAdmin
-would be vulnerable only for XSS issues when processing:
-i)   'export', 
-ii)  'add_value_form'
-iii)  and 'dn' variables?
-
-And LDAP Account Manager would be vulnerable yet to additional
-XSS flaws, due improper sanitization of 'filteruid', 'type',
-and 'cmd' variables? (and these would be LDAP Account Manager
-specific)
-
-Because, if the latter is the case, I would propose the
-CVE-2012-1114, CVE-2012-1115 identifiers to be used for phpLDAPAdmin
-issues, and that we would assign new one for LDAP Account Manager
-ones.
-
-Any clarification here, which source code base is affected by
-which issue exactly is appreciated.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-On 03/05/2012 03:36 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
->   originally (2012-03-01), the following cross-site (XSS) flaws were
-> reported
-> against LDAP Account Manager Pro (from Secunia advisory [1]):
-> 
-> * 1) Input passed to e.g. the "filteruid" POST parameter when filtering
-> result
-> sets in lam/templates/lists/list.php (when "type" is set to a valid
-> value) is
-> not properly sanitised before being returned to the user. This can be
-> exploited
-> to execute arbitrary HTML and script code in a user's browser session in
-> context of an affected site.
-> 
-> * 2) Input passed to the "filter" POST parameter in
-> lam/templates/3rdParty/pla/htdocs/cmd.php (when "cmd" is set to "export"
-> and
-> "exporter_id" is set to "LDIF") is not properly sanitised before being
-> returned
-> to the user. This can be exploited to execute arbitrary HTML and script
-> code in
-> a user's browser session in context of an affected site.
-
-Please use CVE-2012-1114 for these two issues (XSS, same reporter)
-
-> * 3) Input passed to the "attr" parameter in
-> lam/templates/3rdParty/pla/htdocs/cmd.php (when "cmd" is set to
-> "add_value_form" and "dn" is set to a valid value) is not properly
-> sanitised
-> before being returned to the user. This can be exploited to execute
-> arbitrary
-> HTML and script code in a user's browser session in context of an affected
-> site.
-
-Please use CVE-2012-1115 for this vu;n (XSS, but different reporter)
-
-> References:
-> [1] http://secunia.com/advisories/48221/
-> [2] http://www.vulnerability-lab.com/get_content.php?id=458
-> 
-> Later (2012-03-03), it was reported:
-> [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=662050#15
-> 
-> that subset (for 'export', 'add_value_form', and 'dn' variables) of these
-> security flaws is applicable also against the code of PhpLDAPadmin, a
-> web-based
-> LDAP client.
-> 
-> Patches from LDAP Account Manager, which are applicable to PphLDAPAdmin:
-> [4]
-> http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/lib/export_functions.php?r1=1.4&r2=1.5
-> 
-> 
-> [5]
-> http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/htdocs/export.php?r1=1.1&r2=1.2
-> 
-> 
-> [6]
-> http://lam.cvs.sourceforge.net/viewvc/lam/lam/templates/3rdParty/pla/htdocs/add_value_form.php?r1=1.6&r2=1.7
-> 
-> 
-> I would swear, I have seen LDAP Account Manager CVE request on OSS
-> security mailing list
-> recently, but can't find it now quickly right now. Kurt, please prior
-> assigning CVE ids
-> to "LDAP Account Manager Pro" please double check the main CVE mitre
-> database, if these
-> didn't get a CVE identifier yet.
-> 
-> Wrt to PhpLDAPAdmin side -- I am not sure, what's the relation of the
-> code between LAM and
-> PLA (if PLA is using / embedding some code of LAM directly or if there
-> were also some
-> customizations on the side of PLA upon LAM code embedding / inclusion).
-> Hopefully Roland,
-> Fabio, Dmitry can clarify here, how much the PhpLDAPAdmin code is
-> different from LDAP
-> Account Manager code (if it's just overtaken LAM code or PhpLDAPAdmin
-> have also made
-> their own customizations to the code)?
-> 
-> Roland, Fabio, Dmitry, basically what we are searching an answer for is,
-> if the PhpLDAPAdmin
-> code is different enough it safe to be considered as a different code
-> base and separate
-> CVE identifier to be allocated for it? (IOW one for LDAP Account Manager
-> Pro issues,
-> the other for PhpLDAPAdmin issues)
-> 
-> Kurt, once the above doubt solved and you checked and confirmed, that
-> LDAP Account Manager
-> issue did not get CVE identifier in the recent past yet, could you
-> allocate those?
-> 
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+I would like to hear comments on following scenarios using NTP requests with spoofed source IP, especially regarding the fact, that receiving of such packets could be considered to a higher degree a problem of the host base setup (rp_filter, firewalling) and not ntp itself, even for embedded devices (WLAN router).
 
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Example configuration: A device between LAN and internet (firewall but might be also some embedded WLAN router with NAT support) is running a ntp server. The configuration uses "restrict" statements to restrict querying and modification to LAN side only. External interface is just used to query upstream servers. Following scenarios come to my mind with the interfaces default configuration, I'd like to know if they are possible and if yes relevant:
+
+* Processing of spoofed requests (I do not known, what permission "modify" would allow, but might be annoying): If host TCP-stack will deliver it, ntp will process it.
+
+* Flooding host with NTP-replies: If NTP server responds to faked request on external interface, it will reply to the internal interface. Since there is no amplification, this might be problematic only for slow, e.g. embedded devices. Use of broadcast-address for reply was not tested.
+
+* Directing UDP response to any device IP/port behind firewall: It might be interesting if SIP-phones, embedded DNS/DHCP servers et al. survive this, but could be counted vulnerability of device only and no problem of ntp. I have not tested, if NTP reply could be mapped to any other UDP protocol.
+
+* Building of NTP-based tunnels: Use NTP packets forwarded/mangled via server. If just some bits from request to response are preserved, information can be transmitted.
+
+* Subversion of UDP-packet filtering (minor, only NTP-port can be exposed): Since UDP-filtering does not know state in same way than TCP, any allowed UDP packet may establish connection tracking entry. Scenario: firewall can send UDP via one interface but input not allowed via that if. By sending an NTP-request with spoofed source IP/port, ntp will send request (which is allowed), thus punching hole into firewall from that client to NTP daemon port.
+
+* Detection of allowed NTP IPs (hypothetical): If there is any useable feedback in form of packet IDs or timing that ntp server received response, sending NTP requests could be used to detect which hosts are up behind on the other interfaces of the NTP-machine. Example: use different traffic to NTP-machine (e.g. ICMP) to observe timing or IP-packet-ID-use, then send rogue NTP-packets: if NTP-machine sends NTP-response (ARP-query OK) to spoofed IP and receives ICMP-unreachable, this may change IDs/timing and show, that machine is up and perhaps if firewalled or not.
+
+
+Any opinions?
+
+Thanks,
+Roman
+
+[1] http://archive.ntp.org/ntp4/ChangeLog-stable  Change adding support for listening only on defined interfaces: (4.2.5p212) 2009/09/15 Released by Harlan Stenn: [Bug 983] add interface [listen | ignore | drop] ... directive.
+[2] https://bugs.launchpad.net/ubuntu/+source/ntp/+bug/858493
+
+
+DI Roman Fiedler
+Engineer
+Safety & Security Department
+Assistive Healthcare Information Technology
+
+AIT Austrian Institute of Technology GmbH
+Reininghausstrae 13/1  |  8020 Graz  |  Austria
+T +43(0) 50550 2957  |  M +43(0) 664 8561599  |  F +43(0) 50550 2950
+roman.fiedler@....ac.at | http://www.ait.ac.at/
+
+FN: 115980 i HG Wien  |  UID: ATU14703506
+This email and any attachments thereto, is intended only for use by the addressee(s) named herein and may contain legally privileged and/or confidential information. If you are not the intended recipient, please notify the sender by return e-mail or by telephone and delete this message from your system and any printout thereof. Any unauthorized use, reproduction, or dissemination of this message is strictly prohibited. Please note that e-mails are susceptible to change. AIT Austrian Institute of Technology GmbH shall not be liable for the improper or incomplete transmission of the information contained in this communication, nor shall it be liable for any delay in its receipt.
+
+
