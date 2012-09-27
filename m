@@ -1,29 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/5
-Message-Id: <201208280012.43923.geissert@debian.org>
-Date: Tue, 28 Aug 2012 00:12:42 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/27/5
+Message-ID: <50649213.5050300@redhat.com>
+Date: Thu, 27 Sep 2012 11:51:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: letodms multiple issues
+CC: Daniel Kahn Gillmor <dkg@...thhorseman.net>, Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: dracut creates world readable initramfs images
 Content-Type: text/plain; charset=utf-8
 
-On Monday 27 August 2012 20:32:16 Kurt Seifried wrote:
-> On 08/27/2012 02:43 PM, Raphael Geissert wrote:
-> > Multiple vulnerabilities have been found in LetoDMS[1]. Could CVE
-> > ids be assigned, please? Thanks in advance.
-[...]
-> >>  major security update which fixeѕ lots of possible XSS and CSRF
-> >> 
-> >> attacts
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 09/27/2012 11:21 AM, Daniel Kahn Gillmor wrote:
+> On 09/27/2012 05:07 AM, Huzaifa Sidhpurwala wrote:
+>> Hi All,
+>> 
+>> An information disclosure flaw was found in the way dracut, an 
+>> initramfs root filesystem images generator, created initramfs
+>> images.
+>> 
+>> When the root filesystem contained sensitive information
+>> (password based authentication for iSCSI systems or encrypted
+>> root filesystem crypttab password information), an attacker could
+>> use this flaw to obtain this information.
+>> 
+>> This issue has been assigned CVE-2012-4453
 > 
-> That's two sets of vulns, can you send me the links to the code
-> updates? I'm assuming they are in
-> http://mydms.svn.sourceforge.net/viewvc/mydms/ somewhere? Thanks.
+> the subject line says "creates non-world readable initramfs
+> images". should that be "creates world-readable initramfs images"
+> instead?
+> 
+> --dkg
 
-Not helpful, it's all in:
-http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=853
+Yes indeed!
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQZJITAAoJEBYNRVNeJnmT6vQQAJiqHJbPnOPtKjnuoenOq6+Z
+sfVrKAGvYbcCOmM5HwSglbQ8/nTY+LIZfl76QhqheHjVpzz0lr3LmBmvJkqtKu7O
+tP8gQe0WMOyfS0dcsO8wVGF4kPBVgUGCA+kn1gvuo+rsC8uN21H27GumFO5GyQqV
+88qRNG25uccmnEsdfSmJrO2zrWZ4ZJPW6i+RT/R3qTeXxVmfK8rgwL/KgQZ3KjW3
+iuUh4n6yU2mPu9zN6JkxfC1EjRtsvbsrx+T3q0eVHwJqeSCHDArpVGVySuaq+tnZ
+IW+X7yRNu0hZM6DBNIRsv5m83okSDWdxK/uCMchV7IjZ4FyhhVa7WpVNjeYjPfyA
+QgBz3gYdqsuXcCxQ7r1EHpFwMU25Qq3ZlAswZf2WkIf6Zrr99XVsnKaPIkutTvG2
+mjX9GaqWgd7EM8qT3g3kko3czNjMBlZ1H/CWujlu+m9lvctMnE4SeJ8QG7BUfI1x
+z7at29a8eMJHdrccxbn1aFqQjxymtG3ymCwxPZ0NsE7OXeQLBznjO8nxy15/kLH9
+A73zfWrS3eh1IEH7cs8r1lnFXtn7G0zSm9v3sf8QQZMZDbIfYXV6T3Z/ktwwG455
+Ju8KUtEXgkw5GTFDbSr4M6VgxVW2G2nENpSW1h16duZXulDAkMT1o7t1Ob1XvakD
+OTXtSxQvtvRmrpvkrlJp
+=gs7Z
+-----END PGP SIGNATURE-----
