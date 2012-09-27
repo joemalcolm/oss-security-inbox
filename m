@@ -1,36 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/17/2
-Message-ID: <4F3E7EAC.208@redhat.com>
-Date: Fri, 17 Feb 2012 17:22:04 +0100
-From: Stefan Cornelius <scorneli@...hat.com>
-To: "" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE-2012-0864 assignment notification -- glibc F_S format string protection bypass via "nargs" integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/27/1
+Message-ID: <5063E709.8090605@redhat.com>
+Date: Thu, 27 Sep 2012 11:11:29 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2009-4030 regression in mysql
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi All,
 
-In the Phrack article "A Eulogy for Format Strings", a researcher using
-nickname "Captain Planet" reported an integer overflow flaw in the
-format string protection mechanism offered by FORTIFY_SOURCE. A remote
-attacker could provide a specially crafted executable, leading to
-FORTIFY_SOURCE format string protection mechanism bypass, when executed.
+It was found that the fix for CVE-2009-4030 was not present in mysql
+version 5.0.88, as claimed by upstream.
 
-References:
-http://www.phrack.org/issues.html?issue=67&id=9#article
+As a result of this, Red Hat Security Advisory RHSA-2012:0127 which
+rebased mysql in Red Hat Enterprise Linux 5 to 5.0.95, missed the above
+fix.
 
-Red Hat bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=794766
+We have assigned CVE-2012-4452 to this issue.
 
-We have assigned CVE-2012-0864 to this issue.
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4452
+http://bugs.mysql.com/bug.php?id=32167
+http://rhn.redhat.com/errata/RHSA-2012-0127.html
 
-Upstream bug and Kees Cook's proposed patches:
-  http://sourceware.org/bugzilla/show_bug.cgi?id=13656
-  http://sourceware.org/ml/libc-alpha/2012-02/msg00023.html
-  http://sourceware.org/ml/libc-alpha/2012-02/msg00012.html
-  http://sourceware.org/ml/libc-alpha/2012-02/msg00073.html
 
-Thanks and kind regards,
-
---
-Stefan Cornelius / Red Hat Security Response Team
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
