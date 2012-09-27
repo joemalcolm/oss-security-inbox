@@ -1,46 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/10
-Message-ID: <CAGXu5jLRSsY4__4uXssqZ7zzO7D8CNZJ7u-YBx-2_QhG1wOogQ@mail.gmail.com>
-Date: Wed, 18 Apr 2012 13:37:21 -0700
-From: Kees Cook <keescook@...omium.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/27/6
+Message-ID: <5064A40C.8080003@fifthhorseman.net>
+Date: Thu, 27 Sep 2012 15:07:56 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Xorg input device format string flaw
+CC: oss-security@...ts.openwall.com,  Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: dracut creates world readable initramfs images
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 18, 2012 at 1:23 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 04/18/2012 01:28 PM, Kees Cook wrote:
->> Hello,
->>
->> Adding an input device with a malicious name can trigger a format
->> string flaw in Xorg's logging subsystem. For builds of Xorg
->> lacking -D_FORTIFY_SOURCE=2 (or 32-bit systems lacking the fix to
->> fortify[1]) this can lead to arbitrary code execution as the Xorg
->> user, usually root. When built with fortify, this is a denial of
->> service, since Xorg will abort.
->>
->> Proposed solution patch series can be found here: 1/4
->> http://patchwork.freedesktop.org/patch/10000/ 2/4
->> http://patchwork.freedesktop.org/patch/9998/ 3/4
->> http://patchwork.freedesktop.org/patch/9999/ 4/4
->> http://patchwork.freedesktop.org/patch/10001/
->>
->> -Kees
->>
->> [1]
->> http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=7c1f4834d398163d1ac8101e35e9c36fc3176e6e
->
-> So
->>
-> are you asking for just the device name issue covered in
->
-> http://patchwork.freedesktop.org/patch/10001/
+On 09/27/2012 01:51 PM, Kurt Seifried wrote:
+> On 09/27/2012 11:21 AM, Daniel Kahn Gillmor wrote:
+>> On 09/27/2012 05:07 AM, Huzaifa Sidhpurwala wrote:
+>>> When the root filesystem contained sensitive information
+>>> (password based authentication for iSCSI systems or encrypted
+>>> root filesystem crypttab password information), an attacker could
+>>> use this flaw to obtain this information.
+>>>
+>>> This issue has been assigned CVE-2012-4453
+> 
+>> the subject line says "creates non-world readable initramfs
+>> images". should that be "creates world-readable initramfs images"
+>> instead?
+> 
+> Yes indeed!
 
-Yeah, but I wanted to point to the entire patch series, since that
-fix, I think, depends on pieces from the others.
+FWIW, this seems similar to a buggy interaction between the dropbear and
+initramfs-tools packages in debian that was handled a couple years ago:
+ http://bugs.debian.org/578117
 
--Kees
+	--dkg
 
--- 
-Kees Cook
-Chrome OS Security
+
+Download attachment "signature.asc" of type "application/pgp-signature" (1031 bytes)
