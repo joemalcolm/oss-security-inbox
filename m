@@ -1,68 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/6
-Message-ID: <mpro.mavb6v06la3fk02iz.taviso@cmpxchg8b.com>
-Date: Mon, 24 Sep 2012 20:54:31 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/28/4
+Message-Id: <201209281716.q8SHGgCn025780@linus.mitre.org>
+Date: Fri, 28 Sep 2012 13:16:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: Roman.Fiedler@....ac.at
+Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: RFC: ntp behavior with spoofed source IPs
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...hat.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On 09/24/2012 11:15 AM, Kurt Seifried wrote:
-> > On 09/24/2012 02:42 AM, Tavis Ormandy wrote:
-> > > Matthias Weckbecker <mweckbecker@...e.de> wrote:
-> > 
-> > > > On Friday 21 September 2012 23:47:48 Michael Gilbert wrote: [...]
-> >>>> 
-> > > > > So anyway, I suppose this creates more questions than answers, but
-> > > > > I guess its worth thinking about.  After all, what did the user
-> > > > > really expect?  If they had intended that original file to be
-> > > > > private, and now its not, is that appropriate?  Is it more
-> > > > > appropriate to assume all users know how to use umask
-> > > > > appropriately?
-> >>>> 
-> >>> 
-> > > > IMO if one bothers to encrypt a file at all it was certainly
-> > > > intended to be private and only supposed to be readable by a certain
-> > > > user / user group and not by just everyone. Otherwise encryption
-> > > > would be pointless, or are there any other reasons for encrypting a
-> > > > file?
-> >>> 
-> > > > > Best wishes, Mike
-> >>> 
-> > > > Thanks, Matthias
-> >>> 
-> > 
-> > > I agree. Users do know how to use umask properly, but this isn't what
-> > > umask is for. The umask for the low order bits are only applied if the
-> > > program requested 0666, it's still the responsibility of the program
-> > > to choose the appropriate permissions.
-> > 
-> > > Creating sensitive files with 0666 and then saying "set your umask" is
-> > > just wrong.
-> > 
-> > > Tavis.
-> > 
-> > So where do we draw the line? tar? By this definition any program that
-> > has stores sensitive data (passwords/etc.) or has potentially sensitive
-> > output (so email, web clients, chat clients, file downloaders, text
-> > editors, etc.) needs to internally pick some "safe" default and apply it
-> > and/or umask (whichever is more secure I guess).
-> > 
+Although we suspect this message isn't primarily about CVE assignments,
+here are two comments:
 
-Then lets just remove umask, because you're saying it's useless. The purpose
-of umask is to apply a *mask* to what applications request as default, not
-as a universal "set these permissions" command. If it was, it would be
-called uperms.
+>While changing from openntpd (Ubuntu/universe) to ntp (main), a short
+>evaluation of ntp configuration options was performed.
 
-And yes, I think that any program that creates files with sensitive contents
-and requests 0666 is broken.
+>Newer versions come with a default configuration listening on all
+>interfaces ...
 
-Tavis.
+The general issue of interface listening in an NTP daemon's
+configuration is perhaps best covered by CCE. CCE-4134-3 (in the
+http://cce.mitre.org/lists/data/downloads/cce-rhel5-5.20111007.xls
+document) is one related identifier.
 
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
+>The configuration uses "restrict" statements to restrict querying and
+>modification to LAN side only.
 
+>Following scenarios come to my mind with the interfaces default
+>configuration
+
+Do all of these scenarios require a host and network configuration
+that accepts packets with LAN source IP addresses even if these
+packets arrive from the Internet interface? Typically it's not the
+responsibility of an individual network application program to address
+those scenarios. If an application program tried to address such a
+scenario but had an implementation error (e.g., it documented
+192.168.0.0/16 as a hardcoded safe network but actually had
+192.186.0.0/16 hardcoded), that's a different situation and a CVE
+could be assigned.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJQZdorAAoJEGvefgSNfHMdfdQIALepH5LougEZFT0tdJuFHM+7
+VHB3PlbqlpeLT593lHcad7Sgr6kbwR3RjVmqrmS3+vqRataNZNDOwogb57fwAqaI
+Ks2gV/5orRsb2wN7gAvmYqhhE5MFUgxm3ygHSft932kds+2u6qodwQMOt2wkAy5z
+eQlRjwbO99OC2Atfc5yWkLcoJtQo4vfPlRgdhUfpIZlPX2wt7X0GpK2IOHsJyVjo
+2U8t8t7KFjj4i99ocaIOh6bNKusp5tAobSRjx0tsRwCZ6G4LO0tyq3LlbyXxtA2r
+0QVQrK0mX2+Ho8n7FaeWPbwM7VzyyXLf9Je0gCwpn9X0q1OiB7vsA3R01FIGOYg=
+=kVUT
+-----END PGP SIGNATURE-----
