@@ -1,71 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/5
-Message-ID: <20120627131318.GA30758@cmpxchg8b.com>
-Date: Wed, 27 Jun 2012 15:13:18 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: oss-security@...ts.openwall.com
-Subject: please verify unusual x.509 constraints are handled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/29/1
+Message-ID: <CA+KYVfiCkC_5SGN8BCLFfTmNovhkwQcPYvypBLXrFpQfVNmyjQ@mail.gmail.com>
+Date: Fri, 28 Sep 2012 19:56:44 -0400
+From: andi abes <andi.abes@...il.com>
+To: Russell Bryant <rbryant@...hat.com>
+Cc: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com,  openstack-announce@...ts.openstack.org
+Subject: Re: [Openstack] [OSSA 2012-016] Token authorization for a user in a disabled tenant is allowed (CVE-2012-4457)
 Content-Type: text/plain; charset=utf-8
 
-List, just an FYI, I've noticed a Korean CA appears to always set the cA
-bit in the X.509 basicContraints, then uses pathLenConstraint and
-keyUsage bits to restrict the results.
+is the plan going forward to announce these on friday afternoons?
 
-I have no idea what crazy software they're using that generates these
-certificates, but they're in the Microsoft trusted certificate
-store on all Windows machines, and are therefore possibly (probably?)
-cross-signed from other CAs. Maybe someone can check the EFF corpus if
-there is interest.
-
-While arguably the X.509 specifications permit this, I find it hard to
-believe that these bits are checked consistently by all implementations.
-AFAICT, GnuTLS does not check these constraints, but OpenSSL does.
-
-I've produced an example from one of the weaker certificates, hopefully
-you can use this to check whatever implementation you're using handles
-this correctly. If you get an error about pathLen exceeded, or improper
-usage, then it's probably good. If you get a message about revokation or
-some other error about canonicalization*, then you might have a problem.
-
-$ cat local-cert.pem Mengsk.pem sms.hallym.ac.kr.pem CA134040001.pem GPKIRootCA.pem | certtool -e
-Certificate[0]: C=KR,O=Tanaris,CN=localhost
-        Issued by: C=KR,ST=Koprulu Sector,O=Terran Dominion,CN=Mengsk Certificate Authority
-        Verifying against certificate[1].
-        Verification output: Verified.
-
-Certificate[1]: C=KR,ST=Koprulu Sector,O=Terran Dominion,CN=Mengsk Certificate Authority
-        Issued by: C=KR,O=Government of Korea,OU=Group of Server,OU=,CN=sms.hallym.ac.kr
-        Verifying against certificate[2].
-        Verification output: Verified.
-
-Certificate[2]: C=KR,O=Government of Korea,OU=Group of Server,OU=,CN=sms.hallym.ac.kr
-        Issued by: C=KR,O=Government of Korea,OU=GPKI,CN=CA134040001
-        Verifying against certificate[3].
-        Verification output: Verified.
-
-Microsoft asked them to revoke these certificates earlier this month,
-but they publish CRL via ldap, so I don't know if these are really
-visible.  Regardless, I think it's important to verify that
-implementations handle these combinations of constraints.
-
-Tavis.
-
-* The problem with canonicalization is the subjectName/issuerName DN
-  should be canonicalized, but this isnt always implemented. In this
-  case the PrintableString doesnt match the UTF8String. If this is the
-  only problem with the chain reported, then there is a bug.
-
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
-
-Download attachment "CA134040001.pem" of type "application/octet-stream" (1574 bytes)
-
-Download attachment "GPKIRootCA.pem" of type "application/octet-stream" (1289 bytes)
-
-Download attachment "local-cert.pem" of type "application/octet-stream" (4394 bytes)
-
-Download attachment "Mengsk.pem" of type "application/octet-stream" (3648 bytes)
-
-Download attachment "sms.hallym.ac.kr.pem" of type "application/octet-stream" (4684 bytes)
+On Fri, Sep 28, 2012 at 4:50 PM, Russell Bryant <rbryant@...hat.com> wrote:
+> OpenStack Security Advisory: 2012-016
+> CVE: CVE-2012-4457
+> Date: September 28, 2012
+> Title: Token authorization for a user in a disabled tenant is allowed
+> Impact: High
+> Reporter: Rohit Karajgi (NTT Data)
+> Affects: Essex (prior to 2012.1.2), Folsom (prior to folsom-3
+> development milestone)
+>
+> Description:
+> Rohit Karajgi reported a vulnerability in Keystone. It was possible to
+> get a token that is authorized for a disabled tenant. Once the token is
+> established with authorization on the tenant, keystone would respond 200
+> OK to token validation requests from other OpenStack services, allowing
+> the user to work with the tenant's resources.
+>
+> Folsom fix: (Included in 2012.2)
+> http://github.com/openstack/keystone/commit/4ebfdfaf23c6da8e3c182bf3ec2cb2b7132ef685
+>
+> Essex fix: (Included in 2012.1.2)
+> http://github.com/openstack/keystone/commit/5373601bbdda10f879c08af1698852142b75f8d5
+>
+> References:
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4457
+> https://bugs.launchpad.net/keystone/+bug/988920
+>
+> --
+> Russell Bryant
+> OpenStack Vulnerability Management Team
+>
+> _______________________________________________
+> Mailing list: https://launchpad.net/~openstack
+> Post to     : openstack@...ts.launchpad.net
+> Unsubscribe : https://launchpad.net/~openstack
+> More help   : https://help.launchpad.net/ListHelp
