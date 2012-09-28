@@ -1,46 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/2
-Message-ID: <4F6C07F5.7000606@redhat.com>
-Date: Thu, 22 Mar 2012 23:19:49 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: William Pitcock <nenolod@...eferenced.org>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: atheme.org Security Advisory ASA-2012-03-01: Improper cleanup of CertFP entries may result in undefined behaviour
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/28/3
+Message-ID: <20120928031150.GC3036@dojo.mi.org>
+Date: Thu, 27 Sep 2012 23:11:51 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: RFC: ntp behavior with spoofed source IPs
 Content-Type: text/plain; charset=utf-8
 
-On 03/22/2012 12:16 PM, William Pitcock wrote:
-> Hi,
-> 
-> On Wednesday, March 21, 2012, Kurt Seifried <kseifried@...hat.com
-> <mailto:kseifried@...hat.com>> wrote:
->> On 03/21/2012 12:55 PM, William Pitcock wrote:
->>> atheme.org <http://atheme.org> Security Advisory
->>> ASA-2012-03-01
->>>
->>> Original release: March 20, 2012.
->>> Last update: March 20, 2012.
->>>
->>> Copyright (c) 2012 atheme.org <http://atheme.org> and it's contributors.
->>> All rights reserved.
->>>
->>> Distribution of this document in full, or in part is allowed,
->>> provided that it remains in unmodified form and the above
->>> copyright notice and this permission notice remain unchanged.
->>
->> That makes no sense "or in part is allowed, provided that it remains in
->> unmodified form" and I just violated this replying to you I guess.
-> 
-> Yes we should probably change our language for future advisories.
-> 
->>
->> Also did you want a CVE # for this issue?
-> 
-> That would be useful -- I know that suse, debian and gentoo carry the
-> software as part of their IRC server packages.
-> 
-> William
+:While changing from openntpd (Ubuntu/universe) to ntp (main), a short evaluation of ntp configuration options was performed. Older ntp-versions on Ubuntu lucid do not support to disable ntp listening on all interfaces, even when using it just to synchronize with servers, but machine not delivering NTP services itself (see [1]). Newer versions come with a default configuration listening on all interfaces ([2]).
 
-Please use CVE-2012-1576 for this issue.
+There were command-line flags -I/-L for ntpd to facilitate only
+accepting packets on given interfaces.  They'd been around for a
+number of years, but were badly documented.  You're right in that
+older ntpd still *listened* on all interfaces, even with the -I/-L
+flags, with no way to not listen, until the assorted issues in
+http://bugs.ntp.org/show_bug.cgi?id=983 were addressed.  Why I
+happen to know this is because...
+
+:I would like to hear comments on following scenarios using NTP requests with spoofed source IP, especially regarding the fact, that receiving of such packets could be considered to a higher degree a problem of the host base setup (rp_filter, firewalling) and not ntp itself, even for embedded devices (WLAN router).
+
+...a couple years back, I observed that a fresh MacOS Leopard/10.5.8
+install had 123/udp and ntpd exposed, even with its firewall in place.
+At the time, I considered it to be more of a firewall deficiency.  I
+guess I'm "used" to ntpd default configs that (off the top of my head):
+
+      a) have broadcast/multicastclient enabled
+      b) point to some vendor's "pet" NTP servers
+      c) do those fake, drifty stratum 10 clocks
+         etc.
+
+By comparison, spoofing was low on the list of headaches.  For what I
+tend to care about, ntpd doesn't make sense until I scrub whatever the
+default config is and do something simple from scratch.  And, I don't
+really expect "strong security" unless I do authentication and|or can
+reasoanbly validate the path to the stratum 0 reference clock.  
+
+-Mike
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"As God is my witness, I thought turkeys could fly!"      -WKRP In Cincinnati
+
+Content of type "application/pgp-signature" skipped
