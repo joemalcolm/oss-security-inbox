@@ -1,69 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/31/4
-Message-ID: <20120531191656.GC79783@higgins.local>
-Date: Thu, 31 May 2012 12:16:56 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: oss-security@...ts.openwall.com
-Subject: SQL Injection Vulnerability in Ruby on Rails (CVE-2012-2661)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/28/6
+Message-ID: <50660DA7.4050507@redhat.com>
+Date: Fri, 28 Sep 2012 16:50:47 -0400
+From: Russell Bryant <rbryant@...hat.com>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2012-016] Token authorization for a user in a disabled tenant is allowed (CVE-2012-4457)
 Content-Type: text/plain; charset=utf-8
 
-SQL Injection Vulnerability in Ruby on Rails
+OpenStack Security Advisory: 2012-016
+CVE: CVE-2012-4457
+Date: September 28, 2012
+Title: Token authorization for a user in a disabled tenant is allowed
+Impact: High
+Reporter: Rohit Karajgi (NTT Data)
+Affects: Essex (prior to 2012.1.2), Folsom (prior to folsom-3
+development milestone)
 
-There is a SQL injection vulnerability in Active Record, version 3.0 and later. This vulnerability has been assigned the CVE identifier CVE-2012-2661.
+Description:
+Rohit Karajgi reported a vulnerability in Keystone. It was possible to
+get a token that is authorized for a disabled tenant. Once the token is
+established with authorization on the tenant, keystone would respond 200
+OK to token validation requests from other OpenStack services, allowing
+the user to work with the tenant's resources.
 
-Versions Affected:  3.0.0 and ALL later versions
-Not affected:       2.3.14
-Fixed Versions:     3.2.4, 3.1.5, 3.0.13
+Folsom fix: (Included in 2012.2)
+http://github.com/openstack/keystone/commit/4ebfdfaf23c6da8e3c182bf3ec2cb2b7132ef685
 
-Impact 
------- 
-Due to the way Active Record handles nested query parameters, an attacker can use a specially crafted request to inject some forms of SQL into your application's SQL queries.
+Essex fix: (Included in 2012.1.2)
+http://github.com/openstack/keystone/commit/5373601bbdda10f879c08af1698852142b75f8d5
 
-All users running an affected release should upgrade immediately.
-
-Impacted code directly passes request params to the `where` method of an ActiveRecord class like this:
-
-    Post.where(:id => params[:id]).all
-
-An attacker can make a request that causes `params[:id]` to return a specially crafted hash that will cause the WHERE clause of the SQL statement to query an arbitrary table with some value.
-
-Releases 
--------- 
-The FIXED releases are available at the normal locations. 
-
-Workarounds 
------------ 
-This issue can be mitigated by casting the parameter to an expected value.  For example, change this:
-
-    Post.where(:id => params[:id]).all
-
-to this:
-
-    Post.where(:id => params[:id].to_s).all
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset.  We have also provided a patch for the 3.0 series despite the fact it is unmaintained.
-
-* 3-0-params_sql_injection.patch - Patch for 3.0 series 
-* 3-1-params_sql_injection.patch - Patch for 3.1 series 
-* 3-2-params_sql_injection.patch - Patch for 3.2 series 
-
-Please note that only the  3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
-------- 
-
-Thanks to Ben Murphy for reporting the vulnerability to us, and to Chad Pyne of thoughtbot for helping us verify the fix.
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4457
+https://bugs.launchpad.net/keystone/+bug/988920
 
 -- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-0-params_sql_injection.patch" of type "text/plain" (2318 bytes)
-
-View attachment "3-1-params_sql_injection.patch" of type "text/plain" (3559 bytes)
-
-View attachment "3-2-params_sql_injection.patch" of type "text/plain" (3560 bytes)
-
-Content of type "application/pgp-signature" skipped
+Russell Bryant
+OpenStack Vulnerability Management Team
