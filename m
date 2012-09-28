@@ -1,26 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/21/7
-Message-ID: <20121021181409.24a7c42b@melee>
-Date: Sun, 21 Oct 2012 18:14:09 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS in piwik before 1.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/28/5
+Message-ID: <50660D91.9020104@redhat.com>
+Date: Fri, 28 Sep 2012 16:50:25 -0400
+From: Russell Bryant <rbryant@...hat.com>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com
+Subject: [OSSA 2012-015] Some actions in Keystone admin API do not validate token (CVE-2012-4456)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Piwik 1.9 fixes an XSS
-http://piwik.org/blog/2012/10/piwik-1-9/
+OpenStack Security Advisory: 2012-015
+CVE: CVE-2012-4456
+Date: September 28, 2012
+Title: Some actions in Keystone admin API do not validate token
+Impact: High
+Reporter: Jason Xu
+Products: Keystone
+Affects: Essex (prior to 2012.1.2), Folsom (prior to folsom-2
+development milestone)
 
-Not many details though:
-"Security: thanks to Security Researcher Maxim Rupp who responsibly
-disclosed a XSS via our security bounty program"
+Description:
+Jaxon Xu reported a vulnerability in Keystone. Two admin API actions
+did not require a valid token.  The first was listing roles for a
+user.  The second was the ability to get, create, and delete services.
 
-Please assign CVE.
+Folom Fixes: (Included in 2012.2)
+http://github.com/openstack/keystone/commit/868054992faa45d6f42d822bf1588cb88d7c9ccb
+http://github.com/openstack/keystone/commit/1d146f5c32e58a73a677d308370f147a3271c2cb
 
-cu,
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Essex Fixes: (Included in 2012.1.2)
+http://github.com/openstack/keystone/commit/14b136aed9d988f5a8f3e699bd4577c9b874d6c1
+http://github.com/openstack/keystone/commit/24df3adb3f50cbb5ada411bc67aba8a781e6a431
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4456
+https://bugs.launchpad.net/keystone/+bug/1006815
+https://bugs.launchpad.net/keystone/+bug/1006822
+
+- -- 
+Russell Bryant
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iEYEARECAAYFAlBmDZAACgkQFg9ft4s9SAYPhACfTBNPMETkhmP8OG4g11VgZi11
+yCkAn2sc3GtVKy/m1Xq4fobHW45nyb5X
+=bkKK
+-----END PGP SIGNATURE-----
