@@ -1,83 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/11
-Message-Id: <187375.18838.37571-15238-1550819837-1352912959@seznam.cz>
-Date: Wed, 14 Nov 2012 18:09:19 +0100 (CET)
-From: Michal Ambroz <rebus@...nam.cz>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: Tim Brown <timb@...nvas.org>, Michael Wiegand <michael.wiegand@...enbone.net>, full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
-Subject: Re: Re: Re: [OVSA20121112] OpenVAS Manager Vulnerable To Command Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/29/2
+Message-ID: <506692AA.5040206@redhat.com>
+Date: Sat, 29 Sep 2012 00:18:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: andi abes <andi.abes@...il.com>, Russell Bryant <rbryant@...hat.com>
+Subject: Re: Re: [Openstack] [OSSA 2012-016] Token authorization for a user in a disabled tenant is allowed (CVE-2012-4457)
 Content-Type: text/plain; charset=utf-8
 
-Hello Jan,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-in version 2.0.5 the discussed vulnerable like looks like this:
-     command = g_strdup_printf ("/bin/sh %s %s > %s"
-                                 " 2> /dev/null",
-                                 script,
-                                 xml_file,
-                                 output_file);
+On 09/28/2012 05:56 PM, andi abes wrote:
+> is the plan going forward to announce these on friday afternoons?
 
-So there is not IP and PORT to be sanitized so 2.0.5 is probably on the safe side of this vulnerability.
+I can't speak for OpenStack but the history of these vulns is that
+they have been public since May 2012 and April 2012, but were not
+labelled as security, they were noticed, CVE's were assigned and I
+think the idea was to notify people quickly since they're have a
+significant impact and have been around for a while.
 
-If you deem it safer we can bump to current 3.0.x version - I know it is usually nono, but there should be no casualties,
-since I sincerely doubt there are _ANY_ openvas users on Fedora distribution (16/17) as half of the openvas suite packages is still under review. 
+> On Fri, Sep 28, 2012 at 4:50 PM, Russell Bryant
+> <rbryant@...hat.com> wrote:
+>> OpenStack Security Advisory: 2012-016 CVE: CVE-2012-4457 Date:
+>> September 28, 2012 Title: Token authorization for a user in a
+>> disabled tenant is allowed Impact: High Reporter: Rohit Karajgi
+>> (NTT Data) Affects: Essex (prior to 2012.1.2), Folsom (prior to
+>> folsom-3 development milestone)
+>> 
+>> Description: Rohit Karajgi reported a vulnerability in Keystone.
+>> It was possible to get a token that is authorized for a disabled
+>> tenant. Once the token is established with authorization on the
+>> tenant, keystone would respond 200 OK to token validation
+>> requests from other OpenStack services, allowing the user to work
+>> with the tenant's resources.
+>> 
+>> Folsom fix: (Included in 2012.2) 
+>> http://github.com/openstack/keystone/commit/4ebfdfaf23c6da8e3c182bf3ec2cb2b7132ef685
+>>
+>>
+>> 
+Essex fix: (Included in 2012.1.2)
+>> http://github.com/openstack/keystone/commit/5373601bbdda10f879c08af1698852142b75f8d5
+>>
+>>
+>> 
+References:
+>> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4457 
+>> https://bugs.launchpad.net/keystone/+bug/988920
+>> 
+>> -- Russell Bryant OpenStack Vulnerability Management Team
+>> 
+>> _______________________________________________ Mailing list:
+>> https://launchpad.net/~openstack Post to     :
+>> openstack@...ts.launchpad.net Unsubscribe :
+>> https://launchpad.net/~openstack More help   :
+>> https://help.launchpad.net/ListHelp
 
-Mainly the openvas suite doesn't work on current Fedora due to incompatibility between openvas network stack (openvas-libraries) and the gnutls library we have in Fedora.
 
-Best regards
-Michal Ambroz 
-(one of Fedora openvas-* packagers)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-
-
-< ------------ Původní zpráva ------------
-< Od: Jan Lieskovsky <jlieskov@...hat.com>
-< Předmět: Re: [oss-security] Re: [OVSA20121112] OpenVAS Manager Vulnerable To
-< Command Injection
-< Datum: 14.11.2012 11:55:09
-< ----------------------------------------
-< Hello Tim,
-< 
-<   thank you for the heads up and notification.
-< 
-< The versions of openvas-manager package, as shipped with Fedora release of 16
-< and release of 17 is based on upstream 2.0.5 version yet. From what I have
-< looked
-< and can tell from upstream advisory and patch (for 3.0.X version):
-< [1] http://www.openvas.org/OVSA20121112.html
-< [2]
-< http://wald.intevation.org/scm/viewvc.php?view=rev&root=openvas&revision=14437
-< 
-< the CVE-2012-5520 does not seem to be applicable to OpenVAS-4 / openvas-manager
-< 2.0.5
-< version yet:
-< [3]
-< http://lists.wald.intevation.org/pipermail/openvas-announce/2012-August/000140.html
-< 
-< But prior definitely classifying Fedora 16 and Fedora 17 openvas-manager package
-< versions
-< as not vulnerable to this issue, I would like to hear opinion / confirmation
-< from someone
-< more familiar with OpenVAS code.
-< 
-< So could you confirm the CVE-2012-5520 wouldn't affect OpenVAS-4 2.0.X version
-< (yet)?
-< 
-< Thank you && Regards, Jan.
-< --
-< Jan iankko Lieskovsky / Red Hat Security Response Team
-< 
-< ----- Original Message -----
-< Doh, a document gets proof read by multiple people and yet it contains a 
-< mistake.  In the Current Status section of the advisory, the date is 
-< incorrect.  A corrected advisory is attached.
-< 
-< Tim
-< -- 
-< Tim Brown
-< <mailto:timb@...nvas,org>
-< <http://www.openvas.org/>
-< 
-< 
-< 
+iQIcBAEBAgAGBQJQZpKqAAoJEBYNRVNeJnmTUqMP/02lnwb+9O/efN51/Y2qkNzz
+nNSXKWl1ht1beuQaRiLqkRm3au81gtKewO/TmbJHN++6EI54vT1EUj0IXZlXm+aV
+fsdp9rQrJGILMUVPydOccHOe54nhLKUZ/F9os5PmAHhuZJHqSo5oDU2TbiYQeeX+
+vLVJrBG1GXIOxsXWXTV4Bp11+D6mwYIgVQUVN3pk/ZzKeEk9S6T71NHXj1RDZMpZ
+i6Cs35r6nRDcxOsj65jJysiWrHEahjau8bmdZ3KW/2FdjHuzvdqRz3/doFrmAiCG
+bQ4I7laagNC8XkOIZ7UV1S5pTYB64iSvGv+haW7Lq9mjWjrZ6wX06R7J/NX5wDPC
+A3RAIKxYLzkJdn0ifx922lfJkK7SH01dSDWpSib0KQzkkvQBw/6QcSah3TwBpDka
+kFA9ifMYWhiBhn9OFTcIpAT8mpdhmLBiALZsvxM0lRLxCqslcoExK1gWLhyL1tSf
+b2ENNYYZuNNSZMFCp/zm2giZZV2XpUxvPIcyuEGd8RLKANhVI2o+TOKoCmbpBZsE
+9RA5W8zkYxmheVxGLLcPMs02uqK1ZCFh4dKYRDWEXMFTZinyHQahjPY9tUBEPk+b
+am5I5FB4NelhVoLmiTwI9+nIV0VINJj7/UiCD7bGqU8UENcAGzjl3az9fJp6iM6I
+FFxytD+xS5uN7uwomVyD
+=3hBF
+-----END PGP SIGNATURE-----
