@@ -1,27 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/14
-Message-ID: <CAF6rxgmwqc4pFZmN6EV3aSHNqX0QDFcXbn_cGqDdQk_=yf=AFA@mail.gmail.com>
-Date: Fri, 7 Sep 2012 13:27:32 -0400
-From: Eitan Adler <lists@...anadler.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>,  Paul Wise <pabs@...ian.org>, Cyril Brulebois <kibi@...ian.org>
-Subject: Re: CVE-2010 Request -- blender: Insecure temporary file use by creating file string in undo save quit Blender kernel routine (re-occurrence of CVE-2008-1103)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/29/4
+Message-ID: <CA+KYVfi9VmoT4QzAPsFNv1=nYe1yu8gWzWTYHHBzSUQXdKcEcA@mail.gmail.com>
+Date: Sat, 29 Sep 2012 18:18:21 -0400
+From: andi abes <andi.abes@...il.com>
+To: Russell Bryant <rbryant@...hat.com>
+Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: Re: [Openstack] [OSSA 2012-016] Token authorization for a user in a disabled tenant is allowed (CVE-2012-4457)
 Content-Type: text/plain; charset=utf-8
 
-On 7 September 2012 13:25, Kurt Seifried <kseifried@...hat.com> wrote:
+On Sat, Sep 29, 2012 at 1:28 PM, Russell Bryant <rbryant@...hat.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
-> *REJECT* CVE-2012-4410 - this has the wrong year. The issue was
-> reported in 2010.
+> On 09/29/2012 02:18 AM, Kurt Seifried wrote:
+>> On 09/28/2012 05:56 PM, andi abes wrote:
+>>> is the plan going forward to announce these on friday
+>>> afternoons?
+>>
+>> I can't speak for OpenStack but the history of these vulns is that
+>> they have been public since May 2012 and April 2012, but were not
+>> labelled as security, they were noticed, CVE's were assigned and I
+>> think the idea was to notify people quickly since they're have a
+>> significant impact and have been around for a while.
 >
-> Please use CVE-2010-5105 for this issue, it has the correct year.
+> Correct.  Normally, we only announce on Tuesday through Thursday.  In
+> the case of the two announced yesterday (Friday), these were issues
+> fixed a good while ago in the open so we were just now catching up and
+> labeling them properly.
+>
 
-Thanks.
+indeed, they were fixed a while ago. It just required a mini
+fire-drill to verify that, and ensure the packages we are using in our
+deployments indeed had the fixes in. As you point out, the original
+problem report didn't have a CVE designation assigned, so the relevant
+commit messages and standard security tracking mechanisms didn't
+indicate the fixes are included.
+A fun way to spend a friday afternoon.
 
-On 6 September 2012 20:43, Kurt Seifried <kseifried@...hat.com> wrote:
-> Because sometimes I make mistakes and don't read so good =) Steven, is
-> this worth fixing?
+IIRC,  per security process packages/distributors are notified before
+the CVE's are made public.  It would be a great fire-drill
+extinguisher if the CVE announcement provided a link to a centralized
+location (for the CVE) where packages maintainers could update the
+distribution information.
 
-:) You do really good work usually. Thanks for that!
-
--- 
-Eitan Adler
+> Thanks,
+>
+> - --
+> Russell Bryant
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+>
+> iEYEARECAAYFAlBnL8MACgkQFg9ft4s9SAYz3wCfYo+RnuaEtkEtUGmczPwvQiSh
+> yc8An30yhBv+SA1HZxlF2D+gEEUeOM6R
+> =RMEV
+> -----END PGP SIGNATURE-----
