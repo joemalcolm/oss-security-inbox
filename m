@@ -1,34 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/17
-Message-ID: <20121029231805.GA6508@pisco.westfalen.local>
-Date: Tue, 30 Oct 2012 00:18:05 +0100
-From: Moritz Mühlenhoff <jmm@...til.org>
-To: coley@...us.mitre.org, oss-security@...ts.openwall.com, security@...ntu.com
-Subject: Re: CVE Request: Django
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/30/1
+Message-ID: <CAHmME9pnjh+EfkhDZu8gYFsVGO8mC-wym2gWu0mOVjTCVmve4g@mail.gmail.com>
+Date: Sun, 30 Sep 2012 21:21:02 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: cgit@...mli.net, meyering@...hat.com
+Subject: cgit: heap buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 30, 2012 at 12:10:00AM +0100, Seth Arnold wrote:
-> Hello Kurt, Steve, all,
-> 
-> Django recently released updates 1.3.4 and 1.4.2 to address a Host:
-> header poisoning problem and incorrect HttpOnly cookie documentation
-> (only wrong in 1.4.x).
-> 
-> I believe only the header poisoning problem requires a CVE (the other
-> problem is documentation; Django application authors may make a mistake
-> in their code if they go by the faulty documentation), but I thought I
-> should mention both in this CVE request email as the Django announcement
-> mentioned both:
-> 
-> https://www.djangoproject.com/weblog/2012/oct/17/security/
-> 
-> Commits:
-> master: https://github.com/django/django/commit/9305c0e12d43c4df999c3301a1f0c742264a657e
-> 1.4 branch: https://github.com/django/django/commit/92d3430f12171f16f566c9050c40feefb830a4a3
-> 1.3 branch: https://github.com/django/django/commit/b45c377f8f488955e0c7069cad3f3dd21910b071
+Hey oss-sec,
 
-This should be CVE-2012-4520:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=691145
+The original author and maintainer of cgit, Lars Hjemli, has been MIA
+for the last several months, and nobody I've talked to seems to know
+what's happened. Because I've previously been involved with some cgit
+things, I'm maintaining a tree of my own to which folks on the cgit
+mailing list are now sending patches. It'd be a bit presumptuous to
+call myself the new maintainer, but I am trying to keep the project
+alive and healthy until Lars returns from wherever he is.
 
-Cheers,
-        Moritz
+Jim Meyering from Redhat has written to the cgit mailing list with a
+detailed analysis and a two line commit fixing a heap buffer overflow.
+At the minimum, it's a denial of service, and in the worst case, it
+might lead to to a remote shell. If anyone has any tricks on how to
+exploit it successfully, I'd be interested to hear them.
+
+You can read his analysis and look at the commit here [1] and a Redhat
+bug report here [2].
+
+If this oss-sec finds it concerning enough, I can tag a
+non-Lars-approved release and post links to new tarballs for folks.
+But there's a chance that exploitation isn't feasible, as Jim has
+written in his report, in which case I'd like to hold off on making
+any non-Lars-approved releases for a bit.
+
+Thanks,
+Jason
+
+[1] http://git.zx2c4.com/cgit/commit/?id=7757d1b046ecb67b830151d20715c658867df1ec
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=820733
