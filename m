@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/26/2
-Message-Id: <201210260948.47226.timb@nth-dimension.org.uk>
-Date: Fri, 26 Oct 2012 09:48:39 +0100
-From: Tim Brown <timb@...-dimension.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/02/3
+Message-ID: <20121002210648.GG2064@redhat.com>
+Date: Tue, 2 Oct 2012 15:06:48 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Medium severity flaw with Perl 5
+Subject: CVE-2012-3504: insecure temporary file usage in genkey perl script
 Content-Type: text/plain; charset=utf-8
 
-I recently discovered that Perl 5 interpreter is vulnerable to memory 
-corruption when large values are supplied to the x operator.
+I'm not sure if anyone other than Red Hat ships and uses the genkey
+script (we package it as part of the crypto-utils package), but Joe
+Orton found some insecure usage of temporary files.  He had reported
+that it writes to a file called "list" in the current working directory
+without first checking to see if it existed, so it could be used to
+clobber other user's files, if executed as root.
 
-After discussions with the vendor, CVE-2012-5195 was assigned to this 
-vulnerability.
+Our current versions of Fedora and Red Hat Enterprise Linux 6 use this
+vulnerable genkey.pl script; earlier versions did not have the
+vulnerable bits.  Looking at it a bit further, it seems like there's a
+few other places where it clobbers files.
 
-I know Red Hat and Debian have picked it up, but I'm not sure about other 
-vendors.
+Our bug report is here:
 
-Tim
+https://bugzilla.redhat.com/show_bug.cgi?id=849256
+
+I've also got in there a patch that uses the File::Temp to create
+temporary files properly (somewhat tested).
+
+Just a heads-up in case anyone else is shipping this perl script as
+well.
+
+The name CVE-2012-3504 was assigned to this issue.
+
 -- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
-
-Download attachment "NDSA20121025.txt.asc" of type "application/pgp-signature" (8134 bytes)
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Vincent Danen / Red Hat Security Response Team 
