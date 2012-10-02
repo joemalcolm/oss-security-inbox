@@ -1,58 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/31/5
-Message-ID: <20120131072213.GA3713@caimano.fdc.rm-rf.it>
-Date: Tue, 31 Jan 2012 08:22:13 +0100
-From: Gian Piero Carrubba <gpiero@...rf.it>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: Nanakos Chrysostomos <nanakos@...ed-net.gr>, Kurt Seifried <kseifried@...hat.com>, Jonathan Wiltshire <jmw@...ian.org>, "team@...urity.debian.org" <team@...urity.debian.org>
-Subject: Re: Re: Yubiserver package ships with pre-filled identities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/02/1
+Message-Id: <201210021342.45766.geissert@debian.org>
+Date: Tue, 2 Oct 2012 13:42:44 -0500
+From: Raphael Geissert <geissert@...ian.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request - mcrypt buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
-* [Mon, Jan 30, 2012 at 11:32:12PM +0200] Nanakos Chrysostomos:
->>2) can someone remotely/locally access these accounts? what are the
->>credentials for these accounts ("invalid keys"?), can an attacker 
->>access
->>them?
->>
->
->If someone programs or uses a software emulation for the yubikey can 
->have access to whatever the user of the application uses it for ( the 
->yubiserver). For example if someone uses Pam yubico module with the 
->su or sshd server to provide a two factor authentication scheme he 
->should suffer from this security issue if he hasn't deleted or 
->deactivated the test account. If someone by mistake installs 
->yubiserver and doesn't use him to validate his otp or hmac otp, he 
->won't suffer from this security issue. Someone can only suffer if he 
->uses the server and hasn't deleted or deactivated the test account 
->which is shipped with the server.
+Kurt,
 
-Just elaborating a bit more.
-Yubiserver performs key validation, so it could perform authentication 
-(or part of, if used in a multi-factor authentication schema) but it 
-can't by itself grant authorizations.
-For example, I'm not sure a default account can be an immediate problem 
-when yubiserver is used with the pam module, as the latter - if I'm not 
-wrong - need a mapping file for associating users to keys in order to 
-assign the right authorizations.
-More generally, in a 2FA environment, a default account in yubiserver 
-could lessen the security level but should not expose a straight attack 
-vector.
-Problem arises when a user doesn't check the account db [0] and blindly 
-trust the results of key validation, possibly automatically mapping 
-successfully validated keys to default users. I doubt this can happen 
-for system logins, unless something is seriously wrong, but there are 
-other resources for whose I think this scenario is plausible (i.e.  
-authentication to a proxy server or granting access to a network 
-segment).
+I think at least one more CVE id needs to be assigned:
 
-To be honest, issuing a CVE seems a bit overkilling to me. Anyway I 
-strongly support the idea that it should not ship default accounts that 
-can be overlooked, specially when distributed via distro packages with 
-the additional automatisms in place (e.g. typically the daemon is 
-automatically started, enabling de facto the accounts, and some other 
-integrations could be in place).
+On Saturday 15 September 2012 19:22:06 Raphael Geissert wrote:
+> On Tuesday 11 September 2012 10:19:38 Eygene Ryabinkin wrote:
+> > Unfortunately, mcrypt's check_file_head() in combination with
+> > decrypt_general() is a bit worse: it allows to overwrite up to 50
+> > bytes of stack buffers from decrypt_general(), namely local_algorithm,
+> > local_mode, local_keymode.  And in some curcumstances to overwrite
+> > even 2-3 extra bytes (not more, since buf[3] will contain '\0'), though
+> > it is not very much controllable path.
+> > 
+> > The problem is that no length checks are done in combos
+> > read_until_null/strcpy.  Function read_until_null() allows for up to
+> > 100 bytes to be read and it won't NUL-terminate the buffer, so strcpy
+> > can do perform access even further (read from tmp_buf and writes to
+> > the said buffers; but this is the uncontrolled way I was talking
+> > about).
+> > 
+> > The modified PoC is at
+> > 
+> >   http://codelabs.ru/security/mcrypt/poc-cve-2012-4409.py
+> > 
+> > With it I was able to overwrite the salt_size@...rypt_general()
+> > and to trigger the call to malloc() for the chunk of 0x42424242 bytes
+> > via _mcrypt_malloc() that lead to bus error because of subsequent
+> > memmove():
+> [...]
+> 
+> > I wasn't yet able to smash the stack of decrypt_general(), because
+> > BUFFER_SIZE is 1024 and tmp_buf prevents me to reach the top of the
+> > stack frame (provided that compiler won't rearrange local variables),
+> > so I was not able to go past it.  Thus it looks like a temporary
+> > memory consumption/DoS.
+> 
+> Another week, another couple of patches. One makes it use strncpy and
+> forces a NUL on the last byte of local_algorithm, local_mode, and
+> local_keymode. Their values are checked later on, so it seems safe to
+> pass unvalidated data.
+> The size of the buffers is hard-coded to avoid making many changes to the
+> code.
 
-Ciao,
-Gian Piero.
+I think this needs a separate id, since fixes were released by Fedora and 
+Debian referencing CVE-2012-4409 but only for the original report.
 
-[0] yes, shame on him, but this is not the point.
+Eygene's followup issues have been fixed in Debian without referencing a CVE 
+id.
+
+> Once those issues were fixed I noticed that salt_size is not initialized
+> if the salt flag is not set. The result is an inconditional call to
+> malloc, with an uninitialized int as argument. This can lead to a
+> non-attacker-controlled memory consumption DoS in most cases.
+> It makes me think nobody actually ever used it without a salt.
+
+I've no strong opinion on whether this deserves an id.
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
