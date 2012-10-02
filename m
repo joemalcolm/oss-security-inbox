@@ -1,55 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/10
-Message-ID: <4FFC3720.4010000@redhat.com>
-Date: Tue, 10 Jul 2012 08:07:28 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: ecryptfs headsup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/02/4
+Message-ID: <20121002223214.GA13083@boyd>
+Date: Tue, 2 Oct 2012 15:32:15 -0700
+From: Tyler Hicks <tyhicks@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com, security@...y-lang.org
+Subject: CVE Request: Ruby safe level bypasses
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello - Upstream Ruby has fixed[1] exception methods that incorrectly
+allowed safe level bypasses. These bypasses allowed untainted strings to
+be modified by untrusted code in safe level 4.
 
-On 07/10/2012 05:33 AM, Sebastian Krahmer wrote:
-> Hi,
-> 
-> We made a hardening patch for ecryptfs utils. It is finally ready, 
-> using sysconf(_SC_NGROUPS_MAX) :)
-> 
-> I dont know whether a CVE is needed, maybe if you already ship it
-> suid root (we do not).
-> 
-> It can be found here:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=740110
-> 
-> Sebastian
+Note that the changes to exc_to_s() and name_err_to_s(), in error.c, are
+similar to the fix for CVE-2011-1005, but the Ruby advisory[2] made it
+clear that Ruby 1.9.x was not affected by CVE-2011-1005. It turns out
+that the vulnerability was later reintroduced to Ruby's trunk in
+revision 29456. Ruby 1.9.3-p0 and later is affected.
 
-Well what is the security vulnerability / trust boundary that can be
-broken using this issue?
+While Shugo Maeda was fixing the issue above, he noticed that
+name_err_mesg_to_str() had a similar flaw. Ruby 1.8.x, along with
+1.9.3-p0 and later is affected.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+I believe that these issues need two separate CVEs. Both issues are
+fixed in the same upstream patch[1]. Could you please allocate ids?
 
+Thanks,
+Tyler
 
+[1] http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37068
+[2] http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP/DcgAAoJEBYNRVNeJnmT3R8P/0cRjsBbmwVeMwKUbwzZPUrB
-qIZcQEtx+VfQo/pWasY+DudbszVlg7ZKEkOkORMGPeiCYWofElWG3YFM0vzPQALA
-gBLCXOUYzGqZ9ZF754hizqSYOhPa9aQHV0yB/NPlYGhl1MZSjQx6/brsYs1EDOZU
-Kn3bslL3vgp3mzhoDjTKyiLjndaVlFagQVlmcgXlm6YtzkFFkqCTdOU1IU0vElAO
-hgeWzqNXH1ykEDxY6cZCpog+t28VhpbPG87qA2C2ErgZdfTulCaip4LsfP5B5fGY
-nW0Z1vfFRn+2b3iR7YZBmcVbzgO2FUEBhKTRgKWyhDZ4Lee298CKm47dxXDt/T0Q
-PB5Q1a9oJKCcitApyYKqK5f3kZ82uPJJt2jorVRN41ppBIGLbKQurGlYZUXb62Xc
-Lyv4rxL+4/ejJXi6XQCTrHzzJf35Y9JSFsvO0bqXR/xwHtumWs44p6SDW34xtp5y
-Vif1wrYqUUAzKEZkN7w8kzQA3Sz6hXOBiadqcNf7qkaGQ/0HlIfGB3abo7/OlJVB
-2Jf+HH5bM+5oiXA5fKwqq07dNUj9sGptOmuZVhfFsOE1H46WCKqhBGBgsanU94x9
-W/3IUyq4wEAH3lJQypXh65kZoJGc+5CDeypQ2eo9/RI1jmrjxIR5GeN/WVcPRJtY
-MByzHCJ43wPYEVl25/eV
-=7ydb
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
