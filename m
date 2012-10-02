@@ -1,98 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/18/8
-Message-ID: <4F165CE6.2020906@redhat.com>
-Date: Tue, 17 Jan 2012 22:47:18 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/02/2
+Message-ID: <506B3E74.80704@redhat.com>
+Date: Tue, 02 Oct 2012 13:20:20 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>, Agostino Sarubbo <ago@...too.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: Wireshark multiple vulnerabilities
+To: Raphael Geissert <geissert@...ian.org>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request - mcrypt buffer overflow flaw
 Content-Type: text/plain; charset=utf-8
 
-On 01/17/2012 12:46 AM, Huzaifa Sidhpurwala wrote:
-> On 01/16/2012 01:19 AM, Kurt Seifried wrote:
->>
->> I agree in principle, however in practice this is a lot of work (as you
->> well know =). I guess my question/concern would be is who does the
->> research to verify all this, and what if it varies by version (i.e. it
->> is 6 separate issues in an older version but the newer version combined
->> some code into a common library for example so it's only a single issue,
->> but with multiple avenues of attack/etc.). In other words a lot of
->> potential work.
->
->
-> I did some research, with details available at:
-> https://bugzilla.redhat.com/show_bug.cgi?id=773726#c2 and
-> https://bugzilla.redhat.com/show_bug.cgi?id=773726#c3
->
-> In my opinion only 1 and 2 (ie ws bug 6663 and ws bug
-> 6670) should be allocated a CVE.
->
-> Others are application crashes.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Ok doke, so we already got CVE-2012-0041 Assigned for all of these. I
-slightly re-ordered them from the info at
-https://bugzilla.redhat.com/show_bug.cgi?id=773726 and an irc chat to
-confirm:
+On 10/02/2012 12:42 PM, Raphael Geissert wrote:
+> Kurt,
+> 
+> I think at least one more CVE id needs to be assigned:
+> 
+> On Saturday 15 September 2012 19:22:06 Raphael Geissert wrote:
+>> On Tuesday 11 September 2012 10:19:38 Eygene Ryabinkin wrote:
 
-======
-Type-cast error: Caused because of casting unsigned to signed int (ws bug
-6663). This leaves the app in an unstable state.
--
-1. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6663
-This is a type cast issue, caused because of casting an unsigned int to
-signed
-int.
-In the unfixed version this would throw an exception which the application
-would catch, but leave it in an unstable state. The patch makes sure
-that the
-value passed was less than G_MAXINT
-Patch: http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40164
+>> Another week, another couple of patches. One makes it use strncpy
+>> and forces a NUL on the last byte of local_algorithm, local_mode,
+>> and local_keymode. Their values are checked later on, so it seems
+>> safe to pass unvalidated data. The size of the buffers is
+>> hard-coded to avoid making many changes to the code.
+> 
+> I think this needs a separate id, since fixes were released by
+> Fedora and Debian referencing CVE-2012-4409 but only for the
+> original report.
+> 
+> Eygene's followup issues have been fixed in Debian without
+> referencing a CVE id.
 
-=======
-Application crash/Dos because of trying to allocate too large a buffer size
-(ws bug 6666, 6667, 6669).
--
-2. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6666
-5Views file format DoS due to request to allocate too large a buffer size.
-Normally glib should terminate the application with something like
-"GLib-ERROR **: gmem.c:239: failed to allocate 3221228094 bytes"
-Resolved by clamping the value of packet_size
-Patch: http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40165
+Can you post a link to source fixes/commits? Thanks.
 
-3. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6667
-Same problem and solution but with i4b capture format now
-Patch: http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40166
+>> Once those issues were fixed I noticed that salt_size is not
+>> initialized if the salt flag is not set. The result is an
+>> inconditional call to malloc, with an uninitialized int as
+>> argument. This can lead to a non-attacker-controlled memory
+>> consumption DoS in most cases. It makes me think nobody actually
+>> ever used it without a salt.
+> 
+> I've no strong opinion on whether this deserves an id.
+> 
+> Cheers,
 
-5. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6669
-Similar issue with netmon file format.
-Patch: http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40168
+Hrmm there's a thought, has this DoS been confirmed? As we've probably
+seen over the last year more than a few sites fail to salt their
+stored passwords =(.
 
-=======
-Integer underflow causing too large buffer to be allocated and a crash
-(ws bug 6668).
--
-4. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6668
-Same problem and solution but with iptrace capture format. Also some
-checks for
-bad file format.
-Patch: http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40167
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-=======
-Memory corruption (buffer-overflow) when reading novell capture file
-format. glibc however detects this and terminates the application (ws
-bug 6670)
--
-6. https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6670
-Similar issue with netmon file format.
-Patch: http://anonsvn.wireshark.org/viewvc?view=revision&amp;revision=40169
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-=======
-
-So we already have one CVE assigned for all these, my thought would be
-to use CVE-2012-0041 for the first one (6663) and assign new CVE's for
-the rest. Comments/questions?
-
--- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+iQIcBAEBAgAGBQJQaz50AAoJEBYNRVNeJnmTSK4P/26UQ0ORk9a3iUwsegwosivb
+S/hvJQ+nH8oXHrT4TX6sjwg0QacNHGVDcgMRf2iQVTSrDseJsFVz1EC+hQHR0A53
+o3svXEb/11l+tpOxvXRaV2Tr5eU0BSwB+nDLiZgWry+IYLp17pyqdicNsLfwST6n
+RZhWdI/cMFk7Oxm6FyM0fSoXWS95ixSCJrnRh60+PrZeKKe6K+Hw78+nMO9dUcjI
+GQHrMMiNGY0CDwDrokQeYT6Asf96nXBurNjt/gd18u9QXp6NZ7hWLsfF/f8ISFC9
+0firEfZYbBcuV7KSacPyk+kqgT+VsSXZPbCqeC78o8avHBN/pa7zjXmnJjBOH5ps
+FD88YNv5hdk6NjCrK5PbfRqi79ltM1JzI6mDxXb7jmJ6OFbvdCcMqKoSMNQkkYRA
+FaR0f3BOU2I/1JsYKcCUITLRjUAcvw1LQX6v9MWtEb3iN/jfGRYdXEa0hV75tgpq
+qljttSu3i5F/x80/TrOfvtQ+unuESUulkeXExdMfOULnf9SBgxY7aZpbT9TCfBlI
+qBY4xBZTtxh2lYwLTiCof0lCtu779uqKeszVi6LiF9SXv/4cm8srvU4K74CDIcjv
+KLCP4ba+a/VihVBf2EUP2myRN7ayPXYwII6CtqYu4smhJc00UQFMtbFNghXx+3Sg
+vU//7x41AXD3ET5hrRfL
+=fa7h
+-----END PGP SIGNATURE-----
