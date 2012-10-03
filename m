@@ -1,37 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/7
-Message-ID: <20120327161917.GL1398@redhat.com>
-Date: Tue, 27 Mar 2012 10:19:17 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: distutils creates ~/.pypirc insecurely
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/9
+Message-ID: <506CA2ED.1000100@redhat.com>
+Date: Wed, 03 Oct 2012 14:41:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Tyler Hicks <tyhicks@...onical.com>
+CC: oss-security@...ts.openwall.com, coley@...us.mitre.org, security@...ntu.com, security@...y-lang.org
+Subject: Re: CVE Request: Ruby safe level bypasses
 Content-Type: text/plain; charset=utf-8
 
-* [2012-03-27 09:59:46 -0600] Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->On 03/27/2012 08:15 AM, Vincent Danen wrote:
->> Standard flaw where a file that contains a username and password is
->> written with insecure permissions.  This only affects python 2.6 and
->> higher.
+On 10/03/2012 02:30 PM, Tyler Hicks wrote:
+> On 2012-10-03 13:48:14, Kurt Seifried wrote:
+>> On 10/02/2012 04:32 PM, Tyler Hicks wrote:
+>>> Hello - Upstream Ruby has fixed[1] exception methods that 
+>>> incorrectly allowed safe level bypasses. These bypasses
+>>> allowed untainted strings to be modified by untrusted code in
+>>> safe level 4.
+>>> 
+>>> Note that the changes to exc_to_s() and name_err_to_s(), in 
+>>> error.c, are similar to the fix for CVE-2011-1005, but the
+>>> Ruby advisory[2] made it clear that Ruby 1.9.x was not affected
+>>> by CVE-2011-1005. It turns out that the vulnerability was
+>>> later reintroduced to Ruby's trunk in revision 29456. Ruby
+>>> 1.9.3-p0 and later is affected.
+>>> 
+>>> While Shugo Maeda was fixing the issue above, he noticed that 
+>>> name_err_mesg_to_str() had a similar flaw. Ruby 1.8.x, along
+>>> with 1.9.3-p0 and later is affected.
+>>> 
+>>> I believe that these issues need two separate CVEs. Both
+>>> issues are fixed in the same upstream patch[1]. Could you
+>>> please allocate ids?
+>>> 
+>>> Thanks, Tyler
+>>> 
+>>> [1] 
+>>> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37068
+>>>
+>>>
 >>
->> Could a CVE name be assigned to this flaw?  I don't think one has been
->> already.
+>>> 
+[2]
+>> http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/
+>>>
 >>
->> References:
 >>
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650555
->> https://bugzilla.redhat.com/show_bug.cgi?id=758905
->> http://bugs.python.org/issue13512
->> http://bugs.python.org/file23824/pypirc-secure.diff
->>
->> Thanks.
->>
->
->Please use CVE-2012-1587 for this issue.
+>> 
+Please use CVE-2012-4464 for this issue.
+> 
+> Hi Kurt - I think that two CVE ids are needed here.
+> 
+> All issues are fixed in the same upstream patch but some issues in
+> that patch affect different versions. I'll use the notation from
+> "CVE Abstraction Content Decisions: Rationale and Application" to
+> describe how I see it:
+> 
+> S1: The vulnerability found in exc_to_s() S2: The vulnerability
+> found in name_err_to_s() S3: The vulnerability found in
+> name_err_mesg_to_str()
+> 
+> S1, S2 and S3 are the same type of bug. S1 and S2 appear in the
+> same versions (1.9.3-p0 and newer), so MERGE them. S3 appears in
+> 1.8.x, as well as 1.9.3-p0 and newer, so SPLIT it from S1 and S2.
 
-Sorry, I probably should have been more explicit on when it was reported
-(this is an older flaw).  It was reported (and public) in 2011.
+And this is why I should probably be more aggressive about asking for
+commits to be broken out by software version if multiple versions are
+affected =).
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Ok let's continue to use CVE-2012-4464 for the exc_to_s() and
+name_err_to_s() issues which affect 1.9.3-p0 and newer.
+
+For name_err_mesg_to_str() which affects both 1.9.3-p0 and newer and
+1.8.x please use CVE-2012-4466.
+
+> Tyler
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQbKLtAAoJEBYNRVNeJnmT8GUQAMN+H6tTL92vO1zW9uxzz9Sr
+laPfWzSVtoeiqmHCWoUO096Nt8UpRaXcO7bMTfI3hQkJyrpcx3U1NhCcDnHiiGCZ
+eB3QWtzEcF1BeRmX9AsvzXbI+OGonCD8l7N0MfB1CXu1Wnb+oXUNbq7yeqMImCRU
+EXXCa4KjIxUor7IUKoK5ye/V1E1LgYsc/mJgEHH3egX2J4eUAg+wa3yF/lQr+EQo
+vxYAFSAKKHjIfP5lVYWSltcsQrcO4eHyXhJ7oV4S4CKfTF7R1O3l6Og5hLSei8tU
+hZTtfErlQaTnVv9NH91IvcKd3oQh4JMR7MoqhOIbYSpyqVUHyqzYSjzg3J/AWpnG
+s8RxRTt2wS5dyk/am90zPxjt0uHV2/l91d0moz88Z+FWI7wXy9aS0V7UG7J3mqIT
+Umv2WJ97NNBLpQSM8BJBZSz7DPPjePOZQBsLY0dMvxSZdNAsmie/sK1YjL0NTw9w
+rShUx2ZoGj6bpkfugpVLsyw8wfD6B+PJBN/4DRh3PlT20kJgF5xMPVnUPCDEZikU
+HtbuM53r/LFNZT4xkCkZ3/KzQTj/LhSrtVmu1SqJWZAAOgANhezxxiAE/mrCHfmQ
+3cX989BpeJixoWomEK1BsvPPeXmQWHssjHgUMJTke7bpecMRVBhGRMUIO/GAjih1
+C19y0fl7OVTHH4G0RbrW
+=jfkc
+-----END PGP SIGNATURE-----
