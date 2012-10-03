@@ -1,53 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/12/3
-Message-ID: <20120712140359.GB5098@suse.de>
-Date: Thu, 12 Jul 2012 16:04:00 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/7
+Message-ID: <506C97AD.50707@redhat.com>
+Date: Wed, 03 Oct 2012 13:53:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Overflow fix in bash 4.2 patch 33
+CC: "Jason A. Donenfeld" <Jason@...c4.com>, cgit@...mli.net, meyering@...hat.com
+Subject: Re: cgit: heap buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 11, 2012 at 11:29:22AM -0600, Kurt Seifried wrote:
-> On 07/11/2012 10:15 AM, Marcus Meissner wrote:
-> > Hi,
-> > 
-> > the bash maintainer kindly mailed us and other vendors a
-> > notification of a overflow in the bash "test" builtin when
-> > "/dev/fd/..." filenames are used.
-> > 
-> > ftp://ftp.gnu.org/pub/gnu/bash/bash-4.2-patches/bash42-033
-> > 
-> > Reproducer: test -e /dev/fd/111111111111111111111111111111111
-> > 
-> > Problem is caught by -D_FORTIFY_SOURCE=2 if enabled, and likely
-> > also by -fstack-protector (not tested)
-> > 
-> > Goes all the way back to old bashes.
-> > 
-> > The likeliness of people able to inject those filenames into shell
-> > scripts and not being able to execute shellcode themselves is
-> > however slim. (setuid root shell scripts are not possible.)
-> > 
-> > Security (CVE) relevant scenario we thought of is breaking out of
-> > a restricted shell mode.
-> > 
-> > Ciao, Marcus
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 09/30/2012 01:21 PM, Jason A. Donenfeld wrote:
+> Hey oss-sec,
 > 
-> Can you give a more concrete example, e.g. you're talking about
-> http://www.gnu.org/software/bash/manual/html_node/The-Restricted-Shell.html
-> I assume? Are we simply talking about violating those restrictions?
+> The original author and maintainer of cgit, Lars Hjemli, has been
+> MIA for the last several months, and nobody I've talked to seems to
+> know what's happened. Because I've previously been involved with
+> some cgit things, I'm maintaining a tree of my own to which folks
+> on the cgit mailing list are now sending patches. It'd be a bit
+> presumptuous to call myself the new maintainer, but I am trying to
+> keep the project alive and healthy until Lars returns from wherever
+> he is.
+> 
+> Jim Meyering from Redhat has written to the cgit mailing list with
+> a detailed analysis and a two line commit fixing a heap buffer
+> overflow. At the minimum, it's a denial of service, and in the
+> worst case, it might lead to to a remote shell. If anyone has any
+> tricks on how to exploit it successfully, I'd be interested to hear
+> them.
+> 
+> You can read his analysis and look at the commit here [1] and a
+> Redhat bug report here [2].
+> 
+> If this oss-sec finds it concerning enough, I can tag a 
+> non-Lars-approved release and post links to new tarballs for
+> folks. But there's a chance that exploitation isn't feasible, as
+> Jim has written in his report, in which case I'd like to hold off
+> on making any non-Lars-approved releases for a bit.
+> 
+> Thanks, Jason
+> 
+> [1]
+> http://git.zx2c4.com/cgit/commit/?id=7757d1b046ecb67b830151d20715c658867df1ec
+>
+> 
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=820733
+> 
 
-Yes. Breaking out of the restricted shell using this issue.
+Please use CVE-2012-4465 for this issue. At a minimum it can lead to a
+DoS.
 
-$ bash -r
-bash: /dev/pts/9: Gesperrt: Die Ausgabe darf nicht umgeleitet werden.
-$ test -f /dev/fd/111111111111111111111111111111111111111111111111111111111111111
-*** buffer overflow detected ***: bash terminated
-...
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-So basically without fortification measures you can inject a ASCII based
-shell-code to execute code you shouldn't.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-(One can argue that of how secure you evaluate restricted shells ...)
-
-Ciao, Marcus
+iQIcBAEBAgAGBQJQbJetAAoJEBYNRVNeJnmTWr4QANV6yzu71fCtmPOzZVNDaO+I
+S8vN1e94W2I24nKsECghzNIrY0wOI9PDkGsjoDf2FBNwAejLs1LdUp76nuGOEEzd
+JfDSqTzXkaAIM+Vv/aFXNyyVWXiVW+PrQM4tH2Jis75Mu6b/BB/BqVBwjneyJKlJ
+7P9+3Ffmot5ObSHgHJuJm9Q5aKtv20QihrQ1pXYW7PTcCbU688LNVaaRnwudZakv
+B/PMaLAer4skwiSdkOV+pWKIHkhn9oer1l9eY8r9a/woBOTNg81HYgvdVkaqSNyo
+KnJDR9xvs4Aao2294rzsrjpbQiWztpdUtSJuxRrJ0yP4YfcxYRiktIAboJ2c1JL1
+4mE0Iw4kbnQQpEoWOU4Ay6Qlm0a3nl1ecoTkhwKFLP0iZy20EjMyG+CiD+oQaJjp
+7HzSDkNxpYR4uJQ7xP73RERvTP9K1E9UBkWCaDCYxzmt3YLFcMSbZN2SRLAqSCDd
+X52Tq8iivTjO38FMSM0ag/2TRrAf1zmE/aOEe6i4OgvvFxnjr2RsNJHLu/OMBuq3
+B+ZY1LqiVuTXTsoSU+4UKHzy7fxYO83rYs+OT/5MCZPJayqSbf51913r9M/SnrHi
+usaE2s4alytXHAZ9sTp8pI/I2ODP9zk2MphRFPZ57ByfByeAJEkaALs9SRg0ly7L
+EZgH4fTDZAZRHyUFgXMR
+=D+f7
+-----END PGP SIGNATURE-----
