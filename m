@@ -1,104 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/15
-Message-ID: <50903952.3020704@redhat.com>
-Date: Tue, 30 Oct 2012 14:32:18 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Josh Bressers <bressers@...hat.com>
-Subject: Re: Strange CVE situation (at least one ID should come of this)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/8
+Message-ID: <20121003203055.GB3711@boyd>
+Date: Wed, 3 Oct 2012 13:30:56 -0700
+From: Tyler Hicks <tyhicks@...onical.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, coley@...us.mitre.org, security@...ntu.com, security@...y-lang.org
+Subject: Re: CVE Request: Ruby safe level bypasses
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 10/30/2012 11:34 AM, Steven M. Christey wrote:>
->> On 10/26/2012 01:54 PM, Josh Bressers wrote:
->>> 
->>> If I was to list the security problems I found after a few
->>> minutes of looking, they are:
->>> 
->>> * It uses MD5 passwords * The shadow file is directly modified 
->>> without locking (which could lead to a race condition) * If you
->>> get the password wrong, it doesn't unlink the empty temporary
->>> file.
->>> 
->>> None are really a big deal, you *could* run this and probably
->>> never notice these problems.
->>> 
->>> Fundamentally though, this thing should get one CVE ID that 
->>> basically say "don't use this". How have situations like this
->>> been handled in the past?
+On 2012-10-03 13:48:14, Kurt Seifried wrote:
+> On 10/02/2012 04:32 PM, Tyler Hicks wrote:
+> > Hello - Upstream Ruby has fixed[1] exception methods that
+> > incorrectly allowed safe level bypasses. These bypasses allowed
+> > untainted strings to be modified by untrusted code in safe level
+> > 4.
+> > 
+> > Note that the changes to exc_to_s() and name_err_to_s(), in
+> > error.c, are similar to the fix for CVE-2011-1005, but the Ruby
+> > advisory[2] made it clear that Ruby 1.9.x was not affected by
+> > CVE-2011-1005. It turns out that the vulnerability was later
+> > reintroduced to Ruby's trunk in revision 29456. Ruby 1.9.3-p0 and
+> > later is affected.
+> > 
+> > While Shugo Maeda was fixing the issue above, he noticed that 
+> > name_err_mesg_to_str() had a similar flaw. Ruby 1.8.x, along with 
+> > 1.9.3-p0 and later is affected.
+> > 
+> > I believe that these issues need two separate CVEs. Both issues
+> > are fixed in the same upstream patch[1]. Could you please allocate
+> > ids?
+> > 
+> > Thanks, Tyler
+> > 
+> > [1]
+> > http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37068
+> >
+> > 
+> [2]
+> http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/
+> > 
 > 
-> To have a CVE for "don't use this" is not consistent with
-> long-existing practice.  I don't recall ever intentionally
-> assigning a CVE for such a thing - after all, CVE is about
-> vulnerabilities, and "don't use this" is awfully vague.
+> Please use CVE-2012-4464 for this issue.
 
-True, but we've already gone down that road, e.g.:
+Hi Kurt - I think that two CVE ids are needed here.
 
-CVE-2012-2400 	Unspecified vulnerability in
-wp-includes/js/swfobject.js in WordPress before 3.3.2 has unknown
-impact and attack vectors.
+All issues are fixed in the same upstream patch but some issues in that
+patch affect different versions. I'll use the notation from "CVE
+Abstraction Content Decisions: Rationale and Application" to describe
+how I see it:
 
-> Deployment of risky software is effectively a configuration or
-> asset management issue, which is well outside the scope of CVE.
-> (Maybe it's more like a Common Configuration Enumeration (CCE)
-> issue.)
+S1: The vulnerability found in exc_to_s()
+S2: The vulnerability found in name_err_to_s()
+S3: The vulnerability found in name_err_mesg_to_str()
 
-If anything I think it would fit into CPE
+S1, S2 and S3 are the same type of bug. S1 and S2 appear in the same
+versions (1.9.3-p0 and newer), so MERGE them. S3 appears in 1.8.x, as
+well as 1.9.3-p0 and newer, so SPLIT it from S1 and S2.
 
-> In other words - we really shouldn't use CVE to handle this
-> problem.  It is feature creep, and I believe that it WOULD become a
-> huge mess.  Maybe this would work for some, but not for all of
-> CVE's consumers, which is a wide variety of people and use cases.
-> I understand that there is a problem here, though.
+Tyler
 
-True about the mess and not all customers being happy with it.
-
-> It looks like Josh laid out at least 3 different security issues in
-> your initial request.  Those can/should get CVEs assigned, even if
-> there aren't full details.  The lack of a vendor CONFIRM reference
-> or advisory, tells the consumer that the vendor hasn't addressed
-> it.
-> 
-> Perhaps the OSS community could borrow an idea from one of the
-> framework vendors with lots of third-party modules - I forget if it
-> was Joomla or Drupal - who actively maintained a list of poorly
-> maintained or obsolete software.
-> 
-> In the broadest sense, however, such old software is still useful
-> for people who are starting in vulnerability research, or just
-> doing it for fun; many people who audit what MITRE calls "phpGolf"
-> applications, go on to do more substantive research.
-
-The old software would still be available (unless someone goes through
-sourceforge for example and does some serious spring cleaning).
-
-> Perhaps it is time to re-examine Crispin Cowan's Sardonix project,
-> which tried to match vulnerability researchers with open source
-> projects, in order to build reputations for both.
-> 
-> - Steve
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQkDlSAAoJEBYNRVNeJnmTVlAP/2cru5TGX8aGGxCHCkMgkjXZ
-Ho8+/RXWEC2Bx5t2XxREXsChjzvv5DC0lrIsetAR2jNO8JdcE6rFt3FtHRLVxxBL
-Amekmw60e2WKNiL9a3B83oGawnHTGPwQqv+zmrup/Y7al20i6wStKFSMQqEvXrLd
-Icn2YfDoMpDxco8YokFVVB2g/2kaMZXrJEv9aul6pbgi/Vwp3+rAr48g2Zh0MCoh
-V8LxH8Dfy4pzBjWnJiMhYKQa4NBiK0TSkC0R9CyY3IF5rCmhUhCFvNFOABs3DmtK
-bJGtaslx1OE/ycEt7KgUfJuQPOggB8V4+aimGJIgnuzqntLwZhlbaohHrpDo0pHJ
-Rp4eJAkbTvtwqiFa5AuZ5YlM6nZEr4SjgpYHzcPxhE8FdUXbE6QlO02OfvWDO/pI
-/ql7yJAxoPt2thz02QhY6P9OskNZzeddsnVgB5lDXVCATXWcWMTL1SaV9BW3k17G
-77np28scBQFdpe91wJCuZaGdQ1MkVTOYZTCgLABstqC4p/vASEYyXtv3toEXC4fV
-BzLdaSvIzUjRH7WST8D+wB3cQ4jAbJ159SoEjyRPrFWBXoZw81LI5giG1w5iYLof
-Shj8cbTYVlHUInu8qnlFNuJUWJayRUc9QGo/7kWLEtyZgEpzPuW79ZrzQa+mCqFU
-GuCdZGQZl73uq1VBT65h
-=eNjw
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
