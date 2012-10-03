@@ -1,41 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/5
-Message-ID: <CAFJ0LnEDCqhSerYm416-Yf9uSOsGG67mXzf+W=no2oEiMbqmAA@mail.gmail.com>
-Date: Tue, 20 Mar 2012 09:01:39 -0700
-From: Nick Kralevich <nnk@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- kernel: execshield: predictable ascii armour base address
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/4
+Message-ID: <944349183.5728929.1349278590272.JavaMail.root@redhat.com>
+Date: Wed, 3 Oct 2012 11:36:30 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request (minor) -- mc: Improper sanitization of MC_EXT_SELECTED variable when viewing multiple files
 Content-Type: text/plain; charset=utf-8
 
-Can someone explain to me why this is worthy of a CVE? I can see this as a
-bug of course.  But a "vulnerability"?
+Hello Kurt, Steve, vendors,
 
-This bug, by itself, does not cause a vulnerability. It just makes
-vulnerabilities easier to exploit. I'm not sure this is worthy of a CVE
-unless we're willing to assign CVEs to all fixed address allocations.
+  based on https://bugs.gentoo.org/show_bug.cgi?id=436518:
 
--- Nick
+A security flaw was found in the way Midnight Commander,
+a user-friendly text console file manager and visual
+shell, performed sanitization of MC_EXT_SELECTED
+environment variable when multiple files were selected
+(first selected file was used as actual content of the
+MC_EXT_SELECTED variable, while the remaining files were
+provided as arguments to the temporary script, handling
+the F3 / Enter key press event). A remote attacker could
+provide a specially-crafted archive that, when expanded
+and previewed by the victim could lead to arbitrary code
+execution with the privileges of the user running mc
+executable.
 
-On Tue, Mar 20, 2012 at 6:10 AM, Eugene Teo <eugene@...hat.com> wrote:
+References:
+[1] https://bugs.gentoo.org/show_bug.cgi?id=436518
 
-> On 03/20/2012 06:20 PM, Petr Matousek wrote:
-> > When running a binary with a lot of shared libraries, predictable base
-> > address is used for one of the loaded libraries.
-> >
-> > This flaw could be used to bypass ASLR.
-> >
-> > References:
-> >
-> http://scarybeastsecurity.blogspot.com/2012/03/some-random-observations-on-linux-aslr.html
-> > https://bugzilla.redhat.com/show_bug.cgi?id=804947
->
-> Use CVE-2012-1568.
->
-> Eugene
->
+Upstream ticket:
+[2] https://www.midnight-commander.org/ticket/2913
 
+I need to confess this one is a bit on the border
+(the attack to succeed the victim would need to
+perform couple of steps), but basically the scenario
+is possible.
 
+Could you allocate a CVE id for this one?
 
--- 
-Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
-
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
