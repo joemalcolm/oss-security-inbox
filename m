@@ -1,86 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/3
-Message-Id: <201210110728.q9B7SoeE029303@linus.mitre.org>
-Date: Thu, 11 Oct 2012 03:28:50 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2012-5377 through CVE-2012-5383: Windows PATH issues affecting some open-source products
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/2
+Message-ID: <506BBF66.7030904@redhat.com>
+Date: Tue, 02 Oct 2012 22:30:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: coley@...us.mitre.org, oss-security@...ts.openwall.com, security@...ntu.com
+Subject: Re: CVE Request: QT CRIME vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-MITRE assigned seven CVE names for this recent disclosure that
-mentions a few open-source products and also other products, but only
-when installed on Windows:
+On 10/02/2012 08:37 PM, Seth Arnold wrote:
+> Hello Steve, all,
+> 
+> Qt has prepared a fix to the "CRIME" SSL/TLS attack by disabling 
+> compression but I cannot find a CVE.
+> 
+> Some details can be found here 
+> http://permalink.gmane.org/gmane.comp.lib.qt.devel/6729 :
+>> ... The git changes are as follows: 5.0:
+>> 5ea896fbc63593f424a7dfbb11387599c0025c74 4.8:
+>> d41dc3e101a694dec98d7bbb582d428d209e5401 4.7:
+>> 3488f1db96dbf70bb0486d3013d86252ebf433e0
+>> 
+>> For older 4.x releases, the 4.7 patch is expected to work. ...
+> 
+> Some web links to the commits in question:
+> 
+> http://qt.gitorious.org/qt/qt/commit/3488f1db96dbf70bb0486d3013d86252ebf433e0
+>
+> 
+http://qt.gitorious.org/qt/qt/commit/d41dc3e101a694dec98d7bbb582d428d209e5401
+> http://qt.gitorious.org/qt/qtbase/commit/5ea896fbc63593f424a7dfbb11387599c0025c74
+>
+> 
+> 
+> Please allocate a CVE for these fixes.
+> 
+> Thank you
+> 
 
-  https://www.htbridge.com/advisory/HTB23108
+I assumed this was being handled like CVE-2009-3555 (aka "el diablo"),
+in other words everything gets shoved under:
 
-CVE-2012-5377 ActivePerl
-CVE-2012-5378 ActiveTcl
-CVE-2012-5379 ActivePython
-CVE-2012-5380 Ruby
-CVE-2012-5381 PHP
-CVE-2012-5382 Zend Server
-CVE-2012-5383 MySQL
+CVE-2012-4930 	The SPDY protocol 3 and earlier, as used in Mozilla
+Firefox, Google Chrome, and other products, can perform TLS encryption
+of compressed data without properly obfuscating the length of the
+unencrypted data, which allows man-in-the-middle attackers to obtain
+plaintext HTTP headers by observing length differences during a series
+of guesses in which a string in an HTTP request potentially matches an
+unknown string in an HTTP header, aka a "CRIME" attack.
 
-The essence of the problem is that:
+or
 
-  1. Windows has system environment variables, such as PATH, that
-     apply to all users.
+CVE-2012-4929 	The TLS protocol 1.2 and earlier, as used in Mozilla
+Firefox, Google Chrome, and other products, can encrypt compressed
+data without properly obfuscating the length of the unencrypted data,
+which allows man-in-the-middle attackers to obtain plaintext HTTP
+headers by observing length differences during a series of guesses in
+which a string in an HTTP request potentially matches an unknown
+string in an HTTP header, aka a "CRIME" attack.
 
-  2. On Windows, the installation procedure for a product sometimes
-     results (through different mechanisms) in a modified PATH that
-     references the product's installation directory.
-
-  3. The permissions of the installation directory might be unsafe.
-
-  4. Some other software, including software shipped by Microsoft,
-     relies on the PATH containing only safe directories.
-
-One example of an open-source product:
-
-http://www.php.net/manual/en/faq.installation.php#faq.installation.addtopath
-says to add C:\php to the PATH, but doesn't suggest checking the
-permissions of C:\php before doing this. In this case, the situation
-probably should not be described as a vulnerability in the PHP
-software. It could perhaps be considered a security-related
-documentation issue.
-
-One example of another product:
-
-http://docs.activestate.com/activeperl/5.16/install.html has an
-installation option related to PATH:
-
-  PERL_PATH: If set to 'No', the Perl/bin directory will not be added to
-  the system PATH environment variable.
-
-and possibly the default is 'Yes' in some or all versions. Here, there
-is a better argument that this is a vulnerability in the product,
-because (according to the HTB23108 disclosure) the installation
-software itself can make an unsafe PATH change.
-
-One possible security guideline is that all products that
-automatically modify PATH during installation should be checking all
-relevant directory permissions first. This is, however, not the only
-possible way to address the underlying problem or problems. It is
-currently unclear whether there should be a CVE entry for every
-product that handles this PATH issue in any potentially unsafe way.
+Steve, can you comment?
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQEcBAEBAgAGBQJQdnQbAAoJEGvefgSNfHMdJgAIAJZfQPOHSY5B+IOWDIHW9468
-MYO00QJVxBf0+PgHEPfxu14URbbQw0ZohJm77iaBj0Ur2CfWDE2c9pvw/qupwkS5
-40YjixICcuE1jniUoogVmPjrE15LsxQJdo5twWemOVeF/wVmVE03athK/XvR4gCw
-ZfquFBIiUgTz6thiVmb+LVlgsRQW0oLm3L9/D/hLoKv0ZMb8KLoti/blqDw43WU9
-WDCO0CcSt8nb30NyKyo8kCraJIRAWz+dPyfBSJcv6xHlz6A3fYkRfbaQ6XtAb5JQ
-f4qRWWVRLREgf+MxqgFWjEiKBcW083/s+M3QqcKVxGKR+7aZlbiPYPSICMpa+cc=
-=8yEd
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQa79mAAoJEBYNRVNeJnmTFGEP/3RSEmz1gAA2sWB5CUYmdSmO
+/wTwNz1mShlPvfJNQrRvj57yIHlkJmE546freIdIfWSIfH6Hs55xKeyXIZKRybeU
+BlZQhYLkZFtdVkcK9oBBdAkZ+229Pclwd8TY/zkGT7XfCt7BCpcmA65OlM2EoNyN
+iOWDSBE09AJUEC10cGBr79A8jjiV7BS2TRJZYxqT7/VhsKu89Co2OW2avI5KQIMA
+2nH0ImEonuH34djvREw4mViv4XofyNM4ZXPVfvw+PnBTDJQE3b1CnU2CXwQiklLt
+rndJskP+cHz6Kgw+goDZlmX8m7tQs2c6eiKS2qa+NdC4WFcwKxuLEVw4i/pZTe4T
+g3Y5e+KJV1t4Ee6jLG9CFT1SLytw+a+SRtTsia9lNHgV377JtQeZuNrjiF7Lh+8d
+FVNp0RezEU1aZyQl6DGjvhmOfN3S9uhuEkT4GnxEMaDSOzSxA4CCjY08IOS+9Jha
+wVyVx9+upE+c/kkUdoVE5UdX9uV+8/CjMkbKg9BF+OwigAK1S6oL4vEQk/QPHVGh
+87g3+0ud3eIAp5NCZo8xwOXsAUOwLtg8Y7VxN/hbQ6t1VWOx0XfmA0xDqQnXk3v0
+JUMAQyTfqajEtluGeyf5IF4VOQvXECTeEI7XnkvUDTZopAkSzklc1eH9BpRv3kEg
+3kezxmd/U5w3OzZd1OGl
+=t+3H
 -----END PGP SIGNATURE-----
