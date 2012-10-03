@@ -1,74 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/2
-Message-ID: <20120321073659.GA24538@vermeer.pre-sense.de>
-Date: Wed, 21 Mar 2012 08:37:00 +0100
-From: Timo Warns <Warns@...-Sense.DE>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2012-1162 / -1163: Incorrect loop construct and numeric overflow in libzip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/1
+Message-ID: <20121003023754.GA5575@haig>
+Date: Tue, 2 Oct 2012 19:37:54 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: QT CRIME vulnerability
 Content-Type: text/plain; charset=utf-8
 
-The following two issues in libzip have been handled via
-distros@...openwall.org. Distros and the libzip developers were informed on
-2012-03-12. An update of libzip has become available on 2012-03-20, the
-appointed coordinated release date. The PHP and zipruby developers have been
-informed before 2012-03-16, but have not released updates yet.
+Hello Steve, all,
 
-libzip (version <= 0.10) has two vulnerabilities that may lead to a heap
-overflow or an information leak via corrupted zip files. PHP (versions
-5.4.0 and <= 5.3.10) and the Ruby binding zipruby (version <= 0.3.6) are
-also affected as they include copies of affected libzip versions.
+Qt has prepared a fix to the "CRIME" SSL/TLS attack by disabling
+compression but I cannot find a CVE.
 
-* CVE-2012-1162
+Some details can be found here
+http://permalink.gmane.org/gmane.comp.lib.qt.devel/6729 :
+> ...
+> The git changes are as follows:
+> 5.0: 5ea896fbc63593f424a7dfbb11387599c0025c74
+> 4.8: d41dc3e101a694dec98d7bbb582d428d209e5401
+> 4.7: 3488f1db96dbf70bb0486d3013d86252ebf433e0
+> 
+> For older 4.x releases, the 4.7 patch is expected to work.
+> ...
 
-    libzip (version <= 0.10) uses an incorrect loop construct, which can
-    result in a heap overflow on corrupted zip files.
-    
-    On opening a zip file with zip_open, libzip reads in the number of
-    directory entries in the function _zip_readcdir in zip_open.c:
+Some web links to the commits in question:
 
-    (192)    /* number of cdir-entries */
-    (193)    nentry = _zip_read2(&cdp);
+http://qt.gitorious.org/qt/qt/commit/3488f1db96dbf70bb0486d3013d86252ebf433e0
+http://qt.gitorious.org/qt/qt/commit/d41dc3e101a694dec98d7bbb582d428d209e5401
+http://qt.gitorious.org/qt/qtbase/commit/5ea896fbc63593f424a7dfbb11387599c0025c74
 
-    Subsequently, memory for directory entries is allocated via
-    _zip_cdir_new (in zip_dirent.c) based on the number of directory
-    entries:
 
-    (104)    if ((cd->entry=(struct zip_dirent *)malloc(sizeof(*(cd->entry))*nentry))
+Please allocate a CVE for these fixes.
 
-    If the number of directories in the zip file is set to 0, 0 bytes of
-    memory are allocated.
+Thank you
 
-    _zip_readcdir finishes with reading in the directory entries in
-    a posttest do-while loop:
-
-    (260)    do {
-    (261)        if ((_zip_dirent_read(cd->entry+i, fp, bufp, &left, 0, error)) < 0) {
-             ...
-    (277)    } while (i<cd->nentry && left > 0);
-
-    If cd->entry points to 0 bytes of allocated memory, _zip_dirent
-    writes beyond the allocated memory.
-
-* CVE-2012-1163
-
-    libzip (version <= 0.10) has a numeric overflow condition, which,
-    for example, results in improper restrictions of operations within
-    the bounds of a memory buffer (e.g., allowing information leaks).
-
-    On opening a zip file with zip_open, libzip reads in the size and the
-    offset of the central directory structure in the function _zip_readcdir
-    in zip_open.c:
-
-    (198)    cd->size = _zip_read4(&cdp);
-    (199)    cd->offset = _zip_read4(&cdp);
-
-    libzip performs a consistency check on these values, but does not
-    anticipate an integer overflow:
-
-    (203)    if (cd->offset+cd->size > buf_offset + (eocd-buf)) {
-
-    On an integer overflow, libzip continues to handle the zip file, which,
-    for example, can result in improper restriction of operations within the
-    bounds of a memory buffer.
-
-Cheers, Timo
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
