@@ -1,43 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/16
-Message-ID: <4F9030F7.4090105@redhat.com>
-Date: Thu, 19 Apr 2012 09:36:23 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/6
+Message-ID: <506C967E.1070304@redhat.com>
+Date: Wed, 03 Oct 2012 13:48:14 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- kernel: kvm: device assignment page leak
+CC: Tyler Hicks <tyhicks@...onical.com>, coley@...us.mitre.org, security@...ntu.com, security@...y-lang.org
+Subject: Re: CVE Request: Ruby safe level bypasses
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/19/2012 04:52 AM, Petr Matousek wrote:
-> KVM uses memory slots to track and map guest regions of memory.
-> When device assignment is used, the pages backing these slots are
-> pinned in memory using get_user_pages and mapped into the iommu.
-> The problem is that when a memory slot is destroyed the pages for
-> the associated memory slot are neither unpinned nor unmapped from
-> the iommu.
+On 10/02/2012 04:32 PM, Tyler Hicks wrote:
+> Hello - Upstream Ruby has fixed[1] exception methods that
+> incorrectly allowed safe level bypasses. These bypasses allowed
+> untainted strings to be modified by untrusted code in safe level
+> 4.
 > 
-> The problem is that those pages are now never unpinned and continue
-> to have an increased reference count.  This is therefore a
-> potential page leak from the kvm kernel module.
+> Note that the changes to exc_to_s() and name_err_to_s(), in
+> error.c, are similar to the fix for CVE-2011-1005, but the Ruby
+> advisory[2] made it clear that Ruby 1.9.x was not affected by
+> CVE-2011-1005. It turns out that the vulnerability was later
+> reintroduced to Ruby's trunk in revision 29456. Ruby 1.9.3-p0 and
+> later is affected.
 > 
-> On Red Hat Enterprise Linux, local user with ability to assign
-> devices could use this flaw to DoS the system.
+> While Shugo Maeda was fixing the issue above, he noticed that 
+> name_err_mesg_to_str() had a similar flaw. Ruby 1.8.x, along with 
+> 1.9.3-p0 and later is affected.
 > 
-> With upstream qemu-kvm/kvm privileged guest user that could
-> hotunplug and then hotplug back certain devices could potentially
-> use this flaw to DoS the host.
+> I believe that these issues need two separate CVEs. Both issues
+> are fixed in the same upstream patch[1]. Could you please allocate
+> ids?
 > 
-> Upstream fix: 
-> http://git.kernel.org/?p=virt/kvm/kvm.git;a=commit;h=32f6daad4651a748a58a3ab6da0611862175722f
+> Thanks, Tyler
+> 
+> [1]
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37068
 >
->  References: https://lkml.org/lkml/2012/4/11/248 
-> https://bugzilla.redhat.com/show_bug.cgi?id=814149
 > 
-> Thanks,
+[2]
+http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/
+> 
 
-Please use CVE-2012-2121 for this issue.
+Please use CVE-2012-4464 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -45,19 +50,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJPkDD3AAoJEBYNRVNeJnmTcgYP/2ubexk0a17sSaRyOV/o+ZUY
-17YhJVMWWfoXeI0fIjxU/WI/E5eE0GjaZh8wcHzok+SPFiNo8brKberOhOy9YqDE
-DMDT7fO0MTEBNx9szJP7Etjlz2yQVfDKUIyn5M6o9oviWxHDQkSA/hXPZ5RsxBL0
-8MVWrVtLMKvNM05jJBSuu+NGiUv4NcHGHMYB6OTmzAdfYgKnSCTnk+cM2iXdmi/g
-zYh3R7jdwN6EJvEVJFEFDTPY70g15wyQA4+uWBcR/tXb5q9gMMrAKE/JaBJRDe7I
-uXeFVjbBlWz30c8s5mvScI3PkuUIDXw053lZBf/VpxPuJpTRTlA4ikORSUTrrF3t
-lZFAkl2g5QzpVPjsSgZEDp6jHa/ZUNu8qVW2JX4NVcci3dOu/dvOFcppsXOHPVWv
-firw9TtXQctDKMjjEB4FPdWJtd3oP3DAYwMFoEAUfcbRgtNv7W9p0XCinnoisbCg
-P5wPw4SC3EIx2p4keNY801GwEusuZCPBPOcuc2sh5pcbhSmuXZK/KHLc1U9qU9mJ
-QgqXbCDVg88TTA5gjn6+RTp2W9J7SGXEv685jtBl0EyTLmgyehOttIjUxB5kgyS1
-Kcmw3JSvoziEn8n00N1m4VfAFfLLYVlzdv7L92HOPUAeky0cBKZVTgo0kJ9c/r6R
-+z43QEIoqBzG8777rFQP
-=hZGt
+iQIcBAEBAgAGBQJQbJZ+AAoJEBYNRVNeJnmTKVwP/AwS0w4x1fIIUZ4oakCOL04s
+PDhRjSxppmJK3v4hXsTgXlIrb3Le0cOw0equzs07f87OBRC2Tm05Xai2Xx3a9iFZ
+Sa/fdR9+LSSpg8NCULvXArZYW/mOLNLFXJ7XJSK3cttOdAKb99vKnaX/nuLigFMu
+hnmr9+qES/rwkUiRQeik6OPNldYiQX3HxZ+ORoyCnDOx0hhX7YoV7fbGl8q2vEaQ
+VER+epOX2eIiYjSuyCSbUhRYt4httanoDqGUPZYnpITNs2MIrEOsrxizePnZ2RZd
+LjM7NilP+tGcOT9ilc6AxO/jvPGcAHARcg+s3EchTsO98ui9cn2GejyYvRHZE7Kz
+cQd46bQs2xigL69s/s6wA/PSTFFYrfxc0hh3pOlO3Bw44Aajz0/sKCNDeJao9+dx
+iD2vC3Umezv98Zrdw7wRx4kfp1Fu9Rrjl5cDMTBrsfEV26wVAlQGmaO8FljAhdAQ
+nFcY9rxoETeSOdhXkl9gi/J31NJ4B5F64cTUI1vNnO+X0ujxFtnftUgUykCq19Ne
+aTCwrrch4BUsAcwoEtBzpHMrhsnF4oeHGV0Pz2Q7yGe+bc1if4KV0GoT2jUSn8ye
+AbGNSwNKDSYZHRNChjbu1+Pjr3mgs9ftg2dZUdLDUqlLKhbSUlcwXvPBPYn8OWdU
+b/Wmxe0vimxCE5mD50gP
+=JCMw
 -----END PGP SIGNATURE-----
