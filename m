@@ -1,80 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/3
-Message-ID: <50DEE7A1.3060405@msgid.tls.msk.ru>
-Date: Sat, 29 Dec 2012 16:52:49 +0400
-From: Michael Tokarev <mjt@....msk.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/10
+Message-ID: <20121003220855.GG22926@dhcp-25-225.brq.redhat.com>
+Date: Thu, 4 Oct 2012 00:08:56 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: qemu e1000 emulated device gues-side buffer overflow
+Subject: CVE Request -- kernel: compat: SIOCGSTAMP/SIOCGSTAMPNS incorrect order of arguments to compat_put_time[val|spec]
 Content-Type: text/plain; charset=utf-8
 
-I'm not sure what's going on, but no one replied to this email.
+Description of the problem:
 
-Meanwhile, this very place received one more bugfix -- see
+Commit 644595f89620 ("compat: Handle COMPAT_USE_64BIT_TIME in
+net/socket.c") introduced a bug where the helper functions to take
+either a 64-bit or compat time[spec|val] got the arguments in the wrong
+order, passing the kernel stack pointer off as a user pointer (and vice
+versa).
 
-http://lists.nongnu.org/archive/html/qemu-devel/2012-12/msg00533.html
+On architectures that use separate address spaces for userspace and
+kernel (for example PA-RISC), an unprivileged local user can crash the
+system or read kernel memory.
 
-Is this an issue serious enough to get a CVE#?
+Introduced in:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=644595f89620
+
+Upstream fix:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=ed6fe9d614f
+
+Acknowledgements:
+
+This issue was discovered by Mikulas Patocka of Red Hat.
 
 Thanks,
-
-/mjt
-
-19.12.2012 23:52, Michael Tokarev wrote:
-> qemu-1.3 includes the following patch by Michael Contreras:
->
->   http://thread.gmane.org/gmane.comp.emulators.qemu/182666
->    (initial submission)
->   http://git.qemu.org/?p=qemu.git;a=commitdiff;h=b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
->    (the commit)
->
->
-> commit b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
-> Author: Michael Contreras <michael@...tric.com>
-> Date:   Sun Dec 2 20:11:22 2012 -0800
-> Subject: e1000: Discard packets that are too long if !SBP and !LPE
->
->   The e1000_receive function for the e1000 needs to discard packets longer than
->   1522 bytes if the SBP and LPE flags are disabled. The linux driver assumes
->   this behavior and allocates memory based on this assumption.
->
->   Signed-off-by: Michael Contreras <michael <at> inetric.com>
->   ---
->
->   Tested with linux guest. This error can potentially be exploited. At the very
->   least it can cause a DoS to a guest system, and in the worse case it could
->   allow remote code execution on the guest system with kernel level privilege.
->   Risk seems low, as the network would need to be configured to allow large
->   packets.
->
->
-> The last comment, which didn't went into the commit message, indicates
-> that it is possible to send larger packet to a guest and cause a buffer
-> overflow with usual outcome in such cases.
->
-> Yes indeed, the impact is rather low, because the network should be
-> configured to allow larger packets to reach the guest, which is not
-> usually the case -- either the host network is configure for MTU=1500
-> and disallow large packets entirely, or BOTH host and guest network is
-> configured to allow large packets.  In other words, either all devices
-> on the network are configred to accept jumbo frames, no no jumbo frames
-> are enabled at all.
->
-> That's why I'm not sure whenever this can be considered a vulnerability
-> which deserves a CVE# or not, so I'm asking here.
->
-> There's another followup bugfix in the same area, now talking about
-> "extra-large" frames --
->
->   http://thread.gmane.org/gmane.comp.emulators.qemu/183137
->
-> If this issue deserves a CVE#, I guess both patches can be seen as a
-> single bugfix.
->
-> This impacts qemu and all products based on it and using e1000 emulated
-> device, including qemu-kvm, xen and others.
->
-> Thanks,
->
-> /mjt
->
-
+-- 
+Petr Matousek / Red Hat Security Response Team
