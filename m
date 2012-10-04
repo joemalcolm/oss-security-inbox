@@ -1,70 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/11
-Message-ID: <4F68BA2B.30906@redhat.com>
-Date: Tue, 20 Mar 2012 18:11:07 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Bugs in "file" program VU#621745
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/04/1
+Message-Id: <EB7899C0-F95C-4474-8881-4ADFA048D866@brauerranch.com>
+Date: Wed, 3 Oct 2012 18:06:22 -0600
+From: Joshua Brauer <joshua@...uerranch.com>
+To: kseifried@...hat.com, oss-security@...ts.openwall.com
+Subject: CVE Request for Drupal Contributed Modules
 Content-Type: text/plain; charset=utf-8
 
 
-Hi Kurt, vendors,
+This is a batch CVE request for several already published/resolved issues with contributed modules for the Drupal project.
 
-> Date: Wed, 29 Feb 2012 16:54:49 -0500 (EST)
-> From: Kurt Seifried <kseifrie@...hat.com>
-> To: oss-security@...ts.openwall.com
-> Cc: Florian Weimer <fw@...eb.enyo.de>
-> Subject: Re: Bugs in "file" program VU#621745
->
-> On 02/29/2012 10:52 AM, Florian Weimer wrote:
->> * Kurt Seifried:
->>
->>>> We recently pointed the CERT BFF at the ubiquitous "file" command
->>>> and found a few bugs.  While we've not proven the bugs to be
->>>> exploitable, we've also not ruled out the possibility that they
->>>> could be.
->>>>
->>>> Fixes were committed on Feb 16, 2012:
->>>> https://github.com/glensc/file/commits/master
->>
->>> If any of these are security issues please let me know and I will
->>> assign CVE #'s.
->>
->> file also provides a library, libmagic.  This could lead to crashes of
->> server processes which use libmagic.  Debian will likely release a fix
->> as a security update.
->
-> Fair enough but I'd like some details before issuing CVE's, like what
-> are the actual security issues that have been fixed?
+http://drupal.org/node/1649346 | SA-CONTRIB-2012-104 - Privatemsg - Cross Site Scripting (XSS)
+http://drupal.org/node/1663306 | SA-CONTRIB-2012-105 - Hashcash - Cross Site Scripting (XSS)
+http://drupal.org/node/1679412 | SA-CONTRIB-2012-106 - Listhandler - Access Bypass
+http://drupal.org/node/1679422 | SA-CONTRIB-2012-107 - Search autocomplete - Access bypass
+http://drupal.org/node/1679442 | SA-CONTRIB-2012-108 - Drag & Drop Gallery - Arbitrary PHP code execution
+http://drupal.org/node/1679442 | SA-CONTRIB-2012-108 - Drag & Drop Gallery - Cross Site Scripting
+http://drupal.org/node/1679442 | SA-CONTRIB-2012-108 - Drag & Drop Gallery - Access bypass
+http://drupal.org/node/1679442 | SA-CONTRIB-2012-108 - Drag & Drop Gallery - Cross Site Request Forgery
+http://drupal.org/node/1679442 | SA-CONTRIB-2012-108 - Drag & Drop Gallery - SQL Injection
+http://drupal.org/node/1679466 | SA-CONTRIB-2012-109 - Restrict node page view - Access bypass
+http://drupal.org/node/1679486 | SA-CONTRIB-2012-110 - Colorbox Node - Cross Site Scripting (XSS)
+http://drupal.org/node/1679532 | SA-CONTRIB-2012-111 - Security Questions - Access Bypass
 
-Based on further investigation, I am able to tell the issues here
-are out-of heap-based buffer reads and / or invalid pointer dereferences
-by processing various parts of CDF (Composite Document Files) header.
+Thanks,
+Josh - on behalf of the Drupal security team.
 
-Out-of heap-based buffer reads:
-i)   either by attempt to access field at invalid index,
-ii)  or by attempt to access field out of allocated array bounds.
 
-Invalid pointer dereferences:
-iii) by attempt to access pointer value, being modified in
-      a for loop cycle.
 
-Anyway, the file executable is terminated in each case yet by attempt
-to read the location, thus these seem to be able to cause just file
-executable crashes.
-
-Relevant Red Hat Bugzilla record is here:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=805197
-
-Though issues having lower impact, would it be possible to allocate
-one CVE identifier to these? (one should be enough, since the reason
-is always the same and the underlying code is parsing CDF file header).
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->
-> --
-> Kurt Seifried Red Hat Security Response Team (SRT)
 
