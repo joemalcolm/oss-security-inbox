@@ -1,46 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/13/8
-Message-ID: <4F109A93.7040705@redhat.com>
-Date: Fri, 13 Jan 2012 13:56:51 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for OpenTTD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/04/4
+Message-Id: <B131652B-8D0E-4EC5-8BE2-C51C1DAAE358@brauerranch.com>
+Date: Wed, 3 Oct 2012 22:23:05 -0600
+From: Joshua Brauer <joshua@...uerranch.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request for Drupal Contributed Modules
 Content-Type: text/plain; charset=utf-8
 
-On 01/09/2012 11:48 AM, Kurt Seifried wrote:
-> On 01/07/2012 08:13 AM, Rubidium wrote:
->> Hi folks,
->>
->> we, the OpenTTD developers, have identified a security vulnerability in
->> OpenTTD (an open source game with multiplayer). Would you be so kind
->> as to allocate a CVE id for this issue?
->>
->> The issue concerns a denial of service vulnerability in the form of a
->> slow read attack preventing anyone to join the server, and preventing
->> the continuation of a game when 'pause on join' is enabled. This
->> attack requires the attacker to be authorized, but most servers do not
->> implement authorization. The first vulnerable version is 0.3.5, the
->> upcoming 1.1.5 release will have the issue fixed.
->>
->> Once a CVE id is allocated, the issue and fix will be documented at
->> http://security.openttd.org/CVE-2012-xxxx
->>
->> Thanks in advance,
->> Remko 'Rubidium' Bijker
->>
->> (Please CC me, I'm not subscribed)
-> Need more information like a code commit to link to.
->
-> -- Kurt Seifried / Red Hat Security Response Team
-Rubidium replied to me offlist:
+Thanks these have been posted and I'll have more catching up tomorrow.
 
-http://vcs.openttd.org/svn/changeset/23764
+Just to verify the process CVE-2012-4472 SA-CONTRIB-2012-108 is for multiple vulnerabilities which Drupal issued one advisory about. In the past I think these got separate CVE's and we have in our process to report it once for each vulnerability. Which leads to the questions:
+1) Should it have multiple CVE's?
+2) Should we be reporting these separately or all on one?
 
-Please use CVE-2012-0048 for this issue.
+Thanks,
+Josh
 
+On Oct 3, 2012, at 8:20 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 10/03/2012 06:06 PM, Joshua Brauer wrote:
+>> 
+>> This is a batch CVE request for several already published/resolved
+>> issues with contributed modules for the Drupal project.
+>> 
+>> http://drupal.org/node/1649346 | SA-CONTRIB-2012-104 - Privatemsg -
+>> Cross Site Scripting (XSS) http://drupal.org/node/1663306 |
+>> SA-CONTRIB-2012-105 - Hashcash - Cross Site Scripting (XSS) 
+>> http://drupal.org/node/1679412 | SA-CONTRIB-2012-106 - Listhandler
+>> - Access Bypass http://drupal.org/node/1679422 |
+>> SA-CONTRIB-2012-107 - Search autocomplete - Access bypass 
+>> http://drupal.org/node/1679442 | SA-CONTRIB-2012-108 - Drag & Drop
+>> Gallery - Arbitrary PHP code execution 
+>> http://drupal.org/node/1679442 | SA-CONTRIB-2012-108 - Drag & Drop
+>> Gallery - Cross Site Scripting http://drupal.org/node/1679442 |
+>> SA-CONTRIB-2012-108 - Drag & Drop Gallery - Access bypass 
+>> http://drupal.org/node/1679442 | SA-CONTRIB-2012-108 - Drag & Drop
+>> Gallery - Cross Site Request Forgery http://drupal.org/node/1679442
+>> | SA-CONTRIB-2012-108 - Drag & Drop Gallery - SQL Injection 
+>> http://drupal.org/node/1679466 | SA-CONTRIB-2012-109 - Restrict
+>> node page view - Access bypass http://drupal.org/node/1679486 |
+>> SA-CONTRIB-2012-110 - Colorbox Node - Cross Site Scripting (XSS) 
+>> http://drupal.org/node/1679532 | SA-CONTRIB-2012-111 - Security
+>> Questions - Access Bypass
+>> 
+>> Thanks, Josh - on behalf of the Drupal security team.
+> 
+> Perfect, this is easy =).
+> 
+> Please use the following CVEs:
+> 
+> CVE-2012-4468 SA-CONTRIB-2012-104
+> CVE-2012-4469 SA-CONTRIB-2012-105
+> CVE-2012-4470 SA-CONTRIB-2012-106
+> CVE-2012-4471 SA-CONTRIB-2012-107
+> CVE-2012-4472 SA-CONTRIB-2012-108
+> CVE-2012-4473 SA-CONTRIB-2012-109
+> CVE-2012-4474 SA-CONTRIB-2012-110
+> CVE-2012-4475 SA-CONTRIB-2012-111
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+> 
+> iQIcBAEBAgAGBQJQbPJzAAoJEBYNRVNeJnmTcsQP/05luypQ2Wp6z+zsSHVd+a8x
+> zwj1De0kIKoEugjezID24IAYmy1G2QQTl57mRKEgb2WgWImqNBbUSvJ6fuSB9xq0
+> giSwvAWTmoFFzhJBLY1TaF3L+9uo58hqp6hxTH1BpNFTfkORnUvn/HaPanUmAo/9
+> DHG1R9efIYLvTTyD3ALoA8xcLTl33vnbTMgnubxOB+y/a6Ovhq1icueyshefmKGc
+> AFDqLbZGcpi9D1SF28ys0pNe9q1pGxysruDo9VPJILcfq+UJctVqsf036hRg95Et
+> LdhHHVk5vWVbb+yH9A0hWBxloO0iaXlIGJpPtx7xmbUVmewXWpiyvZ9Kh2/SYlEK
+> N4xSPEBIbTtbmgm0qjS/zVDd3vlW0ZOeN/TVmm/mg7DZngn3QfWTC1QJ7dIisGfO
+> 5FKy+NiA/kQSZdZs2GVR/Aq20oR1/kYH0YTORVR9YtdSvr0dsXv2xJIuXdeTgSR9
+> f8uo6KlISk/FOUUeLN/Eoe3VmmLm9MW7OkJY6kVaTD5M/TByPz6bCQxumfXrCw+/
+> OusmbwNcvBAmxQn9n9bD61+1JfvdYVsfVKafKQTpm9nXTJsQ1161trC36N1kaH5E
+> WU8LeeBANz14xEX6TQVqSwcXNfYDdm9++ePKP4tMQcPav3CHpF4jSPSSEMIQuCWl
+> zouflR/IkanhMJlXqCR/
+> =Vs4T
+> -----END PGP SIGNATURE-----
 
--- 
-
--- Kurt Seifried / Red Hat Security Response Team
 
