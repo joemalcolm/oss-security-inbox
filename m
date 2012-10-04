@@ -1,42 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/2
-Message-Id: <201209062003.25686.geissert@debian.org>
-Date: Thu, 6 Sep 2012 20:03:20 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/04/2
+Message-ID: <506CF011.8090508@redhat.com>
+Date: Wed, 03 Oct 2012 20:10:25 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: opencryptoki insecure lock files handling
+Subject: Re: CVE Request -- kernel: compat: SIOCGSTAMP/SIOCGSTAMPNS incorrect order of arguments to compat_put_time[val|spec]
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Niels Heinen (Google) discovered that openCryptoki 2.4.0 and older, when 
-spinlocks are used, incorrectly handle lock files stored in /tmp. It is 
-possible for an attacker to replace the lock files with symlinks and have 
-pkcsslotd (or others) fchmod the target of the symlink to make it world-
-writable, create arbitrary files, etc.
-In response, upstream released 2.4.1[1] which fixed the fchmod issue (commits 
-[3] and [4]).
-Niels discovered that 2.4.1 still allowed arbitrary files creation by 
-following symlinks. Upstream then released 2.4.2[2], fixing this last issue 
-(commits [5] and [6]).
+On 10/03/2012 04:08 PM, Petr Matousek wrote:
+> Description of the problem:
+> 
+> Commit 644595f89620 ("compat: Handle COMPAT_USE_64BIT_TIME in 
+> net/socket.c") introduced a bug where the helper functions to take 
+> either a 64-bit or compat time[spec|val] got the arguments in the
+> wrong order, passing the kernel stack pointer off as a user pointer
+> (and vice versa).
+> 
+> On architectures that use separate address spaces for userspace
+> and kernel (for example PA-RISC), an unprivileged local user can
+> crash the system or read kernel memory.
+> 
+> Introduced in: 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=644595f89620
+>
+>  Upstream fix: 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=ed6fe9d614f
+>
+>  Acknowledgements:
+> 
+> This issue was discovered by Mikulas Patocka of Red Hat.
+> 
+> Thanks,
+> 
 
-Even with the fixes in 2.4.2, members of the pkcs11 group could still use 
-symlink attacks. However, as per upstream's documentation, members of such 
-group are expected to be trusted[7].
+Please use CVE-2012-4467 for this issue.
 
-Could CVE ids be assigned?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-[1] 2.4.1 announcement:
-http://sourceforge.net/mailarchive/message.php?msg_id=28878345
-[2] 2.4.2 announcement:
-http://sourceforge.net/mailarchive/message.php?msg_id=29191022
-[3]http://opencryptoki.git.sourceforge.net/git/gitweb.cgi?p=opencryptoki/opencryptoki;a=commitdiff;h=b7fcb3eb0319183348f1f4fb90ede4edd6487c30
-[4]http://opencryptoki.git.sourceforge.net/git/gitweb.cgi?p=opencryptoki/opencryptoki;a=commitdiff;h=58345488c9351d9be9a4be27c8b407c2706a33a9
-[5]http://opencryptoki.git.sourceforge.net/git/gitweb.cgi?p=opencryptoki/opencryptoki;a=commitdiff;h=8a63b3b17d34718d0f8c7525f93b5eb3c623076a
-[6]http://opencryptoki.git.sourceforge.net/git/gitweb.cgi?p=opencryptoki/opencryptoki;a=commitdiff;h=5667edb52cd27b7e512f48f823b4bcc6b872ab15
-[7]http://opencryptoki.git.sourceforge.net/git/gitweb.cgi?p=opencryptoki/opencryptoki;a=blobdiff;f=man/man7/opencryptoki.7.in;h=5030bd2f6f698119e50926679041d0efcb2693df;hp=659a97976799cc6256df7a796c224bd30ba349d4;hb=7744b6224e80848596ac80a07745c7a588eef2a0;hpb=24950e95a84d125180a0e418a4822a97236f2cb0
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+iQIcBAEBAgAGBQJQbPAQAAoJEBYNRVNeJnmTqL4P/1xsHVcZbTRtS91SIgM4+cuo
+8D//8L/C8BKsqfQ4D8rBv+BEKOwGZz9KMmb5F2b67flKuszcrsYrmisn6b0Unybm
+Wa7xW/MqwoOk6rO/79T9y33vBDtt6fCPbSviGEQDSL63z1WnhKykKHOQNCFsNroa
+wd8XOm9twVlxZoCPAeseY2Q3AwLOVrqYkpn9rsP3tpg4CwgOE9c243WcvtBeRHwT
+2QOag3FPKt6HRkiH70aa5apx28uIi7fpSJfri/gWYYO0tu8MoPFDgQL3pRjXOV3N
+nWZmZCiaTt/mv1afS7mf51URB/B3TtLbpWM2bRHSiG1YbioUJI26pDqwWOm8tvre
+yyNng+BOadIOXTSRwJeTgt8Twsz+qsL+9nNdxYaJsTlxhqlycKkzji4ESdIPgkvY
+HHPa+HKEd65ISAPBUckcNPBHr01ieRVRHhUuhUausCRXHDueDSGA4fXTpzXy2EXX
+oDzceWuPYA6ZdOwctpvtzd+TgaltCGia3hBZV1odd0CfXSPM9Dg+751fyJRFm/YD
+6iSi84kft0D4mtOrx380BCVu8cdI8DvFndQR9nQhBoqKY8i3FXJ5I5gGF9xXb34E
+qmkuEbkwSpGzJWwcrGietDZsccLan+HTSYObvs+DPvTGPmOecdiIPskzJoKzIAP8
+45rjyg4VRXPGTfM/oz3w
+=uzYd
+-----END PGP SIGNATURE-----
