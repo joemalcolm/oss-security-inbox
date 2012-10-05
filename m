@@ -1,18 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/10/1
-Message-ID: <4F5AEB36.6000305@redhat.com>
-Date: Fri, 09 Mar 2012 22:48:38 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/05/5
+Message-ID: <506F2A6B.2080803@redhat.com>
+Date: Fri, 05 Oct 2012 12:43:55 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Python Hash DoS (Issue 13703)
+CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org
+Subject: Re: CVE Request: html2ps
 Content-Type: text/plain; charset=utf-8
 
-Can I please get a CVE for the Python Hash DoS:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This is an offshoot of oCERT-2011-003
+On 10/05/2012 04:49 AM, Marc Deslauriers wrote:
+> Hello,
+> 
+> I don't believe a CVE was ever assigned to this html2ps flaw in
+> 2009:
+> 
+> Directory traversal vulnerability in html2ps before 1.0b7 allows
+> remote attackers to read arbitrary files via directory traversal
+> sequences in SSI directives
+> 
+> See:
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=548633 
+> https://bugzilla.redhat.com/show_bug.cgi?id=526513 
+> http://packetstormsecurity.org/files/81614/html2ps-1.0-beta5-File-Disclosure.html
+>
+>  Thanks,
+> 
+> Marc.
 
-http://bugs.python.org/issue13703
-https://bugzilla.redhat.com/show_bug.cgi?id=750555
+Please use CVE-2009-5067 for this issue.
 
--- 
+BTW if anyone wants to go through the Red Hat Bugzilla and make sure
+all the security have CVE's assigned feel free to contact me and I can
+let you know the easiest way to get the data/check it =).
+
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQbyprAAoJEBYNRVNeJnmTPfkQAKeL2IIYwfjjFD6f+373PVrz
+nwiuWxFcZmm46b9OJtMR5lG5DHY7NJ6V2Tz20/pcVoY6qTQvTVhR/MWuUXsUhdW8
+/uSI5BrrqUizQfxZ1tNg0jrONHsTGOdt/jZpJk6WS6/61IXE382XeMwOyzupk3g7
+so8M2PVjGqVrHdAXhMfI/FgpPDVydh5P4J3580sK+y7eqljIyi9a4LzAxkfvDpwN
+aQqytHSirT/5WAfOwjU/gJgG+jrxvO7C/creEbOGTuWsC/+0HGO4FZygXUBQmLyx
+P3T6x/+EIJ/kJvYlv1Y6QT7jzIHeNuFGT5bZvQCOEUWwM/5+Ztw4t5tWj6DQhcY4
+14VaVlSkQE4LgIBajtwLU2K0BDSOY1s72cvO6QQ86yYFVSP4V75ev6HMsqKWSUg1
+6SeRjtheVhKmX0Gh2Fru0GzpapX/CgRSiRoX85A5UcLK0yl/YrG0lX7O3eMUxZCZ
+xJ4sUQyxMJi1Sac0IC7hDG3w8Hkw1Zab+XpuYNlr8QCm4rjpJwmbRbNzzBZznzCH
+U4MhsG3SAOm0jmnnfCz65GdSqNbndWrL3LZre6+ehG+6lYXLvefczBveOAaXkP/a
+bxBqt7scQXcgasajaBA3k3KUSjZz4frPTmDGFNt20y366E637kSsnKSyWXWABPwR
+1GE3UwZeKlwdHKx9+DT0
+=3Vq9
+-----END PGP SIGNATURE-----
