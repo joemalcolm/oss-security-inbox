@@ -1,25 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/8
-Message-ID: <12931834.Zmy5xRxSLL@asterix.site>
-Date: Tue, 17 Jul 2012 14:06:40 +0200
-From: David Faure <faure@....org>
-To: laurent Montel <montel@....org>
-Cc: Vincent Danen <vdanen@...hat.com>, oss-security@...ts.openwall.com, Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: KDE Pim
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/05/1
+Message-ID: <506EBB45.8030509@canonical.com>
+Date: Fri, 05 Oct 2012 06:49:41 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request: html2ps
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 17 July 2012 10:18:06 laurent Montel wrote:
-> Security problem is that we allows to use javascript.
-> In 4.4 we don't have it.
+Hello,
 
-And here's a testcase for the actual bug.
-In kmail, Ctrl+O, open this .mbox, click on the HTML version, enable HTML 
-rendering, a javascript messagebox pops up.
-Not sure what can really be exploited here (xmlhttprequest?), but at least 
-this way one can prove that 4.4 isn't affected, and test the 4.9 fix.
+I don't believe a CVE was ever assigned to this html2ps flaw in 2009:
+
+Directory traversal vulnerability in html2ps before 1.0b7 allows remote
+attackers to read arbitrary files via directory traversal sequences in
+SSI directives
+
+See:
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=548633
+https://bugzilla.redhat.com/show_bug.cgi?id=526513
+http://packetstormsecurity.org/files/81614/html2ps-1.0-beta5-File-Disclosure.html
+
+Thanks,
+
+Marc.
+
+
 
 -- 
-David Faure, faure@....org, http://www.davidfaure.fr
-Sponsored by Nokia to work on KDE, incl. KDE Frameworks 5
-
-Download attachment "html.mbox" of type "application/mbox" (1692 bytes)
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
