@@ -1,44 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/10
-Message-ID: <20121213145913.GA19569@pre-sense.de>
-Date: Thu, 13 Dec 2012 15:59:13 +0100
-From: Timo Warns <Warns@...-Sense.DE>
-To: oss-security@...ts.openwall.com
-Subject: Remote file inclusion by office applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/05/6
+Message-ID: <506F4165.1080408@canonical.com>
+Date: Fri, 05 Oct 2012 16:21:57 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request: Python keyring
 Content-Type: text/plain; charset=utf-8
 
-I would like to hear some opinions on whether remote file inclusion by
-office applications should be considered as security-relevant.
+Hello,
 
-Different office applications automatically include remote files on
-opening local files. Examples include MS Word [1] and
-LibreOffice/OpenOffice [2].
+Python keyring before 0.9.1 was using the user-supplied password insecurely.
 
-I can imagine different impacts:
+>From the 0.9.1 changelog:
 
-- The origin of a document can track when a document has been opened and
-  possibly by whom.
+CryptedFileKeyring now uses PBKDF2 to derive the key from the user's
+password and a random hash. The IV is chosen randomly as well. All the
+stored passwords are encrypted at once. Any keyrings using the old
+format will be automatically converted to the new format (but will no
+longer be compatible with 0.9 and earlier). The user's password is no
+longer limited to 32 characters. PyCrypto 2.5 or greater is now required
+for this keyring.
 
-- The origin of a document can arbitrarily change the displayed content
-  of the document whenever the document is opened (without affecting hash
-  sums of the document). For example, the origin may change the content
-  of a remote image depending on from which IP or when the image is
-  accessed. For example, a sent tender may be changed after the tender
-  deadline.
+See:
 
-- Under certain conditions, remote content is directly embedded into
-  a document. This may allow to extract confidential data. For example,
-  LibreOffice/OpenOffice directly embed remote content when converting
-  a document into the PDF format. An attacker may send a document
-  referencing confidential data to a victim asking the victim to convert
-  the file. If the victim converts and sends the document back, the
-  attacker receives the confidential data.
+http://pypi.python.org/pypi/keyring#id2
+https://bugs.launchpad.net/ubuntu/+source/python-keyring/+bug/1004845
 
-In my opinion, these issues are a question of user expectation. Users
-are aware that web browsers may access remote content even when opening
-local files. I don't think users are aware that office application may
-do the same. An 'offline mode' for office applications that is enabled
-by default could meet user expectations.
+Thanks,
 
-[1] http://carnal0wnage.attackresearch.com/2011/11/embeding-link-to-network-share-in-word.html
-[2] http://docs.oasis-open.org/office/v1.2/os/OpenDocument-v1.2-os-part1.html#__RefHeading__1415852_253892949
+Marc.
+
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
