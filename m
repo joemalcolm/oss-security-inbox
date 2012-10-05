@@ -1,67 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/10
-Message-ID: <20120913163053.GA355@redhat.com>
-Date: Thu, 13 Sep 2012 10:30:53 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: Marcus Meissner <meissner@...e.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: note on gnome shell extensions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/05/4
+Message-ID: <506F2900.2060403@redhat.com>
+Date: Fri, 05 Oct 2012 12:37:52 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Vit Ondruch <vondruch@...hat.com>, Ruby Security Team <security@...y-lang.org>
+Subject: Re: CVE Request -- ruby (1.8.x with patched CVE-2011-1005): Incomplete fix for CVE-2011-1005 for NameError#to_s method when used on objects
 Content-Type: text/plain; charset=utf-8
 
-* [2012-09-13 18:03:33 +0200] Marcus Meissner wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->On Thu, Sep 13, 2012 at 05:39:57PM +0200, Tavis Ormandy wrote:
->> On Mon, Sep 10, 2012 at 02:48:38PM -0600, Vincent Danen wrote:
->> > * [2012-09-08 18:14:10 -0600] Kurt Seifried wrote:
->> > SUSE has some interesting info in their bug:
->> >
->> > https://bugzilla.novell.com/show_bug.cgi?id=779473#c4
->> >
->> > By the sounds of it, this should be harmless.  Vincent Untz says that
->> > the browser plugin doesn't actually install the extensions, it's passed
->> > to another process via a dbus call to gnome-shell, which sends the uuid
->> > of the extension to the extensions.gnome.org web site in order to
->> > download the extension.
->> >
->> > See:
->> >
->> > http://git.gnome.org/browse/gnome-shell/tree/js/ui/shellDBus.js#n305
->> > http://git.gnome.org/browse/gnome-shell/tree/js/ui/extensionDownloader.js#n27
->> >
->> > which is:
->> >
->> > let message = Soup.form_request_new_from_hash('GET', REPOSITORY_URL_INFO, params);
->> >
->> > And REPOSITORY_URL_INFO is hardcoded earlier:
->> >
->> > const REPOSITORY_URL_BASE = 'https://extensions.gnome.org';
->> > const REPOSITORY_URL_DOWNLOAD = REPOSITORY_URL_BASE + '/download-extension/%s.shell-extension.zip';
->> > const REPOSITORY_URL_INFO     = REPOSITORY_URL_BASE + '/extension-info/';
->> > const REPOSITORY_URL_UPDATE   = REPOSITORY_URL_BASE + '/update-info/';
->> >
->> > I don't think this is something that can be exploited, based on the
->> > above.
->>
->> Not sure I follow the logic, can't I just upload something malicious to
->> extensions.gnome.org and then force you to download it? I mean, I can
->> try it if you're not convinced it's possible.
+On 10/05/2012 09:26 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> Originally, Common Vulnerabilities and Exposures assigned an
+> identifier of CVE-2011-1005 to the following vulnerability:
+> 
+> The safe-level feature in Ruby 1.8.6 through 1.8.6-420, 1.8.7 
+> through 1.8.7-330, and 1.8.8dev allows context-dependent attackers
+> to modify strings via the Exception#to_s method, as demonstrated by
+> changing an intended pathname.
+> 
+> with the following upstream patch: [1]
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?revision=30903&view=revision
 >
->There are supposed to be reviewers before it gets activated, but exactly
->this concern Sebastian also voiced.
+>  Based on later upstream patch for different (CVE-2012-4464 and
+> CVE-2012-4466) issues: [2]
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37068
 >
->> They surely do not have a magical technique for determining if my code
->> is or can become malicious.
->
->Exactly.
+>  it was found that original upstream 1.8.x ruby patch for
+> CVE-2011-1005 issue was not complete, when the NameError#to_s()
+> method was used on / with Ruby objects (the test logic in
+> 'test_to_s_taintness_propagation' test from [1] was actually
+> reversed {Hint: Compare the test for Ruby Object cases in both [1]
+> and [2]}, so the test returned success also on still vulnerable
+> instances).
+> 
+> A different vulnerability than CVE-2011-1005, CVE-2012-4464, and
+> CVE-2012-4466.
+> 
+> References: [3] https://bugzilla.redhat.com/show_bug.cgi?id=863484
+> 
+> This issue was discovered by Vit Ondruch of Red Hat.
+> 
+> Ruby Security Team previously in a private email to Vit confirmed 
+> (still) presence of this issue on ruby 1.8.7 versions and provided 
+> a patch for it: <snip> The behavior of SVN trunk is correct.
+> 
+> The fix for CVE-2011-1005 was insufficient, and NameError#to_s has
+> a problem in 1.8.7.
+> 
+> Please apply the attached patch for 1.8.7.
+> 
+> -- Shugo Maeda
+> 
+> error.c.diff
+> 
+> --- error.c.orig	2012-10-04 23:26:42.000611741 +0900 +++ error.c
+> 2012-10-04 23:26:48.960524245 +0900 @@ -665,9 +665,6 @@
+> 
+> if (NIL_P(mesg)) return rb_class_name(CLASS_OF(exc)); 
+> StringValue(str); -    if (str != mesg) { -	OBJ_INFECT(str, mesg); 
+> -    } return str; }
+> 
+> </snip>
+> 
+> Could you allocate a CVE identifier to this (for those package
+> versions, which have applied patch for originally CVE-2011-1005
+> already)?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-Yeah, this is definitely a possibility, but could happen regardless of
-this with some social engineering (hey, download my cool foo extension!)
-and have something malicious up there.  This is pretty much the same
-thing, just making it easier.
+Please use CVE-2012-4481 for this issue.
 
-It's not much different than having a malicious app in the
-iTunes/Android/Whatever app store.  The flaw there isn't so much in the
-app store, but the app.  Wouldn't the same thought apply here?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQbyj/AAoJEBYNRVNeJnmTMPQP/3pDiCaUQvrdqkVC6rEPwbzW
+MUjNOnIvH01fejHXimrMy12sL+T1gq/jz9wwbspFI/iDenUl2US0K91Wy3PUk6FU
+3K6e2V5G4cN8/8Oqz2IE5gDsYJBMyrE4P5zXJocScRC1ZAOnBHASHOb88LQCa+dR
+9MW5/+G/RlocRKQhLmugN7xlewRxKlOhYBL4Vl5FM0xxeLBvEdKO9FDilp0HyEoC
+EuMh3oc0xJDlc8HzUa1tlAswhhpkWAxJP8VkGwGl1sUMkn5p4DVyJH3hylXTq+rd
+bmXTVhpj3hlmygvxq1dQllvP/e6MLWPbuPbn0Hxt0hJwXP4mW0kGYdu0hr+u4EVR
+eoFzy8/fuiutKg2BH9tzYygQr2jJAfg6dKQBX6OQSNpM+tgPEw6HqZMUBJeGr+Ie
+ZrnnlUhtS3qHmvb/B5EzLJq/OytmlHPvvPKUjqSo6P4IvTjvGYOf9AoTFMpUEhK9
+Ll8dACNJOo57frqIzohshkCrXXHFXvLKBMk0wLPbc2CCEXMeGaqYijEhHpg/pNDS
+NAmSmhRWU5obK1G1jDR7zmjle6TsEzCJF19W+If2eTNLBUeGyI6N+N3VK9bn23rI
+7HVRTPnFxuuxsF5nUlybixLP/eBDnfpgdlEVZ8tcRhljtVKfReo0P0Qolv1HbRKC
+i2h3TGe65Q6nnZ0WP0Lz
+=5BI3
+-----END PGP SIGNATURE-----
