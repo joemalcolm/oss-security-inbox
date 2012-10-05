@@ -1,88 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/17
-Message-ID: <4F637EFB.8080109@redhat.com>
-Date: Fri, 16 Mar 2012 11:57:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Matt Jordan <mjordan@...ium.com>
-Subject: Re: CVE Request -- Asterisk: AST-2012-002 and AST-2012-003 flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/05/2
+Message-ID: <495551764.7006818.1349450774816.JavaMail.root@redhat.com>
+Date: Fri, 5 Oct 2012 11:26:14 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Vit Ondruch <vondruch@...hat.com>, Ruby Security Team <security@...y-lang.org>
+Subject: CVE Request -- ruby (1.8.x with patched CVE-2011-1005): Incomplete fix for CVE-2011-1005 for NameError#to_s method when used on objects
 Content-Type: text/plain; charset=utf-8
 
-On 03/16/2012 05:47 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> 1) AST-2012-002:
-> 
-> An out-of stack-based buffer write flaw was found in the way the Miliwatt
-> application of the Asterisk, open source telephony toolkit, performed
-> generation of constant audio tone at 1000Hz (the 'o' option) from certain,
-> provided audio packets, when the 'internal_timing' Asterisk
-> configuration file
-> option was disabled. In this configuration, a remote attacker could
-> provide a
-> specially-crafted audio packet file, which once processed by the Miliwatt
-> application would lead to that application crash, or, potentially arbitrary
-> code execution with the privileges of the user running the application.
-> 
-> Upstream security advisory:
-> [1] http://downloads.asterisk.org/pub/security/AST-2012-002.pdf
-> 
-> Asterisk v1.8.10.1 announcement:
-> [2] http://www.asterisk.org/node/51797
-> 
-> Upstream patch against the v1.8 branch:
-> [3] http://downloads.asterisk.org/pub/security/AST-2012-002-1.8.diff
-> 
-> References:
-> [4] https://bugs.gentoo.org/show_bug.cgi?id=408431
-> [5] https://bugzilla.redhat.com/show_bug.cgi?id=804038
+Hello Kurt, Steve, vendors,
 
-Please use CVE-2012-1183 for Asterisk AST-2012-002
+  Originally, Common Vulnerabilities and Exposures assigned
+an identifier of CVE-2011-1005 to the following vulnerability:
 
+The safe-level feature in Ruby 1.8.6 through 1.8.6-420, 1.8.7
+through 1.8.7-330, and 1.8.8dev allows context-dependent
+attackers to modify strings via the Exception#to_s method,
+as demonstrated by changing an intended pathname.
 
-> 2) AST-2012-003:
-> 
-> A stack-based buffer overflow flaw was found in the way Asterisk Manager
-> Interface of Asterisk, open source telephony toolkit, performed
-> processing of
-> certain HTTP Digest Authentication headers. A remote attacker,
-> attempting to
-> connect to the HTTP session could send a HTTP Digest Authentication
-> header with
-> specially-crafted values for certain fields, which once processed by the
-> Asterisk parse digest authorization header functionality would lead to
-> asterisk
-> crash, or, potentially arbitrary code execution with the privileges of
-> the user
-> running the application.
-> 
-> Upstream security advisory:
-> [1] http://downloads.asterisk.org/pub/security/AST-2012-003.pdf
-> 
-> Asterisk v1.8.10.1 announcement:
-> [2] http://www.asterisk.org/node/51797
-> 
-> Upstream patch against the v1.8 branch:
-> [3] http://downloads.asterisk.org/pub/security/AST-2012-003-1.8.diff
-> 
-> References:
-> [4] https://bugs.gentoo.org/show_bug.cgi?id=408431
-> [5] https://bugzilla.redhat.com/show_bug.cgi?id=804042
-> 
-> Could you allocate two ids for these issues?
+with the following upstream patch:
+[1] http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?revision=30903&view=revision
 
+Based on later upstream patch for different (CVE-2012-4464 and CVE-2012-4466) issues:
+[2] http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37068
 
-Please use CVE-2012-1184 for Asterisk AST-2012-003
+it was found that original upstream 1.8.x ruby patch for CVE-2011-1005
+issue was not complete, when the NameError#to_s() method was used on /
+with Ruby objects (the test logic in 'test_to_s_taintness_propagation'
+test from [1] was actually reversed {Hint: Compare the test for Ruby
+Object cases in both [1] and [2]}, so the test returned success also
+on still vulnerable instances).
 
+A different vulnerability than CVE-2011-1005, CVE-2012-4464, and CVE-2012-4466.
 
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> P.S.: Cc-ed Matt Jordan of the Asterisk team, so once the ids are
-> assigned, he
->       can update the advisories.
+References:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=863484
 
+This issue was discovered by Vit Ondruch of Red Hat.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Ruby Security Team previously in a private email to Vit confirmed
+(still) presence of this issue on ruby 1.8.7 versions and provided
+a patch for it:
+<snip>
+The behavior of SVN trunk is correct.
+
+The fix for CVE-2011-1005 was insufficient, and NameError#to_s has a
+problem in 1.8.7.
+
+Please apply the attached patch for 1.8.7.
+
+-- Shugo Maeda
+
+error.c.diff
+
+--- error.c.orig	2012-10-04 23:26:42.000611741 +0900
++++ error.c	2012-10-04 23:26:48.960524245 +0900
+@@ -665,9 +665,6 @@
+ 
+     if (NIL_P(mesg)) return rb_class_name(CLASS_OF(exc));
+     StringValue(str);
+-    if (str != mesg) {
+-	OBJ_INFECT(str, mesg);
+-    }
+     return str;
+ }
+
+</snip>
+
+Could you allocate a CVE identifier to this (for those package versions,
+which have applied patch for originally CVE-2011-1005 already)?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
