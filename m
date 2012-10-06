@@ -1,27 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/11/1
-Message-ID: <20120611162118.GL28152@dhcp-25-225.brq.redhat.com>
-Date: Mon, 11 Jun 2012 18:21:19 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/06/4
+Message-ID: <20121006225034.GA2688@openwall.com>
+Date: Sun, 7 Oct 2012 02:50:34 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- libguestfs: virt-edit doesn't preserve file permissions
+Subject: password hashing
 Content-Type: text/plain; charset=utf-8
 
-Description of the problem:
-virt-edit creates a new file when it is used and thus does not
-preserve file permissions, file owner and SELinux context on the
-files that it was editing.
+Hi,
 
-As a consequence, if certain security-sensitive files in the guest
-were edited using virt-edit, they would become world-readable.
+I was too shy to spam oss-security with this, but a list member (who is
+also on Openwall's announce list) asked me to.  Armed with this excuse,
+let me tell you that I made two presentations on password hashing this
+year.  It's everything you wanted to know about password hashing since
+1960s to present day and the near future, and more. ;-)
 
-Proposed upstream patch:
-https://www.redhat.com/archives/libguestfs/2012-February/msg00034.html
+Password security: past, present, future
+(with strong bias towards password hashing)
+http://www.openwall.com/presentations/PHDays2012-Password-Security/
 
-References:
-https://www.redhat.com/archives/libguestfs/2012-February/msg00033.html
-https://bugzilla.redhat.com/show_bug.cgi?id=788642
+Password hashing at scale
+(for Internet companies with millions of users)
+http://www.openwall.com/presentations/YaC2012-Password-Hashing-At-Scale/
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Discussion of the latter at /r/crypto:
+http://www.reddit.com/r/crypto/comments/10zjdo/password_hashing_for_orgs_with_millions_of_users/
+
+and on john-users (click "thread-next"):
+http://www.openwall.com/lists/john-users/2012/10/05/3
+(I intend to reply to the questions raised further in that thread.)
+
+SHA-3 is deliberately not mentioned on the slides yet.  I briefly
+thought of retroactively adding a few mentions of it (YaC 2012 was a day
+too early), but decided not to.  SHA-3 should be similar to DES (read:
+very good) in context of possible defensive use of FPGAs.  As to
+PBKDF2-HMAC-SHA-3, things are less clear, although it's probably weaker
+than PBKDF2-HMAC-SHA-512 (is it also weaker than -SHA-256? than -SHA-1?
+not sure).  (In this context, "weaker" means it allows for even more
+efficient attack-optimized implementations than the other hash type,
+resulting in higher passwords tested per second rate for the same
+processing cost of defensive use.)  I prefer to keep only fairly
+reliable information on the slides, and not speculate on important
+issues there (but I do speculate here, as you can see).  Those of you
+who follow @solardiz on Twitter probably already know a bit more on my
+expectations and reasoning for throughput-optimized parallelized
+implementations of SHA-3, due to the too-many-tweet conversation I had
+with @marshray. ;-)
+
+Alexander
