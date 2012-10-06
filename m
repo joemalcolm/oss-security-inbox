@@ -1,92 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/06/3
-Message-ID: <4FF72160.3000806@redhat.com>
-Date: Fri, 06 Jul 2012 11:33:20 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/06/1
+Message-Id: <201210052311.38808.geissert@debian.org>
+Date: Fri, 5 Oct 2012 23:11:36 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: Three CVE requests: at-spi2-atk, as31, naxsi
+Subject: CVE request: LetoDMS, more issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 07/05/2012 01:00 PM, Moritz Muehlenhoff wrote:
-> Hi, please assign CVE IDs for the following issues:
-> 
-> 1. Insecure tempfile handling in the Gnome accessibiliy component
-> at-spi2-atk 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=678026 
-> https://bugzilla.gnome.org/show_bug.cgi?id=678348
+Some more issues were fixed in LetoDMS...
 
-Please use CVE-2012-3378 for this issue.
+* Fixed in 3.3.8
+Multiple XSS:
+http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/inc/inc.ClassUI.php?r1=930&r2=929&pathrev=930
+http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/out/out.DocumentNotify.php?r1=934&r2=933&pathrev=934
+(and a few others scattered in multiple other commits)
+Missing CSRF protection (all part of the same thing):
+http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=927
+http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=915
+http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=914
+http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=907
+(and possibly some others...)
 
-> 2. Insecure tempfile handling in the as31 assembler 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655496 Homepage:
-> http://wiki.erazor-zone.de/doku.php?id=wiki:projects:linux:as31
+* Fixed in 3.3.9
+Multiple XSS in out/out.UsrMgr.php: 
+http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/out/out.UsrMgr.php?r1=979&r2=978&pathrev=979
+Regression in the above patch (fixed after the release of 3.3.9):
+http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/out/out.UsrMgr.php?r1=982&r2=981&pathrev=982
 
-Please use CVE-2012-3379 for this issue.
+LetoDMS Core:
+* Fixed in 3.3.8:
+SQL injection:
+http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/LetoDMS_Core/Core/inc.ClassDMS.php?r1=929&r2=928&pathrev=929
 
-> 3. File disclosure in Naxsi web application firewall module for
-> Nginx (also shipped in the Debian nginx package): 
-> http://code.google.com/p/naxsi/ 
-> http://code.google.com/p/naxsi/source/detail?r=307
+etc
 
-Please use CVE-2012-3380 for this issue.
-
-> Cheers, Moritz
-> 
-
-Also for temporary file creation please note that it is very easy to
-avoid:
-
-Bash
-Simply use ?mktemp? (?man mktemp? for details).
-
-C
-use mkstemp() (?man mkstemp? for details).
-
-C++
-use mkstemp() (?man mkstemp? for details).
-
-Perl
-use mkstemp()
-http://perldoc.perl.org/File/Temp.html#MKTEMP-FUNCTIONS
-
-Python
-Simply use ?mkstemp? from the ?tempfile? module:
-http://docs.python.org/library/tempfile.html#tempfile.mkstemp
-
-QT
-use QTemporaryFile
-http://qt-project.org/doc/qt-4.8/qtemporaryfile.html
-
-Ruby
-use Tempfile
-http://www.ruby-doc.org/stdlib-1.9.3/libdoc/tempfile/rdoc/Tempfile.html#method-c-new
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP9yFgAAoJEBYNRVNeJnmTtd4QAMcgx+OxP3bHR8kjXNnlMus3
-5kTKIJ7kf0tSB8SWJqAtQiDrf3hVG6X/DPD4dnJqlKrWXsu6bd/PxGIMLO4FMZY9
-j3pJFWxHEuZ+lLneH6BIa4M6AejIKdKgZtSY3iFiAcQSAsX4+p5VytfDuCINGJO3
-zmbTGY1d0AGyKacmDFexsWTv+kZBy7mnOXQrjOEsGsVRxhobK7b3z1EFGOuhkvbA
-1uoDj/vr9lYFr0EaG5h5L+Qx4VdHMjTp1YfxyGoMIX6as53IMidbACaN5MM6tnEu
-DRaUH5nwMN8hEr4yFPbGfuTpdCCiba8I1IDRVuFRlXLc2iplRdauVDGPa9/XhASq
-JrtVHapl5Lm3bGVN8PhkYB6+peSsZPWB+4VP2Qfpm+SoBAYXqGvqzJL8F1by0L4p
-TLcJDmnyXh50kRCjoVfcppNemIXCAhnFpzQ70fwySnPUorWIthWqNrqR4d+OPWjr
-KR5tltaTWB0O7mwsgDxiKGv8T0hf270NGAgfa0U1K4vhnmArdFzr09+4E/lO8XpW
-uUSR76+vV5GSKS9f1YedNkfeXC9UVj+rwS60XHW4Tt6Fh3TCUngVMcnsMeWXV4yi
-xB1LnSvnA0o56oPizNz1Ysqu6E6lqQ0OhgbILNxOtbh5cqRsjmp0bDdOMN51zkkH
-IgsVcL4wiL6B3zqDpOAC
-=sx2U
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
