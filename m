@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/27/1
-Message-ID: <CAF6rxgkssC8Bt6jWGcLF0OSa=L9g4ogkDRMeVnDr4xivWnhRJQ@mail.gmail.com>
-Date: Sat, 27 Oct 2012 15:08:00 -0400
-From: Eitan Adler <lists@...anadler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/06/3
+Message-ID: <20121006073426.GD30113@kludge.henri.nerv.fi>
+Date: Sat, 6 Oct 2012 10:34:26 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Medium severity flaw with Perl 5
+Cc: Josh Bressers <bressers@...hat.com>, Kurt Seifried <kseifried@...hat.com>, cve-assign@...re.org, coley <coley@...re.org>
+Subject: CVE-request for piwigo issues (second request)
 Content-Type: text/plain; charset=utf-8
 
-On 26 October 2012 04:48, Tim Brown <timb@...-dimension.org.uk> wrote:
-> I recently discovered that Perl 5 interpreter is vulnerable to memory
-> corruption when large values are supplied to the x operator.
->
-> After discussions with the vendor, CVE-2012-5195 was assigned to this
-> vulnerability.
->
-> I know Red Hat and Debian have picked it up, but I'm not sure about other
-> vendors.
+Hello,
 
-On FreeBSD
+Old CVE-request did not get filled. At least the CVE is not listed in Mitre's list, OSVDB, Secunia or Debian security-tracker. Request done in: http://www.openwall.com/lists/oss-security/2010/12/07/1
 
-on amd64: typedef __uint64_t __size_t;
-on i386 I believe __size_t is __unit32_t;
+"""
+piwigo:
+a1) CSRF
+a2) SQL injection
+a3) stored XSS
+http://secunia.com/advisories/41365/
+http://piwigo.org/releases/2.1.3
+http://www.exploit-db.com/exploits/14973/
+(the issues mentioned by the exploit-db entry appear to be the same that 
+were fixed in 2.1.3)
+b) search.php SQL injection
+http://secunia.com/advisories/38305/
+http://piwigo.org/releases/2.0.8
+c) CSRF in the admin panel:
+http://secunia.com/advisories/37681/
+http://www.exploit-db.com/exploits/10417
+(the exploit-db entry details two other issues, but are "admin-only" -- feel 
+free to assign or ignore those.)
+"""
 
-Since memset takes a size_t (typedefed of __size_t) a negative number
-would either be optimized out or turned into a large positive number.
-As such there is no negative offset or negative jump.
+SA41365: 2010
+SA38305: 2010
+SA37681: 2009
 
-and such  we are not vulnerable.
+I am happy to provide more information if needed (or in clearner format). Please double-verify that these haven't been assigned before you assign IDs, please.
 
-Is this correct or am I missing something?
-
-
-
--- 
-Eitan Adler
+- Henri Salo
