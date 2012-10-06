@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/27/6
-Message-ID: <4F71E44B.1010005@redhat.com>
-Date: Tue, 27 Mar 2012 10:01:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/06/2
+Message-Id: <201210052354.25850.geissert@debian.org>
+Date: Fri, 5 Oct 2012 23:54:24 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: cifs-utils
+Subject: CVE request: piwigo XSS in password.php
 Content-Type: text/plain; charset=utf-8
 
-On 03/26/2012 08:51 PM, Nico Golde wrote:
-> Hi, can someone please assign a CVE id to: 
-> https://bugzilla.samba.org/show_bug.cgi?id=8821
-> 
-> Debian bug: http;//bugs.debian.org/665923
-> 
-> Cheers Nico
-> 
+Hi,
 
-Please use CVE-2012-1586 for this issue.
+A XSS vulnerability has been reported in piwigo's password.php before 2.4.4:
+http://piwigo.org/bugs/view.php?id=0002750
+http://secunia.com/advisories/50510/
+
+However, as stated in the Secunia advisory, the fix does not entirely address 
+the issue. For context, the stripslashes/strip_tags'ed POST variable is 
+included in the template as following:
+<input type="text" id="username_or_email" name="username_or_email" ... 
+value="{$username_or_email}">
+
+(some parts redacted for clarity)
+
+So, two ids are needed. Thanks in advance.
+
+Piwigo 2.3.1 also seems to be affected but 2.1.2 doesn't.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
