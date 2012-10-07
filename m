@@ -1,29 +1,146 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/20/2
-Message-ID: <20121220044629.GL24980@redhat.com>
-Date: Wed, 19 Dec 2012 21:46:29 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: information disclosure flaw in php-ZendFramework (ZF2012-05)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/07/4
+Message-ID: <CA+O_gMwAWqoBDX+MsaxNsbRVD2adi+oSQBVVW94_QAhDWnMSTA@mail.gmail.com>
+Date: Mon, 8 Oct 2012 11:14:55 +1300
+From: Robbie MacKay <robbie@...ahidi.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Heather Leson <HLeson@...ahidi.com>
+Subject: Re: CVE request for Ushahidi
 Content-Type: text/plain; charset=utf-8
 
-There doesn't seem to be a CVE for this issue.  Could one be assigned?
-Thanks.
+Hi Kurt,
+I've realised one of the SQL injections was incorrectly assigned
+
+SQL injection in Check-in API
+https://github.com/ushahidi/Ushahidi_Web/commit/68d9916 was credited to
+postmodern and assigned CVE-2012-3469
+It should have been credited to: Kees Cook and assigned to CVE-2012-3470
+
+Regards,
+
+Robbie
+
+On Fri, Aug 10, 2012 at 5:51 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 08/01/2012 10:50 PM, Robbie Mackay wrote:
+> > Hi Kurt, I've added info on which researcher discovered the
+> > vulnerability in each commit. Anything other info needed?
+> >
+> > Thanks, Robbie Mackay Software Developer, External Projects,
+> > Ushahidi Inc
+>
+> Ok I split these up by reporter as per CVE guidelines.
+>
+> ***********************
+> > * Multiple SQL injections (Reported by Timothy D. Morgan, Kees
+> > Cook, postmodern )
+>
+> =====================
+> > https://github.com/ushahidi/Ushahidi_Web/commit/fdb48d1 (identified
+> > by Ushahidi dev team)
+> > https://github.com/ushahidi/Ushahidi_Web/commit/4764792 (identified
+> > by Ushahidi dev team)
+> > https://github.com/ushahidi/Ushahidi_Web/commit/d954093 (identified
+> > by Ushahidi dev team)
+>
+> Please use CVE-2012-3468 for these issues
+>
+> =====================
+> > https://github.com/ushahidi/Ushahidi_Web/commit/6f6a919
+> > (postmodern)
+> > https://github.com/ushahidi/Ushahidi_Web/commit/68d9916
+> > (postmodern)
+> > https://github.com/ushahidi/Ushahidi_Web/commit/e0e2b66
+> > (postmodern)
+> > https://github.com/ushahidi/Ushahidi_Web/commit/a11d43c
+> > (postmodern)
+>
+> Please use CVE-2012-3469 for these issues
+>
+> =====================
+> > https://github.com/ushahidi/Ushahidi_Web/commit/3301e48 (Kees
+> > Cook)
+>
+> Please use CVE-2012-3470 for these issues
+>
+> =====================
+> > https://github.com/ushahidi/Ushahidi_Web/commit/3f14fa0 (Timothy
+> > D. Morgan)
+>
+> Please use CVE-2012-3471 for these issues
+>
+> **************************
+> > * Missing authentication on comments, reports, email API calls
+> > (Reported by Kees Cook, Dennison Williams)
+>
+>
+> =====================
+> > https://github.com/ushahidi/Ushahidi_Web/commit/4c24325 (Dennison
+> > Williams)
+>
+> Please use CVE-2012-3472 for these issues
+>
+> =====================
+> > https://github.com/ushahidi/Ushahidi_Web/commit/f67f4ad (Kees
+> > Cook) https://github.com/ushahidi/Ushahidi_Web/commit/13ca6f4 (Kees
+> > Cook)
+>
+> Please use CVE-2012-3473 for these issues
+>
+> **************************
+> > * User details exposed in comments API (Discovered by internal dev
+> > team) https://github.com/ushahidi/Ushahidi_Web/commit/529f353
+>
+> Please use CVE-2012-3474 for these issues
+>
+> **************************
+> > * Admin user hijacking through the installer (Reported by Wil
+> > Clouser) https://github.com/ushahidi/Ushahidi_Web/commit/7892559
+> > https://github.com/ushahidi/Ushahidi_Web/commit/fcdad03
+>
+> Please use CVE-2012-3475 for these issues
+>
+> **************************
+> > * Stored XSS on member profile pages (Reported by Amy K. Farrell)
+> > https://github.com/ushahidi/Ushahidi_Web/commit/00eae4f
+>
+> Please use CVE-2012-3476 for these issues
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+>
+> iQIcBAEBAgAGBQJQI/iPAAoJEBYNRVNeJnmTvAsQAIuh48sIqfM2/07hWmp0uHAX
+> azRSwwHA863udTc9Mkk7GAKwBToZvIzOuITGhfZFIAPIs8wnzAYLNn8fjy2iKfFd
+> 7E7ihEmK1EVeYdwa1KAULaJkyqfiiK0ThMZ9M+oV4KStyqR2C0EPtSXGt+qBeFPE
+> fwVqv/FIyadvVic/y/GIKubF29urV8ji7OtYxNQoT2Zll7Kr9J2GUNUdykrK5lZz
+> ibYpgfZgpNkhHkNy59GYkPtlZMpmWqIMTHhlEMEYGvqakLfU9tO8wL4cYq3oSL9I
+> ihHCeSW1pWzcjjw2CKcfzc7ZCbRd/8PucVOCcIZyaTHcHSG3/A34YWWzLdRrFsix
+> ivZoRJv/zRCL4Jc2Fr+U24iKly4wwGpQ/pyOxA7o/aOy1r4Mf9M7maR40AGSqB8z
+> WQfkzfJZ6b5FuPtWssLHl2LdfRR1/6y/uOzi9LVtzp4vEbi3JZLp4UxNQ8mJOJLe
+> RSNwBOehO9pYHzOppmYsecaNiarpdLKDXzNvHVMl00BUzm0QaHV/3yQAxek/cLPK
+> 0b46CYOl85Cd6Ff1OQ6fUL1IDp7Sb2/25/eS32z1b5rcvulfkFXTdL3EoR03H09q
+> PgS9XSdnjZK/4O1kZpXGryWIe1aq6IOTHbjqX8oWo7+I+tgeWsGuZdlLRE99Gunq
+> 0krB19ynPqhtYZNe8jcp
+> =CTk4
+> -----END PGP SIGNATURE-----
+>
 
 
-A vulnerability was reported in Zend Framework versions prior to 1.11.15
-and 1.12.1, which can be exploited to disclose certain sensitive
-information.  This flaw is caused due to an error in the "Zend_Feed_Rss"
-and "Zend_Feed_Atom" classes of the "Zend_Feed" component, when
-processing XML data.  It can be used to disclose the contents of certain
-local files by sending specially crafted XML data including external
-entity references.
-
-
-References:
-http://framework.zend.com/security/advisory/ZF2012-05
-https://bugzilla.redhat.com/show_bug.cgi?id=889037
-http://secunia.com/advisories/51583
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Robbie Mackay
+
+Software Developer, External Projects
+Ushahidi Inc
+m: +64 27 576 2243
+e: robbie@...ahidi.com
+skype: robbie.mackay
+
