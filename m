@@ -1,21 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/4
-Message-ID: <20120507091557.GA9247@suse.de>
-Date: Mon, 7 May 2012 11:15:58 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/07/3
+Message-ID: <20121007163001.GA22010@kludge.henri.nerv.fi>
+Date: Sun, 7 Oct 2012 19:30:01 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: more tight ioctl permissions in dl2k driver
+Cc: security@...mla.org
+Subject: CVE request: Joomla two XSS vulnerabilities fixed in 2.5.7
 Content-Type: text/plain; charset=utf-8
 
-On Sat, May 05, 2012 at 12:03:28AM +0200, Florian Weimer wrote:
-> * Marcus Meissner:
-> 
-> > Stephan Mueller reported lack of capable(CAP_NET_ADMIN) checks
-> > in private ioctls in the dl2k network card driver.
-> 
-> Have you tested the driver with actual hardware under load?
-> The last time I tested it, it was not really usable.
+Hello,
 
-No, this was a source level audit only.
+I think these two Joomla security issues does not have CVE-identifiers:
 
-Ciao, Marcus
+http://www.joomla.org/announcements/release-news/5463-joomla-2-5-7-released.html
+http://secunia.com/advisories/49678/
+Versions: 2.5.6 and all earlier 2.5.x versions
+
+1) http://developer.joomla.org/security/news/539-20120901-core-xss-vulnerability
+
+2) http://developer.joomla.org/security/news/540-20120902-core-xss-vulnerability
+http://osvdb.org/show/osvdb/83490
+http://www.darksecurity.de/advisories/2012/SSCHADV2012-014.txt
+
+- Henri Salo
