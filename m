@@ -1,40 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/2
-Message-ID: <20120507082741.GA31485@suse.de>
-Date: Mon, 7 May 2012 10:27:41 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/07/2
+Message-ID: <20121007092948.GC5040@pisco.westfalen.local>
+Date: Sun, 7 Oct 2012 11:29:48 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: connman heads up / CVE requests
+Cc: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org
+Subject: Re: CVE Request: html2ps
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Oct 05, 2012 at 12:43:55PM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 10/05/2012 04:49 AM, Marc Deslauriers wrote:
+> > Hello,
+> > 
+> > I don't believe a CVE was ever assigned to this html2ps flaw in
+> > 2009:
+> > 
+> > Directory traversal vulnerability in html2ps before 1.0b7 allows
+> > remote attackers to read arbitrary files via directory traversal
+> > sequences in SSI directives
+> > 
+> > See:
+> > 
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=548633 
+> > https://bugzilla.redhat.com/show_bug.cgi?id=526513 
+> > http://packetstormsecurity.org/files/81614/html2ps-1.0-beta5-File-Disclosure.html
+> >
+> >  Thanks,
+> > 
+> > Marc.
+> 
+> Please use CVE-2009-5067 for this issue.
+> 
+> BTW if anyone wants to go through the Red Hat Bugzilla and make sure
+> all the security have CVE's assigned feel free to contact me and I can
+> let you know the easiest way to get the data/check it =).
 
-I reported several issues to the connman developers last week and it
-seems they made patches for most of them which were
-posted on their mailing list. The one that I am missing is related
-to the GKeyFile/VPN settings storage. I did not review the
-patches itself, except checking them slightly.
-The bug report is here:
+Likewise for the Debian Security Tracker:
+http://security-tracker.debian.org/tracker/data/fake-names contains
+a list of all tracked issues without a CVE reference (most of this
+is historic, of course)
 
-https://bugzilla.novell.com/show_bug.cgi?id=715172
-
-It was not a full review, so some parts remain unchecked.
-
-Some dists seem to ship it and before it goes the wicd way,
-I'd rather ask for CVE's myself.
-
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Cheers,
+        Moritz
