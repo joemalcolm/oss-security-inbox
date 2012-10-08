@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/09/4
-Message-ID: <509D00FE.1000608@mvista.com>
-Date: Fri, 09 Nov 2012 05:11:26 -0800
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros@...openwall.org membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/08/4
+Message-Id: <201210082352.q98Npq8N018527@linus.mitre.org>
+Date: Mon, 8 Oct 2012 19:51:52 -0400 (EDT)
+From: cve-assign@...re.org
+To: seth.arnold@...onical.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: QT CRIME vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Morning,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-So where do we stand on this request?
+>http://permalink.gmane.org/gmane.comp.lib.qt.devel/6729 :
 
-- Armin
+>A security vulnerability has been discovered in the SSL/TLS protocol,
+>which affects connections using compression. All versions of TLS are
+>believed to be affected. To address this, Qt will disable TLS
+>compression by default.
 
-On 11/05/2012 03:32 AM, Premchand Koneru wrote:
-> I recently joined the Montavista Security team and request membership to
-> thelinux-distros@...openwall.org  list, so that I may participate fully
-> in reporting and fixing vulnerabilities in Montavista. Here is my
-> GPG fingerprint:
-> 
-> pub   2048R/5DA060C7 2012-11-05
->       Key fingerprint = 7DF9 45B4 3116 8D5C D3C0  2A15 EADE D5B2 5DA0 60C7
-> uid                  Premchand Koneru<pkoneru@...sta.com 
-> <mailto:pkoneru@...sta.com>>
-> sub   2048R/BE364B01 2012-11-05
-> 
-> Thank you for consideration.
-> 
-> 
+This disclosure should be mapped only to CVE-2012-4929. There should
+not be product-specific CVE names for this issue in the TLS protocol.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJQc2VGAAoJEGvefgSNfHMd4ToH/i5Z594Ozgi3oeEO6cUB3sKv
+38vnY2QvqMyRo0+/11sXFnemi2mGu+ih+ChcB2zH1a3TSNvqTP7KySnH2BmbvdSF
+JpQX/frtsoMUMuOheaxMtIVZ+6tKhuJcSE+7/DBCajvMbM2pb7NkJ4Agd00hriO9
+LRliPVcYNdPo6XOgHNpkIDPHcZldKp5HdN72k5nzPsVFnhSs66OPxXiDW9xA6HwX
+2KAOV/bBigzo6t809Y4rob1rmG11PMv3fWzXpScgPKBIfyPjf/7pfISr9JxmNpow
+DSjBPkNMZ0C19RlTmkp9cpcTasijuKDC1oMtelcvkIGPq0yJubLqSwdS3SJStqw=
+=5YC8
+-----END PGP SIGNATURE-----
