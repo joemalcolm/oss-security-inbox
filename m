@@ -1,65 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/9
-Message-ID: <20120420070537.GC15515@suse.de>
-Date: Fri, 20 Apr 2012 09:05:37 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/08/1
+Message-ID: <1255718567.7311121.1349698552444.JavaMail.root@redhat.com>
+Date: Mon, 8 Oct 2012 08:15:52 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: password hashing
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 19, 2012 at 09:09:55PM -0600, Kurt Seifried wrote:
-> On 04/19/2012 03:48 PM, Marcus Meissner wrote:
-> > Hi,
-> > 
-> > we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a
-> > pid namespace leak caused by vsftpd.
-> > 
-> > https://bugzilla.novell.com/show_bug.cgi?id=757783
-> > 
-> > He provided a simple reproducer:
-> > 
-> > #include <stdio.h> #include <errno.h> #include <signal.h> #include
-> > <sched.h> #include <linux/sched.h> #include <unistd.h> #include
-> > <sys/syscall.h>
-> > 
-> > int main(int argc, char *argv[]) { int i, ret;
-> > 
-> > for (i = 0; i < 10000; i++) {
-> > 
-> > if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC | 
-> > CLONE_NEWNET | SIGCHLD, NULL))) return 0;
-> > 
-> > if (-1 == ret) { perror("clone"); break; }
-> > 
-> > } return 0; }
-> > 
-> > 
-> > and checking "cat /proc/slabinfo|grep pid_namespace" gives 10000
-> > more active slots after running it on 3.0.13 (+SUSE patches) and
-> > 3.1.10 (+SUSE patches).
-> > 
-> > 
-> > Running this on 3.2.0 (+SUSE Patches) did not result in more slots,
-> > so it was probably fixed between 3.1 and 3.2 (but someone else
-> > cross check perhaps).
-> > 
-> > Any idea welcome on which patch fixed this, I tried
-> > 1b26c9b334044cff6d1d2698f2be41bc7d9a0864 but it seems not helping.
-> > 
-> > Ciao, Marcus
+----- Original Message -----
+> Hi,
 > 
-> Can this be triggered by a non privileged user/process? Eugene
-> mentions that CAP_SYS_ADMIN seems to be required, if so it seems like
-> there isn't much of a trust boundary violation going on (anyone/thing
-> with CAP_SYS_ADMIN is already in pretty good).
+> I was too shy to spam oss-security with this, but a list member (who is
+> also on Openwall's announce list) asked me to.  Armed with this excuse,
+> let me tell you that I made two presentations on password hashing this
+> year.  It's everything you wanted to know about password hashing since
+> 1960s to present day and the near future, and more. ;-)
+> 
 
-The above code ... no.
+This is fantastic, thanks! I've not gone through them all yet, but they
+look good and are most interesting.
 
-However, vsftpd has this code pattern in its newer namespace enabled
-versions.
+Can I ask how these are licensed? I can see a use to borrow some of these
+slides for presentations.
 
-So it can be triggered via a namespace enabled vsftpd remotely,
-by just running wget on even anonymous areas in a loop.
+Thanks.
 
-Ciao, Macus
+-- 
+    JB
