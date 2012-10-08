@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/25/3
-Message-Id: <201208241753.04095.geissert@debian.org>
-Date: Fri, 24 Aug 2012 17:53:03 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: jan@...lamowius.de
-Cc: oss-security@...ts.openwall.com
-Subject: information request on security bug fix in GNU Gatekeeper 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/08/2
+Message-ID: <20121008125123.GI13520@kludge.henri.nerv.fi>
+Date: Mon, 8 Oct 2012 15:51:23 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE-request: SMF index.php msg parameter SQL-injection (2005)
 Content-Type: text/plain; charset=utf-8
 
-Hi Jan,
+On Fri, Sep 14, 2012 at 11:29:07AM -0600, Kurt Seifried wrote:
+> On 09/14/2012 06:40 AM, Henri Salo wrote:
+> > Hello list,
+> > 
+> > Old SQL-injection security issue in SMF does not have
+> > CVE-identifier. Could you please assign one from year 2005,
+> > thanks.
+> > 
+> > Affected versions: <= 1.0.4 Fixed in 1.0.5
+> > 
+> > References: http://osvdb.org/17458 
+> > http://secunia.com/advisories/15784/
+> > 
+> > - Henri Salo ps. never too late
+> > 
+> 
+> Can you confirm this isn't
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-4159
 
-On the announcement of release 3.1 of GNU Gatekeeper[1] there's a mention of 
-a security bug fix.
-Could you please shed some light on the security issue? is it related to the 
-status port connection limit feature that was recently added in [2] and 
-similar?
+To me this looks like a different vulnerability, because of different affected files and parameters.
 
-Thanks in advance.
+CVE-2005-XXXX:
+index.php
+http://osvdb.org/17458
+http://www.securiteam.com/exploits/5HP0N0KG0O.html
 
-Found via secunia SA50343 [3]
+CVE-2005-4159:
+Memberlist.php
+http://osvdb.org/21722
+http://archives.neohapsis.com/archives/bugtraq/2005-12/0090.html
 
-[1]http://www.gnugk.org/gnugk-3.1.html
-[2]http://openh323gk.cvs.sourceforge.net/viewvc/openh323gk/openh323gk/GkStatus.cxx?r1=1.132&r2=1.133
-[3]http://secunia.com/advisories/50343/
-
-Kind regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+- Henri Salo
