@@ -1,30 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/12/5
-Message-ID: <20120412074914.GB29831@kludge.henri.nerv.fi>
-Date: Thu, 12 Apr 2012 10:49:14 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/08/3
+Message-ID: <20121008125646.GA17238@pre-sense.de>
+Date: Mon, 8 Oct 2012 14:56:47 +0200
+From: Timo Warns <Warns@...-Sense.DE>
 To: oss-security@...ts.openwall.com
-Cc: Stefan Schurtz <sschurtz@...nline.de>
-Subject: CVE-request: Wikidforum 2.10 multiple XSS and SQL-injection vulnerabilities SSCHADV2012-005
+Subject: [PRE-SA-2012-07] hostapd: Missing EAP-TLS message length validation
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+The issue described below has been reported to the distros list with
+a timeline as follows:
 
-These three 2012 issues are without CVE-identifiers. XSS vulnerabilities can be joined to one CVE if I am correct.
+2012-09-20:
+    - notification of Jouni Malinen of the hostapd project
 
-Affected version: 2.10
-Advisory ID: SSCHADV2012-005
-Bugtraq: http://seclists.org/bugtraq/2012/Mar/45
+2012-09-21:
+    - verification of the vulnerability and provision of patch
+      by Jouni Malinen
+    - agreement on an advisory release date of 2012-10-08
 
-Vulnerabilities:
-http://osvdb.org/show/osvdb/80838 Wikidforum Search Field XSS
-http://osvdb.org/show/osvdb/80839 Wikidforum Advanced Search Multiple Field XSS
-http://osvdb.org/show/osvdb/80840 Wikidforum Advanced Search Multiple Field SQL Injection
+2012-09-24:
+    - notification of distros@...openwall.org
 
-Advisory URLs:
-http://www.darksecurity.de/advisories/2012/SSCHADV2012-005.txt
-http://www.darksecurity.de/index.php?/202-SSCHADV2012-005-Wikidforum-2.10-Multiple-security-vulnerabilities.html
+2012-10-07:
+    - patch becomes available in hostapd's public git repository
 
-I also contacted vendor just to be sure: http://www.wikidforum.com/forum/forum-software_29/wikidforum-support_31/sschadv2012-005-unfixed-xss-and-sql-injection-security-vulnerabilities_188.html
+2012-10-08:
+    - release of advisory
 
-- Henri Salo
+      
+PRE-CERT Security Advisory
+==========================
+
+* Advisory: PRE-SA-2012-07
+* Released on: 8 October 2012
+* Affected product: Hostapd 0.6 - 1.0
+* Impact: denial of service
+* Origin: specially crafted EAP-TLS messages
+* CVSS Base Score: 7.8
+    Impact Subscore: 6.9
+    Exploitability Subscore: 10
+  CVSS Vector: (AV:N/AC:L/Au:N/C:N/I:N/A:C)
+* Credit: Timo Warns (PRESENSE Technologies GmbH)
+* CVE Identifier: CVE-2012-4445
+
+
+Summary
+-------
+
+The internal EAP authentication server of hostapd does not sufficiently
+validate the message length field of EAP-TLS messages, which can be
+exploited for a denial-of-service via specially crafted EAP-TLS messages
+(before authentication).
+
+Hostapd has a function eap_server_tls_process_fragment() used by its
+internal EAP authentication server for handling fragmented EAP-TLS
+messages. The function (indirectly) calls wpabuf_overflow() aborting
+the application in case of potential buffer overflows. Such a situation
+can be triggered by an attacker sending an EAP-TLS message with
+
+    a) the "More Fragments" flag set and
+    b) an "TLS Message Length" value that is smaller than the size of
+       the "TLS Data" field.
+
+The vulnerability can be exploited only if hostapd is configured to use
+its internal EAP authentication server, either directly for IEEE 802.11x
+or when using hostapd as a RADIUS authentication server. 
+
+Affected is hostapd in versions 0.6 - 1.0. The issue was introduced with
+commit
+http://hostap.epitest.fi/gitweb/gitweb.cgi?p=hostap.git;a=commitdiff;h=34f564dbd5168626da55a7119b04832e98793160
+
+
+Solution
+--------
+
+A patch is available at
+http://w1.fi/gitweb/gitweb.cgi?p=hostap.git;a=commitdiff;h=586c446e0ff42ae00315b014924ec669023bd8de
+
+
+References
+----------
+
+When further information becomes available, this advisory will be
+updated. The most recent version of this advisory is available at:
+
+http://www.pre-cert.de/advisories/PRE-SA-2012-07.txt
+
+
+Contact
+--------
+
+PRE-CERT can be reached under precert@...-secure.de. For PGP key
+information, refer to http://www.pre-cert.de/.
