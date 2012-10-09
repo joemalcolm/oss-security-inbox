@@ -1,153 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/4
-Message-ID: <20120920033355.GA30232@cipherdyne.org>
-Date: Wed, 19 Sep 2012 23:33:55 -0400
-From: Michael Rash <mbr@...herdyne.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Damien Stuart <dstuart@...uart.org>
-Subject: Re: CVE Request -- fwknop 2.0.3: Multiple security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/09/2
+Message-ID: <20121009141735.GA14158@openwall.com>
+Date: Tue, 9 Oct 2012 18:17:35 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: password hashing
 Content-Type: text/plain; charset=utf-8
 
-On Sep 19, 2012, Kurt Seifried wrote:
+On Mon, Oct 08, 2012 at 08:15:52AM -0400, Josh Bressers wrote:
+> Can I ask how these are licensed? I can see a use to borrow some of these
+> slides for presentations.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 09/19/2012 12:10 PM, Jan Lieskovsky wrote:
-> > Hello Kurt, Steve, vendors,
-> > 
-> > multiple securit issues have been corrected in 2.0.3 upstream
-> > version of fwknop
-> > (http://www.cipherdyne.org/blog/categories/software-releases.html):
-> >
-> > 
-> -
-> ---------------------------------------------------------------------------
-> > 1) multiple DoS / code execution flaws: Upstream patch: [1]
-> > http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=d46ba1c027a11e45821ba897a4928819bccc8f22
-> 
-> Ok
-> > 
-> yeah this seems to be mostly changes related to char buf[32] to
-> char buf[ACCESS_BUF_LEN], plus some logic cleanups (like making sure
-> the port specified is larger than 0 and less than MAX_PORT). So I'll
-> lump them all together rather than separate them.
-> 
-> Please use CVE-2012-4434 for this issue.
+I hadn't thought of putting my slides under a specific license before,
+but I'm happy to permit reuse given proper attribution.  Perhaps one of
+the Creative Commons licenses would be it, please feel free to suggest
+one if you like.
 
-Understood, thanks.
+Also, reuse of individual slides may fall under fair use, like I am
+reusing a slide on multi-factor authentication from Duo Security's
+presentation (I had informed Dug Song of my intent to reuse the slide,
+though):
 
-> > 2) server did not properly validate allow IP addresses from
-> > malicious authenticated clients Upstream patch: [2]
-> > http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=f4c16bc47fc24a96b63105556b62d61c1ba7d799
-> 
-> Stupid
-> > 
-> question possibly (didn't look at the code apart from the fix).
-> I see:
-> 
-> if(char_ctr >= MAX_IPV4_STR_LEN)
-> 
-> but nothing for IPv6 (does fwknopd even support ipv6?)... someone may
-> want to check that.
+http://www.openwall.com/presentations/PHDays2012-Password-Security/mgp00042.html
 
-fwknop does not yet support ipv6, but this is planned and will update
-the check above to allow v6 addresses.
+BTW, here is the original:
 
-In terms of raw ipv4 validation, there was one additional commit to
-leverage inet_aton():
+https://speakerdeck.com/u/duosec/p/modern-two-factor-authentication-defending-against-user-targeted-attacks
 
-http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=263fa01f2af1d336961df320f1c7a9ea84ddac9a
-
-This code made it into the 2.0.3 release.
-
-> Please use CVE-2012-4435for this issue.
-
-Will do.
-
-> > 3) strict filesystem permissions for various fwknop files are not
-> > verified
-> 
-> This seems more like security hardening. Generally speaking network
-> daemons are not responsible for ensuring the safety of their own files
-> (the system should have a sane configuration). Also if I assign a CVE
-> for this then every single daemon that creates a config file and fails
-> to check the permissions qualifies for a CVE that's a few hundred
-> thousand CVEs =). For example: OpenSSH, it has a number of checks on
-> file permissions, no CVE's for that.
-
-Understood.
-
-> > 4) local buffer overflow in --last processing with a maliciously
-> > constructed ~/.fwknop.run file Upstream patch: [3]
-> > http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=a60f05ad44e824f6230b22f8976399340cb535dc
-> 
-> This
-> > 
-> is the MAX_CMDLINE_ARGS stuff specifically I assume?
-
-Yes, that's it.
-
-> Please use CVE-2012-4436 for this issue.
-
-Will do, thanks.
-
--- 
-Michael Rash
-http://www.cipherdyne.org/
-Key fingerprint: E2EF 0C8A 5AA9 654C 4763  B50F 37AC E946 7F51 8271
-
-> 
-> > For the remaining ones: ======================= 5) several
-> > conditions in which the server did not properly throw out
-> > maliciously constructed variables in the access.conf file Upstream
-> > patch: [4]
-> > http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=e2c0ac4821773eb335e36ad6cd35830b8d97c75a
-> >
-> >  Note: This doesn't look like a security flaw (previously possible
-> > to provide malicious values to access.conf file, but I assume it
-> > would required administrator privileges).
-> > 
-> > 6) [test suite] Added a new fuzzing capability to ensure proper
-> > server-side input validation. Note: Test-suite add-on, no CVE
-> > needed.
-> > 
-> > 7) Fixed RPM builds by including the $(DESTDIR) prefix for
-> > uninstall-local and install-exec-hook stages in Makefile.am. 
-> > Upstream patch: [5]
-> > http://www.cipherdyne.org/cgi-bin/gitweb.cgi?p=fwknop.git;a=commitdiff;h=c5b229c5c87657197b0c814ff22127d870b55753
-> >
-> >  Note: Also doesn't look like a fix for a security flaw.
-> > 
-> > Could you allocate CVE ids for issues 1), 2), 3), and 4) ?
-> > 
-> > [Cc-ed Damien and Michael from fwknop upstream to confirm they {the
-> > first four} should receive a CVE identifier].
-> > 
-> > Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> > Security Response Team
-> > 
-> 
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-> 
-> iQIcBAEBAgAGBQJQWn+eAAoJEBYNRVNeJnmTJTwQALuiFHMtB+AOYoP3PQoPlW07
-> ktfHS3t64Lv9to160PDabHMoGJg/MJyz+liA/mHRESXe6PhnPMdZKYquPtBsA7O9
-> 97NVUQolV5BpfUJTIZtLnIcIH5Sul+mmMj4QbglK5ZV50DGpN8gH9WX6irOn+gFI
-> RNj5W6BnLnCPRJX4CXF+kjKB5BpZGv4TmdRzW9CvR7/j2S+QqbiYS6HCAaQXuqLS
-> OF7W3l9JKY7I9yZP8LuaZ8duRImizhaueSBV9EqDLva8gtl+snI43ho+/eX64+vp
-> HmlnkoChNwUpnAjHFsWqYwjQ2ztCMONlZh7jrptKltdWhVha5zlqv50NlEK2NscC
-> IENCTcb/yWn/GYNYUs5sMn3LJZsuEgzaaTru3/CvSyFs6SbyYhOB3MAaU4AtBWR2
-> T3Y8WNuUz6bf1ZkltIpJb9Nn9Qy57ZMH4BuDJCSDsrIhowwSiKKFAW9RWClLDzOz
-> 24reeMbm/aGXmCNwpzinEoexsWAv5GmvqtaOtyKNgCY2Yjl5Dot+0l6vkcb221hM
-> 9NELus8L20+NhMmAty+XYTnRs4YaezuwOyNroDce7DA2whml9hLEGcb5fv5dY4IE
-> 7Dcx+QttaOQn8Ixdoc3Wqx/dGrto67sajF3OWXz58YqLCj6XAP7kZZ6JxsIxi6Ki
-> NChFqIKY+pLaEXTi0ewn
-> =o1N7
-> -----END PGP SIGNATURE-----
+Alexander
