@@ -1,53 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/13/6
-Message-ID: <4F3935C2.1050603@redhat.com>
-Date: Mon, 13 Feb 2012 09:09:38 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/09/1
+Message-ID: <20121009131418.49926ba4@nemesis.grenouille.com>
+Date: Tue, 9 Oct 2012 13:14:18 +0200
+From: Jérôme Benoit <jerome.benoit@...nouille.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Webcalendar 1.2.4 location XSS
+Subject: Claws-mail security issue in message processing
 Content-Type: text/plain; charset=utf-8
 
-On 02/12/2012 02:52 AM, Henri Salo wrote:
-> On Sun, Feb 12, 2012 at 10:17:46AM +0200, Henri Salo wrote:
->> On Sat, Feb 11, 2012 at 11:04:19PM -0500, Eitan Adler wrote:
->>> On Sat, Feb 11, 2012 at 11:41 AM, Henri Salo <henri@...v.fi> wrote:
->>>> This seems to be missing 2012 CVE.
->>>>
->>>> Original report: http://seclists.org/bugtraq/2012/Jan/128
->>>> Project page: https://sourceforge.net/projects/webcalendar/
->>>> Version affected: 1.2.4 (the newest)
->>>
->>> So far as I could see the newest version is 1.2.3
->>> (http://sourceforge.net/projects/webcalendar/?source=directory and
->>> http://www.k5n.us/webcalendar.php?topic=News don't list 1.2.4)
->>
->> Page http://sourceforge.net/projects/webcalendar/files/webcalendar%201.2/ lists 1.2.4 version. I have no idea why the other page doesn't list it at all. No reply to bug-report: http://sourceforge.net/tracker/?func=detail&aid=3472745&group_id=3870&atid=103870 and only thing I found strange in the report is "Version: 1.2.5" as there isn't such available. I can verify this advisory if you want.
->>
->> - Henri Salo
-> 
-> So if you have javascript enabled in *.sourceforge.net this PoC works in demo-page: http://webcalendar.sourceforge.net/demo/view_entry.php?id=2142&date=20120212 and I also tested this in version 1.2.4 (modified 2011-08-09) and it works as stored XSS. Changelog for 1.2.4 says:
-> 
-> Version 1.2.4 (08 Aug 2011)
->  - Fixed XSS vulnerability: malicious javascript in event descriptions submitted
->    by public can do bad things (create admin account, delete events, etc.)
->    when the pending event is viewed by the admin.
->  - Fixed bug: PHP warnings on search
->  - Removed PHP warnings
->  - Bug fix: undefined function date_default_timezone_set in older versions
->    of PHP.
-> 
-> I can't find release 1.2.5 from SF project-page nor in http://www.k5n.us/downloads.php or in news. If the code indeed has stored XSS in versions 1.2.3 and 1.2.4 there probably is more of them. SHA256 for WebCalendar-1.2.4.tar.gz is: 09dea6511bf692f08e08a1a6088e547517a11ba746dde6b5e2cd57bb0081cfee
-> 
-> At the moment download counts:
-> 1.2.4 zip 8644
-> 1.2.4 tar.gz 1838
-> 
-> Definitely needs a 2012 CVE-identifier.
-> 
-> - Henri Salo
+Hello, 
 
-Please use CVE-2012-0846 for this Webcalendar location variable XSS issue.
+I found by chance a security issue in claws-mail. You can read the
+details here : https://bugzilla.redhat.com/show_bug.cgi?id=862578
+
+Cheers. 
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Jérôme Benoit aka fraggle
+La Météo du Net - http://grenouille.com
+OpenPGP Key ID : 9FE9161D
+Key fingerprint : 9CA4 0249 AF57 A35B 34B3 AC15 FAA0 CB50 9FE9 161D
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
