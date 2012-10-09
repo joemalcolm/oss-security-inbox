@@ -1,84 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/16/7
-Message-ID: <4F8C71BB.1010107@redhat.com>
-Date: Mon, 16 Apr 2012 13:23:39 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, g13net@...il.com
-Subject: Re: CVE-request: Timesheet Next Gen 1.5.2 Multiple SQLi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/09/3
+Message-ID: <20121009212907.70902308@nemesis.grenouille.com>
+Date: Tue, 9 Oct 2012 21:29:07 +0200
+From: Jérôme Benoit <jerome.benoit@...nouille.com>
+To: oss-security@...ts.openwall.com, henri@...v.fi
+Subject: CVE Request -- claws-mail -- NULL pointer derefence while processing email content.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello, 
 
-On 04/16/2012 04:55 AM, Henri Salo wrote:
-> Can I get one 2012 CVE-identifier for Timesheet Next Gen 1.5.2
-> multiple SQL-injections. Thomas Richards said the vendor is working
-> on the patch.
-> 
-> http://sourceforge.net/apps/mantisbt/tsheetx/view.php?id=122 
-> http://osvdb.org/show/osvdb/79804 
-> http://secunia.com/advisories/48239/
+  A NULL pointer dereference flaw was found in the format agnostic
+  email content processing code in claws-mail, an email client (or
+  MUA) based on GTK+. 
 
-Please use CVE-2012-2105 for this issue.
+References: 
 
-> 
-> - Henri Salo
-> 
-> http://seclists.org/bugtraq/2012/Mar/10 """ # Exploit Title:
-> Timesheet Next Gen 1.5.2 Multiple SQLi # Date: 02/23/12 # Author:
-> G13 # Software Link: https://sourceforge.net/projects/tsheetx/ #
-> Version: 1.5.2 # Category: webapps (php) #
-> 
-> ##### Vulnerability #####
-> 
-> The login.php page has multiple SQL injection vulnerabilities.
-> Both the 'username' and 'password' parameters are vulnerable to SQL
-> Injection.
-> 
-> The vulnerability exists via the POST method.
-> 
-> ##### Vendor Notification #####
-> 
-> 02/23/12 - Vendor Notified 02/26/12 - Email sent to each developer,
-> developer responds 02/29/12 - Confirmation by developer requested 
-> 03/02/12 - Disclosure
-> 
-> ##### Exploit #####
-> 
-> http://localhost/timesheet/
-> 
-> POST /timesheet/login.php HTTP/1.1 Host: localhost User-Agent:
-> Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:10.0.2) Gecko/20100101
-> Firefox/10.0.2 Accept:
-> text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 
-> Accept-Language: en-us,en;q=0.5 Accept-Encoding: gzip, deflate 
-> Connection: keep-alive Referer:
-> http://localhost/timesheet/login.php Cookie:
-> PHPSESSID=3b624f789e37fa3bdade432da Content-Type:
-> application/x-www-form-urlencoded Content-Length: 52 
-> redirect=&username=[SQLi]&password=[SQLi]&Login=submit """
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=862578
+[2]
+http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2743 
 
+Could you allocate a CVE id for this?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Cheers.  
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+-- 
+Jérôme Benoit aka fraggle
+La Météo du Net - http://grenouille.com
+OpenPGP Key ID : 9FE9161D
+Key fingerprint : 9CA4 0249 AF57 A35B 34B3 AC15 FAA0 CB50 9FE9 161D
 
-iQIcBAEBAgAGBQJPjHG7AAoJEBYNRVNeJnmTEHwP/jkc3Po69ABXHlALzjsKT/gp
-dkXNjRFJ0C6KABlVGw9332aMHCiQr/vBPpIYoRjsfg/loHpFZNTaGl/HXntQ99bS
-20NkxK352P/xUs4Q7CsksH+HFRwHXqpmt8YhZ/zM+qw0UnoHOso5gkH6iWJky4Th
-PzIygF+bORi6vWLGcMbYAmr5lABT7abd6AfwlDE8h6jWZJEymA4SWfToZF8t55AH
-6UAqVDUT70KBF/2B1+P4zJrreuWrF+fw9LBMXzaovaMVqe6FIW+3QP0DWMbaoOKo
-rYmgBh4/NCFXtmMPNWAgTlNyYacarHPeX5icvmfwDFubpZSCx1bZ9BV93anu8lz1
-4R6y/c0+Im4m6EU2mfIb2qdy9t+Iuovg25+lt3AEfZsZUh7i1gVoAw8g1lLGidrM
-XHvwwvQyKp87f+/+cGOFLN/z5+l8xwiwnBa7h1i7h1f4uHPEGA3GAZUx3Jb7QH8C
-KV6MKi5CXNdcLuf0IvCGR5C+KVKhxfbhqxX2Wi314XVigCeG6Cz21tm7SFbjOnLW
-29ei1YoT0Zf/kSnKsHtqAU7Dn4lCUe8eRuAxtzHjawtA3IxFn/HftiX7un0v5pnJ
-xcVdZzcVZJrh1YOb4Iefbdl/tENGlYyRuzjwY8EEglabKjIbDU9ANlaAbUGDtuoF
-mxbMgZn4Pl7d9S4dmSNj
-=pmAT
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
