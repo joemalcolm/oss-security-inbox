@@ -1,21 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/10
-Message-ID: <20120321190557.GA7583@pisco.westfalen.local>
-Date: Wed, 21 Mar 2012 20:05:57 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/4
+Message-ID: <50750063.1030306@redhat.com>
+Date: Tue, 09 Oct 2012 22:58:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Greg Knaddison <greg.knaddison@...uia.com>, security@...pal.org
-Subject: Re: Re: [security] Drupal CORE and Drupal Contrib
+CC: Henri Salo <henri@...v.fi>, security@...mla.org
+Subject: Re: CVE request: Joomla two XSS vulnerabilities fixed in 2.5.7
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 19, 2012 at 12:33:37PM -0600, Kurt Seifried wrote:
-> http://drupal.org/node/1168756
-> SA-CORE-2011-001 - Drupal core - Multiple vulnerabilities
-> Can't find any CVE's, do they need to be assigned?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yes, there's been no CVE assignment so far. Debian fixed
-this in a point update:
-http://packages.qa.debian.org/d/drupal6/news/20110627T195934Z.html
+On 10/07/2012 10:30 AM, Henri Salo wrote:
+> Hello,
+> 
+> I think these two Joomla security issues does not have
+> CVE-identifiers:
+> 
+> http://www.joomla.org/announcements/release-news/5463-joomla-2-5-7-released.html
+>
+> 
+http://secunia.com/advisories/49678/
+> Versions: 2.5.6 and all earlier 2.5.x versions
+> 
+> 1)
+> http://developer.joomla.org/security/news/539-20120901-core-xss-vulnerability
+>
+>  2)
+> http://developer.joomla.org/security/news/540-20120902-core-xss-vulnerability
+>
+> 
+http://osvdb.org/show/osvdb/83490
+> http://www.darksecurity.de/advisories/2012/SSCHADV2012-014.txt
+> 
+> - Henri Salo
+> 
 
-Cheers,
-        Moritz
+I'm wondering,there seems to be some gaps in Joomla CVE assignments,
+are there other Joomlas that need CVEs as well?
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQdQBjAAoJEBYNRVNeJnmT/xQP/3+laDs5mVOxsoVLfeObEXlp
+NrI+iVYueOXI5zMQqT3TQ/ZMDiueCTZIitw0fINB1GS5wX0K8fftPQAyDWtRu7BC
+6kP9TnOI1TuT9mGuvFM6vslHmY5UMAYXNanievSdAHMzKcNh84+yb/N13un3tZkI
+fenU6mVnoSBgD3QgE1XBiaG2r7SO3dMdUnEbmlrVM2aO8S/r91GUHdyeMO0qSB39
+d/rlNKyu+1Hc2qzM0D6C9Q8d7mN9j09j8HIaggMvx4iugHtch3qWxKi9TbUwhzZB
+FUC4hzburJrMv8LVgQvsyZoQ371jeXJY+hJ6K0IH5I0OlMeqyXvCMvTs2HtfayuS
+4S6FNFiRUMSTL9vBbCvB16K6YloLkbxg+0hasW/kRv1+oVh++MHUzJb8v0VKNCkj
+Mxzz+rXsG3MGq6+jJd+nTcrYrmKfO8P/9jau8ii3Ar5B7z+MwmZiG8ykYaM9/WBd
+LgAETpOCVR2+axKDbxgU71krCeGII4GI/GVtnVBeWO6FR3ds8m51YfQORh9jAUYZ
+N8eksGY9NQUSXOhPXFK5JXKxohQZyQJRUlsoxsGuKOhTkNbQYvlDV8rSrPFO6wdh
+ngEKm2Q9cUdjtx2JMtM5CFIsYooABiHJJuwZD8t/Gg56gaz9AD7CisLANT3QgyzD
+HS4XDveRvYcVkxXm1lLZ
+=31Uj
+-----END PGP SIGNATURE-----
