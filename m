@@ -1,21 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/2
-Message-ID: <06b9cc6a-6f31-4ba8-a71c-cf386efb05b8@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Wed, 06 Jun 2012 22:02:02 -0400 (EDT)
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/12
+Message-Id: <201210102234.q9AMYdOm022710@linus.mitre.org>
+Date: Wed, 10 Oct 2012 18:34:39 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Mojarra allows deployed web applications to read FacesContext from other applications
+Cc: cve-assign@...re.org
+Subject: Re: Fwd: IPv6 DOS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE please be assigned for this issue:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It was found that in Mojarra, the FacesContext that is made available during application startup is held in a ThreadLocal. The reference is not properly cleaned up in all cases. As a result, if a JSF WAR calls FacesContext.getCurrentInstance() during application startup, another WAR can get access to the leftover context and thus get access to the other WAR's resources.
+Here are CVE assignments for these mixed open-source/closed-source
+issues:
 
-References:
-Upstream Mojarra bug: http://java.net/jira/browse/JAVASERVERFACES-2436
-Bug for JBoss-specific impacts: https://issues.jboss.org/browse/JBPAPP-9197
+Windows: flood of ICMPv6 Neighbor Solicitation
+         messages - CVE-2012-5362
 
-Thanks
--- 
-David Jorm / Red Hat Security Response Team
+  (a different vulnerability than CVE-2010-4669)
 
+
+FreeBSD and NetBSD: flood of ICMPv6 Neighbor Solicitation
+                    messages - CVE-2012-5363
+
+  (a different vulnerability than CVE-2011-2393)
+
+  (We're aware that it's possible for the observed IPv6 behavior to
+   have different root causes on FreeBSD and NetBSD.)
+
+
+Mac OS X: flood of ICMPv6 Neighbor Solicitation messages - no CVE
+
+  (There's no CVE assignment from MITRE because the observed impact
+   is potentially reasonable for some design goals. It's possible
+   that there will be a future CVE assignment by Apple.)
+
+
+Windows:  flood of ICMPv6 Router Advertisement packets
+          containing multiple Routing entries - CVE-2012-5364
+
+
+FreeBSD and NetBSD: flood of ICMPv6 Router Advertisement packets
+          containing multiple Routing entries - CVE-2012-5365
+
+
+Mac OS X: flood of ICMPv6 Router Advertisement packets
+          containing multiple Routing entries - CVE-2012-5366
+
+  (We're aware that it's possible for the observed IPv6 behavior to
+   have the same root cause on Mac OS X as on both FreeBSD and
+   NetBSD.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJQdfcdAAoJEGvefgSNfHMdA6UH/0bybnW/n6njAsiscsMCmqFo
+9D8o4PrLrNquI2ybBtTtP0G0OJiGCsFKPDptWROf+T5cMt1BCrX1YC5Mh1wvwWSS
+fIg6gQSTS1D7NNf/gek6vu5geYpfAVMKuHGWl5+6+hHa1KwN1csQOcjGyoo6qGmd
+vb52lZ+Nnt7BqNwEKZjfNvfHIQ60NF0yM8DtDMMe0JTNPF414CO6gqUhdP5kiwtR
+jLOT92EJWoZ2Qi7I8arKvyCEagIl6PhZO84dycFaY1HcUjYpN0EoPTX4kJOdJ3BT
+f8SQilTvuNnYZWDm3kgXb/iSYeHkObfLgfwGDzVh/O2opFlBrU+3cct3oxFoEMw=
+=vWAY
+-----END PGP SIGNATURE-----
