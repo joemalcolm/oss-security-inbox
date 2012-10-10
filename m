@@ -1,34 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/10/5
-Message-Id: <201209101359.28589.geissert@debian.org>
-Date: Mon, 10 Sep 2012 13:59:25 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/2
+Message-ID: <5074FE37.4000905@redhat.com>
+Date: Tue, 09 Oct 2012 22:48:55 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - mcrypt buffer overflow flaw
+CC: Eitan Adler <lists@...anadler.com>
+Subject: Re: CVE Request: gitolite path traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 06 September 2012 15:44:54 Vincent Danen wrote:
-> * [2012-09-06 15:11:27 -0500] Raphael Geissert wrote:
-> >I'm attaching a patch that makes mcrypt abort when the salt is longer
-> >than the temp buffer it uses.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I should have probably mentioned this before for those reviewing the patch 
-(or better, added a comment to the patch):
-Even though the patch checks for salt_size > sizeof(tmp_buf) which is 101, 
-and later the memmove copies to decrypt_general() (src/classic.c)'s 
-local_salt, which is 100-long, the salt_size can't be an odd number (it is 
-decreased by one to make it even-numbered). So, there can't be a one-byte 
-overflow.
+On 10/09/2012 09:45 PM, Eitan Adler wrote:
+> Announcement: 
+> https://groups.google.com/forum/#!topic/gitolite/K9SnQNhCQ-0/discussion
+>
+>  Code change: 
+> https://github.com/sitaramc/gitolite/commit/f636ce3ba3e340569b26d1e47b9d9b62dd8a3bf2
 
-> >I'm attaching another patch that prevents the format string attacks.
+Please
 > 
-> Fantastic, thanks for this.  I suppose the format string issues may
-> require another CVE name?  I'm not sure if they're exploitable or not
-> (no chance right now to look at it further).
+use CVE-2012-4506 for this issue.
 
-I didn't spend much time on them, but none seemed to be exploitable.
+> Hope I did this right ;)
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Yup, only thing better would have been to mention the previous
+gitolite CVE (from April 2011) which is different than this (similar
+but different =).
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQdP40AAoJEBYNRVNeJnmTiKMQAJD4nyKyxX47GWVbrpmv9yRh
+GubQfh4hSPgwCGsWtpw2omON14YHWEWOASdYNSsFs7RXfRVJSsESC0ZSsQVC7y0l
+/JJUIS3Ilv6ih8dcKnyP48/Zpu/gDPOXHoMw7g6Bc5TiXB5NWj8uQCfdMptXB2Fd
+eUk3WfFEBbubZGlmT31589O4pzIFvz5dtrlOnb30HASeHuOCNZdbYN7Ok7/XKIvM
+zgivnqkDbVYDMNhF3qpdQuNau443V7b8FlcjyoYvEqne688RY8U05NEy3/i1fHUI
+1W7qxlgEbtcRPBPkEE9XkQMvAuNBeuMRfAiqLbGr7Q360LRcxnvGUd+OtRogJzuA
+3DLNMuETvgwTWO7KPwPu4y1CCGyK8VUeuQMmtbNZx1S5rBeIhr/QwqPKEplm+Uka
+SSHmdo09YtdV/JIRRM7xsLfSUXIFER8LWchZaGAWg3rvwRtxYTZC0seU+MzSJ58q
++2KVBJpuV3C1DVPlLpjbql8N1emQ5G52cKAI4Fj9Hzdjz/qcUdPVQmN6BnDJ46sY
+jDetuTK5J1M6OiqaNsCDnMMF0gBoN4KQgyNGGbMGedBi2fGqBVgyABE0DVHuX86C
+gWFO0eaHXwavV9uGWkMx+w89JIHuns8VkgtC3BRJmbXM0Pqy9Gz+CJJVyD/kcDxB
+uCf/vwE0iCqyVJU70EJp
+=nzck
+-----END PGP SIGNATURE-----
