@@ -1,24 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/12
-Message-ID: <20120828151944.GB15466@suse.de>
-Date: Tue, 28 Aug 2012 17:19:45 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: Hash collision issue in Mono/C# (similar to Microsoft .NET issue)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/3
+Message-ID: <5074FF55.8030907@redhat.com>
+Date: Tue, 09 Oct 2012 22:53:41 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jérôme Benoit <jerome.benoit@...nouille.com>, henri@...v.fi
+Subject: Re: CVE Request -- claws-mail -- NULL pointer derefence while processing email content.
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The hash collision problem can also be found in the C# Mono implementation.
+On 10/09/2012 01:29 PM, Jérôme Benoit wrote:
+> Hello,
+> 
+> A NULL pointer dereference flaw was found in the format agnostic 
+> email content processing code in claws-mail, an email client (or 
+> MUA) based on GTK+.
+> 
+> References:
+> 
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=862578 [2] 
+> http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2743
+> 
+> 
+> Could you allocate a CVE id for this?
+> 
+> Cheers.
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3414
-describes the issue for the Microsoft .NET runtime, but as the issue
-is also in the Mono implementation it needs a different
-CVE there.
+Just a note, patch is:
+www.thewildbeast.co.uk/claws-mail/bugzilla/attachment.cgi?id=1165
 
-References:
-https://bugzilla.novell.com/show_bug.cgi?id=739119
-https://github.com/mono/mono/commit/2ab1a051058fee5ea3aec2e071fba7000b693488
-https://github.com/mono/mono/commit/c3e088bf2fc22d66d0f17b74676de366f661c3eb
+Please use CVE-2012-4507 for this issue.
 
-Ciao, Marcus
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQdP9VAAoJEBYNRVNeJnmTj8IP/0ibXnI3rSBGq0IIpVAgfMiA
+S54ntRAACeZzehmKtNqfPY/EJX6kbJvXso8PT6Df8NrmbK8ROrehNex0lz0Z3mHk
+Hc882RFoPY31ovJV+2aIt8pMTfkC1ywTQ02w1HbREyl74sP/fA4WGu5cOi8QAJZv
+fLbfVgMax3MyocWwCq09aTrRrM0dxCqSZE/dGWAJslo4T+4m9B9W4hTsUuz+aZpV
+2OD4LtHq+xVg8PguLPwtBztni0Lh4KWYB5yIJ5FiGCKC5i/B1NRW232h7x1bnVSR
+dY+9oj/3KmWhOdWrrPAq33qhbj/ZEa7YdoSeGMVQoEH4FRFiv45Tl3YWFhM4K2fF
+E0V+yw8MbGdTse4R48RUqr9/9QZ4tgqGzPZgz84uHUVHmi37NouY7QybgKUZU0yF
+3d8EMEtzpM5/jeVh4FNZ8zoGRlgebaeWgdZUSl6ZTr53pwvlpFJouhqytuNjblS8
+MSFT5Zp7JLu65wp35vVkuS0brMYlCXcQl9+toL9OoI87xmiFwteaxLP6tzTHsMkS
+749499CkFnv78WofLfCuwNbf32nnaFmPp6hEteQZ62+tKProH7wHQdSOv4omhjFa
+Grxu8zbEWv+ALS2C+HaZJOktLWx4/hCL6josUWt9zfl+U94frZxYNmQDHk+q83ls
+U/iHLmy7Iu1dm0SHWrIZ
+=HeLF
+-----END PGP SIGNATURE-----
