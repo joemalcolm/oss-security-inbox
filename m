@@ -1,35 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/01/4
-Message-ID: <4F008A0C.9050708@pipping.org>
-Date: Sun, 01 Jan 2012 17:30:04 +0100
-From: Sebastian Pipping <sebastian@...ping.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/5
+Message-ID: <20121010051333.GA5455@kludge.henri.nerv.fi>
+Date: Wed, 10 Oct 2012 08:13:33 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: mpack 1.6 allows eavesdropping on mails sent by other users
+Subject: Re: CVE request: Joomla two XSS vulnerabilities fixed in 2.5.7
 Content-Type: text/plain; charset=utf-8
 
-On 12/31/2011 08:39 PM, Sebastian Pipping wrote:
-> Affected distros
-> ================
-> So far I have superficially tested the latest editions of three major
-> distros.  The results:
-> 
->  - Debian (1.6-7):   vulnerable
-> 
->  - Gentoo (1.6-r1):  vulnerable
-> 
->  - FreeBSD (1.6):    vulnerable  (part 2 and after if split,
->                                   see details)
+On Tue, Oct 09, 2012 at 10:58:11PM -0600, Kurt Seifried wrote:
+> I'm wondering,there seems to be some gaps in Joomla CVE assignments,
+> are there other Joomlas that need CVEs as well?
 
-Add to that list:
+Probably. I have been requesting these once I notice CVE is missing. It would help a lot if Joomla would put CVEs to advisories once assigned. This list also contains lots of issues, which needs verification and coordination: http://docs.joomla.org/Vulnerable_Extensions_List
 
-   - OpenBSD (1.5):    vulnerable  (part 2 and after)
+Usually Joomla does not reply to emails sent to address security@j<snip>.org (other than autoreply).
 
-   - Gentoo (1.5):     vulnerable
-
-   - Gentoo (1.5-r1):  vulnerable  (part 2 and after)
-
-Best,
-
-
-
-Sebastian
+- Henri Salo
