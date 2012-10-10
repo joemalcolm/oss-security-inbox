@@ -1,104 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/4
-Message-ID: <507EE4E7.5070601@redhat.com>
-Date: Wed, 17 Oct 2012 11:03:35 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/11
+Message-Id: <201210102312.35755.timb@nth-dimension.org.uk>
+Date: Wed, 10 Oct 2012 23:12:25 +0100
+From: Tim Brown <timb@...-dimension.org.uk>
 To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
+Cc: security@....org
+Subject: Pre-advisory for Konqueror 4.7.3 (other versions may be affected)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Taken from NDSA20121010:
 
-On 10/17/2012 04:25 AM, Matthias Weckbecker wrote:
-> On Wednesday 17 October 2012 11:44:35 Fabian Keil wrote:
->> Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
->>> On 10/16/2012 08:40 AM, Matthias Weckbecker wrote:
->>>> Technically, this would also apply to Perl (at least with
->>>> 5.12.3).
->>> 
->>> It's also the case with perl 5.14.2 (just tested). :/
->> 
->> At least for Perl I consider this a feature.
->> 
-> 
-> I agree. I also think that an application which lets such things
-> happen (ie allow arbitrary content to be passed to open()) is
-> rather to blame than the language (/interpreter) itself. But the
-> same applies to Ruby, IMO.
+--8<--------
+This advisory comes in 4 related parts:
 
-One thought is if you're interfacing to things like file systems which
-generally don't handle NUL bytes in file names[filesystems] I would
-hope the programming language does the smart thing and spit out an
-error. Avtually looking at that page it appears that no modern file
-systems allows NUL in a file name (and in general I suspect it's a bad
-idea/leads to some nasty edge case issues).
+1) The Konqueror web browser is vulnerable to type confusion
+leading to memory disclosure.  The root cause of this is the
+same as CVE-2010-0046 reported by Chris Rohlf which affected
+WebKit.
 
-[filesystems]
-http://en.wikipedia.org/wiki/Comparison_of_file_systems
+2) The Konqueror web browser is vulnerable to an out of bounds
+memory access when accessing the canvas.  In this case the
+vulnerability was identified whilst playing with bug #43813 from
+Google's Chrome repository.
 
-Plus I'm looking for documentation on this, in ruby for example:
+3) The Konqueror web browser is vulnerable to a NULL pointer
+dereference leading to a crash.
 
-http://www.ruby-doc.org/stdlib-1.9.3/libdoc/pathname/rdoc/Pathname.html
+4) The Konqueror web browser is vulnerable to a "use-after-free"
+class flaw when the context menu is used whilst the document
+DOM that is being changed from within Javascript.
 
-===============
-Create a Pathname object from the given String (or String-like
-object). If path contains a NUL character (\0), an ArgumentError is
-raised.
-===============
+These flaws were identified during an analysis of previously
+reported vulnerabilities that affected Google's Chrome web
+browser.  It is believed that only vulnerability 1 is/was common
+to the two code bases.
 
-and I would have generally assumed that to be the case across all
-related functions.
+--8<--------
 
-As for Perl:
+I'm pre-advising on these flaws since I've not heard anything from the KDE 
+project in about 8 months regarding 3 and 4 and we are aware that 1 and 2 have 
+been fixed.  I'll give it 7 days and then drop technical details.  Vendors with 
+an interest can contact me off list.
 
-http://perldoc.perl.org/perlopentut.html
+Tim
+-- 
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
 
-===============
-If magic open is a bit too magical for you, you don't have to turn to
-sysopen. To open a file with arbitrary weird characters in it, it's
-necessary to protect any leading and trailing whitespace. Leading
-whitespace is protected by inserting a "./" in front of a filename
-that starts with whitespace. Trailing whitespace is protected by
-appending an ASCII NUL byte ("\0" ) at the end of the string.
-
-This assumes, of course, that your system considers dot the current
-working directory, slash the directory separator, and disallows ASCII
-NULs within a valid filename.
-===============
-
-So as we can see from the file system comparison table this is almost
-always the case.
-
-I think it's disingenuous to blame every app that uses something as
-common as "open" for doing something dangerous when it's pretty clear
-that this behaviour is not expected, I think solving it in open/etc
-makes a lot more sense than trying to fix every app that uses open
-(which is.. probably all of them).
-
-Personally I think the perlopentut case makes sense, using NUL as an
-end of string marker. What happens if stuff comes after it though?
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQfuTnAAoJEBYNRVNeJnmT17kP/iLt6rkgsqZC5dixAaNhoy9K
-fsOfw5m0qgG1mUYzs0MHGN+PV4IQDlOrils7y/uuqHAKcacdf+goJio6l9rLcXQG
-X9eHEvqa4bibKHZ2fYJzaPD+5dyvytOZ4EqkJ/MTbpHAjA7ySI1EsVAa0SFlXsvH
-rffPCK+clqcTiXpvh3nhrprZo7r5pElyndVKFEiKvbEb8pqQVE1B3sZ2Q2xdhk70
-zcMyy1aM0dSWxR2YtGJI7pmueJiU4BXHocsA/xM6RJuiWtS1bBykpclTDZ9SEYqQ
-KTyjevVp0pnjRj+qh0xY1fctEyN5KYZg9DL5Y7XVUWVrFXWKPxe+CyOIyZBWXqwC
-6bTV0Y20jdQB5VpxhyTOAajeRmLHPmrFGqP+AxGGUQQZDAqvr6i3z88+0tJLqUiz
-29O4DcCg/HrCBt0h24SPEJvR4xJCEo0KeFcOwD2qfWo5kLt+eNyEmF3afreG6jPL
-hxKU4xH9rQTr4xWsJvCLe6iOc1u0iEszpjz5ofNmJkkj1m9r04fNeAMpO0f0lWla
-WJ10M9P6wwbVQSk81cMwFEhWJLjgiKLgd8+dk1A8lkfF/ndCUyKuPHTgfHyEI6QM
-SchAdfU9U4FSEzd+58dBR5vGK0NKZLOd5Lb5ya16aZ2cNas0tyfbPRyl5HOOPjvK
-Yc10u8KplHE0xWXhv0u2
-=7EkV
------END PGP SIGNATURE-----
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
