@@ -1,66 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/05/2
-Message-ID: <4FA5BDF0.4040103@redhat.com>
-Date: Sat, 05 May 2012 17:55:28 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Debian/Ubuntu php_crypt_revamped.patch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/9
+Message-ID: <20121010183922.GA21996@openwall.com>
+Date: Wed, 10 Oct 2012 22:39:22 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fwd: IPv6 DOS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 05/04/2012 11:35 AM, Solar Designer wrote:
-> On Fri, May 04, 2012 at 10:08:53AM -0600, Kurt Seifried wrote:
->> So I'm guessing this needs a CVE #?
-> 
-> The purpose of my posting wasn't to request a CVE id (although you
-> may provide one), but rather to notify Ubuntu and others of the
-> Debian bug that they may need to fix in Debian-derived distros, and
-> to suggest that the patch be dropped from future versions.
-> 
-> Speaking of CVE, though, I think that yes - this deserves one.
-> This is a security issue in two ways:
-> 
-> 1. User authentication in some PHP apps may turn from fail-close
-> to fail-open.
-> 
-> 2. If a PHP app actually makes use of PHP crypt()'s ability to
-> generate random salts (when no salt is provided), then empty
-> strings may be generated in place of hashed passwords for newly
-> set/changed passwords. Combined with #1 above, this may mean that
-> authentication with any password will then succeed against such
-> accounts.
-> 
-> Since I expect that Ubuntu will fix this in a PHP update for 11.04,
-> I guess they'll want to refer to a CVE id in the advisory.
-> 
-> Thanks,
-> 
-> Alexander
+Thanks for posting this, Marc.
 
-Please use CVE-2012-2317 for this issue.
+On Wed, Oct 10, 2012 at 06:55:07PM +0200, Marc Heuse wrote:
+> (I am sitting on this for over a half year now, sorry for that)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Just to clarify: this "half a year" delay occurred before Marc notified
+the distros list, which he did on September 20.  (I was not aware of
+Marc's work on this before that date either.)  Thus, as far as the
+distros list is concerned, the issues were reported to distro vendors and
+embargoed for 20 days, which is a slight violation of the list's policy
+(14 to 19 days max, depending on day of week).  I apologize for this.
+I did not insist on Marc disclosing the issues publicly sooner than he
+wanted to for reasons similar to what we had with hashDoS last year
+(just a DoS, which the researchers wanted to disclose at a certain con),
+although I did remind him and recommend posting to oss-security sooner,
+so that I wouldn't have to apologize. ;-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+It appears that vendors did not care to patch mere IPv6 DoSes promptly
+enough anyway, so the embargo did not help.
 
-iQIcBAEBAgAGBQJPpb3sAAoJEBYNRVNeJnmTMKYP/2xzCpV+UpDSj4TjY5nx4vzj
-yp5qt2jLWvb36/mZE4QfamIcp8jARGDSQPkFQ/dY5sjn/fTpdKzBVNbFvDcHTwuu
-nfsPp1owlXrqW3SPVTpUjl+FpeRIdWhYoj3H5Le2vFkWVxjwt7CmJEITU88lr3/8
-fklX1RMqVEy7EPWjnLmfvO4oLa9d2FrB2R3EnYPt32zxSJZEIBIqladGIHpiJTS/
-f+IuRjHvNJUODQ+Bz+Rh/CONwPXUXVqAft75FHIkAg/8SxZ2ILd5kDX7uh3quWvj
-5U2TleRNEF024DWvo4yt20gvPGRH+eSTBOnZqNfjPJk6vAJutyGuMam0LnEni6ht
-WSRFj78xnlBcw8BX5kYEeNviTDUGC1nN45cymEOtFrwsHlz+rJ1A0IaDNlSnmCN8
-OnhWTkmLc4vq74gPc6omgd/C76xrtTEGFgFpYEY3Fl9SN3hyuW5QxYVqIFOob4RP
-4X1aYFpoc1RV6ow3Q8VIy8cTqK7rPD5mME5AGBrXg0gwH94mroaVfEyNDtX6GWY7
-yea9WJB5LsaSDhg4WQe7is7V0MgMFz4PHOtFWyeeNFHAadXSz8KTUqX1CJCeWY2q
-6a6R7p8PTDpJnTtnXFZQKXRpqDlNXaQyNlYHCQwwjIXwLExBqvKdoBaCpezNPn6d
-vR2zG4anSx0QbFTZga9Z
-=8hhh
------END PGP SIGNATURE-----
+Notifying the distros list closer to the intended public disclosure date
+would be more appropriate - it would reduce the window of partial
+exposure.  Not providing any advance notification would be even better
+in this specific case (since apparently no action was taken anyway), but
+this was impossible to know reliably in advance.
+
+Thanks again,
+
+Alexander
