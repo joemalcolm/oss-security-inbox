@@ -1,48 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/23/2
-Message-ID: <20120923025947.GA6812@openwall.com>
-Date: Sun, 23 Sep 2012 06:59:47 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/6
+Message-ID: <20121010115913.1df9442e@eldamar.bigon.be>
+Date: Wed, 10 Oct 2012 11:59:13 +0200
+From: Laurent Bigonville <bigon@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: tiff2pdf: Heap-based buffer overflow due to improper initialization of T2P context struct pointer
+Subject: CVE request: sSMTP doesn't validate server certificates
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 19, 2012 at 08:15:59AM +0530, Huzaifa Sidhpurwala wrote:
-> I found the following flaw in the tiff2pdf tool, shipped with libtiff:
-> 
-> A heap-based buffer overflow flaw was found in the way tiff2pdf, a TIFF
-> image to a PDF document conversion tool, of libtiff, a library of
-> functions for manipulating TIFF (Tagged Image File Format) image format
-> files, performed write of TIFF image content into particular PDF
-> document file, when not properly initialized T2P context struct pointer
-> has been provided by tiff2pdf (application requesting the conversion)
-> as one of parameters for the routine performing the write. A remote
-> attacker could provide a specially-crafted TIFF image format file, that
-> when processed by tiff2pdf would lead to tiff2pdf executable crash or,
-> potentially, arbitrary code execution with the privileges of the user
-> running the tiff2pdf binary.
-> 
-> This issue has been assigned CVE-2012-3401.
-> 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=837577
-> 
-> The relevant patch for the issue has been applied to upstream
-> libtiff-4.0.2 branch
+Hi,
 
-This is finally patched in 4.0.3:
+It seems that sSMTP is not checking the server certificate when
+connecting. This is quite annoying as one of the main ssmtp purpose is
+to be used on satellite systems that could be connected to untrusted
+networks.
 
-http://www.remotesensing.org/libtiff/v4.0.3.html
+This has been reported (with a proposed patch) to the Debian BTS (see
+[0])
 
-Frank Denis additionally noted:
+Could you please allocate a CVE number for this?
 
-http://twitter.com/jedisct1/status/249699555115945984
+Cheers
 
-"libtiff 4.0.3 brings "various memory buffer access fixes". Does it fix
-more than CVE-2012-3401?"
+Laurent Bigonville
 
-to which I have no answer.  The change log does in fact mention
-"Various memory buffer access fixes." as the very first change listed
-for libtiff.  Perhaps someone should review code changes.
-
-Alexander
+[0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=662960
