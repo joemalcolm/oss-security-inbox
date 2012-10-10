@@ -1,46 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/9
-Message-ID: <50617418.5010308@redhat.com>
-Date: Tue, 25 Sep 2012 14:36:32 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
-Subject: CVE Request: libtiff: Heap-buffer overflow when processing a TIFF image with PixarLog Compression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/10
+Message-ID: <20121010212059.GB2676@redhat.com>
+Date: Wed, 10 Oct 2012 15:20:59 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: libsocialweb untrusted connection to flickr
 Content-Type: text/plain; charset=utf-8
 
-On 09/23/2012 08:29 AM, Solar Designer wrote:
+A similar request was made last year for libsocialweb connecting to
+Twitter, and it seems to be doing the same to Flickr now (probably has
+been all this time).
 
-> "libtiff 4.0.3 brings "various memory buffer access fixes". Does it fix
-> more than CVE-2012-3401?"
-> 
-> to which I have no answer.  The change log does in fact mention
-> "Various memory buffer access fixes." as the very first change listed
-> for libtiff.  Perhaps someone should review code changes.
-> 
+Same situation: opens an HTTP (non-SSL) connection to Flickr when no
+Flickr account is configured, and without the user's permission or
+knowledge.
 
-I had a look at the libtiff-4.0.3 commit logs and found one issue which
-seems to bring a possibility of heap-based buffer overflow when using a
-tiff file with PixarLog compression format.
+Could a CVE be assigned to this (or has one been assigned already)?
 
-More details at:
-https://bugzilla.redhat.com/show_bug.cgi?id=860198
+Request for the Twitter issue is here (for reference):
 
-Though memory overwrite outside the heap-buffer is only a few bytes, one
-cannot really overwrite possible arbitrary code execution.
+http://www.openwall.com/lists/oss-security/2011/11/09/3
 
-Can a CVE id be please assigned to the above flaw?
+and the Red Hat bug:
 
-Found two other commits which seemed interesting, but i dont think
-they could cause arbitrary code execution and i dont want to call
-them security flaws.
+https://bugzilla.redhat.com/show_bug.cgi?id=863206
 
-1. OOB read crash tif_packbits.c
-2. Memory not properly initialised in tif_fax3.c. Again this one was
-partly fixed in 4.0.2 and completely fixed in 4.0.3
-
-If anyone else wants to investigate these in more details, please be my
-guest :)
-
-Thanks!
+Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
