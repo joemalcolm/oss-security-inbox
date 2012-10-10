@@ -1,30 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/09/2
-Message-ID: <20121009141735.GA14158@openwall.com>
-Date: Tue, 9 Oct 2012 18:17:35 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/8
+Message-ID: <5075A86B.6080607@mh-sec.de>
+Date: Wed, 10 Oct 2012 18:55:07 +0200
+From: Marc Heuse <mh@...sec.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: password hashing
+CC: Solar Designer <solar@...nwall.com>
+Subject: Fwd: IPv6 DOS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 08, 2012 at 08:15:52AM -0400, Josh Bressers wrote:
-> Can I ask how these are licensed? I can see a use to borrow some of these
-> slides for presentations.
+Alexander kicked me several times in the ass to finally forward this
+email to oss-security as the embargo time is gone ... so here it is.
 
-I hadn't thought of putting my slides under a specific license before,
-but I'm happy to permit reuse given proper attribution.  Perhaps one of
-the Creative Commons licenses would be it, please feel free to suggest
-one if you like.
 
-Also, reuse of individual slides may fall under fair use, like I am
-reusing a slide on multi-factor authentication from Duo Security's
-presentation (I had informed Dug Song of my intent to reuse the slide,
-though):
+-------- Original-Nachricht --------
+Betreff: IPv6 DOS vulnerabilities
+Von: Marc Heuse <mh@...sec.de>
+An: Microsoft Security Response Center <secure@...rosoft.com>,
+security-officer@...eBSD.org, product-security@...le.com
+Kopie (CC): distros@...openwall.org
 
-http://www.openwall.com/presentations/PHDays2012-Password-Security/mgp00042.html
+Hi folks,
 
-BTW, here is the original:
+this is just a short, quick email about two unspectecular IPv6
+implementation weaknesses that result in local network denial-of-service
+issues in Windows, *BSD (Free and Net, Open not tested) and OS X.
+distros@ is in cc: for information purposes, although it seems that
+Linux is not affected, you might want to test though as I have only
+tested this with a 2.6.x kernel.
 
-https://speakerdeck.com/u/duosec/p/modern-two-factor-authentication-defending-against-user-targeted-attacks
 
-Alexander
+Issue #1:
+
+Flooding the local target with ICMPv6 Neighbor Solicitation messages.
+As this is handled by the kernel, it consumes all CPU power that is
+there, leaving no or too little CPU for the user space.
+
+All except of OS/X went to 100% CPU, OS X went to 60%+ on a QuadCore
+Macbook Pro. But my test machine was not able to produce enough packets
+to even closely get to the satturation point of the network, so the 100%
+CPU might be reachable there too.
+
+In short: a fast multicore CPU helps to negate the impact (unless you
+are Windows, then this does not help).
+
+Test tool: flood_solicate eth0 <IPv6-Linklocal-Address-of-Target>
+(from the package at www.thc.org/thc-ipv6)
+
+
+Issue #2:
+
+Flooding the local network with ICMPv6 Router Advertisement packets
+containing multiple Routing entries result in either 100% CPU (Windows
+all Versions with IPv6 enabled) or some noticable CPU impact however
+IPv6 seem to break for *BSD and OS X. The BSD based systems do not reply
+to any ICMPv6 Neighbor Solicitation requests anymore, when trying to
+send locally from the victim systems you get errors (e.g. "connect
+failed" or "no multicast address on interface")
+
+(yes, this is basically a similar issue like RA flooding with autoconfig
+prefixes from two years ago)
+
+I have an unreleased test tool for this attack, if necessary I can
+package it and send it if needed.
+
+
+(I am sitting on this for over a half year now, sorry for that)
+
+Greets,
+Marc
+
+--
+Marc Heuse
+www.mh-sec.de
+
+PGP: FEDD 5B50 C087 F8DF 5CB9  876F 7FDD E533 BF4F 891A
