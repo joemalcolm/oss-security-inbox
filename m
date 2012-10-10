@@ -1,81 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/18
-Message-ID: <CAOtvbJwqQVJQb2jZvw-gZvSzxbdbsTtStu5Cr3K7SicmUV-yTg@mail.gmail.com>
-Date: Mon, 27 Feb 2012 11:28:35 +0100
-From: Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/7
+Message-ID: <209066437.8660003.1349870088343.JavaMail.root@redhat.com>
+Date: Wed, 10 Oct 2012 07:54:48 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>,  Radoslaw Lisowski <radoslaw.lisowski@...il.com>, kontakt@...antsoft.pl
-Subject: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+Subject: Re: password hashing
 Content-Type: text/plain; charset=utf-8
 
-Hi.
+----- Original Message -----
+> On Mon, Oct 08, 2012 at 08:15:52AM -0400, Josh Bressers wrote:
+> > Can I ask how these are licensed? I can see a use to borrow some of
+> > these slides for presentations.
+> 
+> I hadn't thought of putting my slides under a specific license before,
+> but I'm happy to permit reuse given proper attribution.  Perhaps one of
+> the Creative Commons licenses would be it, please feel free to suggest
+> one if you like.
+> 
 
-I'm forwarding this mail to bug reported, Mateusz Goik
-(aliantsoft.pl). He said that he will take care of CVE identifier
-after Kadu 0.11.1 is released (it is available since late Saturday).
+I'm a fan of the CC BY-SA license (Attribution, ShareAlike). That generally
+keeps the riffraff away ;)
 
-Regards
+Thanks.
 
-
-W dniu 27 lutego 2012 11:05 użytkownik Jan Lieskovsky
-<jlieskov@...hat.com> napisał:
-> Hello Mariusz, Kurt, Steve, vendors,
->
->  [1] though https://bugzilla.novell.com/show_bug.cgi?id=749036#c0
->  mentions CVE identifier has been already requested for this:
->
->  "The bug still doesn't have CVE number but will have in near future."
->
->  it doesn't look like CVE id has been requested for this via OSS
->  security list, so moving this discussion / CVE request there.
->
->  Mariusz, could you clarify, if this issue has got a CVE identifier
->  already or if we still need one? If aren't able to do so, whom
->  should we contact to be clear about "CVE request status" for this?
->
->  Or at least clarify which list that "Here is a part of massage sent
->  by developers to package maintainers:" has been sent to? (so
->  we could ask there)
->
->  And in the end either use that one, already allocated or allocate
->  a new one here via OSS.
->
->  Below being issue description as I got it based on / from [2]:
->
->  A stored cross-site scripting (XSS) flaw was found in the way Kadu, the
-> instant
-> messenger compatible with the Gadu-Gadu protocol, performed sanitization of
-> status and sms messages for particular contact in user's history. A remote
-> attacker could provide a specially-crafted status or sms message, which
-> would
-> be stored in victim's Kadu history file, if the attacker was present on the
-> contact list of the victim and the victim has had storage of statuses
-> enabled
-> for their history file. When the victim later examined the content of the
-> status history, this flaw could lead to arbitrary HTML or webscript
-> execution.
->
-> References:
-> [2] https://bugzilla.novell.com/show_bug.cgi?id=749036
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=797777
->
-> Upstream patches:
-> [4]
-> https://gitorious.org/kadu/kadu/commit/ebe3674cf0f3aa9b36308c06e19cb293cc790b52
->    (patch for the XSS issue)
->
-> [5]
-> https://gitorious.org/kadu/kadu/commit/e9506be6d3dcdd408fdf83d8eb82416c9b798c84
->    (additional hardening)
->
-> [6]
-> https://gitorious.org/kadu/kadu/commit/91772e46541e22cbc2c7bf41a1a9798c2a58f6d6
->    (disable xhtmlrequests)
->
-> [7]
-> https://gitorious.org/kadu/kadu/commit/94e7479617d78a1649a0763960edade7ad09a0d0
->   (allow only GET and HEADER requests, additional hardening)
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
