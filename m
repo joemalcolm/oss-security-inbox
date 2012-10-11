@@ -1,29 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/7
-Message-ID: <4FA7EFAE.8080706@redhat.com>
-Date: Mon, 07 May 2012 09:52:14 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/9
+Message-ID: <5076FDFB.6030607@redhat.com>
+Date: Thu, 11 Oct 2012 11:12:27 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Mark Doliner <mark@...gant.net>
-Subject: Re: CVE request: A Pidgin remote crash
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Doug Ledford <dledford@...hat.com>, Sean Hefty <sean.hefty@...el.com>
+Subject: Re: CVE Request -- librdmacm (one issue) / ibacm (two issues)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/06/2012 11:40 PM, Mark Doliner wrote:
-> Could I request that a CVE be issued for a possible 
-> remotely-triggerable crash in Pidgin? To my knowledge no CVE
-> exists for this issue. The issue is described at 
-> http://pidgin.im/news/security/?id=63
+On 10/11/2012 09:47 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> The Pidgin project has just released version 2.10.4 which fixes
-> the
-issue.
+> multiple issues has been found in tools enabling InfiniBand
+> functionality:
 > 
-> Thanks, Mark
+> Issue #1 librdmacm - Tried to connect to port 6125 if ibacm.port
+> was not found: 
+> ===============================================================================
+>
+> 
+A security flaw was found in the way librdmacm, a userspace RDMA
+Communication
+> Managment API allowing to specify connections using TCP/IP
+> addresses even though it opens RDMA specific connections, performed
+> binding to the underlying ib_acm service (librdmacm used default
+> port value of 6125 to bind to ib_acm service). An attacker able to
+> run a rogue ib_acm service could use this flaw to make librdmacm
+> applications to use potentially bogus address resolution
+> information.
+> 
+> References: https://bugzilla.redhat.com/show_bug.cgi?id=865483 
+> Upstream patch:
+> http://git.openfabrics.org/git?p=~shefty/librdmacm.git;a=commitdiff;h=4b5c1aa734e0e734fc2ba3cd41d0ddf02170af6d
+>
+>  Credit: This issue was discovered by Florian Weimer of Red Hat
+> Product Security Team.
 
-Please use CVE-2012-2318 for this issue.
+Please use CVE-2012-4516 for this issue.
+
+> Issue #2 ibacm - DoS (ib_acm deamon crash) by joining responses for
+> multicast destinations: 
+> ===========================================================================================
+>
+> 
+A denial of service flaw was found in the way ibacm, an InfiniBand
+communication manager
+> assistant, performed management of reference counts for multicast
+> connections. The default reference count value for multicast
+> connection is set to zero and when the multicast connection got
+> released, an attempt was made to free it, possibly resulting in
+> ib_acm service / daemon crash.
+> 
+> References: https://bugzilla.redhat.com/show_bug.cgi?id=865492 
+> Relevant upstream patch:
+> http://git.openfabrics.org/git?p=~shefty/ibacm.git;a=commit;h=c7d28b35d64333c262de3ec972c426423dadccf9
+>
+>  Issue previously corrected by upstream and its security
+> implications pointed out later by Florian Weimer of Red Hat Product
+> Security Team.
+
+Please use CVE-2012-4517 for this issue.
+
+> Issue #3 ibacm - ib_acm service files created with world writable
+> permissions (DoS): 
+> ====================================================================================
+>
+> 
+A security flaw was found in the way ibacm, an InfiniBand communication
+manager
+> assistant, created files used by ib_acm service - they were created
+> with world writable permissions. A local attacker could use this
+> flaw to 1) overwrite content of ib_acm daemon log file or 2)
+> overwrite content of ib_acm daemon ibacm.port file (ability to mask
+> certain actions or cause ib_acm to run on non-default port).
+> 
+> References: https://bugzilla.redhat.com/show_bug.cgi?id=865499 
+> Relevant upstream patch:
+> http://git.openfabrics.org/git?p=~shefty/ibacm.git;a=commit;h=d204fca2b6298d7799e918141ea8e11e7ad43cec
+>
+>  Credit: This issue was discovered by Florian Weimer of Red Hat
+> Product Security Team.
+
+Please use CVE-2012-4518 for this issue.
+
+> --
+> 
+> Could you allocate CVE identifiers for these?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -31,19 +101,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJPp++uAAoJEBYNRVNeJnmTUYsQAMbx+5ga0uwTFsECcUOPdtSt
-Jj5BmzmL4m+MPJvoXnaf8L4tPwj1U+Rw8sMwOZmBHLV+Yok29OebnDC62Uds4fEF
-GMolbQDAb+WaVQwte0BFO4kKTtkT/A4VDMEmcdeZDlXInU0nX3dP3Qbkv9hoOzy8
-7uy/dwFve0os0cTk/b8/+OMwDOeBg/14dMLJcJ9eiomU1pPfvCLMw1Rx/KlbN5P6
-XMyfC5d4KK8Bh/M4uM/T/eP541ZKnCFJ5Y1XV7a1pKlYi5tef1IUvw2w5sxUgmU6
-9S8a8OWoXrQc+Iunl2jTVWsztT7zmVl/JTafUNwProY/L80iQfIB7vx+DLF04R7i
-NbimTuQhYK7lpXW8bLA58d+hkUdzfBEiMxgoVrGi20ishblpwtETz3eIcaT6g7i6
-yx/Pjh/fTzf4VbFBvKOYmnCrnDFjUU4Ui9sE9TCfwFP36IFYPknfLoHWWRVTduLi
-8E0ILj5+7R6OMYDrzUWoUZxTMzComBF93TWFt+kjlQvxeEpjs7UFRLlaWfeGSYEG
-khW0S55D2ZoeBIq6bY+Kx6T0OmPSoJ/WwovQjx/Da/FV20KG9KExLsvdL9KEGm+B
-TUz0zeSmaBtoc3aPq48WaHmq6VbGuwfbQnW8LPEFWp0eJ96fra02262YWUt8XT7S
-LLOcXUj+FSKMcnHVwkZl
-=zwKk
+iQIcBAEBAgAGBQJQdv36AAoJEBYNRVNeJnmTJaIQANaqPPVCYigZ6jDEWWbr5DZe
+I4k5zsP24O4d0tA8WwuPffIK9AxTqKkU8K1426/qBi98dtDyPFT6b/OL5wV8ldD/
+NuLn89IwXw2zT4pmQRE+F5ftDirFdxuV6hivmDoipqrVYce+D7pzCQ/wSmmyuAhl
+eIWPgtsntXeMAFJUe5IsKSdHT2UN+dEikv87e9E9u6rDPr/SJkXfkxONhG7oofVP
+orMEcxJ2PZyeKK9YlKlGN2cD0hmAOh/5lHPxFTMWB9OUCEpXWIwRJN1hyn5zJ24g
+VpruCUXWpp3XLUM11iAfRd9/62CPMFKk623Ez3ncbUSJDDgHSY/CJGIFPeZU2uKJ
+DN4EB5DOjwTAhTjwamFcenxzqRGnuvwPKhdqmkZSyjX6Qgnwl/3sOhFt2ABzxem3
+sN5pk45d/oRPYql5bbuK9F/L0tvCh+kaj5H5Tdr3M8ofWLdcYL+fyrVIOIapReU9
+gPPjpX3T//Wy8HTsd0fZTQlfrdOF33JO9ZDo17Hnum0ubaTaUVy1dbxjk+6xyJ5Y
+H5WGk1Cc23Wflm8ZAowe53m3gTC9uXMdGRNmXJE3cW0m1OR4AVUZyrFK04c/q5Kc
+q0qHFond/61xSsoUuL/MnJvjDST6AO164RH+1ZQKFtYwnfqCH7T3mP57eIlOqxXf
+NgkPXAe26BihRRPHBTmH
+=jiA3
 -----END PGP SIGNATURE-----
