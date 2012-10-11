@@ -1,32 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/19/1
-Message-ID: <20120519184707.GA8073@kludge.henri.nerv.fi>
-Date: Sat, 19 May 2012 21:47:07 +0300
-From: Henri Salo <henri@...v.fi>
-To: Touko Korpela <touko.korpela@....fi>
-Cc: fabrice.fontaine@...nge.com, oss-security@...ts.openwall.com
-Subject: Re: libupnp buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/6
+Message-ID: <295875159.13372001.1349970479301.JavaMail.root@redhat.com>
+Date: Thu, 11 Oct 2012 11:47:59 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Florian Weimer <fweimer@...hat.com>, Doug Ledford <dledford@...hat.com>, Sean Hefty <sean.hefty@...el.com>
+Subject: CVE Request -- librdmacm (one issue) / ibacm (two issues)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 18, 2012 at 10:22:52PM +0300, Touko Korpela wrote:
-> On Fri, May 18, 2012 at 08:43:52PM +0200, Florian Weimer wrote:
-> > * Touko Korpela:
-> > 
-> > > Upstream changelog for libupnp (/usr/share/doc/libupnp6/changelog.gz) lists
-> > > many fixes for buffer overflows in version 1.6.16. Should this be added to
-> > > tracker and check if CVE number is allocated?
-> > 
-> > It seems that the list of issues is fairly long.  Have you got a list
-> > of source code commits?
-> 
-> Unfortunately, no. I only noticed this from the changelog.
-> Maybe maintainer and/or upstream can tell if this can be exploited.
+Hello Kurt, Steve, vendors,
 
-Fabrice replied: 
-"""
-Those issues were found by Coverity (http://www.coverity.com). Coverity affects CWE identifiers like CWE-170 but I haven't kept the CWE identifiers of all the fixed bugs.
-"""
+  multiple issues has been found in tools enabling InfiniBand functionality:
 
-Did you Fabrice verify if these had security impact? I can try to help if needed.
+Issue #1 librdmacm - Tried to connect to port 6125 if ibacm.port was not found:
+===============================================================================
+  A security flaw was found in the way librdmacm, a userspace RDMA Communication
+Managment API allowing to specify connections using TCP/IP addresses even though
+it opens RDMA specific connections, performed binding to the underlying ib_acm
+service (librdmacm used default port value of 6125 to bind to ib_acm service).
+An attacker able to run a rogue ib_acm service could use this flaw to make
+librdmacm applications to use potentially bogus address resolution information.
 
-- Henri Salo
+References: https://bugzilla.redhat.com/show_bug.cgi?id=865483
+Upstream patch: http://git.openfabrics.org/git?p=~shefty/librdmacm.git;a=commitdiff;h=4b5c1aa734e0e734fc2ba3cd41d0ddf02170af6d
+
+Credit: This issue was discovered by Florian Weimer of Red Hat Product Security Team.
+
+Issue #2 ibacm - DoS (ib_acm deamon crash) by joining responses for multicast destinations:
+===========================================================================================
+  A denial of service flaw was found in the way ibacm, an InfiniBand communication manager
+assistant, performed management of reference counts for multicast connections. The default
+reference count value for multicast connection is set to zero and when the multicast connection
+got released, an attempt was made to free it, possibly resulting in ib_acm service / daemon
+crash.
+
+References: https://bugzilla.redhat.com/show_bug.cgi?id=865492
+Relevant upstream patch: http://git.openfabrics.org/git?p=~shefty/ibacm.git;a=commit;h=c7d28b35d64333c262de3ec972c426423dadccf9
+
+Issue previously corrected by upstream and its security implications pointed out later
+by Florian Weimer of Red Hat Product Security Team.
+
+Issue #3 ibacm - ib_acm service files created with world writable permissions (DoS):
+====================================================================================
+  A security flaw was found in the way ibacm, an InfiniBand communication manager
+assistant, created files used by ib_acm service - they were created with world
+writable permissions. A local attacker could use this flaw to 1) overwrite content
+of ib_acm daemon log file or 2) overwrite content of ib_acm daemon ibacm.port file
+(ability to mask certain actions or cause ib_acm to run on non-default port).
+
+References: https://bugzilla.redhat.com/show_bug.cgi?id=865499
+Relevant upstream patch: http://git.openfabrics.org/git?p=~shefty/ibacm.git;a=commit;h=d204fca2b6298d7799e918141ea8e11e7ad43cec
+
+Credit: This issue was discovered by Florian Weimer of Red Hat Product Security Team.
+
+--
+
+Could you allocate CVE identifiers for these?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
