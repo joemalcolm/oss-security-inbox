@@ -1,65 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/15
-Message-ID: <20121029220152.GA2566@hunt>
-Date: Mon, 29 Oct 2012 23:01:52 +0100
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/5
+Message-ID: <20121011154355.GC2676@redhat.com>
+Date: Thu, 11 Oct 2012 09:43:55 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Strange CVE situation (at least one ID should come of this)
+Subject: Re: CVE request: sSMTP doesn't validate server certificates
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 29, 2012 at 02:01:24PM -0600, Kurt Seifried wrote:
-> So the first question I have is:
-> 
-> Q1) Do we need to audit software to prove that it is vulnerable? Or is
-> a statistical model enough? e.g. for PHP based web plugins, not
+* [2012-10-10 11:59:13 +0200] Laurent Bigonville wrote:
 
-I can't argue against the statistical model though it does rather reduce
-the value of CVE as naming a specific vulnerability if they start getting
-assigned for "eww this smells". There may be one easily exploitable
-remote root flaw, there may be thousands of reliability and information
-disclosure flaws, but hiding them all under one "old and stinky" CVE
-doesn't feel like a significant improvement.
+>Hi,
+>
+>It seems that sSMTP is not checking the server certificate when
+>connecting. This is quite annoying as one of the main ssmtp purpose is
+>to be used on satellite systems that could be connected to untrusted
+>networks.
+>
+>This has been reported (with a proposed patch) to the Debian BTS (see
+>[0])
+>
+>Could you please allocate a CVE number for this?
+>
+>Cheers
+>
+>Laurent Bigonville
+>
+>[0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=662960
 
-> We can assign a CVE with a description along the lines of "Software X
-> has not been actively maintained since release Y on date Z. Software X
-> is comprised of some stuff and built in language Z which is known to
-> commonly result in security flaws (possibly list what kind, e.g.
-> XSS/buffer overflow, etc.)." Maybe start with a generic cut off date
-> of say 5 years, and start listing stuff as people find/notice them. If
-> a program ever comes back into maintenance and release a new version
-> then the old CVE would be there as a warning, and moving forwards
-> people would be able to make a much more informed choice.
+I'm not sure it deserves one.
 
-To turn this on its head: qmail is an MTA (historically trouble) written
-in C (historically trouble) and has not had a stable release in 14 years
-(going strictly by Wikipedia).
+If you look at the TLS file in the source tarball, it indicates that
+checking server certificates is not implemented and is something to add
+in the future:
 
-But I do not think qmail deserves a CVE simply by this basis.
+TODO:
+* Check server certificate for changes and notify about it.
+* Diffrent Certificate and Key file?
 
-> In effect this would be a blacklist/greylist of software, and by using
-> CVE it would be able to piggy back on the existing CVE ecosystem (no
-> better word to use), e.g. scanners would pick up the old versions and
+Since sSMTP clearly indicates that this feature is missing and
+unsupported, then it was designed to _not_ do certificate checking.
+Regardless of how good or bad that is, it was a design choice (to leave
+it for a later date), and it's also clearly documented.
 
-I'll grant that the CVE ecosystem is large and potentially very powerful
-Force For Good, if deployed this way.
+To me, that doesn't seem like a security flaw (as in sSMTP was designed
+to check certificates and didn't or didn't do a good job of it).
 
-But when a consumer asks, "Is CVE-2013-F00F fixed?" and the answer is
-"one guy put together three releases the last two months, fixing one
-bug each", what _is_ the answer? "Yes" because there is a responsive
-maintainer? Or "No" because probability dictates there is likely more
-cruft yet to be found? Or "No" because two months is insufficient data
-to draw a conclusion?
-
-> I realize this looks a LOT like feature creep with respect to CVE, but
-> I think it falls into the definition of a vulnerability closely enough
-> that it makes sense/won't result in a huge mess. I can of course see
-
-I like the specificity of today's CVE.
-
-I also think your idea has merit -- there is too much never-loved
-software out there -- but I don't think CVE is the correct lever to
-attack it.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+-- 
+Vincent Danen / Red Hat Security Response Team 
