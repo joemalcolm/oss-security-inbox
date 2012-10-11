@@ -1,30 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/6
-Message-ID: <20120126141518.GC29661@statler.antagonism.home>
-Date: Thu, 26 Jan 2012 09:15:18 -0500
-From: Patrick R McDonald <marlowe@...agonism.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/1
+Message-ID: <507624A1.9030504@redhat.com>
+Date: Wed, 10 Oct 2012 19:45:05 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Request for CVE for Vulnerability in Tahoe-LAFS 1.9.0
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: libsocialweb untrusted connection to flickr
 Content-Type: text/plain; charset=utf-8
 
-I would like to request a CVE for a vulnerability in Tahoe-LAFS,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://tahoe-lafs.org/pipermail/tahoe-announce/2012-January/000032.html
+On 10/10/2012 03:20 PM, Vincent Danen wrote:
+> A similar request was made last year for libsocialweb connecting
+> to Twitter, and it seems to be doing the same to Flickr now
+> (probably has been all this time).
+> 
+> Same situation: opens an HTTP (non-SSL) connection to Flickr when
+> no Flickr account is configured, and without the user's permission
+> or knowledge.
+> 
+> Could a CVE be assigned to this (or has one been assigned
+> already)?
+> 
+> Request for the Twitter issue is here (for reference):
+> 
+> http://www.openwall.com/lists/oss-security/2011/11/09/3
+> 
+> and the Red Hat bug:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=863206
+> 
+> Thanks.
 
-The resolution to the vulnerability is
 
-https://tahoe-lafs.org/pipermail/tahoe-announce/2012-January/000033.html
+Please use CVE-2012-4511 for this issue.
 
-If you have any questions, please feel free to contact me directly.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
---
-----------------------------------------------------------------
-| Patrick R. McDonald                       GPG Key: A2D1E972  |
-| https://www.antagonism.org/         <marlowe@...agonism.org> |
-|                               <mcdonald.patrick.r@...il.com> |
-|                         <patrick@...nsecurityfoundation.org> |
-----------------------------------------------------------------
-| Malo periculosam libertatem quam quietum servitium           |
-----------------------------------------------------------------
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJQdiShAAoJEBYNRVNeJnmTgUgP/ifAY50s7uaC1mv9BbKnhLHQ
+HpWeAp53NXR6gq8BkD6Cj5sTzJ/ZVCXFXApjdyzoFY1pLusFWmL8JYeitYbD/i4i
+FlfFDiojNwqQu9uplN4X/tm3y4BJ2owZZev6F15MwI2R/tc4dDQxQXS0drNTcMf4
+pH4qz59e9xFPK+c6c11oyr3doqkVdcRSqZnBMYmNwb7V6OBnNgjVrwM199Y+vPJu
+LSYMgsfVluixbzUoE4XWnQw8JFzjpgDb3mZoYAx3yAwC1ptMV77SeOLao3cojseH
+Vwx9iKJxi+Ihoh3S0YAct5eMefhkUDRbC07PN+NJQ7RoqsB1YmzUG26pBn89gk9P
+OsW/1yjIcTUDKQrgmp5qilEPvT15f1YquZR2KZ3e1LTbKzT4fvqHaIih+324gHNS
+Pl7JU8lbkc+VYtSF19GvJBzPErcdBw7JNn212Hv7kU8xZzIPrW3yQxsC60hqb3i0
+BZt8bgdOKGHIcbUPROIb/TDqkWuyGhdI+Xeie1JTZwk84nZ/1xhSzIRx4ZDZbLod
+dFKXI5CpUlovOhEIjwCgSKDv8nG4cLbXOiRH1I7hdLU2hkz0TGhfrofTWyzpoEPN
+jwT/afH2UYaRAoRqP4DF19aNjyX8BuCwebFymQFLqxdO+G6t4eqzYR9bRUY3s7o0
+cEjpf01CwFbebaMah3U8
+=hjZG
+-----END PGP SIGNATURE-----
