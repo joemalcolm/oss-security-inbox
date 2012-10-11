@@ -1,35 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/14
-Message-ID: <4FBD265C.2020403@redhat.com>
-Date: Wed, 23 May 2012 12:03:08 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/10
+Message-ID: <5076FF25.1030709@redhat.com>
+Date: Thu, 11 Oct 2012 11:17:25 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: huge pages: memory leak on mmap failure
+CC: Henri Salo <henri@...v.fi>, Scott Herbert <scott.a.herbert@...glemail.com>, Malte Müller <info@...tem.de>
+Subject: Re: CVE request: Zenphoto admin-news-articles.php date parameter XSS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/23/2012 04:35 AM, Petr Matousek wrote:
-> Description of problem: When called for anonymous (non-shared)
-> mappings, hugetlb_reserve_pages() does a resv_map_alloc(). It
-> depends on code in hugetlbfs's vm_ops->close() to release that
-> allocation.
+On 10/11/2012 07:58 AM, Henri Salo wrote:
+> Hello,
 > 
-> However, in the mmap() failure path, we do a plain unmap_region() 
-> without the remove_vma() which actually calls vm_ops->close().
+> Can we assign 2012 CVE-identifier for issue in Zenphoto
+> zp-core/zp-extensions/zenpage/admin-news-articles.php date
+> parameter XSS, thanks.
 > 
-> An unprivileged local user could use this flaw to crash the
-> system.
+> http://osvdb.org/85899 
+> http://seclists.org/fulldisclosure/2012/Oct/17 
+> http://secunia.com/advisories/50799/ 
+> http://scott-herbert.com/blog/2012/10/02/cookie-stealing-and-xss-vulnerable-in-zenphotoversion-1-4-3-2-1130
+>
+>  Not fixed in 1.4.3.3. Will be fixed in next bugfix release
+> beginning of November.
 > 
-> References: https://bugzilla.redhat.com/show_bug.cgi?id=824345 
-> http://www.spinics.net/lists/linux-mm/msg34763.html
+> Fix in http://www.zenphoto.org/svn/trunk/: 
+> foo@bar:~/zenphoto/trunk$ svn diff -r10048:10942
+> zp-core/zp-extensions/zenpage/admin-news-articles.php Index:
+> zp-core/zp-extensions/zenpage/admin-news-articles.php 
+> ===================================================================
+>
 > 
-> Proposed upstream fix: https://lkml.org/lkml/2012/5/21/385
+- --- zp-core/zp-extensions/zenpage/admin-news-articles.php   (revision
+10048)
+> +++ zp-core/zp-extensions/zenpage/admin-news-articles.php
+> (revision 10942) @@ -109,13 +109,13 @@ <h1><?php echo
+> gettext('Articles'); ?> <?php if (isset($_GET['category'])) { -
+> echo "<em>".sanitize($_GET['category']).'</em>'; +
+> echo "<em>".html_encode(sanitize($_GET['category'])).'</em>'; } if
+> (isset($_GET['date'])) { -               echo '<em><small>
+> ('.$_GET['date'].')</small></em>'; +               $_zp_post_date =
+> sanitize($_GET['date']); +               echo '<em><small>
+> ('.html_encode($_zp_post_date).')</small></em>'; // require so the
+> date dropdown is working set_context(ZP_ZENPAGE_NEWS_DATE); -
+> $_zp_post_date = sanitize($_GET['date']); } 
+> if(isset($_GET['published'])) { switch ($_GET['published']) {
 > 
-> Thanks,
+> 
+> - Henri Salo
+> 
 
-Please use CVE-2012-2390 for this issue.
+Please use CVE-2012-4519 for this issue.
+
+P.S. Like /tmp file vulns XSS vulns are really easy to fix especially
+in languages like PHP. When you find an XSS in an app please audit the
+source code for more since chances are you'll find them (and they'll
+get fixed faster).
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -37,19 +65,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJPvSZcAAoJEBYNRVNeJnmTr8oQANqp/NZct0rBOM4TjvWZZGNy
-htHC5hF9dBCkSLV1Kvn97kmLjFJkyV3Uk733/JF3nPHdQGY5C1toUTT0XFC0tvMU
-Pq1y2o6feaxn65pQW6vu4b2a7HJrOw2LNw6/SFNIG6oSg3uomhhhMUi2cNZ8gB5S
-R3qy56sdmhzKkeTon20ql9ZNHORYH5n9Ig6zliqqjJa217H2kz6JQRItFvNS2hp8
-bEFLx8JAVdBVILgPSQ9cIrA7G2rNn2DpisW7++2J0JDMYTqHmDcAN4ZEiXvcd7ZO
-0hHTsR8Qx1rey0EjPL+40tG6h7B5e96B8Waj0ZEfuL4/XK1CWcp+VlA61WRrRNvM
-D2OeUzDKMCDqkyP4ZHCS/5Pr+OTuU2bm8jkDETn1lomIh64mFRlpJbD6riRZrCV3
-z3MQPT817gELvKYPEtmtGfI+SAgoTCh5ky7j0O8YzkXZHqWzux5qcx6RN+dewFsd
-NMm7tbDrep+nKbnqKDdWautDPch90I0lxBq82XnPVdUq2u+XEP7pgJUbp9iHWw17
-6zDWNh0X4P//qfXTTZVLxBds4Xj6McvQs8M9NdubG8ZFKaOFtV22uff0PWZO3mbi
-3qlEXElSrBx/h91RfC3qgcgGse9jwpGdWzQGUrqgZPV9lQJr1Je3KvHIPYgObJOd
-BTvTwY/Y/lYD/2bmuh/9
-=BPUl
+iQIcBAEBAgAGBQJQdv8kAAoJEBYNRVNeJnmTj+IP/jOBswf8Z3BU9HAS4FVufqyF
+tJYROuMh5cSYImy3Bfv3UMIJTxNNR7MRXswVll32IG7556oF2RF+G9x2haMZeTGm
+x0dcBp3XLyR0SwhvS+yGdPGYcD829YJGkPmNqpF7h8ioLFJZ4c0S3p0wCoDMjT5a
+SwMwpHkITkqzL3xt0rLMEK8xQpuO75sNfOd4w/f3QlCQTdZ/8NAQGVW6+DGqWxb6
+h73Sb7CoTeR/SgpG5vmKIOvsDe//cI6U9Qo6gkhhTquMoAdP0z2g2JYllhr1fb3c
+uxzZxy5Bfb4t2h1aiheo7/dutY23qke/gFcddaAZqX5Lg/DLg99UbU102aUIq7WZ
+ySb9viaDSiVH68fU5M1dllT/meaV25wJDa9gKftG9cQGZQO8JbYYjGTHxL1kgLJB
+GxpMCQ86VqZW8k/XuchJdU7IU25D02jz79ADuV/Esz9jY7yslkNm0x4ivyPh6Peg
+RE2vZ4hlQVvg7mKt3r5XxkEfcJpCsPOjMsRHpx6N6f00EP5YJKNJxKFsqv/Uf/d0
+zr6SwCBMnnCNDN2v4w+w+M4EQBPjsyk7/OxeNFOmi0Tat+trME6yf4y5HMmLts1X
+bdIFPRlWFABCVUPM+RcyqSadwa2yMb9W56rJGvyRFAQFPFl5CxxZdennyUJwI1wo
+tNSibkw/Ywe4Ut1tNR8j
+=ildI
 -----END PGP SIGNATURE-----
