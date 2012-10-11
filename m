@@ -1,39 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/16/2
-Message-Id: <201210161440.10249.mweckbecker@suse.de>
-Date: Tue, 16 Oct 2012 14:40:10 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/4
+Message-ID: <20121011135844.GB869@kludge.henri.nerv.fi>
+Date: Thu, 11 Oct 2012 16:58:44 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
+Cc: Scott Herbert <scott.a.herbert@...glemail.com>, Malte Müller <info@...tem.de>
+Subject: CVE request: Zenphoto admin-news-articles.php date parameter XSS 
 Content-Type: text/plain; charset=utf-8
 
-On Friday 12 October 2012 22:50:41 Vincent Danen wrote:
-> Just noticed this today on ruby's web site:
->
-> http://preview.ruby-lang.org/en/news/2012/10/12/poisoned-NUL-byte-vulnerabi
->lity/
->
-> The fix is located here:
->
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37163
->
-> I don't see a CVE name associated with the announcement or commit, so
-> I don't believe one has been assigned.
+Hello,
 
-Technically, this would also apply to Perl (at least with 5.12.3). Or am I
-missing the point?
+Can we assign 2012 CVE-identifier for issue in Zenphoto zp-core/zp-extensions/zenpage/admin-news-articles.php date parameter XSS, thanks.
 
-  $ perl -we 'open $fh, "+>", "perl\0foo"; print $fh "x"x2; close $fh'
-  $ ls perl
-    perl
+http://osvdb.org/85899
+http://seclists.org/fulldisclosure/2012/Oct/17
+http://secunia.com/advisories/50799/
+http://scott-herbert.com/blog/2012/10/02/cookie-stealing-and-xss-vulnerable-in-zenphotoversion-1-4-3-2-1130
 
-If the third parameter is double-quoted. I wouldn't call it a vulnerability 
-though. Just wanted to note it.
+Not fixed in 1.4.3.3. Will be fixed in next bugfix release beginning of November.
 
-Matthias
+Fix in http://www.zenphoto.org/svn/trunk/:
+foo@bar:~/zenphoto/trunk$ svn diff -r10048:10942 zp-core/zp-extensions/zenpage/admin-news-articles.php
+Index: zp-core/zp-extensions/zenpage/admin-news-articles.php
+===================================================================
+--- zp-core/zp-extensions/zenpage/admin-news-articles.php   (revision 10048)
++++ zp-core/zp-extensions/zenpage/admin-news-articles.php   (revision 10942)
+@@ -109,13 +109,13 @@
+            <h1><?php echo gettext('Articles'); ?>
+            <?php
+            if (isset($_GET['category'])) {
+-               echo "<em>".sanitize($_GET['category']).'</em>';
++               echo "<em>".html_encode(sanitize($_GET['category'])).'</em>';
+            }
+            if (isset($_GET['date'])) {
+-               echo '<em><small> ('.$_GET['date'].')</small></em>';
++               $_zp_post_date = sanitize($_GET['date']);
++               echo '<em><small> ('.html_encode($_zp_post_date).')</small></em>';
+                // require so the date dropdown is working
+                set_context(ZP_ZENPAGE_NEWS_DATE);
+-               $_zp_post_date = sanitize($_GET['date']);
+            }
+            if(isset($_GET['published'])) {
+                switch ($_GET['published']) {
 
--- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+
+- Henri Salo
