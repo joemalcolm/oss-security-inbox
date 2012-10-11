@@ -1,25 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/29/6
-Message-ID: <87linlle75.fsf@mid.deneb.enyo.de>
-Date: Wed, 29 Feb 2012 18:52:30 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/11
+Message-ID: <50770C31.8030506@redhat.com>
+Date: Thu, 11 Oct 2012 12:13:05 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Bugs in "file" program VU#621745
+CC: Tim Brown <timb@...-dimension.org.uk>, security@....org
+Subject: Re: Pre-advisory for Konqueror 4.7.3 (other versions may be affected)
 Content-Type: text/plain; charset=utf-8
 
-* Kurt Seifried:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->> We recently pointed the CERT BFF at the ubiquitous "file" command
->> and found a few bugs.  While we've not proven the bugs to be
->> exploitable, we've also not ruled out the possibility that they
->> could be.
->> 
->> Fixes were committed on Feb 16, 2012: 
->> https://github.com/glensc/file/commits/master
+On 10/11/2012 11:10 AM, Kurt Seifried wrote:
+> On 10/10/2012 07:52 PM, Kurt Seifried wrote:
+>> On 10/10/2012 04:12 PM, Tim Brown wrote:
+>>> Taken from NDSA20121010: --8<-------- This advisory comes in 4 
+>>> related parts:
 
-> If any of these are security issues please let me know and I will
-> assign CVE #'s.
+Cut and paste error, thanks to iSIGHT Partners for spotting and
+alerting me!
 
-file also provides a library, libmagic.  This could lead to crashes of
-server processes which use libmagic.  Debian will likely release a fix
-as a security update.
+>>> 1) The Konqueror web browser is vulnerable to type confusion 
+>>> leading to memory disclosure.  The root cause of this is the 
+>>> same as CVE-2010-0046 reported by Chris Rohlf which affected 
+>>> WebKit.
+> 
+> Please use CVE-2012-4512 for this issue.
+> 
+>>> 2) The Konqueror web browser is vulnerable to an out of bounds
+>>>  memory access when accessing the canvas.  In this case the 
+>>> vulnerability was identified whilst playing with bug #43813
+>>> from Google's Chrome repository.
+> 
+> Please use CVE-2012-4513 for this issue.
+> 
+
+Please note I accidentally put the CVE #'s one spot to low, they
+should have been:
+
+>>> 3) The Konqueror web browser is vulnerable to a NULL pointer 
+>>> dereference leading to a crash.
+
+Please use CVE-2012-4514 for this issue.
+
+>>> 4) The Konqueror web browser is vulnerable to a
+>>> "use-after-free" class flaw when the context menu is used
+>>> whilst the document DOM that is being changed from within
+>>> Javascript.
+
+Please use CVE-2012-4515 for this issue.
+
+>>> These flaws were identified during an analysis of previously 
+>>> reported vulnerabilities that affected Google's Chrome web 
+>>> browser. It is believed that only vulnerability 1 is/was
+>>> common to the two code bases.
+> 
+
+> 
+>>> --8<--------
+> 
+>>> I'm pre-advising on these flaws since I've not heard anything 
+>>> from the KDE project in about 8 months regarding 3 and 4 and
+>>> we are aware that 1 and 2 have been fixed.  I'll give it 7 days
+>>> and then drop technical details.  Vendors with an interest can 
+>>> contact me off list.
+> 
+>>> Tim
+> 
+> 
+> 
+> 
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQdwwxAAoJEBYNRVNeJnmTqN0P+wQgZuPH5JIDwa6EayJT8dnV
+uVIe2SCtCRSUO1i+P60BoSZ9yUv+L/GYEvzw7Y0klZYnIazTuULHq4PTJYIaCEcu
+TkorcgQvQo+UGOPByqDctEsjOu/SofCKXA/lJaJtnvOEmXIqakqEtuXbD3G2ngjx
+pLVa8m8w/E3aBNrIvwPEPR3bhQdBXhJQHw5KJBo4+hIUctjcAxUQHukJ+b/9TATy
+Y3RqnGBVds/23dGJqddCENga47w/vuIJlnYh6aXTlK83mWdOAAc3nQjpnf/YwjY3
+zN8+E05pvNJYyrvOH7nvxvt4vQl+fGl21YMOSK6DwERpwIIHl0XuSyf7kqznnO8n
+Rmvni33e0u4iOKb2YGc9eQ1n0CTxKYITpYSJt69rcq8I8UeXIwJw3uuLsdZKwYwd
+BJKFZIpDmF2DbH7ZCW6sCcDXaYTjeX+r5zbLq92qa9p0ZvASGvj0OE+Uvv0gsD3s
+UtDcTcxLGj3xYyuZqUbGvZw6ZlEq/A7u8XgmrVIPYuajXnWSCaqTcu1Y3g5niarT
+bDwDMK0jKpR8OnSWlymcrTE2JwkssxehKboCG+jWEqYYKGBy1NoXRxHmoQnq7NMx
+/5LXMxH2pqMd7XJjB85EB0JD4cVJDzerQGhdTUgS0c8/am7QoE7irr2y4HW3wTJ9
+aIcW1ZADvwBlhMJVfFfi
+=VQPm
+-----END PGP SIGNATURE-----
