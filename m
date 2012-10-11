@@ -1,71 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/12/4
-Message-ID: <4FFF0170.4080500@redhat.com>
-Date: Thu, 12 Jul 2012 10:55:12 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/8
+Message-ID: <5076FD82.3060000@redhat.com>
+Date: Thu, 11 Oct 2012 11:10:26 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: Overflow fix in bash 4.2 patch 33
+CC: Tim Brown <timb@...-dimension.org.uk>, security@....org
+Subject: Re: Pre-advisory for Konqueror 4.7.3 (other versions may be affected)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/12/2012 08:04 AM, Marcus Meissner wrote:
-> On Wed, Jul 11, 2012 at 11:29:22AM -0600, Kurt Seifried wrote:
->> On 07/11/2012 10:15 AM, Marcus Meissner wrote:
->>> Hi,
->>> 
->>> the bash maintainer kindly mailed us and other vendors a 
->>> notification of a overflow in the bash "test" builtin when 
->>> "/dev/fd/..." filenames are used.
->>> 
->>> ftp://ftp.gnu.org/pub/gnu/bash/bash-4.2-patches/bash42-033
->>> 
->>> Reproducer: test -e /dev/fd/111111111111111111111111111111111
->>> 
->>> Problem is caught by -D_FORTIFY_SOURCE=2 if enabled, and
->>> likely also by -fstack-protector (not tested)
->>> 
->>> Goes all the way back to old bashes.
->>> 
->>> The likeliness of people able to inject those filenames into
->>> shell scripts and not being able to execute shellcode
->>> themselves is however slim. (setuid root shell scripts are not
->>> possible.)
->>> 
->>> Security (CVE) relevant scenario we thought of is breaking out
->>> of a restricted shell mode.
->>> 
->>> Ciao, Marcus
->> 
->> Can you give a more concrete example, e.g. you're talking about 
->> http://www.gnu.org/software/bash/manual/html_node/The-Restricted-Shell.html
->>
->> 
-I assume? Are we simply talking about violating those restrictions?
+On 10/10/2012 07:52 PM, Kurt Seifried wrote:
+> On 10/10/2012 04:12 PM, Tim Brown wrote:
+>> Taken from NDSA20121010: --8<-------- This advisory comes in 4
+>> related parts:
 > 
-> Yes. Breaking out of the restricted shell using this issue.
-> 
-> $ bash -r bash: /dev/pts/9: Gesperrt: Die Ausgabe darf nicht
-> umgeleitet werden. $ test -f
-> /dev/fd/111111111111111111111111111111111111111111111111111111111111111
->
-> 
-*** buffer overflow detected ***: bash terminated
-> ...
-> 
-> So basically without fortification measures you can inject a ASCII
-> based shell-code to execute code you shouldn't.
-> 
-> (One can argue that of how secure you evaluate restricted shells
-> ...)
-> 
-> Ciao, Marcus
+>> 1) The Konqueror web browser is vulnerable to type confusion 
+>> leading to memory disclosure.  The root cause of this is the
+>> same as CVE-2010-0046 reported by Chris Rohlf which affected
+>> WebKit.
 
-Please use CVE-2012-3410 for this issue. The --restricted stuff is
-advertised as a security measure and this can be used to bypass it, so
-it gets a CVE.
+Please use CVE-2012-4512 for this issue.
+
+>> 2) The Konqueror web browser is vulnerable to an out of bounds 
+>> memory access when accessing the canvas.  In this case the 
+>> vulnerability was identified whilst playing with bug #43813 from
+>>  Google's Chrome repository.
+
+Please use CVE-2012-4513 for this issue.
+
+>> 3) The Konqueror web browser is vulnerable to a NULL pointer 
+>> dereference leading to a crash.
+> 
+>> 4) The Konqueror web browser is vulnerable to a "use-after-free"
+>>  class flaw when the context menu is used whilst the document
+>> DOM that is being changed from within Javascript.
+
+Please use CVE-2012-4514 for this issue.
+
+>> These flaws were identified during an analysis of previously 
+>> reported vulnerabilities that affected Google's Chrome web
+>> browser. It is believed that only vulnerability 1 is/was common
+>> to the two code bases.
+
+Please use CVE-2012-4515 for this issue.
+
+>> --8<--------
+> 
+>> I'm pre-advising on these flaws since I've not heard anything
+>> from the KDE project in about 8 months regarding 3 and 4 and we
+>> are aware that 1 and 2 have been fixed.  I'll give it 7 days and
+>> then drop technical details.  Vendors with an interest can
+>> contact me off list.
+> 
+>> Tim
 
 
 
@@ -73,23 +62,21 @@ it gets a CVE.
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJP/wFtAAoJEBYNRVNeJnmTAQAQALE+Ae4WI4RXoYgQ+FdsMd3Q
-x5rlOlAYDSN/ug65OPOZ9y3s1igcb7cuggaGo7LmWDjA9P7Jg5E4i1rHn/vFFBjE
-G1ZKU/ep9Y2HSqTGMOSxKm+sXkoV2ZIdMFH4Q7TB1hpp0i9E+ju4Saj5k2y0ayoj
-E8x5tvR90JYHP5c1s0bnJQISb4yncYruYaVqdVa3AVMmdZVgiklGAmLKsSCbZCrZ
-cCdmTnGZW8R++LR1goZBVkOUFYwygP1AeBvyqGhBJpe638xpVcp9XtTewUQokDCF
-Mieqfppx0N9r1slV59y1O0KIqzD1oq/GmK5xChrxDXUnpsuwLWtAoRQfO6wSbSr5
-2OgE3/vnfAFUW7Dg+U2SomYNamCtQQTn0aI+UPwD/nwoSgI+WqcBjFs33AhE4tnP
-OclmWJEsk79AFw1UzVNWM6medmADa9EPMImLfi/DHa3G4sb7aJwzwevwfjFP7AN8
-7mHPSYBCKjnhIg7RUfaeJtBBot3B+c1cYiN0uW6LDEP+I0CwvVlSCaCYL23VSpEZ
-hP7rUua4NFeozhskq+OvWq4zDzkCet5QMTFi4/obFx4LKA+XGlEW6K4GqDDOphNK
-Wt3qmSzD7wJov1fNx2G7ZY7q9UtKLjwOcuHYPKsnRjwu6ATjAw+FZF9RuuibcdF9
-8S1NSGX3hoeUpcGcg3Tx
-=oSt+
+iQIcBAEBAgAGBQJQdv2CAAoJEBYNRVNeJnmTZY4P/i8FhSTjseaK+VYdt4Z3Uow+
+fp6N58S5P16shvY0VOJ9NSYRjAhy212lG6iSzyXHPs+ya+88SwRif6bomjdX63Xy
+IUauSghyhfFh6+Y5tx9mdgSZO5znBIAK93UVEmYam591QFa5FK/8PpWKZ38A4baX
+HCnA6/XOr+ilyUbaj0E3d70HiNbSdARBNsvYrWLJ93/d2+uCCW15PIbuyG1b1nHD
+beMdrse++dfUw/sQiVGgUK7aUeH006YnIObd7j7bkkdU5muLLk8ixvnlI73mDVU2
++18giz58AkUq22wXpP8pwa+KVEpZAbNugFNR/p0xZT1Jk4N3lizBU6e0+K4CkuXV
+1memByFQH2cLzyNRcdJOcI8QcZXvoXJG4Yy8rJMxq0M64/PnZf3eyTPycT/nvfa9
+jQsUILti6wxh/d0SWFo5O/gDrrrHTeRLGPv0/VVCwtASN8e6y6h453P1UNf2WEbl
+WMhOFGoFmKXzeo1a6D2k1rzLzY4PijHf5EStqozb+szrkBk/J0USujSFME9xbjrU
+goEvD128HmeCZ/RaNB5NW4ebJ7aHcg9NALm+8IKdO5BF/Y7kOVXnp7bLBypDpQH7
+WgGwVBM4wdrDl9OYKJ+WiEpF+xtcczO7JTNWaj/JcI6oOkLI+p0x3eZ/q3UtylAf
+MrqDQcd7+y2gnmXmMzn8
+=uAqx
 -----END PGP SIGNATURE-----
