@@ -1,86 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/15
-Message-ID: <4F21DF82.9090902@redhat.com>
-Date: Thu, 26 Jan 2012 16:19:30 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/3
+Message-Id: <201210110728.q9B7SoeE029303@linus.mitre.org>
+Date: Thu, 11 Oct 2012 03:28:50 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Debian (others?) openssh-server: Forced Command handling leaks private information to ssh clients
+Cc: cve-assign@...re.org
+Subject: CVE-2012-5377 through CVE-2012-5383: Windows PATH issues affecting some open-source products
 Content-Type: text/plain; charset=utf-8
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=657445
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-======================================================================
+MITRE assigned seven CVE names for this recent disclosure that
+mentions a few open-source products and also other products, but only
+when installed on Windows:
 
-From: Bjoern Buerger <bbu@...gutronix.de>
-To: Debian Bug Tracking System <submit@...s.debian.org>
-Subject: openssh-server: Forced Command handling leaks private
-information to ssh
- clients
-Date: Thu, 26 Jan 2012 11:46:18 +0100
+  https://www.htbridge.com/advisory/HTB23108
 
-Package: openssh-server
-Version: 1:5.5p1-6+squeeze1
-Severity: normal
+CVE-2012-5377 ActivePerl
+CVE-2012-5378 ActiveTcl
+CVE-2012-5379 ActivePython
+CVE-2012-5380 Ruby
+CVE-2012-5381 PHP
+CVE-2012-5382 Zend Server
+CVE-2012-5383 MySQL
 
+The essence of the problem is that:
 
-The handling of multiple forced commands in ~/.ssh/authorized key leaks
-information about other configured forced commands to the user. This
-affects tools lile gitolite, which makes heavy use of forced commands
-(For gitolite, this bug means: A user can obtain some or all usernames
- with access to the same gitolite setup by just using the verbose
- switch of his ssh client, which is a really nasty thing).
+  1. Windows has system environment variables, such as PATH, that
+     apply to all users.
 
-Example:
+  2. On Windows, the installation procedure for a product sometimes
+     results (through different mechanisms) in a modified PATH that
+     references the product's installation directory.
 
- User "bbu" on machine "ptx" has three configured forced commands for
- keys test{1,2,3}_rsa.pub:
+  3. The permissions of the installation directory might be unsafe.
 
- command="/usr/bin/first_command" ssh-rsa [...third_key...]
- command="/usr/bin/second_command" ssh-rsa [...second_key...]
- command="/usr/bin/third_command" ssh-rsa [...third_key...]
+  4. Some other software, including software shipped by Microsoft,
+     relies on the PATH containing only safe directories.
 
- Now, if the user of test1_rsa.pub uses the "-v" switch of
- his ssh client, he gets just his command:
+One example of an open-source product:
 
- foo@bar:~/ssh_debug$ ssh -i test1_rsa -v bbu@ptx 2>&1 | grep Forced\
-command
- debug1: Remote: Forced command: /usr/bin/first_command
- debug1: Remote: Forced command: /usr/bin/first_command
+http://www.php.net/manual/en/faq.installation.php#faq.installation.addtopath
+says to add C:\php to the PATH, but doesn't suggest checking the
+permissions of C:\php before doing this. In this case, the situation
+probably should not be described as a vulnerability in the PHP
+software. It could perhaps be considered a security-related
+documentation issue.
 
- but the user of test2_rsa.pub sees two commands:
+One example of another product:
 
- foo@bar:~/ssh_debug$ ssh -i test2_rsa -v bbu@ptx 2>&1 | grep Forced\
-command
- debug1: Remote: Forced command: /usr/bin/first_command
- debug1: Remote: Forced command: /usr/bin/second_command
- debug1: Remote: Forced command: /usr/bin/first_command
- debug1: Remote: Forced command: /usr/bin/second_command
+http://docs.activestate.com/activeperl/5.16/install.html has an
+installation option related to PATH:
 
- and for user of test3_rsa.pub:
+  PERL_PATH: If set to 'No', the Perl/bin directory will not be added to
+  the system PATH environment variable.
 
- bbu@...ra:~/ssh_debug$ ssh -i test3_rsa -v bbu@ptx 2>&1 | grep Forced\
-command
- debug1: Remote: Forced command: /usr/bin/first_command
- debug1: Remote: Forced command: /usr/bin/second_command
- debug1: Remote: Forced command: /usr/bin/third_command
- debug1: Remote: Forced command: /usr/bin/first_command
- debug1: Remote: Forced command: /usr/bin/second_command
- debug1: Remote: Forced command: /usr/bin/third_command
-======================================================================
+and possibly the default is 'Yes' in some or all versions. Here, there
+is a better argument that this is a vulnerability in the product,
+because (according to the HTB23108 disclosure) the installation
+software itself can make an unsafe PATH change.
 
-I have confirmed that this works exactly as advertised on Debian 6. I
-have confirmed that RHEL/Fedora are not affected (you only get shown the
-command for your specific SSH key).
+One possible security guideline is that all products that
+automatically modify PATH during installation should be checking all
+relevant directory permissions first. This is, however, not the only
+possible way to address the underlying problem or problems. It is
+currently unclear whether there should be a CVE entry for every
+product that handles this PATH issue in any potentially unsafe way.
 
-So Debian is definitely affected, but I am concerned others may be as
-well (is this Debian specific or does it affect all users of that
-version of OpenSSH?). I suggest you test this on your own distributions
-as well.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-
-
-
-
-
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+iQEcBAEBAgAGBQJQdnQbAAoJEGvefgSNfHMdJgAIAJZfQPOHSY5B+IOWDIHW9468
+MYO00QJVxBf0+PgHEPfxu14URbbQw0ZohJm77iaBj0Ur2CfWDE2c9pvw/qupwkS5
+40YjixICcuE1jniUoogVmPjrE15LsxQJdo5twWemOVeF/wVmVE03athK/XvR4gCw
+ZfquFBIiUgTz6thiVmb+LVlgsRQW0oLm3L9/D/hLoKv0ZMb8KLoti/blqDw43WU9
+WDCO0CcSt8nb30NyKyo8kCraJIRAWz+dPyfBSJcv6xHlz6A3fYkRfbaQ6XtAb5JQ
+f4qRWWVRLREgf+MxqgFWjEiKBcW083/s+M3QqcKVxGKR+7aZlbiPYPSICMpa+cc=
+=8yEd
+-----END PGP SIGNATURE-----
