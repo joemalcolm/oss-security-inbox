@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/11
-Message-ID: <20120419123645.GI27768@suse.cz>
-Date: Thu, 19 Apr 2012 14:36:45 +0200
-From: Miklos Vajna <vmiklos@...e.cz>
-To: Caolán McNamara <caolanm@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, officesecurity@...ts.freedesktop.org, David Tardon <dtardon@...hat.com>, Carlo Di Dato <shinnai@...istici.org>
-Subject: Re: [Officesecurity] CVE Request (minor) -- LibreOffice (X >= v3.5.0): DoS (excessive CPU use) in the RTF tokenizer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/12/2
+Message-ID: <20121012130407.GA6122@vuntz.net>
+Date: Fri, 12 Oct 2012 15:04:07 +0200
+From: Vincent Untz <vuntz@...e.com>
+To: oss-security@...ts.openwall.com
+Subject: Security flaw in cups-pk-helper (CVE-2012-4510)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 19, 2012 at 01:33:07PM +0100, Caolán McNamara <caolanm@...hat.com> wrote:
-> On Thu, 2012-04-19 at 14:14 +0200, Jan Lieskovsky wrote:
-> > Though Caolán , Miklos or LibreOffice upstream can clarify further if
-> > this should be considered to be a security flaw (due to internal
-> > implementation details I am not aware of and might lead to memory
-> > corruption announced at [7]).
-> 
-> nah, insta-crash with a -1 passed to new(...) so throws bad_alloc,
-> "safe" crash.
+Hi,
 
-+1, as far as I see.
+cups-pk-helper (versions up to 0.2.2) wraps cupsGetFile/cupsPutFile in
+an insecure way. Since cups-pk-helper is running as root, this could
+lead to uploading sensitive data to a cups resource, or overwriting
+specific files with the content of a cups resource. The flaw is however
+mitigated by the fact that it cannot be exploited without the user
+explicitly approving the action (via polkit authentication with the
+admin password).
 
-Miklos
+This has been fixed in cups-pk-helper 0.2.3:
+  http://www.freedesktop.org/software/cups-pk-helper/releases/cups-pk-helper-0.2.3.tar.xz
+
+Thanks to Sebastian Krahmer and Alexander Peslyak for their help in
+reviewing the fix.
+
+Reference: CVE-2012-4510
+
+About cups-pk-helper:
+  cups-pk-helper is a PolicyKit helper to configure cups with
+  fine-grained privileges.
+
+  See http://www.freedesktop.org/wiki/Software/cups-pk-helper
+
+Vincent
+
+-- 
+Les gens heureux ne sont pas pressés.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
