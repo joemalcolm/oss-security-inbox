@@ -1,37 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/11
-Message-Id: <201210301327.29470.geissert@debian.org>
-Date: Tue, 30 Oct 2012 13:27:28 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/12/1
+Message-ID: <20121012104306.3b3078e7@redhat.com>
+Date: Fri, 12 Oct 2012 10:43:06 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org
-Subject: Re: CVE Request: Python keyring
+Subject: libproxy PAC downloading buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-On Friday 05 October 2012 15:21:57 Marc Deslauriers wrote:
-> Hello,
-> 
-> Python keyring before 0.9.1 was using the user-supplied password
-> insecurely.
-> 
-> From the 0.9.1 changelog:
-> 
-> CryptedFileKeyring now uses PBKDF2 to derive the key from the user's
-> password and a random hash. The IV is chosen randomly as well. All the
-> stored passwords are encrypted at once. Any keyrings using the old
-> format will be automatically converted to the new format (but will no
-> longer be compatible with 0.9 and earlier). The user's password is no
-> longer limited to 32 characters. PyCrypto 2.5 or greater is now required
-> for this keyring.
-> 
-> See:
-> 
-> http://pypi.python.org/pypi/keyring#id2
-> https://bugs.launchpad.net/ubuntu/+source/python-keyring/+bug/1004845
+Hi!
 
-Could a CVE id be assigned please?
+libproxy 0.4.9 fixes a buffer overflow reported by Tomas Mraz:
 
-Thanks,
+http://code.google.com/p/libproxy/source/detail?r=853
+https://groups.google.com/forum/?fromgroups=#!topic/libproxy/VxZ8No7mT0E
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4504
+
+Upstream announcement also mentions another issue - CVE-2012-4505.  It
+is related, but different problem that was found in pre-0.4 versions
+while investigating if they were affected by CVE-2012-4504.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4505
+
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Tomas Hoger / Red Hat Security Response Team
