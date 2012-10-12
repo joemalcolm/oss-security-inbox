@@ -1,42 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/22/2
-Message-ID: <20120222170437.GR1289@redhat.com>
-Date: Wed, 22 Feb 2012 10:04:37 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/12/4
+Message-Id: <201210121602.57370.mweckbecker@suse.de>
+Date: Fri, 12 Oct 2012 16:02:57 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: systemtap@...rceware.org
-Subject: CVE-2012-0875: systemtap memory disclosure/kernel panic when processing malformed DWARF unwind data
+Subject: Re: libproxy PAC downloading buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-A flaw was discovered [1] in how systemtap handled DWARF expressions
-when unwinding the stack.  This could result in an invalid pointer read,
-leading to reading kernel memory, or a kernel panic (and if the kernel
-reboot on panic flag was set (panic_on_oops), it would cause the system
-to reboot).
+On Friday 12 October 2012 15:46:47 Kurt Seifried wrote:
+> On 10/12/2012 02:43 AM, Tomas Hoger wrote:
+> > Hi!
+> >
+> > libproxy 0.4.9 fixes a buffer overflow reported by Tomas Mraz:
+> >
+> > http://code.google.com/p/libproxy/source/detail?r=853
+> > https://groups.google.com/forum/?fromgroups=#!topic/libproxy/VxZ8No7mT0E
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4504
+>
+> > Upstream announcement also mentions another issue - CVE-2012-4505.
+> > It is related, but different problem that was found in pre-0.4
+> > versions while investigating if they were affected by
+> > CVE-2012-4504.
+> >
+> > https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4505
+>
+> Please use CVE-2012-4521 for this issue.
 
-In order to trigger this flaw, an admin would have to enable
-unprivileged mode (giving users membership in the 'stapusr' group and
-configuring the local machine with 'signer,all-users' stap-server
-trust). If an admin has enabled unprivileged mode, a user with such
-access could use this to crash the local machine.
+Wasn't this rather a CVE notification than a CVE request? At least 
+it looked like this to me. The announcement mentions two CVE.
 
-A workaround is to disable unprivileged mode.
-
-This will be corrected in a forthcoming upstream release of systemtap,
-and is currently fixed in git [2].  It is believed that this flaw was
-introduced via git commit 16d59279f [3], so would affect systemtap >=
-1.4.
-
-[1] http://sourceware.org/bugzilla/show_bug.cgi?id=13714
-[2] http://sourceware.org/git/?p=systemtap.git;a=commit;h=64b0cff3b
-[3] http://sourceware.org/git/?p=systemtap.git;a=commit;h=16d59279f
-
-This is tracked in the Red Hat bugzilla via:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-0875
-
-and is assigned the name CVE-2012-0875.
+Matthias
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
-
-Content of type "application/pgp-signature" skipped
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
