@@ -1,100 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/7
-Message-ID: <980104274.16554131.1350550720175.JavaMail.root@redhat.com>
-Date: Thu, 18 Oct 2012 04:58:40 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com, Breno Silva <breno.silva@...il.com>
-Cc: Matthias Weckbecker <mweckbecker@...e.de>, security@...security.org, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE request: Fwd: [Full-disclosure] SEC Consult SA-20121017-0 :: ModSecurity multipart/invalid part ruleset bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/12/3
+Message-ID: <50781F47.7070309@redhat.com>
+Date: Fri, 12 Oct 2012 07:46:47 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Tomas Hoger <thoger@...hat.com>
+Subject: Re: libproxy PAC downloading buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt, Breno,
-
------ Original Message -----
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/17/2012 02:47 AM, Matthias Weckbecker wrote:
-> Hi Steve, Kurt, vendors,
+On 10/12/2012 02:43 AM, Tomas Hoger wrote:
+> Hi!
 > 
-> this flaw looks slightly different from the last one and
-> apparently has not got a CVE yet.
+> libproxy 0.4.9 fixes a buffer overflow reported by Tomas Mraz:
 > 
-> ----------  Forwarded Message  ----------
-> 
-> Subject: [Full-disclosure] SEC Consult SA-20121017-0 ::
-> ModSecurity multipart/invalid part ruleset bypass Date: Wednesday
-> 17 October 2012 From: SEC Consult Vulnerability Lab 
-> <research@...-consult.com> To: full-disclosure@...ts.grok.org.uk, 
-> bugtraq@...urityfocus.com
-> 
-> SEC Consult Vulnerability Lab Security Advisory < 20121017-0 > 
-> =======================================================================
->
+> http://code.google.com/p/libproxy/source/detail?r=853 
+> https://groups.google.com/forum/?fromgroups=#!topic/libproxy/VxZ8No7mT0E
 >
 > 
-> title: ModSecurity multipart/invalid part ruleset bypass
-> product: ModSecurity vulnerable version: <= 2.6.8 fixed version: 
-> 2.7.0 CVE number: - impact: Depends what you use it for homepage: 
-> http://www.modsecurity.org/ found: 2012-10-12 by: Bernhard Mueller
->  SEC Consult Vulnerability Lab https://www.sec-consult.com 
-> =======================================================================
->
-> Looking
->
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4504
 > 
-> through
+> Upstream announcement also mentions another issue - CVE-2012-4505.
+> It is related, but different problem that was found in pre-0.4
+> versions while investigating if they were affected by
+> CVE-2012-4504.
 > 
-> https://www.modsecurity.org/tracker/secure/ReleaseNote.jspa?projectId=10000&version=10100
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4505
 > 
-> Is this https://www.modsecurity.org/tracker/browse/MODSEC-155
 
-I am not sure this is related since it is closed with resolution 'Cannot Reproduce'.
+Please use CVE-2012-4521 for this issue.
 
-Based on Changes:
-  [1] http://mod-security.svn.sourceforge.net/viewvc/mod-security/m2/branches/2.7.x/CHANGES
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-I would say this is:
-  "* Added MULTIPART_INVALID_PART flag. Also used in rule id 200002 for multipart strict"
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-with relevant upstream commit being:
-  [2] http://mod-security.svn.sourceforge.net/viewvc/mod-security?view=revision&sortby=date&revision=2081
-
-but Cc-in Breno Silva to definitely confirm this yet.
-
-Breno, could you please confirm / disprove that the patch [2] is upstream
-patch for issue:
-  [3] http://www.openwall.com/lists/oss-security/2012/10/17/1 ?
-
-And if it's not the correct one, provide an explicit revision link to
-the proper one?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> I'd like to confirm this before assigning a CVE.
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-> 
-> iQIcBAEBAgAGBQJQf7OGAAoJEBYNRVNeJnmTFlgQAJxEfUA7oFo8bb0/iSrb7zy9
-> k4IgupMfsxmOLy9uv07G5dy7dRNRkOqYtrQxszFfnnsFqTDtE9+BU7QpX3pmyBlp
-> KYJMTen2A7ygbqr2GSNnh5faCeYty/9gvubTrJ0wmdE8wlwoOqOtZcjkjA0IzRy9
-> T5WYmwxHkkytPsBVQjrirJc4Q2ehKLUNA6ipC6eyq5b+5qqtS+pHRcJbMbNeHj8P
-> PSDeWGAgwSVY56o+vb0WjAjaU/o64kv6ZOn8MFb06cb+GCTUbtpJHwRWaBwmNBaf
-> 9vHqUURjkAkB/np5v9PvKGuovBs8MiDjv43Z8Tl2oWLGJlkaWO0ltC0HBD9nkKBV
-> H+5mSPub3MBrtxXyUXI0lb4Zh4vUtbzDt8O0SVV+6lqAFv18UBX0ksTjzkgK6sIl
-> 987lJr+MiKsVsO7XBZk0OBMQShu9AiZq3ueBwcol99HeY/ICPPZxT+lP/v72rNsc
-> rMaLOBtgdMj2n0yVvqk4Zg1mshZyWP8NAofFhu2sIbItd/x/csCrwFTjJnrar2pN
-> 2wHJKFjq/ssMXBuFws1M/O4CjRDo2iImB4fIYqS5GxSXRQUephI6eIbgmX/PPQgG
-> 5z550ct/fbSCcNm8uzCjN5YbAKcvHqfDqTqrq4v6bBMJ6ww2eOR8gF9/LYFm7OKb
-> jTf1myRV1SAMt6UVd0dJ
-> =XFfO
-> -----END PGP SIGNATURE-----
+iQIcBAEBAgAGBQJQeB9HAAoJEBYNRVNeJnmTXlwP/3NMEppbXkbdYPGNS4Rj3lX8
+flnu+WxGy3kC0VDlzTXlmNtssy4/XoKxi4lKAcq97XOeLcZA9GeYTQPJI3DY4406
+7CZEtZXM+n2wRbP1u0H+8s3wpzkfddTV7Oc9MvnwVdfr2qll5Q8Jj7offMat1TF1
+nuf36c/jFG/7Dc7DES1OdEgE57JzWdGWwLmirMOwwrWMrdawa/i4lDIqOp+yTG5/
+jaLrs2AkW7UJi92QvnBJbHfINcwHRv+KpYJVjaCbo7s8fqw11+kZkm1tR0T3RnLo
+gpU6ISjYiFM1JhHGKdVBIWJCDAEQ+vzeOK5kJ8mkOf8kPInk8dAMI2gCSg4PPG/c
+Nh8h7KV9+HNFhpomH5+WjTESHs8KVYIYYH3DbXb172rnSmlqI1FpqNRo45k+yjPx
+D2XAiYdlHYTugqght8wM8OEO4AKqwzCAFAptE8Ak+0BQIPO+sQMvYxWNxGej+RwZ
+1ADyQzo3eIABhxTLq718gTW7TkB8ZtUbUgC0RPT0te+86iMtDiFYLRgU9yLCtQTI
+l7yBt6jaLM6efauO0utSqLOKuBOHa2X6/slRer7dVCoMQdcgo9iF+YOiTDuI0KjB
+W0/8HMJtZn2n7cHzemxMDjopnnJzq+hQ1psFrNKbzCG1d6kc+j7lCb5R3nxwpVdX
+CRerMxVX7boJjOYJT8Jm
+=3BoN
+-----END PGP SIGNATURE-----
