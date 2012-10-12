@@ -1,72 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/08/3
-Message-ID: <5022A23B.5080805@redhat.com>
-Date: Wed, 08 Aug 2012 11:30:35 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/12/5
+Message-ID: <5078265A.3070408@redhat.com>
+Date: Fri, 12 Oct 2012 08:16:58 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request -- libotr: Multiple heap-based buffer overflows in the Base64 decoder
+To: oss-security@...ts.openwall.com
+CC: Matthias Weckbecker <mweckbecker@...e.de>
+Subject: Re: libproxy PAC downloading buffer overflows
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/08/2012 11:18 AM, Jan Lieskovsky wrote:
-> -------- Original Message -------- Subject: CVE Request -- libotr: 
-> Multiple heap-based buffer overflows in the Base64 decoder Date: 
-> Tue, 07 Aug 2012 17:29:35 +0200 From: Jan Lieskovsky 
-> <jlieskov@...hat.com> Reply-To: oss-security@...ts.openwall.com
-> To: Steven M. Christey <coley@...us.mitre.org> CC: 
-> oss-security@...ts.openwall.com,  Justin Ferguson 
-> <jnferguson@...il.com>, Ian Goldberg <ian@...herpunks.ca>
+On 10/12/2012 08:02 AM, Matthias Weckbecker wrote:
+> On Friday 12 October 2012 15:46:47 Kurt Seifried wrote:
+>> On 10/12/2012 02:43 AM, Tomas Hoger wrote:
+>>> Hi!
+>>> 
+>>> libproxy 0.4.9 fixes a buffer overflow reported by Tomas Mraz:
+>>> 
+>>> http://code.google.com/p/libproxy/source/detail?r=853 
+>>> https://groups.google.com/forum/?fromgroups=#!topic/libproxy/VxZ8No7mT0E
+>>
+>>
+>>> 
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4504
+>> 
+>>> Upstream announcement also mentions another issue -
+>>> CVE-2012-4505. It is related, but different problem that was
+>>> found in pre-0.4 versions while investigating if they were
+>>> affected by CVE-2012-4504.
+>>> 
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4505
+>> 
+>> Please use CVE-2012-4521 for this issue.
 > 
-> Hello Kurt, Steve, vendors,
+> Wasn't this rather a CVE notification than a CVE request? At least
+>  it looked like this to me. The announcement mentions two CVE.
 > 
-> multiple heap-based buffer overflow flaws were found in the way the
-> Base64 decoder of libotr, an Off-The-Record Messaging library and
-> toolkit, performed decoding of certain messages. A remote attacker
-> could provide a specially-crafted OTR message that once processed
-> in an application linked against libotr would lead to that
-> application crash or, potentially, arbitrary code execution with
-> the privileges of the user running the application.
-> 
-> References: [1] 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=684121 [2] 
-> http://lists.cypherpunks.ca/pipermail/otr-dev/2012-July/001347.html
->
->
-[3]
-> 
-https://bugzilla.redhat.com/show_bug.cgi?id=846377
-> 
-> Relevant upstream patches: [4]
-> 
-http://otr.git.sourceforge.net/git/gitweb.cgi?p=otr/libotr;a=commitdiff;h=b17232f86f8e60d0d22caf9a2400494d3c77da58
-> 
-> 
-> 
-> [5]
-> 
-http://otr.git.sourceforge.net/git/gitweb.cgi?p=otr/libotr;a=commitdiff;h=6d4ca89cf1d3c9a8aff696c3a846ac5a51f762c1
-> 
-> 
-> 
-> [6]
-> 
-http://otr.git.sourceforge.net/git/gitweb.cgi?p=otr/libotr;a=commitdiff;h=1902baee5d4b056850274ed0fa8c2409f1187435
-> 
-> 
-> 
-> Could you allocate a CVE id for these issues?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat 
-> Security Response Team
-> 
-> P.S.: There doesn't seem to be a CVE identifier for these issues 
-> yet: http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=libotr
-> 
+> Matthias
 > 
 
-Please use CVE-2012-3461 for this issue.
+Please REJECT CVE-2012-4521, sorry I literally just woke up and can't
+read so good it seems. Mea culpa.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -74,19 +49,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQIqI7AAoJEBYNRVNeJnmTpJQQAJPIROc9M77l3ewXZVW5luk3
-X5IrOToSTIxGld4rXf+uSFIKm/FKHssHkylQcDomWPJlOYOPwlZlg+V6g+ErTHb3
-Up/f/1yD43rf1R3YtsmATlJFJxYQv5aO/fz3+Rk8CkyHICzWtFKZPisK+U4Ufo9f
-Q4stSmM39ylO8pX8eSYcVbcoyGMvQWTjBa+pGIlrVx+5k/UXtcZ2Q+MmsuOxDxe+
-nNSMvy9uqmSRvBweBF9yhuNH0wemIi7yADA85i+tvjgKWo9kugSbhH6I+/ZURvoF
-B0DYYM36Mwl89bcefA9jXpGD62XdWZxh8mpzODHd5lVGNLvBoJiQTRj55/1hxT2N
-2ywlEOGMFJr49Bro8ubbifr4wao2HXzMnwNRkooMeu4FCunn5sh8RRlgMpmQXnvE
-JQrIAVq32JCpRd9cFZHgMTnYDFJYZn+S1Kt8fCkoPCT8RIqjrg6E21nKfBMSyBLw
-dgrkS4wMy3Nbcsa7hVKGOcgyWiGLa+sO6fMoo/r1QC74v24afvPn/gzE0MnW0wz9
-dvL1RyXW0M5vpAGG47/kvWdhmFuXmyR/5t25XmlUUBqKEXpgXsyPKQAMDIvNOVxl
-Ir1xxtjTij1lCJqF/A7zZeSpltCDxlFkwFztNyBuRqydqCf6/vjEH1VMhQ8FduNt
-nTYJWozr5DgjGKVxSy8A
-=N6qB
+iQIcBAEBAgAGBQJQeCZaAAoJEBYNRVNeJnmTw/4QALxRjQNmDcaTVp3F1J+dESnU
+JZLy2QX22cfgXIj6SW4bZI8CMSCfUHfiYsPcOMTnSNsKpCZIb/HonhIfqyuRQilU
+ZLuPiA9DsUqlgD7MXCsQIXbSia3oNusWgh7Me5ntaA601mWFZFS9E3HWM4UY1m7W
+iq7LuF2Q+9ZKvgw9kETIYAUnjo78ZtqYImBaE1ZAS2+vxTuIg30hbt3eMBksgsW8
+LPYgA6REetSkyi6kxoV02avhcASBh20mIvrABH0KWqXr6+Ivw4BxUddbXbnwTYJP
+eZvei439bypDnU6t+a+Jqd2MFIWNifSyqsGu3gkgX2P72xDGMBhUVdX/bNu3ditI
+SBo3DfH+vueE4wclQhlRyu6apBna4kPXnJM2wtiK1k+ND7HNUT/H5z8isLA0m4NH
+Ci5jpHtq8OQTFxlpwjmHfhWERsRhWI/JDfkKWu/ovR836hNolBCU8/2UihV4MQKO
+Uivf3/JbkkIB1BM55Yv5uUVEIVjxT6mzEFWjUbP0PLrQlKa6SFAXRRtYTHk/hnCt
+h1qInmrzrovwZiansGs9Sm4X6gW2N+0hiAsMJUb6PuTRlqGqKfwmc0HexxbCpOw1
+yQ/k9Z/PBHMVhiVlro7sFdHUqeak60cIDRXJzamOG96HlQC0W3TJ8QXJQgFdySBL
+uZ26meQPR3om/cvPe1m8
+=GvzZ
 -----END PGP SIGNATURE-----
