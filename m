@@ -1,24 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/2
-Message-ID: <4F542215.7040103@redhat.com>
-Date: Mon, 05 Mar 2012 10:16:53 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/13/1
+Message-ID: <5079C5A2.1060409@redhat.com>
+Date: Sat, 13 Oct 2012 13:48:50 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "stev >> \"Steven M. Christey\"" <coley@...us.mitre.org>
-Subject: CVE-2011-4348 kernel: incomplete fix for CVE-2011-2482
+CC: Vincent Danen <vdanen@...hat.com>, security@...y-lang.org
+Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
 Content-Type: text/plain; charset=utf-8
 
-When testing [CVE-2011-2482] with SELinux disabled (haven't triggered
-panic on patched kernel with selinux on), the reproducer run after
-regular user causes soft lookups and the machine becomes completely
-unresponsive on patched kernel. Target machine was unresponsive after
-remote part of reproducer (con) killed. Target with patched kernel
-needed to be rebooted to start working regularly.
+On 10/12/2012 02:50 PM, Vincent Danen wrote:
+> Just noticed this today on ruby's web site:
+>
+> http://preview.ruby-lang.org/en/news/2012/10/12/poisoned-NUL-byte-vulnerability/
+>
+>
+> The fix is located here:
+>
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37163
+>
+> I don't see a CVE name associated with the announcement or commit, so
+> I don't believe one has been assigned.
+>
+Agreed, user controlled file creation in this manner is definitely a
+security issue.
 
-Upstream commit:
-http://git.kernel.org/linus/ae53b5bd77719fed58086c5be60ce4f22bffe1c6
+Please use CVE-2012-4522 for this issue.
 
-Reference:
-https://bugzilla.redhat.com/CVE-2011-4348
+Also please note that this email is not signed because I'm travelling
+and don't have access to my GPG keys currently.
 
-Thanks, Eugene
+-- Kurt Seifried Red Hat Security Response Team (SRT) PGP: 0x5E267993
+A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
