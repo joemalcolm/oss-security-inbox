@@ -1,25 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/16
-Message-ID: <20120305170635.GD1220@redhat.com>
-Date: Mon, 5 Mar 2012 10:06:35 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: mwlib < 0.13.5 DoS flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/14/1
+Message-ID: <CAPYM6Vw7xJd8=y83gWCBcEtMEyBYQetSxE+9jobpnryMiKGtiQ@mail.gmail.com>
+Date: Mon, 15 Oct 2012 00:38:38 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
+Subject: SilverStripe CMS 2.4.7 <= Arbitrary URL Redirection
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to the following please?
+1. OVERVIEW
 
-It was reported that mwlib suffered from a flaw that could allow a
-remote attacker to perform a denial of service attack on a mwlib
-installation by forcing it to parse a specially-crafted #iferror magic
-function.  This has been corrected in upstream version 0.13.5.
+SilverStripe 2.4.7 and lower versions are vulnerable to Open URL Redirection.
 
-References:
 
-http://groups.google.com/group/mwlib/browse_thread/thread/c2bd1cee77a8a79?hl=en
-http://www.google.com/url?sa=D&q=https://github.com/pediapress/mwlib/pull/10&usg=AFQjCNHgoXQUYFtEj0L8VP5K8Xn_GoTOyw
-https://github.com/pediapress/mwlib/commit/aa987c281c10e29f26aa0faa21c04f3bb1167fde
-https://bugzilla.redhat.com/show_bug.cgi?id=800064
+2. BACKGROUND
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+SilverStripe CMS is easy for both developers and content authors to
+work with. The SilverStripe Framework keeps the code tucked away
+neatly so that it can be accessed easily by programmers but does not
+get in the way of content authors.
+
+
+3. VULNERABILITY DESCRIPTION
+
+SilverStripe CMS contains a flaw that allows a remote cross site
+redirection attack. This flaw exists because the application does not
+validate the "BackURL" parameter upon submission to the
+"/index.php/Security/login" script. This could allow a user to create
+a specially crafted URL, that if clicked, would redirect a victim from
+the intended legitimate web site to an arbitrary web site of the
+attacker's choosing.
+
+
+4. VERSIONS AFFECTED
+
+Tested on 2.4.7
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://localhost/index.php/Security/login?BackURL=//yehg.net
+
+
+6. SOLUTION
+
+Upgrade to the latest 3.x version.
+
+
+7. VENDOR
+
+SilverStripe Development Team
+http://www.silverstripe.org/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2012-02-06: notified vendor
+2012-10-15: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5BSilverStripe_2.4.7%5D_url_redirection
+
+#yehg [2012-10-15]
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
