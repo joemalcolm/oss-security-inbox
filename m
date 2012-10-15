@@ -1,65 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/01/5
-Message-ID: <504296AE.5080005@redhat.com>
-Date: Sat, 01 Sep 2012 17:13:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/15/1
+Message-Id: <201210151550.43688.geissert@debian.org>
+Date: Mon, 15 Oct 2012 15:50:42 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>, security@...uts.apache.org
-Subject: Re: CVE request: Apache Struts S2-010 and S2-011
+Subject: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 09/01/2012 11:35 AM, Raphael Geissert wrote:
-> Hi,
-> 
-> Apache Struts 2.3.4.1 fixes the vulnerabilities described in S2-010
-> (CSRF) and S2-011 (DoS).
-> 
-> Could CVE ids be assigned please?
+Michael Stapelberg, Tollef Fog Heen, and Michael Biebl discovered that 
+dhclient was setting dhclient-script's PATH to one that included a 
+subdirectory of the build directory[1].
+This issue is caused by the way isc-dhcp is packaged in Debian.
 
-Yes, confirmed struts 2.3.4.1 was released August 11, 2012.
+At least two versions of isc-dhcp for the amd64 (x86_64) architecture in 
+Debian were found two be setting PATH to a subdirectory of /home/zero79/, 
+which would allow a user with such HOME directory to be able to execute code 
+as root.
 
-====
+To clarify the bug report: it is not specific to samba or hooks in general, 
+PATH is injected in the environment passed to the execve() call that 
+executes dhclient-script.
 
-> [1] http://struts.apache.org/2.x/docs/s2-010.html
+Since this issue doesn't affect the stable release, there won't be a DSA. 
+This email is just a heads up.
 
-When using Struts 2 token mechanism for CSRF protection, token check
-may be bypassed by misusing known session attributes
+[1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=690532
 
-Please use CVE-2012-4386 for this issue.
-
-====
-
-> [2] http://struts.apache.org/2.x/docs/s2-011.html
-
-Long request parameter names might significantly promote the
-effectiveness of DOS attacks
-
-Please use CVE-2012-4387 for this issue.
-
-These don't appear to affect struts 1.2.x/1.3.x.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQQpauAAoJEBYNRVNeJnmTShsQAKIZvJnzfCPE8TZBy3hj265v
-vwDUwHUynvom4pEvXfORIY3ni2QmwGOD9mzUKr9WI3Qw+AGNsEjB7AeYYczxWbK/
-fmuqG5StLrZBMMZju/MseMcbgZcExom+xaas8S9/qU5aTbyx7QvAnnSO/W3xdOzy
-srEQlW4sSUrPQ3JqXJIYKMOPFoVWXKT4kpq3UF+2zQGunPRbn2FyCKzM7iWhKtKb
-XPdFYxbjKycnDlv8uKlSDeQiQVnDHfdT1jHnLVY9hao1EpF2lfOLT2OPapa5p7Td
-uRKgBNsGyIhZPKBRvSQKIs+WKD+SAFrkJ+fy01NnxGNpGUMXA/+vwMjOh+Jktbgr
-h30rJQNUtBIS83M0oL6zxj9oXKJ/rYFtCSc/XcQb3X7jdZ7vV9kKHVZlQ6yP/qCH
-mn6E0G9xzzs4FNat0rKlvSa13NQM736g9GH4stZOnzqMken7c24HizLLf3KUcXhE
-Mo/jiPUOTNufpzgdUdi+somDFKq4BPU9X4Vkiftid6BYDLruCmh+HODlUwRu6LVF
-UnGIGp1gdZAmTIS+O00TQb9Rne7PWyT+BRHHl454+k6cdIrQmyacYgKLxwBzcHCq
-jgWaDbTjS0cDsmjWMLFRGE3AIJ4wWod1vPMIQv5Tw6X25fGSRpUZqh0AVK/e8l5H
-3wFKAPZVfXNaLS74lNoW
-=bRtv
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
