@@ -1,44 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/09/7
-Message-ID: <CAB9ZNAyjGOkUjT-ehDxiWVC1vvdqrGGbj86fvzHdThEg3v8NrQ@mail.gmail.com>
-Date: Fri, 9 Mar 2012 09:13:26 -0500
-From: Andres Gomez <agomez@...idsignal.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: TORCS 1.3.2 xml buffer overflow - CVE-2012-1189
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/16/1
+Message-Id: <20121016000107.4A0056EA62@zanzibar.garbagecollect.jp>
+Date: Tue, 16 Oct 2012 09:01:08 +0900
+From: "U.Nakamura" <usa@...bagecollect.jp>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com, Vincent Danen <vdanen@...hat.com>, security@...y-lang.org
+Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
 Content-Type: text/plain; charset=utf-8
 
-2012/3/6 Tomas Hoger <thoger@...hat.com>
+Hello,
 
->
-> Their code bases may differ significantly in other parts, but it seems
-> the affected vulnerable code is still identical between the two.
-> Following are versions shortly before fixes got committed:
->
->
-> http://torcs.cvs.sourceforge.net/viewvc/torcs/torcs/torcs/src/modules/graphic/ssggraph/grsound.cpp?revision=1.31.2.2&view=markup
->
-> http://speed-dreams.svn.sourceforge.net/viewvc/speed-dreams/trunk/src/modules/graphic/ssggraph/grsound.cpp?revision=4146&view=markup
->
-> In cases like this, same CVE is used for all project that use / embed
-> the same affected code.
->
+In message "Re: [oss-security] CVE request: ruby file creation due in insertion of illegal NUL character"
+    on Oct.14,2012 04:48:50, <kseifried@...hat.com> wrote:
+> > The fix is located here:
+> >
+> > http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37163
+> >
+> > I don't see a CVE name associated with the announcement or commit, so
+> > I don't believe one has been assigned.
+> >
+> Agreed, user controlled file creation in this manner is definitely a
+> security issue.
+> 
+> Please use CVE-2012-4522 for this issue.
 
- Ok, understood, thanks.
+Thank you.
+
+I've added the mention about the CVE number to the announcement
+on Ruby Web SIte.
 
 
-
-> Write up the description and send it to Mitre =).
->
->   I already did, I sent details but they have not disclosed them in web
-> page http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-1189, maybe i
-> used a wrong email address (cve-assign@...re.org).
->
->
-
- So, what Mitre's email could I send CVE-2012-1189 details?
-
-Regards
-
-Andres Gomez
+Regards,
+-- 
+U.Nakamura <usa@...bagecollect.jp>
 
