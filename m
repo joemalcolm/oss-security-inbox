@@ -1,39 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/31/6
-Message-ID: <20121231175131.2a82115c@melee>
-Date: Mon, 31 Dec 2012 17:51:31 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/16/3
+Message-ID: <20121016154915.50540e5e@redhat.com>
+Date: Tue, 16 Oct 2012 15:49:15 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Dispute CVE-2012-5903 SMF index.php scheduled-parameter XSS
+Subject: Re: libproxy PAC downloading buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 31 Dec 2012 15:14:26 +0100
-Moritz Naumann <oss-security@...itz-naumann.com> wrote:
+On Fri, 12 Oct 2012 10:43:06 +0200 Tomas Hoger wrote:
 
-> On 31.12.2012 11:42 Henri Salo wrote:
-> [..]
-> > Until someone provides a working PoC I dispute this issue. SMF
-> > hasn't replied to my emails about this. Please note there is
-> > several comments[1][2] in forums about this too.
-> > 
-> [..]
-> > It's not a security vulnerability if attacker already has
-> > administrator access to the application. Should we REJECT
-> > CVE-2012-5903?
+> libproxy 0.4.9 fixes a buffer overflow reported by Tomas Mraz:
 > 
-> Based on the authors' description it would seem more likely that the
-> attack would use social engineering to trick the legitimate forum
-> admin into accessing this URL with a payload in it, which would then
-> trigger in his browser and disclose the admins' session cookie to an
-> attacker by means of cross site scripting. Like you, I don't see how
-> the value passed to the "scheduled" parameter would be echoed out,
-> though.
+> http://code.google.com/p/libproxy/source/detail?r=853
+> https://groups.google.com/forum/?fromgroups=#!topic/libproxy/VxZ8No7mT0E
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4504
 
-That's pretty much what is called CSRF, isn't it? So it's a CSRF that
-can trigger an XSS.
+Anyone updating 0.4.x version to fixed upstream version should consider
+picking 0.4.10, which fixes an infinite loop in the PAC downloading
+code (incorrectly fixed in 0.4.9, reportedly also breaking chunked
+encoding downloads).
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Tomas Hoger / Red Hat Security Response Team
