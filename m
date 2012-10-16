@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/6
-Message-ID: <20120209065523.GA5232@openwall.com>
-Date: Thu, 9 Feb 2012 10:55:23 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/16/2
+Message-Id: <201210161440.10249.mweckbecker@suse.de>
+Date: Tue, 16 Oct 2012 14:40:10 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux procfs infoleaks via self-read by a SUID/SGID program (was: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access)
+Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 09, 2012 at 03:31:34AM +0100, Jason A. Donenfeld wrote:
-> On Wed, Feb 8, 2012 at 11:12, Solar Designer <solar@...nwall.com> wrote:
-> > BTW, what version of chsh did you test this with and what behavior do
-> > you observe?  I was not able to get anything useful in this way out of
-> > Owl's chsh (once enabled for non-root) - it just asks for the password,
-> > but somehow fails to read it if one is entered on the tty (perhaps
-> > there's some inconsistency in use of the tty vs. fd 0).  I suppose I'd
-> > need to get past successful authentication for chsh's input to be
-> > treated as the new shell name, in which case it'd get printed out (such
-> > as in an error message) or/and put in /etc/passwd.
-> 
-> zx2c4@...C4-Laptop ~/Projects/Ploits/Local/CVE-2012-0056 $ gcc maps.c
-> zx2c4@...C4-Laptop ~/Projects/Ploits/Local/CVE-2012-0056 $ ./a.out
-> Changing the login shell for zx2c4
-> Enter the new value, or press ENTER for the default
->         Login Shell [/bin/bash]: chsh: Invalid entry:
-> 00400000-00408000 r-xp 00000000 fd:00 1444794
->   /usr/bin/chsh
+On Friday 12 October 2012 22:50:41 Vincent Danen wrote:
+> Just noticed this today on ruby's web site:
+>
+> http://preview.ruby-lang.org/en/news/2012/10/12/poisoned-NUL-byte-vulnerabi
+>lity/
+>
+> The fix is located here:
+>
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37163
+>
+> I don't see a CVE name associated with the announcement or commit, so
+> I don't believe one has been assigned.
 
-Hmm.  It does not even ask you for the password.  Perhaps you have
-CHFN_AUTH in /etc/login.defs set to "no" or not set at all?  (On Owl,
-it's "yes".)
+Technically, this would also apply to Perl (at least with 5.12.3). Or am I
+missing the point?
 
-Alexander
+  $ perl -we 'open $fh, "+>", "perl\0foo"; print $fh "x"x2; close $fh'
+  $ ls perl
+    perl
+
+If the third parameter is double-quoted. I wouldn't call it a vulnerability 
+though. Just wanted to note it.
+
+Matthias
+
+-- 
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
