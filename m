@@ -1,21 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/20
-Message-ID: <87zkaxq2l0.fsf@mid.deneb.enyo.de>
-Date: Fri, 30 Mar 2012 22:02:51 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/16/4
+Message-ID: <507D828E.9000308@fifthhorseman.net>
+Date: Tue, 16 Oct 2012 11:51:42 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: postgresql-jdbc 8.1 SQL injection with postgresql server 9.1
+Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
 Content-Type: text/plain; charset=utf-8
 
-* Ludwig Nussel:
+On 10/16/2012 08:40 AM, Matthias Weckbecker wrote:
+> Technically, this would also apply to Perl (at least with 5.12.3). 
 
-> Postgresql 9.1 turned "standard conforming strings" on by default[1][2].
-> postgresql-jdbc before version 8.2-504 however did not know about that
-> kind of string and escaped single quotes with a backslash always. When
-> such an old version of postgresql-jdbc is used with a newer postgresql
-> server it not only breaks when strings contain single quotes, it also
-> allows for SQL injections[3].
+It's also the case with perl 5.14.2 (just tested). :/
 
-By the way, if you want to fix this for some reason, you should
-probably include support for the modified BYTEA encoding introduced in
-the 9.0 server version, too.
+on the other hand, python and php seem to both have some sort of an
+internal check in place, so there's a difference of expectation somewhere:
+
+0 dkg@pip:~$ python -c 'f = open("python\0foo"); f.write("test");'
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+TypeError: file() argument 1 must be encoded string without NULL bytes,
+not str
+1 dkg@pip:~$
+
+0 dkg@pip:~$ echo | php -B 'if ($x = fopen("php\0foo", "w")) fwrite($x,
+"test");'
+PHP Warning:  fopen() expects parameter 1 to be a valid path, string
+given in Command line begin code on line 1
+0 dkg@pip:~$
+
+hth,
+
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (1031 bytes)
