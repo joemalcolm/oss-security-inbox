@@ -1,51 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/30/4
-Message-ID: <4F26CE80.4010407@redhat.com>
-Date: Mon, 30 Jan 2012 10:08:16 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/6
+Message-ID: <CAF6rxgk20-9R7LczRPC87JhTeGbFx-jr_J1u2sqZ+73zL+TUYQ@mail.gmail.com>
+Date: Wed, 17 Oct 2012 13:39:18 -0400
+From: Eitan Adler <lists@...anadler.com>
 To: oss-security@...ts.openwall.com
-CC: Jonathan Wiltshire <jmw@...ian.org>, Nanakos Chrysostomos <nanakos@...ed-net.gr>, Gian Piero Carrubba <gpiero@...rf.it>, team@...urity.debian.org
-Subject: Re: Re: Yubiserver package ships with pre-filled identities
+Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
 Content-Type: text/plain; charset=utf-8
 
-On 01/30/2012 04:56 AM, Jonathan Wiltshire wrote:
-> On 2012-01-30 06:43, Nanakos Chrysostomos wrote:
->> Hi again,
->> I found another reason for not shipping the package with an example
->> account. I think you are certainly right. If you haven't filled a bug
->> please do so, in the meanwhile I will upload to mentors a new version
->> with an empty database that resolves the problem. Thanks.
-> 
-> This populated database is also shipped in the upstream tarball,
-> oss-security should be consulted to see whether a CVE identifier should
-> be issued.
-> 
-> Adding to CC; oss-sec please see below:
-> 
-> 
->> On 30 Ιαν 2012, at 1:25, Gian Piero Carrubba <gpiero@...rf.it> wrote:
->>
->>> Hi Nanakos,
->>>
->>> thanks for your prompt response.
->>>
->>> * [Sun, Jan 29, 2012 at 11:19:37PM +0200] Nanakos Chrysostomos:
->>>> those keys are invalid and are not my real keys. It's just a sample
->>>> for the potential users of the package to see.
+On 17 October 2012 13:31, Simon McVittie <smcv@...ian.org> wrote:
+> As you imply, that pseudocode is a bad idea anyway: the webapp should
+> be ensuring that the filenames match a pattern more like
+> /^[A-Za-z0-9_]\.jpg$/ (or not allowing user-controlled filenames at
+> all), and/or the web server should be configured so it never trusts
+> files in the uploads directory (either as executable code or something
+> like .htaccess).
 
-Ok I'm not clear on what is going on here, is there a link to the bug
-entry regarding this issue, or can someone clarify it?
+> Anything vulnerable to this sort of trickery is probably vulnerable to
+> file-overwriting attacks via "../" path segments, too.
 
-1) are there default accounts shipped with the product that get
-activated automatically during install? (it sounds like yes?)
+What if they ensure this sort of safety via some other mechanism?
+(chroot for example)
+What if they take the file name to be "anything after the final /" ?
 
-2) can someone remotely/locally access these accounts? what are the
-credentials for these accounts ("invalid keys"?), can an attacker access
-them?
-
-3) what is the privilege level of the accounts?
-
-
+I could see some instances, albeit contrived, where an application
+might be vulnerable to this sort of attack, but not vulnerable to
+generic path traversal.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Eitan Adler
