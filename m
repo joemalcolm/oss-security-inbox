@@ -1,28 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/5
-Message-ID: <4F73EE5E.4060103@redhat.com>
-Date: Wed, 28 Mar 2012 23:08:46 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/3
+Message-Id: <201210171225.28965.mweckbecker@suse.de>
+Date: Wed, 17 Oct 2012 12:25:28 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, security@...mla.org
-Subject: Re: CVE-request: Joomla 20120305 / 20120306
+Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
 Content-Type: text/plain; charset=utf-8
 
-On 03/28/2012 07:11 AM, Henri Salo wrote:
-> Can I get two 2012 CVE-identifiers for these vulnerabilities:
-> 
-> http://developer.joomla.org/security/news/396-20120305-core-password-change.html
+On Wednesday 17 October 2012 11:44:35 Fabian Keil wrote:
+> Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
+> > On 10/16/2012 08:40 AM, Matthias Weckbecker wrote:
+> > > Technically, this would also apply to Perl (at least with 5.12.3).
+> >
+> > It's also the case with perl 5.14.2 (just tested). :/
+>
+> At least for Perl I consider this a feature.
+>
 
-Please use CVE-2012-1598 for this issue.
+I agree. I also think that an application which lets such things happen (ie
+allow arbitrary content to be passed to open()) is rather to blame than the
+language (/interpreter) itself. But the same applies to Ruby, IMO.
 
-> http://developer.joomla.org/security/news/397-20120306-core-information-disclosure.html
+> The NUL byte is a special character and allows trailing white
+> space in the filename that is otherwise stripped. This is
+> (more or less) documented in perlopentut(1).
+>
+> It also seems unlikely that someone adds NUL bytes to the
+> white list of acceptable characters by accident, and if there
+> is no white list in the first place, the Perl script probably
+> has bigger issues.
+>
 
-Please use CVE-2012-1599 for this issue.
+Ack.
 
-> Advisories released today.
-> 
-> - Henri Salo
+> Fabian
 
+Matthias
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
