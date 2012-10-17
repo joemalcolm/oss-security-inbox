@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/3
-Message-ID: <20120831103448.GA23147@inutil.org>
-Date: Fri, 31 Aug 2012 12:34:48 +0200
-From: Moritz Muehlenhoff <jmm@...til.org>
-To: michaelni@....at
-Cc: oss-security@...ts.openwall.com
-Subject: Information on security issues fixed in ffmpeg 0.11?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/2
+Message-ID: <20121017114435.0d58ce6b@fabiankeil.de>
+Date: Wed, 17 Oct 2012 11:44:35 +0200
+From: Fabian Keil <freebsd-listen@...iankeil.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
 Content-Type: text/plain; charset=utf-8
 
-Hi Michael,
+Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
 
-[Adding the oss-security mailing list to CC, which is used by
-all major distros to discuss security issues in open source
-software]
+> On 10/16/2012 08:40 AM, Matthias Weckbecker wrote:
+> > Technically, this would also apply to Perl (at least with 5.12.3). 
+> 
+> It's also the case with perl 5.14.2 (just tested). :/
 
-http://ffmpeg.org/security.html lists several CVE ID, which
-have been fixed in ffmpeg 0.11;
+At least for Perl I consider this a feature.
 
-CVE-2012-2772, CVE-2012-2774, CVE-2012-2775, CVE-2012-2776, CVE-2012-2777,
-CVE-2012-2779, CVE-2012-2782, CVE-2012-2783, CVE-2012-2784, CVE-2012-2785,
-CVE-2012-2786, CVE-2012-2787, CVE-2012-2788, CVE-2012-2789, CVE-2012-2790,
-CVE-2012-2791, CVE-2012-2792, CVE-2012-2793, CVE-2012-2794, CVE-2012-2795,
-CVE-2012-2796, CVE-2012-2797, CVE-2012-2798, CVE-2012-2799, CVE-2012-2800,
-CVE-2012-2801, CVE-2012-2802, CVE-2012-2803, CVE-2012-2804,
+The NUL byte is a special character and allows trailing white
+space in the filename that is otherwise stripped. This is
+(more or less) documented in perlopentut(1).
 
-Do you additional information on these issues, preferably a matching git
-commit to the CVE IDs?
+It also seems unlikely that someone adds NUL bytes to the
+white list of acceptable characters by accident, and if there
+is no white list in the first place, the Perl script probably
+has bigger issues.
 
-Cheers,
-        Moritz
+Fabian
+
+Download attachment "signature.asc" of type "application/pgp-signature" (197 bytes)
