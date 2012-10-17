@@ -1,48 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/9
-Message-ID: <50C9D8AE.6000306@op5.se>
-Date: Thu, 13 Dec 2012 14:31:26 +0100
-From: Andreas Ericsson <ae@....se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/9
+Message-ID: <507EF57E.1010209@debian.org>
+Date: Wed, 17 Oct 2012 19:14:22 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Matthew Brush <mbrush@...ebrainz.ca>,  Eitan Adler <lists@...anadler.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Nick Treleaven <nick.treleaven@...nternet.com>, Colomban Wendling <lists.ban@...besfolles.org>,  Enrico Troeger <enrico.troeger@...na.de>, Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com,  jonathan.underwood@...il.com
-Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
+Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
 Content-Type: text/plain; charset=utf-8
 
-On 12/13/2012 07:50 AM, Matthew Brush wrote:
-> On 12-12-12 09:54 PM, Eitan Adler wrote:
->> On 12 December 2012 11:51, Jan Lieskovsky <jlieskov@...hat.com>
->> wrote:
->>> The questions: 1) should Geany escape the filenames?,
->> 
->> Up to the maintainers.
->> 
->>> 2) is this a security issue or not?
->> 
->> Unlikely.  Is there a way a malicious document could cause code 
->> execution without user action?
->> 
-> 
-> If I understand correctly, if someone messed with the user's
-> configuration directory where the "geany.conf" file is stored, and
-> they modified the "recent files" stored in there that Geany opens
-> automatically on next startup, then assuming that it doesn't choke on
-> the weird filename and that the user didn't notice the weird filename
-> in several places in the GUI, they could technically blindly activate
-> a build command, causing the malicious filename/command to run.
-> 
+On 17/10/12 18:03, Kurt Seifried wrote:
+> Avtually looking at that page it appears that no modern file 
+> systems allows NUL in a file name (and in general I suspect it's a
+> bad idea/leads to some nasty edge case issues).
 
-If someone has access to modify a users home directory, it's safe to
-assume that they can execute commands as that user. It's like saying
-"if someone gains root access to your system, they can replace your
-binaries with trojan kits that open them up to remote root access".
-It's not really a security issue if you can gain access you already
-have.
+Anything that, directly or indirectly, uses Unix-style APIs to access
+files can't possibly support NUL in a filename anyway, since those
+APIs receive the filename as a NUL-terminated string.
 
--- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> Personally I think the perlopentut case makes sense, using NUL as
+> an end of string marker. What happens if stuff comes after it
+> though?
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+For Perl, one possibility would be to continue to treat an input of
+"foo\0" as equivalent to "foo" (so that you can use "./ foo \0" to
+mean " foo ", as documented), but disallow NULs anywhere except the
+last position.
+
+    S
