@@ -1,33 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/17/4
-Message-ID: <20120417093752.GB7896@kludge.henri.nerv.fi>
-Date: Tue, 17 Apr 2012 12:37:52 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/15
+Message-ID: <507F09FC.1090408@redhat.com>
+Date: Wed, 17 Oct 2012 13:41:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: WordPress 3.1.1
+CC: Simon McVittie <smcv@...ian.org>
+Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jan 15, 2012 at 03:35:25PM +0100, Yves-Alexis Perez wrote:
-> On dim., 2012-01-15 at 16:09 +0200, Henri Salo wrote:
-> > I even contacted WordPress administrators and asked if this does have
-> > CVE, but they haven't replied for some reason.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 10/17/2012 12:14 PM, Simon McVittie wrote:
+> On 17/10/12 18:03, Kurt Seifried wrote:
+>> Avtually looking at that page it appears that no modern file 
+>> systems allows NUL in a file name (and in general I suspect it's
+>> a bad idea/leads to some nasty edge case issues).
 > 
-> Note that I tried to contact Ryan Boren and wp-hackers to get
-> information about CVE-2011-3122, 3125, 3128 and 3129 but didn't get any
-> answer either (for the later the mail doesn't even appear on the
-> archives so I guess it was not moderated, but afaict I didn't receive a
-> bounce either). It seems that the security contact point is security
-> [at] automattic.com so maybe try that?
+> Anything that, directly or indirectly, uses Unix-style APIs to
+> access files can't possibly support NUL in a filename anyway, since
+> those APIs receive the filename as a NUL-terminated string.
 > 
-> Regards,
-> -- 
-> Yves-Alexis
+>> Personally I think the perlopentut case makes sense, using NUL
+>> as an end of string marker. What happens if stuff comes after it 
+>> though?
+> 
+> For Perl, one possibility would be to continue to treat an input
+> of "foo\0" as equivalent to "foo" (so that you can use "./ foo \0"
+> to mean " foo ", as documented), but disallow NULs anywhere except
+> the last position.
+> 
+> S
+> 
 
-iCorrection to this email. These CVE-identifiers are related to 3.1.3 and not 3.1.1.
+Wow so this goes back a ways:
 
-CVE-2011-3122
-CVE-2011-3125 
-CVE-2011-3128
-CVE-2011-3129
+http://insecure.org/news/P55-07.txt
 
-- Henri Salo
+- -------[  Phrack Magazine --- Vol. 9 | Issue 55 --- 09.09.99 --- 07 of
+19  ]
+
+- ----------------[  The Beef
+
+- ----[  Poison NULL byte
+
+Note:  The name `Poison NULL byte` was originally used by Olaf Kirch
+in a Bugtraq post. I liked it, and it fit...  So I used.  Greetings to
+Olaf.
+
+When does "root" != "root", but at the same time, "root" == "root"
+(Confused yet)?  When you co-mingle programming languages.
+
+One night I got to wondering, exactly what would Perl allow, and could
+I get anything to blow up in unexpected ways.  So I started piping
+very weird data out to various system calls and functions.  Nothing
+spectacular, except for one that was quite notable...
+
+You see, I wanted to open a particular file, "rfp.db".  I used a fake
+web scenario to get an incoming value "rfp", tacked on a ".db", and
+then opened the file.  In Perl, the functional part of the script was
+something like:
+
+	# parse $user_input
+	$database="$user_input.db";
+	open(FILE "<$database");
+
+Great.  I pass 'user_input=rfp', and the script tries to open "rfp.db".
+Pretty simple (let's ignore the obvious /../ stuff right now).
+
+Then it got interesting when I passed 'user_input=rfp%00'.  Perl made
+$database="rfp\0.db", and then tried to open $database.  The results?
+ It  opened "rfp" (or would have, had it existed).  What happened to
+the ".db"?   This is the interesting part.
+
+You see, Perl allows NUL characters in its variables as data.  Unlike C,
+NUL is not a string delimiter.  So, "root" != "root\0".  But, the
+underlying system/kernel calls are programmed in C, which DOES
+recognize NUL as a delimiter.  So the end result?  Perl passes
+"rfp\0.db", but the underlying libs stop processing when they hit the
+first (our) NUL.
+
+......... and so on.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQfwn8AAoJEBYNRVNeJnmTQWEP/2gqNZrmNM17B9OnCHwIsBo2
++DfRtHYN6crwxtZUOPR6Ofbfxj+q9bCQUoOt2CMlKHx/aKZlMMSM+Hm/oYS23pIa
+lVuBinVTM3Vh8RiFvNctGdieoqtPnMKkqag3+Aq8dXn+VOLHHZhw0d0IiK7skE+L
+FVZJak+ly5KXfWu1THyCxQvstduY37lSlqGIeB7MLXUdyUqKSt+MEbMwxwayPFJV
+J2kfJFIyf+ehV1/+XwQBZk6lbuPduJSWiqluyg3RIZzEJOjzd/5KC+JUtAlCwFeZ
+TjRxCGUuiNIUaOcYrDkJ5HOxGY0uKLpgEHQ+VUmWvI0CpE5xx798AxraowkG2AHp
+T7E0J2pavt35uaCGb2TzimqpaCsmscPDKZiLkYpPsCZCxutRdCkKXJxd6Hu9x7kc
+VajhN2ESgs4kwzVDSM0FsMUChAuSySLcUTvi/ydCYj4WFsPCN8OSaccw/6ep8Wiz
+TJ8x7TnUvqilWog1dqwMAw9a+UbHT7W1fa62eqRmni6Woz41/pdDmIfMEAWqCnnF
+gIKZSBggfMruLQhAScOAGcZYo8PNA1oK4ofKP49j7uGCpmaDIKG344KuRGnrT7bj
+2N3gPEOBFE7s4y9C6cyqyR2zZMr3Jmw/QZBI8TjjHF0+H+qNdjZOQkzdRc5CFhzc
+LOJn9jfw/W5Gk9N0D5bb
+=b9SL
+-----END PGP SIGNATURE-----
