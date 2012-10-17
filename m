@@ -1,92 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/3
-Message-ID: <20515.53519.833182.698887@mariner.uk.xensource.com>
-Date: Thu, 9 Aug 2012 16:02:39 +0100
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-Subject: Xen Security Advisory 11 (CVE-2012-3433) - HVM destroy p2m host DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/8
+Message-ID: <20121017175839.GD2630@sentinelchicken.org>
+Date: Wed, 17 Oct 2012 10:58:39 -0700
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> It's difficult to reason about whether this is a bug or a feature
+> without knowing the justification for treating the Ruby version as a
+> security vulnerability, which was not included in the announcement.
+> 
+> One possible justification is this: suppose a webapp writes files with
+> an attacker-controlled name to the web-server-visible /uploads/
+> directory, using this pseudocode:
+> 
+>     if (filename ends with .jpg) {
+>       open_for_writing(filename).write(content)
+>     }
+>     else {
+>       error "that's not a JPEG, go away"
+>     }
+> 
+> and suppose that the web server also executes *.php files in that
+> directory. Then an attacker could upload "evil.php\0.jpg", and browse
+> to http://example.com/uploads/evil.php to get their payload executed.
+> 
+> Is this what the Ruby people had in mind, or is there some other
+> attack vector I'm not seeing?
 
-            Xen Security Advisory CVE-2012-3433 / XSA-11
-                          version 3
 
-	HVM guest destroy p2m teardown host DoS vulnerability
+I've personally exploited this condition in a number of PHP apps
+during pentests (in versions of PHP that don't prevent it).
 
-UPDATES IN VERSION 3
-====================
+Is the application at fault for not doing a better job of data
+validation?  Yes.  Yet, is there any good reason to allow raw NUL
+bytes in file names?  NO.  As mentioned, no filesystem supports it.
 
-Embargo ended Thursday 2012-08-09 12:00:00 UTC.
+You can save the average web app user a lot of grief by just rejecting
+blatantly illegal paths.
 
-ISSUE DESCRIPTION
-=================
-
-An HVM guest is able to manipulate its physical address space such
-that tearing down the guest takes an extended period amount of
-time searching for shared pages.
-
-This causes the domain 0 VCPU which tears down the domain to be
-blocked in the destroy hypercall. This causes that domain 0 VCPU to
-become unavailable and may cause the domain 0 kernel to panic.
-
-There is no requirement for memory sharing to be in use.
-
-IMPACT
-======
-
-A guest kernel can cause the host to become unresponsive for a period
-of time, potentially leading to a DoS.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems running HVM guests with untrusted guest kernels.
-
-This vulnerability effects only Xen 4.0 and 4.1. Xen 3.4 and earlier
-and xen-unstable are not vulnerable.
-
-MITIGATION
-==========
-
-This issue can be mitigated by running PV (para-virtualised) guests
-only, or by ensuring (inside the guest) that the kernel is
-trustworthy.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch will resolve the issue.
-
-NOTE REGARDING CVE
-==================
-
-We do not yet have a CVE Candidate number for this vulnerability.
-
-PATCH INFORMATION
-=================
-
-The attached patches resolve this issue
-
- Xen 4.1, 4.1.x                              xsa11-4.1.patch
- Xen 4.0, 4.0.x                              xsa11-4.0.patch
-
-$ sha256sum xsa11-*.patch
-c8ab767d831b20a1b22c69a28127303c89cf0379cbf6f1ba3acfda6240aa2a89  xsa11-4.0.patch
-61c6424023a26a8b4ea591d0bff6969908091a1a1e1304567d0d910908f21e8d  xsa11-4.1.patch
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQI8/0AAoJEIP+FMlX6CvZ+fIH/R8w3J9KUiLiIai/QaA4xOjp
-rkvdR40b0GzcllDQEy9bUCvRY3QPz7DRza90vLvxCL9R5OnbkRtGJxdmbxjwmoVX
-zF03FLaFCd5ypFsTGAcxaUcxtOrt6Ut6R0i8GZp5BCkOV+UkNvu/uaOxL6N3UZ3w
-HfCm88EAWsWeJuShiG5jY3BhgCeR7b3GV9uXP0vG5Pa7cwPGvMnx/E6OsC/zEMG2
-7yTX0/AI4qKMT9XtiA024vloN1mMlRgN74ZIBqmPuDv5ggv1wLFseARWueYMBn8Y
-aUDi97nJf+YWXIx+YwAmD0XLmJ/5tTAYvaV3B4vjMrfFc/plMKDvOqohVB+hv08=
-=l4LY
------END PGP SIGNATURE-----
-
-View attachment "xsa11-4.0.patch" of type "text/plain" (1049 bytes)
-
-View attachment "xsa11-4.1.patch" of type "text/plain" (1063 bytes)
+tim
