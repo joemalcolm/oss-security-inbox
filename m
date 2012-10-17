@@ -1,47 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/2
-Message-ID: <50BC2733.4070009@redhat.com>
-Date: Sun, 02 Dec 2012 21:14:43 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/11
+Message-ID: <507EFC2D.6080605@redhat.com>
+Date: Wed, 17 Oct 2012 12:42:53 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: Sergei Golubchik <serg@...monty.org>, oss-security@...ts.openwall.com, king cope <isowarez.isowarez.isowarez@...glemail.com>, todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, security@...iadb.org, security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
-Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
+To: oss-security@...ts.openwall.com
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE request: radsecproxy incorrect x.509 certificate validation
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/02/2012 07:46 PM, Steven M. Christey wrote:
+On 10/17/2012 11:48 AM, Raphael Geissert wrote:
+> Hi,
 > 
-> (removed the full-disclosure/bugtraq mailing lists, they don't need
-> to be further spammed with minor CVE assignment details.)
+> Ralf Paffrath discovered that radsecproxy may incorrectly accept a
+> client certificate if the certificates chain was validated with the
+> CA settings of one configuration block but the other certificate
+> constraints failed, and the certificate constraints of another
+> configuration block passed (ignoring this other config block's CA
+> settings.)
 > 
+> This issue has been fixed in version 1.6.1. However, it introduces
+> a minor regression as it ignores some configuration blocks (see the
+> references for further details.)
 > 
-> On Sun, 2 Dec 2012, Sergei Golubchik wrote:
+> Could a CVE id be assigned?
 > 
->> Hi, Huzaifa!
->> 
->> Here's the vendor's reply:
->> 
->> On Dec 02, Huzaifa Sidhpurwala wrote:
->>> 
->>> * CVE-2012-5611 MySQL (Linux) Stack based buffer overrun PoC
->>> Zeroday http://seclists.org/fulldisclosure/2012/Dec/4 
->>> https://bugzilla.redhat.com/show_bug.cgi?id=882599
->> 
->> A duplicate of CVE-2012-5579 Already fixed in all stable MariaDB
->> version.
+> Thanks in advance.
 > 
-> Kurt - I suggest we REJECT CVE-2012-5579 and preserve
-> CVE-2012-5611 because of the strong likelihood that CVE-2012-5611
-> will be more commonly referenced in the very near future.
+> References: https://project.nordu.net/browse/RADSECPROXY-43 
+> https://postlister.uninett.no/sympa/arc/radsecproxy/2012-09/msg00001.html
+>
+> 
+https://postlister.uninett.no/sympa/arc/radsecproxy/2012-09/msg00006.html
+> 
 
-Sounds good to me
-
-Please REJECT CVE-2012-5579 for this issue, instead please use
-CVE-2012-5611 for this issue.
-
-
+Please use CVE-2012-4523 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -49,18 +44,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQvCczAAoJEBYNRVNeJnmTqH4P/3p3KwQhtxygikZTA9OiJsNi
-28qG8CHFzxGB8pTrHfxNdHRzHi4IBjniIQUwJOcJKMQFhlIJRCTdgvw8pBGMROOK
-Hy5EVCm0r+oWFt5SDNBEZ8blRoUiSwXxgDPB7Vv1ZsuSy2EbGDxXN1W+febjGhXA
-klTg1r+PaxBEaU8n+mzvBc2vYnhCKY4x0Apu46VQt4k82K5KoXTYwSVJIfWmE4FB
-53I6tiFZRoICCqjBlDGbha/V0YfwG7ehtPb7Tgq+3Wd9tC8kO8pG2eKcpEzYWXlL
-kK02GadWEMdBxmhxkw7yxEYXnpE/fqiIgHjXR1fydlB+3dqs1yNvhbi/x5lMUsgJ
-8y422iJyH+QOI6rKcZm2AEZEkEj+/DOtZ2v6VW4vS6EZGNQ5x6VgN/T9cG0kEFgx
-pKe/n3EwC3FLkqFEtU5firwfmI+zNuFrYfst+36FLpPCVEV5Ulm7Dqge9zMPxS3g
-uvP3vxJxkzFkWY1zShQf1cVpXKZPYjzvmGQKhIv4/00e5XqR/BpY7Zb08qNVngD0
-CayQlMM6LX9T2eufouND7/mvmmC/njennqFXG+GM6pz9AFa8ouO/P6vJ/+Rsd6Kv
-+/tDHl7DIpgzwarnNpCN6TMAmGwsL6FS+GSLwDnSIjmqy3XR8hLdmoHqqfiXXKRx
-3ShgRXR8r1VZ24UKd6pP
-=cozl
+iQIcBAEBAgAGBQJQfvwtAAoJEBYNRVNeJnmT2BAP/2A5V4oLMJf8oxfmrjwjHjf5
+2hlcIYZtn0ScmAMfCkKIyxW99qftyV82yp21jSkdTER0LA+U8go40p6YhUAfSxDQ
+yaaIemJo0vKVLVNksa9PosrugFEoqF2P7olVKRtRyvuhLTizih4jwg04Mxq7s6S5
+Y/8KOCWLrdyJsYTrNFpfDfCxOLiBgVNdR6pxu5t8BMQ1UrW2INqcvCHrfM9m6hKG
+3WI2UUDUJZoEGsZwARYPQEoxpq0/rRyyos7YrofnATSaf0m/xI7zUCi585KxYigd
+n4mz9h5A9NSzm0p4B4AAOeBxR2T7J8BPHDEzIcVibYbm6GX9nxINcgr4Us6KWKkV
+NZvkAYXlQhXPliOQrwhS9Wan6YgwBLc/zQdLBghO8dA/pdpBAOQXyUWz2nVM2KjQ
+n30jsM+Dgby+74WuaTAKjzuW7ooaE4Et4//DxFIqJYMk4kYAJJrrH7Wl0Rku4agb
+Vo37rM0aZzzu1udPciuEdwLckvnNRl9ZypYRxG2TQGWOxbKPflMfNUmxZB6f3pp9
+3gXUI2nsysXJL9W3BEZ95BVJLqzhVwDygLP9Ikwd1e+Lse+yGD7HD85x3gT4obuk
+eyhl+7YAFSbxbp7UrjK1/3c2WO/Ze0rh3tRd2zo/P2N1/U/qgYrUMIUs6bP3b8nS
+nb0+JTm68XmEwEu02T+A
+=BwI6
 -----END PGP SIGNATURE-----
