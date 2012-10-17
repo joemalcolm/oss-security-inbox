@@ -1,40 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/12
-Message-ID: <4F96C564.9040003@redhat.com>
-Date: Tue, 24 Apr 2012 09:23:16 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/13
+Message-ID: <507F0A2A.2020200@redhat.com>
+Date: Wed, 17 Oct 2012 13:42:34 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: use after free bug in "quota" handling in hugetlb code
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/24/2012 08:34 AM, Marcus Meissner wrote:
+On 10/15/2012 02:50 PM, Raphael Geissert wrote:
 > Hi,
 > 
-> Reported by Schacher Raindel, quoting his report:
+> Michael Stapelberg, Tollef Fog Heen, and Michael Biebl discovered
+> that dhclient was setting dhclient-script's PATH to one that
+> included a subdirectory of the build directory[1]. This issue is
+> caused by the way isc-dhcp is packaged in Debian.
 > 
-> There is a use after free bug in the kernel hugetlb code. The bug
-> can allow an authenticated, unprivileged local attacker to crash
-> the system (and possibly gain higher privileges) if huge pages are
-> enabled in the system.
+> At least two versions of isc-dhcp for the amd64 (x86_64)
+> architecture in Debian were found two be setting PATH to a
+> subdirectory of /home/zero79/, which would allow a user with such
+> HOME directory to be able to execute code as root.
 > 
-> A fix has been committed to upstream, commit 
-> 90481622d75715bfcb68501280a917dbfe516029 "hugepages: fix use after
-> free bug in "quota" handling"
+> To clarify the bug report: it is not specific to samba or hooks in
+> general, PATH is injected in the environment passed to the execve()
+> call that executes dhclient-script.
 > 
-> Version-Release number of selected component (if applicable): The
-> bug exists in kernel versions 2.6.24 and above.
+> Since this issue doesn't affect the stable release, there won't be
+> a DSA. This email is just a heads up.
 > 
-> References: https://bugzilla.novell.com/show_bug.cgi?id=758532 
-> https://bugzilla.redhat.com/show_bug.cgi?id=815065 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=90481622d75715bfcb68501280a917dbfe516029
->
->  Ciao, Marcus
+> [1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=690532
+> 
+> Cheers,
+> 
 
-Please use CVE-2012-2133 for this issue.
+Was this software released however?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -42,19 +44,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJPlsVkAAoJEBYNRVNeJnmTvF4QAJoyBiApjksbSQdkbJgfiO9w
-AmGLaMxu/6krtEFmn8u3nwbguBn2QnERXuvtq+vC+/9LWieNIadt4pfbULFXd9Sz
-PtBfc87p1xiQsZ9KZbbDMCSsWLkjQSTuqIvaD0imL4O9oYRr2tA7+Khxd1WYd+pI
-fqciAWiixZ+Au6Bw+pXXZycWqBXNC9sCMD5f2lbJwMyBJGQLsfI/zyrmqS0IDhE4
-aLW5s6DJ1KmfuopQo0U+H9Yr2kyjIVTgj4CBzcXE6pJQ3sXWKyupEEHd2jCGv5ss
-jgPC/sSgvgTKWk+XIZNxjazFnjB/dXOhI3/FTwdAtjZFoKRqSjBKmPz0Z/fUZVox
-BP3uC6Ff56hhuKYFDWN+FZpftlKidzTej4/oKNtM8+TXVUfoFnJzKlHWyIuMG2/5
-jp3EYHRQnrDcrdrgiQVApegzPbDCsyyVfoo9h7GDDpVjEQnbFRYywa3gZCwyLKIT
-tYGPcNUTMD1S6IRwh5axtKfm/rS6+0i08soUBZAPAglEmMIkmtCeT0ljSG4A7yoz
-U4+hheWQILGBvSImwnD5Iql2FonZoNH0rInrwv+6agUz63z+ScFpoAAQ8h2gTiEG
-oo8xMW/mMPvBVBXse3NEbzsnko6LjuH3CUF4qJLOLUni3tPAbWvmUMYH1TZ/s/28
-BblHDRUQsCrcN8NcGmyz
-=l5QG
+iQIcBAEBAgAGBQJQfwoqAAoJEBYNRVNeJnmTFa4P/iUGrMc3zt23oqMySqzacrkN
+hzj/zw3xJEFOFZMeTXg2ZUlS3KrUaqolZh6Btlku9EUWVUp+6GudqSE4p/Cr4cL5
+fHj2UoTf7X3RjDv8lyqRNbvtJc6eqRBc5iL2UPwXkTFOBA4dHhIV3/PcxoLNLol/
+uLYnH7Q6oAa8bJdJYWPo6rh2aMGxR6b2ewXqnVWckOCdrcQD6tfNDHgYji1NC/oh
+wcdD3AxvYhxlKiI6+mWy548LG8fJ0bYpx020rkYYldJUre0Frn8TjogoxmEDyyWF
+2Ohhnl3EmjlxM2l0FyKSmUZxsb4aRLkLHqNAmk6b33U5czoti1zsHqmzvMjAAb+d
+g9IjNkZu/SSTt1ma8MZHd1LDRcM+6gqydTXcdXeuehTcELE5zKUPo4nUQXVKXnxg
+CrQDLxRqX0/a6fyc1pLpdWrO0XAHJbCoGdL4nAkI/LlQzQM9K8j9gxkZ4hrWfUwZ
+6tbUBqAnglKLVwUhmRmEeKuFSkuoGq2TZeJEbivbqytxyvcmYUzbb+pDdKydnA4o
+bIFxQ+lMmouQAIGZB+MwrKQ2PGcAPi5DqHaW/ko0o42xlkyhzVy22fFVNh0AgD7y
+NlUZp181WwBrwg4tRKlFHSG0CYq9aKMXIDZL4EAq9cEV8B0WOf/EsVUT3lrXh0dZ
+1JSFcLEl9rje9PawjOfD
+=xqMN
 -----END PGP SIGNATURE-----
