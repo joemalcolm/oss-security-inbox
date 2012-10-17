@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/17/7
-Message-ID: <50053984.4070105@redhat.com>
-Date: Tue, 17 Jul 2012 12:08:04 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/7
+Message-Id: <201210171248.19746.geissert@debian.org>
+Date: Wed, 17 Oct 2012 12:48:19 -0500
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+Subject: CVE request: radsecproxy incorrect x.509 certificate validation
 Content-Type: text/plain; charset=utf-8
 
-On 07/17/2012 12:02 PM, Solar Designer wrote:
-> On Wed, Jul 11, 2012 at 04:12:09PM +0200, yersinia wrote:
->> But exists in other linux libc implementation similar more secure
->> alternatives to getenv ?
->
-> I'm not aware of other Linux libc's having this, but I proposed
-> __secure_getenv() (as well as OpenBSD'ish issetugid() or/and
-> __libc_enable_secure) for addition to musl.  (No, I did not write any
-> code for this.  I merely told Rich and heard back.)  I may be biased,
-> but I think that musl is the main alternative to glibc on Linux now.
+Hi,
 
-Note that GNU libc will likely change the name to secure_getenv. 
-Upstream does not want to document __secure_getenv as-is.
+Ralf Paffrath discovered that radsecproxy may incorrectly accept a client 
+certificate if the certificates chain was validated with the CA settings of 
+one configuration block but the other certificate constraints failed, and the 
+certificate constraints of another configuration block passed (ignoring this 
+other config block's CA settings.)
 
-See the discussion here:
-http://sourceware.org/ml/libc-alpha/2012-07/msg00213.html
+This issue has been fixed in version 1.6.1. However, it introduces a minor 
+regression as it ignores some configuration blocks (see the references for 
+further details.)
+
+Could a CVE id be assigned?
+
+Thanks in advance. 
+
+References:
+https://project.nordu.net/browse/RADSECPROXY-43
+https://postlister.uninett.no/sympa/arc/radsecproxy/2012-09/msg00001.html
+https://postlister.uninett.no/sympa/arc/radsecproxy/2012-09/msg00006.html
 
 -- 
-Florian Weimer / Red Hat Product Security Team
-
-
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
