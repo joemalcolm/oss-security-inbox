@@ -1,31 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/11
-Message-Id: <67BA4235-FD21-4767-B988-B3298CA205A5@securityview.nl>
-Date: Thu, 19 Jan 2012 09:29:15 +0100
-From: Ronald van den Blink <oss-security@...urityview.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/10
+Message-ID: <20121017154411.GG14978@beverly.kleinbus.org>
+Date: Wed, 17 Oct 2012 17:44:11 +0200
+From: Ignatios Souvatzis <is@...bsd.org>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE request - Batavi 1.2.1 Fixes Blind SQL Injection vulnerability in boxToReload parameter of ajax.php
+Cc: is@...bsd.org
+Subject: CVE id request: xlockmore vulnerability: local access
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-On Jan 19, 2012, at 8:40 AM, Ronald van den Blink wrote:
+i'd like to request an CVE identifier for the following vulnerability
+of xlockmore:
 
-> 
-> On Jan 18, 2012, at 10:55 PM, Kurt Seifried wrote:
-> 
->> Can you include a link to the code commit(s) that fiix this? Thanks.
-> Hi Kurt,
-> 
-> This is still a bit of a problem, as our internal svn is still not correctly set up to sync to SF's SVN. What I can do however is ask our developers to create a diff of the files which were changed to fix this and post them online?
-> 
-> B.t.w. if someone knows a way to sync two SVN repositories to with each other, please contact me off list.
-> 
-> With kind regards,
-> 
-> Ronald
+software:	xlockmore 5.0 to 5.40
+access:		terminal-local access to user account
+OS/hardware:	all where sizeof(time_t) > sizeof(long int)
+		(e.g. NetBSD-6 on 32bit platforms)
 
-Well, that went easier than I thought. In https://sourceforge.net/projects/batavi/files/upgrade/ you can find two files (database.1.2-1.2.1.sql and core.1.2-1.2.1.patch) which both contains fixes for the Blind SQL injection. You can find them on lines 12833 till 12860. Also a new DB method was introduced on lines 13289 till 13300. Both are in core.1.2-1.2.1.patch. I hope that this clarifies it enough?
+Details:
 
---
-Ronald
+"xlockmore -mode dclock" grew additional code in version 5.0
+depending on timestamps in 'time_t' format, unfortunately partially
+expressed as 'long' variables. This works if function
+prototypes/definitions or type casts are used and the values are
+passed by value, but fails in a few cases in the code where the
+pointer is passed to localtime(3)).
+
+localtime accesses a (in the discovered case) 64bit value, which
+is likely not to be valid, and returns a null pointer as an error
+indication. The code in dclock.c does not check for this but,
+depending on additional command-line options, either dereferences
+the pointer or passes it to strftime() unconditionally, which in
+turn triggers a segmentation fault, terminating the program and
+leaving the terminal unlocked.
+
+While this is unexpected, the dangerous case is where
+"xlockmore -mode random" calls the mode "dclock" after a while,
+when the user has left the terminal, not noticing that it will
+(eventually) be unlocked.
+
+Accessing the terminal needs physical access to it; however, the 
+terminal can be on a different machine than the one running xlock.
+
+The maintainer of xlockmore has been notified and is working on a
+fixed version. In the meantime, the appended patch file will fix
+this problem. While it was developed for 5.38, it should apply to
+other 5.x versions, too.
+
+The packages xlockmore and xlockmore-lite from pkgsrc.org are
+vulnerable for 32bit machines with 64bit time_t up to and including
+xlockmore-5.38nb5 and xlockmore-lite-5.38nb1, but updated packages
+are available from pkgsrc-current and will shortly be available
+from pkgsrc-2011Q3.
+
+pkgsrc on NetBSD-6.0 or NetBSD-current on 64bit architectures, and
+pkgsrc on NetBSD-5.1.x and earlier, are not vulnerable. 
+
+xlockmore is not shipped with the base system of NetBSD.
+
+The patch is of course subject to the same licensing as the original
+file.
+
+$NetBSD: patch-modes_dclock.c,v 1.2 2012/10/15 20:47:57 is Exp $
+
+--- modes/dclock.c.orig	2012-01-23 13:19:21.000000000 +0000
++++ modes/dclock.c
+@@ -376,11 +376,11 @@ static dclockstruct *dclocks = (dclockst
+ extern char *message;
+ 
+ static unsigned long
+-timeAtLastNewYear(long timeNow)
++timeAtLastNewYear(time_t timeNow)
+ {
+ 	struct tm *t;
+ 
+-	t = localtime((const time_t *) &timeNow);
++	t = localtime(&timeNow);
+ 	return (unsigned long)(t->tm_year);
+ }
+ 
+@@ -420,7 +420,7 @@ convert(double x, char *string)
+ }
+ 
+ static void
+-dayhrminsec(long timeCount, int tzoffset, char *string)
++dayhrminsec(time_t timeCount, int tzoffset, char *string)
+ {
+ 	int days, hours, minutes, secs;
+ 	int bufsize, i;
+@@ -675,7 +675,7 @@ drawDclock(ModeInfo * mi)
+ 				"%a %b %d %Y", localtime(&(dp->timeold)));
+ 		}
+ 	  } else {
+-		long timeNow, timeLocal;
++		time_t timeNow, timeLocal;
+ 		timeNow = seconds();
+ 		timeLocal = timeNow + dp->tzoffset;
+ 
+@@ -950,7 +950,7 @@ init_dclock(ModeInfo * mi)
+ {
+ 	Display *display = MI_DISPLAY(mi);
+ 	dclockstruct *dp;
+-	long timeNow, timeLocal;
++	time_t timeNow, timeLocal;
+ 	int i, j;
+ 
+ 	if (dclocks == NULL) {
+@@ -1252,7 +1252,7 @@ defined(MODE_dclock_mayan)
+ 			dayhrminsec(MAYAN_TIME_START - timeLocal, dp->tzoffset, dp->strnew[1]);
+ 			dp->strpta[1] = dp->strnew[1];
+ 		} else {
+-			struct tm *t = localtime((const time_t *) &timeLocal);
++			struct tm *t = localtime(&timeLocal);
+ 
+ 			if (dp->time24)
+ 			  (void) strftime(dp->strnew[0], STRSIZE, "%H:%M:%S", t);
+
+
+Regards,
+	Ignatios Souvatzis
