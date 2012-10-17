@@ -1,99 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/19/1
-Message-ID: <20120619124102.GA26045@lakka.kapsi.fi>
-Date: Tue, 19 Jun 2012 15:41:02 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/14
+Message-ID: <CANTw=MPBiv_3UvixP8wUxqPhS0Bj-jSPK+Lvk7z935t1oy2x=A@mail.gmail.com>
+Date: Wed, 17 Oct 2012 15:46:55 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Joomla! Security News 2012-06-19
+Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
 Content-Type: text/plain; charset=utf-8
 
-Two issues without CVEs again. Could I get those assigned, thanks.
+On Wed, Oct 17, 2012 at 3:42 PM, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 10/15/2012 02:50 PM, Raphael Geissert wrote:
+>> Hi,
+>>
+>> Michael Stapelberg, Tollef Fog Heen, and Michael Biebl discovered
+>> that dhclient was setting dhclient-script's PATH to one that
+>> included a subdirectory of the build directory[1]. This issue is
+>> caused by the way isc-dhcp is packaged in Debian.
+>>
+>> At least two versions of isc-dhcp for the amd64 (x86_64)
+>> architecture in Debian were found two be setting PATH to a
+>> subdirectory of /home/zero79/, which would allow a user with such
+>> HOME directory to be able to execute code as root.
+>>
+>> To clarify the bug report: it is not specific to samba or hooks in
+>> general, PATH is injected in the environment passed to the execve()
+>> call that executes dhclient-script.
+>>
+>> Since this issue doesn't affect the stable release, there won't be
+>> a DSA. This email is just a heads up.
+>>
+>> [1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=690532
+>>
+>> Cheers,
+>>
+>
+> Was this software released however?
 
-1. 20120601 - Core - Privilege Escalation
-2. 20120602 - Core - Information Disclosure
+It was uploaded to and affected Debian testing and unstable.  Testing
+has not yet been officially "released", but some people use testing as
+if it were an official release.  Unstable never gets released.
 
-- Henri Salo
-ps. forwarded email from Joomla below
-
------ Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
-
-Subject: Joomla! Security News
-From: Joomla! Developer Network - Security News <no_reply@...mla.org>
-To: henri@...v.fi
-
-Joomla! Developer Network - Security News
-
-///////////////////////////////////////////
-[20120601] - Core - Privilege Escalation
-
-Posted: 19 Jun 2012 12:21 AM PDT
-http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/I2o1kbJKIVQ/470-20120601-core-privilege-escalation.html?utm_source=feedburner&utm_medium=email
-
-
-Project: Joomla!
-SubProject: All
- Severity: Medium High
-Versions: 2.5.4 and all earlier 2.5.x versions
-Exploit type: Privilege Escalation
-Reported Date: 2012-April-29
-Fixed Date: 2012-June-18
-
-Description
-
-Inadequate checking leads to possible user privilege escalation.
-Affected Installs
-
-Joomla! versions 2.5.4 and all earlier 2.5.x versions
-Solution
-
-Upgrade to version 2.5.5
-
-Reported by Nils Rückmann
-Contact
-
-The JSST at the Joomla! Security Center.
-
-
-
-///////////////////////////////////////////
-[20120602] - Core - Information Disclosure
-
-Posted: 19 Jun 2012 12:21 AM PDT
-http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/K71HzujRDDs/471-20120602-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
-
-
-Project: Joomla!
-SubProject: All
- Severity: Low
-Versions: 2.5.4 and all earlier 2.5.x versions
-Exploit type: Information Disclosure
-Reported Date: 2012-May-1
-Fixed Date: 2012-June-18
-
-Description
-
-Inadequate filtering leads SQL error and information disclosure.
-Affected Installs
-
-Joomla! versions 2.5.4 and all earlier 2.5.x versions
-Solution
-
-Upgrade to version 2.5.5
-
-Reported by Jakub Galczyk
-Contact
-
-The JSST at the Joomla! Security Center.
-
-
-
---
-You are subscribed to email updates from "Joomla! Developer Network -
-Security News."
-To stop receiving these emails, you may unsubscribe now: http://feedburner.google.com/fb/a/mailunsubscribe?k=JWlBXz9w0F12fWtPu46jwc9_Jcc
-
-Email delivery powered by Google.
-Google Inc., 20 West Kinzie, Chicago IL USA 60610
-
-
------ End forwarded message -----
+Best wishes,
+Mike
