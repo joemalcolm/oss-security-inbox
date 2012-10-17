@@ -1,37 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/29/5
-Message-Id: <201208291326.35248.geissert@debian.org>
-Date: Wed, 29 Aug 2012 13:26:34 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/12
+Message-ID: <507EFDAD.60808@redhat.com>
+Date: Wed, 17 Oct 2012 12:49:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: php header() header injection detection bypass
+CC: Ignatios Souvatzis <is@...bsd.org>
+Subject: Re: CVE id request: xlockmore vulnerability: local access
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Reviewing a list of CVE ids that were assigned from the Debian CNA pool, I 
-noticed there is one [id] for php5 that hasn't been made public yet the 
-issue has already been re-re-reported and in this one last round finally 
-fixed.
+On 10/17/2012 09:44 AM, Ignatios Souvatzis wrote:
+> Hello,
+> 
+> i'd like to request an CVE identifier for the following
+> vulnerability of xlockmore:
+> 
+> software:	xlockmore 5.0 to 5.40 access:		terminal-local access to
+> user account OS/hardware:	all where sizeof(time_t) > sizeof(long
+> int) (e.g. NetBSD-6 on 32bit platforms)
+> 
+> Details:
+> 
+> "xlockmore -mode dclock" grew additional code in version 5.0 
+> depending on timestamps in 'time_t' format, unfortunately
+> partially expressed as 'long' variables. This works if function 
+> prototypes/definitions or type casts are used and the values are 
+> passed by value, but fails in a few cases in the code where the 
+> pointer is passed to localtime(3)).
+> 
+> localtime accesses a (in the discovered case) 64bit value, which is
+> likely not to be valid, and returns a null pointer as an error 
+> indication. The code in dclock.c does not check for this but, 
+> depending on additional command-line options, either dereferences 
+> the pointer or passes it to strftime() unconditionally, which in 
+> turn triggers a segmentation fault, terminating the program and 
+> leaving the terminal unlocked.
+> 
+> While this is unexpected, the dangerous case is where "xlockmore
+> -mode random" calls the mode "dclock" after a while, when the user
+> has left the terminal, not noticing that it will (eventually) be
+> unlocked.
+> 
+> Accessing the terminal needs physical access to it; however, the 
+> terminal can be on a different machine than the one running xlock.
+> 
+> The maintainer of xlockmore has been notified and is working on a 
+> fixed version. In the meantime, the appended patch file will fix 
+> this problem. While it was developed for 5.38, it should apply to 
+> other 5.x versions, too.
+> 
+> The packages xlockmore and xlockmore-lite from pkgsrc.org are 
+> vulnerable for 32bit machines with 64bit time_t up to and
+> including xlockmore-5.38nb5 and xlockmore-lite-5.38nb1, but updated
+> packages are available from pkgsrc-current and will shortly be
+> available from pkgsrc-2011Q3.
+> 
+> pkgsrc on NetBSD-6.0 or NetBSD-current on 64bit architectures, and 
+> pkgsrc on NetBSD-5.1.x and earlier, are not vulnerable.
+> 
+> xlockmore is not shipped with the base system of NetBSD.
+> 
+> The patch is of course subject to the same licensing as the
+> original file.
+> 
+> $NetBSD: patch-modes_dclock.c,v 1.2 2012/10/15 20:47:57 is Exp $
+> 
+> --- modes/dclock.c.orig	2012-01-23 13:19:21.000000000 +0000 +++
+> modes/dclock.c @@ -376,11 +376,11 @@ static dclockstruct *dclocks =
+> (dclockst extern char *message;
+> 
+> static unsigned long -timeAtLastNewYear(long timeNow) 
+> +timeAtLastNewYear(time_t timeNow) { struct tm *t;
+> 
+> -	t = localtime((const time_t *) &timeNow); +	t =
+> localtime(&timeNow); return (unsigned long)(t->tm_year); }
+> 
+> @@ -420,7 +420,7 @@ convert(double x, char *string) }
+> 
+> static void -dayhrminsec(long timeCount, int tzoffset, char
+> *string) +dayhrminsec(time_t timeCount, int tzoffset, char
+> *string) { int days, hours, minutes, secs; int bufsize, i; @@
+> -675,7 +675,7 @@ drawDclock(ModeInfo * mi) "%a %b %d %Y",
+> localtime(&(dp->timeold))); } } else { -		long timeNow, timeLocal; 
+> +		time_t timeNow, timeLocal; timeNow = seconds(); timeLocal =
+> timeNow + dp->tzoffset;
+> 
+> @@ -950,7 +950,7 @@ init_dclock(ModeInfo * mi) { Display *display =
+> MI_DISPLAY(mi); dclockstruct *dp; -	long timeNow, timeLocal; +
+> time_t timeNow, timeLocal; int i, j;
+> 
+> if (dclocks == NULL) { @@ -1252,7 +1252,7 @@
+> defined(MODE_dclock_mayan) dayhrminsec(MAYAN_TIME_START -
+> timeLocal, dp->tzoffset, dp->strnew[1]); dp->strpta[1] =
+> dp->strnew[1]; } else { -			struct tm *t = localtime((const time_t
+> *) &timeLocal); +			struct tm *t = localtime(&timeLocal);
+> 
+> if (dp->time24) (void) strftime(dp->strnew[0], STRSIZE, "%H:%M:%S",
+> t);
+> 
+> 
+> Regards, Ignatios Souvatzis
+> 
 
-I'm talking about https://bugs.php.net/60227 
+Please use CVE-2012-4524 for this issue.
 
-It was independently reported by two persons but as of this time their 
-reports (#54182 and #54006) are still hidden behind the "security bug" 
-curtain of PHP's bug tracker. Back when they were reported, I had assigned 
-the following id: CVE-2011-1398 "header injection detection bypass."
-Note that the id only applies to the CR bypass part of the issue.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Then it came this other report (#60227, originally reported as #60028 by the 
-same person but tagged security, which hid it too), which lead to finally 
-fixing the bug (but please beware of the original fix by reading [1]).
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-Unless I missed something, the CR bypass issue was never assigned a CVE id 
-once it became public. Please do correct me if I'm wrong.
-
-[1] http://article.gmane.org/gmane.comp.php.devel/70584
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+iQIcBAEBAgAGBQJQfv2tAAoJEBYNRVNeJnmTGe0P/iwxrsr+zsmgH/7U623VFWyO
+1aHqrF3NoSYsRqwYQSplFtlqMoQkBcyOSLC4SKdcwmj8oWEkUkcVU0KNDPNNYROE
+5R4xpDMmF29IQgT39uhB/v6JCGwo+cMngSUF7R8hmuWlcM4GFk1EPWNqzNgw8oJc
+qN4ph19ZaKoLtopdMf32VpZBeGwEakDQwFy2Js012ExAYJ8r2dUtNflhvvVSSsPZ
+dLT9GJOXHgS0/YVQ4Pu9xmSX81PAYSP95ufT+xjVN/uSxomVgReHqn5wcz/0eNQi
+wQx7jzufyd6j0MNZ1vENvfTM9s+1DvZoM/kyfEx21Jp1cj7n0k4o4iuN0o20D6v4
+iy3XPugkoFwZtEKczaZIzX8Oi4UgOGLsHeDJzG3DX3tHKoH+IAYO2fuidkpNTp8N
+Y6th0TztQB90zhHP9WpCEcVSC4CB6EuAq3qNsrtqsm3j1Fi4ZKC3phzOb8HdI2WQ
+XOsvBY3KQlHbxFiefuzd/B5LnHx/B5L0m3GMMNgCRV/JsZsOYkmtV6femaP1o9m3
+kePZJL9kwvbSRwjtSYr7B+TKO/wPaZffB5RlQ1iTpLqTJPcqTNDcbaiIDbKi1hnx
+D0w3zhXo/F4gpD7Qx6mupvSFg/GKJOOVGTi5Y53ABFpqHW+iIoCTl7Y5DdH/KmnH
+9v6CcAEO1it26429Yyf9
+=r0bl
+-----END PGP SIGNATURE-----
