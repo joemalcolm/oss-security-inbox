@@ -1,47 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/14
-Message-ID: <4F96D904.5030201@redhat.com>
-Date: Tue, 24 Apr 2012 18:47:00 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Adam Tkac <atkac@...hat.com>, Petr Spacek <pspacek@...hat.com>
-Subject: CVE Request -- bind-dyndb-ldap: Bind DoS (named hang) by processing DNS query for zone served by bind-dyndb-ldap
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/5
+Message-ID: <507EEB6C.40506@debian.org>
+Date: Wed, 17 Oct 2012 18:31:24 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
 Content-Type: text/plain; charset=utf-8
 
-Note: First time mangled email address of Petr Spacek =>
-       apologize if you got this email two times. Anyway:
+On 17/10/12 10:44, Fabian Keil wrote:
+> Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
+>> On 10/16/2012 08:40 AM, Matthias Weckbecker wrote:
+>>> Technically, this would also apply to Perl (at least with
+>>> 5.12.3).
+>> 
+>> It's also the case with perl 5.14.2 (just tested). :/
+> 
+> At least for Perl I consider this a feature.
 
-Hello Kurt, Steve, vendors,
+It's difficult to reason about whether this is a bug or a feature
+without knowing the justification for treating the Ruby version as a
+security vulnerability, which was not included in the announcement.
 
-   a denial of service flaw was found in the way the bind-dyndb-ldap, a dynamic
-LDAP back-end plug-in for BIND providing LDAP database back-end capabilities,
-performed LDAP connection errors handling / attempted to recover, when an error
-during a LDAP search happened for a particular DNS query. When the Berkeley
-Internet Name Domain (BIND) server was patched to support dynamic loading of
-database back-ends, and the LDAP database back-end was enabled, a remote
-attacker could use this flaw to cause denial of service (named process hang)
-via DNS query for zone served by bind-dyndb-ldap.
+One possible justification is this: suppose a webapp writes files with
+an attacker-controlled name to the web-server-visible /uploads/
+directory, using this pseudocode:
 
-bind-dyndb-ldap backend upstream commit, which introduced the problem:
-[1] 
-http://git.fedorahosted.org/git/?p=bind-dyndb-ldap.git;a=commit;h=a7a47212beb01c5083768bdd4170250e7f7cf188
+    if (filename ends with .jpg) {
+      open_for_writing(filename).write(content)
+    }
+    else {
+      error "that's not a JPEG, go away"
+    }
 
-Preliminary bind-dyndb-ldap back-end upstream patch from Adam Tkac:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=815846#c1
+and suppose that the web server also executes *.php files in that
+directory. Then an attacker could upload "evil.php\0.jpg", and browse
+to http://example.com/uploads/evil.php to get their payload executed.
 
-References:
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=815846
-[4] https://www.redhat.com/archives/freeipa-users/2012-April/msg00145.html
+Is this what the Ruby people had in mind, or is there some other
+attack vector I'm not seeing?
 
-Note: Just to explicitly note this. This is NOT a bind DoS in the sense
-       upstream bind source package would be affected by it. Bind
-       needs to be first patched to support dynamic loading of database
-       backends and it's an error in the LDAP backend (bind-dyndb-ldap
-       source code) which makes this attack to succeed when a specially-crafted
-       DNS query is issued.
+> if there is no white list [of characters] in the first place, the
+> Perl script probably has bigger issues.
 
-Could you allocate a CVE id for this?
+As you imply, that pseudocode is a bad idea anyway: the webapp should
+be ensuring that the filenames match a pattern more like
+/^[A-Za-z0-9_]\.jpg$/ (or not allowing user-controlled filenames at
+all), and/or the web server should be configured so it never trusts
+files in the uploads directory (either as executable code or something
+like .htaccess).
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Anything vulnerable to this sort of trickery is probably vulnerable to
+file-overwriting attacks via "../" path segments, too.
+
+    S
