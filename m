@@ -1,26 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/23/1
-Message-ID: <5035E0A0.3010107@redhat.com>
-Date: Thu, 23 Aug 2012 13:19:52 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/18
+Message-ID: <20121018203414.GC4830@kludge.henri.nerv.fi>
+Date: Thu, 18 Oct 2012 23:34:14 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Any information on mesa/CVE-2012-2864?
+Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
 Content-Type: text/plain; charset=utf-8
 
-On 08/22/2012 03:39 PM, Moritz Muehlenhoff wrote:
-> Hi,
-> I noticed the following on
-> http://googlechromereleases.blogspot.de/2012/08/stable-channel-update-for-chrome-os.html :
-> 
->     [$3133.7] [141901] Critical CVE-2012-2864: Mesa array overflow. Credit to miaubiz.
-> 
-> The Google bug tracker entry is closed, does anyone have additional information?
-> 
+On Thu, Oct 18, 2012 at 02:19:06PM -0600, Kurt Seifried wrote:
+> Part of it also depends on usage. Google labels everything as a Beta,
+> sometimes for years and with millions of users. My experience is a lot
+> of people use Debian unstable (when I used Debian I did, otherwise
+> everything was to boring =). What would be interesting is if you could
+> provide download statistics from the main site. I know for a fact
+> CVE's have been assigned for publicly released applications that are
+> probably in use by less than 100 or in extreme cases possibly less
+> than 10 people globally.
 
-The patch for this problem is being discussed by mesa upstream afaik.
+I use stable. Usually one can't easily say how many users there is for package x. :)
 
-More information available at:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-2864
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+- Henri Salo
