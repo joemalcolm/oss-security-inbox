@@ -1,40 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/11
-Message-ID: <20120209200944.GA25530@foo.fgeek.fi>
-Date: Thu, 9 Feb 2012 22:09:44 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: MySQL 0-day - does it need a CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/7
+Message-ID: <980104274.16554131.1350550720175.JavaMail.root@redhat.com>
+Date: Thu, 18 Oct 2012 04:58:40 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com, Breno Silva <breno.silva@...il.com>
+Cc: Matthias Weckbecker <mweckbecker@...e.de>, security@...security.org, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE request: Fwd: [Full-disclosure] SEC Consult SA-20121017-0 :: ModSecurity multipart/invalid part ruleset bypass
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 09, 2012 at 10:20:14AM -0700, Kurt Seifried wrote:
-> https://lists.immunityinc.com/pipermail/canvas/2012-February/000011.html
+Hi Kurt, Breno,
+
+----- Original Message -----
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 10/17/2012 02:47 AM, Matthias Weckbecker wrote:
+> Hi Steve, Kurt, vendors,
 > 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+> this flaw looks slightly different from the last one and
+> apparently has not got a CVE yet.
 > 
-> Hi,
+> ----------  Forwarded Message  ----------
 > 
-> We are releasing a working MySQL 5.5.20 remote 0day exploit with this
-> update.The exploit has been tested with mysql-5.5.20-debian6.0-i686.deb
-> on Debian 6.0.
+> Subject: [Full-disclosure] SEC Consult SA-20121017-0 ::
+> ModSecurity multipart/invalid part ruleset bypass Date: Wednesday
+> 17 October 2012 From: SEC Consult Vulnerability Lab 
+> <research@...-consult.com> To: full-disclosure@...ts.grok.org.uk, 
+> bugtraq@...urityfocus.com
 > 
-> Best,
-> Intevydis Ltd.
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.10 (Darwin)
-> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+> SEC Consult Vulnerability Lab Security Advisory < 20121017-0 > 
+> =======================================================================
+>
+>
 > 
-> iEYEARECAAYFAk8xdTEACgkQY8Flb3OI+Q2zXwCfQL5y+R8n+ipdMYIRdoVPkEdF
-> yeoAn26p3KmY0+WYFqKrb9/A3frNo2Xm
-> =m+1k
-> -----END PGP SIGNATURE-----
+> title: ModSecurity multipart/invalid part ruleset bypass
+> product: ModSecurity vulnerable version: <= 2.6.8 fixed version: 
+> 2.7.0 CVE number: - impact: Depends what you use it for homepage: 
+> http://www.modsecurity.org/ found: 2012-10-12 by: Bernhard Mueller
+>  SEC Consult Vulnerability Lab https://www.sec-consult.com 
+> =======================================================================
+>
+> Looking
+>
 > 
-> Does this need a CVE # or have you already gotten one from Mitre?
+> through
 > 
-> -- 
+> https://www.modsecurity.org/tracker/secure/ReleaseNote.jspa?projectId=10000&version=10100
+> 
+> Is this https://www.modsecurity.org/tracker/browse/MODSEC-155
+
+I am not sure this is related since it is closed with resolution 'Cannot Reproduce'.
+
+Based on Changes:
+  [1] http://mod-security.svn.sourceforge.net/viewvc/mod-security/m2/branches/2.7.x/CHANGES
+
+I would say this is:
+  "* Added MULTIPART_INVALID_PART flag. Also used in rule id 200002 for multipart strict"
+
+with relevant upstream commit being:
+  [2] http://mod-security.svn.sourceforge.net/viewvc/mod-security?view=revision&sortby=date&revision=2081
+
+but Cc-in Breno Silva to definitely confirm this yet.
+
+Breno, could you please confirm / disprove that the patch [2] is upstream
+patch for issue:
+  [3] http://www.openwall.com/lists/oss-security/2012/10/17/1 ?
+
+And if it's not the correct one, provide an explicit revision link to
+the proper one?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> I'd like to confirm this before assigning a CVE.
+> 
+> - -- 
 > Kurt Seifried Red Hat Security Response Team (SRT)
-
-Oracle MySQL Server CVE-2012-0492 Remote MySQL Server Vulnerability – http://www.securityfocus.com/bid/51516
-
-- Henri Salo
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+> 
+> iQIcBAEBAgAGBQJQf7OGAAoJEBYNRVNeJnmTFlgQAJxEfUA7oFo8bb0/iSrb7zy9
+> k4IgupMfsxmOLy9uv07G5dy7dRNRkOqYtrQxszFfnnsFqTDtE9+BU7QpX3pmyBlp
+> KYJMTen2A7ygbqr2GSNnh5faCeYty/9gvubTrJ0wmdE8wlwoOqOtZcjkjA0IzRy9
+> T5WYmwxHkkytPsBVQjrirJc4Q2ehKLUNA6ipC6eyq5b+5qqtS+pHRcJbMbNeHj8P
+> PSDeWGAgwSVY56o+vb0WjAjaU/o64kv6ZOn8MFb06cb+GCTUbtpJHwRWaBwmNBaf
+> 9vHqUURjkAkB/np5v9PvKGuovBs8MiDjv43Z8Tl2oWLGJlkaWO0ltC0HBD9nkKBV
+> H+5mSPub3MBrtxXyUXI0lb4Zh4vUtbzDt8O0SVV+6lqAFv18UBX0ksTjzkgK6sIl
+> 987lJr+MiKsVsO7XBZk0OBMQShu9AiZq3ueBwcol99HeY/ICPPZxT+lP/v72rNsc
+> rMaLOBtgdMj2n0yVvqk4Zg1mshZyWP8NAofFhu2sIbItd/x/csCrwFTjJnrar2pN
+> 2wHJKFjq/ssMXBuFws1M/O4CjRDo2iImB4fIYqS5GxSXRQUephI6eIbgmX/PPQgG
+> 5z550ct/fbSCcNm8uzCjN5YbAKcvHqfDqTqrq4v6bBMJ6ww2eOR8gF9/LYFm7OKb
+> jTf1myRV1SAMt6UVd0dJ
+> =XFfO
+> -----END PGP SIGNATURE-----
