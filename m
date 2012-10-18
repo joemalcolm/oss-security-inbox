@@ -1,45 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/24/2
-Message-ID: <4F47F2D5.7000402@redhat.com>
-Date: Fri, 24 Feb 2012 13:28:05 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/3
+Message-ID: <507F7AF6.6020202@redhat.com>
+Date: Wed, 17 Oct 2012 21:43:50 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Tomas Hoger <thoger@...hat.com>, support@...sl.com
-Subject: Re: MySQL 0-day - does it need a CVE?
+Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
 Content-Type: text/plain; charset=utf-8
 
-On 02/24/2012 03:11 AM, Tomas Hoger wrote:
-> On Thu, 09 Feb 2012 10:20:14 -0700 Kurt Seifried wrote:
-> 
->> https://lists.immunityinc.com/pipermail/canvas/2012-February/000011.html
-> 
-> ...
-> 
->> We are releasing a working MySQL 5.5.20 remote 0day exploit with this
->> update.The exploit has been tested with
->> mysql-5.5.20-debian6.0-i686.deb on Debian 6.0.
-> 
-> Note also:
-> 
-> https://lists.immunityinc.com/pipermail/canvas/2012-February/000014.html
-> http://partners.immunityinc.com/movies/VD-MySQL-5_5_20.mov
-> 
-> According to the video, it should be "yassl buffer overflow".
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Ok according to the video:
+On 10/17/2012 07:54 PM, Michael Gilbert wrote:
+> On Wed, Oct 17, 2012 at 8:41 PM, Kurt Seifried
+> <kseifried@...hat.com> wrote:
+>> When I say released I meant in the sense of made available for 
+>> download, not in the sense of software engineering and doing a
+>> proper "release".
+>> 
+>> Release information here:
+>> 
+>> http://lists.alioth.debian.org/pipermail/pkg-dhcp-devel/2012-April/001275.html
+>>
+>>
+>> 
+Any ways as you can see it's had a CVE assigned:
+>> 
+>> So for Debian Bug report logs - #690532 CVE-2012-2248: build
+>> system paths used in -DCLIENT_PATH
+>> 
+>> So my work here is done =).
+> 
+> Wasn't the assigned CVE number already apparent as part of the
+> subject of this thread?
+> 
+> Best wishes, Mike
 
-This vulnerability affects the yaSSL authentication portion (so SSL
-certificate based authentication of clients).
+I have my mail software setup to squish the headers really small. I
+should probably rethink this space saving strategy.
 
-This attack is "reliable", usually works on the first try, but if it
-fails it will DoS MySQL and MySQL will require a restart.
-
-So it sounds like this might actually be a yaSSL vulnerability and not
-specific to MySQL. CC'ing support@...sl.com so they are aware of this
-potential issue.
-
-Please use CVE-2012-0882 for this issue.
-
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQf3r2AAoJEBYNRVNeJnmTZzgP/RB1YtyapGHNLtBLGTMfuK6h
+neg4z5Z+rdv3P4ehHZEcF4hofrkGHhiH/IxACIjaNaeTNpXT80RfWNUI/QGcQYuU
+P1bIg5mHFNMTNSCW7YrwCwpQSOsOolv33FRm7e5CULWXUfOFAij8vENcTvgcfXb0
+WSauqAr2dYAQoaKeVJcrePcS3NbjJD1igqxzfrEY2uHBmNV29PhacgmFus9NrZMS
+AfFgt55L1/+wzjkcPejRL+1dEPm+K9Wdv2e78TW6z1hZNL3zuVeh+lp8r86HGjHr
+MhsBRkRKPPoidPmr9X7gPNYWGDm1FdmRDnXQEaWH7jhwpPiXll+x8WOr85KJgxOQ
+yVlADuXr0vCidMsipIvoyNLtCSaSE8I0FoIWYMl7HSydJ196jFFzhyS4zBHdXQls
+NwciXtR6MQxV2qyIRtZ8a5rRK/EKQppjdxjrM4XmQWHXW7RkRsqQFckhvl2wo8Ud
+bPXYdnuesLqFQLg4m1qS2oLj56JSQxNXrUNmSaJo0iyC3zxCrWmy/NlsujZw/+aJ
+fIaVqTdMEmfRvRFFtERiCuejwK/rIgFQql/JpmT8VJ5ECqucTmcFOcTPcxtk4G2/
++uuqOIZD3cI+uqlv5LvEyQ6Qx8maC+okGHRDqx6SQP9k/wbjK05x9xEtXEv6hnjX
+bRuiCJdMpbVvH8UYgwkh
+=xkGO
+-----END PGP SIGNATURE-----
