@@ -1,64 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/4
-Message-ID: <50B337DE.6050104@moritz-naumann.com>
-Date: Mon, 26 Nov 2012 10:35:26 +0100
-From: Moritz Naumann <oss-security@...itz-naumann.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Security issue in icecast
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/13
+Message-ID: <CAHQz1r+zRKAMKX96E9EyPvuLXhXD=PAinKSQe0PRB7Q_OBTYNg@mail.gmail.com>
+Date: Thu, 18 Oct 2012 07:41:05 -0500
+From: Breno Silva <breno.silva@...il.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security@...ts.openwall.com, Matthias Weckbecker <mweckbecker@...e.de>,  security@...security.org, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE request: Fwd: [Full-disclosure] SEC Consult SA-20121017-0 :: ModSecurity multipart/invalid part ruleset bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hello Jan,
 
-Hi,
+Yes i can confirm the issue and the patch.
 
-I'm not sure it's worth spending your time on this, so please decide
-for yourselves:
+Thanks
 
-1. Spelling issue in CVE-2011-4612:
+Breno
 
-> On 12/15/2011 11:25 AM, Jamie Strandboge wrote:
->> A security bug was reported by Moritz Naumann against icecast in
->>  Ubuntu.
+On Thu, Oct 18, 2012 at 3:58 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
 
-> Details from the public bug follow: 
-> https://launchpad.net/bugs/894782
-> 
->> From the reporter: "Newline injection in error.log
-[..]
+> Hi Kurt, Breno,
+>
+> ----- Original Message -----
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 10/17/2012 02:47 AM, Matthias Weckbecker wrote:
+> > Hi Steve, Kurt, vendors,
+> >
+> > this flaw looks slightly different from the last one and
+> > apparently has not got a CVE yet.
+> >
+> > ----------  Forwarded Message  ----------
+> >
+> > Subject: [Full-disclosure] SEC Consult SA-20121017-0 ::
+> > ModSecurity multipart/invalid part ruleset bypass Date: Wednesday
+> > 17 October 2012 From: SEC Consult Vulnerability Lab
+> > <research@...-consult.com> To: full-disclosure@...ts.grok.org.uk,
+> > bugtraq@...urityfocus.com
+> >
+> > SEC Consult Vulnerability Lab Security Advisory < 20121017-0 >
+> > =======================================================================
+> >
+> >
+> >
+> > title: ModSecurity multipart/invalid part ruleset bypass
+> > product: ModSecurity vulnerable version: <= 2.6.8 fixed version:
+> > 2.7.0 CVE number: - impact: Depends what you use it for homepage:
+> > http://www.modsecurity.org/ found: 2012-10-12 by: Bernhard Mueller
+> >  SEC Consult Vulnerability Lab https://www.sec-consult.com
+> > =======================================================================
+> >
+> > Looking
+> >
+> >
+> > through
+> >
+> >
+> https://www.modsecurity.org/tracker/secure/ReleaseNote.jspa?projectId=10000&version=10100
+> >
+> > Is this https://www.modsecurity.org/tracker/browse/MODSEC-155
+>
+> I am not sure this is related since it is closed with resolution 'Cannot
+> Reproduce'.
+>
+> Based on Changes:
+>   [1]
+> http://mod-security.svn.sourceforge.net/viewvc/mod-security/m2/branches/2.7.x/CHANGES
+>
+> I would say this is:
+>   "* Added MULTIPART_INVALID_PART flag. Also used in rule id 200002 for
+> multipart strict"
+>
+> with relevant upstream commit being:
+>   [2]
+> http://mod-security.svn.sourceforge.net/viewvc/mod-security?view=revision&sortby=date&revision=2081
+>
+> but Cc-in Breno Silva to definitely confirm this yet.
+>
+> Breno, could you please confirm / disprove that the patch [2] is upstream
+> patch for issue:
+>   [3] http://www.openwall.com/lists/oss-security/2012/10/17/1 ?
+>
+> And if it's not the correct one, provide an explicit revision link to
+> the proper one?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> >
+> > I'd like to confirm this before assigning a CVE.
+> >
+> > - --
+> > Kurt Seifried Red Hat Security Response Team (SRT)
+> > PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> >
+> > -----BEGIN PGP SIGNATURE-----
+> > Version: GnuPG v1.4.12 (GNU/Linux)
+> > Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+> >
+> > iQIcBAEBAgAGBQJQf7OGAAoJEBYNRVNeJnmTFlgQAJxEfUA7oFo8bb0/iSrb7zy9
+> > k4IgupMfsxmOLy9uv07G5dy7dRNRkOqYtrQxszFfnnsFqTDtE9+BU7QpX3pmyBlp
+> > KYJMTen2A7ygbqr2GSNnh5faCeYty/9gvubTrJ0wmdE8wlwoOqOtZcjkjA0IzRy9
+> > T5WYmwxHkkytPsBVQjrirJc4Q2ehKLUNA6ipC6eyq5b+5qqtS+pHRcJbMbNeHj8P
+> > PSDeWGAgwSVY56o+vb0WjAjaU/o64kv6ZOn8MFb06cb+GCTUbtpJHwRWaBwmNBaf
+> > 9vHqUURjkAkB/np5v9PvKGuovBs8MiDjv43Z8Tl2oWLGJlkaWO0ltC0HBD9nkKBV
+> > H+5mSPub3MBrtxXyUXI0lb4Zh4vUtbzDt8O0SVV+6lqAFv18UBX0ksTjzkgK6sIl
+> > 987lJr+MiKsVsO7XBZk0OBMQShu9AiZq3ueBwcol99HeY/ICPPZxT+lP/v72rNsc
+> > rMaLOBtgdMj2n0yVvqk4Zg1mshZyWP8NAofFhu2sIbItd/x/csCrwFTjJnrar2pN
+> > 2wHJKFjq/ssMXBuFws1M/O4CjRDo2iImB4fIYqS5GxSXRQUephI6eIbgmX/PPQgG
+> > 5z550ct/fbSCcNm8uzCjN5YbAKcvHqfDqTqrq4v6bBMJ6ww2eOR8gF9/LYFm7OKb
+> > jTf1myRV1SAMt6UVd0dJ
+> > =XFfO
+> > -----END PGP SIGNATURE-----
+>
 
-The CVE overview now reads:
-> icecast before 2.3.3 allows remote attackers to inject control 
-> characters such as newlines into the error loc (error.log) via a 
-> crafted URL.
-
-I would think "error loc" should actually say "error log".
-
-
-2. Access complexity
-
-"Low" is correct since specialized access conditions or extenuating
-circumstances do not exist and the first three examples provided at
-  http://www.first.org/cvss/cvss-guide.html#i2.1.2
-do apply.
-
-Thanks,
-
-Moritz Naumann
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIcBAEBCgAGBQJQszfAAAoJEL2W7K2TRQCwJ6oP/RjTNXSF4H65cDEp3b6Z/y8E
-CbF165PSI4j6kqoqtYxY+V9Eu8r7x7czuCjqZTC+DzKxfOi2lb+uWUJ01a5Ldnu1
-UX1z210+HOf+XMwDqp3BnaWJwK71ZCIH+9eRkS/6nAWVe04Pk3x5n90fvSJjDvt/
-AAbcAtZiiy9Ef81MtK97amHy4GQqR7I1yMQ9BqBV4PB3vGWKp/pIR+bVg3NHbaHp
-N4fD9EdKh/LDJDd24Bv9ZKnhp/fumJLwsqkGsJ8ePnqitUxcUZjXUqVTGdhXOmvW
-SraEjudIr8Cst6+ykFDkMZYsGe4edhG4MsFFZkmtLvoOsOd4SyuR7jmD58jBSwQj
-1fvVaXICmM7mUCeDbdMeJldGzXGoCoEFwBhdBVMvUm4/572CsWzEug9f0QlhqKl4
-O1tGG9RuMyD0+5kJ7y1Ay8WdLupPHlUhU+ijFusBIj15+AKa56UCktN41xpvLzUf
-c5DO0SBfA9AWcv2+8mxDS752pQ92Cldd6GM3BXtUvmVAeYmn0hDZGev2r1fYCNbl
-RrnoOcj0ViSscOd1GsX2vd9u+CE7yvmwu+b7KGuWM6htPCygbT1ntga7YGPZN2P2
-utLgPJ6+mwEgJwHzxNECCecfxXOAbWD0mvvXBZIEXxfkY9XV+3ZH2S1/qMH5UBn4
-HXYH+XhCcgxI+X42QfDM
-=D0i4
------END PGP SIGNATURE-----
