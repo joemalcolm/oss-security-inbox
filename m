@@ -1,38 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/3
-Message-ID: <20121127234047.GD17784@dragontoe.org>
-Date: Tue, 27 Nov 2012 17:40:47 -0600
-From: Derek Martin <code@...zashack.org>
-To: Yves-Alexis Perez <corsac@...ian.org>
-Cc: oss-security@...ts.openwall.com, secure-testing-team@...ts.alioth.debian.org, Russ Allbery <rra@...ian.org>, temp66@...il.com
-Subject: Re: rssh: incorrect filtering of command line options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/17
+Message-ID: <CANTw=MMngux0n4eQg7WR3Hi+A_tCuw+H_7yahrHD3nVstszAfw@mail.gmail.com>
+Date: Thu, 18 Oct 2012 16:22:09 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 28, 2012 at 12:21:03AM +0100, Yves-Alexis Perez wrote:
-> CVE-2012-2251
-> 	Incorrect filtering of command line when using rsync protocol. It was
-> 	for example possible to pass dangerous options after a "--" switch. The rsync
-> 	protocol support has been added in a Debian (and Fedora/Red Hat) specific
-> 	patch, so this vulnerability doesn't affect upstream.
-> 
-> CVE-2012-2251
+On Thu, Oct 18, 2012 at 4:19 PM, Kurt Seifried wrote:
+> What would be interesting is if you could provide download statistics from the main site.
 
-I believe this one was meant to be CVE-2012-2252...
+You're looking for popcon:
+http://qa.debian.org/popcon.php?package=isc-dhcp
+http://popcon.debian.org/
 
-> 	Incorrect filtering of the "--rsh" option: the filter preventing usage of the
-> 	"--rsh=" option would not prevent passing "--rsh". This vulnerability affects
-> 	upstream code.
-
-I've uploaded rssh-2.3.4 to the project's web page, as well as to
-sourceforge.  This update includes the fix for CVE-2012-2252, and also
-rolls up a fix for CVE-2012-3478, for which I had previously only
-posted a patch.  Additionally there are some mostly trivial updates
-for code and build clean-up.
-
--- 
-Derek D. Martin
-http://www.pizzashack.org/
-GPG Key ID: 0x81CFE75D
-
-
-Content of type "application/pgp-signature" skipped
+Best wishes,
+Mike
