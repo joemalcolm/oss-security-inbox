@@ -1,58 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/14/1
-Message-ID: <4F3A41BD.90103@redhat.com>
-Date: Tue, 14 Feb 2012 12:13:01 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-CC: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Daniel Callaghan <dcallagh@...hat.com>, David Malcolm <dmalcolm@...hat.com>
-Subject: Re: CVE Request -- python (SimpleXMLRPCServer): DoS (excessive CPU usage) via malformed XML-RPC / HTTP POST request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/15
+Message-ID: <CANTw=MO2FgZLMdm80zxQyhgK=eZa8EC7u08xA-hf5PvZJu5Hvg@mail.gmail.com>
+Date: Thu, 18 Oct 2012 15:35:25 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
 Content-Type: text/plain; charset=utf-8
 
-
-Hello vendors,
-
-   just FYI, this issue affected also upstream
-PyPy v1.6 and v1.8 versions. Relevant upstream bug
-being here:
-https://bugs.pypy.org/issue1047
-
-Thanks to David Malcolm for pointing this out!
-
-On 02/13/2012 04:57 PM, Kurt Seifried wrote:
-> On 02/13/2012 07:03 AM, Jan Lieskovsky wrote:
->> Hello Kurt, Steve, vendors,
->>
->>    we have been notified by Daniel Callaghan via:
->> [1] https://bugzilla.redhat.com/show_bug.cgi?id=789790
->>
->> about a denial of service flaw present in the way
->> Simple XML-RPC Server module of Python processed
->> client connections, that were closed prior the
->> complete request body has been received. A remote
->> attacker could use this flaw to cause Python Simple
->> XML-RPC based server process to consume excessive
->> amount of CPU.
->>
->> Issue has been reported upstream at:
->> [2] http://bugs.python.org/issue14001
->>
->> Could you allocate a CVE identifier for this?
->>
->> Thank you&&  Regards, Jan.
->> --
->> Jan iankko Lieskovsky / Red Hat Security Response Team
+On Wed, Oct 17, 2012 at 8:41 PM, Kurt Seifried wrote:
+>> It was uploaded to and affected Debian testing and unstable.
+>> Testing has not yet been officially "released", but some people use
+>> testing as if it were an official release.  Unstable never gets
+>> released.
 >
-> Please use CVE-2012-0845 for this issue.
+> When I say released I meant in the sense of made available for
+> download, not in the sense of software engineering and doing a proper
+> "release".
 
-Thanks, Kurt.
+So, at the risk of sounding nitpicky, the Debian testing + unstable
+archives are pretty much equivalent to Fedora rawhide.  Even though
+Redhat's position is that issues affecting only rawhide should not get
+CVE identifiers, in Debian I think we should try to be more honest, so
+we'll assign identifiers to all "uploaded" versions (in Debian, we use
+the term upload to mean that a package is available in an archive vice
+the term release).
 
-Since the issue in PyPy is also coming from upstream Python
-SimpleXMLRPCServer.py module implementation:
-
-../pypy-1.6/lib-python/2.7/SimpleXMLRPCServer.py
-
-assuming one CVE identifier is enough for both issues.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+Best wishes,
+Mike
