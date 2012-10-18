@@ -1,58 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/4
-Message-ID: <20120502160803.GH20471@suse.de>
-Date: Wed, 2 May 2012 18:08:03 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: dhcpcd 3.2.3 remote stack overflow / denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/4
+Message-ID: <507FB0CA.5060308@redhat.com>
+Date: Thu, 18 Oct 2012 01:33:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE request: piwigo XSS in password.php
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I would like a CVE for following issue:
+On 10/05/2012 10:54 PM, Raphael Geissert wrote:
+> Hi,
+> 
+> A XSS vulnerability has been reported in piwigo's password.php
+> before 2.4.4: http://piwigo.org/bugs/view.php?id=0002750 
+> http://secunia.com/advisories/50510/
+> 
+> However, as stated in the Secunia advisory, the fix does not
+> entirely address the issue. For context, the
+> stripslashes/strip_tags'ed POST variable is included in the
+> template as following: <input type="text" id="username_or_email"
+> name="username_or_email" ... value="{$username_or_email}">
+> 
+> (some parts redacted for clarity)
+> 
+> So, two ids are needed. Thanks in advance.
+> 
+> Piwigo 2.3.1 also seems to be affected but 2.1.2 doesn't.
 
-One of our customers reported a crash of dhcpcd (a DHCP client) version
-3.2.3 as found in our products.
+Please use:
 
-This was triggered by regular network traffic happening, so attackers
-in the local network could inject such a packet.
+CVE-2012-4525 for piwigo 2.4.3 and earlier XSS in password.php
 
-The issue is apparently fixed in dhcpcd-4.0.2 (oldest GIT revision of
-dhcpcd I can find), as it features the necessary checks on cursory review.
+CVE-2012-4526 for piwigo 2.4.4 XSS in password.php (failed fix for
+4525 basically).
 
 
-Problem is that the "to copyed" size of a packet is decoded from the network data
-and not checked against the maximum size of the retrieved packet.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-In dhcpcd 3.2.3 it is copied to a fixed size stackbuffer on some paths
-and so overwrites stack.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-On our SLE11 product this is caught by -fstack-protector, turning this
-into a remote denial of service (crash).
-
-Place to look for places like this:
-
-                bytes = get_udp_data(&pp, packet);
-                if ((size_t)bytes > sizeof(*dhcp)) {
-                        syslog(LOG_ERR,
-                            "%s: packet greater than DHCP size from %s",
-                            iface->name, inet_ntoa(from));
-                        continue;
-                }
-
-bytes is calculated from packet data and not bounded in get_udp_data().
-So without the if() check, it would later copy over bytes into a fixed buffer
-in some paths.
-
-Also:
-                bytes = packet.bh_caplen - ETHER_HDR_LEN;
-                if (bytes > len)
-                        bytes = len;
-                memcpy(data, payload, bytes);
-
-I have pasted the current patch we use against our quite heavily patches dhcpcd 3.2.3
-on https://bugzilla.novell.com/show_bug.cgi?id=760334
-
-Reference: https://bugzilla.novell.com/show_bug.cgi?id=760334
-
-Ciao, Marcus
+iQIcBAEBAgAGBQJQf7DJAAoJEBYNRVNeJnmTCQ0P/ioCdoQLipfBv5kUj7z0Tdjl
+nX1p8JqrwlC25O49EWzUW58Y2D237tcKRIzgHPeBh6xxvc2FIPQnvNeveM/tfvHR
+p0y1ZfU4bjhWMlemFeWf1acNzQGxJJWBLfJ3m+KZdET0Jv2IWccsli8T2MKQ6vwt
+Jw/cTrDpz6VUOyyubxmvrpiq4Pf/wKUnK1pFWmoF0VYud3TjTdAm7PpcKoxXhkdn
+HvipDT3EEGpIc5swGJOATwteqMLN0eM68EE2d7X7H8aZgfcbeNSwRmbDpfCLGG6s
+sez8FpNgwUTPnXGK5j5PG8L9oT62TsPbAB1e/yDtoV6vsnh9AD5tz6dI7Qwz+1Wh
+XFO/8q9o1g0oG7eJqLbLvixP8HrxNpVuNBkalCA01S1IlNHhMsXpI1Bn70u3yk/A
+os9FHm47yLSb+w6XIUgzo92b32heGkA1RNysDY4tXPKd3otgJxU4JXjMUqSEgBNT
+wNVBmPzgiC++znKdWKfaUbewv/cTdOKCS1nBQ6p+8t5+npBFWEOsrFLGjNhjxnms
+4gJ0iNPnCoZip3PZTEwPW1RrBug4UNNiHIkbJCdyX/TELHo+Xzomfx5lCClbcoCi
+LkugwvNHVINulvxth7voprQvZLRvNU9l0qe+5r+/dpv1Oai4GJLRCJ0wHHMHRTBN
+EoW6pLPWhc9vL7Wr5ng+
+=It4M
+-----END PGP SIGNATURE-----
