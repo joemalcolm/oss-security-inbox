@@ -1,28 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/15/5
-Message-ID: <20121115123613.GH28468@trasgu>
-Date: Thu, 15 Nov 2012 13:36:13 +0100
-From: Ricardo Mones <ricardo@...es.org>
-To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
-Subject: CVE request -- vCalendar plugin for Claws Mail: credentials exposed on interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/11
+Message-ID: <50803684.906@halfdog.net>
+Date: Thu, 18 Oct 2012 17:04:04 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+CC: Frank Mehnert <frank.mehnert@...cle.com>,  Kurt Seifried <kseifried@...hat.com>, Raphael Geissert <geissert@...ian.org>
+Subject: Re: Re: CVE for Virtualbox 0x8 DoS?
 Content-Type: text/plain; charset=utf-8
 
-  Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  This has been reported on our bugzilla:
-  http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2782
+Frank Mehnert wrote:
+> Hi,
+> 
+> On Friday 14 September 2012 12:12:44 halfdog wrote:
+>> Hi,
+>>
+>> Kurt Seifried wrote:
+>>> On 09/13/2012 10:59 AM, Raphael Geissert wrote:
+>>>> Hi,
+>>>>
+>>>> Has a CVE id been finally assigned for the following issue?
+>>>> http://www.halfdog.net/Security/2012/VirtualBoxSoftwareInterrupt0x8Guest
+>>>> Crash/
+>>>>
+>>>>  Regards,
+>>>
+>>> - From that page:
+>>>
+>>> 20120910: Oracle security decides, that CVE should be assigned
+>>>
+>>> Can Oracle/halfdog.net communicate the CVE to the community
+>>> please?
+>>
+>> I do not have that information yet. The information about intended CVE
+>> assignment till October update was exchanged off list, contact on
+>> Oracle side was Mr. Mehnert.
+>>
+>> Early disclosure of this issue was due to misconception, that Oracle
+>> would have assessed severity, need for CVE and communication of
+>> disclosure timeline before releasing patch as maintenance release. The
+>> early disclosure mixed up the whole
+>> reporting/analyze/classify/CVE-assign/disclosure process somehow.
+> 
+> The security folks told me that there will be a CVE which will be
+> visible with the next scheduled Oracle CPU date (in October 2012).
 
-  There's still not fix available. Could a CVE id be allocated for this if
-appropriate?
+Seems that Oracle CPU day was 2012-10-16, CVE is CVE-2012-3221
 
-  thanks in advance,
+I've collected references to this issue from HTTP referers and added
+them at the bottom of
 
-P.S.: I'm not subscribed to the list.
--- 
-  Ricardo Mones 
-  ~
-  Physics is like sex: sure, it may give some practical results, but 
-  that's not why we do it.                            Richard Feynman
+http://www.halfdog.net/Security/2012/VirtualBoxSoftwareInterrupt0x8GuestCrash/
 
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iEYEARECAAYFAlCANncACgkQxFmThv7tq+5TlQCeMoALN1LK57w1P0U6h00NXGVh
+l/UAn1Lfp5s0S6lRPq358XEP5AKbITSi
+=M5Gj
+-----END PGP SIGNATURE-----
