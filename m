@@ -1,54 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/4
-Message-ID: <9F69795E29C890408AC2DAF646C89BB379DA607120@MAILBOX.arc.local>
-Date: Wed, 26 Sep 2012 12:34:09 +0200
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RFC: ntp behavior with spoofed source IPs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/5
+Message-ID: <507FB13E.3070309@redhat.com>
+Date: Thu, 18 Oct 2012 01:35:26 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Henri Salo <henri@...v.fi>
+CC: oss-security@...ts.openwall.com, cve-assign@...re.org, coley <coley@...re.org>
+Subject: Re: CVE-request for piwigo issues (second request)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-While changing from openntpd (Ubuntu/universe) to ntp (main), a short evaluation of ntp configuration options was performed. Older ntp-versions on Ubuntu lucid do not support to disable ntp listening on all interfaces, even when using it just to synchronize with servers, but machine not delivering NTP services itself (see [1]). Newer versions come with a default configuration listening on all interfaces ([2]).
+On 10/06/2012 01:34 AM, Henri Salo wrote:
+> Hello,
+> 
+> Old CVE-request did not get filled. At least the CVE is not listed
+> in Mitre's list, OSVDB, Secunia or Debian security-tracker. Request
+> done in: http://www.openwall.com/lists/oss-security/2010/12/07/1
+> 
+> """ piwigo: a1) CSRF a2) SQL injection a3) stored XSS 
+> http://secunia.com/advisories/41365/ 
+> http://piwigo.org/releases/2.1.3 
+> http://www.exploit-db.com/exploits/14973/ (the issues mentioned by
+> the exploit-db entry appear to be the same that were fixed in
+> 2.1.3) b) search.php SQL injection 
+> http://secunia.com/advisories/38305/ 
+> http://piwigo.org/releases/2.0.8 c) CSRF in the admin panel: 
+> http://secunia.com/advisories/37681/ 
+> http://www.exploit-db.com/exploits/10417 (the exploit-db entry
+> details two other issues, but are "admin-only" -- feel free to
+> assign or ignore those.) """
+> 
+> SA41365: 2010 SA38305: 2010 SA37681: 2009
+> 
+> I am happy to provide more information if needed (or in clearner
+> format). Please double-verify that these haven't been assigned
+> before you assign IDs, please.
 
-I would like to hear comments on following scenarios using NTP requests with spoofed source IP, especially regarding the fact, that receiving of such packets could be considered to a higher degree a problem of the host base setup (rp_filter, firewalling) and not ntp itself, even for embedded devices (WLAN router).
+Can you add links to the code commits fixing this stuff? Thanks.
 
-
-Example configuration: A device between LAN and internet (firewall but might be also some embedded WLAN router with NAT support) is running a ntp server. The configuration uses "restrict" statements to restrict querying and modification to LAN side only. External interface is just used to query upstream servers. Following scenarios come to my mind with the interfaces default configuration, I'd like to know if they are possible and if yes relevant:
-
-* Processing of spoofed requests (I do not known, what permission "modify" would allow, but might be annoying): If host TCP-stack will deliver it, ntp will process it.
-
-* Flooding host with NTP-replies: If NTP server responds to faked request on external interface, it will reply to the internal interface. Since there is no amplification, this might be problematic only for slow, e.g. embedded devices. Use of broadcast-address for reply was not tested.
-
-* Directing UDP response to any device IP/port behind firewall: It might be interesting if SIP-phones, embedded DNS/DHCP servers et al. survive this, but could be counted vulnerability of device only and no problem of ntp. I have not tested, if NTP reply could be mapped to any other UDP protocol.
-
-* Building of NTP-based tunnels: Use NTP packets forwarded/mangled via server. If just some bits from request to response are preserved, information can be transmitted.
-
-* Subversion of UDP-packet filtering (minor, only NTP-port can be exposed): Since UDP-filtering does not know state in same way than TCP, any allowed UDP packet may establish connection tracking entry. Scenario: firewall can send UDP via one interface but input not allowed via that if. By sending an NTP-request with spoofed source IP/port, ntp will send request (which is allowed), thus punching hole into firewall from that client to NTP daemon port.
-
-* Detection of allowed NTP IPs (hypothetical): If there is any useable feedback in form of packet IDs or timing that ntp server received response, sending NTP requests could be used to detect which hosts are up behind on the other interfaces of the NTP-machine. Example: use different traffic to NTP-machine (e.g. ICMP) to observe timing or IP-packet-ID-use, then send rogue NTP-packets: if NTP-machine sends NTP-response (ARP-query OK) to spoofed IP and receives ICMP-unreachable, this may change IDs/timing and show, that machine is up and perhaps if firewalled or not.
-
-
-Any opinions?
-
-Thanks,
-Roman
-
-[1] http://archive.ntp.org/ntp4/ChangeLog-stable  Change adding support for listening only on defined interfaces: (4.2.5p212) 2009/09/15 Released by Harlan Stenn: [Bug 983] add interface [listen | ignore | drop] ... directive.
-[2] https://bugs.launchpad.net/ubuntu/+source/ntp/+bug/858493
-
-
-DI Roman Fiedler
-Engineer
-Safety & Security Department
-Assistive Healthcare Information Technology
-
-AIT Austrian Institute of Technology GmbH
-Reininghausstrae 13/1  |  8020 Graz  |  Austria
-T +43(0) 50550 2957  |  M +43(0) 664 8561599  |  F +43(0) 50550 2950
-roman.fiedler@....ac.at | http://www.ait.ac.at/
-
-FN: 115980 i HG Wien  |  UID: ATU14703506
-This email and any attachments thereto, is intended only for use by the addressee(s) named herein and may contain legally privileged and/or confidential information. If you are not the intended recipient, please notify the sender by return e-mail or by telephone and delete this message from your system and any printout thereof. Any unauthorized use, reproduction, or dissemination of this message is strictly prohibited. Please note that e-mails are susceptible to change. AIT Austrian Institute of Technology GmbH shall not be liable for the improper or incomplete transmission of the information contained in this communication, nor shall it be liable for any delay in its receipt.
+> - Henri Salo
+> 
 
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQf7E+AAoJEBYNRVNeJnmTUOgP/jp2QFgekXRk7kLOYm2Ky2C0
+HDSyhc3H8GRb3xsmsAR4aLwzDTHuZNKkDF2OI5hZvwbnuF9wYOr2xxzYMy2SqFpj
+FZfAyx+0GnG62MhpbvQoPznK2ACXGpnCOXpKv+xi+r8VHPTcFTwh0Eg0FTig7jO1
+fR/ttLiqnWQwHYpHXM1HmERu2sEtanCj33c1wFb/FHp/mDGTxPtth0KkSvC0opJ6
+sYM+ol/dy7uXVk5v/he8zrdUO3w6inYbVmJZVAkfi7p33DWMisqUy8LnylEal8eg
+Y/Q8riRxpNM6N/M58fd+dwLI+w5873qVjgQBBdANHhGcWY7V6gTamFZpezCXoaQg
+mNfVKKwmQvUcwtNcTQHsVITmhRxEsfguGAZjM4WJa6zs7NaGA1MSUn6wO+DaCCdl
+xjZvp/UYEbk1y5odKYrbeeq0JEtGHLxUiv46KpzHSInQEPSSSfE7c/hc6Uyu8N6+
+oKClWok0UB3E1bH1lihQFpVl8tkAsr3nQqd/abaTsbHCfADCIWIuU2ehxevGV7qh
+SzudZqbNT8GpJ9qvwWz6vuxt0+EgquLQ29ZH2MtigYVjF35ZAqVJ/+UidnxMhR3r
+dXZdA1Mbucje3L+2h2XNQjgeJ/x64NJBTGGf09h4QR+Seg5/WyEI94lMM+zEZ89z
+u6ubd2PSXXGmPt/0/VHF
+=yJ2u
+-----END PGP SIGNATURE-----
