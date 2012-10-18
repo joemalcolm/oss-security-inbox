@@ -1,43 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/11
-Message-ID: <20121127185535.GN2689@redhat.com>
-Date: Tue, 27 Nov 2012 11:55:35 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/2
+Message-ID: <CANTw=MOt+fgOFdOiFWyOwcaHmfmghyW1AeOkuCzQnAdiy5j7kQ@mail.gmail.com>
+Date: Wed, 17 Oct 2012 21:54:06 -0400
+From: Michael Gilbert <mgilbert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2012-5532 hypervkvpd DoS
+Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
 Content-Type: text/plain; charset=utf-8
 
-* [2012-11-27 11:21:03 -0700] Vincent Danen wrote:
+On Wed, Oct 17, 2012 at 8:41 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> When I say released I meant in the sense of made available for
+> download, not in the sense of software engineering and doing a proper
+> "release".
+>
+> Release information here:
+>
+> http://lists.alioth.debian.org/pipermail/pkg-dhcp-devel/2012-April/001275.html
+>
+> Any ways as you can see it's had a CVE assigned:
+>
+> So for Debian Bug report logs - #690532
+> CVE-2012-2248: build system paths used in -DCLIENT_PATH
+>
+> So my work here is done =).
 
->Just a heads-up on a flaw that was found:
->
->Florian Weimer of the Red Hat Product Security Team discovered that hypervkvpd
->would exit when it processed a spoofed Netlink packet that had been sent from
->an untrusted local user, in the following code:
->
->        len = recvfrom(fd, kvp_recv_buffer, sizeof(kvp_recv_buffer), 0,
->                addr_p, &addr_l);
->
->        if (len < 0 || addr.nl_pid) {
->            syslog(LOG_ERR, "recvfrom failed; pid:%u error:%d %s",
->                    addr.nl_pid, errno, strerror(errno));
->            close(fd);
->            return -1;
->        }
->
->This has been corrected upstream already.
->
->References:
->
->https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=commit;h=95a69adab9acfc3981c504737a2b6578e4d846ef
->https://bugzilla.redhat.com/show_bug.cgi?id=877572
+Wasn't the assigned CVE number already apparent as part of the subject
+of this thread?
 
-Ooops.  This is a bit embarrassing.
-
-This is actually CVE-2012-2669.  Please reject CVE-2012-5532 as a
-duplicate of CVE-2012-2669.
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Best wishes,
+Mike
