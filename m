@@ -1,23 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/7
-Message-ID: <20120209072739.GA5840@openwall.com>
-Date: Thu, 9 Feb 2012 11:27:39 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/6
+Message-ID: <507FB386.60804@redhat.com>
+Date: Thu, 18 Oct 2012 01:45:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4325 Linux kernel: nfs: diotest4 from LTP crash client
+CC: Matthias Weckbecker <mweckbecker@...e.de>, security@...security.org
+Subject: Re: CVE request: Fwd: [Full-disclosure] SEC Consult SA-20121017-0 :: ModSecurity multipart/invalid part ruleset bypass
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 07, 2012 at 08:23:09PM +0100, Petr Matousek wrote:
-> nfs_direct_read_schedule()
->  -> data = nfs_readdata_alloc();			// allocates and nulls readdata
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thank you!
+On 10/17/2012 02:47 AM, Matthias Weckbecker wrote:
+> Hi Steve, Kurt, vendors,
+> 
+> this flaw looks slightly different from the last one and
+> apparently has not got a CVE yet.
+> 
+> ----------  Forwarded Message  ----------
+> 
+> Subject: [Full-disclosure] SEC Consult SA-20121017-0 ::
+> ModSecurity multipart/invalid part ruleset bypass Date: Wednesday
+> 17 October 2012 From: SEC Consult Vulnerability Lab 
+> <research@...-consult.com> To: full-disclosure@...ts.grok.org.uk, 
+> bugtraq@...urityfocus.com
+> 
+> SEC Consult Vulnerability Lab Security Advisory < 20121017-0 > 
+> =======================================================================
+>
+>
+> 
+title: ModSecurity multipart/invalid part ruleset bypass
+> product: ModSecurity vulnerable version: <= 2.6.8 fixed version: 
+> 2.7.0 CVE number: - impact: Depends what you use it for homepage: 
+> http://www.modsecurity.org/ found: 2012-10-12 by: Bernhard Mueller
+>  SEC Consult Vulnerability Lab https://www.sec-consult.com 
+> =======================================================================
 
-Yes, I see that nfs_readdata_alloc() does:
+Looking
+>
+> 
+through
 
-	struct nfs_read_data *p = mempool_alloc(nfs_rdata_mempool, SLAB_NOFS);
+https://www.modsecurity.org/tracker/secure/ReleaseNote.jspa?projectId=10000&version=10100
 
-	if (p) {
-		memset(p, 0, sizeof(*p));
+Is this https://www.modsecurity.org/tracker/browse/MODSEC-155
 
-Alexander
+I'd like to confirm this before assigning a CVE.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQf7OGAAoJEBYNRVNeJnmTFlgQAJxEfUA7oFo8bb0/iSrb7zy9
+k4IgupMfsxmOLy9uv07G5dy7dRNRkOqYtrQxszFfnnsFqTDtE9+BU7QpX3pmyBlp
+KYJMTen2A7ygbqr2GSNnh5faCeYty/9gvubTrJ0wmdE8wlwoOqOtZcjkjA0IzRy9
+T5WYmwxHkkytPsBVQjrirJc4Q2ehKLUNA6ipC6eyq5b+5qqtS+pHRcJbMbNeHj8P
+PSDeWGAgwSVY56o+vb0WjAjaU/o64kv6ZOn8MFb06cb+GCTUbtpJHwRWaBwmNBaf
+9vHqUURjkAkB/np5v9PvKGuovBs8MiDjv43Z8Tl2oWLGJlkaWO0ltC0HBD9nkKBV
+H+5mSPub3MBrtxXyUXI0lb4Zh4vUtbzDt8O0SVV+6lqAFv18UBX0ksTjzkgK6sIl
+987lJr+MiKsVsO7XBZk0OBMQShu9AiZq3ueBwcol99HeY/ICPPZxT+lP/v72rNsc
+rMaLOBtgdMj2n0yVvqk4Zg1mshZyWP8NAofFhu2sIbItd/x/csCrwFTjJnrar2pN
+2wHJKFjq/ssMXBuFws1M/O4CjRDo2iImB4fIYqS5GxSXRQUephI6eIbgmX/PPQgG
+5z550ct/fbSCcNm8uzCjN5YbAKcvHqfDqTqrq4v6bBMJ6ww2eOR8gF9/LYFm7OKb
+jTf1myRV1SAMt6UVd0dJ
+=XFfO
+-----END PGP SIGNATURE-----
