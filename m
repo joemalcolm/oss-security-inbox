@@ -1,30 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/6
-Message-Id: <201209242353.54353.geissert@debian.org>
-Date: Mon, 24 Sep 2012 23:53:53 -0500
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/1
+Message-ID: <507F5028.50105@redhat.com>
+Date: Wed, 17 Oct 2012 18:41:12 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: George Argyros <argyros.george@...il.com>, Aggelos Kiayias <aggelos@...yias.com>, Vladimir Vorontsov <vladimir.vorontsov@...ec.ru>, gifts <gifts.antichat@...il.com>, Anthony Ferrara <ircmaxell@...il.com>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: Randomness Attacks Against PHP Applications
+CC: Michael Gilbert <mgilbert@...ian.org>
+Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 23 September 2012 00:14:47 Solar Designer wrote:
-> > I agree too that education is important. This is something that we
-> > came to an agreement with the PHP team (for example that additional
-> > information is needed on the mt_rand manual). However, as pointed out
-> > nothing has changed yet (the conversations between us and the PHP team
-> > took place in March/April).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 10/17/2012 01:46 PM, Michael Gilbert wrote:
+> On Wed, Oct 17, 2012 at 3:42 PM, Kurt Seifried wrote:
+>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>> 
+>> On 10/15/2012 02:50 PM, Raphael Geissert wrote:
+>>> Hi,
+>>> 
+>>> Michael Stapelberg, Tollef Fog Heen, and Michael Biebl
+>>> discovered that dhclient was setting dhclient-script's PATH to
+>>> one that included a subdirectory of the build directory[1].
+>>> This issue is caused by the way isc-dhcp is packaged in
+>>> Debian.
+>>> 
+>>> At least two versions of isc-dhcp for the amd64 (x86_64) 
+>>> architecture in Debian were found two be setting PATH to a 
+>>> subdirectory of /home/zero79/, which would allow a user with
+>>> such HOME directory to be able to execute code as root.
+>>> 
+>>> To clarify the bug report: it is not specific to samba or hooks
+>>> in general, PATH is injected in the environment passed to the
+>>> execve() call that executes dhclient-script.
+>>> 
+>>> Since this issue doesn't affect the stable release, there won't
+>>> be a DSA. This email is just a heads up.
+>>> 
+>>> [1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=690532
+>>> 
+>>> Cheers,
+>>> 
+>> 
+>> Was this software released however?
 > 
-> Did PHP 5.4's change of session IDs (vs. 5.3's) occur before or after
-> your conversations with them?
+> It was uploaded to and affected Debian testing and unstable.
+> Testing has not yet been officially "released", but some people use
+> testing as if it were an official release.  Unstable never gets
+> released.
 
-If you are referring to using /dev/urandom for entropy by default, it was 
-changed because of:
-https://bugs.php.net/bug.php?id=51436
+When I say released I meant in the sense of made available for
+download, not in the sense of software engineering and doing a proper
+"release".
 
-in 2010.
+Release information here:
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+http://lists.alioth.debian.org/pipermail/pkg-dhcp-devel/2012-April/001275.html
+
+Any ways as you can see it's had a CVE assigned:
+
+So for Debian Bug report logs - #690532
+CVE-2012-2248: build system paths used in -DCLIENT_PATH
+
+So my work here is done =).
+
+> Best wishes, Mike
+
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQf1AoAAoJEBYNRVNeJnmT3SoQAJqW5UirPGOUzSb5NStJD9Se
+GSImky2n+78NyPLwlzSLqB3QRjyEwjbJ01RNXzFU/Z4h4nlmfVVrBrszlWk0T6Fv
+cBXKB3cFGmCxDPYErm4Uh8WmSeD3aFUTe2iibXMUhOAlfoVwUadL5FMpBBjszFo+
+NBqddySqX1TpAm3CHZnHi29U7kj9/7p/JVkdsqHyF7rMW9lXEp2OG2mfLHTDJQ3W
+FcfsqneJQIuEZ3I59OTopKyXrPSaAyvGWCK3yDq6mRyiXDGtv9cb/jCUCUBE130z
+OOyQI6hQrOe1xw6y8Uw9s8WRIMF5khuQzk057ddzSxlWf8KZHOL5mUVMWsP57zsy
+9HSUxve0Cc+1J52ChjFnP/cTGylWht5vLe9ZnmWPq8Sz3HGpoLJaWChMJeU0ODSL
+6BOGi0dtcJFx47nHdzxpiG6hrWRF4qHc1VYUghv3Mli12NSXpMp/eCrepBy+R99I
+/W9ScwS51C7cpSju3Dz6iXOrROMu8USjP5a8FY0TpNKDh7P9qHbN9SIQizxnxqtT
+dbfCcnQ4lHL0W+AFNIXYfMnHt0LkSmTmfZcW8o0g5Ptw++KrtJNr/+SlRycYLSpM
+cn8uW0GyWAxJPdYftw3eZrgQdj0Q5dBj940CtsIguwf3PfboEBHes7MamHt7GMg/
+s3Wo3oTF3tYSCLjvxbe/
+=hjvB
+-----END PGP SIGNATURE-----
