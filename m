@@ -1,31 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/13/3
-Message-ID: <4F391836.7050308@redhat.com>
-Date: Mon, 13 Feb 2012 15:03:34 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Daniel Callaghan <dcallagh@...hat.com>, David Malcolm <dmalcolm@...hat.com>
-Subject: CVE Request -- python (SimpleXMLRPCServer): DoS (excessive CPU usage) via malformed XML-RPC / HTTP POST request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/10
+Message-ID: <5080301B.4050100@debian.org>
+Date: Thu, 18 Oct 2012 17:36:43 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On 18/10/12 11:51, Matthias Weckbecker wrote:
+> On Wednesday 17 October 2012 20:14:22 Simon McVittie wrote:
+>> For Perl, one possibility would be to continue to treat an input of
+>> "foo\0" as equivalent to "foo" (so that you can use "./ foo \0" to
+>> mean " foo ", as documented), but disallow NULs anywhere except the
+>> last position.
+> 
+> Although this is a very elegant solution it's on the other hand probably not
+> trivially implemented, because NUL is mostly treated as the end of a string.
 
-   we have been notified by Daniel Callaghan via:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=789790
+In languages like Perl and Python where a string can contain NULs, the C
+representation of a high-level-language string is not just a C string
+(NUL-terminated char *); it's a struct with a buffer and a length,
+similar to a Pascal string or GLib's GString object. The buffer is
+typically guaranteed to be at least 1 byte longer than the "official"
+length, and contain a NUL after the "official" length, so that it can be
+passed to APIs that expect a C string without copying.
 
-about a denial of service flaw present in the way
-Simple XML-RPC Server module of Python processed
-client connections, that were closed prior the
-complete request body has been received. A remote
-attacker could use this flaw to cause Python Simple
-XML-RPC based server process to consume excessive
-amount of CPU.
+For instance, Python has the function PyString_AsStringAndSize() to
+access both the buffer and the length in one call.
 
-Issue has been reported upstream at:
-[2] http://bugs.python.org/issue14001
+>From a quick look at, for instance, PerlIO_openn() in Perl 5.16.1's
+perlio.c, it would be necessary to use SvPV_const() instead of
+SvPV_nolen_const(), which gives you a length and a buffer instead of
+just the buffer; at which point it's possible and safe to check that no
+NUL appears in the first length-1 bytes. To have its new semantics, Ruby
+must be doing something pretty similar.
 
-Could you allocate a CVE identifier for this?
+(I'm not volunteering to write a patch - I've never used Perl's C API
+before.)
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+    S
