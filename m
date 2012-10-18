@@ -1,26 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/6
-Message-ID: <4F60DD4D.8000704@redhat.com>
-Date: Wed, 14 Mar 2012 12:02:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: gnash integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/9
+Message-ID: <1018476063.16744183.1350568237365.JavaMail.root@redhat.com>
+Date: Thu, 18 Oct 2012 09:50:37 -0400 (EDT)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Attila Bogar <attila.bogar@...guamatics.com>, Raphael Geissert <geissert@...ian.org>
+Subject: CVE Request -- mcrypt: stack-based buffer overflow by encryption / decryption of overly long file names
 Content-Type: text/plain; charset=utf-8
 
-On 03/14/2012 11:54 AM, Vincent Danen wrote:
-> An integer overflow leading to a heap-based buffer overflow was found
-> and fixed in Gnash.  Could a CVE be assigned to this flaw?
-> 
-> References:
-> 
-> http://git.savannah.gnu.org/cgit/gnash.git/commit/?id=bb4dc77eecb6ed1b967e3ecbce3dac6c5e6f1527
-> 
-> http://secunia.com/advisories/47183
-> https://bugzilla.redhat.com/show_bug.cgi?id=803443
-> 
+Hello Kurt, Steve, vendors,
 
-Please use CVE-2012-1175 for this issue.
+  Attila Bogar reported a stack-based buffer overflow
+in the way MCrypt, a crypt() package and crypt(1) command
+replacement, used to encrypt / decrypt files with overly
+long names (longer than 128 bytes). A remote attacker
+could provide a specially-crafted file that, when processed
+by the mcrypt too, would lead to mcrypt executable crash [*].
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+A different vulnerability than CVE-2012-4409:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4409
+
+Note: Using Red Hat bugzilla record for CVE-2012-4409 since
+particular Mitre record is not described yet.
+
+References:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=867790
+
+Patch proposed by Attila:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=867790#c0
+
+Reproducer:
+To reproduce let mcrypt encrypt / decrypt file with name
+longer ~128 bytes.
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+[*] FORTIFY_SOURCE protection mechanism would mitigate this
+deficiency to result into crash only. But on systems, without
+FORTIFY_SOURCE protection being applied, the impact might be
+higher.
+
+P.S.: I am not sure about relation of this issue to the issue
+      Raphael Geissert reported previously:
+      [4] http://www.openwall.com/lists/oss-security/2012/10/02/1
+
+      so CC-in him too, he to clarify if [2] == [4], or if
+      they are yet different issues. Raphael, please clarify.
+      Thanks, Jan.
