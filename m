@@ -1,27 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/05/1
-Message-ID: <20120705190024.GA19386@inutil.org>
-Date: Thu, 5 Jul 2012 21:00:24 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Three CVE requests: at-spi2-atk, as31, naxsi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/19/1
+Message-Id: <201210182014.26885.geissert@debian.org>
+Date: Thu, 18 Oct 2012 20:14:25 -0500
+From: Raphael Geissert <geissert@...ian.org>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, Attila Bogar <attila.bogar@...guamatics.com>
+Subject: Re: CVE Request -- mcrypt: stack-based buffer overflow by encryption / decryption of overly long file names
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign CVE IDs for the following issues:
+Hi Jan, everyone,
 
-1. Insecure tempfile handling in the Gnome accessibiliy component at-spi2-atk
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=678026
-https://bugzilla.gnome.org/show_bug.cgi?id=678348
+[BCC'ing Malcolm Parsons, who sent me an email about the tmperr buffer 
+overflow this morning. Not sure if he discovered it independently.]
 
-2. Insecure tempfile handling in the as31 assembler
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=655496
-Homepage: http://wiki.erazor-zone.de/doku.php?id=wiki:projects:linux:as31
+On Thursday 18 October 2012 08:50:37 Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+>   Attila Bogar reported a stack-based buffer overflow
+> in the way MCrypt, a crypt() package and crypt(1) command
+> replacement, used to encrypt / decrypt files with overly
+> long names (longer than 128 bytes). A remote attacker
+> could provide a specially-crafted file that, when processed
+> by the mcrypt too, would lead to mcrypt executable crash [*].
+> 
+> A different vulnerability than CVE-2012-4409:
+[...]
+> References:
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=867790
+> 
+> Patch proposed by Attila:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=867790#c0
 
-3. File disclosure in Naxsi web application firewall module for Nginx (also 
-shipped in the Debian nginx package):
-http://code.google.com/p/naxsi/
-http://code.google.com/p/naxsi/source/detail?r=307
+Why 132? tmperr is declared as:
+char tmperr[128];
 
-Cheers,
-        Moritz
+That would still allow some bytes to be overwritten.
+
+[...]
+> P.S.: I am not sure about relation of this issue to the issue
+>       Raphael Geissert reported previously:
+>       [4] http://www.openwall.com/lists/oss-security/2012/10/02/1
+> 
+>       so CC-in him too, he to clarify if [2] == [4], or if
+>       they are yet different issues. Raphael, please clarify.
+
+They are different issues. The closest is CVE-2012-4426[5].
+
+I didn't look much into those other buffers as they would require an attacker 
+to control the arguments passed to mcrypt(1) to exploit them.
+
+Kurt, regarding the issues in [4], I don't know what other reference you 
+want me to add. There's nothing more than what's on the thread.
+
+[5]http://www.openwall.com/lists/oss-security/2012/09/13/22
+
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
