@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/11/4
-Message-ID: <4FD62195.8020307@redhat.com>
-Date: Mon, 11 Jun 2012 10:49:25 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/19/3
+Message-ID: <5081840B.3040904@redhat.com>
+Date: Fri, 19 Oct 2012 10:47:07 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Dex <0x41@...h.ai>
-Subject: Re: Re: WHMCS 5.0.2> SQLi CVE Request
+CC: P J P <ppandit@...hat.com>, me@...fdog.net
+Subject: Re: CVE Request -- kernel stack disclosure in binfmt_script load_script()
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/07/2012 09:53 AM, Dex wrote:
-> Because securityfocus seem incapable of reading code, which I
-> guess should be expected from an operation like that, they link to
-> the vuln check code. The exploit code is available at PacketStorm: 
-> http://packetstormsecurity.org/files/113106/WHMCS-Blind-SQL-Injection.html
->
->  On Thursday, June 07, 2012 at 4:48 PM, Dex  wrote:Hello all I'd
-> like to  request a CVE for this bug please so that I can be 
-> cool/save the planet.http://www.securityfocus.com/bid/53711 It is
-> what was patched with this patch from WHMCS 
-> http://www.securityfocus.com/bid/53770http://blog.whmcs.com/?t=47828
+On 10/19/2012 06:28 AM, P J P wrote:
+> 
+> A memory disclosure flaw has been found in the way binfmt_script 
+> load_script() function handled excessive recursions. An
+> unprivileged local user could use this flaw to leak kernel memory.
+> 
+> Proposed upstream fix: - https://lkml.org/lkml/2012/9/23/29
+> 
+> References: - https://lkml.org/lkml/2012/8/18/75 - 
+> http://www.halfdog.net/Security/2012/LinuxKernelBinfmtScriptStackDataDisclosure/
 >
 > 
-Thanks in advance,dx7r
-> I hate myself for this.
+> 
+> Thank you.
 
-So I looked at the info and the patch and there isn't really much info
-apart from "SQL Injection" and the patch is base64 and requires some
-special loader. Can someone post the actual PHP and/or details, a
-bugzilla, or?
-
+Please use CVE-2012-4530 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -39,19 +34,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJP1iGVAAoJEBYNRVNeJnmTgOcQAI4Eo/L7IzbFOiY19+zVzoEu
-Gg+JzbX1T5mr7Ymp8eho9l25bGVYZSzjsk1wm7c7zEdcShxMeFQhH6eHGJ7Q1vEg
-R8tTVF0Cp9kKL4SLxcMU3gePUv/N0r0PTtVuuhDy/XrEQOhTR38UXID8HSE6lVo0
-XeQJ1026O+rQPGipfCFOocXZ+bFkcbEcBTH9r0xeCLF3I5zFvtOKKVraChkakbVt
-tj4fX9XDCuu+d1Dc5PkQ2DTETlDLIgIAkMFTCyIe3GdQqXHNh6hNh1r2ZOX7p22s
-wSYtL8r3R/4wF4VhFab7ZZfR/zciyGPg4u0bNIIdSGtRaHGGwLAIW743uWkp5sLh
-8it3f5i8VVGn/C7PWqGwT8eIaCVz1Vr36sVpELW4OYnKyHEfgxfHOoVyU+kaxHi/
-pOeYfwh8J+HixvtRs729Ktq40KDrvfx6jU5SUrmATgRWDlWLDEQ5NIRCZNbWdFgu
-8WXH6ntN6v6hOfdR7OgbPcRNX2thVSDyvU+YzZf505BvuFo4F8LteKKZxlKGE/QR
-5Ez+Js3jr+wLL11c/Vi+xHkpa9dYXOGIDN7WMzhVHJGcnrh6+G+JrN1cNQ1BVHp1
-IJG40KT/QKIqBmU2rShi0ydxTGmu5yYtBioIAHwCxTKQ3nQ5ACzeQKljF7YRh9yE
-9M91KeD4LEqIa8FJyRss
-=Ntgp
+iQIcBAEBAgAGBQJQgYQLAAoJEBYNRVNeJnmTDCIQAK0U1X+YxwlEvqxgDxsKD+D2
+b32vstxqY7GT1LYWjCyKykbeSv7soYqQZODSOfU/xNKl/BlIuRcqaJB3cy97uuw5
+BdZFbBOV56jd4b0YmK7pKM5Gx84fRO9rmVm178mcx69wqxM7FxPHr+Oo/JTy/lwQ
+6FTiQbMm7E6mz8/ArBl3ogLGOKjCHjusT0nb+Gzw8B2Ga88oGfxKsFs3D2GD57Jb
+NiSKiuMNavl3Lm+P2SLX4lQkugjfwXQHwJKQ6h6vpXbvAIDUDCmSwzkFOLsAuGYt
+Ra6+QSabbyl0dT0SLcnBdFzhkrxptsA0TDBjhk29qYC6Cx/Ji66wm3FdOBDBbmvM
+piDJjerg/UmAtFo4rg2fT+HBj6pt+xV8WKyKu/IkWt8bZhGTykaFQiUSbocsc00V
+s+WXJQZJz+YBhvHZm80AgBIMvEKfQ04dI1o4G9XiglcelsmYhhbp4ylZd14Hb4Ih
+6s/wyJl0M0F8Fg86MIRyhCETNhdZURPXR+rOLQrksl1fhc71GAV5G8cUUMjEPlYl
+ve+W14VUobTGMGIqIf4lPzWH8jv/fa/Ao/8we/GGEJq6RQIxAXdiRQ8NIQ6GGZiB
+R43A1chQM4YBK3HNDLfFRat67Dc2EqLuiGW25YSF4hWRiFL5uqA/IPF+oC/X7h6Z
+fYhY9eeRZgKbQ7AhjnPv
+=Opno
 -----END PGP SIGNATURE-----
