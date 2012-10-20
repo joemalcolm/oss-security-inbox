@@ -1,39 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/12/4
-Message-Id: <201210121602.57370.mweckbecker@suse.de>
-Date: Fri, 12 Oct 2012 16:02:57 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: libproxy PAC downloading buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/20/1
+Message-ID: <CAPYM6Vz8QeiJN-1vyEKTftWSWdT7A5U2+sEv7VAiDoutsENfsQ@mail.gmail.com>
+Date: Sat, 20 Oct 2012 12:18:21 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
+Subject: F5 FirePass SSL VPN 4xxx Series | Arbitrary URL Redirection
 Content-Type: text/plain; charset=utf-8
 
-On Friday 12 October 2012 15:46:47 Kurt Seifried wrote:
-> On 10/12/2012 02:43 AM, Tomas Hoger wrote:
-> > Hi!
-> >
-> > libproxy 0.4.9 fixes a buffer overflow reported by Tomas Mraz:
-> >
-> > http://code.google.com/p/libproxy/source/detail?r=853
-> > https://groups.google.com/forum/?fromgroups=#!topic/libproxy/VxZ8No7mT0E
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4504
->
-> > Upstream announcement also mentions another issue - CVE-2012-4505.
-> > It is related, but different problem that was found in pre-0.4
-> > versions while investigating if they were affected by
-> > CVE-2012-4504.
-> >
-> > https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4505
->
-> Please use CVE-2012-4521 for this issue.
+1. OVERVIEW
 
-Wasn't this rather a CVE notification than a CVE request? At least 
-it looked like this to me. The announcement mentions two CVE.
+F5 FirePass SSL VPN is vulnerable to Open URL Redirection.
 
-Matthias
 
--- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+2. BACKGROUND
+
+F5 FirePass SSL VPN provides secure remote access to enterprise
+applications and data for users over any device or network while
+protecting your corporate. (See
+http://www.f5.com/pdf/products/firepass-overview.pdf)
+
+
+3. VULNERABILITY DESCRIPTION
+
+F5 FirePass SSL VPN contains a flaw that allows a remote cross site
+redirection attack. This flaw exists because the application does not
+validate the "refreshURL" parameter upon submission to the
+"my.activation.cns.php3" script. This could allow a user to create a
+specially crafted URL, that if clicked, would redirect a victim from
+the intended legitimate web site to an arbitrary web site of the
+attacker's choosing.
+
+
+4. VERSIONS AFFECTED
+
+4xxx Series
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+https://[VPN_HOST]/my.activation.cns.php3?langchar=&ui_translation=&refreshURL=http://yehg.net/
+
+
+6. SOLUTION
+
+We have not been informed of the fix.
+We believe this issue should be fixed by the time of releasing our advisory.
+
+
+7. VENDOR
+
+F5 Networks, Inc.
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2012-03-31: notified vendor
+2012-04-04: vendor acknowledged
+2012-10-20: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5BF5_firepass4x%5D_url_redirection
+OWASP Top 10 2010 - A 10:
+http://www.owasp.org/index.php/Top_10_2010-A10-Unvalidated_Redirects_and_Forwards
+SANS Top 25 - Rank 23: http://cwe.mitre.org/top25/#CWE-601
+CWE-601: http://cwe.mitre.org/data/definitions/601.html
+
+#yehg [2012-10-20]
+
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
