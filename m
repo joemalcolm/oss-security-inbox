@@ -1,84 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/15
-Message-ID: <m1wr5a93h3.fsf@fess.ebiederm.org>
-Date: Fri, 20 Apr 2012 02:06:48 -0700
-From: ebiederm@...ssion.com (Eric W. Biederman)
-To: Marcus Meissner <meissner@...e.de>
-Cc: oss-security@...ts.openwall.com,  Eugene Teo <eugeneteo@...nel.sg>,  "security\@kernel.org" <security@...nel.org>,  Sukadev Bhattiprolu <sukadev@...ibm.com>,  Serge Hallyn <serge.hallyn@...onical.com>
-Subject: Re: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/21/1
+Message-Id: <201210210110.56641.tmb@65535.com>
+Date: Sun, 21 Oct 2012 01:10:55 +0100
+From: Tim Brown <tmb@...35.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
 Content-Type: text/plain; charset=utf-8
 
-Marcus Meissner <meissner@...e.de> writes:
+On Wednesday 17 Oct 2012 20:46:55 Michael Gilbert wrote:
 
-> On Fri, Apr 20, 2012 at 09:14:58AM +0400, Pavel Emelyanov wrote:
->> On 04/20/2012 07:10 AM, Eugene Teo wrote:
->> >> So we know what is holding the pid namespace reference.
->> >>
->> >> Additional thoughts.
->> >>
->> >> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
->> > 
->> > No.
->> > 
->> >> Is there a corresponding task_struct leak?
->> > 
->> > Yes.
->> > 
->> >> I don't have much of a clue or much concern as this seems fixed in later kernels but I am happy to suggest things to look for to help narrow this down.
->> > 
->> > I'm helping to provide more information.
->> 
->> Is there also a vfsmount struct leak as well? The pidns creating implies
->> kern-mount-ing of a proc and it should be released when child reaper of
->> the namespace dies.
->
-> Yes, apparently (mnt_cache jumps 2*tries).
+> It was uploaded to and affected Debian testing and unstable.  Testing
+> has not yet been officially "released", but some people use testing as
+> if it were an official release.  Unstable never gets released.
 
-The other mnt_cache entry looks like the internal mount for the ipc
-mqueue superblock/namespace.
+FWIW, I have added a check to unix-privesc-check for privileged binaries that 
+have "PATH=" embedded in them and run it over a couple of fairly vanilla 
+Debian systems with KDE on it and seen a few other cases of embedded PATHs.  
+This yielded a few cases where "privileged" binaries trust 
+/usr/local/{bin/sbin} but nothing else untoward. trunk is currently in flux, 
+but vendors may wish to incorporate it into their release testing in due 
+course.
 
-> I diffed slabinfo before and after approx 7500 tries on a freshly rebooted machine (3.1.10), here
-> are the suspicious large jumps:
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
 
-Hmm.  This smells like unreaped zombies, we will drop the mounts from at
-least the pid namespace in release_task -> proc_flush_task which you
-can't avoid if you get as far as release_task(), and release_task
-is the guts of the zombie reaper.  If the mounts still exist the
-processes should still be visible in /proc.
-
-Is this really steady state data?  Have the zombies really been reaped?
-Perhaps there is a signal deliver bug to init where it isn't noticing it
-has re parented children?
-
-Otherwise these numbers should change and go down as processes are
-reaped and we can get a clue about where the bug is by looking at what
-has leaked.
-
-> -mqueue_inode_cache      1      4    896    4    1 : tunables   54   27    0 : slabdata      1      1      0
-> +mqueue_inode_cache   7516   7516    896    4    1 : tunables   54   27    0 : slabdata   1879   1879      0
->
-> -pid_namespace          0      0   2112    3    2 : tunables   24   12    0 : slabdata      0      0      0
-> +pid_namespace       7515   7515   2112    3    2 : tunables   24   12    0 : slabdata   2505   2505      0
->
-> -proc_inode_cache     591    696    632    6    1 : tunables   54   27    0 : slabdata    116    116      0
-> +proc_inode_cache    8105   8124    632    6    1 : tunables   54   27    0 : slabdata   1352   1354      0
->
-> -mnt_cache             45     45    256   15    1 : tunables  120   60    0 : slabdata      3      3      0
-> +mnt_cache          15077  15090    256   15    1 : tunables  120   60    0 : slabdata   1006   1006      0
->
-> -dentry             10840  10840    192   20    1 : tunables  120   60    0 : slabdata    542    542      0
-> +dentry             26780  26880    192   20    1 : tunables  120   60    0 : slabdata   1343   1344      0
->
-> -size-4096             59     59   4096    1    1 : tunables   24   12    0 : slabdata     59     59      0
-> +size-4096           7577   7577   4096    1    1 : tunables   24   12    0 : slabdata   7577   7577      0
-> -size-1024            665    680   1024    4    1 : tunables   54   27    0 : slabdata    170    170      0
-> +size-1024          15700  15700   1024    4    1 : tunables   54   27    0 : slabdata   3925   3925      0
-> -size-64             3360   3540     64   59    1 : tunables  120   60    0 : slabdata     60     60      0
-> +size-64            15097  22597     64   59    1 : tunables  120   60    0 : slabdata    383    383      0
-> -size-32             7892   7952     32  112    1 : tunables  120   60    0 : slabdata     71     71      0
-> +size-32            23920  31472     32  112    1 : tunables  120   60    0 : slabdata    281    281      0
-
-I hate to say it but it looks very much to me like I am looking at data
-for unreaped zombies.
-
-Eric
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
