@@ -1,41 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/9
-Message-ID: <4FB27485.3000309@redhat.com>
-Date: Tue, 15 May 2012 09:21:41 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/21/2
+Message-ID: <508385F2.6090304@redhat.com>
+Date: Sat, 20 Oct 2012 23:19:46 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Sean Amoss <ackle@...too.org>
-Subject: Re: CVE Request: gdk-pixbuf Integer overflow in XBM file loader
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, nicolas.alvarez@...il.com
+Subject: CVE Request: viewvc 1.1.5 lib/viewvc.py XSS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/15/2012 05:50 AM, Sean Amoss wrote:
-> Hello,
-> 
-> I have not seen a CVE assigned for this issue yet:
-> 
-> "It's possible to crash any application with memory allocation
-> error, or potentially corrupt heap because width/height parameters
-> isn't properly verified."
-> 
-> 
-> References: https://bugs.gentoo.org/show_bug.cgi?id=412033 
-> https://bugs.launchpad.net/ubuntu/+source/gdk-pixbuf/+bug/681150
-> 
-> Upstream bug: https://bugzilla.gnome.org/show_bug.cgi?id=672811
-> 
-> Upstream commit: 
-> http://git.gnome.org/browse/gdk-pixbuf/commit/?id=4f0f465f991cd454d03189497f923eb40c170c22
->
-> 
-> 
-> Thanks, Sean
-> 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=691062
 
-Classic, -1, and this is why we should never trust user input =).
-Please use CVE-2012-2370 for this issue.
+From: Nicolás Alvarez <nicolas.alvarez@...il.com>
+To: Debian Bug Tracking System <submit@...s.debian.org>
+Subject: viewvc: XSS bug in diff view
+Date: Sat, 20 Oct 2012 17:54:18 -0300
+[Message part 1 (text/plain, inline)]
+Package: viewvc
+Version: 1.1.5-1.3
+Severity: important
+Tags: security
+
+There is an XSS bug in the diff view, exploitable by people with commit
+access to the repository. The "function name" lines returned by diff (in
+the diff lines starting with @@) are not HTML-escaped.
+
+Here's an example. Add this file to a SVN repository:
+
+blah
+x <script>alert("XSS!");</script>
+one context
+two context
+three context
+trigger
+
+Commit it. Next, change the line labeled 'trigger', and commit again.
+The diff produced by the second commit is:
+
+@@ -3,4 +3,4 @@ x <script>alert("XSS!");</script>
+ one context
+ two context
+ three context
+- -trigger
++trigger X
+
+When telling ViewVC to show the diff of that file for the last commit,
+it doesn't HTML-escape the <script>, so it gets executed.
+
+I'm attaching a patch that should fix this bug.
+
+I don't have a CVE number. I haven't reported this upstream. I quickly
+glanced at the upstream bug list and dev list archives and it didn't
+seem to be already reported, but I didn't search carefully.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -43,19 +60,19 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJPsnSCAAoJEBYNRVNeJnmT+TUQANXCu7e0gR8iz5udwsUqvopf
-uNF3MJWRtsSsZYv98CfYmEVc4sOjw8dMvuROxwQMDXHt2HDl4SmC2CXL5EH/7z/U
-05BQlKMSJWSGtqc1k/S0GMyKD590oTOu0T4hexisWBtwEm46vO62EqyyAhhdPcpe
-EtYiZZ5HlNIw4w9/W1ypxaIvtO9TYS5F5foNu/x9ltioFuW6AHyImCbOqzyT/18x
-AiJrDupLj7DL1NZgRMZx+AuVqt6uaLji1u29WWcQNVUtt7xWWdF5+yuizNUXvSvn
-FvPOAMedu/P6k9CzmI1nIfE7fcVh2aV0xzYBG+anyYD4Cl81QaYwfW2B8bCjP4/o
-fOi/EgbxmJirbTXH2uBMPY0opa67/0YX7NnNhTEDKH8t7UtI5MoASGZ4CoRVGybw
-vnGHiJNEvwkfVjzHxc7CbP7uTvmzZNcDpA8GPtl4pBKW+5AIjQPuvFeOalIRWJ2Z
-N+0bxlb1oyBajW1k+Pq9MpzVZ0lfp9DyWNppJuoSKZdxcUCDCePlgP4PjYqBHn36
-ey8/M6sR+Fw9rvY+OizeXQVd+daX7jNH5hQho+ZHsyYzwAlPcy3PDpjRJg5Kp/H+
-/+qdZraaKcLKtCFld6EkrlyEJVt3383x6D7yqEPFsoMZribkKz5hqo1JjOEqw1lm
-QDpSFjq0c4gEAE0CLqyv
-=EC1j
+iQIcBAEBAgAGBQJQg4XvAAoJEBYNRVNeJnmT5UoP/jqudbbsiLS5VWhYw6Idvj9U
+IAu9RP6vMtUvJWERf7WyKfP8JACWSLpBNnJQrFUNLZXgF2yCUiVOKfR+DdyWx/n0
+CXADXFUeS2AJF2/ZKOu4C/E7SeI/AiQ7yy+eN94LoUpflYK3lQPrs+nz1UYLL+pE
+/4m5koWvsuUPSNhSv8J1x9D/mMNAi5Pc3zZgw7IDsoOGjxVFEDGya3G0fRfGQamn
+mQSY8LCDITxREAIazsVF6VXNTqaDoqIXMTQG3p8DF7XLq8baleFvJuOuiR9eaUgb
+3rTOsQR9AncZ8c6cGvAoezBcW137CeLambi7HUWIJyjj7DOHmdCIzUXV2+PVtZnK
+Dso1mNNHhn/jSSytYsPlI+j7B7Y/wM0qf5TFGfz9QzCyaewslvrmD5k6nSYyeR0m
+xVhaCKF9uTrKGtmleDN9/ykVSCVG6cXaN0gsViUhbRb7wlF+izYMhk7dgIjmvypF
+0M0pmCzbS2Si4Q4fX32v8mg9L7OaJIe0YCaZ2aRZJHhGEqV9QEjnMpouAUI6tl1s
+lE7jaWEdgx6Mt5leFkbPgc4jryHRrtyIDUYCOnnyTf09z0ajbNVnANowbsVB+y0+
+2GqZh7E1/ltvrU8I8j/9iW2Cz8c3+bqEb4D2BxN8E8BLUSHEaenmCfwbr2PlnJ+k
+zM28/QZ8NYjGc6bsay+1
+=kcnn
 -----END PGP SIGNATURE-----
