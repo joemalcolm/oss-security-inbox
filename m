@@ -1,35 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/8
-Message-ID: <20120502221752.GZ13910@redhat.com>
-Date: Wed, 2 May 2012 16:17:52 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libsoup 2.32.2 sets ssl trusted flag despite no verification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/21/5
+Message-Id: <201210211524.40567.tmb@65535.com>
+Date: Sun, 21 Oct 2012 15:24:34 +0100
+From: Tim Brown <tmb@...35.com>
+To: YGN Ethical Hacker Group <lists@...g.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: F5 FirePass SSL VPN 4xxx Series | Arbitrary URL Redirection
 Content-Type: text/plain; charset=utf-8
 
-* [2012-05-02 10:20:24 +0200] Ludwig Nussel wrote:
+I'm sure I will be corrected if I'm wrong in stating this.  But oss-security 
+is for the discussion of previously disclosed issues that affect F/OSS.  There 
+are doubtless some edge cases but I don't believe that the discussion of an 
+issue relating to BIG-IP F5s (a commerical, closed source product) has any 
+relevance to the oss-security list.   Please try and ensure you only email 
+this list when you require action from F/OSS developers and/or distributions.
 
->Vincent Danen wrote:
->> * [2012-04-24 12:04:24 +0200] Ludwig Nussel wrote:
->>
->>> libsoup 2.32.2 does not verify certificates at all if an application does
->>> not explicitly specify a file with trusted root CA's. Since that libsoup
->>> version relies on the verification failure to clear the trust flag it
->>> always considers ssl connections as trusted in that case.
->>>
->>> Reference:
->>> https://bugzilla.novell.com/show_bug.cgi?id=758431
->>
->> Are you sure it's just this specific version of libsoup?  Looking at the
->> code of earlier versions (such as 2.2.98), the patch noted in your bug
->> would apply (unless there is some other context around it that would
->> make this a non-issue?).  Did you look at other versions at all?
->
->No, we actually didn't.
-
-At least 2.34 is vulnerable as well.  Older versions, at least 2.28,
-don't have the vulnerable feature (so it broke somewhere between 2.28
-and 2.32.2, likely when the feature was added).
-
+Tim
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Tim Brown
+<mailto:tmb@...35.com>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
