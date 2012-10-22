@@ -1,44 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/1
-Message-ID: <50D13825.4010000@redhat.com>
-Date: Tue, 18 Dec 2012 20:44:37 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/22/1
+Message-ID: <5085D03B.6000505@redhat.com>
+Date: Mon, 22 Oct 2012 17:01:15 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-Subject: Re: CVE request: Inkscape fixes a XXE vulnerability during rasterization of SVG images
+CC: Hanno Böck <hanno@...eck.de>, services@...ik.org
+Subject: Re: CVE request: XSS in piwik before 1.9
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/17/2012 01:27 PM, Nicolas Grégoire wrote:
+On 10/21/2012 10:14 AM, Hanno Böck wrote:
+> Hi,
 > 
-> Inkscape is vulnerable to XXE attacks during rasterization/export
-> of SVG images: https://bugs.launchpad.net/inkscape/+bug/1025185
+> Piwik 1.9 fixes an XSS http://piwik.org/blog/2012/10/piwik-1-9/
 > 
-> Impact: The impact of this vulnerability range form denial of
-> service to file disclosure. Under Windows, it can also be used to
-> steal LM/NTLM hashes.
+> Not many details though: "Security: thanks to Security Researcher
+> Maxim Rupp who responsibly disclosed a XSS via our security bounty
+> program"
 > 
-> PoC: During rasterization, entities declared in the DTD are
-> dereferenced and the content of the target file is included in the
-> output. Command-line used: "inkscape -e xxe-inkscape.png xxe.svg"
-> (PoC files are attached to the ticket)
+> Please assign CVE.
 > 
-> References: CWE-827: Improper Control of Document Type Definition 
-> http://cwe.mitre.org/data/definitions/827.html
+> cu,
 > 
-> Regards, Nicolas Grégoire
 
-This already has a CVE reference in the page:
+I can't even find a previous version to download and diff, just
+"latest.zip" (so lame). I also can't find a security contact.
 
-CVE References
+Hopefully the release blog is correct.
 
-2012-1102
-
-
-
-
+Please use CVE-2012-4541 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -47,17 +39,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ0TglAAoJEBYNRVNeJnmTO1QP/i6IySfJlSte8DMMgFPANUrd
-U0UWqyHYyfk7eGlAEZEwYPOgyB97hV4NQ0Q2uXNRfRnefyatMR3YGCd+YCx47fER
-1ZxgVVDKVzDosJyc2Dcoyu4gG+QF6V98+lbnEgH2VIhqu+VWnT35U2wP7HPNIMYI
-zegn9o6uuwt6S4uFujHrCE4xPHTAxZnvgu5l0ucagJZmA2cOXzMSCXrTgILTIW9k
-Yk/2sofeB73jnY3GmcAX++GmShaFHibhJweVu0Wai9b5c9+aA1IXJqkPY8Di0lqo
-crWaXfaq8D8fIYzIe+RQXjAlXPPjud3827mN1ahhOuKx5PanNed7DPII2gBOvhKS
-ZEuc/0mKMqm8lL+lPEePFX4KW8fRLp2djgat+8CpcGI9D7gcl2P7dakib854QNjS
-Mv3y/sST1hLOcLqyp7E2PmrMm3hD1gJV3jZcCHSCQnybbogx3YZ9zMf0g8L6zHF/
-mjsfBewIw/qxejhQ1UahTz2Ei1xettvimTli65PNwSbxgxQhgrY3rvVQ8qEYou4v
-0nV58UH5Oq6sdErg0rUC1rPQJRsFv5uuWMFdVYFvDQiNsBWpIvpp9PnZwvR9Uet8
-I09OhIrSYlGUcETk1z0EB7ADoz6SPlafrVdi/fdqzvPSorQ0J2UYpzIViLs/bpAs
-fyj6qwxXRgNh2Ia3+VlX
-=XMwV
+iQIcBAEBAgAGBQJQhdA7AAoJEBYNRVNeJnmTCKMP/1rRJjW5qMpBwAUF9xhZk/MY
+pW98nh4uLtV+QeFERW/JWJ1JSx+xsNLh7lAhQVaVZbkPWSTdSlQVS/nvK7Ewj1Fk
+Zir53QSxRroeAQ0QrSgbxB3RSSvTefL5NMpZPkcCrbgFkBbOZG6e62jkraUIm3Lz
+YL/DBFfIlBGVw/NnL/mDtj3Jh/cdc8dy7AZacjERE9KPFd80kEyHAlKZsR5OAJZV
+nAtzXr3TPcZvIWJ2Ov3br5DnGGf0L9kt0hPssEWkG6JcUuEH6dL5W/XXzJ6gsIzf
+dervkbigBI/3jP5+t7XtkXKGv1JXWXZZBxVyQds92geitxIXhzvMg3YJO/TMAn7i
+Q7QvqAm7csQ5fH5Of769Zyj6HrtHi/xYiHBM9ePkYeAaJf3AwC4QeJGk61lj7HAk
+GgOZTTkxB+wlJw2GzZifxDSCmGA++w59oGTUjBS6vPogEyB83OKcSz+PW6t6Q9oI
+1OAIIR397Eo6tJ7qa3XRMubjBeG5V/hiQtlbeNv/Lzg5V362/6XmcWt8cJQyqnIr
+E3FTEzz4W/gMM7X6BrHLwvLjPdfBTG2JKH5UweSPyyQ6Yscc1ZAaGfzUbFBiU5tI
+rW2/P5iS+M6oTii+kQLdlKW6OdxyuKyDxOLlrhR71Nlsqp61XKJtS6k0aMwOZS3J
+q5UGpZCI8QGmIGDlWnOT
+=STzK
 -----END PGP SIGNATURE-----
