@@ -1,75 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/21/11
-Message-ID: <CAA5xPpnD6EgQnXm7gBGvpQ55DycsRksAdHkgo3QWAn56D7V+Pw@mail.gmail.com>
-Date: Wed, 21 Mar 2012 23:49:32 +0530
-From: Zubin Mithra <zubin.mithra@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/23/2
+Message-ID: <5085DDBC.5050502@gmail.com>
+Date: Tue, 23 Oct 2012 12:58:52 +1300
+From: Matthieu Aubry <matthieu.aubry@...il.com>
 To: Kurt Seifried <kseifried@...hat.com>
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, oss-security@...ts.openwall.com,  Dhanesh k <dhanesh1428@...il.com>
-Subject: Re: CVE-Request taglib vulnerabilities
+CC: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>, services@...ik.org
+Subject: Re: CVE request: XSS in piwik before 1.9
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 21, 2012 at 10:49 PM, Kurt Seifried <kseifried@...hat.com>wrote:
+Hi there,
 
-> On 03/21/2012 09:42 AM, Ludwig Nussel wrote:
-> > Zubin Mithra wrote:
-> >> [...]
-> >> The issues which are present in the latest "release" but not in the
-> current
-> >> development head were :-
-> >>
-> >> [3] Lack of sanity checks of fields which were read, and were used for
-> >> allocating memory; crafted files would lead of application crash.
-> >
-> > Not an issue according to upstream:
-> > http://mail.kde.org/pipermail/taglib-devel/2012-March/002187.html
+we are NEVER going to release more information, this is normal, we do 
+not want to make exploits any easier than it could be.
+
+The builds can be found at: http://builds.piwik.org/
+
+Security contact: http://piwik.org/security/
+
+Good search engine: https://www.startpage.com/
+
+Cheers
+
+
+
+On 23/10/12 12:01, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
-> Shouldn't it simply say "file to large" or "unable to allocate blah"
-> something rather than crashing? I assume by "large" file the file
-> doesn't actually need to be large, just the header information needs to
-> claim it is large?
+> On 10/21/2012 10:14 AM, Hanno Böck wrote:
+>> Hi,
+>>
+>> Piwik 1.9 fixes an XSS http://piwik.org/blog/2012/10/piwik-1-9/
+>>
+>> Not many details though: "Security: thanks to Security Researcher
+>> Maxim Rupp who responsibly disclosed a XSS via our security bounty
+>> program"
+>>
+>> Please assign CVE.
+>>
+>> cu,
+>>
+> I can't even find a previous version to download and diff, just
+> "latest.zip" (so lame). I also can't find a security contact.
 >
-
-Yes, the file does not need to be large, it just needs to have a crafted
-header.
-
-On investigating the issue further, discussing with a developer Lukas
-Laninsky and providing PoC's, we had confirmed that the root issue was an
-Integer overflow - which would cause a large allocation and crash the
-application.
-
-The changeset that corrects it can be found here =>
-https://github.com/taglib/taglib/commit/dcdf4fd954e3213c355746fa15b7480461972308
-
-
-
+> Hopefully the release blog is correct.
 >
-> >> [4] A one bit change in a working ogg file would cause a thread to loop
-> >> infinitely.
-> >
-> > http://mail.kde.org/pipermail/taglib-devel/2012-March/002191.html
-> >
-> https://github.com/taglib/taglib/commit/b3646a07348ffa276ea41a9dae03ddc63ea6c532
+> Please use CVE-2012-4541 for this issue.
 >
-> Has this been confirmed? Does the looping thread actually cause a DoS,
-> simply slow down the application a bit, or?
->
-
-Yes, it just causes a thread to cause an infinite loop and does not cause
-an application crash.
-
-
-
->
-> > cu
-> > Ludwig
->
->
->
-> --
+> - -- 
 > Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 >
-
-
-Regards,
-Zubin Mithra
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJQhdA7AAoJEBYNRVNeJnmTCKMP/1rRJjW5qMpBwAUF9xhZk/MY
+> pW98nh4uLtV+QeFERW/JWJ1JSx+xsNLh7lAhQVaVZbkPWSTdSlQVS/nvK7Ewj1Fk
+> Zir53QSxRroeAQ0QrSgbxB3RSSvTefL5NMpZPkcCrbgFkBbOZG6e62jkraUIm3Lz
+> YL/DBFfIlBGVw/NnL/mDtj3Jh/cdc8dy7AZacjERE9KPFd80kEyHAlKZsR5OAJZV
+> nAtzXr3TPcZvIWJ2Ov3br5DnGGf0L9kt0hPssEWkG6JcUuEH6dL5W/XXzJ6gsIzf
+> dervkbigBI/3jP5+t7XtkXKGv1JXWXZZBxVyQds92geitxIXhzvMg3YJO/TMAn7i
+> Q7QvqAm7csQ5fH5Of769Zyj6HrtHi/xYiHBM9ePkYeAaJf3AwC4QeJGk61lj7HAk
+> GgOZTTkxB+wlJw2GzZifxDSCmGA++w59oGTUjBS6vPogEyB83OKcSz+PW6t6Q9oI
+> 1OAIIR397Eo6tJ7qa3XRMubjBeG5V/hiQtlbeNv/Lzg5V362/6XmcWt8cJQyqnIr
+> E3FTEzz4W/gMM7X6BrHLwvLjPdfBTG2JKH5UweSPyyQ6Yscc1ZAaGfzUbFBiU5tI
+> rW2/P5iS+M6oTii+kQLdlKW6OdxyuKyDxOLlrhR71Nlsqp61XKJtS6k0aMwOZS3J
+> q5UGpZCI8QGmIGDlWnOT
+> =STzK
+> -----END PGP SIGNATURE-----
+>
 
