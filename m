@@ -1,30 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/25/8
-Message-ID: <20120425210610.GR3020@redhat.com>
-Date: Wed, 25 Apr 2012 15:06:10 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: mikel@...nteractive.net
-Subject: CVE request: two flaws fixed in rubygem-mail 2.4.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/23/6
+Message-ID: <CALYzWgyFwOpPAeSPUZieLw6OG02RUdkyePC=v3UY4SSs1LJ2aw@mail.gmail.com>
+Date: Wed, 24 Oct 2012 11:12:39 +1300
+From: Matthieu Aubry <matthieu.aubry@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: XSS in piwik before 1.9
 Content-Type: text/plain; charset=utf-8
 
+> I hate to break it to you but I did a quick file diff and the XSS
+> stuff is pretty easy to spot. Any attacker who wants to find the
+> vulnerability will, quickly. Not giving out information really only
+> harms the people that actually benefit from knowing (e.g. your users
+> and vendors, it's just one more thing to figure out).\
 
-Two flaws were corrected in rubygem-mail version 2.4.4:
 
-A file system traversal in file_delivery method [1].
+We know and understand how diff work, remember that we are building a major
+open source software? So yes we are fully aware how easy it is to find XSS
+by doing a diff...
 
-Arbitrary command execution when using exim or sendmail from the commandline [2],[3].
+We disagree that giving out exploits and more info about the hacks, will
+help security and our users : it will NOT.
+Supporting researchers to find security bugs in open source projects,
+however has helped us a lot: http://piwik.org/security/
 
-[1] https://github.com/mikel/mail/commit/29aca25218e4c82991400eb9b0c933626aefc98f
-[2] https://github.com/mikel/mail/commit/36b7fa23d38cb59dd79b7efa258ef0e7ddab5a11
-[3] https://github.com/mikel/mail/commit/ac56f03bdfc30b379aeecd4ff317d08fdaa328c2
-
-Other references:
-
-https://bugzilla.novell.com/show_bug.cgi?id=759092
-https://bugzilla.redhat.com/show_bug.cgi?id=816352
-
-Could two CVEs be assigned for these flaws please?
-
--- 
-Vincent Danen / Red Hat Security Response Team 
