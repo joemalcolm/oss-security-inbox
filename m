@@ -1,40 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/9
-Message-ID: <20121010183922.GA21996@openwall.com>
-Date: Wed, 10 Oct 2012 22:39:22 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/23/3
+Message-Id: <5085f7882c78a_6877c3904437e4@uservoice.com>
+Date: Tue, 23 Oct 2012 01:48:55 +0000
+From: Kurt Seifried <services@...ik.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: IPv6 DOS vulnerabilities
+Subject: Re: Re: CVE request: XSS in piwik before 1.9
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE----- 
+ SHA1 
 
-Thanks for posting this, Marc.
+I hate to break it to you but I did a quick file diff and the XSS 
+stuff is pretty easy to spot. Any attacker who wants to find the 
+vulnerability will, quickly. Not giving out information really only 
+harms the people that actually benefit from knowing (e.g. your users 
+and vendors, it's just one more thing to figure out). 
 
-On Wed, Oct 10, 2012 at 06:55:07PM +0200, Marc Heuse wrote:
-> (I am sitting on this for over a half year now, sorry for that)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT) 
+ 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993 
 
-Just to clarify: this "half a year" delay occurred before Marc notified
-the distros list, which he did on September 20.  (I was not aware of
-Marc's work on this before that date either.)  Thus, as far as the
-distros list is concerned, the issues were reported to distro vendors and
-embargoed for 20 days, which is a slight violation of the list's policy
-(14 to 19 days max, depending on day of week).  I apologize for this.
-I did not insist on Marc disclosing the issues publicly sooner than he
-wanted to for reasons similar to what we had with hashDoS last year
-(just a DoS, which the researchers wanted to disclose at a certain con),
-although I did remind him and recommend posting to oss-security sooner,
-so that I wouldn't have to apologize. ;-)
+-----BEGIN PGP SIGNATURE----- 
+ GnuPG v1.4.12 (GNU/Linux) 
 
-It appears that vendors did not care to patch mere IPv6 DoSes promptly
-enough anyway, so the embargo did not help.
+iQIcBAEBAgAGBQJQhfdrAAoJEBYNRVNeJnmTI9EP+wTUWIoCVFQc5JMcYZbDs65B 
+U78c7+jb91VwslWonwnLJyX4zx/0Uc27kOc7y9NNSaskgf75VlORwdVJZGoi19x6 
+cT8javpFeSFvy9L/dTUea175W9yd1VVpjzdZnO+LCVUvQ/0CNX89hOlQhCmyabAt 
+uSKeYUd3icAizZJ9a8qb5Zg6qYvj9iAP2W3wYE0081LDsqgz+tIyAEx1WUj+TBss 
+2sZE6MLqsKcB+lGjGYyVRtDdZTwyXiwS7rvmg8V2ODycLdeWw9znelZvp6+Ai4E+ 
+B+XFU5Mt6yFXf3Gv9O0k8I2jxSFe/zsEJXmKHxhJjW3+jb9tCkQMzwrpc35NqJ40 
+1qdGA/CinAOzad5Cd4Z3bjufwl23KIH+VhrprGlye2GxVZPtcnKxWqhXVNqzIstI 
+zutadEuxhMyWPDXgUkEwG9z8wN96fdQcx0MZDEQqQCRt0yjYm18EiyRLdqLFtGfp 
+h5dsP0ZIuuOZ+yIHFo7Rei/iXwgTLS3YOtkwCLYg7K1W24x3YBYZegZoa9IRWOnl 
+jAgSLCNwKVcc6OHsPgCDgnYp0z/b27a+qEglYRJCalHHyLk2R37CGwD6qX5K9qSD 
+F9o/LX5DCg1omojAHPG/NVpyolw5oYGmztxCD8ijFK/DoMUFeEZFWznvtgnzNz3/ 
+UUpW1A4c9r544NmuQLa+ 
+=OfJF 
+-----END PGP SIGNATURE----- 
 
-Notifying the distros list closer to the intended public disclosure date
-would be more appropriate - it would reduce the window of partial
-exposure.  Not providing any advance notification would be even better
-in this specific case (since apparently no action was taken anyway), but
-this was impossible to know reliably in advance.
+Powered by UserVoice.
+[http://www.uservoice.com/fullservice]
 
-Thanks again,
-
-Alexander
