@@ -1,64 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/12/3
-Message-ID: <4FADFD3D.8050202@redhat.com>
-Date: Sat, 12 May 2012 00:03:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/23/5
+Message-ID: <1707742.pqzVoIFduu@devil>
+Date: Tue, 23 Oct 2012 23:18:15 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-CC: Jonathan Niehof <jtniehof@...il.com>
-Subject: Re: CVE request: pam_shield
+Cc: cve@...re.org
+Subject: Wrong affected version in the CVE-2012-4511
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The description says:
 
-On 05/11/2012 02:04 PM, Jonathan Niehof wrote:
-> Requestor: Jonathan Niehof, jtniehof@...il.com package: pam_shield,
-> http://www.heiho.net/pam_shield/index.html
-> 
-> Type of vulnerability: This utility is intended to block IP
-> addresses showing suspicious behaviour, to disarm a potential
-> attack. In versions before 0.9.4, if configuration option
-> "allow_missing_dns" is set to no, it performs no blocking. This
-> setting is used in the example configuration file, which is
-> installed by default in Debian. Thus, systems using the suggested
-> or default configuration receive no protection.
-> 
-> This vulnerability provides no vector for an attacker, local or 
-> remote, to gain any privileges. It simply fails to provide the 
-> intended protection.
-> 
-> Mainline fix:
-> https://github.com/walterdejong/pam_shield/commit/afa7b246018787fe6028289c414c33292641e1e0
->
-> 
-Debian bug report and fix:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=658830
-> 
-> Vulnerable versions: mainline up to and including 0.9.3. Debian up
-> to and including 0.9.2-3.2 First fixed versions: mainline 0.9.4.
-> Debian 0.9.2-3.3
+services/flickr/flickr.c in libsocialweb before 0.25.22 automatically connects 
+to Flickr when no Flickr account is set, which might allow remote attackers to 
+obtain sensitive information via a man-in-the-middle (MITM) attack.
 
-Please use CVE-2012-2350 for this issue.
+but Rob Bradford in the Red Hat bugzilla said:
+That's odd - when I did "yum remove libsocialweb" it didn't threaten to remove 
+anything else (well, except libsocialweb-keys...:-)
+Anyway there is a 0.25.21 on the servers for you.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+and, for the record the version 0.25.22 does not exist.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPrf08AAoJEBYNRVNeJnmTP10QAMbritfcSQm60+Rjgkg6FKF/
-X45IzwYAxWyIG+zSCE00j+w6pfESMiip1v0tOgdghkdSAdkTqUW2qKUZpyqoZbUR
-9RE18yCTNkepgGo8GLzNypIhGSRIe3OttnVrvS1Hpia7caUOj6HjVQ6hL83KSSsj
-i15LusFkX6AdttF6rlMfDIlwBl1Smo4cqq6XK6rYD5224eRo/X7oc40vITmLazeL
-CuI0R/dhCXko7zJgWpGpR4ZjUT7Kh9UmSkICRrjO7W9x15KfH/gYpTn5h98DVbbn
-BJxbJIRJ3SNm8E/TvuCQOjHwA08avKbhh/GbCzMMsHx9HdiwvQIYQ9EtSjQg0uQp
-kJuSArU8IF42CrQo6Y2vl7PjspwsH2JeVtCN0eD3dSwolYI/0K3gi4iJPVCkUr39
-uigNj26/17a6OeW/6340U47PuQuN4EjZ0wJYvxgNLsGfJlfMnh1NJ5IMEe9LFPDT
-H54a6cdHGaAh8yQ7vBtdEiU9jvIKUaWaP2KRRMs3Czqd7B+B+7E3WLzvKVJJZo9u
-HUyQeB9CEe8EaPx3bLdVU8Zfxu8iUu5pqYrKPm03GAm5LQGXgmArCJJwzfdCfQf0
-TAeApI2ORlPrT100NPKPgHH5u0ltd/d1CQ1AkTx2IR7L2Ylq5SjH0AaOX0oisnvg
-1fhv5SLXUwsxmGLPwYDz
-=ZJa3
------END PGP SIGNATURE-----
+So I think we need "s/22/21"
+Can someone take care of this issue?
+-- 
+Agostino Sarubbo / ago -at- gentoo.org
+Gentoo/AMD64 Arch Security Liaison
+GPG: 0x7CD2DC5D
