@@ -1,26 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/6
-Message-ID: <20121010115913.1df9442e@eldamar.bigon.be>
-Date: Wed, 10 Oct 2012 11:59:13 +0200
-From: Laurent Bigonville <bigon@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: sSMTP doesn't validate server certificates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/23/1
+Message-ID: <5085F76B.9040205@redhat.com>
+Date: Mon, 22 Oct 2012 19:48:27 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Matthieu Aubry <matthieu.aubry@...il.com>
+CC: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>, services@...ik.org
+Subject: Re: CVE request: XSS in piwik before 1.9
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It seems that sSMTP is not checking the server certificate when
-connecting. This is quite annoying as one of the main ssmtp purpose is
-to be used on satellite systems that could be connected to untrusted
-networks.
+On 10/22/2012 05:58 PM, Matthieu Aubry wrote:
+> Hi there,
+> 
+> we are NEVER going to release more information, this is normal, we
+> do not want to make exploits any easier than it could be.
+> 
+> The builds can be found at: http://builds.piwik.org/
+> 
+> Security contact: http://piwik.org/security/
+> 
+> Good search engine: https://www.startpage.com/
+> 
+> Cheers
 
-This has been reported (with a proposed patch) to the Debian BTS (see
-[0])
+I hate to break it to you but I did a quick file diff and the XSS
+stuff is pretty easy to spot. Any attacker who wants to find the
+vulnerability will, quickly. Not giving out information really only
+harms the people that actually benefit from knowing (e.g. your users
+and vendors, it's just one more thing to figure out).
 
-Could you please allocate a CVE number for this?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Cheers
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Laurent Bigonville
-
-[0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=662960
+iQIcBAEBAgAGBQJQhfdrAAoJEBYNRVNeJnmTI9EP+wTUWIoCVFQc5JMcYZbDs65B
+U78c7+jb91VwslWonwnLJyX4zx/0Uc27kOc7y9NNSaskgf75VlORwdVJZGoi19x6
+cT8javpFeSFvy9L/dTUea175W9yd1VVpjzdZnO+LCVUvQ/0CNX89hOlQhCmyabAt
+uSKeYUd3icAizZJ9a8qb5Zg6qYvj9iAP2W3wYE0081LDsqgz+tIyAEx1WUj+TBss
+2sZE6MLqsKcB+lGjGYyVRtDdZTwyXiwS7rvmg8V2ODycLdeWw9znelZvp6+Ai4E+
+B+XFU5Mt6yFXf3Gv9O0k8I2jxSFe/zsEJXmKHxhJjW3+jb9tCkQMzwrpc35NqJ40
+1qdGA/CinAOzad5Cd4Z3bjufwl23KIH+VhrprGlye2GxVZPtcnKxWqhXVNqzIstI
+zutadEuxhMyWPDXgUkEwG9z8wN96fdQcx0MZDEQqQCRt0yjYm18EiyRLdqLFtGfp
+h5dsP0ZIuuOZ+yIHFo7Rei/iXwgTLS3YOtkwCLYg7K1W24x3YBYZegZoa9IRWOnl
+jAgSLCNwKVcc6OHsPgCDgnYp0z/b27a+qEglYRJCalHHyLk2R37CGwD6qX5K9qSD
+F9o/LX5DCg1omojAHPG/NVpyolw5oYGmztxCD8ijFK/DoMUFeEZFWznvtgnzNz3/
+UUpW1A4c9r544NmuQLa+
+=OfJF
+-----END PGP SIGNATURE-----
