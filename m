@@ -1,37 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/05/2
-Message-ID: <20121104193929.15ed637c.reed@reedloden.com>
-Date: Sun, 4 Nov 2012 19:39:29 -0800
-From: Reed Loden <reed@...dloden.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Steven Christey <coley@...re.org>
-Subject: Re: YUI 2.x security issue regarding embedded SWF files -- or, How Not To Handle A Security Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/24/2
+Message-ID: <20121024085501.GM13184@symphytum.spacehopper.org>
+Date: Wed, 24 Oct 2012 09:55:01 +0100
+From: Stuart Henderson <stu@...cehopper.org>
+To: oss-security@...ts.openwall.com
+Cc: Kurt Seifried <kseifried@...hat.com>, Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: XSS in piwik before 1.9
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2012/10/24 11:12, Matthieu Aubry wrote:
+> We disagree that giving out exploits and more info about the hacks, will
+> help security and our users : it will NOT.
 
-On Sun, 04 Nov 2012 17:13:28 -0700
-Kurt Seifried <kseifried@...hat.com> wrote:
+Exploits, I agree. But more information will let people make a decision
+as to whether they're vulnerable, and how much pain it's worth going
+through to either upgrade to a fixed version or backport the fix.
 
-> > Might want to go ahead and get a CVE assigned to whatever this
-> > issue is, and hope more details come out of this soon so YUI 2
-> > users can actually get patched instead of having to request access
-> > to the fix...
-> 
-> Have any CVE's been issued for this issue? I can't find any. More to
-> the point does this kind of issue (is it a service strictly?) even get
-> a CVE? Steve?
+> Supporting researchers to find security bugs in open source projects,
+> however has helped us a lot: http://piwik.org/security/
 
-YUI is not a service at all. It's a JavaScript helper library, similar
-to jQuery, Mootools, Dojo, etc. CVEs have been assigned to YUI before
-(CVE-2010-4207, CVE-2010-4710).
+So this page has a link, "You can see the previous Security issues in Piwik"
+pointing at http://piwik.org/blog/category/security/. The last entry on here
+referring to an issue with piwik itself is from June 2011, but 4 releases
+since then have included security fixes, several of them rated "critical"
+on the changelog page. I wonder if it might be better to just refer to
+the changelog if the separate page can't be kept updated?
 
-~reed
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Unfortunately many of the releases with security fixes coincide with
+warnings like "This new version contains database schema changes so
+please be careful when running the Update script", anything more than
+complicated than "update the installed files" is going to restrict
+the number of users who keep up-to-date with security fixes.
 
-iEYEARECAAYFAlCXNPEACgkQa6IiJvPDPVrOlQCfZ29qgEKP8cq3a080FLz273s/
-FikAoInve8JzkimHW4Exa2fbAHTu/tNT
-=nEQQ
------END PGP SIGNATURE-----
+In particular some OS distributions package piwik; if they would like
+to fix the problems in a stable release (where it's not possible to
+force schema changes etc), with the current process each different
+OS packaging piwik would need to isolate the diff themselves and
+hope they include all needed parts,
+
+As a packager I don't necessarily think an upstream project needs to
+continually maintain security fixes for old releases, but at least
+posting information about the actual bugs fixed with a reference
+to the commit/s would make life a lot easier for the people who
+help many of your users stay on top of security fixes.
+
