@@ -1,79 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/2
-Message-ID: <m1d373iail.fsf@fess.ebiederm.org>
-Date: Thu, 19 Apr 2012 16:09:54 -0700
-From: ebiederm@...ssion.com (Eric W. Biederman)
-To: Andrew Morton <akpm@...ux-foundation.org>
-Cc: Marcus Meissner <meissner@...e.de>,  OSS Security List <oss-security@...ts.openwall.com>,  security@...nel.org,  Sukadev Bhattiprolu <sukadev@...ibm.com>,  Serge Hallyn <serge.hallyn@...onical.com>,  Pavel Emelyanov <xemul@...nvz.org>
-Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/24/3
+Message-Id: <201210242234.q9OMYeVW006681@linus.mitre.org>
+Date: Wed, 24 Oct 2012 18:34:40 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: VLC 2.0.3 libpng_plugin CVE-2012-5470
 Content-Type: text/plain; charset=utf-8
 
-Andrew Morton <akpm@...ux-foundation.org> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> (cc's added)
->
-> On Thu, 19 Apr 2012 23:48:20 +0200
-> Marcus Meissner <meissner@...e.de> wrote:
->
->> Hi,
->> 
->> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
->> namespace leak caused by vsftpd.
->> 
->> https://bugzilla.novell.com/show_bug.cgi?id=757783
->> 
->> He provided a simple reproducer:
->> 
->> #include <stdio.h>
->> #include <errno.h>
->> #include <signal.h>
->> #include <sched.h>
->> #include <linux/sched.h>
->> #include <unistd.h>
->> #include <sys/syscall.h>
->> 
->> int main(int argc, char *argv[])
->> {
->>     int i, ret;
->> 
->>     for (i = 0; i < 10000; i++) {
->> 
->>         if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC |
->> CLONE_NEWNET | SIGCHLD, NULL)))
->>             return 0;
->> 
->>         if (-1 == ret) {
->>             perror("clone");
->>             break;
->>         }
->> 
->>     }
->>     return 0;
->> }
->> 
->> 
->> and checking "cat /proc/slabinfo|grep pid_namespace"
->> gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
->> 
->> 
->> Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
->> fixed between 3.1 and 3.2 (but someone else cross check perhaps).
->> 
->> Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
->> but it seems not helping.
+We have assigned CVE-2012-5470 for this issue in libpng_plugin in
+VideoLAN VLC media player 2.0.3 processing a PNG file:
 
-Is there a corresponding struct pid leak as well?  Most references to
-the pid namespace are through struct pid so that is an easy one to look
-at.
+  http://www.exploit-db.com/exploits/21889/
 
-The previous issue vsftp ran into was network namespaces being slow to
-cleanup which is a very different issue, and I just double checked even
-if network namespaces were being slow to clean up it would not affect
-the pid namespace.
+The "Rewritten support for images, including jpeg, png, xcf, bmp..."
+and "2.0.4 fixes numerous issues, including audio device selection, Qt
+and Mac OS interface, security issues and Windows wallpaper mode..."
+lines in http://www.videolan.org/vlc/releases/2.0.4.html may possibly
+be relevant here. There isn't an obvious mention of PNG on the
+http://trac.videolan.org/vlc/timeline?from=10%2F24%2F12&daysback=15
+ticket list.
 
-At the very least those pid namespaces are going to stay around until
-the parent process reaps the dead children, so in the trivial test
-case it may simply be that there is a difference how the slab cache is
-shrunk after 10,000 pid namespaces are freed.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-Eric
+iQEcBAEBAgAGBQJQiGv9AAoJEGvefgSNfHMd684H/37tnXLm0bQK7/vdVK6Vmk/+
+ELm/9/62ijQOkDhQWUxS+ZmhP7L/jA24cieMHrpiTzlFOGrVX+ly3n6/nlpgyzFr
+Giq5fCIsIi1UD1eXftMsORmAQr+TjJ9ppV9D31C1HQO9itavnwb43kKVU8yrBZDv
+b+UTFX19iXyvNwMino7S3P9ibMxKNnqoP3nxM1Z4IwqOMB6ESp9RzQv0kp8xu5vq
++Rb7vFsWqkdqg0Bs7ct65ehrW+7xRzoFQ/fCEUKeXi7j0jmZxHE46DSjtZNcj/Ox
+s9sWxaW/MQ6zc14vEf8R6Ouf/ur/E6zj2uXsF4Ajo2NQIiEntnglht3nsoO94VE=
+=eugH
+-----END PGP SIGNATURE-----
