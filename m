@@ -1,57 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/17/3
-Message-ID: <20120417093507.GA7896@kludge.henri.nerv.fi>
-Date: Tue, 17 Apr 2012 12:35:07 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/25/1
+Message-ID: <20121025064141.GT13903@dhcp-25-225.brq.redhat.com>
+Date: Thu, 25 Oct 2012 08:41:41 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>, Kurt Seifried <kseifried@...hat.com>, Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: CVE-request: WordPress 3.1.1
+Subject: CVE-2012-4508 -- kernel: ext4: AIO vs fallocate stale data exposure
 Content-Type: text/plain; charset=utf-8
 
-I previously requested CVE-identifiers for two WordPress 3.1.1 issues (2011), which are still not assigned.
+A race condition flaw has been found in the way asynchronous I/O and
+fallocate interacted which can lead to exposure of stale data -- that
+is, an extent which should have had the "uninitialized" bit set
+indicating that its blocks have not yet been written and thus contain
+data from a deleted file. An unprivileged local user could use this flaw
+to cause an information leak.
 
-> 1) Certain unspecified input is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-> http://osvdb.org/show/osvdb/72141
+Acknowledgements:
 
-Hanno Böck said in http://seclists.org/oss-sec/2012/q1/151 that CVE-2012-0287 is for this issue.
+Red Hat would like to thank Theodore Tso for reporting this issue.
+Upstream acknowledges Dmitry Monakhov as the original reporter.
 
-======================================================
-Name: CVE-2012-0287
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-0287
-Phase: Assigned (20120103)
-Category:
-Reference: MISC:http://oldmanlab.blogspot.com/2012/01/wordpress-33-xss-vulnerability.html
-Reference: CONFIRM:https://wordpress.org/news/2012/01/wordpress-3-3-1/
-Reference: SECTRACK:1026542
-Reference: URL:http://www.securitytracker.com/id?1026542
+Upstream fix:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=dee1f973ca341c266229faa5a1a5bb268bed3531
 
-Cross-site scripting (XSS) vulnerability in wp-comments-post.php in
-WordPress 3.3.x before 3.3.1, when Internet Explorer is used, allows
-remote attackers to inject arbitrary web script or HTML via the query
-string in a POST operation that is not properly handled by the
-"Duplicate comment detected" feature.
+Please see https://bugzilla.redhat.com/show_bug.cgi?id=869904#c1 for
+further information regarding the patch.
 
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=869904
 
-Current Votes:
-None (candidate not yet proposed)
-======================================================
-
-It seems to be assigned for 3.3.1 and not for 3.1.1. Sorry for my mistake also in last emails.
-
-> 2) The "make_clickable()" function in wp-includes/formatting.php does not properly check the URL length in comments before passing it to the PCRE library, which can be exploited to cause a crash.
-> http://osvdb.org/show/osvdb/72142
-> 
-> http://wordpress.org/news/2011/04/wordpress-3-1-1/
-> http://secunia.com/advisories/44038/
-> http://seclists.org/cert/2011/63
-
-Still no CVE.
-
-> I even contacted WordPress administrators and asked if this does have CVE, but they haven't replied for some reason.
-
-Still no answer.
-
-Can we now assign CVE-identifiers for 3.1.1 issues, thanks? List of issues in 3.1.1 can be found from here http://core.trac.wordpress.org/query?status=closed&resolution=fixed&milestone=3.1.1&group=resolution&order=priority and related news article in here http://wordpress.org/news/2011/04/wordpress-3-1-1/
-
-- Henri Salo
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
