@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/01/2
-Message-ID: <4F28A821.7010507@redhat.com>
-Date: Tue, 31 Jan 2012 19:49:05 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/26/5
+Message-ID: <20121026213933.GA16798@openwall.com>
+Date: Sat, 27 Oct 2012 01:39:33 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Fwd: Apache HTTP Server 2.2.22 Released
+Cc: Phil Pennock <pdp@...m.org>
+Subject: CVE-2012-5671: Exim <= 4.80 DKIM heap-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 01/31/2012 05:42 PM, Solar Designer wrote:
-> I think that only posting to oss-security when there's not yet a CVE ID
-> assigned (to request one) is weird.  I think it may be more beneficial
-> to post in here about all security issues in Open Source software -
-> well, or at least in widely used pieces of software.  As a special case,
-> when an issue that was first discussed on the private linux-distros or
-> distros lists is made public, I think this should include a posting to
-> oss-security (and not only vendor advisories sent via their usual
-> channels, which vary by vendor).  (No, the Apache issues below were not
-> on the distros lists.)
+Hi,
 
-Agreed, one thing that would be helpful is to start all CVE requests
-with "CVE Request" in the subject line which will make it easy for me to
-spot them. Anything informational can be whatever title (like what Solar
-Designer sent).
+Exim 4.80.1 was released earlier today to fix a remotely triggerable
+heap-based buffer overflow vulnerability in DKIM support (enabled by
+default).  Here's the announcement as posted to the exim-announce list
+(including instructions on how DKIM support may be disabled, and
+download links for Exim 4.80.1):
 
-On the other hand how much overlap do we want with full-disclosure/bugzilla?
+https://lists.exim.org/lurker/message/20121026.080330.74b9147b.en.html
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+A few distro tracking/updates URLs:
+
+http://codelabs.ru/fbsd/ports/qa/mail/exim/4.80.1
+http://security-tracker.debian.org/tracker/CVE-2012-5671
+https://bugs.launchpad.net/ubuntu/+source/exim4/+bug/1071694
+https://bugzilla.redhat.com/show_bug.cgi?id=869953
+http://www.securityfocus.com/bid/56285
+
+Distro vendors had 1 day of advance notice, which some have made use of.
+
+Alexander
