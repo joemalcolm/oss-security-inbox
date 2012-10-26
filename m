@@ -1,95 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/14/3
-Message-ID: <4FD94D2B.4020102@redhat.com>
-Date: Wed, 13 Jun 2012 20:32:11 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/26/4
+Message-ID: <776078697.2526514.1351281255198.JavaMail.root@redhat.com>
+Date: Fri, 26 Oct 2012 15:54:15 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Greg Knaddison <greg.knaddison@...uia.com>
-Subject: Re: CVE Request for Drupal contributed modules
+Cc: coley <coley@...re.org>
+Subject: Strange CVE situation (at least one ID should come of this)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-Apologies for the delay in CRUPAL SA-CONTRIB CVE assignments, here's
-the current batch:
+This Squirrelmail plugin came to my attention a few weeks back:
+http://squirrelmail.org/plugin_view.php?id=117
 
+It's from 2004, which is suspect in itself, but I took a look after someone
+asked. It's pretty scary in there.
 
-CVE-2012-2699 SA-CONTRIB-2012-073 - Glossary - Cross-Site Scripting (XSS)
-CVE-2012-2700 SA-CONTRIB-2012-074 - Contact Forms - Access Bypass
-CVE-2012-2701 SA-CONTRIB-2012-075 - Take Control - Cross Site Request
-Forgery (CSRF)
-CVE-2012-2702 SA-CONTRIB-2012-076 - Ubercart Product Keys Access Bypass
-CVE-2012-2703 SA-CONTRIB-2012-077 - Advertisement - Cross Site
-Scripting & Information Disclosure - XSS
-CVE-2012-2704 SA-CONTRIB-2012-077 - Advertisement - Cross Site
-Scripting & Information Disclosure - Information Disclosure
-CVE-2012-2705 SA-CONTRIB-2012-078 - Smart Breadcrumb - Cross Site
-Scripting (XSS)
-CVE-2012-2706 SA-CONTRIB-2012-079 - Post Affiliate Pro - Cross Site
-Scripting (XSS) and Access Bypass - Unsupported
-CVE-2012-2707 SA-CONTRIB-2012-080 - Hostmaster (Aegir) - Access Bypass
-and Cross Site Scripting (XSS) - access bypass
-CVE-2012-2708 SA-CONTRIB-2012-080 - Hostmaster (Aegir) - Access Bypass
-and Cross Site Scripting (XSS) - XSS
-CVE-2012-2709 SA-CONTRIB-2012-081 - Aberdeen - Cross Site Scripting
-CVE-2012-2710 SA-CONTRIB-2012-082 - Zen - Cross Site Scripting
-CVE-2012-2711 SA-CONTRIB-2012-083 - Taxonomy List - Cross Site
-Scripting (XSS)
-CVE-2012-2712 SA-CONTRIB-2012-084 - Search API - Cross Site Scripting
-(XSS)
-CVE-2012-2713 SA-CONTRIB-2012-085 - BrowserID - Multiple
-Vulnerabilities - CSRF
-CVE-2012-2714 SA-CONTRIB-2012-085 - BrowserID - Multiple
-Vulnerabilities - BrowserID login theft
-CVE-2012-2715 SA-CONTRIB-2012-086 - Amadou - Cross Site Scripting
-CVE-2012-2716 SA-CONTRIB-2012-087 - Comment Moderation - Cross Site
-Request Forgery
-CVE-2012-2717 SA-CONTRIB-2012-088 - Mobile Tools - Cross Site
-Scripting (XSS)
-CVE-2012-2718 SA-CONTRIB-2012-089 - Counter - SQL Injection (unsupported)
-CVE-2012-2719 SA-CONTRIB-2012-090 - File depot - Session Management
-Vulnerability
-CVE-2012-2720 SA-CONTRIB-2012-091 - Token Authentication - Access bypass
-CVE-2012-2721 SA-CONTRIB-2012-092 - Organic Groups - Cross Site
-Scripting (XSS) and Access Bypass
-CVE-2012-2722 SA-CONTRIB-2012-093 - Node Embed - Access Bypass
-CVE-2012-2723 SA-CONTRIB-2012-094 - Maestro module - Cross Site
-Request Forgery (CSRF), Cross Site Scripting (XSS)
-CVE-2012-2724 SA-CONTRIB-2012-095 - Simplenews - Information Disclosure
-CVE-2012-2725 SA-CONTRIB-2012-096 - Authoring HTML - Cross Site
-Scripting (XSS)
-CVE-2012-2726 SA-CONTRIB-2012-097 - Protest - Cross Site Scripting (XSS)
-CVE-2012-2727 SA-CONTRIB-2012-098 - Janrain Capture - Open Redirect
-CVE-2012-2728 SA-CONTRIB-2012-099 - Node Hierarchy - Cross Site
-Request Forgery (CSRF)
-CVE-2012-2729 SA-CONTRIB-2012-100 - SimpleMeta - Cross Site Request
-Forgery (CSRF)
-CVE-2012-2730 SA-CONTRIB-2012-101 - Protected Node - Access Bypass
-CVE-2012-2731 SA-CONTRIB-2012-102 - Ubercart AJAX Cart - Potential
-Disclosure of user Session ID
-CVE-2012-2732 SA-CONTRIB-2012-103 - Global Redirect - Open Redirect
+If I was to list the security problems I found after a few minutes of
+looking, they are:
 
+* It uses MD5 passwords
+* The shadow file is directly modified without locking (which could lead to a
+    race condition)
+* If you get the password wrong, it doesn't unlink the empty temporary file.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+None are really a big deal, you *could* run this and probably never notice
+these problems.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Fundamentally though, this thing should get one CVE ID that basically say
+"don't use this". How have situations like this been handled in the past?
 
-iQIcBAEBAgAGBQJP2U0rAAoJEBYNRVNeJnmTvmYQAIPqLmDYtoOZ0qvQwnJ2D3ZG
-CfGfstBLRTrlEkhSMiEHLztjBCUEnsBz8hvFZ1vA3dBkWuvw4BLBHaONHJ/GZES8
-lMpdVh/1nP0AwqYSOloHjvHOZlI57xWbrmqi517gYM2cBDyZ13527bCeFTAVNOnS
-9uE60cWJfpCrejLrGj7AtZgLPBuyWFnAfPHEDWbZCrq+Di1fjddYK5JBQRTrUE5E
-W1rtx43b3KrO33MgQ33TAdmFkMKXulK4BBUT44DyB2OD2DBqsCi/xgFXRBtu7hii
-RVGYBCw6YxXXW8y86eF10nsURSwl3IZImtaA/z/me9wEPZEG+Mdjmf5zc85kZVtj
-BS8CoOJq1dbNMmPBWptG5tdITWlrRZLEHc2RgjiiVsoSlIPH+X+mg9bvwNkayDzQ
-2UhSFqxP1FFeC/HoWekCA7ZScQhQ1qLdOzUfKTMMAYb06kD7A3ZrQPF3r10UHSLh
-+hE09FF8UiTJo9WsOK7oeFnByWLtcvOs2lQ2AHWIHbsfPxNC9ckHz7AyLHkypPg0
-qPc+Ljw8LVvNnJSodFWszqRwi+1mAAfTqbvoXYh8EcGIMDiPDBJPX5AtMFjARQs1
-8ikC5ABumFv/yvlVuksDl9HfPGqd6oBXG8ZyMoFKoyHHIDZprJ8Y0SxUMTy3DIaP
-t3ETs2fViyvuPN+S+itX
-=6Pqs
------END PGP SIGNATURE-----
+I mailed the Squirrelmail security team. They never responded. Regardless
+of their response though, the plugin site says it has been downloaded more
+than 100K times, so I suspect it's still in use somewhere. My goal in this
+CVE request is to raise awareness so hopefully people stop using this (and
+get the Squirrelmail guys to remove it from their site).
+
+Thanks.
+
+-- 
+    JB
