@@ -1,39 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/13
-Message-ID: <4F4D5693.7040307@redhat.com>
-Date: Tue, 28 Feb 2012 15:34:59 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/26/2
+Message-Id: <201210260948.47226.timb@nth-dimension.org.uk>
+Date: Fri, 26 Oct 2012 09:48:39 +0100
+From: Tim Brown <timb@...-dimension.org.uk>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, mateusz.goik@...antsoft.pl
-Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+Subject: Medium severity flaw with Perl 5
 Content-Type: text/plain; charset=utf-8
 
-On 02/28/2012 03:33 PM, Kurt Seifried wrote:
-> On 02/28/2012 09:32 AM, cve-assign@...re.org wrote:
->>> Any javascript code could be executed from Kadu History Window
->>> in following conditions:
->>
->> CVE-2012-1410 is assigned to this Kadu issue.
->>
->> We are confused about
->>
->> https://bugzilla.novell.com/show_bug.cgi?id=749036
->>
->> This is a bug report about this Kadu vulnerability, but it has a
->> CVE assignment of CVE-2006-7248 for a vulnerability in the 
->> SMIME_read_PKCS7 function in OpenSSL 0.9.7i. Our perspective is
->> that this means CVE-2006-7248 has been assigned to multiple issues
->> (the Kadu issue and the OpenSSL issue), so we'll now proceed to
->> REJECT CVE-2006-7248 sometime later today unless there's a
->> substantial objection.
-> 
-> Please use CVE-2006-7249 for the kadu XSS vulnerability. Sorry about
-> the mess.
-> 
+I recently discovered that Perl 5 interpreter is vulnerable to memory 
+corruption when large values are supplied to the x operator.
 
-Oh fer petes sake, I apologize, read 2006 repeatedly and of course cut
-and paste the wrong one AGAIN. Ok for real this time: please use
-CVE-2012-1092 for the kadu XSS issue.
+After discussions with the vendor, CVE-2012-5195 was assigned to this 
+vulnerability.
 
+I know Red Hat and Debian have picked it up, but I'm not sure about other 
+vendors.
+
+Tim
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
+
+Download attachment "NDSA20121025.txt.asc" of type "application/pgp-signature" (8134 bytes)
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
