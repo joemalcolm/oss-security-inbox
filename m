@@ -1,48 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/12/4
-Message-ID: <808895110.46700242.1355331093254.JavaMail.root@redhat.com>
-Date: Wed, 12 Dec 2012 11:51:33 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Cc: oss-security@...ts.openwall.com, Nick Treleaven <nick.treleaven@...nternet.com>, Colomban Wendling <lists.ban@...besfolles.org>, Enrico Troeger <enrico.troeger@...na.de>, Matthew Brush <mbrush@...ebrainz.ca>, Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com, jonathan.underwood@...il.com
-Subject: Geany IDE not escaping filenames during compilation / build - a security issue or not?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/26/3
+Message-Id: <E1TRhff-0004iR-Vi@xenbits.xen.org>
+Date: Fri, 26 Oct 2012 11:01:47 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 25 (CVE-2012-4544) - Xen domain builder Out-of-memory due to malicious kernel/ramdisk
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  Background: Geany is a small and fast integrated development enviroment with basic
-features and few dependencies to other packages or Desktop Environments.
+	     Xen Security Advisory CVE-2012-4544 / XSA-25
 
-Based on (you might need to click 'Yes, I agree' OK to
-get the exploit code in [2]):
-[1] https://bugs.gentoo.org/show_bug.cgi?id=446986
-[2] http://www.1337day.com/exploit/19924
+   Xen domain builder Out-of-memory due to malicious kernel/ramdisk
 
-it was found that Geany is not escaping filenames (when compiling /
-building source) prior passing the final command line to shell.
+ISSUE DESCRIPTION
+=================
 
-The questions:
-1) should Geany escape the filenames?,
-2) is this a security issue or not?
+The Xen PV domain builder contained no validation of the size of the
+supplied kernel or ramdisk either before or after decompression. This
+could cause the toolstack to consume all available RAM in the domain
+running the domain builder.
 
-Two views:
-* view #1 - it shouldn't escape the filenames. It's just IDE,
-so what it obtains as input is passed to shell for execution.
+IMPACT
+======
 
-* view #2 - it should escape the filenames (because this is what
-shell / bash is doing) prior making the build.
+A malicious guest administrator who can supply a kernel or ramdisk can
+exhaust memory in domain 0 leading to a denial of service attack.
 
-Obviously, even for gcc you can pass specially-crafted filename,
-when attempt to build it would lead to "ls -la" command (for example)
-to be executed.
+VULNERABLE SYSTEMS
+==================
 
-I by myself am not sure / not able to decide here.
+All versions of Xen are vulnerable.
 
-Steve, could you hint? Does Mitre have some guidance / document,
-how to deal with cases like this one?
+MITIGATION
+==========
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Running only trusted kernels and ramdisks will avoid this
+vulnerability.
 
-P.S.: Cc-ed Geany maintainers for their opinion too.
+Using pvgrub also avoids this vulnerability since the builder will run
+in guest context. (nb: use of pygrub *is* vulnerable).
+
+Running only HVM guests will avoid this vulnerability.
+
+RELATED ISSUE
+=============
+
+CVE-2012-2625 covers a bug in pygrub which caused that process to
+consume excessive amount of memory under similar circumstances to the
+above.
+
+This was fixed in xen-unstable (and the fix inherited by Xen 4.2.x) in
+revision 25589:60f09d1ab1fe but not called out as a security problem.
+This fix is also included, where relevant, in the patches below.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue, including
+the related pygrub fix where neccesary.
+
+xsa25-unstable.patch        Xen unstable
+xsa25-4.2.patch             Xen 4.2.x
+xsa25-4.1.patch             Xen 4.1.x
+
+$ sha256sum xsa25*.patch
+613e4b82cdc9cabf9cbd52076118887b298c47e680c2066a28a77f12e9f90606  xsa25-4.1.patch
+135bc089d003f9b97991764c37b1ab8d37e9cbcfa1b9bd7429b4503abe00c8f5  xsa25-4.2.patch
+534495b7eef6e599f5814f0a67fc84fbe2e8eee9d223a09ad178ff63bdcda3dd  xsa25-unstable.patch
+
+Note that these patches impose a new size limit of 1Gby on both the
+compressed and uncompressed sizes of ramdisks.  On some systems it may
+be desirable to relax these limits and risk virtual address or memory
+exhaustion in the toolstack.  This can be achieved by setting
+XC_DOM_DECOMPRESS_MAX to the desired limit (in bytes). This can be
+done by building with "APPEND_CFLAGS=-DXC_DOM_DECOMPRESS_MAX=<limit>"
+or by editing tools/libxc/xc_dom.h directly.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+These issues have already been discussed in public in various places,
+including https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-2625
+and http://bugs.debian.org/688125.  This advisory is therefore not
+subject to an embargo.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQim1nAAoJEIP+FMlX6CvZgw0IAKTyGbRlt5N2i8YbRdAj0+wF
+OA4X5G1GlAEf0iGVjYi92/HnVyjWxLSNCKJK4YSWAUrlnkAC2IEUU6vqQOkxN/ic
+88D1VS8tEtQwRGa9jNxf4RTCLvdGxrVK4lnSDu7OplgwMDT7O/X+Dq89xKN2VCYw
+/iqpzlAndmC0Lqz0U8VlV71JryS5uwg980GWimQaIEinyOWFS5cuImvBamptl+zU
+aoU3JxERd3YWASrspm8dBOtwc75DucWY1hOjz52uloodKcJha55Objcm8dn76xwN
+JV7sHGFRrQyxHnQJ9GeSuV0RHkxB6VhMXTGWKFaynOLjtUUoidkawgs1ld+Qsms=
+=Vj6Q
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa25-4.1.patch" of type "application/octet-stream" (16353 bytes)
+
+Download attachment "xsa25-4.2.patch" of type "application/octet-stream" (12666 bytes)
+
+Download attachment "xsa25-unstable.patch" of type "application/octet-stream" (12510 bytes)
