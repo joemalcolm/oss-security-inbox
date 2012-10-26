@@ -1,55 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/14
-Message-ID: <20121029205851.GM2676@redhat.com>
-Date: Mon, 29 Oct 2012 14:58:51 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/26/1
+Message-ID: <508A2369.1020102@redhat.com>
+Date: Thu, 25 Oct 2012 23:45:13 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: awstats before 7.1 awredir.pl vulnerability
 Content-Type: text/plain; charset=utf-8
 
-* [2012-10-29 14:02:58 -0500] Andr?s G?mez Ram?rez wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->Sorry for the previous message, it was not intentional :)
->
->Hi, Could a CVE be assigned to this issue?
->
->Name: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
->Software: PLIB 1.8.5
->Software link: http://plib.sourceforge.net/
->Vulnerability Type: Stack Based Buffer overflow
->References: http://www.exploit-db.com/exploits/21831/
->                   http://www.securityfocus.com/bid/55839
->
->Vulnerability Details: Plib is prone to stack based Buffer overflow in the
->error function in ssg/ssgParser.cxx when it loads 3d model files as X
->(Direct x), ASC, ASE, ATG, and OFF, if a very long error message is passed
->to the function, in line 68:
->
->
->// Output an error
->void _ssgParser::error( const char *format, ... )
->{
->  char msgbuff[ 255 ];
->  va_list argp;
->
->  char* msgptr = msgbuff;
->  if (linenum)
->  {
->    msgptr += sprintf ( msgptr,"%s, line %d: ",
->      path, linenum );
->  }
->
->  va_start( argp, format );
->68        vsprintf( msgptr, format, argp );
->  va_end( argp );
->
->  ulSetError ( UL_WARNING, "%s", msgbuff ) ;
->}
->
->Thanks,
+On 10/25/2012 03:07 AM, Hanno Böck wrote:
+> http://awstats.sourceforge.net/docs/awstats_changelog.txt -
+> Security fix into awredir.pl
+> 
+> I didn't find any more info, but please assign a CVE. (and i found
+> there were awredir issues before that got CVE-2009-5020, but I
+> think this is a different issue, at least if their changelogs are 
+> correct)
 
-Andreas, was this reported to upstream?  I can't see a patch or anything
-in their bug tracker regarding this.
+Please use CVE-2012-4547 for this issue.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+One question, in CVE-2009-5020 (the last Awstats open redirect): Steve:
+
+CONFIRM:http://awstats.sourceforge.net/docs/awstats_changelog.txt
+
+Is it possible to include more information in the references like a
+line of text or the data it was pulled or something? I'm noticing this
+more and more as I try to verify stuff, could we consider adding a
+notes field or something?
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQiiNoAAoJEBYNRVNeJnmTSbcQAJvzJKn/SF6GewIgStgOsRcM
+dsWhlG/3ELZ4kS6ikUrHEOd8LbjBCQ2dK3JK9kTNxp3cY2xuFtBbnTFy3of3YSjZ
+1rjsK9xvWbm5+2DHJDbtH2cFuh6jF/Bpx33agf1gYiF0hXcTRfc6zCPerI7Zjtbt
+NRcY3yN7yNyZd9C0mY2iT9RWZyqM5tIDRRCkQfVklbltEZOrvgBmXfYSXjTVpzUR
+5q4KGcHVYNvr4gVItyg7z3uaADqIhtCw0QZFgQ/YXSDigxWf8qFNvypHm790RY9Q
+ilQI6B0E9se+x7ypZda/T7eqxAyzaVUFahIOzg6fstrUCp2FrAbnB5m065JCYzuQ
+Q3/Sqy81y12r5p6bbppulzlBgI0zQxT0n+Ayvylea/rp6hcpe82OocnxDVqaw6/z
+ovAjZkgDjWogV8TrdgQbW25iKl1A4ib2IEOu5FQbVbM9cT33QhD4GNMx1jSEU/TM
+x0SN5j4L7PVP2V+zzACAn4qxK8LTUUFy8pRPYckU9DbGICWBHP2CCTsAUWWCTPc5
+2K6+RBPQW0LnSTC60Q//3vQDhpbb+myzwpO3GqHQNpIZzvwQWx94jfXNKN2pZusJ
+3bYaoDTtBr7GGUfkp/j/8D8ID3fOvKwZ7TN+aZaehbmFGzpumFidHtsu+cf/+umr
+TVsWRQOzhHntznXjVWEr
+=e9t/
+-----END PGP SIGNATURE-----
