@@ -1,63 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/01/5
-Message-ID: <20120101205239.GA21048@openwall.com>
-Date: Mon, 2 Jan 2012 00:52:39 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/27/1
+Message-ID: <CAF6rxgkssC8Bt6jWGcLF0OSa=L9g4ogkDRMeVnDr4xivWnhRJQ@mail.gmail.com>
+Date: Sat, 27 Oct 2012 15:08:00 -0400
+From: Eitan Adler <lists@...anadler.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+Subject: Re: Medium severity flaw with Perl 5
 Content-Type: text/plain; charset=utf-8
 
-Hi Nico,
+On 26 October 2012 04:48, Tim Brown <timb@...-dimension.org.uk> wrote:
+> I recently discovered that Perl 5 interpreter is vulnerable to memory
+> corruption when large values are supplied to the x operator.
+>
+> After discussions with the vendor, CVE-2012-5195 was assigned to this
+> vulnerability.
+>
+> I know Red Hat and Debian have picked it up, but I'm not sure about other
+> vendors.
 
-It was high time to bring this up on a public list.  Thank you!
+On FreeBSD
 
-On Sun, Jan 01, 2012 at 04:53:09PM +0100, Nico Golde wrote:
-> given the hash DoS I remembered a small program I wrote some time last year to 
-> demonstrate why the default configuration of openssh sucks (MaxStartups and 
-> LoginGraceTime).
+on amd64: typedef __uint64_t __size_t;
+on i386 I believe __size_t is __unit32_t;
 
-I think not only the default configuration, but also the approach behind
-MaxStartups sucks (either a fixed limit or RED).  In fact, I told this
-to OpenSSH folks before, and I proposed an alternative, but clearly I
-should have done more (contributed code) in order for anything to change.
+Since memset takes a size_t (typedefed of __size_t) a negative number
+would either be optimized out or turned into a large positive number.
+As such there is no negative offset or negative jump.
 
-To be fair, there are also things that I do like about MaxStartups: the
-idea to limit only not-yet-authenticated sessions (or to limit them
-separately from authenticated sessions) and the close-a-pipe-fd trick.
+and such  we are not vulnerable.
 
-> ... how to properly handle this issue with openssh?
+Is this correct or am I missing something?
 
-In the same way that I did in popa3d, I think: per-source limits.  Maybe
-also per-source-netblock (e.g., separately for /8, /16, /24 - although
-this is IPv4-specific and these don't reflect actual netblock allocations).
 
-Another thing that popa3d's standalone mode takes care of is log flood.
-It makes sure that every single source IP address that is permitted to
-connect is logged at least once, but it avoids making mostly redundant
-records when a threshold is reached.
 
-For purpose of these limits, sessions are treated as active for at least
-a certain number of seconds after the connection is made.  So if an
-attacker opens and closes connections rapidly, the per-source limit is
-hit and further connections start to be rejected and not even logged
-until those "zombie sessions" expire.  (With per-netblock limits, this
-may become trickier as we'd want to log each individual IP address at
-least once.)
-
-In xinetd, we have per-source limits (my contribution from many years
-ago), but no log flood protection yet (something to fix).
-
-Speaking of log flood, this is not only about filling up a filesystem,
-but also about exhausting syslogd bandwidth (especially easy if fsync's
-are not disabled).  When the latter happens, the network service (sshd,
-etc.) and other services may be impacted.
-
-I've been toying with the idea of writing a libinetd that would have
-this functionality in it (and we'd have an inetd clone, sshd, and other
-services use it), but I never got around to doing it.
-
-> I feel uncomfortable to further ignore this problem.
-
-Same here.
-
-Alexander
+-- 
+Eitan Adler
