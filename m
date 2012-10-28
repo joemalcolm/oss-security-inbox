@@ -1,34 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/16
-Message-ID: <4F04C45E.5090505@redhat.com>
-Date: Wed, 04 Jan 2012 14:27:58 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/28/2
+Message-ID: <508CD52F.201@redhat.com>
+Date: Sun, 28 Oct 2012 00:48:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: WordPress SQL injection and arbitrary code injection (2003)
+CC: "Jason A. Donenfeld" <Jason@...c4.com>, cgit@...mli.net
+Subject: Re: CVE Request: cgit command injection
 Content-Type: text/plain; charset=utf-8
 
-On 01/03/2012 02:41 PM, Henri Salo wrote:
-> These two WordPress security vulnerabilities from 2003 are still without CVE-identifiers. I am requesting CVE-identifiers as these issues have highly critical impact.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 10/27/2012 08:10 PM, Jason A. Donenfeld wrote:
+> Hi Kurt,
+> 
+> From
+> http://git.zx2c4.com/cgit/commit/?id=7ea35f9f8ecf61ab42be9947aae1176ab6e089bd
 >
-> 1) SQL injection
-> http://osvdb.org/show/osvdb/4610
-Please use CVE-2003-1598 for the WordPress    0.70
-./wp-links/links.all.php SQL Injection
+> 
+:
+> 
+> "syntax-highlighting.sh: Fix command injection.
+> 
+> By not quoting the argument, an attacker with the ability to add
+> files to the repository could pass arbitrary arguments to the
+> highlight command, in particular, the --plug-in argument which can
+> lead to arbitrary command execution.
+> 
+> This patch adds simple argument quoting."
+> 
+> 
+> The vulnerable script is not a hard requirement and is more in the 
+> "contrib" variety of things. That said, lots of users do wind up
+> using it verbatim, as it's simple and works well, so this does
+> affect a decent number of folks.
+> 
+> The patch for it will be released in the upcoming cgit release,
+> along with the previous CVE for that buffer overflow. I'll send the
+> list an update when that release is made.
+> 
+> 
+> Thanks, Jason
+
+Ouch. Please use CVE-2012-4548 for this issue.
 
 
->
-> 2) Arbitrary code injection
-> http://osvdb.org/show/osvdb/4611
-Please use CVE-2003-1599 for the WordPress    0.70 ./blog.header.php
-code injection
->
-> Secunia advisory: http://secunia.com/advisories/8954/
->
-> - Henri Salo
-http://www.kernelpanik.org/docs/kernelpanik/wordpressadv.txt
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
--- Kurt Seifried / Red Hat Security Response Team
-
+iQIcBAEBAgAGBQJQjNUrAAoJEBYNRVNeJnmTh/oP/23yPigb0OaKUljZY1ZmBJq/
+DhuZLpUxqP3g4hfDXo4USBut8MLv7vksGBwJeF9D/AgAE6p3U2R7W6ycKgWX4Rvx
+AXu29Eqz8IY1cxuKKrFaUbPr06sUlhnkYpVXog81+iqUlECe5MRDtr70NEJXRe9L
+94DsGJglckmC6XgRZ3UwG2eracfdqTFiMQ/J8kiw7DsPAjOEZzrdp5VkoEnheLsQ
+ltWNcEMh5rWfyTMv7fMyJ34JC3iDfYjkghK6ihCBlr8uSyq98gjMt27nz74twH4A
+tIVtDoWoPmBXJePghnGuAI+hjtRpAWV5bwmVx78hBy+I5eUU+rW2ljOMmg3kA3lN
+DTDDApnmD+WrLTyEwLTPSIAJCAKcGdtOIfYiHmLJ7E/26yyks/p2JvXexSfeWWKK
+yAV9IdJdx4Wtf32Y2hYELWnQfBjx4bFoOG4QgsGrSyMi5lzVhqXJeXWsnBG9P7Mg
+ZEFed2po4HjNoH4IxbQTOtW1fZmNbYDaMsMfRSqgJt27j+d7Vg/oabdxXyEbM59D
+/+ELYf3twprQFkLUboLIU7LtseqOOjTYFIqYWddryXf+MJisaBNWqBkV7VV5WaTe
+t+zUlWH1SWyaJ/i+WO4ddSyqNv0RI8BJOo5hyczsWsj7xXefNEGuXdlO+nhvBHmb
+ijnlLFH+YHjs6fT1WBSX
+=HicY
+-----END PGP SIGNATURE-----
