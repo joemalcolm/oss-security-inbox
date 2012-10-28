@@ -1,55 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/01/3
-Message-ID: <4FC8EF36.1090800@oracle.com>
-Date: Fri, 01 Jun 2012 17:35:02 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/28/3
+Message-ID: <508D5135.2050103@canonical.com>
+Date: Sun, 28 Oct 2012 15:37:25 +0000
+From: Chris Coulson <chris.coulson@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
+Subject: CVE request: use-after-free in libunity-webapps
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+libunity-webapps provides functionality shared between browser addons 
+that are available for Firefox and Chromium. A use-after-free bug was 
+found in libunity-webapps which could potentially be exploited to crash 
+the users browser or run arbitrary code.
 
-On 01/06/12 17:12, Kurt Seifried wrote:
-> 2) OS level, should we allow SYN+FIN at all? Is this a responsibility
-> for the operating system? To some degree yes, it should probably not
-> create a connection based on a mangled SYN packet (and this has been
-> fixed in the 3.x series). Is this a security issue or a security
-> hardening, debatable, but in any event it's a separate code base
-> (kernel) so it would get a separate CVE from the iptables side.
+Reference:
 
-I am inclined to think that we should have a separate CVE for the kernel
-here.   Unless I'm mistaken, a packet with SYN+FIN has no legitimate
-business being in the Internet any more than the old SYN+RST has.   It's
-security hardening in that firewall rules to discard packets with odd
-combinations of flags are often deployed by people setting up "serious"
-firewalls but most machines out there, whether or not they have iptables
-set up, don't go to those lengths.  Certainly none of the machines I
-have access to that have "out of the box" iptables configurations would
-appear to defend against SYN+FIN for open ports.
+https://launchpad.net/bugs/1068495
 
-- From a purely pragmatic point of view the Nessus plugin at
-http://www.nessus.org/plugins/index.php?view=single&id=11618 can be read
-in two ways: there's either a flaw in the firewall or there's a flaw in
-the kernel.    The fact that the references there talk about a kernel
-patch for SYN+RST was what lead me to read it as meaning the latter.
+Could you please allocate a CVE for this?
 
-It seems that the commit I originally mentioned
-(fdf5af0daf8019cec2396cdef8fb042d80fe71fa) made it through intact into
-3.4 so perhaps we should have a CVE for this? 
-
-jch
-
-(Hoping that finally I've found the combination of things for enigmail
-to correctly sign this one.)
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iF4EAREIAAYFAk/I7zUACgkQRQu7fpQvo8iTCwEAgWfW3DOIMPoUPdHCKemIeSnV
-7dpQ5dhFOR/vkbqK0C4BAKhy6gV+nWMprbbyG5uM7rVh8CF+u1BEw44U/TnLL/lr
-=kTRA
------END PGP SIGNATURE-----
-
+Thanks,
+Chris
