@@ -1,62 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/5
-Message-ID: <50631F57.9040905@redhat.com>
-Date: Wed, 26 Sep 2012 09:29:27 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Noriko Hosoi <nhosoi@...hat.com>, Rich Megginson <rmeggins@...hat.com>
-Subject: Re: CVE Request -- 389-ds-base: Change on SLAPI_MODRDN_NEWSUPERIOR is not evaluated in ACL (ACL rules bypass possible)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/28/1
+Message-ID: <CAHmME9pHSbgtfd9NZA7mL5RTsid9-8kQR1TSSf9wpmZMLAXTFA@mail.gmail.com>
+Date: Sat, 27 Oct 2012 20:10:15 -0600
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: cgit@...mli.net
+Subject: CVE Request: cgit command injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kurt,
 
-On 09/26/2012 03:54 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> Noriko Hosoi of Red Hat notified us about the following
-> deficiency:
-> 
-> A possibility to bypass access control list (ACL) definitions was
-> found in the way 389 Directory Server performed LDAP modifyRDN
-> operation upon request from client. When a user has been granted
-> access to set of DN entries, but denied access to a specific subset
-> of those entries, it was possible the user to obtain temporary
-> (till next Directory Server restart) access to that subset of
-> entries (they should not have had otherwise ability to access) when
-> the DN entry was moved via database modify RDN function.
-> 
-> Upstream ticket: [1] https://fedorahosted.org/389/ticket/340
-> 
-> Relevant upstream patch: [2]
-> http://git.fedorahosted.org/cgit/389/ds.git/commit/?id=5beb93d42efb807838c09c5fab898876876f8d09
->
->  Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+>From http://git.zx2c4.com/cgit/commit/?id=7ea35f9f8ecf61ab42be9947aae1176ab6e089bd
+:
 
-Please use CVE-2012-4450 for this issue.
+"syntax-highlighting.sh: Fix command injection.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+By not quoting the argument, an attacker with the ability to add files
+to the repository could pass arbitrary arguments to the highlight
+command, in particular, the --plug-in argument which can lead to
+arbitrary command execution.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+This patch adds simple argument quoting."
 
-iQIcBAEBAgAGBQJQYx9XAAoJEBYNRVNeJnmTKi4P/RmXXD/LOtYKBLQ0ag5TIkZ3
-Ccr+18fhhvsshUF+DJccMyOozDE2BtAWM10KylFbek6FDefASl3ygTWc/8w2FwOu
-NaP4KFy2cm6b84M+lQL6xWZ8abL9M1PR+4MBE79pEKs5QBJXjbnxcJTAs6loJPVr
-b7NMRerndaJzTzSux9mTKFPYESrtWRnvdOvwALKN2Fg4pPBF06evs9P7MaNUjJnd
-P7tsucsqgDQBxE2Nw3efCiDfuNW4Q3YGOLgdMrKar64sbd8sbj2wIZ0ik9e6G2Hh
-LGCzWZc+8jX8UsZxH/U8uSyBAuV4eQVqqUxxEBUHqiErwZlx9U1vIra5vJ81hub1
-QNsK0hxbKd0RqguntD1iSawsTyrELu+Bje3AMXTRB/rr/rF8n3mmDEGOhy3GH2xo
-OF9TGAytVbBky2oHxdbLH/KEjVZ0PHUttNdVr3nq1ukfUf6F5+gL9cNU9VktcX6D
-PYfljJz5jHdtr61L5rYTfwtd14RHuCFxXf0qyDMwgYQkWydUp6nubLLs/SFfiAsX
-+H08GKbi3Ixt8b+ms70XYqfNSmy17w1AvcyP3wqd72qwpzgII0gfTMn4upJribtc
-BS8yBiL6C4O6F9MpJUsMsRJPDaG35nUb6N1y+AOUhaeLRaqUwvDn/bdoliaXZqyI
-5gDYrkppGv9XzPRjGNrU
-=EtKB
------END PGP SIGNATURE-----
+
+The vulnerable script is not a hard requirement and is more in the
+"contrib" variety of things. That said, lots of users do wind up using
+it verbatim, as it's simple and works well, so this does affect a
+decent number of folks.
+
+The patch for it will be released in the upcoming cgit release, along
+with the previous CVE for that buffer overflow. I'll send the list an
+update when that release is made.
+
+
+Thanks,
+Jason
