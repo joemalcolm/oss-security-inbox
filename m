@@ -1,29 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/16
-Message-ID: <20120420091119.GA25342@openwall.com>
-Date: Fri, 20 Apr 2012 13:11:19 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Tavis Ormandy <taviso@...xchg8b.com>
-Subject: OpenSSL ASN1 BIO vulnerability (CVE-2012-2110)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/12
+Message-ID: <CAANPUChO6bNBBZADHv2wbPLL6rFii1ZMNtaY+zTHzJzDf6EPZg@mail.gmail.com>
+Date: Mon, 29 Oct 2012 13:53:09 -0600
+From: Greg Knaddison <greg.knaddison@...il.com>
+To: Angie Byron <angela.byron@...uia.com>, Joshua Brauer <joshua@...uia.com>
+Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com,  Moritz Muehlenhoff <jmm@...ian.org>, David Rothstein <drothstein@...il.com>
+Subject: Re: CVE request: Drupal SA-CORE-2012-003
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Joshua Brauer is responsible for all CVE requests for the Drupal project.
 
-This should have been posted in here yesterday (and by someone more
-familiar with the topic), but better a bit late than never.
+We added "CVE: Requested" to our template to reduce the possibility
+that someone else will see the advisory and request a CVE on our
+behalf.
 
-Tavis Ormandy of Google Security Team found a vulnerability in OpenSSL:
+Josh periodically requests a batch CVEs for the project.
 
-incorrect integer conversions in OpenSSL can result in memory corruption.
-http://lists.openwall.net/full-disclosure/2012/04/19/4
+If there's a problem with the wording or process please let us know.
 
-Advisory from OpenSSL:
-http://openssl.org/news/secadv_20120419.txt
+Thanks,
+Greg
 
-Fortunately, the SSL/TLS code of OpenSSL is not affected - but some
-other uses of OpenSSL are.
+--
+Greg Knaddison | 720-310-5623 | http://knaddison.com |
+http://twitter.com/greggles
 
-There are updates for 1.0.1, 1.0.0, and 0.9.8.
 
-Alexander
+On Mon, Oct 29, 2012 at 1:39 PM, Angie Byron <angela.byron@...uia.com> wrote:
+> Oh, right, and Greg's new address. :D
+>
+> On Oct 29, 2012, at 12:38 PM, Angie Byron wrote:
+>
+>> Looping in David Rothstein. I'm no longer the release manager for D7, so I'm not sure what the CVE process was.
+>>
+>> On Oct 29, 2012, at 11:52 AM, Kurt Seifried wrote:
+>>
+>>> -----BEGIN PGP SIGNED MESSAGE-----
+>>> Hash: SHA1
+>>>
+>>> On 10/29/2012 12:17 PM, Moritz Muehlenhoff wrote:
+>>>> Hi, please assign a CVE ID for SA-CORE-2012-003:
+>>>> http://drupal.org/node/1815912
+>>>>
+>>>> Cheers, Moritz
+>>>>
+>>>
+>>> The page says "CVE: Requested" but I haven't seen the request, so I
+>>> can only assume it went to Mitre directly? I don't want to create
+>>> duplicates. Angela/Greg can you confirm what's up with the CVE here?
+>>> Thanks.
+>>>
+>>> - --
+>>> Kurt Seifried Red Hat Security Response Team (SRT)
+>>> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>>>
+>>> -----BEGIN PGP SIGNATURE-----
+>>> Version: GnuPG v1.4.12 (GNU/Linux)
+>>>
+>>> iQIcBAEBAgAGBQJQjtBYAAoJEBYNRVNeJnmTmO4P/3BDsde7eNgjt/xkrcV5IwZz
+>>> dw/bn2jMjkcW2Ze/UIxCTK8GmYNCSqoQ+wYcdqVOkk2Q5rp5wmtRVppM4rPO8vho
+>>> Dy4p039WQ827Vaz1iBk8F2I136WPybTh2XPB9Yrc5XuMuTYdxJyKXkUQlgp+2sBl
+>>> G6reX0E2vb8Yu47591rxQyF4gY6nvnA7W2cpTVM1UzmlhAjmHOeR+yoCT8BGJ79F
+>>> wkbXT3ax/8gtzmhz39x1gqU6b5HHjUH2PdOMKxYP65NzVKyqQvPYAFMb5n5kYKFS
+>>> woLz6UCTVfOD+wLpOiUTEDYGhJhNn1e8/LJZTdt7LxEZ9HTI+NtQ2daBfFI176MI
+>>> 6jxqCtVimouwWqJw9zv7lXc08bHHNVUQiyebaxb/mthwZ9Gn1YBIp9+8r/1o48Y2
+>>> TV3QlPYDjtuvECyR45R6V33ts2xgR6v8UCrXg2KKovL1ArIGFiA0yHz0lTokJJX6
+>>> FIciLmGFGFeacN0K4RluFK3K+t8PLvJ1imNE9X8oWTV7OGNcABj4uGbdZAsIwoMf
+>>> D4eImxpnVFaMa6657PUANRUvaxm8bwhoT36ODC+zz10Hv8SA1Wu86X2I72ktwJrm
+>>> K5RAW5ujOS6qX0pSa7Pf1gLgC6YVX+RdIredeTd7ATdO26eAbLdYRwK81jYITD4i
+>>> OIwAc8R+GuBMi0ZmdFDc
+>>> =10SK
+>>> -----END PGP SIGNATURE-----
+>>
+>
