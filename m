@@ -1,159 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/13
-Message-ID: <4FD0FD34.2050201@redhat.com>
-Date: Thu, 07 Jun 2012 13:12:52 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/15
+Message-ID: <20121029220152.GA2566@hunt>
+Date: Mon, 29 Oct 2012 23:01:52 +0100
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: Xi Wang <xi.wang@...il.com>, boost@...ts.boost.org, emery@...umass.edu, ivmai@...l.ru, webmaster2@...prod.com
-Subject: Re: memory allocator upstream patches
+Subject: Re: Strange CVE situation (at least one ID should come of this)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Oct 29, 2012 at 02:01:24PM -0600, Kurt Seifried wrote:
+> So the first question I have is:
+> 
+> Q1) Do we need to audit software to prove that it is vulnerable? Or is
+> a statistical model enough? e.g. for PHP based web plugins, not
 
-On 06/04/2012 11:54 PM, Xi Wang wrote:
-> Hi,
->
-> I would like to share some upstream patches of two specific types
-> of memory allocator vulnerabilities.
->
-> * malloc(n) size overflow.
->
-> Consider the following code pattern.
->
-> 	n = read_from_input();
-> 	p = malloc(n);
-> 	if (p)
-> 		memcpy(p, input_buffer, n);
->
-> Some malloc() implementations internally perform alignment/padding
-> for a large n, and the allocation size wraps around to a small
-> integer.  That means they would allocate a smaller buffer than
-> expected, leading to buffer overflow.
->
-> * calloc(n, size) size overflow.
->
-> Some calloc() implementations don't check for n * size multiplication
-> overflow, and would allocate a smaller buffer than expected,
-> leading to buffer overflow.
->
-> The two types of vulnerabilities can be easily reproduced using
-> malloc(-1) and calloc(BIG-VALUE, BIG-VALUE).  If the return values
-> are non-null, the implementations are likely to be problematic.
->
-> See a more complete list at:
->
-> http://kqueue.org/blog/2012/03/05/memory-allocator-security-revisited/
->
-> Below are some recent upstream fixes.
->
->
-> Boehm-Demers-Weiser GC (libgc)
-> ==============================
->
-> malloc() size overflow, upstream patch (revised by the developers):
->
->
-https://github.com/ivmai/bdwgc/commit/be9df82919960214ee4b9d3313523bff44fd99e1
->
-> The bug in mallocx.c was found by Ivan Maidanski.
->
-> calloc() size overflow, upstream patch (revised by the developers):
->
->
-https://github.com/ivmai/bdwgc/commit/e10c1eb9908c2774c16b3148b30d2f3823d66a9a
->
-https://github.com/ivmai/bdwgc/commit/6a93f8e5bcad22137f41b6c60a1c7384baaec2b3
->
-https://github.com/ivmai/bdwgc/commit/83231d0ab5ed60015797c3d1ad9056295ac3b2bb
+I can't argue against the statistical model though it does rather reduce
+the value of CVE as naming a specific vulnerability if they start getting
+assigned for "eww this smells". There may be one easily exploitable
+remote root flaw, there may be thousands of reliability and information
+disclosure flaws, but hiding them all under one "old and stinky" CVE
+doesn't feel like a significant improvement.
 
-https://github.com/ivmai/bdwgc/blob/master/malloc.c
-https://github.com/ivmai/bdwgc/blob/master/mallocx.c
+> We can assign a CVE with a description along the lines of "Software X
+> has not been actively maintained since release Y on date Z. Software X
+> is comprised of some stuff and built in language Z which is known to
+> commonly result in security flaws (possibly list what kind, e.g.
+> XSS/buffer overflow, etc.)." Maybe start with a generic cut off date
+> of say 5 years, and start listing stuff as people find/notice them. If
+> a program ever comes back into maintenance and release a new version
+> then the old CVE would be there as a warning, and moving forwards
+> people would be able to make a much more informed choice.
 
-Please use CVE-2012-2673 for this issue
+To turn this on its head: qmail is an MTA (historically trouble) written
+in C (historically trouble) and has not had a stable release in 14 years
+(going strictly by Wikipedia).
 
-> bionic (Android libc)
-> =====================
->
-> malloc() size overflow, upstream patch (revised by the developers):
->
->
-https://github.com/android/platform_bionic/commit/7f5aa4f35e23fd37425b3a5041737cdf58f87385
->
-> NB: this vulnerability could only be triggered in debug mode, the
-> same as CVE-2009-0607, calloc() size overflow.
+But I do not think qmail deserves a CVE simply by this basis.
 
-https://github.com/android/platform_bionic/blob/master/libc/bionic/malloc_debug_leak.c
+> In effect this would be a blacklist/greylist of software, and by using
+> CVE it would be able to piggy back on the existing CVE ecosystem (no
+> better word to use), e.g. scanners would pick up the old versions and
 
-Please use CVE-2012-2674 for this issue
+I'll grant that the CVE ecosystem is large and potentially very powerful
+Force For Good, if deployed this way.
 
-> nedmalloc
-> =========
->
-> malloc() size overflow, upstream patch:
->
->
-https://github.com/ned14/nedmalloc/commit/1a759756639ab7543b650a10c2d77a0ffc7a2000
->
-> calloc() size overflow, upstream patch:
->
->
-https://github.com/ned14/nedmalloc/commit/2965eca30c408c13473c4146a9d47d547d288db1
+But when a consumer asks, "Is CVE-2013-F00F fixed?" and the answer is
+"one guy put together three releases the last two months, fixing one
+bug each", what _is_ the answer? "Yes" because there is a responsive
+maintainer? Or "No" because probability dictates there is likely more
+cruft yet to be found? Or "No" because two months is insufficient data
+to draw a conclusion?
 
-https://github.com/ned14/nedmalloc/blob/master/nedmalloc.c
+> I realize this looks a LOT like feature creep with respect to CVE, but
+> I think it falls into the definition of a vulnerability closely enough
+> that it makes sense/won't result in a huge mess. I can of course see
 
-Please use CVE-2012-2675 for this issue
+I like the specificity of today's CVE.
 
-> Hoard
-> =====
->
-> http://www.hoard.org/
->
-> malloc() size overflow, confirmed by the developers via email in
-> this March, no upstream patch available (since 3.8).
->
-> calloc() size overflow, which should only happen on non-glibc
-> platforms (e.g., Mac OS X).  It has not been confirmed by the
-> developers, but one can easily reproduce it.
+I also think your idea has merit -- there is too much never-loved
+software out there -- but I don't think CVE is the correct lever to
+attack it.
 
-hoard-38/src/tlab.h
+Thanks
 
-Please use CVE-2012-2676 for this issue
-
-> boost::pool
-> ===========
->
-> ordered_malloc() (similar to calloc()) size overflow, upstream patch:
->
-> https://svn.boost.org/trac/boost/changeset/78326
-
-http://www.boost.org/doc/libs/1_49_0/boost/pool/poolfwd.hpp
-
-Please use CVE-2012-2677 for this issue
-
-> - xi
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP0P00AAoJEBYNRVNeJnmTegUP/RzPWBuDk5uc5VX7GfNwl2bV
-Tj6vK8eR3PqC0eWZ9J84Ak1Rr/sArq7+eF2jQzB2y5nazrvq8+CbLG45+aG/tc/k
-/s1WgQlPf0/cSdG5KtXqQAot/DNwBr91gzPiXzLhH4VriglZkmyYnQoatUq7qg+X
-95dlGcDiA9MZBs8/Y9hffUQpT6A59RBR1Js/wIuKxgVuvR6FHr5K6kT8ugj7u5n6
-4gsvpL16rpAqUtaDrbrYS/E1wde0X4X++mwdMe+Qnjh4ZmVINPcF845QMmPUKKzN
-ub2q/aibzI3c7UxHVW6yPO4kY14dWHQIJkIB4r6nPNkUlkHEsCageMYqUA+iK8d8
-/c0xbUjEk6Lq9mWjduHCTdXxgSJcZRl5+v64qAAkGXn2Iry1t0LxLUvQagyG/YYl
-laYogHq57jS7gl5bWnPNRFiWo5/zS5n7t6F+T2s98Oly9guNTOZXqe3bzHkJDBO3
-Wcv6GNZ+awN0XVLHgBIzky5LCDHbCQrjr/JZvD55HNt9gCmsJzgg0C4iXda86hUd
-+yLPQ7tzPIXaruco5GdBh24k6pHuvXfUoeIitRHdb/a1lUqY+9Prcrn0/uC9O6H9
-i6RZ7Oki4mE4LBOWP4C/2CxR87tqNmMv2/NKvlMhBVM7IdIxtinXHmwZZGS2aywo
-/9xo9gM88fT2SmjREZu3
-=Zv9/
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
