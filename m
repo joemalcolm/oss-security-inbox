@@ -1,39 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/19/1
-Message-ID: <500774E7.5040103@redhat.com>
-Date: Thu, 19 Jul 2012 08:15:59 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/9
+Message-ID: <508EDBF2.7050205@redhat.com>
+Date: Mon, 29 Oct 2012 13:41:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: tiff2pdf: Heap-based buffer overflow due to improper initialization of T2P context struct pointer
+CC: Andrés Gómez Ramírez <andresgomezram7@...il.com>
+Subject: Re: CVE Request: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I found the following flaw in the tiff2pdf tool, shipped with libtiff:
+On 10/29/2012 01:02 PM, Andrés Gómez Ramírez wrote:
+> Sorry for the previous message, it was not intentional :)
 
-A heap-based buffer overflow flaw was found in the way tiff2pdf, a TIFF
-image to a PDF document conversion tool, of libtiff, a library of
-functions for manipulating TIFF (Tagged Image File Format) image format
-files, performed write of TIFF image content into particular PDF
-document file, when not properly initialized T2P context struct pointer
-has been provided by tiff2pdf (application requesting the conversion)
-as one of parameters for the routine performing the write. A remote
-attacker could provide a specially-crafted TIFF image format file, that
-when processed by tiff2pdf would lead to tiff2pdf executable crash or,
-potentially, arbitrary code execution with the privileges of the user
-running the tiff2pdf binary.
+Thanks.
 
-This issue has been assigned CVE-2012-3401.
+> Hi, Could a CVE be assigned to this issue?
+> 
+> Name: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow Software: PLIB
+> 1.8.5 Software link: http://plib.sourceforge.net/ Vulnerability
+> Type: Stack Based Buffer overflow References:
+> http://www.exploit-db.com/exploits/21831/ 
+> http://www.securityfocus.com/bid/55839
+> 
+> Vulnerability Details: Plib is prone to stack based Buffer overflow
+> in the error function in ssg/ssgParser.cxx when it loads 3d model
+> files as X (Direct x), ASC, ASE, ATG, and OFF, if a very long error
+> message is passed to the function, in line 68:
+> 
+> 
+> // Output an error void _ssgParser::error( const char *format, ...
+> ) { char msgbuff[ 255 ]; va_list argp;
+> 
+> char* msgptr = msgbuff; if (linenum) { msgptr += sprintf (
+> msgptr,"%s, line %d: ", path, linenum ); }
+> 
+> va_start( argp, format ); 68        vsprintf( msgptr, format, argp
+> ); va_end( argp );
+> 
+> ulSetError ( UL_WARNING, "%s", msgbuff ) ; }
+> 
+> Thanks,
+> 
+> Andres Gomez.
+> 
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=837577
+Please use CVE-2012-4552 for this issue.
 
-The relevant patch for the issue has been applied to upstream
-libtiff-4.0.2 branch
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Thanks!
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
-
+iQIcBAEBAgAGBQJQjtvyAAoJEBYNRVNeJnmTPckP/ifPXgu6oDGLdQGFxDfH/L/N
+osBeiFGp21SnFguzfvwjSQgAvco+VuBNL2R7WAZXqiXcsw9vOLSZB8JDelc1udxw
+HFQOK84i1U7kVisXNCkOmxcgdfxJIz9yclgx4WZXxQiYIbT4XdEF9KuYHPlFSlN4
+vyP/RruG2/zGACjL96r+9y17WJtbsf1qEDWmfF2GEXVb19rfzXyRu6R9o3UcWjqT
+jNm+wH63iEggxjyXPGEBUf3TIZAA0vNX18LWVs9V4H0mY56VepHGPtuchLkAduKh
+usaOSs1EAWP2jexi6/txJWGCNrHuoSbWn+CJ1FwUwzHMtRY+s8dgV3ZmproMGwcD
+eAjmPgQPsBHi4MGJNJ42mnH6x/q+fbI4B08yE2cNVqVZ2Ag3NuHQqofqfLcWL+ap
+m/lJ84KdZYmsoRE+aCPBrP98elyse6P1LSiQRk5aFQuinv/nYRz9WEqF9biXqFLC
+9F3JHJXfaseWhzzhFSwUHUVp6DERHhDJDBuyTYonjblVO7AABsKVTxcgQUzJDO+V
+EI2fFUHbCKqlcIoIAL6TGvDea3Gwsw3E8+5t7Yn1UJzulIN5ht2QsiYQzk6Mfbwg
+nviEvgPsyyYllTRUQMPlyabAAEEgDEsTLD2VuExCrYJS4rGfdfEK+jlEBUaFHw1D
+YQkN5FovxvMAHbeDZVIl
+=+9oQ
+-----END PGP SIGNATURE-----
