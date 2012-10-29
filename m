@@ -1,36 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/17/2
-Message-ID: <502E5B11.5040305@coochey.net>
-Date: Fri, 17 Aug 2012 15:54:09 +0100
-From: Giles Coochey <giles@...chey.net>
-To: Julius Kivimäki <julius.kivimaki@...il.com>
-CC: research <research@...ctionis.co.uk>, vuln@...urity.nnov.ru, vuln <vuln@...unia.com>, news@...uriteam.com, secalert@...urityreason.com, submit@...ecurity.com, bugs@...uritytracker.com, full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>, submissions@...ketstormsecurity.org, oss-security@...ts.openwall.com, moderators@...db.org
-Subject: Re: [Full-disclosure] GIMP Scriptfu Python Remote Command Execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/4
+Message-ID: <20121029181729.GA7848@pisco.westfalen.local>
+Date: Mon, 29 Oct 2012 19:17:29 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Drupal SA-CORE-2012-003
 Content-Type: text/plain; charset=utf-8
 
-On 17/08/2012 11:26, Julius Kivimäki wrote:
-> Where exactly is the vulnerability here? I am unable to see it myself, 
-> it appears that you are using an eval function to evaluate code which 
-> isn't exactly a security issue.
->
-The vulnerability appears to lie that this script-fu server just opens a 
-TCP port, un-authenticated and un-encrypted and allows execution to run 
-in the context of the server.
+Hi,
+please assign a CVE ID for SA-CORE-2012-003:
+http://drupal.org/node/1815912
 
-As mentioned, the GIMP Dev team say it is a feature that wasn't designed 
-with security in mind, so if you were to use it, you would be advised to 
-wrap it.
-
--- 
-Regards,
-
-Giles Coochey, CCNA, CCNAS
-NetSecSpec Ltd
-+44 (0) 7983 877438
-http://www.coochey.net
-http://www.netsecspec.co.uk
-giles@...chey.net
-
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4968 bytes)
+Cheers,
+        Moritz
