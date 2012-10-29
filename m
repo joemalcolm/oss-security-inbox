@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/24/6
-Message-ID: <20120824164216.GB1460@redhat.com>
-Date: Fri, 24 Aug 2012 10:42:17 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/7
+Message-ID: <20121029185458.GL2676@redhat.com>
+Date: Mon, 29 Oct 2012 12:54:58 -0600
 From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: oVirt 3.1 does not validate server certificates in python sdk and cli (CVE-2012-3533)
+Cc: Hanno B?ck <hanno@...eck.de>
+Subject: Re: CVE request: awstats before 7.1 awredir.pl vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi folks.  This is a heads-up for anyone who may be shipping oVirt.
-oVirt 3.1 added a new python SDK and CLI which do various fancy things.
-It supports connecting to servers over SSL, but did not have support for
-validating certificates, which could lead to a mitm attack.
+* [2012-10-25 23:45:13 -0600] Kurt Seifried wrote:
 
-I've assigned CVE-2012-3533 to this issue.  It is corrected in git
-already.
+>On 10/25/2012 03:07 AM, Hanno Böck wrote:
+>> http://awstats.sourceforge.net/docs/awstats_changelog.txt -
+>> Security fix into awredir.pl
+>>
+>> I didn't find any more info, but please assign a CVE. (and i found
+>> there were awredir issues before that got CVE-2009-5020, but I
+>> think this is a different issue, at least if their changelogs are
+>> correct)
+>
+>Please use CVE-2012-4547 for this issue.
 
-References:
+I suspect it is this:
 
-http://wiki.ovirt.org/wiki/Release_Notes#Interfaces
-http://gerrit.ovirt.org/#/c/7209/
-http://gerrit.ovirt.org/#/c/7249/
-https://bugzilla.redhat.com/show_bug.cgi?id=851672
+http://awstats.cvs.sourceforge.net/viewvc/awstats/awstats/wwwroot/cgi-bin/awredir.pl?r1=1.13&r2=1.14
+
+But it's been over a year since this commit (but the last one is 8mos
+old and seems to have no security relevance).
+
+So looks to be XSS sanitization.
 
 -- 
 Vincent Danen / Red Hat Security Response Team 
