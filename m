@@ -1,57 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/3
-Message-ID: <505BD023.2060205@redhat.com>
-Date: Thu, 20 Sep 2012 20:25:39 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/8
+Message-ID: <CAGVYHsWfzO=1Xs3bQ9iOum82-Dm1t-e7-Lc+5LKc6+hCQ8xMHQ@mail.gmail.com>
+Date: Mon, 29 Oct 2012 14:02:58 -0500
+From: Andrés Gómez Ramírez <andresgomezram7@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, security@...key-project.com
-Subject: Re: CVE-request: monkey fails to drop supplemental groups when lowering privileges
+Subject: CVE Request: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Sorry for the previous message, it was not intentional :)
 
-On 09/20/2012 11:35 AM, Henri Salo wrote:
-> Hello,
-> 
-> Please assign 2012 CVE-identifier for following monkey
-> vulnerability:
-> 
-> Monkey webserver fails to drop supplemental groups when lowering
-> privileges. This allows any local user on the system to read any
-> fine that root's supplemental groups can access. Monkey does
-> perform a filesystem access check to make sure that its EUID/EGID
-> can access the target file, but this check is subject to TOCTOU
-> flaws.
-> 
-> Reported by John Lightsey in
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=688007 Affected
-> Debian-version is 0.9.3-1 (haven't tested upstream package) Project
-> page: http://www.monkey-project.com/
-> 
-> - Henri Salo
+Hi, Could a CVE be assigned to this issue?
 
-Please use CVE-2012-4442 for this issue.
+Name: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
+Software: PLIB 1.8.5
+Software link: http://plib.sourceforge.net/
+Vulnerability Type: Stack Based Buffer overflow
+References: http://www.exploit-db.com/exploits/21831/
+                   http://www.securityfocus.com/bid/55839
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Vulnerability Details: Plib is prone to stack based Buffer overflow in the
+error function in ssg/ssgParser.cxx when it loads 3d model files as X
+(Direct x), ASC, ASE, ATG, and OFF, if a very long error message is passed
+to the function, in line 68:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQW9AjAAoJEBYNRVNeJnmTzdoQALI8x09uzG3Pwx+NyHKAbMxS
-rCJfoRZ4wVrkxM51Wn7WSUJkn+K2er8bv+NH8uFqpZMQxjguNIlzfPFJodbov1g+
-2c+Wn1R3J2ndLHpEhuwZEtcmsLqOv0I/3Nf5/cazePHCPqbqmF+KfOozmlNt9RBg
-k5bxlQdkR9jhzsbvilzteedQ5UE0GGqD6JlVhmipVhUEv4I55nfsXKKFF12LSV70
-de3W4axDqFOafSB5INjvHYnNxOZtjhpaDgrzfuTwYWfiZnc3hvvgU7Vh2sdVNQOO
-ch9dh+jFdvG/aA2upsLd4xjMMDVECoReCX/5FybBUnvATqPKSX5Nb0oDPoKA9qQ5
-p4GKv8aurWa264ZuUsA9QHzmwgx6be3aj72WVMrdWd+im3PsByXbYSmX5Msz5U+i
-ipfsNEheER2RJigRJI5H7k6C4fd0PEawwair0BHMMSaseJ0/FliJma84V/2aNPd4
-MCgxMaRErIJi1d8F2U9Sa2Er7IYR1odouEQEtVzWdbqFXVRLuBdzMnqfjtVbhB3X
-0ehcLcSwRNzD9GzpFhEfgiy1lv4PMwUqhgYFVTlM4oakQ4EfkZzAupS5k0wsV+7E
-mdHVZ7Z7Ytw1cmPHNf5DDetGPRd4zGuL5XmwUWl72Yg7vyoBEqa8cyG5YAnwCKwi
-qDb8K5X7laTiQsGCO5EQ
-=xZ6Y
------END PGP SIGNATURE-----
+// Output an error
+void _ssgParser::error( const char *format, ... )
+{
+  char msgbuff[ 255 ];
+  va_list argp;
+
+  char* msgptr = msgbuff;
+  if (linenum)
+  {
+    msgptr += sprintf ( msgptr,"%s, line %d: ",
+      path, linenum );
+  }
+
+  va_start( argp, format );
+68        vsprintf( msgptr, format, argp );
+  va_end( argp );
+
+  ulSetError ( UL_WARNING, "%s", msgbuff ) ;
+}
+
+Thanks,
+
+Andres Gomez.
+
