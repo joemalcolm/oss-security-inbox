@@ -1,26 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/7
-Message-ID: <1352552512.17241.25.camel@scapa>
-Date: Sat, 10 Nov 2012 14:01:52 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/18
+Message-ID: <CAGVYHsXO1KM7bx4FNX_nuu4mF3yxee4oJdrwFMxJcaYFLcexLg@mail.gmail.com>
+Date: Mon, 29 Oct 2012 18:22:29 -0500
+From: Andrés Gómez Ramírez <andresgomezram7@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Privilege escalation (lpadmin -> root) in cups
+Subject: Re: CVE Request: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
 Content-Type: text/plain; charset=utf-8
 
-On sam., 2012-11-10 at 13:49 +0100, Yves-Alexis Perez wrote:
-> Hi,
-> 
-> a Debian user reported a bug in our BTS concerning cupsd. The bug is
-> available at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692791 and
-> upstream bug at http://www.cups.org/str.php?L4223 (restricted because
-> it's tagged security).
-> 
-By the way, it seems that the CUPS security contact at
-http://oss-security.openwall.org/wiki/software#cups doesn't work, I just
-received a bounce. Does someone know a mail address to reach them?
+PLIB is no longer being maintained:
 
-Regards,
--- 
-Yves-Alexis
+http://sourceforge.net/mailarchive/message.php?msg_id=28580157
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+I sent a couple of bugs several months ago, but there wasn't any response
+from plib developers, so I decided to make them public.
+
+On Mon, Oct 29, 2012 at 3:58 PM, Vincent Danen <vdanen@...hat.com> wrote:
+
+> * [2012-10-29 14:02:58 -0500] Andr?s G?mez Ram?rez wrote:
+>
+>  Sorry for the previous message, it was not intentional :)
+>>
+>> Hi, Could a CVE be assigned to this issue?
+>>
+>> Name: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
+>> Software: PLIB 1.8.5
+>> Software link: http://plib.sourceforge.net/
+>> Vulnerability Type: Stack Based Buffer overflow
+>> References: http://www.exploit-db.com/**exploits/21831/<http://www.exploit-db.com/exploits/21831/>
+>>                   http://www.securityfocus.com/**bid/55839<http://www.securityfocus.com/bid/55839>
+>>
+>> Vulnerability Details: Plib is prone to stack based Buffer overflow in the
+>> error function in ssg/ssgParser.cxx when it loads 3d model files as X
+>> (Direct x), ASC, ASE, ATG, and OFF, if a very long error message is passed
+>> to the function, in line 68:
+>>
+>>
+>> // Output an error
+>> void _ssgParser::error( const char *format, ... )
+>> {
+>>  char msgbuff[ 255 ];
+>>  va_list argp;
+>>
+>>  char* msgptr = msgbuff;
+>>  if (linenum)
+>>  {
+>>    msgptr += sprintf ( msgptr,"%s, line %d: ",
+>>      path, linenum );
+>>  }
+>>
+>>  va_start( argp, format );
+>> 68        vsprintf( msgptr, format, argp );
+>>  va_end( argp );
+>>
+>>  ulSetError ( UL_WARNING, "%s", msgbuff ) ;
+>> }
+>>
+>> Thanks,
+>>
+>
+> Andreas, was this reported to upstream?  I can't see a patch or anything
+> in their bug tracker regarding this.
+>
+> --
+> Vincent Danen / Red Hat Security Response Team
+
