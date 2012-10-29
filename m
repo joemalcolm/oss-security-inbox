@@ -1,62 +1,147 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/3
-Message-ID: <20120710221556.GB2168@boyd>
-Date: Tue, 10 Jul 2012 15:15:57 -0700
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/13
+Message-ID: <508EE094.3090705@redhat.com>
+Date: Mon, 29 Oct 2012 14:01:24 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Marcus Meissner <meissner@...e.de>, Kurt Seifried <kseifried@...hat.com>, Dan Rosenberg <dan.j.rosenberg@...il.com>, Dustin Kirkland <dustin.kirkland@...zang.com>
-Subject: Re: ecryptfs headsup
+CC: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>
+Subject: Re: Strange CVE situation (at least one ID should come of this)
 Content-Type: text/plain; charset=utf-8
 
-On 2012-07-10 15:13:40, Tyler Hicks wrote:
-> On 2012-07-10 16:48:26, Dan Rosenberg wrote:
-> > On 07/10/2012 10:30 AM, Marcus Meissner wrote:
-> > > On Tue, Jul 10, 2012 at 04:21:13PM +0200, Sebastian Krahmer wrote:
-> > >>
-> > >> It is a potential privilege escalation since the pam module
-> > >> was not setting uid/gid(list) appropriately and the suid
-> > >> binary did not clear environment before exec'ing umount.
-> > >> I do not know whether MS_NOSUID was really needed (and maybe
-> > >> MS_NODEV is, but I was not able to create dev files).
-> > >> Unfortunally we found ecryptfs not really stable inside the kernel
-> > >> and Marcus is still rebooting :)
-> > >
-> > > This means ...
-> > >
-> > > So far we have not yet found a specific security issue.
-> > >
-> > > Ciao, Marcus
-> > >
-> > 
-> > This reminds me...
-> > 
-> > If an unprivileged user can mount ecryptfs shares (e.g. via the setuid-root
-> > mount helper shipped on Ubuntu) and has the ability to mount user-controlled
-> > filesystems (either network filesystems via setuid mount helpers like mount.cifs
-> > or mount.nfs, or formatted USB drives via physical access), it's possible to
-> > escalate privileges to root because the setuid ecryptfs helper does not mount
-> > filesystems with the nosuid or nodev flags.
-> > 
-> > An attacker can create an ecryptfs filesystem on his own machine on a network
-> > filesystem or USB drive, and then mount that ecryptfs filesystem on the victim
-> > machine for a setuid-root backdoor.  Hard-coding nosuid and nodev into the
-> > setuid ecryptfs helper would resolve this, but I'm not sure that's workable for
-> > Ubuntu home directories.
-> 
-> This vulnerability is limited to physical access via formatted USB
-> drives because the eCryptfs filesystem code does not work on top of
-> network filesystems.
-> 
-> Additionally, I believe that the encrypted home source and destination
-> mount points were hard-coded up until ecryptfs-utils version 86.
-> Versions before that should not be vulnerable to the setuid-root binary
-> on a USB drive attack mentioned above.
-> 
-> Dustin - Would you have any objections to forcing the nosuid and nodev
-> mount options in the mount.ecryptfs_private helper?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Sorry, I forgot to add Dustin to cc. 
+On 10/26/2012 01:54 PM, Josh Bressers wrote:
+> Hello,
+> 
+> This Squirrelmail plugin came to my attention a few weeks back: 
+> http://squirrelmail.org/plugin_view.php?id=117
+> 
+> It's from 2004, which is suspect in itself, but I took a look after
+> someone asked. It's pretty scary in there.
+> 
+> If I was to list the security problems I found after a few minutes
+> of looking, they are:
+> 
+> * It uses MD5 passwords * The shadow file is directly modified
+> without locking (which could lead to a race condition) * If you get
+> the password wrong, it doesn't unlink the empty temporary file.
+> 
+> None are really a big deal, you *could* run this and probably never
+> notice these problems.
+> 
+> Fundamentally though, this thing should get one CVE ID that
+> basically say "don't use this". How have situations like this been
+> handled in the past?
+> 
+> I mailed the Squirrelmail security team. They never responded.
+> Regardless of their response though, the plugin site says it has
+> been downloaded more than 100K times, so I suspect it's still in
+> use somewhere. My goal in this CVE request is to raise awareness so
+> hopefully people stop using this (and get the Squirrelmail guys to
+> remove it from their site).
+> 
+> Thanks.
 
-Tyler
+My thoughts on this:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+1) Old software like this almost certainly has exploitable flaws.
+Evidence: Almost all software has exploitable flaws. New attacks have
+been found that the developers didn't even know about. so chances are
+they are vulnerable to some of them (e.g. XSS still affects almost all
+software, and it's well known, CSRF has become well known and also
+affected or still affects most web based software, who knows what is
+next). So I think it's safe to say that software that is not
+maintained, especially certain classes of software known for generally
+poor security (e.g. web plugins written in PHP) can be considered as
+vulnerable, but of course we don't have proof, just a very strong
+statistical inference (in that to date for example virtually all
+software has been found vulnerable to something, especially certain
+classes like PHP based web plugins).
+
+2) We can audit the software to find vulnerabilities, proving that it
+is indeed vulnerable. However this does not scale, and is resource
+intensive.
+
+3) Assigning CVE's to known bad software is incredibly valuable as not
+only does it allow us to track specific technical vulnerabilities, but
+in general gives people evidence needed to stop deployment/use of
+highly risky software (i.e. "this software package currently has X
+CVE's unfixed, therefore it will create a significant risk and we
+should not deploy or use it").
+
+4) There is a lot of extremely popular software (certain wordpress
+plugins. embedded code like timthumb.php, etc.) that isn't well
+maintained (if at all) and has no third party vendor looking out for
+it/maintaining it.
+
+So the first question I have is:
+
+Q1) Do we need to audit software to prove that it is vulnerable? Or is
+a statistical model enough? e.g. for PHP based web plugins, not
+maintained for 5+ years I'd be willing to bet a large sum of money
+that if we started auditing them, every single one would have at least
+one CVE worthy vulnerability.
+
+The second question I have is:
+
+Q2) Should we consider software that has a high probability of
+containing a flaw, AND process related vulnerabilities (aka no
+maintenance is being done) as part of CVE? e.g. software that is not
+actively maintained, at some point will need a fix. Not having anyone
+to maintain it means that a patch may not be created at all, or if it
+is created may take a significant amount of time (since someone has to
+learn the software well enough to patch it, QE/QA it, etc.) and
+distribution will be a problem since the upstream official site may
+not be available to use for distribution (so where do people actually
+download the fix?).
+
+Some more thoughts/comments:
+
+We can assign a CVE with a description along the lines of "Software X
+has not been actively maintained since release Y on date Z. Software X
+is comprised of some stuff and built in language Z which is known to
+commonly result in security flaws (possibly list what kind, e.g.
+XSS/buffer overflow, etc.)." Maybe start with a generic cut off date
+of say 5 years, and start listing stuff as people find/notice them. If
+a program ever comes back into maintenance and release a new version
+then the old CVE would be there as a warning, and moving forwards
+people would be able to make a much more informed choice.
+
+In effect this would be a blacklist/greylist of software, and by using
+CVE it would be able to piggy back on the existing CVE ecosystem (no
+better word to use), e.g. scanners would pick up the old versions and
+warn people allowing an informed choice (e.g. "we audited it and found
+it to be ok" or "we installed that 5 years ago and forgot about it.
+maybe we should evaluate some alternatives").
+
+I realize this looks a LOT like feature creep with respect to CVE, but
+I think it falls into the definition of a vulnerability closely enough
+that it makes sense/won't result in a huge mess. I can of course see
+political concerns ("you called my software unmaintained! it is
+maintained! it's perfect! prove that it is bad!") coming into play,
+but I suspect that won't be much of an issue since by definition we're
+dealing with dead software/dead projects here (and CVE has a dispute
+mechanism in place).
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQjuCUAAoJEBYNRVNeJnmThDcP/14wkG8TpBpGQ6ScnAvsOdHr
+5RkYEG6+n/MCDVFWt8E68FyIoFTPWSakL7CKLNaD98R/KlUO31R/2OMXVTw5d42N
+u4dRvlOG9oHgdjb//rdQHHnzr0JDcalymIx5uSmWnyZnpnE7PVdlr5llXdSYS9sq
+Zvc1OfakB+H4Xu97NC+XkZBoagRa1I+ABH6VAkDUu28js2/gTvUOb4JG+GbC44CG
+IK1qRk7Jy8DvdWUkMqPNsjymnW76/eDKd+uVw3I3u/Yb5GUaNMzJnMY1hVeQOy+9
+bDlm/TgQvDtx8auGXZ4UgIQhroEy+par1jyAaBsW+XFI6tFGFZo87KuvLo/01bxr
+qVLUTY4NkmVw207XWFoPv2x4U7cuVs3O2+PL4rWI4auxTwP2A37lMpClDKbuw+/O
+lK2xqUq8tdASs/9KHkrJxNMlBiviZt94yMKvDMKxZ4EzWUwaPSf1V/aLU0yml/Jq
+nVBVen5T+6wxrz3+58YQOF1f/DOdld2l7xJ0YZ9wkHRi8sDnZugmX/h2mL4MwWJw
+LfIaLrTYyJG62AESaOaWfamr+vvr/htzLtON9ZNI8bOZIKiYtKhzTTUb++Ew7hGc
+iEW+zlx+O4MG/Q5DRLUb4iYZpDWjnFzl90sPqwYUgz3zFa/eCnnapt5igAxNcaD9
+NL9MilUHKSu0erc/zGcg
+=XEuu
+-----END PGP SIGNATURE-----
