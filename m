@@ -1,67 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/11
-Message-ID: <4FBBD170.7060106@redhat.com>
-Date: Tue, 22 May 2012 11:48:32 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Michael Gilbert <mgilbert@...ian.org>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: devotee (debian vote engine) cryptographically weak random numbers permit discovery of secret ballot submissions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/16
+Message-ID: <20121029231000.GA21676@hunt>
+Date: Tue, 30 Oct 2012 00:10:00 +0100
+From: Seth Arnold <seth.arnold@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: Django
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, all,
 
-On 05/21/2012 12:49 PM, Michael Gilbert wrote:
-> On Fri, May 18, 2012 at 6:39 PM, Kurt Seifried wrote:
->> This appears to be a service more than software, and although
->> the source is available (see git link) it appears to be out of
->> date?
->> 
->> http://lists.debian.org/debian-www/2012/04/msg00200.html
-> 
-> Yes, the publicly available source repo is out of date right now,
-> but that won't always be the case.  Debian had a change in
-> secretary, so workflows have changed, and ideally a more public
-> mode of operation should be gotten back to.
-> 
->> Can you confirm the vulnerability is in the software you linked
->> to, and that this has actually been downloaded/used outside of
->> Debian?
-> 
-> Yes, it is indeed an issue in the software implementation itself.
-> See original report for exact code lines that are flawed.
-> 
-> I can neither confirm nor not confirm that devotee is used outside
-> of debian, but it does seem like an obvious choice for online
-> election management.  It is however planned to be package for
-> debian [0], and ubuntu automatically syncs debian, so eventually
-> they will also get the package.  it is important that an id be
-> assigned so that they are aware that they will need to check the
-> package when they do that sync.
-> 
-> [0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=470995
+Django recently released updates 1.3.4 and 1.4.2 to address a Host:
+header poisoning problem and incorrect HttpOnly cookie documentation
+(only wrong in 1.4.x).
 
-Please use CVE-2012-2387 for this issue.
+I believe only the header poisoning problem requires a CVE (the other
+problem is documentation; Django application authors may make a mistake
+in their code if they go by the faulty documentation), but I thought I
+should mention both in this CVE request email as the Django announcement
+mentioned both:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+https://www.djangoproject.com/weblog/2012/oct/17/security/
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Commits:
+master: https://github.com/django/django/commit/9305c0e12d43c4df999c3301a1f0c742264a657e
+1.4 branch: https://github.com/django/django/commit/92d3430f12171f16f566c9050c40feefb830a4a3
+1.3 branch: https://github.com/django/django/commit/b45c377f8f488955e0c7069cad3f3dd21910b071
 
-iQIcBAEBAgAGBQJPu9FwAAoJEBYNRVNeJnmTC5wP/2J4s3zTHl0Pxa9jfHsLxsxh
-Ofn7gEK8gjcpCXG924ak5TNNxN62WJDLIoefCC+NFlEe2KEp9cbfv364bgp4z0bw
-bhKUQtEJHjMywHd5+rkGxFZZFay7a0cnIBQBdv1L/RLGDIrKg4rhBW51oyr5p05W
-Yd9l19X6Rw9XhQ21e5xIVXnPm4zjN8Rujd2gSarzTWYx9OJX7LMaDDYwSrqPmCv3
-OetHIbArddqYJfJ+rr0WoJBJwWpjdezRbmKLab5ZjviuQJlG/xBKieWqW49rfv7z
-DwfIFRGAjLGszR6/HNUzdr6zJVmVGenttWYA3TruQJV/Arih5gbY6OYfiJ3M+Az+
-KgZxqbqMImMI3Uma4tNxPB6JldFWK1UNGmSwoFMNqR6me610/yTvJiP9afISEkv9
-xYToWU0eej1abPnAfohDsCXOHHrMp11VFfEKXdcWjD0B2/doGFyX1EJLAJGJ6hK5
-XGAul8XftVhiFbF3pmr6+yj0esEL7VP9Ae4XFPr4scxKC7wLQF2p29Hicq4KJPX4
-pnaoZUkjSCRHNH+ZZM6gu7I+3B8XT0wLw2BcSj1npZddwtuR8lpJ8P4cqCb7mmgx
-17Ti4gOAyCTV+VKOSFgxdQGlIoC0ytKU1T1M+TI8342t1rCBNb9STK2RoUyVjMqa
-A7aPCI6+nuz7nEZOLDFO
-=7mbW
------END PGP SIGNATURE-----
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
