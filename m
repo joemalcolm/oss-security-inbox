@@ -1,45 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/2
-Message-ID: <50B2BD43.6030207@redhat.com>
-Date: Sun, 25 Nov 2012 17:52:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/14
+Message-ID: <20121029205851.GM2676@redhat.com>
+Date: Mon, 29 Oct 2012 14:58:51 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>
-Subject: Re: CVE Request: slowloris for tomcat
+Subject: Re: CVE Request: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2012-10-29 14:02:58 -0500] Andr?s G?mez Ram?rez wrote:
 
-On 11/25/2012 05:10 PM, David Jorm wrote:
-> The old slowloris attack has CVE IDs for various affected
-> platforms, but not for tomcat. My testing has shown that tomcat is
-> indeed affected, and others [0] [1] back this up. Could we please
-> get a CVE ID assigned for slowloris as it affects tomcat?
-> 
-> Thanks
-> 
+>Sorry for the previous message, it was not intentional :)
+>
+>Hi, Could a CVE be assigned to this issue?
+>
+>Name: PLIB 1.8.5 ssg/ssgParser.cxx Buffer Overflow
+>Software: PLIB 1.8.5
+>Software link: http://plib.sourceforge.net/
+>Vulnerability Type: Stack Based Buffer overflow
+>References: http://www.exploit-db.com/exploits/21831/
+>                   http://www.securityfocus.com/bid/55839
+>
+>Vulnerability Details: Plib is prone to stack based Buffer overflow in the
+>error function in ssg/ssgParser.cxx when it loads 3d model files as X
+>(Direct x), ASC, ASE, ATG, and OFF, if a very long error message is passed
+>to the function, in line 68:
+>
+>
+>// Output an error
+>void _ssgParser::error( const char *format, ... )
+>{
+>  char msgbuff[ 255 ];
+>  va_list argp;
+>
+>  char* msgptr = msgbuff;
+>  if (linenum)
+>  {
+>    msgptr += sprintf ( msgptr,"%s, line %d: ",
+>      path, linenum );
+>  }
+>
+>  va_start( argp, format );
+>68        vsprintf( msgptr, format, argp );
+>  va_end( argp );
+>
+>  ulSetError ( UL_WARNING, "%s", msgbuff ) ;
+>}
+>
+>Thanks,
 
-Please use CVE-2012-5568 for this issue.
+Andreas, was this reported to upstream?  I can't see a patch or anything
+in their bug tracker regarding this.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQsr0/AAoJEBYNRVNeJnmTMCQQAIPCAox82g0duJMP8iQonC6J
-5c5BrzhlNCMlSkVx+UsDsf5D3epNO6NZ+NNjapry0JBF+UkgB6L+KmE/RirmAosd
-ppgXZKqeoYJxjhhaq02STlJGyQa4dEOKS5+uUz7gurhzlkHPRw1lLbStVir3CQVK
-Tcw9eiB485J/yEFeMCEyZjYB8o16V+kATUHKp0Uft78tjxkfjwr2Gleccbrx54pv
-Wh8e2YH0CHL5buHwvVHTg0kvgIC/TyYBcqZQMihVpRf13K06bdj3wldDe107QoBN
-A2UnncLxNWuPBfUD9fRutabG45fJJmZYV2kC221YJIF33/24BYixbrg6f2Vm6BaZ
-4Uxf8Xh+Riw1bjUEZdjV/VbSvk53KMC6SOFQneYeXZqR+zKRjLVOBTuTzKp1uH6T
-/403tlABGSnGosntMfY8DN0QfJzScPkiap2zb3kvKyAGNitaOTtqiE2pVfelEI2c
-vEmx4HMLvMAUJ+i6E90aXIgBFfvyu50Mzmh5C1mXpPr2QtZpUEzalRLszpkyASSO
-VXBDXj4ZrB5y8th0MxTmQqoIIsoaPLq1RV+Ye6H3GIzyf2bHqAqhmbaGiyx5Co7m
-Qw9p5wN7F0Av4e32w/z8DiRaAcqyZ/3D19jV0PUIacvnwV4iy8CddmC44CLMpH/S
-rnre/Q8jk/oESSX0ORzo
-=J0kT
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
