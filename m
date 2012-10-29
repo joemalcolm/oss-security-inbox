@@ -1,81 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/14
-Message-ID: <CAPYM6Vy8gAHqvA5bNOtyKdM5Z_bTbsk2QwaS7GpAryf_g6WkLg@mail.gmail.com>
-Date: Tue, 6 Mar 2012 00:03:35 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, submit@...3ct0r.com, oss-security@...ts.openwall.com
-Subject: Open-Realty CMS 2.5.8 (2.x.x) <= "select_users_template" Local File Inclusion Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/3
+Message-ID: <508EC786.3010600@redhat.com>
+Date: Mon, 29 Oct 2012 12:14:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Chris Coulson <chris.coulson@...onical.com>
+Subject: Re: CVE request: use-after-free in libunity-webapps
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Open-Realty 2.5.8 and lower versions are vulnerable to Local File Inclusion.
+On 10/28/2012 09:37 AM, Chris Coulson wrote:
+> Hi,
+> 
+> libunity-webapps provides functionality shared between browser
+> addons that are available for Firefox and Chromium. A
+> use-after-free bug was found in libunity-webapps which could
+> potentially be exploited to crash the users browser or run
+> arbitrary code.
+> 
+> Reference:
+> 
+> https://launchpad.net/bugs/1068495
+> 
+> Could you please allocate a CVE for this?
+> 
+> Thanks, Chris
 
+Please use CVE-2012-4551 for this issue.
 
-2. BACKGROUND
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Open-Realty is the world's leading real estate listing marketing and
-management CMS application, and has enjoyed being the real estate web
-site software of choice for professional web site developers since
-2002.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-
-3. VULNERABILITY DESCRIPTION
-
-Open-Realty contains a flaw that may allow a remote attacker to
-execute arbitrary commands or code. The issue is due to the
-'index.php' script not properly sanitizing user input, specifically
-directory traversal style attacks (e.g., ../../) supplied to the
-'select_users_template' parameter. This may allow an attacker to
-include a file from the targeted host that contains arbitrary commands
-or code that will be executed by the vulnerable script. Such attacks
-are limited due to the script only calling files already on the target
-host. In addition, this flaw can potentially be used to disclose the
-contents of any file on the system accessible by the web server.
-
-
-4. VERSIONS AFFECTED
-
-2.5.8 (2.x.x) <=
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://localhost/open-realty2.5.8/?select_users_template=../../../../../../../../../../../../../../../etc/passwd%00
-
-
-6. SOLUTION
-
-The version 2.5.x version family is no longer maintained by the vendor.
-The version 3.x.x is not found to be vulnerable to this issue. Upgrade
-to the latest 3.x.x version.
-
-
-7. VENDOR
-
-Transparent Technologies Inc.
-http://www.transparent-support.com
-
-
-8. CREDIT
-
-Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2012-03-05: Open-Realty 2.5.8 in End-of-Support/Maintenance circle
-2012-03-05: Vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5Bopen-realty_2.5.8_2.x%5D_lfi
-Open-Realty Home Page: http://www.open-realty.org/
-CWE-98: Improper Control of Filename for Include/Require Statement in
-PHP Program ('PHP File Inclusion')
-CAPEC-252: PHP Local File Inclusion
-
-
-#yehg [2012-03-05]
+iQIcBAEBAgAGBQJQjseGAAoJEBYNRVNeJnmTlCQP/1pToxUTlJrFOQtcX7IUTiqp
+hob1GFoPJqhJkIK5vi6At1IGaiR6KhcTPywRP/2JCkwou03N+7yVXuCzN2mZEz5D
+ponCurDUmHJOHetzvoWRf3LvZKMv/hwUE3nzLgzrw0n7PeRTqhHOHxCfqjPQMolM
+qr+AMpRmHtkV2ljA84FNT+GiwnakoFpE+DjmmoTNiQj0fTa3gdVHqDKRnBG4k4s3
+hg7jcMCzKzShw0NQpgGvSEC42RrDmrgeTkxeZngKkhvy/wfaNhwasffSI6YFBFAO
+ehnF7x/1FsN1PzhnWjETEqHr0DiiWNsOKK/LeoSVGTQRki4NK7srZyKLd2MPzt+D
+cZIK4uPpq9I6JM+yUXxhvHcL3cqZWGQc08CxI/WfeORNFcyZyikr9OQdB6HjshE2
+SaJn0pY7MhPOb/x4rPInIwCw97bBuHstug3ojfri/jLjMRUNRKll0+EWYVminqzI
+PZ8WIU1ttktlC82EcRtPTggRsEOQS6GNYC3oVBh1WJBz8l3WzndqZUnxQ7plvxNP
+n6IHchAicI7S6K4xROgZJIt8Vdc44sGM09MGMLzYmpo5yKo60IPSVf4LSfKP8aJc
+uxv0EAPAqNK4ieHa6jTCaJD1YeKcHQ1S3ZgkVNOW59P5EiaWaAmizwP/VFSyPo6r
+3df3NFGiV62QpR0gwR5g
+=UJTz
+-----END PGP SIGNATURE-----
