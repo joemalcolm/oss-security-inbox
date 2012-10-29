@@ -1,26 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/1
-Message-ID: <1326931432.32025.3.camel@localhost.localdomain>
-Date: Thu, 19 Jan 2012 01:03:52 +0100
-From: Gu1 <gu1@...sortium-of-pwners.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/29/6
+Message-ID: <508ED058.8060608@redhat.com>
+Date: Mon, 29 Oct 2012 12:52:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Screen locking programs on Xorg 1.11
+CC: Moritz Muehlenhoff <jmm@...ian.org>, Angela Byron <angela.byron@...uia.com>, Greg Knaddison <greg.knaddison@...uia.com>
+Subject: Re: CVE request: Drupal SA-CORE-2012-003
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-I recently found out that it is possible to kill a screensaver/screen
-locker program on the latest version of Xorg (1.11 shipped with
-archlinux, debian wheezy..) using the Ctrl+Alt+Multiply key binding.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This behavior seems to have been introduced in a recent commit[1] and i
-couldn't find a way to disable it.
+On 10/29/2012 12:17 PM, Moritz Muehlenhoff wrote:
+> Hi, please assign a CVE ID for SA-CORE-2012-003: 
+> http://drupal.org/node/1815912
+> 
+> Cheers, Moritz
+> 
 
-All screen locking programs i tested (gnome-screensaver, kscreenlocker,
-slock, slimlock...), are basically rendered useless.
+The page says "CVE: Requested" but I haven't seen the request, so I
+can only assume it went to Mitre directly? I don't want to create
+duplicates. Angela/Greg can you confirm what's up with the CVE here?
+Thanks.
 
-Not sure if this is a bug or a feature... :)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-[1]:
-http://cgit.freedesktop.org/xorg/xserver/commit/?id=7d2543a3cb3089241982ce4f8984fd723d5312a1
-
+iQIcBAEBAgAGBQJQjtBYAAoJEBYNRVNeJnmTmO4P/3BDsde7eNgjt/xkrcV5IwZz
+dw/bn2jMjkcW2Ze/UIxCTK8GmYNCSqoQ+wYcdqVOkk2Q5rp5wmtRVppM4rPO8vho
+Dy4p039WQ827Vaz1iBk8F2I136WPybTh2XPB9Yrc5XuMuTYdxJyKXkUQlgp+2sBl
+G6reX0E2vb8Yu47591rxQyF4gY6nvnA7W2cpTVM1UzmlhAjmHOeR+yoCT8BGJ79F
+wkbXT3ax/8gtzmhz39x1gqU6b5HHjUH2PdOMKxYP65NzVKyqQvPYAFMb5n5kYKFS
+woLz6UCTVfOD+wLpOiUTEDYGhJhNn1e8/LJZTdt7LxEZ9HTI+NtQ2daBfFI176MI
+6jxqCtVimouwWqJw9zv7lXc08bHHNVUQiyebaxb/mthwZ9Gn1YBIp9+8r/1o48Y2
+TV3QlPYDjtuvECyR45R6V33ts2xgR6v8UCrXg2KKovL1ArIGFiA0yHz0lTokJJX6
+FIciLmGFGFeacN0K4RluFK3K+t8PLvJ1imNE9X8oWTV7OGNcABj4uGbdZAsIwoMf
+D4eImxpnVFaMa6657PUANRUvaxm8bwhoT36ODC+zz10Hv8SA1Wu86X2I72ktwJrm
+K5RAW5ujOS6qX0pSa7Pf1gLgC6YVX+RdIredeTd7ATdO26eAbLdYRwK81jYITD4i
+OIwAc8R+GuBMi0ZmdFDc
+=10SK
+-----END PGP SIGNATURE-----
