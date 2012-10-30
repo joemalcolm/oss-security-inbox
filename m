@@ -1,39 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/9
-Message-ID: <4F0B627F.7010902@redhat.com>
-Date: Mon, 09 Jan 2012 14:56:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: Malicious devices & vulnerabilties
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/16
+Message-ID: <50904C01.5070501@gentoo.org>
+Date: Tue, 30 Oct 2012 17:52:01 -0400
+From: Sean Amoss <ackle@...too.org>
+To: cve@...re.org, "Christey, Steven M." <coley@...re.org>
+CC: oss-security@...ts.openwall.com,  Gentoo Linux Security Team <security@...too.org>
+Subject: libfpx Duplicate CVEs (CVE-2011-5232 and CVE-2012-0025)
 Content-Type: text/plain; charset=utf-8
 
-On 01/09/2012 12:35 PM, Florian Weimer wrote:
-> * Kurt Seifried:
->
->> Firewire has DMA. 
->>
->> http://cansecwest.com/core05/2005-firewire-cansecwest.swf
->>
->> eSATA - also does DMA.
->>
->> Thunderbolt also does DMA. 
->>
->> In other words a lot of the newer/higher end interfaces all do DMA
->> which is ... a problem.
-> Gigabit Ethernet adapters also do DMA.  Is it really the case that the
-> (e)SATA implementation is as problematic as IEEE 1394?  I don't think
-> SATA exposes the DMA functionality over the wire.
-Hmmm yeah reading some Intel docs it would appear they did DMA and SATA
-sanely
+Steve, MITRE, vendors:
 
-http://www.intel.com/assets/pdf/whitepaper/252664.pdf
+Another possible duplicate CVE assignment below :D
 
-However it would appear Thunderbolt didn't do such a good job:
+CVE-2011-5232 - Double free vulnerability in the Free_All_Memory
+function in jpeg/dectile.c in libfpx before 1.3.1-1, as used in the
+FlashPix PlugIn 4.2.2.0 for IrfanView, allows remote attackers to cause
+a denial of service (crash) via a crafted FPX image.
 
-http://www.theregister.co.uk/2011/02/24/thunderbolt_mac_threat/
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-5232
+
+References to http://secunia.com/advisories/47246
+
+=======================================================================
+
+CVE-2012-0025 - libfpx "Free_All_Memory()" Double-Free Vulnerability
+
+CVE Assignment: http://www.openwall.com/lists/oss-security/2012/01/03/16
+
+References https://secunia.com/advisories/47246 in assignment above
+
+
+Thanks,
+Sean
 
 -- 
+Sean Amoss
+Gentoo Security | GLSA Coordinator
+E-Mail	  : ackle@...too.org
+GnuPG FP  : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
 
--- Kurt Seifried / Red Hat Security Response Team
 
+Download attachment "signature.asc" of type "application/pgp-signature" (295 bytes)
