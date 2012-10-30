@@ -1,63 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/01/1
-Message-ID: <4FC87EF9.1020600@oracle.com>
-Date: Fri, 01 Jun 2012 09:36:09 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/4
+Message-ID: <508F335F.5080304@redhat.com>
+Date: Mon, 29 Oct 2012 19:54:39 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Moritz Mühlenhoff <jmm@...til.org>, coley@...us.mitre.org, security@...ntu.com
+Subject: Re: CVE Request: Django
 Content-Type: text/plain; charset=utf-8
 
-
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-On 31/05/12 18:44, Kurt Seifried wrote:
-> To clarify: CVE-2012-2663 is for the --syn processing flaw of SYN+FIN
-> packets in iptables (user space tools). c
-> Also if people could test their firewalls to make sure this still
-> doesn't affect other operating systems that would probably be a good idea.
-
-It's not clear to me why you would want to allow SYN+FIN at all.  So far
-as I have been able to discover t is only used for T/TCP which was
-obsoleted in May 2011 by RFC6247 which said this:
-
-> 4. Security Considerations
+On 10/29/2012 05:18 PM, Moritz Mühlenhoff wrote:
+> On Tue, Oct 30, 2012 at 12:10:00AM +0100, Seth Arnold wrote:
+>> Hello Kurt, Steve, all,
+>> 
+>> Django recently released updates 1.3.4 and 1.4.2 to address a
+>> Host: header poisoning problem and incorrect HttpOnly cookie
+>> documentation (only wrong in 1.4.x).
+>> 
+>> I believe only the header poisoning problem requires a CVE (the
+>> other problem is documentation; Django application authors may
+>> make a mistake in their code if they go by the faulty
+>> documentation), but I thought I should mention both in this CVE
+>> request email as the Django announcement mentioned both:
+>> 
+>> https://www.djangoproject.com/weblog/2012/oct/17/security/
+>> 
+>> Commits: master:
+>> https://github.com/django/django/commit/9305c0e12d43c4df999c3301a1f0c742264a657e
+>>
+>> 
+1.4 branch:
+https://github.com/django/django/commit/92d3430f12171f16f566c9050c40feefb830a4a3
+>> 1.3 branch:
+>> https://github.com/django/django/commit/b45c377f8f488955e0c7069cad3f3dd21910b071
 >
-> As mentioned in [RFC4614], the TCP Extensions for Transactions
-> (T/TCP) [RFC1379][RFC1644] are reported to have security issues
-> [DEVIVO].
+>> 
+> This should be CVE-2012-4520: 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=691145
+> 
+> Cheers, Moritz
+> 
 
-RFC4614 has this to say:
+Thanks, good catch! BTW this is why I really, REALLY, REALLY!!! want
+the projects to request CVE's when they release security updates, it
+really prevents duplication, plus it also gets the CVE # out quickly
+and makes tracking everything way easier.
 
-> RFC 1379 I "Extending TCP for Transactions -- Concepts" (November
-> 1992): found defective
->
-> See RFC 1644.
->
-> RFC 1644 E "T/TCP -- TCP Extensions for Transactions Functional
-> Specification" (July 1994): found defective
->
-> The inventors of TCP believed that cached connection state could
-> have been used to eliminate TCP's 3-way handshake, to support
-> two-packet request/response exchanges. RFCs 1379 [RFC1379] and
-> 1644 [RFC1644] show that this is far from simple. Furthermore,
-> T/TCP floundered on the ease of denial-of-service attacks that can
-> result. One idea pioneered by T/TCP lives on in RFC 2140, in the
-> sharing of state across connections.
-
-I'm not averse to this being an iptables problem, I just wondered why
-that is the case given the reasons for making T/TCP historic.
-
-jch
-
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iF4EAREIAAYFAk/IfvkACgkQRQu7fpQvo8h47wEAjQCY/RBRWng2hNe446T862+K
-TczzjV2WpkBeQ3DE/5cBAIiBL0y4fdBkojnGTRyWuDuN4Tl8L+SH98aNWT0mPtXo
-=hEGv
+iQIcBAEBAgAGBQJQjzNfAAoJEBYNRVNeJnmTrsEQAN6G4CMQIC9sFghBcbNKqWBp
+Zmg505ZPoPeX3i97Jnte/lc/Um1pCDf9cDdwrlDhPGzmEI5+wRWmZRHGV6Dpl5V5
+826cOnCMdmcxqeKsnSq1qdELLtpHvNzwTBWNqPhUa4utY3CKbFUHpa3LLTU7ajq1
+BIezvrW3iceqUIUCelduvJexG2MNONDEmk8w7Zugr8HYMBE1Dw/rnpAD5/eFmjLb
+50M/Fu3mLhf3vmryB+FgMKpNDkmEHACtoSNBVz0c+Su2OsCIie2x/BzKD18NVbSw
+1ILZqHUonxhEIcAmFwr+UuQQPkfeX/8gL/v+jsMoAxW4Gxco8B5forFPHAyLoI94
+YFgNrK4onlTpmQwrgHGNGdcpJtg6iKEh9RfNPoTbvjb7o3thOoefVFzjbF8xPaMD
+XCLFlcnNyQQtF9f8d7rZdIllHPkLRVkLOypLHROMguC4pMdeqMYBY6SRmNj4ldtQ
+eXVtmJ7hG5mga3lXwQuKGdEogfv5cltrJa/SNnb1LaTt24SsxR9urtvQliyX8z2U
+NtWgbPMKFi3Px0NOc9lIGzfRBwaNbTbQRzilCUrH1gjwwhFC2N2RUHgD4z+L6wwu
+AA3yUS5iu2NGlQc9KshdH0vg2V8CFD5QsAlQFDfbFWUKEy6rtnnc8EyzQr360p3j
+gGL4wyk0GV/HCzLsoes/
+=XXzV
 -----END PGP SIGNATURE-----
-
