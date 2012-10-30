@@ -1,51 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/18/3
-Message-ID: <20121218144134.GD20407@kroah.com>
-Date: Tue, 18 Dec 2012 06:41:34 -0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Plug-and-wipe and Secure Boot semantics
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/5
+Message-ID: <508F5870.8070801@redhat.com>
+Date: Mon, 29 Oct 2012 22:32:48 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Greg Knaddison <greg.knaddison@...il.com>
+CC: Angie Byron <angela.byron@...uia.com>, Joshua Brauer <joshua@...uia.com>, oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>, David Rothstein <drothstein@...il.com>
+Subject: Re: CVE request: Drupal SA-CORE-2012-003
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 18, 2012 at 01:46:47PM +0100, Florian Weimer wrote:
-> Some UEFI machines seem to boot from USB by default, without any
-> prompting, probably assuming that a signed boot loader cannot cause
-> any damage.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Specific model name(s) please?
-
-> Most signed Linux boot loaders only verify the kernel (and,
-> indirectly, code that's loaded into the kernel), but not the
-> initrd contents.
-
-Given that there is only one public signed Linux boot loader, saying
-"most" is a bit odd here :)
-
-> (This isn't possible because initrds are system-specific and thus
-> cannot be signed in general.  Recovery images signed by system
-> manufactures likely have similar issues.) As a result, the signed
-> loader might start something that wipes the hard disk or uploads its
-> contents somewhere
+On 10/29/2012 01:53 PM, Greg Knaddison wrote:
+> Joshua Brauer is responsible for all CVE requests for the Drupal
+> project.
 > 
-> I'm wondering if this is a problem.  I haven't investigated boot
-> order defaults for legacy systems, so I don't know if this
-> plug-and-wipe issue is a regression.  In the end, this boils down to
-> what Secure Boot means, semantically.
+> We added "CVE: Requested" to our template to reduce the
+> possibility that someone else will see the advisory and request a
+> CVE on our behalf.
 
-UEFI Secure Boot really doesn't care about the kernel or the OS at all,
-all it is there for is to protect the bootloader and the BIOS.  The fact
-that some operating systems take that chain-of-trust and extend it
-beyond the BIOS is up to them, and the fact that some UEFI signing
-authorities might impose more restrictions on the binaries that they
-sign is also up to them, and not part of the UEFI specification or
-requirements.
+Ah ok, please request them then, I'm here to serve.
 
-Having a signed USB image boot properly if it is installed seems to be
-the correct thing to me, but, in my testing, has not been the default on
-the hardware that I have access to.  It would be great to find out what
-hardware you are seeing this on as I am helping to get Linux working
-properly on UEFI machines these days.
+> On 10/29/2012 12:17 PM, Moritz Muehlenhoff wrote:
+>>>>>> Hi, please assign a CVE ID for SA-CORE-2012-003: 
+>>>>>> http://drupal.org/node/1815912
+>>>>>> 
+>>>>>> Cheers, Moritz
+>>>>>> 
 
-thanks,
+SA-CORE-2012-003 - Drupal core - Arbitrary PHP code execution
+Please use CVE-2012-4553 for this issue.
 
-greg k-h
+SA-CORE-2012-003 - Drupal core - Information disclosure
+Please use CVE-2012-4554 for this issue.
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQj1hwAAoJEBYNRVNeJnmTQfMP/jgKum7Q8hjg0nxsele0QHCB
+iFUuuNDzpvuIIuIZ44beO775S7AaFQhe/PPE3f0HOAhON+SN9RuCk4/IUffWRJOV
+5Xsw/Deb3RlkmJ5dtDPQ8DTFL6baCi+F0Fq5/EdiTbqaax/NeJQokECkGXlFaAg4
+AzCTaOFTkbQHgWYkz4x8WWJ8TC5TXgo1X/zvEbiMS5qlPcLNRRf2/8Omj8dKs2Q6
+w+6gJzEShyRS+y8K7D8RCsBDh+yKSBtJczdcWBzGKxvbAagWktXXNbnhFHWmlALc
+fFcCuHs0JbNZf0s0XZ2b00l1VpA+qt4ui8J5kOJbriNpUJoskWt50DOhnO6J5shc
+heRD/LLGZNY8ofHhfjGVJ9sJ0Y+GWzKFoshrU5DGFlPNECL8wGTODkPx1Z18Tt9+
+xFqA3zm6hKaqCKzMtRU//oJoIF99299om9I8yI137DN1rztc2yLUyQbjaym4lZi+
+uDNGHYsC7D1UXaDzxuTBBEoUKNxGaPzDfhq9qXPeJQNBdCxCON2V4odMmduopY57
+72wGWOc45AI1OvpHmPMnG0twzLjPMSWOJOBAB4rzYEd9Lu3jEr4yePirKqYD7mAg
+HUeqztvbkL7vaGfJ2zn2MZtaA4tuhZQYxQjteSFdAb0cEpe4fpZykPjqeuw7+eR7
+mSXd+655JtNXg+qJpi50
+=pbHE
+-----END PGP SIGNATURE-----
