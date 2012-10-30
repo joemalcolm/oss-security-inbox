@@ -1,69 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/08/2
-Message-ID: <509C37CA.4070708@redhat.com>
-Date: Thu, 08 Nov 2012 17:52:58 -0500
-From: Russell Bryant <rbryant@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/8
+Message-ID: <20121030173907.GA16148@kludge.henri.nerv.fi>
+Date: Tue, 30 Oct 2012 19:39:07 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: [OSSA 2012-017] Authentication bypass for image deletion (CVE-2012-4573)
+Subject: Re: Strange CVE situation (at least one ID should come of this)
 Content-Type: text/plain; charset=utf-8
 
-On 11/07/2012 05:10 PM, Russell Bryant wrote:
-> OpenStack Security Advisory: 2012-017
-> CVE: CVE-2012-4573
-> Date: November 7, 2012
-> Title: Authentication bypass for image deletion
-> Impact: High
-> Reporter: Gabe Westmaas (Rackspace)
-> Products: Glance
-> Affects: Essex, Folsom, Grizzly
-> 
-> Description:
-> Gabe Westmaas from Rackspace reported a vulnerability in Glance
-> authentication of image deletion requests. Authenticated users may be
-> able to delete arbitrary, non-protected images from Glance servers. Only
-> Folsom/Grizzly deployments that expose the v1 API are affected by this
-> vulnerability. Additionally, Essex deployments that use the
-> delayed_delete option are also affected.
-> 
-> Fixes:
-> Grizzly:
-> https://github.com/openstack/glance/commit/6ab0992e5472ae3f9bef0d2ced41030655d9d2bc
-> 2012.2 (Folsom):
-> https://github.com/openstack/glance/commit/90bcdc5a89e350a358cf320a03f5afe99795f6f6
-> 2012.1 (Essex): https://review.openstack.org/#/c/15562/
-> 
-> References:
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4573
-> https://bugs.launchpad.net/glance/+bug/1065187
-> 
-> Notes:
-> This fix will be included in the grizzly-1 development milestone and in
-> a future 2012.2 (Folsom) release.
-> 
+On Tue, Oct 30, 2012 at 01:34:07PM -0400, Steven M. Christey wrote:
+> Perhaps the OSS community could borrow an idea from one of the
+> framework vendors with lots of third-party modules - I forget if it
+> was Joomla or Drupal - who actively maintained a list of poorly
+> maintained or obsolete software.
 
-There have been some important updates that have occurred since the
-publication of this advisory:
+There is at least http://docs.joomla.org/Vulnerable_Extensions_List and Drupal is coordinating contrib modules too (code reviews, advisories, etc). I don't know if Joomla security guys handle vulnerable extensions in some level or not.
 
-1) When the advisory was published, the patch for the stable/essex
-branch had not been merged.  It has now been merged and is *different*
-than the original patch.  If you pulled the earlier patch, please update
-to the final version.
-
-https://github.com/openstack/glance/commit/efd7e75b1f419a52c7103c7840e24af8e5deb29d
-
-2) It was discovered that the patches submitted for stable/folsom and
-master (grizzly) did not completely solve the problem.  The original
-patch only fixed the problem for the v1 API.  The problem still existed
-for the v2 API.  Please see this commit for the additional patch:
-
-bug: https://bugs.launchpad.net/glance/+bug/1076506
-
-stable/folsom:
-https://github.com/openstack/glance/commit/fc0ee7623ec59c87ac6fc671e95a9798d6f2e2c3
-
-master:
-https://github.com/openstack/glance/commit/b591304b8980d8aca8fa6cda9ea1621aca000c88
-
--- 
-Russell Bryant
-OpenStack Vulnerability Management Team
+- Henri Salo
