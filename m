@@ -1,53 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/9
-Message-ID: <1018476063.16744183.1350568237365.JavaMail.root@redhat.com>
-Date: Thu, 18 Oct 2012 09:50:37 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, Attila Bogar <attila.bogar@...guamatics.com>, Raphael Geissert <geissert@...ian.org>
-Subject: CVE Request -- mcrypt: stack-based buffer overflow by encryption / decryption of overly long file names
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/14
+Message-ID: <50903858.3060709@redhat.com>
+Date: Tue, 30 Oct 2012 14:28:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, security@...pal.org
+Subject: Re: Strange CVE situation (at least one ID should come of this)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  Attila Bogar reported a stack-based buffer overflow
-in the way MCrypt, a crypt() package and crypt(1) command
-replacement, used to encrypt / decrypt files with overly
-long names (longer than 128 bytes). A remote attacker
-could provide a specially-crafted file that, when processed
-by the mcrypt too, would lead to mcrypt executable crash [*].
+On 10/30/2012 11:39 AM, Henri Salo wrote:
+> On Tue, Oct 30, 2012 at 01:34:07PM -0400, Steven M. Christey
+> wrote:
+>> Perhaps the OSS community could borrow an idea from one of the 
+>> framework vendors with lots of third-party modules - I forget if
+>> it was Joomla or Drupal - who actively maintained a list of
+>> poorly maintained or obsolete software.
+> 
+> There is at least http://docs.joomla.org/Vulnerable_Extensions_List
+> and Drupal is coordinating contrib modules too (code reviews,
+> advisories, etc). I don't know if Joomla security guys handle
+> vulnerable extensions in some level or not.
+> 
+> - Henri Salo
 
-A different vulnerability than CVE-2012-4409:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4409
+Does Drupal throw up a warning if you try to use one of these extensions?
 
-Note: Using Red Hat bugzilla record for CVE-2012-4409 since
-particular Mitre record is not described yet.
+It occurs to me we need a mechanism similar to CRL/OCSP for software,
+especially things with plugins like Drupal/WordPress/Firefox/Chrome so
+that we can at least warn users of bad software.
 
-References:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=867790
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Patch proposed by Attila:
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=867790#c0
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Reproducer:
-To reproduce let mcrypt encrypt / decrypt file with name
-longer ~128 bytes.
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-[*] FORTIFY_SOURCE protection mechanism would mitigate this
-deficiency to result into crash only. But on systems, without
-FORTIFY_SOURCE protection being applied, the impact might be
-higher.
-
-P.S.: I am not sure about relation of this issue to the issue
-      Raphael Geissert reported previously:
-      [4] http://www.openwall.com/lists/oss-security/2012/10/02/1
-
-      so CC-in him too, he to clarify if [2] == [4], or if
-      they are yet different issues. Raphael, please clarify.
-      Thanks, Jan.
+iQIcBAEBAgAGBQJQkDhYAAoJEBYNRVNeJnmTPpYP/jL2WyeKwCZLEbWR0jb84cd6
+Z+qJ/g9XvMicZr7n8n4huNqBF1K4eZ8/GN+JSj53XA8WA/CWFfpZ6POMxbxzQnq4
+nVGl6iB4/mnnRFHMcCejAwV/bNi5W2yOlAkVBwbzPc2UM2X2iG3vEWOs+m8AfT0E
+Psde9Mj2X7hoVNy/nH0uIgPomQIT0ErIPYv/4fJgROKoIQGCWF7JG9WiWGboHNfd
+lnxYDrC0JLB2EG1P3aFarL6LRCIXyC7C344TbRd4l3Ye6H99Auw8ZheSbiYlITUH
+HDlUj/PemXruY04p4CLymXklGKIqi9ZTpfPnpHJyyMn4U3kdgM/ZE7hFlT1xl7mu
+8/qvGj772E942LUrnpGmW3iATVOkBzmEg7IjOOiAzW9XsujV4Nmpsm1B1+GFOded
+u9FnUDoJa4oqpY0zkr2YI43UzfIV+vb0lBdrAQsxk3xame/8lgJSh7nw90PjKV8p
+oulkVDcqpnZoleflztgloGP0CqxBF91AoDOyPLX2UygopYCt8FvvcMCUhIupS1HO
+0HBsHP+karYpnh3R0MO67UVcaN+h93Pd98Zzyr23mnnLMdvxXC4e2pUPDBFObqkH
+UaB2eTqZVPaa1swOT5Z5lRJLU6BDwW/ITD6odg7tuxi64go18PPK1O3EBdz8bs9V
+2ntc+2tdD5xT95aAAiS7
+=qntM
+-----END PGP SIGNATURE-----
