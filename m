@@ -1,34 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/08/4
-Message-Id: <201205081043.19357.a3li@gentoo.org>
-Date: Tue, 8 May 2012 10:43:15 +0200
-From: Alex Legler <a3li@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: node.js <0.6.17/0.7.8 HTTP server information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/6
+Message-Id: <201210301610.24847.timb@nth-dimension.org.uk>
+Date: Tue, 30 Oct 2012 16:10:23 +0000
+From: Tim Brown <timb@...-dimension.org.uk>
+To: full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
+Subject: Medium risk security flaws in Konqueror
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I recnetly discovered a number of memory corruption flaws in the Konqueror web 
+browser as used by KDE.
 
-I didn't see a CVE/request for this one yet:
+After discussions with the vendor, the following CVEs were assigned to these
+vulnerabilities:
 
-http://blog.nodejs.org/2012/05/07/http-server-security-vulnerability-please-
-upgrade-to-0-6-17/
+1) CVE-2012-4512
+2) CVE-2012-4513
+3) CVE-2012-4514
+4) CVE-2012-4515
 
-"A carefully crafted attack request can cause the contents of the HTTP 
-parser’s buffer to be appended to the attacking request’s header, making it 
-appear to come from the attacker. Since it is generally safe to echo back 
-contents of a request, this can allow an attacker to get an otherwise 
-correctly designed server to divulge information about other requests. It is 
-theoretically possible that it could enable header-spoofing attacks, though 
-such an attack has not been demonstrated."
+The attached advisory gives further details.
 
-Fix: https://github.com/joyent/node/commit/c9a231d
-
-Thanks,
-Alex
-
+Cheers,
+Tim
 -- 
-Alex Legler <a3li@...too.org>
-Gentoo Security/Ruby/Infrastructure
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
+
+Download attachment "NDSA20121010.txt.asc" of type "application/pgp-signature" (7271 bytes)
 
 Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
