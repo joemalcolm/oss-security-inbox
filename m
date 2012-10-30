@@ -1,64 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/23
-Message-ID: <4FFE0BED.3020508@redhat.com>
-Date: Wed, 11 Jul 2012 17:27:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/11
+Message-Id: <201210301327.29470.geissert@debian.org>
+Date: Tue, 30 Oct 2012 13:27:28 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Dustin Kirkland <dustin.kirkland@...zang.com>, Tyler Hicks <tyhicks@...onical.com>, Marcus Meissner <meissner@...e.de>, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Re: ecryptfs headsup
+Cc: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org
+Subject: Re: CVE Request: Python keyring
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 07/11/2012 10:48 AM, Kurt Seifried wrote:
->> Hi Tyler, et al.-
+On Friday 05 October 2012 15:21:57 Marc Deslauriers wrote:
+> Hello,
 > 
->> I don't have any objections at all with adding nosuid and nodev
->> to the hardcoded mount.ecryptfs_private options.
+> Python keyring before 0.9.1 was using the user-supplied password
+> insecurely.
 > 
->> Actually, I seem to recall this coming up recently before.  I 
->> can't find the bug or email thread (must have been IRC), but I 
->> recall offering to commit, test, and release that change 
->> immediately.  I believe I was asked to wait to do that until a
->> CVE had been published...  I can't find any record of that
->> conversation though, so that's just from memory.
+> From the 0.9.1 changelog:
 > 
->> Shall I go ahead and commit/test/release that now, Tyler?
+> CryptedFileKeyring now uses PBKDF2 to derive the key from the user's
+> password and a random hash. The IV is chosen randomly as well. All the
+> stored passwords are encrypted at once. Any keyrings using the old
+> format will be automatically converted to the new format (but will no
+> longer be compatible with 0.9 and earlier). The user's password is no
+> longer limited to 32 characters. PyCrypto 2.5 or greater is now required
+> for this keyring.
 > 
-> So it sounds like a non privileged user on an Ubuntu machine can 
-> insert a USB stick/etc with a file system that gets automatically 
-> mounted, said file system can contain setuid root binaries for
-> example which the user can then execute, elevating privileges?
+> See:
+> 
+> http://pypi.python.org/pypi/keyring#id2
+> https://bugs.launchpad.net/ubuntu/+source/python-keyring/+bug/1004845
 
-Please use CVE-2012-3409 for the ecryptfs mount.ecryptfs_private which
-allows setuid and dev enabled filesystems, this affects multiple Linux
-vendors.
+Could a CVE id be assigned please?
 
-Just to confirm: this only affects systems with a setuid
-mount.ecryptfs_private?
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP/gvtAAoJEBYNRVNeJnmTRdgP/3TJHs/zz066JsOQIvBCjWMM
-hFGZjmDIjPdCbUtYioX/6aTR7NTUGdoLOlI9FwVVgBQhzEzdy/hoeD4fQKNje02a
-JFOTg1v/PhlqYhEDZxgMLiaY5yv4uQeDZk+/ZlFfOGEQhRfZXtdB3o1u8U5L1u7f
-Yo/ncDV+1+PCtPTtFQIp9/x//7mF2r0V5/ibvesCBmDicFmkLkmloBQFLdvlJeW5
-muxhY1YYuu777CpWiYwY+59ZvqaeUODBUbGDwk5jQ0reDjwSafB8vz+DqKMbDlyT
-HNYJXASGCdOlxMgM0ic7pR0q9eWYo6YzhCoBG7OM0c+2tqFqeNDAKNa+HKxZFPkj
-1kQL4Rq+nx6l8gaPFNFu+Wj36ryUvN5HXVlVS3F2puoHdPM1kAwE9D59hwT27e8P
-2UF1JFRLLnjWAk8MXRPMOXSDh3Gd05P8xw+2/032KJmSaROfujt2kz1/wCHhY0ai
-gpc1oD4lf2SVC/9EM3vPx81MSYQWh1n+m8BqqT2TBGyZeSPXicW81QmPhyusJbp5
-OMSBHy6gim2tSHZGK3+2HQNyB71vFDPyd78pa/mlCxcs5pkpR0uVTZHlwZvZclbB
-GGarAoNXBFbp4g120FE/MQp74Zi+0xOkt3MdMbvN7OOSOJk3Bi949oii+TDDK/D2
-P10aNjcPiGhwoo7CfsmY
-=PPfw
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
