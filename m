@@ -1,45 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/4
-Message-Id: <201206280858.52127.mweckbecker@suse.de>
-Date: Thu, 28 Jun 2012 08:58:51 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/13
+Message-Id: <201210301346.21627.geissert@debian.org>
+Date: Tue, 30 Oct 2012 13:46:21 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+Subject: Re: CVE request: radsecproxy incorrect x.509 certificate validation
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+Hi again,
 
-On Thursday 28 June 2012 07:12:52 Kurt Seifried wrote:
-> So simply querying:
->
-> ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
->
-> e.g.:
->
-> http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
->
-> shows authors, SAPI modules (and their authors) and normal modules
-> (and their authors), resulting in a significant information disclosure
-> (version #'s can be narrowed down from the authors list).
->
-> This has already been reported, but no CVE was assigned:
->
+On Wednesday 17 October 2012 12:48:19 Raphael Geissert wrote:
+> Ralf Paffrath discovered that radsecproxy may incorrectly accept a client
+> certificate if the certificates chain was validated with the CA settings
+> of one configuration block but the other certificate constraints failed,
+> and the certificate constraints of another configuration block passed
+> (ignoring this other config block's CA settings.)
+> 
+> This issue has been fixed in version 1.6.1. However, it introduces a
+> minor regression as it ignores some configuration blocks (see the
+> references for further details.)
 
-Well, I don't think it should get one. expose_php is no news and so it is
-expectable that it will make things like e.g. PHP's version number appear
-in the HTTP response. Hiding it is security by obscurity and with the same 
-argument you could say that it's a vulnerability that PHP's source code is
-open source. IMHO.
+While checking the issue I noticed that the same issue also affects 
+radsecproxy's DTLS support, which was not fixed. Upstream has now released 
+version 1.6.2 addressing the vulnerability in its DTLS support code.
 
-[...]
+Now, the thing is that upstream re-used the previously assigned CVE id 
+CVE-2012-4523. According to the guidelines a new id should be assigned since 
+they affect different versions even if the issues are related.
 
-Matthias
+So, I guess a new id is in order?
 
-PS: If such things happen regardless of expose_php's value it is of course
-worth a CVE.
+References:
+http://git.nordu.net/?p=radsecproxy.git;a=commit;h=3682c935facf5ccd7fa600644bbb76957155c680
+https://postlister.uninett.no/sympa/arc/radsecproxy/2012-10/msg00001.html
+https://project.nordu.net/browse/RADSECPROXY-43
 
+Regards,
 -- 
-Matthias Weckbecker, Junior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
