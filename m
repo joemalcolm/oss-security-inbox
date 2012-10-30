@@ -1,43 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/25/2
-Message-ID: <Pine.GSO.4.64.1208242222430.13749@faron.mitre.org>
-Date: Fri, 24 Aug 2012 22:29:42 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/7
+Message-ID: <Pine.GSO.4.64.1210301317090.17286@faron.mitre.org>
+Date: Tue, 30 Oct 2012 13:34:07 -0400 (EDT)
 From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Henri Salo <henri@...v.fi>, Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE-request: Roundcube XSS issues
+To: Kurt Seifried <kseifried@...hat.com>
+cc: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
+Subject: Re: Strange CVE situation (at least one ID should come of this)
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 20 Aug 2012, Kurt Seifried wrote:
-
->> 2, Issue 2a: Description: Stored XSS in e-mail body. Ticket:
->> http://trac.roundcube.net/ticket/1488613 Upstream patch:
+> On 10/26/2012 01:54 PM, Josh Bressers wrote:
 >>
->> [snip]
+>> If I was to list the security problems I found after a few minutes
+>> of looking, they are:
 >>
->> Issue 2b: Self XSS in e-mail body (Signature). Ticket:
->> http://trac.roundcube.net/ticket/1488613 Upstream patch:
->[snip]
->
-> Please use CVE-2012-3508 for these two issues (same version, same type
-> of vuln so cve merge).
+>> * It uses MD5 passwords * The shadow file is directly modified
+>> without locking (which could lead to a race condition) * If you get
+>> the password wrong, it doesn't unlink the empty temporary file.
+>>
+>> None are really a big deal, you *could* run this and probably never
+>> notice these problems.
+>>
+>> Fundamentally though, this thing should get one CVE ID that
+>> basically say "don't use this". How have situations like this been
+>> handled in the past?
 
-Further investigation into ticket 1488613 shows that the developer thinks 
-that issue 2b doesn't need a backport to 0.7.  This would suggest a SPLIT 
-based on different affected versions.
+To have a CVE for "don't use this" is not consistent with long-existing 
+practice.  I don't recall ever intentionally assigning a CVE for such a 
+thing - after all, CVE is about vulnerabilities, and "don't use this" is 
+awfully vague.
 
-Plus it's not immediately clear whether this "self XSS" is really an XSS 
-or not - if I can modify my own signature, then I already have the 
-"privileges" on my browser to run script.  But, if this "self XSS" is 
-really just reflected XSS, then that's a security issue to worry about. 
-This requires expertise in the Roundcube codebase to answer for sure, 
-though.
+Deployment of risky software is effectively a configuration or asset 
+management issue, which is well outside the scope of CVE. (Maybe it's more 
+like a Common Configuration Enumeration (CCE) issue.)
 
-So, we should probably SPLIT this CVE.
+In other words - we really shouldn't use CVE to handle this problem.  It 
+is feature creep, and I believe that it WOULD become a huge mess.  Maybe 
+this would work for some, but not for all of CVE's consumers, which is a 
+wide variety of people and use cases.  I understand that there is a 
+problem here, though.
 
-CVE-2012-3508 - Issue 2a - Stored XSS in e-mail body
+It looks like Josh laid out at least 3 different security issues in your 
+initial request.  Those can/should get CVEs assigned, even if there aren't 
+full details.  The lack of a vendor CONFIRM reference or advisory, tells 
+the consumer that the vendor hasn't addressed it.
 
-(new) CVE-2012-4668 - Issue 2b - Self XSS in e-mail body (Signature)
+Perhaps the OSS community could borrow an idea from one of the framework 
+vendors with lots of third-party modules - I forget if it was Joomla or 
+Drupal - who actively maintained a list of poorly maintained or obsolete 
+software.
+
+In the broadest sense, however, such old software is still useful for 
+people who are starting in vulnerability research, or just doing it for 
+fun; many people who audit what MITRE calls "phpGolf" applications, go on 
+to do more substantive research.
+
+Perhaps it is time to re-examine Crispin Cowan's Sardonix project, which 
+tried to match vulnerability researchers with open source projects, in 
+order to build reputations for both.
 
 - Steve
