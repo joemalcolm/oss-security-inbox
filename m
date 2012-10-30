@@ -1,109 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/5
-Message-ID: <4FBE808A.9060004@redhat.com>
-Date: Thu, 24 May 2012 12:40:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: David Black <disclosure@....org>, Peter van Dijk <peter.van.dijk@...herlabs.nl>, Bert Hubert <bert.hubert@...herlabs.nl>
-Subject: Re: CVE Request: powerdns does not clear supplementary groups
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/9
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0691A5A3@IMCMBX01.MITRE.ORG>
+Date: Tue, 30 Oct 2012 17:59:28 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: Sean Amoss <ackle@...too.org>, Common Vulnerabilities & Exposures <cve@...re.org>, "Christey, Steven M." <coley@...re.org>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Gentoo Linux Security Team <security@...too.org>, "xtophe@...eolan.org" <xtophe@...eolan.org>
+Subject: RE: VideoLAN TiVo Demuxer Duplicate CVEs (CVE-2011-5231 and CVE-2012-0023)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Sean,
 
-CC'ing the PowerDNS guys.
+Thank you for noticing this.
 
-On 05/24/2012 10:20 AM, David Black wrote:
-> Powerdns does not drop/clear supplementary groups in its dropPrivs 
-> routine where the intent is to drop privileges.
-> 
-> The relevant code can be found in pdns/unix_utility.cc / 
-> pdns-recursor-3.3/unix_utility.cc [0].
-> 
-> Can a CVE id be assigned for this issue?
-> 
-> 
-> [0] pdns/unix_utility.cc / pdns-recursor-3.3/unix_utility.cc //
-> Drops the program's privileges. void Utility::dropPrivs( int uid,
-> int gid ) { if(gid) { if(setgid(gid)<0) { 
-> theL()<<Logger::Critical<<"Unable to set effective group id to 
-> "<<gid<<": "<<stringerror()<<endl; exit(1); } else 
-> theL()<<Logger::Info<<"Set effective group id to "<<gid<<endl;
-> 
-> }
-> 
-> if(uid) { if(setuid(uid)<0) { theL()<<Logger::Critical<<"Unable to
-> set effective user id to "<<uid<<":  "<<stringerror()<<endl; 
-> exit(1); } else theL()<<Logger::Info<<"Set effective user id to
-> "<<uid<<endl; } }
+CVE-2011-5231 was an accidental duplicate of CVE-2012-0023, and it was only released a couple days ago.
+
+CVE-2012-0023 has been in use since January.
+
+Google search results show that CVE-2012-0023 has many more hits.
+
+Even though the issue was first published in December 2011 and CVE-2012-0023 has "2012" in the name, this off-by-one is very common for identifiers for issues published in December/January of any year.
+
+So, even though it's not "aesthetically appropriate," keep CVE-2012-0023 and REJECT CVE-2011-5231.
+
+- Steve
 
 
-So the dropping of groups and the dropping of supplementary groups has
-come up a lot recently, here are my personal thoughts on the matter
-(with thanks to Steve Grubb for explaining some of the trickier bits).
-These are of course my personal opinions, any mistakes/errors are mine
-entirely and so on.
 
-Dropping of the primary user and group privileges is a well known
-security feature in many programs (e.g. bind, dhcp, apache, etc.). The
-idea being programs need root to bind to privileged ports/etc. But
-once done don't need root access. I think clearly in this case if a
-program is running as root, and claims to give up root privileges but
-fails to, that is a security issue and worthy of a CVE. In the case
-where a program does NOT drop privileges, and this feature has now
-been added (and assuming it works), I think this qualifies as security
-hardening, not a security fix and NOT worthy of a CVE.
+-----Original Message-----
+From: Sean Amoss [mailto:ackle@...too.org] 
+Sent: Monday, October 29, 2012 2:27 PM
+To: Common Vulnerabilities & Exposures; Steven M. Christey
+Cc: oss-security@...ts.openwall.com; Gentoo Linux Security Team; xtophe@...eolan.org
+Subject: VideoLAN TiVo Demuxer Duplicate CVEs (CVE-2011-5231 and CVE-2012-0023)
 
-Now it gets messy. What about the dropping of supplementary groups?
+Steve, MITRE, vendors:
 
-Supplemental groups enabled a user to be a member of more than one
-group at a time (us old timers remember the joys of "newgrp"). Why
-would anyone want this? You could for example create a group that has
-permissions to access logging, terminals (e.g. modems, remember those?
-=) and then add users to it as appropriate (and centralize
-account/permissions management somewhat and all that good stuff).
+It appears that there may be two CVE's for the same issue:
 
-So what happens when a program starts running as say root, and root
-has supplemental groups (like "bin" or "daemon" and the program drops
-its primary user/group but fails to drop supplementary groups, is that
-a security issue, and is it worthy of a CVE identifier?
+CVE-2011-5231 - Double free vulnerability in the get_chunk_header
+function in modules/demux/ty.c in VideoLAN VLC media player 0.9.0
+through 1.1.12 allows remote attackers to cause a denial of service
+(crash) and possibly execute arbitrary code via a crafted TiVo (TY) file.
 
-For most cases I'm going to say probably not (aka no). Having
-supplementary groups is intentional and allows permissions to be more
-fine grained, you can for example make root a member of "logging" so
-that even when the app drops root privileges would still have the
-supplementary group of "logging" and can do its logging or whatever.
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-5231
 
-So unless someone makes a compelling argument that these are security
-issues I'm going to err on the side of "security hardening" instead of
-"security fix" for dropping supplementary groups, but of course not
-all issues are the same so if you have a specific issue and think it
-deserves a CVE make a case on OSS-sec.
+References to http://www.videolan.org/security/sa1108.html
 
-* Should these issues be fixed? yes. Dropping privileges where
-possible is usually a good idea, until things break though and then
-people start disabling things like SELinux or running everything as
-root to "make it work" :P.
+=======================================================================
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE-2012-0023 - Buffer overflow in VLC TiVo demuxer
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+CVE Assignment: http://www.openwall.com/lists/oss-security/2012/01/03/12
 
-iQIcBAEBAgAGBQJPvoCKAAoJEBYNRVNeJnmT0NoP/0klqbji/ArTnVauB9U895Ye
-F8ck9XjRjdxTkmqSZB2rQiD2fmENkHFdZrmG8Vh8BLlnTreamOGwOiPIvX2dkGrM
-zDLoWbFVWD2ORGL7zUBL8KgJ3TkHsiXwGO0N7ojW7pun2S9HsWWtjIK2p0S/cjV+
-rJAUg0vXeQ3d/ySzYNSuUIiyPFFYRMjNV4m35lTFwVz33d+hq9t6cf0JKzJLyH4h
-uqvhdOsYYrh4UOTkxSzdnWovtxsK16yvGrMFpa3N+4FGgqvlhDhwSvFj2aVWKy0I
-zQS1PpvJJiWfYzPRweze82yHLS22owmXBYl4Tl6igJB7l3v/uIzQJeExF+CWPTMB
-ZUdODKiDNd+jFqOUJcvrX0HJn1f/KJmNf11EdW3VZBrOpgKSLQUDJ43+RSGSDF6E
-tHfub3L1pZ4SbDXFVPzvlCzIsUkWhB8h3WwkTTZV2HbLdFiDDaInEH8wfwymc+2N
-YFvj+rjDj5dwftoTwutE92ElcCX8cpI51MqnvyaPChQCe1XdoF+wbM/+byyZHXZf
-tm/d19d/6Tjm7JmLIDfMWKFbGq8dJkuKjK4n2qZgqImd+2E1e2iLGB68pQvRDcgl
-BxGNlj1PL4THwkjMwjtO9s32JMlFcDYM3MjCt7GOSCOU9HyD7nNER10cH3oJ5n3S
-1jkfJxJyNMowHJx3/nJH
-=6ZUw
------END PGP SIGNATURE-----
+References http://www.videolan.org/security/sa1108.html in assignment above
+
+
+Thanks,
+Sean
+-- 
+Sean Amoss
+Gentoo Security | GLSA Coordinator
+E-Mail	  : ackle@...too.org
+GnuPG FP  : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
+
