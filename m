@@ -1,20 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/11/22
-Message-ID: <20120711221852.GC24047@kludge.henri.nerv.fi>
-Date: Thu, 12 Jul 2012 01:18:52 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/12
+Message-Id: <201210301328.10089.geissert@debian.org>
+Date: Tue, 30 Oct 2012 13:28:09 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Overflow fix in bash 4.2 patch 33
+Subject: Re: CVE request: LetoDMS, more issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 11, 2012 at 06:15:07PM +0200, Marcus Meissner wrote:
-> ftp://ftp.gnu.org/pub/gnu/bash/bash-4.2-patches/bash42-033
+On Friday 05 October 2012 23:11:36 Raphael Geissert wrote:
+> Hi,
 > 
-> Reproducer:
-> 	test -e /dev/fd/111111111111111111111111111111111
+> Some more issues were fixed in LetoDMS...
+> 
+> * Fixed in 3.3.8
+> Multiple XSS:
+> http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/inc/
+> inc.ClassUI.php?r1=930&r2=929&pathrev=930
+> http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/out
+> /out.DocumentNotify.php?r1=934&r2=933&pathrev=934 (and a few others
+> scattered in multiple other commits)
+> Missing CSRF protection (all part of the same thing):
+> http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=927
+> http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=915
+> http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=914
+> http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=907
+> (and possibly some others...)
+> 
+> * Fixed in 3.3.9
+> Multiple XSS in out/out.UsrMgr.php:
+> http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/out/
+> out.UsrMgr.php?r1=979&r2=978&pathrev=979 Regression in the above patch
+> (fixed after the release of 3.3.9):
+> http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/out
+> /out.UsrMgr.php?r1=982&r2=981&pathrev=982
+> 
+> LetoDMS Core:
+> * Fixed in 3.3.8:
+> SQL injection:
+> http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/Leto
+> DMS_Core/Core/inc.ClassDMS.php?r1=929&r2=928&pathrev=929
 
-Hello,
+Could CVE ids be assigned please?
 
-Reported to Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=681278
-
-- Henri Salo
+Thanks,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
