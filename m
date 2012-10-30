@@ -1,94 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/23/2
-Message-ID: <500CF9A8.4050601@redhat.com>
-Date: Mon, 23 Jul 2012 01:13:44 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>
-Subject: Re: CVE for JBOSS EAP 5.0(twiddle and jmx invocations) ?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/1
+Message-ID: <1755597582.23791235.1351560372225.JavaMail.root@redhat.com>
+Date: Mon, 29 Oct 2012 21:26:12 -0400 (EDT)
+From: David Jorm <djorm@...hat.com>
+To: "oss-security " <oss-security@...ts.openwall.com>
+Subject: CVE request: XSS is Google Web Toolkit (GWT)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I note that with the release of google web toolkit (GWT) 2.5, a security flaw has been resolved. The best details I can find are at:
 
-On 07/22/2012 11:35 PM, David Jorm wrote:
-> On 07/21/2012 02:12 AM, yersinia wrote:
->> Following this apparently RFE on JBOSS 
->> https://issues.jboss.org/browse/JBPAPP-3391?_sscc=t i have found
->> a nice description, and an  proposed patch, about it here 
->> http://objectopia.com/2009/10/01/securing-jmx-invoker-layer-in-jboss/.
->>
->>
->> 
-But the last link describe - apparently - a serious bug in the JBoss JMX
->> Invoker Layer, a missing authentication that can produce a
->> serious problem. Reading the other response i don't think there 
->> is today the possibility to enforce a true mitigation in JBOSS,
->> apart putting in place some form a network control (aka a 
->> firewall). This is for JBOSS 5.0, i know that twiddle is no
->> longer in JBoss EAP 6.0 which provides a totally new, much
->> improved, secure and scriptable management interface.
->> 
->> Do you think this can require a CVE for JBOSS EAP 5?
->> 
->> Thanks in advance
->> 
-> 
-> Thanks for bringing this up. As I see it, there's two issues here:
-> 
-> 1) twiddle.sh accepting credentials as command-line arguments,
-> meaning they could be exposed to another local user via a process
-> listing (JBPAPP-3391)
-> 
-> This issue affects JBoss AS 5 and EAP 5, but as you noted not AS 7
-> or EAP 6. It is my opinion that this is indeed a low impact
-> security flaw, and a candidate for a CVE ID. I would give it the
-> following CVSSv2 score: 2.1/AV:L/AC:L/Au:N/C:P/I:N/A:N. Kurt, can
-> you please assign a CVE ID for this flaw?
+https://developers.google.com/web-toolkit/release-notes#Release_Notes_2_4_0 (scroll to "Security vulnerability in GWT 2.4")
 
-Please use CVE-2009-5066 for this issue.
+The release notes state:
 
-> 2) AuthenticationInterceptor in jmx-invoker-service.xml is
-> commented out by default, allowing unauthenticated access to the
-> JMX Invoker
-> 
-> This issue only affects JBoss AS community releases, not EAP or
-> other supported JBoss products. The JBoss AS community releases
-> prior to AS 7 opted for open by default configuration rather than
-> secure by default configuration. AS 7 and all supported JBoss
-> products have secure defaults applied. It is my opinion that this
-> is a configuration and documentation issue rather than a security
-> issue. Documentation for securing the invokers on JBoss AS
-> community releases is available here:
-> 
-> https://community.jboss.org/wiki/SecureTheInvokers
+"Recently, the GWT team discovered a cross-site scripting vulnerability in the 2.4 Beta and Release Candidate releases (not in v2.3 GA or v2.4 GA). This vulnerability was partially fixed in the 2.4 GA release and completely fixed in the 2.5 GA release. If you have an app that's been built with 2.4 then you'll need to get the latest 2.5 release, recompile your app, and redeploy."
 
-Agreed, configuration issue.
+I can't find any details on the flaw, a CVE ID, a public bug or a commit. I have contacted security@...gle asking for these details, but no response yet. Can we assign a CVE ID to this flaw in the absence of these details?
 
-> Thanks -- David Jorm / Red Hat Security Response Team
+Thanks
+-- 
+David Jorm / Red Hat Security Response Team
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQDPmoAAoJEBYNRVNeJnmTxyEQANq7tUSCZgIgnVte30YAAj+n
-RI0IPImWIVrsTh+/bEubpl21XtZ50PuXLB3LOO6ATK9IeOcEaloh0oHi5uS2T4Ro
-ZdKYDVQJme6BBle3nxzYefi+Dy5JM3QsRtTpU1CxnJyl+hIBPq+CNLTdqrmFHm1i
-oPneeOkL5UJjuyl8MxjQeFwwcLp1G/d1BvkfZNXcxdwb5i2jqP//9BH88yBSzTuZ
-9lpJzJzlRJFhuCixjVgm2nui7wgAR4Wlr0QwclS0BkArEhXDjMDc667Ptg5srILb
-DUOGs0/uRsRHe5fcy+RYWi5u5ILEaxAVn4bkgd+06vR1kV3V9cfcxTUVe0ndCj/x
-wN1jlOT2umPNF78u0LjDhUQgX8I4DAafbyn2bXzagR4Kbwb8CmOslAzfTX/FYw0C
-cTbpSmJlCw8NbULvUM8MzHfC8GCvTJxnqjvXwtNtFLsuDWWMJh4klEeEZ8gLAhmB
-89p2JiZRw8sC/z3P0o3XP9FGLL9a9C2vfcUyN05ndmRKJQa9Z6Ry8xJOFVhZdpyV
-6U1/VMmWzaIlxVYn50ypEXQuawVTB2I0hlC/QabYpe+00IZFMzsG7DA2aHD/aWwH
-TcoualpRWbiNzIhby7uXWL45yoMZ5Q+/wmk5y1ODavm/9ZaJ3sUjgReAGl//czCv
-nfYABN4h/P8MoUMZbHk6
-=zBZB
------END PGP SIGNATURE-----
