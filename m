@@ -1,29 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/1
-Message-ID: <4FE7F40E.8040407@redhat.com>
-Date: Sun, 24 Jun 2012 23:15:58 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/15
+Message-ID: <50903952.3020704@redhat.com>
+Date: Tue, 30 Oct 2012 14:32:18 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Luciano Bello <luciano@...ian.org>
-Subject: Re: CVE request: CSRF in eXtplorer
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Josh Bressers <bressers@...hat.com>
+Subject: Re: Strange CVE situation (at least one ID should come of this)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/23/2012 06:03 PM, Luciano Bello wrote:
-> John Leitch has discovered a CSRF vulnerability in eXtplorer: 
-> http://www.autosectools.com/Advisories/eXtplorer.2.1.RC3_Cross- 
-> site.Request.Forgery_174.html
+On 10/30/2012 11:34 AM, Steven M. Christey wrote:>
+>> On 10/26/2012 01:54 PM, Josh Bressers wrote:
+>>> 
+>>> If I was to list the security problems I found after a few
+>>> minutes of looking, they are:
+>>> 
+>>> * It uses MD5 passwords * The shadow file is directly modified 
+>>> without locking (which could lead to a race condition) * If you
+>>> get the password wrong, it doesn't unlink the empty temporary
+>>> file.
+>>> 
+>>> None are really a big deal, you *could* run this and probably
+>>> never notice these problems.
+>>> 
+>>> Fundamentally though, this thing should get one CVE ID that 
+>>> basically say "don't use this". How have situations like this
+>>> been handled in the past?
 > 
-> Can you please assign a CVE id to it?
+> To have a CVE for "don't use this" is not consistent with
+> long-existing practice.  I don't recall ever intentionally
+> assigning a CVE for such a thing - after all, CVE is about
+> vulnerabilities, and "don't use this" is awfully vague.
+
+True, but we've already gone down that road, e.g.:
+
+CVE-2012-2400 	Unspecified vulnerability in
+wp-includes/js/swfobject.js in WordPress before 3.3.2 has unknown
+impact and attack vectors.
+
+> Deployment of risky software is effectively a configuration or
+> asset management issue, which is well outside the scope of CVE.
+> (Maybe it's more like a Common Configuration Enumeration (CCE)
+> issue.)
+
+If anything I think it would fit into CPE
+
+> In other words - we really shouldn't use CVE to handle this
+> problem.  It is feature creep, and I believe that it WOULD become a
+> huge mess.  Maybe this would work for some, but not for all of
+> CVE's consumers, which is a wide variety of people and use cases.
+> I understand that there is a problem here, though.
+
+True about the mess and not all customers being happy with it.
+
+> It looks like Josh laid out at least 3 different security issues in
+> your initial request.  Those can/should get CVEs assigned, even if
+> there aren't full details.  The lack of a vendor CONFIRM reference
+> or advisory, tells the consumer that the vendor hasn't addressed
+> it.
 > 
-> Cheers, luciano
+> Perhaps the OSS community could borrow an idea from one of the
+> framework vendors with lots of third-party modules - I forget if it
+> was Joomla or Drupal - who actively maintained a list of poorly
+> maintained or obsolete software.
+> 
+> In the broadest sense, however, such old software is still useful
+> for people who are starting in vulnerability research, or just
+> doing it for fun; many people who audit what MITRE calls "phpGolf"
+> applications, go on to do more substantive research.
 
-Does this affect any versions other than just 2.1 RC3?
+The old software would still be available (unless someone goes through
+sourceforge for example and does some serious spring cleaning).
 
-# A cross-site request forgery vulnerability in eXtplorer 2.1 RC3 can be
-# exploited to create a new admin.
+> Perhaps it is time to re-examine Crispin Cowan's Sardonix project,
+> which tried to match vulnerability researchers with open source
+> projects, in order to build reputations for both.
+> 
+> - Steve
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -31,19 +87,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJP5/QOAAoJEBYNRVNeJnmT+ckQANr2mpLfaXlH9WAuXceoOzzn
-ve2B609LhHyr0p+8KI4adqYxRN/pmxIIYVP9WPVftrBBqYmc4YxeDY3CkFNc7BLe
-W0pkCQ39G2EUzTDqWAYp+IWNnFPVdjrmawUccmV2RvBZa5pE2qWclAUlqdkpwSMo
-u8rpSSEra2b1C54XLxV18WqbmysceeYDsUBkK7Ma9rztk4RJ559392KFNYycnrWJ
-/9yb5hzehnrJp0DnZ5cCyiUD+eMsI48YlWRQti8NS0rgMxOE5JgdwuTEdpCJzF1y
-cndzjOkYidKUC9ABnLSbSb0AWxNeEhi4B6gh9J44IyyxqkKpcStoOukBJkguL0JU
-+RmEscdPCkn1zAOWaF2zrXEiu7A+asEPzTX7jX3IJmPCO5nfwQYfLRDjXyaTZck6
-9PNhfpFe2w8IAMW77NlFIN+CORI2VWz45K3i0zqTYBysqmGWb7jeljsur2vkG09p
-1FgkRLH6iCspuiCV1g5BHcUqQW88lK+XgSh4wWT2FDSlPpoRTEX1p6cdKyGop+w5
-2iY6nf+pPbSThbVHq4O+WwY+lIF7VIveVGrPx85BIttOBYMi9OV9Gz59UmvKeekS
-dwSlho7NU6mkeuj/ta1Y0LL+VCNL4Er8hethsRuF7BKyJUOM6UpFVgwHKLyAnIsj
-mDqJyK6wW2PPnQYheH7V
-=PaP+
+iQIcBAEBAgAGBQJQkDlSAAoJEBYNRVNeJnmTVlAP/2cru5TGX8aGGxCHCkMgkjXZ
+Ho8+/RXWEC2Bx5t2XxREXsChjzvv5DC0lrIsetAR2jNO8JdcE6rFt3FtHRLVxxBL
+Amekmw60e2WKNiL9a3B83oGawnHTGPwQqv+zmrup/Y7al20i6wStKFSMQqEvXrLd
+Icn2YfDoMpDxco8YokFVVB2g/2kaMZXrJEv9aul6pbgi/Vwp3+rAr48g2Zh0MCoh
+V8LxH8Dfy4pzBjWnJiMhYKQa4NBiK0TSkC0R9CyY3IF5rCmhUhCFvNFOABs3DmtK
+bJGtaslx1OE/ycEt7KgUfJuQPOggB8V4+aimGJIgnuzqntLwZhlbaohHrpDo0pHJ
+Rp4eJAkbTvtwqiFa5AuZ5YlM6nZEr4SjgpYHzcPxhE8FdUXbE6QlO02OfvWDO/pI
+/ql7yJAxoPt2thz02QhY6P9OskNZzeddsnVgB5lDXVCATXWcWMTL1SaV9BW3k17G
+77np28scBQFdpe91wJCuZaGdQ1MkVTOYZTCgLABstqC4p/vASEYyXtv3toEXC4fV
+BzLdaSvIzUjRH7WST8D+wB3cQ4jAbJ159SoEjyRPrFWBXoZw81LI5giG1w5iYLof
+Shj8cbTYVlHUInu8qnlFNuJUWJayRUc9QGo/7kWLEtyZgEpzPuW79ZrzQa+mCqFU
+GuCdZGQZl73uq1VBT65h
+=eNjw
 -----END PGP SIGNATURE-----
