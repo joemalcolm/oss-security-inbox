@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/4
-Message-ID: <20120104104040.GA18164@suse.de>
-Date: Wed, 4 Jan 2012 11:40:40 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/4
+Message-ID: <20121031143119.GS13903@dhcp-25-225.brq.redhat.com>
+Date: Wed, 31 Oct 2012 15:31:20 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2011-4858 confusion
+Subject: CVE Request -- kernel: net: divide by zero in tcp algorithm illinois
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description of the problem:
+Reading TCP stats when using TCP Illinois congestion control algorithm
+can cause a divide by zero kernel oops.
 
-According to
+An unprivileged local user could use this flaw to crash the system.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=770929
+Proposed upstream patch:
+http://thread.gmane.org/gmane.linux.network/247871
 
-the tomcat hash collision thing got a new CVE?
+Acknowledgements:
 
-So CVE-2011-4084 is invalidated and we need to use CVE-2011-4858. Is that correct?
+This issue was discovered by Rodrigo Freire of Red Hat.
 
-Sebastian
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=871848
+http://thread.gmane.org/gmane.linux.network/247871
 
-
+Thanks,
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Petr Matousek / Red Hat Security Response Team
