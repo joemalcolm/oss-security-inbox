@@ -1,37 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/15/10
-Message-ID: <1326647295.7887.574.camel@new-desktop>
-Date: Sun, 15 Jan 2012 18:08:15 +0100
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/6
+Message-ID: <5091427A.3010904@redhat.com>
+Date: Wed, 31 Oct 2012 09:23:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE affected for PHP 5.3.9 ?
+CC: Raphael Geissert <geissert@...ian.org>
+Subject: Re: Re: CVE request: radsecproxy incorrect x.509 certificate validation
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Can you provide a reproducer (vuln script and a malicious input) that
-> shows this in action (e.g. creates a local php file).
+On 10/30/2012 01:46 PM, Raphael Geissert wrote:
+> Hi again,
+> 
+> On Wednesday 17 October 2012 12:48:19 Raphael Geissert wrote:
+>> Ralf Paffrath discovered that radsecproxy may incorrectly accept
+>> a client certificate if the certificates chain was validated with
+>> the CA settings of one configuration block but the other
+>> certificate constraints failed, and the certificate constraints
+>> of another configuration block passed (ignoring this other config
+>> block's CA settings.)
+>> 
+>> This issue has been fixed in version 1.6.1. However, it
+>> introduces a minor regression as it ignores some configuration
+>> blocks (see the references for further details.)
+> 
+> While checking the issue I noticed that the same issue also affects
+>  radsecproxy's DTLS support, which was not fixed. Upstream has now
+> released version 1.6.2 addressing the vulnerability in its DTLS
+> support code.
+> 
+> Now, the thing is that upstream re-used the previously assigned CVE
+> id CVE-2012-4523. According to the guidelines a new id should be
+> assigned since they affect different versions even if the issues
+> are related.
+> 
+> So, I guess a new id is in order?
+> 
+> References: 
+> http://git.nordu.net/?p=radsecproxy.git;a=commit;h=3682c935facf5ccd7fa600644bbb76957155c680
+>
+> 
+https://postlister.uninett.no/sympa/arc/radsecproxy/2012-10/msg00001.html
+> https://project.nordu.net/browse/RADSECPROXY-43
+> 
+> Regards,
 
-Please find attached the "php539-xslt.php" script.
+Correct, different versions = different CVEs typically. Please use
+CVE-2012-4566  for this issue. For reference:
 
-This script displays by default a pre-filled HTML form including some
-XML data and XSLT code. When the form is submitted, the user-controlled
-XML data is transformed using the user-controlled XSLT code. Then, the
-output of this transformation is displayed in the browser.
+http://cve.mitre.org/cve/editorial_policies/cd_abstraction.html
 
-When executed, the pre-filled XSLT code will write
-to /var/www/xxx/backdoor.php this content :
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-<html><body>
-<h1><font color="red">I'm a (very) malicious PHP file !!!</font></h1>
-<?php phpinfo()?>
-</body></html>
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Note : the payload is encrypted with RC4. A static key ("simple_demo")
-embedded in the XSLT code is used to decrypt it.
-
-Regards,
-Nicolas
-
-
-
-Download attachment "php539-xslt.php" of type "application/x-php" (2038 bytes)
+iQIcBAEBAgAGBQJQkUJ6AAoJEBYNRVNeJnmT7+wP/i5aKzdl1TldiCIRcdD4pet0
+q3R5jhH+69wCOOS+9gZu8K2J+MFNyGisBnU7zmvdBDw9tSlX6snws+AVxVcT/84P
+aprOOZ22LH5qfrnJfTcIVtrX6cxGsVTrpGEAM7XV2UnvDaQRWkfOdmo68BYnCNh5
+CJ3pHYnz+tR5O0wscQPp5SauoZhuKbig9mlN/fwjutPChntvARvKmi+BWn+qZKIb
+PVAbeCuew60lmJaDbi7tFYfqFFV+RR4MUaJTgv2WC3PZW9bjovHR23WplVyBL+G3
+HUtW3Is/F3/RSYy3OfAVtKNhUmmABlVnq38BMqrItf3m1xTDpGAE1qPW6AUHXdeP
+vnREGluSjMMvo4wLuE+OFFwCa1uwwRnTBedeLIgmZSN4m5w/WHCIX9W0qyiJCGOd
+VYUvWZvhF6J2/RkjdYcSPX8o8YVCu4nt8c49SvR5H3xHo0dHOQWXHGhIFs1Tzvbg
+CqnrlwJwKZfHHtuVfOkbQzJfC/L8w2aQMtm8jE/rm/J6rFml1jwdhhRLmn/Z2J+Z
+yulyDmhplmE28W0LiNWWh6M6uVYe0q1cR8py6Gcv8NqANBclYNWweTjqz+o69YPX
+uPxjz53RxFt3PPnKJMTMID/Qe7mSbiVAhZEhZD5QEQiYZakOOo3/uvTCc6kRN6pS
+eouPvTKzgvNcH4kQKDke
+=3Z27
+-----END PGP SIGNATURE-----
