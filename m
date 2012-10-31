@@ -1,15 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/7
-Message-Id: <3261-Thu19Apr2012104028+0100-jpff@codemist.co.uk>
-Date: Thu, 19 Apr 2012 10:40:28 +0100
-From: john ffitch <jpff@...emist.co.uk>
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Requests: Multiple security flaws in csound5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/5
+Message-ID: <50914189.20407@redhat.com>
+Date: Wed, 31 Oct 2012 09:19:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: net: divide by zero in tcp algorithm illinois
 Content-Type: text/plain; charset=utf-8
 
-As far as I am aware the code in sourceforge git repository fixes
-these potential errors.  The two-patch for 810802 related to
-misunderstanding of what the problem was as the notification I had
-was terse.
-==John ffitch
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 10/31/2012 08:31 AM, Petr Matousek wrote:
+> Description of the problem: Reading TCP stats when using TCP
+> Illinois congestion control algorithm can cause a divide by zero
+> kernel oops.
+> 
+> An unprivileged local user could use this flaw to crash the
+> system.
+> 
+> Proposed upstream patch: 
+> http://thread.gmane.org/gmane.linux.network/247871
+> 
+> Acknowledgements:
+> 
+> This issue was discovered by Rodrigo Freire of Red Hat.
+> 
+> References: https://bugzilla.redhat.com/show_bug.cgi?id=871848 
+> http://thread.gmane.org/gmane.linux.network/247871
+> 
+> Thanks,
+
+Please use CVE-2012-4565 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQkUGJAAoJEBYNRVNeJnmTaCEQAMpQYy2q4fkaUZfh8q031LDD
+9HLVhj19u+m6CRGJ5MvKhdGGl9g5zFkPcz5bO0JtH+q8KW7clggQpAzuskFE/GL7
+ANpU5Jhx5swa03tQmQjmz5381MvkOT3KOwLMm6zGTzIV2slBLMMgqnKiRNECczh2
+asVMQpfXPIuZ2zKgMRDyyb1PHWFE40AX+10+dnCOU9eFoB0W/OCkPg4NN91i/2ae
+OK+XYvMNeeGX/TAMbZbfQ3mAaqCZ7vHMWDDI21u5AS32KdmC/oUMiHb51qK6wMI2
+0gF869OTg/e3r5+nrWwSaALchwRuZrsDf+N7mX7kwmgwyT807uQB4eVULQ2z1hX9
+2RnYXbq+XWLonDzvazHNj5cHfBL9VNhBQKe/fYm+iUx/VTSR7Owcw0xwvCW61cIo
+6/2E8OkfF4WYGVN/HsnNZmBPqmmeinmB2bFuHHln0i2l7oLxQpgnHsvOYlQlITSB
+1TKvxDzbLQHs+JmQYO5CGdtbPyxz98AkZevHGQmjgIqvYt/cGAa4DSxb2l/IKf3t
+5ZG60XcAkws8ZycULSnn513q0u5tcqno6yKBb75jZ3tsJk+uY0lwVNCOH6sqhIq2
+C58H6Gos6iMOkwv/rzOg0Ydzym8zwE81DFMsL4dgMyGpp1ZD6jSuWSmxValbkiCI
+va4CJ34Fm427d1d760Y3
+=ptv8
+-----END PGP SIGNATURE-----
