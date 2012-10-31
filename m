@@ -1,48 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/9
-Message-ID: <4FC502C0.6000201@redhat.com>
-Date: Tue, 29 May 2012 11:09:20 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-Subject: Re: CVE Request: XXE vulnerability in Restlet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/3
+Message-ID: <Pine.GSO.4.64.1210311020220.12365@faron.mitre.org>
+Date: Wed, 31 Oct 2012 10:27:51 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Kurt Seifried <kseifried@...hat.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>, Josh Bressers <bressers@...hat.com>
+Subject: Re: Strange CVE situation (at least one ID should come of this)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 05/29/2012 04:38 AM, Nicolas Grégoire wrote:
-> Hello,
-> 
-> version 2.0.14 of the Restlet Java Framework corrects an XML
-> External Entity vulnerability: 
-> http://blog.restlet.com/2012/05/23/restlet-framework-2-1-rc5-and-2-0-14-released/
+On Tue, 30 Oct 2012, Kurt Seifried wrote:
+
 >
->  Regards, Nicolas
+> On 10/30/2012 11:34 AM, Steven M. Christey wrote:>
+>>
+>> To have a CVE for "don't use this" is not consistent with
+>> long-existing practice.  I don't recall ever intentionally
+>> assigning a CVE for such a thing - after all, CVE is about
+>> vulnerabilities, and "don't use this" is awfully vague.
+>
+> True, but we've already gone down that road, e.g.:
+>
+> CVE-2012-2400 	Unspecified vulnerability in
+> wp-includes/js/swfobject.js in WordPress before 3.3.2 has unknown
+> impact and attack vectors.
 
-Please use CVE-2012-2656 for this issue. Also is there a specific
-source file/etc that contains the fix?
+That's not the same as a generic "don't use this."  For this 
+CVE-2012-2400, there is a specific advisory from a specific vendor telling 
+customers to patch a vulnerability.  It's "unspecified" all over the place 
+due to lack of details, so risk analysis is problematic, but it's a 
+statement of some kind of vulnerability in a specifc version by an 
+authoritative source.
 
+Oracle and HP publish advisories like this on a regular basis.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>> Deployment of risky software is effectively a configuration or
+>> asset management issue, which is well outside the scope of CVE.
+>> (Maybe it's more like a Common Configuration Enumeration (CCE)
+>> issue.)
+>
+> If anything I think it would fit into CPE
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+CPE is neutral on security - it's just about identifying software packages 
+and versions.  One main use is in vulnerability management, but it's more 
+general than that.
 
-iQIcBAEBAgAGBQJPxQLAAAoJEBYNRVNeJnmTt0kP/3EsNgiHZJG2jKSSAQ62xfeo
-3SBLZ18X9r2I8kARkhgxo1SJrTWVPoO8vh7XZ1WBkPhErxTq7zHKHONJ3Eo9QfJu
-oChBtaXV8Ot7P85ggkposlzcBc6bLY+dL9n1DS7oQKnJOfsYD43SSEMt/uEiWpzH
-gbUnevdKlE1BEbuMf2kffhdw3TV9ccfCkhlp2ZII9WjnEN4nSmz68U4JfuKkK7H9
-VZGDbCgkSd14iRRgcvuARJfa4nFrkH9R7qCcs1HcCym/clPz9iXig6bISfWCxmxr
-tp6McA8ZRz8ANhehc+qxjUhkRfdlwK8FWlOQlZEs5HJ4ZTbs9fY+f47veLd5JKrF
-hRU4bTDmJBkwVqj+ZnZSvF4bt62PlSPCuvde7cn8VpdwUSFlwluXPLvENNTYQXPa
-a225ScMWdqwMKZumJ0/BneIwFO+xToBz6nCRJWDp6ASIqOvwQ6Fx6ojcTKmZz+3X
-gnrW/Iu3gc98o3rnxY/nEg77EJaG0PKGIo21QIhy92ap1NiOP6idwZw7UpxECFRd
-FvljD6OQ+xhe4viXWvosQB3v8WyAsBnRSLef6Gjhh7kMV+YovGabwD0O7synAYa+
-MoH+AjUwKa3Pho0YG/tOZFfznLr1N/wP9pGsOoheDsTQ7/0bKpeb826BB0O+efuS
-TJOqwhutSDdqn3+NLADb
-=YfAp
------END PGP SIGNATURE-----
+- Steve
