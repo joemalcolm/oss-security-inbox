@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/09/1
-Message-ID: <4FFAC8D3.20404@redhat.com>
-Date: Mon, 09 Jul 2012 14:04:35 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, David Woodhouse <dwmw2@...radead.org>, Daniel Berrange <berrange@...hat.com>, Daniel Veillard <veillard@...hat.com>
-Subject: CVE Request -- dnsmasq: When being run by libvirt open DNS proxy (reachable out-of the virtual network set for the particular guest domain too) is created
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/10
+Message-Id: <201210311730.28969.geissert@debian.org>
+Date: Wed, 31 Oct 2012 17:30:28 -0600
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request: LetoDMS, more issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Wednesday 31 October 2012 09:31:13 Kurt Seifried wrote:
+> On 10/30/2012 01:28 PM, Raphael Geissert wrote:
+> > On Friday 05 October 2012 23:11:36 Raphael Geissert wrote:
+> >> Regression in the above patch (fixed after the release of
+> >> 3.3.9):
+> >> http://mydms.svn.sourceforge.net/viewvc/mydms/branches/letoDMS-3.3.x/o
+> >> ut/out.UsrMgr.php?r1=982&r2=981&pathrev=982
+> 
+> Does this regression cause a security issue (e.g. did accidentally
+> putting htmlspecialchars() in actually cause a new XSS?).
 
-   David Woodhouse reported a deficiency in the way dnsmasq,
-a lightweight, easy to configure DNS forwarder and DHCP server,
-when being run under libvirt, a library providing simple
-virtualization API, performed processing of packets coming
-outside of virtual network set for the particular guest domain.
+I don't think so. The commit log says[1]:
+"no need to escape with htmlspecialchars() because UI::contentSubHeading() 
+does it too."
 
-   When libvirt was configured to provide a range of public
-IP addresses to its guest domains and dnsmasq was instructed
-to discard packets originating from other interfaces, than
-specified on the command line via the --bind-interface option,
-those packets (coming from 'prohibited' interfaces) were not
-dropped properly and subsequently processed.
+[1]http://mydms.svn.sourceforge.net/viewvc/mydms?view=revision&revision=982
 
-   A remote attacker could use this flaw to cause a distributed
-denial of service, as demonstrated in the report [1] via "stream
-of spoofed DNS queries producing large results".
-
-References:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=833033
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
