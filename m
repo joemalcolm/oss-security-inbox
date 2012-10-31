@@ -1,33 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/20/5
-Message-ID: <20120920155444.6d81422b@redhat.com>
-Date: Thu, 20 Sep 2012 15:54:44 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, Florian Weimer <fweimer@...hat.com>, Oracle Security Team <secalert_us@...cle.com>
-Subject: Re: CVE Request (minor) -- JVM: heap memory disclosure (possibly various JDKs)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/8
+Message-ID: <5091452E.8080306@redhat.com>
+Date: Wed, 31 Oct 2012 09:35:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Raphael Geissert <geissert@...ian.org>, Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org
+Subject: Re: CVE Request: Python keyring
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 11 Sep 2012 17:37:11 -0400 (EDT) Steven M. Christey wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> The bug report appears to be describing a narrow class of
-> vulnerability that could affect multiple codebases that implement
-> Java Virtual Machines, not just Oracle's; if so, then a separate CVE
-> would be needed for each REPORTED codebase, and CVE-2012-4416 is ONLY
-> for bug id 7196857 for the Oracle-supported JVM.
+On 10/30/2012 01:27 PM, Raphael Geissert wrote:
+> On Friday 05 October 2012 15:21:57 Marc Deslauriers wrote:
+>> Hello,
+>> 
+>> Python keyring before 0.9.1 was using the user-supplied password 
+>> insecurely.
+>> 
+>> From the 0.9.1 changelog:
+>> 
+>> CryptedFileKeyring now uses PBKDF2 to derive the key from the
+>> user's password and a random hash. The IV is chosen randomly as
+>> well. All the stored passwords are encrypted at once. Any
+>> keyrings using the old format will be automatically converted to
+>> the new format (but will no longer be compatible with 0.9 and
+>> earlier). The user's password is no longer limited to 32
+>> characters. PyCrypto 2.5 or greater is now required for this
+>> keyring.
+>> 
+>> See:
+>> 
+>> http://pypi.python.org/pypi/keyring#id2 
+>> https://bugs.launchpad.net/ubuntu/+source/python-keyring/+bug/1004845
+>
+>> 
+> Could a CVE id be assigned please?
+> 
+> Thanks,
 
-Out of curiosity, what is the definition of "reported codebase" here?
-I'm asking as 2 CVEs were assigned, one for Oracle JVM and one for
-OpenJDK JVM.  Those codebases are not unrelated though, both problems
-are quite likely to exist because of a bug in a shared code, which
-usually implies single CVE.
+Please use CVE-2012-4571 for this issue.
 
-The current practice is that Java CVEs assigned by Oracle and used for
-Oracle Java SE are also used to refer to fixes applied to the
-open-sourced (OpenJDK) or licensed (IBM Java) JDK versions that share
-the vulnerable code.  For example, a single CVE-2012-4681 was used for
-the recent 0day flaw in Oracle Java SE 7, IBM Java SE 7 and OpenJDK 7.
-Is the use of CVE-2012-4681 for all 3 considered wrong?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQkUUuAAoJEBYNRVNeJnmT31MP/Rtf0gogMeONxkrT/HV/TzdB
+bdOtVsowwczBuRtGd1x1gH9x/IAtCLhjGUxD3ZOOE/7F5lUsD1C/RTqDzR2xNRhZ
+XDaG3QKo0zBLMvwy1gVBFZbNNLaRqqWft8KniXWvATyXHHXmzfnLsuV9l/mzPVQS
+n/8ARJs+p5SfNP6d0vyPTMlu04Juw7oo/VuMkSSSCnMQ79//rBS4zWlWC0itU5d0
+BaEugmxaSxkM8Mk6hSM51zcieBShs/pnneJQfugnhowDwov7k/PqPXMjU/84bbLi
+oT5LfZbqSFnhVLxHFocRScHu96rs1qKh/hjKbfPCaJNwpSp1IPHeHzhTNtincxIq
+NHM7xQ/qa6A4yl5XZHX7jED9SX7Qrfe0KzaEkqr8zI9wIYwrVF1SgFO9GN/1V3yv
+CkdC9EEh6s+etKHwnVlrzd9aFTM/A9u44vDvrD8tlAK3WEzsWrqN6SbGAd+8l4/l
+Pr5Ys53WnT8ca7grxs9ezw5WRrqDcAQzGFfHs6ntJwF42/cIO4OO9l7WQPR5aTn1
+LgOCsnHYm6tTnxI4Kg5YZ27wfDvr/62bRMZJt7O5r4PqttoML5EJr4T49vUiDg/J
+93kHkQIJpwHgluNVxhv6kqd/zy3Pm5LSBrSt+5HW5sQsxqCqpO54IcuQV2cdssrZ
+03A84K5389hgNQyU8aLK
+=AOwV
+-----END PGP SIGNATURE-----
