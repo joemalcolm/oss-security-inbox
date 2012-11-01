@@ -1,28 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/26/1
-Message-ID: <20121226113818.GA6438@pisco.westfalen.local>
-Date: Wed, 26 Dec 2012 12:38:19 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Curl insecure usage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/01/1
+Message-ID: <Pine.GSO.4.64.1210312253001.15861@faron.mitre.org>
+Date: Wed, 31 Oct 2012 23:02:19 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: joshua@...uia.com, oss-security@...ts.openwall.com
+cc: greg.knaddison@...il.com, angela.byron@...uia.com
+Subject: Re: CVE Request for Drupal Contributed Modules
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 29, 2012 at 10:44:36PM +0100, Moritz Mühlenhoff wrote:
-> > Also can someone collate and post a list of all the other apps using
-> > curl insecurely and need CVE's with appropriate links to the
-> > upstreams/etc? Thanks.
-> 
-> There are some, which are potentially affected, but where discussion
-> with upstream is still pending.
 
-Here are two more, please assign CVE IDs (both discovered by
-Alessandro Ghedini):
+Joshua and others on the Drupal team,
 
-1. Falcon programming language:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=696681
+It appears that the following followup questions by Kurt Seifried were 
+missed during some of the confusion over contacts and email addresses for 
+Drupal-related security issues.
 
-2. NuSOAP PHP package:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=696707
+Please respond to the comments in this email, as it supercedes Kurt's 
+email from October 7.
 
-Cheers,
-        Moritz
+
+On Sun, 7 Oct 2012, Kurt Seifried wrote:
+
+>>
+>>
+>> Multiple Vulnerabilities: http://drupal.org/node/1719548 |
+>> SA-CONTRIB-2012-125 - Chaos tool suite (ctools) - Local File
+>> Inclusion http://drupal.org/node/1719548 | SA-CONTRIB-2012-125 -
+>> Chaos tool suite (ctools) - Cross Site Scripting (XSS)
+>
+> This sounds like a single issue with two possible outcomes?
+>
+> The module doesn't sufficiently validate css import statements to
+> confirm they only include css content appropriate to show to end
+> users. This could allow a malicious user to add sensitive content from
+> the site (e.g. settings.php) exposing that sensitive content to
+> visitors of the page. It could also be used to execute a Cross Site
+> Scripting attack.
+>
+> Links to the code commits fixing this would be helpful.
+
+Your answer to this question will help determine whether we have one CVE 
+or two.
+
+
+>> http://drupal.org/node/1732946 | SA-CONTRIB-2012-126 - Hotblocks -
+>> Cross Site Scripting (XSS) and Denial of Service (DoS)
+>
+> This is a multiple CVE issue?
+
+Kurt - we investigated the advisory and it's pretty clear that the two are 
+distinct, so we assigned the following CVEs (Drupal people, please take 
+note):
+
+CVE-2012-5704 - DoS (infinite loop with self-referencing block)
+CVE-2012-5705 - XSS
+
+
+>> Multiple Vulnerabilities: http://drupal.org/node/1762220 |
+>> SA-CONTRIB-2012-130 - Jstool - Access Bypass
+>> http://drupal.org/node/1762220 | SA-CONTRIB-2012-130 - Jstool -
+>> Arbitrary code inclusion
+>
+> The description/vulns don't seem to match up on this one. Can you clarify?
+>
+> The module does not protect its menu paths, which contain sensitive
+> information about all javascript files on the site and their contents.
+> The module does not validate filenames which can lead to potential
+> read/write access to arbitrary files on the server.
+>
+> Links to the code commits fixing this would be helpful.
+
+Drupal team - if these both have the same root cause, such as a directory 
+traversal issue, then they would receive one CVE since they are the same 
+type of issue - even if there are different impacts.  Otherwise, two CVEs 
+might be needed.
+
+>> http://drupal.org/node/1762482 | SA-CONTRIB-2012-133 - Taxonomy
+>> Image - Cross Site Scripting (XSS) & Arbitrary PHP code execution
+> So this is the same root issue, not filtering file uploads allowing an
+> attacker to upload arbitrary stuff (including PHP code), the outcome
+> of which could be PHP code execution, or XSS (or other things I
+> suppose like DoS, CSRF, etc.)?
+
+This is the same basic issue as the last one.  If there's one root cause 
+in which file uploads aren't prevented when they should, then they might 
+receive only one CVE.
+
+(Basically, if a user X is intentionally allowed to do action Y, but a 
+vulnerability allows somebody to become X - then we don't assign a 
+separate CVE ID for Y.)
+
+Thanks,
+Steve
