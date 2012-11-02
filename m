@@ -1,19 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/12
-Message-ID: <20121213161906.GG2754@sentinelchicken.org>
-Date: Thu, 13 Dec 2012 08:19:06 -0800
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/3
+Message-ID: <50939F0B.5020709@redhat.com>
+Date: Fri, 02 Nov 2012 15:53:07 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Robust XML validation
+Subject: libtiff: Missing return value check in ppm2tiff leading to heap-buffer overflow when reading a tiff file
 Content-Type: text/plain; charset=utf-8
 
+Hi All,
 
-> Validating against trusted schemas/DTDs would not be sufficient in my
-> opinion. For example, such validations are not effective against the
-> billion laughs attack (http://en.wikipedia.org/wiki/Billion_laughs).
+A flaw was found in the way ppm2tiff, a tool to create a TIFF file from
+PPM, PGM and PBM image files, did not check the return value of
+TIFFScanlineSize() function. When TIFFScanlineSize encountered an
+integer-overflow and returned zero, this value was not checked. A
+remote attacker could provide a specially-crafted PPM image format
+file, that when processed by ppm2tiff would lead to ppm2tiff executable
+crash or, potentially, arbitrary code execution with the privileges of
+the user running the ppm2tiff binary.
 
-But... isn't the point that you'd never accept a DTD or schema from an
-untrusted source?  That is, never even bother to parse it and
-arguably, reject documents from users that contain them.
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=871700
 
-tim
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
