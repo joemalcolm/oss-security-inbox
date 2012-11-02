@@ -1,42 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/5
-Message-ID: <2035741.oIHJTl3Sd1@tux.boltz.de.vu>
-Date: Fri, 27 Jan 2012 11:56:33 +0100
-From: Christian Boltz <oss-securrity@...ltz.de>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: PostfixAdmin SQL injections and XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/8
+Message-ID: <50940466.60601@redhat.com>
+Date: Fri, 02 Nov 2012 11:35:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- pgbouncer: DoS (pooler server shutdown) by adding database with large name
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Am Donnerstag, 26. Januar 2012 schrieb Kurt Seifried:
-> Please use CVE-2012-0811 for PostfixAdmin 2.3.4 multiple SQL
-> vulnerabilities
+On 11/02/2012 04:53 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> a denial of service flaw was found in the way pgbouncer, a
+> lightweight connection pooler for PostgreSQL, performed processing
+> of client requests attempting to add new database(s) with large
+> name(s). A remote attacker could use this flaw to cause pooler
+> server shutdown.
+> 
+> Relevant upstream patch: [1]
+> http://git.postgresql.org/gitweb/?p=pgbouncer.git;a=commitdiff;h=4b92112b820830b30cd7bc91bef3dd8f35305525
+>
+>  References: [2]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692103 [3]
+> https://bugzilla.redhat.com/show_bug.cgi?id=872527
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-> Please use CVE-2012-0812 for PostfixAdmin 2.3.4 multiple XSS
-> vulnerabilities
+Please use CVE-2012-4575 for this issue.
 
-Thanks.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-I forgot to mention a small, but important detail: The credits ;-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Credits go to 
-    Filippo Cavallarin <filippo.cavallarin [at] codseq [dot] it> 
-for finding most of the vulnerabilities and notifying us.
-
-The only exception is 
-    - create-domain: fix SQL injection (only exploitable by superadmins) 
-which was found by Matthias Bethke <msbethke [at] sourceforge [dot] net>
-
-Please add the credits to the CVEs.
-
-
-Gruß
-
-Christian Boltz
--- 
-Und jetzt sei ein lieber Hase und hoppel irgendwohin, wo man knuddelige,
-fluffige kleine Dinger wie Dich in den Arm nimmt und lieb hat.
-[Robin S. Socha - d.c.o.u.l.m.]
-
+iQIcBAEBAgAGBQJQlARmAAoJEBYNRVNeJnmTLMMP/R3wwdJ2OPhSGH6/kgUOEnU8
+WG2jR6UVUAZu8eyylKZFLAUlEq+SgFsjJiwU9rL0/P1SHM/gXaElIEyeuJ3irETD
+zQVvofBQRuvj+eqmiUCOCeamaYM6OedUoeTiduvZ2r44My0FvzPyN09NFtGpP+BC
+WdadJ6Hlpb1x6gjpNQqtxxI3z8Lw9/VUWuJW1kcXT/FYKy30FyMwi5qIP0xV2mPe
+dzKcWR5HtaTjatZp+LqnR3NhC6hsa0YHdTQwqGtHdG6ePa9ipp5uhPW+tsQEydlk
+5qmr/64cxOa+5soGX6F3ReODuymBPPJAOu39TY9X47b5xAWkwqZGmXAj0Ny3iNlY
+M7ZlGv+7vIoxXzJ72L8e/LILfNr7QJHEtdv57vd6pvPFtx0Eur76o7Cug+DZc1Nv
+Z0yCFmvRcDaA4iDNK5WNjPDyTIFZY/dbCrG2P8XcgGs+Skc3qRP5yPmx8J3a1O/b
+tkjaNYJwdpKEQQOU8bbpP8rpGmE4T5XO/fY9o5rpfzzWuet5Z0mhzWgThucB1Lkn
+mb2M12Klr4FU3qHjdQ9y/Vrqazo9O1pkCHmaw1O0PbgiVgkfEsGMk6Qi+EIKdBSl
+R2WswIrvkpr7sWDmFjdbo4WIaWFqI0AWb/LorEHydQdrXTTpKvs7ePfv+I5dScNy
+8QU/b/x0BBqzE0eJuS4J
+=GJ07
+-----END PGP SIGNATURE-----
