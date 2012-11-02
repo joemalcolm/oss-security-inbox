@@ -1,48 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/14
-Message-ID: <87ty17jfwv.fsf@mid.deneb.enyo.de>
-Date: Thu, 29 Mar 2012 22:44:32 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: TYPO3-CORE-SA-2012-001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/2
+Message-ID: <1351849138.25049.15.camel@Brinn>
+Date: Fri, 02 Nov 2012 09:38:58 +0000
+From: Caolán McNamara <caolanm@...hat.com>
+To: Marcus Meissner <meissner@...e.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2012-4233: multiple null pointer dereference flaws in LibreOffice/OpenOffice.org
 Content-Type: text/plain; charset=utf-8
 
-I may have missed a previous request.  If I can count properly, there
-are four different issues:
+On Fri, 2012-11-02 at 09:07 +0100, Marcus Meissner wrote:
+> On Thu, Nov 01, 2012 at 02:44:23PM -0600, Vincent Danen wrote:
+> > This one took me a bit by surprise.  Debian released an advisory for OOo
+> > and I have no record of this CVE anywhere.  It looks as though it went
+> > public yesterday, and was fixed in upstream 3.5.7.2, but it's not noted
+> > on the LibreOffice web site at all.
 
-| Vulnerable subcomponent: Extbase Framework
-| Affected Versions:
-|   Versions 4.4.x and 4.5.x are not affected by this vulnerabilty.
-| Vulnerability Type: Insecure Unserialize
-| 
-| Problem Description: Due to a missing signature (HMAC) for a request
-| argument, an attacker could unserialize arbitrary objects within
-| TYPO3.
-| 
-| To our knowledge it is neither possible to inject code through this
-| vulnerability, nor are there exploitable objects within the TYPO3
-| Core. However, there might be exploitable objects within third party
-| extensions.
+Because I update the web site and I didn't get around to it until this
+morning. http://www.libreoffice.org/advisories/cve-2012-4233/
+https://www.htbridge.com/advisory/HTB23106 is the source of the CVE and
+their advisory contains the reproducer documents.
 
-| Vulnerable subcomponent: TYPO3 Backend
-| Vulnerability Type: Cross-Site Scripting
-| 
-| Problem Description: Failing to properly HTML-encode user input in
-| several places, the TYPO3 backend is susceptible to Cross-Site
-| Scripting. A valid backend user is required to exploit these
-| vulnerabilities.
+> >> Does anyone have any further details on these issues?  I just filed a
+> > bug in our bugzilla (https://bugzilla.redhat.com/show_bug.cgi?id=872350)
+> > with the following description/references which are all I've been able
+> > to find so far.
 
-| Vulnerable subcomponent: TYPO3 Command Line Interface
-| Vulnerability Type: Information Disclosure
-|
-| Problem Description: Accessing a CLI Script directly with a browser
-| may disclose the database name used for the TYPO3 installation.
+These are the commits for the high-tech advisories
+http://cgit.freedesktop.org/libreoffice/core/commit/?h=libreoffice-3-5-7&id=44bc6b5cac723b52df40fbef026e99b7119d8a69
+http://cgit.freedesktop.org/libreoffice/core/commit/?h=libreoffice-3-5-7&id=8ca9fb05c9967f11670d045886438ddfa3ac02a7
+http://cgit.freedesktop.org/libreoffice/core/commit/?h=libreoffice-3-5-7&id=6789ec4c1a9c6af84bd62e650a03226a46365d97
+http://cgit.freedesktop.org/libreoffice/binfilter/commit/?h=libreoffice-3-5-7&id=7e22ee55ffc9743692f3ddb93e59dd4427029c5b
 
-| Vulnerable subcomponent: TYPO3 HTML Sanitizing API
-| Vulnerability Type: Cross-Site Scripting
-|
-| Problem Description: By not removing non printable characters, the API
-| method t3lib_div::RemoveXSS() fails to filter specially crafted HTML
-| injections, thus is susceptible to Cross-Site Scripting.
+> (The whole OpenOffice/LibreOffice security issue handling is not really
+> good ... long embargoes that get extended wildly even though fixes are in
+> public GIT already, etc )
 
-<http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-001/>
+Well, I'd be more than happy to have more distro folk subscribed to
+officesecurity@...ts.freedesktop.org Fixing the bugs is easy, syncing
+embargo dates between LibreOffice and Apache OOo is a bit more
+challenging.
+
+C.
+
