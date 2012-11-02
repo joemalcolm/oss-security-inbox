@@ -1,31 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/05/13
-Message-ID: <1330952088.15354.132.camel@mdlinux>
-Date: Mon, 05 Mar 2012 07:54:48 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: lightdm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/1
+Message-ID: <20121102080731.GH19427@suse.de>
+Date: Fri, 2 Nov 2012 09:07:31 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, caolanm@...hat.com
+Subject: Re: CVE-2012-4233: multiple null pointer dereference flaws in LibreOffice/OpenOffice.org
 Content-Type: text/plain; charset=utf-8
 
-Could we please get a CVE assigned to the following issue:
-
-lightdm leaks file descriptors to child processes. A local attacker can use this to bypass
-intended permissions and write to the log file, cause a denial of service, or possibly
-have another unknown impact.
-
-Bug:
-https://bugs.launchpad.net/ubuntu/+source/lightdm/+bug/927060
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=658678
-
-Thanks,
-
-Marc.
-
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+On Thu, Nov 01, 2012 at 02:44:23PM -0600, Vincent Danen wrote:
+> This one took me a bit by surprise.  Debian released an advisory for OOo
+> and I have no record of this CVE anywhere.  It looks as though it went
+> public yesterday, and was fixed in upstream 3.5.7.2, but it's not noted
+> on the LibreOffice web site at all.
+>
+> Does anyone have any further details on these issues?  I just filed a
+> bug in our bugzilla (https://bugzilla.redhat.com/show_bug.cgi?id=872350)
+> with the following description/references which are all I've been able
+> to find so far.
+>
+> I'm not sure on the commit referenced as [4] below; that was the first
+> one that caught my eye, but I think it might be a red herring as it
+> doesn't seem to be relevant to any of the file types that are noted as
+> affected.
+>
+> Any further information anyone has would be sincerely appreciated.
 
 
+I am not sure I am allowed to forward the quoted tdf-security mail
+that lists the LibreOffice commits.
+
+But it has in its mailheader:
+From:     Caolán McNamara <caolanm@...hat.com>
+perhaps he can share the details (and I wonder why this caught redhat
+by surprise then);
+
+(The whole OpenOffice/LibreOffice security issue handling is not really
+good ... long embargoes that get extended wildly even though fixes are in
+public GIT already, etc )
+
+Ciao, Marcus
