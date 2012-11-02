@@ -1,24 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/08/6
-Message-ID: <4F593386.1040604@redhat.com>
-Date: Thu, 08 Mar 2012 15:32:38 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/10
+Message-Id: <201211021958.qA2JwoEX000798@linus.mitre.org>
+Date: Fri, 2 Nov 2012 15:58:50 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Parallels Plesk Panel admin/plib/api-rpc/Agent.php Unspecified SQL Injection
+Cc: cve-assign@...re.org
+Subject: Dokeos 2.1.1 XSS CVE-2012-5776
 Content-Type: text/plain; charset=utf-8
 
-On 03/08/2012 12:46 AM, Henri Salo wrote:
-> Can I get 2012 CVE-identifier for this security vulnerability, thanks.
-> 
-> OSVDB: http://osvdb.org/show/osvdb/79769
-> Secunia: http://secunia.com/advisories/48262/
-> SecurityFocus: http://www.securityfocus.com/bid/52267
-> Vendor: http://kb.parallels.com/en/113321
-> 
-> - Henri Salo
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This isn't open source is it?
+We have assigned CVE-2012-5776 for all of the XSS issues involving
+"extra_" parameters in main/auth/profile.php in Dokeos 2.1.1; see
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+  http://www.securityfocus.com/archive/1/524564
+
+Here is a possibly relevant code excerpt from the Dokeos
+main/admin/registration_step3.php file:
+
+// extra default values
+$defaults['extra_street']       = isset($_SESSION['user_info']['extra_street'])?$_SESSION['user_info']['extra_street']:'';
+$defaults['extra_addressline2'] = isset($_SESSION['user_info']['extra_addressline2'])?$_SESSION['user_info']['extra_addressline2']:'';
+$defaults['extra_zipcode']      = isset($_SESSION['user_info']['extra_zipcode'])?$_SESSION['user_info']['extra_zipcode']:'';
+$defaults['extra_city']         = isset($_SESSION['user_info']['extra_city'])?$_SESSION['user_info']['extra_city']:'';
+$defaults['extra_organization'] = isset($_SESSION['user_info']['extra_organization'])?$_SESSION['user_info']['extra_organization']:'';
+if ($iden == 0 && $wish == 0) {
+    $defaults['extra_phone'] = isset($_SESSION['user_info']['extra_phone'])?$_SESSION['user_info']['extra_phone']:'';
+}
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJQlCVhAAoJEGvefgSNfHMdVn4H/1ja+VHgAZV85AfOzieg3k0A
+PSKLu77HeSIEmPMoJNyQMWcEpPlu/T/Oj7E/ktXssU6PIoXsct+7HGKjN1aSDAlY
+REk+uxTOt1ByQMb9EmHt01/V7Jw/j/fD4itykmzerBKx3x7Xy69k5NRWiySbCsSs
+DYppdKN6vUTBQFpMPayTv56ii5QwQ7xAqg+yUeC0HJuJxh+hOE0mYHRteOQDxQcx
+sr70AACcax3/OOl900YO+X/NSAOw0tW4CEhMIyhrFCyHFcNSQRG/s2EameVzD6BO
+DdtANg3nvaypKR3a4EQ2cFSDvX2zXCYhd8iqbMm4M2n1aLseNeGfdd5zc4BRICM=
+=OeB+
+-----END PGP SIGNATURE-----
