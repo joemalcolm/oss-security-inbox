@@ -1,116 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/24/5
-Message-ID: <506096B2.4050007@redhat.com>
-Date: Mon, 24 Sep 2012 11:21:54 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/5
+Message-ID: <160917472.5434172.1351857344147.JavaMail.root@redhat.com>
+Date: Fri, 2 Nov 2012 07:55:44 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Tavis Ormandy <taviso@...xchg8b.com>
-Subject: Re: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Strange CVE situation (at least one ID should come of this)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> 
+> That's not the same as a generic "don't use this."  For this
+> CVE-2012-2400, there is a specific advisory from a specific vendor
+> telling customers to patch a vulnerability.  It's "unspecified" all over
+> the place due to lack of details, so risk analysis is problematic, but
+> it's a statement of some kind of vulnerability in a specific version by an
+> authoritative source.
+> 
+> Oracle and HP publish advisories like this on a regular basis.
+> 
 
-On 09/24/2012 11:15 AM, Kurt Seifried wrote:
-> On 09/24/2012 02:42 AM, Tavis Ormandy wrote:
->> Matthias Weckbecker <mweckbecker@...e.de> wrote:
-> 
->>> On Friday 21 September 2012 23:47:48 Michael Gilbert wrote: 
->>> [...]
->>>> 
->>>> So anyway, I suppose this creates more questions than
->>>> answers, but I guess its worth thinking about.  After all,
->>>> what did the user really expect?  If they had intended that
->>>> original file to be private, and now its not, is that
->>>> appropriate?  Is it more appropriate to assume all users know
->>>> how to use umask appropriately?
->>>> 
->>> 
->>> IMO if one bothers to encrypt a file at all it was certainly 
->>> intended to be private and only supposed to be readable by a 
->>> certain user / user group and not by just everyone. Otherwise 
->>> encryption would be pointless, or are there any other reasons
->>> for encrypting a file?
->>> 
->>>> Best wishes, Mike
->>> 
->>> Thanks, Matthias
->>> 
-> 
->> I agree. Users do know how to use umask properly, but this isn't 
->> what umask is for. The umask for the low order bits are only 
->> applied if the program requested 0666, it's still the 
->> responsibility of the program to choose the appropriate 
->> permissions.
-> 
->> Creating sensitive files with 0666 and then saying "set your
->> umask" is just wrong.
-> 
->> Tavis.
-> 
-> So where do we draw the line? tar? By this definition any program
-> that has stores sensitive data (passwords/etc.) or has potentially 
-> sensitive output (so email, web clients, chat clients, file 
-> downloaders, text editors, etc.) needs to internally pick some
-> "safe" default and apply it and/or umask (whichever is more secure
-> I guess).
-> 
-> Personally I think applying file permissions at the program level
-> is in general (outside of some highly specific instances like
-> encryption key generation and storage in a file) a very very bad
-> place to do this. Moving it up a layer to the OS (e.g. umask, home
-> dir permissions, etc.) makes way more sense I think.
-> 
-> However if people want to go ahead with this then a short list
-> would be:
-> 
-> OpenSSH/any SSH or encrypted connection client OpenSSL/anything
-> that generates certificates/keys/etc. GPG/PGP/anything that
-> provides file encryption/decryption Email clients (email is almost
-> always sensitive, stored passwords/certs) Web clients (cached web
-> pages are sensitive, stored passwords/certs) Chat programs (IRC,
-> MSN, etc.) (stored passwords/certs) Any programs storing
-> financial/accounting data (GnuCash, etc.). Any programs storing
-> health related data (GnuHealth, etc.). File editing programs were
-> previously mentioned
-> 
-> I'm sure I've missed a few.
+This isn't meant to be a troll, it's a legitimate question.
 
-Sorry I forgot to include this:
+So if someone publishes an advisory stating "I have found a number of
+security flaws in product X." Would that get the same sort of CVE ID?
 
-Also trying to fix this in a lot of programs has a major downside:
-systems with bad umasks/home directory permissions/etc. remain hidden
-to the user potentially. E.g. if programs start policing its file
-output permissions this works great until the user uses a program that
-doesn't do this (which they will do, probably sooner than later).
+I of course don't approve of such advisories, my curiosity is academic.
 
-Now that's not to say that some specific instances of data that by
-definition MUST be secret (e.g. secret passwords, certificate keys,
-etc.) should have their permissions policed by their respective
-program (due to the fact that they are quite often used on shared
-systems/etc.), but this is a vastly smaller set of programs and much
-more manageable.
+Thanks.
 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQYJayAAoJEBYNRVNeJnmT8k0P/RDFbswvng9A/PzbYKEiXS/2
-K2NFUK0EWDTbynzj8h6LtHvFmuUBE+n+xwDkKhrTtGcXken2VaTVeW4FtYN6qOlt
-aOeskXXnsu/WNoCC2AYFFX+CYPpX9idk7WnytzU2jjeEOVmqikm/FubzBKqe79yN
-hnBSYQGBhsN0xIMjGPij9uNv9kpRAMrhKOXEV6A8oKszSrMzbyrt8hy9DniBNnws
-rNDRdb5GzUQ+2mDa42odaqZWSZLdEk2eVEDjXpEqtkzwAHRoAi+iLBm7LOp5b1XL
-WJ3HsEIp8CtkjQpMbHWeh5sz+UEIT9MR405+2+koc2wpmKE0/TZpEOxXk0oncDvg
-GEwfsqZppRoj3+/Y/E8BunV+M/HYfRmFXsOg8KZlPJXoPMnDuVQkcGZKE8NtiMvX
-i+tDNzsjfTv7nvWWYyAmH88XRCtoYdmCdZRKMNjR2cLLD/Qek96N+pX8i2Uod1VI
-k+Sb+R8p4V9b4LbQMAaOq12YE6WFDs6J1RGkWpQcPb07Dmt00DFBDsNWMLKTIWml
-6mcKW9FgNDuSAoYmGaCzLyLLEaKJC5PhmFsE7gXXbM+VvRV8PjhtnA4m7Ml7Kwf2
-kOs5keypHb5CxzF+KvGdHLWlQOwFLQVHuh8zl88tqxoTXcgk9gph7OtGkpMYDwXN
-q9ovFUUMRUp+cNiaPJ22
-=bUip
------END PGP SIGNATURE-----
+-- 
+    JB
