@@ -1,22 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/12/5
-Message-ID: <50C8BAD3.60403@redhat.com>
-Date: Wed, 12 Dec 2012 18:11:47 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/7
+Message-ID: <5094044B.7090400@redhat.com>
+Date: Fri, 02 Nov 2012 11:35:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Robust XML validation
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: libtiff: Missing return value check in ppm2tiff leading to heap-buffer overflow when reading a tiff file
 Content-Type: text/plain; charset=utf-8
 
-I'm working on guidelines for robust XML parsing and I noticed that 
-there are some denial-of-service issues related to validation which do 
-not seem widely documented (but were apparently known when SGML was 
-specified).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I wonder if we should care about this in the sense that we should 
-prepare fixes, or if it is sufficient to recommend to validate against 
-trusted schemas/DTDs only.  (I've found an implementation which gets 
-right the things I tested so far, so efficient implementations aren't 
-impossible.)
+On 11/02/2012 04:23 AM, Huzaifa Sidhpurwala wrote:
+> Hi All,
+> 
+> A flaw was found in the way ppm2tiff, a tool to create a TIFF file
+> from PPM, PGM and PBM image files, did not check the return value
+> of TIFFScanlineSize() function. When TIFFScanlineSize encountered
+> an integer-overflow and returned zero, this value was not checked.
+> A remote attacker could provide a specially-crafted PPM image
+> format file, that when processed by ppm2tiff would lead to ppm2tiff
+> executable crash or, potentially, arbitrary code execution with the
+> privileges of the user running the ppm2tiff binary.
+> 
+> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=871700
 
--- 
-Florian Weimer / Red Hat Product Security Team
+Just for the sake of clarity, this was previously assigned
+CVE-2012-4564.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQlARKAAoJEBYNRVNeJnmTKWoP/iMzL9crn2SK2AVd7k6DEdRE
+4+4qBiljbyolgn7PPhOVST/1CWq2C09MBToDdyiThLwEbaDI/OCWlmeQjPz/K5dS
+SZ3pEhDJuH4hdwpKb1jR3AnE6i2Ukv+uAHG6PshdX7TyvVf8AnAGsASOT9AEVqsl
+F0uVd/0GXfKO+wJBxmedNUPLJLnQI4vkFBaUYxscKRQ97mN2ffvHumpovNjBsZpZ
+jy+tG1o0rZsNJ8coSuqRkj06Jz00dD9+I2ip+jTX10HKwksmPB6tft/TO7G6FRxh
+gvxuRRGmqThZFuK/LmfLt0U7L9xSMhUY4Iz5Hf7emmc5EL5dsdUp53a8cAVLZQTa
+qM64eYAXti88v4yj6l+ID3mb28hlX0wK7ARKDoKpsu84bJ1cr4UVQj0L53Fsl+7z
+gfem0r0OZj21JS3uxKyF9Wu6Nd0Qviugaw1q720y117AuM1nYy/PKdt/HVxgZjEg
+5uFfVM9vUV73J1CwS6zIPMmKUxvk/O/78j2+IJdVznA0pLawTFkhbPJXWVR6b+/B
+HmKK04m/Ij0VDK1EwlaQYRq6lun+1a0HyF35vylLtraAZ8LVYdITHc2sHQYPu7lb
+iISka81hzyAR35wPr5tUo6CY/FEFy91/cw/eVKCiBY1XeIeChG/7IcUAPI9QmayE
+nYrINymCTmfXqbmOvaFb
+=86UH
+-----END PGP SIGNATURE-----
