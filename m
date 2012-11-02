@@ -1,59 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/31/5
-Message-ID: <1343750985.4723.7.camel@lagune.teich>
-Date: Tue, 31 Jul 2012 18:09:45 +0200
-From: frosch <frosch@...nttd.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for OpenTTD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/02/9
+Message-Id: <201211021850.qA2InswU029406@linus.mitre.org>
+Date: Fri, 2 Nov 2012 14:49:54 -0400 (EDT)
+From: cve-assign@...re.org
+To: bressers@...hat.com
+Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Strange CVE situation (at least one ID should come of this)
 Content-Type: text/plain; charset=utf-8
 
-> >> On 07/27/2012 03:42 PM, frosch wrote:
-> >>> Hello,
-> >>> 
-> >>> we, the OpenTTD developers, have identified a security 
-> >>> vulnerability in OpenTTD (an open source game with
-> >>> multiplayer). Would you be so kind as to allocate a CVE id for
-> >>> this issue?
-> >>> 
-> >>> The issue concerns a denial of service vulnerabilty which
-> >>> enables an attacker to force the server into an invalid game
-> >>> state. The server will abort upon detecting this state. This
-> >>> attack can be performed using an unmodified client via normal
-> >>> game interaction. The attack requires authorization, but most
-> >>> servers do not implement authorization. The first vulnerable
-> >>> version is 0.6.0, the upcoming 1.2.2 release will have the
-> >>> issue fixed.
-> >>> 
-> >>> Once a CVE id is allocated, the issue and fix will be
-> >>> documented at http://security.openttd.org/CVE-2012-xxxx
-> >>> 
-> >>> Thanks in advance, Christoph 'frosch' Elsenhans
-> >>> 
-> >>> (Please CC me, I'm not subscribed)
-> >> 
-> >> Sorry can you please provide links to an advisory, code commit,
-> >> or something so we have a reference?
-> >> 
-> > trunk commit: http://vcs.openttd.org/svn/changeset/24439/ Bug
-> > report: http://bugs.openttd.org/task/5254
-> > 
-> > Later on http://security.openttd.org/CVE-2012-xxxx will supply
-> > patches for all vulnerable versions, and also link to the bug
-> > tracker and related commits.
-> > 
-> > Regards
-> 
-> Perfect, thanks. Please use CVE-2012-3436 for this issue.
-> 
-> P.S. with respect to "In some cases ships could be covered with land."
-> couldn't the ship sail into a cave or over hanging cliff? ;)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The detailed description is now public on
-http://security.openttd.org/CVE-2012-3436
+>So if someone publishes an advisory stating "I have found a number of
+>security flaws in product X." Would that get the same sort of CVE ID?
 
-Note that both the problem description and patches have been updated
-to cover a second case of this bug, so if you downloaded the patches
-before 2012-07-31 16:00 UTC, please download them again.
+CVE assignment at MITRE attempts to distinguish between "disclosures"
+and "rumors" although admittedly this is not 100% successful. In the
+specific case you mentioned, if there's no maintainer relationship
+between "I" and "product X" and no other available context, then no
+CVE is assigned.
 
+More generally, there are various cases in which exactly the same
+statement would have a different CVE assignment decision depending on
+whether the statement came from a vendor or other software maintainer.
+This has been mentioned here before; for example, see
 
+  http://openwall.com/lists/oss-security/2011/12/30/4
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJQlBRTAAoJEGvefgSNfHMdKAwH/icGoCMaheqgi4cQG4XsChlb
+EaRDQLeN9XhaBp1pk7G+rnKaBNUBf25cVKKkTl8eJ/Y7zkP7eCU8G4aW5tjSBapw
+wNRErtss6mGQjOUt0QtWw9RmbMPR/u9r3ulQvsi1Py2Zp9XSjloiAUrXcgumjdmQ
+C/1SLGLRLNXPWOzhQvl8uPWCZLgoqhFX46/Knf61UX+Z62hwD7USDfE47MHdSj4b
+C4SecVWSAUwWnlfSr94cV9bRWUdZ0JvR2+KtjytKA4wTXjeZXsi7FPvnY0TBCmU8
+lE2gGZEzgzLbDcQqZU2Pk+WiH0jDSp8DmtxhCN/zV9ZvZAyaoBwE9BePBIofo0Q=
+=3WP8
+-----END PGP SIGNATURE-----
