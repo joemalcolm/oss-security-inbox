@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/21/2
-Message-ID: <CAGVYHsXwhtonG6Qxf5EzyGkq3uycwei2j36VHUxecU7kT31zLQ@mail.gmail.com>
-Date: Wed, 21 Nov 2012 12:19:35 -0500
-From: Andrés Gómez Ramírez <andresgomezram7@...il.com>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: CVE Request: Gimp memory corruption vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/04/1
+Message-ID: <20121104123459.12a71c34.reed@reedloden.com>
+Date: Sun, 4 Nov 2012 12:34:59 -0800
+From: Reed Loden <reed@...dloden.com>
+To: <oss-security@...ts.openwall.com>
+Subject: YUI 2.x security issue regarding embedded SWF files -- or, How Not To Handle A Security Disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hello, could a CVE be assigned to this issue?
+I haven't seen this posted at all, but it seems there's some (major?)
+security issue regarding the SWF files embedded in YUI 2. The YUI team
+has published a blog post regarding this problem asking users to e-mail
+them for details.
 
-Name: Gimp memory corruption vulnerability
-Software: GIMP 2.8.2
-Software link: http://www.gimp.org/ <http://plib.sourceforge.net/>
-Vulnerability Type: Memory Corruption
+http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
 
-Description:
+The comments are a great read. Ryan Grove (former Yahoo! and YUI core
+team guy) hits the point on the head regarding disclosure handling of
+the issue. Apparently, some people/companies have already been notified
+directly weeks ago, and this is how the YUI team is continuing the
+disclosure process by just asking projects to e-mail them instead of
+just releasing the fix to the public at this stage. :/
 
-GIMP 2.8.2 is vulnerable to memory corruption when reading XWD files, which
-could lead even to arbitrary code execution.
+Might want to go ahead and get a CVE assigned to whatever this issue
+is, and hope more details come out of this soon so YUI 2 users can
+actually get patched instead of having to request access to the fix...
 
-Upstream fix:
-http://git.gnome.org/browse/gimp/commit/?id=2873262fccba12af144ed96ed91be144d92ff2e1
-(fixed in master and gimp-2-8)
-
-References:
-https://bugzilla.gnome.org/show_bug.cgi?id=687392
-
-Thanks,
-
-Andres Gomez.
-
+~reed
+(speaking only for himself)
