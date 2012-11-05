@@ -1,55 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/01/5
-Message-ID: <1343827964.32192.96.camel@mdlinux>
-Date: Wed, 01 Aug 2012 09:32:44 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/05/8
+Message-ID: <509811FD.70303@halfdog.net>
+Date: Mon, 05 Nov 2012 19:22:37 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: NVidia Linux driver
+Subject: TTY handling when executing code in different lower-privileged context (su, virt containers)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2012-08-01 at 15:12 +0200, Tavis Ormandy wrote:
-> Marc Deslauriers <marc.deslauriers@...onical.com>
-> wrote:
-> 
-> > Hello,
-> > 
-> > Could a CVE please be assigned to the following issue:
-> > 
-> > The binary NVidia Linux driver allows local users to access arbitrary
-> > memory locations by leveraging GPU device-node read/write privileges, and
-> > escalate privileges to root. Possibly an incomplete fix for CVE-2012-0946.
-> > 
-> > See:
-> > 
-> > http://seclists.org/fulldisclosure/2012/Aug/4
-> > 
-> > Thanks,
-> > 
-> > Marc.
-> 
-> I know that at least Gentoo does this since ~2006:
-> 
-> 35 # !!! SECURITY WARNING !!!
-> 36 # DO NOT MODIFY OR REMOVE THE DEVICE FILE RELATED OPTIONS UNLESS YOU KNOW
-> 37 # WHAT YOU ARE DOING.
-> 38 # ONLY ADD TRUSTED USERS TO THE VIDEO GROUP, THESE USERS MAY BE ABLE TO
-> CRASH,
-> 39 # COMPROMISE, OR IRREPARABLY DAMAGE THE MACHINE.
-> 40 options nvidia NVreg_DeviceFileMode=432 NVreg_DeviceFileUID=0
-> NVreg_DeviceFileGID=VIDEOGID NVreg_ModifyDeviceFiles=1
-> 
-> 
-> http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/x11-drivers/nvidia-drivers/files/nvidia?revision=1.3&view=markup
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+During programming experiments I found some class of vulnerabilities
+[1], that seem to be rediscovered again from time to time, but since
+attack value is questionable, it was not fixed yet.
+
+The basic idea is, that a program started from interactive shell can
+access the TTY and also inject input data using TIOCSTI ioctl. This is
+not an issue when the program is running in the same execution
+context, but may allow privilege escalation when the program switches
+to another user context without closing the TTY file descriptors. In
+that case a malicious program running in the lower privileged context
+can inject commands to be executed by the interactive shell running
+with higher privileges.
+
+Test were made using 'su' from root to 'test' user, which is
+vulnerable to that kind of attack.
+
+Also entering a virtualization container is a problematic context
+switch. 'vserver enter' [2] was found to be vulnerable for command
+execution outside container while 'lxc-console' was not.
 
 
-Well, getting rid of static groups like that is what consolekit and udev
-are for. Ideally, permissions would be granted on the device based on
-which user is at the console, as it currently done with other devices.
-Unfortunately, the design of the binary driver makes it hard to do, as
-it resets permissions itself when X loads.
-
-https://bugs.launchpad.net/ubuntu/+source/nvidia-graphics-drivers/+bug/979307
-
-Marc.
+At least with 'su', this vulnerability is known for years and still
+not fixed. In my opinion this is because the fix is not quite trivial
+and the proposed attack method requires root running interactive shell
+switching to a problematic user account (user interaction). So the
+CVSS for this is quite low.
 
 
+I would like to propose following "fix" for this problem: Modification
+of man-page of su making this a known problem or feature, not a bug.
+
+"Using su to execute commands as an untrusted user from an interactive
+shell may allow the untrusted user to escalate privileges to the user
+running the shell."
+
+
+For linux-vserver enter I would be interested in opinions if
+application should be fixed or documentation update is sufficient.
+- From my point of view, fix would be more appropriate.
+
+
+In both cases, paranoid administrators might decide to use /dev/null
+as stdin/stdout/stderr when just starting non-interactive programs in
+different context, while they could replace the privileged shell with
+exec when interactive context switch is needed (no shell, no escalation).
+
+Any opinions on that?
+
+hd
+
+[1] http://www.halfdog.net/Security/2012/TtyPushbackPrivilegeEscalation/
+[2] http://linux-vserver.org/
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAlCYEdIACgkQxFmThv7tq+5NOwCfUfq0ad9K8xkUYO+Yu0aROzpl
+ZL0Anjso4tJUcdZcoqkbfeP5aZ7AunUY
+=7FEy
+-----END PGP SIGNATURE-----
