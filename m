@@ -1,45 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/09/1
-Message-ID: <4F0A44F9.6090302@redhat.com>
-Date: Mon, 09 Jan 2012 09:38:01 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/05/5
+Message-ID: <5097FD39.8050101@redhat.com>
+Date: Mon, 05 Nov 2012 18:54:01 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: Malicious devices & vulnerabilties
+Subject: Re: operator new[] overflow checking in G++
 Content-Type: text/plain; charset=utf-8
 
-On 01/09/2012 05:08 AM, Hanno Böck wrote:
-> Am Sun, 8 Jan 2012 09:07:25 -0800 schrieb Greg KH
-> <greg@...ah.com>:
-> 
->> They should be considered buggy, yes, and as such, the kernel 
->> developers will fix any reported problems (or we should, if not, 
->> please let me know.)
->> 
->> But note, as these almost always fall under the "you have
->> physical access" category, their security impact is generally
->> considered low.
-> 
-> As far as publicly known, it's likely that Stuxnet was originally 
-> spread via a security problem with USB.
-> 
-> Also, I'd doubt the "physical access" category. It may just require
-> a bit of social engineering ("I have the file you requested on this
-> usb stick").
-> 
-> Considering that I'd strongly disagree classifying such issues
-> "low impact".
-> 
-> At least for pluggable devices, I'd consider such issues rather 
-> serious. It's another thing with PCI or other devices that require 
-> significant work to attach to a piece of hardware.
+On 08/31/2012 02:51 PM, Florian Weimer wrote:
 
-If you are using cvss2, the flaw itself should have a low impact, and
-how it will affect your environment may have a higher impact. See
-http://www.first.org/cvss/cvss-guide.html#i2.3.
+> There is another patch which touches code which is not actually used by
+> GCC, but could theoretically be called by code emitted by other compilers:
+>
+>    <http://gcc.gnu.org/ml/gcc-patches/2012-08/msg01416.html>
 
-It's hard to give a single rating that can be applied to all scenarios
-because obviously in some environments, this is not an issue, while in
-other cases like public Internet kiosks, it can be a big headache.
+This has now been accepted into GCC:
 
-Eugene
+<http://gcc.gnu.org/viewcvs?view=revision&revision=193174>
+
+-- 
+Florian Weimer / Red Hat Product Security Team
