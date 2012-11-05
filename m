@@ -1,58 +1,145 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/04/2
-Message-ID: <4FF46FF1.20504@redhat.com>
-Date: Wed, 04 Jul 2012 10:31:45 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: epoll: can leak file descriptors when returning -ELOOP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/05/4
+Message-ID: <CAANPUChoYMrL0K8_Ee-UgG5MKCckQ_rEjGXgVJsvR2PEYK12UA@mail.gmail.com>
+Date: Mon, 5 Nov 2012 09:56:08 -0700
+From: Greg Knaddison <greg.knaddison@...il.com>
+To: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Cc: oss-security@...ts.openwall.com, angela.byron@...uia.com,  Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE Request for Drupal Contributed Modules
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Responses inline below.
 
-On 07/04/2012 01:19 AM, Petr Matousek wrote:
-> An epoll_ctl(,EPOLL_CTL_ADD,,) operation can return '-ELOOP' to
-> prevent circular epoll dependencies from being created.  However,
-> in that case we do not properly clear the 'tfile_check_list'.
-> 
-> An unprivileged local user could use this flaw to crash the
-> system.
-> 
-> Regression introduced via 28d82dc1c4edbc352129f97f4ca22624d1fe61de 
-> commit.
-> 
-> Upstream fix: 13d518074a952d33d47c428419693f63389547e9
-> 
-> References: https://lkml.org/lkml/2012/3/27/65 
-> https://lkml.org/lkml/2012/4/17/247 
-> https://bugzilla.redhat.com/show_bug.cgi?id=837502
-> 
+Also cc'ing Forest Monsen (a member of the Drupal Security Team) who
+will be helping with the CVE process for us from now on.
+
+On Wed, Oct 31, 2012 at 9:02 PM, Steven M. Christey
+<coley@...-smtp.mitre.org> wrote:
+>
+> Joshua and others on the Drupal team,
+>
+> It appears that the following followup questions by Kurt Seifried were
+> missed during some of the confusion over contacts and email addresses for
+> Drupal-related security issues.
+>
+> Please respond to the comments in this email, as it supercedes Kurt's email
+> from October 7.
+>
+>
+> On Sun, 7 Oct 2012, Kurt Seifried wrote:
+>
+>>>
+>>>
+>>> Multiple Vulnerabilities: http://drupal.org/node/1719548 |
+>>> SA-CONTRIB-2012-125 - Chaos tool suite (ctools) - Local File
+>>> Inclusion http://drupal.org/node/1719548 | SA-CONTRIB-2012-125 -
+>>> Chaos tool suite (ctools) - Cross Site Scripting (XSS)
+>>
+>>
+>> This sounds like a single issue with two possible outcomes?
+>>
+>> The module doesn't sufficiently validate css import statements to
+>> confirm they only include css content appropriate to show to end
+>> users. This could allow a malicious user to add sensitive content from
+>> the site (e.g. settings.php) exposing that sensitive content to
+>> visitors of the page. It could also be used to execute a Cross Site
+>> Scripting attack.
+>>
+>> Links to the code commits fixing this would be helpful.
+
+I believe this is the commit
+http://drupalcode.org/project/ctools.git/commit/863e53e
+
+I believe it is the case that XSS is one example of how to exploit the
+issue but that Local File Inclusion is the fundamental problem. The
+local file inclusion is just into a CSS context so it's not a way, for
+example, to execute arbitrary PHP. However it could be used to read
+any file on the server and display the contents inside of CSS (if
+Drupal's css aggregation feature is enabled). So, someone could use
+this to read the database credentials, for example. That might still
+not be enough to compromise the server depending on mysql access
+settings, firewalls etc.
+
+> Your answer to this question will help determine whether we have one CVE or
+> two.
+>
+>
+>>> http://drupal.org/node/1732946 | SA-CONTRIB-2012-126 - Hotblocks -
+>>> Cross Site Scripting (XSS) and Denial of Service (DoS)
+>>
+>>
+>> This is a multiple CVE issue?
+>
+>
+> Kurt - we investigated the advisory and it's pretty clear that the two are
+> distinct, so we assigned the following CVEs (Drupal people, please take
+> note):
+>
+> CVE-2012-5704 - DoS (infinite loop with self-referencing block)
+> CVE-2012-5705 - XSS
+
+Advisory updated with these numbers http://drupal.org/node/1732946
+
+>
+>>> Multiple Vulnerabilities: http://drupal.org/node/1762220 |
+>>> SA-CONTRIB-2012-130 - Jstool - Access Bypass
+>>> http://drupal.org/node/1762220 | SA-CONTRIB-2012-130 - Jstool -
+>>> Arbitrary code inclusion
+>>
+>>
+>> The description/vulns don't seem to match up on this one. Can you clarify?
+>>
+>> The module does not protect its menu paths, which contain sensitive
+>> information about all javascript files on the site and their contents.
+>> The module does not validate filenames which can lead to potential
+>> read/write access to arbitrary files on the server.
+>>
+>> Links to the code commits fixing this would be helpful.
+
+Attached is the patch the maintainer provided for this issue -
+jstool-final-77678-23.patch I'm not immediately sure which commit in
+git corresponds to this.
+
+I believe there are distinct issues here:
+* The ability to read/write to arbitrary files
+* The ability to identify and read all Javascript files of the site -
+this is somewhat by design of Javascript, but the team member working
+on this issue felt that having direct access to read all files in one
+place would be useful to an attacker enough that it deserved mention.
+For example: It could be helpful to an attacker to see the source code
+of the Javascript for Ajax features that are admin only.
+
+
+> Drupal team - if these both have the same root cause, such as a directory
+> traversal issue, then they would receive one CVE since they are the same
+> type of issue - even if there are different impacts.  Otherwise, two CVEs
+> might be needed.
+>
+>>> http://drupal.org/node/1762482 | SA-CONTRIB-2012-133 - Taxonomy
+>>> Image - Cross Site Scripting (XSS) & Arbitrary PHP code execution
+>>
+>> So this is the same root issue, not filtering file uploads allowing an
+>> attacker to upload arbitrary stuff (including PHP code), the outcome
+>> of which could be PHP code execution, or XSS (or other things I
+>> suppose like DoS, CSRF, etc.)?
+>
+>
+> This is the same basic issue as the last one.  If there's one root cause in
+> which file uploads aren't prevented when they should, then they might
+> receive only one CVE.
+>
+> (Basically, if a user X is intentionally allowed to do action Y, but a
+> vulnerability allows somebody to become X - then we don't assign a separate
+> CVE ID for Y.)
+
+Yes, this is fundamentally an "upload arbitrary stuff" issue.
+
 > Thanks,
+> Steve
 
-Please use CVE-2012-3375 for this issue.
+Thank you for your attention to detail!  :)
 
+Regards,
+Greg
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJP9G/uAAoJEBYNRVNeJnmTQ0gQAKEDLP9MS+7TfgdvZwW0WvUp
-/yn9FiWGZ7I9J0cXfPA/UNF4DOb4kZ4SbZBRwPwPKm8+KlP2CczDfSIXqHniyTWP
-DYA1bahNPjesFIDuLWm7aZE+Joj3S2ptQzrrlGLmMEM/SzftI9cAs63bBVj0FgP1
-cyckX/qkvhla5OlD3lrHmqFUpXE5z375mR26g7pvQPSwUibdVSPz1AQCydiUjU00
-BnTWbhXfWBAzLh38phj1Fi9McoefzBG4Ih0ACf/WqkP3SnJzNpNccMpMK57qqICK
-B1hXmkIIjK+taa7/URJJmXz62wEYkC1COaXgbXx6fwc0xsCIjAQoOx4ZBCqlK69D
-WYV9qQz3whByMtAF210MiHvUaH6V3it2UU02v+YKO+LYi40TRBH6DiIpNKg/ghrV
-Pnwn8Q4Hp7YjKEoQqo33WjyH3U/PXjLIkIOpf/DAQeTJ1ERuhNH0TsQzVMLbYCCd
-N9mmUNJQbfPWxH5g5JfxzZXmGYfYcrvUNQechfwrZ9ZOwrUDyP+ip0tKvWWqu54/
-7UiZ/QJoUGACqqFyX6FcUw2nQladfYtDmyKHJZE9uvwz8DeZhB8OnMomTDjoUWsU
-Ep3+Fla8lUvEzUa7XZ4sirDlP58l2PDb6x2ylYDIRY3zGuRMpwz1LKz0TZoldhFu
-MyPWFd6InJk96QZ64PVn
-=jYse
------END PGP SIGNATURE-----
+Download attachment "jstool-final-77678-23.patch" of type "application/octet-stream" (7233 bytes)
