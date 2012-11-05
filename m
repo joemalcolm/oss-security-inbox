@@ -1,40 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/9
-Message-ID: <4680B31DCCC3B6428FB4E85ED9D540D0032B29@SRVEXCH.oppida.fr>
-Date: Wed, 28 Mar 2012 11:58:51 +0000
-From: Luc ABRIC <luc.abric@...ida.fr>
-To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
-CC: "'kseifried@...hat.com'" <kseifried@...hat.com>, Karim SLAMANI <karim.slamani@...ida.fr>, Valérian PERRET <valerian.perret@...ida.fr>, Yann MICHARD <yann.michard@...ida.fr>
-Subject: CVE 2012-1565 Insecure object reference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/05/9
+Message-ID: <50982648.80907@redhat.com>
+Date: Mon, 05 Nov 2012 13:49:12 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Reed Loden <reed@...dloden.com>, Steven Christey <coley@...re.org>, security@...library.com
+Subject: Re: YUI 2.x security issue regarding embedded SWF files -- or, How Not To Handle A Security Disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-eZ Publish published more informations about this specific issue:
-http://share.ez.no/blogs/ez/security-advisory-promptly-patch-your-ez-publish-instances2
+On 11/04/2012 05:13 PM, Kurt Seifried wrote:
+> On 11/04/2012 01:34 PM, Reed Loden wrote:
+>> I haven't seen this posted at all, but it seems there's some 
+>> (major?) security issue regarding the SWF files embedded in YUI
+>> 2. The YUI team has published a blog post regarding this problem 
+>> asking users to e-mail them for details.
+> 
+>> http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
+>
+>>  The comments are a great read. Ryan Grove (former Yahoo! and
+>> YUI core team guy) hits the point on the head regarding
+>> disclosure handling of the issue. Apparently, some
+>> people/companies have already been notified directly weeks ago,
+>> and this is how the YUI team is continuing the disclosure process
+>> by just asking projects to e-mail them instead of just releasing
+>> the fix to the public at this stage. :/
+> 
+>> Might want to go ahead and get a CVE assigned to whatever this 
+>> issue is, and hope more details come out of this soon so YUI 2 
+>> users can actually get patched instead of having to request
+>> access to the fix...
+> 
+>> ~reed (speaking only for himself)
+> 
+> Have any CVE's been issued for this issue? I can't find any. More
+> to the point does this kind of issue (is it a service strictly?)
+> even get a CVE? Steve?
 
-The vulnerability detailled in the CVE is the one described by EZSA-2012-001.
+Ok please use CVE-2012-5475 for this issue.
 
-We also posted more details on our blog:
-http://blog-oppida.blogspot.fr/2012/03/ezpublish-object-remote-full.html
+Also can security@...library.com follow their disclosure policy listed
+at and disclose the problem:
 
-Can you update the CVE description with those informations?
-Do you need help with the translation effort?
+http://yuilibrary.com/security/
 
-I'll send a few more CVE requests for the other vulnerabilities.
+Disclosure of Security Issues
 
-Regards,
-Luc ABRIC
-IT Security Expert
+If you've discovered a security flaw in one of our products, please
+contact us. Expect to receive an acknowledgement quickly with the best
+way to track your report's status. You'll have a direct contact at YUI
+while we investigate.
 
-6 avenue du Vieil Etang - Bâtiment B
-78180 Montigny-le-Bretonneux
-Phone: +33 (0)1 30 14 19 00
-Fax:       +33 (0)1 30 14 19 09
-Mobile: +33 (0)6 26 87 62 14
-luc.abric@...ida.fr
-
-www.oppida.fr
+Since issues have varying impact, we ask for your patience while we
+make sure everyone who uses our products is protected. We will
+disclose a problem once it's confirmed and a resolution is available.
+If a fix is required, our release will credit you for your discovery.
 
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQmCZIAAoJEBYNRVNeJnmTuYwP/0bmNMJXTRS52lGf7uPm+ErP
+WeBNYBo6w4OfuUrJPrv9OYteEB73Cdm6mUj9y9MS/1rMOnYjdl7MexptgLGg3xXF
+Vxp5WShi3QGtzUxVwXP8dd2a587ay2z/tMDZv5SGMKi0CNMQ3VxyatPmt+0vLJfK
+loIBlrqmLU3ETWUjTejPgDLJ7RIjq2vRFN5zPMfHIRDQDuxe10554hmH0bRvMpIP
+mLqnGXdl+I1mNzcOVCACyTLiU9Lc2ZObzNF2mMRbuDsSXi3DurLq2J/iXpgwZNU6
+xFhZPqNd2LuyMTFtZbRoYC+mk6DlZTmajU83u+1dY8lHeoKyoSqFq1nObO9N9Zjh
+NUiX3nUvedUYIP/cA+7wkWgihS5f+7UTYPMmXqJPRoO6kWrJD/+o050AgLxJXsWX
+g5wb+Lp/oVolfYBVPwbxbJOtG163T/abRCyYca7J3EbL3Iq1Su0E5PB0qOMsPrkh
+PkJuH5h1tOx6rMscq7clq5xa4aDRrHl46F/MICWD336V7CaGz82EsXXYLmc9uzcf
+9keOUc7kAGlA6jP4CU+M3K1dKQzPOrXsYXdeTKSqJnkdm/1s/KdDH/uLLVzqyjPC
+vdz1EWDr7+xyxF3Iv7foZyFj4fKcp2pTVOYhAnw0bwyHA+f2aj4SPaNS33d8JhIi
+18alDP7bu/OWSfWX+54Q
+=KDpL
+-----END PGP SIGNATURE-----
