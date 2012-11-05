@@ -1,27 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/25/6
-Message-Id: <058B9966-6771-4E8D-8FE1-17175D7C625A@netherlabs.nl>
-Date: Fri, 25 May 2012 19:59:48 +0200
-From: Peter van Dijk <peter.van.dijk@...herlabs.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/05/1
+Message-ID: <509704A8.8090409@redhat.com>
+Date: Sun, 04 Nov 2012 17:13:28 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: powerdns does not clear supplementary groups
+CC: Reed Loden <reed@...dloden.com>, Steven Christey <coley@...re.org>
+Subject: Re: YUI 2.x security issue regarding embedded SWF files -- or, How Not To Handle A Security Disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On May 25, 2012, at 19:55 , Kurt Seifried wrote:
-
-> Ok this part I did not know, so this is an obvious trust boundary
-> violation (the intention was to drop privileges but it instead ADDS
-> root privileges).
+On 11/04/2012 01:34 PM, Reed Loden wrote:
+> I haven't seen this posted at all, but it seems there's some
+> (major?) security issue regarding the SWF files embedded in YUI 2.
+> The YUI team has published a blog post regarding this problem
+> asking users to e-mail them for details.
 > 
-> Please use CVE-2012-2653 for this issue.
+> http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
+>
+>  The comments are a great read. Ryan Grove (former Yahoo! and YUI
+> core team guy) hits the point on the head regarding disclosure
+> handling of the issue. Apparently, some people/companies have
+> already been notified directly weeks ago, and this is how the YUI
+> team is continuing the disclosure process by just asking projects
+> to e-mail them instead of just releasing the fix to the public at
+> this stage. :/
+> 
+> Might want to go ahead and get a CVE assigned to whatever this
+> issue is, and hope more details come out of this soon so YUI 2
+> users can actually get patched instead of having to request access
+> to the fix...
+> 
+> ~reed (speaking only for himself)
 
+Have any CVE's been issued for this issue? I can't find any. More to
+the point does this kind of issue (is it a service strictly?) even get
+a CVE? Steve?
 
-Just in case this slipped by someone - the example given (that adds root) is not for PowerDNS but for arpwatch!
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Kind regards,
--- 
-Peter van Dijk
-Netherlabs Computer Consulting BV - http://www.netherlabs.nl/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
+iQIcBAEBAgAGBQJQlwSoAAoJEBYNRVNeJnmTR2IP/AuM+UOoUrGTTtuY/xeUZSTx
+ff0uCbCB7cJND189EpAJGmhfMi8Q0yCjNVdyDUu2FtOgEAOfJDGcN0vySufeepLw
+aUoDt5Hjc+LTb1Bx+DoXo3j2cPEEeutpt7IcDotfVDNYzEnqfpixGv8PurumGq/a
+hRgP+SkocKO9IOVvatIKAOB3xr94jcSEtE2nB4mfKZd5tSG43e3HMmL2TBRSgjRV
+4SqHDvydyK8th6tZjpCexbgt/SzxRCjuZgWeUwJUM8kAXxsxcvytgdSKBQqz0teY
+M9I+C+2Fa8DEeprD9pXir68MuUDXu09ps8Ldzd9wrXKCWrgSHeRiUKvzfg7KER++
+Dby6q1CE35rS3Jma1uohauifgNVQg+lAmzt+fK7h6DvcCNJnWvzM+2t1GpYnFuiD
+MRyqytQbBzWUSwuHb+GWzL4HUdFFJg4XtQngyJKpQcVk+TNw2uphRaf3KVmLsWE8
+8m2FN1dTsUTAZSk7upkAldYhwKPweaMKrQCqq6drzuGiykHYPzYpgKXVvTx2tz+Z
+cUVc7fxy9SZV7p0VHb39Wa4+gQztojX2y8phCJCgZOAkPEmU4hoy+/97482L3od8
+W48mNc1ugmoUF/+3luT0S4FFqn4k1FW4LGQf3nPEcMtsvkruGWNBIeLyRQGusnr+
+PnQnohDli058jmPzlKFC
+=smQ8
+-----END PGP SIGNATURE-----
