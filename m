@@ -1,48 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/23
-Message-ID: <4F637B87.6030609@redhat.com>
-Date: Fri, 16 Mar 2012 11:42:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Andreas Ericsson <ae@....se>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE Requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/05/3
+Message-ID: <5097A3E4.7010808@mvista.com>
+Date: Mon, 05 Nov 2012 17:02:52 +0530
+From: Premchand Koneru <pkoneru@...sta.com>
+To: oss-security@...ts.openwall.com
+Subject: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-On 03/16/2012 04:26 AM, Andreas Ericsson wrote:
-> On 03/16/2012 04:41 AM, Kurt Seifried wrote:
->>
->> I need the actual info, please refer to:
->>
->> http://www.openwall.com/lists/oss-security/2012/03/16/2
->> http://www.openwall.com/lists/oss-security/2012/03/15/9
->> http://www.openwall.com/lists/oss-security/2012/03/14/6
->> http://www.openwall.com/lists/oss-security/2012/03/12/7
->>
-> 
-> Those mails are all exemplary requests for CVE id's, ofcourse, but the
-> fact that they are all already fixed and released means that 100% of
-> the work is already done. At that point, assigning a CVE id is mostly
-> useless and is done as a "just for the record" thing.
+I recently joined the Montavista Security team and request membership to
+thelinux-distros@...openwall.org  list, so that I may participate fully
+in reporting and fixing vulnerabilities in Montavista. Here is my
+GPG fingerprint:
 
-Uh no. Tracking these issues is critical and it happens across dozens,
-and in some cases hundreds of vendors (e.g. CVE-2009-3555).
+pub   2048R/5DA060C7 2012-11-05
+       Key fingerprint = 7DF9 45B4 3116 8D5C D3C0  2A15 EADE D5B2 5DA0 60C7
+uid                  Premchand Koneru<pkoneru@...sta.com  <mailto:pkoneru@...sta.com>>
+sub   2048R/BE364B01 2012-11-05
 
-> The need for unified identifier for a particular issue is greatest
-> when discussing the problem and its potential solutions; Not how
-> someone actually solved it after it's already done. If CVE is to become
-> a thing for changelogs only, all those projects that don't use one
-> but rely on commit-messages instead won't use CVE id's at all, and the
-> usefulness of the CVE database dwindles.
-
-If only it were that simple. Having worked for iSIGHT/iDefense prior to
-Red Hat, and now at Red Hat, let me say this simply:
-
-CVE Is 100% critical for security work at large scales.
-
-Automated products/etc need reliable names for security issues.
-Customers need reliable ways to ask questions (did you fix that OpenSSL
-thing mentioned over in this random blog post? Oh you mean this CVE,
-yes. etc.).
+Thank you for consideration.
 
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
