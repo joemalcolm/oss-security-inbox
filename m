@@ -1,44 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/4
-Message-ID: <50990C49.3090602@mvista.com>
-Date: Tue, 06 Nov 2012 05:10:33 -0800
-From: akuster <akuster@...sta.com>
-To: Tomas Hoger <thoger@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros@...openwall.org membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/6
+Message-ID: <CAJzxamK7STS-ydt5PWvLW1bYj5gwwGNgMopkoTY3DP0knzE3ug@mail.gmail.com>
+Date: Wed, 7 Nov 2012 00:37:25 +1100
+From: David Black <disclosure@....org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: TTY handling when executing code in different lower-privileged context (su, virt containers)
 Content-Type: text/plain; charset=utf-8
 
+>In both cases, paranoid administrators might decide to use /dev/null
+>as stdin/stdout/stderr when just starting non-interactive programs in
+>different context, while they could replace the privileged shell with
+>exec when interactive context switch is needed (no shell, no escalation).
+>
+>Any opinions on that?
+>
 
 
-On 11/06/2012 02:17 AM, Tomas Hoger wrote:
-> On Mon, 05 Nov 2012 11:09:44 -0700 Kurt Seifried wrote:
-> 
->>>> pub   2048R/5DA060C7 2012-11-05
->>>> Premchand Koneru<pkoneru@...sta.com>
->>>
->>> This is first time I heard about Montavista. Where is your package-
->>> and bug-tracker? Does Montavista use CVE?
-> 
-> There has been a previous discussion of Montavista's membership in the
-> list:
-> 
-> http://thread.gmane.org/gmane.comp.security.oss.general/4650/focus=4817
-> 
->> Also how do we confirm you are on the security team there? I can't
->> even find proof you work for Montavista (other than the email address)
->> and I can't find any mention of a person called "Premchand Koneru"
->> doing security work in the past.
-> 
-> An explicit signed ack/nack from the existing Montavista subscriber
-> sounds reasonable here, at least to confirm Premchand is really a
-> member of their security team.
-> 
-
-What do you mean as signed?
-
-Premchand just joined MontaVista's security team so please add him to
-the linux-distros list.
-
-Regards,
-Armin
-
+Perhaps if sudo/su determine if a user is running 'interactively' they
+could use a pseudo-pty ?
