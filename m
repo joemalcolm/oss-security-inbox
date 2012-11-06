@@ -1,23 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/15/12
-Message-ID: <20120515194125.GA10065@kludge.henri.nerv.fi>
-Date: Tue, 15 May 2012 22:41:25 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request: WordPress wp-facethumb plugin reflected XSS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/4
+Message-ID: <50990C49.3090602@mvista.com>
+Date: Tue, 06 Nov 2012 05:10:33 -0800
+From: akuster <akuster@...sta.com>
+To: Tomas Hoger <thoger@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-WordPress plugin wp-facethumb version 0.1 is affected to reflected XSS vulnerability. This issue is fixed in version 0.2. Could I get 2012 CVE-identifier for this issue, thanks.
 
-Changelog: http://plugins.svn.wordpress.org/wp-facethumb/trunk/readme.txt
-Original advisory: http://cxsecurity.com/issue/WLB-2012050106
-My report to developer: http://wordpress.org/support/topic/plugin-wp-facethumb-reflected-xss-vulnerability-cwe-79
-Plugin URL: http://wordpress.org/extend/plugins/wp-facethumb/ (will show up very soon. WP admins disabled this until fix is done)
+On 11/06/2012 02:17 AM, Tomas Hoger wrote:
+> On Mon, 05 Nov 2012 11:09:44 -0700 Kurt Seifried wrote:
+> 
+>>>> pub   2048R/5DA060C7 2012-11-05
+>>>> Premchand Koneru<pkoneru@...sta.com>
+>>>
+>>> This is first time I heard about Montavista. Where is your package-
+>>> and bug-tracker? Does Montavista use CVE?
+> 
+> There has been a previous discussion of Montavista's membership in the
+> list:
+> 
+> http://thread.gmane.org/gmane.comp.security.oss.general/4650/focus=4817
+> 
+>> Also how do we confirm you are on the security team there? I can't
+>> even find proof you work for Montavista (other than the email address)
+>> and I can't find any mention of a person called "Premchand Koneru"
+>> doing security work in the past.
+> 
+> An explicit signed ack/nack from the existing Montavista subscriber
+> sounds reasonable here, at least to confirm Premchand is really a
+> member of their security team.
+> 
 
-Diff included between tags 0.1 and 0.2.
+What do you mean as signed?
 
-- Henri Salo
+Premchand just joined MontaVista's security team so please add him to
+the linux-distros list.
 
-View attachment "wp-facethumb.diff" of type "text/x-diff" (11086 bytes)
+Regards,
+Armin
+
