@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/14
-Message-ID: <4F4BBAA0.3000001@redhat.com>
-Date: Mon, 27 Feb 2012 10:17:20 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/2
+Message-ID: <20121106111715.56407c72@redhat.com>
+Date: Tue, 6 Nov 2012 11:17:15 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: CVE request: openssl: null pointer dereference issue
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-On 02/27/2012 07:42 AM, Matthias Weckbecker wrote:
-> Hi Kurt, Steve, vendors,
-> 
-> bad S/MIME messages with crafted MIME headers can result in a NULL pointer 
-> dereference in openssl's ans1 parser,
-> 
->  https://bugzilla.novell.com/show_bug.cgi?id=748738
->  http://www.mail-archive.com/openssl-dev@openssl.org/msg30305.html
->  http://cvs.openssl.org/chngview?cn=22144
-> 
-> Does it qualify for a CVE?
-> 
-> Thanks, Matthias
+On Mon, 05 Nov 2012 11:09:44 -0700 Kurt Seifried wrote:
 
-Ok did some more research and here's what we got:
+> >> pub   2048R/5DA060C7 2012-11-05
+> >> Premchand Koneru<pkoneru@...sta.com>
+> > 
+> > This is first time I heard about Montavista. Where is your package-
+> > and bug-tracker? Does Montavista use CVE?
 
-First mention of this bug is in 2006:
+There has been a previous discussion of Montavista's membership in the
+list:
 
-http://marc.info/?l=openssl-dev&m=115685408414194&w=2
+http://thread.gmane.org/gmane.comp.security.oss.general/4650/focus=4817
 
-So please use CVE-2006-7248 for this issue.
+> Also how do we confirm you are on the security team there? I can't
+> even find proof you work for Montavista (other than the email address)
+> and I can't find any mention of a person called "Premchand Koneru"
+> doing security work in the past.
+
+An explicit signed ack/nack from the existing Montavista subscriber
+sounds reasonable here, at least to confirm Premchand is really a
+member of their security team.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Tomas Hoger / Red Hat Security Response Team
