@@ -1,37 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/26/8
-Message-ID: <27084.1348677799@sss.pgh.pa.us>
-Date: Wed, 26 Sep 2012 12:43:19 -0400
-From: Tom Lane <tgl@...hat.com>
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-cc: Sebastian Krahmer <krahmer@...e.de>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libtiff: Heap-buffer overflow when processing a TIFF image with PixarLog Compression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/7
+Message-ID: <20121106144820.1d6ed02c@redhat.com>
+Date: Tue, 6 Nov 2012 14:48:20 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-Huzaifa Sidhpurwala <huzaifas@...hat.com> writes:
-> On 09/26/2012 12:27 PM, Sebastian Krahmer wrote:
->> As well as the patch:
->> 
->> 
->> -	sp->tbuf = (uint16 *) _TIFFmalloc(tbuf_size);
->> +	sp->tbuf = (uint16 *) _TIFFmalloc(tbuf_size+sizeof(uint16)*sp->stride);
->> 
->> If there were sizeof(uint16)*sp->stride bytes missing before, this is really
->> more than just a few bytes. I checked that the mult cannot overflow,
->> as sp->stride seems to be uint16. However, I think the add can actually wrap,
->> (at least on ILP32) as tbuf_size can be 0xffffffff or so.
->> I think the patch is broken and just shifts the hole.
->> 
-> It seems that sp->stride is at most td_samplesperpixel.
+On Tue, 06 Nov 2012 05:10:33 -0800 akuster wrote:
 
-> Re-thinking about the patch, it does seem a bit broken now.
-> Tom,
-> Any inputs on this?
+> > An explicit signed ack/nack from the existing Montavista subscriber
+> > sounds reasonable here, at least to confirm Premchand is really a
+> > member of their security team.
+> 
+> What do you mean as signed?
 
-Yeah, I was wondering about the possibility of an overflow there too.
-The amount being added is very small but in principle tbuf_size could be
-just below the overflow threshold.  And I agree that it would be saner
-to increase tbuf_size itself.  Having said all that, I still don't
-understand why this buffer needs padding at all.
+Signed as GPG/PGP signed.  When you were subscribed to the list, you
+had provided your GPG key (id).  If you sign your reply with that key,
+list administrator can verify that it is really form current list
+member, vouching for another person representing the same distro or
+organization.
 
-			regards, tom lane
+A good example of similar past communication is this thread:
+http://thread.gmane.org/gmane.comp.security.oss.general/6835
+
+As you can see there, a request may come from a person that is involved
+with a distribution, but is not expected to be a list member as a
+security representative of the distribution.
+
+It's really this kind of feedback that can help list administrator
+here, and signing makes it verifiable.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
