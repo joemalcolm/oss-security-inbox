@@ -1,110 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/5
-Message-ID: <20120120052017.GA13558@kiste2>
-Date: Fri, 20 Jan 2012 06:20:17 +0100
-From: Michael Niedermayer <michaelni@....at>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/14
+Message-ID: <20121106183039.GM13903@dhcp-25-225.brq.redhat.com>
+Date: Tue, 6 Nov 2012 19:30:40 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: valentino.angeletti@...l.com, bugtraq@...urityfocus.com, tytso@....edu
-Subject: Re: Re: pwgen: non-uniform distribution of passwords
+Subject: CVE-2012-4461 -- kernel: kvm: invalid opcode oops on SET_SREGS with OSXSAVE bit set
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 19, 2012 at 11:34:12PM +0400, Solar Designer wrote:
-> On Thu, Jan 19, 2012 at 09:21:17AM +0100, valentino.angeletti@...l.com wrote:
-> > may ask you what software (and how it works brute force ecc) you used?
-> 
-> John the Ripper, indeed - generating a custom .chr file (which is based
-> on trigraph frequencies) from a sample of 1 million of pwgen'ed
-> passwords and then using this file to crack another (non-overlapping)
-> sample of pwgen'ed passwords.  My initial notification to oss-security
-> and Bugtraq included these links, which describe this in more detail:
-> 
-> http://www.openwall.com/lists/john-users/2010/11/17/7
-> http://www.openwall.com/lists/john-users/2010/11/22/5
-> http://www.openwall.com/lists/john-users/2010/11/28/1
-> http://www.openwall.com/lists/john-users/2010/12/06/1
-> 
-> However, as I wrote in a followup posting to oss-security 2 days ago:
-> 
-> "I might update/revise my analysis on this issue in a few days.
-> 
-> Specifically, I now suspect that a (large) part of the apparent
-> non-uniformity of the distribution was in fact an artifact of my
-> analysis approach.  I only analyzed sets of 1 million of pwgen'ed
-> passwords, so I could not directly check the distribution of full
-> passwords (1 million is too little, even compared to the small keyspace
-> of these passwords), whereas JtR only uses trigraph frequencies.
-> 
-> I am now generating 1 billion of pwgen'ed passwords, which should take a
-> couple of days to complete. [...]"
-> 
-> http://www.openwall.com/lists/oss-security/2012/01/17/14
-> 
-> This has in fact completed by now:
-> 
-> $ ./pwgen -1cn 8 1000000000 | dd obs=10M > 1g
-> 17578125+0 records in
-> 858+1 records out
-> 9000000000 bytes (9.0 GB) copied, 147496 seconds, 61.0 kB/s
-> 
-> And I analyzed this larger sample briefly:
-> 
-> $ time ~/john/john-1.7.9-jumbo-5/run/unique -v -mem=25 1gu < 1g
-> Total lines read 1000000000 Unique lines written 697066573
-> 
-> real    144m40.619s
-> user    142m8.727s
-> sys     0m39.645s
-> 
-> So that's 697 million unique passwords in 1 billion, which for a uniform
-> distribution would correspond to a total keyspace size of 1.3 billion:
-> 
-> $ ./solve 697066573 1000000000
-> 1296935185
-> 
-> I've attached the solve.c program to this message.  [ BTW, I verified
-> that there's no fatal precision loss in its expected_different()
-> function (despite of the risky expression) for the value ranges on which
-> it is called here.  I did so by also computing the expected different
-> value with a different (much slower) algorithm - just not as part of
-> equation solving (which would be slower yet). ]
-> 
-> However, let's see what numbers we get for smaller samples (actually,
-> subsets of the 1 billion sample above, but that's OK in this case):
-> 
-> Total lines read 100000000 Unique lines written 89163247
-> Total lines read 10000000 Unique lines written 9811335
-> Total lines read 1000000 Unique lines written 997978
-> 
-> $ ./solve 89163247 100000000
-> 427419891
-> $ ./solve 9811335 10000000
-> 261676022
-> $ ./solve 997978 1000000
-> 246946702
+A flaw has been found in the way Linux kernel's KVM subsystem handled
+vcpu->arch.cr4 X86_CR4_OSXSAVE bit set upon guest enter. On hosts
+without the XSAVE feature and using qemu userspace an unprivileged
+local user could use this flaw to crash the system.
 
-Its also interresting to note that some password lengths are a lot
-worse than others and that longer does not equal better in some cases
+Acknowledgements:
 
-$ pwgen -1cn 4 100000 | sort | uniq -u |wc -l
-98385
-$ pwgen -1cn 5 100000 | sort | uniq -u |wc -l
-82589
-$ pwgen -1cn 6 100000 | sort | uniq -u |wc -l
-96693
-$ pwgen -1cn 7 100000 | sort | uniq -u |wc -l
-99524
-$ pwgen -1cn 8 100000 | sort | uniq -u |wc -l
-99954
+Red Hat would like to thank Jon Howell for reporting this issue.
 
-lucky the default is not 5
+Proposed upstream fix:
+http://article.gmane.org/gmane.comp.emulators.kvm.devel/100742
 
-[...]
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=862900
+http://article.gmane.org/gmane.comp.emulators.kvm.devel/100742
 
+Thanks,
 -- 
-Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
-
-The real ebay dictionary, page 2
-"100% positive feedback" - "All either got their money back or didnt complain"
-"Best seller ever, very honest" - "Seller refunded buyer after failed scam"
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Petr Matousek / Red Hat Security Response Team
