@@ -1,18 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/27
-Message-ID: <20120120205630.GE32366@alex.ibm>
-Date: Sat, 21 Jan 2012 00:56:30 +0400
-From: Alexander Pletnev <pletnev.rusalex@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: pdf attacks vectors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/8
+Message-ID: <20121106140657.GF31783@suse.de>
+Date: Tue, 6 Nov 2012 15:06:57 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, disclosure@....org
+Subject: Re: Re: TTY handling when executing code in different lower-privileged context (su, virt containers)
 Content-Type: text/plain; charset=utf-8
 
-Yes thanks, your answer was very helpfull for me. 
+On Wed, Nov 07, 2012 at 12:37:25AM +1100, David Black wrote:
+> >In both cases, paranoid administrators might decide to use /dev/null
+> >as stdin/stdout/stderr when just starting non-interactive programs in
+> >different context, while they could replace the privileged shell with
+> >exec when interactive context switch is needed (no shell, no escalation).
+> >
+> >Any opinions on that?
+> >
+> 
+> 
+> Perhaps if sudo/su determine if a user is running 'interactively' they
+> could use a pseudo-pty ?
 
-I have no time to write a big explanation to you. But i will do it later. 
+There were fixes released btw ...  (If we are talking about the same
+problem.)
+
+SUSE at least did release fixes for the terminal character injection,
+by opening a new session.
+
+(CVE-2005-4890 is this whole issue I think.)
 
 
+Ludwig Nussel tried to also use pseudo tty, but this gets kind of
+messy soon, especially if you start with the signal handling required
+(ctrl-z and ctrl-c over su are supposed to work...).
 
+Fun enough, after release one of our customers reported to actually use
+code like:
 
-On Fri, Jan 20, 2012 at 11:46:10PM +0400, Solar Designer wrote:
-> On Fri, Jan 20, 2012 at 09:35:04AM +0400, Alexander Pletnev wrote:
+	su nobody -c "echo Test >/dev/tty" 
+
+Ciao, Marcus
