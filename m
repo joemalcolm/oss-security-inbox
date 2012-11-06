@@ -1,66 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/30/3
-Message-ID: <20120830150435.GA11405@openwall.com>
-Date: Thu, 30 Aug 2012 19:04:35 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/9
+Message-ID: <50991A59.3000906@mvista.com>
+Date: Tue, 06 Nov 2012 06:10:33 -0800
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Stripe Capture the Flag
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thank you all for the feedback on this sort of postings.  Besides the
-feedback we've seen in here, I also got two off-list replies, both from
-active list members (who wanted to keep the number of postings in this
-thread down, hence did not post to the list):
 
-One person suggested that CTF announcements be approved selectively -
-most CTF announcements rejected (especially those requiring physical
-presence and scheduled for a specific time, since few people are
-able to participate in those), but some interesting ones accepted
-(especially online infosec games available to play any time).
 
-The other person felt strongly that all of them should be rejected, so
-that we have a high-quality discussion list.
+On 11/05/2012 03:32 AM, Premchand Koneru wrote:
+> I recently joined the Montavista Security team and request
+> membership to thelinux-distros@...openwall.org  list, so that I may
+> participate fully in reporting and fixing vulnerabilities in
+> Montavista. Here is my GPG fingerprint:
+> 
+> pub   2048R/5DA060C7 2012-11-05 Key fingerprint = 7DF9 45B4 3116
+> 8D5C D3C0  2A15 EADE D5B2 5DA0 60C7 uid                  Premchand
+> Koneru<pkoneru@...sta.com <mailto:pkoneru@...sta.com>> sub
+> 2048R/BE364B01 2012-11-05
+> 
+> Thank you for consideration.
+> 
+> 
+I can confirm Premchand is on the MontaVista security team
 
-(The above is my interpretation of the responses.  I am not posting them
-verbatim as I'd need to ask permission first, which I am too lazy to do.)
+Armin
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.18 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-On Fri, Aug 24, 2012 at 08:29:10AM +0200, Filip Palian wrote:
-> As many may think, it's not cve-designation list only (obviously I
-> may be wrong about that).
-
-This list is definitely not meant to be limited to CVE assignments.
-I'd like to see more discussion in here - preferably of specific
-technical issues rather than of policies and such (thus, I'd like this
-message I am posting now to be more of an exception than the rule).
-
-> In the other hand, it would be sad to see oss-security list turning
-> into the place, where people are writing walktroughs, spoilers and
-> asks for help (which IMHO would be unavoidable).
-> Filtering all the garbage could be overhelming for moderators.
-
-Well, we're not receiving any of these so far, and in fact let me dare
-to post this link:
-
-http://www.reddit.com/r/netsec/comments/z188v/stripe_web_security_ctf_is_over_i_wrote_up/
-
-which in turn includes links to several writeups / walk-throughs for
-Stripe CTF.  Warning: those who want to play the CTF for real should
-avoid visiting those links prematurely.
-
-> Maybe you will consider launching a dedicated list for CTFs only?
-
-I'm not seeing enough demand for this.  Besides, doesn't such a list
-already exist?  I must admit I'm not aware of one.  Perhaps not only for
-CTFs, but also for other "similar" stuff we're rejecting: conference and
-(e-)magazine CFPs, (e-)magazine issue announcements, repeated security
-tool announcements (new versions).  It'd have to be limited to those
-"weird" topics only, and exclude postings that would be on topic for
-oss-security and other lists. %-)  (Excluding other topics would be
-difficult as any posting may result in discussion that would include
-postings on-topic for another list.  A (bad) solution could be to keep
-that list announcement-only, rejecting any follow-ups.)  Would anyone
-want to be on that list?  What could it be called?
-
-Alexander
+iQIcBAEBAgAGBQJQmRpZAAoJEH91cpWuue2NUpYP/3c3GDpQIbcSv3k3DWfDkQTj
+Z6+EXwaR1I4eZ5a3uWDXw48Azl82T9+3evXi84IYPlJisq5PwNfS4VuzEthSZvRO
+cB0oY51f1ehuEEuQ8TCqIMlkrD8G2Y296wH8atnThP96XaOUsHHQRWLP/tdtGq6I
+ZHbmCpHF98KI9bWZ34h4Ex8llVADwPJrqgQDzelxn2c8o/gLE4NCKIzgw1KG8q5I
+gRXsdqu5FR8GXxddmQWLto6lJgJ6T7t6owptJ69mjO69WQr1+hgwoqYJ4FREosh1
+oDQxga13Yce7k7PnZqdvdmvShycDRTeUxBc2iBxQMyfK1CGtWro6rT/Gzj4BjYRk
+Wc+HQ7oTAlseJTcxfPTDBr0ysbQCV2T1HqCdc44pgOamRPLJ8voShjAacpgI5+a1
+PjVcbXhvfengD7sHd802yBHwO5L21khkz8+IWYyRqXllt8sBvpfzcFFewmBumbd6
+MwqPOhFwdBH/QvpUNK95dgW6N48T1E/f0pLxDwJhLyZNplw2n/xMtkBtJVHnXV1C
+l2M3AF7A4Brzj8hz06hIzJAWtlELtLXDCOPVMIc04OF7LTZ/OgaFPqbnDWdWgBhT
+REXcB03ljAjl5jivxEvl7jp2nMaQFDo2eE/AHIsRDnCvciJZytcBMSxYRdKn940X
+LNEkh2TO2uTr7uhm4WZE
+=9lqZ
+-----END PGP SIGNATURE-----
