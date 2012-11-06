@@ -1,29 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/21/1
-Message-ID: <20121121132013.350a82fb@chromobil.local>
-Date: Wed, 21 Nov 2012 13:20:13 +0100
-From: Stefan Bühler <stbuehler@...httpd.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/16
+Message-ID: <509965F8.60505@halfdog.net>
+Date: Tue, 06 Nov 2012 19:33:12 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Cc: lighttpd-announce@...ts.lighttpd.net
-Subject: lighttpd 1.4.32 released, fixing CVE-2012-5533
+CC: vladz <vladz@...zero.fr>
+Subject: Re: TTY handling when executing code in different lower-privileged context (su, virt containers)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-we just released lighttpd 1.4.32, fixing a DoS reported by Jesse
-Sipprell from McClatchy Interactive, Inc.
+vladz wrote:
+> 
+> On Mon, Nov 05, 2012 at 07:22:37PM +0000, halfdog wrote:
+>> During programming experiments I found some class of
+>> vulnerabilities [1], that seem to be rediscovered again from time
+>> to time, but since attack value is questionable, it was not fixed
+>> yet.
+> 
+> Nice.  I was just wondering why the SIGSTOP signal is used here? 
+> Sending a string starting with "exit;" to close the child process
+> also does the trick, no?  ...
 
-Sending "Connection: TE,,Keep-Alive" as header will trigger an endless
-loop; as lighttpd is single threaded all request handling will stop
-immediately.
+I'm not sure if there are cases where this is really required. I added
+it to support setups like [root-shell] -> su -> [bad-binary].
 
-Only lighttpd 1.4.31 is affected by this.
+The shell with foreground process will no process the input. When
+suspending the parent, shell will process input, last line of input is
+"fg" to get normal su running again.
 
-For more details and other changes see:
-* http://www.lighttpd.net/2012/11/21/1-4-32/
-* http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2012_01.txt
+I would think of using it that way: [bad-binary] is started by admin
+via su on error or other user process performs attach-exec-transform
+(like with vserver example). [bad-binary] then backdoors root account
+(modify sudoers, add ssh keys, make libc world writable), clears the
+screen, writes out some large banner or error message, so that admin
+does not see the injected commands and then launches the [good-binary].
 
-Regards,
-Stefan
+Therefore it might be useful to temporarily suspend the process
+executed from shell.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+>> I would like to propose following "fix" for this problem:
+>> Modification of man-page of su making this a known problem or
+>> feature, not a bug.
+> 
+> Changing the man page is a good idea.  Administrators (good ones)
+> should never have to open users's interactive shells.  I mean,
+> beside being a security problem, it's kind of invasion of privacy.
+> ;)
+
+Not to a standard user account. But some daemons come with own account
+and that might be hot candidates. For example the postgresql default
+configuration allows psql maintenance connections only from user
+"postgres" on localhost (via shared mem if I remember correctly).
+Therefore su to "postgres" for database in- or exports might be used
+quite frequently, perhaps someone could confirm that or bring even
+other examples.
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAlCZZecACgkQxFmThv7tq+79IACdHNfY7k1/c5+9UvwO7Pznmy2E
+WxQAnjZruvgAdAhoniCLGKLvGkwBq7bN
+=kaTH
+-----END PGP SIGNATURE-----
