@@ -1,62 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/04/4
-Message-ID: <20120204034839.GA19843@openwall.com>
-Date: Sat, 4 Feb 2012 07:48:39 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/3
+Message-ID: <20121106102108.GA13925@devzero.fr>
+Date: Tue, 6 Nov 2012 11:21:08 +0100
+From: vladz <vladz@...zero.fr>
+To: halfdog <me@...fdog.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: TTY handling when executing code in different lower-privileged context (su, virt containers)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 03, 2012 at 10:00:24PM -0500, Michael Gilbert wrote:
-> On Fri, Feb 3, 2012 at 8:45 PM, Solar Designer wrote:
-> > Yet the delay itself matters too.  There are different opinions as to
-> > whether it is "the important aspect" or not.
-> 
-> That's why I think its more appropriate to defer such decisions to the
-> researcher who understands the complexity of the problem at hand (of
-> course hopefully allowing negotiation with those affected to choose a
-> disclosure date that can be met).
 
-That's what we have now, right?
+On Mon, Nov 05, 2012 at 07:22:37PM +0000, halfdog wrote:
+> During programming experiments I found some class of vulnerabilities
+> [1], that seem to be rediscovered again from time to time, but since
+> attack value is questionable, it was not fixed yet.
 
-> > [...] I need a tool - a program to mass-decrypt a
-> > PGP/MIME mbox, producing another mbox.  I think such a program might be
-> > generally useful.  Well, or alternatively I need to introduce a
-> > different mechanism for the archive - not treat it as a regular
-> > subscriber like I intended to.
-> 
-> Completely unfleshed out, but a pseudo-bash script along the lines of
-> the following should do it:
-> 
->   echo "" > newmbox
->   gpg-agent --allow-preset-passphrase
->   /usr/lib/gnupg2/gpg-preset-passphrase --preset <cache id>
->   cat mbox | while read line; do
->       test <header> && echo $line >> /tmp/header
->       test <body> && echo $line >> /tmp/body
->       if [ <end off body> ]; then
->           cat /tmp/header >> newmbox
->           cat /tmp/body | gpg --decrypt >> newmbox
->       fi
->   done
->   /usr/lib/gnupg2/gpg-preset-passphrase --forget
-> 
-> Obviously a bit more work there to figure out appropriate conditionals
-> to put in the angle brackets.
+Nice.  I was just wondering why the SIGSTOP signal is used here?
+Sending a string starting with "exit;" to close the child process also
+does the trick, no?  When [1] was posted on the oss list, I wrote this
+little PoC [2] to hijacked interactive bash shell opened with "su -
+<user>".
 
-Unless I am missing something, this doesn't handle MIME at all - so it
-won't do the trick.
+> I would like to propose following "fix" for this problem: Modification
+> of man-page of su making this a known problem or feature, not a bug.
 
-I was thinking of building something upon Mutt in its entirety (e.g.,
-talk to it with expect) or upon pieces of code from Mutt (since it
-handles such mbox'es just fine) or maybe upon my own mbox and MIME
-parsing code from blists (but add the gpg invocations to it myself).
+Changing the man page is a good idea.  Administrators (good ones) should
+never have to open users's interactive shells.  I mean, beside being a
+security problem, it's kind of invasion of privacy. ;)
 
-Alternatively, I could in fact make the list archive recipient special
-such that there would be no MIME at that level - re-encrypt entire
-already-decrypted messages to the archive key such that the resulting
-messages are no longer valid for viewing with a MUA, but such that we
-can decrypt them again easier (without parsing MIME).  This might be
-less code to write.
+  [1] http://www.openwall.com/lists/oss-security/2011/12/20/2
+  [2] http://vladz.devzero.fr/svn/codes/bash/dontsu.sh
 
-Alexander
+vladz.
+
