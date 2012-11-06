@@ -1,33 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/3
-Message-ID: <20120126012445.GA21847@foo.fgeek.fi>
-Date: Thu, 26 Jan 2012 03:24:45 +0200
-From: Henri Salo <henri@...v.fi>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: TWSL2012-002: Multiple Vulnerabilities in WordPress
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/5
+Message-ID: <50990E1D.5010904@oracle.com>
+Date: Tue, 06 Nov 2012 13:18:21 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 25, 2012 at 05:02:58PM -0700, Kurt Seifried wrote:
-> On 01/25/2012 08:31 AM, Henri Salo wrote:
-> > FYI: http://seclists.org/fulldisclosure/2012/Jan/416
-> > 
-> > - Henri
-> 
-> Uh correct me if I am wrong but these already have CVE's? From the link:
-> 
-> Finding 1: PHP Code Execution and Persistent Cross Site Scripting
-> Vulnerabilities via 'setup-config.php' page.
-> CVE: CVE-2011-4899
-> 
-> Finding 2: Multiple Cross Site Scripting Vulnerabilities in
-> 'setup-config.php' page
-> CVE: CVE-2012-0782
-> 
-> Finding 3: MySQL Server Username/Password Disclosure Vulnerability via
-> 'setup-config.php' page
-> CVE: CVE-2011-4898
 
-Yes you are correct. My point was to share this information with oss-security and the information being that WordPress is not going to fix these issues. Not everyone from oss-security is reading full-disclosure and still want to kno security-related topics of open-source software and looking at the lasts posts of full-disclosure I don't wonder why :)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-- Henri Salo
+On 06/11/12 13:10, akuster wrote:
+> What do you mean as signed? 
+
+Signed using PGP with your usual signing key.   Otherwise you could be
+anyone :)
+
+jch
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iF4EAREIAAYFAlCZDhcACgkQRQu7fpQvo8irPgD+IzEN73eNDVCHISbYrcswuM/p
+oh5QZlg56VOq9018mMMA+wWKrzzQS7M/WVLW91MpJ4gppG7+gVoJMv8BSrvhjjVD
+=2t7c
+-----END PGP SIGNATURE-----
+
