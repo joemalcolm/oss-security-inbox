@@ -1,39 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/04/7
-Message-ID: <4F53968E.3040701@freenet.de>
-Date: Sun, 04 Mar 2012 17:21:34 +0100
-From: Joachim Fritschi <jfritschi@...enet.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/10
+Message-ID: <50991DA0.3060403@mvista.com>
+Date: Tue, 06 Nov 2012 06:24:32 -0800
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Requests for phpCAS
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-2 security vulnerabilities were discovered in the phpCAS library from 
-the jasig project.
-
-In the default configuration a phpCAS protected application allowed any 
-other cas service with proxy authorization and valid user credentials to 
-proxy any other phpCAS applications in the same SSO realm.
-This is a security flaw since individual applications should check 
-whether another application is actually authorized to proxy for users in 
-this particular application.
-This issue can be found on the issue tracker and a fix has already been 
-committed:
-https://issues.jasig.org/browse/PHPCAS-69
+Henri,
 
 
-In the default debug configuration a debug log was stored without proper 
-protection in /tmp and in a proxy configuration session data was stored 
-without proper protection in /tmp. This both could leak private user 
-attributes and sensitive login tokens during the login procedure to 
-other user on the webserver.
-This issue can be found on the issue tracker and a fix has already been 
-committed:
-https://github.com/Jasig/phpCAS/issues/22
+On 11/05/2012 09:53 AM, Henri Salo wrote:
+> On Mon, Nov 05, 2012 at 05:02:52PM +0530, Premchand Koneru wrote:
+>> I recently joined the Montavista Security team and request membership to
+>> thelinux-distros@...openwall.org  list, so that I may participate fully
+>> in reporting and fixing vulnerabilities in Montavista. Here is my
+>> GPG fingerprint:
+>>
+>> pub   2048R/5DA060C7 2012-11-05
+>>       Key fingerprint = 7DF9 45B4 3116 8D5C D3C0  2A15 EADE D5B2 5DA0 60C7
+>> uid                  Premchand Koneru<pkoneru@...sta.com  <mailto:pkoneru@...sta.com>>
+>> sub   2048R/BE364B01 2012-11-05
+>>
+>> Thank you for consideration.
+> 
+> This is first time I heard about Montavista. Where is your package- and bug-tracker? Does Montavista use CVE?
+> 
 
-Could you please allocate two CVE identifiers for these issues?
+Our information can be found at:
+http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
 
-Thanks,
+- Armin
 
-Joachim
+
