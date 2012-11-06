@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/8
-Message-ID: <1327684446.17581.4.camel@scapa>
-Date: Fri, 27 Jan 2012 18:14:06 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/1
+Message-ID: <50988D29.2010905@redhat.com>
+Date: Tue, 06 Nov 2012 09:38:09 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE Request: Debian (others?) openssh-server: Forced Command handling leaks private information to ssh clients
+Subject: gegl: Integer overflow, leading to heap-based buffer overflow by parsing PPM image headers
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2012-01-27 at 09:59 -0700, Kurt Seifried wrote:
-> I created three separate keys, so three separate accounts. 
+Hi All,
 
-That was my question, in fact. Are separate keys (to the same user
-account on the box) really supposed to be considered separate accounts
-(on the box).
+An integer overflow, leading to heap-based buffer overflow was found in 
+the way portable pixmap format (PPM) image file format handler of GEGL, 
+a graph based image processing framework, processed certain input PPM 
+image file headers. A remote attacker could provide a specially-crafted 
+PPM image that when opened in gegl executable would lead to crash, or, 
+potentially arbitrary code execution with the privileges of the user 
+running the binary.
 
-My first guess is “yes”, but I'm not sure if it was created like that,
-and thus think it was a valid question. For the sshd, you don't (may
-not) have three separate accounts, but one.
+This issue was found by Murray McAllister, Red Hat Security Response Team.
 
-Regards,
+We have assigned CVE-2012-4433 to this issue.
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=856300
+
+
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
