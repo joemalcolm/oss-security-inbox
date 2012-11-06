@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/12
-Message-ID: <20120615231349.2ad3e0de@hsalkjdhsa>
-Date: Fri, 15 Jun 2012 23:13:49 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/11
+Message-Id: <201211061506.qA6F6OKa014851@core.courtesan.com>
+Date: Tue, 06 Nov 2012 10:06:24 -0500
+From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: java hashdos vulnerability
+cc: disclosure@....org
+Subject: Re: Re: TTY handling when executing code in different lower-privileged context (su, virt containers)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, 06 Nov 2012 15:06:57 +0100, Marcus Meissner wrote:
 
-Seems java is fixing HashDos finally:
-http://mail.openjdk.java.net/pipermail/core-libs-dev/2012-May/010238.html
+> Ludwig Nussel tried to also use pseudo tty, but this gets kind of
+> messy soon, especially if you start with the signal handling required
+> (ctrl-z and ctrl-c over su are supposed to work...).
 
-They don't mention hashdos, but the interesting part is here:
-"The enhanced hashing implementation uses the murmur3 hashing
-algorithm[1] along with random hash seeds and index masks"
+Using a pseudo tty and still having job control work requires you
+use an extra process in the new session to be the parent of the
+command.  Otherwise the kernel considers the process group to be
+an "orphan" and won't deliver SIGTSTP, SIGTTOU, SIGTTIN etc.
 
-random hash seeds is what prevents hashdos.
+It does get somewhat messy as you need to catch job control signals
+from the user's tty and pass them on to the process running in the
+new pty.  This is what sudo does when I/O logging is enabled or the
+"use_pty" option is specified.
 
-Further info here:
-http://armoredbarista.blogspot.de/2012/02/investigating-hashdos-issue.html
+Simply using setsid() to create a new session for sudo is not a
+workable solution as it breaks too many things.  For example, using
+sudo in a pipeline would no longer work properly.
 
-Please assign CVE.
-
-cu,
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+ - todd
