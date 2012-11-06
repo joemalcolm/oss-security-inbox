@@ -1,46 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/9
-Message-ID: <4FA7F021.2000105@redhat.com>
-Date: Mon, 07 May 2012 09:54:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/15
+Message-ID: <50995CBC.2020809@halfdog.net>
+Date: Tue, 06 Nov 2012 18:53:48 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Pidgin XMPP remote crash (#62)
+Subject: Re: TTY handling when executing code in different lower-privileged context (su, virt containers)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/07/2012 09:53 AM, Kurt Seifried wrote:
-> Could I request that a CVE be issued for a possible 
-> remotely-triggerable crash in Pidgin?  To my knowledge no CVE
-> exists for this issue.  The issue is described at 
-> http://pidgin.im/news/security/?id=62
+vladz wrote:
 > 
-> The Pidgin project has just released version 2.10.4 which fixes the
-> issue.
+> On Mon, Nov 05, 2012 at 07:22:37PM +0000, halfdog wrote:
+>> During programming experiments I found some class of
+>> vulnerabilities [1], that seem to be rediscovered again from time
+>> to time, but since attack value is questionable, it was not fixed
+>> yet.
 > 
+> ... I wrote this little PoC [2] to hijacked interactive bash shell
+> opened with "su - <user>".
 
-Please use CVE-2012-2323 for this issue.
+Off-List: May I have permission to reference your POC from my page?
+
+hd
+
+> [2] http://vladz.devzero.fr/svn/codes/bash/dontsu.sh
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-iQIcBAEBAgAGBQJPp/AhAAoJEBYNRVNeJnmTQSUP/jYG4FOjQ68kzG0tnAnZzoY3
-cBEMrzGf/ACeeypBbGgAHAu6etPJ1bYIc+uTwsoVojn+vgqikbq4hYs64/LZVjyx
-MJdJubiFsIujKhb92jwpRauHnVBXtjJ6M+K7Xbo7v/8AnIJ4wgVCqkGSIizxNWIf
-KS+UfMMLkUl1ws3V/qfMyW1z3sqP0D8Hog0VGZLxTqcmk0u0lFYozRm6+AGubcIA
-uTqLv/IeIRK6xOmFiKCnsh89ZNbBmaHgZEgBoN40FsiVxEjG0ux703gVkwbXY/nT
-ynnYosP/tAxQFzyyWcP42P4FgDDUjeeh3i5METT5E4DGJ51mbVTUO1iP9AN1r9Ba
-AOOxiJunEIGO8U2uRYAL/WqgOk5Xur4Nks9H/79BHwsFogFYMU1lE0shYU0Qqb7B
-JpjcqmbMbshendkK/q4mOay8o6UGxaGIxVsRUG3WDq18JwSFGPYlUQfSgZKOe59Q
-8fZ349aAGNILEn4jfYRR5NTeGS1zFPtrJsXXK+EbOTmUB7S366b5vAsHTtNG6obr
-U8fbI4zFCPhHeRI0YIOlX6kOmTrnjQhjPCu++sxmixEr5NM7+oRlmo8ua2guL35R
-J9QNYrv4/RGnFiArcHTdEkck6HxpRTx5dz4LfvjNOXvONFrotUwQfl0eoErGhFNs
-BX553VLvgJeEvlnqXWf6
-=9NZ6
+iEYEARECAAYFAlCZXLAACgkQxFmThv7tq+4MCQCdHxnTjzVEik3HUyCPceta0lKD
+GPsAn32YKvJLE0Oect0KW9Xhdea/3joa
+=Vyr3
 -----END PGP SIGNATURE-----
