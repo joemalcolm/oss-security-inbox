@@ -1,49 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/18/1
-Message-ID: <4FDF2E05.9090708@redhat.com>
-Date: Mon, 18 Jun 2012 15:32:53 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Josh Bressers <josh@...ss.net>
-Subject: CVE Request -- Revelation: 1) Limits effective password length to 32 characters 2) Doesn't iterate the passphrase through SHA algorithm to derive the encryption key
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/18
+Message-ID: <50997753.3090901@redhat.com>
+Date: Tue, 06 Nov 2012 13:47:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: akuster <akuster@...sta.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   multiple security flaws have been found in Revelation, a password manager for GNOME 2. Specifically:
+On 11/06/2012 08:10 AM, akuster wrote:
+> I am not surprised that our list is behind. I did mention there
+> would be a 3 month delay in new postings back when I was trying to
+> get MontaVista back on the closed list which seemed acceptable at
+> the time. This delay seems excessive. I will ping my management
+> again.
+> 
+> If you feel that MV should be dropped from the list-distros list,
+> then so be it.
 
-1) It was found that Revelation limited effective password lengths to thirty two characters,
-which made it easier for context-dependent attackers to successfully conduct brute-force
-password guessing attacks,
+Nope, I honestly forgot you guys were on the list (I don't think I've
+ever seen a posting from you guys), and the request sounded like a new
+one (he didn't mention that you would vouch for him/etc.).
 
-2) It was found that Revelation did not iterate the particular passphrase through some of
-the SHA family of hashing algorithms, in order to derive the encryption key, which made it
-easier (in that scenario there were only 7 bits to vary on each character) for context-dependent
-attackers to successfully conduct dictionary based password guessing attacks.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Upstream ticket:
-[1] http://oss.codepoet.no/revelation/issue/61/file-format-magic-string-version-mismatch
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Further references:
-[2] https://bugs.gentoo.org/show_bug.cgi?id=421571
-[3] http://lists.fedoraproject.org/pipermail/devel/2012-June/168607.html
-[4] http://knoxin.blogspot.co.uk/2012/06/revelation-password-manager-considered.html
-[5] http://westhoffswelt.de/blog/0046_from_revelation_security_to_android_password_managers.html
-
-Could you allocate two CVE ids for these? (I think two are needed for each
-of the issues)
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: Kurt - regarding time, when this issue has been reported for the first time (thus
-       which CVE-201*- id to allocate), it is necessary to find this it out yet.
-
-       Upstream ticket [1] was reported on 2012-02-06 (which would suggest CVE-2012-* one
-       to be allocated), but the rest of the links mention this issue has been known for
-       longer time, thus please investigate yet. I wanted to Cc- the original ticket
-       reporter 'hannibal218bc' on this request (he to clarify), but I doesn't seem to be
-       able to find his proper email address / contact. Sorry for that.
-
-
+iQIcBAEBAgAGBQJQmXdTAAoJEBYNRVNeJnmTFf8QAL+AYIG7gC0o883yeXdh8SSg
+rTyg+XuFFZMPzYRijl5bTE0CKXMr7Nzwdojfc37FqFBZNwa1QFZqCyY3e4one90G
+D1Jfu5hDEqrQdsEeqnNurheIvkw+BTiLDR2poQujvy5S9Ekf6Do1BhprXrRMDyQV
+pqa6rJ93EioIVweSMA7H7COEQR9lyQ8O/n9F+DUm8gij+QBrMntaFmeF3ZBiHgF7
+prN4EJkkOldxPwklI9PPnULxx8jthQvQQ5vc87lse4Rbb2ly2y7gpJuCyBoaKA7Y
+GC4dBWckXxBriWCPlDDyQw0QRPaerYKhKDwRdQZA5oUxPFmTvscIqN9kmqXLjuai
+dfXY3fVsH9RptIfgIpnKUBiD8T2NMLqPYCl1HuIBs0kYHofCE5j6sB/1TIL6Mzl5
+qLjGBM+qWNV46XdrqTgZ6f6fndLLFbBCyEIWCw2nRJjkXS7ETVAVfSRn848c6lq9
+baTAas5RGIYQQrIrSVdaGIFlmfDBfQaHlTmd7ARabBM1jXWExsKivpx9k6Rqa7xs
+J8g1+NIoNluppRMt+6lZxhcZsKGPAqRVTkCvK5+MofC1Ky6hhC17iYhvl5pm4NaZ
+RYCHILTjha+t7HBOuY0lsNhfwwPFpl0aHRRmVkrTnZPrar5dFFh0KvA2Sr3VXKhd
+oLs/whtuw+QylK9WbX31
+=j3tE
+-----END PGP SIGNATURE-----
