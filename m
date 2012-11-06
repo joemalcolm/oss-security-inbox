@@ -1,32 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/08/5
-Message-ID: <4F591F35.9080404@redhat.com>
-Date: Thu, 08 Mar 2012 14:05:57 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/17
+Message-ID: <5099769D.7050904@redhat.com>
+Date: Tue, 06 Nov 2012 13:44:13 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, security@....net
-Subject: Re: CVE request for PHP 5.3.x Corrupted $_FILES indices lead to security concern
+To: oss-security@...ts.openwall.com
+Subject: Re: YUI 2.x security issue regarding embedded SWF files -- or, How Not To Handle A Security Disclosure
 Content-Type: text/plain; charset=utf-8
 
-On 03/08/2012 01:56 PM, Kurt Seifried wrote:
-> Just looking through http://www.php.net/ChangeLog-5.php#5.4.0
-> 
-> Fixed bug #55500 (Corrupted $_FILES indices lead to security concern).
-> 
-> https://bugs.php.net/bug.php?id=55500
-> (still locked)
-> 
-> But the blog posting:
-> 
-> https://nealpoole.com/blog/2011/10/directory-traversal-via-php-multi-file-uploads/
-> 
-> has details and it appears to be a security issue. I have emailed
-> security@....net twice, no response in a week so I'm sending the request
-> to OSS-sec.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On second look the code doesn't appear to be in PHP 5.3.10 so is it only
-in PHP 5.4 betas? Can anyone @php confirm this?
+On 11/06/2012 08:23 AM, Jan Lieskovsky wrote:
+> Looks they already did: [1]
+> http://www.yuiblog.com/blog/2012/11/05/post-mortem-swf-vulnerability-in-yui-2/
+>
+> 
+[2] http://yuilibrary.com/support/20121030-vulnerability/
+
+well not when I had posted the message =)
 
 
-
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQmXadAAoJEBYNRVNeJnmTS4MQAKR4aKWjYWsM3iW6l9xd4Gyb
+HVlXKrHUO1LE8FH6Aer/0UTvIq4eglM1GIhr3NYre0VF6R2fJpPjnsEvmGq5Gcme
+gzBdJWffiwIkFRciFGC+4cspBQcFmUe0efGmDgJVJ7AAz7PfmMlUjihSbycFjFjO
+K+BUdH7uzAznJms+pZ58lfxRr5VIH8+y4hdEPYqO7FFQh16J+KwUZ7GUgrzLGHsV
+jjudz0eGQRAha0SaXokM6DlrW3CGIlGp+wJICPDKPeBgl1cRMjuMWQgbssfRjEGM
+dA5y9B/bLXSFs7mPfpwCWVPmLRSGxRewyNCM4uHg9in3xQUOp4+74GqMROGypNuC
+YNDudrzRb7ZK0YcvzKXHCzcdSBX/hbMr+aq2V8K/zModeAs8kYd93nWWJojEZxMK
+7oAmJsiC5k/6UmvUZYO3PVFLlBCX6qN4Dova2/tugC8XYQYoKv5Fk98wU89Mz8zz
+AQSjCzMKEmXe0+UmMCrKRy/c0+9sBEmZcHS4SYuf1xUyNcSwWZ+cXxUKGw8s3muv
+2GcyLEEjcVoRO8zrKFz0pnQwo4SKCqV62rVigU1CPSbADLw6jahp8kNQpU9805M9
+u8RaV7CRbBUsS8Pr5QqevjKmCYoKI5FnoGXi5WH5QB2lni74KyQ7a/0EnvY9+Nsk
+Z6zU2TrQ/86VchVYWd3B
+=CRgZ
+-----END PGP SIGNATURE-----
