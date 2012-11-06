@@ -1,77 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/4
-Message-ID: <20121123172745.GA3007@core.inversepath.com>
-Date: Fri, 23 Nov 2012 18:27:45 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2012-001] multiple implementations denial-of-service via MurmurHash algorithm collision
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/12
+Message-ID: <5099285C.9040704@mvista.com>
+Date: Tue, 06 Nov 2012 07:10:20 -0800
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-#2012-001 multiple implementations denial-of-service via MurmurHash algorithm
-collision
+Kurt,
 
-Description:
+On 11/05/2012 10:09 AM, Kurt Seifried wrote:
+> On 11/05/2012 10:53 AM, Henri Salo wrote:
+>> On Mon, Nov 05, 2012 at 05:02:52PM +0530, Premchand Koneru
+>> wrote:
+>>> I recently joined the Montavista Security team and request 
+>>> membership to thelinux-distros@...openwall.org  list, so that
+>>> I may participate fully in reporting and fixing vulnerabilities
+>>> in Montavista. Here is my GPG fingerprint:
+>>> 
+>>> pub   2048R/5DA060C7 2012-11-05 Key fingerprint = 7DF9 45B4
+>>> 3116 8D5C D3C0  2A15 EADE D5B2 5DA0 60C7 uid Premchand
+>>> Koneru<pkoneru@...sta.com <mailto:pkoneru@...sta.com>> sub
+>>> 2048R/BE364B01 2012-11-05
+>>> 
+>>> Thank you for consideration.
+> 
+>> This is first time I heard about Montavista. Where is your
+>> package- and bug-tracker? Does Montavista use CVE?
+> 
+>> - Henri Salo
+> 
+> 
+> Also how do we confirm you are on the security team there? I can't 
+> even find proof you work for Montavista (other than the email
+> address) and I can't find any mention of a person called "Premchand
+> Koneru" doing security work in the past.
+> 
+> I did manage to find a CVE page of sorts:
+> 
+> http://www.mvista.com/cve_vulnerabilities.php
+> 
+> For 2012 you appear to have fixed one Linux security flaw out of
+> the 7 listed (the rest are OpenSSL/OpenSSH), so I'm not really sure
+> why you would need access to distros@ if you aren't fixing Linux
+> related security issues any ways?
 
-A variety of programming languages suffer from a denial-of-service (DoS)
-condition against storage functions of key/value pairs in hash data
-structures, the condition can be leveraged by exploiting predictable
-collisions in the underlying hashing algorithms.
+I am not surprised that our list is behind. I did mention there would
+be a 3 month delay in new postings back when I was trying to get
+MontaVista back on the closed list which seemed acceptable at the
+time. This delay seems excessive. I will ping my management again.
 
-The issue is similar to the one reported in oCERT-2011-003 and concerns the
-MurmurHash algorithm family. The condition for predictable collisions in the
-hashing functions has been reported for the following language
-implementations: JRuby (MurmurHash2), Ruby (MurmurHash2), Rubinius
-(MurmurHash3), Oracle JDK (MurmurHash), OpenJDK (MurmurHash). In the case of
-Java OpenJDK the hash function affected by the reported issue is not enabled
-by default, the default function is however reported vulnerable to
-oCERT-2011-003.
+If you feel that MV should be dropped from the list-distros list, then
+so be it.
 
-Affected version:
-Ruby < 1.9.3-p327
-JRuby all versions
-Rubinius, all versions
-Oracle JDK <= 7
-OpenJDK <= 7
+I do realize this list is maintained by volunteers and today's rules
+are based on previous emails (kinda hard me to follow).
 
-Fixed version:
-Ruby >= 1.9.3-p327
-JRuby, N/A
-Rubinius, N/A
-Oracle JDK, N/A
-OpenJDK, N/A
+I do hope the requirements listed at
 
-Credit: vulnerability report received from Jean-Philippe Aumasson
-        <jeanphilippe.aumasson AT gmail.com>, PoC code and SipHash
-	implementation used to patch the issue developed by Martin Bosslet
-	<martin.bosslet AT gmail.com>.
+http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-CVE: CVE-2012-5370 (JRuby), CVE-2011-5371 (Ruby), CVE-2011-5372 (Rubinius),
-     CVE-2011-5373 (Oracle JDK, OpenJDK)
+will be update with "How to maintain membership" and "How to ack/nack
+additional team members memberships".
 
-Timeline:
-2012-08-30: vulnerability report sent to Ruby, JRuby and Rubinius security contacts
-2012-09-03: vulnerability report forwarded to oCERT by Hiroshi Nakamura (Ruby security contact)
-2012-09-06: oCERT contacted reporters to investigate additional affected projects
-2012-09-06: reporters indicate OpenJDK as vulnerable and that Java security team has been contacted on 2012-07-31
-2012-09-10: oCERT requested CVE assignment for Ruby, JRuby and Rubinius
-2012-09-12: Oracle JDK and OpenJDK confirmed vulnerable by reporters
-2012-09-12: oCERT requested CVE assignment for Oracle JDK and OpenJDK
-2012-10-10: reporters indicate public PoC release on 2012-11-07 at ASFWS
-2012-11-08: assigned CVEs
-2012-11-09: Ruby 1.9.3-p327 released
-2012-11-23: advisory release
+Kind regards,
+Armin
 
-References:
-https://www.131002.net/siphash
 
-Permalink:
-http://www.ocert.org/advisories/ocert-2012-001.html
 
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.18 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+iQIcBAEBAgAGBQJQmShbAAoJEH91cpWuue2Nvl0P/2PfDeNSrUV8CE7oZ0GNgUGs
+wXEmJGEBtplvACUOiQ8P2tOoLHrke790hkF0LaLK7bHryKzTFtNHftVxc87Qu2cR
+V8ej/y7jO8/IGOYdAMS6W1dPPCZtmuVEEE2v6FGNtOGavy9LDYZRYOVBUUNB8yxr
+BtY40cTyAWHHaF/IZCoFw5tbaHLhl2bM9VrU0ws98t1mbG5kRV+HGJqnTvDJbTz9
+wcLIIBltehQn0u5WduDdWIZBo3hYT9mvg3hidDZ+Azag921/Caa6cuC+m5es/W2v
+wuU6GFt6KEPLs1LM+r/Uw0Ip/ilZnDWJIe8KPX/aTQDMQ5SzNkj+GkG/cEW7sMZe
+W8tEesag+nBuMEshtYXjILLCtOnE0NbwgaY2eHLRjZBU66WWObbeQ/upNgnKvq/X
+NVrv5MKyt66NpehjGBt13Ty4k/HEOkswUQl8gmCm+x9F+Rhqdky2Ore1HyjIb/cR
+5zstHdR2ZKodS5YAoiV2HfIFdfd6brymqZcNHEYfhYPnFxvaq/XNL2CRfLpvhmHT
+syKQhach2t5B2EFcED734ytGnnAMExF6S+6ItQ6zChEKnb/jFXQX6m1HEYpWmzn3
+thDO7RD6TEzL1EVJ5U2eEF8IXMe1QKIZdB1X/mJ99OPe0N9FYj8fJhEAz2430ej1
+XjebBQngww0tU0Cod8Aq
+=9Lc5
+-----END PGP SIGNATURE-----
