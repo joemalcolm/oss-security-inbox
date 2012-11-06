@@ -1,20 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/11/2
-Message-ID: <4F0D6964.6000206@redhat.com>
-Date: Wed, 11 Jan 2012 18:50:12 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/13
+Message-ID: <814167927.28074568.1352215380464.JavaMail.root@redhat.com>
+Date: Tue, 6 Nov 2012 10:23:00 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: drm: integer overflow in drm_mode_dirtyfb_ioctl()
+Cc: Reed Loden <reed@...dloden.com>, Steven Christey <coley@...re.org>, security@...library.com
+Subject: Re: YUI 2.x security issue regarding embedded SWF files -- or, How Not To Handle A Security Disclosure
 Content-Type: text/plain; charset=utf-8
 
-There is a potential integer overflow in drm_mode_dirtyfb_ioctl() if
-userspace passes in a large num_clips.  The call to kmalloc would
-allocate a small buffer, and the call to fb->funcs->dirty may result in
-a memory corruption.
+----- Original Message -----
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Reported-by: Haogang Chen <haogangchen@...il.com>
-Signed-off-by: Xi Wang <xi.wang@...il.com>
+On 11/04/2012 05:13 PM, Kurt Seifried wrote:
+>> On 11/04/2012 01:34 PM, Reed Loden wrote:
+>>> I haven't seen this posted at all, but it seems there's some 
+>>> (major?) security issue regarding the SWF files embedded in YUI
+>>> 2. The YUI team has published a blog post regarding this problem 
+>>> asking users to e-mail them for details.
+>> 
+>>> http://www.yuiblog.com/blog/2012/10/30/security-announcement-swf-vulnerability-in-yui-2/
+>>
+>>>  The comments are a great read. Ryan Grove (former Yahoo! and
+>>> YUI core team guy) hits the point on the head regarding
+>>> disclosure handling of the issue. Apparently, some
+>>> people/companies have already been notified directly weeks ago,
+>>> and this is how the YUI team is continuing the disclosure process
+>>> by just asking projects to e-mail them instead of just releasing
+>>> the fix to the public at this stage. :/
+>> 
+>>> Might want to go ahead and get a CVE assigned to whatever this 
+>>> issue is, and hope more details come out of this soon so YUI 2 
+>>> users can actually get patched instead of having to request
+>>> access to the fix...
+>> 
+>>> ~reed (speaking only for himself)
+>> 
+>> Have any CVE's been issued for this issue? I can't find any. More
+>> to the point does this kind of issue (is it a service strictly?)
+>> even get a CVE? Steve?
+>
+> Ok please use CVE-2012-5475 for this issue.
+> 
+> Also can security@...library.com follow their disclosure policy listed
+> at and disclose the problem:
 
-Upstream commit:
-http://git.kernel.org/linus/a5cd335165e31db9dbab636fd29895d41da55dd2
+Looks they already did:
+[1] http://www.yuiblog.com/blog/2012/11/05/post-mortem-swf-vulnerability-in-yui-2/
+[2] http://yuilibrary.com/support/20121030-vulnerability/
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> http://yuilibrary.com/security/
+> 
+> Disclosure of Security Issues
+> 
+> If you've discovered a security flaw in one of our products, please
+> contact us. Expect to receive an acknowledgement quickly with the best
+> way to track your report's status. You'll have a direct contact at YUI
+> while we investigate.
+> 
+> Since issues have varying impact, we ask for your patience while we
+> make sure everyone who uses our products is protected. We will
+> disclose a problem once it's confirmed and a resolution is available.
+> If a fix is required, our release will credit you for your discovery.
+> 
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
