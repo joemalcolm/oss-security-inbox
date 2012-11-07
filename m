@@ -1,72 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/09/10
-Message-ID: <CAKecwXBygjS6SBTT21AR-T4X5QBsg8PT4OVrRd1g5W6sarkNmQ@mail.gmail.com>
-Date: Thu, 9 Aug 2012 18:24:57 -0300
-From: Santiago Pastorino <santiago@...works.com>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
-Subject: Potential XSS Vulnerability in Ruby on Rails
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/07/3
+Message-ID: <1516926920.28600951.1352288638704.JavaMail.root@redhat.com>
+Date: Wed, 7 Nov 2012 06:43:58 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Jan Pokorny <jpokorny@...hat.com>, Matthew Wilkes <matthew.wilkes@...ne.org>, Plone Security Team <security@...ne.org>, Mitre CVE assign department <cve-assign@...re.org>
+Subject: CVE Request - Zope / Plone: Multiple vectors corrected within 20121106 fix
 Content-Type: text/plain; charset=utf-8
 
-There is a vulnerability in the HTML escaping code in Ruby on Rails.
-This vulnerability has been assigned the CVE identifier CVE-2012-3464.
+Hello Kurt, Steve, vendors,
 
-Versions Affected:  All.
-Not affected:       None
-Fixed Versions:     3.2.8, 3.1.8, 3.0.17
+  Plone upstream has issued 20121106 HotFix correcting
+multiple security issues:
+1) http://plone.org/products/plone/security/advisories/20121106/
+2) http://plone.org/products/plone/security/advisories/20121106-announcement
 
-Impact
-- ------
-The HTML escaping code in Ruby on Rails does not escape all
-potentially dangerous characters.  In particular the code does not
-escape the single quote character.  The helpers used in Rails itself
-never use single quotes, so most applications are unlikely to be
-vulnerable, however all users running an affected release should still
-upgrade.
+Issues recapitulation (from 1) ):
+a) Restricted Python injection
+b) Reflexive HTTP header injection
+c) Restricted Python sandbox escape
+d) Restricted Python injection
+e) Partial restricted Python sandbox escape
+f) Reflexive XSS
+g) Partial permissions bypass
+h) Restricted Python sandbox escape
+i) Reflexive XSS
+j) Restricted Python injection
+k) DoS through unsanitised inputs into Kupu
+l) Anonymous users can list user account names
+m) Partial denial of service through Collections functionality
+n) Partial denial of service through internal function
+o) Anonymous users can batch change titles of content items
+p) Crafted URL allows downloading of BLOBs that are not visible to the user
+q) Persistent XSS via filtering bypass
+r) Users connected through FTP can list hidden folder contents
+s) Persistent XSS
+t) Attempting to access a view with no name returns an internal data structure
+u) DoS through RSS on private folder
+v) Timing attack in password validation
+w) PRNG isn't reseeded
+x) Form detail exposure
 
-Releases
-- --------
-The 3.2.8 and 3.1.8 releases are available at the normal locations.
+=> preliminary 24 CVE ids needed.
 
-Workarounds
-- -----------
+Could you allocate a CVE ids for these? Please take this post
+as initial heads up for vendors regarding them. In subsequent
+posts I will try to provide as much details about these as
+possible (we to be able to determine how many of them in fact
+needed).
 
-For users on earlier releases or who are unable to upgrade, you can
-install the attached file into config/initializers.  This will upgrade
-the rails helper to use the Rack::Utils.escape_html helper which does
-escape the single quote character.  However the Rack helper also
-escapes the '/' character, this is likely to cause test failures if
-your application is expecting the values of URLs to be unencoded.
-These tests however browsers will correctly decode the values and
-function as expected.
-
-Patches
-- -------
-To aid users who aren't able to upgrade immediately we have provided
-patches for the two supported release series.  They are in git-am
-format and consist of a single changeset.
-
-* 3-0-escape_html.patch - Patch for 3.0 series
-* 3-1-escape_html.patch - Patch for 3.1 series
-* 3-2-escape_html.patch - Patch for 3.2 series
-
-Please note that only the 3.1.x and 3.2.x series are supported at
-present.  Users of earlier unsupported releases are advised to upgrade
-as soon as possible as we cannot guarantee the continued availability
-of security fixes for unsupported releases.
-
----
-
-Santiago Pastorino
-WyeWorks Co-founder
-http://www.wyeworks.com
-
-Twitter: http://twitter.com/spastorino
-Github: http://github.com/spastorino
-
-Download attachment "single_quote_escape_workaround.rb" of type "application/octet-stream" (549 bytes)
-
-Download attachment "3-2-escape_html.patch" of type "application/octet-stream" (12672 bytes)
-
-Download attachment "3-1-escape_html.patch" of type "application/octet-stream" (22772 bytes)
-
-Download attachment "3-0-escape_html.patch" of type "application/octet-stream" (21414 bytes)
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
