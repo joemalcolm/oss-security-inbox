@@ -1,30 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/15/12
-Message-ID: <20120315194818.GA9016@openwall.com>
-Date: Thu, 15 Mar 2012 23:48:18 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/07/6
+Message-ID: <509ADC3F.7000306@redhat.com>
+Date: Wed, 07 Nov 2012 17:10:07 -0500
+From: Russell Bryant <rbryant@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Luc ABRIC <luc.abric@...ida.fr>, Yann MICHARD <yann.michard@...ida.fr>, Karim SLAMANI <karim.slamani@...ida.fr>, "'jkn@...no'" <jkn@...no>
-Subject: Re: CVE request: eZ Publish: unspecified vulnerability
+Subject: [OSSA 2012-017] Authentication bypass for image deletion (CVE-2012-4573)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 15, 2012 at 12:36:50PM -0600, Kurt Seifried wrote:
-> No more info would be helpful.
+OpenStack Security Advisory: 2012-017
+CVE: CVE-2012-4573
+Date: November 7, 2012
+Title: Authentication bypass for image deletion
+Impact: High
+Reporter: Gabe Westmaas (Rackspace)
+Products: Glance
+Affects: Essex, Folsom, Grizzly
 
-I guess you meant to place a comma after "No".
+Description:
+Gabe Westmaas from Rackspace reported a vulnerability in Glance
+authentication of image deletion requests. Authenticated users may be
+able to delete arbitrary, non-protected images from Glance servers. Only
+Folsom/Grizzly deployments that expose the v1 API are affected by this
+vulnerability. Additionally, Essex deployments that use the
+delayed_delete option are also affected.
 
-> Some draft guidelines:
-> 
-> Information for CVE request, REQUIRED:
-...
+Fixes:
+Grizzly:
+https://github.com/openstack/glance/commit/6ab0992e5472ae3f9bef0d2ced41030655d9d2bc
+2012.2 (Folsom):
+https://github.com/openstack/glance/commit/90bcdc5a89e350a358cf320a03f5afe99795f6f6
+2012.1 (Essex): https://review.openstack.org/#/c/15562/
 
-I think we should place these on the wiki.  There's already a wiki page
-on CVE IDs, but it is very brief and it does not mention obtaining CVE
-IDs via oss-security or distros lists.  You could want to update it and
-add links to it from other relevant oss-security wiki pages.
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4573
+https://bugs.launchpad.net/glance/+bug/1065187
 
-http://oss-security.openwall.org/wiki/disclosure/cve
+Notes:
+This fix will be included in the grizzly-1 development milestone and in
+a future 2012.2 (Folsom) release.
 
-Thanks,
-
-Alexander
+-- 
+Russell Bryant
+OpenStack Vulnerability Management Team
