@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/5
-Message-ID: <4FE86979.8060701@redhat.com>
-Date: Mon, 25 Jun 2012 15:36:57 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Hans Spaans <hans.spaans@...it.nl>, Josselin Mouette <joss@...ian.org>, Bastien Nocera <bnocera@...hat.com>
-Subject: CVE 2011-* Request -- rhythmbox (context plug-in): Insecure temporary directory use by loading template files for 'Album', 'Lyrics', and 'Artist' tabs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/07/2
+Message-ID: <509A0D78.9020605@redhat.com>
+Date: Wed, 07 Nov 2012 17:27:52 +1000
+From: David Jorm <djorm@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- axis2, axis2c
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On 11/07/2012 05:12 PM, Seth Arnold wrote:
+> Hello Kurt, Steve, all,
+>
+> I did not find CVEs for Axis2 or Axis2/c when going through the pile of
+> CVEs generated from the paper:
+>
+> http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
+>
+> Axis appeared to get CVE-2012-5784 but it is my understanding that Axis2
+> and Axis2/c are different codebases and should therefore get their own
+> CVE entries.
+>
+> shmat_cccs12.pdf claims Axis2 is vulnerable but silent on Axis2/c.
+>
+> Has anyone else looked into if Axis2/c is vulnerable? (I gave it a very
+> cursory inspection.) The project pages are silent on the issue.
+>
+> Did I overlook these CVE entries?
+>
+> Thanks
 
-   An insecure temporary directory use flaw was found in the way Rhythmbox, an integrated music 
-management application based on the powerful GStreamer media framework, performed loading of HTML 
-template files, used for rendering of 'Album', 'Lyrics', and 'Artist' tabs. Previously the 
-'/tmp/context' directory has been searched as module directory when loading the HTML template files. 
-A local attacker could use this flaw to conduct symbolic link attacks (possibly leading to 
-attacker's ability to execute arbitrary HTML template file in the context of user running the 
-rhythmbox executable).
+Axis2/Java has been assigned CVE-2012-5785. There is no CVE ID for 
+Axis2/c that I am aware of, and I am not aware that anyone has 
+investigated whether it is vulnerable.
 
-Upstream bug report:
-[1] https://bugzilla.gnome.org/show_bug.cgi?id=678661
-
-References:
-[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=616673
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=835076
-
-Please note the [2] bug has been reported / opened on:
-"Date: Sun, 06 Mar 2011 14:58:46 +0100" yet, so this should
-get a CVE-2011-* identifier. Could you allocate one?
-
-Thank you && Regards, Jan.
+Thanks
 --
-Jan iankko Lieskovsky / Red Hat Security Response Team
+David Jorm / Red Hat Security Response Team
