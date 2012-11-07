@@ -1,25 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/11
-Message-ID: <788553497.1147101.1348584740049.JavaMail.root@redhat.com>
-Date: Tue, 25 Sep 2012 10:52:20 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: Mitre CVE assign department <cve-assign@...re.org>, oss-security@...ts.openwall.com
-Subject: CVE Request - phpMyAdmin: PMASA-2012-5 incident
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/07/5
+Message-ID: <20121107194627.6533e173@redhat.com>
+Date: Wed, 7 Nov 2012 19:46:27 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: IcedTea-Web CVE-2012-4540
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi!
 
-  based on:
-  [1] http://www.phpmyadmin.net/home_page/security/PMASA-2012-5.php
-  [2] http://secunia.com/advisories/50703/
+IcedTea-Web versions 1.1.7, 1.2.2 and 1.3.1 that were just released fix
+a buffer overflow IcedTeaScriptableJavaObject::invoke.  The issue got
+CVE-2012-4540 assigned.
 
-looks (more from [1]): "One server from the SourceForge.net mirror
-system was distributing a phpMyAdmin kit containing a backdoor,
-allowing remotely to execute arbitrary PHP code."
+http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2012-November/020775.html
+http://icedtea.classpath.org/hg/release/icedtea-web-1.3/rev/e7970f3da5fe
 
-Could you allocate a CVE id for this? (I think it's appropriate)
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Tomas Hoger / Red Hat Security Response Team
