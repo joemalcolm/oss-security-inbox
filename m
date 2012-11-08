@@ -1,59 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/09/2
-Message-ID: <4FA9FF8E.5090701@redhat.com>
-Date: Tue, 08 May 2012 23:24:30 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/08/2
+Message-ID: <509C37CA.4070708@redhat.com>
+Date: Thu, 08 Nov 2012 17:52:58 -0500
+From: Russell Bryant <rbryant@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: XSS and SQL injection in serendipity before 1.7.1
+Subject: Re: [OSSA 2012-017] Authentication bypass for image deletion (CVE-2012-4573)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 05/08/2012 04:03 AM, Hanno Böck wrote:
-> http://blog.s9y.org/archives/240-Serendipity-1.6.1-released.html
+On 11/07/2012 05:10 PM, Russell Bryant wrote:
+> OpenStack Security Advisory: 2012-017
+> CVE: CVE-2012-4573
+> Date: November 7, 2012
+> Title: Authentication bypass for image deletion
+> Impact: High
+> Reporter: Gabe Westmaas (Rackspace)
+> Products: Glance
+> Affects: Essex, Folsom, Grizzly
 > 
-> "This release mainly addresses two security issues found by Stefan 
-> Schurtz (thanks a lot, again!). One is a XSS issue in the media 
-> database panel, the other an SQL injection in the media database 
-> section. Both issues can only be exploited if you are logged in to
-> your blog and you click a specially crafted link. The SQL injection
-> cannot be used to extract sensitive information from the database
-> or delete data."
+> Description:
+> Gabe Westmaas from Rackspace reported a vulnerability in Glance
+> authentication of image deletion requests. Authenticated users may be
+> able to delete arbitrary, non-protected images from Glance servers. Only
+> Folsom/Grizzly deployments that expose the v1 API are affected by this
+> vulnerability. Additionally, Essex deployments that use the
+> delayed_delete option are also affected.
 > 
-> The webpage of the vulnerability researcher is 
-> http://www.rul3z.de/
+> Fixes:
+> Grizzly:
+> https://github.com/openstack/glance/commit/6ab0992e5472ae3f9bef0d2ced41030655d9d2bc
+> 2012.2 (Folsom):
+> https://github.com/openstack/glance/commit/90bcdc5a89e350a358cf320a03f5afe99795f6f6
+> 2012.1 (Essex): https://review.openstack.org/#/c/15562/
 > 
-> However, there seems to be no information yet about those vulns, 
-> probably they'll appear there soon.
+> References:
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4573
+> https://bugs.launchpad.net/glance/+bug/1065187
+> 
+> Notes:
+> This fix will be included in the grizzly-1 development milestone and in
+> a future 2012.2 (Folsom) release.
+> 
 
-Please use:
+There have been some important updates that have occurred since the
+publication of this advisory:
 
-CVE-2012-2331 Serendipity 1.6.0 XSS issue
-CVE-2012-2332 Serendipity 1.6.0 SQL Injection issue
+1) When the advisory was published, the patch for the stable/essex
+branch had not been merged.  It has now been merged and is *different*
+than the original patch.  If you pulled the earlier patch, please update
+to the final version.
 
+https://github.com/openstack/glance/commit/efd7e75b1f419a52c7103c7840e24af8e5deb29d
 
+2) It was discovered that the patches submitted for stable/folsom and
+master (grizzly) did not completely solve the problem.  The original
+patch only fixed the problem for the v1 API.  The problem still existed
+for the v2 API.  Please see this commit for the additional patch:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+bug: https://bugs.launchpad.net/glance/+bug/1076506
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+stable/folsom:
+https://github.com/openstack/glance/commit/fc0ee7623ec59c87ac6fc671e95a9798d6f2e2c3
 
-iQIcBAEBAgAGBQJPqf+OAAoJEBYNRVNeJnmTVaYQANPqzjCYb6yLtGRYE6tA8fo2
-YiCYUI3TkRUJfIc+h/JZ+UauL3+BCc3U8ZUZun8h3B3FTYTF272qHKeurP+wkHIz
-d6MxWUaguDpnGetKjgTfPhrrbzXpqcEEhWE3mqlDI/+wT/M9wZWslfikdYz9ELVT
-lHBprwN7ATM3rFTkXrIKU8UlUzOFkwFEi8aaQTK0djOOKAb5ZjSj52QyRKcoOS7B
-tY8t8OVUFGd3mfemiTa8i08KdYZ0EkbLfNYFoiLs9R+sqehhpnneY3sHQHiBQX5h
-EVBiJ4NT8J0pm/IYuDqpxUK4rQfNlQr6K4SzVuo32KpQG9UGcq8EMJjp5//phzFY
-8wGuGP7WQGJtr+JNRJXSWyya/1P67jaqYZC/YzjAZURiighd2lFk4B+oo8DOAzEJ
-h+oMd+4LYQFx8lL8dqUhev1SuuIlEOUbT0KXyU7pUWj0ICeylT41iOz9u2uIlFvt
-CIxbsaYfV7EQfJjSR15oq91Z/upfJn+pQlO51W+S6lrFcl9uxFSgzPZ/G399hBW8
-yhmsM7Bw0Q0hgiqfCIEJqrP0NaBaLX0ufxsy6Q6uyqCK4C7v9S6PeLvZuDQvcEHZ
-25R0XwvPnlNTOl93jbVx9LGQ2EhE4OFPTioyiwdsFd9eF/ptiLDIXeikVZopnJo9
-jynfmxzFVljNP3tMvXsm
-=oANW
------END PGP SIGNATURE-----
+master:
+https://github.com/openstack/glance/commit/b591304b8980d8aca8fa6cda9ea1621aca000c88
+
+-- 
+Russell Bryant
+OpenStack Vulnerability Management Team
