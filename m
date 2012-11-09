@@ -1,48 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/7
-Message-ID: <87628q1nak.fsf@windlord.stanford.edu>
-Date: Fri, 10 Aug 2012 13:53:39 -0700
-From: Russ Allbery <rra@...nford.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/09/5
+Message-ID: <509D0E8D.1070307@redhat.com>
+Date: Fri, 09 Nov 2012 09:09:17 -0500
+From: Russell Bryant <rbryant@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: rssh command-line parsing vulnerability
+Subject: [OSSA 2012-017.1] Authentication bypass for image deletion (CVE-2012-4573, CVE-2012-5482) ERRATA 1
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm the Debian maintainer of the rssh package, which has a security
-vulnerability in its command-line parsing disclosed some time back on the
-rssh mailing list and on BUGTRAQ.  I'm preparing a security update for
-Debian and would like a CVE for tracking purposes.
+OpenStack Security Advisory: 2012-017 (ERRATA 1)
+CVE: CVE-2012-4573, CVE-2012-5482
+Date: November 9, 2012
+Title: Authentication bypass for image deletion
+Impact: High
+Reporter: Gabe Westmaas (Rackspace)
+Products: Glance
+Affects: Essex, Folsom, Grizzly
 
-The security advisory from the upstream maintainer is at:
-http://sourceforge.net/mailarchive/message.php?msg_id=29235647
+Description:
+Gabe Westmaas from Rackspace reported a vulnerability in Glance
+authentication of image deletion requests. Authenticated users may be
+able to delete arbitrary, non-protected images from Glance servers. All
+Folsom and Grizzly deployments are affected. Additionally, Essex
+deployments that use the delayed_delete option are also affected.
 
-Here are the relevant contents:
+Fixes:
+Grizzly:
 
-| rssh is a shell for restricting SSH access to a machine to only scp,
-| sftp, or a small set of similar applications.  
-| 
-|   http://www.pizzashack.org/rssh/
-| 
-| Henrik Erkkonen has discovered that, through clever manipulation of
-| environment variables on the ssh command line, it is possible to
-| circumvent rssh.  As far as I can tell, there is no way to effect a
-| root compromise, except of course if the root account is the one
-| you're attempting to protect with rssh...
-| 
-[...]
-| 
-| Note in particular that ensuring that the AcceptEnv sshd configuration
-| option need not be turned on for this exploit to work.
+https://github.com/openstack/glance/commit/6ab0992e5472ae3f9bef0d2ced41030655d9d2bc
 
-I think this would fit the definition of "local privilege escalation" in
-that it allows users with a restricted shell to run commands they
-shouldn't be able to run.
+https://github.com/openstack/glance/commit/b591304b8980d8aca8fa6cda9ea1621aca000c88
+2012.2 (Folsom):
 
-The last two messages on the thread linked above contain a patch.  (Be
-aware that they've been mangled by the Sourceforge mailing list archive,
-so you have to download them to see them.)  There has been no subsequent
-formal release, just the patch in that thread.
+https://github.com/openstack/glance/commit/90bcdc5a89e350a358cf320a03f5afe99795f6f6
 
--- 
-Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
+https://github.com/openstack/glance/commit/fc0ee7623ec59c87ac6fc671e95a9798d6f2e2c3
+2012.1 (Essex):
+
+https://github.com/openstack/glance/commit/efd7e75b1f419a52c7103c7840e24af8e5deb29d
+
+References:
+    http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4573
+    http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-5482
+    https://bugs.launchpad.net/glance/+bug/1065187
+    https://bugs.launchpad.net/glance/+bug/1076506
+
+Notes:
+This fix will be included in the grizzly-1 development milestone and in
+a future 2012.2 (Folsom) release.
+
+OSSA History:
+2012-11-09 - Errata 1
+  - Updated to reflect that the v2 API in Folsom and Grizzly was also
+    affected
+  - Include links to fixes for the v2 API
+  - Added CVE-2012-5482 for the vulnerability against the v2 API
+2012-11-07 - Original Version
+
+- -- 
+Russell Bryant
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iEYEARECAAYFAlCdDo0ACgkQFg9ft4s9SAZ9AQCfT/q3DFPRE5Vj3UtluqeQfYQB
+PqYAoK/QykvsE7TvtGNJw3XVBqsuDj+A
+=MiA4
+-----END PGP SIGNATURE-----
