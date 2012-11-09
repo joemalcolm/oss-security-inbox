@@ -1,38 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/27/5
-Message-ID: <50649213.5050300@redhat.com>
-Date: Thu, 27 Sep 2012 11:51:15 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/09/2
+Message-ID: <509CBB93.6040207@redhat.com>
+Date: Fri, 09 Nov 2012 01:15:15 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Daniel Kahn Gillmor <dkg@...thhorseman.net>, Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: dracut creates world readable initramfs images
+Subject: Re: CVE request --- acceptation of overlapping ipv6 fragments
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/27/2012 11:21 AM, Daniel Kahn Gillmor wrote:
-> On 09/27/2012 05:07 AM, Huzaifa Sidhpurwala wrote:
->> Hi All,
->> 
->> An information disclosure flaw was found in the way dracut, an 
->> initramfs root filesystem images generator, created initramfs
->> images.
->> 
->> When the root filesystem contained sensitive information
->> (password based authentication for iSCSI systems or encrypted
->> root filesystem crypttab password information), an attacker could
->> use this flaw to obtain this information.
->> 
->> This issue has been assigned CVE-2012-4453
+On 11/08/2012 03:15 PM, Petr Matousek wrote:
+> Accepting overlapping fragmented ipv6 packets can lead to
+> Operating Systems (OS) fingerprinting, IDS/IPS insertion/evasion,
+> firewall evasion.
 > 
-> the subject line says "creates non-world readable initramfs
-> images". should that be "creates world-readable initramfs images"
-> instead?
+> Do not accept such packets.
 > 
-> --dkg
+> Linux kernel upstream fix: 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=70789d7052239992824628db8133de08dc78e593
+>
+>  References: http://tools.ietf.org/rfc/rfc5722.txt 
+> https://media.blackhat.com/bh-eu-12/Atlasis/bh-eu-12-Atlasis-Attacking_IPv6-WP.pdf
+>
+>  Thanks,
 
-Yes indeed!
+So the rational here is that:
+
+1) The RFC says overlapping IPv6 fragments should be dropped (in fact
+all the fragments for that datagram should be dropped).
+2) Generally speaking there is no real legitimate case for overlapping
+IPv6 (or IPv4) fragments, and in fact they are quite dangerous:
+
+http://www.ietf.org/proceedings/72/slides/6man-5.pdf
+- -Overlapping fragments were allowed in the original
+IPv4 specification (RFC791)
+- -RFC1858 described an overlapping fragment attack
+that can be used to overwrite the TCP flags inside a
+packet
+
+IPv6 datagrams can include a destination options
+header
+- -This header belongs to the fragmentable part of the
+datagram
+- -TCP header can be much further into the fragmentable
+part
+- -Makes it possible to even overwrite port info.
+
+So basically IPv6 overlapping fragments are quite dangerous and can
+potentially be used to bypass firewalls/IDS/NIDS/etc.
+
+Also I'm guessing there are a lot of "embedded" (not sure what term to
+use when network devices now have full computers in them, e.g.
+photocopiers) IPv6 stacks that will not handle overlapping fragments
+(crash, memory overwrite, who knows) and cannot be upgraded by users
+(since the devices are not supported/not supported properly by the
+makers).
+
+So in a nutshell by not implementing RFC5722 we allow all manner of
+poorly defined and probably unwanted behaviours to take place,
+additionally we may end up passing nasty traffic to back end systems
+that cannot handle it well (and are expecting the front end machines
+to sanitize the traffic).
+
+So to this end I am assigning CVE-2012-4444 (been saving it, it's easy
+to remember =) for "failure to implement RFC5722 properly, allowing
+overlapping fragmented IPv6 packets to be processed or passed to other
+systems resulting in all sorts of potential unknown badness with
+unknown consequences". It looks like more than just Linux is affected,
+so if you know of other systems that are affected by this please reply
+to this thread so we have a list.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -40,19 +77,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQZJITAAoJEBYNRVNeJnmT6vQQAJiqHJbPnOPtKjnuoenOq6+Z
-sfVrKAGvYbcCOmM5HwSglbQ8/nTY+LIZfl76QhqheHjVpzz0lr3LmBmvJkqtKu7O
-tP8gQe0WMOyfS0dcsO8wVGF4kPBVgUGCA+kn1gvuo+rsC8uN21H27GumFO5GyQqV
-88qRNG25uccmnEsdfSmJrO2zrWZ4ZJPW6i+RT/R3qTeXxVmfK8rgwL/KgQZ3KjW3
-iuUh4n6yU2mPu9zN6JkxfC1EjRtsvbsrx+T3q0eVHwJqeSCHDArpVGVySuaq+tnZ
-IW+X7yRNu0hZM6DBNIRsv5m83okSDWdxK/uCMchV7IjZ4FyhhVa7WpVNjeYjPfyA
-QgBz3gYdqsuXcCxQ7r1EHpFwMU25Qq3ZlAswZf2WkIf6Zrr99XVsnKaPIkutTvG2
-mjX9GaqWgd7EM8qT3g3kko3czNjMBlZ1H/CWujlu+m9lvctMnE4SeJ8QG7BUfI1x
-z7at29a8eMJHdrccxbn1aFqQjxymtG3ymCwxPZ0NsE7OXeQLBznjO8nxy15/kLH9
-A73zfWrS3eh1IEH7cs8r1lnFXtn7G0zSm9v3sf8QQZMZDbIfYXV6T3Z/ktwwG455
-Ju8KUtEXgkw5GTFDbSr4M6VgxVW2G2nENpSW1h16duZXulDAkMT1o7t1Ob1XvakD
-OTXtSxQvtvRmrpvkrlJp
-=gs7Z
+iQIcBAEBAgAGBQJQnLuTAAoJEBYNRVNeJnmTN3wP/28+RpDqy+LOh9cvInOhPUpo
+LROLLXnPsSo12L/QD+SUch9BWrky/tb9k4wZNilt4E4ANIPYxLHlCpGPA5CzTnMP
+DfZ01VK4LCM1PLJXXmnkeltGS+TKKQg2eb5gKT8CcCpaJggnnLAmvpByykglSd48
+xESLbirwK4ZADhnXo01OjZUgHH+osh+0xrXKUmAEV3vs79Tiv2W26/wFIlFP9zbJ
+bsI2XyyycvC2O7YErh5Hf3OuQCZd9xBWr7oe0Y7IHN6WSzlZOuwvLoXqqp8f+kss
+aRRKUIrqnARvEH6kCMDx87hbitI1ChwD/EChPzZPJuS4LYiVjwEysot1hS+3L7rv
++49mazvMHinJumCnlmktpBRQEgP0qFYEf3QATTRAJhwDEsE1w/QyNbw1KSiDQHEk
+k3rbRmoUNs0akLFhkMJwslVPQAUZvfBueH2pk68ssKrXVMaWtE/wpkAHD3+yZpWK
+BbaxAerbYrc+2DgjPoAvwZEaGfp9S78u9IukabdxaaMPkXlhRptiJJf1yFgw95PV
+3h1ceptHrxG2V+dPA94Bxah/QT0qFj/UkaNoOsyETDU7YUZ87w77QsF9QfFJ7Tj1
+OcabyWtXkCvbZbveCybD+knxwQhZW0rdee6lWimi5L8Org2rZwnRNi2pHrcQ/ZuN
+U6wk/FHC3M/YcuBu6ZJZ
+=tcuu
 -----END PGP SIGNATURE-----
