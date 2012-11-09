@@ -1,33 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/05/4
-Message-ID: <50BF07E7.5050303@suse.de>
-Date: Wed, 05 Dec 2012 09:37:59 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/09/1
+Message-ID: <509CB642.2020404@redhat.com>
+Date: Fri, 09 Nov 2012 00:52:34 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Greg KH <gregkh@...uxfoundation.org>, kargig@...d.gr
-Subject: Re: Linux kernel handling of IPv6 temporary addresses
+CC: Russell Bryant <rbryant@...hat.com>
+Subject: Re: Re: [OSSA 2012-017] Authentication bypass for image deletion (CVE-2012-4573)
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried wrote:
-> [...]
-> Sounds like this needs a CVE, is it correct that: an attacker can
-> create a bunch of RA prefixes thus filling up the # of allowed IPv6
-> addresses for an interface, preventing any more IPv6 addresses from
-> being assigned to that interface? In other words an attack over the
-> local network resulting in a DoS condition.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Well, an attacker that is allowed to send RA's could do all kinds of
-ugly things, just like a rogue DHCP server could. Since that kind of
-address configuration provides no means to verify authenticity, hosts
-have no way to tell whether an RA is correct or malicious. Security
-basically relies on the switches blocking unintended address
-configuration.
+On 11/08/2012 03:52 PM, Russell Bryant wrote:
+> On 11/07/2012 05:10 PM, Russell Bryant wrote:
+>> OpenStack Security Advisory: 2012-017 CVE: CVE-2012-4573 Date:
+>> November 7, 2012 Title: Authentication bypass for image deletion 
+>> Impact: High Reporter: Gabe Westmaas (Rackspace) Products:
+>> Glance Affects: Essex, Folsom, Grizzly
+>> 
+>> Description: Gabe Westmaas from Rackspace reported a
+>> vulnerability in Glance authentication of image deletion
+>> requests. Authenticated users may be able to delete arbitrary,
+>> non-protected images from Glance servers. Only Folsom/Grizzly
+>> deployments that expose the v1 API are affected by this 
+>> vulnerability. Additionally, Essex deployments that use the 
+>> delayed_delete option are also affected.
+>> 
+>> Fixes: Grizzly: 
+>> https://github.com/openstack/glance/commit/6ab0992e5472ae3f9bef0d2ced41030655d9d2bc
+>>
+>> 
+2012.2 (Folsom):
+>> https://github.com/openstack/glance/commit/90bcdc5a89e350a358cf320a03f5afe99795f6f6
+>>
+>> 
+2012.1 (Essex): https://review.openstack.org/#/c/15562/
+>> 
+>> References: 
+>> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4573 
+>> https://bugs.launchpad.net/glance/+bug/1065187
+>> 
+>> Notes: This fix will be included in the grizzly-1 development
+>> milestone and in a future 2012.2 (Folsom) release.
+>> 
+> 
+> There have been some important updates that have occurred since
+> the publication of this advisory:
+> 
+> 1) When the advisory was published, the patch for the stable/essex 
+> branch had not been merged.  It has now been merged and is
+> *different* than the original patch.  If you pulled the earlier
+> patch, please update to the final version.
+> 
+> https://github.com/openstack/glance/commit/efd7e75b1f419a52c7103c7840e24af8e5deb29d
+>
+>  2) It was discovered that the patches submitted for stable/folsom
+> and master (grizzly) did not completely solve the problem.  The
+> original patch only fixed the problem for the v1 API.  The problem
+> still existed for the v2 API.  Please see this commit for the
+> additional patch:
+> 
+> bug: https://bugs.launchpad.net/glance/+bug/1076506
+> 
+> stable/folsom: 
+> https://github.com/openstack/glance/commit/fc0ee7623ec59c87ac6fc671e95a9798d6f2e2c3
+>
+>  master: 
+> https://github.com/openstack/glance/commit/b591304b8980d8aca8fa6cda9ea1621aca000c88
 
-cu
-Ludwig
+This
+> 
+needs a new CVE since the previous one wasn't fully fixed in the
+patches.  Please use CVE-2012-5482 for this new/updated fix.
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQnLZBAAoJEBYNRVNeJnmT2fAQAKy9dz3sbm67XHv5ngNWeL5x
+pKgzM6VO+LAtI0Im5IZVRy6D8OQA22WnQILuVeD4Wh25k/gsVs1Krg+Ox8cUsNNr
+uJp8CkvK0nZspTk7rSjSf14twohcst9HeYPK5M7n2VHwO2VLc0crgJuSvMxIsnco
+2qrUKxf7mLQCqBxEHMaLrDMSwspEIEQcTmX6vU/iylEelgwmuFklPRHreA5PBy8R
+I/hDttMsT51+AcPVLcrIbnApBqLaZCfpveDP527NjC4Zz8SzJNtv7Jky4dv1BUfv
+hiUYVbwzLNrtUifqHMshTZ9MGBRvh6QTMTJvrqbjK79Gh0Yz+XdX3dm+EWnXXVXA
+HxdaMvnehaoawkMKoLBQl+mk3F9O4TacG6XtKWc3aaOnsGJZJ9orfxaVYq3F4NVb
+uV2fjhFaydNjn0T5s1TPOnjXu8BtU8BJIMiSxtIieXseeO7MLyftjsbvaoY2X6R3
+9zceGOMkh04c+Ug5r2Xu4to4sG/I2/TmOQ1LojRHLB02y5YsLntNCogI7ceMYjID
+nJOsqXbA3d6jBTCTuA1ddADcn5s9KPpBIpZO0SRC+pTJABZo+/KIz4xOMbrr5Y9B
+WLZ1bVKehTHUDvSq6cKPUNWvYj+5OiRFTLfaouNTCFUgVqS1dxfozcWh6uANcueP
+ZHnn8wt9aabfsHpdaiOv
+=3rlD
+-----END PGP SIGNATURE-----
