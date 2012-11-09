@@ -1,68 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/08/2
-Message-ID: <4FD1B941.7060305@oracle.com>
-Date: Fri, 08 Jun 2012 09:35:13 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/09/8
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF06920FC6@IMCMBX01.MITRE.ORG>
+Date: Fri, 9 Nov 2012 20:55:22 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: Matthew Wilkes <matthew.wilkes@...ne.org>, Assign a CVE Identifier <cve-assign@...re.org>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "jpokorny@...hat.com" <jpokorny@...hat.com>, "security@...ne.org" <security@...ne.org>
+Subject: RE: Re: CVE Request - Zope / Plone: Multiple vectors corrected within 20121106 fix
 Content-Type: text/plain; charset=utf-8
 
-On 07/06/12 19:37, Kurt Seifried wrote:
-> On 06/07/2012 01:31 AM, John Haxby wrote:
->
-> > On 01/06/12 20:12, Kurt Seifried wrote:
-> >> In my limited testing with iptables on RHEL 6.2 it appears that
-> >> --state NEW works properly, and won't allow SYN+FIN to create
-> >> connections (I used hping3 and the SYN+FIN Packets were
-> >> blocked).
->
-> >> So the default ruleset:
->
-> >> -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT -A INPUT
-> >> -m state --state NEW -m tcp -p tcp --dport 22 -j DROP -A INPUT -j
-> >> REJECT --reject-with icmp-host-prohibited
->
-> >> should work, so you could do you clever --syn bits first and then
-> >> have that set to protect stuff from SYN+FIN.
->
-> > What happens if you have "-j ACCEPT" instead of "-j DROP"?   I
-> > would expect that sshd wouldn't see the connection but you would
-> > get all the unpleasant side effects that made T/TCP deprecated.
->
-> Ooops yeah typo, that DROP should have been ACCEPT. So to summarize
-> properly:
->
-> -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-> -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
-> -A INPUT -j REJECT --reject-with icmp-host-prohibited
->
-> results in ICMP unreachable (the -F -S bypasses the "--dport 22 -j
-> ACCEPT" but gets caught in the final "icmp-host-prohibited" rule) with:
->
-> hping3 -c 3 -n -S -F -p 22 192.168.51.195
->
-> with:
->
-> -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-> -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j DROP
-> -A INPUT -j REJECT --reject-with icmp-host-prohibited
->
-> with hping -F -S the packets bypass the "--dport 22 -j DROP" and get
-> caught by the icmp-host-prohibited
->
-> with hping -S the packets get caught by "the "--dport 22 -j DROP"" as
-> expected.
->
-> So basically --state new works fine and dandy.
->
->
-> > jch
->
->
+Note that CVE tries to maintain some amount of consistency across the space of ALL disclosures, and in some cases, that means merging multiple flaws together even when we know they are distinct.  See the section here: http://cve.mitre.org/cve/editorial_policies/cd_abstraction.html#content_decision_vulnerability_information
 
-Good.   That makes the kernel change just hardening then.   If you're
-not using iptables you're leaving yourself open to all kinds of abuse
-anyway so I don't think we need a CVE for the kernel.
+It sounds like there's a reasonable argument to split issues 14 and 15 because of the differences between CWEs 407 and 749.
 
-jch
+For 01 and 02, the CVSS differences are not relevant - at least, not from a CVE perspective.  But, if one is about "incomplete security declarations" and the other is not, that also seems reasonable to split.
+
+- Steve
+
+
+
+
+
+
+-----Original Message-----
+From: Matthew Wilkes [mailto:matthew.wilkes@...ne.org] 
+Sent: Friday, November 09, 2012 11:40 AM
+To: Assign a CVE Identifier
+Cc: oss-security@...ts.openwall.com; jpokorny@...hat.com; security@...ne.org
+Subject: Re: [oss-security] Re: CVE Request - Zope / Plone: Multiple vectors corrected within 20121106 fix
+
+Hi all,
+
+>> It looks like some of these can be CVE merged, e.g. 14 and 15, 1 and
+>> 5, can you confirm that these should not be merged?
+>
+> Thanks for constructing this comprehensive table, but please do not
+> merge 14 and 15, or 1 and 5.
+
+I agree. It's our opinion that these are distinct flaws, and we would 
+prefer to keep them tracked independently.
+
+> CVE assignment by MITRE most often has merges when the available
+> information suggests one of these two situations:
+>
+>    A. Flaw types that have been used for many years and are thought to
+>       be well understood. At present, a large fraction of our merges
+>       are for XSS, SQL injection, CSRF, buffer overflows, integer
+>       overflows, use-after-free issues, and directory traversal.
+>       However, a merge can occur correctly for any flaw type.
+
+Indeed, we do like to keep similar flaws with very different causes 
+separate, though. In the particular case of 1/5 and 14/15 we don't see 
+any similarities, but in general we've tried hard here to request CVEs 
+in a way that accurately reflects discrete vulnerabilities in the stack.
+
+> At this point in the history of CWE, a discloser's choice of the same
+> CWE identifier for two different bugs might not be a strong indication
+> that a CVE merge should occur.
+
+The CWE dictionary is huge, I would very much appreciate any feedback 
+anyone can give me on the appropriateness of my choices here. I have 
+been working on a Plone specific CWE dictionary but it's slow going.
+
+> For example, some CVE consumers don't like situations in
+> which a vendor publishes multiple disclosure documents that explain
+> different aspects of the same CVE.
+
+We will bow to your advice here. If you tell us that our merge 
+recommendations are poor we will make sure that we don't issue multiple 
+guidance documents in future. For now, our list reflects our best 
+understanding of the CVE guidance documents.
+
+> 14 and 15: One might argue that these are different because 14 is
+> about algorithmic complexity but 15 isn't.
+
+Indeed, I did consider CWE-407 here, but 749 is one of our go-to choices 
+as it's a common error in Zope. I think, if I had to come down one side 
+or another, then 15 is complexity whereas 14 is allowing users to 
+circumvent caching on an expensive function. They are both similar 
+outcomes, in that they're expensive pages, but for very different reasons.
+
+> 01 and 05: One might argue that these are different because 05 is
+> about incomplete security declarations but 01 isn't.
+
+Indeed. Also, 05 is a AC:H Au:S whereas 01 is AC:L Au:N. 05 allows an 
+escalation of privileges in the sandbox whereas 01 allows unauthorised 
+authoring of code which happens to only ever be run in a higher 
+privilege set. 01 is a write-once persistent single statement whereas 05 
+is an editable file with multiple statements available. The privilege 
+set that 01 escalates to is the un-escalated set for 05.
+
+Matt
