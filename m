@@ -1,34 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/08/4
-Message-Id: <201208082246.q78MkYkr003596@linus.mitre.org>
-Date: Wed, 8 Aug 2012 18:46:34 -0400 (EDT)
-From: cve-assign@...re.org
-To: marc.deslauriers@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ntu.com
-Subject: Re: CVE Request: NVidia Linux driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/2
+Message-ID: <1884251294.29963643.1352547721777.JavaMail.root@redhat.com>
+Date: Sat, 10 Nov 2012 06:42:01 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Michel Alexandre Salim <michel+fdr@...vestre.me>, Richard Jones <richard@...hanicalcat.net>, Ralf Schlatterbeck <rsc@...tux.com>
+Subject: CVE Request -- roundup: Multiple XSS flaws plus other security related fixes corrected in upstream 1.4.20 version
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-> http://seclists.org/fulldisclosure/2012/Aug/4
-> http://nvidia.custhelp.com/app/answers/detail/a_id/3140
+  Roundup upstream has released new upstream 1.4.20 version,
+correcting multiple cross-site scripting (XSS) flaws (and
+couple of other security related issues):
+[1] http://pypi.python.org/pypi/roundup
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=722672
 
-Use CVE-2012-4225.
+More from [1] (plus relevant tickets inlined too, where
+possible to find out):
+---------------------------------------------------------
+[A] * issue2550729: Fix password history display for anydbm backend,
+thanks to Ralf Hemmecke for reporting. (Ralf)
+[3] http://issues.roundup-tracker.org/issue2550729
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+[B] * issue2550684 Fix XSS vulnerability when username contains HTML code,
+thanks to Thomas Arendsen Hein for reporting and patch. (Ralf)
+[4] http://issues.roundup-tracker.org/issue2550684
 
-iQEcBAEBAgAGBQJQIusrAAoJEGvefgSNfHMdrokH/Asbdbs7g/81nX3LTZVI65wb
-oOGbZhVCTKQQym3i85bVDDyyurSWrgwbR2JB1sKuv8RrkRoyl5ik8Jt8v/NcsYni
-LXQbr9Zh/UQ2apUDz+x+rgOQlL5uEbzxBK28AEkNgnm9LfyhYfDnUC4iq5fPW1Sz
-64bowsAXSRKQFazYZKhCkkbYFvWlBFo300e6vwZi14LUCS3XsnIj2xRD5GJxUzQ9
-ThPVRIXxgtGccVX414hC2V86hPtmPQmHvRGgbUa+H0kB6zoYt2smfvEo3dj84lqJ
-qfe/BprYGpUC1j6CmN2DP9pxnVlhG69Z4fcjExHutMxcftlmPHTzDfqpMyfChgk=
-=yT1y
------END PGP SIGNATURE-----
+[C] * issue2550711 Fix XSS vulnerability in @action parameter,
+thanks to "om" for reporting. (Ralf)
+[5] http://issues.roundup-tracker.org/issue2550711
+
+[D] * Fix wrong execute permissions on some files,
+thanks to Cheer Xiao for the patch. (Ralf)
+
+[E] * Fix another XSS with the "otk" parameter,
+thanks to Jesse Ruderman for reporting. (Ralf)
+
+[F] * Mark cookies HttpOnly and -- if https is used -- secure. Fixes issue2550689,
+but is untested if this really works in browsers. Thanks to Joseph Myers for reporting. (Ralf)
+[6] http://issues.roundup-tracker.org/issue2550689
+
+[G] * Fix another XSS with the ok- and error message, see issue2550724. We solve this differently
+from the proposals in the bug-report by not allowing any html-tags in ok/error messages
+anymore. Thanks to David Benjamin for the bug-report and to Ezio Melotti for several proposed fixes. (Ralf)
+[7] http://issues.roundup-tracker.org/issue2550724
+
+Cc-ed Ralf Schlatterbeck on this post too to clarify, if issues [A] and [D]
+would also have security implications / IOW if those would be security flaws too.
+Ralf please clarify. Thank you, Jan.
+
+Could you allocate CVE ids for these (once clarified)?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
