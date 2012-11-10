@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/5
-Message-ID: <4FD058E7.6060508@oracle.com>
-Date: Thu, 07 Jun 2012 08:31:51 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/5
+Message-ID: <1352551783.17241.24.camel@scapa>
+Date: Sat, 10 Nov 2012 13:49:43 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: 692791@...s.debian.org, team@...urity.debian.org, cups-security@...le.com
+Subject: Privilege escalation (lpadmin -> root) in cups
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+a Debian user reported a bug in our BTS concerning cupsd. The bug is
+available at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692791 and
+upstream bug at http://www.cups.org/str.php?L4223 (restricted because
+it's tagged security).
 
-On 01/06/12 20:12, Kurt Seifried wrote:
-> In my limited testing with iptables on RHEL 6.2 it appears that
-> --state NEW works properly, and won't allow SYN+FIN to create
-> connections (I used hping3 and the SYN+FIN Packets were blocked).
->
-> So the default ruleset:
->
-> -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-> -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j DROP
-> -A INPUT -j REJECT --reject-with icmp-host-prohibited
->
-> should work, so you could do you clever --syn bits first and then have
-> that set to protect stuff from SYN+FIN.
+I'm unsure right now if it's an upstream issue or specific to Debian.
 
-What happens if you have "-j ACCEPT" instead of "-j DROP"?   I would
-expect that sshd wouldn't see the connection but you would get all the
-unpleasant side effects that made T/TCP deprecated.
+Basically, members of the lpadmin group (which is the group having admin
+rights to cups, meaning they're supposed to be able to add/remove
+printeers etc.) have admin access to the web interface, where they can
+edit the config file and set some “dangerous” directives (like the log
+filenames), which enable them to read or write files as the user running
+the cupsd webserver.
 
-jch
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+In Debian case at least, it's run as root, meaning we have a privilege
+escalation issue from lpadmin group to root.
 
-iF4EAREIAAYFAk/QWOYACgkQRQu7fpQvo8i5MwEAiJseTDYDaW2AsQaAz444Y7gv
-Qjbh/Y9rPosBsO0QFlYA/jTuPFgSN38RNVI3l78kh7Cwh9zrBVIXKDG3JPTxakuc
-=rjvP
------END PGP SIGNATURE-----
+A fix would be to not run cupsd web server as root, and maybe to
+restrict it to some kind of chroot so it doesn't have access to
+sensitive files
 
+Can a CVE be allocated for this?
+
+Regards,
+-- 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
