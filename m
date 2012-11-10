@@ -1,42 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/09/5
-Message-ID: <4FAA8DCD.40305@redhat.com>
-Date: Wed, 09 May 2012 17:31:25 +0200
-From: Stefan Cornelius <scorneli@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: thomas.swan@...il.com, bbraun@...ack.net
-Subject: CVE-2012-0862 assignment notification: xinetd enables unintentional services over tcpmux port
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/6
+Message-ID: <20121110122841.GA14104@runtux.com>
+Date: Sat, 10 Nov 2012 13:28:41 +0100
+From: Ralf Schlatterbeck <rsc@...tux.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Michel Alexandre Salim <michel+fdr@...vestre.me>, Richard Jones <richard@...hanicalcat.net>
+Subject: Re: CVE Request -- roundup: Multiple XSS flaws plus other security related fixes corrected in upstream 1.4.20 version
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sat, Nov 10, 2012 at 06:54:46AM -0500, Jan Lieskovsky wrote:
+> [A] * issue2550729: Fix password history display for anydbm backend,
+> thanks to Ralf Hemmecke for reporting. (Ralf)
+> [3] http://issues.roundup-tracker.org/issue2550729
+> 
+> [D] * Fix wrong execute permissions on some files,
+> thanks to Cheer Xiao for the patch. (Ralf)
+> 
+> Cc-ed Ralf Schlatterbeck on this post too to clarify, if issues [A]
+> and [D] would also have security implications / IOW if those would be
+> security flaws too.  Ralf please clarify. Thank you, Jan.
 
-Thomas Swan of FedEx reported a service disclosure flaw in xinetd.
-xinetd allows for services to be configured with the TCPMUX or
-TCPMUXPLUS service types, which makes those services available on port
-1, as per RFC 1078 [1], if the tcpmux-server service is enabled.  When
-the tcpmux-server service is enabled, xinetd would expose _all_ enabled
-services via the tcpmux port, instead of just the configured service(s).
-This could allow a remote attacker to bypass firewall restrictions and
-access services via the tcpmux port.
+[A] Doesn't have security implications if roundup is correnctly
+configured. The bug would create a python backtrace. Unless the "debug"
+option in section [web] is set (which is explicitly discouraged) this
+will only display "an error has occurred" in the web-interface. Even if
+someone sets the debug option in a production release only the hashed
+password could be disclosed. Note that this bug only affects the anydbm
+backend which should not be used for a production version either.
 
-In order for enabled services handled by xinetd to be exposed via the
-tcpmux port, the tcpmux-server service must be enabled (by default it is
-disabled).
+[D] No security implications: Fixed some permissions on files in
+roundup/cgi and locale directories. These are not accessible via the
+web-server. So this doesn't constitute a remote vulnerability. Local
+users don't gain anything executing these files as no privilege
+escalation is involved (they could copy the file which is readable
+anyway and make their local copy executable).
 
-This has been assigned CVE-2012-0862.
-
-Thomas Swan also provided a patch [2], which has been reviewed by a
-former xinetd upstream maintainer and the Red Hat xinetd maintainer
-(upstream didn't respond to our contact attempts).
-
--- References --
-
-[1] Red Hat bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=790940
-
-[2] Proposed patch:
-https://bugzilla.redhat.com/attachment.cgi?id=583311
-
-Thanks and kind regards,
+Ralf
 -- 
-Stefan Cornelius / Red Hat Security Response Team
+Dr. Ralf Schlatterbeck                  Tel:   +43/2243/26465-16
+Open Source Consulting                  www:   http://www.runtux.com
+Reichergasse 131, A-3411 Weidling       email: office@...tux.com
+osAlliance member                       email: rsc@...lliance.com
