@@ -1,47 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/28/5
-Message-ID: <1343472812.6401.20.camel@lagune.teich>
-Date: Sat, 28 Jul 2012 12:53:32 +0200
-From: frosch <frosch@...nttd.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request for OpenTTD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/10
+Message-ID: <20121110203019.GR13903@dhcp-25-225.brq.redhat.com>
+Date: Sat, 10 Nov 2012 21:30:20 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request -- vdsm: certificate generation upon node creation
 Content-Type: text/plain; charset=utf-8
 
+When new node image is being created, vdsm.rpm is added to the node
+image and self-signed key (and certificate) is created. This key/cert
+allows vdsm to start and serve requests from anyone who has a matching
+key/cert which could be anybody holding the node image.
 
-> On 07/27/2012 03:42 PM, frosch wrote:
-> > Hello,
-> > 
-> > we, the OpenTTD developers, have identified a security
-> > vulnerability in OpenTTD (an open source game with multiplayer).
-> > Would you be so kind as to allocate a CVE id for this issue?
-> > 
-> > The issue concerns a denial of service vulnerabilty which enables 
-> > an attacker to force the server into an invalid game state. The 
-> > server will abort upon detecting this state. This attack can be
-> > performed using an unmodified client via normal game interaction.
-> > The attack requires authorization, but most servers do not
-> > implement authorization. The first vulnerable version is 0.6.0, the
-> > upcoming 1.2.2 release will have the issue fixed.
-> > 
-> > Once a CVE id is allocated, the issue and fix will be documented
-> > at http://security.openttd.org/CVE-2012-xxxx
-> > 
-> > Thanks in advance, Christoph 'frosch' Elsenhans
-> > 
-> > (Please CC me, I'm not subscribed)
-> 
-> Sorry can you please provide links to an advisory, code commit, or
-> something so we have a reference?
-> 
-trunk commit: http://vcs.openttd.org/svn/changeset/24439/
-Bug report: http://bugs.openttd.org/task/5254
+Upstream fix:
+http://gerrit.ovirt.org/#/c/8368/
 
-Later on http://security.openttd.org/CVE-2012-xxxx will supply patches
-for all vulnerable versions, and also link to the bug tracker and
-related commits.
+Acknowledgements:
 
-Regards
+This issue was discovered by Dan Kenigsberg of Red Hat.
 
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=875367
 
-
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
