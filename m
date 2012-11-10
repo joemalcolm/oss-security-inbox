@@ -1,80 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/3
-Message-ID: <4F90D383.2070303@redhat.com>
-Date: Thu, 19 Apr 2012 21:09:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/9
+Message-ID: <87y5i9dxmc.fsf@mid.deneb.enyo.de>
+Date: Sat, 10 Nov 2012 21:14:03 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, security@...nel.org
-Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+Subject: CVE request: TYPO3-CORE-SA-2012-005
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+<http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-005/>
+identifies the following vulnerabilities:
 
-On 04/19/2012 03:48 PM, Marcus Meissner wrote:
-> Hi,
-> 
-> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a
-> pid namespace leak caused by vsftpd.
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=757783
-> 
-> He provided a simple reproducer:
-> 
-> #include <stdio.h> #include <errno.h> #include <signal.h> #include
-> <sched.h> #include <linux/sched.h> #include <unistd.h> #include
-> <sys/syscall.h>
-> 
-> int main(int argc, char *argv[]) { int i, ret;
-> 
-> for (i = 0; i < 10000; i++) {
-> 
-> if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC | 
-> CLONE_NEWNET | SIGCHLD, NULL))) return 0;
-> 
-> if (-1 == ret) { perror("clone"); break; }
-> 
-> } return 0; }
-> 
-> 
-> and checking "cat /proc/slabinfo|grep pid_namespace" gives 10000
-> more active slots after running it on 3.0.13 (+SUSE patches) and
-> 3.1.10 (+SUSE patches).
-> 
-> 
-> Running this on 3.2.0 (+SUSE Patches) did not result in more slots,
-> so it was probably fixed between 3.1 and 3.2 (but someone else
-> cross check perhaps).
-> 
-> Any idea welcome on which patch fixed this, I tried
-> 1b26c9b334044cff6d1d2698f2be41bc7d9a0864 but it seems not helping.
-> 
-> Ciao, Marcus
+| Vulnerable subcomponent: TYPO3 Backend History Module
+| Vulnerability Type: SQL Injection, Cross-Site Scripting
+ 
+| Problem Description: Due to missing encoding of user input, the
+| history module is susceptible to SQL Injection and Cross-Site
+| Scripting. A valid backend login is required to exploit this
+| vulnerability.
+| 
+| Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that fix
+| the problem described!
+|
+| Credits: Credits go to Thomas Worm who discovered and reported the
+| issue.
 
-Can this be triggered by a non privileged user/process? Eugene
-mentions that CAP_SYS_ADMIN seems to be required, if so it seems like
-there isn't much of a trust boundary violation going on (anyone/thing
-with CAP_SYS_ADMIN is already in pretty good).
+(Probably needs two CVEs, one for SQL injection, one for cross-site
+scripting.)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+| Vulnerable subcomponent: TYPO3 Backend History Module
+| Vulnerability Type: Information Disclosure
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+| Problem Description: Due to a missing access check, regular editors
+| could see the history view of arbitrary records, only by forging a
+| proper URL for the History Module. A valid backend login is required
+| to exploit this vulnerability.
+|
+| Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
+| fix the problem described!
+|
+| Credits: Credits go to Core Team Member Oliver Hader who discovered
+| and fixed the issue.
 
-iQIcBAEBAgAGBQJPkNODAAoJEBYNRVNeJnmTAAYP/0L2MDtbhXSFOj6LpjhQfoa3
-CmLYoY5E1rQHPJIFggc9FoMPeZKbEDyKGDwxV7LxdEz8g55nDu9tzZTbzFlbPo04
-IxnI5YThwxYcgYQm+kwUp+kVxT2/NVLdEynPTSInJyTXW2p/twjn7D+F88U5ZSOS
-golUVRfJyigVCuHVYyK2Rcw6HXIsgjV6FjLm4pmQVAcfwuL32owUmw0d/CSmGnqI
-yIgNJYUc6DIQA0kDxJVLOBx1WcMGoxzf0UBFV9u6Gj4ucOtm92moBDKgR5+fymrR
-yN1UygKaisU3s0FNtmcSdyOiiypGN052bRBxpXC2rndt59IO/jxoRIWJGYN5txve
-adfcbty/XOOXCP4PMO2C81bEcF9VgQqaTE5RmcapJYBIMyI9LhbKtGr9aIR58TVE
-vjtlENFrF11jEPFKzPfVnqH0/e4i+nFRpX9gb3zR7rPgA6KH8ijKQzCEQf2sS5R0
-X2EJHwj9BHNy+6P+xjXp1JpKXDVq0S9JtyyZVaGBzBOCBIW0QMtpSO84YaxmxbP9
-/Tbt2FgKBGVvY6NpDMK6CsJ7jqSB6IHjJQSIKWbZpFghZgT1NMd4L3rpbwUIXyjJ
-61utBIFfLAIDjqn2H0RQm1TRm+Ofzxc33qx7aNNRDIM4BGUqOcqB/dUlYDVoS/dL
-5Wp58czyQo2nlJ73MAER
-=YakC
------END PGP SIGNATURE-----
+And:
+
+| Vulnerable subcomponent: TYPO3 Backend API
+| Vulnerability Type: Cross-Site Scripting
+
+| Problem Description: Failing to properly HTML-encode user input the
+| tree render API (TCA-Tree) is susceptible to Cross-Site
+| Scripting. TYPO3 Versions below 6.0 does not make us of this API,
+| thus is not exploitable, if no third party extension is installed
+| which uses this API. A valid backend login is required to exploit
+| this vulnerability.
+|
+| Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
+| fix the problem described!
+|
+| Credits: Credits go to Johannes Feustel who discovered and reported
+| the issue.
+
+(The version range appears to be different from the cross-site
+scripting above.)
+
+| Vulnerable subcomponent: TYPO3 Backend API
+| Vulnerability Type: Cross-Site Scripting
+
+| Problem Description: Failing to properly encode user input, the
+| function menu API is susceptible to Cross-Site Scripting. A valid
+| backend login is required to exploit this vulnerability.
+|
+| Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
+| fix the problem described!
+|
+| Credits: Credits go to Richard Brain who discovered and reported the
+| issue.
+
+(This can perhaps be merged with the first cross-site scripting CVE.)
