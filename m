@@ -1,24 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/02/12
-Message-ID: <20120202201222.5b3427a2@redhat.com>
-Date: Thu, 2 Feb 2012 20:12:22 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: security@....net, Stefan Esser <stefan.esser@...tioneins.de>
-Subject: PHP remote code execution introduced via HashDoS fix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/3
+Message-ID: <1757024844.29964093.1352548486021.JavaMail.root@redhat.com>
+Date: Sat, 10 Nov 2012 06:54:46 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Michel Alexandre Salim <michel+fdr@...vestre.me>, Richard Jones <richard@...hanicalcat.net>, Ralf Schlatterbeck <rsc@...tux.com>
+Subject: Re: CVE Request -- roundup: Multiple XSS flaws plus other security related fixes corrected in upstream 1.4.20 version
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Just to clarify the need for CVE ids. Looks roundup 1.4.20
+has been released 15-May-2012 10:49:
+  http://pypi.python.org/packages/source/r/roundup/
 
-Internets are buzzing with info on the PHP flaw found by Stefan Esser
-in the fix for CVE-2011-4885.
+but there doesn't seem to be CVE identifiers for these:
+  http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=roundup
 
-http://thexploit.com/sec/critical-php-remote-vulnerability-introduced-in-fix-for-php-hashtable-collision-dos/
-http://www.h-online.com/security/news/item/Critical-PHP-vulnerability-being-fixed-1427316.html
-http://svn.php.net/viewvc?view=revision&revision=323007
+yet.
 
-This got CVE-2012-0830 assigned earlier today.  This is sent to make
-the assignment public and avoid possible duplicate assignment.
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+----- Original Message -----
+Hello Kurt, Steve, vendors,
+
+  Roundup upstream has released new upstream 1.4.20 version,
+correcting multiple cross-site scripting (XSS) flaws (and
+couple of other security related issues):
+[1] http://pypi.python.org/pypi/roundup
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=722672
+
+More from [1] (plus relevant tickets inlined too, where
+possible to find out):
+---------------------------------------------------------
+[A] * issue2550729: Fix password history display for anydbm backend,
+thanks to Ralf Hemmecke for reporting. (Ralf)
+[3] http://issues.roundup-tracker.org/issue2550729
+
+[B] * issue2550684 Fix XSS vulnerability when username contains HTML code,
+thanks to Thomas Arendsen Hein for reporting and patch. (Ralf)
+[4] http://issues.roundup-tracker.org/issue2550684
+
+[C] * issue2550711 Fix XSS vulnerability in @action parameter,
+thanks to "om" for reporting. (Ralf)
+[5] http://issues.roundup-tracker.org/issue2550711
+
+[D] * Fix wrong execute permissions on some files,
+thanks to Cheer Xiao for the patch. (Ralf)
+
+[E] * Fix another XSS with the "otk" parameter,
+thanks to Jesse Ruderman for reporting. (Ralf)
+
+[F] * Mark cookies HttpOnly and -- if https is used -- secure. Fixes issue2550689,
+but is untested if this really works in browsers. Thanks to Joseph Myers for reporting. (Ralf)
+[6] http://issues.roundup-tracker.org/issue2550689
+
+[G] * Fix another XSS with the ok- and error message, see issue2550724. We solve this differently
+from the proposals in the bug-report by not allowing any html-tags in ok/error messages
+anymore. Thanks to David Benjamin for the bug-report and to Ezio Melotti for several proposed fixes. (Ralf)
+[7] http://issues.roundup-tracker.org/issue2550724
+
+Cc-ed Ralf Schlatterbeck on this post too to clarify, if issues [A] and [D]
+would also have security implications / IOW if those would be security flaws too.
+Ralf please clarify. Thank you, Jan.
+
+Could you allocate CVE ids for these (once clarified)?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
