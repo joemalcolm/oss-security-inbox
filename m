@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/7
-Message-ID: <4F60DD6A.1030806@redhat.com>
-Date: Wed, 14 Mar 2012 12:03:22 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/7
+Message-ID: <1352552512.17241.25.camel@scapa>
+Date: Sat, 10 Nov 2012 14:01:52 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Mark Doliner <mark@...gant.net>
-Subject: Re: CVE request: Two Pidgin crashes
+Subject: Re: Privilege escalation (lpadmin -> root) in cups
 Content-Type: text/plain; charset=utf-8
 
-On 03/14/2012 01:59 AM, Mark Doliner wrote:
-> Hello hello.  Could I request that two CVEs be issued for two separate
-> crashes in Pidgin?  To my knowledge no CVE exists for either issue.
-> Both issues were reported in our public bug tracker, and are therefore
-> public.
+On sam., 2012-11-10 at 13:49 +0100, Yves-Alexis Perez wrote:
+> Hi,
 > 
-> The issues are described at the following two URLs:
-
-> http://pidgin.im/news/security/?id=60
-
-Please use CVE-2011-4939 for this issue.
-
-> http://pidgin.im/news/security/?id=61
-
-Please use CVE-2012-1178 for this issue.
-
-> The Pidgin project has just released version 2.10.2 which fixes both issues.
+> a Debian user reported a bug in our BTS concerning cupsd. The bug is
+> available at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692791 and
+> upstream bug at http://www.cups.org/str.php?L4223 (restricted because
+> it's tagged security).
 > 
-> Thanks,
-> Mark
+By the way, it seems that the CUPS security contact at
+http://oss-security.openwall.org/wiki/software#cups doesn't work, I just
+received a bounce. Does someone know a mail address to reach them?
 
-
+Regards,
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
