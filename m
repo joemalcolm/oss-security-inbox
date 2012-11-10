@@ -1,68 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/02/5
-Message-Id: <201210021752.12949.geissert@debian.org>
-Date: Tue, 2 Oct 2012 17:52:12 -0500
-From: Raphael Geissert <geissert@...ian.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request - mcrypt buffer overflow flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/8
+Message-ID: <20121110183737.GA8107@openwall.com>
+Date: Sat, 10 Nov 2012 22:37:37 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 02 October 2012 14:20:20 Kurt Seifried wrote:
-> On 10/02/2012 12:42 PM, Raphael Geissert wrote:
-> > Kurt,
-> > 
-> > I think at least one more CVE id needs to be assigned:
-> > 
-> > On Saturday 15 September 2012 19:22:06 Raphael Geissert wrote:
-> >> On Tuesday 11 September 2012 10:19:38 Eygene Ryabinkin wrote:
-> >> 
-> >> Another week, another couple of patches. One makes it use strncpy
-> >> and forces a NUL on the last byte of local_algorithm, local_mode,
-> >> and local_keymode. Their values are checked later on, so it seems
-> >> safe to pass unvalidated data. The size of the buffers is
-> >> hard-coded to avoid making many changes to the code.
-> > 
-> > I think this needs a separate id, since fixes were released by
-> > Fedora and Debian referencing CVE-2012-4409 but only for the
-> > original report.
-> > 
-> > Eygene's followup issues have been fixed in Debian without
-> > referencing a CVE id.
+Hi Premchand,
+
+On Mon, Nov 05, 2012 at 05:02:52PM +0530, Premchand Koneru wrote:
+> I recently joined the Montavista Security team and request membership to
+> thelinux-distros@...openwall.org  list, so that I may participate fully
+> in reporting and fixing vulnerabilities in Montavista. Here is my
+> GPG fingerprint:
 > 
-> Can you post a link to source fixes/commits? Thanks.
+> pub   2048R/5DA060C7 2012-11-05
+>       Key fingerprint = 7DF9 45B4 3116 8D5C D3C0  2A15 EADE D5B2 5DA0 60C7
 
-This is all there is:
-http://www.openwall.com/lists/oss-security/2012/09/16/1
+Where do we obtain your key itself?  It does not appear to be on keyservers.
 
-The Debian changelog is probably not of much use.
-
-> >> Once those issues were fixed I noticed that salt_size is not
-> >> initialized if the salt flag is not set. The result is an
-> >> inconditional call to malloc, with an uninitialized int as
-> >> argument. This can lead to a non-attacker-controlled memory
-> >> consumption DoS in most cases. It makes me think nobody actually
-> >> ever used it without a salt.
-> > 
-> > I've no strong opinion on whether this deserves an id.
-> > 
-> > Cheers,
-> 
-> Hrmm there's a thought, has this DoS been confirmed? As we've probably
-> seen over the last year more than a few sites fail to salt their
-> stored passwords =(.
-
-I don't see how that is relevant, this is the mcrypt(1) tool in concern. 
-libmcrypt and libmhash are not affected.
-
-The attached file is a PoC built with a slightly modified mcrypt. It appears 
-that there is no way to disable the salt bit in the unmodified mcrypt while 
-still producing a file that can later be opened. (for those looking at the 
-code, the salt bit is only disabled when using --bare)
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-Download attachment "foo.nc" of type "application/x-netcdf" (76 bytes)
+Alexander
