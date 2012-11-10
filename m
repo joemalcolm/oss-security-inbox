@@ -1,20 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/13/2
-Message-ID: <20120513115739.432d8d8e@hsalkjdhsa.lan>
-Date: Sun, 13 May 2012 11:57:39 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/10/4
+Message-ID: <366075028.29966683.1352550547046.JavaMail.root@redhat.com>
+Date: Sat, 10 Nov 2012 07:29:07 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Piwik before 1.7
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Sebastien Helleu <flashcode@...shtux.org>
+Subject: CVE Request -- WeeChat (prior to 0.3.9.1): Heap-based buffer overflow when decoding IRC colors in strings
 Content-Type: text/plain; charset=utf-8
 
-[...]
+Hello Kurt, Steve, vendors,
 
-Or to sum up: Piwik thinks "security by obscurity" is a good idea...
+  WeeChat upstream has released 0.3.9.1 version, correcting
+one (heap-based) buffer overflow flaw.
 
-I agree to Henri, we should assign CVEs anyway.
+References:
+[1] http://weechat.org/
+[2] http://weechat.org/security/
+[3] https://savannah.nongnu.org/bugs/?37704
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=875181
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Relevant upstream patch:
+[5] http://git.savannah.gnu.org/gitweb/?p=weechat.git;a=commitdiff;h=9453e81baa7935db82a0b765a47cba772aba730d
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
