@@ -1,85 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/14
-Message-ID: <CAC=h7gXgK1V-1N9qyQKB+OqN_ZC8OOv92dfmJt4oj4Lf3aXWxg@mail.gmail.com>
-Date: Wed, 12 Sep 2012 12:35:34 -0500
-From: Dolph Mathews <dolph.mathews@...il.com>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com,  openstack-announce@...ts.openstack.org
-Cc: Ryan Lane <rlane@...imedia.org>
-Subject: Re: [Openstack] [OSSA 2012-014] Revoking a role does not affect existing tokens (CVE-2012-4413)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/11/5
+Message-ID: <1352624495.17241.50.camel@scapa>
+Date: Sun, 11 Nov 2012 10:01:35 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: 692791@...s.debian.org, team@...urity.debian.org
+Subject: Re: Privilege escalation (lpadmin -> root) in cups
 Content-Type: text/plain; charset=utf-8
 
-Ryan Lane deserves recognition for originally identifying this as a
-potential vulnerability.
+On dim., 2012-11-11 at 00:18 -0700, Kurt Seifried wrote:
+> On 11/10/2012 05:49 AM, Yves-Alexis Perez wrote:
+> > Hi,
+> > 
+> > a Debian user reported a bug in our BTS concerning cupsd. The bug
+> > is available at
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692791 and 
+> > upstream bug at http://www.cups.org/str.php?L4223 (restricted
+> > because it's tagged security).
+> > 
+> > I'm unsure right now if it's an upstream issue or specific to
+> > Debian.
+> 
+> On Red Hat Enterprise 6 and Fedora 16 the file is owned by root:sys,
+> and the cupsd.conf defaults to:
+> 
+> <Location /admin/conf>
+>   AuthType Default
+>   Require user @SYSTEM
+>   Order allow,deny
+> </Location>
 
-Thanks, Ryan!
+As far as I can tell, @SYSTEM is defined using SystemGroup and defaults
+to lpadmin.
+> 
+> so that should be like "root", "bin" and "adm" so yeah it would appear
+> to be vendor specific.
 
--Dolph
+Well, in Debian (and upstream) case it's lpadmin -> root but in your
+case it'd be bin -> root and adm -> root. Maybe adm is intended to be
+root anyway but I guess that's not the case for bin?
 
+The whole point is that people with access to the admin web interface
+can force cupsd to read or write files with the user running cupsd
+(root).
+> 
+> > Basically, members of the lpadmin group (which is the group having
+> > admin rights to cups, meaning they're supposed to be able to
+> > add/remove printeers etc.) have admin access to the web interface,
+> > where they can edit the config file and set some “dangerous”
+> > directives (like the log filenames), which enable them to read or
+> > write files as the user running the cupsd webserver.
+> > 
+> > In Debian case at least, it's run as root, meaning we have a
+> > privilege escalation issue from lpadmin group to root.
+> 
+> I think as a rule cupsd runs as root, to touch the various files/dirs/etc.
+> 
+> > A fix would be to not run cupsd web server as root, and maybe to 
+> > restrict it to some kind of chroot so it doesn't have access to 
+> > sensitive files
+> 
+> Tricky, /dev/*, log dirs, etc. Probably better to just use a print
+> specific user/group and make all the standard locations owned by it,
+> and require the admin to setup anything like say
+> /non-standard/log/printers/ and so on.
+> 
+> > Can a CVE be allocated for this?
+> 
+> Please use CVE-2012-5519 for this issue. Also if other vendors could
+> check the permissions/configs/etc. and reply if they are vulnerable
+> that would be good.
 
-On Wed, Sep 12, 2012 at 11:36 AM, Thierry Carrez <thierry@...nstack.org>wrote:
+Thanks.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> OpenStack Security Advisory: 2012-014
-> CVE: CVE-2012-4413
-> Date: September 12, 2012
-> Title: Revoking a role does not affect existing tokens
-> Impact: High
-> Reporter: Dolph Mathews (Rackspace)
-> Products: Keystone
-> Affects: Essex, Folsom
->
-> Description:
-> Dolph Mathews reported a vulnerability in Keystone. Granting and
-> revoking roles from a user is not reflected upon token validation for
-> pre-existing tokens. Pre-existing tokens continue to be valid for the
-> original set of roles for the remainder of the token's lifespan, or
-> until explicitly invalidated. This fix invalidates all tokens held by
-> a user upon role grant/revoke to circumvent the issue.
->
-> Folsom fix:
->
-> http://github.com/openstack/keystone/commit/efb6b3fca0ba0ad768b3e803a324043095d326e2
->
-> Essex fix:
->
-> http://github.com/openstack/keystone/commit/58ac6691a21675be9e2ffb0f84a05fc3cd4d2e2e
->
-> References:
-> https://bugs.launchpad.net/keystone/+bug/1041396
-> http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4413
->
-> Notes:
-> This fix will be included in the future Keystone 2012.1.3 stable
-> update and the upcoming Folsom-RC1 development milestone.
->
-> - --
-> Thierry Carrez (ttx)
-> OpenStack Vulnerability Management Team
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.11 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
->
-> iQIcBAEBCAAGBQJQULoUAAoJEFB6+JAlsQQjGacQAJUvJb+oIjh73KAYYuDpl/YP
-> PqJa4nmjVin7CyQ8AbxHK63xrAQ7isPFpCCqtEmjZ5kvFCrJRHiQggHNqISRhnvo
-> +HyS6RSn4Vrp001PSZSmQI5MpgkeWhbOy+fk4/ZY7hFgUyS2YqC8YiK7DTMdKRBi
-> toWOHRVWrmA4fUEDDcDdm9XzRseTC0cZAbj9bYAF+vXPdpxeGpq5l9Kb6yDezXGD
-> 62dFvHghVTWdUIN+gK4V4d77PoyeO9NRd4Ud0GjDpV/asQL31dW6B4aRPYVDPhL3
-> 7xcnhRsnZ3Y5J31n+7E/gMF+J+6kOaY/DNFZQ8chNW18kplYnmJnm7s3BJNjD512
-> UF/S5A5sH1Rk/vwe2nAHSqvQ1Dq3K0sRvW3YCijG2Rdj3mhBOr6OlvT5uJmnkeJT
-> GQQ8SR3y+ZLS/2EEW+cVjDMxV4Gnf9Zzrw/tSjVp6QLmJAkG8qrFmgdisQ/Jao4M
-> ygE8ZVu8lJq7N8b+k8XkB+bhz9E9V6hYOUuGoifEHRIPki/Ed7++BcdVTQdQYpAL
-> kDTaoVZt1+plwAu4ZBLxUg1vhVz19qgDc7UeoY1sPc1JcRWp/ONnp6K4z+Y+7Rsx
-> 3E4FLH0/qgFxKDHdGX91Plehk9dIEjHcGtKaXI8vOvGT17srYQaF6Y7rc+9TwaqI
-> bggBCxcI2PLQgjuWyF4M
-> =+6UN
-> -----END PGP SIGNATURE-----
->
-> _______________________________________________
-> Mailing list: https://launchpad.net/~openstack
-> Post to     : openstack@...ts.launchpad.net
-> Unsubscribe : https://launchpad.net/~openstack
-> More help   : https://help.launchpad.net/ListHelp
->
+Regards,
+-- 
+Yves-Alexis
 
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
