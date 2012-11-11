@@ -1,35 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/22/3
-Message-ID: <20120122175227.GA15826@openwall.com>
-Date: Sun, 22 Jan 2012 21:52:27 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/11/1
+Message-ID: <509F4B34.50506@redhat.com>
+Date: Sat, 10 Nov 2012 23:52:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: proc: clean up and fix /proc/<pid>/mem handling
+CC: Florian Weimer <fw@...eb.enyo.de>, "security@...o3.org" <security@...o3.org>
+Subject: Re: CVE request: TYPO3-CORE-SA-2012-005
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 18, 2012 at 10:25:55AM +0800, Eugene Teo wrote:
-> "Jüri Aedla reported that the /proc/<pid>/mem handling really isn't very
-> robust, and it also doesn't match the permission checking of any of the
-> other related files.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Anyone got a pointer to Jüri's report?  I suppose it was somewhere on
-LKML, but I haven't found it yet.
+On 11/10/2012 01:14 PM, Florian Weimer wrote:
+> <http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-005/>
+>
+> 
+identifies the following vulnerabilities:
 
-I see how the checks against current->self_exec_id were insufficient for
-security, yet maybe the report contained something else as well?
+You didn't mention the core issues, I assume those need CVE's as well?
 
-> This changes it to do the permission checks at open time, and instead of
-> tracking the process, it tracks the VM at the time of the open.  That
-> simplifies the code a lot, but does mean that if you hold the file
-> descriptor open over an execve(), you'll continue to read from the _old_ VM.
+Also looking at
 
-I see it in the revised code, but I don't get it.  What does "the old
-VM" mean after an execve()?  The code stores the mm pointer in
-file->private_data, but is this stored pointer even valid after an
-execve()?  (The code blindly assumes so, only checking for non-NULL.)
+Problem Description: Due to missing encoding of user input, the
+history module is susceptible to SQL Injection and Cross-Site
+Scripting. A valid backend login is required to exploit this
+vulnerability.
 
-Was this discussed (on LKML or elsewhere)?
+sounds like one issue (input validation), leading to two possible
+outcomes (SQL injection and XSS).
 
-> http://git.kernel.org/linus/e268337dfe26dfc7efd422a804dbb27977a3cccc
+can security@...o3.org provide some light for this and the:
 
-Alexander
+=================
+It has been discovered that TYPO3 Core is vulnerable to SQL Injection,
+Information Disclosure and Cross-Site Scripting
+
+Component Type: TYPO3 Core
+
+Affected Versions: 4.5.0 up to 4.5.20, 4.6.0 up to 4.6.13, 4.7.0 up to
+4.7.5 and development releases of the 6.0 branch.
+
+Vulnerability Types: SQL Injection, Cross-Site Scripting, Information
+Disclosure
+
+Overall Severity: Medium
+
+Release Date: November 8, 2012
+=================
+
+issues?
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQn0s0AAoJEBYNRVNeJnmT158P/Apd/AJftbvtQAoJAXppKeN2
+AYhpQ1mpl3HmwxuS37seK6BH6a4lBa+aC9wk6Aepuvdsw1DvVDaMfmTPkRsaL3T/
+7N4P60ZwhOTvXpoOXJx33ze2r68NFYtNyBZUsXBcnvBmpNdYvDfQxgiP8PLHOeiX
+Qf0BR0688wdZE6IhwYoAK8TcVxH/xNEK6AFOM/jnx51/ZF3STmTxyJrMFa1A2BNr
+MtdnCMS6PFfT+D67LLP5cmc5vQyWhz/qayuCzMIaxABzClAnfCqYjRbvnnbDidLZ
+Rprl+t1vW0sZqry5EFZ/74Au10+6toGGuIB5Fyldg1b+RNd9W7e0uBC1deT1DCoi
+1AcNKJHJEF01H9MuJiynmZK325uPvTCRw2MBLbuIGY7INxqo4ObH0a5686c3WP8T
++fOQZj759gQxOdnqHzJ5UNS4QGLSaFy1uVFoUzQJ5ENevA1W0dSw33eCbV38jUsu
+GmENfaZK/pDwr7TEpsk3ROm5s6dJ8ON3auasQF+ruOWLQlFhUaCicc4RbLdtpqD9
+/YCBs5BJy90qQp/068am97LWHnVQMWJWDEGRUlWvHcHLVIv5BIT+oTTo1HRC0RyU
+8vnwtWnBm3gPOPvXsyA3bdeW/+NgVfHHQ9OvG2NMrJkY7HLF+60zl+XEIUNvgW6+
+QsVvIspnLpBNSoFyThzC
+=9xeZ
+-----END PGP SIGNATURE-----
