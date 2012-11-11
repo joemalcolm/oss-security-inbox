@@ -1,86 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/15
-Message-ID: <507F09FC.1090408@redhat.com>
-Date: Wed, 17 Oct 2012 13:41:48 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/11/3
+Message-ID: <509F5157.6060004@redhat.com>
+Date: Sun, 11 Nov 2012 00:18:47 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Simon McVittie <smcv@...ian.org>
-Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
+Subject: Re: CVE request -- vdsm: certificate generation upon node creation
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/17/2012 12:14 PM, Simon McVittie wrote:
-> On 17/10/12 18:03, Kurt Seifried wrote:
->> Avtually looking at that page it appears that no modern file 
->> systems allows NUL in a file name (and in general I suspect it's
->> a bad idea/leads to some nasty edge case issues).
+On 11/10/2012 01:30 PM, Petr Matousek wrote:
+> When new node image is being created, vdsm.rpm is added to the
+> node image and self-signed key (and certificate) is created. This
+> key/cert allows vdsm to start and serve requests from anyone who
+> has a matching key/cert which could be anybody holding the node
+> image.
 > 
-> Anything that, directly or indirectly, uses Unix-style APIs to
-> access files can't possibly support NUL in a filename anyway, since
-> those APIs receive the filename as a NUL-terminated string.
+> Upstream fix: http://gerrit.ovirt.org/#/c/8368/
 > 
->> Personally I think the perlopentut case makes sense, using NUL
->> as an end of string marker. What happens if stuff comes after it 
->> though?
+> Acknowledgements:
 > 
-> For Perl, one possibility would be to continue to treat an input
-> of "foo\0" as equivalent to "foo" (so that you can use "./ foo \0"
-> to mean " foo ", as documented), but disallow NULs anywhere except
-> the last position.
+> This issue was discovered by Dan Kenigsberg of Red Hat.
 > 
-> S
+> References: https://bugzilla.redhat.com/show_bug.cgi?id=875367
+> 
+> Thanks,
 > 
 
-Wow so this goes back a ways:
-
-http://insecure.org/news/P55-07.txt
-
-- -------[  Phrack Magazine --- Vol. 9 | Issue 55 --- 09.09.99 --- 07 of
-19  ]
-
-- ----------------[  The Beef
-
-- ----[  Poison NULL byte
-
-Note:  The name `Poison NULL byte` was originally used by Olaf Kirch
-in a Bugtraq post. I liked it, and it fit...  So I used.  Greetings to
-Olaf.
-
-When does "root" != "root", but at the same time, "root" == "root"
-(Confused yet)?  When you co-mingle programming languages.
-
-One night I got to wondering, exactly what would Perl allow, and could
-I get anything to blow up in unexpected ways.  So I started piping
-very weird data out to various system calls and functions.  Nothing
-spectacular, except for one that was quite notable...
-
-You see, I wanted to open a particular file, "rfp.db".  I used a fake
-web scenario to get an incoming value "rfp", tacked on a ".db", and
-then opened the file.  In Perl, the functional part of the script was
-something like:
-
-	# parse $user_input
-	$database="$user_input.db";
-	open(FILE "<$database");
-
-Great.  I pass 'user_input=rfp', and the script tries to open "rfp.db".
-Pretty simple (let's ignore the obvious /../ stuff right now).
-
-Then it got interesting when I passed 'user_input=rfp%00'.  Perl made
-$database="rfp\0.db", and then tried to open $database.  The results?
- It  opened "rfp" (or would have, had it existed).  What happened to
-the ".db"?   This is the interesting part.
-
-You see, Perl allows NUL characters in its variables as data.  Unlike C,
-NUL is not a string delimiter.  So, "root" != "root\0".  But, the
-underlying system/kernel calls are programmed in C, which DOES
-recognize NUL as a delimiter.  So the end result?  Perl passes
-"rfp\0.db", but the underlying libs stop processing when they hit the
-first (our) NUL.
-
-......... and so on.
+Please use CVE-2012-5518 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -88,19 +36,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQfwn8AAoJEBYNRVNeJnmTQWEP/2gqNZrmNM17B9OnCHwIsBo2
-+DfRtHYN6crwxtZUOPR6Ofbfxj+q9bCQUoOt2CMlKHx/aKZlMMSM+Hm/oYS23pIa
-lVuBinVTM3Vh8RiFvNctGdieoqtPnMKkqag3+Aq8dXn+VOLHHZhw0d0IiK7skE+L
-FVZJak+ly5KXfWu1THyCxQvstduY37lSlqGIeB7MLXUdyUqKSt+MEbMwxwayPFJV
-J2kfJFIyf+ehV1/+XwQBZk6lbuPduJSWiqluyg3RIZzEJOjzd/5KC+JUtAlCwFeZ
-TjRxCGUuiNIUaOcYrDkJ5HOxGY0uKLpgEHQ+VUmWvI0CpE5xx798AxraowkG2AHp
-T7E0J2pavt35uaCGb2TzimqpaCsmscPDKZiLkYpPsCZCxutRdCkKXJxd6Hu9x7kc
-VajhN2ESgs4kwzVDSM0FsMUChAuSySLcUTvi/ydCYj4WFsPCN8OSaccw/6ep8Wiz
-TJ8x7TnUvqilWog1dqwMAw9a+UbHT7W1fa62eqRmni6Woz41/pdDmIfMEAWqCnnF
-gIKZSBggfMruLQhAScOAGcZYo8PNA1oK4ofKP49j7uGCpmaDIKG344KuRGnrT7bj
-2N3gPEOBFE7s4y9C6cyqyR2zZMr3Jmw/QZBI8TjjHF0+H+qNdjZOQkzdRc5CFhzc
-LOJn9jfw/W5Gk9N0D5bb
-=b9SL
+iQIcBAEBAgAGBQJQn1FXAAoJEBYNRVNeJnmTFxYP/2Dax5sRFfDqAcwJX2oQ7nRN
+i3QvzOyvjCDqLNMZ6D3+6+p+Y2H2YoRgGgMctIjmIWMFL/V//v3rdbpxr/yKbztd
+0tgk+Z1lhWuzkN/sWfZXiqc86QvOFK4wE7ThtsHBvguP0JOnxFn3BevKnJadwy7H
+inuLvz9uVFQv9v1RxYmchMZHJlYPaMPK9d3vbTQPxHVYdjbScFIUwzxyDcEqfKGX
+J3xj4mrAl1UpsUX05qTpT0/M31WqvbLUd7CCyNwuze4xEvz6qke+DES9E4C6OXII
+WkFoDDun0bsXi/tNINj/0LyTasqUJ/0M2Hz35GMkALkZrCb3vjHh/vZP6XNGfI2E
+5fOO3fmS4wb8x4usDngzQDKWkAZfgWdmDuRIOlKoGaeboucvIJDkGVCvH+30xC2+
+dBc1bFDHj592bN2SO8JHun593WkxIV6AsoUbe1EhDk3ji+3IwNuVau22M+NkexJn
+/5xAdbD4PqIk1FOoIqmFAMDYsVRMvdlsdVIlOdgvquo3BvRo7gnKRZRNblMgwzoX
+RtSjeP6FTI0atArlweuonwgmcKqvjMeT/KpoyOvf7s6iS6LLYZmX1vRe5zW2CgGo
+ogMrZHC+F8U7t0CBEaDFYWNr7lraQkAd1RZPJRq5c9Ow/5Jzjp91CXMsF4AesvWL
+FWtVrr8S0IXHHE0WRr9y
+=Kza/
 -----END PGP SIGNATURE-----
