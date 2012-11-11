@@ -1,59 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/02/1
-Message-ID: <4FCA0867.1060504@gentoo.org>
-Date: Sat, 02 Jun 2012 14:34:47 +0200
-From: Stefan Behte <craig@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/11/2
+Message-ID: <509F5135.6030203@redhat.com>
+Date: Sun, 11 Nov 2012 00:18:13 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
+CC: Yves-Alexis Perez <corsac@...ian.org>, 692791@...s.debian.org, team@...urity.debian.org, cups-security@...le.com
+Subject: Re: Privilege escalation (lpadmin -> root) in cups
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm writing because the patch is missing something; in
-http://git.kernel.org/?p=linux/kernel/git/davem/net-next.git;a=commitdiff;h=fdf5af0daf8019cec2396cdef8fb042d80fe71fa
-the issue was fixed for SYN-FIN, but IMHO it's still open für SYN-PSH
-and SYN-URG.
+On 11/10/2012 05:49 AM, Yves-Alexis Perez wrote:
+> Hi,
+> 
+> a Debian user reported a bug in our BTS concerning cupsd. The bug
+> is available at
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692791 and 
+> upstream bug at http://www.cups.org/str.php?L4223 (restricted
+> because it's tagged security).
+> 
+> I'm unsure right now if it's an upstream issue or specific to
+> Debian.
 
-# Victim:
-Locally, I ran:
-ab2 -n 10000 -c 100 http://localhost/
-The performance was about 4500 requests/s
+On Red Hat Enterprise 6 and Fedora 16 the file is owned by root:sys,
+and the cupsd.conf defaults to:
 
-# Attacker:
-iptables -A OUTPUT -d ${VICTIM} -p tcp --dport 80 --tcp-flags
-SYN,ACK,RST RST -j DROP
-I modified synful.c to send SYN-FIN: this results in no open SYN_RECV
-states on the victim, the ab2 benchmark performs as usual.
+<Location /admin/conf>
+  AuthType Default
+  Require user @SYSTEM
+  Order allow,deny
+</Location>
 
-However, sending SYN+URG causes a immediate increase of SYN_RECV to 256
-and ab2 won't even finish, only very few requests succeed.
+so that should be like "root", "bin" and "adm" so yeah it would appear
+to be vendor specific.
 
-Enabling tcp_syncookies is an immediate fix, though.
+> Basically, members of the lpadmin group (which is the group having
+> admin rights to cups, meaning they're supposed to be able to
+> add/remove printeers etc.) have admin access to the web interface,
+> where they can edit the config file and set some “dangerous”
+> directives (like the log filenames), which enable them to read or
+> write files as the user running the cupsd webserver.
+> 
+> In Debian case at least, it's run as root, meaning we have a
+> privilege escalation issue from lpadmin group to root.
 
-So my question is: isn't this the same thing as CVE-2012-2663? If so,
-this works for me:
+I think as a rule cupsd runs as root, to touch the various files/dirs/etc.
 
---- a/net/ipv4/tcp_input.c	2012-06-02 14:16:16.720034382 +0200
-+++ b/net/ipv4/tcp_input.c	2012-06-02 14:16:53.337038807 +0200
-@@ -5864,6 +5864,10 @@
- 		if (th->syn) {
- 			if (th->fin)
- 				goto discard;
-+			if (th->urg)
-+				goto discard;
-+			if (th->psh)
-+				goto discard;
- 			if (icsk->icsk_af_ops->conn_request(sk, skb) < 0)
- 				return 1;
+> A fix would be to not run cupsd web server as root, and maybe to 
+> restrict it to some kind of chroot so it doesn't have access to 
+> sensitive files
 
-References:
-http://markmail.org/thread/fbfyuiugtfyx6pl4#query:+page:1+mid:fbfyuiugtfyx6pl4+state:results
-http://www.spinics.net/lists/netfilter-devel/msg21245.html
-http://www.spinics.net/lists/netfilter-devel/msg21248.html
-https://bugzilla.redhat.com/show_bug.cgi?id=826702
-http://www.securityfocus.com/bid/53733/info ("Vulnerable" list is wrong
-btw.)
+Tricky, /dev/*, log dirs, etc. Probably better to just use a print
+specific user/group and make all the standard locations owned by it,
+and require the admin to setup anything like say
+/non-standard/log/printers/ and so on.
 
-Best regards,
+> Can a CVE be allocated for this?
 
-Stefan Behte
+Please use CVE-2012-5519 for this issue. Also if other vendors could
+check the permissions/configs/etc. and reply if they are vulnerable
+that would be good.
+
+> Regards,
+> 
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQn1E1AAoJEBYNRVNeJnmTAk0QAJzI9+STxsFAL7YJm4obCLAY
+PhVVZYau19qUxMlMEIahfvcV46/36zYZPKYtNJCNtH7G30lPqC2gfZ3upNbri8+u
+71tZw15UMU6qAt/WNpfe9URjSNHRcO8tJ6OqN6u6er13YhdVkls6/Yudty1hAZoU
+wqd1xcBDv2uhaOsI5SswfSHC61JkBLRD7f13T6eWfSz5VT1TBwzJyP5yLTygx4jt
+wRnF/dBUSToSSqlLyP1gdSJWs6ksTtaVc7vHkCD2NVCZMPOn9lm9RiVj52Q1e/eR
+osbqbCwx8P3FC4w+MvN29+GbfRxdFA6ik4IHrpzR3Q+j105aQwIm0pubsENA2Lr3
+YHnvoD4oysfr3zUGYs5dbH1qITTw2t5c2oAP1wfG7C52jjblg3AaDDSgACyJFciQ
+kqcmSnDdBdcpc9dpGFo02LSOkh1jyVmBUCjTfXiNkpTtMv++CtgGdQM6j/UgAh1Q
+28yf5WhxuhdGPo28XNWbYj9ELAe4aDAssggTL+ysM8Xjc23hfBXowCNbkO4LqrlQ
+S14M04wi4eHrd8sj+DpzODm9ttOrnCCmzuNc5UBlxH2Mxk6LUVczU5RwDJ/wFPKA
+DoHFiCldax69zjRsLv/wgu3oNfn8Hi3Piyn/TfGmFEnnnejCUe5lDUIRzZgj+LoB
+62nQOCDF/bsxQWwJdDPl
+=zMgY
+-----END PGP SIGNATURE-----
