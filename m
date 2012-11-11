@@ -1,46 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/6
-Message-Id: <201202281632.q1SGWfM1002068@linus.mitre.org>
-Date: Tue, 28 Feb 2012 11:32:41 -0500 (EST)
-From: cve-assign@...re.org
-To: mateusz.goik@...antsoft.pl
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/11/7
+Message-ID: <1352662181.17241.52.camel@scapa>
+Date: Sun, 11 Nov 2012 20:29:41 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Privilege escalation (lpadmin -> root) in cups
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On sam., 2012-11-10 at 14:01 +0100, Yves-Alexis Perez wrote:
+> On sam., 2012-11-10 at 13:49 +0100, Yves-Alexis Perez wrote:
+> > Hi,
+> > 
+> > a Debian user reported a bug in our BTS concerning cupsd. The bug is
+> > available at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692791 and
+> > upstream bug at http://www.cups.org/str.php?L4223 (restricted because
+> > it's tagged security).
+> > 
+> By the way, it seems that the CUPS security contact at
+> http://oss-security.openwall.org/wiki/software#cups doesn't work, I just
+> received a bounce. Does someone know a mail address to reach them?
+> 
+Followup on that:
 
->Any javascript code could be executed from Kadu History Window in
->following conditions:
+I had the information by the person reporting the bug #4223. He had an
+answer there that the security contact for Apple was security@...le.com
+and the one for CUPS was security@...s.org (which was notified because
+the bug was tagged security).
 
-CVE-2012-1410 is assigned to this Kadu issue.
+I've edited the wiki to correct the information there.
 
-We are confused about
+Regards,
+-- 
+Yves-Alexis
 
-  https://bugzilla.novell.com/show_bug.cgi?id=749036
-
-This is a bug report about this Kadu vulnerability, but it has a CVE
-assignment of CVE-2006-7248 for a vulnerability in the
-SMIME_read_PKCS7 function in OpenSSL 0.9.7i. Our perspective is that
-this means CVE-2006-7248 has been assigned to multiple issues (the
-Kadu issue and the OpenSSL issue), so we'll now proceed to REJECT
-CVE-2006-7248 sometime later today unless there's a substantial
-objection.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S S145
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJPTQBKAAoJEGvefgSNfHMdhXYH/0B7xfkZkD7025beh/Digvpd
-48hm8IRtRSbv8UVqsfq+jVjMUlD0blXjhKbli9OBl0xFcMGjZjxnC/3Rt4RZDib4
-AAUs9nEp1zB7dvjmsItkOCJk7Cn9CFVk4qCjSSEaz0tjrUXasf6nNsePwDht9zw6
-DM8ECv95CHiZ6V7+ZKAfwMRrMpYNxl3WtPGTVxUr9jfhiVvM8qgUvBlhJci4RJs3
-XgXxOTynLlMGYZTzY6zX5TJzOxnuojnmsAedwtYJpRMSBmX9TY/Dx356xjoehQUk
-Swg1IMVM+OcogYRBF5tS6QxrfefM1RDd4YgM0j+dcFA/5xjFLCs1yRY+6Ne0uo8=
-=lXSm
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
