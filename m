@@ -1,54 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/21
-Message-ID: <CA+s+YO+iJ0X_8o8HOrSEu-H=n1JGgGhVJKpGy9tQFvGqTd_9WQ@mail.gmail.com>
-Date: Mon, 27 Feb 2012 14:10:59 +0000
-From: Whitney Houston <i4m4l1v3b17ch3z@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: DesktopOnNet 3 Beta LFI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/11/6
+Message-Id: <1TXOkp-000IBp-CD@internal.tormail.org>
+Date: Sun, 11 Nov 2012 04:02:39 +0000
+From: y33t <y33t@...mail.org>
+To: <oss-security@...ts.openwall.com>
+Subject: Gajim fails to handle invalid certificates
 Content-Type: text/plain; charset=utf-8
 
-I forget to say, I want CVE number. give it to me.
+Gajim does not seem to properly handle invalid/broken/expired 
+certificates. The _ssl_verify_callback function in tls_nb.py is called 
+by OpenSSL for every certificate in the certificate chain (CA first, 
+server certificate last) but always return True whether an error was 
+encountered or not.
 
-On Mon, Feb 27, 2012 at 2:10 PM, Whitney Houston
-<i4m4l1v3b17ch3z@...il.com>wrote:
+This forces OpenSSL to verify each certificate until none is left, at 
+which points it will call _ssl_verify_callback one last time with an 
+error number of 0.
 
-> Hello list
->
-> I want to report serious scary issue, I find this vulnerability that make
-> me fall off chair and giggle like silly slut.
->
-> Project: http://sourceforge.net/projects/don3/
->
-> <?php
-> require('system/switches.php');
->
-> if
-> (file_exists('applications/'.$_GET["app"].'.don3app/'.$_GET["app"].'.php')){
->         $appfile = $_GET["app"];
->         $app_path = "applications/".$appfile.".don3app/";
-> } else {
->         $appfile = "frontpage";
->         $app_path = "applications/frontpage.don3app/";
-> }
->
-> if (file_exists("library/$appfile.don3lib")){
->         $topper_array = don3_read_don3lib($appfile.".don3lib");
->         $title = $topper_array[0];
-> } else {
->         $title = "ERROR T1";
-> }
->
->
-> $topper_includer = 'applications/'.$appfile.'.don3app/'.$appfile.'.php';
->
-> ....
->
-> include ($topper_includer);
->
->
-> Obviously I keep this bug super secret for many month but now i release
-> for all, after my recent death.
->
-> xx
->
+(This behavior is documented here:  man 3 SSL_CTX_set_verify
+"If verify_callback returns 1, the verification process is continued. 
+If verify_callback always returns 1, the TLS/SSL handshake will not be 
+terminated with respect to verification failures and the connection will 
+be established."
+And can be observed in function 
+crypto/x509/x509_vfy.c:internal_verify() in OpenSSL source code.)
+
+_ssh_verify_callback only stores the last error code, which always is 0 
+unless an error was encountered in the deepest level of the chain (the 
+CA), so gajim will not warn as long as the CA is recognized.
+
+
+(...)
+
+This problem goes beyond expired certificates. It is also possible to 
+edit any existing and valid server certificate by changing the CN 
+manually. The certificate's signature will be become invalid and OpenSSL 
+will detect it and return errnum 7 ("Certificate signature failure") but 
+gajim will not warn and will proceed with the connection anyway...
+
+
+References:
+https://trac.gajim.org/ticket/7252
 
