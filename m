@@ -1,48 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/27/3
-Message-ID: <4F99E5BF.4030109@redhat.com>
-Date: Thu, 26 Apr 2012 18:18:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Eitan Adler <lists@...anadler.com>, Xin Li <delphij@...phij.net>, d@...phij.net, FreeBSD Security Team <secteam@...ebsd.org>
-Subject: Re: CVE Request: programming error in crypt(3)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/12/2
+Message-Id: <201211121737.qACHbedv023366@linus.mitre.org>
+Date: Mon, 12 Nov 2012 12:37:40 -0500 (EST)
+From: cve-assign@...re.org
+To: jlieskov@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- WeeChat (prior to 0.3.9.1): Heap-based buffer overflow when decoding IRC colors in strings
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/26/2012 06:09 PM, Eitan Adler wrote:
-> On 26 April 2012 20:01, Kurt Seifried <kseifried@...hat.com>
-> wrote: Can you share the info with
->> security@...ebsd.org and then have them request it (at least then
->> I know it's legitimate) which might work.
-> 
-> Xin Li is a member of the FreeBSD security team: 
-> http://www.freebsd.org/administration.html#t-secteam
+>[3] https://savannah.nongnu.org/bugs/?37704
 
-Derp derp! What can I say, I'm a Linux guy... Will reply to the
-original email with a CVE.
-
+This issue had similar communication sent separately to MITRE, and
+was assigned CVE-2012-5854 today.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJPmeW/AAoJEBYNRVNeJnmTVWwP/3hS18oosTujzK9yy51XLhms
-EKpFFlbQgtntKFUsP8ClTLMBgT2XWnURiI/aRMYNqNeInSGHWAF0bSneHrws1Z9A
-3tvMzqaBPzZQ5y4Iv+YTVqI/MjD1haYttfRibTlf4hyvDvjjX+kF9yGOM9t5MfDY
-r+sUl96sZvxCqnSALW/qrlZ8g8sgK3N9jRUV3li/kzFo4uuYJTtVOnk0559nhFlG
-vsciJGVgw0skwcxGwax8v9mlXLUFP06FCt1+HOydvGgcm3OihHHlJ9T/Sft9Uq3W
-nC9NN4kgVnmkvvCxHsTuUYNPmPZF73juKBYlO5l+iHmLa7aAGMk/ML4WPVfRHfcR
-MTApPb+KUc5zbsHSMqN4NlP1+J6wLDcdfoe2+OAa2lJXFtd4B0nuA8oFfJZOCpFm
-Q/xxM3h3xoZDXuxpu84hP3bOEhSq7Q87KODI+eEzJoXKeN1YecqfCPxiRlq4f466
-YliHhP//o52FO/W6G/DRectWsWFrGFkGQpwGwVzIP/ctEETtENg855bwWltoMyzy
-CdEqMQTYc7+6618enttf3YyVAbMeFIpZihT4Vko2ggfFFzEZoAeRau+dS8qX3sZS
-l5YVr2hDqozXzEDQhoIu24Hx5R3vtjjIvf5kLnIy+YZNmv+tFJBQVlN3et83Xm/o
-CvVRCNWWb3D8nVBQe7nK
-=pBmc
+iQEcBAEBAgAGBQJQoTKsAAoJEGvefgSNfHMdeWcIAK2eVnvJFf5G8EkOKmuxoGrB
+uVcXw6hzKfuuJDAFyA/WM9kyZDdZesg1L7QzP6FRBfp0o4T6Pkkne8A7SkPdAaW7
+ytLLGhkSJkBv3ozTTVueejsTtfBg59K2FWBhvxUoKrRWqSdNzmu0fCdTmsTfUgzk
+5qd/Zx1bteZAh17FeqzTjOh9aBzIRlBhxA3+bgshTY3N0DUDBHWk/NgllwSC2Izl
+ha4LIiYdoFJLMjHbr55o0cXBdyzcdbx+7/BL7nN4sD/DTojpcA6JoE+ZW2/zvJ2Z
+pVoVU3zKE44lEdhmxgeKDYlqHBXbPOgfsg6o9JhKBw+8oS0rqgvuwefyWz5koA8=
+=W8IZ
 -----END PGP SIGNATURE-----
