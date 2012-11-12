@@ -1,72 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/20
-Message-ID: <4f914eda.84630e0a.6214.7739@mx.google.com>
-Date: Fri, 20 Apr 2012 11:56:06 +0000
-From: "pinto.elia@...il.com" <pinto.elia@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: R: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/12/1
+Message-ID: <50A11977.4080509@mvista.com>
+Date: Mon, 12 Nov 2012 21:14:55 +0530
+From: Premchand Koneru <pkoneru@...sta.com>
+To: oss-security@...ts.openwall.com
+CC: solar@...nwall.com
+Subject: Re: Request for linux-distros@...openwall.org membership
 Content-Type: text/plain; charset=utf-8
 
+Hi Alexander,
 
-----Messaggio originale----
-Da: Andrew Morton
-Inviato:  20/04/2012, 00:04 
-A: Marcus Meissner
-Cc: OSS Security List; security@...nel.org; Sukadev Bhattiprolu; Serge Hallyn; Eric W. Biederman; Pavel Emelyanov
-Oggetto: [oss-security] Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+It should be available now. Please try again with the same key.
 
+Regards,
+Premchand Koneru
 
-(cc's added)
-
-On Thu, 19 Apr 2012 23:48:20 +0200
-Marcus Meissner <meissner@...e.de> wrote:
-
-> Hi,
-> 
-> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report a pid
-> namespace leak caused by vsftpd.
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=757783
-> 
-> He provided a simple reproducer:
-> 
-> #include <stdio.h>
-> #include <errno.h>
-> #include <signal.h>
-> #include <sched.h>
-> #include <linux/sched.h>
-> #include <unistd.h>
-> #include <sys/syscall.h>
-> 
-> int main(int argc, char *argv[])
-> {
->     int i, ret;
-> 
->     for (i = 0; i < 10000; i++) {
-> 
->         if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC |
-> CLONE_NEWNET | SIGCHLD, NULL)))
->             return 0;
-> 
->         if (-1 == ret) {
->             perror("clone");
->             break;
->         }
-> 
->     }
->     return 0;
-> }
-> 
-> 
-> and checking "cat /proc/slabinfo|grep pid_namespace"
-> gives 10000 more active slots after running it on 3.0.13 (+SUSE patches) and 3.1.10 (+SUSE patches).
-> 
-> 
-> Running this on 3.2.0 (+SUSE Patches) did not result in more slots, so it was probably
-> fixed between 3.1 and 3.2 (but someone else cross check perhaps).
-> 
-> Any idea welcome on which patch fixed this, I tried 1b26c9b334044cff6d1d2698f2be41bc7d9a0864
-> but it seems not helping.
-> 
-> Ciao, Marcus
+On 11/11/2012 12:07 AM, Solar Designer wrote:
+> Hi Premchand,
+>
+> On Mon, Nov 05, 2012 at 05:02:52PM +0530, Premchand Koneru wrote:
+>    
+>> I recently joined the Montavista Security team and request membership to
+>> thelinux-distros@...openwall.org  list, so that I may participate fully
+>> in reporting and fixing vulnerabilities in Montavista. Here is my
+>> GPG fingerprint:
+>>
+>> pub   2048R/5DA060C7 2012-11-05
+>>        Key fingerprint = 7DF9 45B4 3116 8D5C D3C0  2A15 EADE D5B2 5DA0 60C7
+>>      
+> Where do we obtain your key itself?  It does not appear to be on keyservers.
+>
+> Alexander
+>    
 
