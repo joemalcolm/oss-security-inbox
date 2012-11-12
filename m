@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/07/2
-Message-ID: <4F08612E.6040906@openttd.org>
-Date: Sat, 07 Jan 2012 16:13:50 +0100
-From: Rubidium <rubidium@...nttd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/12/3
+Message-Id: <201211121801.qACI0rnZ023597@linus.mitre.org>
+Date: Mon, 12 Nov 2012 13:00:53 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: CVE request for OpenTTD
+Cc: cve-assign@...re.org
+Subject: VLC 2.0.4 SHAddToRecentDocs CVE-2012-5855
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-we, the OpenTTD developers, have identified a security vulnerability in
-OpenTTD (an open source game with multiplayer). Would you be so kind as 
-to allocate a CVE id for this issue?
+We have assigned CVE-2012-5855 for this issue in the SHAddToRecentDocs
+function in VideoLAN VLC media player 2.0.4:
 
-The issue concerns a denial of service vulnerability in the form of a 
-slow read attack preventing anyone to join the server, and preventing 
-the continuation of a game when 'pause on join' is enabled. This attack 
-requires the attacker to be authorized, but most servers do not 
-implement authorization. The first vulnerable version is 0.3.5, the 
-upcoming 1.1.5 release will have the issue fixed.
+  http://www.securityfocus.com/archive/1/524626
 
-Once a CVE id is allocated, the issue and fix will be documented at
-http://security.openttd.org/CVE-2012-xxxx
+It is unclear whether there are situations in which the erroneous
+string-length calculation could occur without any user interaction.
 
-Thanks in advance,
-Remko 'Rubidium' Bijker
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-(Please CC me, I'm not subscribed)
+iQEcBAEBAgAGBQJQoTfzAAoJEGvefgSNfHMd95cH/Rp6o4tY+GY7kNy5S5CrXNlb
+eWXg6RQMxXCjSZ1DuSsXMQBVA26oscwmK8sUu1XtD9UGmcdybVauUroUSxmxadEg
+DlJFNH658/Rj1zpsMx93Q8zKbN06UFbEpervjns2gRkeFBnlwl4yQjMDz4bwMn4j
+y+WYkwmwcMtb/NNQojwUpo6hsHP+X0W1FyUIatFFznWPq6KLuVlVd48dMnlWRwSO
+P+XjVrICOYQjkU1iDU2ziBo008RRi/qKDmGbKT19AJUUN8m8h/dnOgdK+DTTgnrX
+txUK2gNpOVh1oD2u+UgHFTdbjILYrQM7xP1v8UGM/W5iRuTisGs3F8ysSNinOik=
+=QtBE
+-----END PGP SIGNATURE-----
