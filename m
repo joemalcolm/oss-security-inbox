@@ -1,31 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/14
-Message-ID: <4F022FBF.6010806@redhat.com>
-Date: Mon, 02 Jan 2012 15:29:19 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Eitan Adler <lists@...anadler.com>, Solar Designer <solar@...nwall.com>
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/1
+Message-Id: <E1TYG2A-0000z4-Uh@xenbits.xen.org>
+Date: Tue, 13 Nov 2012 12:56:06 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 20 (CVE-2012-4535) - Timer overflow DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 01/01/2012 09:41 PM, Eitan Adler wrote:
-> On Sun, Jan 1, 2012 at 10:54 PM, Kurt Seifried <kseifrie@...hat.com> wrote:
->> Long term I'd like to see more work on hash cash type solutions, being able to
->> arbitrarily set or have a reactive system that requires increased work on the client
->> end to prove they are a legitimate client would help with this whole DoS/DDoS class > of problem to some degree.
-> But what if the attacker has a 10,000 node bot net? Wouldn't they just
-> abuse the victimized computers even further?
->
->
->
-If you mean the compromised botnet machines by "victimized computers"
-they're already lost and gone forever in most cases.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-One possible second order effect is that the botnet machines need enough
-CPU power to launch their attacks that they become so slow that users
-actually take action to fix their computers, which would be a good thing.
+                 Xen Security Advisory CVE-2012-4535 / XSA-20
+                                version 2
 
--- 
+                       Timer overflow DoS vulnerability
 
--- Kurt Seifried / Red Hat Security Response Team
+UPDATES IN VERSION 2
+====================
 
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+A guest which sets a VCPU with an inappropriate deadline can cause an
+infinite loop in Xen, blocking the affected physical CPU
+indefinitely.
+
+IMPACT
+======
+
+A malicious guest administrator can trigger the bug.  If the Xen
+watchdog is enabled, the whole system will crash.  Otherwise the guest
+can cause the system to become completely unresponsive.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen from at least 3.4 onwards are vulnerable, to every
+kind of guest.
+
+Systems with only trusted guest kernels are not vulnerable.
+
+MITIGATION
+==========
+
+There is no mitigation available other than to use a trusted guest
+kernel.
+
+RESOLUTION
+==========
+
+The attached patch resolves this issue.  The same patch is applicable
+to all affected versions.
+
+$ sha256sum xsa20.patch
+954f43a3b912d551b6534d3962d0bab3db820222a3bff211b545e526f9161c71  xsa20.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQokGkAAoJEIP+FMlX6CvZzB0H/2H7Z/zxYOQtC2QLT77voNvI
+/dCGnO+tUxcn9zsPOTkQjTmd7XrSaCdV9IoKmssZCwTBlHzRiwvFWQBinqrU8SZb
+8UCv4O1zxg4Ygv/9nlJVxI8Xq9+uyxc/RaMeKlMCsW2rSKut9zmHI9HU+FT5kqG9
+0vEXhZW4/MwOFbH+03LoHgjXqW8LOLNZtBg9u5rF5iCDLnltdAC//3kFXA5UG391
+JAzAdBUOOaf2OAnL4tEpEV6ksmeaxjckg63P5T61MUqiFJo/5AL5tu0kEKGHF7jH
+X4tDkSoV7Rbma4kNN3SbYjAkYGtsrGDeVS7HlhPbyZpKQVUJN+bSMYto3r8lVMM=
+=nj9Z
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa20.patch" of type "application/octet-stream" (1498 bytes)
