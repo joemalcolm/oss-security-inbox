@@ -1,27 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/28/2
-Message-ID: <87zk9w131k.fsf@mid.deneb.enyo.de>
-Date: Sat, 28 Apr 2012 13:58:15 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: weak use of crypto in python-elixir can lead to information disclosure (CVE and peer review request)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/4
+Message-Id: <E1TYG2O-000103-Oo@xenbits.xen.org>
+Date: Tue, 13 Nov 2012 12:56:20 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 24 (CVE-2012-4539) - Grant table hypercall infinite loop DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-* Vincent Danen:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> CFB mode is only secure if the the IV is unpredictable and different
-> for every message.
+                 Xen Security Advisory CVE-2012-4539 / XSA-24
+                                version 2
 
-There are a few additional requirements.  Without some form of message
-authentication, chosen-ciphertext attacks are still possible even with
-a random IV.
+              Grant table hypercall infinite loop DoS vulnerability
 
-> Because of this, and because the encryption key is shared for each
-> database table (fields and rows), the same plaintext prefix is
-> always encrypted to an identical and corresponding ciphertext
-> prefix.  As a result, an attacker with access to the database could
-> figure out the plaintext values of encrypted text.
+UPDATES IN VERSION 2
+====================
 
-And you can group by encrypted column values in the database.  That's
-why I'm not sure if it's actually possible to address this issue in a
-satisfying manner.
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Due to inappropriate duplicate use of the same loop control variable,
+passing bad arguments to GNTTABOP_get_status_frames can cause an
+infinite loop in the compat hypercall handler.
+
+IMPACT
+======
+
+A malicious guest administrator can trigger the bug.  If the Xen
+watchdog is enabled, the whole system will crash.  Otherwise the guest
+can cause the system to become completely unresponsive.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.0 and onwards are vulnerable.  Earlier released Xen
+versions are not vulnerable.
+
+Only 32-bit x86 PV guests, running on 64-bit Xen hypervisors,
+introduce the vulnerability.
+
+MITIGATION
+==========
+
+Running only 64-bit guests, or (in previous Xen versions) running a
+32-bit hypervisor (which supports only 32-bit guests), will avoid this
+vulnerability.
+
+Note however that if in a 64-bit Xen system the guest kernel image
+file is under the control of the guest administrator, the guest
+administrator will normally be able to control whether the guest is
+32-bit or 64-bit by supplying a different kernel image.
+
+Running only HVM guests will avoid this vulnerability.
+
+RESOLUTION
+==========
+
+The attached patch resolves this issue.  The same patch is applicable
+to all affected versions.
+
+$ sha256sum xsa24.patch
+2963dff4dbc08aab4278215d74c2cce365972f213453bb7c513d097a838de196  xsa24.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQokGvAAoJEIP+FMlX6CvZ0HAH/jy7Id9Ai1ZJSou6xu6USdQP
+QyaT6BnWzIA8ziatcnRzq5YHW+Occ4g4+9fU92zHpVsFGF5mAN9/aq83xLHoFHkb
+TPH/+xNCRz50zfQ21VTejr6jFlfiO6S1y/4bxVYfohtoevijo5tpRo+OYdFZXMM8
+psagcYXHgOsUy95pFsPBbwg6bh0S/ffDfZnyK3LZCP3J/Xx82kj7Du/HgKcM9lDx
+gk/q0VjFM6M/utxyn2gQlFGbX8YFfoytb9WzcrQdcPf4Ubu/jGUykm1BS/+IrXHs
+C9BtBa6w+k2T6dZgRmseeOjy0PgiEYKrqYhwAG1VC8F+RMLpAmtNGJS3gatwFHE=
+=IoWx
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa24.patch" of type "application/octet-stream" (942 bytes)
