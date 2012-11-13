@@ -1,28 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/24/1
-Message-ID: <20120224111107.2f55ea54@redhat.com>
-Date: Fri, 24 Feb 2012 11:11:07 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/15
+Message-ID: <20121113202432.309c5fe2@melee>
+Date: Tue, 13 Nov 2012 20:24:32 +0000
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: MySQL 0-day - does it need a CVE?
+Cc: kseifried@...hat.com
+Subject: Re: CVE request: mantis before 1.2.12
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 09 Feb 2012 10:20:14 -0700 Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> https://lists.immunityinc.com/pipermail/canvas/2012-February/000011.html
+On Tue, 13 Nov 2012 11:26:39 -0700
+Kurt Seiifried <kseifried@...hat.com> wrote:
 
-...
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 11/13/2012 07:52 AM, Hanno Böck wrote:
+> > http://www.mantisbt.org/bugs/changelog_page.php?version_id=150
+> > 
+> > New mantis bugtracker release. Two fixes are security relevant 
+> > (althouhg both sound minor)
+> 
+> Just to confirm I understand these issues:
 
-> We are releasing a working MySQL 5.5.20 remote 0day exploit with this
-> update.The exploit has been tested with
-> mysql-5.5.20-debian6.0-i686.deb on Debian 6.0.
+I'm not really into the development and only made the request based on
+the release changelog, but I think I agree for the second being an
+information disclosure, the first seems to be more general a
+"wrong permission"-issue, although the consequence is probably also
+"just" an information disclosure.
 
-Note also:
+- -- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
 
-https://lists.immunityinc.com/pipermail/canvas/2012-February/000014.html
-http://partners.immunityinc.com/movies/VD-MySQL-5_5_20.mov
-
-According to the video, it should be "yassl buffer overflow".
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+iQIcBAEBCAAGBQJQoqyDAAoJEKWIAHK7tR5C3Q0P/R4Doqli1gTdwwcu2UCJUYdg
+yj3mDvg8aIDXcIYlF9eKsQgY5a4LpzPmlyWQg/5sF5HgNViQmqH9S8eDbpqRhpeb
+j38HxyjekZ1qFBpW3KT3LpSI2BJKbdIESJLn+VhsBEFoRly+/b9GO8UoebQIkhIF
+vvpap3kDSUSQJv0TLWZ3j82EcTyaOcn4JABOpIeAPvgyZK9tUPmcI/88XSnSZiHj
+FOx4QYNAEiD6ryPQlJLxZdfe4+7jFIB5qaTuPuafuAr6NDLw7CST8WgFKDkhRbYD
+yQJaMYvKKOpjA6pwID8cPeZL3FO9Ijukgt+gUFngiJy986z7CMGpaNFncg59YxBr
+6c1ppUWYPPVIWRt2HFw3MLaqGydGtp9bc1s9Rb3TJgBc+6NYNYgIADN0V9uDL536
+Of+3uVjtGIkEQwzrVq+EWPmfpoGF1e+t3cFyf+ISaCMabwQnqP2tCcBBpYa9MOFu
+sxuvCBa4Vk0HRqgkS15m6L7PntaEL/iJZ0OSBke5lljouX/t8WmtSWzL/2AMEJ8d
+CyDe1JQ7H8b6b2mY4hkuZYiTtrLe/GNusBXyWPQqzAYpRhzzMOGs1X830CJ1PSbJ
+RpeA6m/V4V+xvib0hadvrEO5p0Cp8ZWVIZgFZQ9+nCQ8hajSHzOzJoEM8dDWNGuo
+meG04rDUkMkU7Jch5F9v
+=qj8K
+-----END PGP SIGNATURE-----
