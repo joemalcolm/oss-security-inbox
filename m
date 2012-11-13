@@ -1,73 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/11/1
-Message-ID: <509F4B34.50506@redhat.com>
-Date: Sat, 10 Nov 2012 23:52:36 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>, "security@...o3.org" <security@...o3.org>
-Subject: Re: CVE request: TYPO3-CORE-SA-2012-005
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/11
+Message-ID: <20121113153623.GE13903@dhcp-25-225.brq.redhat.com>
+Date: Tue, 13 Nov 2012 16:36:23 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: Marcus Meissner <meissner@...e.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- Linux kernel: mm/hotplug: failure in propagating hot-added memory to other nodes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 11/10/2012 01:14 PM, Florian Weimer wrote:
-> <http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-005/>
->
+On Tue, Nov 13, 2012 at 04:21:19PM +0100, Marcus Meissner wrote:
+> On Sun, Nov 11, 2012 at 12:19:13AM -0700, Kurt Seifried wrote:
+> > On 11/10/2012 02:36 PM, Petr Matousek wrote:
+> > > A NULL pointer dereference flaw has been found in the way a new
+> > > node's hot-added memory is propagated to other nodes zonelists. An
+> > > unprivileged local user can use this flaw to crash the system.
+> > > 
+> > > Upstream fix: 
+> > > http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=08dff7b7d629807dbb1f398c68dd9cd58dd657a1
+> > >
+> > >  References: https://bugzilla.redhat.com/show_bug.cgi?id=875374
+> > > 
+> > > Thanks,
+> > 
+> > Please use CVE-2012-5517 for this issue.
 > 
-identifies the following vulnerabilities:
+> Our Mel Gorman wonders how this is a security issue.
+> 
+> A local attacker would need to wait for the administrator to hot-add
+> memory, which seems unlikely on first thought?
 
-You didn't mention the core issues, I assume those need CVE's as well?
+Yes, it is unlikely, but not impossible. This unlikely condition
+is reflected in the CVSSv2 [1] score -- AC:H -- which Red Hat uses to
+rate the severity of the security issues and also reflected in the
+impact rating [2].
 
-Also looking at
+  [1] http://www.first.org/cvss/cvss-guide.html
+  [2] https://access.redhat.com/security/updates/classification/
 
-Problem Description: Due to missing encoding of user input, the
-history module is susceptible to SQL Injection and Cross-Site
-Scripting. A valid backend login is required to exploit this
-vulnerability.
-
-sounds like one issue (input validation), leading to two possible
-outcomes (SQL injection and XSS).
-
-can security@...o3.org provide some light for this and the:
-
-=================
-It has been discovered that TYPO3 Core is vulnerable to SQL Injection,
-Information Disclosure and Cross-Site Scripting
-
-Component Type: TYPO3 Core
-
-Affected Versions: 4.5.0 up to 4.5.20, 4.6.0 up to 4.6.13, 4.7.0 up to
-4.7.5 and development releases of the 6.0 branch.
-
-Vulnerability Types: SQL Injection, Cross-Site Scripting, Information
-Disclosure
-
-Overall Severity: Medium
-
-Release Date: November 8, 2012
-=================
-
-issues?
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQn0s0AAoJEBYNRVNeJnmT158P/Apd/AJftbvtQAoJAXppKeN2
-AYhpQ1mpl3HmwxuS37seK6BH6a4lBa+aC9wk6Aepuvdsw1DvVDaMfmTPkRsaL3T/
-7N4P60ZwhOTvXpoOXJx33ze2r68NFYtNyBZUsXBcnvBmpNdYvDfQxgiP8PLHOeiX
-Qf0BR0688wdZE6IhwYoAK8TcVxH/xNEK6AFOM/jnx51/ZF3STmTxyJrMFa1A2BNr
-MtdnCMS6PFfT+D67LLP5cmc5vQyWhz/qayuCzMIaxABzClAnfCqYjRbvnnbDidLZ
-Rprl+t1vW0sZqry5EFZ/74Au10+6toGGuIB5Fyldg1b+RNd9W7e0uBC1deT1DCoi
-1AcNKJHJEF01H9MuJiynmZK325uPvTCRw2MBLbuIGY7INxqo4ObH0a5686c3WP8T
-+fOQZj759gQxOdnqHzJ5UNS4QGLSaFy1uVFoUzQJ5ENevA1W0dSw33eCbV38jUsu
-GmENfaZK/pDwr7TEpsk3ROm5s6dJ8ON3auasQF+ruOWLQlFhUaCicc4RbLdtpqD9
-/YCBs5BJy90qQp/068am97LWHnVQMWJWDEGRUlWvHcHLVIv5BIT+oTTo1HRC0RyU
-8vnwtWnBm3gPOPvXsyA3bdeW/+NgVfHHQ9OvG2NMrJkY7HLF+60zl+XEIUNvgW6+
-QsVvIspnLpBNSoFyThzC
-=9xeZ
------END PGP SIGNATURE-----
+-- 
+Petr Matousek / Red Hat Security Response Team
