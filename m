@@ -1,59 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/2
-Message-ID: <502893CC.8090709@redhat.com>
-Date: Sun, 12 Aug 2012 23:42:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Chong Yidong <cyd@....org>
-Subject: Re: Security flaw in GNU Emacs file-local variables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/6
+Message-Id: <E1TYG2H-0000zc-Mt@xenbits.xen.org>
+Date: Tue, 13 Nov 2012 12:56:13 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 22 (CVE-2012-4537) - Memory mapping failure DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/12/2012 09:22 PM, Chong Yidong wrote:
-> Paul Ling has found a security flaw in the file-local variables
-> code in GNU Emacs.  We are preparing a new Emacs release to address
-> this flaw, and would like to request a CVE.
-> 
-> When the Emacs user option `enable-local-variables' is set to
-> `:safe' (the default value is t), Emacs should automatically refuse
-> to evaluate `eval' forms in file-local variable sections.  Due to
-> the bug, Emacs instead automatically evaluates such `eval' forms.
-> Thus, if the user changes the value of `enable-local-variables' to
-> `:safe', visiting a malicious file can cause automatic execution of
-> arbitrary Emacs Lisp code with the permissions of the user.
-> 
-> The bug is present in Emacs 23.2, 23.3, 23.4, and 24.1.
-> 
-> Attached are patches to fix this bug for Emacs 23.4 and Emacs
-> 24.1, written by Glenn Morris.  (The 23.4 patch should apply to the
-> rest of the Emacs 23.x series.)
-> 
-> Bug tracker ref:
-> http://debbugs.gnu.org/cgi/bugreport.cgi?bug=12155
+                 Xen Security Advisory CVE-2012-4537 / XSA-22
+			      version 4
 
-Please use CVE-2012-3479 for this issue.
+                  Memory mapping failure DoS vulnerability
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+UPDATES IN VERSION 4
+====================
 
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+When set_p2m_entry fails, Xen's internal data structures (the p2m and
+m2p tables) can get out of sync.  This failure can be triggered by
+unusual guest behaviour exhausting the memory reserved for the p2m
+table.  If it happens, subsequent guest-invoked memory operations can
+cause Xen to fail an assertion and crash.
+
+IMPACT
+======
+
+A malicious guest administrator might be able to cause Xen to crash.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen since at least 3.4 are vulnerable.
+
+The vulnerability is only exposed to HVM guests.
+
+MITIGATION
+==========
+
+There is no mitigation available other than to use a trusted guest
+kernel.
+
+RESOLUTION
+==========
+
+The attached patch resolves this issue.
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa22-4.2-unstable.patch    Xen 4.2.x, xen-unstable
+xsa22-4.1.patch             Xen 4.1.x
+xsa22-4.0.patch             Xen 4.0.x
+xsa22-3.4.patch             Xen 3.4.x
+
+$ sha256sum xsa22*.patch
+fe21558f098340451a275c468a7b2209915676f4f41ec394970c6aa0df3d93d3  xsa22-3.4.patch
+b7e635ae07f31ac8ecb8732152ba66897ea6d0f5e30468e35d7c37379c7369bb  xsa22-4.0.patch
+e699e7af6b90e60531d98f04197141c4caf5eb4cdb312a43e736830eb17d32e1  xsa22-4.1.patch
+8dbf850b903179807257febe12a15cb131968e65d2e90dbd3a5f72b83d2f931a  xsa22-4.2-unstable.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQKJPMAAoJEBYNRVNeJnmTfa8QAMp9laqz/ihbWisZWmHk5kkQ
-1afhhPxgSOauIPnuc2myWIP53lu8buJOgXOCo1Tl6fvfjMGu8zWJ3gr3xnqRyYjr
-m1EbiUZtrqdlyukvkReU08CVWmW8lXkn6W3znc3S6JQNq+eRxgBXMvcbAtNnJzKA
-ri6ApmMIqKZkbV9p8hqyHeNcdCdfi4nrjBr4vff6UX4SM1hqe05P6DOa8FCoRDIj
-Wt81d3zUenGwuVyFaRknuqw0dwQ6svwjCpcpsZnEiwjPZG+8IDlo8aCrvuThKh+x
-DTcD3Lt8Vr7+6QhAf7a20PDwJvM1KcinkHDQ1qE6ZvmxcdTJmoY0R+2wZqdnX2UZ
-f7mlqS8GPxH4V173ypz98eM0IhI/E4ZXSlTHg0vThq33QJ9NNjQ0OuDJhM5fuikF
-vY/s2n2TymrEAIjP6CMwZjZfSe56SzcJadR3Pq56H7RD+zSJYJmfasWbK56acjHA
-qE5xxvunO7UZPMAsYqUMGIqVCv5EsiDmmoFF/Xtlk98/at8AWfKNt27IGqPU+io3
-ShpGjDcptN8yitOPaPcEaAim6ndfObL4LlLozNv85M71oJ7tcDGiVBPaPRIjB0AJ
-bXpunXMcEigQlazVy/T4CIv7r2P2ZR64at16t0LKiR4XiTL016rjUkhSuHdPSdU3
-FS+YTLukIBYRDIFbbJss
-=jFS2
+iQEcBAEBAgAGBQJQokGpAAoJEIP+FMlX6CvZUsEIAIL7FtUpAgYTG73BXIpIoJ1h
+L85yaAhizzuwWAHMwLBD/oMs+OPzIXsCp4rBHI8XPQ0rf3YeHSj8uI+ta17Th1Gb
+KuFFlDPujh5EiE0yel8u21hgsJ7rUpA04jPeYDbVbHPVC6bywf7pkChCEPos/Ze9
+gAlRVptdBXH2nGmSyMFDfoby60lDXa7ZP0KoJUyuUG69zDMzlANLiEvk/+mN4YKB
+W4uiaYlCeDfrCn4T8Pk9rTMdDWmCsbQpZQRqwwNXdUa/EX0Ccv/QdcppPHoylYeK
+DQ9GPZOtDsm4s1M/J1oPVXZI7X/vLuBwje4/hhisFFiO4kLffcKCSopSizgLlO0=
+=82B5
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa22-3.4.patch" of type "application/octet-stream" (2044 bytes)
+
+Download attachment "xsa22-4.0.patch" of type "application/octet-stream" (1288 bytes)
+
+Download attachment "xsa22-4.1.patch" of type "application/octet-stream" (1308 bytes)
+
+Download attachment "xsa22-4.2-unstable.patch" of type "application/octet-stream" (1296 bytes)
