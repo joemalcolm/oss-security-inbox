@@ -1,126 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/19/4
-Message-ID: <66b90c4b-9928-4a9e-9276-71657da46046@zmail13.collab.prod.int.phx2.redhat.com>
-Date: Mon, 19 Mar 2012 11:12:11 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/7
+Message-ID: <1105004407.31047537.1352818139754.JavaMail.root@redhat.com>
+Date: Tue, 13 Nov 2012 09:48:59 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: running the distros lists
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Denis Ovsienko <infrastation@...dex.ru>, Christian Hammers <ch@...ian.org>, "Dmitry V. Levin" <ldv@...linux.org>, Paul Jakma <paul@...ma.org>, Florian Weimer <fweimer@...hat.com>, "Marco d'Itri" <md@...ux.it>
+Subject: CVE Request -- quagga (ospf6d): Assertion failure when removing routes (retrieving information which route to remove)
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Josh, Kurt, all -
-> 
-> On Thu, Mar 15, 2012 at 08:33:41AM -0400, Josh Bressers wrote:
-> > This task strikes me as a timesink that results in minimal value.  It's
-> > in the best interest of all list members to fix issues in a timely
-> > manner. The historic vendor-sec never had a serious problem with CRD.
-> > They were often outside of the current proposed 14 day span, but that's
-> > just a reality of how things go. We all have more work to do than time,
-> > so some things are bound to suffer.
-> 
-> This makes some sense, but:
-> 
-> 1. I think that merely proposing a CRD for every reported issue right
-> away is not a timesink.  I could probably be doing it myself, but I'd
-> like to get other list members more involved in running the list in
-> general, I feel that I am already contributing by administering the list
-> setup (so it's not my turn to contribute more), and I think that someone
-> with a vendor affected by a larger percentage of the issues is in a
-> better position to propose CRDs.
+Hello Kurt, Steve, vendors,
 
-Proposing the date isn't the issue. If you want to continue with your 14
-day embargo, that's trivial. The problem is chasing that. Who is
-responsible for ensuring everything is progressing as expected?
+  Marco d'Itri in Debian bug [1] has reported the following deficiency,
+being present in 0.99.21 and possibly earlier versions of the Quagga 
+routing suite:
 
-> 
-> 2. It is bad that embargo periods on the historic vendor-sec were often
-> pretty long.  I don't want the same to be happening on the distros list.
-> Yes, the reality is that some issues will end up being embargoed for
-> longer than many of us would have liked, but let's try to reduce the
-> embargo periods whenever we can and to the extent possible.  Proposing a
-> CRD early on is a step in that direction.
+A denial of service flaw was found in the way Quagga's ospf6d daemon
+performed routes removal. In certain circumstances when removing the
+route the ospf6d daemon terminated with assertion failure when trying
+to determine / find, which route to remove. An OSPF6 router could use
+this flaw to cause ospf6d on an adjacent router to abort.
 
-The biggest problem vendor-sec had was low priority issues would just sit
-and rot. Many probably never should have had an embargo to begin with. This
-is where a relatively short default embargo date is useful. If nobody
-cares, let it go public. At the same time, if something is very important,
-they can ask for an extension.
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=693102
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=876197
 
-The issue of course becomes how does something become public then if nobody
-cares?
+Upstream bug report:
+[3] https://bugzilla.quagga.net/show_bug.cgi?id=747
 
-> 
-> > Trying to get a couple people to do this is going to be a losing
-> > battle.
-> 
-> Maybe, but why (in your opinion)?
-> 
+Could you allocate a CVE id for this?
 
-My above reasoning is why I say this.
-
-> > We need to think about how to best let the list police itself.
-> 
-> Do you have any specific proposal?
-
-This is where things get tricky using just a list. Ideally, things get a
-default embargo date, then they open up at that time (sadly with a list,
-this isn't automatic). If someone needs additional time, they request it,
-again though, who will track this?
-
-> 
-> What I am thinking is that with only a few of us being responsible for
-> doing some well-specified things we will actually have to be doing those
-> things or be prepared to explain why we failed, apologize for that, and
-> adjust our actions going forward.
-> 
-> On the other hand, with the list membership at large being responsible
-> for running the list in accordance with certain goals and policies, no
-> one in particular is responsible.  When things go wrong, there's not much
-> we can do - no one in particular feels like it's his/her fault, no one in
-> particular is going to change anything going forward.  We can only choose
-> between ignoring the problem, calling it a non-problem, shutting the list
-> down, or switching to the "few responsible list members" scheme that I am
-> proposing now.  I simply see no other options.
-
-This is where things start to get tricky. I think about this problem a lot.
-I think the fundamental issue is that we lack an open source security
-community.  We have a bunch of tribes, but no actual community. Until we
-start to foster such a group, nothing is going to change. Embargoes are
-really just a symptom of a much larger issue.
-
-> 
-> > It certainly won't be 100% perfect, but I think even an 80% reasonable
-> > CRD agreement goal is acceptable (perfect is the enemy of the good
-> > comes to mind).
-> 
-> Maybe, but why can't we have a CRD proposed within a day in 100% of
-> cases?  Not all of those initially proposed CRDs will be agreed to, but
-> at least proposing them without delay is desirable, I think.
-
-The only way 100% is possible if there is automation. Humans can't do 100%.
-
-> 
-> > I would suggest some reasonable guidelines (that are not enforced
-> > strictly), then see how things go for a while. If it's deemed
-> > unacceptable, a better solution can be worked on.
-> 
-> We already have what I think are reasonable guidelines.  We see how
-> things are going: many of the reported issues linger without even a
-> proposed CRD for days.  I find that unacceptable because at least in some
-> cases it leads to increased total embargo periods.  Thus, I think we're
-> ready to discuss and hopefully arrive at a solution.
-> 
-
-I think the solution is to start creating an open source community. Of
-course this is far easier said than done. No doubt we all have some ideas.
-
-I think a good first step would be getting a bunch of folks in the
-#oss-security channel on Freenode. We can start talking and figure out
-where to go from there. There are some tools available to us now that were
-not a few years back (some social media type things). So far I think the
-wiki and mailing lists are a start, but we could make all this so much
-more. We have an immense amount of talent out there, if we start
-collaborating, I expect great things to happen.
-
--- 
-    JB
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
