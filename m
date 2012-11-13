@@ -1,87 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/22/6
-Message-ID: <50D55912.1070204@redhat.com>
-Date: Fri, 21 Dec 2012 23:54:10 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: coley@...us.mitre.org, oss-security@...ts.openwall.com, security@...ntu.com, eggert@...ucla.edu
-Subject: Re: CVE Request: grep
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/14
+Message-ID: <50A2910F.2040106@redhat.com>
+Date: Tue, 13 Nov 2012 11:27:27 -0700
+From: Kurt Seiifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Denis Ovsienko <infrastation@...dex.ru>, Christian Hammers <ch@...ian.org>, "Dmitry V. Levin" <ldv@...linux.org>, Paul Jakma <paul@...ma.org>, Florian Weimer <fweimer@...hat.com>, "Marco d'Itri" <md@...ux.it>
+Subject: Re: CVE Request -- quagga (ospf6d): Assertion failure when removing routes (retrieving information which route to remove)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/21/2012 05:19 PM, Seth Arnold wrote:
-> Hello Kurt, Steve, all.
+On 11/13/2012 07:48 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> Paul, I've included you on Cc: to help determine if several grep
-> patches are security-relevant.
+> Marco d'Itri in Debian bug [1] has reported the following
+> deficiency, being present in 0.99.21 and possibly earlier versions
+> of the Quagga routing suite:
 > 
-> A bug reporter [1] that claims he has, or can produce, a code
-> execution exploit against grep < 2.11. I've verified that our grep
-> 2.10 package segfaults on the amd64 platform with the simple
-> reproducer:
+> A denial of service flaw was found in the way Quagga's ospf6d
+> daemon performed routes removal. In certain circumstances when
+> removing the route the ospf6d daemon terminated with assertion
+> failure when trying to determine / find, which route to remove. An
+> OSPF6 router could use this flaw to cause ospf6d on an adjacent
+> router to abort.
 > 
-> $ perl -e 'print "x"x(2**31)' | grep x > /dev/null Segmentation
-> fault (core dumped)
+> References: [1]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=693102 [2]
+> https://bugzilla.redhat.com/show_bug.cgi?id=876197
+> 
+> Upstream bug report: [3]
+> https://bugzilla.quagga.net/show_bug.cgi?id=747
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-Confirmed it segfaults. Would it be possible to get a reproducer for
-this issue?
-
-Please use CVE-2012-5667 for this issue.
-
-> This specific problem was patched [2] with the following checkin: 
-> http://git.savannah.gnu.org/cgit/grep.git/commit/?id=cbbc1a45b9f843c811905c97c90a5d31f8e6c189
->
->  This checkin adds this text to the NEWS file:
-> 
-> + grep no longer dumps core on lines whose lengths do not fit in
-> 'int'. + (e.g., lines longer than 2 GiB on a typical 64-bit host). 
-> + Instead, grep either works as expected, or reports an error. + An
-> error can occur if not enough main memory is available, or if the +
-> GNU C library's regular expression functions cannot handle such
-> long lines. + [bug present since "the beginning"]
-> 
-> Please assign a CVE number for this problem.
-> 
-> 
-> Several other checkins around the 2.11 timeframe also look like
-> they may be security-relevant:
-> 
-> PCRE over-long line fix: 
-> http://git.savannah.gnu.org/cgit/grep.git/commit/?id=4572ea4649d025e51463d48c2d06a1c66134cdb8
->
->  Integer overflow issues: 
-> http://git.savannah.gnu.org/cgit/grep.git/commit/?id=8fcf61523644df42e1905c81bed26838e0b04f91
->
->  Paul, are any security issues fixed with those patches? Did I
-> overlook any other patches that need CVE numbers?
-> 
-> Thanks
-> 
-> 
-> 1: https://bugs.launchpad.net/ubuntu/+source/grep/+bug/1091473 2:
-> http://lists.gnu.org/archive/html/bug-grep/2012-12/msg00004.html
-> 
+Please use CVE-2012-5521 for this issue.
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQ1VkRAAoJEBYNRVNeJnmTqekP/2R36xFvohg+1L/l+7yv+HwU
-FKCCSJvCg7N631ndjdD6Dhau4uqml+3n5gh11FywOTFpaOnD7BsYlYtTIMJWRU+4
-PwnJlAmO+HVIXUiTYUQN0tI6MODeP56KLErtgg9AIveNYkXHT5jo6MrCcOL34Atx
-vWhgSL0f3thh25ckqQ9DvhFgDPjAfF6HJGoazeucFegI86OehpcADl3fkFP6vMgN
-yiyaHKZIk2r8e+nsKf12DGY6KJId4w0OQnUrqGWuYMSN8OTgKTRH6iBXN9t95zOz
-F12mFGtE5VYTG9CPqJN0ZRgyyRdh13A9O417IVKtGTsdpJ1pbWqI4xmn3PM0WT3k
-2DBzlIBNNsMxSAxTldT3C8LPj5OPfeR6H9FMGQLeXJBcKp4/C1DWkJrrbia1fN6X
-uxdlJkL4mY6PXS9NL6oyMelZRSMt4PQMAZLS1z/YglN8uRg2gTjJ0hDeot1GFtoV
-QisVhCQ1HxeiFtZKrelotqob83SL8X81RdyJPj/2ZGmUbbCYqpflNh8f8de6G7Sq
-fy1+KhktDvoe+qoaMj+0mIDvbgpVOmSOgUS9T0wmj5rsgyTbdhRFv3ZMxX2A236b
-0bWvPA60Qn4Evk9g9SDVYxzR8hBoGN7uEXsaKCUUe3YSFhlNUCEOshSL+B+/qPxU
-PQXw12/M6G4634ypTuc5
-=zdi0
+iQIcBAEBAgAGBQJQopEPAAoJEBYNRVNeJnmT5fQP/0T4SrIhya2QCMKB6xwXh2A3
+g15i+A2X0ToXLDgUpnMlJPUbQMSRKvncm+prkHUJNsDxP6KW/hzMj/lsFGfdxsda
+drGePasJJNJUT0f1Z2g8IXNfy1iUq3ZnjAFpwbd93iR/iRclDvNPhC5813XOr37G
+ozpR4E4K+7Uf2GUvPAHwbTsgYeCQwnOzWZ3wIet9+Ej1vaEqRuXra3XmSnLAPiRp
+RTZb6A4TROnc/+KLRI8JHH5AZUSNODJClG00sewI8CVSEp+EtbRRljntzzRVlqOJ
+OXqITx5F5a+Su1S93dlRCoj4GJlPOJ9ALZ74+9RxmBFmR/ApE+uVUqZmIlJbvK73
+sAUBEvvV8yymP6WoaamA/UP8HcICATvjjdQe+I5fgCiFLxOU2z2vVkNuOdNZNwom
+iDGnnckWVEfjy9uRPAf7ubybCAMyY54pMZP2YHOwEzCaH7p74G3Pgv52DtGnQqU6
+ADSJPp0Sc6R0/QyqCbnSyksdPw/gAUWEbAZvlct63o2k+tENii3DjN8oz7bd4dsB
+afIuUqXbV+/1ta/6fkduY6Hir5gOyBXkh9KNg84FM6aa1sYgLGuxzVb1OOxXzXd8
+dsc6nahjFM98n80yx5InFKgyEcGr9BEzEWjn3dqKtagEyr5X3RjeFEabTlojYZIS
+sMvb3K2PDbLv/+TJ2NIG
+=S1si
 -----END PGP SIGNATURE-----
