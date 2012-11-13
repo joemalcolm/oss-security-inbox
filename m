@@ -1,57 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/03/4
-Message-ID: <CAESCr8MLR=4UXXyh4UHfTXccvYKRAeBaTrU0xqnb4e9=k+3LQg@mail.gmail.com>
-Date: Tue, 3 Jan 2012 20:29:46 +0200
-From: Netsparker Advisories <advisories@...itunasecurity.com>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Symphony CMS Multiple Cross-Site Scripting and SQL Injection Vulnerabilities (NS-11-008)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/9
+Message-Id: <201211131509.39639.timb@openvas.org>
+Date: Tue, 13 Nov 2012 15:09:33 +0000
+From: Tim Brown <timb@...nvas.org>
+To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk, oss-security@...ts.openwall.com
+Subject: [OVSA20121112] OpenVAS Manager Vulnerable To Command Injection
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Summary
 
-We are assigning these identifiers to the advisory.
+It has been identified that OpenVAS Manager is vulnerable to command
+injection due to insufficient validation of user supplied data when
+processing OMP requests.  It has been identified that this vulnerability
+may allow arbitrary code to be executed with the privileges of the
+OpenVAS Manager on vulnerable systems.  CVE-2012-5520 has been assigned
+to this vulnerability.
 
-Thanks,
+Current Status
 
-On 22 November 2011 21:52, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 11/22/2011 04:09 AM, Henri Salo wrote:
->> Can we assign CVE-identifiers for these three issues, thank you?
->>
->> Found from: 2.2.3
->> Fixed in: 2.2.4
->>
->> 1. http://osvdb.org/show/osvdb/76882 / SA46663
->> extensions/profiledevkit/content/content.profile.php profile-parameter XSS
->>
->> 2. http://osvdb.org/show/osvdb/76883 / SA46663
->> symphony/lib/core/class.symphony.php filter-parameter XSS
->
-> Ok merging these two issues (as per ADT4 specification)  please use
-> CVE-2011-4340 for this issue.
->
->
->> 3. http://osvdb.org/show/osvdb/76884 / SA46663
->> symphony/content/content.publish.ph filter-parameter SQL injection
->> (Different than CVE-2010-3458)
->
-> Please use CVE-2011-4341 for this issue.
->> References:
->> http://seclists.org/bugtraq/2011/Nov/8
->> http://www.mavitunasecurity.com/xss-and-sql-injection-vulnerabilities-in-symphony-cms/
->> http://secunia.com/advisories/46663/
->> Advisory Reference: NS-11-008
->>
->> - Henri Salo
->
->
-> --
->
-> -Kurt Seifried / Red Hat Security Response Team
->
+As of the 20th January 2011, the state of the vulnerabilities is believed
+to be as follows.  A patch has been supplied by Greenbone Networks which
+it successfully resolves this vulnerability.  New releases of both 3.0.x
+and 4.0.x have also been created which incorporate this patch.
 
+Thanks
 
-
+OpenVAS would like to thank Andre Heinecke of Greenbone Networks for
+his help in reporting the vulnerability.
 -- 
-Netsparker Advisories, <advisories@...itunasecurity.com>
-Homepage, http://www.mavitunasecurity.com/netsparker-advisories/
+Tim Brown
+<mailto:timb@...nvas,org>
+<http://www.openvas.org/>
+
+View attachment "OVSA20121112.txt" of type "text/plain" (2890 bytes)
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
