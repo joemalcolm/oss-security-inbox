@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/11/1
-Message-Id: <201201111134.49453.thijs@debian.org>
-Date: Wed, 11 Jan 2012 11:34:44 +0100
-From: Thijs Kinkhorst <thijs@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: simpleSAMLphp 1.8.2 cross site scripting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/12
+Message-Id: <201211131544.31477.timb@openvas.org>
+Date: Tue, 13 Nov 2012 15:44:24 +0000
+From: Tim Brown <timb@...nvas.org>
+To: bugtraq@...urityfocus.com
+Cc: full-disclosure@...ts.grok.org.uk, oss-security@...ts.openwall.com
+Subject: Re: [OVSA20121112] OpenVAS Manager Vulnerable To Command Injection
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Doh, a document gets proof read by multiple people and yet it contains a 
+mistake.  In the Current Status section of the advisory, the date is 
+incorrect.  A corrected advisory is attached.
 
-Can I get a CVE for this?
+Tim
+-- 
+Tim Brown
+<mailto:timb@...nvas,org>
+<http://www.openvas.org/>
 
-http://code.google.com/p/simplesamlphp/issues/detail?id=468
-http://groups.google.com/group/simplesamlphp-
-announce/browse_thread/thread/cb96723ee3c6751e
+View attachment "OVSA20121112.txt" of type "text/plain" (2886 bytes)
 
-
-thanks,
-Thijs
-
-Download attachment "signature.asc " of type "application/pgp-signature" (491 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
