@@ -1,72 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/04/3
-Message-ID: <CAAPiX_+t3qfdyvW+zLahqr=1JjypV_70pG2HRysC1MzNzN1ipQ@mail.gmail.com>
-Date: Mon, 4 Jun 2012 11:02:57 -0600
-From: Greg Knaddison <greg.knaddison@...uia.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/5
+Message-Id: <E1TYG2R-00010J-89@xenbits.xen.org>
+Date: Tue, 13 Nov 2012 12:56:23 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 25 (CVE-2012-4544,CVE-2012-2625) - Xen domain builder Out-of-memory due to malicious kernel/ramdisk
 Content-Type: text/plain; charset=utf-8
 
-I didn't see a response nor this message in the archives at
-http://www.openwall.com/lists/oss-security/2012/05/
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-But I do see it in twitter at
-https://twitter.com/oss_security/status/207950141695606784
+       Xen Security Advisory CVE-2012-4544,CVE-2012-2625 / XSA-25
+                            version 2
 
-Is that lack of acknowledgment a subtle way to say "Greg, you really
-really need to sign your mails!" If so I will figure it out :)
+   Xen domain builder Out-of-memory due to malicious kernel/ramdisk
 
-Greg
+UPDATES IN VERSION 2
+====================
 
-On Wed, May 30, 2012 at 2:54 PM, Greg Knaddison
-<greg.knaddison@...uia.com> wrote:
-> Hello,
->
-> This is a batch CVE request for several advisories of contributed
-> modules released recently. Let me know if you have any questions.
->
-> Thanks,
-> Greg Knaddison on behalf of the Drupal Security Team
->
-> http://drupal.org/node/1608864 | SA-CONTRIB-2012-090 - File depot -
-> Session Management Vulnerability
-> http://drupal.org/node/1608854 | SA-CONTRIB-2012-089 - Counter - SQL
-> Injection (unsupported)
-> http://drupal.org/node/1608828 | SA-CONTRIB-2012-088 - Mobile Tools -
-> Cross Site Scripting (XSS)
-> http://drupal.org/node/1608822 | SA-CONTRIB-2012-087 - Comment
-> Moderation - Cross Site Request Forgery
-> http://drupal.org/node/1608780 | SA-CONTRIB-2012-086 - Amadou - Cross
-> Site Scripting
-> http://drupal.org/node/1597414 | SA-CONTRIB-2012-085 - BrowserID -
-> Multiple Vulnerabilities
-> * CSRF that leads to privilege escalation/impersonation
->
-> http://drupal.org/node/1597364 | SA-CONTRIB-2012-084 - Search API -
-> Cross Site Scripting (XSS)
-> http://drupal.org/node/1597262 | SA-CONTRIB-2012-083 - Taxonomy List -
-> Cross Site Scripting (XSS)
-> http://drupal.org/node/1585960 | SA-CONTRIB-2012-082 - Zen - Cross
-> Site Scripting
-> http://drupal.org/node/1585890 | SA-CONTRIB-2012-081 - Aberdeen -
-> Cross Site Scripting
-> http://drupal.org/node/1585678 | SA-CONTRIB-2012-080 - Hostmaster
-> (Aegir) - Access Bypass and Cross Site Scripting (XSS)
-> http://drupal.org/node/1585648 | SA-CONTRIB-2012-079 - Post Affiliate
-> Pro - Cross Site Scripting (XSS) and Access Bypass - Unsupported
-> http://drupal.org/node/1585564 | SA-CONTRIB-2012-078 - Smart
-> Breadcrumb - Cross Site Scripting (XSS)
-> http://drupal.org/node/1585544 | SA-CONTRIB-2012-077 - Advertisement -
-> Cross Site Scripting & Information Disclosure
-> http://drupal.org/node/1585532 | SA-CONTRIB-2012-076 - Ubercart
-> Product Keys Access Bypass
->
-> --
-> Director Security Services | +1-720-310-5623
-> Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
+Clarify that XSA-25 is reporting, via the Xen.org security process,
+both CVE-2012-4544 and CVE-2012-2625.
 
+Also we would like to apologise for the fact that xen-announce's copy
+of version 1 of this advisory was delayed in mailing list moderation.
 
+ISSUE DESCRIPTION
+=================
 
--- 
-Director Security Services | +1-720-310-5623
-Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
+The Xen PV domain builder contained no validation of the size of the
+supplied kernel or ramdisk either before or after decompression. This
+could cause the toolstack to consume all available RAM in the domain
+running the domain builder.  (CVE-2012-4544)
+
+Additionally, under similar circumstances pygrub consume excessive
+amount of memory under similar circumstances to the above.
+(CVE-2012-2625)
+
+IMPACT
+======
+
+A malicious guest administrator who can supply a kernel or ramdisk can
+exhaust memory in domain 0 leading to a denial of service attack.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+MITIGATION
+==========
+
+Running only trusted kernels and ramdisks will avoid these
+vulnerabilities.
+
+Using pvgrub also avoids these vulnerabilities since the builder will
+run in guest context. (nb: use of pygrub *is* vulnerable).
+
+Running only HVM guests will avoid these vulnerabilities.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves these issues.
+
+The pygrub problem (CVE-2012-2625) was fixed in xen-unstable (and the
+fix inherited by Xen 4.2.x) in revision 25589:60f09d1ab1fe but not
+called out as a security problem.  This fix is also included, where
+necessary, in the patches below.
+
+xsa25-unstable.patch        Xen unstable
+xsa25-4.2.patch             Xen 4.2.x
+xsa25-4.1.patch             Xen 4.1.x
+
+$ sha256sum xsa25*.patch
+613e4b82cdc9cabf9cbd52076118887b298c47e680c2066a28a77f12e9f90606  xsa25-4.1.patch
+135bc089d003f9b97991764c37b1ab8d37e9cbcfa1b9bd7429b4503abe00c8f5  xsa25-4.2.patch
+534495b7eef6e599f5814f0a67fc84fbe2e8eee9d223a09ad178ff63bdcda3dd  xsa25-unstable.patch
+
+Note that these patches impose a new size limit of 1Gby on both the
+compressed and uncompressed sizes of ramdisks.  On some systems it may
+be desirable to relax these limits and risk virtual address or memory
+exhaustion in the toolstack.  This can be achieved by setting
+XC_DOM_DECOMPRESS_MAX to the desired limit (in bytes). This can be
+done by building with "APPEND_CFLAGS=-DXC_DOM_DECOMPRESS_MAX=<limit>"
+or by editing tools/libxc/xc_dom.h directly.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+These issues have already been discussed in public in various places,
+including https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-2625
+and http://bugs.debian.org/688125.  This advisory is therefore not
+subject to an embargo.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQokGyAAoJEIP+FMlX6CvZl7wH/RdoQHGDcbgVEh5fuS5VzPpw
+RZ0sm6bpI7eclqaN6+thX9SA5qeycvyj2zq769yUGSiHR+BUNw6HRJZ+XAAF0IIx
+nb4VEdS2+Hz1kyTUAeZu3z/5HyfFamKY9Lhhj/47DBTtO5Xl1pjOCA0bC4ZDtIm1
+ffFVhOmTcmQEWXW1z27Vj9hSgQeGsqHTcOys6H0nYpLITDIZqBkGv8MZl4X0/Wtl
+zs2prG8HEWsysKel5Q/dt7De84OV3LgP1/2a+aMkLi+RgKWP+naKAXfYqVAS4mLw
+K+mv2MrmhgNxzEWp/sZX0q1QNvnJf+xKYHOBcP+hUlQIQwD/NQejdAdmNVPem7s=
+=Pfj+
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa25-4.1.patch" of type "application/octet-stream" (16353 bytes)
+
+Download attachment "xsa25-4.2.patch" of type "application/octet-stream" (12666 bytes)
+
+Download attachment "xsa25-unstable.patch" of type "application/octet-stream" (12510 bytes)
