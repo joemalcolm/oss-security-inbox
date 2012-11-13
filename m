@@ -1,80 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/30/12
-Message-ID: <4FC67DF9.1000503@redhat.com>
-Date: Wed, 30 May 2012 14:07:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/10
+Message-ID: <20121113152119.GF31022@suse.de>
+Date: Tue, 13 Nov 2012 16:21:19 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: John Haxby <john.haxby@...cle.com>
-Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
+Subject: Re: CVE request -- Linux kernel: mm/hotplug: failure in propagating hot-added memory to other nodes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, Nov 11, 2012 at 12:19:13AM -0700, Kurt Seifried wrote:
+> On 11/10/2012 02:36 PM, Petr Matousek wrote:
+> > A NULL pointer dereference flaw has been found in the way a new
+> > node's hot-added memory is propagated to other nodes zonelists. An
+> > unprivileged local user can use this flaw to crash the system.
+> > 
+> > Upstream fix: 
+> > http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=08dff7b7d629807dbb1f398c68dd9cd58dd657a1
+> >
+> >  References: https://bugzilla.redhat.com/show_bug.cgi?id=875374
+> > 
+> > Thanks,
+> 
+> Please use CVE-2012-5517 for this issue.
 
-On 05/30/2012 12:48 PM, John Haxby wrote:
-> 
-> On 30 May 2012, at 19:25, Florian Weimer wrote:
-> 
->> * John Haxby:
->> 
->>> Recently we have a couple of queries relating to a Nessus
->>> "TCP/IP SYN+FIN Packet Filtering Weakness".   This has not been
->>> helped by the fact that [1] actually points (indrectly) to
->>> CVE-2002-2438 which is actually a SYN+RST problem.
->> 
->> Reading the discussion here,
->> 
->> <http://comments.gmane.org/gmane.linux.network/213981>
->> 
->> it seems to me that this is just a performance optimization
->> which could be bypassed by using different flags, so I don't
->> think there's a vulnerability or fix here, except the general
->> lack of source IP address validation in IP networks.
-> 
-> That's the same thread that I referred to but I didn't reach the
-> same conclusion that you did.   It is possible to block SYN+FIN in
-> iptables, but the distros I'm aware of don't have that kind of
-> check in place so people will be vulnerable to this kind of DoS.
-> 
-> The conclusion from the thread was that SYN+FIN is not a legitimate
-> packet so the kernel should drop it.   The nessus people seem to
-> think the same thing: they have a test for this (although they
-> refer to the SYN+RST fix from a decade ago).    If there's a
-> consensus that we don't need a CVE then we can go to nessus and
-> have them fix, remove or update their test.
-> 
-> One could argue that if SYN+FIN doesn't need a CVE then SYN+RST
-> didn't either since it can be blocked by the same, or very similar,
-> iptables rule.
-> 
-> jch
+Our Mel Gorman wonders how this is a security issue.
 
-No this definitely gets a CVE (see previous email), it directly
-bypasses a security mechanism that is documented (man iptables, --syn
-section), and other parts of iptables do handle it correctly as far as
-I can tell (e.g. --state NEW). It allows bypass of firewall rules as
-documented, so if that doesn't get a CVE then nothing the world has
-gone upside down =).
+A local attacker would need to wait for the administrator to hot-add
+memory, which seems unlikely on first thought?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPxn35AAoJEBYNRVNeJnmT1OgP/0q1axsnDoz7OhjNW5Cjzo9f
-x0H72pYGOm3J/luxpCX78/Myzs+YubPkkmYrg37QCZpKJQXljGMRlyNNvDrkUo+C
-adeZH5vGIqD2uNwUmFmqPIf5WZezaWBXj1wdVAAk67rF6w4y31u2VJFj3Lytuq1z
-3xelQl8qfdj8UTOB3+4MMGuuMX8udCMcER+6JgtdaunVXqxppqICk7BLANJbWAPG
-jCPi8HcVp8NYpvwjhMW4ezLlMPls64Bq4Ar47woOyycYYgjBobSzCID5yhqvzLX8
-dXA2Hi/6B6G1xPlrwVjAPfUcnD8H9TJAzRGtZU0LfN2UaY/x3F3Pt1tpdZN1u2yB
-SzRnn2ko+rXTrOXF97gW8IrgvPnw9Zai2GsPoVjZAcN2zAHfLirfgq3gM3ZCV68/
-u5tMdk/+mEJ3K/Haspr6o09c0G6k6hZuU9JDqUaKW3kfyTeYUcOSyJarpI+nDkOy
-lyKhgOHrgw6B8D5itdJXH4VZoa6eMygFlCU9AanPxn/1bhEgBv4Tr7Jke8dnd6uZ
-gByj+mC50ShDMOpCNfsc+8Xpqy5PahwH1zD1P5SPJgJJ9dCTM8JHdzBsJe3AykL+
-snJBYSQ65VwmTkDH4/vgtWKqzsXjNuWvsU5ZyIuy4sjWs1uHUIVvIARSTuoAj3Ql
-72aYlQSD704yaxxa6rnW
-=Uq2f
------END PGP SIGNATURE-----
+Ciao, Marcus
