@@ -1,44 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/16/5
-Message-ID: <4F8C248D.7060306@redhat.com>
-Date: Mon, 16 Apr 2012 15:54:21 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request (minor) -- Two Munin graphing framework flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/3
+Message-Id: <E1TYG2K-0000zq-49@xenbits.xen.org>
+Date: Tue, 13 Nov 2012 12:56:16 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 23 (CVE-2012-4538) - Unhooking empty PAE entries DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   the following three problems has been recently reported against Munin:
-   [1] Insecure temp file use in the qmailscan plug-in:
+                 Xen Security Advisory CVE-2012-4538 / XSA-23
+                                version 2
 
-       https://bugzilla.redhat.com/show_bug.cgi?id=812889
-       http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668778
+                Unhooking empty PAE entries DoS vulnerability
 
-   [2] Possibility to inject escape sequences into Munin's log file:
+UPDATES IN VERSION 2
+====================
 
-       https://bugzilla.redhat.com/show_bug.cgi?id=812885
-       http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668666
+Public release.
 
-   [3] Remote users can fill /tmp filesystem:
-       Red Hat would not consider this to be a security flaw =>
-       no RH BTS entry.
+ISSUE DESCRIPTION
+=================
 
-       Original report:
-       http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668667
+The HVMOP_pagetable_dying hypercall does not correctly check the
+caller's pagetable state, leading to a hypervisor crash.
 
-For the first two -- though both of them having minor security impact,
-under suitable circumstances they could lead to trust boundary crossing =>
-under our opinion they should get a (CVE-2012-*) identifiers.
+IMPACT
+======
 
-For the third issue -- we wouldn't consider it to be a security
-flaw. Just as something, which on improperly configured machine
-could allow to fill in /tmp filesystem (just another way how to
-do it, when the particular service isn't properly configured).
+An HVM guest running on shadow pagetables (that is, not HAP) can
+cause the hypervisor to crash.
 
-Could you allocate CVE ids for the first two issues?
+VULNERABLE SYSTEMS
+==================
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+All Xen versions from 4.0 onwards are vulnerable, except that:
+ - systems that run only PV guests are not vulnerable
+ - systems that run all HVM guests using HAP (which is the default on
+   hardware that supports it) are not vulnerable.
+
+MITIGATION
+==========
+
+This issue can be avoided by running only PV guests or by running
+all HVM guests using hardware-assisited paging (HAP, also called
+NPT, RVI and EPT).
+
+Xen will run guests using HAP by default on hardware that
+supports it, unless it is disbled by putting 'hap=0' either on
+the xen hypervisor command-line or in the VM's configuration.
+
+You can check whether a particular machine supports HAP by looking at
+xen's boot messages.  On Xen 4.1, 4.2 and unstable, Xen will print
+"HVM: Hardware Assisted Paging (HAP) detected" during boot; on xen 4.0
+the message is "HVM: Hardware Assisted Paging detected".
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa23-4.0-4.1.patch         Xen 4.0.x, 4.1.x
+xsa23-4.2-unstable.patch    Xen 4.2.x, xen-unstable
+
+$ sha256sum xsa23*.patch
+f696d597481595b14ac9577d1dad05fc97da68568f52db74d62f2e3dcb2c7a6e  xsa23-4.0-4.1.patch
+70ffea07e58e4a747bf3ec103f656ba2cd0d8986722e6a72023c57d802c65964  xsa23-4.2-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQokGsAAoJEIP+FMlX6CvZTagH/iyB7+Y5Ug2+3o0minW/xYe5
+sVoRIxYhOuKIoRZFVHn3WvXc2PkL/sVCg8PoQnxCs1v4etALl6TTwE9CuJYVgbR7
+9OiN6l/NAg2Qbcg3W1j5Har0syOFL5ZkrvIZ3xvER1lsSINKFJ/HBYf9Oe3KUAaD
+ffzgRupB/AcETIClv9qwhmSVgjDyNWEae4TS5MzvdUM5dDcCObg/OpyvCGx2MbA8
+SF/s9bSwmUcEboy1wOm4wkTWfEJUCsE/ftpQRsEZPESOOXG5u2QB+EI1pbZ1SObx
+yhbDGE1Ex3T9u88t+7bSiFn2CwNS7eWQwg7nKQ6P/8PlSwm8BFg7KBC+HUxHNW4=
+=stq6
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa23-4.0-4.1.patch" of type "application/octet-stream" (1148 bytes)
+
+Download attachment "xsa23-4.2-unstable.patch" of type "application/octet-stream" (1160 bytes)
