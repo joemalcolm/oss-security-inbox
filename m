@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/09/3
-Message-ID: <20121009212907.70902308@nemesis.grenouille.com>
-Date: Tue, 9 Oct 2012 21:29:07 +0200
-From: Jérôme Benoit <jerome.benoit@...nouille.com>
-To: oss-security@...ts.openwall.com, henri@...v.fi
-Subject: CVE Request -- claws-mail -- NULL pointer derefence while processing email content.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/16
+Message-ID: <50A2D8AE.3070708@gentoo.org>
+Date: Tue, 13 Nov 2012 18:33:02 -0500
+From: Sean Amoss <ackle@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Privilege escalation (lpadmin -> root) in cups
 Content-Type: text/plain; charset=utf-8
 
-Hello, 
+On 11/11/2012 02:18 AM, Kurt Seifried wrote:
 
-  A NULL pointer dereference flaw was found in the format agnostic
-  email content processing code in claws-mail, an email client (or
-  MUA) based on GTK+. 
+> 
+> Please use CVE-2012-5519 for this issue. Also if other vendors could
+> check the permissions/configs/etc. and reply if they are vulnerable
+> that would be good.
+> 
+>> Regards,
+> 
 
-References: 
+Gentoo is also vulnerable to this issue. Our bug for CVE-2012-5519:
 
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=862578
-[2]
-http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2743 
+https://bugs.gentoo.org/show_bug.cgi?id=442926
 
-Could you allocate a CVE id for this?
-
-Cheers.  
+Thanks,
 
 -- 
-Jérôme Benoit aka fraggle
-La Météo du Net - http://grenouille.com
-OpenPGP Key ID : 9FE9161D
-Key fingerprint : 9CA4 0249 AF57 A35B 34B3 AC15 FAA0 CB50 9FE9 161D
+Sean Amoss
+Gentoo Security | GLSA Coordinator
+E-Mail	  : ackle@...too.org
+GnuPG FP  : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (295 bytes)
