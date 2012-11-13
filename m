@@ -1,38 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/16
-Message-ID: <4F4D6170.5050700@redhat.com>
-Date: Tue, 28 Feb 2012 16:21:20 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/8
+Message-ID: <20121113145227.6c809a10@melee>
+Date: Tue, 13 Nov 2012 14:52:27 +0000
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE Request (minor) -- osc: Improper sanitization of terminal emulator escape sequences when displaying build log and build status
+Subject: CVE request: mantis before 1.2.12
 Content-Type: text/plain; charset=utf-8
 
-On 02/28/2012 03:44 PM, Marcus Meissner wrote:
-> On Tue, Feb 28, 2012 at 06:56:52PM +0100, Jan Lieskovsky wrote:
-> I am not fully convinced it needs a CVE.
-> 
-> It basically boils down to the old "logfile with content that might be controlled
-> by an attacker pasted raw to a terminal" issue.
+http://www.mantisbt.org/bugs/changelog_page.php?version_id=150
 
-Aren't these generally covered?
+New mantis bugtracker release. Two fixes are security relevant
+(althouhg both sound minor)
 
-CVE-2010-3928
-CVE-2010-2713
-CVE-2009-4487
 
-"without sanitizing non-printable characters" and so on.
+- 0014496: [security] Workflow Transitions: Minimal Access Level to
+  Change to this status has no correct 'default' (dregad) - resolved.
+http://www.mantisbt.org/bugs/view.php?id=14496
 
-> There is some more control on the person who builds a specific package what is output
-> thant there usually is in logfiles though.
-> 
-> A rogue server is unlikely, however a malicious packager could echo "bad escape code"
-> in his build and then ask for help on our IRC channels or mailinglists with package Y on project X.
-> (anyone can create an account and build packages ... and asking for help is not uncommon)
-> e.g. with "look at logfile with: 'osc buildlog home:user foopackage standard i586'.)
-> 
-> Ciao, Marcus
 
+- 0014704: [security] Clone and Move issue with Copy bug notes - user
+  get email notice from project without access (dregad) - closed.
+http://www.mantisbt.org/bugs/view.php?id=14704
+
+
+Please assign CVEs.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
