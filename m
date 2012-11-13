@@ -1,51 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/1
-Message-ID: <4FB5A291.6060401@redhat.com>
-Date: Thu, 17 May 2012 19:14:57 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Andres Gomez <agomez@...idsignal.com>
-CC: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, vuln@...unia.com
-Subject: Re: CVE Request: Planeshift buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/2
+Message-Id: <E1TYG2E-0000zH-Ug@xenbits.xen.org>
+Date: Tue, 13 Nov 2012 12:56:10 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 21 (CVE-2012-4536) - pirq range check DoS vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/17/2012 03:29 PM, Andres Gomez wrote:
-> Planeshift is an online multiplayer role playing game which is
-> open source (http://en.wikipedia.org/wiki/PlaneShift_(video_game))
-> and "chatbubbles.xml" is a sort of configuration file for chat
-> windows inside the game, so I can't be changed directly by remote
-> users.
+                 Xen Security Advisory CVE-2012-4536 / XSA-21
+                                version 2
 
-It doesn't sounds like any security boundary is being crossed.
+                    pirq range check DoS vulnerability
 
-If you can edit that file I'm guessing you can also modify the other
-game files (executables, libraries, etc.), so there is no escalation
-of privilege as far as I can tell. If the ifle is owned by a unique
-user (e.g. it's a local config thing) again, if you can edit a users
-files you already have access, so no escalation of privilege. If this
-is correct then I will not be assigning a CVE.
+UPDATES IN VERSION 2
+====================
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Public release.
 
+ISSUE DESCRIPTION
+=================
+
+domain_pirq_to_emuirq() uses the guest provided pirq value before
+range checking it, and physdev_unmap_pirq uses domain_pirq_to_emuirq
+without checking the pirq value either.  Invalid pirq values can cause
+Xen to read out of array bounds, usually resulting in a fatal page
+fault.
+
+IMPACT
+======
+
+A malicious guest administrator can cause Xen to crash.  If the out of
+array bounds access does not crash, the arbitrary value read will be
+ignored due to later error checking, so there is no privilege
+escalation and no exploitable information leak.
+
+VULNERABLE SYSTEMS
+==================
+
+Only Xen version 4.1 is vulnerable.  Other released versions, and
+xen-unstable, are not vulnerable.
+
+The vulnerability is only exposed to HVM guests.
+
+MITIGATION
+==========
+
+Running only PV guests, or ensuring that HVM guests only use trusted
+kernels, will avoid this vulnerability.
+
+RESOLUTION
+==========
+
+The attached patch resolves this issue.
+
+$ sha256sum xsa21.patch
+34c4bef71d0ad08ee7c337c77af47aa77bb19081a13fc13beaff7d4b37b6b35a  xsa21.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIcBAEBAgAGBQJPtaKRAAoJEBYNRVNeJnmThwQP/iLSfGP5gGSQOIN8skNBns6S
-dr/Obla/Xjy1iADbIAuTTYcvvdp07HYlJANDN+VMKSPRQVpmhZhbr0hVq7FNsNZ9
-L2j2BW6kpde0PxhKV6hOpLjUOATgfNYg573XPZNUKU7qEqRVAFasYjqikEiGV+lq
-h63ISGt/bLVvTyZaJAqeUkZz6AWa9sQBYyJ4ixYatyuipA67dfD4bqkbpYwiYtV1
-uy7b24hvW4GTV4bkz3LbZUNxzJuxCn2fv/HCMbbgXV6zlbw9/IhGrQfSyYOGzcn3
-ZJtsByq+kzDDZdZ5QE3fGQRud0+5a4dc00cth9gyh76wHgfH6GGNDcdA3YVzcmBv
-8rPR36LcUHvYCRLzn4+aP6A/y3FZOK++P/f5NofkuAMQsXmenGKhWuL3nex7LGRV
-NYfycw+T89F1wPK5EB6HN0xjmfSxDKgsajHKuV4iJ0EqPwA45zVEFeFSAgqMhVBi
-rVofuOF46iBeHYQHzW8tKU6y13+uC6kMh78U9ekFR1sAR5pYrot5BakBJkCsWUo7
-6X6NVl68OXiDXo8TkI9/OuDJFI7VVnzj2ccsOVRmAB+DKIqqRa6BRvv5aZ50OpfA
-Q+0+0aPsLWJ7lMSDizvFDDw0PhdqPq3vkinBBKRVvSbs9UG1KnNt7ADzn7O7vigR
-dXWRpeRoRNhHO/dfQawV
-=Gbu8
+iQEcBAEBAgAGBQJQokGnAAoJEIP+FMlX6CvZ1lQH/jdovmPuphnocdrkWGR8FE3+
+OqM3JIpOZTDPFfLO7pen/P5e/0fCBs7cF7FGvM1Uua54/M0HrVS93E1m9baornkh
+vEIV5c9TRTfUR3IGmVFs1l+ddJcfULOuhfE2IOrbcYaWBL89D9sQYrL/A1j4LTEh
+umsz6fh4XgINkt/tpneEcE4ckYd0YkkOm3zUK3HaGshNXoOGVyGeaNqKr/YuhEfc
+XWOkCUoZTxKz50Tg12pdtjX8CX0njJaKeAs0MLkyTL1cj+Sf89YzNuXLwx5ffpMu
+//VEe2tbyRzPj2JYzUOrV8E5W1fPZmfCSgMvJEtwmMbMXMb7sIUPMBh3yBcXQQU=
+=yPnD
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa21.patch" of type "application/octet-stream" (1069 bytes)
