@@ -1,46 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/26/2
-Message-ID: <4F4A8557.7000703@redhat.com>
-Date: Sun, 26 Feb 2012 12:17:43 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Eric Leblond <eric@...it.org>
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/3
+Message-ID: <50A36229.7020908@redhat.com>
+Date: Wed, 14 Nov 2012 10:19:37 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: kseifried@...hat.com
+CC: oss-security@...ts.openwall.com
+Subject: Re: Gajim fails to handle invalid certificates
 Content-Type: text/plain; charset=utf-8
 
-On 02/25/2012 11:37 AM, Eric Leblond wrote:
-> Hello,
-> 
-> I've discovered a generic attack on firewall using Application
-> Level Gateway (like Netfilter or Checkpoint).
-> 
-> Impact: An attacker on a local network can open some pinholes in a
-> firewall which is not correctly protected.
+On 11/14/2012 08:19 AM, Kurt Seiifried wrote:
 
-Are there any helpers that can be abused to open holes in the firewall
-externally, or is it only internal clients that can cause problems and
-trigger the firewall to improperly allow network traffic in/out.
+> So do we consider this to be an OpenSSL issue of gajim? I'm sure gajim
+> is not the only program that does something like this.
 
-> Fix: None, the issue has to be fixed in the firewall
-> configuration. Workaround: Apply a strict anti-spoofing policy for
-> IPv4 and IPv6 as described in the document "Secure use of iptables
-> and connection tracking helpers" This document was written after
-> private disclosure of the attack to the Netfilter's team.
+As far as I understand things, it is not necessarily at all to set a 
+verification callback in OpenSSL.  If you load the root certificate 
+store and examine SSL_get_verify_result, that should be sufficient.  You 
+can even look at the peer certificate and continue anyway if the user 
+has overridden the certificate validity.  So far, I haven't found a good 
+reason to use a verify callback at all.  You need it to implement a 
+custom PKIX validation policy, but that should be pretty rare.  (I still 
+have to check older OpenSSL versions, though, perhaps there, the 
+behavior was different.)
 
-Just to confirm: setting net.ipv4.conf.[IFNAME].rp_filter to 1 is
-sufficient, it doesn't need to be set globally as well?
-
-> This attack will be presented at Cansecwest, March 9th 2012.
-
-I assume you won't be providing any specifics until this date? I can't
-assign CVE's without more information so I guess we both just have to
-wait.
-
-> Secure use of iptables and connection tracking helpers: 
-> http://home.regit.org/netfilter-en/secure-use-of-helpers/
-> 
-> Best regards,
-
+Anyway, if application developers set a verification callback, it is 
+their responsibility to implement it correctly.  Therefore, I don't 
+think this is an OpenSSL issue.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Florian Weimer / Red Hat Product Security Team
