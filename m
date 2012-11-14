@@ -1,46 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/3
-Message-ID: <4F18F4F3.9010302@redhat.com>
-Date: Thu, 19 Jan 2012 22:00:35 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/9
+Message-ID: <50A3D438.20602@redhat.com>
+Date: Wed, 14 Nov 2012 10:26:16 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: security@....net, oss-security@...ts.openwall.com
-Subject: Potential security issues fixed in PHP 5.3.9
+To: oss-security@...ts.openwall.com
+CC: Ralf Schlatterbeck <rsc@...tux.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michel Alexandre Salim <michel+fdr@...vestre.me>, Richard Jones <richard@...hanicalcat.net>
+Subject: Re: Re: CVE Request -- roundup: Multiple XSS flaws plus other security related fixes corrected in upstream 1.4.20 version
 Content-Type: text/plain; charset=utf-8
 
-Hi, in addition to the xslt arbitrary file creation) there are some more potential security vulnerabilities that appear to have been fixed in 5.3.9. Can you confirm if these are not security issues? Also will you need CVE assignments for the ones that are (I can help with that).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Sending to security@....net again and cc'ing oss-sec in case anyone on the list has ideas/comments.
+On 11/10/2012 05:28 AM, Ralf Schlatterbeck wrote:
+> On Sat, Nov 10, 2012 at 06:54:46AM -0500, Jan Lieskovsky wrote:
+>> [A] * issue2550729: Fix password history display for anydbm
+>> backend, thanks to Ralf Hemmecke for reporting. (Ralf) [3]
+>> http://issues.roundup-tracker.org/issue2550729
+>> 
+>> [D] * Fix wrong execute permissions on some files, thanks to
+>> Cheer Xiao for the patch. (Ralf)
+>> 
+>> Cc-ed Ralf Schlatterbeck on this post too to clarify, if issues
+>> [A] and [D] would also have security implications / IOW if those
+>> would be security flaws too.  Ralf please clarify. Thank you,
+>> Jan.
+> 
+> [A] Doesn't have security implications if roundup is correnctly 
+> configured. The bug would create a python backtrace. Unless the
+> "debug" option in section [web] is set (which is explicitly
+> discouraged) this will only display "an error has occurred" in the
+> web-interface. Even if someone sets the debug option in a
+> production release only the hashed password could be disclosed.
+> Note that this bug only affects the anydbm backend which should not
+> be used for a production version either.
 
->From the ChangeLog:
+How is the password hashed?
 
-===========================================================
-Fixed bug #60150 (Integer overflow during the parsing of invalid exif
-header). (Stas, flolechaud at gmail dot com) - security bug
-There is an integer overflow in ext/exif/exif.c that can be used in order to
-cause a denial of service or read arbitrary memory.
-
-==========
-Fixed bug #55776 (PDORow to session bug). (Johannes)
-Is a Apache crash. It gives a CGI/FastCGI Send/Don't Send window.
-http://img171.imageshack.us/img171/3953/57126366.jpg [Open URL]
-After few minutes is crashing apache server:
-http://img840.imageshack.us/img840/2981/21231006.jpg [Open URL] 
-
-==========
-Fixed bug #60279 (Fixed NULL pointer dereference in
-stream_socket_enable_crypto, case when ssl_handle of session_stream is
-not initia\
-lized.) (shm) - (needs bad code)
-
-==========
-Fixed bug #55622 (memory corruption in parse_ini_string). (Pierre) -
-need access to ini style config, but can cause memory corruption\
- (code exec?)
-
-==========
-Fixed bug #53502 (strtotime with timezone memory leak). (Derick) - minor
-dos?
-
--- -- Kurt Seifried / Red Hat Security Response Team
+> [D] No security implications: Fixed some permissions on files in 
+> roundup/cgi and locale directories. These are not accessible via
+> the web-server. So this doesn't constitute a remote vulnerability.
+> Local users don't gain anything executing these files as no
+> privilege escalation is involved (they could copy the file which is
+> readable anyway and make their local copy executable).
+> 
+> Ralf
+> 
 
 
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQo9Q4AAoJEBYNRVNeJnmTHoEP/j7npeWvm5yQjofgZhJeletQ
+n5nbn3hOEcmVS0mgE3MJQP9kp8Aeq4hH3IfuGPVUs/ip37+hCJjbk2uh6cmM7/PV
+8BUgPHeSnPjSzaWcyWsxtvfXI8joc1V5RQdCJb3Amei5YAqndrMFUs+7TjSFWWDI
+Y0rMwPo0+gOYsc5CYFOyXPsWAttBmuJqWxBM8H9d2QKIn/9WJOB2aiREgXlyHDHC
+huQOWXRioDl5JIY/n+CkMFBxvWVwIiRqvImnPYhvx1Iv53io7Wvk8C6SbEfEhUFZ
+XZviLRg3vYmvaHdfc68DmzVAJNNbS/bfd513GCumiUXd5Lj/82uVXRzYfzoKESNK
+MucHQy2wppo6RvP9MjTsqt3PPS41bvkBHUBPUBNfDbKHyJnOV/ZcIxZx2NfSMuwQ
+ZadK/bhC9BfTggF/zWkenhCgIeNMD8POmZ3sJSZAxjt48CtlMn/YxmEzEVWlG/ut
+tcsw843Vo3KvciLjb2lLAD8DSZwARsr7weuaeBc6ml0EDm04rWndm9DnxgLrckGt
+vP3VC5g8fq/Idii6z+zwqfJZnsEZTSc0QYQHmtuLcC/zsDerl5hv9HJjlZWZPREg
+nmr+Aec+yow/o1J4XOcXOiwUw889N1YMKIMZddaJFNNUZKaRSYo2eQVHT7XtST87
+eVYKoyEBbgF0qLIa3+Km
+=/mbR
+-----END PGP SIGNATURE-----
