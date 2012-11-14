@@ -1,50 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/22/5
-Message-ID: <50D557DD.7020304@redhat.com>
-Date: Fri, 21 Dec 2012 23:49:01 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/7
+Message-ID: <20121114104322.43befb79@lola.kot>
+Date: Wed, 14 Nov 2012 10:43:22 +0200
+From: George Kargiotakis <kargig@...d.gr>
 To: oss-security@...ts.openwall.com
-CC: Lukas Reschke <lukas@...tuscode.ch>
-Subject: Re: CVE request: ownCloud
+Subject: Linux kernel handling of IPv6 temporary addresses
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello all,
 
-On 12/21/2012 02:29 PM, Lukas Reschke wrote:
-> ownCloud 4.5.5 and 4.0.10 are bringing two security fixes: 
-> http://owncloud.org/changelog/
-> 
-> - Auth bypass in user_webdavauth and user_ldap (oC-SA-2012-001)
+Due to the way the Linux kernel handles the creation of IPv6 temporary
+addresses a malicious LAN user can remotely disable them altogether
+which may lead to privacy violations and information disclosure.
 
-Please use CVE-2012-5665 for this issue.
+By default the Linux kernel uses the 'ipv6.max_addresses' option to
+specify how many IPv6 addresses an interface may have. The
+'ipv6.regen_max_retry' option specifies how many times the kernel will
+try to create a new address.
 
-> - XSS vulnerability in bookmarks (oC-SA-2012-007)
+Currently, in net/ipv6/addrconf.c,lines 898-910, there is no
+distinction between the events of reaching max_addresses for an
+interface and failing to generate a new address. Upon
+reaching any of the above conditions the following error is emitted by
+the kernel times 'regen_max_retry' (default value 3): 
 
-Please use CVE-2012-5666 for this issue.
+[183.793393] ipv6_create_tempaddr(): retry temporary address
+regeneration [183.793405] ipv6_create_tempaddr(): retry temporary
+address regeneration [183.793411] ipv6_create_tempaddr(): retry
+temporary address regeneration
 
-> Thanks Lukas
-> 
+After 'regen_max_retry' is reached the kernel completely disables
+temporary address generation for that interface.
 
+[183.793413] ipv6_create_tempaddr(): regeneration time exceeded -
+disabled temporary address support
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+RFC4941 3.3.7 specifies that disabling temp_addresses MUST happen upon
+failure to create non-unique addresses which is not the above case.
+Addresses would have been created if the kernel had a higher
+'ipv6.max_addresses' limit.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+A malicious LAN user can send a limited amount of RA prefixes and thus
+disable IPv6 temporary address creation for any Linux host. Recent
+distributions which enable the IPv6 Privacy extensions by default, like
+Ubuntu 12.04 and 12.10, are vulnerable to such attacks.
 
-iQIcBAEBAgAGBQJQ1VfdAAoJEBYNRVNeJnmT/sEP/jXElZAErcew5AFir9bcYnhK
-wM2ApyIDK4Lf/jp4QSGKYtGvOZqECQ2oPfUd6atYSZfVwvwNqv3qqNRHWiTfnGy/
-Mv0m8b/BLq0s3Mjm8ChmOY82OweHLWzV7mzk1U0GWqRT60+TVG5A82E1OzcIsUhf
-IH1ph5nEhdop5qolkfrgs44gRj2d11Wqjur21xvXBYr+EKpmG+jU0+Q7+T6/PhRn
-y1f7yzvikVk1GByBzfomKv+vBCP/m/t63HC1xgW/zLUlFOrxT70bpCs0sFv81itF
-xtJfhDdNnRImIF2DxYROy4jMW/VVdIv1TanEYTsPYWKgtOojYceBPV1027YSx1UP
-zLuhJ+BRwsiv/OCFVYbJ7NTapg0hgMykNGb0thNowBmOMmAQwP1TIH/kPRtspWk1
-crsgBRrM5CHVkNUgTXZgRki1RSqq38OWyMKsHNH2cYHJBO1/Ri+JGkpU7z2e0/aD
-2M9pr1yeqiWcxjWl8FF1CsbXeHGGdn5r4BT+F/rqThocjUFoUnekgTD/ZtXzQmR2
-ecQTttmUAB8raK5yJI2fTNW5P4vnaF+CPTlVP1qUkeJSeJ6iJCRjUMcj9NbCojVd
-OZew+ts7YQKV6df9fu0BgKDiA9RbgdoUKMHDC4MEgdfpvd91Nplkjo0RFnhXjqdH
-pGG3+b4aFBpLCaZXs7m4
-=Z0ds
------END PGP SIGNATURE-----
+Due to the kernel's default values for valid (604800) and preferred
+(86400) lifetimes, this scenario may even occur under normal usage when
+a Router sends both a public and a ULA prefix, which is not an uncommon
+scenario for IPv6. 16 addresses are not enough with the current default
+timers when more than 1 prefix is advertised.
+
+The kernel should at least differentiate between the two cases of
+reaching max_addresses and being unable to create new addresses, due to
+DAD conflicts for example.
+
+Best regards,
+-- 
+George Kargiotakis
+https://void.gr
+GPG KeyID: 0xE4F4FFE6
+GPG Fingerprint: 9EB8 31BE C618 07CE 1B51 818D 4A0A 1BC8 E4F4 FFE6
