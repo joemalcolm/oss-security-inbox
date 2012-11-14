@@ -1,130 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/14
-Message-ID: <Pine.GSO.4.64.1211271815560.13413@faron.mitre.org>
-Date: Tue, 27 Nov 2012 18:16:51 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: [oCERT-2012-001] multiple implementations denial-of-service via MurmurHash algorithm collision
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/10
+Message-ID: <50A3D58A.9030500@redhat.com>
+Date: Wed, 14 Nov 2012 10:31:54 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Henri Salo <henri@...v.fi>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE-request: SMF index.php msg parameter SQL-injection (2005)
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Fortunately, CVE-2011-5370 through CVE-2011-5373 don't even exist, so I 
-will REJECT these 2011 typos.
+On 10/08/2012 06:51 AM, Henri Salo wrote:
+> On Fri, Sep 14, 2012 at 11:29:07AM -0600, Kurt Seifried wrote:
+>> On 09/14/2012 06:40 AM, Henri Salo wrote:
+>>> Hello list,
+>>> 
+>>> Old SQL-injection security issue in SMF does not have 
+>>> CVE-identifier. Could you please assign one from year 2005, 
+>>> thanks.
+>>> 
+>>> Affected versions: <= 1.0.4 Fixed in 1.0.5
+>>> 
+>>> References: http://osvdb.org/17458 
+>>> http://secunia.com/advisories/15784/
+>>> 
+>>> - Henri Salo ps. never too late
+>>> 
+>> 
+>> Can you confirm this isn't 
+>> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-4159
+> 
+> To me this looks like a different vulnerability, because of
+> different affected files and parameters.
+> 
+> CVE-2005-XXXX: index.php http://osvdb.org/17458 
+> http://www.securiteam.com/exploits/5HP0N0KG0O.html
 
-- Steve
+Please use CVE-2005-4891 for this issue.
+
+> CVE-2005-4159: Memberlist.php http://osvdb.org/21722 
+> http://archives.neohapsis.com/archives/bugtraq/2005-12/0090.html
+> 
+> - Henri Salo
+> 
 
 
-On Tue, 27 Nov 2012, Andrea Barisani wrote:
 
-> On Tue, Nov 27, 2012 at 10:00:55AM -0500, Jan Lieskovsky wrote:
->> Hello Andrea,
->>
->
-> Hello,
->
->>   thank you for the notification. Just quick check -
->> could you confirm the correct CVE id for JRuby Murmur flaw
->> should be CVE-2012-5370, and not CVE-2011-5370?
->>
->> Asking, because while oCERT-2012-001 page mentions CVE-2012-5370,
->> it actually links against:
->>   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-5370
->>
->> (so some of them is typo), and CVE-2011-5370 would also make
->> sense in the order for other Murmur hash algorithm implementations
->> for other languages.
->>
->
-> You are quite correct, unfortunately there were typos in the other CVEs as
-> well which slipped during the advisory review.
->
-> I just corrected the advisory. The correct CVEs are the following:
-> CVE-2012-5370 (JRuby), CVE-2012-5371 (Ruby), CVE-2012-5372 (Rubinius),
-> CVE-2012-5373 (Oracle JDK, OpenJDK)
->
-> I apologize for the error.
->
-> Cheers
->
->> Thank you && Regards, Jan.
->> --
->> Jan iankko Lieskovsky / Red Hat Security Response Team
->>
->> ----- Original Message -----
->> #2012-001 multiple implementations denial-of-service via MurmurHash algorithm
->> collision
->>
->> Description:
->>
->> A variety of programming languages suffer from a denial-of-service (DoS)
->> condition against storage functions of key/value pairs in hash data
->> structures, the condition can be leveraged by exploiting predictable
->> collisions in the underlying hashing algorithms.
->>
->> The issue is similar to the one reported in oCERT-2011-003 and concerns the
->> MurmurHash algorithm family. The condition for predictable collisions in the
->> hashing functions has been reported for the following language
->> implementations: JRuby (MurmurHash2), Ruby (MurmurHash2), Rubinius
->> (MurmurHash3), Oracle JDK (MurmurHash), OpenJDK (MurmurHash). In the case of
->> Java OpenJDK the hash function affected by the reported issue is not enabled
->> by default, the default function is however reported vulnerable to
->> oCERT-2011-003.
->>
->> Affected version:
->> Ruby < 1.9.3-p327
->> JRuby all versions
->> Rubinius, all versions
->> Oracle JDK <= 7
->> OpenJDK <= 7
->>
->> Fixed version:
->> Ruby >= 1.9.3-p327
->> JRuby, N/A
->> Rubinius, N/A
->> Oracle JDK, N/A
->> OpenJDK, N/A
->>
->> Credit: vulnerability report received from Jean-Philippe Aumasson
->>         <jeanphilippe.aumasson AT gmail.com>, PoC code and SipHash
->> 	implementation used to patch the issue developed by Martin Bosslet
->> 	<martin.bosslet AT gmail.com>.
->>
->> CVE: CVE-2012-5370 (JRuby), CVE-2011-5371 (Ruby), CVE-2011-5372 (Rubinius),
->>      CVE-2011-5373 (Oracle JDK, OpenJDK)
->>
->> Timeline:
->> 2012-08-30: vulnerability report sent to Ruby, JRuby and Rubinius security contacts
->> 2012-09-03: vulnerability report forwarded to oCERT by Hiroshi Nakamura (Ruby security contact)
->> 2012-09-06: oCERT contacted reporters to investigate additional affected projects
->> 2012-09-06: reporters indicate OpenJDK as vulnerable and that Java security team has been contacted on 2012-07-31
->> 2012-09-10: oCERT requested CVE assignment for Ruby, JRuby and Rubinius
->> 2012-09-12: Oracle JDK and OpenJDK confirmed vulnerable by reporters
->> 2012-09-12: oCERT requested CVE assignment for Oracle JDK and OpenJDK
->> 2012-10-10: reporters indicate public PoC release on 2012-11-07 at ASFWS
->> 2012-11-08: assigned CVEs
->> 2012-11-09: Ruby 1.9.3-p327 released
->> 2012-11-23: advisory release
->>
->> References:
->> https://www.131002.net/siphash
->>
->> Permalink:
->> http://www.ocert.org/advisories/ocert-2012-001.html
->>
->> --
->> Andrea Barisani |                Founder & Project Coordinator
->>           oCERT | OSS Computer Security Incident Response Team
->>
->> <lcars@...rt.org>                         http://www.ocert.org
->>  0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
->>         "Pluralitas non est ponenda sine necessitate"
->
-> -- 
-> Andrea Barisani |                Founder & Project Coordinator
->          oCERT | OSS Computer Security Incident Response Team
->
-> <lcars@...rt.org>                         http://www.ocert.org
-> 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
->        "Pluralitas non est ponenda sine necessitate"
->
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQo9WJAAoJEBYNRVNeJnmT2NEQAIu7riVk8t9Jltgi9HUDWgZp
+4mgyLGOX5Bh88+w6ZGwfk0c1GoMRycQDI0pm0jPib65buP9wYobNJxmIpfGKi55Y
+AvvmDCUuHkzslzNGPS0pkId+u8h/bzZ5oNy9vP50D2tpCcg6ByHhXdj6wJPtryel
+zDWVYfBaxLPZM9gVxZ1T2Fhbvhdow/LbDTgRBA7t7/WtGKMXw5uREtOfzAy3GsCt
+WzFdUV0q4X9bbDNlB9vQOLpU9jyDPkHDJfezNzzWFo7tE3AL/u9JP19mzwJg7gjy
+KSuZy1esnpvoa15iTFAvtU2w7dU8QvARqAOw7c1pfQWirPrquFGxOySiT+5hNC36
+jkf+6Mpf0fMKTCpeUa2+aenaej+TQ9e+045EHprmpc5PJeuSTsvOUWot61051G3v
+8gyJ37QLi86gYlgxjEluj3rNxwK+TzBjItYZEu4EXC5dOGLM7H4vcHjsIh94kkX5
+yC3jqLtVBBFJgbVa7NnZQoZIpLoNYqQqdF9/kocVwgStUEJEOl8RubvPqpZmKXeq
+yP1nZNeYE6mRNXEzUmgXzpuYLa/Yv6yOf9XeKJ2YzRga60K890aYJY5f4nI51EFq
+uBYnPYVqDHMaaBuHMwy7jHGzd6XERvHXje22xqIcRObse0dTJVvtw4T9x2+Fv9Pd
+MglXDAKxcLejzFCIi/Nf
+=sxjC
+-----END PGP SIGNATURE-----
