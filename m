@@ -1,63 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/6
-Message-ID: <50292790.8060109@redhat.com>
-Date: Mon, 13 Aug 2012 10:13:04 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/12
+Message-ID: <20121114171411.GA29305@kroah.com>
+Date: Wed, 14 Nov 2012 09:14:11 -0800
+From: Greg KH <gregkh@...uxfoundation.org>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, "Joseph S. Myers" <joseph@...esourcery.com>, Jeff Law <law@...hat.com>
-Subject: Re: CVE Request -- glibc: Integer overflows, leading to stack-based buffer overflows in strto* related routines
+Subject: Re: Linux kernel handling of IPv6 temporary addresses
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Nov 14, 2012 at 10:43:22AM +0200, George Kargiotakis wrote:
+> Hello all,
+> 
+> Due to the way the Linux kernel handles the creation of IPv6 temporary
+> addresses a malicious LAN user can remotely disable them altogether
+> which may lead to privacy violations and information disclosure.
+> 
+> By default the Linux kernel uses the 'ipv6.max_addresses' option to
+> specify how many IPv6 addresses an interface may have. The
+> 'ipv6.regen_max_retry' option specifies how many times the kernel will
+> try to create a new address.
+> 
+> Currently, in net/ipv6/addrconf.c,lines 898-910, there is no
+> distinction between the events of reaching max_addresses for an
+> interface and failing to generate a new address. Upon
+> reaching any of the above conditions the following error is emitted by
+> the kernel times 'regen_max_retry' (default value 3): 
+> 
+> [183.793393] ipv6_create_tempaddr(): retry temporary address
+> regeneration [183.793405] ipv6_create_tempaddr(): retry temporary
+> address regeneration [183.793411] ipv6_create_tempaddr(): retry
+> temporary address regeneration
+> 
+> After 'regen_max_retry' is reached the kernel completely disables
+> temporary address generation for that interface.
+> 
+> [183.793413] ipv6_create_tempaddr(): regeneration time exceeded -
+> disabled temporary address support
+> 
+> RFC4941 3.3.7 specifies that disabling temp_addresses MUST happen upon
+> failure to create non-unique addresses which is not the above case.
+> Addresses would have been created if the kernel had a higher
+> 'ipv6.max_addresses' limit.
+> 
+> A malicious LAN user can send a limited amount of RA prefixes and thus
+> disable IPv6 temporary address creation for any Linux host. Recent
+> distributions which enable the IPv6 Privacy extensions by default, like
+> Ubuntu 12.04 and 12.10, are vulnerable to such attacks.
+> 
+> Due to the kernel's default values for valid (604800) and preferred
+> (86400) lifetimes, this scenario may even occur under normal usage when
+> a Router sends both a public and a ULA prefix, which is not an uncommon
+> scenario for IPv6. 16 addresses are not enough with the current default
+> timers when more than 1 prefix is advertised.
+> 
+> The kernel should at least differentiate between the two cases of
+> reaching max_addresses and being unable to create new addresses, due to
+> DAD conflicts for example.
 
-On 08/13/2012 04:52 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> multiple integer overflows, leading to stack-based buffer overflows
-> were found in various stdlib functions of GNU libc (strtod, strtof,
-> strtold, strtod_l and related routines). If an application, using
-> the affected stdlib functions, did not perform user-level
-> sanitization of provided inputs, a local attacker could use this
-> flaw to cause such an application to crash or, potentially, execute
-> arbitrary code with the privileges of the user running the
-> application.
-> 
-> Upstream bug report: [1]
-> http://sourceware.org/bugzilla/show_bug.cgi?id=14459
-> 
-> Upstream patch (might not be the final one): [2]
-> http://sourceware.org/ml/libc-alpha/2012-08/msg00202.html
-> 
-> References: [3] https://bugzilla.redhat.com/show_bug.cgi?id=847715
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+Have you discussed this with the upstream Linux kernel networking
+developers?
 
-Please use CVE-2012-3480  for this issue.
+thanks,
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJQKSeQAAoJEBYNRVNeJnmTaNQQAM/vJRknkhy21Hpjmazbbbp9
-XsIC6rY7iNVjp6wYfuYWhA01UHgXzCSpyrvrnCcITYl6ISm2JP1fBX7eWoBkTcz4
-7YTa1ibUZZrl4pqg2Yehc888rBCeQhHn2T+T9HEQJz08iLv1B6KVXYekxr7k1ncf
-d/1yTSITnJkwN7tjuHkn0rQhtvFOWM3auMRoWLI1uHxvNEocclAxcxEURmPBnVJE
-MzVcTmwuEA8SM1far+IxZF0OZTEFLlOn/IhLouB+uP8gTvec9ORbHPjdq5fZe3O/
-E8SlhNCXdCY6uZvOSe/J3YHQRFTbDuyFAxkad5fwViRYfply4pwro8NTw43JxNvg
-6BTvBd9BYExo9H95/BTC0sMoI6a83CPYNPzMoorgxxfV9RfbmJy4N/IfqwzQwt6Y
-0KEBfn8bfJlP14LH6uNc05gpCAB01GixAlhUddJn9VXU8yxeWtg95hLPUgJoD0cx
-fnq0iuhRIeVHYcKcxRitEzfh8BurRKgCDg9WG1dHNbvsKi8CkmwayNvrDkwYF+1g
-g3RCfaarQyFMPcBoFtGvbORRsPVFi6gyoEsFrl4agPoE3p/ADWBOvJ8b1uHBH8MV
-kBZ/nPJpPj3EOIO1oSJmHR8sto+/Pj1ghNS+8tzmI1gr/EtxbesrsmRJMwvHoUnC
-FlD14c8vXgIOJCDWYp9D
-=cDR/
------END PGP SIGNATURE-----
+greg k-h
