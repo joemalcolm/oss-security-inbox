@@ -1,74 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/29/10
-Message-ID: <4FC502E8.6080102@redhat.com>
-Date: Tue, 29 May 2012 11:10:00 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/15
+Message-Id: <201211142206.qAEM6bT9018731@linus.mitre.org>
+Date: Wed, 14 Nov 2012 17:06:37 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-CC: Felipe Pena <felipensp@...il.com>
-Subject: Re: CVE id request: Multiple buffer overflow in unixODBC
+Cc: cve-assign@...re.org
+Subject: HT Editor 2.0.20 buffer overflows CVE-2012-5867
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/29/2012 06:42 AM, Felipe Pena wrote:
-> Hi, please assign a CVE id for the issue:
-> 
-> Multiple buffer overflow in unixODBC ===========================
-> 
-> The library unixODBC doesn't check properly the input from
-> FILEDSN=, DRIVER= options in the DSN, which causes buffer overflow
-> when passed to the SQLDriverConnect() function.
-> 
-> The unixODBC maintainer has been notified about the issue.
-> 
-> Version affected ============
-> 
-> FILEDSN= as of 2.0.10 DRIVER= as of 2.3.1
-> 
-> PoC ===
-> 
-> $ ./poc "FILEDSN=$(python -c "print 'A'*10000")" Segmentation
-> fault
-> 
-> (gdb) bt #0  0x00007ffff7bc8c81 in SQLReadFileDSN
-> (pszFileName=<value optimized out>, pszAppName=<value optimized
-> out>, pszKeyName=<value optimized out>, pszString=<value optimized
-> out>, nString=<value optimized out>, pnString=<value optimized
-> out>) at SQLReadFileDSN.c:207 #1  0x4141414141414141 in ?? ()
-> 
-> 
-> CREDITS =======
-> 
-> This bug was discovered by Felipe Pena. BugSec Team -
-> http://www.bugsec.com.br/
+We have assigned CVE-2012-5867 for the stack-based buffer overflows in
+the sys_common_canonicalize function in vfs.cc in HT Editor (aka hte):
 
-Splitting into two CVE's due to the different versions affected:
+  http://www.exploit-db.com/exploits/22683/
 
-Please use CVE-2012-2657 for unixODBC 2.0.10 buffer overflow in FILEDSN=
-
-Please use CVE-2012-2658 for unixODBC 2.3.1 buffer overflow in DRIVER=
-
+The disclosure says "To be honnest, it may be the only interest, as
+the binary is not SUID." We have not determined what realistic use
+cases lead to sys_common_canonicalize function calls, other than cases
+in which the user interactively enters a filename, or interactively
+selects a directory.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIbBAEBAgAGBQJPxQLnAAoJEBYNRVNeJnmTiloP+KTgTGtz1zQArKVZLkypLSIf
-6ZTpQ4TZCv961JBQjn6aR682hGHFwWbAWehqDNVhJTJ+aolnQqVvNb4r7B+jBNAj
-opCQLQ86FyjwLGjh5SP2n38rQIp5mfZHXZJfqugHayD1ovCHXNq6ScaFm2hTwhYp
-1sWNZJ9UUYtWjbeILR4PQZuSED8w2+5m6oZRtyZ7FqJSW8e1fMzuYsGImxXXMGTG
-CjKOuzizzbtnaPdGVOiL0rolwGDGfqcmaZPCQpg2eYLCuYAtUf2yLhUkiFIsMMOO
-JFrlWG00gZtqIDiaIJeeGhWg5BoDNJzaDtuZ1Mg3OtS42tR3wFIzRnCmqjAMLsZa
-BSrYa2IczAJIvJPFWOTcHXlHkWmjmhl3K3Dwy04r4gmMvg0wOyeUtf4VdjvbHHQu
-IQ0R1vVaVDWlfrq3kGxnB6ZMBJjUdJ41olKjpZB6k5PJWcYI+lfgG8t2diBldZ8Z
-gvMn5yiIxTX08ad7doXbmhRp14u06zfNoqHz671G/pcw70DO4Th9oVjrujqrCtyT
-JOmb7aWAQu9cGsdP/c3rpL9mrMG7a/e8yc6BOtVi3OQFlGOc8oecqDB0KB2tSeLm
-yrgM1lhF7ZScaEMmAiogikiqoLvZy1Ol4niRZTquG/9HkHYatNePFJMhC8GpJqEL
-LReUsHTvMoaWsyjUoD8=
-=QCpI
+iQEcBAEBAgAGBQJQpBBMAAoJEGvefgSNfHMdg9wIAL2KgWGj5Vh4x59Ge9X7bT1d
+aPwDY8BK4cWMzbFuL1Mx8dtSFPgcaQ9Wsk7rp5GPSB/DWhNQq84ikhHWd/Lgmc3h
+/sD9jl3kB2isaynQreJ0a9oRT0AwTBtUAgyDYLywa7tv66z89UZ0ST4qT9lIkElB
+Z1aABhq+5FPa2JTbxgpPy+JQnxyIwpovpJkGRYp3lSt8WJNk0bNUNPbhz/BSOtjK
+EIAw2kypSWltFyM5B4WFkF3he0Manjk+A2DAfPJpWWgWeDBuixkqcBxewSQjGnZ+
+EznmrUz/UprrurqZ8ERRyIeruP79GcFJWqLQWcomcbMuqctS9iiNayZ8Fbl4vu0=
+=SxaN
 -----END PGP SIGNATURE-----
