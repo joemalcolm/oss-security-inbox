@@ -1,39 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/12/7
-Message-ID: <20120512171943.GA1018@openwall.com>
-Date: Sat, 12 May 2012 21:19:43 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: micah anderson <micah@...eup.net>
-Subject: Re: ezmlm signature mangling [was: Re: CVE request: sympa (try again)]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/5
+Message-ID: <1334130169.31461174.1352887921077.JavaMail.root@redhat.com>
+Date: Wed, 14 Nov 2012 05:12:01 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Tim Brown <timb@...nvas.org>, Michael Wiegand <michael.wiegand@...enbone.net>
+Cc: full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, oss-security@...ts.openwall.com, Michal Ambroz <rebus@...nam.cz>
+Subject: Re: Re: [OVSA20121112] OpenVAS Manager Vulnerable To Command Injection
 Content-Type: text/plain; charset=utf-8
 
-On Sat, May 12, 2012 at 01:44:19AM -0400, Daniel Kahn Gillmor wrote:
-> On 05/11/2012 02:03 PM, micah wrote:
-> > ps - for some reason the previous message is formatted strange, so I'm
-> > sending this one without the signature
-> 
-> Comparing the received version of the message with its original source,
-> it appears that the mailing list software (ezmlm?) mangled Micah's
-> message by modifying the internal mime parts of the message, despite
-> them being wrapped inside a multipart/signed block.  This contravenes
-> the relevant standards [0], which indicate that the data within a
-> multipart/signed MIME part needs to be treated by any MTA as opaque.
-> 
-> I don't know who updates ezmlm these days, but that probably needs to be
-> addressed if there's an expectation that people should be able to send
-> cryptographically-signed messages with non-ASCII text to the list.
-> 
-> 	--dkg
-> 
-> [0] https://tools.ietf.org/html/rfc3156#section-3
+Hello Tim,
 
-Thank you for looking into this issue.  I also briefly looked into it
-yesterday.  My guess is that the issue might have been triggered by the
-rather unusual MIME section boundary strings ("=-=-=").  Maybe these are
-specific to Notmuch.  We had other signed messages in here, which got
-through to the list just fine.  For just one affected message in 7658
-(total on this list so far), I think I am not going to bother to
-investigate this further and patch it.
+  thank you for the heads up and notification.
 
-Alexander
+The versions of openvas-manager package, as shipped with Fedora release of 16
+and release of 17 is based on upstream 2.0.5 version yet. From what I have looked
+and can tell from upstream advisory and patch (for 3.0.X version):
+[1] http://www.openvas.org/OVSA20121112.html
+[2] http://wald.intevation.org/scm/viewvc.php?view=rev&root=openvas&revision=14437
+
+the CVE-2012-5520 does not seem to be applicable to OpenVAS-4 / openvas-manager 2.0.5
+version yet:
+[3] http://lists.wald.intevation.org/pipermail/openvas-announce/2012-August/000140.html
+
+But prior definitely classifying Fedora 16 and Fedora 17 openvas-manager package versions
+as not vulnerable to this issue, I would like to hear opinion / confirmation from someone
+more familiar with OpenVAS code.
+
+So could you confirm the CVE-2012-5520 wouldn't affect OpenVAS-4 2.0.X version (yet)?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+----- Original Message -----
+Doh, a document gets proof read by multiple people and yet it contains a 
+mistake.  In the Current Status section of the advisory, the date is 
+incorrect.  A corrected advisory is attached.
+
+Tim
+-- 
+Tim Brown
+<mailto:timb@...nvas,org>
+<http://www.openvas.org/>
