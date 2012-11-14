@@ -1,21 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/8
-Message-ID: <CAF6rxgn7XOHo916iHv3wFv6h99yyJG6oSzRqSeU3=VXCq72CPg@mail.gmail.com>
-Date: Sun, 8 Jan 2012 15:19:15 -0500
-From: Eitan Adler <lists@...anadler.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Malicious devices & vulnerabilties
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/11
+Message-Id: <187375.18838.37571-15238-1550819837-1352912959@seznam.cz>
+Date: Wed, 14 Nov 2012 18:09:19 +0100 (CET)
+From: Michal Ambroz <rebus@...nam.cz>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: Tim Brown <timb@...nvas.org>, Michael Wiegand <michael.wiegand@...enbone.net>, full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
+Subject: Re: Re: Re: [OVSA20121112] OpenVAS Manager Vulnerable To Command Injection
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jan 8, 2012 at 3:13 PM, Xi Wang <xi.wang@...il.com> wrote:
->> USB is also a popular transport in many air-gapped environments.
->
-> What else might be on this "untrusted" device list?  Firewire?
-> I guess those in the PC box don't count.
+Hello Jan,
 
-Computer monitors? Keyboards. Anything you could plug into the
-computer without opening up the case.
+in version 2.0.5 the discussed vulnerable like looks like this:
+     command = g_strdup_printf ("/bin/sh %s %s > %s"
+                                 " 2> /dev/null",
+                                 script,
+                                 xml_file,
+                                 output_file);
+
+So there is not IP and PORT to be sanitized so 2.0.5 is probably on the safe side of this vulnerability.
+
+If you deem it safer we can bump to current 3.0.x version - I know it is usually nono, but there should be no casualties,
+since I sincerely doubt there are _ANY_ openvas users on Fedora distribution (16/17) as half of the openvas suite packages is still under review. 
+
+Mainly the openvas suite doesn't work on current Fedora due to incompatibility between openvas network stack (openvas-libraries) and the gnutls library we have in Fedora.
+
+Best regards
+Michal Ambroz 
+(one of Fedora openvas-* packagers)
 
 
--- 
-Eitan Adler
+
+
+< ------------ Původní zpráva ------------
+< Od: Jan Lieskovsky <jlieskov@...hat.com>
+< Předmět: Re: [oss-security] Re: [OVSA20121112] OpenVAS Manager Vulnerable To
+< Command Injection
+< Datum: 14.11.2012 11:55:09
+< ----------------------------------------
+< Hello Tim,
+< 
+<   thank you for the heads up and notification.
+< 
+< The versions of openvas-manager package, as shipped with Fedora release of 16
+< and release of 17 is based on upstream 2.0.5 version yet. From what I have
+< looked
+< and can tell from upstream advisory and patch (for 3.0.X version):
+< [1] http://www.openvas.org/OVSA20121112.html
+< [2]
+< http://wald.intevation.org/scm/viewvc.php?view=rev&root=openvas&revision=14437
+< 
+< the CVE-2012-5520 does not seem to be applicable to OpenVAS-4 / openvas-manager
+< 2.0.5
+< version yet:
+< [3]
+< http://lists.wald.intevation.org/pipermail/openvas-announce/2012-August/000140.html
+< 
+< But prior definitely classifying Fedora 16 and Fedora 17 openvas-manager package
+< versions
+< as not vulnerable to this issue, I would like to hear opinion / confirmation
+< from someone
+< more familiar with OpenVAS code.
+< 
+< So could you confirm the CVE-2012-5520 wouldn't affect OpenVAS-4 2.0.X version
+< (yet)?
+< 
+< Thank you && Regards, Jan.
+< --
+< Jan iankko Lieskovsky / Red Hat Security Response Team
+< 
+< ----- Original Message -----
+< Doh, a document gets proof read by multiple people and yet it contains a 
+< mistake.  In the Current Status section of the advisory, the date is 
+< incorrect.  A corrected advisory is attached.
+< 
+< Tim
+< -- 
+< Tim Brown
+< <mailto:timb@...nvas,org>
+< <http://www.openvas.org/>
+< 
+< 
+< 
