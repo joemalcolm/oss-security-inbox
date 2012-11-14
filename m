@@ -1,128 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/03/6
-Message-ID: <20120203132502.GE25053@foo.fgeek.fi>
-Date: Fri, 3 Feb 2012 15:25:02 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/13
+Message-ID: <50A3D7DD.9010202@redhat.com>
+Date: Wed, 14 Nov 2012 10:41:49 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: Joomla! Security News 2012-02-03
+Subject: Re: Vulnerabilities in Oki CUPS printer drivers
 Content-Type: text/plain; charset=utf-8
 
-And again few Joomla security issues without CVE.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-- Henri Salo
+On 09/18/2012 02:21 AM, Guido Berhoerster wrote:
+> 
+> Vulnerabilities in Oki CUPS printer drivers
+> 
+> The following describes a security vulnerability in several Oki 
+> CUPS drivers. While I'm not aware that these drivers are packaged 
+> in any ditribution, they are free software (licensed under the GPL 
+> v2 or later) and made available via the Oki website and their FTP 
+> server so I hope this is on topic here.
 
------ Forwarded message from Joomla! Developer Network - Security News <no_reply@...mla.org> -----
-
-Date: Fri, 03 Feb 2012 13:11:55 +0000
-From: Joomla! Developer Network - Security News <no_reply@...mla.org>
-To: henri@...v.fi
-Subject: Joomla! Security News
-
-Joomla! Developer Network - Security News
-
-///////////////////////////////////////////
-[20120201] - Core - Information Disclosure
-
-Posted: 01 Feb 2012 09:25 PM PST
-http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/PkBR45UJQxo/387-20120201-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
-
-
-Project: Joomla!
-SubProject: All
- Severity: Low
-Versions: 2.5.0 and 1.7.0 - 1.7.4
-Exploit type: Information Disclosure
-Reported Date: 2012-January-29
-Fixed Date: 2012-February-02
-
-Description
-
-Inadequate validation leads to information disclosure in administrator.
-Affected Installs
-
-Joomla! version 2.5.0, 1.7.4, and all earlier 1.7.x versions
-Solution
-
-Upgrade to version 1.7.5 or 2.5.1 or higher
-
-Reported by Jakub Galczyk
-Contact
-
-The JSST at the Joomla! Security Center.
+Apologies for the delay on this, the files are no longer available on
+the Oki ftpsite, so I assume the vendor "fixed" this by removing them?
+I managed to dig up some copies of the file through google but they
+don't contain the okijobaccounting script or the
+rastertookimonochrome. So I can't confirm this (can anyone other than
+the original reporter? (e.g. iSIGHT or iDefense? I'm pretty sure you
+guys cover Oki as a vendor =).
 
 
 
-///////////////////////////////////////////
-[20120202] - Core - Information Disclosure
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-Posted: 01 Feb 2012 09:25 PM PST
-http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/MFhhodAeXho/388-20120202-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
-
-
-Project: Joomla!
-SubProject: All
- Severity: Moderate
-Versions: 1.7.4 and all earlier 1.7.x versions
-Exploit type: Information Disclosure
-Reported Date: 2012-January-06
-Fixed Date: 2012-February-02
-
-Description
-
-On some servers the error log could be read by unauthorised users.
-Affected Installs
-
-Joomla! version 1.7.4 and all earlier 1.7.x versions
-Solution
-
-Upgrade to version 2.5.1 or 1.7.5 or higher
-
-Reported by Alain Rivest
-Contact
-
-The JSST at the Joomla! Security Center.
-
-
-
-///////////////////////////////////////////
-[20120203] - Core - Information Disclosure
-
-Posted: 01 Feb 2012 09:25 PM PST
-http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/LY07jV4Rnvs/389-20120203-core-information-disclosure.html?utm_source=feedburner&utm_medium=email
-
-
-Project: Joomla!
-SubProject: All
- Severity: Low
-Versions: 2.5.0 and 1.7.0 - 1.7.4
-Exploit type: Information Disclosure
-Reported Date: 2012-January-29
-Fixed Date: 2012-February-02
-
-Description
-
-Inadequate validation leads to path disclosure in administrator.
-Affected Installs
-
-Joomla! version 2.5.0, 1.7.4, and all earlier 1.7.x versions
-Solution
-
-Upgrade to version 2.5.1 or 1.7.5 or higher
-
-Reported by Jakub Galczyk
-Contact
-
-The JSST at the Joomla! Security Center.
-
-
-
---
-You are subscribed to email updates from "Joomla! Developer Network -
-Security News."
-To stop receiving these emails, you may unsubscribe now: http://feedburner.google.com/fb/a/mailunsubscribe?k=JWlBXz9w0F12fWtPu46jwc9_Jcc
-
-Email delivery powered by Google.
-Google Inc., 20 West Kinzie, Chicago IL USA 60610
-
-
------ End forwarded message -----
+iQIcBAEBAgAGBQJQo9fdAAoJEBYNRVNeJnmT4DsP/2FUFLQB9a6qjDBGWsc9NueP
+UEeQTDsIUrMHfh6dE3Q8WD0CynG1yGRt6SB8NilOm93SnyXN8/oaXyK9wYiFKaBb
+uVmKdKTaIk/6o4tWOr6fcgFfa77do+y1OlqN6Sw7Ra6EI/9qCO65u1u0fskVy/HY
+OtcWO8Yx8fNTIKXXekoZwjY6nWV2RJi6/XHzfY9qAvhd2Qv+KyTickIOrOJRIKaW
+GejpWRMZaPUn1HV1IjGfTiLJYKI4IubvItSIaOO+ctMPPPJl/xtWjQpU3S1FEBJf
+3lTqsQpcMc0eMhvj9arJ+BVgUZ/ejkbid/f9DZUuZ+qaJ2TCZEsBl0IYCzSQq2nD
+PzKCugRK1hJTyaDh4C/pgyNRfp8JshepgKR8jkGG3O/if8z812vmjou6mphI/cSf
+c0tLI+fp0of3ig9nhrvI8rftl7ZQUqN7Z+kjOWjBGv0PCRPXajBcTkFXlwU/n79L
+DA4pmqwPln3PnuPem1ZjvT1LnTMOeMstSEZEptuMcIPzPgUsOyQA7ZB6To2hj5l3
+/ZLYgQj2vyHssYcXD2p8MqHtXm1+4W8MQsULP07SbOXDUzDA8c7Dm1/ALvu//Z41
+PjVPBf3G0CWDGYrjEyybxL5KNBUU6vXO+WlUErecW3dZ4ZYnpEQEXbTtYwoehcST
+VbGJBYDDRufUHfODc7d/
+=lvzJ
+-----END PGP SIGNATURE-----
