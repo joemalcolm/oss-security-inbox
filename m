@@ -1,55 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/4
-Message-ID: <116504736.33630970.1347447312661.JavaMail.root@redhat.com>
-Date: Wed, 12 Sep 2012 06:55:12 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/8
+Message-ID: <50A3D3B8.2080406@redhat.com>
+Date: Wed, 14 Nov 2012 10:24:08 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Oracle Security Team <secalert_us@...cle.com>, David Jorm <djorm@...hat.com>
-Subject: Re: CVE Request (minor) -- JVM: heap memory disclosure (possibly various JDKs)
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Damyan Ivanov <dmn@...ian.org>, Philippe Makowski <makowski@...ebird-fr.eu.org>
+Subject: Re: CVE Request -- firebird: DoS (NULL pointer dereference) while preparing an empty query with trace enabled
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  thank you for the clarification.
-
-> Jan/Kurt,
+On 11/14/2012 08:28 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> The bug report appears to be describing a narrow class of vulnerability 
-> that could affect multiple codebases that implement Java Virtual Machines, 
-> not just Oracle's;
-
-That's true, my yesterday's request was too wide, because in that moment we were
-not sure yet, which concrete JVM implementations would be affected by this
-deficiency (and which not).
-
-> if so, then a separate CVE would be needed for each 
-> REPORTED codebase, and CVE-2012-4416 is ONLY for bug id 7196857 for the 
-> Oracle-supported JVM.
-
-Anyway, upon David's review (Cc-ed too) we can announce that this problem would
-affect / is specific only to Oracle Java SE 7 (java-1.7.0-oracle), and
-Java SE 7 as provided by OpenJDK 7 (java-1.7.0-openjdk).
-
-So after above suggestion we will use CVE-2012-4416 for Oracle's codebase /
-Oracle supported JVM and the OpenJDK one should obtain another CVE identifier.
-
-I will clarify this situation in our bugs too yet.
-
-Kurt, could you allocate another CVE id then for the OpenJDK part of the
-story?
-
+> a denial of service flaw was found in the way the TraceManager of
+> Firebird, a SQL relational database management system, performed
+> preparation of an empty dynamic SQL query. When the trace mode was
+> enabled, a remote, authenticated database user could use this flaw
+> to cause the Firebird server to crash with a NULL pointer
+> dereference.
 > 
-> I wonder about the severity of the issue, but given the possibility that 
-> applications might access an array before a fill, and applications may 
-> depend on there being "empty" elements after initialization, this seems 
-> reasonable for a CVE.
-
-Florian clarified on this already (why to assign CVE id for these is appropriate
-approach).
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+> References: [1]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=693210 [2]
+> http://tracker.firebirdsql.org/browse/CORE-3884 [3]
+> https://bugzilla.redhat.com/show_bug.cgi?id=876613
 > 
-> - Steve
+> Relevant upstream patch: [4]
+> http://firebird.svn.sourceforge.net/viewvc/firebird?pathrev=54702&revision=54702&view=revision
+>
+>  Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+
+Please use CVE-2012-5529 for this issue.
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQo9O3AAoJEBYNRVNeJnmTc+cP/jWrCf2mXolIIEYiocuxQIWq
+GlxvEmkZ7+TURvl0McVUVmvsa4J1yTTpwRoPj1RZ1c/Peo045leOGgdbJOPGsTrw
+GQ5/KBQUv7OfGsLN9XSJZ566dQa8vZx4jBeZu4fozBB5NS6mz7DWRYzglg5YHrdS
+9epV1DXNZBD/hdrhQy3hWrRi5jCIlHU3R5GIC8PkpIeQ81fwYIPHMrZ3abAYHzIP
+hiag1p8mYRjPqiCk0h9dmPu/wKGqAtLvi00UgpvmTig603JF6LeqUt0Pp6rt9R57
+LzRJejkFjAID2djvBaC0XZBR2qwrwacQX55amnYu11LEz1X7QSaNYUHS005nYZqP
+VMPEBq8hPmR/9DfqnO5Bh70DXcH1DegR3zpp4JuSQYUVErUu6x2lb5f6vpZ+NY1W
+CXvA0wcyzVmWrXdA9lIWSP6lHHpFgRAPSwFzsgq7FqWw8gzBpPOr6GYZrQ/SbEI0
+4/GMxSWhrz5mPWUNDdEegqRsa+P5CpQPOTFKfD8Q2RHKvj8M39goZ4LODYL7P7hI
+AraCl9sNU6A+ErzXMHbOcg/UaA+MQ8ict4RXmncfipPIszGbZqqGNBtVbZyk9Hm9
+c+2m3cxcFBqqlwb5y/7zpVPV1P+XsEpsAxqqaocvwedyysK6Vdl4OHjo6fHBtdeh
+t1BtMiDlBBlD49E9n3dS
+=s6jB
+-----END PGP SIGNATURE-----
