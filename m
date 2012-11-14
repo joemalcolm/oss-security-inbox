@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/13/1
-Message-ID: <5079C5A2.1060409@redhat.com>
-Date: Sat, 13 Oct 2012 13:48:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/6
+Message-ID: <1072716807.31631289.1352906909059.JavaMail.root@redhat.com>
+Date: Wed, 14 Nov 2012 10:28:29 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>, security@...y-lang.org
-Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Damyan Ivanov <dmn@...ian.org>, Philippe Makowski <makowski@...ebird-fr.eu.org>
+Subject: CVE Request -- firebird: DoS (NULL pointer dereference) while preparing an empty query with trace enabled
 Content-Type: text/plain; charset=utf-8
 
-On 10/12/2012 02:50 PM, Vincent Danen wrote:
-> Just noticed this today on ruby's web site:
->
-> http://preview.ruby-lang.org/en/news/2012/10/12/poisoned-NUL-byte-vulnerability/
->
->
-> The fix is located here:
->
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=37163
->
-> I don't see a CVE name associated with the announcement or commit, so
-> I don't believe one has been assigned.
->
-Agreed, user controlled file creation in this manner is definitely a
-security issue.
+Hello Kurt, Steve, vendors,
 
-Please use CVE-2012-4522 for this issue.
+  a denial of service flaw was found in the way the TraceManager of Firebird,
+a SQL relational database management system, performed preparation of an empty
+dynamic SQL query. When the trace mode was enabled, a remote, authenticated
+database user could use this flaw to cause the Firebird server to crash with
+a NULL pointer dereference.
 
-Also please note that this email is not signed because I'm travelling
-and don't have access to my GPG keys currently.
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=693210
+[2] http://tracker.firebirdsql.org/browse/CORE-3884
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=876613
 
--- Kurt Seifried Red Hat Security Response Team (SRT) PGP: 0x5E267993
-A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Relevant upstream patch:
+[4] http://firebird.svn.sourceforge.net/viewvc/firebird?pathrev=54702&revision=54702&view=revision
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
