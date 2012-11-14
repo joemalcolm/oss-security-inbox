@@ -1,35 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/4
-Message-ID: <20120905080903.GA6399@suse.de>
-Date: Wed, 5 Sep 2012 10:09:03 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-Request: openstack pickle de-serialization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/4
+Message-ID: <50A3660B.6030704@redhat.com>
+Date: Wed, 14 Nov 2012 02:36:11 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Florian Weimer <fweimer@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Gajim fails to handle invalid certificates
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-During openstack review we found that some parts of openstack
-used pickle to de-serialize data. This could be used to execute
-arbitrary code. Please check here:
+On 11/14/2012 02:19 AM, Florian Weimer wrote:
+> On 11/14/2012 08:19 AM, Kurt Seiifried wrote:
+> 
+>> So do we consider this to be an OpenSSL issue of gajim? I'm sure
+>> gajim is not the only program that does something like this.
+> 
+> As far as I understand things, it is not necessarily at all to set
+> a verification callback in OpenSSL.  If you load the root
+> certificate store and examine SSL_get_verify_result, that should be
+> sufficient.  You can even look at the peer certificate and continue
+> anyway if the user has overridden the certificate validity.  So
+> far, I haven't found a good reason to use a verify callback at all.
+> You need it to implement a custom PKIX validation policy, but that
+> should be pretty rare.  (I still have to check older OpenSSL
+> versions, though, perhaps there, the behavior was different.)
+> 
+> Anyway, if application developers set a verification callback, it
+> is their responsibility to implement it correctly.  Therefore, I
+> don't think this is an OpenSSL issue.
 
-https://bugs.launchpad.net/swift/+bug/1006414
+Makes sense, just wanted to confirm this problem resides within Gajim.
+Please use CVE-2012-5524 for this issue.
 
-Can someone please assign a CVE, for completeness?
 
-thx,
-Sebastian
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+iQIcBAEBAgAGBQJQo2YLAAoJEBYNRVNeJnmTfi4P/1WHAiTvcHoJRbouSwyzIWvZ
+PSaQd23ubVbji4Te+4ZaJ1se9fSw0j5RdrkXisTZYuoo5Fg/ev3CDU5K1dZFyZMz
+tZCZSuXmJeSTWSN4lW/59CbLUgL4kaJy+uxCx0kNObBT2BIiIg4/zNu4PIJttwdH
++G4/iAGrEDOJAutiHg6zbG5kBgvr+rWnxEELBxV3IoctWBrdZ509OmVIYT6HuSkx
+cSM2nRauhtYGjVR+e0x8PpbX+xFTVET5i82m7N/TPLjtzP7RJPg5jQKl/1eu6tPy
++SpTGZsoXN9dBSHf3cIw1d/Ysl5wuxN/wj9nSoNpcr3jPqLdEGvbK5Bqem8UyQxp
+yJa7Yk3Ge5LmR92HKJUo01VHWkuqeW1TyQ52tc+1592PN3xYIWHA6xP9DyiqdvHP
+ekMa6wm6G8Tqa/k5rTVWMB1TqJtHq9a46ClHNINSe1aDh/HVitVKVgEm65QpXwTt
+m62/VCGzkFVYa+p8ZVL/7SK0/NoDK7Gxckn7yta/XUzpH70j21yTsYyQNt/W4IDD
+YN6SXc0yMvyjaUEFAIADCIQwlfnLSYeYNh3iVMi4o4YTACVTxumYu4LfU6Tt5dT6
+USJlpnorGD7dSHVeky00vjxAtVJH2U8Nx61Fk/ZdB0qovK72VuSe+uvpmj41kors
+FsA39sWFXGjeqK+yHjkj
+=sFXa
+-----END PGP SIGNATURE-----
