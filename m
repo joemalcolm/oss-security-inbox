@@ -1,82 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/30/9
-Message-Id: <27EBCD9A-8F46-4861-B209-DE0B0F1D472E@wired-net.gr>
-Date: Tue, 31 Jan 2012 00:14:10 +0200
-From: Nanakos Chrysostomos <nanakos@...ed-net.gr>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Jonathan Wiltshire <jmw@...ian.org>, Gian Piero Carrubba <gpiero@...rf.it>, "team@...urity.debian.org" <team@...urity.debian.org>
-Subject: Re: Re: Yubiserver package ships with pre-filled identities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/15/4
+Message-ID: <2104234835.32191369.1352990834394.JavaMail.root@redhat.com>
+Date: Thu, 15 Nov 2012 09:47:14 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Petr Pisar <ppisar@...hat.com>, Mark Stosberg <mark@...mersault.com>
+Subject: CVE Request -- perl-CGI: Newline injection due to improper CRLF escaping in Set-Cookie and P3P headers
 Content-Type: text/plain; charset=utf-8
 
+Hello Kurt, Steve, vendors,
 
-On 31 Ιαν 2012, at 0:06, Kurt Seifried <kseifried@...hat.com> wrote:
+  a security flaw was found in the way CGI.pm, a Perl module to
+handle Common Gateway Interface requests and responses, performed
+sanitization of values to be used for Set-Cookie and P3P headers.
+If a Perl CGI.pm module based CGI application reused cookies values
+and accepted untrusted input from web browser(s), a remote attacker
+could use this flaw to in an unauthorized way alter member items of
+the cookie or add new items.
 
-> On 01/30/2012 02:32 PM, Nanakos Chrysostomos wrote:
->>
->
->>> Ok I'm not clear on what is going on here, is there a link to the  
->>> bug
->>> entry regarding this issue, or can someone clarify it?
->>>
->>
->> Hi,
->> there is no bug entry yet.
->>
->>
->>> 1) are there default accounts shipped with the product that get
->>> activated automatically during install? (it sounds like yes?)
->>>
->>
->> Yes. The database is populated with an example/test account which is
->> activated during install.
->
-> Is this account documented/the impact documented?
->
+References:
+[1] http://cpansearch.perl.org/src/MARKSTOS/CGI.pm-3.63/Changes
+[2] https://github.com/markstos/CGI.pm/pull/23
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=877015
 
-What do you mean?
+Could you allocate a CVE id for this?
 
-
-
->>> 2) can someone remotely/locally access these accounts? what are the
->>> credentials for these accounts ("invalid keys"?), can an attacker  
->>> access
->>> them?
->>>
->>
->> If someone programs or uses a software emulation for the yubikey can
->> have access to whatever the user of the application uses it for ( the
->> yubiserver). For example if someone uses Pam yubico module with the  
->> su
->> or sshd server to provide a two factor authentication scheme he  
->> should
->> suffer from this security issue if he hasn't deleted or deactivated  
->> the
->> test account. If someone by mistake installs yubiserver and doesn't  
->> use
->> him to validate his otp or hmac otp, he won't suffer from this  
->> security
->> issue. Someone can only suffer if he uses the server and hasn't  
->> deleted
->> or deactivated the test account which is shipped with the server.
->>
->>> 3) what is the privilege level of the accounts?
->>
->> That depends on how someone wants to use the server and the privilege
->> level that he wants to give to it's users through the validation of  
->> the
->> otp or hmac otp.
->
-> So it would basically be the same as any other standard account  
-> created
-> on the server?
->
-
-Yes. It's just a simple account you could add anytime by yourself.
-
-
-
->> Chris.
->
->
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
