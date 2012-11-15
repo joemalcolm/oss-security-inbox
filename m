@@ -1,39 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/21
-Message-ID: <20120504224002.GG70483@dojo.mi.org>
-Date: Fri, 4 May 2012 18:40:02 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: PHP-CGI query string parameter vulnerability (CVE-2012-1823 / CVE-2012-2311, CERT VU#520827)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/15/5
+Message-ID: <20121115123613.GH28468@trasgu>
+Date: Thu, 15 Nov 2012 13:36:13 +0100
+From: Ricardo Mones <ricardo@...es.org>
+To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
+Subject: CVE request -- vCalendar plugin for Claws Mail: credentials exposed on interface
 Content-Type: text/plain; charset=utf-8
 
-:On Sat, May 05, 2012 at 12:22:19AM +0400, Solar Designer wrote:
-:> Hi,
-:> 
-:> I guess most of you have heard of this one already, yet it should be in
-:> here as well.  The original issue was tracked as CERT VU#520827,
-:> CVE-2012-1823.  PHP 5.4.2 and 5.3.12 were released with an incomplete
-:> fix, and apparently CVE-2012-2311 refers to that incomplete fix issue.
-:> 
-:> http://eindbazen.net/2012/05/php-cgi-advisory-cve-2012-1823/
-:> http://www.php-security.net/archives/11-Mitigation-for-CVE-2012-1823-CVE-2012-2311.html
-:> http://www.kb.cert.org/vuls/id/520827
-:> http://www.reddit.com/r/PHP/comments/t3pr8/how_serious_is_this/
-:> http://www.reddit.com/r/netsec/comments/t4lxw/phpcgi_query_string_parameter_vulnerability_leads/
-:> http://www.metasploitminute.com/2012/05/cve-2012-1823-php-cgi-bug.html
-:> http://www.opennet.ru/opennews/art.shtml?num=33765 (in Russian)
-:
-:What I find particulary interesting is that the reporters apparently notified PHP
-:on January 17th. :/
+  Hi,
 
-...but the associated PHP bug appears to have only been opened on May
-2nd.  I wonder if it slipped through some cracks because it was being
-handled outside of "normal" bug processes.  Hmmm...
+  This has been reported on our bugzilla:
+  http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2782
 
+  There's still not fix available. Could a CVE id be allocated for this if
+appropriate?
 
+  thanks in advance,
+
+P.S.: I'm not subscribed to the list.
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Potluck supper: prayer and medication to follow."         -Anguished English
+  Ricardo Mones 
+  ~
+  Physics is like sex: sure, it may give some practical results, but 
+  that's not why we do it.                            Richard Feynman
 
-Content of type "application/pgp-signature" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
