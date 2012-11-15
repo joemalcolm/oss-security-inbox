@@ -1,36 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/03/3
-Message-ID: <506BF187.4010602@redhat.com>
-Date: Wed, 03 Oct 2012 13:34:23 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/15/6
+Message-ID: <50A55C45.5090108@redhat.com>
+Date: Thu, 15 Nov 2012 14:19:01 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, "Steven M. Christey" <coley@...us.mitre.org>, Gerald Combs <gerald@...eshark.org>
-Subject: CVE Rejection: CVE-2012-5239 - Wireshark DRDA dissector infinite loop
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Petr Pisar <ppisar@...hat.com>, Mark Stosberg <mark@...mersault.com>
+Subject: Re: CVE Request -- perl-CGI: Newline injection due to improper CRLF escaping in Set-Cookie and P3P headers
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It seems that CVE-2012-5239 is a duplicate of CVE-2012-3548, both
-are used for wireshark - DRDA dissector infinite loop:
+On 11/15/2012 07:47 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> a security flaw was found in the way CGI.pm, a Perl module to 
+> handle Common Gateway Interface requests and responses, performed 
+> sanitization of values to be used for Set-Cookie and P3P headers. 
+> If a Perl CGI.pm module based CGI application reused cookies
+> values and accepted untrusted input from web browser(s), a remote
+> attacker could use this flaw to in an unauthorized way alter member
+> items of the cookie or add new items.
+> 
+> References: [1]
+> http://cpansearch.perl.org/src/MARKSTOS/CGI.pm-3.63/Changes [2]
+> https://github.com/markstos/CGI.pm/pull/23 [3]
+> https://bugzilla.redhat.com/show_bug.cgi?id=877015
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-References:
+Please use CVE-2012-5526 for this issue.
 
-CVE-2012-5239
-=============
-http://www.wireshark.org/security/wnpa-sec-2012-28.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7666
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-5239
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-CVE-2012-3548
-=============
-http://openwall.com/lists/oss-security/2012/08/29/4
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7666
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3548
-
-Can one of the CVE ids be please rejected?
-
-Thanks!
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+iQIcBAEBAgAGBQJQpVxFAAoJEBYNRVNeJnmTkwYP/2AXwV4+NlsfZwQsrwjJwAHZ
+KXvtFzDscvUdghWwvzc6O5zLhvLGgPSb0lHdeDiW3LnC+tEJ7xLyFS0oAGtbGFtA
+TpY1z60l8WY0k0iG+9tLuuJVjILOBnfGGydICBHmbLENZGtx4d+bO4Nd3JJYgBX/
+/W+7gGuY7N+QnvnqQ55lK4nwwHFz9KxX4jJvobh0Q4m2XfSo+8vKj6IAUSskLIb8
++Yd7zBqaoGsQ/ompMLrBRdjI4I884iTDoOGPk3I0NU5kfmTRWDENgRHQ9QtXIsut
+co7IeVJmBrx+1Rco7PjLUDaVH3NrsyTU+doS/WVetlTqJhwX/uN2vSzYPM6hOl2B
+/7mBXoQOwv7u4fx9aucFQ9KT+a1+5J9SBw0UiT+uVQ0VSSrgHH+RyTX3LGZPiARF
+eE0mbfsrBORbCQ2SxqrPFfKIiegpJrctCXF5hsBM9z3M+aY1GeamwTMCohjkO3s2
+MIIbkCnHCQKl0HUfutG6KX9LReSLFXMA083mhvxOIdZf6jRviQ2MQcPPIxIW1HfJ
+f+N/mRH7TgoXDUhXl9wMGzLDgr5JITQu0g6IyX4i+2jKlUUmR41PiVF/Edw5yoH6
+fP4B2vi/fhV1BvCGczrZ3gbjvzP5pTBLAozZuR00TCEPLvt4rkQ62+/mV3p7mipC
+P61odBpdDdyAa5Ef6vZ6
+=+1C4
+-----END PGP SIGNATURE-----
