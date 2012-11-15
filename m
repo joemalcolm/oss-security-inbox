@@ -1,33 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/26/2
-Message-ID: <CAH5b-BVqSBV1EhHBzwwHAJ2sUVCemk-H6Hq491DDMFtaAmfKMg@mail.gmail.com>
-Date: Thu, 26 Jul 2012 14:59:44 +0200
-From: yersinia <yersinia.spiros@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/15/3
+Message-ID: <20121115103636.GA11652@runtux.com>
+Date: Thu, 15 Nov 2012 11:36:37 +0100
+From: Ralf Schlatterbeck <rsc@...tux.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michel Alexandre Salim <michel+fdr@...vestre.me>, Richard Jones <richard@...hanicalcat.net>
+Subject: Re: Re: CVE Request -- roundup: Multiple XSS flaws plus other security related fixes corrected in upstream 1.4.20 version
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 25, 2012 at 9:16 PM, Florian Weimer <fweimer@...hat.com> wrote:
+On Wed, Nov 14, 2012 at 10:26:16AM -0700, Kurt Seifried wrote:
+> > [A] Doesn't have security implications if roundup is correnctly 
+> > configured. The bug would create a python backtrace. Unless the
+> > "debug" option in section [web] is set (which is explicitly
+> > discouraged) this will only display "an error has occurred" in the
+> > web-interface. Even if someone sets the debug option in a
+> > production release only the hashed password could be disclosed.
+> > Note that this bug only affects the anydbm backend which should not
+> > be used for a production version either.
+> 
+> How is the password hashed?
 
-> On 07/17/2012 12:08 PM, Florian Weimer wrote:
->
->  Note that GNU libc will likely change the name to secure_getenv.
->> Upstream does not want to document __secure_getenv as-is.
->>
->
-> This will be part of glibc 2.17.  autoconf instructions are available here:
->
-> <http://sourceware.org/glibc/**wiki/Tips_and_Tricks/secure_**getenv<http://sourceware.org/glibc/wiki/Tips_and_Tricks/secure_getenv>
-> >
->
->
-> FWIW, i have just updated rpm5 (5.4) and popt (1.17) thanks to this thread.
+We're using PBKDF2 now for some time. The number of rounds can be
+configured and currently defaults to 10000. Note that we encode the used
+hashing function in the password field in the database. This allows us
+to upgrade existing passwords on user login to the new scheme. This also
+means existing installations can have a mixture of password hashing
+schemes in the DB.
 
-Thank you
+The old default scheme was SHA-1 with no salt, see
+http://issues.roundup-tracker.org/issue2550688
 
-Elia
+This was changed to PBKDF2 in Release 1.4.17 and there was still the bug
+[A] remaining in the anydbm backend which was fixed in 1.4.20. This also
+shows how many people are using that backend (it's mainly used for demo)
 
-> --
-> Florian Weimer / Red Hat Product Security Team
->
-
+Ralf
+-- 
+Dr. Ralf Schlatterbeck                  Tel:   +43/2243/26465-16
+Open Source Consulting                  www:   http://www.runtux.com
+Reichergasse 131, A-3411 Weidling       email: office@...tux.com
+osAlliance member                       email: rsc@...lliance.com
