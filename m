@@ -1,48 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/31/3
-Message-ID: <Pine.GSO.4.64.1210311020220.12365@faron.mitre.org>
-Date: Wed, 31 Oct 2012 10:27:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Kurt Seifried <kseifried@...hat.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>, Josh Bressers <bressers@...hat.com>
-Subject: Re: Strange CVE situation (at least one ID should come of this)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/15/2
+Message-ID: <CAHmME9oFvgdG+EDva9AUhYTA_xA47EpYb03Q4fNgbPVQ8kvKjA@mail.gmail.com>
+Date: Thu, 15 Nov 2012 01:48:29 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: gentoo-security@...too.org
+Subject: Fwd: [ANNOUNCE] CGIT v0.9.1 Released
 Content-Type: text/plain; charset=utf-8
 
+Hi guys,
 
-On Tue, 30 Oct 2012, Kurt Seifried wrote:
+Just emailing to let you know that CVE-2012-4465 and CVE-2012-4548
+have been fixed with the latest release of cgit.
 
->
-> On 10/30/2012 11:34 AM, Steven M. Christey wrote:>
->>
->> To have a CVE for "don't use this" is not consistent with
->> long-existing practice.  I don't recall ever intentionally
->> assigning a CVE for such a thing - after all, CVE is about
->> vulnerabilities, and "don't use this" is awfully vague.
->
-> True, but we've already gone down that road, e.g.:
->
-> CVE-2012-2400 	Unspecified vulnerability in
-> wp-includes/js/swfobject.js in WordPress before 3.3.2 has unknown
-> impact and attack vectors.
+Thanks,
+Jason
 
-That's not the same as a generic "don't use this."  For this 
-CVE-2012-2400, there is a specific advisory from a specific vendor telling 
-customers to patch a vulnerability.  It's "unspecified" all over the place 
-due to lack of details, so risk analysis is problematic, but it's a 
-statement of some kind of vulnerability in a specifc version by an 
-authoritative source.
 
-Oracle and HP publish advisories like this on a regular basis.
+---------- Forwarded message ----------
+From: Jason A. Donenfeld <Jason@...c4.com>
+Date: Thu, Nov 15, 2012 at 1:46 AM
+Subject: [ANNOUNCE] CGIT v0.9.1 Released
+To: cgit@...mli.net
 
->> Deployment of risky software is effectively a configuration or
->> asset management issue, which is well outside the scope of CVE.
->> (Maybe it's more like a Common Configuration Enumeration (CCE)
->> issue.)
->
-> If anything I think it would fit into CPE
 
-CPE is neutral on security - it's just about identifying software packages 
-and versions.  One main use is in vulnerability management, but it's more 
-general than that.
+Hi everyone,
 
-- Steve
+It is with pleasure that I announce the first release of cgit in
+months, version 0.9.1. This last release cycle has been a long one due
+to the disappearance of the former maintainer, Lars Hjemli, but rest
+assured, cgit is healthy and well, and I've been very pleased with the
+activity and excitement on this list.
+
+Without further ado, here's the changelog for the latest release:
+
+== ChangeLog v0.9.1 ==
+
+Enhancements:
+- path-selected submodule links
+- intelligent default branch guessing
+- /etc/mime.types lookup
+- gitweb.* and cgit.* git-config support
+- case insensitive sorting and age sorting
+- commit, repository, and section sorting
+- bold currently viewed page in pagination
+- support BSDs in makefile
+
+Security:
+- CVE-2012-4465: heap-buffer overflow in parsing.c
+- CVE-2012-4548: syntax highlighting command injection
+
+Bug Fixes:
+- transition maintainer to Jason Donenfeld (zx2c4)
+- download git snapshot from github instead of Lars' old server
+- css fixes
+- stablization of tests
+- more compatible default highlight script
+- suppress gzip timestamp so that tarballs only use tar timestamps
+- treat ctags as target in makefile
+- do not let global variables override certain local repo settings
+- print ampersand as proper html entity
+- use placeholder for empty commit subject
+- format diff view for addition and removal of files
+- point links at correct blob from ssdiff
+
+
+== Downloading ==
+
+The home of cgit is now here:
+http://git.zx2c4.com/cgit/about/
+
+The repository can be cloned by:
+$ git clone http://git.zx2c4.com/cgit
+
+A tarball of v0.9.1 is here:
+http://git.zx2c4.com/cgit/snapshot/cgit-0.9.1.tar.xz
+ sha1 - faca1c822b035cd7fa5eda741f994255fde6608b
+If xz is no good for your distribution, a tar.gz and a tar.bz2 are
+available by tinkering with the URL.
+
+For verification, I've gpg signed the tag "v0.9.1" which you can
+verify by cloning the repo. My public key is 0xA5DE03AE:
+http://pgp.mit.edu:11371/pks/lookup?op=vindex&search=0x49FC7012A5DE03AE
+
+
+== Moving Forward ==
+
+For the next release cycle, there are a few things I look forward to seeing:
+- ssdiff tabulation fixes
+- authorization helper integration
+- fixing memory leaks
+- source file grepping
+
+
+Thanks so much to everyone who contributed with great patches and enhancements.
+
+--
+Jason Donenfeld
+www.zx2c4.com
