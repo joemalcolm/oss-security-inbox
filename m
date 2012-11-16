@@ -1,49 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/13/25
-Message-ID: <20120913224835.GF355@redhat.com>
-Date: Thu, 13 Sep 2012 16:48:35 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: information leak in vino
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/16/3
+Message-Id: <201211161722.qAGHMiRP017397@linus.mitre.org>
+Date: Fri, 16 Nov 2012 12:22:44 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: YUI 2.x security issue regarding embedded SWF files -- or, How Not To Handle A Security Disclosure
 Content-Type: text/plain; charset=utf-8
 
-This one is a bit older, not sure why it hasn't been dealt with or
-reported earlier, but just copying my text from our bug:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+>Ok please use CVE-2012-5475 for this issue.
 
-It was reported that vino transmits all clipboard activity to
-anything listening on port 5900, including to clients that have not
-authenticated.  If a user were to have vino enabled (including requiring
-authentication), a remote user could access the port and see anything
-the user added to the clipboard sent over the port.
+Here's an explanation of why MITRE didn't use CVE-2012-5475.
 
-To reproduce, enable vino with password protection (i.e. execute
-vino-preferences).  Connect to the VNC port (either locally or
-remotely), for instance:
+In 2010, YUI announced these three issues (see the
+http://web.archive.org/web/20101028125444/http://yuilibrary.com/support/2.8.2/
+URL):
 
-% nc -4 odvfc17 5900
-RFB 003.007
-@??zsh: command not found: zsh:@??[vdanen@...fc17]
+  charts.swf XSS affecting 2.4.0 through 2.8.1
+  uploader.swf XSS affecting 2.5.0 through 2.8.1
+  swfstore.swf XSS affecting 2.8.0 through 2.8.1
 
-The above two bits of output are from copying in the GNOME terminal,
-locally, on the system running vino.
+These were assigned 3 CVEs to reflect the different affected versions:
+CVE-2010-4207
+CVE-2010-4208
+CVE-2010-4209
 
-The above was tested with Fedora 17's 3.4.2 version; the report
-indicates that 2.32 on Gentoo and 2.28 on Debian are also vulnerable.
+The recent 2012 announcement at
+http://yuilibrary.com/support/20121030-vulnerability/ had an
+essentially identical pattern of affected versions. Because of this,
+we published 3 CVEs for consistency with the 2010 outcome:
 
-References:
+  CVE-2012-5881 charts.swf XSS affecting 2.4.0 through 2.9.0
+  CVE-2012-5882 uploader.swf XSS affecting 2.5.0 through 2.9.0
+  CVE-2012-5883 swfstore.swf XSS affecting 2.8.0 through 2.9.0
 
-https://bugs.gentoo.org/show_bug.cgi?id=434930
-https://bugzilla.gnome.org/show_bug.cgi?id=678434
-https://bugzilla.redhat.com/show_bug.cgi?id=857250
+CVE-2012-5475 needed to be rejected in the process:
 
-I did a quick attempt to reproduce this with 2.13.5 but was unable to
-reproduce it, so somewhere between 2.13.5 and 2.28 this became a
-problem.  I've not dug into it further to see which version introduced
-this.
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-5475
 
-There's no response in the upstream bug either, so no patches are
-available that I can see.
+We don't know why the original URL for the 2010 disclosure isn't
+available with its original content. (Currently /support/2.8.2/ is a
+301 redirect to the new
+http://yuilibrary.com/support/20121030-vulnerability/ web page.) In
+any case, the web.archive.org URL above has the 2010 data that
+supports the 2010 abstraction choice.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+We'll most likely update CVE-2010-4207, CVE-2010-4208, and
+CVE-2010-4209 to delete the old
+
+  CONFIRM:http://yuilibrary.com/support/2.8.2/
+
+reference, and add the new
+
+  CONFIRM:http://web.archive.org/web/20101028125444/http://yuilibrary.com/support/2.8.2/
+
+reference. We think this is a good idea when a discloser's original
+URL for one vulnerability is suddenly changed to only cover another
+vulnerability. (We're much less certain that it's a good idea to
+change to a web.archive.org URL, if one exists, in all of the many 404
+and 403 error cases for other references in other CVEs.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJQpnReAAoJEGvefgSNfHMd1MMH/iTfETyz8Sypj6swjHxIwtWy
+m9Cv8/NgYcIydHDI3442Iyr7BbXKJ+duDH5v3kz30iznwcUnQRsqm13S4e68k3Xr
+JBstDxN146GjRerJo21CU1kRxRBiMVtQ0AQYLmDzTaSRDZDQpvCCFEhVu6FJK8xj
+wsuELgdY6ka5G/X7lERvSKjgOflhkEcSCK7ue51ow+LtO8tzwI88hCCNzBnVYxKj
+bpyLO+P8uThucIqxsnYqCP1r3Xqi+mywmDOp2Q4o2Sh5x6rhK4UWlBkbdUmvlCKF
+ql+HcJR88k220o684xI1uA7/dcR+baCKiPbnCb2M8yvDXrS/cfYqSXkKU1FGR/Q=
+=fn2A
+-----END PGP SIGNATURE-----
