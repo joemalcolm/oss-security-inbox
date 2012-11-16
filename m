@@ -1,20 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/12
-Message-ID: <20120102184105.GA9177@pisco.westfalen.local>
-Date: Mon, 2 Jan 2012 19:41:05 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Two CVE requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/16/1
+Message-Id: <201211160119.qAG1JKCG003568@linus.mitre.org>
+Date: Thu, 15 Nov 2012 20:19:20 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: mantis before 1.2.12
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign two CVE IDs:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-1. Buffer overflow in VLC TiVo demuxer
-http://www.videolan.org/security/sa1108.html
+>This is an information disclosure: "Consequently, saving the page
+>without changes would cause the config to be saved with all access
+>levels as 'viewer'."
 
-2. maradns made modifications to address the recent hash collisions:
-http://samiam.org/blog/20111229.html
+>the first seems to be more general a "wrong permission"-issue,
+>although the consequence is probably also "just" an information
+>disclosure.
 
-Cheers,
-        Moritz
+We didn't think this was about information disclosure. Our
+interpretation is that CVE-2012-5522 (aka bug 14496) is about which
+users are allowed to change the status of a bug:
+
+  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-5522
+
+http://www.mantisbt.org/manual/manual.configuration.status.settings.php
+says:
+
+  $g_update_bug_status_threshold
+  $g_set_status_threshold
+
+  These settings control the access level required to promote a bug
+  to a new status once the bug is opened. $g_set_status_threshold
+  is an array indexed by the status value that allows a distinct
+  setting for each status. It defaults to blank. If the appropriate
+  status is not defined above, $g_update_bug_status_threshold is
+  used instead. The default is DEVELOPER.
+
+In other words, "all access levels as 'viewer'" doesn't mean that
+there's a confidentiality impact resulting from incorrect assignment
+of the VIEWER access level to additional persons. Instead, it means
+that there's an integrity impact because VIEWER access is sufficient
+to change a bug to any different status (Acknowledged, Confirmed,
+Assigned, Resolved, or Closed). The intended behavior was for VIEWER
+access to be insufficient, and DEVELOPER access to be sufficient. In a
+typical MantisBT installation, changing a bug to Closed would often be
+the worst scenario.
+
+We agree that it's reasonable to have different CVE names for 14496
+and 14704, even though both are closely related to the concept of
+incorrect privilege management.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJQpZLbAAoJEGvefgSNfHMdo4oIAKhxVaPWYaFylDww/g2sNdKG
+3R6zhGT4KL/UY9yviQT9olJ8IhiCPBWLyGFBvfGg3OctIeLXeC82sZYjjIX/jrVq
+FcXcwyCgOFgyvcmjahf1lvhty9hqjaV1GwakMcjdDf1ICAGfg8HdGJwY/JVIOrRH
+POguh2u6g4LOqmuN7DfkyaxodCIbdMqccMiWkxFqzckmGPUQ4dHrWzfBvpRWYNod
+f/btKRGVm87nFVW38nnY3Vch/Ibxt63vPkH6mKJkhSxIRH94sIPwqb3deLMJZqt4
+2lqBP2NIL2mti01hJ3S5S70jm3bj33sTDJ+Ghyl1T+YkRDh7C0fxF84vUejo0Ik=
+=mN6v
+-----END PGP SIGNATURE-----
