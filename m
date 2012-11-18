@@ -1,54 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/07/1
-Message-ID: <20120307105740.GJ17312@dhcp-25-225.brq.redhat.com>
-Date: Wed, 7 Mar 2012 11:57:41 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/18/1
+Message-ID: <50A8723D.7030708@gmail.com>
+Date: Sat, 17 Nov 2012 21:29:33 -0800
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- kernel: mm: memcg: unregistring of events attached to the same eventfd can lead to oops
+Subject: CVE Request for Drupal Contributed Modules
 Content-Type: text/plain; charset=utf-8
 
-There is an issue when memcg unregisters events that were attached to
-the same eventfd:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-- On the first call mem_cgroup_usage_unregister_event() removes all
-  events attached to a given eventfd, and if there were no events left,
-  thresholds->primary would become NULL;
+Hello!
 
-- Since there were several events registered, cgroups core will call
-  mem_cgroup_usage_unregister_event() again, but now kernel will oops,
-  as the function doesn't expect that threshold->primary may be NULL.
+Here's a batch CVE request for a number of previously published and
+resolved issues with contributed modules for the Drupal project. As
+noted in http://www.openwall.com/lists/oss-security/2012/11/05/4, I
+have volunteered to coordinate our CVE requests.
 
- BUG: unable to handle kernel NULL pointer dereference at
-0000000000000004
- IP: [<ffffffff810be32c>] mem_cgroup_usage_unregister_event+0x9c/0x1f0
- Pid: 574, comm: kworker/0:2 Not tainted 3.3.0-rc4+ #9 Bochs Bochs
- RIP: 0010:[<ffffffff810be32c>]  [<ffffffff810be32c>]
-mem_cgroup_usage_unregister_event+0x9c/0x1f0
- RSP: 0018:ffff88001d0b9d60  EFLAGS: 00010246
- Process kworker/0:2 (pid: 574, threadinfo ffff88001d0b8000, task
-ffff88001de91cc0)
- Call Trace:
-  [<ffffffff8107092b>] cgroup_event_remove+0x2b/0x60
-  [<ffffffff8103db94>] process_one_work+0x174/0x450
-  [<ffffffff8103e413>] worker_thread+0x123/0x2d0
+Forest Monsen, on behalf of the Drupal Security Team
 
-A local attacker able to register threshold events could use this flaw
-to crash the system.
 
-The earliest commit that *might* introduce this issue is 2e72b634 in
-2.6.34-rc2. I haven't tested it though and the code isi slightly
-different.
+- - SA-CONTRIB-2012-146 - Simplenews Scheduler - Arbitrary code execution
+  http://drupal.org/node/1789284
 
-On the current kernels without the fix I'm able to reproduce the bug
-easily.
+- - SA-CONTRIB-2012-147 - FileField Sources - Cross Site Scripting (XSS)
+  http://drupal.org/node/1789306
 
-Upstream commit:
-371528c (3.3-rc5)
+- - SA-CONTRIB-2012-148 - Organic Groups - Access Bypass
+  http://drupal.org/node/1796036
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=800813
-http://git.kernel.org/linus/371528c
+- - SA-CONTRIB-2012-149 - Hostip - Cross Site Scripting (XSS)
+  http://drupal.org/node/1802218
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+- - SA-CONTRIB-2012-150 - Twitter Pull - Cross Site Scripting (XSS)
+  http://drupal.org/node/1802230
+
+- - SA-CONTRIB-2012-151 - Commerce Extra Panes - Cross Site Request
+  Forgery
+  http://drupal.org/node/1802258
+
+- - SA-CONTRIB-2012-152 - Feeds - Access bypass
+  http://drupal.org/node/1808832
+
+- - SA-CONTRIB-2012-153 - Mandrill - Information Disclosure
+  http://drupal.org/node/1808846
+
+- - SA-CONTRIB-2012-154 - Basic webmail - Cross Site Scripting
+  http://drupal.org/node/1808852
+
+- - SA-CONTRIB-2012-154 - Basic webmail - Information Disclosure
+  http://drupal.org/node/1808852
+
+- - SA-CONTRIB-2012-155 - ShareThis - Cross Site Scripting (XSS)
+  http://drupal.org/node/1808856
+
+- - SA-CONTRIB-2012-156 - Search API - Cross Site Request Forgery (CSRF)
+  http://drupal.org/node/1815770
+
+- - SA-CONTRIB-2012-157 - Time Spent - Cross Site Scripting (XSS)
+  http://drupal.org/node/1822066
+
+- - SA-CONTRIB-2012-157 - Time Spent - Cross Site Request Forgery (CSRF)
+  http://drupal.org/node/1822066
+
+- - SA-CONTRIB-2012-157 - Time Spent - SQL Injection
+  http://drupal.org/node/1822066
+
+- - SA-CONTRIB-2012-158 - MailChimp - Cross Site Scripting (XSS)
+  http://drupal.org/node/1822166
+
+- - SA-CONTRIB-2012-159 - Password policy - Information disclosure
+  http://drupal.org/node/1828340
+
+- - SA-CONTRIB-2012-160 - OM Maximenu - Cross Site Scripting (XSS)
+  http://drupal.org/node/1834866
+
+- - SA-CONTRIB-2012-161 - Webform CiviCRM Integration - Access Bypass
+  http://drupal.org/node/1834868
+
+- - SA-CONTRIB-2012-162 - RESTful Web Services - Cross site request
+  forgery (CSRF)
+  http://drupal.org/node/1840740
+
+- - SA-CONTRIB-2012-163 - User Read-Only - Permission escalation
+  http://drupal.org/node/1840886
+
+- - SA-CONTRIB-2012-164 - Smiley module and Smileys module - Cross Site
+  Scripting (XSS)
+  http://drupal.org/node/1840892
+
+- - SA-CONTRIB-2012-165 - Chaos tool suite (ctools) - Cross Site
+  Scripting (XSS)
+  http://drupal.org/node/1840992
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+
+iEYEARECAAYFAlCocjEACgkQ/ILCL9e1Br73XACeIA+9vN5kq9QZ99cbEHtVemyV
+SxsAn1EN77He3g3ssthVQ/pgBfVPgrR9
+=15AA
+-----END PGP SIGNATURE-----
