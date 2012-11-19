@@ -1,67 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/7
-Message-ID: <20120227113252.GA31990@foo.fgeek.fi>
-Date: Mon, 27 Feb 2012 13:32:52 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/19/3
+Message-ID: <50AA59A3.8010704@canonical.com>
+Date: Mon, 19 Nov 2012 11:09:07 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: corryl80@...il.com, bugtraq@...urityfocus.com
-Subject: Case YVS Image Gallery
+Subject: Re: CVE Request: Python keyring
 Content-Type: text/plain; charset=utf-8
 
-http://osvdb.org/show/osvdb/79477
+On 12-11-16 11:14 AM, Marc Deslauriers wrote:
+> Hello,
+> 
+> Python keyring before 0.10 created keyring files world-readable by default.
+> 
+> Fixed in the following commit:
+> https://bitbucket.org/kang/python-keyring-lib/changeset/049cd181470f1ee6c540e1d64acf1def7b1de0c1
+> 
+> Bugs:
+> 
+> https://bugs.launchpad.net/ubuntu/+source/python-keyring/+bug/1031465
+> https://bitbucket.org/kang/python-keyring-lib/issue/67/set-go-rwx-on-keyring_passcfg
+> 
+> Could a CVE please be assigned to this issue?
 
-The software "YVS Image Gallery" seems to be full of security issues. For example one can have lots of fun with this. Copy from installation.php:
+Actually, that fix only changes the permissions on database files that
+were migrated from previous versions, it doesn't fix permissions on
+newly created database files.
 
-"""
-    case(isset($_POST['db_name'])):
+It would appear python-keyring still creates new database files with
+inappropriate permissions.
 
-        $host = $_POST['host'];
-        $db_name = $_POST['db_name'];
-        $db_user_name = $_POST['db_user_name'];
-        $db_password = $_POST['db_password'];
+Marc.
 
-        $admin_name = $_POST['admin_name'];
-        $admin_password = $_POST['admin_password'];
 
-        $o_host = $_POST['o_host'];
-        $o_db_name = $_POST['o_db_name'];
-        $o_db_user_name = $_POST['o_db_user_name'];
-        $o_db_password = $_POST['o_db_password'];
-
-        //read in the file
-        $file = "../functions/db_connect.php";
-        $fh = fopen($file, 'r+');
-        $contents = fread($fh, filesize($file));
-
-        //set up the text to change
-        $text_to_change = array();
-        $new_text = array();
-
-        $text_to_change[] = '$dbhost="'.$o_host.'"';
-        $text_to_change[] = '$dbuser="'.$o_db_user_name.'"';
-        $text_to_change[] = '$dbpass="'.$o_db_password.'"';
-        $text_to_change[] = '$dbname="'.$o_db_name.'"';
-
-        $new_text[] = '$dbhost="'.$host.'"';
-        $new_text[] = '$dbuser="'.$db_user_name.'"';
-        $new_text[] = '$dbpass="'.$db_password.'"';
-        $new_text[] = '$dbname="'.$db_name.'"';
-
-        $new_contents = str_replace($text_to_change, $new_text, $contents);
-        fclose($fh);
-
-        // Open file to write
-        $fh = fopen($file, 'r+');
-        fwrite($fh, $new_contents);
-        fclose($fh);
-
-        //set up new admin user
-
-        include '../functions/db_connect.php';
-
-        db_connect();
-"""
-
-I'll bet this software is not used much, but I can list all problems I can find if we want to assign CVE-identifiers to cases like these. No contact information of developer found. Any ideas how to get these fixed or get the code out of internet. The package is also hosted in here: http://www.hotscripts.com/listing/yvs-image-gallery/ (and probably others).
-
-- Henri Salo
