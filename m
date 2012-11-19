@@ -1,48 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/12/6
-Message-Id: <201212121747.qBCHkwYW018253@linus.mitre.org>
-Date: Wed, 12 Dec 2012 12:46:58 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/19/2
+Message-ID: <20121119095721.GA32689@hal.local.invalid>
+Date: Mon, 19 Nov 2012 10:57:21 +0100
+From: Guido Berhoerster <guido+openwall.com@...hoerster.name>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: perl-modules
+Subject: Fwd: [[Weechat-security] Security vulnerability in WeeChat 0.3.0 -> 0.3.9.1]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
->Locale::Maketext is a core l10n library
+the weechat issue below should get a CVE, it describes a shell
+injection vulnerability that affects weechat plugins using the
+hook_process function.
+In addtion, upstream has a bug report at
+https://savannah.nongnu.org/bugs/?37764 and the actual fix which
+is included in 0.3.9.2 is at
+http://git.savannah.gnu.org/gitweb/?p=weechat.git;a=commitdiff_plain;h=efb795c74fe954b9544074aafcebb1be4452b03a
 
->Two problems were found
+----- Forwarded message from FlashCode <flashcode@...shtux.org> -----
 
-Several other parties have recently contacted MITRE's cve-assign
-address with information that may overlap this Locale::Maketext
-disclosure. The information is not yet public in all of the cases, and
-can potentially affect the number of CVEs assigned. For now, we would
-prefer that other CNAs allow MITRE to assign CVEs that are related to:
+Date: Sun, 18 Nov 2012 14:18:12 +0100
+From: FlashCode <flashcode@...shtux.org>
+To: weechat-security@...gnu.org
+Message-ID: <20121118131811.GH29073@...shtux.org>
+Subject: [Weechat-security] Security vulnerability in WeeChat 0.3.0 ->
+        0.3.9.1
 
-  - behavior of Locale::Maketext itself
+Hi all,
 
-  - security issues in use of Locale::Maketext by Perl-based products
+A security vulnerability has been fixed in WeeChat 0.3.9.2.
+This problem affects all versions from 0.3.0 to 0.3.9.1.
 
-  - security announcements from vendors who are attempting to work
-    around a real or perceived Locale::Maketext issue
+Untrusted command for function hook_process could lead to execution of
+commands, because of shell expansions.
 
-We'll try to get the full set of CVE IDs sent here as soon as possible.
+This problem is only caused by some scripts calling function
+hook_process (giving untrusted command), but the problem has been
+fixed in WeeChat, for maximum safety: WeeChat will not use the shell
+any more to execute command.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+If you are not using any script calling function hook_process, you are
+not concerned by this problem.
 
-iQEcBAEBAgAGBQJQyML0AAoJEGvefgSNfHMduJsH/1R2PrRUeF87xgx0ttq3gtZ0
-uLGXZHVShM9DypBEbwwuBxOdCpvnv7e4+gCqi+Ca+gwsXm8AxE3q75fVUKuIA2gr
-PxfRb8Sbk9eOPdMLqOneEuULaF8MeayIfRJ04AbP/Srs4YVqBQrVduVOMZnAuPBr
-832vhUH19JwzAHYHrtrTCgEhENmgcYn6QNFXdka1Mhy15fkEzXKcaK21GHRzqwTD
-9iJ2qGdQeoB9EYqe74DUqerR8QPbmSHoC6+Hxc75gPmO70jLtzj5PWIwJ9xb5FWN
-upP0pG0pJwEuSTf+/OVgiFwQ6ZD7SquNh+rl7eF8uBxSsQ3+yezoxZn8MXSWios=
-=Xkmr
------END PGP SIGNATURE-----
+For more info, visit the WeeChat security page:
+http://weechat.org/security/
+
+--
+Cordialement / Best regards
+Sébastien.
+
+web: flashtux.org / weechat.org      mail: flashcode@...shtux.org
+irc: FlashCode @ irc.freenode.net    xmpp: flashcode@...ber.fr
+
+
+
+----- End forwarded message -----
+
+-- 
+Guido Berhoerster
