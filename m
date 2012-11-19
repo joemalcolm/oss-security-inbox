@@ -1,82 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/4
-Message-Id: <E1TYG2O-000103-Oo@xenbits.xen.org>
-Date: Tue, 13 Nov 2012 12:56:20 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 24 (CVE-2012-4539) - Grant table hypercall infinite loop DoS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/19/4
+Message-ID: <50AA6532.6080504@redhat.com>
+Date: Mon, 19 Nov 2012 09:58:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fwd: [[Weechat-security] Security vulnerability in WeeChat 0.3.0 -> 0.3.9.1]
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-                 Xen Security Advisory CVE-2012-4539 / XSA-24
-                                version 2
+On 11/19/2012 02:57 AM, Guido Berhoerster wrote:
+> Hi,
+> 
+> the weechat issue below should get a CVE, it describes a shell 
+> injection vulnerability that affects weechat plugins using the 
+> hook_process function. In addtion, upstream has a bug report at 
+> https://savannah.nongnu.org/bugs/?37764 and the actual fix which is
+> included in 0.3.9.2 is at 
+> http://git.savannah.gnu.org/gitweb/?p=weechat.git;a=commitdiff_plain;h=efb795c74fe954b9544074aafcebb1be4452b03a
+>
+>  ----- Forwarded message from FlashCode <flashcode@...shtux.org>
+> -----
+> 
+> Date: Sun, 18 Nov 2012 14:18:12 +0100 From: FlashCode
+> <flashcode@...shtux.org> To: weechat-security@...gnu.org 
+> Message-ID: <20121118131811.GH29073@...shtux.org> Subject:
+> [Weechat-security] Security vulnerability in WeeChat 0.3.0 -> 
+> 0.3.9.1
+> 
+> Hi all,
+> 
+> A security vulnerability has been fixed in WeeChat 0.3.9.2. This
+> problem affects all versions from 0.3.0 to 0.3.9.1.
+> 
+> Untrusted command for function hook_process could lead to execution
+> of commands, because of shell expansions.
+> 
+> This problem is only caused by some scripts calling function 
+> hook_process (giving untrusted command), but the problem has been 
+> fixed in WeeChat, for maximum safety: WeeChat will not use the
+> shell any more to execute command.
+> 
+> If you are not using any script calling function hook_process, you
+> are not concerned by this problem.
+> 
+> For more info, visit the WeeChat security page: 
+> http://weechat.org/security/
 
-              Grant table hypercall infinite loop DoS vulnerability
+Please use CVE-2012-5534 for this issue.
 
-UPDATES IN VERSION 2
-====================
 
-Public release.
+> -- Cordialement / Best regards Sébastien.
+> 
+> web: flashtux.org / weechat.org      mail: flashcode@...shtux.org 
+> irc: FlashCode @ irc.freenode.net    xmpp: flashcode@...ber.fr
+> 
+> 
+> 
+> ----- End forwarded message -----
+> 
 
-ISSUE DESCRIPTION
-=================
 
-Due to inappropriate duplicate use of the same loop control variable,
-passing bad arguments to GNTTABOP_get_status_frames can cause an
-infinite loop in the compat hypercall handler.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-IMPACT
-======
-
-A malicious guest administrator can trigger the bug.  If the Xen
-watchdog is enabled, the whole system will crash.  Otherwise the guest
-can cause the system to become completely unresponsive.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.0 and onwards are vulnerable.  Earlier released Xen
-versions are not vulnerable.
-
-Only 32-bit x86 PV guests, running on 64-bit Xen hypervisors,
-introduce the vulnerability.
-
-MITIGATION
-==========
-
-Running only 64-bit guests, or (in previous Xen versions) running a
-32-bit hypervisor (which supports only 32-bit guests), will avoid this
-vulnerability.
-
-Note however that if in a 64-bit Xen system the guest kernel image
-file is under the control of the guest administrator, the guest
-administrator will normally be able to control whether the guest is
-32-bit or 64-bit by supplying a different kernel image.
-
-Running only HVM guests will avoid this vulnerability.
-
-RESOLUTION
-==========
-
-The attached patch resolves this issue.  The same patch is applicable
-to all affected versions.
-
-$ sha256sum xsa24.patch
-2963dff4dbc08aab4278215d74c2cce365972f213453bb7c513d097a838de196  xsa24.patch
-$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJQokGvAAoJEIP+FMlX6CvZ0HAH/jy7Id9Ai1ZJSou6xu6USdQP
-QyaT6BnWzIA8ziatcnRzq5YHW+Occ4g4+9fU92zHpVsFGF5mAN9/aq83xLHoFHkb
-TPH/+xNCRz50zfQ21VTejr6jFlfiO6S1y/4bxVYfohtoevijo5tpRo+OYdFZXMM8
-psagcYXHgOsUy95pFsPBbwg6bh0S/ffDfZnyK3LZCP3J/Xx82kj7Du/HgKcM9lDx
-gk/q0VjFM6M/utxyn2gQlFGbX8YFfoytb9WzcrQdcPf4Ubu/jGUykm1BS/+IrXHs
-C9BtBa6w+k2T6dZgRmseeOjy0PgiEYKrqYhwAG1VC8F+RMLpAmtNGJS3gatwFHE=
-=IoWx
+iQIcBAEBAgAGBQJQqmUyAAoJEBYNRVNeJnmT5vkP/0n0l7PEqOerIjZqWb9UQeA0
+GBtgn2bhvaRXipOaxp7t1t/PhGdl8q+s0YM9Iw5FDQfNvhFPXcq8IVA3z32VQUsB
+ZvZc7pgi1/+EBiz0BpCvSokCO8ptdY171Ujoxbe1hRyoHoS2PAL7/y5CQTRYa/51
+U2XDd5aQomOwMY9keY131VNHyCWtDvtEVpN4NwMR6IV2RKPFAwsz7I5aQCdJU2Lk
+PTSeZWjhchyn7HCKmYzuuYYF683/Buc1kxkFTAyIb6+TLV3wiiHbayJKpVUmjQrM
+wof6yIjjuOi/E++a8ds2XRsUcaDI/Os3wLW3YE1kxlqYiEn9ec1CVRLDRgdBAfsV
+/niVwy6A8EgCnmnEXlNt8fDs7zsbOUVLxHGBaaeO8lua/PPCJRldoJX0D1aD62AK
+YcAQCz6pIWNXWETR9UC0wbH1nLfp7UCEalWspzm+2IrYyQh8rm+R84zNMcnp/ya6
+053VynxFSD9pwDUAKZbSg5Wtw9oya1U6d+Ggvse7rL3HZPmD8unsRzjsVFMoerKr
+nNfqavfXCaolnhRhy4f1dFNbJQMAkgjFm9kL1i2pMYNEua0vDjRPqVaqIA4Rcj1Q
+gyzqb6KQaMnje2b+bh5RM6DgRWEt8pWBiPhhuapofZuRSm4n/OiA56uXMtbgXS5B
+9h5JSRib4sGnQAK3l06I
+=UuE2
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa24.patch" of type "application/octet-stream" (942 bytes)
