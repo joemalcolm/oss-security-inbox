@@ -1,66 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/15/2
-Message-ID: <50CBCF54.2010008@redhat.com>
-Date: Fri, 14 Dec 2012 18:16:04 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/20/3
+Message-ID: <20121120161438.GY4959@redhat.com>
+Date: Tue, 20 Nov 2012 09:14:38 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Simon ." <bofh666ftw@...glemail.com>
-Subject: Re: pacemaker strcmp
+Subject: libssh 0.5.3 release fixes multiple security issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+As reported to distros@ on 20121114:
 
-On 12/13/2012 09:37 AM, Simon . wrote:
-> Hi,
-> 
-> I might have overlooked something. Starting from Line 39, if
-> pacemaker is compiled with ACL support:
-> 
-> https://github.com/ClusterLabs/pacemaker/blob/master/include/crm_internal.h#L39
->
->  Once a user root\0bar is created, and CRM_DAEMON_USER is #undef we
-> can return TRUE. Haven't looked into further details here and I
-> think no sane admin will ever allow such a user. What do you guys
-> think?
-> 
-> 
-> 
-> /* For ACLs */ char *uid2username(uid_t uid); void
-> determine_request_user(char *user, xmlNode * request, const char
-> *field);
-> 
-> # if ENABLE_ACL # include <string.h> static inline gboolean 
-> is_privileged(const char *user) { if (user == NULL) { return
-> FALSE; } else if (strcmp(user, CRM_DAEMON_USER) == 0) {
-> <------------- #undef ? return TRUE; } else if (strcmp(user,
-> "root") == 0) { <------------------- err return TRUE; } return
-> FALSE; } # endif
-> 
+A number of flaws were found in libssh prior to 0.5.3 by Xi Wang and Florian
+Weimer of the Red Hat Product Security Team:
 
-Can attackers create their own user names or do admins have to create
-the accounts (I know nothing about this software)? Also can you
-confirm that "root\0bar actually allows ACL bypass with the
-application in production? Thanks.
+CVE-2012-4559: multiple double free() flaws
+CVE-2012-4560: multiple buffer overflow flaws
+CVE-2012-4561: multiple invalid free() flaws
+CVE-2012-4562: multiple improper overflow checks
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+http://www.libssh.org/2012/11/20/libssh-0-5-3-security-release/
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4559
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4560
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4561
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4562
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Patches for the flaws are attached to the bugs in our bugzilla.
 
-iQIcBAEBAgAGBQJQy89UAAoJEBYNRVNeJnmT+ZgP/RKlc9LyyfMlIPbeuJqOJSuB
-CWWvUuYJWQfhIfniOLyxfDQtU+Bp+LkNyM4Mk5cfxDgLu4bCN4cClWBGTnbvcuDp
-VRH0NOfOhNRf7TlZ5UAMzop5EMU1+3mb1XNA15EaxmShikKew98CabiArolSWpge
-Y/2eZ5KoxdgHCFRwzWm2NjYGh4KFzgjQY5YkNfYCRuEhMDLAo9zq9gGlREYyHQ2c
-SGxEg8jGhnsPF6voAqvZ6wXXMg3s2XmRmEFwC7erTvaPXQ5XNoW3amkEVrDBgeeo
-DrMCCiYtiV2exUSxg55+MxlFQyzsp2u8bBxnHCK2bN7r/ZRt/IrLiva8EGn6ANwa
-ge1wX3t+MwXZ0iZCjMNtqtK6XpRGfDlAb4nv403fS9waUI+6f/b8YzqooDGdc+SN
-on/wX1NJ2HT30Q5d68cSGSK82N1/kl+QolyX9Q5jyAqxCHLyT8psLt9BXsFjH1K9
-0eCIFOgoHNEQeh92MgHzQ1ynkPTRQSqIvXvpOyjZ1sdf+gT93jrRxqydV7/nBK7P
-Hyt6MdJggBDTai259onIfbjTYavTsio1X1efrvAjxDrfa2HULvXW9QwrWPyUKzg4
-JMC0RYzhoUeWg/yhnrUdPjwXuQwp04tzxeNjHWC25Cxs3OHVnBZL4Cbh3/74qt0Q
-zvcBlk+wHZFb2njR4hhG
-=7JbE
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team
