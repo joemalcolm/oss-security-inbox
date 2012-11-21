@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/9
-Message-Id: <0309C67B-4F6F-4E67-A6C4-B2066DA3922E@codseq.it>
-Date: Wed, 23 May 2012 14:21:15 +0200
-From: Filippo Cavallarin <filippo.cavallarin@...seq.it>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Multiple vulnerabilities in LogAnalyzer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/21/2
+Message-ID: <CAGVYHsXwhtonG6Qxf5EzyGkq3uycwei2j36VHUxecU7kT31zLQ@mail.gmail.com>
+Date: Wed, 21 Nov 2012 12:19:35 -0500
+From: Andrés Gómez Ramírez <andresgomezram7@...il.com>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: CVE Request: Gimp memory corruption vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-Can I get a CVE identifier for this issue:
+Hello, could a CVE be assigned to this issue?
 
-http://www.codseq.it/advisories/multiple_vulnerabilities_in_loganalyzer
+Name: Gimp memory corruption vulnerability
+Software: GIMP 2.8.2
+Software link: http://www.gimp.org/ <http://plib.sourceforge.net/>
+Vulnerability Type: Memory Corruption
 
-Here is the changelog:
+Description:
 
-http://loganalyzer.adiscon.com/news/loganalyzer-v3-4-3-v3-stable-released
+GIMP 2.8.2 is vulnerable to memory corruption when reading XWD files, which
+could lead even to arbitrary code execution.
+
+Upstream fix:
+http://git.gnome.org/browse/gimp/commit/?id=2873262fccba12af144ed96ed91be144d92ff2e1
+(fixed in master and gimp-2-8)
+
+References:
+https://bugzilla.gnome.org/show_bug.cgi?id=687392
 
 Thanks,
 
-
-
-Filippo Cavallarin
-
-
-C o d S e q
-Development with an eye on security
-------------------------------------------------------------------------
-Castello 2005, 30122 Venezia
-Tel: 041 88 761 58 - Fax: 041 81 064 714 - Cell: 346 66 93 254
-c.f. CVLFPP82B27L736J - p.iva 03737650279
-http://www.codseq.it - filippo.cavallarin@...seq.it
+Andres Gomez.
 
