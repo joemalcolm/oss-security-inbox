@@ -1,20 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/24/1
-Message-ID: <CANTw=MPBVKdkfr1t7v1k73FBk0MpQNMoaeaHdU1G6AGQ_oMMEg@mail.gmail.com>
-Date: Mon, 23 Jan 2012 20:05:09 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/21/1
+Message-ID: <20121121132013.350a82fb@chromobil.local>
+Date: Wed, 21 Nov 2012 13:20:13 +0100
+From: Stefan Bühler <stbuehler@...httpd.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id assignment dates
+Cc: lighttpd-announce@...ts.lighttpd.net
+Subject: lighttpd 1.4.32 released, fixing CVE-2012-5533
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 23, 2012 at 3:04 PM, Steven M. Christey wrote:
-> We do not publish any dates related to disclosure, patch, or vendor
-> notification; interested parties can consult other databases that explicitly
-> track this information, such as OSVDB.
+Hi,
 
-Just curious, why not?  It seems like this kind of information would
-be invaluable for researchers interested anthropological/statistical
-studies of security vulnerabilities.
+we just released lighttpd 1.4.32, fixing a DoS reported by Jesse
+Sipprell from McClatchy Interactive, Inc.
 
-Best wishes,
-Mike
+Sending "Connection: TE,,Keep-Alive" as header will trigger an endless
+loop; as lighttpd is single threaded all request handling will stop
+immediately.
+
+Only lighttpd 1.4.31 is affected by this.
+
+For more details and other changes see:
+* http://www.lighttpd.net/2012/11/21/1-4-32/
+* http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2012_01.txt
+
+Regards,
+Stefan
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
