@@ -1,25 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/05/6
-Message-ID: <20121105175359.GA16022@kludge.henri.nerv.fi>
-Date: Mon, 5 Nov 2012 19:53:59 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros@...openwall.org membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/4
+Message-ID: <20121123172745.GA3007@core.inversepath.com>
+Date: Fri, 23 Nov 2012 18:27:45 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2012-001] multiple implementations denial-of-service via MurmurHash algorithm collision
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 05, 2012 at 05:02:52PM +0530, Premchand Koneru wrote:
-> I recently joined the Montavista Security team and request membership to
-> thelinux-distros@...openwall.org  list, so that I may participate fully
-> in reporting and fixing vulnerabilities in Montavista. Here is my
-> GPG fingerprint:
-> 
-> pub   2048R/5DA060C7 2012-11-05
->       Key fingerprint = 7DF9 45B4 3116 8D5C D3C0  2A15 EADE D5B2 5DA0 60C7
-> uid                  Premchand Koneru<pkoneru@...sta.com  <mailto:pkoneru@...sta.com>>
-> sub   2048R/BE364B01 2012-11-05
-> 
-> Thank you for consideration.
 
-This is first time I heard about Montavista. Where is your package- and bug-tracker? Does Montavista use CVE?
+#2012-001 multiple implementations denial-of-service via MurmurHash algorithm
+collision
 
-- Henri Salo
+Description:
+
+A variety of programming languages suffer from a denial-of-service (DoS)
+condition against storage functions of key/value pairs in hash data
+structures, the condition can be leveraged by exploiting predictable
+collisions in the underlying hashing algorithms.
+
+The issue is similar to the one reported in oCERT-2011-003 and concerns the
+MurmurHash algorithm family. The condition for predictable collisions in the
+hashing functions has been reported for the following language
+implementations: JRuby (MurmurHash2), Ruby (MurmurHash2), Rubinius
+(MurmurHash3), Oracle JDK (MurmurHash), OpenJDK (MurmurHash). In the case of
+Java OpenJDK the hash function affected by the reported issue is not enabled
+by default, the default function is however reported vulnerable to
+oCERT-2011-003.
+
+Affected version:
+Ruby < 1.9.3-p327
+JRuby all versions
+Rubinius, all versions
+Oracle JDK <= 7
+OpenJDK <= 7
+
+Fixed version:
+Ruby >= 1.9.3-p327
+JRuby, N/A
+Rubinius, N/A
+Oracle JDK, N/A
+OpenJDK, N/A
+
+Credit: vulnerability report received from Jean-Philippe Aumasson
+        <jeanphilippe.aumasson AT gmail.com>, PoC code and SipHash
+	implementation used to patch the issue developed by Martin Bosslet
+	<martin.bosslet AT gmail.com>.
+
+CVE: CVE-2012-5370 (JRuby), CVE-2011-5371 (Ruby), CVE-2011-5372 (Rubinius),
+     CVE-2011-5373 (Oracle JDK, OpenJDK)
+
+Timeline:
+2012-08-30: vulnerability report sent to Ruby, JRuby and Rubinius security contacts
+2012-09-03: vulnerability report forwarded to oCERT by Hiroshi Nakamura (Ruby security contact)
+2012-09-06: oCERT contacted reporters to investigate additional affected projects
+2012-09-06: reporters indicate OpenJDK as vulnerable and that Java security team has been contacted on 2012-07-31
+2012-09-10: oCERT requested CVE assignment for Ruby, JRuby and Rubinius
+2012-09-12: Oracle JDK and OpenJDK confirmed vulnerable by reporters
+2012-09-12: oCERT requested CVE assignment for Oracle JDK and OpenJDK
+2012-10-10: reporters indicate public PoC release on 2012-11-07 at ASFWS
+2012-11-08: assigned CVEs
+2012-11-09: Ruby 1.9.3-p327 released
+2012-11-23: advisory release
+
+References:
+https://www.131002.net/siphash
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2012-001.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
