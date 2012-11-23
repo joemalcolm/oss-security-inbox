@@ -1,28 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/1
-Message-ID: <20120522110502.3003260d@hsalkjdhsa.lan>
-Date: Tue, 22 May 2012 11:05:02 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/3
+Message-ID: <1866340735.37274421.1353691527444.JavaMail.root@redhat.com>
+Date: Fri, 23 Nov 2012 12:25:27 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Serendipity before 1.6.2 SQL Injection
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, security@...de.org
+Subject: CVE Request -- kronolith: Two sets (3.0.17 && 3.0.18) of XSS flaws
 Content-Type: text/plain; charset=utf-8
 
-Upstream:
-http://blog.s9y.org/archives/241-Serendipity-1.6.2-released.html
-Advisory:
-https://www.htbridge.com/advisory/HTB23092
+Hello Kurt, Steve, vendors,
 
-Upstream description of the issue:
-"The error here is that input is not properly validated and can be used
-(when magic_quotes_gpc is off) to inject SQL code to a SQL query; since
-our DB layer does not execute multiple statements, and the involved SQL
-query is not used to produce output code, we regard the impact as low.
-Nevertheless, please upgrade your installation."
+  Horde upstream has recently released 3.0.18 version
+of Kronolith, the Horde calendar application, correcting
+one set of XSS flaws:
+ [1] https://github.com/horde/horde/blob/d3dda2d47fad7eb128a0091e732cded0c2601009/kronolith/docs/CHANGES
+ [2] http://lists.horde.org/archives/announce/2012/000836.html
 
-Please assign CVE.
+more exactly:
+* Set #1: [mms] SECURITY: Fix XSS vulnerabilities in the portal blocks.
+  Upstream patch: http://git.horde.org/horde-git/-/commit/d865c564beb6e98532880aa51a04a79f3311cd1e
+  References: [1], [2] plus [3] https://bugzilla.redhat.com/show_bug.cgi?id=879684
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Also previously (in version 3.0.17 yet another set of XSS flaws got corrected):
+* Set #2: [jan] SECURITY: Fix XSS vulnerabilities in tasks view and search view (Bug #11189).  
+  Upstream ticket: [4] http://bugs.horde.org/ticket/11189
+  Upstream patch:  [5] http://git.horde.org/horde-git/-/commit/1228a6825a8dab3333d0a8c8986fc10d1f3d11b2
+  References: [1], [2], [4], [5]
+  Note: There isn't a Red Hat Bugzilla entry, since the kronolith 2.x
+        version based versions shipped, within Fedora / Fedora EPEL weren't
+        vulnerable to this problem yet.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Look at MITRE CVE database for kronolith:
+[6] http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=kronolith
+
+suggests the last security flaws, a CVE ids has been assigned to, were the
+following two:
+* v2.2-RC2
+--------
+
+[jan] SECURITY: Fix privilege escalation in Horde API. => CVE-2008-7218
+[cjh] SECURITY: Fix missing ownership validation on share changes => CVE-2008-7219
+
+so both of sets of the XSS issues (Set #1, Set #2) should still be lacking
+(two) CVE identifiers.
+
+Could you allocate them?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
