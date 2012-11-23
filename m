@@ -1,33 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/22/1
-Message-ID: <4FE3EE99.1030007@redhat.com>
-Date: Thu, 21 Jun 2012 22:03:37 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/8
+Message-ID: <50AFD462.7090800@redhat.com>
+Date: Fri, 23 Nov 2012 12:54:10 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Breno Silva Pinto <BPinto@...stwave.com>, Stefan Esser <stefan.esser@...tioneins.de>
-Subject: mod_security CVE request
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Christoph Biedl <debian.axhn@...chmal.in-ulm.de>
+Subject: Re: CVE Request -- android-tools (server): Insecure temporary file used for logging
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-CVE request for mod_security multi-part bypass:
+On 11/23/2012 04:44 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> Christoph Biedl in Debian bug report [1] noticed the following
+> deficiency:
+> 
+> An insecure temporary file use flaw was found in the way server
+> component of android tools, a suite of Android Debug Bridge (ADB)
+> platform tools, performed logging of server events upon server
+> startup. A local attacker could use this flaw to conduct symbolic
+> links attacks, possibly leading to their ability to append
+> unauthorized content to system files accessible with the privileges
+> of the user running the adb executable.
+> 
+> References: [1]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=688280 [2]
+> https://bugzilla.redhat.com/show_bug.cgi?id=879582
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
-This issue was partially fixed in 2009 and then corrected completely
-(I hope =) in 2012, so 2 CVE's.
-
-2009:
-https://www.modsecurity.org/fisheye/browse/modsecurity/m2/branches/2.5.x/apache2/msc_multipart.c?r2=1419&r1=1366
-
-2012: commit c5d749a0d809cf24335cd35720d7eac99ba7ea44
-Author: brenosilva <brenosilva@...7d574-64ec-4062-9424-5e00b32a252b>
-Date:   Fri Jun 1 20:16:06 2012 +0000
-MODSEC-312
-svn co
-https://mod-security.svn.sourceforge.net/svnroot/mod-security/m2/trunk
-modsecurity
-svn diff  -r 1917:1918
-
-
+Please use CVE-2012-5564 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -35,19 +42,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJP4+6VAAoJEBYNRVNeJnmTc2IQAN1Ti27MyN7LXfOr+nV3Mt0J
-R81ZwVMDIn0leHUzuFkquXU95aZ181MmmGY50R3ndJ2s0byHWRhog91V9Asi+9C/
-0eQ1+GXdSfNc0eFqZAgIxBUdSnfvdB2f4rjwEXJATtzW8GuWNvxkvKAyRgH17JSm
-NoxG6230J9DYT1kSqfKcBZyQpDowewzLRvZ2oMGOD0NeZVh0zzCX9NWVy6/U0jfj
-wZv7Ijgh8yrgP5XodX3jkC76SW8Sx+2HQsJwqHkLDzmEXnGx54itcTR0KJQlVAm9
-DcB4ci/6jXd4yigkaS6GHlov2M0bb65DXvdMJVnS4BBLZeWpD7oAzSHQjw2lOLzz
-qeFTOPb7zvbC2z9vseEzqK8N/W6ZAKKal8Jqa9458UUiH0SCNfkRv3LVqsrrm2xS
-Jkkjdtu3WhQvcqCRL6TgCN/FGGldmN8Pj0VnN1SxXsF+URiipbZhD5vabs1GL950
-U31Ow9KevKw+FGxGH0DwXC9s1rMpXamK8Tl1stPYd4gaJy5l728u4yHnEJWfmNFu
-u0vZ/B5ujqdzWNal2pYCE1NtPRe2vfWcuoRzzhxtvz6bFst/s87M7v+mOliomeQF
-QjdPyRoIwEmb+ckz3qxvW+r48UJhVy3OHy23+ZbIbg51MfslBTLlZqYqA5ohN3Ao
-JsjNCtSkWMjR55K2vMdi
-=5gNG
+iQIcBAEBAgAGBQJQr9RiAAoJEBYNRVNeJnmTWf0P/j7uMLeu5rT3UFvpKcFpynn2
+2CH/zKBY5bccRM55Uxfv8KVzSQnxHS1Oe8NajXazTezpcYYlrNVUp/ZO0ieUtv4T
+AHJ+i6AFOrYzERpuLy23+BCQQCOW5QAfl+aKPElIVv7N/UjHr0GtKbxo+bB2S6Ai
+KPlo0I8CjAPeFRfE+lirX8zWjECoau5/ZSW7ApmzLrBepsgAXmFXf95pMLXia1kY
+1JifG6rCwrxA5+I/QtMiEfIVe2n9VOEz1UyZ0ajgw8suUxQ3f+hMmP2NmTpTI/nl
+pWkrrL8XUJxyYeMHND/AvIB3YrIvLWWR8Mfsx+hHhfdDI+HfmsgUJxEu65c4zPVZ
+s6gsDuLOcpFRY/of3zdf65eIqwjb2gaA9nugrZsju/z97H/0SCj8KQAiS+RU3SPn
+IdcFssui2SNxXKnqvQkk+DwyJvH9JahreryoxvVfhZDdzEBoqcNsEJyx5dOUmoG7
+da1JeSuvbo0ViIiWSKtDzpCX4LPHCLU7t5iF1e9HU46rIhA4olYaZZFlpLHxXs9n
+8Ns/eZlKN8jE+IDCatoHzqjsNMdA34E8nUYgmMp945jlkBNmjSLVsSIFYGDjcB7k
+snDl/iySQVCaKbJzU9ATnAScp0Nxvkj0glKgpjVCaWSlYrzUMTLXikXMtDqntrx2
+xEUvnKJvWX+LXIj+BdXU
+=FLKN
 -----END PGP SIGNATURE-----
