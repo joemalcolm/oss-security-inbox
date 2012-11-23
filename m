@@ -1,45 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/25/7
-Message-ID: <4FE89A3B.2020201@redhat.com>
-Date: Mon, 25 Jun 2012 11:04:59 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/6
+Message-ID: <50AFC249.7070108@redhat.com>
+Date: Fri, 23 Nov 2012 11:36:57 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Hans Spaans <hans.spaans@...it.nl>, Josselin Mouette <joss@...ian.org>, Bastien Nocera <bnocera@...hat.com>
-Subject: Re: CVE 2011-* Request -- rhythmbox (context plug-in): Insecure temporary directory use by loading template files for 'Album', 'Lyrics', and 'Artist' tabs
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, security@...de.org
+Subject: Re: CVE Request -- (Horde) IMP (prior v5.0.24-git): Obscure XSS issue when uploading attachments.
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/25/2012 07:36 AM, Jan Lieskovsky wrote:
+On 11/23/2012 10:46 AM, Jan Lieskovsky wrote:
 > Hello Kurt, Steve, vendors,
 > 
-> An insecure temporary directory use flaw was found in the way 
-> Rhythmbox, an integrated music management application based on the 
-> powerful GStreamer media framework, performed loading of HTML
-> template files, used for rendering of 'Album', 'Lyrics', and
-> 'Artist' tabs. Previously the '/tmp/context' directory has been
-> searched as module directory when loading the HTML template files.
-> A local attacker could use this flaw to conduct symbolic link
-> attacks (possibly leading to attacker's ability to execute
-> arbitrary HTML template file in the context of user running the
-> rhythmbox executable).
+> Horde upstream within Horde Groupware Webmail Edition version
+> 4.0.9 release corrected also one XSS issue in IMP: [1]
+> http://lists.horde.org/archives/announce/2012/000840.html * Mail
+> changes: * Fixed obscure XSS issue when uploading attachments.
 > 
-> Upstream bug report: [1]
-> https://bugzilla.gnome.org/show_bug.cgi?id=678661
+> Upstream patch:
+> https://github.com/horde/horde/commit/1550c6ecd7204f9579fcbb09ec7089e01b0771e2
+>
 > 
-> References: [2]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=616673 [3]
-> https://bugzilla.redhat.com/show_bug.cgi?id=835076
+References:
+https://github.com/horde/horde/blob/1550c6ecd7204f9579fcbb09ec7089e01b0771e2/imp/docs/CHANGES
 > 
-> Please note the [2] bug has been reported / opened on: "Date: Sun,
-> 06 Mar 2011 14:58:46 +0100" yet, so this should get a CVE-2011-*
-> identifier. Could you allocate one?
+> Could you allocate a CVE id for this?
 > 
 > Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
 > Security Response Team
+> 
+> P.S.: No Red Hat bugzilla entry available, since this issue did
+> not affect versions of IMP, as shipped with Fedora / Fedora EPEL.
+> 
+> P.S.#2: The other XSS from [1]: Calendar changes: * Fixed XSS issue
+> in portal blocks.
+> 
+> is already covered within my previous (Kronolith related) request.
+> 
 
-Please use CVE-2012-3355 for this issue.
+Please use CVE-2012-5565 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -47,19 +48,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJP6Jo6AAoJEBYNRVNeJnmTw/MQALV9lNTYVGsaGF5DDvnqSyNT
-i+EqGjSphdwMqjPMrvkRt30OHF9cQrfUcw5EwMGVfBpcI/OSZzSyZKrFDoW9EVxt
-c+aLx19i457Qe2cmRaWW/UYvXSadlwyKaZpM9B+aVfw+rnRW9ElV+sswkc9iTvkV
-MOz5Ytf3dBD6gf9XsM8cPGG9Cp4fLnkOErU3BVEJgJWM2i3GhxzWMvWTZJLBghvM
-epF4im0QR+H2UzyJ34u4tZMxJ6SXrk2vRD7UD4b4KqpL7Hs44qIaMemCDoNXx9ig
-uFjQZniH+5NIzWGrsHyrRncIKemLTeZ07cVjcj5AWwrkIT8ZNd9TM9YuG1JyyXMg
-HInmzY3etSYyrJNAZmoxylQ7HGeB7cKLipKjfO5RzBwMvFaZXLrxVTVeXZORqBQm
-XNN7SvOj9K+HT0f92ApLqUniBmgBqF8thZYlpGaAoZ9FvPkg08nhMhZP38ozlLet
-wLrbPEoq8Y0AD9bfpDfum05OgIBRO+3O/yMEG8lyd9EUfM5Fmh+BpuDYzvn98ISx
-RVD2O+3A4zwsx4hQ+kioQdH5W0KHTN49Oo9it4qvVE0e9VLALNs5b2oNUKiTWhLV
-sObvjNuEqEB3fxXhhBsq3YBJEJqdhRMsvGvozVzfXmDR+gQqtumm5c5kMQnElTcQ
-gZmj4ULU3d9tWoWhJMRb
-=dMAJ
+iQIcBAEBAgAGBQJQr8JJAAoJEBYNRVNeJnmTPswP/2M1CsC7Iirut0OYhaQWjPEj
+Qqvab1qDeKw8QyxASBOarOEEWpXbbIhJ6DrmdBxlnI7zZAAo/SFiQKqqFKw8J0t3
+7DzKUzVk/HymGz8ZbtECW9DT116jDGGLXP9zhH+LGB39Q98woSE9Fzr0ZlgV6gmk
+zwkurc/tb6xz03VQgceex8DwEn+Xm/7uFez3cxcK4zgy6AKUKIX3n9kbUIv8tpV6
+mn41PaJojZ8sZMSzgIhcXz/0SYK0doA9oRvpyHWTQGE3gqF1rtz2kxYVNNg2VnAf
+udQ7jPHQTh8Wb5O47Uhgw/m1ywvys8V1Kh+5KcSBAmjFsctFBoPKjs+vEOqia+EM
+fb3QDRtastF3WiRUbtnCQEPvXA/DEOnt9Za5cvstofxThIMhtzYInKbnUws1SMeI
+c/z+Z3386DI4L7mbb0cOBlEGE/4PEvoohu7uueKsKE7Rc1bNYJvjuAWA8QkCBrcW
+LwedfuXoeO6zBH6lx1H65/XfNXFvL9fqlCKhEv8i9129zcAbbIWZNwxi46kAtP6Q
+m4NvvowC68HOCeMrr3Tz10JEZvLfmsveoR2X219wa4vZJk6Z7pkHBAocI2qMbEaM
+YbSO0I1URvtCYH2OCMFLMiMJBuurBBrZ82QwM5GkN1dypNnGSSL3r6UzJvbCnRHe
+vTbrDfwM5z4P2JjrSxpV
+=G5Z1
 -----END PGP SIGNATURE-----
