@@ -1,42 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/15
-Message-ID: <CANTw=MP2uKg9TAVGUjMSb4zG-MTY9BcYK2HDa2HfXSAytNm_xQ@mail.gmail.com>
-Date: Fri, 21 Sep 2012 17:47:48 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/1
+Message-ID: <1961204867.37145591.1353671088048.JavaMail.root@redhat.com>
+Date: Fri, 23 Nov 2012 06:44:48 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Christoph Biedl <debian.axhn@...chmal.in-ulm.de>
+Subject: CVE Request -- android-tools (server): Insecure temporary file used for logging
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 21, 2012 at 5:19 PM, Michael Gilbert wrote:
-> So, the point is that umask is more meant more as a fallback only when
-> there isn't better info available to make the right permissions
-> decision.
+Hello Kurt, Steve, vendors,
 
-Although I think that interpretation would be a safer way to go about
-things, but thinking about it more broadly, it may open a large can of
-worms.  Would such a situation in all other applications be considered
-an exposure?
+  Christoph Biedl in Debian bug report [1] noticed the
+following deficiency:
 
-So another vim example
+An insecure temporary file use flaw was found in the way
+server component of android tools, a suite of Android Debug
+Bridge (ADB) platform tools, performed logging of server
+events upon server startup. A local attacker could use this
+flaw to conduct symbolic links attacks, possibly leading to
+their ability to append unauthorized content to system files
+accessible with the privileges of the user running the adb
+executable.
 
-$ umask
-0077
-$ echo test > test
-umask 022
-$ vim test
-:w test2
-$ ls -l test2
--rw-r--r-- 1 a a 5 Sep 21 17:33 test2
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=688280
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=879582
 
-Would this be an exposure since the user had original file permissions
-were 600, and the derived file is now 644?
+Could you allocate a CVE id for this?
 
-So anyway, I suppose this creates more questions than answers, but I
-guess its worth thinking about.  After all, what did the user really
-expect?  If they had intended that original file to be private, and
-now its not, is that appropriate?  Is it more appropriate to assume
-all users know how to use umask appropriately?
-
-Best wishes,
-Mike
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
