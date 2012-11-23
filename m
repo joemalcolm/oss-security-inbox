@@ -1,88 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/30/7
-Message-Id: <51BAF590-58CD-4945-9735-619BCF3C7EDE@wired-net.gr>
-Date: Mon, 30 Jan 2012 23:32:12 +0200
-From: Nanakos Chrysostomos <nanakos@...ed-net.gr>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Jonathan Wiltshire <jmw@...ian.org>, Gian Piero Carrubba <gpiero@...rf.it>, "team@...urity.debian.org" <team@...urity.debian.org>
-Subject: Re: Re: Yubiserver package ships with pre-filled identities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/2
+Message-ID: <50AF7BD8.1010605@redhat.com>
+Date: Fri, 23 Nov 2012 14:36:24 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Gajim fails to handle invalid certificates
 Content-Type: text/plain; charset=utf-8
 
-
-On 30 Ιαν 2012, at 19:08, Kurt Seifried <kseifried@...hat.com> wrote:
-
-> On 01/30/2012 04:56 AM, Jonathan Wiltshire wrote:
->> On 2012-01-30 06:43, Nanakos Chrysostomos wrote:
->>> Hi again,
->>> I found another reason for not shipping the package with an example
->>> account. I think you are certainly right. If you haven't filled a  
->>> bug
->>> please do so, in the meanwhile I will upload to mentors a new  
->>> version
->>> with an empty database that resolves the problem. Thanks.
+On 11/14/2012 10:36 AM, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 11/14/2012 02:19 AM, Florian Weimer wrote:
+>> On 11/14/2012 08:19 AM, Kurt Seiifried wrote:
 >>
->> This populated database is also shipped in the upstream tarball,
->> oss-security should be consulted to see whether a CVE identifier  
->> should
->> be issued.
+>>> So do we consider this to be an OpenSSL issue of gajim? I'm sure
+>>> gajim is not the only program that does something like this.
 >>
->> Adding to CC; oss-sec please see below:
+>> As far as I understand things, it is not necessarily at all to set
+>> a verification callback in OpenSSL.  If you load the root
+>> certificate store and examine SSL_get_verify_result, that should be
+>> sufficient.  You can even look at the peer certificate and continue
+>> anyway if the user has overridden the certificate validity.  So
+>> far, I haven't found a good reason to use a verify callback at all.
+>> You need it to implement a custom PKIX validation policy, but that
+>> should be pretty rare.  (I still have to check older OpenSSL
+>> versions, though, perhaps there, the behavior was different.)
 >>
->>
->>> On 30 Ιαν 2012, at 1:25, Gian Piero Carrubba <gpiero@...rf.it> w 
->>> rote:
->>>
->>>> Hi Nanakos,
->>>>
->>>> thanks for your prompt response.
->>>>
->>>> * [Sun, Jan 29, 2012 at 11:19:37PM +0200] Nanakos Chrysostomos:
->>>>> those keys are invalid and are not my real keys. It's just a  
->>>>> sample
->>>>> for the potential users of the package to see.
+>> Anyway, if application developers set a verification callback, it
+>> is their responsibility to implement it correctly.  Therefore, I
+>> don't think this is an OpenSSL issue.
 >
-> Ok I'm not clear on what is going on here, is there a link to the bug
-> entry regarding this issue, or can someone clarify it?
->
+> Makes sense, just wanted to confirm this problem resides within Gajim.
+> Please use CVE-2012-5524 for this issue.
 
-Hi,
-there is no bug entry yet.
+Regarding the OpenSSL behavior, there appears to be a related bug report:
 
+<http://rt.openssl.org/Ticket/Display.html?id=2768&user=guest&pass=guest>
 
-> 1) are there default accounts shipped with the product that get
-> activated automatically during install? (it sounds like yes?)
->
-
-Yes. The database is populated with an example/test account which is  
-activated during install.
-
-
-> 2) can someone remotely/locally access these accounts? what are the
-> credentials for these accounts ("invalid keys"?), can an attacker  
-> access
-> them?
->
-
-If someone programs or uses a software emulation for the yubikey can  
-have access to whatever the user of the application uses it for ( the  
-yubiserver). For example if someone uses Pam yubico module with the su  
-or sshd server to provide a two factor authentication scheme he should  
-suffer from this security issue if he hasn't deleted or deactivated  
-the test account. If someone by mistake installs yubiserver and  
-doesn't use him to validate his otp or hmac otp, he won't suffer from  
-this security issue. Someone can only suffer if he uses the server and  
-hasn't deleted or deactivated the test account which is shipped with  
-the server.
-
-> 3) what is the privilege level of the accounts?
-
-That depends on how someone wants to use the server and the privilege  
-level that he wants to give to it's users through the validation of  
-the otp or hmac otp.
-
-Chris.
-
-
->
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+-- 
+Florian Weimer / Red Hat Product Security Team
