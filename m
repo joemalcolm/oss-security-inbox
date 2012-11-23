@@ -1,20 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/5
-Message-ID: <20120314175421.GQ3308@redhat.com>
-Date: Wed, 14 Mar 2012 11:54:21 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/5
+Message-ID: <271664441.37279311.1353692769563.JavaMail.root@redhat.com>
+Date: Fri, 23 Nov 2012 12:46:09 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: gnash integer overflow
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, security@...de.org
+Subject: CVE Request -- (Horde) IMP (prior v5.0.24-git): Obscure XSS issue when uploading attachments.
 Content-Type: text/plain; charset=utf-8
 
-An integer overflow leading to a heap-based buffer overflow was found
-and fixed in Gnash.  Could a CVE be assigned to this flaw?
+Hello Kurt, Steve, vendors,
 
-References:
+  Horde upstream within Horde Groupware Webmail Edition version 4.0.9
+release corrected also one XSS issue in IMP:
+[1] http://lists.horde.org/archives/announce/2012/000840.html
+* Mail changes:
+     * Fixed obscure XSS issue when uploading attachments.
 
-http://git.savannah.gnu.org/cgit/gnash.git/commit/?id=bb4dc77eecb6ed1b967e3ecbce3dac6c5e6f1527
-http://secunia.com/advisories/47183
-https://bugzilla.redhat.com/show_bug.cgi?id=803443
+  Upstream patch: https://github.com/horde/horde/commit/1550c6ecd7204f9579fcbb09ec7089e01b0771e2
+  References: https://github.com/horde/horde/blob/1550c6ecd7204f9579fcbb09ec7089e01b0771e2/imp/docs/CHANGES
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: No Red Hat bugzilla entry available, since this issue did not
+      affect versions of IMP, as shipped with Fedora / Fedora EPEL.
+
+P.S.#2: The other XSS from [1]:
+      Calendar changes:
+      * Fixed XSS issue in portal blocks.
+
+      is already covered within my previous (Kronolith related) request.
