@@ -1,30 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/12
-Message-ID: <4F56661F.5090909@redhat.com>
-Date: Tue, 06 Mar 2012 12:31:43 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/2
+Message-ID: <50B2BD43.6030207@redhat.com>
+Date: Sun, 25 Nov 2012 17:52:19 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Joomla! Security News 2012-03
+CC: David Jorm <djorm@...hat.com>
+Subject: Re: CVE Request: slowloris for tomcat
 Content-Type: text/plain; charset=utf-8
 
-On 03/06/2012 06:30 AM, Henri Salo wrote:
-> Can I get two CVE-identifiers for these security vulnerabilities
-listed below.
->
->
-http://developer.joomla.org/security/news/392-20120302-core-xss-vulnerability.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2012-1117 for this issue
+On 11/25/2012 05:10 PM, David Jorm wrote:
+> The old slowloris attack has CVE IDs for various affected
+> platforms, but not for tomcat. My testing has shown that tomcat is
+> indeed affected, and others [0] [1] back this up. Could we please
+> get a CVE ID assigned for slowloris as it affects tomcat?
+> 
+> Thanks
+> 
 
->
-http://developer.joomla.org/security/news/391-20120301-core-sql-injection.html
+Please use CVE-2012-5568 for this issue.
 
-Please use CVE-2012-1116 for this issue
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Please note, smaller Joomla! #, smaller CVE # (trying to keep things in
-sync as much as possible =).
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-> - Henri Salo
->
--- Kurt Seifried Red Hat Security Response Team (SRT)
+iQIcBAEBAgAGBQJQsr0/AAoJEBYNRVNeJnmTMCQQAIPCAox82g0duJMP8iQonC6J
+5c5BrzhlNCMlSkVx+UsDsf5D3epNO6NZ+NNjapry0JBF+UkgB6L+KmE/RirmAosd
+ppgXZKqeoYJxjhhaq02STlJGyQa4dEOKS5+uUz7gurhzlkHPRw1lLbStVir3CQVK
+Tcw9eiB485J/yEFeMCEyZjYB8o16V+kATUHKp0Uft78tjxkfjwr2Gleccbrx54pv
+Wh8e2YH0CHL5buHwvVHTg0kvgIC/TyYBcqZQMihVpRf13K06bdj3wldDe107QoBN
+A2UnncLxNWuPBfUD9fRutabG45fJJmZYV2kC221YJIF33/24BYixbrg6f2Vm6BaZ
+4Uxf8Xh+Riw1bjUEZdjV/VbSvk53KMC6SOFQneYeXZqR+zKRjLVOBTuTzKp1uH6T
+/403tlABGSnGosntMfY8DN0QfJzScPkiap2zb3kvKyAGNitaOTtqiE2pVfelEI2c
+vEmx4HMLvMAUJ+i6E90aXIgBFfvyu50Mzmh5C1mXpPr2QtZpUEzalRLszpkyASSO
+VXBDXj4ZrB5y8th0MxTmQqoIIsoaPLq1RV+Ye6H3GIzyf2bHqAqhmbaGiyx5Co7m
+Qw9p5wN7F0Av4e32w/z8DiRaAcqyZ/3D19jV0PUIacvnwV4iy8CddmC44CLMpH/S
+rnre/Q8jk/oESSX0ORzo
+=J0kT
+-----END PGP SIGNATURE-----
