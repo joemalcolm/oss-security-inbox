@@ -1,84 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/6
-Message-ID: <E1T9Cbz-0003ZK-24@mariner.uk.xensource.com>
-Date: Wed, 5 Sep 2012 11:13:31 +0100
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 13 (CVE-2012-3495) - hypercall physdev_get_free_pirq vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/11
+Message-ID: <50B3B85F.70806@redhat.com>
+Date: Mon, 26 Nov 2012 11:43:43 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: tor DoS via SENDME cells
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-            Xen Security Advisory CVE-2012-3495 / XSA-13
-                             version 3
+On 11/26/2012 09:48 AM, Vincent Danen wrote:
+> I've not seen a CVE for this yet, could one get assigned?
+> 
+> It was reported that Tor suffered from a denial of service 
+> vulnerability due to an error when handling SENDME cells.  This
+> could be exploited to cause excessive consumption of memory
+> resources within an entry node.
+> 
+> This is fixed in upstream version 0.2.3.25.
+> 
+> References:
+> 
+> https://secunia.com/advisories/51329/ 
+> https://trac.torproject.org/projects/tor/ticket/6252 
+> https://gitweb.torproject.org/arma/tor.git/commitdiff/b9b54568c0bb64c32bd0b362954bdbc8c1234b16
+>
+>  https://bugzilla.redhat.com/show_bug.cgi?id=880310 
+> https://bugs.gentoo.org/show_bug.cgi?id=444804
+> 
+> Thanks.
 
-           hypercall physdev_get_free_pirq vulnerability
+Please use Please use CVE-2012-5573 for this issue. for this issue.
 
-UPDATES IN VERSION 3
-====================
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Public release.  Credit Matthew Daley.
-
-ISSUE DESCRIPTION
-=================
-
-PHYSDEVOP_get_free_pirq does not check that its call to get_free_pirq
-succeeded, and if it fails will use the error code as an array index.
-
-IMPACT
-======
-
-A malicious guest might be able to cause the host to crash, leading to
-a DoS, depending on the exact memory layout.  Privilege escalation is
-a theoretical possibility which cannot be ruled out, but is considered
-unlikely.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen systems.
-
-Xen 4.1 is vulnerable.  Other versions of Xen are not vulnerable.
-
-MITIGATION
-==========
-
-This issue can be mitigated by ensuring (inside the guest) that the
-kernel is trustworthy and avoiding situations where something might
-repeatedly cause the attempted allocation of a physical irq.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch will resolve the issue.
-
-CREDIT
-======
-
-Thanks to Matthew Daley for finding this vulnerability (and that in
-XSA-12) and notifying the Xen.org security team.
-
-PATCH INFORMATION
-=================
-
-The attached patches resolve this issue
-
-  Xen 4.1, 4.1.x                           xsa13-xen-4.1.patch
-
-$ sha256sum xsa13-*.patch
-ad6e3e40ff56c7c25a94d8d9763d4b49f07802b90b4362ddbe4c86bf285c1239  xsa13-xen-4.1.patch
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJQRyVqAAoJEIP+FMlX6CvZjrcH/A0xq4dTMtJpUc1WHyUi2aXd
-5ap+AA8w0XHLdosXnbxnsTCSsAdkUeBlPkqZAoGxrCGYrzP83T0cPrz8qjzN64KE
-Jaei9prTk7VFHa9aAz3OqFYjYd/d21CxI4goGJ4Z0tygys4lmkDeex2kEAj5dq7b
-0FLj6aIAVFYI3mWMztx4poOrz/BSCMk1YtrV5hZaY8i7Y6nhaOsPISveS0Dv4FPm
-YDGc93ykhOwEWCNqWFQGVndRihgUWQIUcb7f2SUfOC/FvbcJHGlP4Aojl4LUePqM
-bi/CR9cPESr7x1+1vcGUZybXALsRMBCJPrx1td3OCgqx8bwAbsQIszuFaWTtajY=
-=s7wG
+iQIcBAEBAgAGBQJQs7hfAAoJEBYNRVNeJnmTknAP/2Rv/H4SZe+YE1rB/zvPS+0C
+3Jo6TSF95b94yKVuaqsktgB8kOUviSrzc0J9FvvzhB1RpheEhKZzBLDnlaS0GJ9+
+hqWXnt4EyCEi6BNC1xyp88zrXeQdtJz5g6PTudaSHxTvIWPRINQjrZJEPSxk2EF1
+PK0bHBKyjfdyKq9Yp3Gc84Q2XOqQ0TbbP5Eg9h+2twpm+2WakePm8kNmzF5iagPH
+rvzg6FFE8egaUyM0Hc13N0d15d19VZ3XTNV20YH4wdfocSWeVIgoq34g2GZ7clf4
+WukVkjbeS/y/fo4Bsubml8b6FHfUOS03+8+L99f8uAgAF2cn1gRE6+A/SBDko0QN
+10etjn2g3HO0CWfGRcgPL9mVFLRYNdQTJKQY570Hp+OZHmsu2zwPVJb6RlRxFWzE
+P7iCbu3ZUYUPDbIqsauTkn82efynttohJnBC7qksQeEW+et3OgpZAoFaonCc/ils
+sE8VS6B8SMTW+/JhVE0s1VSG2jXXN4ENgoDFUIj3xbZYM7LNPYXk8+GxycGtBGiK
+oKHcooyfgpSphElaKFKhvGlDNxDTf6JnTMDnUt7y5cdFcGVVxJgIXs8RCPC6mPjV
+zVza/17RQOaYJicWW+I2hpNMgj9KOfMUmOfgNB/HeJTPtrsu8M6YpR6JppPJ4rhH
+HyQW4JTJh3HG3RiVwagR
+=3Xlf
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa13-xen-4.1.patch" of type "application/octet-stream" (1005 bytes)
