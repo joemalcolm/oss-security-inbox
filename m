@@ -1,35 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/10/3
-Message-Id: <201212101901.qBAJ0sPI006321@linus.mitre.org>
-Date: Mon, 10 Dec 2012 14:00:54 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/3
+Message-ID: <50B2C24D.6070007@redhat.com>
+Date: Sun, 25 Nov 2012 18:13:49 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2012-6306 HCView Write Access Violation with GIF file
+CC: Forest Monsen <forest.monsen@...il.com>, daniel@...nsecurityfoundation.org
+Subject: Re: CVE Request for Drupal Contributed Modules
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-We have assigned CVE-2012-6306 to this issue in GIF file handling by
-HCView (aka hardcoreview):
+Thanks to daniel@...nsecurityfoundation.org who caught a pretty
+significant error I made (I typo'ed 154->155 and forgot to assign for
+154).
 
-Disclosure:     http://www.securityfocus.com/data/vulnerabilities/exploits/55819.pl
-Product source: http://hardcoreview.svn.sourceforge.net/viewvc/hardcoreview/hardcoreview/
+On 11/20/2012 01:35 PM, Kurt Seifried wrote:
+> On 11/17/2012 10:29 PM, Forest Monsen wrote:
+>> Hello!
+> 
+>> Here's a batch CVE request for a number of previously published 
+>> and resolved issues with contributed modules for the Drupal 
+>> project. As noted in 
+>> http://www.openwall.com/lists/oss-security/2012/11/05/4, I have 
+>> volunteered to coordinate our CVE requests.
+> 
+>> Forest Monsen, on behalf of the Drupal Security Team
+> 
+> Please see bottom of email for CVEs
+
+Ahh I made an error, simplest way to clean this up seems to be reject
+the one and properly assign for 154 which I forgot to do.
+
+
+>> - SA-CONTRIB-2012-154 - Basic webmail - Cross Site Scripting 
+>> http://drupal.org/node/1808852
+> 
+>> - SA-CONTRIB-2012-154 - Basic webmail - Information Disclosure 
+>> http://drupal.org/node/1808852
+> 
+>> - SA-CONTRIB-2012-155 - ShareThis - Cross Site Scripting (XSS) 
+>> http://drupal.org/node/1808856
+
+> Please use the following:
+> 
+> CVE-2012-5545 Drupal SA-CONTRIB-2012-155 XSS CVE-2012-5546 Drupal
+> SA-CONTRIB-2012-155 Information Disclosure
+
+Please REJECT CVE-2012-5546. The one assigned for CVE-2012-5545 is fine.
+
+For 154:
+
+SA-CONTRIB-2012-154 - XSS please use
+SA-CONTRIB-2012-154 - Information disclosure please use
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQEcBAEBAgAGBQJQxi9eAAoJEGvefgSNfHMdESgIAJD3mwMOAEyG/X0+yDgPjvl7
-1p00jTYgTp1rqJoW3x+ewyc7vqLePNBt8XA/7JMwILH1WQOOEm73WWsPQrT3JFcN
-xd/HYSujRpnEofWooX88FCBeZ9mHP775l7hW4aT9V6iTTKFXwdAwP3rbUfVuIyTj
-+vBB3L8HEpgvBtRMDBlchpmgbuv8k/O8XTgdVOdhZNE5NQJRd3DoSqscnggA2/Q1
-l3jSgUQ4KFoyMF8O6DFUY+Q4+e5BuPlDynfUaa38fDLr33i8pniEQaXHWDTQmN99
-KtXVpwZy/MGNugQOF7uhJBLyHpqCrwiriCxDwue+RbjNH2z0smX6PiQvT3v4njg=
-=Oi19
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQssJNAAoJEBYNRVNeJnmTbv4P/1I9wlpp4Om9TLUq9HjcyUbJ
+2BozganGckQQAtwFxearF6Dlbk+LCcS8n4p/heFeTACG89CevlAHhP3h57vAVp1S
+5vmCdoiwxIE4lv3Dn24iX0UxcQGnUU6WY9n6BZqhcWH2NWFbRMPyF/Ce0LwIgfYy
+Dt+0NCh+fRn2Czlpnmo84zzVu3TN51mRNGzEFPDhL2ZdMwP3Krt4PjUi23aEOKgj
+bKblX0p5rKn8Ey8LfoddTOmsSZ7n/6oh5+4qAH11YfuIFGQFDDCcRELuu3R/vw+P
+NPBZjNSTZyo6MnF82mYncKq3qBDpxRxH0hYsRnp+5sA8qGi1nq1GSDhuua02h9VL
+Nd/wulZf4R8fNRyug4BZz89MKq00A6D9W45gO+wQPM6piWu0sNn6bXQn58CxMohm
+82AghIvc4rKltGBHdqlTz+agtf2G7vKupjZPsXUfO75t6dHYFtWQX4RRhxXTAzxy
+oIjznaUeC9WqFpXeUAcznlRzJPoz9+VhxUd3LZiDPWBRXLy0kQ8R3AKWjv4WeP2E
+zokvqf0gFq0VsMBVRTWLDo+EKNhYsTIU6+JPe/zpt2pbdzzOjY2EhfQQ26jM93xB
+708aPXq2YSQQ9bdSsekB1kjzYqCJBkh0Z2bdwN1HrDlH2BH7zx/piENEr/dptksz
+HPy0SSjeDis8mTwnA9ec
+=s48E
 -----END PGP SIGNATURE-----
