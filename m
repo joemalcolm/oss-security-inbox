@@ -1,22 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/15
-Message-ID: <1328823392.2336.28.camel@scapa>
-Date: Thu, 09 Feb 2012 22:36:32 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/12
+Message-ID: <50B3B86F.5060205@redhat.com>
+Date: Mon, 26 Nov 2012 11:43:59 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: MySQL 0-day - does it need a CVE?
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Symfony (php-symfony-symfony) < 1.4.20: Ability to read arbitrary files on the server, readable with the web server privileges
 Content-Type: text/plain; charset=utf-8
 
-On jeu., 2012-02-09 at 14:23 -0700, Kurt Seifried wrote:
-> I'm not trying to pick on Oracle but this is topical and a perfect
-> example of the problem(s) CVE was meant to address but can't if vendors
-> don't participate in the process appropriately.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 11/26/2012 08:06 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-Can't MITRE request a little more information from vendors?
+> Symfony upstream has released 1.4.20 version: [1]
+> http://symfony.com/blog/security-release-symfony-1-4-20-released
+> 
+> correcting one security flaw: "An information disclosure flaw was
+> found in the way Symfony, an open-source PHP web framework,
+> sanitized certain HTTP POST request values. A remote attacker could
+> use this flaw to obtain (unauthorized) read access to arbitrary
+> system files, readable with the privileges of the web server
+> process."
+> 
+> References: [2] https://bugs.gentoo.org/show_bug.cgi?id=444696 [3]
+> https://bugzilla.redhat.com/show_bug.cgi?id=880240
+> 
+> Relevant upstream patch: [4]
+> http://trac.symfony-project.org/changeset/33598
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-Regards,
--- 
-Yves-Alexis
+Please use CVE-2012-5574 for this issue.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQs7hvAAoJEBYNRVNeJnmTSRsQAKV0x1tXVcNJHhxRNRgUHUA7
+2jUghnUu0hnEbJHfCNzlGByHegPi7nikL0IJyKT7vNHEuSSgHQYj/Kkp7xod0CQD
+nKg0fnxAtWocvGLbkVE22yNull9TlKZ7ltVZDvcj9IQ8fte5wV6qsxmOyTICC6Fb
+iVKBj2uo+5GVye3ZcB8ka+q29D6VTsUvnjAB0YYX7yfr9FTM8zwRLkTUSz/YCZi9
+AUMDMiWTeSYvNwhO0vciBV/W8H6kgYg6wVqWTpOWM/MSc8PBvqKFxgHECZubifY6
+LLlVbmljqgH4jvpz1YSMld3aZ95toSS6/9X+sELuKGnQcZKh+wZ1Ae5XVP0OQprX
+5s3gyT60nd3Nf2nMbB+SKX0KLeZa7kGC5oalG5GVr/LFSiOJPnkrjTDo64LwEAqz
+ORDV3Sict9JomqbwzzVyRr/Qc/dVsfxUvVU7zH74Cw1MplCyV9tTi9VvhVgB/4hH
+tF0pmSIFFbvMnis2yyVcJwHkpgQ1fFax8ZLhqamevd5aiVSzlXmO8aQr68UeobmH
+36h+JPob3rIAvV4h4g4TGAY/ovDPrNOCtXvpqi1Ozp2hsxcFa9pBYqWA9k9iovSi
+xiRn+2arJ+Pnxwkig5YLrfApKHbNBzA5Gt6r9mxyFZcUX2h1SFVcpQIy3r/lrZ+q
+fgSPlh/Hk3i27f9lY6Y0
+=wFPm
+-----END PGP SIGNATURE-----
