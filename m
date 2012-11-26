@@ -1,129 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/9
-Message-ID: <4FD0CAC0.90004@redhat.com>
-Date: Thu, 07 Jun 2012 17:37:36 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Xi Wang <xi.wang@...il.com>, Kurt Seifried <kseifried@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: memory allocator upstream patches
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/4
+Message-ID: <50B337DE.6050104@moritz-naumann.com>
+Date: Mon, 26 Nov 2012 10:35:26 +0100
+From: Moritz Naumann <oss-security@...itz-naumann.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Security issue in icecast
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Hello Xi, Kurt,
+Hi,
 
-   thank you for your report and notification.
+I'm not sure it's worth spending your time on this, so please decide
+for yourselves:
 
-It doesn't look that the issues below have got CVE identifiers
-assigned yet. Thus assuming your report was also a simultaneous
-request for the identifiers, not just notification, correct?
-Can you confirm that?
+1. Spelling issue in CVE-2011-4612:
 
-Kurt,
+> On 12/15/2011 11:25 AM, Jamie Strandboge wrote:
+>> A security bug was reported by Moritz Naumann against icecast in
+>>  Ubuntu.
 
-   once confirmed, could you please allocate CVE ids for these
-flaws? (me not sure if the 'bionic' one case below being open-source,
-but for the rest the request(s) look valid).
+> Details from the public bug follow: 
+> https://launchpad.net/bugs/894782
+> 
+>> From the reporter: "Newline injection in error.log
+[..]
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+The CVE overview now reads:
+> icecast before 2.3.3 allows remote attackers to inject control 
+> characters such as newlines into the error loc (error.log) via a 
+> crafted URL.
 
-On 06/05/2012 07:54 AM, Xi Wang wrote:
-> Hi,
->
-> I would like to share some upstream patches of two specific types
-> of memory allocator vulnerabilities.
->
-> * malloc(n) size overflow.
->
-> Consider the following code pattern.
->
-> 	n = read_from_input();
-> 	p = malloc(n);
-> 	if (p)
-> 		memcpy(p, input_buffer, n);
->
-> Some malloc() implementations internally perform alignment/padding
-> for a large n, and the allocation size wraps around to a small
-> integer.  That means they would allocate a smaller buffer than
-> expected, leading to buffer overflow.
->
-> * calloc(n, size) size overflow.
->
-> Some calloc() implementations don't check for n * size multiplication
-> overflow, and would allocate a smaller buffer than expected,
-> leading to buffer overflow.
->
-> The two types of vulnerabilities can be easily reproduced using
-> malloc(-1) and calloc(BIG-VALUE, BIG-VALUE).  If the return values
-> are non-null, the implementations are likely to be problematic.
->
-> See a more complete list at:
->
-> http://kqueue.org/blog/2012/03/05/memory-allocator-security-revisited/
->
-> Below are some recent upstream fixes.
->
->
-> Boehm-Demers-Weiser GC (libgc)
-> ==============================
->
-> malloc() size overflow, upstream patch (revised by the developers):
->
-> https://github.com/ivmai/bdwgc/commit/be9df82919960214ee4b9d3313523bff44fd99e1
->
-> The bug in mallocx.c was found by Ivan Maidanski.
->
-> calloc() size overflow, upstream patch (revised by the developers):
->
-> https://github.com/ivmai/bdwgc/commit/e10c1eb9908c2774c16b3148b30d2f3823d66a9a
-> https://github.com/ivmai/bdwgc/commit/6a93f8e5bcad22137f41b6c60a1c7384baaec2b3
-> https://github.com/ivmai/bdwgc/commit/83231d0ab5ed60015797c3d1ad9056295ac3b2bb
->
->
-> bionic (Android libc)
-> =====================
->
-> malloc() size overflow, upstream patch (revised by the developers):
->
-> https://github.com/android/platform_bionic/commit/7f5aa4f35e23fd37425b3a5041737cdf58f87385
->
-> NB: this vulnerability could only be triggered in debug mode, the
-> same as CVE-2009-0607, calloc() size overflow.
->
->
-> nedmalloc
-> =========
->
-> malloc() size overflow, upstream patch:
->
-> https://github.com/ned14/nedmalloc/commit/1a759756639ab7543b650a10c2d77a0ffc7a2000
->
-> calloc() size overflow, upstream patch:
->
-> https://github.com/ned14/nedmalloc/commit/2965eca30c408c13473c4146a9d47d547d288db1
->
->
-> Hoard
-> =====
->
-> http://www.hoard.org/
->
-> malloc() size overflow, confirmed by the developers via email in
-> this March, no upstream patch available (since 3.8).
->
-> calloc() size overflow, which should only happen on non-glibc
-> platforms (e.g., Mac OS X).  It has not been confirmed by the
-> developers, but one can easily reproduce it.
->
->
-> boost::pool
-> ===========
->
-> ordered_malloc() (similar to calloc()) size overflow, upstream patch:
->
-> https://svn.boost.org/trac/boost/changeset/78326
->
->
-> - xi
+I would think "error loc" should actually say "error log".
 
+
+2. Access complexity
+
+"Low" is correct since specialized access conditions or extenuating
+circumstances do not exist and the first three examples provided at
+  http://www.first.org/cvss/cvss-guide.html#i2.1.2
+do apply.
+
+Thanks,
+
+Moritz Naumann
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIcBAEBCgAGBQJQszfAAAoJEL2W7K2TRQCwJ6oP/RjTNXSF4H65cDEp3b6Z/y8E
+CbF165PSI4j6kqoqtYxY+V9Eu8r7x7czuCjqZTC+DzKxfOi2lb+uWUJ01a5Ldnu1
+UX1z210+HOf+XMwDqp3BnaWJwK71ZCIH+9eRkS/6nAWVe04Pk3x5n90fvSJjDvt/
+AAbcAtZiiy9Ef81MtK97amHy4GQqR7I1yMQ9BqBV4PB3vGWKp/pIR+bVg3NHbaHp
+N4fD9EdKh/LDJDd24Bv9ZKnhp/fumJLwsqkGsJ8ePnqitUxcUZjXUqVTGdhXOmvW
+SraEjudIr8Cst6+ykFDkMZYsGe4edhG4MsFFZkmtLvoOsOd4SyuR7jmD58jBSwQj
+1fvVaXICmM7mUCeDbdMeJldGzXGoCoEFwBhdBVMvUm4/572CsWzEug9f0QlhqKl4
+O1tGG9RuMyD0+5kJ7y1Ay8WdLupPHlUhU+ijFusBIj15+AKa56UCktN41xpvLzUf
+c5DO0SBfA9AWcv2+8mxDS752pQ92Cldd6GM3BXtUvmVAeYmn0hDZGev2r1fYCNbl
+RrnoOcj0ViSscOd1GsX2vd9u+CE7yvmwu+b7KGuWM6htPCygbT1ntga7YGPZN2P2
+utLgPJ6+mwEgJwHzxNECCecfxXOAbWD0mvvXBZIEXxfkY9XV+3ZH2S1/qMH5UBn4
+HXYH+XhCcgxI+X42QfDM
+=D0i4
+-----END PGP SIGNATURE-----
