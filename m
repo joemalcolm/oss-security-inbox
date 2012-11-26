@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/14/11
-Message-ID: <20120314204410.GS3308@redhat.com>
-Date: Wed, 14 Mar 2012 14:44:10 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/7
+Message-ID: <20121126164857.GB2689@redhat.com>
+Date: Mon, 26 Nov 2012 09:48:57 -0700
 From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Was a CVE ever assigned for Python SimpleHTTPServer.py XSS?
+Subject: tor DoS via SENDME cells
 Content-Type: text/plain; charset=utf-8
 
-I'm not sure if a CVE was ever assigned to this or not; it's an older
-issue that's fixed in 2.5.x and 2.6.x (I suspect 2.7.x is fixed too, but
-I cannot find a commit to be 100% sure).  It sounds awfully familiar
-though.
+I've not seen a CVE for this yet, could one get assigned?
 
+It was reported that Tor suffered from a denial of service
+vulnerability due to an error when handling SENDME cells.  This could be
+exploited to cause excessive consumption of memory resources within an
+entry node.
 
-A flaw was reported in Python's SimpleHTTPServer's list_directory()
-function.  Due to a missing charset parameter, if a user were to connect
-to SimpleHTTPServer using IE7, which engages in encoding-sniffing and
-can be tricked into interpretting the output as UTF7.  Because of this,
-an attacker could hide <script> tags in UTF7-encoded characters which do
-not get quoted by cgi.encode(), allowing XSS attacks.
-
-This has been corrected upstream in version 2.6.7rc2 and 2.5.6c1.  It
-may be fixed in 2.7 as well, but I was unable to find a commit to match
-it against.
+This is fixed in upstream version 0.2.3.25.
 
 References:
-http://bugs.python.org/issue11442
-http://svn.python.org/view/python/branches/release26-maint/Lib/SimpleHTTPServer.py?r1=66717&r2=88831&view=patch
-http://svn.python.org/view/python/branches/release25-maint/Lib/SimpleHTTPServer.py?r1=53148&r2=88815&view=patch
-https://bugzilla.redhat.com/show_bug.cgi?id=803500
+
+https://secunia.com/advisories/51329/
+https://trac.torproject.org/projects/tor/ticket/6252
+https://gitweb.torproject.org/arma/tor.git/commitdiff/b9b54568c0bb64c32bd0b362954bdbc8c1234b16
+https://bugzilla.redhat.com/show_bug.cgi?id=880310
+https://bugs.gentoo.org/show_bug.cgi?id=444804
+
+Thanks.
 
 -- 
 Vincent Danen / Red Hat Security Response Team 
