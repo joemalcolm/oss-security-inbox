@@ -1,57 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/13/5
-Message-ID: <4F393341.9040903@redhat.com>
-Date: Mon, 13 Feb 2012 08:58:57 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/8
+Message-ID: <846296467.37907315.1353953215439.JavaMail.root@redhat.com>
+Date: Mon, 26 Nov 2012 13:06:55 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: YGN Ethical Hacker Group <lists@...g.net>
-Subject: Re: CubeCart 3.0.20 (3.0.x) and lower | Open URL Redirection Vulnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Sawyer X <xsawyerx@...n.org>, Petr Pisar <ppisar@...hat.com>
+Subject: CVE Request -- Dancer.pm / perl-Dancer / libdancer-perl: Newline injection due to improper CRLF escaping in cookie() and cookies() methods (different vulnerability than CVE-2012-5526)
 Content-Type: text/plain; charset=utf-8
 
-On 02/12/2012 08:08 AM, YGN Ethical Hacker Group wrote:
-> 1. OVERVIEW
-> 
-> The CubeCart 3.0.20 and lower versions are vulnerable to Open URL Redirection.
-> 
-> 
-> 2. BACKGROUND
-> 
-> CubeCart is an "out of the box" ecommerce shopping cart software
-> solution which has been written to run on servers that have PHP &
-> MySQL support. With CubeCart you can quickly setup a powerful online
-> store which can be used to sell digital or tangible products to new
-> and existing customers all over the world.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The CubeCart 3.0.20 and lower versions contain a flaw that allows a
-> remote cross site redirection attack. This flaw exists because the
-> application does not properly sanitise the parameters,"goto" and "r".
-> This allows an attacker to create a specially crafted URL, that if
-> clicked, would redirect a victim from the intended legitimate web site
-> (domain.com) to an arbitrary web site (localhost) of the attacker's
-> choice.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> 3.0.20 and lower (aka 3.0.x family)
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://localhost/cube3.0.20/switch.php?r=//yehg.net/&lang=es
-> http://localhost/cube3.0.20/admin/login.php?goto=//yehg.net
-> 
-> 
-> 6. SOLUTION
-> 
-> The CubeCart 3.0.x version family is no longer maintained by the vendor.
-> Upgrade to CubeCart 4x/5.x.
+Hello Kurt, Steve, vendors,
 
-Can you confirm that this issue is corrected/not present in version 4.x
-and 5.x?
+  a security flaw was found in the way Dancer.pm,
+lightweight yet powerful web application framework
+/ Perl language module, performed sanitization of
+values to be used for cookie() and cookies() methods.
+A remote attacker could use this flaw to inject arbitrary
+headers into responses from (Perl) applications, that use
+Dancer.pm. A different vulnerability than CVE-2012-5526.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=694279
+[2] https://github.com/sukria/Dancer/issues/859
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=880329
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: The issue is different / unrelated than similar
+      recent CGI.pm, CVE-2012-5526, flaw (the presence
+      / absence of the CGI.pm CVE-2012-5526 fix doesn't
+      have impact on it).
