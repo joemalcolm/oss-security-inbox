@@ -1,27 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/22/3
-Message-ID: <50D51BE0.2090306@cs.ucla.edu>
-Date: Fri, 21 Dec 2012 18:33:04 -0800
-From: Paul Eggert <eggert@...ucla.edu>
-To: coley@...us.mitre.org, oss-security@...ts.openwall.com,  security@...ntu.com
-Subject: Re: CVE Request: grep
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/13
+Message-ID: <CABbbngCdzMe8x7idqurAZ=R+TgNEbHFrVtVuhyFMp8ER6qbH4A@mail.gmail.com>
+Date: Mon, 26 Nov 2012 11:58:56 -0800
+From: Forest Monsen <forest.monsen@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, daniel@...nsecurityfoundation.org
+Subject: Re: CVE Request for Drupal Contributed Modules
 Content-Type: text/plain; charset=utf-8
 
-On 12/21/2012 04:19 PM, Seth Arnold wrote:
-> Paul, are any security issues fixed with those patches?
+On Sun, Nov 25, 2012 at 5:13 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-Possibly.  I usually don't bother to try to find exploits,
-so I can't say for sure.
+> Ahh I made an error, simplest way to clean this up seems to be reject
+> the one and properly assign for 154 which I forgot to do.
+>
 
-> Did I overlook
-> any other patches that need CVE numbers?
+Will do, thank you.
 
-If memory serves you also need to update gnulib.
+Forest
 
-The set of patches is tricky enough that it is probably
-better to upgrade to 2.11; that's simpler, and arguably
-it's more likely to be safe.  You might want to fix
-the two bugs that were introduced in 2.11 (see
-the NEWS file), but you probably already have a 2.11
-package that does that, somewhere.  You might also
-want to undo the -r change introduced in 2.11.
