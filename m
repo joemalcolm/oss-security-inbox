@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/06/15
-Message-ID: <50995CBC.2020809@halfdog.net>
-Date: Tue, 06 Nov 2012 18:53:48 +0000
-From: halfdog <me@...fdog.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/5
+Message-ID: <1560967117.37798326.1353942386093.JavaMail.root@redhat.com>
+Date: Mon, 26 Nov 2012 10:06:26 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: TTY handling when executing code in different lower-privileged context (su, virt containers)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request -- Symfony (php-symfony-symfony) < 1.4.20: Ability to read arbitrary files on the server, readable with the web server privileges
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-vladz wrote:
-> 
-> On Mon, Nov 05, 2012 at 07:22:37PM +0000, halfdog wrote:
->> During programming experiments I found some class of
->> vulnerabilities [1], that seem to be rediscovered again from time
->> to time, but since attack value is questionable, it was not fixed
->> yet.
-> 
-> ... I wrote this little PoC [2] to hijacked interactive bash shell
-> opened with "su - <user>".
+  Symfony upstream has released 1.4.20 version:
+  [1] http://symfony.com/blog/security-release-symfony-1-4-20-released
 
-Off-List: May I have permission to reference your POC from my page?
+correcting one security flaw:
+"An information disclosure flaw was found in the way Symfony,
+an open-source PHP web framework, sanitized certain HTTP POST
+request values. A remote attacker could use this flaw to obtain
+(unauthorized) read access to arbitrary system files, readable
+with the privileges of the web server process."
 
-hd
+References:
+[2] https://bugs.gentoo.org/show_bug.cgi?id=444696
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=880240
 
-> [2] http://vladz.devzero.fr/svn/codes/bash/dontsu.sh
+Relevant upstream patch:
+[4] http://trac.symfony-project.org/changeset/33598
 
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Could you allocate a CVE id for this?
 
-iEYEARECAAYFAlCZXLAACgkQxFmThv7tq+4MCQCdHxnTjzVEik3HUyCPceta0lKD
-GPsAn32YKvJLE0Oect0KW9Xhdea/3joa
-=Vyr3
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
