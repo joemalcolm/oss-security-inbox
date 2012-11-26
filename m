@@ -1,34 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/28/7
-Message-ID: <4F4D0D7B.9020004@redhat.com>
-Date: Tue, 28 Feb 2012 10:23:07 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/6
+Message-ID: <20121126150635.GA23095@inutil.org>
+Date: Mon, 26 Nov 2012 16:06:35 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, mateusz.goik@...antsoft.pl
-Subject: Re: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+Subject: CVE request: Curl insecure usage
 Content-Type: text/plain; charset=utf-8
 
-On 02/28/2012 09:32 AM, cve-assign@...re.org wrote:
->> Any javascript code could be executed from Kadu History Window
->> in following conditions:
-> 
-> CVE-2012-1410 is assigned to this Kadu issue.
-> 
-> We are confused about
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=749036
-> 
-> This is a bug report about this Kadu vulnerability, but it has a
-> CVE assignment of CVE-2006-7248 for a vulnerability in the 
-> SMIME_read_PKCS7 function in OpenSSL 0.9.7i. Our perspective is
-> that this means CVE-2006-7248 has been assigned to multiple issues
-> (the Kadu issue and the OpenSSL issue), so we'll now proceed to
-> REJECT CVE-2006-7248 sometime later today unless there's a
-> substantial objection.
+Hi,
+during the triage of the SSL client bugs spotted by the
+http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf paper
+Debian developer Alessandro Ghedini discovered two more
+applications using Curl in an insecure manner:
 
-Argh sorry cut and paste the wrong CVE # into novell's bugzilla. Can
-we just remove it from there please?
+1. opendnssec (in the eppclient tool)
+http://lists.opendnssec.org/pipermail/opendnssec-user/2012-November/002296.html
 
+2. PHPcas (used by Moodle e.g.):
+https://github.com/Jasig/phpCAS/pull/58
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Please assign CVE IDs for these.
+
+Cheers,
+        Moritz
