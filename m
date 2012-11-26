@@ -1,67 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/9
-Message-ID: <4FBBCF6B.8050506@redhat.com>
-Date: Tue, 22 May 2012 11:39:55 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/26/9
+Message-ID: <50B3B822.8030609@redhat.com>
+Date: Mon, 26 Nov 2012 11:42:42 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Behdad Esfahbod <behdad@...dad.org>
-Subject: Re: CVE Request -- mosh (and probably vte too): mosh server DoS (long loop) due improper parsing of terminal parameters in terminal dispatcher
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: Curl insecure usage
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/22/2012 07:53 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On 11/26/2012 08:06 AM, Moritz Muehlenhoff wrote:
+> Hi, during the triage of the SSL client bugs spotted by the 
+> http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf paper Debian
+> developer Alessandro Ghedini discovered two more applications using
+> Curl in an insecure manner:
 > 
->   based on:
->   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871
->   [2] https://github.com/keithw/mosh/issues/271
+> 1. opendnssec (in the eppclient tool) 
+> http://lists.opendnssec.org/pipermail/opendnssec-user/2012-November/002296.html
+>
+>  2. PHPcas (used by Moodle e.g.): 
+> https://github.com/Jasig/phpCAS/pull/58
 > 
-> A) Mosh issue:
-> ==============
-> A denial of service flaw was found in the way mosh, a remote terminal
-> application, performed processing of parameters that have been passed to
-> the terminal in the terminal dispatcher class (previously there was no
-> limit for the count of parameters, which were allowed to be passed to
-> the dispatcher). A remote atttacker could use this flaw to cause a
-> denial of service (mosh server to enter long for loop when trying to
-> process the paramaters) via specially-crafted escape sequence string.
+> Please assign CVE IDs for these.
 > 
-> Upstream ticket:
-> [3] https://github.com/keithw/mosh/issues/271
+> Cheers, Moritz
 > 
-> Relevant upstream patch:
-> [4]
-> https://github.com/keithw/mosh/commit/9791768705528e911bfca6c4d8aa88139035060e
-> 
-> 
-> References:
-> [5] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871
-> [6] https://bugzilla.redhat.com/show_bug.cgi?id=823943
-> 
-> Could you allocate a CVE id for this? (issue confirmed by mosh upstream)
 
-Please use CVE-2012-2385 for this issue.
-
-> B) vte issue:
-> =============
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871#5
-> 
-> there is similar issue in vte too (Gnome bug private for now):
-> https://bugzilla.gnome.org/show_bug.cgi?id=676090
-> 
-> Cc-ed Behdad Esfahbod on this post to clarify, what are the upstream plans
-> regarding this report in vte and if the CVE id has been already assigned
-> for
-> it.
-
-Will wait for confirmation.
-
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-
+Have these been receiving individual CVE's? I can't find any offhand,
+can you provide examples of others?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -69,19 +37,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPu89rAAoJEBYNRVNeJnmTLrAP/3q6tRebtqt9w4Dqgtku62ib
-eCKs+EYrgAKmThklXgxbXcHEgT71mAkaX1M9qbQSjodhqeFlvOOodkQ0/sjOd+6q
-YaZfsiLT43bC4ky35nW/ddhv+l3xuAte3gvnN947PvCGe6wOU/rBZ3KDEjCJDevf
-Ob93NfBAqKC5pw+9Sw1CQHHK/kQMY2BL9gqcFriISqhVYYZRCw0/wFnQOdINNq+4
-U2nxMfx9NkobOhDKSYZ0s8QHumcYJY0cVIS8mHDRYf0BHV4y+wSCZTASQnrDOXv4
-qxWVgLVb3aFCxTL3oExpKgKqS+YCh4TrE9+4zaLqG/Yn7MDjWmrvqskTznzlQx5T
-AbyIbPwXkIy+uhhP7n9Wm7eAUgSq47ZqpQb51Vi4dY2rioudIq8dmH3Fi7pa+EHE
-yCHjOf/YtkYYHVykP5LeT5b5WkmLCjR9VxkKkSsxXwT3hfZf+TQP7k3Q1D3IIhqz
-tJSoUWx8ydEapj94GwTSP8MDVohZsPtnQICZKIbzWO4Yem4NkL7Gibdcqz+/l0HS
-jja1VsoVMKp3GshM+9hTes0Kil/zpyxuW419cQk6rqS0bbbackSVAnkudGt4GyH7
-awYBkhmUjfL0YXiZx/wHE9zLrb1v7J8Beujnaq6XoBzFyklBm+Xp8IISdOKyHgHm
-NXSsanFLjGm0ogF3+cYQ
-=Ws5Q
+iQIcBAEBAgAGBQJQs7giAAoJEBYNRVNeJnmTDM4QALlcub2QiCRwLG6hkUOfpMJa
+EbWePTQ2DeShhmnCW1nFrbFQQWpzAQBvJdGmoS45L33ikv3FN5LJKblQ7PTYgHV0
+AMluclPdvrF9szXYpAfREga+YlUbrMkzZnR1p3KTApeKaOMqE1gX41+2waXMqL73
+I0p/eLalMP35+lNJJZRK2dE9dZ70f7GRCbfOTgvAV+LWWcyxOYm6RnS8iyfW4UIs
+j3SFIAVya5xXvsKvlhsXtYQaqXpdlcIXkNUBgtCi1ECXt2kAfQEsdhS6B6fSoWAR
+Nw3bFFiYjCpS5Ek+cpeLWNvklKr27JMchYyN7QYIq99U+2vS2uBAv5o8+cas0xzL
+I33GhffxhthjROt3zfmv3oQhKgTAMaDSbC781gSxdU0h1xPwFolXq8h6ebJRBPwU
+BRtnMpwgvM1Cw9EBSeoEA1+wZH1cahSeghT5GAkedn2F1Qn1CykQlQ/3AvXkohCp
+O+uYq++7K4iYTz4Fjk71pTCzoaeLslDts3g0THRUE7AecKp0jREJ7fZp8Y6C8hYO
+BEbb7GBphW9wYvRJMOQ7ILQbjfdE1gaSLF1qG2/zdoxmZqmdc6mY7zh8MeS27aUV
+YcVeBblMyd+BgVzgDl7ZBcLJgwwH90jysUeG/i2NDlQuDDEP9CFNtfRGzXVNlLM+
+0hkHSxVzqagWo/TNFQyn
+=s0Km
 -----END PGP SIGNATURE-----
