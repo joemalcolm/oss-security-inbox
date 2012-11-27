@@ -1,75 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/25/14
-Message-ID: <5061E222.8030506@redhat.com>
-Date: Tue, 25 Sep 2012 10:56:02 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/5
+Message-Id: <201211271117.33670.mweckbecker@suse.de>
+Date: Tue, 27 Nov 2012 11:17:33 +0100
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: CVE Request: libtiff: Heap-buffer overflow when processing a TIFF image with PixarLog Compression
+Subject: CVE request: libproxy issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kurt, Steve, vendors,
 
-On 09/25/2012 03:06 AM, Huzaifa Sidhpurwala wrote:
-> On 09/23/2012 08:29 AM, Solar Designer wrote:
-> 
->> "libtiff 4.0.3 brings "various memory buffer access fixes". Does
->> it fix more than CVE-2012-3401?"
->> 
->> to which I have no answer.  The change log does in fact mention 
->> "Various memory buffer access fixes." as the very first change
->> listed for libtiff.  Perhaps someone should review code changes.
->> 
-> 
-> I had a look at the libtiff-4.0.3 commit logs and found one issue
-> which seems to bring a possibility of heap-based buffer overflow
-> when using a tiff file with PixarLog compression format.
-> 
-> More details at: 
-> https://bugzilla.redhat.com/show_bug.cgi?id=860198
-> 
-> Though memory overwrite outside the heap-buffer is only a few
-> bytes, one cannot really overwrite possible arbitrary code
-> execution.
-> 
-> Can a CVE id be please assigned to the above flaw?
-> 
-> Found two other commits which seemed interesting, but i dont think 
-> they could cause arbitrary code execution and i dont want to call 
-> them security flaws.
-> 
-> 1. OOB read crash tif_packbits.c 2. Memory not properly initialised
-> in tif_fax3.c. Again this one was partly fixed in 4.0.2 and
-> completely fixed in 4.0.3
-> 
-> If anyone else wants to investigate these in more details, please
-> be my guest :)
-> 
-> Thanks!
-> 
+there is a format string issue with libproxy:
 
-Please use CVE-2012-4447 for this issue.
+  https://bugzilla.novell.com/show_bug.cgi?id=791086
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Version 0.4.10 isn't affected anymore according to Shawn Chang.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Kurt, could you possibly have a look and assign a CVE, please?
 
-iQIcBAEBAgAGBQJQYeIiAAoJEBYNRVNeJnmTYxIQAKseYz981VGzSbT/rivo11yc
-uRwKbp0L37589oNaKbvRR6EhJUJDcOrR4TB7uSSV99DRZb8h50Fe05ZfTul94ws0
-bNkFSm3dAA2RhJDN/Zorpz49PODVYUlZCvPOp8gQttQGXBtqvnPG+FIHgApjIYP8
-7j2JN+H0fB4ZpgV0JmsDnto/N1mDCTj8S9B70L5gnVSxCo5qaDyV2cis/tyJLaeT
-oM3sJaJY9RDFXqexWhhCJIdzel/ho8II4aDRaLiCYuqL4kMFE3bun1dpIwDT2CxV
-bJyxxoI/3els5bslGnxTUWRDkVKSAgK3XfLaytnpAheMBFd2nlOG+6tA2ozoxoxz
-GZQ1SJd6eSoHkoEGU8XB7q4DS+wKSDXVWeziWI0V2BnaC07Ri08ShsNlav1p/9s3
-Yv/PzfzpMjiuRrXdGwP4K5YjaKar0kSY61f7alFP9UdlSX04sDskiKXWPXVWFBoK
-eHJbZRvDxzut2qO3DTkvISe3ek78V3V7uuUz85FhG5c6vevpoIcW/dGMFgVoWpnW
-HuhbqaAAljW/m6NzoExaJqUQUO2ppx5g+K7DUtNG6JrYfljB8ygOf6edn+bWqnAj
-wUPbnQcdoDwLUn2QLBYQ8ZCvOG3yQhdhrYnjoZaqtHPMx6pHoqDaeDhsr2t+FrFS
-rTedSPpoJtJXefPg46RZ
-=owEP
------END PGP SIGNATURE-----
+Thanks,
+Matthias
+
+-- 
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
