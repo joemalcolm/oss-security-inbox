@@ -1,63 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/15
-Message-ID: <CAKCW=4YT4Atm=QHQdw_ZpDFMi7JCA=-Jqz6eLnWaxpoLb6XaSQ@mail.gmail.com>
-Date: Fri, 16 Mar 2012 12:11:04 -0400
-From: Mark Stanislav <mark.stanislav@...il.com>
-To: "Adam D. Barratt" <adam@...m-barratt.org.uk>
-Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE Requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/12
+Message-ID: <20121127213222.GO2689@redhat.com>
+Date: Tue, 27 Nov 2012 14:32:22 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2012-5532 hypervkvpd DoS
 Content-Type: text/plain; charset=utf-8
 
-All points being made are very much valid and I certainly understand how
-contextually oss-sec may be used to allocation requests under different
-circumstances.
+* [2012-11-27 11:55:35 -0700] Vincent Danen wrote:
 
-So here's my situation, I'm up for suggestions (of which, "wait longer", is
-perfectly viable!)...
-
-1) March 1st, I sent 2 of these CVEs over to Steve Christy at MITRE who had
-previously allocated 9 prior CVEs in a day or two generally
-2) March 8th, after not hearing back from Steve, I contacted
-cve@...redirectly with all 5
-3) March 15th, after not hearing back from MITRE, I contacted Kurt off list
-as I've noted his helpfulness doing allocations
-3a) Kurt pointed me to email the list, rather than him directly (which is
-perfectly fine, but perhaps not the context I was aiming for initially)
-
-So we're moving past two weeks, I have 5 CVEs I am trying to allocate and
-talk with all of these developers to get on the same page which. None of
-these vulnerabilities are exactly going to rock the security world (see:
-CVE-2012-0002) but I'd love to be able to handle the process as MITRE
-intends (Introduction to CVE Identifier Reservation -
-http://cve.mitre.org/cve/cna.html) as I have previously 9 times with a lot
-of success.
-
-I apologize if these requests fell outside of the regular scope of the
-list, but at this point I am just trying to get this process done with :)
-
--Mark
-
-On Fri, Mar 16, 2012 at 11:54 AM, Adam D. Barratt
-<adam@...m-barratt.org.uk>wrote:
-
-> On 16.03.2012 10:26, Andreas Ericsson wrote:
+>* [2012-11-27 11:21:03 -0700] Vincent Danen wrote:
 >
->> Those mails are all exemplary requests for CVE id's, ofcourse, but the
->> fact that they are all already fixed and released means that 100% of
->> the work is already done. At that point, assigning a CVE id is mostly
->> useless and is done as a "just for the record" thing.
+>>Just a heads-up on a flaw that was found:
 >>
+>>Florian Weimer of the Red Hat Product Security Team discovered that hypervkvpd
+>>would exit when it processed a spoofed Netlink packet that had been sent from
+>>an untrusted local user, in the following code:
+>>
+>>       len = recvfrom(fd, kvp_recv_buffer, sizeof(kvp_recv_buffer), 0,
+>>               addr_p, &addr_l);
+>>
+>>       if (len < 0 || addr.nl_pid) {
+>>           syslog(LOG_ERR, "recvfrom failed; pid:%u error:%d %s",
+>>                   addr.nl_pid, errno, strerror(errno));
+>>           close(fd);
+>>           return -1;
+>>       }
+>>
+>>This has been corrected upstream already.
+>>
+>>References:
+>>
+>>https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=commit;h=95a69adab9acfc3981c504737a2b6578e4d846ef
+>>https://bugzilla.redhat.com/show_bug.cgi?id=877572
 >
-> Whether you consider it useless or not, those are the CVE assignments that
-> will happen on the list, aiui.
+>Ooops.  This is a bit embarrassing.
 >
-> http://oss-security.openwall.**org/wiki/mailing-lists/oss-**security<http://oss-security.openwall.org/wiki/mailing-lists/oss-security>specifically says: "Public security issues only please. What you say here
-> is public for the world to see - keep that in mind. Embargoed information
-> is best disclosed to vendor-sec" (which should be updated to point at
-> somewhere that actually exists).
+>This is actually CVE-2012-2669.  Please reject CVE-2012-5532 as a
+>duplicate of CVE-2012-2669.
 >
-> Regards,
->
-> Adam
->
+>Thanks.
 
+Wow, ok, this is a little convoluted.  These actually are not the same
+thing.
+
+The old fix is here (so this would be CVE-2012-2669):
+
+https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=blobdiff;f=tools/hv/hv_kvp_daemon.c;h=d9834b36294373f88d29731350ccc9d384b41788;hp=146fd6147e84be5cde2a66009f331f1b6ee2b805;hb=bcc2c9c3fff859e0eb019fe6fec26f9b8eba795c;hpb=cfaf025112d3856637ff34a767ef785ef5cf2ca9
+
+This, however, while detecting the spoofed netlink packet would still
+cause the daemon to exit.  I'm not sure whether or not it actually fixed
+anything.
+
+This fix:
+
+https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=blobdiff;f=tools/hv/hv_kvp_daemon.c;h=c1d910243d49abe6012595d50227648873994ed8;hp=13c2a142331defeb539e40b9fe4d942f66c3aa4a;hb=95a69adab9acfc3981c504737a2b6578e4d846ef;hpb=aeba4a06f28fad11b1e61d150bd3cde3008b80c8
+
+fixes the previous commit so that now the daemon no longer exits on
+these bad packets.  This would be CVE-2012-5532.
+
+So CVE-2012-2669 is for "failing to check origin of netlink messages"
+and CVE-2012-5532 is for the "exiting upon receipt of spoofed netlink
+messages" (or something to that effect anyways).
+
+My apologies for the noise.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
