@@ -1,33 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/21
-Message-ID: <4F637D4C.7090707@redhat.com>
-Date: Fri, 16 Mar 2012 18:50:04 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/1
+Message-ID: <50B4551A.7030608@redhat.com>
+Date: Mon, 26 Nov 2012 22:52:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Michal Schmidt <mschmidt@...hat.com>
-Subject: [Notification] CVE-2012-1174 systemd: TOCTOU race condition by removing user session
+CC: Andrés Gómez Ramírez <andresgomezram7@...il.com>
+Subject: Re: CVE Request: Gimp memory corruption vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   this is to inform you about the following flaw in systemd:
+On 11/21/2012 10:19 AM, Andrés Gómez Ramírez wrote:
+> Hello, could a CVE be assigned to this issue?
+> 
+> Name: Gimp memory corruption vulnerability Software: GIMP 2.8.2 
+> Software link: http://www.gimp.org/ <http://plib.sourceforge.net/> 
+> Vulnerability Type: Memory Corruption
+> 
+> Description:
+> 
+> GIMP 2.8.2 is vulnerable to memory corruption when reading XWD
+> files, which could lead even to arbitrary code execution.
+> 
+> Upstream fix: 
+> http://git.gnome.org/browse/gimp/commit/?id=2873262fccba12af144ed96ed91be144d92ff2e1
+>
+> 
+(fixed in master and gimp-2-8)
+> 
+> References: https://bugzilla.gnome.org/show_bug.cgi?id=687392
+> 
+> Thanks,
+> 
+> Andres Gomez.
 
-A TOCTOU race condition was found in the way the systemd-logind login manager
-of the systemd, a system and service manager for Linux, performed removal of
-particular records related with user session upon user logout. A local attacker
-could use this flaw to conduct symbolic link attacks, potentially leading to
-removal of arbitrary system file.
+Apology for the delay, I had some mail filter issues that I have now
+fixed so I won't miss these in future.
 
-Upstream patch:
-[1] http://cgit.freedesktop.org/systemd/systemd/commit/?id=5ebff5337594d690b322078c512eb222d34aaa82
+Also if there were any other CVE requests that were also CC'ed to
+full-disclosure or Bugtraq that I haven't dealt with please ping me
+and I'll get to them asap.
 
-Red Hat Bugzilla entry:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-1174
+Please use CVE-2012-5576for this issue.
 
-Credit: Issue reported by Michal Schmidt of Red Hat.
 
-Flaw turnaround time: 16 days
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQtFUaAAoJEBYNRVNeJnmTnsoP+weCng3Etwm0gQZE/XsfCkee
+5bv8tZx2IoAqmXcwwjFtJBUUEyW4FOvvWqemDOTu2CbxJHH8BDcG7B/IeiBZuOBs
+rKuqqHx4rwEMyl/pFAmL7TtxVSEm4RjKe6RS/52IZOpFVK53XZfO7o/BtRnAsitV
+sVknVeq+WH+xxFFU6jrpvXqju0aWEo1Q4I4S/uGh9F1WtEhGMUvbBXgBKFQL23X5
+abKPpAhF807E9mhLTFOoJ/sts6L1waw5+hXAvp8LCY9pVtM6pf+VD0Gj8xIW7wP4
+wgGC2i8N4xgEohsmCzvznWDqfD5BNrFFIUguceTl/uF+PL0wKo0Nxyf+0RQOx8e1
+EQ5+3j3Q0BHXwIEA2CArIV0g4LPBJ0sJNH+bSTR6Iiz0j2Gm1VbB9GJ7hSNF5cJ/
+sXVtM9dUMdpBxKfjQeyvb4lXFLKZg8875NooGHFFinMSMjV97p6/rt6atEj76HVD
+tfLK9IBh/lm8V31L56YeegzKq0OkkdIC9pZGw+ATj66WyfTAQZxsdlGl58S9umVS
+PcFjON3sAn0O5RGAEDpyxbMMUHRbW3d/UkilA5lcqJ2XPDeILcvr5HYz5Pikkltg
+JDAbZuQV46ohmXZERjNF4hUY8VWeU4a6rk1wU11wJB4UD+sSpXjvBZoSj9EIdSjO
+MWz9hgNy/as5Qi6aOBEE
+=kBhU
+-----END PGP SIGNATURE-----
