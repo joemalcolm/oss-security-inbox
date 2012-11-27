@@ -1,22 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/7
-Message-ID: <4F83C392.8050102@redhat.com>
-Date: Tue, 10 Apr 2012 10:52:26 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/9
+Message-ID: <50B4F720.4000608@redhat.com>
+Date: Tue, 27 Nov 2012 10:23:44 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request for links2
+CC: Tomas Hoger <thoger@...hat.com>
+Subject: Re: CVE request: libproxy issue
 Content-Type: text/plain; charset=utf-8
 
-On 04/10/2012 08:13 AM, Nico Golde wrote:
-> Buffer overflow when pasting too long text from clipboard to dialog
-> boxes (not remotely exploitable) A write out of allocated memory in
-> the graphics rendeder (potentionally exploitable) An infinite loop
-> when parsing invalid usemap specification in text and graphics mode
-> (can cause browser lockup, but not otherwise exploitable)
-Yeah, i dont think this issue should get a CVE, its Dos
-> Accesses out of memory in the xbm decoder (potentionally
-> exploitable)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+On 11/27/2012 03:41 AM, Tomas Hoger wrote:
+> On Tue, 27 Nov 2012 11:17:33 +0100 Matthias Weckbecker wrote:
+> 
+>> there is a format string issue with libproxy:
+>> 
+>> https://bugzilla.novell.com/show_bug.cgi?id=791086
+>> 
+>> Version 0.4.10 isn't affected anymore according to Shawn Chang.
+> 
+> https://code.google.com/p/libproxy/source/detail?r=475 apparently.
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Please use CVE-2012-5580 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQtPcgAAoJEBYNRVNeJnmTtmgP/3/YsQ9VwnDJ5XROWzjgAEbp
+C3eoMA/Nvvo+neOGjank57JHcCNnr0/5P10HHAXpkp6sFm8qJSjrp5WgYJSdCwZc
+mp4E9ch9DaXc0ozCiNC0dwbzY/p37xFpptYbtCO3EnyYJiQtxA+JrtBJGR8MObp9
+VwFKMRZkm7ddaOS7MIkkRrienV8s76sPJkLxQGOPJtSBI3XgVdVBvIJzpTxAGE4W
+OiXF2net5rRA+9VRfFjO4wctXE6jX1CWYNQRCDVKsC0dNkp5pJckhtzsEBY2FeoK
+4q4qIHJlVmkweg6yb7DszCXrM3eTN5YxDfV/Z02FvIxmrvxOqi7GuRTkklUASkf7
+X6x4TceKxXV5ybUunSu57c/KAZnY9laMu0CJkK/sVjY73P7SIRCcWf9DnFQyIqNQ
+5LwDgexWth9rRikaHBFb1qjtL6mONgynsusH/0alvVJTZQid11yHFiDW6unZUT7R
+WGkpzS+uRcOQZKDSiUp43/IClmtgnZR7Cl5X1G+upIRaq9q6j/EH/Hf7jS/ohOYt
+2BaPSq5h1CEzGYBkv9p72DEDKtPygdBC0hdyLOKht4lXuVDVZNl5SQNixvFEHe2V
+xA0SLbxEPdslRY+Tnc4oDU/ZE3sDWUqgCkDsqnn6zw+pUU4LpHo+lB9Ic8J+7BmH
+zafln24KGsebIrNGM2ns
+=fIQB
+-----END PGP SIGNATURE-----
