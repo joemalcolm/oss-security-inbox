@@ -1,76 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/16/2
-Message-ID: <20120416065255.GA22663@suse.de>
-Date: Mon, 16 Apr 2012 08:52:55 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/13
+Message-ID: <Pine.GSO.4.64.1211271744400.13413@faron.mitre.org>
+Date: Tue, 27 Nov 2012 17:55:14 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: dapal@...ian.org
-Subject: Re: CVE id request: wicd
+cc: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: Curl insecure usage
 Content-Type: text/plain; charset=utf-8
 
 
-Training classes were teached to read our bugzilla:
+Kurt,
 
-https://bugzilla.novell.com/show_bug.cgi?id=681125
+My read is that these are fairly straightforward issues, although the 
+number of implementations with this problem may be rather high :-(
 
-:)
+opendnssec calls libcurl with an incorrect value "true" that's effectively 
+treated as the number 1, which is an insecure CURLOPT_SSL_VERIFYHOST 
+value.  So, opendnssec didn't call the API correctly - so the problem 
+rests with opendnssec.
 
-l8er,
-Sebastian
+For the handful of people interested - this is a kind of type confusion or 
+incorrect conversion error that affects a language other than C!  Kinda 
+cute.
 
-On Wed, Apr 11, 2012 at 01:50:37PM -0600, Kurt Seifried wrote:
+For PHPcas, this is just calling the API with an insecure 
+CURLOPT_SSL_VERIFYHOST value, period.
+
+So, I'd say that these faulty implementations each deserve their own CVE, 
+instead of a single ID for Curl.
+
+- Steve
+
+
+On Mon, 26 Nov 2012, Kurt Seifried wrote:
+
 > -----BEGIN PGP SIGNED MESSAGE-----
 > Hash: SHA1
-> 
-> On 04/11/2012 10:39 AM, Nico Golde wrote:
-> > Hi, can someone please assign a CVE id to wicd for: 
-> > http://www.infosecinstitute.com/courses/ethical_hacking_training.html
-> >
-> > 
-> http://bugs.debian.org/668397
-> > 
-> > It seems possible to get wicd to execute scripts via dbus messages
-> > due to broken filtering.
-> > 
-> > 
-> > Cheers Nico
-> 
-> Please use CVE-2012-2095 for this issue.
-> 
-> 
-> 
-> - -- 
+>
+> On 11/26/2012 08:06 AM, Moritz Muehlenhoff wrote:
+>> Hi, during the triage of the SSL client bugs spotted by the
+>> http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf paper Debian
+>> developer Alessandro Ghedini discovered two more applications using
+>> Curl in an insecure manner:
+>>
+>> 1. opendnssec (in the eppclient tool)
+>> http://lists.opendnssec.org/pipermail/opendnssec-user/2012-November/002296.html
+>>
+>>  2. PHPcas (used by Moodle e.g.):
+>> https://github.com/Jasig/phpCAS/pull/58
+>>
+>> Please assign CVE IDs for these.
+>>
+>> Cheers, Moritz
+>>
+>
+> Have these been receiving individual CVE's? I can't find any offhand,
+> can you provide examples of others?
+>
+> - --
 > Kurt Seifried Red Hat Security Response Team (SRT)
 > PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
 > -----BEGIN PGP SIGNATURE-----
 > Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-> 
-> iQIcBAEBAgAGBQJPheCNAAoJEBYNRVNeJnmTVjAP/jpOHueKpaiyhRRaZWyGAY4X
-> LbLXzbAbE5ttaRjVUYQS54aQpWfLy8oojBLujlU6W7mkH3Nwy+Lpf257aeahF5BR
-> KZPiWLMkSVh82a7YQrfjz3GBpn3/MJKjBQjswEEkPGFTDvp0zHkzihvnAr4vgNnt
-> kBLm3vmMryhjnXrdxQbsz/89NzW3Y0FJYe4psBgfhMQFYsigwE+7XM2uwtV2slRo
-> 5teb4EgleDOyH0wFPRakGfwvSZuS+5JdXws7HTUJfQWyyJJ8NEptCa92zW9qNgoa
-> RwHj69tkEf8AuXrl9v7TnKzvZ60LBqM69wwWR7JNz3yGnTo/a8StuplusORai3rp
-> b3/VJhe+ukPoUs4tkTBk6O26djZdBgJmkXMjTfce8E0koUgKGZEeG6g0FH5Qednw
-> cCDKpQDlIpBCfgiHIwv2QVfvF++kJhsbYwkibWTtVjtAyxI2l/0XnDP7vLea0xIO
-> wWfoj4Z7dyGux2i3tqGPgYVEkw5ccAmSeYjTX6Y8pn7SSOSvIRb5p2IAXvxqKgmN
-> VRTa+d9L0h9NJOKmiWGQfbW9WDe1txDO7Lnok5Oes7Kbt0R6Cz9yjieFBLWoA85F
-> z6AMjNGhJCKidyQ5Hm5GHUNcFuclYLm7rGPy0QHDwjBwIbfW1Hxm/rMgshewlS5u
-> gAicaLlQgONEYNmPPsce
-> =mFVG
+>
+> iQIcBAEBAgAGBQJQs7giAAoJEBYNRVNeJnmTDM4QALlcub2QiCRwLG6hkUOfpMJa
+> EbWePTQ2DeShhmnCW1nFrbFQQWpzAQBvJdGmoS45L33ikv3FN5LJKblQ7PTYgHV0
+> AMluclPdvrF9szXYpAfREga+YlUbrMkzZnR1p3KTApeKaOMqE1gX41+2waXMqL73
+> I0p/eLalMP35+lNJJZRK2dE9dZ70f7GRCbfOTgvAV+LWWcyxOYm6RnS8iyfW4UIs
+> j3SFIAVya5xXvsKvlhsXtYQaqXpdlcIXkNUBgtCi1ECXt2kAfQEsdhS6B6fSoWAR
+> Nw3bFFiYjCpS5Ek+cpeLWNvklKr27JMchYyN7QYIq99U+2vS2uBAv5o8+cas0xzL
+> I33GhffxhthjROt3zfmv3oQhKgTAMaDSbC781gSxdU0h1xPwFolXq8h6ebJRBPwU
+> BRtnMpwgvM1Cw9EBSeoEA1+wZH1cahSeghT5GAkedn2F1Qn1CykQlQ/3AvXkohCp
+> O+uYq++7K4iYTz4Fjk71pTCzoaeLslDts3g0THRUE7AecKp0jREJ7fZp8Y6C8hYO
+> BEbb7GBphW9wYvRJMOQ7ILQbjfdE1gaSLF1qG2/zdoxmZqmdc6mY7zh8MeS27aUV
+> YcVeBblMyd+BgVzgDl7ZBcLJgwwH90jysUeG/i2NDlQuDDEP9CFNtfRGzXVNlLM+
+> 0hkHSxVzqagWo/TNFQyn
+> =s0Km
 > -----END PGP SIGNATURE-----
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+>
