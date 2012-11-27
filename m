@@ -1,42 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/4
-Message-ID: <4F7C05BA.6040905@suse.de>
-Date: Wed, 04 Apr 2012 10:26:34 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com, security@...tgresql.org
-Subject: Re: Re: [pgsql-security] postgresql-jdbc 8.1 SQL injection with postgresql server 9.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/3
+Message-ID: <20121127234047.GD17784@dragontoe.org>
+Date: Tue, 27 Nov 2012 17:40:47 -0600
+From: Derek Martin <code@...zashack.org>
+To: Yves-Alexis Perez <corsac@...ian.org>
+Cc: oss-security@...ts.openwall.com, secure-testing-team@...ts.alioth.debian.org, Russ Allbery <rra@...ian.org>, temp66@...il.com
+Subject: Re: rssh: incorrect filtering of command line options
 Content-Type: text/plain; charset=utf-8
 
-Robert Haas wrote:
-> On Fri, Mar 30, 2012 at 8:51 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
->> Postgresql 9.1 turned "standard conforming strings" on by default[1][2].
->> postgresql-jdbc before version 8.2-504 however did not know about that
->> kind of string and escaped single quotes with a backslash always. When
->> such an old version of postgresql-jdbc is used with a newer postgresql
->> server it not only breaks when strings contain single quotes, it also
->> allows for SQL injections[3].
->> The bug is neither in postgresql-jdbc as it was working correctly at the
->> time it was released, nor is it really postgresql 9.1's fault which I
->> guess doesn't expect and can't detect such an old jdbc adapter. The
->> security issue arises when mixing the old adapter and the new server.
+On Wed, Nov 28, 2012 at 12:21:03AM +0100, Yves-Alexis Perez wrote:
+> CVE-2012-2251
+> 	Incorrect filtering of command line when using rsync protocol. It was
+> 	for example possible to pass dangerous options after a "--" switch. The rsync
+> 	protocol support has been added in a Debian (and Fedora/Red Hat) specific
+> 	patch, so this vulnerability doesn't affect upstream.
 > 
-> Right.  This issue has been previously reported to pgsql-security.
-> The position of the pgsql-jdbc project is that a client version should
-> be used with a matching server version; therefore, the project views
-> the proposed combination as an unsupported configuration.
+> CVE-2012-2251
 
-Sure, no doubt about that. The postgresql-jdbc package should have been
-updated a long time ago but obviously was forgotten. If we had updated
-it a year ago we'd have created a normal version update due to EOL of
-the old package with no security context at all. Now that it's known
-that the unsupported combination of versions allows for SQL injection
-however the update suddenly becomes security relevant.
+I believe this one was meant to be CVE-2012-2252...
 
-cu
-Ludwig
+> 	Incorrect filtering of the "--rsh" option: the filter preventing usage of the
+> 	"--rsh=" option would not prevent passing "--rsh". This vulnerability affects
+> 	upstream code.
+
+I've uploaded rssh-2.3.4 to the project's web page, as well as to
+sourceforge.  This update includes the fix for CVE-2012-2252, and also
+rolls up a fix for CVE-2012-3478, for which I had previously only
+posted a patch.  Additionally there are some mostly trivial updates
+for code and build clean-up.
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Derek D. Martin
+http://www.pizzashack.org/
+GPG Key ID: 0x81CFE75D
+
+
+Content of type "application/pgp-signature" skipped
