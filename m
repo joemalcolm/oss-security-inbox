@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/11
-Message-ID: <20120302181531.GC4795@foo.fgeek.fi>
-Date: Fri, 2 Mar 2012 20:15:31 +0200
-From: Henri Salo <henri@...v.fi>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Joomla core information disclosure 1.7.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/16
+Message-ID: <1354059765.7676.18.camel@scapa>
+Date: Wed, 28 Nov 2012 00:42:45 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: secure-testing-team@...ts.alioth.debian.org, Russ Allbery <rra@...ian.org>,  code@...zashack.org, temp66@...il.com
+Subject: Re: rssh: incorrect filtering of command line options
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 02, 2012 at 10:03:06AM -0700, Kurt Seifried wrote:
-> Huh?
+On mer., 2012-11-28 at 00:21 +0100, Yves-Alexis Perez wrote:
+> CVE-2012-2251
+>         Incorrect filtering of the "--rsh" option: the filter preventing usage of the
+>         "--rsh=" option would not prevent passing "--rsh". This vulnerability affects
+>         upstream code.
 > 
-> http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
-> 
-> and
-> 
-> http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
-> 
-> are entirely different issues (one is "Weak encryption causes potential
-> information disclosure" the other is "Inadequate error checking causes
-> potential information disclosure."), so two issues, two CVE's. We split
-> based on (among other things) the underlying issues, not the outcome.
-> 
-> These two CVE's are fine.
+This is indeed CVE-2012-2252, sorry for that.
 
-Definitely not my day. Sorry about that! My link should have been: http://secunia.com/advisories/46421/
+Regards,
+-- 
+Yves-Alexis Perez
+ Debian Security
 
-- Henri Salo
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
