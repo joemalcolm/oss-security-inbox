@@ -1,63 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/13
-Message-ID: <50A290DF.9030701@redhat.com>
-Date: Tue, 13 Nov 2012 11:26:39 -0700
-From: Kurt Seiifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mantis before 1.2.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/8
+Message-ID: <20121127151024.GF3007@core.inversepath.com>
+Date: Tue, 27 Nov 2012 16:10:24 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [oCERT-2012-001] multiple implementations denial-of-service via MurmurHash algorithm collision
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Nov 27, 2012 at 10:00:55AM -0500, Jan Lieskovsky wrote:
+> Hello Andrea,
+>
 
-On 11/13/2012 07:52 AM, Hanno Böck wrote:
-> http://www.mantisbt.org/bugs/changelog_page.php?version_id=150
+Hello,
+
+>   thank you for the notification. Just quick check -
+> could you confirm the correct CVE id for JRuby Murmur flaw
+> should be CVE-2012-5370, and not CVE-2011-5370?
 > 
-> New mantis bugtracker release. Two fixes are security relevant 
-> (althouhg both sound minor)
+> Asking, because while oCERT-2012-001 page mentions CVE-2012-5370,
+> it actually links against:
+>   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-5370
+> 
+> (so some of them is typo), and CVE-2011-5370 would also make
+> sense in the order for other Murmur hash algorithm implementations
+> for other languages.
+> 
 
-Just to confirm I understand these issues:
+You are quite correct, unfortunately there were typos in the other CVEs as
+well which slipped during the advisory review.
 
-> - 0014496: [security] Workflow Transitions: Minimal Access Level
-> to Change to this status has no correct 'default' (dregad) -
-> resolved. http://www.mantisbt.org/bugs/view.php?id=14496
+I just corrected the advisory. The correct CVEs are the following:
+CVE-2012-5370 (JRuby), CVE-2012-5371 (Ruby), CVE-2012-5372 (Rubinius),
+CVE-2012-5373 (Oracle JDK, OpenJDK)
 
-This is an information disclosure: "Consequently, saving the page
-without changes would cause the config to be saved with all access
-levels as 'viewer'."
+I apologize for the error.
 
-> - 0014704: [security] Clone and Move issue with Copy bug notes -
-> user get email notice from project without access (dregad) -
-> closed. http://www.mantisbt.org/bugs/view.php?id=14704
+Cheers
 
-Also an information disclosure: Now any action on IssueB eg. add
-notes, change status causes send email notice to UserA from IssueB.
-UserA don't have access to IssueB by can read whole history and any
-notes from email body.
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> ----- Original Message -----
+> #2012-001 multiple implementations denial-of-service via MurmurHash algorithm
+> collision
+> 
+> Description:
+> 
+> A variety of programming languages suffer from a denial-of-service (DoS)
+> condition against storage functions of key/value pairs in hash data
+> structures, the condition can be leveraged by exploiting predictable
+> collisions in the underlying hashing algorithms.
+> 
+> The issue is similar to the one reported in oCERT-2011-003 and concerns the
+> MurmurHash algorithm family. The condition for predictable collisions in the
+> hashing functions has been reported for the following language
+> implementations: JRuby (MurmurHash2), Ruby (MurmurHash2), Rubinius
+> (MurmurHash3), Oracle JDK (MurmurHash), OpenJDK (MurmurHash). In the case of
+> Java OpenJDK the hash function affected by the reported issue is not enabled
+> by default, the default function is however reported vulnerable to
+> oCERT-2011-003.
+> 
+> Affected version:
+> Ruby < 1.9.3-p327
+> JRuby all versions
+> Rubinius, all versions
+> Oracle JDK <= 7
+> OpenJDK <= 7
+> 
+> Fixed version:
+> Ruby >= 1.9.3-p327
+> JRuby, N/A
+> Rubinius, N/A
+> Oracle JDK, N/A
+> OpenJDK, N/A
+> 
+> Credit: vulnerability report received from Jean-Philippe Aumasson
+>         <jeanphilippe.aumasson AT gmail.com>, PoC code and SipHash
+> 	implementation used to patch the issue developed by Martin Bosslet
+> 	<martin.bosslet AT gmail.com>.
+> 
+> CVE: CVE-2012-5370 (JRuby), CVE-2011-5371 (Ruby), CVE-2011-5372 (Rubinius),
+>      CVE-2011-5373 (Oracle JDK, OpenJDK)
+> 
+> Timeline:
+> 2012-08-30: vulnerability report sent to Ruby, JRuby and Rubinius security contacts
+> 2012-09-03: vulnerability report forwarded to oCERT by Hiroshi Nakamura (Ruby security contact)
+> 2012-09-06: oCERT contacted reporters to investigate additional affected projects
+> 2012-09-06: reporters indicate OpenJDK as vulnerable and that Java security team has been contacted on 2012-07-31
+> 2012-09-10: oCERT requested CVE assignment for Ruby, JRuby and Rubinius
+> 2012-09-12: Oracle JDK and OpenJDK confirmed vulnerable by reporters
+> 2012-09-12: oCERT requested CVE assignment for Oracle JDK and OpenJDK
+> 2012-10-10: reporters indicate public PoC release on 2012-11-07 at ASFWS
+> 2012-11-08: assigned CVEs
+> 2012-11-09: Ruby 1.9.3-p327 released
+> 2012-11-23: advisory release
+> 
+> References:
+> https://www.131002.net/siphash
+> 
+> Permalink:
+> http://www.ocert.org/advisories/ocert-2012-001.html
+> 
+> -- 
+> Andrea Barisani |                Founder & Project Coordinator
+>           oCERT | OSS Computer Security Incident Response Team
+> 
+> <lcars@...rt.org>                         http://www.ocert.org
+>  0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+>         "Pluralitas non est ponenda sine necessitate"
 
-> Please assign CVEs.
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
 
-
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQopDeAAoJEBYNRVNeJnmTqjkQAKExE/IU6vY0WMd4LhD8CgYx
-22caC6AeEHHHH0RZqPENosv94iMGgUlSuaHDEO1qNzWUwhCvP/gbP9JmOuKJ2dXh
-uHg4y4l8kpDrdC6GHGTCIYmCh+Y+Xu4+ZnVlSdrb8cw/GB1YdekMD/oaHt5eOfox
-0cQ2HIN/4+deM0NRsomK+mTmZgajcsv1WTshhWPq8TsuZe8JdRr725A8vMTwRXa+
-utKwdli/kCRmFTonbIZprnnNVrGRa0WctDZ8Tif3nBPyAD5SM1RFuKbvBH75D2aA
-xBagPxeQe/A2y2eBuzfrKdnIMnTZqcz42zPirnjCTydOX1dzMc24FSObsnzxLk86
-vJK8hZlVnrFHL995i/1CC4P6IRx3FdKymNbXv7qYxf+UKImN/+uuwPLQYh575Tu3
-ilf/yUKrrJgzS3qBZm67944Yv6tKMMZI0elwZ8KkXC4m7IjJG34f0BCBjZU4+34B
-EMguOYUXoHca7X1ViG6mC2HLMibF6gOXPYx5aEvLnpDwj4GUMskOE7IYCjFL9PaJ
-aPh2ZsFeRw++289eI9OEA5iNOJkSCI+g6Cy52KLwB/6XpKyR8gzISq1oYCA1dxDU
-Lrk31W+Y2bq83B7+cfN7+Uuu1VKQACsN96Uf/y53RccsZ+fYj/gKjom8c2PHd0D9
-+wvcShflrjTOX8bfbbcg
-=pMX1
------END PGP SIGNATURE-----
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
