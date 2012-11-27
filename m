@@ -1,47 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/2
-Message-ID: <4FEBE7D4.6050104@redhat.com>
-Date: Wed, 27 Jun 2012 23:12:52 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/4
+Message-ID: <50B46C7A.2000505@redhat.com>
+Date: Tue, 27 Nov 2012 00:32:10 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, security@....net
-Subject: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+To: oss-security@...ts.openwall.com
+CC: Matthias Weckbecker <mweckbecker@...e.de>, Marc Deslauriers <marc.deslauriers@...onical.com>
+Subject: Re: CVE Request: Python keyring
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-So simply querying:
+On 11/22/2012 06:38 AM, Matthias Weckbecker wrote:
+> Hi Marc,
+> 
+> On Monday 19 November 2012 17:09:07 Marc Deslauriers wrote:
+>> On 12-11-16 11:14 AM, Marc Deslauriers wrote:
+>>> Hello,
+>>> 
+>>> Python keyring before 0.10 created keyring files world-readable
+>>> by default.
+>>> 
+> [...]
+>>> 
+>>> Could a CVE please be assigned to this issue?
+>> 
+>> Actually, that fix only changes the permissions on database files
+>> that were migrated from previous versions, it doesn't fix
+>> permissions on newly created database files.
+>> 
+>> It would appear python-keyring still creates new database files
+>> with inappropriate permissions.
+>> 
+> 
+> New bug report seems to be at [1], I assume. Has there already been
+> a CVE assigned actually?
+> 
+> [1]
+> http://bitbucket.org/kang/python-keyring-lib/issue/76/insecure-database-file-permissions
+>
+> 
+(with patches attached too)
+> 
+>> Marc.
+> 
+> Thanks, Matthias
 
-?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
-
-e.g.:
-
-http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
-
-shows authors, SAPI modules (and their authors) and normal modules
-(and their authors), resulting in a significant information disclosure
-(version #'s can be narrowed down from the authors list).
-
-This has already been reported, but no CVE was assigned:
-
-https://bugs.php.net/bug.php?id=55497
-
-It is mentioned in http://php.net/manual/en/ini.core.php however it is
-enabled by default:
-
-; Decides whether PHP may expose the fact that it is installed on the
-server
-; (e.g. by adding its signature to the Web server header).  It is no
-security
-; threat in any way, but it makes it possible to determine whether you
-use PHP
-; on your server or not.
-
-; http://www.php.net/manual/en/ini.core.php#ini.expose-php
-
-expose_php = On
-
-
+Please use CVE-2012-5578 for this issue, Python keyring 0.10 new
+keyring creation file permissions, due to partial fix for CVE-2012-5577.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -49,19 +55,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJP6+fUAAoJEBYNRVNeJnmTk5UQAJebKDKDxL/7HWz3rPcgonLl
-+45EykI+EPgH2dTmPk1vImMa+o074TgPdZYgsupDZc2jiHkyK8qo29zV3VZgg0Gk
-U8o4V1sZbt/dHiwZYagPOn4zz5A9Z+QNgnWiNCD4FZyWIBRDzWRrqfrHUjmHKPC1
-f50OHEvm1Gsu05jchyH8klj1MlIeLN86ZzlONieDU6nf8i93qLSd6R9EK/HpsET7
-6OMyrLlRNECiozruGhkCx7Eb0B1kjKESnwhiTWJh3xmnyK4ec2iICKvD3oOl7cFm
-FwXl59Iy41gpaHQW6qGyWSp942pLcQjWxixgFapJaqmnJyvE94OMdYr/dsOBHpo/
-329V66HBEFqIeC3tOLWVdKoor0EzRWbSerBbybyYhge48r3Ofn+QOKk8+1Oo2rpw
-AG7shGxDVCoAG77liMP7uKpFSnhVaBQTpKmqP16ca0e6IeqgJJKKUaj/ZFzyLVdV
-KvbhzPhHPG9vmjHtfgj1DRxQop4O2uVzvPNtXw/H0F8MqFNCpT/P4BQ5uXYPBqAE
-YdOAiS0hbdd5SRwRwLRXFRnbz14o8td36xRg1OcngPnaAZ4fnA/1xAtlDNHutUbZ
-OxNdpX0q2RfcqdXyiLoNp0n8BK+2cpNB/2yDvpolwyxKAfoVL5whgxKc52FzTe6l
-BrJsFUQkSUq+niiiaE7U
-=Xv+O
+iQIcBAEBAgAGBQJQtGx6AAoJEBYNRVNeJnmTGvsQANYU3Qp5iLgLUznJwvJjBS4m
+uVR7tkwGBvBiIDyQHwenFxHlTyQyeNqFptAs7wVKwvbBTAjIhltASP6kvFASR9EP
+PKGPYqyHpNokxf4KSHT2/X9dBe2nqEbFgn0WouMYSVqBWTjxhMi7fFhpWu25nirC
+uwEYn3SnuyCfg9aSLTVxRKq49hMSp6Wh1bkyxAqpDrKyB1K72yNQkDMhhI4RXDmW
+sFLKb/kNDQ3IH5SXdnp3PRFtgSmRy8h7Yq5P7OusTi+it9vSRtb/pN4OWEonCLc5
+ueI4MOVtvi57ppuQbn53BmjnqqtvUgxP0DnzRC0fP9mw7EkN5LXYrOLxhMYjoKoy
+Q+myrUYcypRQAZbfiX9FsBsTja9aOOyyqNHodiG1IWmuCjPaVIt7L90yh3d/jmRH
+ccrdsI/jXlw9cZR/pHRgM5BpFibe+baBuJo8zQIBVZutQj6nTKgEBwi/xjY5ubH/
+hEZPhFGZKpPKYvdr0Nnc3SapEpNl+WdTggBZuhJLpY9cRHStjxHb4QWhfZrfeezN
+evbwlRARADVKEBjXfu5/GSouweoaX0Mdd9s2tTOrPVfQNoDUM7yDDhROiT2IK1lE
+SYcZZ2H8dMQAWRW19UHVEMGIvUS5k+Xqu3fxibyycDvbgEc/S7n3PKsrVpn+s96G
+WdYifVcXHKIMDXUO1ICC
+=Zzx9
 -----END PGP SIGNATURE-----
