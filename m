@@ -1,66 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/08/7
-Message-ID: <4FA98495.4010503@redhat.com>
-Date: Tue, 08 May 2012 14:39:49 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/15
+Message-ID: <1354058463.7676.13.camel@scapa>
+Date: Wed, 28 Nov 2012 00:21:03 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: MyBB before 1.6.1
+Cc: secure-testing-team@...ts.alioth.debian.org, Russ Allbery <rra@...ian.org>,  code@...zashack.org, temp66@...il.com
+Subject: rssh: incorrect filtering of command line options
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi people,
 
-On 05/08/2012 02:37 AM, Henri Salo wrote:
-> Can I get 2010 CVE-identifiers for these two vulnerabilities,
-> thanks.
-> 
-> 1. MyBB search.php keywords Parameter SQL Injection
-> 
-> MyBB contains a flaw that may allow an attacker to carry out an SQL
-> injection attack. The issue is due to the search.php script not
-> properly sanitizing user-supplied input to the keywords parameter.
-> This may allow an attacker to inject or manipulate SQL queries in
-> the back-end database, allowing for the manipulation or disclosure
-> of arbitrary data."""
-> 
-> Reference: http://osvdb.org/show/osvdb/70013 Advisory:
-> http://yehg.net/lab/pr0js/advisories/%5Bmybb1.6%5D_sql_injection
-> 
-> 2. MyBB private.php keywords Parameter SQL Injection
-> 
-> MyBB contains a flaw that may allow an attacker to carry out an SQL
-> injection attack. The issue is due to the private.php script not
-> properly sanitizing user-supplied input to the keywords parameter.
-> This may allow an attacker to inject or manipulate SQL queries in
-> the back-end database, allowing for the manipulation or disclosure
-> of arbitrary data.
+I've just released DSA 2578-1 which affects rssh after coordination on
+the distro list and I'm now posting to oss-sec per policy.
 
-Merged, same reporter, same issue type, same version #. Please use
-CVE-2010-5096 for these issues.
+Package        : rssh
+Vulnerability  : incorrect filtering of command line options
+Problem type   : remote
+CVE ID         : CVE-2012-2251 CVE-2012-2252 
 
-> - Henri Salo
+James Clawson discovered that rssh, a restricted shell for OpenSSH to be used
+with scp/sftp, rdist and cvs, was not correctly filtering command line options.
+This could be used to force the execution of a remote script and thus allow
+arbitrary command execution. Two CVE were assigned:
 
+CVE-2012-2251
+	Incorrect filtering of command line when using rsync protocol. It was
+	for example possible to pass dangerous options after a "--" switch. The rsync
+	protocol support has been added in a Debian (and Fedora/Red Hat) specific
+	patch, so this vulnerability doesn't affect upstream.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE-2012-2251
+	Incorrect filtering of the "--rsh" option: the filter preventing usage of the
+	"--rsh=" option would not prevent passing "--rsh". This vulnerability affects
+	upstream code.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Regards,
+-- 
+Yves-Alexis Perez
+ Debian Security
 
-iQIcBAEBAgAGBQJPqYSVAAoJEBYNRVNeJnmTWgQP/2L9BbpAJ5tZLnD7NGNtFEee
-wcfjZBbY7DhNBEVaXFwBd1HR5FM0ZBQen2NbxzhIYY2meYr4FWvxwAaLwUHy1Zmg
-Lgl5vfXIKsi6tZdjwtRho+FdqN9a9Utx5vgk2VA4uVSyc8nL40ixjLJspc9tPtPV
-ue8jXd4RHhY4MQeApzjSCDY+irrgddeAyQAncjE2nSKAIftWZurq9lZP4UQaXgUT
-xTuxtHVkbK92zZgwPWDJE2U6el9hBNEoolGW6VcGsWdgiHgoyiI6Nlx+zJPIq4Nf
-nLQHX1dhG+mcxT/RxbqxQtqywccv3FiuejxD+3JJPNcTy7jXrl/y3xQGYMtr53EW
-FEVbOVR6gXh365DbDNTEgX+HJbOOo/6Mgr9rgrtBhI4LcXx+x6tXO3BCkTjtjgXG
-Uc5VpBx+Uckxayx67YzXWSj/2cVrKqJGzhY0ZloHOYFLBF1DZMh0o9W6fkZFQYK9
-8wa+p/Lt4kHCiPQBSLiIS2H5na8juMjVDqE5pQBeu5+kzc9Nco2sHqgFfYBwXWI0
-J8c5pwlDEuwcLT+JcmkQPf/dtgwbhwcxYRyZ1t4AQ8Z+J/D8nDRYqCtiMisNYw/G
-1HGpTB/vXzJYt08EiPlSX5wwRIv+2C9KKwZheir6iKZk7MAKcx6OWhDxMjMg2Zzs
-mjRe+jvIUYvHWL2HO5wk
-=+1R+
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
