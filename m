@@ -1,28 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/8
-Message-ID: <87txzm7fyu.fsf@algae.riseup.net>
-Date: Fri, 11 May 2012 14:03:21 -0400
-From: micah <micah@...eup.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/10
+Message-ID: <20121127182103.GM2689@redhat.com>
+Date: Tue, 27 Nov 2012 11:21:03 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: sympa (try again)
+Subject: CVE-2012-5532 hypervkvpd DoS
 Content-Type: text/plain; charset=utf-8
 
+Just a heads-up on a flaw that was found:
 
-Hi,
+Florian Weimer of the Red Hat Product Security Team discovered that hypervkvpd
+would exit when it processed a spoofed Netlink packet that had been sent from
+an untrusted local user, in the following code:
 
-Please assign a CVE for Sympa, any version prior to 6.1.11. It is
-possible to open the archive management ("arc_manage") page for any
-list, even those set to only be available to members, giving anyone the
-option to download the archive, or delete the archive.
+         len = recvfrom(fd, kvp_recv_buffer, sizeof(kvp_recv_buffer), 0,
+                 addr_p, &addr_l);
 
-http://www.sympa.org/distribution/latest-stable/NEWS
-https://sourcesup.renater.fr/scm/viewvc.php/branches/sympa-6.0-branch/wwsympa/wwsympa.fcgi.in?root=sympa&r1=6706&r2=7358&pathrev=7358
+         if (len < 0 || addr.nl_pid) {
+             syslog(LOG_ERR, "recvfrom failed; pid:%u error:%d %s",
+                     addr.nl_pid, errno, strerror(errno));
+             close(fd);
+             return -1;
+         }
 
-thank you,
-micah
+This has been corrected upstream already.
 
-ps - for some reason the previous message is formatted strange, so I'm
-sending this one without the signature
+References:
+
+https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=commit;h=95a69adab9acfc3981c504737a2b6578e4d846ef
+https://bugzilla.redhat.com/show_bug.cgi?id=877572
 
 -- 
-
+Vincent Danen / Red Hat Security Response Team 
