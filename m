@@ -1,12 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/4
-Message-ID: <CAHmME9p42YNoPXVsjX4MyDuLEOX9L08CHioudfMr_JeGq_01ew@mail.gmail.com>
-Date: Sat, 29 Dec 2012 16:44:55 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Frederick Townes <ftownes@...edge.com>
-Subject: Re: CVE Request: W3 Total Cache - public cache exposure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/11
+Message-ID: <20121127185535.GN2689@redhat.com>
+Date: Tue, 27 Nov 2012 11:55:35 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2012-5532 hypervkvpd DoS
 Content-Type: text/plain; charset=utf-8
 
-Fixed by vendor:
-http://plugins.trac.wordpress.org/changeset/645436/w3-total-cache
+* [2012-11-27 11:21:03 -0700] Vincent Danen wrote:
+
+>Just a heads-up on a flaw that was found:
+>
+>Florian Weimer of the Red Hat Product Security Team discovered that hypervkvpd
+>would exit when it processed a spoofed Netlink packet that had been sent from
+>an untrusted local user, in the following code:
+>
+>        len = recvfrom(fd, kvp_recv_buffer, sizeof(kvp_recv_buffer), 0,
+>                addr_p, &addr_l);
+>
+>        if (len < 0 || addr.nl_pid) {
+>            syslog(LOG_ERR, "recvfrom failed; pid:%u error:%d %s",
+>                    addr.nl_pid, errno, strerror(errno));
+>            close(fd);
+>            return -1;
+>        }
+>
+>This has been corrected upstream already.
+>
+>References:
+>
+>https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=commit;h=95a69adab9acfc3981c504737a2b6578e4d846ef
+>https://bugzilla.redhat.com/show_bug.cgi?id=877572
+
+Ooops.  This is a bit embarrassing.
+
+This is actually CVE-2012-2669.  Please reject CVE-2012-5532 as a
+duplicate of CVE-2012-2669.
+
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
