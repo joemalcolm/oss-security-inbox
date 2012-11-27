@@ -1,207 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/31/1
-Message-ID: <01d901cd3eb4$effa5c10$cfef1430$@reactionis.com>
-Date: Wed, 30 May 2012 23:38:29 +0100
-From: "Joseph Sheridan" <joe@...ctionis.com>
-To: "'full-disclosure'" <full-disclosure@...ts.grok.org.uk>, "'bugtraq'" <bugtraq@...urityfocus.com>, <secalert@...urityreason.com>, <bugs@...uritytracker.com>, "'vuln'" <vuln@...unia.com>, <vuln@...urity.nnov.ru>, <news@...uriteam.com>, <moderators@...db.org>, <submissions@...ketstormsecurity.org>, <submit@...ecurity.com>, <oss-security@...ts.openwall.com>
-Subject: ScriptFu Server Buffer Overflow in GIMP <= 2.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/2
+Message-ID: <50B46222.5070108@redhat.com>
+Date: Mon, 26 Nov 2012 23:48:02 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Forest Monsen <forest.monsen@...il.com>, daniel@...nsecurityfoundation.org
+Subject: Re: CVE Request for Drupal Contributed Modules
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability Summary
-
-=================
-
- 
-
-There is a buffer overflow in the script-fu server component of GIMP 
-
-(the GNU Image Manipulation Program) in all 2.6 versions (Windows and Linux
-versions) affecting both 
-
-the script-fu console and the script-fu network server. A crafted msg to the
-
-
-script-fu server overflows a buffer and overwrites several function pointers
-
-
-allowing the attacker to gain control of EIP and potentially execute
-arbitrary 
-
-code. This issue is fixed in the latest, stable GIMP version (currently
-2.8.0).
-
- 
-
-CVE number: CVE-2012-2763
-
-Impact: high
-
-Vendor Homepage: http://www.gimp.org/
-
-Date found: 18/05/2012
-
-Found by: Joseph Sheridan of Reaction Information Security
-
-Homepage: http://www.reactionpenetrationtesting.co.uk
-
- 
-
-This advisory is posted at:
-
-http://www.reactionpenetrationtesting.co.uk/advisories/scriptfu-buffer-overf
-low-GIMP-2.6.html
-
- 
-
-PoC Code is available here:
-
-http://www.reactionpenetrationtesting.co.uk/advisories/scriptfubof.c
-
- 
-
-Affected Products
-
-=================
-
- 
-
-Vulnerable Products
-
-+------------------
-
- 
-
-The following products are known to be affected by this vulnerability:
-
- 
-
-  * GIMP <= 2.6.12 (Windows or Linux builds)
-
- 
-
-Products Confirmed Not Vulnerable
-
-+--------------------------------
-
- 
-
-The following products are known not to be affected by this
-
-vulnerability:
-
- 
-
-  * GIMP 2.8.0 (current stable release)
-
- 
-
-Details
-
-=======
-
- 
-
-There is a buffer overflow in the command parsing code such that a long
-command
-
-overwrites various function pointers on the heap and gives the attacker full
-control 
-
-of EIP. The following command sent to the script-fu server will trigger the 
-
-vulnerability:
-
- 
-
-(file-bmp-load 123
-
-aaaaaaaaaaaaa...a*1000...aaaaaaaaaa
-
-raw-filename)
-
- 
-
-Impact
-
-======
-
- 
-
-Successful exploitation of the vulnerability may result in remote code
-execution.
-
- 
-
-Solution
-
-===========
-
-Upgrade to the latest stable version of GIMP (currently 2.8 branch) - the
-2.6 branch is 
-
-no longer supported by the GIMP development team.
-
- 
-
-Workarounds
-
-===========
-
- 
-
-A workaround would be not to use this feature on a vulnerable version of
-GIMP.
-
-The GIMP development team have strongly suggested only using the 
-
-script-fu network server in a secure/sandboxed environment due to 
-
-security concerns.
-
- 
-
-Updates
-
-============
-
- 
-
-Future updates of this advisory, if any, will be placed on the ReactionIS
-
-corporate website, but may or may not be actively announced on
-
-mailing lists or newsgroups. Users concerned about this problem are
-
-encouraged to check the URL below for any updates:
-
- 
-
-http://www.reactionpenetrationtesting.co.uk/advisories/scriptfu-buffer-overf
-low-GIMP-2.6.html
-
- 
-
-============================================================================
-====
-
- 
-
-Reaction Information Security 
-
-Lombard House Business Centre,
-
-Suite 117,
-
-12-17 Upper Bridge Street,
-
-Canterbury, Kent, CT1 2NF
-
- 
-
-Phone: +44 (0)1227 785050
-
-Email: research () reactionis {dot} co {dot} uk
-
-Web: http://www.reactionpenetrationtesting.co.uk
-
-
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 11/25/2012 06:13 PM, Kurt Seifried wrote:
+> For 154:
+> 
+> SA-CONTRIB-2012-154 - XSS please use SA-CONTRIB-2012-154 -
+> Information disclosure please use
+
+Now with actual cut and paste:
+
+SA-CONTRIB-2012-154 - XSS please use CVE-2012-5569
+SA-CONTRIB-2012-154 - Information disclosure please use CVE-2012-5570
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQtGIiAAoJEBYNRVNeJnmT6a8P/0Xc2QxMK96EiKjpUnhFpAu/
+FexuPzvl9OiVPjr7LM7qiXT2bHInFagyp6DhFTNnED5PMaroiu13kfmgPwIFJaJa
+9MD21LMQn+XbHjaGn0tDc/au72tfzBs0+jsCn5A3uXhhElRGK9sz72aJ4P32TpHB
+jpgGOKtrDw3iOjFc0UEZy0WwHi2cRN6nc5wmgP5e67ulYCZ5+qaUg3hYBKUaRFzu
+4AnezQDHpsE7MdiHFfXZeUaPuFTl9S+fgC1gZvNypYVbBEtI7GagO7233FpCArDq
+aalqW4/9/cOIhWQSHd7uPThcv1J3jESDli+3t4C20vDmYRoPScVOi4AiHVzOt396
+UpaGloNNSeCjqc2KvHXaIgGMJXIZn5FLxRVJl42OKHA4PWYgZhLpuNNQKmoauRnu
+dVTDQPW1x45j9MFuAR+qNpg1Yp88FmZ0dsUNCWrdfrYIaIPcthRXB1N7/uPlTo63
+rp2rhwYyybX113AfR5Wc0ovC/DNhrXHcMjM0bStnE1NM6tKFBgw7HAzQebaD21vH
+cSEQVUy65h8b0hlafZXG8d9ChEFZYQORU0enqs2ruR6q1dbycVzeLKMauNUZz1fN
+BauADxVC3jkoVLBJmNsyU/eFOQRtRNfGuLLnV7OOU1xgSFYs05tggAsF7R3mSTT7
+VI0gvIvsKRfV/otzGB+g
+=rZ/t
+-----END PGP SIGNATURE-----
