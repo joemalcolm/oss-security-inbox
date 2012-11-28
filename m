@@ -1,94 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/21/2
-Message-ID: <50D49BE1.2050602@redhat.com>
-Date: Fri, 21 Dec 2012 10:26:57 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: David Holland <dholland-oss-security@...bsd.org>
-Subject: Re: Isearch insecure temporary files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/6
+Message-ID: <50B63C17.2060806@openstack.org>
+Date: Wed, 28 Nov 2012 17:30:15 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2012-019] Extension of token validity through token chaining (CVE-2012-5563)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-On 12/21/2012 04:05 AM, David Holland wrote:
-> NetBSD pkgsrc ships an old text search package called Isearch,
-> which I found tonight (in the course of making it compile with a
-> modernish C++ compiler) to contain garden-variety /tmp races.
-> 
-> Does anyone else ship it? I don't think this is worth a CVE unless 
-> someone does; the package appears to be dead upstream.
+OpenStack Security Advisory: 2012-019
+CVE: CVE-2012-5563
+Date: November 28, 2012
+Title: Extension of token validity through token chaining
+Reporter: Anndy
+Products: Keystone
+Affects: Folsom, Grizzly
 
-This is similar to http://seclists.org/oss-sec/2012/q4/142
+Description:
+Anndy reported a vulnerability in token chaining in Keystone. A token
+expiration date can be circumvented by creating a new token before the
+old one has expired. An authenticated and authorized user could
+potentially leverage this vulnerability to extend his access beyond the
+account owner expectations. Note: this vulnerability was fixed in the
+past (CVE-2012-3426) but was reintroduced in Folsom when code was
+refactored to support PKI tokens.
 
-Ideally we need some way to mark software as dead/unsafe/don't use. I
-don't know what the answer is though (does someone maintain a
-blacklist? who decides? etc.).
+Grizzly (development branch) fix:
+https://github.com/openstack/keystone/commit/38c7e46a640a94da4da89a39a5a1ea9c081f1eb5
 
-> http://gnats.netbsd.org/47360 for reference; the relevant portions
-> of the patches cited follow.
+Folsom fix (included in upcoming Keystone 2012.2.1 stable update):
+https://github.com/openstack/keystone/commit/f9d4766249a72d8f88d75dcf1575b28dd3496681
 
-Yeah that's pretty classic /tmp vulns. Please use CVE-2012-5663 for
-this issue.
-
-> --- doctype/anzmeta.cxx~	2000-10-11 14:02:15.000000000 +0000 +++
-> doctype/anzmeta.cxx @@ -1446,9 +1448,21 @@ ANZMETA::Present (const
-> RESULT& ResultRe } else { STRING s_cmd; //CHR* c_cmd; -	      CHR
-> *TmpName; +	      CHR TmpName[64]; +	      int fd;
-> 
-> -	      TmpName = tempnam("/tmp", "mpout"); +	      strcpy(TmpName,
-> "/tmp/mpoutXXXXXX"); +	      fd = mkstemp(TmpName); +	      if (fd
-> < 0) { +		 /* +		  * Apparently failure is not an option here, so +
-> * proceed in a way that at least won't be insecure. +		  */ +
-> strcpy(TmpName, "/dev/null"); +	      } +	      else { +
-> close(fd); +	      }
-> 
-> cout << "[ANZMETA::Present] no docs found, so build Fly cmd" <<
-> endl;
-> 
-> --- doctype/fgdc.cxx~	2000-09-06 18:20:30.000000000 +0000 +++
-> doctype/fgdc.cxx @@ -1824,10 +1826,22 @@ FGDC::Present (const
-> RESULT& ResultRecor return; } else { STRING s_cmd; -	      CHR
-> *TmpName; - -	      TmpName = tempnam("/tmp", "mpout"); +	      CHR
-> TmpName[64]; +	      int fd;
-> 
-> +	      strcpy(TmpName, "/tmp/mpoutXXXXXX"); +	      fd =
-> mkstemp(TmpName); +	      if (fd < 0) { +		 /* +		  * Apparently
-> failure is not an option here, so +		  * proceed in a way that at
-> least won't be insecure. +		  */ +		 strcpy(TmpName, "/dev/null"); 
-> +	      } +	      else { +		 close(fd); +	      } + 
-> BuildCommandLine(mpCommand, HoldFilename, RecordSyntax, TmpName,
-> &s_cmd); system(s_cmd); --- src/marc.cxx.orig	1998-05-12
-> 16:49:10.000000000 +0000 +++ src/marc.cxx @@ -194,9 +194,15 @@
-> MARC::GetPrettyBuffer(STRING *Buffer) { /* // Cheese, cheese,
-> cheese;-) -  char *tempfile = tempnam("/tmp", "marc"); +  char
-> tempfile[32]; +  strcpy(tempfile, "/tmp/marcXXXXXX"); +  int tempfd
-> = mkstemp(tempfile); +  if (tempfd < 0) { +    *Buffer =
-> "MARC::GetPrettyBuffer() failed to open temp file"; +    return; +
-> } FILE *fp; -  if((fp = fopen(tempfile, "w")) == NULL) { +  if((fp
-> = fdopen(tempfd, "w")) == NULL) { *Buffer =
-> "MARC::GetPrettyBuffer() failed to open temp file"; return; }
-> 
-
+References:
+https://bugs.launchpad.net/keystone/+bug/1079216
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2012-5563
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQ1JvdAAoJEBYNRVNeJnmTECoP/1MoTbtK3rDPjqww7CZHmPNv
-e3holkb4Pf9ksE1cI8N/dQJsceSbl6QGJbN3K3D44gRvELI4d+WUmmzZBVJUmWxO
-gEgeMrbTcpTYlARwNa7U7saMW0yNIx8JXA1KFmVGik/cEyb4vfV0TezRU6YtUrhA
-ubwNURoxyNaIofcTW5SKLvS9DAbBYa9UhdZzbJFd7ECAU1SuPZJ/MBScwzY5OAwt
-Sa2u870/pnrUkkFUoSGgmNGOys3ZlTz306IdOUEFdf4LvTbYsWPGKI/yOjIH/SGS
-gFyOmPGrD9D0FY8XDyWV+AczTZB1JAD7EonapmlHvfrT0urq6pJDoRprsZBDxdNy
-jeKgzkzdqTXncrf7UDH2TobHSzgULvOrk4iw+jQSkKebiWTRl14W5LhM7XLciz7V
-lLJWsghteeHDUrsXrQo0DET8Pp0GnOISIPWdL8t9mqAjjHTMZMzIrmHeSht2Hw3i
-CKHdbi76fTdsJPFRxWZtD1izoA1LELK6iNoxeNQwFNHvwtykhXmE5P/DRwTzvu9v
-E7IAe7A/1PT88CXK/tRf1oAic4gGDAJszKUBmklpH+ofafJOPRNTt3PComxO3xKr
-JfjFRr/R9zOw+MPgmlocCdIj6q3qAm0eKffkyy20pjmJP7V3zzdhNfNCi6EfmEfp
-xZUppQSnc3JVbv7nYq3s
-=r14p
+iQIcBAEBCAAGBQJQtjwXAAoJEFB6+JAlsQQj3cwP/3FUjqWBxAHgRTMWz2Df5JML
+DZIelkcq3kxSn05GCJ25FU5JyA3lWvqqoEsU4+SxytBTNAGYhDe8toSo74xU4PlU
+g3+A2V5oUMEJnyCS6ps7YMiLmd1unN3Fz/yrqxAZE7GRv+voD1l64+2IHK15bN7G
+WG+FxN3CgRK+pk+3MpPkaNLI1L9wTeYTPUgBdem+I7xhmLRsf5TBO1gqu3gHja1+
+gvpWjezroWrVdAuqWFFsgzWf7LUZqZR/AqaWwS4DrHJ4LoD+ruHXNGvGyg1BQg8d
+IhqgAhBSdndlaJWTr6fj2KoqhpJK8Wu4VKIr9yIekbQIzJx11IYA9vjiJ38eJ2v1
+x2NLnNDKrq2Q51l+iAy5MMbqmFWqljwZhPNfDW+ysybFMG1CtEnCgQPLqmbF9m9m
+8M9uV/vfGKuD73GpmMR7MlHldySv+uiqJnFzyCce+QMzP7enCBitBDp0t52dRal7
+TrTR7HGXIkVJ4I/73o3MBAfQrzmTsSIYmuVybArnaNzvrcT6aZTKH8hSPWRKVqx/
+pcBP7Z+wLzHkJELWD0X9vgZJZJUj5qbMx6jq0NYYWY1lCrLTIRxXppS76/ZUzzIm
+qGS7FqUQM8u+x8rynnKNattFjWOdwXcFhcy3Io3Noc3kBDTgZf4fshBHWbO0XOqf
+BI3upFpAwQ4g4ep16o1k
+=CZnJ
 -----END PGP SIGNATURE-----
