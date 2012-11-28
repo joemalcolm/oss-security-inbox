@@ -1,49 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/10/12
-Message-ID: <20120710141433.GC5296@suse.de>
-Date: Tue, 10 Jul 2012 16:14:33 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: libdbus hardening
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/5
+Message-ID: <50B63027.6060506@openstack.org>
+Date: Wed, 28 Nov 2012 16:39:19 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2012-018] EC2-style credentials invalidation issue (CVE-2012-5571)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 10, 2012 at 06:07:03PM +0400, Solar Designer wrote:
-> On Tue, Jul 10, 2012 at 03:58:46PM +0200, Florian Weimer wrote:
-> > On 07/10/2012 03:43 PM, Solar Designer wrote:
-> > >We already have __secure_getenv() in glibc, which I think is what
-> > >libraries like this should be using on systems with glibc.
-> > 
-> > Sebastian's patches also include a check on prctl(PR_GET_DUMPABLE).  I'm 
-> > not sure if the libc approach (compare effective and real UIDs/GIDs on 
-> > process start and base process environment trust decisions on that) is 
-> > equivalent.
-> 
-> glibc also uses AT_SECURE.
-> 
-> PR_GET_DUMPABLE catches the extra case of a process that started e.g. as
-> root and has since switched creds, but do we actually want to restrict
-> processing of env vars in that case?  Perhaps not, and so AT_SECURE is
-> more appropriate.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It is indeed, if you are inside libc. :) But I dont want to parse /proc/self/auxv
-from libdbus and do not know any other portable way (I dont want to walk
-the stack base either to find auxv).
-Maybe my patch is even breaking dbus daemon itself, if it dropped to dbus user?
+OpenStack Security Advisory: 2012-018
+CVE: CVE-2012-5571
+Date: November 28, 2012
+Title: EC2-style credentials invalidation issue
+Reporter: Vijaya Erukala
+Products: Keystone
+Affects: All versions
 
-Thats someting upstream could tell us :)
+Description:
+Vijaya Erukala reported a vulnerability in Keystone EC2-style
+credentials invalidation: when a user is removed from a tenant, issued
+EC2-style credentials would continue to be valid for that tenant. An
+authenticated and authorized user could potentially leverage this
+vulnerability to extend his access beyond the account owner
+expectations. Only setups enabling EC2-style credentials (for example
+enabling EC2 API in Nova) are affected.
 
-Sebastian
+Grizzly (development branch) fix:
+http://github.com/openstack/keystone/commit/9d68b40cb9ea818c48152e6c712ff41586ad9653
 
--- 
+Folsom fix (included in upcoming Keystone 2012.2.1 stable update):
+http://github.com/openstack/keystone/commit/37308dd4f3e33f7bd0f71d83fd51734d1870713b
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+Essex fix:
+http://github.com/openstack/keystone/commit/8735009dc5b895db265a1cd573f39f4acfca2a19
 
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
+References:
+https://bugs.launchpad.net/keystone/+bug/1064914
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2012-5571
 
+- -- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBCAAGBQJQtjAkAAoJEFB6+JAlsQQj+4sP/0uKJHxXeCY3HcAdMUtkYP+5
+QyQGnscOhlggr9iE3ifPWkiLALPbfVrdwp/nJr0psXiUnf60QX4Pfj63VJz23DSf
+1Hk/Z3yY5oWmCCgT8/DMgw+SPhkn09YfS6f5KwuMR5zdEX345myp2MFcc1/mgNzx
+CfVKagHoCq8rrIhTjhAvyy5iwY/ZvbDFIgWKzgr3KCSm+76QuIqIoXHkdiCGYm4q
+OMfKEcS1WQZlmUddc54fR2g6kFY/sIsVKGdCtqJBqc6COU+MyUuhNvs7niXGK1Ep
+cU3U7tV6JCK58K70vgtQ0O5EWcDKm/Yfh5Sf/wmJTDwE2UxI8OGNEAzNJl/qxdEw
+iMUp/qRObtnN2t7pF2Rf7/ixZsTWSxpFToq6BZl4O4pghqQZQgZ9dGVgtSFkX8Tn
+crMjs8oWwtJuu1/paHje0O+9Y23NHMIdAg3ccjJUkC8MxfcnrxZkYd5XHZytecff
+iWPUWmm3ISFkOQQPuemah0vcu2Y+YvhjEY9b5nL2Ew6I/E4DeYxL1HwpeBA0lzrt
+w7nQgWCyf+ERz2g1liesuaSJ0CPBmKe93ji20kVvHTV9IRXmC3zK/SDhXtgultVo
+DmY/ovoUjTw9sg60CceTNXAUz4/4QbbUV79vFQ/06sThZ8t7ZW1kTfOrTSG6M4uw
+a557x0IhXfUedbbLCsE6
+=+0zu
+-----END PGP SIGNATURE-----
