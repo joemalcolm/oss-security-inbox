@@ -1,60 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/19/10
-Message-ID: <4F17CA2F.7070402@pipping.org>
-Date: Thu, 19 Jan 2012 08:45:51 +0100
-From: Sebastian Pipping <sebastian@...ping.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Screen locking programs on Xorg 1.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/7
+Message-ID: <20121128164453.GA2689@redhat.com>
+Date: Wed, 28 Nov 2012 09:44:53 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: Ricardo Mones <ricardo@...es.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- vCalendar plugin for Claws Mail: credentials exposed on interface
 Content-Type: text/plain; charset=utf-8
 
-On 01/19/2012 01:03 AM, Gu1 wrote:
-> Hi,
-> I recently found out that it is possible to kill a screensaver/screen
-> locker program on the latest version of Xorg (1.11 shipped with
-> archlinux, debian wheezy..) using the Ctrl+Alt+Multiply key binding.
+* [2012-11-15 13:36:13 +0100] Ricardo Mones wrote:
 
-I was able to reproduce it with Xorg 1.11.3 on Gentoo.
-It didn't work for multiply from shift+plus (German keyboard layout) but
-the keypad's plus (involving Num lock) did bypass the password dialog.
-Scary!
+>  This has been reported on our bugzilla:
+>  http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2782
+>
+>  There's still not fix available. Could a CVE id be allocated for this if
+>appropriate?
+>
+>  thanks in advance,
+>
+>P.S.: I'm not subscribed to the list.
 
+I don't know if this ever got a CVE or not; if it did I don't see a
+reference.
 
-> This behavior seems to have been introduced in a recent commit[1] and i
-> couldn't find a way to disable it.
-> 
-> All screen locking programs i tested (gnome-screensaver, kscreenlocker,
-> slock, slimlock...), are basically rendered useless.
+Also, according to this bug report it's fixed, but I can't find the
+patch in your CVS tracker.  Can you provide a link to it?
 
-Thanks for not keeping this to yourself.  I'm really glad to know.
+And, if a CVE hasn't been assigned, perhaps Kurt or someone could assign
+one?
 
-
-> [1]:
-> http://cgit.freedesktop.org/xorg/xserver/commit/?id=7d2543a3cb3089241982ce4f8984fd723d5312a1
-
-I found the commit on branch master, see here:
-
-  http://cgit.freedesktop.org/xorg/xserver/log/?ofs=650
-
-The first tag coming later in time seems to be xorg-server-1.10.99.902
-on page before:
-
-  http://cgit.freedesktop.org/xorg/xserver/log/?ofs=600
-
-I looked for function PrintDeviceGrabInfo introduced by the commit you
-pointed to:
-
-  # grep -Rl '^PrintDeviceGrabInfo' \
-        xorg-server-1.10.3.901 \
-        xorg-server-1.10.99.902 \
-        xorg-server-1.11.3
-  xorg-server-1.10.99.902/dix/grabs.c
-  xorg-server-1.11.3/dix/grabs.c
-
-So from a superficial analysis anything since 1.10.99.902 could be
-vulnerable.
-
-Best,
-
-
-
-Sebastian
+-- 
+Vincent Danen / Red Hat Security Response Team 
