@@ -1,49 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/5
-Message-ID: <20121011154355.GC2676@redhat.com>
-Date: Thu, 11 Oct 2012 09:43:55 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/4
+Message-ID: <20121128080820.GA3097@suse.de>
+Date: Wed, 28 Nov 2012 09:08:20 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: sSMTP doesn't validate server certificates
+Subject: Re: CVE-2012-5532 hypervkvpd DoS
 Content-Type: text/plain; charset=utf-8
 
-* [2012-10-10 11:59:13 +0200] Laurent Bigonville wrote:
+Hi,
 
->Hi,
->
->It seems that sSMTP is not checking the server certificate when
->connecting. This is quite annoying as one of the main ssmtp purpose is
->to be used on satellite systems that could be connected to untrusted
->networks.
->
->This has been reported (with a proposed patch) to the Debian BTS (see
->[0])
->
->Could you please allocate a CVE number for this?
->
->Cheers
->
->Laurent Bigonville
->
->[0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=662960
+Indeed. CVE-2012-2669 was actually a fix from us, but it turns out
+that it was too strict. Exiting makes indeed no sense. :/
 
-I'm not sure it deserves one.
+Sebastian
 
-If you look at the TLS file in the source tarball, it indicates that
-checking server certificates is not implemented and is something to add
-in the future:
-
-TODO:
-* Check server certificate for changes and notify about it.
-* Diffrent Certificate and Key file?
-
-Since sSMTP clearly indicates that this feature is missing and
-unsupported, then it was designed to _not_ do certificate checking.
-Regardless of how good or bad that is, it was a design choice (to leave
-it for a later date), and it's also clearly documented.
-
-To me, that doesn't seem like a security flaw (as in sSMTP was designed
-to check certificates and didn't or didn't do a good job of it).
+On Tue, Nov 27, 2012 at 02:32:22PM -0700, Vincent Danen wrote:
+> * [2012-11-27 11:55:35 -0700] Vincent Danen wrote:
+>
+>> * [2012-11-27 11:21:03 -0700] Vincent Danen wrote:
+>>
+>>> Just a heads-up on a flaw that was found:
+>>>
+>>> Florian Weimer of the Red Hat Product Security Team discovered that hypervkvpd
+>>> would exit when it processed a spoofed Netlink packet that had been sent from
+>>> an untrusted local user, in the following code:
+>>>
+>>>       len = recvfrom(fd, kvp_recv_buffer, sizeof(kvp_recv_buffer), 0,
+>>>               addr_p, &addr_l);
+>>>
+>>>       if (len < 0 || addr.nl_pid) {
+>>>           syslog(LOG_ERR, "recvfrom failed; pid:%u error:%d %s",
+>>>                   addr.nl_pid, errno, strerror(errno));
+>>>           close(fd);
+>>>           return -1;
+>>>       }
+>>>
+>>> This has been corrected upstream already.
+>>>
+>>> References:
+>>>
+>>> https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=commit;h=95a69adab9acfc3981c504737a2b6578e4d846ef
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=877572
+>>
+>> Ooops.  This is a bit embarrassing.
+>>
+>> This is actually CVE-2012-2669.  Please reject CVE-2012-5532 as a
+>> duplicate of CVE-2012-2669.
+>>
+>> Thanks.
+>
+> Wow, ok, this is a little convoluted.  These actually are not the same
+> thing.
+>
+> The old fix is here (so this would be CVE-2012-2669):
+>
+> https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=blobdiff;f=tools/hv/hv_kvp_daemon.c;h=d9834b36294373f88d29731350ccc9d384b41788;hp=146fd6147e84be5cde2a66009f331f1b6ee2b805;hb=bcc2c9c3fff859e0eb019fe6fec26f9b8eba795c;hpb=cfaf025112d3856637ff34a767ef785ef5cf2ca9
+>
+> This, however, while detecting the spoofed netlink packet would still
+> cause the daemon to exit.  I'm not sure whether or not it actually fixed
+> anything.
+>
+> This fix:
+>
+> https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=blobdiff;f=tools/hv/hv_kvp_daemon.c;h=c1d910243d49abe6012595d50227648873994ed8;hp=13c2a142331defeb539e40b9fe4d942f66c3aa4a;hb=95a69adab9acfc3981c504737a2b6578e4d846ef;hpb=aeba4a06f28fad11b1e61d150bd3cde3008b80c8
+>
+> fixes the previous commit so that now the daemon no longer exits on
+> these bad packets.  This would be CVE-2012-5532.
+>
+> So CVE-2012-2669 is for "failing to check origin of netlink messages"
+> and CVE-2012-5532 is for the "exiting upon receipt of spoofed netlink
+> messages" (or something to that effect anyways).
+>
+> My apologies for the noise.
+>
+> -- 
+> Vincent Danen / Red Hat Security Response Team 
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
