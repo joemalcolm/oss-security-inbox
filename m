@@ -1,46 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/11
-Message-ID: <5050C4B2.2050500@redhat.com>
-Date: Wed, 12 Sep 2012 11:21:54 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Matt Joyce <matt@...resistor.com>, Thierry Carrez <thierry@...nstack.org>, openstack@...ts.launchpad.net, "(openstack@...ts.launchpad.net)" <openstack@...ts.launchpad.net>
-Subject: Re: Re: [Openstack-announce] [OSSA 2012-014] Revoking a role does not affect existing tokens (CVE-2012-4413)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/9
+Message-ID: <20121128171342.GA29348@trasgu>
+Date: Wed, 28 Nov 2012 18:13:42 +0100
+From: Ricardo Mones <ricardo@...es.org>
+To: Vincent Danen <vdanen@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- vCalendar plugin for Claws Mail: credentials exposed on interface
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+  Hi Vincent,
 
-On 09/12/2012 11:07 AM, Matt Joyce wrote:
-> This is not a repeat of cve-2012-3426?
+On Wed, Nov 28, 2012 at 09:44:53AM -0700, Vincent Danen wrote:
+> * [2012-11-15 13:36:13 +0100] Ricardo Mones wrote:
+> 
+> > This has been reported on our bugzilla:
+> > http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2782
+> >
+> > There's still not fix available. Could a CVE id be allocated for this if
+> >appropriate?
+> >
+> > thanks in advance,
+> >
+> >P.S.: I'm not subscribed to the list.
+> 
+> I don't know if this ever got a CVE or not; if it did I don't see a
+> reference.
+> 
+> Also, according to this bug report it's fixed, but I can't find the
+> patch in your CVS tracker.  Can you provide a link to it?
 
-Quite different:
+  Unfortunately tracker only tracks changes to core, not to plugins, but
+the patch it's commited also into the Debian packaging, so this link may
+serve:
 
-CVE-2012-3426 OpenStack-Keystone: token expiration issues
-https://bugzilla.redhat.com/show_bug.cgi?id=843311
+http://anonscm.debian.org/gitweb/?p=users/mones/claws-mail-extra-plugins.git;a=commitdiff;h=a3f91d21b32dd0b63b28ccb0c6f7a73939b14c9a
 
-CVE-2012-4413 OpenStack-Keystone: role revocation token issues
-https://bugzilla.redhat.com/show_bug.cgi?id=855491
+> And, if a CVE hasn't been assigned, perhaps Kurt or someone could assign
+> one?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+  It't got one, but seems the list was not included in recipients:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+> Please use CVE-2012-5527 for this issue.
 
-iQIcBAEBAgAGBQJQUMSyAAoJEBYNRVNeJnmTtXkP/RrHCL0aOigaKrV4X/giNR3q
-KbUcbRl2evec6d5mNryQjOT+lAQK96DHApTCvjvVNFZ/ubFKn22A5ld761IAnsbV
-QE72PqM6UxriZFFujgW0RXRpjmmtTwcw0tjDb5xZh6PaVg41RJxMzjMNV8DmGLoi
-1Gg6YyQabD8RkkYxlCqSw2Msfo2a+Zh3VZRzM1HmZwyY69dwIdW6YfCyH+owfUgL
-rAjDpfX5sAc3rpEwfDrstV86UzdwI9bPDa9U2nuOM07/BP7FX+3DCi8R36hZq4ey
-caVermEytfVWiiLfARz0KC7O/KhTSmEKaVplLAdxNK716HstCjZTsFf72LchwnHP
-AG0gyu1em00wTAuR/oDXjOinwtnk14wKc4pZZa5g7TeCgG9N9KTyrXqEEuDPjdB7
-3gTWmhflKSQLzBkrhZ1AdurkFJolFLiYfIvfw4VlZjluYbHOkJkXhxLw6CHNLcOf
-QSzD+S5n6Glb16r5eHoBNdUk3bvdlm3B7eaIHWfnsnRFMuFegpnp5sEBqdtgd8nC
-KOD3U4KQI6BAtq3HI6YnsK8QuJC5PBLeT1nZmvmdD0S4v/wMQ8hLf7rPfm8xhtmZ
-6r6gKoPMgGDss/2dZWpX8upWt5X9IxBUimRc2ItKQZdII6s+iGclVixq7JqqEI30
-31C8uRBQ6pO6zCVXrU/q
-=RgK0
------END PGP SIGNATURE-----
+  regards,
+-- 
+  Ricardo Mones 
+  ~
+  00:45 < hammar> cool.. have you used rssyl?                          
+  00:46 <@Ticho> um, yes                            Seen on #sylpheed
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
