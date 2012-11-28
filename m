@@ -1,29 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/30/16
-Message-ID: <20120330184333.GA31260@openwall.com>
-Date: Fri, 30 Mar 2012 22:43:33 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Jeff Law <law@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/11
+Message-ID: <50B674FA.6030301@redhat.com>
+Date: Wed, 28 Nov 2012 13:32:58 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: Curl insecure usage
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 30, 2012 at 12:27:31PM -0600, Jeff Law wrote:
-> I think the right way to handle the return value is to return NULL for 
-> these cases.  It's posix complaint and the glibc crypt routines already 
-> return NULL for exceptional conditions.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Do you realize that plenty of services that use crypt() - likely the
-majority of them, even - don't handle NULL returns, so they will
-segfault when these conditions are triggered?  (That's assuming there
-is no way for an attacker to get something mmap()'ed at NULL in the
-service.)  I think the NULL returns got into POSIX starting with 2001;
-if so, anything written earlier than that legitimately does not handle
-NULL returns (and indeed a lot of newer code also does not).
+On 11/27/2012 03:55 PM, Steven M. Christey wrote:
+> 
+> Kurt,
+> 
+> My read is that these are fairly straightforward issues, although
+> the number of implementations with this problem may be rather high
+> :-(
 
-I have to admit that DragonFly BSD also recently went with NULL returns,
-and I failed to convince them to do otherwise.
+Yeah, just wanted to confirm since you guys have to write the
+descriptions (well in this case you can probably just use a template
+and replace the name/version #). I got no problem assigning lots of CVEs.
 
-NetBSD went with my suggestion of "*0" / "*1", though.
+> So, I'd say that these faulty implementations each deserve their
+> own CVE, instead of a single ID for Curl.
 
-Alexander
+Will do.
+
+> - Steve
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQtnT6AAoJEBYNRVNeJnmTVeYP/19m2xiVA3VldGeKL/VolXYA
+EGITcpUoiuq27/GKCEB/mVB4ReSy+DBz9zZxbxaRCFfia3CoTZdmkocW+0yWFK2D
+gKALNoF7S+BLqCQFY87xSRcAFjyAEiRKZj8bxkZBFOZgkURRSPQ3yhEwJ6KZJ7gU
+eYyt+8PbqoraWD/XQfonavIWJcpJxL72mWvA9jGYerXb0nxyZWSWJ47mAjj7QKI2
+Dc4f850Ytbuikwqe9jGw3CTJD8Iv7xqsf5OyPm3Qs2sAvprW/wuW/Vt5wiDCdt3g
+eqTZhtr32HzfyKuif1NlN3VBzUUmpHA6Bk6Q6w6ocxm90/Y4Jy9VG5Du9eWQMXrd
+lXtwxrvXJGyPwHGAdx89ewCAOTQhk8D2GkC7awzeEB0PDSC9keJVsn/Wo3Hlqujm
+UbQ7hT+Ri0/BJK4K04J/5ORkjhoise1M3c50+4uHz7JtJwX5w8y1sFx2Xbte6qL1
+A9w5QfrcoKb/fCsRyZNbUtaShAyB38TFBEjYK8Y+HgCErxOPW75P/ba91ORvj7md
+LQ2Xcz2WpLaH+O9gLvGY7cPcww8UkRRZraGqHYuKLN5lrx6JyXQBorcdbcsmiJb5
+XFvzWe1ZSa1FTmUeom14NjPYcOvI6CkgtUU796u81DOMJVsTiXKKniu0JbC6t4Z6
++NBp0/x5rD+eMlUWnBgC
+=ruLl
+-----END PGP SIGNATURE-----
