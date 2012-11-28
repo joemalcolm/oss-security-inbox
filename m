@@ -1,115 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/06/2
-Message-ID: <20120206052556.GA26935@openwall.com>
-Date: Mon, 6 Feb 2012 09:25:57 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: jbd/jbd2: invalid value of first log block leads to oops
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/10
+Message-ID: <20121128173740.GB2689@redhat.com>
+Date: Wed, 28 Nov 2012 10:37:40 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: Ricardo Mones <ricardo@...es.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- vCalendar plugin for Claws Mail: credentials exposed on interface
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 13, 2011 at 08:55:00AM -0700, Kurt Seifried wrote:
-> On 11/11/2011 03:50 PM, Petr Matousek wrote:
-> > A flaw was found in the way Linux kernel's Journaling Block Device (JBD)
-> > handled invalid log first block value. An attacker able to mount
-> > malicious ext3 or ext4 image could use this flaw to crash the system.
-> >
-> > Upstream commit:
-> > 8762202dd0d6e46854f786bdb6fb3780a1625efe
-> >
-> > Reference:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=753341
-[...]
-> CVE-2011-4132 is for kernel: jbd/jbd2: invalid value of first log block
-> leads to oops
+* [2012-11-28 18:13:42 +0100] Ricardo Mones wrote:
 
-http://rhn.redhat.com/errata/RHSA-2012-0007.html says "A flaw was found
-in the Linux kernel's Journaling Block Device (JBD).
-A local attacker could use this flaw to crash the system by mounting a
-specially-crafted ext3 or ext4 disk. (CVE-2011-4132, Moderate)"
+>  Hi Vincent,
+>
+>On Wed, Nov 28, 2012 at 09:44:53AM -0700, Vincent Danen wrote:
+>> * [2012-11-15 13:36:13 +0100] Ricardo Mones wrote:
+>>
+>> > This has been reported on our bugzilla:
+>> > http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2782
+>> >
+>> > There's still not fix available. Could a CVE id be allocated for this if
+>> >appropriate?
+>> >
+>> > thanks in advance,
+>> >
+>> >P.S.: I'm not subscribed to the list.
+>>
+>> I don't know if this ever got a CVE or not; if it did I don't see a
+>> reference.
+>>
+>> Also, according to this bug report it's fixed, but I can't find the
+>> patch in your CVS tracker.  Can you provide a link to it?
+>
+>  Unfortunately tracker only tracks changes to core, not to plugins, but
+>the patch it's commited also into the Debian packaging, so this link may
+>serve:
+>
+>http://anonscm.debian.org/gitweb/?p=users/mones/claws-mail-extra-plugins.git;a=commitdiff;h=a3f91d21b32dd0b63b28ccb0c6f7a73939b14c9a
+>
+>> And, if a CVE hasn't been assigned, perhaps Kurt or someone could assign
+>> one?
+>
+>  It't got one, but seems the list was not included in recipients:
+>
+>> Please use CVE-2012-5527 for this issue.
 
-Even though the issue is of little relevance for us due to its attack
-vector, I wanted to see if it's in fact limited to a DoS or maybe not.
+Fantastic, thank you for both of these.
 
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=753341
-
-Upstream fix:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=8762202dd0d6e46854f786bdb6fb3780a1625efe
-
-The commit message is lengthy and it includes a reproducer script (I am
-pleasantly surprised).  It says that for ext3 an assert failure occurs
-when s_first == 0, so this case does in fact feel like just a DoS at
-first glance at the commit message (not sure whether the same applies to
-ext4, though).  (But please read below.)  However, the fix also adds a
-check to reject "be32_to_cpu(sb->s_first) >= journal->j_maxlen", and it
-is non-obvious what happens when s_first is above this limit.
-
-Trying to follow the code, it appears that without the fix the
-journal_get_superblock() call from load_superblock() does not return an
-error for these invalid values of s_first, so we get to:
-
-	journal->j_first = be32_to_cpu(sb->s_first);
-
-j_first in turn gets into other fields in journal_reset() or/and in
-journal_next_log_block().  However, journal_reset() has:
-
-	journal->j_free = last - first;
-
-and journal_next_log_block() has:
-
-	J_ASSERT(journal->j_free > 1);
-
-This could save us from worse-than-DoS impact, but j_free is unsigned
-(so would-be-nagative values would look valid to the assert) and
-additionally J_ASSERT() is jbd.h (unlike jbd2.h's) looks like it will
-happily return control after merely dumping a backtrace.
-
-...Speaking of the latter, this means that the assert mentioned in the
-commit message is probably also insufficient to guarantee that there's
-no worse-than-DoS impact for the "== 0" case.
-
-journal_next_log_block() may set:
-
-		journal->j_head = journal->j_first;
-
-and the next call to it may do:
-
-	blocknr = journal->j_head;
-...
-	return journal_bmap(journal, blocknr, retp);
-
-which calls:
-
-		ret = bmap(journal->j_inode, blocknr);
-
-Thus, it appears that we may get an almost arbitrary out of range block
-number passed down into:
-
-sector_t bmap(struct inode * inode, sector_t block)
-{
-	sector_t res = 0;
-	if (inode->i_mapping->a_ops->bmap)
-		res = inode->i_mapping->a_ops->bmap(inode->i_mapping, block);
-	return res;
-}
-
-Following my guess as to what the ->bmap pointer might be here (note: I
-am not familiar with this code at all), I looked at ext3_bmap() and
-ext4_bmap().  These simply pass the block number into
-generic_block_bmap(), and they also pass a pointer to ext3_get_block()
-and ext4_get_block(), respectively.  generic_block_bmap() does little
-besides calling the specific get_block() function via the pointer, but
-those fs-specific functions and those they call are non-trivial.
-
-That's where I stopped spending/wasting my time on this, concluding that
-I still do not know if it's just a DoS (likely) or worse (possibly).
-If this were of more relevance to us, I'd probably figure it out, but as
-it is I just leave it for someone more curious or actually requiring
-proof.  Sorry for this xorl'ish "analysis"; I was hoping I'd arrive at
-something more useful, but I just ran out of time on this. ;-(
-
-The only maybe-useful outcome is another confirmation that this kind of
-issues are rarely quick and easy to fully analyze and figure out their
-precise impact.
-
-Alexander
+-- 
+Vincent Danen / Red Hat Security Response Team 
