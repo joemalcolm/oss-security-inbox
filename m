@@ -1,59 +1,139 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/3
-Message-ID: <4F83A0AE.5040609@redhat.com>
-Date: Mon, 09 Apr 2012 20:53:34 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/29/5
+Message-ID: <50B7A7B2.3080200@redhat.com>
+Date: Thu, 29 Nov 2012 11:21:38 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request for imagemagick, libpng and tiff
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Gerald Combs <gerald@...eshark.org>, Peter Hatina <phatina@...hat.com>
+Subject: Re: CVE Request -- wireshark: Wireshark 1.6.12 and Wireshark 1.8.4 fixes
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/09/2012 08:31 PM, Nico Golde wrote:
-> We received 3 bug reports targeting imagemagick, libpng and tiff
-> crashing on input when used with electric fence indicating memory
-> errors on handling crafted input. From what I see no CVE ids have
-> been assigned to these bugs yet.
+On 11/29/2012 11:07 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> Can someone assign ids? libpng:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668082 (apparently
-> fixed in 1.2.48 with a removal of the buggy function)
+> Wireshark upstream has recently released v1.6.12 and v1.8.4
+> versions, correcting the following security issues:
+
+Posted CVEs at bottom
+
+> * #1 pcap-ng hostname disclosure (wnpa-sec-2012-30) 
+> http://www.wireshark.org/security/wnpa-sec-2012-30.html 
+> https://bugzilla.redhat.com/show_bug.cgi?id=881855
 > 
-> tiff: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668087
+> * #2 DoS (infinite loop) in the USB dissector (wnpa-sec-2012-31) 
+> http://www.wireshark.org/security/wnpa-sec-2012-31.html 
+> https://bugzilla.redhat.com/show_bug.cgi?id=881822
 > 
-> imagemagick:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668075
+> * #3 DoS (infinite loop) in the sFlow dissector (wnpa-sec-2012-32) 
+> http://www.wireshark.org/security/wnpa-sec-2012-32.html 
+> https://bugzilla.redhat.com/show_bug.cgi?id=881816
+> 
+> * #4 DoS (infinite loop) in the SCTP dissector (wnpa-sec-2012-33) 
+> http://www.wireshark.org/security/wnpa-sec-2012-33.html 
+> https://bugzilla.redhat.com/show_bug.cgi?id=881809
+> 
+> * #5 DoS (infinite loop) in the EIGRP dissector (wnpa-sec-2012-34) 
+> http://www.wireshark.org/security/wnpa-sec-2012-34.html 
+> https://bugzilla.redhat.com/show_bug.cgi?id=881805
+> 
+> * #6 DoS (crash) in the ISAKMP dissector (wnpa-sec-2012-35) 
+> http://www.wireshark.org/security/wnpa-sec-2012-35.html 
+> https://bugzilla.redhat.com/show_bug.cgi?id=881790
+> 
+> * #7 DoS (infinite loop) in the iSCSI dissector (wnpa-sec-2012-36) 
+> http://www.wireshark.org/security/wnpa-sec-2012-36.html 
+> https://bugzilla.redhat.com/show_bug.cgi?id=881771
+> 
+> * #8 DoS (infinite loop) in the WTP dissector (wnpa-sec-2012-37) 
+> http://www.wireshark.org/security/wnpa-sec-2012-37.html 
+> https://bugzilla.redhat.com/show_bug.cgi?id=881748
+> 
+> * #9 DoS (infinite loop) in the RTCP dissector (wnpa-sec-2012-38) 
+> http://www.wireshark.org/security/wnpa-sec-2012-38.html 
+> https://bugzilla.redhat.com/show_bug.cgi?id=881742
+> 
+> * #10 DoS (infinite loop) in the 3GPP2 A11 dissector
+> (wnpa-sec-2012-39) 
+> http://www.wireshark.org/security/wnpa-sec-2012-39.html 
+> https://bugzilla.redhat.com/show_bug.cgi?id=881706
+> 
+> * #11 DoS (infinite loop) in the ICMPv6 dissector
+> (wnpa-sec-2012-40) 
+> http://www.wireshark.org/security/wnpa-sec-2012-40.html 
+> https://bugzilla.redhat.com/show_bug.cgi?id=881701
 
-Do any of these crashes occur without electric fence? Also I think
-Vincent Fourmond <fourmond@...ian.org> stated it succinctly:
+CVE-2012-5592 Wireshark #1 pcap-ng hostname disclosure (wnpa-sec-2012-30)
 
-"On what do you base your claim that it is a user security hole ?
-While I agree that it is a bug, I fail to see how a crash at the end
-of a program's execution (cleanup time) necessarily is a user security
-hole, hence downgrading the severity. Feel free to raise it up again
-if you have arguments to back your claim."
+CVE-2012-5593 Wireshark #2 DoS (infinite loop) in the USB dissector
+(wnpa-sec-2012-31)
 
-> Kind regards Nico
+CVE-2012-5594 Wireshark #3 DoS (infinite loop) in the sFlow dissector
+(wnpa-sec-2012-32)
+
+CVE-2012-5595 Wireshark #4 DoS (infinite loop) in the SCTP dissector
+(wnpa-sec-2012-33)
+
+CVE-2012-5596 Wireshark #5 DoS (infinite loop) in the EIGRP dissector
+(wnpa-sec-2012-34)
+
+CVE-2012-5597 Wireshark #6 DoS (crash) in the ISAKMP dissector
+(wnpa-sec-2012-35)
+
+CVE-2012-5598 Wireshark #7 DoS (infinite loop) in the iSCSI dissector
+(wnpa-sec-2012-36)
+
+CVE-2012-5599 Wireshark #8 DoS (infinite loop) in the WTP dissector
+(wnpa-sec-2012-37)
+
+CVE-2012-5600 Wireshark #9 DoS (infinite loop) in the RTCP dissector
+(wnpa-sec-2012-38)
+
+CVE-2012-5601 Wireshark #10 DoS (infinite loop) in the 3GPP2 A11
+dissector (wnpa-sec-2012-39)
+
+CVE-2012-5602 Wireshark #11 DoS (infinite loop) in the ICMPv6
+dissector (wnpa-sec-2012-40)
+
+
+> 
+> Other references: 
+> http://www.wireshark.org/docs/relnotes/wireshark-1.6.12.html 
+> http://www.wireshark.org/docs/relnotes/wireshark-1.8.4.html 
+> http://www.wireshark.org/security/ 
+> https://bugs.gentoo.org/show_bug.cgi?id=445138 
+> https://bugs.mageia.org/show_bug.cgi?id=8239
+> 
+> Could you allocate CVE ids for these?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+> P.S.: Particular Red Hat bugzilla entries contain further
+> information (upstream bug, reproducer && patches where available).
+> 
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPg6CuAAoJEBYNRVNeJnmT+DcP/2Xv7xdJVclX3blnLc162FNC
-7E4tFVdtxaGJ+K8srcS+rinYCz/FrnSHyEDpXR8ShLvmYR1cZ4KP+qzDyi9IzG1d
-QG5pKCRVWQuj2/r94BU/CgBUzLIa7qJO8ztsNxLHqHt22LlpHT7AZH1dC41hnVrD
-PXb3O+c1Y0FgnszFTZ8F7PaKPNYGwfJYOeY/Z8irNdf3iCXgjlbPbng/UBY/j1C+
-znFfaNRy05RcF8DJVVscE2S9LUhZ14ufMIdn4ApV+R+v6BBMzjVBAAJSN+n6AhNY
-zOBV7HdDuzaYdNmlHEcAyBIeGu7aK54gMDIReD0o3M3IpDGYbbc7Lu1C2a67z+DD
-GOm0RoKAjmHVnPg1x81qJQcdTncvD5dVpax3EhBZkfONWX5P0iViIwI2Z+8sRKxh
-NC5dYPIJO0BE70PfQPc7mFpkMsxgJNdqEIxUus7w5rkkN3uHh+k9d6WphAc5G3J3
-u1bbLymV25M2GxemN2qLYqbER8UwQfQ8nLreOnVoHA751sXifeCSWVEoGI62aWCT
-CH8XVzM2X+CZLtUHpRKP+B1Qa84ym0nR3KJDQRzTtO4+RCvcujYaT0T96z07oreS
-w4MtgKR4hy5JvQ+ALI1hBbQ1gc+nRQHFXk/Gl8A71Otnf7AJSE5V4hfG7jYraDiS
-KK4rfLQzswkE1wCzPAEO
-=HTTE
+iQIcBAEBAgAGBQJQt6eyAAoJEBYNRVNeJnmTvFgP/37Utl+929te2/hxLu0Lm4O3
+d3RD6S/odxhTxVeLR4SP2q32mgsxEZhPS5VAD45oUez7WmihHsjuhr5qlz3unqGY
+k90aHnhjTRS8h4wRHcw4VByy/X//wEu8dZ0j+5IGhTRcy9t/1rFNUSsMDV35ixp/
+wMd3b2bV7jKIvXUAmjtyt+dj8gPmKavmrJW0Tx0g1nxZxwE7OStTLnRZHNyEHn38
+6tLFvp055SoKim8MODsfoLbeyk/1+IKdgxaY3Xq9lCvsNsK0Pk33YYraEqQC3dp3
+7zTPKrdk606SD2uThpN9bCE/4XEZ3X+aZ7EMNK/liOvdovSBPEHKpXN71/jI7znI
+ABr311hlxqNzkOixAPW3gIDfQnW+0j/PV5h+wDsnFccge+SGVlaqTuZl6oh+zpBy
+TDMtyQN42xQSyUmuSXAn1BGiG21yH5kSy453Kwwfece4jR8sRMqY+v9OQhdDe17b
+EwatMs2EzqAjyc3X57hqfTKZck2Xr52aSAzVa7aYQcMhrw79QkzN0rvW/khE4YWk
+fVwlZ3tW2SANYg7JT5lnC5HNSWUgyZD3x+6HoLCm2vmdui+6oA9BcHcNlQiuSrNV
+esNWC7GmRPsx5ga7Vwwt9pr5rLPRkyJc+leul5JOiANRlTlYyCmGwBD6pFcHANIR
+j65xhhoqWHTYSwIJpCSS
+=n6TZ
 -----END PGP SIGNATURE-----
