@@ -1,39 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/18/1
-Message-ID: <20120318072041.GA13061@kludge.henri.nerv.fi>
-Date: Sun, 18 Mar 2012 09:20:41 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/29/2
+Message-ID: <50B6D47B.2090201@redhat.com>
+Date: Wed, 28 Nov 2012 20:20:27 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: piwik before 1.6
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-This case is still not handled. Information from the URL:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The Piwik 1.5 release addresses a critical security vulnerability, which affect all Piwik users that have let granted some access to the "anonymous" user. Users should upgrade immediately.
-
-Piwik 1.5 contains a remotely exploitable vulnerabiliy that could allow a remote attacker to execute arbitrary code. Only Installations that have granted untrusted view access to their stats (ie. grant "view" access to a website to anonymous) are at risk.
-
-CVE ID: not yet assigned
-Known Versions Affected: Piwik 1.2, 1.3, and 1.4
-
-This issue was disclosed to us privately and safely. Our thanks to Neal Poole for discovering and reporting the issue to the Piwik Security Team. Neal is the first bounty recipient of Piwik's Security Bug Bounty program.
-
-This release also includes Zend Framework 1.11.6 which addresses a potential SQL injection vector when using PDO_MySql. Piwik users should be unaffected as it has used UTF-8 since Piwik 0.5.
-
-- Henri Salo
-
-On Thu, Oct 20, 2011 at 12:28:02PM -0400, Josh Bressers wrote:
-> Steve,
+On 11/28/2012 05:07 PM, Forest Monsen wrote:
+> Here's a batch CVE request for several previously published and 
+> resolved issues (except for SA-CONTRIB-2012-171, which was never 
+> resolved) in contributed modules for the Drupal project:
 > 
-> Can MITRE take this thread. I'm a bit fearful as to what this one is going to become.
+> ###
 > 
-> Thanks.
+> SA-CONTRIB-2012-166 - Table of Contents - Access Bypass 
+> http://drupal.org/node/1841046
+
+Please use CVE-2012-5584 for this issue.
+
+> SA-CONTRIB-2012-167 - Mixpanel - Cross site scripting (XSS) 
+> http://drupal.org/node/1853198
+
+Please use CVE-2012-5585 for this issue.
+
+> SA-CONTRIB-2012-168 - Services - Information Disclosure 
+> http://drupal.org/node/1853200
+
+Please use CVE-2012-5586 for this issue.
+
+> SA-CONTRIB-2012-169 - Email Field - Cross Site Scripting and Access
+> bypass http://drupal.org/node/1853214
+
+Please use CVE-2012-5587 for this issue XSS
+Please use CVE-2012-5588 for this issue Access bypass
+
+> SA-CONTRIB-2012-170 - MultiLink - Access Bypass 
+> http://drupal.org/node/1853244
+
+Please use CVE-2012-5589 for this issue.
+
+> SA-CONTRIB-2012-171 - Webmail Plus - SQL injection - (unsupported) 
+> http://drupal.org/node/1853268
+
+Please use CVE-2012-5590 for this issue.
+
+> SA-CONTRIB-2012-172 - Zero Point - Cross Site Scripting (XSS) 
+> http://drupal.org/node/1853376
+
+Please use CVE-2012-5591 for this issue.
+
+> ###
 > 
-> ----- Original Message -----
-> > p.s. I see a CVE ID hasn't been issued for:
-> > 
-> > http://piwik.org/blog/2011/06/piwik-1-5-security-advisory/
-> > 
+> Thanks!
 > 
-> -- 
->     JB
+> Forest
+
+Summary:
+
+CVE-2012-5584 Drupal SA-CONTRIB-2012-166
+CVE-2012-5585 Drupal SA-CONTRIB-2012-167
+CVE-2012-5586 Drupal SA-CONTRIB-2012-168
+CVE-2012-5587 Drupal SA-CONTRIB-2012-169 XSS
+CVE-2012-5588 Drupal SA-CONTRIB-2012-169 Access Bypass
+CVE-2012-5589 Drupal SA-CONTRIB-2012-170
+CVE-2012-5590 Drupal SA-CONTRIB-2012-171
+CVE-2012-5591 Drupal SA-CONTRIB-2012-172
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQttR7AAoJEBYNRVNeJnmThV0QAKi2PwpbBHGVb4TMhdACMb2E
+fHYS3ZYn8FyyQ0zkFq03I3e4aEqugT0PPSlvtfJ3czR4YrJtwS8oc0rR8AZ6qWh5
++o/ZLZQeYy0uVFCJY8IAg22chIv1gaR97cBrfOvU0nJdUKxdLDE/K3nZ4BqBNHzT
+/XyZcbyaMbE9dpOGY8UTlnIbZjcUcqfTvdOCZpI557+GQDyvx3bfgKAramfpTHUS
+U1sNUoRyJ+kTaEI4Auj+8mqvURenE6k/Yv9XLPzQ3Jqo7kdaHc5fkoU8nX+SRTmR
+3UnN4cTt8dQ5NxSu5E1ele+oLhTWxgl+WMdyzlTqB6KzgK9MRpPeeK8JRZU7oVYT
+ssChzFYSpLM+Sn2v8D1A+R8fkVqkN9qlkM/Tvz23tSHLcPgXfazjhiJsY0xzRbEG
+Z/yR8Ra9lzV1vuQLGfp3xqV4qVT1CUNOJJUdLvRe8DFcG7dM71AqLu9k0Xkv2ZVm
+cEwJFSJHeu9jtISXZDvyG4zvZ7hY2VI+Irr4v17mUZMxy9qr2rWhRCduXd2Gp5IG
++EfY7mwiKmOfMhK6lWp1pDbDAXl34fIsz6n0Rb+TfQ2+HaleStg1Qa/9zWrk4Qce
+FLte/nAOTVa5b/FnuWhsbyCCgv6wMAmuJLiey5x7MqX0w3Kd8vrUTk2y4cnrXZG/
+gummamOH+PE8boxI2GTd
+=C7C1
+-----END PGP SIGNATURE-----
