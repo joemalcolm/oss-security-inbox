@@ -1,92 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/09/8
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF06920FC6@IMCMBX01.MITRE.ORG>
-Date: Fri, 9 Nov 2012 20:55:22 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: Matthew Wilkes <matthew.wilkes@...ne.org>, Assign a CVE Identifier <cve-assign@...re.org>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "jpokorny@...hat.com" <jpokorny@...hat.com>, "security@...ne.org" <security@...ne.org>
-Subject: RE: Re: CVE Request - Zope / Plone: Multiple vectors corrected within 20121106 fix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/29/1
+Message-ID: <50B6A72A.80905@gmail.com>
+Date: Wed, 28 Nov 2012 16:07:06 -0800
+From: Forest Monsen <forest.monsen@...il.com>
+To: oss-security@...ts.openwall.com
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Note that CVE tries to maintain some amount of consistency across the space of ALL disclosures, and in some cases, that means merging multiple flaws together even when we know they are distinct.  See the section here: http://cve.mitre.org/cve/editorial_policies/cd_abstraction.html#content_decision_vulnerability_information
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It sounds like there's a reasonable argument to split issues 14 and 15 because of the differences between CWEs 407 and 749.
+Here's a batch CVE request for several previously published and
+resolved issues (except for SA-CONTRIB-2012-171, which was never
+resolved) in contributed modules for the Drupal project:
 
-For 01 and 02, the CVSS differences are not relevant - at least, not from a CVE perspective.  But, if one is about "incomplete security declarations" and the other is not, that also seems reasonable to split.
+###
 
-- Steve
+SA-CONTRIB-2012-166 - Table of Contents - Access Bypass
+http://drupal.org/node/1841046
+
+SA-CONTRIB-2012-167 - Mixpanel - Cross site scripting (XSS)
+http://drupal.org/node/1853198
+
+SA-CONTRIB-2012-168 - Services - Information Disclosure
+http://drupal.org/node/1853200
+
+SA-CONTRIB-2012-169 - Email Field - Cross Site Scripting and Access bypass
+http://drupal.org/node/1853214
+
+SA-CONTRIB-2012-170 - MultiLink - Access Bypass
+http://drupal.org/node/1853244
+
+SA-CONTRIB-2012-171 - Webmail Plus - SQL injection - (unsupported)
+http://drupal.org/node/1853268
+
+SA-CONTRIB-2012-172 - Zero Point - Cross Site Scripting (XSS)
+http://drupal.org/node/1853376
+
+###
+
+Thanks!
+
+Forest
 
 
 
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-
------Original Message-----
-From: Matthew Wilkes [mailto:matthew.wilkes@...ne.org] 
-Sent: Friday, November 09, 2012 11:40 AM
-To: Assign a CVE Identifier
-Cc: oss-security@...ts.openwall.com; jpokorny@...hat.com; security@...ne.org
-Subject: Re: [oss-security] Re: CVE Request - Zope / Plone: Multiple vectors corrected within 20121106 fix
-
-Hi all,
-
->> It looks like some of these can be CVE merged, e.g. 14 and 15, 1 and
->> 5, can you confirm that these should not be merged?
->
-> Thanks for constructing this comprehensive table, but please do not
-> merge 14 and 15, or 1 and 5.
-
-I agree. It's our opinion that these are distinct flaws, and we would 
-prefer to keep them tracked independently.
-
-> CVE assignment by MITRE most often has merges when the available
-> information suggests one of these two situations:
->
->    A. Flaw types that have been used for many years and are thought to
->       be well understood. At present, a large fraction of our merges
->       are for XSS, SQL injection, CSRF, buffer overflows, integer
->       overflows, use-after-free issues, and directory traversal.
->       However, a merge can occur correctly for any flaw type.
-
-Indeed, we do like to keep similar flaws with very different causes 
-separate, though. In the particular case of 1/5 and 14/15 we don't see 
-any similarities, but in general we've tried hard here to request CVEs 
-in a way that accurately reflects discrete vulnerabilities in the stack.
-
-> At this point in the history of CWE, a discloser's choice of the same
-> CWE identifier for two different bugs might not be a strong indication
-> that a CVE merge should occur.
-
-The CWE dictionary is huge, I would very much appreciate any feedback 
-anyone can give me on the appropriateness of my choices here. I have 
-been working on a Plone specific CWE dictionary but it's slow going.
-
-> For example, some CVE consumers don't like situations in
-> which a vendor publishes multiple disclosure documents that explain
-> different aspects of the same CVE.
-
-We will bow to your advice here. If you tell us that our merge 
-recommendations are poor we will make sure that we don't issue multiple 
-guidance documents in future. For now, our list reflects our best 
-understanding of the CVE guidance documents.
-
-> 14 and 15: One might argue that these are different because 14 is
-> about algorithmic complexity but 15 isn't.
-
-Indeed, I did consider CWE-407 here, but 749 is one of our go-to choices 
-as it's a common error in Zope. I think, if I had to come down one side 
-or another, then 15 is complexity whereas 14 is allowing users to 
-circumvent caching on an expensive function. They are both similar 
-outcomes, in that they're expensive pages, but for very different reasons.
-
-> 01 and 05: One might argue that these are different because 05 is
-> about incomplete security declarations but 01 isn't.
-
-Indeed. Also, 05 is a AC:H Au:S whereas 01 is AC:L Au:N. 05 allows an 
-escalation of privileges in the sandbox whereas 01 allows unauthorised 
-authoring of code which happens to only ever be run in a higher 
-privilege set. 01 is a write-once persistent single statement whereas 05 
-is an editable file with multiple statements available. The privilege 
-set that 01 escalates to is the un-escalated set for 05.
-
-Matt
+iEYEARECAAYFAlC2pyoACgkQ/ILCL9e1Br4+tQCcCxW3lAylwP1RSuOFnGRnff9b
+gm8AmgLuMDqIHzQVHoo7WtD+SVsH3d4j
+=ZVPx
+-----END PGP SIGNATURE-----
