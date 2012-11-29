@@ -1,20 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/19
-Message-ID: <20121018203531.GB12222@inutil.org>
-Date: Thu, 18 Oct 2012 22:35:31 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/29/3
+Message-ID: <20121129110620.7ccb545c.fk@fabiankeil.de>
+Date: Thu, 29 Nov 2012 11:06:20 +0100
+From: Fabian Keil <fk@...iankeil.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2012-2248: isc-dhcp, Debian-specific: build path included in PATH
+Subject: Re: CVE request: Curl insecure usage
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
-Issues only affecting testing/unstable should always be assigned a CVE ID
-nonetheless. The Debian ecosystem is much more than stable alone:
-There is a great deal of derivative distributions [1], which import packages
-from Debian testing/unstable and having a CVE ID is a convenient way to
-track whether they are affected.
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-[1] http://wiki.debian.org/Derivatives/Census
+> On 11/26/2012 11:42 AM, Kurt Seifried wrote:
+> > On 11/26/2012 08:06 AM, Moritz Muehlenhoff wrote:
+> >> Hi, during the triage of the SSL client bugs spotted by the 
+> >> http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf paper Debian 
+> >> developer Alessandro Ghedini discovered two more applications
+> >> using Curl in an insecure manner:
+> > 
+> >> 1. opendnssec (in the eppclient tool) 
+> >> http://lists.opendnssec.org/pipermail/opendnssec-user/2012-November/002296.html
+> 
+> Please
+> >> 
+> use CVE-2012-5582 for opendnssec: insecure usage of curl
+> 
+> >> 2. PHPcas (used by Moodle e.g.): 
+> >> https://github.com/Jasig/phpCAS/pull/58
+> 
+> Please use CVE-2012-5583 for phpCAS: insecure usage of curl
 
-Cheers,
-        Moritz
+> > Have these been receiving individual CVE's? I can't find any
+> > offhand, can you provide examples of others?
+> 
+> Also can someone collate and post a list of all the other apps using
+> curl insecurely and need CVE's with appropriate links to the
+> upstreams/etc? Thanks.
+
+Note that curl is the (unaffected) command line tool based on libcurl.
+The CVEs should probably refer to insecure usage of libcurl to prevent
+confusion.
+
+Fabian
+
+Download attachment "signature.asc" of type "application/pgp-signature" (197 bytes)
