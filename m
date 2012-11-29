@@ -1,33 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/28/7
-Message-ID: <20120628131544.GT27619@symphytum.spacehopper.org>
-Date: Thu, 28 Jun 2012 14:15:44 +0100
-From: Stuart Henderson <stu@...cehopper.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/29/4
+Message-ID: <581103266.40035311.1354212434922.JavaMail.root@redhat.com>
+Date: Thu, 29 Nov 2012 13:07:14 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, security@....net
-Subject: Re: Re: PHP information disclosure via easter egg ?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Gerald Combs <gerald@...eshark.org>, Peter Hatina <phatina@...hat.com>
+Subject: CVE Request -- wireshark: Wireshark 1.6.12 and Wireshark 1.8.4 fixes
 Content-Type: text/plain; charset=utf-8
 
-On 2012/06/28 12:34, Johannes Schlüter wrote:
-> Hi,
-> 
-> On Wed, 2012-06-27 at 23:12 -0600, Kurt Seifried wrote:
-> > http://php.net/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
-> > 
-> > shows authors, SAPI modules (and their authors) and normal modules
-> > (and their authors), resulting in a significant information disclosure
-> > (version #'s can be narrowed down from the authors list).
-> 
-> I have barely seen attackers actually trying to figure out the version
-> number. 99% are directly trying to exploit known vectors using some
-> scripts. And to get the version number there's a way simpler way, also
-> controlled using the same php.ini setting:
-> 
->     $ echo "HEAD / HTTP/1.0\n" | nc www.php.net 80 | grep PHP
->     Server: Apache/1.3.41 (Unix) PHP/5.2.17
->     X-Powered-By: PHP/5.2.17
+Hello Kurt, Steve, vendors,
 
-Would you expect a variable described as "Decides whether PHP may
-expose the fact that it is installed on the server" to control
-whether an anonymous user can fetch a list of enabled modules?
+  Wireshark upstream has recently released v1.6.12 and v1.8.4 versions,
+correcting the following security issues:
 
+* #1 pcap-ng hostname disclosure (wnpa-sec-2012-30)
+http://www.wireshark.org/security/wnpa-sec-2012-30.html
+https://bugzilla.redhat.com/show_bug.cgi?id=881855
+
+* #2 DoS (infinite loop) in the USB dissector (wnpa-sec-2012-31)
+http://www.wireshark.org/security/wnpa-sec-2012-31.html
+https://bugzilla.redhat.com/show_bug.cgi?id=881822
+
+* #3 DoS (infinite loop) in the sFlow dissector (wnpa-sec-2012-32)
+http://www.wireshark.org/security/wnpa-sec-2012-32.html
+https://bugzilla.redhat.com/show_bug.cgi?id=881816
+
+* #4 DoS (infinite loop) in the SCTP dissector (wnpa-sec-2012-33)
+http://www.wireshark.org/security/wnpa-sec-2012-33.html
+https://bugzilla.redhat.com/show_bug.cgi?id=881809
+
+* #5 DoS (infinite loop) in the EIGRP dissector (wnpa-sec-2012-34)
+http://www.wireshark.org/security/wnpa-sec-2012-34.html
+https://bugzilla.redhat.com/show_bug.cgi?id=881805
+
+* #6 DoS (crash) in the ISAKMP dissector (wnpa-sec-2012-35)
+http://www.wireshark.org/security/wnpa-sec-2012-35.html
+https://bugzilla.redhat.com/show_bug.cgi?id=881790
+
+* #7 DoS (infinite loop) in the iSCSI dissector (wnpa-sec-2012-36)
+http://www.wireshark.org/security/wnpa-sec-2012-36.html
+https://bugzilla.redhat.com/show_bug.cgi?id=881771
+
+* #8 DoS (infinite loop) in the WTP dissector (wnpa-sec-2012-37)
+http://www.wireshark.org/security/wnpa-sec-2012-37.html
+https://bugzilla.redhat.com/show_bug.cgi?id=881748
+
+* #9 DoS (infinite loop) in the RTCP dissector (wnpa-sec-2012-38)
+http://www.wireshark.org/security/wnpa-sec-2012-38.html
+https://bugzilla.redhat.com/show_bug.cgi?id=881742
+
+* #10 DoS (infinite loop) in the 3GPP2 A11 dissector (wnpa-sec-2012-39)
+http://www.wireshark.org/security/wnpa-sec-2012-39.html
+https://bugzilla.redhat.com/show_bug.cgi?id=881706
+
+* #11 DoS (infinite loop) in the ICMPv6 dissector (wnpa-sec-2012-40)
+http://www.wireshark.org/security/wnpa-sec-2012-40.html
+https://bugzilla.redhat.com/show_bug.cgi?id=881701
+
+Other references:
+http://www.wireshark.org/docs/relnotes/wireshark-1.6.12.html
+http://www.wireshark.org/docs/relnotes/wireshark-1.8.4.html
+http://www.wireshark.org/security/
+https://bugs.gentoo.org/show_bug.cgi?id=445138
+https://bugs.mageia.org/show_bug.cgi?id=8239
+
+Could you allocate CVE ids for these?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: Particular Red Hat bugzilla entries contain further information
+      (upstream bug, reproducer && patches where available).
