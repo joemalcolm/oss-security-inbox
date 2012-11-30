@@ -1,38 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/25/4
-Message-ID: <20120425065606.GA5552@kludge.henri.nerv.fi>
-Date: Wed, 25 Apr 2012 09:56:06 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/30/2
+Message-ID: <50B8D0CA.7030009@canonical.com>
+Date: Fri, 30 Nov 2012 09:29:14 -0600
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler aligned_end is not updated
+Subject: CVE Request: owncloud
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 25, 2012 at 12:37:53AM -0600, Kurt Seifried wrote:
-> On 04/25/2012 12:35 AM, Kurt Seifried wrote:
-> > Python 3.2/3.3 utf-16 decoder unicode_decode_call_errorhandler 
-> > aligned_end is not updated
-> > 
-> > does not appear to affect Python 2.x
-> > 
-> > memory leak/crashes/etc.
-> > 
-> > http://bugs.python.org/issue14579
-> > 
-> > Author: Serhiy Storchaka (storchaka) 	Date: 2012-04-14 18:46
-> > 
-> > In the utf-16 decoder after calling
-> > unicode_decode_call_errorhandler aligned_end is not updated. This
-> > may potentially cause data leaks, memory damage, and crash. The bug
-> > introduced by implementation of the issue #4868. In a similar
-> > situation in the utf-8 decoder aligned_end is updated.
-> > 
-> > ========
-> > 
-> > More discussion and links to the patches/etc. in the bug.
-> > 
-> 
-> Please use CVE-2012-2135 for this issue.
+Owncloud 4.5.2 and 4.0.9 has a few security fixes:
+http://owncloud.org/changelog/
 
-Reported to Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=670389
+Specifically:
+- Multiple XSS vulnerabilities (oC-SA-2012-001)
+- Timing attack in the “Lost Password” implementation (oC-SA-2012-002)
+- XSS vulnerability in user_webdavauth (oC-SA-2012-003)
+- Code Execution in /lib/migrate.php (oC-SA-2012-004)
+- Code Execution in /lib/filesystem.php (oC-SA-2012-005)
 
-- Henri Salo
+-- 
+Jamie Strandboge                 http://www.ubuntu.com/
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (900 bytes)
