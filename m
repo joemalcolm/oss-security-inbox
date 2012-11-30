@@ -1,36 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/01/2
-Message-ID: <20121201205843.GA27425@zoidberg>
-Date: Sat, 1 Dec 2012 21:58:43 +0100
-From: Timo Warns <Warns@...-Sense.DE>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/30/1
+Message-ID: <50B7F927.5090208@ushahidi.com>
+Date: Fri, 30 Nov 2012 13:09:11 +1300
+From: Robbie Mackay <robbie@...ahidi.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: TSK misrepresents "." files on FAT filesystems
+CC: Heather Leson <HLeson@...ahidi.com>
+Subject: CVE request for Ushahidi security vulnerability 2012-008
 Content-Type: text/plain; charset=utf-8
 
-The Sleuth Kit misrepresents files named "." on FAT filesystems. An
-attacker could rename a file to "." to evade detection by a forensic
-analysis.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Affected is the current version 4.0.1. Older versions are probably
-affected as well.
+The following vulnerability was found in Ushahidi and fixed in the
+Ushahidi 2.6.1 release.
+Could you please assign a CVE?
 
-No patch is currently available. The bug is tracked at
-http://sourceforge.net/tracker/?func=detail&aid=3523019&group_id=55685&atid=477889
+Forgotten password challenges were guessable based on users last login
+and email address.
+The issue was discovered by Timothy D. Morgan
 
-AFAICS, the bug was originally identified by Wim Bertels
-http://sourceforge.net/mailarchive/forum.php?thread_name=1305739444.2355.35.camel%40zwerfkat&forum_name=sleuthkit-users
+Security advisory:
+http://ushahidi.com/index.php/security/alert/sa-web-2012-008
+Issue: https://github.com/ushahidi/Ushahidi_Web/issues/646
+Commit:
+https://github.com/ushahidi/Ushahidi_Web/commit/e8c7ecd42818c331db8945d20f8b1865bc6d157e
 
-Further discussion is at
-http://sourceforge.net/mailarchive/forum.php?thread_name=20120503111900.GL18142%40hauptmenue&forum_name=sleuthkit-users
+- -- 
+Robbie Mackay
 
+Software Developer, External Projects
+Ushahidi Inc
+e: robbie@...ahidi.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (Darwin)
+Comment: GPGTools - http://gpgtools.org
+Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-The vulnerability is already exploited, for example, by the Flame
-malware (possibly unintendedly). Flame uses an encrypted SQLite-DB named
-"." for extraction of confidential files and for update distribution.
-An analyst may miss the file as the Sleuth Kit does not appropriately
-show the file.
-
-http://labs.bitdefender.com/2012/06/flame-the-story-of-leaked-data-carried-by-human-vector/
-http://blog.crysys.hu/2012/06/flame-usb-dot-file-confirmed/
-
-Regards, Timo
+iQEcBAEBAgAGBQJQt/kmAAoJEKnxsxigzOTXkQwH/izEngpyMz20xT7rXR6XKIsI
+soyPHtDYhrAao+8MbqorqkUYH0PELJ5F3mevo1StKx05oDrHfIjdGq7OqM6/BSeS
+1skF3H9o0D6bPD2pDlva/F1yCST9fEnhru6Tn8pcKyJeZK82zLlo669KDs8AcFOX
+0pifIa/Bv6zhGzbiRRQrF/JfQm/a5VARfOy2CZgAi5+ee6L+4/lizt5q51QMflGd
+COCbRh6gq7ORWCguoE36keWWgCc4D+ducq2zkGvwfbnBuZrwbJZOh4rEiYphCAR5
+i2XIh8MXt8gppMKE4ewpKcrW6hUnmVBYn5gMfqRrB3IkUBjFtTFDK2xCwaTcEzM=
+=4a/A
+-----END PGP SIGNATURE-----
