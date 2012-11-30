@@ -1,84 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/23
-Message-ID: <CANY-Wm_G0Vi8hG=vCgCNT=7L=CCKYPvgHZRtOGr1FSrLFbO8oA@mail.gmail.com>
-Date: Fri, 20 Jan 2012 12:22:51 -0700
-From: "Samuel J. Greear" <sjg@...sjg.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>,  security@...gonflybsd.org, oss-security@...ts.openwall.com,  magnum <john.magnum@...hmail.com>
-Subject: Re: weird crypt-sha* in DragonFly BSD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/30/3
+Message-ID: <50B8F725.8030905@redhat.com>
+Date: Fri, 30 Nov 2012 11:12:53 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jamie Strandboge <jamie@...onical.com>, security@...cloud.org
+Subject: Re: CVE Request: owncloud
 Content-Type: text/plain; charset=utf-8
 
->
-> 1. You will want to be aware of this issue:
->
-> glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
-> http://www.openwall.com/lists/oss-security/2011/11/15/1
->
-> There's no agreed upon fix yet (use "thread-next" to see some ideas),
-> but I think all distros/projects using Ulrich's SHA-crypt will need to
-> deal with this issue eventually.  I'll try to remember to inform you
-> once we choose to do anything specific.
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I saw this, my preference would be to get rid of all uses of alloca() and
-use malloc(), optionally with a fixed-size array on the stack for short
-passwords. If specific alignment is needed it can be forced by
-over-allocating and indexing into the heap allocation to the correct
-alignment. (I have a personally vendetta against alloca(), importing new
-uses of it made me cry a little) -- So I may do this, but it doesn't make
-my short list, if someone beats me to it I would be interested in hearing
-about it so we can keep in sync.
+On 11/30/2012 08:29 AM, Jamie Strandboge wrote:
+> Owncloud 4.5.2 and 4.0.9 has a few security fixes: 
+> http://owncloud.org/changelog/
+> 
+> Specifically: - Multiple XSS vulnerabilities (oC-SA-2012-001)
 
+http://owncloud.org/security/advisories/oc-sa-2012-001/
+Please use CVE-2012-5606 for this issue.
 
+> - Timing attack in the “Lost Password” implementation
+> (oC-SA-2012-002)
 
-> 2. Instead of:
->
-> + * The deprecated sha256/512 functions are somehow sensitive to the
-> + * order of this crypt_types array as well as their respective "name"
-> members.
-> + *
-> + * In order to ensure that both existing passwords will continue to work
-> and
-> + * that new passwords will be more secure by using the new algorithms even
-> + * without updating the existing login.conf, this array is now scanned
-> + * backwards. This could be reverted in the future when the deprecated SHA
-> + * functionality is removed.
->
-> how about using the more reliable approach proposed by magnum here? -
->
-> http://www.openwall.com/lists/john-dev/2012/01/19/1
->
-> As you can see, he has even spent time to identify the specific 64-bit
-> magic values.  Of course, you'll need to double-check them (such as by
-> applying the patch and testing logins to existing accounts with both
-> sha256 and sha512 on a 64-bit DragonFly system.)
->
->
-There isn't a collision issue with $3$ and $4$ on DragonFly, so I don't see
-any obvious need. I intend to rip the old code out after a few releases, so
-the issue (if there is one) will be (relatively) short lived.
+http://owncloud.org/security/advisories/oc-sa-2012-002/
+Please use CVE-2012-5607 for this issue.
 
+> - XSS vulnerability in user_webdavauth (oC-SA-2012-003)
 
-> 3. It would be nice for upgraded systems to automatically switch from
-> sha256 to sha512 in login.conf - perhaps there's some on-upgrade hook
-> that you can use for this?  sha256 no longer means the same thing
-> anyway; there's no good reason for a percentage of DragonFly systems to
-> temporarily switch from one SHA-256 based algorithm to another just for
-> them to hopefully switch to sha512 a little bit later (when the admin
-> does that).  And, what's worse, many systems will end up stuck in this
-> intermediary state.
->
->
-We do not have specific infrastructure for this and it needed to work for
-any systems stuck in such an intermediary state anyway, but I will be
-looking into what we can do to a) automatically change the setting in
-login.conf and b) warn users/administrators of their existing potentially
-insecure passwords.
+http://owncloud.org/security/advisories/oc-sa-2012-003/
+Please use CVE-2012-5608 for this issue.
 
-An aside on B above, if we do put in place a mechanism to warn users/admins
-about passwords with $3$ and $4$ magic, is the MD5 implementation
-sufficiently weak at this point to warrant warning about it as well?
+> - Code Execution in /lib/migrate.php (oC-SA-2012-004)
 
-Thanks,
-Sam
+http://owncloud.org/security/advisories/oc-sa-2012-004/
+Please use CVE-2012-5609 for this issue.
 
+> - Code Execution in /lib/filesystem.php (oC-SA-2012-005)
+
+http://owncloud.org/security/advisories/oc-sa-2012-005/
+Please use CVE-2012-5610 for this issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQuPclAAoJEBYNRVNeJnmTlGoQAJiRk2ucXjqxrB1+lBVZq5wz
+CFQ0t9e+cJlGiBMwOPEgGKmsXr5Tj6wLQ4E+S0CSy8+MDpvpOIas/WJyIRPH94s2
+hTuYnCCoaoA0pe0WrF/8Fv/eEqN3xZzjbStm3Iv4iAIkSNA9iDQNqR9yJUu/fDHa
+NFpwwjT7DAuqIYT0/jASVvQy5rcm47bGVtdE438T9+OJoi2/8oZPRLXwgkpUYuMd
+PL+CrCxAmwAFjkhUFZ9IJ7wkFJwQv8CydEo/Kj1MPit8DqA5qX2q7QLKBFKPuTOy
+EqaBvCcXP4zchEfdODbjxCbxaGuUG1kkYP1JVkpJjC4kFPa7AS3sYECxGCpy8Gb7
+8Uj+JaRLHp/cIWJqHAVxYnvv9iUuc1T83L1NJv5hCWZD3i16qaix297foNSV9mrY
+lAqWxJgvSus5M4Ce4Gt0HARDwzonFB1Kkclpk8PTFxNRmdDDPZUcy7ZoOhvDPHrI
+qtcIqjVZR6/EpZkms77usa1+rza0NqcLCMqeSNCdqbrFMt9z13xnsuBADVgOJNLm
+ZtYDnxonyrdJTKNOofldGdMUowcpuXLZT6n1J7XdCfsfpnoPIuoUylFgFcSOsihs
+eYVIYgGlflnzPKvj7w+YWyRX+0Ed1mowO3eBt/DlAiSdIMna1V6YGZMa1GjhwXVB
+Bm+IOUPVzHTo+L8ATXkz
+=KXaN
+-----END PGP SIGNATURE-----
