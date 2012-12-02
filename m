@@ -1,86 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/07/12
-Message-ID: <504A2D20.3030303@redhat.com>
-Date: Fri, 07 Sep 2012 11:21:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Florian Weimer <fweimer@...hat.com>, Jeff Law <law@...hat.com>, Jakub Jelinek <jakub@...hat.com>
-Subject: Re: CVE Request -- glibc: strcoll() integer overflow leading to buffer overflow + another alloca() stack overflow issue (upstream #14547 && #14552)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/02/5
+Message-ID: <CAFB=mGANmXHOnZSezyjyqiL2oP6aU7RX5-UTB0DEfErWjc7xmQ@mail.gmail.com>
+Date: Sun, 2 Dec 2012 21:17:14 +0100
+From: king cope <isowarez.isowarez.isowarez@...glemail.com>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>,  king cope <isowarez.isowarez.isowarez@...glemail.com>,  full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com,  todd@...ketstormsecurity.org, submit@...sec.com,  Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org,  security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
+Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+My opinion is that the FILE to admin privilege elevation should be patched.
+What is the reason to have FILE and ADMIN privileges seperated when
+with this exploit
+FILE privileges equate to ALL ADMIN privileges.
+I understand that it's insecure to have FILE privileges attached to a user.
+But if this a configuration issue and not a vulnerability then as
+stated above there must be something wrong with the privilege
+management in this SQL server.
 
-On 09/07/2012 09:25 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, Florian, Jeff, Jakub, vendors,
-> 
-> 1) Issue #1: ------------ An integer overflow, leading to buffer
-> overflow flaw was found in the way the implementation of strcoll()
-> routine, used to compare two strings based on the current locale,
-> of glibc, the GNU libc libraries, performed calculation of memory 
-> requirements / allocation, needed for storage of the strings. If an
-> application linked against glibc was missing an application-level
-> sanity checks for validity of strcoll() arguments and accepted
-> untrusted input, an attacker could use this flaw to cause the
-> particular application to crash or, potentially, execute arbitrary
-> code with the privileges of the user running the application.
-> 
-> Upstream bug report (including reproducer): [1]
-> http://sourceware.org/bugzilla/show_bug.cgi?id=14547
-> 
-> References: [2] https://bugzilla.redhat.com/show_bug.cgi?id=855385
-> 
-> Could you allocate a CVE identifier for this?
+With Kind Regards,
 
-Please use CVE-2012-4412 for this issue.
+Kingcope
 
 
-> 2) Issue #2 (mentioned here only for completeness, but I am not of
-> the opinion this should receive a CVE identifier. See argumentation
-> below [but open to glibc upstream / others to disprove it]).
-
-I will hold off on issuing a CVE for this then. Anyone want to weigh in?
-
-> alloca() stack overflow (first issue from the report below) 
-> Upstream bug report: [3]
-> http://sourceware.org/bugzilla/show_bug.cgi?id=14552
-> 
-> If I have looked correctly this is expected / known behaviour of
-> alloca() - from the manual page: [4]
-> http://linux.die.net/man/3/alloca
-> 
-> "Return Value The alloca() function returns a pointer to the 
-> beginning of the allocated space. If the allocation causes stack
-> overflow, program behavior is undefined."
-> 
-> Under my opinion the above description covers also the case of
-> 'alloca() stack overflow' as reported in bug [3]. Further opinions
-> / upstream comments appreciated though.
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQSi0fAAoJEBYNRVNeJnmTUq8P/3BfYom6D0ZyGkLe7pAhyJGn
-2M79MYN+Pnu4zD8P1lMAes8dCZpy2NETd/E0ZcQtyi4dCtw8XuSteRv19S+uOngm
-BYuqcQ50ir8hitRn8+FhoCWnwk0wwpbuY3y1fL85zSo6N97Sc4rRCH7j4/xyKOop
-gwnPe8h2lgteAmykoIhAo2eU4oHw2SuO55Vj/rK/2HxLX+EiiswMJHeiaQg9kGye
-GbsSMG7Erbug/hRV3ebyINHTSqDD258eDaEl6gW1WfXFQWt29Dxgd/cdn9vYkXZg
-nYTX9OH5jOMR6GShjZF/kecZBglXygcp6lJ0pmKMdu7QrufenrFFEhTkMGCy37ED
-/zaggEb83tWeWpunzPlhHiOMr4bCCDweLxpntxE2uskEKMFPQr408kLkysSjb+Yp
-P71r+5gSi6G4I29ZqDKQFzEFrzQ6fD/Mv5Fe9OLsbtY2lN5G4I65dOf6jmicp1rv
-2O0qmZPJ1XAEA3WIlTVBlFgL02gun2IBhykW19gLhNIoKUqtKDBD10uD/FJQuHQO
-ngXsdxWJ3yO/ovqGsfVPMOxamxiiznTpC5307YYbFAGqq1TesCr6jEa1y21QbVkU
-Th7O4VTYqLFrjMivpZB59pEtlphv1yWEaSfwdtgAkYhzVJclwCSiQnGa425dZ6aR
-nxt2czj7YwdfPP1oBBBO
-=vV+n
------END PGP SIGNATURE-----
+2012/12/2 Sergei Golubchik <serg@...monty.org>:
+> Hi, Huzaifa!
+>
+> Here's the vendor's reply:
+>
+> On Dec 02, Huzaifa Sidhpurwala wrote:
+>>
+>> * CVE-2012-5611 MySQL (Linux) Stack based buffer overrun PoC Zeroday
+>> http://seclists.org/fulldisclosure/2012/Dec/4
+>> https://bugzilla.redhat.com/show_bug.cgi?id=882599
+>
+> A duplicate of CVE-2012-5579
+> Already fixed in all stable MariaDB version.
+>
+>> * CVE-2012-5612 MySQL (Linux) Heap Based Overrun PoC Zeroday
+>> http://seclists.org/fulldisclosure/2012/Dec/5
+>> https://bugzilla.redhat.com/show_bug.cgi?id=882600
+>
+> Acknowledged.
+> https://mariadb.atlassian.net/browse/MDEV-3908
+>
+>> * CVE-2012-5613 MySQL (Linux) Database Privilege Elevation Zeroday
+>> Exploit
+>> http://seclists.org/fulldisclosure/2012/Dec/6
+>> https://bugzilla.redhat.com/show_bug.cgi?id=882606
+>
+> Not a bug. MySQL manual specifies many times very explicitly:
+>
+> ===
+>    * Do not grant the `FILE' privilege to nonadministrative users. Any
+>      user that has this privilege can write a file anywhere in the file
+>      system with the privileges of the *Note `mysqld': mysqld. daemon.
+>      To make this a bit safer, files generated with *Note `SELECT ...
+>      INTO OUTFILE': select. do not overwrite existing files and are
+>      writable by everyone.
+>
+>      The `FILE' privilege may also be used to read any file that is
+>      world-readable or accessible to the Unix user that the server runs
+>      as. With this privilege, you can read any file into a database
+>      table. This could be abused, for example, by using *Note `LOAD
+>      DATA': load-data. to load `/etc/passwd' into a table, which then
+>      can be displayed with *Note `SELECT': select.
+> ===
+> You should exercise particular caution in granting the `FILE'
+> and administrative privileges:
+>
+>    * The `FILE' privilege can be abused to read into a database table
+>      any files that the MySQL server can read on the server host. This
+>      includes all world-readable files and files in the server's data
+>      directory.  The table can then be accessed using *Note `SELECT':
+>      select. to transfer its contents to the client host.
+> ===
+>
+> Additionally, MySQL (and MariaDB) provides a --secure-file-priv
+> option that allows to restrict all FILE operations to a specific
+> directory.
+>
+> Thus, CVE-2012-5613 is not a bug, but a result of a misconfiguration,
+> much like an anonymous ftp upload access to the $HOME of the ftp user.
+>
+>> * CVE-2012-5614 MySQL Denial of Service Zeroday PoC
+>> http://seclists.org/fulldisclosure/2012/Dec/7
+>> https://bugzilla.redhat.com/show_bug.cgi?id=882607
+>
+> Acknowledged.
+> https://mariadb.atlassian.net/browse/MDEV-3910
+>
+>> * CVE-2012-5615 MySQL Remote Preauth User Enumeration Zeroday
+>> http://seclists.org/fulldisclosure/2012/Dec/9
+>> https://bugzilla.redhat.com/show_bug.cgi?id=882608
+>
+> This is hardly a "zeroday" issue, it was known for, like, ten years.
+> But I'll see what we can do here.
+> https://mariadb.atlassian.net/browse/MDEV-3909
+>
+> Regards,
+> Sergei
+> MariaDB Security Coordinator
+>
