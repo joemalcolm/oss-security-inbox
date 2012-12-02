@@ -1,26 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/8
-Message-ID: <20120911173509.GA4154@ngolde.de>
-Date: Tue, 11 Sep 2012 19:35:09 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: NTP authentication
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/02/1
+Message-ID: <50BAEE73.2000706@redhat.com>
+Date: Sat, 01 Dec 2012 23:00:19 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: king cope <isowarez.isowarez.isowarez@...glemail.com>
+CC: full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org, security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, moderators@...db.org
+Subject: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-we currently have a discussion[0] whether it makes sense to setup an NTP 
-infrastructure that allows to use autokey authentication or not. It's unclear 
-though how this would look like in practice currently with pool.ntp.org.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I thought this topic may be interesting to other people and especially 
-distributors as well. Is there any distro that is currently using NTP 
-authentication and is using their own pool? What are your opinions on this?
+On 12/01/2012 02:26 PM, king cope wrote:
+> (see attachment)
+> 
+> Cheerio, Kingcope
 
-[0] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=687166
+So normally for MySQL issues Oracle would assign the CVE #. However in
+this case we have a bit of a time constraint (it's a weekend and this
+is blowing up quickly)  and the impacts are potentially quite severe.
+So I've spoken with some other Red Hat SRT members and we feel it is
+best to get CVE #'s assigned for these issues quickly so we can refer
+to them properly.
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+If Oracle security has already assigned CVE's for these please let us
+and the public know so we can use the correct numbers. Also if Oracle
+can let the public know which versions of MySQL are affected (e.g.
+5.0.x, 5.1.x, 5.5.x, etc.) that would be very helpful to everyone I am
+sure.
 
-Content of type "application/pgp-signature" skipped
+I am also adding MySQL, Oracle, MariaDB, OSS-SEC, Steven Christey,
+cve-assign and OSVDB to the CC so that everyone is aware of what is
+going on.
+
+http://seclists.org/fulldisclosure/2012/Dec/4
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQuu5zAAoJEBYNRVNeJnmTF8sP/10htpTkb298u/Szo3yOcRiE
+8HgMwXPVGFhPh0d/avRgIocYeJxIH9oUf7xN/A53TXktgp7CZZUMhJAh4Hv5mrFn
+moVGxs3qBaTT8+zFa8Ea7VUqzYXUGdMNPBeyijyw18WRHu7ETrUg2pXREkr056ol
+GRt5BuMyzz7sdlLNCYWki+uMIxWtnyjw4ngkNCcAbDuPGdmIxwTiNQ8oOLWRgs/+
+ybL0EXWIJgeBWBdsx0nlJNrL6gHqCsfZduKNl95MAdFHRMiOFrc/GQWfL81d+q86
+upWQ+S7U8or/dpcD7eKInSmGvjgoFR+cF1S2lkDqBLXg2ER8aZzemaG/8p+m4ICH
+Cef7Zt7q5F+FaSC4wOeCmmR0SmeA1ZO1krY8Ur3oyuYr39Iegk1O48hAzAP4RbDS
++m0pPFNanDuW2h9NSjAx19C2qgEMoMGCaTpJY1mfF3Zus5ctxXyYtNU1g/yIGr3f
+E2boYVOYW4CPJSRGkeF6n1Vf+c+Sov/0/enxJxUsf9tA58iQUSQNsI+aSj71oI3v
+1Y0/Ce3FKAJRkgY374TD+K834ruhFAO9xJXdA1MSDdz4rJ1uQusIKufz3ubjHCWP
+KhgpV2Pp1Gq5+XGuNPKn06cNh8a/oYubMNpQBxeIbWYm6eFuUvwnSP9ki+hPLjvw
+fa9hdUARqamhayQbkNdH
+=sXhV
+-----END PGP SIGNATURE-----
