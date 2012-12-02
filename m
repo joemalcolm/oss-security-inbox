@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/04/1
-Message-ID: <20120704071950.GE19060@dhcp-25-225.brq.redhat.com>
-Date: Wed, 4 Jul 2012 09:19:50 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/02/2
+Message-ID: <20121202082021.GB26165@meddwl.fritz.box>
+Date: Sun, 2 Dec 2012 09:20:21 +0100
+From: Sergei Golubchik <serg@...monty.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: epoll: can leak file descriptors when returning -ELOOP
+Cc: king cope <isowarez.isowarez.isowarez@...glemail.com>, full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org, security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
+Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
 Content-Type: text/plain; charset=utf-8
 
-An epoll_ctl(,EPOLL_CTL_ADD,,) operation can return '-ELOOP' to prevent
-circular epoll dependencies from being created.  However, in that case
-we do not properly clear the 'tfile_check_list'.
+Hi, Kurt!
 
-An unprivileged local user could use this flaw to crash the system.
+This is CVE-2012-5579 that we've been discussing recently.
+A test case it different, but it triggers exactly the same code.
 
-Regression introduced via 28d82dc1c4edbc352129f97f4ca22624d1fe61de
-commit.
+MariaDB is not vulnerable as of 5.1.66, 5.2.13, 5.3.11, 5.5.28a.
+Latest released MySQL versions are still affected, but Oracle knows
+about this issue, so next versions won't be.
 
-Upstream fix:
-13d518074a952d33d47c428419693f63389547e9
+Regards,
+Sergei
+MariaDB Security Coordinator
 
-References:
-https://lkml.org/lkml/2012/3/27/65
-https://lkml.org/lkml/2012/4/17/247
-https://bugzilla.redhat.com/show_bug.cgi?id=837502
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+On Dec 01, Kurt Seifried wrote:
+> On 12/01/2012 02:26 PM, king cope wrote:
+> > (see attachment)
+> > 
+> > Cheerio, Kingcope
+> 
+> So normally for MySQL issues Oracle would assign the CVE #. However in
+> this case we have a bit of a time constraint (it's a weekend and this
+> is blowing up quickly)  and the impacts are potentially quite severe.
+> So I've spoken with some other Red Hat SRT members and we feel it is
+> best to get CVE #'s assigned for these issues quickly so we can refer
+> to them properly.
+> 
+> If Oracle security has already assigned CVE's for these please let us
+> and the public know so we can use the correct numbers. Also if Oracle
+> can let the public know which versions of MySQL are affected (e.g.
+> 5.0.x, 5.1.x, 5.5.x, etc.) that would be very helpful to everyone I am
+> sure.
+> 
+> I am also adding MySQL, Oracle, MariaDB, OSS-SEC, Steven Christey,
+> cve-assign and OSVDB to the CC so that everyone is aware of what is
+> going on.
+> 
+> http://seclists.org/fulldisclosure/2012/Dec/4
+> 
