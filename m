@@ -1,66 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/22/1
-Message-ID: <20120422093444.GA1484@suse.de>
-Date: Sun, 22 Apr 2012 11:34:44 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/02/3
+Message-ID: <50BB2C14.8000909@redhat.com>
+Date: Sun, 02 Dec 2012 15:53:16 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugeneteo@...nel.sg>, security@...nel.org, jeffm@...e.com, Sukadev Bhattiprolu <sukadev@...ibm.com>, Serge Hallyn <serge.hallyn@...onical.com>, Pavel Emelyanov <xemul@...nvz.org>
-Subject: Re: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+CC: Kurt Seifried <kseifried@...hat.com>, king cope <isowarez.isowarez.isowarez@...glemail.com>, full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org, security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
+Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 20, 2012 at 12:14:14AM -0700, Eric W. Biederman wrote:
-> Eugene Teo <eugeneteo@...nel.sg> writes:
-> 
-> >> So we know what is holding the pid namespace reference.
-> >>
-> >> Additional thoughts.
-> >>
-> >> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
-> >
-> > No.
-> >
-> >> Is there a corresponding task_struct leak?
-> >
-> > Yes.
-> 
-> Hmm.  The zombies are reaped? 
-> 
-> I am scratching my head perhaps because I am looking at the current code
-> but I don't seem to see how a task that pins a pid can get past
-> release_task (the zombie reaper) and in particular past in release
-> __exit_signal() which calls unhash_process().
-> 
-> The simple test to see if we have made it past unhash_process is to see
-> if you can see the zombie processes.
-> 
-> > I'm helping to provide more information.
-> 
-> You are.  Thank you for looking to see what the symptoms are.
+On 12/02/2012 11:30 AM, Kurt Seifried wrote:
+> So normally for MySQL issues Oracle would assign the CVE #. However in
+> this case we have a bit of a time constraint (it's a weekend and this
+> is blowing up quickly)  and the impacts are potentially quite severe.
+> So I've spoken with some other Red Hat SRT members and we feel it is
+> best to get CVE #'s assigned for these issues quickly so we can refer
+> to them properly.
+>
+> If Oracle security has already assigned CVE's for these please let us
+> and the public know so we can use the correct numbers. Also if Oracle
+> can let the public know which versions of MySQL are affected (e.g.
+> 5.0.x, 5.1.x, 5.5.x, etc.) that would be very helpful to everyone I am
+> sure.
+>
 
-Jeff Mahoney did locate the introducer and the fix yesterday night ...
+So here are the CVEs which Kurt meant to assign, but somehow
+that mail never reached the lists.
 
 
+* CVE-2012-5611 MySQL (Linux) Stack based buffer overrun PoC Zeroday
+http://seclists.org/fulldisclosure/2012/Dec/4
+https://bugzilla.redhat.com/show_bug.cgi?id=882599
 
-Introduced in 423e0ab086ad8b33626e45fa94ac7613146b7ffa (in Linux 3.1 timeframe)
+* CVE-2012-5612 MySQL (Linux) Heap Based Overrun PoC Zeroday
+http://seclists.org/fulldisclosure/2012/Dec/5
+https://bugzilla.redhat.com/show_bug.cgi?id=882600
 
-Date:   Tue Jul 19 09:32:38 2011 -0700
+* CVE-2012-5613 MySQL (Linux) Database Privilege Elevation Zeroday
+Exploit
+http://seclists.org/fulldisclosure/2012/Dec/6
+https://bugzilla.redhat.com/show_bug.cgi?id=882606
 
-    VFS : mount lock scalability for internal mounts
+* CVE-2012-5614 MySQL Denial of Service Zeroday PoC
+http://seclists.org/fulldisclosure/2012/Dec/7
+https://bugzilla.redhat.com/show_bug.cgi?id=882607
 
-And the fixed in Linux 3.2:
-
-commit 905ad269c55fc62bee3da29f7b1d1efeba8aa1e1
-Author: Al Viro <viro@...iv.linux.org.uk>
-Date:   Thu Dec 8 23:20:45 2011 -0500
-
-    procfs: fix a vfsmount longterm reference leak
-
-    kern_mount() doesn't pair with plain mntput()...
+* CVE-2012-5615 MySQL Remote Preauth User Enumeration Zeroday
+http://seclists.org/fulldisclosure/2012/Dec/9
+https://bugzilla.redhat.com/show_bug.cgi?id=882608
 
 
-We (SUSE) did backport the buggy patch to our SLE11 SP2 Linux 3.0 kernel, which made
-it also show up there.
-
-So mainline kernels affected: "Linux Kernel 3.1"
-
-Ciao, Marcus
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
