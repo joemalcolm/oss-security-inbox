@@ -1,68 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/2
-Message-ID: <50BD57E4.8090800@redhat.com>
-Date: Mon, 03 Dec 2012 18:54:44 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/02/6
+Message-ID: <1354479884.3208.12.camel@scapa>
+Date: Sun, 02 Dec 2012 21:24:44 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Timo Warns <Warns@...-Sense.DE>
-Subject: Re: CVE request: TSK misrepresents "." files on FAT filesystems
+Cc: Kurt Seifried <kseifried@...hat.com>, king cope <isowarez.isowarez.isowarez@...glemail.com>,  full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com,  todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org,  security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>,  moderators@...db.org
+Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On dim., 2012-12-02 at 21:17 +0100, king cope wrote:
+> My opinion is that the FILE to admin privilege elevation should be patched.
+> What is the reason to have FILE and ADMIN privileges seperated when
+> with this exploit
+> FILE privileges equate to ALL ADMIN privileges. 
 
-On 12/01/2012 01:58 PM, Timo Warns wrote:
-> The Sleuth Kit misrepresents files named "." on FAT filesystems.
-> An attacker could rename a file to "." to evade detection by a
-> forensic analysis.
-> 
-> Affected is the current version 4.0.1. Older versions are probably 
-> affected as well.
-> 
-> No patch is currently available. The bug is tracked at 
-> http://sourceforge.net/tracker/?func=detail&aid=3523019&group_id=55685&atid=477889
->
->  AFAICS, the bug was originally identified by Wim Bertels 
-> http://sourceforge.net/mailarchive/forum.php?thread_name=1305739444.2355.35.camel%40zwerfkat&forum_name=sleuthkit-users
->
->  Further discussion is at 
-> http://sourceforge.net/mailarchive/forum.php?thread_name=20120503111900.GL18142%40hauptmenue&forum_name=sleuthkit-users
->
-> 
-> 
-> The vulnerability is already exploited, for example, by the Flame 
-> malware (possibly unintendedly). Flame uses an encrypted SQLite-DB
-> named "." for extraction of confidential files and for update
-> distribution. An analyst may miss the file as the Sleuth Kit does
-> not appropriately show the file.
-> 
-> http://labs.bitdefender.com/2012/06/flame-the-story-of-leaked-data-carried-by-human-vector/
->
-> 
-http://blog.crysys.hu/2012/06/flame-usb-dot-file-confirmed/
-> 
-> Regards, Timo
+Maybe because you might not want admins to have read/write access to the
+filesystem anyway?
 
-Please use CVE-2012-5619 for this issue.
+Regards,
+-- 
+Yves-Alexis
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQvVfkAAoJEBYNRVNeJnmTsAcP/0wh/shO2O88JMcLDbShZhNi
-o78DXPDNS+kASw2PZz21kLJTnGlTi68zkCT1WlRSnHrrXTvYFdCp61gNAlveHdq9
-uGFVkiE7XRMKpcVbbusEIo5bSgtYTcMCQgb+TMYKSYp4P7YAwwSdnXZQxSfGly8Y
-gd5fMPD2yABPtQnq6/LeNJgFmZGs+TAG7c+z1pQKmV4l7fdCzAvz0DoakBoqz+2T
-26pzX4oMxAeYsHffWKI4F/JPPkBDuVy1yfuQVlJgSGn+UKuPZFuG/I2f0czvplxF
-9xKYTE/cDLCAgmOwrOMRWMk0BnOviIUh2vmaciC/Q/hQ+7zXk9uco4m5y+5vclCk
-iN+aQhhV+KjcDj07AKtK2f45kC9sjYfHymlsxQtBPeN4DZnVy70OKUE0FqFkKNb3
-sElbmA00BNW49U0QVSSLcOqEopCpA3U0XSCh4OMgux9dRFapBOHriWCQnT82skan
-7sZDLCPxkIuRPFAaAWYCdwweX38f55wKbtdverSv4OvVjYa4n/i2p4CVxN7n4BlY
-smnpxu97u/TcifjLL1AglbN0/yfnrhnLjB12O6iwZfdAXkPA/DcoNRLoRdGve9M/
-to6D3ef34OvFtxVhTIUUhsx2sO1YBJZlFb88faunh5jSHEQlXuyIJAOdUNWE+y+9
-SKDQy6m574LMnCXDT9sb
-=1aUQ
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
