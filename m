@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/10/1
-Message-Id: <201212101858.qBAIwoHM006220@linus.mitre.org>
-Date: Mon, 10 Dec 2012 13:58:50 -0500 (EST)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2012-6302 Soapbox 0.3.1 sandbox bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/02/7
+Message-ID: <CAFB=mGCzb01Vw8xASU+uEzR0rYnsperv0=N5ScbVXTu33a3NRw@mail.gmail.com>
+Date: Sun, 2 Dec 2012 21:36:04 +0100
+From: king cope <isowarez.isowarez.isowarez@...glemail.com>
+To: Yves-Alexis Perez <corsac@...ian.org>
+Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>,  full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com,  todd@...ketstormsecurity.org, submit@...sec.com,  Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org,  security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
+Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Correct, I tell that from experience because I've seen many
+configurations where the least privileged user has file privs enabled.
+If we leave it that way the attackers will be more happy, it's not
+decision to patch it or not, just a hint .
 
-We have assigned CVE-2012-6302 to this issue involving running a second
-instance of Soapbox within a sandboxed Soapbox process:
+Regard,
 
-Disclosure:     http://dl.packetstormsecurity.net/1210-exploits/soapbox-exec.txt
-Product source: http://dag.wieers.com/home-made/soapbox/soapbox-0.3.1.tar.bz2
-                (apparently last updated in 2003)
+Kingcope
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
 
-iQEcBAEBAgAGBQJQxi9RAAoJEGvefgSNfHMdedoH/0d7uUlBLYR/ZfHKCIRifbyL
-sRmP0Gj9PeSav15BONfdlMTjs2qQb53Nj2unkB7gkOKQ5nWkVaJbD36fI/rJqAfx
-1YzX0Wh3SSa0rxtaHMQKJMix9PD3fOcs23QvmFbwBByO2BKY8WGsg7xfwVwnsuFE
-vtL6pPUDKdIauZKqFzwUFNKCSedygeaZLb4StoXblAYWxDc0twCnmiepZcvoAW6J
-ELhym2fazt1HvTqJcVB2uC50U6fTsI52WJCalU1mcvzwZ3LWEJjc1xlgG2eNTkvW
-74IbyNy1zuWkMa/JnQSrh3URVnJXTX1KuEoHaiVbDwA3PNVvN1Q79Wh7gjwW13s=
-=914Q
------END PGP SIGNATURE-----
+2012/12/2 Yves-Alexis Perez <corsac@...ian.org>:
+> On dim., 2012-12-02 at 21:17 +0100, king cope wrote:
+>> My opinion is that the FILE to admin privilege elevation should be patched.
+>> What is the reason to have FILE and ADMIN privileges seperated when
+>> with this exploit
+>> FILE privileges equate to ALL ADMIN privileges.
+>
+> Maybe because you might not want admins to have read/write access to the
+> filesystem anyway?
+>
+> Regards,
+> --
+> Yves-Alexis
