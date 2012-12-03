@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/2
-Message-ID: <4F7BBB0F.40906@redhat.com>
-Date: Tue, 03 Apr 2012 21:07:59 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/3
+Message-ID: <20121203075135.GA1072@meddwl>
+Date: Mon, 3 Dec 2012 08:51:35 +0100
+From: Sergei Golubchik <serg@...monty.org>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: privilege escalation in sectool
+Cc: Kurt Seifried <kseifried@...hat.com>, king cope <isowarez.isowarez.isowarez@...glemail.com>, full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org, security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
+Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
 Content-Type: text/plain; charset=utf-8
 
-On 04/03/2012 04:54 PM, Vincent Danen wrote:
-> Colin Guthrie reported that sectool would elevate user privileges when
-> it was installed on a system, due to an incorrect DBus file
-> (specifically org.fedoraproject.sectool.mechanism.conf).  This could
-> allow a user with no additional privileges to elevate theirs (for
-> instance to restart a service they would not normally have permission to
-> restart).
-> 
-> Further details are in the bug, and a patch is available:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=809437
-> http://pkgs.fedoraproject.org/gitweb/?p=sectool.git;a=blob;f=sectool-0.9.5-dbus.patch;h=aedb3ef7f7e5ab22d5438bfb7eee63489ccf3244;hb=4859832281f0e08c6fbe48fc252c4199a0e9e322
-> 
-> 
-> Since this was reported and committed publicly, I'm requesting a CVE in
-> case one has already been assigned.
-> 
-> Thanks.
-> 
+Hi, king cope!
 
-Please use CVE-2012-1615 for this issue.
+On Dec 02, king cope wrote:
+> Hi,
+> My opinion is that the FILE to admin privilege elevation should be
+> patched.  What is the reason to have FILE and ADMIN privileges
+> seperated when with this exploit FILE privileges equate to ALL ADMIN
+> privileges.
+> I understand that it's insecure to have FILE privileges attached to a
+> user.  But if this a configuration issue and not a vulnerability then
+> as stated above there must be something wrong with the privilege
+> management in this SQL server.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+You've missed that part of my reply:
+
+> > Additionally, MySQL (and MariaDB) provides a --secure-file-priv
+> > option that allows to restrict all FILE operations to a specific
+> > directory.
+
+Normally, if a DBA wants to grant FILE privilege to users, the server
+will have something like secure-file-priv=/tmp/mysql (for example)
+specified in the configuration file. This way any operation allowed by
+the FILE privilege (like SELECT ... OUTFILE) will only be able to access
+files under the /tmp/mysql/ path.
+
+Regards,
+Sergei
+
