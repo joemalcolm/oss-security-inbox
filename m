@@ -1,58 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/07/3
-Message-ID: <4F578E2E.3000208@redhat.com>
-Date: Wed, 07 Mar 2012 09:34:54 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/2
+Message-ID: <50BC2733.4070009@redhat.com>
+Date: Sun, 02 Dec 2012 21:14:43 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- kernel: mm: memcg: unregistring of events attached to the same eventfd can lead to oops
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: Sergei Golubchik <serg@...monty.org>, oss-security@...ts.openwall.com, king cope <isowarez.isowarez.isowarez@...glemail.com>, todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, security@...iadb.org, security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
+Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
 Content-Type: text/plain; charset=utf-8
 
-On 03/07/2012 03:57 AM, Petr Matousek wrote:
-> There is an issue when memcg unregisters events that were attached to
-> the same eventfd:
-> 
-> - On the first call mem_cgroup_usage_unregister_event() removes all
->   events attached to a given eventfd, and if there were no events left,
->   thresholds->primary would become NULL;
-> 
-> - Since there were several events registered, cgroups core will call
->   mem_cgroup_usage_unregister_event() again, but now kernel will oops,
->   as the function doesn't expect that threshold->primary may be NULL.
-> 
->  BUG: unable to handle kernel NULL pointer dereference at
-> 0000000000000004
->  IP: [<ffffffff810be32c>] mem_cgroup_usage_unregister_event+0x9c/0x1f0
->  Pid: 574, comm: kworker/0:2 Not tainted 3.3.0-rc4+ #9 Bochs Bochs
->  RIP: 0010:[<ffffffff810be32c>]  [<ffffffff810be32c>]
-> mem_cgroup_usage_unregister_event+0x9c/0x1f0
->  RSP: 0018:ffff88001d0b9d60  EFLAGS: 00010246
->  Process kworker/0:2 (pid: 574, threadinfo ffff88001d0b8000, task
-> ffff88001de91cc0)
->  Call Trace:
->   [<ffffffff8107092b>] cgroup_event_remove+0x2b/0x60
->   [<ffffffff8103db94>] process_one_work+0x174/0x450
->   [<ffffffff8103e413>] worker_thread+0x123/0x2d0
-> 
-> A local attacker able to register threshold events could use this flaw
-> to crash the system.
-> 
-> The earliest commit that *might* introduce this issue is 2e72b634 in
-> 2.6.34-rc2. I haven't tested it though and the code isi slightly
-> different.
-> 
-> On the current kernels without the fix I'm able to reproduce the bug
-> easily.
-> 
-> Upstream commit:
-> 371528c (3.3-rc5)
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=800813
-> http://git.kernel.org/linus/371528c
-> 
-> Thanks,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2012-1146 for this issue.
+On 12/02/2012 07:46 PM, Steven M. Christey wrote:
+> 
+> (removed the full-disclosure/bugtraq mailing lists, they don't need
+> to be further spammed with minor CVE assignment details.)
+> 
+> 
+> On Sun, 2 Dec 2012, Sergei Golubchik wrote:
+> 
+>> Hi, Huzaifa!
+>> 
+>> Here's the vendor's reply:
+>> 
+>> On Dec 02, Huzaifa Sidhpurwala wrote:
+>>> 
+>>> * CVE-2012-5611 MySQL (Linux) Stack based buffer overrun PoC
+>>> Zeroday http://seclists.org/fulldisclosure/2012/Dec/4 
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=882599
+>> 
+>> A duplicate of CVE-2012-5579 Already fixed in all stable MariaDB
+>> version.
+> 
+> Kurt - I suggest we REJECT CVE-2012-5579 and preserve
+> CVE-2012-5611 because of the strong likelihood that CVE-2012-5611
+> will be more commonly referenced in the very near future.
 
--- 
+Sounds good to me
+
+Please REJECT CVE-2012-5579 for this issue, instead please use
+CVE-2012-5611 for this issue.
+
+
+
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQvCczAAoJEBYNRVNeJnmTqH4P/3p3KwQhtxygikZTA9OiJsNi
+28qG8CHFzxGB8pTrHfxNdHRzHi4IBjniIQUwJOcJKMQFhlIJRCTdgvw8pBGMROOK
+Hy5EVCm0r+oWFt5SDNBEZ8blRoUiSwXxgDPB7Vv1ZsuSy2EbGDxXN1W+febjGhXA
+klTg1r+PaxBEaU8n+mzvBc2vYnhCKY4x0Apu46VQt4k82K5KoXTYwSVJIfWmE4FB
+53I6tiFZRoICCqjBlDGbha/V0YfwG7ehtPb7Tgq+3Wd9tC8kO8pG2eKcpEzYWXlL
+kK02GadWEMdBxmhxkw7yxEYXnpE/fqiIgHjXR1fydlB+3dqs1yNvhbi/x5lMUsgJ
+8y422iJyH+QOI6rKcZm2AEZEkEj+/DOtZ2v6VW4vS6EZGNQ5x6VgN/T9cG0kEFgx
+pKe/n3EwC3FLkqFEtU5firwfmI+zNuFrYfst+36FLpPCVEV5Ulm7Dqge9zMPxS3g
+uvP3vxJxkzFkWY1zShQf1cVpXKZPYjzvmGQKhIv4/00e5XqR/BpY7Zb08qNVngD0
+CayQlMM6LX9T2eufouND7/mvmmC/njennqFXG+GM6pz9AFa8ouO/P6vJ/+Rsd6Kv
++/tDHl7DIpgzwarnNpCN6TMAmGwsL6FS+GSLwDnSIjmqy3XR8hLdmoHqqfiXXKRx
+3ShgRXR8r1VZ24UKd6pP
+=cozl
+-----END PGP SIGNATURE-----
