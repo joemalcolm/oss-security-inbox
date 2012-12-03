@@ -1,95 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/18/3
-Message-ID: <CAB9ZNAw9vZZKGKyiHANxw+v0gomhqqzxR3xywzPOV13Q5bviAQ@mail.gmail.com>
-Date: Thu, 17 May 2012 22:53:02 -0500
-From: Andres Gomez <agomez@...idsignal.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  vuln@...unia.com
-Subject: Re: CVE Request: Planeshift buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/7
+Message-Id: <E1TfaBF-000679-B7@xenbits.xen.org>
+Date: Mon, 03 Dec 2012 17:51:45 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 28 (CVE-2012-5512) - HVMOP_get_mem_access crash / HVMOP_set_mem_access information leak
 Content-Type: text/plain; charset=utf-8
 
-Hi kurt,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The fact that only local user can modify program files doesn't mean there
-is no security risk, there are a lot of examples but look at this:
+	     Xen Security Advisory CVE-2012-5512 / XSA-28
+                             version 3
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4620
+  HVMOP_get_mem_access crash / HVMOP_set_mem_access information leak
 
-this is very similar, only local user can modify software files, but as
-defined by Mitre this bug "allows user-assisted remote attackers to execute
-arbitrary code", because an attacker can deceive a user to download and use
-a specially crafted file. I accept the fact that "chatbubbles.xml" being a
-configuration file makes it harder to be replaced, but still there is a
-risk.
+UPDATES IN VERSION 3
+====================
 
-Thanks for the feedback,
+Public release.
 
-Andres Gomez
+ISSUE DESCRIPTION
+=================
 
-2012/5/17 Kurt Seifried <kseifried@...hat.com>
+The HVMOP_set_mem_access operation handler uses an input as an array index
+before range checking it.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 05/17/2012 03:29 PM, Andres Gomez wrote:
-> > Planeshift is an online multiplayer role playing game which is
-> > open source (http://en.wikipedia.org/wiki/PlaneShift_(video_game))
-> > and "chatbubbles.xml" is a sort of configuration file for chat
-> > windows inside the game, so I can't be changed directly by remote
-> > users.
->
-> It doesn't sounds like any security boundary is being crossed.
->
-> If you can edit that file I'm guessing you can also modify the other
-> game files (executables, libraries, etc.), so there is no escalation
-> of privilege as far as I can tell. If the ifle is owned by a unique
-> user (e.g. it's a local config thing) again, if you can edit a users
-> files you already have access, so no escalation of privilege. If this
-> is correct then I will not be assigning a CVE.
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
->
-> iQIcBAEBAgAGBQJPtaKRAAoJEBYNRVNeJnmThwQP/iLSfGP5gGSQOIN8skNBns6S
-> dr/Obla/Xjy1iADbIAuTTYcvvdp07HYlJANDN+VMKSPRQVpmhZhbr0hVq7FNsNZ9
-> L2j2BW6kpde0PxhKV6hOpLjUOATgfNYg573XPZNUKU7qEqRVAFasYjqikEiGV+lq
-> h63ISGt/bLVvTyZaJAqeUkZz6AWa9sQBYyJ4ixYatyuipA67dfD4bqkbpYwiYtV1
-> uy7b24hvW4GTV4bkz3LbZUNxzJuxCn2fv/HCMbbgXV6zlbw9/IhGrQfSyYOGzcn3
-> ZJtsByq+kzDDZdZ5QE3fGQRud0+5a4dc00cth9gyh76wHgfH6GGNDcdA3YVzcmBv
-> 8rPR36LcUHvYCRLzn4+aP6A/y3FZOK++P/f5NofkuAMQsXmenGKhWuL3nex7LGRV
-> NYfycw+T89F1wPK5EB6HN0xjmfSxDKgsajHKuV4iJ0EqPwA45zVEFeFSAgqMhVBi
-> rVofuOF46iBeHYQHzW8tKU6y13+uC6kMh78U9ekFR1sAR5pYrot5BakBJkCsWUo7
-> 6X6NVl68OXiDXo8TkI9/OuDJFI7VVnzj2ccsOVRmAB+DKIqqRa6BRvv5aZ50OpfA
-> Q+0+0aPsLWJ7lMSDizvFDDw0PhdqPq3vkinBBKRVvSbs9UG1KnNt7ADzn7O7vigR
-> dXWRpeRoRNhHO/dfQawV
-> =Gbu8
-> -----END PGP SIGNATURE-----
->
+IMPACT
+======
 
--- 
---
-AVISO DE CONFIDENCIALIDAD:
+A malicious guest administrator can cause Xen to crash.  If the out of array
+bounds access does not crash, the arbitrary value read will be used if the
+caller reads back the default access through the HVMOP_get_mem_access
+operation, thus causing an information leak. The caller cannot, however,
+directly control the address from which to read, since the value read in the
+first step will be used as an array index again in the second step.
 
-Esta transmisión se entiende para uso del destinatario o la entidad a la 
-que va dirigida y puede contener información confidencial o protegida por 
-la ley. Si el lector de este mensaje no fuera el destinatario, considérese 
-por este medio informado que la retención, difusión, o copia de este correo 
-electrónico está estrictamente prohibida. Si recibe este mensaje por error, 
-por favor notifique inmediatamente al emisor y destruya el original. Gracias
+VULNERABLE SYSTEMS
+==================
 
---
-CONFIDENTIALITY NOTICE:
+Only Xen version 4.1 is vulnerable.
 
-This transmission is intended for the use of the individual or entity to 
-which it is addressed, and it may contain information that is confidential 
-or privileged under law. If the reader of this message is not the intended 
-recipient, you are hereby notified that retention, dissemination, 
-distribution or copying of this e-mail is strictly prohibited. If you 
-received this e-mail in error, please notify the sender immediately and 
-destroy the original. Thank you.
+The vulnerability is only exposed to HVM guests.
 
+MITIGATION
+==========
+
+Running only PV guests, or ensuring that the controlling domain of HVM
+guests (e.g. dom0 or stubdom) only uses trusted code, will avoid this
+vulnerability.
+
+RESOLUTION
+==========
+
+The attached patch resolves this issue.
+
+
+$ sha256sum xsa28*.patch
+6282314c4ea0d76ac55473e5fc7d863e045c9f566899eb93c60e5d22f38e8319  xsa28-4.1.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQvOJ2AAoJEIP+FMlX6CvZDfEH/jKbLcOY6taduyPubvWjLqUj
+5moVGJMcdTUnjEOe4TH6zcax4Ce98J5BptHjCkeIIm4A70bcdfFR7Kb8i1Pr1ZA6
+jpo/fbDtn4+YVAJrMlZWhPspJU2lZSSYc+Tu3eVrX78OX4RZ/Ubb+KRGhaSkRn/a
+r14VFvNBwhSmOXFXqFI0IiCRJBctyLOxF32P3lZB3PXUepxsezjrUeYKKZ6qGkSX
+kdufkWYgZV4iKpb8WEwDOdWbs/hE7ru6vHCEE798T8I7BscQF+O8B+2ewVK/iCoo
+AgjGkqWsKhc119lSjdud8LP3A4cXWhhuHSOlmIc+gNz91IsvG3DErzQizc0wtLk=
+=GkYq
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa28-4.1.patch" of type "application/octet-stream" (1352 bytes)
