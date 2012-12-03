@@ -1,77 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/10
-Message-ID: <CAP_sDUHP-TU=4xfh9hVQXHTyHNUEPYBEsuizLesO6LJcbpeAeQ@mail.gmail.com>
-Date: Wed, 12 Sep 2012 10:07:07 -0700
-From: Matt Joyce <matt@...resistor.com>
-To: Thierry Carrez <thierry@...nstack.org>
-Cc: "openstack@...ts.launchpad.net, (openstack@...ts.launchpad.net)" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com
-Subject: Re: [Openstack-announce] [OSSA 2012-014] Revoking a role does not affect existing tokens (CVE-2012-4413)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/13
+Message-ID: <50BD2F80.7030507@gmx.de>
+Date: Tue, 04 Dec 2012 00:02:24 +0100
+From: Matthias Andree <matthias.andree@....de>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2012-5468: bogofilter-SA-2012-01
 Content-Type: text/plain; charset=utf-8
 
-This is not a repeat of cve-2012-3426?
-On Sep 12, 2012 9:37 AM, "Thierry Carrez" <thierry@...nstack.org> wrote:
+bogofilter-SA-2012-01
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> OpenStack Security Advisory: 2012-014
-> CVE: CVE-2012-4413
-> Date: September 12, 2012
-> Title: Revoking a role does not affect existing tokens
-> Impact: High
-> Reporter: Dolph Mathews (Rackspace)
-> Products: Keystone
-> Affects: Essex, Folsom
->
-> Description:
-> Dolph Mathews reported a vulnerability in Keystone. Granting and
-> revoking roles from a user is not reflected upon token validation for
-> pre-existing tokens. Pre-existing tokens continue to be valid for the
-> original set of roles for the remainder of the token's lifespan, or
-> until explicitly invalidated. This fix invalidates all tokens held by
-> a user upon role grant/revoke to circumvent the issue.
->
-> Folsom fix:
->
-> http://github.com/openstack/keystone/commit/efb6b3fca0ba0ad768b3e803a324043095d326e2
->
-> Essex fix:
->
-> http://github.com/openstack/keystone/commit/58ac6691a21675be9e2ffb0f84a05fc3cd4d2e2e
->
-> References:
-> https://bugs.launchpad.net/keystone/+bug/1041396
-> http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2012-4413
->
-> Notes:
-> This fix will be included in the future Keystone 2012.1.3 stable
-> update and the upcoming Folsom-RC1 development milestone.
->
-> - --
-> Thierry Carrez (ttx)
-> OpenStack Vulnerability Management Team
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.11 (GNU/Linux)
-> Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
->
-> iQIcBAEBCAAGBQJQULoUAAoJEFB6+JAlsQQjGacQAJUvJb+oIjh73KAYYuDpl/YP
-> PqJa4nmjVin7CyQ8AbxHK63xrAQ7isPFpCCqtEmjZ5kvFCrJRHiQggHNqISRhnvo
-> +HyS6RSn4Vrp001PSZSmQI5MpgkeWhbOy+fk4/ZY7hFgUyS2YqC8YiK7DTMdKRBi
-> toWOHRVWrmA4fUEDDcDdm9XzRseTC0cZAbj9bYAF+vXPdpxeGpq5l9Kb6yDezXGD
-> 62dFvHghVTWdUIN+gK4V4d77PoyeO9NRd4Ud0GjDpV/asQL31dW6B4aRPYVDPhL3
-> 7xcnhRsnZ3Y5J31n+7E/gMF+J+6kOaY/DNFZQ8chNW18kplYnmJnm7s3BJNjD512
-> UF/S5A5sH1Rk/vwe2nAHSqvQ1Dq3K0sRvW3YCijG2Rdj3mhBOr6OlvT5uJmnkeJT
-> GQQ8SR3y+ZLS/2EEW+cVjDMxV4Gnf9Zzrw/tSjVp6QLmJAkG8qrFmgdisQ/Jao4M
-> ygE8ZVu8lJq7N8b+k8XkB+bhz9E9V6hYOUuGoifEHRIPki/Ed7++BcdVTQdQYpAL
-> kDTaoVZt1+plwAu4ZBLxUg1vhVz19qgDc7UeoY1sPc1JcRWp/ONnp6K4z+Y+7Rsx
-> 3E4FLH0/qgFxKDHdGX91Plehk9dIEjHcGtKaXI8vOvGT17srYQaF6Y7rc+9TwaqI
-> bggBCxcI2PLQgjuWyF4M
-> =+6UN
-> -----END PGP SIGNATURE-----
->
-> _______________________________________________
-> OpenStack-announce mailing list
-> OpenStack-announce@...ts.openstack.org
-> http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-announce
->
+Topic:		heap corruption overrun in bogofilter/bogolexer
 
+Announcement:	bogofilter-SA-2012-01
+Writer:		Matthias Andree
+Version:	1.0
+CVE ID:		CVE-2012-5468
+Announced:	2012-12-03
+Category:	vulnerability
+Type:		out of bounds write through invalid input
+Impact:		heap corruption, application crash
+Credits:	Julius Plenz (FU Berlin, Germany)
+Danger:		medium
+URL:		http://bogofilter.sourceforge.net/security/bogofilter-SA-2012-01
+
+Affected:	bogofilter <= 1.2.2
+		SVN checkouts before 2012-10-19 UTC (-r6972)
+
+Not affected:	bogofilter 1.2.3 (r6973) and newer
+
+1. Background
+=============
+
+Bogofilter is a software package for classifying a message as spam or
+non-spam.  It uses a data base to store words and must be trained
+which messages are spam and non-spam. It uses the probabilities of
+individual words for classifying the message.
+
+Note that the bogofilter project is issuing security announcements only
+for current "stable" releases, and not necessarily for past "stable"
+releases.
+
+2. Problem description
+======================
+
+Julius Plenz figured out that bogofilter's/bogolexer's base64 could
+overwrite heap memory in the character set conversion in certain
+pathological cases of invalid base64 code that decodes to incomplete
+multibyte characters.
+
+3. Impact
+=========
+
+Vulnerable bogofilter/bogolexer applications can corrupt their heap and
+crash.
+
+4. Solution
+===========
+
+Upgrade your bogofilter to version 1.2.3 (or a newer release).
+
+bogofilter is available from SourceForge:
+<https://sourceforge.net/project/showfiles.php?group_id=62265>
+
+
+A. Copyright, License and Warranty
+==================================
+
+(C) Copyright 2012 by Matthias Andree, <matthias.andree@....de>.
+Some rights reserved.
+
+This work is licensed under the
+Creative Commons Attribution-NoDerivs 3.0 Germany License (CC BY-ND 3.0).
+
+To view a copy of this license, visit
+http://creativecommons.org/licenses/by-nd/3.0/de/deed.en
+or send a letter to:
+
+Creative Commons
+444 Castro Street
+Suite 900
+MOUNTAIN VIEW, CALIFORNIA 94041
+USA
+
+
+THIS WORK IS PROVIDED FREE OF CHARGE AND WITHOUT ANY WARRANTIES.
+Use the information herein at your own risk.
+
+END of bogofilter-SA-2012-01
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
