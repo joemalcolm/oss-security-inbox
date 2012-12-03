@@ -1,15 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/23/6
-Message-ID: <20120323100041.GD31973@kludge.henri.nerv.fi>
-Date: Fri, 23 Mar 2012 12:00:41 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/5
+Message-ID: <1968430077.42037618.1354556187933.JavaMail.root@redhat.com>
+Date: Mon, 3 Dec 2012 12:36:27 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: OpenKM 5.1.7 Privilege Escalation / OS Command Execution (XSRF based)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Damien Sandras <dsandras@...onix.com>, Eugen Dedu <eugen.dedu@...pm.univ-fcomte.fr>
+Subject: CVE Request -- Ekiga (x < 4.0.0): DoS (crash) after receiving call from other party with not UTF-8 valid name
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifiers for these two security vulnerabilities?
+Hello Kurt, Steve, vendors,
 
-http://osvdb.org/show/osvdb/78105 COMPASS-2012-001
-http://osvdb.org/show/osvdb/78106 COMPASS-2012-002
+  a denial of service flaw was found in the way Ekiga,
+a Gnome based SIP/H323 teleconferencing application,
+processed information from certain OPAL connections
+([certain] UTF-8 strings were not verified for validity
+prior showing them). A remote attacker (other party with
+a not UTF-8 valid name) could use this flaw to cause
+ekiga executable crash.
 
-- Henri Salo
+Upstream bug report:
+[1] https://bugzilla.gnome.org/show_bug.cgi?id=653009
+
+Relevant upstream patch:
+[2] http://git.gnome.org/browse/ekiga/commit/?id=7d09807257
+
+References:
+[3] http://ftp.gnome.org/pub/gnome/sources/ekiga/4.0/ekiga-4.0.0.news
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=883058
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
