@@ -1,27 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/31/2
-Message-ID: <4F77961B.1080108@redhat.com>
-Date: Sat, 31 Mar 2012 17:41:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Steffen Dettmer <steffen@...t.de>
-Subject: Re: SQL injection attack possible when connecting to PostgreSQL 9.1 with version 8.1 JDBC driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/1
+Message-ID: <Pine.GSO.4.64.1212022136090.27925@faron.mitre.org>
+Date: Sun, 2 Dec 2012 21:46:26 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Sergei Golubchik <serg@...monty.org>
+cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>, king cope <isowarez.isowarez.isowarez@...glemail.com>, todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, security@...iadb.org, security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
+Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
 Content-Type: text/plain; charset=utf-8
 
-On 03/31/2012 10:20 AM, Steffen Dettmer wrote:
-> Hi,
-> 
-> when using PostgreSQL JDBC driver version 8.1 to connect to a PostgreSQL
-> version 9.1 database, escaping of JDBC statement parameters does
-> not work and SQL injection attacks are possible.
+
+(removed the full-disclosure/bugtraq mailing lists, they don't need to be 
+further spammed with minor CVE assignment details.)
 
 
-> Steffen
-> 
+On Sun, 2 Dec 2012, Sergei Golubchik wrote:
 
-I believe this is covered in the list archives.
+> Hi, Huzaifa!
+>
+> Here's the vendor's reply:
+>
+> On Dec 02, Huzaifa Sidhpurwala wrote:
+>>
+>> * CVE-2012-5611 MySQL (Linux) Stack based buffer overrun PoC Zeroday
+>> http://seclists.org/fulldisclosure/2012/Dec/4
+>> https://bugzilla.redhat.com/show_bug.cgi?id=882599
+>
+> A duplicate of CVE-2012-5579
+> Already fixed in all stable MariaDB version.
 
-http://seclists.org/oss-sec/2012/q1/800
+Kurt - I suggest we REJECT CVE-2012-5579 and preserve CVE-2012-5611 
+because of the strong likelihood that CVE-2012-5611 will be more commonly 
+referenced in the very near future.
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+>> * CVE-2012-5613 MySQL (Linux) Database Privilege Elevation Zeroday
+>> Exploit
+>> http://seclists.org/fulldisclosure/2012/Dec/6
+>> https://bugzilla.redhat.com/show_bug.cgi?id=882606
+>
+> Not a bug. MySQL manual specifies many times very explicitly:
+>
+> ===
+>   * Do not grant the `FILE' privilege to nonadministrative users. Any
+
+Misconfigurations generally should not be captured with CVE IDs.  At best, 
+we will probably describe CVE-2012-5613 to emphasis the sysadmin's role.
+
+Just to toss a droplet of esoteric commentary into the bloodbath - while I 
+generally agree with the belief that distinct privileges should imply 
+boundaries that can not be broken, the reality is that most privilege 
+models are not well-documented or well-understood, and some privileges 
+might (by design) be effectively equivalent.  So, privilege issues aren't 
+necessarily guaranteed to be treated as vulnerabilities if they don't 
+violate the intended security policy.  There was some discussion about 
+this kind of challenge in the Linux kernel on oss-security a while back 
+that makes my head hurt just thinking about it.
+
+>> * CVE-2012-5615 MySQL Remote Preauth User Enumeration Zeroday
+>> http://seclists.org/fulldisclosure/2012/Dec/9
+>> https://bugzilla.redhat.com/show_bug.cgi?id=882608
+>
+> This is hardly a "zeroday" issue, it was known for, like, ten years.
+
+Does anybody have any URLs for older reports of this issue?
+
+- Steve
