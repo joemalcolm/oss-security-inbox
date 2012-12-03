@@ -1,28 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/09/4
-Message-ID: <CAHmME9rc0Wv6rdCRDtV7pWGBi6p3+wQ=d6utQWFw5-f3tcJu-g@mail.gmail.com>
-Date: Thu, 9 Feb 2012 03:31:34 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux procfs infoleaks via self-read by a SUID/SGID program (was: CVE-2011-3637 Linux kernel: proc: fix Oops on invalid /proc/<pid>/maps access)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/10
+Message-Id: <E1TfaBE-00066j-ID@xenbits.xen.org>
+Date: Mon, 03 Dec 2012 17:51:44 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 27 (CVE-2012-5511) - several HVM operations do not validate the range of their inputs
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 8, 2012 at 11:12, Solar Designer <solar@...nwall.com> wrote:
-> BTW, what version of chsh did you test this with and what behavior do
-> you observe?  I was not able to get anything useful in this way out of
-> Owl's chsh (once enabled for non-root) - it just asks for the password,
-> but somehow fails to read it if one is entered on the tty (perhaps
-> there's some inconsistency in use of the tty vs. fd 0).  I suppose I'd
-> need to get past successful authentication for chsh's input to be
-> treated as the new shell name, in which case it'd get printed out (such
-> as in an error message) or/and put in /etc/passwd.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-zx2c4@...C4-Laptop ~/Projects/Ploits/Local/CVE-2012-0056 $ gcc maps.c
-zx2c4@...C4-Laptop ~/Projects/Ploits/Local/CVE-2012-0056 $ ./a.out
-Changing the login shell for zx2c4
-Enter the new value, or press ENTER for the default
-        Login Shell [/bin/bash]: chsh: Invalid entry:
-00400000-00408000 r-xp 00000000 fd:00 1444794
-  /usr/bin/chsh
+	     Xen Security Advisory CVE-2012-5511 / XSA-27
+                           version 4
 
-It's possible to use lseek to read the entire file in 1 go though.
+   several HVM operations do not validate the range of their inputs
+
+UPDATES IN VERSION 4
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Several HVM control operations do not check the size of their inputs
+and can tie up a physical CPU for extended periods of time.
+
+In addition dirty video RAM tracking involves clearing the bitmap
+provided by the domain controlling the guest (e.g. dom0 or a
+stubdom). If the size of that bitmap is overly large, an intermediate
+variable on the hypervisor stack may overflow that stack.
+
+IMPACT
+======
+
+A malicious guest administrator can cause Xen to become unresponsive
+or to crash leading in either case to a Denial of Service.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from 3.4 onwards are vulnerable.
+
+However Xen 4.2 and unstable are not vulnerable to the stack
+overflow. Systems running either of these are not vulnerable to the
+crash.
+
+Version 3.4, 4.0 and 4.1 are vulnerable to both the stack overflow and
+the physical CPU hang.
+
+The vulnerability is only exposed to HVM guests.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa27-4.1.patch             Xen 4.1.x
+xsa27-4.2.patch             Xen 4.2.x
+xsa27-4.unstable.patch      xen-unstable
+
+
+$ sha256sum xsa27*.patch
+7443da829a7b2dd4b5e0b8db97a8b569e7c10d908ee7c34fa60bc2ddd781be57  xsa27-4.1.patch
+462eae827944d1d337a6ebf13a36ea952d7fb76b993b9c29946e1d9cfb5ea2a3  xsa27-4.2.patch
+fcb07c6bd78a0d9513a68e2eb3bf0c21ef4d8ff0e6ebf6fdce04a3170303cab6  xsa27-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQvOJ2AAoJEIP+FMlX6CvZzqwIAJwIUGfXDA0KvJ/zZWAJm49Q
+c5Sn5xK1wZdGdJTlCqAGZSMOmaUP6tofqEWanb6nOg2vRAk7HlDz1JbUw5P8E3H9
+mTT9Ro8rOhAIhgD0joT4i2XE77OTuLF85JK0M0fn2XPdUNFraChYUGthXj9+irlc
+FOhrLnXBlo34h7V7nY9XGIKAwcYUQnR7RcPasKOCO1OGEYofWKJOSKR9wrIhXiMN
+Q2svs4J1+PxNdKpErS+mMwEbnYHBcmxxEZXWktB9plzSqf5FMP4yQ3C5wTu/zrYH
+nu8Jj2JNV3NTnZgcviUBysTR+1s+JgVjLU3gtxebh2caqjSKyenPU2yYna5rlfY=
+=tfAP
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa27-4.1.patch" of type "application/octet-stream" (5821 bytes)
+
+Download attachment "xsa27-4.2.patch" of type "application/octet-stream" (4441 bytes)
+
+Download attachment "xsa27-unstable.patch" of type "application/octet-stream" (3669 bytes)
