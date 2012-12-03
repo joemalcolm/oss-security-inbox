@@ -1,84 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/28/4
-Message-ID: <20121128080820.GA3097@suse.de>
-Date: Wed, 28 Nov 2012 09:08:20 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2012-5532 hypervkvpd DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/8
+Message-Id: <E1TfaBI-000691-0m@xenbits.xen.org>
+Date: Mon, 03 Dec 2012 17:51:48 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 32 (CVE-2012-5525) - several hypercalls do not validate input GFNs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Indeed. CVE-2012-2669 was actually a fix from us, but it turns out
-that it was too strict. Exiting makes indeed no sense. :/
+	     Xen Security Advisory CVE-2012-5525 / XSA-32
+			      version 4
 
-Sebastian
+	     several hypercalls do not validate input GFNs
 
-On Tue, Nov 27, 2012 at 02:32:22PM -0700, Vincent Danen wrote:
-> * [2012-11-27 11:55:35 -0700] Vincent Danen wrote:
->
->> * [2012-11-27 11:21:03 -0700] Vincent Danen wrote:
->>
->>> Just a heads-up on a flaw that was found:
->>>
->>> Florian Weimer of the Red Hat Product Security Team discovered that hypervkvpd
->>> would exit when it processed a spoofed Netlink packet that had been sent from
->>> an untrusted local user, in the following code:
->>>
->>>       len = recvfrom(fd, kvp_recv_buffer, sizeof(kvp_recv_buffer), 0,
->>>               addr_p, &addr_l);
->>>
->>>       if (len < 0 || addr.nl_pid) {
->>>           syslog(LOG_ERR, "recvfrom failed; pid:%u error:%d %s",
->>>                   addr.nl_pid, errno, strerror(errno));
->>>           close(fd);
->>>           return -1;
->>>       }
->>>
->>> This has been corrected upstream already.
->>>
->>> References:
->>>
->>> https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=commit;h=95a69adab9acfc3981c504737a2b6578e4d846ef
->>> https://bugzilla.redhat.com/show_bug.cgi?id=877572
->>
->> Ooops.  This is a bit embarrassing.
->>
->> This is actually CVE-2012-2669.  Please reject CVE-2012-5532 as a
->> duplicate of CVE-2012-2669.
->>
->> Thanks.
->
-> Wow, ok, this is a little convoluted.  These actually are not the same
-> thing.
->
-> The old fix is here (so this would be CVE-2012-2669):
->
-> https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=blobdiff;f=tools/hv/hv_kvp_daemon.c;h=d9834b36294373f88d29731350ccc9d384b41788;hp=146fd6147e84be5cde2a66009f331f1b6ee2b805;hb=bcc2c9c3fff859e0eb019fe6fec26f9b8eba795c;hpb=cfaf025112d3856637ff34a767ef785ef5cf2ca9
->
-> This, however, while detecting the spoofed netlink packet would still
-> cause the daemon to exit.  I'm not sure whether or not it actually fixed
-> anything.
->
-> This fix:
->
-> https://git.kernel.org/?p=linux/kernel/git/gregkh/char-misc.git;a=blobdiff;f=tools/hv/hv_kvp_daemon.c;h=c1d910243d49abe6012595d50227648873994ed8;hp=13c2a142331defeb539e40b9fe4d942f66c3aa4a;hb=95a69adab9acfc3981c504737a2b6578e4d846ef;hpb=aeba4a06f28fad11b1e61d150bd3cde3008b80c8
->
-> fixes the previous commit so that now the daemon no longer exits on
-> these bad packets.  This would be CVE-2012-5532.
->
-> So CVE-2012-2669 is for "failing to check origin of netlink messages"
-> and CVE-2012-5532 is for the "exiting upon receipt of spoofed netlink
-> messages" (or something to that effect anyways).
->
-> My apologies for the noise.
->
-> -- 
-> Vincent Danen / Red Hat Security Response Team 
+UPDATES IN VERSION 4
+====================
 
--- 
+Public release.
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+ISSUE DESCRIPTION
+=================
 
+The function get_page_from_gfn does not validate its input GFN. An
+invalid GFN passed to a hypercall which uses this function will cause
+the hypervisor to read off the end of the frame table and potentially
+crash.
+
+IMPACT
+======
+
+A malicious guest administrator of a PV guest can cause Xen to crash.
+If the out of bounds access does not lead to a crash, a carefully
+crafted privilege escalation cannot be excluded, even though the guest
+doesn't itself control the values written.
+
+VULNERABLE SYSTEMS
+==================
+
+Only Xen 4.2 and Xen unstable are vulnerable. Xen 4.1 and earlier are
+not vulnerable.
+
+The vulnerability is exposed only to PV guests.
+
+MITIGATION
+==========
+
+Running only trusted PV guest kernels will avoid this vulnerability.
+
+Running only HVM guests will avoid this vulnerability.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa32-4.2.patch             Xen 4.2.x, xen-unstable
+xsa32-unstable.patch        xen-unstable
+
+
+$ sha256sum xsa32*.patch
+ad25c9298b543ef7af40e9f09cae232d36efc1932804678355ab724a19e3afd9  xsa32-4.2.patch
+734cff82a93f032165ef26633acb30a499cc063141c2b16fccb294703718fcb0  xsa32-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQvOWxAAoJEIP+FMlX6CvZ9uUH/RM5PGHxWTuFv11kAEJAaQK7
+m3dB9GZvjRo/zcRTrSQX2JCumM8rwXffNR9oUHQkC3WxRPjyNRdsiI02sSRLSDAh
+q2tsalK1PpFNX2DRrOezWrkBA2zR7pnGe3sCzgO3sGGpqMMoG5+u6/IcZHu86LGm
+zk+e0hMHtuurz6+uB0w8TJoLge4XSTw0K3ck70vCL4ysKmyOcEWcAgDmNA+OwnQ8
+duw4UGkXLrxCF1X7RbAh31lUWPSLxPvxsytja+78/9ggpQRxZkF5x6T4oABcZ7jg
+vjzYkNN3MdN41RIbmZps1SECLm/SKoOvsBxfOJArf0DYgVmJloxZrLK4TyquCDk=
+=oEp3
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa32-4.2.patch" of type "application/octet-stream" (631 bytes)
+
+Download attachment "xsa32-unstable.patch" of type "application/octet-stream" (631 bytes)
