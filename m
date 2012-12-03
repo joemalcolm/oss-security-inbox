@@ -1,98 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/25
-Message-ID: <4F918183.4090102@redhat.com>
-Date: Fri, 20 Apr 2012 09:32:19 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Marcus Meissner <meissner@...e.de>
-CC: oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/4
+Message-ID: <20121203173341.GS2689@redhat.com>
+Date: Mon, 3 Dec 2012 10:33:41 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Dovecot DoS in 2.x (fixed in 2.1.11)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Could a CVE be assigned for the following please?
 
-On 04/20/2012 01:05 AM, Marcus Meissner wrote:
-> On Thu, Apr 19, 2012 at 09:09:55PM -0600, Kurt Seifried wrote:
->> On 04/19/2012 03:48 PM, Marcus Meissner wrote:
->>> Hi,
->>> 
->>> we had a user, Vadim Ponomarev (ccrssaa at karelia.ru),  report
->>> a pid namespace leak caused by vsftpd.
->>> 
->>> https://bugzilla.novell.com/show_bug.cgi?id=757783
->>> 
->>> He provided a simple reproducer:
->>> 
->>> #include <stdio.h> #include <errno.h> #include <signal.h>
->>> #include <sched.h> #include <linux/sched.h> #include <unistd.h>
->>> #include <sys/syscall.h>
->>> 
->>> int main(int argc, char *argv[]) { int i, ret;
->>> 
->>> for (i = 0; i < 10000; i++) {
->>> 
->>> if (0 == (ret = syscall(__NR_clone, CLONE_NEWPID | CLONE_NEWIPC
->>> | CLONE_NEWNET | SIGCHLD, NULL))) return 0;
->>> 
->>> if (-1 == ret) { perror("clone"); break; }
->>> 
->>> } return 0; }
->>> 
->>> 
->>> and checking "cat /proc/slabinfo|grep pid_namespace" gives
->>> 10000 more active slots after running it on 3.0.13 (+SUSE
->>> patches) and 3.1.10 (+SUSE patches).
->>> 
->>> 
->>> Running this on 3.2.0 (+SUSE Patches) did not result in more
->>> slots, so it was probably fixed between 3.1 and 3.2 (but
->>> someone else cross check perhaps).
->>> 
->>> Any idea welcome on which patch fixed this, I tried 
->>> 1b26c9b334044cff6d1d2698f2be41bc7d9a0864 but it seems not
->>> helping.
->>> 
->>> Ciao, Marcus
->> 
->> Can this be triggered by a non privileged user/process? Eugene 
->> mentions that CAP_SYS_ADMIN seems to be required, if so it seems
->> like there isn't much of a trust boundary violation going on
->> (anyone/thing with CAP_SYS_ADMIN is already in pretty good).
-> 
-> The above code ... no.
-> 
-> However, vsftpd has this code pattern in its newer namespace
-> enabled versions.
-> 
-> So it can be triggered via a namespace enabled vsftpd remotely, by
-> just running wget on even anonymous areas in a loop.
+Dovecot 2.1.11 was released and includes a fix for a crash condition
+when the IMAP server was issued a SEARCH command with multiple KEYWORD
+parameters.  An authenticated remote user could use this flaw to crash
+Dovecot.
 
-Ok that seems like a reasonably sane use case (e.g. as opposed to
-granting a local program CAP_SYS_ADMIN). Please use CVE-2012-2127 for
-this issue.
+The upstream fix was to remove the keyword merging code.  This code
+does not exist in Dovecot 1.x, but it does affect 2.x versions, at least
+as far back as 2.0.9 (earliest version I checked).
 
-> Ciao, Macus
+References:
+
+http://www.dovecot.org/list/dovecot-news/2012-November/000235.html
+http://secunia.com/advisories/51455
+http://hg.dovecot.org/dovecot-2.1/rev/0306792cc843
+https://bugzilla.redhat.com/show_bug.cgi?id=883060
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Thanks.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPkYGDAAoJEBYNRVNeJnmTCS4P/3e8Yb5/QonbKJ8aNOzl3/4L
-3mWUdlUDmUCB/GlGSgKgKi4fVU0Afd3x8ghHjmWfp9YOAnx7WnkZpx7joPCM+dlL
-aXam4E208X7L5WpIbmqIi28IVa9x63N4lxb5au3Zwp4xNVB7mLIxERyYz+adNPRm
-7Kpohf1M2FAL2x/yGFVoTHEGHG2yh29BJYB9+KmQmf4h7znaR1XjidGYtNQpEkq/
-tGGIxdU0cLWHNswzhiDElhte8lsMyaZ4aNYZZDu9lxpc6TUE+/BpiF2zx6oUytmR
-+hKJ+Tv3XMIZcYoyeNm1/5YrXLnZCdQJqAULtD63Rx/XMd9z4+blVryqZAo1PWgi
-rvQcwcAYWdKuGTSk/FCHv3zj/xZ1sb/exWt4U3YfrMAroPNKzr4dlTBs4HJIcsCY
-DnrCjJg7gGwU/mE7M4H2FMaaX3yxV45VVu3Prd8vsnYl3PvIiUl/GNXV02pONRki
-cX+jSK2mM4oYVXtSl3O5fefjJ/AIXg8fd5jgjzxEWQ2SgbsNOdeaofuVLshOshJv
-pXL94yhXiSM0kqA2BSn/n3Da7KNFKfYSNuu9YcpuMOmO98gVTG6BxDREyPVaNNnD
-xM89+VPS81SwoTvXoXApXVmdgsxS77Zr7s1V7rNmIvmz4BwBd9H3zYDZ56noCu0Z
-pR49VyTREeYtfaJmXvic
-=GZlG
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
