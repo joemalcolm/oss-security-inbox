@@ -1,65 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/9
-Message-ID: <50D21AFF.20609@msgid.tls.msk.ru>
-Date: Wed, 19 Dec 2012 23:52:31 +0400
-From: Michael Tokarev <mjt@....msk.ru>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: qemu e1000 emulated device gues-side buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/11
+Message-Id: <E1TfaBF-00067d-Un@xenbits.xen.org>
+Date: Mon, 03 Dec 2012 17:51:45 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 29 (CVE-2012-5513) - XENMEM_exchange may overwrite hypervisor memory
 Content-Type: text/plain; charset=utf-8
 
-qemu-1.3 includes the following patch by Michael Contreras:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- http://thread.gmane.org/gmane.comp.emulators.qemu/182666
-  (initial submission)
- http://git.qemu.org/?p=qemu.git;a=commitdiff;h=b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
-  (the commit)
+	     Xen Security Advisory CVE-2012-5513 / XSA-29
+                             version 3
+
+           XENMEM_exchange may overwrite hypervisor memory
+
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The handler for XENMEM_exchange accesses guest memory without range checking
+the guest provided addresses, thus allowing these accesses to include the
+hypervisor reserved range.
+
+IMPACT
+======
+
+A malicious guest administrator can cause Xen to crash.  If the out of address
+space bounds access does not lead to a crash, a carefully crafted privilege
+escalation cannot be excluded, even though the guest doesn't itself control
+the values written.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are vulnerable.
+
+The vulnerability is only exposed to PV guests.
+
+MITIGATION
+==========
+
+Running only HVM guests, or ensuring that PV guests only use trusted kernels,
+will avoid this vulnerability.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa29-4.1.patch             Xen 4.1.x
+xsa29-4.2-unstable.patch    Xen 4.2.x, xen-unstable
 
 
-commit b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
-Author: Michael Contreras <michael@...tric.com>
-Date:   Sun Dec 2 20:11:22 2012 -0800
-Subject: e1000: Discard packets that are too long if !SBP and !LPE
+$ sha256sum xsa29*.patch
+7246a5534bc1e6a47bb6a860f6eb61c8353ad8b46209310783e823b4f7e2eae8  xsa29-4.1.patch
+54dcd3ac5c84903bfb04f8591107a74c27b079815f2c6843212e05f776873c73  xsa29-4.2-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
- The e1000_receive function for the e1000 needs to discard packets longer than
- 1522 bytes if the SBP and LPE flags are disabled. The linux driver assumes
- this behavior and allocates memory based on this assumption.
+iQEcBAEBAgAGBQJQvOJ3AAoJEIP+FMlX6CvZ7u8IAM01+jNn5fwdGmoo/LIdH885
+nWr5aSc+qMqVuSvla0KKh1SOLFaVWFgovLN1Sfu2hAxLgrK3HxN86RqHU/vLo0k0
+KTFM+9xQlxhJNQzyQSiDryH/qSrHTQI6ERxUEYgfjtTieK8y30SZqkd6jBmwoir/
+nAMMP8oFmVevM2WfYEWjNNsWPaiUlUYP13qxiWGPcGzhcNNKRwcmrIY4N+F6kHID
+Ipl4l5vhoeSaQ0fKkcJKHa+3QGd+706jHZ5VTCwPdWBCnBJLFuMWbc2UlyIg2EB9
+N+3Olwf3jCF0zIzBJkomA+FAg+D7kw31DCjc+y1PdGIyuoMkk+JRwYFVkZcKLi4=
+=pD8C
+-----END PGP SIGNATURE-----
 
- Signed-off-by: Michael Contreras <michael <at> inetric.com>
- ---
+Download attachment "xsa29-4.1.patch" of type "application/octet-stream" (2087 bytes)
 
- Tested with linux guest. This error can potentially be exploited. At the very
- least it can cause a DoS to a guest system, and in the worse case it could
- allow remote code execution on the guest system with kernel level privilege.
- Risk seems low, as the network would need to be configured to allow large
- packets.
-
-
-The last comment, which didn't went into the commit message, indicates
-that it is possible to send larger packet to a guest and cause a buffer
-overflow with usual outcome in such cases.
-
-Yes indeed, the impact is rather low, because the network should be
-configured to allow larger packets to reach the guest, which is not
-usually the case -- either the host network is configure for MTU=1500
-and disallow large packets entirely, or BOTH host and guest network is
-configured to allow large packets.  In other words, either all devices
-on the network are configred to accept jumbo frames, no no jumbo frames
-are enabled at all.
-
-That's why I'm not sure whenever this can be considered a vulnerability
-which deserves a CVE# or not, so I'm asking here.
-
-There's another followup bugfix in the same area, now talking about
-"extra-large" frames --
-
- http://thread.gmane.org/gmane.comp.emulators.qemu/183137
-
-If this issue deserves a CVE#, I guess both patches can be seen as a
-single bugfix.
-
-This impacts qemu and all products based on it and using e1000 emulated
-device, including qemu-kvm, xen and others.
-
-Thanks,
-
-/mjt
+Download attachment "xsa29-4.2-unstable.patch" of type "application/octet-stream" (2099 bytes)
