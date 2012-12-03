@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/15/4
-Message-ID: <2104234835.32191369.1352990834394.JavaMail.root@redhat.com>
-Date: Thu, 15 Nov 2012 09:47:14 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Petr Pisar <ppisar@...hat.com>, Mark Stosberg <mark@...mersault.com>
-Subject: CVE Request -- perl-CGI: Newline injection due to improper CRLF escaping in Set-Cookie and P3P headers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/5
+Message-ID: <CAFB=mGDg+UN7=w7Ve1BC8cXQXRHuzYgBdufUJKj6y5-Tp=Fmqw@mail.gmail.com>
+Date: Mon, 3 Dec 2012 16:52:55 +0100
+From: king cope <isowarez.isowarez.isowarez@...glemail.com>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>,  king cope <isowarez.isowarez.isowarez@...glemail.com>,  full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com,  todd@...ketstormsecurity.org, submit@...sec.com,  Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org,  security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
+Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Yes you are way right.
+Don't patch it!
 
-  a security flaw was found in the way CGI.pm, a Perl module to
-handle Common Gateway Interface requests and responses, performed
-sanitization of values to be used for Set-Cookie and P3P headers.
-If a Perl CGI.pm module based CGI application reused cookies values
-and accepted untrusted input from web browser(s), a remote attacker
-could use this flaw to in an unauthorized way alter member items of
-the cookie or add new items.
-
-References:
-[1] http://cpansearch.perl.org/src/MARKSTOS/CGI.pm-3.63/Changes
-[2] https://github.com/markstos/CGI.pm/pull/23
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=877015
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+2012/12/3 Sergei Golubchik <serg@...monty.org>:
+> Hi, king cope!
+>
+> On Dec 02, king cope wrote:
+>> Hi,
+>> My opinion is that the FILE to admin privilege elevation should be
+>> patched.  What is the reason to have FILE and ADMIN privileges
+>> seperated when with this exploit FILE privileges equate to ALL ADMIN
+>> privileges.
+>> I understand that it's insecure to have FILE privileges attached to a
+>> user.  But if this a configuration issue and not a vulnerability then
+>> as stated above there must be something wrong with the privilege
+>> management in this SQL server.
+>
+> You've missed that part of my reply:
+>
+>> > Additionally, MySQL (and MariaDB) provides a --secure-file-priv
+>> > option that allows to restrict all FILE operations to a specific
+>> > directory.
+>
+> Normally, if a DBA wants to grant FILE privilege to users, the server
+> will have something like secure-file-priv=/tmp/mysql (for example)
+> specified in the configuration file. This way any operation allowed by
+> the FILE privilege (like SELECT ... OUTFILE) will only be able to access
+> files under the /tmp/mysql/ path.
+>
+> Regards,
+> Sergei
+>
