@@ -1,21 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/10/3
-Message-ID: <20120510073930.GD9421@kludge.henri.nerv.fi>
-Date: Thu, 10 May 2012 10:39:30 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request: phpMyFAQ default password 1.3.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/12
+Message-Id: <E1TfaBG-000688-Od@xenbits.xen.org>
+Date: Mon, 03 Dec 2012 17:51:46 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 30 (CVE-2012-5514) - Broken error handling in guest_physmap_mark_populate_on_demand()
 Content-Type: text/plain; charset=utf-8
 
-This is very old issue from 2003 without CVE-identifier.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
+	     Xen Security Advisory CVE-2012-5514 / XSA-30
+                              version 4
 
-By default, phpMyFAQ installs with a default password. An unspecified account has an unspecified password which is publicly known and documented. This allows attackers to trivially access the program or system and gain privileged access.
+    Broken error handling in guest_physmap_mark_populate_on_demand()
 
-http://osvdb.org/show/osvdb/81714
-http://www.phpmyfaq.de/changelog.php
+UPDATES IN VERSION 4
+====================
 
-Is there a general CVE-identifier for issues like default password, which I think would be OK in case like this? If user upgraded installation from old version to new this was not fixed in the process.
+Public release.
 
-- Henri Salo
+ISSUE DESCRIPTION
+=================
+
+guest_physmap_mark_populate_on_demand(), before carrying out its actual
+operation, checks that the subject GFNs are not in use. If that check fails,
+the code prints a message and bypasses the gfn_unlock() matching the
+gfn_lock() carried out before entering the loop.
+
+Further, the function is exposed to the use of guests on their own
+behalf.  While we believe that this does not cause any further issues,
+we have not conducted a thorough enough review to be sure.  Rather, it
+should be exposed only to privileged domains.
+
+IMPACT
+======
+
+A malicious guest administrator can cause Xen to hang.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen version from 3.4 on are vulnerable.
+
+The vulnerability is only exposed by HVM guests.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa30-4.1.patch             Xen 4.1.x
+xsa30-4.2.patch             Xen 4.2.x
+xsa30-4.unstable.patch      xen-unstable
+
+$ sha256sum xsa30*.patch
+586adda04271e91e42f42bb53636e2aa6fc7379e2c2c4b825e7ec6e34350669e  xsa30-4.1.patch
+c410bffb90a551be30fde5ec4593c361b69e9c261878255fdb4f8447e7177418  xsa30-4.2.patch
+2270eed8b89e4e28c4c79e5a284203632a7189474d6f0a6152d6cf56b287497b  xsa30-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQvOJ3AAoJEIP+FMlX6CvZjRgIAIF1cvAxVM3nE55HwvIlMWto
+ldpam6YtFKAIr5XXBD6IQ0NrghJNNXyeZT4bxSdQAqyqUg9tYgkIMgYJx3kxQuVZ
+uhUIyg+mL5bZ+kN1TkHTVPVF1X1D0WbRDD//3V3MV8q6Dy1OEfTaQVb7ZLaNmwv5
+tmZ0+D6nrMe24UEr5RjzupBgX5iMeGdKyh87Zg/OM0CG5y8EQOaxlb9i47K/DLDh
+l4lc6Jpxz1+tW9B9T/SUDiH37BABturvr1XvDsbencuNZeicLr8y1YKDgf2OyN5L
+RfCjSNadtJRBV4BcyGTqdboZfnmavGqmYoDdJg3eSRZ+ls9PZ9hyEMETaRsCeOc=
+=MBWJ
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa30-4.1.patch" of type "application/octet-stream" (1866 bytes)
+
+Download attachment "xsa30-4.2.patch" of type "application/octet-stream" (1858 bytes)
+
+Download attachment "xsa30-unstable.patch" of type "application/octet-stream" (1749 bytes)
