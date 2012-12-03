@@ -1,51 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/11
-Message-ID: <CAAPiX_+QjN5sob7gFwy9YezSGVoOyv5C26at0d_kQXZHAZJd2Q@mail.gmail.com>
-Date: Tue, 10 Apr 2012 10:30:52 -0600
-From: Greg Knaddison <greg.knaddison@...uia.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE's for Drupal Contrib 2012 001 through 057 (67 new CVE assignments)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/6
+Message-Id: <E1TfaBC-00066G-S2@xenbits.xen.org>
+Date: Mon, 03 Dec 2012 17:51:42 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 26 (CVE-2012-5510) - Grant table version switch list corruption vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-These are all now updated. If someone is able to confirm I matched them all
-up properly I would appreciate it.
+	     Xen Security Advisory CVE-2012-5510 / XSA-26
+                             version 3
 
-We publish contributed module SAs on Wednesdays. Would it be helpful for
-future assignments to send a request at the end of the day? As discussed
-previously, it's not currently feasible to ask in advance for CVEs because
-coordination with the contributed module maintainers is not reliable enough
-to be done inside the embargo window.
+       Grant table version switch list corruption vulnerability
 
-I had a few questions/comments as I updated these - inline below:
+UPDATES IN VERSION 3
+====================
 
-"NO CVE","SA-CONTRIB-2012-050","CDN2 Video -
-> Unsupported","https://drupal.org/node/1506542"
->
+Public release.
 
-While the backend service and module are no longer active, there are 70
-sites using this module who are vulnerable to CSRF/XSS. What is the reason
-not to give it a CVE?
+ISSUE DESCRIPTION
+=================
+
+Downgrading the grant table version of a guest involves freeing its
+status pages. This freeing was incomplete - the page(s) are freed back
+to the allocator, but not removed from the domain's tracking
+list. This would cause list corruption, eventually leading to a
+hypervisor crash.
+
+IMPACT
+======
+
+A malicious guest administrator can cause Xen to crash, leading to a
+denial of service attack.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen version from 4.0 on are vulnerable.
+
+Version 3.4 and earlier are not vulnerable.
+
+MITIGATION
+==========
+
+Running only guests with trusted kernels will avoid this vulnerability.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa26-4.1.patch             Xen 4.1.x
+xsa26-4.2.patch             Xen 4.2.x
+xsa26-unstable.patch        xen-unstable
 
 
-> "NO CVE","SA-CONTRIB-2012-056","Janrain Engage - Sensitive Data
-> Protection Vulnerability","https://drupal.org/node/1515282"
->
+$ sha256sum xsa26*.patch
+b4674ddaf9a9786d5e7e5e4f248f6095e118184df581036e0531b5db5e1d645b  xsa26-4.1.patch
+a6e2ed7bae3e62d4294fdb48e8a5418b1de8e0e690f4fea4bb430d2b7cf758e6  xsa26-4.2.patch
+ac2d5a82f0dba0f4213607a0e3bb9be586d90173bbadc4b402c2f19fbe4b2cf3  xsa26-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-We debated a bit about this one and whether to make it an SA or not. In the
-end we decided that if a module were persisting the password in plain text
-that would deserve an SA so this one (persisting a login token in plain
-text) should also get an SA. Do you have any guidance on how you think we
-should have handled it?
+iQEcBAEBAgAGBQJQvOJ1AAoJEIP+FMlX6CvZBHIH/jI42gGLsThzGlgkFg2aqE74
+EUKIPZE4DLQNl6oTQ/fp0dfJgsQ8XHldovl4EphWK+oO0osloE2HjAY5mesOraui
+IIQHRkbosbDshDcSqFDndl+xjAEk1ohlGMMpSdUImIHdFF8ZJneXdK11cqxMtCKR
+27ych3lDViqy0OqxFGRZpsBE0hHqU7aiL8Orr+tI4sANnd/qVfZcdqizoTRuAJX3
+KOmaq+8VwoRSeppAvVgcnGkDLyCd5udRLNEenjrFo1YkC01bVIdbD59/ZwEIC6eZ
+iR7bvppV1nuq9WnbCkx+FVkNc9AuGwUZMOdePH2PwLYqIZGMBi9uqUD3Y0HHMoo=
+=OtT0
+-----END PGP SIGNATURE-----
 
-If you have any further suggestions on how we can improve the content or
-formatting of the SAs please let me know.
+Download attachment "xsa26-4.1.patch" of type "application/octet-stream" (3932 bytes)
 
-Thanks,
-Greg
+Download attachment "xsa26-4.2.patch" of type "application/octet-stream" (3814 bytes)
 
--- 
-Director Security Services | +1-720-310-5623
-Skype: greg.knaddison | http://twitter.com/greggles | http://acquia.com
-
+Download attachment "xsa26-unstable.patch" of type "application/octet-stream" (3820 bytes)
