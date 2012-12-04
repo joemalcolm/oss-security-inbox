@@ -1,80 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/10/15
-Message-ID: <4F848EB2.7050907@redhat.com>
-Date: Tue, 10 Apr 2012 13:49:06 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/2
+Message-ID: <50BD57E4.8090800@redhat.com>
+Date: Mon, 03 Dec 2012 18:54:44 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, asterix@...aule.org
-Subject: Re: gajim insecure file creation when using latex
+To: oss-security@...ts.openwall.com
+CC: Timo Warns <Warns@...-Sense.DE>
+Subject: Re: CVE request: TSK misrepresents "." files on FAT filesystems
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/09/2012 09:43 PM, Nico Golde wrote:
-> Hi, Gajim seems to support latex in instant messages. This is
-> implemented by dumping the content to a .tex template on disk and
-> converting the result to an image. To prevent security problems, it
-> is at least checking the input for dangerous latex commands such as
-> \input (as far as I can see nothing is missing from this list).
+On 12/01/2012 01:58 PM, Timo Warns wrote:
+> The Sleuth Kit misrepresents files named "." on FAT filesystems.
+> An attacker could rename a file to "." to evade detection by a
+> forensic analysis.
 > 
-> However, it fails to create this temporary file in a secure
-> manner: From src/common/latex.py: 60 def get_tmpfile_name(): 61
-> random.seed() 62         int_ = random.randint(0, 100) 63
-> return os.path.join(gettempdir(), 'gajimtex_' + int_.__str__())
-
-Sigh. And this is why people should use mkstemp().
-
-Please use CVE-2012-2093 for this issue.
-
-
-
-> ... 113 def latex_to_image(str_): 114         result = None 115
-> exitcode = 0 116 117         try: 118                 bg_str,
-> fg_str = gajim.interface.get_bg_fg_colors() 119         except: 120
-> # interface may not be available when we test latext at startup 121
-> bg_str, fg_str = 'rgb 1.0 1.0 1.0', 'rgb 0.0 0.0 0.0' 122 123
-> # filter latex code with bad commands 124         if
-> check_blacklist(str_): 125                 # we triggered the
-> blacklist, immediately return None 126                 return None 
-> 127 128         tmpfile = get_tmpfile_name() 130         # build
-> latex string 131         write_latex(os.path.join(tmpfile +
-> '.tex'), str_) and finally: 65 def write_latex(filename, str_): 66
-> texstr =
-> '\\documentclass[12pt]{article}\\usepackage[dvips]{graphicx}' 67
-> texstr += '\\usepackage{amsmath}\\usepackage{amssymb}' 68
-> texstr += '\\pagestyle{empty}' 69         texstr +=
-> '\\begin{document}\\begin{large}\\begin{gather*}' 70         texstr
-> += str_ 71         texstr +=
-> '\\end{gather*}\\end{large}\\end{document}' 72 73         file_ =
-> open(filename, "w+") 74         file_.write(texstr) 75
-> file_.flush() 76         file_.close()
+> Affected is the current version 4.0.1. Older versions are probably 
+> affected as well.
 > 
-> I think this is of pretty minor severity even though it still
-> allows a local attacker to overwrite files the victim has write
-> access to with latex content by using symlinks and latex IMs are
-> used.
+> No patch is currently available. The bug is tracked at 
+> http://sourceforge.net/tracker/?func=detail&aid=3523019&group_id=55685&atid=477889
+>
+>  AFAICS, the bug was originally identified by Wim Bertels 
+> http://sourceforge.net/mailarchive/forum.php?thread_name=1305739444.2355.35.camel%40zwerfkat&forum_name=sleuthkit-users
+>
+>  Further discussion is at 
+> http://sourceforge.net/mailarchive/forum.php?thread_name=20120503111900.GL18142%40hauptmenue&forum_name=sleuthkit-users
+>
 > 
-> Cheers Nico
+> 
+> The vulnerability is already exploited, for example, by the Flame 
+> malware (possibly unintendedly). Flame uses an encrypted SQLite-DB
+> named "." for extraction of confidential files and for update
+> distribution. An analyst may miss the file as the Sleuth Kit does
+> not appropriately show the file.
+> 
+> http://labs.bitdefender.com/2012/06/flame-the-story-of-leaked-data-carried-by-human-vector/
+>
+> 
+http://blog.crysys.hu/2012/06/flame-usb-dot-file-confirmed/
+> 
+> Regards, Timo
 
+Please use CVE-2012-5619 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPhI6yAAoJEBYNRVNeJnmTcD0P/ie/UZf1YOcIesLhQgjsUQq1
-hCV3oQIJKVykwxObjbgpFtT9wgpcgk2zmSU2YL8hE4+uvroCTDVMT4Y9pbt1/7/8
-uREQydl1svEOkWMJU72ScN9Op+wAEkz0bFLtKh6AmVqGddlfVAo1vQm9+r3A693l
-xtqcVOIte5Fbi8LbpkU5KAo4J1jVoMRJyTYT1j4Qi31TcaZVXs+VvgNIWjnX3bV1
-RmrBd8mkttNiGPY2r3/g2UYQtQb4w/hjaYhu6mC+foKnuxN+wsqgTS6sXOadf+Wc
-bdLz2OENPkcicCHIa5yJpw5cGoc5IBgTl4IUyEKzJ8LVWQuDRb89yEmgG/wxcNnW
-lhjmw29bT17oUuyTgjO/nDXrCEq71g/LHYLcYXPOvGpLK1xjYDqsciSha0nSUlq6
-Qg7BoMlpj8WUWo5nml+eQ+2ErFoY7Fla9Ir61HgOG5KaJ/kq3N8PvBbeNWvX6E0v
-w8WnBEihLKc05E4WFbZqu84EMTNtnh/zwnkStY9ZeY49Rs30fAIM5YOJHwac9zKy
-ByB5y4ueEqPmQvp14axruIyae0Sv03HrtuJD7Nm4KsZj1wZRnmlCqTBvlOGEDgdW
-O/mvUM7mNiqhQ2vl4BkqcZac2vf3z3ndz2cjILvJPMY0eE7WfpdkOjKDS+hpsRAZ
-NqBB0+dfoRMLw8OLwY+n
-=Yfv4
+iQIcBAEBAgAGBQJQvVfkAAoJEBYNRVNeJnmTsAcP/0wh/shO2O88JMcLDbShZhNi
+o78DXPDNS+kASw2PZz21kLJTnGlTi68zkCT1WlRSnHrrXTvYFdCp61gNAlveHdq9
+uGFVkiE7XRMKpcVbbusEIo5bSgtYTcMCQgb+TMYKSYp4P7YAwwSdnXZQxSfGly8Y
+gd5fMPD2yABPtQnq6/LeNJgFmZGs+TAG7c+z1pQKmV4l7fdCzAvz0DoakBoqz+2T
+26pzX4oMxAeYsHffWKI4F/JPPkBDuVy1yfuQVlJgSGn+UKuPZFuG/I2f0czvplxF
+9xKYTE/cDLCAgmOwrOMRWMk0BnOviIUh2vmaciC/Q/hQ+7zXk9uco4m5y+5vclCk
+iN+aQhhV+KjcDj07AKtK2f45kC9sjYfHymlsxQtBPeN4DZnVy70OKUE0FqFkKNb3
+sElbmA00BNW49U0QVSSLcOqEopCpA3U0XSCh4OMgux9dRFapBOHriWCQnT82skan
+7sZDLCPxkIuRPFAaAWYCdwweX38f55wKbtdverSv4OvVjYa4n/i2p4CVxN7n4BlY
+smnpxu97u/TcifjLL1AglbN0/yfnrhnLjB12O6iwZfdAXkPA/DcoNRLoRdGve9M/
+to6D3ef34OvFtxVhTIUUhsx2sO1YBJZlFb88faunh5jSHEQlXuyIJAOdUNWE+y+9
+SKDQy6m574LMnCXDT9sb
+=1aUQ
 -----END PGP SIGNATURE-----
