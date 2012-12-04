@@ -1,57 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/30/5
-Message-ID: <503F8831.1040807@redhat.com>
-Date: Thu, 30 Aug 2012 11:35:13 -0400
-From: Russell Bryant <rbryant@...hat.com>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: Re: [Openstack] [OSSA 2012-012] Horizon, Open redirect through 'next' parameter (CVE-2012-3540)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/7
+Message-ID: <117766656.42614424.1354633106738.JavaMail.root@redhat.com>
+Date: Tue, 4 Dec 2012 09:58:26 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Richard J. Moore" <rich@....org>
+Subject: CVE Request -- Qt (x < 4.8.4): QML XmlHttpRequest insecure redirection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-This advisory included the wrong CVE.  It was CVE-2012-3540.  Sorry
-about that.
+  Qt upstream has released 4.8.4 version correcting one security
+issue:
 
-On 08/30/2012 11:10 AM, Russell Bryant wrote:
-> OpenStack Security Advisory: 2012-012 CVE: CVE-2012-3542
+An information disclosure flaw was found in the way XMLHttpRequest
+object implementation in Qt, a software toolkit for developing
+applications, performed management of certain HTTP responses.
+Previous implementation allowed redirection from HTTP protocol
+to file schemas. Also the redirection handling was performed
+automatically by QML application and could not be disabled.
+A remote attacker could use this flaw to cause QML application
+in an unauthorized way to read local file content by causing
+the HTTP response for the application to be a redirect to
+a file: URL (file scheme).
 
-This should have been CVE-2012-3540
+References:
+[1] http://lists.qt-project.org/pipermail/announce/2012-November/000014.html
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=883415
 
-> Date: August 30, 2012 Title: Open redirect through 'next'
-> parameter Impact: Medium Reporter: Thomas Biege (SUSE) Products:
-> Horizon Affects: Essex (2012.1)
-> 
-> Description: Thomas Biege from SUSE reported a vulnerability in
-> Horizon authentication mechanism. By adding a malicious 'next'
-> parameter to a Horizon authentication URL and enticing an
-> unsuspecting user to follow it, the victim might get redirected
-> after authentication to a malicious site where useful information
-> could be extracted. Only setups running Essex are affected.
-> 
-> Fixes: 2012.1: 
-> https://github.com/openstack/horizon/commit/35eada8a27323c0f83c400177797927aba6bc99b
->
->  References: 
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3542
+Relevant upstream patch:
+[3] https://codereview.qt-project.org/#change,40034
 
-This should have been:
+Could you allocate a CVE id for this?
 
-    http://cve.mitre.org/cgi-bin/cvename.cgi?name=2012-3540
-
-> https://bugs.launchpad.net/horizon/+bug/1039077
-> 
-> Notes: This fix will be included in a future Essex (2012.1)
-> release.
-
-- -- 
-Russell Bryant
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iEYEARECAAYFAlA/iDEACgkQFg9ft4s9SAbPBQCgndIk58K5ZF71PCxmWfDjV9MO
-4yoAoJDGBeqC4TbJnyo+AsEeQYeTQEe6
-=zO6p
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
