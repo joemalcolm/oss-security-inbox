@@ -1,47 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/25
-Message-ID: <CANY-Wm-rsh-Ee5pRatEx7Aty1NuzfH225TseADnFfO9Gk_DDfg@mail.gmail.com>
-Date: Fri, 20 Jan 2012 12:52:26 -0700
-From: "Samuel J. Greear" <sjg@...sjg.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>,  security@...gonflybsd.org, oss-security@...ts.openwall.com,  magnum <john.magnum@...hmail.com>
-Subject: Re: weird crypt-sha* in DragonFly BSD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/8
+Message-ID: <50BE2E85.5060200@redhat.com>
+Date: Tue, 04 Dec 2012 10:10:29 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, "Richard J. Moore" <rich@....org>
+Subject: Re: CVE Request -- Qt (x < 4.8.4): QML XmlHttpRequest insecure redirection
 Content-Type: text/plain; charset=utf-8
 
->
-> 2. Instead of:
->>
->> + * The deprecated sha256/512 functions are somehow sensitive to the
->> + * order of this crypt_types array as well as their respective "name"
->> members.
->> + *
->> + * In order to ensure that both existing passwords will continue to work
->> and
->> + * that new passwords will be more secure by using the new algorithms
->> even
->> + * without updating the existing login.conf, this array is now scanned
->> + * backwards. This could be reverted in the future when the deprecated
->> SHA
->> + * functionality is removed.
->>
->> how about using the more reliable approach proposed by magnum here? -
->>
->> http://www.openwall.com/lists/john-dev/2012/01/19/1
->>
->> As you can see, he has even spent time to identify the specific 64-bit
->> magic values.  Of course, you'll need to double-check them (such as by
->> applying the patch and testing logins to existing accounts with both
->> sha256 and sha512 on a 64-bit DragonFly system.)
->>
->>
-> There isn't a collision issue with $3$ and $4$ on DragonFly, so I don't
-> see any obvious need. I intend to rip the old code out after a few
-> releases, so the issue (if there is one) will be (relatively) short lived.
->
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We just realized that we obviously need to do this.
+On 12/04/2012 07:58 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> Qt upstream has released 4.8.4 version correcting one security 
+> issue:
+> 
+> An information disclosure flaw was found in the way XMLHttpRequest 
+> object implementation in Qt, a software toolkit for developing 
+> applications, performed management of certain HTTP responses. 
+> Previous implementation allowed redirection from HTTP protocol to
+> file schemas. Also the redirection handling was performed 
+> automatically by QML application and could not be disabled. A
+> remote attacker could use this flaw to cause QML application in an
+> unauthorized way to read local file content by causing the HTTP
+> response for the application to be a redirect to a file: URL (file
+> scheme).
+> 
+> References: [1]
+> http://lists.qt-project.org/pipermail/announce/2012-November/000014.html
+>
+> 
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=883415
+> 
+> Relevant upstream patch: [3]
+> https://codereview.qt-project.org/#change,40034
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
-Thanks again,
-Sam
+Please use CVE-2012-5624 for this issue.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQvi6FAAoJEBYNRVNeJnmTphkP/AmZ83+7kVystL5+DG5IHfb1
+5EOs3bm7csaxAVXaStv7NnU0fP5YpzCUrnYEjDhmB1zMMXla5oyW2+pLI48OnRKP
+0JotWmNm6l0bNKpM3P8xeb1nEeJjaXUGgoTX25/+N5+JDnH+qqQ4xlAS2+MlGGiu
+uVjU3Neb8TpBMqx8wuNA4qYevuVrhO5rjgEZcFO/BaQXXmPjB76Tdg5GDL4of+i+
+CLO6X/4TsTCarZ/cNekwDMKUzVgunD77H27cimpldcWoecmv2MZRFS1hei8w+iPQ
+intBhTzG+WzJxzSGgSOkY8eUJi8Hftdi8DuOqF4xebRjq91YxrGY6Wekfn5Lihjn
+SY3BeKZbp/FMxLAk/Ru06klmcFfFNyPf2AW2uGBSemAeYNdtKoOip+t25oQwjlxs
+LmzXMMEVUQVtbew8S58OKvrFyjLtSP74YBQ35+AN2uqn8a6nA6fe1jpGGRU2EuJy
+kVzokQKBeqy6rjZt1vGMOB0NhSxFUvNtR26LAkzwJ3cEecXiSG/73xcC26pm6D8+
+ZIXmT2iB9BalXySdXQigb89u6jSSI+pEMPxD2ooXbZCKkVXfu5u2Iysd16OA3SPf
+JsZfwmcmmfO6/ohDt2cSu/T8yYmG2Nao3qiyCtjHQ40q20dHOK8nBYFe2ccXV4md
+ztDQIrLrw7MR/sckdHxG
+=UliW
+-----END PGP SIGNATURE-----
