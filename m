@@ -1,75 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/21/3
-Message-ID: <20121221195054.GB7583@netbsd.org>
-Date: Fri, 21 Dec 2012 19:50:54 +0000
-From: David Holland <dholland-oss-security@...bsd.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Isearch insecure temporary files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/4
+Message-ID: <50BD57F5.9080504@redhat.com>
+Date: Mon, 03 Dec 2012 18:55:01 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: Dovecot DoS in 2.x (fixed in 2.1.11)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 21, 2012 at 10:26:57AM -0700, Kurt Seifried wrote:
- > > NetBSD pkgsrc ships an old text search package called Isearch,
- > > which I found tonight (in the course of making it compile with a
- > > modernish C++ compiler) to contain garden-variety /tmp races.
- > > 
- > > Does anyone else ship it? I don't think this is worth a CVE unless 
- > > someone does; the package appears to be dead upstream.
- > 
- > This is similar to http://seclists.org/oss-sec/2012/q4/142
- > 
- > Ideally we need some way to mark software as dead/unsafe/don't use. I
- > don't know what the answer is though (does someone maintain a
- > blacklist? who decides? etc.).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yeah.
+On 12/03/2012 10:33 AM, Vincent Danen wrote:
+> Could a CVE be assigned for the following please?
+> 
+> Dovecot 2.1.11 was released and includes a fix for a crash
+> condition when the IMAP server was issued a SEARCH command with
+> multiple KEYWORD parameters.  An authenticated remote user could
+> use this flaw to crash Dovecot.
+> 
+> The upstream fix was to remove the keyword merging code.  This
+> code does not exist in Dovecot 1.x, but it does affect 2.x
+> versions, at least as far back as 2.0.9 (earliest version I
+> checked).
+> 
+> References:
+> 
+> http://www.dovecot.org/list/dovecot-news/2012-November/000235.html 
+> http://secunia.com/advisories/51455 
+> http://hg.dovecot.org/dovecot-2.1/rev/0306792cc843 
+> https://bugzilla.redhat.com/show_bug.cgi?id=883060
+> 
+> 
+> Thanks.
 
-Looking at that thread (which I didn't see at the time because I no
-longer have time to follow this list much) I think I'd agree that the
-CVE system itself is the wrong scheme, not only for its own reasons
-but also because it doesn't reach the right targets.
+Please use CVE-2012-5620 for this issue.
 
-Most people prefer to get software from some kind of package
-collection, both because it's easier and because such collections are
-to some extent curated. CVEs work well in this environment; they go
-out to the collection maintainers, packages in the collections get
-tagged, end users can crosscheck their installed package lists against
-CVE databases, etc.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-However, the kind of software we're talking about (dead upstream,
-inherently suspect, not really worth auditing or fixing) tends to get
-kicked out of these collections and forgotten. So when/if end users
-are exposed, it's likely to be because they downloaded something from
-some random place and installed it in /usr/local/bin, or worse,
-untarred it in ~httpd, and then possibly forgot entirely about it.
-There isn't much of a pipeline for getting CVE information to them,
-and they aren't in general likely to think to crosscheck the CVE
-database. (Nor, with some of these old things, is it always entirely
-clear if the item they're looking at is the same as the one the CVE
-database is talking about.)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-All of these problems also apply to any new scheme someone sets up;
-what I'm suggesting is that the existing CVE infrastructure is not
-necessarily that much of an advantage.
-
-That said, I don't know what the answer is. We have quite a number of
-packages in pkgsrc that are dead (or comatose) upstream and that we're
-effectively maintaining ourselves because they require only minor
-attention or someone considers them worthwhile. I've often thought it
-would be helpful to have some kind of wider community for dealing with
-these, not just for security but also for general patches and bug
-fixes. This could also serve as a clearinghouse for deciding which
-things should be declared dead. But you can't create such a community
-by waving a wand.
-
- > > http://gnats.netbsd.org/47360 for reference; the relevant portions
- > > of the patches cited follow.
- > 
- > Yeah that's pretty classic /tmp vulns. Please use CVE-2012-5663 for
- > this issue.
-
-Will do, thanks.
-
--- 
-David A. Holland
-dholland@...bsd.org
+iQIcBAEBAgAGBQJQvVf1AAoJEBYNRVNeJnmTm+cP/3EJPDqt7UsmNiL/SEEDoArJ
+Jg3FuJCnGrMC3MHiZhmAaaeGErP2qzVsB74X+xeRt6tML/KVbUjlSiMJnFDDYiEV
+hNOmlPZKU8h9on84QbkRLTTwGYC64ugwAgihcw8oTQ3djaW1krlBXRkAeqF1iQI5
+R8ereH+DGK9fGfBf16fQihhOnawURqP+Ggdmfx/5AqJQRgFnJhJ48ub6CCETA+0f
+VtrVph3FBEYphW2J7NhXg8xGT37/dyzTsmNGaSA4kD+B/W5shtqBBdDPND1nMNLD
+RwLw6NpkxI6QuOoCgbQsA1VYGdemPr0kNBkspf2kpe441EI+xLz7UdOHn2IT6DM9
+28wppRZbjU/Sr1wciRDO6hI5L8VMrtLGf1plkmwvdTBiXh8fUtmLkvVqizFJ1d0K
+Z8tE2ZLsaZdLJIH0P5RFi/kPC+PNh5wr785jmSvfZiFEj76Dj5GcxuPDWS/6ahU6
+czTbqjeVGtR7KBYjwKSbxVaW4+IZy9H67zBgVlvvA9Goi4mkKo50oYBh1PH6ILVh
+YXFlPiSjrblIiwFCUxsBIdJdQ1Wn+9EUNGMfKYlqFXiMK5uqDzglz+/EsZyXCjRi
+DMalSuZAgmDUsAFmyrm7pZFf9M2/pyloHnzufgr4m7kL3yFjODj6Bt8rDIkodQz8
++fI9BUILwv3SWtc323iS
+=hyvM
+-----END PGP SIGNATURE-----
