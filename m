@@ -1,64 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/11/4
-Message-ID: <20120511031515.GA28318@openwall.com>
-Date: Fri, 11 May 2012 07:15:15 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: OpenSSL invalid TLS/DTLS record attack (CVE-2012-2333)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/9
+Message-ID: <20121204181229.218523tdfdnfphbx@imap.suse.de>
+Date: Tue, 04 Dec 2012 18:12:29 +0100
+From: Matthias Weckbecker <mweckbecker@...e.de>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
+Cc: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: Dovecot DoS in 2.x (fixed in 2.1.11)
 Content-Type: text/plain; charset=utf-8
 
-I think these should be in here given the importance of OpenSSL, as well
-as to encourage relevant follow-ups.
+Hi Kurt, Vincent, vendors, ...
 
------ Forwarded message -----
+Quoting Kurt Seifried <kseifried@...hat.com>:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 12/03/2012 10:33 AM, Vincent Danen wrote:
+>> Could a CVE be assigned for the following please?
+>>
+>> Dovecot 2.1.11 was released and includes a fix for a crash
+>> condition when the IMAP server was issued a SEARCH command with
+>> multiple KEYWORD parameters.  An authenticated remote user could
+>> use this flaw to crash Dovecot.
+>>
+[...]
+>>
+>>
+>> Thanks.
+>
+> Please use CVE-2012-5620 for this issue.
+>
 
-Subject: OpenSSL Security Advisory
-Date: Thu, 10 May 2012 23:47:57 +0200 (CEST)
+We were discussing this issue too at [1] and think that it does only
+affect the current connection, no subsequent (i.e. new) connections
+are affected.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+What's your opinion wrt this?
 
-OpenSSL Security Advisory [10 May 2012]
-=======================================
+[1] https://bugzilla.novell.com/show_bug.cgi?id=792642
 
-Invalid TLS/DTLS record attack (CVE-2012-2333)
-===============================================
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+[...]
 
-A flaw in the OpenSSL handling of CBC mode ciphersuites in TLS 1.1, 1.2 and
-DTLS can be exploited in a denial of service attack on both clients and
-servers.
+Thanks,
+Matthias
 
-DTLS applications are affected in all versions of OpenSSL. TLS is only
-affected in OpenSSL 1.0.1 and later.
-
-Thanks to Codenomicon for discovering this issue using Fuzz-o-Matic fuzzing
-as a service testing platform.
-
-The fix was developed by Stephen Henson of the OpenSSL core team.
-
-Affected users should upgrade to OpenSSL 1.0.1c, 1.0.0j or 0.9.8x
-
-References
-==========
-
-URL for this Security Advisory:
-http://www.openssl.org/news/secadv_20120510.txt
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEVAwUBT6w226LSm3vylcdZAQKTzgf/cksRhBmKkc5BWGXHxRuNEpr7SplMvM1k
-5HcyLrlUKE4E2tredaylgYhbpy9+50e8euv8cWdD5ErBklJ9SGso2YKl/FVOSO0e
-T5MyGgOeQ4jAeyLlBahw6O74bUYrO3WntVyLJDrH6gRGN1dDjenMPErPUKUQGUMw
-8Yy0JXbxIVhw731ymL6Iv2DuleFZvGCdSgPXbX39qXrAe5mD5wd5jGP50f7S0mEO
-mj6/3zPxAHLrn5H9XXwqgebEylQkCHWdMIxSqYihea865/BShT5lXJdLief7YDlh
-YEJVquVjGlRgTJZeq6YZab5c1Lg+Jlc9cxtniQv1QaAgfryEJ5biPQ==
-=/mgW
------END PGP SIGNATURE-----
-______________________________________________________________________
-OpenSSL Project                                 http://www.openssl.org
-Announcement Mailing List                 openssl-announce@...nssl.org
-Automated List Manager                           majordomo@...nssl.org
-
------ End forwarded message -----
+-- 
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://opensuse.org/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg)
