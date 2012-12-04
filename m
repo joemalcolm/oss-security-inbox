@@ -1,139 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/29/5
-Message-ID: <50B7A7B2.3080200@redhat.com>
-Date: Thu, 29 Nov 2012 11:21:38 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/10
+Message-ID: <20121204220142.GE5095@pisco.westfalen.local>
+Date: Tue, 4 Dec 2012 23:01:42 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Gerald Combs <gerald@...eshark.org>, Peter Hatina <phatina@...hat.com>
-Subject: Re: CVE Request -- wireshark: Wireshark 1.6.12 and Wireshark 1.8.4 fixes
+Cc: Kurt Seifried <kseifried@...hat.com>, Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: Dovecot DoS in 2.x (fixed in 2.1.11)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 11/29/2012 11:07 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On Tue, Dec 04, 2012 at 06:12:29PM +0100, Matthias Weckbecker wrote:
+> Hi Kurt, Vincent, vendors, ...
 > 
-> Wireshark upstream has recently released v1.6.12 and v1.8.4
-> versions, correcting the following security issues:
-
-Posted CVEs at bottom
-
-> * #1 pcap-ng hostname disclosure (wnpa-sec-2012-30) 
-> http://www.wireshark.org/security/wnpa-sec-2012-30.html 
-> https://bugzilla.redhat.com/show_bug.cgi?id=881855
+> Quoting Kurt Seifried <kseifried@...hat.com>:
+> >-----BEGIN PGP SIGNED MESSAGE-----
+> >Hash: SHA1
+> >
+> >On 12/03/2012 10:33 AM, Vincent Danen wrote:
+> >>Could a CVE be assigned for the following please?
+> >>
+> >>Dovecot 2.1.11 was released and includes a fix for a crash
+> >>condition when the IMAP server was issued a SEARCH command with
+> >>multiple KEYWORD parameters.  An authenticated remote user could
+> >>use this flaw to crash Dovecot.
+> >>
+> [...]
+> >>
+> >>
+> >>Thanks.
+> >
+> >Please use CVE-2012-5620 for this issue.
+> >
 > 
-> * #2 DoS (infinite loop) in the USB dissector (wnpa-sec-2012-31) 
-> http://www.wireshark.org/security/wnpa-sec-2012-31.html 
-> https://bugzilla.redhat.com/show_bug.cgi?id=881822
+> We were discussing this issue too at [1] and think that it does only
+> affect the current connection, no subsequent (i.e. new) connections
+> are affected.
 > 
-> * #3 DoS (infinite loop) in the sFlow dissector (wnpa-sec-2012-32) 
-> http://www.wireshark.org/security/wnpa-sec-2012-32.html 
-> https://bugzilla.redhat.com/show_bug.cgi?id=881816
+> What's your opinion wrt this?
 > 
-> * #4 DoS (infinite loop) in the SCTP dissector (wnpa-sec-2012-33) 
-> http://www.wireshark.org/security/wnpa-sec-2012-33.html 
-> https://bugzilla.redhat.com/show_bug.cgi?id=881809
-> 
-> * #5 DoS (infinite loop) in the EIGRP dissector (wnpa-sec-2012-34) 
-> http://www.wireshark.org/security/wnpa-sec-2012-34.html 
-> https://bugzilla.redhat.com/show_bug.cgi?id=881805
-> 
-> * #6 DoS (crash) in the ISAKMP dissector (wnpa-sec-2012-35) 
-> http://www.wireshark.org/security/wnpa-sec-2012-35.html 
-> https://bugzilla.redhat.com/show_bug.cgi?id=881790
-> 
-> * #7 DoS (infinite loop) in the iSCSI dissector (wnpa-sec-2012-36) 
-> http://www.wireshark.org/security/wnpa-sec-2012-36.html 
-> https://bugzilla.redhat.com/show_bug.cgi?id=881771
-> 
-> * #8 DoS (infinite loop) in the WTP dissector (wnpa-sec-2012-37) 
-> http://www.wireshark.org/security/wnpa-sec-2012-37.html 
-> https://bugzilla.redhat.com/show_bug.cgi?id=881748
-> 
-> * #9 DoS (infinite loop) in the RTCP dissector (wnpa-sec-2012-38) 
-> http://www.wireshark.org/security/wnpa-sec-2012-38.html 
-> https://bugzilla.redhat.com/show_bug.cgi?id=881742
-> 
-> * #10 DoS (infinite loop) in the 3GPP2 A11 dissector
-> (wnpa-sec-2012-39) 
-> http://www.wireshark.org/security/wnpa-sec-2012-39.html 
-> https://bugzilla.redhat.com/show_bug.cgi?id=881706
-> 
-> * #11 DoS (infinite loop) in the ICMPv6 dissector
-> (wnpa-sec-2012-40) 
-> http://www.wireshark.org/security/wnpa-sec-2012-40.html 
-> https://bugzilla.redhat.com/show_bug.cgi?id=881701
+> [1] https://bugzilla.novell.com/show_bug.cgi?id=792642
 
-CVE-2012-5592 Wireshark #1 pcap-ng hostname disclosure (wnpa-sec-2012-30)
+Upstream (Timo Sirainen) disputed the issue in the Debian BTS:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695138#15
 
-CVE-2012-5593 Wireshark #2 DoS (infinite loop) in the USB dissector
-(wnpa-sec-2012-31)
-
-CVE-2012-5594 Wireshark #3 DoS (infinite loop) in the sFlow dissector
-(wnpa-sec-2012-32)
-
-CVE-2012-5595 Wireshark #4 DoS (infinite loop) in the SCTP dissector
-(wnpa-sec-2012-33)
-
-CVE-2012-5596 Wireshark #5 DoS (infinite loop) in the EIGRP dissector
-(wnpa-sec-2012-34)
-
-CVE-2012-5597 Wireshark #6 DoS (crash) in the ISAKMP dissector
-(wnpa-sec-2012-35)
-
-CVE-2012-5598 Wireshark #7 DoS (infinite loop) in the iSCSI dissector
-(wnpa-sec-2012-36)
-
-CVE-2012-5599 Wireshark #8 DoS (infinite loop) in the WTP dissector
-(wnpa-sec-2012-37)
-
-CVE-2012-5600 Wireshark #9 DoS (infinite loop) in the RTCP dissector
-(wnpa-sec-2012-38)
-
-CVE-2012-5601 Wireshark #10 DoS (infinite loop) in the 3GPP2 A11
-dissector (wnpa-sec-2012-39)
-
-CVE-2012-5602 Wireshark #11 DoS (infinite loop) in the ICMPv6
-dissector (wnpa-sec-2012-40)
-
-
-> 
-> Other references: 
-> http://www.wireshark.org/docs/relnotes/wireshark-1.6.12.html 
-> http://www.wireshark.org/docs/relnotes/wireshark-1.8.4.html 
-> http://www.wireshark.org/security/ 
-> https://bugs.gentoo.org/show_bug.cgi?id=445138 
-> https://bugs.mageia.org/show_bug.cgi?id=8239
-> 
-> Could you allocate CVE ids for these?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-> P.S.: Particular Red Hat bugzilla entries contain further
-> information (upstream bug, reproducer && patches where available).
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQt6eyAAoJEBYNRVNeJnmTvFgP/37Utl+929te2/hxLu0Lm4O3
-d3RD6S/odxhTxVeLR4SP2q32mgsxEZhPS5VAD45oUez7WmihHsjuhr5qlz3unqGY
-k90aHnhjTRS8h4wRHcw4VByy/X//wEu8dZ0j+5IGhTRcy9t/1rFNUSsMDV35ixp/
-wMd3b2bV7jKIvXUAmjtyt+dj8gPmKavmrJW0Tx0g1nxZxwE7OStTLnRZHNyEHn38
-6tLFvp055SoKim8MODsfoLbeyk/1+IKdgxaY3Xq9lCvsNsK0Pk33YYraEqQC3dp3
-7zTPKrdk606SD2uThpN9bCE/4XEZ3X+aZ7EMNK/liOvdovSBPEHKpXN71/jI7znI
-ABr311hlxqNzkOixAPW3gIDfQnW+0j/PV5h+wDsnFccge+SGVlaqTuZl6oh+zpBy
-TDMtyQN42xQSyUmuSXAn1BGiG21yH5kSy453Kwwfece4jR8sRMqY+v9OQhdDe17b
-EwatMs2EzqAjyc3X57hqfTKZck2Xr52aSAzVa7aYQcMhrw79QkzN0rvW/khE4YWk
-fVwlZ3tW2SANYg7JT5lnC5HNSWUgyZD3x+6HoLCm2vmdui+6oA9BcHcNlQiuSrNV
-esNWC7GmRPsx5ga7Vwwt9pr5rLPRkyJc+leul5JOiANRlTlYyCmGwBD6pFcHANIR
-j65xhhoqWHTYSwIJpCSS
-=n6TZ
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
