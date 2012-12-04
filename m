@@ -1,53 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/24/3
-Message-ID: <4FBE77D4.4080109@mvista.com>
-Date: Thu, 24 May 2012 11:03:00 -0700
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: mm: read_pmd_atomic: 32bit PAE pmd walk vs pmd_populate SMP race condition
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/11
+Message-ID: <20121204224821.GE2689@redhat.com>
+Date: Tue, 4 Dec 2012 15:48:21 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: Moritz Muehlenhoff <jmm@...ian.org>
+Cc: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE request: Dovecot DoS in 2.x (fixed in 2.1.11)
 Content-Type: text/plain; charset=utf-8
 
-is 1a5a9906d4e8d1976b701f889d8f35d54b928f25 the upstream fix?
+* [2012-12-04 23:01:42 +0100] Moritz Muehlenhoff wrote:
 
--armin
+>On Tue, Dec 04, 2012 at 06:12:29PM +0100, Matthias Weckbecker wrote:
+>> Hi Kurt, Vincent, vendors, ...
+>>
+>> Quoting Kurt Seifried <kseifried@...hat.com>:
+>> >-----BEGIN PGP SIGNED MESSAGE-----
+>> >Hash: SHA1
+>> >
+>> >On 12/03/2012 10:33 AM, Vincent Danen wrote:
+>> >>Could a CVE be assigned for the following please?
+>> >>
+>> >>Dovecot 2.1.11 was released and includes a fix for a crash
+>> >>condition when the IMAP server was issued a SEARCH command with
+>> >>multiple KEYWORD parameters.  An authenticated remote user could
+>> >>use this flaw to crash Dovecot.
+>> >>
+>> [...]
+>> >>
+>> >>
+>> >>Thanks.
+>> >
+>> >Please use CVE-2012-5620 for this issue.
+>> >
+>>
+>> We were discussing this issue too at [1] and think that it does only
+>> affect the current connection, no subsequent (i.e. new) connections
+>> are affected.
+>>
+>> What's your opinion wrt this?
+>>
+>> [1] https://bugzilla.novell.com/show_bug.cgi?id=792642
+>
+>Upstream (Timo Sirainen) disputed the issue in the Debian BTS:
+>http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695138#15
 
-On 05/18/2012 02:37 AM, Petr Matousek wrote:
-> When holding the mmap_sem for reading, pmd_offset_map_lock should only
-> run on a pmd_t that has been read atomically from the pmdp
-> pointer, otherwise we may read only half of it leading to this crash.
-> 
-> PID: 11679  TASK: f06e8000  CPU: 3   COMMAND: "do_race_2_panic"
->  #0 [f06a9dd8] crash_kexec at c049b5ec
->  #1 [f06a9e2c] oops_end at c083d1c2
->  #2 [f06a9e40] no_context at c0433ded
->  #3 [f06a9e64] bad_area_nosemaphore at c043401a
->  #4 [f06a9e6c] __do_page_fault at c0434493
->  #5 [f06a9eec] do_page_fault at c083eb45
->  #6 [f06a9f04] error_code (via page_fault) at c083c5d5
->     EAX: 01fb470c EBX: fff35000 ECX: 00000003 EDX: 00000100 EBP:
->     00000000
->     DS:  007b     ESI: 9e201000 ES:  007b     EDI: 01fb4700 GS:  00e0
->     CS:  0060     EIP: c083bc14 ERR: ffffffff EFLAGS: 00010246
->  #7 [f06a9f38] _spin_lock at c083bc14
->  #8 [f06a9f44] sys_mincore at c0507b7d
->  #9 [f06a9fb0] system_call at c083becd
->                          start           len
->     EAX: ffffffda  EBX: 9e200000  ECX: 00001000  EDX: 6228537f
->     DS:  007b      ESI: 00000000  ES:  007b      EDI: 003d0f00
->     SS:  007b      ESP: 62285354  EBP: 62285388  GS:  0033
->     CS:  0073      EIP: 00291416  ERR: 000000da  EFLAGS: 00000286
-> 
-> This should be a longstanding bug affecting x86 32bit PAE without
-> THP. Only archs with 64bit large pmd_t and 32bit unsigned long should
-> be affected.
-> 
-> An unprivileged local user could use this flaw to crash the system.
-> 
-> Proposed fix:
-> http://permalink.gmane.org/gmane.linux.kernel.mm/78590
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=822821
-> http://permalink.gmane.org/gmane.linux.kernel.mm/78590
-> 
-> Thanks,
+Ahhh... yes, Timo is correct.  If you're only DoS'ing your own
+connection, I wouldn't consider this a flaw.
+
+I (mistakenly) thought this took down the entire dovecot server.  My
+apologies.
+
+Can we have this CVE rejected or disputed?  As Timo says, it's a
+pointless CVE.
+
+Thanks, and sorry about that.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
