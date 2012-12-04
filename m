@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/04/12
-Message-ID: <4FA3FF5D.1080508@redhat.com>
-Date: Fri, 04 May 2012 10:10:05 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/1
+Message-ID: <50BD57D3.4020309@redhat.com>
+Date: Mon, 03 Dec 2012 18:54:27 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Peter Jones <pjones@...hat.com>
-Subject: Re: CVE Request -- anaconda: Weak permissions by writing password configuration file in bootloader configuration module
+CC: Robbie Mackay <robbie@...ahidi.com>, Heather Leson <HLeson@...ahidi.com>
+Subject: Re: CVE request for Ushahidi security vulnerability 2012-008
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/04/2012 10:06 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On 11/29/2012 05:09 PM, Robbie Mackay wrote:
+> The following vulnerability was found in Ushahidi and fixed in the 
+> Ushahidi 2.6.1 release. Could you please assign a CVE?
 > 
-> a security flaw was found in the way bootloader configuration
-> module of Anaconda, a graphical system installer, stored password
-> hashes when performing write of password configuration file (0755
-> permissions were used instead of 0700 ones). A local users could
-> use this flaw to obtain password hashes and conduct brute force
-> password guessing attacks (possibly leading to password 
-> circumvention, machine reboot or use of custom kernel or initrd
-> command line parameters).
+> Forgotten password challenges were guessable based on users last
+> login and email address. The issue was discovered by Timothy D.
+> Morgan
 > 
-> Upstream patch: [1] 
-> http://git.fedorahosted.org/git/?p=anaconda.git;a=commit;h=03ef13b625cc06873a924e0610340f8489fd92df
->
-> 
-> 
-> References: [2] https://bugzilla.redhat.com/show_bug.cgi?id=819031
-> 
-> Could you allocate a CVE identifier for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+> Security advisory: 
+> http://ushahidi.com/index.php/security/alert/sa-web-2012-008 Issue:
+> https://github.com/ushahidi/Ushahidi_Web/issues/646 Commit: 
+> https://github.com/ushahidi/Ushahidi_Web/commit/e8c7ecd42818c331db8945d20f8b1865bc6d157e
 
-Please use CVE-2012-2314 for this issue.
+Please
+> 
+use CVE-2012-5618 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -43,19 +34,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPo/9cAAoJEBYNRVNeJnmTnigP/i4qm/8SxQCKtSdbA0ltS78N
-fP9gwLS3bXpCxmGidoNxhq3ukA96IObKO4+O4Ofsjpb7En5JiSat1J7t56g8Sy9g
-wn5GfYzwmRiPnqTppZWr8mdJEFaSDd9bGP02oCyUnfl3h6OE5Wflm+7St5qJYZNk
-GOLAdMAhgho2kEiR1btKRrfHhlZStcz3yNvHWAGF3ZC8Hx+UTbOTqMU9i7/7vo+s
-CVfPH2vTjCSEy/0qYhC9o4uGSVUaw6yUDaUx8JPWBWXkxHQZV4UdJl38iW6ytl1j
-k8AwTan3FnfRQOPlb6xIHgsV5Z3iUzYzzF73gOMzq8rZOhy97kb/WM4FHkpj/Z3r
-1IxtbHbF4H97in6SXTVtsUVGKIylmXUn0dU6Q/jq90vbCuXUBEpXRG05sEjP1AQC
-zMmvNVvJDaDHiDOFADHJTx7DZYrlbWoE1RkKFDQNaII+tv7eZeLShQIoUWNTyy/R
-DnuTgtfft9jzIrOGY6QuloRIUWsEQSPii/QjBbzbTvRdnF5H0Fy9+eOQ3D7zWdYA
-ZcFGg/8tZ7xUQs3+pW6JVt3klWqLF/xc6oVb1O/zWbKE3042XzxvpkhuroYHrC69
-jetWJVTGPfVjq2hNYPAhf81MbtDK0HSa0dqZkkXJj9IYAGHLK6Q+uzCtlXjLsdy4
-UKzYa4YPHIOyYDq1YH5F
-=3W0O
+iQIcBAEBAgAGBQJQvVfTAAoJEBYNRVNeJnmTEgwQAMLxqwtmfaDpA0MoKwyshVzq
+sKxABl1CT/OzCB1vaksMT4Y7UhwH09I140QwxpBBIzvaLskagbucFLT1fwO4nInk
+Wu2DMslTOpm0QdklyGykiKy2WgsZgNn3Qkj6lR8nsJEaAtlIPeEv3mT4hLxJx1MU
+If39EqS3EFcuqkj0duRtwgUiN9a54j7cMvcuy3RcKSpZZXcZdMLJS73n6DcHk0vh
+tzmkkRpd8s6AgWreQG43piDFPM7aaQwCfd0v0jMFrCq+BOsnlZ7Pbf0zkpXwH4s1
+sixz+8UtjIkzjp+dOd5jOAjmGirbYq4V96sp1hEu258Cm+LRpfdxOqUcVrxUXQEp
+WbrMNpyK0f2rC9f64wKgHAeaEAoKslvF1QY6c9QXbzqW1EUFAwpxDAO3c4CZ4W3P
+vRZDPOsD2CVRkSFKWuHKv/pMa1h0ltuyxDNf0QNiScb5o9sGGYntCTcbVs/DNjmq
+8qWoRvxCkxt3gSqJI+/GIJbHDtwoVDrkMKWJsqhpF7Q5iSIrONM3HdllAJCbqV90
+F/FdOvwZMe39T9I4XRLzwWhybPsTnq2Gq5GcQexdcUN3iXBvAA3fylOs93ifLhkY
++A9o3D8gklAAeIHPjYzahtqhu/UjnN7qPJVO9VjL9I5A78UwYcsR4FEMEt6uLNTu
+ronBQc3q3iSnDO21mxLj
+=8LN/
 -----END PGP SIGNATURE-----
