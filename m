@@ -1,79 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/04/2
-Message-Id: <201209041902.q84J2PGu008228@linus.mitre.org>
-Date: Tue, 4 Sep 2012 15:02:25 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/3
+Message-ID: <50BD5809.4040007@redhat.com>
+Date: Mon, 03 Dec 2012 18:55:21 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: php header() header injection detection bypass
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Damien Sandras <dsandras@...onix.com>, Eugen Dedu <eugen.dedu@...pm.univ-fcomte.fr>
+Subject: Re: CVE Request -- Ekiga (x < 4.0.0): DoS (crash) after receiving call from other party with not UTF-8 valid name
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> - 5.3.11, https://github.com/php/php-src/blob/704bbb3263d0ec9a6b4a767bbc516e55388f4b0e/main/SAPI.c#L593
->   has the issue completely fixed
+On 12/03/2012 10:36 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> a denial of service flaw was found in the way Ekiga, a Gnome based
+> SIP/H323 teleconferencing application, processed information from
+> certain OPAL connections ([certain] UTF-8 strings were not verified
+> for validity prior showing them). A remote attacker (other party
+> with a not UTF-8 valid name) could use this flaw to cause ekiga
+> executable crash.
+> 
+> Upstream bug report: [1]
+> https://bugzilla.gnome.org/show_bug.cgi?id=653009
+> 
+> Relevant upstream patch: [2]
+> http://git.gnome.org/browse/ekiga/commit/?id=7d09807257
+> 
+> References: [3]
+> http://ftp.gnome.org/pub/gnome/sources/ekiga/4.0/ekiga-4.0.0.news 
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=883058
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
-Note that, in the
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-1398 entry, the
-affected versions are "PHP before 5.3.11." (We do know that 5.3.11
-was released about 2 months after 5.4.0.)
-
->This is perfect, thanks. Please use CVE-2012-4388 for the incomplete
->fix for CVE-2011-1398.
-
-There may be a difference in terminology here. Some CVE entries have a
-"NOTE: this vulnerability exists because of an incomplete fix for
-CVE-####-####." sentence. This means that a product originally had a
-vulnerability (for example, CVE-AAAA-BBBB) that had vectors V1 and V2
-in version X.Y. Then, a new version X.Z was released in which a code
-change prevented exploitation through vector V1, but still allowed
-exploitation through vector V2. Here, a new CVE (for example,
-CVE-CCCC-DDDD) is needed because vector V2 is now known to have
-different affected versions than vector V1. The CVE-CCCC-DDDD
-description would mention "vulnerability in X.Z ... via V2 ... NOTE:
-this vulnerability exists because of an incomplete fix for
-CVE-AAAA-BBBB."
-
-In the current situation, CVE-2011-1398 will probably be modified soon
-to have a "NOTE: this vulnerability exists because of an incomplete
-fix for CVE-####-####." sentence. However, unless another related
-vulnerability is discovered in the future, there won't be any CVE
-entry with a "NOTE: this vulnerability exists because of an incomplete
-fix for CVE-2011-1398." sentence. Because of this, "Please use
-CVE-2012-4388 for the incomplete fix for CVE-2011-1398" is potentially
-confusing to some people.
-
-Although a vulnerability statement such as "First one still has the
-possibility of injecting '\r' before the first '\n'" can be associated
-with the concept of an incomplete fix, MITRE does not consider the fix
-to be an "incomplete fix for" a different CVE (that references a
-better patch). In our terminology, the "incomplete fix for" phrase is
-only used for pointers in the opposite direction. And, of course, CVEs
-are assigned to vulnerabilities, not to fixes.
-
->The second one kills the protection for the NUL byte check, so it won't
->allow header splitting for Apache SAPI, but FastCGI stuff will be affected,
-
-A mostly unrelated comment is that MITRE doesn't associate the
-"incomplete fix" concept with this "kills the protection for the NUL
-byte check" issue. A code change occurred during the process of trying
-to fix a vulnerability, but the effect of the code change was to
-introduce a different vulnerability.
+Please use CVE-2012-5621 for this issue.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQEcBAEBAgAGBQJQRk5FAAoJEGvefgSNfHMdQFoIAMBTeZtPoZHxY1a3UtCkV6H0
-cB8//BTAhm60tUjoaR9YE+VOYYxkPqLAzGG/U0Mv+Zg4atOBAv6i2YZdsDnt6Pih
-+13H2jv1GGtbqBeLu69b9b+9ehrLNJ1tcrQCJEMOFBtZqvTBh7do5m8pRBsUjjNp
-zVWdBaz3/ISm0SiNbQ2GRY6kqc169mhh56cJ8vPpG1ZNP7xSzTgQtPR+o5+DbV84
-30BAp97kwykdc5EBsRqaAA5ZRvCVSHNl0Hz9YD/9YGDJN3KOxJSys0hPuloEFk/B
-Exaa5VdrPearyf0U+HdiJ+ZFwGiqNIrZqfbE8iO+mP8SfS9hiltHTEhhMJlsw0o=
-=9KKK
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQvVgJAAoJEBYNRVNeJnmTnTkP/1g3hZfD+vEtvLiYKi4ZN3e0
+818jnR4mwGxCOriqdgdDuR9in1xcKbs3vocCRdAw5y8MlAQrHf0m0+BinIKNPwHs
+lTpfuj3XXl8TpMNjIeQ0hPmQb3wLINt7myzlBQZlc7TXWNT8OTwkT+hIBcHYvxzh
+eXm2EDu3z1uW6QiUNCGVESWoMlQmg2s5LaoRHvoc2dBBsEuIgoA5aEcn7XofOe7c
+8tL1IEqwpNvBgBSB+PTmMeThSDCtGTzHw/9yrH6WBykKj7CyPsYpvqgD/q6+8cnH
+vARomEY6WfTqS6cYo1/D8L87s+iWjbGXrUUESeSRy3IYVLt5GxA7xGqXwRWmFeCi
+xYwEqpfIDghDyuTF4eCUsZUG7sdrUVXGtJ6qh00DaPwCDxhNDUapzgY5wloVrbjt
++hqxK7QnlFXANpoFARirBuYhd6Q4tym940RoHmbWieoKIel0PRwK76q9RwjxWUUh
+p2YIi2/dyTiwWx9tsdIB77QqKI2agBQrwDLLQiXEHtimBb15ivHm+IPT5AUvyn1r
+gQloUzFYJ8ieSaPyKzHcJiU7Z80KXhyAAAbVc2iJ0QhJ1MtYjUUd70Hc4DTwzDb4
+hLwii6qtffVE+xuCIqOfZgerP2NdeSy85qXaYMuPyZMK2fA0bk9nFTyBWe3UTsOb
+7o3KugCHrmdBh1U2CKYP
+=zJJ0
 -----END PGP SIGNATURE-----
