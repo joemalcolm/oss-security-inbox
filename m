@@ -1,22 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/23
-Message-ID: <4F4BABAC.1060206@aliantsoft.pl>
-Date: Mon, 27 Feb 2012 17:13:32 +0100
-From: Mateusz Goik <mateusz.goik@...antsoft.pl>
-To: Rafał Malinowski <rafal.przemyslaw.malinowski@...il.com>
-CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>, Mariusz Fik <fisiu@...nsuse.org>,  Radoslaw Lisowski <radoslaw.lisowski@...il.com>, kontakt@...antsoft.pl
-Subject: Re: CVE Status Clarification / Request -- kadu: Stored XSS by parsing contact's status and sms messages in history
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/05/1
+Message-ID: <50BECD9D.2040706@redhat.com>
+Date: Tue, 04 Dec 2012 21:29:17 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>, Moritz Muehlenhoff <jmm@...ian.org>, Steven Christey <coley@...re.org>
+Subject: Re: CVE request: Dovecot DoS in 2.x (fixed in 2.1.11)
 Content-Type: text/plain; charset=utf-8
 
-Sorry. Tested on kadu 0.11.0..
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Mateusz Goik.
+On 12/04/2012 03:48 PM, Vincent Danen wrote:
+> * [2012-12-04 23:01:42 +0100] Moritz Muehlenhoff wrote:
+> 
+>> On Tue, Dec 04, 2012 at 06:12:29PM +0100, Matthias Weckbecker
+>> wrote:
+>>> Hi Kurt, Vincent, vendors, ...
+>>> 
+>>> Quoting Kurt Seifried <kseifried@...hat.com>:
+>>>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>>>> 
+>>>> On 12/03/2012 10:33 AM, Vincent Danen wrote:
+>>>>> Could a CVE be assigned for the following please?
+>>>>> 
+>>>>> Dovecot 2.1.11 was released and includes a fix for a crash 
+>>>>> condition when the IMAP server was issued a SEARCH command
+>>>>> with multiple KEYWORD parameters.  An authenticated remote
+>>>>> user could use this flaw to crash Dovecot.
+>>>>> 
+>>> [...]
+>>>>> 
+>>>>> 
+>>>>> Thanks.
+>>>> 
+>>>> Please use CVE-2012-5620 for this issue.
+>>>> 
+>>> 
+>>> We were discussing this issue too at [1] and think that it does
+>>> only affect the current connection, no subsequent (i.e. new)
+>>> connections are affected.
+>>> 
+>>> What's your opinion wrt this?
+>>> 
+>>> [1] https://bugzilla.novell.com/show_bug.cgi?id=792642
+>> 
+>> Upstream (Timo Sirainen) disputed the issue in the Debian BTS: 
+>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695138#15
+> 
+> Ahhh... yes, Timo is correct.  If you're only DoS'ing your own 
+> connection, I wouldn't consider this a flaw.
+> 
+> I (mistakenly) thought this took down the entire dovecot server.
+> My apologies.
+> 
+> Can we have this CVE rejected or disputed?  As Timo says, it's a 
+> pointless CVE.
+> 
+> Thanks, and sorry about that.
+> 
 
-On 02/27/2012 05:11 PM, Mateusz Goik wrote:
-> Hi,
->
-> I would add it is possible - read / create files on users hdd. (using
-> the method - GET / PUT)
-> Tested on Backtrack 5 r1 (kadu 0.10.0 - compiled from source).
->
-> Mateusz Goik
+Please REJECT CVE-2012-5620, this only affects the users session and
+thus no security boundary is crossed (users can of course always close
+their own session, and there is no way to trigger the client to do
+this remotely).
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQvs2dAAoJEBYNRVNeJnmTyi4QAMDt3VQDHKSdyKxzlhl13bh9
+E7ZH5eEM+LFNNOcmr7IAzuQqICJOQCuUSqRUZzac8bzdliAjOZu9S08TzlNHudWS
+SW14FhkT7rUoVtOd79nK43qzTT6SWB+4tOGWofrCZqG6zVsDxyoFnc7Oz+alaQoj
+naYoP+cgjZHm7vt57HALNqqv4EJwF4wgNqSNaQton8zN/B7b7W4jiY43H0mCe7rh
+zffHHiNAfTU707qpQ1Vuv1gpzTDfZgI785m5YjVgGzw1ZnIE0Ej2VG+/zE9ih6M1
+Hx5ugjcR1wxlVLWtrvd7taK06ENq42U0COIL+WEVeXI0es1xSN7v8BBdCS4kWruw
+3p8mvjTBuLezR6oX+lpOTUip73Dl1RUdT3yeOXIcmvq8YENsPppEuh0IV+ZSOTWn
+YoLmDBsMl5mLJ5rvwtkUoofF1k03HjArYHT1tqZdDxNqBXR4uIA51Z08l3Zs1gbJ
+fRr9Tix2FJq+UHLMRyj+nOBHdgFCEt38Le+b8BAFmxVyyDDRYst8nTODtjd5hsXu
+0yc/zPoMiThXBCQsODmqC69O1b8tZQPaEzbeK5wWhaAvP72YNbkywz2s1MBNawrq
+tE+aBG5rBx5B1bZXFp5q9KXXZrxyImhEKghQaZjXVQ+SnAHwWM7NAiLO1ZTm+mBx
+CAS6p8GBL6XvgxFoqgbD
+=XLuU
+-----END PGP SIGNATURE-----
