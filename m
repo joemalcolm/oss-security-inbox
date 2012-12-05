@@ -1,42 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/2
-Message-ID: <20120102001323.GB22463@openwall.com>
-Date: Mon, 2 Jan 2012 04:13:23 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/05/5
+Message-ID: <20121205124346.GA6921@meddwl.vdavda.com>
+Date: Wed, 5 Dec 2012 13:43:46 +0100
+From: Sergei Golubchik <serg@...monty.org>
 To: oss-security@...ts.openwall.com
-Cc: Christos Zoulas <christos@...las.com>
-Subject: Re: *BSD's DES-based crypt(3) treats all invalid salt chars as '.'
+Cc: Kurt Seifried <kseifried@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: CVE request: Mysql/Mariadb insecure salt-usage
 Content-Type: text/plain; charset=utf-8
 
-Christos Zoulas fixed the out of bounds read below in NetBSD (for NetBSD 6).
+Hi, Huzaifa!
 
-On Tue, Nov 15, 2011 at 08:16:14AM +0400, Solar Designer wrote:
-> Speaking of NetBSD, it also appears to have out of bounds array reads on
-> salt characters with the 8th bit set:
+On Dec 05, Huzaifa Sidhpurwala wrote:
+> Noticed another post by kingcope on full-disclosure, which basically
+> boils down to re-use of a salt-value when transmitting passwords
+> over a network.
 > 
-> static unsigned char a64toi[128];	/* ascii-64 => 0..63 */
-> [...]
-> 		/* get iteration count */
-> 		num_iter = 0;
-> 		for (i = 4; --i >= 0; ) {
-> 			if ((t = (unsigned char)setting[i]) == '\0')
-> 				t = '.';
-> 			encp[i] = t;
-> 			num_iter = (num_iter<<6) | a64toi[t];
-> 		}
-> [...]
-> 	salt = 0;
-> 	for (i = salt_size; --i >= 0; ) {
-> 		if ((t = (unsigned char)setting[i]) == '\0')
-> 			t = '.';
-> 		encp[i] = t;
-> 		salt = (salt<<6) | a64toi[t];
-> 	}
+> If you could MITM/capture network packets, you could use this
+> weakness to determine the passwords.
 > 
-> This has no security impact that I can see, though.  Perhaps with PHP
-> safe_mode and the like it could be used to read data beyond array
-> bounds, but unless the order of variables in .bss is heavily changed by
-> the compiler or linker there's nothing interesting to read in the 128
-> bytes following a64toi[], and it would not result in a crash either.
+> References:
+> http://seclists.org/fulldisclosure/2012/Dec/58
+> https://bugzilla.redhat.com/show_bug.cgi?id=883719
 > 
-> Alexander
+> Should this a CVE be assigned to this issue?
+
+https://mariadb.atlassian.net/browse/MDEV-3915
+
+Regards,
+Sergei
