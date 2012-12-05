@@ -1,45 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/04/5
-Message-ID: <501D54C1.9030502@kde.org>
-Date: Sat, 04 Aug 2012 12:58:41 -0400
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/05/3
+Message-ID: <50BEF03A.1000309@redhat.com>
+Date: Wed, 05 Dec 2012 12:26:58 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request for Calligra
+CC: Kurt Seifried <kseifried@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: Mysql/Mariadb insecure salt-usage
 Content-Type: text/plain; charset=utf-8
-
-On 08/04/2012 11:56 AM, Agostino Sarubbo wrote:
-> On Saturday 04 August 2012 11:44:33 Jeff Mitchell wrote:
->> I don't know what Kurt wants, as he didn't respond to my email.
->>
->> What information do you want?
-> Take a look here, an example of CVE description: 
-> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-2677
-> 
-> Integer overflow in the ordered_malloc function in boost/pool/pool.hpp in 
-> Boost Pool before 3.9 makes it easier for context-dependent attackers to 
-> perform memory-related attacks such as buffer overflows via a large size 
-> value, which causes less memory to be allocated than expected.
-> 
-> So, in this case, if you don't provide to any info, what Kurt should write?
->  
->> What commit code do you want?
-> Please post the diff between the vulnerable code and the fix so we are sure 
-> that is a security issue.
-> 
 
 Hi,
 
-You can read all about the details of the vulnerability in the Black Hat
-2012 presentation by Charlie Miller
-(http://media.blackhat.com/bh-us-12/Briefings/C_Miller/BH_US_12_Miller_NFC_attack_surface_WP.pdf)
--- details of the Calligra (and KOffice) exploit start at page 39.
+Noticed another post by kingcope on full-disclosure, which basically
+boils down to re-use of a salt-value when transmitting passwords
+over a network.
 
-Unfortunately, he did not notify us ahead of time of his intent to
-disclose, so it's already public.
+If you could MITM/capture network packets, you could use this
+weakness to determine the passwords.
 
-Thanks,
-Jeff
+References:
+http://seclists.org/fulldisclosure/2012/Dec/58
+https://bugzilla.redhat.com/show_bug.cgi?id=883719
+
+Should this a CVE be assigned to this issue?
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
