@@ -1,33 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/22/3
-Message-ID: <20120522094359.GC31404@kludge.henri.nerv.fi>
-Date: Tue, 22 May 2012 12:43:59 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/05/4
+Message-ID: <50BF07E7.5050303@suse.de>
+Date: Wed, 05 Dec 2012 09:37:59 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Serendipity before 1.6.2 SQL Injection
+Cc: Greg KH <gregkh@...uxfoundation.org>, kargig@...d.gr
+Subject: Re: Linux kernel handling of IPv6 temporary addresses
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 22, 2012 at 11:05:02AM +0200, Hanno Böck wrote:
-> Upstream:
-> http://blog.s9y.org/archives/241-Serendipity-1.6.2-released.html
-> Advisory:
-> https://www.htbridge.com/advisory/HTB23092
-> 
-> Upstream description of the issue:
-> "The error here is that input is not properly validated and can be used
-> (when magic_quotes_gpc is off) to inject SQL code to a SQL query; since
-> our DB layer does not execute multiple statements, and the involved SQL
-> query is not used to produce output code, we regard the impact as low.
-> Nevertheless, please upgrade your installation."
-> 
-> Please assign CVE.
-> 
-> -- 
-> Hanno Böck		mail/jabber: hanno@...eck.de
-> GPG: BBB51E42		http://www.hboeck.de/
+Kurt Seifried wrote:
+> [...]
+> Sounds like this needs a CVE, is it correct that: an attacker can
+> create a bunch of RA prefixes thus filling up the # of allowed IPv6
+> addresses for an interface, preventing any more IPv6 addresses from
+> being assigned to that interface? In other words an attack over the
+> local network resulting in a DoS condition.
 
-Is this same as: http://seclists.org/oss-sec/2012/q2/352
+Well, an attacker that is allowed to send RA's could do all kinds of
+ugly things, just like a rogue DHCP server could. Since that kind of
+address configuration provides no means to verify authenticity, hosts
+have no way to tell whether an RA is correct or malicious. Security
+basically relies on the switches blocking unintended address
+configuration.
 
-It looks to me as a same issue.
+cu
+Ludwig
 
-- Henri Salo
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
