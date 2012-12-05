@@ -1,61 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/8
-Message-ID: <50DFB976.9040809@redhat.com>
-Date: Sat, 29 Dec 2012 20:48:06 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/05/2
+Message-ID: <50BED092.1080401@redhat.com>
+Date: Tue, 04 Dec 2012 21:41:54 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marko Lindqvist <cazfi74@...il.com>
-Subject: Re: About CVE-2012-5645
+CC: Greg KH <gregkh@...uxfoundation.org>, kargig@...d.gr
+Subject: Re: Linux kernel handling of IPv6 temporary addresses
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/21/2012 05:26 PM, Marko Lindqvist wrote:
-> I saw message that Freeciv bug #20003 has been assigned 
-> CVE-2012-5645 : http://seclists.org/oss-sec/2012/q4/484
+On 11/14/2012 10:14 AM, Greg KH wrote:
+> On Wed, Nov 14, 2012 at 10:43:22AM +0200, George Kargiotakis
+> wrote:
+>> Hello all,
+>> 
+>> Due to the way the Linux kernel handles the creation of IPv6
+>> temporary addresses a malicious LAN user can remotely disable
+>> them altogether which may lead to privacy violations and
+>> information disclosure.
+>> 
+>> By default the Linux kernel uses the 'ipv6.max_addresses' option
+>> to specify how many IPv6 addresses an interface may have. The 
+>> 'ipv6.regen_max_retry' option specifies how many times the kernel
+>> will try to create a new address.
+>> 
+>> Currently, in net/ipv6/addrconf.c,lines 898-910, there is no 
+>> distinction between the events of reaching max_addresses for an 
+>> interface and failing to generate a new address. Upon reaching
+>> any of the above conditions the following error is emitted by the
+>> kernel times 'regen_max_retry' (default value 3):
+>> 
+>> [183.793393] ipv6_create_tempaddr(): retry temporary address 
+>> regeneration [183.793405] ipv6_create_tempaddr(): retry
+>> temporary address regeneration [183.793411]
+>> ipv6_create_tempaddr(): retry temporary address regeneration
+>> 
+>> After 'regen_max_retry' is reached the kernel completely
+>> disables temporary address generation for that interface.
+>> 
+>> [183.793413] ipv6_create_tempaddr(): regeneration time exceeded
+>> - disabled temporary address support
+>> 
+>> RFC4941 3.3.7 specifies that disabling temp_addresses MUST happen
+>> upon failure to create non-unique addresses which is not the
+>> above case. Addresses would have been created if the kernel had a
+>> higher 'ipv6.max_addresses' limit.
+>> 
+>> A malicious LAN user can send a limited amount of RA prefixes and
+>> thus disable IPv6 temporary address creation for any Linux host.
+>> Recent distributions which enable the IPv6 Privacy extensions by
+>> default, like Ubuntu 12.04 and 12.10, are vulnerable to such
+>> attacks.
+>> 
+>> Due to the kernel's default values for valid (604800) and
+>> preferred (86400) lifetimes, this scenario may even occur under
+>> normal usage when a Router sends both a public and a ULA prefix,
+>> which is not an uncommon scenario for IPv6. 16 addresses are not
+>> enough with the current default timers when more than 1 prefix is
+>> advertised.
+>> 
+>> The kernel should at least differentiate between the two cases
+>> of reaching max_addresses and being unable to create new
+>> addresses, due to DAD conflicts for example.
 > 
-> I'd like to clarify things a bit. It was not single issue, but
-> more like two separate issues. Most importantly this leads to patch
-> listed 
-> (http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21670)
-> to fix only part of the problems described. Something like:
+> Have you discussed this with the upstream Linux kernel networking 
+> developers?
 > 
-> A denial of service flaw was found in the way the server component 
-> of Freeciv, a turn-based, multi-player, X based strategy game, 
-> processed certain packets (invalid packets with whole packet length
-> lower than packet header size). A remote attacker could send a
-> specially-crafted packet that, when processed would lead to freeciv
-> server to terminate (due to memory exhaustion)
+> thanks,
 > 
-> 
-> The other half: A denial of service flaw was found in the way the
-> server component of Freeciv, a turn-based, multi-player, X based
-> strategy game, processed certain packets (syntactically valid 
-> packets, but whose processing would lead to an infinite loop). A 
-> remote attacker could send a specially-crafted packet that, when 
-> processed would lead to freeciv server to become unresponsive (due
-> to excessive CPU use).
-> 
-> is fixed in 
-> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21701
-> 
-> 
-> 
-> Both are fixed in 2.3.3 (and patch versions applied to the stable 
-> branch S2_3 release was made from: 
-> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21672 , 
-> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21703 )
-> 
-> 
-> - ML
-> 
+> greg k-h
 
-Hmm I'm waffling here. The issues are the same version/reporter,
-roughly the same, can you post the http://cwe.mitre.org/ identifiers
-for these two issues? If they are different enough this might warrant
-a CVE split but for now I'm leaving it merged.
 
+Sounds like this needs a CVE, is it correct that: an attacker can
+create a bunch of RA prefixes thus filling up the # of allowed IPv6
+addresses for an interface, preventing any more IPv6 addresses from
+being assigned to that interface? In other words an attack over the
+local network resulting in a DoS condition.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -64,17 +86,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ37l2AAoJEBYNRVNeJnmTTkkQAJjFSeE5ooOK0OsMUzyCNqgC
-/rlMkokbTgM+BjIc6vSwNl5Kt46k5qhCfz9DR2u0JQDCk71IkeWSohiSug2zBy9E
-3kkCRX3+csQZnksYWLWwIu4kZa+4LY1NoGGNr0c+ZZZ89i2ZMpiu5ywdoovn722g
-PY67l8Nw2UrpOY68Cf/ydBFKW/WxkWUUIpI6X6Fs0E3NwvL6Hi8JRkOFTGKLvhfN
-xEH7Xgp/YHw/WDSiPmTTtSSKLZx9h5SM6+Yv/h7oEU2mvNDqmMRkAYyv2+nW/A+Q
-rxCRFvw8vb/woXIR+Mbqe37M9JHMxPJYnPD3t9au9+jA1Dcfp6NC7wGCMuDzXvDZ
-34FV2L8h10RP//P3XN4kNtMScJxD2H+l3hzGjNFm8ZToHAdElkoy0ns/T04Tr0Mp
-0sjoUhUL7nwBYf17BTzwPdY9I7XfCBxlvqbyDTd5EjGKYBuOfLvnr5WMdflY1/RN
-a/VkACs7vJ3kXkBllUudfAL/YncGCxmwQjYEzDbafKkiwoPa5IqXxOIhLh9Gw5ej
-ruHcAkCgxYiJmnCk6aH69OFM3w5nYrz4mwctfGfk7TKLYdBvhfzL3VYB3X3DvID0
-1mTwIqD8jHJ5o/zLg/DddNLkwgllvKNDmsaSCIcd4Q4uees9ghPXbc8rtFA5ld6N
-+1VR77CoqnGLb2OUJa/v
-=LoLH
+iQIcBAEBAgAGBQJQvtCRAAoJEBYNRVNeJnmTlagQAKgjCVHvmGl2fjDLLkK0i37X
+sI+osD8jJSpyVEezch2moD4d6YpSRzpIULoCms7HQw6JdgGX4U1ArJdWkZd4HVQb
+Tbj1XdfoKQesLBMXH314565Ui+BJnGo46C01yPltiMlrcsMQtYUqb5HeG1RPUlS1
+y9AL0/sVAq/cSUv3X+kHddiDKY7Pwk/kxa59EQ8piKsfHvFAqbgPyWFJldYN2z5C
+lfdlgxej3ISa+gzYVkp5QAI5NdmmuqmdN8ki3dJwyR1SrWhGMBFV2rJt2IKhA1a7
+OfacRZAQqcoE2wQ/4ss+3oYcdVQQUP9ykr3sphL5AjPcOs2B38bwrRt/OIHVMjB5
+wl0vCflU9Xwdhv+stw6He6XQw+EXGMxcaguxp0vXOF3ROhLczV6JKCX5GEVJ6IUS
+Z6bDiWLcq/bj5rkDZRCI/zRCyIEOqVWq2KDECKJ1cM4A4jknCGi9BUtkEFtWBjaq
+NvF04rTKx+T8ie5nNuj9pXX+h/EsglHKtQu7WRWAI9r+ooCsMUzpweeFF7HhZa1a
+CMGogVuplgUxqqvwAJ3NjJXGCee6qRpOFC+3o5kZlnlATOP6sqr3y/DjH30pK6k7
+y5cM8z8vdxhRfIlTTiCe7JKIEVVuL0sbuMHFytUt8pjpAFUL+3fN9x0BezxwtSxr
+XNcQ1KEm6ZF8lzSmGY/l
+=JrA2
 -----END PGP SIGNATURE-----
