@@ -1,56 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/4
-Message-ID: <50DFB7B0.1030909@redhat.com>
-Date: Sat, 29 Dec 2012 20:40:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Tilmann Haak <tilmann@...pwiki.de>, tw-public@....de
-Subject: Re: CVE request: MoinMoin Wiki (remote code execution vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/06/2
+Message-ID: <33901844.19080402.1354758657191.JavaMail.root@redhat.com>
+Date: Wed, 5 Dec 2012 20:50:57 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: Vincent Danen <vdanen@...hat.com>
+Cc: coley <coley@...re.org>, security-2012@...irrelmail.org, oss-security@...ts.openwall.com
+Subject: Re: Strange CVE situation (at least one ID should come of this)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 12/29/2012 07:11 AM, Tilmann Haak wrote:
-> Hi all,
+----- Original Message -----
+> * [2012-12-03 22:26:29 -0700] Kurt Seifried wrote:
 > 
-> there is a remote code execution vulnerability in MoinMoin wiki,
-> versions 1.9.x up to (and including) 1.9.5. The method save in class
-> AnyWikiDraw (action/anywikidraw.py) and class TWikiDraw
-> (action/twikidraw.py) do not filter user supplied input correctly, which
-> leads to a path traversal vulnerability, which can be exploited to
-> execute arbitrary code with moin's privileges. An exploit was seen in
-> the wild.
+> >-----BEGIN PGP SIGNED MESSAGE-----
+> >Hash: SHA1
+> >
+> >On 10/26/2012 01:54 PM, Josh Bressers wrote:
+> >> Hello,
+> >>
+> >> This Squirrelmail plugin came to my attention a few weeks back:
+> >> http://squirrelmail.org/plugin_view.php?id=117
+> >>
+> >> It's from 2004, which is suspect in itself, but I took a look
+> >> after
+> >> someone asked. It's pretty scary in there.
+> >>
+> >> If I was to list the security problems I found after a few minutes
+> >> of looking, they are:
+> >>
+> >> * It uses MD5 passwords
+> >
+> >Going with this one since there's a good number of MD5 related CVE's
+> >already.
+> >
+> >Please use CVE-2012-5623 for this issue.
 > 
-> Details can be found at: http://moinmo.in/SecurityFixes
+> Shouldn't this be a 2004 CVE, since it was fixed in 2004?
 > 
-> A fix is available at: http://hg.moinmo.in/moin/1.9/rev/7e7e1cbb9d3f
-> 
-> Could someone please assign a CVE number?
-> 
-> kind regards,
->   Tilmann
 
-Please use CVE-2012-6081 for this issue.
+No, it's not fixed at all. The module would need a rather invasive rewrite
+to "fix" this. I really just wanted a CVE ID as a warning of "don't use
+this". 2004 is the last time it was updated :)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Thanks.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ37ewAAoJEBYNRVNeJnmT66YP/0pSF6gHCwqGCkd/xj4rgc7d
-fdxIee2hu4eQHpQg6Juqn//eFKY6ToHMwMXaKnUGJohCE5ZfrjZeqkd3e85no9Kc
-lSrpBox7xt0dyzpQg3bPMc7Q850cQgQPo7lhLmrvr9qjOt7qCfzIdbzxMWoGGOC2
-yxQAzp1q5lL/4fSBZ+SIQRU/HfP/rZsQRDwV8dc3CNKpHVPuBl0sycqd69VxCKeY
-gd4syt26rgoJCQvFdnDEDbZh7+ItBz1opyqOlCzClZK4OTWGbOijPjDvkv0HgDmY
-zNbKzJgh2lWVynxKaiqfO2Ae+fvwj46LCD1QdqO3JyO0MUGPK2mtXLGJT81TUM1s
-C2Es1cJqA2losdgU7BrZdaCV5kzeAiI4q9RjnU0mTHYpvihXazOQ3reQDiJzwWTP
-ZhDcFzsk1xr1/6Pf4oWDaYRq0j7x7fXZ+AJhAncDLl1LwDfIyUIb7pd6Qhf2EIxP
-/W4xPedwGFIEKHqz34N/O+NUUhhdmZYWrDxJY1kSi5in7eGKi1kuZIXo24j5zRJb
-IHuzWlL2PDQq55bO0vEmO5Jf1nDiB/63KrESOKW/cq854nlC7C14WvmnHDLVVL7F
-9akfA9ezLNEPRTY9B0B6IoPEwrlsszbNUc2X35Nr45XvfL3fYC7L/UvvlOvLHfrn
-g/rHKJSADdF1cjGs9lcv
-=Pu+I
------END PGP SIGNATURE-----
+-- 
+    JB
