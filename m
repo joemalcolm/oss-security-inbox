@@ -1,63 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/27/2
-Message-ID: <5063F933.4070702@redhat.com>
-Date: Thu, 27 Sep 2012 00:58:59 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/06/3
+Message-ID: <20121206042847.GN2689@redhat.com>
+Date: Wed, 5 Dec 2012 21:28:47 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>, Tomas Hoger <thoger@...hat.com>
-Subject: Re: CVE request: opencryptoki insecure lock files handling
+Cc: coley <coley@...re.org>, security-2012@...irrelmail.org
+Subject: Re: Strange CVE situation (at least one ID should come of this)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2012-12-05 20:50:57 -0500] Josh Bressers wrote:
 
-On 09/24/2012 10:50 PM, Raphael Geissert wrote:
-> On Thursday 20 September 2012 09:10:14 Tomas Hoger wrote:
->> Ok, so I think we need 1 CVE for the two insecure temporary file
->> uses, unless we want to split each temporary file issue under a
->> separate CVE.  I don't believe there's a real need to assign CVE
->> for 2.4.1 (which did not improve things on systems with world
->> writable /var/lock) or 2.4.2 (which re-opens the attack for
->> pkcs11 group members on systems with restricted /var/lock, but
->> improves things on systems with world writable /var/lock).
-> 
-> I think two ids is more appropriate given that the issue isn't
-> fixed in 2.4.1 for systems with world writable /var/lock. 2.4.2, on
-> the other hand, covers boths scenarios (given that pkcs11 group
-> membership is already considered root-equivalent.)
-> 
-> Regards,
+>> >On 10/26/2012 01:54 PM, Josh Bressers wrote:
+>> >> Hello,
+>> >>
+>> >> This Squirrelmail plugin came to my attention a few weeks back:
+>> >> http://squirrelmail.org/plugin_view.php?id=117
+>> >>
+>> >> It's from 2004, which is suspect in itself, but I took a look
+>> >> after
+>> >> someone asked. It's pretty scary in there.
+>> >>
+>> >> If I was to list the security problems I found after a few minutes
+>> >> of looking, they are:
+>> >>
+>> >> * It uses MD5 passwords
+>> >
+>> >Going with this one since there's a good number of MD5 related CVE's
+>> >already.
+>> >
+>> >Please use CVE-2012-5623 for this issue.
+>>
+>> Shouldn't this be a 2004 CVE, since it was fixed in 2004?
+>>
+>
+>No, it's not fixed at all. The module would need a rather invasive rewrite
+>to "fix" this. I really just wanted a CVE ID as a warning of "don't use
+>this". 2004 is the last time it was updated :)
+>
+>Thanks.
 
-Apologies for the late reply.
+Aha!  Sorry, I'm dense.  Thanks for the clarification.  =)
 
-I'm going to assign 2 CVE's:
-
-Please use CVE-2012-4454 for opencryptoki insecure lock files handling
-in /tmp in 2.4.0
-
-Please use CVE-2012-4455 for opencryptoki insecure lock files handling
-in /var/tmp in 2.4.1
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQY/kzAAoJEBYNRVNeJnmT4OQQAKii/9ecdhbj1nYL2hLo8Wd/
-SW1Ss8yKRmo6MiwjHjguQ/gaGz2e09zZ5lMgyFNd5eOSNV6kqf+9W3ISXGufMOOx
-H/cJaI9WnagH/p0C2B4laLUUN3JN3UMjPPipnjMq/lGSGhT+YR1FzLlMXakmS9GX
-e+0D8SUiI6UHlkbrLf+gOibujWl8xjYyvxWdpokf4OATertAEEYvZPWkyCEfJ7re
-F4ffgA7VdgZk8XjHlNuTjRNdJtDmZIbY/KvqMEic6xBwLvwymMUWYIiJcHAIEUZ9
-XlG7gEnmKx6IwSFr4WDfRwHCXRDTf21KD10yXa1iJgign+tsnKmvSgj9Ny4HezTi
-gj/J9oKphTW/SKyStf70mAsLXS3IWiuhx+jwSQwzwQIV5IaDoklj/EpEiCeOxb52
-UXulCPDl5PnveaKeQ3s6/IWSd7VgskXExdO3D8hz1Ka0A+5oaXHXwuGJo/niY/kL
-u3ljlqJ6XUUDSk9r+3eZaPL6szh8AFUrLNuALgVAYJTIoSh3xhgXwD1+ccLKt6et
-8oY/2GeTrsK1fMSp2X0C42WXc62NGfG1ecSEcXpU/6DuoBUxYYEPdppsTEK1tzdc
-JIDcVV9ZIF0AcQvuhUpNpVlV+nnHtBuLkOWgvoNsy9Z9A61ZJkhpIJtxns09zc4E
-oMWWJjtWa+MN86VVKvfj
-=UaY/
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
