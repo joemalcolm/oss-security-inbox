@@ -1,59 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/06/8
-Message-ID: <4F078458.1050201@gmail.com>
-Date: Sat, 07 Jan 2012 00:31:36 +0100
-From: Michael Harrison <n0idx80@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/06/1
+Message-ID: <20121206005859.GM2689@redhat.com>
+Date: Wed, 5 Dec 2012 17:58:59 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request for spamdyke "STARTTLS" Plaintext Injection Vulnerability
+Cc: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>, security-2012@...irrelmail.org
+Subject: Re: Strange CVE situation (at least one ID should come of this)
 Content-Type: text/plain; charset=utf-8
 
-Hi guys,
+* [2012-12-03 22:26:29 -0700] Kurt Seifried wrote:
 
-Could you provide a CVE for the spamdyke "STARTTLS" Plaintext Injection
-Vulnerability
+>-----BEGIN PGP SIGNED MESSAGE-----
+>Hash: SHA1
+>
+>On 10/26/2012 01:54 PM, Josh Bressers wrote:
+>> Hello,
+>>
+>> This Squirrelmail plugin came to my attention a few weeks back:
+>> http://squirrelmail.org/plugin_view.php?id=117
+>>
+>> It's from 2004, which is suspect in itself, but I took a look after
+>> someone asked. It's pretty scary in there.
+>>
+>> If I was to list the security problems I found after a few minutes
+>> of looking, they are:
+>>
+>> * It uses MD5 passwords
+>
+>Going with this one since there's a good number of MD5 related CVE's
+>already.
+>
+>Please use CVE-2012-5623 for this issue.
 
-http://secunia.com/advisories/47435/#comments
-
-Thanks,
-
-Michael
+Shouldn't this be a 2004 CVE, since it was fixed in 2004?
 
 -- 
-
-It's not about what you know, but what is left to learn~
-
------BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v2.0.17 (GNU/Linux)
-
-mQENBE6MJ20BCACsvXUqJyxwgr61LOdRVMmczLC5VHDBEaaCfx4AwSihQm6od14h
-6IQJVyHSp5hQz73n9yOmLeAV51akUSNwUcV85Fjxa169MDut7mexir6YkTDrwSdW
-BRvopP6EuJaLAJwdK0/++YRD9eu6YDPlMp50ceCr47Yy8W0BGTb7Z2CvGnNntr7U
-ZkHR+ALdEQNyqSQ/NGxe7lfO+MVSi0W2eDaUtR6JmmZCWyDRWDsiOsl/q+QnIJ7r
-s3flrDe57zMXkw2rdI6lWm745i9kOyg0+Jw0gQwy8oHh/4ktdboU6WLkv2N9eeMR
-l1a0AZeTSuOfWrepTF1K22E++1NuN3Y5TGKvABEBAAG0MU1pY2hhZWwgUi4gSGFy
-cmlzb24gKEN1cnJlbnQpIDxuMGlkeDgwQGdtYWlsLmNvbT6JAT4EEwECACgFAk6M
-J20CGwMFCQHanAAGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEGcT+eUbMgJy
-T94H/2F98ZYomipk30ZcEZa+MsqLRcBdIvUgfS43cSih2KlhsjWavwYTYANJG4k0
-TImCpoJymmEK0aozlPqeP9eGTFrAM8HPnlBqMqTP5B0dPn2hGnxFwP1NLq4KiwgH
-YM/j2QqTZGvCaq82OtG8FwGNHRCJu+buN3zJ/VZNj5b05USEPnl8w92r5V4gbRyL
-HZsVyGnPDzTsBDqoKjpMcCVD4uXQWDM9jLk366zLM6ChzhEX02bmKrFqkNnb7rd0
-gFGR8svA4uWc2w58zrbZdMTsXDTimHdUm2KU4Cz49UxmyXW+T3SIEtsH8WYlaL+2
-SAk8zYMMb95WjwZwrFt2hhfMBoa5AQ0ETownbQEIALZJ5AbAwQd4qhkPRDmpvgW3
-AZgMj/s20sBo6XiS9PF4iUYwdKbEGUbKuahHH4dP4lrAKO0telzaLW+PY7NKaQ1k
-iLubuiqr7VD2j3bXXD1bvFdmG6w+R+S3jmgZs20Sj+z8472eXXHSokrO8/jolopb
-1xzZGUUVlVoJ7dSYaByqxQgcQCxrCiF1xj3CN32m51LAmaCFnJkVYwRTzZpCcOkf
-I4eF+d+0OYlCEH9VTwhYJKJMuRFJjPJqzCiJyYky7Y5GqaY2QNnSX2tzGpurR6IP
-HW/ZR4SFcnlL8HvHvT6+KVjfItS1M9ybTsXdf8Hl6BGkng+AO/bJKI2f3z2MXP0A
-EQEAAYkBJQQYAQIADwUCTownbQIbDAUJAdqcAAAKCRBnE/nlGzICclJlCAChlNrr
-CeZ3dzj/FrKQFozovCvgYV8GK83BHB3nBAsoOllvEzjmYbqIuCbbxWT5Dl5uatez
-jV7mrfobmnKTsSCGy9WbLc54djiRRcHXpHCeIOCEt8RL85VLim91842Zxw7wTnB0
-CfPM77scCvpekkzFaUj/yWxd6lzugKZ60AmuUxLWxzxPl+tcgRKCQT1XMe+EzyEd
-yAObBp+Pyk8WAWth+mecxJ131AruPzKwTrvzyyQVaa7qwJzgkwOVKpTwHzvLUQqX
-bPj3ZpIt4C0FLc5x91BYAXlt7rk5q3RZajBca+bODlAOJpU4fQs4ln+ZGt3sdTt4
-HvFqkFebN/ZH/wWf
-=Wk3z
------END PGP PUBLIC KEY BLOCK-----
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (536 bytes)
+Vincent Danen / Red Hat Security Response Team 
