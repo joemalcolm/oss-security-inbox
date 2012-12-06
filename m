@@ -1,58 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/19/2
-Message-ID: <4F8F5DCD.600@redhat.com>
-Date: Wed, 18 Apr 2012 18:35:25 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/06/4
+Message-ID: <50C05C2A.3090607@redhat.com>
+Date: Thu, 06 Dec 2012 01:49:46 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <keescook@...omium.org>
-Subject: Re: CVE request: Xorg input device format string flaw
+CC: Sergei Golubchik <serg@...monty.org>, Jan Lieskovsky <jlieskov@...hat.com>, Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: CVE request: Mysql/Mariadb insecure salt-usage
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/18/2012 02:37 PM, Kees Cook wrote:
-> On Wed, Apr 18, 2012 at 1:23 PM, Kurt Seifried
-> <kseifried@...hat.com> wrote:
->> On 04/18/2012 01:28 PM, Kees Cook wrote:
->>> Hello,
->>> 
->>> Adding an input device with a malicious name can trigger a
->>> format string flaw in Xorg's logging subsystem. For builds of
->>> Xorg lacking -D_FORTIFY_SOURCE=2 (or 32-bit systems lacking the
->>> fix to fortify[1]) this can lead to arbitrary code execution as
->>> the Xorg user, usually root. When built with fortify, this is a
->>> denial of service, since Xorg will abort.
->>> 
->>> Proposed solution patch series can be found here: 1/4 
->>> http://patchwork.freedesktop.org/patch/10000/ 2/4 
->>> http://patchwork.freedesktop.org/patch/9998/ 3/4 
->>> http://patchwork.freedesktop.org/patch/9999/ 4/4 
->>> http://patchwork.freedesktop.org/patch/10001/
->>> 
->>> -Kees
->>> 
->>> [1] 
->>> http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=7c1f4834d398163d1ac8101e35e9c36fc3176e6e
->>
->>
->>> 
-So
->>> 
->> are you asking for just the device name issue covered in
->> 
->> http://patchwork.freedesktop.org/patch/10001/
-
-Please use CVE-2012-2118 for this issue (Xorg device name logging
-format string).
-
-> Yeah, but I wanted to point to the entire patch series, since that 
-> fix, I think, depends on pieces from the others.
+On 12/05/2012 05:43 AM, Sergei Golubchik wrote:
+> Hi, Huzaifa!
 > 
-> -Kees
+> On Dec 05, Huzaifa Sidhpurwala wrote:
+>> Noticed another post by kingcope on full-disclosure, which
+>> basically boils down to re-use of a salt-value when transmitting
+>> passwords over a network.
+>> 
+>> If you could MITM/capture network packets, you could use this 
+>> weakness to determine the passwords.
+>> 
+>> References: http://seclists.org/fulldisclosure/2012/Dec/58 
+>> https://bugzilla.redhat.com/show_bug.cgi?id=883719
+>> 
+>> Should this a CVE be assigned to this issue?
+> 
+> https://mariadb.atlassian.net/browse/MDEV-3915
+> 
+> Regards, Sergei
 
-Ok, it's just that some of them have other somewhat security sounding
-issues (I haven't looked in depth though, was hoping you had).
+Please use CVE-2012-5627 for this issue.
 
 
 - -- 
@@ -61,19 +40,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPj13NAAoJEBYNRVNeJnmTcg8P/0nmtqjjZpKKWfHK4vdcPtut
-6Ue/W0/QqDJi2riiB+4pe4QEezK5X27QmsH4pfqEWuk/0ykF9Dj1MKae3/bhT2wg
-zem/cKRHnS3/iprqWZrHhfvPoIi1oSl8nvjJImjfCMUGi1gZhdZDTYqP4MLbtvG7
-+4TbWzeSxxDlOhW6iM70qIbxjuB1guh3DE1pjICjKev9GvfzU6vTkoYYGvq3ZFUQ
-warDFqYo1PxOVcWj96JCIQMpywr5vBIypg3ZmTVVWZgfRiE0Ub/1fstaICK0E9IV
-n+C9PNxwUOPGLAo+X1Mpj5kC7QutPvJ4zyOSHZBBFmUlW2arcXhC08MJb+zO/aXd
-+kqzPnVWEuemqtfAbpELDYoKils5V1PG2ZNgd6rbabg6LHW795Db1UtGjvrU9Wb9
-YZgcD+yA3VqCdwHHSPY/w8ek3BUSQmR7jveAI7ZLdnMPdgV070hMkA8PxRhI7So2
-h3Riv2ySBH22ejZwNAJ0A18T7wBEn0u+KEvt7v91NwG5tLDtSBn7Kk+kvo2BvBz5
-6o3rh7GOFTPOR49wyMaUNHTN5C+LmcSY9mGYxX+mpJLZU68fn43YFbdWu2kRagQ0
-7OQSCg2ycXaR8bhtsudMuUCbWMgKo+Snvd2KCNE6AbCEyMnMDjvztff9Vpe7pCaZ
-iWjfpsj6EXWwvgQzebg5
-=TT32
+iQIcBAEBAgAGBQJQwFwqAAoJEBYNRVNeJnmTVl0QAJJZ5G5h2GxyLieUCGsa15HP
+KQ3uZU1KGZ2uGrueRRzZqbk+i5qP8P7eVwwZEq57lNJRZKYf++UXDRu0WGOn8A0A
+6qgUjDphoqJBmK1hYDjpyO+/YY79p5mGAye3bUKZGs5bOUrYTGTE9MZealwo0+Ur
+En5veDhj0fcOgZGiiRcyz4EE4Zf43Cnq5FKs8ZRNvMqJwqoDTlAUnPCZ7v5v+Sb0
+eNWNOpYC2BUld2Yorm/3wo46zt2nsVAL41r9IY7OmBWKS68yAeXCzXmNYYtiktoQ
+LQLIidqFWcPIOF90sD0IeSy01XRNUK+23Qed2JtV3YBbI8Wu0RS8IlsEJMV1j8Ik
+lzXQFleMIQ4JXdVeJXeTbTfnbc5ri8qZCkKduwzFq28jyXEPvXxnBMEmcQUUaMcL
+KimFSf6ur3eGK8WL3s1fXDh+asaHonsKLoYHEKmP0f+Td7/4fLjN+FjrjMhYxmec
+PDn+B1rMefsy3C/IWupy3HIINDXN23o/A0rsoQurycAsm1Z4FIrGP5VNZqmBhYO6
+SP60nAWUqVk9hh6Z9rtZKkVkwYsk76Ac8i18Qs9mdL5y0hYVhPqjHKIq6NL/dk9A
+lkXVGd28w43SLcNHI2eG/XjZn7tQliu3p2O7Koj4rEYObzVp0JcnhZg17NzNz4PN
+jGICtk8EGou6cwwtzlXw
+=O9Xz
 -----END PGP SIGNATURE-----
