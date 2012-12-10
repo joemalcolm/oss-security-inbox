@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/1
-Message-ID: <CAPhqm0MaD3iO7WagtXdRf3NsiLoC9GyoUcR4JO7-5n_4HRfTvQ@mail.gmail.com>
-Date: Mon, 20 Feb 2012 12:14:23 +0100
-From: muuratsalo experimental hack lab <muuratsalo@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/10/3
+Message-Id: <201212101901.qBAJ0sPI006321@linus.mitre.org>
+Date: Mon, 10 Dec 2012 14:00:54 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Cc: Ulli Horlacher <framstag@....uni-stuttgart.de>
-Subject: Vulnerabilitites in Debian F*EX <= 20100208 and F*EX 20111129-2.
+Cc: cve-assign@...re.org
+Subject: CVE-2012-6306 HCView Write Access Violation with GIF file
 Content-Type: text/plain; charset=utf-8
 
-Dear Sir/Madam,
-I am Nicola Fioravanti aka muuratsalo | muuratsalo experimental hack lab.
-I am writing you because I have discovered some vulnerabilities in
-Debian F*EX <= 20100208 (stable) and F*EX 20111129-2. (testing and
-unstable)
-I have already contacted the Author who confirmed the vulnerabilities
-and applied the suggested fixes.
-A major update of F*EX  has been released on the 15th of February
-2012. The Debian Mantainer of the package is working on it.
-Together with the Author we decided not to release any public advisory
-before the release of the new Debian package.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I would be grateful if you could assign CVE ids to the discovered issues.
+We have assigned CVE-2012-6306 to this issue in GIF file handling by
+HCView (aka hardcoreview):
 
-You will find the two advisories as an attachment.
+Disclosure:     http://www.securityfocus.com/data/vulnerabilities/exploits/55819.pl
+Product source: http://hardcoreview.svn.sourceforge.net/viewvc/hardcoreview/hardcoreview/
 
-Best regards,
-/NF
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-View attachment "FEX 20100208.txt" of type "text/plain" (3926 bytes)
-
-View attachment "FEX 20111129-2.txt" of type "text/plain" (2340 bytes)
+iQEcBAEBAgAGBQJQxi9eAAoJEGvefgSNfHMdESgIAJD3mwMOAEyG/X0+yDgPjvl7
+1p00jTYgTp1rqJoW3x+ewyc7vqLePNBt8XA/7JMwILH1WQOOEm73WWsPQrT3JFcN
+xd/HYSujRpnEofWooX88FCBeZ9mHP775l7hW4aT9V6iTTKFXwdAwP3rbUfVuIyTj
++vBB3L8HEpgvBtRMDBlchpmgbuv8k/O8XTgdVOdhZNE5NQJRd3DoSqscnggA2/Q1
+l3jSgUQ4KFoyMF8O6DFUY+Q4+e5BuPlDynfUaa38fDLr33i8pniEQaXHWDTQmN99
+KtXVpwZy/MGNugQOF7uhJBLyHpqCrwiriCxDwue+RbjNH2z0smX6PiQvT3v4njg=
+=Oi19
+-----END PGP SIGNATURE-----
