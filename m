@@ -1,103 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/18/1
-Message-ID: <50A8723D.7030708@gmail.com>
-Date: Sat, 17 Nov 2012 21:29:33 -0800
-From: Forest Monsen <forest.monsen@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/10/5
+Message-Id: <201212101903.qBAJ2wXl006414@linus.mitre.org>
+Date: Mon, 10 Dec 2012 14:02:58 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: CVE Request for Drupal Contributed Modules
+Cc: cve-assign@...re.org
+Subject: CVE-2012-6309 Arctic Torrent crash with .torrent file
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hello!
+We have assigned CVE-2012-6309 to this issue in .torrent file handling
+by Arctic Torrent:
 
-Here's a batch CVE request for a number of previously published and
-resolved issues with contributed modules for the Drupal project. As
-noted in http://www.openwall.com/lists/oss-security/2012/11/05/4, I
-have volunteered to coordinate our CVE requests.
+Disclosure:     http://downloads.securityfocus.com/vulnerabilities/exploits/55833.pl.txt
+Product source: http://cvs.int64.org/viewvc/int64/arctic/arctic/
 
-Forest Monsen, on behalf of the Drupal Security Team
-
-
-- - SA-CONTRIB-2012-146 - Simplenews Scheduler - Arbitrary code execution
-  http://drupal.org/node/1789284
-
-- - SA-CONTRIB-2012-147 - FileField Sources - Cross Site Scripting (XSS)
-  http://drupal.org/node/1789306
-
-- - SA-CONTRIB-2012-148 - Organic Groups - Access Bypass
-  http://drupal.org/node/1796036
-
-- - SA-CONTRIB-2012-149 - Hostip - Cross Site Scripting (XSS)
-  http://drupal.org/node/1802218
-
-- - SA-CONTRIB-2012-150 - Twitter Pull - Cross Site Scripting (XSS)
-  http://drupal.org/node/1802230
-
-- - SA-CONTRIB-2012-151 - Commerce Extra Panes - Cross Site Request
-  Forgery
-  http://drupal.org/node/1802258
-
-- - SA-CONTRIB-2012-152 - Feeds - Access bypass
-  http://drupal.org/node/1808832
-
-- - SA-CONTRIB-2012-153 - Mandrill - Information Disclosure
-  http://drupal.org/node/1808846
-
-- - SA-CONTRIB-2012-154 - Basic webmail - Cross Site Scripting
-  http://drupal.org/node/1808852
-
-- - SA-CONTRIB-2012-154 - Basic webmail - Information Disclosure
-  http://drupal.org/node/1808852
-
-- - SA-CONTRIB-2012-155 - ShareThis - Cross Site Scripting (XSS)
-  http://drupal.org/node/1808856
-
-- - SA-CONTRIB-2012-156 - Search API - Cross Site Request Forgery (CSRF)
-  http://drupal.org/node/1815770
-
-- - SA-CONTRIB-2012-157 - Time Spent - Cross Site Scripting (XSS)
-  http://drupal.org/node/1822066
-
-- - SA-CONTRIB-2012-157 - Time Spent - Cross Site Request Forgery (CSRF)
-  http://drupal.org/node/1822066
-
-- - SA-CONTRIB-2012-157 - Time Spent - SQL Injection
-  http://drupal.org/node/1822066
-
-- - SA-CONTRIB-2012-158 - MailChimp - Cross Site Scripting (XSS)
-  http://drupal.org/node/1822166
-
-- - SA-CONTRIB-2012-159 - Password policy - Information disclosure
-  http://drupal.org/node/1828340
-
-- - SA-CONTRIB-2012-160 - OM Maximenu - Cross Site Scripting (XSS)
-  http://drupal.org/node/1834866
-
-- - SA-CONTRIB-2012-161 - Webform CiviCRM Integration - Access Bypass
-  http://drupal.org/node/1834868
-
-- - SA-CONTRIB-2012-162 - RESTful Web Services - Cross site request
-  forgery (CSRF)
-  http://drupal.org/node/1840740
-
-- - SA-CONTRIB-2012-163 - User Read-Only - Permission escalation
-  http://drupal.org/node/1840886
-
-- - SA-CONTRIB-2012-164 - Smiley module and Smileys module - Cross Site
-  Scripting (XSS)
-  http://drupal.org/node/1840892
-
-- - SA-CONTRIB-2012-165 - Chaos tool suite (ctools) - Cross Site
-  Scripting (XSS)
-  http://drupal.org/node/1840992
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Version: GnuPG v1.4.11 (SunOS)
 
-iEYEARECAAYFAlCocjEACgkQ/ILCL9e1Br73XACeIA+9vN5kq9QZ99cbEHtVemyV
-SxsAn1EN77He3g3ssthVQ/pgBfVPgrR9
-=15AA
+iQEcBAEBAgAGBQJQxi9pAAoJEGvefgSNfHMd5GIH/iYODYKAEfU0W8Y4weKIgarm
+ryqBj5Aly7Xp15KqQl5QxNYnSUn2Bz+GUbIMUCks6+af50un2d6wpZcUn/RfkdCR
+Z3/OEauSY4pMgj2QMVYVMP3HgHT6+942vyGYl6owlbJwsd51Ng+N3YErJIH8O47O
+fI4Ys+cjT4CBTcz2AEQemQFc8DEYiUeoyNmmf1YOZNHjhd91WsnqEx/a3PjZQXsy
+oa+/Zz1KM1cLmkGkEpN619GTU7HO2xdUXKqsTCl/5aWmGE8u40SSDoy2D4IqHzjp
+Ov/nkYmaBrZ4bXwvvEKmgBMuMlAYGDPN+0F+S+hXFoDzoZOZ+hwfZkDqNDpjj3c=
+=opWS
 -----END PGP SIGNATURE-----
