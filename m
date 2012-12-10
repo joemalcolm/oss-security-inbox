@@ -1,43 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/02/1
-Message-ID: <20120502052132.GA14818@openwall.com>
-Date: Wed, 2 May 2012 09:21:32 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Jeff Law <law@...hat.com>, Paul Wouters <pwouters@...hat.com>
-Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/10/6
+Message-ID: <50C654E4.9050108@redhat.com>
+Date: Mon, 10 Dec 2012 14:32:20 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@...o3.org" <security@...o3.org>
+Subject: TYPO3-CORE-SA-2012-005: Several Vulnerabilities in TYPO3 Core
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 30, 2012 at 11:05:32PM +0400, Solar Designer wrote:
-> On Fri, Mar 30, 2012 at 12:47:54PM -0600, Jeff Law wrote:
-> > On 03/30/2012 12:43 PM, Solar Designer wrote:
-> > >Do you realize that plenty of services that use crypt() - likely the
-> > >majority of them, even - don't handle NULL returns, so they will
-> > >segfault when these conditions are triggered?
-> > 
-> > Then, IMHO,  the app is clearly broken.  Crypt has been defined as 
-> > potentially returning NULL and at least for glibc has done so since the 
-> > introduction of sha256/sha512, if the app fails to check for that, then 
-> > the app needs to be fixed.
-> 
-> Sure.  I am not arguing against fixing the apps (in fact, I am planning
-> to fix one of mine - code originally written in 1998 or so - regardless
-> of what glibc does on this), but I am arguing for not having glibc
-> expose the problem.
-> 
-> Considering the age of Unix, SUSv2 and POSIX.1-2001 are fairly recent
-> (I think this may be when the NULL returns were first standardized), and
-> glibc's SHA-crypt is very young.  It still makes sense to support apps
-> older than that, including without changes.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Paul Wouters (Red Hat) has started to fix the apps:
+TYPO3-CORE-SA-2012-005: Several Vulnerabilities in TYPO3 Core
+https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-005/
 
-https://mobile.twitter.com/letoams/status/195181246614224896
+I'm a little confused because multiple issues are listed together with
+a single CVSS2 score/etc.
 
-"sent crypt() NULL patches out for apg control-center cyrus-sasl openssh
-pam passwdqc ppp python screen shadow-utils sysvinit-tools yp-tools
-7 days ago"
+Can the Typo3 security team please confirm the following:
 
-Thanks again, Paul!
+> Component Type: TYPO3 Core Affected Versions: 4.5.0 up to 4.5.20,
+> 4.6.0 up to 4.6.13, 4.7.0 up
+to 4.7.5 and development releases of the 6.0 branch.
+> Vulnerability Types: SQL Injection, Cross-Site Scripting,
+Information Disclosure
 
-Alexander
+so no CVE's needed for this, this is simply a summary of the below issues?
+
+> Vulnerable subcomponent: TYPO3 Backend History Module Vulnerability
+> Type: SQL Injection, Cross-Site Scripting Solution: Update to the
+> TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
+fix the problem described!
+> Credits: Credits go to Thomas Worm who discovered and reported the
+issue.
+
+Did he discover both the SQL Injection and the Cross-Site Scripting
+issues? Can you provide a link to the specific code fixes?
+
+so 2 cve's needed correct?
+
+> Vulnerable subcomponent: TYPO3 Backend History Module Vulnerability
+> Type: Information Disclosure
+Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that fix
+the problem described!
+> Credits: Credits go to Core Team Member Oliver Hader who
+> discovered
+and fixed the issue.
+
+so one cve needed here? Can you provide a link to the specific code fixes?
+
+> Vulnerable subcomponent: TYPO3 Backend API Vulnerability Type:
+> Cross-Site Scripting Solution: Update to the TYPO3 version 4.5.21,
+> 4.6.14 or 4.7.6 that
+fix the problem described!
+> Credits: Credits go to Johannes Feustel who discovered and
+> reported
+the issue.
+
+so one cve needed here? Can you provide a link to the specific code fixes?
+
+> Vulnerability Type: Cross-Site Scripting Solution: Update to the
+> TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
+fix the problem described!
+> Credits: Credits go to Richard Brain who discovered and reported
+> the
+issue.
+
+so one cve needed here? Can you provide a link to the specific code fixes?
+
+Thanks for confirming this.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQxlTkAAoJEBYNRVNeJnmTdTYQAKM5Lx1uGF4FO5hEwl9Lv5pg
+JbW41XzMOLGyesGggUf39xhHnPqF7/tH0vmgDOM7pDUXdnRUiCbQaXc+oGcKQvtm
+QKYFy5YVo2DNkaluxjmta0bdbSzsi+istYYWQFrUcaHrVGsK9UOCXf7r7fKw6zD3
+om9ajiJG91EugEKgNm4kRrSlBJNCS2KUgf2DeSjuz5rU3Nq98qNtYi0ul4tPEKm0
+WLc+cun7DrKnhFHgKzYFjD3AHUh6KVfgo6uGF/GWtrw0aoknwnbadZ5RwT7L+svl
+yVCxWn1oB6HX5flBL2pkAicUWXs5dVRnn7wuAZb+HUCHw8dWFLl9ndqskfigrR3w
+WtCVSIMZkd10XNpV9T0y+hklWPyC5dPNrHpO78b/rrLvgAr8iJxrDSKY/dLZBAnr
+e3zekkwq8HzCGm/rbcKU2hJEUqIvCFo/n3SsTUBfh+IWriMJXYUHD49OmbO3MqVP
+mpb03U93OtI4YMsut5MWWC+oEgXcyT8HNEr4+Ft+9GdOwV2GVvHv/H+rmYU+xXXt
+JD+McS2Q0F4rAiGuQjEVlCN4rWoIAN+8K/KROQO2w5ZYIw5riwXf5Jt9x9m00vFj
+vkKwonhcQ+XF3O78v0YI7no39LpOiTm41MkLFcyuxuuNNw15rEvKCLPKGgTikZ0x
+SVfcAdMdFEU8jaAtUR7m
+=zzRG
+-----END PGP SIGNATURE-----
