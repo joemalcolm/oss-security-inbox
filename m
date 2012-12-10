@@ -1,38 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/23/6
-Message-ID: <4FBC41FA.7020208@behdad.org>
-Date: Tue, 22 May 2012 21:48:42 -0400
-From: Behdad Esfahbod <behdad@...dad.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/10/1
+Message-Id: <201212101858.qBAIwoHM006220@linus.mitre.org>
+Date: Mon, 10 Dec 2012 13:58:50 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Christian Persch <chpe@...me.org>
-Subject: Re: CVE Request -- mosh (and probably vte too): mosh server DoS (long loop) due improper parsing of terminal parameters in terminal dispatcher
+Cc: cve-assign@...re.org
+Subject: CVE-2012-6302 Soapbox 0.3.1 sandbox bypass
 Content-Type: text/plain; charset=utf-8
 
-[+chpe]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 05/22/2012 09:53 AM, Jan Lieskovsky wrote:
+We have assigned CVE-2012-6302 to this issue involving running a second
+instance of Soapbox within a sandboxed Soapbox process:
 
-> B) vte issue:
-> =============
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673871#5
-> 
-> there is similar issue in vte too (Gnome bug private for now):
-> https://bugzilla.gnome.org/show_bug.cgi?id=676090
-> 
-> Cc-ed Behdad Esfahbod on this post to clarify, what are the upstream plans
-> regarding this report in vte and if the CVE id has been already assigned for
-> it.
+Disclosure:     http://dl.packetstormsecurity.net/1210-exploits/soapbox-exec.txt
+Product source: http://dag.wieers.com/home-made/soapbox/soapbox-0.3.1.tar.bz2
+                (apparently last updated in 2003)
 
-Christian Persch, CC'ed, has already produced two patches to address these issues:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-  * Limit all parsed integers in escape sequences to 65535.  This is in line
-with the mosh change,
-
-  * In the specific sequences mentioned in the original report, limit to
-screen metrics (columns, rows, etc) the same way that xterm does this.
-
-The patches have not been committed yet from what I can see.  If there's a
-coordinated embargo release date being set for this, we can respect that I
-believe.
-
-behdad
+iQEcBAEBAgAGBQJQxi9RAAoJEGvefgSNfHMdedoH/0d7uUlBLYR/ZfHKCIRifbyL
+sRmP0Gj9PeSav15BONfdlMTjs2qQb53Nj2unkB7gkOKQ5nWkVaJbD36fI/rJqAfx
+1YzX0Wh3SSa0rxtaHMQKJMix9PD3fOcs23QvmFbwBByO2BKY8WGsg7xfwVwnsuFE
+vtL6pPUDKdIauZKqFzwUFNKCSedygeaZLb4StoXblAYWxDc0twCnmiepZcvoAW6J
+ELhym2fazt1HvTqJcVB2uC50U6fTsI52WJCalU1mcvzwZ3LWEJjc1xlgG2eNTkvW
+74IbyNy1zuWkMa/JnQSrh3URVnJXTX1KuEoHaiVbDwA3PNVvN1Q79Wh7gjwW13s=
+=914Q
+-----END PGP SIGNATURE-----
