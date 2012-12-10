@@ -1,35 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/06/7
-Message-ID: <CAB9ZNAyFhH44ZHH8kdbDRhG5viCPvKuDe10QWEBf5dF5xTXPfw@mail.gmail.com>
-Date: Tue, 6 Mar 2012 09:31:10 -0500
-From: Andres Gomez <agomez@...idsignal.com>
-To: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: TORCS 1.3.2 xml buffer overflow - CVE-2012-1189
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/10/2
+Message-Id: <201212101900.qBAIxqSM006255@linus.mitre.org>
+Date: Mon, 10 Dec 2012 13:59:52 -0500 (EST)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2012-6303 WaveSurfer and Snack Sound Toolkit buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-2012/3/5 Kurt Seifried <kseifried@...hat.com>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Would you consider tham to be the same code base or a different code
-> base? If the same code base, share the CVE, if different code bases, new
-> CVE for it. Steve: do we have a policy for "Fresh" forks as it were?
->
->
-Well, Speed Dreams started with TORCS code base, but they have added a lot
-new code, so I would say that right now they have different code base,
-although they still share a big portion of the code (as the vulnerable
-section).  Because of that I would consider It needs a new CVE number,
-could you assign one to it?  :)
+We have assigned CVE-2012-6303 to these multiple buffer overflows in
+WaveSurfer and Snack Sound Toolkit:
 
+Disclosures:    http://www.exploit-db.com/exploits/19772/
+                http://secunia.com/advisories/49889/
+Product source: http://www.speech.kth.se/snack/
+                http://wavesurfer.svn.sourceforge.net/viewvc/wavesurfer/trunk/wavesurfer/
+                (The www.speech.kth.se site refers to "Snack v2.2.10
+                 released December 01 Bug fix release" but this is
+                 apparently about December 01 2004 -- not about a 2012
+                 release.)
 
->
-> Write up the description and send it to Mitre =).
->
->
- I already did, I sent details but they have not disclosed them in web page
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-1189, maybe i used a
-wrong email address (cve-assign@...re.org).
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-
-Thank you for your help.
-
+iQEcBAEBAgAGBQJQxi9YAAoJEGvefgSNfHMdrCcH/jKtUz094PCrTXbrtpNhih4j
+zi1zyqdybNMAdmcGGZYs/5pgBym8a1avhRxsSfDsnSC6/1F/bKgw9LzHOprFT9bt
+wn/TleyhHY+5sDcatxLUtwsLsoHCuQPOW4qe2EPXZu22zWOOwrS+ZX0rSE6iGHF2
+2K0my22Dx49ARL/uUIvtCS0B5C8f3EM3NnMg6bNgLQXgmD1FuAqD2WgQ2iIvdcx/
+9JH6xeEOBfA7AsNPIwHWQaIK3KTUEWxOr6Gp9L321TzBIUVsxjrEFgwGD7cRPvNk
+JoAIUOqITXRcocKCsoz9TdwXK2mkFWrW5Dt6ieTAH8itAlDQBHZsE4Fs0WD8Sac=
+=B8hW
+-----END PGP SIGNATURE-----
