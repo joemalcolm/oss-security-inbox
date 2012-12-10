@@ -1,78 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/15
-Message-ID: <4F96EC11.4040603@redhat.com>
-Date: Tue, 24 Apr 2012 12:08:17 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/10/4
+Message-Id: <201212101902.qBAJ1u5i006355@linus.mitre.org>
+Date: Mon, 10 Dec 2012 14:01:56 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Adam Tkac <atkac@...hat.com>, Petr Spacek <pspacek@...hat.com>
-Subject: Re: CVE Request -- bind-dyndb-ldap: Bind DoS (named hang) by processing DNS query for zone served by bind-dyndb-ldap
+Cc: cve-assign@...re.org
+Subject: CVE-2012-6307 JPEGsnoop Write Access Violation with JPEG file
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/24/2012 10:47 AM, Jan Lieskovsky wrote:
-> Note: First time mangled email address of Petr Spacek => apologize
-> if you got this email two times. Anyway:
-> 
-> Hello Kurt, Steve, vendors,
-> 
-> a denial of service flaw was found in the way the bind-dyndb-ldap,
-> a dynamic LDAP back-end plug-in for BIND providing LDAP database
-> back-end capabilities, performed LDAP connection errors handling /
-> attempted to recover, when an error during a LDAP search happened
-> for a particular DNS query. When the Berkeley Internet Name Domain
-> (BIND) server was patched to support dynamic loading of database
-> back-ends, and the LDAP database back-end was enabled, a remote 
-> attacker could use this flaw to cause denial of service (named
-> process hang) via DNS query for zone served by bind-dyndb-ldap.
-> 
-> bind-dyndb-ldap backend upstream commit, which introduced the
-> problem: [1] 
-> http://git.fedorahosted.org/git/?p=bind-dyndb-ldap.git;a=commit;h=a7a47212beb01c5083768bdd4170250e7f7cf188
->
-> 
-> 
-> Preliminary bind-dyndb-ldap back-end upstream patch from Adam
-> Tkac: [2] https://bugzilla.redhat.com/show_bug.cgi?id=815846#c1
-> 
-> References: [3] https://bugzilla.redhat.com/show_bug.cgi?id=815846 
-> [4]
-> https://www.redhat.com/archives/freeipa-users/2012-April/msg00145.html
->
->  Note: Just to explicitly note this. This is NOT a bind DoS in the
-> sense upstream bind source package would be affected by it. Bind 
-> needs to be first patched to support dynamic loading of database 
-> backends and it's an error in the LDAP backend (bind-dyndb-ldap 
-> source code) which makes this attack to succeed when a 
-> specially-crafted DNS query is issued.
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+We have assigned CVE-2012-6307 to this issue in JPEG file handling by
+JPEGsnoop:
 
-Please use CVE-2012-2134 for this issue.
+Disclosure:     http://www.securityfocus.com/data/vulnerabilities/exploits/55791.pl.txt
+Product source: http://jpegsnoop.svn.sourceforge.net/viewvc/jpegsnoop/trunk/
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG v1.4.11 (SunOS)
 
-iQIcBAEBAgAGBQJPluwRAAoJEBYNRVNeJnmTiTwQAME5zGqXnfsu3bjqRmztFtpp
-+tiCDANKzMDWPFtxDefPpKYAipwC7Iv1BjqkuOl3UmwYWONrU+jz/aivIJ3rNhDf
-YYWcOcu/93f37IF4fDbgWjW9jL0VDZtOlrtvdz+Cp0vmGiLtrXfcCu9kqvXf+aN8
-SyrY9ZrOWKSDsXXev3rD5JdiPoalGeSfK4ACnu8jzjxlmaDabgJx18ipKGiGKn6k
-AFbz8SSWIGDPWEeJEdtjR1r85Iaa3sorQzOXiznMXrADlvnx81Qbfi61w8lZfmLI
-itytRr+zjhUEzNOvnXQJTOxTgJfWAyQ8aVGzF/x+XQUdBvm5taJh27NGg/dQn+ZS
-m08kOpMV3wT5LwpqE4tWd1OA1og82Hhm9E+rkuyfPH849QsT6TwEWbUULNEa4dwM
-FjIGbBNBBRy7yifn8hvP2QfS1Kh85CXXtrukkXJ3OMHf4ffLkL1XsTJRrkohptcD
-WUALy3UMq3jHCyB9BksVyQxBVJ3HIKn2JOG+zYHLpJQLiSLeP9Ulvwy+mYe6aWK9
-67akrwu5znTJ8FZjsoYYYCaG9AcM+cGCvAZn9WkbDv+6JpcLMjPWgytbhsv3MtZk
-BqLWeEitlh2GsoKRUPQ9gHp4qFVZmIlKS7stUVDSHpGpz9hej0M17IU9r2e67njL
-nkhpU6Css4tEhsfepTV9
-=+AZO
+iQEcBAEBAgAGBQJQxi9kAAoJEGvefgSNfHMd0BcH/RbCWRMSYpZCOezGK0m33enz
+BA1GqbOlcZP8JWyzgttCsL87oaQdACGXHbWFN6gHgo8C7un2yEH3d4a/6MOGh9wC
+/pp1p/dYhQqpkD+/biNps80LrbPIEogaZWt2AtPbmOoInb1BJC8LQmgFeuCmv6aP
+OE8pnwugNC+Hp5XmyGrs7aEwDCzIUqH4H0sTCR5NCX7E7CG85SiELK1B+Hj+uFA1
+FiiAJWeJUcOiJOBuP0uq2PzJz2vd7ldgtlqU5aQ1q7fO2bpPb42U1+q9XhNdQJiV
+d0cIOrPaa1yto9spp5wwpnE4wSlvaJX0vbZ/ooC2jkSWy6039llmczQP+fqjTQs=
+=CpfD
 -----END PGP SIGNATURE-----
