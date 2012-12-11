@@ -1,45 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/10
-Message-ID: <20120329122947.GB26304@openwall.com>
-Date: Thu, 29 Mar 2012 16:29:47 +0400
-From: Solar Designer <solar@...nwall.com>
-To: "Timothy D. Morgan" <tmorgan@...curity.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2012-0037: libraptor - XXE in RDF/XML File Interpretation (Multiple office products affected)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/11/4
+Message-ID: <50C776E4.2060307@redhat.com>
+Date: Tue, 11 Dec 2012 11:09:40 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jamie Strandboge <jamie@...onical.com>, coley@...us.mitre.org, security <security@...ntu.com>
+Subject: Re: CVE request: perl-modules
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 27, 2012 at 12:39:00PM -0700, Timothy D. Morgan wrote:
-> > "If you have not yet notified upstream projects/developers of the
-> > affected software, other affected distro vendors, and/or affected Open
-> > Source projects, you may want to do so before notifying one of these
-> > mailing lists in order to ensure that these other parties are OK with
-> > the maximum embargo period that would apply (and if not, then you may
-> > have to delay your notification to the mailing list), unless you're
-> > confident you'd choose to ignore their preference anyway and disclose
-> > the issue publicly soon as per the policy stated here."
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 12/11/2012 09:56 AM, Jamie Strandboge wrote:
+> Debian recently fixed the following security bug: 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695224
 > 
-> You may want to re-word this a little to make it utterly clear to those who
-> don't take the time to think about it.  Perhaps something like "If expect
-> upstream vendors to require more than 14-19 days to develop a fix, establish a
-> release date with them prior to notifying this list".  You could also break it
-> down in to step-by-step bullets.  That page has grown much larger now and it is
-> tempting to skim...
+> "Locale::Maketext is a core l10n library that expands templates
+> found in strings.
+> 
+> Two problems were found, reported, and patched-for by Brian Carlson
+> of cPanel, and these fixes are now in blead and on the CPAN.
+> 
+> The commit in question is 
+> http://perl5.git.perl.org/perl.git/commit/1735f6f53ca19f99c6e9e39496c486af323ba6a8
+>
+>  The flaws are:
+> 
+> * in a [method,x,y,z] template, the method could be a
+> fully-qualified name * template expansion did not properly quote
+> metacharacters, allowing code injection through a malicious
+> template
+> 
+> Please upgrade your Locale::Maketext, especially if you allow
+> user-provided templates."
 
-Thank you for the suggestion.  Unfortunately, adding more clarity and
-specific examples would make the wiki page even longer and potentially
-more tempting to skim/skip.  For now, I opted to simplify the text
-quoted above to:
+One of our guys has had a chance to look into this:
 
-"Please notify upstream projects/developers of the affected software,
-other affected distro vendors, and/or affected Open Source projects
-before notifying one of these mailing lists in order to ensure that
-these other parties are OK with the maximum embargo period that would
-apply (and if not, then you may have to delay your notification to the
-mailing list), unless you're confident you'd choose to ignore their
-preference anyway and disclose the issue publicly soon as per the policy
-stated here."
+https://bugzilla.redhat.com/show_bug.cgi?id=884354
 
-This is slightly shorter and it let me add emphasis (bold face) in some
-places.
+Petr Pisar 2012-12-06 10:08:20 EST
 
-Alexander
+Created attachment 658787 [details]
+Template for reproducer
+
+Could show the attack vector? Attached is small code showing how to
+use Locale::Maketext. Please modify it to explain the vulnerability.
+
+I think the vulnerability is effective only when attacker has first
+argument of maketext() under control.
+
+However that means the attacker can run any code even without this
+`vulnerability'. It's like saying glibc's gettext() is vulnerable. But
+that's not true.
+
+Sure gettext("%s", user_input) is not safe, but this is flaw in the
+caller, not in the gettext. The same applies to
+Locale::Maketext::maketext().
+
+Petr Pisar 2012-12-06 11:18:46 EST
+
+And actually the patch breaks behaviour because it forbids
+cross-package calls which were explicitly allowed and documented
+before. I disbelieve the patch is good candidate for stable distributions.
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQx3bkAAoJEBYNRVNeJnmTJPMP/3+IY9tuNyQ4aSRLHCaLpqmZ
+RREnjXeRouJtgaTqVuBBSwPSxAJ8fXfY1a0aM+euZBWWxAF1tp2EWlClMk5CFjg4
+KNOb4f8v4mOuJq/8F2TebGIz+8C7dp7rTpOwadncV38RcbwlXL72QEPdTW2n9t+L
+FrycDQhCTx1lo5/oj5Jju7CWnDo2jPGnFHgmdyroqefNpS1muoJM9IeSJPnPANOQ
+g/0TXEeC8gehzbpvRrG0NRje+Pf3nMw/9t8JwKj3pDXrB0nVYLBIgMQdUv+sgYXw
+AxF4LEa1iKIddl2NwAMHC/lw3w1CoANgb34iqKwm64yIAe88LWfPrHOPHWRRNdgp
+5bj44AMsfMXj/iPnw5ArISNZiLSWW33yKP9gKZUcmGtLgEof4bbhwPmnLWGZtYkQ
+7EhBl0d+HExgEtoyWMbzJLCXe1EMvIBJji6nnkWpNX1uRIFRRy9171ooQr2mc/mn
+EWuDSSV3BNyxjJdLPDvG0zzBC7uWm6fa7TWFGODeWEdIlw4x8gXG3ExcpNNa+P5j
+YfC2FiypfhpWQYdl06jExFgNWvthmatM1YrFmQZtuklkxk8MxCOS2wsYSUEUAGor
+wK0NMliayfgnApjFJp0DlnYbHU4JdgX3rkAVu4hUQe8pfeo3tkPWiECB5JOXalG3
+afN6lI2zn0wV9+UgYpKY
+=ITgy
+-----END PGP SIGNATURE-----
