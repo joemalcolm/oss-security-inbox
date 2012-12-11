@@ -1,152 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/02/15
-Message-ID: <20120102233300.GB7531@ngolde.de>
-Date: Tue, 3 Jan 2012 00:33:01 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/11/3
+Message-ID: <50C77527.6050300@redhat.com>
+Date: Tue, 11 Dec 2012 11:02:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: speaking of DoS, openssh and dropbear (CVE-2006-1206)
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: opus codec before 1.0.2
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Kurt Seifried <kseifrie@...hat.com> [2012-01-02 04:56]:
-[...] 
-> By establishing a large number of connections and holding them open (this 
-> typically requires only a few packets or less per second from the attackers 
-> system) an attacker can hold a connection open indefinitely or until a 
-> timeout condition is reached. 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 12/11/2012 05:32 AM, Hanno Böck wrote:
+> http://lists.xiph.org/pipermail/opus/2012-December/001846.html
 > 
-> We have seen this attack before: SYN flooding, Slowloris, airline seat 
-> reservations, email spam, password brute forcing attacks, etc.
-
-I definitely agree, the root problem is pretty similar (I like airline seat 
-reservation :D).
-
-[...] 
-> 2) Random drops
+> sounds like a low-severity security issue:
 > 
-> Another strategy is to randomly drop connections when load gets high. The 
-> theory is that legitimate connections will continue to try and connect, by 
-> dropping connections and reducing load there is a better chance that 
-> legitimate clients will get through. Unfortunately with a typical DoS or 
-> DDoS style attack to attackers connections will vastly outnumber legitimate 
-> connection attempts.
-
-Or as in some of the slowloris "fixes" not dropping random connections, but 
-incrementally changing the connection timeout with the load/number of 
-connections. I think this is a fairly sane tradeoff.
-
-> 3) Progressive timeouts/lockouts
+> "Opus 1.0.2 fixes an out-of-bounds read that could be triggered by
+> a malicious Opus packet by causing an integer wrap-around in the
+> padding code. Considering that the packet would have to be at least
+> 16 MB in size and that no out-of-bounds write is possible, the
+> severity is very low."
 > 
-> To prevent password guessing attacks at the console some Linux systems 
-> implement a progressive timeout, if you get the password wrong you have to 
-> wait a second, if you get it wrong again you have to wait 2 seconds, then 4 
-> seconds, etc. This reduces the number of attempts an attacker can make. In 
-> terms of OpenSSH we could for example implement a lockout, if you connect 
-> but fail to login you have to wait 10 seconds, the second time you need to 
-> wait 20 seconds, etc. There are a large number of downsides to this however: 
-> you need to store a database of IP's or networks to lockout and for how 
-> long, you may have multi user systems connecting to yours which means one 
-> user making a typo (or maliciously fail to login, thus locing everyone else 
-> out). 
+> Fixed in opus 1.0.2.
 
-If you combine this with a per-ip based connection count, you could achieve 
-that without needing to store connections in a database, but only apply this 
-to active connections. I haven't checked the source, but I would expect there 
-is already a datastructure to operate on lists of connections.
+What's the security impact? does the service crash?
 
-I think we agree that 4 and 5 would be really suboptimal solutions for the 
-case of openssh.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-> 6) hash cash and work functions
-> 
-> The idea here is simple, make the attack computationally expensive and the 
-> attacker will not be able to cause as much trouble. For large scale or 
-> sustained attacks simply increase the work function (like bcrypt, you can 
-> effectively select how much work it is to decrypt the password), this could 
-> also be done in the fly, as an increasingly number of connections occur 
-> increase the work function. 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Do you know of any existing service that implements such an approach? I would 
-love to check this out in detail on an example.
-
-> 7) Grey listing
-> 
-> This is more applicable to email but can work with other protocols 
-> potentially. Basically you tell clients that their connection cannot be 
-> serviced and that they should come back later and try again. Legitimate 
-> clients will come back and attempt to connect again, most illegitimate 
-> clients (at least in the spam world) will simply move on and try other 
-> hosts. This type of solution will probably not work well with interactive 
-> protocols such as SSH or for targeted attacks. 
-
-I guess this would be rather annoying for ssh as an attacker either can 
-directly reconnect, in which case the effect of this is practically non
-existent or it becomes very annoying from a user PoV.
-
-[...] 
-> -------------
-> 
-> But what if the attacker has a 10,000 node bot net?
-
-While this is an argument that is valid, I think this would be an argument 
-that doesn't matter for most users. A possible use of the script I sent would 
-be to e.g. prevent an admin to login via ssh while the server is exploited 
-through another service. In such a case I would find it fairly weird if a 
-botnet is used at the same to achieve this. Also since security is hardly a 
-state and I think in practice the difference really matters, I do believe
-it is useful to significantly raise the bar of the thread from a home-user to 
-a distributed attacker.
-
-[...] 
-> The first three solutions (early drops, random drops and progressive 
-> timeouts) can be implemented in OpenSSH server side without requiring any 
-> changes to the protocol or clients.
-> 
-> Reputation based systems can be implemented within OpenSSH (but I wouldn't, 
-> because it is a bad bad idea) or at the OS level in firewall code, 
-> reputation based systems would require no changes to OpenSSH clients or the 
-> protocol.
-> 
-> Port knocking can implemented at the OS or firewall level, but requires 
-> client software and user training/etc. Widespread deployment isn't going to 
-> happen anytime soon (although I'd be curious to see how adoption would be if 
-> we shipped something to support it by default). 
-
-I still think that for the average user the per-ip based connection count is a 
-fairly good solution. Of course not optimal in case of DDoS attacks, even 
-though as an openssh user, I feel like it's ok to neglect this problem in 
-practice.
-It would also be interesting to see some input from the openssh people, hence 
-I CCed the dev list (hopefully the right one).
-For reference: 
-http://www.openwall.com/lists/oss-security/2012/01/01/3
-
-> The rest of the solutions do not lend themselves to this problem or would 
-> require significant changes to the OpenSSH protocol/client/server which is a 
-> bad bad idea.
-> 
-> Anything we do to address this issue should be extremely simple and 
-> conservative, the OpenSSH server and client are very stable and robust 
-> pieces of code, any modifications to them make me nervous. 
-> 
-> I suspect the simplest and more effective solution might be some form of 
-> progressive timeout for IP's that fail to authenticate (drop the connection 
-> entry silently and ignore them in favor of real clients). 
-> 
-> Long term I'd like to see more work on hash cash type solutions, being able 
-> to arbitrarily set or have a reactive system that requires increased work on 
-> the client end to prove they are a legitimate client would help with this 
-> whole DoS/DDoS class of problem to some degree.
-
-See above, it would be really nice to see if there is a project which already 
-does that.
-
-Kind regards
-Nico
-P.S. if anyone has a clue on why that script still works with dropbear, even 
-though it already seems to implement per-ip based connection counting...
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJQx3UnAAoJEBYNRVNeJnmTlRsP/j8I3rs8LmQPq95JLGFPNHg1
+UF6EX3rCao8E6NzNTJLLXHQWyATqq0dqUyBS3DYsx/ow08+BBZe8ph3GgM1RHikw
+wrH6W0e6VQNhfNgmwBRy16dCg/OtoeMlbHN+/YR0kkkEaDFdbT5YzsIJ8xqcyDDi
+D9CXU59lcRF9HdydsCNmyHrQkDSUYkmZYvdpowPaTkHN5cGD9C8/5zWerZhX7j+m
+lW9PP9Xe1SYgdqVXcr7V79kKL736sqWMyJh9rZuaqAbj/4xtm0qDeXGDFxkk1VOR
+2y+8t3nhCy4KvxG4pNBNZtWrPwrQEWm9RhhPxzlCAG98HB/rlWkrb5YwUAeZqnxX
+lHSzimgsCsD81l/9YT5IGlp4g8z6qd1POqMYltY1BejuxDD1PZP7eIIDpRPgHGQv
+ciliuEHg9ACO6Fd9ATLxwDgSVyMc4QZbhy2+K3mJxldysK2lAnDH6Vku7rXpBJpq
+Fstf7Lcq94hJI28Ax/M0/jR+Z3zSbfaSUcu6NN01C34/m7r42VLf0w+UkME3vLbm
+7+W9M7+2zCJNaayFNeFbl1uxgtYX2+XqTkENxOYqWHoTjfo2y5gq7sFiKHA9C3ms
+fhe/ze5shMQ3JI+pmQ2ta+Fust5UGvFT+RKzwGiv1h/eSkL24ue/xX1/6nNmwNJb
+nhP57AYmyqnPnjHLR9Hl
+=Lm9n
+-----END PGP SIGNATURE-----
