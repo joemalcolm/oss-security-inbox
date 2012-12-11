@@ -1,34 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/09/6
-Message-ID: <20120409202941.GE18080@kludge.henri.nerv.fi>
-Date: Mon, 9 Apr 2012 23:29:41 +0300
-From: Henri Salo <henri@...v.fi>
-To: Amir@...st.ir
-Cc: oss-security@...ts.openwall.com, moderators@...db.org
-Subject: Dispute Taggator Plugin for WordPress taggator.php tagid Parameter SQL Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/11/2
+Message-ID: <50C765CC.1080609@canonical.com>
+Date: Tue, 11 Dec 2012 10:56:44 -0600
+From: Jamie Strandboge <jamie@...onical.com>
+To: coley@...us.mitre.org
+CC: oss-security@...ts.openwall.com, security <security@...ntu.com>
+Subject: CVE request: perl-modules
 Content-Type: text/plain; charset=utf-8
 
-Hello Amir,
+Debian recently fixed the following security bug:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695224
 
-You originally reported a SQL injection security vulnerability in taggator-plugin in bugtraq[1], which can also be found from [2] and [3]. Vendor URL is [4] (from SVN [5]). I found from vendor page a note about your advisory:
+"Locale::Maketext is a core l10n library that expands templates found in
+strings.
 
-"""
-(6-4-2012) Notice 
+Two problems were found, reported, and patched-for by Brian Carlson of
+cPanel, and these fixes are now in blead and on the CPAN.
 
-There has been some reports of an SQL injection vulnerability in TagGator, I would like to reassure all users that we have checked the published exploit and confirmed that it was not valid.
+The commit in question is
+http://perl5.git.perl.org/perl.git/commit/1735f6f53ca19f99c6e9e39496c486af323ba6a8
 
-The Exploit says that the get parameter tagid can be used to execute sql on a website. TagGator doesn’t have this GET parameter, in fact, it doesn’t have any GET parameters, and even if it did, trying to execute the plugin directly outside of wordpress will result in error at the first line of code as all wordpress functions are inaccessible.
+The flaws are:
 
-No code is completely immune to hacking, TagGator is not an exception, but at least not with this exploit. As any developer, I am doing my best to keep my work safe and useful to my users. If you would find any security risks in my work, please report to me through the contact us page.
-"""
+* in a [method,x,y,z] template, the method could be a fully-qualified name
+* template expansion did not properly quote metacharacters, allowing
+  code injection through a malicious template
 
-There has been only one commit in trunk after your advisory, which is copypasted in pastebin [6]. Could you verify that the advisory is correct? Please tell me which versions are affected if any, thank you.
+Please upgrade your Locale::Maketext, especially if you allow user-provided
+templates."
 
-1: http://seclists.org/bugtraq/2012/Apr/43
-2: http://osvdb.org/show/osvdb/80965
-3: http://packetstormsecurity.org/files/111621/WordPress-Taggator-SQL-Injection.html
-4: http://angrybyte.com/wordpress-plugins/taggator/
-5: http://plugins.svn.wordpress.org/taggator/trunk/
-6: http://paste.nerv.fi/94105745.txt
+-- 
+Jamie Strandboge                 http://www.ubuntu.com/
 
-- Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (900 bytes)
