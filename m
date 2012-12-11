@@ -1,19 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/03/7
-Message-ID: <4F7B7A8C.2070507@mvista.com>
-Date: Tue, 03 Apr 2012 12:32:44 -1000
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com
-Subject: fix to CVE-2009-4307
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/11/5
+Message-ID: <50C780D5.6040902@openstack.org>
+Date: Tue, 11 Dec 2012 19:52:05 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2012-020] Information leak in libvirt LVM-backed instances (CVE-2012-5625)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Was there a CVE assigned to commit d50f2ab6f050311dbf7b8f5501b25f0bf64a439b?
+OpenStack Security Advisory: 2012-020
+CVE: CVE-2012-5625
+Date: December 11, 2012
+Title: Information leak in libvirt LVM-backed instances
+Reporter: Eric Windisch (Cloudscaling)
+Products: Nova
+Affects: Folsom, Grizzly
 
-Commit 503358ae01b70ce6909d19dd01287093f6b6271c ("ext4: avoid divide by
-zero when trying to mount a corrupted file system") fixes CVE-2009-4307
-by performing a sanity check on s_log_groups_per_flex, since it can be
-set to a bogus value by an attacker.
+Description:
+Eric Windisch from Cloudscaling reported a vulnerability in libvirt
+LVM-backed instances. The physical volume content was not wiped out
+before being reallocated and passed to an instance, which may result in
+the disclosure of information from previously-allocated logical volumes.
+Only setups using libvirt and LVM-backed instances
+(libvirt_images_type=lvm) are affected.
 
-- Armin
+Grizzly (development branch) fix:
+http://github.com/openstack/nova/commit/9d2ea970422591f8cdc394001be9a2deca499a5f
+
+Folsom fix (included in upcoming Nova 2012.2.2 stable update):
+http://github.com/openstack/nova/commit/a99a802e008eed18e39fc1d98170edc495cbd354
+
+References:
+https://bugs.launchpad.net/nova/+bug/1070539
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2012-5625
+
+- -- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBCAAGBQJQx4DRAAoJEFB6+JAlsQQj5sEP/2osrfWvooWEeQbhnHGIp7yg
+GRR1BdPqqnBqBT4lzXp1B6O23l4LqSjKVC1X3r3zs2VqUcsZwTiJJz3FmPFlr0xZ
+5BSSrg4GWo+If0atGqsWwOabTzuOZqCoFe16uXghtBwjmceZBjUOhra4mfnW+VtO
+xVc9eXiREEnxkHFHVPVuNnAxdxgoYin8Nw0NaOs+uZ9ehTjv2h0/81FNGNy3Rw5Y
+TPJOq3YFrneAK5GEL/srhV+3V6LnRKXqlPIhFbw5wqO+WlHZWOHnayL/hQZaivdF
+gYiuaTkwU2d6yKbasy+q9flreylZbtllcj1p3IGvoAFbTSA3u2l3AeElqnx6D+ak
+ULxIpLQGlBzabiUDLpSe+9t/gv7bY7qcf+Ec1u6DsgRpN/GhHHwBKykzoQwvTPS/
+Of+CfmJj39NJarepUHMO7GMVUu/BYkQm4EnfPAnP8X8Gz5/0xJjo2ue7vnx8yuxC
+M7CPxWx3pZanC98n1omF5GvRlcdWECmbcP7NYynXhrROOw8mgXAs+Eh77mD94flk
+iZULo5fOJDShCVY+LmekzHix9WNRQSWxceAMYHrlNLo/H4zN5DWo063xgxYlSuNI
++jfJ6DtqePjjG+c9tDcpVG9/OMxpyN8CKoWDSVWwdkTega3a7e1AAf9xEj0jT1jd
+OC2iQxz1crzjL1CV9z3J
+=CE4b
+-----END PGP SIGNATURE-----
