@@ -1,66 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/31/1
-Message-ID: <50E0D852.3090406@redhat.com>
-Date: Sun, 30 Dec 2012 17:12:02 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/11/1
+Message-ID: <20121211133225.61874ce6@melee>
+Date: Tue, 11 Dec 2012 13:32:25 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: Isearch insecure temporary files
+Subject: CVE request: opus codec before 1.0.2
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+http://lists.xiph.org/pipermail/opus/2012-December/001846.html
 
-On 12/30/2012 09:16 AM, Henri Salo wrote:
-> On Sat, Dec 29, 2012 at 08:53:42PM -0700, Kurt Seifried wrote:
->> One random thought, might it be worth adding structured data to
->> CVE that basically says when the issue was made public/reported
->> to the upstream and when upstream 1) acknowledged it (if ever)
->> and then they patched it (if ever) and when they shipped a fixed
->> version (if ever). Obviously then you could simply parse for the
->> time between date reported and date acknowledged/patched/fixed
->> and see how healthy/responsive the upstream is.
-> 
-> Yes, that would be really useful data with CVEs. OSVDB is
-> collecting that already. That is not easy task btw.
-> 
-> - Henri Salo
+sounds like a low-severity security issue:
 
-Maybe iDefense or iSIGHT would be willing to share (I know the data
-exists, I helped collect it for 9.5 years =). One thing I'm really
-noticing as a good rule of thumb:
+"Opus 1.0.2 fixes an out-of-bounds read that could be triggered by a
+malicious Opus packet by causing an integer wrap-around in the padding
+code. Considering that the packet would have to be at least 16 MB in
+size and that no out-of-bounds write is possible, the severity is very
+low."
 
-1) if a project has security@ or similar email and responds timely,
-this is good.
-2) if a project has security@ or similar email and never responds then
-they tend to fix things but not overly quickly/consistently
-3) if a project has no security@ or similar email chances are they
-don't handle security issues very gracefully (big surprise hey).
+Fixed in opus 1.0.2.
 
-Basically if the first result in Google for "report security issue to
-X" isn't useful chances are it's not going to end well. The best part
-is not all vendors provide a secure means to submit vulnerabilities
-(e.g. please provide a PGP encryption key for email, and if you use a
-web form please use HTTPS!).
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ4NhSAAoJEBYNRVNeJnmTJ0AQALDRGqpIgLWLyYvc44pBHf5Z
-QkgqUPtXFG/okXm7MwffXZz9y7B9h/Fotgvi8dr4X4CuVVeJ3Wiz/8+P2E/qc2TJ
-HXNlVMxSvzqvLMNT/XmKnNVHfQAWdQD3a5y6oRZSPA07ZUSXfoWwbQbHCq8LR8ba
-XjyMDkjN1ial0ICFJ5bQseKWHliwGSGk9eCxGR0u3Ok2Bp8lzPuCCSXEwnW2XI2c
-8bIdbI73NAnfccDJp5701871VPuj+Z81LhN2SDpysZ+I6E/2dIIv1hhaM9y1ivwG
-ZjsSVpHeO1wukr5CLH5e7NjiNlaoiqL92yQxI67Pv9RRVk5ib+D8nDVK1aKMrlYi
-jwBFgBz13WPB8bZzfoSStACnxGTSVVVfHxixQmnxOrFopY40jGhAp1J98udRz9xq
-dlo4w6j8H0FO810ZSAmITv3zie4rJ/jtQULus78FOsRjpJurPFldze7KQjNY4oNZ
-Rjww62SWCho4pZVBEznU0YiwxvF0NICCtlAt4JzyFtEVFXK87isnattXAr36jLIQ
-FA7pgUBDt2oREzojOaNuepNz3htTaIGnYlQbBRSBByZsTl3QlKJ6cFPK1mfuXMVL
-qZXhCmAguF/zPFdUK4hFsrMVHyK6yCAI9c5+TAoLM6H70Qs2+fHUuCU3YS9n20kr
-lUkiKelZDWZYCFb7ESF/
-=6Z7z
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
