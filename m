@@ -1,24 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/10/5
-Message-ID: <4F0BEA1C.4080609@redhat.com>
-Date: Tue, 10 Jan 2012 15:34:52 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2012-0207 kernel: igmp: Avoid zero delay when receiving odd mixture of IGMP queries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/12/7
+Message-Id: <20121212180540.6e0a5402256607ee284a402e@frank.uvena.de>
+Date: Wed, 12 Dec 2012 18:05:40 +0100
+From: Frank Lanitz <frank@...nk.uvena.de>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, Nick Treleaven <nick.treleaven@...nternet.com>, Colomban Wendling <lists.ban@...besfolles.org>, Enrico Troeger <enrico.troeger@...na.de>, Matthew Brush <mbrush@...ebrainz.ca>, josef@...icpanda.com, jonathan.underwood@...il.com
+Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
 Content-Type: text/plain; charset=utf-8
 
-Commit 5b7c84066733c5dfb0e4016d939757b38de189e4 ('ipv4: correct IGMP
-behavior on v3 query during v2-compatibility mode') added yet another
-case for query parsing, which can result in max_delay = 0.  Substitute
-a value of 1, as in the usual v3 case.
+Hi folks, 
 
-Reported-by: Simon McVittie <smcv <at> debian.org>
-References: http://bugs.debian.org/654876
-Signed-off-by: Ben Hutchings <ben <at> decadent.org.uk>
+On Wed, 12 Dec 2012 11:51:33 -0500 (EST)
+Jan Lieskovsky <jlieskov@...hat.com> wrote:
 
-http://article.gmane.org/gmane.linux.network/217256
+>   Background: Geany is a small and fast integrated development
+> enviroment with basic features and few dependencies to other packages
+> or Desktop Environments.
+> 
+> Based on (you might need to click 'Yes, I agree' OK to
+> get the exploit code in [2]):
+> [1] https://bugs.gentoo.org/show_bug.cgi?id=446986
+> [2] http://www.1337day.com/exploit/19924
+> 
+> it was found that Geany is not escaping filenames (when compiling /
+> building source) prior passing the final command line to shell.
+> 
+> The questions:
+> 1) should Geany escape the filenames?,
+> 2) is this a security issue or not?
+> 
+> Two views:
+> * view #1 - it shouldn't escape the filenames. It's just IDE,
+> so what it obtains as input is passed to shell for execution.
+> 
+> * view #2 - it should escape the filenames (because this is what
+> shell / bash is doing) prior making the build.
+> 
+> Obviously, even for gcc you can pass specially-crafted filename,
+> when attempt to build it would lead to "ls -la" command (for example)
+> to be executed.
+> 
+> I by myself am not sure / not able to decide here.
+> 
+> Steve, could you hint? Does Mitre have some guidance / document,
+> how to deal with cases like this one?
 
-Introduced in 5b7c8406 2.6.36-rc8
+I didn't try it out by now. 
 
-Thanks, Eugene
+Even though this is really not the best behavior at least I don't see
+a real security issue here. Of course you could download a file called
+foo.c"rm -rf /", open it and try to run it, but this would only be
+executed with user's context which in the end doesn't make any
+differences whether you having a shell script like
+
+#!/bin/sh
+rm -rf /;
+
+or funny_shell_script.sh"rm -rf /" downloading. /dev/user is needed
+here. 
+
+However, should be fixed of course as its dangerous behavior
+nevertheless. ;)
+
+Just my 2ct. 
+
+Cheers, 
+Frank 
+-- 
+Frank Lanitz <frank@...nk.uvena.de>
+
+Content of type "application/pgp-signature" skipped
