@@ -1,18 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/04/5
-Message-ID: <20120304185053.GA6969@pisco.westfalen.local>
-Date: Sun, 4 Mar 2012 19:50:55 +0100
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/12/6
+Message-Id: <201212121747.qBCHkwYW018253@linus.mitre.org>
+Date: Wed, 12 Dec 2012 12:46:58 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: CVE request: notmuch
+Cc: cve-assign@...re.org
+Subject: Re: CVE request: perl-modules
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE for this issue in "notmuch" (fixed in DSA 2416):
-http://lists.debian.org/debian-security-announce/2012/msg00044.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Fix:
-http://git.notmuchmail.org/git/notmuch/commit/ae438ccd8c77831158c7c30f19710d798ee4a6b4
+>Locale::Maketext is a core l10n library
 
-Cheers,
-        Moritz
+>Two problems were found
+
+Several other parties have recently contacted MITRE's cve-assign
+address with information that may overlap this Locale::Maketext
+disclosure. The information is not yet public in all of the cases, and
+can potentially affect the number of CVEs assigned. For now, we would
+prefer that other CNAs allow MITRE to assign CVEs that are related to:
+
+  - behavior of Locale::Maketext itself
+
+  - security issues in use of Locale::Maketext by Perl-based products
+
+  - security announcements from vendors who are attempting to work
+    around a real or perceived Locale::Maketext issue
+
+We'll try to get the full set of CVE IDs sent here as soon as possible.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJQyML0AAoJEGvefgSNfHMduJsH/1R2PrRUeF87xgx0ttq3gtZ0
+uLGXZHVShM9DypBEbwwuBxOdCpvnv7e4+gCqi+Ca+gwsXm8AxE3q75fVUKuIA2gr
+PxfRb8Sbk9eOPdMLqOneEuULaF8MeayIfRJ04AbP/Srs4YVqBQrVduVOMZnAuPBr
+832vhUH19JwzAHYHrtrTCgEhENmgcYn6QNFXdka1Mhy15fkEzXKcaK21GHRzqwTD
+9iJ2qGdQeoB9EYqe74DUqerR8QPbmSHoC6+Hxc75gPmO70jLtzj5PWIwJ9xb5FWN
+upP0pG0pJwEuSTf+/OVgiFwQ6ZD7SquNh+rl7eF8uBxSsQ3+yezoxZn8MXSWios=
+=Xkmr
+-----END PGP SIGNATURE-----
