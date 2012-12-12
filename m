@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/28/4
-Message-ID: <20120328063858.GA22457@kludge.henri.nerv.fi>
-Date: Wed, 28 Mar 2012 09:38:58 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request: e107 HTB23004
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/12/4
+Message-ID: <808895110.46700242.1355331093254.JavaMail.root@redhat.com>
+Date: Wed, 12 Dec 2012 11:51:33 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Cc: oss-security@...ts.openwall.com, Nick Treleaven <nick.treleaven@...nternet.com>, Colomban Wendling <lists.ban@...besfolles.org>, Enrico Troeger <enrico.troeger@...na.de>, Matthew Brush <mbrush@...ebrainz.ca>, Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com, jonathan.underwood@...il.com
+Subject: Geany IDE not escaping filenames during compilation / build - a security issue or not?
 Content-Type: text/plain; charset=utf-8
 
-I won't veriify these vulnerabilities manually. Please assign 2011 CVE-identifier.
+Hello Kurt, Steve, vendors,
 
-Original advisory: https://www.htbridge.com/advisory/multiple_vulnerabilities_in_e107_1.html
-These vulnerabilities have been fixed in 12306 revision.
+  Background: Geany is a small and fast integrated development enviroment with basic
+features and few dependencies to other packages or Desktop Environments.
 
-Please do not ask me why changelog entry does not say anything about security problems. HTBridge has tested that vulnerabilities do not exist after patches.
+Based on (you might need to click 'Yes, I agree' OK to
+get the exploit code in [2]):
+[1] https://bugs.gentoo.org/show_bug.cgi?id=446986
+[2] http://www.1337day.com/exploit/19924
 
->From HTBridge:
+it was found that Geany is not escaping filenames (when compiling /
+building source) prior passing the final command line to shell.
 
-On the 6 of July a correction was released:
-http://e107.svn.sourceforge.net/viewvc/e107/trunk/e107_0.7/e107_admin/users_extended.php?revision=12306&view=markup
+The questions:
+1) should Geany escape the filenames?,
+2) is this a security issue or not?
 
-Details of this corrections are available here:
-http://e107.svn.sourceforge.net/viewvc/e107/trunk/e107_0.7/e107_admin/users_extended.php?r1=12225&r2=12306
+Two views:
+* view #1 - it shouldn't escape the filenames. It's just IDE,
+so what it obtains as input is passed to shell for execution.
 
-Corrections for our vulnerabilities are marked as "User extended fields administration improvements and cleanup".
+* view #2 - it should escape the filenames (because this is what
+shell / bash is doing) prior making the build.
 
-The changelog: http://e107.org/svn_changelog.php?version=0.7.26 confirms that this correction was applied to e107 0.7.26 version.
+Obviously, even for gcc you can pass specially-crafted filename,
+when attempt to build it would lead to "ls -la" command (for example)
+to be executed.
 
-- Henri Salo
+I by myself am not sure / not able to decide here.
+
+Steve, could you hint? Does Mitre have some guidance / document,
+how to deal with cases like this one?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: Cc-ed Geany maintainers for their opinion too.
