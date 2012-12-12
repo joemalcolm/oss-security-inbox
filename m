@@ -1,69 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/17/6
-Message-ID: <CAPYM6VzizugSoudTJeuzmzqJ2e4jG9Fo3ivMNizCrR0AQpbZ4w@mail.gmail.com>
-Date: Wed, 18 Apr 2012 00:32:39 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>,  secalert@...urityreason.com, bugs@...uritytracker.com,  vuln <vuln@...unia.com>, vuln@...urity.nnov.ru, news@...uriteam.com,  moderators@...db.org, submissions@...ketstormsecurity.org,  submit@...ecurity.com, oss-security@...ts.openwall.com
-Subject: Acuity CMS 2.6.x <= Cross Site Scripting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/12/5
+Message-ID: <50C8BAD3.60403@redhat.com>
+Date: Wed, 12 Dec 2012 18:11:47 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Robust XML validation
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+I'm working on guidelines for robust XML parsing and I noticed that 
+there are some denial-of-service issues related to validation which do 
+not seem widely documented (but were apparently known when SGML was 
+specified).
 
-Acuity CMS 2.6.x (ASP-based) versions are vulnerable to Cross Site Scripting.
+I wonder if we should care about this in the sense that we should 
+prepare fixes, or if it is sufficient to recommend to validate against 
+trusted schemas/DTDs only.  (I've found an implementation which gets 
+right the things I tested so far, so efficient implementations aren't 
+impossible.)
 
-
-2. BACKGROUND
-
-Acuity CMS is a powerful but simple, extremely easy to use, low
-priced, easy to deploy content management system. It is a leader in
-its price and feature class.
-
-
-3. VULNERABILITY DESCRIPTION
-
-"UserName" parameter is not properly sanitized upon submission to the
-URL, /admin/login.asp , which allows attacker to conduct Cross Site
-Scripting attack. This may allow an attacker to create a specially
-crafted URL that would execute arbitrary script code in a victim's
-browser.
-
-
-4. VERSIONS AFFECTED
-
-Tested in version 2.6.2.
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://localhost/admin/login.asp?UserName="><script>prompt(/xss/)</script>
-
-
-6. SOLUTION
-
-The Acunity CMS is no longer in active development.
-It is recommended to user another CMS in active development and support.
-
-
-7. VENDOR
-
-The Collective
-http://www.thecollective.com.au/
-
-
-8. CREDIT
-
-Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2012-04-17: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5Bacuity_cms2.6.x_(asp)%5D_xss
-
-
-#yehg [2012-04-17]
+-- 
+Florian Weimer / Red Hat Product Security Team
