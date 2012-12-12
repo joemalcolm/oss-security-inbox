@@ -1,118 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/15/3
-Message-ID: <4FDA6B12.4030305@debian.org>
-Date: Thu, 14 Jun 2012 23:52:02 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/12/3
+Message-ID: <843562544.46686746.1355329142617.JavaMail.root@redhat.com>
+Date: Wed, 12 Dec 2012 11:19:02 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2012-3345: symlink attack in ioquake3 >= r1773, < r2253
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Due to Nagios (core) 3.4.3 history.cgi crash (fulldisclosure/2012/Dec/107 post)
 Content-Type: text/plain; charset=utf-8
 
-This was meant to be released tomorrow (and that's what I told vendors),
-but the patch was accidentally committed and announced upstream a day
-early, so I'm sending the advisory out straight away.
+Hello Kurt, Steve, vendors,
 
-Background
-==========
+  based on:
+  [1] http://seclists.org/fulldisclosure/2012/Dec/107
 
-ioquake3 [IOQ] is a fork of the Quake III Arena (id Tech 3) game engine,
-and has become the de facto upstream for that engine since id Software
-ceased to develop it. It is also used (unmodified, modified or forked)
-in various open-source and proprietary games including OpenArena [OA],
-Reaction [REA], Smokin' Guns [SGN], Tremulous [TREM], Turtle Arena [TA],
-Urban Terror [URT] and World of Padman [WOP].
+we have investigated the situation for potential security
+implications and it looks on distributions, with FORTIFY_SOURCE
+protection enabled, this problem would not be a security flaw
+(the history.cgi plug-in truly crashes, but main Nagios daemon
+stays alive and the overflow is detected / in httpd error log:
 
-Vulnerability
-=============
+*** buffer overflow detected ***: /usr/lib64/nagios/cgi-bin/history.cgi terminated
+)
 
-Access vector: local
-Authentication required: local system
-Impact: victim overwrites file of attacker's choice with a predictable
-integer
+So on distributions with F_S enabled the only impact would be
+'nagios' executable crash, but since it's just 'history.cgi' plug-in
+which crashes, DoS can't be reached here either.
 
-Since svn revision 1773, ioquake3 has written its process ID to the file
-/tmp/ioq3.pid (or ioq3.pid in a world-writeable location) under the
-following circumstances:
+Based on the above, we would not consider this to be a security flaw,
+but mentioning here for case nagios is shipped without F_S protection
+somewhere (in that case it might be more interesting from security point
+of view and might qualify for a CVE id).
 
-* running on non-Mac Unix and TMPDIR not set, or set to a
-  world-writeable location; or
-* running on Mac OS and FSFindFolder() for a temporary directory fails
-  or returns a world-writeable location
-
-On a multi-user system, an attacker could create a symbolic link
-/tmp/ioq3.pid pointing to any file owned by a user who plays an
-ioquake3-based game. When the victim runs ioquake3, the target file will
-be overwritten and replaced with the process ID of ioquake3.
-
-The effect of this attack depends on the file being overwritten: it
-could be simple vandalism (destroy one of the victim's files), or it
-could have further security implications if knowledge of the contents of
-a target file is used for authentication (in a system similar to
-pam_dotfile [DOT], for instance).
-
-For the dedicated server, the process ID is written to ioq3_server.pid,
-but the attack is essentially the same. For forks of ioquake3, the
-filename will typically include the name of the fork instead, e.g.
-openarena.pid.
-
-Affected versions
-=================
-
-* ioquake3 >= svn r1773, < r2253 [ANNOUNCE]
-* OpenArena 0.8.8
-* Reaction beta 1.0
-* Smokin' Guns 1.1
-* Tremulous "trunk" >= svn r2125
-* Tremulous "gpp" >= svn r2140
-* Turtle Arena >= svn r204 (all releases named Turtle Arena)
-* World of Padman >= 1.5.2 beta
-
-Unaffected versions
-===================
-
-* ioquake3 1.36
-* ioquake3 <= svn r1772
-* OpenArena <= 0.8.5
-* Smokin' Guns <= 1.1b4
-* Tremulous "trunk" <= svn r2124
-* Tremulous "gpp" <= svn r2139
-* Tremulous GPP1
-* Tremulous <= 1.1.0
-* Turtle Arena <= svn r203
-* TMNT Arena 20091211 (former name of Turtle Arena)
-* ioUrbanTerror 2007-12-20 client
-* ioUrbanTerror 2007-12-20 server
-* World of Padman <= 1.5.0
-
-Solution
-========
-
-The patches at <http://ioquake3.org/files/CVE-2012-3345/> have been
-reviewed by the ioquake3 maintainers and were committed to ioquake3 svn
-(as a single patch) as r2253.
-
-Patch 0001 fixes the vulnerability by writing the pid file into the
-ioquake3 user's home directory (e.g. ~/.q3a/ioq3.pid for an unmodified
-engine with default configuration) instead of the temporary directory.
-
-Patch 0002 is recommended, but not strictly necessary to fix the
-vulnerability. It removes the functions to get the temporary directory,
-as a precaution against other unsafe uses.
-
-On Debian testing/unstable systems, this is fixed in ioquake3 version
-1.36+svn2224-4. Debian stable is not vulnerable.
-
-References
-==========
-
-[ANNOUNCE]
-http://ioquake3.org/2012/06/14/cve-2012-3345-symlink-attack-in-ioquake3-r1773/
-[IOQ] http://ioquake3.org/
-[OA] http://openarena.ws/
-[REA] http://www.rq3.com/
-[SGN] http://www.smokin-guns.net/
-[TREM] http://tremulous.net/
-[TA] http://ztm.x10hosting.com/ta/
-[URT] http://www.urbanterror.info/home/
-[WOP] http://worldofpadman.com/website/
-[DOT] http://0pointer.de/lennart/projects/pam_dotfile/
-
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
