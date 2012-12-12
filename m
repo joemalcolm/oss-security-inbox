@@ -1,21 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/11/2
-Message-ID: <20120611162944.GM28152@dhcp-25-225.brq.redhat.com>
-Date: Mon, 11 Jun 2012 18:29:45 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/12/1
+Message-Id: <201212121157.16820.mweckbecker@suse.de>
+Date: Wed, 12 Dec 2012 11:57:16 +0100
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- libvirt: address bus= device= when identicle vendor ID/product IDs usb devices attached are ignored
+Subject: CVE request: thttpd: Denial of Service (App. crash, local)
 Content-Type: text/plain; charset=utf-8
 
-Description of the problem:
-libvirt ignores address bus= device= when identicle vendor
-ID/product IDs usb devices attached with either virsh or virt-manager.
+Hi Kurt, Steve, vendors, ...,
 
-As a consequence, wrong USB device can be assigned to the wrong guest.
+I think I have never posted it to oss-sec. glibc's crypt() can return NULL
+under some circumstances which causes thttpd to crash while dereferencing:
 
-References and proposed upstream patch:
-https://www.redhat.com/archives/libvir-list/2012-April/msg01494.html
+  https://bugzilla.novell.com/show_bug.cgi?id=783165
 
-Thanks,
+Maybe you want to assign a CVE.
+
+Matthias
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
