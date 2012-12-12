@@ -1,46 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/2
-Message-ID: <4FEAB24C.8040103@redhat.com>
-Date: Wed, 27 Jun 2012 01:12:12 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/12/8
+Message-ID: <20121212204846.GN5030@redhat.com>
+Date: Wed, 12 Dec 2012 13:48:46 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-Subject: Re: XXE in Zend
+Subject: CVE-2012-5617: gksu-polkit privileged code execution with unprivileged credentials
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+This is a heads-up on a flaw reported to us regarding gksu-polkit.  This
+was sent to the linux-distros@ mailing list last week.
 
-On 06/26/2012 06:12 AM, Nicolas Grégoire wrote:
-> Hello,
-> 
-> this Zend XXE vulnerability was published without a CVE: 
-> http://framework.zend.com/security/advisory/ZF2012-01
-> 
-> Regards, Nicolas
-> 
+Miroslav Trmac of Red Hat reported that gksu-polkit ships with an extremely
+permissive PolicyKit policy configuration file.  Because gksu-polkit
+allows a user to execute a program with administrative privileges, and
+because the default allow_active setting is "auth_self" rather than
+"auth_admin", any local user can use gksu-polkit to execute arbitrary
+programs (like a bash shell) with root privileges.
 
-Please use CVE-2012-3363 for this issue.
+For example:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+$ cat foo.sh
+#! /bin/bash
+id -a
+# not just gksu-polkit id -a because gksu-polkit tries to interpret the
+# -a
+# this prompts for user's password only
+$ gksu-polkit /home/user/foo.sh
+uid=0(root) gid=0(root) groups=0(root)
+context=system_u:system_r:initrc_t:s0
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJP6rJMAAoJEBYNRVNeJnmTjT8P/0xt69iPnvQzTzBXqkIkrfK1
-al1wlJLH5mXL9ajQ90uuGSrR3/8dzcwcE4/jmYn5f4yAt1dBSYFppSFQfBHl2XXb
-f527RFzHtNr8corGRJW4doqbOqHnNADpvIh/uVBcVL8p4NONlnBhho9N9ymH/YF3
-zF1Rg4DlbiIdSL60jd0Ws3aZp+kdX6vU6tVsWyyT2ML6M4YRJ1YDgp2iz/vd/US7
-CKgAjdZ6Zs98CYCFTFjm+SsHCoSp5QkyZF7CIrrnRJzVRn5g9Bwdc85S7fwW3zuq
-ahfuReWXEwUCP4QUm2GKUotclZrwQ78RjvVGNB5CHPYEMZcA8eDGIE79intoY1Vf
-z652Ltx79N0wTFfV1hFh5/JM7EwKXPVHdHv+GCIP/9vGQioH7FEEByOmye1kzW4o
-AeIM345Wo5H8D0/hHVggvkUvWrOSbo/zWIEF4/ji6+Fm3hqVEfWQJ0+QnvvP1RRR
-7JQVGY4hw9vP6UMI26C+1T2Mo+S2iXzQL3Xj1SxUKcbwvq7ZnV0Bc3qbVTibgKku
-TPNKiJDgpsER4GCe4+f8+LX37JctQJaG8KAnIMEwvwCSBIkkpH+F0SQczVF+paUx
-vMaFiyu6mRyCsO7AjKFnJQf3e1NHCihCvqZpxg4AyQLBCgThjrL1RLAHaut6VUmH
-XING7OYKU3X2rTm24AZU
-=YFqh
------END PGP SIGNATURE-----
+(As an aside, I did some peeking because there was some discussion as to
+whether or not this was intended behaviour.  It does not seem as though
+gksu-polkit is _intended_ to grant root access to every local user, even
+though they need to actually be at the computer (I've not tested whether
+or not this can be exploited via a remote X session, but it's possible).
+Even if this is not remotely exploitable, we do tend to require
+administrator authentication by local users (via su) or an administrator
+to grant such privileges (via sudo), so to me this is definitely a
+flaw).
+
+
+References:
+
+http://anonscm.debian.org/gitweb/?p=users/kov/gksu-polkit.git;a=blob;f=data/org.gnome.gksu.policy;h=ff0e4187941147d4f6c7ca53ebd1757521337288;hb=HEAD
+https://bugzilla.redhat.com/show_bug.cgi?id=883162
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
