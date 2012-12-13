@@ -1,104 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/11
-Message-ID: <505CAF6A.108@redhat.com>
-Date: Fri, 21 Sep 2012 12:18:18 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/18
+Message-ID: <20121213155115.GC4254@frohike.homeunix.org>
+Date: Thu, 13 Dec 2012 16:51:15 +0100
+From: Peter Bex <Peter.Bex@...all.nl>
 To: oss-security@...ts.openwall.com
-CC: Michael Gilbert <mgilbert@...ian.org>
-Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 09/21/2012 09:31 AM, Michael Gilbert wrote:
-> On Fri, Sep 21, 2012 at 6:37 AM, Tomas Mraz wrote:
->> On Fri, 2012-09-21 at 12:20 +0200, Matthias Weckbecker wrote:
->>> Hello Steve, Kurt, Vitezslav, Tomas, vendors,
->>> 
->>> we have recently been notified about a potential issue with
->>> gpg: When files are en/de-crypted the result is written
->>> world-readable by default. Short example (quote from [1]):
->>> 
->>> # de-crypting % gpg sikrit.gpg % ll sikrit* -rw-r--r-- 1 gp
->>> users  12 Sep 17 09:41 sikrit -rw------- 1 gp users 480 Sep 17
->>> 09:40 sikrit.gpg # en-crypting % echo "my password" > sikrit %
->>> chmod go= sikrit % ll sikrit -rw------- 1 gp users 12 Sep 17
->>> 09:38 sikrit % gpg -e -r pfeifer sikrit % wipe sikrit % ll
->>> sikrit.gpg -rw-r--r-- 1 gp users 480 Sep 17 09:40 sikrit.gpg
->>> 
->>> [1] https://bugzilla.novell.com/show_bug.cgi?id=780943
->>> 
->>> Wouldn't one usually expect files that were previously
->>> encrypted to contain sensitive content (that's probably why
->>> content is encrypted at all)? And if so, shouldn't such files
->>> be only readable by certain users / group of users by default?
->>> Otherwise, a file that is e.g. decrypted in /tmp might leak
->>> due to the file permissions being too loose.
->>> 
->>> I'm not quite sure whether to assign a CVE for this, so I
->>> thought I'd just add a question mark behind the subject and let
->>> the list (and Kurt) decide.
->> 
->> I suppose the permissions respect the user's umask so I do not
->> think this is a real security issue in the gpg itself. Although
->> using the permissions of the original file when creating the
->> decrypted/encrypted one (still modified with the user's umask)
->> would be more appropriate. So in my opinion this does not warrant
->> a CVE but improvement in the upstream gnupg code would be
->> appreciated I think.
+On Thu, Dec 13, 2012 at 08:42:51AM -0700, Kurt Seifried wrote:
+> On 12/13/2012 04:12 AM, Simon McVittie wrote:
+> > If shell syntax is not specifically needed, it would be even better
+> > to use a mechanism not involving parsing shell syntax, like
+> > posix_spawn(), GLib's g_spawn_async() or Python's os.spawn* family,
+> > to launch the compiler (analogous to using prepared statements to
+> > avoid ever having to think about SQL escaping or SQL injection).
 > 
-> Any security weakness can qualify for the E in CVE.  Really the
-> point
+> If anyone knows similar functions/etc for other programming languages
+> please let me know off list so I can compile a list of these and then
+> post them for future reference. Thanks!
 
-No, security vulnerabilities qualify, security hardening does not
-necessarily qualify.
+Chicken Scheme (www.call-cc.org) has multi-argument versions of the
+process family of procedures which map to the exec() family.
+http://wiki.call-cc.org/manual/Unit%20posix#processes
+These are a bit tricky, since the one-argument versions fall back to
+system()-like functionality.  I consider this dangerous.
 
-In this case GnuPG respects umask. We can't assign a CVE for every
-single program that has potentially sensitive output and fails to
-ensure that the output is mode 0600 or whatever (what about extended
-access controls?). Some programs choose to enforce permissions within
-themselves (e.g. OpenSSH and key based authentication), but generally
-speaking makeing sure a program with potentially sensitive output is
-safe is the job of the system configuration, and you have several options:
+There's also the scsh-process egg, which is much more fool-proof:
+http://wiki.call-cc.org/egg/scsh-process
+It's modeled after SCSH, the Scheme Shell.  A few other Scheme
+implementations (at least Guile and Scheme48 iirc) also have a version
+of this safe notation.
 
-1) a safe default umask
-2) using safe directory permissions, for example in RHEL /home/$USER
-is not accessible by group or other
-
-Again, it is nice if the program does this, but if the program does
-not it's not generally considered a security vulnerability (of course
-exceptions exist, for example servers that log username/password to a
-world readable log file for example). But this is not one of those
-exceptions.
-
-> of CVE is increasing awareness.  So whether any issue is a very
-> minor E is really immaterial, but lets give it a number so those
-> who actually care can become aware and take action.
-> 
-> Best wishes, Mike
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQXK9qAAoJEBYNRVNeJnmT9QMP/1yNU5yQoq/7rAZmDW9Q8HUh
-FjU4XTXHXt7V1lNajstrr979oSJffD7d4A4S8kkjrgsOz8ZJ5QASnomk6Wa66Wtj
-nVTtHnjDmtiNsc4rVGDm8fnD69tHayUVWaPtTavtCmqSG2WdPaU2+ilS1mtNmzFB
-NtB/qvV/J5yFkicWz5NDrckblt8tkhTFPwdGXBu1jmuZvfN0puXpxdX7C3oX76x+
-ZDSgzk8eYyLPNOUxEnyR3OixtNoHPH1jwu6VjH/rZfQU/ulSwWcgl+yCGJ7+Xf8t
-sDmyy6O2SltYWLBuMVFUvV64EeleZsPYr4XtJhok4AUKr1VxLUiYMQ7zCDlWJVBv
-YjQaaqNvDizBX+EOzy3KcpkHLpeYy22o94ByiUimeeNBv/QEWEO4blYXI2VYbhDe
-/7jNqxBPGbsrrFDm34w8UtbY/NN3lZvR7sW02XCCGaQHyEY+to3y9t4noR/kw2kk
-0NTQ4N6dLgS8ueXB41/Q9oXoWH9XDSWmuDUWcgXy7waQMWN9Qi7NlRLZTP7R9HxW
-Y45tJU0fJywTw1TV5ypJtALU0xHbW+aX1byzf5U7fAO65w0QqUx2/1o/Lpse2Es4
-Gpndh5YzgqSky9ZJ4baBhKeyHlaNtBMt2KY5pWyyWGqK74UWUJLtOPYYsBracZQV
-+bn0dXBl7WvUIvDBP+dp
-=f2Xw
------END PGP SIGNATURE-----
+Cheers,
+Peter Bex
+-- 
+http://sjamaan.ath.cx
+--
+"The process of preparing programs for a digital computer
+ is especially attractive, not only because it can be economically
+ and scientifically rewarding, but also because it can be an aesthetic
+ experience much like composing poetry or music."
+							-- Donald Knuth
