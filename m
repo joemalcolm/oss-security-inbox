@@ -1,51 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/12
-Message-ID: <m162cudg49.fsf@fess.ebiederm.org>
-Date: Fri, 20 Apr 2012 00:20:06 -0700
-From: ebiederm@...ssion.com (Eric W. Biederman)
-To: Pavel Emelyanov <xemul@...allels.com>
-Cc: Eugene Teo <eugeneteo@...nel.sg>,  Marcus Meissner <meissner@...e.de>,  OSS Security List <oss-security@...ts.openwall.com>,  "security\@kernel.org" <security@...nel.org>,  Sukadev Bhattiprolu <sukadev@...ibm.com>,  Serge Hallyn <serge.hallyn@...onical.com>
-Subject: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/11
+Message-ID: <50C9F77B.80504@redhat.com>
+Date: Thu, 13 Dec 2012 08:42:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Simon McVittie <smcv@...ian.org>
+Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
 Content-Type: text/plain; charset=utf-8
 
-Pavel Emelyanov <xemul@...allels.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On 04/20/2012 07:10 AM, Eugene Teo wrote:
->>> So we know what is holding the pid namespace reference.
->>>
->>> Additional thoughts.
->>>
->>> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
->> 
->> No.
->> 
->>> Is there a corresponding task_struct leak?
->> 
->> Yes.
->> 
->>> I don't have much of a clue or much concern as this seems fixed in later kernels but I am happy to suggest things to look for to help narrow this down.
->> 
->> I'm helping to provide more information.
->
-> Is there also a vfsmount struct leak as well? The pidns creating implies
-> kern-mount-ing of a proc and it should be released when child reaper of
-> the namespace dies.
+On 12/13/2012 04:12 AM, Simon McVittie wrote:
+> (Incidentally, Geany is written using Gtk and GLib, and GLib
+> already has a function g_shell_quote() which escapes arbitrary
+> filenames for /bin/sh.)
+> 
+> If shell syntax is not specifically needed, it would be even better
+> to use a mechanism not involving parsing shell syntax, like
+> posix_spawn(), GLib's g_spawn_async() or Python's os.spawn* family,
+> to launch the compiler (analogous to using prepared statements to
+> avoid ever having to think about SQL escaping or SQL injection).
 
-In this case the user is vsftp which is an entertaining user.
+If anyone knows similar functions/etc for other programming languages
+please let me know off list so I can compile a list of these and then
+post them for future reference. Thanks!
 
-Roughly for every connection vsftp does:
-- accepts the connection
-- forks a server process
-- unshares the network ipc and pid namespaces for additional isolation
-- drops privilegs?
-- serves up the file.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Since vsftp does not want any of the features of namespaces it does not
-setup mounts or any of that.  vsftp simply wants a way to reduce the
-the chance that a bug in the implemenation of vsftp will all the server
-to be compromised.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-To that extent I believe the reproduce program was very representative
-of what vsftp is doing.
-
-Eric
+iQIcBAEBAgAGBQJQyfd6AAoJEBYNRVNeJnmT3qgP/A8dd7gwBa324eR46Yms84/z
+fdl6Wa2aWRPaVLgFgEvqtnspIiokAhQvVqxt0o0F2+rEqAzFa6YBHAlL2WXwyZZZ
+vf/EfLT0X0B4vYRJthzQ7oWwAKrPYewuRycTFXl3qRxWVfOi9NC+rxoCXbjCoHrD
+ry4HSw4LHsdEdeoZY2Q+ntw1uBgP784osqcU2oQ/Nu1ilYc5KjZxVP0aJqRIHcqc
+T9fpxWh6tCgsiOivYr5s4DXUltjkqHJLlX7Db3/faFvhY4q6ZGVp2K36EXk/A+RT
+6qkWxsnzc6Q0loDqgx7Vi20cyggx7zpFL5ocsatu87gYITNZn1yZM6lEpPtghQXN
+yNeDookupmqOd+N4vK3GIx9oCsfZZ7QkJ0BAUAb8LS/lkF9gktJ9SgzIipu4+MBf
+wG7ETxrRNfgWxAFPpvvYajcD6l5EwoYSj2b0xChlZjp97gfBAuLs4DN5kODVbvLS
+eFz+arInikSkcAs+G7hLOfTajM97aSM1Ln7bdhH3b7FHdaiFJW0YkIAhvFuAgwzO
+Q09yTBSzbOhndu183JpY9JtUMhZhC/n0vvY2I1aMnrTrgTsnkte7oqzt5WmZ0b3A
+7RnT2rpjHFMT18pQFoZkP79YxbeKdfjVcv2YDZ02mSw6dEtH/QD2xGoaOuEdwm2a
+1dTPDQSWbMhSlrXEZ/CX
+=ExlJ
+-----END PGP SIGNATURE-----
