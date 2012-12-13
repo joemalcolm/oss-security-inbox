@@ -1,22 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/4
-Message-ID: <4F6881C9.4060906@redhat.com>
-Date: Tue, 20 Mar 2012 21:10:33 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- kernel: execshield: predictable ascii armour base address
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/17
+Message-ID: <50C9F232.7000905@herbesfolles.org>
+Date: Thu, 13 Dec 2012 16:20:18 +0100
+From: Colomban Wendling <lists.ban@...besfolles.org>
+To: Andreas Ericsson <ae@....se>
+CC: Jan Lieskovsky <jlieskov@...hat.com>,  Eitan Adler <lists@...anadler.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Nick Treleaven <nick.treleaven@...nternet.com>, Enrico Troeger <enrico.troeger@...na.de>,  Matthew Brush <mbrush@...ebrainz.ca>, Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com,  jonathan underwood <jonathan.underwood@...il.com>, oss-security@...ts.openwall.com
+Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
 Content-Type: text/plain; charset=utf-8
 
-On 03/20/2012 06:20 PM, Petr Matousek wrote:
-> When running a binary with a lot of shared libraries, predictable base
-> address is used for one of the loaded libraries.
+Le 13/12/2012 12:51, Andreas Ericsson a écrit :
+> On 12/13/2012 12:21 PM, Jan Lieskovsky wrote:
+> [...]
+>
+>> The difference when running it directly from the command line is
+>> that Bash would escape those files for you, so even with crafted names
+>> nothing bad / suspicious would happen (and project would build
+>> if syntactically correct).
+>>
 > 
-> This flaw could be used to bypass ASLR.
+> Except that people wouldn't manually compile thousands of files
+> one by one. That's where build systems come in.
+
+Yes, and for manual compilation to even have a chance to work one would
+tweak a lot the build command to match the project's needs (inclusion
+paths, link paths, etc.), so one has to be told to do so.
+
+So I don't think it's more problematic than telling an user to run say,
+"sudo cp -f that_file_I_sent_you /bin/sh".  Nobody can protect an user
+from that, only the user can do it.
+
+>> To the difference, in the Geany scenario, the file name(s) would
+>> be passed to command line directly as they are (and if the project
+>> would build or not at the end isn't what matters here).
+>>
 > 
-> References:
-> http://scarybeastsecurity.blogspot.com/2012/03/some-random-observations-on-linux-aslr.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=804947
+> For the original report to be valid, the file would still have to
+> be loaded into geany, or the report should have been about some
+> other program. This is not a security issue that concerns geany.
 
-Use CVE-2012-1568.
+All this said, I think the issue should still be addressed, because
+although it doesn't looks so security-related to me, it's not good to
+choke on quotes or whatever.  But that's not oss-security's problem :)
 
-Eugene
+Regards,
+Colomban
