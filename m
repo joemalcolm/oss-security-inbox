@@ -1,55 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/26/12
-Message-ID: <4F21BD74.7090103@redhat.com>
-Date: Thu, 26 Jan 2012 13:54:12 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Christian Boltz <oss-securrity@...ltz.de>
-Subject: Re: CVE request: PostfixAdmin SQL injections and XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/6
+Message-ID: <50C9C15D.8090008@op5.se>
+Date: Thu, 13 Dec 2012 12:51:57 +0100
+From: Andreas Ericsson <ae@....se>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: Eitan Adler <lists@...anadler.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Nick Treleaven <nick.treleaven@...nternet.com>,  Colomban Wendling <lists.ban@...besfolles.org>, Enrico Troeger <enrico.troeger@...na.de>,  Matthew Brush <mbrush@...ebrainz.ca>, Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com,  jonathan underwood <jonathan.underwood@...il.com>, oss-security@...ts.openwall.com
+Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
 Content-Type: text/plain; charset=utf-8
 
-
->>> Please assign a CVE number to those issues.
->>>
->>> The issues are fixed in PostfixAdmin 2.3.5, which I'll release
->>> today or tomorrow.
->>>
->>> For reference, here's the changelog with all details:
->>>   - fix SQL injection in pacrypt() (if $CONF[encrypt] ==
->>>   'mysql_encrypt') 
->>>   - fix SQL injection in backup.php - the dump
->>>   was not mysql_escape()d,>   
->>>     therefore users could inject SQL (for example in the
->>>     vacation message) which will be executed when restoring
->>>     the database dump. WARNING: database dumps created with
->>>     backup.php from 2.3.4 or older might>     
->>>              contain malicious SQL. Double-check
->>>              before using them!
-
-Please use CVE-2012-0811 for PostfixAdmin 2.3.4 multiple SQL vulnerabilities
-
->>>   - fix XSS with $_GET[domain] in templates/menu.php and
->>>   edit-vacation - fix XSS in some create-domain input fields
->>>   - fix XSS in create-alias and edit-alias error message
->>>   - fix XSS (by values stored in the database) in fetchmail list
-
-Please use CVE-2012-0812 for PostfixAdmin 2.3.4 multiple XSS
-vulnerabilities
-
->> So basically we have two sets of vulnerabilities: multiple SQL
->> injections and multiple XSS vulnerabilities, correct?
+On 12/13/2012 12:21 PM, Jan Lieskovsky wrote:
+> Hi Andreas,
 > 
-> Yes, correct.
-> (For completeness: the last 3 items ($LANG, the "forward only" marker 
-> and the hex2bin change) are non-security fixes.)
+>    I think it's unlikely to happen for one file.
+> But what for project with (hundred, thousand of) small files?
 > 
+> Is the user prior building expected to investigate file name of
+> each of them for sanity? This is where trust boundary is crossed -
+> someone could send you a tarball: "Here is the source you were
+> searching for." You would go to build it in Geany..
 > 
-> Gruß
-> 
-> Christian Boltz
 
-Thanks.
+Hold on here. The report is for geany, so for geany's filename
+escaping to actually be at fault, you would still have to load the
+offending file into the editor. Otherwise, just running 'make' from
+the command line would trigger the exact same effect, except that
+make is (as has been pointed out) designed to run arbitrary shell
+commands already and therefore won't be doing anything wrong.
 
+> The difference when running it directly from the command line is
+> that Bash would escape those files for you, so even with crafted names
+> nothing bad / suspicious would happen (and project would build
+> if syntactically correct).
+> 
+
+Except that people wouldn't manually compile thousands of files
+one by one. That's where build systems come in.
+
+> To the difference, in the Geany scenario, the file name(s) would
+> be passed to command line directly as they are (and if the project
+> would build or not at the end isn't what matters here).
+> 
+
+For the original report to be valid, the file would still have to
+be loaded into geany, or the report should have been about some
+other program. This is not a security issue that concerns geany.
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
