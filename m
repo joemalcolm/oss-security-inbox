@@ -1,181 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/8
-Message-Id: <E1T9DVJ-0005Jh-0F@xenbits.xen.org>
-Date: Wed, 05 Sep 2012 11:10:41 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 15 (CVE-2012-3497) - multiple TMEM hypercall vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/8
+Message-ID: <50C97AB9.70701@codebrainz.ca>
+Date: Wed, 12 Dec 2012 22:50:33 -0800
+From: Matthew Brush <mbrush@...ebrainz.ca>
+To: Eitan Adler <lists@...anadler.com>
+CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>, Nick Treleaven <nick.treleaven@...nternet.com>,  Colomban Wendling <lists.ban@...besfolles.org>, Enrico Troeger <enrico.troeger@...na.de>,  Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com, jonathan.underwood@...il.com
+Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12-12-12 09:54 PM, Eitan Adler wrote:
+> On 12 December 2012 11:51, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+>> The questions:
+>> 1) should Geany escape the filenames?,
+>
+> Up to the maintainers.
+>
+>> 2) is this a security issue or not?
+>
+> Unlikely.  Is there a way a malicious document could cause code
+> execution without user action?
+>
 
-            Xen Security Advisory CVE-2012-3497 / XSA-15
-                         version 2
+If I understand correctly, if someone messed with the user's 
+configuration directory where the "geany.conf" file is stored, and they 
+modified the "recent files" stored in there that Geany opens 
+automatically on next startup, then assuming that it doesn't choke on 
+the weird filename and that the user didn't notice the weird filename in 
+several places in the GUI, they could technically blindly activate a 
+build command, causing the malicious filename/command to run.
 
-              multiple TMEM hypercall vulnerabilities
+I have no idea how much of a risk it actually is (relative to someone 
+already having hacked your machine/$HOME files), but I'm personally not 
+opposed to going to reasonable lengths to ensure our code/program is secure.
 
-UPDATES IN VERSION 2
-====================
-
-Public release.  Credit Matthew Daley.
-
-ISSUE DESCRIPTION
-=================
-
-Several sub-operations of the Transcendent Memory (TMEM) hypercall
-either do not correctly validate their inputs, do not correctly
-validate the privilege of the calling guest, or have other
-security-relevant bugs.
-
-A full list of the vulnerabilities in the TMEM system is not available
-at present.
-
-IMPACT
-======
-
-An unprivileged guest can overwrite hypervisor owned memory with the
-content of their choosing allowing them to escalate their privilege to
-that of the host.
-
-In addition an unprivileged guest can also crash the hypervisor,
-leading to a Denial of Service attack.
-
-VULNERABLE SYSTEMS
-==================
-
-ONLY installations where "tmem" is specified on the hypervisor command
-line are vulnerable.  Most Xen installations do not do so.
-
-All versions of Xen from 4.0 onward which have TMEM enabled and are
-running guests with untrusted administrators are vulnerable.
-
-Although we consider it unlikely, we have not been able to rule out
-the possibility that an malicious unprivileged user could exploit
-these issues via a trusted TMEM-aware kernel.  Therefore all
-administrators are advised to disable TMEM even if all guest kernels
-are controlled and trusted.
-
-MITIGATION
-==========
-
-Only systems which have TMEM enabled at boot time are affected by this
-issue.  By default TMEM is disabled unless it is explicitly enabled
-via the hypervisor command line option "tmem".
-
-TMEM has been described by its maintainers as a technology preview,
-and is therefore not supported by them for use in production systems.
-
-Pending a full security audit of the code, the Xen.org security team
-recommends that Xen users do not enable TMEM.
-
-RESOLUTION
-==========
-
-Work is ongoing, by the community maintainers for TMEM, to patch the
-specific bugs as they are found.  This includes both the multiple
-vulnerabilities initially reported to the Xen.org security team, and
-multiple further vulnerabilities which have been discovered since then
-during our ad-hoc code inspection.
-
-At the time of writing, a complete set of fixes even for known issues
-is not available.
-
-PROCESS FOR TMEM VULNERABILITIES
-================================
-
-Until TMEM has gained production maturity, the Xen.org security team
-intends (subject of course to the permission of anyone disclosing to
-us) to handle these and future TMEM vulnerabilities in public, as if
-they were normal non-security-related bugs.
-
-We therefore intend that currently-known vulnerabilities will be
-publicly disclosed on the xen-devel mailing list, as normal bug
-reports, at the expiry of the XSA-15 embargo.  In the meantime the
-list below may be helpful.
-
-Xen.org security team will ensure, on expiry of the embargo, that the
-documentation reflects TMEM's technology preview status.
-
-CREDIT
-======
-
-Thanks to Matthew Daley for finding these vulnerabilities (and that in
-XSA-12) and notifying the Xen.org security team.
-
-LIST OF KNOWN VULNERABILITIES
-=============================
-
-**NOTE** that this is unlikely to be a complete list of problems.
-
-**NOTE** that after publication of this advisory, after the embargo
-ends, the advisory will no longer be updated to extend this list of
-vulnerabilities.  See `Process for TMEM vulnerabilities', above.
-
-
-Multiple tmem save-related control ops do not check for NULL
-clients:
-
-      TMEMC_SAVE_GET_CLIENT_WEIGHT, TMEMC_SAVE_GET_CLIENT_CAP,
-      TMEMC_SAVE_GET_CLIENT_FLAGS and TMEMC_SAVE_END do not check
-      that the cli_id used to find the client is valid, and can
-      hence dereference a NULL client. This allows a malicious
-      guest to crash the host (DoS), or, in the case of
-      TMEMC_SAVE_END, memory corruption (DoS or worse).
-
-Multiple tmem save-related control ops do not check guest output
-buffer pointers:
-
-      The functions tmemc_save_get_next_page,
-      tmemc_save_get_next_inv and the TMEMC_SAVE_GET_POOL_UUID
-      subop do not check incoming guest output buffer pointers,
-      and do not use ie. copy_to_guest. A malicious guest can
-      crash the host or cause memory corruption (DoS / code
-      execution).
-
-Multiple tmem ops do not check for negative pool IDs:
-
-      The functions tmemc_save_get_next_page,
-      tmemc_restore_put_page and tmemc_restore_flush_page do not
-      check for negative pool IDs, allowing (at least) memory
-      corruption.
-
-do_tmem_destroy_pool does not check for invalid pool IDs:
-
-      The function do_tmem_destroy_pool does not check for invalid
-      pool IDs, allowing a malicious guest to crash the host or
-      corrupt host memory (DoS / code execution).
-
-do_tmem_control's privilege check is commented out:
-
-      This allows any guest access to control stack operations
-      (many of which themselves do not have adequate argument
-      checking).
-
-tmh_copy_from_client and tmh_copy_to_client have an integer
-overflow vulnerability:
-
-      This can corrupt host memory.
-
-do_tmem_get()'s bad_copy error path leaves a spinlock held:
-
-      The next operation on the same object will hang the CPU.
-      This is a host DoS.
-
-do_tmem_op has at least one error path with broken locking checks:
-
-      This is a host DoS or worse.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQRyVDAAoJEIP+FMlX6CvZZSEH/11RvLycH5Qm0rkmWb16iuRU
-s9xmGDxGr6LDGLLYenp7RDc6FU7xjFxNeMhziIWckic2f0V1UtEqxiTHViEeOsOu
-AQfiwrUaaSf+fwcDqt07bb6gTynxyqS+faLKpk4bq89tKK1318JlxWN2gRtEW5g9
-KEo7Bt/O0hYuIJBlBWnH48OHPzGSrwVaw51NLt0oPqiWp4w3ObLRhVttKB7VWJlw
-OQR9hSStVWhKR68VUBd/LpTZTkX/Hn5qwhX6ltgQ10RW1n4cF2pvebiKu6CtePCl
-JVBJgn/4ZmaT1joJ8SpX/BONnLt0KHNrublB6vO++1m+7+lBA5qXL38gg4jl48E=
-=yP/R
------END PGP SIGNATURE-----
+Cheers,
+Matthew Brush
 
