@@ -1,46 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/01/4
-Message-ID: <4FA03986.3000107@redhat.com>
-Date: Tue, 01 May 2012 13:29:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/3
+Message-ID: <50C9B815.606@debian.org>
+Date: Thu, 13 Dec 2012 11:12:21 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: spip before 1.9.2.o, 2.0.18 and 2.1.13 multiple XSS
+Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12/12/12 16:51, Jan Lieskovsky wrote:
+> 1) should Geany escape the filenames?,
+> 2) is this a security issue or not?
 
-On 04/30/2012 02:56 PM, Hanno Böck wrote:
-> http://www.securityfocus.com/bid/53216/info 
-> http://archives.rezo.net/archives/spip-en.mbox/U5QUZ6WJRAJC7H5BR7W5SQG6WCD3PXL7/
->
->  Info is very limited, though I'd suggest just having one CVE
-> referring to "multiple XSS".
-> 
+My opinion is that it should escape the filenames as a matter of
+correctness - otherwise, there are certain filenames which it could in
+principle compile successfully, but which will not actually work - but
+that it isn't a security issue.
 
-Please use CVE-2012-2151 for SPIP prior to 1.9.2o, 2.0.18 et 2.1.13
-xss vulns.
+As a general principle, if you're interpolating an arbitrary substring
+(in this case a filename) into a string with a defined syntax (in this
+case Bourne shell), and you don't specifically intend the substring to
+be "code" in that syntax, then you should escape it appropriately for
+that syntax. Failure to do so is certainly a correctness bug, and
+sometimes a security flaw (depending on context).
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+(Incidentally, Geany is written using Gtk and GLib, and GLib already has
+a function g_shell_quote() which escapes arbitrary filenames for /bin/sh.)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+If shell syntax is not specifically needed, it would be even better to
+use a mechanism not involving parsing shell syntax, like posix_spawn(),
+GLib's g_spawn_async() or Python's os.spawn* family, to launch the
+compiler (analogous to using prepared statements to avoid ever having to
+think about SQL escaping or SQL injection).
 
-iQIcBAEBAgAGBQJPoDmGAAoJEBYNRVNeJnmT96EP/3ZtmBqYNBk+OtUBDUZtivCK
-2gqjJjSZNhPTod3KNSVTLwVeG7S5fZ1Isct0kbNc0bAf8ww0N9xK4QsvSBSpAEiO
-y9Zo0EcBGNhbaVKPdQS9b1n0bC0ZUbVpIA7MScYRBBUnEBrBSP1zSn551XRgMpYE
-RCDZkYXEfGkvZUviUnrC9e38mxB7k/jr7tV+T/UVAR3LUjhraPNZTPckhUp9XqA/
-3H0z9ik8AHe7aT3Xo11FM837eJCRdoENzxCXiAphz4qgCUnt3NGWbUrdHKyDtq7W
-bMpcVCprmy0QmXMG0BWJXpscpH1SIcROC35OdApAySrPh2vmivM0L3e2yFrq/cul
-C/YFPCjJsdd53T7bZnpaeQchvSAVnHkrowyASyhF/RlBf/i8oewTnefmWjYKOpsQ
-2Oheu6len/cuCK2/0H+xjmFlQmlQDNa6smO9Q5PYn95AKzRKkdHRiRiRO0FTbIy1
-BVMLRCq0v+/Mg83DaJB1G7aqE6cIZEgyuJj/wc8tUDpd3X/4WkEJx8OEGKtH7aoc
-/nPrNZNpCcCLE5kekI5DgBN5DWX0gEtowRPdbgRG9ecevsJx8jsEAhhv43v6VrYo
-uCNKl6EIxONpIGUUTyEuxXhpZcpP5/o++GuPB97XGo90Jqsq62J2n//S18PjOJ7F
-3eE/1O1YFyaG0fwY5WaB
-=epre
------END PGP SIGNATURE-----
+> Obviously, even for gcc you can pass specially-crafted filename,
+> when attempt to build it would lead to "ls -la" command (for example)
+> to be executed.
+
+What filenames would those be?
+
+If Geany puts filenames in a shell command the way I suspect it does
+from the "exploit" given, then a filename with a command in backticks,
+e.g. foo`xmessage hello`.c, would be another "exploit" - but that's
+entirely between Geany and the shell, and gcc would see only "foo.c".
+(... and then fail because that file probably doesn't exist - another
+reason to treat this as a correctness bug.)
+
+    S
