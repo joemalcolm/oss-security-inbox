@@ -1,36 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/6
-Message-ID: <4F18FA84.2090905@redhat.com>
-Date: Thu, 19 Jan 2012 22:24:20 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/5
+Message-ID: <50C9BBA7.5020307@debian.org>
+Date: Thu, 13 Dec 2012 11:27:35 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Ronald van den Blink <oss-security@...urityview.nl>
-Subject: Re: CVE request - Batavi 1.2.1 Fixes Blind SQL Injection vulnerability in boxToReload parameter of ajax.php
+Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
 Content-Type: text/plain; charset=utf-8
 
-On 01/19/2012 01:29 AM, Ronald van den Blink wrote:
-> On Jan 19, 2012, at 8:40 AM, Ronald van den Blink wrote:
->
->> On Jan 18, 2012, at 10:55 PM, Kurt Seifried wrote:
->>
->>> Can you include a link to the code commit(s) that fiix this? Thanks.
->> Hi Kurt,
->>
->> This is still a bit of a problem, as our internal svn is still not correctly set up to sync to SF's SVN. What I can do however is ask our developers to create a diff of the files which were changed to fix this and post them online?
->>
->> B.t.w. if someone knows a way to sync two SVN repositories to with each other, please contact me off list.
->>
->> With kind regards,
->>
->> Ronald
-> Well, that went easier than I thought. In https://sourceforge.net/projects/batavi/files/upgrade/ you can find two files (database.1.2-1.2.1.sql and core.1.2-1.2.1.patch) which both contains fixes for the Blind SQL injection. You can find them on lines 12833 till 12860. Also a new DB method was introduced on lines 13289 till 13300. Both are in core.1.2-1.2.1.patch. I hope that this clarifies it enough?
->
-> --
-> Ronald
-Thanks, this really helps (ensures no duplicates/etc.). Please use
-CVE-2012-0069 for this issue.
+On 13/12/12 11:21, Jan Lieskovsky wrote:
+> Is the user prior building expected to investigate file name of
+> each of them for sanity? This is where trust boundary is crossed -
+> someone could send you a tarball: "Here is the source you were
+> searching for." You would go to build it in Geany..
 
--- 
+If Geany is willing to run 'make', as it appears to be, then you already
+have to trust the sender of a source tree - a Makefile can contain
+arbitrary shell commands, by design.
 
--- Kurt Seifried / Red Hat Security Response Team
-
+    S
