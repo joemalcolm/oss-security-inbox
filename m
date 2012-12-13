@@ -1,58 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/21/3
-Message-ID: <1397477942.17925147.1345543811747.JavaMail.root@redhat.com>
-Date: Tue, 21 Aug 2012 06:10:11 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/1
+Message-ID: <CAF6rxgkveYO58=EpROgS5r8kZGjAozUwY9z_LPWTwtFJQ-1tfg@mail.gmail.com>
+Date: Thu, 13 Dec 2012 00:54:12 -0500
+From: Eitan Adler <lists@...anadler.com>
 To: oss-security@...ts.openwall.com
-Cc: oss-security@...ts.openwall.com
-Subject: CVE Request -- Tor 0.2.2.38: Three issues
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Nick Treleaven <nick.treleaven@...nternet.com>,  Colomban Wendling <lists.ban@...besfolles.org>, Enrico Troeger <enrico.troeger@...na.de>,  Matthew Brush <mbrush@...ebrainz.ca>, Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com,  jonathan.underwood@...il.com
+Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On 12 December 2012 11:51, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+> The questions:
+> 1) should Geany escape the filenames?,
 
-  Tor upstream has recently released v0.2.2.38 version, correcting three
-security flaws:
+Up to the maintainers.
 
-1) tor: Read from freed memory and double free by processing failed DNS request
-   Upstream ticket:
-   [1] https://trac.torproject.org/projects/tor/ticket/6480
+> 2) is this a security issue or not?
 
-   Relevant patch:
-   [2] https://gitweb.torproject.org/tor.git/commitdiff/62637fa22405278758febb1743da9af562524d4c
+Unlikely.  Is there a way a malicious document could cause code
+execution without user action?
 
-   References:
-   [3] https://lists.torproject.org/pipermail/tor-announce/2012-August/000086.html
-   [4] https://bugzilla.novell.com/show_bug.cgi?id=776642
-   [5] https://bugzilla.redhat.com/show_bug.cgi?id=849949
 
-2) tor: Unitialized memory read by reading vote or consensus document with unrecognized flavor name
-   Upstream ticket:
-   [6] https://trac.torproject.org/projects/tor/ticket/6530
 
-   Relevant patches:
-   [7] https://gitweb.torproject.org/tor.git/commitdiff/57e35ad3d91724882c345ac709666a551a977f0f
-   [8] https://gitweb.torproject.org/tor.git/commitdiff/55f635745afacefffdaafc72cc176ca7ab817546
 
-   References:
-   [9] https://lists.torproject.org/pipermail/tor-announce/2012-August/000086.html
-   [10] https://bugzilla.novell.com/show_bug.cgi?id=776642
-   Note: No Red Hat bug (Fedora tor versions already updated && EPEL one not affected).
 
-3) tor: Client's relays path information leak
-   Upstream ticket:
-   [11] https://trac.torproject.org/projects/tor/ticket/6537
-
-   Relevant patches:
-   [12] https://gitweb.torproject.org/tor.git/commitdiff/308f6dad20675c42b29862f4269ad1fbfb00dc9a
-   [13] https://gitweb.torproject.org/tor.git/commitdiff/d48cebc5e498b0ae673635f40fc57cdddab45d5b
-
-   References:
-   [14] https://lists.torproject.org/pipermail/tor-announce/2012-August/000086.html
-   [15] https://bugzilla.novell.com/show_bug.cgi?id=776642
-   Note: No Red Hat bug (same as in case 2,).
-
-Could you allocate a CVE ids for these?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Eitan Adler
