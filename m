@@ -1,51 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/13
-Message-ID: <4F96C4FE.8050404@redhat.com>
-Date: Tue, 24 Apr 2012 09:21:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/7
+Message-ID: <50C9CE53.8020004@pre-sense.de>
+Date: Thu, 13 Dec 2012 13:47:15 +0100
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-CC: Ludwig Nussel <ludwig.nussel@...e.de>, Vincent Untz <vuntz@...e.com>
-Subject: Re: CVE Request: libsoup 2.32.2 sets ssl trusted flag despite no verification
+Subject: Re: Robust XML validation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12.12.2012 18:11, Florian Weimer wrote:
+> I'm working on guidelines for robust XML parsing and I noticed that 
+> there are some denial-of-service issues related to validation which do 
+> not seem widely documented (but were apparently known when SGML was 
+> specified).
 
-On 04/24/2012 04:04 AM, Ludwig Nussel wrote:
-> Hi,
-> 
-> libsoup 2.32.2 does not verify certificates at all if an
-> application does not explicitly specify a file with trusted root
-> CA's. Since that libsoup version relies on the verification failure
-> to clear the trust flag it always considers ssl connections as
-> trusted in that case.
-> 
-> Reference: https://bugzilla.novell.com/show_bug.cgi?id=758431
-> 
-> cu Ludwig
-> 
+I'm interested in such guidelines. Will they be public?
 
-Please use CVE-2012-2132 for this issue.
+> I wonder if we should care about this in the sense that we should 
+> prepare fixes, or if it is sufficient to recommend to validate against 
+> trusted schemas/DTDs only.  (I've found an implementation which gets 
+> right the things I tested so far, so efficient implementations aren't 
+> impossible.)
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Validating against trusted schemas/DTDs would not be sufficient in my
+opinion. For example, such validations are not effective against the
+billion laughs attack (http://en.wikipedia.org/wiki/Billion_laughs).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Moreover, some projects deliberately decide against schema validation.
+For example, when fixing CVE-2012-2665, LibreOffice developers have
+decided against validating the manifest.xml against a schema or DTD.
+If I understood correctly, the reason was that omitting validations
+allows to open documents in a future format on a best-effort basis (as
+an alternative to annoying the user with a "format not supported" message).
 
-iQIcBAEBAgAGBQJPlsT+AAoJEBYNRVNeJnmTNYQP+QE8Q0HawkuCX49P+65ye2x7
-O0/eRhG9GWs7s1D3i/QsOTMjdnF2Ng18RGrvXCsdFdXhSjgoLQiNFCds3LNPNNqm
-a0suMHDEnBrpdwcargVI28KEZ84Uj+7A7ztFW+olt3Sdi7JCjJz/3oY9Rass1wQf
-35EhtKg9N8I5jTBOGCWjanNis82J4aO+IrG510QyuwpKAw1QsP+tIqEUtta2IKDS
-f4rHGjiMtBU2cb+BELN02clKrgV/OPLTbOqRUsJZqvX7VIeJ070ZfpX1P+b3bA3E
-1v33/iIkxdxVDtOMT1jcF2xX+/koR4h42r7m4BXgZiyOXyJtQpKeSQyXZ8g1OBeL
-sv8Avo7f1t9bUy7ZzL2d97A4Gb6fTqmH9kWI9Ofrbo9+WVWGYFNb0nLuOfyONlR/
-OUt6S/mCJAmwsgprgcTCFTxqfpbRfxfJA1hItrcoX3qS1nwhao4/Er1ujHL20xGU
-RMvmQcyklBPzau87yx7LbaHAd4tOQY+PQgPp0TiKVoXRn9c8WqNIoYMk9rpH06Af
-GbRcWcuBAY4ZbgMSkGBn/xAfMsv5tn4dpPmqFXnO7fKKumQhB1Opx7iBjWtCGCr3
-uzX1tOi7fP3pQsla1Yxet+L1hXmarvEZB1ken2i67+vqJo/56UiBRCZkVxZutG6l
-2y3AoSDvU7i+tuwyigte
-=zTR+
------END PGP SIGNATURE-----
+Regards, Timo
