@@ -1,61 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/8
-Message-ID: <50A3D3B8.2080406@redhat.com>
-Date: Wed, 14 Nov 2012 10:24:08 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/16
+Message-ID: <50CA243D.9040900@fifthhorseman.net>
+Date: Thu, 13 Dec 2012 13:53:49 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Damyan Ivanov <dmn@...ian.org>, Philippe Makowski <makowski@...ebird-fr.eu.org>
-Subject: Re: CVE Request -- firebird: DoS (NULL pointer dereference) while preparing an empty query with trace enabled
+CC: Kurt Seifried <kseifried@...hat.com>, Timo Warns <Warns@...-Sense.DE>
+Subject: Re: Remote file inclusion by office applications
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12/13/2012 11:44 AM, Kurt Seifried wrote:
+> I'm kind of leaning towards classifying this as a security issue since
+> I expected there is some way to disable it or at least tell it to
+> prompt me when a document tries to go get an external data source
+> (e.g. "this document contains external data, the URLs/file paths it is
+> trying to  reference are: [list of locations]") but apparently there
+> is no way to disable/have this prompt (at least that I can find in
+> LibreOffice)?
 
-On 11/14/2012 08:28 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> a denial of service flaw was found in the way the TraceManager of
-> Firebird, a SQL relational database management system, performed
-> preparation of an empty dynamic SQL query. When the trace mode was
-> enabled, a remote, authenticated database user could use this flaw
-> to cause the Firebird server to crash with a NULL pointer
-> dereference.
-> 
-> References: [1]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=693210 [2]
-> http://tracker.firebirdsql.org/browse/CORE-3884 [3]
-> https://bugzilla.redhat.com/show_bug.cgi?id=876613
-> 
-> Relevant upstream patch: [4]
-> http://firebird.svn.sourceforge.net/viewvc/firebird?pathrev=54702&revision=54702&view=revision
->
->  Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+I think your assessment is correct.  I've just now made an ODT file that
+libreoffice uses to not only hit the network for a PNG (denial of
+service attacks, remote exploitation of other flaws in libpng or in LO
+itself, virus scanner bypass, etc), but one that will include and render
+~/.ssh/id_rsa as a text/plain document.  This seems like it could be
+done against any local privileged file.
 
-Please use CVE-2012-5529 for this issue.
+For local file inclusion, libreoffice at leasts prompts me with:
 
+-----------
+ This document contains one or more links to external data.
 
+ Would you like to change the document, and update all links to get the
+ most recent data?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+ [Yes] [No]
+-----------
 
-iQIcBAEBAgAGBQJQo9O3AAoJEBYNRVNeJnmTc+cP/jWrCf2mXolIIEYiocuxQIWq
-GlxvEmkZ7+TURvl0McVUVmvsa4J1yTTpwRoPj1RZ1c/Peo045leOGgdbJOPGsTrw
-GQ5/KBQUv7OfGsLN9XSJZ566dQa8vZx4jBeZu4fozBB5NS6mz7DWRYzglg5YHrdS
-9epV1DXNZBD/hdrhQy3hWrRi5jCIlHU3R5GIC8PkpIeQ81fwYIPHMrZ3abAYHzIP
-hiag1p8mYRjPqiCk0h9dmPu/wKGqAtLvi00UgpvmTig603JF6LeqUt0Pp6rt9R57
-LzRJejkFjAID2djvBaC0XZBR2qwrwacQX55amnYu11LEz1X7QSaNYUHS005nYZqP
-VMPEBq8hPmR/9DfqnO5Bh70DXcH1DegR3zpp4JuSQYUVErUu6x2lb5f6vpZ+NY1W
-CXvA0wcyzVmWrXdA9lIWSP6lHHpFgRAPSwFzsgq7FqWw8gzBpPOr6GYZrQ/SbEI0
-4/GMxSWhrz5mPWUNDdEegqRsa+P5CpQPOTFKfD8Q2RHKvj8M39goZ4LODYL7P7hI
-AraCl9sNU6A+ErzXMHbOcg/UaA+MQ8ict4RXmncfipPIszGbZqqGNBtVbZyk9Hm9
-c+2m3cxcFBqqlwb5y/7zpVPV1P+XsEpsAxqqaocvwedyysK6Vdl4OHjo6fHBtdeh
-t1BtMiDlBBlD49E9n3dS
-=s6jB
------END PGP SIGNATURE-----
+but it doesn't tell me what those documents are. And given the UI
+history of people clicking through popups they don't understand, i'm not
+convinced that this popup is going to do anything to prevent remote
+disclosure (it even defaults to "Yes").  When i say "no" on the prompt,
+it goes out and fetches networked URLs anyway, so i assume this prompt
+is supposed to just refer to local "external data".
+
+	--dkg
