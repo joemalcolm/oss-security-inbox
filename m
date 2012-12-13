@@ -1,41 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/07/8
-Message-ID: <4FA7EFE5.7070608@redhat.com>
-Date: Mon, 07 May 2012 09:53:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: Pidgin XMPP remote crash (#62)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/9
+Message-ID: <50C9D8AE.6000306@op5.se>
+Date: Thu, 13 Dec 2012 14:31:26 +0100
+From: Andreas Ericsson <ae@....se>
+To: oss-security@...ts.openwall.com
+CC: Matthew Brush <mbrush@...ebrainz.ca>,  Eitan Adler <lists@...anadler.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Nick Treleaven <nick.treleaven@...nternet.com>, Colomban Wendling <lists.ban@...besfolles.org>,  Enrico Troeger <enrico.troeger@...na.de>, Frank Lanitz <frank@...nk.uvena.de>, josef@...icpanda.com,  jonathan.underwood@...il.com
+Subject: Re: Geany IDE not escaping filenames during compilation / build - a security issue or not?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12/13/2012 07:50 AM, Matthew Brush wrote:
+> On 12-12-12 09:54 PM, Eitan Adler wrote:
+>> On 12 December 2012 11:51, Jan Lieskovsky <jlieskov@...hat.com>
+>> wrote:
+>>> The questions: 1) should Geany escape the filenames?,
+>> 
+>> Up to the maintainers.
+>> 
+>>> 2) is this a security issue or not?
+>> 
+>> Unlikely.  Is there a way a malicious document could cause code 
+>> execution without user action?
+>> 
+> 
+> If I understand correctly, if someone messed with the user's
+> configuration directory where the "geany.conf" file is stored, and
+> they modified the "recent files" stored in there that Geany opens
+> automatically on next startup, then assuming that it doesn't choke on
+> the weird filename and that the user didn't notice the weird filename
+> in several places in the GUI, they could technically blindly activate
+> a build command, causing the malicious filename/command to run.
+> 
 
-Could I request that a CVE be issued for a possible
-remotely-triggerable crash in Pidgin?  To my knowledge no CVE exists
-for this issue.  The issue is described at
-http://pidgin.im/news/security/?id=62
+If someone has access to modify a users home directory, it's safe to
+assume that they can execute commands as that user. It's like saying
+"if someone gains root access to your system, they can replace your
+binaries with trojan kits that open them up to remote root access".
+It's not really a security issue if you can gain access you already
+have.
 
-The Pidgin project has just released version 2.10.4 which fixes the issue.
+-- 
+Andreas Ericsson                   andreas.ericsson@....se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPp+/lAAoJEBYNRVNeJnmT2rwQALShoYNX0GQHOqsk5F2Kf719
-fy/Y3xRfyNVOTik1aC25/BcOFEgZtHicn8XVQ7GtlruoFHpusHUObTASYKOweWd8
-7fZq8yDRRSdGs+DGLOUs7P6k1fG8d2qwxOFOC5x0DvmI/CNk9YzGRVCAslrR/QM8
-aRTO/S/TjZrkKzhRXyF3IBep5rfrqkeLFXR/ySDddz3VppGds7rHFuckbWpXMa4l
-7e06SQXImuJ1zeIAf8a9olw+AlyY8GD8dkP6KQD39f/5KtTUC9Pm2/vbiYhJG2h5
-Tftex521hdIN+uH6x2EZ1AHJiEhS1ACwN0cOYKen0kxRKS227dDTkhWUHHTb4Ius
-lYfsH+WlWiv0AqutiSsfl0lNK1CR7S/QId7fl5Kln+YA//RnKko0clyfl+uDcfM5
-y+NTIAQQGd/TFlG20JODlZydmDspXYoM23JKEH9K8x/lgpW4zNB0yASrm8rwB+b6
-GupniuB3K5l0NYesz5HSUJZDZz22yt4N9Pw6Yb8yBqdIRS3HFjO8H/F1RynKE8iC
-iNHhsnNK+I4F463O7o4Yp8nnuaOp/g5NnQsJ19HYwExAFfUkW2gOWuXIW2dELAK4
-mOWXly1Z4HO0z/8JakED1JHTloHxsBdCRFsctQPHWau6cMER2DZ7Yn9SP/5VcXRt
-WVHaqnhsT6+zrzdEK7E+
-=WurX
------END PGP SIGNATURE-----
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
