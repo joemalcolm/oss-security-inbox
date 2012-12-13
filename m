@@ -1,58 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/17/3
-Message-ID: <1774200851.904474.1347896206312.JavaMail.root@redhat.com>
-Date: Mon, 17 Sep 2012 11:36:46 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/19
+Message-ID: <CAATysseGvKC4HoQeCWJuceeqm88rGqLHY6iTsnq3EM-8=a_t4A@mail.gmail.com>
+Date: Thu, 13 Dec 2012 17:37:44 +0100
+From: "Simon ." <bofh666ftw@...glemail.com>
 To: oss-security@...ts.openwall.com
-Cc: argyros george <argyros.george@...il.com>, Aggelos Kiayias <aggelos@...yias.com>, Vladimir Vorontsov <vladimir.vorontsov@...ec.ru>, gifts <gifts.antichat@...il.com>
-Subject: Re: Randomness Attacks Against PHP Applications
+Subject: pacemaker strcmp
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Wed, Aug 22, 2012 at 02:31:07PM +0400, Solar Designer wrote:
-> > On Thu, Aug 09, 2012 at 11:19:14AM -0700, Yves-Alexis Perez wrote:
-> > > Paper authors tried to port this to PHP security team, but it seems
-> > > the answer was that it was an application problem.
-> > 
-> > Here's a vulnerability in and attack on session IDs of PHP proper:
-> > 
-> > http://blog.ptsecurity.com/2012/08/not-so-random-numbers-take-two.html
-> > 
-> > This is not exactly the same topic (PHP apps vs. PHP itself), yet it's
-> > closely related and the timing of it was provoked by the same research.
-> 
-> FWIW, here's a PHP mt_rand() seed cracker that I wrote:
-> 
-> http://download.openwall.net/pub/projects/php_mt_seed/
-> 
-> It finds possible seeds given the very first mt_rand() output after
-> being seeded with mt_srand().
-> 
+Hi,
 
-...
+I might have overlooked something. Starting from Line 39, if pacemaker
+is compiled with ACL
+support:
 
-> 
-> Maybe these PoCs will help convince someone.
-> 
+https://github.com/ClusterLabs/pacemaker/blob/master/include/crm_internal.h#L39
 
-I'm skeptical they will. I've been doing a lot of work for the past year on
-various proactive security efforts. I keep coming back to two basic things.
+Once a user root\0bar is created, and CRM_DAEMON_USER is #undef we can return
+TRUE. Haven't looked into further details here and I think no sane
+admin will ever allow
+such a user. What do you guys think?
 
-1) Most people don't understand security (if they can learn is another
-topic).
-2) We suck at explaining security concepts.
 
-Item 1 is solvable to a certain degree with training, but this particular
-issue I bet is #2.
 
-WE see why this is a problem and have trouble understanding why the PHP
-guys don't. Has anyone tried to talk to them about this further to see if
-the issue is they don't understand, or are they being stubborn?
+/* For ACLs */
+char *uid2username(uid_t uid);
+void determine_request_user(char *user, xmlNode * request, const char *field);
 
-I'm quite interested in this problem (the general communication issue, not
-specially this PHP problem).
-
-Thanks.
-
--- 
-    JB
+# if ENABLE_ACL
+# include <string.h>
+static inline gboolean
+is_privileged(const char *user)
+{
+    if (user == NULL) {
+        return FALSE;
+    } else if (strcmp(user, CRM_DAEMON_USER) == 0) { <------------- #undef ?
+        return TRUE;
+    } else if (strcmp(user, "root") == 0) { <------------------- err
+        return TRUE;
+    }
+    return FALSE;
+}
+# endif
