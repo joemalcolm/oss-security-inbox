@@ -1,173 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/23/3
-Message-ID: <20120923051447.GC6940@openwall.com>
-Date: Sun, 23 Sep 2012 09:14:47 +0400
-From: Solar Designer <solar@...nwall.com>
-To: George Argyros <argyros.george@...il.com>
-Cc: oss-security@...ts.openwall.com, Aggelos Kiayias <aggelos@...yias.com>, Vladimir Vorontsov <vladimir.vorontsov@...ec.ru>, gifts <gifts.antichat@...il.com>, Anthony Ferrara <ircmaxell@...il.com>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: Randomness Attacks Against PHP Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/21
+Message-ID: <20121213222932.072dc28c@melee>
+Date: Thu, 13 Dec 2012 22:29:32 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Cc: kseifried@...hat.com
+Subject: Re: CVE request: opus codec before 1.0.2
 Content-Type: text/plain; charset=utf-8
 
-George,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I watched a video of your USENIX Security talk the other day (after I
-was done with my experiments with mt_rand() seed cracking, though):
+On Tue, 11 Dec 2012 11:02:15 -0700
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-http://www.youtube.com/watch?v=yE0qTTi-_iQ
-
-Thanks.  Shortly before that, I released a faster version of my PHP
-mt_rand() seed cracker, now down to 1 minute worst case on CPU:
-
-http://www.openwall.com/lists/john-users/2012/09/20/2
-http://download.openwall.net/pub/projects/php_mt_seed/
-
-$ time ./php_mt_seed 1328851649
-Found 0, trying 637534208 - 671088639, speed 63310249 seeds per second
-seed = 658126103
-Found 1, trying 1207959552 - 1241513983, speed 63343447 seeds per second
-seed = 1234567890
-Found 2, trying 4261412864 - 4294967295, speed 63347894 seeds per second
-Found 2
-
-real    1m7.798s
-user    9m1.942s
-sys     0m0.008s
-
-In one minute of real time (on an FX-8120 CPU, using vectorized fused
-multiply-add instructions), it found the original seed, another seed
-that also produces the same mt_rand() output, and it searched the rest
-of the 32-bit seed space (not finding other matches in this case).
-
-Gifts implemented the same thing in OpenCL:
-
-https://github.com/Gifts/pyphp_rand_ocl
-https://github.com/Gifts/pyphp_rand_ocl/tree/SpeedyOCL
-
-His SpeedyOCL branch achieves similar performance (and even 10% better
-than mine in his test of both on a Core i5-2500) on CPUs (with Intel's
-OpenCL SDK) and several times better performance on GPUs.
-
-On Thu, Sep 20, 2012 at 02:31:19PM -0400, George Argyros wrote:
-> FYI, we have also released some code to exploit such vulnerabilities
-> about a month ago in github
-> (https://github.com/GeorgeArgyros/Snowflake).  We hope that this
-> framework will allow the easier development of exploits for such
-> vulnerabilities.
-> The main difference with the code mentioned in the previous posts, is
-> that it may not always be possible to obtain the first output from
-> mt_rand() after seeding. For example, many applications only leak
-> truncated mt_rand() outputs in which case we should really compare
-> bits of different mt_rand outputs to test whether we found the correct
-> seed.
-
-Yes.  Your implementation is far more generic.
-
-The way I'd approach this is by limiting the set of possible seeds based
-on the first mt_rand() output (perhaps with a min-max range, so _many_
-seeds will be potentially valid - could be millions, yet significantly
-fewer than the full 4 billion set).  This can be accomplished almost as
-quickly as cracking the seed based on an exact mt_rand() output (full
-31 bits of it, no min-max range) - that is, in one minute on CPU.  Then
-slower, but more generic code may be used to filter out the impossible
-seeds based on further mt_rand() outputs, until there's just one seed
-value left.  The slowness of that second cracker would not matter much
-because it'd only need to search a much smaller seed space.
-
-A limitation, though, is that the very first mt_rand() output after
-seeding must be among those available, even if in truncated form.  If it
-is not, then more of the state has to be maintained in the initial
-cracking pass, thereby making it slightly slower.  When the first output
-is (at least partially) available, we only need 3 state elements, so
-they're kept in registers nicely.
-
-> For this reason, in our tool the user defines a "hash" function
-> that expresses any mt_rand dependent output and then we search for a
-> preimage for this hash function.
-
-That's a generic and curious approach, but I think it's slower than what
-I described above while not being _more_ generic.
-
-> We also include a python API for this functionalities as well as a
-> sample exploit for mediawiki 1.18.1. Some POCs might indeed help...
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> We will also release the gaussian solver based tool we developed in
-> order to recover the internal state of mt_rand from its (truncated)
-> outputs in the following days.
+> On 12/11/2012 05:32 AM, Hanno Böck wrote:
+> > http://lists.xiph.org/pipermail/opus/2012-December/001846.html
+> > 
+> > sounds like a low-severity security issue:
+> > 
+> > "Opus 1.0.2 fixes an out-of-bounds read that could be triggered by
+> > a malicious Opus packet by causing an integer wrap-around in the
+> > padding code. Considering that the packet would have to be at least
+> > 16 MB in size and that no out-of-bounds write is possible, the
+> > severity is very low."
+> > 
+> > Fixed in opus 1.0.2.
+> 
+> What's the security impact? does the service crash?
 
-Cool!
+I don't know any details, just read the release announcement and it
+sounded security relevant.
 
-> I agree too that education is important. This is something that we
-> came to an agreement with the PHP team (for example that additional
-> information is needed on the mt_rand manual). However, as pointed out
-> nothing has changed yet (the conversations between us and the PHP team
-> took place in March/April).
+This is the commit:
+http://git.xiph.org/?p=opus.git;a=commit;h=466c879a063e77941b95a6a0298905ba707667ac
 
-Did PHP 5.4's change of session IDs (vs. 5.3's) occur before or after
-your conversations with them?
+Sorry, I don't know more.
 
-> However I think that the specific issue goes beyond education. First
-> of all, We believe that adding simple exploit mitigations such as
-> secure seeding in these functions is something that should definitely
-> happen. Secure seeding is easy to add using randomness from the
-> operating system and furthermore it will incur a negligible
-> performance overhead since it would happen only once in the process
-> lifetime.
+- -- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
 
-Agreed.
-
-> For a more concrete solution I think that the existence of secure
-> PRNGs is not enough. Even if mt_rand() was producing secure random
-> numbers we would still be having a lot of vulnerable applications just
-> from the way this function is used.
-
-Right.
-
-> Just as PHP devs use
-> session_start() to start a new PHP session there is a need for a
-> generate_token() function that will return a random token and take
-> care of providing the necessary level of security for this token.
-
-Perhaps, and this is in line with Anthony Ferrara's work on a new
-password hashing API for PHP 5.5 (which will eventually obsolete phpass,
-I guess).  Simpler interfaces that are easier to use correctly than not.
-
-However, a reason why many PHP app devs use mt_rand() and the like is
-because they want to generate tokens of a certain format, such as to
-meet a standard.  One such use is crypt() salts, which we're helping
-eliminate with phpass and then with Anthony Ferrara's new API.  But I
-guess other uses will remain.  So perhaps that generate_token() function
-would need to accept arguments and return tokens of different target
-formats accordingly.  Maybe it should have a format argument similar to
-that of pack().  Its advantage over separate calls to a PRNG and then to
-pack() on the PRNG's output would be that it'd keep the distribution
-uniform.
-
-It is curious how it is often overlooked that simple modulo division may
-turn a uniform distribution into non-uniform.  Here's an illustration
-(in case this is news to someone on oss-security):
-
-$ php -r 'for ($n = $i = 0; $i < 1000000; $i++) { $x = mt_rand(); $n += ($x < 0x40000000); } echo "$n\n";'
-499567
-$ php -r 'for ($n = $i = 0; $i < 1000000; $i++) { $x = mt_rand(); $n += ($x < 0x40000000); } echo "$n\n";'
-500558
-
-$ php -r 'for ($n = $i = 0; $i < 1000000; $i++) { $x = mt_rand() % 500000000; $n += ($x < 250000000); } echo "$n\n";'
-535117
-$ php -r 'for ($n = $i = 0; $i < 1000000; $i++) { $x = mt_rand() % 500000000; $n += ($x < 250000000); } echo "$n\n";'
-534124
-
-First two runs show uniform distribution of mt_rand() outputs themselves
-(assuming the 0 to 0x7fffffff range).  The other two runs show
-non-uniform distribution over the 0 to 500 million minus 1 range,
-after the modulo division by 500 million.  (Values lower than half the
-maximum suddenly became more common than higher values.  It was 50/50
-before the modulo division, but became 53.5/46.5 afterwards.  The reason
-is obvious: the original space is not divisible into a whole number of
-500 million sub-spaces.)
-
-This is why having separate functions that return a random number and
-those that process it to the desired format might not be good enough.
-A single function that does both jobs at once (avoiding the above
-problem by using a smarter approach) could work better.
-
-Alexander
+iQIcBAEBCAAGBQJQyki/AAoJEKWIAHK7tR5CxZ8P/A40tOa/eto6cCuBMY7DIOmu
+mjzMR6rvirmCUaWNLnhlPulSctF4TZNfJtRGSVPvxKSKcvqMqNJjG64A2nhIVmFt
+3DU/OaB2TvmiMQWQv+d3MXtN1rfzRNfSViUHTXKhMH2WaZgc5efjo5ZRcYiFtBG9
+nIpjZZKv7VhbM8nJ0hB3+l6pQF3x7CVCHilt9Rguk301bI8WzxejHsZub4w0uyiB
+UTpwmNEXif9KwLP5a8xLmWTiCem88Tfsytz+JaZmJWlnQX+X+dJjb8YG06LC7kyy
+bPbGsin1gFje2Cpl88sZxb4BoKn6aRoBfW6SeLHU7U9BFFAQE145jbEglVQnIPz/
+c3dxTg8lQieXOzWPmCzJ158pW/7qCEFCKktTPshJpFGALM3f8BO+nWotv/mOcJCK
+AqzoJ0mbx6bTtO+w9EC+WHeVtzimuaiGIg40l+NI7nc+EXbXWxSVnT5PgN/hbv1h
+n+Bn4dgpejWsxQH1KGyHPrYpruqfCaLDpuPKaxLQlzcS3+WDUyKYUbTQR1+xF2Ff
+Wj0R93jGdkFBYf1g43MwFe0vr46eNMeKHDi/ULg/tKq00YtTIa3FOdm7JQGTNEAL
+8qwfP/dCO88i6UZ54tdRJQMXbXCupRDZQ5Nbv/jwZtZzfFwXf+4nfLQWFhr+aIv+
+0R8bD6KcvpHpGSl9MnZo
+=SlcG
+-----END PGP SIGNATURE-----
