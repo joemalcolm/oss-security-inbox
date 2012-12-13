@@ -1,30 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/27/16
-Message-ID: <1330370331.21477.14.camel@tiger.regit.org>
-Date: Mon, 27 Feb 2012 20:18:51 +0100
-From: Eric Leblond <eric@...it.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/10
+Message-ID: <20121213145913.GA19569@pre-sense.de>
+Date: Thu, 13 Dec 2012 15:59:13 +0100
+From: Timo Warns <Warns@...-Sense.DE>
 To: oss-security@...ts.openwall.com
-Subject: Re: Attack on badly configured Netfilter-based firewalls
+Subject: Remote file inclusion by office applications
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+I would like to hear some opinions on whether remote file inclusion by
+office applications should be considered as security-relevant.
 
-On Mon, 2012-02-27 at 19:13 +0100, Florian Weimer wrote:
-> * Eric Leblond:
-> 
-> > I've discovered a generic attack on firewall using Application Level
-> > Gateway (like Netfilter or Checkpoint).
-> 
-> This is rediscovered every two to five years.  Here's mine
-> (from 2005, but it's been proposed before):
-> 
-> <http://www.enyo.de/fw/security/java-firewall/>
+Different office applications automatically include remote files on
+opening local files. Examples include MS Word [1] and
+LibreOffice/OpenOffice [2].
 
-This is not at all the same attack.
+I can imagine different impacts:
 
-BR,
--- 
-Eric Leblond 
-Blog: http://home.regit.org/
+- The origin of a document can track when a document has been opened and
+  possibly by whom.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+- The origin of a document can arbitrarily change the displayed content
+  of the document whenever the document is opened (without affecting hash
+  sums of the document). For example, the origin may change the content
+  of a remote image depending on from which IP or when the image is
+  accessed. For example, a sent tender may be changed after the tender
+  deadline.
+
+- Under certain conditions, remote content is directly embedded into
+  a document. This may allow to extract confidential data. For example,
+  LibreOffice/OpenOffice directly embed remote content when converting
+  a document into the PDF format. An attacker may send a document
+  referencing confidential data to a victim asking the victim to convert
+  the file. If the victim converts and sends the document back, the
+  attacker receives the confidential data.
+
+In my opinion, these issues are a question of user expectation. Users
+are aware that web browsers may access remote content even when opening
+local files. I don't think users are aware that office application may
+do the same. An 'offline mode' for office applications that is enabled
+by default could meet user expectations.
+
+[1] http://carnal0wnage.attackresearch.com/2011/11/embeding-link-to-network-share-in-word.html
+[2] http://docs.oasis-open.org/office/v1.2/os/OpenDocument-v1.2-os-part1.html#__RefHeading__1415852_253892949
