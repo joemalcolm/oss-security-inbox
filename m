@@ -1,43 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/17/8
-Message-ID: <20121017175839.GD2630@sentinelchicken.org>
-Date: Wed, 17 Oct 2012 10:58:39 -0700
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/13/20
+Message-Id: <201212132103.qBDL3Qlw025344@linus.mitre.org>
+Date: Thu, 13 Dec 2012 16:03:26 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby file creation due in insertion of illegal NUL character
+Cc: cve-assign@...re.org
+Subject: CVE-2012-5374 CVE-2012-5375 Btrfs CRC32C denial of service issues
 Content-Type: text/plain; charset=utf-8
 
-> It's difficult to reason about whether this is a bug or a feature
-> without knowing the justification for treating the Ruby version as a
-> security vulnerability, which was not included in the announcement.
-> 
-> One possible justification is this: suppose a webapp writes files with
-> an attacker-controlled name to the web-server-visible /uploads/
-> directory, using this pseudocode:
-> 
->     if (filename ends with .jpg) {
->       open_for_writing(filename).write(content)
->     }
->     else {
->       error "that's not a JPEG, go away"
->     }
-> 
-> and suppose that the web server also executes *.php files in that
-> directory. Then an attacker could upload "evil.php\0.jpg", and browse
-> to http://example.com/uploads/evil.php to get their payload executed.
-> 
-> Is this what the Ruby people had in mind, or is there some other
-> attack vector I'm not seeing?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+We have assigned two CVEs to these issues in the Linux kernel:
 
-I've personally exploited this condition in a number of PHP apps
-during pentests (in versions of PHP that don't prevent it).
+  http://crypto.junod.info/2012/12/13/hash-dos-and-btrfs/
 
-Is the application at fault for not doing a better job of data
-validation?  Yes.  Yet, is there any good reason to allow raw NUL
-bytes in file names?  NO.  As mentioned, no filesystem supports it.
+CVE-2012-5374 Btrfs CRC32C feature leads to an "infinite loop" or a
+              similar lengthy runtime of filesystem operations
 
-You can save the average web app user a lot of grief by just rejecting
-blatantly illegal paths.
+CVE-2012-5375 Btrfs CRC32C feature prevents file creation in ways
+              that may cross privilege boundaries
 
-tim
+Here are a few additional comments. We realize that the assignment of
+CVE-2012-5374 is potentially problematic because the researcher did
+not investigate the code to determine whether an infinite loop was
+actually occurring. Our expectation is that, after source-code
+analysis is completed by others, the correct number of CVE IDs for the
+issue will still be one.
+
+We realize that the assignment of CVE-2012-5375 is potentially
+problematic because there is, in some sense, a vendor statement that
+the software behavior is completely intentional ("Group writable
+directories have other security issues, and so we picked the hash
+knowing this kind of DOS was possible"). However, there are other
+threat models that may be relevant in some environments, and some CVE
+consumers may wish to track the stated behavior in conjunction with a
+vulnerability-handling process. Thus, there arguably should be a CVE
+for this issue in Btrfs, and other CVEs could be assigned on request
+for each additional hash-based-filesystem codebase with a similar
+behavior. As usual, the CVE project is willing to mark the CVE
+descriptions as "** DISPUTED **" based on vendor information.
+
+Here is an example of an alternative threat model that might be
+relevant. Suppose a system has restricted user accounts that don't
+have full shell access or full filesystem access. Specifically, users
+have no mechanism for modifying or deleting the dotfiles in their home
+directories, but can create other files. A security product, running
+as root, automatically creates .hushlogin files in home directories
+whenever the current motd has private information. A user can cross
+privilege boundaries and bypass this security mechanism by creating a
+file with a different name. One can argue that this isn't a
+vulnerability in the security product because it couldn't reasonably
+anticipate that existence of other filenames would trigger failure of
+root's O_CREAT|O_WRONLY open system call for .hushlogin.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJQykIJAAoJEGvefgSNfHMdHA8H/AtaEUNqqXvUYWW7HPnZMeQC
+V8nEN0ThfevBXKb0rhS3md1E7ZtjwRahTPAR+UGS7v4dCvN5OeUPlI6D7bVAlaTg
+qY3b+RxNpjnmvlAFh6ip+h92xNB7p1e35oJpiXH9bRIy4waWpWv7d7XXXgAVdPkV
+CKT5h5JjNEWxDvKUKGxITSo9V34RJSkrTjqETtvoxO5P+XsMAPPDEGLrZvx8duaJ
+K/MyyOjmoCUc2ilCp82T7N4h9syYYb+3kYyETpqBMvL8GAAygYjBnK69UhuGeGYX
+HutBDFC2h6KfirlcWPFSpKcc8DhS26tSYyGdNgCCE/T0ZI2xKrjFDteO/krzYeU=
+=nKcQ
+-----END PGP SIGNATURE-----
