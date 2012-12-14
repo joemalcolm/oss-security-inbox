@@ -1,39 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/20/12
-Message-ID: <20120120094445.GA4594@openwall.com>
-Date: Fri, 20 Jan 2012 13:44:45 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/14/3
+Message-Id: <201212140132.05038.tmb@65535.com>
+Date: Fri, 14 Dec 2012 01:31:59 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Subject: distros & linux-distros embargo period and message format
+Cc: Kurt Seifried <kseifried@...hat.com>, Daniel Kahn Gillmor <dkg@...thhorseman.net>, Timo Warns <Warns@...-sense.de>
+Subject: Re: Remote file inclusion by office applications
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Friday 14 Dec 2012 00:24:33 Kurt Seifried wrote:
+> On 12/13/2012 11:53 AM, Daniel Kahn Gillmor wrote:
+> > On 12/13/2012 11:44 AM, Kurt Seifried wrote:
+> >> I'm kind of leaning towards classifying this as a security issue
+> >> since I expected there is some way to disable it or at least tell
+> >> it to prompt me when a document tries to go get an external data
+> >> source (e.g. "this document contains external data, the URLs/file
+> >> paths it is trying to  reference are: [list of locations]") but
+> >> apparently there is no way to disable/have this prompt (at least
+> >> that I can find in LibreOffice)?
+> > 
+> > I think your assessment is correct.  I've just now made an ODT file
+> > that libreoffice uses to not only hit the network for a PNG (denial
+> > of service attacks, remote exploitation of other flaws in libpng or
+> > in LO itself, virus scanner bypass, etc), but one that will include
+> > and render ~/.ssh/id_rsa as a text/plain document.  This seems like
+> > it could be done against any local privileged file.
+> > 
+> > For local file inclusion, libreoffice at leasts prompts me with:
+> > 
+> > ----------- This document contains one or more links to external
+> > data.
+> > 
+> > Would you like to change the document, and update all links to get
+> > the most recent data?
+> > 
+> > [Yes] [No] -----------
+> > 
+> > but it doesn't tell me what those documents are. And given the UI
+> > history of people clicking through popups they don't understand,
+> > i'm not convinced that this popup is going to do anything to
+> > prevent remote disclosure (it even defaults to "Yes").  When i say
+> > "no" on the prompt, it goes out and fetches networked URLs anyway,
+> > so i assume this prompt is supposed to just refer to local
+> > "external data".
+> > 
+> > --dkg
 
-I've just updated the wiki page at:
+Confirmed.  By comparison both Okular and Calligra Office ignore the remote and 
+local file references (without even prompting).
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
 
-to state the following:
-
-"Please note that the maximum acceptable embargo period for issues
-disclosed to these lists is 14 to 19 days, with embargoes longer than 14
-days (up to 19) allowed in case the issue is reported on a Thursday or a
-Friday and the proposed coordinated disclosure date is thus adjusted to
-fall on a Monday or (preferably) a Tuesday.  Please do not ask for a
-longer embargo.  In fact, embargoes shorter than 14 days are preferable."
-
-Previously, the maximum was specified as 14 days unconditionally, but
-frankly this started to fail in practice for the day-of-week reason -
-so I've adjusted the policy as above (based on proposals from list
-members).
-
-While at it, I've also added this clarification on the format of messages:
-
-"Speaking of encryption, the supported message formats are: plain
-unencrypted messages, PGP/MIME (including with attachments), or inline
-PGP.  (In all of these cases, messages are distributed to list members
-(re-)encrypted to their own keys.)  However, manual PGP-encrypted
-attachments are not supported (so if you want to attach file(s) to your
-encrypted message, use PGP/MIME)."
-
-Alexander
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
