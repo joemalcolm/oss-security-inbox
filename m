@@ -1,49 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/28/2
-Message-ID: <503C1BB6.70304@redhat.com>
-Date: Mon, 27 Aug 2012 19:15:34 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/14/1
+Message-ID: <50CA71C1.6010905@redhat.com>
+Date: Thu, 13 Dec 2012 17:24:33 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, hdm@...asploit.com, jdrake@...p.org
-Subject: Re: CVE Request: Java 7 code execution 0day
+To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+CC: oss-security@...ts.openwall.com, Timo Warns <Warns@...-Sense.DE>
+Subject: Re: Remote file inclusion by office applications
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/27/2012 06:27 PM, David Jorm wrote:
-> Hi All
+On 12/13/2012 11:53 AM, Daniel Kahn Gillmor wrote:
+> On 12/13/2012 11:44 AM, Kurt Seifried wrote:
+>> I'm kind of leaning towards classifying this as a security issue
+>> since I expected there is some way to disable it or at least tell
+>> it to prompt me when a document tries to go get an external data
+>> source (e.g. "this document contains external data, the URLs/file
+>> paths it is trying to  reference are: [list of locations]") but
+>> apparently there is no way to disable/have this prompt (at least
+>> that I can find in LibreOffice)?
 > 
-> A 0-day flaw exploited in the wild has been reported to affect Java
-> 7:
+> I think your assessment is correct.  I've just now made an ODT file
+> that libreoffice uses to not only hit the network for a PNG (denial
+> of service attacks, remote exploitation of other flaws in libpng or
+> in LO itself, virus scanner bypass, etc), but one that will include
+> and render ~/.ssh/id_rsa as a text/plain document.  This seems like
+> it could be done against any local privileged file.
 > 
-> http://blog.fireeye.com/research/2012/08/zero-day-season-is-not-over-yet.html
->
+> For local file inclusion, libreoffice at leasts prompts me with:
 > 
-http://pastie.org/4594319
+> ----------- This document contains one or more links to external
+> data.
 > 
-> This issue was confirmed to allow unsigned applet to bypass Java
-> applet restrictions and run arbitrary code on users' systems. A lot
-> of public information is now available for this flaw:
+> Would you like to change the document, and update all links to get
+> the most recent data?
 > 
-> http://www.h-online.com/security/news/item/Warning-on-critical-Java-hole-1676219.html
->
+> [Yes] [No] -----------
 > 
-http://www.deependresearch.org/2012/08/java-7-0-day-vulnerability-information.html
-> https://community.rapid7.com/community/metasploit/blog/2012/08/27/lets-start-the-week-with-a-new-java-0day
->
+> but it doesn't tell me what those documents are. And given the UI 
+> history of people clicking through popups they don't understand,
+> i'm not convinced that this popup is going to do anything to
+> prevent remote disclosure (it even defaults to "Yes").  When i say
+> "no" on the prompt, it goes out and fetches networked URLs anyway,
+> so i assume this prompt is supposed to just refer to local
+> "external data".
 > 
-https://github.com/rapid7/metasploit-framework/commit/52ca1083c22de7022baf7dca8a1756909f803341
+> --dkg
 > 
-> This flaw does not have a CVE ID assigned. I contacted Oracle
-> asking if they have assigned one, but got no response. Can someone
-> please assign a CVE ID to this flaw?
-> 
-> Thanks
 
-Please use CVE-2012-3539 for this issue in Java from Oracle. Please
-note that additional CVE's may be issued if it is discovered that this
-issue affects over versions of Java/etc.
+Ok so for LibreOffice and OpenOffice please use CVE-2012-5639 for this
+issue (automatic opening of remote content/poor UI so you have no idea
+what it is your opening).
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -51,19 +59,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQPBu2AAoJEBYNRVNeJnmT1FkP/i9l3aCEN6O+f+u+gs3ShI0T
-RGxQiJ3qkv58/rz608p/xbljRxUmVbjTBDZDN3tPbqzp7mTa4xDlBB/hU2okVAVD
-yHqOPpWwnWv4rsZz5CvcEuGJda+mlhljLU1Ar6L+XoWZtDgDc7bxs9Ms6hESNM+X
-qqQhaaHqZf+AuG5QIb975O4Pj/O8UxeK/B/XRoXCOZNeAuOT+XMQuhphQaJQ9sHS
-2WwEIdeURcX2WOa5mNCG4EFIIOlkSN2hhzXB1SMX5bp0x8x9+CYLjlGUUKmx+kop
-qk6WsoRuzDzFyC4C9ICKq8rapDN9DHhfqbYhjT9BOKZIdz+lWmzaXLdL8AdFGkdE
-EAfzrwmkhrdQFYbZmrlG+Xlc6snhZSdAbBUO7W7C3hMzIyW8VT8VKlegz1F3vMbo
-ZL8bPGdHQZZp7v/4vsxkXOzzt6iskjS9h4raJw6jO55gwNAZI7iMG38h68wK/84h
-VmJDJVjkZoxdT1adbNpasefkXPJej6ZdH6a1fISPklm7jLUand3PHUCY6EeH+zfD
-ntKSe4x1vIVShjJpoadEZL1LNhtP7WQYr+NiTUoK5z4Qir1MDBS251OW09n4aXZB
-P7Drjne4IhrM+u8DkxdSPER1DmIlcrPrDYXbu6rrKaqSoJ+7FnaCQCzrf6LKDPYq
-HKwv3A6E0w2ZESSIl4fe
-=ib65
+iQIcBAEBAgAGBQJQynHBAAoJEBYNRVNeJnmTpvUQAI9Cb4N2LJei/Fi17QeL0PZy
+nw7OZOtlUsPqNCzFts/7X1u3377UBVv3+kFrheFlC9i24aQQ16sFg6M3QmKGIAO7
+lPn0ri+0HvTgOjzjGkmJXvYpMbmFm04qPNWPxRIKW7GvXHnxVI/M2F8hwOIqINca
+sQkFW4cci6GbLhtx1levExadjUzbMTZ1Fm2LG86yE1Q3uBWiTRXqg4DBMwGA99p0
+P0gAg8dL3CjamdCQC5P2DwK5ol3+uVDbyAI7M2vlYixc+LATL1QmLKGNbQfsjcU2
+AWCb35MtnSX/Mm/GnTXtgf1ScbWM+bod9l0p/pCKIBH+W/A0jyRDitJxMz0B+rze
+d2qR/OCtEtEpnHVSSt8rJvGVTCL3VSvD3ODxsmTfrhheYNeDnVwc8I4I4MR2zeQr
+rXYhWqStmNX58cF7NClYm+PNLEdvnt8yd1w6zb9iwVcWAbLhTxS/GX9hM0yS6b4M
+l/2yMve9dEc4TT4ajTi8BwS0f7c9nvNH0RRxe3SJm249ZyuXpF07+P1ZJOJ4owwB
+Ir6Q2NK98aDpLh2Ztmho7Wk64lF9YSoA3CSx2JbKjuVkabeuE3avfd1+PFfx0HWK
+soDm9ohafoGvE0r2O15ENKlzt5QnHay3AGSlMDnuOV/DiHFHTjXh4vCxWe/Qx3zG
+ud/Yy5lXXA4vaX+7dbDk
+=mYif
 -----END PGP SIGNATURE-----
