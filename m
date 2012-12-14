@@ -1,66 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/29/4
-Message-ID: <503E5E81.6010404@redhat.com>
-Date: Wed, 29 Aug 2012 12:25:05 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/14/5
+Message-ID: <50CAEC23.20106@redhat.com>
+Date: Fri, 14 Dec 2012 10:06:43 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, Gerald Combs <gerald@...eshark.org>, Jan Safranek <jsafrane@...hat.com>, Martin Wilck <martin.wilck@...fujitsu.com>
-Subject: Re: CVE Request -- wireshark (X >= 1.6.8): DoS (excessive CPU use and infinite loop) in DRDA dissector
+Subject: Re: Robust XML validation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12/13/2012 01:47 PM, Timo Warns wrote:
 
-On 08/29/2012 09:39 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, Gerald, vendors,
-> 
-> a denial of service flaw was found in the way Distributed
-> Relational Database Architecture (DRDA) dissector of Wireshark, a
-> network traffic analyzer, performed processing of certain DRDA
-> packet capture files. A remote attacker could create a
-> specially-crafted capture file that, when opened could lead to
-> wireshark executable to consume excessive amount of CPU time and
-> hang with an infinite loop.
-> 
-> Issue found by: Martin Wilck
-> 
-> Upstream bug report: [1]
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7666
-> 
-> Reproducer: [2]
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7666#c0
-> 
-> References: [3] https://bugzilla.redhat.com/show_bug.cgi?id=849926
-> 
-> Affected versions: Seems to affect wireshark 1.6.x versions and 
-> later (1.0.x and 1.2.x definitely aren't affected)
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+>> I wonder if we should care about this in the sense that we should
+>> prepare fixes, or if it is sufficient to recommend to validate against
+>> trusted schemas/DTDs only.  (I've found an implementation which gets
+>> right the things I tested so far, so efficient implementations aren't
+>> impossible.)
+>
+> Validating against trusted schemas/DTDs would not be sufficient in my
+> opinion. For example, such validations are not effective against the
+> billion laughs attack (http://en.wikipedia.org/wiki/Billion_laughs).
 
-Please use CVE-2012-3548 for this issue.
+True, entity expansion is required for XML parsing, strictly speaking, 
+not just for validation.  Some XML implementations use heuristics to 
+stop such attacks.  And of course, there's the big hammer of disallowing 
+all entity declarations.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Moreover, some projects deliberately decide against schema validation.
+> For example, when fixing CVE-2012-2665, LibreOffice developers have
+> decided against validating the manifest.xml against a schema or DTD.
+> If I understood correctly, the reason was that omitting validations
+> allows to open documents in a future format on a best-effort basis (as
+> an alternative to annoying the user with a "format not supported" message).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+I'm not an expert on schema authoring.  (Actually, I once tried to 
+define an extensible XML schema and couldn't get it work.) Looking at 
+RELAX NG, there doesn't seem to be a way to say, "you can put any tag 
+here, but if its <myimportanttag>, it must have *this* structure, 
+either.  So it's probably feasible to validate during generation only, 
+to check that your hand-crafted code produces the expected document 
+structure.  Which is a bit odd.
 
-iQIcBAEBAgAGBQJQPl6BAAoJEBYNRVNeJnmTV/0QAJyDsp6OHvnADeErcigT7Kxg
-E0W2fLtb635roZdDV7Qo8k1R/huY0P89VZjDM7cyOH6FqjAx9GpFfbFf/QUOVjjR
-3rFBNx9p0iChyyIUtC8z2jNRO+d0EhcuhbF348remhNKAf5fbxd/J+C2j4VVxf+L
-X8n3OpZsAJMh94jmKxt2JfJppVN8gDfAL8TlUItLsZeN5DyfTOXMPoaGSQxhjgxy
-SjE3/WGzQUrNLwzBjMseIq3fKa6SI7+Owy3YYAS+w/tXxAlr+c8BzD6x5ej0PG1H
-NJI2xbnl1na2WL2Cf8C2QbK57vQAE6qF/ApEicM/oRB0H8abR+uAJzheg+ciRTl+
-Ulc614pXJVdRRVP0/J2J/Iie60HD1zS9YOHFPGVsUMoKCOAWBlgys/+Sgyo9hBwl
-9bZlN2wSsp3Q1bm+BU/i7+f9BI0CKREM8CIzlJmZKXNSGPZ0JXryDx+Spm1+qezG
-DJlWdhPa2IlLQJH5f8U9qUKZbocQPkaDo1+mai5MzOId3uVQuWBhLz9uTCbL0y+Y
-8to53q/QJ0isHAnBripJkDk4krgr0O36ZKisnBSUcnEHtCKNRElUhdyWvmdEYYog
-rBElX0caPyqrh8Ul9ATqIJJeSa1lSgxWYqPndP8E9g+ypGqMvpLlhrqXiSPX1uvH
-uBhGnDzTdDnT5XBJfZJu
-=jqeq
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security Team
