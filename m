@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/07/28/4
-Message-ID: <50138C6C.9060007@redhat.com>
-Date: Sat, 28 Jul 2012 00:53:32 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/14/2
+Message-ID: <50CA7CA7.9070306@redhat.com>
+Date: Thu, 13 Dec 2012 18:11:03 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Quick question regarding CVEs
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE for tog-pegasus Hash DoS issue from 2011
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/28/2012 12:41 AM, Kurt Seifried wrote:
-> Just checking my records, I feel like I'm missing an OpenStack CVE,
-> is this list complete for 2012?
-> 
-> CVE-2012-3371 CVE-2012-3361 CVE-2012-3360 CVE-2012-2654 
-> CVE-2012-2144 CVE-2012-2101 CVE-2012-2094
-> 
-> -Kurt
+I forgot to assign this a CVE apparently.
 
-Ah nevermind, Mitre still has some (like CVE-2012-1585) listed as
-reserved which is why I got confused.
+http://bugzilla.openpegasus.org/show_bug.cgi?id=9182
+https://bugzilla.redhat.com/show_bug.cgi?id=796015
 
+please use CVE-2011-4967 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -29,19 +23,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQE4xsAAoJEBYNRVNeJnmTwMYQAMIDjM/tIUT8AFXaCFYd17sk
-vlvmll5k3R7Hafnfns9FdCnJmXLlUVuv/Ho/+uBNbnLy3IJVgs6qKi1qflGQn1mL
-s52W+DRjaDxfZWbIYPd+btnuqS0U1bHh7Pp9exSD54rwXFHfY5+/ZsEbIeDs/7Cl
-qJnNFpfHo3ZIW/y9JsuHBX33xMfLZ8IESrHoWmjWHtedjCk1RXbodikZHalQQGSi
-AEmXryd9zAF2z4fzQEhXTlhxMQkiRn9gn9KxU6v1PFft/vPpYoERDQth0sTAcXcS
-beW4qZda+chk8LDp+58eTv2iFJp99U0lTqrk/PFhegeWaABTaVtolpz5SpgpSulH
-Fvn0aTFGOj1aoOSDgr8WLZtIqS7JfGS2ZR6sM7QHZjl0dO3Qt9x0vuAo5VIxDA1K
-bK8b+xThnQbHIo1JVHgePfZPD4d2noaxN/55eHvfnLOfEykXlbvLxbsej7dAshiF
-8dd6FKuLFsk0M3aQYV4nwFNnfftqaq6B2NjilFbJd6ra560VFBEQ6rseSKJMp2Qy
-CXpS87L/2mAwBz5mSR0p7gaM6s0KAY/jD+O4wypWmiuAFMnXmv9+DG4zDwZ6nxSR
-IjFEoNSLh+X1NtQbOvCnreEZrrIZl8Z20TrJX3UsBeYD/AwuE2JbuVkKI/nxx3gZ
-gZ+jJ9P1LeG6npxEoXcb
-=iH4Q
+iQIcBAEBAgAGBQJQynynAAoJEBYNRVNeJnmTlU8P/3Wv4Y6ULul57ps+QcS60I1j
+DkoshZ9Na06TzypfCR+OHs85wsvx7PdLA9YFkQB5AmapRgtzMEfWi2cqsiHaKnWe
+T79AyU2pOG6d8PTJr5RLV9am42FdHYJjDOqlBgwpZWGKC3UDj/ognOxwsnuhT0rt
+d+5nAQpwxFd22yu69tAGp0siDzpZpAZMTcbFI07ThG4RAkCpUlq5xs9zzqoATGNs
+riCrl+WFk/ASGVxZNyDiewfNuIdmAuFStOUCc8wleq4A1rNMpNbG5cyRsXh+yeTS
+TCsZD7zCVPPk4or5BJk4tDiGscTfiKNeabsOR3EJgfhREmycZ05WL5uiFRRCbXfR
+kU9w4enfRN2AsdMz5Z6DVlmrjlXxwRrZ4JOCh0aLbQTQ+PPpom6cauR3W6I9jqfx
+fyt+O04H1W4oSuYPPuvMp9Qt+Ir7QiZugGOZmd+Aewj0QxR9XUPlmddCGNdvWZ65
+K2yzW3xvomCykvledlCCJGljvaX1ckzg/K1u93GBxq26MQFiqEeaqPsMhekaHqMA
+FLVeQf4tI/AMmRr/LqwqS6Kb5Jz0ZH6qTGgbnTusE8Mbb4IZWab/NDuStq9+vvxA
+ePUZ0FB4E7RwRGMPs3bU25yCDGkF5LSjgazLmf7zO2YJ2+h0H2zP9bVHlGPov/Jo
+PTJZbbPhayy8sSekZhEi
+=QI5c
 -----END PGP SIGNATURE-----
