@@ -1,95 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/11/11
-Message-ID: <50770C31.8030506@redhat.com>
-Date: Thu, 11 Oct 2012 12:13:05 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/14/4
+Message-ID: <50CAE46F.3000200@redhat.com>
+Date: Fri, 14 Dec 2012 09:33:51 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Tim Brown <timb@...-dimension.org.uk>, security@....org
-Subject: Re: Pre-advisory for Konqueror 4.7.3 (other versions may be affected)
+CC: Daniel Kahn Gillmor <dkg@...thhorseman.net>, Kurt Seifried <kseifried@...hat.com>, Timo Warns <Warns@...-Sense.DE>
+Subject: Re: Remote file inclusion by office applications
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12/13/2012 07:53 PM, Daniel Kahn Gillmor wrote:
 
-On 10/11/2012 11:10 AM, Kurt Seifried wrote:
-> On 10/10/2012 07:52 PM, Kurt Seifried wrote:
->> On 10/10/2012 04:12 PM, Tim Brown wrote:
->>> Taken from NDSA20121010: --8<-------- This advisory comes in 4 
->>> related parts:
+> For local file inclusion, libreoffice at leasts prompts me with:
+>
+> -----------
+>   This document contains one or more links to external data.
+>
+>   Would you like to change the document, and update all links to get the
+>   most recent data?
+>
+>   [Yes] [No]
+> -----------
+>
+> but it doesn't tell me what those documents are.
 
-Cut and paste error, thanks to iSIGHT Partners for spotting and
-alerting me!
+This is based on a similar Microsoft Office prompt and implements 
+required functionality (for different use cases involving linked 
+documents).  It is not a security prompt by any means, and it predates 
+macro security prompts by several years.
 
->>> 1) The Konqueror web browser is vulnerable to type confusion 
->>> leading to memory disclosure.  The root cause of this is the 
->>> same as CVE-2010-0046 reported by Chris Rohlf which affected 
->>> WebKit.
-> 
-> Please use CVE-2012-4512 for this issue.
-> 
->>> 2) The Konqueror web browser is vulnerable to an out of bounds
->>>  memory access when accessing the canvas.  In this case the 
->>> vulnerability was identified whilst playing with bug #43813
->>> from Google's Chrome repository.
-> 
-> Please use CVE-2012-4513 for this issue.
-> 
+(I'm pretty sure Microsoft Office supports external documents with UNC 
+names, FWIW.)
 
-Please note I accidentally put the CVE #'s one spot to low, they
-should have been:
-
->>> 3) The Konqueror web browser is vulnerable to a NULL pointer 
->>> dereference leading to a crash.
-
-Please use CVE-2012-4514 for this issue.
-
->>> 4) The Konqueror web browser is vulnerable to a
->>> "use-after-free" class flaw when the context menu is used
->>> whilst the document DOM that is being changed from within
->>> Javascript.
-
-Please use CVE-2012-4515 for this issue.
-
->>> These flaws were identified during an analysis of previously 
->>> reported vulnerabilities that affected Google's Chrome web 
->>> browser. It is believed that only vulnerability 1 is/was
->>> common to the two code bases.
-> 
-
-> 
->>> --8<--------
-> 
->>> I'm pre-advising on these flaws since I've not heard anything 
->>> from the KDE project in about 8 months regarding 3 and 4 and
->>> we are aware that 1 and 2 have been fixed.  I'll give it 7 days
->>> and then drop technical details.  Vendors with an interest can 
->>> contact me off list.
-> 
->>> Tim
-> 
-> 
-> 
-> 
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQdwwxAAoJEBYNRVNeJnmTqN0P+wQgZuPH5JIDwa6EayJT8dnV
-uVIe2SCtCRSUO1i+P60BoSZ9yUv+L/GYEvzw7Y0klZYnIazTuULHq4PTJYIaCEcu
-TkorcgQvQo+UGOPByqDctEsjOu/SofCKXA/lJaJtnvOEmXIqakqEtuXbD3G2ngjx
-pLVa8m8w/E3aBNrIvwPEPR3bhQdBXhJQHw5KJBo4+hIUctjcAxUQHukJ+b/9TATy
-Y3RqnGBVds/23dGJqddCENga47w/vuIJlnYh6aXTlK83mWdOAAc3nQjpnf/YwjY3
-zN8+E05pvNJYyrvOH7nvxvt4vQl+fGl21YMOSK6DwERpwIIHl0XuSyf7kqznnO8n
-Rmvni33e0u4iOKb2YGc9eQ1n0CTxKYITpYSJt69rcq8I8UeXIwJw3uuLsdZKwYwd
-BJKFZIpDmF2DbH7ZCW6sCcDXaYTjeX+r5zbLq92qa9p0ZvASGvj0OE+Uvv0gsD3s
-UtDcTcxLGj3xYyuZqUbGvZw6ZlEq/A7u8XgmrVIPYuajXnWSCaqTcu1Y3g5niarT
-bDwDMK0jKpR8OnSWlymcrTE2JwkssxehKboCG+jWEqYYKGBy1NoXRxHmoQnq7NMx
-/5LXMxH2pqMd7XJjB85EB0JD4cVJDzerQGhdTUgS0c8/am7QoE7irr2y4HW3wTJ9
-aIcW1ZADvwBlhMJVfFfi
-=VQPm
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security Team
