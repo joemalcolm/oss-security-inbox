@@ -1,72 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/09/6
-Message-Id: <201211091603.qA9G3Tu3011820@linus.mitre.org>
-Date: Fri, 9 Nov 2012 11:03:29 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/15/1
+Message-ID: <50CBCEC8.3070000@redhat.com>
+Date: Fri, 14 Dec 2012 18:13:44 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, matthew.wilkes@...ne.org, jpokorny@...hat.com, security@...ne.org
-Subject: Re: Re: CVE Request - Zope / Plone: Multiple vectors corrected within 20121106 fix
+CC: Matthias Weckbecker <mweckbecker@...e.de>
+Subject: Re: CVE request: thttpd: Denial of Service (App. crash, local)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->It looks like some of these can be CVE merged, e.g. 14 and 15, 1 and
->5, can you confirm that these should not be merged?
+On 12/12/2012 03:57 AM, Matthias Weckbecker wrote:
+> Hi Kurt, Steve, vendors, ...,
+> 
+> I think I have never posted it to oss-sec. glibc's crypt() can
+> return NULL under some circumstances which causes thttpd to crash
+> while dereferencing:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=783165
+> 
+> Maybe you want to assign a CVE.
+> 
+> Matthias
+> 
 
-Thanks for constructing this comprehensive table, but please do not
-merge 14 and 15, or 1 and 5.
+- From the Novell bug:
+Matthias Weckbecker 2012-12-13 10:57:38 UTC
+For the sake of completeness (got reminded by some random dude on
+oss): This affects glibc 2.11 (as shipped with 11.4) (with thttpd-2.25b).
 
-CVE assignment by MITRE most often has merges when the available
-information suggests one of these two situations:
+Also can you post a link to the affected code? thanks.
 
-  A. Flaw types that have been used for many years and are thought to
-     be well understood. At present, a large fraction of our merges
-     are for XSS, SQL injection, CSRF, buffer overflows, integer
-     overflows, use-after-free issues, and directory traversal.
-     However, a merge can occur correctly for any flaw type.
-
-  B. The multiple pieces of disclosed information are identical except
-     for names and values. This occurs, for example, in disclosures of
-     incorrect permissions for multiple files. Another example is bad
-     passwords for multiple accounts.
-
-At this point in the history of CWE, a discloser's choice of the same
-CWE identifier for two different bugs might not be a strong indication
-that a CVE merge should occur.
-
-When a merge decision is unclear, it's almost always better not to
-merge. From the perspective of MITRE in producing CVE content, one
-primary reason is that a merge can make a CVE description difficult to
-understand. There are other reasons that are more important to other
-audiences. For example, some CVE consumers don't like situations in
-which a vendor publishes multiple disclosure documents that explain
-different aspects of the same CVE. Other CVE consumers don't like a
-shared name for two bugs that they will always discuss separately.
-
-In the current case, we don't want to debate whether the CWE choices
-are "right" or "wrong" but instead just briefly indicate that there
-may be multiple perspectives and thus the merge decisions are unclear.
-
-14 and 15: One might argue that these are different because 14 is
-about algorithmic complexity but 15 isn't.
-
-01 and 05: One might argue that these are different because 05 is
-about incomplete security declarations but 01 isn't.
+Please use CVE-2012-5640 for this issue.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQEcBAEBAgAGBQJQnSazAAoJEGvefgSNfHMdP5MIAILyoTU/UROVI8Bm0gQTgHwC
-V1gV5jVjA0NZs5tjcAAodSHPQIHBkxelvJvxwzEsRw43BDgRINtdtbn3JFHXgrv/
-iapc+uubGmik8d+jzxLU/XhiA4xhq9IvTsWIMOHpbq7Q6WNa63HR4E3/3IrI0wei
-KnINO4aVwSklNYz2wAugll07/GLHMeMRUfWbJOb4aVY9wiDFcsUW39bdmFaAfmv3
-1QVCwL3n74HAIYQSZsg4O1JrVe5tIfae0aHpto+0ATK21rc1/09tZyhnblUsOMbd
-QJQ5EKYusDVIXoMq4Ay489AyLq8jlaHNkfeSpsw8O0sEM0I6ngTuCemzaSZP3mM=
-=QuVC
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQy87IAAoJEBYNRVNeJnmTK0YP/jjyu9SeRrhpV9FCg0nUlfcJ
+bfqnrJEw9co7/JsMKJWKoIVqq8wDr4jxmyhANdlAZtapiFPlGficNBnpk+QgWSA9
+u1TWooq7tEf4flxXjPYa2JPopfxXHXBBupZSWPeTNxBLlUs1OoO+/EP9y52LI/jM
+SS9qTZhCBQdIqT9VEZlbY+D35cM+QfGVKf4Y2nzbMKTOdnDw46WCjA/ALI4KmVIc
+F+GpxHJdk541PDd5dnRSaYYK6Q6ImM8uWqIAWz1ag+Fgcbmidy79Hg/iWUY2zPll
+4pWA00lvM0EYeWpe2vhi0eOxHV0S5L51jFXgTsq2iJrLXe/BE9OrCcC9itccWMQ8
+RgWJJ5aXNV1Zd0Pt5fJ5NUTVye+7b8yxZCIGZl8sAl9fwMBKGhbfsgHhXT+RnnIM
+t9RWOt64RG2fkoc1s7I0m6VhCRm5r58VLv/HobeXDfEZmN1ca6/3Q5jotLOMwh2H
+Igy0v3Lkl8FqbZlQri+akC+q5yOVbN4wuU7Z2KbLZge2mGxMNdsAWGu1p5zKHLoZ
+6gPDE1Dktizb1q8Vy8nfOVYhNtpf3+Jj5J16Fxgc5fUa+IOs2uN690C30acdVZ6Q
+wMNnQsA9iVSP+YCc3WptXj2nQUUehjHh1xjp6HSmZbxLQdJTglOfi185Ouug3F/m
+9ZLaZdlwwFXNPJtSvTDy
+=484d
 -----END PGP SIGNATURE-----
