@@ -1,30 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/25/1
-Message-ID: <20120325133706.GC17257@kludge.henri.nerv.fi>
-Date: Sun, 25 Mar 2012 16:37:06 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, lists@...g.net
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE-request: MyBB 1.6 <= SQL Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/15/2
+Message-ID: <50CBCF54.2010008@redhat.com>
+Date: Fri, 14 Dec 2012 18:16:04 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Simon ." <bofh666ftw@...glemail.com>
+Subject: Re: pacemaker strcmp
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 23, 2012 at 09:10:07AM -0600, Kurt Seifried wrote:
-> On 03/23/2012 02:38 AM, Henri Salo wrote:
-> > There was a request with same subject in here: http://seclists.org/oss-sec/2011/q1/545 (2011)
-> > 
-> > I don't think this one got assigned and I couldn't find the CVE-identifier so I am requsting it again.
-> > 
-> > - Henri Salo
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 12/13/2012 09:37 AM, Simon . wrote:
+> Hi,
 > 
-> Is there a link on the MyBB site describing this issue/update?
+> I might have overlooked something. Starting from Line 39, if
+> pacemaker is compiled with ACL support:
 > 
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+> https://github.com/ClusterLabs/pacemaker/blob/master/include/crm_internal.h#L39
+>
+>  Once a user root\0bar is created, and CRM_DAEMON_USER is #undef we
+> can return TRUE. Haven't looked into further details here and I
+> think no sane admin will ever allow such a user. What do you guys
+> think?
+> 
+> 
+> 
+> /* For ACLs */ char *uid2username(uid_t uid); void
+> determine_request_user(char *user, xmlNode * request, const char
+> *field);
+> 
+> # if ENABLE_ACL # include <string.h> static inline gboolean 
+> is_privileged(const char *user) { if (user == NULL) { return
+> FALSE; } else if (strcmp(user, CRM_DAEMON_USER) == 0) {
+> <------------- #undef ? return TRUE; } else if (strcmp(user,
+> "root") == 0) { <------------------- err return TRUE; } return
+> FALSE; } # endif
+> 
 
-It seems that this advisory http://seclists.org/oss-sec/2011/q1/545 is false-positive. Please see: http://dev.mybb.com/issues/1330
+Can attackers create their own user names or do admins have to create
+the accounts (I know nothing about this software)? Also can you
+confirm that "root\0bar actually allows ACL bypass with the
+application in production? Thanks.
 
-#mybb in Freenode were helpful :)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Could YEHG verify this?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-- Henri Salo
+iQIcBAEBAgAGBQJQy89UAAoJEBYNRVNeJnmT+ZgP/RKlc9LyyfMlIPbeuJqOJSuB
+CWWvUuYJWQfhIfniOLyxfDQtU+Bp+LkNyM4Mk5cfxDgLu4bCN4cClWBGTnbvcuDp
+VRH0NOfOhNRf7TlZ5UAMzop5EMU1+3mb1XNA15EaxmShikKew98CabiArolSWpge
+Y/2eZ5KoxdgHCFRwzWm2NjYGh4KFzgjQY5YkNfYCRuEhMDLAo9zq9gGlREYyHQ2c
+SGxEg8jGhnsPF6voAqvZ6wXXMg3s2XmRmEFwC7erTvaPXQ5XNoW3amkEVrDBgeeo
+DrMCCiYtiV2exUSxg55+MxlFQyzsp2u8bBxnHCK2bN7r/ZRt/IrLiva8EGn6ANwa
+ge1wX3t+MwXZ0iZCjMNtqtK6XpRGfDlAb4nv403fS9waUI+6f/b8YzqooDGdc+SN
+on/wX1NJ2HT30Q5d68cSGSK82N1/kl+QolyX9Q5jyAqxCHLyT8psLt9BXsFjH1K9
+0eCIFOgoHNEQeh92MgHzQ1ynkPTRQSqIvXvpOyjZ1sdf+gT93jrRxqydV7/nBK7P
+Hyt6MdJggBDTai259onIfbjTYavTsio1X1efrvAjxDrfa2HULvXW9QwrWPyUKzg4
+JMC0RYzhoUeWg/yhnrUdPjwXuQwp04tzxeNjHWC25Cxs3OHVnBZL4Cbh3/74qt0Q
+zvcBlk+wHZFb2njR4hhG
+=7JbE
+-----END PGP SIGNATURE-----
