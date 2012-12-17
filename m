@@ -1,68 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/12/17
-Message-ID: <CABRvpqCnp=dACcYOkeVbOTpAohQrd7amv7XrRJ7zMgm5hGn_Og@mail.gmail.com>
-Date: Wed, 12 Sep 2012 13:49:46 -0400
-From: Andrew Nacin <nacin@...dpress.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, Hanno Boeck <hanno@...eck.de>,  security@...dpress.org
-Subject: Re: CVEs for wordpress 3.4.2 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/17/6
+Message-ID: <1355776059.4532.69.camel@new-desktop>
+Date: Mon, 17 Dec 2012 21:27:39 +0100
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Inkscape fixes a XXE vulnerability during rasterization of SVG images
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 12, 2012 at 1:04 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-> On 09/12/2012 04:38 AM, Hanno Boeck wrote:
-> > I can't find CVEs assigend for the issues fixed in wordpress
-> > 3.4.2.
-> >
-> > http://wordpress.org/news/2012/09/wordpress-3-4-2/
-> >
-> >
-> > Sadly, the information is quite limited: "Version 3.4.2 also fixes
-> > a few security issues and contains some security hardening. The
-> > vulnerabilities included potential privilege escalation and a bug
-> > that affects multisite installs with untrusted users. These issues
-> > were discovered and fixed by the WordPress security team."
-> >
-> > I suggest assigning two: 1. potential privilege escalation 2.
-> > problem with untrusted users on multisite installations unless
-> > someone has more information.
->
-> Can security@...dpress.org provide clarification on this please?
+Inkscape is vulnerable to XXE attacks during rasterization/export of SVG
+images: https://bugs.launchpad.net/inkscape/+bug/1025185
 
+Impact:
+ The impact of this vulnerability range form denial of service to file
+disclosure. Under Windows, it can also be used to steal LM/NTLM hashes.
 
-The second one there is CVE-2012-3383. 3.4.1 remained affected; fixed in
-3.4.2.
+PoC:
+ During rasterization, entities declared in the DTD are dereferenced and
+the content of the target file is included in the output. Command-line
+used: "inkscape -e xxe-inkscape.png xxe.svg" (PoC files are attached to
+the ticket)
 
-We are more specific on our version pages. From
-http://codex.wordpress.org/Version_3.4.2:
-
- * Fix unfiltered HTML capabilities in multisite (this is CVE-2012-3383)
- * Fix possible privilege escalation in the Atom Publishing Protocol
-endpoint
- * Allow operations on network plugins only through the network admin
-
-Details for the other two:
-
- * AtomPub allowed contributors to publish posts, which is normally reserved
-for users of an author role or higher. This should be considered low risk,
-low
-impact. An additional mitigating factor is that AtomPub is off by default
-and
-rarely enabled. (In WordPress 3.5, AtomPub will no longer be a part of
-core.)
-
- * For multisite, plugins that must be activated network-wide could be
-activated by a non-network administrator. This is only if they were already
-installed by a network administrator, but left inactive. This could also
-only
-occur if the network administrator allowed individual site administrators to
-manage plugins -- by default, this is not the case, and it is rare. Again,
-not
-particularly high risk or impact.
+References:
+ CWE-827: Improper Control of Document Type Definition
+ http://cwe.mitre.org/data/definitions/827.html
 
 Regards,
-
-Andrew Nacin
-Lead Developer
-WordPress
+Nicolas Grégoire
 
