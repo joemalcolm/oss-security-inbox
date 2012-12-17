@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/7
-Message-ID: <4F68B090.5090404@redhat.com>
-Date: Tue, 20 Mar 2012 10:30:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/17/3
+Message-ID: <1757954311.48635700.1355765256599.JavaMail.root@redhat.com>
+Date: Mon, 17 Dec 2012 12:27:36 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Nick Kralevich <nnk@...gle.com>
-Subject: Re: CVE request -- kernel: execshield: predictable ascii armour base address
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request -- SQUID-2012:1 / Squid:  DoS (excessive resource consumption) via invalid Content-Length headers or via memory leaks
 Content-Type: text/plain; charset=utf-8
 
-On 03/20/2012 10:01 AM, Nick Kralevich wrote:
-> Can someone explain to me why this is worthy of a CVE? I can see this as a
-> bug of course.  But a "vulnerability"?
-> 
-> This bug, by itself, does not cause a vulnerability. It just makes
-> vulnerabilities easier to exploit. I'm not sure this is worthy of a CVE
-> unless we're willing to assign CVEs to all fixed address allocations.
-> 
-> -- Nick
+Hello Kurt, Steve, vendors,
 
-To quote Steven on a previous issue:
+  A denial of service flaw was found in the way the CGI Cache Manager of the Squid proxy caching server
+processed certain requests. A remote attacker could this this flaw to cause the squid service to consume
+excessive amount of resources.
 
-http://seclists.org/oss-sec/2012/q1/177
+References:
+[1] http://www.squid-cache.org/Advisories/SQUID-2012_1.txt
+[2] https://bugs.gentoo.org/show_bug.cgi?id=447596
+[3] https://secunia.com/advisories/51545/
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=887962
 
-===================
-In this case, the product's security feature is not living up to its
-advertised capability (by generating shorter passwords than expected)
-so, even if it's not that severe an issue, it's probably still of some
-importance to some people.
-===================
+Upstream patches:
+[5] http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10479.patch
+    (against the 3.1 branch)
+[6] http://www.squid-cache.org/Versions/v3/3.2/changesets/squid-3.2-11714.patch
+    (against the 3.2 branch)
 
-in this case replace "shorter passwords" with "random addresses that are
-not random".
+Could you allocate a CVE id for this?
 
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
