@@ -1,53 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/5
-Message-ID: <505C4305.4040507@gmail.com>
-Date: Fri, 21 Sep 2012 06:35:49 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/17/2
+Message-ID: <50CF54D8.50003@redhat.com>
+Date: Mon, 17 Dec 2012 10:22:32 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>, vcizek@...e.de,  tmraz@...hat.com
-Subject: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: fail2ban 0.8.8 fixes an input variable quoting flaw on <matches> content
 Content-Type: text/plain; charset=utf-8
 
-On 09/21/2012 06:20 AM, Matthias Weckbecker wrote:
-> Hello Steve, Kurt, Vitezslav, Tomas, vendors,
->
-> we have recently been notified about a potential issue with gpg: When files
-> are en/de-crypted the result is written world-readable by default.
-> Short example (quote from [1]):
->
->  # de-crypting
->  % gpg sikrit.gpg
->  % ll sikrit*
->    -rw-r--r-- 1 gp users  12 Sep 17 09:41 sikrit
->    -rw------- 1 gp users 480 Sep 17 09:40 sikrit.gpg
->  # en-crypting
->  % echo "my password" > sikrit
->  % chmod go= sikrit
->  % ll sikrit
->    -rw------- 1 gp users 12 Sep 17 09:38 sikrit
->  % gpg -e -r pfeifer sikrit
->  % wipe sikrit
->  % ll sikrit.gpg 
->    -rw-r--r-- 1 gp users 480 Sep 17 09:40 sikrit.gpg
->
-> [1] https://bugzilla.novell.com/show_bug.cgi?id=780943
->
-> Wouldn't one usually expect files that were previously encrypted to contain
-> sensitive content (that's probably why content is encrypted at all)? And if
-> so, shouldn't such files be only readable by certain users / group of users
-> by default? Otherwise, a file that is e.g. decrypted in /tmp might leak due
-> to the file permissions being too loose.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-GPG seems to just be honoring the umask:
+On 12/17/2012 08:41 AM, Vincent Danen wrote:
+> Could a CVE be assigned to this issue please?
+> 
+> The release notes for fail2ban 0.8.8 indicate:
+> 
+> * [83109bc] IMPORTANT: escape the content of <matches> (if used in 
+> custom action files) since its value could contain arbitrary 
+> symbols.  Thanks for discovery go to the NBS System security team
+> 
+> This could cause issues on the system running fail2ban as it scans
+> log files, depending on what content is matched.  There isn't much
+> more detail about this issue than what is described above, so I
+> think it may largely depend on the type of regexp used (what it
+> matches) and the contents of the log file being scanned (whether or
+> not an attacher could insert something that could be used in a
+> malicious way).
+> 
+> References:
+> 
+> https://raw.github.com/fail2ban/fail2ban/master/ChangeLog 
+> http://sourceforge.net/mailarchive/message.php?msg_id=30193056 
+> https://github.com/fail2ban/fail2ban/commit/83109bc 
+> https://bugzilla.redhat.com/show_bug.cgi?id=887914 
+> https://bugs.gentoo.org/show_bug.cgi?id=447572
+> 
 
-$ ll secret
--rw------- 1 dan dan 9 Sep 21 06:31 secret
-$ umask 0777
-$ gpg -e -r dan secret
-$ ll secret.gpg
----------- 1 dan dan 605 Sep 21 06:34 secret.gpg
+Please use CVE-2012-5642 for this issue.
 
-Still might be worth fixing though.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--Dan
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
+iQIcBAEBAgAGBQJQz1TYAAoJEBYNRVNeJnmTQdgP/jRbo8ReeQJzUxAqsc0JiJ1a
+fC6e4hnTeYw1y8007NZkxbmdnvsgZvtFvUiBe6ovuGidIKXSWqYH3LjoC/0Oim4T
+NNTnL1wG8Ri93akY56/pyyHeZGamo1Ss1Kv4BgM0MXFfOOWTJmGPz1jn52E4VtBC
+gnVHIZ/gNxVbIVj0QVaj3tDJOhweg9ACkunVwDasMTRi1MgQKmT3i8IVgWsVGaAo
+xzxE1T1RXygjtbJNpMlBDmZP4+OjSeAzavAw81OP4j/Tse68PcBA2givh0SNG97T
+neEDyWtL8IvMxYPelgUyWi0jWHv96ymuKwfzkST81+yjSYc2JqN0FnOSa2kCjCtb
+tCG3K/Y2AKCbi8JozTjgDj1wTSh5I6z9DXiARan9m+JfZYChoESiQ960H1VGEd3t
+qJL43vr2FnWTHpClwp4O/CQyQ4XeN8ttxTgZdvZbYUZraSFxpNZfdW1dGVwrR4Kg
+opg06obA4B22o/JZmC7ZRFhFr/idY8IDXtRuuUJPnY9C6UazfP/Zv4EnylTMuYCY
+CvvL58t3SnruoJHplr8d6uZWrPgSqdK7XRFGIm/L7ISuNMe67swXa3SF8+gshpXu
+IIFa8qOK6QIejFMAT2BW5Xlp0Q/m3RB2cnVmEK000rLkuFlj2eYZr0aftD8uJ3Ub
+vZg8/UeljGebpb7n+7w3
+=mKR4
+-----END PGP SIGNATURE-----
