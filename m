@@ -1,47 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/5
-Message-ID: <507FB13E.3070309@redhat.com>
-Date: Thu, 18 Oct 2012 01:35:26 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/17/5
+Message-ID: <50CF62E9.5020100@redhat.com>
+Date: Mon, 17 Dec 2012 11:22:33 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Henri Salo <henri@...v.fi>
-CC: oss-security@...ts.openwall.com, cve-assign@...re.org, coley <coley@...re.org>
-Subject: Re: CVE-request for piwigo issues (second request)
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Django 1.3.5, Django 1.4.3, and Django 1.5 beta 2 Security Update
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/06/2012 01:34 AM, Henri Salo wrote:
-> Hello,
-> 
-> Old CVE-request did not get filled. At least the CVE is not listed
-> in Mitre's list, OSVDB, Secunia or Debian security-tracker. Request
-> done in: http://www.openwall.com/lists/oss-security/2010/12/07/1
-> 
-> """ piwigo: a1) CSRF a2) SQL injection a3) stored XSS 
-> http://secunia.com/advisories/41365/ 
-> http://piwigo.org/releases/2.1.3 
-> http://www.exploit-db.com/exploits/14973/ (the issues mentioned by
-> the exploit-db entry appear to be the same that were fixed in
-> 2.1.3) b) search.php SQL injection 
-> http://secunia.com/advisories/38305/ 
-> http://piwigo.org/releases/2.0.8 c) CSRF in the admin panel: 
-> http://secunia.com/advisories/37681/ 
-> http://www.exploit-db.com/exploits/10417 (the exploit-db entry
-> details two other issues, but are "admin-only" -- feel free to
-> assign or ignore those.) """
-> 
-> SA41365: 2010 SA38305: 2010 SA37681: 2009
-> 
-> I am happy to provide more information if needed (or in clearner
-> format). Please double-verify that these haven't been assigned
-> before you assign IDs, please.
+So a week ago Django released 1.3.5, Django 1.4.3, and Django 1.5 beta
+2 as a security update. I have not assigned these a CVE since they
+appear to be security hardening, and not addressing a direct security
+threat (but I could be wrong so I'm posting this).
 
-Can you add links to the code commits fixing this stuff? Thanks.
+Change #1: Host header poisoning
 
-> - Henri Salo
-> 
+This implements white list filtering, which is almost always better
+than black list filtering:
 
+Hostnames must consist of characters [A-Za-z0-9] plus hyphen ('-') or
+dot ('.').
+IP addresses -- both IPv4 and IPv6 -- are permitted.
+Port, if specified, is numeric.
+
+Change #2: Redirect poisoning
+
+They added a new function "django.utils.http.is_safe_url" and added it
+to the spots within Django's code that would benefit from it.
+
+A new utility function, django.utils.http.is_safe_url, is added; this
+function takes a URL and a hostname, and checks that the URL is either
+relative, or if absolute matches the supplied hostname.
+All of Django's own built-in views -- primarily in the authentication
+system -- which allow user-supplied redirect targets now use
+is_safe_url to validate the supplied URL.
+
+Over all these are very good changes, but they are not security fixes
+per se as stated above, however if anyone is aware of
+attacks/vulnerabilities pertaining to these changes please let me know
+and I iwll assign CVEs.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -49,19 +48,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQf7E+AAoJEBYNRVNeJnmTUOgP/jp2QFgekXRk7kLOYm2Ky2C0
-HDSyhc3H8GRb3xsmsAR4aLwzDTHuZNKkDF2OI5hZvwbnuF9wYOr2xxzYMy2SqFpj
-FZfAyx+0GnG62MhpbvQoPznK2ACXGpnCOXpKv+xi+r8VHPTcFTwh0Eg0FTig7jO1
-fR/ttLiqnWQwHYpHXM1HmERu2sEtanCj33c1wFb/FHp/mDGTxPtth0KkSvC0opJ6
-sYM+ol/dy7uXVk5v/he8zrdUO3w6inYbVmJZVAkfi7p33DWMisqUy8LnylEal8eg
-Y/Q8riRxpNM6N/M58fd+dwLI+w5873qVjgQBBdANHhGcWY7V6gTamFZpezCXoaQg
-mNfVKKwmQvUcwtNcTQHsVITmhRxEsfguGAZjM4WJa6zs7NaGA1MSUn6wO+DaCCdl
-xjZvp/UYEbk1y5odKYrbeeq0JEtGHLxUiv46KpzHSInQEPSSSfE7c/hc6Uyu8N6+
-oKClWok0UB3E1bH1lihQFpVl8tkAsr3nQqd/abaTsbHCfADCIWIuU2ehxevGV7qh
-SzudZqbNT8GpJ9qvwWz6vuxt0+EgquLQ29ZH2MtigYVjF35ZAqVJ/+UidnxMhR3r
-dXZdA1Mbucje3L+2h2XNQjgeJ/x64NJBTGGf09h4QR+Seg5/WyEI94lMM+zEZ89z
-u6ubd2PSXXGmPt/0/VHF
-=yJ2u
+iQIcBAEBAgAGBQJQz2LpAAoJEBYNRVNeJnmTBDIP/1mgINGVaWHQb60tMB04c6Ik
+s4Ir+47Idtdzz+FI0bk84D5lGOhGuAq2NGXZaJHNAwH+A6JSasjgsUX4ynW/ReGN
+fHldldsYAsfb0m0F7DDJqwrgaAfdP7OdNpFbqc6OZ/VLbgEDh0cdF2jkkRJzML5w
+gJIYwGp+XU4lEwC5Fy9eZzCmNkWZBkzwfWCRGx7vPTdsgehQvzpeQ89+r6IEHknj
+w+JZY5cA0hlL8xCC05LSIGb7ew95hBY3seSVL9aUvTGvVn3Ek8L4tVm/angHYJaD
+XghGJTgMxtiYthf1uahBwPScBWeiRcTwdFeFliPzvyb7PuAOrLsqBMgSv2uRvExM
+i9pPHXAOri5sDFtakzlQRWC9FAWxk52dwXiTcMDYDPRW50TLWbPfWfOWjggGiJYJ
+2+u80598X4CI7lF0hmVJ1EDbki1JufUDaJlkMKpCxbjEA+txT0wXa+mxGERkHfvk
+rPSo66wZIK3W7rDjb18H4wll3pW0blp5lI583pXaCmUjl7YjtMNB3XvxwIsAC/SC
+u/vHe17BxuG+hUgt7NCUuGUrqtB7sEUVlOuOKfRyVzN9ZE98WfegTCzlOApphz3V
+GFitZxQDqr8n2iXw+soITpH0SAhuHkohrimnzK01xO/wXrX4kg/2KyexlN5IBOCo
+oSUzUhaTLx1TgkcxSBwQ
+=ZHlN
 -----END PGP SIGNATURE-----
