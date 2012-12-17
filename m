@@ -1,35 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/27/7
-Message-ID: <4F22D805.4090401@redhat.com>
-Date: Fri, 27 Jan 2012 09:59:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/17/1
+Message-ID: <20121217154122.GA24980@redhat.com>
+Date: Mon, 17 Dec 2012 08:41:22 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: CVE Request: Debian (others?) openssh-server: Forced Command handling leaks private information to ssh clients
+Subject: CVE request: fail2ban 0.8.8 fixes an input variable quoting flaw on <matches> content
 Content-Type: text/plain; charset=utf-8
 
-On 01/27/2012 03:40 AM, Yves-Alexis Perez wrote:
-> On jeu., 2012-01-26 at 19:49 -0500, Marc Deslauriers wrote:
->>> Please use CVE-2012-0814 for this issue. Also please let me know if
->>> other Linux distributions are affected!
->>>
->>>
->>
->> Looks like this (I haven't tried...):
->>
->> http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/auth-options.c.diff?r1=1.53;r2=1.54 
-> 
-> By the way, is the ForceCommand (and other directives) really supposed
-> to be private for different keys (or, more widely, for different matches
-> for the same user).
-> 
-> Regards,
+Could a CVE be assigned to this issue please?
 
-I created three separate keys, so three separate accounts. I can't see
-any valid reason that account #3 (that is the third key listed) should
-be able to see the first and second force commands. These commands could
-contain sensitive commands/passwords (e.g. log in with a key to trigger
-some automated job by the backup user) for example.
+The release notes for fail2ban 0.8.8 indicate:
+
+    * [83109bc] IMPORTANT: escape the content of <matches> (if used in
+      custom action files) since its value could contain arbitrary
+      symbols.  Thanks for discovery go to the NBS System security
+      team
+
+This could cause issues on the system running fail2ban as it scans log
+files, depending on what content is matched.  There isn't much more
+detail about this issue than what is described above, so I think it may
+largely depend on the type of regexp used (what it matches) and the
+contents of the log file being scanned (whether or not an attacher could
+insert something that could be used in a malicious way).
+
+References:
+
+https://raw.github.com/fail2ban/fail2ban/master/ChangeLog
+http://sourceforge.net/mailarchive/message.php?msg_id=30193056
+https://github.com/fail2ban/fail2ban/commit/83109bc
+https://bugzilla.redhat.com/show_bug.cgi?id=887914
+https://bugs.gentoo.org/show_bug.cgi?id=447572
 
 -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+Vincent Danen / Red Hat Security Response Team 
