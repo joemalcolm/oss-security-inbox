@@ -1,34 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/7
-Message-ID: <4F62B65F.4080107@redhat.com>
-Date: Thu, 15 Mar 2012 21:41:19 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Mark Stanislav <mark.stanislav@...il.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE Requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/18/3
+Message-ID: <20121218144134.GD20407@kroah.com>
+Date: Tue, 18 Dec 2012 06:41:34 -0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Plug-and-wipe and Secure Boot semantics
 Content-Type: text/plain; charset=utf-8
 
-On 03/15/2012 09:00 PM, Mark Stanislav wrote:
+On Tue, Dec 18, 2012 at 01:46:47PM +0100, Florian Weimer wrote:
+> Some UEFI machines seem to boot from USB by default, without any
+> prompting, probably assuming that a signed boot loader cannot cause
+> any damage.
+
+Specific model name(s) please?
+
+> Most signed Linux boot loaders only verify the kernel (and,
+> indirectly, code that's loaded into the kernel), but not the
+> initrd contents.
+
+Given that there is only one public signed Linux boot loader, saying
+"most" is a bit odd here :)
+
+> (This isn't possible because initrds are system-specific and thus
+> cannot be signed in general.  Recovery images signed by system
+> manufactures likely have similar issues.) As a result, the signed
+> loader might start something that wipes the hard disk or uploads its
+> contents somewhere
 > 
-> 
-> On Mar 15, 2012, at 10:47 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> 
->> On 03/15/2012 07:30 PM, Mark Stanislav wrote:
->>> #1,2,3 are all included
->>
->> ? Sorry but I have literally no idea what that means.
-> 
-> You gave be a numbered list of requirements, I was confirming the existence of those first three for each vulnerability were found with my original email to the list.
+> I'm wondering if this is a problem.  I haven't investigated boot
+> order defaults for legacy systems, so I don't know if this
+> plug-and-wipe issue is a regression.  In the end, this boils down to
+> what Secure Boot means, semantically.
 
-I need the actual info, please refer to:
+UEFI Secure Boot really doesn't care about the kernel or the OS at all,
+all it is there for is to protect the bootloader and the BIOS.  The fact
+that some operating systems take that chain-of-trust and extend it
+beyond the BIOS is up to them, and the fact that some UEFI signing
+authorities might impose more restrictions on the binaries that they
+sign is also up to them, and not part of the UEFI specification or
+requirements.
 
-http://www.openwall.com/lists/oss-security/2012/03/16/2
-http://www.openwall.com/lists/oss-security/2012/03/15/9
-http://www.openwall.com/lists/oss-security/2012/03/14/6
-http://www.openwall.com/lists/oss-security/2012/03/12/7
+Having a signed USB image boot properly if it is installed seems to be
+the correct thing to me, but, in my testing, has not been the default on
+the hardware that I have access to.  It would be great to find out what
+hardware you are seeing this on as I am helping to get Linux working
+properly on UEFI machines these days.
 
-etc.
+thanks,
 
-
--- 
-Kurt Seifried Red Hat Security Response Team (SRT)
+greg k-h
