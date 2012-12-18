@@ -1,59 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/23/8
-Message-ID: <50AFD462.7090800@redhat.com>
-Date: Fri, 23 Nov 2012 12:54:10 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/18/4
+Message-ID: <50D08342.5060605@redhat.com>
+Date: Tue, 18 Dec 2012 15:52:50 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Christoph Biedl <debian.axhn@...chmal.in-ulm.de>
-Subject: Re: CVE Request -- android-tools (server): Insecure temporary file used for logging
+Subject: Re: Plug-and-wipe and Secure Boot semantics
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12/18/2012 03:41 PM, Greg KH wrote:
+> On Tue, Dec 18, 2012 at 01:46:47PM +0100, Florian Weimer wrote:
+>> Some UEFI machines seem to boot from USB by default, without any
+>> prompting, probably assuming that a signed boot loader cannot cause
+>> any damage.
+>
+> Specific model name(s) please?
 
-On 11/23/2012 04:44 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> Christoph Biedl in Debian bug report [1] noticed the following
-> deficiency:
-> 
-> An insecure temporary file use flaw was found in the way server
-> component of android tools, a suite of Android Debug Bridge (ADB)
-> platform tools, performed logging of server events upon server
-> startup. A local attacker could use this flaw to conduct symbolic
-> links attacks, possibly leading to their ability to append
-> unauthorized content to system files accessible with the privileges
-> of the user running the adb executable.
-> 
-> References: [1]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=688280 [2]
-> https://bugzilla.redhat.com/show_bug.cgi?id=879582
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
+Lenovo M72e 0896A9G
 
-Please use CVE-2012-5564 for this issue.
+This is a business-class Windows 8 machine which comes with a Windows 8 
+logo sticker, so Secure Boot was enabled in the factory (and my testing 
+reflected that).  I'm not sure if the type number encodes that—Lenovo 
+surely offers essentially the same hardware with Secure Boot disabled by 
+default, so that customers can install Windows 7 more easily.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>> Most signed Linux boot loaders only verify the kernel (and,
+>> indirectly, code that's loaded into the kernel), but not the
+>> initrd contents.
+>
+> Given that there is only one public signed Linux boot loader, saying
+> "most" is a bit odd here :)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Uhm, aren't there a couple of them in circulation?
 
-iQIcBAEBAgAGBQJQr9RiAAoJEBYNRVNeJnmTWf0P/j7uMLeu5rT3UFvpKcFpynn2
-2CH/zKBY5bccRM55Uxfv8KVzSQnxHS1Oe8NajXazTezpcYYlrNVUp/ZO0ieUtv4T
-AHJ+i6AFOrYzERpuLy23+BCQQCOW5QAfl+aKPElIVv7N/UjHr0GtKbxo+bB2S6Ai
-KPlo0I8CjAPeFRfE+lirX8zWjECoau5/ZSW7ApmzLrBepsgAXmFXf95pMLXia1kY
-1JifG6rCwrxA5+I/QtMiEfIVe2n9VOEz1UyZ0ajgw8suUxQ3f+hMmP2NmTpTI/nl
-pWkrrL8XUJxyYeMHND/AvIB3YrIvLWWR8Mfsx+hHhfdDI+HfmsgUJxEu65c4zPVZ
-s6gsDuLOcpFRY/of3zdf65eIqwjb2gaA9nugrZsju/z97H/0SCj8KQAiS+RU3SPn
-IdcFssui2SNxXKnqvQkk+DwyJvH9JahreryoxvVfhZDdzEBoqcNsEJyx5dOUmoG7
-da1JeSuvbo0ViIiWSKtDzpCX4LPHCLU7t5iF1e9HU46rIhA4olYaZZFlpLHxXs9n
-8Ns/eZlKN8jE+IDCatoHzqjsNMdA34E8nUYgmMp945jlkBNmjSLVsSIFYGDjcB7k
-snDl/iySQVCaKbJzU9ATnAScp0Nxvkj0glKgpjVCaWSlYrzUMTLXikXMtDqntrx2
-xEUvnKJvWX+LXIj+BdXU
-=FLKN
------END PGP SIGNATURE-----
+The Fedora 18 TC3 installer boots on the machine mentioned above, in the 
+factory default configuration.  Previous installer versions showed a 
+Secure Boot error message.  I've run into an installer bug, though:
+<https://bugzilla.redhat.com/show_bug.cgi?id=888232>
+
+-- 
+Florian Weimer / Red Hat Product Security Team
