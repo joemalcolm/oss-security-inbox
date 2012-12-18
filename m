@@ -1,60 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/23/1
-Message-ID: <4F94DEA2.80902@redhat.com>
-Date: Sun, 22 Apr 2012 22:46:26 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/18/5
+Message-ID: <50D0A231.4050802@redhat.com>
+Date: Tue, 18 Dec 2012 10:04:49 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
 CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- DokuWiki: XSS and CSRF due improper escaping of 'target' parameter in preprocessing edit form data
+Subject: Re: CVE Request -- Freeciv (X < 2.3.3): DoS (memory exhaustion or excessive CPU consumption) via malformed network packets
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/22/2012 11:24 AM, Jan Lieskovsky wrote:
+On 12/18/2012 07:13 AM, Jan Lieskovsky wrote:
 > Hello Kurt, Steve, vendors,
 > 
-> a cross-site scripting (XSS) and cross-site request forgery (CSRF) 
-> flaws were found in the way DokuWiki, a standards compliant, simple
-> to use Wiki, performed sanitization of the 'target' parameter when
-> preprocessing edit form data. A remote attacker could provide a
-> specially-crafted URL, which once visited by a valid DokuWiki user
-> would lead to arbitrary HTML or web script execution in the context
-> of logged in DokuWiki user.
+> Freeciv upstream has released 2.3.3 version correcting one security
+> issue:
 > 
-> References: [1] https://secunia.com/advisories/48848/ [2]
-> http://ircrash.com/uploads/dokuwiki.txt [3]
-> https://bugs.gentoo.org/show_bug.cgi?id=412891 [4]
-> http://bugs.dokuwiki.org/index.php?do=details&task_id=2487 
-> (upstream bug report for the XSS issue)
-
-Please use CVE-2012-2129 for this issue.
-
-> [5] http://bugs.dokuwiki.org/index.php?do=details&task_id=2488 
-> (upstream bug report for the CSRF issue)
-
-Please use CVE-2012-2128 for this issue
-
-> [6] https://bugzilla.redhat.com/show_bug.cgi?id=815122 (Red Hat
-> bugzilla entry)
+> A denial of service flaw was found in the way the server component 
+> of Freeciv, a turn-based, multi-player, X based strategy game, 
+> processed certain packets (invalid packets with whole packet
+> length lower than packet header size or syntactically valid
+> packets, but whose processing would lead to an infinite loop). A
+> remote attacker could send a specially-crafted packet that, when
+> processed would lead to freeciv server to terminate (due to memory
+> exhaustion) or become unresponsive (due to excessive CPU use).
 > 
-> Discovered by : Khashayar Fereidani
+> References: [1] http://aluigi.altervista.org/adv/freecivet-adv.txt 
+> [2] https://bugs.gentoo.org/show_bug.cgi?id=447490 [3]
+> http://freeciv.wikia.com/wiki/NEWS-2.3.3 [4]
+> https://bugzilla.redhat.com/show_bug.cgi?id=888331
 > 
-> Proof of Concept URL: 
-> http://sitename/doku.php?do=edit&id=S9F8W2A&target=<script>alert(123)</script>
->
+> Upstream bug report: [5] http://gna.org/bugs/?20003
 > 
+> Relevant patch (against trunk): [6]
+> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21670
 > 
-> Could you allocate a 2012 CVE id for this issue? (one is enough
-> because only 'target' parameter isn't properly escaped, leading to
-> XSS or CSRF {see [2] for further examples})
-
-Under ADT2: 	Are X and Y different bug types? (e.g. buffer overflow,
-SQL injection, NULL pointer dereference?) Yes: SPLIT them.
-
+> Could you allocate a CVE id for this?
+> 
 > Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
 > Security Response Team
 
+Please use CVE-2012-5645 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -62,19 +49,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPlN6iAAoJEBYNRVNeJnmTqdUQAL954UvCMFpkIUpdlUVUj9zR
-jf4qAx13KVvKcxmu4Qyg4ZkO8qjn3I4eFJCqLpx7TTp1hSAcPF7bteGUemBBtB5B
-loG4wNbVYpCZii1ZhIBLIHw9hNlknS18dmstpmRWTRAcpBj2uzppMCaaqB5qBM1H
-V/+rTVh3cpGF8TcoI7u+uLWsDmDXI1LmUsVy/7TtkvWVry7sjQj0IqZl4DtXtlct
-w84cXrfI9ImFwbEe7dL6SBl8TMGAPUFWvzWLotgus9XiEIICI12R5DjvvA60wtiL
-9alOe28mPjQ0xdSNBCMgLq7f1cR6lf+0W5H+Mrs2+TA0VcPYu5VTpPtISjK7Hh56
-vnl8R5MVMpB/oWOsAXt/9m52UKCNmCT1gHPw4QRy8zGbjoAn3Ey8i4ywcG6ZoZP7
-IzhSktbcIYI5urpfh25REz5vSkMZwh3y8Vb/wuYa8KcxNcIZVGpu6SYx5E/gvlSb
-ZunIs3HqHnif/FXlisvbg6YMFZwoYb9sCzA5+H6kcjfX8DWlqX7g92DraTvHHV+8
-YR3YIHfhSyPvANE+YL0oWHZHoL6PIMJsFNE9cujA8qu1D99HcGTJgxlyo4/r0D4U
-7uutIQ3Ub82Pc9A6+SHUZtSWOGKsXk1j7DFsPwbemVw+dBXkjOr8MNjdQLz6DOtn
-2HRZTS+OV9gx35HJyant
-=vpvh
+iQIcBAEBAgAGBQJQ0KIxAAoJEBYNRVNeJnmTTigQAJ/zsEZ07mUjKA2zMh1EOH3v
+CD1UgfkRQ0/lym+Eg55JGzSRzXai7yfWhhp1T+jsLqED4+kKGryJFE1eprvyRMdL
+Je7PAZl67sfrdVW+nBOFUhlIIc7jiKp2vGqj826M4nzcRZbWdYL9hdFhqxlDEnyq
+8dx623jwPOiMFv5N3epX3aE7T5F92MAwGZrPu3tqI4E+B+ho4o12Z2OxZvoS6azG
+FZNWdl9QJ607+YI9Dd2JZ3kpa/T+k9IEImjvCP6QHnmc4UDQVmMPoyV4UXXyleDS
+8kEZLuKzJ2x5+pC/NcHjyt9chOovSuFkbCQut3WYBENz1qZBjyThjEbxfoFATAR+
+sAiRLoM6+rmNN5pBFFKiIypXCsaHz5PbWLXNWZkjGYsitHvNrY7vp700jweMXMFh
+hR9VlRw0zgBja5PYq5S8B/25YcmwzGtpl4zQBFBYJDv+v3WJE07yWeVCY50zEI3c
+jQ4yG7n8rJE0/tEHdNrIP4zBbYjmLoi3KtgEaSzDfMGIo4qHPbGbHg9fOZqBSv6S
+XSm/mVOsV4cwWrcUJFyQolEXCjUtuj/hqVY8tNUPCnUlUo3c3PAoQGGM+Cvx584Z
+0R6SPuni35ABgKJznjvectvaiTD9CMVX1DZHj0sJtoaSUkr9MB1UuDB1/ADpO+t5
+6pVDRu12YymToTPHKzHh
+=cXYM
 -----END PGP SIGNATURE-----
