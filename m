@@ -1,43 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/14/2
-Message-ID: <20120914101542.2c647257@redhat.com>
-Date: Fri, 14 Sep 2012 10:15:42 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/18/2
+Message-ID: <1774594234.49032364.1355840024011.JavaMail.root@redhat.com>
+Date: Tue, 18 Dec 2012 09:13:44 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: libdbus CVE-2012-3524 fix
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request -- Freeciv (X < 2.3.3): DoS (memory exhaustion or excessive CPU consumption) via malformed network packets
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 12 Sep 2012 16:04:33 +0200 Sebastian Krahmer wrote:
+Hello Kurt, Steve, vendors,
 
-> The recently discussed libdbus getenv() issue [1] turned out
-> to be easily exploitable on various UNIX systems, including
-> some Linux distributions. Common attack vectors are Xorg and
-> spice-gtk via auto-launching [2].
-> Properly patching requires fixes for libdbus and libgio,
-> depending on which you link your suid binaries.
+  Freeciv upstream has released 2.3.3 version correcting one
+security issue:
 
-[ ... ]
+A denial of service flaw was found in the way the server component
+of Freeciv, a turn-based, multi-player, X based strategy game,
+processed certain packets (invalid packets with whole packet length
+lower than packet header size or syntactically valid packets, but
+whose processing would lead to an infinite loop). A remote attacker
+could send a specially-crafted packet that, when processed would lead
+to freeciv server to terminate (due to memory exhaustion) or become
+unresponsive (due to excessive CPU use).
 
-> [2] http://stealth.openwall.net/null/dzug.c
+References:
+[1] http://aluigi.altervista.org/adv/freecivet-adv.txt
+[2] https://bugs.gentoo.org/show_bug.cgi?id=447490
+[3] http://freeciv.wikia.com/wiki/NEWS-2.3.3
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=888331
 
-Sebastian, can you confirm that this summary completely covers all your
-findings?
+Upstream bug report:
+[5] http://gna.org/bugs/?20003
 
-There are problems with handling of DBUS_SYSTEM_BUS_ADDRESS environment
-variable in both libdbus and glib/libgio when used in a privileged
-(setuid or setgid) application.
+Relevant patch (against trunk):
+[6] http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21670
 
-libdbus is currently tracked via CVE-2012-3524, with two known attack
-variants:
-- unixexec:, which is only supported in recent dbus versions (1.5+ from
-  what I can see)
-- autolaunch: combined with malicious PATH setting, leading to
-  execution of the attacker's dbus-launch.  This affects pre-1.5 dbus
-  versions too.
+Could you allocate a CVE id for this?
 
-libgio got CVE-2012-4425:
-- autolaunch: or empty address, combined with PATH setting, similar to
-  the second libdbus variant
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
