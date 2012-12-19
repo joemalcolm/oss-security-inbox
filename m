@@ -1,34 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/2
-Message-Id: <201201040257.q042vdTv025674@linus.mitre.org>
-Date: Tue, 3 Jan 2012 21:57:39 -0500 (EST)
-From: cve-assign@...re.org
-To: kseifrie@...hat.com, oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: XSS in wordpress 3.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/9
+Message-ID: <50D21AFF.20609@msgid.tls.msk.ru>
+Date: Wed, 19 Dec 2012 23:52:31 +0400
+From: Michael Tokarev <mjt@....msk.ru>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: qemu e1000 emulated device gues-side buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+qemu-1.3 includes the following patch by Michael Contreras:
 
-The researcher sent e-mail to MITRE earlier today with a
-pre-disclosure reservation request for this issue. We sent him
-CVE-2012-0287 about eight hours ago. So, CVE-2012-0026 will be
-rejected.
+ http://thread.gmane.org/gmane.comp.emulators.qemu/182666
+  (initial submission)
+ http://git.qemu.org/?p=qemu.git;a=commitdiff;h=b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
+  (the commit)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S S145
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/obtain_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
 
-iQEcBAEBAgAGBQJPA774AAoJEGvefgSNfHMd0pQH/2VihAjApqiXAR5DjH3qb7oq
-mcp5UMO4h9h3rgCnIFOkRIQZoMyOMg7cs+ze5m76wdVGj1NhW4/sYsUqSBI0TdIx
-aVUMxY2tAQ+QmMPZgdxLIoJwJ4q4VVgUgnIp0G+dxMO6rIT4Cb7/+Tk7gqMmdhqU
-TLzVtpWGm6CmiCIcR/nqGpc+3oS/VYpCh9JzTjieoAtO0hdvHXBzL8jHXlNwL7kw
-BTwEFCOGJwNxYAq9trzFZbirf4Y7nHNfOAwI+JLGmHY+D8xDtyOJSAC5OFkUy/s+
-RlwCd6ukfZzHuGBtEJ2AQ/WUG+fK+HakbB/6wJZmTEGsR2I/yMiFPs1iSb0PqYs=
-=hZnp
------END PGP SIGNATURE-----
+commit b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
+Author: Michael Contreras <michael@...tric.com>
+Date:   Sun Dec 2 20:11:22 2012 -0800
+Subject: e1000: Discard packets that are too long if !SBP and !LPE
+
+ The e1000_receive function for the e1000 needs to discard packets longer than
+ 1522 bytes if the SBP and LPE flags are disabled. The linux driver assumes
+ this behavior and allocates memory based on this assumption.
+
+ Signed-off-by: Michael Contreras <michael <at> inetric.com>
+ ---
+
+ Tested with linux guest. This error can potentially be exploited. At the very
+ least it can cause a DoS to a guest system, and in the worse case it could
+ allow remote code execution on the guest system with kernel level privilege.
+ Risk seems low, as the network would need to be configured to allow large
+ packets.
+
+
+The last comment, which didn't went into the commit message, indicates
+that it is possible to send larger packet to a guest and cause a buffer
+overflow with usual outcome in such cases.
+
+Yes indeed, the impact is rather low, because the network should be
+configured to allow larger packets to reach the guest, which is not
+usually the case -- either the host network is configure for MTU=1500
+and disallow large packets entirely, or BOTH host and guest network is
+configured to allow large packets.  In other words, either all devices
+on the network are configred to accept jumbo frames, no no jumbo frames
+are enabled at all.
+
+That's why I'm not sure whenever this can be considered a vulnerability
+which deserves a CVE# or not, so I'm asking here.
+
+There's another followup bugfix in the same area, now talking about
+"extra-large" frames --
+
+ http://thread.gmane.org/gmane.comp.emulators.qemu/183137
+
+If this issue deserves a CVE#, I guess both patches can be seen as a
+single bugfix.
+
+This impacts qemu and all products based on it and using e1000 emulated
+device, including qemu-kvm, xen and others.
+
+Thanks,
+
+/mjt
