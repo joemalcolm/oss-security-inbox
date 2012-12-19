@@ -1,95 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/04/5
-Message-ID: <CAOBoUnMMpTB8n4tGJXzooEbie56JbA=_NvQ=a8Z41oQfFX2-wA@mail.gmail.com>
-Date: Wed, 4 Apr 2012 11:07:05 +0200
-From: Steffen Dettmer <steffen.dettmer@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/2
+Message-ID: <50D13A53.7040402@redhat.com>
+Date: Tue, 18 Dec 2012 20:53:55 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [JDBC] CVE DISPUTE notification: postgresql-jdbc: SQL injection due improper escaping of JDBC statement parameters
+CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+Subject: Re: CVE request: Inkscape fixes a XXE vulnerability during rasterization of SVG images
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 2, 2012 at 6:16 PM, Kevin Grittner
-<Kevin.Grittner@...ourts.gov> wrote:
-> ... which shows version 8.1 as having reached end-of-life and gone
-> out of support five years after release, in November, 2010.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thank you for sharing your view. Let's me take this opportunity
-to tell my arguments why I think an advisory with this
-information could be suited.
+On 12/18/2012 08:44 PM, Kurt Seifried wrote:
+> On 12/17/2012 01:27 PM, Nicolas Grégoire wrote:
+> 
+>> Inkscape is vulnerable to XXE attacks during
+>> rasterization/export of SVG images:
+>> https://bugs.launchpad.net/inkscape/+bug/1025185
+> 
+>> Impact: The impact of this vulnerability range form denial of 
+>> service to file disclosure. Under Windows, it can also be used
+>> to steal LM/NTLM hashes.
+> 
+>> PoC: During rasterization, entities declared in the DTD are 
+>> dereferenced and the content of the target file is included in
+>> the output. Command-line used: "inkscape -e xxe-inkscape.png
+>> xxe.svg" (PoC files are attached to the ticket)
+> 
+>> References: CWE-827: Improper Control of Document Type Definition
+>>  http://cwe.mitre.org/data/definitions/827.html
+> 
+>> Regards, Nicolas Grégoire
+> 
+> This already has a CVE reference in the page:
+> 
+> CVE References
+> 
+> 2012-1102
 
+To clarify that CVE was assigned to
+http://seclists.org/oss-sec/2012/q1/549
 
+http://seclists.org/oss-sec/2012/q1/549
 
-Yes, all this is true. However, not everyone knows all that and
-can "apply usual expectations".
+so this is probably an error, someone needs to tidy that bug up and
+post links to the source/etc so I can see whats going on.
 
-So you don't have old clients running anywhere? Others may follow
-the idea not to change a running system (at least as supported by
-vendor) but for some reason upgraded one of their databases to a
-newer version.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Is this such an unlikely situation that some few old applications
-connect to a database which later is updated because some newer
-applications benefit from newer database features? Or because the
-database server hard- and software is upgraded to keep increasing
-performance requirements?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Of course for an expert focusing PostgreSQL / JDBC all this is
-known, clear and obvious, but for the less experienced people,
-for example application developers, it might not be the case.
-
-Java developers may follow "run everywhere" as long as the test
-suites pass (which might not include security penetration testing
-and even if so may fail to detect the problem).
-
-Who is in charge to know that such a combination is insecure? The
-application vendors might not know which JDBC / DBMS combination
-a customer might use. At the customer site IT professionals may
-choose supported distributions and may not know details of
-PostgreSQL version requirements, especially if not stated in the
-manuals.
-
-The last 8.1 version (build) is from 2010, so someone could
-assume it would still be supported. I think this shouldn't be
-mentioned only somewhere on a web page, but in the appropriate
-users manuals.
-
-Often so many things are used by projects that it could be very
-hard trying to read all related mailing lists.
-
-When using a linux distribution that is still supported by the
-vendor, I think it is reasonable to assume the included packages
-are still supported at least by the same vendor.
-
-I talked with a (very) few people, no one had assumed that; the
-assumption was "install all vendor patches and be safe for known
-issues" and that different versions either work securely or not
-at all.
-
-IMHO also misleading seems to be the term "protocol version 3". I
-think this really suggests that any protocol version 3 client
-could connect to any protocol version 3 server.
-But this is not true. There are many different protocol
-version 3 versions, but I don't think that this is commonly
-understood by end users. I know that it is nowhere told that it
-would be interoperable, but I think a common assumption would be
-that protocol v3 is interoperable with protocol v3.
-
-The current situation seems to be "you cannot use older versions
-of your enterprise long term support distribution to connect newer
-versions of your enterprise long term support one", which in my
-point of view had been worth an advisory, but maintainers seem to
-conclude that what is not supported from the project does not
-need to be supported by the distribution.
-
-Maybe maintainers could decide to provide an advisory anyway, be
-it only summarizing the issue. I understand that creating a patch
-would be much effort, is not supported and disliked, but
-spreading the information could be suited nevertheless.
-Distributors could decide to pack newer versions. Even if not,
-Distribution customers then at least could decide to upgrade
-their systems and/or manually install a suited driver version.
-
-Knowing the issue is needed in any case, I think.
-
-oki,
-
-Steffen
+iQIcBAEBAgAGBQJQ0TpTAAoJEBYNRVNeJnmToVkQAL15KAplZyCcwZFZR2PqVr0V
+ZbTvQXo93A3FuAlVDZ6FQQJSMU1E5EMpuD80816JLuUgFe1he/VwUoCtUknPdz5n
+cgXNCAHAtbEt54bCcRKoVCeFHTnYP0MzA2PDOoRFuRgkUoUwFv6ilL5dcZD8pehq
+ZwEWGVE/IDPJ+yFUma+FwtSP0olxoH6ZOP79RPgGoaPrCDfsLRjloKRKX4IUXSHy
+aN5wGNVd9RfCCdtjwb8Qd0DakXwqJ0B0spFDK6ZhbtJl7IxdQqEiIndJ6+EhJRQh
+A9njFDUjtIUM5jqUe7/Lb2Hzi5cno120dBKxvU/PLk0D7ZSErfI2ZneoxIIIdk42
++kNQ1qT8/08QsnicVlqP9RpUiW9fqx4ndzazNUjCcTyegnjyYNm2VQlOC0quEDyo
+DzY2l2PED+A4HZ+gQW0uUcMWuDAaH7o2ti6CGUPgd5IPBYbBJpXBRZmw26QSD71M
+xs50rPHiJhuJiw8s6q7M/sq/rf7ixe/AtJ5bfYntzD9pCaxkG7Q/FZytEXjIwiGb
++mqN6q52Gnc6R+neY22la/xwwRnRjYCDIUz/2r4Xt9EV1I5XbS9Zn24DDLE7YFJw
+KT1hWAa8GqvmUgv5FjB20M9AANyi7wxUlzdnKsiL3WOJdVpApE2cDpBC41PH9WDZ
+EN02SxWlecA1X7CgMGpc
+=Bzwi
+-----END PGP SIGNATURE-----
