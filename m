@@ -1,52 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/17/16
-Message-ID: <Pine.GSO.4.64.1201171700520.16209@faron.mitre.org>
-Date: Tue, 17 Jan 2012 17:08:51 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/6
+Message-ID: <50D19054.204@lab.b-care.net>
+Date: Wed, 19 Dec 2012 11:00:52 +0100
+From: Frédéric Basse <frederic.basse@....b-care.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: gpw password generator giving short password at low rate
+Subject: [CVE-2012-6426] LemonLDAP-NG SAML XML Signature Wrapping
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The rarity of an issue does not affect CVE inclusion.
+The name CVE-2012-6426 was assigned to this issue.
+See http://jira.ow2.org/browse/LEMONLDAP-570
+(Security advisory to follow)
+- -- 
+Frédéric Basse - Thales Communications & Security
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-In this case, the product's security feature is not living up to its 
-advertised capability (by generating shorter passwords than expected) so, 
-even if it's not that severe an issue, it's probably still of some 
-importance to some people.
-
-The availability of the software does not directly affect CVE inclusion; 
-if it could be available for people to install on their own systems, then 
-it can be covered by CVE.  Obviously this applies to any software that is 
-available for download from the web, whether open or closed source.  (I 
-say "does not directly affect CVE inclusion" because CVE cannot keep up 
-with every single product and every single vulnerability due to various 
-limitations - primarily the raw number of vulns that are released every 
-year - so, some products with limited "market share" might not make it 
-into CVE even though they would technically qualify.)
-
-- Steve
-
-
-On Tue, 17 Jan 2012, Yves-Alexis Perez wrote:
-
-> Hi list,
->
-> we were pointed at a bug in gpw (a password generator), which makes it
-> generate shorter password than required at a rate of ~20 over 1 million.
-> The bug is at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651510
-> (so already public) and I'm wondering if that deserves a CVE:
->
-> * gpw seems unmaintained (upstream and in Debian since around 2006)
-> * I'm not sure people even use it
-> * people using it interactively will notice the password has the wrong
-> size
->
-> But as it may be used in a script, then it might still be a real issue.
->
-> What do people think?
->
-> Regards,
-> -- 
-> Yves-Alexis
->
+iQEcBAEBAgAGBQJQ0ZBUAAoJEG39VVx5rCjD+f0H/3WzeIcgSf/UrBkfJ0UlyEAF
+Ql/YvXDbi1P2fgeZnx0U5cK6/qMgJ9Zna5qp3L2Rp4t7Oyuj3dNsuZ0JTA2eWJFJ
+rK+Dtzw37zrdCXTb7kmpqOHH/pld4anzlkRONm4M2LEmVt6m8ral6SxC7WwmvpVp
+uW9MchgjRlATTMiA9f17J6np2NPRTa1Fti+2wVRsfzCy7YZlIkuiTC3NkXxXq+P+
+tT0uXOIO9sOBP0r4AbzO9oXhl9GJPqOoiWW5PpjGY5JtHsWUSXX0Kdls1Q+Ht7FE
+0haQJiKU677kKq3J5j6ebZHF3ux7wyjuBgpfxuXyrV4yx2IEyrbEJzbuBvmkcD0=
+=9+Do
+-----END PGP SIGNATURE-----
