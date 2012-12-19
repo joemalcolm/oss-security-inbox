@@ -1,26 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/10
-Message-ID: <50DFBC29.5060001@redhat.com>
-Date: Sat, 29 Dec 2012 20:59:37 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/1
+Message-ID: <50D13825.4010000@redhat.com>
+Date: Tue, 18 Dec 2012 20:44:37 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: 2012 close out/cleanup
+To: oss-security@...ts.openwall.com
+CC: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+Subject: Re: CVE request: Inkscape fixes a XXE vulnerability during rasterization of SVG images
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-So I've no doubt missed a few 2012 CVE requests, occasionally my email
-seems to drop a posting from oss-sec about once a month, usually
-another SRT member asks me why I haven't responded so I see it in the
-archives then, and sometimes I wait for more info/replies which never
-happens.
+On 12/17/2012 01:27 PM, Nicolas Grégoire wrote:
+> 
+> Inkscape is vulnerable to XXE attacks during rasterization/export
+> of SVG images: https://bugs.launchpad.net/inkscape/+bug/1025185
+> 
+> Impact: The impact of this vulnerability range form denial of
+> service to file disclosure. Under Windows, it can also be used to
+> steal LM/NTLM hashes.
+> 
+> PoC: During rasterization, entities declared in the DTD are
+> dereferenced and the content of the target file is included in the
+> output. Command-line used: "inkscape -e xxe-inkscape.png xxe.svg"
+> (PoC files are attached to the ticket)
+> 
+> References: CWE-827: Improper Control of Document Type Definition 
+> http://cwe.mitre.org/data/definitions/827.html
+> 
+> Regards, Nicolas Grégoire
 
-So with this in mind if you have or know of CVE requests that have
-gone unfulfilled for more than 2 weeks please email me a copy
-(kseifried@...hat.com) so I can make sure they get handled. Otherwise
-they probably won't get handled =). Here's looking forwards to 2013,
-with any luck we can break 2000 CVE assignments on oss-sec this year =).
+This already has a CVE reference in the page:
+
+CVE References
+
+2012-1102
+
+
+
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -29,17 +47,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ37wpAAoJEBYNRVNeJnmTpdcP/jNjmv48MI1H5bJPW8oDpI/X
-0DRxaDurvoWSjOTuiMVrQlqyRI+tpAdMWlEA1JWWcC5VVAMY66qyLimA3H5ZHxn+
-fL36irN1hbsoe0+Zk65pNjj9iByjSdLpV1WqsaUNlSnnJk06hfICKUVqEJlS2Qie
-E8UFYN77/dz4eXiLEd4Pu7vmSE09zeUgtlperp4SNC+DcqMCkJfWSpPEUyk9obPy
-8zhRFRczeXAoqXWP4dMlH8DczDY6oWRljQRaxG2v/eRf8Dd5JO+rZlV3Pe1nNbfe
-Ph6xnQm/sBcF3MH/+PRH0E6KQeq5s/WQQewdcrAcfC+VvhPtVh2k7XooIGkmcGex
-SLaDAumhWiqA7Cy1g9iriV0wBi8pXekzs+2yiWN3rx+gbGEq5ksQs0r8SK6L8UB9
-ttMZ5Pu2+DSY3KoIkAJH2bZwSeA0wh20Z2y+4wqIUnw8Sb5JzQiixCGUD+Ytl9JL
-s+rPFYoEWhmb2d13KTgx8ld6MlYG6nSgGbrdR5nZvpHAPr8TXIkTmBmIS21AKllU
-vNa0IgkyEV8uIAHDiY6M6Twn8s5XJ4yURT9J704ppxiHdGspNP39Lmpg7yL/pUnV
-5iaVCBKKJrrHIahF04i4MS9mD8Liggkqx8H7MWn0pBaOod55T5G/ABBIwQ27vKNc
-rhg/8w4AnFhdJHVVFNSv
-=Klwi
+iQIcBAEBAgAGBQJQ0TglAAoJEBYNRVNeJnmTO1QP/i6IySfJlSte8DMMgFPANUrd
+U0UWqyHYyfk7eGlAEZEwYPOgyB97hV4NQ0Q2uXNRfRnefyatMR3YGCd+YCx47fER
+1ZxgVVDKVzDosJyc2Dcoyu4gG+QF6V98+lbnEgH2VIhqu+VWnT35U2wP7HPNIMYI
+zegn9o6uuwt6S4uFujHrCE4xPHTAxZnvgu5l0ucagJZmA2cOXzMSCXrTgILTIW9k
+Yk/2sofeB73jnY3GmcAX++GmShaFHibhJweVu0Wai9b5c9+aA1IXJqkPY8Di0lqo
+crWaXfaq8D8fIYzIe+RQXjAlXPPjud3827mN1ahhOuKx5PanNed7DPII2gBOvhKS
+ZEuc/0mKMqm8lL+lPEePFX4KW8fRLp2djgat+8CpcGI9D7gcl2P7dakib854QNjS
+Mv3y/sST1hLOcLqyp7E2PmrMm3hD1gJV3jZcCHSCQnybbogx3YZ9zMf0g8L6zHF/
+mjsfBewIw/qxejhQ1UahTz2Ei1xettvimTli65PNwSbxgxQhgrY3rvVQ8qEYou4v
+0nV58UH5Oq6sdErg0rUC1rPQJRsFv5uuWMFdVYFvDQiNsBWpIvpp9PnZwvR9Uet8
+I09OhIrSYlGUcETk1z0EB7ADoz6SPlafrVdi/fdqzvPSorQ0J2UYpzIViLs/bpAs
+fyj6qwxXRgNh2Ia3+VlX
+=XMwV
 -----END PGP SIGNATURE-----
