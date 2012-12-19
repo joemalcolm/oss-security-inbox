@@ -1,56 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/10/6
-Message-ID: <50256B29.3090902@redhat.com>
-Date: Fri, 10 Aug 2012 14:12:25 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/4
+Message-ID: <50D186CC.40806@redhat.com>
+Date: Wed, 19 Dec 2012 10:20:12 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Adam Caudill <adam@...mcaudill.com>
-Subject: Re: CVE Request: NeoInvoice Blind SQL Injection in signup_check.php
+Subject: Re: Plug-and-wipe and Secure Boot semantics
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12/19/2012 06:39 AM, Greg KH wrote:
 
-On 08/10/2012 02:55 AM, Adam Caudill wrote:
-> All,
-> 
-> There is a blind SQL injection issue with NeoInvoice 
-> (https://github.com/tlhunter/neoinvoice).
-> 
-> Requester: adam@...mcaudill.com Software: NeoInvoice Attack Type:
-> Blind SQL Injection Vulnerable Code: 
-> https://github.com/tlhunter/neoinvoice/blob/5e7af94641cba17df9141e95108c369cfb6e6dd5/public/signup_check.php#L29
+>>>> Most signed Linux boot loaders only verify the kernel (and,
+>>>> indirectly, code that's loaded into the kernel), but not the
+>>>> initrd contents.
+>>>
+>>> Given that there is only one public signed Linux boot loader, saying
+>>> "most" is a bit odd here :)
+>>
+>> Uhm, aren't there a couple of them in circulation?
 >
->  Affected Version: Current version; project doesn't seem to be
-> using versions.
-> 
-> Status: Author has been notified; awaiting a response.
-> 
-> -- Adam Caudill
+> Not that I know of, all of the "public" ones are based on Matthew
+> Gerritt's code, do you know of another one that has made it through the
+> Microsoft signing process?
 
-$query = "SELECT $field FROM $table WHERE $field = '$value' LIMIT 1";
+I was mistaken, I assumed that Fedora was shipping Matthew's 0.1 code, 
+which differs significantly from the 0.2 code.  But it turns out that 
+Fedora ships 0.2 instead (since the end of November).  Oh well.
 
-Please use CVE-2012-3477 for this issue.
+>> The Fedora 18 TC3 installer boots on the machine mentioned above, in
+>> the factory default configuration.  Previous installer versions
+>> showed a Secure Boot error message.  I've run into an installer bug,
+>> though:
+>> <https://bugzilla.redhat.com/show_bug.cgi?id=888232>
+>
+> Previous versions of Fedora 18 betas didn't have a valid signed
+> bootloader to allow anything to be installed, are you sure it's all
+> properly built now?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Yes, or the UEFI implementation on the box is buggy.  It could not boot 
+the installer before, but now it can.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+> But, more on-topic, how does UEFI secure boot have anything to do with
+> this mailing list?
 
-iQIcBAEBAgAGBQJQJWspAAoJEBYNRVNeJnmT2bQP/1/NoF9e+FT5wvGiM6w+YsGC
-cwJ1IH5LK9gNHFWJFhMtYmciBn2GJiDLa6F8Kt1sn03wG51vNJlHxsV4R3QibxeQ
-hzfQRtagf43q5AUathRbriMkHMAmWnLlknoxzOuIASMLX8i9Pa/oehpzVcLrYaNA
-Le6zikMr6kmjHK6uMqwr9bueiYZWn96j1WpJFCG8DVMcK5ZGpUqsBAoDW7/A8XZK
-eKiBMsepFD9+MRrnXfo43BQgC6P5WaYHF0L95STs2V9Nc89OgfezaZORrxjyIe7d
-8EJoVkB4TINp3QDb6GJuPoSLMEM+KKHxiozCUYuPFkMM2EH4BskuO1xLEsL6Kp4v
-JrEtCQ8dSQCvQ9z34hNU1rVWgUUgDWaFrHvj8eDA6PVuOn5Ufg9v5uYrd1nkBZ1Z
-H2NyG6gcsYYWB5MlUOufCXCINWPN2cZs3eQ2brRPpl78dphkX7eBldMox8U6Wswh
-YErACj655d0gXEqPQhod9PjwAzRjgzh2fH8R4F5cPzOj8lsIZiYwXcOdguxn0xVY
-8Ja+GtjRfJ4ImORgy9r0xdy8kijkjbDlEcfwxH9mbF1ch7ZxGeDg8IEVsqRx14x2
-VHNdZgkdymRrFtm9ogB7cr6qH2ncnrXCr6HNqtMZsDdm+F8aXJar//BPWgJuQQla
-wbxhM/nlsAIj/BkrDPFU
-=1VHg
------END PGP SIGNATURE-----
+Aren't vendors basing their implementation on the open-source code from 
+Intel?  Or are you referring to the fact that Secure Boot has little to 
+do with security?
+
+-- 
+Florian Weimer / Red Hat Product Security Team
