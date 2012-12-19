@@ -1,62 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/20/13
-Message-ID: <20120420074122.GD15515@suse.de>
-Date: Fri, 20 Apr 2012 09:41:22 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/7
+Message-ID: <20121219163459.GA24439@kroah.com>
+Date: Wed, 19 Dec 2012 08:34:59 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugeneteo@...nel.sg>, "Eric W. Biederman" <ebiederm@...ssion.com>, "security@...nel.org" <security@...nel.org>, Sukadev Bhattiprolu <sukadev@...ibm.com>, Serge Hallyn <serge.hallyn@...onical.com>
-Subject: Re: Re: CVE request: pid namespace leak in kernel 3.0 and 3.1
+Subject: Re: Plug-and-wipe and Secure Boot semantics
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 20, 2012 at 09:14:58AM +0400, Pavel Emelyanov wrote:
-> On 04/20/2012 07:10 AM, Eugene Teo wrote:
-> >> So we know what is holding the pid namespace reference.
-> >>
-> >> Additional thoughts.
-> >>
-> >> Does echo 3 > /proc/sys/vm/drop_caches clear up the issue?
-> > 
-> > No.
-> > 
-> >> Is there a corresponding task_struct leak?
-> > 
-> > Yes.
-> > 
-> >> I don't have much of a clue or much concern as this seems fixed in later kernels but I am happy to suggest things to look for to help narrow this down.
-> > 
-> > I'm helping to provide more information.
+On Wed, Dec 19, 2012 at 10:20:12AM +0100, Florian Weimer wrote:
+> On 12/19/2012 06:39 AM, Greg KH wrote:
+> >>The Fedora 18 TC3 installer boots on the machine mentioned above, in
+> >>the factory default configuration.  Previous installer versions
+> >>showed a Secure Boot error message.  I've run into an installer bug,
+> >>though:
+> >><https://bugzilla.redhat.com/show_bug.cgi?id=888232>
+> >
+> >Previous versions of Fedora 18 betas didn't have a valid signed
+> >bootloader to allow anything to be installed, are you sure it's all
+> >properly built now?
 > 
-> Is there also a vfsmount struct leak as well? The pidns creating implies
-> kern-mount-ing of a proc and it should be released when child reaper of
-> the namespace dies.
+> Yes, or the UEFI implementation on the box is buggy.  It could not
+> boot the installer before, but now it can.
+> 
+> >But, more on-topic, how does UEFI secure boot have anything to do with
+> >this mailing list?
+> 
+> Aren't vendors basing their implementation on the open-source code
+> from Intel?  Or are you referring to the fact that Secure Boot has
+> little to do with security?
 
-Yes, apparently (mnt_cache jumps 2*tries).
+We don't know what vendors are basing their UEFI bios implementation on
+the open source version, I know there is at least one UEFI bios that is
+not based on the open source version, or so it is reported (the BSD
+license of Tianocore means that we will never really know.)
 
-I diffed slabinfo before and after approx 7500 tries on a freshly rebooted machine (3.1.10), here
-are the suspicious large jumps:
+Determining what machine is running what bios from what company that was
+based on what version of the open source UEFI implementation is going to
+be a huge problem in the long run and something that I sure don't want
+to have to track.
 
--mqueue_inode_cache      1      4    896    4    1 : tunables   54   27    0 : slabdata      1      1      0
-+mqueue_inode_cache   7516   7516    896    4    1 : tunables   54   27    0 : slabdata   1879   1879      0
+There have been reported bugs in the Tianocore in the past, I don't
+think they were "security" issues in and of themselves, should we be
+reporting them here to get CVE numbers if they are?
 
--pid_namespace          0      0   2112    3    2 : tunables   24   12    0 : slabdata      0      0      0
-+pid_namespace       7515   7515   2112    3    2 : tunables   24   12    0 : slabdata   2505   2505      0
+thanks,
 
--proc_inode_cache     591    696    632    6    1 : tunables   54   27    0 : slabdata    116    116      0
-+proc_inode_cache    8105   8124    632    6    1 : tunables   54   27    0 : slabdata   1352   1354      0
-
--mnt_cache             45     45    256   15    1 : tunables  120   60    0 : slabdata      3      3      0
-+mnt_cache          15077  15090    256   15    1 : tunables  120   60    0 : slabdata   1006   1006      0
-
--dentry             10840  10840    192   20    1 : tunables  120   60    0 : slabdata    542    542      0
-+dentry             26780  26880    192   20    1 : tunables  120   60    0 : slabdata   1343   1344      0
-
--size-4096             59     59   4096    1    1 : tunables   24   12    0 : slabdata     59     59      0
-+size-4096           7577   7577   4096    1    1 : tunables   24   12    0 : slabdata   7577   7577      0
--size-1024            665    680   1024    4    1 : tunables   54   27    0 : slabdata    170    170      0
-+size-1024          15700  15700   1024    4    1 : tunables   54   27    0 : slabdata   3925   3925      0
--size-64             3360   3540     64   59    1 : tunables  120   60    0 : slabdata     60     60      0
-+size-64            15097  22597     64   59    1 : tunables  120   60    0 : slabdata    383    383      0
--size-32             7892   7952     32  112    1 : tunables  120   60    0 : slabdata     71     71      0
-+size-32            23920  31472     32  112    1 : tunables  120   60    0 : slabdata    281    281      0
-
-Ciao, Marcus
+greg k-h
