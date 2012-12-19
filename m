@@ -1,28 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/13/4
-Message-ID: <924551826.11812407.1344855143001.JavaMail.root@redhat.com>
-Date: Mon, 13 Aug 2012 06:52:23 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, "Joseph S. Myers" <joseph@...esourcery.com>, Jeff Law <law@...hat.com>
-Subject: CVE Request -- glibc: Integer overflows, leading to stack-based buffer overflows in strto* related routines
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/3
+Message-ID: <20121219053959.GC23062@kroah.com>
+Date: Tue, 18 Dec 2012 21:39:59 -0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Plug-and-wipe and Secure Boot semantics
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Tue, Dec 18, 2012 at 03:52:50PM +0100, Florian Weimer wrote:
+> On 12/18/2012 03:41 PM, Greg KH wrote:
+> >On Tue, Dec 18, 2012 at 01:46:47PM +0100, Florian Weimer wrote:
+> >>Some UEFI machines seem to boot from USB by default, without any
+> >>prompting, probably assuming that a signed boot loader cannot cause
+> >>any damage.
+> >
+> >Specific model name(s) please?
+> 
+> Lenovo M72e 0896A9G
 
-  multiple integer overflows, leading to stack-based buffer overflows were found in various stdlib functions of GNU libc (strtod, strtof, strtold, strtod_l and related routines). If an application, using the affected stdlib functions, did not perform user-level sanitization of provided inputs, a local attacker could use this flaw to cause such an application to crash or, potentially, execute arbitrary code with the privileges of the user running the application.
+Thanks for that, I'll try to track one down, that's a very odd behavior,
+but, in reading the spec, I can't see how it violates it at all.
 
-Upstream bug report:
-[1] http://sourceware.org/bugzilla/show_bug.cgi?id=14459
+> This is a business-class Windows 8 machine which comes with a
+> Windows 8 logo sticker, so Secure Boot was enabled in the factory
+> (and my testing reflected that).  I'm not sure if the type number
+> encodes that—Lenovo surely offers essentially the same hardware with
+> Secure Boot disabled by default, so that customers can install
+> Windows 7 more easily.
+> 
+> >>Most signed Linux boot loaders only verify the kernel (and,
+> >>indirectly, code that's loaded into the kernel), but not the
+> >>initrd contents.
+> >
+> >Given that there is only one public signed Linux boot loader, saying
+> >"most" is a bit odd here :)
+> 
+> Uhm, aren't there a couple of them in circulation?
 
-Upstream patch (might not be the final one):
-[2] http://sourceware.org/ml/libc-alpha/2012-08/msg00202.html
+Not that I know of, all of the "public" ones are based on Matthew
+Gerritt's code, do you know of another one that has made it through the
+Microsoft signing process?
 
-References:
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=847715
+> The Fedora 18 TC3 installer boots on the machine mentioned above, in
+> the factory default configuration.  Previous installer versions
+> showed a Secure Boot error message.  I've run into an installer bug,
+> though:
+> <https://bugzilla.redhat.com/show_bug.cgi?id=888232>
 
-Could you allocate a CVE id for this?
+Previous versions of Fedora 18 betas didn't have a valid signed
+bootloader to allow anything to be installed, are you sure it's all
+properly built now?
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Also, there is a bug in Matthew's signed shim code that fails on some
+machines (like the one I have), so you might want to work on getting the
+bugfix into your build/sign/distro creation process.
+
+But, more on-topic, how does UEFI secure boot have anything to do with
+this mailing list?
+
+thanks,
+
+greg k-h
