@@ -1,38 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/16/4
-Message-ID: <502D25F3.60300@redhat.com>
-Date: Thu, 16 Aug 2012 10:55:15 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/20/3
+Message-ID: <50D2A599.6040303@redhat.com>
+Date: Wed, 19 Dec 2012 22:43:53 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Sean Amoss <ackle@...too.org>, Gentoo Linux Security Team <security@...too.org>
-Subject: Re: CVE Request: SquidClamav insufficient escaping flaws
+CC: Jan Lieskovsky <jlieskov@...hat.com>, Nicolas Grégoire <nicolas.gregoire@...rri.fr>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: Inkscape fixes a XXE vulnerability during rasterization of SVG images
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/16/2012 09:29 AM, Sean Amoss wrote:
-> Hi Kurt,
+On 12/19/2012 03:37 AM, Jan Lieskovsky wrote:
+> Hi Kurt, Nicolas, vendors,
 > 
-> It appears that this has not yet received a CVE:
+> ----- Original Message ----- -----BEGIN PGP SIGNED MESSAGE----- 
+> Hash: SHA1
 > 
-> The upstream notification [1] shows SquidClamav 5.8 and 6.7 fixes a
-> URL escaping issue which could lead to a daemon crash [2].
-> SquidClamav 5.8 also fixes escaping issues in CGI scripts [3].
+> On 12/18/2012 08:44 PM, Kurt Seifried wrote:
+>> On 12/17/2012 01:27 PM, Nicolas Grégoire wrote:
+>> 
+>>> Inkscape is vulnerable to XXE attacks during 
+>>> rasterization/export of SVG images: 
+>>> https://bugs.launchpad.net/inkscape/+bug/1025185
+>> 
+>>> Impact: The impact of this vulnerability range form denial of 
+>>> service to file disclosure. Under Windows, it can also be used 
+>>> to steal LM/NTLM hashes.
+>> 
+>>> PoC: During rasterization, entities declared in the DTD are 
+>>> dereferenced and the content of the target file is included in 
+>>> the output. Command-line used: "inkscape -e xxe-inkscape.png 
+>>> xxe.svg" (PoC files are attached to the ticket)
+>> 
+>>> References: CWE-827: Improper Control of Document Type
+>>> Definition http://cwe.mitre.org/data/definitions/827.html
+>> 
+>>> Regards, Nicolas Grégoire
+>> 
+>> This already has a CVE reference in the page:
+>> 
+>> CVE References
+>> 
+>> 2012-1102
+>> 
+>> To clarify that CVE was assigned to 
+>> http://seclists.org/oss-sec/2012/q1/549
+>> 
+>> http://seclists.org/oss-sec/2012/q1/549
+>> 
+>> so this is probably an error, someone needs to tidy that bug up
+>> and post links to the source/etc so I can see whats going on.
 > 
+> That's correct. CVE-2012-1102 has been assigned to the perl
+> XML-Atom issue.
 > 
-> References: [1] http://squidclamav.darold.net/news.html [2]
-> https://github.com/darold/squidclamav/commit/80f74451f628264d1d9a1f1c0bbcebc932ba5e00
+> Assuming the source of the slight confusion is this comment: 
+> https://bugs.launchpad.net/inkscape/+bug/1025185/comments/13
+> 
+> and the CVE id in the references.
+> 
+> But from the context of that bug, comment c#13 was used just to
+> reference patch for same issue in perl XML-Atom (CVE-2012-1102) 
+> issue, when searching a patch for inkscape.
+> 
+> Which later resulted into upstream inkscape commit: 
+> http://bazaar.launchpad.net/~inkscape.dev/inkscape/trunk/revision/11931
 >
+>  referenced in (subsequent) comment c#14: 
+> https://bugs.launchpad.net/inkscape/+bug/1025185/comments/14
 > 
-[3]
-https://github.com/darold/squidclamav/commit/5806d10a31183a0b0d18eccc3a3e04e536e2315b
-> [4] https://bugs.gentoo.org/show_bug.cgi?id=428778
+> So CVE-2012-1102 identifier is for perl XML-Atom problem. And this 
+> (same XXE problem) being present in inkscape should get a new CVE
+> id yet.
 > 
-> 
-> Thanks, Sean
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
-Please use CVE-2012-3501 for this issue.
+Please use CVE-2012-5656 for the Inkscape fixes a XXE vulnerability
+during rasterization of SVG images
+
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -40,19 +88,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQLSXzAAoJEBYNRVNeJnmT3VIP/1l8Bg2kMnBaK7E5VBLhOmgk
-/DH9iFX8XWOCiOSqBdOUn3dvcubStSwXQD00rNiTFa2fgi7OJW0VAv0OdNkqrh9D
-iMw6nFkNuXLdRxvqB8G7p0yAjmVdQbRG7mFbtdoFNDnNdkxzDLHvrLPCoPariCeR
-hLlWmFo4UxU++8hjLpNYKSK2orirVPuMr73xRKnbGXlbwR/po3QprFt52OgiLFy/
-GfYrOZFOe8S9ikW0AucifibBEDoWyURFRfGt9oeDgmUz/gQRdrfCdpdCcOsb1EKo
-mZOX5TXWjTTMCdZGyKcV0qB1+aS3JbTVRONbzs3W6KHYKbpVVucQvFxP9zB/vVLy
-97VPHS1+QyUqh+rdAO7+Xi6344tkAQUt4Pmhru9weihZmCZK/D+Kdxv7KUa/pfm/
-mbyDq7Y8apwt2mmFtuUp1Evt9A8lyoMfl6pMSlxgUVAgUjiM00Slqwp2B+wiqnuf
-mkO49YrFwgF6xu8Ecqgpp5hbFHu/gse7HE1aQXBUELGTPUwr2y6PcF07bVAtH6yo
-VO6DvSEPWHDM5MgGHC2Fim7V2epqOzMF8MNxW8y2i+N03i1LKQQc4yKXNZuD2PLA
-EBD6Q2WvVv/BbbLmsSepSU5eLemWn8JhxT9H+w85hQxJuXlJhv8j/kE2+rwRW/nK
-Kf4DL7TdjS8kSymNrLAk
-=lEcD
+iQIcBAEBAgAGBQJQ0qWYAAoJEBYNRVNeJnmTbwEQAJo3Kj60JuDW+L/s4X6RHSIm
+U6qaRb6f44HNnv9ii32HAHvi6XoHkUmsAcvo1tBvCQ33AAx/9CjPMjT4/2WCq/bN
+faR3Ek+E7IFgIkzbOoQlIJ5DuSqICMJGw409NQRVqPFizXkYh9n0d1uL+OjfKRgo
+TB/LanpsGXWe9KvGozC8GQw0tbtgwl0G1tJMUtJOZlIK+Mh/Bw3xJJJWewgQpIHT
+fHNr4mRyHBICXulV0m1R35th2GfAsKKJHLjxyeVuWCV2Zzbos35v08hofamMxztY
+gANmHdZvEQJ6gQ5x/RMPWN0ZizOxTu7AedqYhQgo0Kb/xWYJOfoFht1kUCKsWikb
+49hMRd7Od7swQu1sneyQh+HeN/bVnMFDLivT+/pbIk0i5qUrCDWCH9uHBrH1HPi1
+gGNizk3WTtLYxDL39SUZyHGKhixQJzTcmUUEl3Ql3kFqMgmG3L2Hw68T0jX2Sml9
+RrTYTdqwT4OmAUBQs2RpNHiAJ7QNTZuJKEKNH+1Fj7Kf7TvQrZ058EjTUT3Nithv
+FIkmQibNJNL9AA5khqym/FcqxyDMTjzYDtYRp9GTVQJX5TAHOW9mXD+eRdSvgCJ6
+6B9BIlkKtc4e9sOwIQaxJUMa8/5QFP4kraYpiF/WW0jU2GLlT7a1RKzkCpLCv8NC
+e52Jm+jfQNagLx2lLpBF
+=0R76
 -----END PGP SIGNATURE-----
