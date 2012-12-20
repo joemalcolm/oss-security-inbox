@@ -1,53 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/02/3
-Message-ID: <50BB2C14.8000909@redhat.com>
-Date: Sun, 02 Dec 2012 15:53:16 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/20/1
+Message-ID: <50D2910B.6060904@redhat.com>
+Date: Wed, 19 Dec 2012 21:16:11 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, king cope <isowarez.isowarez.isowarez@...glemail.com>, full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org, security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
-Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal core, and contributed modules
 Content-Type: text/plain; charset=utf-8
 
-On 12/02/2012 11:30 AM, Kurt Seifried wrote:
-> So normally for MySQL issues Oracle would assign the CVE #. However in
-> this case we have a bit of a time constraint (it's a weekend and this
-> is blowing up quickly)  and the impacts are potentially quite severe.
-> So I've spoken with some other Red Hat SRT members and we feel it is
-> best to get CVE #'s assigned for these issues quickly so we can refer
-> to them properly.
->
-> If Oracle security has already assigned CVE's for these please let us
-> and the public know so we can use the correct numbers. Also if Oracle
-> can let the public know which versions of MySQL are affected (e.g.
-> 5.0.x, 5.1.x, 5.5.x, etc.) that would be very helpful to everyone I am
-> sure.
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-So here are the CVEs which Kurt meant to assign, but somehow
-that mail never reached the lists.
+On 12/19/2012 02:28 PM, Forest Monsen wrote:
+> Hello! I'd like to request CVE identifiers for several issues with 
+> core and contributed modules:
+> 
+> SA-CORE-2012-166: Multiple vulnerabilities 
+> http://drupal.org/SA-CORE-2012-004 (Looks like three identifiers
+> necessary here?)
 
+Access bypass (User module search - Drupal 6 and 7)
+Please use CVE-2012-5651 for this issue.
 
-* CVE-2012-5611 MySQL (Linux) Stack based buffer overrun PoC Zeroday
-http://seclists.org/fulldisclosure/2012/Dec/4
-https://bugzilla.redhat.com/show_bug.cgi?id=882599
+Access bypass (Upload module - Drupal 6)
+Please use CVE-2012-5652 for this issue.
 
-* CVE-2012-5612 MySQL (Linux) Heap Based Overrun PoC Zeroday
-http://seclists.org/fulldisclosure/2012/Dec/5
-https://bugzilla.redhat.com/show_bug.cgi?id=882600
+Arbitrary PHP code execution (File upload modules - Drupal 6 and 7)
+Please use CVE-2012-5653 for this issue.
 
-* CVE-2012-5613 MySQL (Linux) Database Privilege Elevation Zeroday
-Exploit
-http://seclists.org/fulldisclosure/2012/Dec/6
-https://bugzilla.redhat.com/show_bug.cgi?id=882606
+> SA-CONTRIB-2012-173 - Nodewords: Information disclosure 
+> http://drupal.org/node/1859282
 
-* CVE-2012-5614 MySQL Denial of Service Zeroday PoC
-http://seclists.org/fulldisclosure/2012/Dec/7
-https://bugzilla.redhat.com/show_bug.cgi?id=882607
+Please use CVE-2012-5654 for this issue.
 
-* CVE-2012-5615 MySQL Remote Preauth User Enumeration Zeroday
-http://seclists.org/fulldisclosure/2012/Dec/9
-https://bugzilla.redhat.com/show_bug.cgi?id=882608
+> SA-CONTRIB-2012-174 - Context - Information Disclosure 
+> http://drupal.org/node/1870550
 
+Please use CVE-2012-5655 for this issue.
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+> Thanks, Forest
+> 
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ0pEKAAoJEBYNRVNeJnmT3m8P/AtLcWrUckVnBEoARQfphuqE
+dV5FlHBOyX+vrmapMl/4LgqSnSdjG4LCiCwyJ/meZlGF1dkuSutRAZq/gVp6lEY9
+y6upxe/UnMZjroTeS9bUE/SqIM0IG/gqisW59BrHOgaIsERMowoDhLVp0mAcML5R
+IxrPQWLACceoEtVbEcKndh5slp8uOnyYOv1MTRuST66OB0rln+RlHwb77guR30Fu
+lkk98to73WLs8tSGrKXUaBt9XlpXgPgvHsFRs5TCkftBmoc8QMeZPWYEZz2RSnar
+98zPexrZ4ijdA9raBnanBEbQsdmITV/uOc1+P6f0wfZ1VtuICktolBytJiOY+Lxx
+zSq+EJkr/lqF/BEhGjrBvYH9gDGy1BeBgBiVWMIUfdH2q6jUQUbnqfWW+wR9csG3
+6LM1exHklb0/ahIBTqmIOrNpLbkGqPO21daDinehEg/45b0BANbNSP7nwxZZpHfT
+1VajmwDAcApdO/VRD2AKReylNhungmG1Fc7lakJPH9b3/P8ZVF5K1pdhmjzOJNwg
+nKTZI7GRlKckqETd8Iy/5t+raKPQTvGu+kJwAouObHx1Mkn6b7bpVqWgVlu8R08j
+rGAkmmvBrY78k7szzpOiJ7OoGmB5wb44X122yLUSX2UP7j6dZZVeiCVBhz5odWZI
+zKZpPsD6mdLYojwkUeMj
+=hfqG
+-----END PGP SIGNATURE-----
