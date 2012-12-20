@@ -1,40 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/08/10
-Message-ID: <20120108220818.353d2a1f@fb6vu8j9i2>
-Date: Sun, 8 Jan 2012 22:08:18 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/20/4
+Message-ID: <50D2A657.3010109@redhat.com>
+Date: Wed, 19 Dec 2012 22:47:03 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Malicious devices & vulnerabilties
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: information disclosure flaw in php-ZendFramework (ZF2012-05)
 Content-Type: text/plain; charset=utf-8
 
-Am Sun, 8 Jan 2012 09:07:25 -0800
-schrieb Greg KH <greg@...ah.com>:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> They should be considered buggy, yes, and as such, the kernel
-> developers will fix any reported problems (or we should, if not,
-> please let me know.)
+On 12/19/2012 09:46 PM, Vincent Danen wrote:
+> There doesn't seem to be a CVE for this issue.  Could one be
+> assigned? Thanks.
 > 
-> But note, as these almost always fall under the "you have physical
-> access" category, their security impact is generally considered low.
+> 
+> A vulnerability was reported in Zend Framework versions prior to
+> 1.11.15 and 1.12.1, which can be exploited to disclose certain
+> sensitive information.  This flaw is caused due to an error in the
+> "Zend_Feed_Rss" and "Zend_Feed_Atom" classes of the "Zend_Feed"
+> component, when processing XML data.  It can be used to disclose
+> the contents of certain local files by sending specially crafted
+> XML data including external entity references.
+> 
+> 
+> References: http://framework.zend.com/security/advisory/ZF2012-05 
+> https://bugzilla.redhat.com/show_bug.cgi?id=889037 
+> http://secunia.com/advisories/51583
 
-As far as publicly known, it's likely that Stuxnet was originally
-spread via a security problem with USB.
+Please use CVE-2012-5657 for this issue.
 
-Also, I'd doubt the "physical access" category. It may just require a
-bit of social engineering ("I have the file you requested on this usb
-stick").
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Considering that I'd strongly disagree classifying such issues "low
-impact".
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-At least for pluggable devices, I'd consider such issues rather
-serious. It's another thing with PCI or other devices that require
-significant work to attach to a piece of hardware.
-
-
-
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQIcBAEBAgAGBQJQ0qZXAAoJEBYNRVNeJnmTXk8P/i/sKjbl2p3nuN3WCHzOEWDR
+SZqCD9CNdlXnX1UHv2aox9itN+ClnDzDLMmp6pR7R/IWoJqJEb4exS/34WJT7yz5
+T8uLV7HfHhT/787ZVj0eKfQ4bidYgwEbXKdTjKKIJMj+w7gHGyXzdg1pXTLFdFz5
+pZQ3/Rjbkkvnz4FXpt/Sa/xgiq8HlfEeBxhxX5pcDkRq2JB3sOy7zLE9Gvi+81h+
+/K2SncIO90m3EmKr7EOhRDwLSwoCUIonQ4qM6INSYqvzOpoX+o6S8nxymE9xHViI
+96oppBkBv9RlqQOOCIBnbM72KnYx1ok2k0VqRX42XMQrXfVIrmNeWb9b0KfkKYFS
+z77mnVgprE0+4Zud/JKFA/BKs3kHXlc6GSe0vFZDJMZ8kiArH+Fjb/KYCuzytYXX
+Pw4k3A9nxbyRfA8h7QDjxdLPlbWMVbJ26DwjWxJRs2EV2SK+UvCz7iaI/1GJGQDU
+ZsrNV9OvhBWLb/JJTSWm47fTahlCrbubVq8KYAhVgWAjqnl/EsL7b6NQud6ScJwV
+SknaDRy/jWEpXl2nvn2aQnRHyPntLPbi7CIExSmd13EgppSKUkxL/lktW3IPoFz/
+r37RBhbsjgGFDZXSrhS41dBqiaGpwUCpwSEJPt3kOPzRSU3E7c93c8fsVA+7+xFv
+2WZGV1gt4tJiyvKyYljK
+=yxVf
+-----END PGP SIGNATURE-----
