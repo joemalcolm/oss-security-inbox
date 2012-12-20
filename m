@@ -1,43 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/27/7
-Message-ID: <CAK+yWWKRxYh-EAQj9QTe8RbbsJTm_W4JCeizkXOgDgraZG15VA@mail.gmail.com>
-Date: Fri, 27 Apr 2012 17:41:48 +0200
-From: Steve Schnepp <steve.schnepp@...il.com>
-To: Kurt Seifried <kseifried@...hat.com>, 668667@...s.debian.org
-Cc: oss-security@...ts.openwall.com, Helmut Grohne <helmut@...divi.de>,  Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Bug#668667: CVE Request (minor) -- Two Munin graphing framework flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/20/6
+Message-ID: <50D33ECA.3090006@lab.b-care.net>
+Date: Thu, 20 Dec 2012 17:37:30 +0100
+From: Frédéric Basse <frederic.basse@....b-care.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: [CVE-2012-6426] LemonLDAP-NG SAML XML Signature Wrapping
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 18, 2012 at 07:04, Kurt Seifried <kseifried@...hat.com> wrote:
->> In addition munin parses parts of the query string. You are allowed
->> to modify the size of the image. By choosing a path
->> "....png?size_x=20000&size_y=20000&uniquestuff" you can do the
->> same attack while simultaneously using a large image size. The raw
->> image would be 381M (assuming 8bits/pixel) in this case. A png
->> version will likely be smaller, say 4M? So now you have an
->> amplification of 4M/request. Note that this query can get a node
->> into swapping, because rrdtool needs to create the whole image in
->> main memory.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Ouch.
+[CVE-2012-6426] LemonLDAP-NG SAML XML Signature Wrapping
+_______________________________________________________________________
+Summary:
+LemonLDAP-NG <=1.2.2 is prone to a security vulnerability involving
+XML signature wrapping in authentication process.
 
-I believe I fixed the bug in r4825, since :
-- url with query string aren't stored permanently anymore.
-- /tmp isn't used anymore per default (to fix #668536)
+Successful exploits may allow unauthenticated attackers to construct
+specially crafted messages that can be successfully verified and
+contain arbitrary content.
 
-Could you confirm that ?
+This may lead to authentication bypass.
+_______________________________________________________________________
+Details:
+Due to a bad use of Lasso library, SAML signatures are never checked,
+even if SP forces signature check.
+____________________________________________________________________
+CVSS Version 2 Metrics:
+Access Vector: Network exploitable
+Access Complexity: Low
+Authentication: Not required to exploit
+Impact Type:Allows unauthorized disclosure of information; Allows
+unauthorized modification
+_______________________________________________________________________
+Disclosure Timeline:
+2012-11-08 Vendor contacted
+2012-12-18 Vendor: fixed issue in svn r2698
+2012-12-19 CVE-2012-6426 assigned
+2012-12-20 Public advisory
+2012-12-21 EoW
+_______________________________________________________________________
+References:
+http://jira.ow2.org/browse/LEMONLDAP-570
+_______________________________________________________________________
+Frédéric Basse - Thales Communications & Security
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-OTOH, the issue about very big imgs that gets the cgi into swapping
-isn't the same bug to be.
-
-As Helmut noticed, there is already a size cap in rrd, so do I still
-need implement one in munin ? If yes, would you mind to file another
-bugreport (for RAM exhaustion) ?
-
-Thx !
-
-r4825: http://munin-monitoring.org/changeset/4825
-
---
-Steve Schnepp
-http://blog.pwkf.org/
+iQEcBAEBAgAGBQJQ0z7KAAoJEG39VVx5rCjDjjUIAJz8M4OifN9cHf3W1qBwxFex
+CU3jUIGXb1H2N2OVH4DnU1xdFfm8Hr4nEbvSl+3yKJbIWAAPXx3Y5Ok9+LypE+Rb
+OrPRD9OJTat4wUj1SVbIh1bh1XWytRTq4i9pBE/F/86vyIJuQL9Hyya8ETSQoC6P
+FUrKEesHvKJetICPCqsiMuJiCstedEvgdGhkMhrDqaEkZTDkvbaZysxuJ3JSQ6Pq
+CioSQS2qB5U+IKJX2OKix1rR4ruaCoQmOq0qmRSr+8+a0dgP0Zf/w02KaXimuYwI
+oKBmiOTavr8NhQl45QGjVMZi3jMKs8qmxWul5/GE6mH7GqI8SfdvQxZC+iHHxQo=
+=IgwQ
+-----END PGP SIGNATURE-----
