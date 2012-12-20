@@ -1,60 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/01/4
-Message-ID: <4FC91429.1050301@redhat.com>
-Date: Fri, 01 Jun 2012 13:12:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/20/2
+Message-ID: <20121220044629.GL24980@redhat.com>
+Date: Wed, 19 Dec 2012 21:46:29 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: John Haxby <john.haxby@...cle.com>
-Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
+Subject: CVE request: information disclosure flaw in php-ZendFramework (ZF2012-05)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+There doesn't seem to be a CVE for this issue.  Could one be assigned?
+Thanks.
 
-On 06/01/2012 10:35 AM, John Haxby wrote:
-> I am inclined to think that we should have a separate CVE for the
-> kernel here.   Unless I'm mistaken, a packet with SYN+FIN has no
-> legitimate business being in the Internet any more than the old
-> SYN+RST has.   It's security hardening in that firewall rules to
-> discard packets with odd combinations of flags are often deployed
-> by people setting up "serious" firewalls but most machines out
-> there, whether or not they have iptables set up, don't go to those
-> lengths.  Certainly none of the machines I have access to that have
-> "out of the box" iptables configurations would appear to defend
-> against SYN+FIN for open ports.
 
-In my limited testing with iptables on RHEL 6.2 it appears that
-- --state NEW works properly, and won't allow SYN+FIN to create
-connections (I used hping3 and the SYN+FIN Packets were blocked).
+A vulnerability was reported in Zend Framework versions prior to 1.11.15
+and 1.12.1, which can be exploited to disclose certain sensitive
+information.  This flaw is caused due to an error in the "Zend_Feed_Rss"
+and "Zend_Feed_Atom" classes of the "Zend_Feed" component, when
+processing XML data.  It can be used to disclose the contents of certain
+local files by sending specially crafted XML data including external
+entity references.
 
-So the default ruleset:
 
-- -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-- -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j DROP
-- -A INPUT -j REJECT --reject-with icmp-host-prohibited
+References:
+http://framework.zend.com/security/advisory/ZF2012-05
+https://bugzilla.redhat.com/show_bug.cgi?id=889037
+http://secunia.com/advisories/51583
 
-should work, so you could do you clever --syn bits first and then have
-that set to protect stuff from SYN+FIN.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJPyRQpAAoJEBYNRVNeJnmTTxEQAJedLa1Xc6R3nVawEyxp3OLo
-5+HTXnjW6SDLELpkV3abUUeZswrY7F3IYN6hKrcLm+1lCsTmubP5fhGa8Ta1RceH
-GqyxCn+7OTFr3JfT8nHIhV9bSNCIPpPStaVO319WfVNVOqvzXnmVeTid0AuMLOem
-DIgwLpZx/WQqxTXY26t3nabrnolVIZdlV7zMxyV+k8OC7kzyU80cCbG4n6ErDcpj
-rPcydQVa6GTxidX+CzEXtsnVUWfHBcVwQLO60biHOjD7S0ZCHbQhMrj/CA9RAPsH
-9ltWC5sw6VSSGWv2J07dzop4IPzIUJeX/fMzI3HLGvhFuUPbH6AjgiadE0mgBlmB
-A3sXJAGr4yZqkUD/Z09tfy20RR+UFfao9dlR4MdBvigPVfPXJIgYAwP0R8s7wDA5
-SPiQ52mYV+PwgH1akEZjtq4aj25RbSXWwqn/ALVu1Dqau77ti6+MVLu9+uxCx0S8
-ZURyt0/OJjQXF6qrEtYZeaAz8OpaOTp8qaPAngoY9gtBFiHQW9xUDFpUMhvabGMO
-gmV3E5+DZ/+PQu1RbVfb4Ou65/yhS1daophXeiGCGeysW3rEoqvw/kESfeDMkotL
-WoxRGT4Jhg4JnqykuF5Z5A/U+EeqSI9qVgmkjkq30YU4MZb+teEmuitTTjWHu3LU
-V/y1Emz8j7zDb7Xi2I2h
-=e4JD
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
