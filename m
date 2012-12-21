@@ -1,60 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/20/8
-Message-ID: <4F68B633.100@redhat.com>
-Date: Tue, 20 Mar 2012 10:54:11 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/21/2
+Message-ID: <50D49BE1.2050602@redhat.com>
+Date: Fri, 21 Dec 2012 10:26:57 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Stefan Cornelius <scorneli@...hat.com>
-Subject: Re: CVE request: libtasn1 "asn1_get_length_der()" DER decoding issue
+CC: David Holland <dholland-oss-security@...bsd.org>
+Subject: Re: Isearch insecure temporary files
 Content-Type: text/plain; charset=utf-8
 
-On 03/20/2012 06:40 AM, Stefan Cornelius wrote:
-> Hi,
-> 
-> libtasn1 version 2.12 was released fixing the following issue:
-> 
->   - Corrected DER decoding issue (reported by Matthew Hall).
->     Added self check to detect the problem, see tests/Test_overflow.c.
->     This problem can lead to at least remotely triggered crashes, see
->     further analysis on the libtasn1 mailing list.
-> 
-> Further issue details from Simon Josefsson [1]:
-> 
-> I want to mention that there were no security problem in the
-> asn1_get_length_der function.  It was working properly and as documented
-> before.  The security problem was the callers not checking that the
-> returned values were reasonable, i.e., that the output length was less
-> than or equal to the total length of the buffer.  However, fixing all
-> callers of this function would be a huge amount of work.  Instead, we
-> made asn1_get_length_der return an error code when the situation
-> occured, to protect callers.  This fix could be the wrong thing if some
-> code out there calls the function with a der_len parameter that is
-> smaller than the entire DER structure length.  However, we are hoping
-> that is not in any significant use, and that overall security will be
-> improved by having the function sanity check its output rather than
-> letting the caller do that.  This was a judgement call.
-> 
-> [1] http://thread.gmane.org/gmane.comp.gnu.libtasn1.general/54
-> 
-> It appears like GnuTLS is affected as well (but probably does not need a
-> separate CVE at this point):
-> http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5952/
-> http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5957/
-> 
-> -- References --
-> 
-> Release announcement:
-> http://article.gmane.org/gmane.comp.gnu.libtasn1.general/53
-> 
-> Small analysis + patch:
-> http://thread.gmane.org/gmane.comp.gnu.libtasn1.general/54
-> 
-> Red Hat bug:
-> https://bugzilla.redhat.com/show_bug.cgi?id=804920
-> 
-> Thanks and kind regards,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2012-1569 for this issue.
+On 12/21/2012 04:05 AM, David Holland wrote:
+> NetBSD pkgsrc ships an old text search package called Isearch,
+> which I found tonight (in the course of making it compile with a
+> modernish C++ compiler) to contain garden-variety /tmp races.
+> 
+> Does anyone else ship it? I don't think this is worth a CVE unless 
+> someone does; the package appears to be dead upstream.
 
--- 
+This is similar to http://seclists.org/oss-sec/2012/q4/142
+
+Ideally we need some way to mark software as dead/unsafe/don't use. I
+don't know what the answer is though (does someone maintain a
+blacklist? who decides? etc.).
+
+> http://gnats.netbsd.org/47360 for reference; the relevant portions
+> of the patches cited follow.
+
+Yeah that's pretty classic /tmp vulns. Please use CVE-2012-5663 for
+this issue.
+
+> --- doctype/anzmeta.cxx~	2000-10-11 14:02:15.000000000 +0000 +++
+> doctype/anzmeta.cxx @@ -1446,9 +1448,21 @@ ANZMETA::Present (const
+> RESULT& ResultRe } else { STRING s_cmd; //CHR* c_cmd; -	      CHR
+> *TmpName; +	      CHR TmpName[64]; +	      int fd;
+> 
+> -	      TmpName = tempnam("/tmp", "mpout"); +	      strcpy(TmpName,
+> "/tmp/mpoutXXXXXX"); +	      fd = mkstemp(TmpName); +	      if (fd
+> < 0) { +		 /* +		  * Apparently failure is not an option here, so +
+> * proceed in a way that at least won't be insecure. +		  */ +
+> strcpy(TmpName, "/dev/null"); +	      } +	      else { +
+> close(fd); +	      }
+> 
+> cout << "[ANZMETA::Present] no docs found, so build Fly cmd" <<
+> endl;
+> 
+> --- doctype/fgdc.cxx~	2000-09-06 18:20:30.000000000 +0000 +++
+> doctype/fgdc.cxx @@ -1824,10 +1826,22 @@ FGDC::Present (const
+> RESULT& ResultRecor return; } else { STRING s_cmd; -	      CHR
+> *TmpName; - -	      TmpName = tempnam("/tmp", "mpout"); +	      CHR
+> TmpName[64]; +	      int fd;
+> 
+> +	      strcpy(TmpName, "/tmp/mpoutXXXXXX"); +	      fd =
+> mkstemp(TmpName); +	      if (fd < 0) { +		 /* +		  * Apparently
+> failure is not an option here, so +		  * proceed in a way that at
+> least won't be insecure. +		  */ +		 strcpy(TmpName, "/dev/null"); 
+> +	      } +	      else { +		 close(fd); +	      } + 
+> BuildCommandLine(mpCommand, HoldFilename, RecordSyntax, TmpName,
+> &s_cmd); system(s_cmd); --- src/marc.cxx.orig	1998-05-12
+> 16:49:10.000000000 +0000 +++ src/marc.cxx @@ -194,9 +194,15 @@
+> MARC::GetPrettyBuffer(STRING *Buffer) { /* // Cheese, cheese,
+> cheese;-) -  char *tempfile = tempnam("/tmp", "marc"); +  char
+> tempfile[32]; +  strcpy(tempfile, "/tmp/marcXXXXXX"); +  int tempfd
+> = mkstemp(tempfile); +  if (tempfd < 0) { +    *Buffer =
+> "MARC::GetPrettyBuffer() failed to open temp file"; +    return; +
+> } FILE *fp; -  if((fp = fopen(tempfile, "w")) == NULL) { +  if((fp
+> = fdopen(tempfd, "w")) == NULL) { *Buffer =
+> "MARC::GetPrettyBuffer() failed to open temp file"; return; }
+> 
+
+
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ1JvdAAoJEBYNRVNeJnmTECoP/1MoTbtK3rDPjqww7CZHmPNv
+e3holkb4Pf9ksE1cI8N/dQJsceSbl6QGJbN3K3D44gRvELI4d+WUmmzZBVJUmWxO
+gEgeMrbTcpTYlARwNa7U7saMW0yNIx8JXA1KFmVGik/cEyb4vfV0TezRU6YtUrhA
+ubwNURoxyNaIofcTW5SKLvS9DAbBYa9UhdZzbJFd7ECAU1SuPZJ/MBScwzY5OAwt
+Sa2u870/pnrUkkFUoSGgmNGOys3ZlTz306IdOUEFdf4LvTbYsWPGKI/yOjIH/SGS
+gFyOmPGrD9D0FY8XDyWV+AczTZB1JAD7EonapmlHvfrT0urq6pJDoRprsZBDxdNy
+jeKgzkzdqTXncrf7UDH2TobHSzgULvOrk4iw+jQSkKebiWTRl14W5LhM7XLciz7V
+lLJWsghteeHDUrsXrQo0DET8Pp0GnOISIPWdL8t9mqAjjHTMZMzIrmHeSht2Hw3i
+CKHdbi76fTdsJPFRxWZtD1izoA1LELK6iNoxeNQwFNHvwtykhXmE5P/DRwTzvu9v
+E7IAe7A/1PT88CXK/tRf1oAic4gGDAJszKUBmklpH+ofafJOPRNTt3PComxO3xKr
+JfjFRr/R9zOw+MPgmlocCdIj6q3qAm0eKffkyy20pjmJP7V3zzdhNfNCi6EfmEfp
+xZUppQSnc3JVbv7nYq3s
+=r14p
+-----END PGP SIGNATURE-----
