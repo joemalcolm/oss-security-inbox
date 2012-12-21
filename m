@@ -1,68 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/05/10/2
-Message-ID: <20120510070852.GA25491@openwall.com>
-Date: Thu, 10 May 2012 11:08:52 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: thomas.swan@...il.com, bbraun@...ack.net
-Subject: Re: CVE-2012-0862 assignment notification: xinetd enables unintentional services over tcpmux port
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/21/3
+Message-ID: <20121221195054.GB7583@netbsd.org>
+Date: Fri, 21 Dec 2012 19:50:54 +0000
+From: David Holland <dholland-oss-security@...bsd.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Isearch insecure temporary files
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 09, 2012 at 05:31:25PM +0200, Stefan Cornelius wrote:
-> Thomas Swan of FedEx reported a service disclosure flaw in xinetd.
-> xinetd allows for services to be configured with the TCPMUX or
-> TCPMUXPLUS service types, which makes those services available on port
-> 1, as per RFC 1078 [1], if the tcpmux-server service is enabled.  When
-> the tcpmux-server service is enabled, xinetd would expose _all_ enabled
-> services via the tcpmux port, instead of just the configured service(s).
-> This could allow a remote attacker to bypass firewall restrictions and
-> access services via the tcpmux port.
-> 
-> In order for enabled services handled by xinetd to be exposed via the
-> tcpmux port, the tcpmux-server service must be enabled (by default it is
-> disabled).
-> 
-> This has been assigned CVE-2012-0862.
+On Fri, Dec 21, 2012 at 10:26:57AM -0700, Kurt Seifried wrote:
+ > > NetBSD pkgsrc ships an old text search package called Isearch,
+ > > which I found tonight (in the course of making it compile with a
+ > > modernish C++ compiler) to contain garden-variety /tmp races.
+ > > 
+ > > Does anyone else ship it? I don't think this is worth a CVE unless 
+ > > someone does; the package appears to be dead upstream.
+ > 
+ > This is similar to http://seclists.org/oss-sec/2012/q4/142
+ > 
+ > Ideally we need some way to mark software as dead/unsafe/don't use. I
+ > don't know what the answer is though (does someone maintain a
+ > blacklist? who decides? etc.).
 
-This is now reported fixed in xinetd 2.3.15.  From xinetd-2.3.15/CHANGELOG:
+Yeah.
 
-2.3.15
-        If the address we're binding to is a multicast address, do the
-                multicast join.
-        Merge the Fedora patch to turn off libwrap processing on tcp
-                rpc services. Patch xinetd-2.3.12-tcp_rpc.patch.
-        Merge the Fedora patch to add labeled networking.
-                Patch xinetd-2.3.14-label.patch r1.4.
-        Merge the Fedora patch to fix getpeercon() for labeled networking
-                in MLS environments.
-                Patch xinetd-2.3.14-contextconf.patch r1.1
-        Merge the Fedora patch for int->ssize_t.
-                Patch xinetd-2.3.14-ssize_t.patch r1.1
-                Some modifications to this patch were necessary.
-        Change compiler flags, -Wconversion generates excessive and
-                unnecessary warnings with gcc, particularly all
-                cases of ntohs(uint16_t).
-                http://gcc.gnu.org/bugzilla/show_bug.cgi?id=6614
-                Additionally add -Wno-unused to prevent unnecessary
-                warnings regarding unused function parameters when
-                the function is a callback conforming to a standard
-                interface.
-        Change version number to 2.3.15devel, indicating an interim
-                developmental source snapshot.
-        Merge patch from Thomas Swan regarding CVE-2012-0862
+Looking at that thread (which I didn't see at the time because I no
+longer have time to follow this list much) I think I'd agree that the
+CVE system itself is the wrong scheme, not only for its own reasons
+but also because it doesn't reach the right targets.
 
-SHA-256 of xinetd-2.3.15.tar.gz that I just downloaded is
-bf4e060411c75605e4dcbdf2ac57c6bd9e1904470a2f91e01ba31b50a80a5be3.
-Unfortunately, there's no signature.
+Most people prefer to get software from some kind of package
+collection, both because it's easier and because such collections are
+to some extent curated. CVEs work well in this environment; they go
+out to the collection maintainers, packages in the collections get
+tagged, end users can crosscheck their installed package lists against
+CVE databases, etc.
 
-While we're at it, if anyone cares about these xinetd builtin services
-and their issues (and it seems so), I think xinetd 2.3.14+ dropping
-bad_port_check() is also a vulnerability that distros need to patch.
-We do:
+However, the kind of software we're talking about (dead upstream,
+inherently suspect, not really worth auditing or fixing) tends to get
+kicked out of these collections and forgotten. So when/if end users
+are exposed, it's likely to be because they downloaded something from
+some random place and installed it in /usr/local/bin, or worse,
+untarred it in ~httpd, and then possibly forgot entirely about it.
+There isn't much of a pipeline for getting CVE information to them,
+and they aren't in general likely to think to crosscheck the CVE
+database. (Nor, with some of these old things, is it always entirely
+clear if the item they're looking at is the same as the one the CVE
+database is talking about.)
 
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/xinetd/xinetd-2.3.14-up-revert-bad_port_check.diff?rev=1.1
+All of these problems also apply to any new scheme someone sets up;
+what I'm suggesting is that the existing CVE infrastructure is not
+necessarily that much of an advantage.
 
-(haven't updated to 2.3.15 yet, but that patch will stay the same - it
-merely re-introduces the checks that existed in 2.3.13 and below).
+That said, I don't know what the answer is. We have quite a number of
+packages in pkgsrc that are dead (or comatose) upstream and that we're
+effectively maintaining ourselves because they require only minor
+attention or someone considers them worthwhile. I've often thought it
+would be helpful to have some kind of wider community for dealing with
+these, not just for security but also for general patches and bug
+fixes. This could also serve as a clearinghouse for deciding which
+things should be declared dead. But you can't create such a community
+by waving a wand.
 
-Alexander
+ > > http://gnats.netbsd.org/47360 for reference; the relevant portions
+ > > of the patches cited follow.
+ > 
+ > Yeah that's pretty classic /tmp vulns. Please use CVE-2012-5663 for
+ > this issue.
+
+Will do, thanks.
+
+-- 
+David A. Holland
+dholland@...bsd.org
