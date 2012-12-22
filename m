@@ -1,91 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/2
-Message-ID: <4F8E4B78.1010508@redhat.com>
-Date: Tue, 17 Apr 2012 23:04:56 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/22/4
+Message-ID: <CAF6bG8f-8_yEu839ZiowwpJ3A0fmVCZj=b3h1V2d3h4VLqUvow@mail.gmail.com>
+Date: Sat, 22 Dec 2012 02:26:40 +0200
+From: Marko Lindqvist <cazfi74@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Helmut Grohne <helmut@...divi.de>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, 668667@...s.debian.org
-Subject: Re: CVE Request (minor) -- Two Munin graphing framework flaws
+Subject: About CVE-2012-5645
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I saw message that Freeciv bug #20003 has been assigned
+CVE-2012-5645 : http://seclists.org/oss-sec/2012/q4/484
 
-On 04/16/2012 11:34 PM, Helmut Grohne wrote:
-> Hi Kurt,
-> 
-> Please always CC the bug report when adding detail to it. Doing it
-> now for you.
-> 
-> On Mon, Apr 16, 2012 at 01:19:32PM -0600, Kurt Seifried wrote:
->>> [3] Remote users can fill /tmp filesystem: Red Hat would not 
->>> consider this to be a security flaw => no RH BTS entry.
->>> 
->>> Original report: 
->>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=668667
->> 
->> I reread this one a few times, I'm not clear on what:
->> 
->> ========== printf 'GET 
->> /cgi-bin/munin-cgi-graph/localdomain/localhost.localdomain/vmstat-day.png?foo
->>
->> 
-HTTP/1.0\r\nHost: localhost\r\nConnection: close\r\n\r\n' | nc
->> localhost 80
->> 
->> Provided that the filename actually exists, munin will render the
->> image ==========
->> 
->> means exactly, does the file vmstat-day.png need to exist where?
->> It seems like if the image is of any size (say 20k or more) the 
->> amplification (each get request = 20k of tmp space usage) and
->> the files have to be deleted manually it might qualify as a DoS.
->> 
->> helmut@...divi.de can you shed more light on this?
-> 
-> The basic requirement is that a plugin called vmstat is configured
-> for the node localhost.localdomain. I just picked it as an example,
-> cause it is present on my system. In practise any plugin for any
-> host will do.
+I'd like to clarify things a bit. It was not single issue, but more
+like two separate issues. Most importantly this leads to patch listed
+(http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21670) to
+fix only part of the problems described. Something like:
 
-Is this the default configuration?
-
-> In addition munin parses parts of the query string. You are allowed
-> to modify the size of the image. By choosing a path 
-> "....png?size_x=20000&size_y=20000&uniquestuff" you can do the
-> same attack while simultaneously using a large image size. The raw
-> image would be 381M (assuming 8bits/pixel) in this case. A png
-> version will likely be smaller, say 4M? So now you have an
-> amplification of 4M/request. Note that this query can get a node
-> into swapping, because rrdtool needs to create the whole image in
-> main memory.
-> 
-> Hope this helps
-
-Ouch.
-
-> Helmut
+A denial of service flaw was found in the way the server component
+of Freeciv, a turn-based, multi-player, X based strategy game,
+processed certain packets (invalid packets with whole packet
+length lower than packet header size). A
+remote attacker could send a specially-crafted packet that, when
+processed would lead to freeciv server to terminate (due to memory
+exhaustion)
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+The other half:
+A denial of service flaw was found in the way the server component
+of Freeciv, a turn-based, multi-player, X based strategy game,
+processed certain packets (syntactically valid
+packets, but whose processing would lead to an infinite loop). A
+remote attacker could send a specially-crafted packet that, when
+processed would lead to freeciv server to become unresponsive (due to
+excessive CPU use).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+is fixed in
+http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21701
 
-iQIcBAEBAgAGBQJPjkt4AAoJEBYNRVNeJnmTzqwQAKn7u4+dg9mYpMuAAC14fIYh
-JGQGLSRJ98s3IgH14dOO6q9nASErz5wBPhcTnTwOKOLAdbbFHU5Z1DKm+ARyLMXw
-XPIGHrdTb5TkWvsRKilA7iIbUhaXuMckELJj2WWi5LdHvzVLG8mEivQQKMtSY8b1
-Wmp0JmDguHpqcToYq4uwYA1O22fHxwPjBFnsZ6A2HjLtMwCUkZ6WZZEuc85+v2C5
-utfJm3AYSRgW1mI24kLxTIsige88txXZpUt44Bx3T26UkUz2X4ebbO/z5slqXt7n
-RLZ4IDWEs03yau8vJD6vuNtOvQ+p3SmQYeRr6GvEXYrem+mTPB6toKLUeRUr7fNR
-+RO4syrQ1KMoGfcAlNJ9ide2qZHsByXseriSJ02yb0VYKqYD1peUo1wR3Kw/EBnC
-lnWNfb54JmwJih4qzEpE/SKoVEgxTKfuJGT4QcZ1PDrABQSfOWc4v3bughgLNH6m
-c/voNTCuk7XI0//hCj4qF9jx/SPAB0xnnxnhqgmPTCBUVB3WHlSK0V335DV4KIGm
-9c4GqdEJ0lxtKWJpwpZbNBU00LksXpHFQHMjcJ+0Bc0B1CrbaL0Hi9+1/kWH0aYG
-X+N6Ah6/eY1bP78B1rH91CqcSRm5fouIbY5QSraN7ZGvrKXAvrQrnRqdEj+XKYUL
-YTFUs403T/QOG6KuIGhg
-=/Jxz
------END PGP SIGNATURE-----
+
+
+ Both are fixed in 2.3.3 (and patch versions applied to the stable
+branch S2_3 release was made from:
+http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21672 ,
+http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21703 )
+
+
+ - ML
