@@ -1,62 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/03/8
-Message-ID: <501C1363.8090606@redhat.com>
-Date: Fri, 03 Aug 2012 12:07:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Andreas Beckmann <debian@...ckmann.de>
-Subject: CVE ASSIGNMENT: logol: creates world writable directory: /var/lib/logol/results
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/22/1
+Message-ID: <20121222001931.GA8468@hunt>
+Date: Fri, 21 Dec 2012 16:19:31 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com, eggert@...ucla.edu
+Subject: CVE Request: grep
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, all.
 
-logol: creates world writable directory: /var/lib/logol/results
+Paul, I've included you on Cc: to help determine if several grep patches
+are security-relevant.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=683647
+A bug reporter [1] that claims he has, or can produce, a code execution
+exploit against grep < 2.11. I've verified that our grep 2.10 package
+segfaults on the amd64 platform with the simple reproducer:
 
-Package: logol
-Version: 1.5.0-2
-Severity: grave
-Tags: security
-Justification: user security hole
-User: debian-qa@...ts.debian.org
-Usertags: piuparts
+$ perl -e 'print "x"x(2**31)' | grep x > /dev/null
+Segmentation fault (core dumped)
 
-Hi,
+This specific problem was patched [2] with the following checkin:
+http://git.savannah.gnu.org/cgit/grep.git/commit/?id=cbbc1a45b9f843c811905c97c90a5d31f8e6c189
 
-during a test with piuparts I noticed that your packages creates a world
-writable directory:
+This checkin adds this text to the NEWS file:
 
-    drwxrwxrwx 2 root root 40 Jul  1 21:59 /var/lib/logol/results
++ grep no longer dumps core on lines whose lengths do not fit in 'int'.
++ (e.g., lines longer than 2 GiB on a typical 64-bit host).
++ Instead, grep either works as expected, or reports an error.
++ An error can occur if not enough main memory is available, or if the
++ GNU C library's regular expression functions cannot handle such long lines.
++ [bug present since "the beginning"]
 
-There any local user may delete/replace arbitrary files that were not
-created by the user himself.
-
-
-Andreas
-
-Please use CVE-2012-3453 for this issue.
+Please assign a CVE number for this problem.
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Several other checkins around the 2.11 timeframe also look like they
+may be security-relevant:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+PCRE over-long line fix:
+http://git.savannah.gnu.org/cgit/grep.git/commit/?id=4572ea4649d025e51463d48c2d06a1c66134cdb8
 
-iQIcBAEBAgAGBQJQHBNiAAoJEBYNRVNeJnmTIqQQANPvksz6G4rNQERjkF9lJgxo
-9yVY8WINtOzHXnSxKl5fmyMxDkTTH0Rr268X1tPN13htoFRNJwyxl0VLnyUUWRhe
-i+wsrBhbGZmHW2f7ZJ3PmMkAehlj7PTfbnmx1wdcmvAtXxDjStQfwDfSnuT3PvLa
-8WkdQ3RpYuZrDpi6+d9A2nI3Y9EwWLhwS5Pp/BwlZhkGf+jtXGb0aJhvQ8zprdkU
-4gEkoscgIm7AFYvUveKBwJCIHlqFVjSMRNOPxMpWpGYKQWrLxW3UNwxcmpWWiADg
-zLRJFsjgXiE4qNAjJNZPU2rMbpdgIAQCQ0HDL1zutoEjMglm5vEisEdnk2AjYevR
-GlohleGU3e6X7JyN1HDX+8Vh2dLYBvYCU2/Hpfdk28RtM5vjAd9cYh9QcpwyK9ot
-14p4FaG7HyMBbINtbmSACQaZp0MrVa0N35/++/h5Bq+G5t0/L+hBpYEswShYyMvj
-cNrqbPsZwWeB/6obxZdMcav4IYTXYUktsaM/kp3EDVG/JpmFXRTMnHQ6c9BuEDaZ
-lrc2tsHFaaYWtfzItlC9UZOTObWLv/pLX/1u9cvCcP8mrqs4Kjj3XvTk2gehxuEZ
-KA4F/G+sO7WC2y1oC/ejc3J92E1uyMoFm5lXMxuve0v2n+ItzSFa6nw9ZHHwHjyK
-dzIBQKWkfG4GOaDQyVjN
-=eGgi
------END PGP SIGNATURE-----
+Integer overflow issues:
+http://git.savannah.gnu.org/cgit/grep.git/commit/?id=8fcf61523644df42e1905c81bed26838e0b04f91
+
+Paul, are any security issues fixed with those patches? Did I overlook
+any other patches that need CVE numbers?
+
+Thanks
+
+
+1: https://bugs.launchpad.net/ubuntu/+source/grep/+bug/1091473
+2: http://lists.gnu.org/archive/html/bug-grep/2012-12/msg00004.html
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
