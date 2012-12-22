@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/29/13
-Message-ID: <87y5qjjg5m.fsf@mid.deneb.enyo.de>
-Date: Thu, 29 Mar 2012 22:39:17 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Interesting blog entry - Finding v6 hosts by efficiently mapping ip6.arpa
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/22/3
+Message-ID: <50D51BE0.2090306@cs.ucla.edu>
+Date: Fri, 21 Dec 2012 18:33:04 -0800
+From: Paul Eggert <eggert@...ucla.edu>
+To: coley@...us.mitre.org, oss-security@...ts.openwall.com,  security@...ntu.com
+Subject: Re: CVE Request: grep
 Content-Type: text/plain; charset=utf-8
 
-* Kurt Seifried:
+On 12/21/2012 04:19 PM, Seth Arnold wrote:
+> Paul, are any security issues fixed with those patches?
 
-> http://7bits.nl/blog/2012/03/26/finding-v6-hosts-by-efficiently-mapping-ip6-arpa
+Possibly.  I usually don't bother to try to find exploits,
+so I can't say for sure.
 
-It works.  I have used it for enumerating the e164.arpa tree, which
-has a similarly regular structure, too, and for finding TLDs which
-have redirected second level domains on ISC's Dnschanger replacement
-name servers.
+> Did I overlook
+> any other patches that need CVE numbers?
 
-> If this works it would make network scanning a whole heck of a lot
-> easier.
+If memory serves you also need to update gnulib.
 
-Reverse delegation is still not fully solved with IPv6 (and will
-probably never be), so non-synthetic answers will be rare.
-Particularly for anything which doesn't speak SMTP.
-
-If you want to use DNS to facility IPv6 scanning, you probably should
-store every AAAA you see in a database.
+The set of patches is tricky enough that it is probably
+better to upgrade to 2.11; that's simpler, and arguably
+it's more likely to be safe.  You might want to fix
+the two bugs that were introduced in 2.11 (see
+the NEWS file), but you probably already have a 2.11
+package that does that, somewhere.  You might also
+want to undo the -r change introduced in 2.11.
