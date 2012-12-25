@@ -1,68 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/31/19
-Message-ID: <5041307F.6030509@redhat.com>
-Date: Fri, 31 Aug 2012 15:45:35 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/25/2
+Message-ID: <50D91B24.5030500@redhat.com>
+Date: Mon, 24 Dec 2012 20:19:00 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE request: letodms multiple issues
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>, Mateusz Jurczyk <j00ru.vx@...il.com>
+Subject: Re: CVE Request - Multiple security fixes in freetype - 2.4.11
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/28/2012 12:07 AM, Raphael Geissert wrote:
-> On Tuesday 28 August 2012 00:49:51 Kurt Seifried wrote:
->> Welp if someone summarizes it I'll assign CVE's happily =).
+On 12/24/2012 06:58 PM, Huzaifa Sidhpurwala wrote:
+> Merry Christmas!
 > 
-> As per EDB-ID: 20759, there are at least the following issues:
+> Multiple security issues were reported by Mateusz Jurczyk of
+> Google security team. These have been fixed in freetype 2.4.11 
+> Details are as follows.
 > 
->> 1. Reflected XSS in Login Page.
-> But in fact it's not just the login page. However, since it's the
-> same kind of vulnerability, I'd just assign one for all the out/
-> reflected XSS'.
->> 2. Stored XSS in Document Owner/User name (when viewing user
->> document). 3. Stored XS in Calendar.
-> Perhaps those two could be covered by only one id.
+> * NULL Pointer Dereference in bdf_free_font Bug:
+> https://savannah.nongnu.org/bugs/?37905 Patch: 
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=9b6b5754b57c12b820e01305eb69b8863a161e5a
 
-CWE dumps XSS into one thing mostly
-http://cwe.mitre.org/data/definitions/79.html
-
-Please use CVE-2012-4384 for these 3 XSS issues.
-
->> 4. Change Password CSRF.
-
-Please use CVE-2012-4385 for this issue.
-
-> And this one definitely needs its own id.
+Please
 > 
+use CVE-2012-5668 for this issue.
+
+> * Out-of-bounds read in _bdf_parse_glyphs Bug:
+> https://savannah.nongnu.org/bugs/?37906 Patch: 
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=07bdb6e289c7954e2a533039dc93c1c136099d2d
+
+Please
 > 
-> If one is to review the code base, there are probably many more.
-> The changes made to the SQL queries are just a hint.
+use CVE-2012-5669 for this issue.
+
+> * Out-of-bounds write in _bdf_parse_glyphs Bug:
+> https://savannah.nongnu.org/bugs/?37907 Patch: 
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=7f2e4f4f553f6836be7683f66226afac3fa979b8
+
+Please
 > 
-> Cheers,
+use CVE-2012-5670 for this issue.
+
+
+> Can CVEs be please assigned to these issues?
 > 
+> Thanks!
+> 
+
 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJQQTB/AAoJEBYNRVNeJnmTQI8P/RjFboxG2IYjDQjMsXayM5Mt
-sFR1+8xjqBm6Uj+rYWz9vxKk8pz7jSn1+us2j+oSPTpRDtaN4d6N6Senb2yX+det
-v99E10wVC9YzWNRZdDuxd3MSFdE+hT8ea31wkTkJ9h6PfdIxC9XReJTlc1g8+vp2
-eVBBj/SRxLcg/HP6UaLHhtbZCErkfWoNmGrMJ6mn/bw2k7Xu++8OAC3AIDros7BP
-KE4dS53Gz2CDEnAKARRp8vTHpEHznyqHMJmhuQbMgeM0eS8FdwQ5PiiDJ0ZkzMW8
-PMSI1GY/X90bDZc0Q7lVcDV3EhKki/uWAoD6JwLPzEWgtEks4jTZC+F3qDGn9+RG
-jlxt8Tg1oZleUvrD5m4yP/Kkqx4LBv6/f1/yJcnucLV9Hdybar8C5R1/p2Wmb5qC
-lvB/XG+Lq30R9uQXKoo0h5J9pSBV5HNHLUGRvAS7K1W+j6tDVuN4bW+TE6MZlc5G
-8MbtqDyb5Olb0skznkvL3AGN56HHk8LDVA/3Mlz2Q4kH5ZQk1T5TJuLDBVXOvadZ
-rrpsFoWj7HtftmOsBR2yDp5QyJT7VOmADgDUnrp2Ph6Banc7fmUx5IRBh/a6eVbx
-GGAwm9gg60HicbkowrhKYf1V5mq4ekLPb6rSXJSa54knOL9+SQ0yhmzoE+gyy51X
-Sa5cbWYRuTux2CVAEMiS
-=dn5A
+iQIcBAEBAgAGBQJQ2RsfAAoJEBYNRVNeJnmT49IP/0OTKhq+GuD4V69fmVPEi7Bm
+f5+kCi6mpYhxPmGs0uHRJFe6NFxgIRVQ4z/bMGyjGhlsoFMl8wNuPxLPcLvBtCoH
+GIkU7Znji7ap1t6t/+rfTIA0xGq3itGz2nG0XVrAj/U/TMASsBS9hksqw9GdQO+p
+D7XmlZXzFKRzlTooP7zcxkn1ZuLc/RZQH8KSfMuLXwVrA4At0cg5/IkbhzWNTLaH
+OnbvNixPax7clADZV3/P1myun14yU63lqVjUTR6j4HNpVYX1nw3i3foMx//l1ieh
+m3aYslRftjSCAX1CAX/SsQosgoJUv4/PUHDwJ14kLqlNXfmmduAs9U3hOeuBROM7
+Zc1b7DmYQ8ocpGtOShqqg2PeQ7JfshYHyqxTmSi/D2AxhjdTyTLXW3Ce7mHwabh/
+GUU+ugy2NFTdZvTLvZ0+9AYXvo50K6KK5Qelb14ovzpEXehZDeHk6HsjvRvqf6IM
+jquy1oHV4nX0/3mnP/y1wfpCfrBQ8LX8qXu78wbjaLH58GNIEgpowNT1GI7FidX7
+WBKo1T2MlUBgd2pezy3lCW8KouBUc3yujdBLoXpOafkyI1IbXn+UlybAZZMWo9SE
+os9srumXOjFb03PmueixZYr/S2iDZMtwVeYWl3OTkxw/l/vMGUmQQHcYlU/8LQJq
+fWvJbv2ZN6+/jiNbM3gM
+=/y1l
 -----END PGP SIGNATURE-----
