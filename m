@@ -1,52 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/21/14
-Message-ID: <CANTw=MN47FpFD3BSy=1sXT1bgeYg+r_Ook1OtuPFX6+V2rGT=w@mail.gmail.com>
-Date: Fri, 21 Sep 2012 17:19:40 -0400
-From: Michael Gilbert <mgilbert@...ian.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request(?): gpg: improper file permssions set when en/de-crypting files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/25/1
+Message-ID: <50D90835.3060208@redhat.com>
+Date: Tue, 25 Dec 2012 07:28:13 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Kurt Seifried <kseifried@...hat.com>, Mateusz Jurczyk <j00ru.vx@...il.com>
+Subject: CVE Request - Multiple security fixes in freetype - 2.4.11
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 21, 2012 at 3:30 PM, Kurt Seifried
->> Think about it this way.  I open a file with mode 600 in vim, edit
->> it, save it, and find it with mode 644?  That would be an exposure,
->> would it not?
->
-> Not if it respects your umask.
+Merry Christmas!
 
-Editing does not invoke a umask because the program already knows what
-umask you really wanted for that file, and didn't need a default to
-guess at it.
+Multiple security issues were reported by Mateusz Jurczyk of Google
+security team. These have been fixed in freetype 2.4.11
+Details are as follows.
 
-$ umask
-0077
-$ touch test
-$ ls -l test
--rw------- 1 a a 5 Sep 21 17:09 test
-$ umask 022
-$ echo test > test
-$ ls -l test
--rw------- 1 a a 5 Sep 21 17:09 test
+* NULL Pointer Dereference in bdf_free_font
+Bug: https://savannah.nongnu.org/bugs/?37905
+Patch:
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=9b6b5754b57c12b820e01305eb69b8863a161e5a
 
-> If you want privacy set your umask
-> correctly. Programs can't know what they're supposed to do unless you
-> tell them. And we tell the system using umask.
+* Out-of-bounds read in _bdf_parse_glyphs
+Bug: https://savannah.nongnu.org/bugs/?37906
+Patch:
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=07bdb6e289c7954e2a533039dc93c1c136099d2d
 
-Sure, umask applies a default set of permissions to new files, and the
-process of decrypting a file with gpg certainly creates a new file.
-But in this case, we can be more intelligent than the umask because we
-know the permissions of the original encrypted file, and don't need to
-guess at them using the umask.
+* Out-of-bounds write in _bdf_parse_glyphs
+Bug: https://savannah.nongnu.org/bugs/?37907
+Patch:
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=7f2e4f4f553f6836be7683f66226afac3fa979b8
 
-> I'm confused. It's not exposed unless you configure umask wrong and
-> run this in a public viewable directory. If you want a CVE for every
-> single program that doesn't ensure it's (potentially sensitive) output
-> is mode 0600 than that's basically, well, all the programs on a system.
+Can CVEs be please assigned to these issues?
 
-So, the point is that umask is more meant more as a fallback only when
-there isn't better info available to make the right permissions
-decision.
-
-Best wishes,
-Mike
+Thanks!
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
