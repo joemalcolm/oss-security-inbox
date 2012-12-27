@@ -1,43 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/04/12
-Message-ID: <4F04BBA7.3060204@redhat.com>
-Date: Wed, 04 Jan 2012 13:50:47 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/27/1
+Message-ID: <50DC86AA.2070200@redhat.com>
+Date: Thu, 27 Dec 2012 10:34:34 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Moritz Muehlenhoff <jmm@...ian.org>, Craig Barratt <cbarratt@...rs.sourceforge.net>, cve-assign@...re.org, security@...ntu.com
-Subject: Re: CVE Request: Security issue in backuppc
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: Curl insecure usage
 Content-Type: text/plain; charset=utf-8
 
-On 01/04/2012 11:11 AM, Steven M. Christey wrote:
->
-> All,
->
-> A new CVE is needed for this.  The new variant SHOULD receive a new
-> CVE because there's a different researcher (specifically, Jamie) and
-> effectively a different version (probably upstream; also, many distros
-> may have already fixed the original CVE-2011-3361).
->
-> Blame the CVE content-decision documentation (and me, its author). 
-> The current version can cause confusion, people can interpret it in
-> different ways, plus there are gaps.  It needs some serious
-> restructuring.  (This is why the document's not public.)
->
-> Kurt (and other CNAs): the documentation problem is that ADT4 says
-> "MERGE", which seems to imply that you should stop, but really you
-> should continue to ADT5, which is about splitting based on different
-> researchers. ADT4 is there to explicitly cover places where somebody
-> might reasonably feel like splitting, but CVE does not.  There are
-> also a couple other decision points that aren't documented yet.  You
-> should generally fall through *all* the decision points, not just the
-> first point that suggests split/merge/consult.  That is, all of ADT1
-> through ADT5 should be examined when deciding how to group issues.
->
-> - Steve
-Ahhh.. I sort of wondered about that but never thought to ask. Derp! You
-should probably update that document and post it prominently somewhere,
-I know it has helped me a lot.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
--- 
+On 12/26/2012 04:38 AM, Moritz Muehlenhoff wrote:
+> On Thu, Nov 29, 2012 at 10:44:36PM +0100, Moritz Mühlenhoff wrote:
+>>> Also can someone collate and post a list of all the other apps
+>>> using curl insecurely and need CVE's with appropriate links to
+>>> the upstreams/etc? Thanks.
+>> 
+>> There are some, which are potentially affected, but where
+>> discussion with upstream is still pending.
+> 
+> Here are two more, please assign CVE IDs (both discovered by 
+> Alessandro Ghedini):
+> 
+> 1. Falcon programming language: 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=696681
 
--- Kurt Seifried / Red Hat Security Response Team
+Please use CVE-2012-6070 for this issue.
 
+> 2. NuSOAP PHP package: 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=696707
+
+Please use CVE-2012-6071 for this issue.
+
+> Cheers, Moritz
+> 
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJQ3IaqAAoJEBYNRVNeJnmTM7gQAI0notT9HWHAejaFh0wX5eV3
+t/DThiMq41KvczOLibEdyjuOnS4aVfrlwaj/oNs36m4YprDoU9Ggh18gGboC7/5s
+eRhfdzYy9lmhCKhq2mjG3IJVZKfZBCC670dlAvOHPdjEOH6/5Te+ZHhzPNlwYy5Z
+uTIL3SJDxH9uUTsA2g5AydZNlNB5tv52Vr8vrVlqXgRxJPn7GeXXoHozFbwf9MJ+
+2dsCiXaoZAUIJPacZqwVdtR0lBxD8VPw9rH3/f5KNG8NwzAjtkKy5rT3UcKmv14c
+cXzbJi+9tT6VV7+mCukImoO/GNbx637O/cU8/J3yz8NTFDSHStJn6KKzA9sAuy0m
+PyYGphOLHAQZRduTE5qGBN0HAVHpaROY6vIZLeSyq2wrG+G56wzOgzaNS90FTUJc
+Dn5ScEZOoy6mwKnO2B1m48NLYE8KdHUPcxjzeEv0oIH1kyvVh+D2UfUP6Q7zPvaG
+oMuU0R15HnsCQpVYJtiqAHXNb8O1iQi8TSPbQrrr5/FQthGZPi1m04RNEsrahfat
+a+l6SjvcgzHf5CmRjKs9n21jbUt/95UiXTKg9ZpLTPqBM6K8JTnhK6NnK72FGvDg
+u4iY2ART4UAM52d5U0p0yYUB2kgRVc59dl2Zn5CXsO+qL8IHeSGjMvYzQeglvpAS
+XokT44eCQNLJZuIyyAZE
+=XOex
+-----END PGP SIGNATURE-----
