@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/27/8
-Message-ID: <20120427204048.GB3020@redhat.com>
-Date: Fri, 27 Apr 2012 14:40:48 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: weak use of crypto in python-elixir can lead to information disclosure (CVE and peer review request)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/28/2
+Message-ID: <CAHmME9rzmkJNNF+bADWzfNYEDoY8jpsJNPFb4YW6r7N9ecjrGg@mail.gmail.com>
+Date: Fri, 28 Dec 2012 09:04:49 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Frederick Townes <ftownes@...edge.com>
+Subject: CVE Request: W3 Total Cache - public cache exposure
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned for the following issue?
+Hi Kurt,
 
-It was reported that python-elixir, a library for ORM mapping on top of
-SQLAlchemy with support for encrypting data stored in a database,
-suffers from weak use of cryptography.  It uses Blowfish in CFB mode,
-which has an additional parameter (IV), which is not specified and thus
-defaults to zero.  CFB mode is only secure if the the IV is
-unpredictable and different for every message.  Because of this, and
-because the encryption key is shared for each database table (fields and
-rows), the same plaintext prefix is always encrypted to an identical and
-corresponding ciphertext prefix.  As a result, an attacker with access
-to the database could figure out the plaintext values of encrypted text.
+W3 Total Cache: http://wordpress.org/extend/plugins/w3-total-cache/
 
+CVE request for three separate issues:
 
-References:
+1. Cache allows directory listing of hash-key listings, exposing hash keys.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=810013
-http://groups.google.com/group/sqlelixir/browse_thread/thread/efc16227514cffa?pli=1
-http://elixir.ematia.de/trac/ticket/119
+2. Hash keys are easily predictable, in the case of (1) not existing.
 
+3. Cached database values are downloadable by their hash keys on the public
+internet, exposing sensitive information like password hashes.
 
-So far there has been no response from upstream, and we have what I
-think is a suitable proposal to fix the flaw and a possible migration
-script to ease migrating from an insecure encrypted db to a secure one
-(noted in the google groups message).
+Fixing (3) mitigates (1) and (2), so assign this either three CVEs or one
+CVE.
 
-Not sure if anyone else is shipping python-elixir at all, but if you
-are, input on the proposed fix and migration script (in the absence of
-an upstream response) would be fantastic.
+Source: http://seclists.org/fulldisclosure/2012/Dec/242
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+The vendor, copied on this email, currently has not issued a fix.
+
+Thanks,
+Jason
+
