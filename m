@@ -1,88 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/02/4
-Message-ID: <20121202192522.GA26118@meddwl>
-Date: Sun, 2 Dec 2012 20:25:22 +0100
-From: Sergei Golubchik <serg@...monty.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/6
+Message-ID: <50DEFA09.7040403@larpwiki.de>
+Date: Sat, 29 Dec 2012 15:11:21 +0100
+From: Tilmann Haak <tilmann@...pwiki.de>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, king cope <isowarez.isowarez.isowarez@...glemail.com>, full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com, todd@...ketstormsecurity.org, submit@...sec.com, Mitre CVE assign department <cve-assign@...re.org>, Steven Christey <coley@...re.org>, security@...iadb.org, security@...ql.com, Ritwik Ghoshal <ritwik.ghoshal@...cle.com>, moderators@...db.org
-Subject: Re: Re: [Full-disclosure] MySQL (Linux) Stack based buffer overrun PoC Zeroday
+Subject: CVE request: MoinMoin Wiki (remote code execution vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-Hi, Huzaifa!
+Hi all,
 
-Here's the vendor's reply:
+there is a remote code execution vulnerability in MoinMoin wiki,
+versions 1.9.x up to (and including) 1.9.5. The method save in class
+AnyWikiDraw (action/anywikidraw.py) and class TWikiDraw
+(action/twikidraw.py) do not filter user supplied input correctly, which
+leads to a path traversal vulnerability, which can be exploited to
+execute arbitrary code with moin's privileges. An exploit was seen in 
+the wild.
 
-On Dec 02, Huzaifa Sidhpurwala wrote:
-> 
-> * CVE-2012-5611 MySQL (Linux) Stack based buffer overrun PoC Zeroday
-> http://seclists.org/fulldisclosure/2012/Dec/4
-> https://bugzilla.redhat.com/show_bug.cgi?id=882599
+Details can be found at: http://moinmo.in/SecurityFixes
 
-A duplicate of CVE-2012-5579
-Already fixed in all stable MariaDB version.
+A fix is available at: http://hg.moinmo.in/moin/1.9/rev/7e7e1cbb9d3f
 
-> * CVE-2012-5612 MySQL (Linux) Heap Based Overrun PoC Zeroday
-> http://seclists.org/fulldisclosure/2012/Dec/5
-> https://bugzilla.redhat.com/show_bug.cgi?id=882600
+Could someone please assign a CVE number?
 
-Acknowledged.
-https://mariadb.atlassian.net/browse/MDEV-3908
-
-> * CVE-2012-5613 MySQL (Linux) Database Privilege Elevation Zeroday
-> Exploit
-> http://seclists.org/fulldisclosure/2012/Dec/6
-> https://bugzilla.redhat.com/show_bug.cgi?id=882606
-
-Not a bug. MySQL manual specifies many times very explicitly:
-
-===
-   * Do not grant the `FILE' privilege to nonadministrative users. Any
-     user that has this privilege can write a file anywhere in the file
-     system with the privileges of the *Note `mysqld': mysqld. daemon.
-     To make this a bit safer, files generated with *Note `SELECT ...
-     INTO OUTFILE': select. do not overwrite existing files and are
-     writable by everyone.
-
-     The `FILE' privilege may also be used to read any file that is
-     world-readable or accessible to the Unix user that the server runs
-     as. With this privilege, you can read any file into a database
-     table. This could be abused, for example, by using *Note `LOAD
-     DATA': load-data. to load `/etc/passwd' into a table, which then
-     can be displayed with *Note `SELECT': select.
-===
-You should exercise particular caution in granting the `FILE'
-and administrative privileges:
-
-   * The `FILE' privilege can be abused to read into a database table
-     any files that the MySQL server can read on the server host. This
-     includes all world-readable files and files in the server's data
-     directory.  The table can then be accessed using *Note `SELECT':
-     select. to transfer its contents to the client host.
-===
-
-Additionally, MySQL (and MariaDB) provides a --secure-file-priv
-option that allows to restrict all FILE operations to a specific
-directory.
-
-Thus, CVE-2012-5613 is not a bug, but a result of a misconfiguration,
-much like an anonymous ftp upload access to the $HOME of the ftp user.
-
-> * CVE-2012-5614 MySQL Denial of Service Zeroday PoC
-> http://seclists.org/fulldisclosure/2012/Dec/7
-> https://bugzilla.redhat.com/show_bug.cgi?id=882607
-
-Acknowledged.
-https://mariadb.atlassian.net/browse/MDEV-3910
-
-> * CVE-2012-5615 MySQL Remote Preauth User Enumeration Zeroday
-> http://seclists.org/fulldisclosure/2012/Dec/9
-> https://bugzilla.redhat.com/show_bug.cgi?id=882608
-
-This is hardly a "zeroday" issue, it was known for, like, ten years.
-But I'll see what we can do here.
-https://mariadb.atlassian.net/browse/MDEV-3909
-
-Regards,
-Sergei
-MariaDB Security Coordinator
-
+kind regards,
+   Tilmann
