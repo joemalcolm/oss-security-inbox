@@ -1,50 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/19/4
-Message-ID: <50D186CC.40806@redhat.com>
-Date: Wed, 19 Dec 2012 10:20:12 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Plug-and-wipe and Secure Boot semantics
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/2
+Message-ID: <CAHmME9rRzP_HJMa7Tqt4ir=Qjho3CqBrNbYQK6fwaTo2xN8zdg@mail.gmail.com>
+Date: Sat, 29 Dec 2012 12:45:05 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Frederick Townes <ftownes@...edge.com>
+Subject: Re: CVE Request: W3 Total Cache - public cache exposure
 Content-Type: text/plain; charset=utf-8
 
-On 12/19/2012 06:39 AM, Greg KH wrote:
-
->>>> Most signed Linux boot loaders only verify the kernel (and,
->>>> indirectly, code that's loaded into the kernel), but not the
->>>> initrd contents.
->>>
->>> Given that there is only one public signed Linux boot loader, saying
->>> "most" is a bit odd here :)
->>
->> Uhm, aren't there a couple of them in circulation?
+On Sat, Dec 29, 2012 at 6:35 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 >
-> Not that I know of, all of the "public" ones are based on Matthew
-> Gerritt's code, do you know of another one that has made it through the
-> Microsoft signing process?
-
-I was mistaken, I assumed that Fedora was shipping Matthew's 0.1 code, 
-which differs significantly from the 0.2 code.  But it turns out that 
-Fedora ships 0.2 instead (since the end of November).  Oh well.
-
->> The Fedora 18 TC3 installer boots on the machine mentioned above, in
->> the factory default configuration.  Previous installer versions
->> showed a Secure Boot error message.  I've run into an installer bug,
->> though:
->> <https://bugzilla.redhat.com/show_bug.cgi?id=888232>
 >
-> Previous versions of Fedora 18 betas didn't have a valid signed
-> bootloader to allow anything to be installed, are you sure it's all
-> properly built now?
+> As I understand it this is more of an .htaccess type issue than an
+> actual issue with W3 total cache? Is this documented anywhere in the
+> W3 total cache documents?
+>
 
-Yes, or the UEFI implementation on the box is buggy.  It could not boot 
-the installer before, but now it can.
+W3 generates .htaccess files and sets up the directory structure and
+accesses. Nowhere is it documented that sysadmins should additionally
+modify the .htaccess files to protect the cache, and W3's own htaccess
+generation fails to protect it.
 
-> But, more on-topic, how does UEFI secure boot have anything to do with
-> this mailing list?
 
-Aren't vendors basing their implementation on the open-source code from 
-Intel?  Or are you referring to the fact that Secure Boot has little to 
-do with security?
+>
+> > 2. Hash keys are easily predictable, in the case of (1) not
+> > existing.
+>
+> explanation/algorithm/?
+>
 
--- 
-Florian Weimer / Red Hat Product Security Team
+Sure:
+
+        query_md5=md5("SELECT * FROM ${db_prefix}users WHERE ID =
+'${user_id}'")
+        key=md5("w3tc_${host}_${site_id}_sql_${query_md5}")
+        url="
+http://siteblabla/wp-content/w3tc/${key:0:1}/${key:1:1}/${key:2:1}/${key}"
+
+"db_prefix" is by default "wp_", per wordpress config, and few people go in
+and change that. "user_id" is an integer. IDs start at 1 and increase for
+each added user. "site_id" is an integer that also starts at 1 and
+increases for each site used in multi-site wordpress. "host" is the
+hostname of the site. All of these values are known or guessable.
+
+
+
+>
+> > 3. Cached database values are downloadable by their hash keys on
+> > the public internet, exposing sensitive information like password
+> > hashes.
+>
+> Do they need to be downloadable? That is to say can these hash values
+> be protected, or must they be exposed?
+>
+
+They _must_ be protected. They _must not_ be exposed or downloadable. The
+hash values are raw SQL query responses, so they contain things like
+password hashes. The cache is used only internally by the web application,
+and client browsers should never have any direct contact with this cache.
+
