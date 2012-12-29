@@ -1,52 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/24/7
-Message-ID: <5037B69A.9010801@redhat.com>
-Date: Fri, 24 Aug 2012 11:15:06 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/7
+Message-ID: <50DF002E.5000708@gmx.de>
+Date: Sat, 29 Dec 2012 15:37:34 +0100
+From: Tilmann Haak <tilmann.haak@....de>
 To: oss-security@...ts.openwall.com
-CC: Thomas Pollet <thomas.pollet@...il.com>
-Subject: Re: zenoss issues
+Subject: CVE request: MoinMoin Wiki (XSS in rss link)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi all,
 
-On 08/24/2012 01:33 AM, Thomas Pollet wrote:
-> Hello,
-> 
-> I have found xss and command execution problems with zenoss. I
-> created a bugreport which can be found at
-> http://jira.zenoss.com/jira/browse/ZEN-3183 . However the zenoss
-> developers don't seem to be able to reproduce the issues.
-> 
-> Another issue, reported by Emanuel Bronshtein can be found at 
-> http://jira.zenoss.com/jira/browse/ZEN-3153
-> 
-> Regards, Thomas Pollet
+there is an XSS issue in MoinMoin wiki, version 1.9.5. Function
+rsslink() in "theme/__init__.py" does not properly escape the page name
+parameter.
 
-I can't access this page, it requires a login. Is there a public
-resource you can reference, or can you get this page made public so it
-can be referenced?
+Details can be found at: http://moinmo.in/SecurityFixes
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+A fix is available at: http://hg.moinmo.in/moin/1.9/rev/c98ec456e493
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Could you please assign a CVE number?
 
-iQIcBAEBAgAGBQJQN7aaAAoJEBYNRVNeJnmTUrwQALvVeXJogyu8i9lk4lha8cee
-Oynp0jJREIRh1j6XTs+1JZgpHhVpd60rUWnodZ7/6VeYNiBhRtREg1Vgry9I/DDL
-++KVrs9J5J9pt2PnVn44KhRWDp/wu9JJgDIUbVI+axmgk2EW8MVFtMPR9T0wNgkD
-F3WMksNh4S+4QhK+XSy6iwZUD3Xz1/2mxCdLOO8kw4MFr8YUhlXwRIgI9Mfn+5Vd
-6fbMGIkWTnyVCxwJWCYOLL/d1+Q7KYK4yt5dzyE6FfPG0coicVfC92qf8LU+6Ibp
-MMI8I5kP7J3HAzHj9/hRnFhgBusuvuINf2FmgmGO07FXSWsOfsCbc1sGa3027OqR
-VBZA0EojDb1DqJk9WXhB1pgw+JDGtzaNeZtHHq9ZAjvM2sOHilVLqSRTO3nTQAyy
-32rF3HI5kPoWBrDijZ4iRvLd1kL3+WvpIypi3oAxNJ4H14W9otXv7S2pJJhxDYEt
-jzdnSPC36fAdA4JMsZJTa0EeFOSmgr+FTjLY5OfzKMI8OJmZxsjBZu2VO2wwpX/c
-VmZlda6LeogPxuAZqvJT3w1D1vGjFFO5cq0NF6wYe9n/Lwefgx4RO3f7hQnnNYcT
-O1+YNoTYVVBl3VEok7nsv8dURchpReqP2R/XQWoOeIsRF/e2cecSTOLn8w+Axi6Y
-U0oaP/YefSUdPucbfo67
-=SLU8
------END PGP SIGNATURE-----
+kind regards,
+   Tilmann
