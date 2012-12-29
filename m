@@ -1,62 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/11/4
-Message-ID: <20120911130324.GA14488@meddwl.fritz.box>
-Date: Tue, 11 Sep 2012 15:03:24 +0200
-From: sergii@...em.net
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/3
+Message-ID: <50DEE7A1.3060405@msgid.tls.msk.ru>
+Date: Sat, 29 Dec 2012 16:52:49 +0400
+From: Michael Tokarev <mjt@....msk.ru>
 To: oss-security@...ts.openwall.com
-Cc: security@...iadb.org
-Subject: Multiple SQL injections in MySQL/MariaDB
+Subject: Re: CVE request: qemu e1000 emulated device gues-side buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi.
+I'm not sure what's going on, but no one replied to this email.
 
-Recently, our developer Kristian Nielsen have discovered multiple SQL
-injection like vulnerabilities in MySQL and MariaDB.
-As of today, all versions of MySQL are affected.
-Affected MariaDB versions are: 5.1.62 and below, 5.2.12 and below, 5.3.7 and
-below, 5.5.25 and below. Latest MariaDB releases 5.3.8 and 5.5.27 have
-this problem fixed.
+Meanwhile, this very place received one more bugfix -- see
 
-The issue is numerous places in the code where SQL statements are
-generated and written into the binary log. User-supplied identifiers
-(table names, field names, etc.) are not always properly quoted (for
-example, the proper quoted form of SPECI`AL is `SPECI``AL`), so
-authorised users that have privileges to modify a table (any
-non-temporary table) can inject arbitrary SQL into the binary log.
+http://lists.nongnu.org/archive/html/qemu-devel/2012-12/msg00533.html
 
-Such injected SQL will be executed by the slave or when a DBA does a
-mysqlbinlog|mysql style point-in-time recovery.
+Is this an issue serious enough to get a CVE#?
 
-During the normal MySQL replication (master-slave, not
-mysqlbinlog|mysql), the options to exploit these vulnerabilities are
-somewhat limited by the fact, that the slave does not execute many
-statements, when it expects the one. So, one can not inject a new SQL
-statement. But one can extend the WHERE condition, or modify tables that
-he usually would have no access to.
+Thanks,
 
-Just to be clear: to exploit this one needs a valid account on the
-server and privileges to modify data.
+/mjt
 
-Regards,
-Sergei Golubchik
-MariaDB Security Coordinator
-
-References:
-
-1. MariaDB bug entry:
-
-    https://mariadb.atlassian.net/browse/MDEV-382
-
-2. MariaDB patches:
-
-    http://bazaar.launchpad.net/~maria-captains/maria/5.1/revision/3151.1.1
-    http://bazaar.launchpad.net/~maria-captains/maria/5.2/revision/3163.1.1
-    http://bazaar.launchpad.net/~maria-captains/maria/5.3/revision/3556.1.2
-    http://bazaar.launchpad.net/~maria-captains/maria/5.5/revision/3508
-
-3. MySQL bug entry:
-
-    http://bugs.mysql.com/66550
-
-4. The CVE id for this vulnerability is CVE-2012-4414
+19.12.2012 23:52, Michael Tokarev wrote:
+> qemu-1.3 includes the following patch by Michael Contreras:
+>
+>   http://thread.gmane.org/gmane.comp.emulators.qemu/182666
+>    (initial submission)
+>   http://git.qemu.org/?p=qemu.git;a=commitdiff;h=b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
+>    (the commit)
+>
+>
+> commit b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
+> Author: Michael Contreras <michael@...tric.com>
+> Date:   Sun Dec 2 20:11:22 2012 -0800
+> Subject: e1000: Discard packets that are too long if !SBP and !LPE
+>
+>   The e1000_receive function for the e1000 needs to discard packets longer than
+>   1522 bytes if the SBP and LPE flags are disabled. The linux driver assumes
+>   this behavior and allocates memory based on this assumption.
+>
+>   Signed-off-by: Michael Contreras <michael <at> inetric.com>
+>   ---
+>
+>   Tested with linux guest. This error can potentially be exploited. At the very
+>   least it can cause a DoS to a guest system, and in the worse case it could
+>   allow remote code execution on the guest system with kernel level privilege.
+>   Risk seems low, as the network would need to be configured to allow large
+>   packets.
+>
+>
+> The last comment, which didn't went into the commit message, indicates
+> that it is possible to send larger packet to a guest and cause a buffer
+> overflow with usual outcome in such cases.
+>
+> Yes indeed, the impact is rather low, because the network should be
+> configured to allow larger packets to reach the guest, which is not
+> usually the case -- either the host network is configure for MTU=1500
+> and disallow large packets entirely, or BOTH host and guest network is
+> configured to allow large packets.  In other words, either all devices
+> on the network are configred to accept jumbo frames, no no jumbo frames
+> are enabled at all.
+>
+> That's why I'm not sure whenever this can be considered a vulnerability
+> which deserves a CVE# or not, so I'm asking here.
+>
+> There's another followup bugfix in the same area, now talking about
+> "extra-large" frames --
+>
+>   http://thread.gmane.org/gmane.comp.emulators.qemu/183137
+>
+> If this issue deserves a CVE#, I guess both patches can be seen as a
+> single bugfix.
+>
+> This impacts qemu and all products based on it and using e1000 emulated
+> device, including qemu-kvm, xen and others.
+>
+> Thanks,
+>
+> /mjt
+>
 
