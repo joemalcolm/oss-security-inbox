@@ -1,66 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/07/12
-Message-ID: <4FD0F4EA.6010301@redhat.com>
-Date: Thu, 07 Jun 2012 12:37:30 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/1
+Message-ID: <50DE8130.2070005@redhat.com>
+Date: Fri, 28 Dec 2012 22:35:44 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: John Haxby <john.haxby@...cle.com>
-Subject: Re: CVE Request -- kernel: tcp: drop SYN+FIN messages
+CC: "Jason A. Donenfeld" <Jason@...c4.com>, Frederick Townes <ftownes@...edge.com>
+Subject: Re: CVE Request: W3 Total Cache - public cache exposure
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/07/2012 01:31 AM, John Haxby wrote:
+On 12/28/2012 01:04 AM, Jason A. Donenfeld wrote:
+> Hi Kurt,
 > 
-> On 01/06/12 20:12, Kurt Seifried wrote:
->> In my limited testing with iptables on RHEL 6.2 it appears that 
->> --state NEW works properly, and won't allow SYN+FIN to create 
->> connections (I used hping3 and the SYN+FIN Packets were
->> blocked).
+> W3 Total Cache:
+> http://wordpress.org/extend/plugins/w3-total-cache/
 > 
->> So the default ruleset:
+> CVE request for three separate issues:
 > 
->> -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT -A INPUT
->> -m state --state NEW -m tcp -p tcp --dport 22 -j DROP -A INPUT -j
->> REJECT --reject-with icmp-host-prohibited
+> 1. Cache allows directory listing of hash-key listings, exposing
+> hash keys.
+
+As I understand it this is more of an .htaccess type issue than an
+actual issue with W3 total cache? Is this documented anywhere in the
+W3 total cache documents?
+
+> 2. Hash keys are easily predictable, in the case of (1) not
+> existing.
+
+explanation/algorithm/?
+
+> 3. Cached database values are downloadable by their hash keys on
+> the public internet, exposing sensitive information like password
+> hashes.
+
+Do they need to be downloadable? That is to say can these hash values
+be protected, or must they be exposed?
+
+> Fixing (3) mitigates (1) and (2), so assign this either three CVEs
+> or one CVE.
 > 
->> should work, so you could do you clever --syn bits first and then
->> have that set to protect stuff from SYN+FIN.
+> Source: http://seclists.org/fulldisclosure/2012/Dec/242
 > 
-> What happens if you have "-j ACCEPT" instead of "-j DROP"?   I
-> would expect that sshd wouldn't see the connection but you would
-> get all the unpleasant side effects that made T/TCP deprecated.
-
-Ooops yeah typo, that DROP should have been ACCEPT. So to summarize
-properly:
-
-- -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-- -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
-- -A INPUT -j REJECT --reject-with icmp-host-prohibited
-
-results in ICMP unreachable (the -F -S bypasses the "--dport 22 -j
-ACCEPT" but gets caught in the final "icmp-host-prohibited" rule) with:
-
-hping3 -c 3 -n -S -F -p 22 192.168.51.195
-
-with:
-
-- -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-- -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j DROP
-- -A INPUT -j REJECT --reject-with icmp-host-prohibited
-
-with hping -F -S the packets bypass the "--dport 22 -j DROP" and get
-caught by the icmp-host-prohibited
-
-with hping -S the packets get caught by "the "--dport 22 -j DROP"" as
-expected.
-
-So basically --state new works fine and dandy.
-
-
-> jch
+> The vendor, copied on this email, currently has not issued a fix.
 > 
+> Thanks, Jason
+
+Thanks in advance, with more details I will be able to properly assign
+the CVE identifier(s).
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -68,19 +57,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJP0PTqAAoJEBYNRVNeJnmTqqAP/3DwwV7TjMj5voRSpc1X1jIb
-BDMc05DgCxQ1PuVZJbxcFZ9sK7Wch+gRVryDqcgINj8FfUDdeO5rBLz/eXWf+7SX
-2ift2JguG/hR/7SUF91rP9fVA9UKvwpum4x2aI2NRrluHfu8LHGvVVI2TVQOFFXR
-UAWFCrFeP4MNw+Jv3qVdYFiUzjgbdBedzT1PPWtA30hyb6iggfbWYmOoiKxvE3k6
-1uHEhuqtiriIMD4DFK17s+eVuX6RDz3vWUSnH/5h+ZADuhTUdqBDBFOO6J8nrB0B
-PCCYECJbUcBZcT9LhrvpoIbz8NiGFz46OAiBzLJo6MjM+c17kT5HPHOxJnY/psN3
-/VEICPGBb3ggAWkYJnz5l+sZmBaKrPUeXW//YDN7brr8MZgVnbZ6pdNRoRDTMrfA
-UF/UMCmHwkPOObvlFpMUp0fJnGu3BX6JKBGVVCLm3UVKsV5n0AgcaQ3Ji/MLwSke
-YR2wSnM0MFWh0c+ZgSwQ4Qtc51YXe31JC4bmOz8Y469xTSQbd1evOgxDOVqgklcE
-Nyv6wzSAdtSBvTWr/1JwTAPGiCgNq7TX0hZdZIZt4eR5A2umwLJ0UWW/oITvNwAp
-j+7g0bp0hz7mWW6IEvNavuomcCjky9FpWvAvcnKhUwMsR5pmXBt0ZR6f6j3bFqbx
-E7wc+pzPrR/tROyn0aHc
-=dzax
+iQIcBAEBAgAGBQJQ3oEwAAoJEBYNRVNeJnmTcl4P/ipw4D+IzvSLdwYkNOxmGJkZ
+Nk0w7iJRk/vHtWgbvCP3OGlFr66gTN1cfk3Rye/ED0kwV0Sy+dEqmblsXCTwmx3G
+glC+4sADmQ0AcePVgvWnYv6K5oHgINs7NuPbSsWwdVF+BQCXykYOOYXYpBERkRjX
++CZVEuhMqy4xTi/sgcQiHB4iHZtSLjLB8OOh9+THUsmqf65H3urgPWJbAzOaudxY
+PR4+McAKMz0dpshzQVDyZMcSduQBmjhXRCW0RinEyekFshZnvDbk3wkMb+6/Wk36
+ekSE/3/zmLIvoRu0iZBhOeLFUNT+oSZfa8AQmMs++Z8huyTI9OjAPxXrlRAdnbHA
+0V9/41exnPOwq0W3QKsPzOz0YsRImFo+qfC6KWt77ZsgWfjkWB64l4XmSvhe3U2o
+ywoi8XFTuI5e6z/0GAW5zpa/EYqCqV44mCMHYocU8CXzLaXGqbIHv9VK7JH77X2u
+RRUIF9sDN/vRej987Fp7MhQgK7cFtRRNECLipe3jeJE3cY9egHMTGfDh+N/3Bg0+
+8d5ekkwZAtoDePfFJo7aGwY/CDFxS7izMxwb8nUM0iQUfoukLWdgS/PQmCX9EOcb
+tDzDD4Odw36SaN4k5f9fd0CSn0f6+LsPybE/BHDQmJ9mZaK73CcrwIU8s0IoIEOG
+An9aPfHyvuiPILuGSgWe
+=h95j
 -----END PGP SIGNATURE-----
