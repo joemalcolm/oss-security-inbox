@@ -1,83 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/18/12
-Message-ID: <50804DC3.5000106@redhat.com>
-Date: Thu, 18 Oct 2012 12:43:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/8
+Message-ID: <50DF3694.7030409@larpwiki.de>
+Date: Sat, 29 Dec 2012 19:29:40 +0100
+From: Tilmann Haak <tilmann@...pwiki.de>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Attila Bogar <attila.bogar@...guamatics.com>, Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE Request -- mcrypt: stack-based buffer overflow by encryption / decryption of overly long file names
+Subject: CVE request: MoinMoin Wiki (path traversal vulnerability)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi all,
 
-On 10/18/2012 07:50 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
->   Attila Bogar reported a stack-based buffer overflow
-> in the way MCrypt, a crypt() package and crypt(1) command
-> replacement, used to encrypt / decrypt files with overly
-> long names (longer than 128 bytes). A remote attacker
-> could provide a specially-crafted file that, when processed
-> by the mcrypt too, would lead to mcrypt executable crash [*].
-> 
-> A different vulnerability than CVE-2012-4409:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4409
-> 
-> Note: Using Red Hat bugzilla record for CVE-2012-4409 since
-> particular Mitre record is not described yet.
-> 
-> References:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=867790
-> 
-> Patch proposed by Attila:
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=867790#c0
-> 
-> Reproducer:
-> To reproduce let mcrypt encrypt / decrypt file with name
-> longer ~128 bytes.
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> [*] FORTIFY_SOURCE protection mechanism would mitigate this
-> deficiency to result into crash only. But on systems, without
-> FORTIFY_SOURCE protection being applied, the impact might be
-> higher.
-> 
-> P.S.: I am not sure about relation of this issue to the issue
->       Raphael Geissert reported previously:
->       [4] http://www.openwall.com/lists/oss-security/2012/10/02/1
-> 
->       so CC-in him too, he to clarify if [2] == [4], or if
->       they are yet different issues. Raphael, please clarify.
->       Thanks, Jan.
-> 
+there is a path traversal issue in MoinMoin wiki (version 1.9.3 -
+1.9.5). The vulnerability resides in the AttachFile action (function
+_do_attachment_move in action/AttachFile.py). It fails to properly
+sanitize file names.
 
-Please use CVE-2012-4527 for this issue.
+Details can be found at: http://moinmo.in/SecurityFixes
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+A fix is available at: http://hg.moinmo.in/moin/1.9/rev/3c27131a3c52
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
+Is it possible to get a CVE number for this one?
 
-iQIcBAEBAgAGBQJQgE3DAAoJEBYNRVNeJnmTP1UP/j6LR69c0tuOKaN/wWTtLu7J
-yfbsXmQLd7PfrqSl748bzLdGEVjvAZ/r2GvyPbNRv/Wl1zV6LGRkuOmuq7XRC5JB
-VGLsQlg6g8NZ7n1SGh+oDWSQ16CihzE25G0lf/qO4xCs6aKfcSfpYEM1rQANp9O4
-vZB7bWOZj1iBmUrrHsh/bnANAbaLdV/JN4747i0fMFB/aFhILvRFJk284FUFjQgY
-oE6Gqs5DIwFBZYyLYEj/2sqcvxw1vBMLE48QrIuVpJIColK7hU3fGIEBJRJUPVXn
-JkR3F0egpkkm7+p72OxayTt9YgY69GJCouY+xfY4Si5yZvwMaHvTy341TgT6H5F7
-76SYtmoTGKWKa/L9TUAYQkxhzPkUP6syu3HyVvuPRdLEL7Bv3DX+LQAX5/a0QnwB
-B7SftW+yoH4/h/+wRCrza4cViuiF1pKjD+OVEXQUWH/Ih9OF0I9mZIbiequV4ZRB
-odHVOuyNwPdxYDtC63joBaPGO6ldL9t2HsJSbn5mmT27HIlrUiSkkxaRGfeYJaDE
-t2iUMiPqzP0VgmxwgrYgYdNgOrv+4T1p7QBWJ7w9Auy0fDMwyFo+ZxPo2xkfkoPh
-CcAev7nv5S53nUae/zfl15KLr/ta2j7pIaPgoHwZtlfaXy4u3Qsfoy1kKD6FGmEg
-9RTi0YQOif4AYghYtb28
-=TH3z
------END PGP SIGNATURE-----
+kind regards,
+   Tilmann
