@@ -1,55 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/02/20/9
-Message-ID: <4F42BFE8.7030102@redhat.com>
-Date: Mon, 20 Feb 2012 14:49:28 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/29/5
+Message-ID: <20121229103143.GA3201@elende>
+Date: Sat, 29 Dec 2012 11:31:43 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: "CERT(R) Coordination Center" <cert@...t.org>
-Subject: Re: Bugs in "file" program VU#621745
+Cc: team@...urity.debian.org
+Subject: Inkscape reads .eps files from /tmp instead of the current directory
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-On 02/20/2012 10:53 AM, CERT(R) Coordination Center wrote:
-> Hi folks,
-> 
-> We recently pointed the CERT BFF at the ubiquitous "file" command
-> and found a few bugs.  While we've not proven the bugs to be
-> exploitable, we've also not ruled out the possibility that they
-> could be.
-> 
-> Fixes were committed on Feb 16, 2012: 
-> https://github.com/glensc/file/commits/master
-> 
-> 
-> Thank you, Will Dormann
-> 
-> ============================= Vulnerability Analyst CERT
-> Coordination Center 4500 Fifth Ave. Pittsburgh, PA 15213 
-> 1-412-268-7090 =============================
-> 
+Going trough some bugreports in Debian I noticed [1], [2] I haven't
+found a CVE for "Inkscape reads .eps files from /tmp instead of the
+current directory".
 
-If any of these are security issues please let me know and I will
-assign CVE #'s.
+If one has file foo.eps in current directory, and /tmp/foo.eps is
+present
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+ $ inkscape foo.eps
 
-iQIcBAEBAgAGBQJPQr/oAAoJEBYNRVNeJnmTlZcP/2jltmmsUM84A5nH+JjWREDn
-m7Ywd2Jbo/fxr9c09jjakHscVqJLA1VjBtKOB7zcWYyR6St7P4vAIsQMo1yWGel9
-fz9W5mfSKxErHM4nlFhaHOND8B1KQ73Dtk5ojDPkGuRfDxkT86rEraOPyccMTVue
-xNz4P9+X8tgz0M5Zlrflm2CkyN3K9ls0ZZffFQsjAdOaEMuTkkq+POSGHvgN378r
-oStze+kvg+aS2klP0D7ik7A3DJYzaFiRw425AgXaFkHPtR+AMt6/fopOSRv+x+wB
-A4THNe7G0LEA1dxBNmCFaG+FW9e8SZjlRkoDfmpT4vVFcumB1pEK4R6a4E5nOH4w
-xKmaKIc2x7nBTMKjZfiFWr7reb4+Ml9WvR5RGOf4zsTR8HRqYZxzfQAkSCzi0rPZ
-kvNTRAvvHYFeKQy+XZZD+AZoIrj8y62foH2YKrEBnwp7y+7J4kKZHdkIGZjn8g9L
-mhb0YXTZuH4OcT+dNE1SryvWCeNmc9cY+GKQ/Fl+rmIqeO5fqDLunzbqGmGYvA7J
-Xyhx8bXmjBfkPm2yYKokAGdpR8qsWWLwnAphnM+TLRSK/ro7E+PBW1rl9Ioz3//v
-Qljs+CcIjx4iff14JBazuACQ0kORy8uG9tQBq48uwSQDB2apHOHPJ2EAT47tJkXG
-KL5sxD25MfFrCMH0dj40
-=GhYv
------END PGP SIGNATURE-----
+opens the copy in /tmp/foo.eps
+
+Does this warrants a CVE? If so could you assign one?
+
+ [1]: http://bugs.debian.org/654341
+ [2]: https://bugs.launchpad.net/inkscape/+bug/911146
+
+Regards,
+Salvatore
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
