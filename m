@@ -1,35 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/5
-Message-ID: <1968430077.42037618.1354556187933.JavaMail.root@redhat.com>
-Date: Mon, 3 Dec 2012 12:36:27 -0500 (EST)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/3
+Message-ID: <50DFB67B.6050707@redhat.com>
+Date: Sat, 29 Dec 2012 20:35:23 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Damien Sandras <dsandras@...onix.com>, Eugen Dedu <eugen.dedu@...pm.univ-fcomte.fr>
-Subject: CVE Request -- Ekiga (x < 4.0.0): DoS (crash) after receiving call from other party with not UTF-8 valid name
+CC: "Jason A. Donenfeld" <Jason@...c4.com>, Frederick Townes <ftownes@...edge.com>
+Subject: Re: CVE Request: W3 Total Cache - public cache exposure
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  a denial of service flaw was found in the way Ekiga,
-a Gnome based SIP/H323 teleconferencing application,
-processed information from certain OPAL connections
-([certain] UTF-8 strings were not verified for validity
-prior showing them). A remote attacker (other party with
-a not UTF-8 valid name) could use this flaw to cause
-ekiga executable crash.
+On 12/29/2012 04:45 AM, Jason A. Donenfeld wrote:
+> On Sat, Dec 29, 2012 at 6:35 AM, Kurt Seifried
+> <kseifried@...hat.com> wrote:
+>> 
+>> 
+>> As I understand it this is more of an .htaccess type issue than
+>> an actual issue with W3 total cache? Is this documented anywhere
+>> in the W3 total cache documents?
+>> 
+> 
+> W3 generates .htaccess files and sets up the directory structure
+> and accesses. Nowhere is it documented that sysadmins should
+> additionally modify the .htaccess files to protect the cache, and
+> W3's own htaccess generation fails to protect it.
 
-Upstream bug report:
-[1] https://bugzilla.gnome.org/show_bug.cgi?id=653009
+Please use CVE-2012-6077 for this issue.
 
-Relevant upstream patch:
-[2] http://git.gnome.org/browse/ekiga/commit/?id=7d09807257
+>>> 2. Hash keys are easily predictable, in the case of (1) not 
+>>> existing.
+>> 
+>> explanation/algorithm/?
+>> 
+> 
+> Sure:
+> 
+> query_md5=md5("SELECT * FROM ${db_prefix}users WHERE ID = 
+> '${user_id}'") key=md5("w3tc_${host}_${site_id}_sql_${query_md5}") 
+> url=" 
+> http://siteblabla/wp-content/w3tc/${key:0:1}/${key:1:1}/${key:2:1}/${key}"
+>
+>  "db_prefix" is by default "wp_", per wordpress config, and few
+> people go in and change that. "user_id" is an integer. IDs start at
+> 1 and increase for each added user. "site_id" is an integer that
+> also starts at 1 and increases for each site used in multi-site
+> wordpress. "host" is the hostname of the site. All of these values
+> are known or guessable.
 
-References:
-[3] http://ftp.gnome.org/pub/gnome/sources/ekiga/4.0/ekiga-4.0.0.news
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=883058
+Please use CVE-2012-6078 for this issue.
 
-Could you allocate a CVE id for this?
+>>> 3. Cached database values are downloadable by their hash keys
+>>> on the public internet, exposing sensitive information like
+>>> password hashes.
+>> 
+>> Do they need to be downloadable? That is to say can these hash
+>> values be protected, or must they be exposed?
+>> 
+> 
+> They _must_ be protected. They _must not_ be exposed or
+> downloadable. The hash values are raw SQL query responses, so they
+> contain things like password hashes. The cache is used only
+> internally by the web application, and client browsers should never
+> have any direct contact with this cache.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Please use CVE-2012-6079 for this issue.
+
+Thanks for the explanations.
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ37Z7AAoJEBYNRVNeJnmT9wMQANakD23SI8oeDJyTAfpwTYju
+i1yRsLUjEVDvpO1ydv5xZw6GKTLPVB/Hm732tAa90YSOjBQHCfrFlMtflCYvgw66
+Ex++kTnLjdawh8BX9WGsCTFoiI4doYrBerSl/TmH6NwEo/fZP5fumeFaMdbUzXru
+QgXok5CpQQK0DqiDZLLwt7lHBjnbY+pylb7ddybS0SUX3AAC7brfVkabGQM+ZWjH
+hk7OQklJtG+oJbcj6+8tp65Kxp6hQsJPUGoLc7hu47HpidcnVT/KGYCX4huovZPv
+wdz7yLsJgIxO4IDe0NuZKdqeEV9YKKs2blTEAj76zs8EaYUOKscnjDButZdW12NJ
+FgXFr3ag43Li7Ro5tMUsbBq/hK2oJtysUJlwTZAlbGpEmMOtAS7CnoOtS55DzPOQ
+4pXljZ/f+7GMNnFEIF18MeLZZPMD5VH5Xu/Vf54C1AaBx1A1JOAIVfoycI2ts/tP
+c5ABAUNqkz43zn4Zwr6Edh58WJI1pgVy2/XwP1fGvUeaw/tUURvhVMQNKOiI6OfG
+Qp0z36ac93Y3NXGnj71rHxYmIaRZI7yR9yTCYTR5dESlqXZLUlSbzf6Nz6djqS/Q
+JR9JhxDaO1ysQ4+2ONBbcKxM/0U4Hg58SntsVxze03PmE5hYC9bF9UXaCDmEbInT
+bYrJ9nl/lslPd2LHnLbs
+=SO/W
+-----END PGP SIGNATURE-----
