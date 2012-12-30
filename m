@@ -1,21 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/01/28/3
-Message-ID: <4F238BAE.4070203@redhat.com>
-Date: Fri, 27 Jan 2012 22:46:22 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/4
+Message-ID: <50DFB7B0.1030909@redhat.com>
+Date: Sat, 29 Dec 2012 20:40:32 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>, djm@...nbsd.org, dtucker@...nbsd.org
-Subject: Re: CVE Request: Debian (others?) openssh-server: Forced Command handling leaks private information to ssh clients
+CC: Tilmann Haak <tilmann@...pwiki.de>, tw-public@....de
+Subject: Re: CVE request: MoinMoin Wiki (remote code execution vulnerability)
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> TL;DR anyone shipping OpenSSH portable 5.4 and 5.5 is vulnerable and needs to fix this.
+On 12/29/2012 07:11 AM, Tilmann Haak wrote:
+> Hi all,
 > 
-> This may also affect OpenSSH 5.4/5.5 (non portable) which I'll test when I get home.
+> there is a remote code execution vulnerability in MoinMoin wiki,
+> versions 1.9.x up to (and including) 1.9.5. The method save in class
+> AnyWikiDraw (action/anywikidraw.py) and class TWikiDraw
+> (action/twikidraw.py) do not filter user supplied input correctly, which
+> leads to a path traversal vulnerability, which can be exploited to
+> execute arbitrary code with moin's privileges. An exploit was seen in
+> the wild.
+> 
+> Details can be found at: http://moinmo.in/SecurityFixes
+> 
+> A fix is available at: http://hg.moinmo.in/moin/1.9/rev/7e7e1cbb9d3f
+> 
+> Could someone please assign a CVE number?
+> 
+> kind regards,
+>   Tilmann
 
-Confirmed the code is basically identical, didn't actually run them to
-test (since it's been fixed in OpenBSD for quite some time now).
+Please use CVE-2012-6081 for this issue.
 
-
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ37ewAAoJEBYNRVNeJnmT66YP/0pSF6gHCwqGCkd/xj4rgc7d
+fdxIee2hu4eQHpQg6Juqn//eFKY6ToHMwMXaKnUGJohCE5ZfrjZeqkd3e85no9Kc
+lSrpBox7xt0dyzpQg3bPMc7Q850cQgQPo7lhLmrvr9qjOt7qCfzIdbzxMWoGGOC2
+yxQAzp1q5lL/4fSBZ+SIQRU/HfP/rZsQRDwV8dc3CNKpHVPuBl0sycqd69VxCKeY
+gd4syt26rgoJCQvFdnDEDbZh7+ItBz1opyqOlCzClZK4OTWGbOijPjDvkv0HgDmY
+zNbKzJgh2lWVynxKaiqfO2Ae+fvwj46LCD1QdqO3JyO0MUGPK2mtXLGJT81TUM1s
+C2Es1cJqA2losdgU7BrZdaCV5kzeAiI4q9RjnU0mTHYpvihXazOQ3reQDiJzwWTP
+ZhDcFzsk1xr1/6Pf4oWDaYRq0j7x7fXZ+AJhAncDLl1LwDfIyUIb7pd6Qhf2EIxP
+/W4xPedwGFIEKHqz34N/O+NUUhhdmZYWrDxJY1kSi5in7eGKi1kuZIXo24j5zRJb
+IHuzWlL2PDQq55bO0vEmO5Jf1nDiB/63KrESOKW/cq854nlC7C14WvmnHDLVVL7F
+9akfA9ezLNEPRTY9B0B6IoPEwrlsszbNUc2X35Nr45XvfL3fYC7L/UvvlOvLHfrn
+g/rHKJSADdF1cjGs9lcv
+=Pu+I
+-----END PGP SIGNATURE-----
