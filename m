@@ -1,145 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/05/4
-Message-ID: <CAANPUChoYMrL0K8_Ee-UgG5MKCckQ_rEjGXgVJsvR2PEYK12UA@mail.gmail.com>
-Date: Mon, 5 Nov 2012 09:56:08 -0700
-From: Greg Knaddison <greg.knaddison@...il.com>
-To: "Steven M. Christey" <coley@...-smtp.mitre.org>
-Cc: oss-security@...ts.openwall.com, angela.byron@...uia.com,  Forest Monsen <forest.monsen@...il.com>
-Subject: Re: CVE Request for Drupal Contributed Modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/7
+Message-ID: <50DFB862.8040101@redhat.com>
+Date: Sat, 29 Dec 2012 20:43:30 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "security@...o3.org" <security@...o3.org>
+Subject: Re: TYPO3-CORE-SA-2012-005: Several Vulnerabilities in TYPO3 Core
 Content-Type: text/plain; charset=utf-8
 
-Responses inline below.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Also cc'ing Forest Monsen (a member of the Drupal Security Team) who
-will be helping with the CVE process for us from now on.
-
-On Wed, Oct 31, 2012 at 9:02 PM, Steven M. Christey
-<coley@...-smtp.mitre.org> wrote:
->
-> Joshua and others on the Drupal team,
->
-> It appears that the following followup questions by Kurt Seifried were
-> missed during some of the confusion over contacts and email addresses for
-> Drupal-related security issues.
->
-> Please respond to the comments in this email, as it supercedes Kurt's email
-> from October 7.
->
->
-> On Sun, 7 Oct 2012, Kurt Seifried wrote:
->
->>>
->>>
->>> Multiple Vulnerabilities: http://drupal.org/node/1719548 |
->>> SA-CONTRIB-2012-125 - Chaos tool suite (ctools) - Local File
->>> Inclusion http://drupal.org/node/1719548 | SA-CONTRIB-2012-125 -
->>> Chaos tool suite (ctools) - Cross Site Scripting (XSS)
->>
->>
->> This sounds like a single issue with two possible outcomes?
->>
->> The module doesn't sufficiently validate css import statements to
->> confirm they only include css content appropriate to show to end
->> users. This could allow a malicious user to add sensitive content from
->> the site (e.g. settings.php) exposing that sensitive content to
->> visitors of the page. It could also be used to execute a Cross Site
->> Scripting attack.
->>
->> Links to the code commits fixing this would be helpful.
-
-I believe this is the commit
-http://drupalcode.org/project/ctools.git/commit/863e53e
-
-I believe it is the case that XSS is one example of how to exploit the
-issue but that Local File Inclusion is the fundamental problem. The
-local file inclusion is just into a CSS context so it's not a way, for
-example, to execute arbitrary PHP. However it could be used to read
-any file on the server and display the contents inside of CSS (if
-Drupal's css aggregation feature is enabled). So, someone could use
-this to read the database credentials, for example. That might still
-not be enough to compromise the server depending on mysql access
-settings, firewalls etc.
-
-> Your answer to this question will help determine whether we have one CVE or
-> two.
->
->
->>> http://drupal.org/node/1732946 | SA-CONTRIB-2012-126 - Hotblocks -
->>> Cross Site Scripting (XSS) and Denial of Service (DoS)
->>
->>
->> This is a multiple CVE issue?
->
->
-> Kurt - we investigated the advisory and it's pretty clear that the two are
-> distinct, so we assigned the following CVEs (Drupal people, please take
-> note):
->
-> CVE-2012-5704 - DoS (infinite loop with self-referencing block)
-> CVE-2012-5705 - XSS
-
-Advisory updated with these numbers http://drupal.org/node/1732946
-
->
->>> Multiple Vulnerabilities: http://drupal.org/node/1762220 |
->>> SA-CONTRIB-2012-130 - Jstool - Access Bypass
->>> http://drupal.org/node/1762220 | SA-CONTRIB-2012-130 - Jstool -
->>> Arbitrary code inclusion
->>
->>
->> The description/vulns don't seem to match up on this one. Can you clarify?
->>
->> The module does not protect its menu paths, which contain sensitive
->> information about all javascript files on the site and their contents.
->> The module does not validate filenames which can lead to potential
->> read/write access to arbitrary files on the server.
->>
->> Links to the code commits fixing this would be helpful.
-
-Attached is the patch the maintainer provided for this issue -
-jstool-final-77678-23.patch I'm not immediately sure which commit in
-git corresponds to this.
-
-I believe there are distinct issues here:
-* The ability to read/write to arbitrary files
-* The ability to identify and read all Javascript files of the site -
-this is somewhat by design of Javascript, but the team member working
-on this issue felt that having direct access to read all files in one
-place would be useful to an attacker enough that it deserved mention.
-For example: It could be helpful to an attacker to see the source code
-of the Javascript for Ajax features that are admin only.
+I'd like to get these CVE's assigned. can someone from Typo3 please
+reply? Thanks.
 
 
-> Drupal team - if these both have the same root cause, such as a directory
-> traversal issue, then they would receive one CVE since they are the same
-> type of issue - even if there are different impacts.  Otherwise, two CVEs
-> might be needed.
+On 12/10/2012 02:32 PM, Kurt Seifried wrote:
+> TYPO3-CORE-SA-2012-005: Several Vulnerabilities in TYPO3 Core 
+> https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-005/
 >
->>> http://drupal.org/node/1762482 | SA-CONTRIB-2012-133 - Taxonomy
->>> Image - Cross Site Scripting (XSS) & Arbitrary PHP code execution
->>
->> So this is the same root issue, not filtering file uploads allowing an
->> attacker to upload arbitrary stuff (including PHP code), the outcome
->> of which could be PHP code execution, or XSS (or other things I
->> suppose like DoS, CSRF, etc.)?
->
->
-> This is the same basic issue as the last one.  If there's one root cause in
-> which file uploads aren't prevented when they should, then they might
-> receive only one CVE.
->
-> (Basically, if a user X is intentionally allowed to do action Y, but a
-> vulnerability allows somebody to become X - then we don't assign a separate
-> CVE ID for Y.)
+>  I'm a little confused because multiple issues are listed together
+> with a single CVSS2 score/etc.
+> 
+> Can the Typo3 security team please confirm the following:
+> 
+>> Component Type: TYPO3 Core Affected Versions: 4.5.0 up to
+>> 4.5.20, 4.6.0 up to 4.6.13, 4.7.0 up
+> to 4.7.5 and development releases of the 6.0 branch.
+>> Vulnerability Types: SQL Injection, Cross-Site Scripting,
+> Information Disclosure
+> 
+> so no CVE's needed for this, this is simply a summary of the below
+> issues?
+> 
+>> Vulnerable subcomponent: TYPO3 Backend History Module
+>> Vulnerability Type: SQL Injection, Cross-Site Scripting Solution:
+>> Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
+> fix the problem described!
+>> Credits: Credits go to Thomas Worm who discovered and reported
+>> the
+> issue.
+> 
+> Did he discover both the SQL Injection and the Cross-Site
+> Scripting issues? Can you provide a link to the specific code
+> fixes?
+> 
+> so 2 cve's needed correct?
+> 
+>> Vulnerable subcomponent: TYPO3 Backend History Module
+>> Vulnerability Type: Information Disclosure
+> Solution: Update to the TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
+> fix the problem described!
+>> Credits: Credits go to Core Team Member Oliver Hader who 
+>> discovered
+> and fixed the issue.
+> 
+> so one cve needed here? Can you provide a link to the specific code
+> fixes?
+> 
+>> Vulnerable subcomponent: TYPO3 Backend API Vulnerability Type: 
+>> Cross-Site Scripting Solution: Update to the TYPO3 version
+>> 4.5.21, 4.6.14 or 4.7.6 that
+> fix the problem described!
+>> Credits: Credits go to Johannes Feustel who discovered and 
+>> reported
+> the issue.
+> 
+> so one cve needed here? Can you provide a link to the specific code
+> fixes?
+> 
+>> Vulnerability Type: Cross-Site Scripting Solution: Update to the 
+>> TYPO3 version 4.5.21, 4.6.14 or 4.7.6 that
+> fix the problem described!
+>> Credits: Credits go to Richard Brain who discovered and reported 
+>> the
+> issue.
+> 
+> so one cve needed here? Can you provide a link to the specific code
+> fixes?
+> 
+> Thanks for confirming this.
+> 
+> 
 
-Yes, this is fundamentally an "upload arbitrary stuff" issue.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-> Thanks,
-> Steve
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Thank you for your attention to detail!  :)
-
-Regards,
-Greg
-
-Download attachment "jstool-final-77678-23.patch" of type "application/octet-stream" (7233 bytes)
+iQIcBAEBAgAGBQJQ37hiAAoJEBYNRVNeJnmTSSIP/3j+b//bo3KybxbZg6aCck70
+BdWtiCxK12ytFCIc8oddg5EP1d5sFfZ0+STnpJJiO/OK0yLs1rrZ4SuAenlBv3cn
+Ig3m8ZlNCAThGviaeDVV+C7xc/glOo4ze3DJZ0pXbBMJCxI4Gnpi3AVT2xbi5oBG
+Hd/oC1v4iaZqKudBFGwO2g+vucXz3+EuRgwYBHee33RaDhwwAbYMR7JbBr9bVidZ
+0vhn109UTn/kD6X0RgCeQWfUInoTPEVLh+tMoy10edOws5QFCQVMt3rQ7t9Yy7Sv
+Iy9H4mZY4mn+kM0iBgHjQrv65KNTnhWShipuWueg0DfPwOkuXkDOOfBKhlWBKNs1
+fOapfQ3x3pW9nnpPQ0tDzYWg7z4piWx0uZ8Yl+zwz8qi/uwCGcyDTRFNWDkIfbXi
+ArVteT2BVbXq025ESJgHhYnCEPXHJQ2UXJuuPz2zWClTAk0kT2rmE2lUm1XM/3lY
+wjFqZA1M0sxtEspoNwYWYMe9EKr4WHU1OIWp3Jo8wUtqHoJY4pvZq34gOYU+4/9d
+mWdHnJmsbZ3O3v1joBh3oTxPMN70FEazLfUp/kDb6lKWV2vq70zcGugvp5HPGo3j
+kPRfnuBsR4ZZC5pa86xfPsmLAkoI0HgTgfpzUt04FSyzncYOMBhRJlirnRjwcCt3
+dlxv+NXn42tyOTMPhYSR
+=HEQq
+-----END PGP SIGNATURE-----
