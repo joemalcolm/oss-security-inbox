@@ -1,82 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/03/8
-Message-Id: <E1TfaBI-000691-0m@xenbits.xen.org>
-Date: Mon, 03 Dec 2012 17:51:48 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 32 (CVE-2012-5525) - several hypercalls do not validate input GFNs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/11
+Message-ID: <CAF6bG8ftmkO7WPx+8iTQmnw_4fZMaKUWFozYgExnXcxej50A3Q@mail.gmail.com>
+Date: Sun, 30 Dec 2012 13:05:42 +0200
+From: Marko Lindqvist <cazfi74@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: About CVE-2012-5645
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 30 December 2012 05:48, Kurt Seifried <kseifried@...hat.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 12/21/2012 05:26 PM, Marko Lindqvist wrote:
+>> I saw message that Freeciv bug #20003 has been assigned
+>> CVE-2012-5645 : http://seclists.org/oss-sec/2012/q4/484
+>>
+>> I'd like to clarify things a bit. It was not single issue, but
+>> more like two separate issues. Most importantly this leads to patch
+>> listed
+>> (http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21670)
+>> to fix only part of the problems described. Something like:
+>>
+>> A denial of service flaw was found in the way the server component
+>> of Freeciv, a turn-based, multi-player, X based strategy game,
+>> processed certain packets (invalid packets with whole packet length
+>> lower than packet header size). A remote attacker could send a
+>> specially-crafted packet that, when processed would lead to freeciv
+>> server to terminate (due to memory exhaustion)
+>>
+>>
+>> The other half: A denial of service flaw was found in the way the
+>> server component of Freeciv, a turn-based, multi-player, X based
+>> strategy game, processed certain packets (syntactically valid
+>> packets, but whose processing would lead to an infinite loop). A
+>> remote attacker could send a specially-crafted packet that, when
+>> processed would lead to freeciv server to become unresponsive (due
+>> to excessive CPU use).
+>>
+>> is fixed in
+>> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21701
+>>
+>>
+>>
+>> Both are fixed in 2.3.3 (and patch versions applied to the stable
+>> branch S2_3 release was made from:
+>> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21672 ,
+>> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21703 )
+>>
+>>
+>> - ML
+>>
+>
+> Hmm I'm waffling here. The issues are the same version/reporter,
+> roughly the same, can you post the http://cwe.mitre.org/ identifiers
+> for these two issues? If they are different enough this might warrant
+> a CVE split but for now I'm leaving it merged.
 
-	     Xen Security Advisory CVE-2012-5525 / XSA-32
-			      version 4
-
-	     several hypercalls do not validate input GFNs
-
-UPDATES IN VERSION 4
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The function get_page_from_gfn does not validate its input GFN. An
-invalid GFN passed to a hypercall which uses this function will cause
-the hypervisor to read off the end of the frame table and potentially
-crash.
-
-IMPACT
-======
-
-A malicious guest administrator of a PV guest can cause Xen to crash.
-If the out of bounds access does not lead to a crash, a carefully
-crafted privilege escalation cannot be excluded, even though the guest
-doesn't itself control the values written.
-
-VULNERABLE SYSTEMS
-==================
-
-Only Xen 4.2 and Xen unstable are vulnerable. Xen 4.1 and earlier are
-not vulnerable.
-
-The vulnerability is exposed only to PV guests.
-
-MITIGATION
-==========
-
-Running only trusted PV guest kernels will avoid this vulnerability.
-
-Running only HVM guests will avoid this vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa32-4.2.patch             Xen 4.2.x, xen-unstable
-xsa32-unstable.patch        xen-unstable
+ Yes, had it fixes for both parts listed from the start, there would
+be no problem. The problem is the confusion over where CVE-2012-5645
+is really fixed. Based on the original description here some
+distributions claim CVE-2012-5645 fixed now that they have applied one
+patch only. If you just add second fix to CVE-2012-5645, there will be
+no way of telling if particular logmsg about "CVE-2012-5645 fixed"
+means it's fixed completely, or only half of it.
 
 
-$ sha256sum xsa32*.patch
-ad25c9298b543ef7af40e9f09cae232d36efc1932804678355ab724a19e3afd9  xsa32-4.2.patch
-734cff82a93f032165ef26633acb30a499cc063141c2b16fccb294703718fcb0  xsa32-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJQvOWxAAoJEIP+FMlX6CvZ9uUH/RM5PGHxWTuFv11kAEJAaQK7
-m3dB9GZvjRo/zcRTrSQX2JCumM8rwXffNR9oUHQkC3WxRPjyNRdsiI02sSRLSDAh
-q2tsalK1PpFNX2DRrOezWrkBA2zR7pnGe3sCzgO3sGGpqMMoG5+u6/IcZHu86LGm
-zk+e0hMHtuurz6+uB0w8TJoLge4XSTw0K3ck70vCL4ysKmyOcEWcAgDmNA+OwnQ8
-duw4UGkXLrxCF1X7RbAh31lUWPSLxPvxsytja+78/9ggpQRxZkF5x6T4oABcZ7jg
-vjzYkNN3MdN41RIbmZps1SECLm/SKoOvsBxfOJArf0DYgVmJloxZrLK4TyquCDk=
-=oEp3
------END PGP SIGNATURE-----
-
-Download attachment "xsa32-4.2.patch" of type "application/octet-stream" (631 bytes)
-
-Download attachment "xsa32-unstable.patch" of type "application/octet-stream" (631 bytes)
+ - ML
