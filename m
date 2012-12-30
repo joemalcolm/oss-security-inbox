@@ -1,81 +1,142 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/27/13
-Message-ID: <Pine.GSO.4.64.1211271744400.13413@faron.mitre.org>
-Date: Tue, 27 Nov 2012 17:55:14 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/1
+Message-ID: <50DFB3BA.7060403@redhat.com>
+Date: Sat, 29 Dec 2012 20:23:38 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: Curl insecure usage
+CC: Michael Tokarev <mjt@....msk.ru>, michael@...tric.com
+Subject: Re: CVE request: qemu e1000 emulated device gues-side buffer overflow
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Kurt,
+On 12/29/2012 05:52 AM, Michael Tokarev wrote:
+> I'm not sure what's going on, but no one replied to this email.
 
-My read is that these are fairly straightforward issues, although the 
-number of implementations with this problem may be rather high :-(
+I was waiting for someone to reply/post more info, didn't happen until
+now =).
 
-opendnssec calls libcurl with an incorrect value "true" that's effectively 
-treated as the number 1, which is an insecure CURLOPT_SSL_VERIFYHOST 
-value.  So, opendnssec didn't call the API correctly - so the problem 
-rests with opendnssec.
-
-For the handful of people interested - this is a kind of type confusion or 
-incorrect conversion error that affects a language other than C!  Kinda 
-cute.
-
-For PHPcas, this is just calling the API with an insecure 
-CURLOPT_SSL_VERIFYHOST value, period.
-
-So, I'd say that these faulty implementations each deserve their own CVE, 
-instead of a single ID for Curl.
-
-- Steve
-
-
-On Mon, 26 Nov 2012, Kurt Seifried wrote:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+> Meanwhile, this very place received one more bugfix -- see
+> 
+> http://lists.nongnu.org/archive/html/qemu-devel/2012-12/msg00533.html
 >
-> On 11/26/2012 08:06 AM, Moritz Muehlenhoff wrote:
->> Hi, during the triage of the SSL client bugs spotted by the
->> http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf paper Debian
->> developer Alessandro Ghedini discovered two more applications using
->> Curl in an insecure manner:
+>  Is this an issue serious enough to get a CVE#?
+
+I am merging these issues into a single CVE, same researcher, same
+version of Linux kernel, basically same problem. If anyone objects
+strongly however I can split (assumption being the CVE assigned now
+would be for the Dec 3 2012 issue). So we have:
+
+==========================
+Dec 3 2012:
+http://git.qemu.org/?p=qemu.git;a=commitdiff;h=b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
+
++/* this is the size past which hardware will drop packets when
+setting LPE=0 */
++#define MAXIMUM_ETHERNET_VLAN_SIZE 1522
++    /* Discard oversized packets if !LPE and !SBP. */
+
+==========================
+Dec 5 2012:
+https://lists.nongnu.org/archive/html/qemu-devel/2012-12/msg00533.html
+
++/* this is the size past which hardware will drop packets when
+setting LPE=1 */
++#define MAXIMUM_ETHERNET_LPE_SIZE 16384
+
+==========================
+
+Please use CVE-2012-6075 for these issues.
+
+
+> Thanks,
+> 
+> /mjt
+> 
+> 19.12.2012 23:52, Michael Tokarev wrote:
+>> qemu-1.3 includes the following patch by Michael Contreras:
+>> 
+>> http://thread.gmane.org/gmane.comp.emulators.qemu/182666 (initial
+>> submission)
+>> 
+>> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
 >>
->> 1. opendnssec (in the eppclient tool)
->> http://lists.opendnssec.org/pipermail/opendnssec-user/2012-November/002296.html
 >>
->>  2. PHPcas (used by Moodle e.g.):
->> https://github.com/Jasig/phpCAS/pull/58
->>
->> Please assign CVE IDs for these.
->>
->> Cheers, Moritz
->>
->
-> Have these been receiving individual CVE's? I can't find any offhand,
-> can you provide examples of others?
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.12 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJQs7giAAoJEBYNRVNeJnmTDM4QALlcub2QiCRwLG6hkUOfpMJa
-> EbWePTQ2DeShhmnCW1nFrbFQQWpzAQBvJdGmoS45L33ikv3FN5LJKblQ7PTYgHV0
-> AMluclPdvrF9szXYpAfREga+YlUbrMkzZnR1p3KTApeKaOMqE1gX41+2waXMqL73
-> I0p/eLalMP35+lNJJZRK2dE9dZ70f7GRCbfOTgvAV+LWWcyxOYm6RnS8iyfW4UIs
-> j3SFIAVya5xXvsKvlhsXtYQaqXpdlcIXkNUBgtCi1ECXt2kAfQEsdhS6B6fSoWAR
-> Nw3bFFiYjCpS5Ek+cpeLWNvklKr27JMchYyN7QYIq99U+2vS2uBAv5o8+cas0xzL
-> I33GhffxhthjROt3zfmv3oQhKgTAMaDSbC781gSxdU0h1xPwFolXq8h6ebJRBPwU
-> BRtnMpwgvM1Cw9EBSeoEA1+wZH1cahSeghT5GAkedn2F1Qn1CykQlQ/3AvXkohCp
-> O+uYq++7K4iYTz4Fjk71pTCzoaeLslDts3g0THRUE7AecKp0jREJ7fZp8Y6C8hYO
-> BEbb7GBphW9wYvRJMOQ7ILQbjfdE1gaSLF1qG2/zdoxmZqmdc6mY7zh8MeS27aUV
-> YcVeBblMyd+BgVzgDl7ZBcLJgwwH90jysUeG/i2NDlQuDDEP9CFNtfRGzXVNlLM+
-> 0hkHSxVzqagWo/TNFQyn
-> =s0Km
-> -----END PGP SIGNATURE-----
->
+>> 
+(the commit)
+>> 
+>> 
+>> commit b0d9ffcd0251161c7c92f94804dcf599dfa3edeb Author: Michael
+>> Contreras <michael@...tric.com> Date:   Sun Dec 2 20:11:22 2012
+>> -0800 Subject: e1000: Discard packets that are too long if !SBP
+>> and !LPE
+>> 
+>> The e1000_receive function for the e1000 needs to discard
+>> packets longer than 1522 bytes if the SBP and LPE flags are
+>> disabled. The linux driver assumes this behavior and allocates
+>> memory based on this assumption.
+>> 
+>> Signed-off-by: Michael Contreras <michael <at> inetric.com> ---
+>> 
+>> Tested with linux guest. This error can potentially be exploited.
+>> At the very least it can cause a DoS to a guest system, and in
+>> the worse case it could allow remote code execution on the guest
+>> system with kernel level privilege. Risk seems low, as the
+>> network would need to be configured to allow large packets.
+>> 
+>> 
+>> The last comment, which didn't went into the commit message,
+>> indicates that it is possible to send larger packet to a guest
+>> and cause a buffer overflow with usual outcome in such cases.
+>> 
+>> Yes indeed, the impact is rather low, because the network should
+>> be configured to allow larger packets to reach the guest, which
+>> is not usually the case -- either the host network is configure
+>> for MTU=1500 and disallow large packets entirely, or BOTH host
+>> and guest network is configured to allow large packets.  In other
+>> words, either all devices on the network are configred to accept
+>> jumbo frames, no no jumbo frames are enabled at all.
+>> 
+>> That's why I'm not sure whenever this can be considered a
+>> vulnerability which deserves a CVE# or not, so I'm asking here.
+>> 
+>> There's another followup bugfix in the same area, now talking
+>> about "extra-large" frames --
+>> 
+>> http://thread.gmane.org/gmane.comp.emulators.qemu/183137
+>> 
+>> If this issue deserves a CVE#, I guess both patches can be seen
+>> as a single bugfix.
+>> 
+>> This impacts qemu and all products based on it and using e1000
+>> emulated device, including qemu-kvm, xen and others.
+>> 
+>> Thanks,
+>> 
+>> /mjt
+>> 
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ37O6AAoJEBYNRVNeJnmTobcP/2buj6B2/eZ2U6rliK69Bbrj
+sI9ubrmOBSn0FswbsfTBU94p21O9eEWwer6DjbHlE5N5rq3pClRZe8ClQVS5+vDM
+OCEfN5aeK/2PHv398q8yG3GLvxFFEWKdmjIRClVimwFXMVcH5ewmbpt5kVfmcNXp
+PWETebHp10E8Az0IKFfNexBoZVCwaxBJp2YIaeTKbf77KmZ7pbxdVXE4rxRGquoG
+TMmLrIIdG8GqbTp+CRipZUrFCxQs+TRcgY4ZcbAaJfnYlz6P5M6IG9jYF/LiIWCS
+3MCtHoC9XWZi4Vk0nctKe1XAvx7c/uOqiLOYiZsF8NsvYVgVVldptwcxPTMoXNHi
+B3o2Iq7dQLVmBz2nWxsTJ2Fth8joGJRCGqlmZoN6mGDhXhZRH4b7Y7l5N73N1pds
+ycwWYB6XUVeKgwI1G/7EFdNCPgK3GD+oOT9b4cQgUzJ2bqD61UUVzOZSOLhTtm6Q
+cqjOhs0dK0XgElrWtI2diP0StqqZbG3lCS09OHmlQiSJlyNEEm7WJkNFal+FotqV
+wsiGHtij2Kv2WzLsPqajpb/CVQVgJFQ7D/rWgZUPbKurSSE+SGcIuwn9LmZepl7G
+HmoJEh7i1gu90ThT9fRm4SnUViCEpkR++X4zM71PkXkPVOcaxvSOwfNSBUQvaOGv
+ATotoSZWHd8rrjjuak0N
+=OsM0
+-----END PGP SIGNATURE-----
