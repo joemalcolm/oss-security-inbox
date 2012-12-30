@@ -1,41 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/16/16
-Message-ID: <4F637C8F.1030401@redhat.com>
-Date: Fri, 16 Mar 2012 11:46:55 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/9
+Message-ID: <50DFBAC6.3090506@redhat.com>
+Date: Sat, 29 Dec 2012 20:53:42 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>, Mark Stanislav <mark.stanislav@...il.com>
-Subject: Re: CVE Requests
+CC: David Holland <dholland-oss-security@...bsd.org>, Steven Christey <coley@...re.org>
+Subject: Re: Isearch insecure temporary files
 Content-Type: text/plain; charset=utf-8
 
-On 03/16/2012 09:53 AM, Solar Designer wrote:
-> On Fri, Mar 16, 2012 at 12:20:37AM -0400, Mark Stanislav wrote:
->> None of the details of these issues have been publicly discussed or released as I am trying (without much success) to allocate a CVE prior to sending out a coordinated advisory including that identifier as I always have done and as the mitre site indicates to do.
->>
->> There are no reference links to provide and I am not publicizing details on this list before the developer can be informed of the CVE.
->>
->> I'm happy to take this off list as I am sure no one cares about any of this discussion
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-In which case you can ask for them on VS@ list where the issue will
-remain embargoed. If the issue is so sensitive you cannot leak
-details/etc then you need to contact Mitre directly (this will also
-ensure no duplicates/etc.).
+On 12/21/2012 12:50 PM, David Holland wrote:
+> Looking at that thread (which I didn't see at the time because I
+> no longer have time to follow this list much) I think I'd agree
+> that the CVE system itself is the wrong scheme, not only for its
+> own reasons but also because it doesn't reach the right targets.
 
-> No, please keep this on the list.  Discussions on how to handle
-> vulnerability disclosure (including the CVE ID assignment step) are
-> definitely on topic for oss-security.
+> All of these problems also apply to any new scheme someone sets
+> up; what I'm suggesting is that the existing CVE infrastructure is
+> not necessarily that much of an advantage.
 
-Yes and I need to finish documenting this stuff (it's become obvious we
-need to educate people on how the system works and why it works that
-way, we're not insane, we have good reasons for doing it the way we do,
-honest =).
-
-> 
-> Thanks,
-> 
-> Alexander
-> (a moderator for oss-security)
+One random thought, might it be worth adding structured data to CVE
+that basically says when the issue was made public/reported to the
+upstream and when upstream 1) acknowledged it (if ever) and then they
+patched it (if ever) and when they shipped a fixed version (if ever).
+Obviously then you could simply parse for the time between date
+reported and date acknowledged/patched/fixed and see how
+healthy/responsive the upstream is.
 
 
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ37rFAAoJEBYNRVNeJnmTCSgQAIB9gSFe08KOfIVY+oUzRuQw
+ol9jgO8wfB3zKPca1EqSabi7pXVdebTZ+MhjIwC5I7kUxNS+ME1xLU2wcnwx2nMS
+SILB5ZltCv+JfXdf0VuAns047P/iaK4JAMuqFrXu3Bymjui4cSr+ypN5Ao7hXygu
+09nFJ9hnZIoNIMqe8xy3xCFGXFEI9EN2zOE6bJf5uxIBAA2WSmMut9trZLYHo2wZ
+/NAuXWZOATe/tbt24YsJSZrL9HQZTmZL756UTK5/LEn4hQtpzPVv5NpHx2KWsMGf
+I2GZI1QYXnVaArH+HL4ZY9antd3KEahZLsKONq7ZGefpBZBqwyVVLwe/2fD5AVXV
+kLkb6svEeonwQevIYdj59pmIUuvKF0ooWdWasNnIqKWFh7en3yyuiy1ewKayGyTn
+5AMdxKsx4byYGQDQsBgJERZCTRol17XiUwetuNPRWOW3gDCPMmdLeokgWp2esxaf
+INZXlKkcfgJvU69ke1fdaPfUo5abw52+3iYABzbTMzDXdNl1MezT6Pz78GNRyPPh
+xbpxEg5oqMttw+19AoC8yO7JIPdggGsMqhPDLD345moihXXh8FIidB5NFziSBT0z
+/sG4GjTPxOwzCs9hHnlxjtcw2SBYnil8SqGyA4LsesbL2+FGp4y3+iaM0p3ydVjU
+bjhIXvSv8FOZnDgoXp61
+=DTEx
+-----END PGP SIGNATURE-----
