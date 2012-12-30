@@ -1,65 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/30/9
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF0691A5A3@IMCMBX01.MITRE.ORG>
-Date: Tue, 30 Oct 2012 17:59:28 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: Sean Amoss <ackle@...too.org>, Common Vulnerabilities & Exposures <cve@...re.org>, "Christey, Steven M." <coley@...re.org>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Gentoo Linux Security Team <security@...too.org>, "xtophe@...eolan.org" <xtophe@...eolan.org>
-Subject: RE: VideoLAN TiVo Demuxer Duplicate CVEs (CVE-2011-5231 and CVE-2012-0023)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/12
+Message-ID: <20121230161642.GE30200@kludge.henri.nerv.fi>
+Date: Sun, 30 Dec 2012 18:16:42 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: Isearch insecure temporary files
 Content-Type: text/plain; charset=utf-8
 
-Sean,
+On Sat, Dec 29, 2012 at 08:53:42PM -0700, Kurt Seifried wrote:
+> One random thought, might it be worth adding structured data to CVE
+> that basically says when the issue was made public/reported to the
+> upstream and when upstream 1) acknowledged it (if ever) and then they
+> patched it (if ever) and when they shipped a fixed version (if ever).
+> Obviously then you could simply parse for the time between date
+> reported and date acknowledged/patched/fixed and see how
+> healthy/responsive the upstream is.
 
-Thank you for noticing this.
+Yes, that would be really useful data with CVEs. OSVDB is collecting that already. That is not easy task btw.
 
-CVE-2011-5231 was an accidental duplicate of CVE-2012-0023, and it was only released a couple days ago.
-
-CVE-2012-0023 has been in use since January.
-
-Google search results show that CVE-2012-0023 has many more hits.
-
-Even though the issue was first published in December 2011 and CVE-2012-0023 has "2012" in the name, this off-by-one is very common for identifiers for issues published in December/January of any year.
-
-So, even though it's not "aesthetically appropriate," keep CVE-2012-0023 and REJECT CVE-2011-5231.
-
-- Steve
-
-
-
------Original Message-----
-From: Sean Amoss [mailto:ackle@...too.org] 
-Sent: Monday, October 29, 2012 2:27 PM
-To: Common Vulnerabilities & Exposures; Steven M. Christey
-Cc: oss-security@...ts.openwall.com; Gentoo Linux Security Team; xtophe@...eolan.org
-Subject: VideoLAN TiVo Demuxer Duplicate CVEs (CVE-2011-5231 and CVE-2012-0023)
-
-Steve, MITRE, vendors:
-
-It appears that there may be two CVE's for the same issue:
-
-CVE-2011-5231 - Double free vulnerability in the get_chunk_header
-function in modules/demux/ty.c in VideoLAN VLC media player 0.9.0
-through 1.1.12 allows remote attackers to cause a denial of service
-(crash) and possibly execute arbitrary code via a crafted TiVo (TY) file.
-
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-5231
-
-References to http://www.videolan.org/security/sa1108.html
-
-=======================================================================
-
-CVE-2012-0023 - Buffer overflow in VLC TiVo demuxer
-
-CVE Assignment: http://www.openwall.com/lists/oss-security/2012/01/03/12
-
-References http://www.videolan.org/security/sa1108.html in assignment above
-
-
-Thanks,
-Sean
--- 
-Sean Amoss
-Gentoo Security | GLSA Coordinator
-E-Mail	  : ackle@...too.org
-GnuPG FP  : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
-
+- Henri Salo
