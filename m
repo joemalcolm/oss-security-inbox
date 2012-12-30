@@ -1,54 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/02/8
-Message-ID: <4F50FD4A.5030003@redhat.com>
-Date: Fri, 02 Mar 2012 10:03:06 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/10
+Message-ID: <50DFBC29.5060001@redhat.com>
+Date: Sat, 29 Dec 2012 20:59:37 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Joomla core information disclosure 1.7.1
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: 2012 close out/cleanup
 Content-Type: text/plain; charset=utf-8
 
-On 03/01/2012 11:58 PM, Henri Salo wrote:
-> On Thu, Mar 01, 2012 at 10:14:40PM -0700, Kurt Seifried wrote:
->> On 03/01/2012 02:07 PM, Henri Salo wrote:
->>> Hello,
->>>
->>> It seems that this issue does not yet have CVE-identifier.
->>>
->>> http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
->>>
->>> I can't never be sure with Joomla so maybe someone wants to verify this before assigment.
->>>
->>> - Henri Salo
->>
->> Looks like you asked for one for 20111001
->> (http://seclists.org/oss-sec/2011/q4/89) but I can't find a request for
->> 20111002 anywhere.
->>
->> For Joomla! core information disclosure 20111002 please use CVE-2011-4937.
->>
->> -- 
->> Kurt Seifried Red Hat Security Response Team (SRT)
-> 
-> http://seclists.org/oss-sec/2012/q1/524 so the CVE seems to be CVE-2011-3629. Sorry again for the hassle. I think CVE-2011-4937 is now duplicate. How do we get Joomla's security personnel to request CVE-identifiers by themselves and add them to advisories? They do belong to oCERT.
-> 
-> - Henri Salo
-> ps. SORRY :)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Huh?
+So I've no doubt missed a few 2012 CVE requests, occasionally my email
+seems to drop a posting from oss-sec about once a month, usually
+another SRT member asks me why I haven't responded so I see it in the
+archives then, and sometimes I wait for more info/replies which never
+happens.
 
-http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
+So with this in mind if you have or know of CVE requests that have
+gone unfulfilled for more than 2 weeks please email me a copy
+(kseifried@...hat.com) so I can make sure they get handled. Otherwise
+they probably won't get handled =). Here's looking forwards to 2013,
+with any luck we can break 2000 CVE assignments on oss-sec this year =).
 
-and
-
-http://developer.joomla.org/security/news/371-20111002-core-information-disclosure.html
-
-are entirely different issues (one is "Weak encryption causes potential
-information disclosure" the other is "Inadequate error checking causes
-potential information disclosure."), so two issues, two CVE's. We split
-based on (among other things) the underlying issues, not the outcome.
-
-These two CVE's are fine.
-
--- 
+- -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ37wpAAoJEBYNRVNeJnmTpdcP/jNjmv48MI1H5bJPW8oDpI/X
+0DRxaDurvoWSjOTuiMVrQlqyRI+tpAdMWlEA1JWWcC5VVAMY66qyLimA3H5ZHxn+
+fL36irN1hbsoe0+Zk65pNjj9iByjSdLpV1WqsaUNlSnnJk06hfICKUVqEJlS2Qie
+E8UFYN77/dz4eXiLEd4Pu7vmSE09zeUgtlperp4SNC+DcqMCkJfWSpPEUyk9obPy
+8zhRFRczeXAoqXWP4dMlH8DczDY6oWRljQRaxG2v/eRf8Dd5JO+rZlV3Pe1nNbfe
+Ph6xnQm/sBcF3MH/+PRH0E6KQeq5s/WQQewdcrAcfC+VvhPtVh2k7XooIGkmcGex
+SLaDAumhWiqA7Cy1g9iriV0wBi8pXekzs+2yiWN3rx+gbGEq5ksQs0r8SK6L8UB9
+ttMZ5Pu2+DSY3KoIkAJH2bZwSeA0wh20Z2y+4wqIUnw8Sb5JzQiixCGUD+Ytl9JL
+s+rPFYoEWhmb2d13KTgx8ld6MlYG6nSgGbrdR5nZvpHAPr8TXIkTmBmIS21AKllU
+vNa0IgkyEV8uIAHDiY6M6Twn8s5XJ4yURT9J704ppxiHdGspNP39Lmpg7yL/pUnV
+5iaVCBKKJrrHIahF04i4MS9mD8Liggkqx8H7MWn0pBaOod55T5G/ABBIwQ27vKNc
+rhg/8w4AnFhdJHVVFNSv
+=Klwi
+-----END PGP SIGNATURE-----
