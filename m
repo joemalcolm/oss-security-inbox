@@ -1,37 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/13/9
-Message-Id: <201211131509.39639.timb@openvas.org>
-Date: Tue, 13 Nov 2012 15:09:33 +0000
-From: Tim Brown <timb@...nvas.org>
-To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk, oss-security@...ts.openwall.com
-Subject: [OVSA20121112] OpenVAS Manager Vulnerable To Command Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/2
+Message-ID: <50DFB4C8.80507@redhat.com>
+Date: Sat, 29 Dec 2012 20:28:08 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Salvatore Bonaccorso <carnil@...ian.org>, team@...urity.debian.org
+Subject: Re: Inkscape reads .eps files from /tmp instead of the current directory
 Content-Type: text/plain; charset=utf-8
 
-Summary
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It has been identified that OpenVAS Manager is vulnerable to command
-injection due to insufficient validation of user supplied data when
-processing OMP requests.  It has been identified that this vulnerability
-may allow arbitrary code to be executed with the privileges of the
-OpenVAS Manager on vulnerable systems.  CVE-2012-5520 has been assigned
-to this vulnerability.
+On 12/29/2012 03:31 AM, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> Going trough some bugreports in Debian I noticed [1], [2] I
+> haven't found a CVE for "Inkscape reads .eps files from /tmp
+> instead of the current directory".
+> 
+> If one has file foo.eps in current directory, and /tmp/foo.eps is 
+> present
+> 
+> $ inkscape foo.eps
+> 
+> opens the copy in /tmp/foo.eps
+> 
+> Does this warrants a CVE? If so could you assign one?
 
-Current Status
+Yes, please use CVE-2012-6076 for this issue. Relying on file names to
+be not guessed so mystery content isn't opened up is not such a good
+thing.
 
-As of the 20th January 2011, the state of the vulnerabilities is believed
-to be as follows.  A patch has been supplied by Greenbone Networks which
-it successfully resolves this vulnerability.  New releases of both 3.0.x
-and 4.0.x have also been created which incorporate this patch.
+> [1]: http://bugs.debian.org/654341 [2]:
+> https://bugs.launchpad.net/inkscape/+bug/911146
+> 
+> Regards, Salvatore
 
-Thanks
 
-OpenVAS would like to thank Andre Heinecke of Greenbone Networks for
-his help in reporting the vulnerability.
--- 
-Tim Brown
-<mailto:timb@...nvas,org>
-<http://www.openvas.org/>
 
-View attachment "OVSA20121112.txt" of type "text/plain" (2890 bytes)
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ37TIAAoJEBYNRVNeJnmTXAgQAMdcyZMVT4Kfz+ERKIRAC+vc
+gzaDlCxW0+fVhNDYWczAb8ZY48XfoJATlGZWovKrGJNhvkQn1UV9JY6LdeY9Zexm
+xIvc2HLYGQdZxaQWk+1p1pya22cXSRV2dFdPsL+bO47myOQX27AKP6utNGKYwfew
+jEre2B3C81pAnaj0+beDMZZZgKbl1HqNMnu84k6kBrMpbdwwAKVje5MQXKBQbURh
+SZKd4A/IMoSfkaRkc4SF7g/0v/+xf4OB7TRF3ekXUwCh75T0fwX84WVU48Z/0b4i
+Jvl3kiFy5aGO46vJGktXzJDkfxSXYE9g4FYnD3xrIPm04MbtzZdoS+ecjUNFVc++
+hD0ujicLKFDGsi/7eFjavHa2f5u9ZUn0l94Jq4U+zacuZTv6MbZLRDzo0ZNZTVjp
+27XGyLWWt/k4k441JzXyUb/NGoF1tMmMuffViyT9kp8ycUKBE4JtMuuIIvK3Nh74
+mzyMi0jBZn/a0FQcRfaOrCeT/tyyAkDKzm+OwBIx2OlpamrnS6A6a9szgEae9xop
+tM0LpdJPk6MMbZUQnNVqcltNN4+eGOr90j58GMa6NjqYXs7vinx0w6z+rxLNX8XW
+HL7r6sQu0w5pc5s0hPBlIDK8TjSrGCUVEPIzY0/yVOTS3ZjcRHQdQKLCERjgpSg6
+4TJCxh6q9rAlIly/5cI6
+=Fy2c
+-----END PGP SIGNATURE-----
