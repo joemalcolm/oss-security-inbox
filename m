@@ -1,101 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/03/08/1
-Message-ID: <20120308073900.GB22153@foo.fgeek.fi>
-Date: Thu, 8 Mar 2012 09:39:00 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, plugins@...dpress.org
-Subject: Re: CVE-request: Kish Guest Posting Plugin for WordPress File Upload Remote PHP Code Execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/6
+Message-ID: <50DFB7E8.5070202@redhat.com>
+Date: Sat, 29 Dec 2012 20:41:28 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Tilmann Haak <tilmann@...pwiki.de>, tw-public@....de
+Subject: Re: CVE request: MoinMoin Wiki (path traversal vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 06, 2012 at 12:39:15PM -0700, Kurt Seifried wrote:
-> On 03/06/2012 12:31 AM, Henri Salo wrote:
-> > Can we assign CVE-identifier for this security vulnerability, thanks.
-> > 
-> > http://osvdb.org/show/osvdb/78479
-> > http://www.securityfocus.com/bid/51638
-> > http://secunia.com/advisories/47688/
-> > http://www.exploit-db.com/exploits/18412/
-> > 
-> > Plugin is disabled in WordPress (doesn't show up in http://wordpress.org/extend/plugins/), but SVN can be found from here: http://plugins.svn.wordpress.org/kish-guest-posting/trunk/
-> > 
-> > File http://plugins.svn.wordpress.org/kish-guest-posting/trunk/readme.txt says:
-> > 
-> > """
-> > = 1.2 =
-> > security update for Uploadify Script
-> > """
-> > 
-> > But I haven't tested (yet) if that is valid fix for the vulnerability.
-> > 
-> > - Henri Salo
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 12/29/2012 11:29 AM, Tilmann Haak wrote:
+> Hi all,
 > 
-> Please use CVE-2012-1125 for this issue.
+> there is a path traversal issue in MoinMoin wiki (version 1.9.3 - 
+> 1.9.5). The vulnerability resides in the AttachFile action
+> (function _do_attachment_move in action/AttachFile.py). It fails to
+> properly sanitize file names.
 > 
-> -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
+> Details can be found at: http://moinmo.in/SecurityFixes
+> 
+> A fix is available at:
+> http://hg.moinmo.in/moin/1.9/rev/3c27131a3c52
+> 
+> Is it possible to get a CVE number for this one?
+> 
+> kind regards, Tilmann
 
-For curious people this is from SVN trunk:
+Please use CVE-2012-6080 for this issue.
 
-------------------------------------------------------------------------
-r403694 | kiaso | 2011-07-02 13:40:59 +0300 (Sat, 02 Jul 2011) | 1 line
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Uploadify.php security issue fixed
-------------------------------------------------------------------------
-r403689 | kiaso | 2011-07-02 13:24:03 +0300 (Sat, 02 Jul 2011) | 1 line
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Uploadify.php security issue fixed
-------------------------------------------------------------------------
-
-Index: uploadify/scripts/uploadify.php
-===================================================================
---- uploadify/scripts/uploadify.php     (revision 403689)
-+++ uploadify/scripts/uploadify.php     (revision 403694)
-@@ -1,3 +1,4 @@
-+<<<<<<< .mine
- <?php
- /*
- Uploadify v2.1.4
-@@ -27,6 +28,7 @@
-        $tempFile = $_FILES['Filedata']['tmp_name'];
-        $targetPath = $_SERVER['DOCUMENT_ROOT'] . $_REQUEST['folder'] . '/';
-        $targetFile =  str_replace('//','/',$targetPath) . $_FILES['Filedata']['name'];
-+
-        // $fileTypes  = str_replace('*.','',$_REQUEST['fileext']);
-        // $fileTypes  = str_replace(';','|',$fileTypes);
-        // $typesArray = split('\|',$fileTypes);
-@@ -35,11 +37,76 @@
-        // if (in_array($fileParts['extension'],$typesArray)) {
-                // Uncomment the following line if you want to make the directory if it doesn't exist
-                // mkdir(str_replace('//','/',$targetPath), 0755, true);
-+       // Define allowed extensions
-+       $allowable = array ( 'png', 'gif', 'jpg', 'jpeg' );
-+       $fileext = strtolower(substr( $_FILES['Filedata']['name'], -3 ));
-+
-+       // Assume evil upload
-+       $noMatch = 0;
-+
-+       // Give it a try with this tiny extensionckeck
-+       foreach( $allowable as $ext ) {
-+               if ( strcasecmp( $fileext, $ext ) == 0 ) {
-+                       $noMatch = 1;
-+               }
-+       }
-+       if(!$noMatch){ // People are bad. I told you...
-+               echo "This file is not allowed...";
-+               exit();
-+       }
-+       else {
-+               move_uploaded_file($tempFile,$targetFile);
-+               echo str_replace($_SERVER['DOCUMENT_ROOT'],'',$targetFile);
-+       }
-
-+
-+       // } else {
-+       //      echo 'Invalid file type.';
-+       // }
-+}
-+?>=======
-
-In my opinion this is not a proper fix for this security vulnerability as this doesn't detect the filetype. This code only assumes file is valid if filename suffix matches item from allowable array. I do not know how to contact developer of this plugin. I could even provide a working patch for this vulnerability.
-
-- Henri Salo
+iQIcBAEBAgAGBQJQ37foAAoJEBYNRVNeJnmTbKcP/2oAyAcuPak2580QRo3KdiCB
+bxM9LuXfCW3eYqIV3pU/wzuN9N+JVvfmEgstP+EKV+mrumjzjWcyFfcHdsfJGBDh
+LzYZsgTM3XiKhOXyaGbv6KNWW9bx1R9HTGPIFRtEiszY253AO/KDXZIB3pRMfWUK
+l4I9RB99/o94HSk+Bp9f+cjthIABt6vBZK+EECqIRJxMtguwF15QOjz3P3cyO4OZ
+ouM7T73G3iXoZ3svyjuT+oVBjck4DZQy6niZ2LywzZaShRfnZGofcAcCvFAnKspj
+lGUhb5YR7k4qSOuAqibnI/OVVMnRTly/ouMcl//OlobpW0lvY6GlMGaRJK6LyfML
+W6zr1RCB7nAlp14mZ+8Jl3rBrJ/OyQhH/EsqTCU8Lu3thye4FHstMtqR5kYmDNkf
+cdYCU+MT4UR0IuvuZSbXNWz0Rz9Ig9VTPoRui16CpezPtn0QeaqM2624WOLau1TE
+MHXZA6w7+92+/yb4RPIHQ+iTx1DKQ2aVjo7poJBFXzPHm8dW1WJQMQFSuAYix61S
+b54n4YAFaGThj5IWfnswNHz7qq2g8vpBkent0OIWMAXSdC430/GPdetBI8mmlph1
+3894/KQCaE68bIkKzn5lminT4e9UAglsmLRhLg8NkuzH+3SNto/6vwud2quz4AsA
+mCyVaMybICzEo2pil/W9
+=L88+
+-----END PGP SIGNATURE-----
