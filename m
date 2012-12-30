@@ -1,30 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/24/10
-Message-ID: <20120424143447.GC8574@suse.de>
-Date: Tue, 24 Apr 2012 16:34:47 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: use after free bug in "quota" handling in hugetlb code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/30/8
+Message-ID: <50DFB976.9040809@redhat.com>
+Date: Sat, 29 Dec 2012 20:48:06 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marko Lindqvist <cazfi74@...il.com>
+Subject: Re: About CVE-2012-5645
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Reported by Schacher Raindel, quoting his report:
+On 12/21/2012 05:26 PM, Marko Lindqvist wrote:
+> I saw message that Freeciv bug #20003 has been assigned 
+> CVE-2012-5645 : http://seclists.org/oss-sec/2012/q4/484
+> 
+> I'd like to clarify things a bit. It was not single issue, but
+> more like two separate issues. Most importantly this leads to patch
+> listed 
+> (http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21670)
+> to fix only part of the problems described. Something like:
+> 
+> A denial of service flaw was found in the way the server component 
+> of Freeciv, a turn-based, multi-player, X based strategy game, 
+> processed certain packets (invalid packets with whole packet length
+> lower than packet header size). A remote attacker could send a
+> specially-crafted packet that, when processed would lead to freeciv
+> server to terminate (due to memory exhaustion)
+> 
+> 
+> The other half: A denial of service flaw was found in the way the
+> server component of Freeciv, a turn-based, multi-player, X based
+> strategy game, processed certain packets (syntactically valid 
+> packets, but whose processing would lead to an infinite loop). A 
+> remote attacker could send a specially-crafted packet that, when 
+> processed would lead to freeciv server to become unresponsive (due
+> to excessive CPU use).
+> 
+> is fixed in 
+> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21701
+> 
+> 
+> 
+> Both are fixed in 2.3.3 (and patch versions applied to the stable 
+> branch S2_3 release was made from: 
+> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21672 , 
+> http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21703 )
+> 
+> 
+> - ML
+> 
 
-There is a use after free bug in the kernel hugetlb code. The bug can allow an
-authenticated, unprivileged local attacker to crash the system (and possibly
-gain higher privileges) if huge pages are enabled in the system.
+Hmm I'm waffling here. The issues are the same version/reporter,
+roughly the same, can you post the http://cwe.mitre.org/ identifiers
+for these two issues? If they are different enough this might warrant
+a CVE split but for now I'm leaving it merged.
 
-A fix has been committed to upstream, commit
-90481622d75715bfcb68501280a917dbfe516029 "hugepages: fix use after free bug in
-"quota" handling"
 
-Version-Release number of selected component (if applicable):
-The bug exists in kernel versions 2.6.24 and above.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-References:
-	https://bugzilla.novell.com/show_bug.cgi?id=758532
-	https://bugzilla.redhat.com/show_bug.cgi?id=815065
-	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=90481622d75715bfcb68501280a917dbfe516029
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Ciao, Marcus
+iQIcBAEBAgAGBQJQ37l2AAoJEBYNRVNeJnmTTkkQAJjFSeE5ooOK0OsMUzyCNqgC
+/rlMkokbTgM+BjIc6vSwNl5Kt46k5qhCfz9DR2u0JQDCk71IkeWSohiSug2zBy9E
+3kkCRX3+csQZnksYWLWwIu4kZa+4LY1NoGGNr0c+ZZZ89i2ZMpiu5ywdoovn722g
+PY67l8Nw2UrpOY68Cf/ydBFKW/WxkWUUIpI6X6Fs0E3NwvL6Hi8JRkOFTGKLvhfN
+xEH7Xgp/YHw/WDSiPmTTtSSKLZx9h5SM6+Yv/h7oEU2mvNDqmMRkAYyv2+nW/A+Q
+rxCRFvw8vb/woXIR+Mbqe37M9JHMxPJYnPD3t9au9+jA1Dcfp6NC7wGCMuDzXvDZ
+34FV2L8h10RP//P3XN4kNtMScJxD2H+l3hzGjNFm8ZToHAdElkoy0ns/T04Tr0Mp
+0sjoUhUL7nwBYf17BTzwPdY9I7XfCBxlvqbyDTd5EjGKYBuOfLvnr5WMdflY1/RN
+a/VkACs7vJ3kXkBllUudfAL/YncGCxmwQjYEzDbafKkiwoPa5IqXxOIhLh9Gw5ej
+ruHcAkCgxYiJmnCk6aH69OFM3w5nYrz4mwctfGfk7TKLYdBvhfzL3VYB3X3DvID0
+1mTwIqD8jHJ5o/zLg/DddNLkwgllvKNDmsaSCIcd4Q4uees9ghPXbc8rtFA5ld6N
++1VR77CoqnGLb2OUJa/v
+=LoLH
+-----END PGP SIGNATURE-----
