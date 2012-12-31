@@ -1,45 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/04/18/9
-Message-ID: <4F8F22B3.4020100@redhat.com>
-Date: Wed, 18 Apr 2012 14:23:15 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/31/2
+Message-ID: <50E139C0.2070209@redhat.com>
+Date: Mon, 31 Dec 2012 00:07:44 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <keescook@...omium.org>
-Subject: Re: CVE request: Xorg input device format string flaw
+CC: Marko Lindqvist <cazfi74@...il.com>
+Subject: Re: About CVE-2012-5645
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 04/18/2012 01:28 PM, Kees Cook wrote:
-> Hello,
+On 12/30/2012 04:05 AM, Marko Lindqvist wrote:
+> On 30 December 2012 05:48, Kurt Seifried <kseifried@...hat.com>
+> wrote:
+>> Hmm I'm waffling here. The issues are the same version/reporter, 
+>> roughly the same, can you post the http://cwe.mitre.org/
+>> identifiers for these two issues? If they are different enough
+>> this might warrant a CVE split but for now I'm leaving it
+>> merged.
 > 
-> Adding an input device with a malicious name can trigger a format 
-> string flaw in Xorg's logging subsystem. For builds of Xorg
-> lacking -D_FORTIFY_SOURCE=2 (or 32-bit systems lacking the fix to
-> fortify[1]) this can lead to arbitrary code execution as the Xorg
-> user, usually root. When built with fortify, this is a denial of
-> service, since Xorg will abort.
+> Yes, had it fixes for both parts listed from the start, there
+> would be no problem. The problem is the confusion over where
+> CVE-2012-5645 is really fixed. Based on the original description
+> here some distributions claim CVE-2012-5645 fixed now that they
+> have applied one patch only. If you just add second fix to
+> CVE-2012-5645, there will be no way of telling if particular logmsg
+> about "CVE-2012-5645 fixed" means it's fixed completely, or only
+> half of it.
 > 
-> Proposed solution patch series can be found here: 1/4
-> http://patchwork.freedesktop.org/patch/10000/ 2/4
-> http://patchwork.freedesktop.org/patch/9998/ 3/4
-> http://patchwork.freedesktop.org/patch/9999/ 4/4
-> http://patchwork.freedesktop.org/patch/10001/
 > 
-> -Kees
-> 
-> [1]
-> http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=7c1f4834d398163d1ac8101e35e9c36fc3176e6e
+> - ML
 
-So
-> 
-are you asking for just the device name issue covered in
+Please continue to use CVE-2012-5645 for
+http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21701
+Added return value indicating success or failure for all dio_get_xxx()
+functions, and check that value to avoid infinite loop in reading arrays
+from network when there's no more data even though it's expected.
 
-http://patchwork.freedesktop.org/patch/10001/
+For
+http://svn.gna.org/viewcvs/freeciv?view=revision&revision=21672
+Sanity check packet length received over network against values
+less than header length alone to avoid situation where body length
+is considered negative.
 
-or something additional? E.g. the logging shenanigans in
-http://patchwork.freedesktop.org/patch/9999/ ?
+Please use CVE-2012-6083 for this issue.
 
 
 - -- 
@@ -48,19 +53,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJPjyKzAAoJEBYNRVNeJnmTZIIQAIDlcZialKVe7hRljmOYQ/dw
-Gi+0mUR7vGe1hY4gFqoYjQfqsdOgQhHdfAU2j2l/BYJTwRpgAqs3ZcBLkCPsHWem
-1dR1ZCpCyOIMu5GJE+bxD9kb8GQIABIaQeOfRv6GYedCr0b3rvEbnAHYgRD2N92r
-tjmtYcyoEkF8OtdzhOGZGdtyvLqJ0as90B3gISZO0lqO9uniyDKQDfUHj7/RW0ad
-uX5F3cylWY6Moi5NO2I7BprqKa4ulOTABDpHVZ8JR4RVI1qeSsPwiAq6tqI+dRg0
-TCkYfQs+XHoKlAUx4azta0ts4WYQP67dx9wwR94vaHQtE0JdkYTYJEjBJTNlqODL
-jdvHJynanmHT+6OdOaQ+RGH2UTPo6ELl16eRW6PAd56HWuXq+wzJ7ZmiKI55EwU3
-NgHLSWTRpgrjPQu50ZMCZu2mIqzooab09w2FJdhElAkYUNOfxOhGVX7SMo1S5S98
-/1fRRu8qIanKz3TOIg1UvoYlsmhkPmzkODvQwYm8RVG9A/C7epud8Cesxe5+yzYQ
-0otI1yIUcZe7jZ/zCEzafVcQbKKsoSmp1cbGwZGQGD0toYe0smU3bEoISn7m3ZmF
-eXj7jNn9F2tEA/KpkzIjlC2kLXe3yB4EjLb9Vr6tGtaX1SkuEKg3ip2JL7DNRsrt
-kUOuXzYUeVpUpu8Pvax4
-=0t86
+iQIcBAEBAgAGBQJQ4Tm/AAoJEBYNRVNeJnmT76UP/RP0N5OotsXH9xFCM8L2iNGF
+oTd7NoC9Z+XKi+VDoAs+EEJnd1FLZi/D6NlavqSThQRXrDEWPILvwYFUMx/BwHav
+WCt0pwHnj4u+mF0bEMmqgqHjvNjMSQBJTldml29+2rtIHRw9RVr8FDJCzGa7jaKG
+UoQNYCEI7NMZMTgmVIYdH4lXzRYaROE6JgEjRHL3PblNqsTd0NWZcJsFMzEDuoco
+2yvDpbabHbW8tjPxYvlZwTJkxwr35PSCAA0qQYLCyf++KE907j57vwzdQ11V7A5h
+3035JFAErLOt6LxxXwbpBtvTsdF4glvBZcwSI6eUA6LJA/w03iX+YiR/HGjoSOg3
+tMEow8ZUAeZagZjzBf1ErUS8Caoqldr6jv0pVw0+wpABlhCM7KcYjmqx42/9rlt3
+ceaRXWMJFtnHlD4Hw1YS+KTMovuFLYWXyIIOqlxUkMSXpKjBpxwXCS5OVPjuHwd2
+Oy28dQy9i0l0ceCstK2amx453f7aR7JL+LuOc4c9Zrm/FPcViX7ZNpFGgV9N6Kr/
+kpz3QlNQVfPNp4yNTOT/AfyoseWIYFlEbjva7g1FbMadyFsCijJfqTyWLL8apQqR
+XKQXt+xrhtpLyqCKlQmN/S8kXowdFQEnTXtsJ/Z7yQKGHK/BSC355JXYRXiib5I3
+a9RSRwP3Yswh5rHoFht/
+=oRcq
 -----END PGP SIGNATURE-----
