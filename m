@@ -1,31 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/10/10/10
-Message-ID: <20121010212059.GB2676@redhat.com>
-Date: Wed, 10 Oct 2012 15:20:59 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/31/3
+Message-ID: <20121231103225.24f063f9@melee>
+Date: Mon, 31 Dec 2012 10:32:25 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libsocialweb untrusted connection to flickr
+Subject: CVE request (maybe): magento before 1.7.0.2
 Content-Type: text/plain; charset=utf-8
 
-A similar request was made last year for libsocialweb connecting to
-Twitter, and it seems to be doing the same to Flickr now (probably has
-been all this time).
+Hi,
 
-Same situation: opens an HTTP (non-SSL) connection to Flickr when no
-Flickr account is configured, and without the user's permission or
-knowledge.
 
-Could a CVE be assigned to this (or has one been assigned already)?
+http://www.magentocommerce.com/download/release_notes
+1.7.0.2 changelog lists this:
+"Fixed: Security vulnerability in Zend_XmlRpc -
+http://framework.zend.com/security/advisory/ZF2012-01 "
 
-Request for the Twitter issue is here (for reference):
+I don't know if we consider bundled libs issues as extra CVE. The
+original one is CVE-2012-3363.
 
-http://www.openwall.com/lists/oss-security/2011/11/09/3
 
-and the Red Hat bug:
+Also, Magento 1.7.0.1 has this:
+"Fixed: Several potential security vulnerabilities"
 
-https://bugzilla.redhat.com/show_bug.cgi?id=863206
+Yeah, I like it if vendors are so verbose about their
+vulnerabilities... And here are some people defending the "security by
+obscurity standpoint of magento:
+http://www.magentocommerce.com/boards/viewthread/284896/#t397006
 
-Thanks.
+(I seriosly consider this is an issue that should be highlighted more -
+we recently had piwik devs arguing in a similar way for obsurity - free
+software doesn't protect you from dumb developers thinking that
+obscurity may be a good idea)
+
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
