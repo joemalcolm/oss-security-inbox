@@ -1,105 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/06/27/9
-Message-ID: <4FEB30D3.1060209@redhat.com>
-Date: Wed, 27 Jun 2012 10:12:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Dan Rosenberg <dan.j.rosenberg@...il.com>, "lauro.venancio@...nbossa.org" <lauro.venancio@...nbossa.org>, "aloisio.almeida@...nbossa.org" <aloisio.almeida@...nbossa.org>, "sameo@...ux.intel.com" <sameo@...ux.intel.com>, "davem@...emloft.net" <davem@...emloft.net>, "Elias, Ilan" <ilane@...com>
-Subject: Re: CVE Request: Kernel [PATCH] NFC: prevent multiple buffer overflows in NCI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/31/5
+Message-ID: <50E19DC2.60608@moritz-naumann.com>
+Date: Mon, 31 Dec 2012 15:14:26 +0100
+From: Moritz Naumann <oss-security@...itz-naumann.com>
+To: oss-security@...ts.openwall.com
+CC: henri@...v.fi, security@...plemachines.org, irist.ir@...il.com
+Subject: Re: Dispute CVE-2012-5903 SMF index.php scheduled-parameter XSS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 31.12.2012 11:42 Henri Salo wrote:
+[..]
+> Until someone provides a working PoC I dispute this issue. SMF hasn't replied to my emails about this. Please note there is several comments[1][2] in forums about this too.
+> 
+[..]
+> It's not a security vulnerability if attacker already has administrator access to the application. Should we REJECT CVE-2012-5903?
 
-On 06/27/2012 09:51 AM, Kurt Seifried wrote:
-> http://marc.info/?l=linux-kernel&m=134030878917784&w=2
-> 
-> 
-> List:       linux-kernel Subject:    [PATCH] NFC: prevent multiple
-> buffer overflows in NCI From:       Dan Rosenberg <dan.j.rosenberg
-> () gmail ! com> Date:       2012-06-21 19:56:12 Message-ID:
-> 4FE37C5C.4090009 () gmail ! com [Download message RAW]
-> 
-> Fix multiple remotely-exploitable stack-based buffer overflows due
-> to the NCI code pulling length fields directly from incoming frames
-> and copying too much data into statically-sized arrays.
-> Fortunately, there don't appear to be any active users of this code
-> (yet).
-> 
-> This patch fixes the overflows, but I suspect the code will need to
-> be completely reworked since this doesn't address the more
-> systemic problem of failing to check that the values read from
-> incoming frame data aren't from beyond the end of the pulled skb
-> data. Build tested only.
+Based on the authors' description it would seem more likely that the
+attack would use social engineering to trick the legitimate forum admin
+into accessing this URL with a payload in it, which would then trigger
+in his browser and disclose the admins' session cookie to an attacker by
+means of cross site scripting. Like you, I don't see how the value
+passed to the "scheduled" parameter would be echoed out, though.
 
-Please use CVE-2012-3364 for this issue.
+While it doesn't directly impact treatment of this latest report, I'd
+like to point out that there has been a previous report by the same
+author on the same product back in october, which I was also unable to
+reproduce:
 
-> Signed-off-by: Dan Rosenberg <dan.j.rosenberg@...il.com> Cc:
-> stable@...nel.org Cc: security@...nel.org Cc: Lauro Ramos Venancio
-> <lauro.venancio@...nbossa.org> Cc: Aloisio Almeida Jr
-> <aloisio.almeida@...nbossa.org> Cc: Samuel Ortiz
-> <sameo@...ux.intel.com> Cc: David S. Miller <davem@...emloft.net> 
-> Cc: Ilan Elias <ilane@...com> --- net/nfc/nci/ntf.c |   10
-> +++++----- 1 files changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/net/nfc/nci/ntf.c b/net/nfc/nci/ntf.c index
-> cb26461..2ab196a 100644 --- a/net/nfc/nci/ntf.c +++
-> b/net/nfc/nci/ntf.c @@ -106,7 +106,7 @@ static __u8 
-> *nci_extract_rf_params_nfca_passive_poll(struct nci_dev *ndev, 
-> nfca_poll->sens_res = __le16_to_cpu(*((__u16 *)data)); data += 2; -
-> nfca_poll->nfcid1_len = *data++; +	nfca_poll->nfcid1_len =
-> min_t(__u8, *data++, NFC_NFCID1_MAXSIZE); pr_debug("sens_res 0x%x,
-> nfcid1_len %d\n", nfca_poll->sens_res, nfca_poll->nfcid1_len); @@
-> -130,7 +130,7 @@ static __u8 
-> *nci_extract_rf_params_nfcb_passive_poll(struct nci_dev *ndev, 
-> struct rf_tech_specific_params_nfcb_poll *nfcb_poll, __u8 *data) { 
-> -	nfcb_poll->sensb_res_len = *data++; +	nfcb_poll->sensb_res_len =
-> min_t(__u8, *data++, NFC_SENSB_RES_MAXSIZE); 
-> pr_debug("sensb_res_len %d\n", nfcb_poll->sensb_res_len); @@ -145,7
-> +145,7 @@ static __u8 
-> *nci_extract_rf_params_nfcf_passive_poll(struct nci_dev *ndev, __u8
-> *data) { nfcf_poll->bit_rate = *data++; -	nfcf_poll->sensf_res_len
-> = *data++; +	nfcf_poll->sensf_res_len = min_t(__u8, *data++,
-> NFC_SENSF_RES_MAXSIZE); pr_debug("bit_rate %d, sensf_res_len
-> %d\n", nfcf_poll->bit_rate, nfcf_poll->sensf_res_len); @@ -331,7
-> +331,7 @@ static int nci_extract_activation_params_iso_dep(struct 
-> nci_dev *ndev, switch (ntf->activation_rf_tech_and_mode) { case
-> NCI_NFC_A_PASSIVE_POLL_MODE: nfca_poll =
-> &ntf->activation_params.nfca_poll_iso_dep; -
-> nfca_poll->rats_res_len = *data++; +		nfca_poll->rats_res_len =
-> min_t(__u8, *data++, 20); pr_debug("rats_res_len %d\n",
-> nfca_poll->rats_res_len); if (nfca_poll->rats_res_len > 0) { 
-> memcpy(nfca_poll->rats_res, @@ -341,7 +341,7 @@ static int 
-> nci_extract_activation_params_iso_dep(struct nci_dev *ndev, case
-> NCI_NFC_B_PASSIVE_POLL_MODE: nfcb_poll =
-> &ntf->activation_params.nfcb_poll_iso_dep; -
-> nfcb_poll->attrib_res_len = *data++; +		nfcb_poll->attrib_res_len =
-> min_t(__u8, *data++, 50); pr_debug("attrib_res_len %d\n",
-> nfcb_poll->attrib_res_len); if (nfcb_poll->attrib_res_len > 0) { 
-> memcpy(nfcb_poll->attrib_res,
-> 
-> 
-> 
-> 
+From:    irist.ir@...il.com
+To:      bugtraq@...urityfocus.com
+Date:    Tue, 23 Oct 2012 19:20:10 GMT
+Subject: Smf 2.0.2 Cross-Site Scripting Vulnerability
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+# Exploit Title : Smf 2.0.2 Cross-Site Scripting Vulnerability
+#
+# Author        : IrIsT.Ir
+#
+# Discovered By : Am!r
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+http://packetstormsecurity.com/files/117618/SMF-2.0.2-Cross-Site-Scripting.html
 
-iQIcBAEBAgAGBQJP6zDSAAoJEBYNRVNeJnmTnRgP/jJx6T19clbhfikUKGZ8dGhi
-60WjiO0wQOeRO/CB6woTUbyy3MV84Jw8LSklOYv9p7Y1EU45UvAbnnlC9f4wzA6J
-fvULUEucXaoflBydY+S4+UcL0N3Q0nKOFZsQUVs9MgyNTzV0oBF5mCG+fHPiGFMB
-05IECXKh7n+Wssq+nUOORj75JOpyNWfgKNSRSQHFjjmYdXzhyYfTPzg1HwVWu9qC
-NwRKI4VMiYFUpUGRyukks6E6IaDmacq0gLNOPAKPeVMkibOSZvsed0tKjqagatOI
-GSuo/f1D1mWMyhce/yFU0mZ0YK/Hha+LhgsY/8u1YUX5dxonZDmDQYvT2fp1HN9t
-P62XxwtZTJ7JhDl4sSfx24I6DIiItUCjzQa0ks1ODNP0gkFVOVu0E+mECkyKUX1d
-IHb/DqAheQWDsSnRs8Nr1x/sYUq3NVSyyfj7QejjPEBxvFwfWqBvOI+ZzwyFrey6
-q3m5CJJMwUg6n8YJivPUkP9Ix3KX5SZsDTXAnXGQasTUM0Arld3FHu1nooO97exO
-zXzLgjPyQRvhl5iKFRxnhjKNKs5QnNQ2x/3aK690qPTB6tRs2jx1J+TfDmq/hgoI
-GZRbK1qrZX7Gem5Kofqyc6enIjwgjW5Nlg4vIG5esQynxOnIc4vB6RvOSZpysCST
-sqJpqJJVD1nYTzQIAP3U
-=RUqq
------END PGP SIGNATURE-----
+
+Same for a supposed vulnerability in Wordpress which was reported the
+day after:
+
+From:    irist.ir@...il.com
+To:      bugtraq@...urityfocus.com
+Subject: Wordpress 3.4 Cross-Site Scripting Vulnerability
+
+# Exploit Title : Wordpress 3.4 Cross-Site Scripting Vulnerability
+#
+# Author        : IrIsT.Ir
+#
+# Discovered By : Am!r
+
+
+
+I contacted the sender address back then, pointing out that:
+
+> it's an XSS if the application returns the input in an unencoded way,
+> allowing an attacker (or victim) to inject script code into the
+> applications output. I don't see how this is the case with the SMF or
+> Wordpress code you quoted.
+
+I have not received a reply.
+
+Moritz
