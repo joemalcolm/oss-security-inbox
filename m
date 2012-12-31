@@ -1,21 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/4
-Message-ID: <50FF969E.5090808@redhat.com>
-Date: Wed, 23 Jan 2013 08:51:58 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/01/1
+Message-ID: <CACy=+Dvw4zOn1UVxbMRfS78GDp4jDmiVX918KWXqrCrzrMmsxw@mail.gmail.com>
+Date: Tue, 1 Jan 2013 01:57:40 +0400
+From: Mustapha Rabiu <muztapha@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>, Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: CVE Request coreutils
+Subject: Charybdis: Improper assumptions in the server handshake code may lead to a remote crash
 Content-Type: text/plain; charset=utf-8
 
-On 01/22/2013 04:47 PM, Vincent Danen wrote:
+Hi.
 
-> Do you believe this would be the case with modern GCC/Glibc hardening
-> though?  Wouldn't this just be rendered a crash?
 
-Catching this reliably needs compiling with -fstack-check, which is 
-currently not among commonly used hardening flags.  The generated code 
-used to be rather buggy, too.
+Can we get a CVE for the following
 
--- 
-Florian Weimer / Red Hat Product Security Team
+--
+
+Access vector: network
+Access complexity: low
+Authentication requirement: none
+
+Confidentiality impact: none
+Integrity impact: none
+Availability impact: complete
+
+CVSSv2 temporal score: 6.4
+
+Exploitability: functional exploit exists
+Remediation level: official fix
+Report confidence: confirmed
+
+Summary:
+
+All versions of Charybdis are vulnerable to a remotely-triggered crash bug
+caused by code originating from ircd-ratbox 2.0.  (Incidentally, this means all
+versions since ircd-ratbox 2.0 are also vulnerable.)
+
+The bug has to do with server capability negotiation.  A malformed request will
+trigger a crash due to invalid assumptions.
+
+Mitigation:
+
+A patch for all affected versions of ircd-ratbox and charybdis is available from
+the charybdis GIT repository:
+  https://github.com/atheme/charybdis/commit/ac0707aa61d9c20e9b09062294701567c9f41595.patch
+
+To apply the patch, go to your IRCd source tree and run the following commands:
+  $ patch -p1 < /path/to/downloaded/patchfile.patch
+  $ make
+  $ make install
+
+Then you may hotfix the IRCd by running /MODRESTART as a server admin.
+
+Details:
+
+In ratbox-2, the following code was added to m_capab.c:
+  char *t = LOCAL_COPY(parv[i]);
+
+The other logic was then modified to make use of that stack-allocated
+buffer rather
+than the original.  LOCAL_COPY() is a macro which expands to alloca()
+and strlcpy(),
+and the bug effectively is caused by this expansion calling strlen(NULL).
+
+
+--
+
+
+Thanks.
+
+
+Mustapha Rabiu
+
