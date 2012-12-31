@@ -1,46 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/04/10
-Message-ID: <20121204220142.GE5095@pisco.westfalen.local>
-Date: Tue, 4 Dec 2012 23:01:42 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: Dovecot DoS in 2.x (fixed in 2.1.11)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/31/7
+Message-ID: <50E1AD73.4050700@gmail.com>
+Date: Mon, 31 Dec 2012 16:21:23 +0100
+From: Emanuele <emanuele45@...il.com>
+To: Moritz Naumann <oss-security@...itz-naumann.com>
+CC: oss-security@...ts.openwall.com, henri@...v.fi,  security@...plemachines.org, irist.ir@...il.com
+Subject: Re: Dispute CVE-2012-5903 SMF index.php scheduled-parameter XSS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 04, 2012 at 06:12:29PM +0100, Matthias Weckbecker wrote:
-> Hi Kurt, Vincent, vendors, ...
-> 
-> Quoting Kurt Seifried <kseifried@...hat.com>:
-> >-----BEGIN PGP SIGNED MESSAGE-----
-> >Hash: SHA1
-> >
-> >On 12/03/2012 10:33 AM, Vincent Danen wrote:
-> >>Could a CVE be assigned for the following please?
-> >>
-> >>Dovecot 2.1.11 was released and includes a fix for a crash
-> >>condition when the IMAP server was issued a SEARCH command with
-> >>multiple KEYWORD parameters.  An authenticated remote user could
-> >>use this flaw to crash Dovecot.
-> >>
-> [...]
-> >>
-> >>
-> >>Thanks.
-> >
-> >Please use CVE-2012-5620 for this issue.
-> >
-> 
-> We were discussing this issue too at [1] and think that it does only
-> affect the current connection, no subsequent (i.e. new) connections
-> are affected.
-> 
-> What's your opinion wrt this?
-> 
-> [1] https://bugzilla.novell.com/show_bug.cgi?id=792642
+Hello,
 
-Upstream (Timo Sirainen) disputed the issue in the Debian BTS:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695138#15
+my name is Emanuele, and I'm one of the current SMF developers.
 
-Cheers,
-        Moritz
+Moritz Naumann wrote:
+> On 31.12.2012 11:42 Henri Salo wrote:
+> [..]
+>   
+>> Until someone provides a working PoC I dispute this issue. SMF hasn't replied to my emails about this.
+I'm sorry nobody answered.
+
+>> Please note there is several comments[1][2] in forums about this too.
+>>
+>>     
+> [..]
+>   
+>> It's not a security vulnerability if attacker already has administrator access to the application. Should we REJECT CVE-2012-5903?
+>>     
+> Based on the authors' description it would seem more likely that the
+> attack would use social engineering to trick the legitimate forum admin
+> into accessing this URL with a payload in it, which would then trigger
+> in his browser and disclose the admins' session cookie to an attacker by
+> means of cross site scripting. Like you, I don't see how the value
+> passed to the "scheduled" parameter would be echoed out, though.
+>   
+
+As I wrote in my post the scheduled parameter doesn't output anything on
+the screen. It is just used to decide what action should be taken.
+Relevant code involved:
+https://github.com/SimpleMachines/SMF2.1/blob/release-2.1/index.php#L81
+https://github.com/SimpleMachines/SMF2.1/blob/release-2.1/Sources/ScheduledTasks.php#L27
+https://github.com/SimpleMachines/SMF2.1/blob/release-2.1/Sources/ScheduledTasks.php#L132
+These are the only instances of "scheduled" in the entire codebase (the
+code is from the future SMF 2.1 version, but it didn't change from 2.0).
+
+Kindred answer (comment [1]) is not relevant. He was probably referring
+to another bug we fixed with the latest patch (2.0.3).
+
+1:
+http://www.simplemachines.org/community/index.php?topic=491516.msg3445272#msg344527
+
+> While it doesn't directly impact treatment of this latest report, I'd
+> like to point out that there has been a previous report by the same
+> author on the same product back in october, which I was also unable to
+> reproduce:
+>
+>   
+[...]
+> http://packetstormsecurity.com/files/117618/SMF-2.0.2-Cross-Site-Scripting.html
+>   
+And again the "view" is only used to decide the action, but it is not
+used to produce any output.
+
+Thank you for the email.
+
+Best regards,
+Emanuele
