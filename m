@@ -1,51 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/09/05/2
-Message-ID: <5046C1EF.9030301@redhat.com>
-Date: Tue, 04 Sep 2012 21:07:27 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/31/6
+Message-ID: <20121231175131.2a82115c@melee>
+Date: Mon, 31 Dec 2012 17:51:31 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE request: moinmoin incorrect ACL evaluation for virtual groups
+Subject: Re: Dispute CVE-2012-5903 SMF index.php scheduled-parameter XSS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, 31 Dec 2012 15:14:26 +0100
+Moritz Naumann <oss-security@...itz-naumann.com> wrote:
 
-On 09/04/2012 05:44 PM, Raphael Geissert wrote:
-> Hi,
+> On 31.12.2012 11:42 Henri Salo wrote:
+> [..]
+> > Until someone provides a working PoC I dispute this issue. SMF
+> > hasn't replied to my emails about this. Please note there is
+> > several comments[1][2] in forums about this too.
+> > 
+> [..]
+> > It's not a security vulnerability if attacker already has
+> > administrator access to the application. Should we REJECT
+> > CVE-2012-5903?
 > 
-> An issue has been discovered in the way MoinMoin evaluates ACLs and
-> virtual groups. The full description and fix is available at: 
-> http://hg.moinmo.in/moin/1.9/rev/7b9f39289e16
-> 
-> Could a CVE id be assigned please?
-> 
-> Additional reference: http://moinmo.in/SecurityFixes
-> 
-> Cheers,
+> Based on the authors' description it would seem more likely that the
+> attack would use social engineering to trick the legitimate forum
+> admin into accessing this URL with a payload in it, which would then
+> trigger in his browser and disclose the admins' session cookie to an
+> attacker by means of cross site scripting. Like you, I don't see how
+> the value passed to the "scheduled" parameter would be echoed out,
+> though.
 
-Please use CVE-2012-4404 for this issue.
+That's pretty much what is called CSRF, isn't it? So it's a CSRF that
+can trigger an XSS.
 
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQRsHvAAoJEBYNRVNeJnmTLdkP/1uxV4FWbihvZUcfpdTpaGTs
-GJcjfNrox49WJeAw9+vQ/Ijyhboege4WXQotOf4u940bOmXKlTbrwJLfmeRt1Rjx
-ZyemGP+J4f7EgF1Cq+xZ8y5r8+pZgv2h+zACx4cvKjHsv19maDwRgQmA5PG8ztDQ
-KY6hyaEvpyM2BQlxOp5/8ImyCfHXxjj4UynwntmDJ11HNH9Orye3jV1aysIrokZe
-XUMMVa8glkQnw+3AvcMjEv7ZoykdPzlFkR4IcYDubL+cCeSAGxxLJQdcCKU5jPgQ
-+qxZTqYo6NPLHEr3OLUWI9S5TpYI7Pl+iARiTKZN27YnSDarsgTyqWsuIpkRSF+M
-ixkZoxiW1QdK+4PwlRPbBMcYpzvjIWVEwKq4WNeNu0WdeQQUEV0Q3ydjAG3pSa9w
-dQXxhQkmmnSoA990rKZ3kON7iF510b+1Io/v4aDlRS6EIz4AVuatzOUKpiPjb3wl
-7bimHScnytXVcbzJT8u8wxzAK6ymGIin598mbQbIyPusXVTWdbZiFlLCihSKxOf9
-iTv2Bwg3kajZii8/iTX+eCwTxs62FMYGpee/DOrARHLalnWkGd6djmUwvaduVUTt
-ZTzmGq6FjOL7JDpHPtrWtaKTD+nRl+B7RWkWTJV7zmWSNBS7q6lUvvIIiXYieACS
-+3DkLgMjtYDlFDIzPLWk
-=iQVh
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
