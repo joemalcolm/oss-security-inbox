@@ -1,32 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/08/02/7
-Message-ID: <501AD96A.10000@redhat.com>
-Date: Thu, 02 Aug 2012 13:47:54 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/12/31/1
+Message-ID: <50E0D852.3090406@redhat.com>
+Date: Sun, 30 Dec 2012 17:12:02 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, Henri Salo <henri@...v.fi>, johannes@....net, noamr@...ondsecurity.com
-Subject: Re: CVE Request: php5 pdo array overread/crash
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: Isearch insecure temporary files
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 08/02/2012 05:37 AM, Marcus Meissner wrote:
-> Hi,
+On 12/30/2012 09:16 AM, Henri Salo wrote:
+> On Sat, Dec 29, 2012 at 08:53:42PM -0700, Kurt Seifried wrote:
+>> One random thought, might it be worth adding structured data to
+>> CVE that basically says when the issue was made public/reported
+>> to the upstream and when upstream 1) acknowledged it (if ever)
+>> and then they patched it (if ever) and when they shipped a fixed
+>> version (if ever). Obviously then you could simply parse for the
+>> time between date reported and date acknowledged/patched/fixed
+>> and see how healthy/responsive the upstream is.
 > 
-> I think this issue does not have a CVE id yet as far as I can see:
+> Yes, that would be really useful data with CVEs. OSVDB is
+> collecting that already. That is not easy task btw.
 > 
-> Prepared statements in PHP5 pdo can be used to cause an array
-> overread and crash of the php5 interpreter instance.
-> 
-> References: Report on Bugtraq:
-> http://seclists.org/bugtraq/2012/Jun/60 Upstream PHP bug (including
-> testcase) available at: https://bugs.php.net/bug.php?id=61755 
-> https://bugzilla.novell.com/show_bug.cgi?id=769785
-> 
-> Ciao, Marcus
+> - Henri Salo
 
-Please use CVE-2012-3450 for this issue.
+Maybe iDefense or iSIGHT would be willing to share (I know the data
+exists, I helped collect it for 9.5 years =). One thing I'm really
+noticing as a good rule of thumb:
+
+1) if a project has security@ or similar email and responds timely,
+this is good.
+2) if a project has security@ or similar email and never responds then
+they tend to fix things but not overly quickly/consistently
+3) if a project has no security@ or similar email chances are they
+don't handle security issues very gracefully (big surprise hey).
+
+Basically if the first result in Google for "report security issue to
+X" isn't useful chances are it's not going to end well. The best part
+is not all vendors provide a secure means to submit vulnerabilities
+(e.g. please provide a PGP encryption key for email, and if you use a
+web form please use HTTPS!).
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -34,19 +49,18 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJQGtlqAAoJEBYNRVNeJnmTmfMQAKuAeGWG9FsAFqQXzno7Lfze
-aGksvLs799vJOCj2a97lgoOK2rl3Q0YrqsAGdREZOPs9Xr3lTUrMPSMuivHj0ghb
-9j269jLy3IKD6LcjZWi1GFbBx7IHVaEZ6W0pHaGUByXRe8eUZM6Ydu6k+J4gMVk1
-kt/l55MIvryyY0nJXA3TeyZW3M6mCT76t/E7llczHnDlaztuuBVYEDBPclGepTId
-EY+697OJQedMCXIjXoenKyn4D1bhDSGxNuW+7/Cju6phfpbIeYcdP7LWqTfdc7m/
-KbN+Ry9jwcpv73usnFvVocRRdp7XtbHEtS4bJ0NlG8RqkWqbjdQIjYYK3EwiayAa
-N519HfNJEnpW+avHrfGWE8Xw864I3W3SwjE0Z/3hKeGJffEwHW1x6apAeCfwKJ5O
-5ak9yufZsrgUP/E4mO3lZXOMfkMnWO063icC+fKSV77MhFF44dkLwp5hlo2OesMz
-EzTPA0XWMZ+k1veg+ISFNm6DAdQX8NlKrfZvbxrlfLiOe5nZmimCCyXeDGHCsqQw
-KfpTB2nDseWntojIZf0vmZ+e4AKGoQ6ZeFOwbTdtyAG94cF5QMc2v4wZzVbBh+1U
-5FDF2MKSeKMnYYJsrUxze/wOwD3upSxzyO6Wiy/4Kt1hHA9MdQw0G61tkA8n/YbN
-xeQbLeuxtW2V0Ok/AkWh
-=F43T
+iQIcBAEBAgAGBQJQ4NhSAAoJEBYNRVNeJnmTJ0AQALDRGqpIgLWLyYvc44pBHf5Z
+QkgqUPtXFG/okXm7MwffXZz9y7B9h/Fotgvi8dr4X4CuVVeJ3Wiz/8+P2E/qc2TJ
+HXNlVMxSvzqvLMNT/XmKnNVHfQAWdQD3a5y6oRZSPA07ZUSXfoWwbQbHCq8LR8ba
+XjyMDkjN1ial0ICFJ5bQseKWHliwGSGk9eCxGR0u3Ok2Bp8lzPuCCSXEwnW2XI2c
+8bIdbI73NAnfccDJp5701871VPuj+Z81LhN2SDpysZ+I6E/2dIIv1hhaM9y1ivwG
+ZjsSVpHeO1wukr5CLH5e7NjiNlaoiqL92yQxI67Pv9RRVk5ib+D8nDVK1aKMrlYi
+jwBFgBz13WPB8bZzfoSStACnxGTSVVVfHxixQmnxOrFopY40jGhAp1J98udRz9xq
+dlo4w6j8H0FO810ZSAmITv3zie4rJ/jtQULus78FOsRjpJurPFldze7KQjNY4oNZ
+Rjww62SWCho4pZVBEznU0YiwxvF0NICCtlAt4JzyFtEVFXK87isnattXAr36jLIQ
+FA7pgUBDt2oREzojOaNuepNz3htTaIGnYlQbBRSBByZsTl3QlKJ6cFPK1mfuXMVL
+qZXhCmAguF/zPFdUK4hFsrMVHyK6yCAI9c5+TAoLM6H70Qs2+fHUuCU3YS9n20kr
+lUkiKelZDWZYCFb7ESF/
+=6Z7z
 -----END PGP SIGNATURE-----
