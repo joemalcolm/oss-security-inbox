@@ -1,75 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/15
-Message-ID: <l87a6f$3f1$1@ger.gmane.org>
-Date: Tue, 10 Dec 2013 14:58:37 +0000
-From: Matthew Wilkes <matthew@...thewwilkes.co.uk>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for Plone
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/01/5
+Message-ID: <50E28EC5.1060403@redhat.com>
+Date: Tue, 01 Jan 2013 00:22:45 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: KB Sriram <kbsriram@...il.com>
+CC: bugtraq@...urityfocus.com, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: GnuPG 1.4.12 and lower - memory access errors and keyring database corruption
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'd like to request some CVEs for Plone as we have a hotfix release today.
+On 12/28/2012 06:06 PM, KB Sriram wrote:
+> Versions of GnuPG <= 1.4.12 are vulnerable to memory access
+> violations and public keyring database corruption when importing
+> public keys that have been manipulated.
+> 
+> An OpenPGP key can be fuzzed in such a way that gpg segfaults (or
+> has other memory access violations) when importing the key.
+> 
+> The key may also be fuzzed such that gpg reports no errors when 
+> examining the key (eg: "gpg the_bad_key.pkr") but importing it
+> causes gpg to corrupt its public keyring database.
+> 
+> The database corruption issue was first reported on Dec 6th,
+> through the gpg bug tracking system:
+> 
+> https://bugs.g10code.com/gnupg/issue1455
+> 
+> The subsequent memory access violation was discovered and reported
+> in a private email with the maintainer on Dec 20th.
+> 
+> A zip file with keys that causes segfaults and other errors is 
+> available at
+> http://dl.dropbox.com/u/18852638/gnupg-issues/1455.zip and includes
+> a log file that demonstrates the issues [on MacOS X and gpg
+> 1.4.11]
+> 
+> A new version of gpg -- 1.4.13 -- that addressed both these issues,
+> was independently released by the maintainer on Dec 20th.
+> 
+> The simplest solution is to upgrade all gpg installs to 1.4.13.
+> 
+> [Workarounds: A corrupted database may be recovered by manually 
+> copying back the pubring.gpg~ backup file. Certain errors may also
+> be prevented by never directly importing a key, but first just
+> "looking" at the key (eg: "gpg bad_key.pkr"). However, this is not
+> guaranteed to work in all cases; though upgrading to 1.4.13 does
+> work for the issues reported.]
+> 
+> Discovery:
+> 
+> The problem was discovered during a byte-fuzzing test of OpenPGP 
+> certificates for an unrelated application. Each byte in turn was 
+> replaced by a random byte, and the modified certificate fed to the 
+> application to check that it handled errors correctly. Gpg was used
+> as a control, but it itself turned out to have errors related to
+> packet parsing. The errors are generally triggered when fuzzing the
+> length field of OpenPGP packets, which cascades into subsequent
+> errors in certain situations.
+> 
+> -kb
 
+Has this been assigned a CVE identifier yet?
 
-Filesystem path information leak
---------------------------------
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-First up, we have a vulnerability that allows people to find the install 
-path of Plone on a server. I can't actually think of any attacks that 
-happen with this, but we had a CVE assigned for it before so I'm 
-requesting another.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Details, including source links are at:
-     https://plone.org/security/20131210/path-leak
-
-
-Privilege escalation through exposed underlying API
----------------------------------------------------
-
-Plone's searching infrastructure is based on CMF's, which is based on 
-Zope's. Plone wraps the search API with additional filters for 
-permissions and expired content. One of the methods that allows 
-searching wasn't so wrapped, so people who can write untrusted Python 
-can gain access to content they aren't authorised to. In addition, this 
-can accidentally expose information.
-
-Details, including source links are at:
-     https://plone.org/security/20131210/catalogue-exposure
-
-
-
-
-
-In addition, we are releasing two patches to vulnerabilities in Zope 
-today. Can somebody advise if these should be merged?
-
-
-Reflexive XSS in browser_id_manager
------------------------------------
-
-Zope's session infrastructure includes a method for encoding URLs, which 
-is accessible through the web. By passing HTML into this method a 
-reflexive XSS attack can be achieved.
-
-Details, including source links are at:
-     https://plone.org/security/20131210/zope-xss-in-browseridmanager
-
-
-Reflexive XSS in OFS.Image
---------------------------
-
-Zope's image objects include a method for generating tags, which allow 
-for arbitrary classes to be included. This method is accessible through 
-the web and these classes are not sanitised, so the image tag can be 
-broken out of and arbitrary HTML included.
-
-Details, including source links are at:
-     https://plone.org/security/20131210/zope-xss-in-OFS
-
-
-Thanks for your attention,
-
-Matt
-
-
+iQIcBAEBAgAGBQJQ4o7EAAoJEBYNRVNeJnmTjAAP/2rEPCntRzkWeE6l+LknWkzk
+HiIqNWOpRuJMPJ9cqNBM5Egc4XgXCLPNuzlgLhuVuZOHNdU/s7Ca8x0QpLROiC/H
+0dHUHDD918CnElZ6f5ZEf/9vhnBhSud7cvpmJSDYjVjspfAYR//ehypPSlms/t4n
+Ph3pQh8huWarV4M+Qx+pZsfFYnB6GSZCI2DzUfgVi/69fdbSKsRNRNb7vabmjQ96
+4Y7wOz9P/8WoqDAubvwewk8I7QkTPVbAq4JI0KMJS+2/C/NtkrESYmCZ0//xcox7
+iotd5Sjx/nNKDCNxZlTZ+Zdj61/LzLaXCRJx7o9scBHK4MpucpMUisYoVywlueKk
+hPcC0jCWYchUPbJGyLLP4qOhIx8xY4see2qYLW8eo6GIDvtlYwcGP81FNt8O4XAd
+6kIeewsGA1aF1+ndVlYjqzlf/kAbs+IkSxmNYK/EwFjhvHT+/jfFq+nOJfyo27kr
+T0/00dnrz8zjt8+9nJU+P4YzBrTlU0QhVvBR/FwSuWaxUHSYBz8eXPc29sqMUMiQ
+jTqA9KOwi1XYgLrY0w2g4i6CCI+Ud2imCnNvWN+OeTkIT8gpbjK8cpeY0AjiE7Rd
+leBXcqJ6SmwGJigKeau0fyJQFNyFplstnVi4ZXbKof+PWPq8AElEIIa4Xgn/YFj4
+m0wuEBezBNChTLi5xjvO
+=Ai5t
+-----END PGP SIGNATURE-----
