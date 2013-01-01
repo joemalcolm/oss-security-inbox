@@ -1,97 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/24/1
-Message-Id: <201309240529.r8O5TBAJ019180@linus.mitre.org>
-Date: Tue, 24 Sep 2013 01:29:11 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: SSL BREACH
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/01/6
+Message-ID: <50E3702C.2060808@redhat.com>
+Date: Tue, 01 Jan 2013 16:24:28 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: KB Sriram <kbsriram@...il.com>
+CC: bugtraq@...urityfocus.com, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, wk@...pg.org
+Subject: Re: GnuPG 1.4.12 and lower - memory access errors and keyring database corruption
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->Date: Tue, 6 Aug 2013 20:11:53 -0400 (EDT)
+On 01/01/2013 12:22 AM, Kurt Seifried wrote:
+> On 12/28/2012 06:06 PM, KB Sriram wrote:
+>> Versions of GnuPG <= 1.4.12 are vulnerable to memory access
+>> violations and public keyring database corruption when importing
+>> public keys that have been manipulated.
+> 
+>> An OpenPGP key can be fuzzed in such a way that gpg segfaults (or
+>> has other memory access violations) when importing the key.
+> 
+>> The key may also be fuzzed such that gpg reports no errors when 
+>> examining the key (eg: "gpg the_bad_key.pkr") but importing it
+>> causes gpg to corrupt its public keyring database.
+> 
+>> The database corruption issue was first reported on Dec 6th,
+>> through the gpg bug tracking system:
+> 
+>> https://bugs.g10code.com/gnupg/issue1455
+> 
+>> The subsequent memory access violation was discovered and reported
+>> in a private email with the maintainer on Dec 20th.
+> 
+>> A zip file with keys that causes segfaults and other errors is 
+>> available at
+>> http://dl.dropbox.com/u/18852638/gnupg-issues/1455.zip and includes
+>> a log file that demonstrates the issues [on MacOS X and gpg
+>> 1.4.11]
+> 
+>> A new version of gpg -- 1.4.13 -- that addressed both these issues,
+>> was independently released by the maintainer on Dec 20th.
+> 
+>> The simplest solution is to upgrade all gpg installs to 1.4.13.
+> 
+>> [Workarounds: A corrupted database may be recovered by manually 
+>> copying back the pubring.gpg~ backup file. Certain errors may also
+>> be prevented by never directly importing a key, but first just
+>> "looking" at the key (eg: "gpg bad_key.pkr"). However, this is not
+>> guaranteed to work in all cases; though upgrading to 1.4.13 does
+>> work for the issues reported.]
+> 
+>> Discovery:
+> 
+>> The problem was discovered during a byte-fuzzing test of OpenPGP 
+>> certificates for an unrelated application. Each byte in turn was 
+>> replaced by a random byte, and the modified certificate fed to the 
+>> application to check that it handled errors correctly. Gpg was used
+>> as a control, but it itself turned out to have errors related to
+>> packet parsing. The errors are generally triggered when fuzzing the
+>> length field of OpenPGP packets, which cascades into subsequent
+>> errors in certain situations.
+> 
+>> -kb
+> 
+> Has this been assigned a CVE identifier yet?
 
->>I assume this will get handled like CVE-2009-3555?
->>
->>http://threatpost.com/breach-compression-attack-steals-https-secrets-in-under-30-seconds/101579
->>
->>http://it.slashdot.org/story/13/08/05/233216
->>
->>https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
->
->MITRE has looked at this in some depth but has not yet decided whether
->this can be treated as a vulnerability in a protocol, with one CVE
->shared across every product. We do realize that
->http://www.kb.cert.org/vuls/id/987798 currently contains one CVE ID.
+Spoke with upstream, confirmed things. Please use CVE-2012-6085 for this
+issue.
 
-Our current thought is that BREACH is not a vulnerability in the HTTPS
-protocol, and instead should be considered a vulnerability class. In
-this view, there would be one CVE for each independent codebase that
-can be successfully attacked using the BREACH exploit methodology.
 
-As a vulnerability class, BREACH is somewhat similar to the XSS
-vulnerability class. They are both about limitations on what a web
-site can safely do with untrusted client input:
-
-  Reflected cross-site scripting (XSS) - your web site must
-  not take arbitrary markup strings from a client and include
-  them verbatim in an HTML document within an HTTP response
-
-  Cross-site duplicate compression (XSDC, aka BREACH) - your web
-  site (sometimes) must not take arbitrary strings from a
-  client and include them verbatim in the input to a compression
-  algorithm used for an HTTPS response
-
-(This is just a way to outline why we think that the
-one-CVE-per-codebase approach makes sense. It doesn't mean that MITRE
-is necessarily in favor of adopting this "XSDC" terminology.)
-
-MITRE is not currently seeing many reports in which the BREACH issue
-is being associated with an affected codebase of a specific web
-application. Maybe the only public example is the OWA codebase
-mentioned in the original BREACH paper:
-
-  http://breachattack.com/resources/BREACH%20-%20SSL,%20gone%20in%2030%20seconds.pdf
-
-(Yes, we realize that BREACH exploitation, in general, depends both on
-details of the web application and on details of the web-server
-configuration. As a practical matter, the details of the web
-application are very likely to be the limiting factor on the overall
-population size of exploitable web sites.)
-
-There are other reports indicating that other types of products can or
-should be fixed because they contribute to the possibility of a
-successful BREACH attack against a specific web application, but no
-specific web application is identified, e.g.,
-
-Open source:
-
-  https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
-  https://github.com/rails/rails/pull/11729
-
-Non-open source:
-
-  http://support.f5.com/kb/en-us/solutions/public/14000/600/sol14634.html
-  https://techzone.ergon.ch/breach_mitigation
-
-There is nothing yet suggesting that a huge number of CVEs will
-ultimately come out of this.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQEcBAEBAgAGBQJSQSF4AAoJEKllVAevmvms5H0H/Ag4jMKPYCL20yUGi79TFG0R
-g4Ec9byqY1nTdRFtni7X3Fj3hpZ65o8XTMK6QadZOlIyxxWew9COjuIhXBA3DGyE
-eidVDWM23TMHV6i9B4Ksqz4JO1UfrNMx3HjREijxQ3PO4E8sxb0QODIHwashUYnb
-ciw/Fj7b5dI9jTl6CTqfZfC4BT/HsbzjfnQKy4QHyOvq1AzoFFsQWCC+qnm3ixoM
-1x8s5z9lJ5XP0JpvDIrVFZWyx+P7XP0Py8kQLrBSM9ogqOSMEays/pZUcUlA8wIr
-sQWGt7NrBv/iPKMKXIaxp7NlkDnpAVgd5WTUCVfF86hGzCDQ70BuPSoS7iHsDE0=
-=dn4Z
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ43AsAAoJEBYNRVNeJnmTWBkP/2+7T2S3n6KOc0VQjcDlK9Yo
+kUauilVJcH9QKZW28JHGzQnNUV/jf8csjtGsWBawVi7ofrlNNbNLRXTBe3OqEaxM
+ltLB0049NjMQ4sdf9agur3t7kXFJkRarMQZ+DGnlQAYClZggEsztWhwMCOozMiay
+/NuJsUQvlAtzRcRYZEyI0P3R5ecfsu0JHJuf9on/bc4hXgl4A6kl02IGaaZi69hU
+faYdeGXRKjDKWp7fsLdWXVO4S43+QV2VKADdkxC5+fef9b1lHH6cHhobsZCb8ZCl
+pVx19tF/jid7Lz3QyLeaJNuKsu/H65/xJvnhUTdUr3viqo3cArudNNhkb2Fu+8u8
+Y03M1w6jdMpO2ENNjgrlrlgLZ4zCk/A8enK61DJnll7oIhVGbn58K0AVSmfcPJtN
+V+JklmvbEwJwxlOw9MxWkJ6nuQrXaFJRB5ruQnuvLneEWHsfPYlJMUpUmtmg3VWe
+4gbFn774VplIxLuo3wHDwPdaWT7piMvBZLdHvLvRyfx7yBY9zphFsW4zQvZH2hGa
+jMpUj2g8mR2Tw03REXrvgj+GNqMKy516d1YbVm8Y8//TCHMYt8EWeXHJ4COS/9WO
+rKxEBi8kpL/rc5VFOD+76S3Skp2jgYAql9BTbBp4DoJd7jtT8boRYjJFWWzpiwxi
+isKwpf/bS3MC+ZxHKTNe
+=zCWo
 -----END PGP SIGNATURE-----
