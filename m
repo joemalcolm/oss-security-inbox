@@ -1,90 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/07/5
-Message-Id: <E1Ukzyl-0005S8-Gx@xenbits.xen.org>
-Date: Fri, 07 Jun 2013 16:57:31 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 55 - Multiple vulnerabilities in libelf PV kernel handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/01/2
+Message-ID: <50E2838E.90908@redhat.com>
+Date: Tue, 01 Jan 2013 12:04:54 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Charybdis and ircd-ratbox remote crash flaw
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi All,
 
-                     Xen Security Advisory XSA-55
-                             version 2
+Saw this report about Charybdis and ircd-ratbox remote crash flaw at:
 
-           Multiple vulnerabilities in libelf PV kernel handling
+http://rabbit.dereferenced.org/~nenolod/ASA-2012-12-31.txt
+http://tech.slashdot.org/story/12/12/31/2241229/efnet-paralyzed-by-vulnerability
 
-UPDATES IN VERSION 2
-====================
+Researcher advisory suggests both the products are affected.
 
-Updated information regarding the status of the fix.
+Sadly i could not get the contact details of either of the products
+to copy on this email.
 
-STATUS OF THE FIX
-=================
+Should we be assigning CVEs to these issues?
 
-Due to the unintended early release of these patches they have not
-received as much review or testing as we would have liked.
 
-As discussed on xen-devel, the patches distributed with version 2 of
-the advisory are known to introduce regressions and also additional
-issues in the same have been discovered.  An updated patch series is
-in preparation.  Technical assistance with review of the drafts would
-be greatly appreciated.
-
-Under the circumstances, we are sending version of this advisory out
-without any attached patches.
-
-We have not yet been assigned a CVE number for this issue.
-
-ISSUE DESCRIPTION
-=================
-
-The ELF parser used by the Xen tools to read domains' kernels and
-construct domains has multiple integer overflows, pointer dereferences
-based on calculations from unchecked input values, and other problems.
-
-IMPACT
-======
-
-A malicious PV domain administrator who can specify their own kernel
-can escalate their privilege to that of the domain construction tools
-(i.e., normally, to control of the host).
-
-Additionally a malicious HVM domain administrator who is able to
-supply their own firmware ("hvmloader") can do likewise; however we
-think this would be very unusual and it is unlikely that such
-configurations exist in production systems.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are affected.
-
-Installations which only allow the use of trustworthy kernels for PV
-domains are not affected.
-
-MITIGATION
-==========
-
-Ensuring that PV guests use only trustworthy kernels will avoid this
-problem.
-
-RESOLUTION
-==========
-
-The patch series to properly resolve this issue is under development.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJRshDXAAoJEIP+FMlX6CvZfjEIAICD3oeHvE8DsECuI2hEc7ZY
-KebriUO5XccEzqXF4oCyhkhj54MuZvZI5+n9ha/rbucvBfMzA90EMFOu9TUQr8eR
-NANbVn52X7an+a8cfTBQJHmzUbP9SSO3/8abArmQFm9W7dzPWfMZY2LJ9NE2zUG1
-vHPgx5vZTVVKPf2UtWxQnAEggCoemWk7qn9p9Sy7z72JjwLFzShflSXZZju4bgcW
-ncl9Ww0QCsNC0JxnunhvmO/3Xg5j45+nNxqEpUZ5f+KToFs/n9hQTkm2fSHTOOsW
-9ojSG05sUR/6/DyAc3vRwDTBTmYRHM+CQIL2n3FFUh1yT/Y+lW1qJvZMRz/1ph0=
-=fELy
------END PGP SIGNATURE-----
-
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
