@@ -1,32 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/1
-Message-ID: <20130227034128.GA3756@gremlin.ru>
-Date: Wed, 27 Feb 2013 07:41:28 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/01/4
+Message-ID: <50E28B3B.5030400@redhat.com>
+Date: Tue, 01 Jan 2013 00:07:39 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: psi+ stores the cache file as world-readable
+CC: Mustapha Rabiu <muztapha@...il.com>, William Pitcock <nenolod@...eferenced.org>
+Subject: Re: Charybdis: Improper assumptions in the server handshake code may lead to a remote crash
 Content-Type: text/plain; charset=utf-8
 
-On 26-Feb-2013 23:04:24 +0100, Agostino Sarubbo wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- > Psi+, a fork of psi, stores its files in ~/.cache/psi+ as
- > world-readable.
+On 12/31/2012 02:57 PM, Mustapha Rabiu wrote:
+> Hi.
+> 
+> 
+> Can we get a CVE for the following
+> 
+> --
+> 
+> Access vector: network Access complexity: low Authentication
+> requirement: none
+> 
+> Confidentiality impact: none Integrity impact: none Availability
+> impact: complete
+> 
+> CVSSv2 temporal score: 6.4
+> 
+> Exploitability: functional exploit exists Remediation level:
+> official fix Report confidence: confirmed
+> 
+> Summary:
+> 
+> All versions of Charybdis are vulnerable to a remotely-triggered
+> crash bug caused by code originating from ircd-ratbox 2.0.
+> (Incidentally, this means all versions since ircd-ratbox 2.0 are
+> also vulnerable.)
+> 
+> The bug has to do with server capability negotiation.  A malformed
+> request will trigger a crash due to invalid assumptions.
+> 
+> Mitigation:
+> 
+> A patch for all affected versions of ircd-ratbox and charybdis is
+> available from the charybdis GIT repository: 
+> https://github.com/atheme/charybdis/commit/ac0707aa61d9c20e9b09062294701567c9f41595.patch
+>
+>  To apply the patch, go to your IRCd source tree and run the
+> following commands: $ patch -p1 <
+> /path/to/downloaded/patchfile.patch $ make $ make install
+> 
+> Then you may hotfix the IRCd by running /MODRESTART as a server
+> admin.
+> 
+> Details:
+> 
+> In ratbox-2, the following code was added to m_capab.c: char *t =
+> LOCAL_COPY(parv[i]);
+> 
+> The other logic was then modified to make use of that
+> stack-allocated buffer rather than the original.  LOCAL_COPY() is a
+> macro which expands to alloca() and strlcpy(), and the bug
+> effectively is caused by this expansion calling strlen(NULL).
+> 
+> 
+> --
+> 
+> 
+> Thanks.
+> 
+> 
+> Mustapha Rabiu
 
-That's normal - users' home directories are normally accessible
-only by users themselves, and never by othe users:
 
-gremlin@...n:~ > ls -ld .
-drwx-----x 47 gremlin users 20480 2013-02-26 17:48 ./
+Ah sorry just noticed this as well, repeating so it's not missed:
 
-This is the most loosy home directory mode I use - that's for
-accessing ~/www by httpd. Even there I use umask 027 and at
-other (non-http) servers it's 077.
+Please use CVE-2012-6084 for this issue.
 
-Also, please check the umask setting in this case - I guess
-psi+ respects it when creating files.
+Same as http://seclists.org/oss-sec/2012/q4/545
 
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ4os7AAoJEBYNRVNeJnmTKPYQAL1E+pwprii4USuJDVV+alk8
+pmmPQqmUZXGy/hLG+RFBRvjyLTV8kZi/p5H+x3d2JZXPBDTexnaXckJSkE2ItDnt
+iKB9ZCJWJF01DnViTmDycZsy69k7D2FvpfJdll6TySq5L8bnBL1kkc0eCSNql0/5
+9kTeG4O8kGCgB/ouBSr22WhGKzfIHQL77pLf+P7PDLLJnfkIpQyA82F1WcpNiJLj
+wcS2pUv6ycHxZpjLsucmOA2Pqz1waRTyEg8BTGQBJLQazFrjmy8hSLalNc0NLYGZ
+0TwXSUI+rjYzRo/4lcwTIr+OnrhAyvUR5SZ5HX7bEq+R20POE+i1wOBXbyj65Vci
+Z7uprd9Ky3UjEfxLzJRveEnRX7jYgPTLtYnNfRIQ/yfxqQxZ0csNTDTRcXHrixDt
+6SOFPhFi+qA2+SQY3f/eNQK66x7z/7XD1nRLO7Xqp8MtFxX7ARr3I31G5tgRiqw9
+NbNvLRc77jLFfAtz6bAgQa2MJGehGYWjtK4HEwiTVnURDByb0rMakZVsrBp8IpIE
+yCNtEN5pCRTvRb4TT2DJyp1Nmfc9VIO5ubBt9Eg4SOEZ6D+XDD1/2BuagOtw6fbs
+R/aASmpMmhPwNENLSnNJ6OXqX+YlhAoyDkaSR3vG1xjWW6F2Y+FTrJk0tkYOL2nk
+eovf7/4p8AU1TAH+rzOJ
+=zCqa
+-----END PGP SIGNATURE-----
