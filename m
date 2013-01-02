@@ -1,50 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/26
-Message-ID: <51AF91B5.4010103@redhat.com>
-Date: Wed, 05 Jun 2013 13:29:57 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: P J P <ppandit@...hat.com>
-Subject: Re: CVE Request: Linux kernel: fanotify: info leak in copy_event_to_user
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/02/3
+Message-ID: <20130102212222.GA6236@higgins.local>
+Date: Wed, 2 Jan 2013 13:22:22 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
+Subject: SQL Injection Vulnerability in Ruby on Rails (CVE-2012-5664)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+SQL Injection Vulnerability in Ruby on Rails
 
-On 06/05/2013 01:53 AM, P J P wrote:
-> Hi,
-> 
-> Linux kernel built with the Filesystem wide access notification 
-> (CONFIG_FANOTIFY) support is vulnerable to an information leakage
-> flaw. The leaked bytes could be accessed via read(2) call on the
-> fanotify descriptor.
-> 
-> A user/program could use this flaw to leak kernel memory bytes.
-> 
-> Upstream fix: ------------- -> https://lkml.org/lkml/2013/6/3/128
-> 
-> Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
-> 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+There is a SQL injection vulnerability in Active Record in ALL versions. This vulnerability has been assigned the CVE identifier CVE-2012-5664.
 
-Please use CVE-2013-2148 for this issue.
+Versions Affected:  All.
+Not affected:       NONE.
+Fixed Versions:     3.2.10, 3.1.9, 3.0.18
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Impact 
+------ 
+Due to the way dynamic finders in Active Record extract options from method parameters, a method parameter can mistakenly be used as a scope.  Carefully crafted requests can use the scope to inject arbitrary SQL.
 
-iQIcBAEBAgAGBQJRr5G0AAoJEBYNRVNeJnmTO7cP+QHw+Hw+XUrCtsj2Jrawr+4m
-UV/QXA4fNwSoVQpnlHF+PLCZkr4TmS+6MK0hdVe9DovoI8edMJY4rTGb5Snil83+
-ldOg0mFKSOyYcdlRT24Zt73wMcLMtmX6lbAQVl5dM8E5T5LA8+WY/mhhZ8IBvIhR
-h+KLiQVLTuJcWIixnbUdf6IxXqLB+Gh4FlUwVh5amFPRQflOha2qSZxj7qbn0lRN
-MzfPT0TZfe4/i/CUHAYWk+uB44KSGh7t20aDuFpVBqM645NAvwBtOIIrVYFyIeLH
-eJAGlX/8GBwf8UUtTHjaaFo66osrIRCIw7LQl+5hkDQ84jyhA3VMA6MZplbX/usF
-HFPnreSp481L4kORWDarkwpTjgjKRwjBjOqWecEyDizXKoXdT6HqasNu9GuRU4Te
-PYSqGxwApcqH8MtYneENVx+Nh/rRTFtBc6S9DOvL675NxZpXFohpo3Zy1QaTWCRV
-cOzOvj6j1ZU8paUa0x7W5Viqhm8p8Yns3kpr7of4wGCi77liaIyV70NPzdCVb1pS
-jckSHZonzKVGtabO00hEdGrOr9WzzVwThZJcTXoqzbjIkZplH0HR2RiIscKHlw9j
-DzU4arcwq8cFLDqGOOPePeL2ZeWhEEniR2yUUlekB64jrev4vUQhNCQ+hvRpqpPA
-k4Wi35esxrkkLHFGynst
-=BLUh
------END PGP SIGNATURE-----
+All users running an affected release should either upgrade or use one of the work arounds immediately. 
+
+Impacted code passes user provided data to a dynamic finder like this:
+
+  Post.find_by_id(params[:id])
+
+Releases 
+-------- 
+The  3.2.10, 3.1.9 & 3.0.18 releases are available at the normal locations. 
+
+Workarounds 
+----------- 
+The issue can be mitigated by explicitly converting the parameter to an expected value.  For example, change this:
+
+  Post.find_by_id(params[:id])
+
+to this:
+
+  Post.find_by_id(params[:id].to_s)
+
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series and two unsupported versions.  They are in git-am format and consist of a single changeset. 
+
+* 3-2-dynamic_finder_injection.patch - Patch for 3.2 series
+* 3-1-dynamic_finder_injection.patch - Patch for 3.1 series
+* 3-0-dynamic_finder_injection.patch - Patch for 3.0 series
+* 2-3-dynamic_finder_injection.patch - Patch for 2.3 series
+
+Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "2-3-dynamic_finder_injection.patch" of type "text/plain" (2085 bytes)
+
+View attachment "3-0-dynamic_finder_injection.patch" of type "text/plain" (2201 bytes)
+
+View attachment "3-1-dynamic_finder_injection.patch" of type "text/plain" (2155 bytes)
+
+View attachment "3-2-dynamic_finder_injection.patch" of type "text/plain" (2153 bytes)
