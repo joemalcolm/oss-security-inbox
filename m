@@ -1,36 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/3
-Message-ID: <515401BB.7030205@op5.se>
-Date: Thu, 28 Mar 2013 09:39:23 +0100
-From: Andreas Ericsson <ae@....se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/02/2
+Message-ID: <20130102180918.GC15249@kludge.henri.nerv.fi>
+Date: Wed, 2 Jan 2013 20:09:18 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Corey Bryant <coreyb@...ux.vnet.ibm.com>
-Subject: Re: Security vulnerability tools
+Subject: Re: Charybdis: Improper assumptions in the server handshake code may lead to a remote crash
 Content-Type: text/plain; charset=utf-8
 
-On 03/27/2013 08:54 PM, Corey Bryant wrote:
-> Hi,
+On Tue, Jan 01, 2013 at 12:07:39AM -0700, Kurt Seifried wrote:
+> Please use CVE-2012-6084 for this issue.
 > 
-> I'd like to get a better understanding of tools used in the open source community (kernel and user space) to detect security vulnerabilities.
-> 
-> I have a list below to get started.  If anyone has any input, I'd appreciate it!
-> 
-> I'll plan on updating http://oss-security.openwall.org/wiki/tools with anything it doesn't already have.
-> 
+> Same as http://seclists.org/oss-sec/2012/q4/545
 
+ShadowIRCd before 6.3.3 is also affected.
 
-sparse works similarly to clang. It was hacked up by the kernel folks
-for finding potential errors in the linux kernel.
+https://github.com/shadowircd/shadowircd
 
-I like it particularly because it has very few false positives, unlike
-most other tools I've tried. That means it's actually viable to strive
-for "no warnings" from it and run it as part of automated testsuites.
+commit 806af85d265673e599e91f1e0d364845b66ee82d
+Author: Joah <Joah@...haChat.net>
+Date:   Mon Dec 31 14:49:19 2012 -0500
 
--- 
-Andreas Ericsson                   andreas.ericsson@....se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+    Ported m_capab Crash Exploit Fix from charybdis
+    
+    Ported the fix from charybdis to ShadowIRCd.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+- Henri Salo
