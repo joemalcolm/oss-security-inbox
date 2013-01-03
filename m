@@ -1,159 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/1
-Message-ID: <51D5E0F2.80405@thedistillery.eu>
-Date: Thu, 04 Jul 2013 21:54:10 +0100
-From: Matthew Wilkes <matt@...distillery.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/5
+Message-ID: <50E5B542.50702@igalia.com>
+Date: Thu, 03 Jan 2013 17:43:46 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request - PloneFormGen, multiple vulnerabilities
+CC: Aaron Patterson <tenderlove@...y-lang.org>,  rubyonrails-security@...glegroups.com
+Subject: Re: SQL Injection Vulnerability in Ruby on Rails (CVE-2012-5664)
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+On 03/01/13 13:30, Carlos Alberto Lopez Perez wrote:
+> On 02/01/13 22:22, Aaron Patterson wrote:
+>> There is a SQL injection vulnerability in Active Record in ALL versions. This vulnerability has been assigned the CVE identifier CVE-2012-5664.
+> 
+> 
+> CVE-2012-5664 literally says:
+> 
+> "SQL injection vulnerability in the Authlogic gem for Ruby on Rails
+> allows remote attackers to execute arbitrary SQL commands via a crafted
+> parameter in conjunction with a secret_token value, related to certain
+> behavior of find_by_id and other find_by_ methods."
+> 
+> 
+> However in your description of the bug I don't see any references to the
+> Authlogic gem. This rather seems to be a generic RoR issue.
+> 
+> 
+> And both Debian and Ubuntu have marked this CVE as NOT-FOR-US because of
+> this (they don't ship Authlogic gem).
+> 
+> 
+> Could you please clarify this?
+> 
+> 
+> Thanks!
 
-I'd like to request some CVE identifiers for the following 
-vulnerabilities, recently patched in PloneFormGen[1]
+Answering myself:
 
-Here are some descriptions of the vulnerabilities, along with the CVSSv2 
-base score we calculated, and our determination of the relevant CWE 
-identifiers. We're not sure about potential merges, especially as there 
-are two pairs of very similar attacks.
+In this blog post [1] the issue is explained in deep.
 
+The bug is on RoR. Authlogic only is one of the possible vectors to
+trigger the bug. There is a known exploitable scenario that requires
+Authlogic to trigger this bug.
 
-# Execute arbitrary shell commands
-**CVSSv2 base score**: 10
-
-CWE-78 - Improper Neutralisation of Special Elements used in an OS Command
-CWE-573 - Improper Following of Specification by Caller
-CWE-749 - Exposed dangerous method or function
-
-Passing a urlencoded shell command to a support function that is 
-accessible through the web causes that shell command to be run with the 
-same privileges as the Zope server.
-
-
-
-# Set custom script body
-**CVSSv2 base score**: 8.2
-CWE-306 - Missing authentication for critical resource
-CWE-749 - Exposed dangerous method or function
-
-When using a custom script action adapter, it is possible for anonymous 
-users to overwrite the content of the script. This allows an attacker 
-complete control over what happens to the received data. The script is 
-executed within Zope's RestrictedPython environment, however, so it 
-doesn't allow escape from the process sandbox.
-
-
-
-# Can set body of mail template on mailer object
-**CVSSv2 base score**: 7.5
-CWE-863 - Incorrect authorization
-CWE-749 - Exposed dangerous method or function
-
-An unused method has a declarePublic call, allowing anyone to invoke it. 
-This allows any PloneFormGen form with a mailer object to have the email 
-template modified by anonymous users. As the template is a ZPT object it 
-can include inline Python expressions evaluated in the process sandbox.
+However other exploitable scenarios without Authlogic are possible.
 
 
-
-# Insufficient CSRF protection on SaveData adapter allows changing data
-**CVSSv2 base score**: 6.3
-CWE-352 - Cross-site request forgery (CSRF)
-CWE-749 - Exposed dangerous method or function
-
-If a privileged user is tricked into accessing an attacker controlled 
-URL, it is possible to craft a request which would allow setting the 
-saved data to any value, thus compromising the integrity of the data.
+So I think the description for CVE-2012-5664 is incorrect and should be
+amended ASAP. Otherwise it will lead to confusion. People not using
+Authlogic would believe (wrongly) that they are not affected.
 
 
+Regards!
+--------
 
-# Can determine the success page without filling in form
-**CVSSv2 base score**: 5
-CWE-767 - Access to critical private variable via public method
-
-Often this is just a thank you page, however it is used by some users to 
-expose access to a private URL or further logic. In this case it *may* 
-provide an attacker with access to sensitive information.
+[1]
+http://blog.phusion.nl/2013/01/03/rails-sql-injection-vulnerability-hold-your-horses-here-are-the-facts
 
 
-
-# Render body of mail template on mailer object
-**CVSSv2 base score**: 5
-CWE-767 - Access to critical private variable via public method
-
-Like the above attack, this allows users who have not filled in a form 
-to see the email they would have received if they had. It stacks with 
-the set body vulnerability to allow the attacker to execute Python 
-embedded in the custom template.
-
-
-
-# Run ScriptAdapter script without submitting form
-**CVSSv2 base score**: 5 (???)
-CWE-767 - Access to critical private variable via public method
-
-As above, but with the set custom script body vulnerability. The effect 
-of running the script varies by deployment.
-
-
-
-# Can add spurious blank records to SaveDataAdapter
-**CVSSv2 base score**: 5
-CWE-306 - Missing authentication for critical resource
-CWE-20 - Improper input validation
-CWE-749 - Exposed dangerous method or function
-
-When using the default action adapter for saving data, it's possible to 
-create blank, likely invalid records. A malicious user could automate 
-this to add many invalid responses.
-
-
-
-# Can enable or disable form actions
-**CVSSv2 base score**: 4.3
-CWE-306 - Missing authentication for critical resource
-CWE-352 - Cross-site request forgery
-
-If the ids of the action adapters within a form are known, it is possible to
-disable or enable them as an anonymous user. This would allow an attacker to
-effectively disable the form, or to redirect input.
-
-
-
-# Vector for determining user details in XSS attacks
-**CVSSv2 base score**: 3.5 (???)
-CWE-352 - Cross-site request forgery
-CWE-359 - Privacy violation
-
-Multiple methods are exposed which allow determination of the email 
-address, name and id of the currently authenticated member in custom 
-script adapters. If an attacker were already performing a cross site 
-scripting vulnerability elsewhere on the domain, these methods could be 
-used to identify users and leak sensitive information.
-
-
-
-All but 'Insufficient CSRF protection on SaveData adapter allows 
-changing data' have official fixes; that one is unpatched. Disclosure of 
-reproducers has only been to the maintainer at this stage, but happen 
-more widely sometime in the next few weeks. Credits for all the 
-vulnerabilities go to The Code Distillery
-
-Kurt, or whoever assigns the CVEs for this, I'm happy to provide more 
-information if you need it.
-
-Thanks,
-
-Matthew Wilkes
-
-[1] - 
-http://plone.org/products/plone/security/advisories/ploneformgen-vulnerability-requires-immediate-upgrade
-
-
-------
-http://thedistillery.eu.
-The Code Distillery Ltd. Is registered in England & Wales (#7747893).
-Registered address 145-157 St John Street, London, EC1V 4PW.
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (3748 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
