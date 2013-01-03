@@ -1,36 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/18/4
-Message-ID: <51E77E27.5040509@redhat.com>
-Date: Wed, 17 Jul 2013 23:33:27 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Please REJECT CVE-2013-4141
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/3
+Message-ID: <1360226839.52825502.1357227136530.JavaMail.root@redhat.com>
+Date: Thu, 3 Jan 2013 10:32:16 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Jan Wielemaker <J.Wielemaker@...vu.nl>, Petr Pisar <ppisar@...hat.com>
+Subject: CVE Request - SWI-Prolog / pl (X < 6.2.5): Multiple (stack-based) buffer overflows in patch canonisation code and when expanding file-names with long paths
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-Please REJECT CVE-2013-4141, it was assigned privately, it is a
-duplicate of CVE-2013-4125
+  SWI-Prolog upstream has released [2] 6.2.5 / 6.3.7 versions,
+correcting the following two security flaws:
 
+* Issue #1 (from [2]):
+=======================
+* FIXED: Possible buffer overrun in patch canonisation code.
+Pushes pointers on an automatic array without checking for
+overflow.  Can be used for DoS attacks. Will be extremely
+hard to make it execute arbitrary code.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Relevant upstream patch:
+[1] http://www.swi-prolog.org/git/pl.git/commitdiff/a9a6fc8a2a9cf3b9154b490a4b1ffaa8be4d723c
 
-iQIcBAEBAgAGBQJR534mAAoJEBYNRVNeJnmTjnUP/iA1KN05Q6eoAhqB2HuyHdHf
-rGHEOMRkT4dDi00b8YGmBc0jHFY9no7G+H7sJPdWHl+T0xSaX5eXDS8w/iT5GkAo
-0hb7M3CU5+m+HdhKZcVDIhTx1CW6NT/ls6hIN2BrilOY4ctWoFxv5wTaDW9hy5hU
-kqs6r4YrHrFzpn4XwnTwL1kpmcwoHpxoNiF13liN/Ejm5g8ol86tiP7PK+NeRhcd
-pQ1FUR96Bml3G/AVtoyH7AJnnSyUpsmZPMZWxsQcAGy4r4RizZKAuJtHtdcWf5Sw
-35G7SLHno5Fyoz8SY+YjIovxowcf2XQEw7p4G0H996sqTjUt8+3+UXlkSLVPCEe0
-RtqXVDa+Vl9wvJoAyOLKUO1hzovmK2V6rk5wGrkdRYBCNsV4R+j49MvODB8xzatS
-JdtPbub4mvrobn0EbLDDrJM2wPTnIwWW0xEciJ7VkOo/PJ8Or2YwttauwR82YnU9
-6BNTpA1L0Ui9KHCRwl2RJQ1WmZt8ayM0r2IFe+ZQFNKQ7Wk5SAz/KEfrrPA60gLN
-Bi4BMdgi/7z+EgMBJ9xSCHuwd6mp8x622bEkgVw00M4G4amPdriRGIhp6L3srr6/
-+gme1gBy75CqmnBzO0NJY/FZlKlMYjBeIMfqRaXy15bV68WNJ78H86Xnzyz5eFl2
-kwHQD0PXR9TFQsOHejM1
-=2yJc
------END PGP SIGNATURE-----
+References:
+[2] https://lists.iai.uni-bonn.de/pipermail/swi-prolog/2012/009428.html
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=891577
+
+* Issue #2 - from [2]:
+======================
+* SECURITY: Possible buffer overflows when expanding file-names with
+long paths.  Affects expand_file_name/2.  Can lead to crashes
+(DoS attacks) and possibly execution of arbitrary code if an attacker
+can control the names of the files searched for, e.g., if
+expand_file_name/2 is used in a directory to which an attacker can
+upload files for which he can control the name.
+
+Relevant upstream patch:
+[4] http://www.swi-prolog.org/git/pl.git/commitdiff/b2c88972e7515ada025e97e7d3ce3e34f81cf33e
+
+References:
+[5] https://lists.iai.uni-bonn.de/pipermail/swi-prolog/2012/009428.html
+[6] https://bugzilla.redhat.com/show_bug.cgi?id=891577
+
+Could you allocate CVE ids for these? (iilc two should be
+enough)
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
