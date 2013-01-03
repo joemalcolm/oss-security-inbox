@@ -1,79 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/18/1
-Message-ID: <51BFC25A.80009@redhat.com>
-Date: Mon, 17 Jun 2013 20:13:46 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/10
+Message-ID: <50E5E6A6.70909@redhat.com>
+Date: Thu, 03 Jan 2013 13:14:30 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Greg KH <greg@...ah.com>, "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE Request: Linux - ext4 support
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request (maybe): magento before 1.7.0.2
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/17/2013 04:40 PM, Greg KH wrote:
-> On Mon, Jun 17, 2013 at 11:52:47PM +0200, Jonathan Salwan wrote:
->> On Mon, Jun 17, 2013 at 10:29 PM, Greg KH <greg@...ah.com>
->> wrote:
->>> On Mon, Jun 17, 2013 at 10:12:34PM +0200, Jonathan Salwan
->>> wrote:
->>>> Hi,
->>>> 
->>>> Could you assign a CVE for this issue please?
->>>> 
->>>> https://bugzilla.redhat.com/show_bug.cgi?id=971170
->>> 
->>> I thought we (the ext4 developers and kernel security team)
->>> discussed this and determined that a user could _not_ trigger
->>> this problem.  Or was I mistaken as to the output of that
->>> conversation?
->>> 
->>> thanks,
->>> 
->>> greg k-h
->> 
->> Only with CAP_SYS_RESOURCE indeed.
+On 12/31/2012 02:32 AM, Hanno Böck wrote:
+> Hi,
 > 
-> So, given that this really isn't a viable issue, why do you need a
-> CVE?
 > 
-> confused,
+> http://www.magentocommerce.com/download/release_notes 1.7.0.2
+> changelog lists this: "Fixed: Security vulnerability in Zend_XmlRpc
+> - http://framework.zend.com/security/advisory/ZF2012-01 "
 > 
-> greg k-h
+> I don't know if we consider bundled libs issues as extra CVE. The 
+> original one is CVE-2012-3363.
 > 
+> 
+> Also, Magento 1.7.0.1 has this: "Fixed: Several potential security
+> vulnerabilities"
+> 
+> Yeah, I like it if vendors are so verbose about their 
+> vulnerabilities... And here are some people defending the "security
+> by obscurity standpoint of magento: 
+> http://www.magentocommerce.com/boards/viewthread/284896/#t397006
+> 
+> (I seriosly consider this is an issue that should be highlighted
+> more - we recently had piwik devs arguing in a similar way for
+> obsurity - free software doesn't protect you from dumb developers
+> thinking that obscurity may be a good idea)
 
-Looking at man capabilities:
+Honestly I'm not going to waste any time on tracking these down, it
+would take hours to go through the above mentioned 1.8 meg diff file
+that contains these security flaws. So with this in mind:
 
-CAP_SYS_RESOURCE
-* Use reserved space on ext2 file systems;
-* override disk quota limits;
-* increase resource limits (see setrlimit(2));
-* override RLIMIT_NPROC resource limit;
+http://www.magentocommerce.com/download/release_notes
+Release Notes - Magento 1.7.0.1 (Jun 20, 2012)
+Fixed: Several potential security vulnerabilities
 
-so it would seem a user/process with this capability can DoS the
-system regardless. However in this case would it be possible for the
-attacker to trigger a DoS that is difficult (if not impossible) to
-trace back to the attacker? In this case it might qualify for a CVE,
-but I'd also want to get Steven's thoughts (cc'ed directly).
+Please use CVE-2012-6091 for these issues.
 
+But here's a hint: it would only take a few hours to hunt down the
+flaws. And according to the argument "these sites handle large volumes
+of money" it would be worth an attackers time to read the diff file,
+so this obscurity argument only hurts the users/admins since they will
+have to waste time figuring out if they need to apply this patch or
+not or if there is a workaround, or what they should do to see if they
+have already been attacked/etc.
+
+Feel free to post a copy of this on their forums.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRv8JaAAoJEBYNRVNeJnmT3l0P/iMLejdRhqWNNjJXav1y00Bk
-Wqd8U0gS69N8yUB8L56HcXVKCFt0qaM5CpN+HJ/q2Hiu1SDA1db9hK33JG13QvG+
-X90HD2LUzDT2ZE3ILQ7OTu0OxhmFUMxdnXFojN91YsLbY0iWNpSnx6hhk9dZI1uD
-U4OPP8Dd0TjFOVsZRkalhhn/1ppMFOUMmY/0zhU2v7dt4S3D4chpfxCDLEI5lDNs
-x7Mj3pHiQa1dzITmQSvlQh0Yp2d373ShepUPTHiK7R/2qYI8kSqe8MF4vGIwvt/0
-mved8Hstf6/Y7NMu5j6pPwcxUw8CodgWHSS/EvL7uQ+rTeZGh7499BZgBnSLz1Vt
-noXo3JmZijQ75rqxLk5lZBTl6t2PHYxDtxvPhpOwVbrxhCWxJL9ucjbe1mjOQZml
-jKaDr+fOm8K8V19DCW3hByMGx/eBykNUbwpHawA210y/k/Ez0nylK/mL8bCfom5p
-NLy0u6Uqq9SahjFQ6e22itpJcTmeW4FXpLId62uegIA4Bpz/gIbRVliP+FWlc5ze
-BYKjbeBgfWIfiRv2ZvnF1B6WYmQGD06kEcm3ESW6GUGTj/8Mesm2lP6zoKuSWvLA
-A5/ExkQlV85m5xr7KPs/+ejWstFd1Rf4TV3AxiyDWgojNe4Q1e5D0/7SI4Ejg7XE
-ztTTYMAgzWYPp3D9KUAu
-=YKK0
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ5eamAAoJEBYNRVNeJnmTeecQAJDK6zWT3prklzbLpAks6OwW
+Pe3G1kZWO7ABgm9S5LWJYXQdi4LByD7aXK4N5sowTUAEtefnfQrF3GKDGeiIX+sm
+5rVn1NFqwD6Q+SiK9mkBg0FWxUUBY0y0Q7AcahH4VTifsrCce+rQWG9p79cQQm1H
+alBBF5fvQh1pT5kA9/rAIyO8ZeYJ08ziqDBZGlif4Eyonj1XPT5Q2hKcQ+UL27Lc
+rLynXkrvzCqmBUYO5cjHf57VfX9ePowQcDTouNXUf6tMAhSvrh2t4Neb9NKheRI1
+JDXF9z72qovUXXtX8eV8S00kHEGE14B25mS4mQjWBEqetGy72MpK8EcHsy26XOgr
+1PwcSNpbI3Leu57H8DdrrB8eNPdccbBiHOS0IfLccOsVJIGhVXUJGTV7lfc2PW85
+HcGFStMwWoUOvj00uaes+m7Jjk4yDB2g0SUPJ7AJvKJDQFGRJYiPiJhdqcnqx+lG
+nbVvddnXh4uGNB9IPN8gK/cYjcYffs4/teI52vyhcFFQPwXcsWtnUgEqyUBrYQWL
+Sp+PQsXkZPGulhUSuoQZhItaeziJd0F7ldvR9HbuChbaP/q9xC/6V4ug5CaiECjG
+pNGS7ix8c9I4AuX8KA61PpZVBlAHN/h3TZ4UXA1njJPyiMYdYtwrCMk+7VryPil5
+uDfS/UySiC/aA3hvUNL6
+=tvfI
 -----END PGP SIGNATURE-----
