@@ -1,111 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/12/6
-Message-ID: <20130312172453.GO4080@sentinelchicken.org>
-Date: Tue, 12 Mar 2013 10:24:53 -0700
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE assignments for "weak" crypto (was CVE Request: MD5 used for Download verification)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/12
+Message-Id: <201301032053.r03KrlRl000630@linus.mitre.org>
+Date: Thu, 3 Jan 2013 15:53:47 -0500 (EST)
+From: cve-assign@...re.org
+To: clopez@...lia.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, tenderlove@...y-lang.org
+Subject: Re: SQL Injection Vulnerability in Ruby on Rails (CVE-2012-5664)
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi Steve,
+Repurposing CVE-2012-5664 to match the official advisory from the Ruby
+on Rails core team is problematic because that would change the
+affected product. Many CVE consumers have processes for using CVE that
+can't cleanly handle all arbitrary types of post-publication changes
+to the affected product. In this situation, taking a published CVE and
+changing the affected product from "the Authlogic gem" to "Ruby on
+Rails" is not something that we'd like to do.
 
-I think maybe this position you outline doesn't go quite far enough to
-distinguish between various attack scenarios.  As Jeremy alluded to,
-there are three primary attack scenarios against cryptographic hash
-functions:
+The official advisory, i.e.,
 
-* Preimage
+  https://groups.google.com/group/rubyonrails-security/msg/23daa048baf28b64?dmode=source&output=gplain
 
-* Second preimage
+is obviously an important vendor disclosure about an important
+product, and there will be a CVE entry that corresponds to this vendor
+disclosure. See below.
 
-* Collision
+Our understanding is that some details of the Authlogic gem do have
+security concerns for some people. These are perhaps alluded to by
+"The injection interfaces are documented and the programmer is not
+supposed to pass user input to those interfaces" and subsequent
+statements in the
 
+  http://blog.phusion.nl/2013/01/03/rails-sql-injection-vulnerability-hold-your-horses-here-are-the-facts/
 
-Each of these scenarios is VERY DIFFERENT in terms of complexity.  In
-addition, these attack scenarios generalize to all types of
-cryptographic hashes.  (This isn't some quirk of MD5 or Merkle-Damgard
-based hashes or whatever.)  Think of resistance to these attacks as
-"features" offered by the hash algorithm.  In this respect, the
-difficulty of attacks isn't all that fuzzy; it is more cut and dried.
+post. This may be mostly relevant at sites that, for whatever reason,
+are staying at 3.2.9 for now. In any case, tracking an Authlogic gem
+issue may be worthwhile for some CVE consumers. It may meet our
+definition of a vulnerability even if it doesn't meet your definition
+of a vulnerability. A maintainer of the Authlogic gem is, of course,
+welcome to dispute this, and the related entry (see below) would then
+be marked as "DISPUTED" in CVE.
 
-When people say "MD5 is broken", that isn't nearly descriptive enough
-to help us understand in what scenarios it is broken.  So people who
-are concerned about security, but don't understand hashes, frequently
-call out the use of MD5 for any reason as being bad.  Most of the time
-they are wrong about the risk, because the application isn't relying
-on MD5's collision resistance.  When an application uses a hash
-function, it is relying on one or more of these properites to remain
-secure, but rarely relies on all of them.
-
-I think if an application relies on a cryptographic primitive for a
-property that it does not provide, or that it is KNOWN to be broken
-for (such as MD5 or SHA1 with collision resistance), then there should
-be a CVE assigned.  The cat's out of the bag on these things; there's
-no excuse to use MD5 for this purpose.  The world knows these hashes
-are broken w.r.t collision resistance just as RC4 is broken in the
-context of WEP (but not SSL/TLS) or that CBC mode is broken if you
-don't wrap it in a MAC.
-
-However, if someone uses a well salted MD5 for password hashing, then
-no, there is no problem, therefore no CVE.  I think it would help
-security people (and eventually, developers) understand the difference
-if the CVE took a more refined position on this.
-
-tim
+The outcome we're planning will be similar to this draft content:
 
 
+CVE-2012-5664
 
-On Tue, Mar 12, 2013 at 03:36:24PM +0000, Christey, Steven M. wrote:
-> All,
-> 
-> This is an informal response, but I wanted to get something out pretty quickly.
-> 
-> For CVE, our default position is that "using MD5 for integrity checking of downloads" is a security-hardening issue, and thus should NOT receive a CVE ID.  While MD5 may be "broken" from a theoretical standpoint, and there have been some demonstrations of collisions, and stronger options exist - I do not know of any reliable means of efficiently generating a collision that would also remain a functioning executable.  There is also a strong likelihood of debate as to which method is currently "strongest."
-> 
-> The fundamental problem is in the MD5 algorithm itself; any implementation of MD5 will suffer from the same problems.  We have multiple CVE identifiers for the various weaknesses of MD5.  Any product that uses MD5 is therefore subject to these weaknesses.
-> 
-> By a long-running CVE practice, implementations should not receive their own CVEs for a fundamental flaw in a design that they implement.  (Admittedly, CVEs are sometimes assigned accidentally, but this is actively discouraged.)
-> 
-> Admittedly, there can be a fuzzy line between "hardening" and a "vulnerability."  And, as CVE and various security practices get "older," what was once strong at one time may be regarded as weak at a later time.  Further complicating "strong" vs. "weak" is the development of massively-parallel attacks for some algorithms, e.g. password cracking against various hash algorithms that are still very strong, even by today's standards.  I am aware of some efforts in quantifying security of cryptographic algorithms (e.g. by DJ Bernstein), but such work has not reached widespread adoption.
-> 
-> Informally, CVE guidance is as follows.
-> 
-> If a product uses a widely-known, common security algorithm (such as "hashing" or "encryption") that is regarded as "weak" (but not "completely broken"), the product may receive a CVE ID if either:
-> 
-> - the product uses "weak" encryption/hashing when a stronger option is available and implemented [which CVE regards as an issue in the implementation, which should choose the strongest option available unless otherwise directed by the product admin]; OR
-> - the product maintainer agrees that use of  "weak" encryption/hashing poses a vulnerability; modifies the product to use a stronger option; and wishes to use a CVE ID to communicate to the product consumers that a fix really should be applied.
-> 
-> In the original request for Python setuptools/distribute, it appears that the issue is the use of MD5 for integrity checking, but we are not told whether the product implements stronger algorithms, or if the vendor has agreed that these pose a vulnerability for the product.  So, at this point in time, there is not enough evidence to assign a CVE.
-> 
-> - Steve
-> 
-> 
-> >-----Original Message-----
-> >From: Donald Stufft [mailto:donald@...fft.io]
-> >Sent: Monday, March 11, 2013 3:33 PM
-> >To: oss-security@...ts.openwall.com
-> >Subject: [oss-security] CVE Request: MD5 used for Download verification
-> >
-> >I'd like to request CVE(s?) for the Python software: setuptools[1] and
-> >distribute[2]
-> >
-> >Setuptools (and it's fork distribute) utilize MD5 in order to verify that a
-> >download has not been tampered with.
-> >
-> >As far as I know this affects all versions of both setuptools and distribute.
-> >
-> >It also affects zc.buildout[3] which utilizes the md5 checking from distribute. It
-> >does not affect pip[4] as pip has grown it's own handling code outside of
-> >setuptools/distribute to allow stronger hashes.
-> >
-> >[1] https://pypi.python.org/pypi/setuptools/0.6c11
-> >[2] https://pypi.python.org/pypi/distribute/0.6.35
-> >[3] https://pypi.python.org/pypi/zc.buildout/2.0.1
-> >[4] https://pypi.python.org/pypi/pip/1.3.1
-> >
-> >-----------------
-> >Donald Stufft
-> >PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372
-> >DCFA
-> 
+** REJECT **  DO NOT USE THIS CANDIDATE NUMBER.  ConsultIDs:
+CVE-2012-6496, CVE-2012-6497.  Reason: this candidate was intended for
+one issue, but the candidate was publicly used to label concerns about
+multiple products.  Notes: All CVE users should consult CVE-2012-6496
+and CVE-2012-6497 to determine which ID is appropriate.  All
+references and descriptions in this candidate have been removed to
+prevent accidental usage.
+
+
+
+CVE-2012-6496
+
+MLIST:[rubyonrails-security] 20130102 SQL Injection Vulnerability in Ruby on Rails (CVE-2012-5664)
+https://groups.google.com/group/rubyonrails-security/msg/23daa048baf28b64?dmode=source&output=gplain
+
+MISC:http://blog.phusion.nl/2013/01/03/rails-sql-injection-vulnerability-hold-your-horses-here-are-the-facts/
+
+SQL injection vulnerability in the Active Record component in Ruby on
+Rails before 3.0.18, 3.1.x before 3.1.9, and 3.2.x before 3.2.10
+allows remote attackers to execute arbitrary SQL commands via a
+crafted request that leverages incorrect behavior of dynamic finders
+in applications that can use unexpected data types in certain find_by_
+method calls.
+
+
+
+CVE-2012-6497
+
+MISC:http://phenoelit.org/blog/archives/2012/12/21/let_me_github_that_for_you/index.html
+MISC:http://blog.phusion.nl/2013/01/03/rails-sql-injection-vulnerability-hold-your-horses-here-are-the-facts/
+
+The Authlogic gem for Ruby on Rails, when used with certain versions
+before 3.2.10, makes potentially unsafe find_by_id method calls, which
+might allow remote attackers to conduct CVE-2012-6496 SQL injection
+attacks via a crafted parameter in environments that have a known
+secret_token value, as demonstrated by a value contained in
+secret_token.rb in an open-source product.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJQ5e4PAAoJEGvefgSNfHMdtwoIAINP7Dj8Y6ImlbBb4JxCoIcG
+StfgLRXxiPY1iFRwOvw9i1dmfleC/5bZ+PXXM1td8CQUTivklUUboWydUcIoO/hd
+QjrLxzoLdNg2iqrxW+4l62wtKMt5EepFqIfS3uGYZdepxlqztDJAhif9Y7WT2Gge
+NtAVEsJWJswt+vBetcYfpFA9vx9zq5CsqeU4VMEDDujN2+fxl1wtli1iz99I1s+9
+RGd+MP/ML4Dgs0sFaltSv/3S/34ZZvuKq9CWHZ7wD2hvDxIEgkVlkK509avc91A7
+EjJbL429Zyp814i9xEY4E6+5YW/uCRUHHM/p+/X4Ph3tGFakD9AUZK6hnIng1ig=
+=Mfjl
+-----END PGP SIGNATURE-----
