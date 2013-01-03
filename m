@@ -1,36 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/8
-Message-ID: <20130808112839.GE4372@suse.de>
-Date: Thu, 8 Aug 2013 13:28:39 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, David Walser <luigiwalser@...oo.com>
-Cc: "lwn@....net" <lwn@....net>
-Subject: Re: tomcat CVE confusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/7
+Message-ID: <50E5D02F.70306@redhat.com>
+Date: Thu, 03 Jan 2013 11:38:39 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jan Wielemaker <J.Wielemaker@...vu.nl>, Petr Pisar <ppisar@...hat.com>
+Subject: Re: CVE Request - SWI-Prolog / pl (X < 6.2.5): Multiple (stack-based) buffer overflows in patch canonisation code and when expanding file-names with long paths
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 07, 2013 at 11:41:07AM -0700, David Walser wrote:
-> OpenSuSE has issued an advisory for tomcat today:
-> http://lists.opensuse.org/opensuse-updates/2013-08/msg00014.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 01/03/2013 08:32 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> This is also linked from LWN here:
-> http://lwn.net/Vulnerabilities/562439/
+> SWI-Prolog upstream has released [2] 6.2.5 / 6.3.7 versions, 
+> correcting the following two security flaws:
 > 
-> This CVE-2013-3544 is not mentioned on tomcat's security page:
-> http://tomcat.apache.org/security-7.html
+> * Issue #1 (from [2]): ======================= * FIXED: Possible
+> buffer overrun in patch canonisation code. Pushes pointers on an
+> automatic array without checking for overflow.  Can be used for DoS
+> attacks. Will be extremely hard to make it execute arbitrary code.
 > 
-> But CVE-2012-3544 is mentioned there (note the different year).
+> Relevant upstream patch: [1]
+> http://www.swi-prolog.org/git/pl.git/commitdiff/a9a6fc8a2a9cf3b9154b490a4b1ffaa8be4d723c
+>
+>  References: [2]
+> https://lists.iai.uni-bonn.de/pipermail/swi-prolog/2012/009428.html
+>
 > 
-> Based on this Novell/OpenSuSE bug report, I believe OpenSuSE made a typo:
-> https://bugzilla.novell.com/show_bug.cgi?id=831119
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=891577
+
+Please use CVE-2012-6089  for this issue.
+
+> * Issue #2 - from [2]: ====================== * SECURITY: Possible
+> buffer overflows when expanding file-names with long paths.
+> Affects expand_file_name/2.  Can lead to crashes (DoS attacks) and
+> possibly execution of arbitrary code if an attacker can control the
+> names of the files searched for, e.g., if expand_file_name/2 is
+> used in a directory to which an attacker can upload files for which
+> he can control the name.
 > 
-> I can't find any info about CVE-2013-3544, but the mitre page says it's reserved.  Perhaps that CVE has already been allocated for some other piece of software?  If so, this might cause some confusion.  I'm not sure how this should be handled, but I thought it would be appropriate to point this out.
+> Relevant upstream patch: [4]
+> http://www.swi-prolog.org/git/pl.git/commitdiff/b2c88972e7515ada025e97e7d3ce3e34f81cf33e
+>
+>  References: [5]
+> https://lists.iai.uni-bonn.de/pipermail/swi-prolog/2012/009428.html
+>
+> 
+[6] https://bugzilla.redhat.com/show_bug.cgi?id=891577
+
+Please use CVE-2012-6090 for this issue.
+
+> Could you allocate CVE ids for these? (iilc two should be enough)
+
+Done, thanks!
+
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
 
-Hi,
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-This is an unfortunate typo introduced by our packager that migrated to
-the following process.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-CVE-2012-3544 is the correct CVE.
-
-Ciao, Marcus
+iQIcBAEBAgAGBQJQ5dAvAAoJEBYNRVNeJnmTsLkP/RuQEHZexgB64pBN/plCIZ4f
+Es0joWv/R1U2t+n/6h/8+PsDxUGiH7i7Nf9ifUY03Mu5jMooyZxf70SGE5zSA7R/
+cq4u07HkQSCnQnu0mFNxORue4+Yh2Wz526J232pvELSgUnKQcuS/CeCD15RB35ee
+kmxmzfOLyGB+C7DjjmUksN5NGREXwO9u2ptR5Yb6BmYQVBtwW440Pf0cxtnIngn7
+zOQBcWabE5Kh5jpImnyw1d9j3xs6SYPPwJxL8l9/SYsCTrU6y6wP6ObMmIJ6Zqel
+wDCKQ7skw/EY8vWZOnBoJWH85qwkkwkM7xmpPQpLJepuIWTduaLPOCxeuWktDT++
+//lcAOaiHnGxbTUz+hQmo92gOgzWklo5ee8sWctXftROnRB0pYTnrdj7mRGuBw++
+/0dyy2P0SYZS5X3X3WZW0Rtwu2hvaXsmtXSGJkvD96JKQ/awQokj4xqoSqt3WtZA
+H1MLNHmQF7VVxG3jXGpLx3t19v6DqtmRSoAj+NFDtP42/c9PEEKWdGQCT90hMeml
+X9L8QTFlazTtAqbzsU9il3hpJ0kUPu5LX0/cii1SH6EIUuZoT8xHpfm1l8oMzYgv
+ZoHnjf6Z5yg6Vkv71j4AU5AmObA9DRBzu7TU7K8JY4NC9PhrRfz8Vv0ZFnGCjmID
+ByjwBKjHYV92HEylaVw5
+=d2im
+-----END PGP SIGNATURE-----
