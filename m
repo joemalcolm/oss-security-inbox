@@ -1,52 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/12/7
-Message-ID: <CAFp7QwoJMjOHLHjpiPrT3v8NX7YGeM5zpedm-+E+w_0v3P_8PQ@mail.gmail.com>
-Date: Tue, 12 Nov 2013 22:47:06 +0100
-From: Josef Šimánek <josef.simanek@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/8
+Message-ID: <50E5D04A.7030209@redhat.com>
+Date: Thu, 03 Jan 2013 11:39:06 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: rubygem omniauth-facebook CSRF vurnerability
+CC: Daniel Kahn Gillmor <dkg@...thhorseman.net>, nginx-devel@...nx.org
+Subject: Re: nginx http proxy module does not verify peer identity of https origin server
 Content-Type: text/plain; charset=utf-8
 
-Patch prepared to release:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://github.com/mkdynamic/omniauth-facebook/commit/ccfcc26fe7e34acbd75ad4a095fd01ce5ff48ee7
+On 01/03/2013 08:36 AM, Daniel Kahn Gillmor wrote:
+> nginx offers the ability for its http proxy module to talk to an
+> origin server over https.  However, it does not verify the identity
+> of the origin server in this case, which leaves it subject to MITM
+> attacks between the proxy and the origin server.
+> 
+> Sadly, this appears to be unfixed for over a year after it was
+> first reported:
+> 
+> http://trac.nginx.org/nginx/ticket/13
+> 
+> some patch review starts over here, but doesn't seem to reach any 
+> resolution:
+> 
+> http://mailman.nginx.org/pipermail/nginx-devel/2011-September/001182.html
+>
+>  As far as i can tell, there is no CVE assigned for this yet.
+> 
+> --dkg
+> 
 
+Yup. Please use CVE-2011-4968 for this issue.
 
-2013/11/12 Josef Šimánek <josef.simanek@...il.com>
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-> # RubyGem omniauth-facebook CSRF vulnerability
->
-> There is a security vulnerability in the CSRF protection of omniauth-facebook 1.4.1.
->
->     Versions affected: 1.4.1
->     Not affected:      <= 1.4.0 (*)
->     Fixed versions:    >= 1.5.0
->
-> (*) Versions <= 1.4.0 did not have any CSRF protection. So, while this vulnerability does not directly affect versions <= 1.4.0, downgrading to <= 1.4.0 is not a fix.
->
-> ## Impact
->
-> Because of the way that omniauth-facebook supports setting a per-request state parameter by storing it in the session, it is possible to circumvent the automatic CSRF protection. Therefore the CSRF added in 1.4.1 should be considered broken.
->
-> If you are currently providing a custom state, you will need to store and retrieve this yourself (for example, by using the session store) to use 1.5.0.
->
-> All users running an affected release should upgrade to 1.5.0.
->
-> ## Releases
->
-> The 1.5.0 releases is available at the normal locations.
->
->
-> ## Workarounds
->
-> None.
->
-> ## Credits
->
-> Egor Homakov (@homakov)
->
->
-> regardsJosef Šimánek
->
->
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
+iQIcBAEBAgAGBQJQ5dBKAAoJEBYNRVNeJnmTk10P/RUE7xS+vKvTitanyBfK88OZ
+rApBQlDm0v4yFQw3Wr9YZRAOWcla8aiaGe9txK1t2NzHRcKtv4kidXk4VtbfG3El
+LGdourO0zi2Z3Vho48p/OkeVzpTr0eGNPduiJQdDmbD1M0ngmM5CCFxfpCf9hUb8
+1Ph8ZZsVhcvbxhKA6zOtKUVHi8LX+EUdF4XzNPP59gx0UHQhIiLfElbmz4wLoPuN
+p8xLnzEia94VGlFYVWxET34RL8V4uljaGsHIKZOOcFGSrPofzvipnyowfoRVB5dG
+YmNtnWGihpC+Bp54YD81ItsI99TtPCjQfdrUQW6qkdZivMP+SQSqwhc/QZLe7jsI
+/ATkfp28QRTi5fYvJpwAJUo4L6+bXYz4dMa5F3IdZyxBfqGxzwuvf6i4dobYyDnU
+fgtd7H1KbyxGZojNiA5MzY5WCdZYIqjbfrOo2M+maYVrAC/deqEZ8R5JJEK8vhYt
+mfPYs+49Qj8k8aC0AJPC3djbnh6odcG76gcyouweXvSMpPsYKi15Cxa1pmEnC2Ll
+JmTaAvj6MhKviaJekROjBDnPe4g3VNOjPykfN0O9564f3IBWtsgLFN1NmIrA/NvA
+e/7ndDg2JM8sJm3y23gjH14jxyDRMSAn1Bn8WiFX6F3O9WHz7dmImMX4LHEjx94I
+DCv+ThLcl5lpyFQ5UO3m
+=/tAU
+-----END PGP SIGNATURE-----
