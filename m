@@ -1,64 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/2
-Message-ID: <5227E0C6.8050101@redhat.com>
-Date: Wed, 04 Sep 2013 19:39:18 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>, "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: Re: Re: CVE request: unauthorized host/service views displayed in servicegroup view
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/11
+Message-ID: <20130103204759.GA18586@hunt>
+Date: Thu, 3 Jan 2013 12:47:59 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Carlos Alberto Lopez Perez <clopez@...lia.com>
+Cc: oss-security@...ts.openwall.com, Aaron Patterson <tenderlove@...y-lang.org>, rubyonrails-security@...glegroups.com
+Subject: Re: SQL Injection Vulnerability in Ruby on Rails (CVE-2012-5664)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Jan 03, 2013 at 05:43:46PM +0100, Carlos Alberto Lopez Perez wrote:
+> On 03/01/13 13:30, Carlos Alberto Lopez Perez wrote:
+> > CVE-2012-5664 literally says:
 
-On 09/04/2013 07:19 PM, Vincent Danen wrote:
-> That somewhat proves my point. =). In both cases you're talking
-> about intended security being violated or a security-relevant
-> mistake.  I don't see how relaxing ACLs intentionally, but still
-> protected via authentication, meet either criteria.
-> 
-> -- Vincent Danen / Red Hat Security Response Team
-> 
-> 
-> On 2013-09-04, at 5:08 PM, cve-assign@...re.org wrote:
-> 
->>>> I think the first question is what constitutes a security
->>>> flaw -- once that is defined, then I think what upstream does
->>>> is irrelevant. If it's a flaw, it's a flaw.
-> 
-> CVE assignment by MITRE doesn't look at flaws in quite that way. If
-> a vendor has developed and released software and then sends us a
-> report that the software had a security-relevant mistake, or
-> violated that vendor's intended security policy, that's usually
-> enough for a CVE. Reports from third parties are viewed much more
-> restrictively.
+> > And both Debian and Ubuntu have marked this CVE as NOT-FOR-US because of
+> > this (they don't ship Authlogic gem).
+> So I think the description for CVE-2012-5664 is incorrect and should be
+> amended ASAP. Otherwise it will lead to confusion. People not using
+> Authlogic would believe (wrongly) that they are not affected.
 
-A good example of this is in action:
+Thank you for the clarifying email and link to the very useful blog
+post. I had indeed said NOT-FOR-US because we don't ship authlogic, but
+we certainly do ship Active Record. I've updated Ubuntu's triage data.
 
-http://docs.python.org/2/library/pickle.html
-no CVE (big warning, safe alternatives, etc.)
+> http://blog.phusion.nl/2013/01/03/rails-sql-injection-vulnerability-hold-your-horses-here-are-the-facts
 
-http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=deserialization
-http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=deserializing
-lots of CVEs
+Thanks!
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSJ+DGAAoJEBYNRVNeJnmT298P/RpuSqL5uHdQhfbsrJQZS+oo
-Ofar+PtSQzRfAvMqEFbBVA4EcSSiBPyqr6aY9jdboCo9QqWqwRZ/7mZY+WWY0otH
-hSqW/Z7mviZHAbbmvSELkoFTU5Qvjqb6tnH+raqVV/XDcsx3iITYVLp4mL6XjcGE
-SmvCA3fRTDN0LfYwrm04b39xIwWdRtvoKKMlQjgkn3Ea0s5EaxV7ktlwinEHDJvp
-Vk8lwo3R+XGPZ1LaQC69HCG1jff1+0KLeJoXjo0Qz7XzYolEsnFEHeMIufkyFI5+
-k/Sk1EWgZm4sQrUgMxAIu+ILFJ5Z8WnquwFOh2AA49zPA0XAqed1ED23mB3dzBBm
-ZyANQtmdy/r4NKsrVK2/CceGm3LkfCKkxzyzYovhNrgUQIC1o5+f80+AuQz1DB5I
-ZJGq2A9k4chisc6HNLIQpwprvYaS9Z9jWWLNoN8whFcJagV9SDq4Izw14hRIQx77
-A56ASqh6jIphtK/srLo4wlGBXIiHilSTrbPjSCaQF00qEJHHt5ARqG88x9ZVL3hP
-V4QPJ7Qrm+35L+Eq2P3jfZDIrizksOlDNMFOcj1TA+e8no17GkQaC7v7wPAWGYwl
-xkwkVuFNSnO5GoLKCgA+Tg7aEYND9pMQqL2uTSSfvrh789PCOJlUprQu9Cvjl2jh
-OG24Ti4uoEiSPiaU8kYF
-=H5qh
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
