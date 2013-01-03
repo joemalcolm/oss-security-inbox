@@ -1,26 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/11
-Message-Id: <231C5898-F9F3-408A-8693-056B03C5E9B7@petdance.com>
-Date: Tue, 10 Dec 2013 07:55:44 -0600
-From: Andy Lester <andy@...dance.com>
-To: Axel Beckert <abe@...ian.org>
-Cc: oss-security@...ts.openwall.com, Debian Security Team <team@...urity.debian.org>, 731848@...s.debian.org
-Subject: Re: CVE request for remote code execution in ack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/1
+Message-ID: <50E533B9.901@redhat.com>
+Date: Thu, 03 Jan 2013 00:31:05 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: Curl insecure usage
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Dec 10, 2013, at 7:46 AM, Axel Beckert <abe@...ian.org> wrote:
-
-> Hi,
+On 01/02/2013 11:02 AM, Moritz Muehlenhoff wrote:
+> On Wed, Dec 26, 2012 at 12:38:19PM +0100, Moritz Muehlenhoff wrote:
+>> On Thu, Nov 29, 2012 at 10:44:36PM +0100, Moritz Mühlenhoff wrote:
+>>>> Also can someone collate and post a list of all the other apps using
+>>>> curl insecurely and need CVE's with appropriate links to the
+>>>> upstreams/etc? Thanks.
+>>>
+>>> There are some, which are potentially affected, but where discussion
+>>> with upstream is still pending.
+>  
+> Here are two more. These are the last two remaining issues found by 
+> Alessandro Ghedini:
+> Please assign CVE IDs:
 > 
-> as discussed with Salvatore Bonaccorso of the Debian Security Team
-> (team cc'ed), I'm herewith requesting a CVE ID for the following
-> security issue in ack (http://beyondgrep.com/, also known as ack-grep
-> in multiple distributions; upstream developer cc'ed):
+> 1. Zabbix
+> https://support.zabbix.com/browse/ZBX-5924
 
-Is there anything you need me to do?
+Please use CVE-2012-6086 for this issue.
 
---
-Andy Lester => andy@...dance.com => www.petdance.com => AIM:petdance
+> 2. Moodle
+> This one is two-fold. First of all Moodle embeds PHP-Cas and Moodle is thus
+> affected by CVE-2012-5583 as well. (Same code, so same CVE ID).
+> 
+> Additionally there's another issue specific to Moodle, which requires a CVE
+> ID:
+> https://github.com/tpyo/amazon-s3-php-class/pull/36
+
+Please use CVE-2012-6087 for this issue.
+
+> 
+> Cheers,
+>         Moritz
+> 
 
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ5TO5AAoJEBYNRVNeJnmTt0oQAINPPhlLqdmfpgOE/qMvUBLe
+xCezoVP7zj0T4cpvcmzxjAvcBsfsnYjF0XChfMC+vk5FpK0jmSBdcdyHivhzQP9L
+SrR3O1QMZbeo0N9UXgR4q3h9s1Xvccr/4CpZAyraq1d05f/fSRvLQ1oFejFlmOJc
+lmoRJl3V6ov5LPr16eiINQRXuq0+eERB8y3zQResJuu68CMzJlBbRsOf59As0gtK
+zVfuounDS4ggSLD7GbQiP8Fqu8RAKp47LDyxfKLEI5EwrBpE/e/mtYgx6TFWUk1L
+68K5wegMCxjqr1goROY9E/xeStfnrFr8ONKEgJOwNTgg1YiFjWvI3BFXCoVqjQ4e
+QIyCMmEhDj+hu81Ct5uraTHDqAynvqfC+nW2KS8LxRgXxMhJM8EWHMKp9Uu1+Adm
+k5FZiHRwJ9mc25eryLmn81+8JBe+KLLSAZDs2p54heP/JoW54nj8s32clnpl/6Uw
+utOiSnWMJgqByndOOli9Z6jQ3mo1iP1BRdoLNGN4azInq2IavtK2So2xiAoYuyUQ
+HQ24xRZB76OQpZoPTnisL/WX9gboOmsbc35DSm5T5uiT7yNb47cooD9o5Hq+U3Vb
+GKW5U4LmO4dKMTn/1aXgE6rt/k2Q3YrvuDur77pWTSuYLqIPuY4IEM5NnX8ukavI
+JLv+eFxyNQUVIA1kQw+B
+=hzGV
+-----END PGP SIGNATURE-----
