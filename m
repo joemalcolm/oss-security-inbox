@@ -1,95 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/11/1
-Message-Id: <E1Vfpt7-0000ZE-H4@xenbits.xen.org>
-Date: Mon, 11 Nov 2013 11:42:37 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 75 (CVE-2013-4551) - Host crash due to guest VMX instruction execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/4
+Message-ID: <50E5A574.6040809@fifthhorseman.net>
+Date: Thu, 03 Jan 2013 10:36:20 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com, nginx-devel@...nx.org
+Subject: nginx http proxy module does not verify peer identity of https origin server
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+nginx offers the ability for its http proxy module to talk to an origin
+server over https.  However, it does not verify the identity of the
+origin server in this case, which leaves it subject to MITM attacks
+between the proxy and the origin server.
 
-             Xen Security Advisory CVE-2013-4551 / XSA-75
-                              version 2
+Sadly, this appears to be unfixed for over a year after it was first
+reported:
 
-           Host crash due to guest VMX instruction execution
+ http://trac.nginx.org/nginx/ticket/13
 
-UPDATES IN VERSION 2
-====================
+some patch review starts over here, but doesn't seem to reach any
+resolution:
 
-This issue has been assigned CVE-2013-4551.
+ http://mailman.nginx.org/pipermail/nginx-devel/2011-September/001182.html
 
-ISSUE DESCRIPTION
-=================
+As far as i can tell, there is no CVE assigned for this yet.
 
-Permission checks on the emulation paths (intended for guests using
-nested virtualization) for VMLAUNCH and VMRESUME were deferred too
-much.  The hypervisor would try to use internal state which is not set
-up unless nested virtualization is actually enabled for a guest.
+	--dkg
 
-IMPACT
-======
 
-A malicious or misbehaved HVM guest, including malicious or misbehaved user
-mode code run in the guest, might be able to crash the host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.2.x and later are vulnerable.
-Xen 4.1.x and earlier are not vulnerable.
-
-Only HVM guests run on VMX capable (e.g. Intel) hardware can take
-advantage of this vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests, or running HVM guests on SVM capable
-(e.g. AMD) hardware will avoid this issue.
-
-Enabling nested virtualization for a HVM guest running on VMX capable
-hardware would also allow avoiding the issue.  However this
-functionality is still considered experimental, and is not covered by
-security support from the Xen Project security team.  This approach is
-therefore not recommended for use in production.
-
-CREDITS
-=======
-
-This issue was discovered by Jeff Zimmerman.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was disclosed publicly on the xen-devel mailing list.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa75-4.3-unstable.patch    Xen 4.3.x, xen-unstable
-xsa75-4.2.patch             Xen 4.2.x
-
-$ sha256sum xsa75*.patch
-5d7bd39e4077dcdf97abf8cf3ceb662403bedf8642ce7d15840b329bc9e56727  xsa75-4.2.patch
-7e61b457c9ad8d7c598d88163d2760041033ddb1631cfe989f853b7c2b5cd0bf  xsa75-4.3-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJSgMKZAAoJEIP+FMlX6CvZNC0H/0DZ1mBOiGpfSsn+HjCQuVup
-U81kWQp+SjVKVWvJbG+/vdL/418gIJ/jS9PzL7Qhordb63l7fq1d+Gi9vsQApnku
-25/rKpFQzbJCud/67P3DyO3RAw33z5rQ+S/7nLLx7K6oDKNS3knQpcQwjeNIH040
-NekPA2qBEuIi/0G72fYzU1wzc5XWve3lftzgYVyW+CFE1CUDq9OdWxHm5FTI41TH
-v1/WURQelw4a6BTVvV6NxK8J4ibQvWpL0Id4kXs1DnrSl39Al6gBUf2dO/JQwjCo
-fxMMjFAqWtpOrJjbWntUSJSzsFp/UfIh23a2AEmgdo4H/5yRG5RnomgSw2jOjw8=
-=gTUt
------END PGP SIGNATURE-----
-
-Download attachment "xsa75-4.2.patch" of type "application/octet-stream" (1602 bytes)
-
-Download attachment "xsa75-4.3-unstable.patch" of type "application/octet-stream" (1763 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
