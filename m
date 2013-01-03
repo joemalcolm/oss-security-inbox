@@ -1,50 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/05/5
-Message-Id: <201308051927.r75JRN4b015111@linus.mitre.org>
-Date: Mon, 5 Aug 2013 15:27:23 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/9
+Message-ID: <50E5D058.4020302@redhat.com>
+Date: Thu, 03 Jan 2013 11:39:20 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: valid but unusual sequence of CVEs in SYM13-009
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Panu Matilainen <pmatilai@...hat.com>
+Subject: Re: CVE Request -- rpm (X >= 4.10 and X < 3d74c43 commit): Signature checking function returned success on (possibly malicious ) rpm packages
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-There's a recent disclosure at:
+On 01/03/2013 10:30 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> RPM upstream has corrected the following security issue: [1]
+> https://bugzilla.novell.com/show_bug.cgi?id=796375 Relevant
+> upstream patch: [2]
+> http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=3d74c43
+> 
+> Affected rpm versions include rpm >= 4.10.0 [3] and < than [2]
+> commit.
+> 
+> An attacker could use this flaw to create a syntactically valid
+> rpm package, that could bypass the signature check.
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+> [3] http://rpm.org/wiki/Releases/4.10.0
+> 
 
-  http://www.symantec.com/security_response/securityupdates/detail.jsp?fid=security_advisory&pvid=security_advisory&year=&suid=20130801_00
-
-that has the following valid and correct sequence of CVEs:
-
-  CVE-2013-4575
-  CVE-2013-4676
-  CVE-2013-4677
-  CVE-2013-4678
-
-In other words, the first CVE should NOT be re-interpreted to mean a
-number that "fits better."
-
-CVE-2013-4575 is for software that runs on Linux but we don't know
-(and don't need to know) whether it is open source or might be open
-sourced in the future. We're mentioning it at the request of someone
-who has been assigned CVEs adjacent to CVE-2013-4575, with future use
-for open-source vulnerabilities expected. Thanks very much to that
-person for their help.
+Please use CVE-2012-6088 for this issue.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQEcBAEBAgAGBQJR//l0AAoJEGvefgSNfHMdXYAH/iZbYPo5Z1mnuZ6O7l0ox7xG
-jU4DFThfj+pgi2RWheGiqOn9Qp6rLvjO5tPA+C53ryq+UK7LICYYxrkskTL8iol5
-pi7uvMnqAkHnq/FQTjnMhVk3SD0Jo+VRCcnPk5/XleE7hBqdHNNVl7GTo8/o+QYg
-+Vt0PZAMahPW9DXBtlxhHlDnEfQEfFQUr8Avzi2szuDpnniTgu3c/zoYApmFhPYc
-Ia+092oQDS+S3AfHmSIgookzYHa6JqgelbREWkfAWOMueSCJ7ej6Dp/19l9k1eoL
-TFqb6JoxItrWQI08dcB2nPNfXRy9+woPLP63l6b+LWu5APRmXSSbW+JOAXpBxyc=
-=loS6
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ5dBYAAoJEBYNRVNeJnmTvyMQALo4kVCZmXqkCeGnhmsgJm40
+qXebd64x0dtzul2+TCwE/WHzq859kn5P3GMfMw5xSIcIctx5H4PixJ+gqN0W8reG
+Wha3cUc3mIrrUYL431wIV4OWwnuFFm18bZv7KNWSrK9jBYvhTShZUWVpkIp3h/Yf
+C881pStk19vL8OYjCeKfbr6Z8wH7Uo5LcUgtP96uqkCXJcvDHL0jhC8SY3Sc9WVV
+OLXQPqBimrgJ28iArND2+KNImn8G1IgrtbZ23uRYCePJtljOh+lStBPBZ0996i17
+gUdrndqu7+HnaD6Xw/mnCWA4th/9q37Zq+JxftKslD0PJf9ppLHwc0hNbb7ExdFF
+wPW2NbZgd4SnpQNgltiF6tSU8uUn+TzOEBWdmPn3QAtMUUdIZBD4uTyVcNDu4F6r
+MdHYxRtKoKhXVeYAOrKub6NDO7Ya58rQRYo4RaoRIHSsDx+ZZYbCsth6XabJu4Kl
+VdQNTqs4Cs+wpBwZtcnfst/hpdrikTykvn90TEA6KqsSHt2GbKpikg/89UjyN+2/
+mrzHYfEYnou4Az5zocZoVfqokCVo6vEBcKWUWKnXWBSJgRfCRunzdCgw4QxOvXQP
+AeVu/m5zODVXhYFR1jmUFMqQItTjO5q9m72mv8FholvnKaRJtUIImXne1KtI6dhc
+Owy3zwjbTA+N0Zlwmu4N
+=/Y2G
 -----END PGP SIGNATURE-----
