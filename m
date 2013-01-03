@@ -1,62 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/10
-Message-ID: <5202817D.9030302@redhat.com>
-Date: Wed, 07 Aug 2013 11:18:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/6
+Message-ID: <96945015.52885093.1357234242478.JavaMail.root@redhat.com>
+Date: Thu, 3 Jan 2013 12:30:42 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: SQL injection and shell escaping issues in Cacti < 0.8.8b
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Panu Matilainen <pmatilai@...hat.com>
+Subject: CVE Request -- rpm (X >= 4.10 and X < 3d74c43 commit): Signature checking function returned success on (possibly malicious ) rpm packages
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-On 08/07/2013 10:06 AM, Vincent Danen wrote:
-> Cacti 0.8.8b was released today [1] with a changelog that notes:
-> 
-> Cacti 0.8.8b Change Log [...] * security: SQL injection and shell
-> escaping issues
-> 
-> It looks like the SQL injection issue is in api_poller.php and 
-> utility.php [2]
-> 
-> I think there are two shell escaping issue:
-> 
-> 1) snmp.php: Use escapeshellarg() instead of custom escape function
-> for snmp library [3] 2) rrd.php: Properly escape all user input for
-> consumption by rrdtool [4]
-> 
-> 
-> [1] http://sourceforge.net/mailarchive/message.php?msg_id=31258868 
-> [2] http://svn.cacti.net/viewvc?view=rev&revision=7394 [3]
-> http://svn.cacti.net/viewvc?view=rev&revision=7392 [4]
-> http://svn.cacti.net/viewvc?view=rev&revision=7393
-> 
-> 
-> Looks like 3 CVEs are needed.
-> 
+  RPM upstream has corrected the following security issue:
+  [1] https://bugzilla.novell.com/show_bug.cgi?id=796375
+  Relevant upstream patch:
+  [2] http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=3d74c43
 
-JUST FYI vdanen/myself were emailed off list about some CVE's that may
-have already been assigned to this. Just waiting on that info before
-proceeding.
+Affected rpm versions include rpm >= 4.10.0 [3] and < than [2] commit.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+An attacker could use this flaw to create a syntactically valid rpm
+package, that could bypass the signature check.
 
-iQIcBAEBAgAGBQJSAoF9AAoJEBYNRVNeJnmTvU0P/RKdK6I0+K5lKJSuhfaoZByH
-E+1JaQh+9DQFWAjIBJropw46eaJ9snB72dCtj+LDr4J1stBPIkZDGVnBNB3feIlH
-rJMBBuqQAGU3DdpQz4I3txRt/wDHB540PglKdOFYDXTiKWvy8y0HodrQmkzIU+Xd
-HLJA8GDHNB/YGXreKDTEQO/KntHKc0YvAY5JeX1EvNJNwDdcHs444lEbKMmoGmpx
-iS8Khy5EEftwmPVJYzPDXGvdzX6UjdxTEOJHhysUM7m7aGhLtcBoaziC7k9wMcf2
-ghCzSzEqcqGkN4cShz0u00naZ627df7i6SZAuM7xp7vvNr9SnunhMMemjt317q9K
-Vr9Gu3Lb7SwnzRugK8/GMwvgXnzKHyISaoYJX+4EZ7c9J/3x7ZtMdGCfOAmx4x/9
-O90YO5tK6szJzsFeBg/yCPAiJ0gt7o6m67jzGOxw6wNPEW4rc0L80o/vjbmhgyop
-e6CQLlOiTFhlP1iUBXtioyOFIQlwjqIivzcvn23sNW0G7lWmHZ0f9hNq5O03Woq6
-80sGJYRnJzptoFM2TOf7YwqzN17bzURO0FQsMTGlyyWt3MU03s4gIRnFmmdvvmjh
-ce85EAcWiRwmbRPuVHJ0TXPRbBdA0PdcPzvqgCcgs11kEgIbIVdk4ODaWcMqzxSV
-dhfcoUXmv9uZNEVOz/+4
-=b6WC
------END PGP SIGNATURE-----
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+[3] http://rpm.org/wiki/Releases/4.10.0
