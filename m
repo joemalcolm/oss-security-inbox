@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/09/5
-Message-ID: <52A592AB.1020303@redhat.com>
-Date: Mon, 09 Dec 2013 15:21:39 +0530
-From: Ratul Gupta <ratulg@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/2
+Message-ID: <50E579FC.2060302@igalia.com>
+Date: Thu, 03 Jan 2013 13:30:52 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: pam: password hashes aren't compared case-sensitively
+CC: Aaron Patterson <tenderlove@...y-lang.org>,  rubyonrails-security@...glegroups.com
+Subject: Re: SQL Injection Vulnerability in Ruby on Rails (CVE-2012-5664)
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1038555
+On 02/01/13 22:22, Aaron Patterson wrote:
+> There is a SQL injection vulnerability in Active Record in ALL versions. This vulnerability has been assigned the CVE identifier CVE-2012-5664.
 
-It was found that in pam_userdb module for Pam, password hashes weren't 
-compared case-sensitively, which could lead to acceptance of hashes for 
-completely different passwords, which shouldn't be accepted.
 
-After hashing the user's password with crypt(), pam_userdb compares the 
-result to the stored hash case-insensitively with strncasecmp(), which 
-should be avoided, as it could result in an increased possibility of a 
-successful brute-force attack.
+CVE-2012-5664 literally says:
 
-Can a CVE be assigned for this?
+"SQL injection vulnerability in the Authlogic gem for Ruby on Rails
+allows remote attackers to execute arbitrary SQL commands via a crafted
+parameter in conjunction with a secret_token value, related to certain
+behavior of find_by_id and other find_by_ methods."
 
--- 
-Regards,
 
-Ratul Gupta / Red Hat Security Response Team
+However in your description of the bug I don't see any references to the
+Authlogic gem. This rather seems to be a generic RoR issue.
 
+
+And both Debian and Ubuntu have marked this CVE as NOT-FOR-US because of
+this (they don't ship Authlogic gem).
+
+
+Could you please clarify this?
+
+
+Thanks!
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
