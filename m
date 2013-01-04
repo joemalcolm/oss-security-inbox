@@ -1,27 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/7
-Message-ID: <alpine.LFD.2.03.1308081521050.18623@redhat.com>
-Date: Thu, 8 Aug 2013 15:39:30 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Petr Matousek <pmatouse@...hat.com>
-Subject: CVE Request: Linux kernel: arm64: unhandled el0 traps
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/04/2
+Message-Id: <E1Tr9he-0007fM-NC@xenbits.xen.org>
+Date: Fri, 04 Jan 2013 16:01:03 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 37 (CVE-2013-0154) - Hypervisor crash due to incorrect ASSERT (debug build only)
 Content-Type: text/plain; charset=utf-8
 
-   Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Linux kernel built for the ARM64(CONFIG_ARM64) platform is vulnerable to a 
-crash when the processor generates trap/esr, that is not handled gracefully, 
-which leads to bad_mode(), wherein it'll die() or oops().
+	     Xen Security Advisory CVE-2013-0154 / XSA-37
 
-A user/program could use this flaw to crash the kernel resulting in DoS.
+     Hypervisor crash due to incorrect ASSERT (debug build only)
 
-Upstream fixes:
-===============
-  -> https://git.kernel.org/linus/381cc2b9705512ee7c7f1839cbdde374625a2a9f
-  -> https://git.kernel.org/linus/9955ac47f4ba1c95ecb6092aeaefb40a22e99268
+ISSUE DESCRIPTION
+=================
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+A change to an internal interface within the hypervisor invalidated an
+ASSERT in a caller of that API. This code path is exposed to PV guests
+via a hypercall allowing administrators of PV guests to crash the
+hypervisor if it is built with debugging enabled.
+
+IMPACT
+======
+
+Malicious administrators of PV guests running on hypervisors built
+with the non-default debug=y option can crash the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Systems running Xen 4.2 and unstable are vulnerable to this issue. Xen
+4.1 and earlier are not vulnerable.
+
+Only systems built with debugging enabled are vulnerable. Debugging is
+not enabled by default.
+
+Systems running PV guests or HVM guests using stubdomains are
+vulnerable. Guests which run only HVM guests without stubdomains are
+not vulnerable.
+
+MITIGATION
+==========
+
+Building the hypervisor without debugging enabled will completely
+avoid this issue. Note that debugging is not enabled by default.
+
+Avoiding running PV guests with untrusted administrators will also
+avoid this issue
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue was disclosed publicly on xen-devel; the person reporting
+it did not appreciate that it was a security issue.  Under the
+circumstances the Xen.org security team do not consider that this
+advisory should be embargoed.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa37-4.2.patch             Xen 4.2.x
+xsa37-unstable.patch        xen-unstable
+
+$ sha256sum xsa37*.patch
+beb9406e2d2de7a9768034af443b2eb30f69cd6e4688ceb63305595d2221194d  xsa37-4.2.patch
+161f41f95bd679cdb19e37df4da6a75386af4689118377ec501a9e3d4f66c873  xsa37-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQ5vyNAAoJEIP+FMlX6CvZkGUH/38HiKMfj+95DCgRzQI8dGpu
+6bvyhnHOY1WyGPGmDYuaMfLhOdBIoOdR46qMkC7R4kgaNqRIrev2KmzXSF//UuRq
+w/8eUwby1jGmZ4NnrxjBQfHQMUywkZGO0IdSzK573nCsOBDMH42Ec/vtEpnJsNK/
+vxWibmsPmNvDuZ0l/fhuc78iGcpF1D2T9D5ndujfJQ02cYFKeXVzBLuMtA/+YAPF
+JszVIknZnXYKoVjcXMOf5qokRxZehsI4BsbI6A4AxxZboSBzV1lX+fkPqGZnUury
+oiGTSIzdnTq4UbgrgV3JJGcfsCpB2xm5pDLsmXiggd8Zjo2oW25dWrpmTo5B8dU=
+=bPx0
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa37-4.2.patch" of type "application/octet-stream" (691 bytes)
+
+Download attachment "xsa37-unstable.patch" of type "application/octet-stream" (691 bytes)
