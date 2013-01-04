@@ -1,157 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/26/1
-Message-ID: <CAEDdjHeXcmCPeuXbYi1RpD9Q==r9LE-zeNDfvnD8mSGn_WJfZw@mail.gmail.com>
-Date: Sat, 26 Oct 2013 21:45:56 +0100
-From: Pedro Ribeiro <pedrib@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/04/1
+Message-ID: <1904201237.53293871.1357313344781.JavaMail.root@redhat.com>
+Date: Fri, 4 Jan 2013 10:29:04 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Albert Astals Cid <aacid@....org>
-Subject: CVE request: 3 vulnerabilities in poppler and 1 in Xpdf
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>, Jiri Popelka <jpopelka@...hat.com>
+Subject: CVE Request - cups:  'Listen localhost:631' option not honoured correctly on IPv6-enabled systems when systemd used for CUPS socket activation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Kurt, Steve, vendors,
 
-There are 3 vulnerabilities in poppler and 1 in Xpdf that need CVE
-attention. Can you please provide CVE's for the following?
+  during the process of CUPS socket activation code refactoring in favour
+of systemd capability a security flaw was found in the way CUPS service
+honoured Listen localhost:631 cupsd.conf configuration option. The setting
+was recognized properly for IPv4-enabled systems, but failed to be correctly
+applied for IPv6-enabled systems. As a result, a remote attacker could use
+this flaw to obtain (unauthorized) access to the CUPS web-based administration
+interface.
 
-- Race condition on temporary file (Windows) / Insecure temporary file
-(other non-Unix OS's), affecting poppler and Xpdf (reported by Pedro
-Ribeiro, unfixed in poppler, unfixed in Xpdf) -> Not sure if this is
-one or two vulnerabilities?
+References:
+[1] https://bugzilla.novell.com/show_bug.cgi?id=795624
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=891942
 
-- Stack based buffer overflow, affecting poppler in the utils section
-(reported by Daniel Kahn Gillmor, fixed in poppler 0.24.2)
+Note: Obviously this would affect only instances, where CUPS was instructed
+to pass its socket activation code to systemd (instances not using systemd
+would not be affected by this problem).
 
-- User controlled format string, affecting poppler in the utils
-section (reported by Daniel Kahn Gillmor and Pedro Ribeiro, fixed in
-poppler 0.24.3)
+Could you allocate a CVE identifier for this?
 
-Note that the poppler maintainers are aware of the unfixed issue. Xpdf
-upstream appears to be dead since 2011 so I have not attempted to
-contact them.
-
-Details on the vulnerabilities are below.
-
-The first vulnerability is use of insecure temporary file for non-Unix
-OS's. As per the code comments, the maintainers are aware of this and
-welcome patches from anyone who knows of a better way to create temp
-files in Windows / other OS's.
-I have also checked Xpdf and the same vulnerable code is present, so
-the bug must be pretty old and all releases of poppler since forking
-from Xpdf should be affected.
-======================================================================
-Vulnerability: Race condition on temporary file access / Insecure
-Temporary File (CWE-363 / CWE-377)
-Filename(line): poppler-0.24.2/goo/gfile.cc(340-395)
-Code snippet:
-
-There is a race condition and use of a insecure temporary file in the
-openTempFile
-function that enables an attacker to replace the  temporary file with
-a symlink of
-his/her choosing. This only happens on non-Unix OS's (old MacOS, Windows, etc).
-
-GBool openTempFile(GooString **name, FILE **f, const char *mode) {
-#if defined(_WIN32)
-  //---------- Win32 ----------
-  char *tempDir;
-  GooString *s, *s2;
-  FILE *f2;
-  int t, i;
-
-  // this has the standard race condition problem, but I haven't found
-  // a better way to generate temp file names with extensions on
-  // Windows
-  if ((tempDir = getenv("TEMP"))) {
-    s = new GooString(tempDir);
-    s->append('\\');
-  } else {
-    s = new GooString();
-  }
-  s->appendf("x_{0:d}_{1:d}_",
-    (int)GetCurrentProcessId(), (int)GetCurrentThreadId());
-  t = (int)time(NULL);
-  for (i = 0; i < 1000; ++i) {
-    s2 = s->copy()->appendf("{0:d}", t + i);
-    if (!(f2 = fopen(s2->getCString(), "r"))) {
-      if (!(f2 = fopen(s2->getCString(), mode))) {
-delete s2;
-delete s;
-        return gFalse;
-      }
-      *name = s2;
-      *f = f2;
-      delete s;
-      return gTrue;
-    }
-    fclose(f2);
-    delete s2;
-  }
-  delete s;
-  return gFalse;
-#elif defined(VMS) || defined(__EMX__) || defined(ACORN) || defined(MACOS)
-  //---------- non-Unix ----------
-  char *s;
-
-  // There is a security hole here: an attacker can create a symlink
-  // with this file name after the tmpnam call and before the fopen
-  // call.  I will happily accept fixes to this function for non-Unix
-  // OSs.
-  if (!(s = tmpnam(NULL))) {
-    return gFalse;
-  }
-  *name = new GooString(s);
-  if (!(*f = fopen((*name)->getCString(), mode))) {
-    delete (*name);
-    *name = NULL;
-    return gFalse;
-  }
-  return gTrue;
-
-======================================================================
-
-
-The second vulnerability is a buffer overflow in the pdfseparate
-utility, and was reported by Daniel Kahn Gillmor. The buffer overflow
-was fixed in poppler 0.24.2 as per commit in [1].
-
-The third vulnerability user controlled format string, which was
-reported by Daniel Kahn Gillmor and Pedro Ribeiro separately to the
-poppler maintainers. This vulnerability was fixed on poppler 0.24.3 as
-per the commit in [2].
-
-More details on the format string are below:
-======================================================================
-Vulnerability: Uncontrolled format string (CWE-124)
-Filename(line): poppler-0.24.2/utils/pdfseparate.cc(70)
-Code snippet:
-
-bool extractPages (const char *srcFileName, const char *destFileName) {
-  char pathName[4096];
-  GooString *gfileName = new GooString (srcFileName);
-  PDFDoc *doc = new PDFDoc (gfileName, NULL, NULL, NULL);
-
-...
-
-  if (firstPage != lastPage && strstr(destFileName, "%d") == NULL) {
-    error(errSyntaxError, -1, "'{0:s}' must contain '%%d' if more than
-one page should be extracted", destFileName);
-    return false;
-  }
-  for (int pageNo = firstPage; pageNo <= lastPage; pageNo++) {
-    snprintf (pathName, sizeof (pathName) - 1, destFileName, pageNo);
-^ function parameter passed as format string
-
-The function is called by main in line 110 directly passing the arguments:
-ok = extractPages (argv[1], argv[2]);
-^ destFileName parameter
-
-PoC:
-./pdfseparate -f 1 -l 1 aPdfFile.pdf "%x%x%x%x%x%x%n"
-
-======================================================================
-
-Regards,
-Pedro
-
-[1] http://cgit.freedesktop.org/poppler/poppler/diff/utils/pdfseparate.cc?id=b8682d868ddf7f741e93b
-[2] http://cgit.freedesktop.org/poppler/poppler/commit/?id=61f79b8447c3ac8ab5a26e79e0c28053ffdccf75
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
