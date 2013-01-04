@@ -1,13 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/3
-Message-ID: <alpine.LFD.2.03.1306051323210.10573@redhat.com>
-Date: Wed, 5 Jun 2013 13:24:53 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: kernel: cpqarray/c: info leak in ida_locked_ioctl()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/04/4
+Message-ID: <50E68065.8040207@redhat.com>
+Date: Fri, 04 Jan 2013 09:10:29 +0200
+From: Panu Matilainen <pmatilai@...hat.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- rpm (X >= 4.10 and X < 3d74c43 commit): Signature checking function returned success on (possibly malicious ) rpm packages
 Content-Type: text/plain; charset=utf-8
 
-Sorry, meant to say -> Linux kernel: cpqarray/cciss: info leak via ioctl(2)
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+On 01/03/2013 07:30 PM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>    RPM upstream has corrected the following security issue:
+>    [1] https://bugzilla.novell.com/show_bug.cgi?id=796375
+>    Relevant upstream patch:
+>    [2] http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=3d74c43
+>
+> Affected rpm versions include rpm >= 4.10.0 [3] and < than [2] commit.
+
+More precisely, the affected stable versions are 4.10.0 and 4.10.1. Rpm 
+4.10.2 (released on Dec 10th 2012) includes a fix already: 
+http://rpm.org/wiki/Releases/4.10.2
+
+In addition, rpm 4.11 alpha and beta1 test-releases are affected.
+
+> An attacker could use this flaw to create a syntactically valid rpm
+> package, that could bypass the signature check.
+
+To elaborate a bit, it's possible to create a package with an OpenPGP 
+signature that's either
+a) technically valid but one that rpm doesn't support (eg due to 
+"exotic" algorithms used)
+b) (intentionally) malformed one
+
+In both cases, rpm issues an error about skipping package/header with 
+unverifiable signature but because of the flaw, continues nevertheless, 
+effectively bypassing signature checking in the package reading path 
+used by eg queries and installation. The explicit signature checking 
+path (ie 'rpm -K <package>') is not affected by the flaw.
+
+-- 
+     - Panu -
