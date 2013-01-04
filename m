@@ -1,52 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/11/6
-Message-ID: <52579052.2010808@redhat.com>
-Date: Thu, 10 Oct 2013 23:44:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Joel Weinberger <jww@...omium.org>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: Re: browser document.cookie DoS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/04/7
+Message-ID: <20130104225628.GA12324@hunt>
+Date: Fri, 4 Jan 2013 14:56:28 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: cve-assign@...re.org
+Cc: clopez@...lia.com, oss-security@...ts.openwall.com, tenderlove@...y-lang.org, Nico Golde <nion@...ian.org>
+Subject: Re: Re: SQL Injection Vulnerability in Ruby on Rails (CVE-2012-5664)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+CVE-2012-5664 has been referenced in at least one published security
+update to refer to the "root" problem in Active Record's dynamic
+finders:
 
-On 09/25/2013 09:42 AM, Kurt Seifried wrote:
-> On 09/20/2013 09:52 AM, Joel Weinberger wrote:
->> Just an FYI, we have fixed this in tip of the tree Chromium: 
->> https://src.chromium.org/viewvc/chrome?revision=224268&view=revision
->
->> 
+http://lists.debian.org/20130104221128.GA24542@ngolde.de
+
+Are there any updates on the "draft" resolution proposed below? (I'm
+reluctant to change our triage to reflect the draft below until I've
+heard more details; our data currently matches the published DSA.)
+
+Thanks
+
+On Thu, Jan 03, 2013 at 03:53:47PM -0500, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> https://code.google.com/p/chromium/issues/detail?id=238041
->> --Joel
+> Repurposing CVE-2012-5664 to match the official advisory from the Ruby
+> on Rails core team is problematic because that would change the
+> affected product. Many CVE consumers have processes for using CVE that
+> can't cleanly handle all arbitrary types of post-publication changes
+> to the affected product. In this situation, taking a published CVE and
+> changing the affected product from "the Authlogic gem" to "Ruby on
+> Rails" is not something that we'd like to do.
+> 
+> The official advisory, i.e.,
+> 
+>   https://groups.google.com/group/rubyonrails-security/msg/23daa048baf28b64?dmode=source&output=gplain
+> 
+> is obviously an important vendor disclosure about an important
+> product, and there will be a CVE entry that corresponds to this vendor
+> disclosure. See below.
+> 
+> Our understanding is that some details of the Authlogic gem do have
+> security concerns for some people. These are perhaps alluded to by
+> "The injection interfaces are documented and the programmer is not
+> supposed to pass user input to those interfaces" and subsequent
+> statements in the
+> 
+>   http://blog.phusion.nl/2013/01/03/rails-sql-injection-vulnerability-hold-your-horses-here-are-the-facts/
+> 
+> post. This may be mostly relevant at sites that, for whatever reason,
+> are staying at 3.2.9 for now. In any case, tracking an Authlogic gem
+> issue may be worthwhile for some CVE consumers. It may meet our
+> definition of a vulnerability even if it doesn't meet your definition
+> of a vulnerability. A maintainer of the Authlogic gem is, of course,
+> welcome to dispute this, and the related entry (see below) would then
+> be marked as "DISPUTED" in CVE.
+> 
+> The outcome we're planning will be similar to this draft content:
 > 
 > 
-> So I assume Google will not be handling CVE assignments for
-> chromium?
+> CVE-2012-5664
+> 
+> ** REJECT **  DO NOT USE THIS CANDIDATE NUMBER.  ConsultIDs:
+> CVE-2012-6496, CVE-2012-6497.  Reason: this candidate was intended for
+> one issue, but the candidate was publicly used to label concerns about
+> multiple products.  Notes: All CVE users should consult CVE-2012-6496
+> and CVE-2012-6497 to determine which ID is appropriate.  All
+> references and descriptions in this candidate have been removed to
+> prevent accidental usage.
+> 
+> 
+> 
+> CVE-2012-6496
+> 
+> MLIST:[rubyonrails-security] 20130102 SQL Injection Vulnerability in Ruby on Rails (CVE-2012-5664)
+> https://groups.google.com/group/rubyonrails-security/msg/23daa048baf28b64?dmode=source&output=gplain
+> 
+> MISC:http://blog.phusion.nl/2013/01/03/rails-sql-injection-vulnerability-hold-your-horses-here-are-the-facts/
+> 
+> SQL injection vulnerability in the Active Record component in Ruby on
+> Rails before 3.0.18, 3.1.x before 3.1.9, and 3.2.x before 3.2.10
+> allows remote attackers to execute arbitrary SQL commands via a
+> crafted request that leverages incorrect behavior of dynamic finders
+> in applications that can use unexpected data types in certain find_by_
+> method calls.
+> 
+> 
+> 
+> CVE-2012-6497
+> 
+> MISC:http://phenoelit.org/blog/archives/2012/12/21/let_me_github_that_for_you/index.html
+> MISC:http://blog.phusion.nl/2013/01/03/rails-sql-injection-vulnerability-hold-your-horses-here-are-the-facts/
+> 
+> The Authlogic gem for Ruby on Rails, when used with certain versions
+> before 3.2.10, makes potentially unsafe find_by_id method calls, which
+> might allow remote attackers to conduct CVE-2012-6496 SQL injection
+> attacks via a crafted parameter in environments that have a known
+> secret_token value, as demonstrated by a value contained in
+> secret_token.rb in an open-source product.
+> 
+> - -- 
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.11 (SunOS)
+> 
+> iQEcBAEBAgAGBQJQ5e4PAAoJEGvefgSNfHMdtwoIAINP7Dj8Y6ImlbBb4JxCoIcG
+> StfgLRXxiPY1iFRwOvw9i1dmfleC/5bZ+PXXM1td8CQUTivklUUboWydUcIoO/hd
+> QjrLxzoLdNg2iqrxW+4l62wtKMt5EepFqIfS3uGYZdepxlqztDJAhif9Y7WT2Gge
+> NtAVEsJWJswt+vBetcYfpFA9vx9zq5CsqeU4VMEDDujN2+fxl1wtli1iz99I1s+9
+> RGd+MP/ML4Dgs0sFaltSv/3S/34ZZvuKq9CWHZ7wD2hvDxIEgkVlkK509avc91A7
+> EjJbL429Zyp814i9xEY4E6+5YW/uCRUHHM/p+/X4Ph3tGFakD9AUZK6hnIng1ig=
+> =Mfjl
+> -----END PGP SIGNATURE-----
 > 
 
-Ping. Does anyone know if Google is acting as the CNA for Chromium? I
-assume they are, but I also see no CVE for this.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSV5BSAAoJEBYNRVNeJnmTEkMQAJQhHCzOKxhgJELgagAm3O2g
-23pSmKNeXh27Px9Dq+RllMM/qN+jETPHQ/59y1l9GE4nMymqeMBBDbK0Ws5q050+
-Ay9aZTPr3vleClhmoqyFOZIU+oDlbZ0/IamoM0th9F8r4hjVHbzFVO0GXkTSaGk4
-CJKRP3fqli+yX+Wk8twUOXkr4Nr1bg4Ty7LugxeMlHCVrsMo4Lpbv2YcRVg/6x7f
-V6x326z9c00txtpKxbP0IgON7qeR7BBkPDgbf6APFcWSp/TSZIeXk2y/xgMVXiMd
-3IJt6HeKqhLzb35PlHeZJrcJjKlUHkrZniY61Ig3gc/GviwgegFuAwP3O9kUDxvc
-GYS6t7bUfJ/Mhwaki4tAW5JeYc6WV3zhCU31UeJmr/tqNJfunI6uxASQnW0IzzVf
-eS5AV20nHJn6PtJTB54jxw4EuYDvzpXor+9WB5KP76z+wgZhUjitHR4PHDHUIeyY
-jc9nJ7EOs2aqj1k7UGd1STRDE2xG0Rki37Yvf7oPIPulGLjHmPxL6kKCpSTt+pIM
-OaOomM1uZSSejG8BMWXZ4vNTzc0yFUN1C2h226E2i2Q5CykCdENIOXLXjFASfPQR
-aVS+IvRrYFy7+9DjAXU3vK2uoW9vnDUoidSkd76jToCinfkJ6uAYUhH23RJBB1Xe
-/oZA/ZljHxv2mqbc/XMM
-=XRg2
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
