@@ -1,33 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/23/13
-Message-ID: <20130823143933.GF28742@redhat.com>
-Date: Fri, 23 Aug 2013 08:39:33 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/04/5
+Message-ID: <50E72ECB.2060607@redhat.com>
+Date: Fri, 04 Jan 2013 12:34:35 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: roundcube 0.9.3 fixes two XSS flaws
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>, Jiri Popelka <jpopelka@...hat.com>
+Subject: Re: CVE Request - cups:  'Listen localhost:631' option not honoured correctly on IPv6-enabled systems when systemd used for CUPS socket activation
 Content-Type: text/plain; charset=utf-8
 
-I don't see CVEs for these, or requests, so could two be assigned
-please?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Two XSS flaws were fixed in roundcube 0.9.3 [1]:
+On 01/04/2013 08:29 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> during the process of CUPS socket activation code refactoring in
+> favour of systemd capability a security flaw was found in the way
+> CUPS service honoured Listen localhost:631 cupsd.conf configuration
+> option. The setting was recognized properly for IPv4-enabled
+> systems, but failed to be correctly applied for IPv6-enabled
+> systems. As a result, a remote attacker could use this flaw to
+> obtain (unauthorized) access to the CUPS web-based administration 
+> interface.
+> 
+> References: [1] https://bugzilla.novell.com/show_bug.cgi?id=795624 
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=891942
+> 
+> Note: Obviously this would affect only instances, where CUPS was
+> instructed to pass its socket activation code to systemd (instances
+> not using systemd would not be affected by this problem).
+> 
+> Could you allocate a CVE identifier for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-* Fix XSS vulnerability when saving HTML signatures [2],[3]
-* Fix XSS vulnerability when editing a message "as new" or draft [2],[4]
+Please use CVE-2012-6094 for this issue. The novell bug is from 2012.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-[1] http://trac.roundcube.net/wiki/Changelog#RELEASE0.9.3
-[2] http://trac.roundcube.net/ticket/1489251
-[3] http://trac.roundcube.net/changeset/ce5a6496fd6039962ba7424d153278e41ae8761b/github
-[4] http://trac.roundcube.net/changeset/93b0a30c1c8aa29d862b587b31e52bcc344b8d16/github
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-
-Other references:
-
-http://bugs.gentoo.org/show_bug.cgi?id=482206
-https://bugzilla.redhat.com/show_bug.cgi?id=1000510
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+iQIcBAEBAgAGBQJQ5y7KAAoJEBYNRVNeJnmTYegQANsDMiRVbJVntKOoAGJBI8iu
+lZ93jqkZAm7Vxq7hZng+KlC8ISAGiqELEQcUTD5cDekgGyim5Yeo+9ol2bkEUhJQ
+ndath3pu8VQ49wnoyrGLCuPfRGNCcxjRpcSObg/0BY0bKS7tpNb6uQwnnu08vMGM
+8cwkS4W8Q/y+LCLxEd8MIfSCVc0ZJKvEXuPxJwtk/pAzAzZVHa4SS34hiz/1wZ3a
+MR8eNeO+UoZodujNTsU205OIsU2RQw+gqAIBwsbn4SzbTM8CsnBnQZSPIiRCbOmE
+qOte7JUXh6nAzshFuBwk2V2JzjxAx9xQw8VBOcZJwPMShFpTSobz2nFaAufPqG7A
+4+6YVhTBwKqCvRXUodN+TadZTOMOsr0GatGVCW5U8wpDXqqdebnrl43uvkmPqsUY
+s+ZPprWANjh5D6TiCkfueVlZxmX7hbMlWmd2B6RlMUNN3Sw91SJ5y9EgqsB2G9zk
+fFmEAzthPygIywLEE94v0JO6XIDO0XdMROMdqr4w/GLYzKO354yUlGHfw3ZZ4PTo
+Hz3mrV61gD6vMOATluMGr5AcaYGyJ1UKbEw2SO4Z9MJa/fC4cTaQOlAFYSCq8aGx
+tEG1lWzUSpLCNxhRx0lBKcj86W5bekLlAAyRx+yUWutigNcCemIsYRGGuXBFAu/m
+Bec29fjK5m+l2eGD3dlg
+=6+vX
+-----END PGP SIGNATURE-----
