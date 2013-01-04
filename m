@@ -1,28 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/25/12
-Message-ID: <20130925164547.GB10672@kludge.henri.nerv.fi>
-Date: Wed, 25 Sep 2013 19:45:47 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/04/6
+Message-ID: <50E72EE7.5000300@redhat.com>
+Date: Fri, 04 Jan 2013 12:35:03 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Simple Machines Forum (SMF) <= 2.0.5 - multiple vulnerabilities
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Rex Dieter <rdieter@...h.unl.edu>
+Subject: Re: CVE Request -- qt: QSslSocket might report inappropriate errors when certificate verification fails
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 25, 2013 at 02:33:14PM +0000, Moritz Naumann wrote:
-> This CSRF doesn't work for me on two 2.0.4 installations I tested on.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-You are correct.
+On 01/04/2013 09:16 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> Qt upstream has recently announced (upcoming) availability of Qt
+> 4.8.5, Qt 4.7.6 and Qt 4.6.5 which (between other things) should 
+> correct also the following security flaw:
+> 
+> A security flaw was found in the way QSslSocket implementation of
+> the Qt, a software toolkit for applications development, performed
+> certificate verification callbacks, when Qt libraries were used
+> with different OpenSSL version than the one, they were compiled
+> against. In such scenario, this would result in a connection error,
+> but with the SSL error list to contain QSslError:NoError instead of
+> proper reason of the error. This might result in a confusing error
+> being presented to the end users, possibly encouraging them to
+> ignore the SSL errors for the site the connection was initiated
+> against.
+> 
+> References: [1]
+> http://lists.qt-project.org/pipermail/announce/2013-January/000020.html
+>
+> 
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=891955
+> 
+> Relevant upstream patch: [3]
+> https://codereview.qt-project.org/#change,42461
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-> Both return
->   Unable to verify referring url. Please go back and try again.
+Please use CVE-2012-6093 for this issue. The QT bug is from 2012 and
+mentions the security impact.
 
-Actual error message for me:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-"Your session timed out while posting. Please go back and try again."
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-I'm really sorry about this. I even tested using different computer so I don't
-know what I previously did wrong/different. Thank you for correcting this.
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQIcBAEBAgAGBQJQ5y7mAAoJEBYNRVNeJnmTjmEQAKKJZAeiG7SKzTnsYtIFJkaV
+zCYr+BHrauzWSSs+jm6PZjnoBQhdPyVfEl5+B0QsitjVq6hm+MYv6J3zbWmkStST
+GPFun1JyZsUWEbQveEmrv8Rd/NcvdkBL9caIAZCAJ04VVLfNgsH5b7MUTCKVDIlC
+BKXiyAUhJWbsHEjBwa7Rp5OzoOz+I6wCOpSqk6ZI4sX86Snl9gIk5ff3w3AWlKnq
+SpcGYw5J1XqQk2j7rhhfMvUvoE5W2KdvHA4xEeF7+ipOYVCRKq3uUyqmLObZ0h/v
+Hu2HuOLtulso2p7Ab/iDXzPMkiyPRs9fTfs70HXt6LTkhNvf/ZfSnSGFgeAQDEZG
+OcJuLzOMhrEx53xo00ybUhdZelPI1rIhNhc/1LKtCjJAHPBk3ePGudLCMvM1bWp6
+9BPNNY+8n0Wf8THxtBtKgnhI02NZZ2UFcm/Z48+ime1gtMZKk0H2nz72DKMX7IWM
+0fBjLeHuyMMOKSut/PzVp/mMO9Qsg61MadCVqZMRLSbYOeBcoaSx+8izCeVAHNvK
+g6DvPtWT1NFQQvAUvdbNoieImadmfpdjQVZXsfqzxIIAfTpYeJ3HGUhqgC39j1hs
+4+BMjDYEGrAcXLMNyInr8loxqr6fbgm0KWbyW87TRSLyOKeHr4FeKh4iJF2oIxNi
+1CIfKBjIeROfUfs9Bmxp
+=5EAw
+-----END PGP SIGNATURE-----
