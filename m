@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/05/7
-Message-ID: <20130905083052.GV26936@dhcp-25-225.brq.redhat.com>
-Date: Thu, 5 Sep 2013 10:30:52 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/04/3
+Message-ID: <122688110.53315746.1357316179256.JavaMail.root@redhat.com>
+Date: Fri, 4 Jan 2013 11:16:19 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com, Agostino Sarubbo <ago@...too.org>, Kees Cook <keescook@...omium.org>
-Subject: Re: CVE request: Kernel PID Spoofing Privilege Escalation Vulnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Rex Dieter <rdieter@...h.unl.edu>
+Subject: CVE Request -- qt: QSslSocket might report inappropriate errors when certificate verification fails
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 05, 2013 at 11:23:49AM +0300, Dan Carpenter wrote:
-> On Wed, Sep 04, 2013 at 08:30:05PM -0600, Kurt Seifried wrote:
-> > Please use CVE-2013-4300 for this issue.
-> > 
-> > Stupid Q, any reason why this couldn't be sent to
-> > http://oss-security.openwall.org/wiki/mailing-lists/distros to give
-> > vendors a heads up (also we can get it a CVE prior to public release
-> > then)?
-> > 
-> 
-> The original patch was sent to netdev and lkml publicly from the start.
-> 
-> https://lkml.org/lkml/2013/8/22/462
-> 
-> We do have someone who is supposed to forwarding security bugs from
-> security@...nel.org to distros.  I'm not on distros but apparently this
-> wasn't happening properly so we've recently assigned another person to
-> help with this.
+Hello Kurt, Steve, vendors,
 
-As you said, the patch was sent to public mailing lists clearly saying
-"This is a security bug.". If anything, this should have been forwarded
-to oss-security, there's no point to forward to distros when the issue
-is a) public and b) clearly marked as security fix.
+  Qt upstream has recently announced (upcoming) availability of 
+Qt 4.8.5, Qt 4.7.6 and Qt 4.6.5 which (between other things) should
+correct also the following security flaw:
 
--- 
-Petr Matousek / Red Hat Security Response Team
+A security flaw was found in the way QSslSocket implementation of the Qt,
+a software toolkit for applications development, performed certificate
+verification callbacks, when Qt libraries were used with different OpenSSL
+version than the one, they were compiled against. In such scenario, this
+would result in a connection error, but with the SSL error list to contain
+QSslError:NoError instead of proper reason of the error. This might result
+in a confusing error being presented to the end users, possibly encouraging
+them to ignore the SSL errors for the site the connection was initiated against.
+
+References:
+[1] http://lists.qt-project.org/pipermail/announce/2013-January/000020.html
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=891955
+
+Relevant upstream patch:
+[3] https://codereview.qt-project.org/#change,42461
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
