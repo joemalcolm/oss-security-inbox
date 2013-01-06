@@ -1,60 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/29/7
-Message-ID: <51A64245.9030702@redhat.com>
-Date: Wed, 29 May 2013 12:00:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/06/2
+Message-ID: <20130106142030.GA17276@kludge.henri.nerv.fi>
+Date: Sun, 6 Jan 2013 16:20:30 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>
-Subject: Re: CVE request: libraw: multiple issues
+Subject: CVE request: Havalite CMS 1.1.7 stored XSS vulnerability in comments of blog posts
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Havalite CMS has stored XSS vulnerability in comments of blog posts. Example:
 
-On 05/29/2013 03:18 AM, Raphael Geissert wrote:
-> Hi Kurt,
-> 
-> On 28 May 2013 19:58, Kurt Seifried <kseifried@...hat.com> wrote:
->> On 05/28/2013 02:43 AM, Raphael Geissert wrote:
->>> So there's a double-free (fixed in 0.15.2[3])
-> 
-> https://github.com/LibRaw/LibRaw/commit/19ffddb0fe1a4ffdb459b797ffcf7f490d28b5a6
+POST http://example.com/?p=1 "comment" with value %E2%80%9C%3E%3Cscript%3Ealert%28document.cookie%29%3C%2Fscript%3E
 
-Please
-> 
-use CVE-2013-2126 for this issue.
+Tested in 1.1.7 (cbd391e913d04224225cf924a7fcb2b5), which was uploaded 2012-11-07 to sourceforge.net. I tried to contact vendor without response.
 
->>> and a buffer overflow (fixed in 0.15.1[2]).
-> 
-> https://github.com/LibRaw/LibRaw/commit/2f912f5b33582961b1cdbd9fd828589f8b78f21d
+https://sourceforge.net/projects/havalite/files/
 
-Please
-> 
-use CVE-2013-2127 for this issue.
+Some other notes:
+- CVE-2012-5919 still not fixed in 1.1.7 version
+- CVE-2012-5893 does not work without administrator privileges, but uploaded files are executed (for example PHP)
+- Typos in "readme.html"
+- 777 modes not needed even it was in several places. 711 is enough for content directories
 
-> Cheers, -- Raphael Geissert - Debian Developer www.debian.org -
-> get.debian.net
+I recommend not to use this software before these vulnerabilities are fixed.
 
-Thanks
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRpkJEAAoJEBYNRVNeJnmTVZYP/R5M80Qjy91ZN3hoYmsywB7V
-KE8Tgwm1LsxWNvoHm5/ml7kEphNwrwPsxJeiKfZG1lql1N3I4Rd3eGLZZCn88WNk
-EJ1JeSDxE5XIpApnReXHBfCk3OGsHcotRhGj+7b+LCLqOcQW/f/MPQ3yVSMab8Pz
-QhFTg0t2TDthhAEQWi4PbwgVTPEb+UZtWo8gV4EF6rOWC45ZVOg/l5A+V0eBvt3j
-7SKRqxCdx5WTd3bK/t6T1jeQQi8BKF0AJ9q36AV5QObEcdvO992BXjt+bGxfwduk
-xpkChFcSmO17rd+NDWREO4Xr6AdUGD0JlhNsOD+q4+l51YCeZ5a7pumMwCxGVueE
-uBc9ztzvt8HekYgAV3vUgjGAHHistzSVQe9LfvxSwDotzGm6HSMtpvxogOMwXJbF
-eTr4AOBdLeV5cEbCZ+wXvLOFxr7AuNoO/by4pEb7YMMTacfFcv4Xy6uPjFQ63STS
-AGVn6/kN4ZB3xVZRTUePg+xWsgGUQKkeiWiV0N37JorHrNW2F9IwPLZxU4JqGGWA
-mR6HTxDzN1s8IykfuHM8hI/v1AHFr18gcxDlVitcN8zQWtKYXh5leDyEAQf8oLp2
-kqo/rljhijQdvhburnPBf91uJjrm7oYnrx4p5PaiG9e9oGEBZdzEe56teVOPUjjR
-BMZbIiKtJRQWOlZE9InY
-=bs8g
------END PGP SIGNATURE-----
+---
+Henri Salo
+ps. I have regression tests for these issues if someone needs :)
+pss. Please note that havalite.com is not affected by this issue for some reason
