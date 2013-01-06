@@ -1,105 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/17/6
-Message-ID: <5237CA03.20500@redhat.com>
-Date: Mon, 16 Sep 2013 21:18:27 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/06/3
+Message-ID: <50E9B73C.4090101@redhat.com>
+Date: Sun, 06 Jan 2013 10:41:16 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Agostino Sarubbo <ago@...too.org>
-Subject: Re: CVE request: proftpd: mod_sftp/mod_sftp_pam invalid pool allocation during kbdint authentication
+CC: Henri Salo <henri@...v.fi>, jannhorn@...glemail.com
+Subject: Re: CVE request: mount/umount leak information about existence of folders
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/14/2013 01:05 AM, Agostino Sarubbo wrote:
+On 01/06/2013 03:38 AM, Henri Salo wrote:
 > Hello,
 > 
-> From:
-> http://kingcope.wordpress.com/2013/09/11/proftpd-mod_sftpmod_sftp_pam-invalid-pool-allocation-in-kbdint-authentication/
->
->  ProFTPd installs with mod_sftp and mod_sftp_pam activated contain
-> the vulnerability described in this post.
+> Please assign CVE identifier for mount/umount information leak
+> about existence of folders. Reported in Debian bug
+> http://bugs.debian.org/697464
 > 
-> The current stable release of ProFTPd is 1.3.4d and the current
-> release candidate is 1.3.5rc3.
+> - Henri Salo
 > 
-> First I have to note that this vulnerability is unlikely to be
-> exploited. There is a way to control $rip instruction pointer
-> 
-> on 64 bit systems, for example on the Ubuntu 64Bit platform but I
-> believe that it is not possible to get full code execution with
-> this bug.
-> 
-> The bug is useful to trigger a large heap allocation and exhaust
-> all available system memory of the underlying operating system.
-> 
-> Inside the file located at
-> proftpd-1.3.5rc2/contrib/mod_sftp/kbdint.c ProFTPd handles the SSH
-> keyboard interactive authentication procedure, in this case it will
-> use pam as an authentication library therefore mod_sftp_pam has to
-> be active for an installation to be vulnerable.
-> 
-> Source code file and line kbdint.c:300 reads:
-> 
-> [1] resp_count = sftp_msg_read_int(pkt->pool, &buf, &buflen);
-> 
-> [2] list = make_array(p, resp_count, sizeof(char *)); for (i = 0; i
-> < resp_count; i++) { char *resp;
-> 
-> resp = sftp_msg_read_string(pkt->pool, &buf, &buflen); *((char **)
-> push_array(list)) = pstrdup(p, sftp_utf8_decode_str(p, resp)); }
-> 
-> Line 1 will read the kbdint response count which is an unsigned
-> integer with a size of 32 bits from the client during an SSH kbdint
-> userauth info response client request.
-> 
-> This value is used to allocate a buffer with the size 
-> user_supplied_uint32_value multiplied by the size of a char pointer
-> being 32bits or 64bits depending on the platform.
-> 
-> There is no size check before the request is sent to the pool
-> allocator that is called by make_array at Line 2.
-> 
-> The pool allocator can be tricked to handle negative allocation
-> sizes if resp_count is large enough.
-> 
-> There is a size check of the response count value but it’s done
-> after this function returns.
-> 
-> The DoS condition can be triggered by sending an int32 value for
-> resp_count that is slightly below the available memory of the
-> target system and repeating the request.
-> 
-> Noteably OpenSSH vulnerability CVE-2002-0640 is very similar to
-> this ProFTPd vulnerability. It has the very same code path.
-> 
-> Here is a reference to the OpenSSH Challenge-Response
-> Authentication bug that was exploited by GOBBLES Security in their
-> year 2002 sshutuptheo.tgz exploit: http://lwn.net/Articles/3531/.
-> 
-> Usage of keyboard interactive authentication in ProFTPd mod_sftp is
-> rare as it is not activated by default.
 
-Please use CVE-2013-4359 for this issue.
-
+Tested and confirmed on various versions. Please use CVE-2013-0157 for
+this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSN8oDAAoJEBYNRVNeJnmTbXwQALwUtrU+dEmiUF5U6QFtqyRc
-OFFAF7jpJ1gHkvNCUVGmW93uMtAD9VhCJraDFmokkxTlwhyL/3LQ39lXYteH2/Uk
-TeGqUXRPU0BdtvqUZ9UQQCoprEdetnaisypyQnF8/uWsN1afidX9Pzm/XjnTXZUg
-YkkQ1vsAgxXTVtleakwdGWvvEQXa8LUrT/kwt+sx3Q/9Re0OnFq4PNsamZ/6vIjg
-JH/13NSbv5NSCcFr5DoC+QWZ/0Gv6aSQjpZgRyMcTHMmDYSOM9c0u/9XOAj97zp0
-QmU4zTcr+kh1aQU2sHgzulISk0ZeihM3vT3JHmtR+vXunWOt/LiUSaii1Z4iDTT6
-FUU/zcxxhujz339yQ8wE6Obx7KtDjzGzMHQXWjw+fAr6zitdEFcIH7C0TjzcnwAk
-DrddVwAf8s0OQDv4AP942opfOAlDT90M973YS2xO5Qw2f9543O8IthEA1fc65Xed
-YJ/xq/cqHan8kNMQBp5Fi+Z+fUk0N79In1s9RBNhNG78xPAzG2izQzf4zwtpaAEE
-4DuHSH0NJneZbEUg6FyQQ2AystXk7fMp56OMi5naKbf9RqzeaIJBnzgGgQboFDlB
-fH9Yzg7Yai1QyvsDfgEkQoY8lh1/tRzIPLOp4vTAmXUpW92Kx5is3Am5kAzL4KxB
-G7cBhRLIcp+ePR3Pii/R
-=kR+r
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ6bc8AAoJEBYNRVNeJnmTOZYP/3AnrviYd0foWVAddk3DCCLP
+YQ0nvU23yOfRZNpI9wQ/9OrMWJCZ17WUSVjyBAatR+qlohMNp4L2rO5TMT98wFQz
+a3SsF9aEid8YSSTTe52G6sfSIDzTqPpbPFJGkVF7SNnB50prwR6UAFbdZLXX9TpL
+PF4tmvaUK790N9cSpnzIrckwtUm8QTy7Wnodm8iPtai/Gf+WOAybFAljxYU2JkmF
+R1S7p+cz/7LF1wQ7k5M39vbuvDpEWNQaAW9LJcJEJPh+V98fDmMz1aMRtKf7frP7
+C2O6myo59oh932dlOgl/5SJVAvuIGKFzUAyl0FzHt5X1m80g+hO8DKLcYE1pO6qt
+jWSrD2AZHfLFkvOueHk4vUXeiQP/zbgs+AcYjCNG1F+GoLbzrfLhLuv7MUKRC5Gu
+OdsDjEzoU857gNObeA3jAEV4xm5HpiLjpdEO3bxjHSg0b/gPANTx4B6m9gkcHqsI
+u8vG0aZncnsP1MhX0nmoujWM0P8FfzC8RJRIvQZgkRZ+TgYK0/eQNNBLSCltHX0r
+r1bLmiqzBNARZroMKK0PMmBx/hUAmbBMY4gdk4OSvZ7Z+krrvfY21vIe/KAJejwu
+15HKDJM7ki45LUbbuTfFsMfk8658XWx575NbgNs+3zhEM+jqrtcsHxzw7a8PEtU3
+L5IX991gU3wZSSoqEiX1
+=J8Fe
 -----END PGP SIGNATURE-----
