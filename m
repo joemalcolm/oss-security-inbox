@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/4
-Message-id: <8FA7409F-AF5D-4F47-B640-2B5D2BC83AB5@me.com>
-Date: Sat, 08 Jun 2013 07:22:44 -0400
-From: larry Cashdollar <larry0@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/07/5
+Message-ID: <20130107222348.GA9967@devzero.fr>
+Date: Mon, 7 Jan 2013 23:23:49 +0100
+From: vladz <vladz@...zero.fr>
+To: oss-security@...ts.openwall.com
+Subject: /dev/ptmx timing
 Content-Type: text/plain; charset=utf-8
 
-According to the bug report details that's a race condition.  A malicious user is using a vulnerability in the way the installation script handles changing file permissions to disclose sensitive information.  
 
-Larry C$
+Hi list,
 
-On Jun 8, 2013, at 7:00 AM, gremlin@...mlin.ru wrote:
+I noticed that it was possible to measure inter-keystrokes timing thanks
+to the /dev/ptmx character device.  Any local user that is using
+pseudo-terminal can be targeted.
 
-> On 08-Jun-2013 12:44:45 +0200, vladz wrote:
-> 
->> The file "/etc/mysql/debian.cnf", which contains plain text
->> credentials for the "debian-sys-maint" mysql user, is created
->> in an insecure manner during the package installation phase.
->> This can lead a non-privileged local user to disclose its content
->> and use this special account to perform administration tasks.
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=711600
->> Could you allocate CVE id for this issue?
-> 
-> That's not a security issue, but a misconfiguration (alas, very common
-> for Deb*an packages), so at least I doubt that deserves a CVE.
-> 
-> 
-> -- 
-> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-> GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-> GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+As it may also be used to disclose sensible information such as password
+length, I was wondering if it should be treat as a security issue?                      
+
+Description + PoC: http://vladz.devzero.fr/013_ptmx-timing.php.
+
+No sure right now but I think the only way to solve this is to modify
+the pts handling at kernel level.  Any opinions on that?
+
+Thanks,
+vladz.
+
