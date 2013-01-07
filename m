@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/02/4
-Message-ID: <20130702102141.GT10319@dhcp-25-225.brq.redhat.com>
-Date: Tue, 2 Jul 2013 12:21:42 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/07/2
+Message-ID: <20130107182522.GA30578@elende>
+Date: Mon, 7 Jan 2013 19:25:22 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: spender@...ecurity.com
-Subject: Re: CVE request: Kernel 2.6.32+ IP_RETOPTS Buffer Poisoning DoS
+Subject: CVE Request: Jenkins possible remote code execution
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jun 30, 2013 at 12:33:47AM -0700, Steven Ciaburri wrote:
-> There is a local DOS exploit in centos 6, openvz 6, cloudlinux 6 and others.
-> 
-> https://www.rack911.com/poc/hemlock.c
+Hi
 
-Just to make sure -- this triggers Red Hat specific bug introduced via
-CVE-2012-3552 fix [1, 2]. This issue does not affect upstream.
+There was another advisory for Jenkins[1]. According to the advisory
+remote code execution should be possible. Could a CVE be assigned to
+this issue?
 
-  [1] https://bugzilla.redhat.com/show_bug.cgi?id=979936#c2
-  [2] https://bugzilla.redhat.com/show_bug.cgi?id=979936#c3
+ [1]: https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-01-04
 
-Spender suggest there is a integer problem in the code [3], but there is
-not. The problem spender is trying to fix is avoided by the CMSG_OK
-check in ip_cmsg_send() function and msg_controllen check in
-__sys_sendmsg().
-
-There is some slight room for error though since CMSG_OK checks for
-"(cmsg)->cmsg_len >= sizeof(struct cmsghdr)" and the expression is
-"err = cmsg->cmsg_len - CMSG_ALIGN(sizeof(struct cmsghdr));" but with
-the current alignment and cmsghdr struct size we should be fine on
-both 32 and 64bit.
-
-  [3] https://twitter.com/grsecurity/status/351664130031222784
-
--- 
-Petr Matousek / Red Hat Security Response Team
+Regards,
+Salvatore
