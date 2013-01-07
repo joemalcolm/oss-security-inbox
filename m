@@ -1,34 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/24/1
-Message-ID: <20130824144813.6ecc8cb9@hboeck.de>
-Date: Sat, 24 Aug 2013 14:48:13 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/07/3
+Message-ID: <50EB3B57.5020901@redhat.com>
+Date: Mon, 07 Jan 2013 14:17:11 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Joomla unauthorised uploads before 2.5.14 / 3.1.5
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- proFTPD (X < 1.3.5.rc1): Symlink race condition when applying UserOwner to a newly (ProFTPD) created directory
 Content-Type: text/plain; charset=utf-8
 
-Joomla 2.5.14 and 3.1.5 releases fix a security issue:
-http://developer.joomla.org/security/563-20130801-core-unauthorised-uploads.html?utm_source=feedburner&utm_medium=email&utm_campaign=Feed%3A+JoomlaSecurityNews+%28Joomla%21+Security+News%29
-It says "CVE Number: Pending", maybe they already requested a CVE
-themselves.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Code commit 2.5:
-https://github.com/joomla/joomla-cms/commit/fa5645208eefd70f521cd2e4d53d5378622133d8
-Code commit 3.1:
-https://github.com/joomla/joomla-cms/commit/1ed07e257a2c0794ba19e864f7c5101e7e8c41d2
+On 01/07/2013 09:55 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> proFTPD upstream has recently released v1.3.5.rc1 release: [1]
+> http://proftpd.org/docs/NEWS-1.3.5rc1 correcting one security
+> issue:
+> 
+> A time-of-check time-of-use (TOCTOU) race condition flaw was found
+> in the way ProFTPD, flexible, stable and highly-configurable FTP
+> server, handled MKD/XMKD FTP commands when the UserOwner directive
+> was involved. A local attacker could use this flaw to possibly
+> escalate their privileges via symbolic-link attacks on
+> directories, created by ProFTPD prior the UserOwner ownership was
+> applied.
+> 
+> Upstream bug report: [2]
+> http://bugs.proftpd.org/show_bug.cgi?id=3841
+> 
+> Relevant upstream patch: [3]
+> http://bugs.proftpd.org/show_bug.cgi?id=3841#c8
+> 
+> References: [4]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=697524 [5]
+> https://bugzilla.redhat.com/show_bug.cgi?id=892715
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
 
-Issue also exists in 1.5 (end of life):
-http://joomlacode.org/gf/project/joomla/tracker/?action=TrackerItemEdit&tracker_item_id=31626
+Please use CVE-2012-6095 for this issue.
 
-Exploit in the wild:
-https://github.com/rapid7/metasploit-framework/pull/2219
-http://www.cso.com.au/article/523528/joomla_patches_file_manager_vulnerability_responsible_hijacked_websites/
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- 
-Hanno Böck
-http://hboeck.de/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQIcBAEBAgAGBQJQ6ztXAAoJEBYNRVNeJnmTOzcP/3z4cZl+fw20kpE2dRKsuTVC
+El8SgIkwuNAMUJUi2m2SHKqrGqFpJlh+GwneD+hIFsi/eqJR0707ahaEozvqD3f2
+oN8JXGLLYvhe/kUL4hloYEb20FtnN9kgwV9/G1p5CuNB5fz/TZhvAb5uKBqDe2FH
+onqHMOyHC6GSCwJ4gyNAMHTJxuhTz1WuIBuM5acjtprU+EoDkNyLYC278Lk9j8Vf
+MjH5Jnl8FQaDSgpnUeNBHe22sYj8ehBgYrEdLvt1Ths56w61W+M6kXc9Qny6oAmb
+45zAym3zBpIOnD/5kyLxB2pOkjuVrY8tSYwJWBB8M7pw1m1uR1+LyF/yLiPhkwc5
++hLDj1gAp9JVs8+r48r297TZcsxfa+/h+JIL7FrYOhN8otWCpCe9L8ev+cBWRoF7
+hDso6GFa1sJP2H7WSiLn3PLN6nBNShCKP1K4EC0gnSRWQjTGg/0BzpCWbd01ya5N
+qZWqahLGz0nfX8mUp4WfBuXnbQvecwOSet55bf3ic9Aj0vfXetSc8D5OzZRESIS7
+i161wLBZYSe86JInouBuYydChz7F3ETioGMRK0LVm4YKxmMTB6a+tYbx0g96+hfm
+UGllilhvFg9h4/aQyHY74p8qkpJszp9xm4GfLqfuFV/Rq7NwYM82IkRgR1zBDMeq
+iOMH3avIYe+rA859EzEv
+=Ck6K
+-----END PGP SIGNATURE-----
