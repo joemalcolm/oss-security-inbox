@@ -1,41 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/12/12
-Message-ID: <20131212204916.GP29601@dhcp-25-225.brq.redhat.com>
-Date: Thu, 12 Dec 2013 21:49:17 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: linux-distros@...openwall.org
-Cc: ahonig@...gle.com, gleb@...hat.com, pbonzini@...hat.com, digitaleric@...gle.com, larsbull@...gle.com, oss-security@...ts.openwall.com
-Subject: Re: [vs-plain] kvm issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/13
+Message-ID: <20130108201453.GA98992@higgins.local>
+Date: Tue, 8 Jan 2013 12:14:53 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Unsafe Query Generation Risk in Ruby on Rails (CVE-2013-0155)
 Content-Type: text/plain; charset=utf-8
 
-These bugs are public now.
+Unsafe Query Generation Risk in Ruby on Rails
 
-@Gleb/@...lo -- can you please commit the patches upstream?
+There is a vulnerability when Active Record is used in conjunction with JSON parameter parsing. This vulnerability has been assigned the CVE identifier CVE-2013-0155.
 
-Thanks,
-Petr
+Versions Affected:  3.x series
+Not affected:       2.x series
+Fixed Versions:     3.2.11, 3.1.10, 3.0.19
 
-On Wed, Nov 27, 2013 at 06:32:32PM +0100, Petr Matousek wrote:
+Impact
+------
 
-> Hello, vendors.
-> 
-> We've been informed about four issues affecting kvm:
-> 
-> CVE-2013-4587 kernel: kvm: rtc_status.dest_map out-of-bounds access
-> CVE-2013-6367 kernel: kvm: division by zero in apic_get_tmcct()
-> CVE-2013-6368 kernel: kvm: cross page vapic_addr access
-> CVE-2013-6376 kernel: kvm: BUG_ON() in apic_cluster_id()
-> 
-> Please see attachment for kvm upstream acked patches and descriptions.
-> 
-> First three issues were found by Andrew Honig <ahonig@...gle.com> and
-> the last one by Lars Bull <larsbull@...gle.com>
-> 
-> All four issues are embargoed until 2013-12-12 12:12 UTC.
-> 
-> Regards,
-> -- 
-> Petr Matousek / Red Hat Security Response Team
-> PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Due to the way Active Record interprets parameters in combination with the way that JSON parameters are parsed, it is possible for an attacker to issue unexpected database queries with "IS NULL" or empty where clauses.  This issue does *not* let an attacker insert arbitrary values into an SQL query, however they can cause the query to check for NULL or eliminate a WHERE clause when most users wouldn't expect it.
 
-Download attachment "kvm-issues.tgz" of type "application/x-gzip" (3912 bytes)
+For example, a system has password reset with token functionality:
+
+    unless params[:token].nil?
+      user = User.find_by_token(params[:token])
+      user.reset_password!
+    end
+
+An attacker can craft a request such that `params[:token]` will return `[nil]`.  The `[nil]` value will bypass the test for nil, but will still add an "IN ('xyz', NULL)" clause to the SQL query.
+
+Similarly, an attacker can craft a request such that `params[:token]` will return an empty hash.  An empty hash will eliminate the WHERE clause of the query, but can bypass the `nil?` check.
+
+Note that this impacts not only dynamic finders (`find_by_*`) but also relations (`User.where(:name => params[:name])`).
+
+All users running an affected release should either upgrade or use one of the work arounds immediately. All users running an affected release should upgrade immediately. Please note, this vulnerability is a variant of CVE-2012-2660, and CVE-2012-2694.  Even if you upgraded to address those issues, you must take action again.
+
+If this chance in behavior impacts your application, you can manually decode the original values from the request like so:
+
+    ActiveSupport::JSON.decode(request.body)
+
+Releases
+--------
+The FIXED releases are available at the normal locations.
+
+Workarounds
+-----------
+This problem can be mitigated by casting the parameter to a string before passing it to Active Record.  For example:
+
+    unless params[:token].nil? || params[:token].to_s.empty?
+      user = User.find_by_token(params[:token].to_s)
+      user.reset_password!
+    end
+
+Note the parameter is still cast to a string before being sent to Active Record. This is because an array with a nil value can still bypass the `to_s.empty?` test:
+
+    >> ['xyz', nil].to_s
+    => "xyz"
+    >> ['xyz', nil].to_s.empty?
+    => false
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset.
+
+* 3-0-null_array_param.patch - Patch for 3.0 series
+* 3-1-null_array_param.patch - Patch for 3.1 series
+* 3-2-null_array_param.patch - Patch for 3.2 series
+
+Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-0-null_array_param.patch" of type "text/plain" (7637 bytes)
+
+View attachment "3-1-null_array_param.patch" of type "text/plain" (7531 bytes)
+
+View attachment "3-2-null_array_param.patch" of type "text/plain" (7502 bytes)
+
+Content of type "application/pgp-signature" skipped
