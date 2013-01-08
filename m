@@ -1,47 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/03/14
-Message-ID: <20130403224300.GJ3690@redhat.com>
-Date: Wed, 3 Apr 2013 16:43:00 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/4
+Message-ID: <50EBBB21.1060306@redhat.com>
+Date: Mon, 07 Jan 2013 23:22:25 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: rpc-gssd is vulnerable to DNS spoofing
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE request: Havalite CMS 1.1.7 stored XSS vulnerability in comments of blog posts
 Content-Type: text/plain; charset=utf-8
 
-This has been discussed on the linux-nfs mailing list, so fully public.
-Just cutting and pasting from our bugzilla:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It was reported [1],[2] that rpc.gssd in nfs-utils is vulnerable to DNS
-spoofing due to it depending on PTR resolution for GSSAPI
-authentication.  Because of this, if a user where able to poison DNS to
-a victim's computer, they would be able to trick rpc.gssd into talking
-to another server (perhaps with less security) than the intended server
-(with stricter security).  If the victim has write access to the second
-(less secure) server, and the attacker has read access (when they
-normally might not on the secure server), the victim could write files
-to that server, which the attacker could obtain (when normally they
-would not be able to).  To the victim this is transparent because the
-victim's computer asks the KDC for a ticket to the second server due to
-reverse DNS resolution; in this case Krb5 authentication does not fail
-because the victim is talking to the "correct" server.
+On 01/06/2013 07:20 AM, Henri Salo wrote:
+> Havalite CMS has stored XSS vulnerability in comments of blog
+> posts. Example:
+> 
+> POST http://example.com/?p=1 "comment" with value
+> %E2%80%9C%3E%3Cscript%3Ealert%28document.cookie%29%3C%2Fscript%3E
+> 
+> Tested in 1.1.7 (cbd391e913d04224225cf924a7fcb2b5), which was
+> uploaded 2012-11-07 to sourceforge.net. I tried to contact vendor
+> without response.
+> 
+> https://sourceforge.net/projects/havalite/files/
+> 
+> Some other notes: - CVE-2012-5919 still not fixed in 1.1.7 version 
+> - CVE-2012-5893 does not work without administrator privileges, but
+> uploaded files are executed (for example PHP) - Typos in
+> "readme.html" - 777 modes not needed even it was in several places.
+> 711 is enough for content directories
+> 
+> I recommend not to use this software before these vulnerabilities
+> are fixed.
 
-A patch that prevents this issue has been posted [3].
+Please use CVE-2013-0161 for this issue.
 
-To workaround this issue, set the IP/host pair in /etc/hosts so that it
-cannot be spoofed.
+> --- Henri Salo ps. I have regression tests for these issues if
+> someone needs :) pss. Please note that havalite.com is not affected
+> by this issue for some reason
 
-A good explanation is also available here [4].
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-[1] http://marc.info/?l=linux-nfs&m=136491998607561&w=2
-[2] http://marc.info/?l=linux-nfs&m=136500502805121&w=2
-[3] http://marc.info/?l=linux-nfs&m=136493115612397&w=2
-[4] http://ssimo.org/blog/id_015.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-
-https://bugzilla.redhat.com/show_bug.cgi?id=948072
-
-
-Since this is fairly new, I don't think a CVE would have been requested
-already.  Could one be assigned to this?
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+iQIcBAEBAgAGBQJQ67shAAoJEBYNRVNeJnmThmEQAL1DFLb+iDP4aOsIo0+NTydd
+e+N4VgL7PIzJR2Z/8TZx0+q0DdKCni2Y8h4X9hLZl7OUgs74iTbV5hZMnVnpa8LQ
+8EUfrlGRjVsT/INtQ6Lb3K9cDEka2bzxnhMw4HrA4vuTW2MPw9U18kd9EMFogQwV
+dzmOofDVY/k+kkIfW826nKE/1JVy8bGw2Tv/94V1Wvwcpfiu7D0qZgMYPgeqvjf1
+4vJPkyi/eErGdPvK5UsOlV7dZ9ebIyCO6IDUMgNKP8NgLUnOKhI1Q6wBH9k+vuCn
+vljphpdyqQqamhFvkjAV0OG0MxAbO8KAaCFxjzaLCep+uDTiUBwljvPp2diSIFYo
+YSrTyYMSgnPzITXPEUcgEUszZD9kq98a4Wrkn3X8yUVzDZ4GvtmGPUuNb5UYKAn1
+h9VaO6PPQbj/p0XTgfxJ/JGtDrlNDhAv3sTpnwPBc9sZAzJ1qNQYkCRHM+kN+SWN
+aNAUR6EolzI2fmnIQd5royfY2TTaAyRr01mnshRVlpmFeOqwtdZXee8vc1ohjgcq
+uvvvDqsIrnCzxouQF8NxkuO2ZuKL5cYIvoCTP7eF/zuyaqSLEctiTA7xPdetHgh9
+lnfMFJo1+II3DOYYMTPvmxYsmW7zPwGEiMKnJu/PVgQyQN9B/lvetCErOH1XXyAN
+nTStZIZwx4+tK+yluo+W
+=2vPd
+-----END PGP SIGNATURE-----
