@@ -1,121 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/5
-Message-ID: <1514509831.13776092.1376039566831.JavaMail.root@redhat.com>
-Date: Fri, 9 Aug 2013 05:12:46 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/11
+Message-ID: <50EC6E83.2080107@redhat.com>
+Date: Tue, 08 Jan 2013 12:07:47 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Marek Kasik <mkasik@...hat.com>, Albert Astals Cid <aacid@....org>, "Derek B. Noonburg" <derekn@...labs.com>, Mitre CVE assign department <cve-assign@...re.org>
-Subject: [CVE assignment notification] CVE-2012-2142 poppler, xpdf: Insufficient sanitization of escape sequences in the error message {AKA request for feedback if CVE to be marked as disputed / rejected}
+CC: Sebastian Krahmer <krahmer@...e.de>, coley@...us.mitre.org
+Subject: Re: CVE Request: cronie fd leak
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors, Mitre CVE assign department,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  long time ago (in the February of 2012 yet) we have received
-the following private report from Phillips Wolf:
+On 01/08/2013 05:56 AM, Sebastian Krahmer wrote:
+> "Hello Kurt, Steve, vendors,"
+> 
+> cronie leaks read-only fd's, please check here:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=786096
+> 
+> can someone assign a CVE?
+> 
+> thanks, Sebastian
+> 
 
-* poppler, xpdf: Insufficient sanitization of escape sequences in the error messages
--------------------------------------------------------------------------------------
+Please use CVE-2012-6097 for this issue.
 
-  An insufficient escape sequences sanitization flaw was found in the way xpdf, a PDF file viewer for the X window system, and poppler, a PDF rendering library, performed sanitization of certain characters to be displayed in the error messages, which arose during presentation of certain PDF files. A remote attacker could use this flaw to modify a window's title, or, possibly execute arbitrary commands or overwrite files, via a specially-crafted PDF file containing an escape sequence for a terminal emulator if local, unsuspecting user opened such crafted PDF file in xpdf or in an application linked against poppler library (for example evince).
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-  References: https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-2142
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-We tested, confirmed the deficiency and based on that assigned CVE-2012-2142
-identifier to the problem. Marek Kasik (Red Hat poppler package maintainer)
-has provided the following patch against (in that time) upstream poppler version:
-  [P] https://bugzilla.redhat.com/show_bug.cgi?id=789936#c25
-
-We also contacted poppler and xpdf upstreams with request to review that
-patch and agree on embargo date. The reply was as inlined:
-
-Albert Astals Cid (lines prefixed with '>' are my words):
-=========================================================
-"> Hi Albert,
-
-Hi
-
->   we wouldn't have objections against sharing this patches public
-> (and opening our CVE-2012-2142 bug for public audience).
->
-> But prior doing that can we agree on upstream classification of this
-> one? Is the intention to apply the patch still just 'preventive measure',
-> thus upstream doesn't consider CVE-2012-2142 to be a security flaw?
->
-> Or would you admit that this is a security issue and it can be treated
-> as such?
-
-To be honest, as we discussed, I understand this is a flaw of whoever is
-receiving our output, I don't mind "sanitizing" our output for everyone's
-benefit, but as it is poppler's duty to not crash on broken/invalid/malicious
-PDF files, it is whoever is processing poppler's output to not crash or
-malfunction on broken/invalid/malicious input.
-
-Does that help in your classification?
-
-Cheers,
-  Albert
-=========================================================
-
-Derek B.Noonburg (lines prefixed with '>' are my words):
-========================================================
-> Some examples what can be achieved by escape sequences:
->
-> [1] http://rtfm.etla.org/xterm/ctlseq.html
-> [2] http://lwn.net/Articles/24198/
-> [3] http://en.wikipedia.org/wiki/ANSI_escape_code#CSI_codes
-> [4] http://www.termsys.demon.co.uk/vtansi.htm
->
-> Someone might argue that this is not a xpdf's / poppler's problem (they just take
-> the input from the PDF file, parse what's possible to proceed, and display the
-> rest to the standard error output).
->
-> But as noted in [2] there are numerous cases, when improper escaping of escape
-> sequences could lead to malicious effects. And I assume the last thing the xpdf /
-> poppler user, when viewing an untrusted / downloaded PDF file would be, they would
-> need to worry about if viewing that file couldn't do something malicious on their
-> host.
->
-> Thus Marek's patch escapes all the non-printable characters, which might be such
-> intentionally included escape sequences, they to be sanitized yet prior they are logged
-> into standard error output.
->
-> Hopefully the above explains our motivation behind having such patches in both
-> upstream codes.
-
-Wouldn't it make more sense to treat this as a security hole in the
-terminal emulator (xterm or whatever)?
-
-If a sequence of escape characters sent to stdout/stderr can cause a
-security problem, then all an attacker would need to do would be to
-place the escape sequence in, e.g., a README file in a source code
-tarball.  Surely you wouldn't consider that to be a security hole in
-cat?
-
-The bugtraq post referenced in [2] says this:
-
-"The responsibility should rest on the actual terminal emulator; any
-features that allow file or command-line  access should be disabled by
-default and more attention should be paid to new features that
-implement any use of escape sequences."
-
-- Derek
-========================================================
-
-While we don't agree with poppler's / xpdf's upstream opinion (apply
-the patches, but not to call the issue as a security flaw), since for example not
-that recent, similar problem in Apache's httpd web server's mod_rewrite
-module problem:
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1862
-
-has got a CVE identifier [and "security flaw treatment"], we don't
-want to argue with them longer => so if the CVE identifier should be revoked
-as disputed / invalid / rejected at the end, we will leave that decision
-to vendors / Mitre team.
-
-What matters is, the issue is there, and this post is intended as notification
-for vendors who might want to apply Marek's patch [P] to protect their
-instances.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iQIcBAEBAgAGBQJQ7G6DAAoJEBYNRVNeJnmTFVsP/2uiis6yhx7V0E39N23sA7un
+tkMdQ3XziAb1s/dO1wocCDFMQzln6eEtem4TyJWlZyeYEdQELks+mOJZ/naqkQWC
+xpocQPweuCd8pIymt6KAk7OSqVjCMH7MFAH+4/vsRxqoTHeMjIWzxZ9GnKXLAQbU
+6f/60ubsz3t9TZ4/cc3hHj+mfQPZh4kuS8F8XF6wXvQugCEtgVfCZ+kv9TiLHtxe
+MpB7UZfdVB67ViUm9MUH12zzBLiIlQsCUAC41TfIVJqD5N3Ln5DwrCRxl/Q4mFj5
+CNFKNq1bRCTcnNlam1Z9we9OzAxhPI+Ed4w9rzEYTv77R1g7qBuycev1e/OL0Nvu
+AkdYZ3+XSURiDEccw42NDBQalo0MX+fcWsHRCDNnZAiiJiygwKFSq0RwOI/vRs9x
+A1Z3e70lJ73QP/kaxj4hzsr9EY+kDMrwGPJps/jz0mk1HzEp8d+9mi90clLI39uu
+DhTw4Z5XCzxe7nKnS4PYF5Gn27E+326zIhc6ZKnI0ENZj+3Q93yZJVE1U9V4g35X
+yK7nhSWToAtTMGgeq/d5JWL4IrzQ1PeXOAw+21pmw/H4pmzzGCb8rklwSE03yv5K
++gk3cK9iLg/ZzYrMyJNTNCEr+vwc/0zBYpJhHx5CxiV0ljstNfNTDB7xTllP+9AJ
+LFKIWgzpRyR/ynwFDQRp
+=7vF5
+-----END PGP SIGNATURE-----
