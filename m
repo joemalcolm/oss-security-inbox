@@ -1,47 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/8
-Message-ID: <51271E6C.5050006@redhat.com>
-Date: Fri, 22 Feb 2013 00:29:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/6
+Message-ID: <20130108125640.GA22501@suse.de>
+Date: Tue, 8 Jan 2013 13:56:40 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: gremlin@...mlin.ru
-Subject: Re: nginx world-readable logdir
+Cc: coley@...us.mitre.org
+Subject: CVE Request: cronie fd leak
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+"Hello Kurt, Steve, vendors,"
 
-On 02/22/2013 12:17 AM, gremlin@...mlin.ru wrote:
-> On 21-Feb-2013 18:50:14 +0100, Agostino Sarubbo wrote:
-> 
->> I just noticed my nginx logdir and its content are
->> world-readable: What do you think about?
-> 
-> About misconfiguration? Nothing:
-> 
-> % grep create /etc/logrotate.d/nginx create 640 root wheel %
-> 
+cronie leaks read-only fd's, please check here:
 
-What are the initial permissions prior to log rotation?
+https://bugzilla.novell.com/show_bug.cgi?id=786096
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+can someone assign a CVE?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+thanks,
+Sebastian
 
-iQIcBAEBAgAGBQJRJx5sAAoJEBYNRVNeJnmTbLgP/1zESmHGF4DrjXDjwy67Vva9
-jM8ndLDRyIJEwY5PKU7bloQMY/3F2zUPiRsz6LePL3rl0EgldoMdC57L99jL7hYk
-UYRafEPf+oiZWtUGaSsndA9ITd+HsFvQvEaUvHdbBM5hVorldJhCvWKh3aIsQvBT
-OhLjXWwfvZp/GWBkNAAlzfMIlKys1jybeVWcYBoDXgkl8W+c3EZ+7Q837KfcYPQ9
-t8j+qt8AA/VALbw0flMmfvhyTqem7skDq0bWNK9oGY1aJrryYAmQTWDA6lBtH9YJ
-dAn17qhU/AWq1/aPDrNXtAvv5nq95z5I0gNtR25qhcFbLsQle5Ay2UGIQuRLZNW7
-WjGgBi988nlgACA6Ii32OXZN5XV1ymi+/9PYZLvGzQh4PanWEOmeXfhIa3+xIdMM
-Bh2Pw7kt3MmT/wziDjna/zZVM3mHo69sfzr3XzvFrj6bO+JQgTJbRrDL+dtz3Jc1
-FKQfwpUySVyHM/wUN14/voP9/WYC5hpeukMo1A/EsE1SwvFjSr2/WUtrrVuL55vC
-kfg34XAXFdD829+QJO+FzZuVaGnIkAlOu0Bg8q64WdQCy3iOH4uRmc7+wcuUgJ6P
-t/jVvaKsy2Boe3YydlDLgekh6JlZUdV/I1pO5xjKRRtSwtdPGbh6mmO+rtzPO68Q
-9RwN8kTezag+ftlefZvQ
-=bfd4
------END PGP SIGNATURE-----
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
