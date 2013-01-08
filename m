@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/8
-Message-ID: <517467AB.1070905@archlinux.org>
-Date: Mon, 22 Apr 2013 08:26:51 +1000
-From: Allan McRae <allan@...hlinux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/7
+Message-ID: <20130108130008.GB22501@suse.de>
+Date: Tue, 8 Jan 2013 14:00:08 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+Cc: coley@...us.mitre.org
+Subject: CVE Request: nagios Stack based buffer overflow in web interface
 Content-Type: text/plain; charset=utf-8
 
-On 21/04/13 06:39, Solar Designer wrote:
-> Hi,
-> 
-> I just found this recent blog post by Allan McRae of Arch Linux:
-> 
-> http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
-> 
-> Thank you for doing this, Allan!  Are you contacting the upstream
-> authors to request that they start to properly sign their releases?
-> (I've been doing that on some occasions, sometimes with success.)
+Hi,
 
-I have for a couple, but nothing across the whole board.
+I dont know if this already got a CVE. At least its not mentioned
+in the initial posting:
 
-> I think that placing both "MD5 checksum provided on same site as
-> download" and "PGP signature, key difficult to verify" in the same
-> "yellow" category is inconvenient for us.  "MD5 checksum provided on
-> same site as download" only helps verify downloads from mirrors against
-> the master site, whereas "PGP signature, key difficult to verify"
-> achieves a lot more - once a distro is already including the package
-> (and has already taken the risk of it having been tampered with), then
-> verifying further updates to the package becomes almost as reliable as
-> it would have been with proper signing (with a "readily verifiable" key).
-> So we need four categories, or simply "MD5 checksum provided on same
-> site as download" should be in "red", not in "yellow".
+http://archives.neohapsis.com/archives/fulldisclosure/2012-12/0108.html
 
-I had yellow as "at least they tried...".  The could be categorised in
-other ways, but that was a really quick survey of some core Linux
-software, so I did not put that much thought into it.
+Our bug about this is here:
 
-Allan
+https://bugzilla.novell.com/show_bug.cgi?id=797237
+
+Can someone assign a CVE?
+
+thx,
+Sebastian
+
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
