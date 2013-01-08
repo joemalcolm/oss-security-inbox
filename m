@@ -1,40 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/10
-Message-ID: <20130408134930.GA10990@mwanda>
-Date: Mon, 8 Apr 2013 16:49:30 +0300
-From: Dan Carpenter <dan.carpenter@...cle.com>
-To: oss-security@...ts.openwall.com
-Cc: P J P <ppandit@...hat.com>
-Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/14
+Message-ID: <20130108201623.GB98992@higgins.local>
+Date: Tue, 8 Jan 2013 12:16:23 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in parameter parsing in Action Pack (CVE-2013-0156)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 08, 2013 at 06:30:02PM +0530, P J P wrote:
->   Hi,
-> +-- On Fri, 5 Apr 2013, Marcus Meissner wrote --+
-> | Should also get a CVE.
-> | https://github.com/torvalds/linux/commit/12176503366885edd542389eed3aaf94be163fdb
-> 
-> Comments around get_user() macro say that in case of an error, destination 
-> variable @x is set to zero.
-> 
->  -> https://github.com/torvalds/linux/blob/master/arch/x86/include/asm/uaccess.h#L134
-> 
-> Just to confirm, is it the same macro that is called from fs/compat_ioctl.c ?
-> 
+Multiple vulnerabilities in parameter parsing in Action Pack
 
-The x86 verion is ok but asm-generic version of get_user() doesn't
-clear x.
+There are multiple weaknesses in the parameter parsing code for Ruby on Rails which allows attackers to bypass authentication systems, inject arbitrary SQL, inject and execute arbitrary code, or perform a DoS attack on a Rails application. This vulnerability has been assigned the CVE identifier CVE-2013-0156.
 
-include/asm-generic/uaccess.h
+Versions Affected:  ALL versions
+Not affected:       NONE
+Fixed Versions:     3.2.11, 3.1.10, 3.0.19, 2.3.15
 
-   226  #define get_user(x, ptr)                                        \
-   227  ({                                                              \
-   228          might_sleep();                                          \
-   229          access_ok(VERIFY_READ, ptr, sizeof(*ptr)) ?             \
-   230                  __get_user(x, ptr) :                            \
-   231                  -EFAULT;                                        \
-   232  })
+Impact
+------
+The parameter parsing code of Ruby on Rails allows applications to automatically cast values from strings to certain data types.  Unfortunately the type casting code supported certain conversions which were not suitable for performing on user-provided data including creating Symbols and parsing YAML.  These unsuitable conversions can be used by an attacker to compromise a Rails application.
 
-regards,
-dan carpenter
+Due to the critical nature of this vulnerability, and the fact that portions of it have been disclosed publicly, all users running an affected release should either upgrade or use one of the work arounds *immediately*.
 
+Releases
+--------
+The 3.2.11, 3.1.10, 3.0.19 and 2.3.15 releases are available at the normal locations.
+
+Workarounds
+-----------
+The work arounds differ depending on the Rails version you are using, and whether or not your application needs to support XML Parameters.
+
+Disabling XML Entirely
+----------------------
+Users who don't need to support XML parameters should disable XML parsing entirely by placing one of the following snippets inside an application initializer.
+
+Rails 3.2, 3.1 and 3.0
+----------------------
+ActionDispatch::ParamsParser::DEFAULT_PARSERS.delete(Mime::XML)
+
+Rails 2.3
+---------
+ActionController::Base.param_parsers.delete(Mime::XML)
+
+
+Removing YAML and Symbol support from the XML parser
+----------------------------------------------------
+If your application must continue to parse XML you must disable the YAML and Symbol type conversion from the Rails XML parser.  You should place one of the following code snippets in an application initializer to ensure your application isn't vulnerable.  You should also consider greatly reducing the value of REXML::Document.entity_expansion_limit to limit the risk of entity explosion attacks.
+
+YAML Parameter Parsing
+----------------------
+Rails has also shipped with YAML parameter parsing code, this was only ever enabled by default in Rails 1.1.0, but  users who do enable it are vulnerable to all the exploits mentioned above..  There is no fix for YAML object injection, so if you have enabled it you must disable it immediately.
+
+For 2.x apps, check whether your app sets `ActionController::Base.param_parsers[Mime::YAML] = :yaml` and snip that out if it does.
+
+For 3.x apps do this to disable:
+
+  ActionDispatch::ParamsParser::DEFAULT_PARSERS.delete(Mime::YAML)
+
+Rails 3.2, 3.1, 3.0
+---------
+
+ActiveSupport::XmlMini::PARSING.delete("symbol")
+ActiveSupport::XmlMini::PARSING.delete("yaml")
+
+Rails 2.3
+---------
+
+ActiveSupport::CoreExtensions::Hash::Conversions::XML_PARSING.delete('symbol')
+ActiveSupport::CoreExtensions::Hash::Conversions::XML_PARSING.delete('yaml')
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset.
+
+* 2-3-xml_parsing.patch - Patch for 2.3 series
+* 3-0-xml_parsing.patch - Patch for 3.0 series
+* 3-1-xml_parsing.patch - Patch for 3.1 series
+* 3-2-xml_parsing.patch - Patch for 3.2 series
+
+Please note that only the 3.1.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits
+-------
+This vulnerability was reported to us by numerous people, many thanks to Ben Murphy, Magnus Holm, Felix Wilhelm, Darcy Laycock, Jonathan Rudenberg, Bryan Helmkamp, Benoist Claassen and Charlie Somerville for reporting the issue to us and working with us to ensure the fixes worked.
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "2-3-xml_parsing.patch" of type "text/plain" (8834 bytes)
+
+View attachment "3-0-xml_parsing.patch" of type "text/plain" (7949 bytes)
+
+View attachment "3-1-xml_parsing.patch" of type "text/plain" (8173 bytes)
+
+View attachment "3-2-xml_parsing.patch" of type "text/plain" (8232 bytes)
+
+Content of type "application/pgp-signature" skipped
