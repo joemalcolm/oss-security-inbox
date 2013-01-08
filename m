@@ -1,34 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/10/2
-Message-ID: <20130610112630.GB9807@gremlin.ru>
-Date: Mon, 10 Jun 2013 15:26:30 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/1
+Message-ID: <CACzGpqwTV+RTcTcqWvMxfiJr86aR3q=tzk0D7jJZWvASZ3DZjw@mail.gmail.com>
+Date: Mon, 7 Jan 2013 20:11:11 -0500
+From: adam swanda <adam@...oharbor.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
+Subject: Re: /dev/ptmx timing
 Content-Type: text/plain; charset=utf-8
 
-On 08-Jun-2013 13:28:28 -0400, Daniel Kahn Gillmor wrote:
+Don't you need to be running as root for this to be possible? For example,
+I know you can use strace to capture keystroke "writes" for any given PID,
+but unless you want to capture only processes you are running you need to
+be root or use sudo strace <cmd>.
 
- >> That's not a security issue, but a misconfiguration
- > I consider this a security bug in the debian package's maintainer
- > scripts: it is a race condition that leaks confidential information
+It looks like your PoCs fall into the same category. Following that same
+logic, if a user has root access, what would they gain by sniffing password
+character length? Since they can view hashes, change passwords, etc,
+without this method.
 
-Package post-install scripts are closer to configuration.
+I might be completely wrong here but I personally wouldn't classify this as
+a security issue. Just putting in my own opinion, of course, as a casual
+reader of this list.
+On Jan 7, 2013 5:24 PM, "vladz" <vladz@...zero.fr> wrote:
 
- >> (alas, very common for Deb*an packages)
- > If you know of more bugs like this, please report them with an
- > e-mail to submit@...s.debian.org with the first line "Package:
- > FOO" (where "FOO" is replaced by the name of the buggy package).
- > Thanks!
+>
+> Hi list,
+>
+> I noticed that it was possible to measure inter-keystrokes timing thanks
+> to the /dev/ptmx character device.  Any local user that is using
+> pseudo-terminal can be targeted.
+>
+> As it may also be used to disclose sensible information such as password
+> length, I was wondering if it should be treat as a security issue?
+>
+> Description + PoC: http://vladz.devzero.fr/013_ptmx-timing.php.
+>
+> No sure right now but I think the only way to solve this is to modify
+> the pts handling at kernel level.  Any opinions on that?
+>
+> Thanks,
+> vladz.
+>
+>
 
-I know lots (even for MySQL, which we are discussing, I can recall
-at least mysqldump producing trash, or several replication issues),
-but I don't want to waste my time.
-
-P.S.: http://pics.rsh.ru/img/debipoke_demo_itnrnj4r.png :-)
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
