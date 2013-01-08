@@ -1,36 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/02/16
-Message-ID: <5182AF44.5060506@debian.org>
-Date: Thu, 02 May 2013 19:24:04 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenPGP certifications are identity assertions [was: Re: upstream source code authenticity checking]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/09/2
+Message-ID: <CACHAsRfd1PupvP+aEJ9=UbVtx6pBKRLyeSiQ3khcrycPa1Ef6g@mail.gmail.com>
+Date: Tue, 8 Jan 2013 16:16:48 -0300
+From: WHK Yan <yan.uniko.102@...il.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com,  Carlos Alberto Lopez Perez <clopez@...lia.com>, submissions@...ketstormsecurity.com,  mr.inj3ct0r@...il.com, submit@...ecurity.com, vuln@...unia.com,  vuldb@...urityfocus.com
+Subject: Re: Re: [Full-disclosure] File Disclosure in SimpleMachines Forum <= 2.0.3
 Content-Type: text/plain; charset=utf-8
 
-On 02/05/13 17:42, Daniel Kahn Gillmor wrote:
-> most OpenPGP signatures in the current web of trust are *not*
-> trust signatures, and trust packets aren't emitted or transferred
-> publicly (they're private indicators used for local keyring
-> storage).
+The type and range of user defined smf, a co-manager can be created by an
+administrator setting custom permissions, does not mean it comes by default.
+Anyway in some groups smf computer security using caution and have had this in
+our case was a very dangerous.
 
-Some PGP publications try to avoid mentioning "trust" altogether: they
-talk about "[user ID] validity" and "ownertrust".
+2013/1/8 Kurt Seifried <kseifried@...hat.com>
 
-"User ID validity" is when you sign something with semantics similar
-to "I am reasonably confident that the key 4096R/4DE8FF2A63C7CC90
-belongs to Simon McVittie whose address is smcv@...ian.org". That's
-what happens in keysigning.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 01/08/2013 06:36 AM, WHK Yan wrote:
+> > The flaw is not exploitable without privileges. On some occasions
+> > there are forums where there are co-admistrators which have
+> > privileges to view the error log but not to modify code or at least
+> > read the mysql connection.
+>
+> So is a trust/security boundary crossed here? Can you please confirm
+> that the co-admistrator (or anyone) is not supposed to be able to read
+> arbitrary files accessible to the web server, and that this attack
+> does indeed allow that? Thanks.
+>
+> Removing full-disclosure@...ts.grok.org.uk from CC due to reply spam.
+>
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJQ7G9iAAoJEBYNRVNeJnmTPD0P/3qP0sPDl82+V1ST02WalH7q
+> O4qhaSWUi//rY3RXMARDVfNUOeTfzBgOpS21/4qeLuLH07ko5rrwGOksuc6U8fE+
+> NOQz9A3sqHQyE0419WqWDuI/kIK7SucWnGw8ACU+/vckvzWjfSDRQamq6+P+SBxL
+> Cf8zS65JY5kMTRgOPK4HMy/UyUgye9DTg49aKoUIzDndbzEX+BIvr6LqSPzh5wTE
+> +/NbA9R20ARFGJSe/gQARTVs8d5p0/6oi9KSxcwHLfvpWEC1zNsziVpervI3doNB
+> SXb9DoiGH/G0GGoryVP5tl2kgzuaMWgdys/ypHDZ+Jmap4DsV161+Y1pS8UcRP4f
+> MRAKZ3Slb/1wyW7omRnA/J6EWrgyEq4Z0f14DPUhLiLMaOgIHbVEt/b/pfyRYdPE
+> EEhbemCqzqaQMwSkN9g8XSOptwD2g2vj01Kdi58TzKvS4zZefHnmVCUmfr31fEF6
+> iuh4FH4baYygNlyqMMH83QtSHEB6YwRGky/bMxFZ+FGOPq0amYXBhiqV/dAkS2Ns
+> +Tt0dpJCIBo4e6TMOmFe4obpYj4XSlRVz0SKiU4oz5XvDKUiKEM1Q4DGrLtY2+9W
+> 1ozv7vcKFdg89Vrm/i9BfAiyLue9swXtr5LFS1PAE5HJB6yWBSERv2PPvnX4xj3i
+> PMcisy0d8xjsEbxA4rxG
+> =d5Kh
+> -----END PGP SIGNATURE-----
+>
 
-"Ownertrust" is when you configure gpg with things like "if Simon says
-a user ID is valid, assume that it is" (full ownertrust), or "if Simon
-and two others with partial ownertrust all agree that a user ID is
-valid, assume that it is" (partial ownertrust).
-
-Both of those are orthogonal to whether you can trust that I haven't
-deliberately included malicious code in a software package signed by
-my key, whether you can trust that I haven't accidentally included
-dangerously insecure code in that package, or whether I even have the
-authority to be saying "this is a release" on behalf of the project
-from which it purports to be a release.
-
-    S
