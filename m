@@ -1,41 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/5
-Message-ID: <51D0B800.3090806@redhat.com>
-Date: Sun, 30 Jun 2013 16:58:08 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/10
+Message-ID: <50EC6DEE.5000104@redhat.com>
+Date: Tue, 08 Jan 2013 12:05:18 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Steven Ciaburri <steve@...k911.com>
-Subject: Re: CVE request: Kernel 2.6.32+ IP_RETOPTS Buffer Poisoning DoS
+CC: Sebastian Krahmer <krahmer@...e.de>, coley@...us.mitre.org
+Subject: Re: CVE Request: nagios Stack based buffer overflow in web interface
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/30/2013 04:45 PM, Steven Ciaburri wrote:
-> We have a bugzilla report in with redhat: #979788
+On 01/08/2013 06:00 AM, Sebastian Krahmer wrote:
+> Hi,
 > 
+> I dont know if this already got a CVE. At least its not mentioned 
+> in the initial posting:
+> 
+> http://archives.neohapsis.com/archives/fulldisclosure/2012-12/0108.html
+>
+>  Our bug about this is here:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=797237
+> 
+> Can someone assign a CVE?
+> 
+> thx, Sebastian
 
-I'm having issues replicating this, works fine on CentOS 6 VM, RHEL 6
-VM, nothing happens (tried one cpu, 2 cpus, etc.), what RHEL 6
-configuration are you using?
+Please use CVE-2012-6096 for this issue.
+
+Just a heads up: I don't really read full-disclosure for CVE
+assignments (the signal to noise ratio is insane, and every time I
+email back I get a flood of automated replies). If you want a CVE for
+open source from me, posting to oss-sec is the way to go.
+
+
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR0LgAAAoJEBYNRVNeJnmTgEQQAJcu5NdNM5rEcsUbkfGamcK6
-CR/fRclJZiSMb2nV1RzwI5BLq8KPjReiNme+KbLJnqoDknX+krFANjbRM7cK44fz
-ehh8My9K8g8fKbqahejikSXOJHeCooZWMm8d0x0EknHfqsS4AFLdNd1jhayhDLkU
-boKBtucZ8mVaQ5G6J4ov+pCAzHN6RDkpzasbqKDFwRbiMOSF8rIZAtKZhp+u3EoB
-BCZqRD4LwTI08VD/gUhUCzL1c4g2xEEx3EKW+0EL8JY4yoDe12NtSS9/MYcjOrEz
-J8eCnLlQ/edNiKvcqW7jsUbRlnmqkMEEx84+d5xQy/jvrNXRYJ7vYFKR+um1KE88
-4L7ScVxFnZs6lEJ6qgpnmmxgHlq+IMrxaQNI0na70ZZeF49TiqzHkyVZpc53Sp7y
-lVSaodruZhpsccdLgkVzu/HOhb3ltBW/DEqtwFCEue1Z52xQTdrwHE0KOmMuWGlO
-yrSkAOXkDrOsldLNvaqHEz2EAu093mB/Jbs6/ByQ4YGjORFdeuen+T4ECg70+9YD
-2DIlP2I+nCx7EyalilwpgcwboyQid27957AVN93gp6PBsAyYCQZEr/mfLwQJ6bmO
-ca1mimoaq5NuoUc2E9jH+Q0zAXC66qX/zNqd6IRTpCUox4+Q1M9iz08rbg4xS4S6
-56fbIlVp2/K72f8YJ2GS
-=4HeF
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ7G3uAAoJEBYNRVNeJnmTg/sQAMr15m/ZYGlm+IFF6Q/Ln+sv
+GBUhM5zksB9dpoSlKlyC9cDimTYnaOILuDBlbizrt04nxiYZp97VsmHVaHn0hpI7
+pRfL8N9UoLPJixs5BwSW5tFPU+it0uTFJXirl4ycS0Dfn/kJ5BGZw1lNYVvGWs+M
+vXGgN/abbmnZ5S9motpl5+JLxH7i4p4QLpp4lYEJSM8T2sLP4umOrtSZgjG24dT+
+K6x3XzBcNGQvsWgQRJnEOTKW222rx2zNmQat+JD4XmDvL5cO9I5D/Q9xHLvF1kZB
+Jb3Uyo637onhja+DpDCKMbz4IVSRTJv0aBmdGuqT9mefIVmbezAJnOiqSmWvEmvv
+bRAjRvzXs+m6MjoBK8gI7Vk8otSvuIHDcmrvMh1hYVJ0fMpFh6nDLSnmEuJGddQF
+mYH9cSakGzK7vgKj6624nNlqhDBq/Imbb8yBzH8xPznMENcWbNp/QRs5kvGufedr
+CoMiX3lkcWEjQei+WhTfKUbkmv5xFOR3PxUoM8kTYAuOHG/1K82KHdMFQlpLcIb8
+miaR/H3A1SzKGVCPPWme9kBOlnRYuaekSkbqBYZXBnPfxbCvHZKdJxorw8p6D+0G
+dyA2UKtNxrB+DZDrxQD66OmTRN5YTp4Mi0wns/YZK+INTuTh69e/SKPn1kqIpZmY
+uuSIUaDa14lYCFuunCd4
+=j/BZ
 -----END PGP SIGNATURE-----
