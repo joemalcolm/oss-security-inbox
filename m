@@ -1,36 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/01/7
-Message-ID: <20130301164642.GA20979@suse.de>
-Date: Fri, 1 Mar 2013 17:46:44 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: rubygem passenger security issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/12
+Message-ID: <50EC6F62.5080409@redhat.com>
+Date: Tue, 08 Jan 2013 12:11:30 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: WHK Yan <yan.uniko.102@...il.com>, Carlos Alberto Lopez Perez <clopez@...lia.com>, submissions@...ketstormsecurity.com, mr.inj3ct0r@...il.com, submit@...ecurity.com, vuln@...unia.com, vuldb@...urityfocus.com
+Subject: Re: Re: [Full-disclosure] File Disclosure in SimpleMachines Forum <= 2.0.3
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://bugzilla.novell.com/show_bug.cgi?id=804722
-https://github.com/FooBarWidget/passenger/commit/8c6693e0818772c345c979840d28312c2edd4ba4#commitcomment-2643541
+On 01/08/2013 06:36 AM, WHK Yan wrote:
+> The flaw is not exploitable without privileges. On some occasions
+> there are forums where there are co-admistrators which have
+> privileges to view the error log but not to modify code or at least
+> read the mysql connection.
 
-Quoting:
+So is a trust/security boundary crossed here? Can you please confirm
+that the co-admistrator (or anyone) is not supposed to be able to read
+arbitrary files accessible to the web server, and that this attack
+does indeed allow that? Thanks.
 
-There is a security issue regarding passenger that has been fixed in  
-master. However, this does only apply if you deploy arbitrary  
-untrusted apps on you server. Very unlikely for us but still I thought  
-it was worth to inform you.
+Removing full-disclosure@...ts.grok.org.uk from CC due to reply spam.
 
-It fixes a security issue, but unless you're on a shared environment it's not a
-grave issue. It allows an application process to delete an arbitrary file, even
-a file it does not have permi
-ssion to, but only during application startup (i.e. during evaluation of
-config.ru). Once the application is started, it cannot be exploited, so
-external visitors cannot influence this. If 
-you deploy arbitrary untrusted apps on your server then this issue can be a
-problem. If all your apps are trusted (e.g. because your organization wrote)
-them then there's no problem.
 
-Unquote
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-I am not sure this warrants a CVE.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Ciao, Marcus
+iQIcBAEBAgAGBQJQ7G9iAAoJEBYNRVNeJnmTPD0P/3qP0sPDl82+V1ST02WalH7q
+O4qhaSWUi//rY3RXMARDVfNUOeTfzBgOpS21/4qeLuLH07ko5rrwGOksuc6U8fE+
+NOQz9A3sqHQyE0419WqWDuI/kIK7SucWnGw8ACU+/vckvzWjfSDRQamq6+P+SBxL
+Cf8zS65JY5kMTRgOPK4HMy/UyUgye9DTg49aKoUIzDndbzEX+BIvr6LqSPzh5wTE
++/NbA9R20ARFGJSe/gQARTVs8d5p0/6oi9KSxcwHLfvpWEC1zNsziVpervI3doNB
+SXb9DoiGH/G0GGoryVP5tl2kgzuaMWgdys/ypHDZ+Jmap4DsV161+Y1pS8UcRP4f
+MRAKZ3Slb/1wyW7omRnA/J6EWrgyEq4Z0f14DPUhLiLMaOgIHbVEt/b/pfyRYdPE
+EEhbemCqzqaQMwSkN9g8XSOptwD2g2vj01Kdi58TzKvS4zZefHnmVCUmfr31fEF6
+iuh4FH4baYygNlyqMMH83QtSHEB6YwRGky/bMxFZ+FGOPq0amYXBhiqV/dAkS2Ns
++Tt0dpJCIBo4e6TMOmFe4obpYj4XSlRVz0SKiU4oz5XvDKUiKEM1Q4DGrLtY2+9W
+1ozv7vcKFdg89Vrm/i9BfAiyLue9swXtr5LFS1PAE5HJB6yWBSERv2PPvnX4xj3i
+PMcisy0d8xjsEbxA4rxG
+=d5Kh
+-----END PGP SIGNATURE-----
