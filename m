@@ -1,35 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/6
-Message-ID: <20130320021907.00b1a7f4.reed@reedloden.com>
-Date: Wed, 20 Mar 2013 02:19:07 -0700
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com, Henri Salo <henri@...v.fi>, larry0@...com, "Christey, Steven M." <coley@...re.org>
-Subject: Re: Re: [Red Hat - Possible Forgery] Re: Ruby CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/09/5
+Message-Id: <E1TsvY0-00005Q-Is@xenbits.xen.org>
+Date: Wed, 09 Jan 2013 13:18:24 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 33 (CVE-2012-5634) - VT-d interrupt remapping source validation flaw
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On Wed, 20 Mar 2013 03:04:30 -0600
-Kurt Seifried <kseifried@...hat.com> wrote:
+	     Xen Security Advisory CVE-2012-5634 / XSA-33
+                             version 2
 
-> Please don't send requests to oss-sec if you already sent a request to
-> Mitre/anyone else. Also I don't seem to have these in my emails from
-> Mitre (to VIM list or anywhere else)?
+	   VT-d interrupt remapping source validation flaw
 
-To be fair, this list isn't just for CVE requests... It's for security
-issues in open source software[0]. As somebody who relies on this list
-and others like it to stay on top of current issues, I definitely
-appreciate the notification, even if CVEs have already been assigned. :)
+UPDATES IN VERSION 2
+====================
 
-~reed
+Public release.
 
-[0] http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+ISSUE DESCRIPTION
+=================
+
+When passing a device which is behind a legacy PCI Bridge through to
+a guest Xen incorrectly configures the VT-d hardware. This could allow
+incorrect interrupts to be injected to other guests which also have
+passthrough devices.
+
+In a typical Xen system many devices are owned by domain 0 or driver
+domains, leaving them vulnerable to such an attack. Such a DoS is
+likely to have an impact on other guests running in the system.
+
+IMPACT
+======
+
+A malicious domain, given access to a device which is behind a legacy
+PCI bridge, can mount a denial of service attack affecting the whole
+system.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen version 4.0 onwards is vulnerable.
+
+Only systems using Intel VT-d for PCI passthrough are vulnerable.
+
+Any domain which is given access to a PCI device that is behind a
+legacy PCI bridge can take advantage of this vulnerability.
+
+Domains which are given access to PCIe devices only are not able to
+take advantage of this vulnerability.
+
+MITIGATION
+==========
+
+This issue can be avoided by not assigning PCI devices which are
+behind a legacy PCI bridge to untrusted guests.
+
+NOTE REGARDING EMBARGO TIMELINE
+===============================
+
+After discussion with the discloser we have decided to set a longer
+than usual embargo in order to avoid public disclosure during the
+holiday period.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa33-4.2-unstable.patch          Xen 4.2.x, xen-unstable
+xsa33-4.1.patch                   Xen 4.1.x
+
+$ sha256sum xsa33*.patch
+b97ce505a4ea92d574d0b3abef7b4c600b7fdc682787dfd1e50fddd520f6a87d  xsa33-4.1.patch
+ba05474b8e1232318ae010d63d24ff1b15ba4d83e28cdb69d6a76e8f9eb5292c  xsa33-4.2-unstable.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iEYEARECAAYFAlFJfwsACgkQa6IiJvPDPVqSigCfYT4IEI9+DgyaE3UyPCne1/Vb
-RpkAnAmNO0ivQgqqVQuI6CERrAJULa6L
-=MCHH
+iQEcBAEBAgAGBQJQ7W34AAoJEIP+FMlX6CvZENoH/3baTpBwdJ/BaI+p8d9BYtIk
+lc78U3eX5LPX6wW5rO8m3ID0+y8jjGZftIm7VQBXCo1sRgW05feHZnRcxTJfzxvm
+NOoVA6yXxlULbi1gwpG5e2aPpOXywYE/SfQfesW+ooJXiUzUZyBxhM1WZWoSKgee
+8VyT/uo57wcL7uqYZeDJIqwdljYDaysoxvTtFizQRo65uxOmDlOP0IjWhoMBxqSW
+YBrA9jcHXI+8Cx9GruLOeMqbxJKWAD0jF1QMv+wL/psl3nQ682A7TIUSjKIIuEnk
+guvF8+lZpkB3MER0kTisjbYdiRiE5Em/MP5r8B/Ft52Ejh15/V65Irv0kMdVnog=
+=+i2W
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa33-4.1.patch" of type "application/octet-stream" (850 bytes)
+
+Download attachment "xsa33-4.2-unstable.patch" of type "application/octet-stream" (855 bytes)
