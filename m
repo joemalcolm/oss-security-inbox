@@ -1,53 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/11
-Message-ID: <525E29B3.6020100@redhat.com>
-Date: Tue, 15 Oct 2013 23:52:51 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/09/1
+Message-ID: <50ECB9B0.30101@redhat.com>
+Date: Tue, 08 Jan 2013 17:28:32 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: dropbear sshd daemon 2013.59 release
+To: WHK Yan <yan.uniko.102@...il.com>
+CC: oss-security@...ts.openwall.com, Carlos Alberto Lopez Perez <clopez@...lia.com>, submissions@...ketstormsecurity.com, mr.inj3ct0r@...il.com, submit@...ecurity.com, vuln@...unia.com, vuldb@...urityfocus.com
+Subject: Re: Re: [Full-disclosure] File Disclosure in SimpleMachines Forum <= 2.0.3
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/11/2013 07:22 PM, Matt Johnston wrote:
-> On Thu, Oct 10, 2013 at 11:41:27PM -0600, Kurt Seifried wrote:
->> On 10/10/2013 07:27 AM, Marcus Meissner wrote:
->>> It also has this changes entry which might need one: - Avoid
->>> disclosing existence of valid users through inconsistent delays 
->>> Thanks to Logan Lamb for reporting
-> 
->> This one seems to not be as exploitable or did I misread the follow up
->> emails?
-> 
-> This one needs a CVE too, just the link was wrong.                                                                                                            
-> https://secure.ucc.asn.au/hg/dropbear/rev/d7784616409a is
-> the correct patch.
+On 01/08/2013 12:16 PM, WHK Yan wrote:
+> The type and range of user defined smf, a co-manager can be created
+> by an administrator setting custom permissions, does not mean it
+> comes by default. Anyway in some groups smf computer security using
+> caution and have had this in our case was a very dangerous.
 
-Please use CVE-2013-4434 for this issue.
+I apologize but I am having a heck of a time parsing that last
+sentence. If you want to send it in your native language I can
+probably get it translated from another Red Hat employee.
 
-> Cheers,
-> Matt
 > 
-
+> 2013/1/8 Kurt Seifried <kseifried@...hat.com
+> <mailto:kseifried@...hat.com>>
+> 
+> On 01/08/2013 06:36 AM, WHK Yan wrote:
+>> The flaw is not exploitable without privileges. On some
+>> occasions there are forums where there are co-admistrators which
+>> have privileges to view the error log but not to modify code or
+>> at least read the mysql connection.
+> 
+> So is a trust/security boundary crossed here? Can you please
+> confirm that the co-admistrator (or anyone) is not supposed to be
+> able to read arbitrary files accessible to the web server, and that
+> this attack does indeed allow that? Thanks.
+> 
+> Removing full-disclosure@...ts.grok.org.uk 
+> <mailto:full-disclosure@...ts.grok.org.uk> from CC due to reply
+> spam.
+> 
+> 
+> 
+> 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSXimyAAoJEBYNRVNeJnmT5AUP/28rFBFJVCSfX3UQs614CPrG
-Op5zNzh6xJ1FY4GZW0uYtUE3Xu4Q/w6p5IzqiFpfkXpSuJPyFbiZ5sOuq4fS9zqE
-vGgxiBavCr82tjWnN7cYsBm5g92vUvzjmtUETjHgwlpqKw9N1OYoedpkfzDQGppb
-RQYlO0i3rOjs+xE9f1NQwBZquT1dijRYmq7P2bXHknQi0HUkJI4Xp77SEput9wZw
-IzSGzWnPpnDQzImMgKPpR06HBsZHmfjl7vW+WDJDwCTmdkMjO5/oba38stMgvKyA
-VdIggsHNzViyr9OFpt2Dtp5UKH/QwSmzM5drqej67LB7YX5ZIezp3RvfNoIRj6I8
-6WCTZ9Ang6ewTjYkgdr8v7ihTeQV7mqg8V35+dR2CMMpPBIThGC9NMFe9i6m1t1A
-Z6Nwslxd5eGBWUZaDuOffz9W1dVwJc0gY7YjJSUToyDsJsrgps/TbnSKDaQcaKzO
-Lg5ofB47uvZ1zNrQO1SlLtQyiHL7Sm2R9VFwd3J71YsqDKf9NHcBIyP3TO7I+10y
-B77ofy2+z2woezJU6OOJgUHMPzBMzosvGZoLkHmTDkIrO4QcQ9wn/kExO03kpN0f
-GcJqWwH0BOPea4Cr8rpW+bQwoUXLevjZd0q5CI1jixKTlTaFsogGtS4gghlCEcZe
-VO7uPmww+ZmeqVyxsEjp
-=mAl1
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ7LmwAAoJEBYNRVNeJnmTkWUP/0FeKRu03HvATSfTkox0/DGa
+WTK51zUZQb4yAoVxiUA4DjEc7wIsZ0ygcwMz9OaxM/tRMrx2d6eiMbEf7SDLfPvD
+ZsTUrHkQew1pcL7JvSWJ/d6yVkgaMUiCyFZwJLPUL3NSqjOev1C3Nv5dsNfQdmrv
+yz2gGcFCQFiY4Q7W1PqvJj9AT43zhA4wLZY4Lgs2VaDzsYElWhSBncE4C3GhLAN/
+EZzJUV0STtA71+mutQWKl84itukxgdUZ3Hs4yVKTkBt3s3e9G4ziIMCUwirH2y9T
+V8dn8BRIY8m5pHSLPeDuswnmw1gHOBl4m3++GA1GJvtH8xEYpS68Ca3KA8iiZ6K8
+stjbxQ6S4pItpLPCGYfk9CiIfH5aeW2eYvv+pQzvX+WgRRoVHXbnP0zx6+RvvEIb
+8cvnmMXHnFg6Q2/pZuEMCyRPRcqrbjjyPCy0COn6LlskZw5jq1xfv/GcbN0IBYM0
+T7pepu3H0ORcutaMXeW8o813LQGnxV522N84+L3E1iP3hn93WihPZ4pr56P0QChf
+ZdL+L9pzeGdBOBXyA4QLyf7fkcbegCc03u9rcfjFxDEmKwsJbYlIL9ayOnWG7h4A
+6mCgVXQhOrZmvN7gKOipfJ6kO1q2n6p9R8PmVvWoRaAhjKLsKH86gb6dB8AZ8ePa
+vYw2OJFl9M8r5NcfQPlD
+=1W7j
 -----END PGP SIGNATURE-----
