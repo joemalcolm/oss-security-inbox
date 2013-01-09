@@ -1,85 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/03/7
-Message-ID: <50E5D02F.70306@redhat.com>
-Date: Thu, 03 Jan 2013 11:38:39 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/09/6
+Message-ID: <20130109154644.GQ3139@redhat.com>
+Date: Wed, 9 Jan 2013 08:46:44 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jan Wielemaker <J.Wielemaker@...vu.nl>, Petr Pisar <ppisar@...hat.com>
-Subject: Re: CVE Request - SWI-Prolog / pl (X < 6.2.5): Multiple (stack-based) buffer overflows in patch canonisation code and when expanding file-names with long paths
+Subject: Re: CVE Request: cronie fd leak
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2013-01-09 09:24:23 +0100] Sebastian Krahmer wrote:
 
-On 01/03/2013 08:32 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> SWI-Prolog upstream has released [2] 6.2.5 / 6.3.7 versions, 
-> correcting the following two security flaws:
-> 
-> * Issue #1 (from [2]): ======================= * FIXED: Possible
-> buffer overrun in patch canonisation code. Pushes pointers on an
-> automatic array without checking for overflow.  Can be used for DoS
-> attacks. Will be extremely hard to make it execute arbitrary code.
-> 
-> Relevant upstream patch: [1]
-> http://www.swi-prolog.org/git/pl.git/commitdiff/a9a6fc8a2a9cf3b9154b490a4b1ffaa8be4d723c
+>Possible that you have got a different cron implementation.
+
+No, we're using cronie as well.
+
+>There is no hidden info in our bugzilla; the reproducer
+>is using lvm commands, but I remember it worked with any
+>command. Actually its not about the warnings, a "cat" will probably
+>also do, if you check its /proc/$pid/fd when its invoked.
+>But cat doesnt emit warnings about open fd's.
 >
->  References: [2]
-> https://lists.iai.uni-bonn.de/pipermail/swi-prolog/2012/009428.html
+>Not sure about upstream, probably not.
+
+Ok, so did some more digging based on some info from one of our
+developers that we had patched this in Fedora.
+
+Looks like this patch introduced the leak on 2011-04-28:
+
+http://git.fedorahosted.org/cgit/cronie.git/commit/src/cron.c?id=acdf4ae8456888ed78201906ef528f4c28f54582
+
+And this patch reverted it on 2011-06-29:
+
+http://git.fedorahosted.org/cgit/cronie.git/commit/src/cron.c?id=b19007ca9fddd62ecef3af4a7d2d252f1d5e0419
+
+So it looks like only 1.4.8 was affected by this (which, judging by the
+patch in your bugzilla is the same version you're seeing as affected).
+
+That might be a better patch to use than what you're using.  Anyways,
+this only affects 1.4.8 (for any others using cronie and concerned as to
+whether or not they might be affected).
+
+This was also reported to our bugzilla here:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=717505
+
+>On Tue, Jan 08, 2013 at 09:01:19PM -0700, Vincent Danen wrote:
+>> * [2013-01-08 13:56:40 +0100] Sebastian Krahmer wrote:
+>>
+>>> "Hello Kurt, Steve, vendors,"
+>>>
+>>> cronie leaks read-only fd's, please check here:
+>>>
+>>> https://bugzilla.novell.com/show_bug.cgi?id=786096
+>>>
+>>> can someone assign a CVE?
+>>
+>> Sebastian, do you have a specific command that you're using?  I'm trying
+>> to reproduce this in Fedora and RHEL using lvdisplay (maybe a bad
+>> choice?) and also using "lvm vgck -v vg_thor && lvm pvs" in
+>> /etc/crontab.
+>>
+>> The output is mailed to me fine with no warnings?  Can you share what
+>> command was being used to reproduce this?  It's possible that something
+>> you added (or we added) makes this a non-issue on other platforms.
+>>
+>> Has upstream been informed of this yet?
+>>
+>> --
+>> Vincent Danen / Red Hat Security Response Team
 >
-> 
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=891577
-
-Please use CVE-2012-6089  for this issue.
-
-> * Issue #2 - from [2]: ====================== * SECURITY: Possible
-> buffer overflows when expanding file-names with long paths.
-> Affects expand_file_name/2.  Can lead to crashes (DoS attacks) and
-> possibly execution of arbitrary code if an attacker can control the
-> names of the files searched for, e.g., if expand_file_name/2 is
-> used in a directory to which an attacker can upload files for which
-> he can control the name.
-> 
-> Relevant upstream patch: [4]
-> http://www.swi-prolog.org/git/pl.git/commitdiff/b2c88972e7515ada025e97e7d3ce3e34f81cf33e
+>-- 
 >
->  References: [5]
-> https://lists.iai.uni-bonn.de/pipermail/swi-prolog/2012/009428.html
+>~ perl self.pl
+>~ $_='print"\$_=\47$_\47;eval"';eval
+>~ krahmer@...e.de - SuSE Security Team
 >
-> 
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=891577
 
-Please use CVE-2012-6090 for this issue.
-
-> Could you allocate CVE ids for these? (iilc two should be enough)
-
-Done, thanks!
-
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ5dAvAAoJEBYNRVNeJnmTsLkP/RuQEHZexgB64pBN/plCIZ4f
-Es0joWv/R1U2t+n/6h/8+PsDxUGiH7i7Nf9ifUY03Mu5jMooyZxf70SGE5zSA7R/
-cq4u07HkQSCnQnu0mFNxORue4+Yh2Wz526J232pvELSgUnKQcuS/CeCD15RB35ee
-kmxmzfOLyGB+C7DjjmUksN5NGREXwO9u2ptR5Yb6BmYQVBtwW440Pf0cxtnIngn7
-zOQBcWabE5Kh5jpImnyw1d9j3xs6SYPPwJxL8l9/SYsCTrU6y6wP6ObMmIJ6Zqel
-wDCKQ7skw/EY8vWZOnBoJWH85qwkkwkM7xmpPQpLJepuIWTduaLPOCxeuWktDT++
-//lcAOaiHnGxbTUz+hQmo92gOgzWklo5ee8sWctXftROnRB0pYTnrdj7mRGuBw++
-/0dyy2P0SYZS5X3X3WZW0Rtwu2hvaXsmtXSGJkvD96JKQ/awQokj4xqoSqt3WtZA
-H1MLNHmQF7VVxG3jXGpLx3t19v6DqtmRSoAj+NFDtP42/c9PEEKWdGQCT90hMeml
-X9L8QTFlazTtAqbzsU9il3hpJ0kUPu5LX0/cii1SH6EIUuZoT8xHpfm1l8oMzYgv
-ZoHnjf6Z5yg6Vkv71j4AU5AmObA9DRBzu7TU7K8JY4NC9PhrRfz8Vv0ZFnGCjmID
-ByjwBKjHYV92HEylaVw5
-=d2im
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Security Response Team 
