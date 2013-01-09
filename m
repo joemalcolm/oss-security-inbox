@@ -1,36 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/06/2
-Message-ID: <20130506154024.GR28231@suse.de>
-Date: Mon, 6 May 2013 17:40:24 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: CVE request: Linux kernel: chipidea: allow disabling streaming in host mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/09/4
+Message-ID: <20130109082423.GA30593@suse.de>
+Date: Wed, 9 Jan 2013 09:24:23 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: cronie fd leak
 Content-Type: text/plain; charset=utf-8
 
-On Sun, May 05, 2013 at 12:37:44AM -0600, Kurt Seifried wrote:
-> On 05/03/2013 05:22 AM, P J P wrote:
-> > Hello,
-> > 
-> > Linux kernel built with the ChipIdia Highspeed Dual Role
-> > Controller (CONFIG_USB_CHIPIDEA) along with the ChipIdea host
-> > controller (CONFIG_USB_CHIPIDEA_HOST) modules, is vulnerable to a
-> > kernel crash. It occurs while streaming content over network via
-> > USB/Ethernet adapter
-> > 
-> > A user/program could use this flaw to crash the kernel resulting in
-> > DoS.
-> > 
-> > Upstream fix: ------------- ->
-> > https://git.kernel.org/linus/929473ea05db455ad88cdc081f2adc556b8dc48f
-> >
-> >  Reference: ---------- ->
-> > https://bugzilla.redhat.com/show_bug.cgi?id=959210
-> > 
-> > Thank you. -- Prasad J Pandit / Red Hat Security Response Team DB7A
-> > 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
-> 
-> Please use CVE-2013-2058 for this issue.
+Hi,
 
-JFYI, the respective code was added in Linux 3.5 as far as I see.
+Possible that you have got a different cron implementation.
 
-Ciao, Marcus
+There is no hidden info in our bugzilla; the reproducer
+is using lvm commands, but I remember it worked with any
+command. Actually its not about the warnings, a "cat" will probably
+also do, if you check its /proc/$pid/fd when its invoked.
+But cat doesnt emit warnings about open fd's.
+
+Not sure about upstream, probably not.
+
+regards,
+Sebastian
+
+
+On Tue, Jan 08, 2013 at 09:01:19PM -0700, Vincent Danen wrote:
+> * [2013-01-08 13:56:40 +0100] Sebastian Krahmer wrote:
+>
+>> "Hello Kurt, Steve, vendors,"
+>>
+>> cronie leaks read-only fd's, please check here:
+>>
+>> https://bugzilla.novell.com/show_bug.cgi?id=786096
+>>
+>> can someone assign a CVE?
+>
+> Sebastian, do you have a specific command that you're using?  I'm trying
+> to reproduce this in Fedora and RHEL using lvdisplay (maybe a bad
+> choice?) and also using "lvm vgck -v vg_thor && lvm pvs" in
+> /etc/crontab.
+>
+> The output is mailed to me fine with no warnings?  Can you share what
+> command was being used to reproduce this?  It's possible that something
+> you added (or we added) makes this a non-issue on other platforms.
+>
+> Has upstream been informed of this yet?
+>
+> -- 
+> Vincent Danen / Red Hat Security Response Team 
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
