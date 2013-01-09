@@ -1,68 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/09/1
-Message-ID: <51B40430.5060509@redhat.com>
-Date: Sat, 08 Jun 2013 22:27:28 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/09/3
+Message-ID: <20130109040118.GP3139@redhat.com>
+Date: Tue, 8 Jan 2013 21:01:19 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Daniel Kahn Gillmor <dkg@...thhorseman.net>, gremlin@...mlin.ru
-Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
+Cc: Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: CVE Request: cronie fd leak
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2013-01-08 13:56:40 +0100] Sebastian Krahmer wrote:
 
-On 06/08/2013 11:28 AM, Daniel Kahn Gillmor wrote:
-> On 06/08/2013 07:00 AM, gremlin@...mlin.ru wrote:
-> 
->> That's not a security issue, but a misconfiguration
-> 
-> I consider this a security bug in the debian package's maintainer 
-> scripts: it is a race condition that leaks confidential information
-> to a user who "wins" the race.  It is *not* a misconfiguration; it
-> is a bug with security implications.
-> 
->> (alas, very common for Deb*an packages)
-> 
-> If you know of more bugs like this, please report them with an
-> e-mail to submit@...s.debian.org with the first line "Package: FOO"
-> (where "FOO" is replaced by the name of the buggy package).
-> Thanks!
-> 
->> so at least I doubt that deserves a CVE.
-> 
-> I respectfully disagree; if an upstream package leaks confidential 
-> information to an adversary who "wins" a race, that is a bug which 
-> deserves a CVE.  Debian packaging bugs should be held to the same
-> standard.
-> 
-> Regards,
-> 
-> --dkg (i am a member of the debian project)
-> 
+>"Hello Kurt, Steve, vendors,"
+>
+>cronie leaks read-only fd's, please check here:
+>
+>https://bugzilla.novell.com/show_bug.cgi?id=786096
+>
+>can someone assign a CVE?
 
-Actually you're right and wrong. This does deserve a CVE. Also
-misconfigurations can also qualify for CVEs. E.g. if a vendor package
-installs product foo and /etc/foo.conf is world readable and contains
-a sensitive password (say ldap, or database, or whatever) that would
-get a CVE.
+Sebastian, do you have a specific command that you're using?  I'm trying
+to reproduce this in Fedora and RHEL using lvdisplay (maybe a bad
+choice?) and also using "lvm vgck -v vg_thor && lvm pvs" in
+/etc/crontab.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+The output is mailed to me fine with no warnings?  Can you share what
+command was being used to reproduce this?  It's possible that something
+you added (or we added) makes this a non-issue on other platforms.
 
-iQIcBAEBAgAGBQJRtAQwAAoJEBYNRVNeJnmT8pQP/2XoQuxiwahHRJdxx0sJM6dC
-mHPoHga8JwJZNLPP1DB1P2yb3YcCyX0OghurB2ktwsy/OufyxPVjjyjt371cZlE9
-dFlCayBeT49a/QV62sitRrZzxqhcTtNYsVcsH5Zu2tcrWNrrLkgayAHYWZU7U6WT
-Vxv1cHU9I1wFEvG43r33r0DVpyR4S4F6xVZWukMRY489xe9Ix3N6iQ8PtCbExmiL
-srZauBn0l7y6jp76ayym5J7Nsv7cUR3Or/UP+2rw0RyNxhC907VFSuwM4KedvANO
-nT8kRROJuH7XQnu2m+1Mj84tJ1xMS23D+nBupxm4sX6Ol/rtsO3ghu5fv2bSlqSI
-CDnDeeDXgCmpp1Ns/O0/nDbUw3E7W1z9P1zWkyYa0CA6PELV9gSJmRmvWNFh5W5z
-NNIiYeBLTFgskFgVTN8cX2QTcsMFhflMQmcGdR++8KiOofcDWKxKU90D77btkYFb
-1DJiMxo9VCk19B9HRv6q4/X1fyf6+NPx1Jru/rRe/j/XdTE1LoJ0mGMe5Dp4FL0o
-VrW9n5HPaF9nMUl6ai+IKD9vEQBE9qD0rB7vv1Ubx6D4xiXMP92cCm5vuczmfJHD
-ksWki/WjPhqLznqwJszfTcMwFqu1unvCYOOc1sv7tmqG6sHcNGoGNRdc3pZLAxfU
-h0O4wnuYh/3xggP0uSo0
-=iXjJ
------END PGP SIGNATURE-----
+Has upstream been informed of this yet?
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
