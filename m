@@ -1,133 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/2
-Message-ID: <5127035E.5000205@redhat.com>
-Date: Thu, 21 Feb 2013 22:34:22 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/10/1
+Message-ID: <574542730.3306698.1357831700180.JavaMail.root@redhat.com>
+Date: Thu, 10 Jan 2013 10:28:20 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>, "Christey, Steven M." <coley@...re.org>
-Subject: Re: CVE request: python-pyrad insecurities
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Jeremy Allison <jra@...ba.org>
+Subject: Notification: Samba: NTML with session security handshake attack
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors, Jeremy,
 
-On 02/21/2013 04:12 PM, Vincent Danen wrote:
-> * [2013-02-15 23:36:21 -0700] Kurt Seifried wrote:
-> 
->> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
->> 
->> On 02/15/2013 04:53 PM, Vincent Danen wrote:
->>> * [2013-02-15 19:51:07 +0000] Christey, Steven M. wrote:
->>> 
->>>> These two issues were fixed in the same diff and reflect
->>>> poor randomness - should we have only assigned one CVE?  (If
->>>> the RADIUS feature was introduced in different versions than
->>>> the authenticator-password feature, then maybe the SPLIT is 
->>>> acceptable.)
->>> 
->>> I'm not sure.  I didn't go digging to see when they were
->>> introduced -- both features may have been introduced at the
->>> same time (or not).
->>> 
->>> Ok, so doing a quick peek at the first full blob of it in git:
->>> 
->>> https://github.com/wichert/pyrad/blob/c206b1dfc362db8b0ef9c256814377bde8ed91cf/pyrad/packet.py
->>>
->>>
->>>
->>>
->>>
->>> 
-The use of random.randrange() is in both the CreateAuthenticator()
->>> and CreateID() functions, so I would bet that they've been
->>> like that the whole time (that blob is from Sept 2007).  So I
->>> guess one CVE is probably sufficient.
->>> 
->>> I only noted them as two issues as we had two separate bug
->>> reports about them.
->>> 
->>>> -----Original Message----- From: Kurt Seifried 
->>>> [mailto:kseifried@...hat.com] Sent: Friday, February 15,
->>>> 2013 2:37 PM To: oss-security@...ts.openwall.com Cc: Vincent
->>>> Danen Subject: Re: [oss-security] CVE request: python-pyrad 
->>>> insecurities
->>>> 
->>> On 02/15/2013 09:14 AM, Vincent Danen wrote:
->>>>>> Could a CVE be assigned to the following two issues
->>>>>> please?
->>>>>> 
->>>>>> #1: https://bugzilla.redhat.com/show_bug.cgi?id=911682
->>>>>> 
->>>>>> Nathaniel McCallum of Red Hat reported that pyrad was
->>>>>> using Python's random module in a number of places to
->>>>>> generate pseudo-random data.  In the case of the
->>>>>> authenticator data, it was being used to secure a
->>>>>> password sent over the wire. Because Python's random
->>>>>> module is not really suited for this purpose (not random
->>>>>> enough), it could lead to password hashing that may be
->>>>>> predictable.
->>> 
->>> Please use CVE-2013-0294 for this issue.
->>> 
->>> 
->>>>>> #2: https://bugzilla.redhat.com/show_bug.cgi?id=911685
->>>>>> 
->>>>>> Nathaniel McCallum of Red Hat reported that pyrad was 
->>>>>> creating serialized RADIUS packet IDs in the CreateID() 
->>>>>> function in packet.py. This is not suitable for RADIUS as
->>>>>> the RFC specifies that the ID must not be predictable.
->>>>>> As a result, the ID of the next packet sent can be
->>>>>> spoofed.
->>> 
->>> Please use CVE-2013-0295 for this issue.
->> 
->> Please REJECT CVE-2013-0295 and use CVE-2013-0294 for both
->> issues (same code issue, same version, same reporter).
-> 
-> Ok, so the reporter indicated that the patch noted does not fix
-> both issues.  It fixed one issue and the other CreateID() function
-> referenced wasn't actually the CreateID() function he meant:
-> 
-> https://github.com/wichert/pyrad/blob/38f74b36814ca5b1a27d9898141126af4953bee5/pyrad/packet.py#L518
->
-> 
-> 
-> Different function and you can see that:
-> 
-> CurrentID = (CurrentID + 1) % 256 return CurrentID
-> 
-> isn't that great.
-> 
-> Now that CVE-2012-0295 has been rejected, I suppose we cannot
-> re-use it for this, but I think we need another CVE for the "real"
-> CreateID() sequential RADIUS packet ID issue.
-> 
-> Sorry about this.  I hadn't realized there was more than one
-> CreateID() function in there and the original report was short on
-> details.
+  Mark Gamache, a security researcher, in his blog post:
+    [1] http://markgamache.blogspot.cz/2013/01/ntlm-challenge-response-is-100-broken.html
 
-Please use CVE-2013-0342 for pyrad CreateID() packet ID issue. We
-cannot reuse CVE's that have been rejected, it will anger the CVE gods
-(well, mostly Steve, and all the vendors using this stuff =).
+has demonstrated a challenge-response cracking attack against the LM, NTLM, and NTLM with session security handshake types of the NT LAN Manager (NTLM) suite of security protocols. A remote attacker, able to obtain NT hash from the challenge and response, could use this attack to obtain the NT hash that have been used for the handshake, and possibly authenticate to the server.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Also, as noted in [1] post NTLMv2 type of handshake is not vulnerable to this kind of attack.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Samba in the default configuration allows (except NTLMv2) also NTLM with encrypted password response /
+handshake type. The recommendation from Samba upstream (Jeremy Cc-ed) as a preventive-measure for this
+kind of attacks was to disable the 'NTML with the encrypted password' response authentication type,
+i.e. to change the default value from:
 
-iQIcBAEBAgAGBQJRJwNeAAoJEBYNRVNeJnmTZ7cQANeKFf6prru6yqztYBoTXwy3
-3dkV3ejwN4mbV1V+VD6ZNnGLlhepoydJHFfqmFWDLvqcicBAX7/yvGAz6pCuvsf6
-dfxzcx0CfIySemFW1vSdOhj/UOnVXf95zeYSEjRzJfCVx/6bbgcUNbcBIerHlMVq
-XDnWsFWwmYA1KLK2GzERVy1vYNoI2GMEP/MWgcdmOL1UdaO8E8gFvtHFtpiE3Tdk
-IaKdKHFgXEseOvTqVLVG/A/9yhTEpnnDeonaFtoWsFwdNFExPyvCzNZB5UVeSzIR
-xEZf7IkG7J11Zq7IsClEEA2KvZmQlIx+9g4m3R081ebI+r68deM0zR/w/vDt+sNd
-9frHmqftyw+AIElqCf3lquboWieL5teYVkcHRi9ymB9qZZ/s5/vF1/n4T9z2lu/O
-fE/M2btB0+UdvXztr7pdX4XwOXhySntcB2rle3YOZUJTjT9LCNPUbz5NJVuL3iZI
-FC+E8IKBkFUFtjEzf5tgnog6E+vI9wU9jvkn3MZGxc2HVo8AkUsDopiJQ/ddpgkh
-XCYWzAe7u72KI+fptQPa5AGy4ivUa3RT5UxTKC6fEVpEBD+DZSHpqPv4NkGFfXbp
-WPiRz1SKTSpEIx73AttjUlMMPQ2mKBSzh+WkSEdJU9DaWtbzEBf1yzI3fJ5gcTVJ
-eGLAzOjmLq6UfYZfYAQ4
-=iS7i
------END PGP SIGNATURE-----
+  ntml auth = yes
+
+to:
+
+  ntlm auth = no
+
+Since this is not a security flaw in the Samba tools suite itself (but rather in the NTLM protocol
+implementation itself), to allocate a CVE identifier for this issue (for Samba) would not be appropriate
+(and therefore this post is NOT intended to be a CVE request).
+
+It is just a heads-up for other vendors to apply more secure default option (if they didn't do that
+way yet).
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
