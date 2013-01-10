@@ -1,67 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/31/2
-Message-ID: <51588D14.2050105@redhat.com>
-Date: Sun, 31 Mar 2013 13:23:00 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/10/4
+Message-ID: <Pine.GSO.4.64.1301101853330.4759@faron.mitre.org>
+Date: Thu, 10 Jan 2013 18:55:25 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: "Larry W. Cashdollar" <larry0@...com>, Packet Storm <packet@...ketstormsecurity.org>
-Subject: Re: Remote command execution in Ruby Gem ldoce 0.0.2
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Subject: Re: Confirming CVE for ettercap buffer overflow flaw (CVE-2012-0722?)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 03/31/2013 10:11 AM, Larry W. Cashdollar wrote:
-> 
-> Remote command execution in Ruby Gem ldoce 0.0.2
-> 
-> /Larry W. Cashdollar @_larry0 3/25/2013/ 
-> ------------------------------------------------------------------------
+Vincent,
+
+It's probably a typo of CVE-2013-0722 (i.e., the year should be 2013, not 
+2012).  However, I was not the individual who assigned the issue, so I'm 
+not 100% sure - will get back to you later.
+
+- Steve
+
+
+
+On Thu, 10 Jan 2013, Vincent Danen wrote:
+
+> This isn't on MITRE's site (reserved), and the initial advisory
+> indicates that this has a CVE of CVE-2012-0722.  Can someone confirm
+> that this is the correct CVE name?
 >
->  Ldoce Ruby Gem:
-> 
-> Easily interface with the Longman Dictionary of Contemporary
-> English API from Ruby:
-> 
-> NB currently mac only as it depends on the afplay command.
-> 
-> https://github.com/markburns/ldoce
-> 
-> Ldoce passes an mp3 url to commandline for audio output of the 
-> pronunciation of a dictonary word:
-> 
-> If the URL or filename for the mp3 files contain shell
-> metacharacters code can be executed remotely as the client:
-> 
-> [./ldoce-0.0.2/lib/ldoce/word.rb]
-> 
-> if mp3? unless File.exists? filename command = "curl #{mp3_url}
-> -silent > {filename}" `{command}` end `afplay #{filename}` end
-> 
-
-Just one note, can you include the link (if available) to the gem on
-the rubygems.org site (which where most people seem to get their gems).
-
-Please use CVE-2013-1911 for this issue.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRWI0UAAoJEBYNRVNeJnmTrHMP/RDKi6LHT+t0viJZy2zsqftQ
-W87AvNUOpUGDx1ip78No/ymXwHgWiFLoH+n6I4GpPZ4CuTfUlWos9kRJ0GpWFPZi
-nwMsJvgMh7ZEtHUHR+aVssvbwTTU5P2bKkCM5ishVTwKYtFTHQECHzSd44OE5/D5
-zqQN+mYTIh+tW71LIG0NVwUJuazgi/Z0rA9Bv03X31Vja7G/83/R44IrTGS6eXG+
-0Ymmfpmfiy+2cdTjnVPKq+zVTVwLyMoPDTouzP3wbsERxrMXEQEqSlo4JtDZQUcC
-cjrIk9mOp4tJ2spS2ez1duIAJGKDKUNlL+44GKTOCjAEZmGorDoDo+Iv/XsPcEXS
-azxhlx3ikJjMByKcQfe9c9aVJJj6vHOzUNbTkFyC4bDWT3CbDLmuZtN+WHtfNpE8
-xUOGxlvWLDwtunFRVVrGinZfg7QetcWyI7KBr6QGLMyRPNshOhi4iKABtmpF5VxP
-M7Qo8t9v0V3E3fhjo053E6g4zG33JidBPP8B4WJ3dX6yJWYb1GAB+EHUTQh48Yub
-PBJgqgeuQdTJu0JLkbKj0YTyrQRdg8Jo8pCDdhodeModsC+iHY/brvKjYVjoZVxH
-IKf2ga6p6apAL2ZCKGzO6dfpXF02SxaTzaaEuIJOx5KDMws8BfxJ+mPFQ6AU1DC7
-dOZVOFV7G9DFkA2ER8gy
-=9PGv
------END PGP SIGNATURE-----
+>
+>
+> A stack-based buffer overflow was reported [1],[2] in Ettercap <=
+> 0.7.5.1.  A boundary error within the scan_load_hosts() function (in
+> src/ec_scan.c), when parsing entries from a hosts list, could be
+> exploited to cause a stack-based buffer overflow via an overly long
+> entry.  In order to exploit this, a user must be tricked into loading a
+> malicious host file.
+>
+> This has not yet been corrected upstream, but a proposed patch is
+> available [3].
+>
+> The initial report [1] indicates that this was given the name
+> CVE-2012-0722.
+>
+> [1] http://www.exploit-db.com/exploits/23945/
+> [2] https://secunia.com/advisories/51731/
+> [3] http://www.securation.com/files/2013/01/ec.patch
+>
+> Also:
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=894092
+> https://bugs.gentoo.org/show_bug.cgi?id=451198
+>
+> -- 
+> Vincent Danen / Red Hat Security Response Team
