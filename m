@@ -1,54 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/12
-Message-ID: <5203D2F9.80505@redhat.com>
-Date: Thu, 08 Aug 2013 11:18:49 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/10/2
+Message-ID: <20130110165719.GD2638@redhat.com>
+Date: Thu, 10 Jan 2013 09:57:19 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: P J P <ppandit@...hat.com>, Petr Matousek <pmatouse@...hat.com>
-Subject: Re: CVE Request: Linux kernel: arm64: unhandled el0 traps
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Confirming CVE for ettercap buffer overflow flaw (CVE-2012-0722?)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 08/08/2013 04:09 AM, P J P wrote:
->   Hi,
-> 
-> Linux kernel built for the ARM64(CONFIG_ARM64) platform is vulnerable to
-> a crash when the processor generates trap/esr, that is not handled
-> gracefully, which leads to bad_mode(), wherein it'll die() or oops().
-> 
-> A user/program could use this flaw to crash the kernel resulting in DoS.
-> 
-> Upstream fixes:
-> ===============
->  -> https://git.kernel.org/linus/381cc2b9705512ee7c7f1839cbdde374625a2a9f
->  -> https://git.kernel.org/linus/9955ac47f4ba1c95ecb6092aeaefb40a22e99268
-> 
-> Thank you.
-> -- 
-> Prasad J Pandit / Red Hat Security Response Team
-> DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+This isn't on MITRE's site (reserved), and the initial advisory
+indicates that this has a CVE of CVE-2012-0722.  Can someone confirm
+that this is the correct CVE name?
 
 
-Please use CVE-2013-4220 for this issue.
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSA9L4AAoJEBYNRVNeJnmTAUoQALAflUnznXp0+4Ve9Llsx2fb
-J+/Tke2LzCBX3geC7V0hLD0rOXaIgULvunpObLz7aqdwCTXF3ZcjMVorOq3rszsU
-ofreM9SGLjI9xVbxCdptN7zAh14vYTmkqFZG6PPO5IoG4lt5jkydHz6s4yfDYY/o
-QERfxrdVHuhNZ1RSDOLgovD7pKW9ZrofZFCe7ZTn5YVFnkuYHriiZzsSZ9ms9fv/
-0xpgC+b+QTt1JAuLmeML6CZhOMw6yhTYcYlotg/GBe9R1FgADT/QTZYZ2tixh6eF
-zvyMsmn4px8j7l5DDlQVE1oZqYBXhff1glomiyqaudnsB4iAyzpmVyaY17Xphvgg
-YXuMCeQ1ROjfg9y6XLRYrFDFoBPPoVCtcD66/723SFMcBLt0d5nRu39o0NEaHNzx
-QYL4EHSUdNEf84rhtL3Xr7a1G+1ArVv7orAOB1Czu9ETZykNigmNBIYdzWKqoi28
-UHU3U+Zpz/B7uL0P2nk2+O+bG9THX82DVGfREhQojEc65+ZOU9d/6687AyoelgR+
-m+7TFvFbm84aiHdgBBXp7ksOhqAfAawFtIDHzofhT+QEcOZ2yF/RwmDWnVtrGXs6
-bxPu3uFHEvvwAf6y/i7h9v00hmrh+IwSbIT+GmCz2LnAZ5TO/QrGPTP1Iryl/uHq
-qsxU6BpGEVFXDjquXHsQ
-=exK/
------END PGP SIGNATURE-----
+A stack-based buffer overflow was reported [1],[2] in Ettercap <=
+0.7.5.1.  A boundary error within the scan_load_hosts() function (in
+src/ec_scan.c), when parsing entries from a hosts list, could be
+exploited to cause a stack-based buffer overflow via an overly long
+entry.  In order to exploit this, a user must be tricked into loading a
+malicious host file.
+
+This has not yet been corrected upstream, but a proposed patch is
+available [3].
+
+The initial report [1] indicates that this was given the name
+CVE-2012-0722.
+
+[1] http://www.exploit-db.com/exploits/23945/
+[2] https://secunia.com/advisories/51731/
+[3] http://www.securation.com/files/2013/01/ec.patch
+
+Also:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=894092
+https://bugs.gentoo.org/show_bug.cgi?id=451198
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
