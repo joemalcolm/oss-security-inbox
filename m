@@ -1,94 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/30/2
-Message-Id: <E1VQcD4-0000On-Pn@xenbits.xen.org>
-Date: Mon, 30 Sep 2013 12:04:18 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 64 (CVE-2013-4356) - Memory accessible by 64-bit PV guests under live migration
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/14
+Message-Id: <201301112152.r0BLqMbj003422@linus.mitre.org>
+Date: Fri, 11 Jan 2013 16:52:22 -0500 (EST)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Confirming CVE for ettercap buffer overflow flaw (CVE-2012-0722?)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-              Xen Security Advisory CVE-2013-4356 / XSA-64
-                             version 3
+>This isn't on MITRE's site (reserved), and the initial advisory
+>indicates that this has a CVE of CVE-2012-0722.
 
-      Memory accessible by 64-bit PV guests under live migration
+Thanks very much for asking about this. The correct ID was
+CVE-2013-0722 and regrettably CVE-2012-0722 needed to be rejected in
+favor of CVE-2013-0722.
 
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-On some hardware, during live migration of 64-bit PV guests, some
-parts of the guest's shadow pagetables are mistakenly filled in with
-hypervisor mappings.  This causes Xen to crash when those mappings are
-later cleared.  Before the crash, a malicious guest could use
-hypercalls to cause Xen to read and write the parts of memory pointed
-to by the stray mappings.
-
-IMPACT
-======
-
-A malicious 64-bit PV guest, on a vulnerable host system, that can
-arrange for itself to be live-migrated, could read or write memory at
-high physical addresses on the host.
-
-Note that once such a guest begins live migration the host is likely
-to eventually crash, either when the live migration completes or on an
-earlier page fault.  This crash could be avoided if the malicious
-guest uses its improperly escalated privilege to prevent it.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.3.x and xen-unstable are vulnerable.
-Xen 4.2.x and earlier releases are not vulnerable.
-
-In addition, only hosts with RAM extending past 5TB are affected.
-
-On any host that is affected (and has not yet been successfully
-attacked), live migration of a 64-bit PV guest will deterministically
-crash the host.  If you can migrate a 64-bit PV guest from from host A
-to host B, without crashing host A, then host A is not affected by
-this bug.
-
-MITIGATION
-==========
-
-Running only HVM and 32-bit PV guests or preventing live migration of
-64-bit PV guests will avoid this issue.
-
-CREDITS
-=======
-
-Andrew Cooper found the issue as a bug, which on examination by the
-Xenproject.org Security Team turned out to be a security problem.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa64.patch        xen-unstable, xen-4.3
-
-$ sha256sum xsa64.patch
-061396916de992c43b8637909d315581589e5fc28f238aca6822947b45445a47  xsa64.patch
-$
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.11 (SunOS)
 
-iQEcBAEBAgAGBQJSSUynAAoJEIP+FMlX6CvZbVsH/i4Lqqfrx+cKZJwVWEqc9Ufz
-YT9nJzy0nyHPmS8SB4CluhE6Uiy8xi0MwNZLRVTrpuchoFbnWETOpplaKbKasMs3
-OtHtmYKxdZWWYGl5kNydx5d8pJ4OCftJ/zJbSQRBG2buORF8by1MTzq2sVzJRca6
-PcJqruGXlscsPo9B9OxAg4zH5rQo+E3jg0JuuG2qNDYzSDB/tx4WO0uOjkhwxyR6
-eL/sHIzNqUcTLxGUhS4xjfnbjfLJ+WaHUvTJOC3Hu6tmcIBke9p99sRZV8dgToxp
-OB4i02D8z3Rskjda8KgddWGbaOZPM75N47TCgGxh2r0Z46Eg5Pjye/2+VFHpW9U=
-=7bGU
+iQEcBAEBAgAGBQJQ8IlFAAoJEGvefgSNfHMd6LEIAKrbeX/RyjUMwt/SAoaX9cw+
+oiIEgGJxIkksqYcWeXLZfoSqkyC9yCbN+BNsfoLsqCr7uYCVpTiTUIDxdlFLMHwl
+VbHNtd1PkQkDO0p42YTf4tJso7sYs2EZgF/Mca/yEbMpE6fTw8zZMik1x3N+VYgc
+SYsh9BZ+sKFZ+E71ik87324puBsYHMvfnxbidntiybPuqgmAQPgAzXz0pakQMjc1
+A6U9zeooc7HXekbVidVWhfBjwW/64SxT7seiE9ykYx+/KMWYaa01TCaeFtdCM+x4
+8EcrpyO5ov3eyP0Gbdgs7PtI11ktvT1LxDBqRQ2ZZFq2K2JkK40S+apGYAowu80=
+=hCuw
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa64.patch" of type "application/octet-stream" (2353 bytes)
