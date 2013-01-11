@@ -1,40 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/17/3
-Message-ID: <20131217103925.GE16929@scapa.corsac.net>
-Date: Tue, 17 Dec 2013 11:39:26 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Issue with PYTHON_EGG_CACHE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/9
+Message-ID: <20130111001114.332846b4.reed@reedloden.com>
+Date: Fri, 11 Jan 2013 00:11:14 -0800
+From: Reed Loden <reed@...dloden.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request for multi_xml ruby gem (has same problem as CVE-2013-0156)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-On Mon, Dec 16, 2013 at 06:59:53PM -0700, Kurt Seifried wrote:
-> On 12/16/2013 10:14 AM, Yves-Alexis Perez wrote:
-> > On Sun, Dec 15, 2013 at 02:06:59PM -0700, Kurt Seifried wrote:
-> > Does this mean CVE-2013-7109 should be REJECTed or not?
-> > 
-> Sorry I misspoke, the last week has been not good, I was supposed to
-> be on PTO and instead hurt my back and was taking pain pills, my focus
-> was not so very good. Everything is as it should be CVE wise with
-> respect to PYTHON_EGG_CACHE dir thing.
+On Fri, 11 Jan 2013 00:52:38 -0700
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-Erf, sorry to insist, but (maybe because I'm not a native speaker) I'm
-still confused by this answer. So, is CVE-2013-7109 REJECTed?
+> On 01/10/2013 05:56 PM, Reed Loden wrote:
+> > Apparently, the multi_xml ruby gem has the same issue as
+> > CVE-2013-0156.
+...
+> These appear to be slightly different code bases, and in any event to
+> prevent confusion I'm assigning it a separate CVE to prevent confusion
+> since Ruby on Rails = 100% usage basically and multi_xml = > 100%
+> (probably a whole lot less).
+> 
+> Please use CVE-2013-0175 for this issue in the multi_xml ruby gem.
 
-Regards,
-- -- 
-Yves-Alexis Perez
-Debian security team
+Thanks! multi_xml 0.5.2 was just released with the fix.
+https://rubygems.org/gems/multi_xml/versions/0.5.2
+
+~reed
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-iQEcBAEBCgAGBQJSsCnZAAoJEG3bU/KmdcClmVsH/30GuXUAK7edTHPRv9a24SJb
-GKq8/V7W/wQ5DQ/lGq+15CoHyY73J6/RA9Af16m+mMED9yria8Jq7hl3AyDXbG0i
-V/SDVbiksmhZItiiCQNY7N9V5250HmPReEeLlgl7x2AfPzPaccvLPb+ZBVEoyHHE
-ZR5GQsvdUchQCYnvI90G6zsIQJ6/WOidhp78Lhj5Gz3fJo4K3+pW79FTLk7+IKwV
-DQjR/pG1EGIx1VZUhO0KZyUS4tmhMd9WZ5acKG2ynZQmSSPLIGKuszccxHAVMcnY
-iDcw1CsddwsJNgjtoq2VpP8QubvaLcGwSWbvdxziX4kPs0Ybj4PSN6OqwyaTSFs=
-=dEVD
+iEYEARECAAYFAlDvySIACgkQa6IiJvPDPVpZAwCfU8xU8qDKM6vFjRWv6lus9FFf
+vaoAn1xEdqfElznfOoFRAxNquF9dwXEI
+=9u/F
 -----END PGP SIGNATURE-----
