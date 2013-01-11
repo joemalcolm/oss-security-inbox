@@ -1,48 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/13
-Message-ID: <5202840C.6020501@gmail.com>
-Date: Wed, 07 Aug 2013 19:29:48 +0200
-From: Florian <floriangaultier@...il.com>
-To: kseifried@...hat.com
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - LibModPlug <=0.8.8.4 multiple heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/13
+Message-ID: <50F085C8.1040909@igalia.com>
+Date: Fri, 11 Jan 2013 22:36:08 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: WHK Yan <yan.uniko.102@...il.com>
+CC: Kurt Seifried <kseifried@...hat.com>, submit@...ecurity.com,  submissions@...ketstormsecurity.com, vuldb@...urityfocus.com,  1337 Exploit DataBase <mr.inj3ct0r@...il.com>, vuln@...unia.com, oss-security@...ts.openwall.com
+Subject: Re: Re: [Full-disclosure] File Disclosure in SimpleMachines Forum <= 2.0.3
 Content-Type: text/plain; charset=utf-8
 
-On 07/08/2013 19:17, Kurt Seifried wrote:
-> On 08/07/2013 10:24 AM, Florian wrote:
->> Hi,
-> 
->> Just a CVE Request for this 
->> http://blog.scrt.ch/2013/07/24/vlc-abc-parsing-seems-to-be-a-ctf-challenge/
-> 
->>  Thx
-> 
-> 
-> I need a better request. You want one CVE? multiple CVEs? A quick read
-> of the web page indicates multiple different problems. Can you list
-> them here and provide links to the source code? thanks.
-> 
+On 09/01/13 01:28, Kurt Seifried wrote:
+> I apologize but I am having a heck of a time parsing that last
+> sentence. If you want to send it in your native language I can
+> probably get it translated from another Red Hat employee.
+>
 
-Okay, so the first bug is an integer overflow in j variable, it occurs
-here :
-https://github.com/gardaud/libmodplug/blob/master/src/load_abc.cpp#L1852
+I'm Spanish native speaker. Let me translate this for you. This is a
+free translation. I split it on several paragraphs for better readability.
 
-The second bug is a heap overflow and can be triggered in two functions
-abc_MIDI_drum :
-https://github.com/gardaud/libmodplug/blob/master/src/load_abc.cpp#L3211
-and
-abc_MIDI_gchord :
-https://github.com/gardaud/libmodplug/blob/master/src/load_abc.cpp#L3258
+On 09/01/13 02:33, WHK Yan wrote:
+> disculpa, estaba utilizando google translator, hablo español. te explicaba
+> que en ocaciones hay administradores que necesitan ayuda para administrar
+> secciones de foros como en un smf, en mi caso soy parte de la comunidad de
+> elhacker.net donde hay un solo administrador y varios coadministradores,
+> ahora... el administrador no confia ni en su propia sombra y ha creado un
+> grupo especial de usuarios desde el panel de grupos de usuarios llamado
+> coadmin, este tipo de usuarios ha sido creado basado en los permisos de un
+> administrador con la exepcion de instalar paquetes y cualquier cosa que
+> pueda permitir tomar el control total del servidor y restringirlos
+> unicamente a tareas del foro en si.
 
-h->gchord and h->drum are static buffers and are filled until the copied
-byte is in the charset (respectively 'fbcz0123456789ghijGHIJ' and
-'dz0123456789')
+""" Excuse me, I was trying to use google translator. I speak spanish. I
+was explaining you that sometimes there are administrators that need
+help to administer forum sections of SMF. In my case I'm part of the
+elhacker.net community where there is only one administrator and several
+co-administrators. However, the administrator is very wary and he don't
+trusts anybody, so he has created an special group of users from the
+users panel group called coadmin. This coadmin users are created with
+the typical forum administrator rights, with the exception that they are
+not allowed to install packages or anything that could allow them to
+take control over the forum. """
 
-It's up to you to open one or multiple CVE.
+> con esta falla de seguridad un usuario
+> como este coadministrador podria acceder al archivo de configuraciones y
+> leer la base de datos pudiendo obtener el hash de sesion del admistrador
+> para luego subir una shell maliciosa como una c99.php.
 
-Don't hesitate if you want more information.
+""" With this security flaw, one of this untrusted "coadministrators"
+could access to the config file of the site and could obtain the
+database passwords, and then he could get the session hash of the
+administrator from the DB. Then he could upload an evil shell like
+c99.php """
 
-Thx
+> este esenario se
+> repite en multiples foros donde yo visito tales como portalhacker.net y
+> el-hacker.com entre muchos otros. por eso pienso que es una falla de
+> seguridad importante ya que si smf esta diseñado para proteger directorios
+> y no lo hace correctamente permitiendo la lectura de archivos de forma
+> arbitraria es porque para nosotros no es un caso aislado o tan simple de
+> ver, es como el tipico esenario de "un xss es impacto alto o bajo?", todo
+> depende del esenario y en nuestros casos es algo critico. gracias por su
+> atencion señor Kurt.
+
+""" Scenarios like this happen on many forums that I visit like
+portalhacker.net or el-hacker.com, among others. I think that this
+security flaw is important. SMF is designed to protect directory and
+file access, and if it don't works as expected and allows reading any
+file then the security implications are high.
+
+I think this is like the typical question of "Is an XSS of high or low
+impact?". All depends of the scenario and use case, and in our personal
+use cases this is something critical. Thanks for your attention Mr. Kurt """
 
 
+Best regards!
+-------------
 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
