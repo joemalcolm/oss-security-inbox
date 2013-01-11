@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/16/2
-Message-ID: <20130916155949.522596f9@redhat.com>
-Date: Mon, 16 Sep 2013 15:59:49 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/5
+Message-ID: <871udsp69p.fsf@mid.deneb.enyo.de>
+Date: Fri, 11 Jan 2013 07:45:22 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: IcedTea-Web release 1.4.1 fixing CVE-2012-4540
+Subject: gnome-keyring does not discard stored secrets in some cases
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+We've received a bug report that gnome-keyring client library does not
+instruct the daemon to discard secrets when using the
+gnome_keyring_lock_all_sync function:
 
-IcedTea-Web release 1.4.1 (re-)fixes CVE-2012-4540.  That issue was
-previously fixed in 1.1, 1.2, and 1.3 branches, but the fix did not
-make it to head and hence 1.4 was released vulnerable.
+<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=697896>
+<https://bugzilla.gnome.org/show_bug.cgi?id=690466>
 
-It is the same issue, but as vendors may have released security updates
-for the issue before and later rebased to vulnerable 1.4, there's a new
-CVE for missing / regressed security fix - CVE-2013-4349.
+The function is simply not implemented.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1007960
-http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2013-September/024691.html
+I had trouble finding a caller of this function, but the submitter
+indicated that gnome-power-manager uses it in older versions:
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+<http://git.gnome.org/browse/gnome-power-manager/tree/src/gpm-control.c?h=gnome-2-32#n162>
+
+I'm not sure if this needs a CVE, but it's probably worth fixing
+anyway.
