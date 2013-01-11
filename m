@@ -1,45 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/13/2
-Message-ID: <20130313083554.GA20033@gremlin.ru>
-Date: Wed, 13 Mar 2013 12:35:54 +0400
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel + devtmpfs automount == insecure /dev/{,u}random mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/8
+Message-ID: <50EFC758.3060400@redhat.com>
+Date: Fri, 11 Jan 2013 01:03:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, coley@...us.mitre.org, security@...ntu.com
+Subject: Re: CVE Request -- Axis2/c
 Content-Type: text/plain; charset=utf-8
 
-linux/drivers/char/mem.c contains the following code:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-static const struct memdev {
-  const char *name;
-  umode_t mode;
-  const struct file_operations *fops;
-  struct backing_dev_info *dev_info;
-} devlist[] = {
-// ...
-   [8] = { "random", 0666, &random_fops, NULL },
-   [9] = { "urandom", 0666, &urandom_fops, NULL },
-// ...
-};
+On 01/10/2013 08:47 PM, Seth Arnold wrote:
+> Hello Kurt, Steve, all,
+> 
+> In November, I asked if a CVE had been assigned to Axis2/C for
+> failing to check hostnames when validating SSL/TLS certificates: 
+> http://www.openwall.com/lists/oss-security/2012/11/07/1 This was
+> part of the fallout from this paper: 
+> http://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
+> 
+> I was not confident enough in my reading of the source code to say
+> that Axis2/C was vulnerable, so I did not pursue the issue at the
+> time.
+> 
+> Since then, I have re-read the code, emailed three developers
+> privately, emailed the axis-c-dev mail list, and filed a JIRA bug
+> report. None of these communications have received any kind of
+> response.
+> 
+> https://issues.apache.org/jira/browse/AXIS2C-1619 
+> http://mail-archives.apache.org/mod_mbox/axis-c-dev/201301.mbox/browser
+>
+>  Please assign a CVE for Axis2/C for failing to validate hostnames
+> when checking SSL certificates.
+> 
+> Thank you
+> 
 
-This allows writing to these devices by an unprivileged user
-resulting in re-initializing the entropy pool (as described
-in `man 4 random`) and thus making the data predictable.
+Please use CVE-2012-6107 for this issue.
 
-Just boot the kernel with "init=/bin/sh" parameter and issue
-the `ls -l /dev/*random` command - you'll see something like:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-crw-rw-rw- 1 root root 1, 8 Mar 13 08:30 /dev/random
-crw-rw-rw- 1 root root 1, 9 Mar 13 08:30 /dev/urandom
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-The obvious fix is to create these devices with mode 0644,
-so only root will be able to re-initialize the entropy pool.
-
-Possibly, this even deserves a CVE to be assigned...
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJQ78dYAAoJEBYNRVNeJnmTaeEQAKDZY/mbWcZxRV1QEPXJcYuF
+h0Z/Fjr2TqJOL4kia9zLufQZGB93zmaND0QJzJOZmnah0W3MBx24U0+alOrmZE9R
+zy29hvt72epTZi8AeYd0IsF4ZfGslBN6mIcNjZ5unw4SyoFB3T9Io65BAFHf9+8e
++Ay0Ajch+Qw75/EwyiQt48In0a9XAaaP6+ZD//TqJxQHvHX0zvgTuSMz16d870MD
+XyyfY/WdeJdrMojZUFysJKo1Yc9lW5a0e8fmGtlnZEq4mKPsgue2pfBc+UyUm1TN
+M3hiOuipzipJm8lAiYse7+OG3hrDxrHqGf1+hlZhg6gX49zyp5s7RvOLqNSgMPJw
+YhFf0XUwOoQJLARw1RDNqHYTELz8iKK6HwszBVmb7Z6W67QGUZkzLpXPh8kDQYAs
+aIg9oIdOr6A3tla6LomXKbbLdr25G5/3HzQcjX5MWHhCi6HkBKK3KSOCStuG5Zxy
+636mgvt8mkBSI6GkNRq1qnTTMmOit16Jhf65DtoHZjJoLh5mbBcGIU2ARQIqUhGW
+e8CFLqbs8VgGYzybCjiPPDKxh6GNu85sRSKdLMsmrPTraatHW33vUPVJL8rEG4GT
+5rT0xD4/oyrtYP2xeZd3NPNbAS8GhYTp8fSYXao9+RTHjJScrM0xgwRzf63CSP9C
+xs+WPycu1KzXx5XEC79a
+=iK3V
+-----END PGP SIGNATURE-----
