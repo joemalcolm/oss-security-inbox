@@ -1,37 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/11
-Message-ID: <87boaz3qk9.fsf@windlord.stanford.edu>
-Date: Mon, 04 Mar 2013 11:36:38 -0800
-From: Russ Allbery <rra@...nford.edu>
-To: oss-security@...ts.openwall.com
-Subject: Re: Reverse lookup issue in Net::Server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/2
+Message-ID: <20130110165637.745c0d60.reed@reedloden.com>
+Date: Thu, 10 Jan 2013 16:56:37 -0800
+From: Reed Loden <reed@...dloden.com>
+To: <oss-security@...ts.openwall.com>
+Subject: CVE request for multi_xml ruby gem (has same problem as CVE-2013-0156)
 Content-Type: text/plain; charset=utf-8
 
-Remi Gacogne <rgacogne-bugs@...edump.fr> writes:
+Apparently, the multi_xml ruby gem has the same issue as CVE-2013-0156.
 
-> I think there is a security issue in the way the access control feature
-> of Net::Server (http://search.cpan.org/perldoc?Net%3A%3AServer) works.
-> Net::Server is used by various projects including Munin, Postgrey and
-> SQLgrey.
+Can a new CVE be assigned to track it specifically as well, or would
+policy dictate that this issue be considered part of the original CVE?
 
-> The issue lies in the fact that the allow / deny access control does not
-> perform a valid DNS check when given a hostname parameter and the
-> 'reverse_lookups' option is enabled.  The current code only checks that
-> the incoming connection source IP address has a reverse DNS matching the
-> given hostname, but does not check that the hostname resolves back to
-> this source IP address (see how the $prop->{'peerhost'} property is set
-> in get_client_info(), lib/Net/Server.pm:553, then used in allow_deny(),
-> lib/Net/Server.pm:597).  As it is trivial for an attacker to be able to
-> set his own source IP's reverse DNS, the current check is not safe (this
-> probably matches CWE-807: Reliance on Untrusted Inputs in a Security
-> Decision).
+https://gist.github.com/d7f6d9f4925f413621aa
+https://github.com/sferik/multi_xml/pull/34
+https://news.ycombinator.com/item?id=5040457
 
-This is a very weak security measure, but yes, the need to check the
-reverse DNS results with a forward DNS query to make the security check at
-all useful has been well-known going all the way back to the days when TCP
-wrappers was the UNIX firewalling system of choice.  I remember discussion
-of this in security contexts in 1994, and I'm sure it was an old
-discussion even then.
-
--- 
-Russ Allbery (rra@...nford.edu)             <http://www.eyrie.org/~eagle/>
+~reed
