@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/7
-Message-ID: <20130429110608.GS8388@dhcp-25-225.brq.redhat.com>
-Date: Mon, 29 Apr 2013 13:06:09 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/1
+Message-ID: <Pine.GSO.4.64.1301101912300.4759@faron.mitre.org>
+Date: Thu, 10 Jan 2013 19:13:45 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- Linux kernel: veth: double-free in case of congestion
+Subject: CVE-2013-0422 assigned to today's Oracle Java 0-day
 Content-Type: text/plain; charset=utf-8
 
-Description of the problem:
-A flaw was found in the way Virtual Ethernet driver implementation in
-the Linux kernel handled skbs in case of congestion.
 
-A remote attacker could potentially use this flaw to crash the system.
+FYI - I saw a CERT/CC blog post that said this was exploitable on Linux.
 
-Introduced in:
-2.6.33-rc1
+======================================================
+Name: CVE-2013-0422
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-0422
+Reference: MISC:http://blog.fireeye.com/research/2013/01/happy-new-year-from-new-java-zero-day.html
+Reference: MISC:http://krebsonsecurity.com/2013/01/zero-day-java-exploit-debuts-in-crimeware/
+Reference: MISC:http://labs.alienvault.com/labs/index.php/2013/new-year-new-java-zeroday/
+Reference: MISC:http://malware.dontneedcoffee.com/2013/01/0-day-17u10-spotted-in-while-disable.html
+Reference: MISC:https://threatpost.com/en_us/blogs/nasty-new-java-zero-day-found-exploit-kits-already-have-it-011013
+Reference: CERT-VN:VU#625617
+Reference: URL:http://www.kb.cert.org/vuls/id/625617
 
-Fixed in:
-2.6.34
+The MBeanInstantiator in Oracle Java Runtime Environment (JRE) 1.7 in
+Java 7 Update 10 and earlier allows remote attackers to execute
+arbitrary code via vectors related to unspecified classes that allow
+access to the class loader, as exploited in the wild in January 2013,
+as demonstrated by Blackhole and Nuclear Pack, and a different
+vulnerability than CVE-2012-4681.
 
-Upstream fix:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6ec82562ffc6f297d0de36d65776cff8e5704867
 
-References:
-http://marc.info/?l=linux-netdev&m=127310770900442&w=3
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
