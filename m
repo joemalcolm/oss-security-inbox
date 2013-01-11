@@ -1,78 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/30/6
-Message-ID: <51096791.4000307@redhat.com>
-Date: Wed, 30 Jan 2013 11:33:53 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/11/6
+Message-ID: <50EFC171.4030306@redhat.com>
+Date: Fri, 11 Jan 2013 00:38:25 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fweimer@...hat.com>, Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Re: CVE request: hs-tls: Basic constraints vulnerability
+CC: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: gnome-keyring does not discard stored secrets in some cases
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/30/2013 03:59 AM, Florian Weimer wrote:
-> On 01/20/2013 01:32 PM, Salvatore Bonaccorso wrote:
+On 01/10/2013 11:45 PM, Florian Weimer wrote:
+> We've received a bug report that gnome-keyring client library does
+> not instruct the daemon to discard secrets when using the 
+> gnome_keyring_lock_all_sync function:
 > 
->> For hs-tls (TLS/SSL implementation in haskell) it was announced
->> the following advisory[0]:
->> 
->> ----cut---------cut---------cut---------cut---------cut---------cut-----
->>
->> 
-Hi cafe,
->> 
->> this is a security advisory for tls-extra < 0.6.1 which are all 
->> vulnerable to bad certificate validation.
->> 
->> Some part of the certificate validation procedure were missing 
->> (relying on the work-in-progress x509 v3 extensions), and because
->> of this anyone with a correct end-entity certificate can issue
->> certificate for any arbitrary domain, i.e. acting as a CA.
->> 
->> This problem has been fixed in tls-extra 0.6.1, and I advise
->> everyone to upgrade as soon as possible.
->> 
->> Despite a very serious flaw in the certificate validation, I'm
->> happy that the code is seeing some audits, and would want to
->> thanks Ertugrul S￶ylemez for the findings [1].
->> 
->> [1] https://github.com/vincenthz/hs-tls/issues/29 
->> ----cut---------cut---------cut---------cut---------cut---------cut-----
+> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=697896> 
+> <https://bugzilla.gnome.org/show_bug.cgi?id=690466>
+> 
+> The function is simply not implemented.
+> 
+> I had trouble finding a caller of this function, but the submitter 
+> indicated that gnome-power-manager uses it in older versions:
+> 
+> <http://git.gnome.org/browse/gnome-power-manager/tree/src/gpm-control.c?h=gnome-2-32#n162>
 >
->> 
-> I believe an alternative description of the impact is:
-> hs-tls-extras does not check the Basic Constraints attribute of a
-> certificate in certificate chain procession, and any certificate is
-> treated as a CA certificate, which means that anyone who has a
-> valid certificate can use it to sign another one (with an arbitrary
-> subject DN/domain name embedded into it) and have it accepted by
-> hs-tls.  This eventually allows MITM attacks on TLS connections.
+>  I'm not sure if this needs a CVE, but it's probably worth fixing 
+> anyway.
 > 
-> Kurt, is this more to your liking? 8-)
 
-Yup!
-
-Please use CVE-2013-0243 for this issue.
+What security violationoccurs/what trust boundary is crossed?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRCWeRAAoJEBYNRVNeJnmTYuwQANBYOXHg6tppHjpRDrhYrR6i
-yv1MZahWRYRT1cYFiX6dG+6MwAqCtHtLOTaaN5bAGP2BviczTK/WuLdo6axAvR1P
-83XCYk4ewxT+HHLwZXUAJHMmFQrEuplhe0FzpL2wuBquPQ4B9jBWz1+qfm4oR14H
-2DGsI5rHiA88AKzDSf1QwaE/0SwEWplff8f4fvd3kU0wi044HzyuM9VKrkhkroWz
-cHwX4rdJTEV1mTEr8O1myVpXF2tuMmzuzXFMYd42NuqzC1cv72upXJMnbWxq85QG
-qEM2GozkTHeG5kBzqN1R9lAPEXcXhe8dXg6lTYp8XanTjyf5wHCrcV1T6jJhzDLA
-nWM37ehcZ0vZwrTUhkoM9JSLHf/FSLObR9N1qQA8lbNcUn1VNXOelToIcdM84Mcr
-RqBROOa8UX9fg8rMeE9akUxgTmEGHUhDKcWq5Tkf6J8l/EZEYON4JjRVf+n3Cw17
-nrUJ93HnHO2S5AcUXohK12Uq3YfrWxR041fLkwUNH1aOQy2Xomc4T/86WTRw3BNc
-aEEuwKiDu9O9tu5Fy8H/LfuX9geYjpg3i3OXwYzBy8LT87S2H5FvtmMFfCfKrVCR
-+YCh8eJ4T6NimQQfZO5sez9SINyNLaccPnSCFYeMmnidIIjDgySVlDLQuY2kfpxL
-dFY6FOh/+/fXtDnkaAmp
-=DpBg
+iQIcBAEBAgAGBQJQ78FxAAoJEBYNRVNeJnmTJYYQAJ0/+QATzrHed6H3Mu58jqDD
+oP6414l5SHw8i43y7IbDNXO8vK5MBLHODbKrQRG3o3VZWwSxN5olZhKd0xXaweJu
+Xw0s7EJVsvqZx10V271ZmJejpkVXXPBvxjKbHEwHAMz7JFck4vpCY//Scd1bXC5b
+tQFvZ7RakkYvc3yNp/BwHUQOYhhMifdS14pPXiVdJlolbtOlp2FwMubYRehuWrhL
+kMC65K0X52dX053mGNVpeT/WQPZoS2HggzADK7RPw5tnq70tVAcglklqfu+9O0wn
+vfFLgA+tUJpV0Nj2B678ABjmnJZ9OLNPu6aKR2l4FvosuAstqY5bNqxOVKMloQIT
+C1GMRYyC5olmhco0DzGw/ECXbcVwjxAjTkYZa0PN04VmMqph/YdqjMygbTgJMuUb
+OXTWzLo0XG68veNsq6brB/Wr3Dgm1S2QBPl2s3EcIvKU3OQuiSxb1mQOwo+iMSvM
+bYchq6Fl/USezF70JMC+/O5lV1KmGl2SqFjKZdXRPeNUqyQ8cG9yxpWSPSHK1HS3
+gYZtCHnBLT8/Etl8pDhFfunMArmvS6mTUuQ2iE9nwuuSu6nPWNvWVGMcjnB/p0vG
+09KFnNZplSLPncTro6LKqoO92UsiMmAUaYc+OkhbKuUyqws6loL2n46Czk9rv8g0
+OQwQ/zjHD2MgopKbwRXF
+=+WA1
 -----END PGP SIGNATURE-----
