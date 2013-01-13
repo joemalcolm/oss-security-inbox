@@ -1,39 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/3
-Message-ID: <20130701084605.GA13808@suse.de>
-Date: Mon, 1 Jul 2013 10:46:05 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/13/2
+Message-ID: <50F30F18.4070700@redhat.com>
+Date: Sun, 13 Jan 2013 12:46:32 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Kernel: 2.6.32+ IP_RETOPTS Buffer Poisoning DoS hemlock.c
+CC: Florian Weimer <fw@...eb.enyo.de>, Steven Christey <coley@...re.org>
+Subject: Re: DoS vulnerability in the BIND resolver (and potentially others)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jun 30, 2013 at 04:34:16PM -0700, Steven Ciaburri wrote:
-> Kurt,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 01/13/2013 03:26 AM, Florian Weimer wrote:
+> Scott Brynen described a behavioral change in some of the UltraDNS 
+> authorative name servers:
 > 
-> I just loaded a a virtual machine at Rackspace Cloud running RHEL. It is a Xen based VM.
+> <https://lists.dns-oarc.net/pipermail/dns-operations/2013-January/009501.html>
+>
+>  Mark Andrews of ISC confirmed that this triggers a denial of
+> service condition in the BIND recursive resolver:
 > 
-> [steven@...l ~]$ ./a.out
-> [+] giving ourselves some poison...
-> [+] polluted kernelspace with more crap
-> [+] polluted kernelspace with more crap
-> [+] polluted kernelspace with more crap
-> [+] polluted kernelspace with more crap
-> [+] polluted kernelspace with more crap
-> [+] polluted kernelspace with more crap
-> [+] polluted kernelspace with more crap
-> 
-> at which point the server kernel paniced. 
-> 
-> The server is running 2.6.32-358.11.1.el6.x86_64
-> I did discover that it appears with SELINUX enabled the POC can go through a considerable amount of tries before it crashes.
+> <https://lists.dns-oarc.net/pipermail/dns-operations/2013-January/009506.html>
+>
+>  I think he is right, but this obviously has to be fixed in the 
+> resolver.  Can this be assigned a CVE?
 
-Cool, so SELinux is actually doing its job. :)
+Uhmm I'm going to defer to Steven on this one:
 
-Sebastian
+1) is this a security issue? I'm not totally convinced it is. It's
+definitely broken behaviour.
+2) Does this get a single CVE or one per broken client software?
 
--- 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
+iQIcBAEBAgAGBQJQ8w8YAAoJEBYNRVNeJnmTbZ8P/2rnuErOKNHgQCm93O5vdZze
+eVJK2uP0W4bJrcD+ak6QcWD1i9i0JnEDTkTp/s00PJYy2dwg3UJMPl/5FM363Z/y
+7DWeLql7ekZu+4MTqIB91ZN9FyP7MeT1Jer3ogBfUhx71mC8L8k6A9jBoIfjrXdx
+wl7qKm3UkrEvaL346TqeiT3f9Xk+ZB5eCXIgWyIWLDlDvD0BVWYAzUjnr+yFXgvq
+DxRPJKceNvrIuLCBYWrmCM9lWIsvZdvLRVQSje4XDmUAn31Ca44EYIRvq0+6l4Ub
+lc1LzHlzLLQVfVJH6JFUjooRxWXX8gSAbQiaCfEb6OqRlkXg4WH2ItT/QqCYrqSv
+JDBQXe+wLCtoU4fG9ygOZ4Oh+DsYzDMe9KjtQHY/rrtxeYFNZvoP6CPjzpUdT/BO
+GmeADjKkZhP3xODLGivjnri9A+am+Fo/i5wAf981fW1pScTGRLS9tIOLEuVVE/cH
+UfODsIPCiClK4h9z8guxTroiuj1LO4XEyeoPSeU+JuUJ83+R2r+OCgCmcMr0JCbI
+lxe5WfAWxZYTbG6jeZnaHa4EHKHCWCRqd4V5FdVLYqmjM3Y2PcZ3gOZ5YDcg2fdM
+7wrKbGfZxVU6Bvi8lfiqusKctBG3fB0RUFh+NBQZ5t4TtVlqgg8r1FZt+7pYOI/Q
+M6Dqi9Iyck3Crdf/EZPU
+=JWSN
+-----END PGP SIGNATURE-----
