@@ -1,27 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/08/3
-Message-ID: <20130608110051.GA12877@gremlin.ru>
-Date: Sat, 8 Jun 2013 15:00:51 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/14/3
+Message-ID: <898704202.7067748.1358179719160.JavaMail.root@redhat.com>
+Date: Mon, 14 Jan 2013 11:08:39 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Debian's package "mysql-server" leaks credential information
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Michael Scherer <misc@...b.org>
+Subject: CVE Request -- redis: Two insecure temporary file use flaws
 Content-Type: text/plain; charset=utf-8
 
-On 08-Jun-2013 12:44:45 +0200, vladz wrote:
+Hello Kurt, Steve, vendors,
 
- > The file "/etc/mysql/debian.cnf", which contains plain text
- > credentials for the "debian-sys-maint" mysql user, is created
- > in an insecure manner during the package installation phase.
- > This can lead a non-privileged local user to disclose its content
- > and use this special account to perform administration tasks.
- > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=711600
- > Could you allocate CVE id for this issue?
+Issue #1:
+=========
 
-That's not a security issue, but a misconfiguration (alas, very common
-for Deb*an packages), so at least I doubt that deserves a CVE.
+  Michael Scherer in the following Red Hat bugzilla:
+  [1] https://bugzilla.redhat.com/show_bug.cgi?id=894659
 
+pointed out, Redis, a persistent key-value database of version 2.4
+to be prone to temporary file use in src/redis.c:
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
-GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+  server.vm_swap_file = zstrdup("/tmp/redis-%p.vm");
+
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=894659#c0
+
+Note: This problem was fix by the patch [3] below.
+
+Issue #2:
+=========
+When searching for a patch, that corrected the issue [2]
+above, found out it was patch
+
+[3] https://github.com/antirez/redis/commit/697af434fbeb2e3ba2ba9687cd283ed1a2734fa5 ,
+
+but it also introduced another insecure temporary flaw in
+src/redis.c:
+
+  776 	+    server.ds_path = zstrdup("/tmp/redis.ds");
+
+Note: Issue #2 is also fixed in recent upstream 2.6.7 / 2.6.8
+      versions. If you want me to find exact patch, which
+      corrected the second problem, let me know and i will
+      provide the commit id.
+
+Could you allocate (two) CVE ids for these issues?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
