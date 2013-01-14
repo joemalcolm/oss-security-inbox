@@ -1,52 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/18
-Message-ID: <CABYiri9o47kp=Q5DgXpw3Gr2_DnSXXO_3h6hqbLpkraw8u_T8g@mail.gmail.com>
-Date: Fri, 23 Aug 2013 00:36:38 +0400
-From: Andrey Korolyov <andrey@...l.ru>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Possibly insecure permissions on sshd_config in Debian-based distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/14/4
+Message-ID: <20130114171328.GO2638@redhat.com>
+Date: Mon, 14 Jan 2013 10:13:28 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: memcached DoS when printing out keys to be deleted in verbose mode
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 23, 2013 at 12:20 AM, Kurt Seifried <kseifried@...hat.com> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 08/22/2013 12:10 PM, Andrey Korolyov wrote:
->> Hello,
->>
->> At least both Precise and Wheezy has 0644 mask on this file so an
->> unprivileged local user can obtain some sensitive information from
->> it. Though it not CVE-worthy, but quite strange.
->
-> Well the default file config would of course be known. I'm reading the
-> man page and nothing super secret pops out, e.g. no passwords get
-> embedded. Can you give an example of sensitive information in sshd_config?
+We got a report about a DoS in memcached when run with -vv (verbose
+mode) and a request to delete a key is sent to the server (via memrm).
+Because memcached doesn't null terminate the keys as it prints them,
+fprintf may run off the end of the buffer.
 
-AllowUsers/AllowGroups/PermitEmptyPasswords
+This isn't a very significant issue (even without SSP/FORTIFY_SOURCE if
+you could do something more malicious, memcached won't run as root).
+Also note the docs indicate that memcached should only be accessible via
+trusted users/hosts and not the internet at large, so the exposure
+should be minimal.
 
-Obtaining such information can shorten time of bruteforce remote attacks.
+References:
 
->
->
->
-> - --
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJSFnKbAAoJEBYNRVNeJnmT8q4P/j6t2tHKcsIakUyWXFMZwN3n
-> p4x9ejgJH02NKvqe7SxBDsLk976d+B9FRZiZdbdZ0GcstVkYvGlBaV7FzcSGzSGb
-> 3osNdItXOqu/PLzYzfp53z6scMDMF7I9fE5bGYVyjCD5U1Tw5zjXDzcgURxLW56W
-> IcbkalHpPbxYF4PeXsdyoweunlIgWrdL4dSZzSfiysc47nwi7VFX8cgeKZh9+ufu
-> DFUxx4es0uQeyMyDK3cckhJZmD9NWqsdSrGGJ9aPrzs2tMp0/xuW4ecivd6Qhsgi
-> m2MR/2UO78ytY7kGmQLoUUZiPQijo+KPemiUhBc7JrFUBLL05ZewaCVA0HnUinm5
-> Shu6veoasQeGsJt1PiXh5p0QgXV6sIG8MSPSjc0w3aQ40oIuNw30nN2F1W/F/Sdb
-> tgnl0P37S79KzSdiRpiBBNCEh+8SLQTmjrvnX20HoQ8px3IHGzkdT0zVE2mT2DWC
-> cLxP3P2pInq2BTPC3NaNq47QgtbRqow+xP6mU/SUHAh1dRk8xVxqli56g5g/cv0p
-> HIYV35Fy4uv8kQFomnn7pcz2m5E+a0h05yycnUygppha+Lh2un1h+qJraIGc/blj
-> 5kEyyZGVmPYVXec36OOeFiDYz1LgpIWCVuW7noL/awGoOwCufC1YCRYvE6N9FyXI
-> MTqKyKPVKzC0MHERb/Ui
-> =rfgv
-> -----END PGP SIGNATURE-----
+https://bugzilla.redhat.com/show_bug.cgi?id=895054
+https://code.google.com/p/memcached/issues/detail?id=306
+https://code.google.com/p/memcached/issues/attachmentText?id=306&aid=3060004000&name=0001-Fix-buffer-overrun-when-logging-key-to-delete-in-bin.patch&token=3GEzHThBL5cxmUrsYANkW03RrNY%3A1358179503096
+
+Could a CVE be assigned for this?  Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
