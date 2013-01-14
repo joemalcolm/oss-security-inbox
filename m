@@ -1,57 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/27/1
-Message-ID: <20130827234131.GN32641@redhat.com>
-Date: Tue, 27 Aug 2013 17:41:31 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/14/7
+Message-ID: <50F47B07.7050301@redhat.com>
+Date: Mon, 14 Jan 2013 14:39:19 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE request: roundcube 0.9.3 fixes two XSS flaws
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michael Scherer <misc@...b.org>
+Subject: Re: CVE Request -- redis: Two insecure temporary file use flaws
 Content-Type: text/plain; charset=utf-8
 
-* [2013-08-23 14:18:49 -0400] cve-assign@...re.org wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->>[2] http://trac.roundcube.net/ticket/1489251
->
->As far as we can tell from the
->http://trac.roundcube.net/ticket/1489251 history, the addressbook
->group vulnerability was discovered by dennis1993 and affects only
->version 1.0-git (not version 0.9.2). There is no direct statement that
->the addressbook group vulnerability was fixed. It seems likely that
->the addressbook group vulnerability could cross privilege boundaries
->if the "click on this group after creation" action were performed by
->an administrator who was visiting the addressbook of an unprivileged
->user.
->
->The other issues were discovered by und3r and affect version 0.9.2. At
->least one of these issues (JavaScript code in the signature) also
->affects version 1.0-git. There seems to be a dispute about whether
->this signature issue crosses privilege boundaries. Apparently a user
->can use the signature issue to attack himself, but there is no
->discussion of whether an administrator can visit the "identity
->configuration page" of an unprivileged user, and thereby become a
->victim of the XSS attack. The signature issue might be interpreted as
->a CVE-2012-4668 regression. Also, there is some indication that all of
->the issues discovered by und3r might have a root cause of 'This kind
->of problem is present in all parts where there is the "MCE" editor
->(or, more specifically, where there is a <textarea> with the CSS class
->"mce_editor").'
->
->Thus, so far, it seems that we should have one CVE for the addressbook
->group vulnerability, and one CVE for all of the vulnerabilities
->discovered by und3r. If anyone has established that the
->vulnerabilities discovered by und3r don't all have the same affected
->versions, please let us know. Also, if anyone thinks that the
->vulnerabilities discovered by und3r were actually the responsibility
->of a third-party product (such as TinyMCE), please mention that as
->well.
+On 01/14/2013 12:16 PM, Kurt Seifried wrote:
+> On 01/14/2013 09:08 AM, Jan Lieskovsky wrote:
+>> Hello Kurt, Steve, vendors,
 
-I didn't go digging that deep into it, but what you're saying makes
-sense and still leaves us with a request for two CVEs.
+Sorry misread the affected versions, this needs two CVEs:
 
-Would you be able to assign them?   I didn't see the actual assignment
-made in your reply.
+>> Issue #1: =========
+> 
+>> Michael Scherer in the following Red Hat bugzilla: [1] 
+>> https://bugzilla.redhat.com/show_bug.cgi?id=894659
+> 
+>> pointed out, Redis, a persistent key-value database of version
+>> 2.4 to be prone to temporary file use in src/redis.c:
+> 
+>> server.vm_swap_file = zstrdup("/tmp/redis-%p.vm");
 
-Thanks.
+Please use CVE-2013-0178 for the first issue as previously assigned.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+>> [2] https://bugzilla.redhat.com/show_bug.cgi?id=894659#c0
+> 
+>> Note: This problem was fix by the patch [3] below.
+> 
+>> Issue #2: ========= When searching for a patch, that corrected
+>> the issue [2] above, found out it was patch
+> 
+>> [3] 
+>> https://github.com/antirez/redis/commit/697af434fbeb2e3ba2ba9687cd283ed1a2734fa5
+>>
+>> 
+,
+> 
+>> but it also introduced another insecure temporary flaw in 
+>> src/redis.c:
+> 
+>> 776 	+    server.ds_path = zstrdup("/tmp/redis.ds");
+> 
+>> Note: Issue #2 is also fixed in recent upstream 2.6.7 / 2.6.8 
+>> versions. If you want me to find exact patch, which corrected
+>> the second problem, let me know and i will provide the commit
+>> id.
+> 
+>> Could you allocate (two) CVE ids for these issues?
+> 
+>> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat 
+>> Security Response Team
+
+
+Please use CVE-2013-0180 for this second issue.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ9HsHAAoJEBYNRVNeJnmTLusQAJaKRWdl2HrQntMdky1D2rpv
+KsxYbdUSYKj71yJY5cScCfPqWjGB6mCHmqjxS9mceHKCaNpwus6wJ+BfSGytdXIC
+xYcOG1xJwuMTHF2EI7M1jLLfaoRthobkBPmao2EdIPH4pyuPiFXFw29y2vHdA2gS
+her2drPWbQcwY1GqA/5r82FUbtaYpeUyS8RTyfFy0Uha5HNoH+HmPI7cpJ8lvFx4
+Uf2IFoP2EcSh4aMIsHmR9NiwgeQUZB5gJcYsRWCztoDAEQZNYj2C7042iJBxlcOG
+35PrmrAy16EchKKFRp5Le63L9VA9Q1PgAeW2jqUtAeVBsO6w3nTD3RLUEanmwEd6
+kug2BPgNJ/ObkKSbjUbhMKC5OPg3r29OIV5FTeq5mJDWhEaKp/VCSSWTEP9np2vB
+MSpD2up12YRAWOcvJa6qn8MBiZcsktmcsaVcOwVGk2mxvEtIRs0qKq9l2T6o0774
+eKIP5q0Z4frlY6cFGGIMAp9FPXjbKUkFmxzH00rkLdJnedMt0EykwOjcNZrLRevS
+dRoHXRukCo+swXpfyfrFAu2Okf1rf6so30OJ8405p9Djf2rC/iakvXagRcy4xwZ7
+a4PFcfJGBQEWHKgRHiU9JLM2l0CRmuHnoyj9pPP8FqzRCr5jqlh4I8Vw/DNl5IUq
+j8x8XuWLTF4aEApunXaM
+=/WSg
+-----END PGP SIGNATURE-----
