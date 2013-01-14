@@ -1,70 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/8
-Message-ID: <5285B191.70000@redhat.com>
-Date: Thu, 14 Nov 2013 22:30:57 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/14/6
+Message-ID: <50F459AA.9080400@redhat.com>
+Date: Mon, 14 Jan 2013 12:16:58 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: memcached DoS when printing out keys to be deleted in verbose mode
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-So after some though I think what's really needed here is to decide
-what are safe limits for the encryption/hashing of data. E.g. Using a
-"weak" encryption algorithm like 3DES for something like an SSL
-connection to a website for a single banking transaction is a LOT
-different than using that 3DES to protect the transfer of data that is
-sensitive in the long term. So some factors to consider:
+On 01/14/2013 10:13 AM, Vincent Danen wrote:
+> We got a report about a DoS in memcached when run with -vv
+> (verbose mode) and a request to delete a key is sent to the server
+> (via memrm). Because memcached doesn't null terminate the keys as
+> it prints them, fprintf may run off the end of the buffer.
+> 
+> This isn't a very significant issue (even without
+> SSP/FORTIFY_SOURCE if you could do something more malicious,
+> memcached won't run as root). Also note the docs indicate that
+> memcached should only be accessible via trusted users/hosts and not
+> the internet at large, so the exposure should be minimal.
+> 
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=895054 
+> https://code.google.com/p/memcached/issues/detail?id=306 
+> https://code.google.com/p/memcached/issues/attachmentText?id=306&aid=3060004000&name=0001-Fix-buffer-overrun-when-logging-key-to-delete-in-bin.patch&token=3GEzHThBL5cxmUrsYANkW03RrNY%3A1358179503096
+>
+> 
+> 
+> Could a CVE be assigned for this?  Thanks.
+> 
 
-1) How long is the data sensitive for? Does the sensitivity decay over
-time or stop being sensitive at some point? Basically is there a time
-limit on how long the attacker has to decrypt the data for it to be of
-any use.
-
-2) Is the data transmitted over networks? third party networks?
-completely random public networks? My bank has no control over where
-customers log in from for example. Log ins from within a company
-controlled network can be more tightly controlled. Basically how
-likely is the data to have been exposed to an attacker?
-
-3) Is the data stored? E.g. an SSL session is typically not stored,
-but encrypted health records are stored for a long time.
-
-So essentially in my head I see a couple slider bars, as they go
-towards the riskier end of the spectrum (e.g. protecting a CA
-certificate vs. protecting a single SSL session) stronger encryption
-is needed. But I'm not sure where to place those limits. Do we come up
-with something like a CVSS2 score (E.g.: a scenario where the exposure
-is high, time sensitiveness is low and the data is not stored, so a
-score of 6.3 which means RC4 is to weak or whatever). I think general
-rules of thumb are probably ok, like:
-
-DES is not safe at all
-3DES is not safe for stored data, but may be safe for data transfer
-that isn't sensitive for a long time
-and so on.
-
-Same goes for hashing algorithms. These would also be useful as
-software development / configuration guidelines. Thoughts/comments?
+Please use CVE-2013-0179 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJShbGQAAoJEBYNRVNeJnmTGL0QAMvLf7zuvbK/D1k7d3NCR9pd
-IaV+6TiL8pHThQrZto7HA5TnFoHm8/uLuKDlzfdE2iFKRH9pcLVGvqtX1v9LW5u+
-TYlbcRxmFOg8/nteLgcXYQwkHIDN6LQDFhCQirt7bR01Nw6kWUHWB5CB7DIJE+bs
-Ox7eT0D08as55fj2dU8QAM6+LAodOZT2qVqkBF+dJiyxi7M1cU2PwCPZIVLTZnh7
-lHklTY+O2qs7Dbbjcq65/Lsj+LiyHzHtBu8lpw0SWMnL3octddkI1e8janZRWJbA
-nq4GmIaG+PTRcHdTgdt5GEV3GqR/WbrKXTTYR9rdM2E3jSBoVMQcx++QL1GRvYYj
-YgiUwgbpFQZZz9XON7Ghi0IkxekJfqBgVEIoWhcprAYYEqCJNFpLw3tuB7bbCoDR
-KOA1DF7v19Axy2Vcm6ztNErR2hTIQowwWGpVVzbU8iC0eKm3MKuwun8v2DdS6ZtJ
-IYozgalGjajhbXPZozO44yNOpuo9nnTyqxFcwUwVG8JEqBcphmA8QQ4SqvwtTfgU
-ZBmXP9Fv2Gc5QD15ujI4UukcWZs3FP3DS54t2v0P3f7GtPXYtnYz0p7X68V/yu5Z
-h3susAV10IIEPk5IjNH0Awqf2PCUvKZ2SBhXaEL2PI5LGVP8Q6oT63tuGoO6UwpA
-dsPTc5PB1cxWd2Z9cAjk
-=bc4p
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ9FmpAAoJEBYNRVNeJnmTrZ0QAMSuV4tfSGZbLqn8KgBikAbF
+iSYVVHQarteb0qNQcOvmr0DxW+3OVLZjwP4bcQ8T9K3rwZh6FG+u8hE+9JdDrOQ7
+VFhan/fB38Xan6MYEdzZrEKebMwZWDDRi+gMM1HMPIxuakIcRpTh4mRZR8a1zHNi
+C4Jp0Z4zQ+PxiB0IzojlimtNuWVYeFvf2wHGdcIGPEOBn9+9ook2vJnhiJubdjqX
+YbrzQHDak8tt9ZkUmUORVud3I08sstP8tq5BcJZtQijfA6H1vOwW8324Up4g4x7p
+B8nmeDR/yWiKBSRdYXtDiIWBeWKtsYSBFRHuOzxOTsCXs7JWW1H1HmY10lXPgGtq
+iGghVdGg5jQNRO3VqrWpQ3O8jQkZehq00nYF5GIxYgqJxaQoyUpCnnvH9PtN2zvl
+YrFGL9/vFKwp4pChwBdKoZuvUUiQkU6LvKAuGbLLtvl1bi5fRz1vycVjSeKBVJyz
+hP7e/MNkJz7jpmAYp1zuKwGyZDAL8k3qsVyPK16nR9JL4frnCtE6un4B9InW+qZg
+IKGrgu+OsYcrQAs/Zq2mDuIZ4OZtgixr7dVIqiN32pgt/hRwVwTTOzIWDP6rmtEY
+Di4/YK0xVuULHD8Eama5hGu6u0mzXrIhEI+JXwl+l6LlxlOkDtap7HaHfsU94YNh
+/7Drc1Ky4Th3NsxNNbcT
+=CI8z
 -----END PGP SIGNATURE-----
