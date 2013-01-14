@@ -1,59 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/2
-Message-ID: <50FDEC53.9000702@redhat.com>
-Date: Mon, 21 Jan 2013 18:33:07 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/14/1
+Message-ID: <20130114053719.GA12579@openwall.com>
+Date: Mon, 14 Jan 2013 09:37:19 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE Request coreutils
+Subject: Re: DoS vulnerability in the BIND resolver (and potentially others)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Florian -
 
-On 01/21/2013 01:39 PM, Vincent Danen wrote:
-> * [2013-01-21 19:17:49 +0100] Moritz Muehlenhoff wrote:
+On Sun, Jan 13, 2013 at 11:26:17AM +0100, Florian Weimer wrote:
+> Scott Brynen described a behavioral change in some of the UltraDNS
+> authorative name servers:
 > 
->>> Can someone assign a CVE id for a buffer overflow in
->>> coreutils? Its the same code snippet (coreutils-i18n.patch) and
->>> it affects sort, uniq and join:
->>> 
->>> https://bugzilla.novell.com/show_bug.cgi?id=798538 
->>> https://bugzilla.novell.com/show_bug.cgi?id=796243 
->>> https://bugzilla.novell.com/show_bug.cgi?id=798541
->> 
->> Could you send the faulty patch to the list so that distros can
->> validate that they don't include it themselves?
+> <https://lists.dns-oarc.net/pipermail/dns-operations/2013-January/009501.html>
+
+I've exchanged some e-mails with UltraDNS Support last week and was told
+they'd escalate my question, but I still haven't received an answer to
+it (they kept giving other sorts of answers instead).  I am trying to
+find out their rationale behind completely refusing these queries as
+opposed to setting TC, which would avoid the traffic amplification and
+thus remove the incentive for use of this query type in attacks.
+
+My guess is that they might be dealing with currently ongoing attacks,
+which would not pick up the incentive change right away.  But I wanted
+to hear something like this (or not) from them explicitly, with numbers.
+
+[ It appears that you're for complete refusal, too.  It's a rare
+occasion where I happen to disagree with you on some issue. ]
+
+> Mark Andrews of ISC confirmed that this triggers a denial of service
+> condition in the BIND recursive resolver:
 > 
-> Red Hat/Fedora do include this patch, so it's more than just SUSE
-> that ships them.  However, when I was looking at them last week,
-> this struck me as just a non-exploitable crash and unless I'm
-> missing something, I think it would be quite the stretch to call it
-> a security flaw.
+> <https://lists.dns-oarc.net/pipermail/dns-operations/2013-January/009506.html>
+> 
+> I think he is right, but this obviously has to be fixed in the
+> resolver.  Can this be assigned a CVE?
 
-Agreed, there is no significant impact of exploitation and there is no
-real easy way to trick a victim into doing this (and even if you do,
-so what? now if it was code exec we might be talking about something
-interesting).
+What would the correct behavior be, in your opinion?  Not try other
+servers on REFUSED, but return it to the client right away?
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+How is this a DoS on BIND's recursive resolver, any more so than e.g.
+deliberately having many nameservers for a certain hostname and keeping
+all of them down?  Wouldn't BIND's recursive resolver have to try them
+all in that case anyway, even after a fix for behavior on REFUSED?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+I am not convinced this deserves a CVE - but this might change if you
+explain.
 
-iQIcBAEBAgAGBQJQ/exTAAoJEBYNRVNeJnmTrW0P/3B/L/SE7akzCPUU6TW9wy1L
-Rpb8IIITLCz1qkb/gkUayUFJHQDjpEfmxNPJQWm1fJBrWI0bFr0wvHRuGHgyXZEA
-Bl+js2w0uu7kAEEf1bHjZjf7zVHZ2tvoAdzi8ypLASZisxXwSa4acy++sqmPTrSf
-oNOu3ChqG919VSLfD8Zf5AsGFs6G3tRzNEmYtvllt9liUFKgL6WsCNWNWUZdpWm2
-crZPdyf343VvQcG5p7vYPEJLUBmnUSIauakssYPxGSp1vNBDNCC8xuVnyf1KOLfc
-r3BHDPRX5ooe8EcoK/zgo1owK7tP9d7FT94gIsJte3OUOP5dq6LR/R0ZMMUsneNA
-EjJScDCkh0hcZYCdJkqtah5aoAYI6IQvXJVtbwDM+rAvHfoMV2nkbWVZL0SgCMW/
-B/hvhQJejFN3dd0wfiO5sQf5o2UxxYyIIpTE+GQP/pe8Q7F1BzR5nV87Jd3sWQY8
-J873KRADBgt4RwbVUpI7dUL67UeRZCN4FiNtYYEuD5BeJWMSVoVXRHP7zBkx8GhG
-vgfUc02+IyxS0HTO5HIxSJnLYOSa++SxJ4/w85aqcWPLrLHhL4s1k4GELPg/JhdW
-Um35zAkcLNnxsxySCMIWZKEUTZ3xdpBspc3QVkw/IoyZpk+QhQTM2S/C3yWv4Q0z
-xwHEEqesvl8l7UlpQ2mC
-=rw4/
------END PGP SIGNATURE-----
+[ As to "easily" patching qmail, people on the dns-operations thread don't
+appear to realize how many qmail installs came with Plesk (and thus are
+not exactly open source and are operated by people who couldn't patch the
+code anyway).  Perhaps if the situation persists (especially if more DNS
+hosting providers follow suit) Parallels will release a Plesk update with
+patched qmail, but even then most installs won't be upgraded soon, if at
+all, such as because their owners' Plesk license keys have expired (and
+renewal cost is significant).  Plesk and web-based admin panels in
+general are a security problem of its own, but that's another issue,
+albeit a related one.  Ditto about non-free software in general. ]
+
+Thanks,
+
+Alexander
