@@ -1,32 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/10/4
-Message-ID: <20130510212833.GB30055@redhat.com>
-Date: Fri, 10 May 2013 15:28:33 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/14/2
+Message-ID: <50F41209.8090605@redhat.com>
+Date: Mon, 14 Jan 2013 15:11:21 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: password exposure in kdelibs when showing "internal server error" messages
+Subject: Re: Plug-and-wipe and Secure Boot semantics
 Content-Type: text/plain; charset=utf-8
 
-I've not seen this yet; could a CVE be assigned to the following issue?
+On 12/18/2012 01:46 PM, Florian Weimer wrote:
+> Some UEFI machines seem to boot from USB by default, without any
+> prompting, probably assuming that a signed boot loader cannot cause any
+> damage.
 
-It was reported that when KDE encounters an "internal server error"
-and also prints out the URL that caused the error that it would include
-the username and password (if supplied) to the resource that caused the
-error.  For instance, it would show
-"https://user:password@...otehost.com" or similar.  This is due to
-kioslave/http/http.cpp using m_request.url.url() rather than the
-sanitized m_request.url.prettyUrl().  This issue is fixed in git.
-
-Note that this information is printed out to the local user actively
-using the computer.
-
-References:
-
-https://bugs.kde.org/show_bug.cgi?id=319428
-https://projects.kde.org/projects/kde/kdelibs/repository/revisions/65d736dab592bced4410ccfa4699de89f78c96ca/diff/kioslave/http/http.cpp
-https://bugs.mageia.org/show_bug.cgi?id=10037
-https://bugzilla.redhat.com/show_bug.cgi?id=961981
-
+I got a different BIOS for the Lenovo M72e 0896A9G, which does not 
+contain Secure Boot support, bot still boots from plugged-in USB sticks 
+with an UEFI boot loader on them by default.  So this is just a choice 
+made by Lenovo in general, totally independent of Secure Boot support.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Florian Weimer / Red Hat Product Security Team
