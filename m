@@ -1,28 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/06/3
-Message-ID: <50E9B73C.4090101@redhat.com>
-Date: Sun, 06 Jan 2013 10:41:16 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/14/5
+Message-ID: <50F4599C.7060300@redhat.com>
+Date: Mon, 14 Jan 2013 12:16:44 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, jannhorn@...glemail.com
-Subject: Re: CVE request: mount/umount leak information about existence of folders
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Michael Scherer <misc@...b.org>
+Subject: Re: CVE Request -- redis: Two insecure temporary file use flaws
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/06/2013 03:38 AM, Henri Salo wrote:
-> Hello,
+On 01/14/2013 09:08 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 > 
-> Please assign CVE identifier for mount/umount information leak
-> about existence of folders. Reported in Debian bug
-> http://bugs.debian.org/697464
+> Issue #1: =========
 > 
-> - Henri Salo
+> Michael Scherer in the following Red Hat bugzilla: [1]
+> https://bugzilla.redhat.com/show_bug.cgi?id=894659
+> 
+> pointed out, Redis, a persistent key-value database of version 2.4 
+> to be prone to temporary file use in src/redis.c:
+> 
+> server.vm_swap_file = zstrdup("/tmp/redis-%p.vm");
+> 
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=894659#c0
+> 
+> Note: This problem was fix by the patch [3] below.
+> 
+> Issue #2: ========= When searching for a patch, that corrected the
+> issue [2] above, found out it was patch
+> 
+> [3]
+> https://github.com/antirez/redis/commit/697af434fbeb2e3ba2ba9687cd283ed1a2734fa5
+> ,
+> 
+> but it also introduced another insecure temporary flaw in 
+> src/redis.c:
+> 
+> 776 	+    server.ds_path = zstrdup("/tmp/redis.ds");
+> 
+> Note: Issue #2 is also fixed in recent upstream 2.6.7 / 2.6.8 
+> versions. If you want me to find exact patch, which corrected the
+> second problem, let me know and i will provide the commit id.
+> 
+> Could you allocate (two) CVE ids for these issues?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 > 
 
-Tested and confirmed on various versions. Please use CVE-2013-0157 for
-this issue.
+Please use CVE-2013-0178 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -31,17 +59,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJQ6bc8AAoJEBYNRVNeJnmTOZYP/3AnrviYd0foWVAddk3DCCLP
-YQ0nvU23yOfRZNpI9wQ/9OrMWJCZ17WUSVjyBAatR+qlohMNp4L2rO5TMT98wFQz
-a3SsF9aEid8YSSTTe52G6sfSIDzTqPpbPFJGkVF7SNnB50prwR6UAFbdZLXX9TpL
-PF4tmvaUK790N9cSpnzIrckwtUm8QTy7Wnodm8iPtai/Gf+WOAybFAljxYU2JkmF
-R1S7p+cz/7LF1wQ7k5M39vbuvDpEWNQaAW9LJcJEJPh+V98fDmMz1aMRtKf7frP7
-C2O6myo59oh932dlOgl/5SJVAvuIGKFzUAyl0FzHt5X1m80g+hO8DKLcYE1pO6qt
-jWSrD2AZHfLFkvOueHk4vUXeiQP/zbgs+AcYjCNG1F+GoLbzrfLhLuv7MUKRC5Gu
-OdsDjEzoU857gNObeA3jAEV4xm5HpiLjpdEO3bxjHSg0b/gPANTx4B6m9gkcHqsI
-u8vG0aZncnsP1MhX0nmoujWM0P8FfzC8RJRIvQZgkRZ+TgYK0/eQNNBLSCltHX0r
-r1bLmiqzBNARZroMKK0PMmBx/hUAmbBMY4gdk4OSvZ7Z+krrvfY21vIe/KAJejwu
-15HKDJM7ki45LUbbuTfFsMfk8658XWx575NbgNs+3zhEM+jqrtcsHxzw7a8PEtU3
-L5IX991gU3wZSSoqEiX1
-=J8Fe
+iQIcBAEBAgAGBQJQ9FmbAAoJEBYNRVNeJnmTFo4QALy3a/Bu+2xY95VXoEEcHSFM
+BlTqxv4fkH0Zu6dmxeGQji5rjNd1UkV3FAimhxuCDWtSoR+cKznCNUJlmntnXeN3
+PTCvU0mjngAGF8VBwmmNER8J5CoI01PQAV+HFgPKAWSd4KFyecPyUa4USRZU1kdE
+GcmT/TSCGASOobehybcYpwzaSukZasnmvBh7bPfJx6IrfAFUEE5/4F6FtTFYCALG
+TvRtzGhwmr0DQwY6hdkQU9AWMhABfr4fuejxbWp8TI4mvckXO4MTzIr+b79VIdml
+EkZTRXz4WlsFsAkPB/hX3bNLWoHydc8Wh3BRotNJqrq+0Evbv4m2PBiBGGJmeNne
+URXJ9yUHumY+Mw9oTo9eoO7xHEVSQYQzzJsdUK5gHofeMs3BIwR3cwzPFO0ZOiJu
+Z0h0hiKEoSUMxuhlO1UDSbYHEH2HbM8JTRk49e7dILSm75tGNrkgR624jOn1e4YR
+3kUv3aInuY84EO7O46nfv1vV6olQgiu3tpRfe+kJc++DbH7m1h/Ryjhq567ICRJf
+KEaWPHBXP/1U2Lk95PZZqXg5HFffg+Azu4kcBtiAO5GlKpOhmv4bDsdKsKe0jOdO
+bcOUMziPQgKXRNTx3H0L7QNsF3EwaQPSPUdhlhjB0kKD1ZsGCXBgyC9kRZqTTujA
+KfblZT+C8sWqjlJHnSNj
+=gqM1
 -----END PGP SIGNATURE-----
