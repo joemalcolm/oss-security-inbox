@@ -1,52 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/4
-Message-ID: <51241C69.1090501@redhat.com>
-Date: Tue, 19 Feb 2013 17:44:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: CVE request -- Linux kernel: mm: thp: pmd_present and PROT_NONE local DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/15/1
+Message-ID: <20130115002015.GT2638@redhat.com>
+Date: Mon, 14 Jan 2013 17:20:15 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: 3 DoS conditions in Rake
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Three issues were noted in recent release of upstream Rake.  All are DoS
+issues.
 
-On 02/19/2013 05:40 PM, Petr Matousek wrote:
-> Most VM places are using pmd_none but a few are still using pmd_present.
-> The meaning is about the same for the pmd. However pmd_present would
-> return the wrong value on PROT_NONE ranges. When the code using
-> pmd_present gets a false negative, the kernel will crash.
-> 
-> An unprivileged local user could use this flaw to crash the system.
-> 
-> Upstream fix:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=027ef6c8
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=912898
-> 
-> Thanks,
-> 
+ From https://bugzilla.redhat.com/show_bug.cgi?id=895277 (2 issues):
 
-Please use CVE-2013-0309 for this issue.
+Upstream released [1] Rack 1.4.2, 1.3.7, 1.2.6, and 1.1.4 to fix a
+denial of service condition when Rack parses content with a certain
+Content-Disposition header as noted in the original report [2].
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+This has been fixed in git [3].
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Additionally, a second flaw that was fixed in 1.4.4, 1.3.9, 1.2.7, and
+1.1.5 was also announced [4] that creates a minor denial of service
+condition, this time in the Rack::Auth::AbstractRequest, where it
+symbolized arbitrary strings (apparently this has something to do with
+authentication, but there is no further information provided other than
+the fix [5] itself, which is noted as "a breaking API change").
 
-iQIcBAEBAgAGBQJRJBxoAAoJEBYNRVNeJnmTm78QAI7TPTsN/KryK4REJ2RGiSoP
-GJcxRCNPwx0LiVuI2/mg/9T7cWi443tePXqJeHx57xgbjo0rGDVgKeTDC7z4F9wL
-NFuYJo9kFswWfKdVx78mfDk38f4OJIuLUbEB4bUxEqpSXhnJ0c9NTtJzdVuBCXNR
-So/B5Ejoh5fjws9rbknc9jjghdpr4b7OVIJ9RWu2s3rD4/V15zY5bSI44bAUPz7+
-jug5QROihSmcxt+nfioGuIzfKKKOEQWNkdBCJI3T/MAx0JNW7tnWkNs+l83rR5bm
-FNrronR3ohDnMFkxP/AsKbwgI8qCnP1bULWgk3Lm4zp9jnCx6300kQfwNKGBNb8j
-YJxyGKl0GpxzjoFNamXE3FMi59fLfNf/jfWlywEdw1jLMbYVZeNts4tVKou8jcNR
-D2iuQR4/jEu8QQSutfqUbii0PIM589o1WpyE2XCMWBAEYYqJFeTdw0lWfXGFjIWH
-XGgqVpFQKtSqvcwIjgV3OuCG89kDZnhzLfWnvWrOtAKOS5xrKyg1zlvD/s2Vt8Rp
-HliCxdYTYGITzFlQCadStbO5pwgiWbepkHHdNqq6nq3mO7oQqL3wdMeP90182sLs
-slmNc7Qc8Ei6oObrvAOfy2T1hWxPxLxbHz6MG3UIRc30qUWv6AQFxpbOi/TWIhbm
-wT8JFMB9xYDmW4D5hiwz
-=Idk5
------END PGP SIGNATURE-----
+[1] http://rack.github.com/
+[2] https://groups.google.com/forum/#!msg/rack-devel/1w4_fWEgTdI/XAkSNHjtdTsJ
+[3] https://github.com/rack/rack/commit/4fc44671b3cad569421f4f8b775c0590b86f575e
+[4] https://groups.google.com/forum/#!topic/rack-devel/ImYOqcGiksw/discussion
+[5] https://github.com/rack/rack/commit/0c76175fcccad74ba2f991c487d3669c28a297c8
+
+And from https://bugzilla.redhat.com/show_bug.cgi?id=895282:
+
+Upstream released [1] Rack 1.4.3 and 1.3.8 to fix a denial of service
+condition due to a malicious client sending excessively long lines that
+trigger an out-of-memory error in Rack.
+
+This has been fixed in git [2].
+
+
+[1] https://groups.google.com/forum/#!topic/rack-devel/-MWPHDeGWtI/discussion
+[2] https://github.com/rack/rack/commit/f95113402b7239f225282806673e1b6424522b18
+
+
+
+Could three CVEs be assigned for these issues please?  Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
