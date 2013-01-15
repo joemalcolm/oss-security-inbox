@@ -1,61 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/01/2
-Message-ID: <510BEF57.9010508@redhat.com>
-Date: Fri, 01 Feb 2013 17:37:43 +0100
-From: "Fabio M. Di Nitto" <fdinitto@...hat.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Jan Friesse <jfriesse@...hat.com>
-Subject: Re: CVE Request -- Corosync (2.0 <= X < 2.3): Remote DoS due improper HMAC initialization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/15/3
+Message-ID: <50F4B532.6000201@redhat.com>
+Date: Mon, 14 Jan 2013 18:47:30 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-On 02/01/2013 05:26 PM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 01/11/2013 12:49 PM, Forest Monsen wrote:
+> Hi there -- I'd like to request CVE identifiers for two issues
+> with Drupal contributed modules:
 > 
->   Corosync upstream has recently released 2.0.3 version correcting
-> one security issue:
+> SA-CONTRIB-2013-001 - Search API - Cross Site Scripting 
+> https://drupal.org/node/1884332
 
-No, this version is not correct.
+Please use CVE-2013-0181 for this issue.
 
-corosync >= 2.0 to < 2.3 are affected.
+> SA-CONTRIB-2013-002 - Payment - Access Bypass 
+> https://drupal.org/node/1884360
 
-corosync 2.3 and higher have the fix.
+Please use CVE-2013-0182 for this issue.
 
-Also, the DoS reason is not correct. The junk filter part is a
-consequence on how libnss work and should be dropped.
-
-Subject should be:
-
-"CVE Request -- Corosync (2.0 <= X < 2.3): Remote DoS due improper HMAC
-initialization"
-
+> Thanks!
 > 
-> A denial of service flaw was found in the way Corosync,
-> the cluster engine and application programming interfaces,
-> performed processing of certain network packets, when different
-> encryption keys were used. Previously the HMAC key was not initialized
-> properly, which allowed certain packets to pass through to the internal
-> phases of the Corosync packet validation process, possibly leading
-> to corosync daemon crash.
-
-I explained this in details and this description is not accurate.
-
-"A remote denial of service flaw was found in the way Corosync, the
-cluster engine and application programming interfaces, performed
-processing of network packets. Previously the HMAC key was not
-initialized properly, which allowed random targeted packets to be
-processed by the internal process of corosync and possibly leading to a
-daemon crash".
-
+> Forest
 > 
-> The HMAC initialization has been corrected in upstream via:
-> [5] https://github.com/corosync/corosync/commit/b3f456a8ceefac6e9f2e9acc2ea0c159d412b595
-> 
-> but there might be more changes needed (Cc-in Fabio and Jan).
 
-2 missing:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-https://github.com/corosync/corosync/commit/55dc09ea237482f827333759fd45608bc9518d64
-https://github.com/corosync/corosync/commit/ebb007a16c6a8d9e6f783ed82b324cb232c64be5
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Thanks
-Fabio
+iQIcBAEBAgAGBQJQ9LUyAAoJEBYNRVNeJnmT57EQAIZTDxngkA0K4ksfcYM32tCC
+fLU2+X4JJyJ0FJzssfTzlUNsufA0EmlQTXwW1lSaQPe9IHnuF5lp/RO6QkElAL8a
+wUK9weJUsLZDetoOqfv7xyggCmdOWSwnQ+cOH5mWhXCgGlEcyMhaefgJUqy1DeEO
+enIq6Sc8cwAWdvaVIVmUp/X6rINI0pxdJWlMyuzWk9Mjy87aBnZpLSO1rOvQql4i
+Xrc+OhJsfYNd9S3kqjlKkGiTcU9ApBo9uXCEe2RUKjHX9bOgglEYZGtFR8WWUvnn
+6ZP+sCH/SjbSpqxli1EW5j+X3Z1FYZsbEwiAt753+rtuGGp56jB7P+GyzfePwzZ3
+ysQGRposFDgp/+8cnXuEIh285xA6MR/Z8Avl50ip+8k/irOdSvwt72ae2hIjhOVE
+733x7XxYzMJsBTxFm3ZRiLs8YA4m1O38+Qhd0x//4erMoVqGLy7xNDtq7ocK4hj2
+o0ezyykvmzsrdAVONbNNCbZMLYO9pJ4kprWSe19jFkzuJERn7v/InCMuXz+UlmD9
+/saREH/HAkXgTwZEYU5qhr+Fkk/+jRRZKSdWQNQwf2BWxoFc/yEJltmtt0zBG1Zc
+AaL2a9s9IEpTyujBLo4zkUsBZGcJG8nNL9Erq6zfQ8RG/VSFZIgLoC+PzemUX48q
+sLoGPmoW/h1JLOvIjepU
+=OzSX
+-----END PGP SIGNATURE-----
