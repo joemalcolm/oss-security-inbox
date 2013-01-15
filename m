@@ -1,31 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/4
-Message-ID: <CAA7hUgH1p_ZzYJ-B3mkT++xTNt2KzZh-KbfnQF3gqkbiyM=-Ew@mail.gmail.com>
-Date: Fri, 5 Jul 2013 12:13:56 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Possible CVE request: virtualbox virtio-net host DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/15/9
+Message-ID: <87ehhmtez6.fsf@mid.deneb.enyo.de>
+Date: Tue, 15 Jan 2013 20:37:17 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com,  Salvatore Bonaccorso <carnil@...ian.org>,  team@...urity.debian.org
+Subject: Re: CVE request: Digest::SHA double free when using load subroutine
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* Kurt Seifried:
 
-Quoting [1]:
-> I have discovered a problem with virtio-net that leads to a lockup of the host
-> machine's kernel and the need for a hard reset to make it working again.
+> I'm not clear, how would an attacker exploit this? They'd need to be
+> able to specify the file that gets hashed, and the file would have to
+> be not present and would thus trigger the crash? Are there any real
+> world examples of an affected application? (web based?)
 
-The bug is said to be worked around in version 4.2.14 and really fixed
-in 4.2.16, but the changelog of either version doesn't reference that
-ticket.
-
-Rumors say that virtualbox makes the host randomly hang, but since
-there is an actual bug report and confirmation from upstream this time
-I guess a CVE id should be assigned.
-
-[1] https://www.virtualbox.org/ticket/11863
-[2] https://www.virtualbox.org/wiki/Changelog
-[3] https://secunia.com/advisories/53858/
-
-Cheers,
---
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+My hunch is that this is just a bug, not a security issue.
