@@ -1,48 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/27/6
-Message-ID: <20131127121009.GC24442@suse.de>
-Date: Wed, 27 Nov 2013 13:10:09 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: hplip insecure temporary file handling in pkit.py
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/6
+Message-ID: <1358337655-26221-1-git-send-email-andrew.cooper3@citrix.com>
+Date: Wed, 16 Jan 2013 12:00:55 +0000
+From: Andrew Cooper <andrew.cooper3@...rix.com>
+To: <linux-kernel@...r.kernel.org>
+CC: Andrew Cooper <andrew.cooper3@...rix.com>, Frediano Ziglio <frediano.ziglio@...rix.com>, <stable@...r.kernel.org>, <oss-security@...ts.openwall.com>, Konrad Rzeszutek Wilk <konrad@...nel.org>, <xen-devel@...ts.xen.org>, <security@....org>
+Subject: [PATCH] xen: Fix stack corruption in xen_failsafe_callback for 32bit PVOPS guests.
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+This fixes CVE-2013-0190 / XSA-40
 
-Funny. I just told upstream about that yesterday:
+There has been an error on the xen_failsafe_callback path for failed
+iret, which causes the stack pointer to be wrong when entering the
+iret_exc error path.  This can result in the kernel crashing.
 
-https://bugzilla.novell.com/show_bug.cgi?id=852368
+In the classic kernel case, the relevant code looked a little like:
 
-I think hplip could deserve a deeper look.
+        popl %eax      # Error code from hypervisor
+        jz 5f
+        addl $16,%esp
+        jmp iret_exc   # Hypervisor said iret fault
+5:      addl $16,%esp
+                       # Hypervisor said segment selector fault
 
-Sebastian
+Here, there are two identical addls on either option of a branch which
+appears to have been optimised by hoisting it above the jz, and
+converting it to an lea, which leaves the flags register unaffected.
 
-On Wed, Nov 27, 2013 at 12:46:54PM +0100, Raphael Geissert wrote:
-> Hi,
-> 
-> On 27 November 2013 12:22, Ratul Gupta <ratulg@...hat.com> wrote:
-> > Hello,
-> >
-> > A temporary file handling flaw was found in hplip/pkit.py.
-> >
-> > References:
-> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725876
-> 
-> Thanks for sending the request, I was waiting for the problem to be
-> confirmed but later forgot about it.
-> 
-> > Can a CVE please be assigned if one has not been already?
-> 
-> None has been assigned as far as I'm aware of.
-> 
-> Cheers,
-> -- 
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
+In the PVOPS case, the code looks like:
 
+        popl_cfi %eax         # Error from the hypervisor
+        lea 16(%esp),%esp     # Add $16 before choosing fault path
+        CFI_ADJUST_CFA_OFFSET -16
+        jz 5f
+        addl $16,%esp         # Incorrectly adjust %esp again
+        jmp iret_exc
+
+It is possible unprivileged userspace applications to cause this
+behaviour, for example by loading an LDT code selector, then changing
+the code selector to be not-present.  At this point, there is a race
+condition where it is possible for the hypervisor to return back to
+userspace from an interrupt, fault on its own iret, and inject a
+failsafe_callback into the kernel.
+
+This bug has been present since the introduction of Xen PVOPS support
+in commit 5ead97c84 (xen: Core Xen implementation), in 2.6.23.
+
+Signed-off-by: Frediano Ziglio <frediano.ziglio@...rix.com>
+Signed-off-by: Andrew Cooper <andrew.cooper3@...rix.com>
+Cc: stable@...r.kernel.org
+
+---
+Cc: oss-security@...ts.openwall.com
+Cc: Konrad Rzeszutek Wilk <konrad@...nel.org>
+Cc: xen-devel@...ts.xen.org
+Cc: security@....org
+---
+ arch/x86/kernel/entry_32.S |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+diff --git a/arch/x86/kernel/entry_32.S b/arch/x86/kernel/entry_32.S
+index ff84d54..6ed91d9 100644
+--- a/arch/x86/kernel/entry_32.S
++++ b/arch/x86/kernel/entry_32.S
+@@ -1065,7 +1065,6 @@ ENTRY(xen_failsafe_callback)
+ 	lea 16(%esp),%esp
+ 	CFI_ADJUST_CFA_OFFSET -16
+ 	jz 5f
+-	addl $16,%esp
+ 	jmp iret_exc
+ 5:	pushl_cfi $-1 /* orig_ax = -1 => not a system call */
+ 	SAVE_ALL
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+1.7.2.5
 
