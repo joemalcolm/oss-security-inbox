@@ -1,53 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/01/11
-Message-ID: <51D1EAA2.7040600@msgid.tls.msk.ru>
-Date: Tue, 02 Jul 2013 00:46:26 +0400
-From: Michael Tokarev <mjt@....msk.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/4
+Message-ID: <alpine.LFD.2.03.1301161449530.18563@redhat.com>
+Date: Wed, 16 Jan 2013 15:03:02 +0530 (IST)
+From: P J P <ppandit@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Michael Jerris <mike@...ris.com>, Ken Rice <krice@...eswitch.org>
-Subject: CVE request: FreeSWITCH regex substitution 3 buffer overflows
+Subject: Re: Linux kernel handling of IPv6 temporary addresses
 Content-Type: text/plain; charset=utf-8
 
-Hello.
 
-Yesterday I started thinking for the first time about some VOIP
-solution for our office, and come across FreeSWITCH software --
-www.freeswitch.org.  After talking on IRC a bit, I decided to
-take a look at the source, because a question asked by one of
-the users looked interesting to me.
+  Hello,
 
-And immediately I discovered 3 buffer overflows in the _first_
-function I ever saw in the source of this software.
++-- On Wed, 14 Nov 2012, Greg KH wrote --+
+| > [183.793393] ipv6_create_tempaddr(): retry temporary address
+| > regeneration [183.793405] ipv6_create_tempaddr(): retry temporary
+| > address regeneration [183.793411] ipv6_create_tempaddr(): retry
+| > temporary address regeneration
+| > 
+| > After 'regen_max_retry' is reached the kernel completely disables
+| > temporary address generation for that interface.
+| > 
+| > [183.793413] ipv6_create_tempaddr(): regeneration time exceeded -
+| > disabled temporary address support
 
-http://jira.freeswitch.org/browse/FS-5566 - it is the original
- bugreport which looked innocent enough initially.
+  I was trying to reproduce this with the `thc-ipv6-2.0' toolkit, by sending 
+ICMPv6 RA requests. Kernel logs following message, not the above ones
 
-http://jira.freeswitch.org/secure/attachment/18855/0001-regex_subst-allow-n-in-regex-substitutions-and-fix-3.patch --
- this is a patch of mine that fixes initial bug and also 3
- buffer overflows I found when dealing with the issue.
+...kernel: ICMPv6 RA: ndisc_router_discovery() failed to add default route
 
-Some context.  FreeSWITCH's routing mechanism is based almost
-entirely on regular expressions and uses substring matches
-in the core routing (dialplan).  So the regexps are matched
-against untrusted input (which is especially mentioned in the
-docs).  But ofcourse users aren't easy with writing regexps
-correctly, always constraining the length of the input
-properly.
+| > A malicious LAN user can send a limited amount of RA prefixes and thus
+| > disable IPv6 temporary address creation for any Linux host.
 
-So, if there are any references to unconstrained input in
-any dialplan expressions -- that is, instead of \d{10},
-\d+ is used, we're getting a remotely triggerable buffer
-overflows with good potential of remote code execution.
+  is there a RA parameter I need to pass to reproduce above message from 
+ipv6_create_tempaddr() ?
 
-As simple as that.
+| > 
+| > The kernel should at least differentiate between the two cases of
+| > reaching max_addresses and being unable to create new addresses, due to
+| > DAD conflicts for example.
 
-It _looks_ like the default configuration isn't affected
-since apparently all regexes there are constrained.  But
-we can't be sure for all user configs.
+  Does this patch seem right?
 
-I haven't studied actual potential for code execution,
-but from a quick view it appears quite possible.
+===
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 420e563..742d66a 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1046,12 +1046,19 @@ retry:
+ 	if (ifp->flags & IFA_F_OPTIMISTIC)
+ 		addr_flags |= IFA_F_OPTIMISTIC;
+ 
+-	ift = !max_addresses ||
+-	      ipv6_count_addresses(idev) < max_addresses ?
+-		ipv6_add_addr(idev, &addr, tmp_plen,
+-			      ipv6_addr_type(&addr)&IPV6_ADDR_SCOPE_MASK,
+-			      addr_flags) : NULL;
+-	if (!ift || IS_ERR(ift)) {
++    ift = NULL;
++    if (!max_addresses || ipv6_count_addresses(idev) < max_addresses)
++        ipv6_add_addr(idev, &addr, tmp_plen,
++                        ipv6_addr_type(&addr) & IPV6_ADDR_SCOPE_MASK,
++                        addr_flags);
++    if (!ift) {
++        in6_ifa_put(ifp);
++        in6_dev_put(idev);
++        pr_info("%s: ipv6 temporary address upper limit reached\n", __func__);
++        ret = -1;
++        goto out;
++    }
++    else if (IS_ERR(ift)) {
+ 		in6_ifa_put(ifp);
+ 		in6_dev_put(idev);
+ 		pr_info("%s: retry temporary address regeneration\n", __func__);
+===
 
-Thanks,
 
-/mjt
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
