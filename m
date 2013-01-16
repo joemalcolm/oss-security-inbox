@@ -1,58 +1,148 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/13/7
-Message-ID: <5283AEB9.1070601@fifthhorseman.net>
-Date: Wed, 13 Nov 2013 11:54:17 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-Subject: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/10
+Message-ID: <20130116172659.544978d1@lola.kot>
+Date: Wed, 16 Jan 2013 17:26:59 +0200
+From: George Kargiotakis <kargig@...d.gr>
+To: P J P <ppandit@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel handling of IPv6 temporary addresses
 Content-Type: text/plain; charset=utf-8
 
-On 11/13/2013 10:57 AM, Tim wrote:
-> Using a weak encyption algorithm alone isn't a sufficient condition to
-> issue a CVE against software, since often the context of the usage
-> matters a lot.  If you use MD5 or SHA-1 for password hashing (with
-> lots of salt and rounds), then there's no vulnerability.  If you use
-> them for HMACs, then there's also likely no problem.  But if you use
-> them for a signature with a public key, there is.
+Hello,
 
-I'm inclined to try to apply your suggested guidelines to GnuPG:
+On Wed, 16 Jan 2013 18:17:28 +0530 (IST)
+P J P <ppandit@...hat.com> wrote:
 
-gnupg uses SHA-1 as its default digest algorithm when making public key
-signatures, both for cleartext "data signatures" and "certifications"
-(OpenPGP keysigning).
+> 
+>    Hello George,
+> 
+> +-- On Wed, 16 Jan 2013, George Kargiotakis wrote --+
+> | You can reproduce the bug with a new option for flood_router26 that
+> has been added to the thc-ipv6 toolkit v2.1. | # ./flood_router26 -A
+> eth0
+> 
+>   I tried this, it takes quite a while for other hosts to receive the 
+> generated traffic. On the receiving hosts kernel logs
+> 
+> ==
+> ...
+> ...kernel: Neighbour table overflow.
+> ==
+> 
+> no log message from ipv6_create_tempaddr() routine. 
+> 
+Weird because the '-A' flag of flood_router26 sends very few packets so it shouldn't 
+have filled your neighbour table.
 
-Suggestions in the past to change the default digest algorithm to
-SHA-256 have been resisted for the sake of interoperability, despite
-every OpenPGP implementation in wide use having been capable of SHA-256
-for many years.
+what distro/kernel version are you trying ? I'm using latest ubuntu 12.10 with 3.5.7.
+The messages I'm mentioning certainly appear upon testing with ubuntu 12.10 live CD for example.
 
-Are you saying we should assign a CVE for the fact that GnuPG generates
-data signatures over SHA-1 by default?  What about its generation of
-certifications over SHA-1 by default?
+> 
+> | I've applied your patch to 3.5.7 and unless I've done something
+> wrong, it doesn't seem to work. Actually I can't | get any temporary
+> address assignment with it. This is what I get upon booting with your
+> patch:
+> 
+>   Ah, very sorry, I missed to say: ift = ipv6_add_addr(...) : in my
+> last patch. It remains NULL all the time. Please try this fixed
+> version
+> 
+> ===
+> diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+> index 420e563..0aaaa63 100644
+> --- a/net/ipv6/addrconf.c
+> +++ b/net/ipv6/addrconf.c
+> @@ -1046,12 +1046,19 @@ retry:
+>  	if (ifp->flags & IFA_F_OPTIMISTIC)
+>  		addr_flags |= IFA_F_OPTIMISTIC;
+>  
+> -	ift = !max_addresses ||
+> -	      ipv6_count_addresses(idev) < max_addresses ?
+> -		ipv6_add_addr(idev, &addr, tmp_plen,
+> -
+> ipv6_addr_type(&addr)&IPV6_ADDR_SCOPE_MASK,
+> -			      addr_flags) : NULL;
+> -	if (!ift || IS_ERR(ift)) {
+> +    ift = NULL;
+> +    if (!max_addresses || ipv6_count_addresses(idev) < max_addresses)
+> +        ift = ipv6_add_addr(idev, &addr, tmp_plen,
+> +                        ipv6_addr_type(&addr) & IPV6_ADDR_SCOPE_MASK,
+> +                        addr_flags);
+> +    if (!ift) {
+> +        in6_ifa_put(ifp);
+> +        in6_dev_put(idev);
+> +        pr_info("%s: ipv6 temporary address upper limit reached\n",
+> __func__);
+> +        ret = -1;
+> +        goto out;
+> +    }
+> +    else if (IS_ERR(ift)) {
+>  		in6_ifa_put(ifp);
+>  		in6_dev_put(idev);
+>  		pr_info("%s: retry temporary address
+> regeneration\n", __func__); ===
+> 
+> 
+> Thanks so much.
+> --
+> Prasad J Pandit / Red Hat Security Response Team
+> DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
 
-What about for the fact that GnuPG validates and accepts OpenPGP
-certificates made via SHA-1 (note that this is a different question from
-whether generating them warrants a CVE)?
 
-GnuPG also currently accepts and validates certifications and data
-signatures made with MD5. (it prints a warning, but it still treats the
-certifications as acceptable when computing certificate validity, for
-example).  Should we assign a CVE for this as well?
+Your new patch works "better", but still the main problem hasn't been
+eliminated. And I explain myself.
 
-As a reference point, the recent ENISA recommendations [0] recommend
-digests of 160 bits (SHA-1) for "legacy" applications, 256 bits
-(SHA-256) for "near-term future" (at least 10 years) applications and
-512 bits (SHA-512) for "long-term future" (30 to 50 years, which they
-acknowledge is difficult to predict).
+While flooding with RAs the following appears in the dmesg:
+[  117.721878] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
 
-I've been encouraging gnupg to move to stronger default cryptographic
-primitives for years.  i would appreciate any guidance the community
-wants to give about how seriously to take these configuration choices.
+which is what your patch is supposed to do. But acquired addresses
+from flooding all seem to have the tentative flag on:
 
-	--dkg
+    inet6 fd00:966f:7996:c731:9191:a3ce:99bc:897e/64 scope global temporary tentative dynamic 
+       valid_lft 131007sec preferred_lft 65471sec
+    inet6 fd00:966f:7996:c731:222:aaff:fecc:1111/64 scope global tentative dynamic 
+       valid_lft 131007sec preferred_lft 65471sec
+    inet6 fd00:966e:7796:c731:9191:a3ce:99bc:897e/64 scope global temporary tentative dynamic 
+       valid_lft 131007sec preferred_lft 65471sec
+    inet6 fd00:966e:7796:c731:222:aaff:fecc:1111/64 scope global tentative dynamic 
+       valid_lft 131007sec preferred_lft 65471sec
+    inet6 fd00:966c:7396:c731:9191:a3ce:99bc:897e/64 scope global temporary tentative dynamic 
+       valid_lft 131007sec preferred_lft 65471sec
+    inet6 fd00:966c:7396:c731:222:aaff:fecc:1111/64 scope global tentative dynamic 
+       valid_lft 131007sec preferred_lft 65471sec
+    inet6 fd00:966b:7196:c731:9191:a3ce:99bc:897e/64 scope global temporary tentative dynamic 
+       valid_lft 131007sec preferred_lft 65471sec
+    inet6 fd00:966b:7196:c731:222:aaff:fecc:1111/64 scope global tentative dynamic 
+       valid_lft 131007sec preferred_lft 65471sec
 
-[0]
-http://www.enisa.europa.eu/activities/identity-and-trust/library/deliverables/algorithms-key-sizes-and-parameters-report
+what I also find wrong here is that all temporary addresses (dynamic) acquired have gotten the same last 64bits.
+I don't think this is OK per RFC 4941 even if not explicitly defined there. Every temp. address created should be different per prefix from the rest.
 
+use_tempaddr for the iface still has '2' as its value
+# cat /proc/sys/net/ipv6/conf/eth0/use_tempaddr 
+2
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+then after taking the interface down and up again even the new addresses acquired still have the tentative flag enabled:
+    inet6 2001:db8:f00:f00:222:aaff:fecc:1111/64 scope global tentative dynamic 
+       valid_lft 86371sec preferred_lft 3571sec
+    inet6 fdbf:468f:aaa0:474d:222:aaff:fecc:1111/64 scope global tentative dynamic 
+       valid_lft 86371sec preferred_lft 3571sec
+    inet6 fe80::222:aaff:fecc:1111/64 scope link tentative 
+       valid_lft forever preferred_lft forever
+
+dmesg reports:
+[  322.195426] IPv6: ipv6_create_tempaddr: regeneration time exceeded - disabled temporary address support
+
+use_tempaddr for the iface now has '-1' as its value though
+# cat /proc/sys/net/ipv6/conf/eth0/use_tempaddr 
+-1
+
+And so there actually isn't any IPv6 connectivity from then on until a reboot.
+Flooding triggers something that corrupts ipv6 functionality.
+
+Best regards,
+-- 
+George Kargiotakis
+https://void.gr
+GPG KeyID: 0xE4F4FFE6
+GPG Fingerprint: 9EB8 31BE C618 07CE 1B51 818D 4A0A 1BC8 E4F4 FFE6
