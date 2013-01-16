@@ -1,45 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/1
-Message-ID: <510714A1.6090501@moritz-naumann.com>
-Date: Tue, 29 Jan 2013 01:15:29 +0100
-From: Moritz Naumann <security@...itz-naumann.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/1
+Message-ID: <50F63CB7.3060601@redhat.com>
+Date: Tue, 15 Jan 2013 22:37:59 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: XSS in Elgg 1.8.12, 1.7.16 (core module "Twitter widget")
+CC: Florian Weimer <fw@...eb.enyo.de>, Salvatore Bonaccorso <carnil@...ian.org>, team@...urity.debian.org
+Subject: Re: CVE request: Digest::SHA double free when using load subroutine
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Elgg [1], versions 1.8.12 and 1.7.16 and earlier, bears a persistent
-script injection vulnerability in its core module "Twitter widget",
-which allows for XSS attacks.
+On 01/15/2013 12:37 PM, Florian Weimer wrote:
+> * Kurt Seifried:
+> 
+>> I'm not clear, how would an attacker exploit this? They'd need to
+>> be able to specify the file that gets hashed, and the file would
+>> have to be not present and would thus trigger the crash? Are
+>> there any real world examples of an affected application? (web
+>> based?)
+> 
+> My hunch is that this is just a bug, not a security issue.
 
-On installations which have the Twitter widget activated (disabled by
-default, but in use on many installations), any authenticated user may
-add the Twitter widget to their activity / dashboard page. Editing its
-configuration allows the user to set the twitter_username parameter. The
-value stored in this parameter will be echoed without sanitation [2]
-when the users' activity / dashboard page is requested (by the same or
-any other user, authenticated or not).
+I'll leave it for now, if anyone comes up with a security impact/etc.
+let us know! (I bet this never happens, ah well =).
 
-According to changes committed [3] to their Git repository Elgg
-developers will provide a fix for this issue in the upcoming (?) 1.8.13
-release.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Reported by:
-  Moritz Naumann
-  http://moritz-naumann.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-A CVE ID has, to my knowledge, not yet been assigned. Secunia has
-assigned it SA52007.
-
-A slightly more complete advisory should hit FD and Bugtraq any minute.
-
-Thanks,
-
-Moritz
-
-[1] http://elgg.org/
-[2]
-http://github.com/Elgg/Elgg/commit/a74a88501c41e89c8bcd7fc650ae2f8cc0a5003d#L2L21
-[3]
-http://github.com/Elgg/Elgg/commit/19dc507c2fccb378be2a44a762edf6c1e7afa334#L0R11
+iQIcBAEBAgAGBQJQ9jy3AAoJEBYNRVNeJnmT9pcP/j4OWfbjMveABoGn6vyvE1xs
+ozwg0zhaYOMrZi2Um2Yq5+JZfTJfYFk6TB1oEpVemVWus5coKmRvoppVW8gkIyrs
+k459a8XI6OyqQYxn7oE7FWnrFPguiI6Xdi8Vn6/olHgqBAUEPaVfGsmJhNtTtZy+
+Aa4LhfnMTKlVjLIbkTvuCN0qQXHErrx+4xR25dktr/5b3giSshxZ27wRDNe8oQpz
+6UqE2e118tq2g2BWEufLawqBBXrGkY5NIkJIBCeJVVF5tYl1O4RIY4vDz1BbVBMp
+gdNlPDm2Lhe7OoHqr02PPwICReI6AGTnNCqV+xIcGSG3UznCPEz6ui+dWz8v4EiS
+SqeFUaOub/DK3PHaIWkn4L3tHEI/AWrLVp9wnKYwWPalMwtlC4p1bdG/mUbV1ZFn
+vbkrE13AHhwawr4TDBOSEW6BD5LnHRom0YV4FqS5lpfbgHeGhpXx6Kq0mPFEMJcU
+tb6eVD83AKPv+TYxjJ+eGld629MJOyw0r+AX/JGw/aGIgYd3vrxBEoBFyvRYLQqk
+famGZtecyau1ffZ9uWwcOQgu62Dd3UkyawTHU3sSX50OjukUQwOhbiB0qApq/+fQ
+wICYdWSfmIx6j4upaGh/pW1zvQ4OgL6wAOyy0BSX43DZZMhfTJlBAv8EwM8I7VAg
+3Qdpekqr6sugZUJzi8Kj
+=4j+p
+-----END PGP SIGNATURE-----
