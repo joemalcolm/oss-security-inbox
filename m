@@ -1,74 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/3
-Message-ID: <5203009D.4010603@redhat.com>
-Date: Wed, 07 Aug 2013 20:21:17 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/14
+Message-ID: <20130116204226.GA19510@elende>
+Date: Wed, 16 Jan 2013 21:42:26 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Donald Stufft <donald@...fft.io>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: Reserved CVE for pip
+Subject: bcron: cron jobs get access to the temporary output files from all other jobs that are still running
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-On 08/07/2013 11:20 AM, Donald Stufft wrote:
-> So I was researching pip's CVE's some more and I came across
-> CVE-2013-1888 which Kurt assigned
-> http://www.openwall.com/lists/oss-security/2013/03/22/10 but which
-> shows up as RESERVED
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1888.
-> 
-> Can you fix this so it's not RESERVED Kurt?
-> 
-> ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
-> 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-> 
+I haven't found if there was already a request for this.
 
-Nope.
+In Debian Bugtracker it was closed [1] today. It is possible due to a
+bug in bcron-exec that cron jobs get access to the temporary output
+files from other jobs that are still running. This is also mentioned
+in upstream's NEWS[2]. The commit to fix this on github should be[3].
+Even it looks bcron is not broadly used, could the above get a CVE?
 
-http://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures#Description
+ [1]: http://bugs.debian.org/686650
+ [2]: http://untroubled.org/bcron/NEWS
+ [3]: https://github.com/bruceg/bcron/commit/7e3b8d7a82a6712f4607aae151a3ba8843dc6c86
 
-Description
-
-This is a standardized text description of the issue(s). One common
-entry is:
-
-** RESERVED ** This candidate has been reserved by an organization
-or individual that will use it when announcing a new security problem.
-When the candidate has been publicized, the details for this
-candidate will be provided.
-
-This means that the entry number has been reserved by Mitre for an
-issue or a CNA has reserved the number. So in the case where a CNA
-requests a block of CVE numbers in advance (e.g. Red Hat currently
-requests CVEs in blocks of 500) the CVE number will be marked as
-reserved even though the CVE itself may not be assigned by the CNA for
-some time. Until The CVE is assigned AND Mitre is made aware of it
-(e.g. the embargo passes and the issue is made public) AND Mitre has
-researched the issue and written a description of it entries will show
-up as "** RESERVED **".
-
-Mitre: can we consider changing the text to be more explanatory, I get
-requests for this constantly (people seem t think I run the database
-or something ;).
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSAwCdAAoJEBYNRVNeJnmTdgIP/izRNpjULBIuwKrGmDbEwsHy
-n2vMxgu/kgtb82QFThKdnj2f8xgv76LjZPXBUkzkY1JkyjWHt45m4J1dstX5qTac
-FPtrSU/vpABzH+icg2qyeA35sa/9TMkXEM81UTRqXisq3Ex6RPhYu1/UGBoPA1jq
-FAXB0LdWN/QJnw8A+Ii5ll+jdKB8WaHHEaUcIUBQzMNwLdoIlCUlp66KI/7pxDDR
-47LJx299/ZzqPAgbaWI02Is0slEV9rpJKUojrqq+MRBOz4PAGN+CJ1wjTFRcjqmU
-1/T8X6PtNsUqbOCiIvORb0H+b3MTmq9y5d6jUIPyc4SKWNmIL4XWaUie4+hTkmSX
-SIa3AwW/J8b8VoccgdPmJwzwNrAWiVdpr3IJAe6JrCC+75+ZsL5XCcOUXdzANnN9
-E072gW3rz1nu65Q0qaGhk6QLfUFbYIOec8o6XjmzFnOKPosbkB7nseV5c5n59cj8
-OBZ5lpWqErQ2H1oekJpzvqgddS6epXTU1fzzHVXMHWVtY9g1SrLihOapbb3r10NB
-+MIbqYvHNTDo3nX+0zc7MfAPbFxwf2VhqW3Zn8Yvj859DHGzgWz2PB9r9M6V1be1
-FdhnM7XmuV8MQ8T2eTnrOxvISroqhnN1dBd9476Fx34ZYOy8S5opzspwuudwUUZ+
-bR/LbIzhq9TnZs6qWTxr
-=Jov8
------END PGP SIGNATURE-----
+Regards,
+Salvatore
