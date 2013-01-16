@@ -1,122 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/23
-Message-Id: <201302271623.r1RGNa5l010275@core.courtesan.com>
-Date: Wed, 27 Feb 2013 11:23:36 -0500
-From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: potential bypass of sudo tty_tickets constraints
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/2
+Message-ID: <50F63F70.2080803@redhat.com>
+Date: Tue, 15 Jan 2013 22:49:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: pam-pgsql NULL password handling issue
 Content-Type: text/plain; charset=utf-8
 
-Sudo 1.8.6p7 and 1.7.10p6 are now available which include a fix for
-the following bug:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Potential bypass of sudo tty_tickets constraints
+On 01/15/2013 12:23 PM, Florian Weimer wrote:
+> Lucas Clemente Vella discovered that pam-pgsql (aka pam_pgsql)
+> might allow login with any password the SQL query for the password
+> returns NULL.
+> 
+> Bug report: <https://sourceforge.net/p/pam-pgsql/bugs/13/> Patch:
+> <https://sourceforge.net/u/lvella/pam-pgsql/ci/9361f5970e5dd90a747319995b67c2f73b91448c/>
+>
+>  As usual, I'm not sure if this constitutes a security bug, but
+> we'll probably fix this nevertheless if we get the opportunity.
 
-Summary:
-    When a user successfully authenticates with sudo, a time stamp
-    file is updated to allow that user to continue running sudo
-    without requiring a password for a preset time period (five
-    minutes by default).
+Please use CVE-2013-0188 for this issue.
 
-    This time stamp file can either be common to all of a user's
-    terminals, or it can be specific to the particular terminal the
-    user authenticated themselves on.  The terminal-specific time
-    stamp file behavior can be controlled using the "tty_tickets"
-    option in the sudoers file.  This option has been enabled by
-    default since sudo 1.7.4.  Prior to sudo 1.7.4, the default was
-    to use a single time stamp for all the user's sessions.
+In general I think we take a strict line on password parsing, I can
+see programs that might create new accounts with a NULL password
+especially on the theory that the front end/etc forces a password to
+be entered that isn't NULL.
 
-    A vulnerability exists because the user can control which
-    terminal the standard input, output and error file descriptors
-    (0-2) refer to.  A malicious user could use this to run commands
-    via sudo without authenticating, so long as there exists a
-    terminal the user has access to where a sudo command was
-    successfully run by that same user within the password timeout
-    period (usually five minutes).
 
-    The vulnerability does not permit a user to run commands other
-    than those allowed by the sudoers policy.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Sudo versions affected:
-    Sudo 1.3.5 through 1.7.10p6 and sudo 1.8.0 through 1.8.6p7 when
-    the "tty_tickets" option is enabled.  This option is enabled
-    by default in sudo 1.7.4 and above.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Details:
-    The vulnerability can be triggered when the standard input,
-    output and error file descriptors (0-2) of a process are closed
-    and a different terminal device is opened and connected to those
-    descriptors.  When sudo tries to determine the terminal device
-    via the ttyname() function, it will get the name of the other
-    terminal instead.  The core problem is that while ttyname() can
-    be used to determine the name of the terminal device connected
-    to a specific file descriptor, there is no portable way to
-    determine the name of the terminal associated with the session
-    the process belongs to.  However, on many systems it is possible
-    to determine this by using the /proc file system or the sysctl()
-    function.
-
-    Most operating systems that have the /proc file system provide
-    a way to determine the controlling terminal device number for
-    a process; this information is used by the ps command for
-    example.  On Linux, this is the tty_nr field in /proc/self/stat
-    (the seventh entry).  On systems with an SVR4-style /proc, this
-    is the pr_ttydev member of struct psinfo, which comes from
-    /proc/self/psinfo.  Most BSD systems that support the sysctl()
-    function also provide a way to get the terminal device number
-    via the KERN_PROC_PID sysctl.  By mapping this device number
-    to a file name, it is possible to get the name of the terminal
-    file without resorting to ttyname().  Sudo began using this
-    method to determine the process's terminal starting with version
-    1.8.5 and 1.7.10.
-
-    However, sudo still used the ttyname() function as a fall back
-    when no controlling terminal was found via /proc or sysctl().
-    This allowed a malicious process to cause sudo to use ttyname()
-    simply by creating a new session without a controlling tty
-    before executing sudo.  In sudo 1.8.6p6 and 1.7.10p5, this fall
-    back behavior was removed.  This fixed the vulnerability for
-    systems where the process's controlling terminal could be
-    determined via /proc or sysctl().
-
-    Sudo 1.8.6p7 and 1.7.10p6 contain an additional fix for systems
-    without /proc or sysctl() that stores the POSIX session ID in
-    the time stamp file itself.  The controlling terminal is specific
-    to the POSIX session it is associated with.  It is not possible
-    for two processes in different sessions to have the same
-    controlling terminal.  Sudo will now compare the current session
-    ID with the one in the time stamp file and ignore the time stamp
-    file if the session ID does not match.  This has the additional
-    benefit of making it much less likely that a user will be able
-    to reuse the time stamp file after logging out and back in again
-    on the same terminal.
-
-Impact:
-    A (potentially malicious) program run by a user with sudo access
-    may be able to bypass the "tty_ticket" constraints.  In order
-    for this to succeed there must exist on the machine a terminal
-    device that the user has previously authenticated themselves
-    on via sudo within the last time stamp timeout (5 minutes by
-    default).
-
-    This program may use sudo's -n flag to "probe" the terminals
-    in question to see if there is an active time stamp file for
-    the user.  Prior to sudo 1.8.6 and 1.7.10, if a password was
-    required when the -n flag was specified the failure would not
-    be logged, allowing the program to perform such probes without
-    being detected.  The successful command (if any), would still
-    be logged.
-
-Fix:
-    The bug is fixed in sudo 1.8.6p7 and 1.7.10p6.
-
-Credit:
-    Ryan Castellucci brought the initial ttyname() issue to my
-    attention.  Subsequently, James Ogden discovered that using
-    setsid() to create a new session would cause sudo to fall back
-    to using ttyname().
-
-    Other shortcomings in sudo's "tty_tickets" functionality have
-    been known and discussed openly for some time.  There is a long
-    discussion about them at:
-	https://bugs.launchpad.net/ubuntu/+source/sudo/+bug/87023
+iQIcBAEBAgAGBQJQ9j9wAAoJEBYNRVNeJnmTQ1AQALg3GP21h2ssD66QazUvut0M
+xgbxzTqrKEq5ARR9OBQt0tJ5dXiHVl6Y0poYj1s0DasE6iN5NMl96oVCV7HebZGH
+c7wu6VddTl4ZpftZ6m77/jd3F6NP4n0s1AIL0gQqMdvIRB6+MlLTguzEFQ0F6T0q
+MFOVW4BNWy8wJoyQhxTv06gFrgd98oi+h/XoPTebx8allUXhW0vdPsnUPu4B+x6C
+uKd+e2DLiKxmdW4nFSl7Sr20J+M7eDMLYbCxn9rlMHghb0P4kPym9pSvdxFYGGls
+BwlDMPJ5uNhQtM7nBjuZUW+2jinyeV+3h78xv2eIO6gUIQTshXcBtWxnHPRZLwrF
+J9w/yU2sqjpp9NQXWh9Sbx8KzxdqJd/dN0ckXJGJiW5GSZnSyKxO7eyQg4T2/1FZ
+5RUFOVxo3ys2qmp3HmrWu8WrKL0RXIbDyEtid8my0OXwA6KUKS/9Jdsh/szgtAvl
+U3nho0Y0WKvsvlalarDocyDrPfkyspTHZV23/MHaSdGMaCsMyz7A4jPsPEBzcRZE
+ndrqRyOJiYKYVNuMW01d8UU6KZ+6mwgP00xyvMrFnrRO7+1B+MI/751TAtsfIcHa
+Y9f/2HaACOD6l2ftFr5FAeRQRKtJx84HDIvWwbXHhZ+jeG5wIfqcxvRkEkqNX0H5
+E3eaFLlPg09J6X6j+Pnr
+=ENHN
+-----END PGP SIGNATURE-----
