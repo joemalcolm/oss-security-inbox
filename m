@@ -1,29 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/16/9
-Message-ID: <20130516145012.GJ22048@dhcp-25-225.brq.redhat.com>
-Date: Thu, 16 May 2013 16:50:13 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2013-1962 libvirt: DoS (max count of open files exhaustion) due sockets leak in the storage pool
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/8
+Message-Id: <E1TvUJf-0002Qy-Qt@xenbits.xen.org>
+Date: Wed, 16 Jan 2013 14:50:11 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 40 (CVE-2013-0190) - Linux stack corruption in xen_failsafe_callback for 32bit PVOPS guests.
 Content-Type: text/plain; charset=utf-8
 
-A denial of service flaw was found in the way storage pool manager of
-libvirt, a C toolkit to interact with the virtualization capabilities of
-recent versions of Linux (and other OSes), performed management of
-socket file descriptors when 'to list all volumes for the particular
-pool' request was issued (two socket file descriptors were leaked per
-"list all pool volumes" request). An uprivileged user could use this
-flaw to cause denial of service (make libvirtd daemon to exhaust / reach
-the maximum count of open file descriptors, the libvirtd daemon process
-was allowed to open, possibly preventing other users from use of
-libvirtd services till the libvirtd daemon was restarted).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-1962
+             Xen Security Advisory CVE-2013-0190 / XSA-40
 
-Upstream patch:
-https://www.redhat.com/archives/libvir-list/2013-May/msg01222.html
+ Linux stack corruption in xen_failsafe_callback for 32bit PVOPS guests.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+ISSUE DESCRIPTION
+=================
+
+xen_failsafe_callback incorrectly sets up its stack if an iret fault is
+injected by the hypervisor.
+
+IMPACT
+======
+
+Malicious or buggy unprivileged userspace can cause the guest kernel to
+crash, or operate erroneously.
+
+VULNERABLE SYSTEMS
+==================
+
+All 32bit PVOPS versions of Linux are affected, since the introduction
+of Xen PVOPS support in 2.6.23.  Classic-Xen kernels are not vulnerable.
+
+MITIGATION
+==========
+
+This can be mitigated by not running 32bit PVOPS Linux guests.
+
+32bit classic-Xen guests, all 64bit PV guests and all HVM guests are
+unaffected.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa40.patch
+
+$ sha256sum xsa40*.patch
+b6aa67b4605f6088f757ca28093d265c71e456906619d81d129bf656944ed721  xsa40.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQ9r4HAAoJEIP+FMlX6CvZhIMIAKa3l8CMZ4Di0gyp1cVi95es
+0Pzq8qV5Qwla+NZEuz1O91UAxzwke8mrVsKK9PQCUVqdrmKbIrWjGX3b/KNIoa3d
+hCGBd1wkTld7XmQxNfr+0BcfybqM92dww623rhv6G2jPaehOMVGWl28vomwkMU9E
+iT/z2dqYJuAkcq6hobJ02tyfABl5sWNDE+HvI6EFxTptzeUGQtaPm9q6qbdbw1pT
+InAae/VU7u+qAZTr0MY8kncFiK3206LvJX2Wq6YBI6LCFw4eaOvTFfJiAvFojqQb
+nl5PT2KXH3IbiZEAiSOENBRiudkzxY0OfGyTnyuwsZuJa7SaI47pN1Sp5YtRPf0=
+=9uNq
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa40.patch" of type "application/octet-stream" (2107 bytes)
