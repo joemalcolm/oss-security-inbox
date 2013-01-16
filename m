@@ -1,45 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/12/4
-Message-ID: <513E96A7.70609@redhat.com>
-Date: Mon, 11 Mar 2013 20:44:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/3
+Message-ID: <20130116064959.GA21489@elende>
+Date: Wed, 16 Jan 2013 07:49:59 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: XSS in piwik 1.11
+Cc: Florian Weimer <fw@...eb.enyo.de>, team@...urity.debian.org
+Subject: Re: CVE request: Digest::SHA double free when using load subroutine
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Kurt and Florian
 
-On 03/10/2013 07:18 AM, Hanno Böck wrote:
-> Quote: "Security: We would like to thank the Security Researcher
-> Leone Pontorieri who responsibly disclosed a XSS vulnerability
-> (which we’ve fixed) as part of our Security Bug Bounty Program."
+On Tue, Jan 15, 2013 at 10:37:59PM -0700, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> from http://piwik.org/blog/2013/03/piwik-1-11/
+> On 01/15/2013 12:37 PM, Florian Weimer wrote:
+> > * Kurt Seifried:
+> > 
+> >> I'm not clear, how would an attacker exploit this? They'd need to
+> >> be able to specify the file that gets hashed, and the file would
+> >> have to be not present and would thus trigger the crash? Are
+> >> there any real world examples of an affected application? (web
+> >> based?)
+> > 
+> > My hunch is that this is just a bug, not a security issue.
 > 
-> As we already discussed here recently, the piwik devs are fans of 
-> security by obscurity, so they don't provide further details.
+> I'll leave it for now, if anyone comes up with a security impact/etc.
+> let us know! (I bet this never happens, ah well =).
 
-Ayup. Please use CVE-2013-1844 for this issue.
+Thanks for your feedback on this.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRPpanAAoJEBYNRVNeJnmTbcEQALxNNVyDUB8V45xjcpKiF+ih
-IykWm9qyukN3uaRUoaIb4O5cqzehAFUMFCYmU53nG3iLiyefp6seLm7rKbTZSIaW
-HEy5e4xXjpb9VvyRGz/2qEyTgxzab9pMsklBI9v0RN7Qk/XJtUThLNPkxwAtXCk9
-QoZk9S8xmJs8oREKN+kuUEZRIvcVjwmjeqf2skL9R8MyUjkFpmBZJD/kOeZPa0d5
-6gvyse/h4FBCeqe+bSOhuelWLc4dsTycOk2OJTlZBnqhFXlD2718fr+v4Pixkvbp
-ZyixzhdIA3RqqKqWlQctp4duTlSRSJZX2eO44y6KxE4uuaMPTxa43zbDDQnZFK0C
-rack282nCqt+rz4gpMyF7JJhznwdT5LeP/0yc0REmutP9yremP8D260evO7S8CUR
-Fv/48NIau3ICIEVaAqpE5rampAwTPYepYquzqsPlx37AqJSmEZlpklcIjTMpMyqT
-LZV7FrWBxq9yvlHThBVOJ5VbvawhcQMbsfc/G1MZoBUE5ROncva8z0opIuy56x4/
-DvaV2INz/0DpQ2iZAqNnkUa24/0U++AMXeLKchLntLbTET8/0WLrWjKxS8VvUES8
-SMiUJ4AFiM1eBzPI32dIhDc4Nlx7rEe3W62NQlMvBv7KC6DGKMu0eRcjub0KnP9O
-EHTVHlujrfKP11brpNAM
-=/pxb
------END PGP SIGNATURE-----
+Regards,
+Salvatore
