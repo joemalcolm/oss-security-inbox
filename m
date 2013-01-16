@@ -1,72 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/23
-Message-ID: <51268360.4040507@redhat.com>
-Date: Thu, 21 Feb 2013 13:28:16 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/7
+Message-ID: <alpine.LFD.2.03.1301161809360.4004@redhat.com>
+Date: Wed, 16 Jan 2013 18:17:28 +0530 (IST)
+From: P J P <ppandit@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Christey, Steven M." <coley@...re.org>, security curmudgeon <jericho@...rition.org>
-Subject: Re: Two more ZoneMinder that need CVE
+cc: kargig@...d.gr
+Subject: Re: Linux kernel handling of IPv6 temporary addresses
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 02/21/2013 01:03 PM, Christey, Steven M. wrote:
-> Actually, CVE covers default accounts and passwords, although known
-> passwords from 1999 and earlier are not covered.
-> 
-> While this is arguably "configuration," in 2013, products are
-> expected to have other mechanisms of securing themselves out of the
-> box, such as forcing a credentials change during installation, plus
-> there is usually a race condition between when the product is
-> installed and when the administrator changes the credentials.
-> 
-> - Steve
+   Hello George,
 
-So then as I said in:
++-- On Wed, 16 Jan 2013, George Kargiotakis wrote --+
+| You can reproduce the bug with a new option for flood_router26 that has been added to the thc-ipv6 toolkit v2.1.
+| # ./flood_router26 -A eth0
 
-http://seclists.org/oss-sec/2013/q1/155
+  I tried this, it takes quite a while for other hosts to receive the 
+generated traffic. On the receiving hosts kernel logs
 
-> 1) The default account/password is well documented. The services 
-> forces you to change the password when first run and will refuse
-> to run until you do change the password. Generally not considered a
-> vuln.
+==
+...
+...kernel: Neighbour table overflow.
+==
 
-> 2) The default account/password is well documented. The services
-> does not force you to change the password when first run. Generally
-> not considered a vuln as it falls into the "don't do stupid things"
-> class of issues.
-
-#2 needs a CVE?
-
-> 3) The default account/password is not well documented or not 
-> documented at all but can be changed. Generally this would be 
-> considered a vulnerability.
-
-> 4) The default account/password is not well documented or not 
-> documented at all and can NOT be changed. Generally this would be 
-> considered a vulnerability.
+no log message from ipv6_create_tempaddr() routine. 
 
 
+| I've applied your patch to 3.5.7 and unless I've done something wrong, it doesn't seem to work. Actually I can't
+| get any temporary address assignment with it. This is what I get upon booting with your patch:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+  Ah, very sorry, I missed to say: ift = ipv6_add_addr(...) : in my last 
+patch. It remains NULL all the time. Please try this fixed version
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+===
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 420e563..0aaaa63 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1046,12 +1046,19 @@ retry:
+ 	if (ifp->flags & IFA_F_OPTIMISTIC)
+ 		addr_flags |= IFA_F_OPTIMISTIC;
+ 
+-	ift = !max_addresses ||
+-	      ipv6_count_addresses(idev) < max_addresses ?
+-		ipv6_add_addr(idev, &addr, tmp_plen,
+-			      ipv6_addr_type(&addr)&IPV6_ADDR_SCOPE_MASK,
+-			      addr_flags) : NULL;
+-	if (!ift || IS_ERR(ift)) {
++    ift = NULL;
++    if (!max_addresses || ipv6_count_addresses(idev) < max_addresses)
++        ift = ipv6_add_addr(idev, &addr, tmp_plen,
++                        ipv6_addr_type(&addr) & IPV6_ADDR_SCOPE_MASK,
++                        addr_flags);
++    if (!ift) {
++        in6_ifa_put(ifp);
++        in6_dev_put(idev);
++        pr_info("%s: ipv6 temporary address upper limit reached\n", __func__);
++        ret = -1;
++        goto out;
++    }
++    else if (IS_ERR(ift)) {
+ 		in6_ifa_put(ifp);
+ 		in6_dev_put(idev);
+ 		pr_info("%s: retry temporary address regeneration\n", __func__);
+===
 
-iQIcBAEBAgAGBQJRJoNgAAoJEBYNRVNeJnmTHGAQAIzzGsK/XPbuwqU0mNZz8eAi
-DJIGnNB8mhstKkB0y1P7zGb6e7UNcYdT01E34lU3gS9IBTZ3aBnHk7T8JC9TfbAa
-+nM/S1lpRb8O0LSSDNXFQQtSesEk4fHiz2A/AAhcRDcrRX8bG62mcRWhJW398NTM
-ZlnI9NNAv7MORrzxN1ZmW/oK1hbglNobjGWVlAQCGtKIVaYt89HVne9WP9Z4ab5D
-jHHLa9s4Y6EcaCcIjnY4/KrYCOFtjGUe875QhV70T4it9OjyYgmNLHztvbNA0Y5A
-EWxJVd9tPIoIDw6Acmu0fVpHw59AocS4t6b/se2/FXskt1D17nJ2xhnbVIVnhzdV
-66GdK6huYMOiyOjolT2SyrokI0nkHmV56xJ+6OAdjPEEjKX1tqvLIy6kaTGcA7pF
-/AHGpXZDPsSlxV0fBJ6p9M2RYB9anNhWCsMnG/wJx4sm0j8CM5RdPvcASz38JAsE
-HrwCn0EDhNhj1umb1hCYZrJ5fb4+z5rmBT6MRE0znj9nHsyGgMMDvaNOw2mWCwC5
-k/TlTKQZxsl7JHK2HbWaXA/dJH780unp5sE3N/aUYE95KHvMVXlGFQ9aFyNhVMRM
-Efl9fd0aLnZR9sI21zfKQv0SUWkGg7C5wT2fxN6IiN47BbnbGAE/FDPf+md7geCH
-PmqUsV7/4j5avi4iF7/s
-=qj3J
------END PGP SIGNATURE-----
+
+Thanks so much.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
