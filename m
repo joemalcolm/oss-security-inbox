@@ -1,60 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/11/8
-Message-ID: <51DEF3BB.3000203@redhat.com>
-Date: Thu, 11 Jul 2013 12:04:43 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>, squid-bugs@...id-cache.org, info@...id-cache.org
-Subject: Re: CVE request: SQUID-2013:2: buffer overflow in HTTP request handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/5
+Message-ID: <20130116135810.0cdaedd8@lola.kot>
+Date: Wed, 16 Jan 2013 13:58:10 +0200
+From: George Kargiotakis <kargig@...d.gr>
+To: P J P <ppandit@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: Linux kernel handling of IPv6 temporary addresses
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-On 07/11/2013 08:53 AM, Raphael Geissert wrote:
-> Hi,
-> 
-> Squid has released a security advisory[0]:
->> Due to incorrect data validation Squid is vulnerable to a buffer 
->> overflow attack when processing specially crafted HTTP requests.
-> 
-> [0]http://www.squid-cache.org/Advisories/SQUID-2013_2.txt
-> 
-> Could a CVE id be assigned please?
-> 
-> Thanks in advance.
-> 
-> [CC'ing squid's security address so that they can include the id
-> in the advisory once assigned]
-> 
-> Cheers, -- Raphael Geissert - Debian Developer www.debian.org -
-> get.debian.net
-> 
+You can reproduce the bug with a new option for flood_router26 that has been added to the thc-ipv6 toolkit v2.1.
+# ./flood_router26 -A eth0
 
-Please use CVE-2013-4115 for this issue.
 
-Squid people: can someone contact me about getting you guys CVEs in
-advance? It would make things easier for all concerned.
+I've applied your patch to 3.5.7 and unless I've done something wrong, it doesn't seem to work. Actually I can't
+get any temporary address assignment with it. This is what I get upon booting with your patch:
 
-https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+[   35.045299] sky2 0000:01:00.0: eth0: Link is up at 100 Mbps, full duplex, flow control both
+[   35.045765] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+[   36.985436] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
+[   36.985474] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
+[   63.204196] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
+[   63.204241] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
+[   86.125990] Netfilter messages via NETLINK v0.30.
+[   86.883815] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
+[   86.883850] IPv6: ipv6_create_tempaddr: ipv6 temporary address upper limit reached
+[  114.611839] IPv6: ipv6_create_tempaddr: regeneration time exceeded - disabled temporary address support
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+# cat /proc/sys/net/ipv6/conf/eth0/use_tempaddr 
+-1
 
-iQIcBAEBAgAGBQJR3vO7AAoJEBYNRVNeJnmT3OUQAIvRTjkSXucBqPzUv8P6d9qy
-ke4lBrgo1IxwI17CAgCWWP612Ert2mkDsfKkqTDb/bttave6tvDL3RR54wMHYm/W
-SMNX8lKYD4vEpE9UlbLuz65LzBwMH5Uip7aR4FXLG2nFRCgAAN8W+NYunBh/BWaf
-e+m1RwA7SvlkgDMkZiZKAxLC2N0BCs9bkQ8NTyJ0n1jlWiWbV6hxZFLR+TQallAs
-UFXp15fkZB6IeFyG8bJ1t75CbFmtzHa49SRcOla13oV3Q/5pEJXEmmJk1BjH1pUY
-gIouzdVmtpdI2XqKG35ZVbzGi4KrJ9UIFCW7HG7p6CBYYPZKMB9tRh2Q3snSbonT
-6nO+1wBEyALQjHJrBKw3goF3uSqMvhIO0x5H+VEIk7qw4jMBcxBCwIMR/O/l5o4G
-Ps6d3Z7YztWwof7wTlO82jnUnL0ELeWV1Hsh5vqjFfGNLPqQNOZWBqpdrqqyhbBW
-urmPNyoHhFq/YgxRcDi7FmLuM3jP9dqi/DfDhKWctc2IUBLp5hzaXf0CJ+k9NPZW
-M37XnNwfTgpGpToCFCjiIEZ0bZigrWZXHheKojnuc8JSTaPm0/yjnHhIWaIhNj6Z
-l/PaNCgufelRSv200kt+BaTMr6XFW3FrpZRxh32k/KnSY2Y2pm3wtaDIQgEMy87N
-cjszaeAyQimlgzYJ/t9m
-=bB3W
------END PGP SIGNATURE-----
+As I've already said to Eric Dumazet who's also been trying to provide a patch for the issue
+I think that the correct way to resolve the issue would be to follow the recommendations of 
+draft-gont-opsec-ipv6-nd-security-00 section 3.6.4
+<quote>
+   Even if hosts do enforce a limit on the number of IPv6 addresses
+   configured, an attacker might try to cause victim hosts to ignore
+   legitimate prefixes previously advertised for address configuration
+   by legitimate routers.  Hereby we recommend hosts to not discard
+   previously configured addresses if new prefixes for address auto-
+   configuration are advertised and the limit for the maximum number of
+   configured addresses (per interface) has been reached.  When such
+   limit is hit, the newly advertised prefixes for address auto-
+   configuration should be ignored.
+</quote>
+
+Best Regards,
+
+P.S. please CC me in your answers
+-- 
+George Kargiotakis
+https://void.gr
+GPG KeyID: 0xE4F4FFE6
+GPG Fingerprint: 9EB8 31BE C618 07CE 1B51 818D 4A0A 1BC8 E4F4 FFE6
