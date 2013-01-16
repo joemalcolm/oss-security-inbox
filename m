@@ -1,59 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/29/4
-Message-ID: <526F909B.6090503@openstack.org>
-Date: Tue, 29 Oct 2013 11:40:27 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request for a vulnerability in OpenStack Keystone
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/16/9
+Message-Id: <E1TvUJp-0002SX-TY@xenbits.xen.org>
+Date: Wed, 16 Jan 2013 14:50:21 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 41 (CVE-2012-6075) - qemu (e1000 device driver): Buffer overflow when processing large packets
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public,
-although an advisory was not sent yet.
+	     Xen Security Advisory CVE-2012-6075 / XSA-41
+ qemu (e1000 device driver): Buffer overflow when processing large packets
 
-"""
-Title: Unintentional role granting with Keystone LDAP backend
-Reporter: The IBM OpenStack test team
-Products: Keystone
-Affects: Grizzly, Havana
+SUMMARY AND SOURCES OF INFORMATION
+==================================
 
-Description:
-The IBM OpenStack test team reported a vulnerability in role change
-code within the Keystone LDAP backend. When a role on a tenant is
-removed from a user, and that user doesn't have that role on the
-tenant, then the user may actually be granted the role on the tenant.
-A user could use social engineering and leverage that vulnerability to
-get extra roles granted, or may accidentally be granted extra roles.
-Only Keystone setups using a LDAP backend are affected.
-"""
+An issue in qemu has been disclosed which we believe affects some
+users of Xen.
 
-References:
-https://bugs.launchpad.net/keystone/+bug/1242855
+The Qemu project has not itself issued an advisory. More information
+may be available in the advisories published by the distros:
 
-Thanks in advance,
+https://bugzilla.redhat.com/show_bug.cgi?id=889301
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=696051
 
-- -- 
-Thierry Carrez (ttx)
-OpenStack Vulnerability Management Team
+CAVEAT
+======
+
+For full and accurate information please refer to those advisories.
+We have not conducted a full review of the information and patches
+provided.
+
+The rest of the information in this advisory is true to the best of
+our knowledge at the time of writing.
+
+IMPACT
+======
+
+The vulnerability impacts any host running HVM (Fully-Emulated) guests
+which are configured with an e1000 NIC (using "model=e1000") in their
+VIF configuration. Note that the default emulated NIC is "rtl8139"
+which is not vulnerable.
+
+In a vulnerable configuration a hostile network packet may be able to
+corrupt the memory of the guest, leading to a guest DoS or remote
+privilege escalation.
+
+We do not believe that this issue enables an attack against the host.
+
+MITIGATION
+==========
+
+Limiting the size of network frames (e.g. by disabling jumbo frames)
+on the local network and the Xen bridge may reduce or eliminate
+guests' vulnerability to the bug.
+
+RESOLUTION
+==========
+
+The patch is this git commit:
+  http://git.qemu.org/?p=qemu.git;a=commitdiff;h=b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
+
+The fix has been applied to all qemu branches contained in Xen version
+4.1 onwards.
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQIcBAEBCAAGBQJSb5CZAAoJEFB6+JAlsQQjgocP/1Gkak2GjjcTS1/rT9qQhjkF
-2kz6St5X0FVs/PR9GNpv5QXzBDDpidfQ1Qh6q+YP9yFdlBX1uZqHJjProb255PnZ
-8BboQxg+Te4g24vYPZJITEImv41HSiu0YTMI7bGpiHBToBGm5mivu8nLj8lr2Yqc
-SUw4bUPUQQELVUSE9UYGfyT3SHdrYHxt4yKj86sC8HsUfP8V5EgmRqZQbWV093EK
-PJ87cd5OvfAkUEymBZv81h/CzvneP5ywRcEWnWmaTJOWDSoMTIRh2EdeLHOrtUss
-AZAK8tJvKu2bENWLT7coLwFa9np8bTkDRF7ZoEiFJ1xCCCiOB/h9eKDBClyfd87L
-Gg1+3srnIldBH1EVQtRycugqVUiWLMIG7/mhq6tv7mP1qWLVs7A7K6FZqY9malXB
-20LVUFSLxpCPpekmQc4yEMiH2hrPGaw/PEWeRqEbidLTl08nlLLzWm8KjPLNyJOn
-I92e+IWGBhymM2avrAGKPSkUElSKmjK7UpxDU1PhZIIcEz0qpJfWD34X23yfZFiY
-zNum8Hfx//7CWITIi4S0P9iXpSgUBlMf1GIu2XL244mwFRy+at2DA/5M5dGWvDrL
-5YHtEluik97lmX25Rwcot0cb4pvwjMWPqVgCJ8ufmgqpSrP6sW1yjk0gw+YMRjlT
-K7DpeGdgW7nnDIO7hghF
-=jmSw
+iQEcBAEBAgAGBQJQ9r4JAAoJEIP+FMlX6CvZkmcH+gPMPr1x2G381ytNGLcPjiZI
+HAYlaRt2dGg2DBFCaTLTuJJ16DztNLsv4hPab25fAs/eTq3SRvtwsYZkzZ0YgUct
+ItdGseV9IoHRs5xvzkU5yzo/VScBb3hn5T+yMh2uQ1PS5EG+GFEjJlUxeggKEsQW
+IJMY2+lIPElX8VdYKVIxS/M9IeNlT56sALXE4aA+FylX8CIbPlnErZF5AgubY5Pd
+MUSnp72CwYjTkfBBvMYpFgxaDVVep72UEhSC1LlN84kIgQ/bXlr7C74G4fi6SvS/
+YnyDAld6sX7ALAYzCEO0qYd9VjTUjKh0vv0lvttJXRdUrDN1fwbKhuGWeKFsASI=
+=12x9
 -----END PGP SIGNATURE-----
+
