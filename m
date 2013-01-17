@@ -1,58 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/15
-Message-ID: <20130807191602.GA13735@eldamar.local>
-Date: Wed, 7 Aug 2013 21:16:02 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: SQL injection and shell escaping issues in Cacti < 0.8.8b
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/8
+Message-ID: <loom.20130117T095257-379@post.gmane.org>
+Date: Thu, 17 Jan 2013 09:13:38 +0000 (UTC)
+From: Mark Shelor <mshelor@...n.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Digest::SHA double free when using load subroutine
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt, hi Vincent,
+Kurt Seifried <kseifried@...> writes:
 
-On Wed, Aug 07, 2013 at 11:18:53AM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+> On 01/15/2013 12:37 PM, Florian Weimer wrote:
+> > * Kurt Seifried:
+> > 
+> >> I'm not clear, how would an attacker exploit this? They'd need to
+> >> be able to specify the file that gets hashed, and the file would
+> >> have to be not present and would thus trigger the crash? Are
+> >> there any real world examples of an affected application? (web
+> >> based?)
+> > 
+> > My hunch is that this is just a bug, not a security issue.
 > 
-> On 08/07/2013 10:06 AM, Vincent Danen wrote:
-> > Cacti 0.8.8b was released today [1] with a changelog that notes:
-> > 
-> > Cacti 0.8.8b Change Log [...] * security: SQL injection and shell
-> > escaping issues
-> > 
-> > It looks like the SQL injection issue is in api_poller.php and 
-> > utility.php [2]
-> > 
-> > I think there are two shell escaping issue:
-> > 
-> > 1) snmp.php: Use escapeshellarg() instead of custom escape function
-> > for snmp library [3] 2) rrd.php: Properly escape all user input for
-> > consumption by rrdtool [4]
-> > 
-> > 
-> > [1] http://sourceforge.net/mailarchive/message.php?msg_id=31258868 
-> > [2] http://svn.cacti.net/viewvc?view=rev&revision=7394 [3]
-> > http://svn.cacti.net/viewvc?view=rev&revision=7392 [4]
-> > http://svn.cacti.net/viewvc?view=rev&revision=7393
-> > 
-> > 
-> > Looks like 3 CVEs are needed.
-> > 
-> 
-> JUST FYI vdanen/myself were emailed off list about some CVE's that may
-> have already been assigned to this. Just waiting on that info before
-> proceeding.
+> I'll leave it for now, if anyone comes up with a security impact/etc.
+> let us know! (I bet this never happens, ah well =).
 
-The Debian Security Team had assigned the following CVEs:
 
-CVE-2013-1434: for the SQL injection issues, fixed by
-http://svn.cacti.net/viewvc?view=rev&revision=7394
+Digest::SHA is part of the Perl core, so there's a similarity between this case
+and CVE-2008-1927: double-free vulnerability in Perl 5.8.8 allowing a DoS
+(memory corruption and crash).
 
-CVE-2013-1435: for the shell escaping issues, fixed by
-http://svn.cacti.net/viewvc?view=rev&revision=7392 and
-http://svn.cacti.net/viewvc?view=rev&revision=7393
+Currently I see no way for an attacker to exploit this bug to allow arbitrary
+execution of code from user space.  Any vulnerability of that type would appear
+to require preexisting vulnerabilities in the Perl/glibc memory allocators.
 
-Regards,
-Salvatore
+Regards, Mark (Digest::SHA upstream)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+
+
