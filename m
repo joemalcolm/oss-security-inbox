@@ -1,48 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/7
-Message-ID: <512D004E.60502@redhat.com>
-Date: Tue, 26 Feb 2013 13:34:54 -0500
-From: Russell Bryant <rbryant@...hat.com>
-To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>, oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
-Subject: [OSSA-2013-006] VNC proxy can connect to the wrong VM (CVE-2013-0335)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/4
+Message-ID: <50F7A3E2.6030409@redhat.com>
+Date: Thu, 17 Jan 2013 00:10:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: gnome-keyring does not discard stored secrets in some cases
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-OpenStack Security Advisory: 2013-006
-CVE: CVE-2013-0335
-Date: February 26, 2013
-Title: VNC proxy can connect to the wrong VM
-Reporter: Loganathan Parthipan (HP), Rohit Karajgi (NTT Data)
-Products: Nova
-Affects: All versions
+On 01/16/2013 10:27 PM, Florian Weimer wrote:
+> * Kurt Seifried:
+> 
+>>> I've verified that Fedora 17 (GNOME 3.4) does not discard
+>>> cached keys on suspend and hibernate, either.  (Swap is
+>>> encrypted, though, at least I selected that in the installer.)
+>>> However, I suspect that users expect that suspend (but perhaps
+>>> not hibernate) does not discard keys.
+>> 
+>> Just to confirm, is this behavior documented at all in the gnome 
+>> keyring documentation (e.g. that it does or doesn't do it)?
+>> Thanks.
+> 
+> I think the clearest part is 
+> <https://live.gnome.org/GnomeKeyring/SecurityPhilosophy>, which 
+> proclaims:
+> 
+> | * Try to keep your secrets from being swapped out or otherwise |
+> written to disk. | * Hunkering down and discarding all secrets when
+> your computer is |   locked.
+> 
+> The documentation for gnome_keyring_lock_all_sync 
+> <http://developer.gnome.org/gnome-keyring/unstable/gnome-keyring-Keyrings.html#gnome-keyring-lock-all-sync>
+>
+> 
+says:
+> 
+> | Lock all the keyrings, so that their contents may not eb
+> accessed | without first unlocking them with a password.
+> 
+> In addition, 
+> <http://developer.gnome.org/gnome-keyring/unstable/gnome-keyring-Non-pageable-Memory.html>
+>
+> 
+suggests that locked memory is never written to disk.  This is not
+> true with hibernation.
 
-Description:
-Loganathan Parthipan (HP) and Rohit Karajgi (NTT Data) independently
-reported a vulnerability in Nova. If a user requests a console and
-then deletes the VM, it is possible that the console token could allow
-connectivity to a different VM before the console token expires if the
-VNC port gets reused in that time period. This issue can be worked
-around by disabling VNC support.
+Perfect that's exactly what I needed to know. Please use CVE-2012-6111
+for this issue.
 
-Fixes:
-master (grizzly): https://review.openstack.org/#/c/22086/
-stable/folsom: https://review.openstack.org/#/c/22758
-stable/essex: https://review.openstack.org/#/c/22872/
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=2013-0335
-https://bugs.launchpad.net/nova/+bug/1125378
 
 - -- 
-Russell Bryant
-OpenStack Vulnerability Management Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iEYEARECAAYFAlEtAE4ACgkQFg9ft4s9SAZKLwCePGfNZAYdx2mjM2hWHt26Kff6
-2HAAn38YuA93O4wg7SDUtcXar1Yr0d9q
-=sVp/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ96PiAAoJEBYNRVNeJnmT8EwP/09jnBQcIT3SQwlMGEbc7Y6f
+VuQvqt1iYvyBRKGnSQu5IJ3LC/JN3cDjKOFROGkS0qUKuF0QD++q+YKU2NSslAJ4
+/hh56vu/zHhxo38nxH4qhBJAA6oQy5xKBsPiIOUnhB9xbr8cq2RWOwSC4+UXIrP2
+1Fr0lUR8v+cAQ5PbJhl1Bsy/TDmLzpXR4db/4mgZ0o484D+D4mHipIyYqIPIGWoH
+K97Jg5D20K3T4t2UOAelcbgl0OPEcDhK3YUOI7YPUuynrVN3mF28yZTfwdUX88ZD
+BXhJfT8AG1gavzZFNZdi8RhpTbV1K+IcB/tpLVlhJdppad6a0A9K+/GEIMu+Rkxb
++kcbHaWfl+mavAfkI5WEBjfhbg5JyqgIlh+s3g0mhiiTWq9AUeZwsqYOE5/5orxQ
+AM9x8K8w/bKqP2O3o+lk0S8xA9ZmGymOhHMW0TgOsotpzeAi/CQn3LL4knRBe55L
+u3cJakmvro1t7mh9dxhidbpEbl6gByqsat64E9JJUFfJEkRhwawvq6RYcstR+T4X
+vpZabyoSYzCPMttIwG1xbfdo8zOzTN6Tl018UQxLNcshB8vkF+ETwIAhdrzf7Rlj
+gb0AVTMpeS2NnUXN1w/2aPPccW1vPFY5EOfB1x5F0Cw56fXtmyFnTBv9824Gf107
+GDa1dgzuDeKFVENnrJ/f
+=y9Rt
 -----END PGP SIGNATURE-----
