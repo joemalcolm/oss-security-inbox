@@ -1,64 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/04/8
-Message-Id: <201310040812.r948Cp7b001306@linus.mitre.org>
-Date: Fri, 4 Oct 2013 04:12:51 -0400 (EDT)
-From: cve-assign@...re.org
-To: fw@...eb.enyo.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: A note on cookie based sessions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/9
+Message-ID: <alpine.LFD.2.03.1301171502050.24132@redhat.com>
+Date: Thu, 17 Jan 2013 17:21:33 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss-security@...ts.openwall.com
+cc: kargig@...d.gr
+Subject: Re: Linux kernel handling of IPv6 temporary addresses
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
++-- On Wed, 16 Jan 2013, George Kargiotakis wrote --+
+|        valid_lft 131007sec preferred_lft 65471sec
+|  inet6 fd00:966b:7196:c731:222:aaff:fecc:1111/64 scope global tentative dynamic 
+|        valid_lft 131007sec preferred_lft 65471sec
+| 
+| what I also find wrong here is that all temporary addresses (dynamic) 
+| acquired have gotten the same last 64bits. I don't think this is OK per RFC 
+| 4941 even if not explicitly defined there. Every temp. address created 
+| should be different per prefix from the rest.
 
->What about applications built on top of those stacks which do not
->document this?  Would they receive a CVE?
+   True, the last few bits of the addresses are same as the IPv6 address of 
+the host, with scope::global, but no tentative dynamic bits set. Plus network 
+becomes unreachable till I reboot the host.
 
-Referring to
+| use_tempaddr for the iface still has '2' as its value
+| # cat /proc/sys/net/ipv6/conf/eth0/use_tempaddr 
+| 2
 
-  http://openwall.com/lists/oss-security/2013/09/04/13
+   This value is always 0, before ifconfig eth0 down and after ifconfig eth0 
+up.
 
-CVEs can be obtained by the upstream vendor of an application
-framework with this behavior, and CVEs can be obtained by the upstream
-vendor of an individual application with this behavior.
-
-http://maverickblogging.com/logout-is-broken-by-default-ruby-on-rails-web-applications/
-says "Rails will issue a new, empty-ish cookie to the user's browser
-in order to overwrite the one granted when the user originally
-authenticated, and instruct the Web browser to use this newest one
-from this point forth. This relies on good browser behavior."
-
-This approach addresses one important threat model: an unattended
-workstation that had been using a normal web browser, successfully
-completed this type of logout, and left that normal web browser
-running. (The attacker had wanted to make a quick unauthorized use of
-a web application by typing/clicking something at that specific
-workstation, within that specific browser session.) From our
-perspective, each upstream vendor may decide among options such as:
-
-  - announce that there was a software mistake because they were
-    actually intending to address other threat models
-
-  - announce that they hadn't intended to address other threat models,
-    but now wish to make a security enhancement
-
-  - do nothing
-
-The first option gets the CVE.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSTngVAAoJEKllVAevmvms3XYH/RKJcf8dqAUZBps+bhDqa9mG
-PSjyYXukM6LYoyYJcfzzkZgtTSxNvXMfcYOPF8P/LU6U0RcnRl+EMqj1uquuAExo
-wx+uoDHZJg+NU0WsAmJxzeu3jCK8KcUB1NyDOaH50ThRcMpmFo+xiyaXYLb7TZDH
-pp/7CEJBRKib28FhvwJZ3nvYNBPG1veTvmzJ6b4FC3eHHbOKkjwWjuST5CjeshH3
-+rucE01s5FQP+qxbUH33aIMkb6xp2AyuCwlJrpI/WMiW6198GCLbmWGN5VIqnHxw
-p+AVgrh1G6GsdUu+iZejgK7ymrYJQZHEdxIg08H8U2XkZTz6d0AXaih63dJ0lvk=
-=FKMa
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
