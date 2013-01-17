@@ -1,141 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/30/8
-Message-Id: <99B20271-C940-4167-BF76-C2BEB9C871A8@stufft.io>
-Date: Tue, 30 Jul 2013 02:35:52 -0400
-From: Donald Stufft <donald@...fft.io>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, isis@...project.org, cve-assign@...re.org
-Subject: Re: Requesting CVE-ID(s) for Python's pip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/14
+Message-ID: <962175989.11127791.1358437849489.JavaMail.root@redhat.com>
+Date: Thu, 17 Jan 2013 10:50:49 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Forest Monsen <forest.monsen@...il.com>, Drupal Security Team <security@...pal.org>, Mitre CVE assign department <cve-assign@...re.org>
+Subject: CVE Request - SA-CORE-2013-001 (one JQuery X < 1.63 issue and two Drupal modules issues)
 Content-Type: text/plain; charset=utf-8
 
+Hello Kurt, Steve, Forest, Drupal Security Team, vendors,
 
-On Jul 30, 2013, at 2:29 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+  @Forest: Apologize for requesting CVE ids instead of you,
+but I will explain the reasons below shortly.
 
-> Signed PGP part
-> On 07/26/2013 09:46 AM, Donald Stufft wrote:
-> > 
-> > On Jul 26, 2013, at 8:03 AM, isis agora lovecruft
-> > <isis@...project.org> wrote:
-> > 
-> >> I would also like to request CVE assignment(s) for two issues in
-> >> pip (https://github.com/pypa/pip/), related to Donald Stufft's.
-> >> 
-> >> First issue: ------------ Python's pip versions 1.4.x and earlier
-> >> are vulnerable to an Arbitrary Code Execution Attack due to
-> >> incorrect regexp parsing of external download links in the
-> >> following functions in pip/index.py:
-> >> 
-> >> * PackageFinder._get_pages()
-> >> https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L232 *
-> >> PackageFinder._sort_links()
-> >> https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L272 *
-> >> PackageFinder._package_versions()
-> >> https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L285 *
-> >> PackageFinder._link_package_versions()
-> >> https://github.com/pypa/pip/blob/1.3.X/pip/index.py#L290
-> >> 
-> >> Which allow an attacker with the ability to Man-in-the-Middle
-> >> external package URIs (which often include external HTTP URIs,
-> >> and can include the module author's personal website, see 
-> >> https://github.com/pypa/pip/commit/a3584d176697bd4c83390de1857679d44389e00d#L0L265)
-> >>
-> >> 
-> to specify an arbitrarily high package version number and gain code
-> >> execution.
-> >> 
-> >> Uptream bugtracker reports:
-> >> https://github.com/pypa/pip/issues/425#issuecomment-20639993 
-> >> https://github.com/pypa/pip/issues/425#issuecomment-20640890
-> >> 
-> >> Other mentions:
-> >> https://github.com/pypa/pip/commit/9ccd5f0bb37508f03e6a19be58af7384eede2157
-> >>
-> >> 
-> https://paste.debian.net/7309/
-> >> 
-> >> This issue is fixed in pip>=1.5.x by Donald Stufft in the
-> >> following commits: 
-> >> https://github.com/pypa/pip/commit/0e1da584f418ae0088b43d01248572e2ff53d3a1
-> >>
-> >> 
-> https://github.com/pypa/pip/commit/9ccd5f0bb37508f03e6a19be58af7384eede2157
-> > 
-> > I'm not sure I understand this one. Is this just the external urls?
-> > Technically it wasn't a problem with the regexp's they worked fine.
-> > It was just bad behavior inherited from legacy systems. 1.4.x
-> > defaults to allowing them but enables people to turn them off,
-> > 1.5.x will disallow them by default.
-> > 
-> > 1.3.x and earlier allowed them and offered no way to disable them.
-> 
-> So it sounds like 1.3.x was definitely vulnerable to this with no way
-> to disable it, 1.4 was vulnerable by default but could be made safe,
-> and 1.5 is vulnerable but safe by default, is that correct?
+  Drupal upstream has released Drupal 6.28 and Drupal 7.19 versions,
+correcting multiple security flaws:
+[A] http://drupal.org/SA-CORE-2013-001
+* Issue #1 - Cross-site scripting (Various core and contributed modules - Drupal 6 and 7)
+* Issue #2 - Access bypass (Book module printer friendly version - Drupal 6 and 7)
+* Issue #3 - Access bypass (Image module - Drupal 7)
 
-Yes, assuming this is the unverified external link problem which I believe
-it is, except 1.5 is a future version that hasn't happened yet so it's "will" b
- safe by default. As a pip developer, again assuming my understanding
-of the request is correct, I do believe a CVE is warranted here.
+While the issue #1 affects also version of jquery.js JQuery JavaScript library,
+as shipped within Drupal, the original XSS JQuery upstream report is here:
+[B] http://bugs.jquery.com/ticket/9521
 
-> 
-> 
-> >> 
-> >> Second issue: ------------- Python's pip versions 1.5.x and
-> >> earlier use MD5 hashes for verification of package integrity
-> >> against PyPI (which defaults to providing MD5).
-> > 
-> > Strictly speaking pip doesn't default to any hash. It just uses the
-> > hash given to it. Prior to 1.2 it only allowed MD5 but since the
-> > release of 1.2 it has allowed any of the guaranteed hashes in
-> > python's hash lib.
-> > 
-> > See: https://github.com/pypa/pip/pull/467
-> > 
-> > Setuptools has also historically only allowed MD5 but has recently
-> > with version 0.9+ enabled similar abilities to setuptools to enable
-> > the use of any available hashes as well. Distribute (a fork of
-> > setuptools which has now been merged back into setuptools) only
-> > supports MD5 in it's older releases.
-> 
-> I'm not sure in this case MD5 alone is a security vulnerability, I
-> think previously it had been decided that just because it uses MD5
-> wasn't ernough to get a CVE, it had to have some specific use that
-> made MD5 a problem. OTOH DES is at this point worthy of a CVE since
-> you can crack it in a reasonable amount of time on AWS/etc for a few
-> hundred bucks or less. Personally I would assign a CVE to everything
-> using MD5 by default to try and help kill it off, but that would be a
-> lot of CVEs.
+with mention about the fix in JQuery 1.6.3 version here:
+[C] http://blog.jquery.com/2011/09/01/jquery-1-6-3-released/
 
-This one is the one I'm not really sure about. Pip has supported any hash for
-longer then they've offered verified downloads so it's certainly not a problem
-there (or rather if it is a problem it's overshadowed by the fact that it wasn't
-using TLS or if people manually configured it to do so it wouldn't' verify it).
+After further look the same issue needs to be fixed also in drupal7-jquery_update:
+[D] https://bugzilla.redhat.com/show_bug.cgi?id=896467
+[E] http://drupal.org/project/jquery_update
 
-Setuptools did only support MD5 until recently (and has versions that both
-support TLS verification and only MD5 as a hash) however that doesn't
-really buy anything until the index server serves a different hash. Currently
-PyPI (which I'm also an admin on) continues to serve MD5 and going by
-the thread on that discussion list it appears it will continue to do in the future.
+and python-tw-jquery packages: 
+[F] http://toscawidgets.org
 
-> 
-> 
-> 
-> > ----------------- Donald Stufft PGP: 0x6E3CBCE93372DCFA // 7C6B
-> > 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-> > 
-> 
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
+Also python-tw2-jquery package:
+[G] http://toscawidgets.org
 
+seems to ship various embedded versions of the jquery.js library implementation.
+Since there might be more of the components / packages, shipping the vulnerable
+JQuery version the first CVE identifier should be allocated to the original
+JQuery issue.
 
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+@Drupal security team - could you clarify if to fix the first issue,
+there was yet some other Drupal specific patch / change (besides the
+JQuery library update), which would require yet another (fourth) CVE
+id to be allocated?
 
+@Mitre CVE assign department team, could you clarify, if you have already
+assigned CVE identifiers for these issue and if so, for which source code
+base it was?
 
-Content of type "text/html" skipped
+If Drupal upstream just updated JQuery version to not-vulnerable 1.6.3 [B], [C]
+within Drupal core, then three ids are sufficient (one for JQuery, one for
+Drupal Book module issue, one for Drupal Image module issue).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+On the other hand, if there was yet some Drupal specific patch (besides JQuery
+update) needed to fix #1 issue - four CVE identifiers should be allocated
+(after my understanding).
+
+Could you allocate them / if allocated already, let us know the particular
+ids and which source code they were allocated for?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
