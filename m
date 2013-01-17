@@ -1,34 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/6
-Message-Id: <839F16C2-D096-45C0-9F80-8CBCF3D938C1@nadim.cc>
-Date: Tue, 9 Jul 2013 11:59:01 -0400
-From: Nadim Kobeissi <nadim@...im.cc>
-To: kseifried@...hat.com
-Cc: Open Source Security <oss-security@...ts.openwall.com>, nadim@...pto.cat, arlo@...pto.cat
-Subject: Re: cryptocat/decryptocat - needs a cve?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/3
+Message-ID: <87r4lks7jg.fsf@mid.deneb.enyo.de>
+Date: Thu, 17 Jan 2013 06:27:47 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: gnome-keyring does not discard stored secrets in some cases
 Content-Type: text/plain; charset=utf-8
 
-No CVE has been assigned yet. Any assistance with this is welcome!
+* Kurt Seifried:
 
-NK
+>> I've verified that Fedora 17 (GNOME 3.4) does not discard cached
+>> keys on suspend and hibernate, either.  (Swap is encrypted, though,
+>> at least I selected that in the installer.)  However, I suspect
+>> that users expect that suspend (but perhaps not hibernate) does not
+>> discard keys.
+>
+> Just to confirm, is this behavior documented at all in the gnome
+> keyring documentation (e.g. that it does or doesn't do it)? Thanks.
 
-On 2013-07-08, at 11:32 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+I think the clearest part is
+<https://live.gnome.org/GnomeKeyring/SecurityPhilosophy>, which
+proclaims:
 
-> Original posting:
-> http://tobtu.com/decryptocat.php
-> 
-> Official blog reply:
-> https://blog.crypto.cat/2013/07/new-critical-vulnerability-in-cryptocat-details/
-> 
-> Reddit:
-> http://www.reddit.com/r/netsec/comments/1hmn2g/decryptocat/
-> 
-> Has a CVE for this been requested/assigned?
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
+| * Try to keep your secrets from being swapped out or otherwise
+|   written to disk.
+| * Hunkering down and discarding all secrets when your computer is
+|   locked.
 
+The documentation for gnome_keyring_lock_all_sync
+<http://developer.gnome.org/gnome-keyring/unstable/gnome-keyring-Keyrings.html#gnome-keyring-lock-all-sync>
+says:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+| Lock all the keyrings, so that their contents may not eb accessed
+| without first unlocking them with a password.
+
+In addition,
+<http://developer.gnome.org/gnome-keyring/unstable/gnome-keyring-Non-pageable-Memory.html>
+suggests that locked memory is never written to disk.  This is not
+true with hibernation.
