@@ -1,54 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/27/1
-Message-ID: <52BD01EF.3090108@redhat.com>
-Date: Thu, 26 Dec 2013 21:28:31 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/15
+Message-ID: <50F85ECF.1090301@redhat.com>
+Date: Thu, 17 Jan 2013 13:27:59 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: rubygem-will_paginate XSS vulnerabilities
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: piwik before 1.10
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/26/2013 12:43 PM, Ratul Gupta wrote:
-> Hello,
+On 01/17/2013 02:18 AM, Hanno Böck wrote:
+> Hi,
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1046642
+> See here: http://piwik.org/blog/2013/01/piwik-1-10/
 > 
-> Cross-Site Scripting (XSS) vulnerabilities were found in
-> will_paginate gem for Ruby, where certain input related to
-> generated pagination links were not properly sanitised before being
-> returned. This could be exploited to execute arbitrary HTML and
-> script code in a user's browser session in context of an affected
-> site.
+> "Security: We would like to thank the Security Researchers Mateusz 
+> Goik,  Paweł Hałdrzyński and Artur Czyż, for their responsible 
+> disclosure. They have all reported XSS vulnerabilities (which
+> we’ve fixed) as part of our Security Bug Bounty Program. Thank you
+> to them for making Piwik more secure!"
 > 
-> Can a CVE please be assigned to this issue?
+> Security focus lists it, but it calls it just "Multiple
+> Unspecified Cross Site Scripting Vulnerabilities".
+> 
+> No further details. And as piwik devs already statet here last
+> year, they like security by obscurity so I don't think asking them
+> will help.
+> 
+> Please assign CVE. (I think one for all XSS issues fixed in 1.10
+> is enough).
+> 
+> cu,
 
-Please use CVE-2013-6459 for this issue.
+As per CVE merge/split, 3 different researchers = 3 different CVEs. I
+can't find any link between them (e.g.  they don't work for the same
+company and reported them as a group), so the CVE's are:
 
-References:
-https://bugs.gentoo.org/show_bug.cgi?id=495220
+Piwiki 1.10 XSS Mateusz Goik use CVE-2013-0193
+Piwiki 1.10 XSS Paweł Hałdrzyński use CVE-2013-0194
+Piwiki 1.10 XSS Artur Czyż use CVE-2013-0195
 
-Original Advisory:
-https://github.com/mislav/will_paginate/releases/tag/v3.0.5
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSvQHuAAoJEBYNRVNeJnmTBhYQANl9B1XuAA2gf7+0FuchOUmM
-LGwLqQDTI589E2BtRj6UsWE04Q1TtqvbJMdpjLhoqQsNMzavmrbG/hqGqwWwZ0bd
-8SDVWWZ0pOJgD0c22xLdMfrDzDakLxwvDFTgOHLuGrLHS/19i+P/Woza2CKADLny
-bYnWkw3O4QzsPU1QGPXH6k46jd01IznJPIL+3J8Bb4WNnlVV0FpGJBHhWw8yfDm1
-gDTEDH1NFDtlEMPcbsbvNXESo0AOZnBJNLmCWBZAbPcNPtWSNbuPd9wTPCwvVSCR
-aKnPYSouGnKD8aCPPpIFo4NmnYre3qnb88PHvTje1dC/llR1r5/tnu1Cb0X7cFqn
-lDjQegFjg74sDesIZXuzkiKUGLgwNaM2pr35CA4r5wZpCYePq61nLTmJE1Ecf28U
-UjE3uzXY8QNxwQZ1/5i7+tlecMFUFWPYq8udiMtmRNH2NN7ODTM6C2i0cWmdba1y
-sLtIGley3w9rrFR/gV2oG5EzSPa+OaEfHF+3DGxBQNNb26ssvp8Yogb2KyJGqGMU
-Jay8SDiLwIIME6tkuTNrioGQZWNtAAGiug+rln80pNEpljJmroTCaHYyw1AEeT82
-qPyLRYqoYDcZCHt/R4yeBkP2S/InZRHUlaDWL4Y3EGZlHCj7It3mDRCmlCaDjh9e
-aPVrjbrbBSS/5mhk204F
-=y0IJ
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ+F7PAAoJEBYNRVNeJnmTRZwP/02o64X8u/k87JQAlfL7sbjH
+CKdLYpLRXv++vpZSgaiMTPpurqCCA9vXy3okAPnc33wg7F6sq9z3iTMuHFUX9g4n
+QUOPn/EigwUDYZbAEbUpZInK3WcM1fkXEoglZXsUzDfUnp3OMsCPiO3L+B5hzqaW
+ruZi8Ct673eaIl09KyB0OGDB8uNw1IFvXhRafEUM+jC6gvIkgp/xXoQQ+XYBN/Kn
+O5Gn4AdXlouGcJO1p82Y/WU3JBToJihXzATIp9lddxni3Si8ZGQzovgfohtRE46H
+3PEIhbxe6pIddkuOCJfOfB7sUyFfJCjMtziKNmOaB1U9QRxsqA8TEy1doyDsrS82
+oJH2WQgavpbEAsgtC5Lpih9nFPeONgbI4pMBVyCc4Z5FVU636mUz4UfGqx9vM7Ba
+Xq4FaM8h26qXiSSZgYX7ok7ddo7vmxqo4PmuC2iaMrx9cUxNJWcV7vJXNAjLp2ff
+feDdXV0cmMOuUTSAIBiPxWOo7kV7e6Ci/ifFfUv1lGXbyy99DXz4GWVCwp0k8ykv
+LnCUMfexgL4gZduY1k/Hs/h4VHbEEYdOrtWblaNWLJLUsEo6ZCGoayaLoDsmS9fQ
+CEOsrNdhfh0kllpZULFljPQO+lJihM6aiv9HgBWHrBTGtCJKbwDQ7hp4MI7HsrV7
+/Q2p/TO+M/xsrogH4Hfs
+=7f5c
 -----END PGP SIGNATURE-----
