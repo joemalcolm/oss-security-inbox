@@ -1,44 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/21/6
-Message-ID: <20131021212054.61a8f3cf@pc>
-Date: Mon, 21 Oct 2013 21:20:54 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/2
+Message-ID: <50F76DC6.10000@redhat.com>
+Date: Wed, 16 Jan 2013 20:19:34 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: cmsmadesimple before 1.11.8 / bad upstream behaviour vs. CVE assignment
+CC: Florian Weimer <fweimer@...hat.com>
+Subject: Re: gnome-keyring does not discard stored secrets in some cases
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I want to request a CVE, but also start some discussion about how to
-handle such issues.
+On 01/11/2013 02:36 AM, Florian Weimer wrote:
+> On 01/11/2013 08:38 AM, Kurt Seifried wrote:
+>> On 01/10/2013 11:45 PM, Florian Weimer wrote:
+>>> I had trouble finding a caller of this function, but the
+>>> submitter indicated that gnome-power-manager uses it in older
+>>> versions:
+>>> 
+>>> <http://git.gnome.org/browse/gnome-power-manager/tree/src/gpm-control.c?h=gnome-2-32#n162>
+>>>
+>>>
+>>>
+>>> 
+I'm not sure if this needs a CVE, but it's probably worth fixing
+>>> anyway.
+>> 
+>> What security violation occurs/what trust boundary is crossed?
+> 
+> I think the expectation was that key material is discarded on 
+> suspend/hibernate.  This seems quite desirable for hibernate
+> without encrypted swap.
+> 
+> I've verified that Fedora 17 (GNOME 3.4) does not discard cached
+> keys on suspend and hibernate, either.  (Swap is encrypted, though,
+> at least I selected that in the installer.)  However, I suspect
+> that users expect that suspend (but perhaps not hibernate) does not
+> discard keys.
 
-The release notes for cmsmadesimple 1.11.8 mention a security issue:
-http://www.cmsmadesimple.org/announcing-cmsms-1-11-8-fioreana/
-"This release brings a few minor features, some performance
-improvements, documentation improvements, a Smarty upgrade, and a
-number of bug fixes (including a minor security issue)."
+Just to confirm, is this behavior documented at all in the gnome
+keyring documentation (e.g. that it does or doesn't do it)? Thanks.
 
-Now, this is all the information you get. Nothing about the kind of
-security issue, let alone a bug nr or commit. The question is: What do
-we do with such shitty upstream behaviour?
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Last time I reported something alike I was told that I should provide
-more info. The question is: How?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Sure, I could diff the release to the release before or try to find
-some repository and read all the commits in the timeframe. But I'm not
-getting paid for this, I merely want to improve overall security of
-free software voluntarily.
-
-So how will we proceed with such stuff? In the past, we often had "CVE
-for unknown security issue in xxx"-alike assignments.
-
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQIcBAEBAgAGBQJQ923GAAoJEBYNRVNeJnmTpzoP/jh0ZZmoGl01M6Ee7dHSVNWj
+Unt2ERxMKifWqn19eNxrgpc6eja0J54qc+guij+NqSb4wbd8H+zwkLapbvO/lOpa
+X8WtaFSUdZfLPnBddgwn0uf2ZiC8VQ10svi2zWFcjdcDB5ctENTuGz0rsmXB07MU
+9476GVOaVO5HnDDgfKDybVFfTaxrJpf6UjQyOy5i3aZNVsKtd2SKy4TLsBFhIZrc
+zAvPQ1bRI++N1IiN7BwUaq4deQS7loStbBSeDqMDQqTJ5Z6RIJPJbkPQh7s1xjX9
+vc2HpTHJ+LQOCcII/Ncgwep/dnTpZC/moXhGv6B0cXidYgNouIhqg01zQA+8shLZ
+98JcFCiXNcKJIf3u451ukXVqN6gpcSEuFDVbknBNGhkbBc2kUyDgCAL4DqCQjI4F
+1s7GiHSiCsJf2BlkIviYnwUEnMd6eUt1LH0nl37uAHyNQG85jXWcCty8xAUt7lha
+6w/ksWoZaoRHEXzxQIVtFO0H4/aXG9RL+0bd+EUQZbKzyPtmJFjOunim1mqADM+Q
+OFWx+4Sa/uOg8825AxbuFZSqCM4oablGXgE5RxIs1NBM4GHdhMER7HRAkQDZ1usm
+omcWOhQj+yblh8i2ACLO3T0kNiT2PE75MFebXK+OnVvTOntP+gz5rF30rzSc6OLo
+pZtKK+gz/EfSs+ZO++M/
+=+2ir
+-----END PGP SIGNATURE-----
