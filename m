@@ -1,34 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/05/2
-Message-ID: <20131005111044.GA6408@kludge.henri.nerv.fi>
-Date: Sat, 5 Oct 2013 14:10:44 +0300
-From: Henri Salo <henri@...v.fi>
-To: Forest Monsen <forest.monsen@...il.com>, security@...pal.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE duplicates SA-CONTRIB-2013-075
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/12
+Message-Id: <E1TvoaA-0002yO-3f@xenbits.xen.org>
+Date: Thu, 17 Jan 2013 12:28:34 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 41 (CVE-2012-6075) - qemu (e1000 device driver): Buffer overflow when processing large packets
 Content-Type: text/plain; charset=utf-8
 
-Advisory https://drupal.org/node/2087055 says:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-CVE-2013-4381 (XSS)
-CVE-2013-4382 (CSRF)
+	     Xen Security Advisory CVE-2012-6075 / XSA-41
+			      version 2
 
-Are these duplicate CVEs with CVEs below or is there something I am missing?
+ qemu (e1000 device driver): Buffer overflow when processing large packets
 
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-5937
+UPDATES IN VERSION 2
+====================
 
-Cross-site request forgery (CSRF) vulnerability in the Click2Sell Suite module
-6.x-1.x for Drupal allows remote attackers to hijack the authentication of
-administrators for requests that delete database information via vectors
-involving the Drupal Form API.
+Add a reference to a second required patch.
 
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-5938
+SUMMARY AND SOURCES OF INFORMATION
+==================================
 
-Cross-site scripting (XSS) vulnerability in the Click2Sell Suite module 6.x-1.x
-for Drupal allows remote attackers to inject arbitrary web script or HTML via a
-confirmation form.
+An issue in qemu has been disclosed which we believe affects some
+users of Xen.
 
----
-Henri Salo
+The Qemu project has not itself issued an advisory. More information
+may be available in the advisories published by the distros:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+https://bugzilla.redhat.com/show_bug.cgi?id=889301
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=696051
+
+CAVEAT
+======
+
+For full and accurate information please refer to those advisories.
+We have not conducted a full review of the information and patches
+provided.
+
+The rest of the information in this advisory is true to the best of
+our knowledge at the time of writing.
+
+IMPACT
+======
+
+The vulnerability impacts any host running HVM (Fully-Emulated) guests
+which are configured with an e1000 NIC (using "model=e1000") in their
+VIF configuration. Note that the default emulated NIC is "rtl8139"
+which is not vulnerable.
+
+In a vulnerable configuration a hostile network packet may be able to
+corrupt the memory of the guest, leading to a guest DoS or remote
+privilege escalation.
+
+We do not believe that this issue enables an attack against the host.
+
+MITIGATION
+==========
+
+Limiting the size of network frames (e.g. by disabling jumbo frames)
+on the local network and the Xen bridge may reduce or eliminate
+guests' vulnerability to the bug.
+
+RESOLUTION
+==========
+
+There are two patches required. See these git commits:
+  http://git.qemu.org/?p=qemu.git;a=commitdiff;h=b0d9ffcd0251161c7c92f94804dcf599dfa3edeb
+  http://git.qemu.org/?p=qemu.git;a=commitdiff;h=2c0331f4f7d241995452b99afaf0aab00493334a
+
+These fixes have both been applied to all qemu branches contained in
+Xen version 4.1 onwards.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQ9+sEAAoJEIP+FMlX6CvZMwwH/22uA3uKWWK78IdsyjtUx6mv
+9IvBW+8gZn80eLaEURYI0zAR8CXpU20OHCWnPKpD2j8OfRdZDNyUCPIcQP6ztMD5
+RqUoha0sYW7VeTmPADZmdy5MhjpOaJyhoPibpNeWwhJzX6xf0ukKEuNu4GIMzGf7
+tEV90TIi8BevbO9KrNGnU7y1Pj1ZEj8OgBR6TmK0FcJ6A7g45ocIGQyKYHxzqc5U
+Akk5zgkr895DFUZr/88nHL1Bl7JH+PUIiVUrvco2OG0h06Jrgp4quovI0hzF/zvq
+yv5SqWyzABd6/QE9DRz9t+VLn4kiF3/c9Zb9XbGwHmhmJYlI8mTKqvD2Q0YMkE0=
+=Xwyw
+-----END PGP SIGNATURE-----
+
