@@ -1,103 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/01/4
-Message-ID: <50E28B3B.5030400@redhat.com>
-Date: Tue, 01 Jan 2013 00:07:39 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Mustapha Rabiu <muztapha@...il.com>, William Pitcock <nenolod@...eferenced.org>
-Subject: Re: Charybdis: Improper assumptions in the server handshake code may lead to a remote crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/11
+Message-ID: <20130117142725.5a3e58ed@lola.kot>
+Date: Thu, 17 Jan 2013 14:27:25 +0200
+From: George Kargiotakis <kargig@...d.gr>
+To: P J P <ppandit@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel handling of IPv6 temporary addresses
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello, 
 
-On 12/31/2012 02:57 PM, Mustapha Rabiu wrote:
-> Hi.
+On Thu, 17 Jan 2013 17:21:33 +0530 (IST)
+P J P <ppandit@...hat.com> wrote:
+
+> +-- On Wed, 16 Jan 2013, George Kargiotakis wrote --+
+> |        valid_lft 131007sec preferred_lft 65471sec
+> |  inet6 fd00:966b:7196:c731:222:aaff:fecc:1111/64 scope global
+> tentative dynamic |        valid_lft 131007sec preferred_lft 65471sec
+> | 
+> | what I also find wrong here is that all temporary addresses
+> (dynamic) | acquired have gotten the same last 64bits. I don't think
+> this is OK per RFC | 4941 even if not explicitly defined there. Every
+> temp. address created | should be different per prefix from the rest.
 > 
+>    True, the last few bits of the addresses are same as the IPv6
+> address of the host, with scope::global, but no tentative dynamic
+> bits set. Plus network becomes unreachable till I reboot the host.
 > 
-> Can we get a CVE for the following
+> | use_tempaddr for the iface still has '2' as its value
+> | # cat /proc/sys/net/ipv6/conf/eth0/use_tempaddr 
+> | 2
 > 
+>    This value is always 0, before ifconfig eth0 down and after
+> ifconfig eth0 up.
+
+Ubuntu is the only distribution that has by default enabled Privacy
+Extensions as far as I know. On your RHEL it's '0' and
+that's why you weren't seeing any 'ipv6_create_tempaddr' as previously
+mentioned on your emails. If you change this value to '2' you'll also
+see those kernel messages.
+
+> 
+> Thank you.
 > --
-> 
-> Access vector: network Access complexity: low Authentication
-> requirement: none
-> 
-> Confidentiality impact: none Integrity impact: none Availability
-> impact: complete
-> 
-> CVSSv2 temporal score: 6.4
-> 
-> Exploitability: functional exploit exists Remediation level:
-> official fix Report confidence: confirmed
-> 
-> Summary:
-> 
-> All versions of Charybdis are vulnerable to a remotely-triggered
-> crash bug caused by code originating from ircd-ratbox 2.0.
-> (Incidentally, this means all versions since ircd-ratbox 2.0 are
-> also vulnerable.)
-> 
-> The bug has to do with server capability negotiation.  A malformed
-> request will trigger a crash due to invalid assumptions.
-> 
-> Mitigation:
-> 
-> A patch for all affected versions of ircd-ratbox and charybdis is
-> available from the charybdis GIT repository: 
-> https://github.com/atheme/charybdis/commit/ac0707aa61d9c20e9b09062294701567c9f41595.patch
->
->  To apply the patch, go to your IRCd source tree and run the
-> following commands: $ patch -p1 <
-> /path/to/downloaded/patchfile.patch $ make $ make install
-> 
-> Then you may hotfix the IRCd by running /MODRESTART as a server
-> admin.
-> 
-> Details:
-> 
-> In ratbox-2, the following code was added to m_capab.c: char *t =
-> LOCAL_COPY(parv[i]);
-> 
-> The other logic was then modified to make use of that
-> stack-allocated buffer rather than the original.  LOCAL_COPY() is a
-> macro which expands to alloca() and strlcpy(), and the bug
-> effectively is caused by this expansion calling strlen(NULL).
-> 
-> 
-> --
-> 
-> 
-> Thanks.
-> 
-> 
-> Mustapha Rabiu
+> Prasad J Pandit / Red Hat Security Response Team
+> DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
 
 
-Ah sorry just noticed this as well, repeating so it's not missed:
-
-Please use CVE-2012-6084 for this issue.
-
-Same as http://seclists.org/oss-sec/2012/q4/545
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ4os7AAoJEBYNRVNeJnmTKPYQAL1E+pwprii4USuJDVV+alk8
-pmmPQqmUZXGy/hLG+RFBRvjyLTV8kZi/p5H+x3d2JZXPBDTexnaXckJSkE2ItDnt
-iKB9ZCJWJF01DnViTmDycZsy69k7D2FvpfJdll6TySq5L8bnBL1kkc0eCSNql0/5
-9kTeG4O8kGCgB/ouBSr22WhGKzfIHQL77pLf+P7PDLLJnfkIpQyA82F1WcpNiJLj
-wcS2pUv6ycHxZpjLsucmOA2Pqz1waRTyEg8BTGQBJLQazFrjmy8hSLalNc0NLYGZ
-0TwXSUI+rjYzRo/4lcwTIr+OnrhAyvUR5SZ5HX7bEq+R20POE+i1wOBXbyj65Vci
-Z7uprd9Ky3UjEfxLzJRveEnRX7jYgPTLtYnNfRIQ/yfxqQxZ0csNTDTRcXHrixDt
-6SOFPhFi+qA2+SQY3f/eNQK66x7z/7XD1nRLO7Xqp8MtFxX7ARr3I31G5tgRiqw9
-NbNvLRc77jLFfAtz6bAgQa2MJGehGYWjtK4HEwiTVnURDByb0rMakZVsrBp8IpIE
-yCNtEN5pCRTvRb4TT2DJyp1Nmfc9VIO5ubBt9Eg4SOEZ6D+XDD1/2BuagOtw6fbs
-R/aASmpMmhPwNENLSnNJ6OXqX+YlhAoyDkaSR3vG1xjWW6F2Y+FTrJk0tkYOL2nk
-eovf7/4p8AU1TAH+rzOJ
-=zCqa
------END PGP SIGNATURE-----
+Regards,
+-- 
+George Kargiotakis
+https://void.gr
+GPG KeyID: 0xE4F4FFE6
+GPG Fingerprint: 9EB8 31BE C618 07CE 1B51 818D 4A0A 1BC8 E4F4 FFE6
