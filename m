@@ -1,64 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/15
-Message-ID: <51D7269B.5060508@oracle.com>
-Date: Fri, 05 Jul 2013 13:03:39 -0700
-From: Oracle Security Alerts <secalert_us@...cle.com>
-To: kseifried@...hat.com
-CC: oss-security@...ts.openwall.com, Raphael Geissert <geissert@...ian.org>, security@...cle.com
-Subject: Re: Possible CVE request: virtualbox virtio-net host DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/17/7
+Message-ID: <20130117101836.43c11151@melee>
+Date: Thu, 17 Jan 2013 10:18:36 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: piwik before 1.10
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Hi Kurt,
+See here:
+http://piwik.org/blog/2013/01/piwik-1-10/
 
-On 7/5/13 12:22 PM, Kurt Seifried wrote:
-> On 07/05/2013 04:13 AM, Raphael Geissert wrote:
->> Hi,
-> 
->> Quoting [1]:
->>> I have discovered a problem with virtio-net that leads to a 
->>> lockup of the host machine's kernel and the need for a hard
->>> reset to make it working again.
-> 
->> The bug is said to be worked around in version 4.2.14 and really 
->> fixed in 4.2.16, but the changelog of either version doesn't 
->> reference that ticket.
-> 
->> Rumors say that virtualbox makes the host randomly hang, but
->> since there is an actual bug report and confirmation from
->> upstream this time I guess a CVE id should be assigned.
-> 
->> [1] https://www.virtualbox.org/ticket/11863 [2] 
->> https://www.virtualbox.org/wiki/Changelog [3] 
->> https://secunia.com/advisories/53858/
-> 
->> Cheers, -- Raphael Geissert - Debian Developer www.debian.org - 
->> get.debian.net
-> 
-> Oracle is a CNA so they should handle this:
-> 
-> http://cve.mitre.org/cve/cna.html
-> 
-> CC'ing them. Can you guys assign one quickly so this can be
-> properly tracked? Thanks!
+"Security: We would like to thank the Security Researchers Mateusz
+Goik,  Paweł Hałdrzyński and Artur Czyż, for their responsible
+disclosure. They have all reported XSS vulnerabilities (which we’ve
+fixed) as part of our Security Bug Bounty Program. Thank you to them
+for making Piwik more secure!"
 
-Please use CVE-2013-3792 to track this issue.
+Security focus lists it, but it calls it just "Multiple Unspecified
+Cross Site Scripting Vulnerabilities".
 
-Thanks,
-- -Ritwik Ghoshal
+No further details. And as piwik devs already statet here last year,
+they like security by obscurity so I don't think asking them will help.
 
-- --
-Best Regards,
+Please assign CVE. (I think one for all XSS issues fixed in 1.10 is
+enough).
 
-Oracle Security Alerts
------BEGIN PGP SIGNATURE-----
-Version: GnuPG/MacGPG2 v2.0.18 (Darwin)
-Comment: GPGTools - http://gpgtools.org
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+cu,
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-iEYEARECAAYFAlHXJpoACgkQf36Vx1dNy5qhPgCfekd/nmFXwk7kADDn1N5QuSJF
-XJwAn2JZH6u6EYRYdLeGy59VhMhzq8o5
-=z5Rn
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
