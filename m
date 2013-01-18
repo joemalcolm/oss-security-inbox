@@ -1,33 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/12/3
-Message-ID: <20131112171415.6f80c34a@chromobil.localdomain>
-Date: Tue, 12 Nov 2013 17:14:15 +0100
-From: Stefan Bühler <stbuehler@...httpd.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/4
+Message-ID: <407133982.12056890.1358523105381.JavaMail.root@redhat.com>
+Date: Fri, 18 Jan 2013 10:31:45 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: lighttpd multiple issues (setuid/... unchecked return value, FAM: read after free)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Tomas Hozza <thozza@...hat.com>, Josh Stone <jistone@...hat.com>
+Subject: Re: CVE Request -- dnsmasq: Incomplete fix for the CVE-2012-3411 issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I'd like to request CVE ids for the following issues in lighttpd:
+Simultaneously in the second breath it needs to be said
+(yet) that this would be issue of a lower severity (for TCP)
+than for the UDP protocol case (for TCP it's not that easy
+to spoof the source IP address as for UDP).
 
-1. setuid/setgid/setgroups return values are not checked
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-If setuid() fails for any reason (RLIMIT_NPROC) lighttpd runs as root.
+----- Original Message -----
+Hello Kurt, Steve, vendors,
 
-http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2013_02.txt
+  the CVE-2012-3411 identifier has been originally assigned to the
+following issue:
 
+When dnsmasq is used in conjunctions with certain configurations of libvirtd, network packets from prohibited networks (e.g. packets that should not be passed in) may be sent to the dnsmasq application and processed. This can result in DNS amplification attacks for example.
+[1] http://www.openwall.com/lists/oss-security/2012/07/12/5
 
-2. If FAMMonitorDirectory fails, lighttpd reads a value from already
-free()d memory.
+Later it was found:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=894486
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=894486#c3
 
-http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2013_03.txt
+the upstream patch for CVE-2012-3411 it not to be working properly,
+as it still allowed (from [3]):
 
+* replies to remote TCP-protocol based DNS queries
+(UDP protocol ones were corrected, but TCP ones not)
+from prohibited networks, when the --bind-dynamic option was used,
 
-Both issues were found with clang static analyzer, so I assume the bad
-guys already know these.
+* when --except-interface lo option was used dnsmasq didn't
+answer local or remote UDP DNS queries, but still allowed
+TCP protocol based DNS queries,
 
-regards,
-Stefan
+* when --except-interface lo option was not used local / remote
+TCP DNS queries were also still answered by dnsmasq.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Could you allocate a new CVE identifier for this? (as an
+incomplete fix for CVE-2012-3411 issue)
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
