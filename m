@@ -1,47 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/26/4
-Message-ID: <52941B59.6060707@redhat.com>
-Date: Tue, 26 Nov 2013 14:54:01 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/7
+Message-ID: <50F9AAB8.5060303@redhat.com>
+Date: Fri, 18 Jan 2013 13:04:08 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, Kurt Seifried <kseifrie@...hat.com>
-Subject: CVE request: XSS flaw in Ganglia web interface
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Tomas Hozza <thozza@...hat.com>, Josh Stone <jistone@...hat.com>
+Subject: Re: CVE Request -- dnsmasq: Incomplete fix for the CVE-2012-3411 issue
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A cross-site scripting (XSS) flaw was discovered in the Ganglia web 
-interface:
+On 01/18/2013 06:31 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> the CVE-2012-3411 identifier has been originally assigned to the 
+> following issue:
+> 
+> When dnsmasq is used in conjunctions with certain configurations of
+> libvirtd, network packets from prohibited networks (e.g. packets
+> that should not be passed in) may be sent to the dnsmasq
+> application and processed. This can result in DNS amplification
+> attacks for example. [1]
+> http://www.openwall.com/lists/oss-security/2012/07/12/5
+> 
+> Later it was found: [2]
+> https://bugzilla.redhat.com/show_bug.cgi?id=894486 [3]
+> https://bugzilla.redhat.com/show_bug.cgi?id=894486#c3
+> 
+> the upstream patch for CVE-2012-3411 it not to be working
+> properly, as it still allowed (from [3]):
+> 
+> * replies to remote TCP-protocol based DNS queries (UDP protocol
+> ones were corrected, but TCP ones not) from prohibited networks,
+> when the --bind-dynamic option was used,
+> 
+> * when --except-interface lo option was used dnsmasq didn't answer
+> local or remote UDP DNS queries, but still allowed TCP protocol
+> based DNS queries,
+> 
+> * when --except-interface lo option was not used local / remote TCP
+> DNS queries were also still answered by dnsmasq.
+> 
+> Could you allocate a new CVE identifier for this? (as an incomplete
+> fix for CVE-2012-3411 issue)
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
-https://github.com/ganglia/ganglia-web/issues/218
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=730507
 
-Quoting from the original report:
+Please use CVE-2013-0198 for this issue.
 
-""
-Temporary Workaround and Fix
-============================
-Apply the following patch to properly encode the variable:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
---- header.php.old	2013-09-30 21:07:26.272287657 +0200
-+++ header.php	2013-09-30 21:09:42.226281990 +0200
-@@ -491,7 +491,7 @@ $data->assign("custom_time", $custom_tim
-  /////////////////////////////////////////////////////////////////////////
-  if ( $context == "cluster" ) {
-    if ( isset($user['host_regex']) && $user['host_regex'] != "" )
--    $set_host_regex_value="value='" . $user['host_regex'] . "'";
-+    $set_host_regex_value="value='" . htmlentities($user['host_regex'], 
-ENT_QUOTES) . "'";
-    else
-      $set_host_regex_value="";
-""
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-The fix does not apply to the older versions in EPEL (3.0.7 and 3.1.7), 
-but I did not test to see if they were affected.
-
-Can a CVE please be assigned if one has not been already?
-
-Thanks,
-
---
-Murray McAllister / Red Hat Security Response Team
+iQIcBAEBAgAGBQJQ+aq3AAoJEBYNRVNeJnmTRxUP/2Qrpz52gOOcAk5Pdc50kue4
+nP8i7VOVsV+0rjmJ3U8xbbnERQkzvoNtuTel/wsjg4qT9EY3XUQ4N8qJyYPpJD3U
+Gsy4BrBeVT9ZpUXiRtKfYxP0E9G6OPGu5tMTK1baYuFRS9czObTBk4JamPnapv9Z
+t+48GmilchuYlyn0yxRp77aG7nrSt/YCgX7MTdEyAOWP8q+wYPc2/jBkNERcRp1U
+VMqnTgOWH9IjUXhLWKwmCoJKescbVjRH8snGHeShDx1l+fzwKVEcFt2s5sEX/fll
+aLoRUOZ9qxAP3wYo0vkeoWEJZr/TxqqAraHi95gkCxtcPCIJ1w+qh1Zg9cOZ8Rnl
+KfmGbNaiqo3zQo/3lBqCZmTn/DovppQv992b0HMGsGyaRpw1Btylr5txGqWHldcG
+y31L8Ij5SuKmh4vnqTpZb1ax18OgxUCD91Id7RNk5ofTv676zr3xaSqbk0+nqYqe
+KRKrfoD7ShlAWqO1J0QYVCY63hzS+YdvwrT9C1QMa7yvgpsaIeVgPnhrfQEaGazd
+QXJFd76oD6V6+/AlTMFCdY6VgsFy8rLhDXj0RDC/3u+ZZnxl9RXZ9x/gwXYv/EnO
+TvSNJluKAjWcebuJbZzPn25IWnGVXyjppOoy9ZjOEFoz78N2y2qE8oJeALL6RlXe
+fnjNc4y3IkmdWllKnzPM
+=H+Cc
+-----END PGP SIGNATURE-----
