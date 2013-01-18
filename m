@@ -1,17 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/6
-Message-ID: <alpine.LFD.2.03.1302211158180.6999@redhat.com>
-Date: Thu, 21 Feb 2013 11:58:51 +0530 (IST)
-From: P J P <ppandit@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/3
+Message-ID: <loom.20130118T141754-184@post.gmane.org>
+Date: Fri, 18 Jan 2013 13:20:49 +0000 (UTC)
+From: Damien Regad <damien.regad@...ckgroup.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: evm: NULL pointer de-reference flaw
+Subject: Re: CVE request: mantis before 1.2.12
 Content-Type: text/plain; charset=utf-8
 
-+-- On Wed, 20 Feb 2013, Kurt Seifried wrote --+
-| >  Reference: -> https://bugzilla.redhat.com/show_bug.cgi?id=913266
-| Please use CVE-2013-0313 for this issue.
+ <cve-assign@...> writes:
+> We didn't think this was about information disclosure. Our
+> interpretation is that CVE-2012-5522 (aka bug 14496) is about which
+> users are allowed to change the status of a bug:
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+A bit late to confirm, but anyway... The above analysis is absolutely correct.
+
+Damien Regad
+MantisBT developer
+
+
+
