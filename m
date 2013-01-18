@@ -1,124 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/30/5
-Message-id: <363cf805-3542-45af-8e0a-59e083666d93@me.com>
-Date: Fri, 30 Aug 2013 12:54:11 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: YingZhi Python Programming Language for iOS ftp .. bug & httpd arbitrary upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/9
+Message-ID: <CAANPUCjTehWt-fTzH=O7gBQPwOR3z7WM989etgSWnpX2FjbH+A@mail.gmail.com>
+Date: Fri, 18 Jan 2013 16:02:51 -0700
+From: Greg Knaddison <greg.knaddison@...il.com>
+To: security@...pal.org, Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security@...ts.openwall.com,  Mitre CVE assign department <cve-assign@...re.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: [security] CVE Request - SA-CORE-2013-001 (one JQuery X < 1.63 issue and two Drupal modules issues)
 Content-Type: text/plain; charset=utf-8
 
-On Aug 30, 2013, at 05:42 AM, "Larry W. Cashdollar" <larry0@...com> wrote:
+Response below.
 
-On Aug 29, 2013, at 11:46 PM, cve-assign@...re.org wrote:
+On Thu, Jan 17, 2013 at 8:50 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+> @Drupal security team - could you clarify if to fix the first issue,
+> there was yet some other Drupal specific patch / change (besides the
+> JQuery library update), which would require yet another (fourth) CVE
+> id to be allocated?
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The fix we added to Drupal does not require (or implement) an update
+to the jQuery library at all; rather it works around the issue
+entirely within Drupal's code.  I think that means it should get its
+own CVE ID.
 
-I'd like to request a CVE for these vulnerabilities I disclosed back
-on Sept 27 2012.
-http://vapid.dhs.org/advisories/python_for_ipad.html
-YingZhi Python Programming Language for iOS
-Vendor: XiaoWen Huang, YingZhi Python for iOS.
-Ver 1.9.
-OSVDB IDs: 96719 & 96720
-Product Websites
-http://sosilen.blog.163.com
-http://www.iphoneappstorm.com/iphone-apps/utilities/com.yingzhi.python/yingzhipython.php?id=493505744 YingZhi
-Python Interpreter is a native python development application for the
-iPad/iPhone. It is available for iOS 4 and above.
-The product is packaged with its own httpd and ftpd servers. Enabling
-the local daemons for development by Touching Computer<->This Machine
-starts up an httpd server and ftpd server, both daemons are bound to
-device IP not localhost.
+We did it this way because it means that any other Drupal packages,
+such as drupal7-jquery_update, would not be expected to have a
+vulnerability as long as the core update is applied.
 
-httpd server allows upload of arbitrary files to root WWW directory.
-Browsing to http://<target_ip>:8080/ presents an index page in which
-anyone can upload files to the web servers root directory.
+I believe this means that yes, we will need a fourth CVE id to be allocated.
 
-Use CVE-2013-5654. Support for anonymous upload is, at least, rare in
-HTTP servers and this behavior would seem to violate reasonable user
-expectations.
-
-If you have any further information about the specific statements in
-OSVDB entry 96720, please let us know. For example, have you confirmed
-that the default configuration of this HTTP server enables a PHP
-interpreter, such that uploads of .php files are especially dangerous?
- 
-
-I just checked and it appears the http server doesn't interpret .php, .cgi or .py, it only serves basic content.
-
-
-telnet 192.168.0.15 8080
-Trying 192.168.0.15...
-Connected to 192.168.0.15.
-Escape character is '^]'.
-GET /i.php HTTP/1.0
-
-HTTP/1.1 200 OK
-Accept-Ranges: bytes
-Content-Length: 39
-Date: Fri, 30 Aug 2013 12:11:32 GMT
-
-<?php 
-echo '<p>Hello World</p>'; 
-?> 
-Connection closed by foreign host.
-
-
-bos-mp5r9:Documents larry$ curl  -I http://192.168.0.15:8080
-HTTP/1.1 200 OK
-Transfer-Encoding: chunked
-Accept-Ranges: bytes
-Date: Fri, 30 Aug 2013 12:28:48 GMT
-
- 
-
-The application documentation is a little confusing but states the following:
-
-You can upload learning materials to the local on the computer via wifi, support http and ftp two upload ways. The file system supports txt, pdf, chm, mp3, zip, gif, png, html, py
-
-I originally thought .py support might have meant the http server interpreted python, but I have not had success in testing this.
-
-
-
-
-
-
-ftp server vulnerable to ../ bug
-The ftp server doesn't sanitize user input and allows remote users to
-read and possibly write to the devices storage.
-ftp://192.168.0.24:10000/../../../../../../../private/etc/passwd
-
-Use CVE-2013-5655.
-
-
-The ftp server doesn't bother authenticating users, any
-username/password combination will allow you in.
-
-We're not immediately assigning a CVE ID for this authentication
-behavior because it might be an intentional part of the vendor's
-design, and might have been reasonable in the vendor's envisioned
-development environment. If there is any documentation suggesting that
-this is instead an authentication bypass (e.g., the product allows the
-user to configure a username/password combination), the assignment can
-of course be reconsidered.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSID68AAoJEGvefgSNfHMdbt4IALFMSBoUA/WIybOGhq6wXFV+
-hc1S9kiDnKxjtR/IEnSnmjEBkF+iOdYoh2KOM41veWZD5hfoDgE2jgU3CRVHXEC7
-OAhievWB9Bx5SZghIyJFjfqAwhLjS/9DmDonDFN8EBIguflaN36e7clr3+/ixzZ5
-tzKElNelBcbgjf0WaQqfPpHRB46JJQFQ3AvqRMOyi1YbcG2LJ+uC8bylqvhXYbta
-g/LqwJ8UaxZ886Hd+V1k/+sYUL9S/VzgGnkQd4QPZJXVsAfFcEELubpnEyO0m3g+
-OQaKqLjvhA6YTfe6GuY2LJgh583UUrl8Bv+dUuP4nsiELpcZQDHa6AZjbbFJVSw=
-=pgG9
------END PGP SIGNATURE-----
-
-Content of type "text/html" skipped
+Thanks,
+Greg
