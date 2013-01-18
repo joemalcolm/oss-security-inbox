@@ -1,38 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/26/7
-Message-ID: <20130926212701.GN10409@frohike.xs4all.nl>
-Date: Thu, 26 Sep 2013 23:27:01 +0200
-From: Peter Bex <Peter.Bex@...all.nl>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Buffer overrun vulnerability in CHICKEN Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/10
+Message-ID: <1358551271.11550.2@d.hx.id.au>
+Date: Sat, 19 Jan 2013 10:21:11 +1100
+From: David Hicks <d@...id.au>
+To: oss-security@...ts.openwall.com
+Cc: Roland Becker <roland@...ol.de>, Robert Munteanu <robert.munteanu@...il.com>
+Subject: CVE request: MantisBT 1.2.12 only summary.php category/project names XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi list,
 
-I'd like to request a CVE for a recently discovered vulnerability in
-CHICKEN Scheme.  It affects a very particular, not very common use
-of the read-string! procedure.  If given a buffer and #f (the Scheme
-value for "false") as the buffer's size (which should trigger automatic
-size detection but doesn't), it will read beyond the buffer, until the
-input port (file, socket, etc) is exhausted.  This may result in the
-typical potential remote code execution or denial of service; in
-CHICKEN, these buffers are initially allocated on the stack and moved
-to the heap upon GC.
+Roland Becker (MantisBT Developer) discovered[1] a XSS vulnerability
+introduced in MantisBT 1.2.12 with the display of category/project names
+on the summary.php page. Versions of MantisBT other than 1.2.12 are not
+affected by this vulnerability.
 
-In normal usage, users would usually pass in the buffer's size.  This
-is also the workaround for this bug.
+A malicious MantisBT user holding privileged manager/administrator
+permissions could create a category or project name that contains
+JavaScript code. Any user visiting summary.php from that point on may
+then be exposed to having the malicious JavaScript execute within their
+browser environment.
 
-For the official announcement, see
-http://lists.nongnu.org/archive/html/chicken-announce/2013-09/msg00000.html
+The severity of this issue is limited by the need to hold privileged
+manager/administrator permissions in order to modify category and
+project names. However -- there are many use cases where MantisBT
+installations can have hundreds of sub-projects, each managed by
+different people/parties that can not or should not be fully trusted.
 
-The discussion thread's final accepted patch is at
-http://lists.nongnu.org/archive/html/chicken-hackers/2013-09/msg00009.html
-which got applied as http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=cd1b9775005ebe220ba11265dbf5396142e65f26
+Refer to previous commits 3ca8a164[2] and 6ec3f693[3] to trace back the
+origin of this vulnerability.
 
-All versions of CHICKEN prior to 4.8.0.5 and 4.8.3 (not yet released)
-are affected.
+References:
+[1] http://www.mantisbt.org/bugs/view.php?id=15384
+[2]
+https://github.com/mantisbt/mantisbt/commit/3ca8a164641951aba2a459364e656ca0996f8a2b
+[3]
+https://github.com/mantisbt/mantisbt/commit/6ec3f693d6d212d6bba788681a206c14df43569f
 
-Cheers,
-Peter Bex
--- 
-http://www.more-magic.net
+Discussion on the MantisBT Developer Mailing List has indicated that a
+release of MantisBT 1.2.13 (resolving both this vulnerability and
+CVE-2013-0197 which was announced on this list ~12 hours ago) will not
+occur until early next week. As such, a patch is attached for
+distributions packaging MantisBT 1.2.12. It is recommended this patch be
+applied as soon as possible.
+
+Can a CVE ID please be assigned to this issue?
+
+With thanks,
+David Hicks
+MantisBT Developer
+#mantisbt irc.freenode.net
+http://www.mantisbt.org/bugs/
+
+Bcc: mantisbt-dev@...ts.sourceforge.net
+
+View attachment "0001-Fix-15384-summary.php-XSS-vulnerability-in-MantisBT-.patch" of type "text/x-patch" (3260 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
