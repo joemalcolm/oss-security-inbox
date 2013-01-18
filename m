@@ -1,34 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/21/10
-Message-ID: <CAA7hUgH4zcwH9MMJ4EmxT8nTRSR-COwCW9jxzg6qKjY5DgqW9g@mail.gmail.com>
-Date: Thu, 21 Feb 2013 11:47:10 +0100
-From: Raphael Geissert <atomo64@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/2
+Message-ID: <628080642.11882035.1358515894069.JavaMail.root@redhat.com>
+Date: Fri, 18 Jan 2013 08:31:34 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: 700158@...s.debian.org, 700159@...s.debian.org
-Subject: Re: CVE request: XSS flaws fixed in ganglia
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Tomas Hozza <thozza@...hat.com>, Josh Stone <jistone@...hat.com>
+Subject: CVE Request -- dnsmasq: Incomplete fix for the CVE-2012-3411 issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Kurt, Steve, vendors,
 
-On 8 February 2013 19:06, Vincent Danen <vdanen@...hat.com> wrote:
-> A number of XSS issues were fixed in ganglia's web ui:
->
-> https://github.com/ganglia/ganglia-web/commit/31d348947419058c43b8dfcd062e2988abd5058e
+  the CVE-2012-3411 identifier has been originally assigned to the
+following issue:
 
-I've a hunch that there are a few issues with the changes. A quick
-look at the patch shows that the change here breaks the preg_replace
-call:
+When dnsmasq is used in conjunctions with certain configurations of libvirtd, network packets from prohibited networks (e.g. packets that should not be passed in) may be sent to the dnsmasq application and processed. This can result in DNS amplification attacks for example.
+[1] http://www.openwall.com/lists/oss-security/2012/07/12/5
 
-- $query_string = preg_replace("/(&trendhistory=)(\d+)/", "", $query_string);
-+ $query_string = preg_replace("/(&trendhistory=)(\d+)/", "",
-htmlspecialchars($query_string, ENT_QUOTES) );
+Later it was found:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=894486
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=894486#c3
 
-It looks as if the htmlspecialchars call was misplaced.  Not that it
-is a security issue, but it's a bug.
+the upstream patch for CVE-2012-3411 it not to be working properly,
+as it still allowed (from [3]):
 
-Can anyone forward this upstream? I will try to take a look at the
-rest of the patch later.
+* replies to remote TCP-protocol based DNS queries
+(UDP protocol ones were corrected, but TCP ones not)
+from prohibited networks, when the --bind-dynamic option was used,
 
-Cheers,
--- 
-Raphael Geissert
+* when --except-interface lo option was used dnsmasq didn't
+answer local or remote UDP DNS queries, but still allowed
+TCP protocol based DNS queries,
+
+* when --except-interface lo option was not used local / remote
+TCP DNS queries were also still answered by dnsmasq.
+
+Could you allocate a new CVE identifier for this? (as an
+incomplete fix for CVE-2012-3411 issue)
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
