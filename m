@@ -1,48 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/15/9
-Message-Id: <201310152347.r9FNlAo9000823@linus.mitre.org>
-Date: Tue, 15 Oct 2013 19:47:10 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, leon@...nweber.de
-Subject: Re: CVE request: pyxtrlock
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/18/6
+Message-ID: <50F9AA55.5020907@redhat.com>
+Date: Fri, 18 Jan 2013 13:02:29 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marc Deslauriers <marc.deslauriers@...onical.com>, coley@...us.mitre.org
+Subject: Re: CVE Request: PHP openssl_encrypt memory disclosure
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->Honestly I don't know what the rule is, 10? 100? 1000? 10000? 65536?
+On 01/18/2013 08:59 AM, Marc Deslauriers wrote:
+> Hello,
+> 
+> PHP 5.3.9 to 5.3.13 disclose arbitrary memory when an empty $data
+> string is passed to openssl_encrypt.
+> 
+> It was introduced with the following commit: 
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=095cbc48a8f0090f3b0abc6155f2b61943c9eafb
+>
+>  and was fixed in 5.3.14 with the following: 
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=270a406ac94b5fc5cc9ef59fc61e3b4b95648a3e
+>
+>  Bugs:
+> 
+> https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1099793 
+> https://bugs.php.net/bug.php?id=61413
+> 
+> Could a CVE please be assigned to this issue?
+> 
+> Thanks,
+> 
+> Marc.
 
-At least at the moment, those numbers seem very high. From our
-perspective, the minimum required number of users is approximately 2.
-The closed issues page is sufficient:
-
-  https://github.com/leonnnn/pyxtrlock/issues?page=1&state=closed
-
-Situations in which MITRE has previously declined a CVE are much more
-marginal; for example:
-
-  - some cases of code that wasn't packaged in any way, and not even
-    necessarily intended for use as-is, e.g., something similar to
-    example code posted as a stackoverflow.com answer
-
-  - people a few years ago who were creating fake products that didn't
-    have any reasonable purpose, and then asking for CVEs in order to
-    have inbound links to their "vendor" web site
+Please use CVE-2012-6113 for this issue.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQEcBAEBAgAGBQJSXdL8AAoJEKllVAevmvmsjgAIAJRyzNohFgeSEeXbq7Z820z3
-w2/ETthc8eO8kyk4yVZQaHWjHn90gI94m0DzAkBXPRY6b0GQMKOM75HXs6Yjx7Tj
-H9kh/+1Y1hm2v+8ANmOcWc6NlNFdnOJu2Ecfb//zQllKPp3XJsYAUVyKC+HjvTfr
-bomJuPM036uDhR+OZgswn6ZkGebLMbefjqq3b4guSHAWOoEw1D46rqHJspgM561a
-Tn8Bockj2cpbEIbWOrEFuSXfUx2mDXiFpnuAhLpcUpZDSE4DT73OzPH4XSB7GvC/
-1DaKDIH1eCYlGadGInBFdO2xNZMeztoRPswtsLmjJRgDR317S1iTmrGw8fZ1gRU=
-=WGDz
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ+apUAAoJEBYNRVNeJnmTNT0P/iUJSudEE5cbicav6oL75pJE
+pGbL0naByi6OmtbtczJ23TJqXkfLoAtvXEvUP0jxRJPAyyx9nOzFSKAWL9ET8FVP
+7TOESNW78DqXga4rlkFcpZgJgFS718gWl/wRfs5ssmnxb5Sl8fk7RhJh00ApzX6z
+WDx8db1r32WI+q25W1ATCzrII9pxhxO0sUjJOmFYcsxaU5lgKh5zsZp0CROACKLI
+O0n47CDvlBazAKCmlvgnvEvVpYvZV1R+HmKy9dRV9PgOIcyDVAENifwBYo3fBYg1
+YuBg9Wd+jpiuarkcNvGLHf5hpHBX9wvc3D+vV3K2BdmfoLujUuAxGeOTpQGVMpg0
+AAgZmOHKI7Cfr/u9FngccN3ktByCqnsPf/+gpk1mlw0PJguQEyj4CrOFX6aklFMg
+OYs7sgaVXwYsyH82a2OCbFEf4vQoMJd6Zbn+YfJJD59B3ZiniK0GbmbJgMdI1zxD
+PY2eGuokDB2Aj9ECiSPNTHl92EtUg8u5FQjX0ZC6AnFUwZ4FatkNsmiYmNNjnIKn
+xxC7kHjhTaZ9T4rr5PGj3MHrOwY4Dispfe/Kxo9XphGsLBKq0qJjF3GpYz4aYtVn
+6xizt1n8YEeYAp2RxQsyyvPMs6eGjrqozi05ZELpNDe2sFke5PeTlZUAxPGmqhRJ
+VydAk2tlSUTXgUJkzItG
+=a2aY
 -----END PGP SIGNATURE-----
