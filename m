@@ -1,32 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/04/2
-Message-ID: <87obcrkt8p.fsf@alice.fifthhorseman.net>
-Date: Sat, 04 May 2013 05:08:06 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: nicolas vigier <boklm@...s-attacks.org>, oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/19/1
+Message-ID: <1358555706.11550.17@d.hx.id.au>
+Date: Sat, 19 Jan 2013 11:35:06 +1100
+From: David Hicks <d@...id.au>
+To: oss-security@...ts.openwall.com
+Cc: Damien Regad <damien.regad@...ckgroup.com>
+Subject: CVE request: MantisBT before 1.2.13 "Change Status To" feature allows unauthorised workflow changes
 Content-Type: text/plain; charset=utf-8
 
-On Thu 2013-04-25 10:03:15 -0400, nicolas vigier wrote:
+Hello again list,
 
-> The good thing about PGP signed tarballs is that an automated check
-> could be integrated in package build, with some standard macros or
-> script to make it easy to check signature from a specific key. If it's
-> easy and does not cost time then more packagers will do it.
+Damien Regad (MantisBT developer) discovered and fixed[1] an access
+control/permissions bug in MantisBT that exists in MantisBT version
+1.2.12 and prior.
 
-For debian, this suggestion was made in http://bugs.debian.org/610712
-for the "uscan" tool, which looks for new upstream releases.
+A MantisBT user with "Reporter" permissions (enabling them to
+report/create new issues) can modify the workflow status of any issue to
+"New" even if they do not have the necessary permission to make this
+change.
 
-I've just supplied a patch to that bug with a simple implementation for
-the common case where the signatures are distributed alongside the
-tarballs with a similar name, and are made by one of a small set of
-known keys.
+Details of the bug, including steps to reproduce and patches are
+available at [1].
 
-It has some flaws, but it's certainly better than doing nothing.  I
-welcome review and/or feedback and suggestions on that bug report.
+References:
+[1] http://www.mantisbt.org/bugs/view.php?id=15258
 
-Regards,
+As per previous e-mails to this list within the past 24 hours, MantisBT
+1.2.13 is expected to be released early next week.
 
-        --dkg
+Can a CVE ID please be assigned to this issue?
 
-Content of type "application/pgp-signature" skipped
+With thanks,
+David Hicks
+MantisBT Developer
+#mantisbt irc.freenode.net
+http://www.mantisbt.org/bugs/
+
+Bcc: mantisbt-dev@...ts.sourceforge.net
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
