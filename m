@@ -1,41 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/5
-Message-ID: <20130326142853.GC5378@redhat.com>
-Date: Tue, 26 Mar 2013 08:28:53 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: "Larry W. Cashdollar" <larry0@...com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ibutils improper use of files in /tmp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/20/1
+Message-ID: <20130120123233.GA16558@elende>
+Date: Sun, 20 Jan 2013 13:32:33 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: hs-tls: Basic constraints vulnerability
 Content-Type: text/plain; charset=utf-8
 
-* [2013-03-26 12:10:31 +0000] Larry W. Cashdollar wrote:
+Hi
 
->I doubled checked this, i???t looks like this was already assigned  CVE-2013-2561
+For hs-tls (TLS/SSL implementation in haskell) it was announced the following
+advisory[0]:
 
-Do you have a reference for that assignment?  Because I couldn't find
-any CVE references when I was looking for it initially.
+----cut---------cut---------cut---------cut---------cut---------cut-----
+Hi cafe,
 
->On Mar 25, 2013, at 08:09 PM, Kurt Seifried <kseifried@...hat.com> wrote:
->
->>-----BEGIN PGP SIGNED MESSAGE-----
->>Hash: SHA1
->>
->>On 03/25/2013 03:49 PM, Vincent Danen wrote:
->>> It was reported on full-disclosure that ibutils suffers from
->>> improper use of files /tmp that could allow a user to clobber files
->>> as the user running ibutils (probably usually root).
->>>
->>> I didn't see a CVE request for this or anything show up here; if
->>> one hasn't been assigned, could it be?
->>>
->>> Thanks.
->>>
->>> References:
->>>
->>> http://seclists.org/fulldisclosure/2013/Mar/87
->>> https://bugzilla.redhat.com/show_bug.cgi?id=927430
->>
->>Please use CVE-2013-1894 for this issue.
+this is a security advisory for tls-extra < 0.6.1 which are all vulnerable to bad
+certificate validation.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Some part of the certificate validation procedure were missing (relying on the
+work-in-progress x509 v3 extensions), and because of this anyone with a correct
+end-entity certificate can issue certificate for any arbitrary domain, i.e.
+acting as a CA.
+
+This problem has been fixed in tls-extra 0.6.1, and I advise everyone to upgrade as
+soon as possible.
+
+Despite a very serious flaw in the certificate validation, I'm happy that the
+code is seeing some audits, and would want to thanks Ertugrul Söylemez for the
+findings [1].
+
+[1] https://github.com/vincenthz/hs-tls/issues/29
+----cut---------cut---------cut---------cut---------cut---------cut-----
+
+According to the upstream issue it should be fixed with commit [2].
+
+ [0]: http://www.haskell.org/pipermail/haskell-cafe/2013-January/105842.html
+ [2]: https://github.com/vincenthz/hs-tls/commit/15885c0649ceabd2f4d2913df8ac6dc63d6b3b37
+
+Could a CVE for this issue be assigned?
+
+Regards,
+Salvatore
