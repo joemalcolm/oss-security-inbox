@@ -1,41 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/28/4
-Message-ID: <2031400889.17112506.1364482047390.JavaMail.root@redhat.com>
-Date: Thu, 28 Mar 2013 10:47:27 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request -- roundcubemail: Local file inclusion via web UI modification of certain config options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/20/2
+Message-ID: <20130120170248.1b168985@lola.kot>
+Date: Sun, 20 Jan 2013 17:02:48 +0200
+From: George Kargiotakis <kargig@...d.gr>
+To: P J P <ppandit@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel handling of IPv6 temporary addresses
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hello,
 
-  RoundCube Webmail upstream has released 0.8.6 and 0.7.3
-versions to correct one security flaw:
+and sorry for the late reply...
 
-A local file inclusion flaw was found in the way RoundCube
-Webmail, a browser-based multilingual IMAP client, performed
-validation of the 'generic_message_footer' value provided via
-web user interface in certain circumstances. A remote attacker
-could issue a specially-crafted request that, when processed
-by RoundCube Webmail could allow an attacker to obtain arbitrary
-file on the system, accessible with the privileges of the user
-running RoundCube Webmail client.
+On Thu, 17 Jan 2013 18:43:26 +0530 (IST)
+P J P <ppandit@...hat.com> wrote:
 
-References:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=928835
-[2] http://sourceforge.net/news/?group_id=139281&id=310497
-[3] http://lists.roundcube.net/pipermail/dev/2013-March/022328.html
-[4] https://bugs.gentoo.org/show_bug.cgi?id=463554
+> +-- On Thu, 17 Jan 2013, George Kargiotakis wrote --+
+> | Extensions as far as I know. On your RHEL it's '0' and that's why
+> you | weren't seeing any 'ipv6_create_tempaddr' as previously
+> mentioned on your | emails. If you change this value to '2' you'll
+> also see those kernel | messages.
+> 
+>   Yep, worked! I manged to reproduce the log messages. So the patch
+> earlier does seem to fix this issue, doesn't it? It avoids retry once
+> reaching the max_addresses limit.
+> 
 
-Upstream patches:
-[5] http://ow.ly/jtQD0
-[6] http://ow.ly/jtQHM
-[7] http://ow.ly/jtQK0
-[8] http://ow.ly/jtQNd
+Yes and no. When flooding finishes everything still works ok,
+temp. addresses haven't been disabled, but when the preferred timer
+of the temp. address of the original acquired prefix expires, the kernel
+won't be able to acquire a new temporary address because the interface
+is already full with 16 addresses from flooding. An already acquired
+address only gets removed when it's validity timer expires. So, the
+host will be left using the global non-temp address acquired by slaac
+until another 'slot' (from the default 16) becomes free/expires.
 
-Could you allocate a CVE id for this?
+Summarizing, one is still able to remotely, inside a LAN, cause
+problems to another host, that is make it lose it's temp. address
+functionality at least for some time.
 
-Than you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+The solution to this problem is not that simple and I've already
+referenced a possible solution in one of my previous emails. Maybe a
+change of logic from max_addresses per interface to max_prefixes per
+interface would help.
+
+> For the dynamic tentative settings of the interface, I think another
+> patch would be required.
+> 
+> Thanks so much!
+> --
+> Prasad J Pandit / Red Hat Security Response Team
+> DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+
+Regards,
+-- 
+George Kargiotakis
+https://void.gr
+GPG KeyID: 0xE4F4FFE6
+GPG Fingerprint: 9EB8 31BE C618 07CE 1B51 818D 4A0A 1BC8 E4F4 FFE6
