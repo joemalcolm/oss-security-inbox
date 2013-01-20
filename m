@@ -1,62 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/08/5
-Message-ID: <20140508215536.GH2733@sentinelchicken.org>
-Date: Thu, 8 May 2014 14:55:36 -0700
-From: "Timoth D. Morgan" <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/20/3
+Message-ID: <CAH_aqbsuV0x33AeTUZH=nXt=79z-HsLO3M5=JQkZoT+s3k33Fg@mail.gmail.com>
+Date: Sun, 20 Jan 2013 18:18:13 -0200
+From: Henrique <typoon@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: nicolas.gregoire@...rri.fr
-Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
+Subject: CVE Request - Wordpress 3.5 Full-path disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-In my testing, this same issue is true for Java.
+This is a request for a CVE for an issue with Wordpress 3.5 (and probably
+earlier versions) that allows a full-path disclosure.
+The issue can be reproduced by accessing the URL as follows:
 
-That is, if you use DocumentBuilderFactory's setExpandEntityReferences
-method and supply "false", then it has a very similar behavior.  I'm
-about to release a comprehensive XXE paper, and here's a preview of
-what I have written about it:
+http://wordpress_site/?s[]=1
 
-"Java developers who use the default parser (or a newer version of
-Xerces-J) need to change one or more settings to make Xerces
-reasonably safe when processing untrusted XML.  One behavior to be
-aware of is the fact that the DocumentBuilderFactory's
-setExpandEntityReferences method does not provide protection as one
-might expect.  Calling this method with a "false" argument causes the
-parser to omit external entity data in the document when referenced,
-but it does not prevent definitions of external entities.  This means
-the parser will still fetch external URLs, which could obviously be
-used for blind SSRF attacks (even if the content isn't used later in
-the document).   Worse still, this setting does not prevent full use
-of external parameter entities, which would likely allow an attacker
-to conduct all of the same attacks that are possible with regular
-external entities."
+producing the error:
 
-Should we assign a CVE for this as well?  I believe I tested versions
-1.6.0_18 and 1.7.0_51, though I'd want someone to verify this, since
-it has been some time since I observed the behavior.
+Warning: stripslashes() expects parameter 1 to be string, array given in
+/home/gilgamesh/security/wpress/wp-includes/query.php on line 2184
 
-tim
+Before sanitizing the input, the variables passed should be validated that
+they have the correct type in order to avoid such issues.
 
+The wordpress team has already been notified and say they will look into
+the code to improve it.
 
+Regards,
 
+Henrique
 
-On Tue, May 06, 2014 at 08:55:58PM +0200, Tomas Hoger wrote:
-> On Tue, 06 May 2014 20:21:28 +0200 Nicolas Grégoire wrote:
-> 
-> > > libxml2 [...] incorrectly performs entity substituton in the doctype
-> > > prolog, even if the application using libxml2 disabled any entity
-> > > substitution. 
-> > 
-> > I'm not sure that I understand this bug. Do you have a PoC?
-> 
-> The new issue is very similar to the one fixed by:
-> 
-> https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
-> 
-> which is linked to the infamous CVE-2013-0339.  4629ee0 fixed the issue
-> for general entities, while the 9cd1c3c fixes the same type of problem
-> for parameter entities.  Even when parsing without NOENT, external
-> parameter entities are fetched.
-> 
-> -- 
-> Tomas Hoger / Red Hat Security Response Team
