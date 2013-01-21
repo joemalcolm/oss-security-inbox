@@ -1,78 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/01/4
-Message-ID: <510C1CD0.2030706@redhat.com>
-Date: Fri, 01 Feb 2013 12:51:44 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/17
+Message-ID: <50FD861A.4070402@redhat.com>
+Date: Mon, 21 Jan 2013 11:16:58 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Brian Martin <brian@...nsecurityfoundation.org>
-Subject: Re: Re: [OSVDB Mods] [New Vulnerability] File Disclosure in SimpleMachines Forum <= 2.0.3 (CVE-2013-0192) (fwd)
+To: oss-security@...ts.openwall.com, Steven Christey <coley@...re.org>
+Subject: Re: CVE Request coreutils
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 01/30/2013 12:36 PM, Brian Martin wrote:
+On 01/21/2013 07:59 AM, Michael Tokarev wrote:
+> 21.01.2013 18:54, Sebastian Krahmer wrote:
+>> Hi,
+>> 
+>> Can someone assign a CVE id for a buffer overflow in coreutils? 
+>> Its the same code snippet (coreutils-i18n.patch) and it affects
+>> sort, uniq and join:
 > 
-> FYI:
+> It's probably worth to mention that these are SuSE-specific and not
+> in upstream, if I understand correctly.
 > 
-> Kurt has indicated that the 2009 disclosure affects 1.x, and the
-> new affects 2.x, so they warrant separate CVEs. This is the
-> official request for it.
+>> https://bugzilla.novell.com/show_bug.cgi?id=798538 
+>> https://bugzilla.novell.com/show_bug.cgi?id=796243 
+>> https://bugzilla.novell.com/show_bug.cgi?id=798541
 > 
-> Brian OSF / OSVDB.org
+> Thanks,
 > 
-> ---------- Forwarded message ---------- From: Brian Martin
-> <brian@...nsecurityfoundation.org> To: Carlos Alberto Lopez Perez
-> <clopez@...lia.com> Cc: OSVDB Mods <moderators@...db.org>, Kurt
-> Seifried <kseifried@...hat.com> Date: Wed, 30 Jan 2013 13:27:35
-> -0600 (CST) Subject: Re: [OSVDB Mods] [New Vulnerability] File
-> Disclosure in SimpleMachines Forum <= 2.0.3 (CVE-2013-0192)
-> 
-> 
-> 
-> On Wed, 30 Jan 2013, Carlos Alberto Lopez Perez wrote:
-> 
-> : There is a file disclosure vulnerability in SMF (Simple Machines
-> Forum) : affecting versions <= 2.0.3 [1] : : The vulnerability has
-> been assigned CVE-2013-0192 [2] and requires a : valid admin
-> backend login to be exploited, therefore has a low security :
-> impact score. : : On some configurations a SMF deployment is shared
-> by several "co-admins" : that are not trusted beyond the SMF
-> deployment. This vulnerability : allows them to read arbitrary
-> files on the filesystem and therefore gain : new privileges by
-> reading the settings.php with the database passwords.
-> 
-> Thanks for the information Carlos.
-> 
-> Kurt; This was originally disclosed in 2009 (see OSVDB 86444 [1])
-> and re-discovered in January 13. If you concur, do you want to see
-> about issuing a 2009 CVE? One was never issued for the original
-> disclosure.
-> 
-> Brian OSF / OSVDB.org
-> 
-> [1] http://osvdb.org/86444
+> /mjt
 
-Please use CVE-2009-5068 for this issue.
+I'm not clear on exploitation. You would have to run sort/uniq/join
+against attacker supplied input, and then the sort/uniq/join binaries
+would crash. Is there any code execution possible? In general DoS's in
+user programs doesn't get CVE's unless the user program loads remote
+content easily/commonly (e.g. email/web browsers). Although I could be
+wrong, STeve can you confirm that these issues don't need a CVE?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRDBzQAAoJEBYNRVNeJnmTDJEP/jPFMqlf8aNjQvBuGn+0lSse
-4kdc+YioFEOQ+4xshH+/9FdkOjchddhh66dYzeYbUl9PVeT0wL4uqEbN1lD5myBf
-QimLK2pVGOBLThUTb+sqPwWioTYCQdlqjNgw3YGo7gspg8ihAFiAyY0gOVkr9vUH
-1cATd1DB7pzDg7PUYquCmhFVi/CYdPiacNsr+O8txtPQDGK6jdobAqPuXf9oddZE
-/VBJT6xRQF9Xxuwv1ZSIjMHDFJl+XzbiUi6a+zM+gQ9TML4fBbFhEqfy48Vmoq9v
-Rc9N/7su80CfmZqhuc1+nIfti4aFh11kZNdMLy9aUGgs5exIQ+z1edeu+OBIAHTk
-mr2YFqbQnAX2osVozMkuPgd6JEO/XW3Q/+eQK4ZKIllQa7a6Z6BU/Z7XQ3n5T2ga
-GzIvgcfYKDWgd3HYHUiOlI2DWyUzC2PRLMlszG2eWv3tYkPesK7OZ+qlUahRWOSq
-GBzDQIoQwiRugT+NvPpyMZ6cXi4yvY+8WPKAKHelAP5SmEvSAMNkXyD/SLoFrqD+
-5YZR06xIsjuD4pplmeDwnhQmZwWXrfDIp1yLNqWVmuPyxsE47TZYEaf81z0Zgwxh
-8KPd3t1ttGFX3mM1gQhW0vw+127Ge0QSxPSjw2NGEQI8Gc3WqiFEBE01zafbvIYf
-7l9eXPFwI/vtO2520/0/
-=xH4k
+iQIcBAEBAgAGBQJQ/YYaAAoJEBYNRVNeJnmTpAIQAMVV7HiKZ+Pq2YMnVVV3CD1k
+YUPr3ruhmW9CFhmgbKfH3sgrp9LxaDWRyLo5nCg1SOy4m2rE9UNpT89AcbVv5gz4
+rlhAFZkZsjfjMjd12Ak/qNwzoGlOJEQPVu6GNv5O1TnpzGglQeEudLxxnleJmWdE
+zf/CJHESrWOIaJRi/BlsPzA1ur3QP78k2wJ5+J1B0ZSybqNAtv1EhoIzIoEv9CXS
+9Lq/LYi2HcIH6dEFxLKoiva6N2R3iT2IkvS7iP+hiorc+qey6U3WWVqwuRPQjnBs
+RKjcV33JzZMSx/dJ2UfSxAcReBW6QKtLP1Gt2aREctBb5KkSSVL+tYp+L/KTF5FP
+toJa05BTv2EkZ+sqFfny0vZ1hmiAj4e9x7WPKfPcOBZkUB89CpqMjURsqdLx/4wJ
+UCvX3SMXyrNEdcwAEHIGkYyqGvt5iH7sT3Fs4oUvxXSoOPHJjtmcsT04OYaB/YjM
+W8bVH+WhT5ZA7zk3ePOLOmW7amx2nKN+yEZrbKy2C1sXJe605U+1MBvm5xwJFjkE
+RTV2s2CvxciR1WuYMacDX+HgWxifQcpr8hFdISYZxvvZo2egN+52dJS1+BjWdsf1
+/JSUpIWUg7Wy3JaA2qf7Q/uCtPcB0oTiBrT65vxJISl1nA/IQHXwtWZ3RI5dfvyt
+JtbC/DuLBeoklmfgx+TT
+=UBrB
 -----END PGP SIGNATURE-----
