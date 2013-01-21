@@ -1,33 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/20/1
-Message-ID: <51C2482D.3000306@gmail.com>
-Date: Wed, 19 Jun 2013 17:09:17 -0700
-From: Forest Monsen <forest.monsen@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/10
+Message-ID: <20130121124231.5b5304a8@project-mindstorm.net>
+Date: Mon, 21 Jan 2013 12:42:31 +0100
+From: Milan Berger <m.berger@...ject-mindstorm.net>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: CVE request for Drupal contributed module
+Subject: Re: CVE Request - Wordpress 3.5 Full-path disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Hi there,
+> The issue can be seen only when PHP's display_errors is set to On.
+> I have setup a default installation of wordpress 3.5 to display the
+> issue. It can be accessed via the URL:
+> http://blog.gilgalab.com.br/?s[]=1
 
-I'd like to request a CVE identifier, or identifiers, for:
+this is a configuration error on your side, not on wordpress' one.
 
-SA-CONTRIB-2013-053 - Login Security - Multiple Vulnerabilities
-https://drupal.org/node/2023585
 
-Maybe two -- denial of service, and access bypass.
 
-Thanks!
+-- 
+Kind Regards
 
-Forest Monsen, on behalf of the Drupal Security Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
+Milan Berger
+Project-Mindstorm Technical Engineer
 
-iEYEARECAAYFAlHCSCcACgkQ/ILCL9e1Br75UACfdlUDwUPqSN4WTIK6bMhQYoje
-8JQAnivszxby1qk3VyzyAWaeTyC3sBlT
-=GXXe
------END PGP SIGNATURE-----
+---
+project-mindstorm.net
+Fruehlingstrasse 4 
+90537 Feucht
+Germany
+
+Mob.: +49 176 22 98 76 02
+
+https://www.ghcif.de
+http://www.nopaste.info (for sale)
+https://www.digital-bit.ch
+http://www.project-mindstorm.net
+
+
+twitter: http://twitter.com/twit4c
