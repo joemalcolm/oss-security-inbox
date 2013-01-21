@@ -1,65 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/4
-Message-ID: <50FCEA3A.60202@redhat.com>
-Date: Mon, 21 Jan 2013 00:11:54 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/13
+Message-ID: <CAH_aqbtG1p1f68x_EVug0TS+8KSi-cCdx7z=hsZzjhjzdcg43Q@mail.gmail.com>
+Date: Mon, 21 Jan 2013 12:03:42 -0200
+From: Henrique Montenegro <typoon@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Henrique <typoon@...il.com>
 Subject: Re: CVE Request - Wordpress 3.5 Full-path disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Yes, I also agree that wordpress should fix this and I understand that this
+is a low-priority mostly configuration related issue. I was just not sure
+if this was eligible for a CVE or not. I'll keep this reference in mind for
+future times.
 
-On 01/20/2013 01:18 PM, Henrique wrote:
-> Hello,
-> 
-> This is a request for a CVE for an issue with Wordpress 3.5 (and
-> probably earlier versions) that allows a full-path disclosure. The
-> issue can be reproduced by accessing the URL as follows:
-> 
-> http://wordpress_site/?s[]=1
-> 
-> producing the error:
-> 
-> Warning: stripslashes() expects parameter 1 to be string, array
-> given in /home/gilgamesh/security/wpress/wp-includes/query.php on
-> line 2184
-> 
-> Before sanitizing the input, the variables passed should be
-> validated that they have the correct type in order to avoid such
-> issues.
-> 
-> The wordpress team has already been notified and say they will look
-> into the code to improve it.
-> 
-> Regards,
-> 
-> Henrique
+Thanks for the help!
 
-I can't get this to work anywhere. Does it require a specific theme or
-configuration? Do you have details that can aid in reproduction?
+Henrique
 
 
+On Mon, Jan 21, 2013 at 12:00 PM, Henri Salo <henri@...v.fi> wrote:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> On Mon, Jan 21, 2013 at 11:29:45AM +0000, Giles Coochey wrote:
+> > Wouldn't setting PHP "display_errors" be for development only, the
+> > entire point of the directive is to give the developer more
+> > information 'in page'.
+> >
+> > http://php.net/manual/en/errorfunc.configuration.php#ini.display-errors
+> >
+> > Quoting:
+> > "This is a feature to support your development and should never be
+> > used on production systems (e.g. systems connected to the
+> > internet)."
+>
+> You are correct. No CVE, but WordPress should still fix this. Please note
+> that
+> some configuration errors still get CVE, but this is not one of those in my
+> opinion/knowledge. Path disclosures are usually low-priority issues.
+>
+> ---
+> Henri Salo
+>
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ/Oo6AAoJEBYNRVNeJnmTrnoQAJTWO+BL07YlQrzHs4kKbgyL
-1X6YnOWKnz7WSH5sBPaSg2ziAo+o0unyTEf196YdHWeN2Gj6+O5dcofb1zuZKxy2
-0v74bVWsPS5FC40o3sXEXoe9ArBddR9iFr1BGJvD1+0MRjhkp0vFieBqv8Rl/Y6x
-QrUwtAOXGxgRVvo7eIpRFjvEhhKYLA1UIfuhMfMOw6T+3iWk4h2Nf52RRdF1WUTW
-KIJdVbcoPuUjbXJgylEqGt7di1XuAdjwIZlyyU1dXkNF1MRqb85kGXf+PIjFl2aK
-E9dOnUakMEYWR69cxhid1M7+9vtOUC6ABluxEu5xk1w4RMSWusWjQr7Fl9ZupGpb
-ZATGXzxbyiBsbsvZwbazBJeYOlAeABZFmGx3AWoTaXDeF+4murBMpIxIRf8UOyuA
-epFnbicPVDEAeAYiHQaoYiGtk6DTP8aH960TI10I4PZruxJO8hqLASx3x03gmZUB
-yFtmjv66IJECpw7XFTW3JjRlavVjeIzY2ooy3OputDCAxmc2n+9M2wP/YngR//qD
-dvkZ226/bgdzTanP4oaKT42v+UKIu7NEIQz6BCCQzcNJQQn6NsEjyjvv7wM3S7d0
-DqS8Aq2b46RpbU05sDayEnibIh7RiGLNMQ6OpOPLgZVR62WMpacpBH4cMI4khB9u
-yHIVhZMm7R0hoIFlRHE9
-=IGxe
------END PGP SIGNATURE-----
