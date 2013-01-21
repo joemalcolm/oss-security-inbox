@@ -1,35 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/2
-Message-ID: <alpine.LFD.2.03.1304091039100.7191@redhat.com>
-Date: Tue, 9 Apr 2013 11:47:10 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: Dan Carpenter <dan.carpenter@...cle.com>
-cc: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: kernel information leak in fs/compat_ioctl.c VIDEO_SET_SPU_PALETTE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/21
+Message-ID: <50FD9BFE.1030908@googlemail.com>
+Date: Mon, 21 Jan 2013 19:50:22 +0000
+From: Scott Herbert <scott.a.herbert@...glemail.com>
+To: oss-security@...ts.openwall.com
+Subject: Whats worth a CVE?
 Content-Type: text/plain; charset=utf-8
 
-+-- On Mon, 8 Apr 2013, Dan Carpenter wrote --+
-| I'm confused why you are using the word "always" and "Unless
-| `access_ok()' in `__get_user' returns 0".  I don't understand what
-| you are saying.
+Well the subject sum's the question up really, are their any fixed
+guidelines for what counts as a CVE and what doesn't? Or is it just up
+to the CVE pool manager as to what they feel is of note?
 
-  Well, always because __access_ok as defined in include/asm-generic/uaccess.h 
-always returns true.
 
-===
-static inline int __access_ok(unsigned long addr, unsigned long size)
-{
-        return 1;
-}
-===
- 
-| Anyway, the bottom line is that the x86 version of get_user()
-| doesn't have an info leak and the asm-generic version does.
 
-  I see, that's when asm-generic _access_ok is overridden by another 
-definition?
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+Download attachment "signature.asc" of type "application/pgp-signature" (554 bytes)
