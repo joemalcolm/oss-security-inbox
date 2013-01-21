@@ -1,93 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/11/2
-Message-ID: <CAB8Fin8xcw-w3g=N0KTuERzZ7NSWddOQf=dGQZHYYv8mmO9jbg@mail.gmail.com>
-Date: Mon, 11 Nov 2013 14:58:45 +0100
-From: Jacob Vosmaer <jacob@...lab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/2
+Message-ID: <50FCD240.2030806@gmail.com>
+Date: Sun, 20 Jan 2013 21:29:36 -0800
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Security vulnerability in gitlab-shell (CVE-2013-4546)
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-### Security vulnerability in gitlab-shell (CVE-2013-4546)
+Hello there -- requesting CVE identifiers for issues with three
+contributed modules:
 
-We have learned about a second remote code execution vulnerability in
-gitlab-shell. This issue was fixed in gitlab-shell 1.7.4, so users who
-updated gitlab-shell after [our recent security
-announcement](../gitlab-ce-6-2-and-5-4-security-release/) are not affected.
+SA-CONTRIB-2013-003 - RESTful Web Services - CSRF
+https://drupal.org/node/1890222
 
-# Remote code execution vulnerability in the repository import feature of
-older versions of GitLab
+SA-CONTRIB-2013-004 - Live CSS - Arbitrary Code Execution
+https://drupal.org/node/1890318
 
-There is a remote code execution vulnerability in the repository import
-feature of older versions of GitLab. This vulnerability has been assigned
-the CVE identifier CVE-2013-4546.
+SA-CONTRIB-2013-005 - Mark Complete Module - CSRF
+https://drupal.org/node/1890538
 
-Versions affected: 5.0, 5.1, 5.2, 5.3, 5.4, 6.0, 6.1, 6.2
+Thanks in advance.
 
-Not affected: 4.2 and earlier
-
-Fixed versions: 5.4.1, Community Edition 6.2.3, Enterprise Edition 6.2.0
-(all using gitlab-shell 1.7.4)
-
-### Impact
-When creating a new project a GitLab user can specify that a remote
-repository should be imported into the new project. In affected versions
-the import URL text field can be used to execute code on the GitLab server.
-Only authenticated users can create new projects and import repositories.
-
-This vulnerability was fixed in gitlab-shell 1.7.4. All users running
-GitLab 5.4 or newer should verify that they are using gitlab-shell 1.7.4 or
-newer (`cat /home/git/gitlab-shell/VERSION`) and upgrade gitlab-shell
-immediately if necessary.
-
-### Releases
-Gitlab-shell 1.7.4 is available from
-https://gitlab.com/gitlab-org/gitlab-shell and
-https://github.com/gitlabhq/gitlab-shell . To upgrade gitlab-shell it
-suffices to run `sudo su git -c 'git fetch && git checkout v1.7.4'` in
-/home/git/gitlab-shell .
-
-### Workarounds
-If you are unable to upgrade you can disable the repository import
-functionality in GitLab by deleting the following code block from
-`app/contexts/projects/create_context.rb` and restarting GitLab:
-
-<pre>
-# Import project from cloneable resource
-if @project.valid? && @project.import_url.present?
-  shell = Gitlab::Shell.new
-  if shell.import_repository(@project.path_with_namespace,
-@project.import_url)
-    # We should create satellite for imported repo
-    @project.satellite.create unless @project.satellite.exists?
-    @project.imported = true
-    true
-  else
-    @project.errors.add(:import_url, 'cannot clone repo')
-  end
-end
-</pre>
-
-### Credits
-Thanks to Remy van Elst https://raymii.org/ for reporting the vulnerability
-to us.
-
+Best,
+Forest
 -----BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQEcBAEBCgAGBQJSgOJ/AAoJEB2vXw0YK62WVbQH/3dUD1e9A03Y5RxfzmWdzEIw
-hWGFziF4ZobNAKZd3lCynZZBKGHDaBHvBnzhFNkk6IZuwYNvDy7/2UOvvlxBhAYq
-ts8/Il8Rr/z27DkBlxvIwaOgSxx/CRvJkxqUDbpQ9QOTEkmf9USe1RDFrsXvBz7Y
-I10AXrVewm3sWW7qCaB2l4srS25ja/ohmIEXGaujr2Ppjk1N67krEj6l8EIYbW3m
-p8UEPH4NGN1+bDkA9j0/Gj/ABX6W9q0N6NpVzd2E70IQ8dgnisxYgmTwuObGcIbP
-tdNoWleKsk/K4slV97ISlXR5tGKHfKiAVZEAC87odYBcRe57mLEd9Ppt0ykHVKo=
-=Qj+H
+iEYEARECAAYFAlD80joACgkQ/ILCL9e1Br42awCfVJkH/CsOzbUYTOk0aADnUaNn
+1jwAoIJI3RmlYa1Bqvlt4vOK1rgAnUfg
+=St9B
 -----END PGP SIGNATURE-----
-
-Best regards,
-
-Jacob Vosmaer
-GitLab.com
-
