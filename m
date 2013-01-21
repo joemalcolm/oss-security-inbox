@@ -1,75 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/1
-Message-ID: <516385B7.4080906@redhat.com>
-Date: Mon, 08 Apr 2013 21:06:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Damien Regad <damien.regad@...ckgroup.com>
-Subject: Re: Re: Re: Multiple CVE requests for MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/3
+Message-ID: <CABbbngBf4DHCp6gP8Od_5K6s-Y-HFirAjNQ3HTex5Ca14X+Nnw@mail.gmail.com>
+Date: Sun, 20 Jan 2013 21:39:22 -0800
+From: Forest Monsen <forest.monsen@...il.com>
+To: "security@...pal.org" <security@...pal.org>
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>, Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: [security] CVE Request - SA-CORE-2013-001 (one JQuery X < 1.63 issue and two Drupal modules issues)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+CVE assignment team: Please at least copy security@...pal.org when all four
+CVE identifiers have been assigned, and we'll make sure they're publicly
+attached to the vulnerabilities as usual. Thanks again to Jan for ferreting
+out this issue.
 
-On 04/08/2013 03:30 PM, Damien Regad wrote:
-> Kurt Seifried <kseifried@...hat.com> Wrote in message:
-> 
->>>>>> 4. XSS issue on Configuration Report page when displaying
->>>>>>  complex value
->>>>>> 
->>>>>> This issue affects Mantis 1.2.0rc1 and later.
->>>>>> 
->>>>>> Lack of proper string escaping allows users (having admin
->>>>>>  access) to enter arbitrary javascript code and have it 
->>>>>> executed on the user's browser.
->>>>>> 
->>>>>> Reference:
->>>>>> http://www.mantisbt.org/bugs/view.php?id=15416
->>>>> 
->>>>> Does this count as a proper release or does it fall into
->>>>> the "beta" classification?
->>> 
->>>> 1.2.0rc1 was a beta release. The first "proper" release
->>>> affected by this was 1.2.0
->>> 
->>> Ok not assigning a CVE then, unless there are a large number
->>> of users betas don't get CVEs.
->> 
->> Steve just pointed out I may have misread this. Is 1.2.0
->> vulnerable, and this is fixed in 1.2.1, or was it fixed in the
->> 1.2.0 release (so ONLY 1.2.0-rc1 was affected)?
-> 
-> Not sure who Steve is, but he is absolutely correct - this affects 
-> all versions of Mantis *starting* with rc1 and until 1.2.13 
-> included, so definitely non-beta releases are vulnerable.
+Best,
+Forest
 
-Steve/Steven is coley@...re.org (CVE head honcho).
 
-So:
+On Fri, Jan 18, 2013 at 3:02 PM, Greg Knaddison <greg.knaddison@...il.com>wrote:
 
-> Lack of proper string escaping allows users (having admin access)
-> to enter arbitrary javascript code and have it executed on the
-> user's browser.
+> Response below.
+>
+> On Thu, Jan 17, 2013 at 8:50 AM, Jan Lieskovsky <jlieskov@...hat.com>
+> wrote:
+> > @Drupal security team - could you clarify if to fix the first issue,
+> > there was yet some other Drupal specific patch / change (besides the
+> > JQuery library update), which would require yet another (fourth) CVE
+> > id to be allocated?
+>
+> The fix we added to Drupal does not require (or implement) an update
+> to the jQuery library at all; rather it works around the issue
+> entirely within Drupal's code.  I think that means it should get its
+> own CVE ID.
+>
+> We did it this way because it means that any other Drupal packages,
+> such as drupal7-jquery_update, would not be expected to have a
+> vulnerability as long as the core update is applied.
+>
+> I believe this means that yes, we will need a fourth CVE id to be
+> allocated.
+>
+> Thanks,
+> Greg
+> --
+> [ Security | http://lists.drupal.org/mailman/listinfo/security ]
+> [Security team mailing list management and scheduling is documented here |
+> https://security.drupal.org/handling-list-emails]
+>
 
-Please use CVE-2013-1934 for this issue
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRY4W3AAoJEBYNRVNeJnmTvKgQAKAEFc2L4kNxNLUCq9aLh9l2
-RAKnDjrs2pb5kSHyUMXfJ7oN9AhP3U6QXRKZFLwSNbipRVbtuEbFbAHleYAObaiL
-CPCBPyY0HztDiEaFDJ0mls45EBJnB3oa5xitPzT/XFQqoM3ua+wnC8p7yy5wgE/u
-0t4g8UPTW9+mSYOzQq3hbmz5q8SK3KnZc/ff4dXP6+wsvBhezoRR6N12wU0om5Zf
-6tDInYlF4M2Fqc03b97A5KRdJqcvJqzbc09ZLQxQZFZofXB5wy1uut2Iz0oI/4On
-yYTQrxXEVmnu+0ggGYtyvpjmGRcKQ/Eh/XzfKHbKo3VrGaA3dIWiBXC9kdLMJfJV
-/rjrCgvhoyC7aFgQT5c3vBdbIi1xy8eu66wNsay0oohb+pNS99A3iemiZIXMVQXr
-bKz2/kmV1ACLFO0FNDEChkjw4NWlIn3NEStHAgqBz70o/Iv8WTVK6f1jTPzL7JvP
-kKeBwk7hxnScBbVGvGMWTCWNx5rLt2HgLtdbmHzEhfrOscTVojwAkPTgaeZwxjZ2
-9rnd0T0D/pl5j6FKxurj0Q1AVwlepAx3pLc+cqmfD/3MWBdP+5p4l0CUfRlfMQXQ
-ao7qHY27hX2mFrem2d0ZZ7ZYIAvkMThorHsjJJ6qT9ZUgzx/geNbeJX+UNh5j3qI
-vlp2GtzONWjFUhUGKgR/
-=h4sZ
------END PGP SIGNATURE-----
