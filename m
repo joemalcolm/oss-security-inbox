@@ -1,87 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/13/2
-Message-ID: <20130513072855.GH2824@kludge.henri.nerv.fi>
-Date: Mon, 13 May 2013 10:28:55 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/5
+Message-ID: <50FCED0A.3080006@redhat.com>
+Date: Mon, 21 Jan 2013 00:23:54 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: moderators@...db.org
-Subject: CVE request: Gallery multiple XSS vulnerabilities
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Two XSS vulnerabilities have been fixed in gallery 3.0.7.
+On 01/20/2013 10:29 PM, Forest Monsen wrote:
+> Hello there -- requesting CVE identifiers for issues with three 
+> contributed modules:
+> 
+> SA-CONTRIB-2013-003 - RESTful Web Services - CSRF 
+> https://drupal.org/node/1890222
 
-http://osvdb.org/92691
-http://osvdb.org/92740
+Please use CVE-2013-0205 for this issue.
 
-One CVE-2013-XXXX is enough as these are fixed in the same version and same
-issue type.
+> SA-CONTRIB-2013-004 - Live CSS - Arbitrary Code Execution 
+> https://drupal.org/node/1890318
 
-If I am correct:
-http://osvdb.org/92789 should be removed as duplicate of http://osvdb.org/92691
-http://osvdb.org/92690 should be removed as duplicate of http://osvdb.org/92740
+Please use CVE-2013-0206 for this issue.
 
-Please ask if you have questions.
+> SA-CONTRIB-2013-005 - Mark Complete Module - CSRF 
+> https://drupal.org/node/1890538
 
-Diff between 3.0.6 - 3.0.7 below:
+Please use CVE-2013-0207 for this issue.
 
-"""
-git diff aa89aa0dc1610931674530169be8fd1edfceafde df9a412c5a18414ec52550e04f9672693f06421f
-diff --git a/gallery3/README b/gallery3/README
-index 7c58b69..18a2663 100644
---- a/gallery3/README
-+++ b/gallery3/README
-@@ -1,4 +1,4 @@
--Gallery 3.0.6 (Rive Gauche)
-+Gallery 3.0.7 (Rive Droite)
- ===========================
- 
- About
-diff --git a/gallery3/modules/gallery/controllers/movies.php b/gallery3/modules/gallery/controllers/movies.php
-index ca332f6..5607571 100644
---- a/gallery3/modules/gallery/controllers/movies.php
-+++ b/gallery3/modules/gallery/controllers/movies.php
-@@ -67,7 +67,7 @@ class Movies_Controller extends Items_Controller {
- 
-       log::success("content", "Updated movie", "<a href=\"{$movie->url()}\">view</a>");
-       message::success(
--        t("Saved movie %movie_title", array("movie_title" => $movie->title)));
-+        t("Saved movie %movie_title", array("movie_title" => html::purify($movie->title))));
- 
-       if ($form->from_id->value == $movie->id) {
-         // Use the new url; it might have changed.
-diff --git a/gallery3/modules/gallery/helpers/gallery.php b/gallery3/modules/gallery/helpers/gallery.php
-index f3382fa..81f406d 100644
---- a/gallery3/modules/gallery/helpers/gallery.php
-+++ b/gallery3/modules/gallery/helpers/gallery.php
-@@ -18,8 +18,8 @@
-  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
-  */
- class gallery_Core {
--  const VERSION = "3.0.6";
--  const CODE_NAME = "Rive Gauche";
-+  const VERSION = "3.0.7";
-+  const CODE_NAME = "Rive Droite";
-   const RELEASE_CHANNEL = "release";
-   const RELEASE_BRANCH = "3.0.x";
- 
-diff --git a/gallery3/modules/gallery/views/error_admin.html.php b/gallery3/modules/gallery/views/error_admin.html.php
-index cd1bd56..036e204 100644
---- a/gallery3/modules/gallery/views/error_admin.html.php
-+++ b/gallery3/modules/gallery/views/error_admin.html.php
-@@ -289,7 +289,7 @@
-               <tr>
-                 <td class="key">
-                   <code>
--                    <?= $key?>
-+                    <?= html::purify($key) ?>
-                   </code>
-                 </td>
-                 <td class="value">
-"""
+> Thanks in advance.
+> 
+> Best, Forest
+> 
 
----
-Henri Salo
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ/O0KAAoJEBYNRVNeJnmT1zEP/3aKDRXSX1orkvDsZHFMXfIb
+b95lPtt/xg5mEVwZh3ndVGv5dtHe2+ovidGtUzOZ9sge+E3KDvME5/otnvhJ7Q8N
+9pelDki8bEycSscbWJ1r06EpjynPvDl6sz9tz96pNzXl3ty6rt7Z02tswDT3d12f
+qR/TnwktRnDNq4xoAKmEl/Wdg4U5AsrJim37qbmXfqb4LqzdQAl+CFU/NnIK6kTX
+Q6+HO0nJxCJUqkx6NVK/yAwi3N9cV8JGVCEd0G9xgEb+Fle4LeV03LZY/pGgVw15
+6mmnA7Jg1co2jkf7N+UIgmuvCqfaZq/GZDBbRl/4gU+cUCRX0aBbnoN0QS1fnopH
+bkfRFtM59WzrXuCaaFRU5IS+YM9XVWNFDXEejVBsp7A2nd1aYzoB7tBzw4nWISJr
+0S2hxk0P3WwKQSsJPBfu0Isll8IyyPmwOl7PcbEE9mDCzEKusJ+9fL+J29Vk72aq
+qVodnlCsn+YEtYGnfTpjCi/7d5zcHJ49pToobBs0f8wKbL8AtgewGk/wpwrG/Cfl
+0Slo9W/ky88sexKL4IiDm9WaRyrDNVxTEZuReyZKiQcAE7cWzW+ZyEnJ6x1r0acV
+pTS1+XftpCAtK2PLO93DKtGkeS82b8khXGxUMyY991gBTdBJsdU6yvKskuySsxMb
+brVTakyH8xPTl7vdrEYT
+=cD2h
+-----END PGP SIGNATURE-----
