@@ -1,61 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/04/5
-Message-ID: <50E72ECB.2060607@redhat.com>
-Date: Fri, 04 Jan 2013 12:34:35 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/8
+Message-ID: <loom.20130121T094544-91@post.gmane.org>
+Date: Mon, 21 Jan 2013 09:07:59 +0000 (UTC)
+From: Damien Regad <damien.regad@...ckgroup.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>, Jiri Popelka <jpopelka@...hat.com>
-Subject: Re: CVE Request - cups:  'Listen localhost:631' option not honoured correctly on IPv6-enabled systems when systemd used for CUPS socket activation
+Subject: Re: CVE request: MantisBT before 1.2.13 match_type XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Kurt Seifried <kseifried@...> writes:
+> Please use CVE-2013-0197 for this issue.
 
-On 01/04/2013 08:29 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
-> 
-> during the process of CUPS socket activation code refactoring in
-> favour of systemd capability a security flaw was found in the way
-> CUPS service honoured Listen localhost:631 cupsd.conf configuration
-> option. The setting was recognized properly for IPv4-enabled
-> systems, but failed to be correctly applied for IPv6-enabled
-> systems. As a result, a remote attacker could use this flaw to
-> obtain (unauthorized) access to the CUPS web-based administration 
-> interface.
-> 
-> References: [1] https://bugzilla.novell.com/show_bug.cgi?id=795624 
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=891942
-> 
-> Note: Obviously this would affect only instances, where CUPS was
-> instructed to pass its socket activation code to systemd (instances
-> not using systemd would not be affected by this problem).
-> 
-> Could you allocate a CVE identifier for this?
-> 
-> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
-> Security Response Team
-> 
+Hi Kurt,
 
-Please use CVE-2012-6094 for this issue. The novell bug is from 2012.
+Thanks for creating the CVE; please take note of a small rectification on the
+original issue report:
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+David Hicks <d <at> hx.id.au> writes:
+> Jakub Galczyk discovered[1][2] a cross site scripting (XSS)
+> vulnerability in *MantisBT 1.2.12 and earlier versions* 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+This affects *only MantisBT version 1.2.12* (and the 'master'
+development branch after 15-Sep-2012), as earlier versions did not contain the
+commit introducing the 'match type' filtering feature [1].
 
-iQIcBAEBAgAGBQJQ5y7KAAoJEBYNRVNeJnmTYegQANsDMiRVbJVntKOoAGJBI8iu
-lZ93jqkZAm7Vxq7hZng+KlC8ISAGiqELEQcUTD5cDekgGyim5Yeo+9ol2bkEUhJQ
-ndath3pu8VQ49wnoyrGLCuPfRGNCcxjRpcSObg/0BY0bKS7tpNb6uQwnnu08vMGM
-8cwkS4W8Q/y+LCLxEd8MIfSCVc0ZJKvEXuPxJwtk/pAzAzZVHa4SS34hiz/1wZ3a
-MR8eNeO+UoZodujNTsU205OIsU2RQw+gqAIBwsbn4SzbTM8CsnBnQZSPIiRCbOmE
-qOte7JUXh6nAzshFuBwk2V2JzjxAx9xQw8VBOcZJwPMShFpTSobz2nFaAufPqG7A
-4+6YVhTBwKqCvRXUodN+TadZTOMOsr0GatGVCW5U8wpDXqqdebnrl43uvkmPqsUY
-s+ZPprWANjh5D6TiCkfueVlZxmX7hbMlWmd2B6RlMUNN3Sw91SJ5y9EgqsB2G9zk
-fFmEAzthPygIywLEE94v0JO6XIDO0XdMROMdqr4w/GLYzKO354yUlGHfw3ZZ4PTo
-Hz3mrV61gD6vMOATluMGr5AcaYGyJ1UKbEw2SO4Z9MJa/fC4cTaQOlAFYSCq8aGx
-tEG1lWzUSpLCNxhRx0lBKcj86W5bekLlAAyRx+yUWutigNcCemIsYRGGuXBFAu/m
-Bec29fjK5m+l2eGD3dlg
-=6+vX
------END PGP SIGNATURE-----
+It's also worth mentioning that a better patch for the vulnerability is
+available under follow-up issue #15388 [2]
+
+Damien Regad
+MantisBT developer
+
+
+[1] 1.2.x branch:  https://github.com/mantisbt/mantisbt/commit/5b491868
+    master branch: https://github.com/mantisbt/mantisbt/commit/6c6c3d72
+[2] http://www.mantisbt.org/bugs/view.php?id=15388
+
+
