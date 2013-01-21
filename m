@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/4
-Message-ID: <5215BB63.80202@redhat.com>
-Date: Thu, 22 Aug 2013 09:18:59 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/19
+Message-ID: <20130121203927.GB2637@redhat.com>
+Date: Mon, 21 Jan 2013 13:39:27 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: glibc getaddrinfo() stack overflow
+Subject: Re: CVE Request coreutils
 Content-Type: text/plain; charset=utf-8
 
-On 07/04/2013 09:06 PM, Maksymilian wrote:
->> Perhaps there are some missing CVE ids?
->
-> In 2011 the problem with alloca() was not defined as a vulnerability.
->
-> http://sourceware.org/bugzilla/show_bug.cgi?id=12671
+* [2013-01-21 19:17:49 +0100] Moritz Muehlenhoff wrote:
 
-I believe the analysis in this bug report is incorrect.  The security 
-implications are unclear.  A straight copy of a long name to a stack 
-buffer should trigger a crash because it hits the guard page, but even 
-that could be a problem for daemons.
+>> Can someone assign a CVE id for a buffer overflow in coreutils?
+>> Its the same code snippet (coreutils-i18n.patch) and it affects sort, uniq and join:
+>>
+>> https://bugzilla.novell.com/show_bug.cgi?id=798538
+>> https://bugzilla.novell.com/show_bug.cgi?id=796243
+>> https://bugzilla.novell.com/show_bug.cgi?id=798541
+>
+>Could you send the faulty patch to the list so that distros can validate
+>that they don't include it themselves?
 
-On the other hand, it's impossible to know for sure that no GCC version 
-ever lays out the stack in such a way that we end up with a problem. 
-Multi-threaded programs linking in script interpreters are more exposed 
-to these problems, too.
+Red Hat/Fedora do include this patch, so it's more than just SUSE that
+ships them.  However, when I was looking at them last week, this struck
+me as just a non-exploitable crash and unless I'm missing something, I
+think it would be quite the stretch to call it a security flaw.
 
 -- 
-Florian Weimer / Red Hat Product Security Team
+Vincent Danen / Red Hat Security Response Team 
