@@ -1,143 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/14/8
-Message-ID: <CAD1NwhgAcS7wKzFOGmuhz28X8gCvEPMGXjZ-j0VowEtF=BnBUA@mail.gmail.com>
-Date: Thu, 14 Mar 2013 07:36:15 +0100
-From: Lukas Reschke <lukas@...cloud.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/4
+Message-ID: <50FCEA3A.60202@redhat.com>
+Date: Mon, 21 Jan 2013 00:11:54 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "security@...cloud.com" <security@...cloud.com>,  "packaging@...cloud.org Packaging" <packaging@...cloud.org>
-Subject: ownCloud Security Advisories (2013-008, 2013-009, 2013-010)
+CC: Henrique <typoon@...il.com>
+Subject: Re: CVE Request - Wordpress 3.5 Full-path disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-# Multiple XSS vulnerabilities (oC-SA-2013-008)
-Web: https://owncloud.org/about/security/advisories/oC-SA-2013-008/
+On 01/20/2013 01:18 PM, Henrique wrote:
+> Hello,
+> 
+> This is a request for a CVE for an issue with Wordpress 3.5 (and
+> probably earlier versions) that allows a full-path disclosure. The
+> issue can be reproduced by accessing the URL as follows:
+> 
+> http://wordpress_site/?s[]=1
+> 
+> producing the error:
+> 
+> Warning: stripslashes() expects parameter 1 to be string, array
+> given in /home/gilgamesh/security/wpress/wp-includes/query.php on
+> line 2184
+> 
+> Before sanitizing the input, the variables passed should be
+> validated that they have the correct type in order to avoid such
+> issues.
+> 
+> The wordpress team has already been notified and say they will look
+> into the code to improve it.
+> 
+> Regards,
+> 
+> Henrique
 
-## CVE IDENTIFIERS
-- CVE-2013-1822
+I can't get this to work anywhere. Does it require a specific theme or
+configuration? Do you have details that can aid in reproduction?
 
-## AFFECTED SOFTWARE
-- ownCloud Server < 4.5.8
 
-## DESCRIPTION
-Multiple cross-site scripting (XSS) vulnerabilities in ownCloud 4.5.8
-and all prior versions (except 4.0.x) allow remote attackers to inject
-arbitrary web script or HTML via
 
-- the "quota" POST parameter to setquota.php in /core/settings/ajax/
-  - Commits:  2364c79 (stable45)
-  - Risk: Low
-  - Note: Successful exploitation of this stored XSS requires
-administrator privileges.
-- the group input field to settings.php (CVE-2013-0307)
-  - Commits:  4cff6df (stable45)
-  - Risk: Low
-  - Note: Successful exploitation of this DOM based self XSS requires
-group admin privileges.
-- the share with input field
-  - Commits: 7b0a8f4 (stable45)
-  - Risk: Low
-  - Note: Successful exploitation of this DOM based self XSS requires
-group admin privileges.
-
-## RESOLUTION
-Update to ownCloud Server 5.0.0 or 4.5.8
-http://download.owncloud.org/community/owncloud-5.0.0.tar.bz2
-http://download.owncloud.org/community/owncloud-4.5.8.tar.bz2
-
----------------------------------------
-
-# Contacts: Bypass of file blacklist (oC-SA-2013-009)
-Web: https://owncloud.org/about/security/advisories/oC-SA-2013-009/
-
-## CVE IDENTIFIERS
-- CVE-2013-1850
-
-## RISK:
-- Critical
-
-## COMMITS:
-- stable4: fae5bd3
-- stable45: e294a16, 1314e6d
-
-## AFFECTED SOFTWARE
-- ownCloud Server < 4.5.8
-- ownCloud Server < 4.0.13
-
-## DESCRIPTION
-Incomplete blacklist vulnerability in apps/contacts/import.php and
-apps/contacts/ajax/uploadimport.php in ownCloud before 4.0.13 and
-4.5.8 allows an authenticated remote attacker to upload a .htaccess
-file and therefore the execution of arbitrary PHP code in a standard
-Apache installation.
-
-Note: Successful exploitation of this vulnerability requires the
-calendar application to be enabled (enabled by default) and the data
-directory has to be in the webroot.
-
-## RESOLUTION
-Update to ownCloud Server 5.0.0, 4.5.8 or 4.0.13
-http://download.owncloud.org/community/owncloud-5.0.0.tar.bz2
-http://download.owncloud.org/community/owncloud-4.5.8.tar.bz2
-http://download.owncloud.org/community/owncloud-4.0.13.tar.bz2
-
----------------------------------------
-
-# user_migrate: Local file disclosure (oC-SA-2013-010)
-Web: https://owncloud.org/about/security/advisories/oC-SA-2013-010/
-
-## CVE IDENTIFIERS
-- CVE-2013-1851
-
-## RISK:
-- High
-
-## COMMITS:
-- stable4: edf7162
-- stable45: 7b6a022
-
-## AFFECTED SOFTWARE
-- ownCloud Server < 4.5.8
-- ownCloud Server < 4.0.13
-
-## DESCRIPTION
-Incomplete blacklist vulnerability in lib/migrate.php in ownCloud
-before 4.0.13 and 4.5.8 allows an authenticated remote attacker to
-import arbitrary files on the server inside his user account.
-
-Note: Successful exploitation of this vulnerability requires the
-user_migrate application to be enabled. (disabled by default)
-
-## RESOLUTION
-Update to ownCloud Server 5.0.0, 4.5.8 or 4.0.13
-http://download.owncloud.org/community/owncloud-5.0.0.tar.bz2
-http://download.owncloud.org/community/owncloud-4.5.8.tar.bz2
-http://download.owncloud.org/community/owncloud-4.0.13.tar.bz2
-
---
-ownCloud
-Your Cloud, Your Data, Your Way!
-
-GPG: 0xEB32B77BA406BE99
-
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 -----BEGIN PGP SIGNATURE-----
-Version: OpenPGP.js v.1.20121007
-Comment: http://openpgpjs.org
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-wsFcBAEBAgAQBQJRQW+KCRDrMrd7pAa+mQAAD7AP/1n5KCcQv2HFf4iETNfF
-ZFUEPQVppStRCQMwDjzhx3n5LwXciYy6Nk+U12tn4IavacsVYREAsvRUqVRc
-LEPvaap66F7QWjKm+kIeoLbcjcRss0ShCBpGt7lMpI4ZLMu15mlHTZ+1cKcU
-2wRnehR58qxo535B0qmCoBTktOK0eOc3A3XQPWj6Iflvmxj1ZHfDzDTGhORZ
-+N5rJIS4lpoS/sFeBiH1N5ZxhZKuGGymjmzFzLkuKOOC6zPu/ZVtHthpsk64
-JLFV9c8avNdHwuLdDbtfzPRO8NrginR7IeqNkn2cLtX7sId7ikc+t4F3ubPw
-AwF+48rDsVwfda6yCMCHpCw7i0bGtDz/lLsT4vfhUBWJ4ew0ZD1fX2mHunc9
-dnKsNqw+f1hoUYAsWq37bAMIj9fM+GKqBaN+OBUDx+lt2PMhrsZHbDohRmXZ
-GTSGfwgMXcyOw72/M7icrtW2hEylIL1PHt/ZJqn3YRh8WMlTYTnhKH0lpzEd
-curBLzICFs7/qN0fyk1BFYj7NPkKksEpnFAEZx7w5xH+gA5ZanoTXM2J5103
-2dm9uvo0lqxt6XoctujH+SN+Cx2tUocO8ahA+kwOiL9QSRphumJ4Va4wZSpX
-2R5k9t5yUmB9jI904KYbbRz6P9M+teLFzb5bpRyt2RW09EFDbmQ0I8FkYdY6
-90CQ
-=9rrE
+iQIcBAEBAgAGBQJQ/Oo6AAoJEBYNRVNeJnmTrnoQAJTWO+BL07YlQrzHs4kKbgyL
+1X6YnOWKnz7WSH5sBPaSg2ziAo+o0unyTEf196YdHWeN2Gj6+O5dcofb1zuZKxy2
+0v74bVWsPS5FC40o3sXEXoe9ArBddR9iFr1BGJvD1+0MRjhkp0vFieBqv8Rl/Y6x
+QrUwtAOXGxgRVvo7eIpRFjvEhhKYLA1UIfuhMfMOw6T+3iWk4h2Nf52RRdF1WUTW
+KIJdVbcoPuUjbXJgylEqGt7di1XuAdjwIZlyyU1dXkNF1MRqb85kGXf+PIjFl2aK
+E9dOnUakMEYWR69cxhid1M7+9vtOUC6ABluxEu5xk1w4RMSWusWjQr7Fl9ZupGpb
+ZATGXzxbyiBsbsvZwbazBJeYOlAeABZFmGx3AWoTaXDeF+4murBMpIxIRf8UOyuA
+epFnbicPVDEAeAYiHQaoYiGtk6DTP8aH960TI10I4PZruxJO8hqLASx3x03gmZUB
+yFtmjv66IJECpw7XFTW3JjRlavVjeIzY2ooy3OputDCAxmc2n+9M2wP/YngR//qD
+dvkZ226/bgdzTanP4oaKT42v+UKIu7NEIQz6BCCQzcNJQQn6NsEjyjvv7wM3S7d0
+DqS8Aq2b46RpbU05sDayEnibIh7RiGLNMQ6OpOPLgZVR62WMpacpBH4cMI4khB9u
+yHIVhZMm7R0hoIFlRHE9
+=IGxe
 -----END PGP SIGNATURE-----
