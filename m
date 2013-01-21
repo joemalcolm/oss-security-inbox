@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/02/2
-Message-ID: <20130102180918.GC15249@kludge.henri.nerv.fi>
-Date: Wed, 2 Jan 2013 20:09:18 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/14
+Message-ID: <20130121145448.GA8751@suse.de>
+Date: Mon, 21 Jan 2013 15:54:48 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Charybdis: Improper assumptions in the server handshake code may lead to a remote crash
+Cc: coley@...us.mitre.org
+Subject: CVE Request coreutils
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 01, 2013 at 12:07:39AM -0700, Kurt Seifried wrote:
-> Please use CVE-2012-6084 for this issue.
-> 
-> Same as http://seclists.org/oss-sec/2012/q4/545
+Hi,
 
-ShadowIRCd before 6.3.3 is also affected.
+Can someone assign a CVE id for a buffer overflow in coreutils?
+Its the same code snippet (coreutils-i18n.patch) and it affects sort, uniq and join:
 
-https://github.com/shadowircd/shadowircd
+https://bugzilla.novell.com/show_bug.cgi?id=798538
+https://bugzilla.novell.com/show_bug.cgi?id=796243
+https://bugzilla.novell.com/show_bug.cgi?id=798541
 
-commit 806af85d265673e599e91f1e0d364845b66ee82d
-Author: Joah <Joah@...haChat.net>
-Date:   Mon Dec 31 14:49:19 2012 -0500
+regards,
+Sebastian
 
-    Ported m_capab Crash Exploit Fix from charybdis
-    
-    Ported the fix from charybdis to ShadowIRCd.
+-- 
 
-- Henri Salo
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
