@@ -1,59 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/03/11
-Message-ID: <20131203190853.GC27953@higgins.local>
-Date: Tue, 3 Dec 2013 11:08:53 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2013-6415] XSS Vulnerability in number_to_currency
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/22
+Message-ID: <CAF6rxg=kcgPf1UB8DdCXcLmuL9iDbfXZ+HApgJYZYCnp9dwiEQ@mail.gmail.com>
+Date: Mon, 21 Jan 2013 16:17:43 -0500
+From: Eitan Adler <lists@...anadler.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Whats worth a CVE?
 Content-Type: text/plain; charset=utf-8
 
-XSS Vulnerability in number_to_currency
+On 21 January 2013 14:50, Scott Herbert <scott.a.herbert@...glemail.com> wrote:
+> Well the subject sum's the question up really, are their any fixed
+> guidelines for what counts as a CVE and what doesn't? Or is it just up
+> to the CVE pool manager as to what they feel is of note?
 
-There is an XSS vulnerability in the number_to_currency helper in Ruby on Raile. This vulnerability has been assigned the CVE identifier CVE-2013-6415.
+CVEs are given to vulnerabilities.
+A detailed explanation of what these are can be found here:
+https://cve.mitre.org/about/terminology.html
 
-Versions Affected:  All.
-Fixed Versions:     4.0.2, 3.2.16.
-
-Impact 
------- 
-The number_to_currency helper allows users to nicely format a numeric value. One of the parameters to the helper (unit) is not escaped correctly.  Application which pass user controlled data as the unit parameter are vulnerable to an XSS attack.
-
-All users passing user controlled data as number_to_currency's unit parameters should either upgrade or use one of the workarounds immediately. 
-
-Releases 
--------- 
-The 4.0.2 and 3.2.16 releases are available at the normal locations. 
-
-Workarounds 
------------ 
-
-The workaround for this issue is to escape the value passed to the :unit parameter.  For example, replace code like this:
-
-  <%= number_to_currency(1.02, unit: params[:currency]) %>
-
-With code like this
-
-  <%= number_to_currency(1.02, unit: h(params[:currency])) %>
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-
-* 4-0-number_to_currency_xss.patch - Patch for 4.0 series 
-* 3-2-number_to_currency_xss.patch - Patch for 3.2 series 
-
-Please note that only the 4.0.x and 3.2.x series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-Credits 
-------- 
-
-Thanks to Ankit Gupta for reporting the issue to us and working with us on a fix.
 
 -- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-2-number_to_currency_xss.patch" of type "text/plain" (2897 bytes)
-
-View attachment "4-0-number_to_currency_xss.patch" of type "text/plain" (2249 bytes)
-
-Content of type "application/pgp-signature" skipped
+Eitan Adler
