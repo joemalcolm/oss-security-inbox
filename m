@@ -1,54 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/10/20
-Message-ID: <5256EEEC.9000609@redhat.com>
-Date: Thu, 10 Oct 2013 12:16:12 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/16
+Message-ID: <50FD8533.3040500@redhat.com>
+Date: Mon, 21 Jan 2013 11:13:07 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: dropbear sshd daemon 2013.59 release
+Subject: Re: CVE Request - Wordpress 3.5 Full-path disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 10/10/2013 11:30 AM, Seth Arnold wrote:
-> On Thu, Oct 10, 2013 at 03:27:07PM +0200, Marcus Meissner wrote:
->> (Kurt, I looked for your howto, but my googlefu today is weak.)
+On 01/21/2013 07:00 AM, Henri Salo wrote:
+> On Mon, Jan 21, 2013 at 11:29:45AM +0000, Giles Coochey wrote:
+>> Wouldn't setting PHP "display_errors" be for development only,
+>> the entire point of the directive is to give the developer more 
+>> information 'in page'.
+>> 
+>> http://php.net/manual/en/errorfunc.configuration.php#ini.display-errors
+>>
+>>
+>> 
+Quoting:
+>> "This is a feature to support your development and should never
+>> be used on production systems (e.g. systems connected to the 
+>> internet)."
 > 
-> It's unfortunately not ranked well (either in Google or, for
-> giggles, Bing). Everything else Kurt does with CVEs drowns it
-> out...
+> You are correct. No CVE, but WordPress should still fix this.
+> Please note that some configuration errors still get CVE, but this
+> is not one of those in my opinion/knowledge. Path disclosures are
+> usually low-priority issues.
 > 
-> https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
->
->  Unless someone gives you this URL, you're just never going to find
-> it. Capabilities are alive and well. :)
-> 
-> Thanks
-> 
+> --- Henri Salo
 
-I updated the Wikipedia page and added a link to it a while ago as well:
-
-http://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures
-
-in references and external links.
+It's less about severity (there are actually CVE's with a CVSS2 score
+of 0), and more about documentation in this case. Setting
+"display_errors" to "On" for PHP is an EXPLICIT security NONO and
+generally well known (and the default is "Off"), so basically this is
+a "don't point the gun at your foot and pull the trigger because it
+will hurt" situation.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSVu7sAAoJEBYNRVNeJnmT75sQANrWJuzJBDwBW3tQOEZC0COW
-qIPh9hGovOdIAFK+iNDWKWSPPdrERBsHMJA0WadoXIwdF1peBpjxwDx0gZaRoVZh
-AFZEProMu0+IkkyabTlao/qEMpOpPEXfuZClxFsosl89C7RR8E5El8NYpi7zfGjP
-e0VznPx83iCTi6NwL/z8iOSmdaBF2PDty9pybFctI8yXIEk/ir1b8HxR0vU5/cJe
-ooBKcD8pM081vkNWFq2UgFXCfkbJKNSeG2Gk3rQH6TrPegfRmtAKzIwA/nMOGKYJ
-oIEEyEljatp3UFOilV1XK9Tk0PrDz4mOV1CwrojL+7hlSrOc82/PlNLhA55dXEoK
-exijQ06fivRMzRG70PJst1ia4y9SI6+6Kzjl2zGlOHUmpdHSKFLg3+eGUlme/svQ
-DHLcH1Ib80biVRQdsPEZF1+Abh5wTHYCn1YaPHbzic2khhn4NPvwxU0S8D1blJj+
-Bi3ZS5Fs2T6Rafs7HjhiXWrWd/O6gpivZ9S5WSS+AcKyOnGbku7toAumeSAJExAF
-xIK4GwI/swdfp+h57HIW/HKmvH2HLNkvIjUYA2p4F/0s1ulymS9j1HZExESyEw4h
-ykMOXmUMrkDbK1ZKH/Q6b71FJ+zu2LGIoGB090i8wZIh2x1NYZb0xHAwBVHK8wH7
-VDb4JR2O2ZlwFgl3NqYF
-=u8pF
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ/YUzAAoJEBYNRVNeJnmTIKAP/AxsgsBW9HEKF9H9GXgtg/lv
+47f+OlN6RXcD42cNvc++aguFHRQ4nLvxJszV8jthXAwLqZvWAKCbQgb5rpCrp09M
+wq7wStv9vUmTF4/UPZFvw+jXllDFNwrAO9ugYHdMr5nBTaM/gOim1kD9Q/SvaqaN
+xH+piAb9C7+mFqzVRQslhTie+Ps05L2jq9pFNfgBgVSbjwJRCrcvtNkRc0AHajKf
+I4xyb4EgXMGBxvKvQIFpHZcIeTjxQo5JlbbkMoliF8kdO97gXkNL6wwPo2Xo1uPV
+y95cAslDfV1BUJ/4CpFLcxtrLCoHhyA9IpQi10CBrNW107pxaRSG3WWx79BD80vR
+YVNFNH/Waq0BqRGwJ2j3amyf7xvm/ziBPbQhmGQWLLDcvD2dUDhjcBjN/sNcETap
+WWvXwDXnryJHErVyaC7C2n34bzPHQ38RbhWTFbybJOS9egQOPHXGo+HBUy8lspew
+SF9jumMnrMtMPZoJYO2s+djXsXVIaibKKdCteKl+m0+S0uxHCFuMlBmUqMZ3nWAN
+ThLiTjTeA58S0WySfeukLaxNVH9YJE9ETYpztGM3NMg+LeUOaG/W3Rh5QWRAn8wK
+3Udm6/ZiOFG0u7ebfReCPOyawuDhRiTqHavQDxdz6bD4R0mTrvvtvfMOOPKLhOLg
+KfFQhww05tRUEXR1crGJ
+=Xgak
 -----END PGP SIGNATURE-----
