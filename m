@@ -1,64 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/19
-Message-ID: <527800EC.6090808@redhat.com>
-Date: Mon, 04 Nov 2013 13:17:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/15
+Message-ID: <50FD57E4.1060203@msgid.tls.msk.ru>
+Date: Mon, 21 Jan 2013 18:59:48 +0400
+From: Michael Tokarev <mjt@....msk.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: lighttpd using vulnerable cipher suites with SNI
+CC: Sebastian Krahmer <krahmer@...e.de>, coley@...us.mitre.org
+Subject: Re: CVE Request coreutils
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 11/04/2013 10:16 AM, Stefan Bühler wrote:
+21.01.2013 18:54, Sebastian Krahmer wrote:
 > Hi,
 > 
-> I'd like to request a CVE id for the following bug:
-> 
-> Nathan Bishop <me@...shop.name> reported 
-> (http://redmine.lighttpd.net/issues/2525) that lighttpd uses
-> vulnerable cipher suites when SNI is used:
-> 
-> $HTTP["Host"] == "example.com" { ssl.pemfile =
-> "/etc/ssl/certs/example.com.pem" } $SERVER["socket"] == ":443" { 
-> ssl.engine = "enable" ssl.pemfile = "/etc/ssl/certs/default.pem" 
-> ssl.cipher-list = "HIGH" }
-> 
-> This config uses the "DEFAULT" cipher list for "example.com",
-> which includes export ciphers.
-> 
-> More details are available at: 
-> http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2013_01.txt
->
->  Please note that the patch is not final yet, and can't be found in
-> SVN.
-> 
-> We're still discussing: * whether other options should work in SNI
-> context (we could add all ssl.ca-files to all SSL_CTX instances) *
-> whether to set a default ssl.cipher-list, and which string to pick
-> 
-> regards, Stefan
-> 
+> Can someone assign a CVE id for a buffer overflow in coreutils?
+> Its the same code snippet (coreutils-i18n.patch) and it affects sort, uniq and join:
 
-Please use CVE-2013-4508 for this issue.
+It's probably worth to mention that these are SuSE-specific and not in upstream,
+if I understand correctly.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+> https://bugzilla.novell.com/show_bug.cgi?id=798538
+> https://bugzilla.novell.com/show_bug.cgi?id=796243
+> https://bugzilla.novell.com/show_bug.cgi?id=798541
 
-iQIcBAEBAgAGBQJSeADrAAoJEBYNRVNeJnmT8bcQAI3dNXYLuIug+kRLz1wfWSay
-xTY0SBB53w/fvjHYEc2hDHBnGfEeIXuRU4DVO0HVZB2i3djy4sEI1z1jlrWP6WW8
-Xk/Xyu63vfuMBoLmUqtKQQ9Zn88uekyr2h5lY/3VlILZtcB5Hfk9SpxcaQzBhOP5
-T8fmTR8qsIgWVK1XfNJNmeA1teEReFu5vboTNZQALGKb0zivyqHAWZAORAJ4Pf+6
-d0d4ZixNimFQFQQc+HXE28IuRQ8uf27uBjqWgdjdYh/rxtnOnGamfEIwvCCHyT7A
-7avX1lxN4w+2oqFfkHISp6o3LXwmePtDUkYVa1zPmTO6TYmlv8e01mSMYwuOlb0G
-N53LxD1nKRlWa5HutXk1IudTx/WT/dKpM6b6JE56jvqAS16mrxneCPDcPmt4N5bL
-Yc/W4SVdcLjWar3s0SKHbADCoDLJEawEiXhjcikLbUjOjXMfiRtPyfncr6hyFn5u
-jQ2cF/8C3En0eyR3iBgYm9kzdK23+/cpzfdQpN5p3MO7mqd3ZChNZzx9PdZrwKpd
-s+CSD0TVRrNRZD/PaHnoYnEkkmCyPmmQXcS/jE+3ATn33LoYwHUx1tfHpiuJQMqc
-s8w9Q7u/vrHpM8lephvYYdHOzLXm+ai2i2RU+9/PnInygP8MII7ztVOlqA9eQM7X
-kzFIJ4X8r1Exiy+Ihpft
-=1Bl4
------END PGP SIGNATURE-----
+Thanks,
+
+/mjt
