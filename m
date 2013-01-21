@@ -1,36 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/22/15
-Message-ID: <52166DA8.1000201@gigawatt.nl>
-Date: Thu, 22 Aug 2013 21:59:36 +0200
-From: Harald van Dijk <harald@...awatt.nl>
-To: Tavis Ormandy <taviso@...gle.com>
-CC: dash@...r.kernel.org, oss-security@...ts.openwall.com
-Subject: Re: [PATCH] implement privmode support in dash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/9
+Message-ID: <50FD26A9.2070309@coochey.net>
+Date: Mon, 21 Jan 2013 11:29:45 +0000
+From: Giles Coochey <giles@...chey.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request - Wordpress 3.5 Full-path disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 22/08/13 19:59, Tavis Ormandy wrote:
-> Hello, this is a patch to add privmode support to dash. privmode attempts to
-> drop privileges by default if the effective uid does not match the uid. This
-> can be disabled with -p, or -o nopriv.
+On 21/01/2013 10:59, Henrique Montenegro wrote:
+> The issue can be seen only when PHP's display_errors is set to On.
+> I have setup a default installation of wordpress 3.5 to display the issue.
+>   It can be accessed via the URL: http://blog.gilgalab.com.br/?s[]=1
+>
+>
+>
+Wouldn't setting PHP "display_errors" be for development only, the 
+entire point of the directive is to give the developer more information 
+'in page'.
 
-Hi Tavis,
+http://php.net/manual/en/errorfunc.configuration.php#ini.display-errors
 
-Your approach definitely has my support (FWTW), but there are two
-aspects that surprised me, and are different from bash and FreeBSD's sh:
+Quoting:
+"This is a feature to support your development and should never be used 
+on production systems (e.g. systems connected to the internet)."
 
-You named the option nopriv, while bash and FBSD use the name
-privileged. I think it is likely to confuse people if "bash -o
-privileged" and "dash -o nopriv" do the same thing, and that it would be
-better to match bash and give the option a positive name, such as
-"priv", or perhaps even match them exactly and use "privileged".
 
-In bash and FBSD, after starting with -p, set +p can be used to drop
-privileges. With your patch, dash accepts set +p, but silently ignores it.
-
-How does something like the attached, to be applied on top of your
-patch, look?
-
-Cheers,
-Harald
-
-View attachment "dash-priv-addon.patch" of type "text/x-patch" (4150 bytes)
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4968 bytes)
