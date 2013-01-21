@@ -1,77 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/07/3
-Message-ID: <CAD1NwhjB9Nep+99kiewXeAoWTdXYiZBeVDGzCBzmKZD2gRs=jw@mail.gmail.com>
-Date: Fri, 7 Jun 2013 13:34:35 +0200
-From: Lukas Reschke <lukas@...cloud.org>
-To: Open Source Security <oss-security@...ts.openwall.com>, announcements@...cloud.org
-Subject: ownCloud Security Advisory oC-SA-2013-028
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/11
+Message-ID: <alpine.LFD.2.03.1301211728280.15280@redhat.com>
+Date: Mon, 21 Jan 2013 18:02:46 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss-security@...ts.openwall.com
+cc: kargig@...d.gr
+Subject: Re: Linux kernel handling of IPv6 temporary addresses
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
++-- On Sun, 20 Jan 2013, George Kargiotakis wrote --+
+| Yes and no. When flooding finishes everything still works ok,
+| temp. addresses haven't been disabled, but when the preferred timer
+| of the temp. address of the original acquired prefix expires, the kernel
+| won't be able to acquire a new temporary address because the interface
+| is already full with 16 addresses from flooding. An already acquired
+| address only gets removed when it's validity timer expires. So, the
+| host will be left using the global non-temp address acquired by slaac
+| until another 'slot' (from the default 16) becomes free/expires.
+| 
+| Summarizing, one is still able to remotely, inside a LAN, cause
+| problems to another host, that is make it lose it's temp. address
+| functionality at least for some time.
 
-# Multiple XSS vulnerabilities (oC-SA-2013-028)
-Web: http://owncloud.org/about/security/advisories/oC-SA-2013-028/
+  Ah right. I just wanted to confirm if it makes sense to push that patch 
+upstream. I think we'll defer it for now.
 
-## AFFECTED SOFTWARE
-- - ownCloud Server < 5.0.7 (CVE-2013-2150, CVE-2013-2149)
-- - ownCloud Server < 4.5.12 (CVE-2013-2150, CVE-2013-2149)
-- - ownCloud Server < 4.0.16 (CVE-2013-2149)
-
-## RISK
-- - Medium
-
-## COMMITS
-### CVE-2013-2150
-- - stable5: [b9a85f2](https://github.com/owncloud/apps/commit/b9a85f2)
-- - stable45: [773e3de](https://github.com/owncloud/apps/commit/773e3de)
-### CVE-2013-2149
-- - stable5: [752a316](https://github.com/owncloud/core/commit/752a316)
-- - stable45: [600afad](https://github.com/owncloud/core/commit/600afad)
-- - stable4: [17b44bf](https://github.com/owncloud/core/commit/17b44bf)
-
-## DESCRIPTION
-Cross-site scripting (XSS) vulnerabilities in js/viewer.js inside the
-files_videoviewer application via multiple unspecified vectors in all
-ownCloud versions prior to 5.0.7 and 4.5.12 allows authenticated
-remote attackers to inject arbitrary web script or HTML via shared
-files. (CVE-2013-2150)
-
-Cross-site scripting (XSS) vulnerabilities in core/js/oc-dialogs.js
-via multiple unspecified vectors in all ownCloud versions prior to
-5.0.7 and other versions before 4.0.16 allows authenticated remote
-attackers to inject arbitrary web script or HTML via shared files.
-(CVE-2013-2149)
-
-## Credits
-The ownCloud Team would like to thank Mateusz Goik (aliantsoft.pl /
-CVE-2013-2149 / CVE-2013-2150) for discovering this vulnerabilities.
-
-## RESOLUTION
-Update to ownCloud Server 5.0.7, 4.5.12 or 4.0.16
-http://download.owncloud.org/community/owncloud-5.0.7.tar.bz2
-http://download.owncloud.org/community/owncloud-4.5.12.tar.bz2
-http://download.owncloud.org/community/owncloud-4.0.16.tar.bz2
-
-- --
-ownCloud
-Your Cloud, Your Data, Your Way!
-
-GPG: 0xEB32B77BA406BE99
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (Darwin)
-
-iQIcBAEBAgAGBQJRscRMAAoJEOsyt3ukBr6Z03QP+wXpp0Rxm0InVb0+t9JjHy7i
-ALbO4LbrENwf01Kd7vAkf1kLwhXzwXw7PCkc+tGyDpm4TGePxyMIB1YedwwrNCO9
-3AhIcpEAB8nvJE8mlPIBg2NhJsva2nokSu5muFmjp1KfEz+t/MRK7P5zAaWJSqUS
-912uPx0vEaMz6LpHfB0v/VpXwCcNAwohChebeUGv4vy/FpOxUBuOAGZWrmq3iteQ
-yPNlVGoN5fnfRORKgud2j58HRnGuvfO+Ttnun2iZKvV1b1ZFzoKTZVJ+4PT3zNBM
-Xc5yu9VL6NWe+Sqt3geyUdUgA8yLqdo76jk9yXUnwA1VYCwGCog66GBQKcoi/wyh
-/3j+y+Xp2mPhjn+75UED4Ul4jkH61HrxTygWcm5Iz3vgK0bJ8VlYiLlgETLpnBZ6
-DLAzR0J+2vZ5E7UOCTyb/syZHpWgXA2VYcCeBi2cZ3nM+fQi9g5QFMNe1RCuxaVN
-y4e4EYMEjvMcrGVj85NQrZ+xRWcCLhVjjtOdxvL3xR+gC/oyd2j3b/sKA5rJSzm/
-411NwpYMB1cpfNo1ZeXh8nYH1kQ3V0VX3wnNZbIpyhe6mSrKgJrNT5vMoc3tavvI
-+6/NaitHDZJh+16ZHFGk+s2tPxiMvJlWE3ZLf24yLNyvZIuESs72caAWtb/f3nVM
-+gAGvkDUBqIQFY5cT1KH
-=6ItI
------END PGP SIGNATURE-----
+Thanks so much.
+--
+Prasad J Pandit / Red Hat Security Response Team
+DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
