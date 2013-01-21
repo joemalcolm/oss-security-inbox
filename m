@@ -1,29 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/20/7
-Message-ID: <20130220014723.GD31018@kroah.com>
-Date: Tue, 19 Feb 2013 17:47:23 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/21/6
+Message-ID: <1525804.3Xu7lH2NqD@devil>
+Date: Mon, 21 Jan 2013 10:59:08 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel race condition with PTRACE_SETREGS (CVE-2013-0871)
+Subject: Re: CVE Request - Wordpress 3.5 Full-path disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 19, 2013 at 12:40:50PM -0800, Julien Tinnes wrote:
-> On Sat, Feb 16, 2013 at 2:49 AM, Solar Designer <solar@...nwall.com> wrote:
-> > The mainline commits from January are by Oleg Nesterov of Red Hat.  Why
-> > wasn't(?) the issue handled with due severity within Red Hat, then -
-> > such that Red Hat would at the very least have a statement on whether
-> > and which of their kernels are affected by now.  My guess is that the
-> > full severity of the issue might not have been understood by Oleg at the
-> > time, but it's only a guess.
-> 
-> That's the eternal debate :) Since upstream doesn't want to handle
-> security and disclosure, I sure wish that distro vendors could
-> regroup, step-up and do it.
+On Monday 21 January 2013 00:11:54 Kurt Seifried wrote:
+> I can't get this to work anywhere. Does it require a specific theme or
+> configuration? Do you have details that can aid in reproduction?
 
-I know some people don't "like" how the kernel team handles bug reports
-and fixes, but seriously, this should have been pretty obvious by anyone
-watching the stable kernel releases, which all distros do.  The fact
-that the distros didn't notify others is not the kernel community's
-fault, sorry.
-
-greg k-h
+I can't reproduce too.
+-- 
+Agostino Sarubbo / ago -at- gentoo.org
+Gentoo Linux Developer
