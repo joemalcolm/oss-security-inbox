@@ -1,33 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/18/2
-Message-ID: <20131018151826.GL2810@redhat.com>
-Date: Fri, 18 Oct 2013 09:18:26 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2013-4419: libguestfs insecure handling of socket file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/9
+Message-Id: <E1TxcYd-0007H4-74@xenbits.xen.org>
+Date: Tue, 22 Jan 2013 12:02:27 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 35 (CVE-2013-0152) - Nested HVM exposes host to being driven out of memory by guest
 Content-Type: text/plain; charset=utf-8
 
-As reported to the linux-distros mailing list:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+	     Xen Security Advisory CVE-2013-0152 / XSA-35
+                           version 3
 
-libguestfs is a library for accessing and modifying guest disk images.
-It was found that guestfish, which enables shell scripting and command
-line access to libguestfs, insecurely created the temporary directory
-used to store the network socket when started in server mode (using the
-"--listen" option). If guestfish were run with the "--listen" option, a
-local attacker could use this flaw to intercept and modify other users'
-guestfish commands, allowing them to perform arbitrary guestfish actions
-(such as modifying virtual machines) with the privileges of a different
-user, or use this flaw to obtain authentication credentials.
+       Nested HVM exposes host to being driven out of memory by guest
 
-This issue was discovered by Michael Scherer of the Red Hat Regional IT
-team.
+UPDATES IN VERSION 3
+====================
 
-Further details are available in our bug, including the patch.
+Public release.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1016960
-https://www.redhat.com/archives/libguestfs/2013-October/msg00031.html
+ISSUE DESCRIPTION
+=================
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Guests are currently permitted to enable nested virtualization on
+themselves. Missing error handling cleanup in the handling code makes
+it possible for a guest, particularly a multi-vCPU one, to repeatedly
+invoke this operation, thus causing a leak of - over time - unbounded
+amounts of memory.
+
+IMPACT
+======
+
+A malicious domain can mount a denial of service attack affecting the
+whole system.
+
+VULNERABLE SYSTEMS
+==================
+
+Only Xen 4.2 and Xen unstable are vulnerable. Xen 4.1 and earlier are
+not vulnerable.
+
+The vulnerability is only exposed by HVM guests.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+To fix both XSA 34 and XSA 35, first apply xsa34-4.2.patch from XSA 34
+and then *also* apply xsa35-4.2-with-xsa34.patch from this advisory.
+
+To fix this issue without addressing XSA 34, use xsa35.patch.
+
+$ sha256sum xsa35*.patch
+8372322e986bc2210f0d35b4d35a029301bd28fc1dffb789dff1436eb2024723  xsa35-4.2-with-xsa34.patch
+e69b01033b0fa4c3d175697566d2f0b161337e8d206654919937f77721dbf866  xsa35.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJQ/ny+AAoJEIP+FMlX6CvZajwIAJ2/2xGmEbI44LFJ4rGehOY8
+CZRlTzyPLUt1eVk6lD7qwX1ondGEAsFwLrZdFp+c08Cle7o2RT502EwptPGIRhkc
+8pPjOgqWr/YjHC/B0VAoCZOF08HsIpDU2wiaxKhcFODNoeUb2z01OL5G+7I60HzV
+54F70rCBx229Myhq9zqCV4a1XW+73k6NL7bpRICAME5fDy+8q4gcF0UDLv6MZmNV
+PB9Ey2kiH6TMZO4Si+ekF4GQzfvje5/xTU/v0bHq6r7SxhHXq4aJ5e6jER0vlTsr
+0HbE5uG/4LimCmc77q0ZiHOGg61gc/V1imfsUOTnnfaifw4qReCQHXpMAOdg9Ww=
+=O88v
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa35-4.2-with-xsa34.patch" of type "application/octet-stream" (773 bytes)
+
+Download attachment "xsa35.patch" of type "application/octet-stream" (919 bytes)
