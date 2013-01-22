@@ -1,92 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/30/3
-Message-ID: <51D0B330.8010301@redhat.com>
-Date: Sun, 30 Jun 2013 16:37:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/12
+Message-ID: <CAD1Nwhj5wYkmYBTX1C0Ct8tkS_rCKtAZm6XstNDO5hdLAry6BQ@mail.gmail.com>
+Date: Tue, 22 Jan 2013 16:49:12 +0100
+From: Lukas Reschke <lukas@...cloud.org>
 To: oss-security@...ts.openwall.com
-CC: Alexandre Rebert <alexandre.rebert@...il.com>, coley@...re.org, Russ Allbery <rra@...nford.edu>, cve-assign@...re.org
-Subject: Re: 1.2k bug reports for Debian, some may be security
+Cc: "security@...cloud.com" <security@...cloud.com>
+Subject: ownCloud Security Advisories - 2013-001 & 2013-002
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Multiple XSS vulnerabilities (oC-SA-2013-001)
+=================================
+Web: http://owncloud.org/about/security/advisories/oC-SA-2013-001/
 
-On 06/27/2013 09:04 PM, Alexandre Rebert wrote:
-> Hi,
-> 
-> I can confirm most of the bugs have no security implications, and 
-> should probably not get CVEs. Given the high number of crashes we 
-> found, it is highely likely that some will impact security though.
+CVE IDENTIFIERS
+==============
+CVE-2013-0201, CVE-2013-0202, CVE-2013-0203
 
-Please let me know about this laong with impact/etc so I can confirm
-they are security related. It's probably easiest to either post the
-CVE requests here if the issue is public, if it needs to be private I
-suggest using distros@ or emailing me directly. I would also ask that
-you notify distros@ of security issues in any event so vendors can
-coordinate releases. For more info people see:
+AFFECTED SOFTWARE
+==================
+ownCloud Server < 4.5.6
+ownCloud Server < 4.0.11
 
-people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+DESCRIPTION
+===========
+Multiple cross-site scripting (XSS) vulnerabilities in ownCloud 4.5.5
+and 4.0.10 and all prior versions allow remote attackers to inject
+arbitrary web script or HTML via
 
-> Mayhem considered multiple input sources during the analysis of
-> the 23K binaries: environment variables, command line arguments,
-> files and standard input. Sockets was not one of them. That means
-> that we only need to consider two attack vectors: (1) crashes of
-> setuid/setgid programs, and (2) crashes with input files that are
-> potentially untrusted.
-> 
-> For (1), I have not checked whether we found crashes in
-> setuid/setgid programs yet. It is however straightforward to
-> compile a list and forward it to whoever is filing the CVEs. They
-> might not be exploitable, but a crash in such programs is
-> concerning and might be worth a CVE. Let me know if that's
-> something you'd like us to do.
-> 
-> For (2), it is difficult to automatically identify such crashes.
-> As Steve mentioned, it may require a deep familiarity with the
-> program. Package maintainers or upstream developers are the most
-> suited people to judge whether a crash should be considered
-> security critical. It is an unsatisfying solution, as the burden to
-> report vulnerabilities would lie on them, but I don't see a way
-> around it.
+- the GET parameters to resetpassword.php in
+core/lostpassword/templates/ (CVE-2013-0201)
+  - Commits: c05c8ab (stable45), 4e2b834 (stable4)
+  - Risk: Medium
+  - Note: This is a reflected XSS, which can be only abused using
+Internet Explorer 9 and prior.
+- the mime parameter to mimeicon.php in apps/files/ajax/ (CVE-2013-0201)
+  - Commits: b8e0309 (stable45), f603454 (stable4)
+  - Risk: Medium
+  - Note: This is a reflected XSS, which only affects ownCloud
+versions hosted by Windows.
+- the token parameter to sharing.php in apps/gallery/ (CVE-2013-0201)
+  - Commits: 34ac2f5 (stable45), f71f0ad (stable4)
+  - Risk: Medium
+  - Note: This is a reflected XSS, for a successful exploitation the
+"gallery" app needs to be enabled.
+- the action parameter to sharing.php in core/ajax/ (CVE-2013-0202)
+  - Commits: fb334f3 (stable45), 306d5ee (stable4)
+  - Risk: Low
+  - Note: This is a self XSS, for a successful exploitation the user
+needs to enter malicious Javascript on his own.
+- the POST parameters to new.php in apps/calendar/ajax/event/ (CVE-2013-0203)
+  - Commits: 9e6ba80e (stable45), 708bd (stable4)
+  - Risk: High
+  - Note: This is a stored XSS, for a successful exploitation the
+"calendar" app needs to be enabled. An authenticated remote attacker
+may be able to share this crafted event with other users.
+- the url parameter to addBookmark.php in apps/bookmarks/ajax/ (CVE-2013-0203)
+  - Commits: 6aba1e8 (stable45), 3f37063 (stable4)
+  - Risk: Low
+  - Note: This is a stored XSS, for a successful exploitation the
+"bookmarks" app needs to be enabled.
 
-It's the most efficient, I mean Fedora/Debian/etc all have thousands
-(Debian is 50k?) packages, that's a lot of software, asking security
-researchers to be intimately familiar with it isn't realistic. Plus
-most Open Source upstreams want to secure their code and won't mind
-(usually).
+RESOLUTION
+==========
+Update to ownCloud Server 4.5.6 or 4.0.11
+http://mirrors.owncloud.org/releases/owncloud-4.5.6.tar.bz2
+http://mirrors.owncloud.org/releases/owncloud-4.0.11.tar.bz2
+
+CREDITS
+=======
+The ownCloud Team would like to thank Mathias Karlsson
+(CVE-2013-0201), Ahmad Ashraff (CVE-2013-0202) and Frans Rosén
+(CVE-2012-0203) for discovering this vulnerabilities.
 
 
->> I was under the impression from an incomplete read of the MAYHEM
->> paper that it could generate shellcode for code execution, yet
->> I'm only hearing of reports for crashes.  If code execution can
->> be proven, then that may be informative.
-> 
-> Yes, that is correct. Mayhem actually generated a couple of
-> exploits from the crashes we found. We are currently looking at
-> them individually, and we will report all exploits that are
-> security issues.
-> 
-> Regards, The Mayhem Team
-> 
+=======================================================================
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Code execution in external storage (oC-SA-2013-002)
+======================================
+Web: http://owncloud.org/about/security/advisories/oC-SA-2013-002/
 
-iQIcBAEBAgAGBQJR0LMvAAoJEBYNRVNeJnmTiKAP/j3MKZOdarSXWFttCWSKCOZd
-kxnzm6TJBOD7llMxAE7d6ftEolN3o26bqKBtAxKRKwHyv7KUxBokrTPRsIu5sYjk
-HckD8T/kJebjHxlxH6LeXEhYWyYvudjnX5gKBfnFkNim9VdvQ73xnQ6Ea+MzSebq
-Dr4uo6PkxvGNPpZCQCc4NAlWJ/Z1xS5s1SbG1ukkhyGlBJ+NmU6DGbWEvN5oQe/C
-WR8xJrQgt6AnttmgzMMTmDwxWwUcZzOhb3CIORd7V3qLkEIRKJyG+Ncl13TL+lnn
-5zAgR9gg/BC4zBWKXauwFZmGqX8S7Rf0709npSah5F2J2lXc90yhPz+TZvVyFjKM
-DY0/OYIwdrU7kTpkXaUkVnQIN2xxQO5hg1JbAhAAW9Rj0eljJT8VRH97u2ZqfXtQ
-a6AoqiCc2VTaU+guiZOvE2f5ys/cbrJc8TCZWqSSCH80uUqHjtNOQMs0AZjbkvLb
-/5AszCFzjHbIhcP8NghqXvpQS+xOwURlertXD1ziaWNqcKedE2mYOEOVmEdK/oFb
-HrZv6NwRd8y/AGCzgsPyjwtfuguRaiAjPBTpaA6D26RmCwutKtPr76U+UPFpIX4/
-+YpZqUpJ7x7WzAzpFc56C0hJ1wPfk4MI6/Bqn5fkykp9WMgO/KV/PHZZG6+bxIPd
-5NguP55neGGbZ4GZyO8N
-=XbU4
------END PGP SIGNATURE-----
+CVE IDENTIFIER
+=============
+CVE-2013-0204
+
+AFFECTED SOFTWARE
+==================
+ownCloud Server < 4.5.6
+
+RISK
+====
+Critical
+
+COMMIT
+======
+0825f2c (stable45)
+
+DESCRIPTION
+===========
+Due to not sufficiently sanitizing the user input in
+“settings/personal.php” in ownCloud 4.5.x before 4.5.11 an
+authenticated remote attackers may be able to execute arbitrary code
+by entering special crafted PHP code in the mount point settings.
+
+Note: For a successful exploitation the “external storage” app needs
+to be enabled and the admin must allow users to edit their mount
+points.
+
+RESOLUTION
+==========
+Update to ownCloud Server 4.5.6
+http://mirrors.owncloud.org/releases/owncloud-4.5.6.tar.bz2
+
+CREDITS
+=======
+The ownCloud Team would like to thank Yuji Kosuga for discovering this
+vulnerability.
