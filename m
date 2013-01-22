@@ -1,39 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/26/2
-Message-ID: <51513918.4090401@redhat.com>
-Date: Mon, 25 Mar 2013 23:58:48 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE-2013-1895 py-bcrypt 0.2 concurrency vulnerability (auth bypass)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/8
+Message-ID: <20130122082746.GB28839@alf.mars>
+Date: Tue, 22 Jan 2013 09:27:46 +0100
+From: Helmut Grohne <helmut@...divi.de>
+To: oss-security@...ts.openwall.com
+Subject: predictable /tmp filename in git-extras
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Please assign a CVE identifier for the obvious predictable /tmp filename
+used in git-effort[1] and git-changelog[2]. The latter was discovered by
+Jonathan Wiltshire after my initial discovery of the former. The issue
+is already tracked within Debian[3] and there also is a solution[4].
 
-So py-bcrypt 0.2 has a concurrency vulnerability that can lead to auth
-bypass. I looked at the code diff between 0.2 and 0.3, looks ok.
+Thanks
 
-https://pypi.python.org/pypi/py-bcrypt
+Helmut
 
-Please use CVE-2013-1895 for this issue.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRUTkYAAoJEBYNRVNeJnmTXBcQALiB18nHUUBBxJjNJSENoEMh
-vlHilYbylh755S5a1hQueWkD4JXY6YSXv5mraKgKDqUMEvUlucBeC/sG66tCOEF1
-pxUqRNq2P88apmsdlwpB9N44gJNghXYkttz3NjDmIryYogePZRH06l1P73IF6lt+
-LHMrly3uhbXzxxZ385BGsUnMYuLxb4l7EdO3HYppZb6UV9kAEbr2sGh6sipMig4O
-o3LgvdIDPF8GkjEODS9EwpemE1kC1ce8Q7QmbpUWskGdPuRRM1Z/gy2MNLcqA+Cq
-bu/ivdV73dZjMyCHIWo760xYCesdxGy9WLJXBCeGn6POK+7xgky5VphL9QS2CdeV
-NVp83MdQYJrEThSiZn0Ckhhf3zEI8Elv3BRUcsof7DpiLAuoautz3QMgM8u7VSu/
-yiyRe34+0FyG4VDV60zYyaVY7JH7rlJD9uS1ozJYyeZqtGR1zb4IsidtSx/xxkek
-50YFG+vvY6sX1Je58uzogO8qvgUZRFXkzXtZEG2lk9yRp4SkTtrfKHWSOxcgPsP9
-FYjf6o1f/JiG0gRuVIaMZleFbFccfnCUcOmj03yUyxJokZLm5fXBeBZw73kcIMxV
-4tiLSGS7tO936HG8JV0FnW9NKYy1eqfiEi34An/z3mpQO7gezWVq7xyVdIj5TQF7
-tZahCFy47MewIBtSbC9Z
-=bbTJ
------END PGP SIGNATURE-----
+[1] https://github.com/visionmedia/git-extras/blob/master/bin/git-effort
+[2] https://github.com/visionmedia/git-extras/blob/master/bin/git-changelog
+[3] http://bugs.debian.org/698490
+[4] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=32;filename=git-extras-1.7.0-1.2-nmu.diff;att=1;bug=698490
