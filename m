@@ -1,31 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/09/10
-Message-ID: <CAMB8f9OFWiz8YGC6aE=ytRP3u+P_sy4oMG1Bz_PxQuLNC9fjcw@mail.gmail.com>
-Date: Fri, 9 Aug 2013 15:35:02 -0400
-From: Evan Teitelman <teitelmanevan@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/3
+Message-ID: <50FE123E.1070405@redhat.com>
+Date: Mon, 21 Jan 2013 21:14:54 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: ago@...too.org
-Subject: Re: CVE request: nullmailer world readable /etc/nullmailer/remotes
+CC: Yves-Alexis Perez <corsac@...ian.org>, 697666@...s.debian.org
+Subject: Re: CVE request for Movable Type
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 9, 2013 at 1:15 PM, Agostino Sarubbo <ago@...too.org> wrote:
-> Hello,
->
-> On Gentoo, the file /etc/nullmailer/remotes is installed with wrong
-> permissions:
->
-> ~ # ls -la /etc/nullmailer/remotes
-> -rw-r--r-- 1 root root 971 Aug  9 18:58 /etc/nullmailer/remotes
->
-> Nullmailer-1.11-r2 contains the fix, all prior versions are affected.
->
-> Please assign a CVE.
-> --
-> Agostino Sarubbo
-> Gentoo Linux Developer
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Here is a link to the bug listing in the Gentoo issue tracker:
-https://bugs.gentoo.org/show_bug.cgi?id=480376
+On 01/21/2013 01:48 PM, Yves-Alexis Perez wrote:
+> Hi,
+> 
+> Movable Type 4.38 has been released few weeks ago, fixing a
+> security issue in the upgrade page.
+> 
+> More information can be found at [1] but basically it looks like
+> missing input sanitation on the mt-upgrade.cgi page.
+> 
+> As far as I can tell, no CVE has been allocated yet, could someone 
+> allocate one?
+> 
+> Regards,
+> 
+> [1]:
+> http://www.movabletype.org/2013/01/movable_type_438_patch.html
 
-And the fixed build code:
-http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/mail-mta/nullmailer/nullmailer-1.11-r2.ebuild
+Please use CVE-2013-0209 for this issue.
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ/hI+AAoJEBYNRVNeJnmT1mMP/jDNdTdLcLUW2LXXZIO5L7yp
+P8krZsVT0A6jNJA4EK3wC/i7XPq8tWVW6zpRJhHEvyvpLovmu97EpIF/ULZxqmM6
+mFrtoaJzoqjTKKeHyLlEg2e0TOiMzo8vLGj/T6AoD8phV+1feu12I5AbMBun+41y
+inhcNDXZnL5qU8YCNWcY/YpfuheTbRlCehqt94RvIa2/24QFW7HXl9JxIsnZ0k2H
+RKERnL5daWorHxjuonUzZRz6N2ApES1py/d67eBSlnYtXr6KLMJzQA2NImkQpykL
+094cywuPp5hMjNiPf+RaVnLqJCzaJE6q6PP/iApWrA2id/BfyOEkLgygWr6zIwnG
+PYpqk94PmFlCcVjU0hXC3g8rXyvMf04iIQm5A52RLwr0VRMNvuW6Bbyu+RTHItTl
+bviGHmscpeEfCm+K7SH8bCXKsVaMEyYOJlNq7HpgDDj3ry9QoF6cf+vkHYI6SbG3
+w4Jsv3CDBRRNKunjN6Fp0se3s72LtcB2VUbcmNyMTzF4Qgx0tHD3w0lAsT64ukt6
++zlaCHK6MZiGTmUUGvv3wpOSp1LD0clfv8uhU7rn9H/vUR6X/IZGZKmB3e1Eeoak
+7tzkgR7SRYuagxZtqmQ413LZqoZ0CoSxW2toEg72ROX3JK2PtiSDFJAIEmIPSa2K
+kxWM2tY4evMUUqqOkQMl
+=XScr
+-----END PGP SIGNATURE-----
