@@ -1,53 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/10/4
-Message-ID: <Pine.GSO.4.64.1301101853330.4759@faron.mitre.org>
-Date: Thu, 10 Jan 2013 18:55:25 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/4
+Message-ID: <20130122072522.GA16211@suse.de>
+Date: Tue, 22 Jan 2013 08:25:23 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
-Subject: Re: Confirming CVE for ettercap buffer overflow flaw (CVE-2012-0722?)
+Cc: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE Request coreutils
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-Vincent,
+Generally, I see your point. However sometimes services running as
+root 'sort' or 'uniq' user input e.g. via grepping logfiles etc,
+so there is indeed a real chance to indirectly trigger a privilege 
+escalation. The past shows that segfaults can be turned into a 
+code exec often. Its a stack overflow after all.
 
-It's probably a typo of CVE-2013-0722 (i.e., the year should be 2013, not 
-2012).  However, I was not the individual who assigned the issue, so I'm 
-not 100% sure - will get back to you later.
-
-- Steve
+regards,
+Sebastian
 
 
+On Mon, Jan 21, 2013 at 06:33:07PM -0700, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 01/21/2013 01:39 PM, Vincent Danen wrote:
+> > * [2013-01-21 19:17:49 +0100] Moritz Muehlenhoff wrote:
+> > 
+> >>> Can someone assign a CVE id for a buffer overflow in
+> >>> coreutils? Its the same code snippet (coreutils-i18n.patch) and
+> >>> it affects sort, uniq and join:
+> >>> 
+> >>> https://bugzilla.novell.com/show_bug.cgi?id=798538 
+> >>> https://bugzilla.novell.com/show_bug.cgi?id=796243 
+> >>> https://bugzilla.novell.com/show_bug.cgi?id=798541
+> >> 
+> >> Could you send the faulty patch to the list so that distros can
+> >> validate that they don't include it themselves?
+> > 
+> > Red Hat/Fedora do include this patch, so it's more than just SUSE
+> > that ships them.  However, when I was looking at them last week,
+> > this struck me as just a non-exploitable crash and unless I'm
+> > missing something, I think it would be quite the stretch to call it
+> > a security flaw.
+> 
+> Agreed, there is no significant impact of exploitation and there is no
+> real easy way to trick a victim into doing this (and even if you do,
+> so what? now if it was code exec we might be talking about something
+> interesting).
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> 
+> iQIcBAEBAgAGBQJQ/exTAAoJEBYNRVNeJnmTrW0P/3B/L/SE7akzCPUU6TW9wy1L
+> Rpb8IIITLCz1qkb/gkUayUFJHQDjpEfmxNPJQWm1fJBrWI0bFr0wvHRuGHgyXZEA
+> Bl+js2w0uu7kAEEf1bHjZjf7zVHZ2tvoAdzi8ypLASZisxXwSa4acy++sqmPTrSf
+> oNOu3ChqG919VSLfD8Zf5AsGFs6G3tRzNEmYtvllt9liUFKgL6WsCNWNWUZdpWm2
+> crZPdyf343VvQcG5p7vYPEJLUBmnUSIauakssYPxGSp1vNBDNCC8xuVnyf1KOLfc
+> r3BHDPRX5ooe8EcoK/zgo1owK7tP9d7FT94gIsJte3OUOP5dq6LR/R0ZMMUsneNA
+> EjJScDCkh0hcZYCdJkqtah5aoAYI6IQvXJVtbwDM+rAvHfoMV2nkbWVZL0SgCMW/
+> B/hvhQJejFN3dd0wfiO5sQf5o2UxxYyIIpTE+GQP/pe8Q7F1BzR5nV87Jd3sWQY8
+> J873KRADBgt4RwbVUpI7dUL67UeRZCN4FiNtYYEuD5BeJWMSVoVXRHP7zBkx8GhG
+> vgfUc02+IyxS0HTO5HIxSJnLYOSa++SxJ4/w85aqcWPLrLHhL4s1k4GELPg/JhdW
+> Um35zAkcLNnxsxySCMIWZKEUTZ3xdpBspc3QVkw/IoyZpk+QhQTM2S/C3yWv4Q0z
+> xwHEEqesvl8l7UlpQ2mC
+> =rw4/
+> -----END PGP SIGNATURE-----
 
-On Thu, 10 Jan 2013, Vincent Danen wrote:
+-- 
 
-> This isn't on MITRE's site (reserved), and the initial advisory
-> indicates that this has a CVE of CVE-2012-0722.  Can someone confirm
-> that this is the correct CVE name?
->
->
->
-> A stack-based buffer overflow was reported [1],[2] in Ettercap <=
-> 0.7.5.1.  A boundary error within the scan_load_hosts() function (in
-> src/ec_scan.c), when parsing entries from a hosts list, could be
-> exploited to cause a stack-based buffer overflow via an overly long
-> entry.  In order to exploit this, a user must be tricked into loading a
-> malicious host file.
->
-> This has not yet been corrected upstream, but a proposed patch is
-> available [3].
->
-> The initial report [1] indicates that this was given the name
-> CVE-2012-0722.
->
-> [1] http://www.exploit-db.com/exploits/23945/
-> [2] https://secunia.com/advisories/51731/
-> [3] http://www.securation.com/files/2013/01/ec.patch
->
-> Also:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=894092
-> https://bugs.gentoo.org/show_bug.cgi?id=451198
->
-> -- 
-> Vincent Danen / Red Hat Security Response Team
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
