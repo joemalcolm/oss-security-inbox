@@ -1,25 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/2
-Message-ID: <alpine.LFD.2.03.1306051253500.10573@redhat.com>
-Date: Wed, 5 Jun 2013 13:23:02 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE Request: Linux kernel: fanotify: info leak in copy_event_to_user
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/1
+Message-ID: <50FDEBD6.7040502@redhat.com>
+Date: Mon, 21 Jan 2013 18:31:02 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Eitan Adler <lists@...anadler.com>
+Subject: Re: Whats worth a CVE?
 Content-Type: text/plain; charset=utf-8
 
-    Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Linux kernel built with the Filesystem wide access notification 
-(CONFIG_FANOTIFY) support is vulnerable to an information leakage flaw. The 
-leaked bytes could be accessed via read(2) call on the fanotify descriptor.
+On 01/21/2013 02:17 PM, Eitan Adler wrote:
+> On 21 January 2013 14:50, Scott Herbert
+> <scott.a.herbert@...glemail.com> wrote:
+>> Well the subject sum's the question up really, are their any
+>> fixed guidelines for what counts as a CVE and what doesn't? Or is
+>> it just up to the CVE pool manager as to what they feel is of
+>> note?
+> 
+> CVEs are given to vulnerabilities. A detailed explanation of what
+> these are can be found here: 
+> https://cve.mitre.org/about/terminology.html
+> 
+> 
 
-A user/program could use this flaw to leak kernel memory bytes.
+Further note, for example:
 
-Upstream fix:
--------------
-  -> https://lkml.org/lkml/2013/6/3/128
+A default account/password in a device or service. Is this a security
+issue or not? Different scenarios have different outcomes:
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+1) The default account/password is well documented. The services
+forces you to change the password when first run and will refuse to
+run until you do change the password. Generally not considered a vuln.
+
+2) The default account/password is well documented. The services does
+not force you to change the password when first run. Generally not
+considered a vuln as it falls into the "don't do stupid things" class
+of issues.
+
+3) The default account/password is not well documented or not
+documented at all but can be changed. Generally this would be
+considered a vulnerability.
+
+4) The default account/password is not well documented or not
+documented at all and can NOT be changed. Generally this would be
+considered a vulnerability.
+
+Similar things for other things, is it a security vulnerability or
+security hardening, or not a security issue at all? It definitely gets
+fuzzy/messy sometimes.
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ/evWAAoJEBYNRVNeJnmTQOgP/3E8ssvj1W3tLrgwmd8XXsaD
+2U4V6ZueEr0CyIxqlHXHDXBWgtXp2/LYt1ZQg6TkWALIUaj8kuptUd/DLO37+A2b
+bNEcpYXkTuRUgOqf80wXZJ7a6kxUiLCRHh1nIFsqLiiJ/LUG06M2bhJWoFeDVg7f
+BUM087WJeCGqsNyUAz21UKlqoGhuhELP0Uom7bmKy2P2q0btYqdQCI9Tlst0QP+3
+GsoMfUTSa5Ep8E3r7vIGwP6hYA8n/TLrB1Ze95f3ttsqEfWBdXfMYN01SYYw/khn
+aaSvPFK3oHwvb3gc/2fE9sTq8dgoSPKBh09jqbvVPw/NaOiipbOnIMk9eCNL0iNl
+0mHfD9hsS9h1XFiQmZbtmkPWQCjXIlL42llRjJgYAxGnm8QIH3LWqcJdrOALpCGa
+mawi39ItKsQuvLLPr8Jp7LoyeiFRBUKNMLO/QEGWG8rb7sleR3n+VifBqxenNZPP
+PJTWW1F5mm1vtB2+zLbz0tfR+7YS0t4j7iSrzg50veVum5Mn/kc+zh41Nvtr5yvd
+9F37Yfg1AMsoWEnw4ceT5SJs+UBsKQagD9E3EZPXc8W58l6bnTvJWbx4G7Cmsc9h
+JHUOF0sQGofKiFPTmY8jYXLoGoN5pYwHB/xyosdo9Pm1MgjUASK05tfTc/cemK7e
+BIo4RQ3BMeW7T/HlYZaz
+=50LH
+-----END PGP SIGNATURE-----
