@@ -1,49 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/08/1
-Message-ID: <5202F89C.9090603@redhat.com>
-Date: Wed, 07 Aug 2013 19:47:08 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/2
+Message-ID: <50FDEC53.9000702@redhat.com>
+Date: Mon, 21 Jan 2013 18:33:07 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Some Nagios /tmp vulns (no reply from upstream)
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE Request coreutils
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-No reply from upstream, these are both non critical so making public.
-Does anyone know the best way to contact Nagios upstream for security
-issues?
+On 01/21/2013 01:39 PM, Vincent Danen wrote:
+> * [2013-01-21 19:17:49 +0100] Moritz Muehlenhoff wrote:
+> 
+>>> Can someone assign a CVE id for a buffer overflow in
+>>> coreutils? Its the same code snippet (coreutils-i18n.patch) and
+>>> it affects sort, uniq and join:
+>>> 
+>>> https://bugzilla.novell.com/show_bug.cgi?id=798538 
+>>> https://bugzilla.novell.com/show_bug.cgi?id=796243 
+>>> https://bugzilla.novell.com/show_bug.cgi?id=798541
+>> 
+>> Could you send the faulty patch to the list so that distros can
+>> validate that they don't include it themselves?
+> 
+> Red Hat/Fedora do include this patch, so it's more than just SUSE
+> that ships them.  However, when I was looking at them last week,
+> this struck me as just a non-exploitable crash and unless I'm
+> missing something, I think it would be quite the stretch to call it
+> a security flaw.
 
-Nagios:
-https://bugzilla.redhat.com/show_bug.cgi?id=958002
-http://tracker.nagios.org/view.php?id=450
-Please use CVE-2013-4214 for this issue.
-
-Nagios-plugins:
-https://bugzilla.redhat.com/show_bug.cgi?id=957482
-http://tracker.nagios.org/view.php?id=451
-Please use CVE-2013-4215 for this issue.
-
-Both reported by Grant Murhphy (gmurphy@...hat.com) of Red Hat.
-
+Agreed, there is no significant impact of exploitation and there is no
+real easy way to trick a victim into doing this (and even if you do,
+so what? now if it was code exec we might be talking about something
+interesting).
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSAvibAAoJEBYNRVNeJnmTE5wP/0Lyp7Uv28hTqJ9fY13iG3vj
-/XgpPKkjeFYdlO7q9Ih/hO93kYdT45pi5QsUI1/MRYvDXI9JT6Box4AApibh5BCf
-bV8uF2egq5Gtrpa6mV2OBMAEkaLwAlT5Nigps0uIljCZwYKrpTDGjR0w4NFfUtuK
-HXQ9VwxcR3RIG4wduDDsbi/c/anyuxDhP0u5lMrV7D74CoHQxsMJ25kEWF6NSSF1
-kMwu0bSKZpxMv8wKvDOjK59ZBPlJl0fijV0C6NQ4xSzlz+8PpKTD76JKcViTzOZq
-DBELZFDoNogTLxPkg/KyVyJXL1AIpjvnwiUdKFv436z8qlD2XQ8dBUI5+dpQekRT
-OPJY+EypfBhGehao/trsVw6/DY3lszalff45//q39B2oAVehCvT9vTy8XdiMPPuS
-Z2ixqF4wQnFnO0VNYRlZRD0121zUZRMAkSnzJFVuBCy2J6GnUT8wfhhSu0X+XQ3+
-7EGy/dUi5fCUQvcOmmLIibz6+HE3f0FH+53rkfudGoRxTLNuOIOjhk2UfhtKtCKC
-R2WaZAfkOVKvTI9o6a96dRmOhQ3bgYyVn8/hiLxHv+zDof1Fk6GeCo+ZIBCmrp6i
-SoZ+1bfhKeDCdwwMewr75RGOVJzsyyDcx5UqKQhxmYqlWRIbSIxiZsE8dIj0dA14
-lwesnGNadux3ZA6WXX0Z
-=ffI4
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ/exTAAoJEBYNRVNeJnmTrW0P/3B/L/SE7akzCPUU6TW9wy1L
+Rpb8IIITLCz1qkb/gkUayUFJHQDjpEfmxNPJQWm1fJBrWI0bFr0wvHRuGHgyXZEA
+Bl+js2w0uu7kAEEf1bHjZjf7zVHZ2tvoAdzi8ypLASZisxXwSa4acy++sqmPTrSf
+oNOu3ChqG919VSLfD8Zf5AsGFs6G3tRzNEmYtvllt9liUFKgL6WsCNWNWUZdpWm2
+crZPdyf343VvQcG5p7vYPEJLUBmnUSIauakssYPxGSp1vNBDNCC8xuVnyf1KOLfc
+r3BHDPRX5ooe8EcoK/zgo1owK7tP9d7FT94gIsJte3OUOP5dq6LR/R0ZMMUsneNA
+EjJScDCkh0hcZYCdJkqtah5aoAYI6IQvXJVtbwDM+rAvHfoMV2nkbWVZL0SgCMW/
+B/hvhQJejFN3dd0wfiO5sQf5o2UxxYyIIpTE+GQP/pe8Q7F1BzR5nV87Jd3sWQY8
+J873KRADBgt4RwbVUpI7dUL67UeRZCN4FiNtYYEuD5BeJWMSVoVXRHP7zBkx8GhG
+vgfUc02+IyxS0HTO5HIxSJnLYOSa++SxJ4/w85aqcWPLrLHhL4s1k4GELPg/JhdW
+Um35zAkcLNnxsxySCMIWZKEUTZ3xdpBspc3QVkw/IoyZpk+QhQTM2S/C3yWv4Q0z
+xwHEEqesvl8l7UlpQ2mC
+=rw4/
 -----END PGP SIGNATURE-----
