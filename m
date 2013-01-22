@@ -1,48 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/05/2
-Message-ID: <20130405140035.GD26194@suse.de>
-Date: Fri, 5 Apr 2013 16:00:35 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: tg3 VPD firmware -> driver injection 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/11
+Message-ID: <20130122154746.GD2637@redhat.com>
+Date: Tue, 22 Jan 2013 08:47:46 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: Sebastian Krahmer <krahmer@...e.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request coreutils
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* [2013-01-22 08:25:23 +0100] Sebastian Krahmer wrote:
 
-These slides refer to (cloud) server hardware injecting code into otherwise
-unsuspecting host / guest systems.
+>Generally, I see your point. However sometimes services running as
+>root 'sort' or 'uniq' user input e.g. via grepping logfiles etc,
+>so there is indeed a real chance to indirectly trigger a privilege
+>escalation. The past shows that segfaults can be turned into a
+>code exec often. Its a stack overflow after all.
 
-Sample is tg3 (around slide 18)
-	http://cansecwest.com/slides/2013/PrivateCore%20CSW%202013.pdf
+Do you believe this would be the case with modern GCC/Glibc hardening
+though?  Wouldn't this just be rendered a crash?
 
-Introduced by:
-commit 184b89044fb6e2a74611dafa69b1dce0d98612c6
-Author: Matt Carlson <mcarlson@...adcom.com>
-Date:   Mon Apr 5 10:19:25 2010 +0000
+But even then, if we're talking about logfiles (which is a reasonable
+case) you'd have to be allowing user-controlled input to your logs,
+which would mean you'd have another problem.
 
-    tg3: Use VPD fw version when present
+I'm also assuming, based on the comments in the first bug, that you need
+a really large line (not just an entire file, but one line).  How likely
+is it that you would be grepping a log file with ~10MB of data on one
+line?
 
-which was added during Linux 3.2 development.
+Perhaps root grepping/sorting/etc. a logfile is a valid use-case and
+some user-supplied input could be stored in there (perhaps a crafted
+apache url, etc. or maybe a local user running logger to inject a custom
+log entry), but do these programs even allow for a ~10MB in length URL
+or data?
 
-Fixed by:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=715230a44310a8cf66fbfb5a46f9a62a9b2de424
+(I've not looked, maybe they do?)
 
-commit 715230a44310a8cf66fbfb5a46f9a62a9b2de424
-Author: Kees Cook <keescook@...omium.org>
-Date:   Wed Mar 27 06:40:50 2013 +0000
+>On Mon, Jan 21, 2013 at 06:33:07PM -0700, Kurt Seifried wrote:
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA1
+>>
+>> On 01/21/2013 01:39 PM, Vincent Danen wrote:
+>> > * [2013-01-21 19:17:49 +0100] Moritz Muehlenhoff wrote:
+>> >
+>> >>> Can someone assign a CVE id for a buffer overflow in
+>> >>> coreutils? Its the same code snippet (coreutils-i18n.patch) and
+>> >>> it affects sort, uniq and join:
+>> >>>
+>> >>> https://bugzilla.novell.com/show_bug.cgi?id=798538
+>> >>> https://bugzilla.novell.com/show_bug.cgi?id=796243
+>> >>> https://bugzilla.novell.com/show_bug.cgi?id=798541
+>> >>
+>> >> Could you send the faulty patch to the list so that distros can
+>> >> validate that they don't include it themselves?
+>> >
+>> > Red Hat/Fedora do include this patch, so it's more than just SUSE
+>> > that ships them.  However, when I was looking at them last week,
+>> > this struck me as just a non-exploitable crash and unless I'm
+>> > missing something, I think it would be quite the stretch to call it
+>> > a security flaw.
+>>
+>> Agreed, there is no significant impact of exploitation and there is no
+>> real easy way to trick a victim into doing this (and even if you do,
+>> so what? now if it was code exec we might be talking about something
+>> interesting).
+>>
+>> - --
+>> Kurt Seifried Red Hat Security Response Team (SRT)
+>> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>>
+>> -----BEGIN PGP SIGNATURE-----
+>> Version: GnuPG v1.4.12 (GNU/Linux)
+>>
+>> iQIcBAEBAgAGBQJQ/exTAAoJEBYNRVNeJnmTrW0P/3B/L/SE7akzCPUU6TW9wy1L
+>> Rpb8IIITLCz1qkb/gkUayUFJHQDjpEfmxNPJQWm1fJBrWI0bFr0wvHRuGHgyXZEA
+>> Bl+js2w0uu7kAEEf1bHjZjf7zVHZ2tvoAdzi8ypLASZisxXwSa4acy++sqmPTrSf
+>> oNOu3ChqG919VSLfD8Zf5AsGFs6G3tRzNEmYtvllt9liUFKgL6WsCNWNWUZdpWm2
+>> crZPdyf343VvQcG5p7vYPEJLUBmnUSIauakssYPxGSp1vNBDNCC8xuVnyf1KOLfc
+>> r3BHDPRX5ooe8EcoK/zgo1owK7tP9d7FT94gIsJte3OUOP5dq6LR/R0ZMMUsneNA
+>> EjJScDCkh0hcZYCdJkqtah5aoAYI6IQvXJVtbwDM+rAvHfoMV2nkbWVZL0SgCMW/
+>> B/hvhQJejFN3dd0wfiO5sQf5o2UxxYyIIpTE+GQP/pe8Q7F1BzR5nV87Jd3sWQY8
+>> J873KRADBgt4RwbVUpI7dUL67UeRZCN4FiNtYYEuD5BeJWMSVoVXRHP7zBkx8GhG
+>> vgfUc02+IyxS0HTO5HIxSJnLYOSa++SxJ4/w85aqcWPLrLHhL4s1k4GELPg/JhdW
+>> Um35zAkcLNnxsxySCMIWZKEUTZ3xdpBspc3QVkw/IoyZpk+QhQTM2S/C3yWv4Q0z
+>> xwHEEqesvl8l7UlpQ2mC
+>> =rw4/
+>> -----END PGP SIGNATURE-----
+>
+>-- 
+>
+>~ perl self.pl
+>~ $_='print"\$_=\47$_\47;eval"';eval
+>~ krahmer@...e.de - SuSE Security Team
+>
 
-    tg3: fix length overflow in VPD firmware parsing
-    
-    Commit 184b89044fb6e2a74611dafa69b1dce0d98612c6 ("tg3: Use VPD fw version
-    when present") introduced VPD parsing that contained a potential length
-    overflow.
-    
-    Limit the hardware's reported firmware string length (max 255 bytes) to
-    stay inside the driver's firmware string length (32 bytes). On overflow,
-    truncate the formatted firmware string instead of potentially overwriting
-    portions of the tg3 struct.
-    
-    http://cansecwest.com/slides/2013/PrivateCore%20CSW%202013.pdf
-
-
-Ciao, Marcus
+-- 
+Vincent Danen / Red Hat Security Response Team 
