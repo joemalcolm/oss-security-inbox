@@ -1,72 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/27/4
-Message-ID: <20130227050346.GA2119@kroah.com>
-Date: Tue, 26 Feb 2013 21:03:46 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/7
+Message-ID: <20130122092031.GA22505@suse.de>
+Date: Tue, 22 Jan 2013 10:20:31 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Subject: Re: CVE Request coreutils
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 26, 2013 at 11:41:53PM -0500, Michael Gilbert wrote:
-> On Tue, Feb 26, 2013 at 6:05 PM, Jason A. Donenfeld wrote:
-> > On Tue, Feb 26, 2013 at 10:05 PM, Kurt Seifried
-> >> The problem with security is you have to basically do it 100%
-> >> correctly 100% of the time, otherwise things fall through the cracks
-> >> (like this VFAT thing).
-> >
-> > Also, what about the tmpfs one from yesterday? Nobody involved in the
-> > patch reported that as a security bug to this list, until I saw it
-> > myself, just by chance, as a random person on the internet, and posted
-> > it to the list. In that case, it was clearly marked "use-after-free",
-> > but nobody involved requested a CVE.
+
+I think its this one:
+
+http://bit.ly/UOzlmT
+
+and the alloca() inside it.
+
+Sebastian
+
+On Mon, Jan 21, 2013 at 07:17:49PM +0100, Moritz Muehlenhoff wrote:
+> Hi Sebastian,
 > 
-> I actually see Greg KH's recent interest in oss-sec as a positive
-> sign.
+> > Can someone assign a CVE id for a buffer overflow in coreutils?
+> > Its the same code snippet (coreutils-i18n.patch) and it affects sort, uniq and join:
+> > 
+> > https://bugzilla.novell.com/show_bug.cgi?id=798538
+> > https://bugzilla.novell.com/show_bug.cgi?id=796243
+> > https://bugzilla.novell.com/show_bug.cgi?id=798541
+> 
+> Could you send the faulty patch to the list so that distros can validate
+> that they don't include it themselves?
+> 
+> Cheers,
+>         Moritz
 
-Recent?  I've been involved in oss-sec from the very start of it, and
-before that, I was on vendor-sec since 2000 or so.
+-- 
 
-> Anyway, on a more serious note, at some point, acceptance will look
-> something like a real kernel-sec team that does essentially what you
-> just did, but on a continual basis: reviewing most/all commits for
-> potential security concerns and forwarding them to oss-sec to increase
-> identification and awareness to be applied downstream.
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-I will say flat out that this is an impossible task to accomplish.
-
-As proof of that, I suggest you do this for just one major kernel
-release cycle (2-3 months long).
-
-You do know the number of patches applied to the Linux kernel every
-hour, right?
-
-Would you have caught the patch that started this thread?  I sure
-didn't, and I was the one who originally applied it to the kernel tree
-in the first place.  Doing "root-cause" research for every patch is
-non-trivial, as I know you realize.
-
-> Unfortunately a person/group needs to want to scratch that particular
-> itch, and more importantly be able to deal with leaders antipathetic
-> to their work.
-
-I'm not apathetic at all, you are underestimating the ability for
-something like this to be even possible.
-
-> Also, as Kurt was alluding to, the rewards don't seem to be there, and
-> of course there is a lot of potential for pain (i.e. dealing with the
-> anger).
-
-What anger?  I push out on average, 100 kernel bugfixes a week publicly
-for all to see, for multiple kernel versions.  Trying to do the
-categorization you wish for above for just that small number of patches
-is impossible to do, ask the people who have tried to do it.
-
-I would be very happy to see just these bugfixes to be categorized, and
-if people wish to dig further into the patches I miss, I would be more
-than willing to take them into the stable kernel releases as well.
-
-I gladly welcome any help in this area, and always have.
-
-thanks,
-
-greg k-h
