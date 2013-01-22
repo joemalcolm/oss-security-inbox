@@ -1,37 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/13/1
-Message-ID: <CACYkhxjGw6DC1+OBMcTid6S2dAFe5JuZC2LQ-+_XGYERRVU2eg@mail.gmail.com>
-Date: Thu, 13 Jun 2013 10:02:38 +1000
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: KDE Paste Applet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/13
+Message-ID: <alpine.DEB.2.00.1301222106280.32543@procyon.dur.ac.uk>
+Date: Tue, 22 Jan 2013 21:09:29 +0000 (GMT)
+From: M A Young <m.a.young@...ham.ac.uk>
+To: "Xen.org security team" <security@....org>
+cc: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+Subject: Re: [Xen-devel] Xen Security Advisory 35 (CVE-2013-0152) - Nested HVM exposes host to being driven out of memory by guest
 Content-Type: text/plain; charset=utf-8
 
-Ok, so the fix for this uses KRandom::random()...
+On Tue, 22 Jan 2013, Xen.org security team wrote:
 
-I suggest leaving the KDE Paste fix as-is and replacing KRandom with
-something that just fills an integer from /dev/urandom - then we can save a
-few CVE numbers for the rest of the year.
+> To fix both XSA 34 and XSA 35, first apply xsa34-4.2.patch from XSA 34
+> and then *also* apply xsa35-4.2-with-xsa34.patch from this advisory.
 
-qrand() should probably also do the same, especially since cnonces for HTTP
-auth are using it - that means there's only 2^32 (at best) possible
-cnonces...
+The xsa35-4.2-with-xsa34.patch patch is malformed,
+@@ -3862,6 +3862,10 @@ long do_hvm_op(unsigned long op, XEN_GUE
+should be
+@@ -3862,6 +3862,11 @@ long do_hvm_op(unsigned long op, XEN_GUE
 
-Regards,
-  Michael
-
-
-On 31 May 2013 22:43, Jeff Mitchell <mitchell@....org> wrote:
-
-> Michael Samuel wrote:
->
->> Is anyone from KDE working on fixing this?  I wrote a quick patch and
->> was hoping somebody from the KDE team could vet and incorporate it.
->>
->
-> Actually sending the patch to the thread you started at security@....orgwould probably help grease wheels...
->
-> --Jeff
->
->
-
+ 	Michael Young
