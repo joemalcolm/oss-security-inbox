@@ -1,65 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/20/1
-Message-ID: <52635B50.9010507@redhat.com>
-Date: Sat, 19 Oct 2013 22:25:52 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, tjfontaine@...il.com, i@....me
-Subject: Re: CVE Request: Node.js HTTP Pipelining DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/22/5
+Message-Id: <201301221007.49729.mweckbecker@suse.de>
+Date: Tue, 22 Jan 2013 10:07:49 +0100
+From: Matthias Weckbecker <mweckbecker@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request coreutils
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 10/19/2013 09:43 AM, Jonathan Rudenberg wrote:
-> Node.js is vulnerable to DoS when a client sends too many pipelined
-> HTTP requests.
-> 
-> Links:
-> 
-> https://groups.google.com/forum/#!topic/nodejs/NEbweYB0ei0 
-> http://blog.nodejs.org/2013/10/18/node-v0-10-21-stable/ 
-> http://blog.nodejs.org/2013/10/18/node-v0-8-26-maintenance/ 
-> https://github.com/joyent/node/issues/6214 
-> https://github.com/joyent/node/commit/085dd30e93da67362f044ad1b3b6b2d997064692
+On Monday 21 January 2013 15:59:48 Michael Tokarev wrote:
+> 21.01.2013 18:54, Sebastian Krahmer wrote:
+> > Hi,
+> >
+> > Can someone assign a CVE id for a buffer overflow in coreutils?
+> > Its the same code snippet (coreutils-i18n.patch) and it affects sort,
+> > uniq and join:
 >
->  This issue affects all versions of Node released before 0.10.21
-> and 0.8.26.
-> 
+> It's probably worth to mention that these are SuSE-specific and not in
+> upstream, if I understand correctly.
+>
 
-So my first reply bounced off the list (hopefully this one does not).
+Tough to say unless you really looked into every single distribution out
+there. Just assuming something is dangerous.
 
-Please use CVE-2013-4450 for this issue.
+> > https://bugzilla.novell.com/show_bug.cgi?id=798538
+> > https://bugzilla.novell.com/show_bug.cgi?id=796243
+> > https://bugzilla.novell.com/show_bug.cgi?id=798541
+>
+> Thanks,
+>
+> /mjt
 
-As for shipping a security update with "no details" in order to
-protect people this doesn't work very well when you're open source and
-leave the keyword in the source code where the fix is and add comments
-that give all the details.
+Thanks,
+Matthias
 
-You might as well release details in the advisory so that the god guys
-can quickly assess the issue and deal with it properly, rather then
-pretending that the bad guys can't read the source code and figure out
-how to exploit this. It took me literally all of five minutes to
-download the current version, the previous version minus one, diff
-them, and look for the keyword "piplined" (what can I say, I was
-eating a sandwich and only had one hand free ;).
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSY1tQAAoJEBYNRVNeJnmTenIP/R9TRmTAtPqqqLHLXZhoxuXb
-ve/IhedBLzT23xbk9ovmrJIMqqjN6A0HcIDPB9MT21/hBT5yK5GDTK9HmbmxcZvJ
-j9copc+BECvHrTC2sHUy19DUFGgp6RElrZpb1D6jM2K27siKKT78+mm6QwNlaT4z
-sectg7rq1wH74p48Eni66xYq4QjIwMdmWBPb+jrbp2LhELmfGfRnu5zJQAGgxXg9
-/SxPvmITsOKeifFUsfetGe0ob2Mj+uf+b1DeHNTGVRZZlIpWSFnZHUe5GosMAqIX
-SdchV7KLK8WpP4dcbCuFhdmRy2pQtchUZ6Ijkm8jlG/8uJNc4JhMN0VhuTXUBZlk
-dKqB1Bja6TGZJxGWubEhd7NufmOq6CU+Sbgjg7WMt+hkQwZR/EmTfSl95czR3MGh
-b0ZEbByqTaxvM0jVUS154H+8rT3Qn7apWZrzxstMcIKEDMIyukQJr1cpIX5YFksJ
-W+IEP00VqBBVF2wHyOMXZiRTPg/dAt8ont6JpMUhTFcRdFaxZhzcXd1XU/dohv4i
-hL48GcC4AJh4inf0LTIK3g6Nb6aY6J2XYXigQ4ahUtl6KtZezK7yEhirBO36iQZ3
-4qnfaniDfimPiIwPi8nDl3XyZpWlb4ae4Moc1358kH3zYsj5NIJYvTedQD/0IJ5x
-DD+c3vJxCT0ejOtNQ/0P
-=cVts
------END PGP SIGNATURE-----
+-- 
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
