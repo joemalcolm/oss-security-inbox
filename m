@@ -1,94 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/11/6
-Message-ID: <5230D682.3040105@redhat.com>
-Date: Wed, 11 Sep 2013 14:45:54 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/7
+Message-ID: <617692586.14212107.1358958356677.JavaMail.root@redhat.com>
+Date: Wed, 23 Jan 2013 11:25:56 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kousuke Ebihara <ebihara@...imaya.com>, security@...npne.jp
-Subject: Re: CVE Request: OpenPNE 3, opWebAPIPlugin, opOpenSocialPlugin -- XXE vulnerability fix
+Cc: Willy Tarreau <w@....eu>, Michael Scherer <misc@...b.org>, Steve Grubb <sgrubb@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: [Security hardening] [Notification] haproxy (previously) failed to drop supplementary groups after setuid / setgid calls properly
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello vendors,
 
-On 09/09/2013 11:03 PM, Kousuke Ebihara wrote:
-> Hi,
-> 
-> I'm a member of OpenPNE security handling team.
-> 
-> We've released our OSS product, OpenPNE 3, opWebAPIPlugin and
-> opOpenSocialPlugin to fix XXE vulnerability.
-> 
-> Whould you assign CVEs to them?
-> 
-> 1. OpenPNE 3 XXE Vulnerabilities Affects: 3.8.7, 3.6.11, 3.4.21.1,
-> 3.2.7.6, 3.0.8.5 Fixed: 3.8.7.1, 3.6.11.1, 3.4.21.2, 3.2.7.7,
-> 3.0.8.6 Commit:
-> https://github.com/openpne/OpenPNE3/commit/6147099848185a82a18d1ba8aa84e69a7eadfcba
->
-> 
-Security Advisory: http://www.openpne.jp/archives/12091/
-> Original reporter of this vulnerability: Kousuke Ebihara
-> 
-> Access Vector: Network exploitable Access Complexity: Low 
-> Authentication: Not required to exploit Impact Type: Allows
-> unauthorized disclosure of information; Allows unauthorized
-> modification; Allows disruption of service
+  just FYI notification that haproxy upstream has recently corrected [2]
+improper dropping of supplementary groups [1] after setuid / setgid
+calls.
 
-Please use CVE-2013-4333 for this issue.
+We have further investigated this issue and have reasons to believe that 
+by itself this is NOT a security issue (another flaw would need to be
+found in haproxy this to be actually possible to use for something interesting).
 
-> 2. opWebAPIPlugin XXE Vulnerabilities Affects: 0.5.1, 0.4.0, 0.1.0 
-> Fixed: 0.5.1.1, 0.4.0.1, 0.1.0.1 Commit:
-> https://github.com/ebihara/opWebAPIPlugin/commit/8820a4a8d7b8c8fbfa4533cc5645f371d454ca5b
->
-> 
-Security Advisory: http://www.openpne.jp/archives/12091/
-> Original reporter of this vulnerability: Kousuke Ebihara
-> 
-> Access Vector: Network exploitable Access Complexity: Low 
-> Authentication: Not required to exploit Impact Type: Allows
-> unauthorized disclosure of information; Allows unauthorized
-> modification; Allows disruption of service
+For now we are considering this fix to be a preventive measure / security
+hardening (but took the time to notify you explicitly about this as you might
+still want to backport it into affected versions).
 
-Please use CVE-2013-4334 for this issue.
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-> 3. opOpenSocialPlugin XXE Vulnerabilities Affects: 0.8.2.1,
-> 0.9.9.2, 0.9.13, 1.2.6 Fixed: 0.8.2.2, 0.9.9.3, 0.9.13.1, 1.2.6.1 
-> Commit:
-> https://github.com/openpne-ospt/opOpenSocialPlugin/commit/a19c02997cf3045ad18b57c14a05465bfb3ae88c
->
-> 
-Security Advisory: http://www.openpne.jp/archives/12091/
-> Original reporter of this vulnerability: Kousuke Ebihara
-> 
-> Access Vector: Network exploitable Access Complexity: Low 
-> Authentication: Not required to exploit Impact Type: Allows
-> unauthorized disclosure of information; Allows unauthorized
-> modification; Allows disruption of service
-
-Please use CVE-2013-4335 for this issue.
-
-> Thanks, Kousuke
-> 
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSMNaBAAoJEBYNRVNeJnmTPpUP/RHcEUpXO/xpUzn+Pa2O+Zwu
-E7pJ7UYaGgxbjKXLhiFd6GiAhcNk/b1fWPJp1vtqHTSsgx9Ev6RGqy+UCdTnoD5O
-mPOoueo3mc1uKlTdCOkaiYZaEw5NERMrFB6me+1Gbsy71lBrIaEoE867udMgtcRZ
-tkV/C6H2UoGxV/4DH8sBIA/RxS0YDdzH2u/yVM/ituxYql6yLuCT1/eX1T4V6GCY
-HrSxhd/nX3QJD0Orcd9G3+LoLHgSF1QkWUZ8r9d6DvlspwlDiIQA7+SCOmYt7O3c
-kqiNp51xHkkCGTfQVscGiHlWBuTKY40jFPJp7Bfm2LW1KNFsQVbywLfC1W7UuHIY
-B7N1QendnIUdvi/X9PLyjsmTjzhQu6+axdvta3gEKfR1Uxc1xaNprPppi8TKuZqp
-Bx8uC1YwVseHow2W66kEjlKQ+H1amoiSGQzNUle2zoEv2DdKlJYpSFiaU3O2Lz8C
-dzzzjnzxXXJY0AqOIIhnQ0CPKvro47enAGgnk2vnOMhvL7qabBGvFb4AxkPCwtPr
-HpIr5i5BNxYuVsA+DAXwVWaWNPdRM6adUfJF0PbDojylU39cB4eVmDb/D8h86DW8
-H/9H8Enk50AGWARQ86JCpNC6+2I9EcxGhsaLU31JdGhjmajEU6pZLhI/2qL7/YlC
-1o1T3J7ooYbAGcYPxRqR
-=u5Lj
------END PGP SIGNATURE-----
+P.S.: [1] https://bugzilla.redhat.com/show_bug.cgi?id=894626
+      [2] http://git.1wt.eu/web?p=haproxy.git;a=commitdiff;h=ab012dd3
