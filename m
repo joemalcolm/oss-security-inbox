@@ -1,26 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/11/1
-Message-ID: <loom.20130811T072950-947@post.gmane.org>
-Date: Sun, 11 Aug 2013 05:47:32 +0000 (UTC)
-From: mancha <mancha1@...h.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/2
+Message-Id: <201301230238.r0N2cAtd005039@linus.mitre.org>
+Date: Tue, 22 Jan 2013 21:38:10 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE assignment notification] CVE-2012-2142 poppler, xpdf: Insufficient sanitization of escape sequences in the error message {AKA request for feedback if CVE to be marked as disputed / rejected}
+Cc: cve-assign@...re.org
+Subject: Re: CVE request for Movable Type
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky <jlieskov@...> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Poppler upstream patch:
->  
-http://cgit.freedesktop.org/poppler/poppler/commit/?id=71bad47ed6a36d825b0d08992c8db56845c71e40
-> 
-> Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
+>> Movable Type 4.38 has been released ...
 
-Hi. I've adapted Poppler's CVE-2012-2142 fix to xpdf-3.03 and posted
-here:
-http://sourceforge.net/projects/miscellaneouspa/files/misc/xpdf-3.03-CVE-2012-2142.diff
+>Please use CVE-2013-0209 for this issue.
 
---mancha
+We decided to keep CVE-2013-0209 instead of the other CVE that was
+reserved for this through MITRE a while ago. Also, we decided to cover
+this with one CVE entry even though the various issues discussed ("OS
+command injection and SQL injection" in the vendor advisory, and "perl
+code injection" in the researcher's advisory) can perhaps be
+interpreted in other ways.
 
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-0209
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-6315
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJQ/0tEAAoJEGvefgSNfHMdTdEH/ReXfWbrwCYE97+W9y8uAHyW
++EfPHRUmEfmIOfH61IakvsHp1RbBCkoLakZkI4fU0mXoIhuD1pNT5wpj/G+EIzs4
+pHDLm3qxI7iqe0r2gG747RDuAVwHxbxVqbwJqlarD9Dct6lTIrb5h5tXyL0j08ph
+SHYl3JoJeBzbImJmwMLdI37dRYPXNaLbB4tt7CbwX6xeLDJ3RzxmpYUuw6UKq9ZM
+dJbDNLFePUQsQDofrgv77ZRn6A+92TKMI9ecA7abcAs4OTgIQ24TxwA+gSi9n3rp
+f581/R4oR3Qz5rRnYlWtoMNynmFxIH5vFfWJAAkZ7v381Hr51a4YCIvTo1PiU0g=
+=ys3d
+-----END PGP SIGNATURE-----
