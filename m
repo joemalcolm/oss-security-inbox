@@ -1,19 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/11/9
-Message-ID: <87d2w6ljbd.fsf@mid.deneb.enyo.de>
-Date: Mon, 11 Feb 2013 20:52:22 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/4
+Message-ID: <50FF969E.5090808@redhat.com>
+Date: Wed, 23 Jan 2013 08:51:58 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Mike Miller <mtmiller@...e.org>
-Subject: CVE request: openconnect buffer overflow
+CC: Vincent Danen <vdanen@...hat.com>, Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: CVE Request coreutils
 Content-Type: text/plain; charset=utf-8
 
-Kevin Cernekee discovered that a malicious VPN gateway can send a very
-long hostname/path (for redirects) or cookie list (in general), which
-OpenConnect will attempt to write on a fixed length buffer.
+On 01/22/2013 04:47 PM, Vincent Danen wrote:
 
-Upstream commit:
+> Do you believe this would be the case with modern GCC/Glibc hardening
+> though?  Wouldn't this just be rendered a crash?
 
-<http://git.infradead.org/users/dwmw2/openconnect.git/commitdiff/26f752c3dbf69227679fc6bebb4ae071aecec491>
+Catching this reliably needs compiling with -fstack-check, which is 
+currently not among commonly used hardening flags.  The generated code 
+used to be rather buggy, too.
 
-This needs a CVE name from 2012.
+-- 
+Florian Weimer / Red Hat Product Security Team
