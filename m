@@ -1,16 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/09/2
-Message-Id: <20130909080638.2122020136@smtp.hushmail.com>
-Date: Mon, 09 Sep 2013 10:06:37 +0200
-From: "Adéla Goldová" <roguecoder@...h.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/3
+Message-ID: <20130123074735.GA16754@suse.de>
+Date: Wed, 23 Jan 2013 08:47:35 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: [CVE Request] Event Easy Calendar
+Subject: Re: CVE Request coreutils
 Content-Type: text/plain; charset=utf-8
 
-Hello
+On Tue, Jan 22, 2013 at 08:47:46AM -0700, Vincent Danen wrote:
+> * [2013-01-22 08:25:23 +0100] Sebastian Krahmer wrote:
+>
+>> Generally, I see your point. However sometimes services running as
+>> root 'sort' or 'uniq' user input e.g. via grepping logfiles etc,
+>> so there is indeed a real chance to indirectly trigger a privilege
+>> escalation. The past shows that segfaults can be turned into a
+>> code exec often. Its a stack overflow after all.
+>
+> Do you believe this would be the case with modern GCC/Glibc hardening
+> though?  Wouldn't this just be rendered a crash?
 
-The wordpress plugin Event Easy Calendar suffers from CSRF and XSS vulnerability and improper input validation.
-Could someone please assign CVE's to this?
+Are you serious? And since when will CVE's not be assigned because
+some mitigation could possibly prevent a stack overflow being turned
+into code exec?
 
-1: http://seclists.org/fulldisclosure/2013/Sep/41
+>
+> But even then, if we're talking about logfiles (which is a reasonable
+> case) you'd have to be allowing user-controlled input to your logs,
+> which would mean you'd have another problem.
+
+You mean like 'logger -t sshd failed login attempt' ?
+
+
+>
+> I'm also assuming, based on the comments in the first bug, that you need
+> a really large line (not just an entire file, but one line).  How likely
+> is it that you would be grepping a log file with ~10MB of data on one
+> line?
+
+Not very common indeed, but I think its not the point (logfiles were
+just _one_ example).
+
+Nevertheless, you seem to shift your arguments. For each reason/attack vector
+I answer, you bring up two new reasons why this not an issue.
+
+At the end, I did not spot the bug; if the majority thinks its not worth
+a CVE, I can live with it. It would just have made tracking easier.
+
+
+regards,
+Sebastian
+
+PS: Reminds me to the one-year dbus discussion where everyone told me that
+this can never be a problem.
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
