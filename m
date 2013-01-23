@@ -1,68 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/15/15
-Message-ID: <520D021B.3080700@redhat.com>
-Date: Thu, 15 Aug 2013 10:30:19 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/5
+Message-ID: <50FFAEFB.7040402@redhat.com>
+Date: Wed, 23 Jan 2013 02:35:55 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: gremlin@...mlin.ru
-Subject: Re: HTTPS
+Subject: Re: predictable /tmp filename in git-extras
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Ah you appear to be making two classical mistakes. You are confusing
-technical means for enforcing policy (e.g. security policy, privacy
-policy) with the actual policy itself. You are also making the second
-classical mistake of "one size fits all", what you see as valid
-security policy (anonymous access must be unencrypted, login access
-MUST be encrypted) is what you think the entire world should use.
+On 01/22/2013 01:27 AM, Helmut Grohne wrote:
+> Please assign a CVE identifier for the obvious predictable /tmp
+> filename used in git-effort[1] and git-changelog[2]. The latter was
+> discovered by Jonathan Wiltshire after my initial discovery of the
+> former. The issue is already tracked within Debian[3] and there
+> also is a solution[4].
+> 
+> Thanks
+> 
+> Helmut
+> 
+> [1]
+> https://github.com/visionmedia/git-extras/blob/master/bin/git-effort
+>
+> 
+[2] https://github.com/visionmedia/git-extras/blob/master/bin/git-changelog
+> [3] http://bugs.debian.org/698490 [4]
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=32;filename=git-extras-1.7.0-1.2-nmu.diff;att=1;bug=698490
 
-This is obviously not the case. Some organizations may be very
-concerned with availability and exfiltration of data and ban ANY
-encryption, some sites may be very concerned with the privacy and
-integrity of their data and require mandatory encryption of their data
-in transit, at rest, and so on. Who is right? Both are.
-
-Technical measures like encryption are simply a means of enforcing
-policy/laws/etc, First you decide on your policy (and take into
-account any laws/etc.), then you find technical means to achieve that
-policy. Not the other way around.
-
-So in this case the policy can probably be stated as:
-
-"When someone downloads a ruby gem via the rubygems.org system we want
-to ensure they get the gem they requested, and not one that an
-attacker has modified."
-
-So one way to achieve this policy would be gem code signing. Several
-efforts to implement this started and failed due to lack of community
-support/etc., due in large part to people confusing technical measures
-with policy, e.g. people were arguing the use of various cryptographic
-primitives before they'd answered questions like "do we require end
-developers to participate in this, or do we just involve rubygems.org?
-do we want end to end signing?" and so on.
-
-Obviously none of this progressed. So now I think the best option is
-to harden the existing system as best we can to protect users.
+Please
+> 
+use CVE-2012-6114 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSDQIbAAoJEBYNRVNeJnmTdkcQAKwZFUZNTJNzqE7N84GX8JSF
-YSOCmIYFi5tmoUEnMwSqyQ21sWbiM1b/+vblTpLYPYC4xvSxJWc3HrYfa1/xiavm
-EDJjjkb5ewBHGBvfSJs9mAlcQZUSseZaTSXM7i0qy83LjkwjDbWVPgIl5yNokFjY
-IlYJd8LX7i3S8u7rYMQFTBH+fqQMohk9QvcdoHD6JkH6xl3Wq6V2nvWHtKmvxzVH
-LW/lRqnG2myCDjgRikWS+mGLmiJYFi1PlFbkbbWhfP3nuAdsFl3/nhej/5IUnztP
-L6fOT1SU1zKrzTnxWcQwfXrG+rg3AEi4l78lA0wsSXiSdUbA0bM8dbg/DzScG68I
-tT6yxsoNprJ+s8L/y6tBVMT3pNBNMBtiOLjmW3PLa7a8dIhc15xzqHEnr7bfjP6+
-+NCVJB3FJeg8/+lHXn47fuYv7BdpYrP4X/XMXYWY+fb25WGpQyGiw9jZcWrN4P05
-69me1qRycidzh3bNjEOQtE6WIxhCKHa3O62Ws91Ko0x9akoeeV/IxJEgXSZTF/cE
-hCdsj6W2KTWcH1H4gPDMGSoEbO0r/TThZcDlaeFXNRAM6hZIJ+piDSAJvgOsn8zA
-GgUTI5IgoM2F4Sy7Rdd7LPxqcBI2e+a9CLiunoKIugSBwQ3d3/1m19EOiuz9aICI
-rlAkOUieLOUq/311UJqv
-=wzAD
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ/677AAoJEBYNRVNeJnmT8nUP/RuaKd3yOUgn9B7RM3TfsNah
+LJN6GS2KmnUFZkmrCeXpXN6lCF+eMZ4AT/2sCiRjcj+03oj5iV0VOpuP1Y8T+maE
+ACIc8Ba6Kev1Uw8jTSOd+nGFGqyMUWNAa+8FVBsg6Vb5tfwEkXyJ3w1vOhiei2NM
+Ha+eJh6Pqv02AAN9Ttv1Kycm2ol+7IzYVqLPdY978PIHTFkJmgLY9KxC1NAi+p75
+dwiHcngRdgUOnQQC7hQyYqpbHJVMp1Bn1LDC8Ca/NtEeGPA6kPwFsDe+uedv+DUb
+KNVAXqh7Sc1NocrQaMSi+wRQ5BrHUeMivedQEmfnHKlBAk7ATsWp4hyX4SdrZkcz
++A0lBzSb52ZM0euFKd8jLaToFAH4vL3TUX6Sd4gOmctIOpVoLvOZfnVNgabUYOUc
+nfLzhOERgfAwgR6vucl80MGS4LDG+PcHNYCSZmblpyiK+RRrr8rYcw01MeAG0jGV
+c/Y1ItJBxQNZo9cISgqj4jCBTtKkHhbFLL3ySGz4Wnnf2FIymC7mI3gknoZHg8fN
+Uz+WnVAeayHl5rNnhtncKPZaDVreFc+d5BVpZhWmo/eHvsEaF6EpV333IM35ZdJh
+DzK1JXa4F1PC9uGqUtSpy+DiMzrzv8O9YJfA2e+C3sfa1RAbxZvM16EbhVZ97ANQ
+kM0Y+3hXhjhFFFmRs33a
+=u50i
 -----END PGP SIGNATURE-----
