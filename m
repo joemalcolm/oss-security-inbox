@@ -1,43 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/14/13
-Message-ID: <alpine.DEB.2.10.1308141725010.17107@vincent-weaver-1.um.maine.edu>
-Date: Wed, 14 Aug 2013 17:37:32 -0400 (EDT)
-From: Vince Weaver <vincent.weaver@...ne.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/6
+Message-ID: <50FFAB40.9090708@redhat.com>
+Date: Wed, 23 Jan 2013 02:20:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: linux-kernel priviledge escalation on ARM/perf
+CC: Matthias Weckbecker <mweckbecker@...e.de>
+Subject: Re: CVE Request coreutils
 Content-Type: text/plain; charset=utf-8
 
-Hello
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm not really a security researcher, so hopefully I'm reporting this in 
-the proper way.
+On 01/22/2013 02:07 AM, Matthias Weckbecker wrote:
+> On Monday 21 January 2013 15:59:48 Michael Tokarev wrote:
+>> 21.01.2013 18:54, Sebastian Krahmer wrote:
+>>> Hi,
+>>> 
+>>> Can someone assign a CVE id for a buffer overflow in
+>>> coreutils? Its the same code snippet (coreutils-i18n.patch) and
+>>> it affects sort, uniq and join:
+>> 
+>> It's probably worth to mention that these are SuSE-specific and
+>> not in upstream, if I understand correctly.
+>> 
+> 
+> Tough to say unless you really looked into every single
+> distribution out there. Just assuming something is dangerous.
+> 
+>>> https://bugzilla.novell.com/show_bug.cgi?id=798538 
+>>> https://bugzilla.novell.com/show_bug.cgi?id=796243 
+>>> https://bugzilla.novell.com/show_bug.cgi?id=798541
+>> 
+>> Thanks,
+>> 
+>> /mjt
+> 
+> Thanks, Matthias
 
-I have a fuzzer tool for the perf_event_open() syscall that found
-a few oopses on the ARM platform, which I reported to lkml a week ago.
+Please use CVE-2013-0221 for SuSE Bug 798538 - VUL-1: coreutils:
+segmentation fault in "sort -d" and "sort -M" with long line input
 
-One of the oopses can lead to a local privilege escalation on ARM-perf.
-This fix can be found here:
-  http://www.arm.linux.org.uk/developer/patches/viewpatch.php?id=7809/1
-The discussion thread is:
-  https://lkml.org/lkml/2013/8/7/259 
+Please use CVE-2013-0222 for SuSE Bug 796243 - VUL-1: coreutils:
+segmentation fault in "uniq" with long line input
 
-The hope is this appears in 3.11-rc6 but my attempts to get the people at 
-security@...r.kernel.org to take this seriously didn't really go very 
-well.
+Please use CVE-2013-0223 for SuSE Bug 798541 - VUL-1: coreutils:
+segmentation fault in "join -i" with long line input
 
-I do have code that will exploit the kernel and give me a root shell
-on an ARM Pandaboard machine running 3.11-rc4.  The exploit is a bit 
-fragile though:
-  + Only works on ARM
-  + Elevates from normal user to root, no special config required.
-    perf_event syscalls run as regular users, not sure why some
-    think you need root.
-  + It does need a user-mappable address at an exact byte offset
-    from a pmu_struct in memory.  This limits things somewhat; in
-    my testing 3.11-rc kernels have INT_MIN at exactly the right place 
-    but the exploit doesn't work on a 3.7.6 kernel,
-    it just oopses or crashes the machine.
 
-Thanks,
 
-Vince
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJQ/6tAAAoJEBYNRVNeJnmT+1MP/2Wpws+D7H1woEHxmZEKQIil
+tHEOi/lEQRHQQFILqL7pIlhOnz2Kv7MC2CzWNviZ8IRzfz2mFFCk/gpqPDn0MbgA
+KlMLn8lytFq4vsMX0LgfVAJNbG+W+VQYuw54mLu2svenPUys5rzA38tAS6aF9OD7
+5qAVnXazqriPOmshFpBNC3HQw0MKJWORco69H7uGDI3fpz29mE1OSezbubaaQB+T
+x68l8Rzils7e8uuow5fktGV1YoT0+O0FT3KFzkYBOHQLJBZ3UUyZVDkccSpd5o0t
+/yAVoOpR8QdNXVSD5RiC5SFucKiw2Hhosh4DubqdEFHHAEBHyhAksR1i4ZutROXR
+5JUDfnZNKxwO6G2HqoWA2ImlMOcWP7NzYQmi2fsPrDEwggdB894SwciU5R+sjhDy
+zWhX1dS4qdMqOGVNKq3etWTiPVIEBBC5F6HEEtJEGTjLAodwTU3rSXBpZe9YFM4s
+h3BWs3pnAqcs+8fFXBAPnN89Y13DgaclIxOPrMrVE+ws3SE3+JO/XUa7PNHfbxlL
+awkFGjw2IMCG7nkfuEKikfHF0WnrnwxUKc3JkAzY492Q4Rc5f3IZjaF7D6+K8+Jo
+T45dm+GCbUXuLFZKqobvSyiIdcCP8YCPBufiCzmfWoFiLKPSenrV8YIilXCmWdsc
+l+6UXRP1n/52ifyH7/mE
+=5e0x
+-----END PGP SIGNATURE-----
