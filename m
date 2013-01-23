@@ -1,95 +1,243 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/03/1
-Message-ID: <CAGVYHsVR8BuDcUMEYQH4WdL35_JTx3V7q4h9QhJNxoxq=6OArA@mail.gmail.com>
-Date: Thu, 2 May 2013 21:40:22 -0500
-From: Andrés Gómez Ramírez <andresgomezram7@...il.com>
-To: "Christey, Steven M." <coley@...re.org>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "kseifried@...hat.com" <kseifried@...hat.com>
-Subject: Re: Flightgear remote format string
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/23/1
+Message-Id: <201301230034.r0N0YJUr005513@faron.mitre.org>
+Date: Tue, 22 Jan 2013 19:34:19 -0500 (EST)
+From: cve-id-change@...re.org
+To: oss-security@...ts.openwall.com
+Subject: CVE ID Syntax Change - Call for Public Feedback
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE ID Syntax Change - Call for Public Feedback
+-----------------------------------------------
+January 22, 2013
 
-The format string bug is located in the core functionality of flightgear.
-What may differ is the way you can access the property tree, and so the
-vulnerable code:
+Due to the increasing volume of public vulnerability reports, the
+Common Vulnerabilities and Exposures (CVE) project will change the
+syntax of its standard vulnerability identifiers so that CVE can track
+more than 10,000 vulnerabilities in a single year.  The current
+syntax, CVE-YYYY-NNNN, only supports a maximum of 9,999 unique
+identifiers per year.
 
-* The remote way, which is not activated by default, is accessible when
-"telnet" or "props" options are passed to the program.
+Since a change in the ID syntax will affect many parties including end
+users and vendors, the CVE project is soliciting feedback from the
+public before making this change.
 
-* The local way (not too interesting), the user modifies cloud parameters
-through GUI window.
+The public feedback period will continue through the RSA Conference in
+February 2013, where attendees will be able to speak with CVE
+personnel from MITRE and members of the CVE Editorial Board.  After a
+formal Editorial Board vote, the final selection will be made and the
+public will be notified, probably in March 2013.
 
-* And a third way I just realized out. Flightgear uses a script language
-called Nasal. Nasal allows, among other things, to edit the property tree.
-These scripts can be used directly from the models , aircrafts, airports,
-etc - without any security check -
-(http://wiki.flightgear.org/Howto:Nasal_in_scenery_object_XML_files)
-so by loading a specially crafted model, the vulnerability can be thrown.
+The syntax change is scheduled to go into effect on January 1, 2014,
+so that people will have enough time to change their processes and
+software to handle the new ID syntax.
 
-By the way reading a little more about Nasal (http://wiki.flightgear.org/
-Howto:Making_HTTP_Requests_from_Nasal) it seems to be that you can do a lot
-of weird things like make HTTP requests ... WTF!
+With guidance from the CVE Editorial Board, we have identified three
+options for a new ID syntax, summarized as follows:
 
-So I theoretically could create an aircraft which does a lot of creative
-web requests :\
+*) Option A (Year + 6 digits, with leading 0's)
 
-Yes, one don't usually think that a flight simulator has those advanced
-features.
+   Examples: CVE-2014-000001, CVE-2014-009999, CVE-2014-123456
 
-Regards.
+*) Option B (Year + arbitrary digits, no leading 0's except IDs 1 to 999)
 
-On Thu, May 2, 2013 at 10:48 AM, Christey, Steven M. <coley@...re.org>wrote:
+   Examples: CVE-2014-0001, CVE-2014-54321, CVE-2014-123456
 
-> Andrés,
->
-> Here is my interpretation of the problem.  I believe there is some
-> confusion because people don't usually think that a flight simulator could
-> be accessible from a "remote" location.
->
-> Is the following correct?
->
-> 1) The Flightgear package includes a network server.  This server can be
-> run using fgfs.exe and specifying a port number using the "-telnet"
-> argument, for example.
->
-> 2) The format string problem is in the server.
->
-> 3) Your exploit makes a connection to the server (on port 5501).
->
-> 4) The exploit sends a number of format strings in the cloud names (using
-> the "property tree").  For some reason, it sends the same command 5 times,
-> and it sends this command for "layers" 1 through 5.
->
-> 5) The exploit causes the server to crash.
->
-> - Steve
->
-> >-----Original Message-----
-> >From: Andrés Gómez Ramírez [mailto:andresgomezram7@...il.com]
-> >Sent: Thursday, May 02, 2013 11:13 AM
-> >To: kseifried@...hat.com
-> >Cc: oss-security@...ts.openwall.com
-> >Subject: Re: [oss-security] Flightgear remote format string
-> >
-> >>
-> >> So it's not on by default? Is there any documentation specifically you
-> >> can point me to regarding enabling/securing it?
-> >>
-> >
-> >Hi,
-> >the detailed info is in the reference:
-> >
-> >http://kuronosec.blogspot.com/2013/04/flightgear-remote-format-
-> >string.html
-> >
-> >if you need more info, please let me know.
->
+*) Option C (Year + arbitrary digits + check digit)
+
+   Examples: CVE-2014-1-8, CVE-2014-9999-3, CVE-2014-123456-5
+
+One of these options will be selected as the new syntax for CVE
+identifiers.  More details are available at the end of this message.
+
+If you wish to comment on any of these options, you can:
+
+*) Email your commeent to to cve-id-change@...re.org, which is
+   monitored by CVE team members at MITRE.
+
+*) Post to a new, public discussion list that is focused on the CVE ID
+   change.  To subscribe, send email to listserv@...ts.mitre.org .  In
+   the body of the email, type:
+
+        subscribe CVE-ID-SYNTAX-DISCUSS-LIST
+
+*) Reply on any of the public mailing lists to which this announcement
+   has been posted.
+
+Due to the high volume of replies that we expect to receive, we will
+not be able to respond to every email message; however, we will
+publish a summary of responses.
+
+Thank you to the entire community for supporting CVE, and we look
+forward to your feedback.
+
+Regards,
+The CVE Project
 
 
+------------------------------------------------------------
+Option A: Year + 6 digits, with leading 0's
+------------------------------------------------------------
 
--- 
-Andrés Gómez Ramírez | Analista de Diagnóstico
-Fluidsignal Group S.A. | Where Security Meets Business
-http://www.fluidsignal.com/ | ISO 9001:2008 / ISO 27001:2005
+Example identifiers:
+
+  CVE-2014-000001, CVE-2014-000999, CVE-2014-001234, CVE-2014-009999,
+  CVE-2014-010000, CVE-2014-054321, CVE-2014-099999,
+  CVE-2014-100000, CVE-2014-123456, CVE-2014-999999
+
+Strengths:
+
+  This CVE ID syntax will seem familiar to consumers who are used to
+  the old-style syntax from 1999 through 2013, since there are 6
+  digits instead of 4.  This might make adoption easier and minimize
+  confusion.
+
+  The syntax would avoid some ID parsing problems that could occur
+  with the other schemes, such as inadvertent truncation or
+  fixed-length assumptions that would cause the wrong ID to be
+  extracted.  It would also support the use of multiple consecutive
+  IDs that can be easily sorted and displayed without special logic.
+  The fixed length might be a desirable property to some consumers or
+  CVE-processing implementers; the other options have variable-length
+  IDs.
+
+  Some CVE-processing software that automatically extracts or
+  publishes CVE identifiers might not need to be changed, if it
+  already assumes that more than 4 digits could be used.
+
+  There will be enough IDs to support up to 1 million vulnerabilities
+  per year.  This is effectively future-proof for CVE, because CVE's
+  scope is expected to remain largely restricted to vulnerabilities
+  that have been analyzed by humans.  If more than 1 million IDs are
+  required, this would represent such a large paradigm shift in
+  vulnerability disclosure and tracking that the entire industry would
+  not be able to manage the volume using today's practices.
+
+Limitations:
+
+  Immediately upon the first publication of an ID using this syntax,
+  many CVE programs that assume the old-style syntax would stop
+  functioning correctly.
+
+  The larger number of digits could increase the risk of typos,
+  especially with the leading zeroes.  Some consumers might
+  intentionally remove leading zeroes, assuming the old-style 4-digit
+  number.
+
+
+
+---------------------------------------------------------------------
+Option B: Year + arbitrary digits, no leading 0's except IDs 1 to 999
+---------------------------------------------------------------------
+
+Note: in this option, extra digits would not be added until at least
+10,000 IDs are needed.  When necessary, only one additional digit is
+added.  For IDs 1 through 999, leading 0's would be used to expand the
+number to use 4 digits.
+
+Example identifiers:
+
+  CVE-2014-0001, CVE-2014-0999, CVE-2014-1234, CVE-2014-9999,
+  CVE-2014-10000, CVE-2014-54321, CVE-2014-99999,
+  CVE-2014-100000, CVE-2014-123456, CVE-2014-999999, CVE-2014-1234567
+
+Strengths:
+
+  This CVE ID syntax will seem familiar to consumers who are used to
+  the old-style syntax from 1999 through 2013; the numeric portion
+  will just contain extra digits.  This might make adoption easier and
+  minimize confusion.
+
+  The initial change to 5 digits would support up to 100,000
+  identifiers in a single year; 6 digits would support up to 1 million
+  identifiers per year.
+
+  Some CVE-processing software that automatically extracts or
+  publishes CVE identifiers might not need to be changed, if it
+  already assumes that more than 4 digits could be used.
+
+  The ID syntax will not have an obvious change until 10,000
+  identifiers are needed, which might give extra time to CVE users to
+  adjust to a syntax change.  (Note that CVE might not require 10,000
+  identifiers this year.)
+
+Limitations:
+
+  The ID does not have a fixed length, and ID parsing errors are
+  likely.  Some CVE programs would incorrectly truncate the wrong IDs
+  because of the assumption of 4 digits, which would cause confusion
+  and incorrect mappings.  For example, CVE-2014-123456 might be
+  truncated as CVE-2014-1234, which would identify a completely
+  different vulnerability.
+
+  This syntax is less "future-proof" than others.  If a change is
+  needed from 5 digits to 6, some CVE-processing software might break
+  because of built-in assumptions about 5 digits.  Thus, for this
+  option, there would be two different periods of transition of the
+  CVE ID syntax: the transition to 5 digits, and the transition to 6
+  digits.  However, the second transition would be less severe, since
+  it would only affect implementations that were not correctly fixed
+  in the first transition.  Option C would only have one transition,
+  and Option A would only have one transition unless there is a
+  radical change in vulnerability disclosure practices that would
+  require more than 1 million IDs a year.
+
+  Because there is no apparent change to the syntax until 10,000 IDs
+  are needed, this might prevent some CVE implementers from making
+  changes until it is too late and the change has already happened.
+
+
+------------------------------------------------------------
+Option C: Year + arbitrary digits + check digit
+------------------------------------------------------------
+
+Note: the ID would consist of the year, a hyphen, a sequence number of
+1 or more digits, another hyphen, and a single check digit calculated
+using the Luhn Check Digit Algorithm, which is used in other
+identification schemes such as credit card numbers.  This syntax is
+similar to that used by the Common Configuration Enumeration (CCE);
+see http://cce.mitre.org/about/faqs.html#B2 for more information.
+
+Example identifiers:
+
+  CVE-2014-1-8, CVE-2014-999-3, CVE-2014-1234-3, CVE-2014-9999-3,
+  CVE-2014-10000-8,   CVE-2014-54321-5,   CVE-2014-123456-5,
+  CVE-2014-999999-5, CVE-2014-1234567-4
+
+Strengths:
+
+  This ID syntax supports arbitrary numbers of vulnerabilities, and as
+  a result, it is future-proof.  The trailing hyphen and check digit
+  serve as an unambiguous boundary that clearly decomposes the ID into
+  three distinct parts, regardless of length.  CVE implementations
+  that conform to this syntax would not need to be changed when the
+  number of digits changes.
+
+  The check digit would be useful for automatically detecting typos in
+  identifiers.  Because of the widespread use of CVE, identifier typos
+  cause significant confusion and maintenance costs to resolve,
+  although the frequency with which this occurs is not clear.  Since
+  there is a trend towards large-scale automation for managing
+  vulnerabilities, the check digit would be very useful as part of a
+  data integrity check of CVE IDs during computer-to-computer
+  interaction.
+
+Limitations:
+
+  Immediately upon the first publication of an ID using this syntax,
+  many CVE programs that assume the old-style syntax would stop
+  functioning correctly.
+
+  This ID syntax is the most radical change to the old-style syntax.
+  It could cause confusion among CVE consumers who are unaware of the
+  syntax change, since "CVE-2014-1-1" would appear to be a malformed
+  ID compared to the old-style ID.
+
+  Compared to other options, this ID would be more difficult to use in
+  human-to-human communications.
+
+  Parties who are familiar with the old-style ID syntax might
+  inadvertently omit the check digit.  This could increase
+  implementation costs or reduce usability for implementations that
+  assume that IDs have the check digit.
 
