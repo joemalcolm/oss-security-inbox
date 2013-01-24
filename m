@@ -1,57 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/30/4
-Message-ID: <51096776.4020907@redhat.com>
-Date: Wed, 30 Jan 2013 11:33:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: CVE request -- qxl: synchronous io guest DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/24/2
+Message-ID: <87622mgxgb.fsf@mid.deneb.enyo.de>
+Date: Thu, 24 Jan 2013 21:03:48 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE ID Syntax Change - Call for Public Feedback
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> *) Option C (Year + arbitrary digits + check digit)
+>
+>    Examples: CVE-2014-1-8, CVE-2014-9999-3, CVE-2014-123456-5
 
-On 01/30/2013 09:37 AM, Petr Matousek wrote:
-> A flaw was found in the way spice connection breakups were handled in
-> the qemu-kvm qxl driver. Some of the qxl port i/o commands were waiting
-> for the spice server to complete the actions, while the corresponding
-> thread holds qemu_mutex mutex, potentially blocking other threads in the
-> guest's qemu-kvm process. An user able to initiate spice connection to
-> the guest could use this flaw to make guest temporarily unavailable or,
-> in case kernel.softlockup_panic in the guest was set, crash the guest.
-> 
-> Upstream fixes:
-> xf86-video-qxl commit
-> http://cgit.freedesktop.org/xorg/driver/xf86-video-qxl/commit/?id=30b4b72cdbdf9f0e92a8d1c4e01779f60f15a741
-> 
-> which relies on qemu-kvm functionality introduced by commit
-> http://git.kernel.org/?p=virt/kvm/qemu-kvm.git;a=commit;h=5ff4e36c
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=906032
-> 
-> Thanks,
-
-Please use CVE-2013-0241 for this issue.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRCWd1AAoJEBYNRVNeJnmTdz0QAJOFfHYG6T4iQY3hytnR0iV1
-O2JyrYFVk/Jdrgz/+V7pPjhvxn6ukohhHkucYW6+4ZjPSu1ne62zNDEo1Mah0twf
-coPFOcBs4qGz5OQUZjhADWmdzS9RhZis/5jMfLeMJBPjFMrGRRcJtbYKfX7w5Vpn
-p7ajvCvJBCjOK0OIWWwuMjTU1Qv/MSrJSEx6Vla6hrb0L8eZQPYHcpPJNB3IhZ38
-nWkcO+ZpgiaEKjIiNXBpuvLiCcTniDSY1AsEa8lTQc7uZP3WdHKDa+EeGiGlhDGP
-kTKGhrUvBoRmHPXFgh/kK8+1qOnOkk1PUuVsdxBgmli0TtblX6SOKyzZEf9SUPds
-W4auVltGqkS+qSufmV9OfM2ozWZIQOZMo/9/HwYjn5lxywsXxcBJJqNPIlmWuyLO
-6B66lM/WZeNAIRMvt+1HYiZTImH9PHzVlf9gA5LRIR4eHnb7/ABhsUac9M/AC6uR
-q+ojKxKeEvyZNrSBIPyAzVF4A0wzbnxliB+Urql6yUty4Xc5HJMbcMRIDrgMl2sb
-8xJiCT6csQzvcvyU9VUAg4aAhJHsgJLe7m/CdIRUqf2YaMei72JVTbeHqB7pvRtV
-xugO+ZnxtCbVMn4yFKIcFsyQxKjZkZRXMcWEbA2SDd3bWu7ElkMhPSc57MYmhyY9
-iuJppjvtcQtYepRgFFS6
-=kABX
------END PGP SIGNATURE-----
+If you add a check digit, please do not separate it with a hyphen.
+The additional hyphen requires additional changes to parsers, changes
+which could be avoided easily.
