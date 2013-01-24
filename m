@@ -1,45 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/25/9
-Message-ID: <5150AF98.1010808@redhat.com>
-Date: Mon, 25 Mar 2013 14:12:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/24/1
+Message-ID: <20130124014937.GQ2637@redhat.com>
+Date: Wed, 23 Jan 2013 18:49:37 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, security@...en.com
-Subject: Re: CVE Request: Mongo DB
+Subject: Re: CVE Request coreutils
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2013-01-23 08:47:35 +0100] Sebastian Krahmer wrote:
 
-On 03/25/2013 09:58 AM, Marcus Meissner wrote:
-> Hi,
-> 
-> I do not think this has a CVE yet ...
-> 
-> http://blog.scrt.ch/2013/03/24/mongodb-0-day-ssji-to-rce/
-> describes a MongoDB remote exploit.
-> 
-> Ciao, Marcus
+>On Tue, Jan 22, 2013 at 08:47:46AM -0700, Vincent Danen wrote:
+>> * [2013-01-22 08:25:23 +0100] Sebastian Krahmer wrote:
+>>
+>>> Generally, I see your point. However sometimes services running as
+>>> root 'sort' or 'uniq' user input e.g. via grepping logfiles etc,
+>>> so there is indeed a real chance to indirectly trigger a privilege
+>>> escalation. The past shows that segfaults can be turned into a
+>>> code exec often. Its a stack overflow after all.
+>>
+>> Do you believe this would be the case with modern GCC/Glibc hardening
+>> though?  Wouldn't this just be rendered a crash?
+>
+>Are you serious? And since when will CVE's not be assigned because
+>some mitigation could possibly prevent a stack overflow being turned
+>into code exec?
 
-Looks that way. Please use CVE-2013-1892 for this issue.
+Sorry, I should have perhaps clarified that a bit more.  That wasn't so
+much to say "don't assign a CVE" as much as a "is this mitigation
+sufficient".  I can see, however, how it might have been construed the
+other way.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+>> But even then, if we're talking about logfiles (which is a reasonable
+>> case) you'd have to be allowing user-controlled input to your logs,
+>> which would mean you'd have another problem.
+>
+>You mean like 'logger -t sshd failed login attempt' ?
 
-iQIcBAEBAgAGBQJRUK+YAAoJEBYNRVNeJnmTTO4QAKzd0LGLn1z0wlwXWlAVwUgH
-W2cDUigt5KWIbuy/W9uUSnaQsZWD70rKytt37pOKXWhsqNlrKZOlbDdxlIMgSGXC
-0c6gFUsHP59h5HO2LnbwelF4Ze5T01LLIYbe+DSTLG+KePpF6HCcD07c8aXljiRe
-iOqGWm8aUg5fm+CXZ5ay47CWa1UouR5t5C4XQmb/f/rip49RTAFx5SJ3/z4GHo12
-Svn5WyabpIyqTBg+Ny2cVhjs4vO90n1NM1lVMzsq85GRtRz5snBwE6kW+MHc5YVE
-kryxFzZSWzsCb3NyzWsnIi2zJvKFp/Ckjn9f/EL9tuVJo7DsbJVF7xTQtIIk4Ukn
-XYPAv/GwtYOp/v7WIWQnx/OLzIhoZHNs5P9IH68AA3DH8hJrTr6jmgB04S0WsUvc
-Cp88MnWce3qfVfEo6slVA9xYsfD6oKAuda4+kV/THf6E5kshwB8ZHtRjofWq0gNR
-cae9/+7O+7CUINzro33zkwzfhGiRcgZtO1kn0p6muPf4M2Rbk1iy5YgJlJhIrYT8
-8B6clqGnScB+QJ3Fol+qj8zaHmNKtVj+WwtaUR0UCX0EynDj2DfgGO1TSBq+lK4A
-s6hiPB/4pOmDEeYTa8PAmTNpENV3s8rZ/NFZLIZROlfEBh9rnFEJDKwhExnmBKYr
-jKwHWVldvVIIiVcTjavp
-=W54H
------END PGP SIGNATURE-----
+Yes, indeed, exactly like that.  =)  Although one would hope that logger
+has a decent input limit where you couldn't inject a ~10MB long line
+into syslog.  Regardless, what logger does or doesn't do isn't the issue
+either.
+
+>> I'm also assuming, based on the comments in the first bug, that you need
+>> a really large line (not just an entire file, but one line).  How likely
+>> is it that you would be grepping a log file with ~10MB of data on one
+>> line?
+>
+>Not very common indeed, but I think its not the point (logfiles were
+>just _one_ example).
+
+Yes, absolutely.
+
+>Nevertheless, you seem to shift your arguments. For each reason/attack vector
+>I answer, you bring up two new reasons why this not an issue.
+>
+>At the end, I did not spot the bug; if the majority thinks its not worth
+>a CVE, I can live with it. It would just have made tracking easier.
+
+You're right.  I'm inclined to think it isn't an issue (or at least not
+one really worth filing bugs over, however that is just my personal
+opinion).  I see that Kurt did indeed assign CVEs, so I'll be filing
+those bugs regardless.
+
+>PS: Reminds me to the one-year dbus discussion where everyone told me that
+>this can never be a problem.
+
+You, sir, have a very valid point here.  Thanks for that little
+reminder.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
