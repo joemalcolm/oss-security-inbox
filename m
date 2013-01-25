@@ -1,21 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/04/8
-Message-ID: <20130904141123.GA27186@inutil.org>
-Date: Wed, 4 Sep 2013 16:11:23 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/25/2
+Message-ID: <5101DB3B.2030309@redhat.com>
+Date: Thu, 24 Jan 2013 18:09:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2013-2185 / Tomcat
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Question to the Red Hat people on the list:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Is https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2185 something which applies
-to Tomcat in general or is this specific to the  "Red Hat JBoss Enterprise 
-Application Platform"?
+On 01/24/2013 01:46 PM, Forest Monsen wrote:
 
-The DiskFileItem class is part of Tomcat 7, but there's no reference to CVE-2013-2185
-at http://tomcat.apache.org/security-7.html
 
-Cheers,
-        Moritz
+Please use CVE-2013-0224 for this issue.
+
+
+
+Please use CVE-2013-0225 for this issue.
+
+
+
+Please use CVE-2013-0226 for this issue.
+
+
+
+Please use CVE-2013-0227 for this issue.
+
+
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRAds7AAoJEBYNRVNeJnmTAXEQAMI/V10NW9wwzUtcO8/C1NZV
+TqwmMFp/kWQr2VaNBMi3QrVCEsJwB5k74LFHmfygUsrq88fT/GTaHMh95fQEYSqP
+miQUtKekZOUmm3+1g1F5FxKi2bmL+3UocYWbONbUHqHFfuzQOLv8MKma3utoXu/V
+9hb91qazehieIi25ktutQ5F5tHayvlmKPmRFIsCunof+Y8cfpqrupBVWQDLduItr
+TOCv8CFy4pUeF5WTMe2cEdxpFMIh8F9SkJtCGapcINJyxfGHj+OGhIopTEt+SzLl
+9hUugxCPnVtCyzLUviBpoHuauJSosatzCj1TLbTF0KsrwiTDUe3TUkUtmOT55zdn
+7K1MVSTZYQVr3BsgPWy1+ynXep1xk3K6a1Q2Rhhzq3+suxdo60RyRckC9EJhOlN7
+exZICpKoYcrslVgNBvaTd+9QrP5SCke3hVsz5Y/a7GqPvTlb3pECNSLzmFlOICKV
+mQx0I7X4lDpBV2LSqJ7DbTBPGrSYP7nB8LDK44NP7+b+n9sYAA2/A2+Ay8KiwBuK
+kN6gaoQRfZFV4jBmREqvJ4dVKumrN5Coz97A886OIldmmVaim0MY1WWH9igLMCeu
+G2/J+QZOzvZmxupvOJwsYbyOgkBL65HBmskWutDo+QSfTB2aBj7bsvG3lbcO2QYb
+H0tYw2HH6NzrYtM606dl
+=hIZ2
+-----END PGP SIGNATURE-----
