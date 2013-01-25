@@ -1,28 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/04/2
-Message-ID: <CAA7hUgHtdh9ckayyuQyLn-_rNNo84-yoTEmyZm53HLt2Gfchmw@mail.gmail.com>
-Date: Tue, 4 Jun 2013 15:51:14 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/25/3
+Message-ID: <5101DB3B.7090007@redhat.com>
+Date: Thu, 24 Jan 2013 18:09:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libraw: multiple issues
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-Hi again,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 29 May 2013 20:00, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 05/29/2013 03:18 AM, Raphael Geissert wrote:
->> On 28 May 2013 19:58, Kurt Seifried <kseifried@...hat.com> wrote:
->>> On 05/28/2013 02:43 AM, Raphael Geissert wrote:
->>>> So there's a double-free (fixed in 0.15.2[3])
->>
->> https://github.com/LibRaw/LibRaw/commit/19ffddb0fe1a4ffdb459b797ffcf7f490d28b5a6
->
-> Please use CVE-2013-2126 for this issue.
+On 01/24/2013 01:46 PM, Forest Monsen wrote:
+> Hi, here's a request for CVE IDs for several contributed modules:
+> 
+> SA-CONTRIB-2013-006 - Video - Arbitrary Code Execution 
+> https://drupal.org/node/1896714
 
-FWIW, I've noticed that libkdcraw and darktable embed copies of libraw
-that are vulnerable to the double free.
+Please use CVE-2013-0224 for this issue.
 
-Cheers,
---
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+> SA-CONTRIB-2013-007 User Relationships - Cross Site Scripting (XSS)
+> https://drupal.org/node/1896720
+
+Please use CVE-2013-0225 for this issue.
+
+> SA-CONTRIB-2013-009 - Keyboard Shortcut Utility - Access Bypass - 
+> module unsupported https://drupal.org/node/1896752
+
+Please use CVE-2013-0226 for this issue.
+
+> SA-CONTRIB-2013-010 - Search API sorts - Cross Site Scripting (XSS)
+> https://drupal.org/node/1896782
+
+Please use CVE-2013-0227 for this issue.
+
+> Thanks, Forest
+
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRAds7AAoJEBYNRVNeJnmTnU4P/00+nMbQyTti3H+yQvMqU5mJ
+4zavPK8jis23pgBVG4pOLSo8ebf1dhkEaih90OD5UHOXV3183yZYq2hcmuOmZTbk
+53QL5mQciS2mEmihVZ7kTHONi5ga1O4sTVLQz6Vw3qQNAKg0iJRYXOoibwek63FV
+XTastNFyYZXT1h381/lwj5lQHnTTEzeiG6S2ILy5pRzLWrsf7tLmP4G2B0SvN6/i
+W5D9Tq5aJl+Ddwxr5y2yRk0RkayV4YEWRMUBUL1fzX66tTNRhwlpQ3asMeWg/MqW
+0zIFKrSuQlyKVpGnyhdqNRgtiIg5KruOH/pphYc5vKQbmnxkDY502nOIJnGPt1qE
+PLT5kVACbI8QcG4cfYVBAvh+Dj7dZ6J45HbmO87qvEcxj11rRMWVU4NfTl3GgihY
+XthacnpjTOpU2mxNeN0meBTBgdGn3TXGhjFezuj2Mfo+IHHsZT+I+W5wZ/LOvVVz
+ctfgiwq6ag9cEUGJYW8PLB/AgAq04Jruaygb4QkCR9URZdGbz+L0gnrV9VYSF221
+/AfQIScAD9hQwCfWG0JLI1Hg34bnvVSzYwTeXsIxhMTgiVL8jr7dswWvrxrn5hPx
+dKKb+NZlRVEm61Ia1QrFDkefmqgWu20C42PNga/s9fpWUBigYYejrf5Zq5H5ygB6
+beD94iyZWvPUYy2e755E
+=H728
+-----END PGP SIGNATURE-----
