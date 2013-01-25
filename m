@@ -1,53 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/06/4
-Message-ID: <20130606090204.GA3725@quad>
-Date: Thu, 6 Jun 2013 11:02:04 +0200
-From: Stephane Eranian <eranian@...gle.com>
-To: linux-kernel@...r.kernel.org
-Cc: peterz@...radead.org, mingo@...e.hu, pmatouse@...hat.com, meissner@...e.de, security@...nel.org, oss-security@...ts.openwall.com, ak@...ux.intel.com
-Subject: [PATCH] perf: fix hypervisor branch sampling permission check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/25/5
+Message-ID: <1646672.lBURYHEfCB@x2>
+Date: Thu, 24 Jan 2013 22:10:52 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: [Security hardening] [Notification] haproxy (previously) failed to drop supplementary groups after setuid / setgid calls properly
 Content-Type: text/plain; charset=utf-8
 
+On Thursday, January 24, 2013 05:53:38 PM Kurt Seifried wrote:
+> So again, if you know of a way to exploit this please let us know,
+> otherwise we will continue to consider this a security hardening issue
+> and not a security vulnerability.
 
-Commit 2b923c8 perf/x86: Check branch sampling priv level in generic code
-was missing the check for the hypervisor (HV) priv level, so add it back.
+The way these supplemental group issues work is that depending on the groups 
+file, the daemon may try to change to user/group "nobody", but retains group 
+root. This means that any file with group root write privs could be 
+replaced/altered. My experience is that distros have enough files that 
+permissions are wrong on something, somewhere. Its just a matter of finding it.
 
-With this patch, we get the following correct behavior:
+find / -type f -perm -00020 -printf "%-60p %g\t%M\n" 2>/dev/null
 
-  # echo 2 >/proc/sys/kernel/perf_event_paranoid 
+So, it boils down to the problem isn't a vulnerability by itself. However, 
+should a _real_ vulnerability be found in the program, the CVSS score would be 
+higher because the program has CWE-250.
 
-  $ perf record -j any,k noploop 1
-  Error:
-  You may not have permission to collect stats.
-  Consider tweaking /proc/sys/kernel/perf_event_paranoid:
-   -1 - Not paranoid at all
-    0 - Disallow raw tracepoint access for unpriv
-    1 - Disallow cpu events for unpriv
-    2 - Disallow kernel profiling for unpriv
+-Steve
 
-   $ perf record -j any,hv noploop 1
-   Error:
-   You may not have permission to collect stats.
-   Consider tweaking /proc/sys/kernel/perf_event_paranoid:
-    -1 - Not paranoid at all
-     0 - Disallow raw tracepoint access for unpriv
-     1 - Disallow cpu events for unpriv
-     2 - Disallow kernel profiling for unpriv
-
-Signed-off-by: Stephane Eranian <eranian@...gle.com>
----
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 95edd5a..f0880fb 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6501,8 +6501,8 @@ static int perf_copy_attr(struct perf_event_attr __user *uattr,
- 			 */
- 			attr->branch_sample_type = mask;
- 		}
--		/* kernel level capture: check permissions */
--		if ((mask & PERF_SAMPLE_BRANCH_KERNEL)
-+		/* privileged levels capture (kernel, hv): check permissions */
-+		if ((mask & PERF_SAMPLE_BRANCH_PERM_PLM)
- 		    && perf_paranoid_kernel() && !capable(CAP_SYS_ADMIN))
- 			return -EACCES;
- 	}
