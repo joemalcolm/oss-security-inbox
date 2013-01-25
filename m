@@ -1,56 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/20/1
-Message-ID: <51496B2B.4090008@redhat.com>
-Date: Wed, 20 Mar 2013 01:54:19 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/25/7
+Message-ID: <20130125091357.GB815@kludge.henri.nerv.fi>
+Date: Fri, 25 Jan 2013 11:13:57 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Mathias Krause <minipli@...glemail.com>
-Subject: Re: Linux kernel: net - three info leaks in rtnl
+Subject: CVE request: WordPress 3.5.1 Maintenance and Security Release
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>From http://wordpress.org/news/2013/01/wordpress-3-5-1/
 
-On 03/19/2013 03:15 PM, Mathias Krause wrote:
-> I fixed a few more info leaks in linux v3.9-rc3. Unprivileged
-> users can use the netlink interface to exploit the following issues
-> to disclose kernel stack memory:
-> 
-> 29cd8ae dcbnl: fix various netlink info leaks 
-> http://git.kernel.org/linus/29cd8ae0e1a39e239a3a7b67da1986add1199fc0
->
->  84d73cd rtnl: fix info leak on RTM_GETLINK request for VF devices 
-> http://git.kernel.org/linus/84d73cd3fb142bf1298a8c13fd4ca50fd2432372
->
->  c085c49 bridge: fix mdb info leaks 
-> http://git.kernel.org/linus/c085c49920b2f900ba716b4ca1c1a55ece9872cc
->
->  David Miller did backports for the above issues which are
-> currently under review and should end up in the next stable and
-> longterm kernels.
-> 
-> Regards, Mathias
+WordPress 3.5.1 also addresses the following security issues:
 
-CVE Merge - same researcher/vuln/version. Please use CVE-2013-1873 for
-these issues.
+- A server-side request forgery vulnerability and remote port scanning using pingbacks. This vulnerability, which could potentially be used to expose information and compromise a site, affects all previous WordPress versions. This was fixed by the WordPress security team. We’d like to thank security researchers Gennady Kovshenin and Ryan Dewhurst for reviewing our work.
+- Two instances of cross-site scripting via shortcodes and post content. These issues were discovered by Jon Cave of the WordPress security team.
+- A cross-site scripting vulnerability in the external library Plupload. Thanks to the Moxiecode team for working with us on this, and for releasing Plupload 1.5.5 to address this issue.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
-
-iQIcBAEBAgAGBQJRSWsrAAoJEBYNRVNeJnmTRJgP/A5M6zi0J5ZgPyjk/vnIDCDN
-auSwOGihNdEc8abVjQtuo5mepmOdeKZsH6SLtxgIxTNXR2AI2Uov9prnDbuBx4HB
-cZrhD2Pc5kPIdQX/eSG8ZkzSTAnDIRA6DUI4BjHelzyVobkKObq8yTgISEBpuk/R
-wzC7YMLYuvTiA31VzG34cPrYKKSzcb6E6RkgwViCDNgRkhVsbqD1FwqH7+HIcZeA
-pW3pahTvRXOfaZ99WtEylEjsvGlE9eFHHBrC8s6zMsauINdZJGDzFdhkTJcnjQcG
-0AeiRk056gApe/MTj8ZyrJM65/X1Z3eYfl+cdZcddPgpVQQ4av6ks7xdOz+MBe8B
-1TUbYrhWJnz7tNBBHj03uWaCDnl/eZXaThCuokI17inN9ILRrhQV8snQtnVt9aDM
-fO+bB0Qdj6lmzhHYaCOr64E885AyHCLHHp6teqp3PvXnkaTkpb2kUQcRlDKOoXXu
-MRoos6EZSHRxOaJDl2x7JJsr5h47F/IAHjvLqcFVMdCnixaoslj1M1Lat7JmFcc3
-WNVM6Gq662qxcsSwcNumSmuzV30nCZ5/WBuF0RR6rRxLeEHqELsT7eUsjbZEwB69
-lxsYjCh0CldhZruaMtuRSaq5exvcjLXipFfO4M65Aw1BywEV6R5YBhpyP4NcAWzr
-rCpafMk9J0eim/ryXrck
-=bW6B
------END PGP SIGNATURE-----
+--
+Henri Salo
