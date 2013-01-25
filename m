@@ -1,45 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/08/5
-Message-ID: <51397220.3090803@redhat.com>
-Date: Thu, 07 Mar 2013 22:07:44 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/25/1
+Message-ID: <5101D792.3050805@redhat.com>
+Date: Thu, 24 Jan 2013 17:53:38 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Requests (maybe): Linux kernel: various info leaks, some NULL ptr derefs
+Subject: Re: [Security hardening] [Notification] haproxy (previously) failed to drop supplementary groups after setuid / setgid calls properly
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/07/2013 09:55 PM, Petr Matousek wrote:
-> On Thu, Mar 07, 2013 at 01:19:05PM +0400, Solar Designer wrote:
->> Kurt -
->> 
->> On Thu, Mar 07, 2013 at 02:13:37AM -0700, Kurt Seifried wrote:
->>> Bundling the following into a single CVE:
->> [...]
->>> Please use CVE-2012-6138 for these issues.
->> 
->> I think this is wrong.  I would understand if those issues were
->> all in the same subsystem at least (or if you assigned
->> per-subsystem CVE IDs for these), but this is not the case.  Many
->> distros will fix some, but not the others, or not all at the same
->> time.  There's room for a little bit of bundling here, but not
->> that much.
+On 01/23/2013 09:25 AM, Jan Lieskovsky wrote:
+> Hello vendors,
 > 
-> In the past we've usually assigned one CVE per issue even for info
-> leak bugs. Or at least one CVE per subsystem, as Alexander says. I
-> agree with Alexander that one CVE for about ~20 issues is not
-> right.
+> just FYI notification that haproxy upstream has recently corrected
+> [2] improper dropping of supplementary groups [1] after setuid /
+> setgid calls.
+> 
+> We have further investigated this issue and have reasons to believe
+> that by itself this is NOT a security issue (another flaw would
+> need to be found in haproxy this to be actually possible to use for
+> something interesting).
+> 
+> For now we are considering this fix to be a preventive measure /
+> security hardening (but took the time to notify you explicitly
+> about this as you might still want to backport it into affected
+> versions).
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
+> 
+> P.S.: [1] https://bugzilla.redhat.com/show_bug.cgi?id=894626 [2]
+> http://git.1wt.eu/web?p=haproxy.git;a=commitdiff;h=ab012dd3
+> 
 
-Agreed (I was wrong, not much more to say than that =). It sounds like
-Mitre will be handling the additional CVEs for this issue as I
-understand it.
+So to be clear: haproxy fails to properly drop group privileges. Why
+isn't this classified as a security vulnerability?
 
-Now my question is how concise do we go with the Linux kernel as far
-as subsystems go? E.g. file subsystem vs network subsystem seems
-obvious, and say ext4 vs. MSDOS file system code seems obvious but
-what about network drivers (same chipset? same maker, different
-chipsets? or like ext2 vs ext3 vs ext4).
+Well there is no way to exploit this that we're aware of, if you know
+a way to exploit this please let us know.
+
+What would make this a security vulnerability? Let's say for example
+haproxy had an option to read or write to a file and did this with the
+privileges it failed to drop (granting the attacker privilege
+escalation) then it would be a security vulnerability.
+
+So again, if you know of a way to exploit this please let us know,
+otherwise we will continue to consider this a security hardening issue
+and not a security vulnerability.
+
+So as for this tweet:
+
+"@chort0 http://seclists.org/oss-sec/2013/q1/174 … I didn't know about
+that claim -- I guess it explains why such great effort was made to
+not call it a vuln"
+
+I wasn't aware of this claim by haproxy and to be honest I don't care.
+I assigned something like 1,600 CVE's last year, trust me, I'm not
+afraid to annoy people by assigning CVEs that might embarrass them.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -48,17 +66,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJROXIgAAoJEBYNRVNeJnmTb8kP/2UlLcj4Z9u2Xqbd1ODKUZbZ
-ghaSLU6NitjBrxTuMeqsDC5H1BV36F86b06hEsI/jMMcqfdKSbNu+gdxeNCwAOm9
-t+heG418AuHhabEDaCt9goxhkdlbFYHjoz7XZMV3qsy2q7sLHNVCcwV/9EMtcR3Z
-SL9Vuj/Nj7ymk46Y9B3oCqtziHwIRkJXDZTkzopbB7hVrn+ov32dKS67KuIgvcP5
-RogZetM9iedzL3AbFY49Kv1CwtaEkJ1ueCorxVY4tPoSdduDKRy4Qn0pL9TratSq
-8voTl3V+Lj0KOAHTAZy5H140GtPhvjkB4QPEgDh9U3bgFsbZvOvS4iSdG/q/075J
-XjwOubGOH/Y/Q9F1k5xC99lEjm1T+7lNcU2lEZxtMMW9hSsLeFS2tGpGzy0EcY32
-nQz7Jt5cAvDqX2laNnN/ZOWx+3EDmbZ4ezf21l2jG4t+3Y/RzmESoOvqfgWhWNZ3
-+QdZugO1fEsnd28U9GvW1qEaAXt1cuE/lm+x0WhRFnqxUO1yCXl7QCJdtZcpoMl5
-apL/NLLXQJlFE4jU9+tvfR1JMCegmSZVJkYAsIhc5FbHRCTFXR7HV0SkRvLE2ZZc
-p2I7TLyubaf5x233O5Sn8FzdBDAFBk/zBDg5RKt/TPjWUO9KCZDuiAHM5OfRGp7t
-w7dXLHgsrv71uaSBN2xO
-=BGxQ
+iQIcBAEBAgAGBQJRAdeSAAoJEBYNRVNeJnmTzUAQAJ8zJnXdcC65GcXgKw8niVag
+g394V6cIYIxXQ299eJLENKXPM64sqL/WEt8JrdIOQwaU9xntxVp9Z7JT5wKmgbLa
+HICqLd9pHKfrlZngbId/61uc3P+u6BtIq3fUZfBNMePfUm+Rk18DHNerqZSXZZ9t
+epFz2E/T5RCN+SOzH1ov6WGqB02+aY2JuoWDICYdFX8iDiMA0ZJI4pPCMhX9maNE
+dLwiP1RtmHP2WbBmFZKC9faGgIsOFAoMLdJ2d0qMzQV1QgUNNkUYsFQe+PoeJNjY
+NGfDoFbezZurJvfbfRYmva0Ze/JVfUsTEwSm7OwnTpNvKNZv7N+G8aAvQap5taVH
+8JreDNp0YC4ByuNzRzKtR2iuKxu2ILSYhr1xtzt8uQhERmZvMol/Z6jvBhAJgRZK
+J9WP0xXE8476XDCvo7KQafTEBESApEBkcMXL3DDunyQPNbquzG5lk+RV71I1HsJZ
+TJg+CLgOEllVD2+CXjF6yuvRlnZRLiBCa0H81YuvmzgKFX4uMYJxBTjI9TnklnNN
+MNZQ9o2sQaHj36mNl3/kJftBtveRCDZSmVXhwls8eBp0ysN4mkdycRyTMOITSywu
+OJIaKcFe7NtflqWU9sZFgchMsMO0WUlVTOK1Jm896/aJs+nNM9Z4/STceFGvsZmq
+W40gi3vx3MUWF0Rbp1i7
+=77BF
 -----END PGP SIGNATURE-----
