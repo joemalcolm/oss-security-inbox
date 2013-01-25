@@ -1,18 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/24/3
-Message-ID: <CAHUQ3tnXk8h_=nJvZQMTjq00zfSicyxwAA_0VwUoniCO8u_uOQ@mail.gmail.com>
-Date: Thu, 24 Oct 2013 10:00:55 -0700
-From: Kevin Pawloski <kpawloski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/25/4
+Message-ID: <5101DC0F.6090608@redhat.com>
+Date: Thu, 24 Jan 2013 18:12:47 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Simple Machines Forum (SMF) Remote file inclusion vulnerability
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/SimpleMachines/SMF2.1/issues/701
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Affects 2.0.X and 2.1.X.
+Ok not sure what my email client did there.
 
-Can a CVE please be assigned to this issue?
+On 01/24/2013 01:46 PM, Forest Monsen wrote:
+> Hi, here's a request for CVE IDs for several contributed modules:
+> 
+> SA-CONTRIB-2013-006 - Video - Arbitrary Code Execution 
+> https://drupal.org/node/1896714
 
-Thank you.
-Kevin
+Please use CVE-2013-0224 for this issue.
 
+> SA-CONTRIB-2013-007 User Relationships - Cross Site Scripting
+> (XSS) https://drupal.org/node/1896720
+
+Please use CVE-2013-0225 for this issue.
+
+> SA-CONTRIB-2013-009 - Keyboard Shortcut Utility - Access Bypass - 
+> module unsupported https://drupal.org/node/1896752
+
+Please use CVE-2013-0226 for this issue.
+
+> SA-CONTRIB-2013-010 - Search API sorts - Cross Site Scripting
+> (XSS) https://drupal.org/node/1896782
+
+Please use CVE-2013-0227 for this issue.
+
+> Thanks, Forest
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRAdwPAAoJEBYNRVNeJnmT2akP/Rcev2faXs5job+phYJAn4wK
+53yCDq+YGY0q3x7J5i+MJoUgfPCDbM4QzaXB731EFmBKV9tm8dX3d84lTMqm3NXH
+mSLgK32LH9w/+o5frkZ89NlAGCDADOASE3BqqxagWk2sm9QWcgW1fjnrDkmAlk9b
+P7DWRhxnoyjeZ7x85gmJ5lB7XkcUKKhxKmI2BymYjuEVA0x5mOjXsE2hkXf1uVY0
+Py5TZkAgaQt5JHnVJY/LnOyeAREtQ8aPS0r7DO6o6AdGyv4PtFib4gl1lPkpXLTh
+FbAYrrcj/1xP9ohUw7pnGesnn6IgbrB4um3S6cZhkA1xR55Pz2Qw0ZBjOpzJxALX
+hZ8RVuKLkOXbrcEM36ev+L3vpglYdF9FPf07G3Qdji0+uoksio27jjGc8+M+RaBG
+C00ZSh0NzYo/wRZNcF0B9X3bReeKWbAvS1c8M34N7hs9oOVCh9XuqI1oEIYapUlj
+pswHwAURXdhuMm9WhBMyM1YuI1z9CIAcfFKKnS1lrzcSjYi/8w9WrTAodoxdxdOA
+IFrfOP19UURBlWMwEmOX/7HzrQWwfOJUl71iUY83Lu+A5Kmrxp7FuXaedbjnfHc6
+GKU4gouvEykRsXf5+HIT5KHqTqjkZ3Nqh62yI7hDro2bOk5+EYRTMvDuCjMla3vS
+eqUFGhMHqq5KJrt1xYYV
+=2gkS
+-----END PGP SIGNATURE-----
