@@ -1,93 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/9
-Message-Id: <6120028B-249B-4893-8918-273C279F4BD6@nadim.cc>
-Date: Wed, 10 Jul 2013 13:06:01 -0400
-From: Nadim Kobeissi <nadim@...im.cc>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, nadim@...pto.cat, arlo@...pto.cat
-Subject: Re: cryptocat/decryptocat - needs a cve?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/25/6
+Message-ID: <20130125064736.GA26860@elende>
+Date: Fri, 25 Jan 2013 07:47:36 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: team@...urity.debian.org
+Subject: CVE Request: zoneminder: arbitrary command execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
-On 2013-07-09, at 11:44 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+The following arbitrary command execution vulnerability for zoneminder
+was disclosed/published:
 
-> On 07/09/2013 09:59 AM, Nadim Kobeissi wrote:
-> > No CVE has been assigned yet. Any assistance with this is welcome!
-> > 
-> > NK
-> 
-> Ok sorry for the delay, I have some questions. Can you provide links
-> to the code commits fixing these issues/give some details on them?
-> Also I assume the Cryptocat 2.1 release fixes the decryptocat issue
-> correct?
+http://itsecuritysolutions.org/2013-01-22-ZoneMinder-Video-Server-arbitrary-command-execution-vulnerability/
 
-Cryptocat 2.1 does indeed fix the issue.
+Could you please assign a CVE for it?
 
-Code commit:
-https://github.com/cryptocat/cryptocat/commit/5c69cb7d8543184d2f33944cb4129605d050ecad
-
-Blog post with comments:
-https://blog.crypto.cat/2013/07/new-critical-vulnerability-in-cryptocat-details/
-
-> 
-> ==============
-> 
-> https://github.com/cryptocat/cryptocat/blob/master/CHANGELOG.md
-> 
-> Cryptocat 2.1
-> Jun. 7 2013
-> Security enhancements and bug fixes. Updating is recommended.
-> 
-> Cryptocat 2.0.42
-> Apr. 19 2013
-> Fixed a bug found in the encryption libraries that could partially
-> weaken the security of multiparty Cryptocat messages.
-> 
-> Cryptocat 2.0.22
-> Nov. 7 2012
-> This version pushes many important security fixes, detailed here on
-> the Cryptocat Development Blog:
-> https://blog.crypto.cat/2012/11/security-update-our-first-full-audit/
-> 
-> Cryptocat 2.0.19
-> Nov. 1 2012
-> Minor security fixes.
-> 
-> ==============
-> 
-> Second set of questions:
-> 
-> Then in http://tobtu.com/decryptocat.php
-> 
-> A number of other issues are mentioned, but I can't easily match them
-> up to the changelog:
-> 
-> Date introduced	Days in Git	Difficulty rating
-> Jul 9, 2011	58	Passwords so probably broken
-> Sep 5, 2011	6	*** Medium
-> Sep 11, 2011	36	**** Hard
-> Oct 15, 2011	2	***** "Impossible"
-> Oct 17, 2011	12	*** Medium
-> Oct 29, 2011	191	** Easy
-> May 7, 2012	347	* Encraption
-> Apr 19, 2013	45	*** Medium
-> Jun 3, 2013	30+	***** "Impossible"
-> 
-> Can you provide links to the commits for these issues?
-
-The thing is, Cryptocat only started being a serious project since the 2.0 release in late September 2012. Anything before that, to me, would simply not be worth of a CVE because it was nothing more than a bedroom project used by a handful of people.
-
-We only started getting funding and media coverage in July/August 2012, followed by a complete re-engineering and re-release of the project. THAT's why there are so many changes to the key size. 
-
-NK
-
-> 
-> It looks like we need between 4 and 10+ CVEs in total.
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+Regards,
+Salvatore
