@@ -1,54 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/08/11
-Message-ID: <CAHQz1rLZgny6GXDyrLj7TgCfsLaeA6N6St-Jw4bgLJpANXPpBw@mail.gmail.com>
-Date: Mon, 8 Apr 2013 15:34:15 -0300
-From: Breno Silva <breno.silva@...il.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- ModSecurity (X < 2.7.3): Vulnerable to XXE attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/26/2
+Message-ID: <CABRvpqB+K1MCGqoGoW_AAYWP_neNytqx7Ln4dOFptt_GQwMDXg@mail.gmail.com>
+Date: Sat, 26 Jan 2013 15:13:13 -0500
+From: Andrew Nacin <nacin@...dpress.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, Henri Salo <henri@...v.fi>,  WordPress Security Team <security@...dpress.org>
+Subject: Re: CVE request: WordPress 3.5.1 Maintenance and Security Release
 Content-Type: text/plain; charset=utf-8
 
-Hello Jan,
+On Sat, Jan 26, 2013 at 2:19 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-Are you guys backporting de patch to old versions of ModSecurity ?
+> > - A server-side request forgery vulnerability and remote port
+> > scanning using pingbacks. This vulnerability, which could
+> > potentially be used to expose information and compromise a site,
+> > affects all previous WordPress versions. This was fixed by the
+> > WordPress security team. We’d like to thank security researchers
+> > Gennady Kovshenin and Ryan Dewhurst for reviewing our work.
+>
+> Basically it applies filters to pingbacks, things like:
+>
+> return new IXR_Error(33, __('The specified target URL cannot be used
+> as a target. It either doesn't exist, or it is not a pingback-enabled
+> resource.')); so I was largely abl to confirm this one.
 
-Thanks
 
-Breno
+The primary fix is to better validate a URL before triggering an HTTP
+request to it. You can see this with the filter and function
+pingback_ping_source_uri in http://core.trac.wordpress.org/changeset/23330.
+It blocks credentials, odd ports, RFC1918 IPs, etc. Turning the error
+messages into generic errors was an additional defensive measure but due to
+the other fixes, does not address a particular vulnerability.
+
+What these fixes target have already been written about publicly:
+http://www.acunetix.com/blog/web-security-zone/wordpress-pingback-vulnerability/
+http://lab.onsec.ru/2013/01/wordpress-xmlrpc-pingback-additional.html
+
+> - Two instances of cross-site scripting via shortcodes and post
+> > content. These issues were discovered by Jon Cave of the WordPress
+> > security team.
+>
+
+I found one instance of esc_attr() to esc_url() on a url used in
+> embedded media, I'm guessing this is the XSS mentioned in the
+> description as "post content"?
+>
+
+That was one — http://core.trac.wordpress.org/changeset/23322. The other
+was http://core.trac.wordpress.org/changeset/23317, which serves to fully
+validate HTML tags passed to a shortcode and reject exploitative values.
+
+All I'm seeing for shortcodes related junk is in a big JavaScript blob
+> wp-35/wp-includes/js/media-editor.min.js. It looks like this might
+> need two CVEs if they are widely different.
+>
+
+The changes in media-editor.min.js are bug fixes and not related to
+security. They may be seen in uncompressed form here:
+http://core.trac.wordpress.org/changeset?old_path=%2Ftags%2F3.5%2Fwp-includes%2Fjs%2Fmedia-editor.js&new_path=%2Ftags%2F3.5.1%2Fwp-includes%2Fjs%2Fmedia-editor.js
+.
+
+> - A cross-site scripting vulnerability in the external library
+> > Plupload. Thanks to the Moxiecode team for working with us on this,
+> > and for releasing Plupload 1.5.5 to address this issue.
 
 
-On Wed, Apr 3, 2013 at 9:23 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+> The diff for plupload is a mess of JavaScript/binary files so I can't
+> confirm much.
+>
 
-> Hello Kurt, Steve, Breno, vendors,
->
->   ModSecurity upstream has released v2.7.3 version:
-> [1] https://github.com/SpiderLabs/ModSecurity/blob/master/CHANGES
->
-> correcting one security flaw (from [2]):
-> "It was reported that the XML files parser of ModSecurity,
-> a security module for the Apache HTTP Server, was vulnerable
-> to XML External Entity attacks. A remote attacker could
-> provide a specially-crafted XML file that, when processed
-> might lead to local files disclosure or, potentially,
-> excessive resources (memory, CPU) consumption."
->
-> References:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=947842
-> [3] https://bugs.gentoo.org/show_bug.cgi?id=464188
-> [4] https://secunia.com/advisories/52847/
->
-> Relevant upstream patch (seems to be the following):
-> [5]
-> https://github.com/SpiderLabs/ModSecurity/commit/d4d80b38aa85eccb26e3c61b04d16e8ca5de76fe
->
-> Could you allocate a CVE id [*] for this?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> [*] According to:
-> https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ModSecurity
->     there doesn't seem to have been a CVE id allocated for this issue yet.
->
+The security fix was specific to the Flash binary. Here is the upstream
+commit: https://github.com/moxiecode/plupload/commit/2d746ee. Exploit
+occurs with uplupload.flash.js?id=XSS, using the attack described here:
+http://lcamtuf.blogspot.se/2011/03/other-reason-to-beware-of.html.
+
+Regards,
+Andrew Nacin
 
