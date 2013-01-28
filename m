@@ -1,72 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/18/4
-Message-ID: <51972720.5080606@redhat.com>
-Date: Sat, 18 May 2013 01:00:48 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Larry W. Cashdollar" <larry0@...com>
-Subject: Re: Show In Browser 0.0.3 Ruby Gem /tmp file injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/28/3
+Message-ID: <5106E789.9020707@koziarski.com>
+Date: Tue, 29 Jan 2013 10:03:05 +1300
+From: Michael Koziarski <michael@...iarski.com>
+To: rubyonrails-security@...glegroups.com
+CC: oss-security@...ts.openwall.com
+Subject: Vulnerability in JSON Parser in Ruby on Rails 3.0 and 2.3
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/17/2013 10:34 AM, Larry W. Cashdollar wrote:
-> TITLE: *Show In Browser 0.0.3 Ruby Gem /tmp file injection
-> vulnerability*
-> 
-> DATE: 5/15/2023
-> 
-> AUTHOR: Larry W. Cashdollar (@_larry0)
-> 
-> DOWNLOAD: https://rubygems.org/gems/show_in_browser
-> 
-> DESCRIPTION: Opens arbitrary text in your browser
-> 
-> VENDOR: Jonathan Leung
-> 
-> FIX: N/A
-> 
-> CVE: TBD
-> 
-> DETAILS: The following code uses the temporary file
-> "/tmp/browser.html" insecurely.
-> 
-> |  2   FILE_LOCATION = "/tmp/browser.html" 3 4   class << self 5 6
-> def show(html) 7       file = File.open(FILE_LOCATION, 'w') 8
-> file.write(html) 9       file.close 10 11       `open
-> #{FILE_LOCATION}` |
-> 
-> By a malicious user creating /tmp/browser.html first and
-> repeatedly writing to it they can inject malicious html into the
-> file right before it is about to be opened.
-> 
-> PoC:
-> 
-> | nobody@...ter:/$ while (true); do echo "<script> alert('Hello');
-> </script>" >> /tmp/browser.html; done|
-> 
-> Will pop up a java script alert in other gem users browser.
+There is a vulnerability in the JSON  code for Ruby on Rails which
+allows attackers to bypass authentication systems, inject arbitrary
+SQL, inject and execute arbitrary code, or perform a DoS attack on a
+Rails application. This vulnerability has been assigned the CVE
+identifier CVE-2013-0333.
 
-Please use CVE-2013-2105 for this issue.
+Versions Affected:  2.3.x, 3.0.x
+Not Affected:       3.1.x, 3.2.x, applications using the yajl gem.
+Fixed Versions:     3.0.20, 2.3.16
+
+Impact
+- ------
+The JSON Parsing code in Rails 2.3 and 3.0 support multiple parsing
+backends.  One of the backends involves transforming the JSON into
+YAML, and passing that through the YAML parser.  Using a specially
+crafted payload attackers can trick the backend into decoding a subset
+of YAML.
+
+All users running an affected application should upgrade or use the
+workaround immediately.
+
+Note: This is a separate vulnerability to CVE-2013-0156, if you are
+running a 2.3 or 3.0 application you must still take action to protect
+your application.
+
+Releases
+- --------
+The 3.0.20 and 2.3.16 releases are available at the normal locations.
+
+Workarounds
+- -----------
+If you are unable to upgrade, or apply the patches, you can work
+around this vulnerability by switching backends to the JSONGem
+backend.  Place this code in an application initializer:
+
+  ActiveSupport::JSON.backend = "JSONGem"
+
+If you are running Ruby 1.8 you will need to ensure that the `json` or
+`json_pure` gems are installed and in your application's Gemfile.
+Ruby 1.9 includes this code already.
+
+
+Patches
+- -------
+To aid users who aren't able to upgrade immediately we have provided
+patches for the two supported release series.  They are in git-am
+format and consist of a single changeset.
+
+* 2-3-json-parser.patch - Patch for 2.3 series
+* 3-0-json-parser.patch - Patch for 3.0 series
+
+Please note that only the 2.3.x, 3.1.x and 3.2.x series are supported
+at present.  Users of earlier unsupported releases are advised to
+upgrade as soon as possible as we cannot guarantee the continued
+availability of security fixes for unsupported releases.
+
+Credits
+- -------
+
+Thanks to Lawrence Pit of Mirror42 for discovering the vulnerability
+and working closely with us to ensure we shipped a comprehensive fix.
+ Thanks also to the RedHat security response team for helping us with
+regression testing.
+
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Cheers,
 
-iQIcBAEBAgAGBQJRlycgAAoJEBYNRVNeJnmTTnMP/00aBMhjLsdQfBaer0VHe09o
-YVJFI0iMfx7ilxSKgK36aJ2KTi2Cg4Aaiv1o85RehDlQG62Nt5SGrl8ayzjbtlJE
-7NPixqsrg/dz6f9ZKX9AopX3b3gAnbBHkxd3sczsgs5RLyDzhmHjS+atUtnZZvI6
-RCJxPEaPRZXrAbrYGYEPZZUARLN6wZRugWOSx3NJdyYK6/0XTj8rarv9WjOGysrN
-qJxhA7tGvy1cXEaZuLjMz8FVWweFDIcI0OPBLrMOt2RKTxh3k/GYQwpitEy6BmQ4
-kr1/j9L0Pt52R5TwH0UTWvFhJtOgUTT57BpMIDWiMf03S8UK8hOyRrKDHzAUfPhf
-1PHP/7u+Y7S2WNe4tLc3US7opskPaNo3nISi0noQM5Ksm09Ymmk8AyXEkPfqfMRo
-dQ72FLqUq1HAhvQlouhQqiquxBMCt0yWfkkJwdlw2Oi25E/fUCrrsjM1iEB+MhlV
-KYcTBTIdzVq87kDF5D9Ec6yv3vRxfD7Cn+EBQBESXS0c0/cuHzhPPrH47vwMzbT+
-mdacFxPcuxfhPRGgVDNGhn6AtTUYJU3gpCRWD98AiFdCX4f/Mh2RGfsvMOrZdMit
-y851IP3Y+eyU+A9aiH+HS0+fm9qAotcyzWLz2ZzVhmcaZepdVB4Da+toKeeFUWtC
-JVMdEjeH0nKSTJMJotgX
-=L06d
+Koz
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (Darwin)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iEYEARECAAYFAlEG54kACgkQ3CszDRD2lfPfbwCgweNGQAAMpvdR74PP8FmN+pKD
+Z3wAnRXLMDuhdQi5RN++N+553BtmKPDY
+=5mPg
 -----END PGP SIGNATURE-----
+
+View attachment "2-3-json-parser.patch" of type "text/plain" (22370 bytes)
+
+View attachment "3-0-json-parser.patch" of type "text/plain" (23108 bytes)
