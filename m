@@ -1,56 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/26/5
-Message-ID: <52448D88.20303@redhat.com>
-Date: Thu, 26 Sep 2013 13:39:52 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/28/2
+Message-ID: <5106EC54.5030803@redhat.com>
+Date: Mon, 28 Jan 2013 14:23:32 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: qemu host crash from within guest
+CC: Salvatore Bonaccorso <carnil@...ian.org>, team@...urity.debian.org
+Subject: Re: CVE Request: zoneminder: arbitrary command execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/26/2013 12:39 PM, Vincent Danen wrote:
-> Could a CVE be assigned to the following?
+On 01/24/2013 11:47 PM, Salvatore Bonaccorso wrote:
+> Hi
 > 
-> A dangling pointer access flaw was found in the way qemu handled 
-> hot-unplugging virtio devices.  This flaw was introduced by virtio 
-> refactoring and exists in the virtio-pci implementation.  When the 
-> virtio-blk-pci device is deleted, the virtio-blk-device is removed
-> first (removal is done in post-order).  Later, the
-> virtio-blk-device is accessed again, but proxy->vdev->vq is no
-> longer valid (a dangling pointer) and kvm_set_ioeventfd_pio fails.
+> The following arbitrary command execution vulnerability for
+> zoneminder was disclosed/published:
 > 
-> A privileged guest user could use this flaw to crash the qemu
-> process on the host system, causing a denial of service to it and
-> any other running virtual machines.
+> http://itsecuritysolutions.org/2013-01-22-ZoneMinder-Video-Server-arbitrary-command-execution-vulnerability/
+>
+>  Could you please assign a CVE for it?
 > 
-> References:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1012633 
-> http://thread.gmane.org/gmane.comp.emulators.qemu/234440
-> 
+> Regards, Salvatore
 
-Please use CVE-2013-4377 for this issue.
+Please use CVE-2013-0232 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSRI2HAAoJEBYNRVNeJnmTf28P+gIUs+th2lHuuvusTOC5bkO0
-0h3MCDOMs7KwbmzUYPxi1bbBDEpVsiHlhfEgBlYQQFJ1kcTwEf3FHqos5XHaMdlf
-3BSQgyTwMp79U4yt2qXW23M8PG0yaCzVSqzqfPhVxuDCuG7IebUn9gqXd9UbFOS/
-41qPyMz1/NJxV7zJF3FvMxRrUMGo6q3GIdeVaSha9qYfgCU+b8x1abi/nk2ogAiH
-u0U9LuKtU7E2H9DVEN7LE0HKDJlopUk+9v2ycsgO7fE8N32LEyq4DAskO7DlPU0B
-Tc4MpKa9EBPt91/oWVxfIMXGo90vTluy+IZ5cuokVCV/iR6YDY17iI8z+QycLHN5
-Yj7pBKKxYYcSEs8wGW79JKW6/Bh/YnzIbK5i2VMXHk2FONKl+StLmnEe2JYHdwC9
-3ItlINii8YHreDKalr3m0rHODHTg0J8tjUn/540gQbmwcYICGL7bbp/yLLA6xyBt
-RHJhmwkxzI8dIlJc5fD9yGIJW8915FQr6thJeXogLTMc1U1rN498QBgvPvqRjwpj
-sYUMX20H2XbniVrkBvSnhy6IPVFJwa+o7MqYmvZ8o9+nLXOd4oN+cJTWUEipoJuk
-0oPOmBpJhMpuokSasoVpwrFXyrQmfDLS1ZuhDcQgu5ueFMezdHQiOpbwEAOlRmyX
-dxVp59HWHuMw/rjwFV7M
-=Yk2H
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRBuxUAAoJEBYNRVNeJnmTtoMQAKdG7gqZ4T0X2Qnife28xYtJ
+UWl2Ric5tl/DBQrtRAcd70QtvB+L6ABK3D2/1ytzzj/IRmtgEl46Ru7QWFyx/YNW
+ST3N5pFP2PeXAm712nN3MQKFhucjOIp6OmiAVMJHOdNKfUsBeAQC3+BRVe5ELcek
+wQYuNdJQ1WDL3IRhmxZys0vxVamktAWN4zubvSJQ8jVjT8IInFcBt5iajuDUc9Pt
+VLpoqTBeX64otCJqWVvPMdS1Z5YidttoP+b9+Gnpgeq8kpLvp3ufTTyBEhcOGl6h
+eAmeV3MKRxvdJ46WcFYTzsFKdZQqaRhTsQpSGcoimMpDHqieEsGC6felicxmxrAB
+gk5DRaS7ff1b8oM8zum79x/J3zUgbxdwJ98ZYJqBq9ys1LdjYqlQrRFuIDGp2Wbb
+jvP7PlDXNcMWU9jvyrLCM1HVFq1UTmHzIKb0okS9iS+uXpO5PSHigZSWQZXlWyim
+88QA3Z2UlyPAgpUmMnfHRLJ/xmvOUXALFeCD1/5idIjr0fgNSKPmBGH90V1yRXEs
+CEYrLUZOVuazKgD81tWkszm4FxzPgBkUN8rAabx7Sh8C/EuN1Xo9H0BrQkyLorXr
+eMEGM6FmiPxDbG4PRq2H/yN4GMcQlenf1XRYXFIs0JINPJdBM+rxPhZEDBM0NR2A
+yqXerxes4Gsb0MvRBm0U
+=Gs8T
 -----END PGP SIGNATURE-----
