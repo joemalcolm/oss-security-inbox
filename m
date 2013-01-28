@@ -1,40 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/1
-Message-ID: <alpine.LRH.2.00.1302280123380.30582@twin.jikos.cz>
-Date: Thu, 28 Feb 2013 01:31:56 +0100 (CET)
-From: Jiri Kosina <jikos@...os.cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/28/1
+Message-ID: <20130128085648.GB18001@kludge.henri.nerv.fi>
+Date: Mon, 28 Jan 2013 10:56:48 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Linux kernel: VFAT slab-based buffer overflow
+Cc: Andrew Nacin <nacin@...dpress.org>, security@...dpress.org
+Subject: CVE request: WordPress 3.1.4 (and 3.2 Release Candidate 3)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 27 Feb 2013, Greg KH wrote:
+Hello,
 
-> > > If you know of any other ways that we can do this, please let us know.
-> > 
-> > - W^X
-> 
-> I thought we tried this, and had to revert it due to problems it caused
-> with some dyanmic code generators.  Or am I totally mistaken here?
+Vulnerabilities fixed in WordPress 3.1.4[1] does not yet have CVE identifiers. As far as I can tell there is three different issues[2][3][4]. Details of issue OSVDB:73721 from Andrew Nacin below:
 
-Userspace is problematic in this respect, agreed (because of all the JIT 
-stuff, for example).
+Using specially crafted requests under certain conditions, users without the ability to write with unfiltered HTML could add some to a post, and could update posts where they did not have a permission to do so. The relevant changeset is: http://core.trac.wordpress.org/changeset/18368/branches/3.1
 
-I am speaking more in terms of kernel now. I.e. having clear separation of 
-kernel RO-data and kernel code. Basically what grsecurity/PAX is doing 
-with their CONFIG_PAX_KERNEXEC, but with hardware support whenever 
-possible (i.e. minimizing runtime performance penalty).
+1: http://wordpress.org/news/2011/06/wordpress-3-1-4/
+2: http://osvdb.org/73721 WordPress Unspecified Access Restriction Bypass
+3: http://osvdb.org/73722 WordPress wp-admin/edit-tags.php Multiple Parameter SQL Injection
+4: http://osvdb.org/73723 WordPress wp-admin/link-manager.php Multiple Parameter SQL Injection
 
-> > - not letting kernel dereference userspace pointers (and PMAP is not 
-> >   available everywhere, unfortunately)
-> 
-> What do you mean by this?
+Please note that these need to be CVE-2011-XXXX, thanks.
 
-If you trick kernel into derefereing pointer outside it's mapped space 
-(i.e. address lower than TASK_SIZE, thus fully controller by potentially 
-evil userspace), it'll happily do that (modulo incomplete 
-counter-measures, such as vm.mmap_min_addr sysctl).
-
-Thanks,
-
--- 
-Jiri Kosina
+--
+Henri Salo
