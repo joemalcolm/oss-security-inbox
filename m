@@ -1,67 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/30/9
-Message-Id: <201312301616.rBUGGPZ0009399@linus.mitre.org>
-Date: Mon, 30 Dec 2013 11:16:25 -0500 (EST)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Dewplayer issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/5
+Message-ID: <20130129064345.GA12698@1wt.eu>
+Date: Tue, 29 Jan 2013 07:43:45 +0100
+From: Willy Tarreau <w@....eu>
+To: oss-security@...ts.openwall.com
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: [Security hardening] [Notification] haproxy (previously) failed to drop supplementary groups after setuid / setgid calls properly
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi guys,
 
-> PoC: /wp-content/plugins/advanced-dewplayer/admin-panel/download-file.php?dew_file=../../../../wp-config.php
+On Thu, Jan 24, 2013 at 10:10:52PM -0500, Steve Grubb wrote:
+> On Thursday, January 24, 2013 05:53:38 PM Kurt Seifried wrote:
+> > So again, if you know of a way to exploit this please let us know,
+> > otherwise we will continue to consider this a security hardening issue
+> > and not a security vulnerability.
+> 
+> The way these supplemental group issues work is that depending on the groups 
+> file, the daemon may try to change to user/group "nobody", but retains group 
+> root. This means that any file with group root write privs could be 
+> replaced/altered. My experience is that distros have enough files that 
+> permissions are wrong on something, somewhere. Its just a matter of finding it.
+> 
+> find / -type f -perm -00020 -printf "%-60p %g\t%M\n" 2>/dev/null
+> 
+> So, it boils down to the problem isn't a vulnerability by itself. However, 
+> should a _real_ vulnerability be found in the program, the CVSS score would be 
+> higher because the program has CWE-250.
 
-Use CVE-2013-7240 for this dew_file directory traversal issue.
+We had no problem having a CVE for this and I initially asked for one.
+However, no vulnerability can be described, precisely because haproxy
+is designed *not* to access the FS at all once started. The normal way
+of working is to start it as root, jail into a chroot and drop privileges,
+as it's just a network daemon. That's also why it logs over UDP, as it
+cannot access /dev/log. The user/group priv drop are just a hardening
+measure "just in case". Same for the chroot. Still, many people run it
+as root because they need transparent proxy support, and other ones don't
+chroot it because they start it as an application user. That does not
+make them vulnerable at all. So if normal use cases are not vulnerable,
+it seems reasonable to think that the slightly hardened ones are not much.
 
-> Assigning one CVE for vulnerability in different software components e.g.
-> libraries used in WordPress plugins makes it very difficult to coordinate
-> updates with end-users. Examples:
->     http://osvdb.org/83413
->     http://osvdb.org/90374
+But again, I'm not against a CVE, quite the opposite! Someone just has
+to describe how to abuse it for this I think.
 
-When a vulnerability originally came into existence through a single
-action of a single developer, we currently don't like to assign
-multiple CVE IDs on the basis of the vulnerable code later being
-shipped in many separately maintained products. We can enter an
-internal issue report about the effect on CVE usability because of this
-"difficult to coordinate" observation.
+Regards,
+Willy
 
-> PoC: http://example.com/wp-content/plugins/flash-player-widget/dewplayer.swf?mp3=http://example.mp3
-> PoC: http://example.com/wp-content/plugins/advanced-dewplayer/dewplayer.swf?mp3=http://example.mp3
-
-Just to clarify: the dewplayer.swf file is thought to be essentially
-the same in these two cases, and you're asking for two different CVE
-IDs to be assigned? It seems very unlikely at this point that we can
-provide more than one CVE ID for those, but we just wanted to confirm
-that we're answering the right question.
-
-> Q: Does content spoofing issues normally get CVE as the risk is probably
-> minimal?
-
-If we think the vendor's security policy is that dewplayer.swf should
-not be able to reference off-site media files in this way, then the
-issue is currently eligible for a CVE assignment. We're not sure that
-a spoofing impact would be the primary motivation for changing this.
-Perhaps a stronger motivation is that the vendor doesn't want
-dewplayer.swf to trigger arbitrary outbound TCP traffic from the web
-host, possibly including traffic to intranet servers in some
-environments.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSwZu2AAoJEKllVAevmvmsuWoIAI3mI5Yc4YxnJH2Fds04k9LJ
-bwSMONh+1rxxnjImg864NJAPTCEWKoCdczV+5kMK8TL5puu8vM352hBixtJ/Tq9q
-vsxGWxwV1v/yIPkSAorxYJ1yhCmLj3KXunwujmc4qQUcMr0OCPb4ITdKps58mt9d
-aR+rNy31nrtwc1uJIa5OXg//Fp6jE877hWBFBKTzcLwMdVNqSzDzhW6KdqKWJEG8
-JMxQ1o6qHz4h6mm34m+vQn45Qbt6KroiVgkNgXfP5FaJNWRONsvj2WYbrRyhE0/i
-u3JKfuquPCKtjDocBdeihdHjwiNE93M1x6swaZ1jpcrF0pjT7NAFKDQk8S/emVA=
-=ykRj
------END PGP SIGNATURE-----
