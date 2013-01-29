@@ -1,57 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/4
-Message-ID: <20130422085252.GG1588@symphytum.spacehopper.org>
-Date: Mon, 22 Apr 2013 09:52:52 +0100
-From: Stuart Henderson <sthen@...nbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/11
+Message-ID: <51083A45.208@redhat.com>
+Date: Tue, 29 Jan 2013 14:08:21 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+CC: Henri Salo <henri@...v.fi>, moderators@...db.org
+Subject: Re: ircd-hybrid: Denial of service vulnerability in hostmask.c:try_parse_v4_netmask()
 Content-Type: text/plain; charset=utf-8
 
-On 2013/04/22 01:27, Alistair Crooks wrote:
-> On Sun, Apr 21, 2013 at 12:39:39AM +0400, Solar Designer wrote:
-> > Hi,
-> > 
-> > I just found this recent blog post by Allan McRae of Arch Linux:
-> > 
-> > http://allanmcrae.com/2012/04/how-secure-is-the-source-code/
-> > 
-> > Thank you for doing this, Allan!  Are you contacting the upstream
-> > authors to request that they start to properly sign their releases?
-> > (I've been doing that on some occasions, sometimes with success.)
-> > 
-> > I think that placing both "MD5 checksum provided on same site as
-> > download" and "PGP signature, key difficult to verify" in the same
-> > "yellow" category is inconvenient for us.  "MD5 checksum provided on
-> > same site as download" only helps verify downloads from mirrors against
-> > the master site, whereas "PGP signature, key difficult to verify"
-> > achieves a lot more - once a distro is already including the package
-> > (and has already taken the risk of it having been tampered with), then
-> > verifying further updates to the package becomes almost as reliable as
-> > it would have been with proper signing (with a "readily verifiable" key).
-> > So we need four categories, or simply "MD5 checksum provided on same
-> > site as download" should be in "red", not in "yellow".
-> 
-> The BSD ports and packages systems have had this checking in place
-> since day 1, and with different checksums - FreeBSD now use sha256,
-> pkgsrc uses sha1 and rmd160, and I don't know what OpenBSD uses;
-> the digests are all held as part of the packaging system itself.
-> 
-> One of the side benefits of this is recognising when upstream changes
-> tarballs without changing version numbers.
-> 
-> I think the Arch Linux people could leverage the work done here.
-> 
-> Regards,
-> Alistair
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-OpenBSD changed to sha256 for this 5 years ago, we also check file size.
-This does cause some problems for projects which rely on dynamically
-generated tarballs though; in the past we've had trouble with github and
-bitbucket (they seem to be somewhat stable at the moment but I'm not
-convinced it won't happen again). Has anyone come up with a better way
-to handle that situation?
+On 01/29/2013 08:37 AM, Henri Salo wrote:
+> Mr. Bob Nomnomnom from Torland reported a denial of service
+> security vulnerability in ircd-hybrid. Function
+> hostmask.c:try_parse_v4_netmask() is using strtoul to parse masks.
+> Documentation says strtoul can parse "-number" as well. Validation
+> of input does not catch evil bits. I can give proof of concept if
+> needed.
+> 
+> Fixed in commit:
+> http://svn.ircd-hybrid.org:8000/viewcvs.cgi/ircd-hybrid/trunk/src/hostmask.c?r1=1786&r2=1785&pathrev=1786
+>
+> 
+Fixed in: ircd-hybrid 8.0.6
+> 
+> I have requested CVE identifier for this vulnerability in another
+> email to Kurt. Other ircds are using the same code. Consider this
+> email as official advisory. I tried to embargo this issue, but the
+> commit is out already.
 
-I wonder if it might be worth looking at infrastructure to verify PGP
-signatures as part of the framework too though, this is potentially
-useful for updates.
+A yeah sorry dealing with ruby the last little while. I was going to
+reply to you to post this publicly on oss-sec =)
 
+Please use CVE-2013-0238 for this issue.
+
+> Program received signal SIGSEGV, Segmentation fault. 
+> 0x000000000041c799 in try_parse_v4_netmask (text=<value optimized
+> out>, addr=0x113e270, b=0x113e2f8) at hostmask.c:229 229
+> addb[bits / 8] &= ~((1 << (8 - bits % 8)) - 1);
+> 
+> -- Henri Salo
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRCDpFAAoJEBYNRVNeJnmTVRwP/1y8nF5g/xAKXyA+XcfJUuDB
+f9ojCk5SV1YtHZlKoLL7ByxMzyIb172B06138pjN+haQw0mtmMj3nauJ0JjSfb74
+hNibV2u3iRxhFsB2bLaz0ksPSoo8ZZ811fHwDlt3iZFqOw5/pagYKLlo+Q4a3yUW
+c64V6wfbW6OTc6SrdYey76/PH8blk6riNtA8yiKUoCIcMTeQ+2LioVsXX9qzRVgG
+gRZeoxPwf0EeaPSG/2Yv/4FveHQqBreq8b2qINkjguDrou5BO5yubMM2xrrbbb2Y
++FQYHLdIOepLI0LLrf5xC//4elER1Ju1OntZoii3ppX3wsIAiHQDLqvZg7tfAYKN
+hfKwmhr9lAsQJLstC2NuW30av4SDM23xn9nHop3mdTxdrRo4IKR0IXcibrIsaeox
+i9wzlj+AcG07XS7FmFe4v2xCw4CMUF4OMF6EC1sayYg3xTr7pyJEWltvYwH5PmZU
+H69MKyhdD7KfcqmU0l6F+UO7PsJHinjwFcuSTSCCkUuoFjpN4QN1zkNeUmUKMCAO
+vz9cuqCMT1HbPxT8/+FlO8VX4tdRcJP/EskQVfG4YL9i28BjjUZMg2/dvVcPMPtT
+k+eTlZs958Q95f1nhloMaR6N/zZ8wTwxhYPACqE7+g7ENe8k4m4MurxcSF2AudXV
+Hj342LKJmiThU/B8kvNX
+=mtdB
+-----END PGP SIGNATURE-----
