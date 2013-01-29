@@ -1,44 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/20/3
-Message-ID: <20130820011941.GA23227@localhost.localdomain>
-Date: Mon, 19 Aug 2013 21:19:41 -0400
-From: "Eric H. Christensen" <echriste@...hat.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: security@...tgresql.org
-Subject: Re: PostgreSQL insecure install via yum (multiple problems)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/9
+Message-ID: <51082645.1020201@openstack.org>
+Date: Tue, 29 Jan 2013 20:43:01 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2013-001] Boot from volume allows access to random volumes (CVE-2013-0208)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA256
 
-On Mon, Aug 19, 2013 at 06:58:22PM -0600, Kurt Seifried wrote:
-> Signing RPM's isn't very useful if you never make the signing key
-> available!
+OpenStack Security Advisory: 2013-001
+CVE: CVE-2013-0208
+Date: January 29, 2013
+Title: Boot from volume allows access to random volumes
+Reporter: Phil Day (HP)
+Products: Nova
+Affects: Essex, Folsom
 
-You mean like this:  http://keys.fedoraproject.org/pks/lookup?search=0x442df0f8&op=vindex
+Description:
+Phil Day from HP reported a vulnerability in volume attachment in
+nova-volume, affecting the boot-from-volume feature. By passing a
+specific volume ID, an authenticated user may be able to boot from a
+volume he doesn't own, potentially resulting in full access to that
+3rd-party volume contents. Folsom setups making use of Cinder are not
+affected.
 
-I'm pretty sure pgp.mit.edu isn't the best source for PGP keys any longer, unfortunately.
+Folsom fix (included in upcoming Nova 2012.2.3 stable update):
+http://github.com/openstack/nova/commit/317cc0af385536dee43ef2addad50a91357fc1ad
 
-- -- Eric
+Essex fix:
+http://github.com/openstack/nova/commit/243d516cea9d3caa5a8267b12d2f577dcb24193b
 
-- --------------------------------------------------
-Eric "Sparks" Christensen
-Red Hat, Inc - Product Security Team
+References:
+https://bugs.launchpad.net/nova/+bug/1069904
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-0208
 
-sparks@...hat.com - sparks@...oraproject.org
-097C 82C3 52DF C64A 50C2  E3A3 8076 ABDE 024B B3D1
-- --------------------------------------------------
+- -- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQGcBAEBCgAGBQJSEsQqAAoJEB/kgVGp2CYvhFAL/3vUyx8NgCyik42NiJKqOlAe
-yarq7tz6r3CoIxNkcl6LkOpNfsNK6/eSs3K5/ZngUXJX0fIW+jISAPU8TSKLY9AG
-nkEMAJnMpDwwzLbOjrOpSJglFsb4pj+A/q3WTD09HvocJqZXyYKbQK3li5nsj6qR
-TVlBYchjKs3yRBZQdobwK7YVkyQrZIB8a7bFZhyH5OUKHOsWh6cae/7bpkJ55kX/
-8n0j+OP1rAMhPXior40soJAmG/XrVQsiuw4GAJ8eGoc1bGybcBZ5SarRTrbq2s7q
-DQaQZn9HfwCeXoHODYyJj6Pp77l9qKKB72BF+2BDDLmI8lsI681xmMW3On7rCoP6
-PbLkxUHWicO9KtyNg1WYW8wHv0HiwnLPhNNilzlNLoTBBGRIZr6Bb0+Nq1uD1uUD
-E4GymQfIyYRNvowyyFGlh/2fMY5tpFMSR6gtu50tZpaSyhKS0bjzYM68jRX6YCW8
-YyOhcL7uKKenZESWcPHTgq8Z/Yd4rJs0zRrKlXVzsA==
-=Y/N1
+iQIcBAEBCAAGBQJRCCZCAAoJEFB6+JAlsQQjDSYQALrBUhPwUbxFtVrTSGhjDK7A
+Donl1ykZy1CtsykGiXa5NuREw+xtoKZl/NteLDVRo/C0tWcGe2L2rk5FxMboKdRu
+2I0CXXQ65liHySvZqzlZE6M5TfAhGWCJBOpZArbF6PcB/ZP/F/a/2/BU6HbHonSn
+g58Lq8wKK2JErU5djee9B22wkUTlxiZv2JThOGr/VRoR2F3Zxdmd3UbBC+9Db5tg
+OQMBHlGLXgSCvUZBkzMZwyfxvovf6fpTlmFU/8Ff9OWA4fMxtpsybIcD9BoaLZAd
+2U2/f5qoIbh3soZGF5DH1ucVym0js8NtAf9E+9FVzg2SfHX0sF8Qo1sLowEb/43d
+n8WdBQBYLzfLjKqDGkvNUjfhDHkzO6ujekUQCdMtADBk1tBI6IdfSzyJkhMWXF5S
+Rs3Fpkr1gkXq0xuNf9UQPuA1op2TiBxKa5Z8svOfXnHa7m/NOsYHJ3S4hL5e9E6S
+osJ5LlZDvX+xUGIzRTpViAx0YGwNykRlInhtLJrAoKLWWV/3EA9ap4Bl6XB/ZFsO
+UbUeCDGpepAianOnx2S6p7JhERkcT7R0DHVWI7b5U5hPemt1B6bfkTzgwpwIstDv
+XtSwzVvUuNMfDUG2bMSfXmPqdzZBwdh4iKjIJzT5PecFQ5qBOJOvhF5/aCB2UtI2
+LaVsd1b7v/7C3ln4j/bB
+=eX8i
 -----END PGP SIGNATURE-----
