@@ -1,23 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/05/6
-Message-ID: <878ux2trwu.fsf@mid.deneb.enyo.de>
-Date: Tue, 05 Nov 2013 23:17:21 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: additional fix for CVE-2012-2825 libxslt crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/10
+Message-ID: <51082BEA.2010101@openstack.org>
+Date: Tue, 29 Jan 2013 21:07:06 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2013-002] Backend password leak in Glance error message (CVE-2013-0212)
 Content-Type: text/plain; charset=utf-8
 
-* Vincent Danen:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> The reason this doesn't crash for me on Red Hat Enterprise Linux 5 which
-> ships 1.1.17 is because we included this patch (well, the developer did)
-> a day after the initial build with the comment:
->
-> - CVE-2012-2825 requires an extra patch on 1.1.17
->
-> So, I think this does require a second CVE.
+OpenStack Security Advisory: 2013-002
+CVE: CVE-2013-0212
+Date: January 29, 2013
+Title: Backend password leak in Glance error message
+Reporter: Dan Prince (Red Hat)
+Products: Glance
+Affects: All versions
 
-Has anyone shipped an incomplete update?  If yes, then I think we
-actually need a second CVE.  In the past, we got them for similar
-cases, and at least Debian's tracking more or less assumes that it's
-possible to assign CVEs to deal with such corner cases.
+Dan Prince of Red Hat discovered an issue in Glance error reporting. By
+creating an image in Glance by URL that references a mis-configured
+Swift endpoint, or if the Swift endpoint that a previously-ACTIVE image
+references for any reason becomes unusable, an authenticated user may
+access the Glance operator's Swift credentials for that endpoint. Only
+setups that use the single-tenant Swift store are affected.
+
+Grizzly (development branch) fix:
+http://github.com/openstack/glance/commit/e96273112b5b5da58d970796b7cfce04c5030a89
+
+Folsom fix (included in upcoming Glance 2012.2.3 stable update):
+http://github.com/openstack/glance/commit/96a470be64adcef97f235ca96ed3c59ed954a4c1
+
+Essex fix:
+http://github.com/openstack/glance/commit/37d4d96bf88c2bf3e7e9511b5e321cf4bed364b7
+
+References:
+https://bugs.launchpad.net/glance/+bug/1098962
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-0212
+
+- -- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBCAAGBQJRCCvqAAoJEFB6+JAlsQQj9scP/1bQzhQ5lA/jNoPIPMlUKOr4
+NlrT9+QA6pF3xOjTQeyViTTUfMn1YHdOTS8bi/NeSlL3UuEhpdCb59APwqmZva3u
+Tx+so6L3nc5qNRdDAAr6oNBYmD08T41ceLpzjv9BbTgPxD4gUCg9WeySBAa+I7MU
+1w1hvhObhQWZ8Xvqf/2tKTrMpGuJOS/0aoMSQUMqFR47moyYgBznNT6J3FaC3haE
+jRh4RSv7XKN2MU0Cv05m/txXNUTP6rtl+qAiGW9UZvhTHY/kafaJLi/HuGkmANf0
+fkuoKL5VxFYoIbHDlJ+ymPUz/jgoZJNkvvmS5mQH7YFBdgAvzAIAYJ4jk8uOMMmo
+AHqaVdfZYCWRP6pMDzjnU5EGhRrgt2RafWsnU8MyYePrF3G8dcikvQlIki+PlmPT
++zXjPoIsirFJh3XSTRNbUDwIww6AuBbhxgJD78NhQY/12MC5zELOasWcpTKPyvLs
+HTIe8AbVLf5Z0blZdUZHGlzFBQlgPU3ydIjY1UStWPYNCQs2hTrtoq9y68LmDzix
+jRQ3jmKhMGsLwlrcskSyD/1qGGD6NNPRJwME7pXspy7mBlN0LS9OLRwhYHTzNGwx
+YTSKhy12xooqYkaJncZEduTBKwMJLMwk/HZxD7KRuKPM7xoK64mkyz/03rUsQORj
+na6Kqw9rcPfJG0jfh3/c
+=PyUp
+-----END PGP SIGNATURE-----
