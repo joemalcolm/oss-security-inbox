@@ -1,50 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/09/3
-Message-ID: <20130709044934.GA5130@inutil.org>
-Date: Tue, 9 Jul 2013 06:49:34 +0200
-From: Moritz Muehlenhoff <jmm@...til.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: Moritz Muehlenhoff <jmm@...ian.org>, ffmpeg-security@...peg.org, michaelni@....at
-Subject: Re: new FFMpeg stuff
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/1
+Message-ID: <510714A1.6090501@moritz-naumann.com>
+Date: Tue, 29 Jan 2013 01:15:29 +0100
+From: Moritz Naumann <security@...itz-naumann.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: XSS in Elgg 1.8.12, 1.7.16 (core module "Twitter widget")
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried wrote:
+Hi,
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> https://bugs.gentoo.org/show_bug.cgi?id=476218
-> 
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=38229362529ed1619d8ebcc81ecde85b23b45895
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=e30b068ef79f604ff439418da07f7e2efd01d4ea
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=6765ee7b9cba46818a45b051438b2552f0a1b70a
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=b36e1893ef3430f039c1eaddeedcbb378f9c4444
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=7388c0c58601477db076e2e74e8b11f8a644384a
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=95a57d26d8653d21f0dab1aff3558ee944853dbf
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=b564784a207b1395d2b5a41e580539df04651096
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=78962d3df49afe5011b572656ecfe940bd5fbf2e
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=cf04af2086be105ff86088357b83d672d38417d9
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=eae63e3c156f784ee0612422f0c95131ea913c14
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=fd54dd028bc9f7bfb80ebf823a533dc84b73f936
-> 
-> Correct me if I'm wrong but most of these seem to deserve CVEs and
-> none have been assigned, correct?
-> 
-> http://ffmpeg.org/security.html
+Elgg [1], versions 1.8.12 and 1.7.16 and earlier, bears a persistent
+script injection vulnerability in its core module "Twitter widget",
+which allows for XSS attacks.
 
-These appear to be new, but I'm not sure how previous CVE IDs were assigned for ffmpeg/libav.
-E.g. CVE-2013-0878 seems to be from a Google CNA, right? (At least CVE-2013-0879 is for Chrome)
+On installations which have the Twitter widget activated (disabled by
+default, but in use on many installations), any authenticated user may
+add the Twitter widget to their activity / dashboard page. Editing its
+configuration allows the user to set the twitter_username parameter. The
+value stored in this parameter will be echoed without sanitation [2]
+when the users' activity / dashboard page is requested (by the same or
+any other user, authenticated or not).
 
-All these issues (and all the ones in previous rounds) were found through fuzzing done
-at Google by Mateusz "j00ru" Jurczyk and Gynvael Coldwind.
+According to changes committed [3] to their Git repository Elgg
+developers will provide a fix for this issue in the upcoming (?) 1.8.13
+release.
 
-It would be very, very welcome if CVE assignments from either ffmpeg or libav for any
-such issues would have a reference to the filename of the fuzzed file triggering the problem.
+Reported by:
+  Moritz Naumann
+  http://moritz-naumann.com
 
-With the diverging code bases between ffmpeg and libav [1] it becomes very complicated
-to properly track down if one of the two is affected.
+A CVE ID has, to my knowledge, not yet been assigned. Secunia has
+assigned it SA52007.
 
-Cheers,
-        Moritz
+A slightly more complete advisory should hit FD and Bugtraq any minute.
 
-[1] http://en.wikipedia.org/wiki/Libav#Fork_from_FFmpeg
+Thanks,
+
+Moritz
+
+[1] http://elgg.org/
+[2]
+http://github.com/Elgg/Elgg/commit/a74a88501c41e89c8bcd7fc650ae2f8cc0a5003d#L2L21
+[3]
+http://github.com/Elgg/Elgg/commit/19dc507c2fccb378be2a44a762edf6c1e7afa334#L0R11
