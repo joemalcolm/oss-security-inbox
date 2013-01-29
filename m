@@ -1,96 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/05/16
-Message-ID: <20130605181858.GR3638@redhat.com>
-Date: Wed, 5 Jun 2013 12:18:58 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/6
+Message-ID: <51077004.4010207@redhat.com>
+Date: Mon, 28 Jan 2013 23:45:24 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: audreyt@...reyt.org
-Subject: CVE-2013-2145: perl Module::Signature code execution vulnerability
+CC: Henri Salo <henri@...v.fi>, Andrew Nacin <nacin@...dpress.org>, security@...dpress.org
+Subject: Re: CVE request: WordPress 3.1.4 (and 3.2 Release Candidate 3)
 Content-Type: text/plain; charset=utf-8
 
-Florian Weimer of the Red Hat Product Security Team reported the
-following flaw (it has been given the name CVE-2013-2145):
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+On 01/28/2013 01:56 AM, Henri Salo wrote:
+> Hello,
+> 
+> Vulnerabilities fixed in WordPress 3.1.4[1] does not yet have CVE
+> identifiers. As far as I can tell there is three different
+> issues[2][3][4]. Details of issue OSVDB:73721 from Andrew Nacin
+> below:
+> 
+> Using specially crafted requests under certain conditions, users
+> without the ability to write with unfiltered HTML could add some to
+> a post, and could update posts where they did not have a permission
+> to do so. The relevant changeset is:
+> http://core.trac.wordpress.org/changeset/18368/branches/3.1
+> 
+> 1: http://wordpress.org/news/2011/06/wordpress-3-1-4/ 2:
+> http://osvdb.org/73721 WordPress Unspecified Access Restriction
+> Bypass 3: http://osvdb.org/73722 WordPress wp-admin/edit-tags.php
+> Multiple Parameter SQL Injection 4: http://osvdb.org/73723
+> WordPress wp-admin/link-manager.php Multiple Parameter SQL
+> Injection
+> 
+> Please note that these need to be CVE-2011-XXXX, thanks.
+> 
+> -- Henri Salo
 
-The perl Module::Signature module adds signing capabilities to CPAN
-modules.  The 'cpansign verify' command will automatically download keys
-and use them to check the signature of CPAN packages via the SIGNATURE
-file.
+Can the WordPress team reply with commentary so I can help make sense
+of this? thanks.
 
-The format of the SIGNATURE file includes the cipher to use to match the
-provided hash; for instance:
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-SHA1 955ba924e9cd1bafccb4d6d7bd3be25c3ce8bf75 README
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-If an attacker were to replace this (SHA1) with a special unknown cipher
-(e.g. 'Special') and were to include in the distribution a
-'Digest/Special.pm', the code in this perl module would be executed when
-'cpansign -verify' is run.  This will execute arbitrary code with the
-privileges of the user running cpansign.
-
-Because cpansign will download public keys from a public key repository,
-the GPG key used to sign the SIGNATURE file may also be suspect; an
-attacker able to modify a CPAN module distribution file and sign the
-SIGNATURE file with their own key only has to make their key public.
-cpansign will download the attacker's key, validate the SIGNATURE file
-as being correctly signed, but will then execute code as noted above, if
-the SIGNATURE file is crafted in this way.
-
-Module::Signature version 0.72 corrects [1],[2] this issue by refusing
-to load Digest::* modules from relative paths in @INC.
-
-References:
-
-https://github.com/audreyt/module-signature/commit/575f7bd6ba4cc7c92f841e8758f88a131674ebf2
-https://github.com/audreyt/module-signature/commit/cbd06b392a73c63159dc5c20ff5b3c8fc88c4896
-https://bugzilla.redhat.com/show_bug.cgi?id=971096
-
-
-As an aside, I don't believe the authenticity checks of cpansign are
-valid.  According to the upstream documentation, the defaults are to
-download any matching public key for anything that is GPG-signed.  That
-by itself, since there cannot be any trust, makes me believe that the
-GPG signature is no more useful than an md5sum of the SIGNATURE file (in
-terms of it being "tamper proof").  It's sufficient to verify that the
-contents of the file are unmodified from whomever signed it, but does
-not establish any kind of trust/trustworthiness.
-
-According to:
-
-http://search.cpan.org/~audreyt/Module-Signature-0.71/lib/Module/Signature.pm
-
-the following is documented:
-
-$AutoKeyRetrieve
-Whether to automatically fetch unknown keys from the key server.
-Defaults to 1.
-
-$KeyServer
-The OpenPGP key server for fetching the author's public key (currently
-only implemented on gpg, not Crypt::OpenPGP). May be set to a false
-value to prevent this module from fetching public keys
-
-In light of the above, I wouldn't consider the untrustworthiness of a
-GPG key to be a flaw, but it does essentially make the GPG signature
-part not have any real value.
-
-I've suggested to upstream that if they want this to be used seriously
-for trust (and not just verifying that the distribution is untampered
-with, according to whomever was able to sign the SIGNATURE file), that
-they should disable the auto-retrieval of keys by default and/or CPAN
-should manage their own keyserver of trusted keys and cpansign should
-only pull from that keyserver.  The first is probably practical enough
-to do, the second I'm not so sure.
-
-If anyone has any other suggestions for upstream, I've cc'd her to this
-mail (she's not on the list AFAIK, so keep her cc'd if you have other
-suggestions).
-
-I will offer that this is at least a step in the right direction as I
-don't believe that pypi for python does anything like this (no idea for
-other languages).
-
--- 
-Vincent Danen / Red Hat Security Response Team 
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJRB3AEAAoJEBYNRVNeJnmTobUP/11ZfBUsKendTEQdq2VUQY/R
+98stEMUOWnWFd99GbdQdPzRtPgq+s/dKvjyIj2OohDcQY4UfEn6cFpl75EhoxPbA
+FNUDrglQld57MyJh3MUGFTQHBQqjSl4ySn5xJEFv1Nq/j9qp9DZvd03lTpWdv8L7
+I84+WdB71ybqpre3wRM1/RXLGjFi+PrxXsYwq0FJiDX4GrKQ5LZFeZiahvWAFYjQ
+Q8puHO4rxRkNxzO1ZdxJiudElD9EJaUxPDabJhgvaSAoWXFNDCKIPKKK0jv/Y19z
+d34E4ngvYTJZq8gtcBoOysSOb8Yv6lMUam4LGEYsVGxsoVB9nJYO5UV1G69V+A45
+p1H54EoSI4jel9S2vJWUbIzRplEMH4o3iW0EnHLwi0+lK6xNuv4BDnbKsyQKoyfi
+REkWrGreXOIovKeCiBXyL84wGTOaQA4/Oq9WqwCNgGXlOFKA9gTa3gaVR2DeVZkY
+A71e+vculLGA9unHqAZlgyUFv0Uy2U/PYBM1Go+TalEA71Ja86DRgilHqJVu5O2b
+sh7kJ16bnYayyusvnY4dQGdAIcq6A01RHw7xJ0K2pZUeidiDrVa+oriUC7q0GWiX
+UutdvrsUv3PJ8Hpb64VP6L/DlvD8FmokKIhR7FAiPwjmjUIxLr5LnELrZDu20OUy
+9ds0Pf073NFt5UvIGJYP
+=UTA2
+-----END PGP SIGNATURE-----
