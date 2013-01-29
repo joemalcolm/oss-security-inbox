@@ -1,73 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/25/7
-Message-ID: <CA+rthh9En-qqvBrO+MaWHG8rEUu-YN8CDCueBE0wEydzm-pOgA@mail.gmail.com>
-Date: Mon, 25 Feb 2013 19:45:01 +0100
-From: Mathias Krause <minipli@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/4
+Message-ID: <51076E3E.4050905@redhat.com>
+Date: Mon, 28 Jan 2013 23:37:50 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: kernel - sock_diag: Fix out-of-bounds access to sock_diag_handlers[]
+CC: Moritz Naumann <security@...itz-naumann.com>
+Subject: Re: CVE Request: XSS in Elgg 1.8.12, 1.7.16 (core module "Twitter widget")
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 25, 2013 at 5:12 PM, Solar Designer <solar@...nwall.com> wrote:
-> On Mon, Feb 25, 2013 at 11:41:33AM +0100, Mathias Krause wrote:
->> But sorry, I won't disclose any further details, to not get into legal
->> issues. In Germany it's quite hairy to do things like that :/
->> But I can provide you my PoC in a private email -- for security evaluation.
->
-> This is not necessary since we don't use these "too recent" kernels, but
-> thanks for offering.
->
-> Here's a curious tweet:
->
-> <_argp> Since full-disclosure has been DDoSed to oblivion, here's huku's sock_diag 1 year-old exploit: http://pastebin.com/gwn1qErx
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-So it looks like those guys have been exploiting this bug for quite a
-while. Good that it's fixed, now!
+On 01/28/2013 05:15 PM, Moritz Naumann wrote:
+> Hi,
+> 
+> Elgg [1], versions 1.8.12 and 1.7.16 and earlier, bears a
+> persistent script injection vulnerability in its core module
+> "Twitter widget", which allows for XSS attacks.
+> 
+> On installations which have the Twitter widget activated (disabled
+> by default, but in use on many installations), any authenticated
+> user may add the Twitter widget to their activity / dashboard page.
+> Editing its configuration allows the user to set the
+> twitter_username parameter. The value stored in this parameter will
+> be echoed without sanitation [2] when the users' activity /
+> dashboard page is requested (by the same or any other user,
+> authenticated or not).
+> 
+> According to changes committed [3] to their Git repository Elgg 
+> developers will provide a fix for this issue in the upcoming (?)
+> 1.8.13 release.
+> 
+> Reported by: Moritz Naumann http://moritz-naumann.com
+> 
+> A CVE ID has, to my knowledge, not yet been assigned. Secunia has 
+> assigned it SA52007.
+> 
+> A slightly more complete advisory should hit FD and Bugtraq any
+> minute.
+> 
+> Thanks,
+> 
+> Moritz
+> 
+> [1] http://elgg.org/ [2] 
+> http://github.com/Elgg/Elgg/commit/a74a88501c41e89c8bcd7fc650ae2f8cc0a5003d#L2L21
+>
+> 
+[3]
+> http://github.com/Elgg/Elgg/commit/19dc507c2fccb378be2a44a762edf6c1e7afa334#L0R11
 
->
-> The pastebin has:
->
-> ---
-> Who the fuck DDoS'ed full-disclosure? ;)
->
-> http://sysc.tl/mpougatsa_me_krema_kai_milko.tgz
->
-> ---------- Forwarded message ----------
-> From: huku <huku@...ack.net>
-> Date: Mon, 25 Feb 2013 01:18:38 +0200
-> Subject: CVE-2013-1763 local root exploit
-> To: full-disclosure@...ts.grok.org.uk
->
-> Greetings fly to Daphne Rosen, Gianna Michaels and Carmella Bing.
->
-> ./hk
-> ---
->
-> SHA-1:
-> c5904fdaea3e212bb84592e6e2ce3a640b14308c  mpougatsa_me_krema_kai_milko.tgz
->
-> Two of the files in the tarball have timestamps of 2012-07-14.  Of
-> course, this is no proof, but it does appear that the bug was privately
-> known since about July 2012.  The README says:
->
-> "A trimmed down version of an old exploit for the recently published
-> `sock_diag_handlers[]' vulnerability :("
->
-> The code contains:
->
->   printf("Linux kernel >= 3.2 NETLINK_INET_DIAG 0day\n");
->   printf("by huku <huku _at_ grhack _dot_ net>\n");
->
-> Is ">= 3.2" an error (should have been ">= 3.3" as your original posting
-> in here said)?  (The difference may be whether Ubuntu 12.04 is affected.)
+Please
+> 
+use CVE-2013-0234  for this issue.
 
-Did you even try to run the exploit on a v3.2 kernel? Or even more
-simple, looked at the code of a v3.2 kernel? There is no sock_diag
-anywhere in the kernel; there is only inet_diag. And inet_diag hadn't
-and still does not have the out-of-bounds access issue. So no, this
-bug is non-existent on a v3.2 kernel.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Thanks,
-Mathias
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
->
-> Alexander
+iQIcBAEBAgAGBQJRB24+AAoJEBYNRVNeJnmTFlgP/2jFTtmzOwILfjUVaRwNN5Ik
+e8trVYZZsnw/V+JL40ewD/2RboWx1WoPwDvF0zVSjXNdFWX6pm4jdWZ5BbTI9gE7
+i+qXbJIu/GnxuuZdzZm3ApVlHvvKidmCM8hhFm4TEGaSHuuv44V87iPumoq5Wfwq
+qnjAKzwLNZK1w6SapvO0PjT7GHszgjvfcVQG9E2FQoAvWqYmu9ZEY7/YIooRrG9m
+S35Oqc8f5/H4YveqJcpQvfTEpoQRiHDzoU/48JBN28pfQlJ/wzWdV6cgjcFmRfQB
+Hej5PJyoM9ItAz1955X46t2J5mwFPBwtB5iiDj6Ta7790+sfyAt0JcW1MecfFc4n
+swIpJXxKnTpTK6+MyBTRGXr/NCC0DI3LjxkU8kVxdcBfaVkzYiA9funa+yySfq6r
+56CuwFTDQsvVNJYqACVkpN9sEBKw4dq+1Lb/EXA/2GzHuyKLN0oJtFevjv7Zt0hh
+fSEI67dABS02tbPmKUBTUvFKhC4HTRm/Tqtir04A34FgKtv6H3+GnkzDLTVzx6VV
+JEDKQoIPBboGuxwpsWUfJ8fJQlbxvS45RNbdv2ZUUMa/OI6j6WsOCeQb+QKoZCbo
+mlB0rbGxrnLuVd7hLSLEpvetsz+gJloEsgaogo02icEdga6j1ARYGEnXd0kVcgrT
+TMf84SPAaJh4HXPzWPj/
+=4nBC
+-----END PGP SIGNATURE-----
