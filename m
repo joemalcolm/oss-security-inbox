@@ -1,61 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/29/22
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF09093C50@IMCMBX01.MITRE.ORG>
-Date: Mon, 29 Apr 2013 21:18:00 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: OS command injection vulnerability in Chicken Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/7
+Message-ID: <51077132.4060504@redhat.com>
+Date: Mon, 28 Jan 2013 23:50:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Andrew Nacin <nacin@...dpress.org>, Henri Salo <henri@...v.fi>, WordPress Security Team <security@...dpress.org>
+Subject: Re: CVE request: WordPress 3.5.1 Maintenance and Security Release
 Content-Type: text/plain; charset=utf-8
 
-Despite popular perception, the presence of useful details does not necessarily get CVEs published more quickly (although missing or conflicting details certainly make things worse, and poorly-written advisories can reduce overall throughput).  We have particular description styles and analytical requirements that are not visible to the general public.  We have a process where we actively monitor public sources including oss-security, and we prioritize which CVE entries are published first.  Priorities are currently guided by
-http://cve.mitre.org/data/board/archives/2012-09/msg00000.html, but other disclosures are certainly considered as well.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We are currently focused on working with the CVE Editorial Board on extending the CVE ID syntax to handle more than 10,000 vulnerabilities per year, and we are also training several new hires.  We expect our output to rise noticeably within a few months, and we will continue to refine our analysis and publication processes to improve our production in a way that balances the needs of CVE's many diverse users.
+On 01/26/2013 01:13 PM, Andrew Nacin wrote:
+> On Sat, Jan 26, 2013 at 2:19 AM, Kurt Seifried
+> <kseifried@...hat.com> wrote:
+> 
+>>> - A server-side request forgery vulnerability and remote port 
+>>> scanning using pingbacks. This vulnerability, which could 
+>>> potentially be used to expose information and compromise a
+>>> site, affects all previous WordPress versions. This was fixed
+>>> by the WordPress security team. We’d like to thank security
+>>> researchers Gennady Kovshenin and Ryan Dewhurst for reviewing
+>>> our work.
+>> 
+>> Basically it applies filters to pingbacks, things like:
+>> 
+>> return new IXR_Error(33, __('The specified target URL cannot be
+>> used as a target. It either doesn't exist, or it is not a
+>> pingback-enabled resource.')); so I was largely abl to confirm
+>> this one.
+> 
+> 
+> The primary fix is to better validate a URL before triggering an
+> HTTP request to it. You can see this with the filter and function 
+> pingback_ping_source_uri in
+> http://core.trac.wordpress.org/changeset/23330. It blocks
+> credentials, odd ports, RFC1918 IPs, etc. Turning the error 
+> messages into generic errors was an additional defensive measure
+> but due to the other fixes, does not address a particular
+> vulnerability.
+> 
+> What these fixes target have already been written about publicly: 
+> http://www.acunetix.com/blog/web-security-zone/wordpress-pingback-vulnerability/
+>
+> 
+http://lab.onsec.ru/2013/01/wordpress-xmlrpc-pingback-additional.html
 
-- Steve
+Please use CVE-2013-0235 for this issue
 
+>> - Two instances of cross-site scripting via shortcodes and post
+>>> content. These issues were discovered by Jon Cave of the
+>>> WordPress security team.
+>> 
+> 
+> I found one instance of esc_attr() to esc_url() on a url used in
+>> embedded media, I'm guessing this is the XSS mentioned in the 
+>> description as "post content"?
+>> 
+> 
+> That was one — http://core.trac.wordpress.org/changeset/23322. The
+> other was http://core.trac.wordpress.org/changeset/23317, which
+> serves to fully validate HTML tags passed to a shortcode and reject
+> exploitative values.
+> 
+> All I'm seeing for shortcodes related junk is in a big JavaScript
+> blob
+>> wp-35/wp-includes/js/media-editor.min.js. It looks like this
+>> might need two CVEs if they are widely different.
+>> 
+> 
+> The changes in media-editor.min.js are bug fixes and not related
+> to security. They may be seen in uncompressed form here: 
+> http://core.trac.wordpress.org/changeset?old_path=%2Ftags%2F3.5%2Fwp-includes%2Fjs%2Fmedia-editor.js&new_path=%2Ftags%2F3.5.1%2Fwp-includes%2Fjs%2Fmedia-editor.js
 
->-----Original Message-----
->From: Peter Bex [mailto:Peter.Bex@...all.nl]
->Sent: Monday, April 29, 2013 3:50 PM
->To: Open Source Security
->Subject: Re: [oss-security] OS command injection vulnerability in Chicken
->Scheme
->
->On Mon, Apr 29, 2013 at 01:33:12PM -0600, Kurt Seifried wrote:
->> > The full announcement is here:
->> > http://lists.nongnu.org/archive/html/chicken-announce/2013-
->04/msg00000.html
->>
->> Please use CVE-2013-2024 for this issue.
->
->Thank you.
->
->> > By the way, I'm confused as to why the CVEs I've requested so far
->> > don't show up in NVD.  For example,
->> > http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-6122 says
->> > the CVE does not exist, but Kurt assigned it in February:
->> > http://www.openwall.com/lists/oss-security/2013/02/08/2
->> >
->> > The other CVE numbers in that mail produce a "not found" page as
->> > well and an NVD database search for "chicken" turns up nothing
->> > related to Chicken Scheme.  The page says the database was last
->> > updated April 19th 2013, so that's not the cause either.
->>
->> Because Mitre has a large backlog of CVE's to research and write up.
->> Submitting researched/written entries to them will probably result in
->> your entries being posted faster. Try to remember that CVE pushed
->> thousands of these a year, the volume is considerable.
->
->What sort of information would they require, besides the advisory
->I posted in my mail?  If there's something I can do better to make
->their lives easier, I will certainly consider it!
->
->> Apologies for the late reply
->
->No problem!
->
->Cheers,
->Peter
->--
->http://www.more-magic.net
+Same
+> 
+vuln type (XSS), same researcher, same version, CVE MERGE. Please
+use CVE-2013-0236 for this issue.
+
+>> - A cross-site scripting vulnerability in the external library
+>>> Plupload. Thanks to the Moxiecode team for working with us on
+>>> this, and for releasing Plupload 1.5.5 to address this issue.
+> 
+> 
+>> The diff for plupload is a mess of JavaScript/binary files so I
+>> can't confirm much.
+>> 
+> 
+> The security fix was specific to the Flash binary. Here is the
+> upstream commit:
+> https://github.com/moxiecode/plupload/commit/2d746ee. Exploit 
+> occurs with uplupload.flash.js?id=XSS, using the attack described
+> here: 
+> http://lcamtuf.blogspot.se/2011/03/other-reason-to-beware-of.html.
+
+Please use CVE-2013-0237 for this issue.
+
+> Regards, Andrew Nacin
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRB3EyAAoJEBYNRVNeJnmTqWUP/RTp5hvRrBl56eCE0CAHCalj
+jmc3+mPM+5uRb4tFgTTRnhh0Sww1m6eE+s02CZ0lNvrC70VNBr89+Nz4xuyyZfpI
+SVdHhz42veUGUk9nhubGjSNpitdDR+IA4szb33nxDV2q+NGaqz6n2mQ5/zKjWZEf
+9HtDEMK3JtjciE1YEyWiqJBLWpp+KjiLXElKjTRYEGRTPDaFtc1eD6xzgKUGjGls
+SJRYRR1v7Z1d8JY08dN/Q2IFIhyoZnAK0HaCIo/rsNwBPrSyaRnBm6rNNdM9uYl1
+1Hm4beIC/SWBDS27r4yVxPptHJ7PtzwPuiLTkxlwy2TYbwgai79GTXVWUFFXbZ+i
+lQzdBqdrBlL28Umf7HqCjxpzwuVWltip9HGz34jLNkPFpD0oPm50gpFoXPIPCaF9
+BwT1UO5mo8d+Y5EZz7pAhZmf5e9k2yMJisM4ia3LIvuFTLUunxiXBnn0GKntJG4I
+iGsyr13b5jxvuUCi+UF1/rqFlr430KfmV6Wh2+mM9PpI8myHhyjFjUf9oLx7NOB+
+Sg1Vdt5spkitOOFrMxthA8hApAOgIHkhzWW44Z+SqKWEHG/7FSjIeBBFHfz7C7y0
+IHqCh5kc7oISBVe2HPNN87rIifEGQ8qmv5C8EJL5Jtlxi1tUByi7zICIlgg2pn6A
+JG+Y9Gcbv3baCnIdrs+6
+=U00O
+-----END PGP SIGNATURE-----
