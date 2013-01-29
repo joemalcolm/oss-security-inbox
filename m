@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/12
-Message-ID: <alpine.LFD.2.03.1302221531540.11508@redhat.com>
-Date: Fri, 22 Feb 2013 15:35:20 +0530 (IST)
-From: P J P <ppandit@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/8
+Message-ID: <20130129153719.GA17680@kludge.henri.nerv.fi>
+Date: Tue, 29 Jan 2013 17:37:19 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Linux kernel: Bluetooth HIDP information disclosure
+Cc: moderators@...db.org
+Subject: ircd-hybrid: Denial of service vulnerability in hostmask.c:try_parse_v4_netmask()
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+Mr. Bob Nomnomnom from Torland reported a denial of service security
+vulnerability in ircd-hybrid. Function hostmask.c:try_parse_v4_netmask() is
+using strtoul to parse masks. Documentation says strtoul can parse "-number" as
+well. Validation of input does not catch evil bits. I can give proof of concept
+if needed.
 
-Linux kernel built with Bluetooth stack and HIDP support HCONFIG_BT=y/m & 
-CONFIG_BT_HIDP=y/m is vulnerable to an information disclosure flaw caused by 
-wrongly initializing the hid_device->name, physical location and unique 
-identifier variables. Information leakage happens if these variables are not 
-NULL('\0') terminated.
+Fixed in commit: http://svn.ircd-hybrid.org:8000/viewcvs.cgi/ircd-hybrid/trunk/src/hostmask.c?r1=1786&r2=1785&pathrev=1786
+Fixed in: ircd-hybrid 8.0.6
 
-An unprivileged user/program could cause this via ioctl(HIDPCONNADD) call.
+I have requested CVE identifier for this vulnerability in another email to Kurt.
+Other ircds are using the same code. Consider this email as official advisory. I
+tried to embargo this issue, but the commit is out already.
 
-Upstream fix:
-  -> https://git.kernel.org/linus/0a9ab9bdb3e891762553f667066190c1d22ad62b
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000041c799 in try_parse_v4_netmask (text=<value optimized out>, addr=0x113e270, b=0x113e2f8) at hostmask.c:229
+229     addb[bits / 8] &= ~((1 << (8 - bits % 8)) - 1);
 
-Reference:
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=914298
-
-Thank you.
 --
-Prasad J Pandit / Red Hat Security Response Team
-DB7A 84C5 D3F9 7CD1 B5EB  C939 D048 7860 3655 602B
+Henri Salo
