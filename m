@@ -1,19 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/15/9
-Message-ID: <CALi+ztGQsawYKVetGQE4H9oVBLDZo9pG1qV-8VdqSuGzEPZCTQ@mail.gmail.com>
-Date: Thu, 14 Nov 2013 22:39:04 -0800
-From: Chris Palmer <snackypants@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: cryptographic primitive choices [was: Re: Microsoft Warns Customers Away From RC4 and SHA-1]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/29/2
+Message-ID: <20130128163832.5c0a5fde.reed@reedloden.com>
+Date: Mon, 28 Jan 2013 16:38:32 -0800
+From: Reed Loden <reed@...dloden.com>
+To: <oss-security@...ts.openwall.com>
+Subject: CVE request for 'devise' ruby gem
 Content-Type: text/plain; charset=utf-8
 
-On Nov 14, 2013 9:31 PM, "Kurt Seifried" <kseifried@...hat.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> So essentially in my head I see a couple slider bars, as they go
-> towards the riskier end of the spectrum (e.g. protecting a CA
-> certificate vs. protecting a single SSL session) stronger encryption
-> is needed.
+Devise is a flexible authentication solution for Rails.
 
-But the cost of setting the sliders all the way to the secure side is so
-low, why bother making the distinction?
+Security announcement made earlier today:
 
+http://blog.plataformatec.com.br/2013/01/security-announcement-devise-v2-2-3-v2-1-3-v2-0-5-and-v1-5-3-released/
+
+""""
+Using a specially crafted request, an attacker could trick the database
+type conversion code to return incorrect records. For some token values
+this could allow an attacker to bypass the proper checks and gain
+control of other accounts.
+""""
+
+I don't see a CVE yet for this issue, so could one be assigned, please?
+
+Thanks,
+~reed
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAlEHGggACgkQa6IiJvPDPVrpdwCfRZ74c++qybHRAY59U+U6a/VA
+ok4An1pPVTZP4tRprJ+3HdWX1KDQUCUv
+=LJdT
+-----END PGP SIGNATURE-----
