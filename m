@@ -1,116 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/07/5
-Message-ID: <CAAg+Fzp9Y9W_gHiEvGx92LTtZaPFLw48ZBwBfGLnR-N_9Evq+Q@mail.gmail.com>
-Date: Thu, 7 Mar 2013 13:01:38 +0100
-From: jordi gemsstatus <jordigemsstatus@...il.com>
-To: rubyonrails-security@...glegroups.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Denial of Service and Unsafe Object Creation Vulnerability in JSON [CVE-2013-0269]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/30/3
+Message-ID: <20130130163732.GJ13319@dhcp-25-225.brq.redhat.com>
+Date: Wed, 30 Jan 2013 17:37:32 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Kurt Seifried <kseifrie@...hat.com>
+Subject: CVE request -- qxl: synchronous io guest DoS
 Content-Type: text/plain; charset=utf-8
 
-What about json_pure gem?
+A flaw was found in the way spice connection breakups were handled in
+the qemu-kvm qxl driver. Some of the qxl port i/o commands were waiting
+for the spice server to complete the actions, while the corresponding
+thread holds qemu_mutex mutex, potentially blocking other threads in the
+guest's qemu-kvm process. An user able to initiate spice connection to
+the guest could use this flaw to make guest temporarily unavailable or,
+in case kernel.softlockup_panic in the guest was set, crash the guest.
 
-2013/2/11 Aaron Patterson <tenderlove@...y-lang.org>
+Upstream fixes:
+xf86-video-qxl commit
+http://cgit.freedesktop.org/xorg/driver/xf86-video-qxl/commit/?id=30b4b72cdbdf9f0e92a8d1c4e01779f60f15a741
 
-> Denial of Service and Unsafe Object Creation Vulnerability in JSON
->
-> There is a denial of service and unsafe object creation vulnerability in
-> the json gem. This vulnerability has been assigned the CVE identifier
-> CVE-2013-0269.
->
-> Versions Affected:  All. This includes JSON that ships with Ruby
-> 1.9.X-pXXX.
-> Not affected:       NONE
-> Fixed Versions:     1.7.7, 1.6.8, 1.5.5
->
-> Impact
-> ------
-> When parsing certain JSON documents, the JSON gem can be coerced in to
-> creating Ruby symbols in a target system.  Since Ruby symbols are not
-> garbage collected, this can result in a denial of service attack.
->
-> The same technique can be used to create objects in a target system that
-> act like internal objects.  These "act alike" objects can be used to bypass
-> certain security mechanisms and can be used as a spring board for SQL
-> injection attacks in Ruby on Rails.
->
-> Impacted code looks like this:
->
->     JSON.parse(user_input)
->
-> Where the `user_input` variable will have a JSON document like this:
->
->     {"json_class":"foo"}
->
-> The JSON gem will attempt to look up the constant "foo".  Looking up this
-> constant will create a symbol.
->
-> In JSON version 1.7.x, objects with arbitrary attributes can be created
-> using JSON documents like this:
->
->     {"json_class":"JSON::GenericObject","foo":"bar"}
->
-> This document will result in an instance of JSON::GenericObject, with the
-> attribute "foo" that has the value "bar".  Instantiating these objects will
-> result in arbitrary symbol creation and in some cases can be used to bypass
-> security measures.
->
-> PLEASE NOTE: this behavior *does not change* when using `JSON.load`.
->  `JSON.load` should *never* be given input from unknown sources.  If you
-> are processing JSON from an unknown source, *always* use `JSON.parse`.
->
-> All users running an affected release should either upgrade or use one of
-> the work arounds immediately.
->
-> Releases
-> --------
-> The FIXED releases are available at the normal locations.
->
-> Workarounds
-> -----------
-> For users that cannot upgrade, please use the attached patches.  If you
-> cannot use the attached patches, change your code from this:
->
->     JSON.parse(json)
->
-> To this:
->
->     JSON.parse(json, :create_additions => false)
->
-> If you cannot change the usage of `JSON.parse` (for example you're using a
-> gem which depends on `JSON.parse` like multi_json), then apply this monkey
-> patch:
->
->     module JSON
->       class << self
->         alias :old_parse :parse
->         def parse(json, args = {})
->           args[:create_additions] = false
->           old_parse(json, args)
->         end
->       end
->     end
->
-> Patches
-> -------
-> To aid users who aren't able to upgrade immediately we have provided
-> patches for the three supported release series.  They are in git-am format
-> and consist of a single changeset.
->
-> * 1-7-VULN.patch - Patch for the 1.7 series
-> * 1-6-VULN.patch - Patch for the 1.6 series
-> * 1-5-VULN.patch - Patch for the 1.5 series
->
-> Credits
-> -------
-> A huge thanks goes to the following people for responsibly disclosing this
-> issue and working with the Rails team to get it fixed:
->
-> * Thomas Hollstegge of Zweitag (www.zweitag.de)
-> * Ben Murphy
->
-> --
-> Aaron Patterson
-> http://tenderlovemaking.com/
->
+which relies on qemu-kvm functionality introduced by commit
+http://git.kernel.org/?p=virt/kvm/qemu-kvm.git;a=commit;h=5ff4e36c
 
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=906032
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
