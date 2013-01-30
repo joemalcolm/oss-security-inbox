@@ -1,82 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/18/4
-Message-ID: <20130918121549.GB28551@suse.de>
-Date: Wed, 18 Sep 2013 14:15:49 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/30/5
+Message-ID: <51096780.5070204@redhat.com>
+Date: Wed, 30 Jan 2013 11:33:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: [vs-plain] polkit races
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jeff Law <law@...hat.com>, Paolo Bonzini <pbonzini@...hat.com>, Florian Weimer <fweimer@...hat.com>
+Subject: Re: CVE Request -- glibc: DoS due to a buffer overrun in regexp matcher by processing multibyte characters
 Content-Type: text/plain; charset=utf-8
 
-Hi list
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-As required by distros list policy, I forward this to oss-security.
-The initial CRD was Sept 11th, but it was shifted to today as
-there were so many packages to be fixed.
-
-regards
-Sebastian
-
------ Forwarded message from Sebastian Krahmer <krahmer@...e.de> -----
-
-From: Sebastian Krahmer <krahmer@...e.de>
-To: distros@...openwall.org
-Subject: [vs-plain] polkit races
-Date: Wed, 28 Aug 2013 10:17:37 +0200
-
-Hi
-
-The polkit unix-process subject for authorization is racy. It depended
-on the (PID, startup_time) pair to be passed to polkit which then used /proc/PID/status
-to find out the UID the process belongs to. Meanwhile the process could
-have started a suid or pkexec process, changing the euid and/or uid at will.
-The startup_time does not protect here, as its not changed across an execve().
-
-Using /proc/PID/loginuid wont work either, as one could abuse fork-spawning
-processes such as sshd, apache etc. to re-use recently freed process slots,
-faking the loginuid. startup_time would theoretically help here, yet as
-its not atomically passed along the message which is subject to polkit
-authorization, the privileged process needs to learn it by looking up
-/proc/PID/, which is racy again.
-
-Therefore the only thing that could be used is the UID that is passed
-atomically in the peer cred struct when receiving the message in question.
-
-The whole thing needs fixing in polkit, to deprecate PID authorization
-as well as several core packages to make use of the new API, or use
-systembus authorization.
-
-After discussing with upstream, Colin Walters made this private git of patches
-available:
-
-http://people.freedesktop.org/~walters/secret/38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b/
-
-Feel free to suggest improvements if necessary.
-
-As required by list policy, I request a CRD of Sept 11th.
-
-We also need CVE's assigned.
-
-A PoC with example client/server which demonstrates the race
-can be found here (it basically simulates libvirtd's way of
-checking):
-
-http://suse.de/~krahmer/priv/polkit-race.tgz
-
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+On 01/30/2013 04:40 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+> a security flaw was found in the regular expression matching 
+> routine of glibc, the GNU libc libraries, processed multibyte 
+> characters input. If an application utilized the glibc's regular 
+> expression matching mechanism, an attacker could provide a
+> specially-crafted input that, when processed would lead to that
+> executable crash.
+> 
+> Upstream bug report: [1]
+> http://sourceware.org/bugzilla/show_bug.cgi?id=15078
+> 
+> Relevant patch: [2]
+> http://sourceware.org/ml/libc-alpha/2013-01/msg00967.html
+> 
+> More background: * (from Paolo): Jan 30 11:34:19 <bonzini> iankko:
+> it is a memset(foo, 0, ...) that overruns the buffer, so it's not
+> controllable by the attacker
+> 
+> * but the denial of service scenario / attack vector is valid
+> (consider network facing application using glibc's regexp matching
+> on untrusted input)
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> Security Response Team
 
 
+Please use CVE-2013-0242 for this issue.
 
------ End forwarded message -----
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+iQIcBAEBAgAGBQJRCWeAAAoJEBYNRVNeJnmT0Z0P+wSTrhiIc6Z0t16BubaBDdLA
+4/gTkN1KnNyOPCJ2og3TwmpE5X6rRmEQZTKb82orTjxP3k2Sjj7fDZASlbE3P/Ou
+o89od35CAyPMOyTTQsDop4AKTKFUverwrPCf0HrNp9vAKaZxvVmzA3Bm2TNEtG8Z
+uZL/2OwV9RaXxot0RL9Lr8t6KNNutDwKazImJsWjBAXgZnvhiRh+ZuXcScPP0VS2
+0zw9dhb42p0JJs3mdeOrDXte12549eZqBMuN9Gl9DM6bpGA56YxEYk6jHsBTb3Ku
+dcRLOqb/cGv9oT/ngCFKUO8bktq318972icYASXsUeQx/fcnYKWn8AvztDHzo0fD
+oB3O10J4/v6JiqVQaiCurnEYSMRAuBDn1NKnRTThha++1pn0SdfkpYKC6CbIXcZH
+QeYsRP9UfSMALIa/b8neqdsaD3Z1Xn+o3wf8j6meTWGukyabjYYJ7FKIwESIw7Y5
+1uHlVqbtq7nYjJYa57tiQuvMWd7c0erBBXfMZL3+YMixHKmxTaLnHvnMzAvFjzUZ
+bjnumZbOUMfGlDBlwzJy0DV8Agmv/1uXMIXx57ppAlS38vX+/qgl8Acv0m+0EUnB
+UymeDjP1PILMY9z8LBYXm+ccvMzsOH1mNqXgCJVHdVUQge8kqtZqII/CD76O83Lg
+GSlgDX5hjLr9rmE3av2/
+=y3K+
+-----END PGP SIGNATURE-----
