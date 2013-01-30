@@ -1,22 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/3
-Message-ID: <CANTw=MOKmL3OW5euSvejjDddyxZXJtkF8JrwE6nCshKHaZ3qdw@mail.gmail.com>
-Date: Wed, 13 Nov 2013 23:49:07 -0500
-From: Michael Gilbert <mgilbert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/30/2
+Message-ID: <5108FD2F.8080501@redhat.com>
+Date: Wed, 30 Jan 2013 11:59:59 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: mmcallis@...hat.com
-Subject: Re: CVE request: ppthtml heap-based buffer overflow
+CC: Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Re: CVE request: hs-tls: Basic constraints vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 13, 2013 at 11:11 PM, Murray McAllister wrote:
-> (Cc'ing Salvatore in case there is more information in the Debian report
-> that I cannot see.)
+On 01/20/2013 01:32 PM, Salvatore Bonaccorso wrote:
 
-FYI, there is no non-public information anywhere in the debian bug
-tracking system.  Item 3 of the social contract [0] necessitates that
-kind of transparency.
+> For hs-tls (TLS/SSL implementation in haskell) it was announced the following
+> advisory[0]:
+>
+> ----cut---------cut---------cut---------cut---------cut---------cut-----
+> Hi cafe,
+>
+> this is a security advisory for tls-extra < 0.6.1 which are all vulnerable to bad
+> certificate validation.
+>
+> Some part of the certificate validation procedure were missing (relying on the
+> work-in-progress x509 v3 extensions), and because of this anyone with a correct
+> end-entity certificate can issue certificate for any arbitrary domain, i.e.
+> acting as a CA.
+>
+> This problem has been fixed in tls-extra 0.6.1, and I advise everyone to upgrade as
+> soon as possible.
+>
+> Despite a very serious flaw in the certificate validation, I'm happy that the
+> code is seeing some audits, and would want to thanks Ertugrul Söylemez for the
+> findings [1].
+>
+> [1] https://github.com/vincenthz/hs-tls/issues/29
+> ----cut---------cut---------cut---------cut---------cut---------cut-----
 
-Best wishes,
-Mike
+I believe an alternative description of the impact is: hs-tls-extras 
+does not check the Basic Constraints attribute of a certificate in 
+certificate chain procession, and any certificate is treated as a CA 
+certificate, which means that anyone who has a valid certificate can use 
+it to sign another one (with an arbitrary subject DN/domain name 
+embedded into it) and have it accepted by hs-tls.  This eventually 
+allows MITM attacks on TLS connections.
 
-[0] http://www.debian.org/social_contract
+Kurt, is this more to your liking? 8-)
+
+-- 
+Florian Weimer / Red Hat Product Security Team
