@@ -1,51 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/10
-Message-ID: <alpine.DEB.2.00.1303042019330.9653@legendary.xserve.fr>
-Date: Mon, 4 Mar 2013 20:31:14 +0100 (CET)
-From: Remi Gacogne <rgacogne-bugs@...edump.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/31/1
+Message-ID: <alpine.LNX.2.00.1301301335340.22747@forced.attrition.org>
+Date: Wed, 30 Jan 2013 13:36:30 -0600 (CST)
+From: Brian Martin <brian@...nsecurityfoundation.org>
 To: oss-security@...ts.openwall.com
-Subject: Reverse lookup issue in Net::Server
+Subject: Re: [OSVDB Mods] [New Vulnerability] File Disclosure in SimpleMachines Forum <= 2.0.3 (CVE-2013-0192) (fwd)
 Content-Type: text/plain; charset=utf-8
 
 
-Hi,
+FYI:
 
-I think there is a security issue in the way the access control feature
-of Net::Server (http://search.cpan.org/perldoc?Net%3A%3AServer) works.
-Net::Server is used by various projects including Munin, Postgrey and 
-SQLgrey.
+Kurt has indicated that the 2009 disclosure affects 1.x, and the new 
+affects 2.x, so they warrant separate CVEs. This is the official request 
+for it.
 
-The issue lies in the fact that the allow / deny access control
-does not perform a valid DNS check when given a hostname parameter
-and the 'reverse_lookups' option is enabled.
-The current code only checks that the incoming connection source IP
-address has a reverse DNS matching the given hostname, but does not
-check that the hostname resolves back to this source IP address (see
-how the $prop->{'peerhost'} property is set in get_client_info(),
-lib/Net/Server.pm:553, then used in allow_deny(), lib/Net/Server.pm:597).
-As it is trivial for an attacker to be able to set his own
-source IP's reverse DNS, the current check is not safe (this probably
-matches CWE-807: Reliance on Untrusted Inputs in a Security Decision).
+Brian
+OSF / OSVDB.org
 
-I think that the valid way would be to do the same checks as
-Apache HTTPd does for the Allow / Deny directives (see do_double_reverse()
-and ap_get_remote_host() in server/core.c for more information):
-"It will do a reverse DNS lookup on the IP address to find the
-associated hostname, and then do a forward lookup on the hostname
-to assure that it matches the original IP address.
-Only if the forward and reverse DNS are consistent and the hostname
-matches will access be allowed."
+---------- Forwarded message ----------
+From: Brian Martin <brian@...nsecurityfoundation.org>
+To: Carlos Alberto Lopez Perez <clopez@...lia.com>
+Cc: OSVDB Mods <moderators@...db.org>, Kurt Seifried <kseifried@...hat.com>
+Date: Wed, 30 Jan 2013 13:27:35 -0600 (CST)
+Subject: Re: [OSVDB Mods] [New Vulnerability] File Disclosure in SimpleMachines
+     Forum <= 2.0.3 (CVE-2013-0192)
 
-At the very least, the documentation of Net:Server should be updated to
-specify exactly what is checked by Net:Server access control, as many
-people seem to assume that the check is done in the same way as in Apache 
-HTTPd.
 
-So far, I have been unable to reach the Net-Server maintener to discuss 
-this matter.
 
---
-Regards,
+On Wed, 30 Jan 2013, Carlos Alberto Lopez Perez wrote:
 
-Remi Gacogne
+: There is a file disclosure vulnerability in SMF (Simple Machines Forum)
+: affecting versions <= 2.0.3 [1]
+:
+: The vulnerability has been assigned CVE-2013-0192 [2] and requires a
+: valid admin backend login to be exploited, therefore has a low security
+: impact score.
+:
+: On some configurations a SMF deployment is shared by several "co-admins"
+: that are not trusted beyond the SMF deployment. This vulnerability
+: allows them to read arbitrary files on the filesystem and therefore gain
+: new privileges by reading the settings.php with the database passwords.
 
+Thanks for the information Carlos.
+
+Kurt; This was originally disclosed in 2009 (see OSVDB 86444 [1]) and
+re-discovered in January 13. If you concur, do you want to see about
+issuing a 2009 CVE? One was never issued for the original disclosure.
+
+Brian
+OSF / OSVDB.org
+
+[1] http://osvdb.org/86444
