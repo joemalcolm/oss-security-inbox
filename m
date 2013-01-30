@@ -1,41 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/4
-Message-ID: <51358E9D.6040705@redhat.com>
-Date: Mon, 04 Mar 2013 23:20:13 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/30/6
+Message-ID: <51096791.4000307@redhat.com>
+Date: Wed, 30 Jan 2013 11:33:53 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, security@...imedia.org
-Subject: CVE's for MediaWiki 1.20.2 / 1.19.2
+To: oss-security@...ts.openwall.com
+CC: Florian Weimer <fweimer@...hat.com>, Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Re: CVE request: hs-tls: Basic constraints vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-In future if Mediawiki security wants to get CVEs easily just contact
-secalert@...hat.com and we can provide you with CVE's in advance.
+On 01/30/2013 03:59 AM, Florian Weimer wrote:
+> On 01/20/2013 01:32 PM, Salvatore Bonaccorso wrote:
+> 
+>> For hs-tls (TLS/SSL implementation in haskell) it was announced
+>> the following advisory[0]:
+>> 
+>> ----cut---------cut---------cut---------cut---------cut---------cut-----
+>>
+>> 
+Hi cafe,
+>> 
+>> this is a security advisory for tls-extra < 0.6.1 which are all 
+>> vulnerable to bad certificate validation.
+>> 
+>> Some part of the certificate validation procedure were missing 
+>> (relying on the work-in-progress x509 v3 extensions), and because
+>> of this anyone with a correct end-entity certificate can issue
+>> certificate for any arbitrary domain, i.e. acting as a CA.
+>> 
+>> This problem has been fixed in tls-extra 0.6.1, and I advise
+>> everyone to upgrade as soon as possible.
+>> 
+>> Despite a very serious flaw in the certificate validation, I'm
+>> happy that the code is seeing some audits, and would want to
+>> thanks Ertugrul S￶ylemez for the findings [1].
+>> 
+>> [1] https://github.com/vincenthz/hs-tls/issues/29 
+>> ----cut---------cut---------cut---------cut---------cut---------cut-----
+>
+>> 
+> I believe an alternative description of the impact is:
+> hs-tls-extras does not check the Basic Constraints attribute of a
+> certificate in certificate chain procession, and any certificate is
+> treated as a CA certificate, which means that anyone who has a
+> valid certificate can use it to sign another one (with an arbitrary
+> subject DN/domain name embedded into it) and have it accepted by
+> hs-tls.  This eventually allows MITM attacks on TLS connections.
+> 
+> Kurt, is this more to your liking? 8-)
 
-http://www.mediawiki.org/wiki/Release_notes/1.20
-http://www.mediawiki.org/wiki/Release_notes/1.19
+Yup!
 
-(bug 44135/bug 42441) Pass '2' instead of 'true' to CURLOPT_SSL_VERIFYHOST
-https://bugzilla.wikimedia.org/show_bug.cgi?id=44135
-https://bugzilla.wikimedia.org/show_bug.cgi?id=42441
-
-Please use CVE-2013-1816 for this issue.
-
-
-
-(bug 43518) API action=unblock should return the user name, not the
-full user object
-https://bugzilla.wikimedia.org/show_bug.cgi?id=43518
-
-Please use CVE-2013-1817 for this issue.
-
-
-1.20.2 only:
-(Bug 45355) Prevent read of arbitrary files through mwdoc-filter.php
-https://bugzilla.wikimedia.org/show_bug.cgi?id=45355
-
-Please use CVE-2013-1818 for this issue.
+Please use CVE-2013-0243 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -44,17 +62,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRNY6dAAoJEBYNRVNeJnmT8D4QAInmJBxHEo/gQA7UYjk6wZMG
-7VR33+qwyYKLkxGsj81I+ExQLKpxQhTC6P33F69n8wr9aNBTMBkHKytzou13HWgJ
-qNYT2NmactiH2m3ha8mMP5lPPC4QY7ljm3VLf1p83G/jKMBXR6sBz8J0llf0XS3r
-PUypBPVXc7ffq0PE81T4DG6f0kk3KFOPaXEZ3FNWtjVBv9YRlIKintGjRprqTddP
-SIq2iZGXYkKoidNQk4x8oSJ/4XppwsxGA1oz2yBrYCVbAqATqnfSfodwuXQgiuKn
-nlHNvcDxQaes6vLg8KTTHmkqrwkaCvR47hKOpTPdTvjnifoTdKwp/QvBrn9H2nNZ
-lujdm7xqbHElHUgmYpGVd0W99mXCHYey/vFTDqcqU+TnjkW4m/3Jwc8/EpdbJB74
-B5TBBR5EDLO9n/u+29E/u5XLAMyxySYZpgctSdQdy5dETzS7kfRAiFJbN18N5Fgw
-CK5+p2EFRz9pWUhVZSamjGWHLE1aHluQeae9f8rhFnFdaomcJt3DwK9IdCU30l3o
-wR8Mvsc7b2n06UpG6vffF2akNM/jIfhc0DC3Yq0hr5WzDDhNRyvRmblh4wvbUDFL
-7KBsPAeIRbE59Vl9uD0k8/epLQwnbX0cK40CW8+vjp3fBw+498aRT/ANZ+WIAQIZ
-KepwQx0eZNkluvUba35G
-=/tFb
+iQIcBAEBAgAGBQJRCWeRAAoJEBYNRVNeJnmTYuwQANBYOXHg6tppHjpRDrhYrR6i
+yv1MZahWRYRT1cYFiX6dG+6MwAqCtHtLOTaaN5bAGP2BviczTK/WuLdo6axAvR1P
+83XCYk4ewxT+HHLwZXUAJHMmFQrEuplhe0FzpL2wuBquPQ4B9jBWz1+qfm4oR14H
+2DGsI5rHiA88AKzDSf1QwaE/0SwEWplff8f4fvd3kU0wi044HzyuM9VKrkhkroWz
+cHwX4rdJTEV1mTEr8O1myVpXF2tuMmzuzXFMYd42NuqzC1cv72upXJMnbWxq85QG
+qEM2GozkTHeG5kBzqN1R9lAPEXcXhe8dXg6lTYp8XanTjyf5wHCrcV1T6jJhzDLA
+nWM37ehcZ0vZwrTUhkoM9JSLHf/FSLObR9N1qQA8lbNcUn1VNXOelToIcdM84Mcr
+RqBROOa8UX9fg8rMeE9akUxgTmEGHUhDKcWq5Tkf6J8l/EZEYON4JjRVf+n3Cw17
+nrUJ93HnHO2S5AcUXohK12Uq3YfrWxR041fLkwUNH1aOQy2Xomc4T/86WTRw3BNc
+aEEuwKiDu9O9tu5Fy8H/LfuX9geYjpg3i3OXwYzBy8LT87S2H5FvtmMFfCfKrVCR
++YCh8eJ4T6NimQQfZO5sez9SINyNLaccPnSCFYeMmnidIIjDgySVlDLQuY2kfpxL
+dFY6FOh/+/fXtDnkaAmp
+=DpBg
 -----END PGP SIGNATURE-----
