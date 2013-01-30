@@ -1,44 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/25/7
-Message-ID: <51F0E613.6090004@redhat.com>
-Date: Thu, 25 Jul 2013 02:47:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/30/1
+Message-ID: <540932871.18362792.1359546030409.JavaMail.root@redhat.com>
+Date: Wed, 30 Jan 2013 06:40:30 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: cve request: cms made simple XSS before 1.11.7
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Jeff Law <law@...hat.com>, Paolo Bonzini <pbonzini@...hat.com>, Florian Weimer <fweimer@...hat.com>
+Subject: CVE Request -- glibc: DoS due to a buffer overrun in regexp matcher by processing multibyte characters
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Kurt, Steve, vendors,
 
-On 07/21/2013 09:10 AM, Hanno Böck wrote:
-> cmsmadesimple 1.11.7 fixes an XSS. Not much info though:
-> 
-> https://twitter.com/LeakFree/status/336942367351394305 
-> http://forum.cmsmadesimple.org/viewtopic.php?f=1&t=66590&p=299356#p299356
->
->  Please assign CVE.
-> 
+  a security flaw was found in the regular expression matching
+routine of glibc, the GNU libc libraries, processed multibyte
+characters input. If an application utilized the glibc's regular
+expression matching mechanism, an attacker could provide
+a specially-crafted input that, when processed would lead
+to that executable crash.
 
-Please use CVE-2013-4167 for this issue.
+Upstream bug report:
+[1] http://sourceware.org/bugzilla/show_bug.cgi?id=15078
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+Relevant patch:
+[2] http://sourceware.org/ml/libc-alpha/2013-01/msg00967.html
 
-iQIcBAEBAgAGBQJR8OYTAAoJEBYNRVNeJnmTrcAQAMaNmIF7b0FKEJL5zeHE6PQC
-sG1SDryss4JqadmR5hunknSIhfpSzGqc4OAOZPyyg8zGPCy1FbJGQJTUdLJyaTSV
-J+aB90Q0n4oEmou37uS2b8laTTs54SwxJ0873m3Mpklg7/yJyWvCMKlX6rfAIxwf
-hBdJ57gzbGd7EeX9cY/gX5cHsFalnb24cNishNHKKpUAG2XVyzRo8+v27ij+QH+2
-YJjS1U9ATWolUQSMnctxhaKmxS7PPmCNR/BqSYAJjy3WZrOZdRHCftgsQQAXgnaE
-2zTD2blqOqfgFZtf4x30HiSKDpfNaMxZjJvO/kxmKA2r+u5LvW3wgXCwggwieECD
-dAe71ZYpRQeoySvw+SUrKiwEXl3jVJWlf4csIs8Nw7cq7A4n1Qd3GVXsQOSQZYzc
-RgUxcUsLey74ZlVCZM4wArpZOzOJqs2ShyYu4Rya34AlI+V8KznYklrD3LlQqf0V
-k+aDjNrtL13mP6tVtxVR062BnGcD2Yxv419E4W/F0b1xldRdeZerKMPoZ+LUjjh0
-HA6BRruKJhGu1krgy4LD9+KUpllQjYreIUreAEt9fCudQ/1SwE4UhcI2GTPo3umK
-xHOlNyYbyqbILN836/OSFuejMu9dMrxXdIqeYdQmPHgnSAIAJpwE7d7nG5y5nO1V
-m3Didwy4H/KHxLpE25V6
-=LznB
------END PGP SIGNATURE-----
+More background:
+* (from Paolo): Jan 30 11:34:19 <bonzini> iankko: it is a memset(foo, 0, ...) that
+ overruns the buffer, so it's not controllable by the attacker
+
+* but the denial of service scenario / attack vector is valid (consider network
+facing application using glibc's regexp matching on untrusted input)
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
