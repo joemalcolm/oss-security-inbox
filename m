@@ -1,34 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/22/10
-Message-Id: <201305221531.44501.mweckbecker@suse.de>
-Date: Wed, 22 May 2013 15:31:44 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: [Full-disclosure] Thttpd 2.25b Directory Traversal Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/31/3
+Message-ID: <5109EC7A.5060102@redhat.com>
+Date: Wed, 30 Jan 2013 21:00:58 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: jQuery 1.6.2 XSS CVE assignment
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 22 May 2013 13:44:09 Oden Eriksson wrote:
-> onsdagen den 22 maj 2013 13.06.18 skrev  Matthias Weckbecker:
-> > Hi,
-> >
-> > has anybody possibly already confirmed this? It might also be worth
-> > to assign a CVE to this if it turns out to be a reproducible issue.
->
-> Confirmed here. Needed to use "lynx -dump ...".
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-That's weird. But you've tried it *with* 'http://'? Otherwise you
-don't even generate a HTTP request.
+http://blog.jquery.com/2011/09/01/jquery-1-6-3-released/
 
-$ lynx -dump "127.0.0.1:/../../../etc/passwd"
-vs
-$ lynx -dump "http://127.0.0.1/../../../etc/passwd"
+Fix an XSS attack vector: User ma.la reported a common pattern that
+many sites are using to select elements using location.hash that
+allows someone to inject script into the page. This practice seemed
+widespread enough that we decided to modify the selector recognition
+to prevent script injection for the most common case. Any string
+passed to $() cannot contain HTML tags (and thus no script) if it has
+a ?#? character preceding them. See the ticket linked above for more
+information and a test case.
 
-I don't think this report is valid.
+Please use CVE-2011-4969 for this issue.
 
-Matthias
 
--- 
-Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRCex6AAoJEBYNRVNeJnmT11YQALSADLnn7aJWe1tUteN496vh
+ZqZyPrG6X0FGCOx6avLQV9NRUReX01y/ED2Z5mN/oOujCXBIYReOlbdLAXmvl9kU
+zLSwQ1cyrOUjXRv2Cdwg9Dg8O1VLARg0v0jr30i1WCZGa3ZZxgxh9YXb3u7k3+oJ
+M5mv+4ztTB6qjcj8k62d0CFEVHRqoU58Quni9qwJ4tKDeidGabg5bFvR5v80LIvq
+HHdyZLbmOQ+yfpRxEHAkpjncBOhhhCG7oM622qMZFnSYnkA0bf7uLv2KEXHTGrvJ
+zNOzLinvgDyKZfXR+CFCljb9QxnjyKSeSaVAarOR3iVrSMu46Y/3RgTGClxcv3ay
+j4MLAVwfKODkIRZw42FvG2Kc/HIc2zFzMo06YSmX8ku8TLwY7ixfj87qksI/K/tg
+InbJAzbF9gcSmcJHleFjksvE5HfQNncxDHLQvREcILck/lpuLk1K9fEmcy1uBhEw
+p6WZdBb2ZFQYc4nmYIC+GIHF7j4on5f1+z0CjGDyVvPeOIsLrOJbkld9P/WyWaeh
+o0DnM/kw4UdghoK1gKnoIJ+JdloxmhPbqWsYST4uHCbPn+D2hCNVS1Js+aTAj47T
+EsZASWr4O0Bn4eRuAY28MxllNHws9dWiXYCofHnRZ0Nsxuqf2bBXy+nEMLGBTDz8
+LNa27cSc2/YJ3xIZJKMl
+=c6pH
+-----END PGP SIGNATURE-----
