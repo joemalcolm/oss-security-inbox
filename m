@@ -1,22 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/22/12
-Message-ID: <20131022224204.GC2810@redhat.com>
-Date: Tue, 22 Oct 2013 16:42:04 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: another glibc flaw, similar to CVE-2013-1914, but in AF_INET6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/31/4
+Message-ID: <5109EE56.4080409@redhat.com>
+Date: Wed, 30 Jan 2013 21:08:54 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Henri Salo <henri@...v.fi>
+CC: Forest Monsen <forest.monsen@...il.com>, Greg Knaddison <greg.knaddison@...il.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, security@...pal.org
+Subject: Re: CVE
 Content-Type: text/plain; charset=utf-8
 
-It was found that the CVE-2013-1914 fix in glibc for AF_UNSPEC missed a
-an identical case but with AF_INET6.  Could a CVE be assigned to this?
-This issue has the same impact as CVE-2013-1914.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-References:
+On 01/30/2013 01:08 PM, Henri Salo wrote:
+> On Tue, Jan 29, 2013 at 04:19:55PM -0800, Forest Monsen wrote:
+>> Henri, regarding Drupal core SA-CORE-2013-001, you're welcome to
+>> explain the issue more clearly for Kurt if you like.
+> 
+> Advisory: http://drupal.org/SA-CORE-2013-001 Advisory ID:
+> DRUPAL-SA-CORE-2013-001 Project: Drupal core Version: 6.x, 7.x 
+> Date: 2013-January-16 Security risk: Highly critical Exploitable
+> from: Remote Vulnerability: Cross Site Scripting, Access bypass 
+> Versions affected: Drupal core 6.x versions prior to 6.28. Drupal
+> core 7.x versions prior to 7.19. Solution: Install the latest
+> version. If you use Drupal 6.x, upgrade to Drupal core 6.28. If you
+> use Drupal 7.x, upgrade to Drupal core 7.19.
+> 
+> Four issues: CVE-2013-XXXX: Cross-site scripting Various core and
+> contributed modules - Drupal 6 and 7
 
-https://sourceware.org/ml/libc-alpha/2013-10/msg00733.html
-https://bugzilla.redhat.com/show_bug.cgi?id=1022280
+I'm splitting this one since it's a vuln in Drupal and another in jQuery.
 
-Thanks.
+A reflected cross-site scripting vulnerability (XSS) was identified in
+certain Drupal JavaScript functions that pass unexpected user input
+into jQuery causing it to insert HTML into the page when the intended
+behavior is to select DOM elements. Multiple core and contributed
+modules are affected by this issue.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Please use CVE-2013-0244 for this issue.
+
+
+
+jQuery versions 1.6.3 and higher provide protection against common
+forms of this problem; thus, the vulnerability is mitigated if your
+site has upgraded to a recent version of jQuery. However, the versions
+of jQuery that are shipped with Drupal 6 and Drupal 7 core do not
+contain this protection.
+
+No CVE for this in Drupal as previously discussed. TLDR: no vuln no
+CVE, but preventing exploitation of third party components/etc is a
+nice and correct thing to do. Assigned a CVE for jQuery 1.6.2 in
+previous email.
+
+> CVE-2013-XXXX: Access bypass Book module printer friendly version -
+> Drupal 6 and 7
+
+Please use CVE-2013-0245 for this issue.
+
+> CVE-2013-XXXX: Access bypass Image module - Drupal 7
+
+Please use CVE-2013-0246 for this issue.
+
+> CVE-2013-XXXX:
+> http://www.openwall.com/lists/oss-security/2013/01/18/9 (Greg is
+> release manager)
+
+nothing here, see above.
+
+> 
+> Related links: http://drupal.org/drupal-7.19-release-notes 
+> http://drupal.org/drupal-6.28-release-notes
+> 
+> Kurt, any open questions? I can inform Drupal security-team after
+> assignments.
+> 
+> -- Henri Salo
+> 
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRCe5WAAoJEBYNRVNeJnmTrYUP/3JMcPMuHiA4FlqoU9UAAouU
+QmLOL+mNfoq5TQN1vjhFE2Zv2VSM5YFuqiXHRCSudEIsOQTAmmmD1zcGggdKVWEX
+tpno8Sdi8W2TZcmKHvK9HqWmK7N6FIbNWieNjE1xQCM9RKEtQxxtaD9kxPVnWw/a
+JR8Q9Nn2v9DzyTWCfI3vJ7KMKnTLRo28/YEVdYF4rkp6HlcaDd0gShErLHUPWAhP
+83paI4JJ8qlY7KPd0TdqdDbuYUIqZJ15umx6UTknYXJOPFOwaS8eLhb0CfKVAcsw
+gbqRfdMt1lBg/T30CjwCUcYF0EE/ymYbPAFpgzcWwC3fS8a1YIYyaYssvJdcKhqU
+/Aoz3hi6YTYTXmCESgP04Z4TpPqwSsh9DpL8AQsIod52VepvU5SfGEvWKaD8FmWE
+O4dPj/20wX5QHdXvC1Aftt1aY+W+7+zLBK6xs8IzLfdaMWgwJhj6BYsJ59NSTdXn
+XWqNN7yhUBhFiiUZ9uiLvxQbI3hehp0OLIAdJx0uu0Mr1saR39eoaxjtt6tkQfRO
+PLVeseMGtfe9lJVVmh7Il0BjAr5PlR+pOcZh89WjoqHbeylCii/DvFehCjlKyte3
+hksZK1cLKGlkfLMp0WAd3lk82p7B50ixMbv4KgXppOL/fissOUrwK3q4p1o3qU9V
+NDBG9QbCMybatkxTJCT+
+=sK3Q
+-----END PGP SIGNATURE-----
