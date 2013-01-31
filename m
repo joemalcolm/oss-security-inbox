@@ -1,20 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/22/11
-Message-ID: <20130422164620.GA7143@kroah.com>
-Date: Mon, 22 Apr 2013 09:46:20 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/31/2
+Message-Id: <201301310355.r0V3tkD1012410@linus.mitre.org>
+Date: Wed, 30 Jan 2013 22:55:46 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
 Cc: cve-assign@...re.org
-Subject: Re: Re: Linux kernel: more net info leak fixes for v3.9
+Subject: Wireshark before 1.8.5 (etc.) wnpa-sec-2013-01 through wnpa-sec-2013-09
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 22, 2013 at 01:44:17AM -0400, cve-assign@...re.org wrote:
-> 680d04e0ba7e926233e3b9cee59125ce181f66ba CVE-2013-3236
-> d5e0d0f607a7a029c6563a0470d88255c89a8d11 CVE-2013-3237
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please explain how these can get a CVE number when the code involved has
-never even been in a kernel.org release yet?
+Here are the CVE assignments for the issues covered in the recent
+Wireshark advisories
+(found at http://www.wireshark.org/security/wnpa-sec-2013-01.html
+through wnpa-sec-2013-09.html).
 
-confused,
+wnpa-sec-2013-01 bug 8036  CVE-2013-1572
+wnpa-sec-2013-01 bug 8037  CVE-2013-1573
+wnpa-sec-2013-01 bug 8038  CVE-2013-1574
+wnpa-sec-2013-01 bug 8040  CVE-2013-1575
+wnpa-sec-2013-01 bug 8041  CVE-2013-1576
+wnpa-sec-2013-01 bug 8042  CVE-2013-1577
+wnpa-sec-2013-01 bug 8043  CVE-2013-1578
+wnpa-sec-2013-01 bug 8198  CVE-2013-1579
+wnpa-sec-2013-01 bug 8199  CVE-2013-1580
+wnpa-sec-2013-01 bug 8222  CVE-2013-1581
 
-greg k-h
+wnpa-sec-2013-02 bug 7871  CVE-2013-1582
+
+wnpa-sec-2013-03 bug 7945 r46577  CVE-2013-1583
+wnpa-sec-2013-03 bug 7945 r46579  CVE-2013-1584
+
+wnpa-sec-2013-04 bug 8112  CVE-2013-1585
+
+wnpa-sec-2013-05 bug 8111  CVE-2013-1586
+
+wnpa-sec-2013-06 bug 7679  CVE-2013-1587
+
+wnpa-sec-2013-07 bug 8213  CVE-2013-1588
+
+wnpa-sec-2013-08 bug 8197  CVE-2013-1589
+
+wnpa-sec-2013-09 (no bug number listed)  CVE-2013-1590
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJRCenJAAoJEGvefgSNfHMdkocH/R7JrCwxQqWhfS2sgdOvJEXX
+loEG+050LDAzOAfkjVPhZJvJq1/hSpjkt0LdDKt+eKO0+OFJ06z6vTBpfaUKk9HX
+c09i7ZCSUzrFqgkVyH3XeOKTCN22D/My9CKw1tEsCn/675TsfX5+eC1twzgbuE3F
+Oxs0DWOWfv1Gx1Y3KPXC8zR62XKlTsVe5nr6JNGW2mkDdIQN0IQEkgLH6nmE9ppO
+23FCGpwrsQKG2fpcDtsOFJnldJuE/2xj2ZwryHFHrCYAJVImd9ME8bPC8lrVhBDb
+k+W8yQ3dYNRMlte1j0ginZ3/IGc+q8Y4PaWPRUTU5mtDc8ftujOQ2JyYhgjKGDM=
+=NIG4
+-----END PGP SIGNATURE-----
