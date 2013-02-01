@@ -1,19 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/01/3
-Message-ID: <CAGVYHsWukhhMEit7s00Ys-e3WW=_yo9Mf3PT49UDGBb9W11fHw@mail.gmail.com>
-Date: Wed, 1 May 2013 15:18:44 -0500
-From: Andrés Gómez Ramírez <andresgomezram7@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Flightgear remote format string
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/01/2
+Message-ID: <510BEF57.9010508@redhat.com>
+Date: Fri, 01 Feb 2013 17:37:43 +0100
+From: "Fabio M. Di Nitto" <fdinitto@...hat.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Jan Friesse <jfriesse@...hat.com>
+Subject: Re: CVE Request -- Corosync (2.0 <= X < 2.3): Remote DoS due improper HMAC initialization
 Content-Type: text/plain; charset=utf-8
 
-> What is the default setting for flight tree? does it listen t the
-> network public interface, localhost, is it disabled by default, or?
-> Thanks.
->
+On 02/01/2013 05:26 PM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+> 
+>   Corosync upstream has recently released 2.0.3 version correcting
+> one security issue:
 
+No, this version is not correct.
 
-It has to be configured by command line, but it is not an uncommon usage.
+corosync >= 2.0 to < 2.3 are affected.
 
-http://wiki.flightgear.org/Property_Tree
+corosync 2.3 and higher have the fix.
 
+Also, the DoS reason is not correct. The junk filter part is a
+consequence on how libnss work and should be dropped.
+
+Subject should be:
+
+"CVE Request -- Corosync (2.0 <= X < 2.3): Remote DoS due improper HMAC
+initialization"
+
+> 
+> A denial of service flaw was found in the way Corosync,
+> the cluster engine and application programming interfaces,
+> performed processing of certain network packets, when different
+> encryption keys were used. Previously the HMAC key was not initialized
+> properly, which allowed certain packets to pass through to the internal
+> phases of the Corosync packet validation process, possibly leading
+> to corosync daemon crash.
+
+I explained this in details and this description is not accurate.
+
+"A remote denial of service flaw was found in the way Corosync, the
+cluster engine and application programming interfaces, performed
+processing of network packets. Previously the HMAC key was not
+initialized properly, which allowed random targeted packets to be
+processed by the internal process of corosync and possibly leading to a
+daemon crash".
+
+> 
+> The HMAC initialization has been corrected in upstream via:
+> [5] https://github.com/corosync/corosync/commit/b3f456a8ceefac6e9f2e9acc2ea0c159d412b595
+> 
+> but there might be more changes needed (Cc-in Fabio and Jan).
+
+2 missing:
+
+https://github.com/corosync/corosync/commit/55dc09ea237482f827333759fd45608bc9518d64
+https://github.com/corosync/corosync/commit/ebb007a16c6a8d9e6f783ed82b324cb232c64be5
+
+Thanks
+Fabio
