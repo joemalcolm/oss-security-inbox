@@ -1,64 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/14/1
-Message-ID: <20130114053719.GA12579@openwall.com>
-Date: Mon, 14 Jan 2013 09:37:19 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/01/3
+Message-ID: <510C1BD8.2060507@redhat.com>
+Date: Fri, 01 Feb 2013 12:47:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: DoS vulnerability in the BIND resolver (and potentially others)
+CC: "Fabio M. Di Nitto" <fdinitto@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jan Friesse <jfriesse@...hat.com>
+Subject: Re: Re: CVE Request -- Corosync (2.0 <= X < 2.3): Remote DoS due improper HMAC initialization
 Content-Type: text/plain; charset=utf-8
 
-Florian -
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Sun, Jan 13, 2013 at 11:26:17AM +0100, Florian Weimer wrote:
-> Scott Brynen described a behavioral change in some of the UltraDNS
-> authorative name servers:
+On 02/01/2013 09:37 AM, Fabio M. Di Nitto wrote:
+> On 02/01/2013 05:26 PM, Jan Lieskovsky wrote:
+>> Hello Kurt, Steve, vendors,
+>> 
+>> Corosync upstream has recently released 2.0.3 version correcting 
+>> one security issue:
 > 
-> <https://lists.dns-oarc.net/pipermail/dns-operations/2013-January/009501.html>
-
-I've exchanged some e-mails with UltraDNS Support last week and was told
-they'd escalate my question, but I still haven't received an answer to
-it (they kept giving other sorts of answers instead).  I am trying to
-find out their rationale behind completely refusing these queries as
-opposed to setting TC, which would avoid the traffic amplification and
-thus remove the incentive for use of this query type in attacks.
-
-My guess is that they might be dealing with currently ongoing attacks,
-which would not pick up the incentive change right away.  But I wanted
-to hear something like this (or not) from them explicitly, with numbers.
-
-[ It appears that you're for complete refusal, too.  It's a rare
-occasion where I happen to disagree with you on some issue. ]
-
-> Mark Andrews of ISC confirmed that this triggers a denial of service
-> condition in the BIND recursive resolver:
+> No, this version is not correct.
 > 
-> <https://lists.dns-oarc.net/pipermail/dns-operations/2013-January/009506.html>
+> corosync >= 2.0 to < 2.3 are affected.
 > 
-> I think he is right, but this obviously has to be fixed in the
-> resolver.  Can this be assigned a CVE?
+> corosync 2.3 and higher have the fix.
+> 
+> Also, the DoS reason is not correct. The junk filter part is a 
+> consequence on how libnss work and should be dropped.
+> 
+> Subject should be:
+> 
+> "CVE Request -- Corosync (2.0 <= X < 2.3): Remote DoS due improper
+> HMAC initialization"
+> 
+>> 
+>> A denial of service flaw was found in the way Corosync, the
+>> cluster engine and application programming interfaces, performed
+>> processing of certain network packets, when different encryption
+>> keys were used. Previously the HMAC key was not initialized 
+>> properly, which allowed certain packets to pass through to the
+>> internal phases of the Corosync packet validation process,
+>> possibly leading to corosync daemon crash.
+> 
+> I explained this in details and this description is not accurate.
+> 
+> "A remote denial of service flaw was found in the way Corosync,
+> the cluster engine and application programming interfaces,
+> performed processing of network packets. Previously the HMAC key
+> was not initialized properly, which allowed random targeted packets
+> to be processed by the internal process of corosync and possibly
+> leading to a daemon crash".
 
-What would the correct behavior be, in your opinion?  Not try other
-servers on REFUSED, but return it to the client right away?
+Please use CVE-2013-0250  for this issue.
 
-How is this a DoS on BIND's recursive resolver, any more so than e.g.
-deliberately having many nameservers for a certain hostname and keeping
-all of them down?  Wouldn't BIND's recursive resolver have to try them
-all in that case anyway, even after a fix for behavior on REFUSED?
+>> 
+>> The HMAC initialization has been corrected in upstream via: [5]
+>> https://github.com/corosync/corosync/commit/b3f456a8ceefac6e9f2e9acc2ea0c159d412b595
+>>
+>>
+>> 
+but there might be more changes needed (Cc-in Fabio and Jan).
+> 
+> 2 missing:
+> 
+> https://github.com/corosync/corosync/commit/55dc09ea237482f827333759fd45608bc9518d64
+>
+> 
+https://github.com/corosync/corosync/commit/ebb007a16c6a8d9e6f783ed82b324cb232c64be5
 
-I am not convinced this deserves a CVE - but this might change if you
-explain.
+Thanks for the additional info.
 
-[ As to "easily" patching qmail, people on the dns-operations thread don't
-appear to realize how many qmail installs came with Plesk (and thus are
-not exactly open source and are operated by people who couldn't patch the
-code anyway).  Perhaps if the situation persists (especially if more DNS
-hosting providers follow suit) Parallels will release a Plesk update with
-patched qmail, but even then most installs won't be upgraded soon, if at
-all, such as because their owners' Plesk license keys have expired (and
-renewal cost is significant).  Plesk and web-based admin panels in
-general are a security problem of its own, but that's another issue,
-albeit a related one.  Ditto about non-free software in general. ]
+> Thanks Fabio
+> 
 
-Thanks,
 
-Alexander
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRDBvYAAoJEBYNRVNeJnmTtpEP/j4utU/gLEpFy5geRV07sgG5
+WpLX+i36ewQ4iUbDYNg7cZlaxn51zrC62G9bAz6Rdg8I55qH33d+xMVFi6UtFypB
+O/OBq7JMhRZzPW28oHnr5n9IBwNHp2AEkdgm8gdOncSyB8GYWpp+b4SZ0LcbuP7f
+Si5/BFzPqH0b22VgNKvs6iLC/aNArZPaXZXzrMGsBGYEGQJ9ydVzpQLvoHgMq4B4
+pvLXsGwP3Eg27g+8901MxfP2E+hMP8K70CpIMpGEHAF/aKaupPrJ5OhTcc+ct9bs
+Sj8DxFImOT1EOWCEH2Gyu0q/IwqX4/UPsdyq5O7oMxP0dn4VC6rh9INxkt2ZNfx3
+qMTp7efIQt3c6CDMUDGuRvGaI29nxPeWOKC+0IphPGoTW+Q+6T98NmGR/aeorObd
+8wLshQavIYdlJsxm8oi8F3uDehSwvZaswR3JGJwSLZCF28sNXzkoPHavjkGg6n6R
+fxd0sCuYbx0dhU7IROX/1OL7Y0UG3I+PWbmqT60GfqSbfksXU9LsSbKiEeactYhU
+m/ihUVMFiecYQUrRiFo/NxWWNfR/W/Xx8RWZAruogmCl71C7bso8Pl0TEUVItKT8
+8wg7YrZ+D5v/96sKNU754bEBX/vsMwmnFi17mdDxzo8aVzfW2ZiXhcrhIB7NGD/n
+aIfO27EEAQDcbbEq06vJ
+=o2zL
+-----END PGP SIGNATURE-----
