@@ -1,71 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/23/1
-Message-ID: <52B7BDDB.9010401@redhat.com>
-Date: Sun, 22 Dec 2013 21:36:43 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/01/4
+Message-ID: <510C1CD0.2030706@redhat.com>
+Date: Fri, 01 Feb 2013 12:51:44 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE REJECTS
+CC: Brian Martin <brian@...nsecurityfoundation.org>
+Subject: Re: Re: [OSVDB Mods] [New Vulnerability] File Disclosure in SimpleMachines Forum <= 2.0.3 (CVE-2013-0192) (fwd)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 12/22/2013 03:42 AM, Solar Designer wrote:
-> Kurt, all -
+On 01/30/2013 12:36 PM, Brian Martin wrote:
 > 
-> On Wed, Dec 18, 2013 at 11:29:23PM -0700, Kurt Seifried wrote:
->> CVE-2013-4403 - turns out CVE-2013-4404 covered the issue, no
->> need for 4403.
->> 
->> CVE-2013-4418 - turns out to be security hardening, not a
->> security flaw, just like CVE-2013-4417
+> FYI:
 > 
-> While I greatly appreciate your work on CVE assignments, I'd
-> appreciate it if you and others include at least project names and
-> preferably also vulnerability types and/or brief descriptions along
-> with CVE IDs in postings such as the above.  That would make them a
-> lot more useful to
-
-Uhmm but they aren't security issues, they are mistakes (usually
-either duplicate or issues that turn out not to be a security
-vulnerability). As well some of these issues (in this case both I
-think) are still under embargo/not public so I can't always release
-details when they are being publicly rejected.
-
-> those of us who are not focused on CVE as much, but may
-> nevertheless be interested in findings about the actual security
-> issues.  We're unlikely to go and look up each CVE ID mentioned
-> without detail just in case it's relevant to our projects.
-
-This part I don't really understand. If you want to see what security
-related bugs Red Hat products have you can simply search our BZ for
-products and use look for the  keyword "Security". Not clear what
-looking up CVE's that have been rejected due to errors/etc. has to do
-with this?
-
-> Thanks,
+> Kurt has indicated that the 2009 disclosure affects 1.x, and the
+> new affects 2.x, so they warrant separate CVEs. This is the
+> official request for it.
 > 
-> Alexander
+> Brian OSF / OSVDB.org
 > 
+> ---------- Forwarded message ---------- From: Brian Martin
+> <brian@...nsecurityfoundation.org> To: Carlos Alberto Lopez Perez
+> <clopez@...lia.com> Cc: OSVDB Mods <moderators@...db.org>, Kurt
+> Seifried <kseifried@...hat.com> Date: Wed, 30 Jan 2013 13:27:35
+> -0600 (CST) Subject: Re: [OSVDB Mods] [New Vulnerability] File
+> Disclosure in SimpleMachines Forum <= 2.0.3 (CVE-2013-0192)
+> 
+> 
+> 
+> On Wed, 30 Jan 2013, Carlos Alberto Lopez Perez wrote:
+> 
+> : There is a file disclosure vulnerability in SMF (Simple Machines
+> Forum) : affecting versions <= 2.0.3 [1] : : The vulnerability has
+> been assigned CVE-2013-0192 [2] and requires a : valid admin
+> backend login to be exploited, therefore has a low security :
+> impact score. : : On some configurations a SMF deployment is shared
+> by several "co-admins" : that are not trusted beyond the SMF
+> deployment. This vulnerability : allows them to read arbitrary
+> files on the filesystem and therefore gain : new privileges by
+> reading the settings.php with the database passwords.
+> 
+> Thanks for the information Carlos.
+> 
+> Kurt; This was originally disclosed in 2009 (see OSVDB 86444 [1])
+> and re-discovered in January 13. If you concur, do you want to see
+> about issuing a 2009 CVE? One was never issued for the original
+> disclosure.
+> 
+> Brian OSF / OSVDB.org
+> 
+> [1] http://osvdb.org/86444
 
+Please use CVE-2009-5068 for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
 
-iQIcBAEBAgAGBQJSt73aAAoJEBYNRVNeJnmT0zsQAJ5iTVxZi1Q7WlqdfSA8QbFd
-Zgwypvy6eRhA+ElCcqmPc0SuA7ywFyiAuFkLMRe+gOz4T3t4hp2riv3cH/Bg2kAV
-UoNjgnzDfkV1VrAGvvchIBpao4dr6QZRx5ldTLkupeJmmXpx/lpHVerKBX30OgHh
-tPZyXM8Xw+TKZxlXMc3W35PgLsWmIw/Mb3IFEfVD15WS49eA2cWO/Kjdf5zTJ0je
-qDyKyvp5n6QCdBp0Qu4Gr9WFXH4jpqE3xtRxVMEpJBUtO6W1fWYQ9jGQ9tYfwRZi
-MXzz9MaN74VJqY7+KAXYk0pnEKp47nyPcawIp50L5OcrjiVRVP1OZCXMwop+4QmG
-LKALlnexFTk3FJ7RQPI7WxN9WAoPu2S94pkhX+zWKYetX4X2Go/nQd35HlYPYxLH
-3WO0+IkkVNb9RM4K66O7zRqh44XTxiYz2ygPOkcYAtGATjomeFsxYbyWb6YH4Z04
-0mt3GfmoQiHkFwWX+c5vdJpW64q9Ozdc25Od2jXjjXfAkh24XgCAeF/ys6cMCKDA
-Hvcs5chmV98wYbSvMG5dm7vzo4koCrcHh8lXZYZGEodwZsTws+2RrNZxWEdjTjgc
-BGgOVwCq0SZB587uzNp2uktcyQuQuqwb5gLP7rk8QN/Ndv7xkrjMPw1nXFlOXqBx
-Ec7b0lALoSMKevnOWmQT
-=meBi
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRDBzQAAoJEBYNRVNeJnmTDJEP/jPFMqlf8aNjQvBuGn+0lSse
+4kdc+YioFEOQ+4xshH+/9FdkOjchddhh66dYzeYbUl9PVeT0wL4uqEbN1lD5myBf
+QimLK2pVGOBLThUTb+sqPwWioTYCQdlqjNgw3YGo7gspg8ihAFiAyY0gOVkr9vUH
+1cATd1DB7pzDg7PUYquCmhFVi/CYdPiacNsr+O8txtPQDGK6jdobAqPuXf9oddZE
+/VBJT6xRQF9Xxuwv1ZSIjMHDFJl+XzbiUi6a+zM+gQ9TML4fBbFhEqfy48Vmoq9v
+Rc9N/7su80CfmZqhuc1+nIfti4aFh11kZNdMLy9aUGgs5exIQ+z1edeu+OBIAHTk
+mr2YFqbQnAX2osVozMkuPgd6JEO/XW3Q/+eQK4ZKIllQa7a6Z6BU/Z7XQ3n5T2ga
+GzIvgcfYKDWgd3HYHUiOlI2DWyUzC2PRLMlszG2eWv3tYkPesK7OZ+qlUahRWOSq
+GBzDQIoQwiRugT+NvPpyMZ6cXi4yvY+8WPKAKHelAP5SmEvSAMNkXyD/SLoFrqD+
+5YZR06xIsjuD4pplmeDwnhQmZwWXrfDIp1yLNqWVmuPyxsE47TZYEaf81z0Zgwxh
+8KPd3t1ttGFX3mM1gQhW0vw+127Ge0QSxPSjw2NGEQI8Gc3WqiFEBE01zafbvIYf
+7l9eXPFwI/vtO2520/0/
+=xH4k
 -----END PGP SIGNATURE-----
