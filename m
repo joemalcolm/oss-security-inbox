@@ -1,42 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/04/16
-Message-ID: <20131104194039.GD26778@localhost.localdomain>
-Date: Mon, 4 Nov 2013 14:40:39 -0500
-From: "Eric H. Christensen" <echriste@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/01/1
+Message-ID: <1238924710.19834042.1359736012433.JavaMail.root@redhat.com>
+Date: Fri, 1 Feb 2013 11:26:52 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: hanno@...eck.de
-Subject: Re: openssl default ciphers
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Fabio Di Nitto <fdinitto@...hat.com>, Jan Friesse <jfriesse@...hat.com>
+Subject: CVE Request -- Corosync (X < 2.0.3): Remote DoS due improper HMAC initialization and improper junk filtering when different encryption keys used
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hello Kurt, Steve, vendors,
 
-On Mon, Nov 04, 2013 at 07:41:49PM +0100, Stefan Bühler wrote:
-> I think due to BEAST a default collection should include RC4; that is
-> why I included MEDIUM.
+  Corosync upstream has recently released 2.0.3 version correcting
+one security issue:
 
-BEAST is now mitigated on most browsers so we can drop the very broken RC4 cipher.
+A denial of service flaw was found in the way Corosync,
+the cluster engine and application programming interfaces,
+performed processing of certain network packets, when different
+encryption keys were used. Previously the HMAC key was not initialized
+properly, which allowed certain packets to pass through to the internal
+phases of the Corosync packet validation process, possibly leading
+to corosync daemon crash.
 
-- -- Eric
+References:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=906834
+[2] http://lists.fedoraproject.org/pipermail/package-announce/2013-January/097833.html
+[3] http://lwn.net/Vulnerabilities/535234/
+[4] https://bugs.mageia.org/show_bug.cgi?id=8905
 
-- --------------------------------------------------
-Eric "Sparks" Christensen
-Red Hat, Inc - Product Security Team
+The HMAC initialization has been corrected in upstream via:
+[5] https://github.com/corosync/corosync/commit/b3f456a8ceefac6e9f2e9acc2ea0c159d412b595
 
-sparks@...hat.com - sparks@...oraproject.org
-097C 82C3 52DF C64A 50C2  E3A3 8076 ABDE 024B B3D1
-- --------------------------------------------------
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+but there might be more changes needed (Cc-in Fabio and Jan).
 
-iQGcBAEBCgAGBQJSd/gxAAoJEB/kgVGp2CYv7EML/RxVGNPGjL/7PLJK85GfANHf
-hYpT7BSRYWruraXDhk2HhkhaE8IL4GLKZZDsyOfmX/8IHte2K3Dz8+zNKDnu++Qm
-0UOxr/n6LurMGk6mXb07Im+91xQ/iWumb7eQG2XqSqlcuQON5YWWFpHXe8dHcru+
-ySBWchfVbcIrvH72+BtWinAGTpawCXfaRdRuaqQkyR8bkHbX2xdwwXrfMzVddMOb
-j9aIpbmReSf9v+HjbWbAgfXt8PZTPyAJPzYOFCA8Da19LGwN0lyX//P6At405pzp
-0j841cnjz9qEkQsJnPeXZEbFbbUEz2aBZseCXIMTx4WQ6wH6pfKBWhtrjiC04D/j
-9jzEHit9m2H1MJEYuB8bkJzlAuKbF5FgL8qs79Nl1hg0/zWl6sfzhUpXst+EpqCS
-WpVfR5wacbIQ0cgnUmTyaQ/8mlQh1MBjUzccVdxo0AcM7iRgfkTRusDWHHKf8NrH
-I/AAbmX0/O+nHH5hML4GxzXelBtE+eMpuFYGKIiNkw==
-=s/RW
------END PGP SIGNATURE-----
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
