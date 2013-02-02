@@ -1,37 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/16/5
-Message-ID: <20130216104922.GA27327@openwall.com>
-Date: Sat, 16 Feb 2013 14:49:22 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel race condition with PTRACE_SETREGS (CVE-2013-0871)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/02/1
+Message-ID: <20130202135903.GB16583@frohike.homeunix.org>
+Date: Sat, 2 Feb 2013 14:59:03 +0100
+From: Peter Bex <Peter.Bex@...all.nl>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: A small backlog of vulnerabilities in Chicken Scheme
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 15, 2013 at 12:24:18PM -0800, Julien Tinnes wrote:
-> Linux kernel stack corruption due to race condition with PTRACE_SETREGS
+Hello all,
 
-I haven't looked into this closely yet, but at first glance it looks
-like the worst Linux kernel vulnerability in a few years.  For distro
-vendor kernels (rather than mainline, which was patched almost a month
-ago), this is a 0-day.  We need to figure out a few things:
+Recently a handful of security bugs have been found and fixed in the
+Chicken Scheme compiler (http://www.call-cc.org).  We (the core team)
+have decided we'd like to start using CVE identifiers for the benefit
+of our users and distributions.
 
-What's the oldest affected kernel version?
+I'd like to request CVEs for the currently known security bugs:
 
-Which "stable" and distro vendor kernels are affected?  This does not
-appear to be e.g. on Red Hat's Bugzilla yet ... but it's already on HN:
+* POSIX select() buffer overrun, fixed on in Chicken 4.8.2 (development
+snapshot) by switching to POSIX poll() on platforms where supported.
+This is also fixed in 4.8.0.1 (stability release).
 
-https://news.ycombinator.com/item?id=5230262
+Original announcement, with workaround (followed by preliminary patch):
+http://lists.nongnu.org/archive/html/chicken-users/2012-06/msg00031.html
+Final patch:
+http://lists.nongnu.org/archive/html/chicken-hackers/2012-11/msg00075.html
 
-(perhaps the weekend plays a role in the delay of vendor response).
+* Poisoned NUL byte injection due to incomplete protection by missing
+checks in some procedures, fixed in Chicken 4.8.0:
+http://lists.nongnu.org/archive/html/chicken-users/2012-09/msg00004.html
 
-Are all architectures affected?  The ptrace code in the kernel is
-naturally somewhat arch-specific, so _maybe_ not all are affected.
+* Broken randomization procedure on 64-bit platforms (it returned a
+constant value).  This function wasn't used for security purposes
+(and is advertised as being unsuitable), so I'm unsure a CVE is needed:
+http://lists.nongnu.org/archive/html/chicken-hackers/2012-02/msg00084.html
+Fixed in 4.8.0.
 
-The mainline commits from January are by Oleg Nesterov of Red Hat.  Why
-wasn't(?) the issue handled with due severity within Red Hat, then -
-such that Red Hat would at the very least have a statement on whether
-and which of their kernels are affected by now.  My guess is that the
-full severity of the issue might not have been understood by Oleg at the
-time, but it's only a guess.
+* Vulnerability to algorithmic complexity attacks due to hash table
+collisions.  Fixed in 4.8.0.
+First public confirmation of the issue, with preliminary (broken) patch:
+http://lists.nongnu.org/archive/html/chicken-hackers/2012-01/msg00002.html
+Proper fix:
+http://lists.nongnu.org/archive/html/chicken-hackers/2012-01/msg00020.html
 
-Alexander
+Please let me know if more info is required or if this is even the
+proper way to request CVEs.
+
+I'd also like to know if it's possible to get CVE numbers assigned
+*before* issuing a security advisory, but without immediate full
+disclosure, so an initial advisory can be complete with CVE number.
+The CVE can be updated afterwards with the link to the advisory when
+it is issued.  This should make it easier for users to find information
+about the bug.  This list's Openwall wiki seems to imply that it's
+only possible to request a CVE for an issue given all the information
+immediately, but a recent message from Kurt Seifried in a thread about
+Jenkins says that it can be done.  If it's indeed okay to e-mail Kurt
+directly, it would be helpful to include this in the documentation wiki.
+
+Finally, how do CVE entries in MITRE and/or the NVD get updated?
+I couldn't find anything about this in the FAQ.  For example, if we
+find and fix a noncritical vulnerability but the fix is rather
+complicated and needs to be thoroughly tested, the fix might appear
+in a release after CVE and advisory are issued.  How will this be
+reflected in the information once the version in which the fix appears
+is finally known?
+
+Cheers,
+Peter Bex (on behalf of the Chicken core team)
