@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/16/5
-Message-ID: <525E26E7.4080300@redhat.com>
-Date: Tue, 15 Oct 2013 23:40:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/02/2
+Message-ID: <20130202141521.GP21775@kludge.henri.nerv.fi>
+Date: Sat, 2 Feb 2013 16:15:21 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: Re: browser document.cookie DoS vulnerability
+Subject: Re: A small backlog of vulnerabilities in Chicken Scheme
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sat, Feb 02, 2013 at 02:59:03PM +0100, Peter Bex wrote:
+> Recently a handful of security bugs have been found and fixed in the
+> Chicken Scheme compiler (http://www.call-cc.org).  We (the core team)
+> have decided we'd like to start using CVE identifiers for the benefit
+> of our users and distributions.
 
-On 10/11/2013 11:34 AM, Joel Weinberger wrote:
-> Hi there. Yes, we do CVEs, but in this case, we consider this very
-> low severity and will not be creating a CVE for it. Sorry for the
-> delayed response for it! --Joel
+Nice!
 
-So to confirm, this crashes just a single tab or thw whole browser?
+> I'd also like to know if it's possible to get CVE numbers assigned
+> *before* issuing a security advisory, but without immediate full
+> disclosure, so an initial advisory can be complete with CVE number.
+> The CVE can be updated afterwards with the link to the advisory when
+> it is issued.  This should make it easier for users to find information
+> about the bug.  This list's Openwall wiki seems to imply that it's
+> only possible to request a CVE for an issue given all the information
+> immediately, but a recent message from Kurt Seifried in a thread about
+> Jenkins says that it can be done.  If it's indeed okay to e-mail Kurt
+> directly, it would be helpful to include this in the documentation wiki.
 
+http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSXibmAAoJEBYNRVNeJnmTWWsQANlys8wJPHjNI7EzVsB2CtdH
-KzAZpjbx6PN6REGL9DmogCOYeaHXv1wiibS9Zipate4yStLdkQ+gl5G1srqJ2EPf
-E5ZfDT3RVNaeutmRAyA4ZGMvAekAfhuDPRwY5xek1M0K734OBAMlcIDqHZalTRrM
-Ry6M4TD8hlSgNoH09vKTZaYxFPFHCxGL93v1+v8L4EpqqmpSyzAKNRaVFb+9F4ue
-Ol5tb2kveAt0F3xxw10F23xdApdmymUuygPDGvCiiHvx8EW0B/IjXKPkjQHJxRhn
-3j3jq4MauElO0CVOrLF0+lRyVvoU7Aa5CqB3Kp8XjWtHAROOrYeulmQrDf7uucSa
-hfd7HtGXgvNm1WFE81r4eYkTLl7TB0yOsHduxAkSb7c5n8kj2I5ixDxwyw3QGo09
-o8bbC2ADt+qfBeVU655O4le3TZdH0pWcNBQ/T4HRHECM+THBSA0pwQva/YzyE9gc
-bKBw4BkFWScdYHQPsHtOqj4xvpeiKe/s4P61dLKDsE7NXOeKSCjLcFrgk0H+9K3y
-OafjffSzh86KKp35QpmQnW2ProcUYNTp4gelCKZJFA1seLdkE8UFviY7i8Zh95kZ
-pUqRDcVDF7MKS9UZwzhCBA01lfEt4nL81H0WCegROZNIV3dLOTUimMpG4r3+yfEZ
-vywZdha+1biHEUSSNzIq
-=q0fJ
------END PGP SIGNATURE-----
+--
+Henri Salo
