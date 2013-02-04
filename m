@@ -1,40 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/10/18
-Message-ID: <51DDBE3E.5050808@fifthhorseman.net>
-Date: Wed, 10 Jul 2013 16:04:14 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/04/2
+Message-ID: <510F34D2.4060802@redhat.com>
+Date: Sun, 03 Feb 2013 21:10:58 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: 715325@...s.debian.org
-Subject: Re: npm uses predictable temporary filenames when unpacking tarballs
+CC: Michael Gilbert <mgilbert@...ian.org>
+Subject: Re: CVE id request: boost
 Content-Type: text/plain; charset=utf-8
 
-On 07/10/2013 04:02 PM, Daniel Kahn Gillmor wrote:
-> hi oss-sec folks--
-> 
-> i recently learned that npm, the node.js language-specific package
-> manager, created predictable temporary directory names in a
-> world-writable filesystem (/tmp) by default when unpacking archives.
-> 
-> It looks like this might leave open a classic symlink race such that one
-> user could control the location where another user unpacked packages
-> coming from an npm installation.
-> 
-> if the superuser was the one running npm, this might have led to a
-> non-privileged user who wins the race getting a privilege escalation as
-> well, depending on the contents of the fetched package.
-> 
-> The issue appears to have been fixed upstream today, here:
-> 
->   https://github.com/isaacs/npm/commit/f4d31693
-> 
-> I first learned about the problem during a related a bug report
-> http://bugs.debian.org/715325 (cc'ed here)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-sorry, i should also have mentioned that the upstream bug report is:
+On 02/03/2013 06:50 PM, Michael Gilbert wrote:
+> Hi,
+> 
+> Boost has issued a security advisory for a UTF-8 validation issue/exposure:
+> http://www.boost.org/users/news/boost_locale_security_notice.html
+> 
+> Please assign an id.
+> 
+> Thanks,
+> Mike
 
-https://github.com/isaacs/npm/issues/3635
+Please use CVE-2013-0252 for this issue.
 
-	--dkg
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+iQIcBAEBAgAGBQJRDzTRAAoJEBYNRVNeJnmT2eYQAMLjBjPvk+dpc93XvRIPSohS
+9sXzRUVmAjtD8UK7M4W3nkcXu1nI/KH3Z80BmkJCoWUq3OtyYlD5wx7o5nOTmYFK
+jPBqpWITtNWCNssZ+DflUdeuHASSon+BNSTnpeY1zeKA5pqEL83r6KDwy80Psyut
+5H6GkDxby6nbDhmW7Mfl2LrS+UuEksSXlv6QZPsWr23L1gebBMPKj6x4a0cvYmRd
+OFnON/cK85uYEGlFkT8XDXJxTkWTM0+99OuFN6SAGlfqdqsqvooSWAKDlMJFbav7
+dfWvCALRL6nSAvQ06dVwQhOE14+I22SSYeCdH0756u7PKs/+cSlNcVZo5LsET89C
+3S3TcramBZ6UllPUo6W3s0GDyfERnfN8xNdaMU/yz7g5ZTVmShggBMLqdjywNyFI
+wti8QdgZ4nseyNezCkB9HCaz3hk56NrGWgapNxD6YLzmXAL2fajz/VE+DR7c7D+p
+eYcn/K9/vAPqxwdDzXx/xo/DhE24epoe31rZKYCmyZMPn2IKXh92UeICKbe69h67
+4jHBJHz2lr1E4yvS+x1GgvYTD0A5FZkJDYJCXGKBmO/RvkkBKa4bC6z84f1Cd6Ky
+ZUUhS1HjxV62C8mQg1wZcsD9or9tY9CjhnApSRHgrCy/ezqAoudTIQc8QmkSG6ie
+DeqhEmnWc93PVZuaRLx8
+=04LH
+-----END PGP SIGNATURE-----
