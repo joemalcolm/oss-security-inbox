@@ -1,43 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/08/15
-Message-ID: <50EC7AB4.3040705@redhat.com>
-Date: Tue, 08 Jan 2013 12:59:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Mitre CVE assign department <cve-assign@...re.org>
-Subject: Quick note on mfsa2013-04 / CVE-2012-0759 / CVE-2013-0759
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/04/1
+Message-ID: <CANTw=MNF+272nH+6caEyJ8V4C_psEYqv=F6i6a02tF3xGMH+ZA@mail.gmail.com>
+Date: Sun, 3 Feb 2013 20:50:27 -0500
+From: Michael Gilbert <mgilbert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: boost
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-https://www.mozilla.org/security/announce/2013/mfsa2013-04.html
+Boost has issued a security advisory for a UTF-8 validation issue/exposure:
+http://www.boost.org/users/news/boost_locale_security_notice.html
 
-lists:
+Please assign an id.
 
-URL spoofing with credentials info of URL & 204 (CVE-2012-0759)
-
-but actually links to CVE-2013-0759. The series CVE-2012-0751 through
-CVE-2012-0780 were used entirely by Adobe last year, so a typo, just
-something to be aware of.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQ7HqzAAoJEBYNRVNeJnmTA0oP/0Pi2a04owZvGb9OMeGTI4Vs
-pHzyfqutux5egWqCF8gP/EoU5U64vL239+wSkfd74XrDCadC1+DRIhDNS26y954j
-Owpjd8T4RSXe/kqJjuM7Ve+GuqnUk6vTIBXgHeOy3CVdKjeXt38XWyiTKoSipBNt
-Je3qHUhhgXK5ODZK82D5PycalHCfJgjOVQNX+XSO0oDfuuA/a508q0SBUGeJOhQ5
-EvCxIAyusM3alBFeJcCj3GMj/eou0OSISHd4EJUZs4UnTI/CGLvr070ghI2RxaaT
-z57ArDTRsidvzFg9OYl6RHITVPjA2jjJmRQT0GtWhlGQ234WgRpTlc+6Nzg9gBQJ
-Go0JdxxlfetP1jZ3DxI7vW3Mbe6hq8QMr7cis/3BK/rUUuyyVTN8XsQyrkr8qzVz
-1079WqzvYMnt41eyx8bXx8nXn/fwOlNYaoOXElK4a1GqbjVTupljSgBV9ZdtrR2G
-1ITquZ/2rMVtf4cjsJqbr6oQHQfFlYjbSM6CcqSSJ9Wvaw2FcjUoTnO9zPYd3N7E
-kzO24WQsd8QwV9mfCgYTi2jgK60aN5w3auqfxwIOOAi4L8oZH3P3Z5pnJg+CxhWG
-JjWeQvLxlkQGrEnfA+mZTeO/tVdsdG2Tu7WvVdnSvHEahBtPZWTHpQrido/Y0ojX
-J0Veh10+ZNGCV1GfKoKA
-=+fiU
------END PGP SIGNATURE-----
+Thanks,
+Mike
