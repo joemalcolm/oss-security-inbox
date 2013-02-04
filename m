@@ -1,17 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/22/20
-Message-ID: <20130222152044.GA4954@jwilk.net>
-Date: Fri, 22 Feb 2013 16:20:44 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/04/4
+Message-ID: <510FEEB2.8060308@gmail.com>
+Date: Mon, 04 Feb 2013 09:24:02 -0800
+From: Forest Monsen <forest.monsen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVEs for libxml2 and expat internal and external XML entity expansion
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer <fweimer@...hat.com>, 2013-02-22, 09:25:
->>Please use CVE-2013-0338 for libxml2 internal entity expansion
->Hasn't libxml2 got countermeasures for that?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-That'd be CVE-2003-1564, fixed in 2.7.0.
+Hi there,
 
--- 
-Jakub Wilk
+Here's a request for CVE identifiers for several issues with Drupal
+contributed modules. Thank you Kurt.
+
+SA-CONTRIB-2013-011 - email2image - Access Bypass - Unsupported
+http://drupal.org/node/1903264
+
+SA-CONTRIB-2013-012 - Google Authenticator login - Access Bypass
+http://drupal.org/node/1903282
+
+SA-CONTRIB-2013-013 - Boxes - Cross site scripting (XSS)
+http://drupal.org/node/1903300
+
+SA-CONTRIB-2013-014 - Drush Debian Packaging - Information Disclosure
+- - Unsupported
+http://drupal.org/node/1903324
+
+
+Forest
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iEYEARECAAYFAlEP7qYACgkQ/ILCL9e1Br76dgCfcNlFxyeS//VPaSxKzPD5wQhP
+hmwAnAzloJOdaZPOYosHXcfh9y1DTngE
+=wpto
+-----END PGP SIGNATURE-----
