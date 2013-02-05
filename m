@@ -1,30 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/10/4
-Message-ID: <20131210093037.GQ27570@suse.de>
-Date: Tue, 10 Dec 2013 10:30:37 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel: net: memory leak in recvmsg handler msg_name & msg_namelen logic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/10
+Message-Id: <E1U2iMe-00089M-1r@xenbits.xen.org>
+Date: Tue, 05 Feb 2013 13:15:08 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 38 (CVE-2013-0215) - oxenstored incorrect handling of certain Xenbus ring states
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 10, 2013 at 01:00:43PM +0530, P J P wrote:
->    Hello,
->
-> Linux kernel built with the networking support(CONFIG_NET) is vulnerable to 
-> an information leakage flaw in the socket layer. It could occur while doing 
-> recvmsg(2), recvfrom(2) socket calls. It occurs due to improperly 
-> initialised msg_name & msg_namelen message header parameters.
->
-> A user/program could use this flaw to leak kernel memory bytes.
->
-> Upstream fix:
-> -------------
->  -> https://git.kernel.org/linus/f3d3342602f8bcbf37d7c46641cb9bca7618eb1c
->
-> Reference:
-> ----------
->  -> https://bugzilla.redhat.com/show_bug.cgi?id=1039845
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-CVE-2013-6405 covers parts of that already I think and could be extended?
+         Xen Security Advisory CVE-2013-0215 / XSA-38
+			      version 2
 
-Ciao, Marcus
+    oxenstored incorrect handling of certain Xenbus ring states
+
+UPDATES IN VERSION 2
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The oxenstored daemon (the ocaml version of the xenstore daemon) does
+not correctly handle unusual or malicious contents in the xenstore
+ring.  A malicious guest can exploit this to cause oxenstored to read
+past the end of the ring (and very likely crash) or to allocate large
+amounts of RAM.
+
+IMPACT
+======
+
+A malicious guest administrator can mount a denial of service attack
+affecting domain control and management functions.
+
+In more detail:
+
+A malicious guest administrator can cause oxenstored to crash; after
+this many host control operations (for example, starting and stopping
+domains, device hotplug, and some monitoring functions), will be
+unavailable.  Domains which are already running are not directly
+affected.
+
+Such an attacker can also cause a memory exhaustion in the domain
+running oxenstored; often this will make the host's management
+functions unavailable.
+
+Information leak of control plane data is also theoretically possible.
+
+VULNERABLE SYSTEMS
+==================
+
+Any system running oxenstored is vulnerable. oxenstored was introduced
+in Xen version 4.1.
+
+oxenstored was made the default in Xen 4.2.if a suitable ocaml
+toolchain was installed at build time.
+
+Systems running a 32-bit oxenstored are vulnerable only to the crash
+and not to the large memory allocation issue.
+
+MITIGATION
+==========
+
+Running the C version of xenstored will avoid this issue.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa38.patch             Xen 4.1.x, Xen 4.2.x, xen-unstable
+
+$ sha256sum xsa38*.patch
+7d7a5746bc76da747bf61eb87b3303a8f3abb0d96561f35a706c671317ebe4eb  xsa38.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJREQI0AAoJEIP+FMlX6CvZ6wAIAJdVEbDm51534QlQBGEE160O
+beOVzi6J0y1XOV3iDVnPlSxynhhBn3HcNWl0p0ERRAJt+FbZrH/WLMZ/9XLLbzZO
+LWVQHPiKkTYxbgxYsNXt/64CxKN8We2lffuBZn6DUQt1ZiV7T9L4SYVTWHeKo5vW
+mvs4j4VvlGgQTxIy0a724bEEPbBXNCu76+b6uwbJCkocnul1QMxyMK5mCJK/n/dv
+Q4KCXjJ9sfRHcKR8jteU0v45MP3VXbgEjrW70nvqXed3ly01SdBt/OJVAadmiG38
+/EPJiFDT9cqPbl9591yQ6tQqRH5B4J3VoT7vl/hcV9AI8cduHVkQ8nLhfo71lLg=
+=CAag
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa38.patch" of type "application/octet-stream" (2515 bytes)
