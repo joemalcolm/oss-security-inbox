@@ -1,124 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/23/1
-Message-ID: <00b201ce3f9b$5908e900$9b7a6fd5@pc>
-Date: Mon, 22 Apr 2013 23:52:29 +0300
-From: "MustLive" <mustlive@...security.com.ua>
-To: <submissions@...ketstormsecurity.org>, <full-disclosure@...ts.grok.org.uk>, "1337 Exploit DataBase" <mr.inj3ct0r@...il.com>, "Open Source Security" <oss-security@...ts.openwall.com>
-Subject: Vulnerabilities in multiple plugins for WordPress with jPlayer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/14
+Message-ID: <1262213361.21460546.1360080779459.JavaMail.root@redhat.com>
+Date: Tue, 5 Feb 2013 11:12:59 -0500 (EST)
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Debarshi Ray <debarshir@...hat.com>, Simon McVittie <simon.mcvittie@...labora.co.uk>
+Subject: [CVE Assignment Notification] CVE-2013-0240 - Gnome Online Accounts (GOA) (previously) failed to verify SSL certificates when creating e.g. Windows Live or Facebook accounts
 Content-Type: text/plain; charset=utf-8
 
-Hello list!
+Hello Steve, vendors,
 
-I want to inform you about multiple vulnerabilities in multiple plugins for
-WordPress with jPlayer. These are Cross-Site Scripting and Content Spoofing
-and vulnerabilities.
+  it was found that Gnome Online Accounts (GOA)
+did not perform SSL certificate validation, when
+performing Windows Live and Facebook accounts creation.
+A remote attacker could use this flaw to conduct
+man-in-the-middle (MiTM) attacks, possibly leading
+to their ability to obtain sensitive information.
 
-I've wrote about vulnerabilities in jPlayer earlier
-(http://seclists.org/fulldisclosure/2013/Apr/192). jPlayer is used in
-multiple web applications and particularly in multiple plugins for
-WordPress. Google dork for jPlayer shows 32000 results and for WP plugins
-with it shows 239000 (inurl:Jplayer.swf inurl:/wp-content/plugins/).
+The CVE identifier of CVE-2013-0240 has been assigned
+to this issue.
 
-Among them are MP3-jPlayer, Haiku minimalist audio player, Background Music,
-Jammer and WP jPlayer. These five plugins placed in WordPress plugins
-catalog with tag "jplayer", But there are other vulnerable plugins for WP
-with Jplayer.swf (which can be found with above-mentioned Google dork). All
-developers of these plugins, the same as developers of all other web
-applications with jPlayer, need to update it in their software.
+Relevant upstream patch:
+[1] http://git.gnome.org/browse/gnome-online-accounts/commit/?id=edde7c63326242a60a075341d3fea0be0bc4d80e
 
--------------------------
-Affected products:
--------------------------
+References:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-0240
 
-MP3-jPlayer 1.8.3 and previous versions.
-Haiku minimalist audio player 1.0.0 and previous versions.
-Background Music 1.0 and previous versions.
-Jammer 0.2 and previous versions.
-WP jPlayer 0.1 and previous versions.
+The issue was found (and reported internally to Red Hat bugzilla)
+by Simon McVittie.
 
-Vulnerabilities are in jPlayer versions before 2.2.23. Version 2.2.23 and
-the last released version 2.3.0 are not vulnerable to mentioned XSS, except
-CS via JS and XSS via JS callbacks. Also there are other bypass methods
-which work in version 2.3.0, but the developers haven't fixed them besides
-attack via alert. About that I've wrote to developers already in March and
-reminded again. So wait for new version with fixing of these
-vulnerabilities.
-
--------------------------
-Affected vendors:
--------------------------
-
-Plugins' pages at WordPress plugins catalog:
-
-MP3-jPlayer
-http://wordpress.org/extend/plugins/mp3-jplayer/
-Haiku minimalist audio player
-http://wordpress.org/extend/plugins/haiku-minimalist-audio-player/
-Background Music
-http://wordpress.org/extend/plugins/background-music/
-Jammer
-http://wordpress.org/extend/plugins/jammer/
-WP jPlayer
-http://wordpress.org/extend/plugins/wp-jplayer/
-
-----------
-Details:
-----------
-
-Cross-Site Scripting (WASC-08):
-
-In different versions of jPlayer there are different XSS vulnerabilities
-(see in the first advisory) and different WP plugins has different versions
-of jPlayer.
-
-MP3-jPlayer:
-
-http:/site/wp-content/plugins/mp3-jplayer/js/Jplayer.swf?jQuery=document.write&id=%3Cimg%20src=1%20onerror=alert\u0028document.cookie\u0029%3E
-
-Haiku minimalist audio player:
-
-http:/site/wp-content/plugins/haiku-minimalist-audio-player/js/Jplayer.swf?jQuery=document.write&id=%3Cimg%20src=1%20onerror=alert\u0028document.cookie\u0029%3E
-
-Background Music:
-
-http:/site/wp-content/plugins/background-music/js/Jplayer.swf?jQuery=document.write&id=%3Cimg%20src=1%20onerror=alert\u0028document.cookie\u0029%3E
-
-Jammer:
-
-http:/site/wp-content/plugins/jammer/files/Jplayer.swf?jQuery=document.write&id=%3Cimg%20src=1%20onerror=alert\u0028document.cookie\u0029%3E
-
-WP jPlayer:
-
-http:/site/wp-content/plugins/wp-jplayer/assets/js/Jplayer.swf?jQuery=)}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
-
-http:/site/wp-content/plugins/wp-jplayer/assets/js/Jplayer.swf?id='))}catch(e){}if(!self.a)self.a=!alert(document.cookie)//
-
-Content Spoofing (WASC-12):
-
-It's possible to conduct CS (inclusion of audio/video files from external
-resources) via JS and XSS via JS callbacks. This requires HTML Injection
-vulnerability at the site. The attack is similar to XSS attacks via
-callbacks in JW Player (http://securityvulns.ru/docs28176.html).
-
-Because this attack vector requires separate vulnerability at target site to
-conduct CS and XSS attacks with using of jPlayer, the developers didn't do
-anything to fix it. The same as developers JW Player. So protection from
-this attack scenario lies solely on web sites owners.
-
-------------
-Timeline:
------------- 
-
-2013.03.19 - informed developers of jPlayer.
-2013.04.20 - developers released jPlayer 2.3.0
-(http://www.jplayer.org/2.3.0/release-notes/) and informed me.
-2013.04.21 - informed developers of MP3-jPlayer, Haiku minimalist audio
-player and WP jPlayer (from five developers only these three had contact
-information).
-
-Best wishes & regards,
-MustLive
-Administrator of Websecurity web site
-http://websecurity.com.ua 
-
-
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
