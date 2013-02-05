@@ -1,73 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/11/14/2
-Message-ID: <52845170.7010901@redhat.com>
-Date: Wed, 13 Nov 2013 21:28:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/16
+Message-ID: <20130205165539.GQ3443@redhat.com>
+Date: Tue, 5 Feb 2013 09:55:39 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifrie@...hat.com>, carnil@...ian.org
-Subject: Re: CVE request: ppthtml heap-based buffer overflow
+Cc: nadhem.alfardan.2009@...l.ac.uk, kenny.paterson@...l.ac.uk, cve-assign@...re.org
+Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* [2013-02-05 16:54:54 +0100] Marcus Meissner wrote:
 
-On 11/13/2013 09:11 PM, Murray McAllister wrote:
-> Morning,
-> 
-> A heap-based buffer overflow flaw was reported in ppthtml:
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=729279
-> 
-> Looking in xlhtml-0.5-15.fc19.src.rpm, I think the root cause of
-> the problem is in __OLEdecode() with an under allocation here:
-> 
-> 163   BDepot = (U8 *) malloc (0x0200 * (num_bbd_blocks +
-> num_xbbd_blocks));
-> 
-> That still passes this check:
-> 
-> 167   assert (num_bbd_blocks <=  (0x0200 / 4 - 1) * num_xbbd_blocks
-> + 168                              (0x0200 / 4) - 19);
-> 
-> I suspect the overflow eventually occurs in this loop:
-> 
-> 184   for (i = 0; i < num_xbbd_blocks; i++)
-> 
-> with:
-> 
-> 203       fread (s, 0x0200, 1, input); 204       test_exitf
-> (!ferror (input), 5, ends ()); 205       s += 0x0200;
-> 
-> continually executed (but haven't tested thoroughly!!!).
-> 
-> Can a CVE please be assigned?
-> 
-> (Cc'ing Salvatore in case there is more information in the Debian
-> report that I cannot see.)
-> 
-> Cheers,
-> 
-> -- Murray McAllister / Red Hat Security Response Team
+>On Tue, Feb 05, 2013 at 10:34:23AM +0100, Matthias Weckbecker wrote:
+>> Hi,
+>>
+>> has there already been a CVE assigned for the recent "lucky 13" timing
+>> flaw that affects various SSL / TLS implementations (including GnuTLS)?
+>>
+>>   http://www.isg.rhul.ac.uk/tls/
+>>   http://www.gnutls.org/security.html#GNUTLS-SA-2013-1
+>>
+>> I think this could qualify for CVE for each open source implementation
+>> that's prone.
+>
+>openssl has released updated packages with a CVE assigned, unclear
+>whether it covers just openssl or also the others.
+>
+>http://www.openssl.org/news/secadv_20130205.txt
 
-Now this, this is a CVE request. Please use CVE-2013-4565 for this issue.
+cc'ing cve-assign to see if they can provide some guidance here.  I also
+noticed that OpenSSL has a CVE for this (I'm assuming that the
+CVE-2012-2686 issue is _not_ the same thing, but that CVE-2013-0169 is
+this issue).
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+Since it's a weakness in TLS/DTLS itself, from my understanding, and not
+necessarily in a particular implementation, I'm not sure if this
+qualifies as one CVE for the weakness, or if it needs one per
+implementation.
 
-iQIcBAEBAgAGBQJShFFwAAoJEBYNRVNeJnmTulwQALHVP0m+15RnBkZraieiJ5d4
-3eNxkpuqBFWnnpfvY//KLR9AOu4KmLmmbItQT6dvDVMTHExVoE+e3sWXnLLrMyQJ
-MpC5yrTzOYBCRp08F0n5tzr6RsMqZxCprTuF03hrtg/Kky+WznqJWoxIHCn9W+tz
-tfBC2mo4SZ9f9vPYm9T+C6GYFPDCcelXfDDnPwHhE0CX0xNJhvfzKJS6EZluJ+2t
-emVn4hSANFdHpsbhqpchqWLI2K53pyIVwaoJQrmPEyPCWYlSvyS2HS5JMgulbJff
-FRf0blwVU6sV0ITHgVpaSNYvQoWx04CICi7JNWzFA3UDKO7ieJtmr6cVZQSJ0pXk
-czEPrfObNu0cTYJjnpxEa3swoLgcpeMJUggiRkk2CHHbS8OEAwqUqSkU0hqnvtXX
-3DcYZq/ZKXp8ODR3LieZ6mybKL0pyYvq/mk7Sf+JBDQWu45myW0wbxyPT4m4e1Ff
-aKgd4qzAY2g5Rr3chlnZasTAK7VFXnVgNlo4zb4rQbvgDsldyrszeQqFImMm9Rh2
-ZgDTZ5lm4mlUcxES+F3pLknGq9AfHRApj/S3I54kL7bk3msYlc+XY7i6FXenIdk2
-SlHK/vNw/kSlPxvjjsJ8aYobfhvzDLFSE5m1ytQQlQtNWD0zVm7wnhf7mwF9apRg
-LL5GrvaMt1lt0WJCcv5C
-=bu8H
------END PGP SIGNATURE-----
+MITRE, can someone provide some guidance on this?
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
