@@ -1,100 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/05/10
-Message-ID: <51D71AAE.1090102@redhat.com>
-Date: Fri, 05 Jul 2013 13:12:46 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/22
+Message-ID: <51117D21.2040506@redhat.com>
+Date: Tue, 05 Feb 2013 14:44:01 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE Request: libxml2 external parsed entities issue
+CC: Sang Kil Cha <sangkilc@....edu>
+Subject: Re: CVE Request: imview
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 07/05/2013 08:38 AM, Marcus Meissner wrote:
-> On Fri, Jul 05, 2013 at 09:30:07AM -0400, Marc Deslauriers wrote:
->> On 13-07-05 09:17 AM, Marcus Meissner wrote:
->>> On Fri, Jul 05, 2013 at 08:48:04AM -0400, Marc Deslauriers
->>> wrote:
->>>> Hello,
->>>> 
->>>> libxml2 earlier than 2.9.0 fetches external parsed entities
->>>> by default, with no way to disable the behaviour.
->>>> 
->>>> Fixed by the following commit:
->>>> 
->>>> https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
->>>>
->>>>
->>>> 
-More Information:
->>>> https://mail.gnome.org/archives/xml/2012-October/msg00045.html
->>>>
->>>> 
-https://github.com/sparklemotion/nokogiri/issues/693
->>>> https://bugs.launchpad.net/ubuntu/+source/libxml2/+bug/1194410
->>>>
->>>>
->>>>
->>>> 
-Could a CVE please be assigned to this issue?
->>> 
->>> Sounds like http://seclists.org/oss-sec/2013/q1/391 and "Please
->>> use CVE-2013-0339 for libxml2 external entities expansion"
->>> 
->>> ?
->>> 
->> 
->> Hrm, I would have thought CVE-2013-0339 was for the entities
->> expansion DoS issue fixed by this commit:
->> 
->> https://git.gnome.org/browse/libxml2/commit/?id=23f05e0c33987d6605387b300c4be5da2120a7ab
->>
->>
->> 
-The other one is for external entities expansion being enabled by
-default with
->> no way to turn it off. You would lump them together?
+On 02/05/2013 12:23 PM, Sang Kil Cha wrote:
+> Hi,
 > 
-> Mostly wondering, as it seemed more or less related. Perhaps
-> someone else has more insight.
+> I am requesting a CVE for " 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699820".
 > 
-> Ciao, Marcus
+> Thanks, Sang Kil
+> 
 
-So the emails covering this:
-
-http://www.openwall.com/lists/oss-security/2013/04/12/6
-
-CVE-2013-0338 - libxml2 internal entity expansion
-
-CVE-2013-0339 - libxml2 external entities expansion
-
-For CVE-2013-0340 and CVE-2013-0339, there are "workarounds" available
-for application developers, although such workarounds may be very
-expensive to develop, and this might place "too much" responsibility
-to the developers - so, these assignments may still be OK.  It is
-still worth discussion.
-
-So same problem, just a new (better) fix is my take, Steve, does that
-work for you as well?
+How do you get the crashing input to imview? does it get used in web
+browsers or email clients to load images automatically or something?
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJR1xquAAoJEBYNRVNeJnmTfQwQAJGm8zXjmI5zOPtYsl6BX2T5
-5KSQ7ZkfB7iEaaHEtiZPnocXlf0No7jpq6VtMqdoiTQ3mzCXiMvs7Cev6jg9EeA7
-OnHu7Z7C/m5ZAwxdclwJ+83TjtSKcf/Yz1K6vRIAlTeh+cDWhqWGIW/48bX54KTh
-Uj+8oW7ka101ZLaycA8y0UwPsiz9vzrHAonDSn09CcUI7AhxgsLTKOHIl0UgGIZi
-WHNw5rQaxxXtEkyVh4Y0lsn1mqvJv8kSjaRUQ+dH9bv8ToIzGYbm6NLdJtcXl7FX
-+IIxhhWpvJnYaTnqazzN0GFT55AmFf8x6Fu4FPrbW3Pc5S6UdRBVjjdm/Vs3TFr8
-IBDoSp0nqGkIr2Wx9n8BfZeRb7sAUkGZm3l4enue7W9HwQghdzsTyZrL+9xtHO+B
-0YGuo4r+DxFyGMnsyU7m1oXQoCvALp02KPBpr566dKpZ7MFxyim/h8dUxRCO+7R6
-8pVI7icFb+lKfimQryqgclXmmDaFCmikbHwZ+v+J1CrB4yQ3I0JLo7pxi5mNtEvx
-uqU9xvlGZpJiWjDnIRAe4JPgKTqu2AHOQXJv9ITXW1T7E9w9JrB+b14gwM965HT4
-UkPH9OusLZFFp+PBK8CyZAzQ/yOCfoFxkW9DtvWif5CGHORLos01lLogZdITQ7Eq
-Kf9QNiB0vbB51dKcpqPt
-=xLit
+iQIcBAEBAgAGBQJREX0gAAoJEBYNRVNeJnmT4CoP/RJbC/ri3ZQkHyYCSzsiWdSz
+mybDB3J7NRpMeqVcOWK0M65EYmImV9VhH+pjDvDzuFCncpzWQqGFsRg4fWnD3CpU
+85JOl1bXmcsOqWyzev0ulariGpf/zgvKsA3iigEA+DlVy7amCTs9vRdnh+b7vyEg
+X49iEJ7uy5nGZ+SOMYzA5pDcCY4gpDvA/JWlqCoMmI2WDG/t7+Uph0t5yco0bg8v
+4UsFskUgZnLWMN9nNmdvJX0/1Bhlz5UXpNgf22Ie+3erH5196IuhbFmCy6AG8FtA
+u8FRg4dB0mMeVJlsVg768uFygVSP1+W/vSHtkaTznuttLSA78lamhou9bgRiLNh0
+76nzcFxcp9IRph4BV31sh4Vic9BmYplCEzmYac0tTHrpFVrV7gI+DEdrtcDhUkIP
+RFYXJeM+0ZaOWIWjWItxY4MGIRDLLofVjyMeiWZAE+2TCUysL38d6YXahj4WKVaf
+XjviwS4p1dP/f9VHRQveTuQxCsnNQORPT76h9Vn4t5f/v66UxbqlF6c1hMUmblcy
+BrKdJEUvQmBHK0Yw2YeVGFJ5FUT+GFP7cH3gsmV9tvMGQyD9RYBPp5aZUpopTbSK
+Twouuh3UEB4/wI2uvU/QHC5wNAGXWsoC9UUIi8pRat2cdBvNR16jDBjRuuPO2vtP
+PLk4ZkV4mZ5li5WvPG6B
+=2eMT
 -----END PGP SIGNATURE-----
