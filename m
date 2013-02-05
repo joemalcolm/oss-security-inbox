@@ -1,46 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/20/2
-Message-ID: <CAA7hUgECRnc3dd2oM9CFnsi8RDt11suZkKK=ULki6SArRrnDQA@mail.gmail.com>
-Date: Fri, 20 Sep 2013 10:27:02 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/24
+Message-Id: <201302052332.r15NW0wj022388@linus.mitre.org>
+Date: Tue, 5 Feb 2013 18:32:00 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Cc: jmd@...epnet.net, moyo@...epnet.net, info@...ridge.com
-Subject: CVE-2013-5696: split needed
+Cc: cve-assign@...re.org
+Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-GLPI 0.84.2 fixes a few security issues [1], for which CVE-2013-5696
-was assigned.
-However, from the bug tracker[2] it is clear that there are multiple issues:
+Here are the current CVE assignments related to the
+http://www.isg.rhul.ac.uk/tls/TLStiming.pdf paper:
 
-* SQL Injection
-* PHP Code Execution
-* CSRF (seems that it is the vector for the SQL injection)
 
-There there are references to the above CVE id and an id from HTB.
-The latter's advisory [3] only refers to remote code execution.
+CVE-2013-0169 (a vulnerability in protocols that affects
+OpenSSL, PolarSSL, OpenJDK, and probably other implementations):
+"We present a family of attacks that apply to CBC-mode in all TLS
+and DTLS implementations that are compliant with TLS 1.1 or 1.2,
+or with DTLS 1.0 or 1.2 ... a MAC check must still be performed
+on some data to prevent the known timing attacks. But what data
+should be used for that calculation? The TLS 1.1 and 1.2 RFCs
+recommend checking the MAC as if there was a zero-length pad."
 
-So, it looks like the CVE id was originally assigned to the CSRF
-vulnerability, then reused for the SQL injections, and the code
-execution vulns. were just added to the same bug report but it is
-completely independent and not covered by the existing CVE id.
 
-CC'ing GLPI upstream so that they can, hopefully, shed some more
-light. Is the 0.83 branch affected by the way?
+CVE-2013-1618
+"Opera were notified of our attacks in December 2012. Our attacks
+are addressed in Opera version 12.13, released 30/01/2013." (see
+the http://www.opera.com/support/kb/view/1044/ advisory)
 
-CC'ing one of HTB's email addresses, in case they've already requested
-an id directly from MITRE.
 
-(oh and it appears that there's now a warning requesting the
-install.php script to be deleted after the installation. Does that
-mean that there are bugs left to be exploited otherwise?)
+CVE-2013-1619
+"The GnuTLS implementation of MEE-TLS-CBC deals with bad padding
+in a different way to that recommended in the RFCs: instead of
+assuming zero-length padding, it uses the last byte of plaintext
+to determine how many plaintext bytes to remove (whether or not
+those bytes are correctly formatted padding). ... This indicates
+that ignoring the recommendations of the RFCs can have severe
+security consequences."
 
-[1]http://www.glpi-project.org/spip.php?page=annonce&id_breve=308
-[2]https://forge.indepnet.net/issues/4480
-[3]https://www.htbridge.com/advisory/HTB23173
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+CVE-2013-1620
+"Network Security Services (NSS) ... the same approach as taken in
+GnuTLS"
+
+
+CVE-2013-1621
+"PolarSSL ... The code does not sanity check padlen before running
+the padding check, meaning that out-of-bounds comparisons may be
+made" (a possible denial-of-service issue for some applications)
+
+
+CVE-2013-1622
+"PolarSSL ... it does not perform any MAC check if this
+sanity check fails, but instead exits immediately. This would
+render the implementation vulnerable to a simple timing-based
+distinguishing attack." (requires a non-default configuration with
+"TLS alert messages when decryption errors are encountered")
+
+
+CVE-2013-1623
+"yaSSL ... CyaSSL code does not perform proper padding checks, but
+instead just examines the last byte of plaintext and uses this to
+determine how many bytes to remove."
+
+
+CVE-2013-1624
+"The Bouncy-Castle code does careful sanity checking of the
+padding length (as indicated by the last byte of plaintext) but
+treats the padding as having length 1 ... This deviates slightly
+from the recommendation of the RFCs to treat the padding as
+having length zero"
+
+
+
+It is possible that MITRE will assign a CVE name for an F5
+vulnerability later. (This is referenced by "F5 were notified of
+our attacks in December 2012. They have informed us that their
+TLS dataplane traffic is not vulnerable due to cryptographic
+offload, but that local management ports and virtual editions may
+be vulnerable. They also informed us that F5s hotfix for this
+issue will follow shortly after OpenSSL issues their patch." but
+that statement may mean that the issue existed in OpenSSL code
+that was shipped within F5 products.) Other CVEs related to other
+products are obviously also possible.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJREZZAAAoJEGvefgSNfHMdGoYH/jJSc4IiM14eSTfWU24QoKig
+ofmtSlYDWMcvC7p4cbFchWTIPynGGo7Z2WgZ1qRzVpeH5DcXAJbJB7k9W6wz6HN7
+NviLEliOV9ZikeQ2tZGKZXLVSKMAQT2ouHgUbK8QgGgE3z31p6BCS0YaYgNk6d7c
+btCXrK8pE6mOUUE+haXVqAA/1X0F4TldzHZ0z/st3vga7hSnEe2SJaqO5J9WupVg
+pPwhBnuShXu6KmcIqmskH7wtMERjMkeFe5WPrFC0JuOMBM0qhBt2pJfLOW42DE3H
++ZoQZwFEfOUys/qPq+BNo9+mucutY9bdyrRLTmlFaAQ5LLUuXBi1HyvZWCeZyys=
+=+Wxi
+-----END PGP SIGNATURE-----
