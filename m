@@ -1,52 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/09/19
-Message-ID: <516464F4.3030109@msgid.tls.msk.ru>
-Date: Tue, 09 Apr 2013 22:59:00 +0400
-From: Michael Tokarev <mjt@....msk.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/17
+Message-ID: <51113C76.6040907@debian.org>
+Date: Tue, 05 Feb 2013 17:08:06 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Russ Thompson <russ@...dbit.com>
-Subject: Re: Postfix incorrect permissions on configurations. Request.
+Subject: Re: [CVE Assignment Notification] CVE-2013-0240 - Gnome Online Accounts (GOA) (previously) failed to verify SSL certificates when creating e.g. Windows Live or Facebook accounts
 Content-Type: text/plain; charset=utf-8
 
-09.04.2013 22:55, Russ Thompson wrote:
-> The scripts inside are -world- executable, is the main concern here.  Certainly this can be changed by the end user but seems like an insecure default.  I've seen discussions and CVE's assigned for past cases where log directories are world readable and vice versa, if this is not the correct place to send, please advise.
+On 05/02/13 16:12, Jan Lieskovsky wrote:
+>   it was found that Gnome Online Accounts (GOA)
+> did not perform SSL certificate validation, when
+> performing Windows Live and Facebook accounts creation.
+...
+> The CVE identifier of CVE-2013-0240 has been assigned
+> to this issue.
 
-What's wrong with the scripts being world-executable?
-They run with user permissions, if the user can't read
-or write something the script wont do it either.
-There's no need to change the default.
+Now that this is public, I've opened GNOME bug
+https://bugzilla.gnome.org/show_bug.cgi?id=693214 to track this bug and
+its fixes for the various available branches.
 
-And especially there's no need to change permissions
-for main.cf and master.cf - these files don't contain
-private information (if you use, say, sql map, its
-username+password is stored in a separate file with
-proper permissions).
-
-Please don't top-post.
-
-Thanks,
-
-/mjt
-
-> On Tuesday, April 9, 2013 at 2:19 PM, Michael Tokarev wrote:
-> 
->> 09.04.2013 22:08, Russ Thompson wrote:
->>> Postfix is setting the following permissions by default on Debian Squeeze. I'm seeing roughly the same on RHEL/CentOS 6.x, this appears to be a requirement of "sendmail.postfix" 
->>>
->>> 0755 /etc/postfix
->>> 0644 /etc/postfix/*
->>> 0755 /etc/postfix-script
->>> 0755 /etc/post-install
->>>
->>> Which allows all users to execute these scripts and read configurations. Setting to tighter/more typical permissions (i.e 640) results in: postfix/sendmail[21007]: fatal: open /etc/postfix/main.cf: Permission denied
->>
->> That's all nice, but can you elaborate a bit -- what is wrong
->> with that? Which request do you have? What it has to do with
->> oss-security?
->>
->> Thanks,
->>
->> /mjt 
-> 
-> 
-
+    S
