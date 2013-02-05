@@ -1,51 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/04/4
-Message-ID: <529ED534.7020901@redhat.com>
-Date: Wed, 04 Dec 2013 18:09:40 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, security <security@...ntu.com>, xorg_security@...rg, jamie@...onical.com
-Subject: Re: CVE Request: xorg-server and pixman
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/23
+Message-ID: <CA+sLGzwsRPX_kgh7Ta64XR4ek27Jfo+OBjUb+ck2huFPxgVBqg@mail.gmail.com>
+Date: Tue, 5 Feb 2013 16:59:41 -0500
+From: Sang Kil Cha <sangkilc@....edu>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: imview
 Content-Type: text/plain; charset=utf-8
 
-On 12/04/2013 03:32 PM, Kurt Seifried wrote:
-> On 12/03/2013 10:54 AM, Jamie Strandboge wrote:
-> 
->> Hi,
-> 
->> This bug has been public since August but I could find a CVE for
->> it: https://launchpad.net/bugs/1197921
-> 
->> There are two bugs - Xorg can be made to crash and pixman can
->> trigger the aformentioned Xorg crash. A simplified reproducer is in
->> the pixman patches with another reproducer in the Launchpad bug.
->> The xorg
-> 
->> xorg-server - exa: only draw valid trapezoids The patch was
->> submitted in October but doesn't seem to be applied yet, so I'm 
->> CC'ing xorg_security. Patch references the pixman f.d.o bug, but
->> doesn't seem to have an associated xorg bug. 
->> http://patchwork.freedesktop.org/patch/14769/ 
->> http://lists.x.org/archives/xorg-devel/2013-October/037996.html
-> 
->> Pixman - Corrupted CustomShape crashes Xorg 
->> https://bugs.freedesktop.org/show_bug.cgi?id=67484 Patch: -
->> 5e14da97f16e421d084a9e735be21b1025150f0c (fix) -
->> 2f876cf86718d3dd9b3b04ae9552530edafe58a1 (test case)
-> 
->> Thanks!
-> 
-> 
-> So only x.org crashes, you can trigger it via X.org, or via pixman? or
-> is pixman also crashing?
-> 
-> 
+It reads in .ics file (iCalendar). Typical scenario would be to share your
+schedule by sending the ics file to your friends. So someone can open a
+malicious calendar file from imview, and then crash.
 
->From https://bugs.freedesktop.org/show_bug.cgi?id=67484 and
-http://patchwork.freedesktop.org/patch/14769/ it sounded like it would
-affect both 1) crash an application using pixman 2) crash the X server
+-Sang Kil
 
-Is that correct?
+On Tue, Feb 5, 2013 at 4:44 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
---
-Murray McAllister / Red Hat Security Response Team
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 02/05/2013 12:23 PM, Sang Kil Cha wrote:
+> > Hi,
+> >
+> > I am requesting a CVE for "
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699820".
+> >
+> > Thanks, Sang Kil
+> >
+>
+> How do you get the crashing input to imview? does it get used in web
+> browsers or email clients to load images automatically or something?
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.13 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJREX0gAAoJEBYNRVNeJnmT4CoP/RJbC/ri3ZQkHyYCSzsiWdSz
+> mybDB3J7NRpMeqVcOWK0M65EYmImV9VhH+pjDvDzuFCncpzWQqGFsRg4fWnD3CpU
+> 85JOl1bXmcsOqWyzev0ulariGpf/zgvKsA3iigEA+DlVy7amCTs9vRdnh+b7vyEg
+> X49iEJ7uy5nGZ+SOMYzA5pDcCY4gpDvA/JWlqCoMmI2WDG/t7+Uph0t5yco0bg8v
+> 4UsFskUgZnLWMN9nNmdvJX0/1Bhlz5UXpNgf22Ie+3erH5196IuhbFmCy6AG8FtA
+> u8FRg4dB0mMeVJlsVg768uFygVSP1+W/vSHtkaTznuttLSA78lamhou9bgRiLNh0
+> 76nzcFxcp9IRph4BV31sh4Vic9BmYplCEzmYac0tTHrpFVrV7gI+DEdrtcDhUkIP
+> RFYXJeM+0ZaOWIWjWItxY4MGIRDLLofVjyMeiWZAE+2TCUysL38d6YXahj4WKVaf
+> XjviwS4p1dP/f9VHRQveTuQxCsnNQORPT76h9Vn4t5f/v66UxbqlF6c1hMUmblcy
+> BrKdJEUvQmBHK0Yw2YeVGFJ5FUT+GFP7cH3gsmV9tvMGQyD9RYBPp5aZUpopTbSK
+> Twouuh3UEB4/wI2uvU/QHC5wNAGXWsoC9UUIi8pRat2cdBvNR16jDBjRuuPO2vtP
+> PLk4ZkV4mZ5li5WvPG6B
+> =2eMT
+> -----END PGP SIGNATURE-----
+>
+
