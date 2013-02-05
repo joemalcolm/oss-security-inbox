@@ -1,35 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/26/3
-Message-ID: <20130226113904.GN1722@dhcp-25-225.brq.redhat.com>
-Date: Tue, 26 Feb 2013 12:39:05 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/21
+Message-ID: <CA+sLGzwYJ9VgxN_8q=tO=dvqS1E_9kdYOGsmJDhNfu-8=N+UfA@mail.gmail.com>
+Date: Tue, 5 Feb 2013 14:23:17 -0500
+From: Sang Kil Cha <sangkilc@....edu>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- Linux kernel: call_console_drivers() Function Log Prefix Stripping buffer overflow
+Subject: CVE Request: imview
 Content-Type: text/plain; charset=utf-8
 
-A buffer overflow flaw was found in kernels from 3.0 to 3.4 when calling
-log_prefix() function from call_console_drivers().
-    
-This bug existed in previous releases but has been revealed with commit
-162a7e7500f9664636e649ba59defe541b7c2c60 (2.6.39 => 3.0) that made
-changes about how to allocate memory for early printk buffer (use of
-memblock_alloc). It disappears with commit
-7ff9554bb578ba02166071d2d487b7fc7d860d62 (3.4 => 3.5) that does a
-refactoring of printk buffer management.
+Hi,
 
-In log_prefix(), the access to "p[0]", "p[1]", "p[2]" or
-"simple_strtoul(&p[1], &endp, 10)" may cause a buffer overflow as this
-function is called from call_console_drivers by passing
-"&LOG_BUF(cur_index)" where the index must be masked to do not exceed
-the buffer's boundary.
-
-Note: /dev/kmsg is root writable only (at least on RHEL/Fedora), but it
-still might cause issues in restricted root environments.
-
-References:
-https://bugs.gentoo.org/458780
-https://secunia.com/advisories/52366/
+I am requesting a CVE for "
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699820".
 
 Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Sang Kil
+
