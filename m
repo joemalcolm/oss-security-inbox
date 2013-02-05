@@ -1,53 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/04/3
-Message-ID: <51340651.7020109@redhat.com>
-Date: Sun, 03 Mar 2013 19:26:25 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/1
+Message-ID: <51106B20.4050609@redhat.com>
+Date: Mon, 04 Feb 2013 19:14:56 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Michael Gilbert <mgilbert@...ian.org>
-Subject: Re: CVE id request: busybox
+CC: Forest Monsen <forest.monsen@...il.com>
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/03/2013 01:06 PM, Michael Gilbert wrote:
-> On Sun, Mar 3, 2013 at 2:50 PM, Kurt Seifried wrote:
->> This actually raises a good point, due to Debian being a
->> secondary source in most cases (e.g. upstream has a bug report
->> which is then copied into Debian's bug tracker since Debian ships
->> it) the dates and sometimes information is wrong.
+On 02/04/2013 10:24 AM, Forest Monsen wrote:
+> Hi there,
 > 
-> Aren't these problems true for any source whether it be primary, 
-> secondary, tertiary, or so on?
-
-Sorry yeah I should have been more clear. This goes for all the major
-secondary sources (Debian, SUSE, etc.).
-
->> I will no longer be issuing CVE's for issues brought up through
->> the Debian bugtracker without an original source to back it up,
->> otherwise more mistakes will happen which is not good.
+> Here's a request for CVE identifiers for several issues with
+> Drupal contributed modules. Thank you Kurt.
 > 
-> I don't understand the purpose of excluding an entire project's 
-> sources.  Should redhat's bugzilla, gentoo, etc. also be excluded
-> for the same reason?  If not, why do they get special treatment?
+> SA-CONTRIB-2013-011 - email2image - Access Bypass - Unsupported 
+> http://drupal.org/node/1903264
 
-I didn't say I;'m excluding them. I simply will require an original
-source, in this case the year is probably wrong.
+Please use CVE-2013-0257 for this issue.
 
-> Is there really a problem at all?  The debian report included the 
-> upstream commit, so you had a link to a primary resource anyway.
-> So, I think a simple solution to this 'problem' of secondary
-> sources is follow them to the primary one?
+> SA-CONTRIB-2013-012 - Google Authenticator login - Access Bypass 
+> http://drupal.org/node/1903282
 
-Yeah, and people can post them to the list. As stated before, I assign
-a lot of CVEs. One minute extra per CVE is about 20 hours a year. It
-adds up. So from now on I'll be needing original source confirmation
-in the emails to oss-sec.
+Please use CVE-2013-0258 for this issue.
 
-> Best wishes, Mike
+> SA-CONTRIB-2013-013 - Boxes - Cross site scripting (XSS) 
+> http://drupal.org/node/1903300
+
+Please use CVE-2013-0259 for this issue.
+
+> SA-CONTRIB-2013-014 - Drush Debian Packaging - Information
+> Disclosure - Unsupported http://drupal.org/node/1903324
+
+Please use CVE-2013-0260 for this issue.
+
 > 
-
+> Forest
+> 
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -56,17 +48,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRNAZRAAoJEBYNRVNeJnmTbvQQALqxYvC4wPlsezpAib1KJN5B
-/Whn1VfNA63qZ/+RpoVRWRvbx1aC+6hBtdeMyYzNJoq7FGnq33tHuSzW3xW4iQl3
-zJjPd3yuxB4Om3arSqNmewW8aKGM0Z3jPP8wQjh7coxKzwGDd1yY/NQojPxZZTKF
-WTVV6c3JPVeNqZriDem5XXpySCjfufg7CYZzkMrmmsHPWAfpe+X5csa2Ks6P6vzi
-5zsrYY4ucWDdyyjJ5uCxzqxyw/MigI8P4Aj1jOgM3VJdwCsj8UWGmLb6InzceBHP
-97JgGCu4HlviVdFU7XNiG4/fVy9N6lTq8tE0ypTNWQzBHWVnhFqI4KvJlnJRW9FT
-IZN35NsyB3jPv3+6X4aZjhtzZ0bkU7MpqStOtHq4JZfLWwnFviiUJRRl/h26YRc/
-tOGMlbhEsTpOYrwCBh6MSkmf+eQDgzJZO3kQ8Q9Xa4jkowUc5aFDwUkSELhU6G45
-P5ayRml66ylv6leR4qYuaZLktLjc9ytqvfl+Cj39sspKyKBTO1Fhtt6bjy/EYEc4
-8TTPvtuLT900djCnzu3uDurlPBnPGAbP22DBAn+6ElxFQdI3X6Nx/XAOJt5X7ULW
-qW2ZfXfPy+wP4WafT9G3P3FGRsz+4mdIMZWWtndGYskzCvrDHxnYUycKJofT2eUV
-kMnABc62ZstYHtE5dfez
-=trUJ
+iQIcBAEBAgAGBQJREGsfAAoJEBYNRVNeJnmTSQgQAJp2INAuP0EYBBuLFFNT05aM
+a6WcCQ1qhu5Bg7E631YHoqMkHY3G1ozFIlBk30L10cXDYp9D7H7/He+Qgb0plJ7X
+W9HeQVx5Hz9d3IfhlGq8Ih4Buw0UmpQmvGnmMvRgjmdP44r/uuCbl+8Q/aj20ivh
+0z8ZnKZtELDucyUdxuHprn6YujHSIuBUIJcjtftoiaCQpnt9PI4eS4xXaysZaOdc
+oBW55G2fYUvLS2kgWZQvYFIlK6nXd0nGMfXyHnnr8Jv0J2v2+iDBd2LJ880kLAyB
+YC3jmMtfJqX+eQw3AGCCn9pscJWfbrK4Z+tlgHilVArjORS/Pmy3M5jrIOAj9tL2
+ls9+Ej2KHmYNm5kZstVpgfYbPRoSY/xcZY6Aq/RdISnvUJy+Q4mBKmGs4iQn99lN
+M8aeIs8QszxaaLcywJkfShfGVEi1ix/hChtAxN2QvuNAfeFCTVX3B9EuH8VoqfGF
+T5hokqbi26Ifsnex6Gd40pd/40PouIskZD/l9rz7sp+4POVPszqEhy22kPQ6TINx
+RaW2Tdhk6XnGBiQB2QMsKoNyBnJIrS/im+6Noa55MLUxvR9ASdLJ8ij4wHAtNswN
+G+vBwnelaSgt3hPpIqRkk7t2MLojKr2rfSmtkj2hg4ru0d6aJFfyRNY6Rax3HrYY
+vDoySkJDJgBjvvWTGXuH
+=7L+6
 -----END PGP SIGNATURE-----
