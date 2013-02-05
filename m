@@ -1,32 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/08/5
-Message-ID: <CAFA5uROtrEgNeN9=VP1pPbWGuAhCWoWbu2NsCq=qB+CZeT8uSw@mail.gmail.com>
-Date: Tue, 8 Oct 2013 12:21:55 -0500
-From: richard schneeman <richard.schneeman@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Vulnerability Reported in my Ruby Gem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/7
+Message-Id: <E1U2iMY-00088X-Tl@xenbits.xen.org>
+Date: Tue, 05 Feb 2013 13:15:02 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 36 (CVE-2013-0153) - interrupt remap entries shared and old ones not cleared on AMD IOMMUs
 Content-Type: text/plain; charset=utf-8
 
-I'm interested in creating a CVE for this issue and came to this mailing
-list from this link:
-http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I maintain the ruby gem 'wicked' (roughly 100k downloads). A vulnerability
-has been reported allowing an attacker to read arbitrary files on a system.
+	     Xen Security Advisory CVE-2013-0153 / XSA-36
+			      version 3
 
-All previously released versions are vulnerable. Version 1.0.1 has been
-released with the problem patched.
+  interrupt remap entries shared and old ones not cleared on AMD IOMMUs
 
-Email: richard.schneeman@...il.com
-Software Name: Wicked gem
+UPDATES IN VERSION 3
+====================
 
-Commit of fix:
-https://github.com/schneems/wicked/commit/fe31bb2533fffc9d098c69ebeb7afc3b80509f53
+Public release.
 
+ISSUE DESCRIPTION
+=================
 
-Please let me know if you need more information or if this is the wrong
-forum for this type of a request
+To avoid an erratum in early hardware, the Xen AMD IOMMU code by
+default chooses to use a single interrupt remapping table for the
+whole system.  This sharing implies that any guest with a passed
+through PCI device that is bus mastering capable can inject interrupts
+into other guests, including domain 0.
 
---
-Richard Schneeman
+Furthermore, regardless of whether a shared interrupt remapping table
+is in use, old entries are not always cleared, providing opportunities
+(which accumulate over time) for guests to inject interrupts into
+other guests, again including domain 0.
 
+In a typical Xen system many devices are owned by domain 0 or driver
+domains, leaving them vulnerable to such an attack. Such a DoS is
+likely to have an impact on other guests running in the system.
+
+IMPACT
+======
+
+A malicious domain which is given access to a physical PCI device can
+mount a denial of service attack affecting the whole system.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 3.3 onwards are vulnerable.  Earlier Xen versions do not
+implement interrupt remapping, and hence do not support secure AMD-Vi
+PCI passthrough in any case.
+
+Only systems using AMD-Vi for PCI passthrough are vulnerable.
+
+Any domain which is given access to a PCI device can take advantage of
+this vulnerability.
+
+MITIGATION
+==========
+
+This issue can be avoided by not assigning PCI devices to untrusted
+guests.
+
+In Xen versions 4.1.3 and above the sharing of the interrupt remapping
+table (and hence the more severe part of this problem) can be avoided
+by passing "iommu=amd-iommu-perdev-intremap" as a command line option
+to the hypervisor.  This option is not fully functional on earlier
+hypervisors.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that on certain systems (SP5100 chipsets with erratum 28 present,
+or such with broken IVRS ACPI table) these patches will result in the
+IOMMU not being enabled anymore.  This should be dealt with by a BIOS
+update, if available.  Alternatively the check can be overridden by
+specifying "iommu=no-amd-iommu-perdev-intremap" on the Xen command
+line ("iommu=amd-iommu-global-intremap" on 4.1.x), at the price of
+re-opening the security hole addressed by these patches.
+
+xsa36-unstable.patch              Xen unstable
+xsa36-4.2.patch                   Xen 4.2.x
+xsa36-4.1.patch                   Xen 4.1.x
+
+$ sha256sum xsa36*.patch
+2254fa46dcbc164d2d55ad9d519e7aa4ac5b83e9fb8d8e1f224114d08fe44237  xsa36-4.1.patch
+6848712b560b522f7d3cede53e29e799624311e7dee6e450f0c02c165a590783  xsa36-4.2.patch
+0e5d53c0b2bbbf07ef07bf31d8adeca4c043c0277f122f74557b018dc7348b74  xsa36-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJREQItAAoJEIP+FMlX6CvZapMH/i+AeMV4Mi9EAe97JWto2xrg
+bCBdq7LEJ1cIpXGbhpXwTRzmsEGJmFR2VwkaxEtk+BuC7bzJ/KRjWYg6viQ7v+0t
+thHEMtaRYTOIIel8YZ5t+v8oMdEUos7Oo94xhCk+n7ioH6PO+quUTI+aGd0+lcJm
+d/5TC5f8w+HZNTB0nCQX9tQx5d4veQXghKs1NbKHeMyZ66nMZiqUqVUwQNTaFhUO
+9eWyGOik5/mFctRrMxoOZHQm3d36AnDisiOku2CaG1xYYwDaAnOe/u6QcBZcVX3M
+Q9COmTAWnOfIKYMIFnXRnyHSiw2+oZL6PTD5nX4O68B6hZ8pemVa+lFhSTvxsXM=
+=5jP3
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa36-4.1.patch" of type "application/octet-stream" (12462 bytes)
+
+Download attachment "xsa36-4.2.patch" of type "application/octet-stream" (10700 bytes)
+
+Download attachment "xsa36-unstable.patch" of type "application/octet-stream" (10642 bytes)
