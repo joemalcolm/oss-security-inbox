@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/04/21/7
-Message-ID: <20130421221307.GA1502@yuggoth.org>
-Date: Sun, 21 Apr 2013 22:13:08 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/4
+Message-Id: <201302051034.24049.mweckbecker@suse.de>
+Date: Tue, 5 Feb 2013 10:34:23 +0100
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: upstream source code authenticity checking
+Cc: nadhem.alfardan.2009@...l.ac.uk, kenny.paterson@...l.ac.uk
+Subject: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
 Content-Type: text/plain; charset=utf-8
 
-On 2013-04-21 10:05:53 -0700 (-0700), Alan Coopersmith wrote:
-[...]
-> If there was a common standard, with instructions, we'd be far more
-> likely to spend the time to adopt it, than just a "make signatures
-> appear somewhere, in an unspecified format".
+Hi,
 
-For my own software I've been providing detached signatures of every
-release tarball, along the lines of:
+has there already been a CVE assigned for the recent "lucky 13" timing
+flaw that affects various SSL / TLS implementations (including GnuTLS)?
 
-    gpg --armor --detach-sign --output foo-1.2.3.xz.pgp foo-1.2.3.xz
+  http://www.isg.rhul.ac.uk/tls/
+  http://www.gnutls.org/security.html#GNUTLS-SA-2013-1
 
-Then I document that users should verify downloads with my key
-(after obtaining it from a reputable keyserver):
+I think this could qualify for CVE for each open source implementation
+that's prone.
 
-    gpg --verify foo-1.2.3.xz.pgp foo-1.2.3.xz
+Thanks,
+Matthias
 
-I also dump sha512sum and md5sum lists of all the release tarballs
-to a checksum file and sign that in the same way, for completeness.
-Of course this doesn't stop a new user from being hoodwinked if an
-attacker compromises my Web server and replaces all the signatures
-with their own (updating the README to match their key ID), but
-anyone who knew they already had my key in their keyring should
-hopefully spot the name on the signature when checking a new
-download (porters and distro packagers in particular).
 -- 
-{ PGP( 48F9961143495829 ); FINGER( fungi@...ulhu.yuggoth.org );
-WWW( http://fungi.yuggoth.org/ ); IRC( fungi@....yuggoth.org#ccl );
-WHOIS( STANL3-ARIN ); MUD( kinrui@...arsis.mudpy.org:6669 ); }
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
