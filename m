@@ -1,61 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/24/1
-Message-Id: <472F6B92-B09F-4FEB-B6A9-5C2F973A75AE@stufft.io>
-Date: Tue, 23 Jul 2013 23:21:33 -0400
-From: Donald Stufft <donald@...fft.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/13
+Message-ID: <20130205155453.GK2740@suse.de>
+Date: Tue, 5 Feb 2013 16:54:54 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: security@...ngoproject.com, Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Re: CVE Request: Django: Account enumeration through timing attack in password verification in django.contrib.auth
+Cc: nadhem.alfardan.2009@...l.ac.uk, kenny.paterson@...l.ac.uk
+Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
 Content-Type: text/plain; charset=utf-8
 
-
-On Jul 23, 2013, at 6:15 PM, Henri Salo <henri@...v.fi> wrote:
-
-> On Mon, Jul 22, 2013 at 05:04:44PM +0200, Salvatore Bonaccorso wrote:
->> Hi
->> 
->> Cc'ing security@...ngoproject.com
->> 
->> From [1] in Django accounts can be enumerated trough timing attacks:
->> 
->>> When attempting to authenticate using django.contrib.auth, if a user does not
->>> exist the authenticate() function returns None nearly instantaneously, while
->>> when a user exists it takes much longer as the attempted password gets hashed
->>> and compared with the stored password. This allows for an attacker to infer
->>> whether or not a given account exists based upon the response time of an
->>> authentication attempt.  This can be seen much more clearly when the number of
->>> rounds on the password hasher is set to something high like 100000.
->> 
->> [1] https://code.djangoproject.com/ticket/20760
->> 
->> A proposed patch is at [2] but not yet a commit in upstream git repository.
->> 
->> [2] https://code.djangoproject.com/attachment/ticket/20760/20760_fix_hash_once.diff
->> 
->> Does this needs a CVE asignment?
->> 
->> Regards,
->> Salvatore
+On Tue, Feb 05, 2013 at 10:34:23AM +0100, Matthias Weckbecker wrote:
+> Hi,
 > 
-> Please see comments from aaugustin
-> https://code.djangoproject.com/ticket/20760#comment:23
+> has there already been a CVE assigned for the recent "lucky 13" timing
+> flaw that affects various SSL / TLS implementations (including GnuTLS)?
 > 
-> This is exemplary case of CWE-208 and similar issues have received CVEs.
+>   http://www.isg.rhul.ac.uk/tls/
+>   http://www.gnutls.org/security.html#GNUTLS-SA-2013-1
 > 
-> ---
-> Henri Salo
+> I think this could qualify for CVE for each open source implementation
+> that's prone.
 
-I don't think this really deserves a CVE. All versions of Django prior to
-1.6 (unreleased) have allowed you to determine if a username existed
-or not via the login failure message, negating the need to do any sort
-of timing attack. Django 1.6 is the first version that *doesn't* give exact
-details in the error message as to why the login was unsuccessful and
-as noted already the unreleased Django 1.6 has changed the error
-message and has applied the proposed patch.
+openssl has released updated packages with a CVE assigned, unclear
+whether it covers just openssl or also the others.
 
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+http://www.openssl.org/news/secadv_20130205.txt
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+Ciao, Marcus
