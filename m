@@ -1,42 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/07/29/4
-Message-Id: <201307291754.r6THs3X9003593@linus.mitre.org>
-Date: Mon, 29 Jul 2013 13:54:03 -0400 (EDT)
-From: cve-assign@...re.org
-To: jlieskov@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...myadmin.net
-Subject: Re: CVE Request -- phpMyAdmin 3.5.8.2 and 4.0.4.2 are released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/2
+Message-ID: <20130205071251.GA3178@beverly.kleinbus.org>
+Date: Tue, 5 Feb 2013 08:12:51 +0100
+From: Ignatios Souvatzis <is@...bsd.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: latd
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, Feb 03, 2013 at 09:11:13PM -0700, Kurt Seifried wrote:
+> 
+> On 02/03/2013 04:48 AM, Nico Golde wrote:
+> > Hey, latd suffers of a buffer overflow when processing the version
+> > header and generating an error message.
+> > 
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699625
+> > 
+> > Can we get a CVE id for this?
+> > 
+> > Cheers Nico
+> 
+> Please use CVE-2013-0251 for this issue.
 
->* http://www.phpmyadmin.net/home_page/security/PMASA-2013-8.php
->* http://www.phpmyadmin.net/home_page/security/PMASA-2013-9.php
->* http://www.phpmyadmin.net/home_page/security/PMASA-2013-11.php
->* http://www.phpmyadmin.net/home_page/security/PMASA-2013-12.php
->* http://www.phpmyadmin.net/home_page/security/PMASA-2013-13.php
->* http://www.phpmyadmin.net/home_page/security/PMASA-2013-14.php
->* http://www.phpmyadmin.net/home_page/security/PMASA-2013-15.php
->
->Doesn't look CVE identifiers have been already allocated to these?
+All versions from 1.25 to 1.30 contain the bug. I've inspected the 
+code to find out whether the pkgsrc package version has it and to
+write a proper pkg-vulnerabilities database entry.
 
-MITRE has made most of these CVE assignments and should be finishing
-that today. We will send a follow-up message to everyone.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJR9qs7AAoJEGvefgSNfHMdyiUIAMCTfx9wX2Eq9gUihlGdQucH
-PQzoxD5FYGm91EOMaVMmKAgkpAdc07/zHfmBVtaAYFh3TjKpFTersmfEIEsESFyf
-orMSeucNmxVnwxZItzwQo2HQsIUBoQ4DxwcG/aeUMWUxfZkrYGvbHWbYuOtbFOfh
-j1ymCQwSFZlKfn1gJv+lFvxcX0ta+DTSuohJWvF+TFcbU/vJ7O20uENCw3dcTl2P
-i/bpeqHnUcZYIJjYPZRMmrNctfvRpa92FNXUndNrhkHe8XD8aeur7AcNxuNEfKSO
-H48h7urlT+Yhiw+8xLexKq2ETbH9gvnYg+tEqSNQUJLTnXxe7sYvzqJoCVKuYTI=
-=aYCJ
------END PGP SIGNATURE-----
+Regards,
+	-is
