@@ -1,21 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/01/14/2
-Message-ID: <50F41209.8090605@redhat.com>
-Date: Mon, 14 Jan 2013 15:11:21 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/20
+Message-ID: <CABniQZM9nSxyhnyebOBrVhJmN+3nfskMib5X8Tt9GaJTfLDEjQ@mail.gmail.com>
+Date: Tue, 5 Feb 2013 23:36:34 +0800
+From: Shawn <citypw@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Plug-and-wipe and Secure Boot semantics
+Cc: nadhem.alfardan.2009@...l.ac.uk, kenny.paterson@...l.ac.uk
+Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
 Content-Type: text/plain; charset=utf-8
 
-On 12/18/2012 01:46 PM, Florian Weimer wrote:
-> Some UEFI machines seem to boot from USB by default, without any
-> prompting, probably assuming that a signed boot loader cannot cause any
-> damage.
+hi Matthias,
 
-I got a different BIOS for the Lenovo M72e 0896A9G, which does not 
-contain Secure Boot support, bot still boots from plugged-in USB sticks 
-with an UEFI boot loader on them by default.  So this is just a choice 
-made by Lenovo in general, totally independent of Secure Boot support.
+On Tue, Feb 5, 2013 at 5:34 PM, Matthias Weckbecker <mweckbecker@...e.de> wrote:
+> Hi,
+>
+> has there already been a CVE assigned for the recent "lucky 13" timing
+> flaw that affects various SSL / TLS implementations (including GnuTLS)?
+>
+>   http://www.isg.rhul.ac.uk/tls/
+>   http://www.gnutls.org/security.html#GNUTLS-SA-2013-1
+>
+> I think this could qualify for CVE for each open source implementation
+> that's prone.
+>
+According to "OpenSSL Security Advisory [05 Feb 2013]":
+http://www.openssl.org/news/secadv_20130204.txt
+
+It seems already had a CVE-id. But I couldn't find by googled...
+
+
 
 -- 
-Florian Weimer / Red Hat Product Security Team
+GNU powered it...
+GPL protect it...
+God blessing it...
+
+regards
+Shawn
