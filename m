@@ -1,30 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/19/6
-Message-ID: <819346344.21944230.1371661120661.JavaMail.root@redhat.com>
-Date: Wed, 19 Jun 2013 12:58:40 -0400 (EDT)
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Cole Robinson <crobinso@...hat.com>, Florian Weimer <fweimer@...hat.com>
-Subject: [CVE identifier assignment notification] CVE-2013-2191 python-bugzilla: Does not verify Bugzilla server certificate
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/15
+Message-ID: <51113194.8050201@openstack.org>
+Date: Tue, 05 Feb 2013 17:21:40 +0100
+From: Thierry Carrez <thierry@...nstack.org>
+To: "openstack@...ts.launchpad.net" <openstack@...ts.launchpad.net>,  oss-security@...ts.openwall.com, openstack-announce@...ts.openstack.org
+Subject: [OSSA 2013-003] Keystone denial of service through invalid token requests (CVE-2013-0247)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-  It was found that python-bugzilla, a Python library for interacting with Bugzilla
-instances over XML-RPC functionality, did not perform X.509 certificate verification
-when using secured SSL connection. A man-in-the-middle (MiTM) attacker could use this
-flaw to spoof Bugzilla server via an arbitrary certificate.
+OpenStack Security Advisory: 2013-003
+CVE: CVE-2013-0247
+Date: February 5, 2013
+Title: Keystone denial of service through invalid token requests
+Reporter: Dan Prince (Red Hat)
+Products: Keystone
+Affects: All versions
 
-Credit: This issue was discovered by Florian Weimer of the Red Hat Product Security Team.
+Description:
+Dan Prince of Red Hat reported a vulnerability in token creation error
+handling in Keystone. By requesting lots of invalid tokens, an
+unauthenticated user may fill up logs on Keystone API servers disks,
+potentially resulting in a denial of service attack against Keystone.
 
-CVE id: CVE-2013-2191 has been assigned to this issue
+Grizzly (development branch) fix:
+https://github.com/openstack/keystone/commit/8ec247bf61be0e487332d5d891246d2b7b606989
 
-Relevant upstream patch:
-  https://git.fedorahosted.org/cgit/python-bugzilla.git/commit/?id=a782282ee479ba4cc1b8b1d89700ac630ba83eef
+Folsom fix:
+https://github.com/openstack/keystone/commit/bb2226f944aaa38beb7fc08ce0a78796e51e2680
+
+Essex fix:
+https://review.openstack.org/#/c/21216/
 
 References:
-  https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2191
+https://bugs.launchpad.net/keystone/+bug/1098307
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2013-0247
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- -- 
+Thierry Carrez (ttx)
+OpenStack Vulnerability Management Team
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBCAAGBQJRETGUAAoJEFB6+JAlsQQjbC0QAIzjY1gNe/Lr2X+xDOvz+q2v
+7O6Tn2ZV3X1/fgdVbicl4CVnNzkb3mbG1/pIEl7FbpSFfY6a3a8leJZD7u9bKB6z
+M4xNGXITGJoT7HBo8ABvDH4X6p5oA/LDkuCZVotY4SHa5xIYRcQk884DbnIYoGe7
+zXEek352gHgX7m0DmABm8Pz8E+IpyFIp8rdPEv4w9EeVDJmjhZvcgsMhKZmNahph
+DyBMDvdGY7nXeurzI43tMdWHkqYCljq1qagLqzNxjXJj796FNixUdwnBfmvkRuDI
+XvNOGQEnwWMdwRhHgQm9C6o9Y8OYnA2XXLxjKhYuNOYT09c2ZPqhITuT1Aka8eg4
+Xnqt6OnGLhA8qq0zYfRPGAZFXghQ20NqSDU4CaZntYS9bFUZjQegnKA9qmo2bdJp
+TbtE/UoZgDAxAvm5n0myHuT2nw75RCM0FWvbKA6VpgK2qikx77rK6/Y5M68F1288
+hj7qxMUrbsj0aNBPoWkgpUdIzH3oLsvVq4tRxhSUGj06UIOtXo9QVpxRjmOU46eM
+HKKL0n2Gfmi+kXgJfUdlGeQjlYUnNIx4pljn0RHRwyc5nLGdLUTy6ufnRclYRKSY
+roS2qlrR+gDkKeHP3JS1zcdFblg/VKrAK5IN+JIeKRbZ+l/g2ghFemoVYjdduR3E
+IRB0CC4khRi7njgBdDl1
+=CzsK
+-----END PGP SIGNATURE-----
