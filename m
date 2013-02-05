@@ -1,43 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/09/1
-Message-ID: <CAH_aqbvKO3v1jKdk4idWTmDyAJKY5p3NYYSZvNN9wPyWMw3MJg@mail.gmail.com>
-Date: Sat, 9 Feb 2013 11:47:18 -0200
-From: Henrique Montenegro <typoon@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/11
+Message-Id: <E1U2iPa-0008EE-IS@xenbits.xen.org>
+Date: Tue, 05 Feb 2013 13:18:10 +0000
+From: Xen.org security team <security@....org>
 To: oss-security@...ts.openwall.com
-Subject: Wordpress Pinboard theme XSS
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 43 (CVE-2013-0231) - Linux pciback DoS via not rate limited log messages.
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+(Copy of previously sent advisory)
 
-I am writing to notify you about a XSS I have found in the free Pinboard
-1.0.6 theme for Wordpress. This XSS happens in one of the administration
-pages so it can only be triggered by authenticated users.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Here is the part of the code that is compromised
-(includes/theme-options.php):
+             Xen Security Advisory CVE-2013-0231 / XSA-43
+			      version 2
 
-<?php $tab = ( isset( $_GET['tab'] ) ? $_GET['tab'] : 'general' ); ?>
-    <input name="pinboard_theme_options[submit-<?php echo $tab; ?>]"
-type="submit" class="button-primary" value="<?php _e( 'Save Settings',
-'pinboard' ); ?>" />
-    <input name="pinboard_theme_options[reset-<?php echo $tab; ?>]"
-type="submit" class="button-secondary" value="<?php _e( 'Reset Defaults',
-'pinboard' ); ?>" />
+         Linux pciback DoS via not rate limited log messages.
 
-The issue happens because the variable $_GET['tab'] is not being properly
-escaped, causing the issue.
+UPDATES IN VERSION 2
+====================
 
-Here is a proof of concept:
+Public release.
 
-http://wordpress_site_with_active_pinboard_theme/wp-admin/themes.php?page=pinboard_options&tab=
-]"><script>alert(document.cookie)</script>
+ISSUE DESCRIPTION
+=================
 
-For accessing the URL directly, Firefox should be used as Chrome seems to
-have some anti-XSS protections in place.
+Xen's PCI backend drivers in Linux allow a guest with assigned PCI device(s)
+to cause a DoS through a flood of kernel messages, potentially affecting other
+domains in the system.
 
-Could a CVE please be assigned to this?
+IMPACT
+======
 
-Regards,
+A malicious guest can mount a DoS affecting the entire system.
 
-Henrique
+VULNERABLE SYSTEMS
+==================
 
+All systems running guests with access to passed through PCI devices are
+vulnerable.
+
+Both mainline ("pvops") and classic-Xen patch kernels are affected.
+
+MITIGATION
+==========
+
+This issue can be avoided by not assigning PCI devices to untrusted
+guests.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa43-pvops.patch            Apply to mainline Linux 3.8-rc5.
+xsa43-classic.patch          Apply to linux-2.6.18-xen tree.
+
+$ sha256sum xsa43*.patch
+4dec2d9b043bce2b8b54578573ba254fa7e6cbf4640cd100f40d8bf8a5a6a470  xsa43-classic.patch
+6efe83c9951dcba20f18095814d19089e19230c6876bbdab32cc2f1165bb07c8  xsa43-pvops.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJREQI+AAoJEIP+FMlX6CvZkoEH/2sIEO+1qLiHTde/UJznrvr8
+R8MDNC5tqXVLtbPjScoTItMHaPfz33lcypz9UFknHepdwZKhRrcuqy4E79lxeXDG
+BybbbbfNfJPeUG44O1fkyJTJys0xRBnAGzWInZZwq+gWRaJv+JNhzinFujvLNDJV
+4m2ObnSwT1mx/9CjRxWGakKDhPcZSGmWIicyN5tueNKdWbAjSqiR/J8N5W+QJiCm
++BzjzYpfUqn0vKOlARQIMshzqFjYVTnoHFZf/4Hl7ogIibxfGGo5t05pzBoAlIgj
+nTizW2Bxs9XM1NaFsZ2ESg8KVDTFSHS+jsMtdl0bWoHwRs6nNMQJJTjTPHXspCQ=
+=5o5U
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa43-classic.patch" of type "application/octet-stream" (884 bytes)
+
+Download attachment "xsa43-pvops.patch" of type "application/octet-stream" (1786 bytes)
