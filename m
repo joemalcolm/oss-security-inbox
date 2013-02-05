@@ -1,83 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/10/30/1
-Message-ID: <52706E57.5090405@redhat.com>
-Date: Wed, 30 Oct 2013 13:26:31 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/6
+Message-Id: <201302051049.56639.mweckbecker@suse.de>
+Date: Tue, 5 Feb 2013 10:49:56 +0100
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>, carnil@...ian.org
-Subject: Re: CVE Request: sup MUA Command Injection
+Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
 Content-Type: text/plain; charset=utf-8
 
-On 10/30/2013 07:44 AM, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+On Tuesday 05 February 2013 10:40:57 Matthias Weckbecker wrote:
+> b8391806cd79095fe566f2401d8c7ad85a64b198 seems to be the commit for GnuTLS
+> that fixes the issue.
 >
-> On 10/29/2013 01:30 PM, Salvatore Bonaccorso wrote:
->> Hi,
->>
->> On full-disclosure list there was reported a command injection
->> vulnerability in 'sup', a console-based email client.
->>
->> [0]
->> http://rubyforge.org/pipermail/sup-talk/2013-October/004996.html
->> [1] http://seclists.org/fulldisclosure/2013/Oct/272
->>
->> For reference quoting the upstream announce:
->>
->> ----cut---------cut---------cut---------cut---------cut---------cut-----
->>
->>
-> Greetings,
->>
->> Security advisory (#SBU1) for Sup
->>
->> We have been notified of an potential exploit in the somewhat
->> careless way Sup treats attachment metadata in received e-mails.
->> The issues should now be fixed and I have released Sup 0.13.2.1 and
->> 0.14.1.1 which incorporates these fixes. Please upgrade immediately
->> and also ensure that your mime-decode or mime-view hooks are secure
->> [0], [1].
->>
->> This is specifically related to using quotes (',") around filename
->> or content_type which is already escaped using Ruby
->> Shellwords.escape - this means that the string (content_type,
->> filename) is intended to be used _without_ any further quotes.
->> Please make sure that if you use .mailcap (non OSX systems), you do
->> not quote the string.
->>
->> Credit goes to: joernchen of Phenoelit (http://phenoelit.de) who
->> discovered and suggested fixes for these issues.
->>
->> [0] https://github.com/sup-heliotrope/sup/wiki/Viewing-Attachments
->> [1] https://github.com/sup-heliotrope/sup/wiki/Secure-usage-of-Sup
->>
->> You can use 'gem' to upgrade or install sup. Please report any
->> issues to: https://github.com/sup-heliotrope/sup/issues
->>
->> Regards, Gaute
->> ----cut---------cut---------cut---------cut---------cut---------cut-----
->>
->>   Upstream fixed (as mentioned in announce) the issue in 0.13.2.1
->> and 0.14.1.1. Commits:
->>
->> [2]
->> https://github.com/sup-heliotrope/sup/compare/release-0.13.2...release-0.13.2.1
->>
->>
-> [3]
-> https://github.com/sup-heliotrope/sup/compare/release-0.14.1...release-0.14.1.1
->>
->> Could a CVE be assigned for this issue?
->>
->> Regards, Salvatore
->>
->
-> Please use CVE-2013-4478 for this issue.
 
-To confirm, is this CVE for both the content_type issue and the filename 
-issue?
+Links:
 
-Thanks,
+https://gitorious.org/gnutls/gnutls/commit/328ee22c1b3951e060c7124c7cb1cee592c59bc0
+https://gitorious.org/gnutls/gnutls/commit/b8391806cd79095fe566f2401d8c7ad85a64b198
 
---
-Murray McAllister / Red Hat Security Response Team
+Sorry for the spam,
+Matthias
+
+> On Tuesday 05 February 2013 10:34:23 Matthias Weckbecker wrote:
+> > Hi,
+> >
+> > has there already been a CVE assigned for the recent "lucky 13" timing
+> > flaw that affects various SSL / TLS implementations (including GnuTLS)?
+> >
+> >   http://www.isg.rhul.ac.uk/tls/
+> >   http://www.gnutls.org/security.html#GNUTLS-SA-2013-1
+> >
+> > I think this could qualify for CVE for each open source implementation
+> > that's prone.
+> >
+> > Thanks,
+> > Matthias
+
+-- 
+Matthias Weckbecker, Senior Security Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
