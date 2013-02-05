@@ -1,107 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/28/4
-Message-ID: <87fvw2dl74.fsf@alice.fifthhorseman.net>
-Date: Fri, 28 Jun 2013 16:39:11 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
-Cc: Vincent Danen <vdanen@...hat.com>, Ghe Rivero <ghe@...ian.org>, Mike Hommey <glandium@...ian.org>
-Subject: general Krb5 DNS vulnerabilities (e.g. krb5 web auth)? [was: Re: CVE request: rpc-gssd is vulnerable to DNS spoofing]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/18
+Message-Id: <201302051745.r15Hjmfi013644@linus.mitre.org>
+Date: Tue, 5 Feb 2013 12:45:48 -0500 (EST)
+From: cve-assign@...re.org
+To: vdanen@...hat.com, kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
 Content-Type: text/plain; charset=utf-8
 
-On Thu 2013-04-04 13:01:13 -0400, Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On 04/03/2013 04:43 PM, Vincent Danen wrote:
->> This has been discussed on the linux-nfs mailing list, so fully
->> public. Just cutting and pasting from our bugzilla:
->> 
->> It was reported [1],[2] that rpc.gssd in nfs-utils is vulnerable to
->> DNS spoofing due to it depending on PTR resolution for GSSAPI 
->> authentication.  Because of this, if a user where able to poison
->> DNS to a victim's computer, they would be able to trick rpc.gssd
->> into talking to another server (perhaps with less security) than
->> the intended server (with stricter security).  If the victim has
->> write access to the second (less secure) server, and the attacker
->> has read access (when they normally might not on the secure
->> server), the victim could write files to that server, which the
->> attacker could obtain (when normally they would not be able to).
->> To the victim this is transparent because the victim's computer
->> asks the KDC for a ticket to the second server due to reverse DNS
->> resolution; in this case Krb5 authentication does not fail because
->> the victim is talking to the "correct" server.
->> 
->> A patch that prevents this issue has been posted [3].
->> 
->> To workaround this issue, set the IP/host pair in /etc/hosts so
->> that it cannot be spoofed.
->> 
->> A good explanation is also available here [4].
->> 
->> [1] http://marc.info/?l=linux-nfs&m=136491998607561&w=2 [2]
->> http://marc.info/?l=linux-nfs&m=136500502805121&w=2 [3]
->> http://marc.info/?l=linux-nfs&m=136493115612397&w=2 [4]
->> http://ssimo.org/blog/id_015.html
->> 
->> 
->> https://bugzilla.redhat.com/show_bug.cgi?id=948072
->> 
->> 
->> Since this is fairly new, I don't think a CVE would have been
->> requested already.  Could one be assigned to this?
+>cc'ing cve-assign to see if they can provide some guidance here.  I also
+>noticed that OpenSSL has a CVE for this (I'm assuming that the
+>CVE-2012-2686 issue is _not_ the same thing, but that CVE-2013-0169 is
+>this issue).
 >
-> Please use CVE-2013-1923 for this issue.
+>Since it's a weakness in TLS/DTLS itself, from my understanding, and not
+>necessarily in a particular implementation, I'm not sure if this
+>qualifies as one CVE for the weakness, or if it needs one per
+>implementation.
+>
+>MITRE, can someone provide some guidance on this?
 
-I'm wondering if this isn't actually a larger issue, outside of NFS.
-For example, when i use SPNEGO/Negotiate authentication in a
-firefox/iceweasel browser to foo.example.com, firefox appears to
-normalize the request via a DNS reverse lookup before requesting a krb5
-ticket.
+[ This is mostly directed to Red Hat at this point. We'll expand to
+the other recipients or vendors later. ]
 
--------------------------
-0 dkg@...ce:~$ klist
-Ticket cache: FILE:/tmp/krb5cc_1000
-Default principal: dkg@...MPLE.COM
+We're not exactly sure that MITRE has the next step here. A CVE
+exists, CVE-2013-0169, that was issued by the Red Hat CNA. When the
+CVE assignment was made, presumably one or more persons at Red Hat had
+a working understanding of what the name CVE-2013-0169 means. (For
+example: was the CVE assigned with a multi-vendor scope in mind? Was
+the CVE assigned to cover the entirety of the content of the
+www.isg.rhul.ac.uk/tls/TLStiming.pdf research paper?) MITRE would, in
+general, want to preserve this original meaning if it makes sense to
+do that. Because there's no specific statement on this list about what
+CVE-2013-0169 means, we'd next go to
 
-Valid starting    Expires           Service principal
-28/06/2013 10:32  29/06/2013 01:32  krbtgt/EXAMPLE.COM@...MPLE.COM
-	renew until 29/06/2013 10:32
-0 dkg@...ce:~$ 
+  https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-0169
 
- [ then i point my browser (debian iceweasel 22.0-1, maintainer Cc'ed
-   here) at http://foo.example.com/login, which does WWW Negotiate
-   authentication, but the PTR record refers to bar.example.com ]
+to see if that may be a canonical statement of what CVE-2013-0169
+means. But there's nothing there yet.
 
-0 dkg@...ce:~$ klist
-Ticket cache: FILE:/tmp/krb5cc_1000
-Default principal: dkg@...MPLE.COM
+Before offering a guess from MITRE, we'll wait for some more
+information.
 
-Valid starting    Expires           Service principal
-28/06/2013 10:32  29/06/2013 01:32  krbtgt/EXAMPLE.COM@...MPLE.COM
-	renew until 29/06/2013 10:32
-28/06/2013 15:02  29/06/2013 01:32  HTTP/bar.example.com@
-	renew until 29/06/2013 10:32
-28/06/2013 15:02  29/06/2013 01:32  HTTP/bar.example.com@...MPLE.COM
-	renew until 29/06/2013 10:32
-0 dkg@...ce:~$ 
--------------------------
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
 
-
-On the server side, using debian's libapache2-mod-kerb 5.4-2 (maintainer
-cc'ed as well), apache does a reverse lookup on its own virtualhost name
-(confirmed by observing traffic with tcpdump).
-
-So it seems like the same argument used above for NFS applies to the
-web/negotiate/spnego/gssapi/krb5 use case: an attacker capable of
-poisoning the DNS and intercepting traffic could make an authenticated
-victim do something on server A while thinking that they were
-manipulating server B, based on their kerberos credentials.
-
-Is it possible that this is a bigger problem that needs to be addressed
-at the krb5 level?  iirc, reverse DNS has traditionally been a known
-point of concern for krb5 deployments, but maybe the specific attacks
-just haven't been explicitly articulated or identified as a problem?
-
-I might also be confused; feel free to point me to corrective material.
-
-  --dkg
-
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJREUKdAAoJEGvefgSNfHMdf7QH/1Pwhz88Getd4QEG5W7aM4Xy
+Wyu9c+HxX/PdkqmEcJuWXRvfMVPex9Gv8wD6qCGGQLIX6aHp2gLIrqjfOlUrHmoD
+5adHOPhJRAGM4UxZPKM7Y7KU8/etoZGQeJsuH1EUNUIzZmG6pJN2l3++j0vpNoN9
+12r4pDHvop3LCY1kMz75uarC+7vKD63xu+jvCQWNqVFV/gOmCkknNq9wLfZWTg+L
+xA1sooDw80Vkdrv6kIhMSCbdtZ/GqAv4R0b7CDyCuRJOqT1Ml0P/JiE0n0DSjR3u
+1FsqEw2RtkfzgDKJQbcm4n4miuwh5da9hCMR/aY4jL/bKT5Cy/MlggAb+VJW3mg=
+=a2X7
+-----END PGP SIGNATURE-----
