@@ -1,24 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/15/2
-Message-ID: <20130915182756.GA27880@kludge.henri.nerv.fi>
-Date: Sun, 15 Sep 2013 21:27:56 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/19
+Message-ID: <20130205182239.GR3443@redhat.com>
+Date: Tue, 5 Feb 2013 11:22:39 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Moritz Naumann <security@...itz-naumann.com>, security@...plemachines.org
-Subject: CVE request: Simple Machines Forum (SMF) <= 2.0.5 - multiple vulnerabilities
+Cc: kseifried@...hat.com, cve-assign@...re.org
+Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
 Content-Type: text/plain; charset=utf-8
 
-Please assign 2013 CVE for SMF vulnerabilities, thanks. Fixes at least XSS
-issues. No reply from vendor when I asked if there is CVE(s) assigned already.
+* [2013-02-05 12:45:48 -0500] cve-assign@...re.org wrote:
 
-Advisory: http://www.simplemachines.org/community/index.php?topic=509417
-Diff: http://custom.simplemachines.org/upgrades/index.php?action=upgrade;file=smf_patch_2.0.5.tar.gz;smf_version=2.0.4
+>>cc'ing cve-assign to see if they can provide some guidance here.  I also
+>>noticed that OpenSSL has a CVE for this (I'm assuming that the
+>>CVE-2012-2686 issue is _not_ the same thing, but that CVE-2013-0169 is
+>>this issue).
+>>
+>>Since it's a weakness in TLS/DTLS itself, from my understanding, and not
+>>necessarily in a particular implementation, I'm not sure if this
+>>qualifies as one CVE for the weakness, or if it needs one per
+>>implementation.
+>>
+>>MITRE, can someone provide some guidance on this?
+>
+>[ This is mostly directed to Red Hat at this point. We'll expand to
+>the other recipients or vendors later. ]
+>
+>We're not exactly sure that MITRE has the next step here. A CVE
+>exists, CVE-2013-0169, that was issued by the Red Hat CNA. When the
+>CVE assignment was made, presumably one or more persons at Red Hat had
+>a working understanding of what the name CVE-2013-0169 means. (For
+>example: was the CVE assigned with a multi-vendor scope in mind? Was
+>the CVE assigned to cover the entirety of the content of the
+>www.isg.rhul.ac.uk/tls/TLStiming.pdf research paper?) MITRE would, in
+>general, want to preserve this original meaning if it makes sense to
+>do that. Because there's no specific statement on this list about what
+>CVE-2013-0169 means, we'd next go to
+>
+>  https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-0169
+>
+>to see if that may be a canonical statement of what CVE-2013-0169
+>means. But there's nothing there yet.
+>
+>Before offering a guess from MITRE, we'll wait for some more
+>information.
 
-Other references:
-http://osvdb.org/96323
-http://secunia.com/advisories/54384/
+Yes, you're right, this did come from our pool.
 
----
-Henri Salo
+We did provide this CVE to the OpenSSL team (at the time the request was
+made we did not receive any disclosure on the issue and were not aware
+of other affected implementations).  The intention was then just for
+OpenSSL (perhaps under the assumption this was for an OpenSSL-specific
+issue, again, unaware of the details of the flaw).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+If MITRE wants to use it as a general name for the other affected
+implementations (GnuTLS, NSS, etc.) as well, and not just OpenSSL,
+that's fine.  We have not allocated any CVEs for these other
+implementations, nor did we provide this CVE name to the authors of the
+paper.
+
+The long and short of it is a private (unspecified) request came from
+the OpenSSL team and we provided it, so there was no specific intention
+on our part as to how the name was used or what it meant.
+
+I hope that clarifies things a bit.  We have no particular preference
+either way, so we'll leave this to your discretion.
+
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
