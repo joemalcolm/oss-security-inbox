@@ -1,21 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/05/3
-Message-ID: <20130205081310.GB23092@frohike.homeunix.org>
-Date: Tue, 5 Feb 2013 09:13:10 +0100
-From: Peter Bex <Peter.Bex@...all.nl>
-To: oss-security@...ts.openwall.com
-Subject: Re: A small backlog of vulnerabilities in Chicken Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/06/1
+Message-Id: <201302060108.r1618iQJ023669@linus.mitre.org>
+Date: Tue, 5 Feb 2013 20:08:44 -0500 (EST)
+From: cve-assign@...re.org
+To: nadhem.alfardan.2009@...l.ac.uk, kenny.paterson@...l.ac.uk, bugs@...tls.org, security@...illa.org, maintainer@...arssl.org, p.j.bakker@...spark.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Feb 02, 2013 at 04:15:21PM +0200, Henri Salo wrote:
-> http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks for the link.  For some reason I hadn't found that one yet.
+If you are interested in the CVE name assignments for the recent TLS
+and DTLS disclosure at http://www.isg.rhul.ac.uk/tls/TLStiming.pdf
+please see:
 
-However, I'd still like CVE ids for the backlog of vulnerabilities
-I posted originally.  Maybe they got overlooked?
+  http://openwall.com/lists/oss-security/2013/02/05/24
 
-Cheers,
-Peter
--- 
-http://sjamaan.ath.cx
+This references:
+
+  Mozilla Network Security Services (NSS)  CVE-2013-1620
+  GnuTLS                                   CVE-2013-1619
+  PolarSSL                                 three CVEs (see below)
+
+    PolarSSL - TLS and DTLS protocol issue:      CVE-2013-0169
+    PolarSSL - out-of-bounds comparisons:        CVE-2013-1621
+    PolarSSL - lack of MAC check in some cases:  CVE-2013-1622
+
+and other products.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJREanXAAoJEGvefgSNfHMdRSkH/jDVd3wagUKNvjO2mTVo1Jdy
+MYvKStezZTgVDMw4f5zLJcEM7Cm/74tvbst/DdIgHiMI188z9v1CZ5XgBCft3LSm
+DninOatvTcB/8CHhJ80q4vRH7EqiAVVWdq+SAPSU0v+e43rxIE1S1z+axOkG4xpt
+O6vxiXeaD9jZcNJx93nbBVceC6fphmq7Oz/eWdcYMf/BKsADxinxpTpLX/8U9vJH
+cdBAG4I5PUAgnWbHj/Fk/oeVKjYGLmiejMO9WU+/5NpxILUJP2hHz4Fqz8qR4Ovq
+eME40QIIfaumyJ1puY5jJ0jTmbxMkPT7irmZ/YlHnLB5s9CfwJEec0tfkCZcBgM=
+=2FcO
+-----END PGP SIGNATURE-----
