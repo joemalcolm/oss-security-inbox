@@ -1,48 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/05/14
-Message-ID: <1362523737.4083.22.camel@tardis>
-Date: Wed, 06 Mar 2013 08:48:57 +1000
-From: Noel Butler <noel.butler@...ics.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: handling of Linux kernel vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/06/4
+Message-ID: <CA+sLGzxAcYYP8hjDZZhKhk0N+qgrGK6OmQx3pditsqKfkYqPVg@mail.gmail.com>
+Date: Wed, 6 Feb 2013 14:22:02 -0500
+From: Sang Kil Cha <sangkilc@....edu>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: imview
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2013-03-05 at 07:50 +0400, Solar Designer wrote:
+One can associate the program with ics file, but maybe it is not likely.
+Thank you for your help anyway.
 
-> All -
-> 
-> On Mon, Mar 04, 2013 at 08:10:22PM -0700, Kurt Seifried wrote:
-> > If you want to discuss the theoretical/philosophical nature of
-> > information security as applied to the Linux kernel I'd be happy to
-> > set up a separate list for that, OSS-Security isn't really the right
-> > venue.
-> 
-> The above is Kurt's opinion, which he is indeed entitled to, but it is
+Best,
+-Sang Kil
 
+On Wed, Feb 6, 2013 at 1:38 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 02/05/2013 02:59 PM, Sang Kil Cha wrote:
+> > It reads in .ics file (iCalendar). Typical scenario would be to
+> > share your schedule by sending the ics file to your friends. So
+> > someone can open a malicious calendar file from imview, and then
+> > crash.
+> >
+> > -Sang Kil
+>
+> Is it loaded automatically somehow (e.g. ics file association?). It
+> seems like causing this program to crash won't cause any harm (e.g. no
+> lost data/etc. like you get when crashing a web browser/email
+> client/server). Right now I'm leaning towards not assigning a CVE as
+> it appears there is no real security related impact.
+>
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.13 (GNU/Linux)
+>
+> iQIcBAEBAgAGBQJREqMLAAoJEBYNRVNeJnmTwJgP+wVa+pIGBe/FerHCOAuFasLv
+> m7jtS3epo021F/bpwYHCmAJjS89mx6uoU9XgUUeBOQQqN4W3BawqD4kRgLvQ9P7B
+> BczWYmNmwWs/z7Ws+GBtK7ymt2fDfprRe7I3HYLCnV4M54LHzVCugn5RIZlmhcaq
+> j+YkSdayV/+Rfx1ZR95EU1okAwiJ4Is6/QL/GGLQPiAZUMJWKb8gmHUThUPcWsbr
+> 9so1bzN1Sidqst2FdsZtC88Cx+GGlIoIzU4h85Fo4Yu2ah4lXqeLUFUF8KHkf0HG
+> qfQ3zvM2gRe9/6YKWZroqEA0oXYjuBMuJPqag/pmqB9cGN+t9F9TsYXAmdXY5vfd
+> kSiVx2vXlvgLxyZrys784Tb2dfv8YCX8JTyV4BHMs0be6VuL/RcFPgJwhkpWAIYM
+> dtGsBR5BG/+cKKHScIoeihroR6Po9t3ESdTdSNAWi/W/pE3yzN6yQNGjXwrAxcvW
+> abw/rNZFB/KjWOEIRLgCrFMXeAfCoaOpih9jd3FVf6kP+mpGXn5MoTdQpsSb49e1
+> dXZyvbB3LyqC45zYhpZUnQgKhQ9aGgSvR7rCk6pLbtnjC5NtCJ3N4S3BYRMm6/XR
+> C+ocy+HptomqtwSRFFkb+ktJmOr+CbAwZkh3WZvtNXrXf+nJLDCPNXSzIh1m7IVb
+> e/4mxG4elhoBEdWxbef1
+> =TfWR
+> -----END PGP SIGNATURE-----
+>
 
-I kinda agree with Kurt, this thread is like flogging a dead horse, so
-much so Im starting to skip most posts in this thread, cause if I want
-to put to sleep Ill go outside and watch the grass grow :)
-
-current way of doing things has worked for a long time, and, if it aint
-broke, dont break it.
-
-apart from that, it reads to me that some here just want to increase
-their own importance and inflate their own egos, sorry, but that is
-EXACTLY how I see things, like your insistence that Greg et al, post
-notices about commits here days before publishing them.
-
-the net's got enough ego tripsters now, thanks, I left other security
-lists because of people with inflated heads, sorry if thats not your
-intention, but, that is how it comes across, and you know what they say,
-never does just one person think something.
-
-
-
-
-Content of type "text/html" skipped
-
-Download attachment "face-smile.png" of type "image/png" (873 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
