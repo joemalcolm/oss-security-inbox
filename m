@@ -1,57 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/09/12/1
-Message-ID: <52310AB3.5000703@redhat.com>
-Date: Wed, 11 Sep 2013 18:28:35 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Andrew Nacin <nacin@...dpress.org>
-Subject: Re: CVE Requests for WordPress 3.6.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/06/7
+Message-ID: <5112DE78.80401@koziarski.com>
+Date: Thu, 07 Feb 2013 11:51:36 +1300
+From: Michael Koziarski <michael@...iarski.com>
+To: rubyonrails-security@...glegroups.com
+CC: oss-security@...ts.openwall.com
+Subject: Potential Query Manipulation with Common Rails Practises
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 09/11/2013 03:28 PM, Andrew Nacin wrote:
-> Three issues fixed in WordPress 3.6.1: 
-> http://codex.wordpress.org/Version_3.6.1
-> 
-> * Unsafe PHP unserialization. CWE-502. 
-> http://core.trac.wordpress.org/changeset/25325.
+Common patterns used in Ruby on Rails applications could allow an
+attacker to generate SQL that, when combined with some database
+server's typecasting code, generates queries that match incorrect records.
 
-Please use CVE-2013-4338 for this issue.
+Note: This is a code and best-practise advisory, there is no patch to
+apply or updated version to install.
 
-> * Open Redirect / Insufficient Input Validation. CWE-601. 
-> http://core.trac.wordpress.org/changeset/25323 and 
-> http://core.trac.wordpress.org/changeset/25324.
+Databases Affected:  MySQL, SQLServer and some configurations of DB2
+Not affected:        SQLite, PostgreSQL, Oracle
 
-Please use CVE-2013-4339 for this issue.
+Outline
+- -------
+When comparing two values of differing types most databases will
+either generate an error or return 'false'.  Other databases will
+attempt to convert those values to a common type to enable comparison.
 
-> * Privilege Escalation: a user with an Author role, using a
-> specially crafted request, was able to create a post that was
-> marked as "written by" another user.
-> http://core.trac.wordpress.org/changeset/25321.
+For example in MySQL comparing a string with an integer will cast the
+string into an integer.  Given that any string which isn't an invalid
+integer will convert to 0, this could allow an attacker to bypass
+certain queries.
 
-Please use CVE-2013-4340 for this issue.
+If your application has XML or JSON parameter parsing enabled, an
+attacker will be able to generate queries like this unless you take
+care to typecast your input values.  For example:
 
-Perfect request =) Thanks
+  User.where(:login_token=>params[:token]).first
+
+Could be made to generate the query:
+
+  SELECT * FROM `users` WHERE `login_token` = 0 LIMIT 1;
+
+Which will match the first value which doesn't contain a valid
+integer. This vulnerability affects multiple programming languages,
+and multiple databases, be sure to audit your other applications to
+see if they suffer the same issues.
+
+Work Arounds
+- ------------
+There are two options to avoid these problems.  The first is to
+disable JSON and XML parameter parsing.  Depending on the version of
+rails you use you will have to place one of the following snippets in
+an application initializer
+
+Rails 3.2, 3.1 and 3.0:
+  ActionDispatch::ParamsParser::DEFAULT_PARSERS.delete(Mime::XML)
+  ActionDispatch::ParamsParser::DEFAULT_PARSERS.delete(Mime::JSON)
+
+Rails 2.3:
+  ActionController::Base.param_parsers.delete(Mime::XML)
+  ActionController::Base.param_parsers.delete(Mime::JSON)
+
+If your application relies on accepting these formats you will have to
+take care to explicitly convert parameters to their intended types.
+For example:
+
+  User.where(:login_token=>params[:token].to_s)
+
+
+Fixes
+- -----
+Unfortunately it is not possible for ActiveRecord to automatically
+protect against all instances of this attack due to the API we expose.
+ For example:
+
+User.where("login_token = ? AND expires_at > ?", params[:token],
+Time.now)
+
+Without parsing the SQL fragments it is not possible to determine what
+type params[:token] should be cast to.
+
+Future releases of Rails will contain changes to mitigate the risk of
+this class of vulnerability, however as long as this feature is still
+supported this risk will remain.
+
+Credits
+- -------
+Thanks to joernchen of Phenoelit for reporting this to us and to
+Jonathan Rudenberg for helping to review the advisory.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Cheers,
 
-iQIcBAEBAgAGBQJSMQqzAAoJEBYNRVNeJnmTiHgQAJUu3dMQMUNUcILBw1vq60wd
-VONk5MrHOSZEepUi2RdWQqagH8x9LJMsxu19HcnK/qrGAAy6zXNvq4j9obszT9UV
-GMsAU5+OrXCuXvoNMCIofkqabdqXPGbWpw5o+l8I+j71ebOz1th7tH0yye24Badx
-y6nUFwYuzrA3x7DL4F3E2ERamGgegUvcwhcpQlUjaeu7TlF6w3Ikq9ZkrJKHOiiz
-jvon3WBkAy17ayP093uKbE+zrTrypx+WHoc9ucHdAPmwUgiRDTBPfiTQFaGLdo6P
-F6t3zQeaKBKiLKNuGlhmmpEfaMHchjEQTkx4Qjb8E73aOfSXEy0LW1FEhwWrCu9T
-O4v8utuqBR3YCOlmJirrCzz7cGtl9LNtW3/U6e12L6DFy9PthcrIgCxObpGJxUlh
-JfYFuMQtOFw22srsGJFD1fve7ewzHJb0hw21zTaxh4zggJS/ACEKy5Fnz+89YkFr
-D1pXYyD2MBuFlOwqxW8yXnfiIgX1tDWuE9YbbmwM7826iaagYkYlNS1gFVV/Aee1
-ze/XOfRZlT2HjhdmKh7gvmTEE1/wJaA7H8LXi/3SuR24F4wfNpryQLx1MdEqSzXL
-9GjcFTmdoVwZTOyaavaitCvRoOuopB7hT8SZws0MEHAEi9hFwzVjpokOxFESomki
-fAwjXoSgQlfn24LjKakh
-=Uj6o
+Koz
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (Darwin)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iEYEARECAAYFAlES3ngACgkQ3CszDRD2lfNycACgljiq5sC41RM9RGw6qeoJGAqh
+PTsAniVkqWo07BXpKIQx9hEKMT1hA0Hy
+=3WN0
 -----END PGP SIGNATURE-----
