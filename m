@@ -1,46 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/08/07/9
-Message-ID: <5202811F.2010004@redhat.com>
-Date: Wed, 07 Aug 2013 11:17:19 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/06/5
+Message-ID: <20130206212035.GA29981@ngolde.de>
+Date: Wed, 6 Feb 2013 22:20:35 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-CC: Florian <floriangaultier@...il.com>
-Subject: Re: CVE Request - LibModPlug <=0.8.8.4 multiple heap overflow
+Subject: CVE id request: openssh?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
+years ago CVE-2006-1206 was raised for a denial of service attack against 
+dropbear based on exhausting the maximum number of connections.
+Back in 2010 I played around with this in openssh to find out if similar 
+attacks work against that. Since then I never really knew what to do with 
+this, but every now and then I remember it and after this bugged me for a 
+while, I finally brought up the topic to the openssh developers.
 
-On 08/07/2013 10:24 AM, Florian wrote:
-> Hi,
-> 
-> Just a CVE Request for this 
-> http://blog.scrt.ch/2013/07/24/vlc-abc-parsing-seems-to-be-a-ctf-challenge/
->
->  Thx
-> 
+The attached program demonstrates a similar attack against a default openssh 
+installation. The program simply connects to an ssh server and waits for the 
+socket to be closed, thus determining the LoginGraceTime setting of the 
+server. Next, it opens up connections to the server, keeping them open until 
+no further connection is allowed and thus determining the MaxStartUps setting 
+(of course, this may not be always accurate depending on the currently active 
+sessions etc, but this is a minor detail).
 
-I need a better request. You want one CVE? multiple CVEs? A quick read
-of the web page indicates multiple different problems. Can you list
-them here and provide links to the source code? thanks.
+The code continues to sleep for logingracetime seconds and spawns maxstartup 
+connections again. As a result, unless you are very lucky and you hit the time 
+window between the connection respawn, a user can not login anymore.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+While this is a standard problem for any network service that limits the 
+number of connections, I think in openssh's case this is supported by very 
+historically very long LoginGraceTime default settings (2 minutes) and a lack
+of random early drop usage for MaxStartups.
 
-iQIcBAEBAgAGBQJSAoEfAAoJEBYNRVNeJnmTmQ8P/iy7oMVpnHBMzb/ZrdxMxeFV
-x4IyuPn4X7qqF5aJMY24BvN+4dgvsIOUDAr6rJFktyn3aPjk++Srt0oQucZVQ6Ut
-rhu7uzaic2uLcY2e4bFsNHhTiTokOJEAqa7Es862jFwqAwJPU1FYpXDhEGlmENwM
-MFS8TULxlt9ocpQUaYUhN08FbwD0WreOHl2ASXOey9kVjAq6IlZ3QWHXvCxnsfk6
-YefKZ56kH5X80lDH/D4zqCMSk3F8gGV3IK5bZhwFSAtjkc/Nqs4lno6RZ4yspaJK
-lb9UgKudistkGLguM/50Cq8Zm/WlEGHuZIcKyAy40e5fHThMWcNG8ZbmA99uXo8J
-tZ8dWM6cDpWjQgiYPq2tphul1yH2nm8pdYGzpEg+J3Hd0A83hbeyENS2Y9oEujKC
-A8ysBIvlDSe9HPDfwxhI+ga17KCex7zIsVXcvd57ltklwagZae8DMV92oXCQojfl
-zTa2ffrtOTJQi1Vm0wbSB3tf9MuJCm99BjmdG1ZF31gJbuJYCO5NFpiGLPtprNvk
-5p+itH4kCl1D7dhAEg/jnF3k0zzNGpmP9TrPj8XUdBcveMDKcRFA6DxUdqdL+LmJ
-se4ciFbEhH1vr35SbHbqgdx4wVadenzU5AY4xiZKcXnYtGSmd/3kxpbFGrlyGgpW
-fu0uPaHSrHpBfb6xwpeV
-=LoaB
------END PGP SIGNATURE-----
+While you could argue that this is not per-se an openssh security issue, the 
+default settings aid here to a trivial denial of service attack against
+ssh installations by all linux distributions I've seen.
+
+The result for a user who tries to login is this:
+ssh_exchange_identification: Connection closed by remote host
+
+The openssh maintainers actually agree here and it resulted in the following 
+changes:
+http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/servconf.c?r1=1.234#rev1.234
+http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/sshd_config.5?r1=1.156#rev1.156
+http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/sshd_config?r1=1.89#rev1.89
+
+I personally don't mind whether this get's a CVE id or not,but considering 
+that dropbear got one in the past,I thought I'd bring this up.
+
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+
+View attachment "sshext.c" of type "text/x-csrc" (3925 bytes)
+
+Content of type "application/pgp-signature" skipped
