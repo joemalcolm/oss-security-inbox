@@ -1,89 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/28/8
-Message-ID: <512F06D6.5060409@redhat.com>
-Date: Thu, 28 Feb 2013 00:27:18 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/1
+Message-ID: <511300A1.8060503@redhat.com>
+Date: Wed, 06 Feb 2013 18:17:21 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Salvatore Bonaccorso <carnil@...ian.org>, Marcus Meissner <meissner@...e.de>, Steven Christey <coley@...re.org>
-Subject: Re: CVE Request: poppler 0.22.1 security fixes
+CC: Florian Weimer <fw@...eb.enyo.de>, Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: e1000e/82574L hardware erratum
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 02/27/2013 11:53 PM, Salvatore Bonaccorso wrote:
-> Hi Kurt
+On 02/06/2013 03:00 PM, Florian Weimer wrote:
+> It's been reported that some Intel 82574L network controllers can
+> be brought into a non-processing state by receiving certain
+> Ethernet frames:
 > 
-> Just noticed the following and wanted to ask:
+> <http://blog.krisk.org/2013/02/packets-of-death.html>
 > 
-> On Wed, Feb 27, 2013 at 08:39:40PM -0700, Kurt Seifried wrote:
->>> So far I see: 
->>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=8b6dc55e530b2f5ede6b9dfb64aafdd1d5836492
->>>
->>>
->>
->>> 
-Fix invalid memory access in 1150.pdf.asan.8.69
->>> 
->>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=e14b6e9c13d35c9bd1e0c50906ace8e707816888
->>>
->>>
->>
->>> 
-Fix invalid memory access in 2030.pdf.asan.69.463
->>> 
->>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=0388837f01bc467045164f9ddaff787000a8caaa
->>>
->>>
->>
->>> 
-Fix another invalid memory access in 1091.pdf.asan.72.42
->>> 
->>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=957aa252912cde85d76c41e9710b33425a82b696
->>>
->>>
->>
->>> 
-Fix invalid memory accesses in 1091.pdf.asan.72.42
->>> 
->>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=bbc2d8918fe234b7ef2c480eb148943922cc0959
->>>
->>>
->>
->>> 
-Fix invalid memory accesses in 1036.pdf.asan.23.17
->> 
->> Please use CVE-2013-1788 for these invalid memory issues.
-> ^^^^^^^^^^^^^
->> 
->>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a9b8ab4657dec65b8b86c225d12c533ad7e984e2
->>>
->>>
->>
->>> 
-Fix crash in broken file 1031.pdf.asan.48.15
->>> 
->>> http://cgit.freedesktop.org/poppler/poppler/commit/?h=poppler-0.22&id=a205e71a2dbe0c8d4f4905a76a3f79ec522eacec
->>>
->>>
->>
->>> 
-Do not crash in broken documents like 1007.pdf.asan.48.4
->> 
->> Please use CVE-2013-1788 for these crash issues.
-> ^^^^^^^^^^^^^
-
-Typo, that last one should be CVE-2013-1789.
-
-
-> Was this intentional that there where both assigned CVE-2013-1788,
-> for both the 'invalid memory issues' and the 'crash issues'?
-
-Typo, didn't see it, derp! Thanks for catching.
-
-> Regards, Salvatore
+> The packet is not malformed at the lower layers and will travel
+> over the Internet.
 > 
+> I have not tried to reproduced this.  Disabling hardware
+> offloading features might constitue a workaround.
+> 
+> Reportedly, this can be fixed by appropriate EEPROM settings, so a 
+> driver-based workaround seems feasible/necessary.
 
+Probably best if Mitre handles this.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
@@ -92,17 +36,17 @@ PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRLwbWAAoJEBYNRVNeJnmTROoQANy7oeqXP64yfblQw6D1ze6v
-dNVroZzAx3EbYvmqKZFrykFfGn+YYlpgkIm38GZnfxWAplCAVJHrgtKVvW5Ufoj+
-nAoXzePWID4TPPt89xXGPB2WBmO3YbFnE7ONdmz6OqcII/mIvP+oi47Cs4ewcxzU
-8Q126S47HThLgDKJ/IWWi5CzAi47vjDs5Lfbk2LPoYeJfQu2iZ7CiC+JI3P18v6L
-GGy2wo++7Qp3KOnj0NyVT/FGhwlnssLNADI9pIlvgqSE4H1kM9kWQj2UTwW5QRGa
-/SyMjdHweFP4ck1Yt83DOpPz/ny5MRcsFotX0xfutIde4X1xQps8i6QPQEi6tSBy
-dY4OQtIVWYpPuhMKIFGY3E7xWtO4p0mV0KaVKgvjdqQwQ+GmbxLwwwputm3lNxgw
-6TIHRowdrQZvoE+LTFWSfLaa7wp3zQSo4lD1FxUCyE/12/OnisKHCoP1QxMzgBA+
-WJBpFrBUK/4O+AYUr5niSgr086ngudsnuXW3RtksRbg7ACj36VOm3r91VY7BpT9e
-erWAPBUlrhituxawcOwcCnjDvKUouXr7Q9yly66YN+mcbulrTo0wUDPsO4VAn/2S
-NjZriEpMimaRTsJ6isECKRElE6BmOYFOAZLICUL/pWjVPENNi9za9X0BsigoTivA
-QvJzRb/5mc+Hu2AAbSTS
-=mtdX
+iQIcBAEBAgAGBQJREwCgAAoJEBYNRVNeJnmTIbMP/3K0EE4VF5x2ysVnuTwpioY6
+dWsUWXMvgIs6v2jdupC5zwiwei5mJpIBJ7y8fbnAqCY3rEYkbzxVfGZ6tTgj53dv
+tvVfKP4DqhmWMjckyJkK1PeYdrd8aX4bIGdLsU7wWeJq+fmiFUPqYNIrqhMAQBJs
+drKc73sWVX/+64UzhcqU9Fuzwj98ITVKdULPQ0GNz494hAO2Bwlvdv8XujDB5KtS
+89/WsqJfKD73kwk5925DYxgQGs/FV8hwffbnkEPvY9C0Dyvdva06gsUvAeobcl4f
+GRrr/9CuhkUzQQ2pH827OPCeFEjQ9WGEgejQ9i8ocQeH0hmr2/7Zf83SBIDkI2B2
+FUJsdGL8YBcDSHV8BLo+b4VNYHxuaoIZNzQ2HWXYubrMMEGvhlWF3ivrwUHj6jYH
+s3nxb6YR4nG7hWH/T2VO/smNGAmgIRBYJagJB8FVhhfhOYgUszuTcJp2RscRO24F
+UIbcjPTJSVunKTT58UWbfpVZOZIRLLyJ78/8jqfUx3vRkFv5Dl7FFlQFov2CyEcb
+8s29+uUsPdx174Xcc/OK4dXS2jLlSLep1VePgtB88xWV3Or474PoNgMjcW+Zuc/Z
+eJFdMRMkGI7UZ5yv2euvHsjwFzWoBHLftGmZoAiPc7KrjjfVk8UmTcruVYlIYown
+fLL+R5lF55FMTN7NU1Dm
+=Enz5
 -----END PGP SIGNATURE-----
