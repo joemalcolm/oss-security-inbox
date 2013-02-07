@@ -1,42 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/05/23/4
-Message-ID: <20130523205212.GE29720@openstack.org>
-Date: Thu, 23 May 2013 20:52:12 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
-To: openstack@...ts.launchpad.net, oss-security@...ts.openwall.com
-Subject: [OSSA 2013-013] Keystone client local information disclosure (CVE-2013-2013)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/8
+Message-ID: <20130207104539.GA15634@gremlin.ru>
+Date: Thu, 7 Feb 2013 14:45:39 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: imview
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2013-013
-CVE: CVE-2013-2013
-Date: May 23, 2013
-Title: Keystone client local information disclosure
-Reporter: Jake Dahn (Nebula)
-Products: python-keystoneclient
-Affects: All versions
+On 06-Feb-2013 14:22:02 -0500, Sang Kil Cha wrote:
 
-Description:
-Jake Dahn from Nebula reported a vulnerability that the keystone
-client only allows passwords to be updated in a clear text
-command-line argument, which may enable other local users to obtain
-sensitive information by listing the process and potentially leaves
-a record of the password within the shell command history.
+ > One can associate the program with ics file, but maybe it is not likely.
 
-Fix:
-https://review.openstack.org/28702
+That doesn't raise the ordinary bug to the level of security issue.
 
-Notes:
-A fix has already been merged to the python-keystoneclient master
-branch on 2013-05-21 (commit f2e0818) which adds an interactive
-password prompt, and will appear in the next release of
-python-keystoneclient.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2013
-https://bugs.launchpad.net/python-keystoneclient/+bug/938315
 
 -- 
-Jeremy Stanley (fungi)
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG key ID: 0xEF3B1FA8, keyserver: hkp://subkeys.pgp.net
+GPG key fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
