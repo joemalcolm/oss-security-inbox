@@ -1,169 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/08/3
-Message-Id: <201312081803.rB8I38Ag017521@linus.mitre.org>
-Date: Sun, 8 Dec 2013 13:03:08 -0500 (EST)
-From: cve-assign@...re.org
-To: michaelni@....at
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, ffmpeg-security@...peg.org
-Subject: Re: CVE Request: FFmpeg 2.1 multiple problems
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/12
+Message-ID: <5113F137.2090003@redhat.com>
+Date: Thu, 07 Feb 2013 11:23:51 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Kurt Seifried <kseifrie@...hat.com>, spender@...ecurity.net
+Subject: Re: CVE request -- Linux kernel: x86/msr: /dev/cpu/*/msr local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> Id like to request CVE(s) for FFmpeg 2.1, for the changes below:
+On 02/07/2013 03:55 AM, Petr Matousek wrote:
+> Access to /dev/cpu/*/msr was protected only using filesystem
+> checks. A local uid 0 (root) user with all capabilities dropped
+> could use this flaw to execute arbitrary code in kernel mode.
+> 
+> Upstream commit: 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=c903f0456bc69176912dee6dd25c6a66ee1aed00
+>
+>  References: https://bugzilla.redhat.com/show_bug.cgi?id=908693 
+> http://grsecurity.net/~spender/msr32.c
+> 
+> Thanks,
 
-We've looked at these 17 commits and did not find any situations in which there
-was a shared root cause, or a conceptually similar type of error within the
-different pieces of code. Accordingly, there are 17 separate CVE IDs. We do not
-group issues based on impact.
-
-> https://github.com/FFmpeg/FFmpeg/commit/29ffeef5e73b8f41ff3a3f2242d356759c66f91f
->     fixes a deadlock in h264 decoding
->     https://trac.ffmpeg.org/ticket/2927
-
-Use CVE-2013-7008.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/3819db745da2ac7fb3faacb116788c32f4753f34
->     Fixes out of array (on heap) writes in rpza decoding
->     https://trac.ffmpeg.org/ticket/2850
-
-Use CVE-2013-7009.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/454a11a1c9c686c78aa97954306fb63453299760
->     avcodec/dsputil: fix signedness in sizeof() comparisons leading
->     to integer overflow and out of array accesses
-
-Use CVE-2013-7010.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/547d690d676064069d44703a1917e0dab7e33445
->     Fixes out of array (on heap) writes in ffv1 decoding
->     https://trac.ffmpeg.org/ticket/2906
->     Found-by: ami_stuff
-
-Use CVE-2013-7011.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/780669ef7c23c00836a24921fcc6b03be2b8ca4a
->     Fixes out of array write in jpeg2000 decoding
->     https://trac.ffmpeg.org/ticket/3080
->     Found-by: ami_stuff
-
-Use CVE-2013-7012.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/821a5938d100458f4d09d634041b05c860554ce0
->     Fix order of align and pixel size multiplication.
->     Fixes out of array accesses in g2m4
->     https://trac.ffmpeg.org/ticket/2922
->     Found-by: ami_stuff
-
-Use CVE-2013-7013.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/86736f59d6a527d8bc807d09b93f971c0fe0bb07
->     avcodec/pngdsp: fix (un)signed type in end comparison
->     Fixes out of array writes in png decoding
->     https://trac.ffmpeg.org/ticket/2919
->     Found_by: ami_stuff
-
-Use CVE-2013-7014.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/880c73cd76109697447fbfbaa8e5ee5683309446
->     avcodec/flashsv: check diff_start/height
->     Fixes out of array accesses
->     https://trac.ffmpeg.org/ticket/2844
->     Found-by: ami_stuff
-
-Use CVE-2013-7015.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/8bb11c3ca77b52e05a9ed1496a65f8a76e6e2d8f
->     Check cdx/y values more carefully
->     Fixes out of array accesses in jpeg2000 decoding
->     https://trac.ffmpeg.org/ticket/2848
->     Found-by: Piotr Bandurski <ami_stuff@...pl>
-
-Use CVE-2013-7016.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/912ce9dd2080c5837285a471d750fa311e09b555
->     fix dereferencing invalid pointers in jpeg2000 decoding
->     Found-by: Laurent Butti <laurentb@...il.com>
-
-Use CVE-2013-7017.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/9a271a9368eaabf99e6c2046103acb33957e63b7
->     jpeg2000: check log2_cblk dimensions
->     Fixes out of array access
->     https://trac.ffmpeg.org/ticket/2895
->     Found-by: Piotr Bandurski <ami_stuff@...pl>
-
-Use CVE-2013-7018.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/a1b9004b768bef606ee98d417bceb9392ceb788d
->     avcodec/jpeg2000dec: fix context consistency with too large lowres
->     Fixes out of array accesses in jpeg2000 decoding
->     https://trac.ffmpeg.org/ticket/2898
-
-Use CVE-2013-7019.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/b05cd1ea7e45a836f7f6071a716c38bb30326e0f
->     ffv1dec: Check bits_per_raw_sample and colorspace for equality in ver 0/1 headers
->     prevents inconsistency and out of array write
-
-Use CVE-2013-7020.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/cdd5df8189ff1537f7abe8defe971f80602cc2d2
->     avfilter/vf_fps: make sure the fifo is not empty before using it
->     fixes double free in the fps filter
->     https://trac.ffmpeg.org/ticket/2905
-
-Use CVE-2013-7021.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/e07ac727c1cc9eed39e7f9117c97006f719864bd
->     fixes out of array access in g2m4
->     https://trac.ffmpeg.org/ticket/2971
->     Found-by: ami_stuff
-
-Use CVE-2013-7022.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/f31011e9abfb2ae75bb32bc44e2c34194c8dc40a
->     out of array write (on heap) in case of realloc failure
->     https://trac.ffmpeg.org/ticket/2982
-
-Use CVE-2013-7023.
-
-
-> https://github.com/FFmpeg/FFmpeg/commit/fe448cd28d674c3eff3072552eae366d0b659ce9
->     avcodec/jpeg2000dec: prevent out of array accesses in pixel addressing
->     https://trac.ffmpeg.org/ticket/2921
-
-Use CVE-2013-7024.
+Please use CVE-2013-0268 for this issue.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQEcBAEBAgAGBQJSpLKxAAoJEKllVAevmvmsSnEH/Av2AADJ8ei+HoQpvvJ0IZeR
-LXT40WJKUU48/cCO9A68KLE7FvxBHz/+gj57EsCrOhG5M5p0rg3f/2erI2YnSlgw
-c/vEoAU6OOxuNMBLreXKx+ED7/Zx5gdmU3KwCMcBGAP3ttE4kaz+LclSGpQm7K/N
-PqCOfJC3WGIqB8+uopdDhpeaBtT8gXKIJqUF89dK83G1It2PpdMRRTFQ9IQB7pej
-upJUOUTJ6VY5IsDosGrMaABn4BGfT/gYBVVoGCpQUZEN+wI3Gj7Y5eiTjc8KNK4a
-0d61cNF+GC8q07zKYSo2rPSvYB9lR36qp5SdiZ2hEOGTCOoyYlAOmerR7vcQvpk=
-=miLE
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRE/E3AAoJEBYNRVNeJnmTjvIQAJZAOvO1heqIEZXdmxZfCBsW
+y+NjKmN/El8PCPJ4bfGrH0TK7y+lZYBWBfnbaHI1kTZOxs/NuVtPn88D+Am+AABf
+TBa2Jm3Bj19MnqYkkpdGJ+TCNgMpzByu8f1xRKK+lwHdCBkbV4HRKC+I5f7Tej9V
+pVyFTaEyLivdaYqb+6Uq7ndQXVu1W/XBGN+7ulh37WFQ43eS+wP0RFR5BFoToeiR
+rrb2YppjAYZJSEI638Cd72Lo3J/9kSPgu8bKm5XEwngCyMICqRy4uLSPisaw2Crm
+mlXaj2xzT7uGgmxtSLSFJQR0gewqsl0bmelC87Ay/bgyI0tRb+ujcYv9ttxLHUcC
+V6dwWV5sCqxQqdgnEu08Yo8Oaqv33ohvkrxEpiMWrhjsLHE2hw5vjsInIi5fjCGO
+Pzhjx6VOu5Ov5EHE9RWzyiUUzMCutwUsAnt28lsfQvEM2BZCYp408MMBAadezLUB
+sAxmMjaUWnRYwU2bOqG4vKKMK2rm5zBHrdpHWkhigpk5WkH+FNMCfNBTUg7DAu/i
+yZRc0QvpzE//Eg/+bEvIco5g8cH23C20/5lM/IC6GDdhhnSKd0XTXBtHkZpPt6oZ
+QnXsHB5v2SWwLdofuKGFwvaBEkT51LhDuWLqE4JmEXt2rm0PdrfwXTsNt5Gom40X
+PJZB9LRVZ8BuaPabv+9S
+=hulg
 -----END PGP SIGNATURE-----
