@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/12/31/6
-Message-ID: <alpine.LFD.2.10.1312311234230.23217@javelin.pnq.redhat.com>
-Date: Tue, 31 Dec 2013 12:36:54 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Linux kernel: net: memory leak in recvmsg handlermsg_name & msg_namelen logic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/13
+Message-ID: <5113F170.80102@redhat.com>
+Date: Thu, 07 Feb 2013 11:24:48 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Hanno Böck <hanno@...eck.de>, cve-assign@...re.org
+Subject: Re: CVE request: TLS CBC padding timing flaw in various SSL / TLS implementations
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Linux kernel built with the networking support(CONFIG_NET) is vulnerable to an 
-information leakage flaw in the socket layer. It could occur while doing 
-recvmsg(2), recvfrom(2) socket calls. It occurs due to improperly initialised 
-msg_name & msg_namelen message header parameters.
+On 02/07/2013 05:19 AM, Hanno B￶ck wrote:
+> Can you assign one more for matrixssl?
+> 
+> http://www.matrixssl.org/news.html
 
-A user/program could use this flaw to leak information from kernel memory 
-bytes.
+Forwarding this to cve-assign@...re.org, I'm steering clear of the
+current SSL mess.
 
-Upstream fix:
--------------
-   -> https://git.kernel.org/linus/f3d3342602f8bcbf37d7c46641cb9bca7618eb1c
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1039845
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (GNU/Linux)
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+iQIcBAEBAgAGBQJRE/FwAAoJEBYNRVNeJnmTyBwP/jvzHu+r3jY0yOPSuR1UkJhw
+T+qEFK6FllBHnGHG801MBnSCTMUbNiQBRqXPhNPfFBhHRzea9bWV6xRqoTfpOzXM
+5TXAAaUlqPhXkvF+J+opZKWhe2vmXPEo12SU/YaaCp2Jx+n3Q4CxGBdWJ1NqB3Ia
+cSY2JIk4UFVxhcaA2yhqqWIWpdNzjOrkPW9NrT7dRP4oJbv7ojlvwzm7I88QvaTZ
+KOB4iil6zeXOo2+0SvHLkf5C/5YAuwhrADTM8+nefVnL0kNZ8XsRTxsgw7ZMgWMA
+vJ1M2umAk3V4305Z26l3GGZZyKISuYgSlsHKzw4rrBGFhfxfPclOE7cH48vf5bjM
+OaRG0k2UdtoRZ7AjBsX/ndYV4EjJ9ouIxgYcg/EqpnTbuCagGRMrqXKK634RTNVE
+zTMAgKfh7IwR03IznCsxUNb8oDa1PpTZHWvU7KFmpMNmLRpmASDheEduRj5qfi8Q
+SH5sa7yzVPyAlTUYJ23+NPntHpFRXwhIXlB7WV3VgqEfi/l3vTgV1Ho2EtDszMQ4
+6GzZALEGpYrilPu5ewrEkg5sFzMdRnMQh4QE+GNZtMxneCe+S1EU6wUZ32RCEkxh
+CYknEu/XE8NcdemGb36+X8f555tDxoPZZVaCpBUE3DL+d40KySTEvZnfcmjNXp7Y
+Hh23g8E4f7/AsTNrONOx
+=rs0z
+-----END PGP SIGNATURE-----
