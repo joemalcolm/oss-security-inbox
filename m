@@ -1,47 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/03/11/3
-Message-ID: <513E1897.6020507@redhat.com>
-Date: Mon, 11 Mar 2013 11:47:03 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2013/02/07/3
+Message-ID: <51131016.7020706@redhat.com>
+Date: Wed, 06 Feb 2013 19:23:18 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, DO-webmaster@...t.gov
-Subject: *.nist.gov websites gone forever?
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: openssh?
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-So a bunch of nist.gov websites have been gone now for about 4-5 days:
+On 02/06/2013 02:20 PM, Nico Golde wrote:
+> Hello, years ago CVE-2006-1206 was raised for a denial of service
+> attack against dropbear based on exhausting the maximum number of
+> connections. Back in 2010 I played around with this in openssh to
+> find out if similar attacks work against that. Since then I never
+> really knew what to do with this, but every now and then I remember
+> it and after this bugged me for a while, I finally brought up the
+> topic to the openssh developers.
+> 
+> The attached program demonstrates a similar attack against a
+> default openssh installation. The program simply connects to an ssh
+> server and waits for the socket to be closed, thus determining the
+> LoginGraceTime setting of the server. Next, it opens up connections
+> to the server, keeping them open until no further connection is
+> allowed and thus determining the MaxStartUps setting (of course,
+> this may not be always accurate depending on the currently active 
+> sessions etc, but this is a minor detail).
+> 
+> The code continues to sleep for logingracetime seconds and spawns
+> maxstartup connections again. As a result, unless you are very
+> lucky and you hit the time window between the connection respawn, a
+> user can not login anymore.
+> 
+> While this is a standard problem for any network service that
+> limits the number of connections, I think in openssh's case this is
+> supported by very historically very long LoginGraceTime default
+> settings (2 minutes) and a lack of random early drop usage for
+> MaxStartups.
+> 
+> While you could argue that this is not per-se an openssh security
+> issue, the default settings aid here to a trivial denial of service
+> attack against ssh installations by all linux distributions I've
+> seen.
+> 
+> The result for a user who tries to login is this: 
+> ssh_exchange_identification: Connection closed by remote host
+> 
+> The openssh maintainers actually agree here and it resulted in the
+> following changes: 
+> http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/servconf.c?r1=1.234#rev1.234
+>
+> 
+http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/sshd_config.5?r1=1.156#rev1.156
+> http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/sshd_config?r1=1.89#rev1.89
+>
+>  I personally don't mind whether this get's a CVE id or not,but
+> considering that dropbear got one in the past,I thought I'd bring
+> this up.
+> 
+> Kind regards Nico
 
-http://web.nvd.nist.gov
-http://nvd.nist.gov
-http://scap.nist.gov
-
-They are either gone entirely (web.nvd.nist.gov has no server at all),
-or they have a generic "Site/Page Not Available" error now (they were
-serving a CFM error over the weekend).
-
-This impacts CVE a bit since the two main sites are cve.mitre.org and
-the web.nvd.nist.gov one. Any one know what is going on or have a
-contact at nist.gov that can get this sorted out? Are these websites
-gone forever or are they simply having an extended outage?
+Please use CVE-2010-5107  for this issue.
 
 - -- 
 Kurt Seifried Red Hat Security Response Team (SRT)
 PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.13 (GNU/Linux)
 
-iQIcBAEBAgAGBQJRPhiXAAoJEBYNRVNeJnmTZgkQAJcBuKbU++LPOr1jyOjyQoUo
-Z48pYCxi2TqfmwR9MXGqy0xej27te7cMr3zxRo5/deMACwZfX3BKU176gjuJUOPt
-VdzlnyM7GV0SkI8Ea1Dgriklw4r4UXWrxI8yJvYSwoO5FMjEDysttXDaYhbsXGiq
-tXZSDs8BOQ/6JjfCCBWU9HpI+HMbZb5vm9lCpaS1oq6eyiJ2sGpX4ICZ2XjCNjo5
-vo1wms22iO+2DrnVfdjQ4pbEVSXTDMAdbWF1Pb8SJdhcEhMddHRQSe/Fylo5tLgY
-CJoCkWmReYcJ1F5k16mIZ+Mn1Af6K1hY9E+fzQHfxM4IgH6gDrcRa4/bxzLcLkQI
-E7T94Jgz7giEKebA5md3Xwfk8AsmWNgWAXfqWi4bs1YjBvfjlszohN7SRAd2ul7Q
-5CcD8rzGGkxupJBZytATEgF07AVu7yHMuqwPoN7IkSgy9uuI0zW9Bfz5PKnrpJRQ
-QMSDJE2QQc2Fimj8Zp++wcrfx9XbX5cWeKFOPTgHKV7mZ/kPgJw1rg5BaXcn/M32
-ukOY0ezrfIwSWB2qzUIrKZaMuMLMxToVmUedkE2V5ZjtBUKW2qapDKXpNORBfGSz
-piaxUkXRTcsuTY9Q+YV5k7a41yF4kb2NxRACH1dZkLSENwbOfRyheuQPBWZ02Wg+
-hJrRW8IW9YnTmC8Smmt5
-=qSEn
+iQIcBAEBAgAGBQJRExAWAAoJEBYNRVNeJnmTkjIP/1OZL0I3yaXM/f7QUQbC9TcF
+yVKK8s6FsXgUcIMigtvm1CwHLWU1QVDXr+Q6SgytPqo/SF6r8+xWTOOLslPgKL39
+oUEAE+0kIZ5900q3bsbLeJ7vLT0YXbPeFtd4tCE8WhFLKnX8zpbYx17xPtwowO0C
+cFXLYbkl8XS6ZFOynxaSxexXLJCrhtJMqSqfJBDFd/tjRU8jM0WHne85+wGIPiI6
+vQWNbV59aAn3GAmKk2j+lET2D+3JHwHS/QkCRvkxiEuhka+Gx+nmdqQ5ms0hdeIi
+4h65F+ppOfeQ6gkS+fnTPvkajPo7RQGwQ5GPGkaLX3i54q9aCIc5JCfXv7L3r1uA
+J9Ix+4zlTdLPcTy2m2aU5m4G9yk2cv7OgwQvilZTGQF9Ro1acIYSm019WNSvr47N
+9ItUQHfUsEqrY89Lnd/fS/gviCjW9cYTPaJCcPfWO38j+L7mD15UgrQXGyzwXrY0
+RbYqWOGJ83aAGzFm8Xa24wo7g5spk1zlCYQoKiFPKq8yAXMb258SDkgDPrXPgY0o
++HQ7NkE4pAK2x9qvkeZ/LLHvwPYGiSjJdvivnCQMNtZPqkbHdyF4ULOu93sw6PkO
+++Ih1RmeyKyTiVB60UkiCIMHNMvCGk6Zp4OJxpMmPPhq2K/usWXEGqTDrKa+LgL6
+4bajkNh3HLA5ZdC+Wq0g
+=tGUF
 -----END PGP SIGNATURE-----
